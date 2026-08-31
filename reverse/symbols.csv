@@ -79534,7 +79534,6 @@ name,address,notes
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,0x0003921B,pinharvest x1 (thunk)
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,0x0004ADE0,pinharvest x1 (thunk)
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,0x0004AEFD,pinharvest x1 (thunk)
-?setSequentialTimer@ScriptEngine@@QAEXPAVTeam@@H@Z,0x00027237,ILT; tail call from ScriptActions::doTeamSpinForFramecount
 ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z,0x0000FAC9
 ?setShoreLineDetail@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
 ?setShouldPlay@Eva@@QAE_NW4EvaMessage@@PBUCoord3D@@@Z,0x004233A0,this=TheEva 0x012F142C (initSubsystem<Eva> tag at 0x000794E4); (msg pos): msg==-1 -> false; bounds against the +0x4C/+0x50 (0x18) and +0x0C/+0x10 (0x1C) vectors then per-message trigger 0x004223F0(state[msg] def[msg] pos) storing an optional Coord3D; update calls it at 0x0035FBBC with (9 NULL) when an allied player is defeated; ZH Eva::setShouldPlay(EvaMessage) extended with a position
