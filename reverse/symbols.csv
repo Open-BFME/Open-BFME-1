@@ -81367,3 +81367,10 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?appendObjectIDArgument@GameMessage@@QAEXW4ObjectID@@@Z,0x0002BCEC,SelectionTranslator selectFriends retail ILT
+?BFMEEmptyUnicodeString@@3GB,0x00C7388C,TU-scoped BFME UnicodeString empty payload
+??0BfmeSelectFriendsUnicodeBase@@AAE@PBG@Z,0x00888DE0,TU-scoped BFME UnicodeString wide-text constructor
+??0BfmeSelectFriendsUnicodeBase@@AAE@ABV0@@Z,0x00888400,TU-scoped BFME UnicodeString copy constructor
+?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
+?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
+??A?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAEAAHABQBVThingTemplate@@@Z,0x00017111,SelectionTranslator selectFriends retail ILT
