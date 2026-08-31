@@ -24259,3 +24259,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001b2400@@YAXXZ,0x001B2400,gen-dump placeholder superseded by the exact clean C++ BfmeThingEFE constructor over the same 157-byte range
 ?d_001b2570@@YAXXZ,0x001B2570,gen-dump placeholder superseded by the exact clean C++ ExperienceTracker constructor over the same 181-byte range
 ?d_001b1560@@YAXXZ,0x001B1560,gen-dump placeholder superseded by the exact clean C++ BfmeCellGrid point-to-cell index over the same 77-byte range
+?d_001b22f0@@YAXXZ,0x001B22F0,gen-dump placeholder superseded by the exact clean C++ BFME ExperienceTracker destructor over the same 98-byte range
