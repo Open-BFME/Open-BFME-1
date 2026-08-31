@@ -8201,34 +8201,6 @@ void FiringTracker::crc( Xfer *xfer )
 }  // end crc
 
 // ------------------------------------------------------------------------------------------------
-/** Xfer method
-	* Version Info:
-	* 1: Initial version */
-// ------------------------------------------------------------------------------------------------
-// ?xfer@FiringTracker@@MAEXPAVXfer@@@Z present-unmatched
-void FiringTracker::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// object helper base class
-	UpdateModule::xfer( xfer );
-
-	// consecutive shots
-	xfer->xferInt( &m_consecutiveShots );
-
-	// victim id
-	xfer->xferObjectID( &m_victimID );
-
-	// frame to start cooldown
-	xfer->xferUnsignedInt( &m_frameToStartCooldown );
-
-}  // end xfer
-
-// ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
 // ?loadPostProcess@FiringTracker@@MAEXXZ present-unmatched
