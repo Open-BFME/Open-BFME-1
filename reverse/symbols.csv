@@ -72692,9 +72692,8 @@ name,address,notes
 ?bfmeBaseTH@BfmeThingTH@@QAEXPAX@Z,0x00016013,pin
 ?bfmeBaseTJ@BfmeThingTJ@@QAEXPAX0@Z,0x00002874,pin
 ?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
-?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseTL@BfmeThingTL@@QAEPAV1@PAXH@Z,0x0083FB60,BfmeThreeHundredFiftyOne identity candidate; retail returns this
-?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
+?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
@@ -73702,6 +73701,7 @@ name,address,notes
 ?bfmeGetSA@BfmeThingSA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
+?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -73862,6 +73862,7 @@ name,address,notes
 ?bfmeInitEOE@@YGXPAUBfmeThingEOE@@HHP6AXXZ1@Z,0x009F6EE4,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
+?bfmeInitTCB@BfmeBaseTCB@@QAEXXZ,0x0000835F,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -73900,6 +73901,7 @@ name,address,notes
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
+?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1051@BfmeLog1051@@QAEXHPADH0HHHH@Z,0x00015235,pin
@@ -74389,6 +74391,7 @@ name,address,notes
 ?bfmeSetSLA@BfmeSetterSLA@@QAEXPAXH@Z,0x000307E7,pin
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
+?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -74760,6 +74763,7 @@ name,address,notes
 ?bfmeUseSB@BfmeSinkSB@@QAEXPAX0@Z,0x00809E00,pin
 ?bfmeUseSHA@BfmeStoreSHA@@QAEXPAH@Z,0x0001A37A,pin
 ?bfmeUseTBB@BfmeThingTBB@@QAEXH@Z,0x0001284B,pin
+?bfmeUseTCA@BfmeSinkTCA@@QAEXPAX@Z,0x008097D0,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
