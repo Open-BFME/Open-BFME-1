@@ -99,6 +99,17 @@ bool u1IsAbsent_005C0F90( const U1Flagged_005C0F90 *f )
 	return !f->m_present;
 }
 
+class U1PtrFlagged_005C0FB0
+{
+public:
+	const void *m_ptr;
+};
+
+bool u1IsAbsent_005C0FB0( const U1PtrFlagged_005C0FB0 *f )
+{
+	return !f->m_ptr;
+}
+
 class U1Counted_005C1C20
 {
 public:
