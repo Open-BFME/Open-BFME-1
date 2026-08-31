@@ -10858,6 +10858,13 @@ name,address,notes
 ?_M_clear@?$vector@URva0029FA20Element@_STL@@V?$allocator@URva0029FA20Element@_STL@@@2@@_STL@@IAEXXZ,0x00049157,Open-BFME5 the vector _M_clear the insert at 0x0029FA20 calls
 ?_M_clear@?$vector@URva00347900Element@_STL@@V?$allocator@URva00347900Element@_STL@@@2@@_STL@@IAEXXZ,0x00044CD8,Open-BFME5 the vector _M_clear the insert at 0x00347900 calls
 ?_M_clear@?$vector@URva0035AFC0Element@_STL@@V?$allocator@URva0035AFC0Element@_STL@@@2@@_STL@@IAEXXZ,0x0002594B,Open-BFME5 the vector _M_clear the insert at 0x0035AFC0 calls
+?_M_clear@?$vector@URva00426C00Element@@V?$allocator@URva00426C00Element@@@_STL@@@_STL@@IAEXXZ,0x00009E8A,Open-BFME5 ILT vector clear callee
+?_M_clear@?$vector@URva006AACB0Element@@V?$allocator@URva006AACB0Element@@@_STL@@@_STL@@IAEXXZ,0x0003C358,Open-BFME5 ILT vector clear callee
+?_M_clear@?$vector@URva00774090Element@@V?$allocator@URva00774090Element@@@_STL@@@_STL@@IAEXXZ,0x00011A8B,Open-BFME5 ILT vector clear callee
+?_M_clear@?$vector@URva0081D280Element@@V?$allocator@URva0081D280Element@@@_STL@@@_STL@@IAEXXZ,0x0081D0F0,Open-BFME5 vector clear callee
+?_M_clear@?$vector@URva00777E40Element@@V?$allocator@URva00777E40Element@@@_STL@@@_STL@@IAEXXZ,0x0001DB1A,Open-BFME5 ILT vector clear callee
+?_M_clear@?$vector@URva0077BFB0Element@@V?$allocator@URva0077BFB0Element@@@_STL@@@_STL@@IAEXXZ,0x0002C570,Open-BFME5 ILT vector clear callee
+
 ?_M_clear@?$vector@URva0035B130Element@_STL@@V?$allocator@URva0035B130Element@_STL@@@2@@_STL@@IAEXXZ,0x00015E56,Open-BFME5 the vector _M_clear the insert at 0x0035B130 calls
 ?_M_clear@?$vector@URva003751A0Element@_STL@@V?$allocator@URva003751A0Element@_STL@@@2@@_STL@@IAEXXZ,0x0001CC06,Open-BFME5 the vector _M_clear the insert at 0x003751A0 calls
 ?_M_clear@?$vector@URva00381300Element@_STL@@V?$allocator@URva00381300Element@_STL@@@2@@_STL@@IAEXXZ,0x0003206F,Open-BFME5 the vector _M_clear the insert at 0x00381300 calls

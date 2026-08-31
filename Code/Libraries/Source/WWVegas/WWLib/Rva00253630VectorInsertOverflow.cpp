@@ -7,7 +7,20 @@ struct Rva00253630Element
 	char m_body[44];
 };
 
+struct Rva00777E40Element
+{
+	char m_body[44];
+};
+
+struct Rva0077BFB0Element
+{
+	char m_body[108];
+};
+
 namespace _STL
+
+
+
 {
 struct __false_type
 {
@@ -112,4 +125,13 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 // ?_M_insert_overflow@?$vector@URva00253630Element@@V?$allocator@URva00253630Element@@@_STL@@@_STL@@IAEXPAURva00253630Element@@ABU3@ABU__false_type@2@I_N@Z
 template class vector<Rva00253630Element, allocator<Rva00253630Element> >;
+
+// ?_M_insert_overflow@?$vector@URva00777E40Element@@V?$allocator@URva00777E40Element@@@_STL@@@_STL@@IAEXPAURva00777E40Element@@ABU3@ABU__false_type@2@I_N@Z
+template class vector<Rva00777E40Element, allocator<Rva00777E40Element> >;
+
+// ?_M_insert_overflow@?$vector@URva0077BFB0Element@@V?$allocator@URva0077BFB0Element@@@_STL@@@_STL@@IAEXPAURva0077BFB0Element@@ABU3@ABU__false_type@2@I_N@Z
+template class vector<Rva0077BFB0Element, allocator<Rva0077BFB0Element> >;
 }
+
+
+
