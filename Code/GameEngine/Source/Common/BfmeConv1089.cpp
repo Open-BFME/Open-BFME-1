@@ -30,18 +30,38 @@ public:
 extern BfmeD1089 *g_bfmeD1089;
 extern BfmeP1089 *g_bfmeP1089;
 
-char __stdcall bfmeGo1089A(int a, int t)
+class Parameter
 {
-	int n = ((BfmeT1089 *)t)->m_bfme08;
+public:
+	int getInt() const { return m_int; }
 
-	t = g_bfmeP1089->bfmeNext1089(a);
-	while ((short)t) {
-		BfmeR1089 *r = g_bfmeD1089->bfmeLook1089((short *)&t);
+private:
+	char m_unreconstructed00[8];
+	int m_int;
+};
+
+class ScriptConditions
+{
+protected:
+	bool evaluateSciencePurchasePoints(Parameter *playerParm, Parameter *pointsParm);
+};
+
+// ?evaluateSciencePurchasePoints@ScriptConditions@@IAE_NPAVParameter@@0@Z
+bool ScriptConditions::evaluateSciencePurchasePoints(
+	Parameter *playerParm, Parameter *pointsParm)
+{
+	int n = pointsParm->getInt();
+
+	pointsParm = reinterpret_cast<Parameter *>(
+		g_bfmeP1089->bfmeNext1089(reinterpret_cast<int>(playerParm)));
+	while ((short)reinterpret_cast<int>(pointsParm)) {
+		BfmeR1089 *r = g_bfmeD1089->bfmeLook1089(
+			reinterpret_cast<short *>(&pointsParm));
 
 		if (r && r->m_bfme264 >= n)
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }
 
 char __stdcall bfmeGo1089B(int a)
