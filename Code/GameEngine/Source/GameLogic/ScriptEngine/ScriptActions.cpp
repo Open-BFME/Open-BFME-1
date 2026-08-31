@@ -896,27 +896,31 @@ void ScriptActions::doSetInfantryLightingOverride(Real setting)
 //-------------------------------------------------------------------------------------------------
 /** doVictory */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doVictory_Thunk.cpp
-// ?doVictory@ScriptActions@@IAEXXZ present-unmatched
+// ?doVictory@ScriptActions@@IAEXXZ
 void ScriptActions::doVictory( void )
 {
-	closeWindows(FALSE);
+	m_suppressNewWindows = FALSE;
 	TheGameLogic->closeWindows();
 	doDisableInput();
 	if (!m_suppressNewWindows)
 	{
-		const Player *localPlayer = ThePlayerList->getLocalPlayer();
-		Bool showObserverWindow = localPlayer->isPlayerObserver() || TheScriptEngine->hasShownMPLocalDefeatWindow();
-		if(showObserverWindow)
-			m_messageWindow = TheWindowManager->winCreateFromScript("Menus/ObserverQuit.wnd");
-		else
+		BfmeDefeatScreenHolder *holder =
+			((BfmeGameClientDefeatScreen *)ThePlayerList)->m_defeatScreenHolder;
+		if (TheVictoryConditions && holder)
 		{
-			m_messageWindow = TheWindowManager->winCreateFromScript("Menus/Victorious.wnd");
+			BFMERetailAsciiString cheer( holder->m_window &&
+				((BfmeGameWindowExistingState *)holder->m_window)->m_existingState
+				? "Gui_VictoryCheerEvil" : "Gui_VictoryCheerGood" );
+			BFMERetailAsciiString screen( "Gui_VictoryScreen" );
+			BFMERetailAsciiString eventName( BfmeShouldShowGameOverEvent()
+				? "APT:EndGameOver" : "APT:EndVictorious" );
+			((BfmeVictoryConditionsVtbl *)TheVictoryConditions)->showScreen(
+				*(const AsciiString *)&eventName,
+				holder->m_window
+					? ((BfmeGameWindowExistingState *)holder->m_window)->m_existingState : false,
+				*(const AsciiString *)&screen, &cheer);
 		}
-	}	
-	if(TheCampaignManager)
-		TheCampaignManager->SetVictorious(TRUE);
-	TheScriptEngine->startEndGameTimer();
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
