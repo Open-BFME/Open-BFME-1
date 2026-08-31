@@ -2357,41 +2357,47 @@ void InGameUI::freeMessageResources( void )
 	* to me a string manager label */
 //-------------------------------------------------------------------------------------------------
 // srj sez: passing as const-ref screws up varargs for some reason. dunno why. just pass by value.
-// ?message@InGameUI@@ present-unmatched
-// BFME REMOVED THE VARARGS MESSAGE LAYER.  All three entry points below are
-// nine-byte stubs in retail, laid out consecutively, that destroy their
-// by-value string argument and return:
-//
-//   message(AsciiString, ...)              0x0043DED0  lea ecx,[esp+8]  jmp 0x00887940
-//   message(UnicodeString, ...)            0x0043DEE0  lea ecx,[esp+8]  jmp 0x008881D0
-//   messageColor(RGBColor*, UnicodeString) 0x0043DEF0  lea ecx,[esp+0xC] jmp 0x008881D0
-//
-// The jump targets are the AsciiString and UnicodeString releaseBuffer bodies,
-// and the argument offsets differ exactly as each signature dictates -- +8 for
-// the one-argument forms, +0xC where the RGBColor* comes first -- so this is
-// not a mis-anchoring.  addMessageText right after them at 0x0043DF00 is a real
-// 388-byte body, so the message SYSTEM survives; only the printf-style
-// formatting front end is gone.
-//
-// The Zero Hour bodies are kept below for reference and CANNOT be matched.  Two
-// of the three rows already live in their own files as naked stubs
-// (InGameUI_message_AsciiString.cpp, InGameUI_message_UnicodeString.cpp); the
-// third belongs with them rather than here.
+// BFME reserves a larger formatting buffer than Zero Hour for all three message
+// entry points; keeping the size local avoids changing every UnicodeString user.
+template <typename Char>
+class StringBase
+{
+public:
+	void set( const Char *text, Int length );
+};
+
+static __forceinline const char *bfmeMessageText( const AsciiString &text )
+{
+	const char *data = *reinterpret_cast<const char *const *>( &text );
+	return data ? data + 8 : text.str();
+}
+
+static __forceinline const WideChar *bfmeMessageText( const UnicodeString &text )
+{
+	const void *data = *reinterpret_cast<const void *const *>( &text );
+	return data ? reinterpret_cast<const WideChar *>( static_cast<const char *>( data ) + 8 ) : text.str();
+}
+
+static __forceinline void bfmeSetMessageText( UnicodeString &text, const WideChar *buffer )
+{
+	reinterpret_cast<StringBase<WideChar> &>( text ).set( buffer, wcslen( buffer ) );
+}
+
 void InGameUI::message( AsciiString stringManagerLabel, ... )
 {
 	UnicodeString stringManagerString;
 	UnicodeString formattedMessage;
 
 	// fetch the string from the string manger
-	stringManagerString = TheGameText->fetch( stringManagerLabel.str() );
+	stringManagerString = TheGameText->fetch( bfmeMessageText( stringManagerLabel ) );
 
 	// construct the final text after formatting
 	va_list args;
   va_start( args, stringManagerLabel );
-	WideChar buf[ UnicodeString::MAX_FORMAT_BUF_LEN ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, stringManagerString.str(), args ) < 0 )
+	WideChar buf[ 8192 ];
+  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( stringManagerString ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
-	formattedMessage.set( buf );
+	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
 
 	// add the text to the ui
@@ -2403,7 +2409,6 @@ void InGameUI::message( AsciiString stringManagerLabel, ... )
 /** Interface for display text messages to the user */
 //-------------------------------------------------------------------------------------------------
 // srj sez: passing as const-ref screws up varargs for some reason. dunno why. just pass by value.
-// ?message@InGameUI@@ present-unmatched
 void InGameUI::message( UnicodeString format, ... )
 {
 	UnicodeString formattedMessage;
@@ -2411,10 +2416,10 @@ void InGameUI::message( UnicodeString format, ... )
 	// construct the final text after formatting
 	va_list args;
   va_start( args, format );
-	WideChar buf[ UnicodeString::MAX_FORMAT_BUF_LEN ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, format.str(), args ) < 0 )
+	WideChar buf[ 8192 ];
+  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
-	formattedMessage.set( buf );
+	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
 
 	// add the text to the ui
@@ -2426,8 +2431,6 @@ void InGameUI::message( UnicodeString format, ... )
 /** Interface for display text messages to the user */
 //-------------------------------------------------------------------------------------------------
 // srj sez: passing as const-ref screws up varargs for some reason. dunno why. just pass by value.
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIMessageColorThunk.cpp
-// ?messageColor@InGameUI@@UAAXPBURGBColor@@VUnicodeString@@ZZ present-unmatched
 void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ... )
 {
 	UnicodeString formattedMessage;
@@ -2435,10 +2438,10 @@ void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ...
 	// construct the final text after formatting
 	va_list args;
   va_start( args, format );
-	WideChar buf[ UnicodeString::MAX_FORMAT_BUF_LEN ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, format.str(), args ) < 0 )
+	WideChar buf[ 8192 ];
+  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
-	formattedMessage.set( buf );
+	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
 
 	// add the text to the ui
