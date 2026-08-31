@@ -2307,6 +2307,7 @@ name,address,notes
 ??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00217660,BFME CrateCollide ctor body; ILT 0x0002AC43 used by legacy crate constructors
 ??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0024F450,late-layout CrateCollide ctor body; ILT 0x00026CAB used by constructor group at 0x0024FC20
 ??0CrateCollideModuleData@@QAE@XZ,0x000441CA,Open-BFME5 UnitCrateCollide base constructor pin
+??0Rva000441CAModuleDataBase@@QAE@XZ,0x000441CA,address-derived spelling for the shared module-data base constructor thunk
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001F5C3,pinharvest x1 (thunk)
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002070C,pinharvest x1 (thunk)
