@@ -1,8 +1,8 @@
 class ModelConditionFlags
 {
 public:
-	unsigned int m_bfmeFlags;
-	unsigned char m_bfmeTail[0x24];
+	unsigned int m_bits[10];
+	void clearAndSet(const ModelConditionFlags &clear, const ModelConditionFlags &set);
 };
 
 struct BfmeRecordOwnerRB
@@ -19,9 +19,14 @@ public:
 
 private:
 	void bfmeApplyModelConditionFlags(bool immediate);
-	unsigned char m_bfmeHead[0x278];
+	unsigned char m_bfmeHead[0x150];
+	class DrawModule **m_bfmeDrawModules;
+	unsigned char m_bfmeGap154[0xfc];
+	ModelConditionFlags m_bfmeConditionState;
 	ModelConditionFlags m_bfmeClearMask;
 	ModelConditionFlags m_bfmeSetMask;
+	unsigned char m_bfmeGap2c8[0xeb];
+	bool m_bfmeIsModelDirty;
 };
 
 void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set)
@@ -29,6 +34,48 @@ void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &cle
 	m_bfmeClearMask = clear;
 	m_bfmeSetMask = set;
 	bfmeApplyModelConditionFlags(true);
+}
+
+class ObjectDrawInterface
+{
+public:
+	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
+	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
+	virtual void anchor20(); virtual void anchor24(); virtual void anchor28(); virtual void anchor2c();
+	virtual void anchor30(); virtual void anchor34(); virtual void anchor38(); virtual void anchor3c();
+	virtual void anchor40(); virtual void anchor44(); virtual void anchor48();
+	virtual void replaceModelConditionState(const ModelConditionFlags &state, bool immediate, unsigned int effect);
+};
+
+class DrawModule
+{
+public:
+	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
+	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
+	virtual void anchor20(); virtual void anchor24(); virtual void anchor28(); virtual void anchor2c();
+	virtual void anchor30(); virtual void anchor34(); virtual void anchor38(); virtual void anchor3c();
+	virtual void anchor40(); virtual void anchor44(); virtual void anchor48(); virtual void anchor4c();
+	virtual void anchor50(); virtual void anchor54(); virtual void anchor58(); virtual void anchor5c();
+	virtual void anchor60(); virtual void anchor64(); virtual void anchor68(); virtual void anchor6c();
+	virtual void anchor70(); virtual void anchor74(); virtual void anchor78(); virtual void anchor7c();
+	virtual void anchor80(); virtual void anchor84(); virtual void anchor88(); virtual void anchor8c();
+	virtual void anchor90(); virtual void anchor94(); virtual void anchor98();
+	virtual ObjectDrawInterface *getObjectDrawInterface();
+};
+
+void Drawable::bfmeApplyModelConditionFlags(bool immediate)
+{
+	if (!m_bfmeIsModelDirty && !immediate)
+		return;
+
+	m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
+	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	{
+		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+		if (interface)
+			interface->replaceModelConditionState(m_bfmeConditionState, immediate, 0);
+	}
+	m_bfmeIsModelDirty = false;
 }
 
 class BfmeNodeRB
@@ -47,9 +94,9 @@ void BfmeNodeRB::bfmeTellRB(void *what)
 	ModelConditionFlags record = owner->m_bfmeRecord;
 
 	if ((unsigned int)what == 4)
-		record.m_bfmeFlags |= 0x80;
+		record.m_bits[0] |= 0x80;
 	else
-		record.m_bfmeFlags &= ~0x80;
+		record.m_bits[0] &= ~0x80;
 
 	((Drawable *)this)->replaceModelConditionState(record, false, 0);
 }
