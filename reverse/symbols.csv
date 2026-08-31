@@ -75155,7 +75155,6 @@ name,address,notes
 ?construct@ButterflyDrawTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00019CB3,ButterflyDrawModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@ButterflyDrawTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0003E8F1,ButterflyDrawModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@ConvertToCarBombCrateCollideModuleDataBaseShim@@QAEXXZ,0x000441CA,ConvertToCarBombCrateCollide base
-?construct@Rva0012A170ModuleData@@QAEPAV1@XZ,0x00012233,address-derived spelling for the module-data constructor thunk called by the 0x0012A170 factory
 ?construct@Coord3DPairConstructShim@_STL@@SAXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@@Z,0x00134F70,_STL _Construct pair ICoord2D Coord3D incremental-link thunk target through a TU-local forwarding shim
 ?construct@CylinderEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x00009AA7,CylinderEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@CylinderEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x000237EF,CylinderEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
@@ -75217,6 +75216,7 @@ name,address,notes
 ?construct@RenderObjectUpdateModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0000FB50,Open-BFME5 render object update module constructor ILT pin
 ?construct@RenderObjectUpdateTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00018101,RenderObjectUpdateModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@RenderObjectUpdateTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00035490,RenderObjectUpdateModuleTemplate constructor thunk used through a TU-local layout shim
+?construct@Rva0012A170ModuleData@@QAEPAV1@XZ,0x00012233,address-derived spelling for the module-data constructor thunk called by the 0x0012A170 factory
 ?construct@ShaderVectorBaseCtorShim@@QAEXHH@Z,0x009305D0,Open-BFME5 shader vector retail base constructor
 ?construct@SphereEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0004018D,SphereEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@SphereEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0001598D,SphereEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
@@ -75304,6 +75304,7 @@ name,address,notes
 ?countVotesForPlayer@BfmeVoteCounter@@QAEHHPAVConnectionManager@@@Z,0x00003751,alias of the two-argument DisconnectManager spelling pinned below; DisconnectManager.cpp reaches it through a view class because the reference header declares the one-argument form
 ?countVotesForPlayer@DisconnectManager@@IAEHH@Z,0x00003751,ILT thunk; real body 0x66B720 (from isPlayerVotedOut)
 ?countVotesForPlayer@DisconnectManager@@IAEHHPAVConnectionManager@@@Z,0x00003751,ILT thunk; BFME takes the ConnectionManager as a second argument unlike ZH's one-arg form
+?crc@DrawModule@@MAEXPAVXfer@@@Z,0x00004381,W3DRopeDraw primary-vtable CRC forwarding target
 ?create@BridgeAreaEffectsOCLShim@@QBEPAVObject@@PBV2@PBUCoord3D@@1_N@Z,0x00002A59,BridgeBehavior doAreaEffects retail call at 0x001F24E6 uses the Bool ObjectCreationList overload
 ?create@LocomotorStoreNewLocomotorShim@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z,0x001B6920,LocomotorStore newLocomotor incremental-link thunk target through a TU-local forwarding shim
 ?create@RadarCreateEventShim@@QAEXPBUCoord3D@@W4RadarEventType@@M@Z,0x00108140,Radar createEvent incremental-link thunk target through a TU-local forwarding shim
@@ -75450,6 +75451,7 @@ name,address,notes
 ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z,0x000366E7
 ?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z,0x007A1410,WaterRenderObjClass::enableWaterGrid incremental-link thunk target through a TU-local forwarding shim
 ?endThreads@GameResultsQueue@@UAEXXZ,0x006407D0,GameResultsQueue vtable 0x01119380 slot +0x28; deletes the worker (closeLiveHandle@BFMENetworkBackend 0x009DB5A0 then vslot 0); ZH GameResultsThread.cpp:139; present-unmatched row
+?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?ensureUniqueBufferOfSize@AsciiString@@IAEXH_NPBD1@Z,0x00032182,ILT thunk read out of AIGuardPickUpCrateState ctor call displacement; real body 0x0014F280 (d_0014f280, gen-dump)
 ?entEnragedInitialValue@@YAHHIPBXH@Z,0x00001BAE,Open-BFME5 EntEnragedUpdate initialization helper ILT pin
@@ -77377,6 +77379,7 @@ name,address,notes
 ?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF,doSpecialPowerUsingWaypoints call target (incremental-link thunk)
 ?getSpecialPowerSourceObject@AIGroup@@QAEPAVObject@@I@Z,0x00018F16,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?getSpecialPowerType@SpecialAbilityUpdate@@QBE?AW4SpecialPowerType@@XZ,0x00042956,Special ability power type
+?getState@Rva0024D4E0Owner@@QAEPAURva0024D4E0State@@XZ,0x00021017,RVA-derived ILT call target used by the positive-state clamp at 0x0024D4E0
 ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z,0x000245A0,harvested from parseStaticGameLODDefinition (thunk)
 ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ,0x0000978C,Open-BFME5 ILT; called by ?isOutOfAmmo@WeaponSet@@QBE_NXZ at 0x001EAE70
 ?getStatusString@DownloadManager@@QAE?AVUnicodeString@@XZ,0x0001AEEC
@@ -81501,5 +81504,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
-?getState@Rva0024D4E0Owner@@QAEPAURva0024D4E0State@@XZ,0x00021017,RVA-derived ILT call target used by the positive-state clamp at 0x0024D4E0

@@ -212,7 +212,6 @@ void W3DRopeDraw::doDrawModule(const Matrix3D* transformMtx)
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------
-// ?crc@W3DRopeDraw@@MAEXPAVXfer@@@Z present-unmatched
 void W3DRopeDraw::crc( Xfer *xfer )
 {
 
