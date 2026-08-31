@@ -37,13 +37,28 @@ private:
 	int m_bfmeValue;
 };
 
-class BfmeDtorMemberJ
+void bfmeDeallocate(void *memory, unsigned int bytes);
+
+class BfmeDtorMemberJBase
+{
+protected:
+	~BfmeDtorMemberJBase(void)
+	{
+		if (m_header != 0)
+			bfmeDeallocate(m_header, 0x30);
+	}
+
+	void *m_header;
+	int m_bfmeTreeState[2];
+};
+
+class BfmeDtorMemberJ : public BfmeDtorMemberJBase
 {
 public:
 	~BfmeDtorMemberJ(void);					// retail 0x009CF1E0
 
 private:
-	int m_bfmeValues[3];
+	void clear(void);
 };
 
 class BfmeDtorMemberK
@@ -126,6 +141,12 @@ Gen_002DEB80::~Gen_002DEB80(void)
 // ??1Gen_00581F30@@QAE@XZ
 Gen_00581F30::~Gen_00581F30(void)
 {
+}
+
+// ??1BfmeDtorMemberJ@@QAE@XZ
+BfmeDtorMemberJ::~BfmeDtorMemberJ(void)
+{
+	clear();
 }
 
 // ??1Gen_009D0730@@QAE@XZ
