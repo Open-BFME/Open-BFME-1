@@ -76255,6 +76255,9 @@ name,address,notes
 ?g_bfmeK1269A@@3MB,0x00C75334,pin
 ?g_bfmeK1269B@@3MB,0x00C7533C,pin
 ?g_bfmeK1270@@3MB,0x00C7533C,pin
+?g_bfmeK1SMA@@3MA,0x00CF692C,pin
+?g_bfmeK2SMA@@3MA,0x00C9D11C,pin
+?g_bfmeK3SMA@@3MA,0x00C75334,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
