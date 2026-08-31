@@ -100,7 +100,6 @@ struct GlobalLanguageDataBFMERetail
 // W3DDisplayString::W3DDisplayString =========================================
 /** */
 //=============================================================================
-// ??0W3DDisplayString@@QAE@XZ present-unmatched
 W3DDisplayString::W3DDisplayString( void )
 {
 	
@@ -108,7 +107,13 @@ W3DDisplayString::W3DDisplayString( void )
 	m_textPos.x = 0;
 	m_textPos.y = 0;
 	m_currTextColor = 0;
+	m_bfmeResetFields[2] = 0;
 	m_currDropColor = 0;
+	m_bfmeResetFields[3] = 0;
+	m_bfmeResetFields[0] = 0;
+	m_bfmeResetFields[4] = 0;
+	m_bfmeResetFields[1] = 0;
+	m_bfmeResetFields[5] = 0;
 	m_size.x = 0;
 	m_size.y = 0;
 	m_fontChanged = FALSE;
@@ -120,7 +125,9 @@ W3DDisplayString::W3DDisplayString( void )
 	m_useHotKey = FALSE;
 	m_hotKeyPos.x = 0;
 	m_hotKeyPos.y = 0;
+	m_bfmeFlag20C = FALSE;
 	m_hotKeyColor = GameMakeColor(255,255,255,255);
+	m_bfmeFlag1EC = TRUE;
 	
 }  // end W3DDisplayString
 

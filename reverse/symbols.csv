@@ -2394,6 +2394,7 @@ name,address,notes
 ??0DieModuleData@@QAE@XZ,0x0004A426,pinharvest x1 (thunk)
 ??0DieMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0DirectInputKeyboard@@QAE@XZ,0x000120D0,DirectInputKeyboard ctor thunk; createKeyboard@W3DGameClient factory REL32
+??0DisplayString@@QAE@XZ,0x00020C25,W3DDisplayString constructor calls the DisplayString constructor through this retail ILT
 ??0DisplayStringManager@@QAE@XZ,0x0000F7A9
 ??0DistLODClass@@QAE@ABV0@@Z,0x00030EE0,DistLOD copy constructor
 ??0DockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x002CD4B0,Open-BFME5 base constructor RepairDockUpdate and SupplyWarehouseDockUpdate forward to; reloc_names carries the same address as SupplyCenterDockUpdateBase which is the ICF twin
@@ -3218,6 +3219,7 @@ name,address,notes
 ??0ReflectDamage@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035B7F,link thunk to the ReflectDamage constructor; named from the ModuleFactory registration that pairs "ReflectDamage" with factory 0x0011E900
 ??0ReflectDamageModuleData@@QAE@XZ,0x0003E4A5,module-data constructor called by ReflectDamage::friend_newModuleData at 0x0011E980
 ??0RegistryClass@@QAE@PBD_N@Z,0x009DC200,pinharvest x2 (body)
+??0Render2DSentenceClass@@QAE@XZ,0x00940BF0,W3DDisplayString constructor embeds two Render2DSentenceClass members
 ??0RenderObjClass@@QAE@ABV0@@Z,0x0091FFE0,base copy ctor; derived from ParticleBufferClass copy ctor site
 ??0RenderObjClass@@QAE@XZ,0x009204B0,derived from ParticleBufferClass main ctor aligned call sites
 ??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0001C021,Open-BFME5 pin
