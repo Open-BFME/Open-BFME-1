@@ -81359,3 +81359,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?_M_clear@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXXZ,0x00005A9C,Clean C++ STLport clear callee of the 56-byte vector overflow at 0x006F2B00
