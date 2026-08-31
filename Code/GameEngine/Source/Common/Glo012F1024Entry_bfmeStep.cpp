@@ -16,6 +16,8 @@
 
 typedef int Int;
 
+class User;
+
 class BfmeIntVector
 {
 public:
@@ -23,6 +25,17 @@ public:
 
 	int *m_bfmeBegin;
 	int *m_bfmeEnd;
+};
+
+class BfmeElem4Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+	User **bfmeAt(unsigned int index) const { return m_bfmeBegin + index; }
+	User **bfmeBegin(void) const { return m_bfmeBegin; }
+
+	User **m_bfmeBegin;
+	User **m_bfmeEnd;
 };
 
 class BfmeElem16
@@ -112,7 +125,9 @@ public:
 
 	char m_bfmeHead[0x38];
 	BfmeIntVector m_bfmeItems;
-	char m_bfmeMiddle[0x6C - 0x40];
+	char m_bfmeMiddleA[0x44 - 0x40];
+	BfmeElem4Vector m_bfmeNames;
+	char m_bfmeMiddle[0x6C - 0x4C];
 	BfmeElem20Vector m_bfmeTable;
 	char m_bfmeMiddleB[0xB4 - 0x74];
 	BfmeElem16Vector m_bfmeQueue;
@@ -127,6 +142,21 @@ public:
 	void bfmeRemove(int value);
 };
 
+class AsciiString
+{
+public:
+	~AsciiString(void);
+	operator int(void) const { return (int)this; }
+
+	char *m_bfmeData;
+};
+
+class User : public Glo012F1024Item
+{
+public:
+	AsciiString GetName(void);
+};
+
 class BfmeGlobal_012f706c
 {
 public:
@@ -139,9 +169,18 @@ class BfmeGlobal_012f1024
 {
 public:
 	void bfmeCall40F39(void *a, void *b, void *c, unsigned char d);
+	User *getUser(void *key);
 };
 
 extern BfmeGlobal_012f1024 *g_bfmeGlobal_012f1024;
+
+class Gen_003bcb40
+{
+public:
+	void m(int value);
+};
+
+extern Gen_003bcb40 *g_Gen003bcb40;
 
 class Rva0060D5E0
 {
@@ -212,6 +251,20 @@ void Glo012F1024Item::j_0002d3e4(void)
 			(char *)(m_bfmeTable.m_bfmeBegin + index) + 0x0C,
 			(char *)(m_bfmeTable.m_bfmeBegin + index) + 8,
 			(m_bfmeTable.m_bfmeBegin + index)->m_bfmeByte);
+	}
+}
+
+// ?j_00019eca@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00019eca(void)
+{
+	for (unsigned int index = 0; index < m_bfmeNames.bfmeSize(); ++index)
+	{
+		User *user = g_bfmeGlobal_012f1024->getUser(m_bfmeNames.bfmeBegin() + index);
+		if (user != 0)
+		{
+			g_Gen003bcb40->m(user->GetName());
+			user->bfmeEnter();
+		}
 	}
 }
 
