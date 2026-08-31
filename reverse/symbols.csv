@@ -75475,6 +75475,8 @@ name,address,notes
 ?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z,0x007A1410,WaterRenderObjClass::enableWaterGrid incremental-link thunk target through a TU-local forwarding shim
 ?endThreads@GameResultsQueue@@UAEXXZ,0x006407D0,GameResultsQueue vtable 0x01119380 slot +0x28; deletes the worker (closeLiveHandle@BFMENetworkBackend 0x009DB5A0 then vslot 0); ZH GameResultsThread.cpp:139; present-unmatched row
 ?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
+?getUpgradeCostChange@Player@@QBEMXZ,0x000225BB,RVA-derived Player cost-change getter called by UpgradeTemplate calcCostToBuild at 0x0010A850
+??1AvailableGameInfo@@QAE@XZ,0x0001CFFD,canonical AvailableGameInfo destructor called by GameState clearAvailableGames at 0x0010E430
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?ensureUniqueBufferOfSize@AsciiString@@IAEXH_NPBD1@Z,0x00032182,ILT thunk read out of AIGuardPickUpCrateState ctor call displacement; real body 0x0014F280 (d_0014f280, gen-dump)
 ?entEnragedInitialValue@@YAHHIPBXH@Z,0x00001BAE,Open-BFME5 EntEnragedUpdate initialization helper ILT pin
@@ -77437,7 +77439,6 @@ name,address,notes
 ?getUnknownPacketsPerSecond@Network@@UAEMXZ,0x00681D00,vtable 0x0111A968 slot 50 (+0xC8) via ILT 0x00039806; same shape tail-jumping ?getUnknownPacketsPerSecond@Transport 0x00684080
 ?getUnsignedIntFromRegistry@@YA_NPAXVAsciiString@@1AAI@Z,0x001091E0,registry DWORD primitive via thunk 0x1D21E
 ?getUpgradeActivationMasks@UpgradeMuxData@@QBEXAAV?$BitFlags@$0IA@@@0@Z,0x0002644F,pinharvest x1 (thunk)
-?getUpgradeCostChange@Player@@QBEMXZ,0x000225BB,RVA-derived Player cost-change getter called by UpgradeTemplate calcCostToBuild at 0x0010A850
 ?getUser@BfmeGlobal_012f1024@@QAEPAVUser@@PAX@Z,0x00042523,call-site callee candidate for Glo012F1024Item::j_00019eca; the global at 0x012F1024 receives the vector entry address and returns the matched 0x003B39C0 object
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9
 ?getUserName@SkirmishPreferences@@QAE?AVUnicodeString@@XZ,0x0009FA60,ZH SkirmishPreferences::getUserName line for line with the key renamed "CurrentUserName": find ILT 0x0000AEAC on the map at +4; QuotedPrintableToUnicodeString ILT 0x0000F704; trim; empty -> TheEmptyString; ILT 0x00010898
