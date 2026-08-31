@@ -10542,6 +10542,7 @@ name,address,notes
 ?StaticGameLODNames@@3PAPBDA,0x00EA73E4,GameLODManager::getStaticGameLODIndex direct DIR32; six retail names VeryLow through Custom
 ?String@CRC@@SAKPBDK@Z,0x009E7FD0
 ?StructureCollapseRandom@@YAHHHPBDH@Z,0x00001BAE,StructureCollapse begin deterministic random ILT thunk
+?SyncTime@WW3D@@0IA,0x0133F420,StreakRendererClass retail constructor WW3D synchronization time
 ?TEST_KINDOFMASK_ANY@@YA_NABV?$BitFlags@$0HE@@@0@Z,0x000497D3,REL32 pin for retail ThingTemplate kindof test
 ?TheAIUpdateInterfacePool@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE30,pool-glue cascade static (back-solved)
 ?TheActiveBodyPool@?1??getClassMemoryPool@ActiveBody@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF928,pool-glue cascade static (back-solved)
@@ -12269,6 +12270,7 @@ name,address,notes
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x0004AC41,pinharvest x1 (thunk)
 ?_M_use_facet@locale@_STL@@QBEPAVfacet@12@ABVid@12@@Z,0x008321D0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_write@_Filebuf_base@_STL@@QAE_NPADH@Z,0x0084A7B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
+?_PresetAdditiveSpriteShader@ShaderClass@@2V1@A,0x012D6E2C,StreakRendererClass retail constructor additive sprite shader preset
 ?_Rebalance@?$_Rb_global@_N@_STL@@SAXPAU_Rb_tree_node_base@2@AAPAU32@@Z,0x0082C9D0,insert-side twin of the _Rebalance_for_erase pin 0x190 later; called by every matched _Rb_tree _M_insert instantiation; body opens x->_M_color=red
 ?_Rebalance_for_erase@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@AAPAU32@11@Z,0x0082CB60
 ?_Transfer@?$_List_global@_N@_STL@@SAXPAU_List_node_base@2@00@Z,0x0082BA90,family-emit shared callee

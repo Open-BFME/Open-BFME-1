@@ -63,27 +63,6 @@
 
 
 // ??0StreakRendererClass@@ present-unmatched
-StreakRendererClass::StreakRendererClass(void) :
-		Texture(NULL),
-		Shader(ShaderClass::_PresetAdditiveSpriteShader),
-		Width(0.0f),
-		Color(Vector3(1,1,1)),
-		Opacity(1.0f),
-		SubdivisionLevel(0),
-		NoiseAmplitude(0.0f),
-		MergeAbortFactor(1.5f),
-		// TextureTileFactor(1.0f),
-		// LastUsedSyncTime(WW3D::Get_Sync_Time()),
-		// CurrentUVOffset(0.0f,0.0f),
-		// UVOffsetDeltaPerMS(0.0f, 0.0f),
-		Bits(DEFAULT_BITS),
-		m_vertexBufferSize(0),
-		m_vertexBuffer(NULL)
-{
-  // EMPTY
-}
-
-// ??0StreakRendererClass@@ present-unmatched
 StreakRendererClass::StreakRendererClass(const StreakRendererClass & that) :
 		Texture(NULL),
 		Shader(ShaderClass::_PresetAdditiveSpriteShader),
