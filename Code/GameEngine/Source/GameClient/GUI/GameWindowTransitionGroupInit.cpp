@@ -123,7 +123,7 @@ private:
 class TransitionWindow
 {
 public:
-	void init(void);
+	bool init(void);
 	void draw(void);
 	void update(int frame);
 	void reverse(int totalFrames);
@@ -140,13 +140,13 @@ private:
 	int m_currentFrameDelay;
 };
 
-// ?init@TransitionWindow@@ present-unmatched
-inline void TransitionWindow::init(void)
+inline bool TransitionWindow::init(void)
 {
 	m_winID = TheNameKeyGenerator->nameToKey(m_winName.str());
 	m_win = TheWindowManager->winGetWindowFromId(0, m_winID);
 	m_currentFrameDelay = m_frameDelay;
 	m_transition->init(m_win);
+	return true;
 }
 
 inline void TransitionWindow::draw(void)
