@@ -81388,3 +81388,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
 ?bfmeIsWithin@Gen_001E1980@@QBEEXZ,0x0003FB1B,BFME weapon frame-window predicate; existing body compares TheGameLogic frame to +0x1C and +0x24
 ?updateDrawableClipStatus@Drawable@@QAEXIIW4WeaponSlotType@@@Z,0x000387DF,BFME Drawable ammo-clip status update called by Object weapon-status update
+??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear

@@ -12,6 +12,8 @@ extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 class AsciiString
 {
 public:
+	~AsciiString();
+
 	Int compare(const AsciiString &that) const
 	{
 		const Int thatLength = that.m_data ? that.m_data->length : 0;
@@ -44,19 +46,36 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 
 struct Rva0045C9E0CameraMarker
 {
+	~Rva0045C9E0CameraMarker();
+
 	Rva0045C9E0CameraMarker *m_next;
 	AsciiString m_name;
 };
 
+Rva0045C9E0CameraMarker::~Rva0045C9E0CameraMarker()
+{
+}
+
 class Rva0045C9E0CameraMarkerList
 {
 public:
+	void clear();
 	Rva0045C9E0CameraMarker *find(const AsciiString &name) const;
 
 private:
 	char m_unknown[0x80];
 	Rva0045C9E0CameraMarker *m_markers;
 };
+
+void Rva0045C9E0CameraMarkerList::clear()
+{
+	while (m_markers)
+	{
+		Rva0045C9E0CameraMarker *marker = m_markers;
+		m_markers = marker->m_next;
+		delete marker;
+	}
+}
 
 Rva0045C9E0CameraMarker *Rva0045C9E0CameraMarkerList::find(
 	const AsciiString &name) const
