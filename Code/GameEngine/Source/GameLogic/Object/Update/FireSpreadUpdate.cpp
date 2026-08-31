@@ -175,13 +175,18 @@ UpdateSleepTime FireSpreadUpdate::update( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?startFireSpreading@FireSpreadUpdate@@QAEXXZ present-unmatched
 void FireSpreadUpdate::startFireSpreading()
 {
-	if( !getObject()->getStatusBits().test( OBJECT_STATUS_AFLAME ) )
+	if( (*reinterpret_cast<const UnsignedInt *>(reinterpret_cast<const char *>(getObject()) + 0x90) & 0x400) == 0 )
 		return;	// sorry, must be on fire
 
-	setWakeFrame(getObject(), UPDATE_SLEEP(calcNextSpreadDelay()));
+	const char *moduleData = *reinterpret_cast<const char * const *>(reinterpret_cast<const char *>(this) + 0x04);
+#line 152 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\FireSpreadUpdate.cpp"
+	UnsignedInt delay = GameLogicRandomValue(*reinterpret_cast<const Int *>(moduleData + 0x0c), *reinterpret_cast<const Int *>(moduleData + 0x10));
+#line 186
+	if (delay < 1)
+		delay = 1;
+	setWakeFrame(getObject(), UPDATE_SLEEP(delay));
 }
 
 //-------------------------------------------------------------------------------------------------
