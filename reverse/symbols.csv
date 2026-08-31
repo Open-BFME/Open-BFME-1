@@ -81385,3 +81385,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?_M_clear@?$vector@URva00253630Element@@V?$allocator@URva00253630Element@@@_STL@@@_STL@@IAEXXZ,0x0000C9E1
+?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
+?bfmeIsWithin@Gen_001E1980@@QBEEXZ,0x0003FB1B,BFME weapon frame-window predicate; existing body compares TheGameLogic frame to +0x1C and +0x24
+?updateDrawableClipStatus@Drawable@@QAEXIIW4WeaponSlotType@@@Z,0x000387DF,BFME Drawable ammo-clip status update called by Object weapon-status update
