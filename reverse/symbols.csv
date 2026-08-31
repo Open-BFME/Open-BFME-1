@@ -4190,6 +4190,7 @@ name,address,notes
 ??1DieModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1DisplayString@@MAE@XZ,0x0000D823,W3DDisplayString dtor call target
 ??1DisplayString@@UAE@XZ,0x0000D823,W3DDisplayString dtor call target; same thunk as the MAE spelling (access level differs between our header and retail)
+??1DisplayStringManager@@UAE@XZ,0x000472E9,BFME DisplayStringManager destructor ILT called by exact W3DDisplayStringManager destructor
 ??1DozerAudioEventRTS@@UAE@XZ,0x00026F35,DozerAIUpdate building-sound member destructor
 ??1DozerDockPointInfo@DozerAIUpdate@@QAE@XZ,0x0002EA0F,DozerAIUpdate dock-point array destructor thunk
 ??1DynamicIBAccessClass@@QAE@XZ,0x0091D350,DynamicIB ABI for BoxRenderObjClass::render_box
@@ -8771,6 +8772,7 @@ name,address,notes
 ??1Rva0036BBA0BehaviorModule@@UAE@XZ,0x00047C53,REL32 seven-byte base destructor target from CastleMemberBehavior 0x0036BC0A
 ??1Rva003A9860@@QAE@XZ,0x00037A4C,Open-BFME5 ILT thunk to body 0x003A9860; ??1LivingWorldCampaign@@QAE@XZ at 0x003AA7F0 destroys its member at +0x0C through it; address-derived name
 ??1Rva004029F0@@QAE@XZ,0x00040138,Open-BFME5 ILT thunk to body 0x004029F0; ?freeBlocks@PathfindZoneManager@@AAEXXZ at 0x00403760 hands it to the eh vector destructor iterator as the element destructor of the 0x228-byte array at +0x23624; address-derived name
+??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
 ??1Rva0082AE40TailBase@@UAE@XZ,0x0082AE40,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832170MultiBase@@QAE@XZ,0x00832170,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -73832,6 +73834,7 @@ name,address,notes
 ?bfmeIsReady@BfmeSubEFB@@QAE_NXZ,0x0003D2F8,pin
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
+?bfmeIsWithin@Gen_001E1980@@QBEEXZ,0x0003FB1B,BFME weapon frame-window predicate; existing body compares TheGameLogic frame to +0x1C and +0x24
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
@@ -77175,6 +77178,7 @@ name,address,notes
 ?getMaxHeightAbovePosition@GeometryInfo@@QBEMXZ,0x0087E000,Open-BFME5 called by ?getFiringLineOfSightOrigin@Weapon@@IBEXPBVObject@@AAUCoord3D@@@Z at 0x001E1A30
 ?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ,0x0087E070,Open-BFME5 GeometryInfo lower extent paired with the independently pinned upper-extent body and called by calcPitches
 ?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ,0x00043EEB
+?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
 ?getModelIndices@W3DBridge@@IAEHPAGHHPAVMeshClass@@@Z,0x0003881B
 ?getModelVertices@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x0001B14E
 ?getModelVertices@W3DBridgeGetModelVerticesShim@@QAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x006D7EA0,W3DBridge incremental-link thunk target through a TU-local forwarding shim
@@ -79879,6 +79883,7 @@ name,address,notes
 ?update@Network@@UAEX_N@Z,0x00682C70,vtable 0x0111A968 slot 10 (+0x28) via ILT 0x00027E12; ZH Network::update with a Bool forwarded to liteupdate: +0x34=0 then PREGAME->INGAME at 0x00682C7E then GetCommandsFromCommandList 0x006828D0 then vslot +0x24 then when status==2 disconnectLocalPlayer 0x006665E0 + TheMessageStream 0x012ED5EC appendMessage(0x1D MSG_CLEAR_GAME_DATA) + status=3 (ZH endOfGameCheck inlined without the canILeave gate) then RelayCommandsToCommandList 0x00682A90; callers GameEngine update core 0x0006BB2C (pushes 1) load screen 0x00491F81 and disconnect menu 0x0050FF3F (push 0)
 ?update@ObjectUpdateUpgradeModulesShim@@QAEXXZ,0x001C5800,Object updateUpgradeModules incremental-link thunk target through a TU-local forwarding shim
 ?update@Radar@@UAEXXZ,0x00030E77,W3DRadar update retail base thunk
+?update@RadiusDecal@@QAEXXZ,0x0003FC15,BFME RadiusDecal update ILT called by InGameUI handleRadiusCursor
 ?update@Rva00367810Entry@@QAEXXZ,0x0000E0AC,REL32 target read from the retail call at RVA 0x0036786D; ILT thunk to RVA 0x00367330
 ?update@Rva00802CD0Element@@QAEXPBVRva007F4F90LobbyCounts@@H@Z,0x00802CD0,V2 lane: browser lobby element update from a four-int lobby-count record
 ?update@ScreenCrossFadeFilterUpdateFadeLevelShim@@QAE_NXZ,0x007D35B0,ScreenCrossFadeFilter updateFadeLevel incremental-link thunk target through a TU-local forwarding shim
@@ -79893,6 +79898,7 @@ name,address,notes
 ?updateCounts@W3DRoadBuffer@@IAEXPAVRoadSegment@@@Z,0x00010BC7,Open-BFME-DS05 addMapObject callee pin (ILT thunk to 0x00705000)
 ?updateCountsAndFlags@W3DRoadBuffer@@IAEXXZ,0x00010B5E,third of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0; named by position against the four already-named calls that follow it. Body 0x00705260
 ?updateDamageState@Bridge@@QAEXXZ,0x000232D6,Open-BFME5 ILT; called by ?updateBridgeDamageStates@TerrainLogic@@UAEXXZ at 0x001AAD70
+?updateDrawableClipStatus@Drawable@@QAEXIIW4WeaponSlotType@@@Z,0x000387DF,BFME Drawable ammo-clip status update called by Object weapon-status update
 ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,ILT thunk to Drawable::updateDrawableSupplyStatus at 0x00411E50
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C
 ?updateMPBattleHonors@@YAXAAHAAVPSPlayerStats@@@Z,0x004E59E0,ZH updateMPBattleHonors(Int& honors PSPlayerStats& stats) with stats in EAX (LTCG custom convention) and honors on the stack: winsInARow(+0x188)>=3/10/25 -> 0x2/0x8/0x10 (ZH only STREAK at 5); gamesInRowWithLastGeneral(+0x17c)>=20 && localPlayer side America/China/GLA -> 0x20/0x40/0x200; getTotalUnitsBuilt(VEHICLE !AIRCRAFT)>=50 -> 0x80 (BATTLE_TANK); (AIRCRAFT)>=20 -> 0x100 (AIR_WING); TheGameLogic frame/300<5 -> 0x4000 BLITZ5 frame/5/60<10 -> 0x8000 BLITZ10; no apocalypse/global-general arms; sole caller populatePlayerInfo 0x004E75F1 gated on !crc !discon !isLocalAlliedDefeat getEndFrame
@@ -81385,8 +81391,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
-?bfmeIsWithin@Gen_001E1980@@QBEEXZ,0x0003FB1B,BFME weapon frame-window predicate; existing body compares TheGameLogic frame to +0x1C and +0x24
-?updateDrawableClipStatus@Drawable@@QAEXIIW4WeaponSlotType@@@Z,0x000387DF,BFME Drawable ammo-clip status update called by Object weapon-status update
-??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
-?update@RadiusDecal@@QAEXXZ,0x0003FC15,BFME RadiusDecal update ILT called by InGameUI handleRadiusCursor

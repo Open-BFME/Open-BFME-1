@@ -57,7 +57,6 @@ W3DDisplayStringManager::W3DDisplayStringManager( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??1W3DDisplayStringManager@@UAE@XZ present-unmatched
 W3DDisplayStringManager::~W3DDisplayStringManager( void )
 {
 	for (Int i = 0; i < MAX_GROUPS; ++i) 
