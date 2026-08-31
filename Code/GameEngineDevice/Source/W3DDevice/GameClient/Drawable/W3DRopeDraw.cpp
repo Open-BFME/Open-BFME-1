@@ -149,7 +149,6 @@ void W3DRopeDraw::initRopeParms(Real length, Real width, const RGBColor& color, 
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?setRopeCurLen@W3DRopeDraw@@UAEXM@Z present-unmatched
 void W3DRopeDraw::setRopeCurLen(Real length)
 { 
 	m_curLen = length; 
