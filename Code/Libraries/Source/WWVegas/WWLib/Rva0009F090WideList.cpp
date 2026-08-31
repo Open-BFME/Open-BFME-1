@@ -39,6 +39,7 @@ private:
 class UnicodeString
 {
 public:
+	UnicodeString(const UnicodeString &other);
 	~UnicodeString() { ((StringBase<WideChar> *)this)->releaseBuffer(); }
 
 	int compareNoCase(const UnicodeString &other) const throw()
@@ -76,6 +77,7 @@ class Rva0009F090WideListData
 public:
 	Rva0009F090WideIterator begin() { return Rva0009F090WideIterator(m_head->next); }
 	Rva0009F090WideIterator end() { return Rva0009F090WideIterator(m_head); }
+	const UnicodeString &front() const { return m_head->next->value; }
 
 private:
 	Rva0009F090WideNode *m_head;
@@ -84,12 +86,18 @@ private:
 class Rva0009F090WideList
 {
 public:
+	UnicodeString first() const;
 	int findNoCase(UnicodeString value);
 
 private:
 	char m_unknown[0x14];
 	Rva0009F090WideListData m_values;
 };
+
+UnicodeString Rva0009F090WideList::first() const
+{
+	return m_values.front();
+}
 
 int Rva0009F090WideList::findNoCase(UnicodeString value)
 {
