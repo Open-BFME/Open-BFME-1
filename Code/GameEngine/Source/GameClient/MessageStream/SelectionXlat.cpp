@@ -269,11 +269,13 @@ SelectionTranslator *TheSelectionTranslator = NULL;
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// ??0SelectionTranslator@@QAE@XZ present-unmatched
 SelectionTranslator::SelectionTranslator()
 {
 	m_leftMouseButtonIsDown = FALSE;
 	m_dragSelecting = FALSE;
+	// BFME retains the release hand-of-god state byte between these flags and
+	// the first aligned integer member.
+	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 6) = FALSE;
 	m_lastGroupSelTime = 0;
 	m_lastGroupSelGroup = -1;
 	m_selectFeedbackAnchor.x = 0;
