@@ -24270,3 +24270,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001b2c70@@YAXXZ,0x001B2C70,gen-dump placeholder superseded by the exact clean C++ BFME FiringTracker destructor over the same 130-byte range
 ?d_001b2d90@@YAXXZ,0x001B2D90,gen-dump placeholder superseded by the exact clean C++ BFME FiringTracker shot query over the same 67-byte range
 ?d_001c6580@@YAXXZ,0x001C6580,gen-dump placeholder superseded by the exact clean C++ BitFlags<86>::xfer body over the same 151-byte range
+??1FiringTracker@@UAE@XZ,0x001B2C70,incorrect public-access mangling replaced by the verified protected FiringTracker destructor identity

@@ -17,15 +17,6 @@ public:
 
 extern AudioManager *TheAudio;
 
-class Gen_dtor_00113d40
-{
-public:
-	virtual ~Gen_dtor_00113d40();
-
-private:
-	const void *m_moduleData;
-};
-
 class BehaviorModuleInterface
 {
 public:
@@ -38,9 +29,13 @@ public:
 	virtual void updateModuleInterface() = 0;
 };
 
-class ObjectModule : public Gen_dtor_00113d40
+class ObjectModule
 {
+public:
+	virtual ~ObjectModule();
+
 private:
+	const void *m_moduleData;
 	void *m_object;
 };
 
@@ -63,7 +58,7 @@ private:
 
 class FiringTracker : public UpdateModule
 {
-public:
+protected:
 	virtual ~FiringTracker();
 
 private:
