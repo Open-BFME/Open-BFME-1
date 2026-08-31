@@ -10643,6 +10643,7 @@ name,address,notes
 ?TheLocomotorSetUpgradePool@?1??getClassMemoryPool@LocomotorSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0580,pool-glue cascade static (back-solved)
 ?TheLookAtTranslator@@3PAVLookAtTranslator@@A,0x012F4C84,Open-BFME5 the object doDisableInput tail-calls resetModes on
 ?TheMapCache@@3PAVMapCache@@A,0x012F1594,GameClient MapCache global; absolute load in the map-metadata refresh at 0x00525F35 and source definition in MapUtil.cpp
+?TheMappedImageCollection@@3PAVMappedImageCollection@@A,0x012F6924,canonical BFME mapped-image singleton used by UpgradeTemplate cacheButtonImage
 ?TheMappedImageCollection@@3PAVMappedImageCollectionPortraitShim@@A,0x012F6924,BFME portrait selector mapped-image global
 ?TheMaxHealthUpgradePool@?1??getClassMemoryPool@MaxHealthUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0588,pool-glue cascade static (back-solved)
 ?TheMemoryPoolFactory@@3PAVMemoryPoolFactory@@A,0x00EED600,pool-glue cascade static (back-solved)
@@ -72690,6 +72691,7 @@ name,address,notes
 ?bfmeBaseTC@BfmeThingTC@@QAEXXZ,0x00021FFD,pin
 ?bfmeBaseTF@BfmeThingTF@@QAEXH@Z,0x009DB4E0,pin
 ?bfmeBaseTG@BfmeThingTG@@QAEXHH@Z,0x00899F00,pin
+?bfmeBaseTGE@BfmeThingTGE@@QAEXXZ,0x00039C2F,pin
 ?bfmeBaseTH@BfmeThingTH@@QAEXPAX@Z,0x00016013,pin
 ?bfmeBaseTJ@BfmeThingTJ@@QAEXPAX0@Z,0x00002874,pin
 ?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
@@ -72729,6 +72731,7 @@ name,address,notes
 ?bfmeCalcEBH@BfmeThingEBH@@QAEMM@Z,0x0001FEEC,pin
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
+?bfmeCalcTGC@@YAXPAXPAH@Z,0x0000C9B4,pin
 ?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
 ?bfmeCall1100@@YAXH@Z,0x00032759,pin
 ?bfmeCall40F39@BfmeGlobal_012f1024@@QAEXPAX00E@Z,0x00040F39,call-site callee candidate for Glo012F1024Item::j_0002d3e4; the global at 0x012F1024 is loaded into thiscall ecx and the four stack arguments match the 0x003B4510 body
@@ -74191,6 +74194,7 @@ name,address,notes
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
 ?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmePrintTGD@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeProcess1279@BfmeWrapper1279@@QAEXPAX@Z,0x008BD400,address-derived processor called by the 0x008BD4D0 forwarding body
 ?bfmePush1236@BfmeA1236@@QAEXPAX@Z,0x008D2BB0,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
@@ -74320,6 +74324,7 @@ name,address,notes
 ?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
 ?bfmeRunFDB@BfmeThingFDB@@QAEXPAX@Z,0x00048F36,pin
 ?bfmeRunTFD@BfmeHolderTFD@@QAEXXZ,0x009DB4D0,pin
+?bfmeRunTGD@@YAXHH@Z,0x0000630C,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74403,6 +74408,7 @@ name,address,notes
 ?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
 ?bfmeSetTEB@BfmeSubTEB@@QAEXH@Z,0x000122AB,pin
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
+?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -74783,6 +74789,7 @@ name,address,notes
 ?bfmeUseTBB@BfmeThingTBB@@QAEXH@Z,0x0001284B,pin
 ?bfmeUseTCA@BfmeSinkTCA@@QAEXPAX@Z,0x008097D0,pin
 ?bfmeUseTFC@BfmeSinkTFC@@QAEXPAX0@Z,0x007F69B0,pin
+?bfmeUseTGB@BfmeThingTGB@@QAEXH@Z,0x0003F9EA,pin
 ?bfmeVal1025@BfmeH1025@@QAEHXZ,0x0001F668,pin
 ?bfmeVal1027@BfmeVal1027@@QAEMXZ,0x0000D7B5,pin
 ?bfmeVal1034@BfmeN1034@@QAEHXZ,0x00898300,pin
@@ -75468,8 +75475,6 @@ name,address,notes
 ?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z,0x007A1410,WaterRenderObjClass::enableWaterGrid incremental-link thunk target through a TU-local forwarding shim
 ?endThreads@GameResultsQueue@@UAEXXZ,0x006407D0,GameResultsQueue vtable 0x01119380 slot +0x28; deletes the worker (closeLiveHandle@BFMENetworkBackend 0x009DB5A0 then vslot 0); ZH GameResultsThread.cpp:139; present-unmatched row
 ?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
-?TheMappedImageCollection@@3PAVMappedImageCollection@@A,0x012F6924,canonical BFME mapped-image singleton used by UpgradeTemplate cacheButtonImage
-?getUpgradeCostChange@Player@@QBEMXZ,0x000225BB,RVA-derived Player cost-change getter called by UpgradeTemplate calcCostToBuild at 0x0010A850
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?ensureUniqueBufferOfSize@AsciiString@@IAEXH_NPBD1@Z,0x00032182,ILT thunk read out of AIGuardPickUpCrateState ctor call displacement; real body 0x0014F280 (d_0014f280, gen-dump)
 ?entEnragedInitialValue@@YAHHIPBXH@Z,0x00001BAE,Open-BFME5 EntEnragedUpdate initialization helper ILT pin
@@ -76659,6 +76664,7 @@ name,address,notes
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVftTDA@@3PAPAXA,0x00D29D30,pin
+?g_bfmeVftTGE@@3PAPAXA,0x00D1C9A8,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -77198,6 +77204,7 @@ name,address,notes
 ?getCompressionType@CompressionManager@@SA?AW4CompressionType@@PBXH@Z,0x0081E560,decode_calls pin for isDataCompressed/getUncompressedSize callee
 ?getContainCount@TunnelTracker@@QAEIH@Z,0x00036165,Open-BFME5 ILT; BFME gives it an argument the reference does not have and ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z at 0x003782D0 passes zero at both call sites
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
+?getControllingPlayer@Rva00107A50Object@@QAEPAVRva00107A50Player@@XZ,0x00020824,RVA-derived controlling-player getter called by Radar color refresh at 0x00107A50
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
 ?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
 ?getCountdownPercent@OCLUpdate@@QAEMXZ,0x00047069,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 passes its result to the text display
@@ -77430,6 +77437,7 @@ name,address,notes
 ?getUnknownPacketsPerSecond@Network@@UAEMXZ,0x00681D00,vtable 0x0111A968 slot 50 (+0xC8) via ILT 0x00039806; same shape tail-jumping ?getUnknownPacketsPerSecond@Transport 0x00684080
 ?getUnsignedIntFromRegistry@@YA_NPAXVAsciiString@@1AAI@Z,0x001091E0,registry DWORD primitive via thunk 0x1D21E
 ?getUpgradeActivationMasks@UpgradeMuxData@@QBEXAAV?$BitFlags@$0IA@@@0@Z,0x0002644F,pinharvest x1 (thunk)
+?getUpgradeCostChange@Player@@QBEMXZ,0x000225BB,RVA-derived Player cost-change getter called by UpgradeTemplate calcCostToBuild at 0x0010A850
 ?getUser@BfmeGlobal_012f1024@@QAEPAVUser@@PAX@Z,0x00042523,call-site callee candidate for Glo012F1024Item::j_00019eca; the global at 0x012F1024 receives the vector entry address and returns the matched 0x003B39C0 object
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9
 ?getUserName@SkirmishPreferences@@QAE?AVUnicodeString@@XZ,0x0009FA60,ZH SkirmishPreferences::getUserName line for line with the key renamed "CurrentUserName": find ILT 0x0000AEAC on the map at +4; QuotedPrintableToUnicodeString ILT 0x0000F704; trim; empty -> TheEmptyString; ILT 0x00010898
@@ -79533,6 +79541,7 @@ name,address,notes
 ?run@WinInstanceDataInitShim@@QAEXXZ,0x00499850,WinInstanceData init incremental-link thunk target through a TU-local forwarding shim
 ?run@XferRandomVariableShim@@SAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0010C4D0,xferRandomVariable incremental-link thunk target through a TU-local forwarding shim
 ?rva000b2cc0@@YGXPAXH@Z,0x00025306,Open-BFME5 ILT stdcall of push0+data wrapper
+?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
 ?rva00362360UnguardedLinearInsert@@YAXPAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@Z,0x000146FA,REL32 unguarded-linear-insert target from 0x00363BAA
 ?rva00362400PushHeap@@YAXPAURva00364980HeapElement@@HHU1@URva00364980HeapCompare@@@Z,0x0002DE8E,REL32 push-heap target from 0x00363D53
@@ -80585,6 +80594,7 @@ __imp_?bfmeLeaveTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58E74,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeLogSF@@YAHPAUBfmeFileSF@@PBDZZ,0x00F593C0,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
+__imp_?bfmeMakeTGE@@YGPAXH@Z,0x00F58F08,pin
 __imp_?bfmeMap1044@@YGPAXPAXH@Z,0x00F590FC,pin
 __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
 __imp_?bfmeOpenSF@@YAPAUBfmeFileSF@@PBD0@Z,0x00F593BC,pin
@@ -81530,5 +81540,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getControllingPlayer@Rva00107A50Object@@QAEPAVRva00107A50Player@@XZ,0x00020824,RVA-derived controlling-player getter called by Radar color refresh at 0x00107A50
-?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
