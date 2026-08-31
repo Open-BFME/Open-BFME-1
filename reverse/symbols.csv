@@ -80463,11 +80463,14 @@ __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
+__imp_?bfmeLogSF@@YAHPAUBfmeFileSF@@PBDZZ,0x00F593C0,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
 __imp_?bfmeMap1044@@YGPAXPAXH@Z,0x00F590FC,pin
 __imp_?bfmeOpen1043@@YGPAXPAD@Z,0x00F58E78,pin
+__imp_?bfmeOpenSF@@YAPAUBfmeFileSF@@PBD0@Z,0x00F593BC,pin
 __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
+__imp_?bfmeShutSF@@YAHPAUBfmeFileSF@@@Z,0x00F593A0,pin
 __imp_?bfmeSpf1065@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1068@@YAHPAD0H@Z,0x00F5948C,pin
 __imp_?bfmeSpf1070@@YAHPAD0H@Z,0x00F5948C,pin
