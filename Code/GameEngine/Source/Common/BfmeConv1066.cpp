@@ -32,6 +32,7 @@ class BfmeH1066
 public:
 	void bfmeGo1066A(int a);
 	void bfmeGo1066B(int a);
+	int bfmeHandle1066(int eventType, unsigned char eventCode, unsigned int flags);
 	char m_bfmePad[0x250];
 	BfmeX1066 *m_bfme250;
 	char m_bfmePad2[4];
@@ -63,4 +64,25 @@ void BfmeH1066::bfmeGo1066B(int a)
 		m_bfme25a = 1;
 		m_bfme259 = 0;
 	}
+}
+
+int BfmeH1066::bfmeHandle1066(
+	int eventType, unsigned char eventCode, unsigned int flags)
+{
+	if (eventType != 21)
+		return 0;
+
+	switch (eventCode) {
+		case 1:
+		case 28:
+		case 41:
+			break;
+		default:
+			return 0;
+	}
+
+	if (flags & 1)
+		bfmeGo1066A(0);
+
+	return 1;
 }
