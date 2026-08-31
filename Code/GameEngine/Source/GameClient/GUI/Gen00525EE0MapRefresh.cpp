@@ -56,7 +56,18 @@ public:
 	AsciiString getMap(void) const;
 	GameSlot *getSlot(int index);
 	const GameSlot *getConstSlot(int index) const;
+
+private:
+	unsigned char m_unmodelled[0x38];
+	AsciiString m_mapName;
 };
+
+// The retail BFME layout places m_mapName at this+0x3c, and the upstream
+// implementation is the ordinary by-value copy getter.
+AsciiString GameInfo::getMap(void) const
+{
+	return m_mapName;
+}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapMetaData
