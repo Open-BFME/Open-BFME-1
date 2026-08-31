@@ -44,20 +44,33 @@ extern BfmeC1091 *g_bfmeC1091;
 extern BfmeD1091 *g_bfmeD1091;
 extern BfmeP1091 *g_bfmeP1091;
 
-char __stdcall bfmeGo1091A(int a, int b)
+class Parameter;
+
+class ScriptConditions
 {
-	int e = g_bfmeC1091->bfmeFind1091(b + 0x10);
+protected:
+	bool evaluateScienceAcquired(Parameter *playerParm, Parameter *scienceParm);
+};
+
+// ?evaluateScienceAcquired@ScriptConditions@@IAE_NPAVParameter@@0@Z
+bool ScriptConditions::evaluateScienceAcquired(
+	Parameter *playerParm, Parameter *scienceParm)
+{
+	int e = g_bfmeC1091->bfmeFind1091(
+		reinterpret_cast<int>(scienceParm) + 0x10);
 
 	if (e == -1)
-		return 0;
-	b = g_bfmeP1091->bfmeNext1091(a);
-	while ((short)b) {
-		BfmeR1091 *r = g_bfmeD1091->bfmeLook1091((short *)&b);
+		return false;
+	scienceParm = reinterpret_cast<Parameter *>(
+		g_bfmeP1091->bfmeNext1091(reinterpret_cast<int>(playerParm)));
+	while ((short)reinterpret_cast<int>(scienceParm)) {
+		BfmeR1091 *r = g_bfmeD1091->bfmeLook1091(
+			reinterpret_cast<short *>(&scienceParm));
 
 		if (r && r->bfmeHas1091(e))
-			return 1;
+			return true;
 	}
-	return 0;
+	return false;
 }
 
 char __stdcall bfmeGo1091B(int a)
