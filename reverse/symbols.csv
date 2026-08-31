@@ -72558,6 +72558,7 @@ name,address,notes
 ?bfmeApplyCVC@BfmeThingCVC@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
+?bfmeApplyModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,Open-BFME5 ILT reached after storing Drawable clear and set model-condition masks
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling

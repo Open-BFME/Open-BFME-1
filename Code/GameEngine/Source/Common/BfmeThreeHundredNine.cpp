@@ -15,7 +15,21 @@ class Drawable
 {
 public:
 	void replaceModelConditionState(const ModelConditionFlags &state, bool dirty, unsigned int effect);
+	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
+
+private:
+	void bfmeApplyModelConditionFlags(bool immediate);
+	unsigned char m_bfmeHead[0x278];
+	ModelConditionFlags m_bfmeClearMask;
+	ModelConditionFlags m_bfmeSetMask;
 };
+
+void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set)
+{
+	m_bfmeClearMask = clear;
+	m_bfmeSetMask = set;
+	bfmeApplyModelConditionFlags(true);
+}
 
 class BfmeNodeRB
 {
