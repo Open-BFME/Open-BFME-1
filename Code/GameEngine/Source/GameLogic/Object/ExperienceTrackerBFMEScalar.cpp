@@ -3,6 +3,92 @@
 typedef float Real;
 
 class ExperienceTracker;
+template <class T> class OVERRIDE;
+
+class Overridable
+{
+public:
+	__inline const Overridable *getFinalOverride() const;
+
+private:
+	void *m_vtable;
+	Overridable *m_nextOverride;
+
+	friend class ThingTemplate;
+	template <class T> friend class OVERRIDE;
+	friend class Object;
+	friend class ExperienceTracker;
+};
+
+__inline const Overridable *Overridable::getFinalOverride() const
+{
+	if (m_nextOverride)
+		return m_nextOverride->getFinalOverride();
+	return this;
+}
+
+class ThingTemplate : public Overridable
+{
+private:
+	unsigned char m_unreconstructed_008[0xC8 - 0x08];
+	unsigned char m_kindOfLowByte;
+
+	friend class ExperienceTracker;
+};
+
+template <class T>
+class OVERRIDE
+{
+public:
+	__forceinline operator const T *() const;
+	__forceinline const T *operator->() const;
+
+private:
+	const T *m_overridable;
+};
+
+template <class T>
+__forceinline OVERRIDE<T>::operator const T *() const
+{
+	if (!m_overridable)
+		return 0;
+	return static_cast<const T *>(m_overridable->getFinalOverride());
+}
+
+template <class T>
+__forceinline const T *OVERRIDE<T>::operator->() const
+{
+	return operator const T *();
+}
+
+class Thing
+{
+public:
+	__forceinline const ThingTemplate *getTemplate() const;
+
+private:
+	virtual ~Thing();
+	OVERRIDE<ThingTemplate> m_template;
+
+	friend class ExperienceTracker;
+};
+
+__forceinline const ThingTemplate *Thing::getTemplate() const
+{
+	return m_template;
+}
+
+class Object : public Thing
+{
+};
+
+class GameLogic
+{
+public:
+	bool isLivingWorld();
+};
+
+extern GameLogic *TheGameLogic;
 
 class BfmeThingEFE
 {
@@ -22,12 +108,15 @@ private:
 class ExperienceTracker
 {
 public:
+	Real bfmeScaleLivingWorldExperience(Real amount) const;
 	void bfmeSetScalarIndex(int index);
 	void bfmeSetScalarBaseCount(int count);
 	void bfmeResetScalarBaseCount();
 
 private:
-	unsigned char m_unreconstructed_000[0x28];
+	void *m_vtable;
+	Object *m_parent;
+	unsigned char m_unreconstructed_008[0x28 - 0x08];
 	int m_scalarIndex;
 	BfmeThingEFE *m_scalarTable;
 };
@@ -54,4 +143,17 @@ void ExperienceTracker::bfmeResetScalarBaseCount()
 	BfmeThingEFE *table = m_scalarTable;
 	table->m_baseCount = m_scalarIndex;
 	table->m_scalar = table->bfmeAt(table->m_baseCount);
+}
+
+Real ExperienceTracker::bfmeScaleLivingWorldExperience(Real amount) const
+{
+	const unsigned char bfmeKindOfStructure = 0x80;
+	if (TheGameLogic->isLivingWorld())
+	{
+		if (!(m_parent->getTemplate()->m_kindOfLowByte &
+			bfmeKindOfStructure))
+			return amount * m_scalarTable->m_scalar;
+	}
+
+	return amount;
 }
