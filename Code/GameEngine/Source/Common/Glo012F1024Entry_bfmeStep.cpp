@@ -25,6 +25,21 @@ public:
 	int *m_bfmeEnd;
 };
 
+class BfmeElem16
+{
+public:
+	char m_bfmeBody[0x10];
+};
+
+class BfmeElem16Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeElem16 *m_bfmeBegin;
+	BfmeElem16 *m_bfmeEnd;
+};
+
 class Glo012F1024Item
 {
 public:
@@ -49,7 +64,9 @@ public:
 
 	char m_bfmeHead[0x38];
 	BfmeIntVector m_bfmeItems;
-	char m_bfmeTail[0xDC - 0x40];
+	char m_bfmeMiddle[0xB4 - 0x40];
+	BfmeElem16Vector m_bfmeQueue;
+	char m_bfmeTail[0xDC - 0xBC];
 };
 
 class Gen_003C02B0
@@ -57,6 +74,14 @@ class Gen_003C02B0
 public:
 	void bfmeRemove(int value);
 };
+
+class BfmeGlobal_012f706c
+{
+public:
+	void bfmeGoDGE(void *a, void *b);
+};
+
+extern BfmeGlobal_012f706c *g_bfmeGlobal_012f706c;
 
 class Glo012F1028Sub
 {
@@ -81,6 +106,16 @@ void Glo012F1024Item::j_00008053(void)
 {
 	for (unsigned int index = 0; index < m_bfmeItems.bfmeSize(); ++index)
 		Glo012F1028Remove->bfmeRemove((int)(m_bfmeItems.m_bfmeBegin + index));
+}
+
+// ?j_00040c32@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00040c32(void)
+{
+	for (unsigned int index = 0; index < m_bfmeQueue.bfmeSize(); ++index)
+	{
+		BfmeElem16 *position = m_bfmeQueue.m_bfmeBegin + index;
+		g_bfmeGlobal_012f706c->bfmeGoDGE(position, (char *)position + 4);
+	}
 }
 
 class Glo012F1024Entry
