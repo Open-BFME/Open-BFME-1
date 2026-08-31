@@ -3570,17 +3570,6 @@ void ParticleSystemManager::removeParticle( Particle *particleToRemove)
 // ------------------------------------------------------------------------------------------------
 /** Remove a particle system from the master particle system list. */
 // ------------------------------------------------------------------------------------------------
-// ?friend_removeParticleSystem@ParticleSystemManager@@QAEXPAVParticleSystem@@@Z present-unmatched
-void ParticleSystemManager::friend_removeParticleSystem( ParticleSystem *particleSystemToRemove )
-{
-	ParticleSystemListIt it = std::find(m_allParticleSystemList.begin(), m_allParticleSystemList.end(), particleSystemToRemove);
-	if (it != m_allParticleSystemList.end()) {
-		m_allParticleSystemList.erase(it);
-		--m_particleSystemCount;
-	}
-
-}
-
 // ------------------------------------------------------------------------------------------------
 /** Remove the oldest N number of particles from the lowest priority lists first.  We will
  * not remove particles from any priorities higher or equal to the priorityCap parameter. */
