@@ -81662,6 +81662,8 @@ _piStartReporting,0x00866820
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
+_piSBStopListingAutoMatches,0x00864BF0,upstream peerAutoMatch.c status switch calls at 0x008641BF 0x00864203 and 0x00864247
+_piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
 _piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
