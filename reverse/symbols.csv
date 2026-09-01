@@ -74564,6 +74564,7 @@ name,address,notes
 ?bfmeRunTGD@@YAXHH@Z,0x0000630C,pin
 ?bfmeRunVIR@BfmeMsgVIR@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVIT@BfmeMsgVIT@@QAEXXZ,0x007E8AC0,pin
+?bfmeRunVIW@BfmeMsgVIW@@QAEXXZ,0x007E8AC0,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74619,6 +74620,9 @@ name,address,notes
 ?bfmeSet1096@BfmeR1096@@QAEXH@Z,0x00049B02,pin
 ?bfmeSet1236@BfmeA1236@@QAEXPAX@Z,0x008D2E00,pin
 ?bfmeSet1251@BfmeSub1251@@QAEXPAX@Z,0x008002C0,pin
+?bfmeSet2VIW@BfmeMsgVIW@@QAEXPBDPAX1@Z,0x007E8E90,pin
+?bfmeSet3VIW@BfmeMsgVIW@@QAEXPBDH@Z,0x007E88D0,pin
+?bfmeSet4VIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
@@ -74668,6 +74672,7 @@ name,address,notes
 ?bfmeSetVIA@BfmeUniVIA@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVIR@BfmeMsgVIR@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVIT@BfmeMsgVIT@@QAEXPBDPAX@Z,0x007E8A10,pin
+?bfmeSetVIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76337,6 +76342,7 @@ name,address,notes
 ?g_bfmeAEUA@@3PAVBfmeGlobAEUA@@A,0x00EF076C,pin
 ?g_bfmeAFAE@@3PAUBfmeHoldFAE@@A,0x00EACB50,pin
 ?g_bfmeAMG@@3HA,0x00EB9664,pin
+?g_bfmeAVIW@@3PAXA,0x00F0A5E8,pin
 ?g_bfmeAccDYB@@3HA,0x00EED8A4,pin
 ?g_bfmeActA979@@3PAVBfmeActA979@@A,0x00EF19E8,pin
 ?g_bfmeAlloc1034@@3PAUBfmeAlloc1034@@A,0x00F37A30,pin
@@ -76378,6 +76384,7 @@ name,address,notes
 ?g_bfmeBEUA@@3PAVBfmeGlobBEUA@@A,0x00EED748,pin
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
+?g_bfmeBVIW@@3PAXA,0x00F0A600,pin
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
 ?g_bfmeBuf1023@@3PADA,0x00EF3CC4,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
@@ -76394,6 +76401,7 @@ name,address,notes
 ?g_bfmeC1101@@3PAVBfmeC1101@@A,0x00EED600,pin
 ?g_bfmeC1104@@3PAUBfmeC1104@@A,0x00F40534,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
+?g_bfmeCVIW@@3PAXA,0x00F0A624,pin
 ?g_bfmeCfgUKD@@3PAUBfmeCfgUKD@@A,0x00EED524,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
@@ -76440,6 +76448,7 @@ name,address,notes
 ?g_bfmeD1100@@3PAVBfmeD1100@@A,0x00EF1600,pin
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
+?g_bfmeDVIW@@3PAXA,0x00F0A5C4,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
@@ -76459,6 +76468,7 @@ name,address,notes
 ?g_bfmeE1056@@3PAUBfmeE1056@@A,0x00F40534,pin
 ?g_bfmeE1057@@3PAUBfmeE1057@@A,0x00F40534,pin
 ?g_bfmeE1095@@3PAVBfmeE1095@@A,0x00EF1600,pin
+?g_bfmeEVIW@@3PAXA,0x00F0A4E8,pin
 ?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
