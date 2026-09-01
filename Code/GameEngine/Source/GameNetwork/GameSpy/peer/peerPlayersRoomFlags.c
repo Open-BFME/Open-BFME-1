@@ -55,10 +55,15 @@ void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData)
 void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
 void *TableLookup(HashTable table, const void *elem);
 void TableEnter(HashTable table, void *elem);
+void TableRemove(HashTable table, void *elem);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 __declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
 PEERBool piPingInitPlayer(PEER peer, piPlayer *player);
 void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType);
+void piPingPlayerLeftRoom(PEER peer, piPlayer *player);
+void piKeyCacheCleanse(PEER peer);
+void piKeyCachePlayerChangedNick(PEER peer, const char *oldNick,
+	const char *newNick);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	RoomType roomType, int flags)
@@ -132,6 +137,11 @@ static piPlayer *piAddPlayer(PEER peer, const char *nick,
 	return piGetPlayer(peer, nick);
 }
 
+static void piRemovePlayer(PEER peer, piPlayer *player)
+{
+	TableRemove(peer->players, player);
+}
+
 piPlayer *piPlayerJoinedRoom(PEER peer, const char *nick,
 	RoomType roomType, int mode)
 {
@@ -154,6 +164,43 @@ piPlayer *piPlayerJoinedRoom(PEER peer, const char *nick,
 
 	piPingPlayerJoinedRoom(peer, player, roomType);
 	return player;
+}
+
+void piPlayerLeftRoom(PEER peer, const char *nick, RoomType roomType)
+{
+	piPlayer *player = piGetPlayer(peer, nick);
+
+	if (!player)
+		return;
+
+	player->inRoom[roomType] = 0;
+	peer->numPlayers[roomType]--;
+	player->flags[roomType] = 0;
+	piPingPlayerLeftRoom(peer, player);
+
+	if (!player->inRoom[0] && !player->inRoom[1] && !player->inRoom[2])
+		piRemovePlayer(peer, player);
+
+	piKeyCacheCleanse(peer);
+}
+
+void piPlayerChangedNick(PEER peer, const char *oldNick,
+	const char *newNick)
+{
+	char playerInfoBuffer[0x70];
+	piPlayer *player = piGetPlayer(peer, oldNick);
+
+	if (!player)
+		return;
+
+	memcpy(playerInfoBuffer, &player->inRoom[0], sizeof(playerInfoBuffer));
+	piRemovePlayer(peer, player);
+	player = piAddPlayer(peer, newNick, 0);
+	if (!player)
+		return;
+
+	memcpy(&player->inRoom[0], playerInfoBuffer, sizeof(playerInfoBuffer));
+	piKeyCachePlayerChangedNick(peer, oldNick, newNick);
 }
 
 void piSetPlayerIPAndProfileID(PEER peer, const char *nick,

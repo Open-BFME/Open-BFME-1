@@ -81573,3 +81573,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
 ??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
+_piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
+_piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
