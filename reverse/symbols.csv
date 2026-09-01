@@ -81373,6 +81373,9 @@ _piSBFreeHostServer,0x00864FB0,gamespy-peer: called by piLeaveRoom at 0x00863EE0
 _piSBStartListingGames,0x00864FE0
 _piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
 _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
+_SBServerListDisconnect,0x00867B00,vendored=gamespy-2004; exact piSBStopListingGames callee
+_SBEngineHaltUpdates,0x008698E0,vendored=gamespy-2004; exact piSBStopListingGames callee
+_piClearCallbacks,0x0085E240,vendored=gamespy-2004; exact piSBStopListingGames callee
 _piSendChannelUTM,0x00857EB0,gamespy-peer: called by piXpingPlayer at 0x00862B80 with the PNG command literal
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
