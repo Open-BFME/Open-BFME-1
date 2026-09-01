@@ -56,6 +56,7 @@ void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
 void *TableLookup(HashTable table, const void *elem);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 __declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
+void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	RoomType roomType, int flags)
@@ -97,6 +98,32 @@ piPlayer *piGetPlayer(PEER peer, const char *nick)
 	playerMatch.nick[0x3F] = '\0';
 	player = (piPlayer *)TableLookup(peer->players, &playerMatch);
 	return player;
+}
+
+void piSetPlayerIPAndProfileID(PEER peer, const char *nick,
+	unsigned int IP, int profileID)
+{
+	piPlayer *player;
+
+	if (!nick)
+		return;
+
+	player = piGetPlayer(peer, nick);
+	if (player)
+	{
+		player->IP = IP;
+		player->profileID = profileID;
+		if (!player->gotIPAndProfileID)
+		{
+			player->gotIPAndProfileID = 1;
+			if (player->inRoom[0])
+				piPingPlayerJoinedRoom(peer, player, 0);
+			if (player->inRoom[1])
+				piPingPlayerJoinedRoom(peer, player, 1);
+			if (player->inRoom[2])
+				piPingPlayerJoinedRoom(peer, player, 2);
+		}
+	}
 }
 
 typedef void (*piEnumRoomPlayersCallback)(PEER peer, RoomType roomType,
