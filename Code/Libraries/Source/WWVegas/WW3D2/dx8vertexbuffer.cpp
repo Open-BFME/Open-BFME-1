@@ -325,8 +325,7 @@ SortingVertexBufferClass::SortingVertexBufferClass(unsigned short VertexCount)
 
 // ----------------------------------------------------------------------------
 
-// ??1SortingVertexBufferClass@@ present-unmatched
-SortingVertexBufferClass::~SortingVertexBufferClass()
+SortingVertexBufferClass::~SortingVertexBufferClass() throw()
 {
 	delete[] VertexBuffer;
 }

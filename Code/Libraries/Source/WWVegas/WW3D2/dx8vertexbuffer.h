@@ -263,7 +263,7 @@ class SortingVertexBufferClass : public VertexBufferClass
 	VertexFormatXYZNDUV2* VertexBuffer;
 
 protected:
-	~SortingVertexBufferClass();
+	~SortingVertexBufferClass() throw();
 public:
 	SortingVertexBufferClass(unsigned short VertexCount);
 };
