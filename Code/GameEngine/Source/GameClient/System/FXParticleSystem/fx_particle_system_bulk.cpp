@@ -7,6 +7,11 @@
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
+class U1Tail_005CEC60 {
+public:
+    U1Tail_005CEC60 &operator=(const U1Tail_005CEC60 &that);
+};
+
 // GameClientRandomVariable xfer helper (version + distribution/min/max); lives in
 // another translation unit — resolved via reverse/symbols.csv.
 void xferRandomVariable(Xfer &xfer, GameClientRandomVariable &v);
@@ -64,8 +69,33 @@ public:
 
 class ParticleSystemTemplateTailAssignShim {
 public:
-    void assign(const void *source);
+    ParticleSystemTemplateTailAssignShim &operator=(const ParticleSystemTemplateTailAssignShim &that);
+
+private:
+    class Clonable {
+    public:
+        virtual ~Clonable();
+        virtual Clonable *clone();
+    };
+
+    Clonable *m_first;
+    Clonable *m_second;
+    U1Tail_005CEC60 m_tail;
 };
+
+ParticleSystemTemplateTailAssignShim &ParticleSystemTemplateTailAssignShim::operator=(const ParticleSystemTemplateTailAssignShim &that)
+{
+    Clonable *sourceFirst = that.m_first;
+    Clonable *copyFirst = sourceFirst ? sourceFirst->clone() : 0;
+    delete m_first;
+    m_first = copyFirst;
+    Clonable *sourceSecond = that.m_second;
+    Clonable *copySecond = sourceSecond ? sourceSecond->clone() : 0;
+    delete m_second;
+    m_second = copySecond;
+    m_tail = that.m_tail;
+    return *this;
+}
 
 class TerrainCollisionEventFXLookupShim {
 public:
@@ -12153,7 +12183,7 @@ ParticleSystemTemplate &ParticleSystemTemplate::operator=(const ParticleSystemTe
     ((LifeEventAsciiStringAssignShim *)((unsigned char *)this + 0x98))->assign(source + 0x98);
     unsigned char *tail = (unsigned char *)this + 0xa0;
     *(unsigned int *)((unsigned char *)this + 0x9c) = 0;
-    ((ParticleSystemTemplateTailAssignShim *)tail)->assign(source + 0xa0);
+    *(ParticleSystemTemplateTailAssignShim *)tail = *(const ParticleSystemTemplateTailAssignShim *)(source + 0xa0);
     return *this;
 }
 
