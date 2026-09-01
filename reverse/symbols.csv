@@ -81749,3 +81749,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
 ??1MeshMatDescClass@@UAE@XZ,0x0092B6A0,meshmatdesc destructor region vtable and base calls plus 0x0092BA20 deleting-wrapper call prove identity
 ??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
+??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x00929E80,matched texture ShareBuffer constructor brackets 29-byte destructor; vtable/free/base-dtor structure and 0x0092A140 wrapper call prove identity
