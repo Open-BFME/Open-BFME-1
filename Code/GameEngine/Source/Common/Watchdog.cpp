@@ -5,6 +5,7 @@ typedef unsigned long UnsignedInt;
 extern "C" UnsignedInt __stdcall GetCurrentThreadId(void);
 extern "C" __declspec(dllimport) long __cdecl time(long *value);
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *criticalSection);
+extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(void *criticalSection);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *criticalSection);
 
 class WatchdogCriticalSection
@@ -36,16 +37,24 @@ private:
 class ThreadClass
 {
 public:
+	ThreadClass(const char *name);
+	virtual ~ThreadClass();
 	void Execute(void);
 	void Stop(void);
+	virtual void Thread_Function(void) = 0;
 
 private:
-	char m_storage[0x50];
+	char m_name[0x40];
+	volatile unsigned int m_running;
+	volatile unsigned long m_handle;
+	int m_priority;
 };
 
 class MutexClass
 {
 public:
+	MutexClass(const char *name);
+
 	class LockClass
 	{
 	public:
@@ -66,21 +75,23 @@ class Watchdog : public ThreadClass
 {
 public:
 	Watchdog(int timeout, int warningInterval, int warningDelay);
+	virtual ~Watchdog();
 	void suppressTimeouts(void);
 	void update(void);
 	void resumeTimeouts(void);
 	void start(void);
+	virtual void Thread_Function(void);
 	void stop(void);
 
 private:
 	UnsignedInt m_parentThreadId;
 	long m_lastHeartbeat;
-	UnsignedInt m_timeout;
+	int m_timeout;
 	UnsignedInt m_previousWarning;
 	UnsignedInt m_warningInterval;
 	UnsignedInt m_warningDelay;
 	UnsignedInt m_nextWarning;
-	volatile int m_suppressionCount;
+	int m_suppressionCount;
 	WatchdogCriticalSection m_criticalSection;
 	MutexClass m_mutex;
 	MutexClass::LockClass *m_ownedLock;
@@ -91,10 +102,29 @@ Watchdog *createWatchdog(int timeout, int warningInterval, int warningDelay)
 	return new Watchdog(timeout, warningInterval, warningDelay);
 }
 
+Watchdog::Watchdog(int timeout, int warningInterval, int warningDelay) :
+	ThreadClass(0),
+	m_parentThreadId(GetCurrentThreadId()),
+	m_timeout(timeout),
+	m_previousWarning(0),
+	m_warningInterval(warningInterval),
+	m_warningDelay(warningDelay),
+	m_nextWarning(0),
+	m_suppressionCount(0),
+	m_mutex((*(volatile long *)&m_lastHeartbeat = 0, (const char *)0))
+{
+	*(MutexClass::LockClass *volatile *)&m_ownedLock = 0;
+	if (*(volatile int *)&m_timeout <= 0)
+	{
+		m_timeout = 1;
+	}
+	InitializeCriticalSection(&m_criticalSection);
+}
+
 void Watchdog::suppressTimeouts(void)
 {
 	ScopedWatchdogLock suppressionLock(m_criticalSection);
-	++m_suppressionCount;
+	++*(volatile int *)&m_suppressionCount;
 }
 
 void Watchdog::update(void)
@@ -121,9 +151,10 @@ void Watchdog::resumeTimeouts(void)
 	}
 
 	ScopedWatchdogLock suppressionLock(m_criticalSection);
-	if (m_suppressionCount > 0)
+	volatile int &suppressionCount = *(volatile int *)&m_suppressionCount;
+	if (suppressionCount > 0)
 	{
-		m_suppressionCount--;
+		suppressionCount--;
 	}
 }
 

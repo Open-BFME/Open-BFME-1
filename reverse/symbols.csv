@@ -3613,6 +3613,7 @@ name,address,notes
 ??0TerrainLogicBase@@QAE@XZ,0x001ADB80,Open-BFME5 the base constructor TerrainLogic forwards to; unnamed in the image and not SubsystemInterface which is 0x009A1A30
 ??0TexBufferClass@@QAE@HPBD@Z,0x0092BA60
 ??0ThreadClass@@QAE@PBDP6AHHPAU_EXCEPTION_POINTERS@@@Z@Z,0x008B2EF0,pin for LoaderThreadClass ctor callee
+??0ThreadClass@@QAE@PBD@Z,0x009DB4E0,BFME ThreadClass constructor called by Watchdog and initializing vptr/name/running/handle/priority through +0x4C
 ??0TightenPathStruct@@QAE@PAVPathfinder@@PAVObject@@PBVLocomotorSet@@W4PathfindLayerEnum@@PBUCoord3D@@@Z,0x0002D7F9,tightenPath info init (thunk->0x003E1720)
 ??0TileData@@QAE@XZ,0x0003B6B5
 ??0TimeCodedBitChannelClass@@QAE@XZ,0x00977AF0
@@ -9425,6 +9426,7 @@ name,address,notes
 ??_7VirtualZeroDerivedThirdThunk@@6B@,0x010F6F74,Open-BFME5 third virtual zero derived vftable
 ??_7VirtualZeroDerivedThunk@@6B@,0x010F6F5C,Open-BFME5 virtual zero derived vftable
 ??_7WanderAIUpdateModuleDataVtbl@@6B@,0x0108A5A8,WanderAIUpdate vtbl
+??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
