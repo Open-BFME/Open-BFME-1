@@ -73058,6 +73058,7 @@ name,address,notes
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
+?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -76844,6 +76845,7 @@ name,address,notes
 ?g_bfmeSrc962@@3PAVBfmeSrc962@@A,0x00EF1464,pin
 ?g_bfmeSrc982@@3PAVBfmeSrc982@@A,0x00EF076C,pin
 ?g_bfmeStateA979@@3PAUBfmeStateA979@@A,0x00EF0898,pin
+?g_bfmeStateUYA@@3PAUBfmeStateUYA@@A,0x00EF33F8,pin
 ?g_bfmeStop1003@@3PAVBfmeStop1003@@A,0x00EF1024,pin
 ?g_bfmeStop1006@@3PAVBfmeStop1006@@A,0x00EF4B58,pin
 ?g_bfmeStore1014@@3PAVBfmeStore1014@@A,0x00EF0898,pin
