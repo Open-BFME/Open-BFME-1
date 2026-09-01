@@ -73060,6 +73060,7 @@ name,address,notes
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
+?bfmeClearVJZ@BfmeColorVJZ@@QAEXXZ,0x00887940,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -73155,6 +73156,7 @@ name,address,notes
 ?bfmeCopyUVA@@YAXPADIPBD@Z,0x007E8640,pin
 ?bfmeCopyUVB@@YAXPADIPBD@Z,0x007E8640,pin
 ?bfmeCopyVGB@BfmeStrVGB@@QAEXPBV1@@Z,0x00888400,pin
+?bfmeCopyVJZ@BfmeColorVJZ@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
