@@ -80898,6 +80898,7 @@ __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
 __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
+__imp_?bfmeCopyVGK@@YAXPADPBD@Z,0x00F5948C,pin
 __imp_?bfmeEnterTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58D18,pin
 __imp_?bfmeFindSRA@@YGPAXPAXH@Z,0x00F59010,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
