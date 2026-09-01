@@ -52,6 +52,7 @@ class Watchdog : public BFMENetworkThreadBase
 {
 public:
 	void update(void);
+	void resumeTimeouts(void);
 	void stop(void);
 
 private:
@@ -62,7 +63,7 @@ private:
 	UnsignedInt m_warningInterval;
 	UnsignedInt m_warningDelay;
 	UnsignedInt m_nextWarning;
-	int m_suppressionCount;
+	volatile int m_suppressionCount;
 	WatchdogCriticalSection m_criticalSection;
 	char m_event[8];
 	WatchdogOwnedState *m_ownedState;
@@ -77,6 +78,24 @@ void Watchdog::update(void)
 		time(&now);
 		ScopedWatchdogLock lock(m_criticalSection);
 		m_lastHeartbeat = now;
+	}
+}
+
+void Watchdog::resumeTimeouts(void)
+{
+	long now;
+	UnsignedInt currentThread = GetCurrentThreadId();
+	if (currentThread == m_parentThreadId)
+	{
+		time(&now);
+		ScopedWatchdogLock heartbeatLock(m_criticalSection);
+		m_lastHeartbeat = now;
+	}
+
+	ScopedWatchdogLock suppressionLock(m_criticalSection);
+	if (m_suppressionCount > 0)
+	{
+		m_suppressionCount--;
 	}
 }
 
