@@ -1,12 +1,14 @@
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
-/* GameSpy PEER SDK -- watch-key lookup functions from peerKeys.c. */
+/* GameSpy PEER SDK -- watch-key functions from peerKeys.c. */
 
 #include <string.h>
 
 typedef void *PEER;
 typedef void *HashTable;
+typedef void *CHAT;
 typedef int RoomType;
 typedef int PEERBool;
+typedef int CHATBool;
 
 typedef struct piConnection
 {
@@ -54,6 +56,12 @@ typedef struct piPlayerChangedNickMapData
 	const char *newNick;
 } piPlayerChangedNickMapData;
 
+typedef struct piSetupKeysMapData
+{
+	int next;
+	char **keys;
+} piSetupKeysMapData;
+
 typedef struct piCacheKey
 {
 	char *nick;
@@ -83,6 +91,7 @@ void piAddGlobalKeyChangedCallback(PEER peer, const char *nick, const char *key,
 	const char *value);
 void piAddRoomKeyChangedCallback(PEER peer, RoomType roomType, const char *nick,
 	const char *key, const char *value);
+PEERBool piRoomToType(PEER peer, const char *room, RoomType *roomType);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
 	HashTable watchCache)
@@ -287,4 +296,54 @@ void piRoomKeyChanged(PEER peer, RoomType roomType, const char *nick,
 	if (piKeyChanged(peer, nick, key, value, connection->roomWatchKeys[roomType],
 		connection->roomWatchCache[roomType], 1, roomType))
 		piAddRoomKeyChangedCallback(peer, roomType, nick, key, value);
+}
+
+void piSetupKeysMap(void *elem, void *clientData)
+{
+	piWatchKey *key = (piWatchKey *)elem;
+	piSetupKeysMapData *data = (piSetupKeysMapData *)clientData;
+
+	data->keys[data->next++] = key->key;
+}
+
+void piKeysGetGlobalKeysCallbackA(CHAT chat, CHATBool success, const char *user,
+	int num, const char **keys, const char **values, void *param)
+{
+	PEER peer = (PEER)param;
+	int i;
+
+	if (success && user) {
+		for (i = 0; i < num; i++)
+			piGlobalKeyChanged(peer, user, keys[i], values[i]);
+	}
+	(void)chat;
+}
+
+void piGetRoomKeysCallbackA(CHAT chat, CHATBool success, const char *channel,
+	const char *user, int num, const char **keys, const char **values, void *param)
+{
+	PEER peer = (PEER)param;
+
+	if (!user && success) {
+		int i;
+		RoomType roomType;
+		static const char *endName = "(END)";
+
+		if (!piRoomToType(peer, channel, &roomType))
+			return;
+		for (i = 0; i < num; i++)
+			piRoomKeyChanged(peer, roomType, endName, keys[i], 0);
+		return;
+	}
+
+	if (success) {
+		int i;
+		RoomType roomType;
+
+		if (!piRoomToType(peer, channel, &roomType))
+			return;
+		for (i = 0; i < num; i++)
+			piRoomKeyChanged(peer, roomType, user, keys[i], values[i]);
+	}
+	(void)chat;
 }

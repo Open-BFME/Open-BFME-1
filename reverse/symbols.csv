@@ -81717,6 +81717,8 @@ _piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAuto
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
+_piGetRoomKeysCallbackA,0x00865DB0,GameSpy PEER SDK peerKeys.c room-key response callback
+_piKeysGetGlobalKeysCallbackA,0x00865D60,GameSpy PEER SDK peerKeys.c global-key response callback; unique object name avoids collision with peerOperations callback
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
 _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
 _piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
@@ -81739,6 +81741,7 @@ _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
 _piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
 _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x008659C0 on the demangled username key
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
+_piSetupKeysMap,0x00865D40,GameSpy PEER SDK peerKeys.c watch-key array collector
 _piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
 _piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
