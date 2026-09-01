@@ -4142,6 +4142,7 @@ name,address,notes
 ??1BfmeElemN@@QAE@XZ,0x000295FF,Open-BFME5 the ICF thunk (to 0x0060AA70) the element destructor the clear at 0x0060B470 calls
 ??1BfmeElemTZA@@QAE@XZ,0x00030652,pin
 ??1BfmeElemTZB@@QAE@XZ,0x00018FCF,pin
+??1BfmeElemUHA@@QAE@XZ,0x00030652,pin
 ??1BfmeElementA@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementB@@QAE@XZ,0x0001AAD2,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementC@@QAE@XZ,0x00937390,Open-BFME5 the element destructor the array-owning destructors call
@@ -10804,16 +10805,6 @@ name,address,notes
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
-_piChannelMessageA,0x0086B430,upstream peerGlobalCallbacks.c channelMessage callback assigned by piSetChannelCallbacks
-_piChannelKickedA,0x0086B570,upstream peerGlobalCallbacks.c kicked callback assigned by piSetChannelCallbacks
-_piChannelUserJoinedA,0x0086B5E0,upstream peerGlobalCallbacks.c userJoined callback assigned by piSetChannelCallbacks
-_piChannelUserPartedA,0x0086B710,upstream peerGlobalCallbacks.c userParted callback assigned by piSetChannelCallbacks
-_piChannelUserChangedNickA,0x0086B810,upstream peerGlobalCallbacks.c userChangedNick callback assigned by piSetChannelCallbacks
-_piChannelTopicChangedA,0x0086B860,upstream peerGlobalCallbacks.c topicChanged callback assigned by piSetChannelCallbacks
-_piChannelNewUserListA,0x0086B8D0,upstream peerGlobalCallbacks.c newUserList callback assigned by piSetChannelCallbacks
-_piBroadcastKeyChangedA,0x0086B950,upstream peerGlobalCallbacks.c broadcastKeyChanged callback assigned by piSetChannelCallbacks
-_piUserModeChangedA,0x0086B990,upstream peerGlobalCallbacks.c userModeChanged callback assigned by piSetChannelCallbacks
-_piChannelModeChangedA,0x0086B9D0,upstream peerGlobalCallbacks.c channelModeChanged callback assigned by piSetChannelCallbacks
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
 ?Update_Min_Max@AABTreeClass@@AAEXHAAVVector3@@0@Z,0x0096AFC0
@@ -81532,9 +81523,18 @@ _piAddPingCallback,0x0085EB90,vendored=gamespy-2004; exact piProcessPing callee
 _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
 _piAddXping,0x00863100,vendored=gamespy-2004; authentic peerPing.c static helper called by piUpdateXping
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
+_piBroadcastKeyChangedA,0x0086B950,upstream peerGlobalCallbacks.c broadcastKeyChanged callback assigned by piSetChannelCallbacks
 _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback dispatcher
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
 _piChangeNickCallbackA,0x0085FCD0,GameSpy Peer change-nick completion callback
+_piChannelKickedA,0x0086B570,upstream peerGlobalCallbacks.c kicked callback assigned by piSetChannelCallbacks
+_piChannelMessageA,0x0086B430,upstream peerGlobalCallbacks.c channelMessage callback assigned by piSetChannelCallbacks
+_piChannelModeChangedA,0x0086B9D0,upstream peerGlobalCallbacks.c channelModeChanged callback assigned by piSetChannelCallbacks
+_piChannelNewUserListA,0x0086B8D0,upstream peerGlobalCallbacks.c newUserList callback assigned by piSetChannelCallbacks
+_piChannelTopicChangedA,0x0086B860,upstream peerGlobalCallbacks.c topicChanged callback assigned by piSetChannelCallbacks
+_piChannelUserChangedNickA,0x0086B810,upstream peerGlobalCallbacks.c userChangedNick callback assigned by piSetChannelCallbacks
+_piChannelUserJoinedA,0x0086B5E0,upstream peerGlobalCallbacks.c userJoined callback assigned by piSetChannelCallbacks
+_piChannelUserPartedA,0x0086B710,upstream peerGlobalCallbacks.c userParted callback assigned by piSetChannelCallbacks
 _piCheckTimeouts,0x00873280,GameSpy pingerThink checks active ping expiry after processing input
 _piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
 _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
@@ -81611,6 +81611,7 @@ _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
 _piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
 _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xping update
+_piUserModeChangedA,0x0086B990,upstream peerGlobalCallbacks.c userModeChanged callback assigned by piSetChannelCallbacks
 _piXpingTableCompareFn,0x008625E0,vendored=gamespy-2004; authentic peerPing.c source order
 _piXpingTableElementFreeFn,0x00862680,vendored=gamespy-2004; authentic peerPing.c source order
 _piXpingTableHashFn,0x00862540,vendored=gamespy-2004; authentic peerPing.c source order
