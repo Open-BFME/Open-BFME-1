@@ -440,3 +440,38 @@ void piKeyCacheRefreshRoom(PEER peer, RoomType roomType)
 {
 	piKeyCacheRefresh(peer, roomType, 0);
 }
+
+void piSetRoomWatchKeys(PEER peer, RoomType roomType, int num,
+	const char **keys, PEERBool addKeys)
+{
+	piWatchKey watchKey;
+	int i;
+	piConnection *connection = (piConnection *)peer;
+
+	if (num == 0) {
+		if (addKeys)
+			return;
+		TableClear(connection->roomWatchKeys[roomType]);
+		TableClear(connection->roomWatchCache[roomType]);
+		return;
+	}
+
+	if (!addKeys) {
+		piRemoveExistingKeysData data;
+
+		data.num = num;
+		data.keys = keys;
+		data.watchKeys = connection->roomWatchKeys[roomType];
+		TableMapSafe(connection->roomWatchKeys[roomType], piRemoveExistingKeysMap,
+			&data);
+	}
+
+	for (i = 0; i < num; i++) {
+		watchKey.key = goastrdup(keys[i]);
+		TableEnter(connection->roomWatchKeys[roomType], &watchKey);
+	}
+
+	if (connection->enteringRoom[roomType] || connection->inRoom[roomType])
+		chatGetChannelKeysA(connection->chat, connection->rooms[roomType], "*", num,
+			keys, piGetRoomKeysCallbackA, peer, 0);
+}
