@@ -81629,3 +81629,4 @@ _ciGetUserBasicInfoMap,0x008727B0,GameSpy chatChannel.c map callback immediately
 ?unidentified_000062DF@BfmeAptScreenSpellStore@@QAEXXZ,0x000062DF,SpellStore final UI update
 ?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ,0x000041D3,currentCommandPoints retail call at 0x00361A1D invokes the LivingWorldArmy name-getter ILT thunk
 ??0?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0000DC0B,LivingWorldPlayerArmy copy constructor retail call at 0x0036527A invokes the vector<LivingWorldArmy> copy-constructor ILT thunk
+??1?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAE@XZ,0x00009AB1,LivingWorldPlayerArmy destructor retail call at 0x00362B68 invokes the vector<LivingWorldArmy> destructor ILT thunk

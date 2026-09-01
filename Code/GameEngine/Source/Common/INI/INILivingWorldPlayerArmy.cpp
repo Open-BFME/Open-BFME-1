@@ -16,6 +16,10 @@
 #include "Common/INI.h"
 #include <vector>
 
+inline Snapshot::~Snapshot()
+{
+}
+
 class LivingWorldPlayerArmy;
 
 class LivingWorldArmy
@@ -147,6 +151,10 @@ LivingWorldPlayerArmy::LivingWorldPlayerArmy( const LivingWorldPlayerArmy &other
 	m_unmodelled4C( other.m_unmodelled4C ),
 	m_minCommandPoints( other.m_minCommandPoints ),
 	m_replenishArmyName( other.m_replenishArmyName )
+{
+}
+
+LivingWorldPlayerArmy::~LivingWorldPlayerArmy()
 {
 }
 
