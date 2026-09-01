@@ -81563,3 +81563,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
 ?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00040C23,ILT call target used by the 0x0073B5F0 validated setter
 ??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
+_piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
+_piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
