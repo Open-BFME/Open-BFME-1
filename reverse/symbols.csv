@@ -81662,3 +81662,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?addInt@BfmeC994@@QAEXPBDH@Z,0x007E88D0,FESL transaction sender appends its TID integer through the recovered message field writer
+?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
+?submit@BfmeSinkSKA@@AAEXPAVBfmeC994@@@Z,0x008038F0,FESL transaction sender submits the completed local message through its owning sink
