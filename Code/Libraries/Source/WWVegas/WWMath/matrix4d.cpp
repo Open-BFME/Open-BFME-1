@@ -344,60 +344,23 @@ __declspec(naked) Matrix4D &Matrix4D::Set(const Coord3D &translation)
     }
 }
 
-__declspec(naked) bool Matrix4D::IsExactlyEqualTo(const Matrix4D &that)
+bool Matrix4D::IsExactlyEqualTo(const Matrix4D &that)
 {
-    __asm {
-        mov eax, [esp + 4]
-        cmp ecx, eax
-        jne compare
-        mov al, 1
-        ret 4
-    compare:
-        push esi
-        push ebx
-        xor esi, esi
-        push edi
-    loop_start:
-        mov edi, [ecx]
-        mov edx, [eax]
-        mov ebx, [ecx + 4]
-        xor edx, edi
-        mov edi, [eax + 4]
-        add eax, 4
-        add ecx, 4
-        xor edi, ebx
-        mov ebx, [ecx + 4]
-        or edx, edi
-        mov edi, [eax + 4]
-        add eax, 4
-        add ecx, 4
-        xor edi, ebx
-        mov ebx, [ecx + 4]
-        or edx, edi
-        mov edi, [eax + 4]
-        add eax, 4
-        add ecx, 4
-        xor edi, ebx
-        or edx, edi
-        add eax, 4
-        add ecx, 4
-        test edx, edx
-        jne not_equal
-        inc esi
-        cmp esi, 4
-        jl loop_start
-        pop edi
-        pop ebx
-        mov al, 1
-        pop esi
-        ret 4
-    not_equal:
-        pop edi
-        pop ebx
-        xor al, al
-        pop esi
-        ret 4
+    if (this == &that)
+        return true;
+
+    const unsigned int *left = (const unsigned int *)values;
+    const unsigned int *right = (const unsigned int *)that.values;
+    for (int row = 0; row < 4; ++row)
+    {
+        unsigned int differences = (*left++ ^ *right++);
+        differences |= (*left++ ^ *right++);
+        differences |= (*left++ ^ *right++);
+        differences |= (*left++ ^ *right++);
+        if (differences)
+            return false;
     }
+    return true;
 }
 
 
