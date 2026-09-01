@@ -81777,6 +81777,7 @@ _piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname u
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
 ??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 ??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor
+??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
