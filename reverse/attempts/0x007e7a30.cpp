@@ -1,5 +1,6 @@
 // ??0Matrix4D@@QAE@ABVCoord3D@@M@Z
-// partial score=0.98 date=2026-09-01
+// partial score=0.99 date=2026-09-01
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
 #include "matrix4d.h"
 
 #include <math.h>
