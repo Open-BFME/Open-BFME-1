@@ -81791,3 +81791,4 @@ _piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect 
 _bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call while piDisconnect is reconstructed in the same file
 _piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operation reset before title cleanup
 ?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHHHHHHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder
+_chatGetUserID,0x008606F0,gamespy-chat: authentic peerGetUserID tail call after connected guard
