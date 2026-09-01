@@ -81640,3 +81640,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
 ?popImmediate@Shell@@QAEXXZ,0x00045EE9,Shell destructor retail call invokes the popImmediate ILT thunk
 ??1ShellMenuSchemeManager@@QAE@XZ,0x00041871,Shell destructor retail call invokes the scheme-manager destructor ILT thunk
+?bfmeFind@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,MapCache::findMap tree lookup ILT
