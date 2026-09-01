@@ -6344,6 +6344,7 @@ name,address,notes
 ??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose first slot is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
 ??1Gen_dtor_00921fb0@@UAE@XZ,0x009214D0,gen-dtor class destructor
 ??1Gen_dtor_00921fd0@@UAE@XZ,0x00921FF0,gen-dtor class destructor
+??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose first slot is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00922040@@UAE@XZ,0x00922060,gen-dtor class destructor
 ??1Gen_dtor_00922120@@UAE@XZ,0x00922140,gen-dtor class destructor
 ??1Gen_dtor_009221b0@@UAE@XZ,0x009221D0,gen-dtor class destructor
