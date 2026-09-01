@@ -105,7 +105,7 @@ public:
 
 protected:
 	mutable int					engine_refs;
-	unsigned short				index_count;		// number of indices
+	unsigned					index_count;		// BFME stores the count in a full 32-bit slot
 	unsigned						type;
 };
 

@@ -429,7 +429,6 @@ DX8IndexBufferClass::~DX8IndexBufferClass()
 //
 // ----------------------------------------------------------------------------
 
-// ??0SortingIndexBufferClass@@QAE@G@Z present-unmatched
 SortingIndexBufferClass::SortingIndexBufferClass(unsigned short index_count_)
 	:
 	IndexBufferClass(BUFFER_TYPE_SORTING,index_count_)
