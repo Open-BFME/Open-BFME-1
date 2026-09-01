@@ -74579,6 +74579,7 @@ name,address,notes
 ?bfmeTailB1037@BfmeI1037@@QAEXH@Z,0x00045179,pin
 ?bfmeTailB1044@BfmeB1044@@QAEXXZ,0x00033F19,pin
 ?bfmeTailB1054@@YGXPAUBfmeB1054@@@Z,0x000481D0,pin
+?bfmeTailB1054Cdecl@@YAXPAUBfmeB1054@@@Z,0x000481D0,cdecl alias proven by the 0x005D19D0 caller stack cleanup
 ?bfmeTailB947C@BfmeGlob947C@@QAEXXZ,0x000290D2,pin
 ?bfmeTailBCD@BfmeThingBCD@@QAEXXZ,0x0001CD8C,pin
 ?bfmeTailBED@BfmeThingBED@@QAEXXZ,0x00012C6F,pin
