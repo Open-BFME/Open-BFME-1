@@ -2,6 +2,12 @@
 
 typedef void *HANDLE;
 typedef int BOOL;
+typedef unsigned char EngineBool;
+
+struct AsciiStringLayout
+{
+	void *m_data;
+};
 
 extern "C" __declspec(dllimport) BOOL __stdcall TerminateProcess(
 	HANDLE process, unsigned int exitCode);
@@ -15,7 +21,11 @@ public:
 private:
 	void _bfme_terminateChildProcesses(void);
 
-	char m_unknown04[0x0C];
+	AsciiStringLayout m_name;       // 0x04, inherited SubsystemInterface::m_name
+	int m_maxFPS;                   // 0x08
+	EngineBool m_quitting;          // 0x0C
+	EngineBool m_isActive;          // 0x0D
+	char m_alignment0E[2];
 	int m_childProcessCount;
 	HANDLE m_childProcesses[7];
 };

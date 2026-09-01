@@ -2,6 +2,13 @@
 // readable body of ?update@GameEngine@@UAEXXZ: Code/GameEngine/Source/Common/GameEngine.cpp
 
 typedef unsigned int UnsignedInt;
+typedef void *HANDLE;
+typedef unsigned char EngineBool;
+
+struct AsciiStringLayout
+{
+	void *m_data;
+};
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
@@ -122,7 +129,13 @@ public:
 private:
 	void _bfme_updateClientFrameRatio(void);
 
-	char m_unknown04[0x2C];
+	AsciiStringLayout m_name;       // 0x04, inherited SubsystemInterface::m_name
+	int m_maxFPS;                   // 0x08
+	EngineBool m_quitting;          // 0x0C
+	EngineBool m_isActive;          // 0x0D
+	char m_alignment0E[2];
+	int m_childProcessCount;        // 0x10
+	HANDLE m_childProcesses[7];     // 0x14..0x2F
 	int m_clientFramePeriod;
 	int m_clientFrameCounter;
 	float m_clientFrameRatio;

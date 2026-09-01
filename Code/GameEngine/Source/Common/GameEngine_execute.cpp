@@ -8,6 +8,15 @@ extern "C" void _ReadWriteBarrier(void);
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
+typedef void *HANDLE;
+
+// SubsystemInterface owns this one-pointer string at this+0x04. Retail's
+// constructor at 0x009A1A30 clears it and its destructor at 0x009A1A40
+// destroys it.
+struct AsciiStringLayout
+{
+	void *m_data;
+};
 
 enum RecorderModeType
 {
@@ -157,11 +166,14 @@ public:
 	virtual void execute(void);
 
 private:
-	void *m_unknown04;
-	int m_maxFPS;
-	bool m_quitting;
-	char m_gap0D[0x23];
-	int m_clientFramePeriod;
+	AsciiStringLayout m_name;       // 0x04, inherited SubsystemInterface::m_name
+	int m_maxFPS;                    // 0x08
+	Bool m_quitting;                // 0x0C
+	Bool m_isActive;                // 0x0D
+	char m_alignment0E[2];
+	int m_childProcessCount;        // 0x10
+	HANDLE m_childProcesses[7];     // 0x14..0x2F
+	int m_clientFramePeriod;         // 0x30
 };
 
 struct GlobalDataLayout
