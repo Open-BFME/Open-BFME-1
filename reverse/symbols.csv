@@ -3818,6 +3818,7 @@ name,address,notes
 ??0locale@_STL@@QAE@ABV01@@Z,0x00832150,STLport 4.5.3 locale copy constructor; address read from the retail pubimbue REL32 displacement
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
+??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
@@ -73215,6 +73216,8 @@ name,address,notes
 ?bfmeDtor918Q@BfmeSub918Q@@QAEXXZ,0x0083F810,pin
 ?bfmeDtor927B@BfmeObj927B@@QAEXXZ,0x00036E9E,pin
 ?bfmeDtorAEC@BfmeNodeAEC@@QAEXXZ,0x00030841,pin
+?bfmeDtorATYA@BfmeHeadTYA@@QAEXXZ,0x00801600,pin
+?bfmeDtorBTYA@BfmeSlotTYA@@QAEXXZ,0x007F78E0,pin
 ?bfmeDtorBXD@BfmePayloadBXD@@QAEXXZ,0x00021445,pin
 ?bfmeDtorBXE@BfmePayloadBXE@@QAEXXZ,0x0003F95E,pin
 ?bfmeDtorCAD@BfmeRefCAD@@QAEXXZ,0x00030841,pin
@@ -73693,6 +73696,8 @@ name,address,notes
 ?bfmeFreeTWC@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeTXA@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeTXB@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeTYA@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeTYB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -76756,9 +76761,11 @@ name,address,notes
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
 ?g_bfmeVftATWA@@3PAPAXA,0x00D2B8A4,pin
 ?g_bfmeVftATWB@@3PAPAXA,0x00D2B5C4,pin
+?g_bfmeVftATYA@@3PAPAXA,0x00D2C4A8,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftBTWA@@3PAPAXA,0x00D2B8A0,pin
 ?g_bfmeVftBTWB@@3PAPAXA,0x00D2B598,pin
+?g_bfmeVftBTYA@@3PAPAXA,0x00D2C408,pin
 ?g_bfmeVftCTWA@@3PAPAXA,0x00D2B890,pin
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
@@ -76771,6 +76778,7 @@ name,address,notes
 ?g_bfmeVftTVA@@3PAPAXA,0x00D29A9C,pin
 ?g_bfmeVftTXA@@3PAPAXA,0x00D3DEE4,pin
 ?g_bfmeVftTXB@@3PAPAXA,0x00D439F8,pin
+?g_bfmeVftTYB@@3PAPAXA,0x00C7D518,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -81709,4 +81717,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
