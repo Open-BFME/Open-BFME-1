@@ -42,6 +42,8 @@ void piAddReadyChangedCallback(PEER peer, const char *nick, PEERBool ready);
 void piAddPlayerFlagsChangedCallback(PEER peer, RoomType roomType,
 	const char *nick, int oldFlags, int newFlags);
 void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData);
+void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
+__declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	RoomType roomType, int flags)
@@ -159,4 +161,33 @@ piPlayer *piFindPlayerByIndex(PEER peer, RoomType roomType, int index)
 	data.count = 0;
 	data.roomType = roomType;
 	return (piPlayer *)TableMap2(peer->players, piFindPlayerByIndexMap, &data);
+}
+
+typedef struct piCountRoomOpsMapData
+{
+	int count;
+	RoomType roomType;
+	const char *exclude;
+} piCountRoomOpsMapData;
+
+static void piCountRoomOpsMap(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piCountRoomOpsMapData *data = (piCountRoomOpsMapData *)clientData;
+
+	if (data->exclude && strcasecmp(data->exclude, player->nick) == 0)
+		return;
+	if (player->flags[data->roomType] & PEER_FLAG_OP)
+		data->count++;
+}
+
+int piCountRoomOps(PEER peer, RoomType roomType, const char *exclude)
+{
+	piCountRoomOpsMapData data;
+
+	data.count = 0;
+	data.roomType = roomType;
+	data.exclude = exclude;
+	TableMap(peer->players, piCountRoomOpsMap, &data);
+	return data.count;
 }
