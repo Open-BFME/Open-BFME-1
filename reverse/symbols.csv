@@ -73155,6 +73155,7 @@ name,address,notes
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
 ?bfmeCopyUVA@@YAXPADIPBD@Z,0x007E8640,pin
 ?bfmeCopyUVB@@YAXPADIPBD@Z,0x007E8640,pin
+?bfmeCopyUVKE@BfmeUniVKE@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCopyVGB@BfmeStrVGB@@QAEXPBV1@@Z,0x00888400,pin
 ?bfmeCopyVJZ@BfmeColorVJZ@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
