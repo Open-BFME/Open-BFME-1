@@ -53,6 +53,8 @@ void piAddPlayerFlagsChangedCallback(PEER peer, RoomType roomType,
 	const char *nick, int oldFlags, int newFlags);
 void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData);
 void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
+void TableMapSafe(HashTable table, void (*mapFn)(void *, void *),
+	void *clientData);
 void *TableLookup(HashTable table, const void *elem);
 void TableEnter(HashTable table, void *elem);
 void TableRemove(HashTable table, void *elem);
@@ -201,6 +203,30 @@ void piPlayerChangedNick(PEER peer, const char *oldNick,
 
 	memcpy(&player->inRoom[0], playerInfoBuffer, sizeof(playerInfoBuffer));
 	piKeyCachePlayerChangedNick(peer, oldNick, newNick);
+}
+
+typedef struct piLeftRoomData
+{
+	PEER peer;
+	RoomType roomType;
+} piLeftRoomData;
+
+static void piLeftRoomMapFn(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piLeftRoomData *data = (piLeftRoomData *)clientData;
+
+	if (player->inRoom[data->roomType])
+		piPlayerLeftRoom(data->peer, player->nick, data->roomType);
+}
+
+void piClearRoomPlayers(PEER peer, RoomType roomType)
+{
+	piLeftRoomData data;
+
+	data.peer = peer;
+	data.roomType = roomType;
+	TableMapSafe(peer->players, piLeftRoomMapFn, &data);
 }
 
 void piSetPlayerIPAndProfileID(PEER peer, const char *nick,
