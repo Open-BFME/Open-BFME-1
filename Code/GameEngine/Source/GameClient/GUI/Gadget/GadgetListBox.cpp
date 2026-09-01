@@ -246,11 +246,12 @@ static Int getListboxBottomEntry( ListboxData *list )
 //=============================================================================
 static void removeSelection( ListboxData *list, Int i )
 {
-	memcpy( &list->selections[i], &list->selections[(i+1)],
+	memcpy( &(*(Int **)((char *)list + 0x38))[i],
+						&(*(Int **)((char *)list + 0x38))[(i+1)],
 						((list->listLength - i) * sizeof(Int)) );
 
 	// put -1 at end of list just for safety
-	list->selections[(list->listLength - 1)] = -1;
+	(*(Int **)((char *)list + 0x38))[(list->listLength - 1)] = -1;
 }
 
 static void adjustDisplay( GameWindow *window, Int adjustment, Bool updateSlider );
