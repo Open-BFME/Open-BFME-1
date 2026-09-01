@@ -185,7 +185,6 @@ unsigned IndexBufferClass::Get_Total_Allocated_Indices()
 	return _IndexBufferTotalIndices;
 }
 
-// ?Get_Total_Allocated_Memory@IndexBufferClass@@SAIXZ present-unmatched
 unsigned IndexBufferClass::Get_Total_Allocated_Memory()
 {
 	return _IndexBufferTotalSize;
