@@ -81436,6 +81436,7 @@ _piEnumRoomPlayers,0x008633E0
 _piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
 _piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
 _piGetPlayer,0x00863350,gamespy-peer: looks a piPlayer up by nick in connection->players; sole player-lookup callee of peerKeys.c cache maps
+_piFindPlayerByIP,0x00863460,vendored=gamespy-2004; exact piPinged callee with peer and IP
 _piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
 _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare

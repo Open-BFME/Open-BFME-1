@@ -80,13 +80,12 @@ void TableEnter(void *table, const void *elem);
 int piXpingTableHashFn(const void *param, int numBuckets);
 int piXpingTableCompareFn(const void *param1, const void *param2);
 void piXpingTableElementFreeFn(void *param);
-void piPinged(unsigned int IP, unsigned short port, int ping,
-	const char *data, int len, PEER peer);
 int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
 unsigned int current_time(void);
 __declspec(dllimport) void srand(unsigned int seed);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
+piPlayer *piFindPlayerByIP(PEER peer, unsigned int IP);
 void piAddPingCallback(PEER peer, const char *nick, int ping);
 
 static void piProcessPing(PEER peer, piPlayer *player, int ping)
@@ -120,6 +119,18 @@ static void piProcessPing(PEER peer, piPlayer *player, int ping)
 	player->xpingSent = 0;
 	if(player->pingOnce)
 		player->pingOnce = 0;
+}
+
+void piPinged(unsigned int IP, unsigned short port, int ping,
+	const char *data, int len, PEER peer)
+{
+	piPlayer *player;
+
+	player = piFindPlayerByIP(peer, IP);
+	if(!player)
+		return;
+
+	piProcessPing(peer, player, ping);
 }
 
 static void piPingerReplyMapFn(void *elem, void *clientData)
