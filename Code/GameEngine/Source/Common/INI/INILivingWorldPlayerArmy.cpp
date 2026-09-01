@@ -16,13 +16,18 @@
 #include "Common/INI.h"
 #include <vector>
 
+class LivingWorldPlayerArmy;
+
 class LivingWorldArmy
 {
 public:
 	virtual ~LivingWorldArmy();
+	void replenish( LivingWorldPlayerArmy *playerArmy );
 
 private:
-	char m_unmodelled[ 0xB0 ];
+	char m_unmodelled04[ 0x2C ];
+	std::vector<LivingWorldArmy> m_armies;
+	char m_unmodelled3C[ 0x78 ];
 };
 
 class LivingWorldPlayerArmy : public Snapshot
@@ -59,6 +64,12 @@ public:
 	Int m_minCommandPoints;
 	AsciiString m_replenishArmyName;
 };
+
+void LivingWorldArmy::replenish( LivingWorldPlayerArmy *playerArmy )
+{
+	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
+		playerArmy->m_armies.push_back( m_armies[ i ] );
+}
 
 LivingWorldPlayerArmy::LivingWorldPlayerArmy() :
 	m_index( 0 ),

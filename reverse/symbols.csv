@@ -81612,3 +81612,5 @@ _ciGetUserBasicInfoMap,0x008727B0,GameSpy chatChannel.c map callback immediately
 ?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXXZ,0x00042663,CampaignReview playerSideType callback target thunk
 ?unidentified_0003A085@BfmeAptScreenCampaignReview@@QAEXXZ,0x0003A085,CampaignReview post-registration UI update
 ?unidentified_0001A483@WindowManager@@QAEXXZ,0x0001A483,CampaignReview final WindowManager update
+??$_Construct@VLivingWorldArmy@@V1@@_STL@@YAXPAVLivingWorldArmy@@ABV1@@Z,0x00003193,replenish retail call at 0x003655B1 invokes the LivingWorldArmy element-copy ILT thunk
+?_M_insert_overflow@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldArmy@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,replenish retail call at 0x003655D3 invokes the vector<LivingWorldArmy> overflow-insert ILT thunk
