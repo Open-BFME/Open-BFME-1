@@ -122,6 +122,8 @@ protected:
 	unsigned short					VertexCount;
 	mutable int						engine_refs;
 	FVFInfoClass*					fvf_info;
+	bool								m_BFMEExplicitVertexSize;
+	unsigned char					m_BFMEPadding[3];
 };
 
 

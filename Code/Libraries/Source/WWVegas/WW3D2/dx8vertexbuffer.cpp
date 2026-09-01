@@ -52,6 +52,9 @@
 #include "wwmemlog.h"
 #include <D3dx8core.h>
 
+extern void W3DRadarResetLock(void);
+extern void BFME_DX8_Thread_Assert(void);
+
 #define DEFAULT_VB_SIZE 5000
 
 static bool _DynamicSortingVertexArrayInUse=false;
@@ -102,11 +105,11 @@ VertexBufferClass::VertexBufferClass(unsigned type_, unsigned FVF, unsigned shor
 	WWASSERT(VertexCount);
 	WWASSERT(type==BUFFER_TYPE_DX8 || type==BUFFER_TYPE_SORTING);
 	WWASSERT((FVF!=0 && vertex_size==0) || (FVF==0 && vertex_size!=0));
-	*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x18) = false;
+	m_BFMEExplicitVertexSize = false;
 	BFMEVertexFVFInfo *retailFVFInfo = ::new BFMEVertexFVFInfo(FVF, vertex_size);
 	fvf_info = reinterpret_cast<FVFInfoClass *>(retailFVFInfo);
 	// BFME records whether the explicit vertex-size form constructed this buffer; ZH removed this field.
-	*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x18) = vertex_size != 0;
+	m_BFMEExplicitVertexSize = vertex_size != 0;
 
 	_VertexBufferCount++;
 	_VertexBufferTotalVertices+=VertexCount;
@@ -430,7 +433,6 @@ DX8VertexBufferClass::DX8VertexBufferClass(
 
 // ----------------------------------------------------------------------------
 
-// ??1DX8VertexBufferClass@@ present-unmatched
 DX8VertexBufferClass::~DX8VertexBufferClass()
 {
 #ifdef VERTEX_BUFFER_LOG
@@ -438,7 +440,9 @@ DX8VertexBufferClass::~DX8VertexBufferClass()
 	_DX8VertexBufferCount--;
 	WWDEBUG_SAY(("Current vertex buffer count: %d\n",_DX8VertexBufferCount));
 #endif
+	W3DRadarResetLock();
 	VertexBuffer->Release();
+	BFME_DX8_Thread_Assert();
 }
 
 // ----------------------------------------------------------------------------
