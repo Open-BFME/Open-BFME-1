@@ -158,8 +158,20 @@ void __cdecl bfmeLinearInsertAU(BfmeRecAU **first, BfmeRecAU **last, BfmeRecAU *
 	}
 }
 
-void __cdecl bfmeUnguardedInsertAV(BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp);
-								// retail thunk 0x000044EE -> 0x004044EE
+// ?bfmeUnguardedInsertAV@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z
+void __cdecl bfmeUnguardedInsertAV(BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp)
+{
+	BfmeRecAU **next = last - 1;
+
+	while (comp(value, *next))
+	{
+		*last = *next;
+		last = next;
+		--next;
+	}
+
+	*last = value;
+}
 
 // ?bfmeLinearInsertAV@@YAXPAPAVBfmeRecAU@@0PAV1@VBfmeCompAU@@@Z
 void __cdecl bfmeLinearInsertAV(BfmeRecAU **first, BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp)
