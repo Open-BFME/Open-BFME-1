@@ -73845,12 +73845,14 @@ name,address,notes
 ?bfmeGet948D@BfmeGrid948D@@QAE_NH@Z,0x00017049,pin
 ?bfmeGet979B@BfmeKey979@@QAEPAUBfmeX979@@XZ,0x00020824,pin
 ?bfmeGet992C@BfmeAsk992@@QAEHXZ,0x007E88B0,pin
+?bfmeGetAUZA@BfmeSubAUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x009292E0,pin
 ?bfmeGetAllocator003D32D0@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x0002CE4E,Open-BFME5 address-scoped STLport get_allocator ILT to body 0x003D32D0 used by the key-map copy constructor
 ?bfmeGetAllocator@Gen_000bb890@@ABE?AVBfmeAllocator@@XZ,0x0001E2A4,Open-BFME5 ILT the copy constructor at 0x000BB890 gets its allocator through
 ?bfmeGetAllocator@Gen_000ce890@@ABE?AVBfmeAllocator@@XZ,0x00008BED,Open-BFME5 ILT the copy constructor at 0x000CE890 gets its allocator through
 ?bfmeGetAllocator@Gen_0036e170@@ABE?AVBfmeAllocator@@XZ,0x000441BB,Open-BFME5 ILT the copy constructor at 0x0036E170 gets its allocator through
 ?bfmeGetAllocator@Gen_005862c0@@ABE?AVBfmeAllocator@@XZ,0x0003FFB7,Open-BFME5 ILT the copy constructor at 0x005862C0 gets its allocator through
 ?bfmeGetAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Open-BFME5 ILT thunk to body 0x00368C50; body initializes the output to 1.0 and multiplies matching attribute entries while bfme names record unresolved retail API spelling
+?bfmeGetBUZA@BfmeSubBUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x0092C9D0,pin
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 queries bonus 14 through
 ?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,alias of the Object spelling pinned below; Object.cpp reaches the getter through a view class because the reference Object.h does not declare it
