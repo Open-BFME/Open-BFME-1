@@ -3350,6 +3350,7 @@ name,address,notes
 ??0Rva00802D00Element@@QAE@XZ,0x00802D00,V2 lane: 64-byte element constructor placement-new'd by ?allocate@Rva007F7810Block@@QAEXH@Z
 ??0Rva00802E70Element@@QAE@XZ,0x00802E70,V2 lane: 28-byte element constructor placement-new'd by ?allocate@Rva007F77B0Block@@QAEXH@Z
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
+??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
 ??0Rva4048AString@@QAE@XZ,0x0004048A,Open-BFME6 string default ctor ILT called by 0x00844520
 ??0Rva7F4CC0Child@@QAE@XZ,0x007E86B0,Open-BFME5 child-constructor call pin
 ??0Rva899F00Base@@QAE@PBDH@Z,0x00899F00
@@ -75930,6 +75931,7 @@ name,address,notes
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_Rva005127A0InGameChat@@3PAVRva005127A0InGameChat@@A,0x012F4988,address-derived InGameChat global used by the guarded 0x005127A0 forwarder
+?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
@@ -81319,6 +81321,7 @@ _peerMessageRoomA,0x008576F0,GameSpy Peer room-message sender
 _peerShutdown,0x00858450,GameSpy Peer shutdown reached by the blocking shutdown check
 _peerStopGame,0x00857E50,Open-BFME5 cdecl body; ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z at 0x0064C9E0 calls it on the peer exactly where the reference does
 _piAddListingGamesCallback,0x0085E420,Peer SDK peerCallbacks.c:385 piAddListingGamesCallback(peer; success; server; msg) line for line: msg==PEER_REMOVE(2) -> piClearListingGameServerCallbacks 0x0085E290; SBServerGetStringValueA hostname/"(No Name)" and gamemode=="openstaging"; progress from connection->initialGameList +0x178c SBServerListCount(&gameList +0xba4) querylist.count +0x1758 pendinglist.count +0x174c; piAddCallback 0x0085E120 type 3 with gameListCallback +0x1784 / gameListParam +0x1788; the ledger name generateGameSpyGameResultsPacket belongs to 0x006386F0
+_piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
 _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback dispatcher
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
@@ -81337,6 +81340,8 @@ _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID compara
 _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
+_piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
+_piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
 _piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
@@ -81571,9 +81576,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
-??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
-_piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
-_piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
-?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
 ??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk

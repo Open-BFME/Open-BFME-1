@@ -1,0 +1,108 @@
+// Open-BFME5 conversions.
+
+class BfmeThingTPB
+{
+public:
+	virtual void bfmeV0TPB() = 0;
+	virtual void bfmeV1TPB() = 0;
+	virtual void bfmeV2TPB() = 0;
+	virtual void bfmeV3TPB() = 0;
+	virtual void bfmeV4TPB() = 0;
+	virtual void bfmeV5TPB() = 0;
+	virtual void bfmeV6TPB() = 0;
+	virtual void bfmeV7TPB() = 0;
+	virtual void bfmeV8TPB() = 0;
+	virtual void bfmeV9TPB() = 0;
+	virtual void bfmeV10TPB() = 0;
+	virtual void bfmeV11TPB() = 0;
+	virtual void bfmeV12TPB() = 0;
+	virtual void bfmeV13TPB() = 0;
+	virtual void bfmeV14TPB() = 0;
+	virtual void bfmeV15TPB() = 0;
+	virtual void bfmeV16TPB() = 0;
+	virtual void bfmeV17TPB() = 0;
+	virtual void bfmeV18TPB() = 0;
+	virtual void bfmeV19TPB() = 0;
+	virtual void bfmeV20TPB() = 0;
+	virtual void bfmeV21TPB() = 0;
+	virtual void bfmeV22TPB() = 0;
+	virtual void bfmeV23TPB() = 0;
+	virtual void bfmeV24TPB() = 0;
+	virtual void bfmeV25TPB() = 0;
+	virtual void bfmeV26TPB() = 0;
+	virtual void bfmeV27TPB() = 0;
+	virtual void bfmeV28TPB() = 0;
+	virtual void bfmeV29TPB() = 0;
+	virtual void bfmeV30TPB() = 0;
+	virtual void bfmeV31TPB() = 0;
+	virtual void bfmeV32TPB() = 0;
+	virtual void bfmeV33TPB() = 0;
+	virtual void bfmeV34TPB() = 0;
+	virtual void bfmeV35TPB() = 0;
+	virtual void bfmeV36TPB() = 0;
+	virtual void bfmeV37TPB() = 0;
+	virtual void bfmeV38TPB() = 0;
+	virtual void bfmeV39TPB() = 0;
+	virtual void bfmeV40TPB() = 0;
+	virtual void bfmeV41TPB() = 0;
+	virtual void bfmeV42TPB() = 0;
+	virtual void bfmeV43TPB() = 0;
+	virtual void bfmeV44TPB() = 0;
+	virtual void bfmeV45TPB() = 0;
+	virtual void bfmeV46TPB() = 0;
+	virtual void bfmeV47TPB() = 0;
+	virtual void bfmeV48TPB() = 0;
+	virtual void bfmeV49TPB() = 0;
+	virtual void bfmeV50TPB() = 0;
+	virtual void bfmeV51TPB() = 0;
+	virtual void bfmeV52TPB() = 0;
+	virtual void bfmeV53TPB() = 0;
+	virtual void bfmeV54TPB() = 0;
+	virtual void bfmeV55TPB() = 0;
+	virtual void bfmeV56TPB() = 0;
+	virtual void bfmeV57TPB() = 0;
+	virtual void bfmeV58TPB() = 0;
+	virtual void bfmeV59TPB() = 0;
+	virtual void bfmeV60TPB() = 0;
+	virtual void bfmeV61TPB() = 0;
+	virtual void bfmeV62TPB() = 0;
+	virtual void bfmeV63TPB() = 0;
+	virtual void bfmeV64TPB() = 0;
+	virtual void bfmeV65TPB() = 0;
+	virtual void bfmeV66TPB() = 0;
+	virtual void bfmeV67TPB() = 0;
+	virtual void bfmeV68TPB() = 0;
+	virtual void bfmeV69TPB() = 0;
+	virtual void bfmeV70TPB() = 0;
+	virtual void bfmeV71TPB() = 0;
+	virtual void bfmeV72TPB() = 0;
+	virtual void bfmeV73TPB() = 0;
+	virtual void bfmeV74TPB() = 0;
+	virtual void bfmeV75TPB() = 0;
+	virtual void bfmeV76TPB() = 0;
+	virtual void bfmeV77TPB() = 0;
+	virtual void bfmeV78TPB() = 0;
+	virtual void bfmeV79TPB() = 0;
+	virtual void bfmeV80TPB() = 0;
+	virtual void bfmeV81TPB() = 0;
+	virtual void bfmeV82TPB() = 0;
+	virtual void bfmeV83TPB() = 0;
+	virtual void bfmeV84TPB() = 0;
+	virtual void bfmeV85TPB() = 0;
+	virtual void bfmeV86TPB() = 0;
+	virtual void bfmeV87TPB() = 0;
+	virtual void bfmeV88TPB() = 0;
+	virtual float bfmeQueryTPB(int a) = 0;
+	void bfmeGoTPB(int a);
+	char m_bfmePad[0xc4];
+	unsigned m_bfmeMax;
+	float m_bfmeOut;
+	char m_bfmePad2[0x30];
+	unsigned m_bfmeCur;
+};
+
+void BfmeThingTPB::bfmeGoTPB(int a)
+{
+	m_bfmeOut = bfmeQueryTPB(a);
+	m_bfmeCur = m_bfmeCur >= m_bfmeMax ? m_bfmeMax : m_bfmeCur;
+}
