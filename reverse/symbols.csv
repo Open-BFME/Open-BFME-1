@@ -3993,6 +3993,7 @@ name,address,notes
 ??1?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@QAE@XZ,0x00048C66,operator[] retail temporary-pair destructor ILT; jumps to 0x00468340
 ??1?$pair@$$CBVAsciiString@@URva0046C540Mapped@@@_STL@@QAE@XZ,0x00047B40,operator[] retail temporary-pair destructor ILT; jumps to 0x004683C0
 ??1?$pair@$$CBVAsciiString@@V1@@_STL@@QAE@XZ,0x0002517B
+??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
 ??1?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@QAE@XZ,0x0007CB30,releases the AsciiString at +4 then at +0; the per-node dtor of the PreferenceMap _M_erase 0x0007D250 (ILT 0x00031EF3); ledger row is a Gen_t placeholder
 ??1?$pair@$$CBVAsciiString@@VBannerType@@@_STL@@QAE@XZ,0x00011487,BannerType hash_map value-pair destruction ILT proven by operator subscript cleanup
 ??1?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@QAE@XZ,0x00012D78
@@ -73636,6 +73637,7 @@ name,address,notes
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeTMB@@YAXPAX@Z,0x008068B0,pin
+?bfmeFreeTQD@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -73717,6 +73719,7 @@ name,address,notes
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
 ?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
+?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -73881,6 +73884,7 @@ name,address,notes
 ?bfmeInitTEB@BfmeBaseTEB@@QAEXXZ,0x00041970,pin
 ?bfmeInitTFA@BfmeBaseTFA@@QAEXXZ,0x0000835F,pin
 ?bfmeInitTHB@@YGXPAVBfmeThingTHB@@0PAX@Z,0x009FACAD,pin
+?bfmeInitTQA@BfmeSubTQA@@QAEXHHM@Z,0x0002A1B2,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -76687,6 +76691,8 @@ name,address,notes
 ?g_bfmeVftTDA@@3PAPAXA,0x00D29D30,pin
 ?g_bfmeVftTGE@@3PAPAXA,0x00D1C9A8,pin
 ?g_bfmeVftTKB@@3PAPAXA,0x00D1E008,pin
+?g_bfmeVftTQA@@3PAPAXA,0x00CC7450,pin
+?g_bfmeVftTQD@@3PAPAXA,0x00D29D30,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -80077,6 +80083,8 @@ name,address,notes
 ?updateNumPlayersOnline@@YAXXZ,0x0050BA40
 ?updateOCLTimerTextDisplay@ControlBar@@AAEXIM@Z,0x00029839,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 calls it only when the second count changed
 ?updatePlayback@RecorderClass@@QAEXXZ,0x00099110,zh-sweep callee pin derived from retail REL32 displacement
+?updatePlayerCells008FC300@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC300,PartitionManager reveal-map per-cell call target; exact sibling implementation
+?updatePlayerCells008FC3B0@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC3B0,PartitionManager reveal-map per-cell call target; exact sibling implementation
 ?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
 ?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x00013647,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C with the object position after the layer store
@@ -81327,6 +81335,7 @@ _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback d
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
 _piChangeNickCallbackA,0x0085FCD0,GameSpy Peer change-nick completion callback
 _piCheckTimeouts,0x00873280,GameSpy pingerThink checks active ping expiry after processing input
+_piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup
 _piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
 _piCreateStagingRoomEnumUsersCallbackA,0x0085F4F0,GameSpy Peer staging-room user enumeration callback
 _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
@@ -81342,6 +81351,7 @@ _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callbac
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
+_piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
 _piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
@@ -81576,8 +81586,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
-_piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
-_piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup
-?updatePlayerCells008FC300@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC300,PartitionManager reveal-map per-cell call target; exact sibling implementation
-?updatePlayerCells008FC3B0@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC3B0,PartitionManager reveal-map per-cell call target; exact sibling implementation
