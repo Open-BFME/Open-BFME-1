@@ -118,6 +118,20 @@ public:
 	int m_bfmeState;					// +0x00
 };
 
+class BfmeCompAV
+{
+public:
+	bool operator()(const BfmeRecAU *left, const BfmeRecAU *right) const
+	{
+		if ((left->m_bfmeThing == 0) ^ (right->m_bfmeThing == 0))
+			return right->m_bfmeThing == 0;
+
+		return left->m_bfmeName.bfmeCompare(&right->m_bfmeName) < 0;
+	}
+
+	int m_bfmeState;					// +0x00
+};
+
 inline BfmeRecAU **bfmeCopyBackwardAU(BfmeRecAU **first, BfmeRecAU **last, BfmeRecAU **result)
 {
 	int bytes = (char *)last - (char *)first;
@@ -207,5 +221,8 @@ void __push_heap(RandomAccessIter first, Distance holeIndex,
 
 template void __push_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAU>(
 	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAU);
+
+template void __push_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAV>(
+	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAV);
 
 }
