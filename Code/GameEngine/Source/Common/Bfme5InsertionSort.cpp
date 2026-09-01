@@ -12,6 +12,7 @@
 // and loses the xor retail has.
 
 extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
+extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *left, const void *right, unsigned int count);
 
 inline int *bfmeCopyBackward(int *first, int *last, int *result)
 {
@@ -66,9 +67,33 @@ void __cdecl bfmeInsertionSort(int *first, int *last)
 class BfmeNameAU
 {
 public:
-	int bfmeCompare(const BfmeNameAU *other) const;		// retail thunk 0x00027471 -> 0x00427471
+	inline int bfmeCompare(const BfmeNameAU *other) const
+	{
+		int otherLength = other->m_bfmeData ? other->m_bfmeData->m_length : 0;
+		const char *otherData = other->m_bfmeData ? other->m_bfmeData->m_data : "";
+		int length = m_bfmeData ? m_bfmeData->m_length : 0;
+		const char *data = m_bfmeData ? m_bfmeData->m_data : "";
+		int count = length < otherLength ? length : otherLength;
+		int order = _memicmp(data, otherData, count);
 
-	int m_bfmeData[3];					// +0x00
+		if (order != 0)
+			return order;
+
+		return length - otherLength;
+	}
+
+private:
+	struct Header
+	{
+		int m_references;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		char m_data[1];
+	};
+
+	Header *m_bfmeData;					// +0x00
+	int m_bfmeUnused08;
+	int m_bfmeUnused0C;
 };
 
 class BfmeRecAU
@@ -103,8 +128,20 @@ inline BfmeRecAU **bfmeCopyBackwardAU(BfmeRecAU **first, BfmeRecAU **last, BfmeR
 	return (BfmeRecAU **)((char *)result - bytes);
 }
 
-void __cdecl bfmeUnguardedInsertAU(BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp);
-								// retail thunk 0x00016275 -> 0x00416275
+// ?bfmeUnguardedInsertAU@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z
+void __cdecl bfmeUnguardedInsertAU(BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp)
+{
+	BfmeRecAU **next = last - 1;
+
+	while (comp(value, *next))
+	{
+		*last = *next;
+		last = next;
+		--next;
+	}
+
+	*last = value;
+}
 
 // ?bfmeLinearInsertAU@@YAXPAPAVBfmeRecAU@@0PAV1@VBfmeCompAU@@@Z
 void __cdecl bfmeLinearInsertAU(BfmeRecAU **first, BfmeRecAU **last, BfmeRecAU *value, BfmeCompAU comp)
