@@ -1,108 +1,60 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Upstream body and layout:
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 private:
-	struct FrameHashEntry;
-	FrameHashEntry *GetFrameEntry(unsigned int, unsigned int, const char *, int);
+    enum FrameStatus
+    {
+        Unknown,
+        Skip,
+        NoSkip
+    };
+
+    struct FrameHashEntry
+    {
+        FrameHashEntry *next;
+        unsigned int frameAddr;
+        unsigned int frameType;
+        const char *fileOrGroup;
+        int line;
+        int hits;
+        FrameStatus status;
+    };
+
+    enum { FRAME_HASH_SIZE = 10007 };
+
+    char m_prefix[0x18];
+    FrameHashEntry *frameHash[FRAME_HASH_SIZE];
+
+    FrameHashEntry *AddFrameEntry(unsigned int addr, unsigned int type,
+        const char *fileOrGroup, int line);
+    void UpdateFrameStatus(FrameHashEntry &entry);
+
+    __forceinline FrameHashEntry *LookupFrame(unsigned int addr)
+    {
+        for (FrameHashEntry *entry = frameHash[addr % FRAME_HASH_SIZE]; entry;
+             entry = entry->next)
+        {
+            if (entry->frameAddr == addr)
+                return entry;
+        }
+        return 0;
+    }
+
+    FrameHashEntry *GetFrameEntry(unsigned int addr, unsigned int type,
+        const char *fileOrGroup, int line);
 };
 
 // ?GetFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z
-__declspec(naked) Debug::FrameHashEntry *Debug::GetFrameEntry(unsigned int, unsigned int, const char *, int)
+Debug::FrameHashEntry *Debug::GetFrameEntry(unsigned int addr, unsigned int type,
+    const char *fileOrGroup, int line)
 {
-	__asm {
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf9
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x8b
-		__emit 0xc1
-		__emit 0xbe
-		__emit 0x17
-		__emit 0x27
-		__emit 0x00
-		__emit 0x00
-		__emit 0xf7
-		__emit 0xf6
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x97
-		__emit 0x18
-		__emit 0x85
-		__emit 0xd2
-		__emit 0x74
-		__emit 0x10
-		__emit 0xeb
-		__emit 0x03
-		__emit 0x8d
-		__emit 0x49
-		__emit 0x00
-		__emit 0x39
-		__emit 0x4a
-		__emit 0x04
-		__emit 0x74
-		__emit 0x35
-		__emit 0x8b
-		__emit 0x12
-		__emit 0x85
-		__emit 0xd2
-		__emit 0x75
-		__emit 0xf5
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0x50
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x52
-		__emit 0x50
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x1e
-		__emit 0xf0
-		__emit 0xff
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x18
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x08
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xcd
-		__emit 0xf8
-		__emit 0xff
-		__emit 0xff
-		__emit 0x5f
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0xc2
-		__emit 0x10
-		__emit 0x00
-		__emit 0x8b
-	}
+    FrameHashEntry *entry = LookupFrame(addr);
+    if (!entry)
+        entry = AddFrameEntry(addr, type, fileOrGroup, line);
+    if (entry->status == Unknown)
+        UpdateFrameStatus(*entry);
+    return entry;
 }

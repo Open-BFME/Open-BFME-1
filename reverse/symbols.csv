@@ -81803,3 +81803,5 @@ _chatGetProfileID,0x00860700,gamespy-chat: authentic peerGetProfileID tail call 
 _piGetPrivateIP,0x00857150,gamespy-peer: authentic peerInitialize private-address discovery call before title initialization
 _piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
 _piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
+?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,0x00889F20,upstream Debug::GetFrameEntry direct callee when the frame address is absent
+?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
