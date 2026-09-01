@@ -20,18 +20,40 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+class Glo012F1028Name
+{
+public:
+	const char *str(void) const
+	{
+		return m_data ? (const char *)m_data + 8 :
+			(const char *)0x0107388B;
+	}
+
+	void *m_data;
+};
+
 class Glo012F1028Item
 {
 public:
 	void bfmeRun(void);					// ILT 0x00006348
 
-	char m_bfmePayloadHead[0x28];
+	char m_bfmeHead[0x08];
+	Glo012F1028Name m_bfmeName;
+	char m_bfmePayloadHead[0x28 - 0x0C];
 	int m_bfmePayload;
-	char m_bfmeHead[0xA8 - 0x2C];
-	unsigned char m_bfmeEnabled;			// +0xA8
-	char m_bfmeGap[0xB4 - 0xA9];
+	char m_bfmeGapA[0xB4 - 0x2C];
 	void *m_bfmeValue;					// +0xB4
+	char m_bfmeGapB[0xE9 - 0xB8];
+	unsigned char m_bfmeEnabled;			// +0xE9
 };
+
+class FileSystem
+{
+public:
+	bool doesFileExist(const char *filename) const;
+};
+
+extern FileSystem *TheFileSystem;
 
 class Rva003BAD00Owner
 {
@@ -91,4 +113,16 @@ void Glo012F1028Sub::bfmeNotify(void)
 		items.m_bfmeStart[i]->bfmeRun();
 		bfmeFinish(items.m_bfmeStart[i], 0);
 	}
+}
+
+// ?bfmeRun@Glo012F1028Item@@QAEXXZ
+void Glo012F1028Item::bfmeRun(void)
+{
+	AsciiString mapName;
+	const char *name = m_bfmeName.str();
+	mapName.format(AsciiString("maps\\%s\\%s.map"),
+		name, name);
+	char *mapData = *(char **)&mapName;
+	const char *mapText = mapData ? mapData + 8 : (const char *)0x0107388B;
+	m_bfmeEnabled = TheFileSystem->doesFileExist(mapText);
 }
