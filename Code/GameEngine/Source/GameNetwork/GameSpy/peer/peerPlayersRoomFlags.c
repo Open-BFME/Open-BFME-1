@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 // Upstream: GameSpy Peer SDK peerPlayers.c, 2004 release.
 
+#include <ctype.h>
 #include <string.h>
 
 typedef int PEERBool;
@@ -40,7 +41,8 @@ typedef struct piConnection
 	char unreconstructed_0044[0x384 - 0x44];
 	PEERBool enteringRoom[3];
 	PEERBool inRoom[3];
-	char unreconstructed_039C[0xAB4 - 0x39C];
+	char unreconstructed_039C[0xAB0 - 0x39C];
+	PEERBool stayInTitleRoom;
 	HashTable players;
 	int numPlayers[3];
 } piConnection;
@@ -58,6 +60,11 @@ void TableMapSafe(HashTable table, void (*mapFn)(void *, void *),
 void *TableLookup(HashTable table, const void *elem);
 void TableEnter(HashTable table, void *elem);
 void TableRemove(HashTable table, void *elem);
+HashTable TableNew(int elemSize, int numBuckets,
+	int (*hashFn)(const void *, int),
+	int (*compareFn)(const void *, const void *),
+	void (*freeFn)(void *));
+void TableFree(HashTable table);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 __declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
 PEERBool piPingInitPlayer(PEER peer, piPlayer *player);
@@ -107,6 +114,62 @@ piPlayer *piGetPlayer(PEER peer, const char *nick)
 	playerMatch.nick[0x3F] = '\0';
 	player = (piPlayer *)TableLookup(peer->players, &playerMatch);
 	return player;
+}
+
+static int piPlayersTableHashFn(const void *elem, int numBuckets)
+{
+	const piPlayer *player = (const piPlayer *)elem;
+	const char *str = player->nick;
+	unsigned int hash = 0;
+	int c;
+
+	while ((c = *str++) != '\0')
+		hash += (unsigned int)tolower(c);
+	return (int)(hash % (unsigned int)numBuckets);
+}
+
+static int piPlayersTableCompareFn(const void *elem1, const void *elem2)
+{
+	const piPlayer *player1 = (const piPlayer *)elem1;
+	const piPlayer *player2 = (const piPlayer *)elem2;
+
+	return strcasecmp(player1->nick, player2->nick);
+}
+
+static void piPlayersTableElementFreeFn(void *elem)
+{
+	(void)elem;
+}
+
+PEERBool piPlayersInit(PEER peer)
+{
+	int i;
+
+	if (peer->stayInTitleRoom)
+		return 1;
+
+	peer->players = TableNew(sizeof(piPlayer), 32,
+		piPlayersTableHashFn, piPlayersTableCompareFn,
+		piPlayersTableElementFreeFn);
+	if (!peer->players)
+		return 0;
+
+	for (i = 0; i < 3; i++)
+		peer->numPlayers[i] = 0;
+	return 1;
+}
+
+void piPlayersCleanup(PEER peer)
+{
+	int i;
+
+	if (peer->stayInTitleRoom)
+		return;
+	if (peer->players)
+		TableFree(peer->players);
+	peer->players = 0;
+	for (i = 0; i < 3; i++)
+		peer->numPlayers[i] = 0;
 }
 
 static piPlayer *piAddPlayer(PEER peer, const char *nick,
