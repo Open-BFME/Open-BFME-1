@@ -73143,6 +73143,7 @@ name,address,notes
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
+?bfmeDecVGO@@YAIPAI@Z,0x00894D90,pin
 ?bfmeDecay@BfmeCell@@QAEXMM@Z,0x0002116B,BfmeCellGrid decay loop calls this ILT to the exact landed 0x001B12B0 cell decay body
 ?bfmeDefer@Gen_002d60a0@@AAE_NPAVObject@@@Z,0x0000204F,Open-BFME5 ILT the guard at 0x002D60A0 tail-jumps through; it jumps to 0x002D9D00
 ?bfmeDel1086@BfmeC1086@@QAEXPAVBfmeQ1086@@@Z,0x0000358A,pin
@@ -73290,6 +73291,7 @@ name,address,notes
 ?bfmeDropTWB@BfmeListTWB@@QAEXXZ,0x00800290,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
+?bfmeDropVGO@@YAXPAX@Z,0x00895320,pin
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
 ?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
 ?bfmeDtor918P@BfmeSub918P@@QAEXXZ,0x000414BB,pin
@@ -73971,6 +73973,7 @@ name,address,notes
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
 ?bfmeInChannelUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00871C40,pin
+?bfmeIncVGO@@YAIPAI@Z,0x00894D80,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
 ?bfmeInit000078A1@@YAXXZ,0x000078A1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85A0 calls
 ?bfmeInit0000B686@@YAXXZ,0x0000B686,Open-BFME5 ILT the initialiser the run-once latch at 0x005E8570 calls
