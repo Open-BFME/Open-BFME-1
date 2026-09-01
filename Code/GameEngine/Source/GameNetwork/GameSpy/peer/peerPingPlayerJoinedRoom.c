@@ -57,13 +57,15 @@ typedef struct piPingerReplyData
 
 typedef struct piXping
 {
-	unsigned char data[0x84];
+	char nicks[2][64];
+	int ping;
 } piXping;
 
 void *TableNew(int elemSize, int numBuckets,
 	int (*hashFn)(const void *, int),
 	int (*compareFn)(const void *, const void *),
 	void (*freeFn)(void *));
+void *TableLookup(void *table, const void *elem);
 int piXpingTableHashFn(const void *param, int numBuckets);
 int piXpingTableCompareFn(const void *param1, const void *param2);
 void piXpingTableElementFreeFn(void *param);
@@ -73,6 +75,37 @@ int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
 unsigned int current_time(void);
 __declspec(dllimport) void srand(unsigned int seed);
+
+static piXping *piFindXping(PEER peer, const char *nick1, const char *nick2)
+{
+	piXping xpingMatch;
+	piConnection *connection = (piConnection *)peer;
+
+	strncpy(xpingMatch.nicks[0], nick1, 64);
+	xpingMatch.nicks[0][63] = '\0';
+	_strlwr(xpingMatch.nicks[0]);
+	strncpy(xpingMatch.nicks[1], nick2, 64);
+	xpingMatch.nicks[1][63] = '\0';
+	_strlwr(xpingMatch.nicks[1]);
+
+	return (piXping *)TableLookup(connection->xpings, &xpingMatch);
+}
+
+int piGetXping(PEER peer, const char *nick1, const char *nick2, int *ping)
+{
+	piXping *xping;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return 0;
+
+	xping = piFindXping(peer, nick1, nick2);
+	if(!xping)
+		return 0;
+
+	*ping = xping->ping;
+	return 1;
+}
 
 typedef struct piPickXpingPlayerData
 {

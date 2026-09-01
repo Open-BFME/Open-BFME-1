@@ -72149,7 +72149,8 @@ name,address,notes
 ?b_008589cb@@YAXXZ,0x008589CB,gen-thunk body
 ?b_00860620@@YAXXZ,0x00860620,gen-thunk body
 ?b_00860690@@YAXXZ,0x00860690,gen-thunk body
-?b_008631f0@@YAXXZ,0x008631F0,gen-thunk body
+_piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
+_piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helper called by piGetXping
 ?b_00864f00@@YAXXZ,0x00864F00,gen-thunk body
 ?b_00865760@@YAXXZ,0x00865760,gen-thunk body
 ?b_008657c0@@YAXXZ,0x008657C0,gen-thunk body
