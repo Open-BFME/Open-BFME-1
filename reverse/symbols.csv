@@ -73556,6 +73556,7 @@ name,address,notes
 ?bfmeFlushSTA@@YAXXZ,0x0088A670,pin
 ?bfmeFlushSXA@@YAXXZ,0x0088A670,pin
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
+?bfmeFmtVJJ@BfmeThingVJJ@@QAEXPADH@Z,0x007E8760,pin
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
 ?bfmeFormatUPB@@YAXPAXPAD0PBD@Z,0x007EEC30,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
@@ -74700,6 +74701,7 @@ name,address,notes
 ?bfmeSetVJF@BfmeMsgVJF@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJH@BfmeMsgVJH@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJI@BfmeMsgVJI@@QAEXPBD0@Z,0x007E8A10,pin
+?bfmeSetVJJ@BfmeMsgVJJ@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
