@@ -3829,6 +3829,7 @@ name,address,notes
 ??0locale@_STL@@QAE@ABV01@@Z,0x00832150,STLport 4.5.3 locale copy constructor; address read from the retail pubimbue REL32 displacement
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
+??1?$DynamicVectorClass@PAULegacyMaterialClass@MeshLoadContextClass@@@@UAE@XZ,0x0094EAB0,typed constructor 0x0094E490 stores table 0x00D3D0B0; 0x0094F0E0 wrapper directly calls this scalar destructor
 ??1?$DynamicVectorClass@VVector4@@@@UAE@XZ,0x0094EA80,0x0094E2B0 constructor stores table 0x00D3D098 whose exact Clear ID and equality slots identify the Vector4 specialization; 0x0094F0C0 calls this body
 ??1MultiListObjectClass@@UAE@XZ,0x009DC190,0x00945950 wrapper call and the 0x00D3D01C table stored by the exact zero-list-node constructor prove the WWLib base identity
 ??1?$SimpleDynVecClass@K@@UAE@XZ,0x00944FC0,0x009450F0 deleting destructor occupies the vtable before exact unsigned-long Resize and Uninitialised_Grow slots
