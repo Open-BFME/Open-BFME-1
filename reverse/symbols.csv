@@ -72589,6 +72589,7 @@ name,address,notes
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
+?bfmeAddVHI@BfmeMultiVHI@@QAEXPBUBfmeParseVHI@@I@Z,0x00850920,pin
 ?bfmeAdj1096@BfmeR1096@@QAEXH@Z,0x0000E881,pin
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
@@ -73019,6 +73020,7 @@ name,address,notes
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
+?bfmeCheckVHJ@@YADXZ,0x008896D0,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
@@ -73878,6 +73880,7 @@ name,address,notes
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
+?bfmeGetParseCVHI@@YAPBUBfmeParseVHI@@XZ,0x00019326,pin
 ?bfmeGetRelationInterface@Object@@QBEPAVBfmeRelationInterface@@XZ,0x0000D3B9,Object relationship body calls this protected ILT for its BFME relation interface
 ?bfmeGetSA@BfmeThingSA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
@@ -74425,6 +74428,7 @@ name,address,notes
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
+?bfmeRecordVHJ@@YAXH@Z,0x008896A0,pin
 ?bfmeRefreshPartitionCells@Object@@QAEXXZ,0x000292DF,Open-BFME5 ILT thunk to body 0x001BFD70; Object virtual-base lookup at +0x68 reaches friend_getPartitionData slot 4 twice then calls the combined dirty-list unlink and cell update; bfme prefix records unrecovered retail spelling
 ?bfmeReg1024@BfmeP1024@@QAEXPAVBfmeE1024@@@Z,0x009EF280,pin
 ?bfmeReg1033@@YAXP6AXXZ0@Z,0x0002FCB1,pin
@@ -76649,6 +76653,7 @@ name,address,notes
 ?g_bfmeLog1057@@3PAVBfmeLog1057@@A,0x00EF19E8,pin
 ?g_bfmeLog993@@3PAVBfmeLog993@@A,0x00EF19E8,pin
 ?g_bfmeLog995@@3PAVBfmeLog995@@A,0x00EF19E8,pin
+?g_bfmeLogVHJ@@3PAVBfmeLogVHJ@@A,0x00F36E5C,pin
 ?g_bfmeLook1001@@3PAVBfmeLook1001@@A,0x00EF0898,pin
 ?g_bfmeLook1011@@3PAVBfmeLook1011@@A,0x00EF0898,pin
 ?g_bfmeLook978@@3PAVBfmeLook978@@A,0x00EF0898,pin
@@ -76775,6 +76780,8 @@ name,address,notes
 ?g_bfmeP1095@@3PAVBfmeP1095@@A,0x00EF076C,pin
 ?g_bfmeP1096@@3PAVBfmeP1096@@A,0x00EF076C,pin
 ?g_bfmeP1097@@3PAVBfmeP1097@@A,0x00EF076C,pin
+?g_bfmeParseAVHI@@3PAUBfmeParseVHI@@A,0x00C8B468,pin
+?g_bfmeParseBVHI@@3PAUBfmeParseVHI@@A,0x00C898A0,pin
 ?g_bfmeParseVHG@@3PAUBfmeParseVHG@@A,0x00C83270,pin
 ?g_bfmePoolTRB@@3VBfmePoolTRB@@A,0x00F3D1AC,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
