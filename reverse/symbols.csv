@@ -10803,6 +10803,16 @@ name,address,notes
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
+_piChannelMessageA,0x0086B430,upstream peerGlobalCallbacks.c channelMessage callback assigned by piSetChannelCallbacks
+_piChannelKickedA,0x0086B570,upstream peerGlobalCallbacks.c kicked callback assigned by piSetChannelCallbacks
+_piChannelUserJoinedA,0x0086B5E0,upstream peerGlobalCallbacks.c userJoined callback assigned by piSetChannelCallbacks
+_piChannelUserPartedA,0x0086B710,upstream peerGlobalCallbacks.c userParted callback assigned by piSetChannelCallbacks
+_piChannelUserChangedNickA,0x0086B810,upstream peerGlobalCallbacks.c userChangedNick callback assigned by piSetChannelCallbacks
+_piChannelTopicChangedA,0x0086B860,upstream peerGlobalCallbacks.c topicChanged callback assigned by piSetChannelCallbacks
+_piChannelNewUserListA,0x0086B8D0,upstream peerGlobalCallbacks.c newUserList callback assigned by piSetChannelCallbacks
+_piBroadcastKeyChangedA,0x0086B950,upstream peerGlobalCallbacks.c broadcastKeyChanged callback assigned by piSetChannelCallbacks
+_piUserModeChangedA,0x0086B990,upstream peerGlobalCallbacks.c userModeChanged callback assigned by piSetChannelCallbacks
+_piChannelModeChangedA,0x0086B9D0,upstream peerGlobalCallbacks.c channelModeChanged callback assigned by piSetChannelCallbacks
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
 ?Update_Min_Max@AABTreeClass@@AAEXHAAVVector3@@0@Z,0x0096AFC0
