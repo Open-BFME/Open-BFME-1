@@ -1,7 +1,4 @@
-// ?d_0085df30@@YAXXZ
-// partial score=0.9 date=2026-08-30
-// cl: /DNDEBUG /MD
-// Upstream identity: GameSpy Peer SDK piCallAutoMatchRateCallback.
+// GameSpy Peer SDK -- peerSB.c
 
 typedef void *PEER;
 typedef void *SBServer;
@@ -26,7 +23,10 @@ int piCallAutoMatchRateCallback(PEER peer, SBServer server)
 	volatile piOperation *operation = connection->autoMatchOperation;
 
 	if (operation && operation->callback2)
-		return operation->callback2(peer, server, operation->callbackParam);
+	{
+		piOperation *callOperation = (piOperation *)operation;
+		return callOperation->callback2(peer, server, operation->callbackParam);
+	}
 
 	return 0;
 }
