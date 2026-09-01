@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // Twenty-four 67-byte __thiscall destructors, one shape.  Retail:
 //
 //     push -1 / push <ehdata> / fs:[0] frame ; EH state 0, `this` at [esp+4]
@@ -29,6 +30,10 @@
 // vftable and the EH data are DIR32 relocation sites the byte gate takes from
 // the target; the member destructors are REL32 and are pinned in
 // reverse/symbols.csv.
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+#include <vector>
 
 #define BFME_INNER_VPTR( VT )                                             \
 	class Inner##VT                                                       \
@@ -71,13 +76,24 @@ BFME_INNER_VPTR( 010EDAA0 )
 BFME_INNER_VPTR( 010F6F58 )
 
 BFME_MEMBER_DTOR( 00129C80 )
-BFME_MEMBER_DTOR( 0027E9C0 )
 BFME_MEMBER_DTOR( 0039D550 )
 BFME_MEMBER_DTOR( 003AB460 )
 BFME_MEMBER_DTOR( 004C5700 )
 BFME_MEMBER_DTOR( 004C57D0 )
 BFME_MEMBER_DTOR( 00887940 )
 BFME_MEMBER_DTOR( 008881D0 )
+
+struct Mem0027E9C0Element
+{
+	int m_pad0;
+	int m_pad1;
+	_STL::list<int> m_values;
+};
+
+// The 0x0027E9C0 body is the authentic vector destructor: its 12-byte
+// elements contain two words followed by a list<int>.  Naming the member as
+// that vector also makes the already-matched 0x0027EED0 owner call it directly.
+typedef _STL::vector<Mem0027E9C0Element> Mem0027E9C0;
 
 BFME_TWO_MEMBER_DTOR( Rva000ED4A0, Inner01073744, Mem00887940, 12 )
 BFME_TWO_MEMBER_DTOR( Rva00126CF0, Inner01073744, Mem00887940, 4 )
