@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/stringbaseunicode /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -37,6 +37,7 @@
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Lib/BaseType.h"
+#include "string_base.h"
 #include "Common/CRC.h"
 #include "Common/GameEngine.h"
 #include "Common/GlobalData.h"
@@ -220,34 +221,46 @@ Int LANPreferences::getNumRemoteIPs(void)
 	return atoi( text );
 }
 
-// ?getRemoteIPEntry@LANPreferences@@ present-unmatched
 UnicodeString LANPreferences::getRemoteIPEntry(Int i)
 {
 	UnicodeString ret;
 	AsciiString key;
-	key.format("RemoteIP%d", i);
-
+	key.format(AsciiString("RemoteIP%d"), i);
 	AsciiString ipstr;
 	AsciiString asciientry;
-
-	LANPreferences::const_iterator it = find(key.str());
-	if (it == end())
+	BFMELANPreferenceMap *map;
+	void *node;
 	{
-		asciientry = "";
+		BFMELANPreferenceKey lookupKey( key.str() );
+		map = reinterpret_cast<BFMELANPreferenceMap *>(
+			reinterpret_cast<unsigned char *>( this ) + 4 );
+		node = map->find( lookupKey );
+	}
+
+	if (node == *reinterpret_cast<void **>( map ))
+	{
+		reinterpret_cast<StringBase<char> *>( &asciientry )->set( "", 0 );
 		return ret;
 	}
 
-	asciientry = it->second;
+	asciientry = *reinterpret_cast<AsciiString *>(
+		reinterpret_cast<unsigned char *>( node ) + 0x14 );
 
 	asciientry.nextToken(&ipstr, ":");
-	asciientry.set(asciientry.str() + 1); // skip the ':'
+	const char *description = asciientry.str() + 1;
+	reinterpret_cast<StringBase<char> *>( &asciientry )->set(
+		description, description ? strlen( description ) : 0 ); // skip the ':'
 
 	ret.translate(ipstr);
-	if (asciientry.getLength() > 0)
+	const char *entry_data = *reinterpret_cast<const char *const *>( &asciientry );
+	const int entry_length = entry_data
+		? *reinterpret_cast<const unsigned short *>( entry_data + 4 ) : 0;
+	if (entry_length > 0)
 	{
-		ret.concat(L"(");
-		ret.concat(QuotedPrintableToUnicodeString(asciientry));
-		ret.concat(L")");
+		StringBase<wchar_t> *ret_string = reinterpret_cast<StringBase<wchar_t> *>( &ret );
+		ret_string->concat( L"(", wcslen( L"(" ) );
+		ret.concat( QuotedPrintableToUnicodeString( asciientry ) );
+		ret_string->concat( L")", wcslen( L")" ) );
 	}
 
 	return ret;

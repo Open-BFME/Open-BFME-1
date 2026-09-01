@@ -58,7 +58,16 @@ public:
     void set(const UnicodeString &that) { ((StringBase<wchar_t>*)this)->set(*(const StringBase<wchar_t>*)&that); }
     void set(const wchar_t *str) { ((StringBase<wchar_t>*)this)->set(str); }
     void translate(const AsciiString &that);
-    void concat(const UnicodeString &that) { ((StringBase<wchar_t>*)this)->concat(*(const StringBase<wchar_t>*)&that); }
+    void concat(const UnicodeString &that)
+    {
+        const int length = that.m_text
+            ? *reinterpret_cast<const unsigned short *>(
+                reinterpret_cast<const char *>( that.m_text ) + 4 ) : 0;
+        const wchar_t *text = that.m_text
+            ? reinterpret_cast<const wchar_t *>(
+                reinterpret_cast<const char *>( that.m_text ) + 8 ) : L"";
+        ((StringBase<wchar_t>*)this)->concat( text, length );
+    }
     void concat(const wchar_t *str) { ((StringBase<wchar_t>*)this)->concat(str); }
     void concat(const wchar_t c) { ((StringBase<wchar_t>*)this)->concat(c); }
     void trim() { ((StringBase<wchar_t>*)this)->trim(); }
