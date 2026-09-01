@@ -73128,6 +73128,7 @@ name,address,notes
 ?bfmeConstruct_0069F080@@YAXPAUBfmeCopy_0069F080@@PBU1@@Z,0x00026503,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x0069F080 calls per pass
 ?bfmeConstruct_007653C0@@YAXPAUBfmeCopy_007653C0@@PBU1@@Z,0x0003B7E6,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007653C0 calls per pass
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
+?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0000DE6D,BFME ActionManager structure-attack visitor callback; helper 0x000C5870 passes its incremental-link thunk to ContainModuleInterface::iterateContained
 ?bfmeContains6DF1F0@BfmePolygon6DF1F0@@QBEDABUBfmeCoord6DF1F0@@@Z,0x0000A7DB,address-derived polygon predicate thunk called by the 0x006DF1F0 retail body
 ?bfmeConv1058@@YAHHH@Z,0x0003B971,pin
 ?bfmeConv1060@BfmeQ1060@@QAEHH@Z,0x0003ADD7,pin
@@ -73897,6 +73898,7 @@ name,address,notes
 ?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x000202ED,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 asks for the bonus source through
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
+?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
 ?bfmeGetCrewSpeedMultiplier@Object@@QBEMXZ,0x000277AA,Open-BFME5 ILT thunk to body 0x001BF020; null m_contain at +0x1FC returns 1.0 otherwise tail-forwards to ContainModuleInterface slot 48 (+0xC0); bfme prefix records unrecovered retail spelling
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
 ?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
@@ -77610,6 +77612,7 @@ name,address,notes
 ?getADynamicLight@RTS3DSceneLightPulseShim@@QAEPAVW3DDynamicLightPulseShim@@XZ,0x0003442D,ILT call target used by W3DDisplay light pulse
 ?getAIDifficulty@AIPlayer@@QBE?AW4GameDifficulty@@XZ,0x00160EC0,Player difficulty tail target; named AIPlayer getter compiles to this four-byte BFME field access
 ?getAIStateType@AIUpdateInterface@@QBE?AW4AIStateType@@XZ,0x0001E33A,Open-BFME5 ILT; called by ?ownerDocking@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z at 0x002C5BB0
+?getAbleToAttackSpecificObject@Object@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBV1@W4CommandSourceType@@@Z,0x00034C93,ActionManager::getCanAttackObject ILT call to the exact Object attack-eligibility body at 0x001C77B0
 ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@@Z,0x000291D6,Object BFME attack query delegates through this ILT to the legacy WeaponSet overload
 ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@W4WeaponSlotType@@@Z,0x001EBEB0,callee pin from Object.cpp REL32 site
 ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z,0x0002481B,pinharvest x6 (thunk)
@@ -77864,6 +77867,7 @@ name,address,notes
 ?getSlot@NetCommandMsg@@QAEEXZ,0x000058B7,ILT thunk to the disconnect-vote message slot accessor; returns a byte
 ?getSoleHealingBenefactor@Object@@QBE?AW4ObjectID@@XZ,0x000029D7,Open-BFME5 ILT fronts unclaimed 26-byte body 0x001BE770; called by ?privateRepair@DozerAIUpdate@@MAEXPAVObject@@W4CommandSourceType@@@Z at 0x002B6B80
 ?getSound@ThingTemplate@@QBEPBVAudioEventRTS@@H@Z,0x0001BFD1,Open-BFME5 ILT thunk to body 0x00416FA0 - an indexed sound getter that falls back to the no-sound event at 0x012F1318; ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z at 0x00221720 asks it for index 101 where the reference calls getSoundEnter
+?getSpawnBehaviorInterface@Object@@QBEPAVSpawnBehaviorInterface@@XZ,0x00044201,ActionManager::getCanAttackObject ILT call to the exact BFME behavior-interface lookup body at 0x001BF5F0
 ?getSpecialPowerModule@Object@@QBEPAVSpecialPowerModuleInterface@@PBVSpecialPowerTemplate@@@Z,0x000401BF,doSpecialPowerUsingWaypoints call target (incremental-link thunk)
 ?getSpecialPowerSourceObject@AIGroup@@QAEPAVObject@@I@Z,0x00018F16,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?getSpecialPowerType@SpecialAbilityUpdate@@QBE?AW4SpecialPowerType@@XZ,0x00042956,Special ability power type
@@ -82162,7 +82166,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0000DE6D,BFME ActionManager structure-attack visitor callback; helper 0x000C5870 passes its incremental-link thunk to ContainModuleInterface::iterateContained
-?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
-?getAbleToAttackSpecificObject@Object@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBV1@W4CommandSourceType@@@Z,0x00034C93,ActionManager::getCanAttackObject ILT call to the exact Object attack-eligibility body at 0x001C77B0
-?getSpawnBehaviorInterface@Object@@QBEPAVSpawnBehaviorInterface@@XZ,0x00044201,ActionManager::getCanAttackObject ILT call to the exact BFME behavior-interface lookup body at 0x001BF5F0
