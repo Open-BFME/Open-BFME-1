@@ -10,6 +10,8 @@ typedef int RoomType;
 enum
 {
 	StagingRoom = 2,
+	CHAT_VOICE = 0x01,
+	CHAT_OP = 0x02,
 	PEER_FLAG_STAGING = 0x01,
 	PEER_FLAG_READY = 0x02,
 	PEER_FLAG_PLAYING = 0x04,
@@ -93,5 +95,27 @@ void piSetPlayerRoomFlags(PEER peer, const char *nick,
 
 	nFlags = player->flags[roomType] & (PEER_FLAG_OP | PEER_FLAG_VOICE);
 	nFlags |= piParseFlags(flags);
+	piSetNewPlayerFlags(peer, nick, roomType, nFlags);
+}
+
+void piSetPlayerModeFlags(PEER peer, const char *nick,
+	RoomType roomType, int mode)
+{
+	piPlayer *player;
+	int nFlags;
+
+	if (!nick)
+		return;
+
+	player = piGetPlayer(peer, nick);
+	if (!player || !player->inRoom[roomType])
+		return;
+
+	nFlags = player->flags[roomType] & ~(PEER_FLAG_OP | PEER_FLAG_VOICE);
+	if (mode & CHAT_OP)
+		nFlags |= PEER_FLAG_OP;
+	if (mode & CHAT_VOICE)
+		nFlags |= PEER_FLAG_VOICE;
+
 	piSetNewPlayerFlags(peer, nick, roomType, nFlags);
 }
