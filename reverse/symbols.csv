@@ -73166,6 +73166,7 @@ name,address,notes
 ?bfmeCopyUVKE@BfmeUniVKE@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCopyVGB@BfmeStrVGB@@QAEXPBV1@@Z,0x00888400,pin
 ?bfmeCopyVJZ@BfmeColorVJZ@@QAEXABV1@@Z,0x00887B60,pin
+?bfmeCopyVKV@BfmeStrVKV@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
@@ -81068,6 +81069,7 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
+__imp_?bfmeAddRefVKV@@YGXPAX@Z,0x00F58E5C,pin
 __imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
 __imp_?bfmeAtoiVHG@@YAHPBD@Z,0x00F59384,pin
 __imp_?bfmeBindTTE@@YAXHPAX@Z,0x00F5950C,pin
