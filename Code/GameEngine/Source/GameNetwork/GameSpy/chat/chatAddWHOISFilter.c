@@ -6,6 +6,9 @@ typedef void (*chatGetUserInfoCallback)(CHAT chat, int success,
 	const char *address, int numChannels, const char **channels, void *param);
 typedef void (*chatGetBasicUserInfoCallback)(CHAT chat, int success,
 	const char *nick, const char *user, const char *address, void *param);
+typedef void (*chatGetChannelBasicUserInfoCallback)(CHAT chat, int success,
+	const char *channel, const char *nick, const char *user,
+	const char *address, void *param);
 
 typedef struct WHOISData
 {
@@ -94,4 +97,10 @@ int ciAddWHOFilter(CHAT chat, const char *user,
 	chatGetBasicUserInfoCallback callback, void *param)
 {
 	return ciAddFilter(chat, 10, user, 0, (void *)callback, 0, param, 0);
+}
+
+int ciAddCWHOFilter(CHAT chat, const char *channel,
+	chatGetChannelBasicUserInfoCallback callback, void *param)
+{
+	return ciAddFilter(chat, 11, channel, 0, (void *)callback, 0, param, 0);
 }
