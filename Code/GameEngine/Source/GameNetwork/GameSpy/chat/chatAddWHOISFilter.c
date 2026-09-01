@@ -15,6 +15,8 @@ typedef void (*chatEnumChannelBansCallback)(CHAT chat, int success,
 	const char *channel, int numBans, const char **bans, void *param);
 typedef void (*chatChangeNickCallback)(CHAT chat, int success,
 	const char *oldNick, const char *newNick, void *param);
+typedef void (*chatAuthenticateCDKeyCallback)(CHAT chat, int result,
+	const char *message, void *param);
 
 typedef struct WHOISData
 {
@@ -65,7 +67,7 @@ unsigned int current_time(void);
 char *goastrdup(const char *source);
 int ciGetNextID(CHAT chat);
 
-static int ciAddFilter(CHAT chat, int type, const char *name,
+static __declspec(noinline) int ciAddFilter(CHAT chat, int type, const char *name,
 	const char *name2, void *callback, void *callback2, void *param, void *data)
 {
 	ciServerMessageFilter *filter;
@@ -160,4 +162,10 @@ int ciAddNICKFilter(CHAT chat, const char *oldNick, const char *newNick,
 	chatChangeNickCallback callback, void *param)
 {
 	return ciAddFilter(chat, 9, oldNick, newNick, (void *)callback, 0, param, 0);
+}
+
+int ciAddCDKEYFilter(CHAT chat, chatAuthenticateCDKeyCallback callback,
+	void *param)
+{
+	return ciAddFilter(chat, 16, 0, 0, (void *)callback, 0, param, 0);
 }
