@@ -10827,6 +10827,7 @@ _piSBGroupsListCallback,0x00864700,upstream peerSB.c second SBServerListInit cal
 _piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
 _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
 _piJoinAutoMatchRoom,0x008643F0,upstream peerSB.c updated-server helper call at 0x0086493D
+_piJoinAutoMatchRoomCallback,0x008642D0,upstream peerAutoMatch.c callback stored by piJoinAutoMatchRoom at 0x00864452
 _piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
 _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoked by piSBAutoMatchGetServerRating at 0x008648B0
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
