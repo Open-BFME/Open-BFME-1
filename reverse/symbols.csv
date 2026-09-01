@@ -74809,6 +74809,7 @@ name,address,notes
 ?bfmeSubVIY@BfmeThingVIY@@QAEXPAVBfmeMsgVIX@@PAX1@Z,0x007F1400,pin
 ?bfmeSubVJC@BfmeThingVJC@@QAEXPAVBfmeMsgVJC@@PAX1@Z,0x007F1800,pin
 ?bfmeSubVJD@BfmeThingVJD@@QAEXPAVBfmeMsgVJC@@HPAX@Z,0x007F1800,pin
+?bfmeSubVJE@BfmeThingVJE@@QAEXPAVBfmeMsgVJC@@HPAX@Z,0x007F1800,pin
 ?bfmeSubmit1282@BfmeRouteManager1282@@QAEXPAXPAVBfmeN1034@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BAAB0 retail body
 ?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
@@ -77004,6 +77005,7 @@ name,address,notes
 ?g_bfmeVJB@@3PAXA,0x00F0A548,pin
 ?g_bfmeVJC@@3PAXA,0x00F0A5DC,pin
 ?g_bfmeVJD@@3PAXA,0x00F0A618,pin
+?g_bfmeVJE@@3PAXA,0x00F0A5B8,pin
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeVal995B@@3HA,0x00EB7430,pin
