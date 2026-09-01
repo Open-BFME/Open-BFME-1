@@ -81787,3 +81787,5 @@ _chatThink,0x00860470,gamespy-chat: authentic piThink first call on connection c
 _piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect cleanup call
+_bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call while piDisconnect is reconstructed in the same file
+_piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operation reset before title cleanup
