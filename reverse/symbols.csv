@@ -898,6 +898,7 @@ name,address,notes
 ??$__copy_backward@PAUGen_t_00776270_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00776270_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x007748D0,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_007762a0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_007762a0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00774970,gen-tgrid payload member
 ??$__copy_backward@PAUGeometryShape@@PAU1@H@_STL@@YAPAUGeometryShape@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,GeometryInfo shape-vector insertion path at retail 0x004FF8F0; 0x24-byte element and StringBase assignment identify the instantiation
+??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75C0,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE30,gen-tgrid payload member
@@ -1000,6 +1001,7 @@ name,address,notes
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00532740@@@Z,0x00530050,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00574DF0@@@Z,0x005719B0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@00US4Cmp002EB8E0@@@Z,0x002EA750,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
+??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
 ??$__unguarded_partition@PAHHUQ4Sort0034BFC0@@@_STL@@YAPAHPAH0HUQ4Sort0034BFC0@@@Z,0x003407C0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort003D15A0@@@_STL@@YAPAHPAH0HUQ4Sort003D15A0@@@Z,0x003CE380,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort004566F0@@@_STL@@YAPAHPAH0HUQ4Sort004566F0@@@Z,0x00452720,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
@@ -2205,6 +2207,7 @@ name,address,notes
 ??0BfmeStaticThingE@@QAE@XZ,0x000022D9,Open-BFME5 the constructor the function-local static at 0x005D9CA0 runs
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
+??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
 ??0BfmeStringLiteralBase@@AAE@PBD@Z,0x00888BC0,alias of the retail one-dword AsciiString literal constructor pinned at the same address; the by-value format argument delegates to it so the copy stays visible
 ??0BfmeSubA@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 the sub-object copy ctor the copies at 0x003505E0 and 0x00350630 call
@@ -4163,6 +4166,7 @@ name,address,notes
 ??1BfmeVecElem_000FAFF0@@QAE@XZ,0x0002C3BD,Open-BFME5 the element destructor the vector destroy at 0x000FAFF0 runs over its live range
 ??1BfmeVecElem_000FEAF0@@QAE@XZ,0x000312B9,Open-BFME5 the element destructor the vector destroy at 0x000FEAF0 runs over its live range
 ??1BoxDynamicVBAccessClass@@QAE@XZ,0x0091D9E0,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
+??1BoxRenderObjClass@@UAE@XZ,0x00956950,exact 5-byte source body and 0x00956D10 deleting-destructor call prove identity
 ??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BroadcastStealthUpdateModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1BuddyMessage@@QAE@XZ,0x00021445
@@ -4191,6 +4195,7 @@ name,address,notes
 ??1CustomMatchPreferences@@UAE@XZ,0x00041F6A
 ??1DX8Caps@@QAE@XZ,0x00903E00,DX8Wrapper::Compute_Caps retail destructor
 ??1DX8FVFCategoryContainer@@UAE@XZ,0x00946B20,REL32 pin for scalar deleting dtor ??_GDX8FVFCategoryContainer
+??1DX8SkinFVFCategoryContainer@@UAE@XZ,0x009471E0,exact 11-byte source body and 0x00948B40 deleting-destructor call prove identity
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088A6E0,pinharvest x1 (body)
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088FAA0,pinharvest x1 (body)
@@ -8668,6 +8673,7 @@ name,address,notes
 ??1Nugget@ModuleInfo@@QAE@XZ,0x0002F487,STLport callee exact retail rel32 target (incremental-link thunk); resolves repointed STL template thunk-dump
 ??1Nugget@ModuleInfo@@QAE@XZ,0x0003B589,site-decoded x1 (thunk)
 ??1Nugget@ModuleInfo@@QAE@XZ,0x000454A3,resweep callee back-solved
+??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
 ??1ObjectCreationListMap@@QAE@XZ,0x0001D110,Open-BFME5 retail ObjectCreationList map destructor body
 ??1ObjectCreationUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1ObjectModule@@UAE@XZ,0x00047C53,Open-BFME5 FireWeaponCollide base destructor ILT pin
@@ -10489,6 +10495,7 @@ name,address,notes
 ?Rva0088EB30@@YAPAXPAXI@Z,0x0088EB30,pin
 ?Rva0088EB90@@YAPAXPAXI@Z,0x0088EB90,pin
 ?Rva00897330NotifyFree@@YAXPAX@Z,0x00897330,address decoded from the retail REL32 call site; name is address-derived
+?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
 ?Rva009F8878Notify@@YGXPAX0@Z,0x009F8878,address-derived stdcall notification target called by 0x0048CDD0
 ?Rva012ED238Global@@3PAXA,0x012ED238,address-derived global used by 0x0048CDD0 notification pair
 ?Rva01336E50Str@@3VRva0036CA00Str@@A,0x01336E50,Open-BFME5 global Rva0036CA00Str immediate used by 0x00385180/0x003855C0 reset
@@ -72745,6 +72752,7 @@ name,address,notes
 ?bfmeBaseTK@BfmeThingTK@@QAEXXZ,0x009CB970,pin
 ?bfmeBaseTL@BfmeThingTL@@QAEPAV1@PAXH@Z,0x0083FB60,BfmeThreeHundredFiftyOne identity candidate; retail returns this
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
+?bfmeBaseUBA@BfmeThingUBA@@QAEXXZ,0x00010D07,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
@@ -73952,6 +73960,7 @@ name,address,notes
 ?bfmeInitTHB@@YGXPAVBfmeThingTHB@@0PAX@Z,0x009FACAD,pin
 ?bfmeInitTQA@BfmeSubTQA@@QAEXHHM@Z,0x0002A1B2,pin
 ?bfmeInitTUA@BfmeSubTUA@@QAEXXZ,0x007E86B0,pin
+?bfmeInitUBB@BfmeSubUBB@@QAEXH@Z,0x00002ECD,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -75244,6 +75253,7 @@ name,address,notes
 ?compare@Gen_t_00423f10_mc4@@QBEHABU1@@Z,0x0005FEB0,family-emit payload member
 ?compare@Gen_t_0054ed50_mc4@@QBEHABU1@@Z,0x0005FFA0,family-emit payload member
 ?compare@Rva0039C7D0Owner@@ABE_NPBURva0039C7D0Payload@@0@Z,0x00028AF6,Open-BFME5 ILT to the two-argument member worker called by 0x0039C7D0
+?compareNoCase@?$StringBase@D@@QBEHABV1@@Z,0x00027471,retail __linear_insert at 0x00531860 calls the StringBase<char> compareNoCase ILT
 ?compareNoCase@AsciiString@@QBEHPBD@Z,0x000405E8,ILT thunk to the case-insensitive AsciiString compare at 0x00075E00
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x0009ECA0,case-insensitive wide comparison helper reached by the 0x0009F090 list search
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
@@ -75867,6 +75877,7 @@ name,address,notes
 ?findFormat@@YA?AW4WW3DFormat@@QBW41@@Z,0x006C09B0,W3DRadar retail texture format selector
 ?findFunction@FunctionLexicon@@IAEPAXW4NameKeyType@@W4TableIndex@1@@Z,0x00025CD4
 ?findGroup@BFMETransitionHandler@@QAEPAVBFMETransitionGroup@@VBFMETransitionAsciiString@@@Z,0x0048A520,retail GameWindowTransitionsHandler::findGroup
+?findGroup@GameWindowTransitionsHandler@@AAEPAVTransitionGroup@@VAsciiString@@@Z,0x00024172,setGroup retail call target thunk to 0x0048A520
 ?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
 ?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
 ?findImageByName@MappedImageCollectionPortraitShim@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606,BFME portrait selector image lookup ILT
@@ -76786,6 +76797,7 @@ name,address,notes
 ?g_bfmeVftTYB@@3PAPAXA,0x00C7D518,pin
 ?g_bfmeVftTZA@@3PAPAXA,0x00D3C5FC,pin
 ?g_bfmeVftTZB@@3PAPAXA,0x00D3CE0C,pin
+?g_bfmeVftUBA@@3PAPAXA,0x00CCE990,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -79560,6 +79572,7 @@ name,address,notes
 ?reset@Rva007E8810Message@@QAEXXZ,0x007E8AC0,V2 lane: FESL message reset(); same body the tree also names ?run@Rva007E8AC0@@QAEXXZ
 ?reset@SidesInfoSegmentShim@@QAEXXZ,0x00033F46,SidesInfo clear first segment helper shim
 ?reset@TerrainLogic@@UAEXXZ,0x0001B707,Open-BFME5 ILT fronts unclaimed 183-byte body 0x001ACF90; called by W3DTerrainLogic init/reset
+?reset@TransitionGroup@@QAEXXZ,0x000024A5,setGroup empty-immediate retail call target thunk
 ?reset@VictoryConditions@@UAEXXZ,0x0035F1E0,vtable 0x010E8D90 slot 4 (+0x10) via ILT 0x0003CE0C; ZH reset line for line: m_players[32]@+0x14 and m_isDefeated[32]@+0x9C cleared in one loop; +0xBC +0xBD +0xBE +0x98 +0xC0 = 0; m_localSlotNum@+0x94 = -1; m_victoryConditions = (TheGameLogic mode==6 ? 3 : 1) at 0x0035F243; tail-calls slot +0x4C hideEndGameScreen; size 107 (0x0035F1E0-0x0035F24B) not the 101 Ghidra guessed; UNCLAIMED row
 ?reset@VictorySystem@@UAEXXZ,0x001DE5B0,vtable 0x0109FD8C slot 4 (+0x10) via the double thunk 0x0001A550 -> 0x001DE660 -> body (also ILT 0x0003B3E0); destroys and deletes the two cell grids +0xF8/+0xFC via 0x001B14F0; +0x104=2 (no active grid) +0x108=0 +0x10=0 +0x64[16]/+0xA4[16]=0 +0xE4/+0xE8=0 +0x100=0; called first by newMap 0x001DF4BB
 ?reset@W3DShroud@@QAEXXZ,0x0000AA4C,BFME adjustTerrainLOD shroud call; ILT body 0x0071B4B0
@@ -81273,6 +81286,8 @@ _g_bfmeO1146,0x00EF1600,pin
 _g_bfmeOwner1179,0x00F40584,pin
 _g_bfmeS1142,0x00EF8008,pin
 _g_bfmeS1177,0x00CCED70,pin
+_g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
+_g_bfmeState56AD10B,0x012F0898,Rva0056AD10 second state source
 _g_bfmeTab1182,0x00F4CC58,pin
 _g_bfmeTab1203,0x00EF3C00,pin
 _g_bfmeV1134,0x00CF0AE0,pin
@@ -81725,15 +81740,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
-_g_bfmeState56AD10B,0x012F0898,Rva0056AD10 second state source
-??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
-??1DX8SkinFVFCategoryContainer@@UAE@XZ,0x009471E0,exact 11-byte source body and 0x00948B40 deleting-destructor call prove identity
-?findGroup@GameWindowTransitionsHandler@@AAEPAVTransitionGroup@@VAsciiString@@@Z,0x00024172,setGroup retail call target thunk to 0x0048A520
-?reset@TransitionGroup@@QAEXXZ,0x000024A5,setGroup empty-immediate retail call target thunk
-??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
-?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
-??1BoxRenderObjClass@@UAE@XZ,0x00956950,exact 5-byte source body and 0x00956D10 deleting-destructor call prove identity
-??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
-??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
-?compareNoCase@?$StringBase@D@@QBEHABV1@@Z,0x00027471,retail __linear_insert at 0x00531860 calls the StringBase<char> compareNoCase ILT
