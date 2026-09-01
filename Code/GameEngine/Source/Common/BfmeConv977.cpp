@@ -11,6 +11,25 @@ public:
 
 extern BfmeMgr977 *g_bfmeMgr977;
 
+class BfmeCampaignSwitch977
+{
+public:
+	char m_bfmePad[0x1C];
+	bool m_bfmeRingCampaign;
+};
+
+extern BfmeCampaignSwitch977 *g_bfmeSwitchDR;
+
+class AsciiString
+{
+public:
+	AsciiString(const char *text);
+	~AsciiString();
+
+private:
+	char *m_bfmeData;
+};
+
 struct BfmeRec977
 {
 	char m_bfmePad[4];
@@ -35,6 +54,22 @@ void BfmeB977::bfmeGo977B(int unused)
 		if (x)
 			g_bfmeMgr977->bfmeDo977B(0, x);
 	}
+}
+
+// ?bfmeUpdateMaxPowerCommand@@YGXPAX@Z
+void __stdcall bfmeUpdateMaxPowerCommand(void *)
+{
+	void *command;
+	{
+		bool ringCampaign = g_bfmeSwitchDR->m_bfmeRingCampaign;
+		const char *name = ringCampaign
+			? "NonCommand_MaxRingPower" : "NonCommand_MaxEvenstarPower";
+		AsciiString label(name);
+		command = g_bfmeMgr977->bfmeFind977B((BfmeB977 *)&label);
+	}
+
+	if (command)
+		g_bfmeMgr977->bfmeDo977B(0, command);
 }
 
 class BfmeClock977
