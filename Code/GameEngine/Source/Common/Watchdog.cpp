@@ -51,6 +51,7 @@ public:
 class Watchdog : public BFMENetworkThreadBase
 {
 public:
+	void suppressTimeouts(void);
 	void update(void);
 	void resumeTimeouts(void);
 	void stop(void);
@@ -68,6 +69,12 @@ private:
 	char m_event[8];
 	WatchdogOwnedState *m_ownedState;
 };
+
+void Watchdog::suppressTimeouts(void)
+{
+	ScopedWatchdogLock suppressionLock(m_criticalSection);
+	++m_suppressionCount;
+}
 
 void Watchdog::update(void)
 {
