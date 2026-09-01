@@ -957,45 +957,47 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 pathfinder (air units just move point to point) it generates the path immediately.  Otherwise the path
 will be processed when we get to the front of the pathfind queue. jba */
 //-------------------------------------------------------------------------------------------------
-// ?requestPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::requestPath( Coord3D *destination, Bool isFinalGoal ) 
 {
+	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>( this );
 
-	if (m_locomotorSet.getValidSurfaces() == 0) {
-		DEBUG_CRASH(("Attempting to path immobile unit."));
+	if (g_012F0239 && g_012ED4FC)
+	{
+		((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: requestPath1-- m_requestedDestination changing from %g,%g,%g to %g,%g,%g",
+			retail->m_requestedDestination.x, retail->m_requestedDestination.y,
+			retail->m_requestedDestination.z, destination->x, destination->y, destination->z);
 	}
 
-	//DEBUG_LOG(("Request Frame %d, obj %s %x\n", TheGameLogic->getFrame(), getObject()->getTemplate()->getName().str(), getObject()));
-	m_requestedDestination = *destination;
-	m_isFinalGoal = isFinalGoal;
-	CRCDEBUG_LOG(("AIUpdateInterface::requestPath() - m_isAttackPath = FALSE for object %d\n", getObject()->getID()));
-	m_isAttackPath = FALSE;	
-	m_requestedVictimID = INVALID_ID;	
-	m_isApproachPath = FALSE;
-	m_isSafePath = FALSE;
+	retail->m_requestedDestination = *destination;
+	retail->m_isFinalGoal = isFinalGoal;
+	retail->m_isAttackPath = FALSE;
+	retail->m_requestedVictimID = INVALID_ID;
+	retail->m_isApproachPath = FALSE;
+	retail->m_isSafePath = FALSE;
+
 	if (canComputeQuickPath()) {
 		computeQuickPath(destination);
 		return;
 	}
-	m_waitingForPath = TRUE;
-	if (m_pathTimestamp > TheGameLogic->getFrame()-3) {
+
+	if (retail->m_pathTimestamp > TheGameLogic->getFrame() - 2) {
 		/* Requesting path very quickly.  Can cause a spin. */
-		//DEBUG_LOG(("%d Pathfind - repathing in less than 3 frames.  Waiting 1 second\n",
-			//TheGameLogic->getFrame()));
-		setQueueForPathTime(LOGICFRAMES_PER_SECOND);
-		// See if it has been too soon.
-		// jba intense debug
-		//DEBUG_LOG(("Info - RePathing very quickly %d, %d.\n", m_pathTimestamp, TheGameLogic->getFrame()));
-		if (m_path && m_isBlockedAndStuck) {
-			setIgnoreCollisionTime(2*LOGICFRAMES_PER_SECOND);
-			m_blockedFrames = 0;
-			m_isBlocked = FALSE;
-			m_isBlockedAndStuck = FALSE;
+		if (getWakeFrame() > UPDATE_SLEEP( 5 ) && !retail->m_isInUpdate)
+			setWakeFrame(retail->m_object, UPDATE_SLEEP( 5 ));
+		retail->m_queueForPathFrame = TheGameLogic->getFrame() + 5;
+		if (retail->m_path && retail->m_isBlockedAndStuck) {
+			retail->m_ignoreCollisionsUntil = TheGameLogic->getFrame() + 10;
+			retail->m_blockedFrames = 0;
+			retail->m_isBlocked = FALSE;
+			retail->m_isBlockedAndStuck = FALSE;
+			retail->m_waitingForPath = FALSE;
 		}
 		return;
 	}
-	TheAI->pathfinder()->queueForPath(getObject()->getID());
 
+	retail->m_waitingForPath = TRUE;
+	TheAI->pathfinder()->queueForPath(retail->m_object->getID());
 }
 
 //-------------------------------------------------------------------------------------------------
