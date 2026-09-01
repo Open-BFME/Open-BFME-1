@@ -74739,6 +74739,8 @@ name,address,notes
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeSortAVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3FD0,pin
+?bfmeSortBVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3F80,pin
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
 ?bfmeStart1098@BfmeD1098@@QAEHHHH@Z,0x00044C60,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
