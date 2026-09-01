@@ -74563,6 +74563,7 @@ name,address,notes
 ?bfmeRunTFD@BfmeHolderTFD@@QAEXXZ,0x009DB4D0,pin
 ?bfmeRunTGD@@YAXHH@Z,0x0000630C,pin
 ?bfmeRunVIR@BfmeMsgVIR@@QAEXXZ,0x007E8AC0,pin
+?bfmeRunVIT@BfmeMsgVIT@@QAEXXZ,0x007E8AC0,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74666,6 +74667,7 @@ name,address,notes
 ?bfmeSetVHH@BfmeLayoutVHH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVIA@BfmeUniVIA@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVIR@BfmeMsgVIR@@QAEXPBDPAX@Z,0x007E8A10,pin
+?bfmeSetVIT@BfmeMsgVIT@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76970,6 +76972,9 @@ name,address,notes
 ?g_bfmeV1095@@3HA,0x00EB8910,pin
 ?g_bfmeVIR@@3PAXA,0x00F0A66C,pin
 ?g_bfmeVIS@@3PAXA,0x00F0A6C0,pin
+?g_bfmeVIT@@3PAXA,0x00F0A560,pin
+?g_bfmeVIU@@3PAXA,0x00F0A660,pin
+?g_bfmeVIV@@3PAXA,0x00F0A530,pin
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeVal995B@@3HA,0x00EB7430,pin
