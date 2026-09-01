@@ -14,7 +14,9 @@ enum
 enum
 {
 	CALLBACK_PRIVATE_MESSAGE = 2,
-	CALLBACK_CHANNEL_MESSAGE = 4
+	CALLBACK_CHANNEL_MESSAGE = 4,
+	CALLBACK_USER_PARTED = 7,
+	CALLBACK_USER_LIST_UPDATED = 12
 };
 
 typedef struct ciServerMessage
@@ -72,12 +74,28 @@ typedef struct ciCallbackChannelMessageParams
 	int type;
 } ciCallbackChannelMessageParams;
 
+typedef struct ciCallbackUserPartedParams
+{
+	const char *channel;
+	const char *user;
+	int why;
+	const char *reason;
+	const char *kicker;
+} ciCallbackUserPartedParams;
+
+typedef struct ciCallbackUserListUpdatedParams
+{
+	const char *channel;
+} ciCallbackUserListUpdatedParams;
+
 unsigned int __cdecl strlen(const char *string);
 int __cdecl strcmp(const char *left, const char *right);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left,
 	const char *right);
 __declspec(dllimport) char * __cdecl strchr(const char *string, int character);
 chatChannelCallbacks *ciGetChannelCallbacks(CHAT chat, const char *channel);
+void ciUserLeftChannel(CHAT chat, const char *user, const char *channel);
+CHATBool ciWasJoinCallbackCalled(CHAT chat, const char *channel);
 void ciAddCallback_(CHAT chat, int type, void *callback, void *params,
 	void *callbackParam, int ID, void *param2, int paramsSize);
 
@@ -234,6 +252,55 @@ void ciUTMHandler(CHAT chat, const ciServerMessage *message)
 			ciAddCallback_(chat, CALLBACK_CHANNEL_MESSAGE,
 				callbacks->channelMessage, &params, callbacks->param,
 				0, target, sizeof(params));
+		}
+	}
+}
+
+void ciPartHandler(CHAT chat, const ciServerMessage *message)
+{
+	char *nick;
+	char *channel;
+	char *reason;
+	chatChannelCallbacks *callbacks;
+	ciConnection *connection = (ciConnection *)chat;
+
+	nick = message->nick;
+	channel = message->params[0];
+	if (message->numParams > 1)
+		reason = message->params[1];
+	else
+		reason = "";
+
+	if (strcmp(nick, connection->nick) != 0)
+	{
+		ciUserLeftChannel(chat, nick, channel);
+		if (ciWasJoinCallbackCalled(chat, channel))
+		{
+			callbacks = ciGetChannelCallbacks(chat, channel);
+			if (callbacks != 0)
+			{
+				if (callbacks->userParted != 0)
+				{
+					ciCallbackUserPartedParams params;
+					params.channel = channel;
+					params.user = nick;
+					params.why = 0;
+					params.reason = reason;
+					params.kicker = 0;
+					ciAddCallback_(chat, CALLBACK_USER_PARTED,
+						callbacks->userParted, &params, callbacks->param,
+						0, channel, sizeof(params));
+				}
+
+				if (callbacks->userListUpdated != 0)
+				{
+					ciCallbackUserListUpdatedParams params;
+					params.channel = channel;
+					ciAddCallback_(chat, CALLBACK_USER_LIST_UPDATED,
+						callbacks->userListUpdated, &params, callbacks->param,
+						0, channel, sizeof(params));
+				}
+			}
 		}
 	}
 }
