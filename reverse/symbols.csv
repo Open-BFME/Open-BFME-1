@@ -81771,6 +81771,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
 _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
+??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
