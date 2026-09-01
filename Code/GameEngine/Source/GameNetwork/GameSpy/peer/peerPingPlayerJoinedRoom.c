@@ -2,6 +2,7 @@
 /* GameSpy Peer SDK -- piPingPlayerJoinedRoom from peerPing.c. */
 
 #include <ctype.h>
+#include <stdio.h>
 #include <string.h>
 
 typedef void *PEER;
@@ -15,13 +16,13 @@ typedef enum RoomType
 
 typedef struct piPlayer
 {
-	unsigned char pad0[0x40];
+	char nick[0x40];
 	int inRoom[3];
 	int local;
 	unsigned int IP;
-	unsigned char pad54[0x58 - 0x54];
+	int profileID;
 	int gotIPAndProfileID;
-	unsigned char pad5C[0x68 - 0x5C];
+	int flags[3];
 	unsigned int lastPingSend;
 	unsigned int lastPingRecv;
 	unsigned int lastXping;
@@ -41,24 +42,41 @@ typedef struct piPlayer
 
 typedef struct piConnection
 {
-	unsigned char pad0[0xAB0];
+	unsigned char pad0[0x80];
+	char rooms[3][0x101];
+	void *enteringRoom[3];
+	void *inRoom[3];
+	unsigned char pad39C[0xAB0 - 0x39C];
 	int stayInTitleRoom;
 	void *players;
-	unsigned char padAB8[0xAC8 - 0xAB8];
+	int numPlayers[3];
+	int padAC4;
 	int doPings;
 	int lastPingTimeMod;
 	int pingRoom[3];
 	int xpingRoom[3];
 	void *xpings;
 	int lastXpingSend;
+	unsigned char padAF0[0xB44 - 0xAF0];
+	int playing;
+	unsigned char padB48[0x1828 - 0xB48];
+	int away;
 } piConnection;
 
 void TableFree(void *table);
 void TableRemove(void *table, const void *elem);
+int TableCount(void *table);
 void TableMap(void *table, void (*mapFn)(void *, void *), void *clientData);
 void TableMapSafe(void *table, void (*mapFn)(void *, void *), void *clientData);
 void pingerShutdown(void);
+void pingerThink(void);
+void pingerPing(unsigned int IP, unsigned short port,
+	void *pinged, void *pingedParam, int blocking, int timeout);
 void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData);
+int piIsPlayerVIP(piPlayer *player, RoomType roomType);
+void piMangleIP(char *buffer, unsigned int IP);
+void piSendChannelUTM(PEER peer, const char *room, const char *command,
+	const char *parameters, int authenticate);
 
 typedef struct piPingerReplyData
 {
@@ -369,6 +387,193 @@ void piPingerReply(unsigned int IP, unsigned short port, int ping,
 	data.IP = IP;
 	data.ping = ping;
 	TableMap(connection->players, piPingerReplyMapFn, &data);
+}
+
+static void piPingPlayer(PEER peer, piPlayer *player)
+{
+	if(player->waitingForPing)
+		return;
+
+	pingerPing(player->IP, 0x3353, piPingerReply, peer, 0, 5000);
+	player->waitingForPing = 1;
+	player->lastPingSend = current_time();
+	player->mustPing = 0;
+}
+
+typedef struct piPickPingPlayersData
+{
+	PEER peer;
+	piPlayer **players;
+	int max;
+	int num;
+} piPickPingPlayersData;
+
+static void piPickPingPlayersMap(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piPickPingPlayersData *data = (piPickPingPlayersData *)clientData;
+	piPlayer *other;
+	unsigned int now;
+	unsigned int delay;
+	int i;
+	int j;
+
+	if(!player->inPingRoom && !player->pingOnce)
+		return;
+	if(!player->gotIPAndProfileID)
+		return;
+	if(player->waitingForPing)
+		return;
+	if(player->local)
+		return;
+	if((player->inRoom[0] && (player->flags[0] & 12)) ||
+		(player->inRoom[1] && (player->flags[1] & 12)) ||
+		(player->inRoom[2] && (player->flags[2] & 12)))
+		return;
+
+	if(!player->mustPing)
+	{
+		now = current_time();
+		if(player->pingsLostConsecutive >= 4 &&
+			(now - player->lastPingSend) < 120000)
+			return;
+		if(player->inRoom[2])
+			delay = 2000;
+		else if(player->pingsReturned < 3)
+			delay = 5000;
+		else
+			delay = 30000;
+		if((now - player->lastPingSend) < delay)
+			return;
+		if((now - player->lastPingRecv) < (delay + 1500))
+			return;
+	}
+
+	for(i = data->max - 1; i >= 0; i--)
+	{
+		if(!data->players[i])
+			continue;
+		other = data->players[i];
+		if((!other->numPings && player->numPings) ||
+			(other->inRoom[2] && !player->inRoom[2]) ||
+			(piIsPlayerVIP(other, StagingRoom) &&
+			 !piIsPlayerVIP(player, StagingRoom)) ||
+			(strcasecmp(other->nick, player->nick) < 0))
+			break;
+	}
+
+	i++;
+	if(i == data->max)
+		return;
+	for(j = data->max - 1; j > i; j--)
+		data->players[j] = data->players[j - 1];
+	data->players[i] = player;
+	if(data->num < data->max)
+		data->num++;
+}
+
+static piPlayer **piPickPingPlayers(PEER peer, int *numPings)
+{
+	static piPlayer *players[12];
+	piPickPingPlayersData data;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->players || !*numPings || !TableCount(connection->players))
+	{
+		*numPings = 0;
+		return 0;
+	}
+
+	data.peer = peer;
+	data.players = players;
+	data.max = (12 < *numPings) ? 12 : *numPings;
+	data.num = 0;
+	memset(players, 0, sizeof(piPlayer *) * data.max);
+	TableMap(connection->players, piPickPingPlayersMap, &data);
+	*numPings = data.num;
+	if(!data.players[0])
+		return 0;
+	return data.players;
+}
+
+static void piXpingPlayer(PEER peer, piPlayer *player)
+{
+	int roomType;
+	char message[160];
+	char encodedIP[11];
+	piConnection *connection = (piConnection *)peer;
+
+	if(!player->inXpingRoom)
+		return;
+	piMangleIP(encodedIP, player->IP);
+	sprintf(message, "%s %d", encodedIP, player->pingAverage);
+	for(roomType = 0; roomType < 3; roomType++)
+	{
+		if(player->inRoom[roomType] && connection->xpingRoom[roomType])
+		{
+			if(connection->numPlayers[roomType] <= 32)
+			{
+				if(connection->inRoom[roomType] || connection->enteringRoom[roomType])
+					piSendChannelUTM(peer, connection->rooms[roomType], "PNG",
+						message, 0);
+			}
+		}
+	}
+	player->xpingSent = 1;
+	player->lastXping = current_time();
+	connection->lastXpingSend = player->lastXping;
+}
+
+static piPlayer *piPickXpingPlayer(PEER peer)
+{
+	piPickXpingPlayerData data;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->players || !TableCount(connection->players))
+		return 0;
+	data.peer = peer;
+	data.player = 0;
+	TableMap(connection->players, piPickXpingPlayerMap, &data);
+	return data.player;
+}
+
+void piPingThink(PEER peer)
+{
+	unsigned int now;
+	int pingTimeMod;
+	int numPings;
+	piPlayer *player;
+	piPlayer **players;
+	int i;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return;
+	if(connection->playing)
+		return;
+	if(connection->away)
+		return;
+	now = current_time();
+	pingTimeMod = (int)(now / 40);
+	if(connection->lastPingTimeMod)
+		numPings = pingTimeMod - connection->lastPingTimeMod;
+	else
+		numPings = 1;
+	if(numPings)
+		connection->lastPingTimeMod = pingTimeMod;
+	players = piPickPingPlayers(peer, &numPings);
+	if(players)
+	{
+		for(i = 0; i < numPings && players[i]; i++)
+			piPingPlayer(peer, players[i]);
+	}
+	if((now - connection->lastXpingSend) > 2000)
+	{
+		player = piPickXpingPlayer(peer);
+		if(player)
+			piXpingPlayer(peer, player);
+	}
+	pingerThink();
 }
 
 void piPingCleanup(PEER peer)

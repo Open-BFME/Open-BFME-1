@@ -81476,6 +81476,7 @@ _piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping 
 _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
 _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
+_piIsPlayerVIP,0x00863690,vendored=gamespy-2004; authentic piPickPingPlayersMap calls this player VIP predicate twice
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
