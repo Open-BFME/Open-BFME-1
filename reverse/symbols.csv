@@ -2164,6 +2164,7 @@ name,address,notes
 ??0BfmeCreated_0091A5A0@@QAE@PAVGen_0091A5A0@@@Z,0x00919F40,Open-BFME5 the constructor the make-and-return body at 0x0091A5A0 runs on its fresh block
 ??0BfmeCreated_0092CEF0@@QAE@PAVGen_0092CEF0@@@Z,0x0092CD00,Open-BFME5 the constructor the make-and-return body at 0x0092CEF0 runs on its fresh block
 ??0BfmeCreated_009513E0@@QAE@PAVGen_009513E0@@@Z,0x009510A0,Open-BFME5 the constructor the make-and-return body at 0x009513E0 runs on its fresh block
+??0Line3DClass@@QAE@ABV0@@Z,0x009510A0,Line3D Clone at 0x009513E0 allocates 0x148 bytes and directly invokes this copy constructor on its fresh block
 ??0BfmeCreated_00957FB0@@QAE@PAVGen_00957FB0@@@Z,0x00957F40,Open-BFME5 the constructor the make-and-return body at 0x00957FB0 runs on its fresh block
 ??0BfmeCreated_0097D920@@QAE@PAVGen_0097D920@@@Z,0x0097D850,Open-BFME5 the constructor the make-and-return body at 0x0097D920 runs on its fresh block
 ??0BfmeCtorBaseD@@QAE@XZ,0x009A1A30,Open-BFME5 the base constructor the based list constructor at 0x000FDA80 runs first

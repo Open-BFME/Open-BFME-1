@@ -167,7 +167,8 @@ Line3DClass::Line3DClass(const Line3DClass & src) :
 	Length(src.Length),
    Width(src.Width),
 	Shader(src.Shader),
-	Color(src.Color)
+	Color(src.Color),
+	SortLevel(0)
 {
 		for (int i=0; i<8; i++) vert[i]=src.vert[i];
 }
