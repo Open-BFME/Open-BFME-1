@@ -953,7 +953,38 @@ void BaseHeightMapResetBuffer::clear30A4()
 	buffer->m_field24 = 0;
 }
 
-class BaseHeightMapResetShroud
+class BfmeListHeader;
+
+class BfmeShroudList
+{
+public:
+	void bfmeErase(BfmeListHeader *node);
+
+	BfmeListHeader *m_header;
+	int m_count;
+};
+
+class BfmeListHeader
+{
+public:
+	BfmeListHeader *m_previous;
+	BfmeListHeader *m_next;
+	BfmeListHeader *m_first;
+	BfmeListHeader *m_last;
+};
+
+struct BaseHeightMapResetShroudFields
+{
+	char m_padding00[0x18];
+	void *m_field18;
+	char m_padding1c[0x1c];
+	void *m_field38;
+	void *m_field3c;
+	char m_padding40[4];
+};
+
+class BaseHeightMapResetShroud : public BaseHeightMapResetShroudFields,
+	public BfmeShroudList
 {
 public:
 	void reset30B8();
@@ -961,6 +992,32 @@ public:
 	void reset30BC();
 	void setBorderShroudLevel30BC(UnsignedByte level);
 };
+
+void BaseHeightMapResetShroud::reset30BC()
+{
+	if (m_field18) {
+		::operator delete(m_field18);
+	}
+	m_field18 = NULL;
+	if (m_field38) {
+		::operator delete(m_field38);
+	}
+	m_field38 = NULL;
+	if (m_field3c) {
+		::operator delete((void *)m_field3c);
+	}
+	m_field3c = NULL;
+	*(UnsignedByte *)((char *)this + 0x35) = 1;
+
+	BfmeShroudList *list = (BfmeShroudList *)((char *)this + 0x44);
+	if (list->m_count) {
+		list->bfmeErase(list->m_header->m_next);
+		list->m_header->m_first = list->m_header;
+		list->m_header->m_next = NULL;
+		list->m_header->m_last = list->m_header;
+		list->m_count = 0;
+	}
+}
 
 class BaseHeightMapResetStringBase
 {
