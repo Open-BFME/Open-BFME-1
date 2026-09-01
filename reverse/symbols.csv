@@ -9685,7 +9685,6 @@ name,address,notes
 ?BfmeCopy00769060@@YAXPAUBfmeValue00769060@@PBU1@@Z,0x000366E2,Open-BFME5 ILT the value copy the clone-node body at 0x00769060 calls
 ?BfmeCopy009C94C0@@YAXPAUBfmeValue009C94C0@@PBU1@@Z,0x009C9120,Open-BFME5 ILT the value copy the clone-node body at 0x009C94C0 calls
 ?BfmeCopy009D02C0@@YAXPAUBfmeValue009D02C0@@PBU1@@Z,0x009CF3C0,Open-BFME5 ILT the value copy the clone-node body at 0x009D02C0 calls
-?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
 ?BfmeDetonatorInfoUninitializedCopy@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@00ABU__false_type@1@@Z,0x00027782,Open-BFME5 ILT for _STL::__uninitialized_copy on MinefieldBehavior DetonatorInfo at 0x00570920
 ?BfmeDetonatorInfoUninitializedFillN@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@IABU23@ABU__false_type@1@@Z,0x00019E89,Open-BFME5 ILT for _STL::__uninitialized_fill_n on MinefieldBehavior DetonatorInfo at 0x00570970
 ?BfmeDynamicDX8VertexBufferInUse@@3PA_NA,0x01346740,Open-BFME5 per-slot in-use flags the BoxDynamicVBAccessClass destructor at 0x0091D9E0 clears; DIR32 sites are masked by the byte gate so this records which global it is
