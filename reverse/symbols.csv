@@ -72737,6 +72737,8 @@ name,address,notes
 ?bfmeAssign@BfmeCopyElementF@@QAEXPAU1@@Z,0x0001B1D5,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
+?bfmeAssignAVIK@BfmeSubAVIK@@QAEXABV1@@Z,0x009600F0,pin
+?bfmeAssignBVIK@BfmeSubBVIK@@QAEXABV1@@Z,0x0095C860,pin
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
@@ -72817,6 +72819,7 @@ name,address,notes
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseVHC@BfmeThingVHC@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
 ?bfmeBaseVHD@BfmeThingVHD@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
+?bfmeBaseVIK@BfmeThingVIK@@QAEXABV1@@Z,0x0091F790,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
