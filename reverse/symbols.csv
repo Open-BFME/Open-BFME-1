@@ -74723,6 +74723,7 @@ name,address,notes
 ?bfmeSetVJI@BfmeMsgVJI@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJJ@BfmeMsgVJJ@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJU@BfmeStackVJU@@QAEXPAX@Z,0x008D2E00,pin
+?bfmeSetVKC@BfmeUniVKC@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
