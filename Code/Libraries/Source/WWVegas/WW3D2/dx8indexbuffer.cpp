@@ -175,7 +175,6 @@ IndexBufferClass::~IndexBufferClass()
 #endif
 }
 
-// ?Get_Total_Buffer_Count@IndexBufferClass@@SAIXZ present-unmatched
 unsigned IndexBufferClass::Get_Total_Buffer_Count()
 {
 	return _IndexBufferCount;
