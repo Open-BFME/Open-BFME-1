@@ -72826,6 +72826,7 @@ name,address,notes
 ?bfmeBaseVHC@BfmeThingVHC@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
 ?bfmeBaseVHD@BfmeThingVHD@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
 ?bfmeBaseVIK@BfmeThingVIK@@QAEXABV1@@Z,0x0091F790,pin
+?bfmeBaseVKT@BfmeThingVKT@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
@@ -72988,6 +72989,7 @@ name,address,notes
 ?bfmeCallFHA@@YAHPAX0@Z,0x00041164,pin
 ?bfmeCallJA@BfmeHookJA@@QAEPAUBfmeSlotJA@@XZ,0x000022BB,pin
 ?bfmeCallUDB@BfmeSrcUDB@@QAEMHH@Z,0x0001AFC8,pin
+?bfmeCallVKU@@YAXPAXHPAUBfmeStateVKU@@H@Z,0x00022BE7,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
