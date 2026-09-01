@@ -73001,6 +73001,7 @@ name,address,notes
 ?bfmeCanAttackTarget@BfmeAttackQuery@@QBE_NPBVObject@@PBUCoord3D@@0PBX@Z,0x0002DB1E,Object BFME attack query calls this protected ILT for source-target permission
 ?bfmeCast2EVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00010424,pin
 ?bfmeCastEVB@@YAPAUBfmeObjEVB@@PAX@Z,0x00042424,pin
+?bfmeCatVHH@BfmeLayoutVHH@@QAEXPBDH@Z,0x00887D60,pin
 ?bfmeCb1098@@YAXXZ,0x00012D69,pin
 ?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
@@ -73890,6 +73891,7 @@ name,address,notes
 ?bfmeGetUsersUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00872030,pin
 ?bfmeGetVCC@@YAPAVBfmeSinkVCC@@XZ,0x007EFFC0,pin
 ?bfmeGetVHC@BfmeMsgVHC@@QAEPAXPAX0@Z,0x007E8900,pin
+?bfmeGetVHE@BfmeMsgVHE@@QAEHPAXH@Z,0x007E8900,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74051,6 +74053,7 @@ name,address,notes
 ?bfmeInitDGF@BfmeThingDGF@@QAEPAV1@PAX@Z,0x007F8730,pin
 ?bfmeInitDGG@BfmeThingDGG@@QAEPAV1@PAX@Z,0x007FA990,pin
 ?bfmeInitEOE@@YGXPAUBfmeThingEOE@@HHP6AXXZ1@Z,0x009F6EE4,pin
+?bfmeInitFromVHG@BfmeIniVHG@@QAEXPAXPBUBfmeParseVHG@@@Z,0x008520A0,pin
 ?bfmeInitSubBWD@BfmeSubBWD@@QAEXXZ,0x0000F0A6,pin
 ?bfmeInitSubEFA@@YAXPAX0@Z,0x0000129E,pin
 ?bfmeInitTCB@BfmeBaseTCB@@QAEXXZ,0x0000835F,pin
@@ -74258,6 +74261,7 @@ name,address,notes
 ?bfmeNextIdUNC@@YAHXZ,0x0080E440,pin
 ?bfmeNextM1110@@YAPAUBfmeM1110@@PAU1@@Z,0x0082B870,pin
 ?bfmeNextR1110@BfmeR1110@@QAEPAV1@XZ,0x00022A70,pin
+?bfmeNextTokenVHG@BfmeIniVHG@@QAEPBDPBD@Z,0x00850970,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
 ?bfmeNormUSC@@YAHPAX@Z,0x009B4680,pin
@@ -74627,6 +74631,8 @@ name,address,notes
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
 ?bfmeSetVGD@BfmeLayoutVGD@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVGI@BfmeWideVGI@@QAEXPBGH@Z,0x008885C0,pin
+?bfmeSetVHE@BfmeMsgVHE@@QAEXPAXH@Z,0x007E88D0,pin
+?bfmeSetVHH@BfmeLayoutVHH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76602,6 +76608,7 @@ name,address,notes
 ?g_bfmeKeyBVHC@@3HA,0x00D2B578,pin
 ?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
 ?g_bfmeKeyDVHD@@3HA,0x00D2B588,pin
+?g_bfmeKeyVHE@@3HA,0x00D2C144,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
 ?g_bfmeLens1228@@3PAEA,0x00ED5DFC,pin
 ?g_bfmeLens1229@@3PAEA,0x00ED5378,pin
@@ -76768,6 +76775,7 @@ name,address,notes
 ?g_bfmeP1095@@3PAVBfmeP1095@@A,0x00EF076C,pin
 ?g_bfmeP1096@@3PAVBfmeP1096@@A,0x00EF076C,pin
 ?g_bfmeP1097@@3PAVBfmeP1097@@A,0x00EF076C,pin
+?g_bfmeParseVHG@@3PAUBfmeParseVHG@@A,0x00C83270,pin
 ?g_bfmePoolTRB@@3VBfmePoolTRB@@A,0x00F3D1AC,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
@@ -80912,6 +80920,7 @@ __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,p
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
+__imp_?bfmeAtoiVHG@@YAHPBD@Z,0x00F59384,pin
 __imp_?bfmeBindTTE@@YAXHPAX@Z,0x00F5950C,pin
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
 __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
