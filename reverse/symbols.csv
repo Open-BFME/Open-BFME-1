@@ -73042,6 +73042,8 @@ name,address,notes
 ?bfmeClear987@BfmeDrop987@@QAEXHH@Z,0x00014506,pin
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
 ?bfmeClear@BfmeListB@@QAEXXZ,0x0001900B,Open-BFME5 the out-of-line list clear the destructor at 0x00080950 calls
+?bfmeClearAVHW@BfmeSubAVHW@@QAEXXZ,0x00801570,pin
+?bfmeClearBVHW@BfmeSubBVHW@@QAEXXZ,0x00800630,pin
 ?bfmeClearEFG@BfmeThingEFG@@QAEXXZ,0x0001D4B7,pin
 ?bfmeClearELAa@BfmeThingELAa@@QAEXXZ,0x0004278A,pin
 ?bfmeClearELAa@BfmeThingELAb@@QAEXXZ,0x0004278A,pin
@@ -76963,11 +76965,13 @@ name,address,notes
 ?g_bfmeVftATWB@@3PAPAXA,0x00D2B5C4,pin
 ?g_bfmeVftATYA@@3PAPAXA,0x00D2C4A8,pin
 ?g_bfmeVftAUNA@@3PAPAXA,0x00D2BBE8,pin
+?g_bfmeVftAVHW@@3PAHA,0x00D2C440,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftBTWA@@3PAPAXA,0x00D2B8A0,pin
 ?g_bfmeVftBTWB@@3PAPAXA,0x00D2B598,pin
 ?g_bfmeVftBTYA@@3PAPAXA,0x00D2C408,pin
 ?g_bfmeVftBUNA@@3PAPAXA,0x00D2B3B8,pin
+?g_bfmeVftBVHW@@3PAHA,0x00D2C358,pin
 ?g_bfmeVftCTWA@@3PAPAXA,0x00D2B890,pin
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
