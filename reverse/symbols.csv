@@ -81709,5 +81709,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
-?clear@BaseHeightMapResetList@@QAEX_N@Z,0x0094CE50,BaseHeightMap reset list cleanup helper at +0xC0 and +0xE8
