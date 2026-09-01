@@ -180,7 +180,6 @@ unsigned IndexBufferClass::Get_Total_Buffer_Count()
 	return _IndexBufferCount;
 }
 
-// ?Get_Total_Allocated_Indices@IndexBufferClass@@SAIXZ present-unmatched
 unsigned IndexBufferClass::Get_Total_Allocated_Indices()
 {
 	return _IndexBufferTotalIndices;
