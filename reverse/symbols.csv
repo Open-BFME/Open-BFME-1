@@ -81561,3 +81561,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
+?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00040C23,ILT call target used by the 0x0073B5F0 validated setter
