@@ -74242,6 +74242,7 @@ name,address,notes
 ?bfmeRegisterDAD@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAE@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
+?bfmeRegisterTKB@@YGXPAX@Z,0x0090E3D0,pin
 ?bfmeRelKB@BfmeOldKB@@QAEXXZ,0x009EB7A0,pin
 ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z,0x00049413,TU-specific name for the relative-angle helper used by AIAttackMeleeHordeWaitState
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
@@ -74514,6 +74515,7 @@ name,address,notes
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
 ?bfmeStepTAA@@YAXH@Z,0x0081B830,pin
 ?bfmeStepTDB@@YAXXZ,0x00904BA0,pin
+?bfmeStepTKD@@YAXNH@Z,0x0002E90B,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
@@ -76312,6 +76314,7 @@ name,address,notes
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
+?g_bfmeInfoTKB@@3PADA,0x00D1E05C,pin
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
 ?g_bfmeIntegerFormat@@3QBDB,0x011442DC,address-derived integer format string from the DIR32 operand at retail 0x009D94B8
@@ -76672,6 +76675,7 @@ name,address,notes
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVftTDA@@3PAPAXA,0x00D29D30,pin
 ?g_bfmeVftTGE@@3PAPAXA,0x00D1C9A8,pin
+?g_bfmeVftTKB@@3PAPAXA,0x00D1E008,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
