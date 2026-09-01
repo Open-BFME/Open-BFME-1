@@ -73310,6 +73310,7 @@ name,address,notes
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
 ?bfmeDropVGO@@YAXPAX@Z,0x00895320,pin
+?bfmeDropVIH@BfmeSubVIH@@QAEXPAVBfmeThingVIH@@@Z,0x0081C3D0,pin
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
 ?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
 ?bfmeDtor918P@BfmeSub918P@@QAEXXZ,0x000414BB,pin
@@ -77000,6 +77001,7 @@ name,address,notes
 ?g_bfmeVftUNC@@3PAPAXA,0x00D2C830,pin
 ?g_bfmeVftUUA@@3PAPAXA,0x00D2C6F4,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
+?g_bfmeVftVIH@@3PAHA,0x00D2D210,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
 ?g_bfmeW1027@@3PAVBfmeW1027@@A,0x00EF4B98,pin
