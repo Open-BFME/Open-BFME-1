@@ -339,7 +339,7 @@ VertexBufferClass::AppendLockClass::~AppendLockClass()
 #ifdef VERTEX_BUFFER_LOG
 		WWDEBUG_SAY(("VertexBuffer->Unlock()\n"));
 #endif
-		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(VertexBuffer)->Get_DX8_Vertex_Buffer()->Unlock());
+		BFME_DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(VertexBuffer)->Get_DX8_Vertex_Buffer()->Unlock());
 		break;
 	case BUFFER_TYPE_SORTING:
 		break;
@@ -348,6 +348,7 @@ VertexBufferClass::AppendLockClass::~AppendLockClass()
 		break;
 	}
 	VertexBuffer->Release_Ref();
+	BFME_DX8_Thread_Assert();
 }
 
 // ----------------------------------------------------------------------------
