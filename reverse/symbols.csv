@@ -72813,6 +72813,8 @@ name,address,notes
 ?bfmeBaseUNC@BfmeThingUNC@@QAEXXZ,0x00808B80,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
+?bfmeBaseVHC@BfmeThingVHC@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
+?bfmeBaseVHD@BfmeThingVHD@@QAEXPAVBfmeMsgVHC@@@Z,0x007FBC30,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
 ?bfmeBaseZA@BfmeThingZA@@QAEXXZ,0x00025E1E,pin
 ?bfmeBaseZD@BfmeThingZD@@QAEXPAXVBfmeStrZD@@@Z,0x000035B2,pin
@@ -73268,6 +73270,7 @@ name,address,notes
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
 ?bfmeDone1038@BfmeB1038@@QAEXXZ,0x000142A9,pin
 ?bfmeDone1045@BfmeSub1045@@QAEXXZ,0x007E86C0,pin
+?bfmeDrawTriVHA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
 ?bfmeDrop1022@BfmeE1022@@QAEXHPAX@Z,0x0003BCCD,pin
@@ -73878,6 +73881,7 @@ name,address,notes
 ?bfmeGetSA@BfmeThingSA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
+?bfmeGetStrVHC@BfmeMsgVHC@@QAEDPAXPADH@Z,0x007E8A80,pin
 ?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
 ?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
@@ -73885,6 +73889,7 @@ name,address,notes
 ?bfmeGetTWC@@YAPAVBfmeSinkTWC@@XZ,0x007EFFC0,pin
 ?bfmeGetUsersUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00872030,pin
 ?bfmeGetVCC@@YAPAVBfmeSinkVCC@@XZ,0x007EFFC0,pin
+?bfmeGetVHC@BfmeMsgVHC@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74615,6 +74620,7 @@ name,address,notes
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
 ?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
+?bfmeSetTexVHA@@YAXIAAPAVBfmeTexVHA@@@Z,0x00905AC0,pin
 ?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
@@ -76592,6 +76598,10 @@ name,address,notes
 ?g_bfmeKUKC@@3MA,0x00CE8F14,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
+?g_bfmeKeyAVHC@@3HA,0x00D2B580,pin
+?g_bfmeKeyBVHC@@3HA,0x00D2B578,pin
+?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
+?g_bfmeKeyDVHD@@3HA,0x00D2B588,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
 ?g_bfmeLens1228@@3PAEA,0x00ED5DFC,pin
 ?g_bfmeLens1229@@3PAEA,0x00ED5378,pin
