@@ -4123,6 +4123,7 @@ name,address,notes
 ??1BfmeElementB@@QAE@XZ,0x0001AAD2,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementC@@QAE@XZ,0x00937390,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementD@@QAE@XZ,0x00018FCF,Open-BFME5 the element destructor the array-owning destructors call
+??1BfmeEmotionName@@QAE@XZ,0x00887940,EmotionSystem addNugget temporary owns the retail AsciiString payload and destroys through its established release body
 ??1BfmeErasedValue_004EBC10@@QAE@XZ,0x00021445,Open-BFME5 the value destructor the list erase at 0x004EBC10 runs before freeing the node
 ??1BfmeErasedValue_00627200@@QAE@XZ,0x0003F95E,Open-BFME5 the value destructor the list erase at 0x00627200 runs before freeing the node
 ??1BfmeErasedValue_0076A810@@QAE@XZ,0x0001C954,Open-BFME5 the value destructor the list erase at 0x0076A810 runs before freeing the node
@@ -11738,6 +11739,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003B075,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x000486BC,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@PAVEmotion@@V?$allocator@PAVEmotion@@@_STL@@@_STL@@IAEXPAPAVEmotion@@ABQAV3@ABU__true_type@2@I_N@Z,0x00022E4E,EmotionTrackerUpdate vector overflow ILT
+?_M_insert_overflow@?$vector@PAVEmotionNugget@@V?$allocator@PAVEmotionNugget@@@_STL@@@_STL@@IAEXPAPAVEmotionNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002FC61,addNugget retail vector overflow ILT target
 ?_M_insert_overflow@?$vector@PAVExperienceScalarTable@@V?$allocator@PAVExperienceScalarTable@@@_STL@@@_STL@@IAEXPAPAVExperienceScalarTable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0037F7D0,Open-BFME5 grow path of the vector at TheExperienceLevelSystem+0x20
 ?_M_insert_overflow@?$vector@PAVLivingWorldAnimObject@@V?$allocator@PAVLivingWorldAnimObject@@@_STL@@@_STL@@IAEXPAPAVLivingWorldAnimObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000094D5,LivingWorldAnimObject vector helper ILT decoded from exact findAnimObject body
 ?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000486BC,ILT thunk used by call site
@@ -75850,6 +75852,7 @@ _piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helpe
 ?findNameIndex@Rva00359530StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000072F7,retail call target from the 0x00359530 string-record release body
 ?findNonConstCommandButton@ControlBar@@IAEPAVCommandButton@@ABVAsciiString@@@Z,0x00044EEF,pinharvest x1 (thunk)
 ?findNonConstCommandSet@ControlBar@@AAEPAVCommandSet@@ABVAsciiString@@@Z,0x00036D27,pinharvest x1 (thunk)
+?findNugget@EmotionSystem@@QAEPAVEmotionNugget@@ABVBfmeEmotionName@@@Z,0x0000C202,addNugget call-site ILT target for the const-name lookup body at 0x0037CD70
 ?findObj@BfmeMgr33F@@QAEPAVBfmeObj720@@PAX@Z,0x0003B59D,pin
 ?findObj@BfmeMgrD74_Linked@@QAEPAVBfmeLinkedObj@@H@Z,0x0001DDE5,pin
 ?findObjectByID@BFMEObjectLookup@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,alias of the GameLogic enum spelling pinned below; AIUpdate.cpp reaches the lookup through a view class because the reference GameLogic.h inlines it
@@ -77392,6 +77395,7 @@ _piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helpe
 ?getName@Anim2DTemplate@@QBE?AVAsciiString@@XZ,0x00012E72,ILT thunk to the Anim2D template name accessor
 ?getName@CrateTemplate@@QBE?AVAsciiString@@XZ,0x000259D7,Open-BFME5 ILT; ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z at 0x003795E0 compares each vector entry on the name it returns by value
 ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z,0x00002ECD,ILT thunk found directly in DataChunkInput::readDict retail bytes
+?getName@EmotionNugget@@QBE?AVBfmeEmotionName@@XZ,0x00036DC2,addNugget call-site ILT target for the AsciiString value-return body at 0x0037CB90
 ?getName@GameSlot@@QBE?AVUnicodeString@@XZ,0x0003A20B,Open-BFME5 ILT thunk (jmp 0x003879C0) read from the isUser call displacement at 0x0068E8FE; 0x003879C0 already carries object-symbol=?getName@GameSlot@@QBE?AVUnicodeString@@XZ
 ?getName@Image@@QBE?AVAsciiString@@XZ,0x00047028,REL32 pin from ImageCollection::addImage @0x5D3410
 ?getName@LANGameInfo@@QAE?AVUnicodeString@@XZ,0x00041FC9,Open-BFME5 ILT target read from the RequestAccept call displacement at 0x0068614B
