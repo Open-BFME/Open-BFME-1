@@ -73870,6 +73870,7 @@ name,address,notes
 ?bfmeGetFinalOverride@BfmeSubInnerEFF@@QAEPAXXZ,0x000022BB,pin
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
+?bfmeGetIdVHM@@YAHXZ,0x009DB580,pin
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
 ?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
 ?bfmeGetLog1037@@YAPAVBfmeLog1037@@XZ,0x007EB810,pin
@@ -76384,6 +76385,7 @@ name,address,notes
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCountTDB@@3HA,0x00F40594,pin
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
+?g_bfmeCsVHM@@3UBfmeCsVHM@@A,0x00F3F4E8,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
 ?g_bfmeCx1264@@3HA,0x00EF497C,pin
 ?g_bfmeCy1264@@3HA,0x00EF4980,pin
@@ -76411,6 +76413,7 @@ name,address,notes
 ?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
 ?g_bfmeDefaultUDD@@3PADA,0x00F36E50,pin
+?g_bfmeDepthVHM@@3HC,0x00F40588,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDoneSJA@@3DA,0x00EF4CA4,pin
@@ -76433,6 +76436,7 @@ name,address,notes
 ?g_bfmeEmptyVFD@@3PADA,0x00C7301C,pin
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
+?g_bfmeEventVHM@@3PAXA,0x00F3F540,pin
 ?g_bfmeF1071@@3DA,0x00EB7D84,pin
 ?g_bfmeF1085@@3DA,0x00EB7D84,pin
 ?g_bfmeFileUUA@@3PADA,0x00D2C6A8,pin
@@ -76762,6 +76766,7 @@ name,address,notes
 ?g_bfmeOneSJA@@3PADA,0x00EF19B8,pin
 ?g_bfmeOneTXB@@3PAVBfmeResTXB@@A,0x00F4D060,pin
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
+?g_bfmeOwnerVHM@@3HC,0x00F40584,pin
 ?g_bfmeP1024@@3PAVBfmeP1024@@A,0x00F4FAAC,pin
 ?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
 ?g_bfmeP1060@@3PAUBfmeP1060@@A,0x00EF4B98,pin
@@ -80936,6 +80941,7 @@ __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCopyVGK@@YAXPADPBD@Z,0x00F5948C,pin
 __imp_?bfmeEnterTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58D18,pin
+__imp_?bfmeEnterVHM@@YGXPAUBfmeCsVHM@@@Z,0x00F58D18,pin
 __imp_?bfmeFindSRA@@YGPAXPAXH@Z,0x00F59010,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFmt1067@@YAHPADI0H@Z,0x00F5932C,pin
@@ -80953,6 +80959,7 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeInitTTD@@YGJPAXH@Z,0x00F59188,pin
 __imp_?bfmeLeaveTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58E74,pin
+__imp_?bfmeLeaveVHM@@YGXPAUBfmeCsVHM@@@Z,0x00F58E74,pin
 __imp_?bfmeLenVGI@@YAIPBG@Z,0x00F59524,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeLockVGP@@YGHPAH@Z,0x00F58E54,pin
@@ -80980,6 +80987,7 @@ __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
+__imp_?bfmeWaitVHM@@YGKPAXK@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
