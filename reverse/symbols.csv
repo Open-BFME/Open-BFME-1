@@ -72684,6 +72684,7 @@ name,address,notes
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
+?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
@@ -73078,6 +73079,7 @@ name,address,notes
 ?bfmeCmpFGD@@YAXPBD0@Z,0x00900D70,pin
 ?bfmeCmpRE@BfmeOtherRE@@QAEDHH@Z,0x007E8F20,pin
 ?bfmeCmpVKO@BfmeBlockVKO@@QAE_NABV1@@Z,0x00035CA1,pin
+?bfmeCmpVKP@BfmeBlockVKP@@QAE_NABV1@@Z,0x00035CA1,pin
 ?bfmeCombine1236@@YAXPAUBfmeTransform1236@@00@Z,0x008BCED0,address-derived helper called by the 0x008BDA70 transform body
 ?bfmeCompare1294@AsciiString@@QBEHPBD@Z,0x0004B01A,address-derived string comparison called by the 0x003A0860 retail body
 ?bfmeCompare@AsciiString@@QBEHABV1@@Z,0x000220C5,Open-BFME5 ILT less<AsciiString> calls in the AsciiString-keyed _Rb_tree _M_insert at 0x005B2EF0; it jumps to 0x0005FEB0 and its result is tested against zero
@@ -74345,6 +74347,7 @@ name,address,notes
 ?bfmeNotifyPlain@BFMEPathfindLayerFields@@QAEXXZ,0x0003A03F,alias of the private PathfindLayer spelling pinned below; AIPathfind.cpp reaches the notification setDestroyed makes when the bridge at +0x38 is null through a view struct
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNotifyVIM@BfmeThingVIM@@QAEXXZ,0x0083E8F0,pin
+?bfmeNotifyVKP@BfmeNotifyVKP@@QAEXPAVBfmeBlockVKP@@HH@Z,0x0001343F,pin
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
@@ -75093,6 +75096,7 @@ name,address,notes
 ?bfmeUpdate@BfmeCellFC@@QAEXH_N@Z,0x00881BE0,Open-BFME5 semantic identity for exact address-derived cell update body at 0x00881BE0
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
+?bfmeUpdateVKP@BfmeUpdVKP@@QAEXXZ,0x0003611A,pin
 ?bfmeUse1026@BfmeW1026@@QAEXH@Z,0x0002B706,pin
 ?bfmeUse1035@BfmeT1035@@QAEXPAVBfmeX1035@@H@Z,0x00022372,pin
 ?bfmeUse1052@BfmeJ1052@@QAEXPAH@Z,0x00046150,pin
