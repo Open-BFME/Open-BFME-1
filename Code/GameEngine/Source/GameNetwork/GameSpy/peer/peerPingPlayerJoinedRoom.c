@@ -66,6 +66,7 @@ void *TableNew(int elemSize, int numBuckets,
 	int (*compareFn)(const void *, const void *),
 	void (*freeFn)(void *));
 void *TableLookup(void *table, const void *elem);
+void TableEnter(void *table, const void *elem);
 int piXpingTableHashFn(const void *param, int numBuckets);
 int piXpingTableCompareFn(const void *param1, const void *param2);
 void piXpingTableElementFreeFn(void *param);
@@ -75,6 +76,7 @@ int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
 unsigned int current_time(void);
 __declspec(dllimport) void srand(unsigned int seed);
+piPlayer *piGetPlayer(PEER peer, const char *nick);
 
 static piXping *piFindXping(PEER peer, const char *nick1, const char *nick2)
 {
@@ -89,6 +91,47 @@ static piXping *piFindXping(PEER peer, const char *nick1, const char *nick2)
 	_strlwr(xpingMatch.nicks[0]);
 
 	return (piXping *)TableLookup(connection->xpings, &xpingMatch);
+}
+
+static piXping *piAddXping(PEER peer, const char *nick1, const char *nick2)
+{
+	piXping xpingMatch;
+	piConnection *connection = (piConnection *)peer;
+
+	strncpy(xpingMatch.nicks[0], nick1, 64);
+	xpingMatch.nicks[0][63] = '\0';
+	_strlwr(xpingMatch.nicks[0]);
+	strncpy(xpingMatch.nicks[1], nick2, 64);
+	xpingMatch.nicks[1][63] = '\0';
+	_strlwr(xpingMatch.nicks[1]);
+
+	TableEnter(connection->xpings, &xpingMatch);
+	return (piXping *)TableLookup(connection->xpings, &xpingMatch);
+}
+
+void piUpdateXping(PEER peer, const char *nick1, const char *nick2, int ping)
+{
+	piPlayer *player1;
+	piPlayer *player2;
+	piXping *xping;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return;
+
+	player1 = piGetPlayer(peer, nick1);
+	if(!player1 || !player1->inXpingRoom)
+		return;
+
+	player2 = piGetPlayer(peer, nick2);
+	if(!player2 || !player2->inXpingRoom)
+		return;
+
+	xping = piAddXping(peer, nick1, nick2);
+	if(!xping)
+		return;
+
+	xping->ping = ping;
 }
 
 int piGetXping(PEER peer, const char *nick1, const char *nick2, int *ping)
