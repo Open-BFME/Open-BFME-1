@@ -73020,6 +73020,7 @@ name,address,notes
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
+?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
 ?bfmeCheckVHJ@@YADXZ,0x008896D0,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
@@ -74413,7 +74414,11 @@ name,address,notes
 ?bfmePushBackAux@Gen_00369a30@@IAEXABQAX@Z,0x00036C82,Open-BFME5 ILT the deque push_back at 0x00369A30 tail-jumps through
 ?bfmePushBackAux@Gen_00369e30@@IAEXABQAX@Z,0x00036C82,Open-BFME5 ILT the deque push_back at 0x00369E30 tail-jumps through
 ?bfmePushBackAux@Gen_00647430@@IAEXABQAX@Z,0x000399D7,Open-BFME5 ILT the deque push_back at 0x00647430 tail-jumps through
+?bfmePushNilVHR@@YAXPAUBfmeLuaVHR@@@Z,0x009903B0,pin
+?bfmePushNumVHR@@YAXPAUBfmeLuaVHR@@N@Z,0x00990410,pin
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
+?bfmePushStrVHR@@YAXPAUBfmeLuaVHR@@PBD@Z,0x00990480,pin
+?bfmePushUserVHR@@YAXPAUBfmeLuaVHR@@PAXH@Z,0x009904F0,pin
 ?bfmePut1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z,0x008B84C0,pin
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
@@ -80976,6 +80981,8 @@ __imp_?bfmePrint1025@@YAXHPADH@Z,0x00F5948C,pin
 __imp_?bfmeReleaseTVA@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeReleaseTVB@@YGXPAX@Z,0x00F591A8,pin
 __imp_?bfmeReleaseVGP@@YGXPAX@Z,0x00F591A8,pin
+__imp_?bfmeRemoveVHR@@YAHPBD@Z,0x00F59478,pin
+__imp_?bfmeRenameVHS@@YAHPBD0@Z,0x00F5947C,pin
 __imp_?bfmeSet995A@@YGXHMM@Z,0x00F5969C,pin
 __imp_?bfmeShowSRA@@YGXPAXHH@Z,0x00F58FD0,pin
 __imp_?bfmeShutSF@@YAHPAUBfmeFileSF@@@Z,0x00F593A0,pin
