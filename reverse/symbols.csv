@@ -81712,6 +81712,7 @@ _piQRServerKeyCallback,0x00866380,upstream peerQR.c callback passed by piStartAu
 _piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAutoMatchReporting
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
+_piKeyChanged,0x008659C0,GameSpy PEER SDK peerKeys.c shared watch-key cache update
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
 _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit

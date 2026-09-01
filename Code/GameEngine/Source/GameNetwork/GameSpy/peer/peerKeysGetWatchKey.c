@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy PEER SDK -- watch-key lookup functions from peerKeys.c. */
 
+#include <string.h>
+
 typedef void *PEER;
 typedef void *HashTable;
 typedef int RoomType;
+typedef int PEERBool;
 
 typedef struct piConnection
 {
@@ -21,6 +24,10 @@ typedef struct piPlayer
 {
 	char nick[0x40];
 	int inRoom[3];
+	int local;
+	unsigned int IP;
+	int profileID;
+	int gotIPAndProfileID;
 } piPlayer;
 
 typedef struct piWatchKey
@@ -64,6 +71,18 @@ piPlayer *piGetPlayer(PEER peer, const char *nick);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 __declspec(dllimport) void __cdecl free(void *memory);
 char *goastrdup(const char *source);
+void TableEnter(HashTable table, const void *element);
+void piAddPlayerInfoCallback(PEER peer, RoomType roomType, const char *nick,
+	unsigned int IP, int profileID);
+PEERBool piDemangleUser(const char *user, unsigned int *IP, int *profileID);
+void piSetPlayerIPAndProfileID(PEER peer, const char *nick, unsigned int IP,
+	int profileID);
+void piSetPlayerRoomFlags(PEER peer, const char *nick, RoomType roomType,
+	const char *flags);
+void piAddGlobalKeyChangedCallback(PEER peer, const char *nick, const char *key,
+	const char *value);
+void piAddRoomKeyChangedCallback(PEER peer, RoomType roomType, const char *nick,
+	const char *key, const char *value);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
 	HashTable watchCache)
@@ -188,4 +207,84 @@ void piKeyCachePlayerChangedNick(PEER peer, const char *oldNick,
 	TableMap(connection->roomWatchCache[0], piPlayerChangedNickMap, &data);
 	TableMap(connection->roomWatchCache[1], piPlayerChangedNickMap, &data);
 	TableMap(connection->roomWatchCache[2], piPlayerChangedNickMap, &data);
+}
+
+static PEERBool piKeyChanged(PEER peer, const char *nick, const char *key,
+	const char *value, HashTable watchKeys, HashTable watchCache, PEERBool inRoom,
+	RoomType roomType)
+{
+	piWatchKey watchKeyTemp;
+	piCacheKey cacheKey;
+
+	if (!nick || !nick[0])
+		return 1;
+	if (!value)
+		value = "";
+
+	if (strcasecmp(key, "username") == 0) {
+		piPlayer *player;
+
+		if (strcmp(nick, "(END)") == 0) {
+			piAddPlayerInfoCallback(peer, roomType, 0, 0, 0);
+			return 0;
+		}
+
+		player = piGetPlayer(peer, nick);
+		if (player && !player->gotIPAndProfileID) {
+			int profileID;
+			unsigned int IP;
+
+			if (piDemangleUser(value, &IP, &profileID))
+				piSetPlayerIPAndProfileID(peer, nick, IP, profileID);
+		}
+
+		if (inRoom) {
+			if (player && player->gotIPAndProfileID)
+				piAddPlayerInfoCallback(peer, roomType, nick, player->IP,
+					player->profileID);
+			else
+				piAddPlayerInfoCallback(peer, roomType, nick, 0, 0);
+		}
+	}
+
+	if (inRoom && strcasecmp(key, "b_flags") == 0)
+		piSetPlayerRoomFlags(peer, nick, roomType, value);
+
+	watchKeyTemp.key = (char *)key;
+	if (!TableLookup(watchKeys, &watchKeyTemp)) {
+		if (inRoom && strncmp(key, "b_", 2) == 0)
+			return 1;
+		return 0;
+	}
+
+	memset(&cacheKey, 0, sizeof(cacheKey));
+	cacheKey.nick = goastrdup(nick);
+	cacheKey.key = goastrdup(key);
+	cacheKey.value = goastrdup(value);
+	TableEnter(watchCache, &cacheKey);
+	return 1;
+}
+
+void piGlobalKeyChanged(PEER peer, const char *nick, const char *key,
+	const char *value)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (piKeyChanged(peer, nick, key, value, connection->globalWatchKeys[0],
+			connection->globalWatchCache, 0, 0)
+		|| piKeyChanged(peer, nick, key, value, connection->globalWatchKeys[1],
+			connection->globalWatchCache, 0, 0)
+		|| piKeyChanged(peer, nick, key, value, connection->globalWatchKeys[2],
+			connection->globalWatchCache, 0, 0))
+		piAddGlobalKeyChangedCallback(peer, nick, key, value);
+}
+
+void piRoomKeyChanged(PEER peer, RoomType roomType, const char *nick,
+	const char *key, const char *value)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (piKeyChanged(peer, nick, key, value, connection->roomWatchKeys[roomType],
+		connection->roomWatchCache[roomType], 1, roomType))
+		piAddRoomKeyChangedCallback(peer, roomType, nick, key, value);
 }
