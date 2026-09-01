@@ -74081,6 +74081,7 @@ name,address,notes
 ?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsGiantBird@Object@@QBEHXZ,0x0000E462,Open-BFME5 ILT thunk to body 0x001BE9D0; Object AI slot 76 is false in the base AIUpdateInterface and true in GiantBirdAIUpdate; AIAttackState uses the promoted result for BFME attack-mode selection
 ?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
+?bfmeIsRawVHN@BfmeNameVHN@@QAEDXZ,0x0090C950,pin
 ?bfmeIsReady@BfmeSubEFB@@QAE_NXZ,0x0003D2F8,pin
 ?bfmeIsSet@BfmeGameOverGateA@@QAE_NXZ,0x000330DC,Open-BFME5 ILT the first early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012ED748 is unidentified
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
