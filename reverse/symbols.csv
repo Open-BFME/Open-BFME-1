@@ -81557,3 +81557,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_rva005F4340Resource@@3PAVRefCountClass@@A,0x00EF6DE0,global ref-counted renderer resource
 ?g_rva005F7FA0Resource@@3PAVRefCountClass@@A,0x00EF6E30,global ref-counted renderer resource
+_bfmeXferGuardTargetType,0x0010C100,GuardTargetType enum dispatcher proven by the retail string table
+_g_guardTargetTypeThrowInfo,0x00DDFE5C,ThrowInfo used by the GuardTargetType transfer helper
+?_CxxThrowException@@YGXPAX0@Z,0x009F6D00,MSVC retail exception throw helper with C++ linkage
