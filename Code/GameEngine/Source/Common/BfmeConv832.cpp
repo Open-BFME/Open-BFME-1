@@ -114,7 +114,13 @@ public:
 };
 extern BfmeMgr4C8 *g_mgr12F4C84;
 
-void bfmeSequence010()
+class ScriptActions
+{
+protected:
+	void doDisableInput();
+};
+
+void ScriptActions::doDisableInput()
 {
 	g_mgr12F148C->step1(0);
 	g_mgr12F4C5C->step2(0);
