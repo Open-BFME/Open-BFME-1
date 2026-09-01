@@ -745,6 +745,84 @@ public:
 	void clear30A0();
 };
 
+class BFMETextureRelease
+{
+public:
+	void Release_Ref();
+};
+
+void W3DRadarResetLock(void);
+void W3DRadarResetUnlock(void);
+
+class BaseHeightMapResetGuard
+{
+public:
+	BaseHeightMapResetGuard() { W3DRadarResetLock(); }
+	~BaseHeightMapResetGuard() { W3DRadarResetUnlock(); }
+};
+
+class BaseHeightMapResetList
+{
+public:
+	void clear(bool reset);
+};
+
+struct BaseHeightMapResetTreeType
+{
+	RefCountClass *m_mesh;
+	char m_padding04[0x58];
+};
+
+class GameEngine
+{
+private:
+	char m_padding00[0x34];
+
+public:
+	Int m_field34;
+};
+
+extern GameEngine *TheGameEngine;
+
+void BaseHeightMapResetBuffer::clear3094()
+{
+	BaseHeightMapResetGuard guard;
+	char *base = reinterpret_cast<char *>(this);
+	Int zero = 0;
+
+	*reinterpret_cast<Int *>(base + 0x2a7cb0) = zero;
+	BFMETextureRelease **texture =
+		reinterpret_cast<BFMETextureRelease **>(base + 0xb8);
+	if (*texture) {
+		(*texture)->Release_Ref();
+		*texture = NULL;
+	}
+	texture = reinterpret_cast<BFMETextureRelease **>(base + 0xbc);
+	if (*texture) {
+		(*texture)->Release_Ref();
+		*texture = NULL;
+	}
+	reinterpret_cast<BaseHeightMapResetList *>(base + 0xc0)->clear(false);
+	reinterpret_cast<BaseHeightMapResetList *>(base + 0xe8)->clear(false);
+	*reinterpret_cast<Int *>(base + 0x160) = zero;
+	*reinterpret_cast<UnsignedByte *>(base + 0x2a7cb4) = 1;
+
+	BaseHeightMapResetTreeType *type =
+		reinterpret_cast<BaseHeightMapResetTreeType *>(base + 0x2a7cbc);
+	for (Int i = 0; i < 64; ++i, ++type) {
+		if (type->m_mesh) {
+			type->m_mesh->Release_Ref();
+			type->m_mesh = NULL;
+		}
+	}
+
+	if (TheGameEngine) {
+		*reinterpret_cast<Real *>(base + 0x2a98f8) =
+			static_cast<Real>(TheGameEngine->m_field34);
+	}
+	*reinterpret_cast<Int *>(base + 0x2a93bc) = zero;
+}
+
 // BFME's +0x30A4 buffer is a W3DFloorBuffer.  Its list is the STLport
 // circular list at +0x20; the payloads are the floor render objects allocated
 // by the buffer and owned by this reset path.
@@ -752,12 +830,6 @@ class Gen_dtor_006f8910
 {
 public:
 	virtual ~Gen_dtor_006f8910();
-};
-
-class BFMETextureRelease
-{
-public:
-	void Release_Ref();
 };
 
 struct BaseHeightMapFloorElement
