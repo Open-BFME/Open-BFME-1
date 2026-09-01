@@ -54,6 +54,7 @@
 
 extern void W3DRadarResetLock(void);
 extern void BFME_DX8_Thread_Assert(void);
+extern void rva008fd2a0(void);
 
 // BFME's retail DX8 error path writes through the game debug stream rather
 // than calling the later Zero Hour Log_DX8_ErrorCode helper.  Keep the ABI
@@ -97,6 +98,28 @@ static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }
+
+// BFME uses the D3D9 device ABI: CreateVertexBuffer is slot +0x68 and carries
+// the trailing shared-handle argument that the Zero Hour D3D8 shim omits.
+class BFMEVertexBufferDevice
+{
+public:
+	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+	virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3C();
+	virtual void Slot40(); virtual void Slot44(); virtual void Slot48(); virtual void Slot4C();
+	virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5C();
+	virtual void Slot60(); virtual void Slot64();
+	virtual HRESULT __stdcall CreateVertexBuffer(UINT length, DWORD usage, DWORD fvf, D3DPOOL pool,
+		IDirect3DVertexBuffer8 **buffer, HANDLE *shared_handle);
+};
+
+struct BFMEVertexBufferCaps
+{
+	char pad[0x138];
+	bool supportTnL;
+};
 
 #define DEFAULT_VB_SIZE 5000
 
@@ -491,10 +514,9 @@ DX8VertexBufferClass::~DX8VertexBufferClass()
 //
 // ----------------------------------------------------------------------------
 
-// ?Create_Vertex_Buffer@DX8VertexBufferClass@@ present-unmatched
 void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 {
-	DX8_THREAD_ASSERT();
+	W3DRadarResetLock();
 	WWASSERT(!VertexBuffer);
 
 #ifdef VERTEX_BUFFER_LOG
@@ -516,22 +538,25 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 		((usage&USAGE_DYNAMIC) ? D3DUSAGE_DYNAMIC : 0)|
 		((usage&USAGE_NPATCHES) ? D3DUSAGE_NPATCHES : 0)|
 		((usage&USAGE_SOFTWAREPROCESSING) ? D3DUSAGE_SOFTWAREPROCESSING : 0);
-	if (!DX8Wrapper::Get_Current_Caps()->Support_TnL()) {
+	const BFMEVertexBufferCaps *caps = reinterpret_cast<const BFMEVertexBufferCaps *>(DX8Wrapper::Get_Current_Caps());
+	if (!caps->supportTnL) {
 		usage_flags|=D3DUSAGE_SOFTWAREPROCESSING;
 	}
 
 	// New Code
-	if (!DX8Wrapper::Get_Current_Caps()->Support_TnL()) {
+	if (!caps->supportTnL) {
 		usage_flags|=D3DUSAGE_SOFTWAREPROCESSING;
 	}
 
-	HRESULT ret=DX8Wrapper::_Get_D3D_Device8()->CreateVertexBuffer(
+	HRESULT ret=reinterpret_cast<BFMEVertexBufferDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateVertexBuffer(
 		FVF_Info().Get_FVF_Size()*VertexCount,
 		usage_flags,
 		FVF_Info().Get_FVF(),
 		(usage&USAGE_DYNAMIC) ? D3DPOOL_DEFAULT : D3DPOOL_MANAGED,
-		&VertexBuffer);
+		&VertexBuffer,
+		NULL);
 	if (SUCCEEDED(ret)) {
+		BFME_DX8_Thread_Assert();
 		return;
 	}
 
@@ -540,28 +565,27 @@ void DX8VertexBufferClass::Create_Vertex_Buffer(UsageType usage)
 	// Vertex buffer creation failed, so try releasing least used textures and flushing the mesh cache.
 
 	// Free all textures that haven't been used in the last 5 seconds
-	TextureClass::Invalidate_Old_Unused_Textures(5000);
+	rva008fd2a0();
 
 	// Invalidate the mesh cache
 	WW3D::_Invalidate_Mesh_Cache();
 
-	//@todo: Find some way to invalidate the textures too
-	ret = DX8Wrapper::_Get_D3D_Device8()->ResourceManagerDiscardBytes(0);
-
 	// Try again...
-	ret=DX8Wrapper::_Get_D3D_Device8()->CreateVertexBuffer(
+	ret=reinterpret_cast<BFMEVertexBufferDevice *>(DX8Wrapper::_Get_D3D_Device8())->CreateVertexBuffer(
 		FVF_Info().Get_FVF_Size()*VertexCount,
 		usage_flags,
 		FVF_Info().Get_FVF(),
 		(usage&USAGE_DYNAMIC) ? D3DPOOL_DEFAULT : D3DPOOL_MANAGED,
-		&VertexBuffer);
+		&VertexBuffer,
+		NULL);
 
 	if (SUCCEEDED(ret)) {
 		WWDEBUG_SAY(("...Vertex buffer creation succesful\n"));
 	}
 
 	// If it still fails it is fatal
-	DX8_ErrorCode(ret);
+	BFME_DX8_ErrorCode(ret);
+	BFME_DX8_Thread_Assert();
 
 	/* Old Code
 	DX8CALL(CreateVertexBuffer(

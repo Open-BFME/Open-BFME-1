@@ -10777,6 +10777,7 @@ name,address,notes
 ?_Create_DX8_Surface@DX8Wrapper@@SAPAVIDirect3DSurface9@@IIW4WW3DFormat@@W4_D3DPOOL@@@Z,0x00904CE0,SurfaceClass four-argument constructor call target
 ?_CxxThrowException@@YGXPAX0@Z,0x009F6D00,MSVC retail exception throw helper with C++ linkage
 ?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@1@@Z,0x00920D10,pinharvest x2 (body)
+?_Invalidate_Mesh_Cache@WW3D@@SAXXZ,0x009056B0,DX8 vertex-buffer creation retry direct call target
 ?_Invalidate_Textures@WW3D@@SAXXZ,0x008FD790,pinharvest x2 (body)
 ?_M_acquire_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082DA10,node_alloc deallocate lock acquire; thunk to real acquire 0x0082C760
 ?_M_advance@?$_Deque_iterator_base@H@_STL@@QAEXH@Z,0x009ED4A0,gen-tgrid shared callee
@@ -79654,6 +79655,7 @@ name,address,notes
 ?rva0082ADB0Fill@@YAXPAD0ABD@Z,0x0082ADB0,callee of rva0082BE60FillN; STLport fill at the ICF alias
 ?rva0082C6E0CopyValues@@YAPAURva0082C6E0Value@@PAU1@00@Z,0x00018179,0x0082C6E0 vector erase trivial-copy thunk;target=0x00065E30
 ?rva0082C760Acquire@@YAXPAVNodeAllocMutex@_STL@@@Z,0x0082C760,node_alloc real acquire called by _M_acquire_lock
+?rva008fd2a0@@YAXXZ,0x008FD2A0,DX8 vertex-buffer creation retry calls the already matched no-argument invalidation wrapper
 ?rva220840Callback@@YAXXZ,0x006207F0,Open-BFME5 dispatch callback pin
 ?rva379ec0SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 small-block deallocator reached by the CrateTemplate node-list destructor
 ?rva423670SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 record small-block deallocator pin
