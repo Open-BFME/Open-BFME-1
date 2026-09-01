@@ -81770,11 +81770,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
 _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
-??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
-??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
-??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
-??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
-??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
 ??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
