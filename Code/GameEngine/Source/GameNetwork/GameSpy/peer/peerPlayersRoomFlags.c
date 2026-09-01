@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-typedef void *PEER;
 typedef int PEERBool;
 typedef int RoomType;
+typedef void *HashTable;
 
 enum
 {
@@ -29,10 +29,19 @@ typedef struct piPlayer
 	int flags[3];
 } piPlayer;
 
+typedef struct piConnection
+{
+	char unreconstructed_0000[0xAB4];
+	HashTable players;
+} piConnection;
+
+typedef piConnection *PEER;
+
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 void piAddReadyChangedCallback(PEER peer, const char *nick, PEERBool ready);
 void piAddPlayerFlagsChangedCallback(PEER peer, RoomType roomType,
 	const char *nick, int oldFlags, int newFlags);
+void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	RoomType roomType, int flags)
@@ -118,4 +127,36 @@ void piSetPlayerModeFlags(PEER peer, const char *nick,
 		nFlags |= PEER_FLAG_VOICE;
 
 	piSetNewPlayerFlags(peer, nick, roomType, nFlags);
+}
+
+typedef struct piFindPlayerByIndexData
+{
+	int index;
+	int count;
+	RoomType roomType;
+} piFindPlayerByIndexData;
+
+static int piFindPlayerByIndexMap(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piFindPlayerByIndexData *data = (piFindPlayerByIndexData *)clientData;
+
+	if (player->inRoom[data->roomType])
+	{
+		if (data->index == data->count)
+			return 0;
+		data->count++;
+	}
+
+	return 1;
+}
+
+piPlayer *piFindPlayerByIndex(PEER peer, RoomType roomType, int index)
+{
+	piFindPlayerByIndexData data;
+
+	data.index = index;
+	data.count = 0;
+	data.roomType = roomType;
+	return (piPlayer *)TableMap2(peer->players, piFindPlayerByIndexMap, &data);
 }
