@@ -18,8 +18,43 @@
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/Gadget.h"
+#include "GameClient/GadgetListBox.h"
 #include "GameClient/KeyDefs.h"
+#include "GameClient/MetaEvent.h"
 #include "GameClient/WindowLayout.h"
+
+static GameWindow *listBoxCommandList = NULL;
+
+struct BfmeMetaMapRec
+{
+	BfmeMetaMapRec *next;
+	unsigned char padding[0x14];
+	MappableKeyCategories category;
+	unsigned int key;
+	UnicodeString displayName;
+};
+
+struct BfmeMetaMap
+{
+	unsigned char padding[8];
+	BfmeMetaMapRec *first;
+};
+
+void fillCommandListBox( MappableKeyCategories cat )
+{
+	if (!listBoxCommandList)
+		return;
+
+	GadgetListBoxReset(listBoxCommandList);
+	Color color = GameMakeColor(255, 255, 255, 255);
+
+	BfmeMetaMap *metaMap = (BfmeMetaMap *)TheMetaMap;
+	for (const BfmeMetaMapRec *rec = metaMap->first; rec; rec = rec->next)
+	{
+		if (rec->category == cat)
+			GadgetListBoxAddEntryText(listBoxCommandList, rec->displayName, color, -1, -1);
+	}
+}
 
 //-------------------------------------------------------------------------------------------------
 /** keyboard options menu input callback */
