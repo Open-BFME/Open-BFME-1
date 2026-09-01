@@ -81844,5 +81844,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_SBServerGetPrivateInetAddress,0x00859F20,peerSB.c private-address accessor proven by piIsLocalServer call
 ?Init@CComCriticalSection@ATL@@QAEJXZ,0x007E5860,ATL 7.1 critical-section initializer body reached through ILT 0x0003AEC7
