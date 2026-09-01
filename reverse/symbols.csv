@@ -6397,14 +6397,10 @@ name,address,notes
 ??1Gen_dtor_00957820@@UAE@XZ,0x00957840,gen-dtor class destructor
 ??1Gen_dtor_00957b90@@UAE@XZ,0x00957BB0,gen-dtor class destructor
 ??1Gen_dtor_00964650@@UAE@XZ,0x00921620,gen-dtor class destructor
-??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose first slot is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
 ??1Gen_dtor_00966890@@UAE@XZ,0x009221E0,gen-dtor class destructor
-??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose first slot is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
 ??1Gen_dtor_00966a90@@UAE@XZ,0x009215B0,gen-dtor class destructor
 ??1Gen_dtor_00967060@@UAE@XZ,0x00967080,gen-dtor class destructor
-??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose first slot is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
 ??1Gen_dtor_00967090@@UAE@XZ,0x009670B0,gen-dtor class destructor
-??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose first slot is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
 ??1Gen_dtor_009670c0@@UAE@XZ,0x009670E0,gen-dtor class destructor
 ??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose first slot is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
 ??1Gen_dtor_009670f0@@UAE@XZ,0x00967110,gen-dtor class destructor
@@ -8632,6 +8628,7 @@ name,address,notes
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
 ??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
+??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose first slot is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
 ??1LivingWorldAnimObject@@UAE@XZ,0x00012AD0,LivingWorldAnimObject scalar deleting destructor calls this ILT
 ??1LivingWorldCampaign@@QAE@XZ,0x003AA7F0,Open-BFME5 destructor unwound at the end of ParseLivingWorldCampaignBlock
 ??1LivingWorldPlayerArmy@@QAE@XZ,0x00006C4E,derived from the REL32 displacement at 0x00366410
@@ -8806,6 +8803,7 @@ name,address,notes
 ??1RoadType@@QAE@XZ,0x00044E2C,pinharvest x1 (thunk)
 ??1RoadType@@QAE@XZ,0x000482ED,pinharvest x1 (thunk)
 ??1RopeInfo@ChinookCombatDropState@@QAE@XZ,0x0003D041,Open-BFME5 ILT fronts unclaimed 8-byte body 0x00191910; called by the _Destroy range loop over that element type
+??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose first slot is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
 ??1RousingSpeechUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 pin
 ??1RousingSpeechUpdateModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1RousingSpeechUpdateModuleDataMemberB@@QAE@XZ,0x0001A401,Open-BFME5 pin
@@ -8993,6 +8991,7 @@ name,address,notes
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x00029555,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x009D19A0,pinharvest x1 (body)
+??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose first slot is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
 ??1ScienceVecStandIn@@QAE@XZ,0x00016B58,ScienceInfo ScienceVec destructor ILT
 ??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose first slot is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
 ??1ScriptActions@@UAE@XZ,0x00013E9E,ILT for the ScriptActions destructor body at 0x002F1B80
@@ -9005,6 +9004,7 @@ name,address,notes
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
+??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose first slot is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
 ??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
@@ -72660,6 +72660,7 @@ name,address,notes
 ?bfmeAllowsBase@Gen_002983b0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x002983B0 defers through
 ?bfmeAllowsRelationship@BfmeRelationTest@@QBE_NHPBVBfmeRelationEntry@@@Z,0x00037349,Object relationship body calls this protected ILT for special relation tests
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
+?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
@@ -72833,6 +72834,7 @@ name,address,notes
 ?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreeQJ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBind1282@BfmeQ1282@@QAEXPAX@Z,0x000361CE,pin
+?bfmeBitsURD@@YIIH@Z,0x0090C400,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
 ?bfmeBlendTileOffset@BFMERetailWorldHeightMapBlendTileDataShim@@AAEHHPAUTBlendTileInfo@@@Z,0x0003D965,Open-BFME5 ILT the blendTileData at 0x0074A240 asks for its offset through
@@ -72842,6 +72844,7 @@ name,address,notes
 ?bfmeBucketNumForKey@@YAIPBXI@Z,0x00012909,Open-BFME5 ILT the hashtable iterator skips at 0x00460DA0 and 0x00461480 ask for the bucket through
 ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
 ?bfmeBuildString1284@BfmeStringWriter1284@@QAEXPAVBfmeString1284@@H@Z,0x008B8E70,address-derived string builder; receiver and output-string shape decoded from the 0x008B9460 retail call site
+?bfmeBumpURB@BfmeThingURB@@QAEXXZ,0x009EB940,pin
 ?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
 ?bfmeCalcBWF@BfmeCalcBWF@@QAEXPAVBfmeRetBWF@@H0@Z,0x0087E0D0,pin
 ?bfmeCalcBXA@@YAHHI@Z,0x00023254,pin
@@ -73404,6 +73407,7 @@ name,address,notes
 ?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
+?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
@@ -76650,6 +76654,7 @@ name,address,notes
 ?g_bfmeName1019@@3PADA,0x00D2A5A8,pin
 ?g_bfmeName1052@@3PADA,0x00D2C144,pin
 ?g_bfmeName1053@@3PADA,0x00C892DC,pin
+?g_bfmeNameURC@@3PADA,0x00D2ACA4,pin
 ?g_bfmeNext1221@@3PAIA,0x00F391A4,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
@@ -81914,4 +81919,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
