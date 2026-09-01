@@ -138,7 +138,7 @@ static int _IndexBufferTotalSize;
 // ----------------------------------------------------------------------------
 
 // ??0IndexBufferClass@@QAE@IG@Z present-unmatched
-IndexBufferClass::IndexBufferClass(unsigned type_, unsigned short index_count_)
+IndexBufferClass::IndexBufferClass(unsigned type_, unsigned index_count_)
 	:
 	index_count(index_count_),
 	type(type_),

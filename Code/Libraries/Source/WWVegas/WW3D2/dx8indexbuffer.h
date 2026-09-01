@@ -64,7 +64,7 @@ class IndexBufferClass : public W3DMPO, public RefCountClass
 protected:
 	virtual ~IndexBufferClass();
 public:
-	IndexBufferClass(unsigned type, unsigned short index_count);
+	IndexBufferClass(unsigned type, unsigned index_count);
 
 	void Copy(unsigned int* indices,unsigned start_index,unsigned index_count);
 	void Copy(unsigned short* indices,unsigned start_index,unsigned index_count);
