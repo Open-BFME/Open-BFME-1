@@ -85,6 +85,15 @@ typedef struct piPlayer
 	int pingOnce;
 } piPlayer;
 
+typedef struct bfmeHostEnt
+{
+	char *name;
+	char **aliases;
+	short addressType;
+	short addressLength;
+	unsigned int **addressList;
+} bfmeHostEnt;
+
 int piGetNextID(PEER peer);
 int piRoomsInit(PEER peer);
 int piPlayersInit(PEER peer);
@@ -174,7 +183,9 @@ void chatDisconnect(void *chat);
 void piOperationsReset(PEER peer);
 void piCallbacksThink(PEER peer, int opID);
 static void piThink(PEER peer, int opID);
-unsigned int piGetPrivateIP(void);
+static unsigned int piGetPrivateIP(void);
+bfmeHostEnt *getlocalhost(void);
+int IsPrivateIP(unsigned int *address);
 int piOperationsInit(PEER peer);
 int piCallbacksInit(PEER peer);
 int piKeysInit(PEER peer);
@@ -223,6 +234,23 @@ int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
+
+static unsigned int piGetPrivateIP(void)
+{
+	bfmeHostEnt *host = getlocalhost();
+	unsigned int *address;
+	int i;
+
+	if (!host)
+		return 0;
+	for (i = 0; host->addressList[i]; ++i)
+	{
+		address = host->addressList[i];
+		if (IsPrivateIP(address))
+			return *address;
+	}
+	return 0;
+}
 
 static void piShutdownCleanup(PEER peer)
 {
