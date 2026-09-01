@@ -81889,3 +81889,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
 ??1WorkerStateMachine@@MAE@XZ,0x0003EC0C,constructor installs vtable 0x010CA1F0 whose first slot reaches deleting wrapper 0x002C8760; wrapper directly calls this protected scalar-destructor ILT thunk
+??1WorkerAIUpdate@@MAE@XZ,0x0003EFBD,constructor installs vtable 0x010C9F58 whose first slot reaches deleting wrapper 0x002C8340; wrapper directly calls this protected scalar-destructor ILT thunk
