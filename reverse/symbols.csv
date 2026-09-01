@@ -1,5 +1,4 @@
 name,address,notes
-?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z,0x000461FF,goalPosition caller proves the ILT target
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -72653,6 +72652,7 @@ name,address,notes
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
 ?bfmeAppendVCB@BfmeBufVCB@@QAEXPBD@Z,0x008002C0,pin
+?bfmeAppendVFD@BfmeBufVFD@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
@@ -74405,6 +74405,7 @@ name,address,notes
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
 ?bfmeReadSJA@@YAXPAX0PAD@Z,0x0000FB73,pin
+?bfmeReadVFC@BfmeChunkVFC@@QAEIPAXI@Z,0x009E15C0,pin
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
@@ -74550,6 +74551,7 @@ name,address,notes
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
 ?bfmeSendSKA@BfmeSinkSKA@@QAEXHHH@Z,0x00804010,pin
+?bfmeSendVFA@@YAHPAXHHHH@Z,0x00807370,pin
 ?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
@@ -76400,6 +76402,7 @@ name,address,notes
 ?g_bfmeEmptyUPA@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUVA@@3PADA,0x00C7301C,pin
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
+?g_bfmeEmptyVFD@@3PADA,0x00C7301C,pin
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeF1071@@3DA,0x00EB7D84,pin
@@ -77651,6 +77654,7 @@ name,address,notes
 ?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ,0x00003B52,Open-BFME5 ILT thunk to the body matched at 0x001BF570; ?queueUpgrade@AIGroup@@QAEXPBVUpgradeTemplate@@_N@Z at 0x00151170 reaches it through this thunk
 ?getProgress@NetFileProgressCommandMsg@@QAEHXZ,0x00033668,ILT thunk; NetPacket::addFileProgressCommand at 0x0067A700 calls it where Zero Hour calls getProgress
 ?getProjectileLaunchOffset@Drawable@@QBE_NW4WeaponSlotType@@HPAVMatrix3D@@W4WhichTurretType@@PAUCoord3D@@3@Z,0x0041B9C0
+?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z,0x000461FF,goalPosition caller proves the ILT target
 ?getReal@UserPreferences@@QBEMVAsciiString@@M@Z,0x000A93B0,find virtual +0x18 then atof through the CRT import at 0x01359380 and fstp/fld of the Real default; ILT 0x0000B320 used by getTimePlayed 0x0009C2C0; ret 8
 ?getRealFilename@NetFileAnnounceCommandMsg@@QAE?AVAsciiString@@XZ,0x000106D6,processFileAnnounce calls the ILT for the matched 0x00675610 StringBase<char> return body
 ?getRelationship@Object@@QBE?AW4Relationship@@PBV1@@Z,0x0004A719,ILT thunk to Object::getRelationship; identity from Zero Hour ActionManager.cpp where the result is compared against ALLIES
@@ -80750,6 +80754,12 @@ _WSACleanup@0,0x0081BDE4,vendored=gamespy-2004
 _WSAGetLastError@0,0x0081BE08,vendored=gamespy-2004
 _WSAIoctl@36,0x0081BE80,Y4 lane: nine-argument WS2_32 stdcall; the address remap at 0x007FE310 calls it with SIO_ROUTING_INTERFACE_QUERY 0xC8000014
 _WSAStartup@8,0x0081BDF6,vendored=gamespy-2004
+_WatchCacheCompare,0x00865550,GameSpy PEER SDK peerKeys.c watch-cache comparison callback
+_WatchCacheFree,0x00865590,GameSpy PEER SDK peerKeys.c watch-cache free callback; exact ICF alias already source-covered
+_WatchCacheHash,0x00865510,GameSpy PEER SDK peerKeys.c watch-cache hash callback
+_WatchKeysCompare,0x008654E0,GameSpy PEER SDK peerKeys.c watch-key comparison callback; exact ICF alias already source-covered
+_WatchKeysFree,0x00865500,GameSpy PEER SDK peerKeys.c watch-key free callback; exact ICF alias already source-covered
+_WatchKeysHash,0x008654A0,GameSpy PEER SDK peerKeys.c watch-key hash callback
 _XMP_Fetch_Prime_Size,0x009E8140
 _XMP_Fetch_Prime_Table,0x009E8130
 _XMP_Is_Small_Prime,0x009E8CA0
@@ -81656,6 +81666,7 @@ _piGetGlobalWatchKeyA,0x00865760,GameSpy PEER SDK peerKeys.c global watch-cache 
 _piGetPlayer,0x00863350,gamespy-peer: looks a piPlayer up by nick in connection->players; sole player-lookup callee of peerKeys.c cache maps
 _piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
 _piGetPrivateIP,0x00857150,gamespy-peer: authentic peerInitialize private-address discovery call before title initialization
+_piGetRoomKeysCallbackA,0x00865DB0,GameSpy PEER SDK peerKeys.c room-key response callback
 _piGetRoomWatchKeyA,0x008657C0,GameSpy PEER SDK peerKeys.c room watch-cache lookup
 _piGetWatchKeyA,0x00865710,GameSpy PEER SDK peerKeys.c internal watch-cache lookup
 _piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
@@ -81674,6 +81685,7 @@ _piKeyCacheRefreshPlayer,0x00866340,GameSpy PEER SDK peerKeys.c player key-cache
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
 _piKeyChanged,0x008659C0,GameSpy PEER SDK peerKeys.c shared watch-key cache update
 _piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
+_piKeysGetGlobalKeysCallbackA,0x00865D60,GameSpy PEER SDK peerKeys.c global-key response callback; unique object name avoids collision with peerOperations callback
 _piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
@@ -81702,8 +81714,6 @@ _piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAuto
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
-_piGetRoomKeysCallbackA,0x00865DB0,GameSpy PEER SDK peerKeys.c room-key response callback
-_piKeysGetGlobalKeysCallbackA,0x00865D60,GameSpy PEER SDK peerKeys.c global-key response callback; unique object name avoids collision with peerOperations callback
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
 _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
 _piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
@@ -81722,13 +81732,13 @@ _piSendChannelUTM,0x00857EB0,gamespy-peer: called by piXpingPlayer at 0x00862B80
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
 _piSetChannelCallbacks,0x0086BA10,GameSpy Peer channel callback initializer
+_piSetGlobalWatchKeys,0x00865F20,GameSpy PEER SDK peerKeys.c global watch-key configuration
 _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
 _piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
 _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x008659C0 on the demangled username key
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
-_piSetupKeysMap,0x00865D40,GameSpy PEER SDK peerKeys.c watch-key array collector
 _piSetRoomWatchKeys,0x00866010,GameSpy PEER SDK peerKeys.c room watch-key configuration
-_piSetGlobalWatchKeys,0x00865F20,GameSpy PEER SDK peerKeys.c global watch-key configuration
+_piSetupKeysMap,0x00865D40,GameSpy PEER SDK peerKeys.c watch-key array collector
 _piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
 _piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
@@ -81738,12 +81748,6 @@ _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
-_WatchKeysHash,0x008654A0,GameSpy PEER SDK peerKeys.c watch-key hash callback
-_WatchKeysCompare,0x008654E0,GameSpy PEER SDK peerKeys.c watch-key comparison callback; exact ICF alias already source-covered
-_WatchKeysFree,0x00865500,GameSpy PEER SDK peerKeys.c watch-key free callback; exact ICF alias already source-covered
-_WatchCacheHash,0x00865510,GameSpy PEER SDK peerKeys.c watch-cache hash callback
-_WatchCacheCompare,0x00865550,GameSpy PEER SDK peerKeys.c watch-cache comparison callback
-_WatchCacheFree,0x00865590,GameSpy PEER SDK peerKeys.c watch-cache free callback; exact ICF alias already source-covered
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
 _piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
 _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xping update
