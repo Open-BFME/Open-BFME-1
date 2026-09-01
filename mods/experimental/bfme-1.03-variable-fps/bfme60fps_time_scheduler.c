@@ -461,8 +461,7 @@ static void open_timing_log(void){
   if(size==0)WriteFile(g_timingLog,header,sizeof(header)-1,&wrote,0);
 }
 static void log_timing(TimingClass classification,const char *admission,BOOL force){
-  typedef int (__fastcall *ClientFrameProc)(void*,void*);
-  char line[1280];int n,maxFps=0,logicAdjust=0,logicFrame=-1,clientFrame=-1,savedClientFrame=-1;DWORD wrote,now=GetTickCount(),network=0,frameElapsed=0,sleepRemaining=0,sleepTotal=0,previousFrame=0,w3dFrame=0,foregroundPid=0,vt=0;double target;float logicScale=0.0f;BYTE useFps=0,limitRate=0,engineActive=0;LONG foreground,pending,attempt;void *engine,*global,*logic,*client;HWND foregroundWindow;
+  char line[1280];int n,maxFps=0,logicAdjust=0,logicFrame=-1,clientFrame=-1,savedClientFrame=-1;DWORD wrote,now=GetTickCount(),network=0,frameElapsed=0,sleepRemaining=0,sleepTotal=0,previousFrame=0,w3dFrame=0,foregroundPid=0;double target;float logicScale=0.0f;BYTE useFps=0,limitRate=0,engineActive=0;LONG foreground,pending,attempt;void *engine,*global,*logic;HWND foregroundWindow;
   foregroundWindow=GetForegroundWindow();if(foregroundWindow)GetWindowThreadProcessId(foregroundWindow,&foregroundPid);foreground=foregroundPid==GetCurrentProcessId();
   if(foreground!=g_lastForeground){g_lastForeground=foreground;force=TRUE;}
   if(!force&&classification==g_timing.lastClass&&(DWORD)(now-g_timing.lastLogMs)<1000)return;
@@ -475,7 +474,9 @@ static void log_timing(TimingClass classification,const char *admission,BOOL for
     {int *adjust=*(int**)(g_image+(0x012A7244-0x00400000));if(adjust)logicAdjust=*adjust;}
     frameElapsed=*(volatile DWORD*)(g_image+(0x012ED514-0x00400000));sleepRemaining=*(volatile DWORD*)(g_image+(0x012ED510-0x00400000));sleepTotal=*(volatile DWORD*)(g_image+(0x012ED50C-0x00400000));previousFrame=*(volatile DWORD*)(g_image+(0x012ED518-0x00400000));w3dFrame=*(volatile DWORD*)(g_image+W3D_FRAME_MS_RVA);
     logic=*(void**)(g_image+(0x012F0898-0x00400000));if(logic)logicFrame=*(volatile int*)((BYTE*)logic+0x3C);
-    client=*(void**)(g_image+(0x012F1464-0x00400000));if(client&&(vt=*(volatile DWORD*)client)!=0)clientFrame=((ClientFrameProc)(*(volatile DWORD*)(vt+0x64)))(client,0);
+    /* Vtable slot +0x64 is not GameClient::getFrame(): retail passes it one
+       stack argument.  Calling it as a zero-argument diagnostic corrupted its
+       frame-index input and crashed startup.  Keep this unproven field blank. */
     savedClientFrame=*(volatile int*)(g_image+(0x012ED508-0x00400000));
   }
   target=bfme_target_hz(g_timing.fps);pending=InterlockedCompareExchange(&g_pendingTick,0,0);attempt=InterlockedCompareExchange(&g_admissionAttemptInFlight,0,0);
