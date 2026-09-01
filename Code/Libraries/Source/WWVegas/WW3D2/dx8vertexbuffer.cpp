@@ -142,7 +142,6 @@ VertexBufferClass::~VertexBufferClass() throw()
 	::operator delete(fvf_info);
 }
 
-// ?Get_Total_Buffer_Count@VertexBufferClass@@ present-unmatched
 unsigned VertexBufferClass::Get_Total_Buffer_Count()
 {
 	return _VertexBufferCount;
