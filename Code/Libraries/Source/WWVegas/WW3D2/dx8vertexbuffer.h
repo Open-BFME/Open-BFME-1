@@ -212,7 +212,7 @@ inline VertexFormatXYZNDUV2 * DynamicVBAccessClass::WriteLockClass::Get_Formatte
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass : public VertexBufferClass
 {
-	W3DMPO_GLUE(DX8VertexBufferClass)
+	// Retail uses the ordinary deleting destructor for this class.
 protected:
 	~DX8VertexBufferClass();
 public:
