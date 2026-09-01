@@ -493,28 +493,6 @@ Bool ModuleInfo::clearCopiedFromDefaultEntries(Int interfaceMask, const AsciiStr
 
 
 //-------------------------------------------------------------------------------------------------
-// ?clearAiModuleInfo@ModuleInfo@@QAE_NXZ present-unmatched
-Bool ModuleInfo::clearAiModuleInfo() 
-{ 
-	Bool ret = false;
-
-	std::vector<Nugget>::iterator it = m_info.begin();
-	while( it != m_info.end() )
-	{
-		if (it->second->isAiModuleData() )
-		{
-			it = m_info.erase( it );
-			ret = true;
-		}
-		else
-		{
-			++it;
-		}
-	}
-	return ret;
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?parseModuleName@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z
 // Body in Code/masm_dumps/_sa__parseModuleName_ThingTemplate__KAXPAVINI__PAX1PBX_1458A0.asm (exact 772B retail @ 0x001458A0).
 //-------------------------------------------------------------------------------------------------
