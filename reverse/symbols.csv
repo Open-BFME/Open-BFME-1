@@ -73281,6 +73281,7 @@ name,address,notes
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
 ?bfmeDone1038@BfmeB1038@@QAEXXZ,0x000142A9,pin
 ?bfmeDone1045@BfmeSub1045@@QAEXXZ,0x007E86C0,pin
+?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
 ?bfmeDrop1022@BfmeE1022@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDrop1024@BfmeN1024@@QAEXH@Z,0x00005696,pin
@@ -73812,6 +73813,7 @@ name,address,notes
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVCC@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeVD@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeVDB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
@@ -74618,6 +74620,7 @@ name,address,notes
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
 ?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
+?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
@@ -81684,6 +81687,7 @@ _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
+_piKeyChanged,0x008659C0,GameSpy PEER SDK peerKeys.c shared watch-key cache update
 _piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
 _piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
@@ -81712,7 +81716,6 @@ _piQRServerKeyCallback,0x00866380,upstream peerQR.c callback passed by piStartAu
 _piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAutoMatchReporting
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
-_piKeyChanged,0x008659C0,GameSpy PEER SDK peerKeys.c shared watch-key cache update
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
 _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
