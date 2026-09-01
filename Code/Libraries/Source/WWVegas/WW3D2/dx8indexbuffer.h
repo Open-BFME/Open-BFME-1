@@ -164,7 +164,7 @@ public:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass : public IndexBufferClass
 {
-	W3DMPO_GLUE(DX8IndexBufferClass)
+	// Retail uses the ordinary deleting destructor for this class.
 
 	friend IndexBufferClass::WriteLockClass;
 	friend IndexBufferClass::AppendLockClass;
