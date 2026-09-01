@@ -6401,6 +6401,7 @@ name,address,notes
 ??1Gen_dtor_00964650@@UAE@XZ,0x00921620,gen-dtor class destructor
 ??1Gen_dtor_00966890@@UAE@XZ,0x009221E0,gen-dtor class destructor
 ??1Gen_dtor_00966a90@@UAE@XZ,0x009215B0,gen-dtor class destructor
+??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose first slot is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
 ??1Gen_dtor_00967060@@UAE@XZ,0x00967080,gen-dtor class destructor
 ??1Gen_dtor_00967090@@UAE@XZ,0x009670B0,gen-dtor class destructor
 ??1Gen_dtor_009670c0@@UAE@XZ,0x009670E0,gen-dtor class destructor
