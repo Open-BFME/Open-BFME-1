@@ -74568,6 +74568,7 @@ name,address,notes
 ?bfmeRunVIX@BfmeMsgVIX@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVJA@BfmeMsgVJA@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVJC@BfmeMsgVJC@@QAEXXZ,0x007E8AC0,pin
+?bfmeRunVJF@BfmeMsgVJF@@QAEXXZ,0x007E8AC0,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74625,9 +74626,11 @@ name,address,notes
 ?bfmeSet1251@BfmeSub1251@@QAEXPAX@Z,0x008002C0,pin
 ?bfmeSet2VIW@BfmeMsgVIW@@QAEXPBDPAX1@Z,0x007E8E90,pin
 ?bfmeSet2VIX@BfmeMsgVIX@@QAEXPBDPAX1@Z,0x007E8E90,pin
+?bfmeSet2VJF@BfmeMsgVJF@@QAEXPBDPAX1@Z,0x007E8E90,pin
 ?bfmeSet3VIW@BfmeMsgVIW@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJA@BfmeMsgVJA@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJC@BfmeMsgVJC@@QAEXPBDH@Z,0x007E88D0,pin
+?bfmeSet3VJF@BfmeMsgVJF@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet4VIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet4VIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
@@ -74683,6 +74686,7 @@ name,address,notes
 ?bfmeSetVIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJA@BfmeMsgVJA@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJC@BfmeMsgVJC@@QAEXPBDPAX@Z,0x007E8A10,pin
+?bfmeSetVJF@BfmeMsgVJF@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -77006,6 +77010,7 @@ name,address,notes
 ?g_bfmeVJC@@3PAXA,0x00F0A5DC,pin
 ?g_bfmeVJD@@3PAXA,0x00F0A618,pin
 ?g_bfmeVJE@@3PAXA,0x00F0A5B8,pin
+?g_bfmeVJF@@3PAXA,0x00F0A630,pin
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeVal995B@@3HA,0x00EB7430,pin
