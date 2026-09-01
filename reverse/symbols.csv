@@ -994,6 +994,7 @@ name,address,notes
 ??$__partial_sort@PAHHUQ4Sort00533470@@@_STL@@YAXPAH000UQ4Sort00533470@@@Z,0x00532DF0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__partial_sort@PAHHUQ4Sort00755050@@@_STL@@YAXPAH000UQ4Sort00755050@@@Z,0x00754C60,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__pop_heap@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@H@_STL@@YAXPAURva00364980HeapElement@@00U1@URva00364980HeapCompare@@PAH@Z,0x0001479F,REL32 wide-element pop-heap target from 0x00366838
+??$__push_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x00019B6E,retail __adjust_heap at 0x005135F0 tails through this ILT to the 243-byte BfmeRecAU pointer sift-up body at 0x00513190
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00575AA0@@@Z,0x000127B0,retail __adjust_heap at 0x005757E0 direct call-site ILT to the 104-byte push-heap body at 0x00574FC0
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z,0x009F2E90,Open-BFME5 the sift-up the __adjust_heap at 0x009F3110 tails into
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F34B0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F34B0@@@Z,0x009F2F00,Open-BFME5 the sift-up the __adjust_heap at 0x009F3190 tails into

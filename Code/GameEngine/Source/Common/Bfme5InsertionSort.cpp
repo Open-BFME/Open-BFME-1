@@ -187,3 +187,25 @@ void __cdecl bfmeLinearInsertAV(BfmeRecAU **first, BfmeRecAU **last, BfmeRecAU *
 		bfmeUnguardedInsertAV(last, value, comp);
 	}
 }
+
+namespace _STL
+{
+
+template <class RandomAccessIter, class Distance, class Tp, class Compare>
+void __push_heap(RandomAccessIter first, Distance holeIndex,
+	Distance topIndex, Tp value, Compare comp)
+{
+	Distance parent = (holeIndex - 1) / 2;
+	while (holeIndex > topIndex && comp(*(first + parent), value))
+	{
+		*(first + holeIndex) = *(first + parent);
+		holeIndex = parent;
+		parent = (holeIndex - 1) / 2;
+	}
+	*(first + holeIndex) = value;
+}
+
+template void __push_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAU>(
+	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAU);
+
+}
