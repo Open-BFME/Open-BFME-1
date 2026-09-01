@@ -4,6 +4,22 @@
 #include <deque>
 
 typedef float Real;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
+extern "C" __declspec(dllimport) double __cdecl floor(double value);
+
+__forceinline Int shroudFloatToLong(Real value)
+{
+	long result;
+	__asm
+	{
+		fld [value]
+		fistp [result]
+	}
+	return result;
+}
 
 void *operator new[](unsigned int bytes);
 void operator delete[](void *pointer);
@@ -51,6 +67,14 @@ struct Gen_t_008fb350_p12pod
 {
 	int value[3];
 };
+
+class ShroudManagerImpl008FBA40;
+class PartitionManager;
+
+bool processShroudRevealCircle008F9A70(Int cellX, Int cellY, Int cellRadius,
+	ShroudManagerImpl008FBA40 *manager, Int playerMask);
+bool processShroudRevealCircle008F9B10(Int cellX, Int cellY, Int cellRadius,
+	ShroudManagerImpl008FBA40 *manager, Int playerMask);
 
 class ShroudManagerImpl008FBA40Element;
 
@@ -131,6 +155,10 @@ public:
 	void reset();
 	void setRegion(const Region3D *region, Real cellSize);
 	void configure(Region3D region, Real cellSize);
+	__declspec(noinline) void doShroudReveal(Int cellX, Int cellY,
+		Int cellRadius, UnsignedInt playerMask);
+	__declspec(noinline) void undoShroudReveal(Int cellX, Int cellY,
+		Int cellRadius, UnsignedInt playerMask);
 
 private:
 	int mode;
@@ -151,6 +179,7 @@ private:
 
 	void processPending(bool drainAll);
 	friend class ShroudManagerImpl008FBA40Element;
+	friend class PartitionManager;
 };
 
 ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
@@ -336,4 +365,64 @@ void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC300(
 				index / manager->width, newStatus);
 		}
 	}
+}
+
+void ShroudManagerImpl008FBA40::doShroudReveal(Int cellX, Int cellY,
+	Int cellRadius, UnsignedInt playerMask)
+{
+	if (playerMask != 0 && cellRadius >= 0)
+		processShroudRevealCircle008F9A70(cellX, cellY, cellRadius, this,
+			playerMask & 0xffff);
+}
+
+void ShroudManagerImpl008FBA40::undoShroudReveal(Int cellX, Int cellY,
+	Int cellRadius, UnsignedInt playerMask)
+{
+	if (playerMask != 0 && cellRadius >= 0)
+		processShroudRevealCircle008F9B10(cellX, cellY, cellRadius, this,
+			playerMask & 0xffff);
+}
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
+class PartitionManager
+{
+public:
+	void doShroudReveal(const Coord3D *position, Real radius,
+		UnsignedInt playerMask);
+	void undoShroudReveal(const Coord3D *position, Real radius,
+		UnsignedInt playerMask);
+
+private:
+	char m_unmodelled_00[0x0C];
+	ShroudManagerImpl008FBA40 *m_impl;
+};
+
+void PartitionManager::doShroudReveal(const Coord3D *position, Real radius,
+	UnsignedInt playerMask)
+{
+	Real radiusInCells = (Real)ceil(radius * m_impl->inverseCellSize);
+	Int cellRadius = shroudFloatToLong(radiusInCells);
+	Real yInCells = (Real)floor((position->y - m_impl->region.lo.y) *
+		m_impl->inverseCellSize);
+	Int cellY = shroudFloatToLong(yInCells);
+	Real xInCells = (Real)floor((position->x - m_impl->region.lo.x) *
+		m_impl->inverseCellSize);
+	Int cellX = shroudFloatToLong(xInCells);
+
+	m_impl->doShroudReveal(cellX, cellY, cellRadius, playerMask);
+}
+
+void PartitionManager::undoShroudReveal(const Coord3D *position, Real radius,
+	UnsignedInt playerMask)
+{
+	Real radiusInCells = (Real)ceil(radius * m_impl->inverseCellSize);
+	Int cellRadius = shroudFloatToLong(radiusInCells);
+	Real yInCells = (Real)floor((position->y - m_impl->region.lo.y) *
+		m_impl->inverseCellSize);
+	Int cellY = shroudFloatToLong(yInCells);
+	Real xInCells = (Real)floor((position->x - m_impl->region.lo.x) *
+		m_impl->inverseCellSize);
+	Int cellX = shroudFloatToLong(xInCells);
+
+	m_impl->undoShroudReveal(cellX, cellY, cellRadius, playerMask);
 }
