@@ -54,8 +54,10 @@ void piAddPlayerFlagsChangedCallback(PEER peer, RoomType roomType,
 void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData);
 void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
 void *TableLookup(HashTable table, const void *elem);
+void TableEnter(HashTable table, void *elem);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 __declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
+PEERBool piPingInitPlayer(PEER peer, piPlayer *player);
 void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
@@ -97,6 +99,60 @@ piPlayer *piGetPlayer(PEER peer, const char *nick)
 	strzcpy(playerMatch.nick, nick, 0x40);
 	playerMatch.nick[0x3F] = '\0';
 	player = (piPlayer *)TableLookup(peer->players, &playerMatch);
+	return player;
+}
+
+static piPlayer *piAddPlayer(PEER peer, const char *nick,
+	PEERBool initialize)
+{
+	piPlayer playerMatch;
+	piPlayer *player = &playerMatch;
+
+	memset(player, 0, sizeof(piPlayer));
+	strzcpy(player->nick, nick, 0x40);
+	player->nick[0x3F] = '\0';
+	if (initialize)
+	{
+		int roomType;
+
+		player->local = (PEERBool)(strcasecmp(nick, peer->nick) == 0);
+		for (roomType = 0; roomType < 3; roomType++)
+		{
+			player->inRoom[roomType] = 0;
+			player->flags[roomType] = 0;
+		}
+		player->IP = 0;
+		player->profileID = 0;
+		player->gotIPAndProfileID = 0;
+		if (!piPingInitPlayer(peer, player))
+			return 0;
+	}
+
+	TableEnter(peer->players, player);
+	return piGetPlayer(peer, nick);
+}
+
+piPlayer *piPlayerJoinedRoom(PEER peer, const char *nick,
+	RoomType roomType, int mode)
+{
+	piPlayer *player;
+
+	if (!peer->enteringRoom[roomType] && !peer->inRoom[roomType])
+		return 0;
+
+	player = piGetPlayer(peer, nick);
+	if (!player)
+		player = piAddPlayer(peer, nick, 1);
+
+	player->inRoom[roomType] = 1;
+	peer->numPlayers[roomType]++;
+	player->flags[roomType] = 0;
+	if (mode & CHAT_OP)
+		player->flags[roomType] |= PEER_FLAG_OP;
+	if (mode & CHAT_VOICE)
+		player->flags[roomType] |= PEER_FLAG_VOICE;
+
+	piPingPlayerJoinedRoom(peer, player, roomType);
 	return player;
 }
 
