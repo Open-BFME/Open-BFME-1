@@ -2127,6 +2127,7 @@ name,address,notes
 ??0BfmeArmyIcon@@QAE@ABVAsciiString@@@Z,0x00023ED9,retail findArmyIcon body directly encodes the BfmeArmyIcon constructor thunk
 ??0BfmeArmyIconBase@@QAE@VAsciiString@@@Z,0x000125F3,base constructor thunk called by BfmeArmyIcon
 ??0BfmeAttackNuggetBase@@QAE@XZ,0x0001B522,Open-BFME5 ILT the AttackNugget constructor at 0x0059EB00 calls its base through; it jumps to 0x00489210
+??0BfmeAudioEvent491110@@QAE@ABVBfmeAsciiString491110@@H@Z,0x00025306,0x00491110 constructs both temporary audio events through the retail two-argument AudioEventRTS constructor thunk
 ??0BfmeAudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z,0x0004941D,alias of the positional AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
 ??0BfmeAudioEventRTS@@QAE@ABVAsciiString@@W4ObjectID@@@Z,0x0003961C,alias of the AudioEventRTS spelling pinned at the same ILT; ScriptActions.cpp sizes the local through a view because BFME's event is 0x70 bytes
 ??0BfmeBase1134@@QAE@XZ,0x009A1A30,pin
@@ -4077,6 +4078,7 @@ name,address,notes
 ??1BfmeAptScreenQuitMenu@@UAE@XZ,0x00569720,E tier 1 via the corrected TheNetwork vcall seed: virtual dtor of the QuitMenu APT screen whose ctor is pinned ??0BfmeAptScreenQuitMenu@@QAE@PAX@Z (ILT 0x00025153 -> 0x0056A2F0 installs vtable 0x0110A388 at 0x0056A324 and publishes this to 0x012F4B40 at 0x0056A361): resets vtables 0x0110A388 / 0x0110A384 (+0x218) compares this with 0x012F4B40 (0x0056974F) and clears it then UI singleton 0x012F148C slot +0x150(0); carries the ZH QuitMenu.cpp:151 exit: if TheNetwork (0x012F7714 at 0x0056981F) TheNetwork->quitGame vslot +0x78 at 0x0056982C else 0x003839E0 (posts MSG_CLEAR_GAME_DATA at 0x00383A2C) via ILT 0x000238A3; then Shell::showShell 0x00580150 bfme_hideBackground 0x00468090 APT:Pause text via 0x0046CBF0 and the APT screen base dtor 0x00465430 (the base ??1BfmeAptScreenDisconnectScreen also calls); called by the deleting dtor ??_GGen_dtor_00569de0 at 0x00569DE3 via ILT 0x000271F6 = vtable 0x0110A388 slot 0
 ??1BfmeAptScreenScoreScreen@@UAE@XZ,0x00575050,virtual dtor: resets vtables 0x0110AAB8/0x0110AAB4 unregisters AptScoreScreen::InitGadgets via 0x004629A0; if +0x25c==0 (single-player screen) && TheShell 0x012F4B58 -> TheShell->0x0057F5B0(FALSE) (ILT 0x000428ED); clears TheScoreScreen 0x012F4B50; AsciiString dtors at +0x330 +0x320 +0x300; frees the bit-vector buffer +0x2e8; vector<pair<Int AsciiString>> dtor 0x00574BC0 on +0x264; base dtor 0x00465430; ILT 0x00006F28; sole caller the deleting dtor 0x00575883
 ??1BfmeAsciiStringArg@@QAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; the ScriptActions by-value string view
+??1BfmeAudioEvent491110@@QAE@XZ,0x00026F35,0x00491110 destroys both 0x70-byte temporary audio events through the retail AudioEventRTS destructor thunk
 ??1BfmeAudioEventRTS@@QAE@XZ,0x00026F35,alias of the AudioEventRTS destructor spelling pinned at the same ILT; reached from the ScriptActions view local
 ??1BfmeBaseAA@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the unwound clear destructor at 0x0039C6D0 chains to
 ??1BfmeBaseF@@QAE@XZ,0x00029537,Open-BFME5 the base destructor the deleting list destructor at 0x0048C5B0 chains to
@@ -8951,6 +8953,7 @@ name,address,notes
 ??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
 ??1Snapshot@@QAE@XZ,0x00887940,DamageInfo destructor subobject calls (packet 000c3410) -- additive pin alongside existing 0x009A1A40 row
 ??1Snapshot@@QAE@XZ,0x009A1A40
+??1SortingIndexBufferClass@@UAE@XZ,0x0091D300,0x0091D930 deleting destructor directly calls this class destructor
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1SpawnBehaviorModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
@@ -12528,6 +12531,7 @@ name,address,notes
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0002ED4D,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067AFD0,addCommand's jump-table arm for command type 16
 ?addMapObjects@W3DRoadBuffer@@IAEXXZ,0x0002001D,second of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0; the last four of the seven already resolve to insertTeeIntersections, insertCurveSegments, insertCrossTypeJoins and preloadRoadsInVertexAndIndexBuffers in exactly the order the source calls them, which fixes the first three by position. Body 0x007100C0
+?addMoneyEarned@ScoreKeeper@@QAEXH@Z,0x0003A45E,RefundDie::onDie matched caller identifies the score keeper money-earned ILT
 ?addNetCommandMsg@FrameDataManager@@QAEPAVNetCommandRef@@PAVNetCommandMsg@@@Z,0x0002FB5D,ILT thunk for body 0x00670640
 ?addNoFlyZone@AerialPathfinder@@QAEXPAVPolygonTrigger@@M@Z,0x00148C10,Open-BFME5 callee of parseAerialPathfindNoFlyZone; appends {area,height} to the list at TheAerialPathfinder+0xC
 ?addNugget@EmotionSystem@@QAEXPAVEmotionNugget@@@Z,0x000170D0,derived from the REL32 displacement at 0x0037B8A0
@@ -72153,10 +72157,6 @@ name,address,notes
 ?b_008589cb@@YAXXZ,0x008589CB,gen-thunk body
 ?b_00860620@@YAXXZ,0x00860620,gen-thunk body
 ?b_00860690@@YAXXZ,0x00860690,gen-thunk body
-_piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
-_piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helper called by piGetXping
-_piAddXping,0x00863100,vendored=gamespy-2004; authentic peerPing.c static helper called by piUpdateXping
-_piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xping update
 ?b_00864f00@@YAXXZ,0x00864F00,gen-thunk body
 ?b_00865760@@YAXXZ,0x00865760,gen-thunk body
 ?b_008657c0@@YAXXZ,0x008657C0,gen-thunk body
@@ -73254,6 +73254,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeDtorTWA@BfmeStrTWA@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWB@BfmeStrTWB@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWC@BfmeHeadTWC@@QAEXXZ,0x007E86C0,pin
+?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
@@ -73631,6 +73632,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeFreeArrDMD@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDME@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrayTVB@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArrayTXA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
@@ -73688,6 +73690,8 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeFreeTWA@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeTWB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeTWC@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeTXA@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeTXB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -74313,6 +74317,8 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
 ?bfmeRelease@BfmeTagged@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared release the tag-checked assignments call
+?bfmeReleaseATXA@@YGXPAX@Z,0x00AFD504,pin
+?bfmeReleaseBTXA@@YGXPAX@Z,0x00AFD510,pin
 ?bfmeReleaseOld@Gen_0023E120@@QAEXXZ,0x00045557,Open-BFME5 the release of the old block the vector reserve at 0x0023E120 calls after moving
 ?bfmeReleaseOld@Gen_00359A80@@QAEXXZ,0x0002594B,Open-BFME5 the release of the old block the vector reserve at 0x00359A80 calls after moving
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
@@ -76567,6 +76573,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
 ?g_bfmeOneATC@@3PAVBfmeOneATC@@A,0x00EF19E8,pin
 ?g_bfmeOneSJA@@3PADA,0x00EF19B8,pin
+?g_bfmeOneTXB@@3PAVBfmeResTXB@@A,0x00F4D060,pin
 ?g_bfmeOut982@@3PAVBfmeOut982@@A,0x00EED83C,pin
 ?g_bfmeP1024@@3PAVBfmeP1024@@A,0x00F4FAAC,pin
 ?g_bfmeP1025@@3PAVBfmeP1025@@A,0x00F4FAAC,pin
@@ -76717,6 +76724,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
 ?g_bfmeTwoSJA@@3PADA,0x00EF19A4,pin
+?g_bfmeTwoTXB@@3PAVBfmeResTXB@@A,0x00F4CC50,pin
 ?g_bfmeU1019@@3PAVBfmeU1019@@A,0x00EF076C,pin
 ?g_bfmeU1026@@3PAVBfmeU1026@@A,0x00EF076C,pin
 ?g_bfmeU1027@@3PAVBfmeU1027@@A,0x00EF076C,pin
@@ -76759,6 +76767,8 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?g_bfmeVftTQD@@3PAPAXA,0x00D29D30,pin
 ?g_bfmeVftTUA@@3PAPAXA,0x00D296B0,pin
 ?g_bfmeVftTVA@@3PAPAXA,0x00D29A9C,pin
+?g_bfmeVftTXA@@3PAPAXA,0x00D3DEE4,pin
+?g_bfmeVftTXB@@3PAPAXA,0x00D439F8,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -78496,6 +78506,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?hasAnyBuildings@Team@@QBE_N_N@Z,0x00017652,Open-BFME5 ILT thunk to body 0x000F4980; ?hasAnyBuildings@TeamPrototype@@QAE_N_N@Z at 0x000F6FD0 passes its flag through to each team on the instance list
 ?hasAnyBuildings@TeamPrototype@@QAE_NV?$BitFlags@$0MA@@@_N@Z,0x0000B55F,Open-BFME5 ILT; ?hasAnyBuildings@Player@@QBE_NV?$BitFlags@$0MA@@@_N@Z at 0x000CDF70 forwards the mask and the flag to each prototype through it
 ?hasAnyBuildings@TeamPrototype@@QAE_N_N@Z,0x0003DD0C,Open-BFME5 ILT thunk to body 0x000F6FD0; ?hasAnyBuildings@Player@@QBE_N_N@Z at 0x000CDF20 forwards its flag to each prototype through it
+?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
 ?hasAnyObjects@Player@@QBE_N_N@Z,0x0002BB8E,ILT thunk -> body 0x000CE0B0; ZH hasAnyObjects grew one arg in BFME (call site pushes 0); arg type unproven
 ?hasAnyObjects@Team@@QBE_N_N@Z,0x0001478B,Open-BFME5 ILT thunk to body 0x000F4CF0; ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z at 0x000F7170 passes its flag through to each team on the instance list
 ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z,0x00021D96,Open-BFME5 ILT; ?hasAnyObjects@Player@@QBE_N_N@Z at 0x000CE0B0 forwards its flag to each prototype through it
@@ -78514,6 +78525,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?hasScience@Player@@QBE_NW4ScienceType@@@Z,0x0000943F,retail target of playerHasPrereqsForScience inner-loop call; thunk-table entry; real body unresolved
 ?hasSinglePlayerBeenDefeated@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035FDF0,vtable 0x010E8D90 slot 11 (+0x2C) via ILT 0x000151CC; ZH body: m_victoryConditions bits select hasAnyObjects 0x000CE0B0 / hasAnyUnits 0x000CE070 / hasAnyBuildings(mask 0x8000) 0x000CDF70; BFME adds isPlayerObserver -> false and isPlayerDead 0x000C9D00 -> true and increments the +0xC0 counter at 0x0035FEB9 on every true
 ?hasUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x0000BA37,Open-BFME5 ILT thunk from CommandButton::isReady call sites (body 0x001C9F50)
+?hasUpgradeComplete@Player@@QAE_NPBVUpgradeTemplate@@@Z,0x000235BF,RefundDie::onDie matched caller identifies the completed-upgrade predicate ILT
 ?hasUpgradeMask@BfmeUpgradeMaskTester@@QBE_NI@Z,0x001C59C0,alias of the Object spelling; Object.cpp reaches the mask test through a view class because the reference Object.h does not declare it
 ?hasUpgradeMask@Object@@QBE_NI@Z,0x001C59C0,Open-BFME5 the mask test Object::hasUpgrade tail-jumps to; unnamed in the image
 ?haveAllConnectedPlayersReachedFrame@BFMEConnectionManager@@QAE_NI@Z,0x00662D50,walks +0x12060 latest-frame[8] with m_connections read as [eax-0x1205c]; FALSE if any connected slot's latest frame < arg; sole caller 0x00682BD7 in Network frame-tick body 0x00682A90 gating the router's own beginPlayerLeave on Network+0x38; ILT 0x0004A895
@@ -78932,6 +78944,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?isUsed@PathfindLayer@@QAE_NXZ,0x0003D4E2,Open-BFME5 ILT; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 goes on when it returns true - the opposite sense to the reference isUnused so the name is behaviour-derived
 ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
+?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
 ?isValidToUseOn@CommandButton@@QBE_NPBVObject@@0PBUCoord3D@@W4CommandSourceType@@@Z,0x00005C4A,doTeamUseCommandButtonOnNamed BFME CommandButton ILT
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,ILT thunk to TurretAI::isWeaponSlotOnTurret at 0x0018C7A0
 ?isWithinTargetPitch@Weapon@@QBE_NPBVObject@@0@Z,0x00005533,Open-BFME5 ILT thunk fronting body 0x001E2C50
@@ -81422,7 +81435,9 @@ _peerMessageRoomA,0x008576F0,GameSpy Peer room-message sender
 _peerShutdown,0x00858450,GameSpy Peer shutdown reached by the blocking shutdown check
 _peerStopGame,0x00857E50,Open-BFME5 cdecl body; ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z at 0x0064C9E0 calls it on the peer exactly where the reference does
 _piAddListingGamesCallback,0x0085E420,Peer SDK peerCallbacks.c:385 piAddListingGamesCallback(peer; success; server; msg) line for line: msg==PEER_REMOVE(2) -> piClearListingGameServerCallbacks 0x0085E290; SBServerGetStringValueA hostname/"(No Name)" and gamemode=="openstaging"; progress from connection->initialGameList +0x178c SBServerListCount(&gameList +0xba4) querylist.count +0x1758 pendinglist.count +0x174c; piAddCallback 0x0085E120 type 3 with gameListCallback +0x1784 / gameListParam +0x1788; the ledger name generateGameSpyGameResultsPacket belongs to 0x006386F0
+_piAddPingCallback,0x0085EB90,vendored=gamespy-2004; exact piProcessPing callee
 _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
+_piAddXping,0x00863100,vendored=gamespy-2004; authentic peerPing.c static helper called by piUpdateXping
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
 _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback dispatcher
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
@@ -81434,11 +81449,13 @@ _piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
 _piCreateStagingRoomEnumUsersCallbackA,0x0085F4F0,GameSpy Peer staging-room user enumeration callback
 _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
 _piEnumRoomPlayers,0x008633E0
+_piFindPlayerByIP,0x00863460,vendored=gamespy-2004; exact piPinged callee with peer and IP
+_piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helper called by piGetXping
 _piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
 _piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
 _piGetPlayer,0x00863350,gamespy-peer: looks a piPlayer up by nick in connection->players; sole player-lookup callee of peerKeys.c cache maps
-_piFindPlayerByIP,0x00863460,vendored=gamespy-2004; exact piPinged callee with peer and IP
 _piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
+_piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
 _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
 _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
@@ -81457,10 +81474,9 @@ _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x0
 _piPingPlayerLeftRoomTableMapFn,0x00862F10,vendored=gamespy-2004; authentic peerPing.c source-order callback
 _piPinged,0x00862750,vendored=gamespy-2004; authentic peerPing.c source order
 _piPingerReplyMapFn,0x00862870,vendored=gamespy-2004; authentic peerPing.c source-order callback
-_piProcessPing,0x00862690,vendored=gamespy-2004; authentic peerPing.c static helper called by piPingerReplyMapFn
-_piAddPingCallback,0x0085EB90,vendored=gamespy-2004; exact piProcessPing callee
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piProcessIncoming,0x00873170,GameSpy pingerThink processes pending socket input before timeout checks
+_piProcessPing,0x00862690,vendored=gamespy-2004; authentic peerPing.c static helper called by piPingerReplyMapFn
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
 _piSBFreeHostServer,0x00864FB0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when leaving the staging room
@@ -81481,6 +81497,7 @@ _piStartReporting,0x00866820
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
+_piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xping update
 _piXpingTableCompareFn,0x008625E0,vendored=gamespy-2004; authentic peerPing.c source order
 _piXpingTableElementFreeFn,0x00862680,vendored=gamespy-2004; authentic peerPing.c source order
 _piXpingTableHashFn,0x00862540,vendored=gamespy-2004; authentic peerPing.c source order
@@ -81690,10 +81707,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?hasUpgradeComplete@Player@@QAE_NPBVUpgradeTemplate@@@Z,0x000235BF,RefundDie::onDie matched caller identifies the completed-upgrade predicate ILT
-?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
-?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
-?addMoneyEarned@ScoreKeeper@@QAEXH@Z,0x0003A45E,RefundDie::onDie matched caller identifies the score keeper money-earned ILT
-??0BfmeAudioEvent491110@@QAE@ABVBfmeAsciiString491110@@H@Z,0x00025306,0x00491110 constructs both temporary audio events through the retail two-argument AudioEventRTS constructor thunk
-??1BfmeAudioEvent491110@@QAE@XZ,0x00026F35,0x00491110 destroys both 0x70-byte temporary audio events through the retail AudioEventRTS destructor thunk
-??1SortingIndexBufferClass@@UAE@XZ,0x0091D300,0x0091D930 deleting destructor directly calls this class destructor
