@@ -6413,6 +6413,7 @@ name,address,notes
 ??1Gen_dtor_00969c70@@UAE@XZ,0x00969C90,gen-dtor class destructor
 ??1Gen_dtor_0096a0d0@@UAE@XZ,0x0096A0F0,gen-dtor class destructor
 ??1Gen_dtor_0096a550@@UAE@XZ,0x0096A570,gen-dtor class destructor
+??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose first slot is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
 ??1Gen_dtor_0096aca0@@UAE@XZ,0x0096A920,gen-dtor class destructor
 ??1Gen_dtor_0096de90@@UAE@XZ,0x0096D120,gen-dtor class destructor
 ??1Gen_dtor_0096ea40@@UAE@XZ,0x0096E900,gen-dtor class destructor
