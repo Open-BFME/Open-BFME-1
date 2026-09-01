@@ -127,6 +127,29 @@ LivingWorldPlayerArmy::LivingWorldPlayerArmy() :
 	m_unmodelled40 = 0;
 }
 
+LivingWorldPlayerArmy::LivingWorldPlayerArmy( const LivingWorldPlayerArmy &other ) :
+	m_index( other.m_index ),
+	m_isActive( other.m_isActive ),
+	m_name( other.m_name ),
+	m_faction( other.m_faction ),
+	m_icon( other.m_icon ),
+	m_color( other.m_color ),
+	m_nightColor( other.m_nightColor ),
+	m_startingCommandPoints( other.m_startingCommandPoints ),
+	m_unmodelled24( other.m_unmodelled24 ),
+	m_unmodelled28( other.m_unmodelled28 ),
+	m_unmodelled2C( other.m_unmodelled2C ),
+	m_armies( other.m_armies ),
+	m_unmodelled3C( other.m_unmodelled3C ),
+	m_unmodelled40( other.m_unmodelled40 ),
+	m_survivalThreshold( other.m_survivalThreshold ),
+	m_displayNameTag( other.m_displayNameTag ),
+	m_unmodelled4C( other.m_unmodelled4C ),
+	m_minCommandPoints( other.m_minCommandPoints ),
+	m_replenishArmyName( other.m_replenishArmyName )
+{
+}
+
 void LivingWorldPlayerArmy::clearArmies()
 {
 	m_armies.clear();
