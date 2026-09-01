@@ -10,6 +10,22 @@ class GameLogicPortraitShim
 {
 public:
 	bool isInMultiplayerOrSkirmishGame();
+
+	char m_beforeGameType[0x10c];
+	int m_gameType;
+	char m_beforeRecorderMode[0x19c];
+	int m_recorderMode;
+};
+
+enum RecorderModeType
+{
+	RECORDER_MODE_NONE = 0
+};
+
+class RecorderClass
+{
+public:
+	RecorderModeType getMode();
 };
 
 class MappedImageCollectionPortraitShim
@@ -31,6 +47,32 @@ public:
 
 extern GameLogicPortraitShim *TheGameLogic;
 extern MappedImageCollectionPortraitShim *TheMappedImageCollection;
+
+bool GameLogicPortraitShim::isInMultiplayerOrSkirmishGame()
+{
+	if (m_gameType == 1)
+		goto true_result;
+	if (m_gameType == 5)
+		goto true_result;
+	if (m_gameType == 2)
+		goto true_result;
+	if (!TheGameLogic)
+		goto false_result;
+	if (((RecorderClass *)TheGameLogic)->getMode() != 1)
+		goto false_result;
+	if (TheGameLogic->m_recorderMode == 2)
+		goto true_result;
+	if (TheGameLogic->m_recorderMode == 1)
+		goto true_result;
+	if (TheGameLogic->m_recorderMode == 5)
+		goto true_result;
+	goto false_result;
+
+true_result:
+	return true;
+false_result:
+	return false;
+}
 
 // The relevant BFME template flags are in the word at +0x128.  Bit 17
 // distinguishes the alternate GondorGandalf form at this call site.
