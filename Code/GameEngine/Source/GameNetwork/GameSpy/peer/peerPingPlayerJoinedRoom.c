@@ -14,7 +14,8 @@ typedef enum RoomType
 
 typedef struct piPlayer
 {
-	unsigned char pad0[0x4C];
+	unsigned char pad0[0x40];
+	int inRoom[3];
 	int local;
 	unsigned char pad50[0x70 - 0x50];
 	unsigned int lastXping;
@@ -42,8 +43,10 @@ typedef struct piConnection
 
 void TableFree(void *table);
 void TableMap(void *table, void (*mapFn)(void *, void *), void *clientData);
+void TableMapSafe(void *table, void (*mapFn)(void *, void *), void *clientData);
 void pingerShutdown(void);
 void piPingerReplyMapFn(void *elem, void *clientData);
+void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData);
 
 typedef struct piPingerReplyData
 {
@@ -179,4 +182,53 @@ void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType)
 
 	if(roomType == StagingRoom)
 		player->mustPing = 1;
+}
+
+typedef struct piPingPlayerLeftRoomData
+{
+	PEER peer;
+	const char *nick;
+} piPingPlayerLeftRoomData;
+
+void piPingPlayerLeftRoom(PEER peer, piPlayer *player)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return;
+
+	if(player->inPingRoom)
+	{
+		int i;
+		int inPingRoom = 0;
+
+		for(i = 0; i < 3; i++)
+		{
+			if(player->inRoom[i] && connection->pingRoom[i])
+				inPingRoom = 1;
+		}
+		player->inPingRoom = inPingRoom;
+	}
+
+	if(player->inXpingRoom)
+	{
+		int i;
+		int inXpingRoom = 0;
+
+		for(i = 0; i < 3; i++)
+		{
+			if(player->inRoom[i] && connection->xpingRoom[i])
+				inXpingRoom = 1;
+		}
+		player->inXpingRoom = inXpingRoom;
+
+		if(!player->inXpingRoom)
+		{
+			piPingPlayerLeftRoomData data;
+			data.peer = peer;
+			data.nick = (const char *)player;
+			TableMapSafe(connection->xpings,
+				piPingPlayerLeftRoomTableMapFn, &data);
+		}
+	}
 }
