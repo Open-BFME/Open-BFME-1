@@ -98,7 +98,10 @@ struct BFMEApproachPathFields
 	UnsignedInt m_pathTimestamp;
 	char m_unreconstructed_164[0x17C - 0x164];
 	UnsignedInt m_queueForPathFrame;
-	char m_unreconstructed_180[0x1D8 - 0x180];
+	char m_unreconstructed_180[0x18C - 0x180];
+	ObjectID m_repulsor1;
+	ObjectID m_repulsor2;
+	char m_unreconstructed_194[0x1D8 - 0x194];
 	Int m_locomotorGoalType;
 	Coord3D m_locomotorGoalData;
 	char m_unreconstructed_1E8[0x31E - 0x1E8];
@@ -1050,27 +1053,46 @@ void AIUpdateInterface::requestApproachPath( Coord3D *destination )
 
 //-------------------------------------------------------------------------------------------------
 // Requests a safe path away from the repulsor.
-// ?requestSafePath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::requestSafePath( ObjectID repulsor ) 
 {
-	if (repulsor != m_repulsor1) {
-		m_repulsor2 = m_repulsor1; // save the prior repulsor.
+	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>( this );
+
+	if (repulsor != retail->m_repulsor1) {
+		retail->m_repulsor2 = retail->m_repulsor1; // save the prior repulsor.
 	}
-	m_repulsor1 = repulsor;	
-	m_isFinalGoal = FALSE;
-	CRCDEBUG_LOG(("AIUpdateInterface::requestSafePath() - m_isAttackPath = FALSE for object %d\n", getObject()->getID()));
-	m_isAttackPath = FALSE;	
-	m_requestedVictimID = INVALID_ID;	
-	m_isApproachPath = FALSE;
-	m_isSafePath = TRUE;
-	m_waitingForPath = TRUE;
-	if (m_pathTimestamp > TheGameLogic->getFrame()-3) {
+	retail->m_repulsor1 = repulsor;
+	retail->m_isFinalGoal = FALSE;
+	retail->m_isAttackPath = FALSE;
+	retail->m_requestedVictimID = INVALID_ID;
+	retail->m_isApproachPath = FALSE;
+	retail->m_isSafePath = TRUE;
+
+	if (retail->m_pathTimestamp > TheGameLogic->getFrame() - 2) {
 		/* Requesting path very quickly.  Can cause a spin. */
-		//DEBUG_LOG(("%d Pathfind - repathing in less than 3 frames.  Waiting 2 second\n",TheGameLogic->getFrame()));
-		setQueueForPathTime(2*LOGICFRAMES_PER_SECOND);
+		if (getWakeFrame() > UPDATE_SLEEP( 10 ) && !retail->m_isInUpdate)
+			setWakeFrame(retail->m_object, UPDATE_SLEEP( 10 ));
+		retail->m_queueForPathFrame = TheGameLogic->getFrame() + 10;
+		destroyPath();
 		return;
 	}
-	TheAI->pathfinder()->queueForPath(getObject()->getID());
+
+	retail->m_waitingForPath = TRUE;
+	if (g_012F0239 && g_012ED4FC)
+	{
+		((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: requestSafePath 'I don't believe this line accomplishes anything' ");
+		if (g_012ED4FC)
+		{
+			((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
+				"-- m_requestedDestination changing from %g,%g,%g to %g,%g,%g",
+				retail->m_requestedDestination.x, retail->m_requestedDestination.y,
+				retail->m_requestedDestination.z, retail->m_object->getPosition()->x,
+				retail->m_object->getPosition()->y, retail->m_object->getPosition()->z);
+		}
+	}
+
+	retail->m_requestedDestination = *retail->m_object->getPosition();
+	TheAI->pathfinder()->queueForPath(retail->m_object->getID());
 }
 
 enum {WAYPOINT_PATH_LIMIT=1024};
