@@ -81596,3 +81596,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?push_back@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXABQAVDrawable@@@Z,0x0004A151,BFME attack-voice DrawableList insertion
 ?setWeaponLock@Object@@QAEXHH@Z,0x0003EEBE,Object command-button weapon lock call
 _ciGetUserBasicInfoMap,0x008727B0,GameSpy chatChannel.c map callback immediately preceding ciGetUserBasicInfoA
+?getName@LivingWorldPlayerArmy@@QAE?AVAsciiString@@XZ,0x0004B470,findArmy retail call at 0x003B440F invokes the ILT thunk for the player-army name getter

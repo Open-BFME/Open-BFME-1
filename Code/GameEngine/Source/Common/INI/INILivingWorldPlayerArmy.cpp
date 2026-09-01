@@ -35,6 +35,7 @@ public:
 	virtual void crc( Xfer *xfer );
 	virtual void xfer( Xfer *xfer );
 	virtual void loadPostProcess();
+	AsciiString getName() { return m_name; }
 
 	static const FieldParse m_fieldParseTable[];
 
@@ -109,6 +110,7 @@ class BfmeLivingWorldCampaignManager
 {
 public:
 	void addPlayerArmy( LivingWorldPlayerArmy *army );
+	LivingWorldArmy *findArmy( const AsciiString &name );
 
 private:
 	char m_unmodelled[ 0x20 ];
@@ -121,6 +123,17 @@ void BfmeLivingWorldCampaignManager::addPlayerArmy( LivingWorldPlayerArmy *army 
 {
 	m_playerArmies.push_back( *army );
 	m_playerArmies.back().m_index = m_playerArmies.size() - 1;
+}
+
+LivingWorldArmy *BfmeLivingWorldCampaignManager::findArmy( const AsciiString &name )
+{
+	for( UnsignedInt i = 0; i < m_playerArmies.size(); ++i )
+	{
+		if( m_playerArmies[ i ].getName().compare( name ) == 0 )
+			return reinterpret_cast<LivingWorldArmy *>( &m_playerArmies[ i ] );
+	}
+
+	return NULL;
 }
 
 // ?parseLivingWorldPlayerArmy@@YAXPAVINI@@@Z
