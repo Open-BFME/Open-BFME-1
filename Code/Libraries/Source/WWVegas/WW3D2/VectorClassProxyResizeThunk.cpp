@@ -94,6 +94,20 @@ protected:
 	bool VectorClassPad[2];
 };
 
+template <class T>
+VectorClass<T>::VectorClass(int size, T const *array) :
+	Vector(0), VectorMax(size), IsValid(true), IsAllocated(false)
+{
+	if (size) {
+		if (array) {
+			Vector = new ((void *)array) T[size];
+		} else {
+			Vector = new T[size];
+			IsAllocated = true;
+		}
+	}
+}
+
 // ?Resize@?$VectorClass@VProxyClass@@@@UAE_NHPBVProxyClass@@@Z
 template <class T>
 bool VectorClass<T>::Resize(int newsize, T const *array)
@@ -138,4 +152,5 @@ bool VectorClass<T>::Resize(int newsize, T const *array)
 
 // Force emission of the Resize instantiation even though nothing else in
 // this isolated TU calls it.
+template VectorClass<ProxyClass>::VectorClass(int, ProxyClass const *);
 template bool VectorClass<ProxyClass>::Resize(int, ProxyClass const *);

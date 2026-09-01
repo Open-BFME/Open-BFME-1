@@ -29,11 +29,28 @@ public:
 	int GrowthStep;
 };
 
-class Render2DBatchClass
+class StringClass
 {
 public:
-	~Render2DBatchClass();
-	unsigned char bytes[0x74];
+	StringClass() : Buffer(0) {}
+	char *Buffer;
+};
+
+class Matrix3D
+{
+public:
+	float Row[3][4];
+};
+
+class ProxyClass
+{
+public:
+	ProxyClass();
+	~ProxyClass();
+
+	StringClass Name;
+	Matrix3D Transform;
+	unsigned char UnreconstructedTail[0x74 - 0x34];
 };
 
 template<class T>
@@ -108,7 +125,7 @@ private:
 	Vector2 CoordinateOffset;
 	Render2DRawArray ArrayA;
 	Render2DRawArray ArrayB;
-	DynamicVectorClass<Render2DBatchClass> Batches;
+	DynamicVectorClass<ProxyClass> Batches;
 	TextureRef Texture;
 	int CurrentBatch;
 	bool IsDirty;
