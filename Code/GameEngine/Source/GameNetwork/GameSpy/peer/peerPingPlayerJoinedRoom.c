@@ -392,6 +392,34 @@ void piPingCleanup(PEER peer)
 	connection->doPings = 0;
 }
 
+int piPingInitPlayer(PEER peer, piPlayer *player)
+{
+	int i;
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return 1;
+
+	player->lastPingSend = 0;
+	player->lastPingRecv = 0;
+	player->lastXping = 0;
+	player->waitingForPing = 0;
+	player->pingsReturned = 0;
+	player->pingsLostConsecutive = 0;
+	player->pingAverage = 0;
+	for(i = 0; i < 4; i++)
+		player->pingHistory[i] = 0;
+	player->pingHistoryNum = 0;
+	player->numPings = 0;
+	player->xpingSent = 0;
+	player->inPingRoom = 0;
+	player->inXpingRoom = 0;
+	player->mustPing = 0;
+	player->pingOnce = 0;
+
+	return 1;
+}
+
 void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType)
 {
 	piConnection *connection = (piConnection *)peer;
