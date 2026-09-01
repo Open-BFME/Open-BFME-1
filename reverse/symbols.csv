@@ -81373,6 +81373,10 @@ _piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
 _piPingInitPlayer,0x00862E10,gamespy-peer: called by piAddPlayer at 0x008637E0 when initialising a new piPlayer
 _piPingPlayerJoinedRoom,0x00862E90,gamespy-peer: called by piPlayerJoinedRoom at 0x008638D0
 _piPingerReplyMapFn,0x00862870,vendored=gamespy-2004; authentic peerPing.c source-order callback
+_piXpingTableHashFn,0x00862540,vendored=gamespy-2004; authentic peerPing.c source order
+_piXpingTableCompareFn,0x008625E0,vendored=gamespy-2004; authentic peerPing.c source order
+_piXpingTableElementFreeFn,0x00862680,vendored=gamespy-2004; authentic peerPing.c source order
+_piPinged,0x00862750,vendored=gamespy-2004; authentic peerPing.c source order
 _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x00863970
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piProcessIncoming,0x00873170,GameSpy pingerThink processes pending socket input before timeout checks

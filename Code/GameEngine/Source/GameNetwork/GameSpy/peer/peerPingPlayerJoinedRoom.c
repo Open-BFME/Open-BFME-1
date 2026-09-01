@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy Peer SDK -- piPingPlayerJoinedRoom from peerPing.c. */
 
+#include <string.h>
+
 typedef void *PEER;
 
 typedef enum RoomType
@@ -43,6 +45,50 @@ typedef struct piPingerReplyData
 	unsigned int IP;
 	int ping;
 } piPingerReplyData;
+
+typedef struct piXping
+{
+	unsigned char data[0x84];
+} piXping;
+
+void *TableNew(int elemSize, int numBuckets,
+	int (*hashFn)(const void *, int),
+	int (*compareFn)(const void *, const void *),
+	void (*freeFn)(void *));
+int piXpingTableHashFn(const void *param, int numBuckets);
+int piXpingTableCompareFn(const void *param1, const void *param2);
+void piXpingTableElementFreeFn(void *param);
+void piPinged(unsigned int IP, unsigned short port, int ping,
+	const char *data, int len, PEER peer);
+int pingerInit(const char *localAddress, unsigned short localPort,
+	void *pinged, void *pingedParam, void *setData, void *setDataParam);
+unsigned int current_time(void);
+__declspec(dllimport) void srand(unsigned int seed);
+
+int piPingInit(PEER peer)
+{
+	static int noPings[3];
+	piConnection *connection = (piConnection *)peer;
+
+	if(memcmp(connection->pingRoom, noPings, sizeof(noPings)) == 0)
+		return 1;
+
+	connection->xpings = TableNew(sizeof(piXping), 32,
+		piXpingTableHashFn, piXpingTableCompareFn,
+		piXpingTableElementFreeFn);
+	if(!connection->xpings)
+		return 0;
+
+	if(!pingerInit(0, 0x3353, piPinged, peer, 0, 0))
+		return 0;
+
+	connection->lastPingTimeMod = 0;
+	connection->lastXpingSend = 0;
+	srand(current_time());
+	connection->doPings = 1;
+
+	return 1;
+}
 
 void piPingerReply(unsigned int IP, unsigned short port, int ping,
 	const char *pingData, int pingDataLen, PEER peer)
