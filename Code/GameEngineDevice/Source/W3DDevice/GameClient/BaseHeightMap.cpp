@@ -773,6 +773,14 @@ struct BaseHeightMapResetTreeType
 	char m_padding04[0x58];
 };
 
+struct BaseHeightMapResetDualType
+{
+	char m_padding00[4];
+	RefCountClass *m_first;
+	RefCountClass *m_second;
+	char m_padding0c[0x98];
+};
+
 class GameEngine
 {
 private:
@@ -821,6 +829,66 @@ void BaseHeightMapResetBuffer::clear3094()
 			static_cast<Real>(TheGameEngine->m_field34);
 	}
 	*reinterpret_cast<Int *>(base + 0x2a93bc) = zero;
+}
+
+void BaseHeightMapResetBuffer::clear3098()
+{
+	char *base = reinterpret_cast<char *>(this);
+	BaseHeightMapResetDualType *entry =
+		reinterpret_cast<BaseHeightMapResetDualType *>(base + 0x15dc);
+	for (Int i = 0; i < *reinterpret_cast<Int *>(base + 0x1e1cc8);
+		++i, ++entry) {
+		if (entry->m_first) {
+			entry->m_first->Release_Ref();
+			entry->m_first = NULL;
+		}
+		if (entry->m_second) {
+			entry->m_second->Release_Ref();
+			entry->m_second = NULL;
+		}
+	}
+
+	Int zero = 0;
+	*reinterpret_cast<Int *>(base + 0x1e1cc8) = zero;
+	*reinterpret_cast<Int *>(base + 0x1444) = zero;
+	*reinterpret_cast<Int *>(base + 0x1440) = zero;
+	*reinterpret_cast<Real *>(base + 0x144c) = 1.0f;
+	*reinterpret_cast<Real *>(base + 0x1448) = 1.0f;
+	BFMETextureRelease **texture =
+		reinterpret_cast<BFMETextureRelease **>(base + 0x1450);
+	if (*texture) {
+		(*texture)->Release_Ref();
+		*texture = NULL;
+	}
+	texture = reinterpret_cast<BFMETextureRelease **>(base + 0x1454);
+	if (*texture) {
+		(*texture)->Release_Ref();
+		*texture = NULL;
+	}
+	reinterpret_cast<BaseHeightMapResetList *>(base + 0x1458)->clear(false);
+	reinterpret_cast<BaseHeightMapResetList *>(base + 0x1480)->clear(false);
+	*reinterpret_cast<Int *>(base + 0x14f8) = zero;
+	*reinterpret_cast<UnsignedByte *>(base + 0x1e1ccc) = 1;
+
+	BaseHeightMapResetTreeType *type =
+		reinterpret_cast<BaseHeightMapResetTreeType *>(base + 0x1e1cd4);
+	for (Int i = 0; i < 64; ++i, ++type) {
+		if (type->m_mesh) {
+			type->m_mesh->Release_Ref();
+			type->m_mesh = NULL;
+		}
+	}
+
+	if (TheGameEngine) {
+		*reinterpret_cast<Real *>(base + 0x1e3910) =
+			static_cast<Real>(TheGameEngine->m_field34);
+	}
+	UnsignedInt *sentinel =
+		reinterpret_cast<UnsignedInt *>(base + 0xb8);
+	for (Int i = 0; i < 0x4e2; ++i) {
+		sentinel[i] = 0xffffffff;
+	}
+	*reinterpret_cast<Int *>(base + 0x1e33d4) = zero;
 }
 
 // BFME's +0x30A4 buffer is a W3DFloorBuffer.  Its list is the STLport
