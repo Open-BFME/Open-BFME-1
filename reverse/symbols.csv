@@ -1007,6 +1007,7 @@ name,address,notes
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00574DF0@@@Z,0x00045214,retail __linear_insert at 0x00573900 direct call-site ILT to the matched 0x00570BF0 slide body
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00531FA0@@@Z,0x0001649B,retail __linear_insert at 0x0052FE90 direct call-site ILT to the 109-byte unguarded insertion body at 0x0052F110
+??$__unguarded_linear_insert@PAUS4SortElem8@@U1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@U1@US4Cmp00575AA0@@@Z,0x0002DB3C,retail __linear_insert at 0x005756C0 direct call-site ILT to the 68-byte unguarded insert body at 0x00574F60
 ?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
 ?BfmeCopyBackward00570F50@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x0002ABE9,address-scoped spelling for the 12-byte POD copy_backward ILT called by retail 0x00573900
 ?BfmeCopyBackward0052D370@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00019CBD,address-scoped spelling for the 12-byte copy_backward ILT called by retail 0x0052FE90
