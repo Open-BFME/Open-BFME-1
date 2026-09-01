@@ -260,14 +260,14 @@ void IndexBufferClass::Copy(unsigned short* indices,unsigned first_index,unsigne
 // ??0WriteLockClass@@ present-unmatched
 IndexBufferClass::WriteLockClass::WriteLockClass(IndexBufferClass* index_buffer_, int flags) : index_buffer(index_buffer_)
 {
-	DX8_THREAD_ASSERT();
+	W3DRadarResetLock();
 	WWASSERT(index_buffer);
 	WWASSERT(!index_buffer->Engine_Refs());
 	index_buffer->Add_Ref();
 	switch (index_buffer->Type()) {
 	case BUFFER_TYPE_DX8:
 		DX8_Assert();
-		DX8_ErrorCode(static_cast<DX8IndexBufferClass*>(index_buffer)->Get_DX8_Index_Buffer()->Lock(
+		BFME_DX8_ErrorCode(static_cast<DX8IndexBufferClass*>(index_buffer)->Get_DX8_Index_Buffer()->Lock(
 			0,
 			index_buffer->Get_Index_Count()*sizeof(WORD),
 			(unsigned char**)&indices,

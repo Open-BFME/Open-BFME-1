@@ -69,7 +69,7 @@ public:
 	void Copy(unsigned int* indices,unsigned start_index,unsigned index_count);
 	void Copy(unsigned short* indices,unsigned start_index,unsigned index_count);
 
-	inline unsigned short Get_Index_Count() const { return index_count; }
+	inline unsigned Get_Index_Count() const { return index_count; }
 
 	inline unsigned Type() const { return type; }
 
