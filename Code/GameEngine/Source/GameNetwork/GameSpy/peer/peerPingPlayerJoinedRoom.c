@@ -54,6 +54,7 @@ typedef struct piConnection
 } piConnection;
 
 void TableFree(void *table);
+void TableRemove(void *table, const void *elem);
 void TableMap(void *table, void (*mapFn)(void *, void *), void *clientData);
 void TableMapSafe(void *table, void (*mapFn)(void *, void *), void *clientData);
 void pingerShutdown(void);
@@ -413,6 +414,18 @@ typedef struct piPingPlayerLeftRoomData
 	PEER peer;
 	const char *nick;
 } piPingPlayerLeftRoomData;
+
+void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData)
+{
+	piXping *xping = (piXping *)elem;
+	piPingPlayerLeftRoomData *data = (piPingPlayerLeftRoomData *)clientData;
+
+	if(strcmp(xping->nicks[0], data->nick) == 0 ||
+		strcmp(xping->nicks[1], data->nick) == 0)
+	{
+		TableRemove(((piConnection *)data->peer)->xpings, xping);
+	}
+}
 
 void piPingPlayerLeftRoom(PEER peer, piPlayer *player)
 {
