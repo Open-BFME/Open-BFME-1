@@ -372,3 +372,35 @@ void chatSendRawA(CHAT chat, const char *raw)
 
 	ciSocketSend(&connection->chatSocket, raw);
 }
+
+void chatRetryWithNickA(CHAT chat, const char *nick)
+{
+	int validateNick;
+	ciConnection *connection = (ciConnection *)chat;
+
+	if(connection->connected)
+		return;
+
+	if(nick == NULL)
+	{
+		connection->connecting = CHATFalse;
+
+		if(connection->connectCallback != NULL)
+			connection->connectCallback(chat, CHATFalse, 1,
+				connection->connectParam);
+
+		return;
+	}
+
+	strncpy(connection->nick, nick, 64);
+	connection->nick[63] = '\0';
+
+	validateNick = ciNickIsValid(nick);
+	if(!validateNick)
+	{
+		ciNickError(chat, 1, nick, 0, NULL);
+		return;
+	}
+
+	ciSocketSendf(&connection->chatSocket, "NICK :%s", nick);
+}
