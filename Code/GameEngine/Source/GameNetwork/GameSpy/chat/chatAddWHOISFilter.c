@@ -1,6 +1,7 @@
 // GameSpy Chat SDK -- chatHandlers.c, 2007 release.
 
 typedef void *CHAT;
+typedef int CHATBool;
 typedef void (*chatGetUserInfoCallback)(CHAT chat, int success,
 	const char *nick, const char *user, const char *name,
 	const char *address, int numChannels, const char **channels, void *param);
@@ -17,6 +18,9 @@ typedef void (*chatChangeNickCallback)(CHAT chat, int success,
 	const char *oldNick, const char *newNick, void *param);
 typedef void (*chatAuthenticateCDKeyCallback)(CHAT chat, int result,
 	const char *message, void *param);
+typedef void (*chatGetChannelKeysCallback)(CHAT chat, int success,
+	const char *channel, const char *user, int num,
+	const char **keys, const char **values, void *param);
 
 typedef struct WHOISData
 {
@@ -62,6 +66,14 @@ typedef struct chatChannelCallbacks
 	void *param;
 } chatChannelCallbacks;
 
+typedef struct GETCKEYData
+{
+	int num;
+	char **keys;
+	CHATBool channel;
+	CHATBool allBroadcastKeys;
+} GETCKEYData;
+
 typedef struct ciServerMessageFilter
 {
 	int type;
@@ -86,6 +98,7 @@ typedef struct ciConnection
 
 __declspec(dllimport) void * __cdecl malloc(unsigned int size);
 __declspec(dllimport) void __cdecl free(void *memory);
+int __cdecl strcmp(const char *left, const char *right);
 void * __cdecl memset(void *dest, int value, unsigned int count);
 unsigned int current_time(void);
 char *goastrdup(const char *source);
@@ -205,6 +218,51 @@ int ciAddUNQUIETFilter(CHAT chat, const char *channel)
 	memset(data, 0, sizeof(NAMESData));
 	return ciAddFilter(chat, 15, channel, 0, callbacks->newUserList,
 		0, callbacks->param, data);
+}
+
+int ciAddGETCKEYFilter(CHAT chat, const char *cookie, int num,
+	const char **keys, CHATBool channel, CHATBool getBroadcastKeys,
+	chatGetChannelKeysCallback callback, void *param)
+{
+	int src;
+	int dest;
+	GETCKEYData *data = (GETCKEYData *)malloc(sizeof(GETCKEYData));
+	if (data == 0)
+		return 0;
+
+	memset(data, 0, sizeof(GETCKEYData));
+	data->allBroadcastKeys = getBroadcastKeys;
+	data->num = num;
+	data->channel = channel;
+	if (getBroadcastKeys)
+		data->num--;
+
+	data->keys = (char **)malloc(sizeof(char *) * data->num);
+	if (data->keys == 0)
+	{
+		free(data);
+		return 0;
+	}
+
+	for (src = 0, dest = 0; src < num; src++)
+	{
+		if (strcmp(keys[src], "b_*") != 0)
+		{
+			data->keys[dest] = goastrdup(keys[src]);
+			if (data->keys[dest] == 0)
+			{
+				for (dest--; dest >= 0; dest--)
+					free(data->keys[dest]);
+				free(data->keys);
+				free(data);
+				return 0;
+			}
+			dest++;
+		}
+	}
+
+	data->num = dest;
+	return ciAddFilter(chat, 13, cookie, 0, (void *)callback, 0, param, data);
 }
 
 int ciAddCDKEYFilter(CHAT chat, chatAuthenticateCDKeyCallback callback,
