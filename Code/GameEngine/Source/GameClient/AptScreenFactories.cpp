@@ -256,6 +256,7 @@ class WindowManager
 public:
 	void bfme_hideBackground( bool hide );
 	__declspec( noinline ) void bfme_showBackground( int kind );
+	void unidentified_000062DF();
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
 	void unidentified_0001A483();
 	void unidentified_00015235( int movie, const char *function, int argumentCount,
@@ -839,14 +840,141 @@ void * __stdcall createAptScreenInGameChat( void *context )
 }
 
 // SpellStore.apt, retail 0x00105140, object 0x2D4 bytes.
-class BfmeAptScreenSpellStore
+extern const void *BfmeAptScreenSpellStoreVftable[];
+extern const void *BfmeAptScreenSpellStoreSecondaryVftable[];
+extern void *g_obj12F4C38;
+
+class SpellStoreHolder
+{
+public:
+	SpellStoreHolder( FunctorBinding binding );
+
+private:
+	void *m_ptr;
+};
+
+class SpellStoreRegistry
+{
+public:
+	void showAptScreen( const AsciiString &name, SpellStoreHolder callback );
+};
+
+class __declspec(novtable) __multiple_inheritance BfmeAptScreenSpellStore
+	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
 {
 public:
 	BfmeAptScreenSpellStore( void *context );
+	virtual ~BfmeAptScreenSpellStore();
+	void _bfme_onRollOutBttnSpell();
+	void _bfme_onRollOverBttnSpell();
+	void _bfme_onBttnSpell();
+	void _bfme_onBttnClose();
+	void _bfme_onClosed();
+	void _bfme_onInitialized();
+	void unidentified_000062DF();
 
 private:
-	char m_unmodelled[ 0x2D4 ];
+	bool m_field258;
+	bool m_field259;
+	bool m_field25A;
+	bool m_field25B;
+	int m_field25C;
+	struct SpellStorePair
+	{
+		int first;
+		int second;
+	};
+	SpellStorePair m_fields260[ 12 ];
+	int m_fields2C0[ 4 ];
+	bool m_field2D0;
+	bool m_field2D1;
 };
+
+BfmeAptScreenSpellStore::BfmeAptScreenSpellStore( void *context )
+	: _bfme_AptGameWindow( context )
+{
+	*(const void ***)( (char *)this ) = BfmeAptScreenSpellStoreVftable;
+	*(const void ***)( (char *)this + 0x218 ) =
+		BfmeAptScreenSpellStoreSecondaryVftable;
+	m_field258 = false;
+	m_field259 = true;
+	m_field25A = false;
+	m_field25B = true;
+	m_field25C = 0;
+
+	SpellStorePair *field = m_fields260;
+	for( int i = 0; i < 12; ++i, ++field )
+	{
+		field->first = 0;
+		field->second = 0;
+	}
+	for( int i = 0; i < 4; ++i )
+		m_fields2C0[ i ] = -1;
+	m_field2D0 = false;
+	m_field2D1 = false;
+
+	if( g_theWindowManager )
+	{
+		g_obj12F4C38 = this;
+		SpellStoreRegistry *registry =
+			(SpellStoreRegistry *)( (char *)this + 0x218 );
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onInitialized;
+			AsciiString name( "AptSpellStore::OnInitialized" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onClosed;
+			AsciiString name( "AptSpellStore::OnClosed" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onBttnClose;
+			AsciiString name( "AptSpellStore::OnBttnClose" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onBttnSpell;
+			AsciiString name( "AptSpellStore::OnBttnSpell" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onRollOverBttnSpell;
+			AsciiString name( "AptSpellStore::OnRollOverBttnSpell" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenSpellStore::_bfme_onRollOutBttnSpell;
+			AsciiString name( "AptSpellStore::OnRollOutBttnSpell" );
+			registry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		if( m_field25B )
+		{
+			g_theWindowManager->bfme_showBackground( 2 );
+			m_field25B = false;
+		}
+		unidentified_000062DF();
+	}
+}
 
 // ?createAptScreenSpellStore@@YGPAXPAX@Z
 void * __stdcall createAptScreenSpellStore( void *context )

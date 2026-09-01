@@ -81614,3 +81614,15 @@ _ciGetUserBasicInfoMap,0x008727B0,GameSpy chatChannel.c map callback immediately
 ?unidentified_0001A483@WindowManager@@QAEXXZ,0x0001A483,CampaignReview final WindowManager update
 ??$_Construct@VLivingWorldArmy@@V1@@_STL@@YAXPAVLivingWorldArmy@@ABV1@@Z,0x00003193,replenish retail call at 0x003655B1 invokes the LivingWorldArmy element-copy ILT thunk
 ?_M_insert_overflow@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldArmy@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,replenish retail call at 0x003655D3 invokes the vector<LivingWorldArmy> overflow-insert ILT thunk
+?BfmeAptScreenSpellStoreVftable@@3PAPBXA,0x0110C3EC,SpellStore primary vftable written by its constructor
+?BfmeAptScreenSpellStoreSecondaryVftable@@3PAPBXA,0x0110C3E8,SpellStore secondary APT interface vftable at this+0x218
+?g_obj12F4C38@@3PAXA,0x012F4C38,SpellStore screen singleton
+??0SpellStoreHolder@@QAE@UFunctorBinding@@@Z,0x000340EF,SpellStore callback holder constructor
+?showAptScreen@SpellStoreRegistry@@QAEXABVAsciiString@@VSpellStoreHolder@@@Z,0x000338ED,SpellStore callback registration through the APT screen registry
+?_bfme_onRollOutBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x0003C597,SpellStore OnRollOutBttnSpell callback target thunk
+?_bfme_onRollOverBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00016513,SpellStore OnRollOverBttnSpell callback target thunk
+?_bfme_onBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00017D2D,SpellStore OnBttnSpell callback target thunk
+?_bfme_onBttnClose@BfmeAptScreenSpellStore@@QAEXXZ,0x00010401,SpellStore OnBttnClose callback target thunk
+?_bfme_onClosed@BfmeAptScreenSpellStore@@QAEXXZ,0x0001692D,SpellStore OnClosed callback target thunk
+?_bfme_onInitialized@BfmeAptScreenSpellStore@@QAEXXZ,0x000074AF,SpellStore OnInitialized callback target thunk
+?unidentified_000062DF@BfmeAptScreenSpellStore@@QAEXXZ,0x000062DF,SpellStore final UI update
