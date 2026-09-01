@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy Peer SDK -- piPingPlayerJoinedRoom from peerPing.c. */
 
+#include <ctype.h>
 #include <string.h>
 
 typedef void *PEER;
@@ -77,7 +78,35 @@ void *TableNew(int elemSize, int numBuckets,
 	void (*freeFn)(void *));
 void *TableLookup(void *table, const void *elem);
 void TableEnter(void *table, const void *elem);
-int piXpingTableHashFn(const void *param, int numBuckets);
+int piXpingTableHashFn(const void *param, int numBuckets)
+{
+	piXping *xping = (piXping *)param;
+	int i;
+	int c;
+	const char *str;
+	unsigned int hash = 0;
+	const char *nicks[2];
+
+	nicks[0] = xping->nicks[0];
+	nicks[1] = xping->nicks[1];
+
+	if(strcmp(nicks[1], nicks[0]) < 0)
+	{
+		const char *temp = nicks[0];
+		nicks[0] = nicks[1];
+		nicks[1] = temp;
+	}
+
+	for(i = 0; i < 2; i++)
+	{
+		str = nicks[i];
+		while((c = *str++) != '\0')
+			hash += (unsigned int)tolower(c);
+		hash %= (unsigned int)numBuckets;
+	}
+
+	return (int)hash;
+}
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 
 int piXpingTableCompareFn(const void *param1, const void *param2)
