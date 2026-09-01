@@ -3778,6 +3778,7 @@ name,address,notes
 ??0W3DTruckDrawModuleData@@QAE@XZ,0x0003616F,link thunk to 0x0077F830; the address the factory at 0x006BF4F0 encodes
 ??0WOLLoginNickList@@QAE@ABV0@@Z,0x0003FA67,WOLLogin pair list-layout copy thunk;target=0x00443D60
 ??0WUU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,WallUpgradeUpdate constructor calls the shared ObjectModule constructor ILT
+??0Watchdog@@QAE@HHH@Z,0x0010B9C0,GameEngine::init passes timeout 300 and warning values 10/10 through the 0x0010BBF0 allocation factory
 ??0Weapon@@QAE@PBVWeaponTemplate@@W4WeaponSlotType@@@Z,0x00002B03,Open-BFME5 Weapon ctor pin
 ??0WeaponBonusUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0WeaponBonusUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000BAF0,pinharvest x1 (thunk)

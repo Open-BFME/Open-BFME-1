@@ -65,6 +65,7 @@ private:
 class Watchdog : public ThreadClass
 {
 public:
+	Watchdog(int timeout, int warningInterval, int warningDelay);
 	void suppressTimeouts(void);
 	void update(void);
 	void resumeTimeouts(void);
@@ -84,6 +85,11 @@ private:
 	MutexClass m_mutex;
 	MutexClass::LockClass *m_ownedLock;
 };
+
+Watchdog *createWatchdog(int timeout, int warningInterval, int warningDelay)
+{
+	return new Watchdog(timeout, warningInterval, warningDelay);
+}
 
 void Watchdog::suppressTimeouts(void)
 {
