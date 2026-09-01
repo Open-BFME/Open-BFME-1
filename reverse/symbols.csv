@@ -81034,6 +81034,7 @@ _breakstat,0x0099BC90,decode_calls pin for _stat callee
 _chatAuthenticateCDKeyA,0x008607A0,GameSpy Chat CD-key authentication request
 _chatChangeNickA,0x008604C0,GameSpy Chat nick-change request
 _chatConnectLoginA,0x008623E0,GameSpy Chat login connection entry
+_chatConnectDoit,0x00861ED0,GameSpy Chat common connection constructor called by chatConnectLoginA
 _chatConnectPreAuthA,0x00862460,GameSpy Chat pre-auth connection entry
 _chatConnectSecureA,0x00862380,GameSpy Chat secure connection entry
 _chatDisconnect,0x008603F0,gamespy-chat: called by chatConnectDoit at 0x00861ED0 when a blocking connect fails
