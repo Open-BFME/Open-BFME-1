@@ -4212,6 +4212,7 @@ name,address,notes
 ??1DX8Caps@@QAE@XZ,0x00903E00,DX8Wrapper::Compute_Caps retail destructor
 ??1DX8FVFCategoryContainer@@UAE@XZ,0x00946B20,REL32 pin for scalar deleting dtor ??_GDX8FVFCategoryContainer
 ??1DX8SkinFVFCategoryContainer@@UAE@XZ,0x009471E0,exact 11-byte source body and 0x00948B40 deleting-destructor call prove identity
+??1DX8TextureCategoryClass@@UAE@XZ,0x00946540,constructor 0x00946460 and destructor both store table 0x00D3D020; 0x00947D10 wrapper directly calls this body
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088A6E0,pinharvest x1 (body)
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088FAA0,pinharvest x1 (body)
