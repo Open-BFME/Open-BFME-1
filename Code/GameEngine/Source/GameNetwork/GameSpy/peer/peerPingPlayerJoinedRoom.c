@@ -86,7 +86,7 @@ static piXping *piFindXping(PEER peer, const char *nick1, const char *nick2)
 	_strlwr(xpingMatch.nicks[0]);
 	strncpy(xpingMatch.nicks[1], nick2, 64);
 	xpingMatch.nicks[1][63] = '\0';
-	_strlwr(xpingMatch.nicks[1]);
+	_strlwr(xpingMatch.nicks[0]);
 
 	return (piXping *)TableLookup(connection->xpings, &xpingMatch);
 }
