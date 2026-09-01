@@ -72669,6 +72669,7 @@ name,address,notes
 ?bfmeAllowsRelationship@BfmeRelationTest@@QBE_NHPBVBfmeRelationEntry@@@Z,0x00037349,Object relationship body calls this protected ILT for special relation tests
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
+?bfmeAppendVCB@BfmeBufVCB@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeApply1023@BfmeB1023@@QAEXH@Z,0x00003FE4,pin
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
@@ -73809,6 +73810,7 @@ name,address,notes
 ?bfmeFreeVA@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVB@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeVCC@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeVD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
@@ -73891,6 +73893,7 @@ name,address,notes
 ?bfmeGetTVC@@YAPAVBfmeSinkTVC@@XZ,0x007EFFC0,pin
 ?bfmeGetTWC@@YAPAVBfmeSinkTWC@@XZ,0x007EFFC0,pin
 ?bfmeGetUsersUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00872030,pin
+?bfmeGetVCC@@YAPAVBfmeSinkVCC@@XZ,0x007EFFC0,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -77709,6 +77712,9 @@ name,address,notes
 ?getText@WinInstanceData@@QAE?AVUnicodeString@@XZ,0x0003E112,Open-BFME5 ILT; called by ?winGetText@GameWindow@@QAE?AVUnicodeString@@XZ at 0x005CB9F0
 ?getTexture@BFMEShadowManagerLayout@@QAEPAVW3DShadowTexture@@PBD@Z,0x0004088B,retail projected-shadow texture lookup ILT thunk
 ?getTexture@BFMEShadowManagerLayoutGetTextureShim@@QAEPAVW3DShadowTexture@@PBD@Z,0x007AFD10,BFME ShadowManager incremental-link thunk target through a TU-local forwarding shim
+?getTexture@LineGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x0098ECC0,ParticleBufferClass Get_Texture line-group accessor
+?getTexture@LineRendererShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00960080,ParticleBufferClass Get_Texture line-renderer accessor
+?getTexture@PointGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00912830,ParticleBufferClass Get_Texture point-group accessor
 ?getTimePlayed@SkirmishBattleHonors@@QBEMVAsciiString@@@Z,0x0009C2C0,by-value side prefix + "TimePlayed" at VA 0x01080488 then getReal body 0x000A93B0 via ILT 0x0000B320 with default 0; ret 4; ZH SkirmishBattleHonors::getTimePlayed
 ?getTooltipName@MultiplayerColorDefinition@@QBE?AVAsciiString@@XZ,0x0002D830,Open-BFME5 ILT thunk to body 0x0008E280; ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@VAsciiString@@@Z at 0x0008E760 calls it on each colour in the list and compares the string it returns by value
 ?getTotalBuildingsDestroyed@ScoreKeeper@@QAEHXZ,0x000E8A70,sums the 32 ints at ScoreKeeper+0x94 (m_totalBuildingsDestroyed[MAX_PLAYER_COUNT]); used for buildingsKilled%d by generateLadderGameResultsPacket at 0x006394BA via ILT 0x0001033E; ZH ScoreKeeper.h:92
@@ -79559,6 +79565,7 @@ name,address,notes
 ?radarToWorld@Radar@@QAE_NPBUICoord2D@@PAUCoord3D@@@Z,0x00011513,screenPixelToWorld call target (incremental-link thunk)
 ?reacquire@W3DVolumetricShadowManagerReAcquireShim@@QAE_NXZ,0x007C1180,W3DVolumetricShadowManager ReAcquireResources incremental-link thunk target through a TU-local forwarding shim
 ?read@UDPReadShim@@QAEHPAEIPAUsockaddr_in@@@Z,0x00684630,UDP Read incremental-link thunk target through a TU-local forwarding shim
+?readAdditionalDisconnectsFromUserFile@@YIHH@Z,0x004DB0B0,GetAdditionalDisconnectsFromUserFile helper uses the retail one-argument ECX calling convention
 ?readChatMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,0x0067E760,identified by the NetChatCommandMsg constructor it calls; source is one instruction pair off
 ?readDict@DataChunkInput@@QAE?AVDict@@XZ,0x00022683
 ?readDisconnectChatMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,0x0067E620,identified by the NetDisconnectChatCommandMsg constructor it calls; source is one instruction pair off, see NetPacket_read.cpp
@@ -79936,6 +79943,7 @@ name,address,notes
 ?set@BFMEWeatherAsciiString@@QAEXPBDH@Z,0x00887D20,Open-BFME5 WeatherSetting two-argument string setter
 ?set@BFMEZBiasSetter@@SAXM@Z,0x00905990,float-ABI shim for BFME's older DX8 Z-bias body called by BaseHeightMapScorchSetZBias
 ?set@BfmeQuickMatchSlot@@QAEXABV1@@Z,0x00887C90,"string-member assignment used by ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z"
+?set@BfmeThingTemplateString@@QAEXPBDH@Z,0x00887D20,ThingTemplate validateAudio TU shim for StringBase<char>::set(const char*,int)
 ?set@Bitset67SetShim@_STL@@QAEAAV?$bitset@$0ED@@2@IH@Z,0x000E9910,incremental-link thunk target through a TU-local forwarding shim
 ?set@DX8TextureStageStateShim@@SAXIKI@Z,0x006C5840,DX8Wrapper incremental-link static thunk target through a TU-local forwarding shim
 ?set@GameFileSetNameShim@@QAEPBDPBD@Z,0x006F63B0,GameFileClass Set_Name incremental-link thunk target through a TU-local forwarding shim
@@ -80372,6 +80380,7 @@ name,address,notes
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x0050EFB0,body of the ILT 0x00031DB8 already pinned under this name; ZH updateVotes twin: AS var DisconnectScreen::VotesReceived%d := votes ? format(L%d 0x010F9F60) : empty through 0x0046CBF0; this unused; callers DisconnectManager::resetPlayersVotes 0x0066B7FE applyDisconnectVote 0x0066B957 populateDisconnectScreen 0x0066BF7C
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
+?usePluralShadowName@BfmeThingTemplateShadowSelector@@QBE_NXZ,0x0087E8D0,ThingTemplate validateAudio body calls this retail predicate on its +0x60 shadow-selection subobject
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?use_facet@Rva005C0FD0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?validMovementPosition@BFMEPathfinderMove@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,alias of the Pathfinder spelling pinned below; AIUpdate.cpp reaches it through a view class because the reference Pathfinder declares Zero Hour argument order
@@ -81949,9 +81958,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?usePluralShadowName@BfmeThingTemplateShadowSelector@@QBE_NXZ,0x0087E8D0,ThingTemplate validateAudio body calls this retail predicate on its +0x60 shadow-selection subobject
-?set@BfmeThingTemplateString@@QAEXPBDH@Z,0x00887D20,ThingTemplate validateAudio TU shim for StringBase<char>::set(const char*,int)
-?getTexture@PointGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00912830,ParticleBufferClass Get_Texture point-group accessor
-?getTexture@LineGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x0098ECC0,ParticleBufferClass Get_Texture line-group accessor
-?getTexture@LineRendererShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00960080,ParticleBufferClass Get_Texture line-renderer accessor
-?readAdditionalDisconnectsFromUserFile@@YIHH@Z,0x004DB0B0,GetAdditionalDisconnectsFromUserFile helper uses the retail one-argument ECX calling convention
