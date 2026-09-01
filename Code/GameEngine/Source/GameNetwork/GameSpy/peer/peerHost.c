@@ -22,6 +22,7 @@ typedef struct piConnection
 } piConnection;
 
 void SBServerFree(void **server);
+int piStartReporting(PEER peer, int socket, unsigned short port);
 void piStopReporting(PEER peer);
 void piSetLocalFlags(PEER peer);
 
@@ -34,6 +35,21 @@ void piSBFreeHostServer(PEER peer)
 		SBServerFree(&connection->hostServer);
 		connection->hostServer = 0;
 	}
+}
+
+int piStartHosting(PEER peer, int socket, unsigned short port)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if(connection->hosting)
+		return 0;
+
+	connection->hosting = 1;
+
+	if(!piStartReporting(peer, socket, port))
+		return 0;
+
+	return 1;
 }
 
 void piStopHosting(PEER peer, int stopReporting)
