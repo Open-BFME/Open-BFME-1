@@ -73077,6 +73077,7 @@ name,address,notes
 ?bfmeCmpENF@BfmeSubENF@@QAEHPBD@Z,0x000405E8,pin
 ?bfmeCmpFGD@@YAXPBD0@Z,0x00900D70,pin
 ?bfmeCmpRE@BfmeOtherRE@@QAEDHH@Z,0x007E8F20,pin
+?bfmeCmpVKO@BfmeBlockVKO@@QAE_NABV1@@Z,0x00035CA1,pin
 ?bfmeCombine1236@@YAXPAUBfmeTransform1236@@00@Z,0x008BCED0,address-derived helper called by the 0x008BDA70 transform body
 ?bfmeCompare1294@AsciiString@@QBEHPBD@Z,0x0004B01A,address-derived string comparison called by the 0x003A0860 retail body
 ?bfmeCompare@AsciiString@@QBEHABV1@@Z,0x000220C5,Open-BFME5 ILT less<AsciiString> calls in the AsciiString-keyed _Rb_tree _M_insert at 0x005B2EF0; it jumps to 0x0005FEB0 and its result is tested against zero
