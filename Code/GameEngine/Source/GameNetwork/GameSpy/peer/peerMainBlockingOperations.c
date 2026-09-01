@@ -44,9 +44,12 @@ typedef struct piConnection
 	void *gameListCallback;
 	void *gameListParam;
 	int initialGameList;
-	char reservedGameList[0x17A4 - 0x1790];
+	char reservedGameList[0x1794 - 0x1790];
+	int nextID;
+	char reservedBeforeCallbacks[0x17A4 - 0x1798];
 	void *disconnectedCallback;
-	char reservedCallbacks[0x1824 - 0x17A8];
+	char callbackRest[0x70];
+	char reservedCallbacks[0x1824 - 0x1818];
 	int callbackDepth;
 	int away;
 	char awayReason[128];
@@ -171,6 +174,12 @@ void chatDisconnect(void *chat);
 void piOperationsReset(PEER peer);
 void piCallbacksThink(PEER peer, int opID);
 static void piThink(PEER peer, int opID);
+unsigned int piGetPrivateIP(void);
+int piOperationsInit(PEER peer);
+int piCallbacksInit(PEER peer);
+int piKeysInit(PEER peer);
+void SocketStartUp(void);
+extern int __GSIACResult;
 int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 	const char *password, int maxPlayers, unsigned int socket,
 	unsigned short port, void *callback, void *param, int opID);
@@ -187,6 +196,7 @@ int piNewAutoMatchOperation(PEER peer, unsigned int socket,
 	int opID);
 void piAddAutoMatchStatusCallback(PEER peer);
 __declspec(dllimport) void __cdecl free(void *memory);
+__declspec(dllimport) void *__cdecl malloc(unsigned int size);
 void piSendChannelUTM(PEER peer, const char *channel, const char *command,
 	const char *parameters, int authenticate);
 typedef struct in_addr
@@ -213,6 +223,59 @@ int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
+
+static void piShutdownCleanup(PEER peer)
+{
+	piOperationsCleanup(peer);
+	piCallbacksCleanup(peer);
+	SocketShutDown();
+	piKeysCleanup(peer);
+	free(peer);
+}
+
+PEER peerInitialize(void *callbacks)
+{
+	piConnection *connection;
+
+	if (__GSIACResult != 1)
+		return 0;
+	SocketStartUp();
+	connection = (piConnection *)malloc(sizeof(piConnection));
+	if (!connection)
+		return 0;
+	memset(connection, 0, sizeof(piConnection));
+	connection->chat = 0;
+	connection->nick[0] = '\0';
+	connection->connecting = 0;
+	connection->connected = 0;
+	connection->privateIP = piGetPrivateIP();
+	connection->title[0] = '\0';
+	connection->nextID = 0;
+
+	if (!piOperationsInit(connection))
+	{
+		piOperationsCleanup(connection);
+		piCallbacksCleanup(connection);
+		SocketShutDown();
+		piKeysCleanup(connection);
+		free(connection);
+		return 0;
+	}
+
+	memcpy(&connection->disconnectedCallback, callbacks, 0x74);
+	if (!piCallbacksInit(connection))
+	{
+		piShutdownCleanup(connection);
+		return 0;
+	}
+	if (!piKeysInit(connection))
+	{
+		piShutdownCleanup(connection);
+		return 0;
+	}
+	connection->shutdown = 0;
+	return connection;
+}
 
 void peerClearTitle(PEER peer)
 {

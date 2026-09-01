@@ -81798,3 +81798,6 @@ _piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operat
 ?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHHHHHHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder
 _chatGetUserID,0x008606F0,gamespy-chat: authentic peerGetUserID tail call after connected guard
 _chatGetProfileID,0x00860700,gamespy-chat: authentic peerGetProfileID tail call after connected guard
+_piGetPrivateIP,0x00857150,gamespy-peer: authentic peerInitialize private-address discovery call before title initialization
+_piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
+_piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
