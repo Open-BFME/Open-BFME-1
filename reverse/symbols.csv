@@ -77174,6 +77174,7 @@ name,address,notes
 ?get@ObjectDefectionHelperPoolShim@@SAPAVMemoryPool@@XZ,0x006731A0,Open-BFME5 ObjectDefectionHelper pool implementation target
 ?get@ObjectGetRelationshipShim@@QBE?AW4Relationship@@PBVObject@@@Z,0x001C7950,Object getRelationship incremental-link thunk target through a TU-local forwarding shim
 ?get@WW3DGetRenderTargetResolutionShim@@SAXAAH00AA_N@Z,0x00906990,WW3D incremental-link static thunk target through a TU-local forwarding shim
+?getADynamicLight@RTS3DSceneLightPulseShim@@QAEPAVW3DDynamicLightPulseShim@@XZ,0x0003442D,ILT call target used by W3DDisplay light pulse
 ?getAIDifficulty@AIPlayer@@QBE?AW4GameDifficulty@@XZ,0x00160EC0,Player difficulty tail target; named AIPlayer getter compiles to this four-byte BFME field access
 ?getAIStateType@AIUpdateInterface@@QBE?AW4AIStateType@@XZ,0x0001E33A,Open-BFME5 ILT; called by ?ownerDocking@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z at 0x002C5BB0
 ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@@Z,0x000291D6,Object BFME attack query delegates through this ILT to the legacy WeaponSet overload
@@ -78497,6 +78498,7 @@ name,address,notes
 ?initTimes@BoneFXUpdateInitTimesShim@@QAEXXZ,0x00288540,BoneFXUpdate::initTimes incremental-link thunk target through a TU-local forwarding shim
 ?initTransport@Network@@UAEXXZ,0x006819B0,vtable 0x0111A968 slot 14 (+0x38) via ILT 0x00023F01; if (m_conMgr) tail-jumps 0x00663230 which reset@Transport+deletes conMgr+0x12024 then news a 0x410E4 B Transport and inits it with &conMgr+0x12050 = ZH ConnectionManager::initTransport; called 0x00639A1F and 0x0068A5B8 before parseUserList
 ?initialize@BitVectorInitializeShim@_STL@@QAEXI@Z,0x00526BC0,_STL bit vector _M_initialize incremental-link thunk target through a TU-local forwarding shim
+?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
 ?initialize@Rva14BAD0List@@QAEPAU1@PADH@Z,0x00021C42,Open-BFME5 RVA 14BAD0 list head initializer thunk pin
 ?initializeBonePositions@SpawnPointProductionExitUpdate@@AAEXXZ,0x0003B566
 ?initializeBuckets@TeamRelationHashTable@@AAEXI@Z,0x00016A59,retail REL32 at 0x000F7726 targets the ILT for STLport hashtable _M_initialize_buckets
@@ -79730,6 +79732,7 @@ name,address,notes
 ?setFPMode@@YAXXZ,0x008FC4C0
 ?setFileID@NetFileProgressCommandMsg@@QAEXG@Z,0x000247EE,ILT thunk; real body 0xA74090
 ?setFlipRecursive@W3DTerrainBackground@@IAEXHHH@Z,0x0001B5F9
+?setFrameFade@W3DDynamicLightPulseShim@@QAEXII@Z,0x000049E9,ILT call target used by W3DDisplay light pulse
 ?setFrameToResend@NetFrameResendRequestCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
 ?setFrameToResend@NetFrameResendRequestCommandMsg@@QAEXI@Z,0x00026C33,pinharvest x1 (thunk)
 ?setFrameToResend@NetFrameResendRequestCommandMsg@@QAEXI@Z,0x00029505,pinharvest x1 (thunk)
@@ -80681,6 +80684,7 @@ __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x00F593BC,pin
 __imp__ftell,0x00F593EC,pin
 __imp__itoa,0x00F5935C,pin
+__imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
 __imp__strchr,0x00F5949C,pin
 __imp__strdup,0x00F59308,pin
 __imp__strncpy,0x00F594C0,pin
@@ -81567,7 +81571,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-__imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
-?getADynamicLight@RTS3DSceneLightPulseShim@@QAEPAVW3DDynamicLightPulseShim@@XZ,0x0003442D,ILT call target used by W3DDisplay light pulse
-?setFrameFade@W3DDynamicLightPulseShim@@QAEXII@Z,0x000049E9,ILT call target used by W3DDisplay light pulse
-?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
