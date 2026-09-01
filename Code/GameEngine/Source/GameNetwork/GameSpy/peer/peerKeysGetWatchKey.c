@@ -84,10 +84,15 @@ void TableMap(HashTable table, void (*mapFunction)(void *, void *), void *client
 void TableClear(HashTable table);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
+__declspec(dllimport) int __cdecl tolower(int character);
 __declspec(dllimport) void __cdecl free(void *memory);
 char *goastrdup(const char *source);
 void TableEnter(HashTable table, const void *element);
 int TableCount(HashTable table);
+HashTable TableNew(int elementSize, int numBuckets,
+	int (*hashFunction)(const void *, int),
+	int (*compareFunction)(const void *, const void *),
+	void (*freeFunction)(void *));
 void piAddPlayerInfoCallback(PEER peer, RoomType roomType, const char *nick,
 	unsigned int IP, int profileID);
 PEERBool piDemangleUser(const char *user, unsigned int *IP, int *profileID);
@@ -509,4 +514,93 @@ void piSetGlobalWatchKeys(PEER peer, RoomType roomType, int num,
 	if (connection->enteringRoom[roomType] || connection->inRoom[roomType])
 		chatGetGlobalKeysA(connection->chat, connection->rooms[roomType], num, keys,
 			piKeysGetGlobalKeysCallbackA, peer, 0);
+}
+
+int WatchKeysHash(const void *elem, int numBuckets)
+{
+	piWatchKey *key = (piWatchKey *)elem;
+	int c;
+	const char *str = key->key;
+	unsigned int hash = 0;
+
+	while ((c = *str++) != 0)
+		hash += (unsigned int)tolower(c);
+	return (int)(hash % (unsigned int)numBuckets);
+}
+
+int WatchKeysCompare(const void *elem1, const void *elem2)
+{
+	piWatchKey *key1 = (piWatchKey *)elem1;
+	piWatchKey *key2 = (piWatchKey *)elem2;
+
+	return strcasecmp(key1->key, key2->key);
+}
+
+void WatchKeysFree(void *elem)
+{
+	piWatchKey *key = (piWatchKey *)elem;
+
+	free(key->key);
+}
+
+int WatchCacheHash(const void *elem, int numBuckets)
+{
+	piCacheKey *key = (piCacheKey *)elem;
+	int c;
+	const char *str = key->key;
+	unsigned int hash = 0;
+
+	while ((c = *str++) != 0)
+		hash += (unsigned int)tolower(c);
+	return (int)(hash % (unsigned int)numBuckets);
+}
+
+int WatchCacheCompare(const void *elem1, const void *elem2)
+{
+	piCacheKey *key1 = (piCacheKey *)elem1;
+	piCacheKey *key2 = (piCacheKey *)elem2;
+	int result = strcasecmp(key1->nick, key2->nick);
+
+	if (result)
+		return result;
+	return strcasecmp(key1->key, key2->key);
+}
+
+void WatchCacheFree(void *elem)
+{
+	piCacheKey *key = (piCacheKey *)elem;
+
+	free(key->nick);
+	free(key->key);
+	free(key->value);
+}
+
+PEERBool piKeysInit(PEER peer)
+{
+	int roomType;
+	piConnection *connection = (piConnection *)peer;
+
+	memset(connection->globalWatchKeys, 0, sizeof(connection->globalWatchKeys));
+	memset(connection->roomWatchKeys, 0, sizeof(connection->roomWatchKeys));
+	memset(connection->roomWatchCache, 0, sizeof(connection->roomWatchCache));
+
+	connection->globalWatchCache = TableNew(sizeof(piCacheKey), 128,
+		WatchCacheHash, WatchCacheCompare, WatchCacheFree);
+	if (!connection->globalWatchCache)
+		return 0;
+
+	for (roomType = 0; roomType < 3; roomType++) {
+		connection->globalWatchKeys[roomType] = TableNew(sizeof(piWatchKey), 16,
+			WatchKeysHash, WatchKeysCompare, WatchKeysFree);
+		connection->roomWatchKeys[roomType] = TableNew(sizeof(piWatchKey), 16,
+			WatchKeysHash, WatchKeysCompare, WatchKeysFree);
+		connection->roomWatchCache[roomType] = TableNew(sizeof(piCacheKey), 128,
+			WatchCacheHash, WatchCacheCompare, WatchCacheFree);
+
+		if (!connection->globalWatchKeys[roomType]
+			|| !connection->roomWatchKeys[roomType]
+			|| !connection->roomWatchCache[roomType])
+			return 0;
+	}
+	return 1;
 }
