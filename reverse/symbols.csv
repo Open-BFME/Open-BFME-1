@@ -73532,6 +73532,7 @@ name,address,notes
 ?bfmeFindUDD@BfmeSubUDD@@QAEPAXH@Z,0x00026C47,pin
 ?bfmeFindUDE@BfmeMgrUDE@@QAEPAVBfmeRecUDE@@H@Z,0x0001F253,pin
 ?bfmeFindUPB@@YAPAXPAX0@Z,0x007EBCA0,pin
+?bfmeFindVLI@BfmeMapVLI@@QAEPAUBfmeNodeVLI@@PAG@Z,0x0093DCE0,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
@@ -74153,6 +74154,7 @@ name,address,notes
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
+?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
 ?bfmeLockVJR@@YAXXZ,0x00903090,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
