@@ -141,7 +141,11 @@ int piXpingTableCompareFn(const void *param1, const void *param2)
 
 	return 0;
 }
-void piXpingTableElementFreeFn(void *param);
+void piXpingTableElementFreeFn(void *param)
+{
+	piXping *xping = (piXping *)param;
+	(void)xping;
+}
 int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
 unsigned int current_time(void);
