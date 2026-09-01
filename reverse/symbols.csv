@@ -4187,6 +4187,7 @@ name,address,notes
 ??1BfmeThingE@@QAE@XZ,0x0000E68D,Open-BFME5 the middle member destructor the three-member destructor at 0x000F8A40 runs
 ??1BfmeVecElem_000FAFF0@@QAE@XZ,0x0002C3BD,Open-BFME5 the element destructor the vector destroy at 0x000FAFF0 runs over its live range
 ??1BfmeVecElem_000FEAF0@@QAE@XZ,0x000312B9,Open-BFME5 the element destructor the vector destroy at 0x000FEAF0 runs over its live range
+??1Bitmap2DObjClass@@UAE@XZ,0x00956260,0x00956240 deleting wrapper directly calls this body; the exact Clone caller identifies the adjacent 0x00956140 copy constructor and establishes Bitmap2DObj ownership
 ??1BoxDynamicVBAccessClass@@QAE@XZ,0x0091D9E0,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
 ??1BoxRenderObjClass@@UAE@XZ,0x00956950,exact 5-byte source body and 0x00956D10 deleting-destructor call prove identity
 ??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -4200,6 +4201,7 @@ name,address,notes
 ??1CameraShakerClass@CameraShakeSystemClass@@UAE@XZ,0x0001E394,pinharvest x1 (thunk)
 ??1CivilianSpawnUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1CivilianSpawnUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
+??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921380,0x00921430 deleting wrapper directly calls this body; exact constructor 0x00921390 and Clone 0x009213E0 form the contiguous ClassicEnvironmentMapper emission group
 ??1ClearanceTestingSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1ClearanceTestingSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x000309F4,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
@@ -6388,7 +6390,6 @@ name,address,notes
 ??1Gen_dtor_009509b0@@UAE@XZ,0x0094F9C0,gen-dtor class destructor
 ??1Gen_dtor_00951080@@UAE@XZ,0x00950FC0,gen-dtor class destructor
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,gen-dtor class destructor
-??1Bitmap2DObjClass@@UAE@XZ,0x00956260,0x00956240 deleting wrapper directly calls this body; the exact Clone caller identifies the adjacent 0x00956140 copy constructor and establishes Bitmap2DObj ownership
 ??1Gen_dtor_00956d10@@UAE@XZ,0x00956950,gen-dtor class destructor
 ??1Gen_dtor_00957820@@UAE@XZ,0x00957840,gen-dtor class destructor
 ??1Gen_dtor_00957b90@@UAE@XZ,0x00957BB0,gen-dtor class destructor
@@ -72622,6 +72623,7 @@ name,address,notes
 ?bfmeAllocRU@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRW@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRX@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocUNB@@YAPAXI@Z,0x007F0130,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
 ?bfmeAllocate@Gen_009073d0@@AAE_NHH@Z,0x00905DC0,Open-BFME5 the allocate the reserve at 0x009073D0 calls
 ?bfmeAllocate@Gen_00930d00@@AAE_NHH@Z,0x009304A0,Open-BFME5 the allocate the reserve at 0x00930D00 calls
@@ -72798,6 +72800,7 @@ name,address,notes
 ?bfmeBaseTL@BfmeThingTL@@QAEPAV1@PAXH@Z,0x0083FB60,BfmeThreeHundredFiftyOne identity candidate; retail returns this
 ?bfmeBaseTL@BfmeThingTL@@QAEXPAXH@Z,0x0083FB60,pin
 ?bfmeBaseUBA@BfmeThingUBA@@QAEXXZ,0x00010D07,pin
+?bfmeBaseUNC@BfmeThingUNC@@QAEXXZ,0x00808B80,pin
 ?bfmeBaseUpdate@Gen009D6330@@QAEXPAXPBXI@Z,0x009D6E50,address-derived base update target from the direct REL32 call at retail 0x009D634E
 ?bfmeBaseVDW@BfmeThingVDW@@QAEXHH@Z,0x00899F00,pin
 ?bfmeBaseXfer@BfmeAODHordeContainOwner@@QAEXPAVBfmeXfer@@@Z,0x00024BDB,AODHordeContain xfer delegates to the base HordeContain transfer body
@@ -73697,6 +73700,7 @@ name,address,notes
 ?bfmeFreeArrDME@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrayTVB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrayTXA@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArrayUND@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeBIB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeBOF@@YAXPAX@Z,0x00012E90,pin
 ?bfmeFreeBOG@@YAXPAX@Z,0x000126FC,pin
@@ -73739,6 +73743,7 @@ name,address,notes
 ?bfmeFreeEYG@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeRC@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeRecUNA@@YAXPAX@Z,0x00806580,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
@@ -73764,6 +73769,7 @@ name,address,notes
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUF@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeUNA@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeVA@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVB@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
@@ -74123,6 +74129,7 @@ name,address,notes
 ?bfmeMakeOX@@YAHPAX@Z,0x00006B9A,pin
 ?bfmeMakeRE@@YAPAVBfmeMakerRE@@XZ,0x007F4D50,pin
 ?bfmeMakeRG@@YAPAVBfmeMakerRG@@XZ,0x007F4D50,pin
+?bfmeMakeRecUNB@@YAPAXH@Z,0x008064A0,pin
 ?bfmeMakeTFD@BfmeHolderTFD@@QAEXPAX@Z,0x009DB4B0,pin
 ?bfmeMakeW0@@YAIII@Z,0x0004B28B,Open-BFME5 ILT the variant ctor at 0x00390830 calls
 ?bfmeMakeW1@@YAIII@Z,0x00002B8F,Open-BFME5 ILT the variant ctor at 0x003CA5F0 calls
@@ -74206,6 +74213,7 @@ name,address,notes
 ?bfmeNextCWB@@3HA,0x00EF1030,pin
 ?bfmeNextCWC@@3HA,0x00EF1030,pin
 ?bfmeNextCWD@@3HA,0x00EF1030,pin
+?bfmeNextIdUNC@@YAHXZ,0x0080E440,pin
 ?bfmeNextM1110@@YAPAUBfmeM1110@@PAU1@@Z,0x0082B870,pin
 ?bfmeNextR1110@BfmeR1110@@QAEPAV1@XZ,0x00022A70,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
@@ -74564,6 +74572,7 @@ name,address,notes
 ?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
+?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76352,6 +76361,7 @@ name,address,notes
 ?g_bfmeE1095@@3PAVBfmeE1095@@A,0x00EF1600,pin
 ?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
+?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
@@ -76849,10 +76859,12 @@ name,address,notes
 ?g_bfmeVftATWA@@3PAPAXA,0x00D2B8A4,pin
 ?g_bfmeVftATWB@@3PAPAXA,0x00D2B5C4,pin
 ?g_bfmeVftATYA@@3PAPAXA,0x00D2C4A8,pin
+?g_bfmeVftAUNA@@3PAPAXA,0x00D2BBE8,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
 ?g_bfmeVftBTWA@@3PAPAXA,0x00D2B8A0,pin
 ?g_bfmeVftBTWB@@3PAPAXA,0x00D2B598,pin
 ?g_bfmeVftBTYA@@3PAPAXA,0x00D2C408,pin
+?g_bfmeVftBUNA@@3PAPAXA,0x00D2B3B8,pin
 ?g_bfmeVftCTWA@@3PAPAXA,0x00D2B890,pin
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
@@ -76869,6 +76881,8 @@ name,address,notes
 ?g_bfmeVftTZA@@3PAPAXA,0x00D3C5FC,pin
 ?g_bfmeVftTZB@@3PAPAXA,0x00D3CE0C,pin
 ?g_bfmeVftUBA@@3PAPAXA,0x00CCE990,pin
+?g_bfmeVftUNB@@3PAPAXA,0x00D2BBE8,pin
+?g_bfmeVftUNC@@3PAPAXA,0x00D2C830,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -81571,6 +81585,7 @@ _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanse
 _piClearCallbacks,0x0085E240,vendored=gamespy-2004; exact piSBStopListingGames callee
 _piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup
 _piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
+_piCreateAutoMatchRoomCallback,0x008644A0,upstream peerAutoMatch.c callback stored by piCreateAutoMatchRoom at 0x00864534
 _piCreateStagingRoomEnumUsersCallbackA,0x0085F4F0,GameSpy Peer staging-room user enumeration callback
 _piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect cleanup call
 _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
@@ -81592,7 +81607,6 @@ _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
 _piIsPlayerVIP,0x00863690,vendored=gamespy-2004; authentic piPickPingPlayersMap calls this player VIP predicate twice
 _piJoinAutoMatchRoom,0x008643F0,upstream peerSB.c updated-server helper call at 0x0086493D
 _piJoinAutoMatchRoomCallback,0x008642D0,upstream peerAutoMatch.c callback stored by piJoinAutoMatchRoom at 0x00864452
-_piCreateAutoMatchRoomCallback,0x008644A0,upstream peerAutoMatch.c callback stored by piCreateAutoMatchRoom at 0x00864534
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
