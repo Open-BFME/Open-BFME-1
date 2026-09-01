@@ -81746,6 +81746,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?update@BfmeThingDTK@@QAEXXZ,0x00168270,address-derived update using the existing BfmeThingDTK helper pin
 ?ensure@Rva00410F10Owner@@QAEPAVRva00410F10Allocation@@XZ,0x00410F10,address-derived lazy allocation helper
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
+_piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
 ??1MeshMatDescClass@@UAE@XZ,0x0092B6A0,meshmatdesc destructor region vtable and base calls plus 0x0092BA20 deleting-wrapper call prove identity
 ??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
