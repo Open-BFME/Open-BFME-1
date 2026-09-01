@@ -653,8 +653,8 @@ name,address,notes
 ??$__adjust_heap@PAHHHUQ4Cmp00513B40@@@_STL@@YAXPAHHHHUQ4Cmp00513B40@@@Z,0x005135F0,__adjust_heap instantiation called by the 83-byte STLport __make_heap family (Q4MakeHeap.cpp); address-derived template argument; identity not recovered
 ??$__adjust_heap@PAHHHUQ4Cmp00531BE0@@@_STL@@YAXPAHHHHUQ4Cmp00531BE0@@@Z,0x00530200,__adjust_heap instantiation called by the 83-byte STLport __make_heap family (Q4MakeHeap.cpp); address-derived template argument; identity not recovered
 ??$__adjust_heap@PAHHHUQ4Cmp00753DD0@@@_STL@@YAXPAHHHHUQ4Cmp00753DD0@@@Z,0x007538A0,__adjust_heap instantiation called by the 83-byte STLport __make_heap family (Q4MakeHeap.cpp); address-derived template argument; identity not recovered
-??$__adjust_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x0001A618,dedicated ILT to the 259-byte BfmeRecAU pointer adjust-heap body at 0x005135F0; its tail call names the exact BfmeCompAU push-heap specialization
 ??$__adjust_heap@PAHHHUQ4Sort004567A0@@@_STL@@YAXPAHHHHUQ4Sort004567A0@@@Z,0x00453290,ICF-folded with the Q4Cmp00453C20 instantiation at the same address; resolved via decode_calls at __partial_sort<Q4Sort004567A0>
+??$__adjust_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x0001A618,dedicated ILT to the 259-byte BfmeRecAU pointer adjust-heap body at 0x005135F0; its tail call names the exact BfmeCompAU push-heap specialization
 ??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp00261140@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00261140@@@Z,0x00260D80,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp00437D80@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00437D80@@@Z,0x004379B0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00575AA0@@@Z,0x005757E0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -3831,15 +3831,14 @@ name,address,notes
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
 ??1?$DynamicVectorClass@PAULegacyMaterialClass@MeshLoadContextClass@@@@UAE@XZ,0x0094EAB0,typed constructor 0x0094E490 stores table 0x00D3D0B0; 0x0094F0E0 wrapper directly calls this scalar destructor
-??1?$DynamicVectorClass@VVector4@@@@UAE@XZ,0x0094EA80,0x0094E2B0 constructor stores table 0x00D3D098 whose exact Clear ID and equality slots identify the Vector4 specialization; 0x0094F0C0 calls this body
-??1MultiListObjectClass@@UAE@XZ,0x009DC190,0x00945950 wrapper call and the 0x00D3D01C table stored by the exact zero-list-node constructor prove the WWLib base identity
-??1?$SimpleDynVecClass@K@@UAE@XZ,0x00944FC0,0x009450F0 deleting destructor occupies the vtable before exact unsigned-long Resize and Uninitialised_Grow slots
 ??1?$DynamicVectorClass@UTextureStatisticsStruct@@@@UAE@XZ,0x009380E0,0x00938130 wrapper call; typed 0x00937FB0 derived ctor and static statistics vector prove identity; distinct base wrapper at 0x00938080
 ??1?$DynamicVectorClass@VProxyClass@@@@UAE@XZ,0x00936E40,0x00937040 wrapper call; 0x74-byte ProxyClass element teardown and adjacent Render2DClass ctor batches member prove derived vector identity
 ??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
+??1?$DynamicVectorClass@VVector4@@@@UAE@XZ,0x0094EA80,0x0094E2B0 constructor stores table 0x00D3D098 whose exact Clear ID and equality slots identify the Vector4 specialization; 0x0094F0C0 calls this body
 ??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
 ??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
+??1?$SimpleDynVecClass@K@@UAE@XZ,0x00944FC0,0x009450F0 deleting destructor occupies the vtable before exact unsigned-long Resize and Uninitialised_Grow slots
 ??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
@@ -8681,6 +8680,7 @@ name,address,notes
 ??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,Open-BFME5 list-style sentinel container dtor from AnimalAIUpdate-family ModuleData dtor call sites
 ??1ModuleTagString@@QAE@XZ,0x00026AB2,ModuleInfo::Nugget m_moduleTag AsciiString-like ILT
 ??1Mouse@@UAE@XZ,0x000437F2
+??1MultiListObjectClass@@UAE@XZ,0x009DC190,0x00945950 wrapper call and the 0x00D3D01C table stored by the exact zero-list-node constructor prove the WWLib base identity
 ??1MultiplayerColorDefinition@@QAE@XZ,0x00887940,Open-BFME5 retail color-definition string destructor body
 ??1MultiplayerColorList@@QAE@XZ,0x0004A01B,Open-BFME5 retail multiplayer color-map destructor thunk
 ??1NamedPivotMapClass@@UAE@XZ,0x00974E20,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
@@ -8979,13 +8979,13 @@ name,address,notes
 ??1ScienceVecStandIn@@QAE@XZ,0x00016B58,ScienceInfo ScienceVec destructor ILT
 ??1ScriptActions@@UAE@XZ,0x00013E9E,ILT for the ScriptActions destructor body at 0x002F1B80
 ??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
+??1SegmentedLineClass@@UAE@XZ,0x0094F9C0,0x009509B0 is the first slot of the table followed by exact SegmentedLine Clone and Class_ID methods; wrapper directly calls this body
 ??1ShellMenuSchemeManager@@QAE@XZ,0x00041871,Shell destructor retail call invokes the scheme-manager destructor ILT thunk
 ??1ShroudManagerImpl008FBA40Element@@QAE@XZ,0x008F9330,RVA 0x008FBA40 element-array destructor callback
 ??1ShroudManagerImpl008FBA40Node@@QAE@XZ,0x008F8340,RVA 0x008FBA40 node-chain destructor call target
 ??1SiegeDeploySpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
-??1SegmentedLineClass@@UAE@XZ,0x0094F9C0,0x009509B0 is the first slot of the table followed by exact SegmentedLine Clone and Class_ID methods; wrapper directly calls this body
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
@@ -74399,6 +74399,7 @@ _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineIn
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
 ?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
 ?bfmeReportTSA@@YGXJPAVBfmeThingTSA@@PAUBfmeGuidTSA@@@Z,0x00AFD550,pin
+?bfmeReportUKA@@YGXJPAVBfmeThingUKA@@PAUBfmeGuidUKA@@@Z,0x00AFD550,pin
 ?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
@@ -76284,6 +76285,7 @@ _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineIn
 ?g_bfmeC1101@@3PAVBfmeC1101@@A,0x00EED600,pin
 ?g_bfmeC1104@@3PAUBfmeC1104@@A,0x00F40534,pin
 ?g_bfmeCFAE@@3HA,0x00EEF418,pin
+?g_bfmeCfgUKD@@3PAUBfmeCfgUKD@@A,0x00EED524,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
@@ -76474,6 +76476,7 @@ _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineIn
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
 ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A,0x00D3DF00,pin
+?g_bfmeIidUKA@@3UBfmeGuidUKA@@A,0x00D3DF00,pin
 ?g_bfmeInfoTKB@@3PADA,0x00D1E05C,pin
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
@@ -76517,6 +76520,7 @@ _piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineIn
 ?g_bfmeK3SMA@@3MA,0x00C75334,pin
 ?g_bfmeKTHE@@3MA,0x00C9ECC0,pin
 ?g_bfmeKUDB@@3MA,0x00C75350,pin
+?g_bfmeKUKC@@3MA,0x00CE8F14,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
@@ -80628,6 +80632,7 @@ _SBEngineHaltUpdates,0x008698E0,vendored=gamespy-2004; exact piSBStopListingGame
 _SBLastListErrorA,0x008680B0,adjacency-lane pin: jmp target of _ServerBrowserListQueryErrorA tail-call
 _SBQueryEngineUpdateServer,0x00869930,vendored=gamespy-2004
 _SBReleaseStr,0x008676D0,vendored=gamespy-2004
+_SBServerGetPrivateInetAddress,0x00859F20,peerSB.c private-address accessor proven by piIsLocalServer call
 _SBServerListConnectAndQuery,0x00868B00,vendored=gamespy-2004
 _SBServerListDisconnect,0x00867B00,vendored=gamespy-2004; exact piSBStopListingGames callee
 _SBServerListInit,0x00868970,vendored=gamespy-2004
@@ -81839,4 +81844,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_SBServerGetPrivateInetAddress,0x00859F20,peerSB.c private-address accessor proven by piIsLocalServer call
