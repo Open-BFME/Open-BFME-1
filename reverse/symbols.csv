@@ -73955,6 +73955,7 @@ name,address,notes
 ?bfmeGrow@Gen_006AB0B0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AB0B0 calls
 ?bfmeGrow@Gen_006AC5D0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AC5D0 calls
 ?bfmeGrowUPC@@YAXPAUBfmeStateUPC@@H@Z,0x009959C0,pin
+?bfmeGrowVKN@BfmeVecVKN@@QAEXPAUBfmeElemVKN@@PBU2@PAPBU2@HH@Z,0x00040F4D,pin
 ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00001A50,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000240A@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000240A,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00004B79@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00004B79,Open-BFME5 ILT the __cdecl hand-over helper a version block calls
