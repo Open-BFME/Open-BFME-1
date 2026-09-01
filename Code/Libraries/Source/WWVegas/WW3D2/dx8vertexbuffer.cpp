@@ -122,8 +122,7 @@ VertexBufferClass::VertexBufferClass(unsigned type_, unsigned FVF, unsigned shor
 
 // ----------------------------------------------------------------------------
 
-// ??1VertexBufferClass@@ present-unmatched
-VertexBufferClass::~VertexBufferClass()
+VertexBufferClass::~VertexBufferClass() throw()
 {
 	_VertexBufferCount--;
 	_VertexBufferTotalVertices-=VertexCount;
@@ -136,7 +135,8 @@ VertexBufferClass::~VertexBufferClass()
 		_VertexBufferTotalVertices,
 		_VertexBufferTotalSize));
 #endif
-	delete fvf_info;
+	// The FVF record is allocated with global new above, and BFME frees it directly.
+	::operator delete(fvf_info);
 }
 
 // ?Get_Total_Buffer_Count@VertexBufferClass@@ present-unmatched

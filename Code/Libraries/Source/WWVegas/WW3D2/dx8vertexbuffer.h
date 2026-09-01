@@ -88,7 +88,7 @@ class VertexBufferClass : public W3DMPO, public RefCountClass
 
 protected:
 	VertexBufferClass(unsigned type, unsigned FVF, unsigned short VertexCount, unsigned vertex_size=0);
-	virtual ~VertexBufferClass();
+	virtual ~VertexBufferClass() throw();
 public:
 
 	inline const FVFInfoClass& FVF_Info() const { return *fvf_info; }
