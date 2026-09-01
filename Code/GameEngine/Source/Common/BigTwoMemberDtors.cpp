@@ -78,10 +78,50 @@ BFME_INNER_VPTR( 010F6F58 )
 BFME_MEMBER_DTOR( 00129C80 )
 BFME_MEMBER_DTOR( 0039D550 )
 BFME_MEMBER_DTOR( 003AB460 )
-BFME_MEMBER_DTOR( 004C5700 )
 BFME_MEMBER_DTOR( 004C57D0 )
 BFME_MEMBER_DTOR( 00887940 )
 BFME_MEMBER_DTOR( 008881D0 )
+
+class Mem004CRefCounted
+{
+public:
+	void Release_Ref()
+	{
+		if( (m_refs = m_refs - 1) <= 0 )
+			Delete_This( 1 );
+	}
+
+protected:
+	virtual void Delete_This( unsigned int );
+	int m_refs;
+};
+
+template <int Tag>
+class Mem004CRefPtr
+{
+public:
+	~Mem004CRefPtr()
+	{
+		if( m_ptr )
+			m_ptr->Release_Ref();
+	}
+
+private:
+	Mem004CRefCounted *m_ptr;
+};
+
+#define BFME_REF_PAIR_DTOR( NAME, TAG )                                   \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		~NAME();                                                          \
+	private:                                                              \
+		Mem004CRefPtr<TAG> m_first;                                      \
+		Mem004CRefPtr<TAG + 1> m_second;                                 \
+	};                                                                    \
+	NAME::~NAME() {}
+
+BFME_REF_PAIR_DTOR( Mem004C5700, 0 )
 
 struct Mem0027E9C0Element
 {
