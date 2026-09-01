@@ -73013,6 +73013,7 @@ name,address,notes
 ?bfmeCatVHH@BfmeLayoutVHH@@QAEXPBDH@Z,0x00887D60,pin
 ?bfmeCb1098@@YAXXZ,0x00012D69,pin
 ?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
+?bfmeCbVJM@@YGXXZ,0x007F6870,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
 ?bfmeChanged@Gen_00505530@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505530 calls
@@ -73292,6 +73293,7 @@ name,address,notes
 ?bfmeDone1045@BfmeSub1045@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJK@BfmeMsgVJK@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJL@BfmeMsgVJL@@QAEXXZ,0x007E86C0,pin
+?bfmeDoneVJM@BfmeMsgVJM@@QAEXXZ,0x007E86C0,pin
 ?bfmeDrawTriVHA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
@@ -74092,6 +74094,7 @@ name,address,notes
 ?bfmeInitUBB@BfmeSubUBB@@QAEXH@Z,0x00002ECD,pin
 ?bfmeInitVJK@BfmeMsgVJK@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJL@BfmeMsgVJL@@QAEXPADH@Z,0x007E8850,pin
+?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
