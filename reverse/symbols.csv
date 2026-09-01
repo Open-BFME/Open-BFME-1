@@ -81756,3 +81756,4 @@ _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanse
 ??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
 ??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
 ??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
+??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
