@@ -81592,6 +81592,7 @@ _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
 _piIsPlayerVIP,0x00863690,vendored=gamespy-2004; authentic piPickPingPlayersMap calls this player VIP predicate twice
 _piJoinAutoMatchRoom,0x008643F0,upstream peerSB.c updated-server helper call at 0x0086493D
 _piJoinAutoMatchRoomCallback,0x008642D0,upstream peerAutoMatch.c callback stored by piJoinAutoMatchRoom at 0x00864452
+_piCreateAutoMatchRoomCallback,0x008644A0,upstream peerAutoMatch.c callback stored by piCreateAutoMatchRoom at 0x00864534
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
