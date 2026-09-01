@@ -76419,6 +76419,7 @@ name,address,notes
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDoneSJA@@3DA,0x00EF4CA4,pin
 ?g_bfmeDoneTDB@@3DA,0x00ED6DFC,pin
+?g_bfmeDrawVHP@@3PAVBfmeDrawVHP@@A,0x00EF4B98,pin
 ?g_bfmeDrop995@@3PAVBfmeDrop995@@A,0x00EF12CC,pin
 ?g_bfmeDropDXH@@3P6AXPAVBfmeSubDXH@@@ZA,0x00F378A0,pin
 ?g_bfmeE1014@@3PAVBfmeE1014@@A,0x00EF3A90,pin
