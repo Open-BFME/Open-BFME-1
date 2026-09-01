@@ -71,6 +71,15 @@ EMISSION_VELOCITY_INFO( SphericalEmissionVelocity, 1 )
 EMISSION_VELOCITY_INFO( CylindricalEmissionVelocity, 2 )
 EMISSION_VELOCITY_INFO( OutwardEmissionVelocity, 2 )
 
+class OrthoEmissionVelocityInfo : public EmissionVelocityInfo
+{
+public:
+	OrthoEmissionVelocityInfo( const OrthoEmissionVelocityInfo &that );
+
+private:
+	GameClientRandomVariable m_variables[ 3 ];
+};
+
 class ModuleTemplateSlice
 {
 public:
@@ -111,5 +120,6 @@ class CategoryModuleTemplateSlice
 EMISSION_VELOCITY_MODULE( SphericalEmissionVelocity )
 EMISSION_VELOCITY_MODULE( CylindricalEmissionVelocity )
 EMISSION_VELOCITY_MODULE( OutwardEmissionVelocity )
+EMISSION_VELOCITY_MODULE( OrthoEmissionVelocity )
 
 }
