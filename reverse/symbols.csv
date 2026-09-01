@@ -6354,6 +6354,7 @@ name,address,notes
 ??1GridEnvironmentMapperClass@@UAE@XZ,0x009221D0,constructor 0x009215C0 installs vtable 0x0113C068 whose first slot is deleting wrapper 0x009221B0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00922220@@UAE@XZ,0x00921940,gen-dtor class destructor
 ??1Gen_dtor_00922730@@UAE@XZ,0x00922750,gen-dtor class destructor
+??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose first slot is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
 ??1Gen_dtor_00924070@@UAE@XZ,0x00924090,gen-dtor class destructor
 ??1Gen_dtor_009240f0@@UAE@XZ,0x00924110,gen-dtor class destructor
 ??1Gen_dtor_00924130@@UAE@XZ,0x00924150,gen-dtor class destructor
