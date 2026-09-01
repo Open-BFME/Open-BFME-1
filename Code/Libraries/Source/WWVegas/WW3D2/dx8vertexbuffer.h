@@ -252,7 +252,7 @@ protected:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class SortingVertexBufferClass : public VertexBufferClass
 {
-	W3DMPO_GLUE(SortingVertexBufferClass)
+	// Retail uses the ordinary deleting destructor for this class.
 
 	friend DX8Wrapper;
 	friend SortingRendererClass;
