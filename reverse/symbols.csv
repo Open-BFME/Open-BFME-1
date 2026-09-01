@@ -73420,6 +73420,7 @@ name,address,notes
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
+?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
 ?bfmeF01148@BfmeS1148@@QAEHXZ,0x0002D41B,pin
 ?bfmeF1062A@BfmeA1062@@QAEXXZ,0x0003139A,pin
