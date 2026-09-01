@@ -21,6 +21,11 @@ typedef struct WHOISData
 	char **channels;
 } WHOISData;
 
+typedef struct BANData
+{
+	char *channel;
+} BANData;
+
 typedef struct ciServerMessageFilter
 {
 	int type;
@@ -111,4 +116,21 @@ int ciAddCMODEFilter(CHAT chat, const char *channel,
 	chatGetChannelModeCallback callback, void *param)
 {
 	return ciAddFilter(chat, 5, channel, 0, (void *)callback, 0, param, 0);
+}
+
+int ciAddBANFilter(CHAT chat, const char *user, const char *channel)
+{
+	BANData *data = (BANData *)malloc(sizeof(BANData));
+	if (data == 0)
+		return 0;
+
+	memset(data, 0, sizeof(BANData));
+	data->channel = goastrdup(channel);
+	if (data->channel == 0)
+	{
+		free(data);
+		return 0;
+	}
+
+	return ciAddFilter(chat, 7, user, 0, 0, 0, 0, data);
 }
