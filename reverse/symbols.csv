@@ -81686,6 +81686,8 @@ _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callbac
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
+_piKeyCacheRefresh,0x00866110,GameSpy PEER SDK peerKeys.c shared room key-cache refresh
+_piKeyCacheRefreshPlayer,0x00866340,GameSpy PEER SDK peerKeys.c player key-cache refresh wrapper
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
 _piKeyChanged,0x008659C0,GameSpy PEER SDK peerKeys.c shared watch-key cache update
 _piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity

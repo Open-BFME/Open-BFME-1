@@ -12,10 +12,17 @@ typedef int CHATBool;
 
 typedef struct piConnection
 {
-	unsigned char pad0[0x384];
+	CHAT chat;
+	unsigned char pad04[0x7C];
+	char rooms[3][0x101];
+	unsigned char pad383;
 	int enteringRoom[3];
 	int inRoom[3];
-	unsigned char pad1[0x1510];
+	unsigned char pad39c[0x728];
+	int alwaysRequestPlayerInfo;
+	unsigned char padac8[8];
+	int pingRoom[3];
+	unsigned char padadc[0xDD0];
 	HashTable globalWatchKeys[3];
 	HashTable roomWatchKeys[3];
 	HashTable globalWatchCache;
@@ -80,6 +87,7 @@ __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right
 __declspec(dllimport) void __cdecl free(void *memory);
 char *goastrdup(const char *source);
 void TableEnter(HashTable table, const void *element);
+int TableCount(HashTable table);
 void piAddPlayerInfoCallback(PEER peer, RoomType roomType, const char *nick,
 	unsigned int IP, int profileID);
 PEERBool piDemangleUser(const char *user, unsigned int *IP, int *profileID);
@@ -92,6 +100,14 @@ void piAddGlobalKeyChangedCallback(PEER peer, const char *nick, const char *key,
 void piAddRoomKeyChangedCallback(PEER peer, RoomType roomType, const char *nick,
 	const char *key, const char *value);
 PEERBool piRoomToType(PEER peer, const char *room, RoomType *roomType);
+__declspec(dllimport) void *__cdecl malloc(unsigned int size);
+void chatGetGlobalKeysA(CHAT chat, const char *user, int num,
+	const char **keys, void (*callback)(CHAT, CHATBool, const char *, int,
+		const char **, const char **, void *), void *param, CHATBool blocking);
+void chatGetChannelKeysA(CHAT chat, const char *channel, const char *user,
+	int num, const char **keys, void (*callback)(CHAT, CHATBool, const char *,
+		const char *, int, const char **, const char **, void *), void *param,
+	CHATBool blocking);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
 	HashTable watchCache)
@@ -346,4 +362,81 @@ void piGetRoomKeysCallbackA(CHAT chat, CHATBool success, const char *channel,
 			piRoomKeyChanged(peer, roomType, user, keys[i], values[i]);
 	}
 	(void)chat;
+}
+
+static void piKeyCacheRefresh(PEER peer, RoomType roomType, const char *nick)
+{
+	int num;
+	piSetupKeysMapData data;
+	PEERBool getIP;
+	PEERBool getFlags;
+	piWatchKey watchKey;
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->inRoom[roomType] && !connection->enteringRoom[roomType])
+		return;
+
+	if (!nick)
+		getIP = connection->pingRoom[roomType]
+			|| connection->alwaysRequestPlayerInfo;
+	else
+		getIP = 0;
+
+	if (getIP) {
+		watchKey.key = "username";
+		getIP = !TableLookup(connection->roomWatchKeys[roomType], &watchKey);
+	}
+
+	getFlags = nick == 0;
+	if (getFlags) {
+		watchKey.key = "b_flags";
+		getFlags = !(TableLookup(connection->globalWatchKeys[roomType], &watchKey)
+			|| TableLookup(connection->roomWatchKeys[roomType], &watchKey));
+	}
+
+	data.next = 0;
+	num = TableCount(connection->globalWatchKeys[roomType]);
+	if (num) {
+		data.keys = (char **)malloc(sizeof(char *) * num);
+		if (!data.keys)
+			return;
+		TableMap(connection->globalWatchKeys[roomType], piSetupKeysMap, &data);
+		chatGetGlobalKeysA(connection->chat,
+			nick ? nick : connection->rooms[roomType], num,
+			(const char **)data.keys, piKeysGetGlobalKeysCallbackA, peer, 0);
+		free(data.keys);
+	}
+
+	if (!nick) {
+		data.next = 0;
+		num = TableCount(connection->roomWatchKeys[roomType]);
+		if (getIP)
+			num++;
+		if (getFlags)
+			num++;
+		if (num) {
+			data.keys = (char **)malloc(sizeof(char *) * num);
+			if (!data.keys)
+				return;
+			TableMap(connection->roomWatchKeys[roomType], piSetupKeysMap, &data);
+			if (getIP)
+				data.keys[data.next++] = "username";
+			if (getFlags)
+				data.keys[data.next++] = "b_flags";
+			chatGetChannelKeysA(connection->chat, connection->rooms[roomType],
+				nick ? nick : "*", num, (const char **)data.keys,
+				piGetRoomKeysCallbackA, peer, 0);
+			free(data.keys);
+		}
+	}
+}
+
+void piKeyCacheRefreshPlayer(PEER peer, RoomType roomType, const char *nick)
+{
+	piKeyCacheRefresh(peer, roomType, nick);
+}
+
+void piKeyCacheRefreshRoom(PEER peer, RoomType roomType)
+{
+	piKeyCacheRefresh(peer, roomType, 0);
 }
