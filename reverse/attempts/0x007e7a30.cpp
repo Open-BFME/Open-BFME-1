@@ -419,16 +419,16 @@ static __forceinline void SetAxisAngle(Matrix4D &matrix, const Coord3D &axis, fl
 
     matrix.values[0] = axis.x * axis.x + c * (1.0f - axis.x * axis.x);
     matrix.values[1] = axis.x * axis.y * (1.0f - c) - axis.z * s;
-    matrix.values[2] = (1.0f - c) * axis.x * axis.z + axis.y * s;
+    matrix.values[2] = axis.z * (axis.x * (1.0f - c)) + axis.y * s;
     matrix.values[3] = 0.0f;
 
     matrix.values[4] = axis.x * axis.y * (1.0f - c) + axis.z * s;
     matrix.values[5] = axis.y * axis.y + c * (1.0f - axis.y * axis.y);
-    matrix.values[6] = (1.0f - c) * axis.y * axis.z - axis.x * s;
+    matrix.values[6] = axis.z * (axis.y * (1.0f - c)) - axis.x * s;
     matrix.values[7] = 0.0f;
 
-    matrix.values[8] = (1.0f - c) * axis.x * axis.z - axis.y * s;
-    matrix.values[9] = (1.0f - c) * axis.y * axis.z + axis.x * s;
+    matrix.values[8] = axis.z * (axis.x * (1.0f - c)) - axis.y * s;
+    matrix.values[9] = axis.z * (axis.y * (1.0f - c)) + axis.x * s;
     matrix.values[10] = axis.z * axis.z + c * (1.0f - axis.z * axis.z);
     matrix.values[11] = 0.0f;
 
