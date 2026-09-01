@@ -270,257 +270,32 @@ float Coord3D::GetLengthEstimate2D() const
     return ay + length_estimate_factor * ax;
 }
 
-__declspec(naked) float Coord3D::GetLengthEstimate() const
+static __forceinline float estimateLength2D(float a, float b)
 {
-    __asm {
-        __emit 0x51
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x75
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0xc2
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x1c
-        __emit 0x24
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0x75
-        __emit 0x1c
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x74
-        __emit 0x02
-        __emit 0xd9
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0x59
-        __emit 0xc3
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x74
-        __emit 0x02
-        __emit 0xd9
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0x04
-        __emit 0x24
-        __emit 0x59
-    }
+    if (a > b)
+        return a + length_estimate_factor * b;
+    return b + length_estimate_factor * a;
 }
 
-__declspec(naked) float Coord3D::lengthEstimate() const
+static __forceinline float estimateLength3D(const Coord3D &coord)
 {
-    __asm {
-        __emit 0x51
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x75
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0xc2
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xd9
-        __emit 0xe1
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x1c
-        __emit 0x24
-        __emit 0xd9
-        __emit 0xc1
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0x75
-        __emit 0x1c
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x74
-        __emit 0x02
-        __emit 0xd9
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd9
-        __emit 0x04
-        __emit 0x24
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0x59
-        __emit 0xc3
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x74
-        __emit 0x02
-        __emit 0xd9
-        __emit 0xc9
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xde
-        __emit 0xc1
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0xd8
-        __emit 0x04
-        __emit 0x24
-        __emit 0x59
-        __emit 0xc3
-    }
+    float ax = fabs(coord.x);
+    float ay = fabs(coord.y);
+    float xy = estimateLength2D(ax, ay);
+    float az = fabs(coord.z);
+    if (xy > az)
+        return estimateLength2D(ax, ay) + length_estimate_factor * az;
+    return az + length_estimate_factor * estimateLength2D(ax, ay);
+}
+
+float Coord3D::GetLengthEstimate() const
+{
+    return estimateLength3D(*this);
+}
+
+float Coord3D::lengthEstimate() const
+{
+    return estimateLength3D(*this);
 }
 
 float Coord3D::GetLengthSqrd() const
