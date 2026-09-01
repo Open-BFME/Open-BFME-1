@@ -81,6 +81,9 @@ typedef struct piPlayer
 } piPlayer;
 
 int piGetNextID(PEER peer);
+int piRoomsInit(PEER peer);
+int piPlayersInit(PEER peer);
+void piPingInit(PEER peer);
 int piNewChangeNickOperation(PEER peer, const char *newNick,
 	void *callback, void *param, int opID);
 void piAddChangeNickCallback(PEER peer, int success, const char *oldNick,
@@ -186,6 +189,17 @@ int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
+
+int piConnectTitle(PEER peer)
+{
+	if (!piRoomsInit(peer))
+		return 0;
+	if (!piPlayersInit(peer))
+		return 0;
+
+	piPingInit(peer);
+	return 1;
+}
 
 int peerGetPlayerFlagsA(PEER peer, const char *nick, int roomType, int *flags)
 {
