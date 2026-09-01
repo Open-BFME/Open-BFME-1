@@ -257,6 +257,7 @@ public:
 	void bfme_hideBackground( bool hide );
 	__declspec( noinline ) void bfme_showBackground( int kind );
 	void bfme_setAptText( const AsciiString &name, const UnicodeString &text );
+	void unidentified_0001A483();
 	void unidentified_00015235( int movie, const char *function, int argumentCount,
 		const void *argument1, const void *argument2, int unused1, int unused2, int unused3 );
 
@@ -703,15 +704,117 @@ void * __stdcall createAptScreenScoreScreen( void *context )
 	return new BfmeAptScreenScoreScreen( context );
 }
 
+extern const void *BfmeAptScreenCampaignReviewVftable[];
+extern const void *BfmeAptScreenCampaignReviewSecondaryVftable[];
+extern void *g_obj12F495C;
+
+// These are the three template specializations used by CampaignReview's
+// callbacks.  Their constructors are incremental-link thunks in retail; the
+// distinct types preserve the three wrapper vtables at 0x1104C24/30/3C.
+class CampaignReviewShowHolder
+{
+public:
+	CampaignReviewShowHolder( FunctorBinding binding );
+
+private:
+	void *m_ptr;
+};
+
+class CampaignReviewRefHolder
+{
+public:
+	CampaignReviewRefHolder( FunctorBinding binding );
+
+private:
+	void *m_ptr;
+};
+
+class CampaignReviewArgHolder
+{
+public:
+	CampaignReviewArgHolder( FunctorBinding binding );
+
+private:
+	void *m_ptr;
+};
+
+class CampaignReviewRegistry
+{
+public:
+	void showAptScreen( const AsciiString &name,
+		CampaignReviewShowHolder callback );
+	void showAptScreenWithArg( const AsciiString &name, void *argument,
+		CampaignReviewArgHolder callback );
+};
+
+void campaignReviewSetAptScreenRef( const AsciiString &name,
+	CampaignReviewRefHolder callback );
+
 // CampaignReview.apt, retail 0x00105040, object 0x258 bytes.
-class BfmeAptScreenCampaignReview
+class __declspec(novtable) __multiple_inheritance BfmeAptScreenCampaignReview
+	: public _bfme_AptGameWindow, public BfmeAptFunctorMarker
 {
 public:
 	BfmeAptScreenCampaignReview( void *context );
+	void _bfme_continue();
+	void _bfme_initGadgets();
+	void _bfme_totalCampaignScore();
+	void _bfme_playerSideType();
+	void unidentified_0003A085();
 
-private:
-	char m_unmodelled[ 0x258 ];
 };
+
+BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
+	: _bfme_AptGameWindow( context )
+{
+	*(const void ***)( (char *)this ) = BfmeAptScreenCampaignReviewVftable;
+	*(const void ***)( (char *)this + 0x218 ) =
+		BfmeAptScreenCampaignReviewSecondaryVftable;
+
+	if( g_obj12F495C == 0 )
+	{
+		g_obj12F495C = this;
+		_bfme_AptGameWindow *registry =
+			(_bfme_AptGameWindow *)( (char *)this + 0x218 );
+		CampaignReviewRegistry *campaignRegistry =
+			(CampaignReviewRegistry *)registry;
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_continue;
+			AsciiString name( "AptCampaignReview::Continue" );
+			campaignRegistry->showAptScreen( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_initGadgets;
+			AsciiString name( "AptCampaignReview::InitGadgets" );
+			campaignReviewSetAptScreenRef( name,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_totalCampaignScore;
+			AsciiString name( "TotalCampaignScore" );
+			campaignRegistry->showAptScreenWithArg( name, (void *)0,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&BfmeAptScreenCampaignReview::_bfme_playerSideType;
+			AsciiString name( "playerSideType" );
+			campaignRegistry->showAptScreenWithArg( name, (void *)1,
+				FunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		unidentified_0003A085();
+		g_theWindowManager->unidentified_0001A483();
+	}
+}
 
 // ?createAptScreenCampaignReview@@YGPAXPAX@Z
 void * __stdcall createAptScreenCampaignReview( void *context )

@@ -81598,3 +81598,17 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setWeaponLock@Object@@QAEXHH@Z,0x0003EEBE,Object command-button weapon lock call
 _ciGetUserBasicInfoMap,0x008727B0,GameSpy chatChannel.c map callback immediately preceding ciGetUserBasicInfoA
 ?getName@LivingWorldPlayerArmy@@QAE?AVAsciiString@@XZ,0x0004B470,findArmy retail call at 0x003B440F invokes the ILT thunk for the player-army name getter
+?BfmeAptScreenCampaignReviewVftable@@3PAPBXA,0x01104C74,CampaignReview primary vftable written by its constructor
+?BfmeAptScreenCampaignReviewSecondaryVftable@@3PAPBXA,0x01104C70,CampaignReview secondary APT interface vftable at this+0x218
+??0CampaignReviewShowHolder@@QAE@UFunctorBinding@@@Z,0x0002A815,CampaignReview Continue callback holder constructor
+??0CampaignReviewRefHolder@@QAE@UFunctorBinding@@@Z,0x0001BD9C,CampaignReview InitGadgets callback holder constructor
+??0CampaignReviewArgHolder@@QAE@UFunctorBinding@@@Z,0x00003A17,CampaignReview value-provider holder constructor
+?showAptScreen@CampaignReviewRegistry@@QAEXABVAsciiString@@VCampaignReviewShowHolder@@@Z,0x000338ED,CampaignReview Continue registration through the APT screen registry
+?campaignReviewSetAptScreenRef@@YAXABVAsciiString@@VCampaignReviewRefHolder@@@Z,0x0003DF14,CampaignReview InitGadgets registration
+?showAptScreenWithArg@CampaignReviewRegistry@@QAEXABVAsciiString@@PAXVCampaignReviewArgHolder@@@Z,0x0000ACFE,CampaignReview value-provider registration
+?_bfme_continue@BfmeAptScreenCampaignReview@@QAEXXZ,0x0004785C,CampaignReview Continue callback target thunk
+?_bfme_initGadgets@BfmeAptScreenCampaignReview@@QAEXXZ,0x00035C47,CampaignReview InitGadgets callback target thunk
+?_bfme_totalCampaignScore@BfmeAptScreenCampaignReview@@QAEXXZ,0x0001CD37,CampaignReview TotalCampaignScore callback target thunk
+?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXXZ,0x00042663,CampaignReview playerSideType callback target thunk
+?unidentified_0003A085@BfmeAptScreenCampaignReview@@QAEXXZ,0x0003A085,CampaignReview post-registration UI update
+?unidentified_0001A483@WindowManager@@QAEXXZ,0x0001A483,CampaignReview final WindowManager update
