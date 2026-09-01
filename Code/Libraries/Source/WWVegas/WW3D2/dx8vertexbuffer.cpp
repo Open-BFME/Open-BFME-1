@@ -55,6 +55,49 @@
 extern void W3DRadarResetLock(void);
 extern void BFME_DX8_Thread_Assert(void);
 
+// BFME's retail DX8 error path writes through the game debug stream rather
+// than calling the later Zero Hour Log_DX8_ErrorCode helper.  Keep the ABI
+// view local to this TU; only the slots exercised by that path are named.
+class BFMEIndexBufferDebugStream
+{
+public:
+	virtual BFMEIndexBufferDebugStream *Put_Unsigned(unsigned value);
+	virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+	virtual void Slot30(); virtual void Slot34();
+	virtual BFMEIndexBufferDebugStream *Put_String(const char *text);
+	virtual void Slot3C(); virtual void Slot40(); virtual void Slot44(); virtual void Slot48();
+	virtual BFMEIndexBufferDebugStream *Finish(int report);
+};
+
+class BFMEIndexBufferDebugClass
+{
+public:
+	virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+	virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+	virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+	virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3C();
+	virtual void Slot40(); virtual void Slot44(); virtual void Slot48(); virtual void Slot4C();
+	virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5C();
+	virtual void Begin_Report();
+	virtual void Slot64(); virtual void Slot68();
+	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
+};
+
+extern BFMEIndexBufferDebugClass *g_BFMEIndexBufferDebug;
+extern void _bfme_debugRecordCallsite(int kind);
+
+static __forceinline void BFME_DX8_ErrorCode(unsigned result)
+{
+	if (result != D3D_OK) {
+		_bfme_debugRecordCallsite(1);
+		g_BFMEIndexBufferDebug->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = g_BFMEIndexBufferDebug->Get_Stream(NULL, NULL);
+		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
+	}
+}
+
 #define DEFAULT_VB_SIZE 5000
 
 static bool _DynamicSortingVertexArrayInUse=false;
@@ -250,7 +293,7 @@ VertexBufferClass::AppendLockClass::AppendLockClass(VertexBufferClass* VertexBuf
 	:
 	VertexBufferLockClass(VertexBuffer)
 {
-	DX8_THREAD_ASSERT();
+	W3DRadarResetLock();
 	WWASSERT(VertexBuffer);
 	WWASSERT(!VertexBuffer->Engine_Refs());
 	WWASSERT(start_index+index_range<=VertexBuffer->Get_Vertex_Count());
@@ -269,7 +312,7 @@ VertexBufferClass::AppendLockClass::AppendLockClass(VertexBufferClass* VertexBuf
 		}
 #endif
 		DX8_Assert();
-		DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(VertexBuffer)->Get_DX8_Vertex_Buffer()->Lock(
+		BFME_DX8_ErrorCode(static_cast<DX8VertexBufferClass*>(VertexBuffer)->Get_DX8_Vertex_Buffer()->Lock(
 			start_index*VertexBuffer->FVF_Info().Get_FVF_Size(),
 			index_range*VertexBuffer->FVF_Info().Get_FVF_Size(),
 			(unsigned char**)&Vertices,
