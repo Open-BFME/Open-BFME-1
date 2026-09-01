@@ -74139,6 +74139,7 @@ name,address,notes
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
 ?bfmeJoinENLa@@YAPAXPAX0@Z,0x00023254,pin
 ?bfmeJoinENLb@@YAPAXPAX0@Z,0x0003F7CE,pin
+?bfmeKickVLL@BfmeKickVLL@@QAEXXZ,0x00030B11,pin
 ?bfmeKind1001@BfmeUnit1001@@QAEDH@Z,0x0003251F,pin
 ?bfmeKind1092@BfmeE1092@@QAEHH@Z,0x0002B81E,pin
 ?bfmeKind956@BfmeAI956@@QAEHXZ,0x0001E33A,pin
@@ -74355,6 +74356,7 @@ name,address,notes
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNotifyVIM@BfmeThingVIM@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVKP@BfmeNotifyVKP@@QAEXPAVBfmeBlockVKP@@HH@Z,0x0001343F,pin
+?bfmeNotifyVLL@BfmeCtlVLL@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
