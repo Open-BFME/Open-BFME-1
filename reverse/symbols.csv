@@ -81577,3 +81577,5 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
+_piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
+_piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup

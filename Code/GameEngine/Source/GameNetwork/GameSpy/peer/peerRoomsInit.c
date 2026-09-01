@@ -7,6 +7,8 @@ typedef int RoomType;
 enum
 {
 	TitleRoom = 0,
+	GroupRoom = 1,
+	StagingRoom = 2,
 	NumRooms = 3
 };
 
@@ -41,9 +43,20 @@ typedef piConnection *PEER;
 
 __declspec(dllimport) int __cdecl strcasecmp(const char *left,
 	const char *right);
+__declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source,
+	int len);
 int piParseFlags(const char *flags);
 void chatSetChannelKeysA(void *chat, const char *channel, const char *user,
 	int num, const char **keys, const char **values);
+void chatLeaveChannel(void *chat, const char *channel, const char *reason);
+void piCancelJoinOperation(PEER peer, RoomType roomType);
+void piClearRoomPlayers(PEER peer, RoomType roomType);
+void piKeyCacheCleanse(PEER peer);
+void piKeyCacheRefreshRoom(PEER peer, RoomType roomType);
+void piSBFreeHostServer(PEER peer);
+void piSetLocalFlags(PEER peer);
+void piStopHosting(PEER peer, PEERBool stopReporting);
+void piStopReporting(PEER peer);
 
 PEERBool piRoomsInit(PEER peer)
 {
@@ -63,6 +76,76 @@ PEERBool piRoomsInit(PEER peer)
 	peer->groupID = 0;
 	peer->titleRoomChannel[0] = '\0';
 	return 1;
+}
+
+void piFinishedEnteringRoom(PEER peer, RoomType roomType, const char *name)
+{
+	if (!name)
+		name = "";
+
+	peer->inRoom[roomType] = 1;
+	peer->enteringRoom[roomType] = 0;
+	strzcpy(peer->name[roomType], name, 0x200);
+	peer->name[roomType][0x1FF] = '\0';
+	piSetLocalFlags(peer);
+	piKeyCacheRefreshRoom(peer, roomType);
+}
+
+void piLeaveRoom(PEER peer, RoomType roomType, const char *reason)
+{
+	if (!peer->enteringRoom[roomType] && !peer->inRoom[roomType])
+		return;
+
+	if (peer->enteringRoom[roomType])
+		piCancelJoinOperation(peer, roomType);
+	if (peer->connected)
+		chatLeaveChannel(peer->chat, peer->room[roomType], reason);
+
+	piClearRoomPlayers(peer, roomType);
+	if (peer->inRoom[roomType])
+		peer->inRoom[roomType] = 0;
+	else
+		peer->enteringRoom[roomType] = 0;
+
+	peer->room[roomType][0] = '\0';
+	peer->name[roomType][0] = '\0';
+	peer->oldFlags[roomType] = 0;
+
+	if (roomType == StagingRoom)
+	{
+		piStopHosting(peer, 0);
+		if (!peer->playing)
+			piStopReporting(peer);
+		piSBFreeHostServer(peer);
+		peer->ready = 0;
+		peer->passwordedRoom = 0;
+		piSetLocalFlags(peer);
+	}
+	else if (roomType == GroupRoom)
+	{
+		peer->groupID = 0;
+	}
+
+	piKeyCacheCleanse(peer);
+}
+
+void piRoomsCleanup(PEER peer)
+{
+	int roomType;
+
+	for (roomType = 0; roomType < NumRooms; roomType++)
+	{
+		if (peer->stayInTitleRoom && roomType == TitleRoom)
+			continue;
+
+		if (peer->inRoom[roomType] || peer->enteringRoom[roomType])
+			piLeaveRoom(peer, roomType, 0);
+		peer->room[roomType][0] = '\0';
+		peer->name[roomType][0] = '\0';
+		peer->enteringRoom[roomType] = 0;
+		peer->inRoom[roomType] = 0;
+	}
+	peer->titleRoomChannel[0] = '\0';
 }
 
 PEERBool piRoomToType(PEER peer, const char *room, RoomType *roomType)
