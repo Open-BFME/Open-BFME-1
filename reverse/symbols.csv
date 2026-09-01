@@ -73294,6 +73294,7 @@ name,address,notes
 ?bfmeDoneVJK@BfmeMsgVJK@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJL@BfmeMsgVJL@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJM@BfmeMsgVJM@@QAEXXZ,0x007E86C0,pin
+?bfmeDoneVJN@BfmeMsgVJN@@QAEXXZ,0x007E86C0,pin
 ?bfmeDrawTriVHA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
@@ -74095,6 +74096,7 @@ name,address,notes
 ?bfmeInitVJK@BfmeMsgVJK@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJL@BfmeMsgVJL@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
+?bfmeInitVJN@BfmeMsgVJN@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
