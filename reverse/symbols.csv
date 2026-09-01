@@ -81570,3 +81570,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
 ?getADynamicLight@RTS3DSceneLightPulseShim@@QAEPAVW3DDynamicLightPulseShim@@XZ,0x0003442D,ILT call target used by W3DDisplay light pulse
 ?setFrameFade@W3DDynamicLightPulseShim@@QAEXII@Z,0x000049E9,ILT call target used by W3DDisplay light pulse
+?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
