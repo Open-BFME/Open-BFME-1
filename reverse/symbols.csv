@@ -81977,3 +81977,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?insert_unique@?$_Rb_tree@HU?$pair@$$CBHVPSPlayerStats@@@_STL@@U?$_Select1st@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVPSPlayerStats@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVPSPlayerStats@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHVPSPlayerStats@@@2@@Z,0x00030B43,retail ILT called by the PSPlayerStats map operator[] at 0x0065E220; the BFME body at 0x0065E1F0 is the same insert_unique instantiation family
