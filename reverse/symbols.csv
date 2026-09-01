@@ -81741,16 +81741,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
-_g_bfmeState56AD10B,0x012F0898,Rva0056AD10 second state source
-??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
-??1DX8SkinFVFCategoryContainer@@UAE@XZ,0x009471E0,exact 11-byte source body and 0x00948B40 deleting-destructor call prove identity
-?findGroup@GameWindowTransitionsHandler@@AAEPAVTransitionGroup@@VAsciiString@@@Z,0x00024172,setGroup retail call target thunk to 0x0048A520
-?reset@TransitionGroup@@QAEXXZ,0x000024A5,setGroup empty-immediate retail call target thunk
-??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
-?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
 ?update@BfmeThingDTK@@QAEXXZ,0x00168270,address-derived update using the existing BfmeThingDTK helper pin
-??1BoxRenderObjClass@@UAE@XZ,0x00956950,exact 5-byte source body and 0x00956D10 deleting-destructor call prove identity
-??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
-??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
-?compareNoCase@?$StringBase@D@@QBEHABV1@@Z,0x00027471,retail __linear_insert at 0x00531860 calls the StringBase<char> compareNoCase ILT
