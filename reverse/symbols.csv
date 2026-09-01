@@ -10813,6 +10813,12 @@ name,address,notes
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
+_piSBQueryVersion,0x00EC88E4,upstream peerSB.c global loaded twice by piSBInit before SBQueryEngineInit
+_piSBGamesListCallback,0x00864570,upstream peerSB.c first SBServerListInit callback stored by piSBInit
+_piSBGamesEngineCallback,0x008646A0,upstream peerSB.c first SBQueryEngineInit callback stored by piSBInit
+_piSBGroupsListCallback,0x00864700,upstream peerSB.c second SBServerListInit callback stored by piSBInit
+_piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
+_piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
 ?Update_Min_Max@AABTreeClass@@AAEXHAAVVector3@@0@Z,0x0096AFC0
