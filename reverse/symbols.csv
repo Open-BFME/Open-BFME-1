@@ -6351,7 +6351,6 @@ name,address,notes
 ??1Gen_dtor_009221b0@@UAE@XZ,0x009221D0,gen-dtor class destructor
 ??1Gen_dtor_00922220@@UAE@XZ,0x00921940,gen-dtor class destructor
 ??1Gen_dtor_00922730@@UAE@XZ,0x00922750,gen-dtor class destructor
-??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose first slot is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
 ??1Gen_dtor_00924070@@UAE@XZ,0x00924090,gen-dtor class destructor
 ??1Gen_dtor_009240f0@@UAE@XZ,0x00924110,gen-dtor class destructor
 ??1Gen_dtor_00924130@@UAE@XZ,0x00924150,gen-dtor class destructor
@@ -6402,7 +6401,6 @@ name,address,notes
 ??1Gen_dtor_00966890@@UAE@XZ,0x009221E0,gen-dtor class destructor
 ??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose first slot is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
 ??1Gen_dtor_00966a90@@UAE@XZ,0x009215B0,gen-dtor class destructor
-??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose first slot is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
 ??1Gen_dtor_00967060@@UAE@XZ,0x00967080,gen-dtor class destructor
 ??1Gen_dtor_00967090@@UAE@XZ,0x009670B0,gen-dtor class destructor
 ??1Gen_dtor_009670c0@@UAE@XZ,0x009670E0,gen-dtor class destructor
@@ -8592,6 +8590,7 @@ name,address,notes
 ??1GrantStealthBehaviorModuleDataMemberC@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1GridClassicEnvironmentMapperClass@@UAE@XZ,0x00922140,constructor 0x00922070 installs vtable 0x0113C0AC whose first slot is deleting wrapper 0x00922120; that wrapper directly calls this scalar body
 ??1GridEnvironmentMapperClass@@UAE@XZ,0x009221D0,constructor 0x009215C0 installs vtable 0x0113C068 whose first slot is deleting wrapper 0x009221B0; that wrapper directly calls this scalar body
+??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose first slot is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
 ??1HTreeClass@@QAE@XZ,0x00952790
 ??1HeaderTemplateINI@@QAE@XZ,0x008512E0,Open-BFME5 HeaderTemplateManager init relocation
 ??1HeaderTemplateString@@QAE@XZ,0x00887940,Open-BFME5 HeaderTemplateManager init relocation
@@ -8992,6 +8991,7 @@ name,address,notes
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,pinharvest x1 (thunk)
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x009D19A0,pinharvest x1 (body)
 ??1ScienceVecStandIn@@QAE@XZ,0x00016B58,ScienceInfo ScienceVec destructor ILT
+??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose first slot is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
 ??1ScriptActions@@UAE@XZ,0x00013E9E,ILT for the ScriptActions destructor body at 0x002F1B80
 ??1SegLineRendererClass@@QAE@XZ,0x00960030,derived from ~ParticleBufferClass call site
 ??1SegmentedLineClass@@UAE@XZ,0x0094F9C0,0x009509B0 is the first slot of the table followed by exact SegmentedLine Clone and Class_ID methods; wrapper directly calls this body
