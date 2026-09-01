@@ -160,6 +160,7 @@ void SocketShutDown(void);
 void piKeysCleanup(PEER peer);
 void chatThink(void *chat);
 int chatGetUserID(void *chat);
+int chatGetProfileID(void *chat);
 unsigned int current_time(void);
 void piPingThink(PEER peer);
 void piSBThink(PEER peer);
@@ -350,6 +351,15 @@ int peerGetUserID(PEER peer)
 	if (!connection->connected)
 		return 0;
 	return chatGetUserID(connection->chat);
+}
+
+int peerGetProfileID(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (!connection->connected)
+		return 0;
+	return chatGetProfileID(connection->chat);
 }
 
 int piConnectTitle(PEER peer)

@@ -81795,3 +81795,4 @@ _bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call
 _piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operation reset before title cleanup
 ?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHHHHHHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder
 _chatGetUserID,0x008606F0,gamespy-chat: authentic peerGetUserID tail call after connected guard
+_chatGetProfileID,0x00860700,gamespy-chat: authentic peerGetProfileID tail call after connected guard
