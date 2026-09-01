@@ -187,6 +187,26 @@ void peerShutdown(PEER peer);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
 
+int peerGetPlayerFlagsA(PEER peer, const char *nick, int roomType, int *flags)
+{
+	piConnection *connection = (piConnection *)peer;
+	piPlayer *player;
+
+	if(!flags)
+		return 0;
+	if(!connection->inRoom[roomType])
+		return 0;
+
+	player = piGetPlayer(peer, nick);
+	if(!player)
+		return 0;
+	if(!player->inRoom[roomType])
+		return 0;
+
+	*flags = player->flags[roomType];
+	return 1;
+}
+
 void peerChangeNickA(PEER peer, const char *newNick, void *callback,
 	void *param, int blocking)
 {
