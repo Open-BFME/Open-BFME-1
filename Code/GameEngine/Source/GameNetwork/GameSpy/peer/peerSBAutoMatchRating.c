@@ -75,7 +75,7 @@ static __declspec(noinline) int piSBAutoMatchGetServerRating(PEER peer, SBServer
 	return piCallAutoMatchRateCallback(peer, server);
 }
 
-void piSBAutoMatchCheckUpdatedServer(PEER peer, SBServer server)
+static __declspec(noinline) void piSBAutoMatchCheckUpdatedServer(PEER peer, SBServer server)
 {
 	int rating;
 
@@ -92,4 +92,9 @@ void piSBAutoMatchCheckUpdatedServer(PEER peer, SBServer server)
 	piLeaveRoom(peer, 2, "");
 	if (!piJoinAutoMatchRoom(peer, server))
 		piSetAutoMatchStatus(peer, 0);
+}
+
+void piSBAutoMatchCheckUpdatedServerCaller(PEER peer, SBServer server)
+{
+	piSBAutoMatchCheckUpdatedServer(peer, server);
 }
