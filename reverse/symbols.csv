@@ -82141,3 +82141,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
+?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z,0x003E9720,BFME five-argument updateGoal called by GiantBirdNormalFlightState::onExit at 0x002BE180; source file and line are encoded in the retail call
