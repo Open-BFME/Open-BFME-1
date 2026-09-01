@@ -74523,6 +74523,7 @@ name,address,notes
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
+?bfmeReserveVKJ@BfmeStrVKJ@@QAEXIHIHI@Z,0x0089E570,pin
 ?bfmeReset1015@BfmeL1015@@QAEXXZ,0x007E86C0,pin
 ?bfmeReset1018@BfmeSink1018@@QAEXH@Z,0x000348EC,pin
 ?bfmeReset1046@BfmeD1046@@QAEXH@Z,0x008BDD70,pin
@@ -76410,6 +76411,7 @@ name,address,notes
 ?g_bfmeAlloc1045@@3PAUBfmeAlloc1045@@A,0x00F37A30,pin
 ?g_bfmeAlloc1233@@3PAUBfmeAlloc1233@@A,0x00F37A30,pin
 ?g_bfmeAllocVKI@@3PA6APAXI@ZA,0x00F37A30,pin
+?g_bfmeAllocVKJ@@3PAUBfmeAllocVKJ@@A,0x00F37A30,pin
 ?g_bfmeArg1051@@3PADA,0x00D090E8,pin
 ?g_bfmeArg1057@@3PADA,0x00D07374,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
@@ -80057,6 +80059,7 @@ name,address,notes
 ?second@Rva003C0E40@@QAEXH@Z,0x003BEBA0,second half of the chained pair at 0x003C0E40; address-derived name
 ?secondaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x0003E1A3,retail jump thunk to the byte-verified secondary state lookup at 0x00369120
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
+?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
 ?send@BfmeMgr089@@QAEXPAX0@Z,0x0002836C,pin
 ?send@BfmeSub2B8_112@@QAEXPAXH@Z,0x0000E700,pin
 ?send@ConnectionManagerSendFrameDataShim@@QAEXII@Z,0x00664D20,ConnectionManager sendFrameDataToPlayer incremental-link thunk target through a TU-local forwarding shim
@@ -82141,4 +82144,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
