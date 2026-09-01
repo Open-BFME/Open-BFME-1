@@ -10561,6 +10561,7 @@ name,address,notes
 ?Start@ParticleEmitterClass@@QAEXXZ,0x0097F090
 ?Start_Movie_Capture@WW3D@@SAXPBDM@Z,0x009E7FD0,pinharvest x1 (body)
 ?StaticGameLODNames@@3PAPBDA,0x00EA73E4,GameLODManager::getStaticGameLODIndex direct DIR32; six retail names VeryLow through Custom
+?Stop@ThreadClass@@QAEXXZ,0x009DB5A0,Watchdog::stop tail call and BFME no-argument wait-and-clear thread body
 ?String@CRC@@SAKPBDK@Z,0x009E7FD0
 ?StructureCollapseRandom@@YAHHHPBDH@Z,0x00001BAE,StructureCollapse begin deterministic random ILT thunk
 ?SyncTime@WW3D@@0IA,0x0133F420,StreakRendererClass retail constructor WW3D synchronization time
