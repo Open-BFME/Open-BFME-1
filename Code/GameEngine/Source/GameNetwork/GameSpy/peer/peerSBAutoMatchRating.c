@@ -15,7 +15,11 @@ typedef struct PEERConnection
 	unsigned char pad_0000[0x54];
 	unsigned int publicIP;
 	unsigned int privateIP;
-	unsigned char pad_005C[0x1EF0 - 0x5C];
+	unsigned char pad_005C[0x384 - 0x5C];
+	int enteringRoom[3];
+	unsigned char pad_0390[0x18D4 - 0x390];
+	int autoMatchStatus;
+	unsigned char pad_18D8[0x1EF0 - 0x18D8];
 	piOperation *autoMatchOperation;
 	int autoMatchReporting;
 } PEERConnection;
@@ -28,8 +32,12 @@ unsigned int SBServerGetPrivateInetAddress(SBServer server);
 unsigned short SBServerGetPrivateQueryPort(SBServer server);
 unsigned short SBServerGetPublicQueryPort(SBServer server);
 int SBServerHasFullKeys(SBServer server);
-int SBServerGetIntValue(SBServer server, const char *key, int defaultValue);
+int SBServerGetIntValueA(SBServer server, const char *key, int defaultValue);
 int piCallAutoMatchRateCallback(PEER peer, SBServer server);
+void piStopAutoMatchReporting(PEER peer);
+void piLeaveRoom(PEER peer, int roomType, const char *reason);
+int piJoinAutoMatchRoom(PEER peer, SBServer server);
+void piSetAutoMatchStatus(PEER peer, int status);
 
 static __declspec(noinline) PEERBool piIsLocalServer(PEER peer, SBServer server)
 {
@@ -52,7 +60,7 @@ static __declspec(noinline) PEERBool piIsLocalServer(PEER peer, SBServer server)
 	return 1;
 }
 
-int piSBAutoMatchGetServerRating(PEER peer, SBServer server)
+static __declspec(noinline) int piSBAutoMatchGetServerRating(PEER peer, SBServer server)
 {
 	if (peer->autoMatchReporting && piIsLocalServer(peer, server))
 		return 0;
@@ -60,9 +68,28 @@ int piSBAutoMatchGetServerRating(PEER peer, SBServer server)
 	if (!SBServerHasFullKeys(server))
 		return 0;
 
-	if (SBServerGetIntValue(server, "numplayers", 0) >=
-		SBServerGetIntValue(server, "maxplayers", 0))
+	if (SBServerGetIntValueA(server, "numplayers", 0) >=
+		SBServerGetIntValueA(server, "maxplayers", 0))
 		return 0;
 
 	return piCallAutoMatchRateCallback(peer, server);
+}
+
+void piSBAutoMatchCheckUpdatedServer(PEER peer, SBServer server)
+{
+	int rating;
+
+	if (peer->autoMatchStatus != 2)
+		return;
+	if (peer->enteringRoom[2])
+		return;
+
+	rating = piSBAutoMatchGetServerRating(peer, server);
+	if (rating <= 0)
+		return;
+
+	piStopAutoMatchReporting(peer);
+	piLeaveRoom(peer, 2, "");
+	if (!piJoinAutoMatchRoom(peer, server))
+		piSetAutoMatchStatus(peer, 0);
 }
