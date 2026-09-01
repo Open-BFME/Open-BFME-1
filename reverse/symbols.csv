@@ -81576,3 +81576,4 @@ __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
 ?setFrameFade@W3DDynamicLightPulseShim@@QAEXII@Z,0x000049E9,ILT call target used by W3DDisplay light pulse
 ?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
 _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
+??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
