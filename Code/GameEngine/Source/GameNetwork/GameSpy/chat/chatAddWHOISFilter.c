@@ -13,6 +13,8 @@ typedef void (*chatGetChannelModeCallback)(CHAT chat, int success,
 	const char *channel, const void *mode, void *param);
 typedef void (*chatEnumChannelBansCallback)(CHAT chat, int success,
 	const char *channel, int numBans, const char **bans, void *param);
+typedef void (*chatChangeNickCallback)(CHAT chat, int success,
+	const char *oldNick, const char *newNick, void *param);
 
 typedef struct WHOISData
 {
@@ -152,4 +154,10 @@ int ciAddGETBANFilter(CHAT chat, const char *channel,
 
 	memset(data, 0, sizeof(GETBANData));
 	return ciAddFilter(chat, 8, channel, 0, (void *)callback, 0, param, data);
+}
+
+int ciAddNICKFilter(CHAT chat, const char *oldNick, const char *newNick,
+	chatChangeNickCallback callback, void *param)
+{
+	return ciAddFilter(chat, 9, oldNick, newNick, (void *)callback, 0, param, 0);
 }
