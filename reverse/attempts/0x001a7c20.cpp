@@ -137,10 +137,13 @@ PathfindLayerEnum TerrainLogic::getLayerForDestination(
 
 	if (bestLayer == LAYER_GROUND)
 	{
+		AI *ai;
+
 		if (_TheAIParseDefinitionAI->pathfinder()->bfmeAnyBridgeAt(position))
 			return (PathfindLayerEnum)16;
 
-		if (_TheAIParseDefinitionAI && _TheAIParseDefinitionAI->pathfinder())
+		ai = _TheAIParseDefinitionAI;
+		if (ai && ai->pathfinder())
 			return (PathfindLayerEnum)_TheAIParseDefinitionAI->pathfinder()->
 				bfmeLayerForPosition(object, *position);
 	}
