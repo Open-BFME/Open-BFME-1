@@ -8972,6 +8972,7 @@ name,address,notes
 ??1SiegeDeploySpecialPowerModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
+??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
 ??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
