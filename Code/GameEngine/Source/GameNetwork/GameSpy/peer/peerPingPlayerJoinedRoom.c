@@ -78,7 +78,40 @@ void *TableNew(int elemSize, int numBuckets,
 void *TableLookup(void *table, const void *elem);
 void TableEnter(void *table, const void *elem);
 int piXpingTableHashFn(const void *param, int numBuckets);
-int piXpingTableCompareFn(const void *param1, const void *param2);
+__declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
+
+int piXpingTableCompareFn(const void *param1, const void *param2)
+{
+	piXping *xping1 = (piXping *)param1;
+	piXping *xping2 = (piXping *)param2;
+	int i;
+	int rcode;
+	const char *nicks[2][2];
+
+	nicks[0][0] = xping1->nicks[0];
+	nicks[0][1] = xping1->nicks[1];
+	nicks[1][0] = xping2->nicks[0];
+	nicks[1][1] = xping2->nicks[1];
+
+	for(i = 0; i < 2; i++)
+	{
+		if(strcmp(nicks[i][1], nicks[i][0]) < 0)
+		{
+			const char *temp = nicks[i][0];
+			nicks[i][0] = nicks[i][1];
+			nicks[i][1] = temp;
+		}
+	}
+
+	for(i = 0; i < 2; i++)
+	{
+		rcode = strcasecmp(nicks[0][i], nicks[1][i]);
+		if(rcode != 0)
+			return rcode;
+	}
+
+	return 0;
+}
 void piXpingTableElementFreeFn(void *param);
 int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
