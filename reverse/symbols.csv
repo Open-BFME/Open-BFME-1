@@ -6386,7 +6386,6 @@ name,address,notes
 ??1Gen_dtor_0094f2e0@@UAE@XZ,0x0094ED60,gen-dtor class destructor
 ??1Gen_dtor_009509b0@@UAE@XZ,0x0094F9C0,gen-dtor class destructor
 ??1Gen_dtor_00951080@@UAE@XZ,0x00950FC0,gen-dtor class destructor
-??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,gen-dtor class destructor
 ??1Gen_dtor_00956d10@@UAE@XZ,0x00956950,gen-dtor class destructor
 ??1Gen_dtor_00957820@@UAE@XZ,0x00957840,gen-dtor class destructor
@@ -8618,6 +8617,7 @@ name,address,notes
 ??1LaserUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1LayoutFilename@@QAE@XZ,0x00887940
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
+??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
 ??1LivingWorldAnimObject@@UAE@XZ,0x00012AD0,LivingWorldAnimObject scalar deleting destructor calls this ILT
 ??1LivingWorldCampaign@@QAE@XZ,0x003AA7F0,Open-BFME5 destructor unwound at the end of ParseLivingWorldCampaignBlock
 ??1LivingWorldPlayerArmy@@QAE@XZ,0x00006C4E,derived from the REL32 displacement at 0x00366410
@@ -10203,6 +10203,7 @@ name,address,notes
 ?HideInGameChat@@YAXXZ,0x00019583
 ?HideQuitMenu@@YAXXZ,0x0001BF36
 ?HideSaveLoadMenu@@YAXXZ,0x0000A416
+?Init@CComCriticalSection@ATL@@QAEJXZ,0x007E5860,ATL 7.1 critical-section initializer body reached through ILT 0x0003AEC7
 ?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z,0x00960190,derived from ParticleBufferClass main ctor aligned call sites
 ?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z,0x00929410
 ?Init_Caps@DX8Caps@@AAEXPAUIDirect3DDevice8@@@Z,0x0091B6E0
@@ -74400,6 +74401,7 @@ _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoke
 ?bfmeReleaseOld@Gen_00359A80@@QAEXXZ,0x0002594B,Open-BFME5 the release of the old block the vector reserve at 0x00359A80 calls after moving
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
 ?bfmeReleaseRef@BfmeTextureS@@QAEXXZ,0x009EB7A0,Open-BFME5 the reference release the destructor at 0x00757830 runs over its elements
+?bfmeReleaseULD@BfmeCurULD@@QAEXXZ,0x009EB7A0,pin
 ?bfmeRemove1183@BfmeList1183@@QAEXPAUBfmeSlot1183@@@Z,0x0001DFE3,pin
 ?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
@@ -74407,6 +74409,7 @@ _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoke
 ?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
 ?bfmeReportTSA@@YGXJPAVBfmeThingTSA@@PAUBfmeGuidTSA@@@Z,0x00AFD550,pin
 ?bfmeReportUKA@@YGXJPAVBfmeThingUKA@@PAUBfmeGuidUKA@@@Z,0x00AFD550,pin
+?bfmeReportULA@@YGXJPAVBfmeThingULA@@PAUBfmeGuidULA@@@Z,0x00AFD550,pin
 ?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
@@ -76484,6 +76487,7 @@ _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoke
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
 ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A,0x00D3DF00,pin
 ?g_bfmeIidUKA@@3UBfmeGuidUKA@@A,0x00D3DF00,pin
+?g_bfmeIidULA@@3UBfmeGuidULA@@A,0x00D3DF00,pin
 ?g_bfmeInfoTKB@@3PADA,0x00D1E05C,pin
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
@@ -81851,4 +81855,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?Init@CComCriticalSection@ATL@@QAEJXZ,0x007E5860,ATL 7.1 critical-section initializer body reached through ILT 0x0003AEC7
