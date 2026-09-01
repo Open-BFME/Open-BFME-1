@@ -14,7 +14,8 @@ enum
 enum
 {
 	CHAT_LEFT,
-	CHAT_QUIT
+	CHAT_QUIT,
+	CHAT_KILLED = 3
 };
 
 enum
@@ -329,6 +330,43 @@ void ciQuitEnumChannelsCallback(CHAT chat, const char *user,
 				params.user = user;
 				params.why = CHAT_QUIT;
 				params.reason = (char *)reason;
+				params.kicker = 0;
+				ciAddCallback_(chat, CALLBACK_USER_PARTED,
+					callbacks->userParted, &params, callbacks->param,
+					0, (void *)channel, sizeof(params));
+			}
+
+			if (callbacks->userListUpdated != 0)
+			{
+				ciCallbackUserListUpdatedParams params;
+				params.channel = channel;
+				ciAddCallback_(chat, CALLBACK_USER_LIST_UPDATED,
+					callbacks->userListUpdated, &params, callbacks->param,
+					0, (void *)channel, sizeof(params));
+			}
+		}
+	}
+}
+
+void ciKillEnumChannelsCallback(CHAT chat, const char *user,
+	const char *channel, void *param)
+{
+	chatChannelCallbacks *callbacks;
+	char *reason = (char *)param;
+
+	ciUserLeftChannel(chat, user, channel);
+	if (ciWasJoinCallbackCalled(chat, channel))
+	{
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if (callbacks != 0)
+		{
+			if (callbacks->userParted != 0)
+			{
+				ciCallbackUserPartedParams params;
+				params.channel = channel;
+				params.user = user;
+				params.why = CHAT_KILLED;
+				params.reason = reason;
 				params.kicker = 0;
 				ciAddCallback_(chat, CALLBACK_USER_PARTED,
 					callbacks->userParted, &params, callbacks->param,
