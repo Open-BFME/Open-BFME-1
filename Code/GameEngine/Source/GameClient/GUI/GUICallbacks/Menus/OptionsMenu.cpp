@@ -1016,18 +1016,33 @@ Real OptionPreferences::getGammaValue(void)
  	return gamma;
 }
 
-// ?getResolution@OptionPreferences@@QAEXPAH0@Z present-unmatched
+struct BfmeGlobalDataResolution
+{
+	unsigned char m_unreconstructed_00[0x2C];
+	Int m_xResolution;
+	Int m_yResolution;
+};
+
 void OptionPreferences::getResolution(Int *xres, Int *yres)
 {
-	*xres = TheGlobalData->m_xResolution;
-	*yres = TheGlobalData->m_yResolution;
+	*xres = ((const BfmeGlobalDataResolution *)TheGlobalData)->m_xResolution;
+	*yres = ((const BfmeGlobalDataResolution *)TheGlobalData)->m_yResolution;
 
-	OptionPreferences::const_iterator it = find("Resolution");
-	if (it == end())
+	CustomAsciiStringShim key;
+	key.init("Resolution");
+
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)((UnsignedByte *)this + 4);
+	CustomMapNodeShim *node = map->find(&key);
+	key.destroy();
+
+	if (node == map->m_header)
 		return;
 
 	Int selectedXRes,selectedYRes;
-	if (sscanf(it->second.str(),"%d%d", &selectedXRes, &selectedYRes) != 2)
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)((UnsignedByte *)data + 8) : "";
+	if (sscanf(text,"%d%d", &selectedXRes, &selectedYRes) != 2)
 		return;
 
 	*xres=selectedXRes;
