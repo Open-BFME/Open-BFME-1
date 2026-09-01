@@ -74567,6 +74567,7 @@ name,address,notes
 ?bfmeRunVIW@BfmeMsgVIW@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVIX@BfmeMsgVIX@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVJA@BfmeMsgVJA@@QAEXXZ,0x007E8AC0,pin
+?bfmeRunVJC@BfmeMsgVJC@@QAEXXZ,0x007E8AC0,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
@@ -74626,6 +74627,7 @@ name,address,notes
 ?bfmeSet2VIX@BfmeMsgVIX@@QAEXPBDPAX1@Z,0x007E8E90,pin
 ?bfmeSet3VIW@BfmeMsgVIW@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJA@BfmeMsgVJA@@QAEXPBDH@Z,0x007E88D0,pin
+?bfmeSet3VJC@BfmeMsgVJC@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet4VIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet4VIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
@@ -74680,6 +74682,7 @@ name,address,notes
 ?bfmeSetVIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJA@BfmeMsgVJA@@QAEXPBDPAX@Z,0x007E8A10,pin
+?bfmeSetVJC@BfmeMsgVJC@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -74804,6 +74807,8 @@ name,address,notes
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeSub1224@BfmeA1224@@QAEPAVBfmeE1224@@H@Z,0x00899430,pin
 ?bfmeSubVIY@BfmeThingVIY@@QAEXPAVBfmeMsgVIX@@PAX1@Z,0x007F1400,pin
+?bfmeSubVJC@BfmeThingVJC@@QAEXPAVBfmeMsgVJC@@PAX1@Z,0x007F1800,pin
+?bfmeSubVJD@BfmeThingVJD@@QAEXPAVBfmeMsgVJC@@HPAX@Z,0x007F1800,pin
 ?bfmeSubmit1282@BfmeRouteManager1282@@QAEXPAXPAVBfmeN1034@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BAAB0 retail body
 ?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
@@ -76997,6 +77002,8 @@ name,address,notes
 ?g_bfmeVIV@@3PAXA,0x00F0A530,pin
 ?g_bfmeVJA@@3PAXA,0x00F0A4B8,pin
 ?g_bfmeVJB@@3PAXA,0x00F0A548,pin
+?g_bfmeVJC@@3PAXA,0x00F0A5DC,pin
+?g_bfmeVJD@@3PAXA,0x00F0A618,pin
 ?g_bfmeVal991@@3HA,0x00EF822C,pin
 ?g_bfmeVal993B@@3HA,0x00EB7D80,pin
 ?g_bfmeVal995B@@3HA,0x00EB7430,pin
