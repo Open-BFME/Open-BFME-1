@@ -23,17 +23,37 @@
 // bytes -- does not appear.
 
 class BfmeStringBaseChar;
+struct S4Name;
 
 template <class T>
 class StringBase
 {
-private:
+public:
+	void set(const StringBase<T> &other);			// retail 0x00887C90
+	StringBase<T> &operator=(const StringBase<T> &other)
+	{
+		set(other);
+		return *this;
+	}
+	int compareNoCase(const StringBase<T> &other) const;	// retail 0x00027471
+
+	private:
 	StringBase(const StringBase<T> &other);			// retail 0x00887B60
 	~StringBase(void);
-
 	T *m_bfmeData;
 
+	friend struct S4Name;
 	friend struct S4SortElem12;
+};
+
+// The wrapper keeps the retail string subobject at +0x04 while making its
+// copy and destruction sequence explicit for this isolated STLport TU.
+struct S4Name
+{
+	S4Name(const S4Name &other) : m_base(other.m_base) {}
+	~S4Name(void) {}
+
+	StringBase<char> m_base;
 };
 
 // Not the same twelve bytes as the sort at 0x002E1170, despite the shared
@@ -41,14 +61,21 @@ private:
 // it reads a byte at +0 and a dword at +8. Only the string at +4 is common.
 struct S4SortElem12
 {
-	char m_bfmeA;						// +0x00
-	StringBase<char> m_bfmeName;				// +0x04
+	bool m_bfmeA;						// +0x00
+	S4Name m_bfmeName;					// +0x04
 	int m_bfmeC;						// +0x08
 };
 
 struct S4Cmp00532740
 {
 	int m_bfmeSlot;
+
+	bool operator()(const S4SortElem12 &left, const S4SortElem12 &right) const
+	{
+		if (((!left.m_bfmeA) ^ (!right.m_bfmeA)) != 0)
+			return left.m_bfmeA;
+		return left.m_bfmeName.m_base.compareNoCase(right.m_bfmeName.m_base) < 0;
+	}
 };
 
 namespace _STL
@@ -56,7 +83,32 @@ namespace _STL
 
 template <class RandomAccessIter, class Tp, class Compare>
 void __linear_insert(RandomAccessIter first, RandomAccessIter last, Tp val,
-	Compare comp);						// ILT 0x0002C3D1
+	Compare comp);
+
+struct random_access_iterator_tag
+{
+};
+
+template <class RandomAccessIter, class BidirectionalIter, class Distance>
+BidirectionalIter __copy_backward(RandomAccessIter first, RandomAccessIter last,
+	BidirectionalIter result, const random_access_iterator_tag &tag,
+	Distance *distance);						// ILT 0x0003EF95
+
+template <class RandomAccessIter, class Tp, class Compare>
+void __unguarded_linear_insert(RandomAccessIter last, Tp val, Compare comp);
+
+template <class RandomAccessIter, class Tp, class Compare>
+inline void __linear_insert(RandomAccessIter first,
+	RandomAccessIter last, Tp val, Compare comp)
+{
+	if (comp(val, *first)) {
+		random_access_iterator_tag tag;
+		__copy_backward(first, last, last + 1, tag, (int *)0);
+		*first = val;
+	} else {
+		__unguarded_linear_insert(last, val, comp);
+	}
+}
 
 template <class RandomAccessIter, class Compare>
 void __insertion_sort(RandomAccessIter first, RandomAccessIter last, Compare comp)
