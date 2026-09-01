@@ -81455,6 +81455,8 @@ _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x0
 _piPingPlayerLeftRoomTableMapFn,0x00862F10,vendored=gamespy-2004; authentic peerPing.c source-order callback
 _piPinged,0x00862750,vendored=gamespy-2004; authentic peerPing.c source order
 _piPingerReplyMapFn,0x00862870,vendored=gamespy-2004; authentic peerPing.c source-order callback
+_piProcessPing,0x00862690,vendored=gamespy-2004; authentic peerPing.c static helper called by piPingerReplyMapFn
+_piAddPingCallback,0x0085EB90,vendored=gamespy-2004; exact piProcessPing callee
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piProcessIncoming,0x00873170,GameSpy pingerThink processes pending socket input before timeout checks
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update

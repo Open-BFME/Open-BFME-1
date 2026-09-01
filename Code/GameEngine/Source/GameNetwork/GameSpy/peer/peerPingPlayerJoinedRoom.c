@@ -17,14 +17,25 @@ typedef struct piPlayer
 	unsigned char pad0[0x40];
 	int inRoom[3];
 	int local;
-	unsigned char pad50[0x70 - 0x50];
+	unsigned int IP;
+	unsigned char pad54[0x58 - 0x54];
+	int gotIPAndProfileID;
+	unsigned char pad5C[0x68 - 0x5C];
+	unsigned int lastPingSend;
+	unsigned int lastPingRecv;
 	unsigned int lastXping;
-	unsigned char pad74[0x98 - 0x74];
+	int waitingForPing;
+	int pingsReturned;
+	int pingsLostConsecutive;
+	int pingAverage;
+	int pingHistory[4];
+	int pingHistoryNum;
 	int numPings;
 	int xpingSent;
 	int inPingRoom;
 	int inXpingRoom;
 	int mustPing;
+	int pingOnce;
 } piPlayer;
 
 typedef struct piConnection
@@ -45,7 +56,6 @@ void TableFree(void *table);
 void TableMap(void *table, void (*mapFn)(void *, void *), void *clientData);
 void TableMapSafe(void *table, void (*mapFn)(void *, void *), void *clientData);
 void pingerShutdown(void);
-void piPingerReplyMapFn(void *elem, void *clientData);
 void piPingPlayerLeftRoomTableMapFn(void *elem, void *clientData);
 
 typedef struct piPingerReplyData
@@ -77,6 +87,67 @@ int pingerInit(const char *localAddress, unsigned short localPort,
 unsigned int current_time(void);
 __declspec(dllimport) void srand(unsigned int seed);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
+void piAddPingCallback(PEER peer, const char *nick, int ping);
+
+static void piProcessPing(PEER peer, piPlayer *player, int ping)
+{
+	int i;
+	int total;
+	int moveCount;
+
+	player->pingsReturned++;
+	player->pingsLostConsecutive = 0;
+	player->numPings++;
+	player->lastPingRecv = current_time();
+
+	if(player->pingHistoryNum > 0)
+	{
+		moveCount = (player->pingHistoryNum < 3) ?
+			player->pingHistoryNum : 3;
+		memmove(player->pingHistory + 1, player->pingHistory,
+			(unsigned int)(moveCount * sizeof(int)));
+	}
+	player->pingHistory[0] = ping;
+	if(player->pingHistoryNum < 4)
+		player->pingHistoryNum++;
+
+	total = 0;
+	for(i = 0; i < player->pingHistoryNum; i++)
+		total += player->pingHistory[i];
+	player->pingAverage = total / player->pingHistoryNum;
+
+	piAddPingCallback(peer, (const char *)player, ping);
+	player->xpingSent = 0;
+	if(player->pingOnce)
+		player->pingOnce = 0;
+}
+
+static void piPingerReplyMapFn(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piPingerReplyData *data = (piPingerReplyData *)clientData;
+
+	if(!player->waitingForPing)
+		return;
+
+	if(!player->gotIPAndProfileID || player->IP != data->IP)
+		return;
+
+	player->waitingForPing = 0;
+	if(data->ping == -1)
+	{
+		player->pingsLostConsecutive++;
+		if(player->pingOnce && player->pingsLostConsecutive >= 3)
+		{
+			player->pingsLostConsecutive = 0;
+			player->pingOnce = 0;
+		}
+	}
+	else
+	{
+		piProcessPing(data->peer, player, data->ping);
+	}
+}
 
 static piXping *piFindXping(PEER peer, const char *nick1, const char *nick2)
 {
