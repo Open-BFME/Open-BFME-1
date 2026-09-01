@@ -82162,3 +82162,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0000DE6D,BFME ActionManager structure-attack visitor callback; helper 0x000C5870 passes its incremental-link thunk to ContainModuleInterface::iterateContained
+?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
+?getAbleToAttackSpecificObject@Object@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBV1@W4CommandSourceType@@@Z,0x00034C93,ActionManager::getCanAttackObject ILT call to the exact Object attack-eligibility body at 0x001C77B0
+?getSpawnBehaviorInterface@Object@@QBEPAVSpawnBehaviorInterface@@XZ,0x00044201,ActionManager::getCanAttackObject ILT call to the exact BFME behavior-interface lookup body at 0x001BF5F0
