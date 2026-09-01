@@ -561,7 +561,6 @@ Int GameWindow::winGetRegion( IRegion2D *region )
 /** Check to see if the given point is inside the window.  Will
 	* still return true if the point is actually in a child. */
 //=============================================================================
-// ?winPointInWindow@GameWindow@@QAE_NHH@Z present-unmatched
 Bool GameWindow::winPointInWindow( Int x, Int y )
 {
 	Int winX, winY, width, height;
