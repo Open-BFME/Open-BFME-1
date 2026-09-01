@@ -417,10 +417,11 @@ DX8IndexBufferClass::DX8IndexBufferClass(unsigned short index_count_,UsageType u
 
 // ----------------------------------------------------------------------------
 
-// ??1DX8IndexBufferClass@@UAE@XZ present-unmatched
 DX8IndexBufferClass::~DX8IndexBufferClass()
 {
+	W3DRadarResetLock();
 	index_buffer->Release();
+	BFME_DX8_Thread_Assert();
 }
 
 // ----------------------------------------------------------------------------
