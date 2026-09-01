@@ -81692,3 +81692,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
 ?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
 ?addMoneyEarned@ScoreKeeper@@QAEXH@Z,0x0003A45E,RefundDie::onDie matched caller identifies the score keeper money-earned ILT
+??0BfmeAudioEvent491110@@QAE@ABVBfmeAsciiString491110@@H@Z,0x00025306,0x00491110 constructs both temporary audio events through the retail two-argument AudioEventRTS constructor thunk
+??1BfmeAudioEvent491110@@QAE@XZ,0x00026F35,0x00491110 destroys both 0x70-byte temporary audio events through the retail AudioEventRTS destructor thunk
