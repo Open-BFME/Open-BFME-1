@@ -14,7 +14,13 @@ typedef enum RoomType
 
 typedef struct piPlayer
 {
-	unsigned char pad0[0xA0];
+	unsigned char pad0[0x4C];
+	int local;
+	unsigned char pad50[0x70 - 0x50];
+	unsigned int lastXping;
+	unsigned char pad74[0x98 - 0x74];
+	int numPings;
+	int xpingSent;
 	int inPingRoom;
 	int inXpingRoom;
 	int mustPing;
@@ -64,6 +70,41 @@ int pingerInit(const char *localAddress, unsigned short localPort,
 	void *pinged, void *pingedParam, void *setData, void *setDataParam);
 unsigned int current_time(void);
 __declspec(dllimport) void srand(unsigned int seed);
+
+typedef struct piPickXpingPlayerData
+{
+	PEER peer;
+	piPlayer *player;
+} piPickXpingPlayerData;
+
+void piPickXpingPlayerMap(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piPickXpingPlayerData *data = (piPickXpingPlayerData *)clientData;
+	unsigned int now;
+
+	if(!player->inXpingRoom)
+		return;
+
+	if(player->local)
+		return;
+
+	if(!player->numPings)
+		return;
+
+	if(player->xpingSent)
+		return;
+
+	now = current_time();
+	if((now - player->lastXping) < 5000)
+		return;
+
+	if(!data->player)
+		data->player = player;
+	else if((now - player->lastXping) >
+		(now - data->player->lastXping))
+		data->player = player;
+}
 
 int piPingInit(PEER peer)
 {
