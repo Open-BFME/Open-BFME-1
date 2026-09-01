@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 // Open-BFME5: Glo012F1028Sub::bfmeNotify, retail 0x003CAD20, 87 bytes. The body
 // carried only a machine byte-dump row; the pin naming it went in with
 // Glo012F1024Entry::bfmeStep at 0x003A7320, which tail-jumps into it from both
@@ -22,6 +24,19 @@ class Glo012F1028Item
 {
 public:
 	void bfmeRun(void);					// ILT 0x00006348
+
+	char m_bfmePayloadHead[0x28];
+	int m_bfmePayload;
+	char m_bfmeHead[0xA8 - 0x2C];
+	unsigned char m_bfmeEnabled;			// +0xA8
+	char m_bfmeGap[0xB4 - 0xA9];
+	void *m_bfmeValue;					// +0xB4
+};
+
+class Rva003BAD00Owner
+{
+public:
+	void notify0C(const AsciiString &key, int a, int b);	// ILT 0x0000B316
 };
 
 class BfmeItemVector
@@ -52,6 +67,18 @@ private:
 	char m_bfmeHead[0x04];
 	Glo012F1028Holder *m_bfmeHolder;			// +0x04
 };
+
+__declspec(noinline) void Glo012F1028Sub::bfmeBegin(Glo012F1028Item *item)
+{
+	Rva003BAD00Owner *owner =
+		(Rva003BAD00Owner *)((char *)m_bfmeHolder + 0x40);
+	owner->notify0C(AsciiString("EnemyBordersEffect"),
+		(int)&item->m_bfmePayload, 0);
+	owner->notify0C(AsciiString("FriendlyBordersEffect"),
+		(int)&item->m_bfmePayload, 0);
+	owner->notify0C(AsciiString("HilightBordersEffect"),
+		(int)&item->m_bfmePayload, 0);
+}
 
 // ?bfmeNotify@Glo012F1028Sub@@QAEXXZ
 void Glo012F1028Sub::bfmeNotify(void)

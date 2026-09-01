@@ -79219,6 +79219,7 @@ name,address,notes
 ?notify@Gen00587600@@QAEXXZ,0x000271FB,Open-BFME5 ILT target of the guarded notifier at 0x0051A6E0
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,two-argument __thiscall member called at the top of the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ?notify@Rva00589690@@AAEXXZ,0x0003643A,Open-BFME5 fresh thiscall at ILT of set-byte+notify 0x00589690
+?notify0C@Rva003BAD00Owner@@QAEXABVAsciiString@@HH@Z,0x0000B316,caller passes the temporary AsciiString key to the verified three-argument dispatcher body
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?notifyModelConditionChanged@Object@@QAEXXZ,0x0002191D,Object model-condition notify ILT (body 0x1BE1C0); inlined clearModelConditionState(PANICKING) sites
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
