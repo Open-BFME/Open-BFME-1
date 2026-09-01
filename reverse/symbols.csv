@@ -73055,6 +73055,7 @@ name,address,notes
 ?bfmeClose1281@BfmeE1281@@QAEXXZ,0x00028EC0,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
 ?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
+?bfmeCloseVHT@BfmeChunkVHT@@QAEXXZ,0x009E13E0,pin
 ?bfmeClr1097@BfmeR1097@@QAEXXZ,0x00044F5D,pin
 ?bfmeCmp1097@BfmeSub1097@@QAEHPAV1@@Z,0x000220C5,pin
 ?bfmeCmpEBMa@@YADPAX0@Z,0x00013C78,pin
@@ -73148,6 +73149,7 @@ name,address,notes
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
+?bfmeCurIdVHT@BfmeChunkVHT@@QAEIXZ,0x009E1440,pin
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
 ?bfmeDecVGO@@YAIPAI@Z,0x00894D90,pin
 ?bfmeDecay@BfmeCell@@QAEXMM@Z,0x0002116B,BfmeCellGrid decay loop calls this ILT to the exact landed 0x001B12B0 cell decay body
@@ -74389,6 +74391,7 @@ name,address,notes
 ?bfmeOneWE@BfmeNodeWE@@QAEXPAUBfmeDestWE@@@Z,0x00887C90,pin
 ?bfmeOpen1071@BfmeR1071@@QAEXPAVBfmeX1071@@@Z,0x0002144A,pin
 ?bfmeOpen1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x0002144A,pin
+?bfmeOpenVHT@BfmeChunkVHT@@QAE_NXZ,0x009E1380,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
@@ -74432,6 +74435,7 @@ name,address,notes
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
 ?bfmeReadSJA@@YAXPAX0PAD@Z,0x0000FB73,pin
 ?bfmeReadVFC@BfmeChunkVFC@@QAEIPAXI@Z,0x009E15C0,pin
+?bfmeReadVHT@BfmeChunkVHT@@QAEIPAXI@Z,0x009E15C0,pin
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
