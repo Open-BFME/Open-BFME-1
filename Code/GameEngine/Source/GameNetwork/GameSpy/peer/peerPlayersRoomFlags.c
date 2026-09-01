@@ -25,14 +25,24 @@ typedef struct piPlayer
 {
 	char nick[0x40];
 	PEERBool inRoom[3];
-	char unreconstructed_4C[0x10];
+	PEERBool local;
+	unsigned int IP;
+	int profileID;
+	PEERBool gotIPAndProfileID;
 	int flags[3];
+	char unreconstructed_68[0xB0 - 0x68];
 } piPlayer;
 
 typedef struct piConnection
 {
-	char unreconstructed_0000[0xAB4];
+	char unreconstructed_0000[4];
+	char nick[0x40];
+	char unreconstructed_0044[0x384 - 0x44];
+	PEERBool enteringRoom[3];
+	PEERBool inRoom[3];
+	char unreconstructed_039C[0xAB4 - 0x39C];
 	HashTable players;
+	int numPlayers[3];
 } piConnection;
 
 typedef piConnection *PEER;
@@ -43,7 +53,9 @@ void piAddPlayerFlagsChangedCallback(PEER peer, RoomType roomType,
 	const char *nick, int oldFlags, int newFlags);
 void *TableMap2(HashTable table, int (*mapFn)(void *, void *), void *clientData);
 void TableMap(HashTable table, void (*mapFn)(void *, void *), void *clientData);
+void *TableLookup(HashTable table, const void *elem);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
+__declspec(dllimport) char *__cdecl strzcpy(char *dest, const char *source, int len);
 
 static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	RoomType roomType, int flags)
@@ -71,6 +83,20 @@ static void piSetNewPlayerFlags(PEER peer, const char *nick,
 	}
 
 	piAddPlayerFlagsChangedCallback(peer, roomType, nick, oldFlags, flags);
+}
+
+piPlayer *piGetPlayer(PEER peer, const char *nick)
+{
+	piPlayer playerMatch;
+	piPlayer *player;
+
+	if (!peer->players)
+		return 0;
+
+	strzcpy(playerMatch.nick, nick, 0x40);
+	playerMatch.nick[0x3F] = '\0';
+	player = (piPlayer *)TableLookup(peer->players, &playerMatch);
+	return player;
 }
 
 int piParseFlags(const char *flags)
