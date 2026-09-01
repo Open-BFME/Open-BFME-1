@@ -74653,6 +74653,7 @@ name,address,notes
 ?bfmeSetVGI@BfmeWideVGI@@QAEXPBGH@Z,0x008885C0,pin
 ?bfmeSetVHE@BfmeMsgVHE@@QAEXPAXH@Z,0x007E88D0,pin
 ?bfmeSetVHH@BfmeLayoutVHH@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVIA@BfmeUniVIA@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
