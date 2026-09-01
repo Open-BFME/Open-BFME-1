@@ -4123,6 +4123,8 @@ name,address,notes
 ??1BfmeDtorMemberM@@QAE@XZ,0x0000E5D9,Open-BFME5 the member destructor the plain chain destructor at 0x00093CC0 calls twice
 ??1BfmeElemF@@QAE@XZ,0x000452FA,Open-BFME5 the ICF thunk (to 0x0037B990) the element destructor the clear at 0x002901C0 calls
 ??1BfmeElemN@@QAE@XZ,0x000295FF,Open-BFME5 the ICF thunk (to 0x0060AA70) the element destructor the clear at 0x0060B470 calls
+??1BfmeElemTZA@@QAE@XZ,0x00030652,pin
+??1BfmeElemTZB@@QAE@XZ,0x00018FCF,pin
 ??1BfmeElementA@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementB@@QAE@XZ,0x0001AAD2,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementC@@QAE@XZ,0x00937390,Open-BFME5 the element destructor the array-owning destructors call
@@ -73698,6 +73700,8 @@ name,address,notes
 ?bfmeFreeTXB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeTYA@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeTYB@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeTZA@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeTZB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -75245,6 +75249,7 @@ name,address,notes
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z,0x0001D7C8
 ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z,0x00024591,Open-BFME5 ILT; called by ?getAttackRange@Weapon@@QBEMPBVObject@@@Z at 0x001E2B50 with the source object a zero flag word and the default-constructed bonus block
+?computeQuickPath@AIUpdateInterface@@QAE_NPBUCoord3D@@@Z,0x00029375,requestPath retail call target thunk
 ?concat@AsciiString@@QAEXPBD@Z,0x00006DB6,hit-decoded x2 (thunk)
 ?concat@AsciiString@@QAEXPBD@Z,0x0003ADD7,hit-decoded x2 (thunk)
 ?concat@AsciiString@@QAEXPBD@Z,0x00888060,hit-decoded x2 (body)
@@ -76779,6 +76784,8 @@ name,address,notes
 ?g_bfmeVftTXA@@3PAPAXA,0x00D3DEE4,pin
 ?g_bfmeVftTXB@@3PAPAXA,0x00D439F8,pin
 ?g_bfmeVftTYB@@3PAPAXA,0x00C7D518,pin
+?g_bfmeVftTZA@@3PAPAXA,0x00D3C5FC,pin
+?g_bfmeVftTZB@@3PAPAXA,0x00D3CE0C,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -81717,5 +81724,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?computeQuickPath@AIUpdateInterface@@QAE_NPBUCoord3D@@@Z,0x00029375,requestPath retail call target thunk
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
