@@ -6400,6 +6400,7 @@ name,address,notes
 ??1Gen_dtor_009e3460@@UAE@XZ,0x009E3110,gen-dtor class destructor
 ??1Gen_dtor_009e35b0@@UAE@XZ,0x009E31C0,gen-dtor class destructor
 ??1Gen_dtor_009e3860@@UAE@XZ,0x009E3880,gen-dtor class destructor
+??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
 ??1Gen_dtor_009eb9e0@@UAE@XZ,0x009F23C0,gen-dtor class destructor
 ??1Gen_dtor_009ebe70@@UAE@XZ,0x009EBC70,gen-dtor class destructor
 ??1Gen_dtor_009ed840@@UAE@XZ,0x009ED2F0,gen-dtor class destructor
@@ -73633,6 +73634,7 @@ name,address,notes
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeTMB@@YAXPAX@Z,0x008068B0,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -74418,6 +74420,7 @@ name,address,notes
 ?bfmeSetTEB@BfmeSubTEB@@QAEXH@Z,0x000122AB,pin
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
 ?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
+?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75724,6 +75727,7 @@ name,address,notes
 ?fill_insert@BitVectorFillInsertShim@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x002CC290,_STL bit vector _M_fill_insert incremental-link thunk target through a TU-local forwarding shim
 ?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
+?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00040C23,ILT call target used by the 0x0073B5F0 validated setter
 ?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
 ?find2@BfmeMgrF5F@@QAEPAXHPAX0H@Z,0x0001F253,pin
 ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIPBDII@Z,0x00654BE0,STLport basic_string<char>::find(const char* s; size_type pos; size_type n): -1 on empty; clamps pos; std::search via ILT 0x0000F574 over [begin+pos; end) for [s; s+n); returns index or npos; callers parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x006597BE; ILT 0x0003DA4B
@@ -76745,6 +76749,7 @@ name,address,notes
 ?g_processVal13596B8@@3P6GXH@ZA,0x00F596B8,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
 ?g_release@@3P6GXPAX@ZA,0x013590C8,address-derived IAT call recovered from 0x0093C400
+?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
 ?g_rva0051B5F0Small@@3URva0051B5F0Small@@A,0x00D05FA8,Open-BFME5 packed five-byte preset global
@@ -81330,6 +81335,7 @@ _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callbac
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
+_piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
 _piPingInitPlayer,0x00862E10,gamespy-peer: called by piAddPlayer at 0x008637E0 when initialising a new piPlayer
 _piPingPlayerJoinedRoom,0x00862E90,gamespy-peer: called by piPlayerJoinedRoom at 0x008638D0
 _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x00863970
@@ -81346,6 +81352,7 @@ _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
 _piSetChannelCallbacks,0x0086BA10,GameSpy Peer channel callback initializer
 _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
+_piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
 _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x008659C0 on the demangled username key
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
@@ -81560,9 +81567,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
-?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00040C23,ILT call target used by the 0x0073B5F0 validated setter
-??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
-_piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
-_piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
 __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
