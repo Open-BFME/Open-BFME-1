@@ -74648,6 +74648,7 @@ name,address,notes
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTexVHA@@YAXIAAPAVBfmeTexVHA@@@Z,0x00905AC0,pin
 ?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
+?bfmeSetTopVIF@@YAXPAUBfmeLuaVHR@@H@Z,0x0098FDE0,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
@@ -74914,6 +74915,7 @@ name,address,notes
 ?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1154@BfmeS1154@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
+?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
@@ -80971,6 +80973,7 @@ __imp_?bfmeFmt1077@@YAHPADI0ZZ,0x00F5932C,pin
 __imp_?bfmeFmtD1065@@YAHPADI0N@Z,0x00F5932C,pin
 __imp_?bfmeFmtFl1074@@YAHPADI0N@Z,0x00F5932C,pin
 __imp_?bfmeFmtIn1074@@YAHPADI0H@Z,0x00F5932C,pin
+__imp_?bfmeFopenVIF@@YAPAXPBD0@Z,0x00F593BC,pin
 __imp_?bfmeFree1035@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
