@@ -13,11 +13,17 @@ typedef void *PEER;
 
 typedef struct piConnection
 {
-	unsigned char pad0[0xb50];
+	unsigned char pad0[0xb40];
+	int hosting;					/* +0xB40 */
+	int playing;					/* +0xB44 */
+	unsigned char padb48[0xb50 - 0xb48];
 	void *hostServer;				/* +0xB50 */
+	int ready;					/* +0xB54 */
 } piConnection;
 
 void SBServerFree(void **server);
+void piStopReporting(PEER peer);
+void piSetLocalFlags(PEER peer);
 
 void piSBFreeHostServer(PEER peer)
 {
@@ -28,4 +34,21 @@ void piSBFreeHostServer(PEER peer)
 		SBServerFree(&connection->hostServer);
 		connection->hostServer = 0;
 	}
+}
+
+void piStopHosting(PEER peer, int stopReporting)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if(stopReporting)
+		piStopReporting(peer);
+
+	if(!connection->hosting)
+		return;
+
+	connection->hosting = 0;
+	connection->playing = 0;
+	connection->ready = 0;
+
+	piSetLocalFlags(peer);
 }
