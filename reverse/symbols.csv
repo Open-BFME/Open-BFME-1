@@ -81728,3 +81728,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
 _g_bfmeState56AD10B,0x012F0898,Rva0056AD10 second state source
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
+??1DX8SkinFVFCategoryContainer@@UAE@XZ,0x009471E0,exact 11-byte source body and 0x00948B40 deleting-destructor call prove identity
