@@ -2164,7 +2164,6 @@ name,address,notes
 ??0BfmeCreated_0091A5A0@@QAE@PAVGen_0091A5A0@@@Z,0x00919F40,Open-BFME5 the constructor the make-and-return body at 0x0091A5A0 runs on its fresh block
 ??0BfmeCreated_0092CEF0@@QAE@PAVGen_0092CEF0@@@Z,0x0092CD00,Open-BFME5 the constructor the make-and-return body at 0x0092CEF0 runs on its fresh block
 ??0BfmeCreated_009513E0@@QAE@PAVGen_009513E0@@@Z,0x009510A0,Open-BFME5 the constructor the make-and-return body at 0x009513E0 runs on its fresh block
-??0Line3DClass@@QAE@ABV0@@Z,0x009510A0,Line3D Clone at 0x009513E0 allocates 0x148 bytes and directly invokes this copy constructor on its fresh block
 ??0BfmeCreated_00957FB0@@QAE@PAVGen_00957FB0@@@Z,0x00957F40,Open-BFME5 the constructor the make-and-return body at 0x00957FB0 runs on its fresh block
 ??0BfmeCreated_0097D920@@QAE@PAVGen_0097D920@@@Z,0x0097D850,Open-BFME5 the constructor the make-and-return body at 0x0097D920 runs on its fresh block
 ??0BfmeCtorBaseD@@QAE@XZ,0x009A1A30,Open-BFME5 the base constructor the based list constructor at 0x000FDA80 runs first
@@ -2922,6 +2921,7 @@ name,address,notes
 ??0LightPulseFXNugget@@QAE@XZ,0x00021175,LightPulse parser calls this constructor ILT; target resolves to the 0x00828E10 body
 ??0LightningDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19614,LightningDrawModuleTemplate clone copy-ctor pin
 ??0LightningEmissionModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x19f88,LightningEmissionModuleTemplate clone copy-ctor pin
+??0Line3DClass@@QAE@ABV0@@Z,0x009510A0,Line3D Clone at 0x009513E0 allocates 0x148 bytes and directly invokes this copy constructor on its fresh block
 ??0LineGroupClass@@QAE@XZ,0x0098E9C0,derived from ParticleBufferClass main ctor aligned call sites
 ??0LivingWorldAnimObject@@QAE@ABVAsciiString@@@Z,0x000089E0,LivingWorldAnimObject vtable and snapshot-name literal correct the constructor class identity
 ??0LivingWorldCampaign@@QAE@ABVAsciiString@@@Z,0x003AA750,Open-BFME5 REL32 target of ParseLivingWorldCampaignBlock; builds the campaign record from the block name
@@ -6384,7 +6384,6 @@ name,address,notes
 ??1Gen_dtor_0094f0c0@@UAE@XZ,0x0094EA80,gen-dtor class destructor
 ??1Gen_dtor_0094f0e0@@UAE@XZ,0x0094EAB0,gen-dtor class destructor
 ??1Gen_dtor_0094f2e0@@UAE@XZ,0x0094ED60,gen-dtor class destructor
-??1MeshModelClass@@UAE@XZ,0x0094ED60,0x0094F2E0 deleting wrapper directly calls this body; destructor installs the MeshModel vtables also used by the exact 0x0094EC20 copy constructor
 ??1Gen_dtor_009509b0@@UAE@XZ,0x0094F9C0,gen-dtor class destructor
 ??1Gen_dtor_00951080@@UAE@XZ,0x00950FC0,gen-dtor class destructor
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,gen-dtor class destructor
@@ -8671,6 +8670,7 @@ name,address,notes
 ??1MemoryWriteFile@@UAE@XZ,0x009CB590,called by the MemoryWriteFile scalar deleting destructor
 ??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
+??1MeshModelClass@@UAE@XZ,0x0094ED60,0x0094F2E0 deleting wrapper directly calls this body; destructor installs the MeshModel vtables also used by the exact 0x0094EC20 copy constructor
 ??1MilitarySubtitleData@InGameUI@@QAE@XZ,0x00018CE1,ILT thunk to the military subtitle record destructor
 ??1MissingAnimClass@@UAE@XZ,0x00002C7A,ILT thunk; retail call sites use the thunk
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x00009C5A,pinharvest x1 (thunk)
@@ -10819,19 +10819,6 @@ name,address,notes
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
-_ciChannelListUsers,0x00871B90,upstream chatMain.c local-user enumeration helper called by chatEnumUsersA
-_ciAddNAMESFilter,0x0086C5A0,upstream chatMain.c NAMES filter helper whose return becomes chatEnumUsersA's blocking ID
-_qr2_registered_key_list,0x00EC84E8,upstream peerSB.c indexed query-key table read by piSBStartListingGames
-_piSBQueryVersion,0x00EC88E4,upstream peerSB.c global loaded twice by piSBInit before SBQueryEngineInit
-_piSBGamesListCallback,0x00864570,upstream peerSB.c first SBServerListInit callback stored by piSBInit
-_piSBGamesEngineCallback,0x008646A0,upstream peerSB.c first SBQueryEngineInit callback stored by piSBInit
-_piSBGroupsListCallback,0x00864700,upstream peerSB.c second SBServerListInit callback stored by piSBInit
-_piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
-_piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
-_piJoinAutoMatchRoom,0x008643F0,upstream peerSB.c updated-server helper call at 0x0086493D
-_piJoinAutoMatchRoomCallback,0x008642D0,upstream peerAutoMatch.c callback stored by piJoinAutoMatchRoom at 0x00864452
-_piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
-_piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoked by piSBAutoMatchGetServerRating at 0x008648B0
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
 ?Update_Min_Max@AABTreeClass@@AAEXHAAVVector3@@0@Z,0x0096AFC0
@@ -73856,6 +73843,7 @@ _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoke
 ?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
 ?bfmeGetTVC@@YAPAVBfmeSinkTVC@@XZ,0x007EFFC0,pin
 ?bfmeGetTWC@@YAPAVBfmeSinkTWC@@XZ,0x007EFFC0,pin
+?bfmeGetUsersUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00872030,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -73945,6 +73933,7 @@ _piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoke
 ?bfmeIdCWB@@3HA,0x00EF102C,pin
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
+?bfmeInChannelUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00871C40,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
 ?bfmeInit000078A1@@YAXXZ,0x000078A1,Open-BFME5 ILT the initialiser the run-once latch at 0x005E85A0 calls
 ?bfmeInit0000B686@@YAXXZ,0x0000B686,Open-BFME5 ILT the initialiser the run-once latch at 0x005E8570 calls
@@ -81277,12 +81266,14 @@ _ciAddGETCKEYFilter,0x0086C8F0,gamespy-chat: 8-arg filter registered by chatGetC
 _ciAddGETKEYFilter,0x0086C7E0,gamespy-chat: 7-arg filter registered by chatGetGlobalKeys at 0x00861940
 _ciAddJOINFilter,0x0086C4F0,GameSpy Chat channel-join filter constructor
 _ciAddLISTFilter,0x0086C4A0,GameSpy Chat channel-list filter constructor
+_ciAddNAMESFilter,0x0086C5A0,upstream chatMain.c NAMES filter helper whose return becomes chatEnumUsersA's blocking ID
 _ciAddTOPICFilter,0x0086C570,GameSpy Chat channel-topic filter constructor
 _ciAddWHOFilter,0x0086C650,gamespy-chat: registered by chatGetBasicUserInfo at 0x00861370 right after the WHO send
 _ciBufferPreAppend,0x0085A740,gamespy-chatSocket internal call from exact ciSocketSend caller
 _ciCallCallbacks,0x008714F0,gamespy-chat: final callee of ciThink at 0x008601F0 - takes the chat handle and an ID
 _ciChannelEntering,0x00871850,gamespy-chat: marks channel as entering
 _ciChannelLeft,0x00871A30,Open-BFME5 the channel bookkeeping _chatLeaveChannel at 0x008609B0 runs after the PART goes out
+_ciChannelListUsers,0x00871B90,upstream chatMain.c local-user enumeration helper called by chatEnumUsersA
 _ciCheckCallbacksForID,0x00871630,gamespy-chat: second arm of the short-circuit or in ciCheckForID at 0x00860170
 _ciCheckFiltersForID,0x0086C340,gamespy-chat: first arm of the short-circuit or in ciCheckForID at 0x00860170
 _ciCleanup,0x008543A0,Open-BFME5 the library cleanup _chatDisconnect at 0x008603F0 tails into
@@ -81561,6 +81552,7 @@ _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
 _piAddXping,0x00863100,vendored=gamespy-2004; authentic peerPing.c static helper called by piUpdateXping
 _piAuthenticateCDKeyCallbackA,0x00860020,GameSpy Peer CD-key completion callback
 _piBroadcastKeyChangedA,0x0086B950,upstream peerGlobalCallbacks.c broadcastKeyChanged callback assigned by piSetChannelCallbacks
+_piCallAutoMatchRateCallback,0x0085DF30,upstream peerSB.c rating callback invoked by piSBAutoMatchGetServerRating at 0x008648B0
 _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback dispatcher
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
 _piChangeNickCallbackA,0x0085FCD0,GameSpy Peer change-nick completion callback
@@ -81597,6 +81589,8 @@ _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
 _piIsOperationFinished,0x0085F040,GameSpy Peer operation completion check
 _piIsPlayerVIP,0x00863690,vendored=gamespy-2004; authentic piPickPingPlayersMap calls this player VIP predicate twice
+_piJoinAutoMatchRoom,0x008643F0,upstream peerSB.c updated-server helper call at 0x0086493D
+_piJoinAutoMatchRoomCallback,0x008642D0,upstream peerAutoMatch.c callback stored by piJoinAutoMatchRoom at 0x00864452
 _piJoinRoomEnterChannelCallbackA,0x0085F960,GameSpy Peer join-room entry callback
 _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration callback
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
@@ -81624,8 +81618,14 @@ _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
+_piSBAutoMatchEngineCallback,0x00864AE0,upstream peerSB.c second SBQueryEngineInit callback stored by piSBInit
+_piSBAutoMatchListCallback,0x00864960,upstream peerSB.c third SBServerListInit callback stored by piSBInit
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piSBFreeHostServer,0x00864FB0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when leaving the staging room
+_piSBGamesEngineCallback,0x008646A0,upstream peerSB.c first SBQueryEngineInit callback stored by piSBInit
+_piSBGamesListCallback,0x00864570,upstream peerSB.c first SBServerListInit callback stored by piSBInit
+_piSBGroupsListCallback,0x00864700,upstream peerSB.c second SBServerListInit callback stored by piSBInit
+_piSBQueryVersion,0x00EC88E4,upstream peerSB.c global loaded twice by piSBInit before SBQueryEngineInit
 _piSBStartListingGames,0x00864FE0
 _piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
 _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
@@ -81644,6 +81644,7 @@ _piStartHosting,0x00865410,GameSpy Peer query-reporting host startup
 _piStartReporting,0x00866820
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
+_piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
 _piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
@@ -81677,6 +81678,7 @@ _pushupvalue,0x0099B000,vendored=lua-4.0.1
 _qr2_init_socketA,0x00856290,vendored=gamespy-2004
 _qr2_internal_key_list_append,0x0085C010,vendored=gamespy-2004
 _qr2_parse_queryA,0x00855F70,vendored=gamespy-2004
+_qr2_registered_key_list,0x00EC84E8,upstream peerSB.c indexed query-key table read by piSBStartListingGames
 _read_long_string,0x009A0420,decode_calls pin for _luaX_lex callee
 _read_number,0x009A00D0,per-TU llex.c static read_number; both retail luaX_lex REL32 sites target this body
 _recv@16,0x0081BE74,vendored=gamespy-2004
