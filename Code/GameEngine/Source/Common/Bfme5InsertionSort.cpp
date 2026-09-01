@@ -219,10 +219,35 @@ void __push_heap(RandomAccessIter first, Distance holeIndex,
 	*(first + holeIndex) = value;
 }
 
+template <class RandomAccessIter, class Distance, class Tp, class Compare>
+void __adjust_heap(RandomAccessIter first, Distance holeIndex,
+	Distance len, Tp value, Compare comp)
+{
+	Distance topIndex = holeIndex;
+	Distance secondChild = 2 * holeIndex + 2;
+	while (secondChild < len)
+	{
+		if (comp(*(first + secondChild), *(first + (secondChild - 1))))
+			--secondChild;
+		*(first + holeIndex) = *(first + secondChild);
+		holeIndex = secondChild;
+		secondChild = 2 * (secondChild + 1);
+	}
+	if (secondChild == len)
+	{
+		*(first + holeIndex) = *(first + (secondChild - 1));
+		holeIndex = secondChild - 1;
+	}
+	__push_heap(first, holeIndex, topIndex, value, comp);
+}
+
 template void __push_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAU>(
 	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAU);
 
 template void __push_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAV>(
 	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAV);
+
+template void __adjust_heap<BfmeRecAU **, int, BfmeRecAU *, BfmeCompAU>(
+	BfmeRecAU **, int, int, BfmeRecAU *, BfmeCompAU);
 
 }
