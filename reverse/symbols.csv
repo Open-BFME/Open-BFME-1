@@ -74610,6 +74610,8 @@ name,address,notes
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
+?bfmeSetVGD@BfmeLayoutVGD@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVGI@BfmeWideVGI@@QAEXPBGH@Z,0x008885C0,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76721,6 +76723,7 @@ name,address,notes
 ?g_bfmeObjTDB@@3PAUBfmeObjTDB@@A,0x00F40534,pin
 ?g_bfmeObjUDB@@3PAVBfmeSrcUDB@@A,0x00EF7FE0,pin
 ?g_bfmeObjUDC@@3PAVBfmeSrcUDC@@A,0x00F07214,pin
+?g_bfmeObjVGJ@@3PAVBfmeThingVGJ@@A,0x00EED5C8,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -80913,6 +80916,7 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeInitTTD@@YGJPAXH@Z,0x00F59188,pin
 __imp_?bfmeLeaveTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58E74,pin
+__imp_?bfmeLenVGI@@YAIPBG@Z,0x00F59524,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeLogSF@@YAHPAUBfmeFileSF@@PBDZZ,0x00F593C0,pin
 __imp_?bfmeMake1030@@YGHHHH@Z,0x00F58CF4,pin
