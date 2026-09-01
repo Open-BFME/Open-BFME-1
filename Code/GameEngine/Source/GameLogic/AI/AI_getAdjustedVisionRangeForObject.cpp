@@ -22,6 +22,21 @@ extern const Real BfmeZeroRange;				// 0x01075350
 
 class BfmeObjectAI;
 
+struct RvaC4390First
+{
+public:
+	char m_bfmeHead[0x204];
+	BfmeObjectAI *m_bfmeAI;
+};
+
+class RvaC4390Second
+{
+public:
+	char m_bfmeHead[0x94];
+	unsigned char m_bfmeFlags;
+	RvaC4390First *resolve(Int kind);
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
@@ -58,6 +73,8 @@ private:
 	unsigned char m_bfme1b8;					// +0x1B8
 	char m_bfmeGap1B9[0x2F];
 	void *m_bfme1e8;						// +0x1E8
+	char m_bfmeGap1EC[0x0C];
+	Int m_bfmeStateValue;					// +0x1F8
 };
 
 class BfmeAIFactors
@@ -76,6 +93,30 @@ public:
 };
 
 extern "C" BfmeAIRoot *TheAIParseDefinitionAI;			// 0x012EF214
+
+// ?bfmeStateValue@BfmeObjectAI@@QAEHXZ
+#pragma optimize("s", on)
+int BfmeObjectAI::bfmeStateValue(void)
+{
+	BfmeObjectAI *current = this;
+
+	do
+	{
+		RvaC4390Second *relation =
+			(RvaC4390Second *)current->m_bfmeObject;
+		if (!relation || !(relation->m_bfmeFlags & 0x20))
+			break;
+
+		RvaC4390First *linked = relation->resolve(0);
+		if (!linked || !linked->m_bfmeAI)
+			break;
+
+		current = linked->m_bfmeAI;
+	} while (current);
+
+	return current->m_bfmeStateValue;
+}
+#pragma optimize("", on)
 
 // ?bfmeStateFlags@BfmeObjectAI@@QAEIXZ
 UnsignedInt BfmeObjectAI::bfmeStateFlags(void)
