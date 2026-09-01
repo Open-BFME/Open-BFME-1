@@ -335,6 +335,13 @@ void peerThink(PEER peer)
 		peerShutdown(peer);
 }
 
+void *peerGetChat(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	return connection->chat;
+}
+
 int piConnectTitle(PEER peer)
 {
 	if (!piRoomsInit(peer))
