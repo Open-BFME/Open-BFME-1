@@ -20,12 +20,40 @@ typedef struct piPlayer
 
 typedef struct piConnection
 {
-	unsigned char pad0[0xAC8];
+	unsigned char pad0[0xAB0];
+	int stayInTitleRoom;
+	unsigned char padAB4[0xAC8 - 0xAB4];
 	int doPings;
-	unsigned char padACC[0xAD0 - 0xACC];
+	int lastPingTimeMod;
 	int pingRoom[3];
 	int xpingRoom[3];
+	void *xpings;
+	int lastXpingSend;
 } piConnection;
+
+void TableFree(void *table);
+void pingerShutdown(void);
+
+void piPingCleanup(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if(!connection->doPings)
+		return;
+
+	if(connection->stayInTitleRoom)
+		return;
+
+	connection->lastPingTimeMod = 0;
+	connection->lastXpingSend = 0;
+
+	if(connection->xpings)
+		TableFree(connection->xpings);
+	connection->xpings = 0;
+
+	pingerShutdown();
+	connection->doPings = 0;
+}
 
 void piPingPlayerJoinedRoom(PEER peer, piPlayer *player, RoomType roomType)
 {

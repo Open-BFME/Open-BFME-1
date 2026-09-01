@@ -74499,7 +74499,7 @@ name,address,notes
 ?bfmeStep3@Gen_004410A0@@AAEXXZ,0x0002E8CA,Open-BFME5 ILT the three-step runner at 0x004410A0 tail-jumps to
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
-?bfmeStep3_250@@YAXPAX@Z,0x00862820,pin
+_piPingCleanup,0x00862820,vendored=gamespy-2004; authentic peerPing.c cleanup; calls matched pingerShutdown
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
