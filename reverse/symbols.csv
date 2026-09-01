@@ -12521,6 +12521,7 @@ name,address,notes
 ?addInformPlayerLeaveFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0004901C,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addInformPlayerLeaveFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00679B00,addCommand's jump-table arm for command type 8
 ?addInt64@Rva007E8810Message@@QAEXPBD_J@Z,0x007E8E90,V2 lane: FESL message append key/value __int64 field via %I64d
+?addInt@BfmeC994@@QAEXPBDH@Z,0x007E88D0,FESL transaction sender appends its TID integer through the recovered message field writer
 ?addInt@Rva007E8810Message@@QAEXPBDH@Z,0x007E88D0,V2 lane: FESL message append key/value int field
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00022BFB,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067BC40,addCommand's jump-table arm for command type 12
@@ -12556,6 +12557,7 @@ name,address,notes
 ?addSciencePurchasePoints@Player@@QAEXH@Z,0x0000F0F1
 ?addScorch@BaseHeightMapRenderObjClass@@QAEXVVector3@@MW4Scorches@@@Z,0x00047906
 ?addShadowCore@BFMEShadowManagerLayout@@QAEPAVW3DProjectedShadow@@PAVW3DShadowTexture@@PAVRenderObjClass@@W4ShadowType@@_NMMHMMPAPAV2@3PAVDrawable@@3@Z,0x000193BC,retail projected-shadow 13-argument core ILT thunk
+?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
 ?addString@Rva007E8810Message@@QAEXPBD0@Z,0x007E8A10,V2 lane: FESL message append key/value string field
 ?addSupplyCenter@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x0001E23B,Open-BFME5 ILT from zh_sweep packet 002503b0
 ?addSupplyWarehouse@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x00028646,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
@@ -73203,6 +73205,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
 ?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropRS@BfmeThingRS@@QAEXH@Z,0x00031F7A,pin
+?bfmeDropTWB@BfmeListTWB@@QAEXXZ,0x00800290,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
@@ -73248,6 +73251,9 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeDtorEHBb@BfmeSubEHBb@@QAEXXZ,0x0003D2B7,pin
 ?bfmeDtorTRB@BfmeThingTRB@@QAEXXZ,0x008DD8A0,pin
 ?bfmeDtorTVA@BfmeThingTVA@@QAEXXZ,0x007F0300,pin
+?bfmeDtorTWA@BfmeStrTWA@@QAEXXZ,0x007E86C0,pin
+?bfmeDtorTWB@BfmeStrTWB@@QAEXXZ,0x007E86C0,pin
+?bfmeDtorTWC@BfmeHeadTWC@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
@@ -73679,6 +73685,9 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeFreeTVA@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeTVB@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeTVC@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeTWA@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeTWB@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeTWC@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -73762,6 +73771,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
 ?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
 ?bfmeGetTVC@@YAPAVBfmeSinkTVC@@XZ,0x007EFFC0,pin
+?bfmeGetTWC@@YAPAVBfmeSinkTWC@@XZ,0x007EFFC0,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74570,6 +74580,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?bfmeStepTAA@@YAXH@Z,0x0081B830,pin
 ?bfmeStepTDB@@YAXXZ,0x00904BA0,pin
 ?bfmeStepTKD@@YAXNH@Z,0x0002E90B,pin
+?bfmeStepTWA@BfmeThingTWA@@QAEXXZ,0x007F8940,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
@@ -75140,6 +75151,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?clear@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@QAEXXZ,0x0008F880,NameKeyGenerator aux hash_map hashtable<>::clear() proven via freeSockets tail-jmp
 ?clear@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEXXZ,0x000458BD
 ?clear@AsciiString@@QAEXXZ,0x00887940,retail AsciiString::clear body called from DictPair::copyFrom
+?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
 ?clear@BfmeDtorMemberJ@@AAEXXZ,0x009D0E20,Open-BFME5 tree clear called by the 0x009CF1E0 member destructor
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
 ?clear@BfmeThing152@@QAEXXZ,0x00039595,pin
@@ -76732,7 +76744,12 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?g_bfmeVft969D3@@3PADA,0x00D2B3C8,pin
 ?g_bfmeVft994C@@3PADA,0x00D296B0,pin
 ?g_bfmeVftAQB@@3PADA,0x00D22470,pin
+?g_bfmeVftATWA@@3PAPAXA,0x00D2B8A4,pin
+?g_bfmeVftATWB@@3PAPAXA,0x00D2B5C4,pin
 ?g_bfmeVftBQB@@3PADA,0x00D223A0,pin
+?g_bfmeVftBTWA@@3PAPAXA,0x00D2B8A0,pin
+?g_bfmeVftBTWB@@3PAPAXA,0x00D2B598,pin
+?g_bfmeVftCTWA@@3PAPAXA,0x00D2B890,pin
 ?g_bfmeVftSE@@3PAPAXA,0x00D28428,pin
 ?g_bfmeVftTA@@3PADA,0x00D2F254,pin
 ?g_bfmeVftTDA@@3PAPAXA,0x00D29D30,pin
@@ -80019,6 +80036,7 @@ _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xpi
 ?storeImage@Anim2DTemplate@@QAEXPBVImage@@@Z,0x0001CF0D
 ?strtrim@@YAPADPAD@Z,0x009E7EB0
 ?structureCollapseBuildNonDupRandomIndexList@@YAXHHQAH@Z,0x002AE160,StructureCollapse doPhaseStuff retail file-local index builder
+?submit@BfmeSinkSKA@@AAEXPAVBfmeC994@@@Z,0x008038F0,FESL transaction sender submits the completed local message through its owning sink
 ?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
 ?substr@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBE?AV12@II@Z,0x006550F0,STLport basic_string<char>::substr(pos; n): constructs the hidden return string from [begin+pos; begin+pos+min(n; size-pos)) through the range ctor ILT 0x0002648B; four callers in parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x00659888..0x00659A25; ILT 0x0003D60E
 ?supportTextureFormat@W3DRadarFormatCaps@@QAE_NW4WW3DFormat@@@Z,0x0091B4F0,W3DRadar BFME caps query ABI shim
@@ -80526,6 +80544,7 @@ _TableEnter,0x00866E70,vendored=gamespy-2004
 _TableFree,0x00866DF0,vendored=gamespy-2004
 _TableLookup,0x00866F30,vendored=gamespy-2004
 _TableMap,0x00866F90,vendored=gamespy-2004
+_TableMapSafe,0x00866FD0,vendored=gamespy-2004; exact piPingPlayerLeftRoom callee
 _TableMapSafe2,0x00867060,vendored=gamespy-2004
 _TableNew2,0x00866D80,vendored=gamespy-2004
 _TableRemove,0x00866ED0,vendored=gamespy-2004
@@ -81434,7 +81453,6 @@ _piPingInitPlayer,0x00862E10,gamespy-peer: called by piAddPlayer at 0x008637E0 w
 _piPingPlayerJoinedRoom,0x00862E90,gamespy-peer: called by piPlayerJoinedRoom at 0x008638D0
 _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x00863970
 _piPingPlayerLeftRoomTableMapFn,0x00862F10,vendored=gamespy-2004; authentic peerPing.c source-order callback
-_TableMapSafe,0x00866FD0,vendored=gamespy-2004; exact piPingPlayerLeftRoom callee
 _piPinged,0x00862750,vendored=gamespy-2004; authentic peerPing.c source order
 _piPingerReplyMapFn,0x00862870,vendored=gamespy-2004; authentic peerPing.c source-order callback
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
@@ -81668,10 +81686,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?addInt@BfmeC994@@QAEXPBDH@Z,0x007E88D0,FESL transaction sender appends its TID integer through the recovered message field writer
-?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
-?submit@BfmeSinkSKA@@AAEXPAVBfmeC994@@@Z,0x008038F0,FESL transaction sender submits the completed local message through its owning sink
-?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
 ?hasUpgradeComplete@Player@@QAE_NPBVUpgradeTemplate@@@Z,0x000235BF,RefundDie::onDie matched caller identifies the completed-upgrade predicate ILT
 ?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
 ?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
