@@ -73213,6 +73213,7 @@ name,address,notes
 ?bfmeDtorDXG@BfmeThingDXG@@QAEXXZ,0x00893990,pin
 ?bfmeDtorEHBa@BfmeSubEHBa@@QAEXXZ,0x00016004,pin
 ?bfmeDtorEHBb@BfmeSubEHBb@@QAEXXZ,0x0003D2B7,pin
+?bfmeDtorTRB@BfmeThingTRB@@QAEXXZ,0x008DD8A0,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
@@ -73638,6 +73639,7 @@ name,address,notes
 ?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeTMB@@YAXPAX@Z,0x008068B0,pin
 ?bfmeFreeTQD@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeTRB@BfmePoolTRB@@QAEXPAX@Z,0x008DDA50,pin
 ?bfmeFreeUB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeUD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
@@ -74269,6 +74271,7 @@ name,address,notes
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
 ?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
+?bfmeReportTSA@@YGXJPAVBfmeThingTSA@@PAUBfmeGuidTSA@@@Z,0x00AFD550,pin
 ?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
@@ -76329,6 +76332,7 @@ name,address,notes
 ?g_bfmeICoord3DFormat@@3QBDB,0x0114436C,address-derived ICoord3D format string from retail 0x009D969D
 ?g_bfmeIRegion2DFormat@@3QBDB,0x0114445C,address-derived IRegion2D format string from retail 0x009D985E
 ?g_bfmeIRegion3DFormat@@3QBDB,0x011443C8,address-derived IRegion3D format string from retail 0x009D9745
+?g_bfmeIidTSA@@3UBfmeGuidTSA@@A,0x00D3DF00,pin
 ?g_bfmeInfoTKB@@3PADA,0x00D1E05C,pin
 ?g_bfmeInitDYB@@3DA,0x00EED8B0,pin
 ?g_bfmeInt64Format@@3QBDB,0x011442EC,address-derived int64 format string from retail 0x009D9503
@@ -76528,6 +76532,7 @@ name,address,notes
 ?g_bfmeP1095@@3PAVBfmeP1095@@A,0x00EF076C,pin
 ?g_bfmeP1096@@3PAVBfmeP1096@@A,0x00EF076C,pin
 ?g_bfmeP1097@@3PAVBfmeP1097@@A,0x00EF076C,pin
+?g_bfmePoolTRB@@3VBfmePoolTRB@@A,0x00F3D1AC,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
