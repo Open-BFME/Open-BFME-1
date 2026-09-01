@@ -81877,3 +81877,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
+??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
