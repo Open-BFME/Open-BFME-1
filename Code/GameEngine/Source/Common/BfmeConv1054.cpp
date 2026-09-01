@@ -10,6 +10,18 @@ struct BfmeA1054
 	void (*volatile m_bfmeFn)(void);
 	volatile int m_bfme58;
 	volatile int m_bfme5c;
+	int m_bfmeH6;
+	void (*m_bfmeFn6)(void);
+	int m_bfme68;
+	int m_bfme6c;
+	int m_bfmeH7;
+	void (*m_bfmeFn7)(void);
+	int m_bfme78;
+	int m_bfme7c;
+	int m_bfmeH8;
+	void (*m_bfmeFn8)(void);
+	int m_bfme88;
+	int m_bfme8c;
 };
 
 struct BfmeB1054
@@ -79,6 +91,23 @@ void bfmeTailB1054Impl(BfmeB1054 *p)
 	p->m_bfme58 = z;
 	p->m_bfme5c = z;
 	bfmeTailA1054Cdecl(reinterpret_cast<BfmeA1054 *>(p));
+}
+
+void bfmeTailA1054Impl(BfmeA1054 *p)
+{
+	int z = 0;
+	p->m_bfmeH6 = bfmeMake1054(6);
+	p->m_bfmeFn6 = reinterpret_cast<void (*)(void)>(0x0042ed75);
+	p->m_bfme68 = z;
+	p->m_bfme6c = z;
+	p->m_bfmeH7 = bfmeMake1054(7);
+	p->m_bfmeFn7 = reinterpret_cast<void (*)(void)>(0x00441c09);
+	p->m_bfme78 = z;
+	p->m_bfme7c = z;
+	p->m_bfmeH8 = bfmeMake1054(8);
+	p->m_bfmeFn8 = reinterpret_cast<void (*)(void)>(0x0043c9cf);
+	p->m_bfme88 = z;
+	p->m_bfme8c = z;
 }
 
 struct BfmeCategoryHead1054
