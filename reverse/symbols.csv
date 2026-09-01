@@ -9615,6 +9615,7 @@ name,address,notes
 ?Add@?$DynamicVectorClass@UPtrPairStruct@PointerRemapClass@@@@QAE_NABUPtrPairStruct@PointerRemapClass@@@Z,0x000457CD,pinharvest x1 (thunk)
 ?Add@?$DynamicVectorClass@VModelNodeClass@HLodClass@@@@QAE_NABVModelNodeClass@HLodClass@@@Z,0x0097B080,pin for HLod Add_Sub_Object_To_Bone (rel32)
 ?Add@?$DynamicVectorClass@VShaderClass@@@@QAE_NABVShaderClass@@@Z,0x0092FA60
+?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,0x00889F20,upstream Debug::GetFrameEntry direct callee when the frame address is absent
 ?AddOutput@Debug@@AAEXPBDI@Z,0x0088A8F0
 ?Add_Engine_Ref@IndexBufferClass@@QBEXXZ,0x0091CD30,pinharvest x2 (body)
 ?Add_Engine_Ref@VertexBufferClass@@QBEXXZ,0x0091D9C0,pinharvest x1 (body)
@@ -10801,6 +10802,7 @@ name,address,notes
 ?U2Put0083C590_do@@YA?AUU2PutIter@@U1@PAX1N@Z,0x0083C590,U2 lane: cdecl callee of the double-argument put forwarder 0x30 bytes before it; unnamed dump elsewhere
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
+?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
 ?Update_Min_Max@AABTreeClass@@AAEXHAAVVector3@@0@Z,0x0096AFC0
@@ -79211,6 +79213,7 @@ name,address,notes
 ?normalizeAngle@@YAMM@Z,0x0000991C
 ?noteAssign@U4Notify@@QAEXPAVU4Assign006057C0@@@Z,0x00409040,U4 lane: notify entry called by the assignment operator at 0x006057C0; address-derived name
 ?noteOwner@U4Notify@@QAEXPAVU4Owner00604C00@@@Z,0x004090C0,U4 lane: notify entry called by the detach at 0x00604C00; address-derived name
+?notify0C@Rva003BAD00Owner@@QAEXABVAsciiString@@HH@Z,0x0000B316,caller passes the temporary AsciiString key to the verified three-argument dispatcher body
 ?notify@BfmeMgr19E@@QAEHXZ,0x000290D2,pin
 ?notify@BfmeObjNotify3F0@@QAEXPAXH@Z,0x000259FA,pin
 ?notify@BfmeSub30_7F0@@QAEXHH@Z,0x00044319,pin
@@ -79219,7 +79222,6 @@ name,address,notes
 ?notify@Gen00587600@@QAEXXZ,0x000271FB,Open-BFME5 ILT target of the guarded notifier at 0x0051A6E0
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,two-argument __thiscall member called at the top of the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ?notify@Rva00589690@@AAEXXZ,0x0003643A,Open-BFME5 fresh thiscall at ILT of set-byte+notify 0x00589690
-?notify0C@Rva003BAD00Owner@@QAEXABVAsciiString@@HH@Z,0x0000B316,caller passes the temporary AsciiString key to the verified three-argument dispatcher body
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?notifyModelConditionChanged@Object@@QAEXXZ,0x0002191D,Object model-condition notify ILT (body 0x1BE1C0); inlined clearModelConditionState(PANICKING) sites
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
@@ -81807,5 +81809,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,0x00889F20,upstream Debug::GetFrameEntry direct callee when the frame address is absent
-?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
