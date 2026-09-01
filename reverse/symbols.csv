@@ -994,9 +994,9 @@ name,address,notes
 ??$__partial_sort@PAHHUQ4Sort00533470@@@_STL@@YAXPAH000UQ4Sort00533470@@@Z,0x00532DF0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__partial_sort@PAHHUQ4Sort00755050@@@_STL@@YAXPAH000UQ4Sort00755050@@@Z,0x00754C60,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__pop_heap@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@H@_STL@@YAXPAURva00364980HeapElement@@00U1@URva00364980HeapCompare@@PAH@Z,0x0001479F,REL32 wide-element pop-heap target from 0x00366838
+??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00575AA0@@@Z,0x000127B0,retail __adjust_heap at 0x005757E0 direct call-site ILT to the 104-byte push-heap body at 0x00574FC0
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z,0x009F2E90,Open-BFME5 the sift-up the __adjust_heap at 0x009F3110 tails into
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F34B0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F34B0@@@Z,0x009F2F00,Open-BFME5 the sift-up the __adjust_heap at 0x009F3190 tails into
-??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00575AA0@@@Z,0x000127B0,retail __adjust_heap at 0x005757E0 direct call-site ILT to the 104-byte push-heap body at 0x00574FC0
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp002E1690@@@Z,0x002E0730,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00531FA0@@@Z,0x0052FF20,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00532740@@@Z,0x00530050,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -1004,15 +1004,10 @@ name,address,notes
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@00US4Cmp002EB8E0@@@Z,0x002EA750,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem8@@U1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@00US4Cmp00575AA0@@@Z,0x000046FB,matched final-insertion wrapper at 0x00576FF0 calls this zero-third STLport helper through its ILT
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp002E1690@@@Z,0x00042F91,retail __linear_insert at 0x002E0FE0 direct call-site ILT
+??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00531FA0@@@Z,0x0001649B,retail __linear_insert at 0x0052FE90 direct call-site ILT to the 109-byte unguarded insertion body at 0x0052F110
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00574DF0@@@Z,0x00045214,retail __linear_insert at 0x00573900 direct call-site ILT to the matched 0x00570BF0 slide body
-??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00531FA0@@@Z,0x0001649B,retail __linear_insert at 0x0052FE90 direct call-site ILT to the 109-byte unguarded insertion body at 0x0052F110
 ??$__unguarded_linear_insert@PAUS4SortElem8@@U1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@U1@US4Cmp00575AA0@@@Z,0x0002DB3C,retail __linear_insert at 0x005756C0 direct call-site ILT to the 68-byte unguarded insert body at 0x00574F60
-?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
-?BfmeCopyBackward00570F50@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x0002ABE9,address-scoped spelling for the 12-byte POD copy_backward ILT called by retail 0x00573900
-?BfmeCopyBackward0052D370@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00019CBD,address-scoped spelling for the 12-byte copy_backward ILT called by retail 0x0052FE90
-?BfmeLess0052E880@S4SortElem12@@QBE_NABU1@@Z,0x0002B210,address-scoped spelling for the record comparison ILT called by retail 0x0052FE90
-?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z,0x00013471,address-scoped spelling for the element comparison ILT called by retail 0x005757E0
 ??$__unguarded_partition@PAHHUQ4Sort0034BFC0@@@_STL@@YAPAHPAH0HUQ4Sort0034BFC0@@@Z,0x003407C0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort003D15A0@@@_STL@@YAPAHPAH0HUQ4Sort003D15A0@@@Z,0x003CE380,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort004566F0@@@_STL@@YAPAHPAH0HUQ4Sort004566F0@@@Z,0x00452720,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
@@ -3832,12 +3827,17 @@ name,address,notes
 ??0locale@_STL@@QAE@ABV01@@Z,0x00832150,STLport 4.5.3 locale copy constructor; address read from the retail pubimbue REL32 displacement
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
+??1?$DynamicVectorClass@UTextureStatisticsStruct@@@@UAE@XZ,0x009380E0,0x00938130 wrapper call; typed 0x00937FB0 derived ctor and static statistics vector prove identity; distinct base wrapper at 0x00938080
+??1?$DynamicVectorClass@VProxyClass@@@@UAE@XZ,0x00936E40,0x00937040 wrapper call; 0x74-byte ProxyClass element teardown and adjacent Render2DClass ctor batches member prove derived vector identity
 ??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
 ??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
 ??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
+??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
+??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
+??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x00013449,SpecialAbilityUpdate list member destructor call target
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x000383CF,HordeContain list member destructor call target (third COMDAT copy 0x0020ACD0)
@@ -8619,6 +8619,7 @@ name,address,notes
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00045CA5,pinharvest x1 (thunk)
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00AFF130,pinharvest x1 (body)
 ??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
+??1MaterialInfoClass@@UAE@XZ,0x00930F60,0x009312B0 deleting wrapper calls target; matched 0x00930E00 copy constructor and three owned material vectors prove class layout
 ??1MaterialRemapperClass@@QAE@XZ,0x0092FF90,callee of the byte-proven clone_materials 0x96DDC0; same stack temp as ecx under EH state -1
 ??1Mem00026AB2@@QAE@XZ,0x00026AB2,Open-BFME5 ILT the subobject destructor the EH-framed member-offset vectors call
 ??1Mem000658A0@@QAE@XZ,0x000658A0,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
@@ -8655,6 +8656,7 @@ name,address,notes
 ??1MemoryPool@@QAE@XZ,0x0003C740,Open-BFME5 SiegeDeploySpecialPower pool cleanup pin
 ??1MemoryReadFile@@UAE@XZ,0x009CB460,folded onto File::~File - MemoryReadFile adds no destructible member
 ??1MemoryWriteFile@@UAE@XZ,0x009CB590,called by the MemoryWriteFile scalar deleting destructor
+??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
 ??1MilitarySubtitleData@InGameUI@@QAE@XZ,0x00018CE1,ILT thunk to the military subtitle record destructor
 ??1MissingAnimClass@@UAE@XZ,0x00002C7A,ILT thunk; retail call sites use the thunk
@@ -8974,7 +8976,6 @@ name,address,notes
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
-??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
 ??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
@@ -9465,6 +9466,7 @@ name,address,notes
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
+??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
 ??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7VirtualMinusOneConstructorThunk@@6B@,0x010F6F58,Open-BFME5 virtual minus one constructor vftable
@@ -9694,6 +9696,9 @@ name,address,notes
 ?BfmeCopy00769060@@YAXPAUBfmeValue00769060@@PBU1@@Z,0x000366E2,Open-BFME5 ILT the value copy the clone-node body at 0x00769060 calls
 ?BfmeCopy009C94C0@@YAXPAUBfmeValue009C94C0@@PBU1@@Z,0x009C9120,Open-BFME5 ILT the value copy the clone-node body at 0x009C94C0 calls
 ?BfmeCopy009D02C0@@YAXPAUBfmeValue009D02C0@@PBU1@@Z,0x009CF3C0,Open-BFME5 ILT the value copy the clone-node body at 0x009D02C0 calls
+?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
+?BfmeCopyBackward0052D370@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00019CBD,address-scoped spelling for the 12-byte copy_backward ILT called by retail 0x0052FE90
+?BfmeCopyBackward00570F50@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x0002ABE9,address-scoped spelling for the 12-byte POD copy_backward ILT called by retail 0x00573900
 ?BfmeDetonatorInfoUninitializedCopy@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@00ABU__false_type@1@@Z,0x00027782,Open-BFME5 ILT for _STL::__uninitialized_copy on MinefieldBehavior DetonatorInfo at 0x00570920
 ?BfmeDetonatorInfoUninitializedFillN@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@IABU23@ABU__false_type@1@@Z,0x00019E89,Open-BFME5 ILT for _STL::__uninitialized_fill_n on MinefieldBehavior DetonatorInfo at 0x00570970
 ?BfmeDynamicDX8VertexBufferInUse@@3PA_NA,0x01346740,Open-BFME5 per-slot in-use flags the BoxDynamicVBAccessClass destructor at 0x0091D9E0 clears; DIR32 sites are masked by the byte gate so this records which global it is
@@ -9713,6 +9718,8 @@ name,address,notes
 ?BfmeHideShowSubObjInfoConstruct@_STL@@YAXPAXABUHideShowSubObjInfo@ModelConditionInfo@@@Z,0x00033FF0,Open-BFME5 ILT this allocate-and-copy uses for the 8-byte _Construct at 0x003A9110
 ?BfmeHorzLineUninitializedCopy@_STL@@YAPAUHorzLine@@PAU2@00ABU__false_type@1@@Z,0x0000C61C,Open-BFME5 ILT for the shared 12-byte-element _STL::__uninitialized_copy at 0x00068C50
 ?BfmeHorzLineUninitializedFillN@_STL@@YAPAUHorzLine@@PAU2@IABU2@ABU__false_type@1@@Z,0x0002E91A,Open-BFME5 ILT for the shared 12-byte-element _STL::__uninitialized_fill_n at 0x00068CA0
+?BfmeLess0052E880@S4SortElem12@@QBE_NABU1@@Z,0x0002B210,address-scoped spelling for the record comparison ILT called by retail 0x0052FE90
+?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z,0x00013471,address-scoped spelling for the element comparison ILT called by retail 0x005757E0
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeProductionPrerequisiteConstruct@_STL@@YAXPAXABVProductionPrerequisite@@@Z,0x000027A2,Open-BFME5 ILT for the ProductionPrerequisite copy-construct at 0x003ABAD0 as _M_allocate_and_copy calls it
 ?BfmeRunwayInfoUninitializedCopy@_STL@@YAPAURunwayInfo@ParkingPlaceBehavior@@PAU23@00ABU__false_type@1@@Z,0x00021A1C,Open-BFME5 ILT for _STL::__uninitialized_copy on ParkingPlaceBehavior RunwayInfo at 0x0074AAC0
@@ -74511,9 +74518,11 @@ name,address,notes
 ?bfmeSetBTB@BfmeSubBTB@@QAEXPAX0@Z,0x00025306,pin
 ?bfmeSetBZC@BfmeSubBZC@@QAEXH@Z,0x00802C30,pin
 ?bfmeSetCBE@@YAXPAXH@Z,0x008FE0E0,pin
+?bfmeSetColorsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A420,pin
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
 ?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
+?bfmeSetLocsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A300,pin
 ?bfmeSetNeedsGateOpenRaw@Team@@QAEXHH@Z,0x0000E6B5,TEAM_NEEDS_OPEN_GATE canonical callee consumes the low byte of the full stack-word flag
 ?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
 ?bfmeSetPG@BfmeThingPG@@QAEXHPAX@Z,0x00021C1F,pin
@@ -74530,6 +74539,7 @@ name,address,notes
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
+?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
 ?bfmeSetupXB@BfmeThingXB@@QAEXPAX000@Z,0x00023F1F,pin
 ?bfmeShowDZE@BfmeUiDZE@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
@@ -75032,6 +75042,7 @@ name,address,notes
 ?call@Gen00025603@@QAEXXZ,0x00025603,element callee of the 0x003D2410 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen00036A9D@@QAEXXZ,0x00036A9D,element callee of the 0x003CDE60 for-each loop reached via incremental-link thunk; address-derived name
 ?call@Gen00041FE7@@QAEXPAVY1ForEachArg@@@Z,0x00041FE7,element callee of the 0x003D0FA0 for-each loop reached via incremental-link thunk; address-derived name
+?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHHHHHHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder
 ?call@WeaponMapHelperShim@@QBE_NABV?$BitFlags@$0BB@@@0@Z,0x001407A0,incremental-link thunk target through a TU-local forwarding shim
 ?call_0002105d@AssaultTransportAIUpdateBase@@IAEXXZ,0x0002105D,unnamed body 0x002B4320 via ILT thunk
 ?call_00030887@Object@@QAEXH@Z,0x00030887,unnamed body 0x001C7E60 via ILT thunk
@@ -80993,6 +81004,7 @@ _bfmeOffEAA,0x00D09918,pin
 _bfmeOffEAB,0x00D05E70,pin
 _bfmeOnEAA,0x00D09920,pin
 _bfmeOnEAB,0x00D05E6C,pin
+_bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call while piDisconnect is reconstructed in the same file
 _bfmePiDisconnectCleanupFromEsi,0x008572E0,GameSpy Peer static disconnect cleanup with peer carried in ESI
 _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carried in ESI
 _bfmeQuery1239,0x00892370,pin
@@ -81204,11 +81216,14 @@ _chatGetBasicUserInfoA,0x00861370,GameSpy Chat basic-user-info request
 _chatGetBasicUserInfoNoWaitA,0x00861450,GameSpy Chat cached basic-user lookup
 _chatGetChannelKeysA,0x00861C60,GameSpy Chat channel-key request
 _chatGetGlobalKeysA,0x00861940,GameSpy Chat global-key request
+_chatGetProfileID,0x00860700,gamespy-chat: authentic peerGetProfileID tail call after connected guard
+_chatGetUserID,0x008606F0,gamespy-chat: authentic peerGetUserID tail call after connected guard
 _chatKickUserA,0x00861510
 _chatLeaveChannel,0x008609B0,gamespy-chat: called by piLeaveRoom at 0x00863EE0 with the room name and a reason
 _chatRetryWithNickA,0x008624C0
 _chatSendChannelMessageA,0x008609F0
 _chatSetGlobalKeysA,0x00861730,GameSpy Chat global-key setter
+_chatThink,0x00860470,gamespy-chat: authentic piThink first call on connection chat handle
 _check,0x0099AA50,vendored=lua-4.0.1
 _check_match,0x0099AB20,vendored=lua-4.0.1
 _chunk,0x0099D2D0,vendored=lua-4.0.1
@@ -81507,10 +81522,13 @@ _piCallCallbacks,0x00872C20,GameSpy pingerThink tail-calls the queued callback d
 _piCancelJoinOperation,0x0085F0A0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 while the room is still being entered
 _piChangeNickCallbackA,0x0085FCD0,GameSpy Peer change-nick completion callback
 _piCheckTimeouts,0x00873280,GameSpy pingerThink checks active ping expiry after processing input
+_piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
+_piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
 _piClearCallbacks,0x0085E240,vendored=gamespy-2004; exact piSBStopListingGames callee
 _piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup
 _piConnectTitle,0x00857210,GameSpy Peer title subsystem initialization
 _piCreateStagingRoomEnumUsersCallbackA,0x0085F4F0,GameSpy Peer staging-room user enumeration callback
+_piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect cleanup call
 _piDisconnectTitle,0x00857250,GameSpy Peer title subsystem cleanup
 _piEnumRoomPlayers,0x008633E0
 _piFindPlayerByIP,0x00863460,vendored=gamespy-2004; exact piPinged callee with peer and IP
@@ -81520,6 +81538,7 @@ _piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
 _piGetGlobalWatchKeyA,0x00865760,GameSpy PEER SDK peerKeys.c global watch-cache lookup
 _piGetPlayer,0x00863350,gamespy-peer: looks a piPlayer up by nick in connection->players; sole player-lookup callee of peerKeys.c cache maps
 _piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
+_piGetPrivateIP,0x00857150,gamespy-peer: authentic peerInitialize private-address discovery call before title initialization
 _piGetRoomWatchKeyA,0x008657C0,GameSpy PEER SDK peerKeys.c room watch-cache lookup
 _piGetWatchKeyA,0x00865710,GameSpy PEER SDK peerKeys.c internal watch-cache lookup
 _piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
@@ -81533,8 +81552,11 @@ _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
 _piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
+_piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
+_piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
+_piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operation reset before title cleanup
 _piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
 _piPingCleanup,0x00862820,vendored=gamespy-2004; authentic peerPing.c cleanup; calls matched pingerShutdown
 _piPingInitPlayer,0x00862E10,gamespy-peer: called by piAddPlayer at 0x008637E0 when initialising a new piPlayer
@@ -81543,15 +81565,20 @@ _piPingPlayerLeftRoom,0x00862FA0,gamespy-peer: called by piPlayerLeftRoom at 0x0
 _piPingPlayerLeftRoomTableMapFn,0x00862F10,vendored=gamespy-2004; authentic peerPing.c source-order callback
 _piPinged,0x00862750,vendored=gamespy-2004; authentic peerPing.c source order
 _piPingerReplyMapFn,0x00862870,vendored=gamespy-2004; authentic peerPing.c source-order callback
+_piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname updater
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piProcessIncoming,0x00873170,GameSpy pingerThink processes pending socket input before timeout checks
 _piProcessPing,0x00862690,vendored=gamespy-2004; authentic peerPing.c static helper called by piPingerReplyMapFn
+_piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
+_piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
 _piRoomToType,0x00863BB0,gamespy-peer: maps a channel name to a RoomType; called by piGetRoomKeysCallbackA at 0x00865DB0
+_piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piSBFreeHostServer,0x00864FB0,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when leaving the staging room
 _piSBStartListingGames,0x00864FE0
 _piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
 _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
+_piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
 _piSendChannelUTM,0x00857EB0,gamespy-peer: called by piXpingPlayer at 0x00862B80 with the PNG command literal
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
@@ -81560,12 +81587,15 @@ _piSetLocalFlags,0x00863C00,GameSpy Peer local-player flag update
 _piSetNewPlayerFlags,0x00863500,GameSpy Peer SDK peerPlayers.c internal room flag updater
 _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x008659C0 on the demangled username key
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
+_piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
 _piStartHosting,0x00865410,GameSpy Peer query-reporting host startup
 _piStartReporting,0x00866820
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
+_piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
+_piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
 _piUpdateXping,0x00863180,vendored=gamespy-2004; authentic peerPing.c public xping update
 _piXpingTableCompareFn,0x008625E0,vendored=gamespy-2004; authentic peerPing.c source order
 _piXpingTableElementFreeFn,0x00862680,vendored=gamespy-2004; authentic peerPing.c source order
@@ -81776,32 +81806,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
-_piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
-_piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
-_piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname updater
-??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
-??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
-??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor
-??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
-??1MaterialInfoClass@@UAE@XZ,0x00930F60,0x009312B0 deleting wrapper calls target; matched 0x00930E00 copy constructor and three owned material vectors prove class layout
-??1?$DynamicVectorClass@VProxyClass@@@@UAE@XZ,0x00936E40,0x00937040 wrapper call; 0x74-byte ProxyClass element teardown and adjacent Render2DClass ctor batches member prove derived vector identity
-??1?$DynamicVectorClass@UTextureStatisticsStruct@@@@UAE@XZ,0x009380E0,0x00938130 wrapper call; typed 0x00937FB0 derived ctor and static statistics vector prove identity; distinct base wrapper at 0x00938080
-_piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
-_piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
-_piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
-_piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
-_chatThink,0x00860470,gamespy-chat: authentic piThink first call on connection chat handle
-_piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
-_piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
-_piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect cleanup call
-_bfmePiDisconnect,0x00858410,GameSpy Peer TU shim preserving retail piThink call while piDisconnect is reconstructed in the same file
-_piOperationsReset,0x0085EF80,gamespy-peer: authentic piDisconnectCleanup operation reset before title cleanup
-?call@Rva007F6740Receiver@@QAEXPAXHHHHHHHHHHHHHH@Z,0x007F6740,address-derived direct callee of the 0x00802910 fourteen-argument forwarder
-_chatGetUserID,0x008606F0,gamespy-chat: authentic peerGetUserID tail call after connected guard
-_chatGetProfileID,0x00860700,gamespy-chat: authentic peerGetProfileID tail call after connected guard
-_piGetPrivateIP,0x00857150,gamespy-peer: authentic peerInitialize private-address discovery call before title initialization
-_piKeysInit,0x008655C0,gamespy-peer: authentic peerInitialize final subsystem initializer after piCallbacksInit
-_piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 ?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,0x00889F20,upstream Debug::GetFrameEntry direct callee when the frame address is absent
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
