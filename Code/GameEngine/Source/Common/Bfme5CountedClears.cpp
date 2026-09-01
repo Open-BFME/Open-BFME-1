@@ -7,7 +7,9 @@
 // elements by hand -- destructor call and free are separate, so that element
 // type's destructor is not virtual.
 
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *value);
 extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source, unsigned int bytes);
+void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 
 class BfmeOwnedM
 {
@@ -98,6 +100,19 @@ inline BfmeElemN **bfmeCopyElems(BfmeElemN **destination, BfmeElemN **first, Bfm
 class BfmeVecN
 {
 public:
+	~BfmeVecN(void)
+	{
+		if (m_bfmeStart)
+		{
+			unsigned int bytes = sizeof(BfmeElemN *) * (m_bfmeEnd - m_bfmeStart);
+
+			if (bytes > 0x80)
+				bfmeFreeScalar(m_bfmeStart);
+			else
+				bfmeDeallocate(m_bfmeStart, bytes);
+		}
+	}
+
 	unsigned int bfmeSize(void) const
 	{
 		return (unsigned int)(m_bfmeFinish - m_bfmeStart);
@@ -127,21 +142,58 @@ public:
 class AsciiString
 {
 protected:
+	~AsciiString(void) { releaseBuffer(); }
 	void releaseBuffer(void);				// retail 0x00887940
 
 private:
 	void *m_bfmeData;					// +0x00
 };
 
+class BfmeRefN
+{
+public:
+	virtual ~BfmeRefN(void);
+
+	void bfmeRelease(void)
+	{
+		if (InterlockedDecrement(&m_bfmeRefCount) <= 0)
+			delete this;
+	}
+
+private:
+	long m_bfmeRefCount;
+};
+
+class BfmeRefHandleN
+{
+public:
+	~BfmeRefHandleN(void)
+	{
+		if (m_bfmeRef)
+			m_bfmeRef->bfmeRelease();
+	}
+
+private:
+	BfmeRefN *m_bfmeRef;
+};
+
 class Gen_0060B470 : public AsciiString
 {
 public:
+	~Gen_0060B470(void);
 	void bfmeClear(void);
 
 private:
-	int m_bfmeHead[2];					// +0x04
+	BfmeRefHandleN m_bfmeRefA;				// +0x04
+	BfmeRefHandleN m_bfmeRefB;				// +0x08
 	BfmeVecN m_bfmeVector;					// +0x0C
 };
+
+// ??1Gen_0060B470@@QAE@XZ
+Gen_0060B470::~Gen_0060B470(void)
+{
+	bfmeClear();
+}
 
 // ?bfmeClear@Gen_0060B470@@QAEXXZ
 void Gen_0060B470::bfmeClear(void)
