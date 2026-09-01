@@ -6406,6 +6406,7 @@ name,address,notes
 ??1Gen_dtor_00967090@@UAE@XZ,0x009670B0,gen-dtor class destructor
 ??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose first slot is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
 ??1Gen_dtor_009670c0@@UAE@XZ,0x009670E0,gen-dtor class destructor
+??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose first slot is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
 ??1Gen_dtor_009670f0@@UAE@XZ,0x00967110,gen-dtor class destructor
 ??1Gen_dtor_009677e0@@UAE@XZ,0x00967800,gen-dtor class destructor
 ??1Gen_dtor_00969310@@UAE@XZ,0x00969330,gen-dtor class destructor
