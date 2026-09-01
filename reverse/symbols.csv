@@ -81773,6 +81773,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
 _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
+_piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname updater
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
 ??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 ??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor

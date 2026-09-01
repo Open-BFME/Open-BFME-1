@@ -41,6 +41,12 @@ typedef struct piRemoveExistingKeysData
 	HashTable watchKeys;
 } piRemoveExistingKeysData;
 
+typedef struct piPlayerChangedNickMapData
+{
+	const char *oldNick;
+	const char *newNick;
+} piPlayerChangedNickMapData;
+
 typedef struct piCacheKey
 {
 	char *nick;
@@ -52,9 +58,12 @@ void *TableLookup(HashTable table, const void *element);
 void TableRemove(HashTable table, const void *element);
 void TableMapSafe(HashTable table, void (*mapFunction)(void *, void *),
 	void *clientData);
+void TableMap(HashTable table, void (*mapFunction)(void *, void *), void *clientData);
 void TableClear(HashTable table);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 __declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
+__declspec(dllimport) void __cdecl free(void *memory);
+char *goastrdup(const char *source);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
 	HashTable watchCache)
@@ -154,4 +163,29 @@ void piRemoveExistingKeysMap(void *elem, void *clientData)
 			return;
 	}
 	TableRemove(data->watchKeys, key);
+}
+
+void piPlayerChangedNickMap(void *elem, void *clientData)
+{
+	piCacheKey *key = (piCacheKey *)elem;
+	piPlayerChangedNickMapData *data = (piPlayerChangedNickMapData *)clientData;
+
+	if (strcasecmp(key->nick, data->oldNick) == 0) {
+		free(key->nick);
+		key->nick = goastrdup(data->newNick);
+	}
+}
+
+void piKeyCachePlayerChangedNick(PEER peer, const char *oldNick,
+	const char *newNick)
+{
+	piPlayerChangedNickMapData data;
+	piConnection *connection = (piConnection *)peer;
+
+	data.oldNick = oldNick;
+	data.newNick = newNick;
+	TableMap(connection->globalWatchCache, piPlayerChangedNickMap, &data);
+	TableMap(connection->roomWatchCache[0], piPlayerChangedNickMap, &data);
+	TableMap(connection->roomWatchCache[1], piPlayerChangedNickMap, &data);
+	TableMap(connection->roomWatchCache[2], piPlayerChangedNickMap, &data);
 }
