@@ -1,6 +1,10 @@
 BFME 1.03 variable-FPS local timing patch
 ==========================================
 
+For the full architecture, timing formulas, hook inventory, problem history,
+multiplayer 200-to-215-ms analysis, diagnostics, tests, and limitations, read
+TECHNICAL_DESIGN.md included in this package.
+
 Install
 -------
 1. Close lotrbfme.exe.
