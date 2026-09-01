@@ -159,6 +159,24 @@ public:
 };
 extern Gen012F8048Target *Gen012F8048;
 
+class Rva006E1AE0
+{
+public:
+	void invoke();
+	char m_pad00[0xA8];
+	int m_A8;
+};
+void Rva006E1AE0::invoke()
+{
+	Gen012F8048->m_38 = 0.0f;
+	Gen012F8048Target &target = *Gen012F8048;
+	target.m_40 = 0;
+	target.m_3C = 0;
+	Gen012F8048->m_69 = 1;
+	Gen012F8048->m_6A = 0;
+	m_A8 = 1;
+}
+
 class Rva006E1B30
 {
 public:
