@@ -6336,7 +6336,7 @@ name,address,notes
 ??1Gen_dtor_0091f2d0@@UAE@XZ,0x0091E040,gen-dtor class destructor
 ??1Gen_dtor_0091f360@@UAE@XZ,0x0091E060,gen-dtor class destructor
 ??1Gen_dtor_00921430@@UAE@XZ,0x00921380,gen-dtor class destructor
-??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921380,0x00921430 deleting wrapper directly calls this body; exact constructor 0x00921390 and Clone 0x009213E0 form the contiguous ClassicEnvironmentMapper emission group
+??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,constructor 0x00921390 installs vtable 0x0113BF90 whose first slot is deleting wrapper 0x00921F50; that wrapper directly calls this scalar body
 ??1Gen_dtor_00921f50@@UAE@XZ,0x00921F70,gen-dtor class destructor
 ??1Gen_dtor_00921f80@@UAE@XZ,0x00921FA0,gen-dtor class destructor
 ??1Gen_dtor_00921fb0@@UAE@XZ,0x009214D0,gen-dtor class destructor
