@@ -115,3 +115,35 @@ Q2_OVERRIDE_CHAIN_FIELD( Rva00413300, float, 0x10C )
 Q2_OVERRIDE_CHAIN_FIELD( Rva00413330, float, 0x110 )
 Q2_OVERRIDE_CHAIN_FIELD( Rva00413360, float, 0x114 )
 Q2_OVERRIDE_CHAIN_FIELD( Rva003FE740, float, 0x3C )
+
+// This neighbor uses the same override walk, but tests a pointer-sized field
+// instead of returning the field itself.
+class Rva001B5120Data : public Overridable
+{
+public:
+	char m_unreconstructed_08[ 0xD4 - 8 ];
+	const void *m_value;
+};
+
+class Rva001B5120
+{
+public:
+	unsigned char hasValue() const;
+
+private:
+	void *m_unreconstructed_00;
+	const Rva001B5120Data *m_data;
+};
+
+unsigned char Rva001B5120::hasValue() const
+{
+	const Rva001B5120Data *d = m_data;
+	const Rva001B5120Data *f;
+	if ( d == 0 )
+		f = d;
+	else
+		f = (const Rva001B5120Data *)( d->m_nextOverride
+			? d->m_nextOverride->getFinalOverride()
+			: d );
+	return f->m_value != 0;
+}
