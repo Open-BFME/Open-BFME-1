@@ -81745,6 +81745,7 @@ _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
 _piSetupKeysMap,0x00865D40,GameSpy PEER SDK peerKeys.c watch-key array collector
 _piSetRoomWatchKeys,0x00866010,GameSpy PEER SDK peerKeys.c room watch-key configuration
+_piSetGlobalWatchKeys,0x00865F20,GameSpy PEER SDK peerKeys.c global watch-key configuration
 _piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
 _piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
