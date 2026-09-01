@@ -10814,6 +10814,8 @@ name,address,notes
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
+_ciChannelListUsers,0x00871B90,upstream chatMain.c local-user enumeration helper called by chatEnumUsersA
+_ciAddNAMESFilter,0x0086C5A0,upstream chatMain.c NAMES filter helper whose return becomes chatEnumUsersA's blocking ID
 _qr2_registered_key_list,0x00EC84E8,upstream peerSB.c indexed query-key table read by piSBStartListingGames
 _piSBQueryVersion,0x00EC88E4,upstream peerSB.c global loaded twice by piSBInit before SBQueryEngineInit
 _piSBGamesListCallback,0x00864570,upstream peerSB.c first SBServerListInit callback stored by piSBInit
