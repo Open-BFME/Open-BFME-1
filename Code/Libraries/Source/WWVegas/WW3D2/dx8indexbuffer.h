@@ -197,7 +197,7 @@ private:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class SortingIndexBufferClass : public IndexBufferClass
 {
-	W3DMPO_GLUE(SortingIndexBufferClass)
+	// Retail uses the ordinary deleting destructor for this class.
 
 	friend DX8Wrapper;
 	friend SortingRendererClass;
