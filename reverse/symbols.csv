@@ -2175,6 +2175,7 @@ name,address,notes
 ??0BfmeMemberB_00632360@@QAE@ABV0@@Z,0x00028218,Open-BFME5 the second-member copy ctor the two-member ctor at 0x00632360 calls
 ??0BfmeMemberB_009CAA70@@QAE@ABV0@@Z,0x009CA8F0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CAA70 calls
 ??0BfmeMemberB_009CF070@@QAE@ABV0@@Z,0x009CEBF0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CF070 calls
+??0BfmeMsgVJH@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
 ??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
 ??0BfmeOnlineProfileScreen@@QAE@PAX@Z,0x00035283,ILT thunk to the online profile screen constructor at 0x00557C00
@@ -4154,6 +4155,7 @@ name,address,notes
 ??1BfmeMidB@@QAE@XZ,0x009D82D0,Open-BFME5 the middle member destructor the vector-member destructor at 0x009D83D0 runs second
 ??1BfmeMidC@@QAE@XZ,0x009D7A70,Open-BFME5 the last member destructor the vector-member destructor at 0x009D83D0 runs first
 ??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
+??1BfmeMsgVJH@@QAE@XZ,0x007E86C0,pin
 ??1BfmeOtherX@@QAE@XZ,0x00024D8E,Open-BFME5 the last member destructor the multi-member vector destructor at 0x000A83D0 runs first
 ??1BfmeOwnedMember@@QAE@XZ,0x00887940,Open-BFME5 provisional destructor for the owned member the zeroing constructors unwind
 ??1BfmeParticleSystemHandle@@QAE@XZ,0x00013994,Open-BFME5 ILT; the value ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 gets back from its lookup is released through it
@@ -74607,6 +74609,7 @@ name,address,notes
 ?bfmeSendVFA@@YAHPAXHHHH@Z,0x00807370,pin
 ?bfmeSendVIR@BfmeThingVIR@@QAEXPAVBfmeMsgVIR@@PBUBfmeOwnerVIR@@PBQBDHHH@Z,0x007F2A50,pin
 ?bfmeSendVIS@BfmeThingVIS@@QAEXPAVBfmeMsgVIR@@PBUBfmeOwnerVIR@@PBQBDHHH@Z,0x007F2A50,pin
+?bfmeSendVJH@BfmeThingVJH@@QAEXPAVBfmeMsgVJH@@@Z,0x008038F0,pin
 ?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
@@ -74631,6 +74634,7 @@ name,address,notes
 ?bfmeSet3VJA@BfmeMsgVJA@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJC@BfmeMsgVJC@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJF@BfmeMsgVJF@@QAEXPBDH@Z,0x007E88D0,pin
+?bfmeSet3VJH@BfmeMsgVJH@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet4VIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet4VIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
@@ -74687,6 +74691,7 @@ name,address,notes
 ?bfmeSetVJA@BfmeMsgVJA@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJC@BfmeMsgVJC@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJF@BfmeMsgVJF@@QAEXPBDPAX@Z,0x007E8A10,pin
+?bfmeSetVJH@BfmeMsgVJH@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
