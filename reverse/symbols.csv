@@ -81954,3 +81954,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getTexture@PointGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00912830,ParticleBufferClass Get_Texture point-group accessor
 ?getTexture@LineGroupShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x0098ECC0,ParticleBufferClass Get_Texture line-group accessor
 ?getTexture@LineRendererShim@ParticleBufferClass@@QBE?AVTextureHandleClass@2@XZ,0x00960080,ParticleBufferClass Get_Texture line-renderer accessor
+?readAdditionalDisconnectsFromUserFile@@YIHH@Z,0x004DB0B0,GetAdditionalDisconnectsFromUserFile helper uses the retail one-argument ECX calling convention
