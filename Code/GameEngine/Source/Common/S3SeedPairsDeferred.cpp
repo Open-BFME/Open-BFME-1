@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: twenty-six more seeders, unlocked by one observation about the
 // __cdecl hand-over helper: MSVC does not always clean its two arguments at
@@ -10,6 +10,47 @@
 // This batch is helper-heavy: 46 of its hand-overs go through the __cdecl
 // helper rather than a slot on the target.
 
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase(const StringBase<T> &other);
+	~StringBase(void);
+	void releaseBuffer(void);
+
+	void *m_data;
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const AsciiString &other)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&other);
+	}
+
+	~AsciiString(void)
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+private:
+	char *m_text;
+};
+
+extern AsciiString TheBfmeCrateNameDefault;
+
+class BfmeMgrF1D
+{
+public:
+	void *registerObj(void *field);
+};
+
+extern BfmeMgrF1D *g_mgr12EF1D8;
+
 struct BfmeSeedPair
 {
 	unsigned char m_bfmeFirst;
@@ -20,7 +61,7 @@ class BfmeSeedTarget
 {
 public:
 	virtual void bfmeSlot0(void);
-	virtual void bfmeSlot1(void);
+	virtual bool bfmeSlot1(void);
 	virtual void bfmeSlot2(void);
 	virtual void bfmeSlot3(void);
 	virtual bool bfmeSkip(void);		// slot 4, vtable+0x10
@@ -45,7 +86,7 @@ public:
 	virtual void bfmeSlot23(void);
 	virtual void bfmeTakeAt60(void *item);		// slot 24, vtable+0x60
 	virtual void bfmeSlot25(void);
-	virtual void bfmeSlot26(void);
+	virtual void bfmeTakeAt68(AsciiString *name);	// slot 26, vtable+0x68
 	virtual void bfmeTakeAt6C(void *item);		// slot 27, vtable+0x6C
 	virtual void bfmeSlot28(void);
 	virtual void bfmeTakeAt74(void *item);		// slot 29, vtable+0x74
@@ -56,6 +97,24 @@ public:
 	virtual void bfmeSlot34(void);
 	virtual void bfmeTakeAt8C(void *item);		// slot 35, vtable+0x8C
 };
+
+// ?bfmeHandOver_000353C8@@YAXPAVBfmeSeedTarget@@PAX@Z		// 140 bytes
+__declspec(noinline) void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *item)
+{
+	const AsciiString *source;
+	void *old = *(void **)item;
+
+	if (old)
+		source = (const AsciiString *)((char *)old + 0x20);
+	else
+		source = &TheBfmeCrateNameDefault;
+
+	AsciiString name(*source);
+	target->bfmeTakeAt68(&name);
+
+	if (target->bfmeSlot1())
+		*(void **)item = g_mgr12EF1D8->registerObj(&name);
+}
 
 class BfmeSubAccept_0002C41C
 {
