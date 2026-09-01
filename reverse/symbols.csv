@@ -6347,7 +6347,6 @@ name,address,notes
 ??1Gen_dtor_00921f50@@UAE@XZ,0x00921F70,gen-dtor class destructor
 ??1Gen_dtor_00921f80@@UAE@XZ,0x00921FA0,gen-dtor class destructor
 ??1Gen_dtor_00921fb0@@UAE@XZ,0x009214D0,gen-dtor class destructor
-??1WSEnvMapperClass@@UAE@XZ,0x009214D0,constructor 0x00965920 installs vtable 0x0113C020 whose first slot is deleting wrapper 0x00921FB0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00921fd0@@UAE@XZ,0x00921FF0,gen-dtor class destructor
 ??1Gen_dtor_00922040@@UAE@XZ,0x00922060,gen-dtor class destructor
 ??1Gen_dtor_00922120@@UAE@XZ,0x00922140,gen-dtor class destructor
@@ -6409,11 +6408,8 @@ name,address,notes
 ??1Gen_dtor_009677e0@@UAE@XZ,0x00967800,gen-dtor class destructor
 ??1Gen_dtor_00969310@@UAE@XZ,0x00969330,gen-dtor class destructor
 ??1Gen_dtor_009696f0@@UAE@XZ,0x009644B0,gen-dtor class destructor
-??1GridWSEnvMapperClass@@UAE@XZ,0x009644B0,constructor 0x00969680 installs vtable 0x0113E60C whose first slot is deleting wrapper 0x009696F0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00969c70@@UAE@XZ,0x00969C90,gen-dtor class destructor
-??1GridWSClassicEnvironmentMapperClass@@UAE@XZ,0x00969C90,constructors 0x00969CA0 and 0x00969CD0 install vtable 0x0113E630 whose first slot is deleting wrapper 0x00969C70; that wrapper directly calls this scalar body
 ??1Gen_dtor_0096a0d0@@UAE@XZ,0x0096A0F0,gen-dtor class destructor
-??1GridWSEnvironmentMapperClass@@UAE@XZ,0x0096A0F0,constructors 0x0096A100 and 0x0096A130 install vtable 0x0113E654 whose first slot is deleting wrapper 0x0096A0D0; that wrapper directly calls this scalar body
 ??1Gen_dtor_0096a550@@UAE@XZ,0x0096A570,gen-dtor class destructor
 ??1Gen_dtor_0096aca0@@UAE@XZ,0x0096A920,gen-dtor class destructor
 ??1Gen_dtor_0096de90@@UAE@XZ,0x0096D120,gen-dtor class destructor
@@ -8595,6 +8591,9 @@ name,address,notes
 ??1GridClassicEnvironmentMapperClass@@UAE@XZ,0x00922140,constructor 0x00922070 installs vtable 0x0113C0AC whose first slot is deleting wrapper 0x00922120; that wrapper directly calls this scalar body
 ??1GridEnvironmentMapperClass@@UAE@XZ,0x009221D0,constructor 0x009215C0 installs vtable 0x0113C068 whose first slot is deleting wrapper 0x009221B0; that wrapper directly calls this scalar body
 ??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose first slot is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
+??1GridWSClassicEnvironmentMapperClass@@UAE@XZ,0x00969C90,constructors 0x00969CA0 and 0x00969CD0 install vtable 0x0113E630 whose first slot is deleting wrapper 0x00969C70; that wrapper directly calls this scalar body
+??1GridWSEnvMapperClass@@UAE@XZ,0x009644B0,constructor 0x00969680 installs vtable 0x0113E60C whose first slot is deleting wrapper 0x009696F0; that wrapper directly calls this scalar body
+??1GridWSEnvironmentMapperClass@@UAE@XZ,0x0096A0F0,constructors 0x0096A100 and 0x0096A130 install vtable 0x0113E654 whose first slot is deleting wrapper 0x0096A0D0; that wrapper directly calls this scalar body
 ??1HTreeClass@@QAE@XZ,0x00952790
 ??1HeaderTemplateINI@@QAE@XZ,0x008512E0,Open-BFME5 HeaderTemplateManager init relocation
 ??1HeaderTemplateString@@QAE@XZ,0x00887940,Open-BFME5 HeaderTemplateManager init relocation
@@ -9143,6 +9142,7 @@ name,address,notes
 ??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
 ??1W3DShadowHelperManager@@QAE@XZ,0x007C19A0,Open-BFME5 shadow helper manager dtor (two refcounted members) from retail ~W3DShadowManager call site
 ??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose first slot is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
+??1WSEnvMapperClass@@UAE@XZ,0x009214D0,constructor 0x00965920 installs vtable 0x0113C020 whose first slot is deleting wrapper 0x00921FB0; that wrapper directly calls this scalar body
 ??1WSEnvironmentMapperClass@@UAE@XZ,0x00922060,constructor 0x00921570 installs vtable 0x0113C044 whose first slot is deleting wrapper 0x00922040; that wrapper directly calls this scalar body
 ??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
 ??1WaterTracksObj@@QAE@XZ,0x0003DD2F,WaterTracksRenderSystem::shutdown deletes WaterTracksObj through this exact retail ILT; target 0x003DD2F forwards to the proven 0x007AB150 WaterTracksObj destructor body
@@ -73868,6 +73868,7 @@ name,address,notes
 ?bfmeGetLastShotPosition@BfmeFiringTracker@@QBE?AUBfmeFiringPosition@@XZ,0x000228BD,Open-BFME5 ILT to body 0x001BD7D0; FiringTracker+0x48 last-shot position getter used by Object wrapper 0x001BF970
 ?bfmeGetLog1037@@YAPAVBfmeLog1037@@XZ,0x007EB810,pin
 ?bfmeGetLog1038@@YAPAVBfmeLog1038@@XZ,0x007EB810,pin
+?bfmeGetLogUUA@@YAPAVBfmeLogUUA@@XZ,0x007EB810,pin
 ?bfmeGetLookup1282@BfmeEntrySource1282@@QAEPAVBfmeTab1034@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BAAB0 retail body
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
@@ -76404,6 +76405,7 @@ name,address,notes
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeF1071@@3DA,0x00EB7D84,pin
 ?g_bfmeF1085@@3DA,0x00EB7D84,pin
+?g_bfmeFileUUA@@3PADA,0x00D2C6A8,pin
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
@@ -76654,6 +76656,9 @@ name,address,notes
 ?g_bfmeMsg1042@@3PADA,0x00DE1CE4,pin
 ?g_bfmeMsg1043@@3PADA,0x00DE1CE4,pin
 ?g_bfmeMsg2_1043@@3PADA,0x00E07858,pin
+?g_bfmeMsgAUUA@@3PADA,0x00D2C690,pin
+?g_bfmeMsgBUUA@@3PADA,0x00D2C67C,pin
+?g_bfmeMsgCUUA@@3PADA,0x00D2C660,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
@@ -76922,6 +76927,7 @@ name,address,notes
 ?g_bfmeVftUBA@@3PAPAXA,0x00CCE990,pin
 ?g_bfmeVftUNB@@3PAPAXA,0x00D2BBE8,pin
 ?g_bfmeVftUNC@@3PAPAXA,0x00D2C830,pin
+?g_bfmeVftUUA@@3PAPAXA,0x00D2C6F4,pin
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
@@ -81367,6 +81373,7 @@ _ciSocketSendf,0x0085AD70,gamespy-chat: varargs send - the NICK and USER sends a
 _ciSocketThink,0x0085AC70,gamespy-chat: first callee of ciThink at 0x008601F0 - takes &connection->chatSocket
 _ciSocketThinkRecv,0x0085AB70,gamespy-chatSocket internal call from exact ciSocketThink caller
 _ciSocketThinkSend,0x0085AAB0,gamespy-chatSocket internal call from exact ciSocketThink caller
+_ciUserLeftChannel,0x008721A0,authentic ciPartHandler caller passes chat nick and channel directly to this GameSpy chatChannel.c body
 _ciWasJoinCallbackCalled,0x00871EF0,gamespy-chat: checks if join callback called
 _cleanup,0x00881EB0,address-derived cleanup call recovered from 0x0093C440
 _closesocket@4,0x0081BE02,vendored=gamespy-2004
@@ -81928,4 +81935,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_ciUserLeftChannel,0x008721A0,authentic ciPartHandler caller passes chat nick and channel directly to this GameSpy chatChannel.c body
