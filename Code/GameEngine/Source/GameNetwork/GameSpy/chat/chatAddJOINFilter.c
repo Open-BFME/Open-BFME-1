@@ -3,6 +3,21 @@
 typedef void *CHAT;
 typedef int (*chatEnterChannelCallback)(CHAT chat, int success,
 	int failureReason, void *param);
+typedef void (*chatEnumChannelsCallbackEach)(CHAT chat, int success,
+	int index, const char *channel, const char *topic, int numUsers,
+	void *param);
+typedef void (*chatEnumChannelsCallbackAll)(CHAT chat, int success,
+	int numChannels, const char **channels, const char **topics,
+	const int *numUsers, void *param);
+
+typedef struct LISTData
+{
+	int gotStart;
+	int numChannels;
+	char **channels;
+	int *numUsers;
+	char **topics;
+} LISTData;
 
 typedef struct chatChannelCallbacks
 {
@@ -75,6 +90,18 @@ static int ciAddFilter(CHAT chat, int type, const char *name,
 	connection->lastFilter = filter;
 
 	return filter->ID;
+}
+
+int ciAddLISTFilter(CHAT chat, chatEnumChannelsCallbackEach callbackEach,
+	chatEnumChannelsCallbackAll callbackAll, void *param)
+{
+	LISTData *data = (LISTData *)malloc(sizeof(LISTData));
+	if (data == 0)
+		return 0;
+
+	memset(data, 0, sizeof(LISTData));
+	return ciAddFilter(chat, 0, 0, 0, (void *)callbackEach,
+		(void *)callbackAll, param, data);
 }
 
 int ciAddJOINFilter(CHAT chat, const char *channel,
