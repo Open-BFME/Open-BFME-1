@@ -2176,6 +2176,7 @@ name,address,notes
 ??0BfmeMemberB_009CAA70@@QAE@ABV0@@Z,0x009CA8F0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CAA70 calls
 ??0BfmeMemberB_009CF070@@QAE@ABV0@@Z,0x009CEBF0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CF070 calls
 ??0BfmeMsgVJH@@QAE@PADH@Z,0x007E8850,pin
+??0BfmeMsgVJI@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
 ??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
 ??0BfmeOnlineProfileScreen@@QAE@PAX@Z,0x00035283,ILT thunk to the online profile screen constructor at 0x00557C00
@@ -4156,6 +4157,7 @@ name,address,notes
 ??1BfmeMidC@@QAE@XZ,0x009D7A70,Open-BFME5 the last member destructor the vector-member destructor at 0x009D83D0 runs first
 ??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
 ??1BfmeMsgVJH@@QAE@XZ,0x007E86C0,pin
+??1BfmeMsgVJI@@QAE@XZ,0x007E86C0,pin
 ??1BfmeOtherX@@QAE@XZ,0x00024D8E,Open-BFME5 the last member destructor the multi-member vector destructor at 0x000A83D0 runs first
 ??1BfmeOwnedMember@@QAE@XZ,0x00887940,Open-BFME5 provisional destructor for the owned member the zeroing constructors unwind
 ??1BfmeParticleSystemHandle@@QAE@XZ,0x00013994,Open-BFME5 ILT; the value ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 gets back from its lookup is released through it
@@ -73903,6 +73905,7 @@ name,address,notes
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
 ?bfmeGetStrVHC@BfmeMsgVHC@@QAEDPAXPADH@Z,0x007E8A80,pin
+?bfmeGetStrVJI@BfmeMsgVJI@@QAEDPBDPADH@Z,0x007E8A80,pin
 ?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
 ?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
@@ -73912,6 +73915,7 @@ name,address,notes
 ?bfmeGetVCC@@YAPAVBfmeSinkVCC@@XZ,0x007EFFC0,pin
 ?bfmeGetVHC@BfmeMsgVHC@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetVHE@BfmeMsgVHE@@QAEHPAXH@Z,0x007E8900,pin
+?bfmeGetVJI@BfmeMsgVJI@@QAEHPBDH@Z,0x007E8900,pin
 ?bfmeGet_002197e0@BfmeChainResult@@QAEPAXXZ,0x00027746,Open-BFME5 ILT the lookup at 0x002197E0 tail-jumps through
 ?bfmeGet_00219890@BfmeChainResult@@QAEPAXXZ,0x0002818C,Open-BFME5 ILT the lookup at 0x00219890 tail-jumps through
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
@@ -74289,6 +74293,7 @@ name,address,notes
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNote1029@@YAXHD@Z,0x0001136A,pin
 ?bfmeNote1049@@YGXHH@Z,0x00047807,pin
+?bfmeNoteVJI@BfmeSubVJI@@QAEXPBD@Z,0x00808BF0,pin
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNotify1280@BfmeA1280@@QAEXH@Z,0x00019574,pin
 ?bfmeNotify1281@BfmeA1281@@QAEXH@Z,0x0003E85B,pin
@@ -74610,6 +74615,7 @@ name,address,notes
 ?bfmeSendVIR@BfmeThingVIR@@QAEXPAVBfmeMsgVIR@@PBUBfmeOwnerVIR@@PBQBDHHH@Z,0x007F2A50,pin
 ?bfmeSendVIS@BfmeThingVIS@@QAEXPAVBfmeMsgVIR@@PBUBfmeOwnerVIR@@PBQBDHHH@Z,0x007F2A50,pin
 ?bfmeSendVJH@BfmeThingVJH@@QAEXPAVBfmeMsgVJH@@@Z,0x008038F0,pin
+?bfmeSendVJI@BfmeThingVJI@@QAEXPAVBfmeMsgVJI@@@Z,0x008038F0,pin
 ?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
@@ -74635,6 +74641,7 @@ name,address,notes
 ?bfmeSet3VJC@BfmeMsgVJC@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJF@BfmeMsgVJF@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet3VJH@BfmeMsgVJH@@QAEXPBDH@Z,0x007E88D0,pin
+?bfmeSet3VJI@BfmeMsgVJI@@QAEXPBDH@Z,0x007E88D0,pin
 ?bfmeSet4VIW@BfmeMsgVIW@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet4VIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
@@ -74692,6 +74699,7 @@ name,address,notes
 ?bfmeSetVJC@BfmeMsgVJC@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJF@BfmeMsgVJF@@QAEXPBDPAX@Z,0x007E8A10,pin
 ?bfmeSetVJH@BfmeMsgVJH@@QAEXPBD0@Z,0x007E8A10,pin
+?bfmeSetVJI@BfmeMsgVJI@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
