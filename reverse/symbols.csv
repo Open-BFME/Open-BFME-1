@@ -4047,6 +4047,8 @@ name,address,notes
 ??1AABTreeLinkClass@@UAE@XZ,0x0001E394,pinharvest x1 (thunk)
 ??1AIUpdateModuleData@@UAE@XZ,0x00887940
 ??1ASCB_RootBase@@UAE@XZ,0x0002B8C8,AnimationSoundClientBehavior dtor root base call; ILT thunk for body 0x00113E60
+??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
+??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActiveCategoryStackClass@@UAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1ActiveCategoryStackClass@@UAE@XZ,0x0003B8DB,pinharvest x1 (thunk)
 ??1ActiveCategoryStackClass@@UAE@XZ,0x0003CC2C,pinharvest x1 (thunk)
@@ -4202,6 +4204,7 @@ name,address,notes
 ??1CivilianSpawnUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1CivilianSpawnUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921380,0x00921430 deleting wrapper directly calls this body; exact constructor 0x00921390 and Clone 0x009213E0 form the contiguous ClassicEnvironmentMapper emission group
+??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,constructor 0x00921390 installs vtable 0x0113BF90 whose first slot is deleting wrapper 0x00921F50; that wrapper directly calls this scalar body
 ??1ClearanceTestingSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1ClearanceTestingSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x000309F4,Open-BFME5 pin
 ??1CommandSetUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 base dtor pin
@@ -4297,6 +4300,7 @@ name,address,notes
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x0003BE8A,pinharvest x1 (thunk)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x000459F8,pinharvest x1 (thunk)
 ??1EnumeratedIP@@QAE@XZ,0x00028FB0,ILT called by IPEnumeration destructor at 0x00625040
+??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose first slot is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
 ??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
 ??1EvaSideSoundsVec@@QAE@XZ,0x0003763C,ILT thunk to the retail Eva side-sound container destructor at 0x00424890; unidentified beyond its shape
 ??1FXBoneInfo@@QAE@XZ,0x00007928,resweep callee back-solved
@@ -6338,13 +6342,10 @@ name,address,notes
 ??1Gen_dtor_0091f2d0@@UAE@XZ,0x0091E040,gen-dtor class destructor
 ??1Gen_dtor_0091f360@@UAE@XZ,0x0091E060,gen-dtor class destructor
 ??1Gen_dtor_00921430@@UAE@XZ,0x00921380,gen-dtor class destructor
-??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,constructor 0x00921390 installs vtable 0x0113BF90 whose first slot is deleting wrapper 0x00921F50; that wrapper directly calls this scalar body
 ??1Gen_dtor_00921f50@@UAE@XZ,0x00921F70,gen-dtor class destructor
 ??1Gen_dtor_00921f80@@UAE@XZ,0x00921FA0,gen-dtor class destructor
-??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose first slot is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
 ??1Gen_dtor_00921fb0@@UAE@XZ,0x009214D0,gen-dtor class destructor
 ??1Gen_dtor_00921fd0@@UAE@XZ,0x00921FF0,gen-dtor class destructor
-??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose first slot is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00922040@@UAE@XZ,0x00922060,gen-dtor class destructor
 ??1WSEnvironmentMapperClass@@UAE@XZ,0x00922060,constructor 0x00921570 installs vtable 0x0113C044 whose first slot is deleting wrapper 0x00922040; that wrapper directly calls this scalar body
 ??1Gen_dtor_00922120@@UAE@XZ,0x00922140,gen-dtor class destructor
@@ -9126,6 +9127,7 @@ name,address,notes
 ??1W3DRopeDraw@@MAE@XZ,0x0000CC70,W3DRopeDraw deleting-destructor call through retail ILT
 ??1W3DRopeDrawRootBase@@UAE@XZ,0x0002B8C8,W3DRopeDraw destructor drawable-root-base call through retail ILT
 ??1W3DShadowHelperManager@@QAE@XZ,0x007C19A0,Open-BFME5 shadow helper manager dtor (two refcounted members) from retail ~W3DShadowManager call site
+??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose first slot is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
 ??1WatchdogOwnedState@@QAE@XZ,0x009DB400,Watchdog owned-state destructor from retail stop body
 ??1WaterTracksObj@@QAE@XZ,0x0003DD2F,WaterTracksRenderSystem::shutdown deletes WaterTracksObj through this exact retail ILT; target 0x003DD2F forwards to the proven 0x007AB150 WaterTracksObj destructor body
 ??1WeaponChangeSpecialPowerModuleModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 base pin
@@ -9134,6 +9136,7 @@ name,address,notes
 ??1Win32LocalFileSystem@@UAE@XZ,0x009CDE20,what the deleting dtor at 0x009CDE30 calls; the body sets the base vtable 0x01143B78 rather than 0x01143B98 -- Win32LocalFileSystem adds no members so MSVC merged the derived destructor into the base one
 ??1WindowTransitionINI@@QAE@XZ,0x008512E0,TU-local BFME INI ABI declaration for GameWindowTransitionsHandler::load
 ??1WindowVideo@@QAE@XZ,0x000253E7
+??1WorkerStateMachine@@MAE@XZ,0x0003EC0C,constructor installs vtable 0x010CA1F0 whose first slot reaches deleting wrapper 0x002C8760; wrapper directly calls this protected scalar-destructor ILT thunk
 ??1WriteLockClass@BoxDynamicVBAccessClass@@QAE@XZ,0x0091F240,TU-local DynamicVB lock ABI for BoxRenderObjClass::render_box
 ??1WriteLockClass@DynamicIBAccessClass@@QAE@XZ,0x0091D4E0,DynamicIB lock ABI for BoxRenderObjClass::render_box
 ??1WriteLockClass@VertexBufferClass@@QAE@XZ,0x0091DE10,REL32 callee pin
@@ -73467,6 +73470,7 @@ name,address,notes
 ?bfmeFindTargetGate@@YAPAVBfmeTargetGateModule@@PBVObject@@@Z,0x00003A49,Object BFME attack query calls this protected ILT to locate the target gate module
 ?bfmeFindUDD@BfmeSubUDD@@QAEPAXH@Z,0x00026C47,pin
 ?bfmeFindUDE@BfmeMgrUDE@@QAEPAVBfmeRecUDE@@H@Z,0x0001F253,pin
+?bfmeFindUPB@@YAPAXPAX0@Z,0x007EBCA0,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
@@ -73511,6 +73515,7 @@ name,address,notes
 ?bfmeFlushSXA@@YAXXZ,0x0088A670,pin
 ?bfmeFlushSlots1289@BfmeSlotDispatcher1281@@QAEXXZ,0x008BCD80,address-derived slot-state flush reconstructed from the 0x008BCD80 retail body
 ?bfmeFormatAPB@@YAXPADHPAX@Z,0x00850600,pin
+?bfmeFormatUPB@@YAXPAXPAD0PBD@Z,0x007EEC30,pin
 ?bfmeForward@Gen_0002644FTarget@@QAEXXZ,0x0002644F,Open-BFME5 ILT the three negative-displacement forwarders at 0x001FB570 0x001FBF60 and 0x00204450 all jump to
 ?bfmeForward@Gen_0005C450Target@@QAEXXZ,0x00018205,Open-BFME5 the member the singleton forwarder at 0x0005C450 tail-jumps to
 ?bfmeForward@Gen_000C9770Target@@QAEXPAX@Z,0x000107D5,Open-BFME5 the callee the guarded delegate at 0x000C9770 tail-jumps to
@@ -73879,6 +73884,7 @@ name,address,notes
 ?bfmeGrow@Gen_0065DD10@@AAEXPAX@Z,0x0001B018,Open-BFME5 the grow routine the bounded append at 0x0065DD10 calls
 ?bfmeGrow@Gen_006AB0B0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AB0B0 calls
 ?bfmeGrow@Gen_006AC5D0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AC5D0 calls
+?bfmeGrowUPC@@YAXPAUBfmeStateUPC@@H@Z,0x009959C0,pin
 ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00001A50,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000240A@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000240A,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00004B79@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00004B79,Open-BFME5 ILT the __cdecl hand-over helper a version block calls
@@ -74181,6 +74187,7 @@ name,address,notes
 ?bfmeName1233@BfmeE1233@@QAEXPAUBfmeStr1233@@@Z,0x008985C0,pin
 ?bfmeNewAlloc@@YAPAXI@Z,0x00881F30,Open-BFME5 the large-block allocator the allocate-and-copy bodies at 0x000A7820 and its siblings call above 0x80 bytes
 ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z,0x00018679,Open-BFME5 ILT Player::newMap calls for the subobject at Player+0x30; it jumps to 0x000C7A30
+?bfmeNewTableUPC@@YAPAXPAUBfmeStateUPC@@HH@Z,0x00999610,pin
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
@@ -74576,6 +74583,7 @@ name,address,notes
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
+?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76365,6 +76373,7 @@ name,address,notes
 ?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
+?g_bfmeEmptyUPA@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
@@ -76443,6 +76452,7 @@ name,address,notes
 ?g_bfmeFmtP1071@@3PADA,0x00D09708,pin
 ?g_bfmeFmtQ1071@@3PADA,0x00D096FC,pin
 ?g_bfmeFmtR1071@@3PADA,0x00D09E28,pin
+?g_bfmeFmtUPB@@3PADA,0x00C7301C,pin
 ?g_bfmeFree1040@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
@@ -81633,6 +81643,12 @@ _piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname u
 _piPlayerJoinedRoom,0x008638D0,GameSpy Peer joined-player insertion
 _piProcessIncoming,0x00873170,GameSpy pingerThink processes pending socket input before timeout checks
 _piProcessPing,0x00862690,vendored=gamespy-2004; authentic peerPing.c static helper called by piPingerReplyMapFn
+_piQRAddErrorCallback,0x008666A0,upstream peerQR.c callback passed by piStartAutoMatchReporting
+_piQRCountCallback,0x00866650,upstream peerQR.c callback passed by piStartAutoMatchReporting
+_piQRKeyListCallback,0x00866590,upstream peerQR.c callback passed by piStartAutoMatchReporting
+_piQRPlayerKeyCallback,0x008664B0,upstream peerQR.c callback passed by piStartAutoMatchReporting
+_piQRServerKeyCallback,0x00866380,upstream peerQR.c callback passed by piStartAutoMatchReporting
+_piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAutoMatchReporting
 _piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
 _piRemoveExistingKeysMap,0x00865970,GameSpy PEER SDK peerKeys.c retained-key filter
 _piRoomKeyChanged,0x00865C30,GameSpy Peer room-key cache update
@@ -81647,6 +81663,7 @@ _piSBGroupsListCallback,0x00864700,upstream peerSB.c second SBServerListInit cal
 _piSBQueryVersion,0x00EC88E4,upstream peerSB.c global loaded twice by piSBInit before SBQueryEngineInit
 _piSBStartListingGames,0x00864FE0
 _piSBStartListingGroups,0x00865280,GameSpy Peer server browser group listing starter
+_piSBStopListingAutoMatches,0x00864BF0,upstream peerAutoMatch.c status switch calls at 0x008641BF 0x00864203 and 0x00864247
 _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
 _piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
 _piSendChannelUTM,0x00857EB0,gamespy-peer: called by piXpingPlayer at 0x00862B80 with the PNG command literal
@@ -81659,13 +81676,12 @@ _piSetPlayerIPAndProfileID,0x00863480,gamespy-peer: called by piKeyChanged at 0x
 _piSetPlayerRoomFlags,0x008635E0,gamespy-peer: called by piKeyChanged at 0x008659C0 on the b_flags key
 _piShutdownCleanup,0x00857340,gamespy-peer: exact peerInitialize failure path carries connection in ESI to cleanup helper
 _piSocketInit,0x00872AE0,GameSpy pingerInit static socket-setup callee; authentic pingerMain control flow and sole call site
+_piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
 _piStartHosting,0x00865410,GameSpy Peer query-reporting host startup
 _piStartReporting,0x00866820
 _piStartedEnteringRoom,0x00863B40,GameSpy Peer room-entry state transition
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piStopAutoMatchReporting,0x008667F0,upstream peerSB.c updated-server helper call at 0x00864931
-_piSBStopListingAutoMatches,0x00864BF0,upstream peerAutoMatch.c status switch calls at 0x008641BF 0x00864203 and 0x00864247
-_piStartAutoMatchReporting,0x00866900,upstream peerAutoMatch.c status switch calls at 0x0086418A 0x008641E0 and 0x0086423B
 _piStopHosting,0x00865450,gamespy-peer: called by piLeaveRoom at 0x00863EE0 when the staging room is left
 _piStopReporting,0x00866770,gamespy-peer: called by piLeaveRoom at 0x00863EE0 and piStopHosting at 0x00865450; NOTE 0x00866770 currently also carries an address-derived C++ name from Common/R3GuardedReleaseAndClear.cpp
 _piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
@@ -81729,12 +81745,6 @@ _strstr,0x009F709C,Y2 lane: strstr import thunk (gen-import ?ji_009f709c@@YAXXZ 
 _strtol,0x009F71CC,AptValue::toInteger at 0x00898300 calls the retail strtol import thunk for hexadecimal string coercion
 _strtoul,0x009F6DE8,Y2 lane: strtoul import thunk (gen-import ?ji_009f6de8@@YAXXZ names the same address)
 _strzcpy,0x008EC880,vendored=gamespy-2004
-_piQRServerKeyCallback,0x00866380,upstream peerQR.c callback passed by piStartAutoMatchReporting
-_piQRPlayerKeyCallback,0x008664B0,upstream peerQR.c callback passed by piStartAutoMatchReporting
-_piQRTeamKeyCallback,0x00866560,upstream peerQR.c callback passed by piStartAutoMatchReporting
-_piQRKeyListCallback,0x00866590,upstream peerQR.c callback passed by piStartAutoMatchReporting
-_piQRCountCallback,0x00866650,upstream peerQR.c callback passed by piStartAutoMatchReporting
-_piQRAddErrorCallback,0x008666A0,upstream peerQR.c callback passed by piStartAutoMatchReporting
 _piQRNatNegotiateCallback,0x00866710,upstream peerQR.c callback registered by piStartReporting
 _piQRPublicAddressCallback,0x00866740,upstream peerQR.c callback registered by piStartReporting
 _subexpr,0x0099CA60,vendored=lua-4.0.1
@@ -81889,7 +81899,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
-??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
-??1WorkerStateMachine@@MAE@XZ,0x0003EC0C,constructor installs vtable 0x010CA1F0 whose first slot reaches deleting wrapper 0x002C8760; wrapper directly calls this protected scalar-destructor ILT thunk
 ??1WorkerAIUpdate@@MAE@XZ,0x0003EFBD,constructor installs vtable 0x010C9F58 whose first slot reaches deleting wrapper 0x002C8340; wrapper directly calls this protected scalar-destructor ILT thunk
