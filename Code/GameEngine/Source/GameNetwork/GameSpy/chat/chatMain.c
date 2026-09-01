@@ -56,6 +56,7 @@ typedef struct ciConnection
 
 void ciSocketSend(void *chatSocket, const char *buffer);
 void ciSocketSendf(void *chatSocket, const char *format, ...);
+void ciAddBANFilter(CHAT chat, const char *user, const char *channel);
 CHATBool ciCheckFiltersForID(CHAT chat, int ID);
 CHATBool ciCheckCallbacksForID(CHAT chat, int ID);
 void ciAddCallback_(CHAT chat, int type, void *callback, void *params,
@@ -403,4 +404,15 @@ void chatRetryWithNickA(CHAT chat, const char *nick)
 	}
 
 	ciSocketSendf(&connection->chatSocket, "NICK :%s", nick);
+}
+
+void chatBanUserA(CHAT chat, const char *channel, const char *user)
+{
+	ciConnection *connection = (ciConnection *)chat;
+
+	if(!connection || !connection->connected)
+		return;
+
+	ciSocketSendf(&connection->chatSocket, "WHOIS %s", user);
+	ciAddBANFilter(chat, user, channel);
 }

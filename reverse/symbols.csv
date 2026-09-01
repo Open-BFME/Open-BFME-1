@@ -81181,6 +81181,7 @@ _chatSetGlobalKeysA,0x00861730,GameSpy Chat global-key setter
 _check,0x0099AA50,vendored=lua-4.0.1
 _check_match,0x0099AB20,vendored=lua-4.0.1
 _chunk,0x0099D2D0,vendored=lua-4.0.1
+_ciAddBANFilter,0x0086C710,gamespy-chat: ban filter registered by chatBanUserA immediately after its WHOIS send
 _ciAddCDKEYFilter,0x0086CB80,GameSpy Chat CD-key response filter constructor
 _ciAddCallback_,0x00870350,gamespy-chat: 8-arg deferred-callback enqueue; 0x00861DA0 calls it with type 25 (CALLBACK_NICK_ERROR) and sizeof-params 16
 _ciAddGETCHANKEYFilter,0x0086CA10,gamespy-chat: 7-arg filter registered by chatGetChannelKeys at 0x00861C60 on the whole-room branch
