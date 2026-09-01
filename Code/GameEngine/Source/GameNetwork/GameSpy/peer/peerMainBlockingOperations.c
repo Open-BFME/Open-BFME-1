@@ -44,7 +44,9 @@ typedef struct piConnection
 	void *gameListCallback;
 	void *gameListParam;
 	int initialGameList;
-	char reservedGameList[0x1824 - 0x1790];
+	char reservedGameList[0x17A4 - 0x1790];
+	void *disconnectedCallback;
+	char reservedCallbacks[0x1824 - 0x17A8];
 	int callbackDepth;
 	int away;
 	char awayReason[128];
@@ -152,6 +154,10 @@ void piRoomsCleanup(PEER peer);
 void piPlayersCleanup(PEER peer);
 void piPingCleanup(PEER peer);
 void piStopAutoMatch(PEER peer);
+void piOperationsCleanup(PEER peer);
+void piCallbacksCleanup(PEER peer);
+void SocketShutDown(void);
+void piKeysCleanup(PEER peer);
 int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 	const char *password, int maxPlayers, unsigned int socket,
 	unsigned short port, void *callback, void *param, int opID);
@@ -207,6 +213,41 @@ void peerClearTitle(PEER peer)
 	piStopAutoMatch(peer);
 	connection->title[0] = '\0';
 	connection->qrSecretKey[0] = '\0';
+}
+
+void peerShutdown(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	if (connection->connected || connection->connecting)
+	{
+		void *callback = connection->disconnectedCallback;
+		connection->disconnectedCallback = 0;
+		if (connection->callbackDepth > 0)
+			connection->disconnect = 1;
+		else
+		{
+			connection->stayInTitleRoom = 0;
+			bfmePiDisconnectCleanupFromEsi();
+			bfmePiThinkFromEsi(-1);
+		}
+		connection->disconnectedCallback = callback;
+	}
+
+	if (connection->title[0])
+		peerClearTitle(peer);
+
+	if (connection->callbackDepth > 0)
+	{
+		connection->shutdown = 1;
+		return;
+	}
+
+	piOperationsCleanup(peer);
+	piCallbacksCleanup(peer);
+	SocketShutDown();
+	piKeysCleanup(peer);
+	free(connection);
 }
 
 int piConnectTitle(PEER peer)
