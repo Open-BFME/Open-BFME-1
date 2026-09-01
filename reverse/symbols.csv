@@ -81949,3 +81949,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?usePluralShadowName@BfmeThingTemplateShadowSelector@@QBE_NXZ,0x0087E8D0,ThingTemplate validateAudio body calls this retail predicate on its +0x60 shadow-selection subobject
+?set@BfmeThingTemplateString@@QAEXPBDH@Z,0x00887D20,ThingTemplate validateAudio TU shim for StringBase<char>::set(const char*,int)
