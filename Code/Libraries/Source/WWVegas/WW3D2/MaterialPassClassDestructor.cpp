@@ -55,3 +55,8 @@ MaterialPassClass::~MaterialPassClass()
 		Material = 0;
 	}
 }
+
+void Force_MaterialPass_Deleting_Destructor(MaterialPassClass *material_pass)
+{
+	delete material_pass;
+}
