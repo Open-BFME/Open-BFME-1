@@ -81749,6 +81749,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
 _piGetWatchKeyA,0x00865710,GameSpy PEER SDK peerKeys.c internal watch-cache lookup
 _piGetGlobalWatchKeyA,0x00865760,GameSpy PEER SDK peerKeys.c global watch-cache lookup
+_piGetRoomWatchKeyA,0x008657C0,GameSpy PEER SDK peerKeys.c room watch-cache lookup
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
 ??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
 ??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target

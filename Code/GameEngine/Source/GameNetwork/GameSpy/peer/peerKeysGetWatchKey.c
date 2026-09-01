@@ -3,11 +3,13 @@
 
 typedef void *PEER;
 typedef void *HashTable;
+typedef int RoomType;
 
 typedef struct piConnection
 {
 	unsigned char pad0[0x18C4];
 	HashTable globalWatchCache;
+	HashTable roomWatchCache[3];
 } piConnection;
 
 typedef struct piCacheKey
@@ -39,4 +41,11 @@ const char *piGetGlobalWatchKeyA(PEER peer, const char *nick, const char *key)
 {
 	piConnection *connection = (piConnection *)peer;
 	return piGetWatchKeyA(nick, key, connection->globalWatchCache);
+}
+
+const char *piGetRoomWatchKeyA(PEER peer, RoomType roomType, const char *nick,
+	const char *key)
+{
+	piConnection *connection = (piConnection *)peer;
+	return piGetWatchKeyA(nick, key, connection->roomWatchCache[roomType]);
 }
