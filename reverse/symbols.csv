@@ -73122,6 +73122,7 @@ name,address,notes
 ?bfmeConv1181@BfmeP1181@@QAEXPAXPAUBfmePair1181@@@Z,0x000171E8,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
+?bfmeConvertUVB@@YAHPADPAPAX@Z,0x00807AB0,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
 ?bfmeCopy1279@BfmeQ1279@@QAEXPAD0H@Z,0x007E8A80,pin
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
@@ -73144,6 +73145,8 @@ name,address,notes
 ?bfmeCopySlotE@@YAXPAUBfmeSlotE@@PAX@Z,0x0001870F,Open-BFME5 the copy the bounded appends call
 ?bfmeCopyTwoCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0003B5C5,pin
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
+?bfmeCopyUVA@@YAXPADIPBD@Z,0x007E8640,pin
+?bfmeCopyUVB@@YAXPADIPBD@Z,0x007E8640,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
@@ -73869,6 +73872,7 @@ name,address,notes
 ?bfmeGetLog1037@@YAPAVBfmeLog1037@@XZ,0x007EB810,pin
 ?bfmeGetLog1038@@YAPAVBfmeLog1038@@XZ,0x007EB810,pin
 ?bfmeGetLogUUA@@YAPAVBfmeLogUUA@@XZ,0x007EB810,pin
+?bfmeGetLogUVB@@YAPAVBfmeLogUVB@@XZ,0x007EB810,pin
 ?bfmeGetLookup1282@BfmeEntrySource1282@@QAEPAVBfmeTab1034@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BAAB0 retail body
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
@@ -76400,12 +76404,14 @@ name,address,notes
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUPA@@3PADA,0x00F36E50,pin
+?g_bfmeEmptyUVA@@3PADA,0x00C7301C,pin
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeF1071@@3DA,0x00EB7D84,pin
 ?g_bfmeF1085@@3DA,0x00EB7D84,pin
 ?g_bfmeFileUUA@@3PADA,0x00D2C6A8,pin
+?g_bfmeFileUVB@@3PADA,0x00D2C24C,pin
 ?g_bfmeFind975D@@3PAVBfmeFind975D@@A,0x00EEF1D8,pin
 ?g_bfmeFindA980@@3PAVBfmeFindA980@@A,0x00EEF1D8,pin
 ?g_bfmeFindAMB@@3PAVBfmeFindAMB@@A,0x00EF0898,pin
@@ -76659,6 +76665,7 @@ name,address,notes
 ?g_bfmeMsgAUUA@@3PADA,0x00D2C690,pin
 ?g_bfmeMsgBUUA@@3PADA,0x00D2C67C,pin
 ?g_bfmeMsgCUUA@@3PADA,0x00D2C660,pin
+?g_bfmeMsgUVB@@3PADA,0x00D1C2A0,pin
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
