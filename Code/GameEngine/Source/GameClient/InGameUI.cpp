@@ -594,6 +594,19 @@ SuperweaponInfo* InGameUI::findSWInfo(Int playerIndex, const AsciiString& powerN
 	return NULL;
 }
 
+struct BfmeSuperweaponListNode
+{
+	BfmeSuperweaponListNode *next;
+	BfmeSuperweaponListNode *prev;
+	SuperweaponInfo *info;
+};
+
+class BfmeDeletableSuperweaponInfo
+{
+public:
+	virtual ~BfmeDeletableSuperweaponInfo();
+};
+
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_addSuperweapon_Thunk.cpp
@@ -634,24 +647,30 @@ void InGameUI::addSuperweapon(Int playerIndex, const AsciiString& powerName, Obj
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?removeSuperweapon@InGameUI@@UAE_NHABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z present-unmatched
 Bool InGameUI::removeSuperweapon(Int playerIndex, const AsciiString& powerName, ObjectID id, const SpecialPowerTemplate *powerTemplate)
 {
 	DEBUG_LOG(("Removing superweapon UI timer\n"));
-	SuperweaponMap::iterator mapIt = m_superweapons[playerIndex].find(powerName);
-	if (mapIt != m_superweapons[playerIndex].end())
+	SuperweaponMap *superweapons = (SuperweaponMap *)((char *)this + 0x5cc);
+	SuperweaponMap::iterator mapIt = superweapons[playerIndex].find(powerName);
+	if (mapIt != superweapons[playerIndex].end())
 	{
 		SuperweaponList& swList = mapIt->second;
 		for (SuperweaponList::iterator listIt = swList.begin(); listIt != swList.end(); ++listIt)
 		{
 			if ((*listIt)->m_id == id)
 			{
-				SuperweaponInfo *info = *listIt;
-				swList.erase(listIt);
-				info->deleteInstance();
+				BfmeSuperweaponListNode *dead = *(BfmeSuperweaponListNode **)&listIt;
+				BfmeSuperweaponListNode *next = dead->next;
+				BfmeSuperweaponListNode *prev = dead->prev;
+				SuperweaponInfo *info = dead->info;
+				prev->next = next;
+				next->prev = prev;
+				_STL::allocator<BfmeSuperweaponListNode>().deallocate(dead, 1);
+				delete (BfmeDeletableSuperweaponInfo *)info;
+
 				if (swList.size() == 0)
 				{
-					m_superweapons[playerIndex].erase(mapIt);
+					superweapons[playerIndex].erase(mapIt);
 				}
 				return TRUE;
 			}

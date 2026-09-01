@@ -81576,3 +81576,4 @@ _piAddPlayer,0x008637E0,GameSpy Peer static player insertion helper
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
 ?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
+??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
