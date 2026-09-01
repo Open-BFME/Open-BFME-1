@@ -7,7 +7,10 @@ typedef int RoomType;
 
 typedef struct piConnection
 {
-	unsigned char pad0[0x18AC];
+	unsigned char pad0[0x384];
+	int enteringRoom[3];
+	int inRoom[3];
+	unsigned char pad1[0x1510];
 	HashTable globalWatchKeys[3];
 	HashTable roomWatchKeys[3];
 	HashTable globalWatchCache;
@@ -40,6 +43,9 @@ typedef struct piCacheKey
 
 void *TableLookup(HashTable table, const void *element);
 void TableRemove(HashTable table, const void *element);
+void TableMapSafe(HashTable table, void (*mapFunction)(void *, void *),
+	void *clientData);
+void TableClear(HashTable table);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
@@ -71,6 +77,28 @@ const char *piGetRoomWatchKeyA(PEER peer, RoomType roomType, const char *nick,
 	return piGetWatchKeyA(nick, key, connection->roomWatchCache[roomType]);
 }
 
+void piCleanseGlobalCacheMap(void *elem, void *clientData)
+{
+	piPlayer *player;
+	int roomType;
+	piCacheKey *cacheKey = (piCacheKey *)elem;
+	PEER peer = (PEER)clientData;
+	piConnection *connection = (piConnection *)peer;
+	piWatchKey watchKeyTemp;
+
+	watchKeyTemp.key = cacheKey->key;
+	player = piGetPlayer(peer, cacheKey->nick);
+	if (player) {
+		for (roomType = 0; roomType < 3; roomType++) {
+			if (player->inRoom[roomType]) {
+				if (TableLookup(connection->globalWatchKeys[roomType], &watchKeyTemp))
+					return;
+			}
+		}
+	}
+	TableRemove(connection->globalWatchCache, cacheKey);
+}
+
 void piCleanseRoomCacheMap(void *elem, void *clientData)
 {
 	piPlayer *player;
@@ -86,4 +114,23 @@ void piCleanseRoomCacheMap(void *elem, void *clientData)
 			return;
 	}
 	TableRemove(connection->globalWatchCache, cacheKey);
+}
+
+void piKeyCacheCleanse(PEER peer)
+{
+	int roomType;
+	piCleanseRoomCacheMapData data;
+	piConnection *connection = (piConnection *)peer;
+
+	TableMapSafe(connection->globalWatchCache, piCleanseGlobalCacheMap, peer);
+	data.peer = peer;
+	for (roomType = 0; roomType < 3; roomType++) {
+		if (connection->inRoom[roomType] || connection->enteringRoom[roomType]) {
+			data.roomType = roomType;
+			TableMapSafe(connection->roomWatchCache[roomType], piCleanseRoomCacheMap,
+				&data);
+		} else {
+			TableClear(connection->roomWatchCache[roomType]);
+		}
+	}
 }
