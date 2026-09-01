@@ -4199,6 +4199,7 @@ name,address,notes
 ??1Buffer@@QAE@XZ,0x00887940,pinharvest x1 (body)
 ??1Buffer@@QAE@XZ,0x009E1E60
 ??1BufferStraw@@UAE@XZ,0x00921790
+??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose first slot is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
 ??1CDManagerInterface@@UAE@XZ,0x00101BA0,CDManagerInterface dtor body (called by ??_G @ 0x101BB0)
 ??1CameraShakerClass@CameraShakeSystemClass@@UAE@XZ,0x0001E394,pinharvest x1 (thunk)
 ??1CivilianSpawnUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
@@ -4263,6 +4264,7 @@ name,address,notes
 ??1DozerAudioEventRTS@@UAE@XZ,0x00026F35,DozerAIUpdate building-sound member destructor
 ??1DozerDockPointInfo@DozerAIUpdate@@QAE@XZ,0x0002EA0F,DozerAIUpdate dock-point array destructor thunk
 ??1DynamicIBAccessClass@@QAE@XZ,0x0091D350,DynamicIB ABI for BoxRenderObjClass::render_box
+??1EdgeMapperClass@@UAE@XZ,0x00967800,constructor 0x00965710 installs vtable 0x0113E4FC whose first slot is deleting wrapper 0x009677E0; that wrapper directly calls this scalar body
 ??1ElvenWoodSpecialPowerModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 pin
 ??1ElvenWoodSpecialPowerModuleDataMemberA@@QAE@XZ,0x00013C00,Open-BFME5 pin
 ??1ElvenWoodSpecialPowerModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -6403,19 +6405,14 @@ name,address,notes
 ??1Gen_dtor_00967060@@UAE@XZ,0x00967080,gen-dtor class destructor
 ??1Gen_dtor_00967090@@UAE@XZ,0x009670B0,gen-dtor class destructor
 ??1Gen_dtor_009670c0@@UAE@XZ,0x009670E0,gen-dtor class destructor
-??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose first slot is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
 ??1Gen_dtor_009670f0@@UAE@XZ,0x00967110,gen-dtor class destructor
-??1ZigZagLinearOffsetTextureMapperClass@@UAE@XZ,0x00967110,constructor 0x00965350 installs vtable 0x0113E4C0 whose first slot is deleting wrapper 0x009670F0; that wrapper directly calls this scalar body
 ??1Gen_dtor_009677e0@@UAE@XZ,0x00967800,gen-dtor class destructor
-??1EdgeMapperClass@@UAE@XZ,0x00967800,constructor 0x00965710 installs vtable 0x0113E4FC whose first slot is deleting wrapper 0x009677E0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00969310@@UAE@XZ,0x00969330,gen-dtor class destructor
-??1RandomTextureMapperClass@@UAE@XZ,0x00969330,constructor 0x00965C00 installs vtable 0x0113E53C whose first slot is deleting wrapper 0x00969310; that wrapper directly calls this scalar body
 ??1Gen_dtor_009696f0@@UAE@XZ,0x009644B0,gen-dtor class destructor
 ??1GridWSEnvMapperClass@@UAE@XZ,0x009644B0,constructor 0x00969680 installs vtable 0x0113E60C whose first slot is deleting wrapper 0x009696F0; that wrapper directly calls this scalar body
 ??1Gen_dtor_00969c70@@UAE@XZ,0x00969C90,gen-dtor class destructor
 ??1Gen_dtor_0096a0d0@@UAE@XZ,0x0096A0F0,gen-dtor class destructor
 ??1Gen_dtor_0096a550@@UAE@XZ,0x0096A570,gen-dtor class destructor
-??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose first slot is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
 ??1Gen_dtor_0096aca0@@UAE@XZ,0x0096A920,gen-dtor class destructor
 ??1Gen_dtor_0096de90@@UAE@XZ,0x0096D120,gen-dtor class destructor
 ??1Gen_dtor_0096ea40@@UAE@XZ,0x0096E900,gen-dtor class destructor
@@ -8790,6 +8787,7 @@ name,address,notes
 ??1RAMFile@@MAE@XZ,0x0003692B,pinharvest x1 (thunk)
 ??1RAMFile@@MAE@XZ,0x009D19A0,pinharvest x1 (body)
 ??1RadiusDecal@@QAE@XZ,0x00458340,RadiusDecal destructor body at 0x00458340; callee of assigned RadiusDecalUpdate destructor
+??1RandomTextureMapperClass@@UAE@XZ,0x00969330,constructor 0x00965C00 installs vtable 0x0113E53C whose first slot is deleting wrapper 0x00969310; that wrapper directly calls this scalar body
 ??1RegistryClass@@QAE@XZ,0x009DC280,pinharvest x4 (body)
 ??1Render2DSentenceClass@@QAE@XZ,0x00887940,per-TU copy called by W3DGameWindow dtor
 ??1Render2DSentenceClass@@QAE@XZ,0x009409F0,W3DDisplayString dtor call target
@@ -9038,6 +9036,7 @@ name,address,notes
 ??1StealthDetectorUpdateModuleDataBase@@UAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose first slot is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
 ??1Straw@@UAE@XZ,0x009E1A90
 ??1StringClass@@QAE@XZ,0x009DB7A0,RenderDeviceDescClass string-member destructor calls; ICF with StringClass::Free_String
 ??1StringInfo@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
@@ -9160,6 +9159,7 @@ name,address,notes
 ??1Z1Elem0013BF00@@QAE@XZ,0x0013AD00,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
 ??1Z1Elem0056D960@@QAE@XZ,0x0010DAE0,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
 ??1Z1Elem0076AE50@@QAE@XZ,0x00762EC0,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
+??1ZigZagLinearOffsetTextureMapperClass@@UAE@XZ,0x00967110,constructor 0x00965350 installs vtable 0x0113E4C0 whose first slot is deleting wrapper 0x009670F0; that wrapper directly calls this scalar body
 ??1_bfme_AptGameWindow@@UAE@XZ,0x000204C3,DisconnectScreen destructor chains through the established APT base destructor ILT
 ??1_bfme_AptGameWindow@@UAE@XZ,0x00465430,dtor twin of 0x00465310: restores vtables 0x010F711C/0x010F7118 releases the AsciiString at +0x24c calls 0x00464E20 then ??1GameWindow ILT 0x0002C98F; deleting dtor 0x00465500; ILT 0x000204C3
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
@@ -74249,6 +74249,7 @@ name,address,notes
 ?bfmeNextR1110@BfmeR1110@@QAEPAV1@XZ,0x00022A70,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
+?bfmeNormUSC@@YAHPAX@Z,0x009B4680,pin
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNote1029@@YAXHD@Z,0x0001136A,pin
 ?bfmeNote1049@@YGXHH@Z,0x00047807,pin
