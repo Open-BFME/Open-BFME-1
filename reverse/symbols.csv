@@ -81780,6 +81780,7 @@ _piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname u
 ??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1MaterialInfoClass@@UAE@XZ,0x00930F60,0x009312B0 deleting wrapper calls target; matched 0x00930E00 copy constructor and three owned material vectors prove class layout
 ??1?$DynamicVectorClass@VProxyClass@@@@UAE@XZ,0x00936E40,0x00937040 wrapper call; 0x74-byte ProxyClass element teardown and adjacent Render2DClass ctor batches member prove derived vector identity
+??1?$DynamicVectorClass@UTextureStatisticsStruct@@@@UAE@XZ,0x009380E0,0x00938130 wrapper call; typed 0x00937FB0 derived ctor and static statistics vector prove identity; distinct base wrapper at 0x00938080
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
