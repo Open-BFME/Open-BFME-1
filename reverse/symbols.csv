@@ -73057,6 +73057,7 @@ name,address,notes
 ?bfmeClearELAa@BfmeThingELAb@@QAEXXZ,0x0004278A,pin
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
+?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -74605,6 +74606,7 @@ name,address,notes
 ?bfmeSetSLA@BfmeSetterSLA@@QAEXPAXH@Z,0x000307E7,pin
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
+?bfmeSetStrUXC@BfmeThingUXC@@QAEXPBD@Z,0x00887B60,pin
 ?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
 ?bfmeSetTEB@BfmeSubTEB@@QAEXH@Z,0x000122AB,pin
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
@@ -80895,6 +80897,7 @@ __imp_?bfmeFmtIn1074@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFree1035@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeFree912B@@YGXPAX@Z,0x00F58CCC,pin
 __imp_?bfmeFreeUEW@@YAXPAXI@Z,0x00F37830,pin
+__imp_?bfmeFreeUXB@@YAXPAX@Z,0x00F593A0,pin
 __imp_?bfmeFreeVCW@@YAXPAX@Z,0x00F3782C,pin
 __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
