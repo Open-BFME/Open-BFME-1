@@ -76409,6 +76409,7 @@ name,address,notes
 ?g_bfmeAlloc1041@@3PAUBfmeAlloc1041@@A,0x00F37A30,pin
 ?g_bfmeAlloc1045@@3PAUBfmeAlloc1045@@A,0x00F37A30,pin
 ?g_bfmeAlloc1233@@3PAUBfmeAlloc1233@@A,0x00F37A30,pin
+?g_bfmeAllocVKI@@3PA6APAXI@ZA,0x00F37A30,pin
 ?g_bfmeArg1051@@3PADA,0x00D090E8,pin
 ?g_bfmeArg1057@@3PADA,0x00D07374,pin
 ?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
@@ -76536,6 +76537,7 @@ name,address,notes
 ?g_bfmeEmptyUVA@@3PADA,0x00C7301C,pin
 ?g_bfmeEmptyUnicode@@3QBDB,0x0107388C,address-derived empty UnicodeString fallback from retail 0x009D9AA3
 ?g_bfmeEmptyVFD@@3PADA,0x00C7301C,pin
+?g_bfmeEmptyVKI@@3UBfmeHdrVKI@@A,0x00ED5298,pin
 ?g_bfmeEndC976@@3PAVBfmeEndC976@@A,0x00EF64BC,pin
 ?g_bfmeEndKA@@3PAPAVBfmeItemKA@@A,0x00EF1470,pin
 ?g_bfmeEventVHM@@3PAXA,0x00F3F540,pin
