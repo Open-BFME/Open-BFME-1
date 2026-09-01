@@ -38,6 +38,30 @@ typedef struct GETBANData
 	char **bans;
 } GETBANData;
 
+typedef struct NAMESData
+{
+	int len;
+	int numUsers;
+	char **users;
+	int *modes;
+} NAMESData;
+
+typedef struct chatChannelCallbacks
+{
+	void *channelMessage;
+	void *kicked;
+	void *userJoined;
+	void *userParted;
+	void *userChangedNick;
+	void *topicChanged;
+	void *channelModeChanged;
+	void *userModeChanged;
+	void *userListUpdated;
+	void *newUserList;
+	void *broadcastKeyChanged;
+	void *param;
+} chatChannelCallbacks;
+
 typedef struct ciServerMessageFilter
 {
 	int type;
@@ -66,6 +90,7 @@ void * __cdecl memset(void *dest, int value, unsigned int count);
 unsigned int current_time(void);
 char *goastrdup(const char *source);
 int ciGetNextID(CHAT chat);
+chatChannelCallbacks *ciGetChannelCallbacks(CHAT chat, const char *channel);
 
 static __declspec(noinline) int ciAddFilter(CHAT chat, int type, const char *name,
 	const char *name2, void *callback, void *callback2, void *param, void *data)
@@ -162,6 +187,24 @@ int ciAddNICKFilter(CHAT chat, const char *oldNick, const char *newNick,
 	chatChangeNickCallback callback, void *param)
 {
 	return ciAddFilter(chat, 9, oldNick, newNick, (void *)callback, 0, param, 0);
+}
+
+int ciAddUNQUIETFilter(CHAT chat, const char *channel)
+{
+	chatChannelCallbacks *callbacks;
+	NAMESData *data;
+
+	callbacks = ciGetChannelCallbacks(chat, channel);
+	if (callbacks == 0 || callbacks->newUserList == 0)
+		return 0;
+
+	data = (NAMESData *)malloc(sizeof(NAMESData));
+	if (data == 0)
+		return 0;
+
+	memset(data, 0, sizeof(NAMESData));
+	return ciAddFilter(chat, 15, channel, 0, callbacks->newUserList,
+		0, callbacks->param, data);
 }
 
 int ciAddCDKEYFilter(CHAT chat, chatAuthenticateCDKeyCallback callback,
