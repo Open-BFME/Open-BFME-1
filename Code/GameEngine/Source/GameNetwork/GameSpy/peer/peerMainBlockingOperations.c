@@ -158,6 +158,13 @@ void piOperationsCleanup(PEER peer);
 void piCallbacksCleanup(PEER peer);
 void SocketShutDown(void);
 void piKeysCleanup(PEER peer);
+void chatThink(void *chat);
+unsigned int current_time(void);
+void piPingThink(PEER peer);
+void piSBThink(PEER peer);
+void piQRThink(PEER peer);
+void piDisconnect(PEER peer);
+void piCallbacksThink(PEER peer, int opID);
 int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 	const char *password, int maxPlayers, unsigned int socket,
 	unsigned short port, void *callback, void *param, int opID);
@@ -248,6 +255,46 @@ void peerShutdown(PEER peer)
 	SocketShutDown();
 	piKeysCleanup(peer);
 	free(connection);
+}
+
+static void piThink(PEER peer, int opID)
+{
+	piConnection *connection = (piConnection *)peer;
+	unsigned int now;
+
+	if (connection->connected || connection->connecting)
+	{
+		chatThink(connection->chat);
+		if (!connection->disconnect)
+		{
+			if (connection->title[0])
+				piPingThink(peer);
+			if (connection->connected)
+			{
+				now = current_time();
+				if ((now - connection->lastChatPing) > 300000)
+				{
+					chatSendRawA(connection->chat, "PING");
+					connection->lastChatPing = now;
+				}
+			}
+		}
+	}
+
+	piSBThink(peer);
+	piQRThink(peer);
+	if (connection->disconnect && connection->callbackDepth == 0)
+		piDisconnect(peer);
+	piCallbacksThink(peer, opID);
+}
+
+void peerThink(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	piThink(peer, -1);
+	if (connection->shutdown && connection->callbackDepth == 0)
+		peerShutdown(peer);
 }
 
 int piConnectTitle(PEER peer)

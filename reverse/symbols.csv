@@ -81780,3 +81780,8 @@ _piPlayerChangedNickMap,0x00865C80,GameSpy PEER SDK peerKeys.c cached-nickname u
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
 _piOperationsCleanup,0x0085EFA0,gamespy-peer: peerShutdown final cleanup sequence before piCallbacksCleanup proves identity
+_piThink,0x00857370,gamespy-peer: exact peerThink caller passes -1 while carrying peer in ESI
+_chatThink,0x00860470,gamespy-chat: authentic piThink first call on connection chat handle
+_piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
+_piQRThink,0x008667C0,gamespy-peer: authentic piThink query-reporting step after piSBThink
+_piDisconnect,0x00858410,gamespy-peer: authentic piThink conditional disconnect cleanup call
