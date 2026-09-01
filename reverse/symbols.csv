@@ -6384,6 +6384,7 @@ name,address,notes
 ??1Gen_dtor_0094f0c0@@UAE@XZ,0x0094EA80,gen-dtor class destructor
 ??1Gen_dtor_0094f0e0@@UAE@XZ,0x0094EAB0,gen-dtor class destructor
 ??1Gen_dtor_0094f2e0@@UAE@XZ,0x0094ED60,gen-dtor class destructor
+??1MeshModelClass@@UAE@XZ,0x0094ED60,0x0094F2E0 deleting wrapper directly calls this body; destructor installs the MeshModel vtables also used by the exact 0x0094EC20 copy constructor
 ??1Gen_dtor_009509b0@@UAE@XZ,0x0094F9C0,gen-dtor class destructor
 ??1Gen_dtor_00951080@@UAE@XZ,0x00950FC0,gen-dtor class destructor
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,gen-dtor class destructor
