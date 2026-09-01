@@ -23,6 +23,8 @@ class LivingWorldArmy
 public:
 	virtual ~LivingWorldArmy();
 	void replenish( LivingWorldPlayerArmy *playerArmy );
+	AsciiString getName() const { return *reinterpret_cast<const AsciiString *>( reinterpret_cast<const char *>( this ) + 4 ); }
+	Int getCount() const { return *reinterpret_cast<const Int *>( reinterpret_cast<const char *>( this ) + 0x34 ); }
 
 private:
 	char m_unmodelled04[ 0x2C ];
@@ -37,6 +39,7 @@ public:
 	LivingWorldPlayerArmy( const LivingWorldPlayerArmy &other );
 	~LivingWorldPlayerArmy();
 	void clearArmies();
+	Int currentCommandPoints() const;
 	virtual void crc( Xfer *xfer );
 	virtual void xfer( Xfer *xfer );
 	virtual void loadPostProcess();
@@ -65,10 +68,42 @@ public:
 	AsciiString m_replenishArmyName;
 };
 
+class ThingTemplate
+{
+public:
+	Int getCommandPointCost() const { return m_commandPointCost; }
+
+private:
+	char m_unmodelled[ 0x4B4 ];
+	Int m_commandPointCost;
+};
+
+class ThingFactory
+{
+public:
+	ThingTemplate *findTemplate( const AsciiString &name );
+};
+
+extern ThingFactory *TheThingFactory;
+
 void LivingWorldArmy::replenish( LivingWorldPlayerArmy *playerArmy )
 {
 	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
 		playerArmy->m_armies.push_back( m_armies[ i ] );
+}
+
+Int LivingWorldPlayerArmy::currentCommandPoints() const
+{
+	Int commandPoints = 0;
+	for( UnsignedInt i = 0; i < m_armies.size(); ++i )
+	{
+		const LivingWorldArmy &army = m_armies[ i ];
+		const ThingTemplate *thingTemplate = TheThingFactory->findTemplate( army.getName() );
+		if( thingTemplate )
+			commandPoints += thingTemplate->getCommandPointCost() * army.getCount();
+	}
+
+	return commandPoints;
 }
 
 LivingWorldPlayerArmy::LivingWorldPlayerArmy() :
