@@ -740,7 +740,6 @@ int AABTreeBuilderClass::Node_Count(void)
  * HISTORY:                                                                                    *
  *   10/23/98   GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?AABTreeBuilderClass::Poly_Count present-unmatched
 int AABTreeBuilderClass::Poly_Count(void) 
 { 
 	return PolyCount;
