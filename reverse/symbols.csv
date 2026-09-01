@@ -81665,3 +81665,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?addInt@BfmeC994@@QAEXPBDH@Z,0x007E88D0,FESL transaction sender appends its TID integer through the recovered message field writer
 ?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
 ?submit@BfmeSinkSKA@@AAEXPAVBfmeC994@@@Z,0x008038F0,FESL transaction sender submits the completed local message through its owning sink
+?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
