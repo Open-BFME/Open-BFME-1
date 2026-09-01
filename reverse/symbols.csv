@@ -74572,6 +74572,7 @@ name,address,notes
 ?bfmeTailA1037@BfmeI1037@@QAEXH@Z,0x000302E7,pin
 ?bfmeTailA1044@BfmeB1044@@QAEXXZ,0x00006E83,pin
 ?bfmeTailA1054@@YGXPAUBfmeA1054@@@Z,0x000207B6,pin
+?bfmeTailA1054Cdecl@@YAXPAUBfmeA1054@@@Z,0x000207B6,cdecl alias proven by the 0x005CF2C0 caller stack cleanup
 ?bfmeTailA947C@@YAXXZ,0x000241E0,pin
 ?bfmeTailB1037@BfmeI1037@@QAEXH@Z,0x00045179,pin
 ?bfmeTailB1044@BfmeB1044@@QAEXXZ,0x00033F19,pin
