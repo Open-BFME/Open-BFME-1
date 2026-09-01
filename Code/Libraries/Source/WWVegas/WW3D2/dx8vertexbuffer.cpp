@@ -152,7 +152,6 @@ unsigned VertexBufferClass::Get_Total_Allocated_Vertices()
 	return _VertexBufferTotalVertices;
 }
 
-// ?Get_Total_Allocated_Memory@VertexBufferClass@@ present-unmatched
 unsigned VertexBufferClass::Get_Total_Allocated_Memory()
 {
 	return _VertexBufferTotalSize;
