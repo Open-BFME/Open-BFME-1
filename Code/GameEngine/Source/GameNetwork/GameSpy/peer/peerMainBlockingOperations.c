@@ -31,7 +31,7 @@ typedef struct piConnection
 	int alwaysRequestPlayerInfo;
 	char reservedStay[0xAF0 - 0xAC8];
 	void *queryReporting;
-	char reservedReporting[0xB38 - 0xAF4];
+	char qrSecretKey[0xB38 - 0xAF4];
 	int reportingOptions;
 	char reservedReportingOptions[0xB40 - 0xB3C];
 	int hosting;
@@ -147,6 +147,11 @@ int piNewJoinRoomOperation(PEER peer, int roomType, const char *channel,
 void piAddJoinRoomCallback(PEER peer, int success, int result, int roomType,
 	void *callback, void *param, int opID);
 void piStopHosting(PEER peer, int stopReporting);
+void piSBCleanup(PEER peer);
+void piRoomsCleanup(PEER peer);
+void piPlayersCleanup(PEER peer);
+void piPingCleanup(PEER peer);
+void piStopAutoMatch(PEER peer);
 int piNewCreateStagingRoomOperation(PEER peer, const char *name,
 	const char *password, int maxPlayers, unsigned int socket,
 	unsigned short port, void *callback, void *param, int opID);
@@ -189,6 +194,20 @@ int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
+
+void peerClearTitle(PEER peer)
+{
+	piConnection *connection = (piConnection *)peer;
+
+	piStopHosting(peer, 1);
+	piSBCleanup(peer);
+	piRoomsCleanup(peer);
+	piPlayersCleanup(peer);
+	piPingCleanup(peer);
+	piStopAutoMatch(peer);
+	connection->title[0] = '\0';
+	connection->qrSecretKey[0] = '\0';
+}
 
 int piConnectTitle(PEER peer)
 {
