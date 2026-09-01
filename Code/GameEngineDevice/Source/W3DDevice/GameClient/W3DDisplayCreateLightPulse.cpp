@@ -1,11 +1,17 @@
 // ?createLightPulse@W3DDisplay@@UAEXPAVCoord3D@@HHW4RGBColor@@M@Z
-// partial score=0.65 date=2026-08-31
-// cl: /DNDEBUG /MD /EHsc
 
 struct Vector3
 {
 	float x, y, z;
 	Vector3(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+	Vector3(const Vector3 &other) : x(other.x), y(other.y), z(other.z) {}
+	Vector3 &operator=(const Vector3 &other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+		return *this;
+	}
 };
 
 struct Coord3D { float x, y, z; };
@@ -49,12 +55,12 @@ private:
 	float m_farAttenStart;
 	float m_farAttenEnd;
 	unsigned char m_pad10C[0x3c];
-	bool m_enabled;
-	bool m_decayRange;
-	bool m_decayColor;
+	volatile bool m_enabled;
+	volatile bool m_decayRange;
+	volatile bool m_decayColor;
 	unsigned char m_pad14B[9];
-	unsigned int m_decayFrameCount;
-	unsigned int m_increaseFrameCount;
+	volatile unsigned int m_decayFrameCount;
+	volatile unsigned int m_increaseFrameCount;
 };
 
 class RTS3DSceneLightPulseShim
