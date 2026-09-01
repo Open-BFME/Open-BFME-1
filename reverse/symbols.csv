@@ -4148,6 +4148,7 @@ name,address,notes
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BfmeListE@@QAE@XZ,0x00013449,Open-BFME5 the list member destructor the three-member destructor at 0x000F8A40 runs twice
+??1BfmeLockVHX@@QAE@XZ,0x009DB400,pin
 ??1BfmeMapChunk@@QAE@XZ,0x0002B9A4,Open-BFME5 ILT thunk; ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ at 0x006D2690 hands it to the eh vector destructor iterator as the element destructor of the 0xC4-byte array at +0x30D8; address-derived name
 ??1BfmeMidA@@QAE@XZ,0x00035D8C,Open-BFME5 the middle member destructor the vector-member destructor at 0x003643C0 runs
 ??1BfmeMidB@@QAE@XZ,0x009D82D0,Open-BFME5 the middle member destructor the vector-member destructor at 0x009D83D0 runs second
@@ -73058,6 +73059,7 @@ name,address,notes
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
 ?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
 ?bfmeCloseVHT@BfmeChunkVHT@@QAEXXZ,0x009E13E0,pin
+?bfmeCloseVHX@BfmeHandleVHX@@QAEXXZ,0x009DB5A0,pin
 ?bfmeClr1097@BfmeR1097@@QAEXXZ,0x00044F5D,pin
 ?bfmeCmp1097@BfmeSub1097@@QAEHPAV1@@Z,0x000220C5,pin
 ?bfmeCmpEBMa@@YADPAX0@Z,0x00013C78,pin
@@ -73158,6 +73160,7 @@ name,address,notes
 ?bfmeDefer@Gen_002d60a0@@AAE_NPAVObject@@@Z,0x0000204F,Open-BFME5 ILT the guard at 0x002D60A0 tail-jumps through; it jumps to 0x002D9D00
 ?bfmeDel1086@BfmeC1086@@QAEXPAVBfmeQ1086@@@Z,0x0000358A,pin
 ?bfmeDelArrVGP@@YAXPAX@Z,0x00881EF0,pin
+?bfmeDelArrVHY@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDelVGP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeDeleteSelf@BfmeOwnedD@@QAEPAXI@Z,0x0000E4A8,Open-BFME5 the ICF thunk (to 0x001CBDC0) the element clear at 0x0038A6F0 calls with a flag of 1
 ?bfmeDestroyRange12@@YAXPAUBfmeElem12@@0PAD@Z,0x00014AA1,Open-BFME5 the element destroy helper the vector destroy at 0x006FA4E0 hands its range to
