@@ -6385,6 +6385,7 @@ name,address,notes
 ??1Gen_dtor_0094f2e0@@UAE@XZ,0x0094ED60,gen-dtor class destructor
 ??1Gen_dtor_009509b0@@UAE@XZ,0x0094F9C0,gen-dtor class destructor
 ??1Gen_dtor_00951080@@UAE@XZ,0x00950FC0,gen-dtor class destructor
+??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,gen-dtor class destructor
 ??1Gen_dtor_00956d10@@UAE@XZ,0x00956950,gen-dtor class destructor
 ??1Gen_dtor_00957820@@UAE@XZ,0x00957840,gen-dtor class destructor
