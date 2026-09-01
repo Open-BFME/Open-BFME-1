@@ -159,12 +159,13 @@ IndexBufferClass::IndexBufferClass(unsigned type_, unsigned short index_count_)
 #endif
 }
 
-// ??1IndexBufferClass@@MAE@XZ present-unmatched
 IndexBufferClass::~IndexBufferClass()
 {
 	_IndexBufferCount--;
-	_IndexBufferTotalIndices-=index_count;
-	_IndexBufferTotalSize-=index_count*sizeof(unsigned short);
+	// BFME reads the complete 32-bit storage slot occupied by the 16-bit count.
+	const unsigned count = *reinterpret_cast<const unsigned *>(&index_count);
+	_IndexBufferTotalIndices-=count;
+	_IndexBufferTotalSize-=count*sizeof(unsigned short);
 #ifdef VERTEX_BUFFER_LOG
 	WWDEBUG_SAY(("Delete IB, %d indices, size %d bytes\n",index_count,index_count*sizeof(unsigned short)));
 	WWDEBUG_SAY(("Total IB count: %d, total %d indices, total size %d bytes\n",
