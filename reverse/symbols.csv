@@ -72859,6 +72859,7 @@ name,address,notes
 ?bfmeCalcEFC@@YGMH@Z,0x0001FEEC,pin
 ?bfmeCalcEOC@@YAMPAX@Z,0x0000991C,pin
 ?bfmeCalcTGC@@YAXPAXPAH@Z,0x0000C9B4,pin
+?bfmeCalcVKH@@YGXPAUBfmeMat4VKH@@PAVBfmeThingVKH@@H@Z,0x009FACAD,pin
 ?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
 ?bfmeCall1100@@YAXH@Z,0x00032759,pin
 ?bfmeCall40F39@BfmeGlobal_012f1024@@QAEXPAX00E@Z,0x00040F39,call-site callee candidate for Glo012F1024Item::j_0002d3e4; the global at 0x012F1024 is loaded into thiscall ecx and the four stack arguments match the 0x003B4510 body
