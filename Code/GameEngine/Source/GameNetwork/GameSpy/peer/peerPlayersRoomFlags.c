@@ -99,6 +99,45 @@ piPlayer *piGetPlayer(PEER peer, const char *nick)
 	return player;
 }
 
+typedef void (*piEnumRoomPlayersCallback)(PEER peer, RoomType roomType,
+	piPlayer *player, int index, void *param);
+
+typedef struct piEnumRoomPlayersData
+{
+	PEER peer;
+	RoomType roomType;
+	int count;
+	piEnumRoomPlayersCallback callback;
+	void *param;
+} piEnumRoomPlayersData;
+
+static void piEnumRoomPlayersMap(void *elem, void *clientData)
+{
+	piPlayer *player = (piPlayer *)elem;
+	piEnumRoomPlayersData *data = (piEnumRoomPlayersData *)clientData;
+
+	if (player->inRoom[data->roomType])
+	{
+		data->callback(data->peer, data->roomType, player,
+			data->count, data->param);
+		data->count++;
+	}
+}
+
+void piEnumRoomPlayers(PEER peer, RoomType roomType,
+	piEnumRoomPlayersCallback callback, void *param)
+{
+	piEnumRoomPlayersData data;
+
+	data.peer = peer;
+	data.roomType = roomType;
+	data.count = 0;
+	data.callback = callback;
+	data.param = param;
+	TableMap(peer->players, piEnumRoomPlayersMap, &data);
+	callback(peer, roomType, 0, -1, param);
+}
+
 int piParseFlags(const char *flags)
 {
 	int nFlags = 0;
