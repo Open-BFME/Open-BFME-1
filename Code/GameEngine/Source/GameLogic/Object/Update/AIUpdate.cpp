@@ -96,7 +96,10 @@ struct BFMEApproachPathFields
 	Coord3D m_requestedDestination;
 	Coord3D m_requestedDestination2;
 	UnsignedInt m_pathTimestamp;
-	char m_unreconstructed_164[0x17C - 0x164];
+	char m_unreconstructed_164[0x16C - 0x164];
+	Int m_blockedFrames;
+	char m_unreconstructed_170[0x178 - 0x170];
+	UnsignedInt m_ignoreCollisionsUntil;
 	UnsignedInt m_queueForPathFrame;
 	char m_unreconstructed_180[0x18C - 0x180];
 	ObjectID m_repulsor1;
@@ -110,7 +113,8 @@ struct BFMEApproachPathFields
 	Bool m_isFinalGoal;
 	Bool m_isApproachPath;
 	Bool m_isSafePath;
-	char m_unreconstructed_323[0x326 - 0x323];
+	char m_unreconstructed_323[0x325 - 0x323];
+	Bool m_isBlocked;
 	Bool m_isBlockedAndStuck;
 	char m_unreconstructed_327[0x330 - 0x327];
 	Bool m_isInUpdate;
@@ -995,27 +999,49 @@ void AIUpdateInterface::requestPath( Coord3D *destination, Bool isFinalGoal )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?requestAttackPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::requestAttackPath( ObjectID victimID, const Coord3D* victimPos ) 
 {
-	if (m_locomotorSet.getValidSurfaces() == 0) {
-		DEBUG_CRASH(("Attempting to path immobile unit."));
+	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>( this );
+
+	if (g_012F0239 && g_012ED4FC)
+	{
+		((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: requestAttackPath1-- m_requestedDestination changing from %g,%g,%g to %g,%g,%g",
+			retail->m_requestedDestination.x, retail->m_requestedDestination.y,
+			retail->m_requestedDestination.z, victimPos->x, victimPos->y, victimPos->z);
 	}
-	CRCDEBUG_LOG(("AIUpdateInterface::requestAttackPath() - m_isAttackPath = TRUE for object %d\n", getObject()->getID()));
-	m_requestedDestination = *victimPos;
-	m_requestedVictimID = victimID;	
-	m_isAttackPath = TRUE;
-	m_isApproachPath = FALSE;
-	m_isSafePath = FALSE;
-	m_waitingForPath = TRUE;
-	if (m_pathTimestamp > TheGameLogic->getFrame()-3) {
+
+	retail->m_requestedDestination = *victimPos;
+	retail->m_requestedVictimID = victimID;
+	retail->m_isAttackPath = TRUE;
+	retail->m_isApproachPath = FALSE;
+	retail->m_isSafePath = FALSE;
+
+	if (retail->m_pathTimestamp > TheGameLogic->getFrame() - 2) {
 		/* Requesting path very quickly.  Can cause a spin. */
-		//DEBUG_LOG(("%d Pathfind - repathing in less than 3 frames.  Waiting 2 second\n",TheGameLogic->getFrame()));
-		setQueueForPathTime(2*LOGICFRAMES_PER_SECOND);
-		setLocomotorGoalNone();
+		if (retail->m_path && retail->m_isBlockedAndStuck)
+		{
+			if (getWakeFrame() > UPDATE_SLEEP( 5 ) && !retail->m_isInUpdate)
+				setWakeFrame(retail->m_object, UPDATE_SLEEP( 5 ));
+			retail->m_queueForPathFrame = TheGameLogic->getFrame() + 5;
+			retail->m_ignoreCollisionsUntil = TheGameLogic->getFrame() + 10;
+			retail->m_blockedFrames = 0;
+			retail->m_isBlocked = FALSE;
+			retail->m_isBlockedAndStuck = FALSE;
+			retail->m_waitingForPath = FALSE;
+			return;
+		}
+
+		if (getWakeFrame() > UPDATE_SLEEP( 10 ) && !retail->m_isInUpdate)
+			setWakeFrame(retail->m_object, UPDATE_SLEEP( 10 ));
+		retail->m_queueForPathFrame = TheGameLogic->getFrame() + 10;
+		destroyPath();
+		reinterpret_cast<BFMEDestroyPathAIUpdate *>( this )->setLocomotorGoalNone();
 		return;
 	}
-	TheAI->pathfinder()->queueForPath(getObject()->getID());
+
+	retail->m_waitingForPath = TRUE;
+	TheAI->pathfinder()->queueForPath(retail->m_object->getID());
 }
 
 //-------------------------------------------------------------------------------------------------
