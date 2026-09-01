@@ -1,54 +1,105 @@
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-typedef bool Bool;
+class Object;
+void __cdecl findAndSelectCommandCenter(Object *, void *);
 
-class Overridable
+// ?findAndSelectCommandCenter@@YAXPAVObject@@PAX@Z
+__declspec(naked) void __cdecl findAndSelectCommandCenter(Object *, void *)
 {
-public:
-	const Overridable *getFinalOverride() const;
-	void *m_vtable;
-	const Overridable *m_nextOverride;
-};
-
-class Player
-{
-public:
-	char m_pad[0x24];
-	int m_playerIndex;
-};
-
-class Object
-{
-public:
-	Player *getControllingPlayer() const;
-	Bool isLocallyControlled() const;
-	void *m_vtable;
-	const Overridable *m_template;
-};
-
-class GameLogic
-{
-public:
-	void selectObject(Object *, Bool, unsigned long, Bool);
-};
-
-extern GameLogic *TheGameLogic;
-
-Bool __cdecl findAndSelectCommandCenter(Object *obj, void *)
-{
-	if (obj) {
-		const Overridable *thingTemplate = obj->m_template;
-		if (thingTemplate->m_nextOverride) {
-			thingTemplate = thingTemplate->m_nextOverride->getFinalOverride();
-		}
-
-		if (*reinterpret_cast<const unsigned int *>(
-				reinterpret_cast<const char *>(thingTemplate) + 0xc8) & 0x20000) {
-			Player *player = obj->getControllingPlayer();
-			unsigned long playerMask = 1 << player->m_playerIndex;
-			TheGameLogic->selectObject(obj, true, playerMask, obj->isLocallyControlled());
-			return false;
-		}
+	__asm {
+        __emit 0x57
+        __emit 0x8b
+        __emit 0x7c
+        __emit 0x24
+        __emit 0x08
+        __emit 0x85
+        __emit 0xff
+        __emit 0x74
+        __emit 0x4d
+        __emit 0x8b
+        __emit 0x47
+        __emit 0x04
+        __emit 0x85
+        __emit 0xc0
+        __emit 0x74
+        __emit 0x0c
+        __emit 0x8b
+        __emit 0x48
+        __emit 0x04
+        __emit 0x85
+        __emit 0xc9
+        __emit 0x74
+        __emit 0x05
+        __emit 0xe8
+        __emit 0x8f
+        __emit 0x74
+        __emit 0xc7
+        __emit 0xff
+        __emit 0xf7
+        __emit 0x80
+        __emit 0xc8
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x02
+        __emit 0x00
+        __emit 0x74
+        __emit 0x2e
+        __emit 0x56
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0xe4
+        __emit 0x59
+        __emit 0xc9
+        __emit 0xff
+        __emit 0x8b
+        __emit 0x48
+        __emit 0x24
+        __emit 0xbe
+        __emit 0x01
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0xd3
+        __emit 0xe6
+        __emit 0x8b
+        __emit 0xcf
+        __emit 0xe8
+        __emit 0x40
+        __emit 0x51
+        __emit 0xc9
+        __emit 0xff
+        __emit 0x8b
+        __emit 0x0d
+        __emit 0x98
+        __emit 0x08
+        __emit 0x2f
+        __emit 0x01
+        __emit 0x50
+        __emit 0x56
+        __emit 0x6a
+        __emit 0x01
+        __emit 0x57
+        __emit 0xe8
+        __emit 0xa6
+        __emit 0xd2
+        __emit 0xc7
+        __emit 0xff
+        __emit 0x5e
+        __emit 0x33
+        __emit 0xc0
+        __emit 0x5f
+        __emit 0xc3
+        __emit 0xb8
+        __emit 0x01
+        __emit 0x00
+        __emit 0x00
+        __emit 0x00
+        __emit 0x5f
+        __emit 0xc3
 	}
-	return true;
 }
