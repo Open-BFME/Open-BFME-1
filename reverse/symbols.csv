@@ -1001,9 +1001,8 @@ name,address,notes
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00532740@@@Z,0x00530050,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00574DF0@@@Z,0x005719B0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@00US4Cmp002EB8E0@@@Z,0x002EA750,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
-??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp002E1690@@@Z,0x00042F91,retail __linear_insert at 0x002E0FE0 direct call-site ILT
-?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
+??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
 ??$__unguarded_partition@PAHHUQ4Sort0034BFC0@@@_STL@@YAPAHPAH0HUQ4Sort0034BFC0@@@Z,0x003407C0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort003D15A0@@@_STL@@YAPAHPAH0HUQ4Sort003D15A0@@@Z,0x003CE380,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort004566F0@@@_STL@@YAPAHPAH0HUQ4Sort004566F0@@@Z,0x00452720,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
@@ -3824,6 +3823,8 @@ name,address,notes
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
 ??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
+??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
+??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
@@ -8607,6 +8608,7 @@ name,address,notes
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x000408EA,pinharvest x1 (thunk)
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00045CA5,pinharvest x1 (thunk)
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x00AFF130,pinharvest x1 (body)
+??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
 ??1MaterialRemapperClass@@QAE@XZ,0x0092FF90,callee of the byte-proven clone_materials 0x96DDC0; same stack temp as ecx under EH state -1
 ??1Mem00026AB2@@QAE@XZ,0x00026AB2,Open-BFME5 ILT the subobject destructor the EH-framed member-offset vectors call
 ??1Mem000658A0@@QAE@XZ,0x000658A0,subobject destructor called by the 76-byte pair destructors in BigPairMemberDtors.cpp
@@ -8643,6 +8645,7 @@ name,address,notes
 ??1MemoryPool@@QAE@XZ,0x0003C740,Open-BFME5 SiegeDeploySpecialPower pool cleanup pin
 ??1MemoryReadFile@@UAE@XZ,0x009CB460,folded onto File::~File - MemoryReadFile adds no destructible member
 ??1MemoryWriteFile@@UAE@XZ,0x009CB590,called by the MemoryWriteFile scalar deleting destructor
+??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
 ??1MilitarySubtitleData@InGameUI@@QAE@XZ,0x00018CE1,ILT thunk to the military subtitle record destructor
 ??1MissingAnimClass@@UAE@XZ,0x00002C7A,ILT thunk; retail call sites use the thunk
 ??1ModelArrayClass@HLodClass@@UAE@XZ,0x00009C5A,pinharvest x1 (thunk)
@@ -9043,6 +9046,7 @@ name,address,notes
 ??1TeamsInfo@@QAE@XZ,0x00049CA1,pinharvest x1 (thunk)
 ??1TeamsInfo@@QAE@XZ,0x009DB7A0,pinharvest x1 (body)
 ??1TensileFormationUpdateMember@@QAE@XZ,0x0003D2C1,TensileFormationUpdate member destructor call target
+??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x00029BEA,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x0002BFF3,pinharvest x1 (thunk)
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x000308D2,pinharvest x1 (thunk)
@@ -9446,6 +9450,7 @@ name,address,notes
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
@@ -9677,6 +9682,7 @@ name,address,notes
 ?BfmeCopy00769060@@YAXPAUBfmeValue00769060@@PBU1@@Z,0x000366E2,Open-BFME5 ILT the value copy the clone-node body at 0x00769060 calls
 ?BfmeCopy009C94C0@@YAXPAUBfmeValue009C94C0@@PBU1@@Z,0x009C9120,Open-BFME5 ILT the value copy the clone-node body at 0x009C94C0 calls
 ?BfmeCopy009D02C0@@YAXPAUBfmeValue009D02C0@@PBU1@@Z,0x009CF3C0,Open-BFME5 ILT the value copy the clone-node body at 0x009D02C0 calls
+?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
 ?BfmeDetonatorInfoUninitializedCopy@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@00ABU__false_type@1@@Z,0x00027782,Open-BFME5 ILT for _STL::__uninitialized_copy on MinefieldBehavior DetonatorInfo at 0x00570920
 ?BfmeDetonatorInfoUninitializedFillN@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@IABU23@ABU__false_type@1@@Z,0x00019E89,Open-BFME5 ILT for _STL::__uninitialized_fill_n on MinefieldBehavior DetonatorInfo at 0x00570970
 ?BfmeDynamicDX8VertexBufferInUse@@3PA_NA,0x01346740,Open-BFME5 per-slot in-use flags the BoxDynamicVBAccessClass destructor at 0x0091D9E0 clears; DIR32 sites are masked by the byte gate so this records which global it is
@@ -72915,6 +72921,7 @@ name,address,notes
 ?bfmeCallFED@BfmeBaseFED@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeCallFHA@@YAHPAX0@Z,0x00041164,pin
 ?bfmeCallJA@BfmeHookJA@@QAEPAUBfmeSlotJA@@XZ,0x000022BB,pin
+?bfmeCallUDB@BfmeSrcUDB@@QAEMHH@Z,0x0001AFC8,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -72987,6 +72994,7 @@ name,address,notes
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
 ?bfmeClose1281@BfmeE1281@@QAEXXZ,0x00028EC0,pin
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
+?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
 ?bfmeClr1097@BfmeR1097@@QAEXXZ,0x00044F5D,pin
 ?bfmeCmp1097@BfmeSub1097@@QAEHPAV1@@Z,0x000220C5,pin
 ?bfmeCmpEBMa@@YADPAX0@Z,0x00013C78,pin
@@ -73413,6 +73421,8 @@ name,address,notes
 ?bfmeFindSD@BfmeMapSD@@QAEPAUBfmeSlotSD@@PAUBfmeKeySD@@@Z,0x00020E7D,pin
 ?bfmeFindTJA@BfmeMgrTJA@@QAEPADH@Z,0x0002F52C,pin
 ?bfmeFindTargetGate@@YAPAVBfmeTargetGateModule@@PBVObject@@@Z,0x00003A49,Object BFME attack query calls this protected ILT to locate the target gate module
+?bfmeFindUDD@BfmeSubUDD@@QAEPAXH@Z,0x00026C47,pin
+?bfmeFindUDE@BfmeMgrUDE@@QAEPAVBfmeRecUDE@@H@Z,0x0001F253,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
@@ -75580,6 +75590,7 @@ name,address,notes
 ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z,0x000366E7
 ?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z,0x007A1410,WaterRenderObjClass::enableWaterGrid incremental-link thunk target through a TU-local forwarding shim
 ?endThreads@GameResultsQueue@@UAEXXZ,0x006407D0,GameResultsQueue vtable 0x01119380 slot +0x28; deletes the worker (closeLiveHandle@BFMENetworkBackend 0x009DB5A0 then vslot 0); ZH GameResultsThread.cpp:139; present-unmatched row
+?ensure@Rva00410F10Owner@@QAEPAVRva00410F10Allocation@@XZ,0x00410F10,address-derived lazy allocation helper
 ?ensureStorage@Rva007BDB70ArrayOwner@@QAEXXZ,0x00040EDA,RVA-derived ILT call target used by bounded fixed-record lookup at 0x007BDB70
 ?ensureUnique@Dict@@AAEPAUDictPair@1@H_NPAU21@@Z,0x0002BF21
 ?ensureUniqueBufferOfSize@AsciiString@@IAEXH_NPBD1@Z,0x00032182,ILT thunk read out of AIGuardPickUpCrateState ctor call displacement; real body 0x0014F280 (d_0014f280, gen-dump)
@@ -76276,6 +76287,7 @@ name,address,notes
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
+?g_bfmeDefaultUDD@@3PADA,0x00F36E50,pin
 ?g_bfmeDisconnectPingResult@@3HA,0x012B9810,standalone disconnect ping-result state read and set by updateDisconnectStatus after the sub-ten-percent ratio check
 ?g_bfmeDoneAPB@@3_NA,0x00EED4E6,pin
 ?g_bfmeDoneSJA@@3DA,0x00EF4CA4,pin
@@ -76460,6 +76472,7 @@ name,address,notes
 ?g_bfmeK2SMA@@3MA,0x00C9D11C,pin
 ?g_bfmeK3SMA@@3MA,0x00C75334,pin
 ?g_bfmeKTHE@@3MA,0x00C9ECC0,pin
+?g_bfmeKUDB@@3MA,0x00C75350,pin
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
@@ -76528,6 +76541,8 @@ name,address,notes
 ?g_bfmeMgr12F0898@@3PAVBfmeMgrF5F@@A,0x00EF0898,pin
 ?g_bfmeMgr977@@3PAVBfmeMgr977@@A,0x00EF33F8,pin
 ?g_bfmeMgrTJA@@3PAVBfmeMgrTJA@@A,0x00EF086C,pin
+?g_bfmeMgrUDD@@3PAVBfmeMgrUDD@@A,0x00EF1028,pin
+?g_bfmeMgrUDE@@3PAVBfmeMgrUDE@@A,0x00EF0898,pin
 ?g_bfmeMillisecondsToSeconds@@3MA,0x00C766EC,float milliseconds-to-seconds scale used by BfmeTimedOpNode::update
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
@@ -76593,6 +76608,8 @@ name,address,notes
 ?g_bfmeObjMD@@3PAVBfmeObjMD@@A,0x00EF19E8,pin
 ?g_bfmeObjMG@@3PAVBfmeObjMG@@A,0x00EF19E8,pin
 ?g_bfmeObjTDB@@3PAUBfmeObjTDB@@A,0x00F40534,pin
+?g_bfmeObjUDB@@3PAVBfmeSrcUDB@@A,0x00EF7FE0,pin
+?g_bfmeObjUDC@@3PAVBfmeSrcUDC@@A,0x00F07214,pin
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -80178,6 +80195,7 @@ name,address,notes
 ?update@AIInternalMoveToStateUpdateShim@@QAE?AW4StateReturnType@@XZ,0x00172E70,AIInternalMoveToState::update incremental-link thunk target through a TU-local forwarding shim
 ?update@AIMoveOutOfTheWayStateUpdateShim@@QAE?AW4StateReturnType@@XZ,0x000488F6,AIMoveOutOfTheWayState::update incremental-link thunk target through a TU-local forwarding shim
 ?update@AIUpdateInterface@@UAE?AW4UpdateSleepTime@@XZ,0x00028772,Open-BFME5 ILT from zh_sweep packet 002c5740
+?update@BfmeThingDTK@@QAEXXZ,0x00168270,address-derived update using the existing BfmeThingDTK helper pin
 ?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,address-derived timed-operation node update callee decoded from the direct REL32 in _bfme_updateTimedOps
 ?update@GameLogic@@UAEXXZ,0x0038DA10,the main logic tick; calls setFPMode popSleepyUpdate getCRC RecorderClass::getMode and VictorySystem::update at 0x0038DC4D; reached through ILT 0x0003A9C7 and loads TheNetwork 0x012F7714
 ?update@MapTransferLoadScreen@@QAEXH@Z,0x0050FF30,E tier 1 via the corrected TheNetwork vcall seed: the non-virtual update(Int percent) of the APT-era screen _doFileTransfer 0x0066CE60 drives - called with ecx = ls at 0x0066CED0 (ls->update(0)) and 0x0066D11A (ls->update(fileTransferPercent)) exactly at ZH FileTransfer.cpp:54/124 right after ls->processTimeout = ILT 0x000362B9 -> 0x00510130 (ledger ?processTimeout@MapTransferLoadScreen@@); body inlines ZH MapTransferLoadScreen::update + LoadScreen::update: TheNetwork(0x012F7714)->update(FALSE) at 0x0050FF3F; TheMouse 0x012F4C5C setCursorTooltip(TheEmptyString -1 NULL 1.0f) 0x005A56F0; TheGameEngine +0x40 serviceWindowsOS; TheWindowManager/g_theWindowManager +0x14; TheDisplay +0x14 update and +0x1C draw; the percent arg and this are unused
@@ -81488,8 +81506,11 @@ _piFindPlayerByIP,0x00863460,vendored=gamespy-2004; exact piPinged callee with p
 _piFindXping,0x00863090,vendored=gamespy-2004; authentic peerPing.c static helper called by piGetXping
 _piFinishedEnteringRoom,0x00863E70,GameSpy Peer room-entry completion
 _piGetChannelKeysCallbackA,0x0085FEB0,GameSpy Peer room-key completion callback
+_piGetGlobalWatchKeyA,0x00865760,GameSpy PEER SDK peerKeys.c global watch-cache lookup
 _piGetPlayer,0x00863350,gamespy-peer: looks a piPlayer up by nick in connection->players; sole player-lookup callee of peerKeys.c cache maps
 _piGetPlayerInfoCallbackA,0x0085FAF0,GameSpy Peer shared player-info completion callback
+_piGetRoomWatchKeyA,0x008657C0,GameSpy PEER SDK peerKeys.c room watch-cache lookup
+_piGetWatchKeyA,0x00865710,GameSpy PEER SDK peerKeys.c internal watch-cache lookup
 _piGetXping,0x008631F0,vendored=gamespy-2004; authentic peerPing.c public xping getter
 _piGlobalKeyChanged,0x00865BA0,GameSpy Peer global-key cache update
 _piIsCallbackFinishedCompareCallback,0x0085E1F0,GameSpy Peer callback ID comparator ICF alias at gpiTransferCompare
@@ -81500,6 +81521,7 @@ _piJoinRoomEnumUsersCallbackA,0x0085F8A0,GameSpy Peer join-room user enumeration
 _piKeyCacheCleanse,0x008658F0,GameSpy Peer player key-cache cleanup
 _piKeyCachePlayerChangedNick,0x00865CC0,GameSpy Peer key-cache nickname migration
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
+_piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
 _piLeaveRoom,0x00863EE0,GameSpy Peer room-leave operation
 _piNewConnectOperation,0x0085F2F0,GameSpy Peer peerConnectPreAuthA operation constructor
 _piParseFlags,0x00863570,GameSpy Peer SDK peerPlayers.c room flag parser
@@ -81743,20 +81765,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?update@BfmeThingDTK@@QAEXXZ,0x00168270,address-derived update using the existing BfmeThingDTK helper pin
-?ensure@Rva00410F10Owner@@QAEPAVRva00410F10Allocation@@XZ,0x00410F10,address-derived lazy allocation helper
-??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
-_piKeysCleanup,0x008656B0,GameSpy PEER SDK peerKeys.c cleanup; shutdown call graph and four _TableFree call sites prove identity
-_piGetWatchKeyA,0x00865710,GameSpy PEER SDK peerKeys.c internal watch-cache lookup
-_piGetGlobalWatchKeyA,0x00865760,GameSpy PEER SDK peerKeys.c global watch-cache lookup
-_piGetRoomWatchKeyA,0x008657C0,GameSpy PEER SDK peerKeys.c room watch-cache lookup
 _piCleanseGlobalCacheMap,0x00865820,GameSpy PEER SDK peerKeys.c global cache cleanser
 _piCleanseRoomCacheMap,0x00865890,GameSpy PEER SDK peerKeys.c room cache cleanser
-??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
-??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
-??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
-??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
-??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
 _piSBCleanup,0x00864D80,gamespy-peer: peerClearTitle second cleanup call after piStopHosting; authentic peerMain.c order
 _piStopAutoMatch,0x00864280,gamespy-peer: peerClearTitle final cleanup call after piPingCleanup; authentic peerMain.c order
