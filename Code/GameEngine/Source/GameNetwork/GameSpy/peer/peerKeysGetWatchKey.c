@@ -34,6 +34,13 @@ typedef struct piCleanseRoomCacheMapData
 	RoomType roomType;
 } piCleanseRoomCacheMapData;
 
+typedef struct piRemoveExistingKeysData
+{
+	int num;
+	const char **keys;
+	HashTable watchKeys;
+} piRemoveExistingKeysData;
+
 typedef struct piCacheKey
 {
 	char *nick;
@@ -47,6 +54,7 @@ void TableMapSafe(HashTable table, void (*mapFunction)(void *, void *),
 	void *clientData);
 void TableClear(HashTable table);
 piPlayer *piGetPlayer(PEER peer, const char *nick);
+__declspec(dllimport) int __cdecl strcasecmp(const char *left, const char *right);
 
 static const char *piGetWatchKeyA(const char *nick, const char *key,
 	HashTable watchCache)
@@ -133,4 +141,17 @@ void piKeyCacheCleanse(PEER peer)
 			TableClear(connection->roomWatchCache[roomType]);
 		}
 	}
+}
+
+void piRemoveExistingKeysMap(void *elem, void *clientData)
+{
+	int i;
+	piWatchKey *key = (piWatchKey *)elem;
+	piRemoveExistingKeysData *data = (piRemoveExistingKeysData *)clientData;
+
+	for (i = 0; i < data->num; i++) {
+		if (strcasecmp(key->key, data->keys[i]) == 0)
+			return;
+	}
+	TableRemove(data->watchKeys, key);
 }
