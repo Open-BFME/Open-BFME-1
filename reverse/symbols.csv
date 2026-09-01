@@ -73295,6 +73295,7 @@ name,address,notes
 ?bfmeDoneVJL@BfmeMsgVJL@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJM@BfmeMsgVJM@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJN@BfmeMsgVJN@@QAEXXZ,0x007E86C0,pin
+?bfmeDoneVJO@BfmeMsgVJO@@QAEXXZ,0x007E86C0,pin
 ?bfmeDrawTriVHA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
@@ -74097,6 +74098,7 @@ name,address,notes
 ?bfmeInitVJL@BfmeMsgVJL@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJN@BfmeMsgVJN@@QAEXPADH@Z,0x007E8850,pin
+?bfmeInitVJO@BfmeMsgVJO@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -74506,6 +74508,7 @@ name,address,notes
 ?bfmeReportTSA@@YGXJPAVBfmeThingTSA@@PAUBfmeGuidTSA@@@Z,0x00AFD550,pin
 ?bfmeReportUKA@@YGXJPAVBfmeThingUKA@@PAUBfmeGuidUKA@@@Z,0x00AFD550,pin
 ?bfmeReportULA@@YGXJPAVBfmeThingULA@@PAUBfmeGuidULA@@@Z,0x00AFD550,pin
+?bfmeReportVJO@@YAPAVBfmeRVJO@@XZ,0x007EB810,pin
 ?bfmeReserve1242@BfmeN1242@@QAEXH@Z,0x008B8D60,pin
 ?bfmeReserve@Gen_00095A50@@AAEXHPAX@Z,0x000472DA,Open-BFME5 ILT the vector assignment at 0x00095A50 reserves through
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
@@ -74526,6 +74529,7 @@ name,address,notes
 ?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
 ?bfmeResetSafeOcclusionFrame@Object@@QAEXXZ,0x00039D06,Open-BFME5 Object safe-occlusion refresh ILT thunk to body 0x001C3020; surviving Object.cpp expression and BFME offsets prove current-frame plus ThingTemplate OcclusionDelay semantics
 ?bfmeResetUJC@@YAXPAUBfmeConnUJC@@@Z,0x008EBFC0,pin
+?bfmeResetVJO@BfmeCVJO@@QAEXPAVBfmeXVJO@@@Z,0x008014F0,pin
 ?bfmeResolve1281@BfmeSlotDispatcher1281@@QAEXHHPAPAXPA_N@Z,0x008BC3E0,address-derived resolver callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeResolveMeleeTarget@Object@@QAEPAV1@H@Z,0x0000FAA6,TU-specific name for the melee target resolution helper used by AIAttackMeleeHordeWaitState
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
