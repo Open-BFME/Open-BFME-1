@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "f8a80e0d96d03c653649a3e528e3dffa796157a7975f014bee5d3f25ee346184",
+    "sha256": "575c606c0c03a173050ca0627daaffbb1ad791e6f912cc6b64eebd60c8f9c2ae",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 2330
+    "used": 2521
   },
   "features": [
     {
@@ -39,6 +39,10 @@
     {
       "name": "020-gameresult",
       "target_rva": "0x00665C10"
+    },
+    {
+      "name": "042-tracksfix",
+      "target_rva": "0x0072FEB0"
     }
   ]
 }

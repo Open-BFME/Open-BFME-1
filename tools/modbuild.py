@@ -58,6 +58,8 @@ TARGET_DISCARD = 0x006620A4
 # called the moment it paused the logic, and could never see the key that
 # unpauses it.
 TARGET_REPLAYFRAME = 0x0006B910
+# TerrainTracksRenderObjClassSystem::flush
+TARGET_TRACKSFLUSH = 0x0072FEB0
 
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
@@ -328,6 +330,18 @@ def build_framedrain(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_tracksprobe(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/tracksprobe.cpp", "tracks_frame", (
+        (TARGET_REPLAYFRAME, "tracks_frame", ("ecx",)),
+    ), probe=probe)
+
+
+def build_tracksfix(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/tracksfix.cpp", "tracksfix_flush", (
+        (TARGET_TRACKSFLUSH, "tracksfix_flush", ("ecx",)),
+    ), probe=probe)
+
+
 def build_replayctl(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/replayctl.cpp", "replayctl_frame", (
         (TARGET_REPLAYFRAME, "replayctl_frame", ("ecx",)),
@@ -388,7 +402,12 @@ FEATURES = {"020-gameresult": build_gameresult,
             # camera stayed live, and screenshots 8s apart differ by 5437 px
             # playing, 0 px paused, 3603 px resumed. Replay-only -- it returns
             # immediately unless TheGameLogic's mode is GAME_REPLAY.
-            "039-replayctl": build_replayctl}
+            "039-replayctl": build_replayctl,
+            # Promoted with its red/green in hand: the crash it removes is
+            # reproduced byte for byte from three retail minidumps, and the same
+            # trigger against this build leaves the match running. See
+            # mods/features/042-tracksfix/README.md.
+            "042-tracksfix": build_tracksfix}
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.
@@ -400,6 +419,9 @@ UNSHIPPED = {
                        "both seats, match dead at 127, against zero in every other arm. "
                        "See the header of its source before reviving it"),
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
+    "041-tracksprobe": (build_tracksprobe,
+                        "an instrument: it watches the terrain-track vertex buffer, and its "
+                        "ctrl+F9 deliberately crashes the game"),
 }
 
 
