@@ -73914,6 +73914,7 @@ name,address,notes
 ?bfmeGetSNA@@YAPAVBfmeLogSNA@@XZ,0x007EB810,pin
 ?bfmeGetStrVHC@BfmeMsgVHC@@QAEDPAXPADH@Z,0x007E8A80,pin
 ?bfmeGetStrVJI@BfmeMsgVJI@@QAEDPBDPADH@Z,0x007E8A80,pin
+?bfmeGetStrVJT@BfmeMsgVJT@@QAEDPBDPADH@Z,0x007E8A80,pin
 ?bfmeGetTCA@BfmeGetterTCA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetTDA@@YAPAVBfmeSinkTDA@@XZ,0x007EFFC0,pin
 ?bfmeGetTQD@@YAPAVBfmeSinkTQD@@XZ,0x007EFFC0,pin
@@ -74431,6 +74432,7 @@ name,address,notes
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
 ?bfmePop1236@BfmeA1236@@QAEXXZ,0x008D2CC0,pin
+?bfmePopVJU@BfmeStackVJU@@QAEXXZ,0x008D2CC0,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
 ?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
@@ -74455,6 +74457,7 @@ name,address,notes
 ?bfmePushQI@BfmeThingQI@@QAEXE@Z,0x0003BC23,pin
 ?bfmePushStrVHR@@YAXPAUBfmeLuaVHR@@PBD@Z,0x00990480,pin
 ?bfmePushUserVHR@@YAXPAUBfmeLuaVHR@@PAXH@Z,0x009904F0,pin
+?bfmePushVJU@BfmeStackVJU@@QAEXXZ,0x008D2C80,pin
 ?bfmePut1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z,0x008B84C0,pin
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
@@ -74717,6 +74720,7 @@ name,address,notes
 ?bfmeSetVJH@BfmeMsgVJH@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJI@BfmeMsgVJI@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJJ@BfmeMsgVJJ@@QAEXPBD0@Z,0x007E8A10,pin
+?bfmeSetVJU@BfmeStackVJU@@QAEXPAX@Z,0x008D2E00,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -81044,6 +81048,7 @@ __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
 __imp_?bfmeAtoi1027@@YAHPAD@Z,0x00F59384,pin
 __imp_?bfmeAtoiVHG@@YAHPBD@Z,0x00F59384,pin
 __imp_?bfmeBindTTE@@YAXHPAX@Z,0x00F5950C,pin
+__imp_?bfmeCallVJU@@YAXPAXH@Z,0x00F378A8,pin
 __imp_?bfmeClose1012@@YGXPAX@Z,0x00F58ECC,pin
 __imp_?bfmeClose1033@@YGXH@Z,0x00F58CCC,pin
 __imp_?bfmeClose1038@@YGHPAX@Z,0x00F58ECC,pin
