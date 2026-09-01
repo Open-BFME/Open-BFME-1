@@ -3765,7 +3765,6 @@ void DX8Wrapper::Flush_DX8_Resource_Manager(unsigned int bytes)
 	DX8CALL(ResourceManagerDiscardBytes(bytes));
 }
 
-// ?Get_Free_Texture_RAM@DX8Wrapper@@ present-unmatched
 unsigned int DX8Wrapper::Get_Free_Texture_RAM()
 {
 	DX8_Assert();
