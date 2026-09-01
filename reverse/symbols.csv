@@ -81638,3 +81638,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAE@XZ,0x00009AB1,LivingWorldPlayerArmy destructor retail call at 0x00362B68 invokes the vector<LivingWorldArmy> destructor ILT thunk
 ?reserve@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@QAEXI@Z,0x0001FA23,Sub005C92F0 copy constructor retail call invokes the vector reserve ILT thunk
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
+?popImmediate@Shell@@QAEXXZ,0x00045EE9,Shell destructor retail call invokes the popImmediate ILT thunk
+??1ShellMenuSchemeManager@@QAE@XZ,0x00041871,Shell destructor retail call invokes the scheme-manager destructor ILT thunk
