@@ -81579,3 +81579,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
 _piKeyCacheRefreshRoom,0x00866360,GameSpy Peer room key-cache refresh
 _piClearRoomPlayers,0x00863AA0,GameSpy Peer room player cleanup
+?updatePlayerCells008FC300@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC300,PartitionManager reveal-map per-cell call target; exact sibling implementation
+?updatePlayerCells008FC3B0@PartitionManagerImpl008F8D60Element@@QAEXPAVPartitionManagerImpl008F8D60@@H@Z,0x008FC3B0,PartitionManager reveal-map per-cell call target; exact sibling implementation
