@@ -74,6 +74,13 @@ typedef struct GETCKEYData
 	CHATBool allBroadcastKeys;
 } GETCKEYData;
 
+typedef struct GETCHANKEYData
+{
+	int num;
+	char **keys;
+	CHATBool allBroadcastKeys;
+} GETCHANKEYData;
+
 typedef struct ciServerMessageFilter
 {
 	int type;
@@ -263,6 +270,53 @@ int ciAddGETCKEYFilter(CHAT chat, const char *cookie, int num,
 
 	data->num = dest;
 	return ciAddFilter(chat, 13, cookie, 0, (void *)callback, 0, param, data);
+}
+
+int ciAddGETCHANKEYFilter(CHAT chat, const char *cookie, int num,
+	const char **keys, CHATBool getBroadcastKeys,
+	chatGetChannelKeysCallback callback, void *param)
+{
+	int src;
+	int dest;
+	GETCHANKEYData *data = (GETCHANKEYData *)malloc(sizeof(GETCHANKEYData));
+	if (data == 0)
+		return 0;
+
+	memset(data, 0, sizeof(GETCHANKEYData));
+	data->allBroadcastKeys = getBroadcastKeys;
+	data->num = num;
+	if (getBroadcastKeys)
+		data->num--;
+
+	if (data->num)
+	{
+		data->keys = (char **)malloc(sizeof(char *) * data->num);
+		if (data->keys == 0)
+		{
+			free(data);
+			return 0;
+		}
+
+		for (src = 0, dest = 0; src < num; src++)
+		{
+			if (strcmp(keys[src], "b_*") != 0)
+			{
+				data->keys[dest] = goastrdup(keys[src]);
+				if (data->keys[dest] == 0)
+				{
+					for (dest--; dest >= 0; dest--)
+						free(data->keys[dest]);
+					free(data->keys);
+					free(data);
+					return 0;
+				}
+				dest++;
+			}
+		}
+		data->num = dest;
+	}
+
+	return ciAddFilter(chat, 14, cookie, 0, (void *)callback, 0, param, data);
 }
 
 int ciAddCDKEYFilter(CHAT chat, chatAuthenticateCDKeyCallback callback,
