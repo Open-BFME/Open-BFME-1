@@ -3634,6 +3634,7 @@ name,address,notes
 ??0TransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,TransportAIUpdate ctor base
 ??0TransportContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,TransportContain ctor base call
 ??0TunnelTracker@@QAE@XZ,0x0001E777,REL32 pin from CaveSystem::registerNewCave @0x378970
+??0TurretAIData@@QAE@XZ,0x0018C300,TurretAIData constructor: exact C++ reconstruction; parseTurret calls its incremental-link thunk at 0x0002F6C1
 ??0TurretState@@IAE@PAVTurretStateMachine@@VAsciiString@@@Z,0x0018D890,base ctor of the five retail TurretAI states; the reference declares TurretState with exactly those children and its ctor is protected taking TurretStateMachine* and AsciiString by value
 ??0TwiddlerClass@@QAE@XZ,0x000063A2,pinharvest x1 (thunk)
 ??0TwiddlerClass@@QAE@XZ,0x0000CDC9,pinharvest x1 (thunk)
@@ -72993,6 +72994,7 @@ name,address,notes
 ?bfmeCallJA@BfmeHookJA@@QAEPAUBfmeSlotJA@@XZ,0x000022BB,pin
 ?bfmeCallUDB@BfmeSrcUDB@@QAEMHH@Z,0x0001AFC8,pin
 ?bfmeCallVKU@@YAXPAXHPAUBfmeStateVKU@@H@Z,0x00022BE7,pin
+?bfmeCallVMC@@YAXHHH@Z,0x00018179,pin
 ?bfmeCall_0000386e@BfmeGlobal_012f706c@@QAEXXZ,0x0000386E,Open-BFME5 the member the 11-byte forwarders on global 0x012F706C tail-jump to
 ?bfmeCall_0000b99c@BfmeGlobal_012ed668@@QAEXXZ,0x0000B99C,Open-BFME5 the member the 11-byte forwarders on global 0x012ED668 tail-jump to
 ?bfmeCall_000131a1@BfmeGlobal_012f4b98@@QAEXXZ,0x000131A1,Open-BFME5 the member the 11-byte forwarders on global 0x012F4B98 tail-jump to
@@ -82184,4 +82186,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0TurretAIData@@QAE@XZ,0x0018C300,TurretAIData constructor: exact C++ reconstruction; parseTurret calls its incremental-link thunk at 0x0002F6C1
