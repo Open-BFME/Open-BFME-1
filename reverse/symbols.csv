@@ -2837,6 +2837,7 @@ name,address,notes
 ??0GrantUpgradeCreateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0HDU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HeightDieUpdate constructor calls the shared ObjectModule constructor ILT
 ??0HRBMD_Buffer@@QAE@XZ,0x0003747A,HitReactionBehaviorModuleData member constructor ILT
+??1BfmeFirstMember1134@@QAE@XZ,0x0001A401,Gen_00581ED0 first-member destructor ILT
 ??0HRB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HitReactionBehavior constructor calls the shared ObjectModule constructor ILT
 ??0HTreeClass@@QAE@ABV0@@Z,0x009527C0,derived from HTreeClass::Alter_Avatar_HTree
 ??0HeaderTemplateINI@@QAE@XZ,0x00851230,Open-BFME5 HeaderTemplateManager init relocation
