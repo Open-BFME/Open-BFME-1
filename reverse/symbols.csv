@@ -82421,3 +82421,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z,0x0087F020,Open-BFME5 fill-n of 0x0087FBE0
 ?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
 ?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
+?find@BfmeMapWV@@QAEHH@Z,0x0002AF2C,Open-BFME5 map range-find ILT used by 0x00749E30 lookup
