@@ -82347,3 +82347,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
 ?bfmeCopyBwdV45@@YAXPAH00@Z,0x00008B75,Open-BFME5 copy-backward pin for 0x0082F610
 ?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
+?set@BfmeSubA100@@QAEXABU1@@Z,0x00033640,Open-BFME5 ILT from 0x002EA100 20B copy loop
