@@ -1,5 +1,4 @@
 name,address,notes
-??0AIAttackSwoopThenIdleStateMachine@@QAE@PAXVAsciiString@@@Z,0x00025095,AIAttackSwoopThenIdleStateMachine constructor ILT identified by exact state-machine literal and matching allocation size
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -1954,6 +1953,7 @@ name,address,notes
 ??0?\@UOrthoEmissionVelocityModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity clone copy-ctor pin
 ??0?\@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x000391A3,Concrete PointEmissionVolume copy ctor pin
 ??0AHB_BaseModuleData@@QAE@XZ,0x0000F0A6,AutoHealBehaviorModuleData constructs the shared module-data base through this ILT
+??0AIAttackSwoopThenIdleStateMachine@@QAE@PAXVAsciiString@@@Z,0x00025095,AIAttackSwoopThenIdleStateMachine constructor ILT identified by exact state-machine literal and matching allocation size
 ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z,0x00030EA4,AICommandParms constructor resolves to the retail ILT at 0x00030EA4 and body 0x00185910; AICommandInterface::aiEnter constructs AICMD_ENTER parameters through this exact target
 ??0AIGroup@@QAE@XZ,0x0002A031,Open-BFME5 ILT; ?createGroup@AI@@QAEPAVAIGroup@@XZ at 0x0014C630 runs it on the 0x40 bytes it allocates
 ??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x0014F280,base ctor of 13 retail State subclasses; the reference declares exactly those classes deriving from AIInternalMoveToState and its ctor takes (StateMachine* AsciiString) by value which matches the copy-then-pass at this address
