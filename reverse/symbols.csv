@@ -82247,3 +82247,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?rva008AF650Implementation@@YAXHHH@Z,0x008AF650,Open-BFME5 cdecl implementation called by the 0x008C3E70 stdcall adapter
 ??0Gen00522E00@@QAE@XZ,0x0001B879,address-derived 0x4C-byte self-registering class; ILT to ctor body 0x00522E00 called by the discarded-new factory 0x00510AC0
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
+?g_bfmeGlobCC0@@3PAVBfmeGlobCC0@@A,0x00EF1104,pin
