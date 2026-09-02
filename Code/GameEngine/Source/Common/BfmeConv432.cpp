@@ -8,6 +8,7 @@ class BfmeThingAZB
 {
 public:
 	void bfmeGoAZB(void *what);
+	void bfmeSetAZB(void *what);
 	unsigned char m_bfmeHead[8];
 	void *m_bfmeWhat;
 	bool m_bfmeReady;
@@ -24,4 +25,21 @@ void BfmeThingAZB::bfmeGoAZB(void *what)
 		m_bfmeReady = false;
 		m_bfmeOn = false;
 	}
+}
+
+// ?bfmeSetAZB@BfmeThingAZB@@QAEXPAX@Z
+void BfmeThingAZB::bfmeSetAZB(void *what)
+{
+	if (m_bfmeWhat != 0)
+	{
+		m_bfmeOn = true;
+		bfmeStopAZB(0);
+		bfmeSendAZB(0, bfmeTextOneAZB, bfmeTextTwoAZB);
+		m_bfmeWhat = 0;
+		m_bfmeReady = false;
+		m_bfmeOn = false;
+	}
+
+	m_bfmeReady = false;
+	m_bfmeWhat = what;
 }
