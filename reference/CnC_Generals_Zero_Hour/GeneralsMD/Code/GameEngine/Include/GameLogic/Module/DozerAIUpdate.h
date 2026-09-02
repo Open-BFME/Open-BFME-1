@@ -49,6 +49,10 @@ class DozerPrimaryStateMachine : public StateMachine
 public:
 
   DozerPrimaryStateMachine( Object *owner );
+
+#ifdef BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
+	unsigned char m_bfmeLayoutPadding[0x0c];
+#endif
 	// virtual destructor prototypes provided by memory pool object
 
 	//-----------------------------------------------------------------------------------------------
@@ -306,4 +310,3 @@ private:
 
 
 #endif // __DOZERAIUPDATE_H_
-

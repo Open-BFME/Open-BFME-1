@@ -41,6 +41,10 @@ class SupplyTruckStateMachine : public StateMachine
 public:
 	SupplyTruckStateMachine( Object *owner );
 
+#ifdef BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
+	unsigned char m_bfmeLayoutPadding[0x0c];
+#endif
+
 // state transition conditions
 
 	static Bool ownerDocking( State *thisState, void* userData );

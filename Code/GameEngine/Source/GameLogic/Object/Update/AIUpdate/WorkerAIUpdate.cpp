@@ -31,6 +31,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
+#define BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/ActionManager.h"
@@ -63,6 +64,7 @@
 #include "GameLogic/Module/SupplyCenterDockUpdate.h"
 #include "GameLogic/Module/SupplyWarehouseDockUpdate.h"
 #include "GameLogic/Module/WorkerAIUpdate.h"
+#undef BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
 
 
 #ifdef _INTERNAL
@@ -207,27 +209,72 @@ Real WorkerAIUpdate::getBoredRange( void ) const
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?createMachines@WorkerAIUpdate@@AAEXXZ present-unmatched
+namespace
+{
+// BFME places the three machine pointers at +0x41c, +0x420 and +0x424.  The
+// vendored WorkerAIUpdate layout is the ZH layout, so use a TU-local view here
+// rather than changing the shared class (which would perturb its other bodies).
+struct BfmeWorkerAIUpdateMachineFields
+{
+	unsigned char m_padding[0x41c];
+	WorkerStateMachine *m_workerMachine;
+	DozerPrimaryStateMachine *m_dozerMachine;
+	SupplyTruckStateMachine *m_supplyTruckStateMachine;
+};
+
+struct BfmeWorkerAIUpdateOwnerFields
+{
+	unsigned char m_padding[0x08];
+	Object *m_object;
+
+	Object *getObject() const { return m_object; }
+};
+
+struct BfmeStateMachineVirtuals
+{
+#define BFME_STATE_MACHINE_VIRTUAL_PAD( N ) virtual void pad##N();
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 0 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 1 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 2 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 3 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 4 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 5 )
+	BFME_STATE_MACHINE_VIRTUAL_PAD( 6 )
+#undef BFME_STATE_MACHINE_VIRTUAL_PAD
+	virtual StateReturnType initDefaultState();
+};
+
+static __forceinline void bfmeInitDefaultState( StateMachine *machine )
+{
+	reinterpret_cast<BfmeStateMachineVirtuals *>( machine )->initDefaultState();
+}
+}
+
 void WorkerAIUpdate::createMachines( void )
 {
+	BfmeWorkerAIUpdateMachineFields *fields =
+		reinterpret_cast<BfmeWorkerAIUpdateMachineFields *>( this );
 
-	if( m_workerMachine == NULL )
+	if( fields->m_workerMachine == NULL )
 	{
-		m_workerMachine = newInstance(WorkerStateMachine)( getObject() );
+		fields->m_workerMachine = newInstance(WorkerStateMachine)( *reinterpret_cast<Object **>(
+			reinterpret_cast<char *>( this ) + 0x08 ) );
 
-		if( m_dozerMachine == NULL )
+		if( fields->m_dozerMachine == NULL )
 		{
-			m_dozerMachine = newInstance(DozerPrimaryStateMachine)( getObject() );
-			m_dozerMachine->initDefaultState();
+			fields->m_dozerMachine = newInstance(DozerPrimaryStateMachine)(
+				reinterpret_cast<BfmeWorkerAIUpdateOwnerFields *>( this )->getObject() );
+			bfmeInitDefaultState( fields->m_dozerMachine );
 		}
 
-		if( m_supplyTruckStateMachine == NULL )
+		if( fields->m_supplyTruckStateMachine == NULL )
 		{
-			m_supplyTruckStateMachine = newInstance(SupplyTruckStateMachine)( getObject() );
-			m_supplyTruckStateMachine->initDefaultState();
+			fields->m_supplyTruckStateMachine = newInstance(SupplyTruckStateMachine)( *reinterpret_cast<Object **>(
+					reinterpret_cast<char *>( this ) + 0x08 ) );
+			bfmeInitDefaultState( fields->m_supplyTruckStateMachine );
 		}
 
-		m_workerMachine->initDefaultState();// this has to wait until all three are in place since
+		bfmeInitDefaultState( fields->m_workerMachine );// this has to wait until all three are in place since
 		// an immediate transition check will ask questions of the machines.
 
 //#ifdef _DEBUG

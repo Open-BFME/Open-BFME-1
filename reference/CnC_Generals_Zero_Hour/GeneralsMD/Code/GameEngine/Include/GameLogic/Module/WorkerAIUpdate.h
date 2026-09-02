@@ -47,6 +47,10 @@ class WorkerStateMachine : public StateMachine
 public:
 	WorkerStateMachine( Object *owner );
 
+#ifdef BFME_WORKER_AIUPDATE_MACHINE_LAYOUT
+	unsigned char m_bfmeLayoutPadding[0x0c];
+#endif
+
 // state transition conditions
 	static Bool supplyTruckSubMachineWantsToEnter( State *thisState, void* userData );
 	static Bool supplyTruckSubMachineReadyToLeave( State *thisState, void* userData );
@@ -271,4 +275,3 @@ private:
 
 
 #endif // __WORKER_AI_UPDATE_H_
-
