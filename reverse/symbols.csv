@@ -74042,6 +74042,8 @@ name,address,notes
 ?bfmeIdCWB@@3HA,0x00EF102C,pin
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
+?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
+?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeInChannelUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00871C40,pin
 ?bfmeIncVGO@@YAIPAI@Z,0x00894D80,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
@@ -77964,6 +77966,7 @@ name,address,notes
 ?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z,0x00977FF0
 ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
 ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
+?go@Rva0090C2F0Inner@@QAEXHHHHHHH@Z,0x0090C2F0,Open-BFME5 sibling dump callee for 0x0090E2A0
 ?goProne@ProneUpdate@@QAEXPBVDamageInfo@@@Z,0x00015456,ILT fronting the 76-byte body at 0x002A0120; from AIUpdateInterface::privateGoProne
 ?gotInternalAddress@NAT@@IAEXHI@Z,0x00670D70,processGlobalMessage callee
 ?gotMangledPort@NAT@@IAEXHG@Z,0x00671EB0,processGlobalMessage callee
@@ -80079,6 +80082,10 @@ name,address,notes
 ?rva0082C6E0CopyValues@@YAPAURva0082C6E0Value@@PAU1@00@Z,0x00018179,0x0082C6E0 vector erase trivial-copy thunk;target=0x00065E30
 ?rva0082C760Acquire@@YAXPAVNodeAllocMutex@_STL@@@Z,0x0082C760,node_alloc real acquire called by _M_acquire_lock
 ?rva008fd2a0@@YAXXZ,0x008FD2A0,DX8 vertex-buffer creation retry calls the already matched no-argument invalidation wrapper
+?rva00906340CellCtor@@YAXPAX@Z,0x004110D6,Open-BFME5 cell ctor ILT
+?rva00906340CellDtor@@YAXPAX@Z,0x00430652,Open-BFME5 cell dtor ILT
+?rva00906340VecCtor@@YGXPAXIHP6AX0@Z1@Z,0x009F6EE4,Open-BFME5 eh vector ctor iterator
+?rva00906340VecCtor@@YGXPAXIHP6AXPAX@Z1@Z,0x009F6EE4,Open-BFME5 eh vector ctor iterator
 ?rva220840Callback@@YAXXZ,0x006207F0,Open-BFME5 dispatch callback pin
 ?rva379ec0SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 small-block deallocator reached by the CrateTemplate node-list destructor
 ?rva423670SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 record small-block deallocator pin
@@ -82193,5 +82200,3 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeApply1VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 first source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply2VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 second source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
-?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
-?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
