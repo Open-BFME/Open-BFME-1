@@ -82435,3 +82435,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?clearSlot@Rva007FA2C0@@QAEXPAX@Z,0x007F9AC0,FESL transactor slot teardown called from 0x007FA170
+??0Rva007E8810Message@@QAE@XZ,0x007E8810,FESL message ctor used by 0x007FA170 nonblock timeout
+??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
