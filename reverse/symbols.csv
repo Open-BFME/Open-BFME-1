@@ -2209,6 +2209,7 @@ name,address,notes
 ??0BfmeTempCME@@QAE@XZ,0x00037EC5,pin
 ??0BfmeThingBE@@QAE@XZ,0x008BE3B0,Open-BFME5 the constructor the new expression at 0x008BE660 runs on its block
 ??0BfmeUnicodeArgBase@@AAE@ABV0@@Z,0x00888400,alias of the wide string copy constructor pinned at the same address; InGameUI.cpp builds the by-value GadgetRadioSetText argument through a view because the reference header keeps the copy out of line
+??0BfmeValVNJ@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BinkVideoPlayer@@QAE@XZ,0x0000B0A5,pinharvest x1 (thunk)
 ??0BinkVideoPlayer@@QAE@XZ,0x00045AF7,pinharvest x1 (thunk)
 ??0Bitmap2DObjClass@@QAE@ABV0@@Z,0x00956140,Open-BFME5 retail bitmap copy constructor pin
@@ -76744,6 +76745,7 @@ name,address,notes
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDVIW@@3PAXA,0x00F0A5C4,pin
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
+?g_bfmeDefVNJ@@3DA,0x00F36E50,pin
 ?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
 ?g_bfmeDefault996@@3PADA,0x00D2233C,pin
 ?g_bfmeDefaultUDD@@3PADA,0x00F36E50,pin
