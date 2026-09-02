@@ -73211,6 +73211,7 @@ name,address,notes
 ?bfmeCopyVJZ@BfmeColorVJZ@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCopyVKV@BfmeStrVKV@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCopyWR@@YAPAUBfmePod16WR@@PAU1@00ABUBfmeTagWR@@PAH@Z,0x0003F369,Open-BFME5 16-byte __copy ILT used by 0x0074E6B0 resize erase
+?bfmeCosVNB@@YAMM@Z,0x00873920,pin
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
@@ -74228,6 +74229,11 @@ name,address,notes
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
 ?bfmeInsertV17@BfmeVecV17@@QAEXPAHI0@Z,0x0002A059,Open-BFME5 insert n copies thunk for 0x0082FA70
+?bfmeInsertV51@BfmeStrV51@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831EA0
+?bfmeInsertV52@BfmeStrV52@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831E00
+?bfmeInsertV53@BfmeStrV53@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831BE0
+?bfmeInsertV54@BfmeStrV54@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831970
+?bfmeInsertV55@BfmeStrV55@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831CE0
 ?bfmeIntern996@BfmeMap996@@QAEHPAD@Z,0x0003ADD7,pin
 ?bfmeIntersects@GeometryInfo@@QBE_NABUCoord3D@@MABV1@0M@Z,0x0087F2F0,Open-BFME5 oriented GeometryInfo intersection predicate called by Object wrapper 0x001BE980; direct body pin; descriptive spelling
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
@@ -74888,6 +74894,7 @@ name,address,notes
 ?bfmeShowEAA@BfmeUiEAA@@QAEXPAXPBDH01HHH@Z,0x00015235,pin
 ?bfmeShowEAC@BfmeUiEAC@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
+?bfmeSinVNB@@YAMM@Z,0x00873910,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
 ?bfmeSkip1092@BfmeE1092@@QAEDPAVBfmeR1092@@@Z,0x00003B1B,pin
 ?bfmeSlot1024@BfmeSlots1024@@QAEPAPAVBfmeV1024@@H@Z,0x000100A0,pin
@@ -75005,6 +75012,8 @@ name,address,notes
 ?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
 ?bfmeStore1173@BfmeSlot1173@@QAEXPAXH@Z,0x00802550,pin
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
+?bfmeStrlenV51@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831EA0
+?bfmeStrlenV55@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831CE0
 ?bfmeSub1224@BfmeA1224@@QAEPAVBfmeE1224@@H@Z,0x00899430,pin
 ?bfmeSubVIY@BfmeThingVIY@@QAEXPAVBfmeMsgVIX@@PAX1@Z,0x007F1400,pin
 ?bfmeSubVJC@BfmeThingVJC@@QAEXPAVBfmeMsgVJC@@PAX1@Z,0x007F1800,pin
@@ -75145,12 +75154,18 @@ name,address,notes
 ?bfmeThrow1152@BfmeS1152@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1154@BfmeS1154@@QAEXXZ,0x000132CD,pin
+?bfmeThrow2V53@BfmeStrV53@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831BE0
+?bfmeThrow2V54@BfmeStrV54@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831970
+?bfmeThrow2V55@BfmeStrV55@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831CE0
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
 ?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
 ?bfmeThrowV37@BfmeStrV37@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831780
 ?bfmeThrowV38@BfmeStrV38@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830B10
 ?bfmeThrowV43@BfmeStrV43@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831080
+?bfmeThrowV53@BfmeStrV53@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831BE0
+?bfmeThrowV54@BfmeStrV54@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831970
+?bfmeThrowV55@BfmeStrV55@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831CE0
 ?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
@@ -75796,6 +75811,9 @@ name,address,notes
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
 ?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
+?copyFrom@BfmeTailA2@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EA20
+?copyFrom@BfmeTailAA@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EAA0
+?copyFrom@BfmeTailF0@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F0F0
 ?copyFrom@BfmeTailF4@@QAEXPAU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F4D0
 ?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
 ?copyFrom@DictPair@Dict@@QAEXPAU12@@Z,0x00013E94
@@ -82372,19 +82390,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeStrlenV51@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831EA0
-?bfmeInsertV51@BfmeStrV51@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831EA0
-?copyFrom@BfmeTailF0@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F0F0
-?bfmeInsertV52@BfmeStrV52@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831E00
-?copyFrom@BfmeTailA2@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EA20
-?bfmeThrowV53@BfmeStrV53@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831BE0
-?bfmeThrow2V53@BfmeStrV53@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831BE0
-?bfmeInsertV53@BfmeStrV53@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831BE0
-?copyFrom@BfmeTailAA@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EAA0
-?bfmeThrowV54@BfmeStrV54@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831970
-?bfmeThrow2V54@BfmeStrV54@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831970
-?bfmeInsertV54@BfmeStrV54@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831970
-?bfmeStrlenV55@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831CE0
-?bfmeThrowV55@BfmeStrV55@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831CE0
-?bfmeThrow2V55@BfmeStrV55@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831CE0
-?bfmeInsertV55@BfmeStrV55@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831CE0
