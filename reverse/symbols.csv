@@ -82273,3 +82273,11 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeEraseV17@BfmeVecV17@@QAEXPAH0@Z,0x00002A3B,Open-BFME5 erase range thunk for 0x0082FA70
 ?bfmeInsertV17@BfmeVecV17@@QAEXPAHI0@Z,0x0002A059,Open-BFME5 insert n copies thunk for 0x0082FA70
 ?cell@BfmeGridWM@@QAEXHH@Z,0x00023B14,Open-BFME5 grid cell thiscall used by 0x0074C890 nested walk
+?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
+?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
+?bfmeFinish@Gen_00742DA0@@QAEXXZ,0x000312A0,Open-BFME5 ILT from 0x00742DA0 flag reset
+?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
+?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
+?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
+?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
+??0TextureVectorBaseCtorShim@@QAE@HPBV?$RefCountPtr@VTextureClass@@@@@Z,0x0092FBA0,Open-BFME5 texture vector base constructor object symbol;candidate identity is the reloc-named TextureVectorBaseCtorShim construct

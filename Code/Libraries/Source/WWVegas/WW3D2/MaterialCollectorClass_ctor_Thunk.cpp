@@ -2,17 +2,73 @@
 // readable body of ??0MaterialCollectorClass@@QAE@XZ: Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
+#include <new.h>
+
+void *__cdecl operator new[](unsigned int size);
+void __cdecl operator delete[](void *pointer);
+
 class ShaderVectorBaseCtorShim
 {
 public:
 	void construct(int, int);
 };
 
+class TextureClass
+{
+public:
+	void Release_Ref();
+};
+
+template <class T>
+class RefCountPtr
+{
+public:
+	RefCountPtr() : Referent(0) {}
+	~RefCountPtr()
+	{
+		if (Referent != 0) {
+			Referent->Release_Ref();
+			Referent = 0;
+		}
+	}
+
+private:
+	T *Referent;
+};
+
+typedef RefCountPtr<TextureClass> TextureVectorCell;
+
 class TextureVectorBaseCtorShim
 {
 public:
-	void construct(int, int);
+	__declspec(noinline) TextureVectorBaseCtorShim(int, TextureVectorCell const *);
+	virtual ~TextureVectorBaseCtorShim();
+
+private:
+	TextureVectorCell *Vector;
+	int VectorMax;
+	bool IsValid;
+	bool IsAllocated;
+	bool VectorClassPad[2];
 };
+
+TextureVectorBaseCtorShim::TextureVectorBaseCtorShim(int size, TextureVectorCell const *array)
+{
+	*(unsigned int *)this = 0x0113c5fc;
+	Vector = 0;
+	VectorMax = size;
+	IsValid = true;
+	IsAllocated = false;
+
+	if (size) {
+		if (array) {
+			Vector = new ((void *)(unsigned char *)array) TextureVectorCell[size];
+		} else {
+			Vector = new TextureVectorCell[size];
+			IsAllocated = true;
+		}
+	}
+}
 
 class ShaderVector
 {
@@ -51,11 +107,12 @@ private:
 };
 
 class TextureVector
+	: public TextureVectorBaseCtorShim
 {
 public:
 	__forceinline TextureVector()
+		: TextureVectorBaseCtorShim(0, 0)
 	{
-		((TextureVectorBaseCtorShim *)this)->construct(0, 0);
 		*(unsigned int *)((unsigned char *)this + 0x10) = 0;
 		*(unsigned int *)this = 0x0113c62c;
 		*(unsigned int *)((unsigned char *)this + 0x14) = 10;
@@ -63,7 +120,7 @@ public:
 	~TextureVector();
 
 private:
-	unsigned char m_data[0x18];
+	unsigned char m_data[8];
 };
 
 class ShaderValue
