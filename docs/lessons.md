@@ -2387,3 +2387,15 @@ and delta==member offset — the shapes that do not match. Skeleton to copy:
 (`mov eax,[obj+0x68]; mov ecx,[eax+vbindex]; add ecx,delta; lea ecx,[ecx+obj+0x68]`)
 falls out byte-shaped once the PMF is passed as a value (parameter or local the
 optimizer cannot fold).
+
+**SIB base/index order is a source-level lever, not allocator noise.** A body that
+misses by one ModRM/SIB byte -- ours `[edi+edx]`, retail `[edx+edi]` -- has the
+counter and the pointer in swapped SIB slots. MSVC 7.1 puts the POINTER in the base
+slot for `p[i]`, `*(p+i)` and `i[p]` alike; it puts the COUNTER in the base slot
+only when the pointer enters the address as an integer on the right of the counter:
+`*(const char *)(i + (unsigned int)p)`. Proven on 0x009D7B80 (57/57 from a
+one-byte miss, `build/sib_gen.py` matrix); the same four-byte SIB defect gates the
+563-byte VP6 filters 0x009AFA60/0x009AFEC0 (score 0.97) and any "single SIB byte"
+partial. Tool for the other side of that coin: `tools/vtable_lookup.py <vtable VA>`
+prints a class's retail slot table, ledger names per slot, and every ctor/dtor that
+installs the vtable -- the usual answer to "owning class unidentified".
