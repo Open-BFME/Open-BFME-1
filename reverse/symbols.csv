@@ -74038,6 +74038,7 @@ name,address,notes
 ?bfmeFreeELD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeEXB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeEYG@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeLarge007883D0@@YAXPAX@Z,0x00881EB0,retail large-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeNodeVOA@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeNodeVOB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
@@ -74046,6 +74047,7 @@ name,address,notes
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeSmall007883D0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
@@ -75543,6 +75545,7 @@ name,address,notes
 ?bfmeVisit1236@BfmeNode1236@@QAEXXZ,0x008ADB50,address-derived node method called by the 0x008BD670 traversal
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
+?bfmeVtable007883D0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007883D0 destructor
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
 ?bfmeWalkWorldCells@Pathfinder@@QAEHABUICoord2D@@0HPAPBUCoord3D@@@Z,0x0004ACBE,Open-BFME5 world-cell walk ILT used by 0x003DAC20
 ?bfmeWrite@BfmeSetupRecord@@QAEXPBDH@Z,0x007E8A10,Open-BFME5 the write the two-field setup stubs call twice
@@ -82815,3 +82818,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BFU_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 BoneFXUpdate base destructor call target
 ?g_bfmeDeadlineClock@@3PAUBfmeDeadlineClock@@A,0x00EF0898,Open-BFME5 frame clock global read by 0x0028EEB0
+?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHH@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHH@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@AAEXI@Z,0x0000BB40,hashtable initialize_buckets ILT from FXListStore ctor
