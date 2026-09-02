@@ -378,14 +378,47 @@ static FunctionLexicon::TableEntry winLayoutShutdownTable[] =
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 FunctionLexicon *TheFunctionLexicon = NULL;  ///< the function dictionary
 
+// This TU-local StringBase declaration uses the existing WWLib ABI symbols;
+// the facade preserves retail's one-pointer temporary and inline data view.
+template <typename T>
+class StringBase
+{
+	friend class BFMEFunctionLexiconString;
+
+private:
+	StringBase( const T *text );
+	~StringBase();
+
+	const T *str() const
+	{
+		static const T nullCharacter = (T)0;
+		return m_data ? (const T *)m_data + 8 : &nullCharacter;
+	}
+
+private:
+	void *m_data;
+};
+
+class BFMEFunctionLexiconString : public StringBase<char>
+{
+public:
+	BFMEFunctionLexiconString( const char *text )
+		: StringBase<char>( text ) { }
+	~BFMEFunctionLexiconString() { }
+
+	operator const char *() const
+	{
+		return str();
+	}
+};
+
 //-------------------------------------------------------------------------------------------------
 /** Since we have a convenient table to organize our callbacks anyway,
 	* we'll just use this same storage space to load in any run time
 	* components we might want to add to the table, such as generating
 	* a key based off the name supplied in the table for faster access */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/FunctionLexicon_loadTable_Thunk.cpp
-// ?loadTable@FunctionLexicon@@IAEXPAUTableEntry@1@W4TableIndex@1@@Z present-unmatched
+// Open-BFME5: convert FunctionLexicon::loadTable with the retail StringBase ABI.
 void FunctionLexicon::loadTable( TableEntry *table, 
 																 TableIndex tableIndex )
 {
@@ -396,16 +429,20 @@ void FunctionLexicon::loadTable( TableEntry *table,
 
 	// loop through all entries
 	TableEntry *entry = table;
-	while( entry->name )
+	if( entry->name )
 	{
+		do
+		{
+			// assign key from name key based on name provided in table
+			{
+				BFMEFunctionLexiconString name( entry->name );
+				entry->key = TheNameKeyGenerator->nameToKey( name );
+			}
 
-		// assign key from name key based on name provided in table
-		entry->key = TheNameKeyGenerator->nameToKey( AsciiString(entry->name) );
-
-		// next table entry please
-		entry++;
-
-	}  // end while
+			// next table entry please
+			entry++;
+		} while( entry->name );
+	}
 
 	// assign table to the index specified
 	m_tables[ tableIndex ] = table;
