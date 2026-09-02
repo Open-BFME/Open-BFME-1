@@ -77349,8 +77349,10 @@ name,address,notes
 ?g_bfmeVftVIH@@3PAHA,0x00D2D210,pin
 ?g_bfmeVtVLU@@3PAUBfmeVtVLU@@A,0x00F37A30,pin
 ?g_bfmeVtaVNE@@3PAXA,0x00CED8D4,pin
+?g_bfmeVtaVNF@@3PAXA,0x00CED8D4,pin
 ?g_bfmeVtbVNE@@3PAXA,0x00CED97C,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
+?g_bfmeVtcVNF@@3PAXA,0x00CED938,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
 ?g_bfmeW1027@@3PAVBfmeW1027@@A,0x00EF4B98,pin
 ?g_bfmeW1060@@3PAVBfmeW1060@@A,0x00EF3330,pin
