@@ -82528,3 +82528,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
+?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target
