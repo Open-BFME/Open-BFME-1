@@ -10914,6 +10914,7 @@ name,address,notes
 ?TheKeepObjectDiePool@?1??getClassMemoryPool@KeepObjectDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC24,pool-glue cascade static (back-solved)
 ?TheLaserUpdatePool@?1??getClassMemoryPool@LaserUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF7028,pool-glue cascade static (back-solved)
 ?TheLifetimeUpdatePool@?1??getClassMemoryPool@LifetimeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFFB8,pool-glue cascade static (back-solved)
+?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
 ?TheLocalFileSystem@@3PAVLocalFileSystem@@A,0x0134D060,LocalFileSystem* global
 ?TheLockWeaponCreatePool@?1??getClassMemoryPool@LockWeaponCreate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFB94,pool-glue cascade static (back-solved)
 ?TheLocomotorSetUpgradePool@?1??getClassMemoryPool@LocomotorSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0580,pool-glue cascade static (back-solved)
@@ -74302,6 +74303,7 @@ name,address,notes
 ?bfmeGetLogUUA@@YAPAVBfmeLogUUA@@XZ,0x007EB810,pin
 ?bfmeGetLogUVB@@YAPAVBfmeLogUVB@@XZ,0x007EB810,pin
 ?bfmeGetLogVNC@@YAPAVBfmeLogVNC@@XZ,0x007EB810,pin
+?bfmeGetLogVPE@@YAPAVBfmeLogVPE@@XZ,0x007EB810,pin
 ?bfmeGetLookup1282@BfmeEntrySource1282@@QAEPAVBfmeTab1034@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BAAB0 retail body
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
@@ -83158,4 +83160,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
