@@ -73186,6 +73186,7 @@ name,address,notes
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
 ?bfmeCopyEFG@BfmeThingEFG@@QAEXPAV1@@Z,0x000201A3,pin
+?bfmeCopyFwdV49@@YAXPAX00@Z,0x0000E8AE,Open-BFME5 copy-fwd pin for 0x00830410
 ?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x0002C14C,Open-BFME5 the copier the allocate-and-delegate body at 0x00134BB0 hands its range and block to
 ?bfmeCopyInto_00134C20@@YAXPBUBfmeCopyElem_00134C20@@0PAU1@PAI@Z,0x00031E4E,Open-BFME5 the copier the allocate-and-delegate body at 0x00134C20 hands its range and block to
 ?bfmeCopyInto_0020E8D0@@YAXPBUBfmeCopyElem_0020E8D0@@0PAU1@PAI@Z,0x00024528,Open-BFME5 the copier the allocate-and-delegate body at 0x0020E8D0 hands its range and block to
@@ -73194,6 +73195,7 @@ name,address,notes
 ?bfmeCopyInto_005716D0@@YAXPBUBfmeCopyElem_005716D0@@0PAU1@PAI@Z,0x00027782,Open-BFME5 the copier the allocate-and-delegate body at 0x005716D0 hands its range and block to
 ?bfmeCopyOneCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0000D8A5,pin
 ?bfmeCopyOneCKA@BfmePartCKA@@QAEXPAU1@@Z,0x00018A70,pin
+?bfmeCopyOneV50@@YAXPAX0@Z,0x000180CF,Open-BFME5 copy-one pin for 0x008300B0
 ?bfmeCopySlotA@@YAXPAUBfmeSlotA@@PAX@Z,0x00002A8B,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotB@@YAXPAUBfmeSlotB@@PAX@Z,0x0003BB51,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotC@@YAXPAUBfmeSlotC@@PAX@Z,0x00045877,Open-BFME5 the copy the bounded appends call
@@ -73219,6 +73221,9 @@ name,address,notes
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
 ?bfmeCurIdVHT@BfmeChunkVHT@@QAEIXZ,0x009E1440,pin
 ?bfmeDeallocV46@BfmeStrV46@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FE50
+?bfmeDeallocV48@BfmeStrV48@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FBB0
+?bfmeDeallocV49@BfmeStrV49@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x00830410
+?bfmeDeallocV50@BfmeStrV50@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x008300B0
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
 ?bfmeDecVGO@@YAIPAI@Z,0x00894D90,pin
 ?bfmeDecay@BfmeCell@@QAEXMM@Z,0x0002116B,BfmeCellGrid decay loop calls this ILT to the exact landed 0x001B12B0 cell decay body
@@ -73903,6 +73908,7 @@ name,address,notes
 ?bfmeFreeUNA@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
 ?bfmeFreeV46@@YAXPAXI@Z,0x000159D8,Open-BFME5 deallocate pin for 0x0082FE50
+?bfmeFreeV47@BfmeVecV47@@QAEXXZ,0x00028006,Open-BFME5 vector free pin for 0x0082F310
 ?bfmeFreeVA@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVB@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
@@ -74644,6 +74650,7 @@ name,address,notes
 ?bfmeReleaseVGR@BfmeTexVGR@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVGS@BfmeTexVGS@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVGX@BfmeTexVGX@@QAEXXZ,0x009EB7A0,pin
+?bfmeReleaseVMZ@BfmeStrVMZ@@QAEXXZ,0x00887940,pin
 ?bfmeRemove1183@BfmeList1183@@QAEXPAUBfmeSlot1183@@@Z,0x0001DFE3,pin
 ?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
@@ -74837,6 +74844,7 @@ name,address,notes
 ?bfmeSetRQ@BfmeInnerRQ@@QAEXHH@Z,0x0000A5DD,pin
 ?bfmeSetSLA@BfmeSetterSLA@@QAEXPAXH@Z,0x000307E7,pin
 ?bfmeSetSize@BfmeShadowPart@@QAEXMM@Z,0x00022D86,Open-BFME5 ILT thunk to body 0x00428250; ?setSize@Shadow@@QAEXMM@Z at 0x001E4250 calls it on every live entry of the two four-pointer arrays at +0x94 and +0xA4; address-derived name
+?bfmeSetSizeVLR@Rva007EB8B0Log@@QAEXH@Z,0x007EB7A0,FESL vararg buffer grow used by 0x007EB8B0
 ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z,0x008D3050,address-derived node state method called by the 0x008BB570 retail body
 ?bfmeSetStrUXC@BfmeThingUXC@@QAEXPBD@Z,0x00887B60,pin
 ?bfmeSetTCB@BfmeSetterTCB@@QAEXPAXH@Z,0x00037A56,pin
@@ -74869,6 +74877,7 @@ name,address,notes
 ?bfmeSetVKC@BfmeUniVKC@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMV@BfmeStrVMV@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMX@BfmeStrVMX@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeSetVMZ@BfmeStrVMZ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75786,7 +75795,9 @@ name,address,notes
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
+?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
 ?copyFrom@BfmeTailF4@@QAEXPAU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F4D0
+?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
 ?copyFrom@DictPair@Dict@@QAEXPAU12@@Z,0x00013E94
 ?copyFromQueueNode@BFMENetworkQueueItem1@@QAEXPAX@Z,0x00032F6A,native BFME queue item copy helper for wrapper queue +0x3c
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
@@ -76264,6 +76275,7 @@ name,address,notes
 ?findCommandSet@ControlBar@@QAEPBVCommandSet@@ABVAsciiString@@@Z,0x00048CCA,ControlBar::findCommandSet via ILT thunk
 ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509
 ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z,0x0000442B,Open-BFME5 ILT thunk to 0x004AD740; REL32 target of setControlBarScheme at 0x004AD8B5
+?findControlBarScheme@ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate@@QAEPAVControlBarScheme@@VControlBarSchemeAsciiString@@@Z,0x0000442B,TU-local view forwards through the existing ControlBarSchemeManager::findControlBarScheme ILT at 0x0000442B for the 0x004ADE40 clean C++ body
 ?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z,0x0001B8CE,Open-BFME5 ILT; CrateSystem::newCrateTemplate calls the BFME find-by-name implementation through this retail thunk
 ?findExperienceScalarTable@ExperienceLevelSystem@@QAEPAUBfmeVec@@ABVAsciiString@@@Z,0x00021797,BfmeThingEFE constructor calls this ILT to resolve its configured scalar table
 ?findFXList@FXListStore@@QBEPBVFXList@@PBD@Z,0x0001EDE9
@@ -77185,6 +77197,7 @@ name,address,notes
 ?g_bfmeStr1279B@@3PADA,0x00D18E44,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
+?g_bfmeStrStrVMZ@@3P6APADPBD0@ZA,0x00F594D0,pin
 ?g_bfmeSubB3@@3NA,0x00C7C640,Open-BFME5 double sub for 0x0040B300
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
@@ -79719,6 +79732,7 @@ name,address,notes
 ?operator_delete_sized@@YAXPAX@Z,0x00881EF0,ShareBuffer dtor free/delete helper
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x0001745E,pinharvest x1 (thunk)
 ?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
+?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
 ?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287D00,BoneFXUpdateModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
@@ -82358,14 +82372,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeFreeV47@BfmeVecV47@@QAEXXZ,0x00028006,Open-BFME5 vector free pin for 0x0082F310
-?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
-?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
-?bfmeDeallocV48@BfmeStrV48@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FBB0
-?findControlBarScheme@ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate@@QAEPAVControlBarScheme@@VControlBarSchemeAsciiString@@@Z,0x0000442B,TU-local view forwards through the existing ControlBarSchemeManager::findControlBarScheme ILT at 0x0000442B for the 0x004ADE40 clean C++ body
-?bfmeSetSizeVLR@Rva007EB8B0Log@@QAEXH@Z,0x007EB7A0,FESL vararg buffer grow used by 0x007EB8B0
-?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
-?bfmeCopyFwdV49@@YAXPAX00@Z,0x0000E8AE,Open-BFME5 copy-fwd pin for 0x00830410
-?bfmeDeallocV49@BfmeStrV49@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x00830410
-?bfmeCopyOneV50@@YAXPAX0@Z,0x000180CF,Open-BFME5 copy-one pin for 0x008300B0
-?bfmeDeallocV50@BfmeStrV50@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x008300B0
