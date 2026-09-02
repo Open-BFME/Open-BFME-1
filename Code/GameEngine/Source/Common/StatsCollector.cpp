@@ -351,6 +351,26 @@ void StatsCollector::update()
 	m_lastUpdate = TheGameLogic->getFrame();
 }
 
+void StatsCollector::collectScoreKeeperStats()
+{
+	Player *player = ThePlayerList->getLocalPlayer();
+	if( player )
+	{
+		ScoreKeeper *scoreKeeper = player->getScoreKeeper();
+		if( scoreKeeper )
+		{
+			m_scoreKeeperMoneySpent = scoreKeeper->getTotalMoneySpent();
+			m_scoreKeeperMoneyEarned = scoreKeeper->getTotalMoneyEarned();
+			m_scoreKeeperUnitsDestroyed = scoreKeeper->getTotalUnitsDestroyed();
+			m_scoreKeeperUnitsBuilt = scoreKeeper->getTotalUnitsBuilt();
+			m_scoreKeeperUnitsLost = scoreKeeper->getTotalUnitsLost();
+			m_scoreKeeperBuildingsDestroyed = scoreKeeper->getTotalBuildingsDestroyed();
+			m_scoreKeeperBuildingsBuilt = scoreKeeper->getTotalBuildingsBuilt();
+			m_scoreKeeperBuildingsLost = scoreKeeper->getTotalBuildingsLost();
+		}
+	}
+}
+
 void StatsCollector::writeInitialFileInfo()
 {
 	FILE *f = fopen( m_statsFileName.str(), "w" );
