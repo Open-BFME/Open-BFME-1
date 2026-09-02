@@ -80194,6 +80194,7 @@ name,address,notes
 ?send@ConnectionManagerSendFrameDataShim@@QAEXII@Z,0x00664D20,ConnectionManager sendFrameDataToPlayer incremental-link thunk target through a TU-local forwarding shim
 ?send@NATSendMangledPortShim@@QAEXGPAVGameSlot@@@Z,0x006718A0,NAT sendMangledPortNumberToTarget incremental-link thunk target through a TU-local forwarding shim
 ?send@TransportDoSendShim@@QAE_NXZ,0x006834B0,Transport doSend incremental-link thunk target through a TU-local forwarding shim
+?sendChat@BFMEConnectionManager@@QAEXVUnicodeString@@H@Z,0x006675E0,Open-BFME5 Network::sendChat call target recovered from the vtable-slot body and its two-argument ret 8 call shape
 ?sendChat@DisconnectMenu@@QAEXVUnicodeString@@@Z,0x0050EE90,EXTRA(not in W3 list) ZH sendChat twin: TheLanguageFilter 0x012F1570 ->filterLine 0x0044DB90 when set then TheNetwork 0x012F7714 slot +0x54 sendDisconnectChat 0x006824C0; callers onQuit 0x0050F21B and onChatEnterText 0x0050F35B; ILT 0x0003E98C
 ?sendChat@Network@@UAEXVUnicodeString@@H@Z,0x00682440,vtable 0x0111A968 slot 20 (+0x50) via ILT 0x0002B512; copies the UnicodeString (??0?$StringBase@G copy ctor 0x00888400) and calls conMgr 0x006675E0 with (text playerMask) ret 8 = ZH sendChat(text playerMask); caller in-game chat 0x005142B8; NOTE callee 0x006675E0 is ledgered ?sendDisconnectVoteCommand@BFMEConnectionManager@@QAEXHI@Z yet receives a UnicodeString by value (identity-suspect for that row)
 ?sendCode@BfmeObjF3E@@QAEXHPAX@Z,0x0002BF2B,pin

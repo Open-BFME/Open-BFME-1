@@ -164,6 +164,7 @@ Real Network::getIncomingPacketsPerSecond(void)
 class BFMEConnectionManager
 {
 public:
+	void sendChat(UnicodeString text, Int playerMask);
 	void sendProgressCommand(Int percent);
 
 	// BFME grew the connection manager before its disconnect manager pointer;
@@ -171,6 +172,14 @@ public:
 	char m_bfmePad[0x120e0];
 	DisconnectManager *m_disconnectManager;
 };
+
+// BFME's normal chat path forwards the by-value text and player mask through
+// the expanded connection manager.  The retail body is the vtable slot-20
+// implementation at 0x00682440.
+void Network::sendChat(UnicodeString text, Int playerMask)
+{
+	((BFMEConnectionManager *)m_conMgr)->sendChat(text, playerMask);
+}
 
 void Network::updateLoadProgress(Int percent)
 {
