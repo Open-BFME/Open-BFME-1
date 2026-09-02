@@ -82254,3 +82254,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
 ?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmeFinish@Gen_00742DA0@@QAEXXZ,0x000312A0,Open-BFME5 ILT from 0x00742DA0 flag reset
+?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
+?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
+?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
