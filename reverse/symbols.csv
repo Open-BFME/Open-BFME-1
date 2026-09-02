@@ -80782,6 +80782,7 @@ name,address,notes
 ?u4AppendVector@@YAPAVINI@@PAV1@PBX@Z,0x00025FA9,U4 vector formatter called by 0x005C8AA0
 ?u4Finish@INI@@QAEXH@Z,0x0002408C,U4 record terminator called by 0x005F50B0
 ?u4FormatFloat@@YAXPAVINI@@N@Z,0x0000F376,U4 floating-point formatter called by 0x005F50B0
+?u4FormatInt@@YAXPAVINI@@H@Z,0x0002CE5D,U4 integer formatter called by 0x005F79C0
 ?u4Indent@INI@@QAEXH@Z,0x0001B77A,U4 indentation emitter called by 0x005F50B0
 ?u4Next005F5120@@YAXPAVINI@@PAX1PBX@Z,0x005F50B0,U4 lane: four-argument callee reached from 0x005F5120 and 0x005FF120; address-derived name
 ?u4Next005F8AE0@@YAXPAVINI@@PAX1PBX@Z,0x005C8AA0,U4 lane: four-argument callee tail-jumped to by 0x005F8AE0; address-derived name

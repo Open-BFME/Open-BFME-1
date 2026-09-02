@@ -112,9 +112,36 @@ U4Ret005F79A0 *u4From005F79A0( U4Ret005F79A0 *out, const int &v )
 	return out;
 }
 
-class INI;
+class INI
+{
+public:
+	void u4Indent( int width );
+	void u4Append( const void *value );
+	void u4Finish( int radix );
+};
 struct U4Rec005F7A30 { int m_first; };
 void u4Then005F7A30( INI *ini, void *instance, void *store, const void *userData );
+extern const char g_u4Separator[];
+void __cdecl u4FormatInt( INI *ini, int value );
+
+void u4Then005F7A30( INI *ini, void *instance, void *store, const void *userData )
+{
+	unsigned int depth = (unsigned int)instance;
+	if ( depth > 0 )
+	{
+		do
+		{
+			ini->u4Indent( 32 );
+		}
+		while ( --depth );
+	}
+
+	ini->u4Append( store );
+	ini->u4Append( g_u4Separator );
+	u4FormatInt( ini, ((const U4Rec005F7A30 *)userData)->m_first );
+	ini->u4Finish( 10 );
+}
+
 void u4Guard005F7A30( INI *ini, void *instance, void *store, const void *userData )
 {
 	const U4Rec005F7A30 *rec = (const U4Rec005F7A30 *)userData;
