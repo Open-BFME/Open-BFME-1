@@ -3621,6 +3621,7 @@ name,address,notes
 ??0TerrainLogicBase@@QAE@XZ,0x0004629F,Open-BFME5 the incremental-link thunk TerrainLogic encodes for that base
 ??0TerrainLogicBase@@QAE@XZ,0x001ADB80,Open-BFME5 the base constructor TerrainLogic forwards to; unnamed in the image and not SubsystemInterface which is 0x009A1A30
 ??0TexBufferClass@@QAE@HPBD@Z,0x0092BA60
+??0TextureVectorBaseCtorShim@@QAE@HPBV?$RefCountPtr@VTextureClass@@@@@Z,0x0092FBA0,Open-BFME5 texture vector base constructor object symbol;candidate identity is the reloc-named TextureVectorBaseCtorShim construct
 ??0ThreadClass@@QAE@PBD@Z,0x009DB4E0,BFME ThreadClass constructor called by Watchdog and initializing vptr/name/running/handle/priority through +0x4C
 ??0ThreadClass@@QAE@PBDP6AHHPAU_EXCEPTION_POINTERS@@@Z@Z,0x008B2EF0,pin for LoaderThreadClass ctor callee
 ??0TightenPathStruct@@QAE@PAVPathfinder@@PAVObject@@PBVLocomotorSet@@W4PathfindLayerEnum@@PBUCoord3D@@@Z,0x0002D7F9,tightenPath info init (thunk->0x003E1720)
@@ -72671,6 +72672,7 @@ name,address,notes
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
 ?bfmeAnyVKQ@BfmeBlockVKQ@@QAEDABV1@@Z,0x00026F62,pin
+?bfmeAppendV16@BfmeStrV16@@QAEXID@Z,0x00012396,Open-BFME5 append n chars thunk for 0x0082FB10
 ?bfmeAppendVCB@BfmeBufVCB@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeAppendVFD@BfmeBufVFD@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeAppendVME@BfmeStrVME@@QAEXID@Z,0x00012396,pin
@@ -72703,6 +72705,7 @@ name,address,notes
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
+?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
@@ -73446,6 +73449,8 @@ name,address,notes
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
 ?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
+?bfmeEraseV16@BfmeStrV16@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x0082FB10
+?bfmeEraseV17@BfmeVecV17@@QAEXPAH0@Z,0x00002A3B,Open-BFME5 erase range thunk for 0x0082FA70
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
@@ -73484,6 +73489,7 @@ name,address,notes
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
 ?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
 ?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
+?bfmeFillV16@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x0082FB10
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
@@ -73563,6 +73569,7 @@ name,address,notes
 ?bfmeFindUDE@BfmeMgrUDE@@QAEPAVBfmeRecUDE@@H@Z,0x0001F253,pin
 ?bfmeFindUPB@@YAPAXPAX0@Z,0x007EBCA0,pin
 ?bfmeFindVLI@BfmeMapVLI@@QAEPAUBfmeNodeVLI@@PAG@Z,0x0093DCE0,pin
+?bfmeFindVMQ@@YAPADPBD0@Z,0x007EBCA0,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
@@ -74180,6 +74187,7 @@ name,address,notes
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
+?bfmeInsertV17@BfmeVecV17@@QAEXPAHI0@Z,0x0002A059,Open-BFME5 insert n copies thunk for 0x0082FA70
 ?bfmeIntern996@BfmeMap996@@QAEHPAD@Z,0x0003ADD7,pin
 ?bfmeIntersects@GeometryInfo@@QBE_NABUCoord3D@@MABV1@0M@Z,0x0087F2F0,Open-BFME5 oriented GeometryInfo intersection predicate called by Object wrapper 0x001BE980; direct body pin; descriptive spelling
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
@@ -75346,6 +75354,7 @@ name,address,notes
 ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z,0x00003E7C,Open-BFME5 retail cave index switch pin
 ?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
 ?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
+?cell@BfmeGridWM@@QAEXHH@Z,0x00023B14,Open-BFME5 grid cell thiscall used by 0x0074C890 nested walk
 ?changeBattlePlan@Player@@QAEXW4BattlePlanStatus@@HPAVBattlePlanBonuses@@@Z,0x000D8080,Open-BFME5 retail identity; exact clean C++ body
 ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,Bridge::updateDamageState calls the existing ILT thunk for both closed and open transitions
 ?changeGridHeight@WaterRenderObjClass@@QAEXMMM@Z,0x0079F850,thunk-resolved body (via 0x2b256)
@@ -82267,10 +82276,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeFillV16@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x0082FB10
-?bfmeEraseV16@BfmeStrV16@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x0082FB10
-?bfmeAppendV16@BfmeStrV16@@QAEXID@Z,0x00012396,Open-BFME5 append n chars thunk for 0x0082FB10
-?bfmeEraseV17@BfmeVecV17@@QAEXPAH0@Z,0x00002A3B,Open-BFME5 erase range thunk for 0x0082FA70
-?bfmeInsertV17@BfmeVecV17@@QAEXPAHI0@Z,0x0002A059,Open-BFME5 insert n copies thunk for 0x0082FA70
-?cell@BfmeGridWM@@QAEXHH@Z,0x00023B14,Open-BFME5 grid cell thiscall used by 0x0074C890 nested walk
-??0TextureVectorBaseCtorShim@@QAE@HPBV?$RefCountPtr@VTextureClass@@@@@Z,0x0092FBA0,Open-BFME5 texture vector base constructor object symbol;candidate identity is the reloc-named TextureVectorBaseCtorShim construct
