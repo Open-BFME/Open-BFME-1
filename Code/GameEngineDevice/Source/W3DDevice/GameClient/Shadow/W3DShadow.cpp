@@ -49,11 +49,36 @@
 #include "D3dx8math.h"
 #include "common/GlobalData.h"
 #include "W3DDevice/GameClient/W3DVolumetricShadow.h"
-#include "W3DDevice/GameClient/W3DProjectedShadow.h"
 #include "W3DDevice/GameClient/W3DShadow.h"
 #include "WW3D2/statistics.h"
 #include "Common/Debug.h"
 #include "Common/PerfTimer.h"
+
+// BFME's projected manager has an 0x254-byte allocation footprint.  This TU
+// only needs its public calls and global pointers, so keep the retail layout
+// boundary local instead of imposing the Generals header's member layout on
+// this constructor.
+class W3DProjectedShadowManager : public ProjectedShadowManager
+{
+public:
+	W3DProjectedShadowManager(void);
+	~W3DProjectedShadowManager(void);
+	Bool init(void);
+	void reset(void);
+	Int renderShadows(RenderInfoClass & rinfo);
+	void ReleaseResources(void);
+	Bool ReAcquireResources(void);
+	void invalidateCachedLightPositions(void);
+	Shadow *addDecal(Shadow::ShadowTypeInfo *shadowInfo);
+	Shadow *addDecal(RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo);
+	Shadow *addShadow(RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw);
+	void removeAllShadows(void);
+
+private:
+	UnsignedByte m_bfme_layout[0x250];
+};
+
+extern W3DProjectedShadowManager *TheW3DProjectedShadowManager;
 
 #define SUN_DISTANCE_FROM_GROUND	10000.0f	//distance of sun (our only light source).
 
@@ -71,7 +96,17 @@ const FrustumClass *shadowCameraFrustum;
 class W3DShadowHelperManager
 {
 public:
+	W3DShadowHelperManager();
 	~W3DShadowHelperManager();
+
+private:
+	void *m_helper1;
+	void *m_helper2;
+	void *m_helper3;
+	void *m_helper4;
+	void *m_helper5;
+	void *m_helper6;
+	void *m_helper7;
 };
 W3DShadowHelperManager *TheW3DShadowHelperManager = NULL;
 
@@ -112,7 +147,19 @@ void DoShadows(RenderInfoClass & rinfo, Bool stencilPass)
 }
 	
 // byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShadowManager_ctor_Thunk.cpp
-// ??0W3DShadowManager@@QAE@XZ present-unmatched
+struct BfmeTerrainLightPosition
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+struct BfmeGlobalDataTerrainLightView
+{
+	UnsignedByte m_unreconstructed[0xA04];
+	BfmeTerrainLightPosition m_terrainLightPos[1];
+};
+
 W3DShadowManager::W3DShadowManager( void )
 {
 	DEBUG_ASSERTCRASH(TheW3DVolumetricShadowManager == NULL && TheW3DProjectedShadowManager == NULL,
@@ -122,14 +169,18 @@ W3DShadowManager::W3DShadowManager( void )
 	m_isShadowScene = FALSE;
 	m_stencilShadowMask = 0;	//all bits can be used for storing shadows.
 
-	Vector3 lightRay(-TheGlobalData->m_terrainLightPos[0].x,
-		-TheGlobalData->m_terrainLightPos[0].y, -TheGlobalData->m_terrainLightPos[0].z);
+	const BfmeGlobalDataTerrainLightView *retailGlobalData =
+		reinterpret_cast<const BfmeGlobalDataTerrainLightView *>(TheGlobalData);
+	Vector3 lightRay(-retailGlobalData->m_terrainLightPos[0].x,
+		-retailGlobalData->m_terrainLightPos[0].y, -retailGlobalData->m_terrainLightPos[0].z);
 	lightRay.Normalize();
 
 	LightPosWorld[0]=lightRay*SUN_DISTANCE_FROM_GROUND;
 
 	TheW3DVolumetricShadowManager = NEW W3DVolumetricShadowManager;
-	TheProjectedShadowManager = TheW3DProjectedShadowManager = NEW W3DProjectedShadowManager;
+	TheW3DShadowHelperManager = NEW W3DShadowHelperManager;
+	TheW3DProjectedShadowManager = NEW W3DProjectedShadowManager;
+	TheProjectedShadowManager = TheW3DProjectedShadowManager;
 }
 
 W3DShadowManager::~W3DShadowManager( void )

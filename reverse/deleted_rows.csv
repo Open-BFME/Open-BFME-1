@@ -24306,3 +24306,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_0082e350@@YAXXZ,0x0082E350,"gen-dump placeholder superseded by the real identity of these bytes: ?bfmeRFindChV42@@YGHDI@Z, byte-verified from Code/GameEngine/Source/Common/BfmeConv1484.cpp over the same 241-byte range. The Code/gen_asm/d_0082d0b0.asm dump reproduces those bytes but carries no identity."
 ?d_007d2390@@YAXXZ,0x007D2390,"gen-dump placeholder superseded by real C++ ?init@ScreenZoomFilter@@UAEHXZ landed at the same range from Code/GameEngine/Source/Common/ScreenZoomFilter_init.cpp"
 ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509,five-byte incremental-link thunk claim retracted so the exact BFME body at 0x00391B30 can carry the name; the thunk bytes return to the gen-thunk pool.
+?dup_007c10d0@@YAXXZ,0x007C10D0,gen-alias placeholder superseded by clean C++ W3DShadowManager helper constructor at 0x007C10D0

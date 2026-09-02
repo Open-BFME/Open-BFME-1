@@ -3748,6 +3748,7 @@ name,address,notes
 ??0W3DOverlordAircraftDrawModuleData@@QAE@XZ,0x00025EBE,pinharvest x1 (thunk)
 ??0W3DOverlordTankDrawModuleData@@QAE@XZ,0x0000260D
 ??0W3DOverlordTruckModuleDataBase@@QAE@XZ,0x000426E0,TU-local ABI name for the 225-byte retail base called at 0x00429460
+??0W3DProjectedShadowManager@@QAE@XZ,0x000246BD,retail ILT called by the exact W3DShadowManager constructor at 0x007B7900
 ??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002B67,pinharvest x1 (thunk)
 ??0W3DProjectileStreamDrawModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)
 ??0W3DProjectileStreamDrawModuleData@@QAE@XZ,0x0001ECBD,pinharvest x1 (thunk)
@@ -3771,6 +3772,7 @@ name,address,notes
 ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00773360,Open-BFME5 base constructor W3DQuadrupedDraw and W3DSupplyDraw forward to
 ??0W3DScriptedModelDrawModuleData@@QAE@XZ,0x0000289C,module-data constructor called by W3DScriptedModelDraw::friend_newModuleData at 0x006BF0C0
 ??0W3DShadowGeometryManager@@QAE@XZ,0x00038488,BFME constructor ILT reached by volumetric shadow manager allocation
+??0W3DShadowHelperManager@@QAE@XZ,0x00022764,retail ILT called by the exact W3DShadowManager constructor at 0x007B7900
 ??0W3DSnowManager@@QAE@XZ,0x000216C0
 ??0W3DStreakDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00031804,link thunk to the W3DStreakDraw constructor; named from the draw-module registration that pairs "W3DStreakDraw" with factory 0x006BFCF0
 ??0W3DStreakDrawModuleData@@QAE@XZ,0x000302EC,module-data constructor called by W3DStreakDraw::friend_newModuleData at 0x006BFD70
