@@ -82826,3 +82826,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeCreate@ObjectCreationListStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,Open-BFME5 conditional object creation called by 0x0028CA70
 ?bfmeSet@BfmeTargetSub@@QAEXH@Z,0x0001C882,Open-BFME5 target subobject update called by 0x0028B440
 ?bfmeSet@BfmeTargetSink@@QAEXHH@Z,0x0003EEBE,Open-BFME5 target sink update called by 0x0028B440
+?bfmeAssign@BfmeRecordSet@@QAEXPAX@Z,0x00011DB0,Open-BFME5 record-set copy called by 0x0028BFF0
