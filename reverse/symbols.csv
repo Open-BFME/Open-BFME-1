@@ -10501,6 +10501,7 @@ name,address,notes
 ?Rva007F0030Free@@YAXPAX@Z,0x007F0030,Y2 DirtySock lane: address-derived; the matching one-argument release, called by ProtoMangleDestroy
 ?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
 ?Rva007F8D30@@YAXXZ,0x007F8D30,Y2 lane: address-derived; the no-argument teardown 0x007EB650 runs before the DirtySock module shutdown
+?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
 ?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
 ?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
 ?Rva007FD080@@YAXH@Z,0x007FD080,Y2 lane: C++ spelling of the DirtySock module create converted as _Rva007FD080 in Y4DirtySockSocket.c
@@ -72679,6 +72680,7 @@ name,address,notes
 ?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
 ?bfmeAnyVKQ@BfmeBlockVKQ@@QAEDABV1@@Z,0x00026F62,pin
 ?bfmeAppendV16@BfmeStrV16@@QAEXID@Z,0x00012396,Open-BFME5 append n chars thunk for 0x0082FB10
+?bfmeAppendV36@BfmeStrV36@@QAEXPAD00@Z,0x00011522,Open-BFME5 append-range pin for 0x00830F00
 ?bfmeAppendVCB@BfmeBufVCB@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeAppendVFD@BfmeBufVFD@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeAppendVME@BfmeStrVME@@QAEXID@Z,0x00012396,pin
@@ -73497,6 +73499,7 @@ name,address,notes
 ?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
 ?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
 ?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
+?bfmeFillInsV38@BfmeStrV38@@QAEPAV1@PAD0ID@Z,0x00830030,Open-BFME5 assign-n-char pin for 0x00830B10
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
 ?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
@@ -74196,6 +74199,7 @@ name,address,notes
 ?bfmeInitTUA@BfmeSubTUA@@QAEXXZ,0x007E86B0,pin
 ?bfmeInitUBB@BfmeSubUBB@@QAEXH@Z,0x00002ECD,pin
 ?bfmeInitV15@BfmeStrV15@@QAEXPAD00@Z,0x00021A58,Open-BFME5 /Od range-init thunk for 0x00831780
+?bfmeInitV37@BfmeStrV37@@QAEXPAD00@Z,0x00021A58,Open-BFME5 range-init pin for 0x00831780
 ?bfmeInitVJK@BfmeMsgVJK@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJL@BfmeMsgVJL@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
@@ -74244,6 +74248,7 @@ name,address,notes
 ?bfmeLenErrV21@BfmeStrV21@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831190
 ?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
 ?bfmeLenErrV23@BfmeStrV23@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00830FC0
+?bfmeLenErrV38@BfmeStrV38@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00830B10
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
@@ -74540,6 +74545,7 @@ name,address,notes
 ?bfmeOpenVHT@BfmeChunkVHT@@QAE_NXZ,0x009E1380,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
+?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
@@ -74849,6 +74855,7 @@ name,address,notes
 ?bfmeSetVJJ@BfmeMsgVJJ@@QAEXPBD0@Z,0x007E8A10,pin
 ?bfmeSetVJU@BfmeStackVJU@@QAEXPAX@Z,0x008D2E00,pin
 ?bfmeSetVKC@BfmeUniVKC@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeSetVMV@BfmeStrVMV@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75117,6 +75124,10 @@ name,address,notes
 ?bfmeThrow1153@BfmeS1153@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow1154@BfmeS1154@@QAEXXZ,0x000132CD,pin
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
+?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
+?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
+?bfmeThrowV37@BfmeStrV37@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831780
+?bfmeThrowV38@BfmeStrV38@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830B10
 ?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
@@ -82323,13 +82334,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
-?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
-?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
-?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
-?bfmeAppendV36@BfmeStrV36@@QAEXPAD00@Z,0x00011522,Open-BFME5 append-range pin for 0x00830F00
-?bfmeThrowV37@BfmeStrV37@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831780
-?bfmeInitV37@BfmeStrV37@@QAEXPAD00@Z,0x00021A58,Open-BFME5 range-init pin for 0x00831780
-?bfmeThrowV38@BfmeStrV38@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830B10
-?bfmeLenErrV38@BfmeStrV38@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00830B10
-?bfmeFillInsV38@BfmeStrV38@@QAEPAV1@PAD0ID@Z,0x00830030,Open-BFME5 assign-n-char pin for 0x00830B10
