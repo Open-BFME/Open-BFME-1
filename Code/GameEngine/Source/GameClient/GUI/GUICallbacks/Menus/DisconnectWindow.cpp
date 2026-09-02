@@ -39,8 +39,73 @@ public:
 };
 #undef BFME_INGAME_UI_SLOT
 
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other );
+	~StringBase();
+
+	void *m_data;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString( const char *text ) : StringBase<char>( text ) {}
+	~AsciiString() {}
+};
+
+#define BFME_WINDOW_MANAGER_SLOT(n) virtual void slot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
+class GameWindowManager
+{
+public:
+	BFME_WINDOW_MANAGER_SLOT(0) BFME_WINDOW_MANAGER_SLOT(1) BFME_WINDOW_MANAGER_SLOT(2)
+	BFME_WINDOW_MANAGER_SLOT(3) BFME_WINDOW_MANAGER_SLOT(4) BFME_WINDOW_MANAGER_SLOT(5)
+	BFME_WINDOW_MANAGER_SLOT(6) BFME_WINDOW_MANAGER_SLOT(7) BFME_WINDOW_MANAGER_SLOT(8)
+	BFME_WINDOW_MANAGER_SLOT(9) BFME_WINDOW_MANAGER_SLOT(10) BFME_WINDOW_MANAGER_SLOT(11)
+	BFME_WINDOW_MANAGER_SLOT(12) BFME_WINDOW_MANAGER_SLOT(13) BFME_WINDOW_MANAGER_SLOT(14)
+	BFME_WINDOW_MANAGER_SLOT(15) BFME_WINDOW_MANAGER_SLOT(16) BFME_WINDOW_MANAGER_SLOT(17)
+	BFME_WINDOW_MANAGER_SLOT(18) BFME_WINDOW_MANAGER_SLOT(19) BFME_WINDOW_MANAGER_SLOT(20)
+	BFME_WINDOW_MANAGER_SLOT(21) BFME_WINDOW_MANAGER_SLOT(22) BFME_WINDOW_MANAGER_SLOT(23)
+	BFME_WINDOW_MANAGER_SLOT(24) BFME_WINDOW_MANAGER_SLOT(25) BFME_WINDOW_MANAGER_SLOT(26)
+	virtual BFMEDisconnectWindowLayout *winCreateLayout( AsciiString file );
+};
+#undef BFME_WINDOW_MANAGER_SLOT
+
 static BFMEDisconnectWindowLayout *disconnectMenuLayout;
 extern InGameUI *TheInGameUI;
+extern GameWindowManager *TheWindowManager;
+
+void HideDiplomacy( void );
+void HideInGameChat( void );
+// ControlBar::hidePurchaseScience at 0x00598F30, reached this-less through
+// ILT 0x0003576F where the ZH twin called HideQuitMenu.
+void _bfme_hidePurchaseScience( void );
+void HideSaveLoadMenu( void );
+
+// upstream: reference ShowDisconnectWindow loads Menus/DisconnectScreen.wnd;
+// the BFME rewrite first hides the other overlay screens, flags the quit-menu
+// visibility the hide path clears, then loads DisconnectScreen.apt and runs
+// its init.
+void ShowDisconnectWindow( void )
+{
+	if (disconnectMenuLayout == 0)
+	{
+		HideDiplomacy();
+		HideInGameChat();
+		_bfme_hidePurchaseScience();
+		HideSaveLoadMenu();
+		TheInGameUI->setQuitMenuVisible( true );
+		disconnectMenuLayout = TheWindowManager->winCreateLayout(
+			AsciiString( "DisconnectScreen.apt" ) );
+		disconnectMenuLayout->runInit( 0 );
+	}
+}
 
 void HideDisconnectWindow( void )
 {
