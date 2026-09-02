@@ -75786,6 +75786,7 @@ name,address,notes
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
+?copyFrom@BfmeTailF4@@QAEXPAU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F4D0
 ?copyFrom@DictPair@Dict@@QAEXPAU12@@Z,0x00013E94
 ?copyFromQueueNode@BFMENetworkQueueItem1@@QAEXPAX@Z,0x00032F6A,native BFME queue item copy helper for wrapper queue +0x3c
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
@@ -82357,18 +82358,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?g_bfmeBadE15@@3UBfmeShapeE15@@A,0x00ED4CE8,Open-BFME5 sentinel for 0x0087E150
-?bfmeEraseV44@BfmeStrV44@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase-range pin for 0x00830DE0
-?bfmeImplV44@BfmeStrV44@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert-range impl pin for 0x00830DE0
-?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
-?bfmeCopyBwdV45@@YAXPAH00@Z,0x00008B75,Open-BFME5 copy-backward pin for 0x0082F610
-?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
-?set@BfmeSubA100@@QAEXABU1@@Z,0x00033640,Open-BFME5 ILT from 0x002EA100 20B copy loop
-?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
-?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
-?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
-?bfmeNodeAllocV46@@YAPAXI@Z,0x0082E540,Open-BFME5 small-alloc pin for 0x0082FE50
-?bfmeCopyTrivialV46@@YAPAXPAX00@Z,0x00038EAB,Open-BFME5 copy-trivial pin for 0x0082FE50
-?bfmeFreeV46@@YAXPAXI@Z,0x000159D8,Open-BFME5 deallocate pin for 0x0082FE50
-?bfmeDeallocV46@BfmeStrV46@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FE50
-?copyFrom@BfmeTailF4@@QAEXPAU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F4D0
