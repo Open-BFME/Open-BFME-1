@@ -82234,3 +82234,10 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplVMW@BfmeStrVMW@@QAEXHHPAD@Z,0x00021A58,Open-BFME5 /Od thiscall callee thunk for 0x00831740
 ?bfmeImplVMX@BfmeStrVMX@@QAEXHHPAD@Z,0x00011522,Open-BFME5 /Od thiscall callee thunk for 0x008316E0
 ?bfmeImplVMY@@YAXHHH@Z,0x00018179,Open-BFME5 /Od cdecl callee thunk for 0x0082DDA0
+?allocate@Rva00914860PoolA@@QAE_NHH@Z,0x0003FC7E,Open-BFME5 pool A allocation used by the 0x00914860 sizing update
+?allocate@Rva00914860PoolB@@QAE_NHH@Z,0x009136F0,Open-BFME5 pool B allocation used by the 0x00914860 sizing update
+?allocate@Rva00914860PoolC@@QAE_NHH@Z,0x009131E0,Open-BFME5 pool C allocation used by the 0x00914860 sizing update
+?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
+?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
+?g_rva00914860PoolC@@3VRva00914860PoolC@@A,0x013466B8,Open-BFME5 third pool object used by the 0x00914860 sizing update
+?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
