@@ -82310,3 +82310,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0ServiceHubImpl@@QAE@PAX00000@Z,0x007EAE30,ServiceHubImpl ctor used by 0x007EB1C0 create
 ?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
 ?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
+?bfmePrep@Gen_006A6AF0@@QAEXHH@Z,0x000299A1,Open-BFME5 ILT from 0x006A6AF0 grid walk
+?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
