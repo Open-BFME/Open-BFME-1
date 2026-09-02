@@ -1235,11 +1235,11 @@ void TeamPrototype::iterateObjects( ObjectIterateFunc func, void *userData )
 /**
  * Count the number of teams that have been instanced by this prototype
  */
-// ?countTeamInstances@TeamPrototype@@QAEHXZ present-unmatched
+// ?countTeamInstances@TeamPrototype@@QAEHXZ
 Int TeamPrototype::countTeamInstances( void )
 {
 	Int count = 0;
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
+	for( BfmeTeamInstanceIterator iter = ((const BfmeTeamPrototypeInstances *)this)->iterate(); !iter.done(); iter.advance() )
 		count++;
 
 	return count;
