@@ -82422,3 +82422,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeAllocLarge2E@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x008802E0
+?bfmeAllocSmall2E@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x008802E0
+?bfmeCopy2E@@YAPAUBfmeElem2E@@PBU1@0PAU1@ABUBfmeFalse2E@@@Z,0x0087FFC0,Open-BFME5 remainder copy of 0x008802E0
+?copyFrom@BfmeElem2E@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 elem copy ctor of 0x008802E0
+?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
