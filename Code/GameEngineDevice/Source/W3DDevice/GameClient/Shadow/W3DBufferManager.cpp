@@ -60,23 +60,96 @@ Int W3DBufferManager::getDX8Format(VBM_FVF_TYPES format)
 	return FVFTypeIndexList[format];
 }
 
-// ??0W3DBufferManager@@ present-unmatched
+// byte-exact reconstruction: BFME widened the two slot pools beyond the ZH
+// header's declarations.  Keep that drift local to this body so the matched
+// ZH-era methods below continue to compile against their vendored header.
 W3DBufferManager::W3DBufferManager(void)
 {
-	m_numEmptySlotsAllocated=0;
-	m_numEmptyVertexBuffersAllocated=0;
-	m_numEmptyIndexSlotsAllocated=0;
-	m_numEmptyIndexBuffersAllocated=0;
+	struct BFMEBufferSlotStorage
+	{
+		unsigned int value0;
+		unsigned int value1;
+		unsigned int value2;
+		unsigned int value3;
+		unsigned int value4;
+		unsigned int value5;
+		unsigned int value6;
+	};
+	struct BFMEIndexBufferStorage
+	{
+		unsigned int value0;
+		unsigned int value1;
+		unsigned int value2;
+		unsigned int value3;
+		unsigned int value4;
+	};
+	struct BFMEBufferManagerView
+	{
+		unsigned int vertexSlotLists[18][512];
+		unsigned int vertexBuffers[18];
+		BFMEBufferSlotStorage emptyVertexSlots[4096];
+		unsigned int numEmptySlots;
+		BFMEBufferSlotStorage emptyVertexBuffers[32];
+		unsigned int numEmptyVertexBuffers;
+		unsigned int indexSlotLists[1024];
+		unsigned int indexBuffers;
+		BFMEBufferSlotStorage emptyIndexSlots[4096];
+		unsigned int numEmptyIndexSlots;
+		BFMEIndexBufferStorage emptyIndexBuffers[32];
+		unsigned int numEmptyIndexBuffers;
+	};
+	BFMEBufferManagerView *bfme = reinterpret_cast<BFMEBufferManagerView *>(this);
 
-	for (Int i=0; i<MAX_FVF; i++)
-		m_W3DVertexBuffers[i]=NULL;
-	for (i=0; i<MAX_FVF; i++)
-		for (Int j=0; j<MAX_VB_SIZES; j++)
-			m_W3DVertexBufferSlots[i][j]=NULL;
+	bfme->numEmptySlots=0;
+	bfme->numEmptyVertexBuffers=0;
+	bfme->indexBuffers=0;
+	bfme->numEmptyIndexSlots=0;
+	bfme->numEmptyIndexBuffers=0;
 
-	m_W3DIndexBuffers=NULL;
-	for (Int j=0; j<MAX_IB_SIZES; j++)
-		m_W3DIndexBufferSlots[j]=NULL;
+	for (Int i=0; i<18; i++)
+		bfme->vertexBuffers[i]=0;
+	for (Int i=0; i<18*512; i++)
+		reinterpret_cast<unsigned int *>(bfme->vertexSlotLists)[i]=0;
+	for (Int i=0; i<4096; i++)
+	{
+		bfme->emptyVertexSlots[i].value0=0;
+		bfme->emptyVertexSlots[i].value1=0;
+		bfme->emptyVertexSlots[i].value2=0;
+		bfme->emptyVertexSlots[i].value3=0;
+		bfme->emptyVertexSlots[i].value4=0;
+		bfme->emptyVertexSlots[i].value5=0;
+		bfme->emptyVertexSlots[i].value6=0;
+	}
+	for (Int i=0; i<32; i++)
+	{
+		bfme->emptyVertexBuffers[i].value0=0;
+		bfme->emptyVertexBuffers[i].value1=0;
+		bfme->emptyVertexBuffers[i].value2=0;
+		bfme->emptyVertexBuffers[i].value3=0;
+		bfme->emptyVertexBuffers[i].value4=0;
+		bfme->emptyVertexBuffers[i].value5=0;
+		bfme->emptyVertexBuffers[i].value6=0;
+	}
+	for (Int i=0; i<1024; i++)
+		bfme->indexSlotLists[i]=0;
+	for (Int i=0; i<4096; i++)
+	{
+		bfme->emptyIndexSlots[i].value0=0;
+		bfme->emptyIndexSlots[i].value1=0;
+		bfme->emptyIndexSlots[i].value2=0;
+		bfme->emptyIndexSlots[i].value3=0;
+		bfme->emptyIndexSlots[i].value4=0;
+		bfme->emptyIndexSlots[i].value5=0;
+		bfme->emptyIndexSlots[i].value6=0;
+	}
+	for (Int i=0; i<32; i++)
+	{
+		bfme->emptyIndexBuffers[i].value0=0;
+		bfme->emptyIndexBuffers[i].value1=0;
+		bfme->emptyIndexBuffers[i].value2=0;
+		bfme->emptyIndexBuffers[i].value3=0;
+		bfme->emptyIndexBuffers[i].value4=0;
+	}
 }
 
 W3DBufferManager::~W3DBufferManager(void)
