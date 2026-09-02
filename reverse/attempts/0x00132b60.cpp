@@ -1,5 +1,7 @@
 // ?setPositionZ@Thing@@QAEXM@Z
 // partial score=0.99 date=2026-09-02
+// ?setPositionZ@Thing@@QAEXM@Z
+// partial score=0.99 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
@@ -191,15 +193,12 @@ void Thing::setPositionZ( Real z )
 	//USE_PERF_TIMER(ThingMatrixStuff)
 	if( !(reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10) )
 	{
-		struct OldData
-		{
-			Real angle;
-			Coord3D pos;
-		} old;
-		old.pos.x = m_cachedPos.x;
-		old.angle = m_cachedAngle;
-		old.pos.y = m_cachedPos.y;
-		old.pos.z = m_cachedPos.z;
+		Real oldAngle;
+		Coord3D oldPos;
+		oldAngle = m_cachedAngle;
+		oldPos.x = m_cachedPos.x;
+		oldPos.y = m_cachedPos.y;
+		oldPos.z = m_cachedPos.z;
 		Matrix3D oldMtx = m_transform;
 
 		m_transform.Set_Z_Translation( z );
@@ -207,14 +206,14 @@ void Thing::setPositionZ( Real z )
 
 		if (m_cacheFlags & VALID_ALTITUDE_TERRAIN)
 		{
-			m_cachedAltitudeAboveTerrain += (z - old.pos.z);
+			m_cachedAltitudeAboveTerrain += (z - oldPos.z);
 		}
 		if (m_cacheFlags & VALID_ALTITUDE_SEALEVEL)
 		{
-			m_cachedAltitudeAboveTerrainOrWater += (z - old.pos.z);
+			m_cachedAltitudeAboveTerrainOrWater += (z - oldPos.z);
 		}
 
-		reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &old.pos, old.angle);
+		reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &oldPos, oldAngle);
 	}
 	else
 	{

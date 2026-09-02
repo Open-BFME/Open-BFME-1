@@ -1,101 +1,112 @@
 // ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z
-// partial score=0.97 date=2026-09-01
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// partial score=0.97 date=2026-09-02
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-#define Matrix4x4 Matrix4
 
-#include "PreRTS.h"
-#include "GameClient/GameWindowTransitions.h"
+typedef bool Bool;
+typedef int Int;
 
-class BFMETransitionGroupView
+struct CRITICAL_SECTION;
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(CRITICAL_SECTION *lock);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(CRITICAL_SECTION *lock);
+
+class CriticalSectionLock
 {
 public:
-	void init();
-	void reset();
-	void reverse();
-	void skip();
-};
-
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
+	explicit CriticalSectionLock(CRITICAL_SECTION *lock) : m_lock(lock)
+	{
+		EnterCriticalSection(m_lock);
+	}
+	~CriticalSectionLock()
+	{
+		LeaveCriticalSection(m_lock);
+	}
 private:
-	BfmeStringArgBase(const BfmeStringArgBase &);
-	~BfmeStringArgBase();
+	CRITICAL_SECTION *m_lock;
 };
 
-class BfmeAsciiStringArg
+template <typename T> class StringBase
 {
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-	~BfmeAsciiStringArg();
-
+friend class AsciiString;
 private:
-	char *m_text;
+	StringBase(const StringBase<T> &other);
+	void releaseBuffer(void);
 };
 
-class BFMETransitionHandler
+class AsciiString
 {
 public:
-	TransitionGroup *findGroup(BfmeAsciiStringArg groupName);
+	AsciiString(const AsciiString &other)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&other);
+	}
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
+	}
+	Bool isEmpty(void) const
+	{
+		return m_data == 0 || *(unsigned short *)(m_data + 4) == 0;
+	}
+private:
+	char *m_data;
 };
 
-class BFMETransitionLock
+class TransitionGroup
 {
-	public:
-	explicit BFMETransitionLock(CRITICAL_SECTION &lock) : m_lock(lock)
-	{
-		EnterCriticalSection(&m_lock);
-	}
+public:
+	void init(void);
+	void reset(void);
+	void skip(void);
+	void reverse(void);
+};
 
-	~BFMETransitionLock()
-	{
-		LeaveCriticalSection(&m_lock);
-	}
-
-	private:
-	CRITICAL_SECTION &m_lock;
+class GameWindowTransitionsHandler
+{
+public:
+	void reverse(AsciiString groupName);
+private:
+	TransitionGroup *findGroup(AsciiString groupName);
+	unsigned char m_padding0[0x20];
+	TransitionGroup *m_currentGroup;
+	TransitionGroup *m_pendingGroup;
+	unsigned char m_padding1[0x0c];
+	unsigned char m_criticalSection;
 };
 
 void GameWindowTransitionsHandler::reverse(AsciiString groupName)
 {
-	unsigned char *rawThis = reinterpret_cast<unsigned char *>(this);
-	TransitionGroup *&currentGroup = *reinterpret_cast<TransitionGroup **>(rawThis + 0x20);
-	TransitionGroup *&pendingGroup = *reinterpret_cast<TransitionGroup **>(rawThis + 0x24);
+	CRITICAL_SECTION *cs = reinterpret_cast<CRITICAL_SECTION *>(&m_criticalSection);
+	CriticalSectionLock lockGuard(cs);
 
-	BFMETransitionLock guard(*reinterpret_cast<CRITICAL_SECTION *>(rawThis + 0x34));
-	TransitionGroup *group = reinterpret_cast<BFMETransitionHandler *>(this)->findGroup(groupName);
-	if (group && currentGroup == group)
+	TransitionGroup *group = findGroup(groupName);
+	if (group && m_currentGroup == group)
 	{
-		reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->reverse();
+		m_currentGroup->reverse();
 	}
-	else if (group && pendingGroup == group)
+	else if (group && m_pendingGroup == group)
 	{
-		reinterpret_cast<BFMETransitionGroupView *>(pendingGroup)->reset();
-		pendingGroup = NULL;
+		m_pendingGroup->reset();
+		m_pendingGroup = 0;
 	}
 	else if (group)
 	{
-		if (currentGroup)
+		if (m_currentGroup)
 		{
-			reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->skip();
-			reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->reset();
+			m_currentGroup->skip();
+			m_currentGroup->reset();
 		}
-		if (pendingGroup)
+		if (m_pendingGroup)
 		{
-			reinterpret_cast<BFMETransitionGroupView *>(pendingGroup)->skip();
-			reinterpret_cast<BFMETransitionGroupView *>(pendingGroup)->reset();
-			pendingGroup = NULL;
+			m_pendingGroup->skip();
+			m_pendingGroup->reset();
+			m_pendingGroup = 0;
 		}
 
-		currentGroup = group;
-		reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->init();
-		reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->skip();
-		reinterpret_cast<BFMETransitionGroupView *>(currentGroup)->reverse();
+		m_currentGroup = group;
+		m_currentGroup->init();
+		m_currentGroup->skip();
+		m_currentGroup->reverse();
 	}
 }

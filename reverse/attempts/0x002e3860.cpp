@@ -1,4 +1,6 @@
 // ?CurDrawableGetCurrentTargetDistance@@YAHPAUlua_State@@@Z
+// partial score=0.98 date=2026-09-02
+// ?CurDrawableGetCurrentTargetDistance@@YAHPAUlua_State@@@Z
 // partial score=0.98 date=2026-08-28
 // cl: /DNDEBUG /DWIN32 /MD /O2
 
