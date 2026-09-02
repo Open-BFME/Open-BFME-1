@@ -55264,10 +55264,6 @@ name,address,notes
 ?b_00588ca0@@YAXXZ,0x00588CA0,gen-thunk body
 ?b_00588cf0@@YAXXZ,0x00588CF0,gen-thunk body
 ?b_00588d10@@YAXXZ,0x00588D10,gen-thunk body
-?bfmeClose@GameWindow@@QAEX_N@Z,0x00027F2A,Gen_00588D10 close-window thunk
-?bfmeDetach@BfmeTransitionMD@@QAEXPAVGameWindow@@@Z,0x00027895,Gen_00588D10 transition detach thunk
-?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
-?g_bfmeTransitionMD@@3PAVBfmeTransitionMD@@A,0x00EF4C7C,Gen_00588D10 transition manager
 ?b_00588d80@@YAXXZ,0x00588D80,gen-thunk body
 ?b_00588d90@@YAXXZ,0x00588D90,gen-thunk body
 ?b_00588da0@@YAXXZ,0x00588DA0,gen-thunk body
@@ -73191,6 +73187,7 @@ name,address,notes
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
 ?bfmeClose1281@BfmeE1281@@QAEXXZ,0x00028EC0,pin
+?bfmeClose@GameWindow@@QAEX_N@Z,0x00027F2A,Gen_00588D10 close-window thunk
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
 ?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
 ?bfmeCloseVHT@BfmeChunkVHT@@QAEXXZ,0x009E13E0,pin
@@ -73328,6 +73325,7 @@ name,address,notes
 ?bfmeDestroyRange@@YADPAH0VBfmeAllocL@@@Z,0x0002376D,Open-BFME5 the ICF thunk (to 0x0042376D) the clear at 0x0048FA30 destroys its range with
 ?bfmeDestroyRange@@YAXPAH0PAD@Z,0x000247E9,Open-BFME5 the element destroy helper the vector destroy at 0x000BCBC0 hands its range to
 ?bfmeDestroyRange@@YAXPAVBfmeVecAW@@@Z,0x00034DC9,Open-BFME5 the ICF thunk (to 0x00434DC9) the clear at 0x003D41D0 destroys its elements through
+?bfmeDetach@BfmeTransitionMD@@QAEXPAVGameWindow@@@Z,0x00027895,Gen_00588D10 transition detach thunk
 ?bfmeDetachCFF@BfmeOwnerCFF@@QAEXPAVBfmeThingCFF@@@Z,0x0004B367,pin
 ?bfmeDisconnectUJC@@YAXPAUBfmeConnUJC@@H@Z,0x008EDA20,pin
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
@@ -75309,6 +75307,7 @@ name,address,notes
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
+?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
 ?bfmeTry1009@BfmeC1009@@QAEDPAX0@Z,0x0001D813,pin
 ?bfmeTry1033@BfmeSub1033@@QAEHPAVBfmeF1033@@@Z,0x000220C5,pin
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
@@ -77431,6 +77430,7 @@ name,address,notes
 ?g_bfmeThingVNH@@3PAUBfmeThingVNH@@A,0x00EF49D0,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
+?g_bfmeTransitionMD@@3PAVBfmeTransitionMD@@A,0x00EF4C7C,Gen_00588D10 transition manager
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
 ?g_bfmeTwoAQA@@3PAVBfmeTwoAQA@@A,0x00EF1028,pin
 ?g_bfmeTwoATC@@3PAUBfmeTwoATC@@A,0x00EF4B58,pin
