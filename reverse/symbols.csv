@@ -75986,6 +75986,7 @@ name,address,notes
 ?destroyObject@GameLogic@@QAEXPAVObject@@@Z,0x0001D0DE,ILT thunk; real body 0x78B0C0
 ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z,0x00005696,BoneFXUpdate::killRunningParticleSystems/stopAllBoneFX call target (ILT thunk -> body 0x5C3C10)
 ?destroyPath@AIUpdateInterface@@QAEXXZ,0x000065E1,requestApproachPath retail ILT reaches the 0x0026F080 path destructor body
+?destroyPlacementIcons@InGameUI@@QAEXXZ,0x0001EC3B,Open-BFME5 InGameUI::placeBuildAvailable calls the destroyPlacementIcons ILT immediately before returning from its null-build arm; body 0x0043AF00
 ?detach@NetCommandMsg@@QAEXXZ,0x000200A4,additive; ILT thunk for body 0xA73610
 ?detach@NetCommandMsg@@QAEXXZ,0x009EB7A0
 ?detailAlphaShader@@3VShaderClass@@A,0x012BA78C,W3DBibBuffer renderBibs TU-local shader object
