@@ -112,7 +112,7 @@ record `blocked`.
   pin and `--check` after. `reverse/pin_consistency_baseline.csv` is the
   known-bad backlog and may only shrink — never add a line to get green. See
   `docs/lessons.md`, "A `pinharvest` row is a candidate, not an address".
-  Near-miss (0.9+) bodies: check `docs/shape_levers.md` before banking.
+  Near-miss (0.9+) bodies: run `tools/probe.py` (compile + retail diff + symptom/lever) and check `docs/shape_levers.md` before banking.
 - **Quoting a `GlobalData` constant as behaviour?** The compiled `imm32` is not
   what the game runs on. 378 GlobalData fields are INI-parseable, and a value
   can be changed by `ini.big` OR by `_patch222.big` on top of it, so read the
