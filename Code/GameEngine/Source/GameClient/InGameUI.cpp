@@ -112,6 +112,15 @@ InGameUI *TheInGameUI = NULL;
 
 GameWindow *m_replayWindow = NULL;
 
+// BFME's Thing::isKindOf call site uses the 0x3251f ILT.  The full ZH
+// Thing declaration resolves the same spelling directly to its body, so this
+// small ABI name keeps this retail call target explicit.
+class BFMEActionThing
+{
+public:
+	Bool isKindOf(Int kind) const;
+};
+
 // ------------------------------------------------------------------------------------------------
 struct KindOfSelectionData
 {
@@ -682,34 +691,111 @@ Bool InGameUI::removeSuperweapon(Int playerIndex, const AsciiString& powerName, 
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/InGameUI_objectChangedTeam_Thunk.cpp
-// ?objectChangedTeam@InGameUI@@UAEXPBVObject@@HH@Z present-unmatched
+// Open-BFME5: byte-exact clean C++ reconstruction at retail RVA 0x00449FC0.
 void InGameUI::objectChangedTeam(const Object *obj, Int oldPlayerIndex, Int newPlayerIndex)
 {
+	// The BFME Object layout keeps its behavior array at +0x1f0.  The
+	// vendored ZH Object header places that member at +0x18c, and its primary
+	// BehaviorModule vtable is eight bytes earlier than BFME's secondary
+	// interface base.  Keep this ABI slice local to the reconstruction so the
+	// game-facing headers remain usable by the rest of the TU.
+	struct BFMEObjectBehaviorsField
+	{
+		unsigned char pad[0x1f0];
+		BehaviorModule *const *behaviors;
+	};
+	struct BFMESpecialPowerTemplateShim
+	{
+		virtual void slot00() = 0;
+		virtual void slot04() = 0;
+		virtual void slot08() = 0;
+		virtual void slot0c() = 0;
+		virtual void slot10() = 0;
+		virtual void slot14() = 0;
+		virtual const SpecialPowerTemplate *getSpecialPowerTemplate() const = 0;
+	};
+	struct BFMEModuleSpecialPowerShim
+	{
+		virtual void slot00() = 0;
+		virtual void slot04() = 0;
+		virtual void slot08() = 0;
+		virtual void slot0c() = 0;
+		virtual void slot10() = 0;
+		virtual void slot14() = 0;
+		virtual void slot18() = 0;
+		virtual BFMESpecialPowerTemplateShim *getSpecialPower() = 0;
+	};
+	struct BFMEInGameUISuperweaponShim
+	{
+		virtual void slot00() = 0;
+		virtual void slot04() = 0;
+		virtual void slot08() = 0;
+		virtual void slot0c() = 0;
+		virtual void slot10() = 0;
+		virtual void slot14() = 0;
+		virtual void slot18() = 0;
+		virtual void slot1c() = 0;
+		virtual void slot20() = 0;
+		virtual void slot24() = 0;
+		virtual void slot28() = 0;
+		virtual void slot2c() = 0;
+		virtual void slot30() = 0;
+		virtual void slot34() = 0;
+		virtual void slot38() = 0;
+		virtual void slot3c() = 0;
+		virtual void slot40() = 0;
+		virtual void slot44() = 0;
+		virtual void slot48() = 0;
+		virtual void slot4c() = 0;
+		virtual void slot50() = 0;
+		virtual void slot54() = 0;
+		virtual void slot58() = 0;
+		virtual void slot5c() = 0;
+		virtual void slot60() = 0;
+		virtual void slot64() = 0;
+		virtual void slot68() = 0;
+		virtual void slot6c() = 0;
+		virtual void slot70() = 0;
+		virtual void slot74() = 0;
+		virtual void slot78() = 0;
+		virtual void slot7c() = 0;
+		virtual void slot80() = 0;
+		virtual void addSuperweapon(Int, const AsciiString&, ObjectID, const SpecialPowerTemplate*) = 0;
+		virtual Bool removeSuperweapon(Int, const AsciiString&, ObjectID, const SpecialPowerTemplate*) = 0;
+	};
+
 	// if we already had it listed, remove and re-add it
 	if (obj && oldPlayerIndex >= 0 && newPlayerIndex >= 0)
 	{
 		ObjectID id = obj->getID();
 		AsciiString powerName;
-		for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
+		BehaviorModule *const *behaviors =
+			(reinterpret_cast<const BFMEObjectBehaviorsField *>(obj))->behaviors;
+		for (BehaviorModule *const *m = behaviors; *m; ++m)
 		{
-			SpecialPowerModuleInterface* sp = (*m)->getSpecialPower();
+			char *adjusted = reinterpret_cast<char *>(const_cast<BehaviorModule *>(*m)) + 0xc;
+			BFMESpecialPowerTemplateShim *sp =
+				reinterpret_cast<BFMEModuleSpecialPowerShim *>(adjusted)->getSpecialPower();
 			if (!sp)
 				continue;
 
 			const SpecialPowerTemplate *powerTemplate = sp->getSpecialPowerTemplate();
 			powerName = powerTemplate->getName();
 
-			SuperweaponMap::iterator mapIt = m_superweapons[oldPlayerIndex].find(powerName);
+			SuperweaponMap *superweapons =
+				reinterpret_cast<SuperweaponMap *>(reinterpret_cast<char *>(this) + 0x5cc);
+			SuperweaponMap::iterator mapIt = superweapons[oldPlayerIndex].find(powerName);
 			Bool found = false;
-			if (mapIt != m_superweapons[oldPlayerIndex].end())
+			if (mapIt != superweapons[oldPlayerIndex].end())
 			{
 				for (SuperweaponList::iterator listIt = mapIt->second.begin(); listIt != mapIt->second.end(); ++listIt)
 				{
 					if ((*listIt)->m_id == id)
 					{
-						removeSuperweapon(oldPlayerIndex, powerName, id, powerTemplate);
-						addSuperweapon(newPlayerIndex, powerName, id, powerTemplate);
+						reinterpret_cast<BFMEInGameUISuperweaponShim *>(this)->removeSuperweapon(
+							oldPlayerIndex, powerName, id, powerTemplate);
+						reinterpret_cast<BFMEInGameUISuperweaponShim *>(this)->addSuperweapon(
+							newPlayerIndex, powerName, id, powerTemplate);
 						found = true;
 						break;
 					}
@@ -717,9 +803,11 @@ void InGameUI::objectChangedTeam(const Object *obj, Int oldPlayerIndex, Int newP
 			}
 			if (!found)
 			{
-				if( TheGameLogic->getFrame() == 0 && !obj->getStatusBits().test( OBJECT_STATUS_UNDER_CONSTRUCTION ) &&
-					obj->isKindOf( KINDOF_COMMANDCENTER ) == FALSE )
-					addSuperweapon(newPlayerIndex, powerName, id, powerTemplate);
+				if( TheGameLogic->getFrame() == 0 &&
+					(*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(obj) + 0x90) & 4) == 0 &&
+					reinterpret_cast<const BFMEActionThing *>(obj)->isKindOf(0x11) == FALSE )
+						reinterpret_cast<BFMEInGameUISuperweaponShim *>(this)->addSuperweapon(
+							newPlayerIndex, powerName, id, powerTemplate);
 			}
 		}
 	}
