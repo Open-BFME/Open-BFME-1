@@ -74103,6 +74103,7 @@ name,address,notes
 ?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
 ?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
 ?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
+??0W3DDynamicLight@@QAE@XZ,0x0004928D,Open-BFME5 BFME W3DDynamicLight ctor ILT reached by getADynamicLight at 0x00712489
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin

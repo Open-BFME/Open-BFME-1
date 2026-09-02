@@ -1132,10 +1132,12 @@ void RTS3DScene::addDynamicLight(W3DDynamicLight * obj)
 /** Adds a dynamic light. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS3DScene_getADynamicLight_Thunk.cpp
-// ?getADynamicLight@RTS3DScene@@QAEPAVW3DDynamicLight@@XZ present-unmatched
 W3DDynamicLight * RTS3DScene::getADynamicLight(void)
 {
-		RefRenderObjListIterator dynaLightIt(&m_dynamicLightList);
+	// BFME inserted scene state before the dynamic-light list.  Keep the
+	// iterator on the retail list address while retaining the upstream body.
+	struct BFMEScene { char pad[0x110]; RefRenderObjListClass m_dynamicLightList; };
+	RefRenderObjListIterator dynaLightIt(&((BFMEScene *)this)->m_dynamicLightList);
 		W3DDynamicLight *pLight;
 		for (dynaLightIt.First(); !dynaLightIt.Is_Done(); dynaLightIt.Next())
 		{		
