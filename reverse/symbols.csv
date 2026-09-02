@@ -82279,3 +82279,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeRelEE@BfmeObjEE@@QAEXXZ,0x00020BCB,Open-BFME5 thunk to RelVM0 body 0x0040ECA0
 ?set@BfmeStrEE@@QAEXABV1@@Z,0x00887C90,Open-BFME5 StringBase char set for 0x0040EE10
 ?g_bfmeEmptyEE@@3VBfmeStrEE@@A,0x00F36E50,Open-BFME5 AsciiString TheEmptyString for 0x0040EE10
+?bfmeGrowV21@BfmeStrV21@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831190
+?bfmeLenErrV21@BfmeStrV21@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831190
+?bfmeImplV21@BfmeStrV21@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831190
