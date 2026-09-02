@@ -442,22 +442,8 @@ Bool StealthUpdate::allowedToStealth( Object *stealthOwner ) const
 //---------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// ?hintDetectableWhileUnstealthed@StealthUpdate@@ present-unmatched
-void StealthUpdate::hintDetectableWhileUnstealthed() 
-{
-	Object *self = getObject();
-	const StealthUpdateModuleData *md = getStealthUpdateModuleData();
-
-	if( self && md->m_hintDetectableStates.testForAny( self->getStatusBits() ) )
-	{
-		if ( self->getControllingPlayer() == ThePlayerList->getLocalPlayer() )
-		{
-			Drawable *selfDraw = self->getDrawable();
-			if ( selfDraw )
-				selfDraw->setSecondMaterialPassOpacity( 1.0f );
-		}
-	}
-}
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_hintDetectableWhileUnstealthed.cpp
+// ?hintDetectableWhileUnstealthed@StealthUpdate@@IAEXXZ
 
 
 

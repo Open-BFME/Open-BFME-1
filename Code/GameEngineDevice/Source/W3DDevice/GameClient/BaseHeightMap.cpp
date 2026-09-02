@@ -1698,7 +1698,7 @@ void BaseHeightMapRenderObjClass::Get_Obj_Space_Bounding_Box(AABoxClass &box) co
  */
 //-------------------------------------------------------------------------------------------------
 // ?getMaximumVisibleBox@BaseHeightMapRenderObjClass@@QAE_NABVFrustumClass@@PAVAABoxClass@@_N@Z
-// Body in BaseHeightMap_getMaximumVisibleBox.asm (exact 1439B retail; field offsets).
+// Body in BaseHeightMap_getMaximumVisibleBox.cpp (exact 1439B retail).
 // Keep AABoxClass::Init(Vector3*,int) COMDAT in this TU (was only referenced by the
 // old C++ getMaximumVisibleBox body; 869B matched at 0x006C9EF0).
 void (AABoxClass::*_BaseHeightMap_Force_AABox_Init)(Vector3 *, int) = &AABoxClass::Init;

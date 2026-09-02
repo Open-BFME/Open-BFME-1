@@ -104,6 +104,7 @@ DArray ArrayNew(int elemSize, int numElemsToAllocate, void *elemFreeFn);
 void ArrayAppend(DArray array, const void *newElem);
 int ArrayLength(DArray array);
 void *ArrayNth(DArray array, int index);
+int ArraySearch(DArray array, const void *elem, int (__cdecl *compare)(const void *, const void *), int startIndex, int sorted);
 void ArrayDeleteAt(DArray array, int index);
 void ArrayFree(DArray array);
 void piProcessIncoming(void);
@@ -260,4 +261,120 @@ void pingerThink(void)
 	piProcessIncoming();
 	piCheckTimeouts();
 	piCallCallbacks();
+}
+
+static int __cdecl piFindActivePingCompareFn(const void *elem1, const void *elem2)
+{
+	const piActivePing *activePing1 = (const piActivePing *)elem1;
+	const piActivePing *activePing2 = (const piActivePing *)elem2;
+	return activePing1->ID - activePing2->ID;
+}
+
+static piActivePing *piFindActivePing(unsigned short ID)
+{
+	piActivePing key;
+	int index;
+
+	key.ID = ID;
+	index = ArraySearch(piActivePingList, &key, piFindActivePingCompareFn, 0, 0);
+	if (index == -1)
+		return 0;
+	return (piActivePing *)ArrayNth(piActivePingList, index);
+}
+
+typedef struct piUDPPing
+{
+	unsigned char magic;
+	unsigned char version;
+	unsigned short trip;
+	unsigned short ID_A;
+	unsigned short ID_B;
+} piUDPPing;
+
+static void piPingToBytes(piUDPPing *udpPing, unsigned char *buffer)
+{
+	*buffer++ = udpPing->magic;
+	*buffer++ = udpPing->version;
+	*buffer++ = (unsigned char)((udpPing->trip & 0xFF00) >> 8);
+	*buffer++ = (unsigned char)(udpPing->trip & 0x00FF);
+	*buffer++ = (unsigned char)((udpPing->ID_A & 0xFF00) >> 8);
+	*buffer++ = (unsigned char)(udpPing->ID_A & 0x00FF);
+	*buffer++ = (unsigned char)((udpPing->ID_B & 0xFF00) >> 8);
+	*buffer++ = (unsigned char)(udpPing->ID_B & 0x00FF);
+}
+
+static GSIBool piSendPing(SOCKADDR_IN *to, unsigned short trip,
+	unsigned short ID_A, unsigned short ID_B, const char *data)
+{
+	unsigned char buffer[32];
+	piUDPPing udpPing;
+	int rcode;
+
+	udpPing.magic = 0x91;
+	udpPing.version = 1;
+	udpPing.trip = trip;
+	udpPing.ID_A = ID_A;
+	udpPing.ID_B = ID_B;
+	piPingToBytes(&udpPing, buffer);
+	if (data != 0)
+		memcpy(buffer + sizeof(piUDPPing), data, 32 - sizeof(piUDPPing));
+	else
+		memset(buffer + sizeof(piUDPPing), 0, 32 - sizeof(piUDPPing));
+	rcode = sendto(piSocket, (char *)buffer, 32, 0,
+		(SOCKADDR *)to, sizeof(SOCKADDR_IN));
+	if (rcode != 32)
+		return 0;
+	return 1;
+}
+
+void msleep(unsigned int milliseconds);
+
+void pingerPing(unsigned int IP, unsigned short port, pingerGotPing reply,
+	void *replyParam, GSIBool blocking, unsigned int timeout)
+{
+	SOCKADDR_IN to;
+	unsigned short ID;
+
+	if (piSettingData)
+		return;
+
+	memset(&to, 0, sizeof(SOCKADDR_IN));
+	to.sin_family = AF_INET;
+	to.sin_port = htons(port);
+	to.sin_addr.s_addr = IP;
+
+	ID = piNextID;
+	if (piNextID == 0xFFFF)
+		piNextID = 1;
+	else
+		piNextID++;
+
+	if (piSendPing(&to, 1, ID, 0, 0))
+	{
+		piActivePing activePing;
+
+		activePing.originator = 1;
+		activePing.ID = ID;
+		activePing.expectedTrip = 2;
+		activePing.timestamp = current_time();
+		if (timeout == 0)
+			activePing.timeout = 0;
+		else
+			activePing.timeout = activePing.timestamp + timeout;
+		activePing.remoteIP = IP;
+		activePing.remotePort = port;
+		activePing.reply = reply;
+		activePing.replyParam = replyParam;
+		ArrayAppend(piActivePingList, &activePing);
+	}
+
+	if (blocking)
+	{
+		while (piFindActivePing(ID) != 0)
+		{
+			pingerThink();
+			msleep(1);
+		}
+		piCallCallbacks();
+	}
 }
