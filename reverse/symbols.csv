@@ -82189,5 +82189,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
+?bfmeApply1VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 first source-distinct owner apply tail-call from the 0x00298530 update
+?bfmeApply2VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 second source-distinct owner apply tail-call from the 0x00298530 update
+?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
