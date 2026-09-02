@@ -75458,6 +75458,7 @@ name,address,notes
 ?campaignReviewSetAptScreenRef@@YAXABVAsciiString@@VCampaignReviewRefHolder@@@Z,0x0003DF14,CampaignReview InitGadgets registration
 ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@_N2@Z,0x0001CEA9,Open-BFME5 ILT thunk to the body matched at 0x0010AF70; BFME gives it a FOURTH argument - ?queueUpgrade@AIGroup@@QAEXPBVUpgradeTemplate@@_N@Z at 0x00151170 passes its own extra flag third with the reference FALSE still last
 ?canEnterObject@BFMEActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4CanEnterType@@PA_N@Z,0x0002D588,retail five-argument ActionManager ABI thunk (body 0x000C5440)
+?canFireWeaponAtObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4WeaponSlotType@@@Z,0x0000378D,Open-BFME5 retail ILT thunk to body 0x000C4280; direct call from InGameUI weapon eligibility
 ?canGetHealedAt@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,0x0001B090,Open-BFME5 ILT thunk fronting body 0x000C5140
 ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z,0x00003E7C,Open-BFME5 retail cave index switch pin
 ?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
