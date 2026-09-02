@@ -3859,6 +3859,8 @@ name,address,notes
 ??1?$_List_base@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE@XZ,0x00040278,GameWindowManager dtor call target (incremental-link thunk)
 ??1?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@XZ,0x0000E68D,OpenContain m_containList destructor call target
 ??1?$_List_base@PAVResizerWindow@@V?$allocator@PAVResizerWindow@@@_STL@@@_STL@@QAE@XZ,0x000361BA,ILT thunk; retail call sites use the thunk
+??1?$_List_base@PAVShellMenuSchemeImage@@V?$allocator@PAVShellMenuSchemeImage@@@_STL@@@_STL@@QAE@XZ,0x0002D55B,Open-BFME5 exact REL32 callee from ShellMenuScheme destructor; ILT body 0x005809A0
+??1?$_List_base@PAVShellMenuSchemeLine@@V?$allocator@PAVShellMenuSchemeLine@@@_STL@@@_STL@@QAE@XZ,0x00049706,Open-BFME5 exact REL32 callee from ShellMenuScheme destructor; ILT body 0x00580A40
 ??1?$_List_base@UGen_p8pod@@V?$allocator@UGen_p8pod@@@_STL@@@_STL@@QAE@XZ,0x000078C4,ContestableContain list member destructor call target (tg_0021aed0)
 ??1?$_List_base@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x008881D0,derived-ICF
 ??1?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE@XZ,0x00032FD3
