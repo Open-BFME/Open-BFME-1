@@ -808,6 +808,7 @@ void Object::onDestroy()
 
 //=============================================================================
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_setGeometryInfo_Thunk.cpp
 // ?setGeometryInfo@Object@@QAEXABVGeometryInfo@@@Z present-unmatched
 void Object::setGeometryInfo(const GeometryInfo& geom) 
 { 

@@ -11579,6 +11579,7 @@ name,address,notes
 ?_M_getc@?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@QBEXXZ,0x00833D90,TU public-access alias of the already matched protected wide iterator _M_getc body
 ?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z,0x0082B870
 ?_M_initialize@?$vector@_NV?$allocator@_N@_STL@@@_STL@@IAEXI@Z,0x0003B1A1
+?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHH@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHH@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@AAEXI@Z,0x0000BB40,hashtable initialize_buckets ILT from FXListStore ctor
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_00067b50_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00067b50_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00067b50_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x00067AC0,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_00067bb0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00067bb0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00067bb0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x00067AC0,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_000902c0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000902c0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000902c0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x0008FF00,gen-tgrid payload member
@@ -74038,6 +74039,7 @@ name,address,notes
 ?bfmeFreeELD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeEXB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeEYG@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeLarge007873C0@@YAXPAX@Z,0x00881EB0,retail large-block deallocator for the assigned 0x007873C0 destructor
 ?bfmeFreeLarge007883D0@@YAXPAX@Z,0x00881EB0,retail large-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeNodeVOA@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeNodeVOB@@YAXPAXI@Z,0x0082E5F0,pin
@@ -74047,6 +74049,7 @@ name,address,notes
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeSmall007873C0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007873C0 destructor
 ?bfmeFreeSmall007883D0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
@@ -75545,6 +75548,7 @@ name,address,notes
 ?bfmeVisit1236@BfmeNode1236@@QAEXXZ,0x008ADB50,address-derived node method called by the 0x008BD670 traversal
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
+?bfmeVtable007873C0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007873C0 destructor
 ?bfmeVtable007883D0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007883D0 destructor
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
 ?bfmeWalkWorldCells@Pathfinder@@QAEHABUICoord2D@@0HPAPBUCoord3D@@@Z,0x0004ACBE,Open-BFME5 world-cell walk ILT used by 0x003DAC20
@@ -76020,6 +76024,7 @@ name,address,notes
 ?construct_from@DefaultModuleTemplate7CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000CC4D,DefaultModuleTemplate6 copy-ctor base shim
 ?consume@Gen003BF540Owner@@QAE_NPAVGen003BD8D0Built@@@Z,0x003CAE40,member called on the owner at +0x28 with the built result by 0x003BD8D0; address-derived name
 ?consume@Rva8CD490Target@@QAEXPAVRva8CCCE0Value@@@Z,0x008BD490,address-derived Apt target consumer called by 0x008CD490
+?contains@Team@@QAEEABVAsciiString@@@Z,0x0002E23F,Team hash-contains; ILT to 0x000F72B0 Rva000F72B0AsciiHashOwner::contains; caller 0x00326960
 ?coord3DUninitializedCopy@_STL@@YAPAUCoord3D@@PBU2@0PAU2@ABU__false_type@1@@Z,0x0000C61C,Open-BFME5 Coord3D uninitialized-copy ILT
 ?copy@AsciiCoordTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@PAU32@0@Z,0x000BFF50,incremental-link thunk target through a TU-local forwarding shim
 ?copy@AsciiStringCopyShim@_STL@@SAPAVAsciiString@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x006FA270,_STL __copy AsciiString incremental-link thunk target through a TU-local forwarding shim

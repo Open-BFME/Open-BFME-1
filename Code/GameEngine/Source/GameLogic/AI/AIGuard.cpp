@@ -146,13 +146,14 @@ Bool ExitConditions::shouldExit(const StateMachine* machine) const
 	
 	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius) 
 	{
-		Coord3D deltaAggressor;
+		volatile Real planarDelta[3];
 		const Coord3D *objPos = machine->getGoalObject()->getPosition();
-		deltaAggressor.y = *reinterpret_cast<volatile const Real *>(&objPos->y) - m_center.y;
-		*reinterpret_cast<volatile Real *>(&deltaAggressor.x) = objPos->x - m_center.x;
-		deltaAggressor.z = 0;
+		Real objY = *reinterpret_cast<volatile const Real *>(&objPos->y);
+		planarDelta[0] = objPos->x - m_center.x;
+		Real deltaY = objY - m_center.y;
+		Real deltaYSquared = deltaY * deltaY;
 
-		if (deltaAggressor.lengthSqr() > m_radiusSqr) 
+		if (deltaYSquared + planarDelta[0] * planarDelta[0] > m_radiusSqr) 
 		{
 			return true;
 		} 
