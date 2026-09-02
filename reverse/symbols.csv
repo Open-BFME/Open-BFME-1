@@ -74507,6 +74507,8 @@ _g_bfmeDualDispatchSource,0x010BD158,Open-BFME5 source path passed by 0x0028B910
 ?bfmeComplete@Gen_0028D8F0@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 random-condition completion called by 0x0028D8F0
 _g_bfmeD8F0Source,0x010BDCC0,Open-BFME5 source path passed by 0x0028D8F0 random selection
 ?bfmeFindModule@@YAPAVBfmeDestroyable@@XZ,0x0028CCD0,Open-BFME5 object module scan called by 0x0028CF50
+?bfmeFill@BfmeEffectState8030@@QAEXPAXHPAUBfmeEffectRecord8030@@H@Z,0x00002243,Open-BFME5 masked-effect record fill called by 0x00288030
+?bfmeRun@BfmeThing8030@@QAEXPAVBfmeEffectState8030@@PAUBfmeEffectRecord8030@@HH@Z,0x00002A59,Open-BFME5 masked effect dispatch called by 0x00288030
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
