@@ -10491,6 +10491,7 @@ name,address,notes
 ?Rva007EB410NetConnStatus@@YAHHPAXH@Z,0x007EB410,Y2 lane: NetConnStatus -- the body names itself in its own warning string; three-argument query with the third unused
 ?Rva007EB520NetConnMAC@@YAIPAX@Z,0x007EB520,Y2 lane: NetConnMAC -- the body names itself in both of its log lines; NetConnStatus hands it the 0xF0-byte Adapter block
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
+?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
 ?Rva007EBCA0@@YAPADPBD0@Z,0x007EBCA0,Y2 lane: address-derived; the tag lookup 0x007EBF20 and 0x007EBFC0 both hand a record and a tag name to
 ?Rva007F0000Alloc@@YAPAXH@Z,0x007F0000,Y2 DirtySock lane: address-derived; one-argument allocator ProtoMangleCreate calls for the 0x214-byte module record
 ?Rva007F0030Free@@YAXPAX@Z,0x007F0030,Y2 DirtySock lane: address-derived; the matching one-argument release, called by ProtoMangleDestroy
@@ -11582,6 +11583,7 @@ name,address,notes
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f20a0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x009EF950,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f20f0_p12cd@@@_STL@@@2@@_STL@@AAEXI@Z,0x009EF9C0,gen-tgrid payload member
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@AAEXI@Z,0x001378D0,ThingFactory hash map bucket initialization body
+?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0000E0FC,Open-BFME5 DamageFXStore ctor call target: retail uses the ILT for NameKeyType-to-DamageFX hashtable bucket initialization
 ?_M_initialize_buckets@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@AAEXI@Z,0x00498DE0,body byte-verified from WindowVideoManagerCtor.cpp; call sites reach it via ILT thunk 0x0002DF4C
 ?_M_initialize_map@?$_Deque_base@HV?$allocator@H@_STL@@@_STL@@IAEXI@Z,0x00089190,gen-tgrid shared callee
 ?_M_initialize_map@?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,rel32 pin for exact-ambiguous landing
@@ -11807,9 +11809,9 @@ name,address,notes
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000486BC,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@MV?$allocator@M@_STL@@@_STL@@IAEXPAMABMABU__true_type@2@I_N@Z,0x000264D1,Open-BFME5 ILT thunk to 0x000D32E0 - the overflow arm of _M_fill_insert at 0x00459D90. That body already carries a generated four-byte-POD _M_insert_overflow identity (Gen_t_000d6300_m4pod) which agrees the element is four bytes wide
 ?_M_insert_overflow@?$vector@PAVBfmeArmyIcon@@V?$allocator@PAVBfmeArmyIcon@@@_STL@@@_STL@@IAEXPAPAVBfmeArmyIcon@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001E051,retail findArmyIcon overflow call directly identifies vector<BfmeArmyIcon*> overflow helper
-?_M_insert_overflow@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CE4F,Open-BFME5 ILT; CrateSystem::newCrateTemplate vector growth call at retail 0x0037A418
 ?_M_insert_overflow@?$vector@PAVBfmeLivingWorldAnimObject@@V?$allocator@PAVBfmeLivingWorldAnimObject@@@_STL@@@_STL@@IAEXPAPAVBfmeLivingWorldAnimObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000094D5,STL vector overflow helper ILT decoded from findAnimObject retail callsite
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
+?_M_insert_overflow@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CE4F,Open-BFME5 ILT; CrateSystem::newCrateTemplate vector growth call at retail 0x0037A418
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001F4FB,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003B075,pinharvest x1 (thunk)
@@ -72605,6 +72607,7 @@ name,address,notes
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
 ?bfmeAddVHI@BfmeMultiVHI@@QAEXPBUBfmeParseVHI@@I@Z,0x00850920,pin
+?bfmeAddVMO@BfmeListVMO@@QAEXPAVBfmeSvcVMO@@@Z,0x007EA550,pin
 ?bfmeAdj1096@BfmeR1096@@QAEXH@Z,0x0000E881,pin
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
@@ -73441,6 +73444,7 @@ name,address,notes
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseFrom@BfmeListW@@QAEXPAVBfmeNodeW@@@Z,0x00037AB5,Open-BFME5 the ICF thunk (to 0x00437AB5) the list clear at 0x004B1720 erases through
+?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
@@ -73478,6 +73482,7 @@ name,address,notes
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
 ?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
+?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
@@ -73562,6 +73567,7 @@ name,address,notes
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
 ?bfmeFinish1013@BfmeB1013@@QAEXXZ,0x00011464,pin
 ?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@HHH@Z,0x0001C7EC,pin
+?bfmeFinish925@BfmeReg925@@QAEXXZ,0x009A1A40,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin
 ?bfmeFinish@Gen_0015BCB0@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 tail-jump to
@@ -73570,6 +73576,7 @@ name,address,notes
 ?bfmeFinish@Gen_002BC050@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x002BC050 tail-jumps to
 ?bfmeFinish@Gen_0038D000@@AAEXXZ,0x00015028,Open-BFME5 the ICF thunk (to 0x0038AE90) the clear at 0x0038D000 calls on this after the walk
 ?bfmeFinish@Gen_00490100@@QAEXXZ,0x00013421,Open-BFME5 the body call the destructor at 0x00490100 makes first
+?bfmeFinish@Gen_00742DA0@@QAEXXZ,0x000312A0,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmeFinish@Gen_0081DC90@@QAEXXZ,0x0081DBE0,Open-BFME5 the body call the vector-member destructor at 0x0081DC90 makes before its members go
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x00038910,Open-BFME5 ILT thunk to body 0x003CA7C0; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with the item and a zero; address-derived name
 ?bfmeFinishAGA@BfmeThingAGA@@QAEXPAX@Z,0x00028493,pin
@@ -73992,6 +73999,7 @@ name,address,notes
 ?bfmeGrow@Gen_006AB0B0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AB0B0 calls
 ?bfmeGrow@Gen_006AC5D0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AC5D0 calls
 ?bfmeGrowUPC@@YAXPAUBfmeStateUPC@@H@Z,0x009959C0,pin
+?bfmeGrowV15@BfmeStrV15@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831780
 ?bfmeGrowVKN@BfmeVecVKN@@QAEXPAUBfmeElemVKN@@PBU2@PAPBU2@HH@Z,0x00040F4D,pin
 ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00001A50,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000240A@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000240A,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
@@ -74045,6 +74053,7 @@ name,address,notes
 ?bfmeHashCombineC@@YAIII@Z,0x0003F7CE,Open-BFME5 ILT the combiner at 0x0056E1E0 calls
 ?bfmeHashCompareA@@YAIII@Z,0x00027BFB,Open-BFME5 ILT the hash comparisons at 0x0054ECB0 and 0x0054F200 call
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
+?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
 ?bfmeHelpVML@@YAXPAHHHH@Z,0x0001D30E,Open-BFME5 REL32 from 0x0048E9A0 thunk to FUN_0088e730
 ?bfmeHelpWI@@YAHH@Z,0x0004B2BD,Open-BFME5 REL32 from stdcall wrapper 0x0078AD90
 ?bfmeHelper760@@YAXPAXH@Z,0x002ED760,pin
@@ -74156,6 +74165,7 @@ name,address,notes
 ?bfmeInitTQA@BfmeSubTQA@@QAEXHHM@Z,0x0002A1B2,pin
 ?bfmeInitTUA@BfmeSubTUA@@QAEXXZ,0x007E86B0,pin
 ?bfmeInitUBB@BfmeSubUBB@@QAEXH@Z,0x00002ECD,pin
+?bfmeInitV15@BfmeStrV15@@QAEXPAD00@Z,0x00021A58,Open-BFME5 /Od range-init thunk for 0x00831780
 ?bfmeInitVJK@BfmeMsgVJK@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJL@BfmeMsgVJL@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
@@ -74167,6 +74177,7 @@ name,address,notes
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
+?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
 ?bfmeIntern996@BfmeMap996@@QAEHPAD@Z,0x0003ADD7,pin
 ?bfmeIntersects@GeometryInfo@@QBE_NABUCoord3D@@MABV1@0M@Z,0x0087F2F0,Open-BFME5 oriented GeometryInfo intersection predicate called by Object wrapper 0x001BE980; direct body pin; descriptive spelling
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
@@ -74502,6 +74513,7 @@ name,address,notes
 ?bfmePopVJU@BfmeStackVJU@@QAEXXZ,0x008D2CC0,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
+?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
 ?bfmePrepWJ@@YGXPAUBfmeObjWJ@@@Z,0x000044C1,Open-BFME5 REL32 from 0x002AB0B0 stdcall wrapper
 ?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
@@ -74579,6 +74591,7 @@ name,address,notes
 ?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
 ?bfmeRemove@BfmeSingletonH@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the singleton clear at 0x003C0DB0 calls per element
+?bfmeRemoveVMO@BfmeListVMO@@QAEXPAVBfmeSvcVMO@@@Z,0x007EA590,pin
 ?bfmeReport1028@@YAXHHPADH@Z,0x00027AAC,pin
 ?bfmeReportTSA@@YGXJPAVBfmeThingTSA@@PAUBfmeGuidTSA@@@Z,0x00AFD550,pin
 ?bfmeReportUKA@@YGXJPAVBfmeThingUKA@@PAUBfmeGuidUKA@@@Z,0x00AFD550,pin
@@ -76180,6 +76193,7 @@ name,address,notes
 ?findCommandSet@ControlBar@@QAEPBVCommandSet@@ABVAsciiString@@@Z,0x00048CCA,ControlBar::findCommandSet via ILT thunk
 ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509
 ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z,0x0000442B,Open-BFME5 ILT thunk to 0x004AD740; REL32 target of setControlBarScheme at 0x004AD8B5
+?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z,0x0001B8CE,Open-BFME5 ILT; CrateSystem::newCrateTemplate calls the BFME find-by-name implementation through this retail thunk
 ?findExperienceScalarTable@ExperienceLevelSystem@@QAEPAUBfmeVec@@ABVAsciiString@@@Z,0x00021797,BfmeThingEFE constructor calls this ILT to resolve its configured scalar table
 ?findFXList@FXListStore@@QBEPBVFXList@@PBD@Z,0x0001EDE9
 ?findFlag@BFMEScriptEngineFlagLookup@@QAEPA_NVAsciiString@@@Z,0x0004278F,TU-scoped ABI name for the ScriptEngine flag lookup ILT; target body 0x00344E10 is semantically proven but its canonical retail spelling is unknown
@@ -76310,7 +76324,6 @@ name,address,notes
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
-?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z,0x0001B8CE,Open-BFME5 ILT; CrateSystem::newCrateTemplate calls the BFME find-by-name implementation through this retail thunk
 ?friend_getFinalOverride@BFMELocomotorOverride@@QAEPAV1@XZ,0x000022BB,alias of the LocomotorOverridable spelling pinned below; AIUpdate.cpp reaches the chain walker through a view class because the reference Locomotor reads its template instead
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
 ?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
@@ -80100,6 +80113,7 @@ name,address,notes
 ?run@WideRunner@@QAEXPAVWideCall@@PBDHHHHHH@Z,0x00015235,incremental-link thunk to 0x004675F0; __thiscall with eight stack args (ret 0x20); address-derived name
 ?run@WinInstanceDataInitShim@@QAEXXZ,0x00499850,WinInstanceData init incremental-link thunk target through a TU-local forwarding shim
 ?run@XferRandomVariableShim@@SAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0010C4D0,xferRandomVariable incremental-link thunk target through a TU-local forwarding shim
+?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
 ?rva000b2cc0@@YGXPAXH@Z,0x00025306,Open-BFME5 ILT stdcall of push0+data wrapper
 ?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
@@ -82251,15 +82265,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
-?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
-?bfmeFinish@Gen_00742DA0@@QAEXXZ,0x000312A0,Open-BFME5 ILT from 0x00742DA0 flag reset
-?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
-?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
-?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
-?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
-?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0000E0FC,Open-BFME5 DamageFXStore ctor call target: retail uses the ILT for NameKeyType-to-DamageFX hashtable bucket initialization
-?bfmeFinish925@BfmeReg925@@QAEXXZ,0x009A1A40,pin
-?bfmeGrowV15@BfmeStrV15@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831780
-?bfmeInitV15@BfmeStrV15@@QAEXPAD00@Z,0x00021A58,Open-BFME5 /Od range-init thunk for 0x00831780
-?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
