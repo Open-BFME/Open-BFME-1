@@ -2416,6 +2416,7 @@ name,address,notes
 ??0DieModuleData@@QAE@XZ,0x0004A426,pinharvest x1 (thunk)
 ??0DieMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0DirectInputKeyboard@@QAE@XZ,0x000120D0,DirectInputKeyboard ctor thunk; createKeyboard@W3DGameClient factory REL32
+??0Display@@QAE@XZ,0x000110FE,ILT to Display ctor body 0x005CBF60
 ??0DisplayString@@QAE@XZ,0x00020C25,W3DDisplayString constructor calls the DisplayString constructor through this retail ILT
 ??0DisplayStringManager@@QAE@XZ,0x0000F7A9
 ??0DistLODClass@@QAE@ABV0@@Z,0x00030EE0,DistLOD copy constructor
@@ -3360,6 +3361,7 @@ name,address,notes
 ??0Rva006E1700Base@@QAE@XZ,0x0002ACD4,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E1700
 ??0Rva006E6C10Base@@QAE@XZ,0x00032F1F,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E6C10
 ??0Rva006FB500Base@@QAE@XZ,0x00020004,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006FB500
+??0Rva006FB780Product@@QAE@P6AXXZ00@Z,0x0003574C,ILT to product ctor body 0x007E3A80
 ??0Rva00722120Base@@QAE@XZ,0x000354E5,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x00722120
 ??0Rva00740BC0Elem@@QAE@XZ,0x0003ABCF,element constructor of the 0x14-byte arrays built at 0x00740AE0
 ??0Rva0076F980Mid@@QAE@ABV0@@Z,0x00007A63,Open-BFME5 fresh thiscall copy ctor at ILT of 12-byte mid member of 0x0076F980
@@ -4113,6 +4115,8 @@ name,address,notes
 ??1BaseUpgradeModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BattlePlanUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BehaviorModule@@UAE@XZ,0x00019565,Open-BFME5 SiegeDeploySpecialPower base dtor pin
+??1Bfme5RefPairVal@@QAE@XZ,0x0000EA43,ILT thunk to Mem004C5700 pair destructor used by Rva004C6370
+??1Bfme5RefPairValE@@QAE@XZ,0x0003F148,ILT thunk to Mem004C57D0 pair destructor used by Rva004C64E0
 ??1BfmeAptScreenDisconnectScreen@@UAE@XZ,0x0050EA10,virtual dtor of the class whose ctor is pinned ??0BfmeAptScreenDisconnectScreen@@QAE@PAX@Z: resets vtables 0x01104DE8 and 0x01104DE4(+0x218) clears TheDisconnectMenu 0x012F4964 when it is this calls g_theWindowManager 0x00468090(0) unless the Quit flag this+0x261 is set unregisters DisconnectScreen::InitGadgets via 0x004629A0 then base dtor 0x00465430; called by the deleting dtor at 0x0050F633; ILT 0x00011C84
 ??1BfmeAptScreenQuitMenu@@UAE@XZ,0x00569720,E tier 1 via the corrected TheNetwork vcall seed: virtual dtor of the QuitMenu APT screen whose ctor is pinned ??0BfmeAptScreenQuitMenu@@QAE@PAX@Z (ILT 0x00025153 -> 0x0056A2F0 installs vtable 0x0110A388 at 0x0056A324 and publishes this to 0x012F4B40 at 0x0056A361): resets vtables 0x0110A388 / 0x0110A384 (+0x218) compares this with 0x012F4B40 (0x0056974F) and clears it then UI singleton 0x012F148C slot +0x150(0); carries the ZH QuitMenu.cpp:151 exit: if TheNetwork (0x012F7714 at 0x0056981F) TheNetwork->quitGame vslot +0x78 at 0x0056982C else 0x003839E0 (posts MSG_CLEAR_GAME_DATA at 0x00383A2C) via ILT 0x000238A3; then Shell::showShell 0x00580150 bfme_hideBackground 0x00468090 APT:Pause text via 0x0046CBF0 and the APT screen base dtor 0x00465430 (the base ??1BfmeAptScreenDisconnectScreen also calls); called by the deleting dtor ??_GGen_dtor_00569de0 at 0x00569DE3 via ILT 0x000271F6 = vtable 0x0110A388 slot 0
 ??1BfmeAptScreenScoreScreen@@UAE@XZ,0x00575050,virtual dtor: resets vtables 0x0110AAB8/0x0110AAB4 unregisters AptScoreScreen::InitGadgets via 0x004629A0; if +0x25c==0 (single-player screen) && TheShell 0x012F4B58 -> TheShell->0x0057F5B0(FALSE) (ILT 0x000428ED); clears TheScoreScreen 0x012F4B50; AsciiString dtors at +0x330 +0x320 +0x300; frees the bit-vector buffer +0x2e8; vector<pair<Int AsciiString>> dtor 0x00574BC0 on +0x264; base dtor 0x00465430; ILT 0x00006F28; sole caller the deleting dtor 0x00575883
@@ -4275,6 +4279,7 @@ name,address,notes
 ??1DeletionUpdateModuleDataBase@@UAE@XZ,0x0000E421,Open-BFME5 pin
 ??1DetailedArchivedDirectoryInfo@@QAE@XZ,0x009D0730,site-decoded from ~ArchiveFile: lea ecx,[esi+8] then call -- m_rootDirectory is the DetailedArchivedDirectoryInfo member at ArchiveFile+8 and the type is already named by its copy ctor
 ??1DieModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
+??1Display@@UAE@XZ,0x000314BC,ILT to Display dtor body 0x005CB360
 ??1DisplayString@@MAE@XZ,0x0000D823,W3DDisplayString dtor call target
 ??1DisplayString@@UAE@XZ,0x0000D823,W3DDisplayString dtor call target; same thunk as the MAE spelling (access level differs between our header and retail)
 ??1DisplayStringManager@@UAE@XZ,0x000472E9,BFME DisplayStringManager destructor ILT called by exact W3DDisplayStringManager destructor
@@ -73145,6 +73150,7 @@ name,address,notes
 ?bfmeChk1114@BfmeK1114@@QAEDH@Z,0x00048577,pin
 ?bfmeChk1218@BfmeE1218@@QAEDXZ,0x00898480,pin
 ?bfmeChk1219@BfmeE1219@@QAEDXZ,0x00898480,pin
+?bfmeCleanup@BfmeObj4310@@QAEXH@Z,0x008C3F10,thiscall cleanup with a mode argument used by 0x008C4310
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeCleanupVMU@BfmeNodeVMU@@QAEXXZ,0x00893990,pin
 ?bfmeCleanupVOH@BfmeNodeVOH@@QAEXXZ,0x00893990,pin
@@ -73438,6 +73444,7 @@ name,address,notes
 ?bfmeDrop1106@BfmeK1106@@QAEXXZ,0x00006D61,pin
 ?bfmeDrop988@BfmeReg988@@QAEXPAVBfmeE988@@@Z,0x00010F46,pin
 ?bfmeDrop@BfmeSinkAM@@QAEXH@Z,0x00010FFA,Open-BFME5 the ICF thunk (to 0x003C6D40) the remove at 0x003BEBA0 tells about the entry
+?bfmeDrop@BfmeTracker4310@@QAEXPAVBfmeObj4310@@@Z,0x00896FF0,thiscall drop from the tracker at 0x013377F8 used by 0x008C4310
 ?bfmeDrop@Rva003D8530Owner@@QAEXPAX@Z,0x00016DB0,Open-BFME5 ILT thunk to body 0x003D8530; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it on the sub-object at +0x0C of _TheAIParseDefinitionAI for each live slot whose kind is one of four; address-derived name
 ?bfmeDropA@@YAXPAX@Z,0x00895320,Open-BFME5 the drop the cleanup at 0x00783A50 calls
 ?bfmeDropAIB@BfmeListAIB@@QAEXPAX@Z,0x0000E363,pin
@@ -76499,6 +76506,7 @@ name,address,notes
 ?first@Rva0051DB00@@QAEXXZ,0x00005F88,Open-BFME5 thiscall at ILT of two-call wrap 0x0051DB00
 ?first@Rva0051DCE0@@QAEXXZ,0x00005F88,ILT to 0x0051D590 for 13B two-call wrap at 0x0051DCE0
 ?firstNamed@U4Scan@@QBE_NPAXPBVU4Filter@@@Z,0x00606D60,U4 lane: third scan entry forwarded to by the proxy at 0x00606E20; address-derived name
+?fiveArg@TerrainLogicP48@@QAEXHHPAHHH@Z,0x001A51F0,thiscall body of the 0x001A64F0 adapter
 ?flattenZones@@YAXPAG0H@Z,0x004027B0,Open-BFME5 static zone-table flatten helper used by PathfindZoneManager at 0x00402E90
 ?flush@?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@QAEAAV12@XZ,0x00030B11,FX particle ostream put sentry unitbuf flush ILT
 ?flush@Open27110F0Flusher@@QAEXXZ,0x0003139A,Open2 0x007110F0 flush (ILT)
@@ -79927,6 +79935,7 @@ name,address,notes
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
 ?onExit@SpecialAbilityUpdate@@AAEX_N0@Z,0x0000F975,SpecialAbilityUpdate destructor cleanup call target
 ?onLevelStart@Drawable@@QAEXXZ,0x00015B81,Open-BFME5 ILT thunk to body 0x00412500; GameLogic start-new-game sequence and the exact Drawable module broadcast establish onLevelStart semantics
+?onMatch@TerrainLogicP48Owner@@QAEXPAUTerrainLogicP48Rec@@H@Z,0x001A6550,thiscall body of the 0x001A7A50 finder
 ?onPlayerSciencePurchasePointsChanged@BfmeSciencePointsControlBar@@QAEXPAVPlayer@@@Z,0x000439D7,alias of the ControlBar spelling pinned below; Player.cpp reaches the notification through a view class because the reference ControlBar.h declares it taking a const Player
 ?onPlayerSciencePurchasePointsChanged@ControlBar@@QAEXPAVPlayer@@@Z,0x000439D7,Open-BFME5 the thunk Player addSciencePurchasePoints notifies; Zero Hour names the same call
 ?onRemovedFrom@Object@@QAEXPAV1@@Z,0x00023D30,ILT thunk to already-matched body 0x001CBAE0; resolved via decode_calls at TunnelTracker::onTunnelDestroyed
@@ -80094,6 +80103,7 @@ name,address,notes
 ?preprocessMacro@INI@@SAPBDPBD@Z,0x008524B0,provisional name for BFME INI macro substitution; called by scanInt/scanReal
 ?primaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x00025D92,retail jump thunk to the byte-verified primary state lookup at 0x003690A0
 ?privateDock@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z,0x0004872F,Open-BFME5 ILT from zh_sweep packet 002c5820
+?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z,0x00030A8A,ILT to the nine-arg body at 0x001E9FD0
 ?probed@NAT@@IAEXH@Z,0x00671DE0,processGlobalMessage callee (ILT body)
 ?process@BfmeSubED8@@QAEXPAX@Z,0x000283F8,pin
 ?processAck@Connection@@QAEPAVNetCommandRef@@GEI@Z,0x00661CC0,the three-argument form; BFME passes the ack's original execution frame as well as the command id and player id
