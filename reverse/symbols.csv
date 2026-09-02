@@ -4116,6 +4116,7 @@ name,address,notes
 ??1BFMENetworkThreadBase@@UAE@XZ,0x009DB530,BFMENetworkBackend destructor base call and existing unwind dtor pin at this body
 ??1BFMEPlayerTemplateAsciiString@@QAE@XZ,0x00887940,PlayerTemplate time-change retail AsciiString release owner
 ??1BFMERetailAsciiString@@QAE@XZ,0x0000D828,alias of the string destructor ILT the ScriptActions unwind funclet jumps to; the destructor body itself is already pinned at 0x00887940 under ??1AsciiString and ?releaseBuffer
+??1BFU_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 BoneFXUpdate base destructor call target
 ??1BannerCarrierString@@QAE@XZ,0x00887940,BannerCarrier object-name string destructor
 ??1BannerCarrierUpgrade@@QAE@XZ,0x000438AB,BannerCarrier upgrade destructor thunk
 ??1BannerStringMember@@QAE@XZ,0x0001A401,BannerUI +0x1C member destructor ILT proven by the virtual destructor call site
@@ -72898,6 +72899,7 @@ name,address,notes
 ?bfmeAssign@BfmeCopyElementF@@QAEXPAU1@@Z,0x0001B1D5,Open-BFME5 the element assign the copy loops call
 ?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
+?bfmeAssign@BfmeRecordSet@@QAEXPAX@Z,0x00011DB0,Open-BFME5 record-set copy called by 0x0028BFF0
 ?bfmeAssignAVIK@BfmeSubAVIK@@QAEXABV1@@Z,0x009600F0,pin
 ?bfmeAssignBVIK@BfmeSubBVIK@@QAEXABV1@@Z,0x0095C860,pin
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
@@ -73358,6 +73360,7 @@ name,address,notes
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
+?bfmeCreate@ObjectCreationListStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,Open-BFME5 conditional object creation called by 0x0028CA70
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
@@ -75027,6 +75030,8 @@ name,address,notes
 ?bfmeSet4VIX@BfmeMsgVIX@@QAEXPBDPAX@Z,0x007E8980,pin
 ?bfmeSet988@BfmeE988@@QAEXHH@Z,0x000157DA,pin
 ?bfmeSet991@BfmeB991@@QAEXH@Z,0x00024177,pin
+?bfmeSet@BfmeTargetSink@@QAEXHH@Z,0x0003EEBE,Open-BFME5 target sink update called by 0x0028B440
+?bfmeSet@BfmeTargetSub@@QAEXH@Z,0x0001C882,Open-BFME5 target subobject update called by 0x0028B440
 ?bfmeSetA1004@BfmeObj1004@@QAEXHH@Z,0x00032DEE,pin
 ?bfmeSetAKA@BfmeInnerAKA@@QAEXH@Z,0x00024D70,pin
 ?bfmeSetANB@BfmeSlotANB@@QAEXPAXH@Z,0x00887D20,pin
@@ -75091,6 +75096,7 @@ name,address,notes
 ?bfmeSetVMX@BfmeStrVMX@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMZ@BfmeStrVMZ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVOS@BfmeStrVOS@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeSetVOT@BfmeStrVOT@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76986,6 +76992,7 @@ name,address,notes
 ?g_bfmeDSV@@3PAVBfmeGlobDSV@@A,0x00EED748,pin
 ?g_bfmeDUI@@3PAUBfmeOtherDUI@@A,0x00EF0898,pin
 ?g_bfmeDVIW@@3PAXA,0x00F0A5C4,pin
+?g_bfmeDeadlineClock@@3PAUBfmeDeadlineClock@@A,0x00EF0898,Open-BFME5 frame clock global read by 0x0028EEB0
 ?g_bfmeDefHD@@3PADA,0x00F36E50,pin
 ?g_bfmeDefVNJ@@3DA,0x00F36E50,pin
 ?g_bfmeDefault1032@@3PADA,0x00F36E50,pin
@@ -82821,9 +82828,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1BFU_DeepBase@@UAE@XZ,0x00047C53,Open-BFME5 BoneFXUpdate base destructor call target
-?g_bfmeDeadlineClock@@3PAUBfmeDeadlineClock@@A,0x00EF0898,Open-BFME5 frame clock global read by 0x0028EEB0
-?bfmeCreate@ObjectCreationListStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,Open-BFME5 conditional object creation called by 0x0028CA70
-?bfmeSet@BfmeTargetSub@@QAEXH@Z,0x0001C882,Open-BFME5 target subobject update called by 0x0028B440
-?bfmeSet@BfmeTargetSink@@QAEXHH@Z,0x0003EEBE,Open-BFME5 target sink update called by 0x0028B440
-?bfmeAssign@BfmeRecordSet@@QAEXPAX@Z,0x00011DB0,Open-BFME5 record-set copy called by 0x0028BFF0
