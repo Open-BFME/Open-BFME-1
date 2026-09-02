@@ -82535,3 +82535,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeFindInRange@@YAPAXPAX0HPBH@Z,0x000434E6,pin 0x00582540 find_if helper ILT target

@@ -1,5 +1,5 @@
-// ?d_00582540@@YAXXZ
-// partial score=0.92 date=2026-08-30
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
 void *bfmeFindInRange(void *begin, void *end, int value, const int *key);
 
 class BfmeRangeOwner
@@ -13,6 +13,7 @@ private:
 	void *m_end;
 };
 
+// ?find@BfmeRangeOwner@@QAEPAXH@Z
 void *BfmeRangeOwner::find(int value)
 {
 	void *end = m_end;
