@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "48377a20920e784fd0ff1862076e732baa9c46cac36f26b249a8aeb3fab9cd2a",
+    "sha256": "7e976bb6a73eb7c2526b69b10002baee7efe3394ce5779f325088cbd4998ab22",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 3115
+    "used": 3531
   },
   "features": [
     {

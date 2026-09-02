@@ -8,10 +8,14 @@ ceiling. This exposes three more, all of them the engine's own:
 | `[` / `]` | rotate the camera left / right |
 | `PageUp` / `PageDown` | zoom in / out, past retail's ceiling |
 | `,` / `.` | pitch the camera down / up |
+| `/` | show the controls card again |
 
 Replay-only: the hook returns immediately unless `TheGameLogic`'s mode is
 `GAME_REPLAY`, so it cannot affect a match, a skirmish or the shell. Retail's
 own `CAMERA_RESET` (numpad 5) puts everything back.
+
+A card listing all of it appears in the corner a few seconds into every replay,
+and `/` brings it back — because a control nobody can find is not a feature.
 
 ## This does not implement a camera
 
@@ -39,6 +43,58 @@ finished, tuned, and unreachable:
   constructor, `reset`, and `setInputEnabled`.
 
 So this feature writes those four bytes and lets the engine do the work.
+
+## The card
+
+Six lines through `InGameUI::message`, the engine's own message feed — the
+surface BFME already uses to tell a player something. It costs no layout, no
+font handling and no draw order, it cannot disturb the renderer, and it fades
+by itself:
+
+```
+Replay: Ctrl+. pause
+[ ] rotate camera
+PgUp/PgDn zoom
+, . tilt camera
+Numpad5 reset camera
+/ shows controls
+```
+
+Short lines on purpose: the feed is **right-aligned to the viewport edge and
+does not wrap**, so the first cut's padded two-column layout stretched every
+line clear across the battle. Six on purpose too — the feed shows about that
+many before the oldest scrolls off, and a seventh cost the header.
+
+**Getting the right overload matters and the vtable will not tell you.** Three
+`message`-family entries sit next to each other, all variadic, all with a
+16 KB `_vsnwprintf` buffer. Only their frame sizes separate them:
+
+| slot | frame | reads format at | so the format is | which |
+|---|---|---|---|---|
+| `+0x38` | `0x4014` | `[esp+0x4020]` | arg**3** | `messageColor(color, fmt, ...)` |
+| `+0x3C` | `0x4018` | `[esp+0x4020]` | arg**2** | `message(AsciiString, ...)` — and it alone reads `TheGameText` |
+| `+0x40` | `0x4014` | `[esp+0x401C]` | arg**2** | `message(UnicodeString, ...)` ← this one |
+
+The first cut called `+0x38` with two arguments, so it read its format from
+uninitialised stack and died on `0x0000002C`. The `+0x3C` sibling resolves its
+argument through the CSF string table, which is no use for text that is not in
+`lotr.csf`.
+
+The vtable base is **`0x010F5B38`**, read off the store the constructor makes at
+RVA `0x0044B834` — not inferred from where a known method sits, which is how the
+slot was got wrong in the first place.
+
+Being variadic, `message` is `__cdecl` with `this` as the first stack argument,
+and it takes its format **by value and destroys it** (`call 0x00C881D0` on the
+parameter slot). So each line is a real refcounted `UnicodeString`, built by
+`UnicodeString::UnicodeString(const WideChar *)` at RVA `0x00888DE0` — the
+GameEngine one, in the same string TU as `AsciiString`'s literal ctor at
+`0x00C88BC0`, **not** the WWLib class of the same mangled name that
+`reverse/functions.csv` pins at RVA `0x00065410`. Handing it a static body would
+hand its destructor a static body to free.
+
+The card text is a printf format, so a stray `%` in it would be read as a
+conversion.
 
 ## The hook
 
@@ -163,6 +219,9 @@ recorded one.
 * `View::setPitch` (RVA `0x0045B570`) clamps pitch to a **-36° floor** and
   forces exactly `-0.6283185` below it, so a runaway pitch key cannot invert the
   camera. Above the horizon there is no skybox — the sky renders black.
+* Every key here is polled once per client frame, so a tap shorter than a frame
+  is missed. A human press is 2-4 frames; an `xdotool key` tap is not, and
+  mistaking the second for a dead key cost a build. Hold the key when testing.
 * **Three `View` rows in the ledger are mis-pinned onto BFME's layout.**
   `?setHeightAboveGround@View@@UAEXM@Z` at RVA `0x0018F257` is a 10-byte
   `mov [ecx+0x44]` stub; the real one is RVA `0x00742E60`, ~215 bytes, writes

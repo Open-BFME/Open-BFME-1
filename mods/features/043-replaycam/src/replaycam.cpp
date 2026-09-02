@@ -50,6 +50,11 @@ typedef short(__stdcall *GetAsyncKey)(int);
 // MSVC 7.1 rejects __thiscall here. This is the documented __fastcall
 // spelling used by 040-horplus: this in ECX, unused EDX, then stack args.
 typedef void(__fastcall *SetPitch)(void *self, void *edx, Real pitch);
+typedef void(__fastcall *UnicodeCtor)(void *self, void *edx, const unsigned short *text);
+// InGameUI::message is a VARIADIC member, so MSVC gives it __cdecl with `this`
+// as the first stack argument -- which is exactly how the engine calls it at
+// ConnectionManager::disconnectPlayer RVA 0x006663C3.
+typedef void(__cdecl *UiMessage)(void *self, void *unicode_string);
 typedef Real(__fastcall *GetBound)(void *self, void *edx);
 typedef void(__fastcall *SetHeight)(void *self, void *edx, Real height);
 
@@ -59,6 +64,14 @@ typedef void(__fastcall *SetHeight)(void *self, void *edx, Real height);
 // the five in-progress camera-movement flags, and rebuilds the camera
 // transform. Poking the field does none of that and fights the next update.
 #define c_setpitch ((SetPitch)0x00B42D50)
+// UnicodeString::UnicodeString(const WideChar *) -- the GameEngine one, in the
+// same string TU as AsciiString's literal ctor at 0x00C88BC0, NOT the WWLib
+// class of the same mangled name that reverse/functions.csv pins at RVA
+// 0x00065410. message takes its format BY VALUE and destroys it on the way out
+// (`call 0x00C881D0` on the parameter slot), so the string has to be a real
+// refcounted one; handing it a static body would hand the destructor a static
+// body to free.
+#define c_unicode ((UnicodeCtor)0x00C88DE0)
 
 #define TheGameLogic (*(void **)0x012F0898)
 #define TheTacticalView (*(void **)0x012F1600)
@@ -69,6 +82,21 @@ enum { GAME_REPLAY = 3 };
 
 // InGameUI's per-frame camera request flags, read by InGameUI::update at RVA
 // 0x004413C5 (rotate) and 0x00441427 (zoom).
+// InGameUI vtable +0x40: message(UnicodeString format, ...), which goes
+// straight to _vsnwprintf(buf, 0x1fff, format, args). Its format IS a format --
+// a stray % in the card text would be read as a conversion.
+//
+// The vtable base is 0x010F5B38, read off the store the constructor makes at
+// RVA 0x0044B834, not inferred from where `update` sits. Three overloads live
+// next to each other and only their frames tell them apart; the first cut
+// picked the wrong one and crashed on a garbage format:
+//
+//   +0x38  frame 0x4014, format at [esp+0x4020] = arg3  messageColor(color, fmt, ...)
+//   +0x3C  frame 0x4018, format at [esp+0x4020] = arg2  message(AsciiString, ...)
+//          -- and it alone reads TheGameText (0x012F147C) to resolve the label
+//   +0x40  frame 0x4014, format at [esp+0x401C] = arg2  message(UnicodeString, ...)
+enum { UI_VT_MESSAGE = 0x40 };
+
 enum {
     UI_ROTATE_LEFT = 0x12B4,
     UI_ROTATE_RIGHT = 0x12B5,
@@ -116,11 +144,13 @@ enum { GD_ROTATE_SPEED = 0xCC8 };
 // 831, and the screen is black by 1121 -- all of it clipping, not culling.
 enum { GD_CLIP_DEPTH = 0xA28 };
 
-// [ ] rotate, PageUp/PageDown zoom, , . pitch. All six are unbound in retail:
+// [ ] rotate, PageUp/PageDown zoom, , . pitch, / the card. All of them are
+// unbound in retail:
 // CommandMap.ini claims none of them, and the bare comma and period are only
 // ever bound by commandmapdebug.ini, which a retail build does not load.
 enum {
     VK_CTRL = 0x11,
+    VK_SLASH = 0xBF,
     VK_PRIOR = 0x21,
     VK_NEXT = 0x22,
     VK_COMMA = 0xBC,
@@ -132,6 +162,42 @@ enum {
 static int s_in_replay;
 static unsigned char s_saved_zoom_cap;
 static Real s_saved_clip_depth;
+static int s_card_delay;
+static int s_card_key_down;
+
+// The card. Shown once a replay has settled and again on F10, through the
+// engine's own message feed -- the surface BFME already uses to tell a player
+// something, so it gets the game's font, colour and fade for free and cannot
+// disturb the renderer.
+//
+// Short lines on purpose. The feed is RIGHT-aligned to the viewport edge and
+// does not wrap, so a padded two-column layout stretches each line across the
+// whole screen and over the battle. Six lines on purpose too: the feed shows
+// about that many before the oldest scrolls off, and a seventh cost the header.
+static const unsigned short *const CARD[] = {
+    (const unsigned short *)L"Replay: Ctrl+. pause",
+    (const unsigned short *)L"[ ] rotate camera",
+    (const unsigned short *)L"PgUp/PgDn zoom",
+    (const unsigned short *)L", . tilt camera",
+    (const unsigned short *)L"Numpad5 reset camera",
+    (const unsigned short *)L"/ shows controls"
+};
+enum { CARD_LINES = sizeof(CARD) / sizeof(CARD[0]) };
+// Client frames to wait before the card appears. The message feed is not up on
+// the replay's first frame, and a line posted into it then is dropped.
+enum { CARD_DELAY_FRAMES = 90 };
+
+static void show_card(void *ui) {
+    void **vt = *(void ***)ui;
+    UiMessage message = (UiMessage)vt[UI_VT_MESSAGE / 4];
+    for (int i = 0; i < CARD_LINES; ++i) {
+        // One dword, constructed by the engine and destroyed by the callee:
+        // the ordinary contract for a by-value string argument.
+        void *line = 0;
+        c_unicode(&line, 0, CARD[i]);
+        message(ui, line);
+    }
+}
 
 static int down(int vk) {
     return (c_getasynckey(vk) & 0x8000) != 0;
@@ -212,6 +278,7 @@ extern "C" __declspec(dllexport) void __cdecl replaycam_update(void *ecx) {
     }
 
     if (!replay || ui == 0 || view == 0) {
+        s_card_delay = 0;
         return;
     }
 
@@ -240,6 +307,25 @@ extern "C" __declspec(dllexport) void __cdecl replaycam_update(void *ecx) {
     }
 
     const int ctrl = down(VK_CTRL);
+
+    if (s_card_delay <= CARD_DELAY_FRAMES && ++s_card_delay == CARD_DELAY_FRAMES) {
+        show_card(ui);
+    }
+    // Slash because it is the help key everything else uses, and because it is
+    // free bare in retail -- ctrl+slash is TOGGLE_FAST_FORWARD_MODE, hence the
+    // guard. Like every key here this is polled once per client frame, so a tap
+    // shorter than a frame is missed; a human press is 2-4 frames, an
+    // `xdotool key` tap is not, and mistaking the second for a broken key cost
+    // a build.
+    if (!ctrl && down(VK_SLASH)) {
+        if (!s_card_key_down) {
+            s_card_key_down = 1;
+            show_card(ui);
+        }
+    } else {
+        s_card_key_down = 0;
+    }
+
     ui[UI_ROTATE_LEFT] = (unsigned char)down(VK_LBRACKET);
     ui[UI_ROTATE_RIGHT] = (unsigned char)down(VK_RBRACKET);
     ui[UI_ZOOM_IN] = (unsigned char)down(VK_PRIOR);
