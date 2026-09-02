@@ -82303,3 +82303,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeScaleBC@@3MA,0x00C7FAC4,Open-BFME5 float scale for 0x0040BC50
 ?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
 ?bfmePredV30@@YAHHHD@Z,0x0003B557,Open-BFME5 3-arg predicate for 0x0082E680 find-if
+?g_bfmeSubB3@@3NA,0x00C7C640,Open-BFME5 double sub for 0x0040B300
+?g_bfmeMulB3@@3NA,0x00C7F948,Open-BFME5 double mul for 0x0040B300
+?g_bfmeScaleB3@@3MA,0x00C84068,Open-BFME5 float scale for 0x0040B300
