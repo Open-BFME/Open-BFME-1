@@ -76,6 +76,58 @@ RETRY_WAS = 2000
 # rebuilt to its own -o path.
 RETRY_MS = 400
 
+# 038-fpsrender. The same field store as 037 and NONE of its pokes: the render
+# rate alone, with the six-step cycle exactly as retail has it. Shares 037's
+# detour address deliberately, so modbuild refuses to stack the two.
+TARGET_ENGINE_UPDATE_RENDER = 0x0006E910
+
+# 037-fps60. GameEngine::update's six-step cycle, and the render rate that has
+# to keep up with it.
+#
+# The two immediates are the cycle length. `cmp eax,6` decides whether the step
+# counter has come round, and `cmp ecx,6` whether this iteration is the
+# network-gated phase 1; between them they make GameLogic::update run six times
+# per 200 ms network frame, which is a 30 Hz simulation. Each is one byte.
+#
+# The detour is GameEngine::update's entry, whose first five bytes are three
+# pushes and a `mov esi,ecx` -- whole instructions, none of them relative. It
+# carries the other half: the frame limit the render loop paces itself to,
+# which lives on the engine object rather than in the image, because the value
+# the game runs on comes from _patch222.big and is 38, not the compiled 30.
+TARGET_ENGINE_UPDATE = 0x0006E910
+SUBSTEP_IMMEDIATES = (0x0006E986, 0x0006E9D9)
+SUBSTEPS_WERE = 6
+# Doubled together, so 76/12 is exactly 38/6: the loop still has the same
+# number of spare iterations per network frame to spend re-attempting the
+# gated phase, and the network frame is still 200 ms.
+SUBSTEPS = 12
+FPS_LIMIT_WAS = 38
+# 038's own limit, separate from 037's on purpose. 037 doubles the sub-step
+# count and so is bound to 76, because 76/12 must equal 38/6 or the cycle's
+# spare iterations change. 038 leaves sub-steps alone, the network paces the
+# simulation in a match, and any limit works -- so it takes the 60 that was
+# actually asked for, which also asks 21% less of the machine than 76.
+#
+# Measured on a real desktop, 60 costs nothing against retail's 38: animation
+# 0.942 against 0.926, network 4.755/s against 4.684/s.
+RENDER_LIMIT = 60
+FPS_LIMIT = 76
+# The animation clock advances this many ms per simulation sub-step (VA
+# 0x012BB1CC). Retail holds 33 and runs 30 sub-steps a second: 0.990x real
+# time. Doubling the sub-steps doubles animation speed unless this halves with
+# them, and 33/2 is not an integer -- so the payload alternates these two and
+# averages 16.5.
+ANIM_MS_WAS = 33
+ANIM_MS_LOW = ANIM_MS_WAS * SUBSTEPS_WERE // SUBSTEPS          # 16
+ANIM_MS_HIGH = ANIM_MS_LOW + 1                                  # 17
+
+# 036-fpsprobe. DX8Wrapper::End_Scene's `mov eax,[TheD3DDevice]` immediately
+# before Present -- five bytes, one whole instruction, no relative operand, and
+# past the `flip` test, so the hook fires once per frame that really reaches the
+# screen and never on a render-to-texture pass. EndScene has already run, which
+# is what makes a backbuffer readback legal there.
+TARGET_PRESENT = 0x00909039
+
 # 031-earlysend. The client half's tail, immediately before the engine's own
 # liteupdate(FALSE) at 0x0006BA53 -- so a command queued by the payload is
 # flushed to the wire by the next instruction of the retail path. The six bytes
@@ -347,6 +399,57 @@ def build_replayctl(pe, feature_dir, probe=False):
         (TARGET_REPLAYFRAME, "replayctl_frame", ("ecx",)),
     ), probe=probe)
 
+def build_fpsprobe(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/fpsprobe.cpp", "fpsprobe_present", (
+        (TARGET_PRESENT, "fpsprobe_present", ()),
+    ), probe=probe)
+
+
+def build_fpsprobe_timing(pe, feature_dir, probe=False):
+    """The probe with the backbuffer readback compiled out.
+
+    The readback is a full GPU-to-CPU copy of the frame -- 5.76 MB at 1600x900,
+    four times a second -- and it stalls the pipeline. Measured, that instrument
+    cost is what produced the ~85 ms hitches and a ~7% simulation deficit at
+    high resolution, and it is why the same build measures clean at 660x520
+    where the copy is a quarter the size. Timing, the clocks and the network
+    frame are all still recorded; only the per-cell hashes are gone."""
+    return build_feature(pe, feature_dir.parent / "036-fpsprobe" / "src/fpsprobe.cpp",
+                         "fpsprobe_present", (
+        (TARGET_PRESENT, "fpsprobe_present", ()),
+    ), probe=probe, defines=("FPSPROBE_TIMING_ONLY=1",))
+
+
+def build_fpsrender(pe, feature_dir, probe=False):
+    """One field store, no pokes: the render rate doubled, the simulation
+    sub-step count left exactly as retail has it."""
+    return build_feature(pe, feature_dir / "src/fpsrender.cpp", "fpsrender_engine", (
+        (TARGET_ENGINE_UPDATE_RENDER, "fpsrender_engine", ("ecx",)),
+    ), probe=probe, defines=(f"FPS_LIMIT={RENDER_LIMIT}",
+                             f"FPS_LIMIT_RETAIL={FPS_LIMIT_WAS}"))
+
+
+def build_fps60(pe, feature_dir, probe=False):
+    """Two byte pokes and one detour: the simulation sub-step count, and the
+    render rate that lets twelve of them finish inside a network frame."""
+    pokes = []
+    for rva in SUBSTEP_IMMEDIATES:
+        before = pe.read(rva, 1)[0]
+        if before != SUBSTEPS_WERE:
+            raise SystemExit(
+                f"0x{rva:08X} holds {before}, not {SUBSTEPS_WERE}. This is not "
+                f"retail's GameEngine::update, so the poke would change an "
+                f"unknown comparison.")
+        pe.write(rva, bytes([SUBSTEPS]))
+        pokes.append(dict(rva=rva, was=before, now=SUBSTEPS))
+    info = build_feature(pe, feature_dir / "src/fps60.cpp", "fps60_engine", (
+        (TARGET_ENGINE_UPDATE, "fps60_engine", ("ecx",)),
+    ), probe=probe, defines=(f"FPS_LIMIT={FPS_LIMIT}",
+                             f"ANIM_MS_LOW={ANIM_MS_LOW}",
+                             f"ANIM_MS_HIGH={ANIM_MS_HIGH}"))
+    info["pokes"] = pokes
+    return info
+
 
 def build_retrytime(pe, feature_dir, probe=False):
     """No payload and no detour: one imm32, rewritten in place.
@@ -414,6 +517,23 @@ FEATURES = {"020-gameresult": build_gameresult,
 # Promote one into FEATURES when it has.
 UNSHIPPED = {
     "030-netlatprobe": (build_netlatprobe, "an instrument: it writes tens of lines a second"),
+    "036-fpsprobe-timing": (build_fpsprobe_timing,
+                            "the probe without the backbuffer readback, for "
+                            "measuring at a resolution where the copy itself "
+                            "would be the thing being measured"),
+    "038-fpsrender": (build_fpsrender,
+                      "the render rate only, sub-step count untouched. Cannot "
+                      "smooth unit motion, and cannot break anything that "
+                      "counts sub-steps -- which 037 does, as the Heal spell "
+                      "showed"),
+    "037-fps60": (build_fps60,
+                  "UNMEASURED: it doubles the simulation sub-step count, and "
+                  "whether a sub-step advances the world by a fixed amount is "
+                  "exactly what has not been established. If it does, this "
+                  "arm runs the game at double speed while the network frame "
+                  "rate -- the obvious gate -- still reads a reassuring 5.0/s"),
+    "036-fpsprobe": (build_fpsprobe,
+                     "an instrument: it reads the backbuffer back off the GPU"),
     "034-framedrain": (build_framedrain,
                        "REFUTED: it desyncs. the desync flag raised from logic frame 102 on "
                        "both seats, match dead at 127, against zero in every other arm. "

@@ -108,6 +108,32 @@ synchronisation.
 All hooked at entry, which is what lets the shim lift the target's own first
 argument (`cave.py`'s `args=("ecx","stack:0")`).
 
+## The frame probe
+
+`036-fpsprobe` hashes the backbuffer and `tools/fpsmeter.py` reads it. UNSHIPPED
+— it reads pixels back off the GPU. Hook address, cell grid, burst schedule and
+the two calibration controls: `mods/features/036-fpsprobe/README.md`. What it
+then measured: `docs/fps60.md`. Three traps from it generalise:
+
+**The present rate is not the measurement.** A build that presents twice as
+often while repeating every second frame doubles it and changes nothing a
+player sees. The metric is *new images per second* — `(1 - duplicate rate) x
+present rate`, per cell — which only a change that puts more DIFFERENT images
+on the screen can move.
+
+**Animation speed is invisible to every pixel metric.** A torch flickering
+twice as fast still changes on the same fraction of presented frames, so cell
+hashes, duplicate rates and new-images rates are all blind to it. It needs its
+own clock — the probe reads `WW3D::SyncTime` and slopes it against the wall
+clock. `docs/fps60.md` for what that clock turned out to be driven by.
+
+**The network frame rate is not the game-speed gate.** It is paced by the
+network at 5 Hz whatever the loop does, so a build whose simulation advances
+the world twice as far per network frame reads a reassuring 5.000/s. Use the
+walk (`--walk`), or read the resource counter off the phase screenshots: gold
+accrues per simulation step, so at matched elapsed times it is a direct measure
+of game speed that no frame-rate change can fake.
+
 ## Metrics that survived
 
 * **held** — creation → the command leaving. Bounded by one quantum for retail,
@@ -137,6 +163,13 @@ argument (`cave.py`'s `args=("ecx","stack:0")`).
 * **Anchor a metric to the thing the change moves**, not to a reference frame
   the change is defined against. A phase-within-frame statistic is degenerate at
   the frame boundary and reported an 84% effect as 9%.
+* **Pinning a single-threaded game to one core is not a throttle.** BFME's main
+  loop is one thread, so one core is all it ever wanted: `taskset -a -pc 0` on
+  a client moved its present rate 30.3 -> 30.6 Hz and left its spare frame
+  budget unmoved at 25 ms. A weak machine has to be modelled by CONTENDING for
+  the core -- busy loops pinned to the same one, so the client gets
+  1/(N+1) of it. The pin alone is a gate that cannot fail, which is worse than
+  no gate, because it reads as "the build absorbs it".
 * **A consistency check against a broken input reproduces the break.** Two
   parties then hold the same wrong number with more confidence than either
   started with. At least one check must return to the raw quantity.
@@ -147,8 +180,21 @@ The guest's one-frame lag is the protocol's correctness margin, not slack:
 `getFrameAdvanceCount` is a boolean to its caller, `areFrameCommandsComplete`
 compares a snapshot so extra polls desync (`034-framedrain`, frame 102), and the
 wait is exactly one quantum with no phase component. BFME has no run-ahead to
-shorten. The router's relay blackout is real but worth ~20 ms. Do not raise
-`FramesPerSecondLimit` — it changes game speed.
+shorten. The router's relay blackout is real but worth ~20 ms.
+
+**An extra draw in the frame limiter has nothing new to draw.**
+`GameEngine::update` runs a six-step cycle per 5 Hz network frame and renders at
+`FramesPerSecondLimit` — 38 from `_patch222.big`, not the compiled 30 — so
+retail already draws more often than the world changes, and ~22% of a host's
+frames are repeats before anything is modded. Raising `FramesPerSecondLimit`
+alone changes game speed, because with no network to pace it the cycle turns
+over at the loop rate.
+
+Those six steps ARE simulation sub-steps, settled by `037-fps60`'s defect:
+doubling the count doubled the speed of content authored in frames, which a
+client-side interpolation pass could not do. Raising the count is therefore
+closed -- `Lifetime` appears 2,735 times across 724 ini files and every one of
+them is denominated in those steps. `docs/fps60.md` has the numbers.
 
 ## Adding a game-end row
 
