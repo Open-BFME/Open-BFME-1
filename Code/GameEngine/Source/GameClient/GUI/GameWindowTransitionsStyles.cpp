@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -1577,6 +1577,33 @@ struct BfmeTextTypeTransitionFields
 typedef char BfmeTextTypeTransitionStringWidth[
 		(sizeof(UnicodeString) == 4) ? 1 : -1];
 
+// CountUpTransition's retail object keeps the same transition prefix as the
+// text style, then stores its integer counter after the two string slots.
+// The shipped C++ base is eight bytes shorter than BFME's transition base, so
+// this view is required for the member accesses in the retail body.
+struct BfmeCountUpTransitionFields
+{
+	unsigned char m_unreconstructed_00[ 0x04 ];
+	Int m_frameLength;
+	Bool m_isFinished;
+	Bool m_isForward;
+	unsigned char m_pad0a[ 2 ];
+	GameWindow *m_win;
+	Int m_startFrame;
+	Int m_endFrame;
+	ICoord2D m_pos;
+	ICoord2D m_size;
+	Int m_drawState;
+	UnicodeString m_fullText;
+	UnicodeString m_unusedText;
+	Int m_intValue;
+	Int m_currentValue;
+	Int m_countState;
+};
+
+typedef char BfmeCountUpTransitionStringWidth[
+		(sizeof(UnicodeString) == 4) ? 1 : -1];
+
 // newDisplayString is vtable slot 9 (+0x24) in BFME, not the slot 6 (+0x18) the
 // vendored manager puts it at.
 class BfmeTransitionDisplayStringManager
@@ -1761,64 +1788,55 @@ void CountUpTransition::init( GameWindow *win )
 	GadgetStaticTextSetText(m_win, currVal);
 }
 
+// Open-BFME5: convert CountUpTransition::update from retail ASM to clean C++.
 void CountUpTransition::update( Int frame )
 {
-	m_drawState = -1;
-	if(frame < COUNTUPTRANSITION_START || frame > COUNTUPTRANSITION_END)
+	BfmeCountUpTransitionFields *self = (BfmeCountUpTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
 	{
-		DEBUG_ASSERTCRASH(FALSE, ("CountUpTransition::update - Frame is out of the range the this update can handle %d", frame));
 		return;
 	}
-	switch (frame) {
-	case COUNTUPTRANSITION_START:
+	if(frame == self->m_startFrame)
+	{
+		if(!self->m_isForward && self->m_win)
 		{
-			
-			if(m_isForward || !m_win )
-				break;
-			m_currentValue = 0;
+			self->m_currentValue = 0;
 			UnicodeString currVal;
-			currVal.format(L"%d",m_currentValue);
-			GadgetStaticTextSetText(m_win, currVal);
-
-			m_win->winHide(TRUE);
-			m_isFinished = TRUE;
+			currVal.format(UnicodeString(L"%d"), self->m_currentValue);
+			GadgetStaticTextSetText(self->m_win, currVal);
+			self->m_win->winHide(TRUE);
+			self->m_isFinished = TRUE;
 		}
-		break;
-	case COUNTUPTRANSITION_END:
-		{
-			if(!m_isForward || !m_win )
-				break;
-			m_win->winHide(FALSE);
-			m_isFinished = TRUE;
-		}
-	}	
-	if(frame >= m_frameLength)
-	{
-		m_win->winHide(FALSE);
-
 	}
-	if(frame > COUNTUPTRANSITION_START && frame < m_frameLength)
+	else if(frame == self->m_endFrame)
 	{
-		m_win->winHide(FALSE);
-		m_drawState = frame;
-		AudioEventRTS buttonClick("GUIScoreScreenTick");
-
-		if( TheAudio )
+		if(self->m_isForward && self->m_win)
 		{
-			TheAudio->addAudioEvent( &buttonClick );
-		}  // end if
-		m_currentValue +=m_countState;
-		if(m_currentValue > m_intValue)
-			m_currentValue = m_intValue;
-
+			self->m_win->winHide(FALSE);
+			self->m_isFinished = TRUE;
+		}
+	}
+	if(frame >= self->m_frameLength)
+	{
+		self->m_win->winHide(FALSE);
+	}
+	if(frame > self->m_startFrame && frame < self->m_frameLength)
+	{
+		self->m_win->winHide(FALSE);
+		self->m_currentValue += self->m_countState;
+		self->m_drawState = frame;
+		if(self->m_currentValue > self->m_intValue)
+			self->m_currentValue = self->m_intValue;
 		UnicodeString currVal;
-		currVal.format(L"%d",m_currentValue);
-		GadgetStaticTextSetText(m_win, currVal);
+		currVal.format(UnicodeString(L"%d"), self->m_currentValue);
+		GadgetStaticTextSetText(self->m_win, currVal);
 	}
-	if( frame == m_frameLength )
+	if(frame == self->m_frameLength)
 	{
-		GadgetStaticTextSetText(m_win, m_fullText);
-		m_isFinished = TRUE;
+		GadgetStaticTextSetText(self->m_win, self->m_fullText);
+		self->m_isFinished = TRUE;
 	}
 }
 
