@@ -8126,3 +8126,4 @@ _luaV_execute	0x00997C80	2924	blocked	Vendored Lua 4.0.1 source is ~99 percent r
 ??0DamageFXStore@@QAE@XZ	0x00067C10	113	void	prior banked partial is superseded by exact clean C++ conversion; stash removed; t=1min model=gpt-5
 ?getBool@Rva007E8810Message@@QAE_NPBD_N@Z	0x007E89C0	73	partial	lookup Rva007EBCA0 and Rva007EE720 match; retail bool-izes via eax/ecx setnz cl while MSVC 7.1 uses test esi/eax setnz al. t=20 model=grok-4.6 score=0.82 stash=reverse/attempts/0x007e89c0.cpp
 ?d_007496c0@@YAXXZ	0x007496C0	44	blocked	register wall: 37B sibling shape (dest hoisted to eax, last in edx) vs 44B (last in eax then mov edx,eax; dest loaded after jle); same copy-short-to-int loop; t=8 m=grok-4.6
+?onBodyDamageStateChange@BridgeBehavior@@UAEXPBVDamageInfo@@W4BodyDamageType@@1@Z	0x001F2E80	540	void	t=1min model=Codex OnGameJoin now owns this RVA with an exact 30-byte clean body; prior BridgeBehavior identity was stale and its banked body was removed by add_match

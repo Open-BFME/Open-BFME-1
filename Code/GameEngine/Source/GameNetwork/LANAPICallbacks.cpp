@@ -517,7 +517,6 @@ void LANAPI::OnPlayerJoin( Int slot, UnicodeString playerName )
 	lanUpdateSlotList();
 }
 
-// ?OnGameJoin@LANAPI@@ present-unmatched
 void LANAPI::OnGameJoin( ReturnType ret, LANGameInfo *theGame )
 {
 	if (ret == RET_OK)
