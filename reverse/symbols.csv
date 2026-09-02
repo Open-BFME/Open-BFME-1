@@ -82316,3 +82316,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setPeer@Rva007F9B80@@QAEXPAX@Z,0x007F9590,stores peer pointer on the 0x6B8 service object
 ?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
 ?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
+?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
+?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
+?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
+?fillInsert@BfmeVecWR@@QAEXPAUBfmePod16WR@@IABU2@@Z,0x00012EFE,Open-BFME5 16-byte vector fill-insert ILT used by 0x0074E6B0 resize
+?bfmeCopyWR@@YAPAUBfmePod16WR@@PAU1@00ABUBfmeTagWR@@PAH@Z,0x0003F369,Open-BFME5 16-byte __copy ILT used by 0x0074E6B0 resize erase
