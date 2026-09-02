@@ -3299,6 +3299,8 @@ name,address,notes
 ??0Rva0050F8B0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x0050F8B0,byte-identical to 0x0050F840 except vtable 0x01104DA8 (slot 1 = ?invoke@Rva0050E940FunctorInvoke); 4 callers in the ctor 0x0050FAB1 0x0050FB0C 0x0050FB67 0x0050FBC2 binding the fscommand handlers OnInitialized Quit Kick Chat::OnBttnEnterText; ILT 0x000180C5
 ??0Rva00537630String@@QAE@ABV0@@Z,0x00832150,Open-BFME5 the string copy constructor the accessor at 0x00537630 calls
 ??0Rva00572CA0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x00572CA0,address-derived per FunctorBindConstructors.cpp convention: news the 0x18-byte functor wrapper with vtable 0x0110A958 (slot 1 = ?invoke@Rva00571770FunctorInvoke: this=object+delta jmp code) fills object/code/delta from the 4 stack args refcount=1 and stores it through the ecx out-pointer; 7 callers in the ScoreScreen APT ctor 0x005782D6 0x00578332 0x0057838E 0x005783EA 0x00578446 0x005784A2 0x005784FE binding the fscommand handlers; ILT 0x0003E3C9
+??0Rva0057D2D0Base@@QAE@ABV0@@Z,0x0001AA73,Open-BFME5 base copy constructor called by 0x0057ECF0
+??0Rva005862C0Member@@QAE@ABV0@@Z,0x0003CA29,Open-BFME5 member copy constructor called by 0x00587050
 ??0Rva005E92E0@@QAE@ABV0@@Z,0x005E9310,copy constructor called by the 31-byte new-T(*this) clone at 0x005E92E0; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
 ??0Rva005E9750@@QAE@ABV0@@Z,0x005E9780,copy constructor called by the 31-byte new-T(*this) clone at 0x005E9750; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
 ??0Rva005E9970@@QAE@ABV0@@Z,0x005E99A0,copy constructor called by the 31-byte new-T(*this) clone at 0x005E9970; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
@@ -9514,6 +9516,7 @@ name,address,notes
 ??_7Gen0082AF40@@6B@,0x00D2E918,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF40
 ??_7Gen0082AF60@@6B@,0x00D2E924,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF60
 ??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
+??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
 ??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
 ??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
 ??_7LargeGroupAudioUnusedKnownKeys@@6B@,0x010EE0FC,Open-BFME5 vftable the copy constructor at 0x003CD590 installs over the base one
@@ -72783,6 +72786,7 @@ name,address,notes
 ?bfmeApplyCVC@BfmeThingCVC@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
+?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
 ?bfmeApplyModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,Open-BFME5 ILT reached after storing Drawable clear and set model-condition masks
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
@@ -74576,6 +74580,7 @@ name,address,notes
 ?bfmeNotify@Gen_00600710Sub@@QAEXPAVBfmeFlagTarget@@@Z,0x00018926,Open-BFME5 ILT the refresh at 0x00600710 calls on its sub-object
 ?bfmeNotify@Gen_00605820@@QAEXPAX@Z,0x000082D3,Open-BFME5 the owner notify the chain disposal at 0x00605820 calls per node
 ?bfmeNotify@Glo012F1028Sub@@QAEXXZ,0x0002DE89,Open-BFME5 ILT thunk to body 0x003CAD20; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 tail-jumps into it from both arms on the sub-object at +0x28 of the global at 0x012F1028; address-derived name
+?bfmeNotify@InGameUI@@QAEXXZ,0x00043DC9,Open-BFME5 UI notification tail-called by 0x00589940
 ?bfmeNotifyBridge@BFMEPathfindLayerFields@@QAEXXZ,0x0003B250,alias of the private PathfindLayer spelling pinned below; AIPathfind.cpp reaches the notification setDestroyed makes when the bridge at +0x38 is set through a view struct
 ?bfmeNotifyBridge@PathfindLayer@@AAEXXZ,0x0003B250,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is set
 ?bfmeNotifyCCA@BfmeSubCCA@@QAEXXZ,0x0002191D,pin
@@ -75012,6 +75017,7 @@ name,address,notes
 ?bfmeSetVMV@BfmeStrVMV@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMX@BfmeStrVMX@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMZ@BfmeStrVMZ@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVOS@BfmeStrVOS@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -82679,8 +82685,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0Rva0057D2D0Base@@QAE@ABV0@@Z,0x0001AA73,Open-BFME5 base copy constructor called by 0x0057ECF0
-??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
-?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
-??0Rva005862C0Member@@QAE@ABV0@@Z,0x0003CA29,Open-BFME5 member copy constructor called by 0x00587050
-?bfmeNotify@InGameUI@@QAEXXZ,0x00043DC9,Open-BFME5 UI notification tail-called by 0x00589940
