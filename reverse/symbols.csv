@@ -74546,6 +74546,7 @@ name,address,notes
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
 ?bfmeReserveVKJ@BfmeStrVKJ@@QAEXIHIHI@Z,0x0089E570,pin
 ?bfmeReserveVKK@BfmeStrVKK@@QAEXIHIHI@Z,0x0089E570,pin
+?bfmeReserveVLT@BfmeStrVLT@@QAEXI@Z,0x00025243,pin
 ?bfmeReset1015@BfmeL1015@@QAEXXZ,0x007E86C0,pin
 ?bfmeReset1018@BfmeSink1018@@QAEXH@Z,0x000348EC,pin
 ?bfmeReset1046@BfmeD1046@@QAEXH@Z,0x008BDD70,pin
