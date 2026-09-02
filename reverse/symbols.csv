@@ -82226,3 +82226,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
 ?bfmeImplVMR@BfmeStrVMR@@QAEXHHH@Z,0x00830410,Open-BFME5 /Od 3-arg view of callee at 0x00830410
 ?bfmeImplVMS@BfmeStrVMS@@QAEXHHH@Z,0x008300B0,Open-BFME5 /Od 3-arg view of callee at 0x008300B0
+?bfmeImplVMT@BfmeStrVMT@@QAEXHH@Z,0x00036DE0,Open-BFME5 /Od 2-arg view of callee at 0x00036DE0
