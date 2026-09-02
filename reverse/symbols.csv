@@ -74102,6 +74102,7 @@ name,address,notes
 ?bfmeImplV23@BfmeStrV23@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830FC0
 ?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
 ?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
+?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
@@ -74250,6 +74251,7 @@ name,address,notes
 ?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
 ?bfmeLenErrV23@BfmeStrV23@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00830FC0
 ?bfmeLenErrV38@BfmeStrV38@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00830B10
+?bfmeLenErrV43@BfmeStrV43@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831080
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
@@ -75129,6 +75131,7 @@ name,address,notes
 ?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
 ?bfmeThrowV37@BfmeStrV37@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831780
 ?bfmeThrowV38@BfmeStrV38@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830B10
+?bfmeThrowV43@BfmeStrV43@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831080
 ?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
@@ -82338,9 +82341,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
-?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
-?notify@T_007ea120@@QAEXPAX@Z,0x007EA0A0,FESL notify used by hub teardown
-?bfmeThrowV43@BfmeStrV43@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831080
-?bfmeLenErrV43@BfmeStrV43@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831080
-?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
