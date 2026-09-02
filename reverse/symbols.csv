@@ -74004,6 +74004,7 @@ name,address,notes
 ?bfmeFreeVMN@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVNY@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeVOK@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeVOL@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFwd1050@BfmeP1050@@QAEXHHHHH@Z,0x009F5C00,pin
 ?bfmeFwdFourSUA@BfmeThingSUA@@QAEXHH@Z,0x0082EF90,pin
 ?bfmeFwdOneSUA@BfmeThingSUA@@QAEXDH@Z,0x0002A9E6,pin
