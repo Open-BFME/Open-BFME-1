@@ -169,14 +169,13 @@ void TurretStateMachine::loadPostProcess( void )
 //----------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------
-// ??0TurretAIData@@QAE@XZ present-unmatched
 TurretAIData::TurretAIData()
 {
 	m_turnRate = DEFAULT_TURN_RATE;
 	m_pitchRate = DEFAULT_PITCH_RATE;
 	m_naturalTurretAngle = 0.0f;
 	m_naturalTurretPitch = 0.0f;
-	for( Int slotIndex = 0; slotIndex < WEAPONSLOT_COUNT; ++slotIndex )
+	for( Int slotIndex = 0; slotIndex < WEAPONSLOT_COUNT + 1; ++slotIndex )
 	{
 		m_turretFireAngleSweep[slotIndex] = 0.0f;
 		m_turretSweepSpeedModifier[slotIndex] = 1.0f;
@@ -194,7 +193,7 @@ TurretAIData::TurretAIData()
 
 	m_minIdleScanInterval = 9999999;
 	m_maxIdleScanInterval = 9999999;
-	m_recenterTime = 2*LOGICFRAMES_PER_SECOND;
+	m_recenterTime = 10;
 	m_initiallyDisabled = false;
 	m_firesWhileTurning = FALSE;
 	m_isAllowsPitch = false;

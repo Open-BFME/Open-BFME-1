@@ -82184,3 +82184,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0TurretAIData@@QAE@XZ,0x0018C300,TurretAIData constructor: exact C++ reconstruction; parseTurret calls its incremental-link thunk at 0x0002F6C1
