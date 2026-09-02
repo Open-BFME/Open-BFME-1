@@ -78912,6 +78912,7 @@ name,address,notes
 ?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
+?helper@Rva0056C090@@QAEHXZ,0x00003EA4,Open-BFME5 thunk to 0x0056AB50
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
 ?hide@AptPalantir@@QAEX_N@Z,0x0001420E,ILT to body 0x00592CD0; the AptPalantir callback table at 0x00565F30 names its RenderRadar RenderRadarViewBox ClipRadar and OnInitialized methods; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@BannerUI@@QAEX_N@Z,0x0003A062,ILT to body 0x005839D0; BannerUI is independently identified by its existing parser and constructor sources; HideControlBar passes TRUE and ShowControlBar passes FALSE
