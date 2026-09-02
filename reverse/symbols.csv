@@ -3352,6 +3352,7 @@ name,address,notes
 ??0Rva00722120Base@@QAE@XZ,0x000354E5,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x00722120
 ??0Rva0076F980Mid@@QAE@ABV0@@Z,0x00007A63,Open-BFME5 fresh thiscall copy ctor at ILT of 12-byte mid member of 0x0076F980
 ??0Rva007B12F0Base@@QAE@XZ,0x0000AF38,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x007B12F0
+??0Rva007E8810Message@@QAE@XZ,0x007E8810,FESL message ctor used by 0x007FA170 nonblock timeout
 ??0Rva007F9B80@@QAE@PAX@Z,0x007F9B80,ctor of 0x6B8 FESL service object taking owner
 ??0Rva007FBC30GameKey@@QAE@PAVRva007E8810Message@@@Z,0x007FBC30,V2 lane: FESL Aries LID/GID base constructor; base of the three derived record ctors in V2FeslAriesRecords.cpp
 ??0Rva007FF700FeslString@@QAE@XZ,0x007FF700,address-derived default constructor for two FESL string members in the 0x007F0CB0 blob record
@@ -8861,6 +8862,7 @@ name,address,notes
 ??1Rva003A9860@@QAE@XZ,0x00037A4C,Open-BFME5 ILT thunk to body 0x003A9860; ??1LivingWorldCampaign@@QAE@XZ at 0x003AA7F0 destroys its member at +0x0C through it; address-derived name
 ??1Rva004029F0@@QAE@XZ,0x00040138,Open-BFME5 ILT thunk to body 0x004029F0; ?freeBlocks@PathfindZoneManager@@AAEXXZ at 0x00403760 hands it to the eh vector destructor iterator as the element destructor of the 0x228-byte array at +0x23624; address-derived name
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
+??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
 ??1Rva0082AE40TailBase@@UAE@XZ,0x0082AE40,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832170MultiBase@@QAE@XZ,0x00832170,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -75664,6 +75666,7 @@ name,address,notes
 ?clearLeaveRequestTime@BFMEConnectionManager@@QAEXXZ,0x00662E70,zeroes +0x12110 (the leave-request stamp); sole caller 0x00682B55 in 0x00682A90 when the router sees its own PLAYERLEAVE execute; ILT 0x000316DD
 ?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z,0x00031F7A,ILT thunk to 0x00162CD0; identified from ZH AIStates.cpp clearModelConditionState call site
 ?clearPopupMessageData@InGameUI@@QAEXXZ,0x0000F5F6,ILT fronting the 125-byte body at 0x0043B890; from InGamePopupMessageSystem
+?clearSlot@Rva007FA2C0@@QAEXPAX@Z,0x007F9AC0,FESL transactor slot teardown called from 0x007FA170
 ?clearWinList@@YAXAAV?$list@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@@Z,0x0045D660,file-local static; retail takes list head in edi
 ?clone_materials@MeshModelClass@@IAEXABV1@@Z,0x0096DDC0,REL32 target of MeshModelClass copy ctor at 0x0094ED42
 ?close@File@@UAEXXZ,0x000309CC,pinharvest x1 (thunk)
@@ -77059,6 +77062,7 @@ name,address,notes
 ?g_bfmeName1053@@3PADA,0x00C892DC,pin
 ?g_bfmeNameURC@@3PADA,0x00D2ACA4,pin
 ?g_bfmeNext1221@@3PAIA,0x00F391A4,pin
+?g_bfmeNowVNH@@3P6AHXZA,0x00F59544,pin
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -77269,6 +77273,7 @@ name,address,notes
 ?g_bfmeTbl1064@@3PAPADA,0x00D05E9C,pin
 ?g_bfmeTbl1065@@3PAPADA,0x00D0C3B0,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
+?g_bfmeThingVNH@@3PAUBfmeThingVNH@@A,0x00EF49D0,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
 ?g_bfmeTickC976@@3PAVBfmeTickC976@@A,0x00EF706C,pin
 ?g_bfmeTwoAOA@@3PAVBfmeTwoAOA@@A,0x00EED600,pin
