@@ -82241,3 +82241,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
 ?g_rva00914860PoolC@@3VRva00914860PoolC@@A,0x013466B8,Open-BFME5 third pool object used by the 0x00914860 sizing update
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
+?bfmeTailVMZ@BfmeElemVMZ@@QAEXPAXHHHHHH@Z,0x0004894B,pin
