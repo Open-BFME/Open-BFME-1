@@ -73181,6 +73181,7 @@ name,address,notes
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
+?bfmeCopyBwdV45@@YAXPAH00@Z,0x00008B75,Open-BFME5 copy-backward pin for 0x0082F610
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
 ?bfmeCopyEFG@BfmeThingEFG@@QAEXPAV1@@Z,0x000201A3,pin
@@ -73197,6 +73198,7 @@ name,address,notes
 ?bfmeCopySlotC@@YAXPAUBfmeSlotC@@PAX@Z,0x00045877,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotD@@YAXPAUBfmeSlotD@@PAX@Z,0x00026BAC,Open-BFME5 the copy the bounded appends call
 ?bfmeCopySlotE@@YAXPAUBfmeSlotE@@PAX@Z,0x0001870F,Open-BFME5 the copy the bounded appends call
+?bfmeCopyTrivialV46@@YAPAXPAX00@Z,0x00038EAB,Open-BFME5 copy-trivial pin for 0x0082FE50
 ?bfmeCopyTwoCDF@BfmePartCDF@@QAEXPAU1@@Z,0x0003B5C5,pin
 ?bfmeCopyTwoCKA@BfmePartCKA@@QAEXPAU1@@Z,0x000434DC,pin
 ?bfmeCopyUVA@@YAXPADIPBD@Z,0x007E8640,pin
@@ -73215,6 +73217,7 @@ name,address,notes
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
 ?bfmeCurIdVHT@BfmeChunkVHT@@QAEIXZ,0x009E1440,pin
+?bfmeDeallocV46@BfmeStrV46@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FE50
 ?bfmeDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 the sentinel deallocator the list-member destructors at 0x0009F7A0 and 0x00080950 call
 ?bfmeDecVGO@@YAIPAI@Z,0x00894D90,pin
 ?bfmeDecay@BfmeCell@@QAEXMM@Z,0x0002116B,BfmeCellGrid decay loop calls this ILT to the exact landed 0x001B12B0 cell decay body
@@ -73464,6 +73467,7 @@ name,address,notes
 ?bfmeEraseV16@BfmeStrV16@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x0082FB10
 ?bfmeEraseV17@BfmeVecV17@@QAEXPAH0@Z,0x00002A3B,Open-BFME5 erase range thunk for 0x0082FA70
 ?bfmeEraseV24@BfmeStrV24@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830CC0
+?bfmeEraseV44@BfmeStrV44@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase-range pin for 0x00830DE0
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
@@ -73897,6 +73901,7 @@ name,address,notes
 ?bfmeFreeUF@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUNA@@YAXPAXH@Z,0x007F0170,pin
 ?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
+?bfmeFreeV46@@YAXPAXI@Z,0x000159D8,Open-BFME5 deallocate pin for 0x0082FE50
 ?bfmeFreeVA@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVB@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
@@ -74104,6 +74109,7 @@ name,address,notes
 ?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
 ?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
 ??0W3DDynamicLight@@QAE@XZ,0x0004928D,Open-BFME5 BFME W3DDynamicLight ctor ILT reached by getADynamicLight at 0x00712489
+?bfmeImplV44@BfmeStrV44@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert-range impl pin for 0x00830DE0
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
@@ -74422,6 +74428,7 @@ name,address,notes
 ?bfmeNextTokenVHG@BfmeIniVHG@@QAEPBDPBD@Z,0x00850970,pin
 ?bfmeNodeAllocLarge@@YAPAXI@Z,0x00881F30,Open-BFME5 the STLport large-block allocator the 0x84-byte clone-node body calls
 ?bfmeNodeAllocSmall@@YAPAXI@Z,0x0082E540,Open-BFME5 the STLport node allocator the red-black clone-node bodies call
+?bfmeNodeAllocV46@@YAPAXI@Z,0x0082E540,Open-BFME5 small-alloc pin for 0x0082FE50
 ?bfmeNormUSC@@YAHPAX@Z,0x009B4680,pin
 ?bfmeNote1023@BfmeJ1023@@QAEXPAVBfmeH1023@@@Z,0x00010F46,pin
 ?bfmeNote1029@@YAXHD@Z,0x0001136A,pin
@@ -74550,6 +74557,7 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHHH@Z,0x00025CD4,pin
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
+?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
@@ -74860,6 +74868,7 @@ name,address,notes
 ?bfmeSetVJU@BfmeStackVJU@@QAEXPAX@Z,0x008D2E00,pin
 ?bfmeSetVKC@BfmeUniVKC@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVMV@BfmeStrVMV@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeSetVMX@BfmeStrVMX@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75775,6 +75784,8 @@ name,address,notes
 ?copy@W3DAnimationInfoConstCopyShim@_STL@@SAPAXPAX00ABUrandom_access_iterator_tag@2@PAH@Z,0x003B3800,_STL __copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoCopyShim@_STL@@SAPAVW3DAnimationInfo@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00610AF0,_STL __copy W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
+?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
+?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
 ?copyFrom@DictPair@Dict@@QAEXPAU12@@Z,0x00013E94
 ?copyFromQueueNode@BFMENetworkQueueItem1@@QAEXPAX@Z,0x00032F6A,native BFME queue item copy helper for wrapper queue +0x3c
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
@@ -76598,6 +76609,7 @@ name,address,notes
 ?g_bfmeBFAE@@3HA,0x00EACB4C,pin
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
 ?g_bfmeBVIW@@3PAXA,0x00F0A600,pin
+?g_bfmeBadE15@@3UBfmeShapeE15@@A,0x00ED4CE8,Open-BFME5 sentinel for 0x0087E150
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
 ?g_bfmeBuf1023@@3PADA,0x00EF3CC4,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
@@ -79080,6 +79092,7 @@ name,address,notes
 ?init@Network@@UAEXXZ,0x00681E40,vtable 0x0111A968 slot 1 (+0x04) via ILT 0x00040FB6; ZH Network::init: destroy@BFMEConnectionManager 0x00668D90 + delete of +0x08 then new 0x12190 B ConnectionManager via construct@BFMEConnectionManager 0x00669630 and its vslot 0 init; status +0x0C=0 PREGAME QueryPerformanceFrequency->+0x10 QueryPerformanceCounter->+0x18 +0x2C=0 +0x34=0 +0x38=-1; called right after construction by the factory 0x00682320 (call [vt+4] at 0x0068237B)
 ?init@PathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z,0x0004B0AB,Open-BFME5 ILT; ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z at 0x003D5850 initialises the first free layer through it
 ?init@Player@@QAEXPBVPlayerTemplate@@@Z,0x00020AEA,
+?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
 ?init@SpawnPointInitializeBonePositionsShim@@QAEXXZ,0x002D18F0,SpawnPointProductionExitUpdate initializeBonePositions incremental-link thunk target through a TU-local forwarding shim
 ?init@TerrainLogic@@UAEXXZ,0x00027994,Open-BFME5 ILT fronts 1-byte body 0x001A2BD0, consistent with an empty base init; called by W3DTerrainLogic init/reset
 ?init@TerrainShader2Stage@@QAEHXZ,0x00023272,Open-BFME5 terrain two-stage shader initializer ILT
@@ -79704,6 +79717,7 @@ name,address,notes
 ?openMouse@DirectInputMouse@@AAEXXZ,0x00042A7D,ILT thunk to DirectInputMouse::openMouse
 ?operator_delete_sized@@YAXPAX@Z,0x00881EF0,ShareBuffer dtor free/delete helper
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x0001745E,pinharvest x1 (thunk)
+?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
 ?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287D00,BoneFXUpdateModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
@@ -80296,6 +80310,7 @@ name,address,notes
 ?set@BFMEZBiasSetter@@SAXM@Z,0x00905990,float-ABI shim for BFME's older DX8 Z-bias body called by BaseHeightMapScorchSetZBias
 ?set@BfmeQuickMatchSlot@@QAEXABV1@@Z,0x00887C90,"string-member assignment used by ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z"
 ?set@BfmeStrEE@@QAEXABV1@@Z,0x00887C90,Open-BFME5 StringBase char set for 0x0040EE10
+?set@BfmeSubA100@@QAEXABU1@@Z,0x00033640,Open-BFME5 ILT from 0x002EA100 20B copy loop
 ?set@BfmeThingTemplateString@@QAEXPBDH@Z,0x00887D20,ThingTemplate validateAudio TU shim for StringBase<char>::set(const char*,int)
 ?set@Bitset67SetShim@_STL@@QAEAAV?$bitset@$0ED@@2@IH@Z,0x000E9910,incremental-link thunk target through a TU-local forwarding shim
 ?set@DX8TextureStageStateShim@@SAXIKI@Z,0x006C5840,DX8Wrapper incremental-link static thunk target through a TU-local forwarding shim
