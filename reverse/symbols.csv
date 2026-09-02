@@ -82351,3 +82351,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
 ?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
+?bfmeNodeAllocV46@@YAPAXI@Z,0x0082E540,Open-BFME5 small-alloc pin for 0x0082FE50
+?bfmeCopyTrivialV46@@YAPAXPAX00@Z,0x00038EAB,Open-BFME5 copy-trivial pin for 0x0082FE50
+?bfmeFreeV46@@YAXPAXI@Z,0x000159D8,Open-BFME5 deallocate pin for 0x0082FE50
+?bfmeDeallocV46@BfmeStrV46@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FE50
