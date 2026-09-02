@@ -10716,6 +10716,7 @@ name,address,notes
 ?TheAssistedTargetingUpdatePool@?1??getClassMemoryPool@AssistedTargetingUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE38,pool-glue cascade static (back-solved)
 ?TheAudio@@3PAVAudioManager@@A,0x00EED668,AudioManager* global read by the OptionPreferences volume getters
 ?TheAudioClientUpdate@@3PAVClientSubsystem@@A,0x012ED668,Audio subsystem pointer used by GameEngine::_bfme_updateClientSubsystems
+?TheAudioClientUpdate@@3PAVRva0051D690Audio@@A,0x012ED668,TheAudio singleton typed for vslot 0x6c
 ?TheAutoDepositUpdatePool@?1??getClassMemoryPool@AutoDepositUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE50,pool-glue cascade static (back-solved)
 ?TheAutoFindHealingUpdatePool@?1??getClassMemoryPool@AutoFindHealingUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE58,pool-glue cascade static (back-solved)
 ?TheAutoHealBehaviorPool@?1??getClassMemoryPool@AutoHealBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF764,pool-glue cascade static (back-solved)
@@ -75532,6 +75533,7 @@ name,address,notes
 ?check@Gen00003B1B@@QAE_NH@Z,0x00003B1B,stop question asked by 0x003D08F0 reached via incremental-link thunk; address-derived name
 ?check@Gen00842870@@QAEHXZ,0x00842870,address-derived REL32 callee of the node-flag updaters; thiscall on a sub-object; result compared against zero
 ?check@Gen00842A00@@QAEHXZ,0x00842A00,address-derived REL32 callee of the node-flag updaters; thiscall on a sub-object; result compared against zero
+?check@Rva0051D690Shell@@QAE_NXZ,0x0002000E,ILT TheShell predicate used by 0x0051D690
 ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z,0x00027C96,ILT to the matched checkDestination body at 0x003DD7A0; reached from the adjust cascade at 0x003DEAB0
 ?checkForAdjust@Pathfinder@@QAE_NPAVObject@@PBVLocomotorSet@@_NHHHPAUCoord3D@@2@Z,0x00018BE7,ILT to the 8-arg BFME checkForAdjust body at 0x003D6210; ZH iRadius/center/groupDest params are gone; called twice by the adjust cascade at 0x003DEAB0
 ?checkState@BfmeSubHelperCAB@@QAEHPAX00@Z,0x00034C93,pin
@@ -77505,6 +77507,7 @@ name,address,notes
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
 ?g_obj12F495C@@3PAXA,0x012F495C,pin
 ?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
+?g_obj12F4B58@@3PAVRva0051D690Shell@@A,0x012F4B58,TheShell singleton typed for 0x0051D690
 ?g_obj12F4C38@@3PAXA,0x012F4C38,SpellStore screen singleton
 ?g_pair@@3P6GXPAX0@ZA,0x013590FC,address-derived IAT call recovered from 0x0093C400
 ?g_processVal13596B8@@3P6GXH@ZA,0x00F596B8,pin
@@ -77517,6 +77520,7 @@ name,address,notes
 ?g_rva005655C0PlayerList@@3PAURva005655C0PlayerList@@A,0x012ED748,Open-BFME5 retail absolute player-list global used by default-text copier
 ?g_rva005F4340Resource@@3PAVRefCountClass@@A,0x00EF6DE0,global ref-counted renderer resource
 ?g_rva005F7FA0Resource@@3PAVRefCountClass@@A,0x00EF6E30,global ref-counted renderer resource
+?g_rva007A2330Flag@@3DA,0x012D6DFC,byte flag stored by 0x007A2330 before the helper call
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
 ?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
 ?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
@@ -77524,6 +77528,7 @@ name,address,notes
 ?g_spyVisionSourceFile@@3DB,0x010A1C70,SpyVisionUpdate retail source-file literal
 ?g_theAssetRegistry@@3PAVAssetRegistry@@A,0x0134FAAC,Add_Prototype AssetRegistry global
 ?g_theGameLogic@@3PAUGameLogicState@@A,0x012F0898,LargeGroupBonus game-logic global
+?g_theTransitionHandler@@3PAVGameWindowTransitionsHandler@@A,0x012F3330,TheTransitionHandler singleton
 ?g_theWindowManager@@3PAVWindowManager@@A,0x012F19E8,HideQuitMenu WindowManager global
 ?g_u1Empty@@3QBDB,0x0107388B,U1 empty string used by 0x005C71F0
 ?g_u1False@@3QBDB,0x01092BB0,U1 false text used by 0x005C7410
@@ -79242,6 +79247,7 @@ name,address,notes
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?helper@Rva0056C090@@QAEHXZ,0x00003EA4,Open-BFME5 thunk to 0x0056AB50
 ?helper@Rva006AE610@@AAEXHPAX@Z,0x00021C1F,ILT thunk to 0x006ADAE0 called from 0x006AE610
+?helper@Rva007A2330@@QAEXPAPAVRva007A2330Target@@@Z,0x000243B6,ILT to claimed gen-dump 0x007AA820
 ?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
 ?helper@W3DView@@AAEXXZ,0x00042F23,thunk the 0x00742DF0 W3DView body calls before rebuilding the camera
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
@@ -80369,6 +80375,7 @@ name,address,notes
 ?resize@ICoord2DVectorResizeShim@_STL@@QAEXI@Z,0x00453DF0,incremental-link thunk target through a TU-local forwarding shim
 ?resolve@RvaC4390Second@@QAEPAURvaC4390First@@H@Z,0x00035995,Open-BFME5 relation resolver call pin
 ?resolveMeleeTarget@BfmeTargetObject@@QAEPAV1@D@Z,0x0000FAA6,BannerCarrier target predicate resolves contained melee targets through the retail object helper
+?restore@Rva0051D690Shell@@QAEXXZ,0x0002359C,ILT TheShell restore used by 0x0051D690
 ?restoreGlobalDataFields@RecorderClass@@QAEXXZ,0x0000BD1B,BFME-only RecorderClass entry ReplayMenuShutdown opens with; ILT thunk to body 0x00097360
 ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A
 ?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
@@ -80610,6 +80617,7 @@ name,address,notes
 ?setGridTransform@WaterRenderObjClass@@QAEXPBVMatrix3D@@@Z,0x000151D6,pinharvest x1 (thunk)
 ?setGridTransform@WaterRenderObjClass@@QAEXPBVMatrix3D@@@Z,0x00017120,pinharvest x1 (thunk)
 ?setGroup@BfmeRankTransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,Open-BFME5 ILT reached by ControlBar::onPlayerRankChanged; BFME setGroup takes a second always-zero argument the vendored one-argument declaration cannot spell, so it is called through a view; address from the donor and byte-proved by the rel32
+?setGroup@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0001422C,ILT one-arg setGroup used by 0x0051D690
 ?setGroup@GameWindowTransitionsHandler@@QAEXVAsciiString@@_N@Z,0x0048AD80,this=TheTransitionHandler 0x012F3330; ZH GameWindowTransitionsHandler::setGroup line for line under a BFME critical section (+0x34): empty name and immediate -> m_currentGroup(+0x20)=NULL; immediate -> skip 0x0048A240 and findGroup 0x0048A520 into +0x20 then init 0x0048AC10; else reverse 0x0048A180 when not fireOnce/reversed and findGroup into m_pendingGroup +0x24; same TU as ??0ScoreScaleUpTransition 0x0048B8D0 and parseWindowTransitions 0x0048B7C0; hideEndGameScreen passes MPorSkirmishFadeToScoreScreen
 ?setGroup@TransitionHandler@@QAEXVAsciiString@@H@Z,0x00045C28,TransitionHandler::setGroup via ILT thunk
 ?setID@Drawable@@QAEXW4DrawableID@@@Z,0x00005A7E,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
