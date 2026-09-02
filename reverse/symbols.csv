@@ -82245,3 +82245,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?finishOwner@Rva0017AE40Owner@@AAEXXZ,0x000306BB,Open-BFME5 owner finalization tail call used by the 0x0017AE40 child finalizer
 ?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
 ??0Gen00522E00@@QAE@XZ,0x0001B879,address-derived 0x4C-byte self-registering class; ILT to ctor body 0x00522E00 called by the discarded-new factory 0x00510AC0
+??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
