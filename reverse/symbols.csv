@@ -73070,6 +73070,7 @@ name,address,notes
 ?bfmeCb1098@@YAXXZ,0x00012D69,pin
 ?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
 ?bfmeCbVJM@@YGXXZ,0x007F6870,pin
+?bfmeCellUpdateVNR@BfmeCellVNR@@QAEXPAVBfmeMgrVNR@@H@Z,0x008FC300,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
 ?bfmeChanged@Gen_00505530@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505530 calls
@@ -76138,6 +76139,8 @@ name,address,notes
 ?equal_range@?$hashtable@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_006a7200_m12pod@@@_STL@@@2@@_STL@@U12@@2@ABH@Z,0x006A4630,family-emit payload member
 ?equal_range@?$hashtable@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00768310_m12pod@@@_STL@@@2@@_STL@@U12@@2@ABH@Z,0x00764E90,family-emit payload member
 ?equal_range@?$hashtable@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00768ac0_m12pod@@@_STL@@@2@@_STL@@U12@@2@ABH@Z,0x00765520,family-emit payload member
+?equals@Rva002E4FD0Tail@@QBE_NPBU1@@Z,0x000347FC,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D60
+?equals@Rva002E5030Tail@@QBE_NPBU1@@Z,0x000341EE,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D20
 ?erase@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@0@Z,0x009EC370,REL32 call via ILT thunk
 ?erase@?$_Rb_tree@GU?$pair@$$CBGH@_STL@@U?$_Select1st@U?$pair@$$CBGH@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBGH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGH@_STL@@@2@@2@0@Z,0x00644BB0,family-emit shared callee
 ?erase@?$_Rb_tree@HU?$pair@$$CBHUGen_t_0021c9d0_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_0021c9d0_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0021c9d0_p12cd@@@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_0021c9d0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_0021c9d0_p12cd@@@_STL@@@2@@2@0@Z,0x0021AF30,gen-tgrid payload member
@@ -82453,5 +82456,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?equals@Rva002E5030Tail@@QBE_NPBU1@@Z,0x000341EE,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D20
-?equals@Rva002E4FD0Tail@@QBE_NPBU1@@Z,0x000347FC,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D60
