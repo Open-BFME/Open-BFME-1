@@ -410,6 +410,13 @@ def build_tracksfix(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_uiprobe(pe, feature_dir, probe=False):
+    # Shares 039-replayctl's hook address; build it with --only.
+    return build_feature(pe, feature_dir / "src/uiprobe.cpp", "uiprobe_frame", (
+        (TARGET_REPLAYFRAME, "uiprobe_frame", ("ecx",)),
+    ), probe=probe)
+
+
 def build_drawprobe(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/drawprobe.cpp", "drawprobe_a", (
         (0x004469F0, "drawprobe_a", ("ecx",)),   # InGameUI::postDraw entry
@@ -601,6 +608,9 @@ UNSHIPPED = {
     "046-optionsui": (build_optionsui,
                       "needs its relabelled apt/options.big shipped with it, and a "
                       "hands-on pass; see mods/features/046-optionsui/README.md"),
+    "047-uiprobe": (build_uiprobe,
+                    "an instrument: it opens the Options screen and flips a mod-bus bit "
+                    "from the keyboard, for a rig whose mouse does not reach the game"),
     "045-drawprobe": (build_drawprobe,
                       "an instrument: it paints bands over the game to find which point "
                       "in the frame a mod can draw 2D from. Shares 044's hook address"),
