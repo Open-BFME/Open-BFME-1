@@ -80751,6 +80751,7 @@ name,address,notes
 ?resetAll@Y3ResetTail_005C5A00@@QAEXXZ,0x005C5A00,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?resetModes@LookAtTranslator@@QAEXXZ,0x00048626,Open-BFME5 the tail call of doDisableInput with ecx = TheLookAtTranslator at 0x012F4C84; jumps to 0x005B5440
 ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk
+?resetOrStartSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@@Z,0x00036E67,ILT callee of SpecialPowerModule::startPowerRecharge; body 0x000D2710
 ?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
 ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z,0x000333E3,DisconnectManager frame processing resets stale votes through the ILT to the existing 0x0066B7B0 body
 ?resetSciences@Player@@QAEXXZ,0x0003FDA0,Open-BFME5 ILT thunk to body 0x000D7B60; resetRank calls it after rebuilding rank and science-purchase state, matching the reference Player algorithm

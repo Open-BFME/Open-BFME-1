@@ -1,126 +1,118 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?startPowerRecharge@SpecialPowerModule@@UAEXXZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp
-// Grok promote from masm_dumps — retail 0x0026AE00 size 112
-// was: Code/masm_dumps/_rn7__startPowerRecharge_SpecialPowerModule__UAEXXZ_26AE00.asm
+// cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: byte-exact clean C++ implementation of the retail recharge start.
 
-class SpecialPowerModule { public: virtual void startPowerRecharge(void); };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	Overridable *friend_getFinalOverride(void)
+	{
+		if (m_next)
+			return m_next->m_next ? m_next->m_next->friend_getFinalOverride() : m_next;
+		return this;
+	}
+
+private:
+	void *m_vtable;
+	Overridable *m_next;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
+class SpecialPowerTemplate : public Overridable
+{
+public:
+	bool isSharedNSync(void) const
+	{
+		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
+		return ((const SpecialPowerTemplate *)self->friend_getFinalOverride())->m_sharedNSync;
+	}
+
+	unsigned int getReloadTime(void) const;
+
+private:
+	unsigned char m_unreconstructed_08[0x10d];
+	bool m_sharedNSync;
+};
+
+class SpecialPowerModuleData
+{
+public:
+	unsigned char m_unreconstructed_00[8];
+	SpecialPowerTemplate *m_specialPowerTemplate;
+};
+
+class Player
+{
+public:
+	void resetOrStartSpecialPowerReadyFrame(const SpecialPowerTemplate *);
+};
+
+class Object
+{
+public:
+	Player *getControllingPlayer(void) const;
+};
+
+class GameLogic
+{
+public:
+	unsigned int getFrame(void) const { return *(const unsigned int *)((const char *)this + 0x3c); }
+};
+
+extern GameLogic *TheGameLogic;
+
+// The retail method runs on the SpecialPowerModule subobject.  The BFME
+// module-data and Object links are immediately before that subobject, while
+// the ZH header puts them at different positive offsets.
+class SpecialPowerModule
+{
+public:
+	virtual void unused00(void) const;
+	virtual void unused01(void) const;
+	virtual void unused02(void) const;
+	virtual void unused03(void) const;
+	virtual void unused04(void) const;
+	virtual void unused05(void) const;
+	virtual const SpecialPowerTemplate *getSpecialPowerTemplate(void) const;
+
+	const SpecialPowerModuleData *getSpecialPowerModuleData(void) const
+	{
+		return *(const SpecialPowerModuleData **)((const char *)this - 0x20);
+	}
+
+	Object *getObject(void) const
+	{
+		return *(Object **)((const char *)this - 0x1c);
+	}
+
+	virtual void startPowerRecharge(void);
+
+private:
+	unsigned int m_availableOnFrame;
+};
 
 // ?startPowerRecharge@SpecialPowerModule@@UAEXXZ
-__declspec(naked) void SpecialPowerModule::startPowerRecharge(void)
+void SpecialPowerModule::startPowerRecharge(void)
 {
-__asm {
-		_emit 056h
-		_emit 057h
-		_emit 08Bh
-		_emit 0F9h
-		_emit 08Bh
-		_emit 077h
-		_emit 0E0h
-		_emit 08Bh
-		_emit 046h
-		_emit 008h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 05Fh
-		_emit 08Bh
-		_emit 04Fh
-		_emit 0E4h
-		_emit 085h
-		_emit 0C9h
-		_emit 074h
-		_emit 058h
-		_emit 053h
-		_emit 0E8h
-		_emit 009h
-		_emit 05Ah
-		_emit 0DBh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 0D8h
-		_emit 085h
-		_emit 0DBh
-		_emit 074h
-		_emit 04Bh
-		_emit 08Bh
-		_emit 076h
-		_emit 008h
-		_emit 08Bh
-		_emit 046h
-		_emit 004h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 00Eh
-		_emit 08Bh
-		_emit 048h
-		_emit 004h
-		_emit 085h
-		_emit 0C9h
-		_emit 074h
-		_emit 009h
-		_emit 0E8h
-		_emit 02Ah
-		_emit 0DEh
-		_emit 0DDh
-		_emit 0FFh
-		_emit 0EBh
-		_emit 002h
-		_emit 08Bh
-		_emit 0C6h
-		_emit 08Ah
-		_emit 088h
-		_emit 015h
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 084h
-		_emit 0C9h
-		_emit 074h
-		_emit 00Ch
-		_emit 056h
-		_emit 08Bh
-		_emit 0CBh
-		_emit 0E8h
-		_emit 01Ah
-		_emit 0C0h
-		_emit 0DCh
-		_emit 0FFh
-		_emit 05Bh
-		_emit 05Fh
-		_emit 05Eh
-		_emit 0C3h
-		_emit 0A1h
-		_emit 098h
-		_emit 008h
-		_emit 02Fh
-		_emit 001h
-		_emit 08Bh
-		_emit 017h
-		_emit 08Bh
-		_emit 070h
-		_emit 03Ch
-		_emit 08Bh
-		_emit 0CFh
-		_emit 0FFh
-		_emit 052h
-		_emit 018h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 022h
-		_emit 095h
-		_emit 0DBh
-		_emit 0FFh
-		_emit 003h
-		_emit 0C6h
-		_emit 089h
-		_emit 047h
-		_emit 004h
-		_emit 05Bh
-		_emit 05Fh
-		_emit 05Eh
-		_emit 0C3h
+	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
+
+	if (modData->m_specialPowerTemplate == 0)
+		return;
+
+	Object *obj = getObject();
+	if (!obj)
+		return;
+
+	Player *player = getObject()->getControllingPlayer();
+	if (!player)
+		return;
+
+	if (modData->m_specialPowerTemplate->isSharedNSync())
+	{
+		player->resetOrStartSpecialPowerReadyFrame(modData->m_specialPowerTemplate);
+	}
+	else
+	{
+		m_availableOnFrame = TheGameLogic->getFrame() + getSpecialPowerTemplate()->getReloadTime();
 	}
 }
-
