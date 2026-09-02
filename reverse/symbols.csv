@@ -9505,6 +9505,7 @@ name,address,notes
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
 ??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
+??_7SpecialAbilityUpdateModuleData@@6B@,0x010C2D58,SpecialAbilityUpdateModuleData retail vtable stored by ctor at 0x002A5AA0
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
 ??_7UpdateModuleInterface@@6B@,0x0109CBA0,Open-BFME5 vtable address emitted by ObjectHelper constructor 0x001C0DB0
 ??_7VirtualMinusOneConstructorThunk@@6B@,0x010F6F58,Open-BFME5 virtual minus one constructor vftable

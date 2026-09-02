@@ -1,444 +1,109 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of the SpecialAbilityUpdateModuleData
+// constructor. Retail keeps the four AudioEventRTS members at +0x08, +0x78,
+// +0xE8 and +0x158; the remaining module-data fields are represented by their
+// recovered ABI-sized tail so this TU does not change shared headers.
 
-class SpecialAbilityUpdateModuleData { public: SpecialAbilityUpdateModuleData(); };
-// ??0SpecialAbilityUpdateModuleData@@QAE@XZ
-__declspec(naked) SpecialAbilityUpdateModuleData::SpecialAbilityUpdateModuleData()
+__forceinline unsigned int specialAbilityHugeDistanceBits()
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x7c
-		__emit 0x27
-		__emit 0x01
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x08
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x53
-		__emit 0x68
-		__emit 0x50
-		__emit 0x6e
-		__emit 0x33
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x08
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x58
-		__emit 0x2d
-		__emit 0x0c
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x2e
-		__emit 0xf8
-		__emit 0xd7
-		__emit 0xff
-		__emit 0x53
-		__emit 0x68
-		__emit 0x50
-		__emit 0x6e
-		__emit 0x33
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x78
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x1b
-		__emit 0xf8
-		__emit 0xd7
-		__emit 0xff
-		__emit 0x53
-		__emit 0x68
-		__emit 0x50
-		__emit 0x6e
-		__emit 0x33
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0xe8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x02
-		__emit 0xe8
-		__emit 0x05
-		__emit 0xf8
-		__emit 0xd7
-		__emit 0xff
-		__emit 0x53
-		__emit 0x68
-		__emit 0x50
-		__emit 0x6e
-		__emit 0x33
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x58
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x03
-		__emit 0xe8
-		__emit 0xef
-		__emit 0xf7
-		__emit 0xd7
-		__emit 0xff
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xd4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xe0
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xe4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xe8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x50
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0xb8
-		__emit 0x80
-		__emit 0x96
-		__emit 0x18
-		__emit 0x4b
-		__emit 0x89
-		__emit 0x86
-		__emit 0xec
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x86
-		__emit 0xf0
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xb8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x86
-		__emit 0x18
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x86
-		__emit 0xfc
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc8
-		__emit 0xff
-		__emit 0x89
-		__emit 0x86
-		__emit 0x04
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x86
-		__emit 0xc8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xd8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x0c
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x10
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x1c
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x20
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xf4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x14
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x41
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x42
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x43
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x40
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x44
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x45
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xdc
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xf8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x47
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x46
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x48
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x00
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x86
-		__emit 0x49
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x01
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x24
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4a
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x08
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x30
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4b
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xcc
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xd0
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4c
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x34
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4d
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x38
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x3c
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x28
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x2c
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4e
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x4f
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc3
+	return 0x4b189680;
+}
+
+__forceinline void specialAbilityStoreZero( volatile unsigned int *address )
+{
+	*address = 0;
+}
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS( void *allocator, int zero );
+	virtual ~AudioEventRTS();
+
+private:
+	unsigned char m_data[0x6c];
+};
+
+class __declspec(novtable) SpecialAbilityUpdateModuleDataBase
+{
+public:
+	SpecialAbilityUpdateModuleDataBase()
+	{
 	}
+	virtual void specialAbilityUpdateModuleDataBaseAnchor();
+	virtual ~SpecialAbilityUpdateModuleDataBase();
+
+private:
+	unsigned int m_word04;
+};
+
+class SpecialAbilityUpdateModuleData
+	: public SpecialAbilityUpdateModuleDataBase
+{
+public:
+	SpecialAbilityUpdateModuleData();
+	virtual ~SpecialAbilityUpdateModuleData();
+
+private:
+	AudioEventRTS m_packSound;
+	AudioEventRTS m_unpackSound;
+	AudioEventRTS m_prepSoundLoop;
+	AudioEventRTS m_triggerSound;
+	unsigned char m_tail[0x8c];
+};
+
+// ??0SpecialAbilityUpdateModuleData@@QAE@XZ
+SpecialAbilityUpdateModuleData::SpecialAbilityUpdateModuleData()
+	: m_packSound( (void *)0x01336e50, 0 ),
+	  m_unpackSound( (void *)0x01336e50, 0 ),
+	  m_prepSoundLoop( (void *)0x01336e50, 0 ),
+	  m_triggerSound( (void *)0x01336e50, 0 )
+{
+	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1d4 ) );
+	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1e0 ) );
+	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1e4 ) );
+	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x1e8 ) );
+	specialAbilityStoreZero( reinterpret_cast<volatile unsigned int *>( (unsigned char *)this + 0x250 ) );
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1ec ) = specialAbilityHugeDistanceBits();
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1f0 ) = specialAbilityHugeDistanceBits();
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x218 ) = 1;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1fc ) = 1;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x204 ) = 0xffffffff;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1c8 ) = 0xffffffff;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1d8 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x20c ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x210 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x21c ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x220 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1f4 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x214 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x241 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x242 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x243 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x240 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x244 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x245 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1dc ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1f8 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x247 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x246 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x248 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x200 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x249 ) = 1;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x224 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24a ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x208 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x230 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24b ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1cc ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x1d0 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24c ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x234 ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24d ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x238 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x23c ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x228 ) = 0;
+	*reinterpret_cast<unsigned int volatile *>( (unsigned char *)this + 0x22c ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24e ) = 0;
+	*reinterpret_cast<unsigned char volatile *>( (unsigned char *)this + 0x24f ) = 0;
 }
