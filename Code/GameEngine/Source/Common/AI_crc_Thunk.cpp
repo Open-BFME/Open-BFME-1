@@ -1,321 +1,120 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Source/Common/System
+// stlport
 // readable body of ?crc@AI@@UAEXPAVXfer@@@Z: Code/GameEngine/Source/GameLogic/AI/ai.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of the AI CRC/version serializer.
 
-class Xfer;
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+#include "xfer.h"
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
+{
+public:
+	virtual void crc(Xfer *xfer);
+	virtual void xfer(Xfer *xfer);
+	virtual void loadPostProcess();
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+template <typename T>
+class StringBase
+{
+protected:
+	StringBase() : m_data(0) {}
+	void *m_data;
+};
+
+class AsciiString : public StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	void set(const char *text, int length);
+	~AsciiString();
+};
+
+// Pathfinder's Snapshot subobject follows its service-interface vptr at +4.
+// Only that adjustment is reached by this function.
+class PathfinderServices
+{
+public:
+	virtual void unused();
+};
+
+class Pathfinder : private PathfinderServices, public Snapshot
+{
+};
+
+class TAiData : public Snapshot
+{
+public:
+	char m_unreconstructed[0xf8 - 4];
+	TAiData *m_next;
+};
+
+class AIGroup : public Snapshot
+{
+};
+
+class CrcVersion
+{
+public:
+	CrcVersion() {}
+	unsigned char data[2];
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
-	virtual void crc(Xfer *);
+	virtual void crc(Xfer *xfer);
+
+private:
+	Pathfinder *m_pathfinder;
+	_STL::list<AIGroup *> m_groupList;
+	TAiData *m_aiData;
+	unsigned int m_nextGroupID;
+	unsigned int m_nextFormationID;
 };
 
 // ?crc@AI@@UAEXPAVXfer@@@Z
-__declspec(naked) void AI::crc(Xfer *)
+void AI::crc(Xfer *xfer)
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x38
-		__emit 0x45
-		__emit 0x00
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x8b
-		__emit 0xd9
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x50
-		__emit 0x0c
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xc4
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x43
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x57
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x30
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x7b
-		__emit 0x0c
-		__emit 0x85
-		__emit 0xff
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x33
-		__emit 0xeb
-		__emit 0x03
-		__emit 0x8d
-		__emit 0x49
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x0e
-		__emit 0x68
-		__emit 0xdc
-		__emit 0x57
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xe8
-		__emit 0xf0
-		__emit 0xc3
-		__emit 0x73
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x50
-		__emit 0x68
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x30
-		__emit 0x8b
-		__emit 0xbf
-		__emit 0xf8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xff
-		__emit 0x75
-		__emit 0xd2
-		__emit 0x8b
-		__emit 0x43
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0x74
-		__emit 0x35
-		__emit 0x8b
-		__emit 0x47
-		__emit 0x08
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x27
-		__emit 0x6a
-		__emit 0x0e
-		__emit 0x68
-		__emit 0xc8
-		__emit 0x57
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xe8
-		__emit 0xb2
-		__emit 0xc3
-		__emit 0x73
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x50
-		__emit 0x68
-		__emit 0x8b
-		__emit 0x47
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x30
-		__emit 0x8b
-		__emit 0x3f
-		__emit 0x3b
-		__emit 0x7b
-		__emit 0x08
-		__emit 0x75
-		__emit 0xcb
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xa3
-		__emit 0xbf
-		__emit 0x73
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x16
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x88
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x88
-		__emit 0x44
-		__emit 0x24
-		__emit 0x09
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x28
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x8d
-		__emit 0x43
-		__emit 0x10
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x74
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x83
-		__emit 0xc3
-		__emit 0x14
-		__emit 0x53
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x52
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
+	register AI *self = this;
+	CrcVersion version;
+	if (xfer->IsCRC())
+	{
+		Pathfinder *pathfinder = self->m_pathfinder;
+		Pathfinder *nonnullPathfinder = pathfinder ? pathfinder : 0;
+		(*xfer) == *static_cast<Snapshot *>(nonnullPathfinder);
+
+		AsciiString marker;
+		TAiData *aiData = self->m_aiData;
+		while (aiData)
+		{
+			marker.set("MARKER:TAiData", 14);
+			(*xfer) == marker;
+			(*xfer) == *aiData;
+			aiData = aiData->m_next;
+		}
+
+		for (_STL::list<AIGroup *>::iterator groupIt = self->m_groupList.begin();
+			groupIt != self->m_groupList.end(); ++groupIt)
+		{
+			if (*groupIt)
+			{
+				marker.set("MARKER:AIGroup", 14);
+				(*xfer) == marker;
+				(*xfer) == **groupIt;
+			}
+		}
+	}
+	else
+	{
+		version.data[0] = 1;
+		version.data[1] = 1;
+		(*xfer) == *reinterpret_cast<Xfer::Version *>(&version);
+		(*xfer) == self->m_nextGroupID;
+		xfer->XferRawBytes(&self->m_nextFormationID, 4);
 	}
 }
