@@ -74047,6 +74047,11 @@ name,address,notes
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
+?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
+?bfmeRegisterC0600@Rva006C0600Registry@@QAEXPAXH@Z,0x0003A37D,Open-BFME5 address-derived descriptor registration call from the 0x006C0600 initializer
+?g_bfmeDescriptor3C0600@@3HA,0x012BA450,Open-BFME5 first descriptor registered by 0x006C0600 with ID 3
+?g_bfmeDescriptor8C0600@@3HA,0x012F7F28,Open-BFME5 second descriptor registered by 0x006C0600 with ID 8
+?g_bfmeDescriptor5C0600@@3HA,0x012F7F34,Open-BFME5 third descriptor registered by 0x006C0600 with ID 5
 ?bfmeSelect6BE90@BfmeRecordHook6BE90@@QAEXPAUBfmeRecord6BE90@@HH@Z,0x000418E9,Open-BFME5 address-derived adjusted-this record selection call from 0x0076BE90
 ?bfmeCall71BA0@BfmeHelper71BA0@@QAEHXZ,0x00980890,Open-BFME5 address-derived guarded helper tail-call from the 0x00971BA0 body
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
