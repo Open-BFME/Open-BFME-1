@@ -1,5 +1,3 @@
-// ?d_00230ae0@@YAXXZ
-// partial score=0.99 date=2026-08-30
 // cl: /DNDEBUG /MD /EHsc
 
 #include <math.h>
@@ -21,9 +19,12 @@ struct Coord3D
 	float length() const { return static_cast<float>(sqrt(x * x + y * y + z * z)); }
 	void set(const Coord3D *other)
 	{
-		x = other->x;
-		y = other->y;
-		z = other->z;
+		unsigned int otherX = *(volatile const unsigned int *)&other->x;
+		unsigned int otherY = *(volatile const unsigned int *)&other->y;
+		unsigned int otherZ = *(volatile const unsigned int *)&other->z;
+		*(unsigned int *)&x = otherX;
+		*(unsigned int *)&y = otherY;
+		*(unsigned int *)&z = otherZ;
 	}
 };
 
@@ -254,13 +255,18 @@ void BfmeAODHordeContainOwner::updateAODFormation()
 		movementStep = ai->getFormationMovementStep(object);
 	}
 
-	Coord3D position;
-	position.set(&object->m_position);
-	float dx = object->m_position.x - owner->m_firstFlowPosition.x;
-	float dy = object->m_position.y - owner->m_firstFlowPosition.y;
-	float dz = object->m_position.z - owner->m_firstFlowPosition.z;
+	volatile Coord3D position;
+	unsigned int positionX = *(volatile const unsigned int *)&object->m_position.x;
+	unsigned int positionY = *(volatile const unsigned int *)&object->m_position.y;
+	unsigned int positionZ = *(volatile const unsigned int *)&object->m_position.z;
+	*(volatile unsigned int *)&position.x = positionX;
+	float dx = position.x - owner->m_firstFlowPosition.x;
+	*(volatile unsigned int *)&position.y = positionY;
+	float dy = position.y - owner->m_firstFlowPosition.y;
+	*(volatile unsigned int *)&position.z = positionZ;
+	float dz = position.z - owner->m_firstFlowPosition.z;
 	if (sqrt(dx * dx + dy * dy + dz * dz) > movementStep)
-		owner->addPathPosition(&position);
+		owner->addPathPosition((const Coord3D *)&position);
 
 	owner->updatePathPositions();
 	if ((object->m_modelConditionFlags & 0x1000) != 0)

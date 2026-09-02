@@ -39,12 +39,18 @@
 
 extern const float GenFloat00C75350;
 
+struct GenPair002153D0
+{
+	unsigned int first;
+	unsigned int second;
+};
+
 class GenTargetFace
 {
 public:
 	virtual float v00();
 	virtual float v01();
-	virtual float v02();
+	virtual float v02( int value );
 	virtual float v03();
 	virtual float v04();
 	virtual float v05();
@@ -73,7 +79,7 @@ public:
 	virtual float v28();
 	virtual float v29();
 	virtual float v30();
-	virtual float v31();
+	virtual GenPair002153D0 *v31( GenPair002153D0 *result );
 	virtual float v32();
 	virtual float v33();
 	virtual float v34();
@@ -93,11 +99,23 @@ class GenOwner
 {
 public:
 	bool ready();
+	float sample002150E0();
+	char m_pad[ 0xe0 ];
+	GenTarget *m_cached;
+};
+
+class BfmeOwnFCB
+{
+public:
+	void bfmeAfterFCB();
 };
 
 class GenPart
 {
 public:
+	float sample00215040();
+	GenPair002153D0 sample002153D0();
+	float sample00215470( int value );
 	float sample00215150();
 	float sample002154B0();
 	float sample002154E0();
@@ -114,3 +132,46 @@ S3_SAMPLE( sample002154B0, 06 )
 S3_SAMPLE( sample002154E0, 07 )
 S3_SAMPLE( sample00215510, 35 )
 S3_SAMPLE( sample00215550, 30 )
+
+float GenPart::sample00215470( int value )
+{
+	GenOwner *owner = (GenOwner *)( (char *)this - 0x10 );
+	if( owner->ready() )
+		return m_target->v02( value );
+	return GenFloat00C75350;
+}
+
+float GenOwner::sample002150E0()
+{
+	((BfmeOwnFCB *)this)->bfmeAfterFCB();
+	if( ready() )
+		return m_cached->v04();
+	return GenFloat00C75350;
+}
+
+float GenPart::sample00215040()
+{
+	GenOwner *owner = (GenOwner *)( (char *)this - 0x10 );
+	((BfmeOwnFCB *)owner)->bfmeAfterFCB();
+	if( owner->ready() )
+		return m_target->v05();
+	return GenFloat00C75350;
+}
+
+GenPair002153D0 GenPart::sample002153D0()
+{
+	GenPair002153D0 fallback;
+	GenPair002153D0 temporary;
+	GenPair002153D0 *result;
+	fallback.first = 0;
+	GenOwner *owner = (GenOwner *)( (char *)this - 0x10 );
+	if( owner->ready() )
+		result = m_target->v31( &temporary );
+	else
+	{
+		fallback.first = 0;
+		fallback.second = 0;
+		result = &fallback;
+	}
+	return *result;
+}

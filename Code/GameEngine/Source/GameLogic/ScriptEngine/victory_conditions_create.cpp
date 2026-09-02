@@ -46,6 +46,7 @@ class VictoryConditionsInterface : public SubsystemInterface
 {
 public:
 	VictoryConditionsInterface() { m_victoryConditions = 0; }
+	virtual ~VictoryConditionsInterface();
 
 	virtual Bool hasAchievedVictory(Player *player) = 0;
 	virtual Bool hasBeenDefeated(Player *player) = 0;
@@ -109,6 +110,10 @@ private:
 
 typedef char BFMERetailVictoryConditionsSizeCheck[ sizeof( VictoryConditions ) == 0xc4 ? 1 : -1 ];
 
+VictoryConditionsInterface::~VictoryConditionsInterface()
+{
+}
+
 //-------------------------------------------------------------------------------------------------
 VictoryConditionsInterface * createVictoryConditions( void )
 {
@@ -121,4 +126,10 @@ VictoryConditions::VictoryConditions()
 : m_endGameShowing(false), m_endGameShowTime(0)
 {
 	reset();
+}
+
+//-------------------------------------------------------------------------------------------------
+VictoryConditions::~VictoryConditions()
+{
+	hideEndGame();
 }

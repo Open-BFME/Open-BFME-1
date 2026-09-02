@@ -143,7 +143,24 @@ class BfmeGameLogicPause
 {
 public:
 	void setGamePaused( Bool paused, Int pauseMode, Bool affectInput );
+	void clearGameData( Bool showScoreScreen, Bool unknown );
 	Bool isGamePaused();
+};
+
+class BfmeGameEngineReset
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot4() = 0;
+	virtual void slot8() = 0;
+	virtual void slotC() = 0;
+	virtual void reset() = 0;
+};
+
+class BfmePopupSaveGameState
+{
+public:
+	SaveCode loadGame( AvailableGameInfo gameInfo );
 };
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
@@ -482,11 +499,10 @@ static void doLoadGame( void )
 	// loose these allocated user data pointers attached as listbox item data when the
 	// engine resets
 	//
-	if (TheGameState->loadGame( *selectedGameInfo ) != SC_OK)
+	if (((BfmePopupSaveGameState *)TheGameState)->loadGame( *selectedGameInfo ) != SC_OK)
 	{
-		if (TheGameLogic->isInGame())
-			TheGameLogic->clearGameData( FALSE );
-		TheGameEngine->reset();
+		((BfmeGameLogicPause *)TheGameLogic)->clearGameData( FALSE, TRUE );
+		((BfmeGameEngineReset *)TheGameEngine)->reset();
 		TheShell->showShell(TRUE);
 	}
 
@@ -495,17 +511,20 @@ static void doLoadGame( void )
 // ------------------------------------------------------------------------------------------------
 /** Close the save/load menu */
 // ------------------------------------------------------------------------------------------------
-static void closeSaveMenu( GameWindow *window )
+static void closeSaveMenu( GameWindow *window, Bool restoreInput )
 {
 	
 	if(isPopup)
 	{
 		WindowLayout *saveLoadMenuLayout = window->winGetLayout();
 		if( saveLoadMenuLayout )
-			saveLoadMenuLayout->hide( TRUE );	
+			((BfmeVirtualHideLayout *)saveLoadMenuLayout)->hide( TRUE );	
 	}
 	else
-		TheShell->hideShell();
+		TheShell->hide( TRUE );
+
+	((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(
+		wasGamePausedOnEntry, restoreInput ? 0 : 2, TRUE );
 
 }  // end closeSaveMenu
 
@@ -566,7 +585,7 @@ static void processLoadButtonPress(GameWindow *window)
 		{
 
 			// just close the menu and do the load game logic
-			closeSaveMenu( window );
+			closeSaveMenu( window, TRUE );
 			doLoadGame();
 
 		}  // end if
@@ -760,7 +779,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 				if(isPopup)
 				{				
 					// close the save/load menu
-					closeSaveMenu( window );
+					closeSaveMenu( window, TRUE );
 				}
 				else
 				{
@@ -843,7 +862,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 					//Added By Sadullah Nader
 					//Fix for bug
 					// close save menuu
-					closeSaveMenu( window );
+					closeSaveMenu( window, FALSE );
 					
 					//
 					// given the context of this menu figure out which type of save game we're acutally
@@ -904,7 +923,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 				updateMenuActions();
 
 				// close save menuu
-				closeSaveMenu( window );
+				closeSaveMenu( window, TRUE );
 
 				// get save filename
 				AvailableGameInfo *selectedGameInfo = getSelectedSaveFileInfo( listboxGames );
@@ -970,7 +989,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 					//Moved by Sadullah Nader
 					//moved to fix the 
 					// close save/load layout menu
-					closeSaveMenu( window );
+					closeSaveMenu( window, FALSE );
 					doLoadGame();
 				}
 

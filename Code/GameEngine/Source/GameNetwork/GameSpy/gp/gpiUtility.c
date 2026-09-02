@@ -369,7 +369,7 @@ gpiCheckSocketConnect(
   int * state
 )
 {
-#if 0
+#if 1
 	int aWriteFlag  = 0;
 	int aExceptFlag = 0;
 	int aReturnCode = 0;

@@ -1,6 +1,8 @@
-// ?PixelSize@@YIIABUSurfaceDescription@SurfaceClass@@@Z
-// partial score=0.96 date=2026-08-28
+// ?PixelSize@SurfaceDescription@SurfaceClass@@QAEIXZ
+// partial score=0.96 date=2026-09-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// ?PixelSize@@YIIABUSurfaceDescription@SurfaceClass@@@Z
+// Retail 0x008FC4F0. BFME switch uses D3DFORMAT values (R8G8B8=20).
 
 enum WW3DFormat008FC4F0
 {
@@ -27,16 +29,17 @@ class SurfaceClass
 public:
 	struct SurfaceDescription
 	{
-		WW3DFormat008FC4F0 format;
+		WW3DFormat008FC4F0 Format;
 		unsigned width;
 		unsigned height;
+		unsigned PixelSize(void);
 	};
 };
 
-unsigned __fastcall PixelSize(const SurfaceClass::SurfaceDescription &description)
+unsigned SurfaceClass::SurfaceDescription::PixelSize(void)
 {
 	unsigned size = 0;
-	switch (description.format) {
+	switch (Format) {
 	case WW3D_FORMAT_A8R8G8B8_008FC4F0:
 	case WW3D_FORMAT_X8R8G8B8_008FC4F0:
 		size = 4;

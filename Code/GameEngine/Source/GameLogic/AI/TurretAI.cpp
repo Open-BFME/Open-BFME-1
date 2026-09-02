@@ -110,12 +110,13 @@ void TurretStateMachine::clear()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?resetToDefaultState@TurretStateMachine@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType TurretStateMachine::resetToDefaultState()
 {
 	StateReturnType tmp = StateMachine::resetToDefaultState();
 
-	TurretAI* turret = getTurretAI();
+	// BFME's TurretStateMachine layout keeps the TurretAI owner at +0x44;
+	// the surviving Zero Hour header used by this TU places it at +0x38.
+	TurretAI* turret = *reinterpret_cast<TurretAI **>(reinterpret_cast<char *>(this) + 0x44);
 	if (turret)
 		turret->friend_notifyStateMachineChanged();
 
@@ -123,13 +124,15 @@ StateReturnType TurretStateMachine::resetToDefaultState()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?setState@TurretStateMachine@@UAE?AW4StateReturnType@@I@Z present-unmatched
 StateReturnType TurretStateMachine::setState(StateID newStateID)
 {
-	StateID oldID = getCurrentStateID();
+	// BFME keeps the current-state pointer at +0x1c and the StateID at +4.
+	// Both are four bytes earlier than the surviving Zero Hour declarations.
+	State *current = *reinterpret_cast<State **>(reinterpret_cast<char *>(this) + 0x1c);
+	StateID oldID = current ? *reinterpret_cast<StateID *>(reinterpret_cast<char *>(current) + 4) : INVALID_STATE_ID;
 	StateReturnType tmp = StateMachine::setState(newStateID);
 
-	TurretAI* turret = getTurretAI();
+	TurretAI* turret = *reinterpret_cast<TurretAI **>(reinterpret_cast<char *>(this) + 0x44);
 	if (turret && oldID != newStateID)
 		turret->friend_notifyStateMachineChanged();
 
@@ -987,11 +990,11 @@ UnsignedInt TurretAI::friend_getNextIdleMoodTargetFrame() const
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?friend_checkForIdleMoodTarget@TurretAI@@QAEXXZ present-unmatched
 void TurretAI::friend_checkForIdleMoodTarget()
 {
 	Object* obj = getOwner();
-	AIUpdateInterface *ai = obj->getAIUpdateInterface();
+	// BFME's Object keeps its AI update pointer at +0x204.
+	AIUpdateInterface *ai = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(obj) + 0x204);
 
 	// This state is used internally some places, so we don't necessarily want to be looking for targets
 	// Places that use AI_IDLE internally should set this to false in the constructor. jkmcd
@@ -1484,25 +1487,32 @@ StateReturnType TurretAIIdleState::onEnter()
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?update@TurretAIIdleState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType TurretAIIdleState::update()
 {
 	//DEBUG_LOG(("TurretAIIdleState frame %d: %08lx\n",TheGameLogic->getFrame(),getTurretAI()->getOwner()));
 
+	// BFME's State base is four bytes smaller than the surviving Zero Hour
+	// declaration, so both the machine pointer and the derived timestamp sit
+	// four bytes earlier.  The TurretAI back-pointer in its state machine is at
+	// +0x44 in BFME.
+	UnsignedInt &nextIdleScan = *reinterpret_cast<UnsignedInt *>(
+		reinterpret_cast<char *>(this) + 0x24);
 	UnsignedInt now = TheGameLogic->getFrame();
-	if (now >= m_nextIdleScan)
+	if (now >= nextIdleScan)
 	{
 		// this is redundant, since we're exiting the state, and will reset 
 		// it again in onEnter next time (srj)
 		// resetIdleScan();
 
-		return STATE_FAILURE;
+		return static_cast<StateReturnType>(-1);
 	}
 
-	TurretAI* turret = getTurretAI();
+	void *machine = *reinterpret_cast<void **>(reinterpret_cast<char *>(this) + 0x1c);
+	TurretAI *turret = *reinterpret_cast<TurretAI **>(
+		reinterpret_cast<char *>(machine) + 0x44);
 	turret->friend_checkForIdleMoodTarget();
 
-	return frameToSleepTime(turret->friend_getNextIdleMoodTargetFrame(), m_nextIdleScan);
+	return frameToSleepTime(turret->friend_getNextIdleMoodTargetFrame(), nextIdleScan);
 }
 
 //----------------------------------------------------------------------------------------------------------

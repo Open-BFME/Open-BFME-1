@@ -432,27 +432,8 @@ Bool VictoryConditions::hasAchievedVictory(Player *player)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?hideEndGame@VictoryConditions@@UAEXXZ present-unmatched
-// One instruction pair from the 119-byte retail body at 0x0035F770: retail
-// emits `mov [esp+0xC],esp` (the /EHsc byval-temp stash) BEFORE `mov ecx,esp`
-// at the setGroup AsciiString temp, this compiles them swapped. Every other
-// byte matches; ||/nested-if, implicit conversion, defaulted-arg and
-// /EHs//EHs-c- spellings all keep the swap.
-void VictoryConditions::hideEndGame( void )
-{
-	if (!g_theWindowManager || !m_endGameShowing)
-		return;
-
-	g_theWindowManager->unidentified_00015235(0xb, "HideEndGame", 0, 0, 0, 0, 0, 0);
-	m_endGameShowing = false;
-	TheDisplay->setUnidentified13c(true);
-
-	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
-	{
-		if (m_singleAllianceRemaining)
-			TheTransitionHandler->setGroup("MPorSkirmishFadeToScoreScreen", 0);
-	}
-}
+// hideEndGame lives in VictoryConditionsHideEndGame.cpp so the by-value
+// AsciiString temp uses StringInline.h (EH saved-esp order).
 
 //-------------------------------------------------------------------------------------------------
 void VictoryConditions::updateEndGame( void )

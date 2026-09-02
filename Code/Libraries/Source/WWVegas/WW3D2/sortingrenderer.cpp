@@ -311,8 +311,9 @@ void SortingRendererClass::Insert_Triangles(
 //
 // ----------------------------------------------------------------------------
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp
-// ?Insert_Triangles@SortingRendererClass@@ present-unmatched
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesNoSphere.cpp
+// ?Insert_Triangles@SortingRendererClass@@SAXGGGG@Z
+#if 0
 void SortingRendererClass::Insert_Triangles(
 	unsigned short start_index, 
 	unsigned short polygon_count,
@@ -322,6 +323,7 @@ void SortingRendererClass::Insert_Triangles(
 	SphereClass sphere(Vector3(0.0f,0.0f,0.0f),0.0f);
 	Insert_Triangles(sphere,start_index,polygon_count,min_vertex_index,vertex_count);
 }
+#endif
 
 // ----------------------------------------------------------------------------
 //

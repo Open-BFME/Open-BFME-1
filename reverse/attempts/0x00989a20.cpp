@@ -1,7 +1,17 @@
 // ??0ParticleBufferClass@@QAE@ABV0@@Z
+// partial score=0.88 date=2026-09-02
+// ??0ParticleBufferClass@@QAE@ABV0@@Z
 // partial score=0.78 date=2026-09-02
-// cl: same as part_buf.cpp
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
 // banked attempt for ??0ParticleBufferClass@@QAE@ABV0@@Z @ 0x00989A20
+#define Matrix4x4 Matrix4
+#include "part_buf.h"
+#include "part_emt.h"
+#include "ww3d.h"
+#include "pointgr.h"
+#include "linegrp.h"
+#include "seglinerenderer.h"
+
 ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	RenderObjClass(src),
 	NewParticleQueue(NULL),
@@ -49,26 +59,22 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	BlurTimeKeyFrameValues(NULL),
 	BlurTimeKeyFrameDeltas(NULL),
 	DefaultTailDiffuse(src.DefaultTailDiffuse),
-	NumRandomColorEntriesMinus1(src.NumRandomColorEntriesMinus1),
 	RandomColorEntries(NULL),
-	NumRandomAlphaEntriesMinus1(src.NumRandomAlphaEntriesMinus1),
 	RandomAlphaEntries(NULL),
-	NumRandomSizeEntriesMinus1(src.NumRandomSizeEntriesMinus1),
 	RandomSizeEntries(NULL),
-	NumRandomRotationEntriesMinus1(src.NumRandomRotationEntriesMinus1),
+	NumRandomRotationEntriesMinus1(0),
 	RandomRotationEntries(NULL),
-	NumRandomOrientationEntriesMinus1(src.NumRandomOrientationEntriesMinus1),
+	NumRandomOrientationEntriesMinus1(0),
 	RandomOrientationEntries(NULL),
-	NumRandomFrameEntriesMinus1(src.NumRandomFrameEntriesMinus1),
+	NumRandomFrameEntriesMinus1(0),
 	RandomFrameEntries(NULL),
-	NumRandomBlurTimeEntriesMinus1(src.NumRandomBlurTimeEntriesMinus1),
+	NumRandomBlurTimeEntriesMinus1(0),
 	RandomBlurTimeEntries(NULL),
 	ColorRandom(src.ColorRandom),
 	OpacityRandom(src.OpacityRandom),
 	SizeRandom(src.SizeRandom),
 	RotationRandom(src.RotationRandom),
 	FrameRandom(src.FrameRandom),
-	BlurTimeRandom(src.BlurTimeRandom),
 	InitialOrientationRandom(src.InitialOrientationRandom),
 	PointGroup(NULL),
 	LineRenderer(NULL),
@@ -89,8 +95,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	TimeStamp(NULL),
 	Emitter(src.Emitter),
 	DecimationThreshold(src.DecimationThreshold),
-	ProjectedArea(0.0f),
-	CurrentGroupID(src.CurrentGroupID)
+	ProjectedArea(0.0f)
 {
 	Position[0] = NULL;
 	Position[1] = NULL;
@@ -100,6 +105,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	LodCount = MIN(MaxNum, 17);
 	LodBias = src.LodBias;
 
+	NumRandomColorEntriesMinus1 = src.NumRandomColorEntriesMinus1;
 	if (src.Color) {
 		Color = NEW_REF( ShareBufferClass<Vector3> , (MaxNum, "ParticleBufferClass::Color", 0) );
 
@@ -123,6 +129,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 		ColorKeyFrameValues[0] = src.ColorKeyFrameValues[0];
 	}
 
+	NumRandomAlphaEntriesMinus1 = src.NumRandomAlphaEntriesMinus1;
 	if (src.Alpha) {
 		Alpha = NEW_REF( ShareBufferClass<float> , (MaxNum, "ParticleBufferClass::Alpha", 0) );
 
@@ -146,6 +153,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 		AlphaKeyFrameValues[0] = src.AlphaKeyFrameValues[0];
 	}
 
+	NumRandomSizeEntriesMinus1 = src.NumRandomSizeEntriesMinus1;
 	if (src.Size) {
 		Size = NEW_REF( ShareBufferClass<float> , (MaxNum, "ParticleBufferClass::Size", 0) );
 
@@ -169,6 +177,8 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 		SizeKeyFrameValues[0] = src.SizeKeyFrameValues[0];
 	}
 
+	NumRandomRotationEntriesMinus1 = src.NumRandomRotationEntriesMinus1;
+	NumRandomOrientationEntriesMinus1 = src.NumRandomOrientationEntriesMinus1;
 	if (src.Orientation) {
 		Orientation = NEW_REF( ShareBufferClass<uint8> , (MaxNum, "ParticleBufferClass::Orientation", 0) );
 
@@ -201,6 +211,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	}
 
 
+	NumRandomFrameEntriesMinus1 = src.NumRandomFrameEntriesMinus1;
 	if (src.Frame || src.UCoord) {
 		if (src.Frame) {
 			Frame = NEW_REF( ShareBufferClass<uint8> , (MaxNum, "ParticleBufferClass::Frame", 0) );
@@ -228,6 +239,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 		FrameKeyFrameValues[0] = src.FrameKeyFrameValues[0];
 	}
 
+	NumRandomBlurTimeEntriesMinus1 = src.NumRandomBlurTimeEntriesMinus1;
 	if (NumBlurTimeKeyFrames > 0) {
 		BlurTimeKeyFrameTimes = W3DNEWARRAY unsigned int [NumBlurTimeKeyFrames];
 		BlurTimeKeyFrameValues = W3DNEWARRAY float [NumBlurTimeKeyFrames];
@@ -326,7 +338,11 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 
 	int minlod = Calculate_Cost_Value_Arrays(1.0f, Value, Cost);
 
-	if (Get_LOD_Level() < minlod) Set_LOD_Level(minlod);
+	if (((int)LodCount - (int)DecimationThreshold - 1) < minlod) {
+		if (minlod < 0) minlod = 0;
+		if (minlod > (int)LodCount) minlod = LodCount;
+		DecimationThreshold = LodCount - minlod - 1;
+	}
 
 	TotalActiveCount++;
 }

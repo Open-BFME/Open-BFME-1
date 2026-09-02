@@ -66,6 +66,8 @@ static Bool isShuttingDown = false;
 static Bool startGame = false;
 static Bool buttonPushed = false;
 static GameDifficulty s_AIDiff = DIFFICULTY_NORMAL;
+
+// BFME's pending map string moved from the Zero Hour GlobalData layout.
 static void setupGameStart(AsciiString mapName)
 {
 	startGame = true;

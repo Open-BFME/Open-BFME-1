@@ -1300,35 +1300,37 @@ Bool ScreenMotionBlurFilter::postRender(enum FilterModes mode, Coord2D &scrollDe
 	return continueEffect;
 }
 
-// ?setup@ScreenMotionBlurFilter@@UAE_NW4FilterModes@@@Z present-unmatched
 Bool ScreenMotionBlurFilter::setup(enum FilterModes mode)
 {
 
 	m_additive = false;
 
-	if (mode == FM_VIEW_MB_IN_AND_OUT_SATURATE ||
-			mode == FM_VIEW_MB_IN_SATURATE ||
-			mode == FM_VIEW_MB_OUT_SATURATE) {
+	// BFME inserts extra FilterModes values vs ZH; retail immediates:
+	// IN_AND_OUT_ALPHA=7, IN_AND_OUT_SATURATE=8, OUT_ALPHA=10,
+	// IN_SATURATE=11, OUT_SATURATE=12, END_PAN_ALPHA=13, PAN_ALPHA=16.
+	if (mode == (FilterModes)8 ||
+			mode == (FilterModes)11 ||
+			mode == (FilterModes)12) {
 		m_additive = true;
 	}
 
 	m_doZoomTo = false;
-	if (mode == FM_VIEW_MB_IN_AND_OUT_SATURATE ||
-			mode == FM_VIEW_MB_IN_AND_OUT_ALPHA ) {
+	if (mode == (FilterModes)8 ||
+			mode == (FilterModes)7 ) {
 		m_doZoomTo = true;
 	}
-	if (mode >= FM_VIEW_MB_PAN_ALPHA)	{
-		m_panFactor = (int)mode - FM_VIEW_MB_PAN_ALPHA;
+	if (mode >= (FilterModes)16)	{
+		m_panFactor = (int)mode - 16;
 		if (m_panFactor<1) m_panFactor = DEFAULT_PAN_FACTOR;
 	}
 	m_skipRender = false;
-	if (mode != FM_VIEW_MB_END_PAN_ALPHA) 
+	if (mode != (FilterModes)13) 
 		m_maxCount = 0;
 	m_decrement = false;
 	m_skipRender = false;
 	switch (mode) {
-		case FM_VIEW_MB_OUT_SATURATE:
-		case FM_VIEW_MB_OUT_ALPHA:
+		case (FilterModes)12:
+		case (FilterModes)10:
 			m_maxCount = MAX_COUNT;
 			m_decrement = TRUE;
 			break;

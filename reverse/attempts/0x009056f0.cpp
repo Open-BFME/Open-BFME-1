@@ -1,25 +1,26 @@
-// ?d_009056f0@@YAXXZ
-// partial score=0.86 date=2026-08-31
-// Clean reconstruction of the two-dimensional texture-size validator used by
-// the retail renderer.  These compact declarations retain only the witnessed
-// prefix of the renderer-capabilities classes.
+// ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z
+// partial score=0.9 date=2026-09-02
+// cl: /DNDEBUG /MD /EHsc
+// TextureLoader::Validate_Texture_Size(unsigned&, unsigned&)
+// retail 0x009056F0. Two-argument BFME overload: next power-of-two per axis,
+// clamped to the current device max texture size. No 8:1 aspect pass.
 
 struct D3DCapsPrefix
 {
 	unsigned char reserved[0x58];
-	unsigned int maxTextureWidth;
-	unsigned int maxTextureHeight;
+	unsigned int MaxTextureWidth;
+	unsigned int MaxTextureHeight;
 };
 
 class DX8Caps
 {
 public:
-	const D3DCapsPrefix &Get_DX8_Caps() const { return caps; }
+	const D3DCapsPrefix &Get_DX8_Caps() const { return Caps; }
 
 private:
-	unsigned int maxDisplayWidth;
-	unsigned int maxDisplayHeight;
-	D3DCapsPrefix caps;
+	int MaxDisplayWidth;
+	int MaxDisplayHeight;
+	D3DCapsPrefix Caps;
 };
 
 class DX8Wrapper
@@ -32,12 +33,12 @@ public:
 class TextureLoader
 {
 public:
-	static void Validate_Texture_Size(unsigned int &width, unsigned int &height);
+	static void Validate_Texture_Size(unsigned &width, unsigned &height);
 };
 
-static unsigned int Valid_Texture_Dimension(unsigned int dimension, unsigned int maximum)
+static unsigned Valid_Texture_Dimension(unsigned dimension, unsigned maximum)
 {
-	unsigned int result = 1;
+	unsigned result = 1;
 	while (result < dimension) {
 		result <<= 1;
 	}
@@ -47,17 +48,18 @@ static unsigned int Valid_Texture_Dimension(unsigned int dimension, unsigned int
 	return result;
 }
 
-void TextureLoader::Validate_Texture_Size(unsigned int &width, unsigned int &height)
+// ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z
+void TextureLoader::Validate_Texture_Size(unsigned &width, unsigned &height)
 {
 	const DX8Caps *currentCaps = DX8Wrapper::Get_Current_Caps();
 	if (currentCaps == 0) {
 		return;
 	}
 	const D3DCapsPrefix &caps = currentCaps->Get_DX8_Caps();
-	unsigned int validWidth = Valid_Texture_Dimension(width, caps.maxTextureWidth);
-	unsigned int &heightOutput = height;
+	unsigned validWidth = Valid_Texture_Dimension(width, caps.MaxTextureWidth);
+	unsigned &heightOutput = height;
 	width = validWidth;
-	unsigned int maximumHeight = caps.maxTextureHeight;
-	unsigned int inputHeight = heightOutput;
+	unsigned maximumHeight = caps.MaxTextureHeight;
+	unsigned inputHeight = heightOutput;
 	heightOutput = Valid_Texture_Dimension(inputHeight, maximumHeight);
 }

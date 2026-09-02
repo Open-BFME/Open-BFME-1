@@ -630,7 +630,6 @@ Bool GameSpyPeerMessageQueue::isConnecting( void )
 	return (m_thread) ? m_thread->isConnecting() : false;
 }
 
-// ?addRequest@GameSpyPeerMessageQueue@@ present-unmatched
 void GameSpyPeerMessageQueue::addRequest( const PeerRequest& req )
 {
 	MutexClass::LockClass m(m_requestMutex);

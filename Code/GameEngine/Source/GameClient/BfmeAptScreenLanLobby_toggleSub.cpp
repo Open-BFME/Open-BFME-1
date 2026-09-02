@@ -1,0 +1,66 @@
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// Retail 0x00516B60: BfmeAptScreenLanLobby thiscall, one bool. If the flag is
+// clear, run the +0x25C subobject's dispatchOnce; if set, run its stop path
+// only when the 0x012F7730 singleton exists and its +0xB8 predicate is false.
+
+class LanLobbyGuard
+{
+public:
+#define LANLOBBY_GUARD_SLOT(N) virtual void slot##N();
+	LANLOBBY_GUARD_SLOT(0)  LANLOBBY_GUARD_SLOT(1)  LANLOBBY_GUARD_SLOT(2)
+	LANLOBBY_GUARD_SLOT(3)  LANLOBBY_GUARD_SLOT(4)  LANLOBBY_GUARD_SLOT(5)
+	LANLOBBY_GUARD_SLOT(6)  LANLOBBY_GUARD_SLOT(7)  LANLOBBY_GUARD_SLOT(8)
+	LANLOBBY_GUARD_SLOT(9)  LANLOBBY_GUARD_SLOT(10) LANLOBBY_GUARD_SLOT(11)
+	LANLOBBY_GUARD_SLOT(12) LANLOBBY_GUARD_SLOT(13) LANLOBBY_GUARD_SLOT(14)
+	LANLOBBY_GUARD_SLOT(15) LANLOBBY_GUARD_SLOT(16) LANLOBBY_GUARD_SLOT(17)
+	LANLOBBY_GUARD_SLOT(18) LANLOBBY_GUARD_SLOT(19) LANLOBBY_GUARD_SLOT(20)
+	LANLOBBY_GUARD_SLOT(21) LANLOBBY_GUARD_SLOT(22) LANLOBBY_GUARD_SLOT(23)
+	LANLOBBY_GUARD_SLOT(24) LANLOBBY_GUARD_SLOT(25) LANLOBBY_GUARD_SLOT(26)
+	LANLOBBY_GUARD_SLOT(27) LANLOBBY_GUARD_SLOT(28) LANLOBBY_GUARD_SLOT(29)
+	LANLOBBY_GUARD_SLOT(30) LANLOBBY_GUARD_SLOT(31) LANLOBBY_GUARD_SLOT(32)
+	LANLOBBY_GUARD_SLOT(33) LANLOBBY_GUARD_SLOT(34) LANLOBBY_GUARD_SLOT(35)
+	LANLOBBY_GUARD_SLOT(36) LANLOBBY_GUARD_SLOT(37) LANLOBBY_GUARD_SLOT(38)
+	LANLOBBY_GUARD_SLOT(39) LANLOBBY_GUARD_SLOT(40) LANLOBBY_GUARD_SLOT(41)
+	LANLOBBY_GUARD_SLOT(42) LANLOBBY_GUARD_SLOT(43) LANLOBBY_GUARD_SLOT(44)
+	LANLOBBY_GUARD_SLOT(45)
+#undef LANLOBBY_GUARD_SLOT
+	virtual bool predicateB8();
+};
+
+extern LanLobbyGuard *g_Va012F7730;
+
+class BfmeE976
+{
+public:
+	void bfmeGo976E();
+};
+
+class Rva00523340Object
+{
+public:
+	void dispatchOnce();
+};
+
+class BfmeAptScreenLanLobby
+{
+public:
+	void toggleSub(bool on);
+
+private:
+	char m_unmodelled[0x25C];
+	BfmeE976 m_subStop;
+};
+
+// ?toggleSub@BfmeAptScreenLanLobby@@QAEX_N@Z
+void BfmeAptScreenLanLobby::toggleSub(bool on)
+{
+	if (on)
+	{
+		if (g_Va012F7730 && !g_Va012F7730->predicateB8())
+			m_subStop.bfmeGo976E();
+	}
+	else
+	{
+		((Rva00523340Object *)&m_subStop)->dispatchOnce();
+	}
+}

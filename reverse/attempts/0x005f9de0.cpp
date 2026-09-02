@@ -1,30 +1,45 @@
-// ?d_005f9de0@@YAXXZ
-// partial score=0.94 date=2026-08-30
-#include "System/game_client_random_variable.h"
+// ?getVelocity@OrthoEmissionVelocityModule@FXParticleSystem@@QAE?AUCoord3D@2@HH@Z
+// partial score=0.94 date=2026-09-02
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-struct BfmeVec1284
+#include "../../../Common/System/game_client_random_variable.h"
+
+namespace FXParticleSystem
 {
-	BfmeVec1284(float x_, float y_, float z_) : x(x_), y(y_), z(z_) {}
+
+struct Coord3D
+{
+	Coord3D( float x_, float y_, float z_ ) : x( x_ ), y( y_ ), z( z_ ) {}
 
 	float x;
 	float y;
 	float z;
 };
 
-class BfmeA1284
+__forceinline float retainFloatSlot( float *value )
+{
+	return *value;
+}
+
+class OrthoEmissionVelocityModule
 {
 public:
-	BfmeVec1284 bfmeSample1284(int, int);
-	char m_bfmePad00[0x1c];
+	Coord3D getVelocity( int, int );
+
+private:
+	char m_base[ 0x1c ];
 	GameClientRandomVariable m_x;
 	GameClientRandomVariable m_y;
 	GameClientRandomVariable m_z;
 };
 
-BfmeVec1284 BfmeA1284::bfmeSample1284(int, int)
+Coord3D OrthoEmissionVelocityModule::getVelocity( int, int )
 {
+	volatile float reserved;
 	float x = m_x.getValue();
 	float y = m_y.getValue();
 	float z = m_z.getValue();
-	return BfmeVec1284(x, y, z);
+	return Coord3D( x, y, retainFloatSlot( &z ) );
+}
+
 }
