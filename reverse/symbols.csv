@@ -74952,6 +74952,7 @@ name,address,notes
 ?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
+?bfmeSetUntilVOJ@BfmeObjVOJ@@QAEXHI@Z,0x0003364A,pin
 ?bfmeSetVGD@BfmeLayoutVGD@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVGI@BfmeWideVGI@@QAEXPBGH@Z,0x008885C0,pin
 ?bfmeSetVHE@BfmeMsgVHE@@QAEXPAXH@Z,0x007E88D0,pin
@@ -77138,6 +77139,7 @@ name,address,notes
 ?g_bfmeMgrUDD@@3PAVBfmeMgrUDD@@A,0x00EF1028,pin
 ?g_bfmeMgrUDE@@3PAVBfmeMgrUDE@@A,0x00EF0898,pin
 ?g_bfmeMgrVLS@@3PAVBfmeMgrVLS@@A,0x00EF7730,pin
+?g_bfmeMgrVOJ@@3PAVBfmeMgrVOJ@@A,0x00EF076C,pin
 ?g_bfmeMillisecondsToSeconds@@3MA,0x00C766EC,float milliseconds-to-seconds scale used by BfmeTimedOpNode::update
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
