@@ -85,3 +85,38 @@ def rewrite(raw, keep):
         else:
             dropped += 1
     return b"".join(kept), dropped
+
+
+def atomic_write_bytes(path, data, retries=40, delay=0.25):
+    """Replace `path` with `data` so no reader ever sees a torn file.
+
+    A plain write_bytes truncates first and fills 30 MB afterwards; a reader
+    (check_csv, git, another lane) or a kill in that window sees a short file
+    -- that is how symbols.csv lost 14,858 rows on 2026-09-02. Write beside
+    the target, fsync, then rename over it. On Windows the rename fails with
+    PermissionError while a reader still holds the old file open, so retry
+    briefly; readers are short.
+    """
+    import os
+    import time
+    from pathlib import Path as _P
+    path = _P(path)
+    tmp = path.with_name(path.name + ".tmp-%d" % os.getpid())
+    with open(tmp, "wb") as f:
+        f.write(data)
+        f.flush()
+        os.fsync(f.fileno())
+    last = None
+    for _ in range(retries):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError as e:
+            last = e
+            time.sleep(delay)
+    try:
+        tmp.unlink()
+    except OSError:
+        pass
+    raise last
+

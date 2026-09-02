@@ -160,8 +160,21 @@ def main():
     ret_ins = disasm(retail)
     our_ins = disasm(compiled)
     kind = classify(ret_ins, our_ins, ret_m, ours_m)
-    print(f"symptom  {kind}")
-    print(f"lever    {LEVERS[kind]}")
+    # Evidence: the instruction pairs that differ. The label is a candidate
+    # cause keyed on byte pattern; the same pattern can have another source
+    # (a control-flow shape looked like a register mirror on 0x00339B90).
+    def masked_ins(ins, m):
+        return m[ins.address: ins.address + ins.size]
+    pairs = [(r, o) for r, o in zip(ret_ins, our_ins)
+             if masked_ins(r, ret_m) != masked_ins(o, ours_m)]
+    covered = sum(len(r.bytes) for r, _ in pairs)
+    confidence = "high" if kind == "exact" or (pairs and covered >= len(diffs)) else "low"
+    print(f"candidate {kind}  (confidence {confidence}; verify against the evidence below)")
+    print(f"lever     {LEVERS[kind]}")
+    for r, o in pairs[:6]:
+        print(f"evidence  +{r.address:04x}  retail: {r.mnemonic} {r.op_str:32}  ours: {o.mnemonic} {o.op_str}")
+    if len(pairs) > 6:
+        print(f"evidence  ... {len(pairs) - 6} more differing instruction(s)")
 
     def rows(ins):
         return [(i.address, " ".join(f"{b:02x}" for b in i.bytes), f"{i.mnemonic} {i.op_str}") for i in ins]

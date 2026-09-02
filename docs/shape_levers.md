@@ -21,3 +21,13 @@ a byte-exact landing on 2026-09-02; the mechanism is in `docs/lessons.md`.
 
 Also check that the attempts log entry is not stale: `grep ,0xRVA, reverse/functions.csv`
 -- if the row already points at a `.cpp`, someone landed it.
+
+## Fleet tools (all read-only except add_match/re_log)
+
+| Need | Tool |
+|---|---|
+| Send a worker fresh, non-stale work with per-body context | `python3 tools/brief.py --dump <gen_asm file> \| --rvas ... \| --csv <worklist>` |
+| Find banked bodies already landed, or whose blockers got resolved | `python3 tools/stale_partials.py [--stale] [--requeue out.csv]` |
+| Find which one pin/model unlocks the most dump bodies | `python3 tools/dump_families.py [--show N]` |
+| Whose function is this (vtable in the prologue) | `python3 tools/vtable_lookup.py <vtable VA>` |
+| Compile, retail-diff, name the wall | `python3 tools/probe.py <cpp> "<symbol>" 0x<RVA>` |

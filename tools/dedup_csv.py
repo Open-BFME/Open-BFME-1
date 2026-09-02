@@ -87,7 +87,7 @@ def dedup_functions(path):
     # real change keeps `dedup_csv.py` -- the fix every check_csv message names --
     # from handing the merge driver a whole-file reorder to collapse nothing.
     if out != raw:
-        path.write_bytes(out)
+        ledger_io.atomic_write_bytes(path, out)
     return len(rows), len(ordered)
 
 
@@ -121,7 +121,7 @@ def dedup_symbols(path):
         if key not in best or (-len(line), line) < (-len(best[key]), best[key]):
             best[key] = line
     unique = sorted(best.values())
-    path.write_bytes((eol.join([header, *unique]) + eol).encode("utf-8"))
+    ledger_io.atomic_write_bytes(path, (eol.join([header, *unique]) + eol).encode("utf-8"))
     return len(body), len(unique)
 
 

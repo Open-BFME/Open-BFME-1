@@ -309,7 +309,7 @@ def main():
     build_sh = root / "build.sh"
     if not build_sh.exists():
         # revert: an unverifiable row must not survive
-        functions_csv.write_bytes(raw)
+        ledger_io.atomic_write_bytes(functions_csv, raw)
         source_path.write_bytes(saved_source)
         fail(f"no build.sh at {root} — cannot verify; append reverted")
 
@@ -323,12 +323,12 @@ def main():
     try:
         result = subprocess.run(verify_cmd, cwd=root)
     except BaseException:
-        functions_csv.write_bytes(raw)
+        ledger_io.atomic_write_bytes(functions_csv, raw)
         source_path.write_bytes(saved_source)
         print("add_match: interrupted — append and marker strip REVERTED", file=sys.stderr)
         raise
     if result.returncode != 0:
-        functions_csv.write_bytes(raw)
+        ledger_io.atomic_write_bytes(functions_csv, raw)
         source_path.write_bytes(saved_source)
         fail(f"verification failed (exit {result.returncode}) — append and "
              "marker strip REVERTED; nothing was changed")
