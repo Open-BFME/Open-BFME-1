@@ -82384,3 +82384,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeThrowV54@BfmeStrV54@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831970
 ?bfmeThrow2V54@BfmeStrV54@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831970
 ?bfmeInsertV54@BfmeStrV54@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831970
+?bfmeStrlenV55@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831CE0
+?bfmeThrowV55@BfmeStrV55@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831CE0
+?bfmeThrow2V55@BfmeStrV55@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831CE0
+?bfmeInsertV55@BfmeStrV55@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831CE0
