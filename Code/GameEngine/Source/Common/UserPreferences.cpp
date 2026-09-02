@@ -1226,12 +1226,13 @@ __declspec(naked) Int GameSpyMiscPreferences::getMaxMessagesPerUpdate( void )
 // IgnorePreferences base class 
 //-----------------------------------------------------------------------------
 
+// Open-BFME5: exact clean C++ constructor with the BFME profile ABI.
 IgnorePreferences::IgnorePreferences()
 {
 	AsciiString userPrefFilename;
-//	if(!TheGameSpyInfo)
-	Int localProfile = TheGameSpyInfo->getLocalProfileID();
-	userPrefFilename.format("GeneralsOnline\\IgnorePref%d.ini", localProfile);
+	//	if(!TheGameSpyInfo)
+	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
+	userPrefFilename.format("LoTRB4MEOnline\\IgnorePref%d.ini", localProfile);
 	load(userPrefFilename);
 }
 
