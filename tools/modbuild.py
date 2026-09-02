@@ -67,6 +67,9 @@ TARGET_TRACKSFLUSH = 0x0072FEB0
 # position-independent, so the payload runs before that frame exists and must
 # not fault.
 TARGET_INGAMEUI_UPDATE = 0x004410C0
+# 044-modpanel. InGameUI::postDraw -- the pass that runs after the world, so the
+# panel lands over the battle rather than under it.
+TARGET_INGAMEUI_POSTDRAW = 0x004469F0
 
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
@@ -401,6 +404,21 @@ def build_tracksfix(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_drawprobe(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/drawprobe.cpp", "drawprobe_a", (
+        (0x004469F0, "drawprobe_a", ("ecx",)),   # InGameUI::postDraw entry
+        (0x006F3FC0, "drawprobe_b", ("ecx",)),   # W3DDisplay::draw entry
+        (0x006C4A50, "drawprobe_c", ("ecx",)),   # GameWindowManager repaint entry -- the
+                                                 # 2D pass whose own output demonstrably draws
+    ), probe=probe)
+
+
+def build_modpanel(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/modpanel.cpp", "modpanel_draw", (
+        (TARGET_INGAMEUI_POSTDRAW, "modpanel_draw", ("ecx",)),
+    ), probe=probe)
+
+
 def build_replaycam(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/replaycam.cpp", "replaycam_update", (
         (TARGET_INGAMEUI_UPDATE, "replaycam_update", ("ecx",)),
@@ -558,6 +576,13 @@ UNSHIPPED = {
                        "both seats, match dead at 127, against zero in every other arm. "
                        "See the header of its source before reviving it"),
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
+    # 044 and 045 both hook InGameUI::postDraw, so cave.py refuses to build them
+    # together. That is the tool working: select one at a time.
+    "045-drawprobe": (build_drawprobe,
+                      "an instrument: it paints bands over the game to find which point "
+                      "in the frame a mod can draw 2D from. Shares 044's hook address"),
+    "044-modpanel": (build_modpanel,
+                     "the mod panel; unshipped until its first in-game pass is green"),
     "041-tracksprobe": (build_tracksprobe,
                         "an instrument: it watches the terrain-track vertex buffer, and its "
                         "ctrl+F9 deliberately crashes the game"),
