@@ -82259,3 +82259,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
 ?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0000E0FC,Open-BFME5 DamageFXStore ctor call target: retail uses the ILT for NameKeyType-to-DamageFX hashtable bucket initialization
+?bfmeFinish925@BfmeReg925@@QAEXXZ,0x009A1A40,pin
+?bfmeGrowV15@BfmeStrV15@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831780
+?bfmeInitV15@BfmeStrV15@@QAEXPAD00@Z,0x00021A58,Open-BFME5 /Od range-init thunk for 0x00831780
+?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
