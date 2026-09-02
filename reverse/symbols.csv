@@ -82325,3 +82325,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
 ?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
+?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
