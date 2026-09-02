@@ -82683,3 +82683,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
 ?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
 ??0Rva005862C0Member@@QAE@ABV0@@Z,0x0003CA29,Open-BFME5 member copy constructor called by 0x00587050
+?bfmeNotify@InGameUI@@QAEXXZ,0x00043DC9,Open-BFME5 UI notification tail-called by 0x00589940
