@@ -1,0 +1,483 @@
+// ?setPositionZ@Thing@@QAEXM@Z
+// partial score=0.99 date=2026-09-02
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: Thing.cpp ////////////////////////////////////////////////////////////
+// Created:   Colin Day, May 2001
+//
+// Desc:      Things are the base class for objects and drawables, objects
+//						are logic side representations while drawables are client
+//						side.  Common data will be held in the Thing defined here
+//						and systems that need to work with both of them will work with
+//						"Things"
+//
+//-----------------------------------------------------------------------------
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#include "Common/PerfTimer.h"
+#include "Common/Thing.h"
+#include "Common/ThingTemplate.h"
+#include "Common/ThingFactory.h"
+#include "Common/GlobalData.h"
+#include "Common/NameKeyGenerator.h"
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/Team.h"
+#include "Lib/Trig.h"
+#include "GameLogic/TerrainLogic.h"
+
+class BFMERetailThingVTable
+{
+public:
+	virtual Real calculateHeightAboveTerrain() const = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void reactToTransformChange(const Matrix3D *oldMtx, const Coord3D *oldPos, Real oldAngle) = 0;
+};
+
+class BFMERetailTerrainLogicVTable
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	// ZH's TerrainLogic.h puts getGroundHeight at slot 5; retail calls
+	// [vtable+0x18], one slot further out.
+	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal = NULL) const = 0;
+	virtual void slot7() = 0;
+	virtual void slot8() = 0;
+	virtual void slot9() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual PathfindLayerEnum alignOnTerrain(Real angle, const Coord3D& pos, Bool stickToGround, Matrix3D& mtx) = 0;
+	virtual Bool isUnderwater(Real x, Real y, Real *waterZ, Real *terrainZ) = 0;
+};
+
+class BFMEThingSetTransformVTable
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot1() = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	virtual void reactToTransformChange() = 0;
+};
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+//=============================================================================
+/** Constructor */
+//=============================================================================
+Thing::Thing( const ThingTemplate *thingTemplate ) 
+{
+	// sanity
+	if( thingTemplate == NULL )
+	{
+	
+		// cannot create thing without template
+		DEBUG_CRASH(( "no template" ));
+		return;
+
+	}  // end if
+		
+	m_template = thingTemplate;
+#if defined(_DEBUG) || defined(_INTERNAL)
+	m_templateName = thingTemplate->getName();
+#endif
+	m_transform.Make_Identity();
+	m_cachedPos.zero();
+	m_cachedAngle = 0.0f;
+	m_cachedDirVector.zero();
+	m_cachedAltitudeAboveTerrain = 0;
+	m_cachedAltitudeAboveTerrainOrWater = 0;
+	m_cacheFlags = 0;
+
+}
+
+//=============================================================================
+/** Destructor */
+//=============================================================================
+// ??1Thing@@MAE@XZ present-unmatched
+Thing::~Thing()
+{
+}
+
+//DECLARE_PERF_TIMER(ThingMatrixStuff)
+
+//=============================================================================
+const ThingTemplate *Thing::getTemplate() const
+{
+	return m_template;
+}
+
+//=============================================================================
+const Coord3D* Thing::getUnitDirectionVector2D() const
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	if (!(m_cacheFlags & VALID_DIRVECTOR))
+	{
+		Real angle = getOrientation();
+		m_cachedDirVector.x = Cos( angle );
+		m_cachedDirVector.y = Sin( angle );
+		m_cachedDirVector.z = 0;
+		m_cacheFlags |= VALID_DIRVECTOR;
+	}
+
+	return &m_cachedDirVector;
+}
+
+//=============================================================================
+void Thing::getUnitDirectionVector2D(Coord3D& dir) const
+{
+	dir = *getUnitDirectionVector2D();
+}
+
+//=============================================================================
+void Thing::getUnitDirectionVector3D(Coord3D& dir) const
+{
+	Vector3 vdir = m_transform.Get_X_Vector();
+	vdir.Normalize();
+	dir.x = vdir.X;
+	dir.y = vdir.Y;
+	dir.z = vdir.Z;
+}
+
+//=============================================================================
+// the nice thing about this is that we don't have to recalc out cached terrain stuff.
+// ?setPositionZ@Thing@@QAEXM@Z present-unmatched
+void Thing::setPositionZ( Real z )
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	if( !(reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10) )
+	{
+		struct OldData
+		{
+			Real angle;
+			Coord3D pos;
+		} old;
+		old.pos.x = m_cachedPos.x;
+		old.angle = m_cachedAngle;
+		old.pos.y = m_cachedPos.y;
+		old.pos.z = m_cachedPos.z;
+		Matrix3D oldMtx = m_transform;
+
+		m_transform.Set_Z_Translation( z );
+		m_cachedPos.z = z;
+
+		if (m_cacheFlags & VALID_ALTITUDE_TERRAIN)
+		{
+			m_cachedAltitudeAboveTerrain += (z - old.pos.z);
+		}
+		if (m_cacheFlags & VALID_ALTITUDE_SEALEVEL)
+		{
+			m_cachedAltitudeAboveTerrainOrWater += (z - old.pos.z);
+		}
+
+		reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &old.pos, old.angle);
+	}
+	else
+	{
+		Matrix3D mtx;
+		const Bool stickToGround = true;	// yes, set the "z" pos		
+		Coord3D pos;
+		pos.x = m_cachedPos.x;
+		pos.y = m_cachedPos.y;
+		pos.z = z;
+		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(getOrientation(), pos, stickToGround, mtx );
+		setTransformMatrix(&mtx);
+	}
+	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
+}
+
+//=============================================================================
+void Thing::setPosition( const Coord3D *pos )
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	if( !(reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10) )
+	{
+		Real oldAngle = m_cachedAngle;
+		Coord3D oldPos;
+		oldPos.x = m_cachedPos.x;
+		oldPos.y = m_cachedPos.y;
+		oldPos.z = m_cachedPos.z;
+		Matrix3D oldMtx;
+		oldMtx = m_transform;
+
+		//DEBUG_ASSERTCRASH(!(_isnan(pos->x) || _isnan(pos->y) || _isnan(pos->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
+		m_transform.Set_X_Translation( pos->x );
+		m_transform.Set_Y_Translation( pos->y );
+		m_transform.Set_Z_Translation( pos->z );
+		m_cachedPos = *pos;
+		m_cacheFlags &= ~(VALID_ALTITUDE_TERRAIN | VALID_ALTITUDE_SEALEVEL);	// but don't clear the dir flags.
+
+		reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &oldPos, oldAngle);
+	}
+	else
+	{
+		Matrix3D mtx;
+		const Bool stickToGround = true;	// yes, set the "z" pos				
+		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(getOrientation(), *pos, stickToGround, mtx );
+		setTransformMatrix(&mtx);
+	}
+	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
+}
+
+//=============================================================================
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp
+void Thing::setOrientation( Real angle )
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	Coord3D u, x, y, z, pos;
+
+	// setOrientation always forces us straight up in the Z axis,
+	// or aligned with the terrain if we have the magic flag set.
+	// don't want this? call setTransformMatrix instead.
+
+	Real oldAngle = m_cachedAngle;
+	Coord3D oldPos;
+	oldPos.x = m_cachedPos.x;
+	oldPos.y = m_cachedPos.y;
+	oldPos.z = m_cachedPos.z;
+	Matrix3D oldMtx = m_transform;
+
+	pos.x = m_transform.Get_X_Translation();
+	pos.y = m_transform.Get_Y_Translation();
+	pos.z = m_transform.Get_Z_Translation();
+	if( reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10 )
+	{
+		Matrix3D mtx;
+		const Bool stickToGround = true;	// yes, set the "z" pos				
+		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(angle, pos, stickToGround, m_transform );
+	}
+	else
+	{
+		z.x = 0.0f;
+		z.y = 0.0f;
+		z.z = 1.0f;
+
+		u.x = Cos(angle);
+		u.y = Sin(angle);
+		u.z = 0.0f;
+
+		y.crossProduct( &z, &u, &y );
+		x.crossProduct( &y, &z, &x );
+
+		m_transform.Set(  x.x, y.x, z.x, pos.x,
+											x.y, y.y, z.y, pos.y,
+											x.z, y.z, z.z, pos.z );
+	}
+
+	//DEBUG_ASSERTCRASH(-PI <= angle && angle <= PI, ("Please pass only normalized (-PI..PI) angles to setOrientation (%f).\n", angle));
+	m_cachedAngle = normalizeAngle(angle);
+	m_cachedPos = pos;
+	m_cacheFlags &= ~VALID_DIRVECTOR;	// but don't clear the altitude flags.
+
+	reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &oldPos, oldAngle);
+	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
+}
+
+//=============================================================================
+/** Set the world transformation matrix */
+//=============================================================================
+void Thing::setTransformMatrix( const Matrix3D *mx )
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	Real oldAngle = m_cachedAngle;
+	Real oldX = m_cachedPos.x;
+	Real oldY = m_cachedPos.y;
+	Real oldZ = m_cachedPos.z;
+
+	m_transform = *mx;
+	m_cachedPos.x = m_transform.Get_X_Translation();
+	m_cachedPos.y = m_transform.Get_Y_Translation();
+	m_cachedPos.z = m_transform.Get_Z_Translation();
+	m_cachedAngle = m_transform.Get_Z_Rotation();
+	m_cacheFlags = 0;
+
+	if (oldAngle != m_cachedAngle ||
+		oldX != m_cachedPos.x ||
+		oldY != m_cachedPos.y ||
+		oldZ != m_cachedPos.z)
+	{
+		reinterpret_cast<BFMEThingSetTransformVTable *>(this)->reactToTransformChange();
+	}
+	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
+}
+
+//-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp
+// ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z present-unmatched
+Bool Thing::isKindOf(KindOfType t) const 
+{ 
+	return getTemplate()->isKindOf(t); 
+}
+
+//-------------------------------------------------------------------------------------------------
+struct Thing_BFME_Retail_ThingTemplateKindOf
+{
+	unsigned char pad[0xc8];
+	KindOfMaskType kindof;
+};
+static Bool (*volatile _bfme_force_test_kindof_any)(const KindOfMaskType&, const KindOfMaskType&) = &TEST_KINDOFMASK_ANY;
+
+Bool Thing::isKindOfMulti(const KindOfMaskType& mustBeSet, const KindOfMaskType& mustBeClear) const 
+{ 
+	return reinterpret_cast<const Thing_BFME_Retail_ThingTemplateKindOf *>(getTemplate())->kindof.testSetAndClear(mustBeSet, mustBeClear);
+}
+
+// ------------------------------------------------------------------------------------------------
+Bool Thing::isAnyKindOf( const KindOfMaskType& anyKindOf ) const
+{
+	const ThingTemplate *thingTemplate = getTemplate();
+	return reinterpret_cast<const Thing_BFME_Retail_ThingTemplateKindOf *>(thingTemplate)->kindof.anyIntersectionWith(anyKindOf);
+}
+
+// ------------------------------------------------------------------------------------------------
+Real Thing::calculateHeightAboveTerrain() const 
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	const Coord3D* pos = getPosition();
+	Real terrainZ = reinterpret_cast<const BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->getGroundHeight( pos->x, pos->y );
+	Real myZ = pos->z;
+	return myZ - terrainZ;
+}
+
+//-------------------------------------------------------------------------------------------------
+Real Thing::getHeightAboveTerrain() const
+{
+	if (!(m_cacheFlags & VALID_ALTITUDE_TERRAIN))
+	{
+		m_cachedAltitudeAboveTerrain = reinterpret_cast<const BFMERetailThingVTable *>(this)->calculateHeightAboveTerrain();
+		m_cacheFlags |= VALID_ALTITUDE_TERRAIN;
+	}
+	return m_cachedAltitudeAboveTerrain;
+}
+
+//-------------------------------------------------------------------------------------------------
+Real Thing::getHeightAboveTerrainOrWater() const
+{
+	//USE_PERF_TIMER(ThingMatrixStuff)
+	if (!(m_cacheFlags & VALID_ALTITUDE_SEALEVEL))
+	{
+		const Coord3D* pos = getPosition();
+		Real waterZ;
+		if (reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->isUnderwater(pos->x, pos->y, &waterZ, 0))
+		{
+			m_cachedAltitudeAboveTerrainOrWater = pos->z - waterZ;
+		} 
+		else
+		{
+			m_cachedAltitudeAboveTerrainOrWater = getHeightAboveTerrain();
+		}
+		m_cacheFlags |= VALID_ALTITUDE_SEALEVEL;
+	}
+	return m_cachedAltitudeAboveTerrainOrWater;
+}
+
+//=============================================================================
+/** If we treat this as airborne, then they slide down slopes.  This checks whether
+they are high enough that we should let them act like they're flying. jba. */
+//=============================================================================
+// ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ present-unmatched
+Bool Thing::isSignificantlyAboveTerrain() const 
+{
+	// If it's high enough that it will take more than 3 frames to return to the ground,
+	// then it's significantly airborne.  jba
+	return (getHeightAboveTerrain() > -(3*3)*TheGlobalData->m_gravity);
+}
+
+
+//-------------------------------------------------------------------------------------------------
+void Thing::convertBonePosToWorldPos(const Coord3D* bonePos, const Matrix3D* boneTransform, Coord3D* worldPos, Matrix3D* worldTransform) const
+{
+	if (worldTransform)
+	{
+#ifdef ALLOW_TEMPORARIES
+		*worldTransform = m_transform * (*boneTransform);
+#else
+		worldTransform->mul(m_transform, *boneTransform);
+#endif
+	}
+	if (worldPos)
+	{
+		Vector3 vector;
+		vector.X = bonePos->x;
+		vector.Y = bonePos->y;
+		vector.Z = bonePos->z;
+		m_transform.Transform_Vector(m_transform, vector, &vector);
+		worldPos->x = vector.X;
+		worldPos->y = vector.Y;
+		worldPos->z = vector.Z;
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+/** Push the 'in' parameter through our transformation matrix and store in 'out' */
+// ------------------------------------------------------------------------------------------------
+void Thing::transformPoint( const Coord3D *in, Coord3D *out )
+{
+
+	// santiy
+	if( in == NULL || out == NULL )
+		return;
+
+	// for conversion
+	Vector3 vectorIn;
+	Vector3 vectorOut;
+
+	///@ todo this is dumb and we should not have to convert types
+	// convert to Vector3 datatypes
+	vectorIn.X = in->x;
+	vectorIn.Y = in->y;
+	vectorIn.Z = in->z;
+
+	// do the transform
+	m_transform.Transform_Vector( m_transform, vectorIn, &vectorOut );
+
+	// store converted vector in 'out'
+	out->x = vectorOut.X;
+	out->y = vectorOut.Y;
+	out->z = vectorOut.Z;
+
+}  // end transformPoint
