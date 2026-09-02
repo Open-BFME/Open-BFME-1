@@ -3810,6 +3810,7 @@ name,address,notes
 ??0WeaponSetUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003406D,module ctor (friend_newModuleInstance retail call target)
 ??0WeaponTemplate@@QAE@XZ,0x0004456C,newWeaponTemplate call target (incremental-link thunk)
 ??0WeatherSetting@@QAE@XZ,0x000157CB,harvested from parseWeatherDefinition (thunk)
+??0WideStr@@QAE@ABV0@@Z,0x00888400,pin
 ??0WindowTransitionINI@@QAE@XZ,0x00851230,TU-local BFME INI ABI declaration for GameWindowTransitionsHandler::load
 ??0WorkerAIUpdateModuleData@@QAE@XZ,0x00024BFE,pinharvest x1 (thunk)
 ??0WorkerAIUpdateModuleData@@QAE@XZ,0x000386B8,pinharvest x1 (thunk)
@@ -72652,6 +72653,7 @@ name,address,notes
 ?bfmeAllocEECa@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocEECb@@YGPAXI@Z,0x0002698B,pin
 ?bfmeAllocEFA@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocLarge2E@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x008802E0
 ?bfmeAllocLargeBE@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FBE0
 ?bfmeAllocLargeCD@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FCD0
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
@@ -72665,6 +72667,7 @@ name,address,notes
 ?bfmeAllocRU@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRW@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRX@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocSmall2E@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x008802E0
 ?bfmeAllocSmallBE@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FBE0
 ?bfmeAllocSmallCD@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FCD0
 ?bfmeAllocUNB@@YAPAXI@Z,0x007F0130,pin
@@ -73188,6 +73191,7 @@ name,address,notes
 ?bfmeConvertUVB@@YAHPADPAPAX@Z,0x00807AB0,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
 ?bfmeCopy1279@BfmeQ1279@@QAEXPAD0H@Z,0x007E8A80,pin
+?bfmeCopy2E@@YAPAUBfmeElem2E@@PBU1@0PAU1@ABUBfmeFalse2E@@@Z,0x0087FFC0,Open-BFME5 remainder copy of 0x008802E0
 ?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z,0x0087EFA0,Open-BFME5 uninit-copy of 0x0087FBE0
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
@@ -75611,6 +75615,7 @@ name,address,notes
 ?clear@BfmeDtorMemberJ@@AAEXXZ,0x009D0E20,Open-BFME5 tree clear called by the 0x009CF1E0 member destructor
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
 ?clear@BfmeThing152@@QAEXXZ,0x00039595,pin
+?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
 ?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
 ?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
 ?clear@Buffer@@QAEXXZ,0x00887940,Open-BFME5 W3DTreeDrawModuleData retail string-buffer clear pin
@@ -75828,6 +75833,7 @@ name,address,notes
 ?copy@W3DAnimationInfoConstCopyShim@_STL@@SAPAXPAX00ABUrandom_access_iterator_tag@2@PAH@Z,0x003B3800,_STL __copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoCopyShim@_STL@@SAPAVW3DAnimationInfo@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00610AF0,_STL __copy W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
+?copyFrom@BfmeElem2E@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 elem copy ctor of 0x008802E0
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
 ?copyFrom@BfmeElemBE@@QAEXABU1@@Z,0x00013476,Open-BFME5 elem copy ctor of 0x0087FBE0
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
@@ -76191,6 +76197,7 @@ name,address,notes
 ?erase@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAEPAVLivingWorldArmy@@PAV3@0@Z,0x00030B48,LivingWorldPlayerArmy constructor vector clear ILT thunk to 0x00363820
 ?erase@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAE?AU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@U32@0@Z,0x00029631,BaseHeightMap reset packed-bool vector erase ILT thunk
 ?erase@BfmeLegendStringVec@@QAEXPAX0@Z,0x00065960,SubsystemLegend.cpp vector<AsciiString> stand-in erase(first,last)
+?erase@BfmeVec60@@QAEXPAUBfmeElem60@@0@Z,0x0087FB90,Open-BFME5 shrink erase of 0x00880260
 ?erase@IntPairTreeEraseShim@_STL@@QAEXPAU?$_Rb_tree_node@U?$pair@$$CBHI@_STL@@@2@@Z,0x000AA7B0,_STL int pair tree incremental-link thunk target through a TU-local forwarding shim
 ?erase@PrereqVector@@QAEPAXPAX0@Z,0x00010BB3,ThingTemplate parsePrerequisites vector range-erase helper (jmp thunk)
 ?erase@SpawnBehaviorModuleDataMemberA@@QAEXPAI0@Z,0x00024C17,Open-BFME5 range-erase callee pin
@@ -77341,6 +77348,8 @@ name,address,notes
 ?g_bfmeVftVDW@@3PADA,0x00D36238,pin
 ?g_bfmeVftVIH@@3PAHA,0x00D2D210,pin
 ?g_bfmeVtVLU@@3PAUBfmeVtVLU@@A,0x00F37A30,pin
+?g_bfmeVtaVNE@@3PAXA,0x00CED8D4,pin
+?g_bfmeVtbVNE@@3PAXA,0x00CED97C,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
 ?g_bfmeW1027@@3PAVBfmeW1027@@A,0x00EF4B98,pin
@@ -79186,6 +79195,7 @@ name,address,notes
 ?insert4Way@W3DRoadBuffer@@IAEXVVector2@@HM@Z,0x00032B96,ILT thunk to 0x706310
 ?insert@?$vector@UGen_t_001b6e60_p40pod@@V?$allocator@UGen_t_001b6e60_p40pod@@@_STL@@@_STL@@QAEPAUGen_t_001b6e60_p40pod@@PAU3@ABU3@@Z,0x001C7720,gen-tgrid payload member
 ?insert@BfmeSubMap3B3@@QAEPAPAXPAX@Z,0x00038B22,pin
+?insert@BfmeVec60@@QAEXPAUBfmeElem60@@IABU2@@Z,0x0087FDC0,Open-BFME5 grow fill-insert of 0x00880260
 ?insert@RelationshipHashtableInsertShim@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x00787140,incremental-link thunk target through a TU-local forwarding shim
 ?insert@W3DRoadBufferInsertTeeShim@@QAEXVVector2@@HM@Z,0x0070BC00,W3DRoadBuffer insertTee incremental-link thunk target through a TU-local forwarding shim
 ?insertHelper@BfmeVector28@@QAEXPAXABUBfmeItem28@@0HH@Z,0x00032272,pin
@@ -80029,6 +80039,7 @@ name,address,notes
 ?registerObject@PartitionManager@@QAEXPAVObject@@@Z,0x001086C0,Open-BFME5 callee of ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ at 0x001BED80 via ILT 0x00001F5A
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@PAUDataChunkInfo@@P6A_NAAV1@1PAX@ZH@Z,0x00015BD1,DataChunkInput::registerParser via ILT thunk
+?release@BfmeTail60@@QAEXXZ,0x00887940,Open-BFME5 by-value tail release of 0x00880260
 ?release@DcPool@@QAEXPAX@Z,0x0005C0C0,HDC pool release; body at 0x0005C0C0 is 52/53 bytes exact (retail CALLs DeleteDC where MSVC tail-jumps)
 ?release@DictReleaseDataShim@@QAEXXZ,0x000681C0,Dict releaseData incremental-link thunk target through a TU-local forwarding shim
 ?release@DistLODClassFreeShim@@QAEXXZ,0x00725B70,DistLODClass incremental-link Free target through a TU-local layout shim
@@ -82422,12 +82433,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeAllocLarge2E@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x008802E0
-?bfmeAllocSmall2E@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x008802E0
-?bfmeCopy2E@@YAPAUBfmeElem2E@@PBU1@0PAU1@ABUBfmeFalse2E@@@Z,0x0087FFC0,Open-BFME5 remainder copy of 0x008802E0
-?copyFrom@BfmeElem2E@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 elem copy ctor of 0x008802E0
-?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
-??0WideStr@@QAE@ABV0@@Z,0x00888400,pin
-?erase@BfmeVec60@@QAEXPAUBfmeElem60@@0@Z,0x0087FB90,Open-BFME5 shrink erase of 0x00880260
-?insert@BfmeVec60@@QAEXPAUBfmeElem60@@IABU2@@Z,0x0087FDC0,Open-BFME5 grow fill-insert of 0x00880260
-?release@BfmeTail60@@QAEXXZ,0x00887940,Open-BFME5 by-value tail release of 0x00880260
