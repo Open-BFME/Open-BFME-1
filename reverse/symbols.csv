@@ -74498,6 +74498,8 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeLinkRelation@@YAXPAXPAVObject@@H@Z,0x0001253F,Open-BFME5 optional relation link called by 0x00283460
+_g_bfmeDualDispatchSource,0x010BD158,Open-BFME5 source path passed by 0x0028B910 random selections
+?bfmeRun@BfmeSecondaryTarget@@QAEXPAVObject@@HH@Z,0x000160D1,Open-BFME5 optional secondary dispatch called by 0x0028B910
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
