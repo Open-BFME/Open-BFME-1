@@ -3368,6 +3368,7 @@ name,address,notes
 ??0Rva007FF700FeslString@@QAE@XZ,0x007FF700,address-derived default constructor for two FESL string members in the 0x007F0CB0 blob record
 ??0Rva00802D00Element@@QAE@XZ,0x00802D00,V2 lane: 64-byte element constructor placement-new'd by ?allocate@Rva007F7810Block@@QAEXH@Z
 ??0Rva00802E70Element@@QAE@XZ,0x00802E70,V2 lane: 28-byte element constructor placement-new'd by ?allocate@Rva007F77B0Block@@QAEXH@Z
+??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
 ??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
 ??0Rva4048AString@@QAE@XZ,0x0004048A,Open-BFME6 string default ctor ILT called by 0x00844520
@@ -8903,6 +8904,7 @@ name,address,notes
 ??1Rva0089A800HeaderedDeleting@@UAE@XZ,0x0089A830,address decoded from the retail REL32 call site; name is address-derived
 ??1Rva0089A9A0HeaderedDeleting@@UAE@XZ,0x0089A9D0,address decoded from the retail REL32 call site; name is address-derived
 ??1Rva0089AB40HeaderedDeleting@@UAE@XZ,0x0089AB70,address decoded from the retail REL32 call site; name is address-derived
+??1Rva0089C860State@@QAE@XZ,0x0089CC70,alias of ??1Q4Sub00C9CC70@@QAE@XZ; 16-byte subobject at +8 constructed by initialize
 ??1Rva008A11A0SizedDeleting@@UAE@XZ,0x008A11D0,destructor address decoded from the retail REL32 call site; name is address-derived
 ??1Rva008A3030SizedDeleting@@UAE@XZ,0x008A2C80,destructor address decoded from the retail REL32 call site; name is address-derived
 ??1Rva008A4C90SizedDeleting@@UAE@XZ,0x008A4CC0,destructor address decoded from the retail REL32 call site; name is address-derived
@@ -75564,6 +75566,7 @@ name,address,notes
 ?cleanup@Gen00627270Owner@@QAEXXZ,0x00627270,no-argument __thiscall member run first by the 27-byte node-pool release family (Q2NodePoolReleases.cpp); target read from the call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
 ?cleanup@Gen0076AE50Owner@@QAEXXZ,0x0076AE50,no-argument __thiscall member run first by the 27-byte node-pool release family (Q2NodePoolReleases.cpp); target read from the call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
 ?cleanup@HordeContainOwnedBuffer@@AAEXXZ,0x00047B4F,Open-BFME5 HordeContain owned-buffer cleanup
+?cleanup@Rva00785FD0Item@@QAEXXZ,0x00049062,ILT to claimed 0x00785300 queue-element cleanup
 ?clear3094@BaseHeightMapResetBuffer@@QAEXXZ,0x0000DDD7,BaseHeightMap reset call for BFME buffer at this+0x3094
 ?clear3098@BaseHeightMapResetBuffer@@QAEXXZ,0x00045D72,BaseHeightMap reset call for BFME buffer at this+0x3098
 ?clear30A0@BaseHeightMapResetBuffer@@QAEXXZ,0x000404D0,BaseHeightMap reset call for BFME buffer at this+0x30A0
@@ -76068,6 +76071,7 @@ name,address,notes
 ?doGameStart@@YAXXZ,0x004D1B00,Open-BFME5 MapSelectMenu.cpp file-static; target of the rel32 at 0x004D1BE8 inside MapSelectMenuUpdate. Also referenced from 0x004D1B0C which reads the same startGame flag 0x012F3E6D. MainMenu.cpp declares a static of this name too - if that one ever needs pinning it is a second row here, not an edit to this one
 ?doInit@BfmeThing3E0@@QAEXXZ,0x0003FA30,pin
 ?doInit@BfmeThingDE0@@QAEXXZ,0x0003FA30,pin
+?doMergeTeamIntoTeam@ScriptActions@@IAEXABVAsciiString@@0@Z,0x00027DF4,ILT to ScriptActions::doMergeTeamIntoTeam body 0x002FD790
 ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001FC3F
 ?doNamedMapReveal@ScriptEnginedoNamedMapRevealShim@@QAEXABVAsciiString@@@Z,0x0034D200,ScriptEngine::doNamedMapReveal incremental-link thunk target through a TU-local forwarding shim
 ?doPhaseStuff@StructureCollapseUpdate@@IAEXW4StructureCollapsePhaseType@@PBUCoord3D@@@Z,0x00022872,StructureCollapse initial-phase ILT thunk
@@ -77520,6 +77524,9 @@ name,address,notes
 ?g_rva005655C0PlayerList@@3PAURva005655C0PlayerList@@A,0x012ED748,Open-BFME5 retail absolute player-list global used by default-text copier
 ?g_rva005F4340Resource@@3PAVRefCountClass@@A,0x00EF6DE0,global ref-counted renderer resource
 ?g_rva005F7FA0Resource@@3PAVRefCountClass@@A,0x00EF6E30,global ref-counted renderer resource
+?g_rva00785FD0Dirty@@3DA,0x01306950,APT queued-primitive dirty flag for 0x00785FD0
+?g_rva00785FD0Queue@@3PAURva00785FD0Node@@A,0x01306978,APT queue sentinel for 0x00785FD0
+?g_rva00785FD0Renderer@@3PAVRva00785FD0Renderer@@A,0x01306954,APT renderer singleton for 0x00785FD0
 ?g_rva007A2330Flag@@3DA,0x012D6DFC,byte flag stored by 0x007A2330 before the helper call
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
 ?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
@@ -78306,6 +78313,7 @@ name,address,notes
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z,0x0004115F,Open-BFME5 ILT at guardSupplyCenter 0x001669C0; receives the adjusted warehouse position with normal guard mode and script command source
+?groupIdle@AIGroup@@QAEXH@Z,0x0000F871,ILT to AIGroup::groupIdle body 0x00155B90
 ?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
 ?grow@Rva0005CBD0Buffer@@IAEXI@Z,0x0005CBD0,out-of-line growth routine shared by the 0x0005E200 and 0x0005EEB0 reserve() twins (U3_arena_alloc.cpp)
 ?grow@Rva006AAC20@@AAEXH@Z,0x000256CB,ILT thunk to 0x006A43D0 called from 0x006AAC20
@@ -80461,6 +80469,7 @@ name,address,notes
 ?rva423670SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 record small-block deallocator pin
 ?rva571c40@@YAXPAVRva572670Record@@HHV1@H@Z,0x0000CE0A,incremental-link thunk to 0x00571C40; callee of the 0x00572670 wrapper
 ?rva784C30SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 small-block deallocator pin
+?rva8CDE50Continue@@YAXPAVRva8CEE00State@@PAURva8CEE00Cursor@@@Z,0x008CDE50,address-derived callee of 0x008CEE00 cursor dispatch
 ?s4First005F2D80@@YAXXZ,0x005DF2D0,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?s4First005F36D0@@YAXXZ,0x005DEEE0,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?s4First005F6590@@YAXXZ,0x005DF120,S4 callee of the ctor-then-publish-new family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -80644,6 +80653,7 @@ name,address,notes
 ?setLossStreak@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009CAB0,BFME per-side variant of ZH SkirmishBattleHonors::setLossStreak: concat("LossStreak" at VA 0x010804F4) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
 ?setLosses@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009C830,BFME per-side variant of ZH SkirmishBattleHonors::setLosses: concat("Losses" at VA 0x010804E0) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
 ?setLowControlBarConfig@ControlBar@@IAEXXZ,0x0002FA6D
+?setMode@Rva00785FD0Renderer@@QAIXH@Z,0x0003DDED,ILT __fastcall mode setter used by 0x00785FD0
 ?setMouseLimits@Mouse@@UAEXXZ,0x00002A63
 ?setMouseText@Mouse@@QAEXVUnicodeString@@PBURGBAColorInt@@1@Z,0x0002FBD0,ILT thunk to body 0x005A5950
 ?setName@BFMETransitionGroup@@QAEXVBFMETransitionAsciiString@@@Z,0x00489B60,retail TransitionGroup::setName
@@ -80799,6 +80809,7 @@ name,address,notes
 ?startRenderToTexture@W3DShaderManager@@SAXXZ,0x000154E7
 ?startThreads@GameResultsQueue@@UAEXXZ,0x006406D0,GameResultsQueue vtable 0x01119380 slot +0x24 in the ZH interface order; endThreads vslot +0x28 first then new(0x54) GameResultsThreadClass + Execute; ZH GameResultsThread.cpp:128; present-unmatched row
 ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z,0x0003BD8B
+?stencil@Rva00785FD0Renderer@@QAEXXZ,0x00041EC0,ILT to claimed 0x0078B280 stencil helper
 ?step1@BfmeMgrF14_010@@QAEXH@Z,0x0003EBDF,pin
 ?step1@BfmeSub30_7F0@@QAEXXZ,0x0002D308,pin
 ?step1@BfmeSubVfn1A6@@QAEXXZ,0x0002D308,pin

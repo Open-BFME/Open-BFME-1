@@ -8269,3 +8269,46 @@ _luaV_execute	0x00997C80	2924	blocked	Vendored Lua 4.0.1 source is ~99 percent r
 ?d_00720d10@@YAXXZ	0x00720D10	1312	blocked	not W3DSmudgeManager: this+0x1E1CC8 +0x1E1CCF +0x1E33D4 same large class as 0x007206E0 dtor t=10min model=grok-4.6
 ?d_0071eec0@@YAXXZ	0x0071EEC0	4112	blocked	not W3DSmudgeManager::render: this+0x1E1CD0 same large class as 0x007206E0 dtor; class size >> 0x44 t=10min model=grok-4.6
 ?bfmeFillVOD@BfmeOwnerVOD@@,0x006A3130,167,residue,"Tops the list at +0x9c0 up to the configured limit: counts the list, and while short of the limit makes an item through the factory pointer, initialises it, counts again to pass the new one-based index to the setter, allocates a 0xc node, stores the item through the guarded member address, links the node before the sentinel and bumps the count; on either exit it copies the config field at +0x30 into +0x618. Size exact at 167 with both inline count loops, both alignment nops free, the three __stdcall pointer calls with no cleanup, the cdecl allocator's own cleanup, and the placement-style null check on the node member. Two things were needed: hoisting the setter pointer into a local so it lives in ebp across the outer loop, and making both exits break so the tail assignment is shared rather than duplicated. What remains is the ebx and edi pair: retail keeps the item in edi and the sentinel copy in ebx, MSVC the reverse. Declaring the sentinel local before the item, and hoisting the item's declaration outside the loop, both leave it unchanged."
+?copyFromOverride@Rva00723CF0@@QAEXXZ	0x00723CF0	108	partial	callees resolved getFinalOverride 0x00087A80 ILT 0x000022BB; Q2 two-var walk matches first two copies; last copy jnz-vs-je plus 8B cloned store (116 vs 108). t=40min model=grok-4.6 score=0.85 score=0.85 stash=reverse/attempts/0x00723cf0.cpp
+?cachedRandom@Rva00723C50@@QAEMXZ	0x00723C50	124	partial	callees resolved getFinalOverride and getValue@GameClientRandomVariable 0x00096F60 ILT 0x000D7B5; two walks plus stack 1.0f needed for tail-jmp getValue; 55-107B vs 124 still short of three lea-ecx jmp tails. t=25min model=grok-4.6 score=0.4 stash=reverse/attempts/0x00723c50.cpp
+?rva0052AE20@@YAHH@Z	0x0052AE20	77	partial	ILTs 0x0002A62B->0x003BDF70 and 0x00039A77->0x003BF630 plus Glo012F1028 now claimed; nth-match loop is exact except n lives in ebx not ebp (74 vs 77). t=15min model=grok-4.6 score=0.9 stash=reverse/attempts/0x0052ae20.cpp
+??@PAHHUQ4Sort004567A0@@@_STL@@YAXPAH000UQ4Sort004567A0@@@Z	0x00455EC0	121	partial	pins already in symbols.csv; dedicated TU emits the exact mangled __partial_sort at 125B vs 121; extra 8b442414 preloads comp before push ebx. argument-staging residue. t=20min model=grok-4.6 score=0.7 stash=reverse/attempts/0x00455ec0.cpp
+?rva006F8700@@YGXHHHPAX@Z	0x006F8700	20	partial	callee 0x006F83F0 now claimed gen-dump; stdcall 4-arg tail-jmp compiles 20B with store+jmp but jz-to-ret vs retail jnz-over-ret. t=15min model=grok-4.6 score=0.8 stash=reverse/attempts/0x006f8700.cpp
+??$__partial_sort@PAHHUQ4Sort004567A0@@@_STL@@YAXPAH000UQ4Sort004567A0@@@Z	0x00455EC0	121	void	wrong symbol recorded because PowerShell ate dollar-partial_sort
+??@PAHHUQ4Sort004567A0@@@_STL@@YAXPAH000UQ4Sort004567A0@@@Z	0x00455EC0	121	void	PowerShell stripped dollar-partial_sort from the mangled name
+??$__partial_sort@PAHHUQ4Sort004567A0@@@_STL@@YAXPAH000UQ4Sort004567A0@@@Z	0x00455EC0	121	partial	pins already in symbols.csv; dedicated TU emits the exact mangled __partial_sort at 125B vs 121; extra 8b442414 preloads comp before push ebx. argument-staging residue. t=20min model=grok-4.6 score=0.7 stash=reverse/attempts/0x00455ec0.cpp
+?bfmeGo1118A@BfmeW1118@@QAEXXZ	0x0021B960	141	blocked	callees resolved; register-permutation residue remains ebp/edi swapped throughout. t=5min model=grok-4.6
+?Clone@CollectionClass@@UBEPAVRenderObjClass@@XZ	0x0093B2C0	128	blocked	callees 0x00939430 0x00881F30 0x00939F40 now claimed; BFME Clone is SEH recycle via global 0x012D71C0 then new(0x288)+copy-ctor not ZH NEW_REF. t=15min model=grok-4.6
+?parse@TransitionDamageFXModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z	0x00251ED0	118	blocked	0x00251CF0 now claimed as TransitionDamageFX ctor but call is custom esi-inherited outlined helper with caller-cleaned extra arg; convention still unexpressable. t=5min model=grok-4.6
+?d_0086f740@@YAXXZ	0x0086F740	116	blocked	helpers 0x0086BA70 and 0x0086BBF0 now gen-dump; still custom eax/esi register convention. t=5min model=grok-4.6
+?bfmeGo1116A@BfmeW1116@@QAEXPAUBfmeV1116@@@Z	0x003D36E0	108	blocked	callees resolved; operand-fold plus loop-alignment residue remains. t=5min model=grok-4.6
+??1AIStateMachine@@MAE@XZ	0x00187270	107	blocked	helpers 0x00170460 gen-dump and 0x0009FFF0 claimed; extra BFME cleanup vs ZH dtor (goalPath 0x14d7b squad vcall +0x224). t=10min model=grok-4.6
+?d_008cbb80@@YAXXZ	0x008CBB80	101	blocked	base 0x00899F00 and bfmeSetVKI 0x0089E680 claimed; SEH still needs unpinned BfmeStrVKI dtor in scopetable. t=8min model=grok-4.6
+?bfmeGo1080A@@YAHXZ	0x004B24F0	90	blocked	callees resolved; undefined push eax plus by-value struct two-push vs mov-copy residue. t=5min model=grok-4.6
+?bfmeGo1065A@@YAXXZ	0x00565100	86	blocked	callees resolved; register-permutation residue mov eax vs ecx on member load. t=5min model=grok-4.6
+?d_002e38e0@@YAXXZ	0x002E38E0	84	blocked	callees resolved; register-copy residue 82 vs 84. t=5min model=grok-4.6
+?d_00061380@@YAXXZ	0x00061380	80	blocked	callees resolved; RMW fold plus accumulator-form residue. t=5min model=grok-4.6
+?bfmeGo1109B@BfmeW1109@@QAEHH@Z	0x000E9540	76	blocked	callees resolved; ebp/ebx swapped register-permutation residue. t=5min model=grok-4.6
+?d_000d07a0@@YAXXZ	0x000D07A0	53	blocked	allocate claimed; shrink-wrap push edi residue on 53B splice family. t=5min model=grok-4.6
+?d_0084ef00@@YAXXZ	0x0084EF00	48	blocked	callees resolved; edi constant-retention residue 44 vs 48. t=5min model=grok-4.6
+?d_0084eed0@@YAXXZ	0x0084EED0	48	blocked	callees resolved; edi constant-retention residue 44 vs 48. t=5min model=grok-4.6
+?d_007f6a80@@YAXXZ	0x007F6A80	46	blocked	callees resolved; register-save placement residue. t=5min model=grok-4.6
+?d_000C1500@@YAHHHHHH@Z	0x000C1500	45	blocked	callee resolved; esi-caching residue. t=5min model=grok-4.6
+?d_002F1150@@YGXD@Z	0x002F1150	42	blocked	callees resolved; ecx/eax global-load swap residue. t=5min model=grok-4.6
+?d_00662230@@YAXXZ	0x00662230	40	blocked	callees resolved; push vs mov ecx scheduling residue. t=5min model=grok-4.6
+?d_009588e0@@YAXXZ	0x009588E0	36	blocked	callees resolved; register-save placement residue. t=5min model=grok-4.6
+?d_0086c370@@YAXXZ	0x0086C370	35	blocked	callee 0x0086C0C0 still custom eax convention; not expressable as C++. t=5min model=grok-4.6
+?d_0018cf90@@YAXXZ	0x0018CF90	32	blocked	callees resolved; eax short-form vs 8b0d residue. t=5min model=grok-4.6
+?d_009acb60@@YAXXZ	0x009ACB60	28	blocked	0x009AC660 now gen-dump but still esi-preloaded custom convention. t=5min model=grok-4.6
+?d_001a2d50@@YAXXZ	0x001A2D50	27	blocked	callees resolved; eax short-form residue. t=5min model=grok-4.6
+?d_00233ec0@@YAXXZ	0x00233EC0	25	blocked	callees resolved; eax short-form add residue. t=5min model=grok-4.6
+?d_00661730@@YAXXZ	0x00661730	23	blocked	callee resolved; edx vs ecx register-permutation residue. t=5min model=grok-4.6
+?d_006bd6c0@@YAXXZ	0x006BD6C0	22	blocked	callee resolved; eax short-form residue. t=5min model=grok-4.6
+??0Rva8CBB80Derived@@QAE@XZ	0x008CBB80	101	partial	all bytes match except first BfmeStrVKI ctor setup: retail lea ecx,[esi+0x20] then push Error; compiled push Error then lea. EH 0 then 1, both 0x89e680 calls, vptr and base(0x29,8) match. t=40min model=grok-4.6 score=0.95 stash=reverse/attempts/0x008cbb80.cpp
+?rva8CEE00Dispatch@@YAXPAVRva8CEE00State@@PAURva8CEE00Cursor@@@Z	0x008CEE00	64	partial	62 vs 64: flag test folded to test dword [ecx+4],0x40000000 instead of mov/shr 0x1e/test dl,1; vcall uses edx not eax as a result. t=40min model=grok-4.6 score=0.9 stash=reverse/attempts/0x008cee00.cpp
+??0Rva8CBB80Derived@@QAE@VBfmeStrVKI@@@Z	0x008CBBF0	131	partial	inlined copy/addref at +0x20 and by-value dtor match; only Error-ctor setup is push-then-lea vs retail lea-then-push. EH 2 before that call. t=40min model=grok-4.6 score=0.95 stash=reverse/attempts/0x008cbbf0.cpp
+??1Rva8CB6D0Derived@@UAE@XZ	0x008CB790	129	converted	landed: empty most-derived dtor inlines callback-holder release at +0x20 then Q4 notify/subobject/base vptr; t=40min model=grok-4.6
+??0BfmeDerivedVNF@@QAE@H@Z	0x008CB600	101	converted	landed: registry insert kind=8 with jl-to-insert via member add returning 0 on overflow; t=40min model=grok-4.6
+??0Rva8CBC80Derived@@QAE@XZ	0x008CBC80	132	converted	landed: kind=0x14 registry then Rva0089C860State(4) at +8; t=40min model=grok-4.6
+?Rva009AFA60FilterHoriz@@YAXHPAEH@Z	0x009AFA60	563	converted	SIB lever: int &s=stride plus *(const unsigned char*)((-2*s)+(unsigned int)ptr) puts the hoisted row offset in the SIB base; other taps stay ptr[stride]/ptr[-stride]. t=40min model=grok-4.6
+?Rva009AFEC0FilterHoriz@@YAXHPAEH@Z	0x009AFEC0	563	converted	twelve-column twin of 0x009AFA60 landed with the same stride-alias plus integer-pointer-on-the-right spelling. t=40min model=grok-4.6

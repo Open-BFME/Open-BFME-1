@@ -76,6 +76,7 @@ class GameWindowTransitionsHandler
 {
 public:
 	void setGroup(AsciiString groupName, Bool immediate);
+	void reverse(AsciiString groupName);
 private:
 	TransitionGroup *findGroup(AsciiString groupName);
 	unsigned char m_padding0[0x20];
@@ -120,4 +121,40 @@ void GameWindowTransitionsHandler::setGroup(AsciiString groupName, Bool immediat
 	m_currentGroup = findGroup(groupName);
 	if (m_currentGroup)
 		m_currentGroup->init();
+}
+
+void GameWindowTransitionsHandler::reverse(AsciiString groupName)
+{
+	CRITICAL_SECTION *cs = reinterpret_cast<CRITICAL_SECTION *>(&m_criticalSection);
+	CriticalSectionLock lockGuard(cs);
+
+	TransitionGroup *group = findGroup(groupName);
+	if (group && m_currentGroup == group)
+	{
+		m_currentGroup->reverse();
+	}
+	else if (group && m_pendingGroup == group)
+	{
+		m_pendingGroup->reset();
+		m_pendingGroup = 0;
+	}
+	else if (group)
+	{
+		if (m_currentGroup)
+		{
+			m_currentGroup->skip();
+			m_currentGroup->reset();
+		}
+		if (m_pendingGroup)
+		{
+			m_pendingGroup->skip();
+			m_pendingGroup->reset();
+			m_pendingGroup = 0;
+		}
+
+		m_currentGroup = group;
+		m_currentGroup->init();
+		m_currentGroup->skip();
+		m_currentGroup->reverse();
+	}
 }

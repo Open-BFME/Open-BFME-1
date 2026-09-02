@@ -1,35 +1,67 @@
-// ?d_00723c50@@YAXXZ
-// partial score=0.15 date=2026-09-02
-// PARTIAL / UNVERIFIED -- does not compile-match yet. Banked for the next agent.
-// ghidra: FUN_00b23c50 retail @ 0x00723C50 size 124
-// Sibling of BfmeA1137Cache (see attempt_723b60.cpp). Returns a float (x87
-// st0, default 1.0f = 0x3f800000) selected from either the shared global at
-// RVA 0x0012F15F8 or `this` depending on whether the global's inner pointer
-// (+4) is set, then depending on flag bytes at [+0x40] and this->m_bfme44
-// either returns the default float OR tail-jumps into a shared comparator
-// helper reached via the 0x00040D7B5 ILT slot, whose real target resolves to
-// RVA 0x00096F60 (min/max-shaped: fld [ecx+8]/[ecx+4], fucompp, and a call to
-// RVA 0x00096970 on the "not equal" path -- looks like a clamped lerp/min
-// helper over two floats stored at [this_or_global + 4] and [+8], i.e. NOT
-// literally `this` at those low offsets -- the callee re-derives its own
-// object from ecx passed at the tail-jmp, still unidentified).
+// ?cachedRandom@Rva00723C50@@QAEMXZ
+// partial score=0.4 date=2026-09-02
+// cl: /EHs-c-
 //
-// Blocker: same 0x0012F15F8 global identity gap as the rest of the family,
-// plus the exact register/branch shape of the three near-identical
-// "jmp 0x40d7b5" tail paths (matching.md warns near-matches on branch layout
-// are still failures) and the semantics of RVA 0x00096F60 itself.
+// Two independent override walks of the singleton at 0x012F15F8.  The first
+// reads the +0x40 flag (and this+0x44); both clear => return 1.0f from a
+// stack slot.  Both set => walk again and tail into
+// GameClientRandomVariable::getValue (0x00096F60 / ILT 0x000D7B5) on the
+// random variable at override+0x44.
 
-extern "C" void *g_bfmeGlobalUnknown1137; // RVA 0x0012F15F8, identity TBD
-void __fastcall bfmeWalkLock1137(void *p); // RVA 0x000022BB thunk -> 0x00087A80
-
-class BfmeA1137Cache2
+class Overridable
 {
 public:
-	float bfmeQueryCached(); // returns via ecx-tail-jump on 2 of 3 paths
-	char m_bfmePad[0x40];
-	char m_bfme40;
-	char m_bfme44;
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	const Overridable *m_nextOverride;
 };
 
-// Not written: the three tail-jump paths need the RVA 0x00096F60 callee's
-// real signature/identity before a byte-matching shape can be attempted.
+class GameClientRandomVariable
+{
+public:
+	float getValue() const;
+};
+
+class Rva00723C50Data : public Overridable
+{
+public:
+	char m_unmodelled_08[0x40 - 8];
+	char m_flag40;
+	char m_unmodelled_41[3];
+	GameClientRandomVariable m_random;
+};
+
+extern Rva00723C50Data *g_rva00723CF0Data;
+
+class Rva00723C50
+{
+public:
+	float cachedRandom();
+
+private:
+	char m_unmodelled_00[0x44];
+	char m_flag44;
+};
+
+float Rva00723C50::cachedRandom()
+{
+	float one = 1.0f;
+	Rva00723C50Data *d = g_rva00723CF0Data;
+	Rva00723C50Data *f;
+	if (d == 0)
+		f = d;
+	else
+		f = (Rva00723C50Data *)(d->m_nextOverride
+			? d->m_nextOverride->getFinalOverride()
+			: d);
+	if (f->m_flag40 == 0 || m_flag44 == 0)
+		return one;
+	if (d == 0)
+		f = d;
+	else
+		f = (Rva00723C50Data *)(d->m_nextOverride
+			? d->m_nextOverride->getFinalOverride()
+			: d);
+	return f->m_random.getValue();
+}
