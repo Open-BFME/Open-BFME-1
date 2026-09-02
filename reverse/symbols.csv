@@ -82344,3 +82344,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeBadE15@@3UBfmeShapeE15@@A,0x00ED4CE8,Open-BFME5 sentinel for 0x0087E150
 ?bfmeEraseV44@BfmeStrV44@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase-range pin for 0x00830DE0
 ?bfmeImplV44@BfmeStrV44@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert-range impl pin for 0x00830DE0
+?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
