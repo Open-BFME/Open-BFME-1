@@ -641,6 +641,38 @@ public:
 	virtual Object *getUnitNamedByValue( BfmeAsciiStringArg name ) = 0;
 };
 
+// Retail builds the by-value string argument of SpecialPowerStore::findSpecialPowerTemplate
+// through the out-of-line AsciiString copy constructor, where the reference header
+// inlines the addref.  The view exists only to carry that argument shape; its method
+// is pinned to the same thunk the real name resolves to.
+class BfmeSpecialPowerStoreView
+{
+public:
+	const SpecialPowerTemplate *findSpecialPowerTemplate( BfmeAsciiStringArg name );
+};
+
+// BFME's SpecialPowerModuleInterface vtable puts doSpecialPowerAtObject at slot 12
+// where the reference header lands it at 11.
+class BfmeSpecialPowerModuleVtbl_30
+{
+public:
+	virtual void _sp30_0() = 0;
+	virtual void _sp30_1() = 0;
+	virtual void _sp30_2() = 0;
+	virtual void _sp30_3() = 0;
+	virtual UnsignedInt getReadyFrame( void ) const = 0;
+	virtual void _sp30_5() = 0;
+	virtual void _sp30_6() = 0;
+	virtual void _sp30_7() = 0;
+	virtual void _sp30_8() = 0;
+	virtual void setReadyFrame( UnsignedInt frame ) = 0;
+	virtual void pauseCountdown( Bool pause ) = 0;
+	virtual void _sp30_11() = 0;
+	virtual void doSpecialPowerAtObject( Object *obj, UnsignedInt commandOptions ) = 0;
+	// BFME drops the angle argument the reference header carries here.
+	virtual void doSpecialPowerAtLocation( const Coord3D *loc, UnsignedInt commandOptions ) = 0;
+};
+
 // BFME's ScriptEngine vtable puts getTeamNamed at slot 17, it takes the team
 // name by value, and it carries a second Bool the reference header does not
 // declare -- the `push 0` ahead of the string temporary is that argument.
@@ -5371,17 +5403,16 @@ void ScriptActions::doEnableCountdownTimerDisplay(void)
 //-------------------------------------------------------------------------------------------------
 /** doNamedStopSpecialPowerCountdown */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedStopSpecialPowerCountdown@ScriptActions@@IAEXABVAsciiString@@0_N@Z present-unmatched
 void ScriptActions::doNamedStopSpecialPowerCountdown(const AsciiString& unit, const AsciiString& specialPower, Bool stop)
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	const SpecialPowerTemplate *power = TheSpecialPowerStore->findSpecialPowerTemplate(specialPower);
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	const SpecialPowerTemplate *power = ((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->findSpecialPowerTemplate(specialPower);
 	if (theObj && power)
 	{
 		SpecialPowerModuleInterface *mod = theObj->getSpecialPowerModule(power);
 		if (mod)
 		{
-			mod->pauseCountdown(stop);
+			((BfmeSpecialPowerModuleVtbl_30 *)mod)->pauseCountdown(stop);
 		}
 	}
 }
@@ -5389,18 +5420,18 @@ void ScriptActions::doNamedStopSpecialPowerCountdown(const AsciiString& unit, co
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetSpecialPowerCountdown */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedSetSpecialPowerCountdown@ScriptActions@@IAEXABVAsciiString@@0H@Z present-unmatched
 void ScriptActions::doNamedSetSpecialPowerCountdown( const AsciiString& unit, const AsciiString& specialPower, Int seconds )
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	const SpecialPowerTemplate *power = TheSpecialPowerStore->findSpecialPowerTemplate(specialPower);
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	const SpecialPowerTemplate *power = ((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->findSpecialPowerTemplate(specialPower);
 	if (theObj && power)
 	{
 		SpecialPowerModuleInterface *mod = theObj->getSpecialPowerModule(power);
 		if (mod)
 		{
-			Int frames = LOGICFRAMES_PER_SECOND * seconds;
-			mod->setReadyFrame(TheGameLogic->getFrame() + frames);
+			// BFME scales the script's seconds by 5 where ZH uses LOGICFRAMES_PER_SECOND.
+			Int frames = 5 * seconds;
+			((BfmeSpecialPowerModuleVtbl_30 *)mod)->setReadyFrame(TheGameLogic->getFrame() + frames);
 		}
 	}
 }
@@ -5408,18 +5439,17 @@ void ScriptActions::doNamedSetSpecialPowerCountdown( const AsciiString& unit, co
 //-------------------------------------------------------------------------------------------------
 /** doNamedAddSpecialPowerCountdown */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedAddSpecialPowerCountdown@ScriptActions@@IAEXABVAsciiString@@0H@Z present-unmatched
 void ScriptActions::doNamedAddSpecialPowerCountdown( const AsciiString& unit, const AsciiString& specialPower, Int seconds )
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	const SpecialPowerTemplate *power = TheSpecialPowerStore->findSpecialPowerTemplate(specialPower);
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	const SpecialPowerTemplate *power = ((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->findSpecialPowerTemplate(specialPower);
 	if (theObj && power)
 	{
 		SpecialPowerModuleInterface *mod = theObj->getSpecialPowerModule(power);
 		if (mod)
 		{
-			Int frames = LOGICFRAMES_PER_SECOND * seconds;
-			mod->setReadyFrame(mod->getReadyFrame() + frames);
+			Int frames = 5 * seconds;
+			((BfmeSpecialPowerModuleVtbl_30 *)mod)->setReadyFrame(((BfmeSpecialPowerModuleVtbl_30 *)mod)->getReadyFrame() + frames);
 		}
 	}
 }
@@ -5427,21 +5457,20 @@ void ScriptActions::doNamedAddSpecialPowerCountdown( const AsciiString& unit, co
 //-------------------------------------------------------------------------------------------------
 /** doNamedFireSpecialPowerAtArea */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedFireSpecialPowerAtWaypoint@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
 void ScriptActions::doNamedFireSpecialPowerAtWaypoint( const AsciiString& unit, const AsciiString& specialPower, const AsciiString& waypoint )
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	const SpecialPowerTemplate *power = TheSpecialPowerStore->findSpecialPowerTemplate(specialPower);
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	const SpecialPowerTemplate *power = ((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->findSpecialPowerTemplate(specialPower);
 	if (theObj && power)
 	{
 		SpecialPowerModuleInterface *mod = theObj->getSpecialPowerModule(power);
 		if (mod)
 		{
-			Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
+			Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypoint);
 			if (!way) {
 				return;
 			}
-			mod->doSpecialPowerAtLocation(way->getLocation(), INVALID_ANGLE, COMMAND_FIRED_BY_SCRIPT );
+			((BfmeSpecialPowerModuleVtbl_30 *)mod)->doSpecialPowerAtLocation(way->getLocation(), COMMAND_FIRED_BY_SCRIPT );
 		}
 	}
 }
@@ -5525,18 +5554,17 @@ void ScriptActions::doSkirmishFireSpecialPowerAtMostCost( const AsciiString &pla
 //-------------------------------------------------------------------------------------------------
 /** doNamedFireSpecialPowerAtNamed */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedFireSpecialPowerAtNamed@ScriptActions@@IAEXABVAsciiString@@00@Z present-unmatched
 void ScriptActions::doNamedFireSpecialPowerAtNamed( const AsciiString& unit, const AsciiString& specialPower, const AsciiString& target )
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	Object *theTarget = TheScriptEngine->getUnitNamed( target );
-	const SpecialPowerTemplate *power = TheSpecialPowerStore->findSpecialPowerTemplate(specialPower);
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	Object *theTarget = ((BfmeScriptEngineVtbl_6c *)TheScriptEngine)->getUnitNamedByValue( target );
+	const SpecialPowerTemplate *power = ((BfmeSpecialPowerStoreView *)TheSpecialPowerStore)->findSpecialPowerTemplate(specialPower);
 	if (theObj && power && theTarget)
 	{
 		SpecialPowerModuleInterface *mod = theObj->getSpecialPowerModule(power);
 		if (mod)
 		{
-			mod->doSpecialPowerAtObject(theTarget, COMMAND_FIRED_BY_SCRIPT );
+			((BfmeSpecialPowerModuleVtbl_30 *)mod)->doSpecialPowerAtObject(theTarget, COMMAND_FIRED_BY_SCRIPT );
 		}
 	}
 }
@@ -5916,11 +5944,10 @@ void ScriptActions::doPlayerSetOverrideRelationToTeam(const AsciiString& playerN
 //-------------------------------------------------------------------------------------------------
 /** doPlayerRemoveOverrideRelationToTeam */
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerRemoveOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doPlayerRemoveOverrideRelationToTeam(const AsciiString& playerName, const AsciiString& otherTeam)
 {
-	Player *thePlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(playerName));
-	Team *theOtherTeam = TheScriptEngine->getTeamNamed( otherTeam );
+	Player *thePlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(bfmeStringChars(playerName)));
+	Team *theOtherTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( otherTeam );
 	if (thePlayer && theOtherTeam) {
 		thePlayer->removeTeamRelationship(theOtherTeam);
 	}
@@ -5929,11 +5956,10 @@ void ScriptActions::doPlayerRemoveOverrideRelationToTeam(const AsciiString& play
 //-------------------------------------------------------------------------------------------------
 /** doTeamSetOverrideRelationToPlayer */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamSetOverrideRelationToPlayer@ScriptActions@@IAEXABVAsciiString@@0H@Z present-unmatched
 void ScriptActions::doTeamSetOverrideRelationToPlayer(const AsciiString& teamName, const AsciiString& otherPlayer, Int relation)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	Player *theOtherPlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(otherPlayer));
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( teamName );
+	Player *theOtherPlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(bfmeStringChars(otherPlayer)));
 	if (theTeam && theOtherPlayer) {
 		theTeam->setOverridePlayerRelationship(theOtherPlayer->getPlayerIndex(), (Relationship)relation);
 	}
@@ -5942,11 +5968,10 @@ void ScriptActions::doTeamSetOverrideRelationToPlayer(const AsciiString& teamNam
 //-------------------------------------------------------------------------------------------------
 /** doTeamRemoveOverrideRelationToTeam */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamRemoveOverrideRelationToPlayer@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doTeamRemoveOverrideRelationToPlayer(const AsciiString& teamName, const AsciiString& otherPlayer)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	Player *theOtherPlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(otherPlayer));
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed( teamName );
+	Player *theOtherPlayer = ThePlayerList->findPlayerWithNameKey(NAMEKEY(bfmeStringChars(otherPlayer)));
 	if (theTeam && theOtherPlayer) {
 		theTeam->removeOverridePlayerRelationship(theOtherPlayer->getPlayerIndex());
 	}

@@ -3388,6 +3388,7 @@ void W3DView::shake( const Coord3D *epicenter, CameraShakeType shakeType )
 /** Transformt he screen pixel coord passed in, to a world coordinate at the specified
 	* z value */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewScreenToWorldAtZ.cpp
 // ?screenToWorldAtZ@W3DView@@ present-unmatched
 void W3DView::screenToWorldAtZ( const ICoord2D *s, Coord3D *w, Real z )
 {
