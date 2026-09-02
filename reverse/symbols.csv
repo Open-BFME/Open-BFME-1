@@ -80247,6 +80247,7 @@ name,address,notes
 ?setFrameToResend@NetFrameResendRequestCommandMsg@@QAEXI@Z,0x00029505,pinharvest x1 (thunk)
 ?setFrameToResend@NetFrameResendRequestCommandMsg@@QAEXI@Z,0x000306D9,pinharvest x1 (thunk)
 ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z,0x0003EF77,ILT; base call from W3DTankTruckDraw::setFullyObscuredByShroud
+?stopMoveDebris@W3DTankDraw@@IAEXXZ,0x00042D52,Open-BFME5 ILT called by W3DTankDraw shroud transition
 ?setGameMessageType@NetGameCommandMsg@@QAEXH@Z,0x00673730,identified from readGameMessage's call site
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00006F50,BFME three-argument GameLogic::setGamePaused; ILT thunk to body 0x00383490
 ?setGoalObject@StateMachine@@QAEXPBVObject@@@Z,0x00035A1C,StateMachine goal-object setter ILT; caller 0x002737B0 sets the attack victim and body 0x001705A0 updates the safetied pointer

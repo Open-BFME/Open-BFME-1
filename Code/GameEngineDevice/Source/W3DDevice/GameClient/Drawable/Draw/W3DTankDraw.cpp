@@ -360,7 +360,7 @@ void W3DTankDraw::startMoveDebris( void )
  * Stop creating debris from the tank treads
  */
 // ?stopMoveDebris@W3DTankDraw@@ present-unmatched
-void W3DTankDraw::stopMoveDebris( void )
+__declspec(noinline) void W3DTankDraw::stopMoveDebris( void )
 {
   if (m_treadDebrisLeft)
   	m_treadDebrisLeft->stop();
@@ -380,10 +380,10 @@ void W3DTankDraw::setHidden(Bool h)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setFullyObscuredByShroud@W3DTankDraw@@ present-unmatched
+// BFME stores DrawModule's shroud flag at physical offset +0x2d.
 void W3DTankDraw::setFullyObscuredByShroud(Bool fullyObscured)
 {
-	if (fullyObscured != getFullyObscuredByShroud())
+	if (fullyObscured != *(const Bool *)((const char *)this + 0x2d))
 	{
 		if (fullyObscured)
 			stopMoveDebris();
