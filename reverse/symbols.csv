@@ -82468,3 +82468,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeInitTexA1137@@YAXXZ,0x000091C5,pin BfmeA1137 destructor prologue helper call site
 ??0?$ShareBufferClass@VVector3@@@@QAE@ABV0@@Z,0x0094E1B0,Open-BFME5 existing exact Vector3 ShareBuffer copy constructor body
 ??0?$ShareBufferClass@VVector4@@@@QAE@ABV0@@Z,0x0094E580,Open-BFME5 retail geometry uniqueness call target for Vector4 ShareBuffer copy construction
+?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target
