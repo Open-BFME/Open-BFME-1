@@ -76271,6 +76271,7 @@ name,address,notes
 ?find@BFMEFlagMap@@QAEPAUBFMEFlagMapNode@@ABVBFMEFlagName@@@Z,0x000243CF,TU-scoped map facade; retail call reaches proven pair-of-AsciiString tree find body 0x0033FE60
 ?find@BFMELANPreferenceMap@@QAEPAXABVBFMELANPreferenceKey@@@Z,0x0000AEAC,LANPreferences retail map lookup ILT reaches the matched STL tree find at 0x00080600
 ?find@BfmeFinderD02@@QAEHH@Z,0x0002B81E,pin
+?find@BfmeMapWV@@QAEHH@Z,0x0002AF2C,Open-BFME5 map range-find ILT used by 0x00749E30 lookup
 ?find@BfmeMemberIndexMap@@QAE?AUBfmeMemberIndexIterator@@ABH@Z,0x0001F000,HordeContain member-index lookup reaches the retail STLport map find instantiation
 ?find@BfmeMgrEB2@@QAEPAVBfmeObjEB2@@H@Z,0x0001F253,pin
 ?find@BfmeMgrF5F@@QAEPAXHPAXH@Z,0x0001F253,pin
@@ -82421,31 +82422,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeThrowV56@BfmeStrV56@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831A80
-?bfmeThrow2V56@BfmeStrV56@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831A80
-?bfmeInsertV56@BfmeStrV56@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831A80
-?copyFrom@BfmeTailE9@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087E9B0
-?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
-?Rva00806710@@YAHPAURva00806580Record@@PBDII@Z,0x00806710,cdecl open fesl.ea.com from 0x007FA6C0
-?g_bfmeEmptyF9@@3PADA,0x0107388B,Open-BFME5 empty AsciiString fallback of 0x0087F9C0
-?afterWalk@BfmeObjF9@@QAEXXZ,0x0087EE60,Open-BFME5 post-walk callee of 0x0087F9C0
-?onAccept@Rva007FA2C0@@QAEXPAX@Z,0x007F9FD0,FESL helper from 0x007FA2C0 accept path
-?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
-?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
-?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
-?value@ObjectAttemptDamageFlagHook@@QAEHXZ,0x0002CA61,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
-?valid@Rva007FA5E0Arg@@QAE_NXZ,0x007E88A0,FESL arg valid() used by 0x007FA5E0
-?bfmeAllocLargeCD@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FCD0
-?bfmeAllocSmallCD@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FCD0
-?bfmeCopyCD@@YAPAUBfmeElemCD@@PBU1@0PAU1@ABUBfmeFalseCD@@@Z,0x0087F4D0,Open-BFME5 uninit-copy of 0x0087FCD0
-?copyFrom@BfmeTailCD@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy of 0x0087FCD0
-?bfmeFillCD@@YAPAUBfmeElemCD@@PAU1@IABU1@ABUBfmeFalseCD@@@Z,0x0087F520,Open-BFME5 fill-n of 0x0087FCD0
-?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
-?bfmeAllocLargeBE@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FBE0
-?bfmeAllocSmallBE@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FBE0
-?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z,0x0087EFA0,Open-BFME5 uninit-copy of 0x0087FBE0
-?copyFrom@BfmeElemBE@@QAEXABU1@@Z,0x00013476,Open-BFME5 elem copy ctor of 0x0087FBE0
-?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z,0x0087F020,Open-BFME5 fill-n of 0x0087FBE0
-?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
-?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
-?find@BfmeMapWV@@QAEHH@Z,0x0002AF2C,Open-BFME5 map range-find ILT used by 0x00749E30 lookup
