@@ -82934,5 +82934,6 @@ g_rva8D0D80CreateTag,0x01338610,address-derived Apt creation tag passed by 0x008
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
+?allocateGeometry006e@Render2DClass@@AAEPAUBfmeRenderVertex@@IIPAPAKPAK@Z,0x009369A0,BFME Render2D batch allocator called by the six-color Add_Quad body at 0x006E7210
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
