@@ -695,8 +695,7 @@ Bool DataChunkInput::isValidFileType(void)
 	return m_contents.isOpenedForRead();
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/DataChunkInput_openDataChunk_Thunk.cpp
-// ?openDataChunk@DataChunkInput@@QAE?AVAsciiString@@PAG@Z present-unmatched
+// Open-BFME5: byte-exact clean C++ reconstruction at retail RVA 0x001032A0.
 AsciiString DataChunkInput::openDataChunk(DataChunkVersionType *ver )
 {
 	// allocate a new chunk and place it on top of the chunk stack
