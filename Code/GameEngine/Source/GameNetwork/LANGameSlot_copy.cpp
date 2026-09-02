@@ -23,11 +23,25 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef unsigned char UnsignedByte;
+typedef bool Bool;
+
+enum SlotState
+{
+	SLOT_OPEN,
+	SLOT_CLOSED,
+	SLOT_EASY_AI,
+	SLOT_MED_AI,
+	SLOT_BRUTAL_AI,
+	SLOT_PLAYER
+};
 
 template <typename T>
 class StringBase
 {
 	friend class LANGameSlot;
+	friend class GameSlot;
+	friend class BfmeWideSlotString;
+	friend class BfmeAsciiSlotString;
 
 public:
 	~StringBase() { releaseBuffer(); }
@@ -37,6 +51,24 @@ private:
 	void releaseBuffer();				// ?releaseBuffer@?$StringBase@D@@AAEXXZ
 
 	void *m_data;
+};
+
+class BfmeWideSlotString : public StringBase<unsigned short>
+{
+public:
+	BfmeWideSlotString(const BfmeWideSlotString &other)
+		: StringBase<unsigned short>(other)
+	{
+	}
+};
+
+class BfmeAsciiSlotString : public StringBase<char>
+{
+public:
+	BfmeAsciiSlotString(const BfmeAsciiSlotString &other)
+		: StringBase<char>(other)
+	{
+	}
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
@@ -50,8 +82,49 @@ public:
 	virtual void _bfme_slot1(void) = 0;
 	virtual void _bfme_slot2(void) = 0;
 
-	UnsignedByte m_bfmeBody[0x40];			// after the vptr
+	SlotState m_state;
+	Bool m_isAccepted;
+	Bool m_hasMap;
+	Bool m_isMuted;
+	Int m_color;
+	Int m_startPos;
+	Int m_playerTemplate;
+	Int m_teamNumber;
+	Int m_origColor;
+	Int m_origStartPos;
+	Int m_origPlayerTemplate;
+	BfmeWideSlotString m_name;
+	BfmeAsciiSlotString m_IP;
+	UnsignedInt m_bfme30;
+	UnsignedInt m_bfme34;
+	UnsignedInt m_bfme38;
+	UnsignedInt m_bfme3c;
+	UnsignedByte m_bfme40;
 };
+
+// ??0GameSlot@@QAE@ABV0@@Z
+// Open-BFME5: convert GameSlot copy construction from retail ASM to clean C++.
+GameSlot::GameSlot(const GameSlot &other)
+	: m_state(other.m_state),
+	  m_isAccepted(other.m_isAccepted),
+	  m_hasMap(other.m_hasMap),
+	  m_isMuted(other.m_isMuted),
+	  m_color(other.m_color),
+	  m_startPos(other.m_startPos),
+	  m_playerTemplate(other.m_playerTemplate),
+	  m_teamNumber(other.m_teamNumber),
+	  m_origColor(other.m_origColor),
+	  m_origStartPos(other.m_origStartPos),
+	  m_origPlayerTemplate(other.m_origPlayerTemplate),
+	  m_name(other.m_name),
+	  m_IP(other.m_IP),
+	  m_bfme30(other.m_bfme30),
+	  m_bfme34(other.m_bfme34),
+	  m_bfme38(other.m_bfme38),
+	  m_bfme3c(other.m_bfme3c),
+	  m_bfme40(other.m_bfme40)
+{
+}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANPlayer.h
 class LANPlayer
