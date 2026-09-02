@@ -54748,6 +54748,9 @@ name,address,notes
 ?b_0057ecf0@@YAXXZ,0x0057ECF0,gen-thunk body
 ?b_0057ed60@@YAXXZ,0x0057ED60,gen-thunk body
 ?b_0057ed70@@YAXXZ,0x0057ED70,gen-thunk body
+??0BfmeArgED@@QAE@ABV0@@Z,0x0001050A,Gen_0057ED70 by-value argument copy thunk
+?bfmeApply@BfmeConsumerED@@QAEXVBfmeArgED@@@Z,0x00048A0E,Gen_0057ED70 member call thunk
+?bfmeFinish@Gen_0057ED70@@QAEXXZ,0x0000D698,Gen_0057ED70 tail call thunk
 ?b_0057edb0@@YAXXZ,0x0057EDB0,gen-thunk body
 ?b_0057f070@@YAXXZ,0x0057F070,gen-thunk body
 ?b_0057f0a0@@YAXXZ,0x0057F0A0,gen-thunk body
