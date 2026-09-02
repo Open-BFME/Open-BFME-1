@@ -82381,3 +82381,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeThrow2V53@BfmeStrV53@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831BE0
 ?bfmeInsertV53@BfmeStrV53@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831BE0
 ?copyFrom@BfmeTailAA@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EAA0
+?bfmeThrowV54@BfmeStrV54@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831970
+?bfmeThrow2V54@BfmeStrV54@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831970
+?bfmeInsertV54@BfmeStrV54@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831970
