@@ -2124,6 +2124,7 @@ name,address,notes
 ??0BfmeAptScreenScoreScreen@@QAE@PAX@Z,0x00578160,body of the ILT 0x00017233 already pinned under this name; ctor of the 0x334-byte ScoreScreen.apt class created by createAptScreenScoreScreen 0x00104FC0 (push 0x334 call ILT 0x00017233 at 0x00104FF9): base ctor 0x00465310 vtables 0x0110AAB8 / 0x0110AAB4 at +0x218; zeroes +0x258..+0x32c and APT:NULL at +0x330; if TheScoreScreen 0x012F4B50 is NULL publishes this and binds fscommands AptScoreScreen::OnInitialized->0x005701D0 Exit->0x005731C0 Save->0x00570200 Continue->0x005780E0 RestartGame->0x005731D0 RenameAccept->0x005710A0 RenameCancel->0x00570220 (functor 0x00572CA0 + binder 0x00464ED0) then AS providers via 0x00464FE0: the 11-name table 0x012B7F9C (NumOfPlayers ShowSaveReplay ShowCampaign ScoreGrandTotal heroVetCount unitsVetCount PlayerFaction numberOfObjectives ShowVictory objectivesPerScore NumberFormatter) -> 0x005731E0; 8x ScoreScreen:PlayerColor:%d -> 0x00571DF0 ScoreScreen:PlayerFaction:%d -> 0x00571E50 Separator%d (i>=1) -> 0x00570260; ScoreBattleStat ScoreBonusObjectives ScoreHeroVeterancy ScoreUnitVeterancy ScoreTerritoryBonus -> 0x005702B0; battleStat%c%d (A..G x 1..3) -> 0x00570300; objectiveChecked%d x8 -> 0x005703A0; heroVetUpgrade%d x12 -> 0x005729C0; AptScoreScreen::InitGadgets -> 0x00571EC0 via 0x004628E0; then g_theWindowManager 0x012F19E8 -> 0x00469A10(1)
 ??0BfmeAptScreenSkirmish@@QAE@PAX@Z,0x000025C7,ILT thunk to the Skirmish.apt screen constructor
 ??0BfmeAptScreenSpellStore@@QAE@PAX@Z,0x00036647,ILT thunk to the SpellStore.apt screen constructor
+??0BfmeArgED@@QAE@ABV0@@Z,0x0001050A,Gen_0057ED70 by-value argument copy thunk
 ??0BfmeArmyIcon@@QAE@ABVAsciiString@@@Z,0x00023ED9,retail findArmyIcon body directly encodes the BfmeArmyIcon constructor thunk
 ??0BfmeArmyIconBase@@QAE@VAsciiString@@@Z,0x000125F3,base constructor thunk called by BfmeArmyIcon
 ??0BfmeAttackNuggetBase@@QAE@XZ,0x0001B522,Open-BFME5 ILT the AttackNugget constructor at 0x0059EB00 calls its base through; it jumps to 0x00489210
@@ -2837,7 +2838,6 @@ name,address,notes
 ??0GrantUpgradeCreateModuleData@@QAE@XZ,0x0003E4A5,pinharvest x1 (thunk)
 ??0HDU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HeightDieUpdate constructor calls the shared ObjectModule constructor ILT
 ??0HRBMD_Buffer@@QAE@XZ,0x0003747A,HitReactionBehaviorModuleData member constructor ILT
-??1BfmeFirstMember1134@@QAE@XZ,0x0001A401,Gen_00581ED0 first-member destructor ILT
 ??0HRB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HitReactionBehavior constructor calls the shared ObjectModule constructor ILT
 ??0HTreeClass@@QAE@ABV0@@Z,0x009527C0,derived from HTreeClass::Alter_Avatar_HTree
 ??0HeaderTemplateINI@@QAE@XZ,0x00851230,Open-BFME5 HeaderTemplateManager init relocation
@@ -4182,6 +4182,7 @@ name,address,notes
 ??1BfmeErasedValue_0076B2F0@@QAE@XZ,0x000205A9,Open-BFME5 the value destructor the list erase at 0x0076B2F0 runs before freeing the node
 ??1BfmeEvaCheckInfoTail@@QAE@XZ,0x00011FDB,ILT thunk to the retail _Rb_tree<int,...> destructor at 0x004247C0, the per-record map subobject the EvaCheckInfoRecord vector destructor tears down at +0x10
 ??1BfmeEvaSideSoundsArray@@QAE@XZ,0x0089CC70,provisional structural name: incremental-link thunk fronting 0x0089C900 the dtor of EvaCheckInfo member at +0x8; count-plus-array container not an STLport vector
+??1BfmeFirstMember1134@@QAE@XZ,0x0001A401,Gen_00581ED0 first-member destructor ILT
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BfmeListE@@QAE@XZ,0x00013449,Open-BFME5 the list member destructor the three-member destructor at 0x000F8A40 runs twice
@@ -9513,6 +9514,7 @@ name,address,notes
 ??_7Gen0082AF40@@6B@,0x00D2E918,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF40
 ??_7Gen0082AF60@@6B@,0x00D2E924,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF60
 ??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
+??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
 ??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
 ??_7LargeGroupAudioUnusedKnownKeys@@6B@,0x010EE0FC,Open-BFME5 vftable the copy constructor at 0x003CD590 installs over the base one
 ??_7LargeGroupBonusIface1@@6B@,0x0109C9D0,LargeGroupBonus first update interface vtable
@@ -54748,9 +54750,6 @@ name,address,notes
 ?b_0057ecf0@@YAXXZ,0x0057ECF0,gen-thunk body
 ?b_0057ed60@@YAXXZ,0x0057ED60,gen-thunk body
 ?b_0057ed70@@YAXXZ,0x0057ED70,gen-thunk body
-??0BfmeArgED@@QAE@ABV0@@Z,0x0001050A,Gen_0057ED70 by-value argument copy thunk
-?bfmeApply@BfmeConsumerED@@QAEXVBfmeArgED@@@Z,0x00048A0E,Gen_0057ED70 member call thunk
-?bfmeFinish@Gen_0057ED70@@QAEXXZ,0x0000D698,Gen_0057ED70 tail call thunk
 ?b_0057edb0@@YAXXZ,0x0057EDB0,gen-thunk body
 ?b_0057f070@@YAXXZ,0x0057F070,gen-thunk body
 ?b_0057f0a0@@YAXXZ,0x0057F0A0,gen-thunk body
@@ -55220,17 +55219,10 @@ name,address,notes
 ?b_00587b20@@YAXXZ,0x00587B20,gen-thunk body
 ?b_00587b30@@YAXXZ,0x00587B30,gen-thunk body
 ?b_00587bb0@@YAXXZ,0x00587BB0,gen-thunk body
-?bfmeRingPrepare@@YAXXZ,0x0002832B,Gen_00587BB0 preparation thunk
-?bfmeRingReady@@YA_NXZ,0x0002C82C,Gen_00587BB0 readiness thunk
 ?b_00587c50@@YAXXZ,0x00587C50,gen-thunk body
-?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
-?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
-?g_bfmeRingReset@@3HA,0x00EF4B7C,Gen_00587C50 reset latch
 ?b_00587cd0@@YAXXZ,0x00587CD0,gen-thunk body
 ?b_00587d20@@YAXXZ,0x00587D20,gen-thunk body
 ?b_00587d40@@YAXXZ,0x00587D40,gen-thunk body
-??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
-?bfmeAlloc1134@@YAPAXI@Z,0x0082E540,Gen_00587D40 buffer allocator
 ?b_00587e10@@YAXXZ,0x00587E10,gen-thunk body
 ?b_00587e40@@YAXXZ,0x00587E40,gen-thunk body
 ?b_005880c0@@YAXXZ,0x005880C0,gen-thunk body
@@ -72706,6 +72698,7 @@ name,address,notes
 ?bfmeAlloc1047@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1051@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1053@@YAPAXH@Z,0x008064A0,pin
+?bfmeAlloc1134@@YAPAXI@Z,0x0082E540,Gen_00587D40 buffer allocator
 ?bfmeAlloc946@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAlloc950B@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocATA@@YAPAXI@Z,0x0082E540,pin
@@ -72779,6 +72772,7 @@ name,address,notes
 ?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
+?bfmeApply@BfmeConsumerED@@QAEXVBfmeArgED@@@Z,0x00048A0E,Gen_0057ED70 member call thunk
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
 ?bfmeApply@Gen_0037DF60Owner@@QAEXPAX@Z,0x000204F0,Open-BFME5 ILT the __stdcall wrapper at 0x0037DF60 calls through
 ?bfmeApply@Gen_0052F050Owner@@QAEXPAX@Z,0x0002B210,Open-BFME5 ILT the __stdcall wrapper at 0x0052F050 calls through
@@ -73712,6 +73706,7 @@ name,address,notes
 ?bfmeFinish@Gen_002BC050@@AAEHXZ,0x000042DC,Open-BFME5 ILT the finder at 0x002BC050 tail-jumps to
 ?bfmeFinish@Gen_0038D000@@AAEXXZ,0x00015028,Open-BFME5 the ICF thunk (to 0x0038AE90) the clear at 0x0038D000 calls on this after the walk
 ?bfmeFinish@Gen_00490100@@QAEXXZ,0x00013421,Open-BFME5 the body call the destructor at 0x00490100 makes first
+?bfmeFinish@Gen_0057ED70@@QAEXXZ,0x0000D698,Gen_0057ED70 tail call thunk
 ?bfmeFinish@Gen_00742DA0@@QAEXXZ,0x000312A0,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmeFinish@Gen_0081DC90@@QAEXXZ,0x0081DBE0,Open-BFME5 the body call the vector-member destructor at 0x0081DC90 makes before its members go
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x00038910,Open-BFME5 ILT thunk to body 0x003CA7C0; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on this with the item and a zero; address-derived name
@@ -74170,6 +74165,7 @@ name,address,notes
 ?bfmeHandOver_0003EE32@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0003EE32,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0004420B@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0004420B,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_00044FD0@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00044FD0,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
+?bfmeHandleVOQ@BfmeSubVOQ@@QAEXXZ,0x0089C880,pin
 ?bfmeHandle_00790310@@YAXPAVGen_00790310@@PAX@Z,0x0003883E,Open-BFME5 ILT the 22-byte submit at 0x00790310 calls
 ?bfmeHandle_00790330@@YAXPAVGen_00790330@@PAX@Z,0x000011A4,Open-BFME5 ILT the 22-byte submit at 0x00790330 calls
 ?bfmeHandle_00790b60@@YAXPAVGen_00790b60@@PAX@Z,0x0000C036,Open-BFME5 ILT the 22-byte submit at 0x00790B60 calls
@@ -74769,6 +74765,8 @@ name,address,notes
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
 ?bfmeRelease964@BfmeItem964@@QAEXXZ,0x000024A5,pin
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
+?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
+?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
 ?bfmeRelease@BfmeTagged@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared release the tag-checked assignments call
 ?bfmeReleaseATXA@@YGXPAX@Z,0x00AFD504,pin
@@ -74825,6 +74823,8 @@ name,address,notes
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
 ?bfmeResume@Gen_0018BC70@@AAEXXZ,0x0000764E,Open-BFME5 the ICF thunk (to 0x0040764E) the compaction at 0x0018BC70 calls when its flag is clear
+?bfmeRingPrepare@@YAXXZ,0x0002832B,Gen_00587BB0 preparation thunk
+?bfmeRingReady@@YA_NXZ,0x0002C82C,Gen_00587BB0 readiness thunk
 ?bfmeRun1006@BfmeRun1006@@QAEXXZ,0x0003B773,pin
 ?bfmeRun1060@BfmeR1060@@QAEXPAVBfmeX1060@@PADH1HHHH@Z,0x00015235,pin
 ?bfmeRun1062@BfmeR1062@@QAEXPAVBfmeX1062@@PADH1HHHH@Z,0x00015235,pin
@@ -77346,6 +77346,7 @@ name,address,notes
 ?g_bfmeResult1240@@3PAVBfmeE1240@@A,0x00F379BC,pin
 ?g_bfmeResult1242@@3PAXA,0x00F379BC,pin
 ?g_bfmeResult1243@@3PAXA,0x00F379BC,pin
+?g_bfmeRingReset@@3HA,0x00EF4B7C,Gen_00587C50 reset latch
 ?g_bfmeRun1006@@3PAVBfmeRun1006@@A,0x00EF4998,pin
 ?g_bfmeS1019@@3PAVBfmeS1019@@A,0x00F0A5B0,pin
 ?g_bfmeS1027@@3PAUBfmeS1027@@A,0x00EF0898,pin
