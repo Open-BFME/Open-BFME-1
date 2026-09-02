@@ -32,3 +32,36 @@ int Rva002E4FD0Value::equals(const Rva002E4FD0Value *other) const
 
 	return false;
 }
+
+struct Rva002E5030Tail
+{
+	bool equals(const Rva002E5030Tail *other) const;
+};
+
+class Rva002E5030Value
+{
+public:
+	int equals(const Rva002E5030Value *other) const;
+
+private:
+	int m_kind;
+	int m_values[3];
+	Rva002E5030Tail m_tail;
+};
+
+int Rva002E5030Value::equals(const Rva002E5030Value *other) const
+{
+	if (m_kind == other->m_kind) {
+		for (unsigned int index = 0; index < 3; ++index) {
+			if (m_values[index] != other->m_values[index]) {
+				return false;
+			}
+		}
+
+		if (m_tail.equals(&other->m_tail)) {
+			return true;
+		}
+	}
+
+	return false;
+}
