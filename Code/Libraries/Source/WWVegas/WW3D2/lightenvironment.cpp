@@ -309,10 +309,11 @@ void LightEnvironmentClass::Add_Light(const LightClass & light)
 	}
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/LightEnvironmentClass_Pre_Render_Update_Thunk.cpp
-// ?Pre_Render_Update@LightEnvironmentClass@@QAEXABVMatrix3D@@@Z present-unmatched
+// Open-BFME5: convert LightEnvironmentClass::Pre_Render_Update from retail ASM to clean C++.
 void LightEnvironmentClass::Pre_Render_Update(const Matrix3D & camera_tm)
 {
+	LightEnvironmentClass *bfme = reinterpret_cast<LightEnvironmentClass *>(reinterpret_cast<char *>(this) + 4);
+
 	/*
 	** Calculate and set up the fill light for the object
 	*/
@@ -322,13 +323,13 @@ void LightEnvironmentClass::Pre_Render_Update(const Matrix3D & camera_tm)
 	** Transform each light into camera space
 	** and add up the ambient effect of each light
 	*/
-	for (int light_index=0; light_index<LightCount; light_index++) {
-		OutputLights[light_index].Init(InputLights[light_index],camera_tm);
+	for (int light_index=0; light_index<bfme->LightCount; light_index++) {
+		bfme->OutputLights[light_index].Init(bfme->InputLights[light_index],camera_tm);
 	}
 	// Clamp ambient.
-	OutputAmbient.X = WWMath::Clamp(OutputAmbient.X,0.0f,1.0f);
-	OutputAmbient.Y = WWMath::Clamp(OutputAmbient.Y,0.0f,1.0f);
-	OutputAmbient.Z = WWMath::Clamp(OutputAmbient.Z,0.0f,1.0f);
+	bfme->OutputAmbient.X = WWMath::Clamp(bfme->OutputAmbient.X,0.0f,1.0f);
+	bfme->OutputAmbient.Y = WWMath::Clamp(bfme->OutputAmbient.Y,0.0f,1.0f);
+	bfme->OutputAmbient.Z = WWMath::Clamp(bfme->OutputAmbient.Z,0.0f,1.0f);
 }
 
 void LightEnvironmentClass::Set_Lighting_LOD_Cutoff(float inten)
