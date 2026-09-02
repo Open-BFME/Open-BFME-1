@@ -69,6 +69,7 @@
 #include "GameClient/GadgetPushButton.h"
 #include "GameClient/GadgetStaticText.h"
 #include "GameClient/Controlbar.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
@@ -1620,54 +1621,49 @@ void TextTypeTransition::init( GameWindow *win )
 	self->m_frameLength = length < self->m_endFrame ? length : self->m_endFrame;
 }
 
+// Open-BFME5: convert TextTypeTransition::update from retail ASM to clean C++.
 void TextTypeTransition::update( Int frame )
 {
-	m_drawState = -1;
-	if(frame < TEXTTYPETRANSITION_START || frame > TEXTTYPETRANSITION_END)
+	BfmeTextTypeTransitionFields *self = (BfmeTextTypeTransitionFields *)this;
+
+	self->m_drawState = -1;
+	if(frame < self->m_startFrame || frame > self->m_endFrame)
 	{
-		DEBUG_ASSERTCRASH(FALSE, ("TextTypeTransition::update - Frame is out of the range the this update can handle %d", frame));
 		return;
 	}
-	switch (frame) {
-	case TEXTTYPETRANSITION_START:
+	if(frame == self->m_startFrame)
 		{
-			
-			if(m_isForward || !m_win )
-				break;
-			m_win->winHide(TRUE);
-			m_isFinished = TRUE;
+			if(!self->m_isForward && self->m_win )
+			{
+				self->m_win->winHide(TRUE);
+				self->m_isFinished = TRUE;
+			}
 		}
-		break;
-	case TEXTTYPETRANSITION_END:
+	else if(frame == self->m_endFrame)
 		{
-			if(!m_isForward || !m_win )
-				break;
-			m_win->winHide(FALSE);
-			m_isFinished = TRUE;
-		}
-	}	
-	if(frame >= m_frameLength)
+			if(self->m_isForward && self->m_win )
+			{
+				self->m_win->winHide(FALSE);
+				self->m_isFinished = TRUE;
+			}
+	}
+	if(frame >= self->m_frameLength)
 	{
-		m_win->winHide(FALSE);
+		self->m_win->winHide(FALSE);
 
 	}
-	if(frame > TEXTTYPETRANSITION_START && frame < m_frameLength)
+	if(frame > self->m_startFrame && frame < self->m_frameLength)
 	{
-		m_win->winHide(TRUE);
-		m_drawState = frame;
-		AudioEventRTS buttonClick("GUITypeText");
-
-		if( TheAudio )
+		self->m_win->winHide(TRUE);
+		self->m_drawState = frame;
+		if(self->m_isForward)
 		{
-			TheAudio->addAudioEvent( &buttonClick );
-		}  // end if
-		if(m_isForward)
-		{
-			m_partialText.concat(m_fullText.getCharAt(frame - 1));
+			WideChar character = ((StringBase<WideChar> *)&self->m_fullText)->getCharAt(frame - 1);
+			((StringBase<WideChar> *)&self->m_partialText)->concat(&character, 1);
 		}
 		else
 		{
-			m_partialText.removeLastChar();
+			((StringBase<WideChar> *)&self->m_partialText)->removeLastChar();
 		}
 	}
 }
