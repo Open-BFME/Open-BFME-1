@@ -74047,6 +74047,7 @@ name,address,notes
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
+?bfmeCall71BA0@BfmeHelper71BA0@@QAEHXZ,0x00980890,Open-BFME5 address-derived guarded helper tail-call from the 0x00971BA0 body
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeInChannelUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00871C40,pin
 ?bfmeIncVGO@@YAIPAI@Z,0x00894D80,pin
