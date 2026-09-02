@@ -1,413 +1,116 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
-// Open-BFME5: lift MASM dump ScriptAction::getUiText to C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/scriptenginevtable /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
 
-class AsciiString {};
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
-class ScriptAction
+#include <string.h>
+#include "string_base.h"
+
+// BFME's script UI strings use the WWLib StringBase<char> ABI: a string is a
+// single data pointer, with an eight-byte header, and the set/concat calls take
+// an explicit character count.  Keep this view local to the thunk so the
+// shared reference headers remain untouched.
+#define ASCIISTRING_H
+class AsciiString
 {
 public:
-AsciiString getUiText();
+	static AsciiString TheEmptyString;
+
+	AsciiString() : m_text(0) {}
+	AsciiString(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&that);
+	}
+	AsciiString(const char *text)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
+	}
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+	AsciiString &operator=(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
+		return *this;
+	}
+	AsciiString &operator=(const char *text)
+	{
+		((StringBase<char> *)this)->set(text, text ? (int)strlen(text) : 0);
+		return *this;
+	}
+
+	const char *str() const
+	{
+		return m_text ? (const char *)(m_text + 8) : "";
+	}
+	int getLength() const
+	{
+		return m_text ? *(const unsigned short *)(m_text + 4) : 0;
+	}
+	int compareNoCase(const AsciiString &that) const
+	{
+		return ((const StringBase<char> *)this)->compareNoCase(
+			*(const StringBase<char> *)&that);
+	}
+	void concat(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->concat(that.str(), that.getLength());
+	}
+
+private:
+	char *m_text;
 };
 
-// ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ
-__declspec(naked) AsciiString ScriptAction::getUiText()
+inline bool operator==(const AsciiString &left, const AsciiString &right)
 {
-__asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xdc
-        __emit 0x94
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x40
-        __emit 0x53
-        __emit 0x55
-        __emit 0x56
-        __emit 0x57
-        __emit 0x33
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x89
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x6c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x68
-        __emit 0xd9
-        __emit 0x7b
-        __emit 0x41
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x6c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x58
-        __emit 0x0b
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x5c
-        __emit 0x02
-        __emit 0xff
-        __emit 0x52
-        __emit 0x28
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x39
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x7e
-        __emit 0x23
-        __emit 0x8d
-        __emit 0x6c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8d
-        __emit 0x5e
-        __emit 0x14
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0xd8
-        __emit 0x18
-        __emit 0x53
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x10
-        __emit 0x47
-        __emit 0x83
-        __emit 0xc5
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc3
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xf8
-        __emit 0x7c
-        __emit 0xea
-        __emit 0x8b
-        __emit 0x6c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8a
-        __emit 0x45
-        __emit 0x40
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x10
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x74
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x05
-        __emit 0x68
-        __emit 0xe4
-        __emit 0x8a
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x38
-        __emit 0x19
-        __emit 0x53
-        __emit 0x00
-        __emit 0x33
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x75
-        __emit 0x0c
-        __emit 0xb3
-        __emit 0x03
-        __emit 0x90
-        __emit 0x3b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x7d
-        __emit 0x29
-        __emit 0x8b
-        __emit 0x44
-        __emit 0xbc
-        __emit 0x20
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x48
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x51
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x41
-        __emit 0x19
-        __emit 0x53
-        __emit 0x00
-        __emit 0x3b
-        __emit 0x7d
-        __emit 0x08
-        __emit 0x7d
-        __emit 0x45
-        __emit 0x8b
-        __emit 0x0e
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xba
-        __emit 0x68
-        __emit 0xce
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x58
-        __emit 0x74
-        __emit 0x06
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x48
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x51
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x05
-        __emit 0x19
-        __emit 0x53
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x58
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xd7
-        __emit 0x14
-        __emit 0x53
-        __emit 0x00
-        __emit 0x47
-        __emit 0x83
-        __emit 0xc6
-        __emit 0x04
-        __emit 0x83
-        __emit 0xff
-        __emit 0x0c
-        __emit 0x0f
-        __emit 0x8c
-        __emit 0x7a
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x60
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xda
-        __emit 0x16
-        __emit 0x53
-        __emit 0x00
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x51
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x68
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xd0
-        __emit 0x08
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x58
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x8c
-        __emit 0x14
-        __emit 0x53
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x50
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x4c
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+	return strcmp(left.str(), right.str()) == 0;
 }
+
+// The ScriptEngine header includes the game-memory placement-new shim.  Keep
+// the CRT's duplicate inline overloads suppressed in this TU.
+#define __PLACEMENT_NEW_INLINE
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "GameLogic/ScriptEngine.h"
+
+// The definitions precede ScriptAction::getUiText just as they do in the
+// original Scripts.cpp translation unit.  This keeps the template copy loop
+// and ScriptEngine lookup inline at this call site.
+Int Template::getUiStrings(AsciiString strings[MAX_PARMS]) const
+{
+	Int i;
+	for (i = 0; i < m_numUiStrings; i++) {
+		strings[i] = m_uiStrings[i];
+	}
+	return m_numUiStrings;
+}
+
+Int ScriptAction::getUiStrings(AsciiString strings[MAX_PARMS])
+{
+	const ActionTemplate *pTemplate = TheScriptEngine->getActionTemplate(m_actionType);
+	return pTemplate->getUiStrings(strings);
+}
+
+// ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ
+AsciiString ScriptAction::getUiText(void)
+{
+	AsciiString uiText;
+	AsciiString strings[MAX_PARMS];
+	Int numStrings = getUiStrings(strings);
+	Int i;
+
+	if (m_hasWarnings) {
+		uiText = "[???]";
+	}
+
+	for (i = 0; i < MAX_PARMS; i++) {
+		if (i < numStrings) {
+			uiText.concat(strings[i]);
+		}
+		if (i < m_numParms) {
+			uiText.concat(m_parms[i]->getUiText());
+		}
+	}
+
+	return uiText;
 }
