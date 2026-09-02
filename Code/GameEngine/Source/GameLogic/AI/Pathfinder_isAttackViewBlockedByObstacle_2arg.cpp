@@ -1,13 +1,18 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 struct Coord3D;
-class Object;
+class Object
+{
+public:
+	bool isSignificantlyAboveTerrain(void) const;
+};
 
 class Pathfinder
 {
 public:
 	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *pos);
-	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *sourcePos, const Object *victim, const Coord3D *victimPos);
+	bool isAttackViewBlockedByObstacle(const Object *source, const Object *target);
+	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *sourcePos, const Object *target, const Coord3D *targetPos);
 };
 
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z
@@ -15,4 +20,15 @@ bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord
 {
 	const Coord3D *sourcePos = (const Coord3D *)((const char *)source + 0x38);
 	return isAttackViewBlockedByObstacle(source, sourcePos, 0, pos);
+}
+
+// ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@0@Z
+bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Object *target)
+{
+	if (target->isSignificantlyAboveTerrain()) {
+		return false;
+	}
+	const Coord3D *sourcePos = (const Coord3D *)((const char *)source + 0x38);
+	const Coord3D *targetPos = (const Coord3D *)((const char *)target + 0x38);
+	return isAttackViewBlockedByObstacle(source, sourcePos, target, targetPos);
 }

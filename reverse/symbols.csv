@@ -82474,3 +82474,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_Va012F8064@@3HA,0x012F8064,pin stale-stamp dispatcher global
 ?target@Rva0076CAF0ConditionalDispatch@@QAEXXZ,0x00024F5F,pin 0x0076CAF0 stale-stamp dispatcher tail target
 ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@01@Z,0x00023042,pin Pathfinder isAttackViewBlockedByObstacle 4-arg pointer overload ILT target
+?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
