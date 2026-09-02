@@ -76445,6 +76445,7 @@ name,address,notes
 ?finishConstruct@BFMENetworkQueue1@@QAEXPAX@Z,0x0002E91F,native BFME queue-1 constructor helper ILT
 ?finishConstruct@BFMENetworkQueue@@QAEXPAX@Z,0x000109D3,native BFME queue-0 constructor helper ILT
 ?finishOwner@Rva0017AE40Owner@@AAEXXZ,0x000306BB,Open-BFME5 owner finalization tail call used by the 0x0017AE40 child finalizer
+?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target
 ?finishReset@Rva003F7380State@@QAEXXZ,0x0004B3B7,Open-BFME5 retail call target; ILT thunk to body 0x003F6F10
 ?finishSinglePlayerInit@@YAXXZ,0x0001F78F,ScoreScreen.cpp TU-local; ILT thunk to body 0x004E4790
 ?finishState14@Rva56E070StateOwner@@QAEXXZ,0x000335F0,call target in the 0x0056E070 late-state dispatcher
@@ -80256,6 +80257,7 @@ name,address,notes
 ?resetAll@Y3ResetTail_005C5A00@@QAEXXZ,0x005C5A00,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?resetModes@LookAtTranslator@@QAEXXZ,0x00048626,Open-BFME5 the tail call of doDisableInput with ecx = TheLookAtTranslator at 0x012F4C84; jumps to 0x005B5440
 ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk
+?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
 ?resetPlayersVotes@DisconnectManager@@IAEXHIPAVConnectionManager@@@Z,0x000333E3,DisconnectManager frame processing resets stale votes through the ILT to the existing 0x0066B7B0 body
 ?resetSciences@Player@@QAEXXZ,0x0003FDA0,Open-BFME5 ILT thunk to body 0x000D7B60; resetRank calls it after rebuilding rank and science-purchase state, matching the reference Player algorithm
 ?resetShader@W3DShaderManager@@SAXW4ShaderTypes@1@@Z,0x00014367,pinharvest x1 (thunk)
@@ -80829,6 +80831,7 @@ name,address,notes
 ?u4Append@INI@@QAEXPBX@Z,0x0002DFEC,U4 record field append called twice by 0x005F50B0
 ?u4AppendVector@@YAPAVINI@@PAV1@PBX@Z,0x00025FA9,U4 vector formatter called by 0x005C8AA0
 ?u4Finish@INI@@QAEXH@Z,0x0002408C,U4 record terminator called by 0x005F50B0
+?u4FormatFloat@@YAPAVINI@@PAV1@N@Z,0x0000F376,U1 chained float formatter called twice by 0x005C9030
 ?u4FormatFloat@@YAXPAVINI@@N@Z,0x0000F376,U4 floating-point formatter called by 0x005F50B0
 ?u4FormatInt@@YAXPAVINI@@H@Z,0x0002CE5D,U4 integer formatter called by 0x005F79C0
 ?u4Indent@INI@@QAEXH@Z,0x0001B77A,U4 indentation emitter called by 0x005F50B0
@@ -82532,5 +82535,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
-?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target

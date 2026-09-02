@@ -96,6 +96,7 @@ extern const char g_u1False[];
 extern const char g_u1True[];
 extern const char g_u1Empty[];
 void __cdecl u1FormatPointer( INI *ini, void *value );
+INI *__cdecl u4FormatFloat( INI *ini, double value );
 
 void u1Do_005C7410( void *a, void *b, void *c, U1ByteFlagged *d );
 void u1Do_005C90D0( void *a, void *b, void *c, U1DwordFlagged *d );
@@ -138,6 +139,17 @@ void u1Do_005C71F0( void *a, void *b, void *c, U1CountedHolder *d )
 	INI *ini = (INI *)a;
 	u1BeginField( ini, b, c );
 	ini->u4Append( d->m_item ? (char *)d->m_item + 8 : g_u1Empty );
+	ini->u4Finish( 10 );
+}
+
+void u1Do_005C9030( void *a, void *b, void *c, U1Pair *d )
+{
+	INI *ini = (INI *)a;
+	u1BeginField( ini, b, c );
+	b = *(void **)&d->m_y;
+	INI *next = u4FormatFloat( ini, d->m_x );
+	next->u4Finish( 32 );
+	u4FormatFloat( next, *(float *)&b );
 	ini->u4Finish( 10 );
 }
 
