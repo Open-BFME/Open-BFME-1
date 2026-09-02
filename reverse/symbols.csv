@@ -82295,3 +82295,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
 ?prepare@Rva007EAD30Owner@@QAEXXZ,0x007EAA70,prepare helper for 0x007EAD30 send
 ?prepare@Rva007EADC0Owner@@QAEXXZ,0x007EAB40,prepare helper for 0x007EADC0 send
+?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
