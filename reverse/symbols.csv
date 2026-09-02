@@ -74124,6 +74124,8 @@ name,address,notes
 ?bfmeInitVJM@BfmeMsgVJM@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJN@BfmeMsgVJN@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVJO@BfmeMsgVJO@@QAEXPADH@Z,0x007E8850,pin
+?bfmeInitVLY@BfmeRegVLY@@QAEXXZ,0x0082DA10,pin
+?bfmeInitVLZ@BfmeRegVLZ@@QAEXXZ,0x0082DA10,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
@@ -76969,6 +76971,8 @@ name,address,notes
 ?g_bfmeReg1026@@3PAVBfmeReg1026@@A,0x00EF12CC,pin
 ?g_bfmeReg963@@3PAVBfmeReg963@@A,0x00EF10D0,pin
 ?g_bfmeReg988@@3PAVBfmeReg988@@A,0x00EF1044,pin
+?g_bfmeRegVLY@@3VBfmeRegVLY@@A,0x00F0B250,pin
+?g_bfmeRegVLZ@@3VBfmeRegVLZ@@A,0x00F0B254,pin
 ?g_bfmeRegion2DFormat@@3QBDB,0x0114442C,address-derived Region2D format string from retail 0x009D9814
 ?g_bfmeRegion3DFormat@@3QBDB,0x01144388,address-derived Region3D format string from retail 0x009D96EE
 ?g_bfmeResetA961@@3PAVBfmeResetA961@@A,0x00EF1028,pin
