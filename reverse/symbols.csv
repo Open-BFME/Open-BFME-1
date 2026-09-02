@@ -82222,3 +82222,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplVMN@BfmeStrVMN@@QAEXHHHHPAD@Z,0x008314E0,Open-BFME5 /Od forwarder callee for 0x00831930
 ?bfmeImplVMN@BfmeStrVMN@@QAEXHHHH@Z,0x008314E0,Open-BFME5 /Od 4-arg view of 5-arg callee at 0x008314E0
 ?bfmeImplVMO@BfmeStrVMO@@QAEXHHHH@Z,0x008312E0,Open-BFME5 /Od 4-arg view of callee at 0x008312E0
+?bfmeImplVMP@BfmeStrVMP@@QAEXHHHH@Z,0x008314E0,Open-BFME5 /Od 4-arg view of callee at 0x008314E0
