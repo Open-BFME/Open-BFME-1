@@ -82453,3 +82453,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?equals@Rva002E4FD0Tail@@QBE_NPBU1@@Z,0x000347FC,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D60
