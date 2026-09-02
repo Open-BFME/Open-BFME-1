@@ -82290,3 +82290,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeGrowV23@BfmeStrV23@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00830FC0
 ?bfmeLenErrV23@BfmeStrV23@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00830FC0
 ?bfmeImplV23@BfmeStrV23@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830FC0
+?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
+?bfmeEraseV24@BfmeStrV24@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830CC0
+?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
