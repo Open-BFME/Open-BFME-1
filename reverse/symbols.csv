@@ -82349,3 +82349,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
 ?set@BfmeSubA100@@QAEXABU1@@Z,0x00033640,Open-BFME5 ILT from 0x002EA100 20B copy loop
 ?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
+?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
+?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
