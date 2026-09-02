@@ -82367,3 +82367,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
 ?bfmeCopyFwdV49@@YAXPAX00@Z,0x0000E8AE,Open-BFME5 copy-fwd pin for 0x00830410
 ?bfmeDeallocV49@BfmeStrV49@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x00830410
+?bfmeCopyOneV50@@YAXPAX0@Z,0x000180CF,Open-BFME5 copy-one pin for 0x008300B0
+?bfmeDeallocV50@BfmeStrV50@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x008300B0
