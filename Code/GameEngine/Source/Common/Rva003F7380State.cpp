@@ -1,0 +1,40 @@
+// Open-BFME5: clean C++ conversion of the state reset at 0x003F7380.
+
+struct Rva003F7380Node
+{
+	unsigned char m_padding[0x20];
+	int m_value;
+};
+
+struct Rva003F7380Argument
+{
+	unsigned char m_padding[0x74];
+	int m_value;
+};
+
+class Rva003F7380State
+{
+public:
+	void resetIfMatching(const Rva003F7380Argument *argument);
+	void finishReset();
+
+private:
+	Rva003F7380Node *m_node;
+	unsigned char m_padding[8];
+	unsigned int m_flags;
+};
+
+void Rva003F7380State::resetIfMatching(const Rva003F7380Argument *argument)
+{
+	unsigned int flags = m_flags;
+	if ((flags & 7) == 3) {
+		m_flags = flags & ~7u;
+	}
+
+	Rva003F7380Node *node = m_node;
+	if (node != 0 && node->m_value == argument->m_value) {
+		m_flags &= ~7u;
+		node->m_value = 0;
+		finishReset();
+	}
+}
