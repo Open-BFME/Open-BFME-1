@@ -82301,3 +82301,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeValBC@BfmeObjBC@@QAEMXZ,0x008D8E00,Open-BFME5 float getter for 0x0040BC50
 ?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
 ?g_bfmeScaleBC@@3MA,0x00C7FAC4,Open-BFME5 float scale for 0x0040BC50
+?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
