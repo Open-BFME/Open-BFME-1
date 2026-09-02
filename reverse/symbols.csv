@@ -74502,6 +74502,10 @@ _g_bfmeDualDispatchSource,0x010BD158,Open-BFME5 source path passed by 0x0028B910
 ?bfmeRun@BfmeSecondaryTarget@@QAEXPAVObject@@HH@Z,0x000160D1,Open-BFME5 optional secondary dispatch called by 0x0028B910
 ?bfmeApply@BfmeEntrySink@@QAEXPAUBfmeEntry@@EHHH@Z,0x000391C6,Open-BFME5 nested entry dispatch called by 0x00283790
 ?bfmeFinish@Gen_0028B360@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 selected-command completion called by 0x0028B360
+?bfmeSetConditionState@Object@@QAEXH@Z,0x0001E402,Open-BFME5 condition-state setter called by 0x0028D8F0
+?clearAndSetModelConditionFlags@Object@@QAEXABVBfmeConditionFlags@@0@Z,0x000095ED,Open-BFME5 random-condition model flags call at 0x0028D8F0
+?bfmeComplete@Gen_0028D8F0@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 random-condition completion called by 0x0028D8F0
+_g_bfmeD8F0Source,0x010BDCC0,Open-BFME5 source path passed by 0x0028D8F0 random selection
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
