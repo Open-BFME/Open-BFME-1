@@ -82376,3 +82376,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeInsertV51@BfmeStrV51@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831EA0
 ?copyFrom@BfmeTailF0@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F0F0
 ?bfmeInsertV52@BfmeStrV52@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831E00
+?copyFrom@BfmeTailA2@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EA20
