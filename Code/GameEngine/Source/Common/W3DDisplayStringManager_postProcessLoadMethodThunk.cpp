@@ -1,384 +1,107 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // readable body of ?postProcessLoad@W3DDisplayStringManager@@UAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManager.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: convert the retail display-string post-load routine to clean C++.
 
-class __declspec(novtable) W3DDisplayStringManager
+typedef unsigned short wchar_t;
+#include "Common/AsciiString.h"
+#include "Common/UnicodeString.h"
+
+typedef int Int;
+typedef unsigned char Bool;
+
+class GameFont;
+
+class DisplayString
 {
 public:
-    virtual void postProcessLoad();
+	virtual ~DisplayString();
+	virtual void setText(UnicodeString text);
+	virtual UnicodeString getText();
+	virtual Int getTextLength();
+	virtual void notifyTextChanged();
+	virtual void reset();
+	virtual void setFont(GameFont *font);
 };
 
-// ?postProcessLoad@W3DDisplayStringManager@@UAEXXZ
-__declspec(naked) void W3DDisplayStringManager::postProcessLoad()
+class DisplayStringManager
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x10
-        __emit 0xbb
-        __emit 0x04
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x10
-        __emit 0xa1
-        __emit 0xf8
-        __emit 0x13
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xdb
-        __emit 0x40
-        __emit 0x04
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x8a
-        __emit 0x48
-        __emit 0x08
-        __emit 0x57
-        __emit 0x51
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x38
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xf8
-        __emit 0x52
-        __emit 0x91
-        __emit 0xff
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x33
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x5e
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x52
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x03
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xff
-        __emit 0x52
-        __emit 0x18
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x57
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0xcc
-        __emit 0x62
-        __emit 0x0f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xb5
-        __emit 0x32
-        __emit 0x19
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x14
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xdb
-        __emit 0x36
-        __emit 0x19
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xc4
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x52
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x2b
-        __emit 0x22
-        __emit 0x19
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x7c
-        __emit 0x14
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x52
-        __emit 0xff
-        __emit 0x50
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x0b
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x52
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xe3
-        __emit 0x1f
-        __emit 0x19
-        __emit 0x00
-        __emit 0x47
-        __emit 0x83
-        __emit 0xc3
-        __emit 0x04
-        __emit 0x83
-        __emit 0xff
-        __emit 0x0a
-        __emit 0x0f
-        __emit 0x8c
-        __emit 0x6a
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x50
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x46
-        __emit 0x38
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xff
-        __emit 0x52
-        __emit 0x18
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x5c
-        __emit 0xff
-        __emit 0x11
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x1f
-        __emit 0x32
-        __emit 0x19
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x14
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x45
-        __emit 0x36
-        __emit 0x19
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xfc
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x99
-        __emit 0x21
-        __emit 0x19
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x7c
-        __emit 0x14
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x57
-        __emit 0xff
-        __emit 0x52
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x38
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x50
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x52
-        __emit 0x1f
-        __emit 0x19
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x1c
-        __emit 0xc3
-    }
+public:
+	virtual ~DisplayStringManager();
+	virtual void init() = 0;
+	virtual void postProcessLoad();
+	virtual void reset() = 0;
+	virtual void update() = 0;
+	virtual void draw();
+	virtual Bool bfme_dsm_6(void *) { return 0; }
+	virtual void bfme_dsm_7() {}
+	virtual void bfme_dsm_8(void *) {}
+	virtual DisplayString *newDisplayString() = 0;
+	AsciiString m_name;
+	DisplayString *m_stringList;
+	DisplayString *m_currentCheckpoint;
+};
+
+class W3DDisplayStringManager : public DisplayStringManager
+{
+public:
+	virtual void postProcessLoad();
+	DisplayString *m_groupNumeralStrings[10];
+	DisplayString *m_formationLetterDisplayString;
+};
+
+class DrawGroupInfo
+{
+public:
+	AsciiString m_fontName;
+	Int m_fontSize;
+	Bool m_fontIsBold;
+};
+
+class FontLibrary
+{
+public:
+	GameFont *getFont(AsciiString *name, float pointSize, Bool bold);
+};
+
+class GameTextInterface
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1c();
+	virtual void slot20();
+	virtual UnicodeString fetch(AsciiString label, Bool *exists = 0);
+};
+
+extern DrawGroupInfo *TheDrawGroupInfo;
+extern FontLibrary *TheFontLibrary;
+extern GameTextInterface *TheGameText;
+
+void W3DDisplayStringManager::postProcessLoad()
+{
+	GameFont *font = TheFontLibrary->getFont(
+		&TheDrawGroupInfo->m_fontName,
+		(float)TheDrawGroupInfo->m_fontSize,
+		TheDrawGroupInfo->m_fontIsBold);
+
+	for (Int i = 0; i < 10; ++i)
+	{
+		m_groupNumeralStrings[i] = newDisplayString();
+		m_groupNumeralStrings[i]->setFont(font);
+
+		AsciiString displayNumber;
+		displayNumber.format("NUMBER:%d", i);
+		m_groupNumeralStrings[i]->setText(TheGameText->fetch(displayNumber));
+	}
+
+	m_formationLetterDisplayString = newDisplayString();
+	m_formationLetterDisplayString->setFont(font);
+	AsciiString displayLetter;
+	displayLetter.format("LABEL:FORMATION");
+	m_formationLetterDisplayString->setText(TheGameText->fetch(displayLetter));
 }
