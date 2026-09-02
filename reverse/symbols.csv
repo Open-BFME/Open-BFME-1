@@ -79041,6 +79041,8 @@ name,address,notes
 ?hasUpgradeMask@Object@@QBE_NI@Z,0x001C59C0,Open-BFME5 the mask test Object::hasUpgrade tail-jumps to; unnamed in the image
 ?haveAllConnectedPlayersReachedFrame@BFMEConnectionManager@@QAE_NI@Z,0x00662D50,walks +0x12060 latest-frame[8] with m_connections read as [eax-0x1205c]; FALSE if any connected slot's latest frame < arg; sole caller 0x00682BD7 in Network frame-tick body 0x00682A90 gating the router's own beginPlayerLeave on Network+0x38; ILT 0x0004A895
 ?healObject@TunnelTracker@@SAXPAVObject@@PAX@Z,0x000387B2,ILT thunk to 0xF8640; pinned from TunnelTracker::healObjects @0xF8D10
+?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
+?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?helper@@YGXPAH@Z,0x007EA0A0,address-derived stdcall helper recovered from 0x007EA300
 ?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
