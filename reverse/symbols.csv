@@ -82249,36 +82249,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeHelpWI@@YAHH@Z,0x0004B2BD,Open-BFME5 REL32 from stdcall wrapper 0x0078AD90
-?bfmePrepWJ@@YGXPAUBfmeObjWJ@@@Z,0x000044C1,Open-BFME5 REL32 from 0x002AB0B0 stdcall wrapper
-??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,0x00047C80,one-argument BFME constructor ILT forwards to the matched two-argument body at 0x002C6430
-?bfmeImplVMN@BfmeStrVMN@@QAEXHHHHPAD@Z,0x008314E0,Open-BFME5 /Od forwarder callee for 0x00831930
-?bfmeImplVMN@BfmeStrVMN@@QAEXHHHH@Z,0x008314E0,Open-BFME5 /Od 4-arg view of 5-arg callee at 0x008314E0
-?bfmeImplVMO@BfmeStrVMO@@QAEXHHHH@Z,0x008312E0,Open-BFME5 /Od 4-arg view of callee at 0x008312E0
-?bfmeImplVMP@BfmeStrVMP@@QAEXHHHH@Z,0x008314E0,Open-BFME5 /Od 4-arg view of callee at 0x008314E0
-?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
-?bfmeImplVMR@BfmeStrVMR@@QAEXHHH@Z,0x00830410,Open-BFME5 /Od 3-arg view of callee at 0x00830410
-?bfmeImplVMS@BfmeStrVMS@@QAEXHHH@Z,0x008300B0,Open-BFME5 /Od 3-arg view of callee at 0x008300B0
-?bfmeImplVMT@BfmeStrVMT@@QAEXHH@Z,0x00036DE0,Open-BFME5 /Od 2-arg view of callee at 0x00036DE0
-?_bfme_initialize_007E35E0@Rva007E3930StringState@@AAEXPBDHH@Z,0x00005C0E,address-derived three-argument initializer ILT to body 0x007E35E0
-?bfmeImplVMU@@YA?AUBfmeItVMU@@U1@0DPAD@Z,0x0082D0B0,Open-BFME5 /Od struct-return callee for 0x0082DE30
-?bfmeImplVMV@@YA?AUBfmeItVMV@@U1@0DPAD@Z,0x0082D470,Open-BFME5 /Od struct-return callee for 0x0082DFA0
-?_bfme_hidePurchaseScience@@YAXXZ,0x0003576F,this-less alias of ControlBar::hidePurchaseScience 0x00598F30 at the ZH HideQuitMenu position in ShowDisconnectWindow
-?bfmeImplVMW@BfmeStrVMW@@QAEXHHPAD@Z,0x00021A58,Open-BFME5 /Od thiscall callee thunk for 0x00831740
-?bfmeImplVMX@BfmeStrVMX@@QAEXHHPAD@Z,0x00011522,Open-BFME5 /Od thiscall callee thunk for 0x008316E0
-?bfmeImplVMY@@YAXHHH@Z,0x00018179,Open-BFME5 /Od cdecl callee thunk for 0x0082DDA0
-?allocate@Rva00914860PoolA@@QAE_NHH@Z,0x0003FC7E,Open-BFME5 pool A allocation used by the 0x00914860 sizing update
-?allocate@Rva00914860PoolB@@QAE_NHH@Z,0x009136F0,Open-BFME5 pool B allocation used by the 0x00914860 sizing update
-?allocate@Rva00914860PoolC@@QAE_NHH@Z,0x009131E0,Open-BFME5 pool C allocation used by the 0x00914860 sizing update
-?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
-?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
-?g_rva00914860PoolC@@3VRva00914860PoolC@@A,0x013466B8,Open-BFME5 third pool object used by the 0x00914860 sizing update
-?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
-?bfmeTailVMZ@BfmeElemVMZ@@QAEXPAXHHHHHH@Z,0x0004894B,pin
-?finishOwner@Rva0017AE40Owner@@AAEXXZ,0x000306BB,Open-BFME5 owner finalization tail call used by the 0x0017AE40 child finalizer
-?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
-?rva008AF650Implementation@@YAXHHH@Z,0x008AF650,Open-BFME5 cdecl implementation called by the 0x008C3E70 stdcall adapter
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
-??0Gen00522E00@@QAE@XZ,0x0001B879,address-derived 0x4C-byte self-registering class; ILT to ctor body 0x00522E00 called by the discarded-new factory 0x00510AC0
-??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
-?g_bfmeGlobCC0@@3PAVBfmeGlobCC0@@A,0x00EF1104,pin
