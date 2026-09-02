@@ -80779,6 +80779,7 @@ name,address,notes
 ?u1Emit_005C7A10@@YAXPAVU1Sink@@PBD@Z,0x005C4D00,cdecl sink append target of 0x005C7A10; address-derived name
 ?u1Widen_005C5E40@@YAXPAVU1FloatSink@@N@Z,0x005C5E40,cdecl (this double) callee of 0x005C67A0; address-derived name
 ?u4Append@INI@@QAEXPBX@Z,0x0002DFEC,U4 record field append called twice by 0x005F50B0
+?u4AppendVector@@YAPAVINI@@PAV1@PBX@Z,0x00025FA9,U4 vector formatter called by 0x005C8AA0
 ?u4Finish@INI@@QAEXH@Z,0x0002408C,U4 record terminator called by 0x005F50B0
 ?u4FormatFloat@@YAXPAVINI@@N@Z,0x0000F376,U4 floating-point formatter called by 0x005F50B0
 ?u4Indent@INI@@QAEXH@Z,0x0001B77A,U4 indentation emitter called by 0x005F50B0
