@@ -74922,6 +74922,7 @@ name,address,notes
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeSinVNB@@YAMM@Z,0x00873910,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
+?bfmeSizeVNQ@BfmeItemVNQ@@QAEHXZ,0x009212E0,pin
 ?bfmeSkip1092@BfmeE1092@@QAEDPAVBfmeR1092@@@Z,0x00003B1B,pin
 ?bfmeSlot1024@BfmeSlots1024@@QAEPAPAVBfmeV1024@@H@Z,0x000100A0,pin
 ?bfmeSlot@BfmeDrawableLookupTable@@QAEPAPAVDrawable@@ABI@Z,0x00034A95,Open-BFME5 ILT addDrawableToLookupTable at 0x00431C20 asks for the slot through
@@ -76395,6 +76396,7 @@ name,address,notes
 ?finishConstruct@BFMENetworkQueue1@@QAEXPAX@Z,0x0002E91F,native BFME queue-1 constructor helper ILT
 ?finishConstruct@BFMENetworkQueue@@QAEXPAX@Z,0x000109D3,native BFME queue-0 constructor helper ILT
 ?finishOwner@Rva0017AE40Owner@@AAEXXZ,0x000306BB,Open-BFME5 owner finalization tail call used by the 0x0017AE40 child finalizer
+?finishReset@Rva003F7380State@@QAEXXZ,0x0004B3B7,Open-BFME5 retail call target; ILT thunk to body 0x003F6F10
 ?finishSinglePlayerInit@@YAXXZ,0x0001F78F,ScoreScreen.cpp TU-local; ILT thunk to body 0x004E4790
 ?finishState14@Rva56E070StateOwner@@QAEXXZ,0x000335F0,call target in the 0x0056E070 late-state dispatcher
 ?finishState15@Rva56E070StateOwner@@QAEXXZ,0x0000C4EB,incremental-link call target in the 0x0056E070 late-state dispatcher
@@ -77431,6 +77433,7 @@ name,address,notes
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
 ?g_rva0051B5F0Medium@@3URva0051B5F0Medium@@A,0x00D05FB0,Open-BFME5 packed ten-byte preset global
 ?g_rva0051B5F0Small@@3URva0051B5F0Small@@A,0x00D05FA8,Open-BFME5 packed five-byte preset global
+?g_rva005655C0PlayerList@@3PAURva005655C0PlayerList@@A,0x012ED748,Open-BFME5 retail absolute player-list global used by default-text copier
 ?g_rva005F4340Resource@@3PAVRefCountClass@@A,0x00EF6DE0,global ref-counted renderer resource
 ?g_rva005F7FA0Resource@@3PAVRefCountClass@@A,0x00EF6E30,global ref-counted renderer resource
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
@@ -82450,5 +82453,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?g_rva005655C0PlayerList@@3PAURva005655C0PlayerList@@A,0x012ED748,Open-BFME5 retail absolute player-list global used by default-text copier
-?finishReset@Rva003F7380State@@QAEXXZ,0x0004B3B7,Open-BFME5 retail call target; ILT thunk to body 0x003F6F10
