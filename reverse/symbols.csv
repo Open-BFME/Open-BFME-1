@@ -82362,14 +82362,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
 ?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
 ?bfmeDeallocV48@BfmeStrV48@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FBB0
-?bfmeRelEE@BfmeObjEE@@QAEXXZ,0x00020BCB,Open-BFME5 thunk to RelVM0 body 0x0040ECA0
-?set@BfmeStrEE@@QAEXABV1@@Z,0x00887C90,Open-BFME5 StringBase char set for 0x0040EE10
-?g_bfmeEmptyEE@@3VBfmeStrEE@@A,0x00F36E50,Open-BFME5 AsciiString TheEmptyString for 0x0040EE10
-?bfmeGrowV21@BfmeStrV21@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831190
-?bfmeLenErrV21@BfmeStrV21@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831190
-?bfmeImplV21@BfmeStrV21@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831190
-?bfmePred@BfmeElem340@@QAEEXZ,0x0003C5B0,Open-BFME5 ILT from 0x0013E340 any-of walk
-?bfmeGrowV22@BfmeStrV22@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831230
-?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
-?bfmeImplV22@BfmeStrV22@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831230
 ?findControlBarScheme@ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate@@QAEPAVControlBarScheme@@VControlBarSchemeAsciiString@@@Z,0x0000442B,TU-local view forwards through the existing ControlBarSchemeManager::findControlBarScheme ILT at 0x0000442B for the 0x004ADE40 clean C++ body
