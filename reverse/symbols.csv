@@ -82267,3 +82267,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeFillV16@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x0082FB10
+?bfmeEraseV16@BfmeStrV16@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x0082FB10
+?bfmeAppendV16@BfmeStrV16@@QAEXID@Z,0x00012396,Open-BFME5 append n chars thunk for 0x0082FB10
