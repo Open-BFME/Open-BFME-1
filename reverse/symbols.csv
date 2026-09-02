@@ -3927,6 +3927,7 @@ name,address,notes
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@@_STL@@QAE@XZ,0x009F5970,TeamFactory destructor map delete body
 ??1?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@UAE@XZ,0x0083FB50,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ??1?$hashtable@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@@2@@_STL@@QAE@XZ,0x0002D286,ILT of hashtable dtor from FXListStore dtor
+??1?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAE@XZ,0x000476EA,retail WindowVideoManager map destructor call target
 ??1?$pair@$$CBGUGen_t_002c11a0_m4cd@@@_STL@@QAE@XZ,0x0001E29F,family-emit payload member
 ??1?$pair@$$CBGUGen_t_009f2900_m4cd@@@_STL@@QAE@XZ,0x009F2800,family-emit payload member
 ??1?$pair@$$CBHUGen_t_000aa6c0_p16cd@@@_STL@@QAE@XZ,0x000A9C90,gen-tgrid payload member
