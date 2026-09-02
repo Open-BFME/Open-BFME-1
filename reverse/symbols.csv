@@ -2287,6 +2287,7 @@ name,address,notes
 ??0CompositeRenderObjClass@@QAE@ABV0@@Z,0x00005E93,Open-BFME5 the incremental-link thunk DistLODClass copy constructor forwards to; DistLODClass derives from it in the vendored WW3D2 header
 ??0Condition@@QAE@W4ConditionType@0@@Z,0x00357CC0,resolved via direct disassembly at Condition::duplicate; 1st ctor call site (83B unclaimed gen-dump)
 ??0ContestableContainModuleDataBase@@QAE@XZ,0x00014565,ContestableContainModuleData ctor base
+??0ControlBar@@QAE@XZ,0x0049D660,Open-BFME5 retail ControlBar constructor body reached through the 0x0001CA58 incremental-link thunk
 ??0ControlBarSchemeImage@@QAE@XZ,0x00028489,parseAnimatingPartImage callee ILT thunk to 0x4ACD00
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001F5C3,pinharvest x1 (thunk)

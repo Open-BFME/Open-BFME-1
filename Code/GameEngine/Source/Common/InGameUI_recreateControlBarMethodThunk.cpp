@@ -1,295 +1,140 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?recreateControlBar@InGameUI@@UAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ conversion of InGameUI::recreateControlBar.
 
-class __declspec(novtable) InGameUI
+typedef int Int;
+typedef unsigned int UnsignedInt;
+
+// Retail's AsciiString is a one-pointer StringBase<char> view.  Keeping the
+// constructors and release operation out of line leaves the calls at the
+// already matched retail string bodies (0x00888BC0 and 0x00887940).
+template <typename T> class StringBase
+{
+private:
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &that );
+	void releaseBuffer();
+	friend class AsciiString;
+};
+
+class AsciiString
 {
 public:
-    virtual void recreateControlBar();
+	AsciiString( const char *text )
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase( text );
+	}
+
+	AsciiString( const AsciiString &that )
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&that );
+	}
+
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+	const char *str() const
+	{
+		return m_text ? m_text + 8 : (const char *)0x0107388B;
+	}
+
+private:
+	char *m_text;
+};
+
+class GameWindow
+{
+public:
+	virtual void deleteInstance( UnsignedInt flags );
+};
+
+class WindowLayoutInfo;
+
+class GameWindowManager
+{
+public:
+	virtual void slot000(); virtual void slot004(); virtual void slot008();
+	virtual void slot00C(); virtual void slot010(); virtual void slot014();
+	virtual void slot018(); virtual void slot01C(); virtual void slot020();
+	virtual void slot024(); virtual void slot028(); virtual void slot02C();
+	virtual void slot030(); virtual void slot034(); virtual void slot038();
+	virtual void slot03C(); virtual void slot040(); virtual void slot044();
+	virtual void slot048(); virtual void slot04C(); virtual void slot050();
+	virtual void slot054(); virtual void slot058(); virtual void slot05C();
+	virtual void slot060(); virtual void slot064();
+	virtual GameWindow *winCreateFromScript( AsciiString file,
+		WindowLayoutInfo *info, void *extra );
+	virtual void slot06C(); virtual void slot070(); virtual void slot074();
+	virtual void slot078(); virtual void slot07C(); virtual void slot080();
+	virtual void slot084(); virtual void slot088(); virtual void slot08C();
+	virtual void slot090(); virtual void slot094(); virtual void slot098();
+	virtual void slot09C(); virtual void slot0A0(); virtual void slot0A4();
+	virtual void slot0A8(); virtual void slot0AC();
+	virtual void slot0B0(); virtual void slot0B4(); virtual void slot0B8();
+	virtual void slot0BC(); virtual void slot0C0(); virtual void slot0C4();
+	virtual void slot0C8(); virtual void slot0CC(); virtual void slot0D0();
+	virtual void slot0D4(); virtual void slot0D8();
+	virtual GameWindow *winGetWindowFromId( GameWindow *window, Int id );
+};
+
+class NameKeyGenerator
+{
+public:
+	Int nameToKey( const char *name );
+};
+
+class ControlBar
+{
+public:
+	ControlBar();
+	virtual ~ControlBar();
+	virtual void init();
+
+private:
+	char m_unreconstructed[0x2F4];
+};
+
+extern GameWindowManager *TheWindowManager;
+extern NameKeyGenerator *TheNameKeyGenerator;
+extern ControlBar *TheControlBar;
+
+void HideControlBar( bool immediate );
+
+class InGameUI
+{
+public:
+	virtual void recreateControlBar();
+
+	void createControlBar()
+	{
+		TheWindowManager->winCreateFromScript(
+			AsciiString( "ControlBar.wnd" ), 0, 0 );
+		HideControlBar( true );
+	}
+
+private:
+	char m_unreconstructed[0x1398];
+	GameWindow *m_idleWorkerWin;
 };
 
 // ?recreateControlBar@InGameUI@@UAEXXZ
-__declspec(naked) void InGameUI::recreateControlBar()
+void InGameUI::recreateControlBar()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xb3
-        __emit 0x2c
-        __emit 0x02
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0x68
-        __emit 0x5c
-        __emit 0x57
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x96
-        __emit 0x68
-        __emit 0x44
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x40
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x31
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x00
-        __emit 0xd6
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x7f
-        __emit 0x8a
-        __emit 0xbf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x40
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0x96
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xc6
-        __emit 0x55
-        __emit 0x44
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x12
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x5c
-        __emit 0x57
-        __emit 0x0f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x87
-        __emit 0x9c
-        __emit 0x13
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x1b
-        __emit 0x68
-        __emit 0x44
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x40
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x01
-        __emit 0xff
-        __emit 0x50
-        __emit 0x68
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x90
-        __emit 0x04
-        __emit 0xbc
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xf8
-        __emit 0x33
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x42
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xff
-        __emit 0x12
-        __emit 0x68
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x5c
-        __emit 0xfb
-        __emit 0x43
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x09
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x6a
-        __emit 0xa6
-        __emit 0xbd
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xa3
-        __emit 0xf8
-        __emit 0x33
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x52
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-    }
+	GameWindow *window = TheWindowManager->winGetWindowFromId(
+		0, TheNameKeyGenerator->nameToKey(
+			AsciiString( "ControlBar.wnd" ).str() ) );
+	if (window)
+		window->deleteInstance( 1 );
+
+	m_idleWorkerWin = 0;
+	createControlBar();
+
+	if (TheControlBar)
+	{
+		delete TheControlBar;
+		TheControlBar = new ControlBar;
+		TheControlBar->init();
+	}
 }
