@@ -82231,3 +82231,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplVMU@@YA?AUBfmeItVMU@@U1@0DPAD@Z,0x0082D0B0,Open-BFME5 /Od struct-return callee for 0x0082DE30
 ?bfmeImplVMV@@YA?AUBfmeItVMV@@U1@0DPAD@Z,0x0082D470,Open-BFME5 /Od struct-return callee for 0x0082DFA0
 ?_bfme_hidePurchaseScience@@YAXXZ,0x0003576F,this-less alias of ControlBar::hidePurchaseScience 0x00598F30 at the ZH HideQuitMenu position in ShowDisconnectWindow
+?bfmeImplVMW@BfmeStrVMW@@QAEXHHPAD@Z,0x00021A58,Open-BFME5 /Od thiscall callee thunk for 0x00831740
