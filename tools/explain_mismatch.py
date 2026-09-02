@@ -83,6 +83,15 @@ def disassemble(data, base):
     finally:
         build.Path(path).unlink(missing_ok=True)
 
+    if result.returncode != 0:
+        # Apple's llvm-objdump rejects "-b binary", so on a stock macOS host the
+        # driver's usage error lands where the disassembly should be. capstone is
+        # already a dependency of the reversing tools -- fall back to it.
+        lines = disassemble_capstone(data, base)
+        if lines is not None:
+            return lines
+        return [line.strip() for line in result.stdout.splitlines() if line.strip()]
+
     lines = []
     for line in result.stdout.splitlines():
         stripped = line.strip()
