@@ -408,6 +408,7 @@ class __multiple_inheritance BfmeAptScreenDisconnectScreen
 public:
 	BfmeAptScreenDisconnectScreen( void *context );
 	virtual ~BfmeAptScreenDisconnectScreen();
+	int _bfme_checkMsg( int msg, void *control, void *data );
 	void _bfme_getPlayerColor( const char *name, void *value, bool setting );
 	void _bfme_onChatEnterText( const char *argument );
 	void _bfme_onInitGadget( const char *name, void *argument, GameWindow *window );
@@ -592,6 +593,35 @@ void BfmeAptScreenDisconnectScreen::_bfme_onChatEnterText( const char * )
 		if( !text.isEmpty() )
 			((DisconnectMenu *)this)->sendChat( text );
 	}
+}
+
+class BfmeMsgHandler
+{
+public:
+	int defaultHandler( int msg, void *control, void *data );
+};
+
+// ?_bfme_checkMsg@BfmeAptScreenDisconnectScreen@@QAEHHPAX0@Z
+// Window-message filter: anything the default handler consumed is done; a
+// GBM_SELECTED (0x4008) is always claimed, and a GEM_EDIT_DONE (0x4030) from
+// the chat entry with no data submits the pending chat line.
+int BfmeAptScreenDisconnectScreen::_bfme_checkMsg( int msg, void *control, void *data )
+{
+	if( ((BfmeMsgHandler *)this)->defaultHandler( msg, control, data ) == 1 )
+		return 1;
+
+	switch( msg )
+	{
+	case 0x4008:
+		break;
+	case 0x4030:
+		if( control == m_textEntryWindow && data == 0 )
+			_bfme_onChatEnterText( (const char *)data );
+		break;
+	default:
+		return 0;
+	}
+	return 1;
 }
 
 // ?_bfme_onInitGadget@BfmeAptScreenDisconnectScreen@@QAEXPBDPAXPAVGameWindow@@@Z
