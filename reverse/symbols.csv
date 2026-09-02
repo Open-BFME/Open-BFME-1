@@ -74049,6 +74049,8 @@ name,address,notes
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeCall71BA0@BfmeHelper71BA0@@QAEHXZ,0x00980890,Open-BFME5 address-derived guarded helper tail-call from the 0x00971BA0 body
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
+?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
+?bfmeImplVML@BfmeStrVML@@QAEXHHHHPAD@Z,0x008314E0,Open-BFME5 /Od forwarder callee for 0x008318B0
 ?bfmeInChannelUMA@@YAHPAUBfmeConnUMA@@PBD@Z,0x00871C40,pin
 ?bfmeIncVGO@@YAIPAI@Z,0x00894D80,pin
 ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z,0x0003E0B3,Open-BFME5 ILT thunk to body 0x0039BBD0; ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEE... at 0x0039BE50 asks it about the template first and allows everything when it answers negative; address-derived name
@@ -76530,6 +76532,7 @@ name,address,notes
 ?g_bfmeCountSI@@3HA,0x00EED240,pin
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCountTDB@@3HA,0x00F40594,pin
+?g_bfmeCountWE@@3HA,0x0130BCA8,Open-BFME5 locale once-counter at 0x0083B6C0
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCsVHM@@3UBfmeCsVHM@@A,0x00F3F4E8,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
@@ -76913,6 +76916,7 @@ name,address,notes
 ?g_bfmeObjUDB@@3PAVBfmeSrcUDB@@A,0x00EF7FE0,pin
 ?g_bfmeObjUDC@@3PAVBfmeSrcUDC@@A,0x00F07214,pin
 ?g_bfmeObjVGJ@@3PAVBfmeThingVGJ@@A,0x00EED5C8,pin
+?g_bfmeObjWE@@3PAXA,0x0130BCA0,Open-BFME5 locale impl pointer written by 0x0083B6C0
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -82202,6 +82206,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
-?g_bfmeCountWE@@3HA,0x0130BCA8,Open-BFME5 locale once-counter at 0x0083B6C0
-?g_bfmeObjWE@@3PAXA,0x0130BCA0,Open-BFME5 locale impl pointer written by 0x0083B6C0
