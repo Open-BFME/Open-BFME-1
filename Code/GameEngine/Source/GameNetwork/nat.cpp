@@ -1317,7 +1317,6 @@ void NAT::sendMangledPortNumberToTarget(UnsignedShort mangledPort, GameSlot *tar
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/NAT_processGlobalMessage_Thunk.cpp
-// ?processGlobalMessage@NAT@@QAEXHPBD@Z present-unmatched
 void NAT::processGlobalMessage(Int slotNum, const char *options) {
 	const char *ptr = options;
 	// skip preceding whitespace.
@@ -1351,7 +1350,11 @@ void NAT::processGlobalMessage(Int slotNum, const char *options) {
 		Int sendingNode;
 		sscanf(c, "%d %d\n", &node, &sendingNode);
 
-		if (m_connectionPairs[m_connectionPairIndex][m_connectionRound][node] == sendingNode) {
+		// BFME keeps the pairing cursor at +0xB0; the reference NAT layout places
+		// the same field at +0xC0 after its larger connection-state arrays.
+		const Int connectionPairIndex = *reinterpret_cast<const Int *>(
+			reinterpret_cast<const UnsignedByte *>(this) + 0xB0);
+		if (m_connectionPairs[connectionPairIndex][m_connectionRound][node] == sendingNode) {
 //			Int node = atoi(ptr + strlen("CONNDONE"));
 			DEBUG_LOG(("NAT::processGlobalMessage - got a CONNDONE message for node %d\n", node));
 			if ((node >= 0) && (node <= m_numNodes)) {
@@ -1369,6 +1372,7 @@ void NAT::processGlobalMessage(Int slotNum, const char *options) {
 		if ((node >= 0) && (node < m_numNodes)) {
 			DEBUG_LOG(("NAT::processGlobalMessage - node %d's connection failed, setting connection state to failed\n", node));
 			setConnectionState(node, NATCONNECTIONSTATE_FAILED);
+			m_NATState = NATSTATE_FAILED;
 		}
 	} else if (!strncmp(ptr, "PORT", strlen("PORT"))) {
 		// format: PORT<node number> <port number> <internal IP>
