@@ -73692,6 +73692,7 @@ name,address,notes
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
 ?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
 ?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
+?bfmeFill@BfmeEffectState8030@@QAEXPAXHPAUBfmeEffectRecord8030@@H@Z,0x00002243,Open-BFME5 masked-effect record fill called by 0x00288030
 ?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
 ?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z,0x0087F020,Open-BFME5 fill-n of 0x0087FBE0
 ?bfmeFillCD@@YAPAUBfmeElemCD@@PAU1@IABU1@ABUBfmeFalseCD@@@Z,0x0087F520,Open-BFME5 fill-n of 0x0087FCD0
@@ -74502,17 +74503,6 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeLinkRelation@@YAXPAXPAVObject@@H@Z,0x0001253F,Open-BFME5 optional relation link called by 0x00283460
-_g_bfmeDualDispatchSource,0x010BD158,Open-BFME5 source path passed by 0x0028B910 random selections
-?bfmeRun@BfmeSecondaryTarget@@QAEXPAVObject@@HH@Z,0x000160D1,Open-BFME5 optional secondary dispatch called by 0x0028B910
-?bfmeApply@BfmeEntrySink@@QAEXPAUBfmeEntry@@EHHH@Z,0x000391C6,Open-BFME5 nested entry dispatch called by 0x00283790
-?bfmeFinish@Gen_0028B360@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 selected-command completion called by 0x0028B360
-?bfmeSetConditionState@Object@@QAEXH@Z,0x0001E402,Open-BFME5 condition-state setter called by 0x0028D8F0
-?clearAndSetModelConditionFlags@Object@@QAEXABVBfmeConditionFlags@@0@Z,0x000095ED,Open-BFME5 random-condition model flags call at 0x0028D8F0
-?bfmeComplete@Gen_0028D8F0@@QAEXPAVObject@@H@Z,0x000157DA,Open-BFME5 random-condition completion called by 0x0028D8F0
-_g_bfmeD8F0Source,0x010BDCC0,Open-BFME5 source path passed by 0x0028D8F0 random selection
-?bfmeFindModule@@YAPAVBfmeDestroyable@@XZ,0x0028CCD0,Open-BFME5 object module scan called by 0x0028CF50
-?bfmeFill@BfmeEffectState8030@@QAEXPAXHPAUBfmeEffectRecord8030@@H@Z,0x00002243,Open-BFME5 masked-effect record fill called by 0x00288030
-?bfmeRun@BfmeThing8030@@QAEXPAVBfmeEffectState8030@@PAUBfmeEffectRecord8030@@HH@Z,0x00002A59,Open-BFME5 masked effect dispatch called by 0x00288030
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
@@ -74982,6 +74972,7 @@ _g_bfmeD8F0Source,0x010BDCC0,Open-BFME5 source path passed by 0x0028D8F0 random 
 ?bfmeRun1078@BfmeR1078@@QAEXPAVBfmeX1078@@PADH11111@Z,0x00015235,pin
 ?bfmeRun1079@BfmeR1079@@QAEXPAVBfmeX1079@@PADH11111@Z,0x00015235,pin
 ?bfmeRun@BfmeSecondaryTarget@@QAEXPAVObject@@HH@Z,0x000160D1,Open-BFME5 optional secondary dispatch called by 0x0028B910
+?bfmeRun@BfmeThing8030@@QAEXPAVBfmeEffectState8030@@PAUBfmeEffectRecord8030@@HH@Z,0x00002A59,Open-BFME5 masked effect dispatch called by 0x00288030
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
