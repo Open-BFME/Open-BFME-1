@@ -58,7 +58,7 @@ public:
 	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
 	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
 	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
-	virtual void slot09(void); virtual void slot10(void); virtual void slot11(void);
+	virtual void setFrame(UnsignedInt frame); virtual void slot10(void); virtual void slot11(void);
 	virtual void slot12(void); virtual void slot13(void); virtual void slot14(void);
 	virtual void slot15(void); virtual void slot16(void); virtual void slot17(void);
 	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
@@ -114,6 +114,8 @@ public:
 	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
 	virtual void slot21(void); virtual void slot22(void); virtual void slot23(void);
 	virtual void slot24(void); virtual void slot25(void);
+	// Retail +0x68 -> ILT 0x0041D723 -> 0x008318C0. This is a pure load of
+	// the UnsignedInt at object +0x0C, paired with setFrame at vtable +0x24.
 	virtual UnsignedInt getFrame(void);
 };
 

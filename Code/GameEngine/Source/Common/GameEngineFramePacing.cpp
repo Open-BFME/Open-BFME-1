@@ -151,7 +151,7 @@ public:
 	virtual void slot06(void) = 0;
 	virtual void slot07(void) = 0;
 	virtual void slot08(void) = 0;
-	virtual void setFrame(int frame) = 0;
+	virtual void setFrame(unsigned int frame) = 0;
 	virtual void slot10(void) = 0;
 	virtual void slot11(void) = 0;
 	virtual void slot12(void) = 0;
@@ -168,7 +168,7 @@ public:
 	virtual void slot23(void) = 0;
 	virtual void slot24(void) = 0;
 	virtual void slot25(void) = 0;
-	virtual int getFrame(void) = 0;
+	virtual unsigned int getFrame(void) = 0;
 
 	char m_gap04[0xc0];
 	bool m_advanceFrame;
