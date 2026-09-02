@@ -10624,7 +10624,7 @@ name,address,notes
 ?Set_Arrays@PointGroupClass@@QAEXPAV?$ShareBufferClass@VVector3@@@@PAV?$ShareBufferClass@VVector4@@@@PAV?$ShareBufferClass@I@@PAV?$ShareBufferClass@M@@PAV?$ShareBufferClass@E@@4HMMMM@Z,0x009126B0,derived from Render_Particles call sites
 ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z,0x0001321E
 ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z,0x000261E3
-?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905990,REL32 pin from DX8Wrapper::Set_Default_Global_Render_States @0x9081D0
+?Set_DX8_ZBias@DX8Wrapper@@SAXM@Z,0x00905990,REL32 pin from DX8Wrapper::Set_Default_Global_Render_States @0x9081D0
 ?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905AB0,int-to-float thunk onto 0x905990 body
 ?Set_Flag@LineGroupClass@@QAEXW4FlagsType@1@_N@Z,0x0098E900,derived from ParticleBufferClass main ctor aligned call sites
 ?Set_Flag@PointGroupClass@@QAEXW4FlagsType@1@_N@Z,0x009120A0,derived from ParticleBufferClass main ctor aligned call sites
