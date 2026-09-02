@@ -82428,3 +82428,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeElem2E@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 elem copy ctor of 0x008802E0
 ?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
 ??0WideStr@@QAE@ABV0@@Z,0x00888400,pin
+?erase@BfmeVec60@@QAEXPAUBfmeElem60@@0@Z,0x0087FB90,Open-BFME5 shrink erase of 0x00880260
+?insert@BfmeVec60@@QAEXPAUBfmeElem60@@IABU2@@Z,0x0087FDC0,Open-BFME5 grow fill-insert of 0x00880260
+?release@BfmeTail60@@QAEXXZ,0x00887940,Open-BFME5 by-value tail release of 0x00880260
