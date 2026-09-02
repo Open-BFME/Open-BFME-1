@@ -1,363 +1,108 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // readable body of ?newShellMenuScheme@ShellMenuSchemeManager@@QAEPAVShellMenuScheme@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: convert ShellMenuSchemeManager::newShellMenuScheme to clean C++.
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef unsigned short UnsignedShort;
+
+extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
+
+struct BfmeAsciiStringData
+{
+	UnsignedShort m_refCount;
+	UnsignedShort m_numCharsAllocated;
+	UnsignedShort m_len;
+	UnsignedShort m_pad;
+};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
+public:
+	AsciiString(const AsciiString &that);
+	~AsciiString();
+
+	void toLower(void);                         // retail 0x00887DA0
+	void set(const AsciiString &that);          // retail 0x00887C90
+
+	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
+	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }
+
+	Int compare(const AsciiString &other) const
+	{
+		Int lenOther = other.getLength();
+		const char *pOther = other.str();
+		Int lenThis = getLength();
+		const char *pThis = str();
+		Int shorter = lenThis < lenOther ? lenThis : lenOther;
+
+		Int diff = memcmp(pThis, pOther, shorter);
+		if (diff != 0)
+			return diff;
+
+		return lenThis - lenOther;
+	}
+
+private:
+	BfmeAsciiStringData *m_data;
 };
-class ShellMenuScheme;
+
+class ShellMenuSchemeLine;
+class ShellMenuSchemeImage;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
+class ShellMenuScheme
+{
+public:
+	ShellMenuScheme(void);
+	~ShellMenuScheme(void);
+
+	AsciiString m_name;
+	typedef _STL::list<ShellMenuSchemeImage *> ShellMenuSchemeImageList;
+	ShellMenuSchemeImageList m_imageList;
+	typedef _STL::list<ShellMenuSchemeLine *> ShellMenuSchemeLineList;
+	ShellMenuSchemeLineList m_lineList;
+};
+
+typedef _STL::list<ShellMenuScheme *> ShellMenuSchemeList;
+typedef ShellMenuSchemeList::iterator ShellMenuSchemeListIt;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager
 {
 public:
-	ShellMenuScheme *newShellMenuScheme(AsciiString);
+	ShellMenuScheme *newShellMenuScheme(AsciiString name);
+
+private:
+	ShellMenuSchemeList m_schemeList;
+	ShellMenuScheme *m_currentScheme;
 };
 
-// ?newShellMenuScheme@ShellMenuSchemeManager@@QAEPAVShellMenuScheme@@VAsciiString@@@Z
-__declspec(naked) ShellMenuScheme *ShellMenuSchemeManager::newShellMenuScheme(AsciiString)
+ShellMenuScheme *ShellMenuSchemeManager::newShellMenuScheme(AsciiString name)
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xf3
-		__emit 0x69
-		__emit 0x03
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x0c
-		__emit 0x53
-		__emit 0x55
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x57
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x28
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x89
-		__emit 0x67
-		__emit 0x30
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x3b
-		__emit 0xe8
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x91
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x85
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x08
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x74
-		__emit 0x09
-		__emit 0x0f
-		__emit 0xb7
-		__emit 0x5f
-		__emit 0x04
-		__emit 0x83
-		__emit 0xc7
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x07
-		__emit 0x33
-		__emit 0xdb
-		__emit 0xbf
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x06
-		__emit 0x0f
-		__emit 0xb7
-		__emit 0x50
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x8d
-		__emit 0x70
-		__emit 0x08
-		__emit 0x75
-		__emit 0x05
-		__emit 0xbe
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x3b
-		__emit 0xd3
-		__emit 0x8b
-		__emit 0xca
-		__emit 0x7c
-		__emit 0x02
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0x33
-		__emit 0xc0
-		__emit 0xf3
-		__emit 0xa6
-		__emit 0x74
-		__emit 0x05
-		__emit 0x1b
-		__emit 0xc0
-		__emit 0x83
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x08
-		__emit 0x2b
-		__emit 0xd3
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x8b
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x3b
-		__emit 0x6c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x75
-		__emit 0x9f
-		__emit 0xeb
-		__emit 0x2a
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x89
-		__emit 0x01
-		__emit 0x55
-		__emit 0x89
-		__emit 0x48
-		__emit 0x04
-		__emit 0xe8
-		__emit 0x55
-		__emit 0xcf
-		__emit 0x2a
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x20
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x46
-		__emit 0xff
-		__emit 0xa8
-		__emit 0xff
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x01
-		__emit 0x08
-		__emit 0x30
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x10
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x73
-		__emit 0x08
-		__emit 0x30
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x01
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0x61
-		__emit 0x40
-		__emit 0xa9
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xa5
-		__emit 0x65
-		__emit 0x30
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x36
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x4c
-		__emit 0xce
-		__emit 0x2a
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x48
-		__emit 0x08
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x02
-		__emit 0x89
-		__emit 0x39
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x04
-		__emit 0x89
-		__emit 0x48
-		__emit 0x04
-		__emit 0x89
-		__emit 0x30
-		__emit 0x89
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x89
-		__emit 0x46
-		__emit 0x04
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x22
-		__emit 0x62
-		__emit 0x30
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0xc7
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x18
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
+	ShellMenuSchemeListIt it;
+	it = m_schemeList.begin();
+	name.toLower();
+	while (it != m_schemeList.end())
+	{
+		ShellMenuScheme *scheme = *it;
+		if (scheme->m_name.compare(name) == 0)
+		{
+			m_schemeList.erase(it);
+			delete scheme;
+			break;
+		}
+		else
+			++it;
 	}
+
+	ShellMenuScheme *newScheme = new ShellMenuScheme;
+	newScheme->m_name.set(name);
+	m_schemeList.push_back(newScheme);
+	return newScheme;
 }
