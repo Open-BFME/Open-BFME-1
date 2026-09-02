@@ -22,6 +22,8 @@ void BfmeThingDYA::bfmeGoDYA(void *a)
 extern char g_bfmeInitDYB;
 extern int g_bfmeT0DYB;
 extern int g_bfmeAccDYB;
+extern unsigned __int64 g_bfmeStartDYB;
+extern unsigned __int64 g_bfmeElapsedDYB;
 
 void bfmeGoDYB()
 {
@@ -30,6 +32,17 @@ void bfmeGoDYB()
 		g_bfmeInitDYB = 1;
 		g_bfmeT0DYB = bfmeTickDYA();
 		g_bfmeAccDYB = 0;
+	}
+}
+
+void Rva001057C0()
+{
+	if (g_bfmeInitDYB)
+	{
+		g_bfmeInitDYB = 0;
+		g_bfmeElapsedDYB +=
+			static_cast<unsigned __int64>(static_cast<unsigned int>(bfmeTickDYA())) -
+			g_bfmeStartDYB;
 	}
 }
 
