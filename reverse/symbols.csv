@@ -72666,6 +72666,9 @@ name,address,notes
 ?bfmeApply1040@@YAXPAUBfmeS1040@@H@Z,0x009A6630,pin
 ?bfmeApply1236@BfmeB1236@@QAEXPAX@Z,0x008AD8F0,pin
 ?bfmeApply1243@BfmeA1243@@QAEXPAX00@Z,0x008B65E0,pin
+?bfmeApply1VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 first source-distinct owner apply tail-call from the 0x00298530 update
+?bfmeApply2VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 second source-distinct owner apply tail-call from the 0x00298530 update
+?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply980A@BfmeUseA980@@QAEPAXHH@Z,0x0000DA8A,pin
 ?bfmeApply980B@BfmeUseB980@@QAEPAXHH@Z,0x0004B01F,pin
 ?bfmeApply@BfmeSMCTarget@@QAEXHPBXH@Z,0x0002AD88,Open-BFME5 ILT thunk to body 0x0028EEB0; Object chain-tail forwarder at 0x001C1FB0 supplies the condition index optional opaque descriptor and frame count; bfme name records unrecovered retail types and spelling
@@ -74030,6 +74033,7 @@ name,address,notes
 ?bfmeHashCombineC@@YAIII@Z,0x0003F7CE,Open-BFME5 ILT the combiner at 0x0056E1E0 calls
 ?bfmeHashCompareA@@YAIII@Z,0x00027BFB,Open-BFME5 ILT the hash comparisons at 0x0054ECB0 and 0x0054F200 call
 ?bfmeHashCompareB@@YAIII@Z,0x00020AA4,Open-BFME5 ILT the hash comparisons at 0x0054ECE0 and 0x0054F230 call
+?bfmeHelpVML@@YAXPAHHHH@Z,0x0001D30E,Open-BFME5 REL32 from 0x0048E9A0 thunk to FUN_0088e730
 ?bfmeHelper760@@YAXPAXH@Z,0x002ED760,pin
 ?bfmeHelper98FDE0@@YAXPAXH@Z,0x0098FDE0,pin
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
@@ -74471,6 +74475,7 @@ name,address,notes
 ?bfmePopVJU@BfmeStackVJU@@QAEXXZ,0x008D2CC0,pin
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
+?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
 ?bfmePrepare1281@BfmeSlotDispatcher1281@@QAEXHHI@Z,0x008BBDB0,address-derived preparation callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmePrintTGD@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeProcess1279@BfmeWrapper1279@@QAEXPAX@Z,0x008BD400,address-derived processor called by the 0x008BD4D0 forwarding body
@@ -82196,8 +82201,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
-?bfmeApply1VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 first source-distinct owner apply tail-call from the 0x00298530 update
-?bfmeApply2VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 second source-distinct owner apply tail-call from the 0x00298530 update
-?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
-?bfmeHelpVML@@YAXPAHHHH@Z,0x0001D30E,Open-BFME5 REL32 from 0x0048E9A0 thunk to FUN_0088e730
