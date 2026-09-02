@@ -129,7 +129,6 @@ CreditsLine::~CreditsLine()
 }
 
 
-// ??0CreditsManager@@ present-unmatched
 CreditsManager::CreditsManager(void)
 {
 	m_scrollRate = 1; // in pixels

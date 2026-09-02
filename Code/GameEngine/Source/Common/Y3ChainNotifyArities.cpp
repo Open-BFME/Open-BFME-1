@@ -123,11 +123,58 @@ public:
 
 // ---- tails that are only declared here ------------------------------------
 
+class Y3FlaggedItem
+{
+public:
+	virtual void pad0();
+	virtual void reset();
+	char m_gap[ 0x18 ];
+	unsigned char m_skip;
+};
+
 class Y3ResetTail_005C5A00
 {
 public:
 	void resetAll();
+
+	Y3Item0 *m_h0;
+	Y3Item0 *m_h1;
+	Y3FlaggedItem **m_begin;
+	Y3FlaggedItem **m_end;
 };
+
+void Y3ResetTail_005C5A00::resetAll()
+{
+	Y3_RESET_HEAD( 0 )
+	Y3_RESET_HEAD( 1 )
+	for ( Y3FlaggedItem **it = m_begin; it != m_end; ++it )
+	{
+		Y3FlaggedItem *item = *it;
+		if ( !item->m_skip )
+			item->reset();
+	}
+}
+
+class Y3Reset_005C41E0
+{
+public:
+	void resetAll();
+
+	Y3Item0 *m_h0;
+	Y3FlaggedItem **m_begin;
+	Y3FlaggedItem **m_end;
+};
+
+void Y3Reset_005C41E0::resetAll()
+{
+	Y3_RESET_HEAD( 0 )
+	for ( Y3FlaggedItem **it = m_begin; it != m_end; ++it )
+	{
+		Y3FlaggedItem *item = *it;
+		if ( !item->m_skip )
+			item->reset();
+	}
+}
 
 class Y3NotifyTail_005C5A50
 {

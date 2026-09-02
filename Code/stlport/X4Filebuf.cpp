@@ -10,18 +10,7 @@
 
 extern "C" __declspec(dllimport) BOOL WINAPI SetEndOfFile(HANDLE);
 extern "C" __declspec(dllimport) long __cdecl _get_osfhandle(int);
-extern "C" __declspec(dllimport) HANDLE WINAPI CreateFileMappingA(
-  HANDLE, void *, DWORD, DWORD, DWORD, const char *);
-extern "C" __declspec(dllimport) void *WINAPI MapViewOfFile(
-  HANDLE, DWORD, DWORD, DWORD, DWORD);
 bool bfmeGoDXF(void *file);
-
-#ifndef PAGE_READONLY
-#define PAGE_READONLY 2
-#endif
-#ifndef FILE_MAP_READ
-#define FILE_MAP_READ 4
-#endif
 
 namespace _SgI {
 int _get_osfflags(int file_no, HANDLE os_handle);
@@ -228,27 +217,6 @@ streamoff _Filebuf_base::_M_seek(streamoff offset, ios_base::seekdir dir)
   if (li.LowPart == (DWORD)-1 && GetLastError() != 0)
     return streamoff(-1);
   return li.QuadPart;
-}
-
-void *_Filebuf_base::_M_mmap(streamoff offset, streamoff len)
-{
-  void *base;
-
-  _M_view_id = CreateFileMappingA(_M_file_id, 0, PAGE_READONLY, 0, 0, 0);
-
-  if (_M_view_id) {
-    base = MapViewOfFile(_M_view_id, FILE_MAP_READ,
-      (DWORD)(((unsigned __int64)offset) >> 32),
-      (DWORD)(((unsigned __int64)offset) & 0xffffffff), len);
-    if (base == 0 || _M_seek(offset + len, ios_base::beg) < 0) {
-      this->_M_unmap(base, len);
-      base = 0;
-    }
-  }
-  else
-    base = 0;
-
-  return base;
 }
 
 _STLP_END_NAMESPACE

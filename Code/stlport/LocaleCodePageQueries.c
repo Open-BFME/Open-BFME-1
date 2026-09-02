@@ -197,26 +197,6 @@ char *_Locale_ctype_name(const void *loc, char *buf)
     return __GetLocaleName(ctype->lcid, cpBuf, buf);
 }
 
-static char *__TranslateToSystem(const char *name, char *buf)
-{
-    LCID lcid;
-    char cp[6];
-    if (__GetLCIDFromName(name, &lcid, cp) != 0)
-        return 0;
-    return __GetLocaleName(lcid, cp, buf);
-}
-
-char *Rva0084F190UseTranslateA(const char *name, char *buf)
-{
-    return __TranslateToSystem(name, buf);
-}
-
-char *Rva0084F190UseTranslateB(const char *name, char *buf)
-{
-    char *result = __TranslateToSystem(name, buf);
-    return result ? result : buf;
-}
-
 int Rva0084E5B0UseDefaultCPA(LCID lcid)
 {
     return __GetDefaultCP(lcid);
