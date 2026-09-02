@@ -82215,3 +82215,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeHelpWI@@YAHH@Z,0x0004B2BD,Open-BFME5 REL32 from stdcall wrapper 0x0078AD90
+?bfmePrepWJ@@YGXPAUBfmeObjWJ@@@Z,0x000044C1,Open-BFME5 REL32 from 0x002AB0B0 stdcall wrapper
