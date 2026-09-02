@@ -76923,6 +76923,7 @@ name,address,notes
 ?g_bfmeKTHE@@3MA,0x00C9ECC0,pin
 ?g_bfmeKUDB@@3MA,0x00C75350,pin
 ?g_bfmeKUKC@@3MA,0x00CE8F14,pin
+?g_bfmeKeb@@3MA,0x00D32A80,Open-BFME5 float scale of 0x0087EBB0
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
 ?g_bfmeKeyAVHC@@3HA,0x00D2B580,pin
@@ -79671,6 +79672,7 @@ name,address,notes
 ?markMPLocalDefeatWindowShown@ScriptEngine@@QAEXXZ,0x00002ACC,local defeat retail ILT
 ?markZonesDirty@BFMEZoneDirtyManager@@QAEX_N0@Z,0x004030D0,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h declares one argument, not two
 ?markZonesDirty@PathfindZoneManager@@QAEX_N0@Z,0x00015307,Open-BFME5 ILT; two arguments in BFME where the reference takes one; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 passes false and true
+?maxAbove@BfmeObjEB@@QBEMXZ,0x0087E000,Open-BFME5 max-height callee of 0x0087EBB0
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,0x0000E43A
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
@@ -82392,5 +82394,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?maxAbove@BfmeObjEB@@QBEMXZ,0x0087E000,Open-BFME5 max-height callee of 0x0087EBB0
-?g_bfmeKeb@@3MA,0x00D32A80,Open-BFME5 float scale of 0x0087EBB0
