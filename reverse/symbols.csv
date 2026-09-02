@@ -82830,3 +82830,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?g_bfmeWindowManager@@3PAVBfmeWindowManager@@A,0x012ED5C4,Open-BFME5 window manager read by 0x0028B810
+?bfmeClear@BfmeWindowManager@@QAEXPAH@Z,0x009A25A0,Open-BFME5 window focus clear called by 0x0028B810
+?bfmeSet@BfmeWindowManager@@QAEXPAH@Z,0x009A2590,Open-BFME5 window focus set called by 0x0028B810
