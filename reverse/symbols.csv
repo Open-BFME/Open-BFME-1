@@ -82394,3 +82394,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeThrowV56@BfmeStrV56@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831A80
+?bfmeThrow2V56@BfmeStrV56@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831A80
+?bfmeInsertV56@BfmeStrV56@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831A80
