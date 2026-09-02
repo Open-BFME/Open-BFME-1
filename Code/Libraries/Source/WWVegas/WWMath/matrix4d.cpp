@@ -311,37 +311,13 @@ Matrix4D &Matrix4D::SetIdentity()
     return *this;
 }
 
-__declspec(naked) Matrix4D &Matrix4D::Set(const Coord3D &translation)
+Matrix4D &Matrix4D::Set(const Coord3D &translation)
 {
-    __asm {
-        mov eax, ecx
-        xor ecx, ecx
-        mov edx, 0x3f800000
-        mov [eax + 0x0c], ecx
-        mov [eax + 0x1c], ecx
-        mov [eax + 0x2c], ecx
-        mov [eax + 0x04], ecx
-        mov [eax + 0x08], ecx
-        mov [eax + 0x10], ecx
-        mov [eax + 0x18], ecx
-        mov [eax + 0x20], ecx
-        mov [eax + 0x24], ecx
-        mov [eax + 0x30], ecx
-        mov [eax + 0x34], ecx
-        mov [eax + 0x38], ecx
-        mov ecx, [esp + 0x04]
-        mov [eax], edx
-        mov [eax + 0x14], edx
-        mov [eax + 0x28], edx
-        mov [eax + 0x3c], edx
-        mov edx, [ecx]
-        mov [eax + 0x0c], edx
-        mov edx, [ecx + 0x04]
-        mov [eax + 0x1c], edx
-        mov ecx, [ecx + 0x08]
-        mov [eax + 0x2c], ecx
-        ret 4
-    }
+    SetIdentity();
+    values[3] = translation.x;
+    values[7] = translation.y;
+    values[11] = translation.z;
+    return *this;
 }
 
 bool Matrix4D::IsExactlyEqualTo(const Matrix4D &that)
