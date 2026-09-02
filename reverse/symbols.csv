@@ -55272,6 +55272,10 @@ name,address,notes
 ?b_00588ca0@@YAXXZ,0x00588CA0,gen-thunk body
 ?b_00588cf0@@YAXXZ,0x00588CF0,gen-thunk body
 ?b_00588d10@@YAXXZ,0x00588D10,gen-thunk body
+?bfmeClose@GameWindow@@QAEX_N@Z,0x00027F2A,Gen_00588D10 close-window thunk
+?bfmeDetach@BfmeTransitionMD@@QAEXPAVGameWindow@@@Z,0x00027895,Gen_00588D10 transition detach thunk
+?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
+?g_bfmeTransitionMD@@3PAVBfmeTransitionMD@@A,0x00EF4C7C,Gen_00588D10 transition manager
 ?b_00588d80@@YAXXZ,0x00588D80,gen-thunk body
 ?b_00588d90@@YAXXZ,0x00588D90,gen-thunk body
 ?b_00588da0@@YAXXZ,0x00588DA0,gen-thunk body
