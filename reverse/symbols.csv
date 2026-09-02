@@ -74328,6 +74328,7 @@ name,address,notes
 ?bfmeIsSet@BfmeGameOverGateB@@QAE_NXZ,0x0000CFC7,Open-BFME5 ILT the second early check of BfmeShouldShowGameOverEvent at 0x002ED8F0 goes through; the receiving global at 0x012F076C is unidentified
 ?bfmeIsWithin@Gen_001E1980@@QBEEXZ,0x0003FB1B,BFME weapon frame-window predicate; existing body compares TheGameLogic frame to +0x1C and +0x24
 ?bfmeItemSizeVOF@BfmeItemVOF@@QAEHXZ,0x00959500,pin
+?bfmeItemSizeVOG@BfmeItemVOG@@QAEHXZ,0x0095B070,pin
 ?bfmeIterate@BfmeIterableObject@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x0003DB68,Open-BFME5 ILT the per-object visit in Player::iterateObjects at 0x000CDCF0 calls; it jumps to 0x000EE770
 ?bfmeJoinAKD@BfmeInnerAKD@@QAEXPAXHH@Z,0x00014FDD,pin
 ?bfmeJoinBSE@@YAPAXPAX0@Z,0x00042FA0,pin
