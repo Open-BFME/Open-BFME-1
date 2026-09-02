@@ -73597,6 +73597,7 @@ name,address,notes
 ?bfmeFindUPB@@YAPAXPAX0@Z,0x007EBCA0,pin
 ?bfmeFindVLI@BfmeMapVLI@@QAEPAUBfmeNodeVLI@@PAG@Z,0x0093DCE0,pin
 ?bfmeFindVMQ@@YAPADPBD0@Z,0x007EBCA0,pin
+?bfmeFindVNC@BfmeKeyVNC@@QAEPAXPBDH@Z,0x007E8900,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
 ?bfmeFinish1010A@BfmeA1010@@QAEXXZ,0x0002A05E,pin
 ?bfmeFinish1010B@BfmeThing1010@@QAEXH@Z,0x0001AA0A,pin
@@ -73987,6 +73988,7 @@ name,address,notes
 ?bfmeGetLog1038@@YAPAVBfmeLog1038@@XZ,0x007EB810,pin
 ?bfmeGetLogUUA@@YAPAVBfmeLogUUA@@XZ,0x007EB810,pin
 ?bfmeGetLogUVB@@YAPAVBfmeLogUVB@@XZ,0x007EB810,pin
+?bfmeGetLogVNC@@YAPAVBfmeLogVNC@@XZ,0x007EB810,pin
 ?bfmeGetLookup1282@BfmeEntrySource1282@@QAEPAVBfmeTab1034@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BAAB0 retail body
 ?bfmeGetLookup1285@BfmeEntrySource1285@@QAEPAVBfmeLookup1285@@XZ,0x008C41D0,address-derived lookup accessor called by the 0x008BB570 retail body
 ?bfmeGetMgr1015@@YAPAVBfmeMgr1015@@XZ,0x007EFFC0,pin
