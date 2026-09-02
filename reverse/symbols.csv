@@ -72839,6 +72839,7 @@ name,address,notes
 ?bfmeBigFreePM@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreeQJ@@YAXPAX@Z,0x0002AB35,pin
+?bfmeBigFreeVLX@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigVLV@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBigVLW@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBind1282@BfmeQ1282@@QAEXPAX@Z,0x000361CE,pin
@@ -74770,6 +74771,7 @@ name,address,notes
 ?bfmeSmallFreePM@@YAXPAXI@Z,0x0082E4F0,pin
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeSmallFreeVLX@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallVLV@@YAPAXI@Z,0x0082E540,pin
 ?bfmeSmallVLW@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSortAVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3FD0,pin
