@@ -82914,6 +82914,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeGetInterface@Object@@QAEPAVBfmeRelationInterface@@XZ,0x0000B3E3,Open-BFME5 relation interface lookup called by 0x002875C0
 ?bfmePrepare@Object@@QAEXH@Z,0x0001F852,Open-BFME5 owner preparation called by 0x002875C0
 ?bfmeFinish@Object@@QAEXH@Z,0x0003A521,Open-BFME5 owner finalization called by 0x002875C0
+?bfmeLinkRelation@@YAXPAXPAVObject@@H@Z,0x0001253F,Open-BFME5 optional relation link called by 0x00283460
 ?bfmeResetIndexed38@@YAXHH@Z,0x0001ED1C,Open-BFME5 indexed-state reset helper body at 0x00564080
 ?bfmeResetIndexed48@@YAXH@Z,0x00047CC1,Open-BFME5 indexed-state reset helper body at 0x00564180
 ?bfmeResetIndexed49@@YAXHH@Z,0x0001C341,Open-BFME5 indexed-state reset helper body at 0x005640D0
