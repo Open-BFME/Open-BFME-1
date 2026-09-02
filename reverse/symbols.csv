@@ -74715,6 +74715,9 @@ name,address,notes
 ?bfmeReset@Gen009D6E10@@QAEXPAVBfmePeer@@@Z,0x009D6410,address-derived reset target from the direct REL32 call at retail 0x009D6E33
 ?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
 ?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
+?bfmeResetA@BfmeActivationPartA@@QAEXXZ,0x0001EF4C,activation handshake member at 0x009D8460 resets its first subobject
+?bfmeResetB@BfmeActivationPartB@@QAEXXZ,0x009D8230,activation handshake member at 0x009D8460 resets its second subobject
+?bfmeResetC@BfmeActivationPartC@@QAEXXZ,0x009D77A0,activation handshake member at 0x009D8460 resets its third subobject
 ?bfmeResetSafeOcclusionFrame@Object@@QAEXXZ,0x00039D06,Open-BFME5 Object safe-occlusion refresh ILT thunk to body 0x001C3020; surviving Object.cpp expression and BFME offsets prove current-frame plus ThingTemplate OcclusionDelay semantics
 ?bfmeResetUJC@@YAXPAUBfmeConnUJC@@@Z,0x008EBFC0,pin
 ?bfmeResetVJO@BfmeCVJO@@QAEXPAVBfmeXVJO@@@Z,0x008014F0,pin
@@ -81665,7 +81668,6 @@ _bfmeTextBTF,0x00CBF820,pin
 _bfmeTextOneAZB,0x00F36E54,pin
 _bfmeTextTwoAZB,0x00F36E50,pin
 _bfmeTid1179,0x009DB580,pin
-_bfmeTryActivate@12,0x009D8460,address-derived stdcall helper target from the direct REL32 call at retail 0x009D6310
 _bfmeVft1028A,0x00D1A174,pin
 _bfmeVft1029A,0x00D36128,pin
 _bfmeVft1030A,0x00D29A9C,pin
