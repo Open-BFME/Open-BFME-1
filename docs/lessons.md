@@ -2425,3 +2425,19 @@ esi=s2/edx=s1, the other order mirrors every use of both. Combined with the IAT-
 rule this means most "one register apart" partials are a statement-ordering
 problem, not an allocator coin flip: reorder local definitions to match the order
 retail first materializes each value.
+
+**The EH-temporary transposition is a class-shape lever, not a scheduler coin flip.**
+`mov [esp+N],esp` (EH saved-esp) vs `mov ecx,esp` (in-place ctor this) come out in
+retail's order -- saved-esp FIRST -- only when the by-value class's copy ctor and
+dtor are INLINE FORWARDERS to a base class that owns the out-of-line bodies:
+`class AsciiString : private StringBase<char> { AsciiString(const AsciiString &o)
+: StringBase<char>(o) {} ~AsciiString() {} ... };`. Declaring the copy ctor/dtor
+out-of-line on the string class itself (even with identical callees) yields the
+transposed order on every flag combination tried (/G5-/G7, /GB, /Op, /Ob, /Oi, /Oa,
+/Ow, /Ot, /Gy, /GF, /Gs, /Og, /Gd /Gr /Gz, /GS-, /Zp, /vd, /vm, /GR-, /EHsc /GX).
+Proven on 0x0048ACF0 (107/107 modulo relocs, `build/_eh_t.cpp`); the same shape
+matched ShowDisconnectWindow earlier. Retail's callees confirm it: the calls go to
+`??0?$StringBase@D@@` / `??1?$StringBase@D@@` bodies (0x00887B60 / 0x00887940), not
+to AsciiString-named bodies. Apply to every "EH stack-save and ctor-this swapped"
+partial with a by-value AsciiString/UnicodeString argument (UnicodeString =
+StringBase<unsigned short>).

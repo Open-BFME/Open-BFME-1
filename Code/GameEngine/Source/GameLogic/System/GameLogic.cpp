@@ -7588,7 +7588,7 @@ void GameLogic::setControlBarOverride(const AsciiString& commandSetName, Int slo
 }
 
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/System/GameLogicFindControlBarOverrideThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/GameLogicFindControlBarOverride.cpp
 // ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z present-unmatched
 Bool GameLogic::findControlBarOverride(const AsciiString& commandSetName, Int slot, ConstCommandButtonPtr& commandButton) const
 {

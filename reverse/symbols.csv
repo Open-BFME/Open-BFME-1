@@ -2205,6 +2205,7 @@ name,address,notes
 ??0BfmeStaticThingD@@QAE@XZ,0x0003DB0E,Open-BFME5 the constructor the function-local static at 0x005D9C30 runs
 ??0BfmeStaticThingE@@QAE@XZ,0x000022D9,Open-BFME5 the constructor the function-local static at 0x005D9CA0 runs
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
+??0BfmeStrVKI@@QAE@PBD@Z,0x0089E680,alias of landed ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z; same thiscall const-char body used as BfmeStrVKI constructor
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -10745,6 +10746,7 @@ name,address,notes
 ?TheDisplay@@3PAVDisplay@@A,0x012F1270,Display* global
 ?TheDozerAIUpdatePool@?1??getClassMemoryPool@DozerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0254,pool-glue cascade static (back-solved)
 ?TheDynamicShroudClearingRangeUpdatePool@?1??getClassMemoryPool@DynamicShroudClearingRangeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF20,pool-glue cascade static (back-solved)
+?TheEmptyString@UnicodeString@@2V1@A,0x01336E54,UnicodeString::TheEmptyString; export is const 2V1@B at RVA 0x00F36E54
 ?TheExperienceLevelSystem@@3PAVExperienceLevelSystem@@A,0x00EF0888,GameEngine::init pushes the literal "TheExperienceLevelSystem" at 0x00479C3A immediately before pushing this address at 0x00479C48; doTeamSpinForFramecount loads it at 0x002F11F4
 ?TheExperienceScalarUpgradePool@?1??getClassMemoryPool@ExperienceScalarUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0560,pool-glue cascade static (back-solved)
 ?TheFXListDiePool@?1??getClassMemoryPool@FXListDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC14,pool-glue cascade static (back-solved)
@@ -11513,6 +11515,7 @@ name,address,notes
 ?_M_fill_insert@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXPAUCoord3D@@IABU3@@Z,0x00006B45,Open-BFME5 ILT; sole callee of vector<Coord3D>::resize insert branch at 0x000B7C90
 ?_M_fill_insert@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEXPAUICoord2D@@IABU3@@Z,0x000160C2,Open-BFME5 ILT the ICoord2D vector resize uses; it jumps to the _M_fill_insert body at 0x00452450
 ?_M_fill_insert@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x0000886E
+?_M_find@ControlBarOverrideMapABI@@QBEPAUBfmeControlBarOverrideNode@@ABVAsciiString@@@Z,0x00043054,ILT to hashtable _M_find at 0x0038BF10 used by GameLogic findControlBarOverride
 ?_M_find@Rva00137E20ThingNameRegistry@@QAEPAXABVRva00137E20String@@@Z,0x0001460A,ILT for thing-name registry lookup reached from ParseObjectDataChunk predicate
 ?_M_getc@?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@QBEXXZ,0x00833D90,TU public-access alias of the already matched protected wide iterator _M_getc body
 ?_M_increment@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@@Z,0x0082B870
@@ -79246,6 +79249,7 @@ name,address,notes
 ?hide@BannerUI@@QAEX_N@Z,0x0003A062,ILT to body 0x005839D0; BannerUI is independently identified by its existing parser and constructor sources; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@Shell@@QAEX_N@Z,0x000428ED,GameLogic::prepareNewGame direct-call ILT thunk
 ?hideAptWindow@WindowManager@@QAE_NH@Z,0x0002144A,BannerUI::hide(TRUE) call; WindowManager entry 0x00467460 hides the indexed APT window when its slot is active
+?hideAptWindowInternal@WindowManager@@QAE_NH@Z,0x0003F3E1,ILT already pinned as bfmeHide1183; hideAptWindow returns this bool thiscall
 ?hidePurchaseScience@ControlBar@@QAEXXZ,0x00020347
 ?hideQuitMenu@WindowManager@@QAEXXZ,0x000290D2,HideQuitMenu tail-call target
 ?hideScreen@DisconnectMenu@@QAEXXZ,0x00024D6B,ILT thunk; real body 0x50E5A0 (from DisconnectManager::turnOffScreen)
@@ -82577,5 +82581,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_M_find@ControlBarOverrideMapABI@@QBEPAUBfmeControlBarOverrideNode@@ABVAsciiString@@@Z,0x00043054,ILT to hashtable _M_find at 0x0038BF10 used by GameLogic findControlBarOverride
-??0BfmeStrVKI@@QAE@PBD@Z,0x0089E680,alias of landed ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z; same thiscall const-char body used as BfmeStrVKI constructor

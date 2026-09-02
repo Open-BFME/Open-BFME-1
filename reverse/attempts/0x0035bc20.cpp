@@ -1,96 +1,72 @@
 // ??1ScriptList@@QAE@XZ
-// partial score=0.91 date=2026-08-31
-// Clean reconstruction of the ScriptList member teardown at 0x0035BC20.
+// partial score=0.93 date=2026-09-02
+// cl: /DNDEBUG /MD /EHsc
+// readable body of ??1ScriptList@@QAE@XZ: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 
-extern "C" void __cdecl ScriptListFreeNode(void *node);
-
-class ScriptListSnapshotHead
+class ScriptGroup
 {
 public:
-	virtual ~ScriptListSnapshotHead() {}
-};
-
-class ScriptListGroupNode
-{
-public:
-	ScriptListGroupNode *next;
-	void deleteInstance(int deleting);
-};
-
-class ScriptListScriptNode
-{
-public:
-	ScriptListScriptNode *next;
-	void deleteInstance(int deleting);
-};
-
-class ScriptListGroupOwner
-{
-public:
-	~ScriptListGroupOwner()
-	{
-		ScriptListGroupNode *node = head;
-		if (node != 0) {
-			if (node->next != 0) {
-				node->next->deleteInstance(1);
-			}
-			ScriptListFreeNode(node);
-		}
-	}
+	~ScriptGroup();
 
 private:
-	ScriptListGroupNode *head;
+	unsigned char m_data[0x20];
 };
 
-class ScriptListScriptOwner
+class ScriptGroupPoolObject
 {
 public:
-	~ScriptListScriptOwner()
-	{
-		ScriptListScriptNode *node = head;
-		if (node != 0) {
-			if (node->next != 0) {
-				node->next->deleteInstance(1);
-			}
-			ScriptListFreeNode(node);
-		}
-	}
-
-private:
-	ScriptListScriptNode *head;
+	ScriptGroupPoolObject *next;
+	void deleteInstance(int destroy);
 };
 
-class ScriptListInlineGroup
+class ScriptPoolObject
 {
 public:
-	~ScriptListInlineGroup();
-
-private:
-	unsigned char data[0x20];
+	ScriptPoolObject *next;
+	void deleteInstance(int destroy);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class ScriptListBase
 {
 public:
-	__forceinline ~ScriptListBase() {}
+	virtual ~ScriptListBase();
 
 private:
-	ScriptListSnapshotHead snapshot;
-	ScriptListGroupOwner firstGroup;
-	ScriptListScriptOwner firstScript;
+	ScriptGroupPoolObject *m_firstGroup;
+	ScriptPoolObject *m_firstScript;
 };
+
+ScriptListBase::~ScriptListBase()
+{
+	ScriptPoolObject *script = m_firstScript;
+	if (script)
+	{
+		if (script->next)
+			script->next->deleteInstance(1);
+		operator delete(script);
+	}
+
+	ScriptGroupPoolObject *group = m_firstGroup;
+	if (group)
+	{
+		if (group->next)
+			group->next->deleteInstance(1);
+		operator delete(group);
+	}
+}
 
 class ScriptList : public ScriptListBase
 {
 public:
-	~ScriptList();
+	virtual ~ScriptList();
 
 private:
-	ScriptListInlineGroup groupA;
-	ScriptListInlineGroup groupB;
+	ScriptGroup m_first;
+	ScriptGroup m_second;
 };
 
+// ??1ScriptList@@QAE@XZ
 ScriptList::~ScriptList()
 {
-	*(volatile unsigned int *)this = 0x010E8CA8;
 }
