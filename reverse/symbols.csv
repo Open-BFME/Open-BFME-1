@@ -9850,6 +9850,7 @@ name,address,notes
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000DBA7,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x009EDD30,pinharvest x1 (body)
+?Clear@DX8Wrapper@@SAX_N00ABVVector3@@MMI@Z,0x00904250,BFME 7-arg Clear color/z/stencil split from ZH 6-arg
 ?Close_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E13E0
 ?Close_Micro_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E1480
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVTriClass@@PAUCastResultStruct@@@Z,0x008E0C30
@@ -10621,6 +10622,7 @@ name,address,notes
 ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z,0x0001321E
 ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z,0x000261E3
 ?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905990,REL32 pin from DX8Wrapper::Set_Default_Global_Render_States @0x9081D0
+?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905AB0,int-to-float thunk onto 0x905990 body
 ?Set_Flag@LineGroupClass@@QAEXW4FlagsType@1@_N@Z,0x0098E900,derived from ParticleBufferClass main ctor aligned call sites
 ?Set_Flag@PointGroupClass@@QAEXW4FlagsType@1@_N@Z,0x009120A0,derived from ParticleBufferClass main ctor aligned call sites
 ?Set_Force_Visible@RenderObjClass@@UAEXH@Z,0x0091F890,out-of-line in retail; GeneralsMD inlines the Bits OR
@@ -74284,6 +74286,7 @@ name,address,notes
 ?bfmeInitVLZ@BfmeRegVLZ@@QAEXXZ,0x0082DA10,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
+?bfmeInsert@BfmeJ1017@@QAEXI@Z,0x008A0700,callee of the 0x008A07A0 and 0x008A0770 send wrappers
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
@@ -78283,6 +78286,7 @@ name,address,notes
 ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z,0x0004115F,Open-BFME5 ILT at guardSupplyCenter 0x001669C0; receives the adjusted warehouse position with normal guard mode and script command source
 ?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
 ?grow@Rva0005CBD0Buffer@@IAEXI@Z,0x0005CBD0,out-of-line growth routine shared by the 0x0005E200 and 0x0005EEB0 reserve() twins (U3_arena_alloc.cpp)
+?grow@Rva006AAC20@@AAEXH@Z,0x000256CB,ILT thunk to 0x006A43D0 called from 0x006AAC20
 ?grow@Rva0082C300Buf@@AAEXXZ,0x000132CD,callee of Rva0082C300Buf::at; ILT to gen-shim ret-void at 0x006434C0
 ?grow@Rva0082C330Buf@@AAEXXZ,0x000132CD,callee of Rva0082C330Buf::at; same ILT as Rva0082C300Buf::grow
 ?h000053B7@GenAlpha@@QAEXXZ,0x000053B7,S3 guarded-global-triple family callee (address-derived name)
@@ -79219,6 +79223,7 @@ name,address,notes
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?helper@Rva0056C090@@QAEHXZ,0x00003EA4,Open-BFME5 thunk to 0x0056AB50
+?helper@Rva006AE610@@AAEXHPAX@Z,0x00021C1F,ILT thunk to 0x006ADAE0 called from 0x006AE610
 ?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
 ?helper@W3DView@@AAEXXZ,0x00042F23,thunk the 0x00742DF0 W3DView body calls before rebuilding the camera
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
@@ -79795,6 +79800,7 @@ name,address,notes
 ?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00015479,pinharvest x1 (thunk)
 ?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00037565,pinharvest x1 (thunk)
 ?makeEmpty@SimpleObjectIteratorMakeEmptyShim@@QAEXXZ,0x0040AD80,SimpleObjectIterator incremental-link thunk target through a TU-local forwarding shim
+?makeInto@Rva006AAC20@@AAEXPAURva006AAC20Result@@PAX@Z,0x00005A42,ILT thunk to 0x006A0730 called from 0x006AAC20
 ?makeSortedTmp@HuffStat@@IAEHPAUHuffStatTmpStruct@@@Z,0x00825E80
 ?markAsDead@AIUpdateInterface@@QAEXXZ,0x00025BFD,ILT thunk read out of StructureCollapseUpdate::onDie call displacement; real body 0x0026EE80 (d_0026ee80, gen-dump)
 ?markMPLocalDefeatWindowShown@ScriptEngine@@QAEXXZ,0x00002ACC,local defeat retail ILT
@@ -79889,6 +79895,7 @@ name,address,notes
 ?overflow@BfmeVec440@@QAEXPAUBfmeElem440@@ABU2@ABUBfmeFalse440@@I_N@Z,0x008802E0,Open-BFME5 insert-overflow callee of 0x00880440
 ?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
 ?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
+?packShroudPixel@@YAIE@Z,0x00006C2B,ILT jmp to 0x0071A410 shroud-level pixel packer used by fillShroudSurface
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287D00,BoneFXUpdateModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
 ?parse@BoxEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00027999,Open-BFME5 pin
@@ -80804,6 +80811,7 @@ name,address,notes
 ?test@Rva002DF120@@QAEEPAX0@Z,0x0001D813,ILT to 0x002DF120 thiscall uchar(void*,void*) for 23B setne wrappers
 ?test@Rva00383860@@QAE_NXZ,0x00382B50,niladic predicate called on the global at 0x012F0898 by 0x003BCC10; address-derived name
 ?test@Rva003BF540@@QAE_NXZ,0x003BEAF0,niladic predicate read by the mirrored-flag update at 0x003BF540; address-derived name
+?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z,0x000316FB,ILT to 0x00216600 BitFlags testForAny used by StealthUpdate hintDetectableWhileUnstealthed
 ?testOne@Rva002DF100@@QAEEPAX@Z,0x0000BAEB,Open-BFME5 ILT to the one-argument worker called by 0x002DF100
 ?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x00019BCD,pinharvest x1 (thunk)
@@ -80913,6 +80921,7 @@ name,address,notes
 ?updateDrawableSupplyStatus@Drawable@@QAEXHH@Z,0x00031615,ILT thunk to Drawable::updateDrawableSupplyStatus at 0x00411E50
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z,0x003E9720,BFME five-argument updateGoal called by GiantBirdNormalFlightState::onExit at 0x002BE180; source file and line are encoded in the retail call
+?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
 ?updateMPBattleHonors@@YAXAAHAAVPSPlayerStats@@@Z,0x004E59E0,ZH updateMPBattleHonors(Int& honors PSPlayerStats& stats) with stats in EAX (LTCG custom convention) and honors on the stack: winsInARow(+0x188)>=3/10/25 -> 0x2/0x8/0x10 (ZH only STREAK at 5); gamesInRowWithLastGeneral(+0x17c)>=20 && localPlayer side America/China/GLA -> 0x20/0x40/0x200; getTotalUnitsBuilt(VEHICLE !AIRCRAFT)>=50 -> 0x80 (BATTLE_TANK); (AIRCRAFT)>=20 -> 0x100 (AIR_WING); TheGameLogic frame/300<5 -> 0x4000 BLITZ5 frame/5/60<10 -> 0x8000 BLITZ10; no apocalypse/global-general arms; sole caller populatePlayerInfo 0x004E75F1 gated on !crc !discon !isLocalAlliedDefeat getEndFrame
 ?updateMacroTexture@BaseHeightMapResetTerrain@@QAEXVBaseHeightMapResetAsciiString@@_N@Z,0x00003CE2,BaseHeightMap reset two-argument macro-texture ILT thunk
 ?updateMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@ABVAABoxClass@@M@Z,0x007BE000,certified packet 348; updateMeshVolume body 0x7BE000 (thunk 0xC392 from updateVolumes)
@@ -82309,6 +82318,7 @@ _piSBStopListingAutoMatches,0x00864BF0,upstream peerAutoMatch.c status switch ca
 _piSBStopListingGames,0x008646C0,GameSpy Peer server-browser listing stop
 _piSBThink,0x00864EB0,gamespy-peer: authentic piThink server-browser step after chat and ping processing
 _piSendChannelUTM,0x00857EB0,gamespy-peer: called by piXpingPlayer at 0x00862B80 with the PNG command literal
+_piSendPing,0x00872A40,gamespy-pinger authentic static UDP ping sender called by pingerPing
 _piSendStateChanged,0x008667A0,GameSpy Peer query-reporting state update
 _piSetAutoMatchStatus,0x008640A0,GameSpy Peer auto-match status transition
 _piSetChannelCallbacks,0x0086BA10,GameSpy Peer channel callback initializer
@@ -82542,11 +82552,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
-?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target
-?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z,0x000316FB,ILT to 0x00216600 BitFlags testForAny used by StealthUpdate hintDetectableWhileUnstealthed
-?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
-?helper@Rva006AE610@@AAEXHPAX@Z,0x00021C1F,ILT thunk to 0x006ADAE0 called from 0x006AE610
-?packShroudPixel@@YAIE@Z,0x00006C2B,ILT jmp to 0x0071A410 shroud-level pixel packer used by fillShroudSurface
-?bfmeInsert@BfmeJ1017@@QAEXI@Z,0x008A0700,callee of the 0x008A07A0 and 0x008A0770 send wrappers
-_piSendPing,0x00872A40,gamespy-pinger authentic static UDP ping sender called by pingerPing
