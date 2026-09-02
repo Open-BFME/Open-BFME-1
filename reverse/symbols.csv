@@ -82338,3 +82338,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?notify@T_007ea120@@QAEXPAX@Z,0x007EA0A0,FESL notify used by hub teardown
+?bfmeThrowV43@BfmeStrV43@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831080
+?bfmeLenErrV43@BfmeStrV43@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831080
+?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
