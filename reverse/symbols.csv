@@ -82398,3 +82398,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeThrow2V56@BfmeStrV56@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831A80
 ?bfmeInsertV56@BfmeStrV56@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831A80
 ?copyFrom@BfmeTailE9@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087E9B0
+?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
+?Rva00806710@@YAHPAURva00806580Record@@PBDII@Z,0x00806710,cdecl open fesl.ea.com from 0x007FA6C0
