@@ -82456,8 +82456,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?equals@Rva002E5030Tail@@QBE_NPBU1@@Z,0x000341EE,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D20
-?equals@Rva002E4FD0Tail@@QBE_NPBU1@@Z,0x000347FC,Open-BFME5 retail call target; ILT thunk to nested comparison body 0x002E4D60
 ?findSpecialPowerTemplate@BfmeSpecialPowerStoreView@@QAEPBVSpecialPowerTemplate@@VBfmeAsciiStringArg@@@Z,0x00020F04,alias of the SpecialPowerStore thunk pinned at the same address; ScriptActions.cpp builds the by-value string argument through a view because the reference header inlines the addref
 ?bfmeEndRenderToTexture@@YAPAXXZ,0x0003FAC6,ILT of W3DShaderManager::endRenderToTexture called from ScreenDefaultFilter::postRender
 ?bfmeDrawFilterUV@@YAXHHPAUCoord2D@@@Z,0x000196A0,ILT of fullscreen blit helper called from ScreenDefaultFilter::postRender
@@ -82465,3 +82463,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Release_Ref@BfmeTex1137Term@@QAEXXZ,0x009EB7A0,pin BfmeA1137 destructor texture release match
 ??1BfmeBaseTerm1137A@@UAE@XZ,0x0045B060,pin BfmeA1137 destructor base-class delegate call target
 ??0BfmeAptScreenMapTransfer@@QAE@PAX@Z,0x000250B8,ILT thunk to the APT FileTransfer load-screen constructor at 0x005104C0
+?LoadAndCreateD3DShader@BfmeShaderLoader16@@SAHPBDPAI@Z,0x00016CB6,ILT of 2-arg LoadAndCreateD3DShader from ScreenZoomFilter::init
+?bind@TextureHolder@@QAEXABVBFMEWaterTrackTextureHandle@@@Z,0x0003652A,texture-handle bind/assign thiscall from ScreenZoomFilter::init
+?bfmeInitTexA1137@@YAXXZ,0x000091C5,pin BfmeA1137 destructor prologue helper call site
