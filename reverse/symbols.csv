@@ -82402,3 +82402,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva00806710@@YAHPAURva00806580Record@@PBDII@Z,0x00806710,cdecl open fesl.ea.com from 0x007FA6C0
 ?g_bfmeEmptyF9@@3PADA,0x0107388B,Open-BFME5 empty AsciiString fallback of 0x0087F9C0
 ?afterWalk@BfmeObjF9@@QAEXXZ,0x0087EE60,Open-BFME5 post-walk callee of 0x0087F9C0
+?onAccept@Rva007FA2C0@@QAEXPAX@Z,0x007F9FD0,FESL helper from 0x007FA2C0 accept path
+?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
+?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
