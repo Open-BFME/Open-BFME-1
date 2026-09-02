@@ -82427,3 +82427,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeCopy2E@@YAPAUBfmeElem2E@@PBU1@0PAU1@ABUBfmeFalse2E@@@Z,0x0087FFC0,Open-BFME5 remainder copy of 0x008802E0
 ?copyFrom@BfmeElem2E@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 elem copy ctor of 0x008802E0
 ?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
+??0WideStr@@QAE@ABV0@@Z,0x00888400,pin
