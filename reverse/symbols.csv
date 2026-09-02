@@ -55220,6 +55220,8 @@ name,address,notes
 ?b_00587cd0@@YAXXZ,0x00587CD0,gen-thunk body
 ?b_00587d20@@YAXXZ,0x00587D20,gen-thunk body
 ?b_00587d40@@YAXXZ,0x00587D40,gen-thunk body
+??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
+?bfmeAlloc1134@@YAPAXI@Z,0x0082E540,Gen_00587D40 buffer allocator
 ?b_00587e10@@YAXXZ,0x00587E10,gen-thunk body
 ?b_00587e40@@YAXXZ,0x00587E40,gen-thunk body
 ?b_005880c0@@YAXXZ,0x005880C0,gen-thunk body
