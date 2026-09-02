@@ -73301,7 +73301,7 @@ name,address,notes
 ?bfmeDoBHA@BfmeThingBHA@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeDoBHE@BfmeSubBHE@@QAEXXZ,0x0000F15F,pin
 ?bfmeDoBID@BfmeSubBID@@QAEXPAX@Z,0x0002F333,pin
-?bfmeDoBIE@@YGXPAUBfmeThingBIE@@PAUBfmeSubBIE@@PAX@Z,0x00005484,pin
+?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target
 ?bfmeDoBJC@BfmeSubBJC@@QAEXPAX@Z,0x0001ABD1,pin
 ?bfmeDoBJD@@YGXPAX0PAPAX@Z,0x0002648B,pin
 ?bfmeDoBJE@BfmeSubBJE@@QAEXPAX@Z,0x0092F910,pin
