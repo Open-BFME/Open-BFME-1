@@ -72840,6 +72840,7 @@ name,address,notes
 ?bfmeBigFreePZ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigFreeQJ@@YAXPAX@Z,0x0002AB35,pin
 ?bfmeBigVLV@@YAPAXI@Z,0x00037C54,pin
+?bfmeBigVLW@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBind1282@BfmeQ1282@@QAEXPAX@Z,0x000361CE,pin
 ?bfmeBitsURD@@YIIH@Z,0x0090C400,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
@@ -74770,6 +74771,7 @@ name,address,notes
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallVLV@@YAPAXI@Z,0x0082E540,pin
+?bfmeSmallVLW@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSortAVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3FD0,pin
 ?bfmeSortBVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3F80,pin
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
