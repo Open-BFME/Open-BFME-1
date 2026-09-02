@@ -70,6 +70,7 @@ public:
 	void bfmeGoVM0(int);
 	void bfmeTickVM0();
 	void bfmeRelVM0();
+	void bfmeRelBareVM0();
 	char m_pad[0x38];
 	void *m_3C;
 	void *m_40;
@@ -93,5 +94,17 @@ void BfmeStrVM0::bfmeRelVM0()
 			m_40 = 0;
 			m_3C = 0;
 		}
+	}
+}
+
+void BfmeStrVM0::bfmeRelBareVM0()
+{
+	if (m_40)
+	{
+		ReleaseMutex(*(void * volatile *)&m_40);
+		WaitForSingleObject(m_3C, 0xffffffff);
+		ReleaseMutex(m_3C);
+		m_40 = 0;
+		m_3C = 0;
 	}
 }
