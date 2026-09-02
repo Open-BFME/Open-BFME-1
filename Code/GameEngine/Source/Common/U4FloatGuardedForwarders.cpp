@@ -40,7 +40,13 @@
 // IDENTITY IS NOT RECOVERED.  Every name is address-derived; the two callees
 // are pinned in reverse/symbols.csv at the addresses their REL32s resolve to.
 
-class INI;
+class INI
+{
+public:
+	void u4Indent( int width );
+	void u4Append( const void *value );
+	void u4Finish( int radix );
+};
 struct U4Vec3
 {
 	float m_x;
@@ -51,6 +57,27 @@ extern const float g_u4Sentinel;
 
 void u4Next005F5120( INI *ini, void *instance, void *store, const void *userData );
 void u4Next005F8AE0( INI *ini, void *instance, void *store, const void *userData );
+
+extern const char g_u4Separator[];
+void __cdecl u4FormatFloat( INI *ini, double value );
+
+void u4Next005F5120( INI *ini, void *instance, void *store, const void *userData )
+{
+	unsigned int depth = (unsigned int)instance;
+	if ( depth > 0 )
+	{
+		do
+		{
+			ini->u4Indent( 32 );
+		}
+		while ( --depth );
+	}
+
+	ini->u4Append( store );
+	ini->u4Append( g_u4Separator );
+	u4FormatFloat( ini, *(const float *)userData );
+	ini->u4Finish( 10 );
+}
 
 void u4Guard005F5120( INI *ini, void *instance, void *store, const void *userData )
 {

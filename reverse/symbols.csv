@@ -77466,6 +77466,7 @@ name,address,notes
 ?g_theAssetRegistry@@3PAVAssetRegistry@@A,0x0134FAAC,Add_Prototype AssetRegistry global
 ?g_theGameLogic@@3PAUGameLogicState@@A,0x012F0898,LargeGroupBonus game-logic global
 ?g_theWindowManager@@3PAVWindowManager@@A,0x012F19E8,HideQuitMenu WindowManager global
+?g_u4Separator@@3QBDB,0x0110FCA8,U4 formatter separator used by 0x005F50B0
 ?gainLevel@ExperienceLevelSystem@@QAEXPAVObject@@_N@Z,0x00027237,UNIT_GAIN_LEVEL dispatch resolves an Object and tail-calls this experience-level body with the FX flag
 ?gandalfTemplate@?6??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4VAsciiString@@A,0x012EF1F0,GondorGandalf static AsciiString
 ?gandalfTheGrey@?9??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4PBV2@B,0x012EF1EC,lazily cached HIGandalTheGrey image
@@ -80777,6 +80778,10 @@ name,address,notes
 ?u1Do_005C90D0@@YAXPAX00PAVU1DwordFlagged@@@Z,0x005C90D0,tail-call target of the pointer guard 0x005C9C80; address-derived name
 ?u1Emit_005C7A10@@YAXPAVU1Sink@@PBD@Z,0x005C4D00,cdecl sink append target of 0x005C7A10; address-derived name
 ?u1Widen_005C5E40@@YAXPAVU1FloatSink@@N@Z,0x005C5E40,cdecl (this double) callee of 0x005C67A0; address-derived name
+?u4Append@INI@@QAEXPBX@Z,0x0002DFEC,U4 record field append called twice by 0x005F50B0
+?u4Finish@INI@@QAEXH@Z,0x0002408C,U4 record terminator called by 0x005F50B0
+?u4FormatFloat@@YAXPAVINI@@N@Z,0x0000F376,U4 floating-point formatter called by 0x005F50B0
+?u4Indent@INI@@QAEXH@Z,0x0001B77A,U4 indentation emitter called by 0x005F50B0
 ?u4Next005F5120@@YAXPAVINI@@PAX1PBX@Z,0x005F50B0,U4 lane: four-argument callee reached from 0x005F5120 and 0x005FF120; address-derived name
 ?u4Next005F8AE0@@YAXPAVINI@@PAX1PBX@Z,0x005C8AA0,U4 lane: four-argument callee tail-jumped to by 0x005F8AE0; address-derived name
 ?u4Take005F79A0@@YAXPAUU4Ret005F79A0@@H@Z,0x005F0120,U4 lane: out-parameter callee of the forwarder at 0x005F79A0; address-derived name
