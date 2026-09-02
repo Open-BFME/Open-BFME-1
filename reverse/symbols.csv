@@ -82833,6 +82833,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeWindowManager@@3PAVBfmeWindowManager@@A,0x012ED5C4,Open-BFME5 window manager read by 0x0028B810
 ?bfmeClear@BfmeWindowManager@@QAEXPAH@Z,0x009A25A0,Open-BFME5 window focus clear called by 0x0028B810
 ?bfmeSet@BfmeWindowManager@@QAEXPAH@Z,0x009A2590,Open-BFME5 window focus set called by 0x0028B810
+?bfmeSet@BfmeActiveState@@QAEXHH@Z,0x0003EEBE,Open-BFME5 active state update called by 0x0027FED0
+?bfmeForward@Gen_0027FED0@@AAEXPAX00@Z,0x00021EE5,Open-BFME5 optional record forward called by 0x0027FED0
 ?bfmeResetIndexed38@@YAXHH@Z,0x0001ED1C,Open-BFME5 indexed-state reset helper body at 0x00564080
 ?bfmeResetIndexed48@@YAXH@Z,0x00047CC1,Open-BFME5 indexed-state reset helper body at 0x00564180
 ?bfmeResetIndexed49@@YAXHH@Z,0x0001C341,Open-BFME5 indexed-state reset helper body at 0x005640D0
