@@ -82414,3 +82414,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeTailCD@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy of 0x0087FCD0
 ?bfmeFillCD@@YAPAUBfmeElemCD@@PAU1@IABU1@ABUBfmeFalseCD@@@Z,0x0087F520,Open-BFME5 fill-n of 0x0087FCD0
 ?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
+?bfmeAllocLargeBE@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FBE0
+?bfmeAllocSmallBE@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FBE0
+?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z,0x0087EFA0,Open-BFME5 uninit-copy of 0x0087FBE0
+?copyFrom@BfmeElemBE@@QAEXABU1@@Z,0x00013476,Open-BFME5 elem copy ctor of 0x0087FBE0
+?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z,0x0087F020,Open-BFME5 fill-n of 0x0087FBE0
+?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
