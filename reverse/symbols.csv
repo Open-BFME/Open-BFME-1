@@ -9707,6 +9707,7 @@ name,address,notes
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHRawAnimClass@@M@Z,0x00953EB0,uncompressed-animation evaluator
 ?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z,0x00028CE0,TeamInQueue disband call pin
 ?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
+?Apply_Default_State@DX8Wrapper@@SAXXZ,0x009095A0,BFME DX8MeshRendererClass::Flush tail; snapshot-inlined default-state body at historical 0x009095A0
 ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,0x00904890
 ?AptGetSwfVersion@@YAIXZ,0x00892370,EA Apt 2.00.00 SWF version getter called by the ActionScript BitAnd handler
 ?AptLivingWorldWindowIndex@@YAHHH@Z,0x000019F6,BFME APT Living World visibility helpers call the established two-int wrapper through this retail ILT

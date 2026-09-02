@@ -638,7 +638,6 @@ void ParticleBufferClass_force_Render_Line_SimpleDynVec(void)
 	(void)tmp_id[0];
 }
 
-
 void ParticleBufferClass::Render_Line_Group(RenderInfoClass & rinfo)
 {
 	// If the number of active points is less than the maximum or we need to decimate particles
