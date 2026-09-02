@@ -82243,3 +82243,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
 ?bfmeTailVMZ@BfmeElemVMZ@@QAEXPAXHHHHHH@Z,0x0004894B,pin
 ?finishOwner@Rva0017AE40Owner@@AAEXXZ,0x000306BB,Open-BFME5 owner finalization tail call used by the 0x0017AE40 child finalizer
+?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
