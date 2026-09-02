@@ -1,14 +1,7 @@
-// ?setText@SuperweaponInfo@@QAEXABVUnicodeString@@0@Z
-// partial score=0.82 date=2026-08-31
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-class UnicodeString
-{
-private:
-	void *m_data;
-public:
-	UnicodeString(const UnicodeString &that);
-	~UnicodeString();
-};
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// Canonical Zero Hour SuperweaponInfo::setText body with BFME's vtable layout.
+
+#include "StringInline.h"
 
 class DisplayString
 {
@@ -23,12 +16,13 @@ private:
 	void *m_vtable;
 	DisplayString *m_nameDisplayString;
 	DisplayString *m_timeDisplayString;
+
 public:
 	void setText(const UnicodeString &name, const UnicodeString &time);
 };
 
 void SuperweaponInfo::setText(const UnicodeString &name, const UnicodeString &time)
 {
-	m_nameDisplayString->setText(UnicodeString(name));
-	m_timeDisplayString->setText(UnicodeString(time));
+	m_nameDisplayString->setText(name);
+	m_timeDisplayString->setText(time);
 }

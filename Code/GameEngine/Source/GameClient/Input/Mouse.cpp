@@ -1063,11 +1063,20 @@ void Mouse::draw( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?resetTooltipDelay@Mouse@@ present-unmatched
+void j_0002497e();
 void Mouse::resetTooltipDelay( void )
 {
-	m_stillTime = timeGetTime();
-	m_displayTooltip = FALSE;
+	char *self = reinterpret_cast<char *>(this);
+	*reinterpret_cast<UnsignedInt *>(self + 0x4ddc) = timeGetTime();
+	UnicodeString *tooltip = reinterpret_cast<UnicodeString *>(self + 0x10fc);
+	*reinterpret_cast<Bool *>(self + 0x110c) = FALSE;
+	if (!tooltip->isEmpty())
+	{
+		j_0002497e();
+		tooltip->clear();
+	}
+	reinterpret_cast<UnicodeString *>(self + 0x1100)->clear();
+	reinterpret_cast<UnicodeString *>(self + 0x1104)->clear();
 }
 
 //-------------------------------------------------------------------------------------------------

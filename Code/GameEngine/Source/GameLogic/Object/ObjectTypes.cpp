@@ -54,7 +54,7 @@ ObjectTypes::ObjectTypes()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectTypes_ctor_Thunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectTypes_named_ctor_Thunk.cpp
 // ??0ObjectTypes@@ present-unmatched
 ObjectTypes::ObjectTypes(const AsciiString& listName) : m_listName(listName)
 {

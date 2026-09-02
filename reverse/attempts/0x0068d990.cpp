@@ -1,24 +1,24 @@
-// ?bfmeReadByte_0068D990@@YAPAEPAE0PBE@Z
-// partial score=0.95 date=2026-08-29
-// Open-BFME5: guarded single-byte cursor read, retail 0x0068D990.
+// ?rva68d990@@YAPADPAD00@Z
+// partial score=0.95 date=2026-09-02
+// The three byte-identical 33-byte bodies at 0x0068D990, 0x0068D9C0 and
+// 0x0068D9F0 -- the reading counterpart of BoundedByteCursorWrites.cpp.
+//
+// Same three-pointer cdecl shape and the same unsigned limit guard; the store
+// is reversed so one byte is copied out of the cursor instead of into it.
 
-#include <string.h>
-
-#pragma intrinsic(memcpy)
-
-unsigned char *bfmeReadByte_0068D990(unsigned char *cursor,
-	unsigned char *out, const unsigned char *end)
-{
-	if (end)
-	{
-		if (cursor > end)
-			return cursor;
-
-		if (cursor + 1 > end)
-			return cursor;
+#define BFME_BOUNDED_BYTE_READ( NAME )                                        \
+	char *NAME( char *cursor, char *out, char *limit )                        \
+	{                                                                         \
+		if ( limit != 0 && ( cursor > limit || cursor + 1 > limit ) )         \
+		{                                                                     \
+			return cursor;                                                    \
+		}                                                                     \
+                                                                              \
+		*out = *cursor;                                                       \
+                                                                              \
+		return cursor + 1;                                                    \
 	}
 
-	memcpy(out, cursor, 1);
-
-	return cursor + 1;
-}
+BFME_BOUNDED_BYTE_READ( rva68d990 )
+BFME_BOUNDED_BYTE_READ( rva68d9c0 )
+BFME_BOUNDED_BYTE_READ( rva68d9f0 )

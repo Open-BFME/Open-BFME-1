@@ -363,9 +363,9 @@ void W3DTankDraw::startMoveDebris( void )
 __declspec(noinline) void W3DTankDraw::stopMoveDebris( void )
 {
   if (m_treadDebrisLeft)
-  	m_treadDebrisLeft->stop();
+	  	m_treadDebrisLeft->stop();
   if (m_treadDebrisRight)
-  	m_treadDebrisRight->stop();
+	  	m_treadDebrisRight->stop();
 }
 
 //-------------------------------------------------------------------------------------------------

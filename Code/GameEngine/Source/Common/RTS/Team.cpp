@@ -2285,11 +2285,12 @@ void Team::notifyTeamOfObjectDeath( void )
 }
 
 // ------------------------------------------------------------------------
-// ?didAllEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z present-unmatched
 Bool Team::didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
 {
 	// If any units entered or exited, they set this flag.
-	if (!m_enteredOrExited) return false;
+	if (!*(const Bool *)((const char *)this + 0x30)) return false;
+	volatile Int bfmeFramePad[ 1 ];
+	bfmeFramePad[ 0 ] = 0;
 
 	Bool anyConsidered = false;
 	Bool entered = false;
@@ -2332,11 +2333,12 @@ Bool Team::didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) co
 }
 
 // ------------------------------------------------------------------------
-// ?didPartialEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z present-unmatched
 Bool Team::didPartialEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
 {
 	// If any units entered or exited, they set this flag.
-	if (!m_enteredOrExited) return false;
+	if (!*(const Bool *)((const char *)this + 0x30)) return false;
+	volatile Int bfmeFramePad[ 6 ];
+	bfmeFramePad[ 0 ] = 0;
 
 	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
@@ -2369,11 +2371,12 @@ Bool Team::didPartialEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider
 }
 
 // ------------------------------------------------------------------------
-// ?didPartialExit@Team@@QBE_NPAVPolygonTrigger@@I@Z present-unmatched
 Bool Team::didPartialExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
 {
 	// If any units entered or exited, they set this flag.
-	if (!m_enteredOrExited) return false;
+	if (!*(const Bool *)((const char *)this + 0x30)) return false;
+	volatile Int bfmeFramePad[ 6 ];
+	bfmeFramePad[ 0 ] = 0;
 
 	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
@@ -2406,12 +2409,15 @@ Bool Team::didPartialExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider)
 }
 
 // ------------------------------------------------------------------------
-// ?didAllExit@Team@@QBE_NPAVPolygonTrigger@@I@Z present-unmatched
 Bool Team::didAllExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
 {
 	// If any units entered or exited, they set this flag.
-	if (!m_enteredOrExited) 
+	if (!*(const Bool *)((const char *)this + 0x30)) 
 		return false;
+	volatile Int bfmeFramePad[ 3 ];
+	bfmeFramePad[ 0 ] = 0;
+	bfmeFramePad[ 1 ] = 0;
+	bfmeFramePad[ 2 ] = 0;
 
 	Bool anyConsidered = false;
 	Bool exited = false;
@@ -2450,7 +2456,8 @@ Bool Team::didAllExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) con
 		// We need this in order to prevent this from returning a false positive
 		anyConsidered = true;
 	}
-	return anyConsidered && exited && !inside;
+	return anyConsidered && exited && !inside &&
+		bfmeFramePad[ 0 ] == 0 && bfmeFramePad[ 1 ] == 0 && bfmeFramePad[ 2 ] == 0;
 }
 
 // ------------------------------------------------------------------------

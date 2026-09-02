@@ -1454,15 +1454,44 @@ static void parseBoneNameKey(INI* ini, void *instance, void * store, const void 
 }
 
 //-------------------------------------------------------------------------------------------------
+struct RetailConditionFlags00765B20
+{
+	UnsignedInt m_words[10];
+
+	Bool operator==(const RetailConditionFlags00765B20& that) const
+	{
+		for (UnsignedInt i = 0; i < 10; ++i)
+		{
+			if (m_words[i] != that.m_words[i])
+				return false;
+		}
+		return true;
+	}
+};
+
+struct RetailModelConditionInfo00765B20
+{
+	RetailConditionFlags00765B20 m_conditions;
+	Byte m_rest[0x100];
+};
+
+struct RetailConditionVector00765B20
+{
+	const RetailModelConditionInfo00765B20 *m_begin;
+	const RetailModelConditionInfo00765B20 *m_end;
+};
+
 static Bool doesStateExist(const ModelConditionVector& v, const ModelConditionFlags& f)
 {
-	for (ModelConditionVector::const_iterator it = v.begin(); it != v.end(); ++it)
+	const RetailConditionVector00765B20& retailVector =
+		*reinterpret_cast<const RetailConditionVector00765B20 *>(&v);
+	const RetailConditionFlags00765B20& retailFlags =
+		*reinterpret_cast<const RetailConditionFlags00765B20 *>(&f);
+	for (const RetailModelConditionInfo00765B20 *it = retailVector.m_begin;
+		 it != retailVector.m_end; ++it)
 	{
-		for (Int i = it->getConditionsYesCount()-1; i >= 0; --i)
-		{
-			if (f == it->getNthConditionsYes(i))
-				return true;
-		}
+		if (retailFlags == it->m_conditions)
+			return true;
 	}
 	return false;
 }

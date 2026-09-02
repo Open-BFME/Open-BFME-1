@@ -1788,6 +1788,8 @@ public:
 	virtual void _ve8_56() = 0;
 	virtual void _ve8_57() = 0;
 	virtual void zoomCamera(Real finalZoom, Int milliseconds, Real easeIn, Real easeOut) = 0;
+	virtual void pitchCamera(Real finalPitch, Int milliseconds, Real easeIn, Real easeOut) = 0;
+	virtual void rotateCamera(Real rotations, Int milliseconds, Real easeIn, Real easeOut) = 0;
 };
 
 void ScriptActions::doZoomCamera(Real zoom, Real sec, Real easeIn, Real easeOut)
@@ -1798,10 +1800,9 @@ void ScriptActions::doZoomCamera(Real zoom, Real sec, Real easeIn, Real easeOut)
 //-------------------------------------------------------------------------------------------------
 /** doPitchCamera */
 //-------------------------------------------------------------------------------------------------
-// ?doPitchCamera@ScriptActions@@IAEXMMMM@Z present-unmatched
 void ScriptActions::doPitchCamera(Real pitch, Real sec, Real easeIn, Real easeOut)
 {
-	TheTacticalView->pitchCamera(pitch, sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f);
+	((BfmeViewVtbl_e8 *)TheTacticalView)->pitchCamera(pitch, sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1916,10 +1917,9 @@ void ScriptActions::doResetCamera(const AsciiString& waypoint, Real sec, Real ea
 //-------------------------------------------------------------------------------------------------
 /** doRotateCamera around the object we are looking at. */
 //-------------------------------------------------------------------------------------------------
-// ?doRotateCamera@ScriptActions@@IAEXMMMM@Z present-unmatched
 void ScriptActions::doRotateCamera(Real rotations, Real sec, Real easeIn, Real easeOut)
 {
-	TheTacticalView->rotateCamera(rotations, sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f);			
+	((BfmeViewVtbl_e8 *)TheTacticalView)->rotateCamera(rotations, sec*1000.0f, easeIn*1000.0f, easeOut*1000.0f);
 }
 
 //-------------------------------------------------------------------------------------------------
