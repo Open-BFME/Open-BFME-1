@@ -1,126 +1,93 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Clean reconstruction of ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z.
+//
+// Retail keeps the body module at Object+0x200 and the private-status byte at
+// Object+0x344.  The two non-virtual calls are retained as address-derived
+// effect shims: their retail entries are incremental-link thunks, so the
+// resolver selects the same thunk encoded by this body.
 
-class DamageInfo;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+extern "C" const float bfmeConst1075350; // retail 0x01075350
+
+class DamageInfo
+{
+public:
+	char m_unreconstructed_00[0x3c];
+	float m_damageAmount;
+};
+
+class BodyModuleInterface
+{
+public:
+	virtual void attemptDamage(DamageInfo *damageInfo);
+};
+
+class ObjectAttemptDamageHook
+{
+public:
+	void apply(DamageInfo *damageInfo);
+};
+
+class ObjectAttemptDamageFlagHook
+{
+public:
+	int value();
+};
+
+// Existing clean source owns this method at 0x00414010; the retail call here
+// uses its incremental-link entry at 0x00037FA6.
+class Rva00414010GuardedVCall
+{
+public:
+	void forward(int value);
+
+	char m_unreconstructed_00[0x3ac];
+	unsigned char m_flag3ac;
+};
+
 class Object
 {
 public:
-	void attemptDamage(DamageInfo *);
+	virtual void bfmeSlot00();
+	virtual void bfmeSlot04();
+	virtual void bfmeSlot08();
+	virtual void bfmeSlot0c();
+	virtual void bfmeSlot10();
+	virtual void bfmeSlot14();
+	virtual void bfmeSlot18();
+	virtual void bfmeSlot1c();
+	virtual void bfmeSlot20();
+	virtual void bfmeSlot24();
+	virtual Rva00414010GuardedVCall *getAttemptDamageEffect();
+
+	void attemptDamage(DamageInfo *damageInfo);
+
+private:
+	char m_unreconstructed_000[0x1fc];
+	BodyModuleInterface *m_body;          // retail this+0x200
+	char m_unreconstructed_204[0x140];
+	unsigned char m_privateStatus;         // retail this+0x344
 };
 
 // ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z
-__declspec(naked) void Object::attemptDamage(DamageInfo *)
+void Object::attemptDamage(DamageInfo *damageInfo)
 {
-	__asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xf6
-        __emit 0x86
-        __emit 0x44
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x75
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x8e
-        __emit 0x00
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x57
-        __emit 0xff
-        __emit 0x10
-        __emit 0xf6
-        __emit 0x86
-        __emit 0x44
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0x74
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x47
-        __emit 0x3c
-        __emit 0xd8
-        __emit 0x1d
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x41
-        __emit 0x75
-        __emit 0x08
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x4a
-        __emit 0x44
-        __emit 0xe4
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x52
-        __emit 0x28
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x19
-        __emit 0x8a
-        __emit 0x87
-        __emit 0xac
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0f
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x72
-        __emit 0xc5
-        __emit 0xe5
-        __emit 0xff
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0xaf
-        __emit 0x7a
-        __emit 0xe6
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+	if ((m_privateStatus & 1) == 0)
+	{
+		BodyModuleInterface *body = m_body;
+		if (body != 0)
+			body->attemptDamage(damageInfo);
+	}
+
+	if ((m_privateStatus & 1) == 0
+		|| damageInfo->m_damageAmount > bfmeConst1075350)
+	{
+		reinterpret_cast<ObjectAttemptDamageHook *>(this)->apply(damageInfo);
+	}
+
+	Rva00414010GuardedVCall *effect = getAttemptDamageEffect();
+	if (effect != 0 && effect->m_flag3ac != 0)
+	{
+		int value = reinterpret_cast<ObjectAttemptDamageFlagHook *>(this)->value();
+		effect->forward(value);
 	}
 }
