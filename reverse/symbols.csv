@@ -74663,6 +74663,7 @@ name,address,notes
 ?bfmeRegisterTKB@@YGXPAX@Z,0x0090E3D0,pin
 ?bfmeRelEE@BfmeObjEE@@QAEXXZ,0x00020BCB,Open-BFME5 thunk to RelVM0 body 0x0040ECA0
 ?bfmeRelKB@BfmeOldKB@@QAEXXZ,0x009EB7A0,pin
+?bfmeRelationVNI@BfmeObjVNI@@QAEHPAV1@@Z,0x0004A719,pin
 ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z,0x00049413,TU-specific name for the relative-angle helper used by AIAttackMeleeHordeWaitState
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
 ?bfmeRelease964@BfmeItem964@@QAEXXZ,0x000024A5,pin
@@ -74916,6 +74917,7 @@ name,address,notes
 ?bfmeShowDisconnectScreen@@YAXXZ,0x0050E9A0,the this-less spelling retail's DisconnectManager::turnOnScreen calls; the same body is pinned as ?showScreen@DisconnectMenu@@QAEXXZ and as the gen-thunk ?b_0050e9a0@@YAXXZ, but the call site passes no receiver
 ?bfmeShowEAA@BfmeUiEAA@@QAEXPAXPBDH01HHH@Z,0x00015235,pin
 ?bfmeShowEAC@BfmeUiEAC@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
+?bfmeShroudedVNI@@YADPAX@Z,0x000C3F80,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeSinVNB@@YAMM@Z,0x00873910,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
