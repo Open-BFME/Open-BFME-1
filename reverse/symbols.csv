@@ -75212,6 +75212,7 @@ name,address,notes
 ?bfmeStepTKD@@YAXNH@Z,0x0002E90B,pin
 ?bfmeStepTWA@BfmeThingTWA@@QAEXXZ,0x007F8940,pin
 ?bfmeStepVOU@@YAXPAX0H0@Z,0x009CD630,pin
+?bfmeStepVOV@@YAXPAX0H0@Z,0x0002F329,pin
 ?bfmeStepWB@BfmeThingWB@@QAEXPAX@Z,0x00012D82,pin
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
