@@ -221,7 +221,9 @@ public:
 	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
 	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
 	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
-	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot20();
+	virtual void sendDisconnectChat( UnicodeString text );
+	virtual void slot22(); virtual void slot23();
 	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
 	virtual void slot28(); virtual void slot29();
 	virtual void quitGame();
@@ -239,6 +241,15 @@ public:
 };
 
 extern NetworkInterface *TheNetwork;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LanguageFilter.h
+class LanguageFilter
+{
+public:
+	void filterLine( UnicodeString &line );
+};
+
+extern LanguageFilter *TheLanguageFilter;
 
 // DisconnectScreen.apt, retail 0x00104D40, object 0x26C bytes.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
@@ -523,6 +534,16 @@ void DisconnectMenu::setPlayerTimeoutTime( int slot, int percent )
 	int movie = *(int *)( (char *)this + 0x250 );
 	g_theWindowManager->unidentified_00015235(
 		movie, "SetBarPercent", 2, slotArgument, percentArgument, 0, 0, 0 );
+}
+
+// upstream: reference DisconnectMenu::sendChat forwards the line to
+// Network::sendDisconnectChat; the ZH-style twin first runs it through
+// TheLanguageFilter when one exists.
+void DisconnectMenu::sendChat( UnicodeString text )
+{
+	if( TheLanguageFilter )
+		TheLanguageFilter->filterLine( text );
+	TheNetwork->sendDisconnectChat( text );
 }
 
 BfmeAptScreenDisconnectScreen::~BfmeAptScreenDisconnectScreen()
