@@ -62,6 +62,10 @@ typedef BitFlags<KINDOF_COUNT>	KindOfMaskType;
 
 CrateSystem *TheCrateSystem = NULL;
 
+// BFME raises this byte while copying a default template as it does for
+// override copies (retail address 0x012ED611).
+extern Bool TheBfmeOverrideCopyInProgress;
+
 CrateSystem::CrateSystem()
 {
 	m_crateTemplateVector.clear();
@@ -169,7 +173,6 @@ void CrateSystem::parseCrateTemplateDefinition(INI* ini)
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/CrateSystem_newCrateTemplate_Thunk.cpp
-// ?newCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z present-unmatched
 CrateTemplate *CrateSystem::newCrateTemplate( AsciiString name )
 {
 	// sanity
@@ -183,7 +186,9 @@ CrateTemplate *CrateSystem::newCrateTemplate( AsciiString name )
 	const CrateTemplate *defaultCT = findCrateTemplate(AsciiString("DefaultCrate"));
 	if(defaultCT)
 	{
+		TheBfmeOverrideCopyInProgress = true;
 		*ct = *defaultCT;
+		TheBfmeOverrideCopyInProgress = false;
 	}
 
 	ct->setName( name );

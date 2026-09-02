@@ -11807,6 +11807,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000486BC,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@MV?$allocator@M@_STL@@@_STL@@IAEXPAMABMABU__true_type@2@I_N@Z,0x000264D1,Open-BFME5 ILT thunk to 0x000D32E0 - the overflow arm of _M_fill_insert at 0x00459D90. That body already carries a generated four-byte-POD _M_insert_overflow identity (Gen_t_000d6300_m4pod) which agrees the element is four bytes wide
 ?_M_insert_overflow@?$vector@PAVBfmeArmyIcon@@V?$allocator@PAVBfmeArmyIcon@@@_STL@@@_STL@@IAEXPAPAVBfmeArmyIcon@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001E051,retail findArmyIcon overflow call directly identifies vector<BfmeArmyIcon*> overflow helper
+?_M_insert_overflow@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CE4F,Open-BFME5 ILT; CrateSystem::newCrateTemplate vector growth call at retail 0x0037A418
 ?_M_insert_overflow@?$vector@PAVBfmeLivingWorldAnimObject@@V?$allocator@PAVBfmeLivingWorldAnimObject@@@_STL@@@_STL@@IAEXPAPAVBfmeLivingWorldAnimObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000094D5,STL vector overflow helper ILT decoded from findAnimObject retail callsite
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
@@ -76309,6 +76310,7 @@ name,address,notes
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
+?findCrateTemplate@CrateSystem@@QBEPBVCrateTemplate@@VAsciiString@@@Z,0x0001B8CE,Open-BFME5 ILT; CrateSystem::newCrateTemplate calls the BFME find-by-name implementation through this retail thunk
 ?friend_getFinalOverride@BFMELocomotorOverride@@QAEPAV1@XZ,0x000022BB,alias of the LocomotorOverridable spelling pinned below; AIUpdate.cpp reaches the chain walker through a view class because the reference Locomotor reads its template instead
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
 ?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
