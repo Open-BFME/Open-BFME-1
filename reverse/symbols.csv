@@ -55221,6 +55221,9 @@ name,address,notes
 ?b_00587b30@@YAXXZ,0x00587B30,gen-thunk body
 ?b_00587bb0@@YAXXZ,0x00587BB0,gen-thunk body
 ?b_00587c50@@YAXXZ,0x00587C50,gen-thunk body
+?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
+?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
+?g_bfmeRingReset@@3HA,0x00EF4B7C,Gen_00587C50 reset latch
 ?b_00587cd0@@YAXXZ,0x00587CD0,gen-thunk body
 ?b_00587d20@@YAXXZ,0x00587D20,gen-thunk body
 ?b_00587d40@@YAXXZ,0x00587D40,gen-thunk body
