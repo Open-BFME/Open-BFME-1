@@ -60,6 +60,13 @@ TARGET_DISCARD = 0x006620A4
 TARGET_REPLAYFRAME = 0x0006B910
 # TerrainTracksRenderObjClassSystem::flush
 TARGET_TRACKSFLUSH = 0x0072FEB0
+# 043-replaycam. InGameUI::update, at its entry -- the very function that reads
+# the four camera flags this feature writes, so they are set and consumed inside
+# one call and nothing can clear them in between. The stolen five bytes are the
+# head of an SEH frame setup (`push -1` + `mov eax,fs:[0]`, 8 bytes), both
+# position-independent, so the payload runs before that frame exists and must
+# not fault.
+TARGET_INGAMEUI_UPDATE = 0x004410C0
 
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
@@ -394,6 +401,12 @@ def build_tracksfix(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_replaycam(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/replaycam.cpp", "replaycam_update", (
+        (TARGET_INGAMEUI_UPDATE, "replaycam_update", ("ecx",)),
+    ), probe=probe)
+
+
 def build_replayctl(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/replayctl.cpp", "replayctl_frame", (
         (TARGET_REPLAYFRAME, "replayctl_frame", ("ecx",)),
@@ -510,7 +523,13 @@ FEATURES = {"020-gameresult": build_gameresult,
             # reproduced byte for byte from three retail minidumps, and the same
             # trigger against this build leaves the match running. See
             # mods/features/042-tracksfix/README.md.
-            "042-tracksfix": build_tracksfix}
+            "042-tracksfix": build_tracksfix,
+            # Promoted with its red/green in hand. Three camera axes retail
+            # implements, tunes and never binds a key to; measured against
+            # retail on the same replay, every key moves 0.9-1.5M px here and
+            # nothing outside retail's own idle band there. Replay-only.
+            # See mods/features/043-replaycam/README.md.
+            "043-replaycam": build_replaycam}
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.

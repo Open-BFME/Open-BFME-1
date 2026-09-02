@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "575c606c0c03a173050ca0627daaffbb1ad791e6f912cc6b64eebd60c8f9c2ae",
+    "sha256": "48377a20920e784fd0ff1862076e732baa9c46cac36f26b249a8aeb3fab9cd2a",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 2521
+    "used": 3115
   },
   "features": [
     {
@@ -31,6 +31,10 @@
     {
       "name": "020-gameresult",
       "target_rva": "0x0035F920"
+    },
+    {
+      "name": "043-replaycam",
+      "target_rva": "0x004410C0"
     },
     {
       "name": "033-retrytime",
