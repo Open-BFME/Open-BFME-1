@@ -159,6 +159,25 @@ enum {
     VK_RBRACKET = 0xDD
 };
 
+// The mod bus: the first 0x40 bytes of the cave, reserved by modbuild.py, and
+// the only way a separately-linked feature can talk to this one. 046-optionsui
+// writes these three from the Options screen.
+//
+// The MAGIC is the gate, not the byte. A build without 046 leaves the bus
+// zeroed, and zero must not read as "every camera axis off" -- so an unclaimed
+// bus means everything is enabled, which is exactly how this feature behaved
+// before the bus existed.
+#define MOD_BUS ((volatile unsigned char *)0x01416000)
+#define BUS_MAGIC 0x4D46424Ful /* 'OBFM' */
+enum { BUS_ROTATE = 4, BUS_TILT = 5, BUS_ZOOM = 6 };
+
+static int bus_on(int field) {
+    if (*(volatile unsigned long *)MOD_BUS != BUS_MAGIC) {
+        return 1;
+    }
+    return MOD_BUS[field] != 0;
+}
+
 static int s_in_replay;
 static unsigned char s_saved_zoom_cap;
 static Real s_saved_clip_depth;
@@ -285,15 +304,19 @@ extern "C" __declspec(dllexport) void __cdecl replaycam_update(void *ecx) {
     // A replay has no build radius and no unit to keep on screen, so the height
     // clamp that keeps a player at a playable scale only gets in the way.
     // W3DView::setHeightAboveGround consults this byte and skips its whole
-    // clamp block when it is zero.
-    view[VIEW_ZOOM_LIMITED] = 0;
+    // clamp block when it is zero. Off the switch, the engine's own cap stands
+    // and the clamp below never fires, so the camera behaves like retail.
+    const int freezoom = bus_on(BUS_ZOOM);
+    if (freezoom) {
+        view[VIEW_ZOOM_LIMITED] = 0;
+    }
 
     // Which puts the clamp here instead, against the same numbers the engine
     // would have used. The engine clamps inside its own store, so this sees a
     // value at most one 5% step past the ceiling and pulls it back through the
     // engine's setter -- never by poking the field, which would skip the camera
     // transform that goes with it.
-    {
+    if (freezoom) {
         unsigned char *limiter = view + VIEW_LIMITER;
         void **limvt = *(void ***)limiter;
         const Real floor = ((GetBound)limvt[0])(limiter, 0);
@@ -337,7 +360,7 @@ extern "C" __declspec(dllexport) void __cdecl replaycam_update(void *ecx) {
     if ((++s_ticks % 10) == 0) { trace(ui, view); }
 #endif
 
-    if (!ctrl && gd != 0) {
+    if (!ctrl && gd != 0 && bus_on(BUS_TILT)) {
         const Real step = *(Real *)(gd + GD_ROTATE_SPEED);
         const Real pitch = *(Real *)(view + VIEW_PITCH);
         if (down(VK_COMMA)) {

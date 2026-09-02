@@ -70,6 +70,12 @@ TARGET_INGAMEUI_UPDATE = 0x004410C0
 # 044-modpanel. InGameUI::postDraw -- the pass that runs after the world, so the
 # panel lands over the battle rather than under it.
 TARGET_INGAMEUI_POSTDRAW = 0x004469F0
+# 046-optionsui. BfmeAptScreenOptions::update, vtable 0x0110912C slot +0x14 --
+# it ticks only while the Options screen is up, which is exactly the window in
+# which the three checkboxes exist. And AptOptions::Save at its entry, before it
+# has read a single widget.
+TARGET_APTOPTIONS_UPDATE = 0x0055DC00
+TARGET_APTOPTIONS_SAVE = 0x00560280
 
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
@@ -413,6 +419,13 @@ def build_drawprobe(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_optionsui(pe, feature_dir, probe=False):
+    return build_feature(pe, feature_dir / "src/optionsui.cpp", "optionsui_update", (
+        (TARGET_APTOPTIONS_UPDATE, "optionsui_update", ("ecx",)),
+        (TARGET_APTOPTIONS_SAVE, "optionsui_save", ("ecx",)),
+    ), probe=probe)
+
+
 def build_modpanel(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/modpanel.cpp", "modpanel_draw", (
         (TARGET_INGAMEUI_POSTDRAW, "modpanel_draw", ("ecx",)),
@@ -547,7 +560,8 @@ FEATURES = {"020-gameresult": build_gameresult,
             # retail on the same replay, every key moves 0.9-1.5M px here and
             # nothing outside retail's own idle band there. Replay-only.
             # See mods/features/043-replaycam/README.md.
-            "043-replaycam": build_replaycam}
+            "043-replaycam": build_replaycam,
+            }
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.
@@ -578,6 +592,15 @@ UNSHIPPED = {
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
     # 044 and 045 both hook InGameUI::postDraw, so cave.py refuses to build them
     # together. That is the tool working: select one at a time.
+    # UNSHIPPED on purpose, and not because it is unfinished. It changes what
+    # three existing checkboxes MEAN, so it is only honest alongside the
+    # relabelled apt/options.big that apt_labels.py produces. Shipped alone, a
+    # box still reading "Show All Health Bars" would drive the replay camera --
+    # exactly the silent surprise this project refuses. Ship the pair or
+    # neither. It also has not been driven by hand yet: see its README.
+    "046-optionsui": (build_optionsui,
+                      "needs its relabelled apt/options.big shipped with it, and a "
+                      "hands-on pass; see mods/features/046-optionsui/README.md"),
     "045-drawprobe": (build_drawprobe,
                       "an instrument: it paints bands over the game to find which point "
                       "in the frame a mod can draw 2D from. Shares 044's hook address"),
@@ -587,6 +610,39 @@ UNSHIPPED = {
                         "an instrument: it watches the terrain-track vertex buffer, and its "
                         "ctrl+F9 deliberately crashes the game"),
 }
+
+
+# The mod bus. Features are compiled and linked one at a time with no linker
+# between them, so a feature cannot name a symbol in another. What they CAN
+# share is an address, and the cave's own base is the one address every feature
+# already knows. So the first MOD_BUS_SIZE bytes of the cave are reserved,
+# zeroed, and never allocated to a payload: a settings screen in one blob writes
+# a flag there and the camera in another reads it.
+#
+# Layout is owned by docs/mods.md. Adding a field means appending, never
+# reordering, because every feature bakes the offsets in at compile time.
+MOD_BUS_SIZE = 0x40
+
+
+# Features bake this VA in as a literal -- they have no way to be told it at
+# link time -- so if the cave ever moves, every one of them would silently read
+# somebody else's memory. Checked here so that is a build error instead.
+MOD_BUS_VA = 0x01416000
+
+
+def reserve_mod_bus(pe):
+    """Take the first MOD_BUS_SIZE bytes of the cave so no payload lands there."""
+    rva = pe.alloc(b"\0" * MOD_BUS_SIZE, align=16)
+    if rva != pe.cave_rva:
+        raise SystemExit(f"the mod bus must be the first thing in the cave, "
+                         f"but landed at 0x{rva:08X} not 0x{pe.cave_rva:08X}")
+    va = pe.image_base + rva
+    if va != MOD_BUS_VA:
+        raise SystemExit(
+            f"the mod bus is at VA 0x{va:08X} but every feature has "
+            f"0x{MOD_BUS_VA:08X} compiled into it. Change MOD_BUS_VA here and the "
+            f"MOD_BUS define in each feature together, or they read stale memory.")
+    return rva
 
 
 def main():
@@ -604,7 +660,10 @@ def main():
 
     pe = PE(a.baseline)
     pe.add_cave(a.cave_size)
+    bus = reserve_mod_bus(pe)
     print(f"cave .bfmemod @ RVA 0x{pe.cave_rva:08X} size 0x{pe.cave_size:X}")
+    print(f"  mod bus @ RVA 0x{bus:08X} (VA 0x{pe.image_base + bus:08X}), "
+          f"{MOD_BUS_SIZE} bytes reserved")
 
     claimed = {}
     names = a.only or list(FEATURES)
