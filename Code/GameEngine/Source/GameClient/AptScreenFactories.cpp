@@ -694,10 +694,20 @@ class BfmeAptScreenScoreScreen
 {
 public:
 	BfmeAptScreenScoreScreen( void *context );
+	void _bfme_setPlayerTable( int row, int field, const UnicodeString &text );
 
 private:
 	char m_unmodelled[ 0x334 ];
 };
+
+// ?_bfme_setPlayerTable@BfmeAptScreenScoreScreen@@QAEXHHABVUnicodeString@@@Z
+void BfmeAptScreenScoreScreen::_bfme_setPlayerTable(
+	int row, int field, const UnicodeString &text )
+{
+	AsciiString variableName;
+	variableName.format( (AsciiString)"PlayerTable:%d:%d", row, field );
+	g_theWindowManager->bfme_setAptText( variableName, text );
+}
 
 // ?createAptScreenScoreScreen@@YGPAXPAX@Z
 void * __stdcall createAptScreenScoreScreen( void *context )
