@@ -73146,6 +73146,7 @@ name,address,notes
 ?bfmeChk1219@BfmeE1219@@QAEDXZ,0x00898480,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
 ?bfmeCleanupVMU@BfmeNodeVMU@@QAEXXZ,0x00893990,pin
+?bfmeCleanupVOH@BfmeNodeVOH@@QAEXXZ,0x00893990,pin
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
 ?bfmeClear1035@BfmeSubB1035@@QAEXXZ,0x0089C880,pin
@@ -76963,6 +76964,7 @@ name,address,notes
 ?g_bfmeFreeVMU@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeVOA@@3P6GXPAX@ZA,0x00F59610,pin
 ?g_bfmeFreeVOB@@3P6GXPAX@ZA,0x00F5960C,pin
+?g_bfmeFreeVOH@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
 ?g_bfmeG1023@@3PAVBfmeG1023@@A,0x00EED668,pin
 ?g_bfmeG1024@@3PAVBfmeG1024@@A,0x00EED668,pin
