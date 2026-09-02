@@ -82298,3 +82298,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
 ?bfmePos9F@BfmePos9F@@QAEPBUBfmeC39F@@XZ,0x0004B12D,Open-BFME5 thunk to 0x0041D090 getPosition for 0x00409F40
 ?bfmeUse9F@BfmeObj9F@@QAEXPBUBfmeC39F@@@Z,0x00046AFB,Open-BFME5 thunk to 0x00409930 for 0x00409F40
+?bfmeValBC@BfmeObjBC@@QAEMXZ,0x008D8E00,Open-BFME5 float getter for 0x0040BC50
+?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
+?g_bfmeScaleBC@@3MA,0x00C7FAC4,Open-BFME5 float scale for 0x0040BC50
