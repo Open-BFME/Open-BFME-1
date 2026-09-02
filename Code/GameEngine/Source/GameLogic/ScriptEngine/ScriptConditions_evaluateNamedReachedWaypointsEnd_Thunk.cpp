@@ -1,328 +1,131 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump ScriptConditions::evaluateNamedReachedWaypointsEnd to C++ thunk.
+// Open-BFME5: clean C++ for ScriptConditions::evaluateNamedReachedWaypointsEnd.
 
-class Parameter;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
+typedef bool Bool;
+
+template <class T> class StringBase
+{
+	friend class AsciiString;
+
+	public:
+	// Retail's non-throwing compare call leaves no intermediate EH-state stores.
+	int compare(const StringBase &) const throw();
+
+	private:
+	StringBase(const StringBase &);
+	~StringBase();
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&that);
+	}
+	~AsciiString();
+
+private:
+	char *m_text;
+};
+
+inline bool operator==(const AsciiString &left, const AsciiString &right)
+{
+	return ((const StringBase<char> *)&left)->compare(
+		*(const StringBase<char> *)&right) == 0;
+}
+
+class Parameter
+{
+public:
+	const AsciiString &getString() const { return m_string; }
+
+private:
+	unsigned char m_beforeString[0x10];
+	AsciiString m_string;
+};
+
+class Object;
+class ScriptEngine;
+
+// BFME's ScriptEngine has an extra slot before getUnitNamed compared with the
+// Zero Hour declaration; getUnitNamed is the virtual at +0x68 in retail.
+class BfmeScriptConditionEngine
+{
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0; virtual void slot02() = 0;
+	virtual void slot03() = 0; virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0; virtual void slot08() = 0;
+	virtual void slot09() = 0; virtual void slot10() = 0; virtual void slot11() = 0;
+	virtual void slot12() = 0; virtual void slot13() = 0; virtual void slot14() = 0;
+	virtual void slot15() = 0; virtual void slot16() = 0; virtual void slot17() = 0;
+	virtual void slot18() = 0; virtual void slot19() = 0; virtual void slot20() = 0;
+	virtual void slot21() = 0; virtual void slot22() = 0; virtual void slot23() = 0;
+	virtual void slot24() = 0; virtual void slot25() = 0;
+	virtual Object *getUnitNamed(const AsciiString &) = 0;
+};
+
+class Object
+{
+public:
+	class AIUpdateInterface *getAIUpdateInterface() const
+	{
+		return *(class AIUpdateInterface **)((const char *)this + 0x204);
+	}
+};
+
+class AIUpdateInterface
+{
+public:
+	class Waypoint *getCompletedWaypoint() const
+	{
+		return *(class Waypoint **)((const char *)this + 0x13c);
+	}
+};
+
+class Waypoint
+{
+public:
+	AsciiString getPathLabel1() const;
+	AsciiString getPathLabel2() const;
+	AsciiString getPathLabel3() const;
+};
+
+extern ScriptEngine *TheScriptEngine;
+
+// ?evaluateNamedReachedWaypointsEnd@ScriptConditions@@IAE_NPAVParameter@@0@Z
 class ScriptConditions
 {
 protected:
-bool evaluateNamedReachedWaypointsEnd(Parameter *, Parameter *);
+	Bool evaluateNamedReachedWaypointsEnd(Parameter *, Parameter *);
 };
 
-// ?evaluateNamedReachedWaypointsEnd@ScriptConditions@@IAE_NPAVParameter@@0@Z
-__declspec(naked) bool ScriptConditions::evaluateNamedReachedWaypointsEnd(Parameter *, Parameter *)
+Bool ScriptConditions::evaluateNamedReachedWaypointsEnd(Parameter *pUnitParm, Parameter *pWaypointPathParm)
 {
-__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x04
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x78
-        __emit 0x73
-        __emit 0x01
-        __emit 0x01
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x53
-        __emit 0x56
-        __emit 0x52
-        __emit 0xff
-        __emit 0x50
-        __emit 0x68
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xf3
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x80
-        __emit 0x04
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xe5
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xb0
-        __emit 0x3c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xd7
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0x74
-        __emit 0xc7
-        __emit 0x55
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xb4
-        __emit 0x67
-        __emit 0xd1
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x52
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xb9
-        __emit 0x6c
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0xf7
-        __emit 0xdb
-        __emit 0x1a
-        __emit 0xdb
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xfe
-        __emit 0xc3
-        __emit 0xe8
-        __emit 0x23
-        __emit 0xc5
-        __emit 0x55
-        __emit 0x00
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x75
-        __emit 0x2d
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xf8
-        __emit 0xd4
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x8c
-        __emit 0x6c
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0xf7
-        __emit 0xdb
-        __emit 0x1a
-        __emit 0xdb
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xfe
-        __emit 0xc3
-        __emit 0xe8
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x55
-        __emit 0x00
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x26
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xe1
-        __emit 0xc4
-        __emit 0x55
-        __emit 0x00
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x52
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xcb
-        __emit 0x1c
-        __emit 0xd0
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0x39
-        __emit 0x6c
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0xf7
-        __emit 0xdb
-        __emit 0x1a
-        __emit 0xdb
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xfe
-        __emit 0xc3
-        __emit 0xe8
-        __emit 0xa3
-        __emit 0xc4
-        __emit 0x55
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x92
-        __emit 0xc4
-        __emit 0x55
-        __emit 0x00
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x75
-        __emit 0xad
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-}
+	// Retail passes the first Parameter's address as the AsciiString reference
+	// consumed by getUnitNamed, while the path Parameter uses its +0x10 string
+	// member below. Preserve that BFME-specific ABI shape explicitly.
+	Object *theObj = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine)->getUnitNamed(
+		*(const AsciiString *)pUnitParm);
+	if (!theObj)
+		return false;
+
+	AIUpdateInterface *ai = theObj->getAIUpdateInterface();
+	if (!ai)
+		return false;
+
+	const Waypoint *targetWay = ai->getCompletedWaypoint();
+	if (!targetWay)
+		return false;
+
+	AsciiString pathName = pWaypointPathParm->getString();
+	if (targetWay->getPathLabel1() == pathName)
+		return true;
+	if (targetWay->getPathLabel2() == pathName)
+		return true;
+	if (targetWay->getPathLabel3() == pathName)
+		return true;
+
+	return false;
 }

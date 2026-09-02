@@ -78060,6 +78060,9 @@ name,address,notes
 ?getOverallWinStreak@SkirmishBattleHonors@@QBEHXZ,0x0009CEA0,getInt("OverallWinStreak" at VA 0x0108053C; 0) via the pinned getInt ILT 0x000443B9; 33 B
 ?getOverallWorstLossStreak@SkirmishBattleHonors@@QBEHXZ,0x0009CFC0,getInt("OverallWorstLossStreak" at VA 0x01080584; 0) via the pinned getInt ILT 0x000443B9; 33 B
 ?getPacketRouterSlot@ConnectionManager@@QAEIXZ,0x000374B1,DisconnectManager status update packet-router gate through ILT to the existing 0x00662DE0 body
+?getPathLabel1@Waypoint@@QBE?AVAsciiString@@XZ,0x00041BB4,Open-BFME5 exact ILT to body 0x001A6F60; BFME Waypoint m_pathLabel1 getter
+?getPathLabel2@Waypoint@@QBE?AVAsciiString@@XZ,0x00028925,Open-BFME5 exact ILT to body 0x001A6F90; BFME Waypoint m_pathLabel2 getter
+?getPathLabel3@Waypoint@@QBE?AVAsciiString@@XZ,0x0002D14B,Open-BFME5 exact ILT to body 0x001A6FC0; BFME Waypoint m_pathLabel3 getter
 ?getPath_UserData@GlobalData@@QBE?AVAsciiString@@XZ,0x000106EA,GlobalData::getPath_UserData thunk
 ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x0000FD44,TurretAI startRotOrPitchSound retail call target
 ?getPercentComplete@NetCommandWrapperListNode@@QAEHXZ,0x0003D497
