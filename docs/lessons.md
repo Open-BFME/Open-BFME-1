@@ -2374,3 +2374,16 @@ and confirms the commit SUBJECT is in origin/master.
 **Quote the heredoc when a commit message contains backticks.** `git commit -F -`
 with an unquoted `<<EOF` lets the shell execute backticks and `$`.
 
+
+**The {pfn, -100, 0} DLINK member-pointer wall is a vbptr-inheritance signature.**
+A dozen `d_002f6330.asm` bodies materialize PMF constants delta=-100/vbindex=0 and
+were blocked because every reconstruction gave delta=+4 or vbindex=4. Measured law
+(probe `build/_pmf_v6.cpp`): MSVC 7.1 encodes delta=-100 with vbindex=0 exactly when
+the class's vbptr is INHERITED from a base sitting at +0x68 that introduces the
+virtual base at its own +0 (so vbtable[0]==0), with the member's class at +4:
+delta = 4 - 0x68. A most-derived-introduced vbptr instead yields vbtable[0]==-vbpofs
+and delta==member offset — the shapes that do not match. Skeleton to copy:
+`reference/shims/objectdlink/ObjectDlinkPmf.h`. The generic dispatch loop
+(`mov eax,[obj+0x68]; mov ecx,[eax+vbindex]; add ecx,delta; lea ecx,[ecx+obj+0x68]`)
+falls out byte-shaped once the PMF is passed as a value (parameter or local the
+optimizer cannot fold).
