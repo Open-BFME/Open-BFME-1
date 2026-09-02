@@ -82679,3 +82679,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0Rva0057D2D0Base@@QAE@ABV0@@Z,0x0001AA73,Open-BFME5 base copy constructor called by 0x0057ECF0
+??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
