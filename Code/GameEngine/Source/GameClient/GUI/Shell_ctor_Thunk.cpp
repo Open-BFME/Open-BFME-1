@@ -1,275 +1,107 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0Shell@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of Shell::Shell.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
-class Shell {
+typedef bool Bool;
+typedef unsigned int UnsignedInt;
+
+class AsciiString
+{
 public:
-	Shell();
+	AsciiString() : m_data(0) {}
+	~AsciiString();
+	void set(const char *text, int length);
+
+private:
+	void *m_data;
 };
 
-// ??0Shell@@QAE@XZ
-__declspec(naked) Shell::Shell()
+class SubsystemInterface
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x09
-		__emit 0x68
-		__emit 0x03
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x08
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x08
-		__emit 0xe8
-		__emit 0xbb
-		__emit 0x23
-		__emit 0x42
-		__emit 0x00
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x54
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x58
-		__emit 0xb5
-		__emit 0x10
-		__emit 0x01
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x19
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x48
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x46
-		__emit 0x08
-		__emit 0x89
-		__emit 0x46
-		__emit 0x0c
-		__emit 0x89
-		__emit 0x46
-		__emit 0x10
-		__emit 0x89
-		__emit 0x46
-		__emit 0x14
-		__emit 0x89
-		__emit 0x46
-		__emit 0x18
-		__emit 0x89
-		__emit 0x46
-		__emit 0x1c
-		__emit 0x89
-		__emit 0x46
-		__emit 0x20
-		__emit 0x89
-		__emit 0x46
-		__emit 0x24
-		__emit 0x89
-		__emit 0x46
-		__emit 0x28
-		__emit 0x89
-		__emit 0x46
-		__emit 0x2c
-		__emit 0x89
-		__emit 0x46
-		__emit 0x30
-		__emit 0x89
-		__emit 0x46
-		__emit 0x34
-		__emit 0x89
-		__emit 0x46
-		__emit 0x38
-		__emit 0x89
-		__emit 0x46
-		__emit 0x3c
-		__emit 0x89
-		__emit 0x46
-		__emit 0x40
-		__emit 0x89
-		__emit 0x46
-		__emit 0x44
-		__emit 0x53
-		__emit 0x68
-		__emit 0x1c
-		__emit 0x30
-		__emit 0x07
-		__emit 0x01
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x01
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x4e
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x4f
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x4c
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x4d
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x46
-		__emit 0x86
-		__emit 0x30
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x34
-		__emit 0xc6
-		__emit 0x46
-		__emit 0x58
-		__emit 0x01
-		__emit 0x88
-		__emit 0x5e
-		__emit 0x59
-		__emit 0xe8
-		__emit 0x48
-		__emit 0x28
-		__emit 0x30
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x02
-		__emit 0x74
-		__emit 0x09
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0x8e
-		__emit 0x7b
-		__emit 0xa9
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x6a
-		__emit 0x08
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0x89
-		__emit 0x46
-		__emit 0x5c
-		__emit 0xe8
-		__emit 0x1e
-		__emit 0x28
-		__emit 0x30
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x03
-		__emit 0x74
-		__emit 0x09
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0x9d
-		__emit 0xbc
-		__emit 0xac
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x89
-		__emit 0x46
-		__emit 0x60
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x68
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x6c
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x48
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x64
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x14
-		__emit 0xc3
-	}
+public:
+	SubsystemInterface();
+	virtual ~SubsystemInterface();
+	virtual void init() = 0;
+	virtual Bool loadIniFilesFromLegend();
+	virtual void reset() = 0;
+	virtual void update() = 0;
+	virtual void draw() = 0;
+
+protected:
+	AsciiString m_name;
+};
+
+class WindowLayout;
+
+class AnimateWindowManager
+{
+public:
+	AnimateWindowManager();
+	virtual ~AnimateWindowManager();
+
+private:
+	char m_unreconstructed[0x30];
+};
+
+class ShellMenuSchemeManager
+{
+public:
+	ShellMenuSchemeManager();
+	~ShellMenuSchemeManager();
+
+private:
+	char m_unreconstructed[8];
+};
+
+class Shell : public SubsystemInterface
+{
+public:
+	Shell();
+	virtual ~Shell();
+	virtual void init();
+	virtual Bool loadIniFilesFromLegend();
+	virtual void reset();
+	virtual void update();
+	virtual void draw();
+
+private:
+	WindowLayout *m_screenStack[16];
+	int m_screenCount;
+	Bool m_bfmeState4c;
+	Bool m_bfmeState4d;
+	Bool m_pendingPush;
+	Bool m_pendingPop;
+	Bool m_clearBackground;
+	char m_unreconstructed[3];
+	AsciiString m_pendingPushName;
+	Bool m_isShellActive;
+	Bool m_shellMapOn;
+	AnimateWindowManager *m_animateWindowManager;
+	ShellMenuSchemeManager *m_schemeManager;
+	UnsignedInt m_musicHandle;
+	WindowLayout *m_saveLoadMenuLayout;
+	WindowLayout *m_popupReplayLayout;
+};
+
+Shell::Shell()
+{
+	int i;
+
+	m_screenCount = 0;
+	for (i = 0; i < 16; ++i)
+		m_screenStack[i] = 0;
+
+	m_pendingPush = false;
+	m_pendingPop = false;
+	m_bfmeState4c = false;
+	m_bfmeState4d = false;
+	m_clearBackground = false;
+	m_pendingPushName.set("", 0);
+	m_isShellActive = true;
+	m_shellMapOn = false;
+	m_animateWindowManager = new AnimateWindowManager;
+	m_schemeManager = new ShellMenuSchemeManager;
+	m_musicHandle = 1;
+	m_saveLoadMenuLayout = 0;
+	m_popupReplayLayout = 0;
+	m_screenCount = 0;
 }
