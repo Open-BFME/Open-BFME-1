@@ -209,6 +209,7 @@ class BFMENetGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
 {
 public:
 	BFMENetGameSpyStatsAuthKeyCommandMsg();
+	virtual ~BFMENetGameSpyStatsAuthKeyCommandMsg();
 
 	AsciiString getText1C();
 	void setText1C(AsciiString text);
@@ -222,6 +223,10 @@ public:
 BFMENetGameSpyStatsAuthKeyCommandMsg::BFMENetGameSpyStatsAuthKeyCommandMsg()
 {
 	m_commandType = NETCOMMANDTYPE_GAMESPY_STATS_AUTHKEY;
+}
+
+BFMENetGameSpyStatsAuthKeyCommandMsg::~BFMENetGameSpyStatsAuthKeyCommandMsg()
+{
 }
 
 AsciiString BFMENetGameSpyStatsAuthKeyCommandMsg::getText1C()
