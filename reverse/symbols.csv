@@ -3351,6 +3351,7 @@ name,address,notes
 ??0Rva00722120Base@@QAE@XZ,0x000354E5,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x00722120
 ??0Rva0076F980Mid@@QAE@ABV0@@Z,0x00007A63,Open-BFME5 fresh thiscall copy ctor at ILT of 12-byte mid member of 0x0076F980
 ??0Rva007B12F0Base@@QAE@XZ,0x0000AF38,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x007B12F0
+??0Rva007F9B80@@QAE@PAX@Z,0x007F9B80,ctor of 0x6B8 FESL service object taking owner
 ??0Rva007FBC30GameKey@@QAE@PAVRva007E8810Message@@@Z,0x007FBC30,V2 lane: FESL Aries LID/GID base constructor; base of the three derived record ctors in V2FeslAriesRecords.cpp
 ??0Rva007FF700FeslString@@QAE@XZ,0x007FF700,address-derived default constructor for two FESL string members in the 0x007F0CB0 blob record
 ??0Rva00802D00Element@@QAE@XZ,0x00802D00,V2 lane: 64-byte element constructor placement-new'd by ?allocate@Rva007F7810Block@@QAEXH@Z
@@ -3438,6 +3439,7 @@ name,address,notes
 ??0ScriptAction@@QAE@W4ScriptActionType@0@@Z,0x0003BA16,ILT for the ScriptAction type-taking constructor body at 0x00356040
 ??0SegLineRendererClass@@QAE@ABV0@@Z,0x00960990
 ??0SegLineRendererClass@@QAE@XZ,0x0095FFD0,derived from ParticleBufferClass main ctor aligned call sites
+??0ServiceHubImpl@@QAE@PAX00000@Z,0x007EAE30,ServiceHubImpl ctor used by 0x007EB1C0 create
 ??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
 ??0ShellMenuSchemeImage@@QAE@XZ,0x0001DA7F,ShellMenuSchemeImage constructor via ILT thunk
 ??0ShroudCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026F1C,module ctor (friend_newModuleInstance retail call target)
@@ -10492,11 +10494,15 @@ name,address,notes
 ?Rva007EB410NetConnStatus@@YAHHPAXH@Z,0x007EB410,Y2 lane: NetConnStatus -- the body names itself in its own warning string; three-argument query with the third unused
 ?Rva007EB520NetConnMAC@@YAIPAX@Z,0x007EB520,Y2 lane: NetConnMAC -- the body names itself in both of its log lines; NetConnStatus hands it the 0xF0-byte Adapter block
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
+?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
 ?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
 ?Rva007EBCA0@@YAPADPBD0@Z,0x007EBCA0,Y2 lane: address-derived; the tag lookup 0x007EBF20 and 0x007EBFC0 both hand a record and a tag name to
 ?Rva007F0000Alloc@@YAPAXH@Z,0x007F0000,Y2 DirtySock lane: address-derived; one-argument allocator ProtoMangleCreate calls for the 0x214-byte module record
 ?Rva007F0030Free@@YAXPAX@Z,0x007F0030,Y2 DirtySock lane: address-derived; the matching one-argument release, called by ProtoMangleDestroy
+?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
 ?Rva007F8D30@@YAXXZ,0x007F8D30,Y2 lane: address-derived; the no-argument teardown 0x007EB650 runs before the DirtySock module shutdown
+?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
+?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
 ?Rva007FD080@@YAXH@Z,0x007FD080,Y2 lane: C++ spelling of the DirtySock module create converted as _Rva007FD080 in Y4DirtySockSocket.c
 ?Rva007FD270@@YAXXZ,0x007FD270,Y2 lane: C++ spelling of the DirtySock module shutdown converted as _Rva007FD270 in Y4DirtySockSocket.c
 ?Rva007FD2D0SocketOpen@@YAPAXHHH@Z,0x007FD2D0,Y2 lane: C++ spelling of the socket open converted as _Rva007FD2D0 in Y4DirtySockSocket.c
@@ -73075,6 +73081,7 @@ name,address,notes
 ?bfmeChk1218@BfmeE1218@@QAEDXZ,0x00898480,pin
 ?bfmeChk1219@BfmeE1219@@QAEDXZ,0x00898480,pin
 ?bfmeCleanup@INIMemberA@@AAEXXZ,0x009CBF50,Open-BFME5 the call INIMemberA's destructor at 0x009CBFE0 makes on this before releasing its vector member
+?bfmeCleanupVMU@BfmeNodeVMU@@QAEXXZ,0x00893990,pin
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
 ?bfmeClear1035@BfmeSubB1035@@QAEXXZ,0x0089C880,pin
@@ -73172,6 +73179,7 @@ name,address,notes
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
+?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
 ?bfmeCopyEFG@BfmeThingEFG@@QAEXPAV1@@Z,0x000201A3,pin
 ?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x0002C14C,Open-BFME5 the copier the allocate-and-delegate body at 0x00134BB0 hands its range and block to
 ?bfmeCopyInto_00134C20@@YAXPBUBfmeCopyElem_00134C20@@0PAU1@PAI@Z,0x00031E4E,Open-BFME5 the copier the allocate-and-delegate body at 0x00134C20 hands its range and block to
@@ -73194,6 +73202,7 @@ name,address,notes
 ?bfmeCopyVGB@BfmeStrVGB@@QAEXPBV1@@Z,0x00888400,pin
 ?bfmeCopyVJZ@BfmeColorVJZ@@QAEXABV1@@Z,0x00887B60,pin
 ?bfmeCopyVKV@BfmeStrVKV@@QAEXABV1@@Z,0x00887B60,pin
+?bfmeCopyWR@@YAPAUBfmePod16WR@@PAU1@00ABUBfmeTagWR@@PAH@Z,0x0003F369,Open-BFME5 16-byte __copy ILT used by 0x0074E6B0 resize erase
 ?bfmeCount1029@@YAHHHPADH@Z,0x00001BAE,pin
 ?bfmeCount1041@@YAHHPAXPADH@Z,0x00001BAE,pin
 ?bfmeCount1051@@YAHHHPADH@Z,0x00001BAE,pin
@@ -73451,6 +73460,7 @@ name,address,notes
 ?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
 ?bfmeEraseV16@BfmeStrV16@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x0082FB10
 ?bfmeEraseV17@BfmeVecV17@@QAEXPAH0@Z,0x00002A3B,Open-BFME5 erase range thunk for 0x0082FA70
+?bfmeEraseV24@BfmeStrV24@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830CC0
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
@@ -73485,6 +73495,8 @@ name,address,notes
 ?bfmeFill1028@BfmeSub1028@@QAEXPAH0@Z,0x00021562,pin
 ?bfmeFill1031@@YAXPAVBfmeG1031@@PAH@Z,0x000139BC,pin
 ?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
+?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
+?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
 ?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
@@ -73880,6 +73892,7 @@ name,address,notes
 ?bfmeFreeUE@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUF@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeUNA@@YAXPAXH@Z,0x007F0170,pin
+?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
 ?bfmeFreeVA@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVB@@YGXPAX@Z,0x009F6C16,pin
 ?bfmeFreeVC@@YAXPAX@Z,0x00881EB0,pin
@@ -74009,6 +74022,9 @@ name,address,notes
 ?bfmeGrow@Gen_006AC5D0@@AAEXPAX@Z,0x0000B61D,Open-BFME5 the grow routine the bounded append at 0x006AC5D0 calls
 ?bfmeGrowUPC@@YAXPAUBfmeStateUPC@@H@Z,0x009959C0,pin
 ?bfmeGrowV15@BfmeStrV15@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831780
+?bfmeGrowV21@BfmeStrV21@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831190
+?bfmeGrowV22@BfmeStrV22@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831230
+?bfmeGrowV23@BfmeStrV23@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00830FC0
 ?bfmeGrowVKN@BfmeVecVKN@@QAEXPAUBfmeElemVKN@@PBU2@PAPBU2@HH@Z,0x00040F4D,pin
 ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z,0x00001A50,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
 ?bfmeHandOver_0000240A@@YAXPAVBfmeSeedTarget@@PAX@Z,0x0000240A,Open-BFME5 ILT the __cdecl hand-over helper a seeder calls
@@ -74077,6 +74093,11 @@ name,address,notes
 ?bfmeIdCWB@@3HA,0x00EF102C,pin
 ?bfmeIdCWC@@3HA,0x00EF14A0,pin
 ?bfmeIdCWD@@3HA,0x00EF3694,pin
+?bfmeImplV21@BfmeStrV21@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831190
+?bfmeImplV22@BfmeStrV22@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831230
+?bfmeImplV23@BfmeStrV23@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830FC0
+?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
+?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
 ?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
@@ -74220,6 +74241,9 @@ name,address,notes
 ?bfmeLen1223@BfmeSub1223@@QAEHXZ,0x0089CC10,pin
 ?bfmeLen1224@BfmeSub1224@@QAEHXZ,0x0089CC10,pin
 ?bfmeLen1238@BfmeS1238@@QAEHXZ,0x0089CC10,pin
+?bfmeLenErrV21@BfmeStrV21@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831190
+?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
+?bfmeLenErrV23@BfmeStrV23@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00830FC0
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
@@ -74521,8 +74545,12 @@ name,address,notes
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
 ?bfmePop1236@BfmeA1236@@QAEXXZ,0x008D2CC0,pin
 ?bfmePopVJU@BfmeStackVJU@@QAEXXZ,0x008D2CC0,pin
+?bfmePos9F@BfmePos9F@@QAEPBUBfmeC39F@@XZ,0x0004B12D,Open-BFME5 thunk to 0x0041D090 getPosition for 0x00409F40
+?bfmePred@BfmeElem340@@QAEEXZ,0x0003C5B0,Open-BFME5 ILT from 0x0013E340 any-of walk
+?bfmePredV30@@YAHHHD@Z,0x0003B557,Open-BFME5 3-arg predicate for 0x0082E680 find-if
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
+?bfmePrep@Gen_006A6AF0@@QAEXHH@Z,0x000299A1,Open-BFME5 ILT from 0x006A6AF0 grid walk
 ?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
 ?bfmePrepWJ@@YGXPAUBfmeObjWJ@@@Z,0x000044C1,Open-BFME5 REL32 from 0x002AB0B0 stdcall wrapper
@@ -74580,6 +74608,7 @@ name,address,notes
 ?bfmeRegisterDAE@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
 ?bfmeRegisterTKB@@YGXPAX@Z,0x0090E3D0,pin
+?bfmeRelEE@BfmeObjEE@@QAEXXZ,0x00020BCB,Open-BFME5 thunk to RelVM0 body 0x0040ECA0
 ?bfmeRelKB@BfmeOldKB@@QAEXXZ,0x009EB7A0,pin
 ?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z,0x00049413,TU-specific name for the relative-angle helper used by AIAttackMeleeHordeWaitState
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
@@ -75199,6 +75228,7 @@ name,address,notes
 ?bfmeUse1251@BfmeSub2_1251@@QAEXPAX@Z,0x007F7F50,pin
 ?bfmeUse926B@BfmeKeyLC@@QAEXPAUBfmeNodeLC@@@Z,0x00002E69,pin
 ?bfmeUse975D@BfmeD975@@QAEDPAX@Z,0x0003E80B,pin
+?bfmeUse9F@BfmeObj9F@@QAEXPBUBfmeC39F@@@Z,0x00046AFB,Open-BFME5 thunk to 0x00409930 for 0x00409F40
 ?bfmeUseDXI@BfmeGlobDXI@@QAEXH@Z,0x0004159C,pin
 ?bfmeUseDXJ@BfmeSubDXJ@@QAEXH@Z,0x00021468,pin
 ?bfmeUseEFJ@BfmeResEFJ@@QAEXPAX0@Z,0x00017A12,pin
@@ -75227,6 +75257,7 @@ name,address,notes
 ?bfmeVal1239@BfmeE1239@@QAEHXZ,0x00898300,pin
 ?bfmeVal1240@BfmeE1240@@QAEHXZ,0x00898300,pin
 ?bfmeVal1243@BfmeE1243@@QAEPAXXZ,0x00898300,pin
+?bfmeValBC@BfmeObjBC@@QAEMXZ,0x008D8E00,Open-BFME5 float getter for 0x0040BC50
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
@@ -76146,6 +76177,7 @@ name,address,notes
 ?fetchB@Rva00677590Msg@@QAEIXZ,0x00035EF4,S3 wire-record fill family fetch callee (address-derived name)
 ?fill@U1SupplierHigh@@QAEXPAVU1FillTargetHigh@@PAX@Z,0x005C8E90,tail of the slot-2 field collectors reading the 0xB8-0xBC run; address-derived name
 ?fill@U1SupplierLow@@QAEXPAVU1FillTargetLow@@PAX@Z,0x005C8D40,tail of the slot-2 field collectors reading the 0x3C-0x54 run; address-derived name
+?fillInsert@BfmeVecWR@@QAEXPAUBfmePod16WR@@IABU2@@Z,0x00012EFE,Open-BFME5 16-byte vector fill-insert ILT used by 0x0074E6B0 resize
 ?fill_insert@BitVectorFillInsertShim@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x002CC290,_STL bit vector _M_fill_insert incremental-link thunk target through a TU-local forwarding shim
 ?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
@@ -76641,6 +76673,7 @@ name,address,notes
 ?g_bfmeElapsedDYB@@3_KA,0x00EED8A8,pin
 ?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
+?g_bfmeEmptyEE@@3VBfmeStrEE@@A,0x00F36E50,Open-BFME5 AsciiString TheEmptyString for 0x0040EE10
 ?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUPA@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUVA@@3PADA,0x00C7301C,pin
@@ -76734,6 +76767,7 @@ name,address,notes
 ?g_bfmeFree1046@@3P6AXPAXH@ZA,0x00F37830,pin
 ?g_bfmeFreeDWF@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeFreeDXG@@3P6AXPAX@ZA,0x00F3782C,pin
+?g_bfmeFreeVMU@@3P6AXPAX@ZA,0x00F3782C,pin
 ?g_bfmeG1022@@3PAVBfmeG1022@@A,0x00EED668,pin
 ?g_bfmeG1023@@3PAVBfmeG1023@@A,0x00EED668,pin
 ?g_bfmeG1024@@3PAVBfmeG1024@@A,0x00EED668,pin
@@ -76747,6 +76781,7 @@ name,address,notes
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
+?g_bfmeGlob9A@@3HA,0x00EF10D8,Open-BFME5 global the walk at 0x00409A60 stores
 ?g_bfmeGlobCC0@@3PAVBfmeGlobCC0@@A,0x00EF1104,pin
 ?g_bfmeGlobGI@@3PAVBfmeGlobGI@@A,0x00EF076C,pin
 ?g_bfmeGlobID@@3PAVBfmeGlobID@@A,0x00EED5F0,pin
@@ -76919,6 +76954,7 @@ name,address,notes
 ?g_bfmeMsgBUUA@@3PADA,0x00D2C67C,pin
 ?g_bfmeMsgCUUA@@3PADA,0x00D2C660,pin
 ?g_bfmeMsgUVB@@3PADA,0x00D1C2A0,pin
+?g_bfmeMulB3@@3NA,0x00C7F948,Open-BFME5 double mul for 0x0040B300
 ?g_bfmeN1020@@3PAVBfmeN1020@@A,0x00EF1B40,pin
 ?g_bfmeN1021@@3PAVBfmeN1021@@A,0x00EF1B40,pin
 ?g_bfmeN1022@@3PAVBfmeN1022@@A,0x00EF1B40,pin
@@ -77077,6 +77113,8 @@ name,address,notes
 ?g_bfmeS1083_2@@3PAVBfmeS1083@@A,0x00F3839C,pin
 ?g_bfmeS1097@@3PAUBfmeS1097@@A,0x00EEF1D8,pin
 ?g_bfmeScalarByteFormat@@3QBDB,0x011442D0,address-derived scalar-byte format string from the DIR32 operand at retail 0x009D9479
+?g_bfmeScaleB3@@3MA,0x00C84068,Open-BFME5 float scale for 0x0040B300
+?g_bfmeScaleBC@@3MA,0x00C7FAC4,Open-BFME5 float scale for 0x0040BC50
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
 ?g_bfmeSink1010@@3PAVBfmeSink1010@@A,0x00EF0898,pin
@@ -77118,6 +77156,7 @@ name,address,notes
 ?g_bfmeStr1279B@@3PADA,0x00D18E44,pin
 ?g_bfmeStrA993B@@3PADA,0x00C81238,pin
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
+?g_bfmeSubB3@@3NA,0x00C7C640,Open-BFME5 double sub for 0x0040B300
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeT1057@@3PAVBfmeT1057@@A,0x00EF1464,pin
@@ -77983,6 +78022,8 @@ name,address,notes
 ?getSurfaceLevel@W3DRadarResetTexture@@QAE?AVW3DRadarResetSurface@@XZ,0x0090E670,W3DRadar reset BFME value-surface accessor
 ?getTaintLevelByte006e@BfmeTaintManager@@QAEEHH@Z,0x00880E50,W3DDisplay BFME taint-level byte target read from retail REL32
 ?getTeamAsAIGroup@Team@@QAEXPAVAIGroup@@@Z,0x00022EC1,doTeamAttackNamed BFME Team::getTeamAsAIGroup thunk
+?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
+?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
 ?getTerrainColorAt@WorldHeightMap@@QAEXMMPAURGBColor@@@Z,0x007477E0,thunk-resolved body (via 0x197ae)
 ?getText@INILineBuffer@@QBEPBDH@Z,0x009CBC60,the INI line array accessor readLine copies from
 ?getText@NetChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00025338,ILT thunk; the by-value UnicodeString getter NetPacket::isRoomForChatMessage calls, beside the ledgered NetDisconnectChatCommandMsg twin
@@ -78057,6 +78098,7 @@ name,address,notes
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z,0x0004115F,Open-BFME5 ILT at guardSupplyCenter 0x001669C0; receives the adjusted warehouse position with normal guard mode and script command source
+?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
 ?grow@Rva0005CBD0Buffer@@IAEXI@Z,0x0005CBD0,out-of-line growth routine shared by the 0x0005E200 and 0x0005EEB0 reserve() twins (U3_arena_alloc.cpp)
 ?grow@Rva0082C300Buf@@AAEXXZ,0x000132CD,callee of Rva0082C300Buf::at; ILT to gen-shim ret-void at 0x006434C0
 ?grow@Rva0082C330Buf@@AAEXXZ,0x000132CD,callee of Rva0082C330Buf::at; same ILT as Rva0082C300Buf::grow
@@ -79782,6 +79824,8 @@ name,address,notes
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?prepare@Rva00751EC0Owner@@AAEXPAVRva00751EC0Target@@@Z,0x00011CBB,Open-BFME5 ILT thunk to the 0x00776AC0 target preparation body
+?prepare@Rva007EAD30Owner@@QAEXXZ,0x007EAA70,prepare helper for 0x007EAD30 send
+?prepare@Rva007EADC0Owner@@QAEXXZ,0x007EAB40,prepare helper for 0x007EADC0 send
 ?prependDirtyModule@PartitionDirtyListOwner@@QAEXPAVPartitionData@@@Z,0x008F8C50,descriptive name; BFME-only dirty-list link helper called from PartitionData::makeDirty
 ?prependToList@Drawable@@QAEXPAPAV1@@Z,0x00025C84,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
 ?preprocessMacro@INI@@SAPBDPBD@Z,0x008524B0,provisional name for BFME INI macro substitution; called by scanInt/scanReal
@@ -80232,6 +80276,7 @@ name,address,notes
 ?set@BFMEWeatherAsciiString@@QAEXPBDH@Z,0x00887D20,Open-BFME5 WeatherSetting two-argument string setter
 ?set@BFMEZBiasSetter@@SAXM@Z,0x00905990,float-ABI shim for BFME's older DX8 Z-bias body called by BaseHeightMapScorchSetZBias
 ?set@BfmeQuickMatchSlot@@QAEXABV1@@Z,0x00887C90,"string-member assignment used by ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z"
+?set@BfmeStrEE@@QAEXABV1@@Z,0x00887C90,Open-BFME5 StringBase char set for 0x0040EE10
 ?set@BfmeThingTemplateString@@QAEXPBDH@Z,0x00887D20,ThingTemplate validateAudio TU shim for StringBase<char>::set(const char*,int)
 ?set@Bitset67SetShim@_STL@@QAEAAV?$bitset@$0ED@@2@IH@Z,0x000E9910,incremental-link thunk target through a TU-local forwarding shim
 ?set@DX8TextureStageStateShim@@SAXIKI@Z,0x006C5840,DX8Wrapper incremental-link static thunk target through a TU-local forwarding shim
@@ -80379,6 +80424,7 @@ name,address,notes
 ?setOverallWinStreak@SkirmishBattleHonors@@QAEXH@Z,0x0009CE70,setInt("OverallWinStreak" at VA 0x0108053C; val) via the pinned setInt ILT 0x00009B3D; 36 B; ZH SkirmishBattleHonors setter shape
 ?setOverallWorstLossStreak@SkirmishBattleHonors@@QAEXH@Z,0x0009CF90,setInt("OverallWorstLossStreak" at VA 0x01080584; val) via the pinned setInt ILT 0x00009B3D; 36 B; ZH SkirmishBattleHonors setter shape
 ?setPasswordMode@@YAXW4PasswordMode@@@Z,0x004D7AF0,pinharvest x2 (body)
+?setPeer@Rva007F9B80@@QAEXPAX@Z,0x007F9590,stores peer pointer on the 0x6B8 service object
 ?setPercentage@NetProgressCommandMsg@@QAEXE@Z,0x00030C56,pinharvest x1 (thunk)
 ?setPercentage@NetProgressCommandMsg@@QAEXE@Z,0x0003C44D,pinharvest x1 (thunk)
 ?setPlayerIndex@AudioEventRTS@@QAEXH@Z,0x0003AC88,doSoundPlayFromNamed player-index ILT thunk
@@ -82277,47 +82323,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeRelEE@BfmeObjEE@@QAEXXZ,0x00020BCB,Open-BFME5 thunk to RelVM0 body 0x0040ECA0
-?set@BfmeStrEE@@QAEXABV1@@Z,0x00887C90,Open-BFME5 StringBase char set for 0x0040EE10
-?g_bfmeEmptyEE@@3VBfmeStrEE@@A,0x00F36E50,Open-BFME5 AsciiString TheEmptyString for 0x0040EE10
-?bfmeGrowV21@BfmeStrV21@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831190
-?bfmeLenErrV21@BfmeStrV21@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831190
-?bfmeImplV21@BfmeStrV21@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831190
-?bfmePred@BfmeElem340@@QAEEXZ,0x0003C5B0,Open-BFME5 ILT from 0x0013E340 any-of walk
-?bfmeGrowV22@BfmeStrV22@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831230
-?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
-?bfmeImplV22@BfmeStrV22@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831230
-?g_bfmeGlob9A@@3HA,0x00EF10D8,Open-BFME5 global the walk at 0x00409A60 stores
-?bfmeGrowV23@BfmeStrV23@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00830FC0
-?bfmeLenErrV23@BfmeStrV23@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00830FC0
-?bfmeImplV23@BfmeStrV23@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830FC0
-?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
-?bfmeEraseV24@BfmeStrV24@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830CC0
-?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
-?prepare@Rva007EAD30Owner@@QAEXXZ,0x007EAA70,prepare helper for 0x007EAD30 send
-?prepare@Rva007EADC0Owner@@QAEXXZ,0x007EAB40,prepare helper for 0x007EADC0 send
-?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
-?bfmePos9F@BfmePos9F@@QAEPBUBfmeC39F@@XZ,0x0004B12D,Open-BFME5 thunk to 0x0041D090 getPosition for 0x00409F40
-?bfmeUse9F@BfmeObj9F@@QAEXPBUBfmeC39F@@@Z,0x00046AFB,Open-BFME5 thunk to 0x00409930 for 0x00409F40
-?bfmeValBC@BfmeObjBC@@QAEMXZ,0x008D8E00,Open-BFME5 float getter for 0x0040BC50
-?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
-?g_bfmeScaleBC@@3MA,0x00C7FAC4,Open-BFME5 float scale for 0x0040BC50
-?bfmeFreeV29@BfmeVecV29@@QAEXXZ,0x00028006,Open-BFME5 vector buffer free for 0x0082F840
-?bfmePredV30@@YAHHHD@Z,0x0003B557,Open-BFME5 3-arg predicate for 0x0082E680 find-if
-?g_bfmeSubB3@@3NA,0x00C7C640,Open-BFME5 double sub for 0x0040B300
-?g_bfmeMulB3@@3NA,0x00C7F948,Open-BFME5 double mul for 0x0040B300
-?g_bfmeScaleB3@@3MA,0x00C84068,Open-BFME5 float scale for 0x0040B300
-??0ServiceHubImpl@@QAE@PAX00000@Z,0x007EAE30,ServiceHubImpl ctor used by 0x007EB1C0 create
-?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
-?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
-?bfmePrep@Gen_006A6AF0@@QAEXHH@Z,0x000299A1,Open-BFME5 ILT from 0x006A6AF0 grid walk
-?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
-??0Rva007F9B80@@QAE@PAX@Z,0x007F9B80,ctor of 0x6B8 FESL service object taking owner
-?setPeer@Rva007F9B80@@QAEXPAX@Z,0x007F9590,stores peer pointer on the 0x6B8 service object
-?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
-?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
-?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
-?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
-?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
-?fillInsert@BfmeVecWR@@QAEXPAUBfmePod16WR@@IABU2@@Z,0x00012EFE,Open-BFME5 16-byte vector fill-insert ILT used by 0x0074E6B0 resize
-?bfmeCopyWR@@YAPAUBfmePod16WR@@PAU1@00ABUBfmeTagWR@@PAH@Z,0x0003F369,Open-BFME5 16-byte __copy ILT used by 0x0074E6B0 resize erase
