@@ -1,6 +1,6 @@
 // cl: /GS
-// 0x007E90C0 / 0x007E91D0 / 0x007E9240 / 0x007E9130: sprintf indexed key
-// then getString (and getInt for errors) on the message at +0.
+// 0x007E90C0 / 0x007E91D0 / 0x007E9240 / 0x007E9130 / 0x007E8F20:
+// sprintf indexed keys then getString/getInt on a FESL message.
 
 class Rva007E8810Message
 {
@@ -94,4 +94,30 @@ bool Rva007E9130Errors::get(char *fieldError, int *fieldName, int destSize)
 	}
 	m_count = 0;
 	return false;
+}
+
+class Rva007E8F20Country
+{
+public:
+	bool load(Rva007E8810Message *msg, int index);
+
+	char m_description[0x80];
+	char m_isoCode[4];
+	int m_registrationAgeLimit;
+	int m_parentalControlAgeLimit;
+};
+
+bool Rva007E8F20Country::load(Rva007E8810Message *msg, int index)
+{
+	char key[0x40] = {0};
+	sprintf(key, "countryList.%d.description", index);
+	if (!msg->getString(key, m_description, 0x80))
+		return false;
+	sprintf(key, "countryList.%d.ISOCode", index);
+	msg->getString(key, m_isoCode, 4);
+	sprintf(key, "countryList.%d.parentalControlAgeLimit", index);
+	m_registrationAgeLimit = msg->getInt(key, 18);
+	sprintf(key, "countryList.%d.registrationAgeLimit", index);
+	m_parentalControlAgeLimit = msg->getInt(key, 13);
+	return true;
 }
