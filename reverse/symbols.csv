@@ -82257,3 +82257,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
 ?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
+?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
