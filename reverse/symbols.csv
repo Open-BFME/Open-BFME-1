@@ -82407,3 +82407,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?value@ObjectAttemptDamageFlagHook@@QAEHXZ,0x0002CA61,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
+?valid@Rva007FA5E0Arg@@QAE_NXZ,0x007E88A0,FESL arg valid() used by 0x007FA5E0
