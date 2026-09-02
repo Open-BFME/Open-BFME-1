@@ -82400,3 +82400,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyFrom@BfmeTailE9@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087E9B0
 ?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
 ?Rva00806710@@YAHPAURva00806580Record@@PBDII@Z,0x00806710,cdecl open fesl.ea.com from 0x007FA6C0
+?g_bfmeEmptyF9@@3PADA,0x0107388B,Open-BFME5 empty AsciiString fallback of 0x0087F9C0
+?afterWalk@BfmeObjF9@@QAEXXZ,0x0087EE60,Open-BFME5 post-walk callee of 0x0087F9C0
