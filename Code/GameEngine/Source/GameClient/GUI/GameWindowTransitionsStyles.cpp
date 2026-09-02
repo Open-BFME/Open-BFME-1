@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/asciistringsetoutofline /Ireference/shims/fullfade /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -1740,52 +1740,54 @@ CountUpTransition::~CountUpTransition( void )
 	m_win = NULL;
 }
 
+// Open-BFME5: convert CountUpTransition::init from retail ASM to clean C++.
 void CountUpTransition::init( GameWindow *win )
 {
+	BfmeCountUpTransitionFields *self = (BfmeCountUpTransitionFields *)this;
+
 	if(win)
 	{
-		m_win = win;
-		m_win->winGetSize(&m_size.x, &m_size.y);
-		m_win->winGetScreenPosition(&m_pos.x, &m_pos.y );
+		self->m_win = win;
+		self->m_win->winGetSize(&self->m_size.x, &self->m_size.y);
+		self->m_win->winGetScreenPosition(&self->m_pos.x, &self->m_pos.y );
 
-		if( m_win->winIsHidden() )
+		if( self->m_win->winIsHidden() )
 		{
-			m_isForward = TRUE;
-			m_isFinished = TRUE;
-			m_frameLength = 0;
+			self->m_isForward = TRUE;
+			self->m_isFinished = TRUE;
+			self->m_frameLength = 0;
 			return;
 		}
 	}
-	m_fullText = GadgetStaticTextGetText(m_win);		
-	m_isForward = FALSE;
-	update(COUNTUPTRANSITION_START);
-	m_isFinished = FALSE;
-	m_isForward = TRUE;
+	self->m_fullText = GadgetStaticTextGetText(self->m_win);
+	self->m_isForward = FALSE;
+	update(self->m_startFrame);
+	self->m_isFinished = FALSE;
+	self->m_isForward = TRUE;
 	
 	AsciiString tempStr;
-	tempStr.translate(m_fullText);
-	m_intValue = atoi(tempStr.str());
-	DEBUG_LOG(("CountUpTransition::init %hs %s %d\n", m_fullText.str(), tempStr.str(), m_intValue));
-	if(m_intValue < COUNTUPTRANSITION_END)
+	tempStr.translate(self->m_fullText);
+	self->m_intValue = atoi(tempStr.str());
+	if(self->m_intValue < self->m_endFrame)
 	{
-		m_countState = COUNT_ONES;
-		m_frameLength = MIN(m_intValue, COUNTUPTRANSITION_END);
+		self->m_countState = COUNT_ONES;
+		self->m_frameLength = MIN(self->m_intValue, self->m_endFrame);
 	}
-	else if(m_intValue/100 < COUNTUPTRANSITION_END)
+	else if(self->m_intValue/100 < self->m_endFrame)
 	{
-		m_countState = COUNT_100S;
-		m_frameLength = MIN(m_intValue/100, COUNTUPTRANSITION_END);
+		self->m_countState = COUNT_100S;
+		self->m_frameLength = MIN(self->m_intValue/100, self->m_endFrame);
 	}
 	else
 	{
-		m_countState = COUNT_1000S;
-		m_frameLength = MIN(m_intValue/1000, COUNTUPTRANSITION_END);
+		self->m_countState = COUNT_1000S;
+		self->m_frameLength = MIN(self->m_intValue/1000, self->m_endFrame);
 	}
 	
-	m_currentValue = 0;
+	self->m_currentValue = 0;
 	UnicodeString currVal;
-	currVal.format(L"%d",m_currentValue);
-	GadgetStaticTextSetText(m_win, currVal);
+	currVal.format(UnicodeString(L"%d"),self->m_currentValue);
+	GadgetStaticTextSetText(self->m_win, currVal);
 }
 
 // Open-BFME5: convert CountUpTransition::update from retail ASM to clean C++.
