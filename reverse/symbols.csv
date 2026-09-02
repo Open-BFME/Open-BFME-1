@@ -82293,3 +82293,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
 ?bfmeEraseV24@BfmeStrV24@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830CC0
 ?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
+?prepare@Rva007EAD30Owner@@QAEXXZ,0x007EAA70,prepare helper for 0x007EAD30 send
+?prepare@Rva007EADC0Owner@@QAEXXZ,0x007EAB40,prepare helper for 0x007EADC0 send
