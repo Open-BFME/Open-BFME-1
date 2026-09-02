@@ -1187,8 +1187,10 @@ name,address,notes
 ??0?$ShareBufferClass@PAVVertexMaterialClass@@@@QAE@ABV0@@Z,0x00929D40,packet 0092a1e0 pin
 ??0?$ShareBufferClass@VShaderClass@@@@QAE@HPBDH@Z,0x0092B940,Get_Shader_Array ShareBuffer 3-arg ctor
 ??0?$ShareBufferClass@VVector2@@@@QAE@ABV0@@Z,0x0092B710
+??0?$ShareBufferClass@VVector3@@@@QAE@ABV0@@Z,0x0094E1B0,Open-BFME5 existing exact Vector3 ShareBuffer copy constructor body
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,0x00049832,ILT thunk; body 0x5F3BE0
 ??0?$ShareBufferClass@VVector3@@@@QAE@HPBDH@Z,0x005F3BE0,3-arg aligned-buffer ctor
+??0?$ShareBufferClass@VVector4@@@@QAE@ABV0@@Z,0x0094E580,Open-BFME5 retail geometry uniqueness call target for Vector4 ShareBuffer copy construction
 ??0?$ShareBufferClass@VVector4@@@@QAE@HPBDH@Z,0x000281EB
 ??0?$SimpleParameterClass@H$0A@@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$SimpleParameterClass@M$00@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
@@ -2107,6 +2109,7 @@ name,address,notes
 ??0BfmeAptScreenLanLobby@@QAE@PAX@Z,0x0001FDA2,ILT thunk to the LanLobby.apt screen constructor
 ??0BfmeAptScreenLoadScreen@@QAE@PAX@Z,0x00039B6C,ILT thunk to the LoadScreen.apt screen constructor
 ??0BfmeAptScreenMainMenu@@QAE@PAX@Z,0x0003A73D,ILT thunk to the screen constructor at 0x0051F3A0
+??0BfmeAptScreenMapTransfer@@QAE@PAX@Z,0x000250B8,ILT thunk to the APT FileTransfer load-screen constructor at 0x005104C0
 ??0BfmeAptScreenObjectives@@QAE@PAX@Z,0x0000508D,ILT thunk to the Objectives.apt and PlayerStatus.apt screen constructor
 ??0BfmeAptScreenOnlineShell@@QAE@PAX@Z,0x00033EA1,ILT thunk to the OnlineShell.apt screen constructor
 ??0BfmeAptScreenOptions@@QAE@PAX@Z,0x0000C059,ILT thunk to the Options.apt screen constructor
@@ -4107,6 +4110,7 @@ name,address,notes
 ??1BfmeBaseF@@QAE@XZ,0x00029537,Open-BFME5 the base destructor the deleting list destructor at 0x0048C5B0 chains to
 ??1BfmeBaseP@@UAE@XZ,0x009A1A40,Open-BFME5 the primary base destructor the vector-member destructor at 0x00378650 calls
 ??1BfmeBaseT@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the destructor at 0x004B1670 chains to
+??1BfmeBaseTerm1137A@@UAE@XZ,0x0045B060,pin BfmeA1137 destructor base-class delegate call target
 ??1BfmeBaseX@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the body vector destructor at 0x00490100 chains to
 ??1BfmeBaseZ@@QAE@XZ,0x0002B4AE,Open-BFME5 the base destructor the two-vector destructor at 0x000E54B0 chains to
 ??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
@@ -10257,6 +10261,7 @@ name,address,notes
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
+?LoadAndCreateD3DShader@BfmeShaderLoader16@@SAHPBDPAI@Z,0x00016CB6,ILT of 2-arg LoadAndCreateD3DShader from ScreenZoomFilter::init
 ?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z,0x0001FC99,alias of ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z pinned at the same ILT; W3DShaderManager.cpp compiles the reference five-argument declaration so the BFME two-argument spelling needs a name of its own
 ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
 ?Load_W3D@AdaptiveDeltaMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977CC0
@@ -10344,6 +10349,7 @@ name,address,notes
 ?Release_Engine_Ref@VertexBufferClass@@QBEXXZ,0x0091D9D0,pinharvest x1 (body)
 ?Release_Ref@BFMETextureRelease@@QAEXXZ,0x009EB7A0,BFME TextureBaseClass::Release_Ref for updateCenter
 ?Release_Ref@BFMEWaterTrackTexture@@QAEXXZ,0x009EB7A0,WaterTracks local texture release surrogate
+?Release_Ref@BfmeTex1137Term@@QAEXXZ,0x009EB7A0,pin BfmeA1137 destructor texture release match
 ?Release_Ref@CountedAsset@@QAEXXZ,0x009EB7A0,address-derived counted asset release callee at 0x009EBEC0
 ?Release_Ref@TextureBaseClass@@QAEXXZ,0x009EB7A0,hider decl in texture.h; WORD refcount+flags release
 ?Release_Ref@TextureClass@@QAEXXZ,0x009EB7A0,BFME texture release: WORD refcount+flag bits at [this+4]; auto-delete via vtbl slot 8 when bit24 set ??? TextureClass does NOT derive RefCountClass
@@ -73084,6 +73090,8 @@ name,address,notes
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
+?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target
+?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target
 ?bfmeCheckB@@YAHPAX@Z,0x00894DB0,Open-BFME5 the guard the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
@@ -73106,6 +73114,7 @@ name,address,notes
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
 ?bfmeClear1035@BfmeSubB1035@@QAEXXZ,0x0089C880,pin
+?bfmeClear7@@YAX_N00ABUVector3@@MMI@Z,0x00904250,BFME DX8Wrapper::Clear 7-arg form called from 0x007D4A80
 ?bfmeClear927A@BfmeSub927A@@QAEXXZ,0x0004278A,pin
 ?bfmeClear987@BfmeDrop987@@QAEXHH@Z,0x00014506,pin
 ?bfmeClear@BfmeListA@@QAEXXZ,0x00021CD3,Open-BFME5 the out-of-line list clear the destructor at 0x0009F7A0 calls
@@ -73301,7 +73310,6 @@ name,address,notes
 ?bfmeDoBHA@BfmeThingBHA@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeDoBHE@BfmeSubBHE@@QAEXXZ,0x0000F15F,pin
 ?bfmeDoBID@BfmeSubBID@@QAEXPAX@Z,0x0002F333,pin
-?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target
 ?bfmeDoBJC@BfmeSubBJC@@QAEXPAX@Z,0x0001ABD1,pin
 ?bfmeDoBJD@@YGXPAX0PAPAX@Z,0x0002648B,pin
 ?bfmeDoBJE@BfmeSubBJE@@QAEXPAX@Z,0x0092F910,pin
@@ -73380,6 +73388,7 @@ name,address,notes
 ?bfmeDoneVJM@BfmeMsgVJM@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJN@BfmeMsgVJN@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJO@BfmeMsgVJO@@QAEXXZ,0x007E86C0,pin
+?bfmeDrawFilterUV@@YAXHHPAUCoord2D@@@Z,0x000196A0,ILT of fullscreen blit helper called from ScreenDefaultFilter::postRender
 ?bfmeDrawTriVHA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrawTrianglesVDA@@YAXGGGG@Z,0x00906DF0,pin
 ?bfmeDrop1010@BfmeSink1010@@QAEXPAVBfmeItem1010@@@Z,0x0001D0DE,pin
@@ -73480,6 +73489,7 @@ name,address,notes
 ?bfmeEnd1111@BfmeK1111@@QAEXXZ,0x000097BE,pin
 ?bfmeEnd1236@BfmeA1236@@QAEXXZ,0x008D2B80,pin
 ?bfmeEnd982C@BfmeHub982@@QAEXXZ,0x00008D4B,pin
+?bfmeEndRenderToTexture@@YAPAXXZ,0x0003FAC6,ILT of W3DShaderManager::endRenderToTexture called from ScreenDefaultFilter::postRender
 ?bfmeEndSGA@@YAXXZ,0x0000AF33,pin
 ?bfmeEnsureWA@BfmeThingWA@@QAEXXZ,0x0002DE02,pin
 ?bfmeEnter@Glo012F1024Item@@QAEXXZ,0x0000BC5D,Open-BFME5 ILT thunk to body 0x003AEE70; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 calls it on the 0xDC-byte item the advanced index selects; address-derived name
@@ -73497,6 +73507,7 @@ name,address,notes
 ?bfmeEraseV44@BfmeStrV44@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase-range pin for 0x00830DE0
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
+?bfmeExistsVNV@@YADPBD@Z,0x009EBB80,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
 ?bfmeF01148@BfmeS1148@@QAEHXZ,0x0002D41B,pin
 ?bfmeF1062A@BfmeA1062@@QAEXXZ,0x0003139A,pin
@@ -74237,6 +74248,7 @@ name,address,notes
 ?bfmeInitTHB@@YGXPAVBfmeThingTHB@@0PAX@Z,0x009FACAD,pin
 ?bfmeInitTQA@BfmeSubTQA@@QAEXHHM@Z,0x0002A1B2,pin
 ?bfmeInitTUA@BfmeSubTUA@@QAEXXZ,0x007E86B0,pin
+?bfmeInitTexA1137@@YAXXZ,0x000091C5,pin BfmeA1137 destructor prologue helper call site
 ?bfmeInitUBB@BfmeSubUBB@@QAEXH@Z,0x00002ECD,pin
 ?bfmeInitV15@BfmeStrV15@@QAEXPAD00@Z,0x00021A58,Open-BFME5 /Od range-init thunk for 0x00831780
 ?bfmeInitV37@BfmeStrV37@@QAEXPAD00@Z,0x00021A58,Open-BFME5 range-init pin for 0x00831780
@@ -74714,9 +74726,9 @@ name,address,notes
 ?bfmeReset@Gen005207C0Member@@QAEXXZ,0x00018FB1,Open-BFME5 ILT to the preview-state reset body at 0x005207C0 called by multiplayer setup shutdown
 ?bfmeReset@Gen009D6E10@@QAEXPAVBfmePeer@@@Z,0x009D6410,address-derived reset target from the direct REL32 call at retail 0x009D6E33
 ?bfmeReset@Gen_008812D0@@QAEXXZ,0x008811A0,Open-BFME5 semantic no-op reset hook called immediately before the Taint grid region is cleared
-?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
 ?bfmeResetA@BfmeActivationPartA@@QAEXXZ,0x0001EF4C,activation handshake member at 0x009D8460 resets its first subobject
 ?bfmeResetB@BfmeActivationPartB@@QAEXXZ,0x009D8230,activation handshake member at 0x009D8460 resets its second subobject
+?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
 ?bfmeResetC@BfmeActivationPartC@@QAEXXZ,0x009D77A0,activation handshake member at 0x009D8460 resets its third subobject
 ?bfmeResetSafeOcclusionFrame@Object@@QAEXXZ,0x00039D06,Open-BFME5 Object safe-occlusion refresh ILT thunk to body 0x001C3020; surviving Object.cpp expression and BFME offsets prove current-frame plus ThingTemplate OcclusionDelay semantics
 ?bfmeResetUJC@@YAXPAUBfmeConnUJC@@@Z,0x008EBFC0,pin
@@ -75391,6 +75403,7 @@ name,address,notes
 ?bfme_showBackground@WindowManager@@QAEXH@Z,0x00009494,DisconnectScreen constructor calls the established background helper through this ILT
 ?bfme_showBackground@WindowManager@@QAEXH@Z,0x00469A10,twin of the W4-pinned bfme_hideBackground 0x00468090: +0x1b8 = kind; kind 1 invokes APT "ShowFrontEndBackground" kind 2 "ShowInGameBackground" through the invoke helper 0x004675F0 on the level at +0x1c0 and clears +0x1bc; ILT 0x00009494; callers QuitMenu 0x00569869 AptScoreScreen 0x00578C6A
 ?bind@BFX_Member@@QAEHPAVMemoryPool@@@Z,0x0002AE23,Open-BFME5 pin
+?bind@TextureHolder@@QAEXABVBFMEWaterTrackTextureHandle@@@Z,0x0003652A,texture-handle bind/assign thiscall from ScreenZoomFilter::init
 ?bind@UDPBindShim@@QAEHIG@Z,0x00684900,UDP Bind incremental-link thunk target through a TU-local forwarding shim
 ?bkt_num_key@AudioEventHashtableBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z,0x000B8670,incremental-link thunk target through a TU-local forwarding shim
 ?bkt_num_key@AudioEventInfoBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z,0x000B8670,incremental-link thunk target through a TU-local forwarding shim
@@ -76378,6 +76391,7 @@ name,address,notes
 ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z,0x0002A216,Open-BFME5 ILT; returns the particle system by value into a hidden slot for ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10
 ?findRoad@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00019DC6,walks the list at collection+0x08; identical 246-byte body to findBridge which walks +0x0c. Called by the Road block whose create branch is the already-matched newRoad
 ?findSomething@BfmeMgrF07@@QAEHPAXH@Z,0x0004B290,pin
+?findSpecialPowerTemplate@BfmeSpecialPowerStoreView@@QAEPBVSpecialPowerTemplate@@VBfmeAsciiStringArg@@@Z,0x00020F04,alias of the SpecialPowerStore thunk pinned at the same address; ScriptActions.cpp builds the by-value string argument through a view because the reference header inlines the addref
 ?findSpecialPowerTemplate@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@VAsciiString@@@Z,0x00020F04,harvested from parseSpecialPowerTemplate (thunk)
 ?findSpecialPowerTemplateByID@SpecialPowerStore@@QAEPBVSpecialPowerTemplate@@I@Z,0x000034B8,Open-BFME5 ILT thunk to the body already matched at 0x000EB690; ?getSpecialPowerSourceObject@AIGroup@@QAEPAVObject@@I@Z at 0x001513D0 reaches it through this thunk
 ?findSpecialPowerTemplatePrivate@SpecialPowerStore@@IAEPAVSpecialPowerTemplate@@VAsciiString@@@Z,0x00004822,link thunk; the address findSpecialPowerTemplate at 0x000BA930 encodes
@@ -76494,6 +76508,7 @@ name,address,notes
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
 ?g_Rva005127A0InGameChat@@3PAVRva005127A0InGameChat@@A,0x012F4988,address-derived InGameChat global used by the guarded 0x005127A0 forwarder
 ?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
+?g_Va012F8064@@3HA,0x012F8064,pin stale-stamp dispatcher global
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
 ?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
@@ -77154,6 +77169,7 @@ name,address,notes
 ?g_bfmeParseBVHI@@3PAUBfmeParseVHI@@A,0x00C898A0,pin
 ?g_bfmeParseVHG@@3PAUBfmeParseVHG@@A,0x00C83270,pin
 ?g_bfmePoolTRB@@3VBfmePoolTRB@@A,0x00F3D1AC,pin
+?g_bfmePrepVNV@@3P6AXPBD@ZA,0x00F59344,pin
 ?g_bfmeProbe976@@3PAUBfmeProbe976@@A,0x00F40534,pin
 ?g_bfmePtr986B@@3PADA,0x00EF9CE4,pin
 ?g_bfmePtrTB@@3PAXA,0x00F0BCA0,pin
@@ -79487,6 +79503,7 @@ name,address,notes
 ?isAnyKindOf@BfmeKindOfTester@@QBE_NABVBfmeKindOfMask@@@Z,0x00132AE0,alias of the Thing BitFlags<116> spelling ledgered at the same body; Object.cpp reaches it through a view class because the reference KindOfMaskType is four dwords, not six
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0EF@@@@Z,0x0004250A,Open-BFME5 MSVC71 BitFlags<69> ILT
 ?isAnyKindOf@Thing@@QBE_NABV?$BitFlags@$0HE@@@@Z,0x0004250A,ILT thunk
+?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@01@Z,0x00023042,pin Pathfinder isAttackViewBlockedByObstacle 4-arg pointer overload ILT target
 ?isCapableOfPurchasingScience@Player@@QBE_NW4ScienceType@@@Z,0x00049E45
 ?isCellOnEnd@Bridge@@QAE_NPBURegion2D@@@Z,0x0000DAAD,ILT thunk used by call site
 ?isCliffMappedTexture@WorldHeightMap@@QAE_NHH@Z,0x00022034,retail WorldHeightMap::isCliffMappedTexture ILT thunk
@@ -79557,6 +79574,7 @@ name,address,notes
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
 ?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
+?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
 ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
 ?isStealthedAndUndetected@BFMEObjectStealthQuery@@QBE_NPBVObject@@@Z,0x00003B1B,TU-specific ABI name for the stealth visibility query ILT; target body 0x001CAEE0 proves the semantics while its canonical retail spelling remains unknown
@@ -80717,6 +80735,7 @@ name,address,notes
 ?take0046DE10@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DE10,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take0046DEF0@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DEF0,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take@Gen0001581B@@QAEXPAVGenForwardedArg@@@Z,0x0001581B,S2 one-argument member forwarded to by 0x003B70F0 and 0x003B7140; ILT thunk to body 0x00065090
+?target@Rva0076CAF0ConditionalDispatch@@QAEXXZ,0x00024F5F,pin 0x0076CAF0 stale-stamp dispatcher tail target
 ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z,0x000228EF,Open-BFME5 ILT thunk to body 0x000F6D80; ?updateState@TeamPrototype@@QAEXXZ at 0x000F71C0 calls it on the global at 0x012ED810 just before deleting an empty team
 ?test@BFMESelectionStatusBits@@QBE_NI@Z,0x0003AB20,TU-scoped BFME Object status-bit view; CanSelectDrawable retail ILT
 ?test@BridgeCellOnEndShim@@QAE_NPBURegion2D@@@Z,0x001A24B0,Bridge cell-end incremental-link thunk target through a TU-local forwarding shim
@@ -82458,20 +82477,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?findSpecialPowerTemplate@BfmeSpecialPowerStoreView@@QAEPBVSpecialPowerTemplate@@VBfmeAsciiStringArg@@@Z,0x00020F04,alias of the SpecialPowerStore thunk pinned at the same address; ScriptActions.cpp builds the by-value string argument through a view because the reference header inlines the addref
-?bfmeEndRenderToTexture@@YAPAXXZ,0x0003FAC6,ILT of W3DShaderManager::endRenderToTexture called from ScreenDefaultFilter::postRender
-?bfmeDrawFilterUV@@YAXHHPAUCoord2D@@@Z,0x000196A0,ILT of fullscreen blit helper called from ScreenDefaultFilter::postRender
-?bfmeClear7@@YAX_N00ABUVector3@@MMI@Z,0x00904250,BFME DX8Wrapper::Clear 7-arg form called from 0x007D4A80
-?Release_Ref@BfmeTex1137Term@@QAEXXZ,0x009EB7A0,pin BfmeA1137 destructor texture release match
-??1BfmeBaseTerm1137A@@UAE@XZ,0x0045B060,pin BfmeA1137 destructor base-class delegate call target
-??0BfmeAptScreenMapTransfer@@QAE@PAX@Z,0x000250B8,ILT thunk to the APT FileTransfer load-screen constructor at 0x005104C0
-?LoadAndCreateD3DShader@BfmeShaderLoader16@@SAHPBDPAI@Z,0x00016CB6,ILT of 2-arg LoadAndCreateD3DShader from ScreenZoomFilter::init
-?bind@TextureHolder@@QAEXABVBFMEWaterTrackTextureHandle@@@Z,0x0003652A,texture-handle bind/assign thiscall from ScreenZoomFilter::init
-?bfmeInitTexA1137@@YAXXZ,0x000091C5,pin BfmeA1137 destructor prologue helper call site
-??0?$ShareBufferClass@VVector3@@@@QAE@ABV0@@Z,0x0094E1B0,Open-BFME5 existing exact Vector3 ShareBuffer copy constructor body
-??0?$ShareBufferClass@VVector4@@@@QAE@ABV0@@Z,0x0094E580,Open-BFME5 retail geometry uniqueness call target for Vector4 ShareBuffer copy construction
-?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target
-?g_Va012F8064@@3HA,0x012F8064,pin stale-stamp dispatcher global
-?target@Rva0076CAF0ConditionalDispatch@@QAEXXZ,0x00024F5F,pin 0x0076CAF0 stale-stamp dispatcher tail target
-?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@01@Z,0x00023042,pin Pathfinder isAttackViewBlockedByObstacle 4-arg pointer overload ILT target
-?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
