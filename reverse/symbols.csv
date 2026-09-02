@@ -73210,6 +73210,7 @@ name,address,notes
 ?bfmeDelArrVJS@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDelVGP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeDeleteSelf@BfmeOwnedD@@QAEPAXI@Z,0x0000E4A8,Open-BFME5 the ICF thunk (to 0x001CBDC0) the element clear at 0x0038A6F0 calls with a flag of 1
+?bfmeDeleteVMP@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeDestroyRange12@@YAXPAUBfmeElem12@@0PAD@Z,0x00014AA1,Open-BFME5 the element destroy helper the vector destroy at 0x006FA4E0 hands its range to
 ?bfmeDestroyRange2@@YAXPAH0PAD@Z,0x000096FB,Open-BFME5 the element destroy helper the vector destroy at 0x006A76E0 hands its range to
 ?bfmeDestroyRange@@YADPAH0VBfmeAllocL@@@Z,0x0002376D,Open-BFME5 the ICF thunk (to 0x0042376D) the clear at 0x0048FA30 destroys its range with
@@ -73955,6 +73956,7 @@ name,address,notes
 ?bfmeGetNonnegativePreferredLocomotorHeight@Object@@QBEMXZ,0x000047C8,Open-BFME5 ILT thunk to body 0x001BE030; Object m_ai at +0x204 and AIUpdateInterface m_curLocomotor at +0x1CC; returns canonical getPreferredHeight clamped to shared 0.0f; bfme prefix records unrecovered retail spelling
 ?bfmeGetParseCVHI@@YAPBUBfmeParseVHI@@XZ,0x00019326,pin
 ?bfmeGetPoolVLR@@YAPAVBfmePoolVLR@@XZ,0x007EFFC0,pin
+?bfmeGetPoolVMP@@YAPAVBfmePoolVMP@@XZ,0x007EFFC0,pin
 ?bfmeGetRelationInterface@Object@@QBEPAVBfmeRelationInterface@@XZ,0x0000D3B9,Object relationship body calls this protected ILT for its BFME relation interface
 ?bfmeGetSA@BfmeThingSA@@QAEPAXPAX0@Z,0x007E8900,pin
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
