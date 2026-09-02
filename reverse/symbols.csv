@@ -82408,3 +82408,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?value@ObjectAttemptDamageFlagHook@@QAEHXZ,0x0002CA61,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?valid@Rva007FA5E0Arg@@QAE_NXZ,0x007E88A0,FESL arg valid() used by 0x007FA5E0
+?bfmeAllocLargeCD@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FCD0
+?bfmeAllocSmallCD@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FCD0
+?bfmeCopyCD@@YAPAUBfmeElemCD@@PBU1@0PAU1@ABUBfmeFalseCD@@@Z,0x0087F4D0,Open-BFME5 uninit-copy of 0x0087FCD0
+?copyFrom@BfmeTailCD@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy of 0x0087FCD0
+?bfmeFillCD@@YAPAUBfmeElemCD@@PAU1@IABU1@ABUBfmeFalseCD@@@Z,0x0087F520,Open-BFME5 fill-n of 0x0087FCD0
+?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
