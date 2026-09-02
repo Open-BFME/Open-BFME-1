@@ -75272,6 +75272,7 @@ name,address,notes
 ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z,0x0089F530,pinharvest x1 (body)
 ?cachePlayerPtrs@VictoryConditions@@UAEXXZ,0x0035F4E0,vtable 0x010E8D90 slot 12 (+0x30) via ILT 0x000143B7 = ZH cachePlayerPtrs line for line: TheRecorder->isMultiplayer 0x00097800; NAMEKEY(FactionCivilian 0x010E8DFC) template; 32x ThePlayerList->getNthPlayer skipping neutral (+0x14) civilian template and isPlayerObserver; m_players[count]=player at 0x0035F566; isLocalPlayer -> m_localSlotNum@+0x94; rep stosd NULL fill; no local -> +0xBC=1 TheRadar->forceOn (+0x0D) +0xBE=1; the ledger name ?findSkirmishSideInfo@SidesList@@ is wrong
 ?calcBoundingStuff@GeometryInfo@@AAEXXZ,0x0087EE60,Open-BFME5 tail-call target of parseGeometryIsSmall at 0x0087F160
+?calcBoundingStuff@BfmeSubCNG@@QAEXXZ,0x0087EE60,Open-BFME5 recovered geometry-update callee alias
 ?calcCostToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z,0x0000DA8A,Player::canAffordBuild at 0x000C99D0 calls the retail ThingTemplate cost body with this Player and build index -1
 ?calcNumPrereqUnitsOwned@ProductionPrerequisite@@ABEHPBVPlayer@@QAH@Z,0x000379B1
 ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00020865,ILT thunk to the hover-or-wings physics transform helper
