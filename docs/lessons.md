@@ -2413,3 +2413,15 @@ source (`if (a) { ... if (b) { ...; return; } } flag = 1;`), never two inline
 `{ flag = 1; return; }` early exits -- the duplicated form costs one byte and moves
 the callee-saved push. Also: the attempts log's latest `partial` entry can be stale
 -- check `functions.csv` for a real source before working a banked body.
+
+**Two more register-mirror rules, proven on 0x0005DC70 (77/77 from a "load order
+swapped before branch" 0.97 partial).** (3) Loads that retail schedules ABOVE a guard
+(`test ecx,ecx; mov esi,[s2]; mov edx,[s1]; jle`) are parameters the source copied
+into locals after the preceding computation and before the `if` -- inside the guard
+they stay control-dependent and sink below the jump; at the very top they change the
+prologue instead. (4) Callee-saved/scratch assignment among such locals follows
+DEFINITION ORDER: `const WCHAR *q = s2; const WCHAR *p = s1;` gives retail's
+esi=s2/edx=s1, the other order mirrors every use of both. Combined with the IAT-CSE
+rule this means most "one register apart" partials are a statement-ordering
+problem, not an allocator coin flip: reorder local definitions to match the order
+retail first materializes each value.
