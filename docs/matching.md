@@ -34,6 +34,9 @@ Useful iteration tools:
 
 ## MSVC 7.1 shaping notes
 
+Start with `docs/shape_levers.md`: a one-page table mapping each "everything matches
+except..." byte-diff symptom to the source-shape lever that fixes it.
+
 Near-matches are still failures. If a candidate differs only by register choice, branch layout, or
 x87 operand order, revert it unless the exact decorated-symbol check passes.
 
