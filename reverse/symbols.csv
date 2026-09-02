@@ -82364,3 +82364,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeDeallocV48@BfmeStrV48@@QAEXXZ,0x0001EACE,Open-BFME5 thiscall dealloc pin for 0x0082FBB0
 ?findControlBarScheme@ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate@@QAEPAVControlBarScheme@@VControlBarSchemeAsciiString@@@Z,0x0000442B,TU-local view forwards through the existing ControlBarSchemeManager::findControlBarScheme ILT at 0x0000442B for the 0x004ADE40 clean C++ body
 ?bfmeSetSizeVLR@Rva007EB8B0Log@@QAEXH@Z,0x007EB7A0,FESL vararg buffer grow used by 0x007EB8B0
+?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
