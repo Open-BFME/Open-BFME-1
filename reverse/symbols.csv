@@ -82359,3 +82359,5 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFreeV47@BfmeVecV47@@QAEXXZ,0x00028006,Open-BFME5 vector free pin for 0x0082F310
+?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
+?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
