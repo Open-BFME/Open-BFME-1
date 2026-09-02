@@ -254,7 +254,6 @@ void Thing::setPosition( const Coord3D *pos )
 
 //=============================================================================
 // byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp
-// ?setOrientation@Thing@@QAEXM@Z present-unmatched
 void Thing::setOrientation( Real angle )
 {
 	//USE_PERF_TIMER(ThingMatrixStuff)
@@ -265,17 +264,20 @@ void Thing::setOrientation( Real angle )
 	// don't want this? call setTransformMatrix instead.
 
 	Real oldAngle = m_cachedAngle;
-	Coord3D oldPos = m_cachedPos;
+	Coord3D oldPos;
+	oldPos.x = m_cachedPos.x;
+	oldPos.y = m_cachedPos.y;
+	oldPos.z = m_cachedPos.z;
 	Matrix3D oldMtx = m_transform;
 
 	pos.x = m_transform.Get_X_Translation();
 	pos.y = m_transform.Get_Y_Translation();
 	pos.z = m_transform.Get_Z_Translation();
-	if( m_template->isKindOf( KINDOF_STICK_TO_TERRAIN_SLOPE) )
+	if( reinterpret_cast<const unsigned char *>(m_template.operator->())[0xc8] & 0x10 )
 	{
 		Matrix3D mtx;
 		const Bool stickToGround = true;	// yes, set the "z" pos				
-		TheTerrainLogic->alignOnTerrain(angle, pos, stickToGround, m_transform );
+		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(angle, pos, stickToGround, m_transform );
 	}
 	else
 	{
@@ -300,7 +302,7 @@ void Thing::setOrientation( Real angle )
 	m_cachedPos = pos;
 	m_cacheFlags &= ~VALID_DIRVECTOR;	// but don't clear the altitude flags.
 
-	reactToTransformChange(&oldMtx, &oldPos, oldAngle);
+	reinterpret_cast<BFMERetailThingVTable *>(this)->reactToTransformChange(&oldMtx, &oldPos, oldAngle);
 	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
 }
 
