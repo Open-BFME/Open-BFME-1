@@ -73036,6 +73036,7 @@ name,address,notes
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
 ?bfmeCheckVHJ@@YADXZ,0x008896D0,pin
+?bfmeCheckVLS@BfmeSubVLS@@QAE_NXZ,0x0002DB2D,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
@@ -73303,6 +73304,7 @@ name,address,notes
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
+?bfmeDoVLS@@YAXPAVBfmeThingVLS@@PAXH@Z,0x00041579,pin
 ?bfmeDone1038@BfmeB1038@@QAEXXZ,0x000142A9,pin
 ?bfmeDone1045@BfmeSub1045@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJK@BfmeMsgVJK@@QAEXXZ,0x007E86C0,pin
@@ -76815,6 +76817,7 @@ name,address,notes
 ?g_bfmeMgrTJA@@3PAVBfmeMgrTJA@@A,0x00EF086C,pin
 ?g_bfmeMgrUDD@@3PAVBfmeMgrUDD@@A,0x00EF1028,pin
 ?g_bfmeMgrUDE@@3PAVBfmeMgrUDE@@A,0x00EF0898,pin
+?g_bfmeMgrVLS@@3PAVBfmeMgrVLS@@A,0x00EF7730,pin
 ?g_bfmeMillisecondsToSeconds@@3MA,0x00C766EC,float milliseconds-to-seconds scale used by BfmeTimedOpNode::update
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
