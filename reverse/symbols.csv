@@ -82218,3 +82218,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeHelpWI@@YAHH@Z,0x0004B2BD,Open-BFME5 REL32 from stdcall wrapper 0x0078AD90
 ?bfmePrepWJ@@YGXPAUBfmeObjWJ@@@Z,0x000044C1,Open-BFME5 REL32 from 0x002AB0B0 stdcall wrapper
 ??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,0x00047C80,one-argument BFME constructor ILT forwards to the matched two-argument body at 0x002C6430
+?bfmeImplVMN@BfmeStrVMN@@QAEXHHHHPAD@Z,0x008314E0,Open-BFME5 /Od forwarder callee for 0x00831930
+?bfmeImplVMN@BfmeStrVMN@@QAEXHHHH@Z,0x008314E0,Open-BFME5 /Od 4-arg view of 5-arg callee at 0x008314E0
