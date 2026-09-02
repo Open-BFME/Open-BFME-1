@@ -82328,3 +82328,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
 ?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
 ?bfmeAppendV36@BfmeStrV36@@QAEXPAD00@Z,0x00011522,Open-BFME5 append-range pin for 0x00830F00
+?bfmeThrowV37@BfmeStrV37@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00831780
+?bfmeInitV37@BfmeStrV37@@QAEXPAD00@Z,0x00021A58,Open-BFME5 range-init pin for 0x00831780
