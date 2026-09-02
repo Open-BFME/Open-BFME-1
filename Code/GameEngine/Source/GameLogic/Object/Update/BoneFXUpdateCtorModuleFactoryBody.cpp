@@ -27,15 +27,24 @@ protected:
 class BFU_Iface1 { public: virtual void slot(); };
 class BFU_Iface2 { public: virtual void slot(); };
 
+class BFU_BehaviorBase : public BFU_DeepBase, public BFU_Iface1
+{
+public:
+	BFU_BehaviorBase(Thing *thing, const ModuleData *moduleData)
+		: BFU_DeepBase(thing, moduleData) {}
+	virtual ~BFU_BehaviorBase() {}
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModule : public BFU_DeepBase, public BFU_Iface1, public BFU_Iface2
+class UpdateModule : public BFU_BehaviorBase, public BFU_Iface2
 {
 public:
     UpdateModule(Thing *thing, const ModuleData *moduleData)
-        : BFU_DeepBase(thing, moduleData),
+        : BFU_BehaviorBase(thing, moduleData),
           m_nextCallFrameAndPhase(0), m_indexInLogic(-1), m_updateState(-1)
     {
     }
+	virtual ~UpdateModule() {}
 
 private:
     unsigned int m_nextCallFrameAndPhase;
@@ -67,7 +76,10 @@ class BoneFXUpdate : public UpdateModule
 {
 public:
     BoneFXUpdate(Thing *, const ModuleData *);
+
+protected:
     virtual ~BoneFXUpdate();
+	void killRunningParticleSystems();
 
 private:
     std::vector<ParticleSystemID> m_particleSystemIDs;
@@ -102,4 +114,10 @@ BoneFXUpdate::BoneFXUpdate(Thing *thing, const ModuleData *moduleData)
     m_particleSystemIDs.clear();
     m_active = false;
     m_curBodyState = 0;
+}
+
+// ??1BoneFXUpdate@@MAE@XZ
+BoneFXUpdate::~BoneFXUpdate()
+{
+	killRunningParticleSystems();
 }
