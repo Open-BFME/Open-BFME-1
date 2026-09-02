@@ -1,8 +1,9 @@
 // ?getPoint@Rva0016FFD0PathOwner@@QAEPAURva0016FFD0Coord3D@@H@Z
 // partial score=0.97 date=2026-09-02
+// ?getPoint@Rva0016FFD0PathOwner@@QAEPAURva0016FFD0Coord3D@@H@Z
 // cl: /DNDEBUG /MD
 // Retail 0x0016FFD0: bounds-checked coordinate lookup through the path pointer
-// at +0x30.  The owner identity is not recovered, so the name is derived from
+// at +0x30. The owner identity is not recovered, so the name is derived from
 // the verified retail address.
 
 struct Rva0016FFD0Coord3D
@@ -22,9 +23,7 @@ struct Rva0016FFD0Path
 	{
 		if( index >= 0 )
 		{
-			volatile Rva0016FFD0Coord3D *end = m_end;
-			volatile Rva0016FFD0Coord3D *begin = m_begin;
-			unsigned int count = (unsigned int) (end - begin);
+			unsigned int count = (unsigned int) (m_end - m_begin);
 			if( (unsigned int) index < count )
 				return const_cast<Rva0016FFD0Coord3D *>( m_begin + index );
 		}

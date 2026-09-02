@@ -147,15 +147,10 @@ Bool ExitConditions::shouldExit(const StateMachine* machine) const
 	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius) 
 	{
 		Coord3D deltaAggressor;
-		Coord3D objPos = *machine->getGoalObject()->getPosition();
-		deltaAggressor.x = objPos.x - m_center.x;
-		deltaAggressor.y = objPos.y - m_center.y;
-//	deltaAggressor.z = objPos.z - m_center.z;
-		deltaAggressor.z = 0; // BGC - when we search for a target we don't account for Z, so why should we here?
-													// changing this fixed a crash where a GLARebelInfantry would be in GuardReturnState, find
-													// a target that is within range, then not be able to attack because its actually out of range.
-													// then it would look for a new target, get the same one, and proceed in an infinite recursive
-													// loop that eventually blew the stack.
+		const Coord3D *objPos = machine->getGoalObject()->getPosition();
+		deltaAggressor.y = *reinterpret_cast<volatile const Real *>(&objPos->y) - m_center.y;
+		*reinterpret_cast<volatile Real *>(&deltaAggressor.x) = objPos->x - m_center.x;
+		deltaAggressor.z = 0;
 
 		if (deltaAggressor.lengthSqr() > m_radiusSqr) 
 		{
@@ -199,7 +194,7 @@ AIGuardMachine::~AIGuardMachine()
 	Real visionRange = TheAI->getAdjustedVisionRangeForObject(obj, 
 		AI_VISIONFACTOR_OWNERTYPE | AI_VISIONFACTOR_MOOD | AI_VISIONFACTOR_GUARDINNER);
 
-	return visionRange;
+	return std::min(visionRange, 300.0f);
 }
 
 //--------------------------------------------------------------------------------------

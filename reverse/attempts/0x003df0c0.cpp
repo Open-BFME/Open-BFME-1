@@ -1,4 +1,6 @@
 // ?bfmeObjectCell@Pathfinder@@QAEXPAVObject@@PAUICoord2D@@@Z
+// partial score=0.98 date=2026-09-02
+// ?bfmeObjectCell@Pathfinder@@QAEXPAVObject@@PAUICoord2D@@@Z
 // partial score=0.93 date=2026-09-02
 // cl: /DNDEBUG /MD
 //
@@ -52,6 +54,11 @@ union BFMEQueryScratch
 	Bool b;
 };
 
+static __forceinline Int bfmeReadVolatileInt( volatile Int *value )
+{
+	return *value;
+}
+
 class BFMEObjectLayerQuery
 {
 public:
@@ -80,7 +87,7 @@ void Pathfinder::bfmeObjectCell( Object *obj )
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
 	bfmeQuery( obj, &radius.i, &center.i );
-	Bool centerInCell = center.b;
+	Bool centerInCell = *(volatile Bool *)&center.b;
 
 	ICoord2D cell;
 	if (centerInCell) {
@@ -109,7 +116,7 @@ void Pathfinder::bfmeObjectCell( Object *obj, ICoord2D *cell )
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
 	bfmeQuery( obj, &radius.i, &center.i );
-	Bool centerInCell = center.b;
+	Bool centerInCell = *(volatile Bool *)&center.b;
 
 	if (centerInCell) {
 		center.f = (Real)floor( obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
@@ -118,16 +125,18 @@ void Pathfinder::bfmeObjectCell( Object *obj, ICoord2D *cell )
 		center.f = (Real)floor( 0.5f + obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
-	cell->x = radius.i;
+	cell->x = bfmeReadVolatileInt( &radius.i );
 
+	Int cellY;
 	if (centerInCell) {
 		center.f = (Real)floor( obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
-		BFME_FLOOR_TO_LONG_ASM;
+		__asm fld dword ptr [center]
+		__asm fistp dword ptr [cellY]
 	} else {
 		center.f = (Real)floor( 0.5f + obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
-		BFME_FLOOR_TO_LONG_ASM;
+		__asm fld dword ptr [center]
+		__asm fistp dword ptr [cellY]
 	}
-	cell->y = radius.i;
-
-	bfmeCellVisit( obj->getLayer(), cell->x, cell->y );
+	bfmeCellVisit( (cell->y = cellY, obj->getLayer()), cell->x, cellY );
 }
+

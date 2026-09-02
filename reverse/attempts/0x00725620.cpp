@@ -1,94 +1,100 @@
-// ?d_00725620@@YAXXZ
-// partial score=0.9 date=2026-09-02
-struct BfmeModeAZC
-{
-	char m_bfmePad[0xc];
-	int m_bfmeFrame;
-};
+// ?update@BfmeA1137@@QAEXXZ
+// partial score=0.95 date=2026-09-02
+// cl: /DNDEBUG /MD /EHs-c-
+// Open-BFME5 conversions.
+// ghidra: FUN_00b25620 retail @ 0x00725620 size 189
+// BfmeA1137 frame/state update: walk Glo012F15F8, maybe decrement this+0x4c,
+// then either refresh from (K - this+0x54)*override+0x5c or tail-call
+// copyFromOverride.
 
-extern BfmeModeAZC *g_bfmeModeAZC;
-
-class BfmeChainR725620
-{
-public:
-	void *bfmeGetFinalOverride(void) const;
-
-	void *m_bfmeVtbl;
-	BfmeChainR725620 *m_bfmeNext;
-	char m_bfmePad[0x58 - 0x08];
-	unsigned char m_bfmeFlag58;
-	char m_bfmePad2[3];
-	int m_bfme5c;
-};
-
-extern BfmeChainR725620 *g_bfmeChainR725620;
-extern float g_bfmeK725620;
-
-class BfmeThingR725620
+class Overridable
 {
 public:
-	void bfmeUpdateR725620(void);
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	const Overridable *m_nextOverride;
+};
+
+class BfmeOverride1137 : public Overridable
+{
+public:
+	char m_unmodelled_08[0x58 - 8];
+	char m_flag58;
+	char m_unmodelled_59[3];
+	int m_5c;
+};
+
+class BfmeGlo012F0FE0
+{
+public:
+	int frame() const { return m_0c; }
+
+	char m_unmodelled_00[0x0c];
+	int m_0c;
+};
+
+extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+extern BfmeGlo012F0FE0 *g_bfmeGlo012F0FE0;
+extern "C" float g_bfmeDefaultBU;
+
+class BfmeA1137
+{
+public:
+	void update();
+	void copyFromOverride();
+	void sibling();
 
 private:
-	void bfmeSiblingR725620(void);
-	void bfmeTailR725620(void);
-
-	char m_bfmePad[0x4c];
-	int m_bfme4c;
-	char m_bfmePad2[0x54 - 0x50];
-	float m_bfme54;
-	char m_bfmePad3[0x94 - 0x58];
-	int m_bfme94;
-	int m_bfme98;
+	char m_unmodelled_00[0x4c];
+	int m_4c;
+	char m_unmodelled_50[0x54 - 0x50];
+	float m_54;
+	char m_unmodelled_58[0x94 - 0x58];
+	int m_94;
+	int m_98;
 };
 
-void BfmeThingR725620::bfmeUpdateR725620(void)
+static const BfmeOverride1137 *walk(const BfmeOverride1137 *d)
 {
-	BfmeChainR725620 *ov = g_bfmeChainR725620;
+	const BfmeOverride1137 *f = d;
+	if (d && d->m_nextOverride)
+		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	return f;
+}
 
-	if (ov && ov->m_bfmeNext)
-		ov = (BfmeChainR725620 *)ov->m_bfmeNext->bfmeGetFinalOverride();
-
-	if (!ov->m_bfmeFlag58)
+void BfmeA1137::update()
+{
+	const BfmeOverride1137 *ov = walk(g_bfmeGlo012F15F8);
+	if (ov->m_flag58 == 0)
 		return;
 
-	if (m_bfme98 != 0)
+	if (m_98 != 0)
 	{
-		int state = m_bfme98;
-
+		int state = m_98;
 		if (state == 1 || state == 3)
-			--m_bfme4c;
-
-		bfmeSiblingR725620();
-
-		int state94 = m_bfme94;
-
+			--m_4c;
+		sibling();
+		int state94 = m_94;
 		if (state94 == 2)
 		{
-			int frame = g_bfmeModeAZC->m_bfmeFrame;
-
+			int frame = g_bfmeGlo012F0FE0->m_0c;
 			if (frame != state94)
 			{
-				m_bfme98 = 3;
-
-				ov = g_bfmeChainR725620;
-
-				if (ov && ov->m_bfmeNext)
-					ov = (BfmeChainR725620 *)ov->m_bfmeNext->bfmeGetFinalOverride();
-
-				m_bfme4c = (int)((g_bfmeK725620 - m_bfme54) * ov->m_bfme5c);
-				m_bfme94 = frame;
+				m_98 = 3;
+				ov = walk(g_bfmeGlo012F15F8);
+				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
+				m_94 = frame;
 			}
 		}
 	}
 	else
 	{
-		int frame = g_bfmeModeAZC->m_bfmeFrame;
-
-		if (frame == 2 && m_bfme94 != 2)
+		int frame = g_bfmeGlo012F0FE0->frame();
+		if (frame == 2 && m_94 != 2)
 		{
-			m_bfme94 = 2;
-			bfmeTailR725620();
+			m_94 = 2;
+			copyFromOverride();
 		}
 	}
 }

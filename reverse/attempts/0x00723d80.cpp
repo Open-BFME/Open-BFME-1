@@ -1,78 +1,111 @@
-// ?d_00723d80@@YAXXZ
-// partial score=0.35 date=2026-09-02
-// PARTIAL / UNVERIFIED -- does not compile-match yet. Banked for the next agent.
+// ?resetOrCopy@BfmeA1137@@QAEXXZ
+// partial score=0.85 date=2026-09-02
+// cl: /DNDEBUG /MD /EHs-c-
+// Open-BFME5 conversions.
 // ghidra: FUN_00b23d80 retail @ 0x00723D80 size 160
-// Sibling of BfmeA1137Cache/BfmeA1137Cache2 (see attempt_723b60.cpp,
-// attempt_723c50.cpp). Zeroes this->m_bfme4c and this->m_bfme98, copies a
-// field from a SECOND global pointer at RVA 0x0012F0FE0 (->[+0xc]) into
-// this->m_bfme94, then branches on a byte at [globalUnknown1137 + 0x3a]:
-//   - false path: copies this->m_bfme58/m_bfme5c into this->m_bfme38/m_10,
-//     clears this->m_bfme3d, returns.
-//   - true path: re-derives the global-or-this pointer again (same
-//     "global->[+4] non-null -> lock thunk" guard as the rest of the
-//     family) and copies its [+0x30] into this->m_bfme38, then a THIRD
-//     independent lookup of the same guard copies [+0x34] into
-//     this->m_bfme10.
-//
-// Blocker: same 0x0012F15F8 (and now also 0x0012F0FE0) global identity gap;
-// this is otherwise the most tractable of the four once that identity
-// lands, since it has no x87/float content at all.
+// Sibling of BfmeA1137::copyFromOverride: clear this+0x4c/0x98, copy
+// Glo012F0FE0+0xc into this+0x94, then either copy this+0x58/0x5c down
+// or pull override+0x30/0x34 from walked Glo012F15F8.
 
-extern "C" void *g_bfmeGlobalUnknown1137; // RVA 0x0012F15F8, identity TBD
-extern "C" void *g_bfmeGlobalUnknown1137B; // RVA 0x0012F0FE0, identity TBD
-void __fastcall bfmeWalkLock1137(void *p); // RVA 0x000022BB thunk -> 0x00087A80
-
-class BfmeA1137Reset
+class Overridable
 {
 public:
-	void bfmeResetOrCopy();
-	int m_bfme10;
-	char m_bfmePad[0x24];
-	int m_bfme38;
-	char m_bfmePad2[4];
-	int m_bfme3a_holder; // byte at +0x3a lives inside this padding
-	char m_bfme3d;
-	char m_bfmePad3[0xe];
-	int m_bfme4c;
-	char m_bfmePad4[8];
-	int m_bfme58;
-	int m_bfme5c;
-	char m_bfmePad5[0x38];
-	int m_bfme94;
-	int m_bfme98;
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	const Overridable *m_nextOverride;
 };
 
-static inline void *bfmeLockedGlobal1137()
+class BfmeOverride1137 : public Overridable
 {
-	void *g = g_bfmeGlobalUnknown1137;
-	if (g)
-	{
-		void *inner = *(void **)((char *)g + 4);
-		if (inner)
-			bfmeWalkLock1137(inner);
-	}
-	return g;
+public:
+	char m_unmodelled_08[0x30 - 8];
+	int m_30;
+	int m_34;
+	char m_unmodelled_38[0x3a - 0x38];
+	char m_flag3a;
+	char m_unmodelled_3b[0x5c - 0x3b];
+	int m_5c;
+};
+
+class BfmeGlo012F0FE0
+{
+public:
+	char m_unmodelled_00[0x0c];
+	int m_0c;
+};
+
+extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+extern BfmeGlo012F0FE0 *g_bfmeGlo012F0FE0;
+
+class BfmeA1137
+{
+public:
+	void resetOrCopy();
+
+private:
+	char m_unmodelled_00[0x10];
+	int m_10;
+	char m_unmodelled_14[0x38 - 0x14];
+	int m_38;
+	char m_unmodelled_3c;
+	char m_flag3d;
+	char m_unmodelled_3e[0x4c - 0x3e];
+	int m_4c;
+	char m_unmodelled_50[0x58 - 0x50];
+	int m_58;
+	int m_5c;
+	char m_unmodelled_60[0x94 - 0x60];
+	int m_94;
+	int m_98;
+};
+
+static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
+{
+	const BfmeOverride1137 *f;
+	if (d == 0)
+		f = 0;
+	else if (d->m_nextOverride)
+		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	else
+		f = d;
+	return f;
 }
 
-void BfmeA1137Reset::bfmeResetOrCopy()
+void BfmeA1137::resetOrCopy()
 {
-	m_bfme4c = 0;
-	m_bfme98 = 0;
-	m_bfme94 = *(int *)((char *)g_bfmeGlobalUnknown1137B + 0xc);
+	const BfmeOverride1137 *d;
+	const BfmeOverride1137 *f;
+	int a;
+	int b;
 
-	void *g = bfmeLockedGlobal1137();
-	char flag = g ? *((char *)g + 0x3a) : 0;
-	if (!flag)
+	m_4c = 0;
+	m_98 = 0;
+	m_94 = g_bfmeGlo012F0FE0->m_0c;
+
+	d = g_bfmeGlo012F15F8;
+	f = walk3(d);
+	if (f->m_flag3a == 0)
 	{
-		m_bfme3d = 0;
-		m_bfme38 = m_bfme58;
-		m_bfme10 = m_bfme5c;
+		a = m_58;
+		b = m_5c;
+		m_flag3d = 0;
+		m_38 = a;
+		m_10 = b;
 		return;
 	}
 
-	void *g2 = bfmeLockedGlobal1137();
-	m_bfme38 = *(int *)((char *)g2 + 0x30);
+	f = walk3(d);
+	m_38 = f->m_30;
 
-	void *g3 = bfmeLockedGlobal1137();
-	m_bfme10 = *(int *)((char *)g3 + 0x34);
+	d = g_bfmeGlo012F15F8;
+	f = d;
+	if (!g_bfmeGlo012F15F8)
+	{
+		m_10 = f->m_34;
+		return;
+	}
+	if (d->m_nextOverride)
+		d = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	m_10 = d->m_34;
 }

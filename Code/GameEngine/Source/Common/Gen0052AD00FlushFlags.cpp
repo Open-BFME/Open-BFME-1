@@ -1,5 +1,26 @@
 // cl: /EHs-c-
 
+class Gen0052AD00Owner
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot18(void) = 0;
+	virtual void slot1C(void) = 0;
+	virtual void slot20(void) = 0;
+	virtual bool bfmeAccept(void *value) = 0;
+};
+
+class BfmeThingBPF
+{
+public:
+	void bfmeGoBPF(void *value, void *context);
+};
+
 class Gen0052AD00
 {
 public:
@@ -12,7 +33,10 @@ public:
 	void bfmeFlush13(void);
 
 private:
-	unsigned char m_unmodelled[0x10];
+	unsigned char m_unmodelled00[4];
+	Gen0052AD00Owner *m_owner;
+	void *m_first;
+	void *m_second;
 	bool m_flag10;
 	bool m_flag11;
 	bool m_flag12;
@@ -20,6 +44,8 @@ private:
 	bool m_flag14;
 	bool m_flag15;
 	bool m_enabled;
+	unsigned char m_unmodelled17[0x11];
+	BfmeThingBPF m_bpf;
 };
 
 // Clear each pending flag and dispatch its corresponding refresh operation.
@@ -67,4 +93,19 @@ bool Gen0052AD00::bfmeFlushFlags(void)
 		changed = true;
 	}
 	return changed;
+}
+
+// Validate the two pending objects and forward the surviving secondary object
+// through the embedded BPF helper.
+// ?bfmeFlush13@Gen0052AD00@@QAEXXZ
+void Gen0052AD00::bfmeFlush13(void)
+{
+	if (m_first && !m_owner->bfmeAccept(m_first))
+		m_first = 0;
+
+	if (m_second && !m_owner->bfmeAccept(m_second))
+		m_second = 0;
+
+	if (m_second)
+		m_bpf.bfmeGoBPF(m_second, 0);
 }

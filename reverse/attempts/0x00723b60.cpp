@@ -1,69 +1,95 @@
-// ?d_00723b60@@YAXXZ
-// partial score=0.3 date=2026-09-02
-// PARTIAL / UNVERIFIED -- does not compile-match yet. Banked for the next agent.
+// ?refreshCache@BfmeA1137@@QAEXXZ
+// partial score=0.45 date=2026-09-02
+// cl: /DNDEBUG /MD /EHs-c-
+// Open-BFME5 conversions.
 // ghidra: FUN_00b23b60 retail @ 0x00723B60 size 184
-// Sibling of BfmeA1137Getters (see attempt_723cf0.cpp for the shared global
-// and 0x000022BB thunk this whole family goes through). This one reads a
-// bool flag from *that global*'s offset +0x40 (NOT from `this`), then:
-//   - if this->m_bfme44 (byte) is already set and this->m_bfme48 (int
-//     counter) is > 1 after a decrement, just decrement and return (a
-//     ref-counted "cache still warm" fast path);
-//   - otherwise recomputes via x87: a call to a helper at RVA 0x008D8E00
-//     (pinned "?bfmeValBC@BfmeObjBC@@QAEMXZ" -- float getter, comment says
-//     "float getter for 0x0040BC50") fetching a float, compared against
-//     *(float*)(other_global+0x54); on failure sets this->m_bfme44=1 and
-//     recomputes this->m_bfme48 via
-//       ftol2( fval * [0x01121004] + [0x01075C6C] + this->m_bfme50 * [0x0107533C] )
-//     i.e. a seconds-to-frames style conversion (LOGICFRAMES_PER_SECOND-ish
-//     constants) -- classic SAGE timing cache pattern, not yet pinned to a
-//     named GlobalData field. __ftol2 is already pinned (RVA 0x009F6E38).
-//
-// Blocker: the exact x87 operand/branch order (matching.md "MSVC 7.1 shaping
-// notes" -- ternary/x87 traps) and the identity of the two floating
-// constants at RVA 0x01121004 / 0x01075C6C / 0x0107533C. Needs the same
-// 0x0012F15F8 global identity as the rest of this family.
+// BfmeA1137 cache refresh: walk Glo012F15F8, decrement this+0x48 while
+// this+0x44 is set, else Random_Float against override+0x54 and recompute
+// this+0x48 via x87.
 
-extern "C" void *g_bfmeGlobalUnknown1137; // RVA 0x0012F15F8, identity TBD
-void __fastcall bfmeWalkLock1137(void *p); // RVA 0x000022BB thunk -> 0x00087A80
-float __cdecl bfmeValBC1137(); // RVA 0x008D8E00, pinned ?bfmeValBC@BfmeObjBC@@QAEMXZ
-
-class BfmeA1137Cache
+class Overridable
 {
 public:
-	void bfmeRefreshCache();
-	char m_bfmePad[0x44];
-	char m_bfme44;
-	int m_bfme48;
-	int m_bfme4c;
-	int m_bfme50;
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	const Overridable *m_nextOverride;
 };
 
-void BfmeA1137Cache::bfmeRefreshCache()
+class BfmeOverride1137 : public Overridable
 {
-	void *g = g_bfmeGlobalUnknown1137;
-	if (g)
-	{
-		void *inner = *(void **)((char *)g + 4);
-		if (inner)
-			bfmeWalkLock1137(inner);
-	}
-	char flag = g ? *((char *)g + 0x40) : 0;
-	if (!flag)
-		return;
+public:
+	char m_unmodelled_08[0x40 - 8];
+	char m_flag40;
+	char m_unmodelled_41[0x50 - 0x41];
+	int m_50;
+	float m_54;
+};
 
-	if (m_bfme44)
+extern BfmeOverride1137 *g_bfmeGlo012F15F8;
+extern "C" float g_bfmeK1121004;
+extern "C" float g_bfmeK075C6C;
+extern "C" float g_bfmeK07533C;
+
+class WWMath
+{
+public:
+	static float Random_Float();
+};
+
+class BfmeA1137
+{
+public:
+	void refreshCache();
+
+private:
+	char m_unmodelled_00[0x44];
+	char m_flag44;
+	char m_unmodelled_45[3];
+	int m_48;
+};
+
+static const BfmeOverride1137 *walk(const BfmeOverride1137 *d)
+{
+	const BfmeOverride1137 *f = d;
+	if (d && d->m_nextOverride)
+		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	return f;
+}
+
+static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
+{
+	const BfmeOverride1137 *f;
+	if (d == 0)
+		f = 0;
+	else if (d->m_nextOverride)
+		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	else
+		f = d;
+	return f;
+}
+
+void BfmeA1137::refreshCache()
+{
+	float slot;
+	const BfmeOverride1137 *f = walk(g_bfmeGlo012F15F8);
+	if (f->m_flag40 == 0)
+		return;
+	if (m_flag44)
 	{
-		if (--m_bfme48 > 0)
+		int n = m_48 - 1;
+		m_48 = n;
+		if (n > 0)
 			return;
-		m_bfme48 = 0;
-		m_bfme44 = 0;
+		m_48 = 0;
+		m_flag44 = 0;
 		return;
 	}
-
-	float v = bfmeValBC1137();
-	// TODO: compare v against *(float*)(other_global + 0x54); on the
-	// "close enough" branch fall straight to the pop/ret at +0x15 (no cache
-	// refresh) -- not modelled here yet.
-	m_bfme44 = 1;
-	// m_bfme48 = (int)(v * K1 + K2 + m_bfme50 * K3);  -- constants unresolved
+	slot = WWMath::Random_Float();
+	f = walk(g_bfmeGlo012F15F8);
+	if (slot > f->m_54)
+		return;
+	m_flag44 = 1;
+	f = walk3(g_bfmeGlo012F15F8);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }
