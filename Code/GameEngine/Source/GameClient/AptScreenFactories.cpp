@@ -695,6 +695,7 @@ class BfmeAptScreenScoreScreen
 public:
 	BfmeAptScreenScoreScreen( void *context );
 	void bfmeProvide( const char *selector, void *value, bool setting );
+	void bfmeProvideObjectiveChecked( const char *selector, void *value, bool setting );
 	void _bfme_setPlayerTable( int row, int field, const UnicodeString &text );
 
 private:
@@ -712,6 +713,25 @@ void BfmeAptScreenScoreScreen::bfmeProvide(
 		*(unsigned short *)output = (unsigned short)'0';
 		if( index >= 0 && index < 5 )
 			sprintf( output, "%d", *(int *)( (char *)this + 0x278 + index * 4 ) );
+	}
+}
+
+// ?bfmeProvideObjectiveChecked@BfmeAptScreenScoreScreen@@QAEXPBDPAX_N@Z
+void BfmeAptScreenScoreScreen::bfmeProvideObjectiveChecked(
+	const char *selector, void *value, bool setting )
+{
+	if( !setting )
+	{
+		int index = (int)selector;
+		char *output = (char *)value;
+		*(unsigned short *)output = (unsigned short)'0';
+		if( index >= 0 &&
+			index < *(int *)( (char *)this + 0x304 ) &&
+			index < 8 )
+		{
+			unsigned char checked = *(unsigned char *)( (char *)this + 0x308 + index );
+			sprintf( output, "%d", checked != 0 );
+		}
 	}
 }
 
