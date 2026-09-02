@@ -3717,6 +3717,7 @@ name,address,notes
 ??0W3DDefaultDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003ECA7,pinharvest x1 (thunk)
 ??0W3DDependencyModelDrawModuleData@@QAE@XZ,0x0001235A,pinharvest x1 (thunk)
 ??0W3DDisplay@@QAE@XZ,0x00002432
+??0W3DDynamicLight@@QAE@XZ,0x0004928D,Open-BFME5 BFME W3DDynamicLight ctor ILT reached by getADynamicLight at 0x00712489
 ??0W3DFloorDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A9D9,link thunk to the W3DFloorDraw constructor; named from the draw-module registration that pairs "W3DFloorDraw" with factory 0x006BF9C0
 ??0W3DFloorDrawBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039770,Open-BFME5 the incremental-link thunk W3DFloorDraw encodes for that base
 ??0W3DFloorDrawBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x007592C0,Open-BFME5 base constructor W3DFloorDraw forwards to; byte-identical to and folded with W3DPropDraw so the address cannot name the class
@@ -74108,7 +74109,6 @@ name,address,notes
 ?bfmeImplV24@BfmeStrV24@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert range impl for 0x00830CC0
 ?bfmeImplV26@@YAPAXHHHHD@Z,0x0082D6D0,Open-BFME5 find-range impl for 0x0082DFE0
 ?bfmeImplV43@BfmeStrV43@@QAEXPAD000@Z,0x008300B0,Open-BFME5 insert-range impl pin for 0x00831080
-??0W3DDynamicLight@@QAE@XZ,0x0004928D,Open-BFME5 BFME W3DDynamicLight ctor ILT reached by getADynamicLight at 0x00712489
 ?bfmeImplV44@BfmeStrV44@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert-range impl pin for 0x00830DE0
 ?bfmeImplVMF@BfmeStrVMF@@QAEXHHHPAD@Z,0x00830410,pin
 ?bfmeImplVMG@BfmeStrVMG@@QAEXHHHPAD@Z,0x008300B0,pin
