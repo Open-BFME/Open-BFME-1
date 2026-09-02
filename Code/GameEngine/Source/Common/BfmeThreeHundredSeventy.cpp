@@ -28,3 +28,19 @@ void bfmeCopyWE(BfmeNodeWE *first, BfmeNodeWE *last, BfmeDestWE *to)
 		++first;
 	}
 }
+
+BfmeNodeWE *bfmeUninitCopyWE(BfmeNodeWE *first, BfmeNodeWE *last, BfmeNodeWE *to)
+{
+	int count = last - first;
+
+	while (count > 0)
+	{
+		to->bfmeOneWE((BfmeDestWE *)first);
+		to->m_bfmeSub.bfmeTwoWE(&first->m_bfmeSub);
+		++first;
+		++to;
+		--count;
+	}
+
+	return to;
+}
