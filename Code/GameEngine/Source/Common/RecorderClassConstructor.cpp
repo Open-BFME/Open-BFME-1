@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /ICode/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
+
+#include "ascii_string.h"
 
 // Open-BFME5: RecorderClass's constructor, retail 0x000993E0, 103 bytes. The
 // body carried only a machine byte-dump row; the symbols.csv pin names it, and
@@ -21,18 +23,79 @@ public:
 	~BfmeRecorderStore();
 
 private:
-	char m_bfmeBody[0x2B0 - 0x20];
+	// ReplayGameInfo is 0x278 bytes in this image: a 0x58-byte GameInfo
+	// base followed by eight 0x44-byte slots.  The Recorder-owned state starts
+	// immediately after it at RecorderClass+0x298.
+	char m_bfmeBody[0x278];
 };
 
-class BfmeRecorderSlot
+// The BFME ReplayGameInfo vtable has two leading virtuals before reset.  The
+// methods below are declared-only views so their calls resolve to the already
+// pinned GameInfo bodies/thunks without changing the constructor's member type.
+class GameInfo
 {
 public:
-	BfmeRecorderSlot() { m_bfmePointer = 0; }
-	~BfmeRecorderSlot();
+	virtual void bfmeGameInfoSlot0(void);
+	virtual void bfmeGameInfoSlot1(void);
+	virtual void reset(void);
+	void clearSlotList(void);
+	void setMap(AsciiString mapName);
+};
+
+// The ten-byte setter reached by RecorderClass::bfmeInit is an ICF-folded
+// body shared with W3DVolumetricShadow::setOptimalExtrusionPadding.  Its retail
+// call-site thunk is pinned at 0x0001F4A6; using the folded owner keeps the
+// clean C++ call's ABI and target address without inventing a new pin.
+class RecorderClass;
+
+class W3DVolumetricShadow
+{
+	friend class RecorderClass;
+
+	protected:
+	void setOptimalExtrusionPadding(float padding);
+};
+
+extern int Rva00096A50Get(void);
+
+// GlobalData's pending/map strings are the adjacent BFME fields at +0xB84 and
+// +0xB88.  The pointer itself is the established 0x012ED5C8 singleton.  The
+// pending-file test is deliberately local: the retail body inlines the
+// StringBase header check instead of calling StringBase::isEmpty.
+struct BfmeAsciiStringState
+{
+	struct Header
+	{
+		int refCount;
+		unsigned short length;
+		unsigned short capacity;
+	};
+
+	Header *m_data;
+
+	bool isEmpty(void) const
+	{
+		return m_data == 0 || m_data->length == 0;
+	}
+};
+
+class BfmeGlobalData
+{
+private:
+	char m_bfmeHead[0x08];
+
+public:
+	BfmeAsciiStringState m_mapName;
 
 private:
-	void *m_bfmePointer;
+	char m_bfmeGap[0xB84 - 0x0C];
+
+public:
+	BfmeAsciiStringState m_pendingFile;
 };
+
+extern BfmeGlobalData *TheGlobalData;
+extern int OpenBFME5_netCRCInterval;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
@@ -55,11 +118,20 @@ public:
 private:
 	void bfmeInit(void);					// ILT 0x0000B721
 
-	char m_bfmeHeadA[0x10 - 0x08];
-	BfmeRecorderSlot m_bfmeFirst;				// +0x10
-	char m_bfmeHeadB[0x1C - 0x14];
-	BfmeRecorderSlot m_bfmeSecond;				// +0x1C
-	BfmeRecorderStore m_bfmeStore;				// +0x20
+	char m_bfmeHeadA[0x0C - 0x08];
+	void *m_bfmeFile;						// +0x0C
+	AsciiString m_bfmeFileName;				// +0x10
+	int m_bfmeCurrentFilePosition;				// +0x14
+	int m_bfmeMode;						// +0x18
+	AsciiString m_bfmeCurrentReplayFilename;			// +0x1C
+	BfmeRecorderStore m_bfmeGameInfo;				// +0x20
+	int m_bfmeNetworkCrcInterval;				// +0x298
+	int m_bfmeOriginalGameMode;				// +0x29C
+	int m_bfmeNextFrame;					// +0x2A0
+	int m_bfmeSeedOrDesync;					// +0x2A4
+	unsigned char m_bfmeDoingAnalysis;				// +0x2A8
+	char m_bfmeModePadding[0x2AC - 0x2A9];
+	int m_bfmeGameMode;					// +0x2AC
 	int m_bfme2B0;						// +0x2B0
 };
 
@@ -69,4 +141,41 @@ RecorderClass::RecorderClass()
 	m_bfme2B0 = 0;
 
 	bfmeInit();
+}
+
+// ?bfmeInit@RecorderClass@@AAEXXZ
+void RecorderClass::bfmeInit(void)
+{
+	// The BFME recorder starts in NONE mode, clears its file state, and resets
+	// the embedded ReplayGameInfo before selecting the pending map (or the
+	// current map when no pending map is present).
+	m_bfmeGameMode = 8;
+	m_bfmeMode = 2;
+	m_bfmeFile = 0;
+	m_bfmeFileName.clear();
+
+	GameInfo *gameInfo = reinterpret_cast<GameInfo *>(&m_bfmeGameInfo);
+	m_bfmeCurrentFilePosition = 0;
+	gameInfo->clearSlotList();
+	gameInfo->reset();
+
+	if (TheGlobalData->m_pendingFile.isEmpty())
+		gameInfo->setMap(reinterpret_cast<const AsciiString &>(TheGlobalData->m_mapName));
+	else
+		gameInfo->setMap(reinterpret_cast<const AsciiString &>(TheGlobalData->m_pendingFile));
+
+	W3DVolumetricShadow *seedView = reinterpret_cast<W3DVolumetricShadow *>(gameInfo);
+	union BfmeSeedBits
+	{
+		int integer;
+		float real;
+	} seed;
+	seed.integer = Rva00096A50Get();
+	seedView->setOptimalExtrusionPadding(seed.real);
+
+	m_bfmeOriginalGameMode = -1;
+	m_bfmeNetworkCrcInterval = OpenBFME5_netCRCInterval;
+	m_bfmeNextFrame = 0;
+	m_bfmeDoingAnalysis = 0;
+	m_bfmeSeedOrDesync = -1;
 }
