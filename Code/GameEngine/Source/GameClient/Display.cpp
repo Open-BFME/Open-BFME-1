@@ -67,6 +67,53 @@ public:
 	virtual void setMouseLimits() = 0;
 };
 
+// BFME inserts the width/height accessors around the view mutators.  Keep the
+// calls in setDisplayMode on the retail slots instead of the shorter ZH View
+// declaration, whose vtable layout puts these methods at different offsets.
+class BFMERetailTacticalViewVTable
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot0A() = 0;
+	virtual void slot0B() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot0D() = 0;
+	virtual void setWidth( Int width ) = 0;            // +0x38
+	virtual Int getWidth() = 0;                         // +0x3c
+	virtual void setHeight( Int height ) = 0;           // +0x40
+	virtual Int getHeight() = 0;                        // +0x44
+	virtual void setOrigin( Int x, Int y ) = 0;         // +0x48
+	virtual void getOrigin( Int *x, Int *y ) = 0;       // +0x4c
+};
+
+// The focused build uses the upstream ZH Display declaration.  BFME adds
+// three subsystem slots before the display attributes, so spell these calls
+// through the retail vtable shape as well.
+class BFMERetailDisplayVTable
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1C() = 0;
+	virtual void slot20() = 0;
+	virtual void setWidth( UnsignedInt width ) = 0;      // +0x24
+	virtual void setHeight( UnsignedInt height ) = 0;    // +0x28
+};
+
 /// The Display singleton instance.
 Display *TheDisplay = NULL;
 
@@ -180,24 +227,29 @@ void Display::draw( void )
 
 /** Sets screen resolution/mode*/
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/Display_setDisplayMode_Thunk.cpp
-// ?setDisplayMode@Display@@UAE_NIII_N@Z present-unmatched
 Bool Display::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bitdepth, Bool windowed )
 {
 	//Get old values
 	UnsignedInt oldDisplayHeight=getHeight();
 	UnsignedInt oldDisplayWidth=getWidth();
-	Int oldViewWidth=TheTacticalView->getWidth();
-	Int oldViewHeight=TheTacticalView->getHeight();
+	Int oldViewWidth=
+		reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )->getWidth();
+	Int oldViewHeight=
+		reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )->getHeight();
 	Int oldViewOriginX,oldViewOriginY;
-	TheTacticalView->getOrigin(&oldViewOriginX,&oldViewOriginY);
+	reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )
+		->getOrigin(&oldViewOriginX,&oldViewOriginY);
 
-	setWidth(xres);
-	setHeight(yres);
+	reinterpret_cast<BFMERetailDisplayVTable *>( this )->setWidth(xres);
+	reinterpret_cast<BFMERetailDisplayVTable *>( this )->setHeight(yres);
 
 	//Adjust view to match previous proportions
-	TheTacticalView->setWidth((Real)oldViewWidth/(Real)oldDisplayWidth*(Real)xres);
-	TheTacticalView->setHeight((Real)oldViewHeight/(Real)oldDisplayHeight*(Real)yres);
-	TheTacticalView->setOrigin((Real)oldViewOriginX/(Real)oldDisplayWidth*(Real)xres,
+	reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )
+		->setWidth((Real)oldViewWidth/(Real)oldDisplayWidth*(Real)xres);
+	reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )
+		->setHeight((Real)oldViewHeight/(Real)oldDisplayHeight*(Real)yres);
+	reinterpret_cast<BFMERetailTacticalViewVTable *>( TheTacticalView )
+		->setOrigin((Real)oldViewOriginX/(Real)oldDisplayWidth*(Real)xres,
 	(Real)oldViewOriginY/(Real)oldDisplayHeight*(Real)yres);
 	return TRUE;
 }
