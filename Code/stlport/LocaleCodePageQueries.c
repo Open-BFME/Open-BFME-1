@@ -31,6 +31,12 @@ typedef struct _LOCALECONV
     const char *abbrev;
 } LOCALECONV;
 
+typedef struct _Locale_ctype_t
+{
+    LCID lcid;
+    int cp;
+} _Locale_ctype_t;
+
 static int __FindFlag;
 static LCID __FndLCID;
 static const char *__FndLang;
@@ -76,6 +82,8 @@ static int __GetDefaultCP(LCID lcid)
         return __intGetOCP(lcid);
     return cp;
 }
+
+int __GetLCIDFromName(const char *name, LCID *lcid, char *cp);
 
 static LCID LocaleFromHex(const char *locale)
 {
@@ -179,6 +187,34 @@ char *_Locale_common_default(char *buf)
         codePage = __intGetOCP(0x400);
     my_ltoa(codePage, cp);
     return __GetLocaleName(0x400, cp, buf);
+}
+
+char *_Locale_ctype_name(const void *loc, char *buf)
+{
+    char cpBuf[6];
+    _Locale_ctype_t *ctype = (_Locale_ctype_t *)loc;
+    my_ltoa(ctype->cp, cpBuf);
+    return __GetLocaleName(ctype->lcid, cpBuf, buf);
+}
+
+static char *__TranslateToSystem(const char *name, char *buf)
+{
+    LCID lcid;
+    char cp[6];
+    if (__GetLCIDFromName(name, &lcid, cp) != 0)
+        return 0;
+    return __GetLocaleName(lcid, cp, buf);
+}
+
+char *Rva0084F190UseTranslateA(const char *name, char *buf)
+{
+    return __TranslateToSystem(name, buf);
+}
+
+char *Rva0084F190UseTranslateB(const char *name, char *buf)
+{
+    char *result = __TranslateToSystem(name, buf);
+    return result ? result : buf;
 }
 
 int Rva0084E5B0UseDefaultCPA(LCID lcid)

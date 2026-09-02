@@ -57,5 +57,33 @@ BFME_PROTO_CTOR( Rva00970880Proto )
 BFME_PROTO_CTOR( Rva00970EC0Proto )
 BFME_PROTO_CTOR( Rva009712A0Proto )
 BFME_PROTO_CTOR( Rva00971670Proto )
-BFME_PROTO_CTOR( Rva00971CE0AggregatePrototype )
 BFME_PROTO_CTOR( Rva009723C0Proto )
+
+class Rva00971CE0AggregatePrototype : public GenBase009EB7D0
+{
+public:
+	Rva00971CE0AggregatePrototype(const char *name, int first, int second);
+	Rva00971CE0AggregatePrototype(const char *name, void *ptr);
+
+private:
+	void *m_ptr;
+	StringClass m_name;
+	int m_first;
+	int m_second;
+};
+
+Rva00971CE0AggregatePrototype::Rva00971CE0AggregatePrototype(const char *name, int first, int second)
+	: m_ptr(0),
+	  m_name(name),
+	  m_first(first),
+	  m_second(second)
+{
+}
+
+Rva00971CE0AggregatePrototype::Rva00971CE0AggregatePrototype(const char *name, void *ptr)
+	: m_ptr(ptr),
+	  m_name(name),
+	  m_first(0),
+	  m_second(0)
+{
+}

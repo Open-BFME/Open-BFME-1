@@ -140,6 +140,9 @@ CreditsManager::CreditsManager(void)
 	
 	m_currentStyle = CREDIT_STYLE_NORMAL;
 	m_isFinished = FALSE;
+	// BFME extends CreditsManager with two zero-initialized trailing words.
+	((Int *)this)[0x3c / sizeof(Int)] = 0;
+	((Int *)this)[0x40 / sizeof(Int)] = 0;
 	m_normalFontHeight = 10;
 }
 

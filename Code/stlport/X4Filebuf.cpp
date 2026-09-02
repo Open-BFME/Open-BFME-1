@@ -9,9 +9,53 @@
 #define _STLP_CTRLZ 26
 
 extern "C" __declspec(dllimport) BOOL WINAPI SetEndOfFile(HANDLE);
+extern "C" __declspec(dllimport) long __cdecl _get_osfhandle(int);
+extern "C" __declspec(dllimport) HANDLE WINAPI CreateFileMappingA(
+  HANDLE, void *, DWORD, DWORD, DWORD, const char *);
+extern "C" __declspec(dllimport) void *WINAPI MapViewOfFile(
+  HANDLE, DWORD, DWORD, DWORD, DWORD);
 bool bfmeGoDXF(void *file);
 
+#ifndef PAGE_READONLY
+#define PAGE_READONLY 2
+#endif
+#ifndef FILE_MAP_READ
+#define FILE_MAP_READ 4
+#endif
+
+namespace _SgI {
+int _get_osfflags(int file_no, HANDLE os_handle);
+}
+
 _STLP_BEGIN_NAMESPACE
+
+bool _Filebuf_base::_M_open(int file_no, ios_base::openmode init_mode)
+{
+  if (_M_is_open || file_no < 0)
+    return false;
+
+  if (_M_is_open || file_no == -1)
+    return false;
+
+  HANDLE os_handle = (HANDLE)_get_osfhandle(file_no);
+
+  if ((long)os_handle != -1)
+    file_no = (int)os_handle;
+  else
+    return false;
+
+  if (init_mode != ios_base::__default_mode)
+    _M_openmode = init_mode;
+  else
+    _M_openmode = _SgI::_get_osfflags(file_no, os_handle);
+
+  _M_is_open = true;
+  _M_file_id = (_STLP_fd)file_no;
+  _M_should_close = false;
+  _M_regular_file = bfmeGoDXF(_M_file_id);
+
+  return true;
+}
 
 bool _Filebuf_base::_M_open(const char *name, ios_base::openmode openmode,
                             long permission)
@@ -184,6 +228,27 @@ streamoff _Filebuf_base::_M_seek(streamoff offset, ios_base::seekdir dir)
   if (li.LowPart == (DWORD)-1 && GetLastError() != 0)
     return streamoff(-1);
   return li.QuadPart;
+}
+
+void *_Filebuf_base::_M_mmap(streamoff offset, streamoff len)
+{
+  void *base;
+
+  _M_view_id = CreateFileMappingA(_M_file_id, 0, PAGE_READONLY, 0, 0, 0);
+
+  if (_M_view_id) {
+    base = MapViewOfFile(_M_view_id, FILE_MAP_READ,
+      (DWORD)(((unsigned __int64)offset) >> 32),
+      (DWORD)(((unsigned __int64)offset) & 0xffffffff), len);
+    if (base == 0 || _M_seek(offset + len, ios_base::beg) < 0) {
+      this->_M_unmap(base, len);
+      base = 0;
+    }
+  }
+  else
+    base = 0;
+
+  return base;
 }
 
 _STLP_END_NAMESPACE

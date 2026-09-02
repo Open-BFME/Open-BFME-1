@@ -1,5 +1,5 @@
-// ?d_00100580@@YAXXZ
-// partial score=0.98 date=2026-08-28
+// ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
+// partial score=0.98 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 // Open-BFME: GeometryInfo five-argument constructor, retail 0x00100580.
@@ -52,9 +52,6 @@ struct GeometryRecord
 	AsciiString m_name;
 };
 
-extern "C" void __stdcall geometryRecordErase(GeometryRecord *first,
-	GeometryRecord *last);
-
 class Snapshot
 {
 public:
@@ -98,7 +95,7 @@ private:
 
 // ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
 GeometryInfo::GeometryInfo(GeometryType type, Bool isSmall, Real height,
-Real majorRadius, Real minorRadius)
+	Real majorRadius, Real minorRadius)
 {
 	m_scalar08 = 0.0f;
 	m_scalar0c = 0.0f;
