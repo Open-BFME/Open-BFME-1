@@ -82258,3 +82258,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeEraseV14@BfmeStrV14@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase range thunk for 0x00830030
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
 ?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
+?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0000E0FC,Open-BFME5 DamageFXStore ctor call target: retail uses the ILT for NameKeyType-to-DamageFX hashtable bucket initialization
