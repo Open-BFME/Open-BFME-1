@@ -2399,3 +2399,17 @@ one-byte miss, `build/sib_gen.py` matrix); the same four-byte SIB defect gates t
 partial. Tool for the other side of that coin: `tools/vtable_lookup.py <vtable VA>`
 prints a class's retail slot table, ledger names per slot, and every ctor/dtor that
 installs the vtable -- the usual answer to "owning class unidentified".
+
+**Two register-mirror levers that fall out of source shape, not luck** (both proven
+instruction-for-instruction on 0x00339B90, `build/vt_gen.py`): (1) an import called
+twice must be the real `__declspec(dllimport)` function, not a function-pointer
+global or a cached local -- MSVC 7.1 CSEs the IAT load into a callee-saved register
+at CSE time, so that temp is allocated AFTER the locals that already exist (retail
+`edi` for GetProcAddress with the earlier proc result in `esi`); a local copy or a
+pointer global allocates first and mirrors ESI/EDI, and the vtable temp for any
+virtual call in between flips eax/edx with it. (2) A `flag = 1` that retail reaches
+by two forward jumps and places after the main path is ONE fall-through tail in the
+source (`if (a) { ... if (b) { ...; return; } } flag = 1;`), never two inline
+`{ flag = 1; return; }` early exits -- the duplicated form costs one byte and moves
+the callee-saved push. Also: the attempts log's latest `partial` entry can be stale
+-- check `functions.csv` for a real source before working a banked body.

@@ -4,7 +4,7 @@
 // (count at +4) for an element whose dword at +0x10 equals the argument, then
 // runs that element's destructor and sized delete (0x38) and nulls the slot.
 
-class BfmeElemSKA
+class BfmeSub1045
 {
 public:
 	void bfmeDone1045();
@@ -24,13 +24,13 @@ public:
 
 	int m_gap00;
 	int m_count;
-	BfmeElemSKA **m_array;
+	BfmeSub1045 **m_array;
 };
 
 char BfmeSubSKA::bfmeTestSKA( int id )
 {
-	BfmeElemSKA *elem;
-	BfmeElemSKA **slot;
+	BfmeSub1045 *elem;
+	BfmeSub1045 **slot;
 	int i;
 	int n;
 
