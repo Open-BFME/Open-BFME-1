@@ -69,11 +69,14 @@ def read_slots(data, secs, va, max_slots):
 
 
 def scan_code_for_constant(data, secs, va):
+    """File offsets inside .text only where the 4-byte constant appears."""
     needle = struct.pack("<I", va)
+    lo, hi = text_bounds(secs)
+    start = build.rva_to_file_offset(secs, lo)
+    end = build.rva_to_file_offset(secs, hi - 1) + 1
     hits = []
-    start = 0
     while True:
-        i = data.find(needle, start)
+        i = data.find(needle, start, end)
         if i < 0:
             break
         hits.append(i)
@@ -102,6 +105,16 @@ def main():
     sym_lines = open(ROOT / "reverse/symbols.csv", encoding="utf-8", errors="replace").read().splitlines()
     fn_lines = open(ROOT / "reverse/functions.csv", encoding="utf-8", errors="replace").read().splitlines()
 
+    pinned_vtables = set()
+    for l in sym_lines:
+        if l.startswith("??_7"):
+            parts = l.split(",")
+            if len(parts) > 1 and parts[1].startswith("0x"):
+                try:
+                    pinned_vtables.add(int(parts[1], 16))
+                except ValueError:
+                    pass
+
     for vs in a.vtables:
         va = int(vs, 16)
         if va < 0x400000:
@@ -114,7 +127,7 @@ def main():
             print("  PIN:", l[:140])
         print("  -- retail slots --")
         try:
-            slots = read_slots(data, secs, va, a.slots)
+            slots = read_slots(data, secs, va, a.slots, pinned_vtables)
         except Exception as e:
             slots = []
             print("  (cannot read slots:", e, ")")
@@ -126,12 +139,12 @@ def main():
                 print(f"  slot {i:3} +{i*4:#05x} -> {entry:#010x} {name[:70]}{tag}  [{Path(src).name}]")
             else:
                 print(f"  slot {i:3} +{i*4:#05x} -> {entry:#010x} <unclaimed>")
-        print("  -- functions carrying the constant (installers: ctors/dtors) --")
+        print("  -- .text functions carrying the constant (ctors/dtors install it; a cmp is a type check) --")
         hits = scan_code_for_constant(data, secs, va)
         seen = set()
         for off in hits:
             rva = file_offset_to_rva(secs, off)
-            if rva is None or rva >= 0x00C00000:
+            if rva is None:
                 continue
             row = containing_row(by_rva, sorted_rvas, rva)
             if not row:
