@@ -51,18 +51,30 @@ def containing_row(by_rva, sorted_rvas, rva):
     return None
 
 
-def read_slots(data, secs, va, max_slots):
+def text_bounds(secs):
+    for s in secs:
+        if s["name"] == ".text":
+            return s["rva"], s["rva"] + s["size"]
+    raise ValueError("no .text section")
+
+
+def read_slots(data, secs, va, max_slots, other_vtables):
+    """Slots until the first non-.text entry or the start of another pinned vtable.
+
+    Vtables sit back to back in .rdata with only an RTTI locator pointer (into
+    .rdata/.data, so not a code address) between them; stopping at the first
+    non-code dword ends most tables, and the pinned-vtable set catches the rest.
+    """
     rva = va - 0x400000
     off = build.rva_to_file_offset(secs, rva)
-    text_lo, text_hi = None, None
-    for s in secs:
-        if s["name"].rstrip(b"\0") == b".text" if isinstance(s.get("name"), bytes) else False:
-            pass
+    lo, hi = text_bounds(secs)
     slots = []
     for i in range(max_slots):
+        if i and (va + i * 4) in other_vtables:
+            break
         entry = struct.unpack("<I", data[off + i * 4: off + i * 4 + 4])[0]
         erva = entry - 0x400000
-        if not (0x1000 <= erva < 0x00C00000):
+        if not (lo <= erva < hi):
             break
         slots.append((i, entry))
     return slots
