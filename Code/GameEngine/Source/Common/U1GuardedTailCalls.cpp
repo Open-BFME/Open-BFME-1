@@ -83,10 +83,63 @@ public:
 	float m_y;
 };
 
+class INI
+{
+public:
+	void u4Indent( int width );
+	void u4Append( const void *value );
+	void u4Finish( int radix );
+};
+
+extern const char g_u4Separator[];
+extern const char g_u1False[];
+extern const char g_u1True[];
+extern const char g_u1Empty[];
+void __cdecl u1FormatPointer( INI *ini, void *value );
+
 void u1Do_005C7410( void *a, void *b, void *c, U1ByteFlagged *d );
 void u1Do_005C90D0( void *a, void *b, void *c, U1DwordFlagged *d );
 void u1Do_005C71F0( void *a, void *b, void *c, U1CountedHolder *d );
 void u1Do_005C9030( void *a, void *b, void *c, U1Pair *d );
+
+inline void u1BeginField( INI *ini, void *depthValue, void *store )
+{
+	unsigned int depth = (unsigned int)depthValue;
+	if ( depth > 0 )
+	{
+		do
+		{
+			ini->u4Indent( 32 );
+		}
+		while ( --depth );
+	}
+	ini->u4Append( store );
+	ini->u4Append( g_u4Separator );
+}
+
+void u1Do_005C90D0( void *a, void *b, void *c, U1DwordFlagged *d )
+{
+	INI *ini = (INI *)a;
+	u1BeginField( ini, b, c );
+	u1FormatPointer( ini, d->m_pointer );
+	ini->u4Finish( 10 );
+}
+
+void u1Do_005C7410( void *a, void *b, void *c, U1ByteFlagged *d )
+{
+	INI *ini = (INI *)a;
+	u1BeginField( ini, b, c );
+	ini->u4Append( d->m_flag ? g_u1True : g_u1False );
+	ini->u4Finish( 10 );
+}
+
+void u1Do_005C71F0( void *a, void *b, void *c, U1CountedHolder *d )
+{
+	INI *ini = (INI *)a;
+	u1BeginField( ini, b, c );
+	ini->u4Append( d->m_item ? (char *)d->m_item + 8 : g_u1Empty );
+	ini->u4Finish( 10 );
+}
 
 void u1Guard_005C8A80( void *a, void *b, void *c, U1ByteFlagged *d )
 {

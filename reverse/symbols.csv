@@ -77498,6 +77498,9 @@ name,address,notes
 ?g_theAssetRegistry@@3PAVAssetRegistry@@A,0x0134FAAC,Add_Prototype AssetRegistry global
 ?g_theGameLogic@@3PAUGameLogicState@@A,0x012F0898,LargeGroupBonus game-logic global
 ?g_theWindowManager@@3PAVWindowManager@@A,0x012F19E8,HideQuitMenu WindowManager global
+?g_u1Empty@@3QBDB,0x0107388B,U1 empty string used by 0x005C71F0
+?g_u1False@@3QBDB,0x01092BB0,U1 false text used by 0x005C7410
+?g_u1True@@3QBDB,0x01092BD0,U1 true text used by 0x005C7410
 ?g_u4Separator@@3QBDB,0x0110FCA8,U4 formatter separator used by 0x005F50B0
 ?gainLevel@ExperienceLevelSystem@@QAEXPAVObject@@_N@Z,0x00027237,UNIT_GAIN_LEVEL dispatch resolves an Object and tail-calls this experience-level body with the FX flag
 ?gandalfTemplate@?6??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4VAsciiString@@A,0x012EF1F0,GondorGandalf static AsciiString
@@ -80821,6 +80824,7 @@ name,address,notes
 ?u1Do_005C9030@@YAXPAX00PAVU1Pair@@@Z,0x005C9030,tail-call target of the float guard 0x005C9C40; address-derived name
 ?u1Do_005C90D0@@YAXPAX00PAVU1DwordFlagged@@@Z,0x005C90D0,tail-call target of the pointer guard 0x005C9C80; address-derived name
 ?u1Emit_005C7A10@@YAXPAVU1Sink@@PBD@Z,0x005C4D00,cdecl sink append target of 0x005C7A10; address-derived name
+?u1FormatPointer@@YAXPAVINI@@PAX@Z,0x00021927,U1 pointer formatter called by 0x005C90D0
 ?u1Widen_005C5E40@@YAXPAVU1FloatSink@@N@Z,0x005C5E40,cdecl (this double) callee of 0x005C67A0; address-derived name
 ?u4Append@INI@@QAEXPBX@Z,0x0002DFEC,U4 record field append called twice by 0x005F50B0
 ?u4AppendVector@@YAPAVINI@@PAV1@PBX@Z,0x00025FA9,U4 vector formatter called by 0x005C8AA0
