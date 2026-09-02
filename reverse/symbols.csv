@@ -10493,6 +10493,7 @@ name,address,notes
 ?Rva0051DCE0Second@@YAXXZ,0x0001285A,ILT to 0x00579440 for 13B two-call wrap at 0x0051DCE0
 ?Rva00739900Forward@@YAXPAXM@Z,0x000246A4,Open-BFME5 ILT thunk used by the 0x006FCBD0 clamped float forwarder
 ?Rva007E8640Copy@@YAXPADIPBD@Z,0x007E8640,U2 lane: bounded string copy called by the setters at 0x00801470 and 0x008014A0
+?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
 ?Rva007EB410NetConnStatus@@YAHHPAXH@Z,0x007EB410,Y2 lane: NetConnStatus -- the body names itself in its own warning string; three-argument query with the third unused
 ?Rva007EB520NetConnMAC@@YAIPAX@Z,0x007EB520,Y2 lane: NetConnMAC -- the body names itself in both of its log lines; NetConnStatus hands it the 0xF0-byte Adapter block
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
@@ -10504,6 +10505,7 @@ name,address,notes
 ?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
 ?Rva007F8D30@@YAXXZ,0x007F8D30,Y2 lane: address-derived; the no-argument teardown 0x007EB650 runs before the DirtySock module shutdown
 ?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
+?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
 ?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
 ?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
 ?Rva007FD080@@YAXH@Z,0x007FD080,Y2 lane: C++ spelling of the DirtySock module create converted as _Rva007FD080 in Y4DirtySockSocket.c
@@ -10538,6 +10540,7 @@ name,address,notes
 ?Rva00805A70NextProbe@@YAHPAURva00805960Probe@@PAURva00804150ProtoMangleRef@@PBD@Z,0x00805A70,Y2 DirtySock lane: address-derived; 0x00805960 calls it cdecl with three arguments to fill a 0x58-byte Probe from the response text
 ?Rva00805C70@@YAHPAURva00804150ProtoMangleRef@@PAURva00805960Probe@@@Z,0x00805C70,Y2 DirtySock lane: address-derived; 0x00805960 calls it once per probe and treats a negative result as fatal
 ?Rva00805E50@@YAXPAURva00804150ProtoMangleRef@@PAURva00805960Probe@@HH@Z,0x00805E50,Y2 DirtySock lane: address-derived; 0x00805960 calls it once per entry inside a probe
+?Rva00806710@@YAHPAURva00806580Record@@PBDII@Z,0x00806710,cdecl open fesl.ea.com from 0x007FA6C0
 ?Rva00806B10@@YAXPAURva00806580Record@@@Z,0x00806B10,Y2 lane: address-derived; the 2102-byte pump 0x008076E0 runs once when its record has no complete block
 ?Rva00807370@@YAHPAURva00806580Record@@HHPADH@Z,0x00807370,Y2 lane: address-derived; 0x00806710 calls it with the selector 0x3F746963 and the 0x34-byte Ticket
 ?Rva00807520@@YAHPAURva00806580Record@@HH@Z,0x00807520,Y2 lane: address-derived; 0x00807370 reserves output space with it and fails when it gets back less than it asked for
@@ -12674,6 +12677,7 @@ name,address,notes
 ?adjustModelConditionForWeaponStatus@Object@@QAEXXZ,0x000276D3,ILT thunk; real body 0x5CA0F0
 ?adjustStacking@W3DRoadBuffer@@IAEXHH@Z,0x0000448F,ILT thunk pin for insertCrossTypeJoins
 ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6,Open-BFME5 ILT thunk from CommandButton::isReady call site (body 0x001C5A30)
+?afterWalk@BfmeObjF9@@QAEXXZ,0x0087EE60,Open-BFME5 post-walk callee of 0x0087F9C0
 ?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target
 ?aiEnter@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x000442A1,Open-BFME5 ILT thunk fronting body 0x000D89C0
 ?aiGetHealed@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003CF10,packet 002817b0 pin
@@ -12736,6 +12740,7 @@ name,address,notes
 ?apply@Gen00025C75@@QAEXPAVY1RangeContext@@@Z,0x00025C75,element callee of the 0x003D09A0 dispatch loop reached via incremental-link thunk; address-derived name
 ?apply@Gen003C0110Result@@QAEXHHHHH@Z,0x003A58E0,five-argument member called on the lookup result by 0x003C0250; address-derived name
 ?apply@Gen00587600@@QAEXHH@Z,0x00039FEF,S2 two-argument member called after atoi by the six entry points at 0x0051A7xx; ILT thunk to body 0x00587600
+?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
 ?apply@Rva003BF540@@QAEX_N@Z,0x003BD960,boolean applier called by the mirrored-flag update at 0x003BF540; address-derived name
 ?apply@Rva00841E10Owner@@QAEXH@Z,0x008412E0,U2 lane: tail-jump target of the three-flag guard at 0x00841E10; unnamed dump elsewhere
@@ -72647,6 +72652,8 @@ name,address,notes
 ?bfmeAllocEECa@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocEECb@@YGPAXI@Z,0x0002698B,pin
 ?bfmeAllocEFA@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocLargeBE@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FBE0
+?bfmeAllocLargeCD@@YAPAXI@Z,0x00881F30,Open-BFME5 large alloc of 0x0087FCD0
 ?bfmeAllocNode@@YAPAXI@Z,0x0082E540,Open-BFME5 the 16-byte allocator the node makers at 0x0046A070 0x0046B1C0 and 0x00927760 call
 ?bfmeAllocPV@@YAPAXHI@Z,0x00030940,pin
 ?bfmeAllocQA@@YAPAXHI@Z,0x00030940,pin
@@ -72658,6 +72665,8 @@ name,address,notes
 ?bfmeAllocRU@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRW@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocRX@@YAPAXI@Z,0x0082E540,pin
+?bfmeAllocSmallBE@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FBE0
+?bfmeAllocSmallCD@@YAPAXI@Z,0x0082E540,Open-BFME5 small alloc of 0x0087FCD0
 ?bfmeAllocUNB@@YAPAXI@Z,0x007F0130,pin
 ?bfmeAllocUQC@@YAPAXI@Z,0x0082E540,pin
 ?bfmeAllocate@Gen_007b9e80@@AAE_NHH@Z,0x0003FC7E,Open-BFME5 the allocate the reserve at 0x007B9E80 calls
@@ -73179,10 +73188,12 @@ name,address,notes
 ?bfmeConvertUVB@@YAHPADPAPAX@Z,0x00807AB0,pin
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
 ?bfmeCopy1279@BfmeQ1279@@QAEXPAD0H@Z,0x007E8A80,pin
+?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z,0x0087EFA0,Open-BFME5 uninit-copy of 0x0087FBE0
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBaseCNI@BfmeBaseCNI@@QAEXPAU1@@Z,0x000171CA,pin
 ?bfmeCopyBwdV45@@YAXPAH00@Z,0x00008B75,Open-BFME5 copy-backward pin for 0x0082F610
+?bfmeCopyCD@@YAPAUBfmeElemCD@@PBU1@0PAU1@ABUBfmeFalseCD@@@Z,0x0087F4D0,Open-BFME5 uninit-copy of 0x0087FCD0
 ?bfmeCopyCEB@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyChV24@@YAXPAD0@Z,0x000180CF,Open-BFME5 char_traits assign char for 0x00830CC0
 ?bfmeCopyEFG@BfmeThingEFG@@QAEXPAV1@@Z,0x000201A3,pin
@@ -73511,6 +73522,8 @@ name,address,notes
 ?bfmeFill1172@BfmeF1172@@QAEXPAH@Z,0x009EE0F0,pin
 ?bfmeFill@BfmeCellAF0@@QAEXXZ,0x000038D7,Open-BFME5 ILT from 0x006A6AF0 cell fill
 ?bfmeFillBC@@YAXPAUBfmeVecBC@@HH@Z,0x0002A31A,Open-BFME5 thunk to 0x0040BB60 fill for 0x0040BC50
+?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z,0x0087F020,Open-BFME5 fill-n of 0x0087FBE0
+?bfmeFillCD@@YAPAUBfmeElemCD@@PAU1@IABU1@ABUBfmeFalseCD@@@Z,0x0087F520,Open-BFME5 fill-n of 0x0087FCD0
 ?bfmeFillInsV38@BfmeStrV38@@QAEPAV1@PAD0ID@Z,0x00830030,Open-BFME5 assign-n-char pin for 0x00830B10
 ?bfmeFillRD@BfmeSubRD@@QAEXPAPAX@Z,0x0003BA61,pin
 ?bfmeFillSHA@BfmeMakerSHA@@QAEXPAUBfmeCellSHA@@PAH@Z,0x00009B10,pin
@@ -74236,6 +74249,7 @@ name,address,notes
 ?bfmeInsertV53@BfmeStrV53@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831BE0
 ?bfmeInsertV54@BfmeStrV54@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831970
 ?bfmeInsertV55@BfmeStrV55@@QAEXPAD0000@Z,0x008314E0,Open-BFME5 insert-range callee of 0x00831CE0
+?bfmeInsertV56@BfmeStrV56@@QAEXPAD0000@Z,0x008312E0,Open-BFME5 insert-range callee of 0x00831A80
 ?bfmeIntern996@BfmeMap996@@QAEHPAD@Z,0x0003ADD7,pin
 ?bfmeIntersects@GeometryInfo@@QBE_NABUCoord3D@@MABV1@0M@Z,0x0087F2F0,Open-BFME5 oriented GeometryInfo intersection predicate called by Object wrapper 0x001BE980; direct body pin; descriptive spelling
 ?bfmeInvoke@Gen_0064C6A0Target@@QAEXPAX0@Z,0x0001F785,Open-BFME5 the member the guarded dispatcher at 0x0064C6A0 calls
@@ -75159,6 +75173,7 @@ name,address,notes
 ?bfmeThrow2V53@BfmeStrV53@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831BE0
 ?bfmeThrow2V54@BfmeStrV54@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831970
 ?bfmeThrow2V55@BfmeStrV55@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831CE0
+?bfmeThrow2V56@BfmeStrV56@@QAEXXZ,0x00042DC0,Open-BFME5 length-error pin for 0x00831A80
 ?bfmeThrow937C@@YGXI@Z,0x00AFD540,pin
 ?bfmeThrowV35@BfmeVecV35@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x0082DB50
 ?bfmeThrowV36@BfmeStrV36@@QAEXXZ,0x000132CD,Open-BFME5 range-check throw pin for 0x00830F00
@@ -75168,6 +75183,7 @@ name,address,notes
 ?bfmeThrowV53@BfmeStrV53@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831BE0
 ?bfmeThrowV54@BfmeStrV54@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831970
 ?bfmeThrowV55@BfmeStrV55@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831CE0
+?bfmeThrowV56@BfmeStrV56@@QAEXXZ,0x000132CD,Open-BFME5 length-error pin for 0x00831A80
 ?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
@@ -75595,6 +75611,8 @@ name,address,notes
 ?clear@BfmeDtorMemberJ@@AAEXXZ,0x009D0E20,Open-BFME5 tree clear called by the 0x009CF1E0 member destructor
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
 ?clear@BfmeThing152@@QAEXXZ,0x00039595,pin
+?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
+?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
 ?clear@Buffer@@QAEXXZ,0x00887940,Open-BFME5 W3DTreeDrawModuleData retail string-buffer clear pin
 ?clear@CrateTemplateCrateList@@QAEXXZ,0x000331AE,Open-BFME5 incremental-link thunk to the node-list clear body at 0x00379940 that CrateTemplate::~CrateTemplate calls twice
 ?clear@DamageFX@@QAEXXZ,0x00044297
@@ -75811,10 +75829,13 @@ name,address,notes
 ?copy@W3DAnimationInfoCopyShim@_STL@@SAPAVW3DAnimationInfo@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00610AF0,_STL __copy W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copyFrom@BfmeElem440@@QAEXPBU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x00880440
+?copyFrom@BfmeElemBE@@QAEXABU1@@Z,0x00013476,Open-BFME5 elem copy ctor of 0x0087FBE0
 ?copyFrom@BfmeElemFC@@QAEXPAU1@@Z,0x0002B355,Open-BFME5 copy-ctor callee of 0x0087FFC0
 ?copyFrom@BfmeTail50@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087FF50
 ?copyFrom@BfmeTailA2@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EA20
 ?copyFrom@BfmeTailAA@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087EAA0
+?copyFrom@BfmeTailCD@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy of 0x0087FCD0
+?copyFrom@BfmeTailE9@@QAEXPBU1@@Z,0x00887C90,Open-BFME5 tail copy callee of 0x0087E9B0
 ?copyFrom@BfmeTailF0@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F0F0
 ?copyFrom@BfmeTailF4@@QAEXPAU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F4D0
 ?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
@@ -76735,6 +76756,7 @@ name,address,notes
 ?g_bfmeEmpty1233@@3UBfmeBuf1233@@A,0x00ED5298,pin
 ?g_bfmeEmptyAscii@@3QBDB,0x0107388B,address-derived empty AsciiString fallback from retail 0x009D9A53
 ?g_bfmeEmptyEE@@3VBfmeStrEE@@A,0x00F36E50,Open-BFME5 AsciiString TheEmptyString for 0x0040EE10
+?g_bfmeEmptyF9@@3PADA,0x0107388B,Open-BFME5 empty AsciiString fallback of 0x0087F9C0
 ?g_bfmeEmptyUND@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUPA@@3PADA,0x00F36E50,pin
 ?g_bfmeEmptyUVA@@3PADA,0x00C7301C,pin
@@ -79099,6 +79121,7 @@ name,address,notes
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?helper@Rva0056C090@@QAEHXZ,0x00003EA4,Open-BFME5 thunk to 0x0056AB50
+?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
 ?hide@AptPalantir@@QAEX_N@Z,0x0001420E,ILT to body 0x00592CD0; the AptPalantir callback table at 0x00565F30 names its RenderRadar RenderRadarViewBox ClipRadar and OnInitialized methods; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@BannerUI@@QAEX_N@Z,0x0003A062,ILT to body 0x005839D0; BannerUI is independently identified by its existing parser and constructor sources; HideControlBar passes TRUE and ShowControlBar passes FALSE
@@ -79733,6 +79756,8 @@ name,address,notes
 ?objectEnteringInfluence@Energy@@QAEXPAVObject@@@Z,0x0000F402,Open-BFME5 retail Energy entering-influence ILT
 ?objectLeavingInfluence@Energy@@QAEXPAVObject@@@Z,0x00029D20,Open-BFME5 retail Energy leaving-influence ILT
 ?okToPlayRadarEdgeSound@Player@@QAE_NXZ,0x000141F0,Open-BFME5 ILT; the third condition of both radar edge tests in Player::disableRadar 0x000CC1C0 and Player::enableRadar 0x000CC2C0
+?onAccept@Rva007FA2C0@@QAEXPAX@Z,0x007F9FD0,FESL helper from 0x007FA2C0 accept path
+?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
 ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z,0x000476F9,packet 00219850 pin
 ?onDie@Object@@QAEXPAVDamageInfo@@@Z,0x0003369F,InactiveBody::attemptDamage retail callee
 ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ,0x00021E27
@@ -80792,6 +80817,7 @@ name,address,notes
 ?usePluralShadowName@BfmeThingTemplateShadowSelector@@QBE_NXZ,0x0087E8D0,ThingTemplate validateAudio body calls this retail predicate on its +0x60 shadow-selection subobject
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
 ?use_facet@Rva005C0FD0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
+?valid@Rva007FA5E0Arg@@QAE_NXZ,0x007E88A0,FESL arg valid() used by 0x007FA5E0
 ?validMovementPosition@BFMEPathfinderMove@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,alias of the Pathfinder spelling pinned below; AIUpdate.cpp reaches it through a view class because the reference Pathfinder declares Zero Hour argument order
 ?validMovementPosition@Pathfinder@@QAE_NPBUCoord3D@@W4PathfindLayerEnum@@IPAVObject@@@Z,0x0003B359,Open-BFME5 isValidLocomotorPosition exact four-argument call setup reaches ILT thunk to body 0x003DB520
 ?validMovementTerrain@Pathfinder@@QAE_NHPBVLocomotor@@PBUCoord3D@@@Z,0x0001B405,ILT thunk to the pathfinder terrain check at 0x003D85C0
@@ -80802,6 +80828,7 @@ name,address,notes
 ?value00683D80@Gen00683900@@QBEMXZ,0x00026B7A,S2 float getter tail-jumped to from 0x00681CA0; ILT thunk to body 0x00683D80
 ?value00683F00@Gen00683900@@QBEMXZ,0x0000D82D,S2 float getter tail-jumped to from 0x00681CD0; ILT thunk to body 0x00683F00
 ?value00684080@Gen00683900@@QBEMXZ,0x0001F96A,S2 float getter tail-jumped to from 0x00681D00; ILT thunk to body 0x00684080
+?value@ObjectAttemptDamageFlagHook@@QAEHXZ,0x0002CA61,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?value@Rva003608F0FloatElement@@QAEMXZ,0x0002CC5F,address-derived float element callee; target read directly from RVA 0x00361420 rel32 call
 ?valueFor@Rva00368C10Values@@QBEHPBVRva00368C10Mask@@@Z,0x00021323,retail jump thunk to the byte-verified seven-bit value lookup at 0x00368C10
 ?vectorLargeAllocate@_STL@@YAPAXI@Z,0x00881F30,Open-BFME5 Coord3D vector large allocator
