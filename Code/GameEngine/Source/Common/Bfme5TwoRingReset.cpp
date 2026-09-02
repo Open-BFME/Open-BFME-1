@@ -1,4 +1,6 @@
 extern int g_bfmeRingReset;
+bool bfmeRingReady(void);
+void bfmeRingPrepare(void);
 
 struct BfmeResetBlock
 {
@@ -68,4 +70,34 @@ void Gen_00587C50::bfmeReset(void)
 	g_bfmeRingReset = 0;
 	m_bfmeFirst.bfmeClear();
 	m_bfmeSecond.bfmeClear();
+}
+
+class Gen_00587BB0
+{
+public:
+	void bfmeReset(void);
+
+private:
+	char m_bfme00[8];
+	int m_bfme08;
+	char m_bfme0C;
+	char m_bfme0D;
+	char m_bfme0E[10];
+	BfmeRingOwnerA m_bfmeFirst;
+	int m_bfme20;
+	BfmeRingOwnerB m_bfmeSecond;
+};
+
+// ?bfmeReset@Gen_00587BB0@@QAEXXZ
+void Gen_00587BB0::bfmeReset(void)
+{
+	if (!bfmeRingReady())
+		return;
+
+	bfmeRingPrepare();
+	m_bfmeFirst.bfmeClear();
+	m_bfmeSecond.bfmeClear();
+	m_bfme08 = 0;
+	m_bfme0D = 0;
+	m_bfme0C = 0;
 }

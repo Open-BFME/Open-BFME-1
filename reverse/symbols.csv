@@ -55220,6 +55220,8 @@ name,address,notes
 ?b_00587b20@@YAXXZ,0x00587B20,gen-thunk body
 ?b_00587b30@@YAXXZ,0x00587B30,gen-thunk body
 ?b_00587bb0@@YAXXZ,0x00587BB0,gen-thunk body
+?bfmeRingPrepare@@YAXXZ,0x0002832B,Gen_00587BB0 preparation thunk
+?bfmeRingReady@@YA_NXZ,0x0002C82C,Gen_00587BB0 readiness thunk
 ?b_00587c50@@YAXXZ,0x00587C50,gen-thunk body
 ?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
 ?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
