@@ -82200,3 +82200,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeApply1VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 first source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply2VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 second source-distinct owner apply tail-call from the 0x00298530 update
 ?bfmeApply3VNI@BfmeOwnerVNI@@QAEXXZ,0x0002191D,Open-BFME5 third source-distinct owner apply tail-call from the 0x00298530 update
+?bfmeImplVMI@BfmeStrVMI@@QAEXHHHHPAD@Z,0x008312E0,pin
