@@ -2990,10 +2990,11 @@ Bool Player::hasScience(ScienceType t) const
 }
 
 //=============================================================================
-// ?isScienceDisabled@Player@@QBE_NW4ScienceType@@@Z present-unmatched
+// ?isScienceDisabled@Player@@QBE_NW4ScienceType@@@Z
 Bool Player::isScienceDisabled( ScienceType t ) const
 {
-	return std::find( m_sciencesDisabled.begin(), m_sciencesDisabled.end(), t ) != m_sciencesDisabled.end();
+	const BfmePlayerScienceFields *self = (const BfmePlayerScienceFields *)this;
+	return std::find(self->m_sciencesDisabled.begin(), self->m_sciencesDisabled.end(), t) != self->m_sciencesDisabled.end();
 }
 
 //=============================================================================
