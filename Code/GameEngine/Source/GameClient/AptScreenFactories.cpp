@@ -694,11 +694,26 @@ class BfmeAptScreenScoreScreen
 {
 public:
 	BfmeAptScreenScoreScreen( void *context );
+	void bfmeProvide( const char *selector, void *value, bool setting );
 	void _bfme_setPlayerTable( int row, int field, const UnicodeString &text );
 
 private:
 	char m_unmodelled[ 0x334 ];
 };
+
+// ?bfmeProvide@BfmeAptScreenScoreScreen@@QAEXPBDPAX_N@Z
+void BfmeAptScreenScoreScreen::bfmeProvide(
+	const char *selector, void *value, bool setting )
+{
+	if( !setting )
+	{
+		char *output = (char *)value;
+		int index = (int)selector;
+		*(unsigned short *)output = (unsigned short)'0';
+		if( index >= 0 && index < 5 )
+			sprintf( output, "%d", *(int *)( (char *)this + 0x278 + index * 4 ) );
+	}
+}
 
 // ?_bfme_setPlayerTable@BfmeAptScreenScoreScreen@@QAEXHHABVUnicodeString@@@Z
 void BfmeAptScreenScoreScreen::_bfme_setPlayerTable(
