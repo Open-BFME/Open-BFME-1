@@ -1,5 +1,5 @@
-// ?bfmeReset@Gen_00588A30@@QAEXH@Z
-// partial score=0.93 date=2026-09-03
+// Open-BFME5: clean C++ recovery of the retail indexed-state reset at 0x00588A30.
+
 void bfmeResetIndexed38(int index, int value);
 void bfmeResetIndexed48(int index);
 void bfmeResetIndexed49(int index, int value);
@@ -17,8 +17,8 @@ private:
 // ?bfmeReset@Gen_00588A30@@QAEXH@Z
 void Gen_00588A30::bfmeReset(int index)
 {
+	int active38 = *reinterpret_cast<int *>(m_bfmeState + index * 0x20 + 0x38);
 	unsigned char *state = m_bfmeState + index * 0x20;
-	int active38 = *reinterpret_cast<int *>(state + 0x38);
 
 	*reinterpret_cast<int *>(state + 0x2C) = 0;
 	*reinterpret_cast<int *>(state + 0x30) = 0;
