@@ -82286,3 +82286,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeGrowV22@BfmeStrV22@@QAEXXZ,0x000132CD,Open-BFME5 /Od range-check grow thunk for 0x00831230
 ?bfmeLenErrV22@BfmeStrV22@@QAEXXZ,0x00042DC0,Open-BFME5 /Od length-error thunk for 0x00831230
 ?bfmeImplV22@BfmeStrV22@@QAEXPAD000@Z,0x00830410,Open-BFME5 insert range impl for 0x00831230
+?g_bfmeGlob9A@@3HA,0x00EF10D8,Open-BFME5 global the walk at 0x00409A60 stores
