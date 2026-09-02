@@ -1,5 +1,8 @@
 // cl: /O2 /Ob0
 
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *);
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *, unsigned long);
+
 class BfmeStrVM0
 {
 public:
@@ -66,10 +69,29 @@ public:
 	virtual bool bfmePredVM0();
 	void bfmeGoVM0(int);
 	void bfmeTickVM0();
+	void bfmeRelVM0();
+	char m_pad[0x38];
+	void *m_3C;
+	void *m_40;
 };
 
 void BfmeStrVM0::bfmeTickVM0()
 {
 	if (bfmePredVM0())
 		bfmeGoVM0(3);
+}
+
+void BfmeStrVM0::bfmeRelVM0()
+{
+	if (bfmePredVM0())
+	{
+		if (m_40)
+		{
+			ReleaseMutex(*(void * volatile *)&m_40);
+			WaitForSingleObject(m_3C, 0xffffffff);
+			ReleaseMutex(m_3C);
+			m_40 = 0;
+			m_3C = 0;
+		}
+	}
 }
