@@ -2803,6 +2803,7 @@ name,address,notes
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GhostObjectManager@@QAE@XZ,0x006BC530,real body via thunk 0x2ba49
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
+??0GiantBirdGuardReturnState@@QAE@PAX@Z,0x0001C292,GiantBirdGuardReturnState constructor ILT identified by adjacent exact literal name getter and allocation size
 ??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,GiveUpgradeUpdate ctor base call; ILT thunk for SpecialAbilityUpdate ctor (body 0x002A6360)
 ??0GiveUpgradeUpdateModuleDataBase@@QAE@XZ,0x0003F503,GiveUpgradeUpdateModuleData ctor base
 ??0GlobalData@@QAE@XZ,0x00001807,ILT; ctor call site in GlobalData::newOverride 0x00085BA0
@@ -79866,6 +79867,7 @@ name,address,notes
 ?onDie@Object@@QAEXPAVDamageInfo@@@Z,0x0003369F,InactiveBody::attemptDamage retail callee
 ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ,0x00021E27
 ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ,0x00172600,AIInternalMoveToState::onEnter incremental-link thunk target through a TU-local forwarding shim
+?onEnter@GiantBirdNormalFlightState@@UAE?AW4StateReturnType@@XZ,0x002BE060,GiantBirdNormalFlightState onEnter identity from adjacent name getter and matched onExit
 ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z,0x00029311
 ?onExit@AIInternalMoveToStateOnExitShim@@QAEXW4StateExitType@@@Z,0x00172D80,AIInternalMoveToState::onExit incremental-link thunk target through a TU-local forwarding shim
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
@@ -82540,3 +82542,11 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?resetPair@Rva00249C50HordeContain@@QAEXPAX0@Z,0x0001D0D4,pin 0x00249C50 resetPair ILT target
+?finishReset@Rva00249C50HordeContain@@QAEXXZ,0x00004B51,pin 0x00249C50 finishReset ILT target
+?testForAny@ObjectStatusMaskType@@QBE_NABV1@@Z,0x000316FB,ILT to 0x00216600 BitFlags testForAny used by StealthUpdate hintDetectableWhileUnstealthed
+?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
+?helper@Rva006AE610@@AAEXHPAX@Z,0x00021C1F,ILT thunk to 0x006ADAE0 called from 0x006AE610
+?packShroudPixel@@YAIE@Z,0x00006C2B,ILT jmp to 0x0071A410 shroud-level pixel packer used by fillShroudSurface
+?bfmeInsert@BfmeJ1017@@QAEXI@Z,0x008A0700,callee of the 0x008A07A0 and 0x008A0770 send wrappers
+_piSendPing,0x00872A40,gamespy-pinger authentic static UDP ping sender called by pingerPing
