@@ -134,6 +134,7 @@ void DefaultProductionExitUpdate::exitObjectViaDoor( Object *newObj, ExitDoorTyp
 
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateGetExitPosition.cpp
 // ?getExitPosition@DefaultProductionExitUpdate@@ present-unmatched
 Bool DefaultProductionExitUpdate::getExitPosition( Coord3D& exitPosition ) const
 {
