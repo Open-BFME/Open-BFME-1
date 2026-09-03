@@ -163,6 +163,7 @@ void SupplyCenterProductionExitUpdate::exitObjectViaDoor( Object *newObj, ExitDo
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SupplyCenterProductionExitUpdateGetExitPosition.cpp
 // ?getExitPosition@SupplyCenterProductionExitUpdate@@ present-unmatched
 Bool SupplyCenterProductionExitUpdate::getExitPosition( Coord3D& exitPosition ) const
 {
