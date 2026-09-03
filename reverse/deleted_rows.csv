@@ -24382,3 +24382,7 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_0022f130@@YAXXZ,0x0022F130,gen-dump placeholder superseded by the recovered Gen_0022F130::bfmeRemove identity and exact C++ body
 ?d_0022f260@@YAXXZ,0x0022F260,gen-dump placeholder superseded by the recovered Gen_0022F260::bfmeForward identity and exact C++ body
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9,"five-byte incremental-link thunk claim retracted so the exact BFME body at 0x00451460 can carry the name"
+?loadStandardMaps@MapCache@@AAEXXZ,0x000359DB,"five-byte incremental-link thunk claim retracted so the exact BFME body at 0x004507A0 can carry the name"
+?d_004507a0@@YAXXZ,0x004507A0,"gen-dump placeholder superseded by the recovered MapCache::loadStandardMaps identity and exact 234B C++ body"
+?d_0045085c@@YAXXZ,0x0045085C,"gen-dump placeholder superseded by MapCache::loadStandardMaps; this 46B slice is the function epilogue"
+?get@Rva00450854ConstantGetter@@QAEPAXXZ,0x00450854,"six-byte catch funclet of MapCache::loadStandardMaps absorbed into the 234B body at 0x004507A0"

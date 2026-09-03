@@ -1,19 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
-// readable body of ?loadStandardMaps@MapCache@@AAEXXZ: Code/GameEngine/Source/GameClient/MapUtil.cpp
+// cl: /DNDEBUG /MD /O2 /EHsc
+// Re-homed from ?loadStandardMaps@MapCache@@AAEXXZ so the 234B retail body
+// at 0x004507A0 can carry that name. This file keeps the 5-byte ILT
+// trampoline as a tail call.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
-class MapCache
-{
-    void loadStandardMaps();
-};
+void b_004507a0();
 
-class MapCacheLoadStandardMapsShim
+void j_000359db()
 {
-public:
-    void load();
-};
-
-void MapCache::loadStandardMaps()
-{
-    ((MapCacheLoadStandardMapsShim *)this)->load();
+	b_004507a0();
 }
