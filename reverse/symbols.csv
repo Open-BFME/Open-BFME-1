@@ -83651,3 +83651,6 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ??_7BfmeAptScreenSecondary@@6B@,0x01105690,second-base vtable restored at +0x3C after CustomMatch member dtors
 ??1BfmeCustomMatchMember40@@QAE@XZ,0x0000B42E,CustomMatch member at +0x40 destructor ILT used by 0x00538CE0
 ??_7BfmeAptScreenOnlineCustomMatch@@6BBfmeAptScreenSecondary@@@,0x01107438,OnlineCustomMatch secondary MI vtable at +0x3C
+??0BfmeOnlineLoginMember3C@@QAE@XZ,0x00010BE0,OnlineLogin member at +0x3C constructed by ctor 0x005538A0; ILT of GameSpyLoginPreferences-shaped body 0x00082970
+??_7OnlineLoginFunctorWrapper@@6B@,0x011080B0,16-byte OnlineLogin fscommand functor wrapper vtable (refcount then vptr then this/method)
+??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x011080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
