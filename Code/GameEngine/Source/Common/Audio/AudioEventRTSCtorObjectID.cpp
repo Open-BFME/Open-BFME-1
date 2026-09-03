@@ -4,6 +4,10 @@
 //   (const AsciiString &, ObjectID)              retail 0x000B4350, 188B
 //     named by FlammableUpdateStartBurningSoundThunk.cpp
 //   (const AsciiString &, DrawableID)            retail 0x000B44F0, 188B
+//   (const AsciiString &, LivingWorldID)         retail 0x000B4690, 192B
+//     ownerType=5, same type isDead already uses for LivingWorld
+//   (const AsciiString &, int extra)             retail 0x000B2CC0, 159B
+//     ILT 0x00025306: BloodthirstyUpdate 0x70-byte members with extra=0
 //   (const AsciiString &, const Coord3D *, int)  retail 0x000B2E10, 180B
 //     named by ScriptActions_doPlaySoundEffectAt_Thunk.cpp
 //
@@ -23,6 +27,11 @@ enum ObjectID
 enum DrawableID
 {
 	INVALID_DRAWABLE_ID = 0
+};
+
+enum LivingWorldID
+{
+	INVALID_LIVING_WORLD_ID = 0
 };
 
 struct Coord3D
@@ -84,6 +93,8 @@ class AudioEventRTS
 public:
 	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
 	AudioEventRTS(const AsciiString &eventName, DrawableID drawableID);
+	AudioEventRTS(const AsciiString &eventName, LivingWorldID ownerID);
+	AudioEventRTS(const AsciiString &eventName, int extra);
 	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
 	virtual ~AudioEventRTS();
 
@@ -148,6 +159,37 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, DrawableID drawableID
 	Coord3D pos;
 	resolveOwnerPosition(&pos, reinterpret_cast<bool *>(
 		reinterpret_cast<char *>(&pos) + 0x1C));
+}
+
+// ??0AudioEventRTS@@QAE@ABVAsciiString@@W4LivingWorldID@@@Z
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, LivingWorldID ownerID)
+{
+	commonInit();
+
+	m_eventName = eventName;
+	m_eventInfo.clear();
+
+	m_objectID = static_cast<ObjectID>(ownerID);
+	m_timeOfDay = 1;
+	if (ownerID)
+		m_ownerType = 5;
+	else
+		m_objectID = INVALID_ID;
+
+	Coord3D pos;
+	resolveOwnerPosition(&pos, reinterpret_cast<bool *>(
+		reinterpret_cast<char *>(&pos) + 0x1C));
+}
+
+// ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, int extra)
+{
+	commonInit();
+
+	m_eventName = eventName;
+	m_eventInfo.clear();
+
+	m_timeOfDay = static_cast<unsigned int>(extra);
 }
 
 // ??0AudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z
