@@ -83585,3 +83585,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bindShown@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0046DA70,WindowManager helper that showAptScreen forwards the named holder to after the vector push_back
 ?bindShownWithArg@WindowManager@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x0046DBC0,WindowManager helper that showAptScreenWithArg forwards the named holder and void arg to after the vector push_back
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
+?add@WideMulti@@QAEXPBUWideFieldParse@@I@Z,0x00850920,call-site callee of Rva0022A450::buildFieldParse
+?g_bfmeTokA450@@3QBDB,0x00EA6918,token pointer for Rva0022A450 runtime FieldParse
+?bfmeParseA450@@YAXXZ,0x00CACBE0,parse proc for Rva0022A450 runtime FieldParse
+?g_bfmeUserA450@@3QBDB,0x00852E00,userData pointer for Rva0022A450 runtime FieldParse
