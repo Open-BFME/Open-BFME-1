@@ -2253,6 +2253,8 @@ name,address,notes
 ??0BfmeStaticThingD@@QAE@XZ,0x0003DB0E,Open-BFME5 the constructor the function-local static at 0x005D9C30 runs
 ??0BfmeStaticThingE@@QAE@XZ,0x000022D9,Open-BFME5 the constructor the function-local static at 0x005D9CA0 runs
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
+??0BfmeStrAVTV@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrBVTV@@QAE@ABV0@@Z,0x00888400,pin
 ??0BfmeStrVKI@@QAE@PBD@Z,0x0089E680,alias of landed ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z; same thiscall const-char body used as BfmeStrVKI constructor
 ??0BfmeStrVSY@@QAE@ABV0@@Z,0x0001AB86,pin
 ??0BfmeStrVTA@@QAE@ABV0@@Z,0x00887B60,pin
@@ -4297,6 +4299,8 @@ name,address,notes
 ??1BfmeSecondZ@@QAE@XZ,0x00017E63,Open-BFME5 the second member destructor the two-member vector destructor at 0x0035B8A0 runs
 ??1BfmeSplitResultListName@@QAE@XZ,0x00887940,Open-BFME5 HordeContain split-result-list name release body
 ??1BfmeSplitValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the tree removes at 0x00587670 and 0x00587750 run
+??1BfmeStrAVTV@@QAE@XZ,0x00887940,pin
+??1BfmeStrBVTV@@QAE@XZ,0x008881D0,pin
 ??1BfmeStrVSO@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTA@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTB@@QAE@XZ,0x00887940,pin
@@ -9609,6 +9613,7 @@ name,address,notes
 ??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7BfmeOwnVSV@@6B@,0x010EC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
 ??_7BfmeOwnVSW@@6B@,0x01075D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
+??_7BfmeOwnVTU@@6B@,0x01143B3C,Open-BFME5 retail vftable stored by the 0x009CC220 constructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73034,6 +73039,7 @@ name,address,notes
 ?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
+?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z,0x009CC020,pin
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
@@ -73450,6 +73456,7 @@ name,address,notes
 ?bfmeClearVSV@BfmeStrVSV@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSW@BfmeStrVSW@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSY@BfmeStrVSY@@QAEXXZ,0x00887940,pin
+?bfmeClearVTU@BfmeStrVTU@@QAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
@@ -74647,6 +74654,7 @@ name,address,notes
 ?bfmeInitVLY@BfmeRegVLY@@QAEXXZ,0x0082DA10,pin
 ?bfmeInitVLZ@BfmeRegVLZ@@QAEXXZ,0x0082DA10,pin
 ?bfmeInitVSW@BfmeOwnVSW@@QAEXXZ,0x00017D7D,pin
+?bfmeInitVTU@BfmeOwnVTU@@QAEXXZ,0x009CB970,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInitialize@BfmeVector12DK@@QAEXHPBUBfmeAllocatorDK@@@Z,0x00028B28,vector storage initialization thunk
