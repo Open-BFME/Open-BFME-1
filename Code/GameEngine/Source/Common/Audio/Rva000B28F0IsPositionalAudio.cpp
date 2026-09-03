@@ -1,11 +1,10 @@
-// ?isPositionalAudio@AudioEventRTS@@QBE_NXZ
-// partial score=0.99 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: AudioEventRTS::isPositionalAudio, retail 0x000B28F0.
-// BFME adds a sixth owner state.  Positional owners are always positional;
-// drawable, object, and the sixth state require a nonzero owner id.
-
+// Open-BFME5: AudioEventRTS::isPositionalAudio, retail RVA 0x000B28F0.
+// The BFME AudioEventRTS layout places AudioEventInfo::m_type at +0x38,
+// the owner id at +0x2C, and the owner type at +0x30.  The caller-side
+// AudioEventRTS declarations in AudioEventRTS.cpp and GameSounds.cpp provide
+// the identity; this TU keeps the recovered layout local to this body.
 struct AudioEventInfoSlice
 {
 	char m_pad[0x38];
@@ -44,12 +43,6 @@ bool AudioEventRTS::isPositionalAudio() const
 			goto not_positional;
 	}
 
-positional:
-	return true;
 not_positional:
 	return false;
-}
-
-void AudioEventRTSIsPositionalAudioBoundary()
-{
 }
