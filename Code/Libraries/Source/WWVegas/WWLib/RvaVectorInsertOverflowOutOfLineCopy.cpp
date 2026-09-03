@@ -36,6 +36,11 @@ struct Rva00365020Element
 	char m_body[ 180 ];
 };
 
+struct Rva003AC170Element
+{
+	char m_body[ 220 ];
+};
+
 namespace _STL
 {
 struct __false_type
@@ -72,6 +77,10 @@ Rva00608FE0Element *__cdecl BfmeRva00608FE0Copy(
 Rva00365020Element *__cdecl BfmeRva00365020Copy(
 	Rva00365020Element *first, Rva00365020Element *last,
 	Rva00365020Element *result, const __false_type &);
+
+Rva003AC170Element *__cdecl BfmeRva003AC170Copy(
+	Rva003AC170Element *first, Rva003AC170Element *last,
+	Rva003AC170Element *result, const __false_type &);
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -357,4 +366,53 @@ void vector<Rva00365020Element, allocator<Rva00365020Element> >::_M_insert_overf
 }
 
 // ?_M_insert_overflow@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXPAURva00365020Element@@ABU3@ABU__false_type@2@I_N@Z
+
+template <>
+void vector<Rva003AC170Element, allocator<Rva003AC170Element> >::_M_insert_overflow(
+	Rva003AC170Element *position, const Rva003AC170Element &value,
+	const __false_type &, unsigned int fillLength, bool atEnd)
+{
+	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
+	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
+	unsigned int length = growth + oldSize;
+
+	Rva003AC170Element *newStart;
+	if (length)
+	{
+		unsigned int bytes = length * sizeof(Rva003AC170Element);
+		if (bytes > 128)
+			newStart = (Rva003AC170Element *)vectorLargeAllocate(bytes);
+		else
+			newStart = (Rva003AC170Element *)vectorSmallAllocate(bytes);
+	}
+	else
+	{
+		newStart = 0;
+	}
+
+	Rva003AC170Element *newFinish = uninitialized_copy(
+		_M_start, position, newStart);
+
+	if (fillLength == 1)
+	{
+		BfmeElementConstruct(newFinish, value);
+		++newFinish;
+	}
+	else
+	{
+		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
+	}
+
+	if (!atEnd)
+		newFinish = BfmeRva003AC170Copy(position, _M_finish, newFinish,
+			reinterpret_cast<const __false_type &>(atEnd));
+
+	_M_clear();
+
+	_M_finish = newFinish;
+	_M_start = newStart;
+	_M_end_of_storage = newStart + length;
+}
+
+// ?_M_insert_overflow@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEXPAURva003AC170Element@@ABU3@ABU__false_type@2@I_N@Z
 }
