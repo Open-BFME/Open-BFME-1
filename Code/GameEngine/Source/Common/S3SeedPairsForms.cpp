@@ -506,6 +506,20 @@ private:
 	char m_bfmeItem1;				// +0x24
 };
 
+class Gen_002923B0
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+
+private:
+	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000044C1
+
+	char m_bfmePad0[0x20];
+	char m_bfmeItem0;				// +0x20
+	char m_bfmePad1[0x3];
+	char m_bfmeItem1;				// +0x24
+};
+
 class Gen_00292E60
 {
 public:
@@ -1170,6 +1184,28 @@ void Gen_0028CE90::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeSeed(&pair);
 		target->bfmeTakeAt74(&m_bfmeItem0);
 		bfmeHandOver_0000C9B4(target, &m_bfmeItem1);
+	}
+}
+
+// ?bfmeSeed@Gen_002923B0@@QAEXPAVBfmeSeedTarget@@@Z		88 bytes
+void Gen_002923B0::bfmeSeed(BfmeSeedTarget *target)
+{
+	BfmeSeedPair pair;
+
+	pair.m_bfmeFirst = 1;
+	pair.m_bfmeSecond = 2;
+
+	target->bfmeSeed(&pair);
+	bfmeAccept(target);
+
+	if ( !target->bfmeSkip() )
+	{
+		bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
+
+		if ( pair.m_bfmeSecond >= 2 )
+		{
+			target->bfmeTakeAt6C(&m_bfmeItem1);
+		}
 	}
 }
 
