@@ -72778,6 +72778,7 @@ name,address,notes
 ?bfmeAccept@Gen_0028D3C0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x0028D3C0 accepts through
 ?bfmeAccept@Gen_0028EAD0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x0028EAD0 accepts through
 ?bfmeAccept@Gen_00291DC0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x00291DC0 accepts through
+?bfmeAccept@Gen_002923B0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002923B0 accepts through
 ?bfmeAccept@Gen_00292E60@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x00292E60 accepts through
 ?bfmeAccept@Gen_00295430@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x00295430 accepts through
 ?bfmeAccept@Gen_002956A0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002956A0 accepts through
@@ -83217,4 +83218,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeAccept@Gen_002923B0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002923B0 accepts through
