@@ -73768,6 +73768,7 @@ name,address,notes
 ?bfmeEraseV44@BfmeStrV44@@QAEXPAD0@Z,0x00007C1B,Open-BFME5 erase-range pin for 0x00830DE0
 ?bfmeEraseVLQ@BfmeListVLQ@@QAEXH@Z,0x0004B65F,pin
 ?bfmeEraseVME@BfmeStrVME@@QAEXPAD0@Z,0x00007C1B,pin
+?bfmeEraseVSD@BfmeVecVSD@@QAEXPAX0@Z,0x00024C17,pin
 ?bfmeExistsVNV@@YADPBD@Z,0x009EBB80,pin
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
 ?bfmeF01148@BfmeS1148@@QAEHXZ,0x0002D41B,pin
@@ -75286,6 +75287,7 @@ name,address,notes
 ?bfmeSetVOS@BfmeStrVOS@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVOT@BfmeStrVOT@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVOX@BfmeStrVOX@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeSetVSD@BfmeItemVSD@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
