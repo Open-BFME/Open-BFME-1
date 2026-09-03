@@ -444,10 +444,7 @@ void AudioEventRTS::generatePlayInfo( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-Real AudioEventRTS::getPitchShift( void ) const
-{
-	return *(const Real *)((const char *)this + 0x4C);
-}
+// getPitchShift lives in AudioEventRTSGetPitchShiftThunk.cpp (retail 0x000B48D0).
 
 //-------------------------------------------------------------------------------------------------
 Real AudioEventRTS::getVolumeShift( void ) const
