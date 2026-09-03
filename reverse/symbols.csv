@@ -9615,6 +9615,7 @@ name,address,notes
 ??_7BfmeAptGameWindow@@6B@,0x01106F08,APT game window base virtual table restored by OnlineLogin destructor
 ??_7BfmeAptScreenOnlineLogin@@6B@,0x01107F58,OnlineLogin retail virtual table installed by destructor
 ??_7BfmeBaseVUH@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
+??_7BfmeBaseVUJ@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
 ??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
 ??_7BfmeEntVTA@@6B@,0x010EC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
@@ -9625,6 +9626,7 @@ name,address,notes
 ??_7BfmeOwnVTU@@6B@,0x01143B3C,Open-BFME5 retail vftable stored by the 0x009CC220 constructor
 ??_7BfmeOwnVTY@@6B@,0x010E7688,Open-BFME5 retail vftable stored by the 0x00339DA0 constructor
 ??_7BfmeOwnVUH@@6B@,0x0109DE9C,Open-BFME5 retail derived vftable stored by the 0x001B5550 destructor
+??_7BfmeOwnVUJ@@6B@,0x010FB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73476,6 +73478,7 @@ name,address,notes
 ?bfmeClearVUF@BfmeStrVUF@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUG@BfmeStrVUG@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUH@BfmeStrVUH@@AAEXXZ,0x00887940,pin
+?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
