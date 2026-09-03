@@ -1,6 +1,7 @@
 // ??0EmotionNugget@@QAE@XZ
-// partial score=0.98 date=2026-08-31
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /ICode/Libraries/Source/WWVegas/WWLib
+// partial score=0.98 date=2026-09-03
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// ??0EmotionNugget@@QAE@XZ present-unmatched
 
 #include "Common/AsciiString.h"
 #include <string.h>
@@ -10,7 +11,12 @@ typedef unsigned char Bool;
 
 struct ZeroTwenty
 {
-	ZeroTwenty() { memset( value, 0, sizeof( value ) ); }
+	ZeroTwenty()
+	{
+		int *p = value;
+		unsigned c = 20;
+		memset(p, 0, c * sizeof(int));
+	}
 	Int value[20];
 };
 
@@ -51,6 +57,7 @@ private:
 	AsciiString m_F4;
 };
 
+// ??0EmotionNugget@@QAE@XZ
 EmotionNugget::EmotionNugget()
 	: m_name( AsciiString::TheEmptyString ),
 	  m_04( -1 ),
