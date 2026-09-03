@@ -83619,3 +83619,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?convertBonePosToWorldPos@Object@@QBEXPBUCoord3D@@PBVMatrix3D@@PAU2@PAV3@@Z,0x00002243,ILT of Thing::convertBonePosToWorldPos 0x00132530; SpawnPoint initializeBonePositions call
 ___WSAFDIsSet@8,0x009F9B70,GameSpy CanSend/CanReceive FD_ISSET
 _CanSendOnSocket,0x00854700,vendored=gamespy-2004
+??$__get_decimal_integer@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0AAH@Z,0x0083B0D0,
+??$__get_decimal_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0AAH@Z,0x008391D0,
+?equal@?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@QBE_NABV12@@Z,0x00838820,
+??$__get_formatted_time@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083C710,
+??$__get_formatted_time@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083BCA0,
