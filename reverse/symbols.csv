@@ -83641,3 +83641,8 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?finish@XmlNameSlotList@@QAEXXZ,0x0035EE70,pin for Rva002E2970 applyNameFlags
 ?TheBfmeOnlineChat@@3PAVBfmeAptScreenOnlineChat@@A,0x012F49F0,OnlineChat singleton compared and cleared by destructor 0x0052D7C0
 ??_7BfmeAptScreenOnlineChat@@6B@,0x01106F58,OnlineChat retail virtual table installed by ctor 0x00536DC0 and reset by destructor 0x0052D7C0
+??_7BfmeAptScreenOnlineHome@@6B@,0x01107B70,OnlineHome retail virtual table installed by ctor 0x005484E0 and reset by destructor 0x00545FF0
+?_bfme_removeNamedAptGadget@WindowManager@@QAEXABVAsciiString@@@Z,0x00047B31,ILT of WindowManager +0x6C vector unbind; Home dtor 0x00545FF0 removes OnlineHome/Gadgets/Image and ImageLevelIconMain
+?removeAptObject@WindowManager@@QAEXABVAsciiString@@@Z,0x0001E277,AsciiString alias of the BannerUI removeAptObject ILT; Home dtor removes tooltipPlayerLevelIcon
+?g_onlineHomeGadgetsImage@@3PBDA,0x012B7918,char* to OnlineHome/Gadgets/Image used by Home dtor 0x00545FF0
+?g_onlineHomeGadgetsImageLevelIconMain@@3PBDA,0x012B791C,char* to OnlineHome/Gadgets/ImageLevelIconMain used by Home dtor 0x00545FF0
