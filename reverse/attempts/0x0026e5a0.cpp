@@ -1,56 +1,49 @@
-// ?bfmeStalled@Gen_0026E5A0@@QBE_NXZ
-// partial score=0.55 date=2026-09-02
-// Sibling of Gen_0026E570::bfmeActive: same +4 list / +0x10 guard, but
-// walks the list (next at +8, deadline at +0x20) with a 100-step budget.
-// Retail is 60B: two-guard xor-al-ret stub, xor ecx / mov edx,7fffffff /
-// push esi, then 7-byte lea esp,[esp] aligning the loop to 16, then
-// mov esi,ecx / inc ecx / cmp esi,64h / jae fail / cmp [eax+20],edx.
-// This compile keeps the algorithm and the two loads but folds the
-// guard-fail into the loop-fail (je to a shared xor al,al) and keeps the
-// sentinel as an immediate, so it is 46B and never emits the alignment pad.
+// ?probe@Rva0026E5A0ListProbe@@QBE_NXZ
+// partial score=0.7 date=2026-09-03
+// cl: /O2 /DNDEBUG /MD
+// Open-BFME6: 0x0026E5A0 list-tag probe.
 
-class BfmeNodeE5A0
+struct Rva0026E5A0Node
 {
-public:
 	char m_pad00[8];
-	BfmeNodeE5A0 *m_next;
+	Rva0026E5A0Node *m_next;
 	char m_pad0C[0x14];
-	int m_deadline;
+	unsigned m_tag20;
 };
 
-class Gen_0026E5A0
+class Rva0026E5A0ListProbe
 {
 public:
-	bool bfmeStalled(void) const;
+	bool probe() const;
 
 private:
-	int m_head;
-	BfmeNodeE5A0 *m_list;
-	int m_gap[2];
-	int *m_guard;
+	char m_pad00[4];
+	Rva0026E5A0Node *m_head;
+	char m_pad08[8];
+	void *m_guard10;
 };
 
-// ?bfmeStalled@Gen_0026E5A0@@QBE_NXZ
-bool Gen_0026E5A0::bfmeStalled(void) const
+// ?probe@Rva0026E5A0ListProbe@@QBE_NXZ
+bool Rva0026E5A0ListProbe::probe() const
 {
-	BfmeNodeE5A0 *node = m_list;
-	if (!node)
+	Rva0026E5A0Node *node = m_head;
+	if (node == 0)
 		return false;
-	if (!m_guard)
+	if (m_guard10 == 0)
 		return false;
 
-	int i = 0;
-	int sentinel = 0x7fffffff;
-	do
+	unsigned i = 0;
+	const unsigned sentinel = 0x7FFFFFFFu;
+	for (;;)
 	{
-		int prev = i;
+		unsigned cur = i;
 		++i;
-		if ((unsigned)prev >= 100)
+		if (cur >= 100u)
 			return false;
-		if (node->m_deadline != sentinel)
+		if (node->m_tag20 != sentinel)
 			return true;
 		node = node->m_next;
-	} while (node);
-
-	return false;
+		if (node == 0)
+			return false;
+	}
 }
