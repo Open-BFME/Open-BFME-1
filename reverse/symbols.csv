@@ -2252,6 +2252,7 @@ name,address,notes
 ??0BfmeStrVTA@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTB@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTC@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrVTF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -4285,6 +4286,7 @@ name,address,notes
 ??1BfmeStrVTA@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTB@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTC@@QAE@XZ,0x00887940,pin
+??1BfmeStrVTF@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
@@ -78479,7 +78481,6 @@ name,address,notes
 ?getAsInt@RGBColor@@QBEIXZ,0x0002D989,ILT thunk to the RGBColor packer
 ?getAsciiString@BfmeStringPresenceDict@@QBE?AVBfmeStringPresenceValue@@HPA_N@Z,0x0002FF6D,address-derived Dict-compatible string lookup
 ?getAsciiString@Dict@@QBE?AVAsciiString@@W4NameKeyType@@PA_N@Z,0x0002FF6D
-?getInt@Dict@@QBEHHPA_N@Z,0x0003A76A,address-derived color Dict reader calls the canonical getInt ILT with an int-compatible key
 ?getAttackFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x00019BEB,AudioEventRTS portion filename switch case 0 names the attack filename accessor
 ?getAttackInfo@ScriptEngine@@QAEPBVAttackPriorityInfo@@ABVAsciiString@@@Z,0x0002C3F4,ScriptActions updateNamedAttackPrioritySet retail ILT call
 ?getAttackRange@BfmeRangedWeaponTemplate@@QBEMPBVObject@@ABVWeaponBonus@@PBUCoord3D@@@Z,0x0002FFB3,alias of the WeaponTemplate spelling pinned below; Weapon.cpp reaches the widened three-argument form through a view class because the reference WeaponTemplate declares the bonus-only one
@@ -78491,8 +78492,8 @@ name,address,notes
 ?getBestWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CC90,by-value side prefix + "BestWinStreak" at VA 0x01080504 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getBestWinStreak
 ?getBool@Rva007E8810Message@@QAE_NPBD_N@Z,0x007E89C0,Y4 lane: FESL message lookup bool field by key with default; ret 8; returns _N in al
 ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z,0x0002C7CD,incremental-link thunk
-?getBountyBonusPercent@CampaignObject@@QAEHXZ,0x00029CBC,address-derived living-world bounty adjuster reads this percentage through the retail ILT
 ?getBounds@Rva8BB1A0BoundsSource@@QAEXPAURva8BB1A0Bounds@@@Z,0x008AE2E0,Open-BFME5 bounds getter pin
+?getBountyBonusPercent@CampaignObject@@QAEHXZ,0x00029CBC,address-derived living-world bounty adjuster reads this percentage through the retail ILT
 ?getBridgeBehaviorInterfaceFromObject@BridgeBehavior@@SAPAVBridgeBehaviorInterface@@PAVObject@@@Z,0x00010424,Bridge::updateDamageState calls the existing ILT thunk before the scaffold check
 ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z,0x0000B802,ILT thunk used by call site
 ?getBridgeScaffoldBehaviorInterfaceFromObject@BridgeScaffoldBehavior@@SAPAVBridgeScaffoldBehaviorInterface@@PAVObject@@@Z,0x00046F8D,ILT thunk proven by BridgeBehavior scaffold-list callers at 0x001F3C30 and 0x001F3D40
@@ -78604,6 +78605,7 @@ name,address,notes
 ?getInfoResponseForRequest@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A910,Buddy request callback helper identified by its GP callback registration and identity copies into the request response
 ?getInfoResponseForStatus@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A980,Buddy status callback helper identified by its GP callback registration and writes into the status response
 ?getInt64@Rva007E8810Message@@QAE_JPBD_J@Z,0x007E8930,V2 lane: FESL message lookup __int64 field by key with default
+?getInt@Dict@@QBEHHPA_N@Z,0x0003A76A,address-derived color Dict reader calls the canonical getInt ILT with an int-compatible key
 ?getInt@Rva007E8810Message@@QAEHPBDH@Z,0x007E8900,V2 lane: FESL message lookup int field by key with default
 ?getInt@UserPreferences@@QBEHVAsciiString@@H@Z,0x000443B9,incremental-link thunk fronting the unclaimed body 0x000A9490
 ?getInt@UserPreferences@@QBEHVAsciiString@@H@Z,0x000A9490,body behind the pinned ILT 0x000443B9: find virtual +0x18 then atoi through the CRT import at 0x01359384 with the Int default; ret 8
