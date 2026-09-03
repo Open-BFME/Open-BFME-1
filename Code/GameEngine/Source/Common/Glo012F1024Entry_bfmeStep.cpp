@@ -85,6 +85,21 @@ public:
 	BfmeElem8 *m_bfmeEnd;
 };
 
+class BfmeElem12Rec
+{
+public:
+	char m_bfmeBody[0x0C];
+};
+
+class BfmeElem12RecVector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeElem12Rec *m_bfmeBegin;
+	BfmeElem12Rec *m_bfmeEnd;
+};
+
 class BfmeElem12
 {
 public:
@@ -161,7 +176,9 @@ public:
 	BfmeElem16Vector m_bfmeQueue;
 	char m_bfmeMiddleC[0xC0 - 0xBC];
 	BfmeElem12Vector m_bfmeOuter;
-	char m_bfmeTail[0xDC - 0xC8];
+	char m_bfmePadC8[0x04];
+	BfmeElem12RecVector m_bfmeLate;				// +0xCC
+	char m_bfmeTail[0xDC - 0xD4];
 };
 
 class Gen_003C02B0
@@ -198,6 +215,7 @@ class BfmeGlobal_012f1024
 {
 public:
 	void bfmeCall40F39(void *a, void *b, void *c, unsigned char d);
+	void bfmeCall3426b(void *a, void *b, void *c);
 	User *getUser(void *key);
 };
 
@@ -313,6 +331,16 @@ void Glo012F1024Item::j_00019eca(void)
 			g_Gen003bcb40->m(user->GetName());
 			user->bfmeEnter();
 		}
+	}
+}
+
+// ?j_00010bcc@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00010bcc(void)
+{
+	for (unsigned int index = 0; index < m_bfmeLate.bfmeSize(); ++index)
+	{
+		BfmeElem12Rec *position = m_bfmeLate.m_bfmeBegin + index;
+		g_bfmeGlobal_012f1024->bfmeCall3426b(position, (char *)position + 4, (char *)position + 8);
 	}
 }
 
