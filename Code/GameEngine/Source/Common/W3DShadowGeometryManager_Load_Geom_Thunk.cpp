@@ -1,359 +1,200 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of W3DShadowGeometryManager::Load_Geom.
 
-class RenderObjClass;
+typedef bool Bool;
+#define FALSE false
+#define TRUE true
+#ifndef NULL
+#define NULL 0
+#endif
+
+extern "C" unsigned int __cdecl strlen(const char *text);
+#pragma intrinsic(strlen)
+
+// BFME's RefCountClass keeps the count immediately after its primary vptr.
+// Release_Ref is inline in the retail build, while Delete_This occupies the
+// first virtual slot.
+class RefCountClass
+{
+public:
+	RefCountClass(void) : NumRefs(1) {}
+	void Add_Ref(void) { NumRefs++; }
+	void Release_Ref(void)
+	{
+		NumRefs--;
+		if (NumRefs == 0)
+			Delete_This();
+	}
+	virtual void Delete_This(void);
+
+protected:
+	virtual ~RefCountClass(void) {}
+
+private:
+	int NumRefs;
+};
+
+class HashableClass
+{
+public:
+	HashableClass(void) : NextHash(0) {}
+	virtual ~HashableClass(void) {}
+	virtual const char *Get_Key(void) = 0;
+
+private:
+	HashableClass *NextHash;
+};
+
+// The BFME StringBase header is eight bytes (refcount, length, capacity), so
+// its character data begins at m_data+8.  set() remains an out-of-line call;
+// str() is the tiny accessor inlined by the retail compiler.
+struct AsciiStringData
+{
+	int refCount;
+	unsigned short length;
+	unsigned short capacity;
+	char data[1];
+};
+
+class AsciiString
+{
+public:
+	AsciiString(void) : m_data(0) {}
+	~AsciiString(void);
+	void set(const char *text, int length);
+	const char *str(void) const
+	{
+		static const char nullCharacter = 0;
+		return m_data ? (const char *)((const char *)m_data + 8) : &nullCharacter;
+	}
+
+private:
+	AsciiStringData *m_data;
+};
+
+class W3DShadowGeometryMesh
+{
+public:
+	W3DShadowGeometryMesh(void);
+	~W3DShadowGeometryMesh(void);
+
+private:
+	int m_opaque[13];
+};
+
+class W3DShadowGeometry;
+
+// Only the two virtual slots reached by this body are named.  The class-id
+// slot is +0x0c and the mesh model accessor is +0x14 in BFME's RenderObjClass
+// vtable.
+class RenderObjClass
+{
+public:
+	virtual void slot00(void);
+	virtual void slot04(void);
+	virtual void slot08(void);
+	virtual int Class_ID(void);
+	virtual void slot10(void);
+	virtual RenderObjClass *Get_Model(int lod, W3DShadowGeometry *owner);
+};
+
+class W3DShadowGeometry : public RefCountClass, public HashableClass
+{
+public:
+	W3DShadowGeometry(void);
+	~W3DShadowGeometry(void);
+
+	virtual const char *Get_Key(void) { return m_namebuf.str(); }
+
+	int initFromHLOD(RenderObjClass *robj);
+	int initFromMesh(RenderObjClass *robj);
+
+	const char *Get_Name(void) const { return m_namebuf.str(); }
+	void Set_Name(const char *name)
+	{
+		AsciiString *namebuf = &m_namebuf;
+		int length = name ? (int)strlen(name) : 0;
+		namebuf->set(name, length);
+	}
+
+private:
+	AsciiString m_namebuf;
+	W3DShadowGeometryMesh m_meshList[160];
+	int m_meshCount;
+	int m_numTotalsVerts;
+};
+
+class HashTableClass
+{
+public:
+	HashableClass *Find(const char *key);
+	void Add(HashableClass *entry);
+};
+
 class W3DShadowGeometryManager
 {
 public:
-	int Load_Geom(RenderObjClass *, char const *);
+	int Load_Geom(RenderObjClass *robj, const char *name);
+
+	W3DShadowGeometry *Peek_Geom(const char *name)
+	{
+		return (W3DShadowGeometry *)GeomPtrTable->Find(name);
+	}
+
+	Bool Add_Geom(W3DShadowGeometry *new_geom)
+	{
+		new_geom->Add_Ref();
+		GeomPtrTable->Add(new_geom);
+		return TRUE;
+	}
+
+private:
+	HashTableClass *GeomPtrTable;
 };
 
 // ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z
-__declspec(naked) int W3DShadowGeometryManager::Load_Geom(RenderObjClass *, char const *)
+int W3DShadowGeometryManager::Load_Geom(RenderObjClass *robj, const char *name)
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xab
-		__emit 0x2c
-		__emit 0x05
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x55
-		__emit 0x56
-		__emit 0x57
-		__emit 0x68
-		__emit 0x9c
-		__emit 0x20
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xe9
-		__emit 0xe8
-		__emit 0xca
-		__emit 0x4d
-		__emit 0x0c
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0xa4
-		__emit 0x44
-		__emit 0x87
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xf6
-		__emit 0x85
-		__emit 0xf6
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xb1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x28
-		__emit 0x85
-		__emit 0xd2
-		__emit 0x8d
-		__emit 0x5e
-		__emit 0x10
-		__emit 0x74
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0x8d
-		__emit 0x78
-		__emit 0x01
-		__emit 0x8a
-		__emit 0x08
-		__emit 0x40
-		__emit 0x84
-		__emit 0xc9
-		__emit 0x75
-		__emit 0xf9
-		__emit 0x2b
-		__emit 0xc7
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x50
-		__emit 0x52
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xe8
-		__emit 0x64
-		__emit 0xab
-		__emit 0x0c
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x07
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xff
-		__emit 0x50
-		__emit 0x0c
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0f
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x19
-		__emit 0x75
-		__emit 0x25
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x36
-		__emit 0x5f
-		__emit 0x87
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x12
-		__emit 0x8b
-		__emit 0x17
-		__emit 0x56
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xff
-		__emit 0x52
-		__emit 0x14
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x09
-		__emit 0xd1
-		__emit 0x88
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x95
-		__emit 0xc0
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x74
-		__emit 0x25
-		__emit 0xff
-		__emit 0x4e
-		__emit 0x04
-		__emit 0x75
-		__emit 0x4d
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x10
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0xb8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x03
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x00
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x1d
-		__emit 0x2f
-		__emit 0x22
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x2a
-		__emit 0x83
-		__emit 0xc0
-		__emit 0xf8
-		__emit 0x74
-		__emit 0x25
-		__emit 0xff
-		__emit 0x4e
-		__emit 0x04
-		__emit 0x75
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x12
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0xb8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x56
-		__emit 0x04
-		__emit 0x42
-		__emit 0x8d
-		__emit 0x46
-		__emit 0x08
-		__emit 0x89
-		__emit 0x56
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x00
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x2c
-		__emit 0x2e
-		__emit 0x22
-		__emit 0x00
-		__emit 0xff
-		__emit 0x4e
-		__emit 0x04
-		__emit 0x75
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xff
-		__emit 0x12
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
+	Bool res = FALSE;
+	W3DShadowGeometry *newgeom = new W3DShadowGeometry;
+
+	if (newgeom == NULL)
+	{
+		goto Error;
 	}
+
+	newgeom->Set_Name(name);
+
+	switch (robj->Class_ID())
+	{
+		case 25:
+			res = newgeom->initFromHLOD(robj);
+			break;
+		case 0:
+			res = newgeom->initFromMesh(robj->Get_Model(-1, newgeom));
+			break;
+		default:
+			break;
+	}
+
+	if (res != TRUE)
+	{
+		newgeom->Release_Ref();
+		goto Error;
+	}
+	else if (Peek_Geom(newgeom->Get_Name()) != NULL)
+	{
+		newgeom->Release_Ref();
+		goto Error;
+	}
+	else
+	{
+		Add_Geom(newgeom);
+		newgeom->Release_Ref();
+	}
+
+	return 0;
+
+Error:
+	return 1;
 }

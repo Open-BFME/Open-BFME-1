@@ -79849,6 +79849,7 @@ name,address,notes
 ?init@Win32Mouse@@UAEXXZ,0x0000B7B2,incremental-link thunk fronting the unclaimed body 0x006BC0A0
 ?init@WinInstanceData@@QAEXXZ,0x00021EC7
 ?initDevice@Win32Mouse@@QAEXXZ,0x005A4A40,Open-BFME5 the base init Win32Mouse::init calls before setting its own flag; unnamed in the image
+?initFromHLOD@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,0x0003310E,Load_Geom direct call target; identity from W3DShadowGeometry method declaration and retail ILT
 ?initFromINI@AIParseDefinitionINIShim@@QAEXPAXPBX@Z,0x008520A0,AI parse definition initFromINI helper shim
 ?initFromINI@BfmeIni@@QAEXPAXPBX@Z,0x008520A0,Rva0048BD60 INI parse helper
 ?initFromINI@INI@@QAEXPAXPBUFieldParse@@@Z,0x008520A0
@@ -79856,6 +79857,7 @@ name,address,notes
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,BridgeTower friend_newModuleData retail call
 ?initFromINIMulti@INI@@QAEXPAXABVMultiIniFieldParse@@@Z,0x00851910,called by INI::initFromINI at 0x008520A0
 ?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z,0x00852130
+?initFromMesh@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,0x0004A2F5,Load_Geom direct call target; identity from W3DShadowGeometry method declaration and retail ILT
 ?initInternetMultiPlayer@@YAXXZ,0x004E8B80,ZH initInternetMultiPlayer: screenType=3 (0x004E8B86); grabMultiPlayerInfo 0x004E8B90; GadgetTextEntrySetText + winSetFocus(textEntryChat); hides staticTextGameSaved buttonContinue textEntryChat buttonEmote shows listboxChat chatBoxBorder; buttonBuddies hidden iff TheGameSpyInfo && getLocalProfileID()==0 (0x004E8C4C); BuddyRequest SETSTATUS(1) statusString Online -> TheGameSpyBuddyMessageQueue(0x012F71B4)->addRequest +0x18 at 0x004E8CAB; ILT 0x0004AD22; sole caller ScoreScreenInit 0x004E92D1 (mode 5)
 ?initLANMultiPlayer@@YAXXZ,0x004E8A70,ZH initLANMultiPlayer: screenType=2 (0x004E8A71); grabMultiPlayerInfo 0x004E8A7B; GadgetTextEntrySetText(textEntryChat TheEmptyString) winSetFocus(textEntryChat); staticTextGameSaved hidden textEntryChat/buttonEmote/listboxChat/chatBoxBorder shown buttonContinue/buttonBuddies hidden; listbox also stored to [0x012F7730]+0x5c; ILT 0x000081ED; sole caller ScoreScreenInit 0x004E92DD (mode 1)
 ?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
