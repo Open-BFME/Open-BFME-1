@@ -83558,3 +83558,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?j_00019c36@Glo012F1028Sub@@QAEXAAVBfmeSubA@@H@Z,0x00019C36,Open-BFME5 ILT the Glo012F1028 sub-object consumes each early-vector string
 ?bfmeCall3426b@BfmeGlobal_012f1024@@QAEXPAX00@Z,0x0003426B,call-site callee of Glo012F1024Item::j_00010bcc; global 0x012F1024 thiscall with three stack args; ILT 0x0003426B -> 0x003B2D60
 ?dlink_next_TeamMemberList@Object@@QBEPAV1@XZ,0x00001140,Object DLINK PMF pfn used by Team member-list walks; ILT 0x00001140 -> 0x000C8980
+?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
+?StopStopwatch@@YAKK@Z,0x008793B0,nbench StopStopwatch; retail is Rva008793B0ClockDelta
+?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
+?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
+?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)

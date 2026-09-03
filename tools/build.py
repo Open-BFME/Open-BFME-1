@@ -415,6 +415,30 @@ def stlport_include_dir():
     return None
 
 
+def nbench_include_dir():
+    """Directory of vendored nbench-byte 2.2.3 sources, or None.
+
+    Code/Libraries/Source/Benchmark/{nbench0,nbench1,emfloat}.cpp include the
+    upstream .c files by their original names; those live here, not next to
+    the wrappers. Scoped to Benchmark TUs the same way vendor/stlport is
+    scoped to // stlport files.
+    """
+    path = ROOT / "vendor" / "nbench"
+    if (path / "nbench1.c").exists():
+        return path
+    return None
+
+
+def source_needs_nbench(source):
+    if source is None:
+        return False
+    try:
+        relative = resolved(source).relative_to(ROOT).as_posix()
+    except ValueError:
+        return False
+    return relative.startswith("Code/Libraries/Source/Benchmark/")
+
+
 # The vendored Zero Hour tree. Its whole value is being unmodified upstream, so
 # its files carry neither the `// stlport` marker nor a `// cl:` line that a
 # Code/ source uses to declare its build settings; a row sourced from here gets
@@ -490,11 +514,17 @@ def compiler_environment(root, source=None):
     base_dir = root.parents[1]
 
     stlport = stlport_include_dir() if source_needs_stlport(source) else None
+    nbench = nbench_include_dir() if source_needs_nbench(source) else None
 
     if os.name == "nt":
         include = str(root / "Vc7" / "include")
+        extras = []
         if stlport:
-            include = os.pathsep.join([str(stlport), str(stlport / "src"), include])
+            extras.extend([str(stlport), str(stlport / "src")])
+        if nbench:
+            extras.append(str(nbench))
+        if extras:
+            include = os.pathsep.join(extras + [include])
         env["INCLUDE"] = include
         env["LIB"] = str(root / "Vc7" / "lib")
         # MSVC 7.1 runtime DLLs (msvcp71.dll) live in the toolchain root, not
@@ -503,8 +533,13 @@ def compiler_environment(root, source=None):
         return env
 
     include = wine_path(root / "Vc7" / "include")
+    extras = []
     if stlport:
-        include = ";".join([wine_path(stlport), wine_path(stlport / "src"), include])
+        extras.extend([wine_path(stlport), wine_path(stlport / "src")])
+    if nbench:
+        extras.append(wine_path(nbench))
+    if extras:
+        include = ";".join(extras + [include])
     env["INCLUDE"] = include
     env["LIB"] = wine_path(root / "Vc7" / "lib")
     env["WINEPATH"] = ";".join(
