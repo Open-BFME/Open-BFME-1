@@ -2168,6 +2168,7 @@ name,address,notes
 ??0BfmeBase1142@@QAE@XZ,0x00048BE4,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
+??0BfmeBigVSZ@@QAE@ABV0@@Z,0x00047B27,pin
 ??0BfmeBinkPlayerMember@@QAE@XZ,0x0002833F,Open-BFME5 ILT the member constructor BinkVideoPlayer at 0x00691230 calls for its member at +0x0C
 ??0BfmeBits1133@@QAE@HHHH@Z,0x0003284E,pin
 ??0BfmeBits1133@@QAE@HHHHHH@Z,0x00031133,pin
@@ -4192,6 +4193,7 @@ name,address,notes
 ??1BfmeBaseTerm1137A@@UAE@XZ,0x0045B060,pin BfmeA1137 destructor base-class delegate call target
 ??1BfmeBaseX@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the body vector destructor at 0x00490100 chains to
 ??1BfmeBaseZ@@QAE@XZ,0x0002B4AE,Open-BFME5 the base destructor the two-vector destructor at 0x000E54B0 chains to
+??1BfmeBigVSZ@@QAE@XZ,0x00887940,pin
 ??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
 ??1BfmeCellGrid@@QAE@XZ,0x000046E2,VictorySystem::reset 0x001DE5B0 calls this ILT before operator delete for each non-null BfmeCellGrid; ILT target 0x001B1AC0 clears the grid allocations
 ??1BfmeChainValue2@@QAE@XZ,0x000014D8,Open-BFME5 the carried value destructor the chain disposal at 0x00605820 runs
