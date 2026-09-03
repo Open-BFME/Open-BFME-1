@@ -204,14 +204,18 @@ Bool RiderChangeContain::isValidContainerFor(const Object* rider, Bool checkCapa
 // ?onContaining@RiderChangeContain@@UAEXPAVObject@@_N@Z present-unmatched
 void RiderChangeContain::onContaining( Object *rider, Bool wasSelected )
 {
-	TransportContain::onContaining( rider, wasSelected );
+	Bool selected = wasSelected;
+	Object *entering = rider;
+	const RiderChangeContainModuleData *data;
+	TransportContain::onContaining( entering, selected );
 
-	const RiderChangeContainModuleData *data = getRiderChangeContainModuleData();
+	data = *reinterpret_cast<RiderChangeContainModuleData **>(
+		reinterpret_cast<char *>(this) + 0x04);
 	if (data == NULL)
 		return;
 
-	TheGameLogic->deselectObject( rider, PLAYERMASK_ALL, TRUE );
-	if (!wasSelected || *reinterpret_cast<const UnsignedByte *>(
+	TheGameLogic->deselectObject( entering, PLAYERMASK_ALL, TRUE );
+	if (!selected || *reinterpret_cast<const UnsignedByte *>(
 		reinterpret_cast<const char *>(data) + 0x248) == 0)
 		return;
 

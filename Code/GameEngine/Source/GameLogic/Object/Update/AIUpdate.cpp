@@ -1090,8 +1090,10 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		pos1.x = -1000.0f;
 		pos1.y = -1000.0f;
 		pos1.z = 0.0f;
+		Object *repulsor;
 		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		Object *repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
+		ObjectID volatile *repulsorID = &retail->m_repulsor1;
+		repulsor = gameLogic->findObjectByID(*repulsorID);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
