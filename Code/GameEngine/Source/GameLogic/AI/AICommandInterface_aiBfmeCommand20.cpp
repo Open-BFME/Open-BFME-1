@@ -1,0 +1,63 @@
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// stlport
+// Open-BFME: AICommandInterface command 0x20, retail 0x00154780, 214 bytes.
+// Inserted between GUARD_OBJECT (0x1F) and GUARD_AREA (0x21); writes m_team
+// and an integer.
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
+
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
+typedef bool Bool;
+
+struct Coord3D { Real x, y, z; };
+
+class Object;
+class Team;
+class Waypoint;
+class PolygonTrigger;
+class CommandButton;
+class Path;
+
+enum AICommandType { AICMD_BFME_20 = 0x20 };
+enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+
+struct DamageInfo
+{
+	char m_bfme_body[0x5C];
+};
+
+struct AICommandParms
+{
+	AICommandType						m_cmd;
+	CommandSourceType				m_cmdSource;
+	Coord3D									m_pos;
+	Object									*m_obj;
+	Object									*m_otherObj;
+	const Team							*m_team;
+	_STL::vector<Coord3D>		m_coords;
+	const Waypoint					*m_waypoint;
+	const PolygonTrigger		*m_polygon;
+	Int											m_intValue;
+	DamageInfo							m_damage;
+	const CommandButton			*m_commandButton;
+	Path										*m_path;
+
+	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);
+};
+
+class AICommandInterface
+{
+public:
+	virtual void aiDoCommand(const AICommandParms *parms) = 0;
+	void aiBfmeCommand20(const Team *team, Int value, CommandSourceType cmdSource);
+};
+
+void AICommandInterface::aiBfmeCommand20(const Team *team, Int value, CommandSourceType cmdSource)
+{
+	AICommandParms parms(AICMD_BFME_20, cmdSource);
+	parms.m_team = team;
+	parms.m_intValue = value;
+	aiDoCommand(&parms);
+}

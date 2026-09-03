@@ -1223,6 +1223,7 @@ name,address,notes
 ??0?$SimpleParameterClass@M$0N@@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
+??0?$StringBase@D@@IAE@ABV0@@Z,0x00887B60,protected StringBase char copy ctor
 ??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,StringBase<unsigned short> const wchar ctor used by populateSideInfo L%d temps
 ??0?$StringBase@G@@QAE@ABV0@@Z,0x00888400,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -12974,6 +12975,7 @@ name,address,notes
 ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
 ?applyFirst@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00031F75,address-derived first target updater called by retail 0x002D9510
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
+?applyNamed@ScriptEngine@@QAEXPAX0@Z,0x00340F10,ScriptEngine named-apply callee of walkNamed
 ?applyRva1C7370@Object@@QAEXABVModelConditionFlags@@_N@Z,0x000307E7,Open-BFME6 RVA 162CD0 flag-apply helper call pin
 ?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00025162,address-derived second target updater called by retail 0x002D9510
 ?applySingle@Gen00587600@@QAEXH@Z,0x000489D2,Open-BFME5 fresh ILT alias for the single-argument sibling at 0x0051A820
@@ -74359,6 +74361,7 @@ name,address,notes
 ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z,0x009A76A0,8x8 block helper called from bfmeGo7820
 ?bfmeGo7760@@YAXPAHPAXHHHH1@Z,0x009A7760,8x8 block helper called from bfmeGo7820
 ?bfmeGo9F@BfmeObj9F@@QAEXIE@Z,0x0003C3A8,ILT of BfmeObj9F::bfmeGo9F from the +0xE4 pointer-vector foreach
+?bfmeGoBUZA@BfmeThingBUZA@@QBE?AVBfmeHandleCX@@HH@Z,0x0092CA90,return-type alias of landed bfmeGoBUZA (HandleCX vs HandleUZA)
 ?bfmeGoD540@BfmeObjD540@@QAEXVAsciiString@@@Z,0x00033302,Open-BFME5 ILT to 0x0040D540 quoted-string consumer
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
@@ -74578,6 +74581,7 @@ name,address,notes
 ?bfmeInnerE6E90@Pathfinder@@QAEEPAX00000PAAPAXH@Z,0x00049F3F,ILT thunk to 0x003DF580 used by 0x003E6E90 wrapper
 ?bfmeInnerE6E90@Pathfinder@@QAEEPAX00000PAPAXH@Z,0x00049F3F,ILT thunk to 0x003DF580 used by 0x003E6E90 wrapper
 ?bfmeInsert@BfmeJ1017@@QAEXI@Z,0x008A0700,callee of the 0x008A07A0 and 0x008A0770 send wrappers
+?bfmeInsert@Gen009D76F0@@QAEPAUBfmeHashPair@@PBU2@@Z,0x009D7AF0,hashtable insert callee of operator[]
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
@@ -75087,6 +75091,7 @@ name,address,notes
 ?bfmeResetSafeOcclusionFrame@Object@@QAEXXZ,0x00039D06,Open-BFME5 Object safe-occlusion refresh ILT thunk to body 0x001C3020; surviving Object.cpp expression and BFME offsets prove current-frame plus ThingTemplate OcclusionDelay semantics
 ?bfmeResetUJC@@YAXPAUBfmeConnUJC@@@Z,0x008EBFC0,pin
 ?bfmeResetVJO@BfmeCVJO@@QAEXPAVBfmeXVJO@@@Z,0x008014F0,pin
+?bfmeResize@Gen009D7B80@@AAEXI@Z,0x009D7BC0,hashtable resize callee of Gen009D7B80 insert
 ?bfmeResolve1281@BfmeSlotDispatcher1281@@QAEXHHPAPAXPA_N@Z,0x008BC3E0,address-derived resolver callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeResolveMeleeTarget@Object@@QAEPAV1@H@Z,0x0000FAA6,TU-specific name for the melee target resolution helper used by AIAttackMeleeHordeWaitState
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
@@ -76503,6 +76508,7 @@ name,address,notes
 ?dx8_polygons@Debug_Statistics@@3HA,0x01346E64,Open-BFME5 retail DX8 polygon counter
 ?dx8_renders@Debug_Statistics@@3HA,0x01346E68,Open-BFME5 retail DX8 render counter
 ?dx8_vertices@Debug_Statistics@@3HA,0x01346DF0,Open-BFME5 retail DX8 vertex counter
+?emit@LookAtTranslator@@QAEXPAULookAtEvent@@@Z,0x005A6470,LookAtTranslator event emit is ICF with Rva005A6470MouseEventQueue::emit
 ?enableRadar@Player@@QAEXXZ,0x00043207
 ?enableRadar@PlayerEnableRadarShim@@QAEXXZ,0x000CC2C0,Player::enableRadar incremental-link thunk target through a TU-local forwarding shim
 ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z,0x000366E7
@@ -78397,6 +78403,7 @@ name,address,notes
 ?gen009CE9B0@@YAXPAX0@Z,0x009CE9B0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen009CF3C0@@YAXPAX0@Z,0x009CF3C0,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
 ?gen009D73D0@@YAXPAX0@Z,0x009D73D0,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
+?gen009D8190@@YAXPAXPBX@Z,0x009D8190,pair construct callee of Gen009D7B80 insert
 ?gen009ED790@@YAXPAX0@Z,0x009ED790,address-derived subobject constructor of the allocating-factory family; target read from the REL32 at its call sites
 ?gen009EE320@@YAPAXXZ,0x009EE320,address-derived callee of the 22-byte cached-pointer fill family; target read from the REL32 at its call sites
 ?generateFilename@AudioEventRTS@@QAEXXZ,0x000B3970,Open-BFME5 matched caller at 0x000B3B70 names the lazy filename generator
@@ -78654,6 +78661,7 @@ name,address,notes
 ?getPlayerMaskFromAsciiString@BfmeScriptEngine_getPlayerMaskFromAsciiString@@QAEGABVAsciiString@@PA_N@Z,0x0034CB60,body BFME ScriptEngine multi-player mask from name
 ?getPlayerName@ConnectionManager@@QAE?AVUnicodeString@@H@Z,0x00012A62,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x000362AA,Open-BFME5 ILT at guardSupplyCenter 0x0016694A; static helper receives the local bounds and enemy player index
+?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z,0x00044C60,ILT of BFME 3-arg getPlayersWithRelationship body 0x000DF5A0
 ?getPoints@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009C410,by-value side prefix + "Points" at VA 0x01080498 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getPoints
 ?getPortableFilename@NetFileAnnounceCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x0003D50F,ILT thunk to 0x0067D2E0; NetPacket::GetFileAnnounceCommandSize at 0x0067D460 calls it where Zero Hour calls getPortableFilename
 ?getPortableFilename@NetFileAnnounceCommandMsg@@QAE?AVAsciiString@@XZ,0x0003D50F,ILT thunk to 0x0067D2E0; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
@@ -82721,6 +82729,8 @@ _g_bfmeVB1199,0x00CF9B60,pin
 _g_guardTargetTypeThrowInfo,0x00DDFE5C,ThrowInfo used by the GuardTargetType transfer helper
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
+_gen000d7010,0x000D7010,xfer element helper for xferRva00347C40
+_gen00344750,0x00344750,xfer element helper for xferRva00347BB0
 _getbinopr,0x0099B480,decode_calls pin for _subexpr callee
 _gethostbyname@4,0x0081BDEA,vendored=gamespy-2004
 _gethostname@8,0x0081BDF0,vendored=gamespy-2004
