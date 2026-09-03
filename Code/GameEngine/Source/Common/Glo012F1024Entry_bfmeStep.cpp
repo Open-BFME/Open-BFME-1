@@ -70,6 +70,57 @@ public:
 	BfmeElem20 *m_bfmeEnd;
 };
 
+class BfmeFlag16
+{
+public:
+	char m_bfmeHead[0x0C];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x03];
+};
+
+class BfmeFlag16Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag16 *m_bfmeBegin;
+	BfmeFlag16 *m_bfmeEnd;
+};
+
+class BfmeFlag24
+{
+public:
+	char m_bfmeHead[0x08];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x0F];
+};
+
+class BfmeFlag24Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag24 *m_bfmeBegin;
+	BfmeFlag24 *m_bfmeEnd;
+};
+
+class BfmeFlag32
+{
+public:
+	char m_bfmeHead[0x1C];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x03];
+};
+
+class BfmeFlag32Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag32 *m_bfmeBegin;
+	BfmeFlag32 *m_bfmeEnd;
+};
+
 class BfmeElem8
 {
 public:
@@ -83,6 +134,21 @@ public:
 
 	BfmeElem8 *m_bfmeBegin;
 	BfmeElem8 *m_bfmeEnd;
+};
+
+class BfmeElem12Rec
+{
+public:
+	char m_bfmeBody[0x0C];
+};
+
+class BfmeElem12RecVector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeElem12Rec *m_bfmeBegin;
+	BfmeElem12Rec *m_bfmeEnd;
 };
 
 class BfmeElem12
@@ -99,6 +165,32 @@ public:
 
 	BfmeElem12 *m_bfmeBegin;
 	BfmeElem12 *m_bfmeEnd;
+};
+
+class BfmeSubA
+{
+public:
+	BfmeSubA() : m_item(0) {}
+	BfmeSubA(const BfmeSubA &other);
+	~BfmeSubA();
+
+private:
+	void *m_item;
+};
+
+struct BfmeElem8Str
+{
+	int m_first;
+	BfmeSubA m_name;
+};
+
+class BfmeElem8StrVector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeElem8Str *m_bfmeBegin;
+	BfmeElem8Str *m_bfmeEnd;
 };
 
 class Glo012F1024Item
@@ -123,17 +215,29 @@ public:
 	void j_00036124(void);
 	void j_00010bcc(void);
 
-	char m_bfmeHead[0x38];
+	char m_bfmeHead[0x08];
+	BfmeElem8StrVector m_bfmeEarly;				// +0x08
+	char m_bfmeHeadRest[0x38 - 0x10];
 	BfmeIntVector m_bfmeItems;
 	char m_bfmeMiddleA[0x44 - 0x40];
 	BfmeElem4Vector m_bfmeNames;
 	char m_bfmeMiddle[0x6C - 0x4C];
 	BfmeElem20Vector m_bfmeTable;
-	char m_bfmeMiddleB[0xB4 - 0x74];
+	char m_bfmePad74[0x04];
+	BfmeFlag32Vector m_bfmeFlag32;				// +0x78
+	char m_bfmePad80[0x04];
+	BfmeFlag24Vector m_bfmeFlag24;				// +0x84
+	char m_bfmePad8C[0x04];
+	BfmeElem20Vector m_bfmeFlag20;				// +0x90
+	char m_bfmePad98[0x04];
+	BfmeFlag16Vector m_bfmeFlag16;				// +0x9C
+	char m_bfmeMiddleB[0xB4 - 0xA4];
 	BfmeElem16Vector m_bfmeQueue;
 	char m_bfmeMiddleC[0xC0 - 0xBC];
 	BfmeElem12Vector m_bfmeOuter;
-	char m_bfmeTail[0xDC - 0xC8];
+	char m_bfmePadC8[0x04];
+	BfmeElem12RecVector m_bfmeLate;				// +0xCC
+	char m_bfmeTail[0xDC - 0xD4];
 };
 
 class Gen_003C02B0
@@ -170,6 +274,7 @@ class BfmeGlobal_012f1024
 {
 public:
 	void bfmeCall40F39(void *a, void *b, void *c, unsigned char d);
+	void bfmeCall3426b(void *a, void *b, void *c);
 	User *getUser(void *key);
 };
 
@@ -211,6 +316,7 @@ class Glo012F1028Sub
 {
 public:
 	void bfmeNotify(void);					// ILT 0x0002DE89
+	void j_00019c36(BfmeSubA &name, int flag);
 };
 
 class Glo012F1028Type
@@ -224,6 +330,24 @@ public:
 extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
 
 extern Gen_003C02B0 *Glo012F1028Remove;				// 0x012F1028
+
+// ?j_0003152a@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_0003152a(void)
+{
+	BfmeSubA tmp;
+	Glo012F1028Type *global = Glo012F1028;
+	if (global->m_bfmeSub != 0)
+	{
+		for (unsigned int index = 0; index < m_bfmeEarly.bfmeSize(); ++index)
+		{
+			BfmeElem8Str *begin = m_bfmeEarly.m_bfmeBegin;
+			tmp.BfmeSubA::BfmeSubA(*(BfmeSubA *)((char *)begin + index * 8 + 4));
+			Glo012F1028Type *again = Glo012F1028;
+			Glo012F1028Sub *sub = again->m_bfmeSub;
+			sub->j_00019c36(tmp, 1);
+		}
+	}
+}
 
 // ?j_00008053@Glo012F1024Item@@QAEXXZ
 void Glo012F1024Item::j_00008053(void)
@@ -240,6 +364,28 @@ void Glo012F1024Item::j_00040c32(void)
 		BfmeElem16 *position = m_bfmeQueue.m_bfmeBegin + index;
 		g_bfmeGlobal_012f706c->bfmeGoDGE(position, (char *)position + 4);
 	}
+}
+
+// ?j_0000ca59@Glo012F1024Item@@QAE_NXZ
+bool Glo012F1024Item::j_0000ca59(void)
+{
+	for (unsigned int index = 0; index < m_bfmeFlag16.bfmeSize(); ++index)
+		if (m_bfmeFlag16.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag20.bfmeSize(); ++index)
+		if (m_bfmeFlag20.m_bfmeBegin[index].m_bfmeByte != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag32.bfmeSize(); ++index)
+		if (m_bfmeFlag32.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag24.bfmeSize(); ++index)
+		if (m_bfmeFlag24.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	return false;
 }
 
 // ?j_0002d3e4@Glo012F1024Item@@QAEXXZ
@@ -266,6 +412,16 @@ void Glo012F1024Item::j_00019eca(void)
 			g_Gen003bcb40->m(user->GetName());
 			user->bfmeEnter();
 		}
+	}
+}
+
+// ?j_00010bcc@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_00010bcc(void)
+{
+	for (unsigned int index = 0; index < m_bfmeLate.bfmeSize(); ++index)
+	{
+		BfmeElem12Rec *position = m_bfmeLate.m_bfmeBegin + index;
+		g_bfmeGlobal_012f1024->bfmeCall3426b(position, (char *)position + 4, (char *)position + 8);
 	}
 }
 
