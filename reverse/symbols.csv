@@ -76984,6 +76984,7 @@ name,address,notes
 ?findTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x00028560,SpawnBehavior retail findTemplate ILT
 ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z,0x0000DBD9,first of the find-then-create pair in the Terrain block parser; the second call on the same receiver is the already-matched newTerrain and ZH declares findTerrain immediately above it with the same signature
 ?findUpdateModule@Object@@QAEPAVOCLUpdate@@W4NameKeyType@@@Z,0x0002AE23,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 looks the OCLUpdate module up through it
+?findUpdateModule@Object@@QAEPAVSupplyWarehouseDockUpdate@@H@Z,0x0002AE23,ScriptActions warehouse-value TU view of the same Object method ILT
 ?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A
 ?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VBFMERetailAsciiString@@@Z,0x0000D3FA,WeaponFireSpecialAbilityUpdate WeaponStore lookup ILT thunk
 ?finish@BfmeRva9140Member@@QAEXXZ,0x00025806,assigned body helper for Rva00249140
@@ -81309,6 +81310,7 @@ name,address,notes
 ?setBorderShroudLevel30BC@BaseHeightMapResetShroud@@QAEXE@Z,0x0000BFF5,BaseHeightMap border-level call for BFME shroud at this+0x30BC
 ?setButtonImage@BFMERetailCommandButton@@QAEXPBVImage@@@Z,0x0002A7ED,Open-BFME5 ControlBar retail out-of-line button image setter thunk
 ?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
+?setCashValue@SupplyWarehouseDockUpdate@@QAEXH@Z,0x0002EF0F,ScriptActions warehouse-value call reaches the matched body through this ILT
 ?setChunkNumber@NetWrapperCommandMsg@@QAEXI@Z,0x0003AE36,ILT thunk; real body 0xA73F10
 ?setColor@Shadow@@QAEXH@Z,0x00459880,resolved via direct disassembly of retail bytes at RadiusDecalTemplate::createRadiusDecal; only non-virtual call in the function
 ?setCompletedWaypoint@AIUpdateInterface@@QAEXPBVWaypoint@@@Z,0x0002F93C,incremental-link thunk used by AIFollowWaypointPathExactState::onExit at 0x001790F0
