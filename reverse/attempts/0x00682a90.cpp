@@ -1,17 +1,15 @@
 // ?RelayCommandsToCommandList@Network@@IAEXXZ
-// partial score=0.92 date=2026-09-03
-// cl: /DNDEBUG /MD /GX
+// partial score=0.93 date=2026-09-03
+// cl: /DNDEBUG /MD /EHsc
 //
 // Network::RelayCommandsToCommandList, 0x00682A90, 375 bytes.
-//
-// Named by the already-matched Network::update (0x00682C70) which calls this
-// at 0x00682CBC, and by the reloc-named pin. Zero Hour's
-// RelayCommandsToCommandList(frame) with the frame read from TheGameLogic+0x3C
-// and processFrameSynchronizedNetCommand inlined. Type 4 GAMECOMMAND appends
-// constructGameMessage; type 10 PLAYERLEAVE records the router's own leave
-// frame at Network+0x38 or beginPlayerLeave; type 11 DESTROYPLAYER is
-// processDestroyPlayerCommand. The BFME tail fires the router's own leave
-// once every connected player has reached that frame.
+// Same walk as reverse/attempts/0x00682a90.cpp. Named frame local matches
+// retail's mov eax,[eax+0x3c]; push eax. TheGameLogic is the pinned
+// ?TheGameLogic@@3PAVGameLogic@@A. Wall: cannot get both sub esp,0xC and
+// ebp=ref / edi=cmd. Seeding cmd (0 / this) is DCE'd; a live CommandList*
+// before getFrameCommandList steals ebx onto ebp. Address-taken leaver
+// does not create the third slot. Iterator stays edi, cmd stays ebp,
+// frame is 8 not 0xC, size 390 vs 375.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -46,13 +44,15 @@ public:
 	virtual void _cl6(void) = 0;
 	virtual void _cl7(void) = 0;
 	virtual void _cl8(void) = 0;
-	virtual void appendMessage(GameMessage *msg) = 0;	// slot 9, +0x24
+	virtual void appendMessage(GameMessage *msg) = 0;
 };
+
+class NetCommandList;
 
 class ConnectionManager
 {
 public:
-	class NetCommandList *getFrameCommandList(UnsignedInt frame);
+	NetCommandList *getFrameCommandList(UnsignedInt frame);
 };
 
 class BFMEConnectionManager : public ConnectionManager
@@ -71,11 +71,11 @@ public:
 	NetCommandType getNetCommandType(void) { return m_commandType; }
 	UnsignedInt getExecutionFrame(void) { return m_executionFrame; }
 
-	UnsignedInt m_pad04;				// +0x04
-	UnsignedInt m_executionFrame;			// +0x08
-	UnsignedInt m_playerID;				// +0x0C
-	unsigned short m_id;				// +0x10
-	NetCommandType m_commandType;			// +0x14
+	UnsignedInt m_pad04;
+	UnsignedInt m_executionFrame;
+	UnsignedInt m_playerID;
+	unsigned short m_id;
+	NetCommandType m_commandType;
 };
 
 class NetGameCommandMsg : public NetCommandMsg
@@ -100,8 +100,8 @@ public:
 	NetCommandMsg *getCommand(void) { return m_command; }
 	NetCommandRef *getNext(void) { return m_next; }
 
-	NetCommandMsg *m_command;			// +0x00
-	NetCommandRef *m_next;				// +0x04
+	NetCommandMsg *m_command;
+	NetCommandRef *m_next;
 };
 
 class NetCommandList
@@ -111,7 +111,7 @@ public:
 
 	NetCommandRef *getFirstMessage(void) { return m_first; }
 
-	NetCommandRef *m_first;				// +0x04
+	NetCommandRef *m_first;
 };
 
 class GameLogic
@@ -120,11 +120,11 @@ public:
 	void bfme_setPlayerLeaveStatus(Int slot, Int status);
 
 	unsigned char m_pad[0x3C];
-	UnsignedInt m_frame;				// +0x3C
+	UnsignedInt m_frame;
 };
 
 extern CommandList *TheCommandList;
-extern GameLogic *TheGameLogicForNet;
+extern GameLogic *TheGameLogic;
 
 class Network
 {
@@ -164,10 +164,10 @@ public:
 	virtual void _s32(void) = 0;
 	virtual void _s33(void) = 0;
 	virtual void _s34(void) = 0;
-	virtual bool isPacketRouter(void) = 0;			// slot 35, +0x8C
+	virtual bool isPacketRouter(void) = 0;
 	virtual void _s36(void) = 0;
 	virtual void _s37(void) = 0;
-	virtual UnsignedInt getLocalPlayerID(void) = 0;		// slot 38, +0x98
+	virtual UnsignedInt getLocalPlayerID(void) = 0;
 	virtual void _s39(void) = 0;
 	virtual void _s40(void) = 0;
 	virtual void _s41(void) = 0;
@@ -184,17 +184,17 @@ public:
 	virtual void _s52(void) = 0;
 	virtual void _s53(void) = 0;
 	virtual void _s54(void) = 0;
-	virtual bool _bfme_isRouterLeavePending(void) = 0;	// slot 55, +0xDC
+	virtual bool _bfme_isRouterLeavePending(void) = 0;
 
 protected:
 	void RelayCommandsToCommandList(void);
 	void processDestroyPlayerCommand(NetDestroyPlayerCommandMsg *msg);
 
-	void *m_subsystemName;				// +0x04
-	BFMEConnectionManager *m_conMgr;		// +0x08
-	NetLocalStatus m_localStatus;			// +0x0C
+	void *m_subsystemName;
+	BFMEConnectionManager *m_conMgr;
+	NetLocalStatus m_localStatus;
 	unsigned char m_pad10[0x38 - 0x10];
-	Int m_routerLeaveFrame;				// +0x38
+	Int m_routerLeaveFrame;
 };
 
 void Network::RelayCommandsToCommandList(void)
@@ -204,19 +204,19 @@ void Network::RelayCommandsToCommandList(void)
 	if (m_localStatus == NETLOCALSTATUS_PREGAME)
 		return;
 
-	UnsignedInt frame = TheGameLogicForNet->m_frame;
+	UnsignedInt frame = TheGameLogic->m_frame;
 	NetCommandList *netcmdlist = m_conMgr->getFrameCommandList(frame);
-	if (TheGameLogicForNet->m_frame <= 1)
+	if (TheGameLogic->m_frame <= 1)
 	{
 		if (netcmdlist != 0)
 			delete netcmdlist;
 		return;
 	}
 
-	NetCommandRef *msg = netcmdlist->getFirstMessage();
-	while (msg != 0)
+	NetCommandRef *ref = netcmdlist->getFirstMessage();
+	while (ref != 0)
 	{
-		NetCommandMsg *cmd = msg->getCommand();
+		NetCommandMsg *cmd = ref->getCommand();
 		if (cmd != 0)
 		{
 			switch (cmd->getNetCommandType())
@@ -234,7 +234,7 @@ void Network::RelayCommandsToCommandList(void)
 				}
 				else if (m_conMgr->beginPlayerLeave((void *)(UnsignedInt)leaver) == 1)
 					m_localStatus = NETLOCALSTATUS_LEAVING;
-				TheGameLogicForNet->bfme_setPlayerLeaveStatus((Int)leaver, 1);
+				TheGameLogic->bfme_setPlayerLeaveStatus((Int)leaver, 1);
 				break;
 			}
 			case NETCOMMANDTYPE_DESTROYPLAYER:
@@ -242,7 +242,7 @@ void Network::RelayCommandsToCommandList(void)
 				break;
 			}
 		}
-		msg = msg->getNext();
+		ref = ref->getNext();
 	}
 
 	delete netcmdlist;
