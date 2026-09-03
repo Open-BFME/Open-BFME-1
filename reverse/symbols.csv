@@ -1887,6 +1887,7 @@ name,address,notes
 ??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z,0x00046ADD,pinharvest x1 (thunk)
 ??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z,0x00048667,pinharvest x1 (thunk)
 ??0?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@QAE@ABHABVMultiplayerColorDefinition@@@Z,0x00048FEA,MultiplayerColor map operator pair-constructor ILT
+??0?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@QAE@ABUBfmeRva449E0Key@@ABUBfmeRva449E0Value@@@Z,0x00020FB8,retail pair constructor thunk for Rva002449E0 map insertion
 ??0?$pair@$$CBUGen_t_0007cd50_k4@@UGen_t_0007cd50_p12cd@@@_STL@@QAE@ABU01@@Z,0x0007CCC0,gen-tgrid payload member
 ??0?$pair@$$CBUGen_t_00080e00_k4@@UGen_t_00080e00_p12cd@@@_STL@@QAE@ABU01@@Z,0x00080AF0,gen-tgrid payload member
 ??0?$pair@$$CBUGen_t_0008e700_k4@@UGen_t_0008e700_p12cd@@@_STL@@QAE@ABU01@@Z,0x0008E560,gen-tgrid payload member
@@ -2234,6 +2235,7 @@ name,address,notes
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
+??0BfmeRva449E0Value@@QAE@XZ,0x0000DCD3,retail default constructor thunk for Rva002449E0 map value
 ??0BfmeRva44E60Record@@QAE@XZ,0x00033D39,assigned body helper for Rva00244E60
 ??0BfmeS1059@@QAE@XZ,0x00018A07,pin
 ??0BfmeSMiddle@@QAE@PAX0@Z,0x00025306,Open-BFME5 the base the multi-vftable constructor at 0x006949B0 forwards to
@@ -3529,6 +3531,7 @@ name,address,notes
 ??0SegLineRendererClass@@QAE@ABV0@@Z,0x00960990
 ??0SegLineRendererClass@@QAE@XZ,0x0095FFD0,derived from ParticleBufferClass main ctor aligned call sites
 ??0ServiceHubImpl@@QAE@PAX00000@Z,0x007EAE30,ServiceHubImpl ctor used by 0x007EB1C0 create
+??0ShadowLightEnvironment007AF5A0@@QAE@XZ,0x0094AAF0,W3DProjectedShadowManager embedded light-environment constructor at this+0x24
 ??0ShareBufferClassBase@@QAE@HPBDH@Z,0x00929FC0,TexBufferClass base ShareBuffer-like ctor
 ??0ShellMenuSchemeImage@@QAE@XZ,0x0001DA7F,ShellMenuSchemeImage constructor via ILT thunk
 ??0ShroudCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026F1C,module ctor (friend_newModuleInstance retail call target)
@@ -9681,6 +9684,7 @@ name,address,notes
 ??_7VirtualZeroDerivedAlternateThunk@@6B@,0x010F6F68,Open-BFME5 alternate virtual zero derived vftable
 ??_7VirtualZeroDerivedThirdThunk@@6B@,0x010F6F74,Open-BFME5 third virtual zero derived vftable
 ??_7VirtualZeroDerivedThunk@@6B@,0x010F6F5C,Open-BFME5 virtual zero derived vftable
+??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
 ??_7WanderAIUpdateModuleDataVtbl@@6B@,0x0108A5A8,WanderAIUpdate vtbl
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
@@ -10930,6 +10934,7 @@ name,address,notes
 ?TheDisplay@@3PAVDisplay@@A,0x012F1270,Display* global
 ?TheDozerAIUpdatePool@?1??getClassMemoryPool@DozerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0254,pool-glue cascade static (back-solved)
 ?TheDynamicShroudClearingRangeUpdatePool@?1??getClassMemoryPool@DynamicShroudClearingRangeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF20,pool-glue cascade static (back-solved)
+?TheEmptyString@AsciiString@@2V1@B,0x01336E50,SkyboxSettings parser registration empty parent label
 ?TheEmptyString@UnicodeString@@2V1@A,0x01336E54,UnicodeString::TheEmptyString; export is const 2V1@B at RVA 0x00F36E54
 ?TheExperienceLevelSystem@@3PAVExperienceLevelSystem@@A,0x00EF0888,GameEngine::init pushes the literal "TheExperienceLevelSystem" at 0x00479C3A immediately before pushing this address at 0x00479C48; doTeamSpinForFramecount loads it at 0x002F11F4
 ?TheExperienceScalarUpgradePool@?1??getClassMemoryPool@ExperienceScalarUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0560,pool-glue cascade static (back-solved)
@@ -11049,6 +11054,7 @@ name,address,notes
 ?TheVideoPlayer@@3PAVVideoPlayer@@A,0x0130B190,global TheVideoPlayer
 ?TheW3DRadarFormatCaps@@3PAVW3DRadarFormatCaps@@A,0x00F40578,W3DRadar BFME caps singleton ABI shim
 ?TheWanderAIUpdatePool@?1??getClassMemoryPool@WanderAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0470,pool-glue cascade static (back-solved)
+?TheWaterRenderObj@@3PAVWaterSkyBoxSettingsOwner@@A,0x01306D7C,SkyboxSettings reader global proven by the matching writer and WaterRenderObjClass layout
 ?TheWeaponBonusUpgradePool@?1??getClassMemoryPool@WeaponBonusUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05E8,pool-glue cascade static (back-solved)
 ?TheWeaponSetUpgradePool@?1??getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05F0,pool-glue cascade static (back-solved)
 ?TheWeaponStore@@3PAVWeaponStore@@A,0x00EEF738,WeaponFireSpecialAbilityUpdate global store address
@@ -77054,6 +77060,7 @@ name,address,notes
 ?forwardDrawableEvent@BfmeDrawableEventManager@@QAEXW4DrawableID@@PBXEE@Z,0x00030878,Open-BFME5 ILT target proven by the one-shot drawable event forwarder at 0x00751970
 ?forwardObj@BfmeMgr089_E5E@@QAEXPAX@Z,0x0001D0DE,pin
 ?forwardVal@BfmeMgr2B0@@QAEXPAX@Z,0x000201DA,pin
+?frame@Rva007E4820FrameClock@@QAEHH@Z,0x007E4820,assigned helper body call for Rva007E4B80Vp6Stream
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
@@ -80090,6 +80097,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@_STL@@_N@2@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x009A41E0,SelectionXlat callers target the shared 0x009A41E0 body (retail-folded COMDAT); definition lives under the PBV1-Identity name
 ?insert_unique@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@U32@ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@@Z,0x000135E8,link thunk; the address the body at 0x000F3A20 encodes
 ?insert_unique@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@U32@ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@@Z,0x0001A5F5,link thunk; the address ??A?$map at 0x000F3A20 encodes
+?insert_unique@?$_Rb_tree@UBfmeRva449E0Key@@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@U?$less@UBfmeRva449E0Key@@@3@V?$allocator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@2@@Z,0x0003A260,retail insert_unique thunk for Rva002449E0 map insertion
 ?insert_unique@?$_Rb_tree@UGen_t_00093990_mc4@@U1@U?$_Identity@UGen_t_00093990_mc4@@@_STL@@U?$less@UGen_t_00093990_mc4@@@3@V?$allocator@UGen_t_00093990_mc4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_00093990_mc4@@U?$_Nonconst_traits@UGen_t_00093990_mc4@@@_STL@@@_STL@@_N@2@ABUGen_t_00093990_mc4@@@Z,0x00093760,family-emit payload member
 ?insert_unique@?$_Rb_tree@UOpen2Key6148F0@@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@U?$_Select1st@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@3@UOpen2Less6148F0@@V?$allocator@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@2@@2@U32@ABU?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@2@@Z,0x21623145,Open2 0x6148f0 map twin callee
 ?insert_unique@?$_Rb_tree@URva00063870Key@@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@3@U?$less@URva00063870Key@@@3@V?$allocator@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva00063870Key@@URva00063870Value@@@2@@Z,0x0000A529,Open-BFME5 ILT for the tree insert_unique the map insert at 0x00063870 forwards to
@@ -80574,6 +80582,7 @@ name,address,notes
 ?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
 ?onContaining@BfmeRvaBBD0Owner@@QAEXPAVBfmeRvaBBD0Object@@@Z,0x000088FF,assigned-body helper for Rva0024BBD0
 ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z,0x000476F9,packet 00219850 pin
+?onContaining@TransportContain@@UAEXPAVObject@@_N@Z,0x0022DD10,callee pin from RiderChangeContain onContaining at 0x0022B3E0
 ?onDie@Object@@QAEXPAVDamageInfo@@@Z,0x0003369F,InactiveBody::attemptDamage retail callee
 ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ,0x00021E27
 ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ,0x00172600,AIInternalMoveToState::onEnter incremental-link thunk target through a TU-local forwarding shim
@@ -80659,6 +80668,7 @@ name,address,notes
 ?parseRGBColor@INI@@SAXPAV1@PAX1PBX@Z,0x00852F50
 ?parseReal@INI@@SAXPAV1@PAX1PBX@Z,0x00852B20
 ?parseScience@INI@@SAXPAV1@PAX1PBX@Z,0x0001393A
+?parseSkyBoxSettings007A5BA0@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00047BDB,SkyboxSettings registration stores the retail ILT callback
 ?parseToken@Rva00128510BitFlagsParser@@QAE_NPBDPA_N1@Z,0x0003D3B1,ILT to the 459-byte routine at 0x00128510 that BitFlags<116>::parseFromINI calls once per token at 0x0012983F
 ?parseToken@Rva00204770BitFlagsParser@@QAE_NPBDPA_N1@Z,0x0003D68B,ILT to the routine at 0x00204770 that BitFlags<45>::parseFromINI calls once per token at 0x00204E9F
 ?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z,0x00852AC0
@@ -81478,6 +81488,9 @@ name,address,notes
 ?setSize@Shadow@@QAEXMM@Z,0x0002133C,pinharvest x1 (thunk)
 ?setSize@Shadow@@QAEXMM@Z,0x00040412,pinharvest x1 (thunk)
 ?setSize@ShadowSetSizeShim@@QAEXMM@Z,0x001E4250,Shadow::setSize incremental-link thunk target through a TU-local forwarding shim
+?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0
+?setSkyBoxScale@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F,SkyboxSettings reader direct call through the retail ILT to 0x0079F1E0
+?setSkyBoxTexture007A58C0@WaterSkyBoxSettingsOwner@@QAEXPBVAsciiString@@@Z,0x000435D1,SkyboxSettings reader direct call through the retail ILT to 0x007A58C0
 ?setSlot@NetDisconnectVoteCommandMsg@@QAEXE@Z,0x00020739,ILT thunk; real body 0xA73D20
 ?setSlotData@GI_SlotObj@@QAEXPAVGameSlot@@@Z,0x000126E8,Open-BFME5 pin
 ?setSortMode@@YAXW4GameSortType@@@Z,0x00048360
@@ -81726,6 +81739,7 @@ name,address,notes
 ?update@Rva00367810Entry@@QAEXXZ,0x0000E0AC,REL32 target read from the retail call at RVA 0x0036786D; ILT thunk to RVA 0x00367330
 ?update@Rva0060A240Element@@QAEXXZ,0x00011D10,element update ILT called by the exact counted loop at 0x0060FFF0
 ?update@Rva0060A470Element@@QAEXXZ,0x0001D2BE,element update ILT called by the exact counted loop at 0x0060FF60
+?update@Rva007E4AD0Vp6Stream@@QAEXXZ,0x007E4AD0,assigned helper body call for Rva007E4B80Vp6Stream
 ?update@Rva00802CD0Element@@QAEXPBVRva007F4F90LobbyCounts@@H@Z,0x00802CD0,V2 lane: browser lobby element update from a four-int lobby-count record
 ?update@ScreenCrossFadeFilterUpdateFadeLevelShim@@QAE_NXZ,0x007D35B0,ScreenCrossFadeFilter updateFadeLevel incremental-link thunk target through a TU-local forwarding shim
 ?update@Transport@@QAEXXZ,0x00001EC4,Transport::update for LANAPI::RequestLobbyLeave forced path
@@ -83429,11 +83443,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheWaterRenderObj@@3PAVWaterSkyBoxSettingsOwner@@A,0x01306D7C,SkyboxSettings reader global proven by the matching writer and WaterRenderObjClass layout
-?setSkyBoxScale@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F,SkyboxSettings reader direct call through the retail ILT to 0x0079F1E0
-?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0
-?setSkyBoxTexture007A58C0@WaterSkyBoxSettingsOwner@@QAEXPBVAsciiString@@@Z,0x000435D1,SkyboxSettings reader direct call through the retail ILT to 0x007A58C0
-?TheEmptyString@AsciiString@@2V1@B,0x01336E50,SkyboxSettings parser registration empty parent label
-?parseSkyBoxSettings007A5BA0@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00047BDB,SkyboxSettings registration stores the retail ILT callback
-??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
-??0ShadowLightEnvironment007AF5A0@@QAE@XZ,0x0094AAF0,W3DProjectedShadowManager embedded light-environment constructor at this+0x24

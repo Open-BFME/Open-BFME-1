@@ -1091,9 +1091,9 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		pos1.y = -1000.0f;
 		pos1.z = 0.0f;
 		Object *repulsor;
+		ObjectID repulsorID = retail->m_repulsor1;
 		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		ObjectID volatile *repulsorID = &retail->m_repulsor1;
-		repulsor = gameLogic->findObjectByID(*repulsorID);
+		repulsor = gameLogic->findObjectByID(repulsorID);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
@@ -1334,6 +1334,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
 }
 #undef TheAI
+#undef TheGameLogic
 #undef TheGameLogic
 
 /* Requests a path to be found.  Note that if it is possible to do it without having to use the 

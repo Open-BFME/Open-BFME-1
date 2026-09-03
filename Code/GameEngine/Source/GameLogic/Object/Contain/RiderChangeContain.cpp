@@ -220,8 +220,8 @@ void RiderChangeContain::onContaining( Object *rider, Bool wasSelected )
 		return;
 
 	TheGameLogic->selectObject(
-		*reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 0x18),
-		PLAYERMASK_ALL, TRUE);
+		*reinterpret_cast<Object **>(reinterpret_cast<char *>(this) + 0x08),
+		TRUE, PLAYERMASK_ALL, TRUE);
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -43,6 +43,19 @@
 //#include "GameNetwork/GameSpy/PeerDefs.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
 
+template <typename T> class StringBase
+{
+private:
+	StringBase( const StringBase<T> &other );
+	friend class UnicodeString;
+};
+
+inline UnicodeString::UnicodeString( const UnicodeString &other )
+{
+	((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
+		*(const StringBase<wchar_t> *)&other);
+}
+
 void deleteNotificationBox( void );
 static void raiseOverlays( void );
 
@@ -67,7 +80,7 @@ public:
 // Message boxes -------------------------------------
 static GameWinMsgBoxFunc okFunc = NULL;
 static GameWinMsgBoxFunc cancelFunc = NULL;
-static Bool reOpenPlayerInfoFlag = FALSE;
+static volatile Bool reOpenPlayerInfoFlag = FALSE;
 /**
 	* messageBoxOK is called when a message box is destroyed
 	* by way of an OK button, so we can clear our pointers to it.
@@ -149,8 +162,7 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 		cancelFunc = NULL;
 	MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
 	cancelFunc = newCancelFunc;
-	reOpenPlayerInfoFlag = TRUE;
-	okFunc = newOkFunc;
+	okFunc = (reOpenPlayerInfoFlag = TRUE, newOkFunc);
 }
 
 /**
@@ -170,8 +182,7 @@ void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBox
 		cancelFunc = NULL;
 	MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
 	cancelFunc = newNoFunc;
-	reOpenPlayerInfoFlag = TRUE;
-	okFunc = newYesFunc;
+	okFunc = (reOpenPlayerInfoFlag = TRUE, newYesFunc);
 }
 
 /**
