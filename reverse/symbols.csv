@@ -83124,6 +83124,7 @@ _qr2_parse_queryA,0x00855F70,vendored=gamespy-2004
 _qr2_registered_key_list,0x00EC84E8,upstream peerSB.c indexed query-key table read by piSBStartListingGames
 _read_long_string,0x009A0420,decode_calls pin for _luaX_lex callee
 _read_number,0x009A00D0,per-TU llex.c static read_number; both retail luaX_lex REL32 sites target this body
+_realloc,0x009F7CCC,MSVCR71 realloc import thunk; Ghidra realloc at 0x009F7CCC; IAT slot 0x01359474 used by ATL CSimpleArray HINSTANCE Add
 _recv@16,0x0081BE74,vendored=gamespy-2004
 _recvfrom@24,0x0081BE26,vendored=gamespy-2004
 _repeatstat,0x0099CD90,decode_calls pin for _stat callee
