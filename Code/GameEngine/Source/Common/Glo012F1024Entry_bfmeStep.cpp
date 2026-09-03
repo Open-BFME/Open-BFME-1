@@ -101,6 +101,32 @@ public:
 	BfmeElem12 *m_bfmeEnd;
 };
 
+class BfmeSubA
+{
+public:
+	BfmeSubA() : m_item(0) {}
+	BfmeSubA(const BfmeSubA &other);
+	~BfmeSubA();
+
+private:
+	void *m_item;
+};
+
+struct BfmeElem8Str
+{
+	int m_first;
+	BfmeSubA m_name;
+};
+
+class BfmeElem8StrVector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeElem8Str *m_bfmeBegin;
+	BfmeElem8Str *m_bfmeEnd;
+};
+
 class Glo012F1024Item
 {
 public:
@@ -123,7 +149,9 @@ public:
 	void j_00036124(void);
 	void j_00010bcc(void);
 
-	char m_bfmeHead[0x38];
+	char m_bfmeHead[0x08];
+	BfmeElem8StrVector m_bfmeEarly;				// +0x08
+	char m_bfmeHeadRest[0x38 - 0x10];
 	BfmeIntVector m_bfmeItems;
 	char m_bfmeMiddleA[0x44 - 0x40];
 	BfmeElem4Vector m_bfmeNames;
@@ -211,6 +239,7 @@ class Glo012F1028Sub
 {
 public:
 	void bfmeNotify(void);					// ILT 0x0002DE89
+	void j_00019c36(BfmeSubA &name, int flag);
 };
 
 class Glo012F1028Type
@@ -224,6 +253,24 @@ public:
 extern Glo012F1028Type *Glo012F1028;				// 0x012F1028
 
 extern Gen_003C02B0 *Glo012F1028Remove;				// 0x012F1028
+
+// ?j_0003152a@Glo012F1024Item@@QAEXXZ
+void Glo012F1024Item::j_0003152a(void)
+{
+	BfmeSubA tmp;
+	Glo012F1028Type *global = Glo012F1028;
+	if (global->m_bfmeSub != 0)
+	{
+		for (unsigned int index = 0; index < m_bfmeEarly.bfmeSize(); ++index)
+		{
+			BfmeElem8Str *begin = m_bfmeEarly.m_bfmeBegin;
+			tmp.BfmeSubA::BfmeSubA(*(BfmeSubA *)((char *)begin + index * 8 + 4));
+			Glo012F1028Type *again = Glo012F1028;
+			Glo012F1028Sub *sub = again->m_bfmeSub;
+			sub->j_00019c36(tmp, 1);
+		}
+	}
+}
 
 // ?j_00008053@Glo012F1024Item@@QAEXXZ
 void Glo012F1024Item::j_00008053(void)
