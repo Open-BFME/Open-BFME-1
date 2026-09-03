@@ -83602,3 +83602,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva009B4390CodecCall@@YAXPAXH0HHHHHHHHHHHH@Z,0x009B4390
 ?j_000359db@@YAXXZ,0x000359DB
 ?b_004507a0@@YAXXZ,0x004507A0,ILT target of j_000359db; MapCache::loadStandardMaps body
+?bfmeActive@BfmeSubF2C@@QAE_NXZ,0x00010758,ILT thunk to Gen_0026E570 bfmeActive
