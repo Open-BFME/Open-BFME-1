@@ -2254,6 +2254,7 @@ name,address,notes
 ??0BfmeStrVTC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTH@@QAE@ABV0@@Z,0x0001400B,pin
+??0BfmeStrVTI@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -4290,6 +4291,7 @@ name,address,notes
 ??1BfmeStrVTC@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTF@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTH@@QAE@XZ,0x00887940,pin
+??1BfmeStrVTI@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
@@ -10973,6 +10975,7 @@ name,address,notes
 ?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x012EF738,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
 ?TheOpenContainPool@?1??getClassMemoryPool@OpenContain@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA60,pool-glue cascade static (back-solved)
+?ThePlayerList@@3PAVPlayerList@@A,0x00EED748,ScriptActions::doSpeechPlay local-player lookup at retail VA 0x012ED748
 ?ThePlayerTemplateStore@@3PAVPlayerTemplateStore@@A,0x00EED750,PlayerTemplateStore* global read by CustomMatchPreferences::getPreferredFaction
 ?ThePoisonedBehaviorPool@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF82C,pool-glue cascade static (back-solved)
 ?ThePreorderCreatePool@?1??getClassMemoryPool@PreorderCreate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFB9C,pool-glue cascade static (back-solved)
@@ -83330,4 +83333,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?ThePlayerList@@3PAVPlayerList@@A,0x00EED748,ScriptActions::doSpeechPlay local-player lookup at retail VA 0x012ED748
