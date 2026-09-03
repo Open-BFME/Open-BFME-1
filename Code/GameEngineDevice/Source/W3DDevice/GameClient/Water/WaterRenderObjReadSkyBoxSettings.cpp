@@ -3,20 +3,27 @@
 class AsciiString
 {
 public:
+	AsciiString(const char *text);
 	~AsciiString();
+	static const AsciiString TheEmptyString;
 
 private:
 	void *m_data;
 };
 
+struct DataChunkInfo;
+
 class DataChunkInput
 {
 public:
+	typedef bool (*Parser)(DataChunkInput &, DataChunkInfo *, void *);
+
 	float readReal();
 	AsciiString readAsciiString();
+	void registerParser(const AsciiString &label, const AsciiString &parentLabel,
+		Parser parser, void *userData);
+	bool parse(void *userData);
 };
-
-struct DataChunkInfo;
 
 struct Vector3
 {
@@ -55,6 +62,7 @@ public:
 	void setSkyBoxScale(const float *scale);
 	void setSkyBoxRotation007A15A0(const float *rotation);
 	void setSkyBoxTexture007A58C0(const AsciiString *texture);
+	void loadSkyBoxSettings007A6120(DataChunkInput &file);
 
 	unsigned char m_beforeSkyBox[0x250];
 	SkyBoxRenderObject *volatile m_skyBox;
@@ -80,4 +88,15 @@ bool parseSkyBoxSettings007A5BA0(DataChunkInput &file, DataChunkInfo *, void *)
 	TheWaterRenderObj->setSkyBoxRotation007A15A0(&rotation);
 	TheWaterRenderObj->setSkyBoxTexture007A58C0(&texture);
 	return true;
+}
+
+void WaterSkyBoxSettingsOwner::loadSkyBoxSettings007A6120(DataChunkInput &file)
+{
+	{
+		AsciiString label("SkyboxSettings");
+		file.registerParser(label, AsciiString::TheEmptyString,
+			parseSkyBoxSettings007A5BA0, 0);
+	}
+	if (!file.parse(this))
+		throw 0xDEAD0005;
 }

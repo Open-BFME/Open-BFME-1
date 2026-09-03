@@ -83337,3 +83337,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setSkyBoxScale@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F,SkyboxSettings reader direct call through the retail ILT to 0x0079F1E0
 ?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0
 ?setSkyBoxTexture007A58C0@WaterSkyBoxSettingsOwner@@QAEXPBVAsciiString@@@Z,0x000435D1,SkyboxSettings reader direct call through the retail ILT to 0x007A58C0
+?TheEmptyString@AsciiString@@2V1@B,0x01336E50,SkyboxSettings parser registration empty parent label
+?parseSkyBoxSettings007A5BA0@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00047BDB,SkyboxSettings registration stores the retail ILT callback
