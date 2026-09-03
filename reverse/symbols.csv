@@ -83573,3 +83573,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?findConditionIndex@GarrisonContain@@IAEHXZ,0x00043405,call-site callee of GarrisonContain::calcBestGarrisonPosition; ILT 0x00043405
+?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,call-site callee of BfmeThing300::bfmeGo; ILT -> TunnelTracker::onTunnelDestroyed
