@@ -83678,3 +83678,9 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?initFromName@AudioEventRTS@@QAEXABVAsciiString@@@Z,0x0004A86D,ILT to 0x000B2610 used by thin AudioEventRTS constructors
 ___GetLCIDFromName,0x0084F020,STLport 4.5.3 __GetLCIDFromName; edx/ebx private-convention callee of __TranslateToSystem
 ___ParseLocaleString,0x0084E0C0,STLport 4.5.3 __ParseLocaleString; eax-in private-convention callee of __GetLCIDFromName
+?getVictimAntiMask@@YAHPBVObject@@@Z,0x001EBDA0,same-TU esi-convention callee of WeaponSet::chooseBestWeaponForTarget
+?bfmeCanAffect@Weapon@@QBE_NPBVObject@@0@Z,0x00025EE1,ILT used by WeaponSet::chooseBestWeaponForTarget
+?bfmeClampedRange@Weapon@@QBEMXZ,0x00048324,ILT used by WeaponSet::chooseBestWeaponForTarget
+?bfmeEstimate@Weapon@@QBEMPBVObject@@0@Z,0x0001538E,ILT used by WeaponSet::chooseBestWeaponForTarget
+?bfmeSpecialOk@Weapon@@QBE_NPBVObject@@0@Z,0x00032123,ILT used by WeaponSet::chooseBestWeaponForTarget
+?isAnyKindOf@Thing@@QBE_NABUKindOfMask@@@Z,0x0004250A,KindOfMask struct ILT used by WeaponSet::chooseBestWeaponForTarget

@@ -1,19 +1,10 @@
-// ?chooseBestWeaponForTarget@WeaponSet@@QAE_NPBVObject@@0W4WeaponChoiceCriteria@@W4CommandSourceType@@@Z
-// partial score=0.96 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: WeaponSet::chooseBestWeaponForTarget, retail 0x001EC3F0 size 1011.
-// Probe 980B / 41 diffs / score 0.96. Exact through +0x211 (lock, ret 0x10,
-// frame 0x40, ebx=victim, push ebp only at has-victim, mov ebp,3,
-// [ecx+ebp*4+8], slotAlways +0x2e, mov esi,ebx; call getVictimAntiMask,
-// Coord3D copy-then-subtract, damage 1.0/0.0 after second canAffect,
-// KindOf lea esi,[ebp+ebp*2]; shl 3, switch sub/dec/dec, or ebp,-1).
-//
-// Walls: two SIB bytes ([esi+ecx+disp] vs retail [ecx+esi+disp] at +0x88/+0x28)
-// and a 31B-shorter epilogue -- found stays in al so the stores use ecx/edx
-// and skip `mov al,[esp+6]`; backup does not stack-store found=1; none uses
-// xor al instead of reloading the found byte. KindOf arrays recreate a 0x24
-// induction and grow the frame to 0x44. Same-TU static helper is required
-// for the esi private convention (pair with getAbleToAttack 0x001EBEB0).
+// Focused TU: WeaponSet.cpp keeps ZH WEAPONSLOT_COUNT==3; this body walks 4.
+// Same-TU static getVictimAntiMask is MSVC's private esi convention
+// (retail `mov esi,ebx; call 0x001EBDA0`). KindOf arrays recreate a 0x24
+// induction; a named kindOff local is what flips SIB to [ecx+esi+disp].
+// Single return of found is what clones the three retail epilogues.
 
 enum WeaponStatus
 {
@@ -140,16 +131,6 @@ class WeaponTemplateSet
 public:
 	char m_pad_00[0x18];
 	unsigned int m_autoChooseMask[4];
-
-	KindOfMask *nth88(int i)
-	{
-		return (KindOfMask *)((char *)this + 0x88 + ((i + i * 2) << 3));
-	}
-
-	KindOfMask *nth28(int i)
-	{
-		return (KindOfMask *)((char *)this + 0x28 + ((i + i * 2) << 3));
-	}
 };
 
 class WeaponSet
@@ -302,7 +283,8 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		else if (distance < minRange)
 			weaponIsReady = false;
 
-		KindOfMask *mask88 = m_curWeaponTemplateSet->nth88(i);
+		int kindOff = (i + i * 2) << 3;
+		KindOfMask *mask88 = (KindOfMask *)((char *)m_curWeaponTemplateSet + 0x88 + kindOff);
 		if (bfmeAnySix(mask88->bits))
 		{
 			if (victim->isAnyKindOf(*mask88))
@@ -319,7 +301,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 			}
 		}
 
-		KindOfMask *mask28 = m_curWeaponTemplateSet->nth28(i);
+		KindOfMask *mask28 = (KindOfMask *)((char *)m_curWeaponTemplateSet + 0x28 + kindOff);
 		if (bfmeAnySix(mask28->bits) && victim->isAnyKindOf(*mask28))
 		{
 			damage = 1.0e10f;
@@ -376,16 +358,13 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 	}
 
 	if (found)
-	{
 		m_curWeapon = (WeaponSlotType)currentDecision;
-		return found;
-	}
-	if (foundBackup)
+	else if (foundBackup)
 	{
 		m_curWeapon = (WeaponSlotType)currentDecisionBackup;
 		found = true;
-		return found;
 	}
-	m_curWeapon = PRIMARY_WEAPON;
+	else
+		m_curWeapon = PRIMARY_WEAPON;
 	return found;
 }
