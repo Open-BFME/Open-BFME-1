@@ -83646,3 +83646,8 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?removeAptObject@WindowManager@@QAEXABVAsciiString@@@Z,0x0001E277,AsciiString alias of the BannerUI removeAptObject ILT; Home dtor removes tooltipPlayerLevelIcon
 ?g_onlineHomeGadgetsImage@@3PBDA,0x012B7918,char* to OnlineHome/Gadgets/Image used by Home dtor 0x00545FF0
 ?g_onlineHomeGadgetsImageLevelIconMain@@3PBDA,0x012B791C,char* to OnlineHome/Gadgets/ImageLevelIconMain used by Home dtor 0x00545FF0
+?TheBfmeOnlineCustomMatch@@3PAVBfmeAptScreenOnlineCustomMatch@@A,0x012F49FC,OnlineCustomMatch singleton compared and cleared by destructor 0x00538CE0
+??_7BfmeAptScreenOnlineCustomMatch@@6B@,0x01107484,OnlineCustomMatch primary vtable installed by ctor 0x00545310 and destructor 0x00538CE0
+??_7BfmeAptScreenSecondary@@6B@,0x01105690,second-base vtable restored at +0x3C after CustomMatch member dtors
+??1BfmeCustomMatchMember40@@QAE@XZ,0x0000B42E,CustomMatch member at +0x40 destructor ILT used by 0x00538CE0
+??_7BfmeAptScreenOnlineCustomMatch@@6BBfmeAptScreenSecondary@@@,0x01107438,OnlineCustomMatch secondary MI vtable at +0x3C
