@@ -76632,6 +76632,8 @@ name,address,notes
 ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ,0x000205F4
 ?didAllEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5580,Team::didAllEnter entry (m_enteredOrExited early-out); caller evaluateTeamEnteredAreaEntirely 0x00324E40
 ?didAllExit@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F58B0,Team::didAllExit entry; caller evaluateTeamExitedAreaEntirely 0x00324F60
+?didEnter@BfmeObjectInsideView@@QBE_NPAVPolygonTrigger@@@Z,0x0002B24C,ILT 0x0002B24C to Object::didEnter 0x001C8C40; decoded from Team::didPartialEnter 0x000F56D0
+?didExit@BfmeObjectInsideView@@QBE_NPAVPolygonTrigger@@@Z,0x0003C9AC,ILT 0x0003C9AC to Object::didExit 0x001C8CE0; decoded from Team::didPartialExit 0x000F57C0
 ?didPartialEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F56D0,Team::didPartialEnter entry; caller evaluateTeamEnteredAreaPartially 0x00324ED0
 ?didPartialExit@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F57C0,Team::didPartialExit entry; caller evaluateTeamExitedAreaPartially 0x00324FF0
 ?disableRadar@Player@@QAEXXZ,0x0003C2BD
