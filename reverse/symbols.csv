@@ -83579,3 +83579,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
 ?bfmeSetVoid4D0@BfmeSet4D0@@QAEXXZ,0x00008337,Open-BFME6 void set for the 0x0022F4D0 dispatch; body at 0x00411DD0
 ?add@AIGroup@@QAEXPAVObject@@@Z,0x0002B7E2,Team::getTeamAsAIGroup matched caller; ILT to 0x001526C0
+?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
+?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
