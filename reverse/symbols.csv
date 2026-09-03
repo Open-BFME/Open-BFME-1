@@ -73467,6 +73467,7 @@ name,address,notes
 ?bfmeClearVTU@BfmeStrVTU@@QAEXXZ,0x00887940,pin
 ?bfmeClearVTY@BfmeStrVTY@@QAEXXZ,0x008881D0,pin
 ?bfmeClearVUF@BfmeStrVUF@@AAEXXZ,0x00887940,pin
+?bfmeClearVUG@BfmeStrVUG@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
