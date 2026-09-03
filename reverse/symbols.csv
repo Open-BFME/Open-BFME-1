@@ -73388,6 +73388,7 @@ name,address,notes
 ?bfmeClearVJZ@BfmeColorVJZ@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSV@BfmeStrVSV@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSW@BfmeStrVSW@@QAEXXZ,0x00887940,pin
+?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
