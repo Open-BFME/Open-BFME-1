@@ -2254,7 +2254,9 @@ name,address,notes
 ??0BfmeStaticThingE@@QAE@XZ,0x000022D9,Open-BFME5 the constructor the function-local static at 0x005D9CA0 runs
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
 ??0BfmeStrAVTV@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrAVTW@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrBVTV@@QAE@ABV0@@Z,0x00888400,pin
+??0BfmeStrBVTW@@QAE@ABV0@@Z,0x00888400,pin
 ??0BfmeStrVKI@@QAE@PBD@Z,0x0089E680,alias of landed ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z; same thiscall const-char body used as BfmeStrVKI constructor
 ??0BfmeStrVSY@@QAE@ABV0@@Z,0x0001AB86,pin
 ??0BfmeStrVTA@@QAE@ABV0@@Z,0x00887B60,pin
@@ -4300,7 +4302,9 @@ name,address,notes
 ??1BfmeSplitResultListName@@QAE@XZ,0x00887940,Open-BFME5 HordeContain split-result-list name release body
 ??1BfmeSplitValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the tree removes at 0x00587670 and 0x00587750 run
 ??1BfmeStrAVTV@@QAE@XZ,0x00887940,pin
+??1BfmeStrAVTW@@QAE@XZ,0x00887940,pin
 ??1BfmeStrBVTV@@QAE@XZ,0x008881D0,pin
+??1BfmeStrBVTW@@QAE@XZ,0x008881D0,pin
 ??1BfmeStrVSO@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTA@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTB@@QAE@XZ,0x00887940,pin
