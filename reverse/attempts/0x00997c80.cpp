@@ -1,5 +1,5 @@
 // _luaV_execute
-// partial score=0.94 date=2026-09-02
+// partial score=0.97 date=2026-09-03
 // cl: /MD
 /* Lua 4.0.1 (TeCGraf, PUC-Rio), lua.org lua-4.0.1.tar.gz, flattened from
    src/, src/lib/, src/luac/ and include/.  Statically linked into
@@ -674,19 +674,22 @@ StkId luaV_execute (lua_State *L, const Closure *cl, StkId base) {
       }
       case OP_JMPONF: {
         int t = ttype(top-1);
-        if (t == LUA_TNIL) { dojump(pc, i); break; }
-        if (t == 6) {
-          if (!bvalue(top-1)) { dojump(pc, i); break; }
+        if (t == LUA_TNIL || (t == 6 && !bvalue(top-1))) {
+          dojump(pc, i);
         }
-        top--;
+        else {
+          top--;
+        }
         break;
       }
       case OP_JMP: {
         dojump(pc, i);
         break;
       }
-      case OP_PUSHNILJMP: {
-        ttype(top++) = LUA_TNIL;
+      case OP_PUSHNILJMP: {  /* EA: pushes a real boolean false, not nil */
+        bvalue(top) = 0;
+        ttype(top) = 6;
+        top++;
         pc++;
         break;
       }
