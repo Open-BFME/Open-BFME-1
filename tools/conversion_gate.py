@@ -132,10 +132,23 @@ def gen_asm_offences(old, new):
     return offences
 
 
-def show(rev, path):
+class _MissingSource(Exception):
+    """A ledger row's source is unreadable at the revision being judged.
+
+    Raised instead of exiting: HEAD itself can carry such rows (a commit that
+    added rows without adding the file), and crashing on them blocks the very
+    repair commit that retracts them. Callers treat a missing source as
+    proving nothing -- neither clean nor naked -- and check_csv (which runs
+    beside this gate in the hook) still rejects any NEW row in that state.
+    """
+
+
+def show(rev, path, allow_missing=False):
     spec = (":%s" if rev == ":" else rev + ":%s") % path
     proc = subprocess.run(["git", "show", spec], capture_output=True, text=True)
     if proc.returncode != 0:
+        if allow_missing:
+            raise _MissingSource(spec)
         raise SystemExit("conversion_gate: cannot read %s — a matched row's source "
                          "must exist at its revision (ledger corruption?)" % spec)
     return proc.stdout
@@ -155,15 +168,26 @@ def ledger_blob(rev):
 
 
 def naked_keys(rev, all_rows, sources):
-    """Row keys naked at `rev`, judged by progress.py's per-row machinery.
+    """(Row keys naked at `rev`, sources unreadable at `rev`).
 
-    Feeds naked_cpp_rows every matched row of each affected source, not just
-    the changed rows: its sole-row-sole-body proof is only valid on whole files.
+    Judged by progress.py's per-row machinery. Feeds naked_cpp_rows every
+    matched row of each affected source, not just the changed rows: its
+    sole-row-sole-body proof is only valid on whole files. A source missing
+    at `rev` proves nothing either way, so its rows are withheld from the
+    proof and reported beside it for clean_sources to exclude as well.
     """
     matched = {(r["name"], r["target_rva"]): (int(r["target_size"]), r["source"])
                for rows in all_rows.values() for r in rows if r["source"] in sources}
-    texts = {s: show(rev, s) for s in sources if Path(s).suffix.lower() in CPP_SUFFIXES}
-    return naked_cpp_rows(matched, texts)
+    texts, missing = {}, set()
+    for s in sources:
+        if Path(s).suffix.lower() not in CPP_SUFFIXES:
+            continue
+        try:
+            texts[s] = show(rev, s, allow_missing=True)
+        except _MissingSource:
+            missing.add(s)
+    matched = {k: v for k, v in matched.items() if v[1] not in missing}
+    return naked_cpp_rows(matched, texts), missing
 
 
 def clean_coverage_lost(old, new):
@@ -176,17 +200,18 @@ def clean_coverage_lost(old, new):
     if not changed:
         return []
 
-    def clean_sources(rva, rows_by_rva, naked):
+    def clean_sources(rva, rows_by_rva, naked, missing):
         return sorted({r["source"] for r in rows_by_rva[rva]
                        if not r["source"].endswith(".asm")
+                       and r["source"] not in missing
                        and (r["name"], r["target_rva"]) not in naked})
 
-    old_naked = naked_keys(old, old_rows, {r["source"] for rva in changed for r in old_rows[rva]})
-    new_naked = naked_keys(new, new_rows, {r["source"] for rva in changed for r in new_rows[rva]})
+    old_naked, old_missing = naked_keys(old, old_rows, {r["source"] for rva in changed for r in old_rows[rva]})
+    new_naked, new_missing = naked_keys(new, new_rows, {r["source"] for rva in changed for r in new_rows[rva]})
     lost = []
     for rva in changed:
-        before = clean_sources(rva, old_rows, old_naked)
-        if before and not clean_sources(rva, new_rows, new_naked):
+        before = clean_sources(rva, old_rows, old_naked, old_missing)
+        if before and not clean_sources(rva, new_rows, new_naked, new_missing):
             lost.append((rva, old_rows[rva][0]["name"], ", ".join(before),
                          ", ".join(sorted({r["source"] for r in new_rows[rva]}))))
     return lost
