@@ -80387,6 +80387,7 @@ name,address,notes
 ?isInMultiplayerGame@GameLogic@@QAE_NXZ,0x0005C5E0,returns m_gameMode (+0x10c) == 1 GAME_LAN or == 5 GAME_INTERNET which is the ZH inline isInMultiplayerGame; called by the MSG_CLEAR_GAME_DATA arm at 0x003977A4 via ILT 0x000062D5; the converted GameLogic::testTimeOut uses it
 ?isInMultiplayerOrSkirmishGame@GameLogicPortraitShim@@QAE_NXZ,0x0001E0AB,BFME portrait selector ILT to GameLogic mode predicate
 ?isInMultiplayerOrSkirmishGame@Open2Logic143730@@QAE_NXZ,0x0001E0AB,Open2 0x00143730 portrait twin callee
+?isInside@BfmeObjectInsideView@@QBE_NPAVPolygonTrigger@@@Z,0x0000D6ED,ILT 0x0000D6ED to Object::isInside 0x001BEA90; decoded from Team::allInside 0x000F5A30
 ?isKindOf@BFMEActionThing@@QBE_NH@Z,0x0003251F,BFME Thing kind helper ILT decoded from ActionManager::canGetHealedAt
 ?isKindOf@Drawable@@QBE_NH@Z,0x0003251F,addShadow Drawable type check via retail ILT
 ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,REL32 pin from TunnelTracker::updateNemesis @0xF90D0
