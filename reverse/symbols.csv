@@ -83567,3 +83567,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
 ?assign@BuffNuggetFXNuggetMember@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by BuffNuggetFXNugget ctor
 ??1BuffNuggetFXNuggetMember@@QAE@XZ,0x00026AB2,12-byte tail destructor ILT used by BuffNuggetFXNugget ctor EH
+?bfmeG@BfmeList2F260@@QAEXHH@Z,0x0002818C,Open-BFME6 list method tail-called by Gen_0022F260 forwarder; body at 0x000688A5
