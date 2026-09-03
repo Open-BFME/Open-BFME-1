@@ -2260,6 +2260,7 @@ name,address,notes
 ??0BfmeStrVTF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTH@@QAE@ABV0@@Z,0x0001400B,pin
 ??0BfmeStrVTI@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrVTN@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -75697,6 +75698,7 @@ name,address,notes
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
 ?bfmeTouchVRA@BfmeCellVRA@@QAEXPAVBfmePartVRA@@H@Z,0x008FC300,pin
 ?bfmeTouchVRB@BfmeCellVRB@@QAEXPAVBfmePartVRB@@H@Z,0x008FC3B0,pin
+?bfmeTouchVTN@BfmeSinkVTN@@QAEPAVBfmeHostVTN@@XZ,0x000022BB,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
