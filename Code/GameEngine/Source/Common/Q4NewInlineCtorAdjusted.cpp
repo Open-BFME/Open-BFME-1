@@ -2,7 +2,9 @@
 //
 // Seven 102-byte __thiscall members identical in shape to
 // Q4NewInlineCtorMembers.cpp except that the receiver is ADJUSTED BY -0x14
-// before it is handed to the constructor:
+// before it is handed to the constructor, plus one 105-byte sibling at
+// 0x005E5D90 whose only size delta is `push 0x90` (5B) versus `push imm8`
+// (2B) for the smaller allocations:
 //
 //     push <SIZE> / mov edi,ecx / call operator new / mov esi,eax
 //     test / je null
@@ -64,4 +66,7 @@ Q4_MID_BODY( 005E7620, char m_pad[ 0x1c ]; )
 
 Q4_MID_DECL( 005E7940,  )
 Q4_MID_BODY( 005E7940, char m_pad[ 0x34 ]; )
+
+Q4_MID_DECL( 005E5D90,  )
+Q4_MID_BODY( 005E5D90, char m_pad[ 0x84 ]; )
 

@@ -2124,6 +2124,7 @@ name,address,notes
 ??0BaseX005ED510@@QAE@PAVHostX005ED510@@@Z,0x005ED590,ctor of the base subobject constructed inline by the 99-byte new-with-inlined-ctor family (Q4NewInlineCtorMembers.cpp); address-derived name; identity not recovered
 ??0BaseX005ED630@@QAE@PAVHostX005ED630@@@Z,0x005ED6B0,ctor of the base subobject constructed inline by the 99-byte new-with-inlined-ctor family (Q4NewInlineCtorMembers.cpp); address-derived name; identity not recovered
 ??0BaseY005E4C10@@QAE@PAVOwnerY005E4C10@@@Z,0x005FD6A0,ctor of the base subobject constructed inline by the 102-byte adjusted-owner new family (Q4NewInlineCtorAdjusted.cpp); address-derived name; identity not recovered
+??0BaseY005E5D90@@QAE@PAVOwnerY005E5D90@@@Z,0x005EFF60,ctor of the base subobject constructed inline by the 105-byte adjusted-owner new at 0x005E5D90; address-derived name
 ??0BaseY005E6030@@QAE@PAVOwnerY005E6030@@@Z,0x005FDF80,ctor of the base subobject constructed inline by the 102-byte adjusted-owner new family (Q4NewInlineCtorAdjusted.cpp); address-derived name; identity not recovered
 ??0BaseY005E6160@@QAE@PAVOwnerY005E6160@@@Z,0x005FEC70,ctor of the base subobject constructed inline by the 102-byte adjusted-owner new family (Q4NewInlineCtorAdjusted.cpp); address-derived name; identity not recovered
 ??0BaseY005E6290@@QAE@PAVOwnerY005E6290@@@Z,0x005FCA70,ctor of the base subobject constructed inline by the 102-byte adjusted-owner new family (Q4NewInlineCtorAdjusted.cpp); address-derived name; identity not recovered
