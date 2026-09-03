@@ -73031,6 +73031,7 @@ name,address,notes
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignVSE@BfmeStrVSE@@QAEAAV1@PBD0@Z,0x0002B297,pin
+?bfmeAssignVSH@BfmeStrVSH@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
@@ -75293,6 +75294,7 @@ name,address,notes
 ?bfmeSetVSD@BfmeItemVSD@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSF@BfmeStrVSF@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSG@BfmeStrVSG@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVSH@BfmeStrVSH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75356,6 +75358,7 @@ name,address,notes
 ?bfmeStep1@Gen_004410A0@@AAEXXZ,0x000459CB,Open-BFME5 ILT the three-step runner at 0x004410A0 calls first
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
+?bfmeStep1VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0002A3B0,pin
 ?bfmeStep1_004647E0@@YAXXZ,0x0002B314,Open-BFME5 ILT the pair runner at 0x004647E0 calls first
 ?bfmeStep1_00589680@@YAXXZ,0x0003643A,Open-BFME5 ILT the pair runner at 0x00589680 calls first
 ?bfmeStep1_009A75E0@@YAXXZ,0x009B3A00,Open-BFME5 the routine the pair runner at 0x009A75E0 calls first
@@ -75363,6 +75366,7 @@ name,address,notes
 ?bfmeStep2@Gen_004410A0@@AAEXXZ,0x0000B613,Open-BFME5 ILT the three-step runner at 0x004410A0 calls second
 ?bfmeStep2@Gen_0077F000@@AAEXXZ,0x0002398E,Open-BFME5 ILT the three-step runner at 0x0077F000 calls second
 ?bfmeStep2@Gen_007892D0@@AAEXXZ,0x0003879E,Open-BFME5 ILT the three-step runner at 0x007892D0 calls second
+?bfmeStep2VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0001A870,pin
 ?bfmeStep2_004647E0@@YAXXZ,0x00039F1D,Open-BFME5 ILT the pair runner at 0x004647E0 tail-jumps to
 ?bfmeStep2_00589680@@YAXXZ,0x000216D9,Open-BFME5 ILT the pair runner at 0x00589680 tail-jumps to
 ?bfmeStep2_009A75E0@@YAXXZ,0x009B3B40,Open-BFME5 the routine the pair runner at 0x009A75E0 tail-jumps to
@@ -75370,7 +75374,10 @@ name,address,notes
 ?bfmeStep3@Gen_004410A0@@AAEXXZ,0x0002E8CA,Open-BFME5 ILT the three-step runner at 0x004410A0 tail-jumps to
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
+?bfmeStep3VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0000BB0E,pin
+?bfmeStep4VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x00045DAE,pin
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
+?bfmeStep5VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x000236A5,pin
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
 ?bfmeStepA1046@@YAXPAUBfmeSubA1046@@@Z,0x00867B00,pin
