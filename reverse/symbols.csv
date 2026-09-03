@@ -73029,6 +73029,7 @@ name,address,notes
 ?bfmeAssignBVIK@BfmeSubBVIK@@QAEXABV1@@Z,0x0095C860,pin
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
+?bfmeAssignVSE@BfmeStrVSE@@QAEAAV1@PBD0@Z,0x0002B297,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
@@ -82156,6 +82157,7 @@ __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWaitVHM@@YGKPAXK@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
+__imp__GetLocalTime@4,0x01358DB8,Open-BFME5 retail GetLocalTime import pointer
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
@@ -82203,6 +82205,7 @@ __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x00F593BC,pin
 __imp__ftell,0x00F593EC,pin
 __imp__itoa,0x00F5935C,pin
+__imp__sprintf,0x0135948C,Open-BFME5 retail sprintf import pointer
 __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
 __imp__strchr,0x00F5949C,pin
 __imp__strdup,0x00F59308,pin
