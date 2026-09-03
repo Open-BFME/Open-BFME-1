@@ -319,20 +319,6 @@ __forceinline BFMEObjectLookup *bfmePathGameLogic()
 #define BFME_PATH_AI bfmePathAI()
 #define BFME_PATH_GAME_LOGIC bfmePathGameLogic()
 
-__forceinline Object *bfmeFindRepulsor( BFMEObjectLookup *gameLogic,
-	BFMEApproachPathFields *retail, Coord3D *position )
-{
-	position->x = -1000.0f;
-	position->y = -1000.0f;
-	position->z = 0.0f;
-	return gameLogic->findObjectByID( retail->m_repulsor1 );
-}
-
-__forceinline Int bfmeCrushableFlag( UnsignedByte level )
-{
-	return level >= 4;
-}
-
 // BFME's pathfinder position test takes the position first and the object
 // last, and asks nothing about crush level; the reference Pathfinder declares
 // Zero Hour's argument list. The layer accessor is a call here, not the
@@ -1091,9 +1077,8 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		pos1.y = -1000.0f;
 		pos1.z = 0.0f;
 		Object *repulsor;
-		ObjectID repulsorID = retail->m_repulsor1;
-		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		repulsor = gameLogic->findObjectByID(repulsorID);
+		BFMEObjectLookup * const gameLogic = BFME_PATH_GAME_LOGIC;
+		repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
@@ -1105,9 +1090,9 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 			pos2 = *repulsor->getPosition();
 		}
 		Object *object = retail->m_object;
-		const TAiData *aiData = BFME_PATH_AI->getAiData();
 		Int extraDistance = (Int)*reinterpret_cast<const volatile Real *>(
 			reinterpret_cast<const char *>(object) + 0x18C);
+		const TAiData *aiData = BFME_PATH_AI->getAiData();
 		retail->m_path = pathfinder->findSafePath(object,
 			*reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>( this ) + 0x1A8),
 			object->getPosition(),
@@ -1125,7 +1110,6 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		}
 		return;
 	}
-
 	if (retail->m_isApproachPath &
 		!reinterpret_cast<BFMEDestroyPathAIUpdate *>( this )->isDoingGroundMovement())
 	{

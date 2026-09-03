@@ -57,6 +57,7 @@ inline UnicodeString::UnicodeString( const UnicodeString &other )
 }
 
 void deleteNotificationBox( void );
+void b_00042a50( void );
 static void raiseOverlays( void );
 
 // BFME WindowLayout vtable order (see Code/.../window_layout.h):
@@ -133,7 +134,7 @@ void GSMessageBoxOk(UnicodeString title, UnicodeString message, GameWinMsgBoxFun
 {
 	if (reOpenPlayerInfoFlag)
 	{
-		deleteNotificationBox();
+		b_00042a50();
 		reOpenPlayerInfoFlag = FALSE;
 	}
 	if (okFunc)
@@ -153,7 +154,7 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 {
 	if (reOpenPlayerInfoFlag)
 	{
-		deleteNotificationBox();
+		b_00042a50();
 		reOpenPlayerInfoFlag = FALSE;
 	}
 	if (okFunc)
@@ -161,8 +162,9 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
+	okFunc = newOkFunc;
 	cancelFunc = newCancelFunc;
-	okFunc = (reOpenPlayerInfoFlag = TRUE, newOkFunc);
+	reOpenPlayerInfoFlag = TRUE;
 }
 
 /**
@@ -173,7 +175,7 @@ void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBox
 {
 	if (reOpenPlayerInfoFlag)
 	{
-		deleteNotificationBox();
+		b_00042a50();
 		reOpenPlayerInfoFlag = FALSE;
 	}
 	if (okFunc)
@@ -181,8 +183,9 @@ void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBox
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
+	okFunc = newYesFunc;
 	cancelFunc = newNoFunc;
-	okFunc = (reOpenPlayerInfoFlag = TRUE, newYesFunc);
+	reOpenPlayerInfoFlag = TRUE;
 }
 
 /**

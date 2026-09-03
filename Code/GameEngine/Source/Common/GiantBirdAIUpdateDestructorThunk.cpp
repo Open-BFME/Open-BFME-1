@@ -95,6 +95,8 @@ private:
 
 GiantBirdMemberA::~GiantBirdMemberA()
 {
+	GiantBirdMemberA *self = this;
+	(void)self;
 }
 
 GiantBirdAIUpdate::~GiantBirdAIUpdate()

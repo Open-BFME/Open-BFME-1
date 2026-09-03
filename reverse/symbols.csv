@@ -1991,6 +1991,7 @@ name,address,notes
 ??0AHB_BaseModuleData@@QAE@XZ,0x0000F0A6,AutoHealBehaviorModuleData constructs the shared module-data base through this ILT
 ??0AIAttackSwoopThenIdleStateMachine@@QAE@PAXVAsciiString@@@Z,0x00025095,AIAttackSwoopThenIdleStateMachine constructor ILT identified by exact state-machine literal and matching allocation size
 ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z,0x00030EA4,AICommandParms constructor resolves to the retail ILT at 0x00030EA4 and body 0x00185910; AICommandInterface::aiEnter constructs AICMD_ENTER parameters through this exact target
+??0AICommandParmsStorage@@QAE@ABUAICommandParms@@@Z,0x00019E2A,AIUpdateInterface_aiDoCommand placement copy aliases the known storage thunk
 ??0AIGroup@@QAE@XZ,0x0002A031,Open-BFME5 ILT; ?createGroup@AI@@QAEPAVAIGroup@@XZ at 0x0014C630 runs it on the 0x40 bytes it allocates
 ??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x0014F280,base ctor of 13 retail State subclasses; the reference declares exactly those classes deriving from AIInternalMoveToState and its ctor takes (StateMachine* AsciiString) by value which matches the copy-then-pass at this address
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
@@ -10440,6 +10441,7 @@ name,address,notes
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
 ?LoadAndCreateD3DShader@BfmeShaderLoader16@@SAHPBDPAI@Z,0x00016CB6,ILT of 2-arg LoadAndCreateD3DShader from ScreenZoomFilter::init
 ?LoadAndCreateD3DShader@BfmeShaderLoader@@SAJPBDPAK@Z,0x0001FC99,alias of ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z pinned at the same ILT; W3DShaderManager.cpp compiles the reference five-argument declaration so the BFME two-argument spelling needs a name of its own
+?LoadAndCreateD3DShader@BfmeVertexShaderLoader@@SAJPBDPAK@Z,0x000078CE,BFME Glow vertex shader loader ILT called by W3DShaderManager::init
 ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
 ?Load_W3D@AdaptiveDeltaMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977CC0
 ?Load_W3D@TimeCodedMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977A00
@@ -78549,6 +78551,7 @@ name,address,notes
 ?getBestWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CC90,by-value side prefix + "BestWinStreak" at VA 0x01080504 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getBestWinStreak
 ?getBool@Rva007E8810Message@@QAE_NPBD_N@Z,0x007E89C0,Y4 lane: FESL message lookup bool field by key with default; ret 8; returns _N in al
 ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z,0x0002C7CD,incremental-link thunk
+?getBounds@Bridge@@QBEXPAURegion2D@@@Z,0x0000FEE8,ILT target for BFME bridge region bounds copy
 ?getBounds@Rva8BB1A0BoundsSource@@QAEXPAURva8BB1A0Bounds@@@Z,0x008AE2E0,Open-BFME5 bounds getter pin
 ?getBountyBonusPercent@CampaignObject@@QAEHXZ,0x00029CBC,address-derived living-world bounty adjuster reads this percentage through the retail ILT
 ?getBridgeBehaviorInterfaceFromObject@BridgeBehavior@@SAPAVBridgeBehaviorInterface@@PAVObject@@@Z,0x00010424,Bridge::updateDamageState calls the existing ILT thunk before the scaffold check
@@ -80533,6 +80536,7 @@ name,address,notes
 ?nextToken@AsciiString@@QAE_NPAV1@PBD@Z,0x008880E0,same body the ledger claims as ?nextToken@?$StringBase@D@@QAE_NPAV1@PBD@Z
 ?nodeAllocate@_STL@@YAPAXI@Z,0x0082E540,Open-BFME5 STLport node allocator allocate as the _Rb_tree _M_copy body reaches it
 ?nodeDeallocate@_STL@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 STLport node allocator deallocate as the _Rb_tree _M_erase body reaches it
+?normAngle@@YIXAAM@Z,0x0073A900,address-derived W3D camera angle normalizer
 ?normalizeAngle@@YAMM@Z,0x0000991C
 ?noteAssign@U4Notify@@QAEXPAVU4Assign006057C0@@@Z,0x00409040,U4 lane: notify entry called by the assignment operator at 0x006057C0; address-derived name
 ?noteOwner@U4Notify@@QAEXPAVU4Owner00604C00@@@Z,0x004090C0,U4 lane: notify entry called by the detach at 0x00604C00; address-derived name

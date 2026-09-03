@@ -28,8 +28,12 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	{
 		destroyPath();
 		Coord3D pos1, pos2;
-		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		Object *repulsor = bfmeFindRepulsor(gameLogic, retail, &pos1);
+		pos1.x = -1000.0f;
+		pos1.y = -1000.0f;
+		pos1.z = 0.0f;
+		Object *repulsor;
+		BFMEObjectLookup * const gameLogic = BFME_PATH_GAME_LOGIC;
+		repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
@@ -212,9 +216,11 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 				moveAllies)
 			{
 				Pathfinder *alliesPathfinder = TheAI->pathfinder();
+				char crushableLevel =
+					reinterpret_cast<const BFMECrushableLevelQuery *>(object)->getCrushableLevel();
 				reinterpret_cast<BFMEPathfinderMoveAllies *>(alliesPathfinder)->moveAllies(
 					object, retail->m_path,
-					reinterpret_cast<const BFMECrushableLevelQuery *>(object)->getCrushableLevel() >= 4);
+					!(crushableLevel < 4));
 				if (g_012F0239 && g_012ED4FC)
 				{
 					((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,

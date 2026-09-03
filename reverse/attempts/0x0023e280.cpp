@@ -85,8 +85,9 @@ void parseHordeContainUnitTypePos( INI *ini, void *instance, void *store,
 		throw INIException( 3, "'Pos' expected" );
 
 	{
+		Int dummy = 0;
 		Coord2DTemp temp;
-		INI::parseCoord2D( ini, 0, &temp.value, 0 );
+		INI::parseCoord2D( ini, 0, &temp.value, (const void *)dummy );
 		slot->m_pos.x = temp.value.x;
 		slot->m_pos.y = temp.value.y;
 	}

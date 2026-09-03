@@ -201,7 +201,6 @@ Bool RiderChangeContain::isValidContainerFor(const Object* rider, Bool checkCapa
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?onContaining@RiderChangeContain@@UAEXPAVObject@@_N@Z present-unmatched
 void RiderChangeContain::onContaining( Object *rider, Bool wasSelected )
 {
 	Bool selected = wasSelected;
