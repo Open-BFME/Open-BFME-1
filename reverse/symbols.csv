@@ -83571,3 +83571,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeSmallRefillPR@@YAPAXI@Z,0x0082C870,STLport __node_alloc<false,0> _S_refill used by bfmeSmallAllocPR at 0x0082E450
 ?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
 ?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
+?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
+?findConditionIndex@GarrisonContain@@IAEHXZ,0x00043405,call-site callee of GarrisonContain::calcBestGarrisonPosition; ILT 0x00043405
