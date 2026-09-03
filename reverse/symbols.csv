@@ -78491,6 +78491,7 @@ name,address,notes
 ?getBestWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CC90,by-value side prefix + "BestWinStreak" at VA 0x01080504 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getBestWinStreak
 ?getBool@Rva007E8810Message@@QAE_NPBD_N@Z,0x007E89C0,Y4 lane: FESL message lookup bool field by key with default; ret 8; returns _N in al
 ?getBool@UserPreferences@@QBE_NVAsciiString@@_N@Z,0x0002C7CD,incremental-link thunk
+?getBountyBonusPercent@CampaignObject@@QAEHXZ,0x00029CBC,address-derived living-world bounty adjuster reads this percentage through the retail ILT
 ?getBounds@Rva8BB1A0BoundsSource@@QAEXPAURva8BB1A0Bounds@@@Z,0x008AE2E0,Open-BFME5 bounds getter pin
 ?getBridgeBehaviorInterfaceFromObject@BridgeBehavior@@SAPAVBridgeBehaviorInterface@@PAVObject@@@Z,0x00010424,Bridge::updateDamageState calls the existing ILT thunk before the scaffold check
 ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z,0x0000B802,ILT thunk used by call site
