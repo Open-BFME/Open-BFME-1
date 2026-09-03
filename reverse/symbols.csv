@@ -83586,31 +83586,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
-?StopStopwatch@@YAKK@Z,0x008793B0,nbench StopStopwatch; retail is Rva008793B0ClockDelta
-?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
-?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
-?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)
-?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
-?assign@BuffNuggetFXNuggetMember@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by BuffNuggetFXNugget ctor
-??1BuffNuggetFXNuggetMember@@QAE@XZ,0x00026AB2,12-byte tail destructor ILT used by BuffNuggetFXNugget ctor EH
-?bfmeG@BfmeList2F260@@QAEXHH@Z,0x0002818C,Open-BFME6 list method tail-called by Gen_0022F260 forwarder; body at 0x000688A5
-?bfmeSmallRefillPR@@YAPAXI@Z,0x0082C870,STLport __node_alloc<false,0> _S_refill used by bfmeSmallAllocPR at 0x0082E450
-?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
-?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
-?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
-?findConditionIndex@GarrisonContain@@IAEHXZ,0x00043405,call-site callee of GarrisonContain::calcBestGarrisonPosition; ILT 0x00043405
-?bfmeInit4D0@Gen_0022F4D0@@QAEXPAX@Z,0x00032E61,Open-BFME6 init call for the 0x0022F4D0 dispatch; body at 0x00227DC0
-?bfmeClear4D0@BfmeClear4D0@@QAE_NH@Z,0x0003C06A,Open-BFME6 disable-clear for the 0x0022F4D0 dispatch; body at 0x001C8440
-?bfmeCall4D0@BfmeCall4D0@@QAEXXZ,0x0002AE5F,Open-BFME6 no-arg call for the 0x0022F4D0 dispatch; body at 0x001CA2E0
-?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
-?bfmeSetVoid4D0@BfmeSet4D0@@QAEXXZ,0x00008337,Open-BFME6 void set for the 0x0022F4D0 dispatch; body at 0x00411DD0
-?add@AIGroup@@QAEXPAVObject@@@Z,0x0002B7E2,Team::getTeamAsAIGroup matched caller; ILT to 0x001526C0
-?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
-?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
-?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
-?bindShown@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0046DA70,WindowManager helper that showAptScreen forwards the named holder to after the vector push_back
-?bindShownWithArg@WindowManager@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x0046DBC0,WindowManager helper that showAptScreenWithArg forwards the named holder and void arg to after the vector push_back
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
 ?add@WideMulti@@QAEXPBUWideFieldParse@@I@Z,0x00850920,call-site callee of Rva0022A450::buildFieldParse
 ?g_bfmeTokA450@@3QBDB,0x00EA6918,token pointer for Rva0022A450 runtime FieldParse
