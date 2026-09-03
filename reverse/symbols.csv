@@ -83581,3 +83581,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?add@AIGroup@@QAEXPAVObject@@@Z,0x0002B7E2,Team::getTeamAsAIGroup matched caller; ILT to 0x001526C0
 ?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
 ?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
+?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
