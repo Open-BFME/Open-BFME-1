@@ -105,6 +105,16 @@ name,address,notes
 ?$S51@?1??getClassMemoryPool@FireWeaponWhenDamagedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF7C8,pool-glue cascade static (back-solved)
 ?$S52@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF7D0,pool-glue cascade static (back-solved)
 ?92c0@@YAXXZ,0x005992C0,gen-thunk body
+??$BfmeElementConstruct@UGen_t_001fa830_p12cd@@@_STL@@YAXPAUGen_t_001fa830_p12cd@@ABU1@@Z,0x00002086,Open-BFME5 target of the element construct call in 0x001FA5B0
+??$BfmeElementConstruct@UGen_t_002e19c0_p12cd@@@_STL@@YAXPAUGen_t_002e19c0_p12cd@@ABU1@@Z,0x0003B8F4,Open-BFME5 target of the element construct call in 0x002E1820
+??$BfmeElementConstruct@UGen_t_002e20c0_p12cd@@@_STL@@YAXPAUGen_t_002e20c0_p12cd@@ABU1@@Z,0x0001AE06,Open-BFME5 target of the element construct call in 0x002E1DA0
+??$BfmeElementConstruct@UGen_t_00375ea0_p12cd@@@_STL@@YAXPAUGen_t_00375ea0_p12cd@@ABU1@@Z,0x0003CB69,Open-BFME5 target of the element construct call in 0x003752F0
+??$BfmeElementConstruct@UGen_t_003b1050_p40cd@@@_STL@@YAXPAUGen_t_003b1050_p40cd@@ABU1@@Z,0x000181A6,Open-BFME5 ILT for the element construct called by 0x003B01B0
+??$BfmeElementConstruct@UGen_t_003b10a0_p48cd@@@_STL@@YAXPAUGen_t_003b10a0_p48cd@@ABU1@@Z,0x000200BD,Open-BFME5 ILT for the element construct called by 0x003B0320
+??$BfmeElementConstruct@UGen_t_003b1140_p12cd@@@_STL@@YAXPAUGen_t_003b1140_p12cd@@ABU1@@Z,0x000140E2,Open-BFME5 target of the element construct call in 0x003B05F0
+??$BfmeElementConstruct@UGen_t_003b1c00_p12cd@@@_STL@@YAXPAUGen_t_003b1c00_p12cd@@ABU1@@Z,0x00049F49,Open-BFME5 target of the element construct call in 0x003B14A0
+??$BfmeElementConstruct@UGen_t_003b1eb0_p12cd@@@_STL@@YAXPAUGen_t_003b1eb0_p12cd@@ABU1@@Z,0x0003C1A0,Open-BFME5 target of the element construct call in 0x003B1C50
+??$BfmeElementConstruct@UGen_t_00533100_p12cd@@@_STL@@YAXPAUGen_t_00533100_p12cd@@ABU1@@Z,0x00039AC7,Open-BFME5 target of the element construct call in 0x00532B50
 ??$BfmeElementConstruct@URva000E7F90Element@@@_STL@@YAXPAXABURva000E7F90Element@@@Z,0x0000E705,Open-BFME5 the element copy the RvaVectorAllocateAndCopy body at 0x000E7F90 calls
 ??$BfmeElementConstruct@URva000FB210Element@@@_STL@@YAXPAURva000FB210Element@@ABU1@@Z,0x0002E3BB,Open-BFME5 a callee of a vector push_back
 ??$BfmeElementConstruct@URva000FD960Element@@@_STL@@YAXPAXABURva000FD960Element@@@Z,0x0001D089,Open-BFME5 the element copy helper the vector allocate-and-copy at 0x000FD960 calls
@@ -4318,6 +4328,7 @@ name,address,notes
 ??1BfmeStrVTZ@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
+??1BfmeSubA@@QAE@XZ,0x00887940,Open-BFME5 ICF StringBase<char> release used by Glo012F1024Item::j_0003152a
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
 ??1BfmeSubF@@QAE@XZ,0x00887940,Open-BFME5 the held object member destructor the deleting list destructor at 0x0048C5B0 runs twice per node
 ??1BfmeTailP@@QAE@XZ,0x008881D0,Open-BFME5 the member destructor the destructor at 0x0039C060 runs first
@@ -9963,7 +9974,10 @@ name,address,notes
 ?BfmeRva0028DAB0TailCopy@_STL@@YAPAVRva0028DAB0Element@@PAV2@00ABU__false_type@1@@Z,0x000030DA,Open-BFME5 ILT for the 48-byte-element _STL::__uninitialized_copy at 0x0028D4E0
 ?BfmeRva002E7C50TailCopy@_STL@@YAPAVRva002E7C50Element@@PAV2@00ABU__false_type@1@@Z,0x0001BC93,Open-BFME5 ILT for the 28-byte-element _STL::__uninitialized_copy at 0x002E3050
 ?BfmeRva002FED10Construct@_STL@@YAXPAURva002FED10Element@@ABU2@@Z,0x000060CD,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x000953E0
+?BfmeRva00365020Copy@_STL@@YAPAURva00365020Element@@PAU2@00ABU__false_type@1@@Z,0x0000D242,Open-BFME5 ILT for the trailing uninitialized copy at 0x003644D0
 ?BfmeRva0038BAD0Construct@_STL@@YAXPAURva0038BAD0Element@@ABU2@@Z,0x0002A56D,Open-BFME5 ILT for the 8-byte-element _STL::_Construct at 0x00385CC0
+?BfmeRva003A35A0Copy@_STL@@YAPAURva003A35A0Element@@PAU2@00ABU__false_type@1@@Z,0x000287EA,Open-BFME5 ILT for the trailing uninitialized copy at 0x003A3410
+?BfmeRva003AC170Copy@_STL@@YAPAURva003AC170Element@@PAU2@00ABU__false_type@1@@Z,0x00048847,Open-BFME5 ILT for the trailing uninitialized copy at 0x003AC000
 ?BfmeRva003DDF00Copy@_STL@@YAPAURva003DDF00Element@@PAU2@00ABU__false_type@1@@Z,0x0000B938,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x003D72E0
 ?BfmeRva003DDF00FillN@_STL@@YAPAURva003DDF00Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x00017085,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x003D7330
 ?BfmeRva00531220Copy@_STL@@YAPAURva00531220Element@@PAU2@00ABU__false_type@1@@Z,0x00017B9D,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x0052D110
@@ -9971,12 +9985,15 @@ name,address,notes
 ?BfmeRva00573DB0Copy@_STL@@YAPAURva00573DB0Element@@PAU2@00ABU__false_type@1@@Z,0x00032FBF,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x00570880
 ?BfmeRva00573DB0FillN@_STL@@YAPAURva00573DB0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x0002932F,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x005708D0
 ?BfmeRva00583330TailCopy@_STL@@YAPAVRva00583330Element@@PAV2@00ABU__false_type@1@@Z,0x00015019,Open-BFME5 ILT for the 28-byte-element _STL::__uninitialized_copy at 0x00581C50
+?BfmeRva00607770Copy@_STL@@YAPAURva00607770Element@@PAU2@00ABU__false_type@1@@Z,0x00036971,Open-BFME5 ILT for the trailing uninitialized copy at 0x00607570
+?BfmeRva00608FE0Copy@_STL@@YAPAURva00608FE0Element@@PAU2@00ABU__false_type@1@@Z,0x0000A042,Open-BFME5 ILT for the trailing uninitialized copy at 0x00608DE0
 ?BfmeRva006AAF10Construct@_STL@@YAXPAURva006AAF10Element@@ABU2@@Z,0x00008BDE,Open-BFME5 ILT for the 4-byte-element _STL::_Construct at 0x0069C370
 ?BfmeRva006AAF10Destroy@_STL@@YAXPAURva006AAF10Element@@0ABU__false_type@1@@Z,0x000096FB,Open-BFME5 ILT for the 4-byte-element _STL::_Destroy range helper at 0x0069F100
 ?BfmeRva00719AF0Copy@_STL@@YAPAURva00719AF0Element@@PAU2@00ABU__false_type@1@@Z,0x000216FC,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x00717B80
 ?BfmeRva00719AF0FillN@_STL@@YAPAURva00719AF0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x00025018,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x00717BD0
 ?BfmeRva0076B160Copy@_STL@@YAPAURva0076B160Element@@PAU2@00ABU__false_type@1@@Z,0x00021247,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_copy at 0x007615E0
 ?BfmeRva0076B160FillN@_STL@@YAPAURva0076B160Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x00044094,Open-BFME5 ILT for the 12-byte-element _STL::__uninitialized_fill_n at 0x0075E8B0
+?BfmeRva0077CC10Copy@_STL@@YAPAURva0077CC10Element@@PAU2@00ABU__false_type@1@@Z,0x0003755B,Open-BFME5 ILT for the trailing uninitialized copy at 0x0077C6C0
 ?BfmeRva009F56C0Copy@_STL@@YAPAURva009F56C0Element@@PAU2@00ABU__false_type@1@@Z,0x009F4580,Open-BFME5 the 24-byte-element _STL::__uninitialized_copy this body calls directly
 ?BfmeRva009F56C0FillN@_STL@@YAPAURva009F56C0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x009F45D0,Open-BFME5 the 24-byte-element _STL::__uninitialized_fill_n this body calls directly
 ?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
@@ -11208,10 +11225,19 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_001ac070_p48cd@@V?$allocator@UGen_t_001ac070_p48cd@@@_STL@@@_STL@@IAEXXZ,0x001AC010,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_001e71d0_p12pod@@V?$allocator@UGen_t_001e71d0_p12pod@@@_STL@@@_STL@@IAEXXZ,0x001E7180,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_001efe90_p12cd@@V?$allocator@UGen_t_001efe90_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000B7880,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0000DC60,Open-BFME5 target of the vector clear call in 0x001FA5B0
 ?_M_clear@?$vector@UGen_t_0020f660_p12pod@@V?$allocator@UGen_t_0020f660_p12pod@@@_STL@@@_STL@@IAEXXZ,0x0020F610,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_002304b0_p24cd@@V?$allocator@UGen_t_002304b0_p24cd@@@_STL@@@_STL@@IAEXXZ,0x00230450,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_002e13b0_p12cd@@V?$allocator@UGen_t_002e13b0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x002E1330,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_002e19c0_p12cd@@V?$allocator@UGen_t_002e19c0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00043D33,Open-BFME5 target of the vector clear call in 0x002E1820
 ?_M_clear@?$vector@UGen_t_002e1a90_p12cd@@V?$allocator@UGen_t_002e1a90_p12cd@@@_STL@@@_STL@@IAEXXZ,0x002E1A10,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_002e20c0_p12cd@@V?$allocator@UGen_t_002e20c0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00027F34,Open-BFME5 target of the vector clear call in 0x002E1DA0
+?_M_clear@?$vector@UGen_t_00375ea0_p12cd@@V?$allocator@UGen_t_00375ea0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0003088C,Open-BFME5 target of the vector clear call in 0x003752F0
+?_M_clear@?$vector@UGen_t_003b1050_p40cd@@V?$allocator@UGen_t_003b1050_p40cd@@@_STL@@@_STL@@IAEXXZ,0x0000A295,Open-BFME5 ILT for vector clear at 0x003B01B0
+?_M_clear@?$vector@UGen_t_003b10a0_p48cd@@V?$allocator@UGen_t_003b10a0_p48cd@@@_STL@@@_STL@@IAEXXZ,0x0003B6D3,Open-BFME5 ILT for vector clear at 0x003B0320
+?_M_clear@?$vector@UGen_t_003b1140_p12cd@@V?$allocator@UGen_t_003b1140_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00049265,Open-BFME5 target of the vector clear call in 0x003B05F0
+?_M_clear@?$vector@UGen_t_003b1c00_p12cd@@V?$allocator@UGen_t_003b1c00_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000147BD,Open-BFME5 target of the vector clear call in 0x003B14A0
+?_M_clear@?$vector@UGen_t_003b1eb0_p12cd@@V?$allocator@UGen_t_003b1eb0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0001BEFA,Open-BFME5 target of the vector clear call in 0x003B1C50
 ?_M_clear@?$vector@UGen_t_003b4920_p32cd@@V?$allocator@UGen_t_003b4920_p32cd@@@_STL@@@_STL@@IAEXXZ,0x003AFDA0,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b4a40_p16cd@@V?$allocator@UGen_t_003b4a40_p16cd@@@_STL@@@_STL@@IAEXXZ,0x003AFF10,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b4b60_p16cd@@V?$allocator@UGen_t_003b4b60_p16cd@@@_STL@@@_STL@@IAEXXZ,0x003AFF80,gen-tgrid payload member
@@ -11220,6 +11246,7 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_003b55d0_p32cd@@V?$allocator@UGen_t_003b55d0_p32cd@@@_STL@@@_STL@@IAEXXZ,0x003AFBB0,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b56f0_p12cd@@V?$allocator@UGen_t_003b56f0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x003AFC20,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b5c60_p12cd@@V?$allocator@UGen_t_003b5c60_p12cd@@@_STL@@@_STL@@IAEXXZ,0x003B0F80,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_00533100_p12cd@@V?$allocator@UGen_t_00533100_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0003DFE1,Open-BFME5 target of the vector clear call in 0x00532B50
 ?_M_clear@?$vector@UGen_t_006acaf0_p4cd@@V?$allocator@UGen_t_006acaf0_p4cd@@@_STL@@@_STL@@IAEXXZ,0x00532650,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_00745890_p24cd@@V?$allocator@UGen_t_00745890_p24cd@@@_STL@@@_STL@@IAEXXZ,0x00745830,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_007709c0_p24cd@@V?$allocator@UGen_t_007709c0_p24cd@@@_STL@@@_STL@@IAEXXZ,0x007707B0,gen-tgrid payload member
@@ -11234,6 +11261,7 @@ name,address,notes
 ?_M_clear@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXXZ,0x00004AB1,Open-BFME5 ILT the RunwayInfo vector _M_insert_overflow at 0x0039EC70 cleans up through
 ?_M_clear@?$vector@URva000A8500Element@_STL@@V?$allocator@URva000A8500Element@_STL@@@2@@_STL@@IAEXXZ,0x0000903E,Open-BFME5 the vector _M_clear the insert at 0x000A8500 calls
 ?_M_clear@?$vector@URva000B19F0Element@_STL@@V?$allocator@URva000B19F0Element@_STL@@@2@@_STL@@IAEXXZ,0x00010230,Open-BFME5 the vector _M_clear the insert at 0x000B19F0 calls
+?_M_clear@?$vector@URva000FB210Element@@V?$allocator@URva000FB210Element@@@_STL@@@_STL@@IAEXXZ,0x000290A5,Open-BFME5 ILT for vector clear at 0x000FB080
 ?_M_clear@?$vector@URva00143CE0Element@_STL@@V?$allocator@URva00143CE0Element@_STL@@@2@@_STL@@IAEXXZ,0x00039707,Open-BFME5 the vector _M_clear the insert at 0x00143CE0 calls
 ?_M_clear@?$vector@URva00146940Element@_STL@@V?$allocator@URva00146940Element@_STL@@@2@@_STL@@IAEXXZ,0x00005F42,Open-BFME5 the vector _M_clear the insert at 0x00146940 calls
 ?_M_clear@?$vector@URva001999C0Element@@V?$allocator@URva001999C0Element@@@_STL@@@_STL@@IAEXXZ,0x00024EC4,Open-BFME5 ILT for vector clear at 0x00197D30
@@ -11246,10 +11274,14 @@ name,address,notes
 ?_M_clear@?$vector@URva00347900Element@_STL@@V?$allocator@URva00347900Element@_STL@@@2@@_STL@@IAEXXZ,0x00044CD8,Open-BFME5 the vector _M_clear the insert at 0x00347900 calls
 ?_M_clear@?$vector@URva0035AFC0Element@_STL@@V?$allocator@URva0035AFC0Element@_STL@@@2@@_STL@@IAEXXZ,0x0002594B,Open-BFME5 the vector _M_clear the insert at 0x0035AFC0 calls
 ?_M_clear@?$vector@URva0035B130Element@_STL@@V?$allocator@URva0035B130Element@_STL@@@2@@_STL@@IAEXXZ,0x00015E56,Open-BFME5 the vector _M_clear the insert at 0x0035B130 calls
+?_M_clear@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXXZ,0x0002451E,Open-BFME5 ILT for vector clear at 0x003644D0
 ?_M_clear@?$vector@URva00365070Element@@V?$allocator@URva00365070Element@@@_STL@@@_STL@@IAEXXZ,0x0002451E,ILT reached by the 0x00365070 vector assignment
+?_M_clear@?$vector@URva00366890Element@@V?$allocator@URva00366890Element@@@_STL@@@_STL@@IAEXXZ,0x0003ABED,Open-BFME5 ILT for vector clear at 0x003665C0
 ?_M_clear@?$vector@URva003751A0Element@_STL@@V?$allocator@URva003751A0Element@_STL@@@2@@_STL@@IAEXXZ,0x0001CC06,Open-BFME5 the vector _M_clear the insert at 0x003751A0 calls
 ?_M_clear@?$vector@URva00381300Element@_STL@@V?$allocator@URva00381300Element@_STL@@@2@@_STL@@IAEXXZ,0x0003206F,Open-BFME5 the vector _M_clear the insert at 0x00381300 calls
+?_M_clear@?$vector@URva003A35A0Element@@V?$allocator@URva003A35A0Element@@@_STL@@@_STL@@IAEXXZ,0x00041F15,Open-BFME5 ILT for vector clear at 0x003A3410
 ?_M_clear@?$vector@URva003A5500Element@_STL@@V?$allocator@URva003A5500Element@_STL@@@2@@_STL@@IAEXXZ,0x000325BF,Open-BFME5 the vector _M_clear the insert at 0x003A5500 calls
+?_M_clear@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEXXZ,0x0000B4F6,Open-BFME5 ILT for vector clear at 0x003AC000
 ?_M_clear@?$vector@URva003B0060Element@_STL@@V?$allocator@URva003B0060Element@_STL@@@2@@_STL@@IAEXXZ,0x00015168,Open-BFME5 the vector _M_clear the insert at 0x003B0060 calls
 ?_M_clear@?$vector@URva003B0760Element@_STL@@V?$allocator@URva003B0760Element@_STL@@@2@@_STL@@IAEXXZ,0x00020C34,Open-BFME5 the vector _M_clear the insert at 0x003B0760 calls
 ?_M_clear@?$vector@URva003B0A30Element@_STL@@V?$allocator@URva003B0A30Element@_STL@@@2@@_STL@@IAEXXZ,0x000153C0,Open-BFME5 the vector _M_clear the insert at 0x003B0A30 calls
@@ -11259,6 +11291,8 @@ name,address,notes
 ?_M_clear@?$vector@URva00426C00Element@@V?$allocator@URva00426C00Element@@@_STL@@@_STL@@IAEXXZ,0x00009E8A,Open-BFME5 ILT vector clear callee
 ?_M_clear@?$vector@URva004358A0Element@_STL@@V?$allocator@URva004358A0Element@_STL@@@2@@_STL@@IAEXXZ,0x0003DA5A,Open-BFME5 the vector _M_clear the insert at 0x004358A0 calls
 ?_M_clear@?$vector@URva005751D0Element@_STL@@V?$allocator@URva005751D0Element@_STL@@@2@@_STL@@IAEXXZ,0x00005C81,Open-BFME5 the vector _M_clear the insert at 0x005751D0 calls
+?_M_clear@?$vector@URva00607770Element@@V?$allocator@URva00607770Element@@@_STL@@@_STL@@IAEXXZ,0x0002955F,Open-BFME5 ILT for vector clear at 0x00607570
+?_M_clear@?$vector@URva00608FE0Element@@V?$allocator@URva00608FE0Element@@@_STL@@@_STL@@IAEXXZ,0x00001C94,Open-BFME5 ILT for vector clear at 0x00608DE0
 ?_M_clear@?$vector@URva0061AE10Element@_STL@@V?$allocator@URva0061AE10Element@_STL@@@2@@_STL@@IAEXXZ,0x0000B708,Open-BFME5 the vector _M_clear the insert at 0x0061AE10 calls
 ?_M_clear@?$vector@URva006AACB0Element@@V?$allocator@URva006AACB0Element@@@_STL@@@_STL@@IAEXXZ,0x0003C358,Open-BFME5 ILT vector clear callee
 ?_M_clear@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXXZ,0x00005A9C,Clean C++ STLport clear callee of the 56-byte vector overflow at 0x006F2B00
@@ -11270,6 +11304,7 @@ name,address,notes
 ?_M_clear@?$vector@URva00777E40Element@@V?$allocator@URva00777E40Element@@@_STL@@@_STL@@IAEXXZ,0x0001DB1A,Open-BFME5 ILT vector clear callee
 ?_M_clear@?$vector@URva0077AEA0Element@_STL@@V?$allocator@URva0077AEA0Element@_STL@@@2@@_STL@@IAEXXZ,0x00004B74,Open-BFME5 the vector _M_clear the insert at 0x0077AEA0 calls
 ?_M_clear@?$vector@URva0077BFB0Element@@V?$allocator@URva0077BFB0Element@@@_STL@@@_STL@@IAEXXZ,0x0002C570,Open-BFME5 ILT vector clear callee
+?_M_clear@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@IAEXXZ,0x000490F8,Open-BFME5 ILT for vector clear at 0x0077C6C0
 ?_M_clear@?$vector@URva0081D280Element@@V?$allocator@URva0081D280Element@@@_STL@@@_STL@@IAEXXZ,0x0081D0F0,Open-BFME5 vector clear callee
 ?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
@@ -73254,6 +73289,7 @@ name,address,notes
 ?bfmeCall1055@@YAXHP6AXXZPAUBfmeT1055@@@Z,0x00866FD0,pin
 ?bfmeCall1100@@YAXH@Z,0x00032759,pin
 ?bfmeCall2440@Team@@QAEXPAX0@Z,0x00045B60,ILT thunk to body 0x000F75B0
+?bfmeCall3426b@BfmeGlobal_012f1024@@QAEXPAX00@Z,0x0003426B,call-site callee of Glo012F1024Item::j_00010bcc; global 0x012F1024 thiscall with three stack args; ILT 0x0003426B -> 0x003B2D60
 ?bfmeCall40F39@BfmeGlobal_012f1024@@QAEXPAX00E@Z,0x00040F39,call-site callee candidate for Glo012F1024Item::j_0002d3e4; the global at 0x012F1024 is loaded into thiscall ecx and the four stack arguments match the 0x003B4510 body
 ?bfmeCall71BA0@BfmeHelper71BA0@@QAEHXZ,0x00980890,Open-BFME5 address-derived guarded helper tail-call from the 0x00971BA0 body
 ?bfmeCall916D@BfmeTail916D@@QAEXPAX@Z,0x0001192D,pin
@@ -73663,6 +73699,7 @@ name,address,notes
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDo979A@BfmeActA979@@QAEXH@Z,0x00009494,pin
 ?bfmeDo985@BfmeHub985@@QAEXXZ,0x000290D2,pin
+?bfmeDo@BfmeK1101@@QAEXPAX0H@Z,0x000445FD,call-site callee of Gen_00219800::bfmeDispatch; ILT 0x000445FD -> iterateContained@TunnelTracker 0x000F8B10
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
@@ -76586,6 +76623,7 @@ name,address,notes
 ?dispatchIndexedValue@@YAXPAXH0HPAH1@Z,0x00858070,Open-BFME5 dual indexed dispatch implementation target
 ?dispatchMember@Rva21C710MemberDispatch@@QAEXPAVRva21C710Object@@PAX@Z,0x0002CE44,address-derived member dispatch ILT thunk
 ?dispatchNew@Rva21C710MemberDispatch@@QAEXPAVRva21C710Object@@PAX@Z,0x00012E0E,address-derived nonmember dispatch ILT thunk
+?dlink_next_TeamMemberList@Object@@QBEPAV1@XZ,0x00001140,Object DLINK PMF pfn used by Team member-list walks; ILT 0x00001140 -> 0x000C8980
 ?dlink_removeFrom_TeamMemberList@Object@@QAEXPAPAV1@@Z,0x001BD490,MAKE_DLINK unlink body; unlinks Object +0x25C/+0x260 and writes *pListHead
 ?doAction@BfmeSub9BB@@QAEXXZ,0x00026044,pin
 ?doCall@BfmeSub204_2C0@@QAEXH@Z,0x00016DF1,pin
@@ -80418,6 +80456,7 @@ name,address,notes
 ?j_000100d7@?$vector@PAVRva003C5890Item@@V?$allocator@PAVRva003C5890Item@@@_STL@@@_STL@@IAEXPAPAVRva003C5890Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x000100D7,STLport pointer vector overflow ILT for Rva003C5890Owner
 ?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ
+?j_00019c36@Glo012F1028Sub@@QAEXAAVBfmeSubA@@H@Z,0x00019C36,Open-BFME5 ILT the Glo012F1028 sub-object consumes each early-vector string
 ?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_0001bc70@BfmeThingCDA@@QAEXXZ,0x0001BC70,address-derived BfmeThingCDA call used by the 0x005976B0 state updater
 ?j_0001d6c4@BfmeSingletonH@@QAEXXZ,0x0001D6C4,BFME stop-helper layout alias; retail loads the singleton into ECX before this thunk
