@@ -81885,6 +81885,8 @@ _Rva007FF860,0x007FF860,Y4 lane: DirtySock socket-address formatter (address des
 _Rva007FFB50AddrText,0x007FFB50,Y4 lane: C-callable spelling of the same body the C++ pin names; the xmap lookup at 0x007FD660 is a .c translation unit and cannot emit the decorated form
 _Rva007FFDD0,0x007FFDD0,Y4 lane: DirtySock host and port text parser
 _Rva0080ADE0,0x0080ADE0,address-derived comm object state release helper called by 0x0080B050
+_Rva0080B1B0,0x0080B1B0,address-derived comm connect helper called by the Y2 record pump at 0x00806B10
+_Rva0080B4B0,0x0080B4B0,address-derived comm pump called by the Y2 record pump at 0x00806B10
 _Rva0080C390,0x0080C390,address-derived comm buffered-send helper called by 0x0080D980
 _Rva0080C6F0,0x0080C6F0,address-derived DirtySock buffered receive helper called by 0x0080DA50
 _Rva0080E500,0x0080E500,address-derived cleanup helper invoked immediately before release by 0x0080E4D0
