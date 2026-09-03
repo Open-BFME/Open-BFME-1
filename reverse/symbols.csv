@@ -83608,3 +83608,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeTailD820@BfmeTailD820@@QAEXXZ,0x00044B0C,ILT to FUN_006aa9d0 used by 0x0026D820
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00667320,int-return alias of the matched QAEXPAX body; eax is PlayerLeaveCode (1=LOCAL)
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00032957,ILT of beginPlayerLeave used by RelayCommandsToCommandList 0x00682B64
+??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z,0x0003E8D3,ILT to AIGuardRetaliateMachine ctor 0x0015F240; retail onEnter@AIGuardRetaliateState call

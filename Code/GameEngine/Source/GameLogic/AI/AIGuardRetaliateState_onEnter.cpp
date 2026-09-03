@@ -1,6 +1,12 @@
-// ?onEnter@AIGuardRetaliateState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.99 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@AIGuardRetaliateState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
+//
+// AIGuardRetaliateState::onEnter — retail 0x0017E1F0 (199B).
+//
+// ZH onEnter plus BFME's kindFlags 0x20 melee-target resolve. Accessors match
+// the inlines in StateMachine.h / AIUpdate.h / AIGuardRetaliate.h so the
+// goal-position copy is `add`-based (src +0x24, dest +0x44) and the second
+// getMachineOwner reload can land in ecx.
 
 enum StateReturnType
 {
@@ -17,10 +23,16 @@ struct Coord3D
 };
 
 class StateMachine;
+class Object;
 
 class AIUpdateInterface
 {
 public:
+	StateMachine *getStateMachine() { return m_stateMachine; }
+	const StateMachine *getStateMachine() const { return m_stateMachine; }
+	Object *getGoalObject();
+	const Coord3D *getGoalPosition() const;
+
 	unsigned char m_aiFields[0x30];
 	StateMachine *m_stateMachine;
 };
@@ -29,9 +41,8 @@ class Object
 {
 public:
 	Object *bfmeResolveMeleeTarget(int index);
-
-	__forceinline AIUpdateInterface *getAI() { return m_ai; }
-	__forceinline const AIUpdateInterface *getAI() const { return m_ai; }
+	AIUpdateInterface *getAI() { return m_ai; }
+	unsigned int getID() const { return m_id; }
 
 	unsigned char m_objectFields00[0x74];
 	unsigned int m_id;
@@ -55,15 +66,27 @@ public:
 	virtual void slot18();
 	virtual StateReturnType initDefaultState();
 
+	Object *getOwner() { return m_owner; }
+	const Coord3D *getGoalPosition() const { return &m_goalPosition; }
+	Object *getGoalObject();
+
 	unsigned char m_machineFields04[0x0c];
 	Object *m_owner;
 	unsigned char m_machineFields14[0x10];
 	Coord3D m_goalPosition;
-
-	Object *getGoalObject();
 };
 
 #pragma comment(linker, "/alternatename:?getGoalObject@StateMachine@@QAEPAVObject@@XZ=?j_0000e570@@YAXXZ")
+
+inline Object *AIUpdateInterface::getGoalObject()
+{
+	return getStateMachine()->getGoalObject();
+}
+
+inline const Coord3D *AIUpdateInterface::getGoalPosition() const
+{
+	return getStateMachine()->getGoalPosition();
+}
 
 class AIGuardRetaliateMachine
 {
@@ -79,15 +102,22 @@ public:
 	virtual void slot18();
 	virtual StateReturnType initDefaultState();
 
+	void setTargetPositionToGuard(const Coord3D *pos) { m_positionToGuard = *pos; }
+	void setNemesisID(unsigned int id) { m_nemesisToAttack = id; }
+
 	unsigned char m_machineFields04[0x40];
-	Coord3D m_position;
-	unsigned int m_nemesisID;
+	Coord3D m_positionToGuard;
+	unsigned int m_nemesisToAttack;
 };
+
+#pragma comment(linker, "/alternatename:??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z=?j_0003e8d3@@YAXXZ")
 
 class AIGuardRetaliateState
 {
 public:
 	virtual StateReturnType onEnter();
+
+	Object *getMachineOwner() { return m_machine->getOwner(); }
 
 	unsigned char m_stateFields04[0x18];
 	StateMachine *m_machine;
@@ -95,15 +125,16 @@ public:
 	AIGuardRetaliateMachine *m_guardRetaliateMachine;
 };
 
-// ?onEnter@AIGuardRetaliateState@@UAE?AW4StateReturnType@@XZ
 StateReturnType AIGuardRetaliateState::onEnter()
 {
-	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
-	m_guardRetaliateMachine = new AIGuardRetaliateMachine(m_machine->m_owner);
-	m_guardRetaliateMachine->m_position = ai->m_stateMachine->m_goalPosition;
+	Object *obj = getMachineOwner();
+	AIUpdateInterface *ai = obj->getAI();
 
-	Object *goalObject = ai->m_stateMachine->getGoalObject();
-	if (goalObject != 0)
+	m_guardRetaliateMachine = new AIGuardRetaliateMachine(getMachineOwner());
+	m_guardRetaliateMachine->setTargetPositionToGuard(ai->getGoalPosition());
+
+	Object *goalObject = ai->getGoalObject();
+	if (goalObject)
 	{
 		if ((goalObject->m_kindFlags & 0x20) != 0)
 		{
@@ -111,7 +142,7 @@ StateReturnType AIGuardRetaliateState::onEnter()
 			if (resolved != 0)
 				goalObject = goalObject->bfmeResolveMeleeTarget(0);
 		}
-		m_guardRetaliateMachine->m_nemesisID = goalObject->m_id;
+		m_guardRetaliateMachine->setNemesisID(goalObject->getID());
 	}
 
 	return m_guardRetaliateMachine->initDefaultState();
