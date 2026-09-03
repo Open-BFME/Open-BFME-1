@@ -83564,3 +83564,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
 ?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
 ?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)
+?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
