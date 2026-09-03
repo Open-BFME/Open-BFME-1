@@ -214,6 +214,18 @@ private:
 	char m_bfmeItem0;				// +0x24
 };
 
+class Gen_0016BB30
+{
+public:
+	void bfmeSeed(BfmeSeedTarget *target);
+
+private:
+	char m_bfmePad0[0x24];
+	char m_bfmeItem0;				// +0x24
+	char m_bfmePad1[0x3];
+	char m_bfmeItem1;				// +0x28
+};
+
 class Gen_0016BB90
 {
 public:
@@ -797,6 +809,25 @@ void Gen_0016BAD0::bfmeSeed(BfmeSeedTarget *target)
 	if ( !target->bfmeSkip() )
 	{
 		target->bfmeTakeAt74(&m_bfmeItem0);
+	}
+}
+
+// ?bfmeSeed@Gen_0016BB30@@QAEXPAVBfmeSeedTarget@@@Z		77 bytes
+void Gen_0016BB30::bfmeSeed(BfmeSeedTarget *target)
+{
+	BfmeSeedPair pair;
+
+	pair.m_bfmeFirst = 1;
+	pair.m_bfmeSecond = 2;
+
+	target->bfmeSeed(&pair);
+	if ( !target->bfmeSkip() )
+	{
+		target->bfmeTakeAt74(&m_bfmeItem0);
+		if ( pair.m_bfmeSecond > 1 )
+		{
+			target->bfmeTakeAt78(&m_bfmeItem1);
+		}
 	}
 }
 
