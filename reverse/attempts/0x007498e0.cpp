@@ -1,6 +1,7 @@
-// ?d_007498e0@@YAXXZ
-// partial score=0.82 date=2026-09-02
+// ?setBit@BfmeBitMapWP@@QAEXHHE@Z
+// partial score=0.85 date=2026-09-02
 // cl: /O2
+// ?setBit@BfmeBitMapWP@@QAEXHHE@Z
 
 class BfmeBitMapWP
 {
@@ -21,22 +22,17 @@ private:
 
 void BfmeBitMapWP::setBit(int x, int y, unsigned char on)
 {
-	BfmeBitMapWP *self = this;
-	if (x < 0)
+	if (x < 0 || y < 0)
 		return;
-	if (y < 0)
+	if (y >= m_h)
 		return;
-	if (y >= self->m_h)
+	if (x >= m_w)
 		return;
-	if (x >= self->m_w)
+	unsigned char *p = &m_start[m_stride * y + (x >> 3)];
+	if ((unsigned)(p - m_start) >= (unsigned)(m_end - m_start))
 		return;
-	int idx = self->m_stride * y + (x >> 3);
-	if (idx >= self->m_end - self->m_start)
-		return;
-	unsigned char *p = self->m_start + idx;
-	unsigned char bit = (unsigned char)(1 << (x & 7));
 	if (on)
-		*p = (unsigned char)(*p | bit);
+		*p |= (unsigned char)(1 << (x & 7));
 	else
-		*p = (unsigned char)(*p & (unsigned char)~bit);
+		*p &= (unsigned char)~(1 << (x & 7));
 }

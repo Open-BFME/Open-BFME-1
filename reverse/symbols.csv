@@ -10152,6 +10152,7 @@ name,address,notes
 ?Gen00261A20@@YAXPAUQ3SortElem8@@0UQ3SortCompare@@@Z,0x00261A20,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen00261AE0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x00261AE0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen002DFFD0@@YAXPAX0000@Z,0x002DFFD0,five-argument __cdecl callee of the 31-byte four-argument forwarder family (Q2TrailingZeroForwarders.cpp); target read from the forwarder call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
+?Gen002E07A0@@YAXPAUS4SortElem12@@HHU1@US4Cmp002E0CD0@@@Z,0x0002C0CA,ILT thunk to 0x002E07A0 __adjust_heap; callee of gen002E0CD0
 ?Gen002E1690@@YAXPAUS4SortElem12@@0US4Cmp002E1690@@@Z,0x0000896D,ILT thunk to 0x002E1690 __final_insertion_sort; callee of Rva002E1F10
 ?Gen002E1B60@@YAXPAUS4SortElem12@@00HUS4Cmp002E1690@@@Z,0x00031BDD,ILT thunk to 0x002E1B60 __introsort_loop; callee of Rva002E1F10
 ?Gen002E7EE0@@YAXPAX0000@Z,0x002E7EE0,five-argument __cdecl callee of the 31-byte four-argument forwarder family (Q2TrailingZeroForwarders.cpp); target read from the forwarder call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
@@ -76687,6 +76688,7 @@ name,address,notes
 ?evaluate@ScriptConditionsEvaluateTeamInsideAreaEntirelyShim@@QAE_NPAVParameter@@00@Z,0x00324AC0,ScriptConditions evaluateTeamInsideAreaEntirely incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@ScriptConditionsEvaluateTeamInsideAreaPartiallyShim@@QAE_NPAVParameter@@00@Z,0x00324670,ScriptConditions evaluateTeamInsideAreaPartially incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@U4Curve006095D0@@QBEMH@Z,0x0006A520,U4 lane: float-valued member callee of the blend at 0x006095D0; address-derived name
+?evaluate@U4Curve006095D0@@QBEMH@Z,0x00038EBF,ILT to 0x0006A520 used by 2D blend at 0x006096A0
 ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@QAE_NHHM@Z,0x00004AFC,BaseHeightMap visible-cliff evaluator ILT thunk
 ?evaluateBezSegmentAtT@BezierSegment@@QBEXMPAUCoord3D@@@Z,0x000059ED
 ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z,0x0000696F
@@ -78448,6 +78450,7 @@ name,address,notes
 ?getDistanceSquared@Object@@QBEMPBV1@@Z,0x00043CED,Object separation-squared ILT used by AIAttackMeleeHordeWaitState
 ?getDistanceSquared@SupplyWarehouseActionObject@@QBEMPBV1@@Z,0x00043CED,SupplyWarehouse action TU-local semantic shim; ILT reaches the 0x000ED3B0 object separation-squared body whose layout and sole Object argument prove the call
 ?getDrawModules@Drawable@@QAEPAPAXXZ,0x00021472,address-derived getter of Drawable +0x150; ILT to 0x00411580
+?getDrawModules@Drawable@@QBEPAPAXXZ,0x00040A8E,address-derived const getter of Drawable +0x150; ILT to 0x00411590
 ?getDynamicGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z,0x0001703F,harvested from parseDynamicGameLODDefinition (thunk)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x0002EE60,ILT getEachPlayerFromMask (body 0xDF4A0)
 ?getEachPlayerFromMask@PlayerList@@QAEPAVPlayer@@AAG@Z,0x000DF4A0,body PlayerList::getEachPlayerFromMask
@@ -78615,6 +78618,8 @@ name,address,notes
 ?getPortableFilename@NetFileCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x00044323,ILT thunk to 0x0067D250; NetPacket::GetFileCommandSize at 0x0067D410 calls it beside the ledgered getFileLength on the same class
 ?getPortableFilename@NetFileCommandMsg@@QAE?AVAsciiString@@XZ,0x00044323,ILT thunk to 0x0067D250; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
 ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk
+?getPosition@Drawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk to 0x0041D090
+?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
 ?getPosition@Object@@QBE?AUCoord3D@@XZ,0x00007AD6,Thing/Object by-value position ILT thunk to 0x0018F790; privateFaceObject at 0x00279180 passes a hidden Coord3D dest
 ?getPreferredHeight@Locomotor@@QBEMXZ,0x0002ECAD,Open-BFME5 ILT thunk to four-byte body 0x001B46A0; reads Locomotor m_preferredHeight at +0x3C as established by the BFME locomotor layout shim
@@ -83166,3 +83171,30 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
+?getLayer@Pathfinder@@QAEHPBUCoord3D@@@Z,0x0001A95B,Open-BFME5 ILT Pathfinder cell-layer lookup used by AIUpdate layersCompatible
+??$__make_heap@PAHUQ4Sort003D15A0@@HH@_STL@@YAXPAH0UQ4Sort003D15A0@@00@Z,0x00021053,ILT to 0x003CE510 make_heap used by partial_sort at 0x003D00E0
+??$sort_heap@PAHUQ4Sort003D15A0@@@_STL@@YAXPAH0UQ4Sort003D15A0@@@Z,0x00005F06,ILT to 0x003CFA90 sort_heap used by partial_sort at 0x003D00E0
+?fillVec005C3A30@@YA?AUBfmeVec3@@PAXH0@Z,0x000209DC,ILT thunk to 0x005C33E0 called by 0x005C3A30
+_GdipCreateBitmapFromScan0@24,0x009F6BF8,gdiplus.dll import stub (direct REL32 call site; Bitmap from scan0)
+?helper@BfmeFixup2580@@QAEXPAXPAVBfmeFixupChunk2580@@0@Z,0x008A2130,pin
+?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
+??1BfmeBase1134@@UAE@XZ,0x009A1A40,Open-BFME5 BfmeA1134 destructor base SubsystemInterface body
+?swap@@YAXAAURva00356830Proxy8@@0@Z,0x0000D0C1,alloc-proxy swap helper for Rva00356830Blk
+?swap@@YAXAAURva00356830Proxy14@@0@Z,0x00017427,alloc-proxy swap helper for Rva00356830Blk
+?swap@@YAXAAURva003569D0Proxy14@@0@Z,0x0004B3D5,alloc-proxy swap helper for Rva003569D0Blk
+?bfmeIsBlocked@FXList@@QBE_NXZ,0x00011F77,ILT to FUN_0082DAA0; bool skip used by static doFXObj wrapper 0x00065DE0
+??0Rva003B9AD0Inner@@QAE@ABV0@@Z,0x00018782,8-byte member copy ctor called by 0x003B9AD0; retail call goes through this incremental-link thunk to 0x003B8F80
+?bfmeDelViews@BfmeObjEE@@QAEXXZ,0x0040D970,Open-BFME5 Display deleteViews called from BfmeObjEE destructor
+?evaCheckCopy@@YAPAUEvaCheck@@PAU1@00ABUEvaCheckCopyTag@@PAH@Z,0x0000320B,Open-BFME5 24-byte __copy ILT used by EvaCheckVecBase::resize shrink
+?fillInsert@EvaCheckVecBase@@QAEXPAUEvaCheck@@IABU2@@Z,0x00047429,Open-BFME5 EvaCheck vector _M_fill_insert ILT used by EvaCheckVecBase::resize grow
+??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
+?lookup@Rva0007F560Factory@@QAEPAXABVAsciiString@@@Z,0x00001F78,ILT thunk to 0x0007F470 name lookup used by Rva0007F560 ctor
+?rva008B2EA0Create@@YAPAVRva008B2EA0Node@@XZ,0x00892940,cdecl factory called by 0x008B2EA0
+?append@Rva008B2EA0Node@@QAEXPAX@Z,0x008927C0,thiscall append called by 0x008B2EA0
+?bfmeGoD540@BfmeObjD540@@QAEXVAsciiString@@@Z,0x00033302,Open-BFME5 ILT to 0x0040D540 quoted-string consumer
+?bfmeUnitAngle@@YAMPBUCoord3D@@0@Z,0x00022C6E,cdecl acos(dot) of two unit Coord3D; ILT to FUN_007fd650 at 0x003FD650; called from Path::bfmeBuildTurnArc 0x003FFB50
+?bfmeFinishTurnArc@Path@@QAEXPAVPathNode@@00M@Z,0x00021BF2,Path helper ILT to FUN_007febb0 at 0x003FEBB0; called from Path::bfmeBuildTurnArc 0x003FFB50
+?helper@BfmeBaseHelper060600@@QAEXHPAX@Z,0x0075BBA0,adjusted-this base helper call target from 0x00760600 (currently gen-dump ?d_0075bba0@@YAXXZ)
+?bfmeAssign@Gen_0092D720@@QAEXPBD@Z,0x0092D720,assign callee of Mesh name/text setter 0x0092E440
+?addCapEdgeToTrack@BfmeTrackLikeD62640@@QAEXMM@Z,0x0072F390,unidentified track-edge helper called from W3DModelDraw::setHidden (currently gen-dump ?d_0072f390@@YAXXZ)

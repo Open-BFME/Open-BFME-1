@@ -43,6 +43,22 @@ int   Rva008076E0( Rva00806580Record *record, unsigned int *outA,
 		unsigned int *outB, char **outText );               // 0x008076E0
 void  Rva00806B10( Rva00806580Record *record );             // 0x00806B10
 int   Rva0080E330( void *crypto, int length );              // 0x0080E330
+// Accept at 0x0080B0A0, connect at 0x0080B1B0, the comm pump at 0x0080B4B0,
+// send/recv/info through the comm object, and the three crypto helpers the
+// packet path uses after a complete header has arrived.
+extern "C" void *Rva0080B0A0( void *comm, int unsupported, void *address,
+		int *addressLength );
+extern "C" int   Rva0080B1B0( void *comm, int secu, char *name,
+		unsigned int addr, unsigned int port );
+extern "C" void  Rva0080B4B0( void *comm );
+extern "C" int   Rva0080D980( void *comm, const char *data, int length );
+extern "C" int   Rva0080DA50( void *comm, char *output, int length );
+extern "C" int   Rva0080DBF0( void *comm, int selector, void *buffer,
+		int bufferSize );
+extern "C" void  Rva0080E1C0( void *crypto, unsigned char *data, int length );
+extern "C" int   Rva0080E200( void *crypto, const unsigned char *data,
+		int length );
+extern "C" int   Rva0080E300( void *crypto, int length );
 int   Rva00807520( Rva00806580Record *record, int length, int limit ); // 0x00807520
 void  Rva0080E350( void *crypto, char *packet, int length );  // 0x0080E350
 void  Rva0080E410( void *crypto, char *packet, int length );  // 0x0080E410
@@ -103,7 +119,9 @@ struct Rva00806580Record
 	int   m_field74;             // +0x74 -- 'ibuf' is +0x74 minus +0x78
 	int   m_field78;             // +0x78
 	void *m_field7C;             // +0x7C -- gates 'ibuf'
-	char  m_pad80[ 0x0C ];
+	// 0x0C-byte header staging: 0x00806B10 receives the packet header here
+	// while +0x7C is still null, then copies it into the allocated block.
+	char  m_recvHead[ 0x0C ];    // +0x80
 	short m_field8C;             // +0x8C -- 'secu', read SIGNED
 	short m_field8E;             // +0x8E -- set by 0x00806A90
 	char  m_key[ 0x54 ];         // +0x90
@@ -675,4 +693,282 @@ int Rva00807520( Rva00806580Record *record, int length, int limit )
 	}
 
 	return record->m_outSize - record->m_outUsed;
+}
+
+// 0x00806B10 IS THE PUMP.  It is the 2102-byte body the two packet helpers
+// above call: 0x008076E0 runs it once when no complete inbound block is
+// waiting, and 0x00807370 runs it before reserving space and again after the
+// packet is assembled.  The /GZ frame names two arrays -- `len` at ebp-12 and
+// `addr` at ebp-40 -- and /GS puts a cookie in front of `addr[0x10]`.
+//
+// THE STATE WORD AT +0x5C IS A SEQUENCE, not a switch: 1 is accept, 2 is
+// connect, 3 is connected, 4 is the listen-idle that 3 falls into when it has
+// no sub-object.  Each arm can change the word, so a later arm in the same
+// call sees the new value -- 3 with no socket becomes 4, and 4 with queued
+// output becomes 2.
+//
+// A COMPLETE INBOUND PACKET is the two cursors at +0x74/+0x78 being equal.
+// Until then the 0x0C-byte header is received into +0x80, decrypted, and used
+// to size the +0x7C block; the rest of the payload is received into that block
+// and checked by the crypto sub-object at +0xE4.
+void Rva00806B10( Rva00806580Record *record )
+{
+	int len;
+	unsigned char *packet;
+	char addr[ 0x10 ];
+	void *ref;
+
+	if( record->m_field5C == 3 && record->m_field00 == 0 )
+	{
+		if( record->m_field7C != 0 )
+			Rva007F0030Free( record->m_field7C );
+
+		record->m_field74 = 0xC;
+		record->m_field78 = 0xC;
+		record->m_field7C = Rva007F0000Alloc( record->m_field74 + 1 );
+		packet = (unsigned char *)record->m_field7C;
+		packet[ 3 ] = 0xFF;
+		packet[ 2 ] = 0xFF;
+		packet[ 1 ] = 0xFF;
+		packet[ 0 ] = 0xFF;
+		packet[ 7 ] = 0xFE;
+		packet[ 6 ] = 0xFE;
+		packet[ 5 ] = 0xFE;
+		packet[ 4 ] = 0xFE;
+		packet[ 10 ] = 0;
+		packet[ 9 ] = 0;
+		packet[ 8 ] = 0;
+		packet[ 11 ] = 0xC;
+		record->m_field5C = 4;
+	}
+
+	if( record->m_field5C == 4 && record->m_outBuffer != 0 )
+	{
+		record->m_field5C = 2;
+		record->m_field60 = 0;
+	}
+
+	if( record->m_field5C == 1 )
+	{
+		len = 0x10;
+		ref = Rva0080B0A0( record->m_field00, 0, addr, &len );
+		if( ref == 0 )
+			return;
+
+		Rva0080B070Destroy( record->m_field00 );
+		record->m_field00 = ref;
+		record->m_field5C = 3;
+		record->m_outSent = 0;
+
+		if( record->m_field7C != 0 )
+			Rva007F0030Free( record->m_field7C );
+
+		record->m_field74 = 0xC;
+		record->m_field78 = 0xC;
+		record->m_field7C = Rva007F0000Alloc( record->m_field74 + 1 );
+		packet = (unsigned char *)record->m_field7C;
+		packet[ 3 ] = 0xFF;
+		packet[ 2 ] = 0xFF;
+		packet[ 1 ] = 0xFF;
+		packet[ 0 ] = 0xFF;
+		packet[ 7 ] = 0xFF;
+		packet[ 6 ] = 0xFF;
+		packet[ 5 ] = 0xFF;
+		packet[ 4 ] = 0xFF;
+		packet[ 10 ] = 0;
+		packet[ 9 ] = 0;
+		packet[ 8 ] = 0;
+		packet[ 11 ] = 0xC;
+	}
+
+	if( record->m_field5C == 2 )
+	{
+		if( Rva007FEA00Tick() > (unsigned int)record->m_field60 )
+		{
+			if( record->m_field00 != 0 )
+				Rva0080B070Destroy( record->m_field00 );
+
+			record->m_field00 = Rva0080B000Create();
+			if( record->m_field00 == 0 )
+				return;
+
+			if( Rva0080B1B0( record->m_field00,
+					record->m_field8C != 0,
+					record->m_name,
+					Rva007FFAD0( record->m_addr ),
+					Rva007FFA60Swap16( record->m_port ) ) < 0 )
+				return;
+
+			record->m_field60 = Rva007FEA00Tick() + 0x7530;
+			Rva0080DFC0( &record->m_fieldE4, 0 );
+		}
+
+		if( record->m_field00 == 0 )
+			return;
+
+		Rva0080B4B0( record->m_field00 );
+
+		if( Rva0080DBF0( record->m_field00, 'stat', 0, 0 ) <= 0 )
+			return;
+
+		if( record->m_addr == 0 )
+			Rva0080DBF0( record->m_field00, 'peer', &record->m_family, 0x10 );
+
+		if( Rva0080DBF0( record->m_field00, 'bind', addr, 0x10 ) == 0 )
+		{
+			record->m_localAddr = Rva007FFAD0( *(unsigned int *)( addr + 4 ) );
+			record->m_localPort = Rva007FFA60Swap16( *(unsigned short *)( addr + 2 ) );
+		}
+
+		record->m_field5C = 3;
+		record->m_outSent = 0;
+
+		if( record->m_field7C != 0 )
+			Rva007F0030Free( record->m_field7C );
+
+		record->m_field74 = 0xC;
+		record->m_field78 = 0xC;
+		record->m_field7C = Rva007F0000Alloc( record->m_field74 + 1 );
+		packet = (unsigned char *)record->m_field7C;
+		packet[ 3 ] = 0xFF;
+		packet[ 2 ] = 0xFF;
+		packet[ 1 ] = 0xFF;
+		packet[ 0 ] = 0xFF;
+		packet[ 7 ] = 0xFF;
+		packet[ 6 ] = 0xFF;
+		packet[ 5 ] = 0xFF;
+		packet[ 4 ] = 0xFF;
+		packet[ 10 ] = 0;
+		packet[ 9 ] = 0;
+		packet[ 8 ] = 0;
+		packet[ 11 ] = 0xC;
+	}
+
+	if( record->m_field00 == 0 )
+		return;
+
+	Rva0080B4B0( record->m_field00 );
+
+	if( record->m_outBuffer != 0 && record->m_outSent != record->m_outUsed )
+	{
+		len = Rva0080D980( record->m_field00,
+				(char *)record->m_outBuffer + record->m_outSent,
+				record->m_outUsed - record->m_outSent );
+		if( len < 0 )
+		{
+			Rva0080B070Destroy( record->m_field00 );
+			record->m_field00 = 0;
+			return;
+		}
+
+		if( len > 0 )
+			record->m_outSent = record->m_outSent + len;
+
+		if( record->m_outSent == record->m_outUsed )
+		{
+			Rva007F0030Free( record->m_outBuffer );
+			record->m_outBuffer = 0;
+		}
+	}
+
+	if( record->m_field7C == 0 )
+	{
+		if( record->m_field74 == record->m_field78 )
+		{
+			record->m_field74 = 0xC;
+			record->m_field78 = 0;
+		}
+
+		len = Rva0080DA50( record->m_field00,
+				(char *)record + 0x80 + record->m_field78,
+				record->m_field74 - record->m_field78 );
+		if( len < 0 )
+		{
+			Rva0080B070Destroy( record->m_field00 );
+			record->m_field00 = 0;
+			return;
+		}
+
+		if( len > 0 )
+			record->m_field78 = record->m_field78 + len;
+
+		if( record->m_field78 == record->m_field74 )
+		{
+			packet = (unsigned char *)record + 0x80;
+			Rva0080E1C0( &record->m_fieldE4, packet, 0xC );
+			record->m_field74 = ( packet[ 8 ] << 24 ) | ( packet[ 9 ] << 16 )
+					| ( packet[ 10 ] << 8 ) | packet[ 11 ];
+
+			if( record->m_field74 < 0xC || record->m_field74 > 0x8000 )
+			{
+				Rva0080B070Destroy( record->m_field00 );
+				record->m_field00 = 0;
+				return;
+			}
+
+			record->m_field7C = Rva007F0000Alloc( record->m_field74 + 1 );
+			if( record->m_field7C == 0 )
+			{
+				Rva0080B070Destroy( record->m_field00 );
+				record->m_field00 = 0;
+				return;
+			}
+
+			memcpy( record->m_field7C, (char *)record + 0x80, record->m_field78 );
+
+			if( record->m_field78 == record->m_field74
+					&& record->m_outBuffer != 0
+					&& record->m_outSent == record->m_outUsed )
+			{
+				Rva007F0030Free( record->m_outBuffer );
+				record->m_outBuffer = 0;
+			}
+		}
+	}
+
+	if( record->m_field7C != 0 )
+	{
+		if( record->m_field78 < record->m_field74 )
+		{
+			len = Rva0080DA50( record->m_field00,
+					(char *)record->m_field7C + record->m_field78,
+					record->m_field74 - record->m_field78 );
+			if( len < 0 )
+			{
+				Rva0080B070Destroy( record->m_field00 );
+				record->m_field00 = 0;
+				return;
+			}
+
+			if( len > 0 )
+				record->m_field78 = record->m_field78 + len;
+
+			if( record->m_field78 == record->m_field74 )
+			{
+				Rva0080E1C0( &record->m_fieldE4,
+						(unsigned char *)record->m_field7C + 0xC,
+						record->m_field78 - 0xC );
+				if( Rva0080E200( &record->m_fieldE4,
+						(unsigned char *)record->m_field7C,
+						record->m_field74 ) < 0 )
+				{
+					Rva0080B070Destroy( record->m_field00 );
+					record->m_field00 = 0;
+					return;
+				}
+
+				record->m_field78 = Rva0080E300( &record->m_fieldE4,
+						record->m_field74 );
+				record->m_field74 = record->m_field78;
+			}
+
+			if( record->m_field78 == record->m_field74
+					&& record->m_outBuffer != 0
+					&& record->m_outSent == record->m_outUsed )
+			{
+				Rva007F0030Free( record->m_outBuffer );
+				record->m_outBuffer = 0;
+			}
+		}
+	}
 }

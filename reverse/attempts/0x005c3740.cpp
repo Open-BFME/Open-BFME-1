@@ -1,19 +1,8 @@
-// ?d_005c3740@@YAXXZ
-// partial score=0.97 date=2026-08-29
-// ---------------------------------------------------------------------------
-// 0x005C3740 -- drain a list, then zero everything.
-//
-//     mov eax,[esi+0x80] / cmp [eax],eax / je / mov ecx,[eax] / mov ecx,[ecx+8]
-//     ... push 1 / call [edx] ... cmp [esi+0x8c],edi / jne <top>
-//
-// `cmp [eax],eax` compares the list's first link against the list's own
-// address, which is the emptiness test of an EMBEDDED sentinel.  The drain
-// re-reads the count every turn and the list pointer with it, because the
-// deleting destructor is what removes the entry.
-//
-// The zeroing afterwards is ONE loop writing two slots a turn -- `[eax-0x38]`
-// and `[eax]`, fourteen times -- so the two arrays are cleared together rather
-// than one after the other.
+// ?reset@Rva005C3740@@QAEXXZ
+// partial score=0.98 date=2026-09-02
+// cl: /DNDEBUG /MD /EHsc
+// Drain an embedded-sentinel list while count is nonzero, then zero the two
+// 14-slot arrays together and the trailing counters.
 
 class Open25C3740Held
 {
@@ -53,21 +42,23 @@ public:
 	int m_at98;
 };
 
-// @?reset@Rva005C3740@@QAEXXZ 0x005C3740
 void Rva005C3740::reset( void )
 {
-	while( m_count != 0 )
+	while ( m_count != 0 )
 	{
 		Open25C3740List *list = m_list;
-		if( list->m_head.m_next != (Open25C3740Node *)list )
+		Open25C3740Node *node;
+		Open25C3740Held *held;
+		if ( *(Open25C3740Node *volatile *)list != (Open25C3740Node *)list )
 		{
-			Open25C3740Held *held = list->m_head.m_next->m_value;
-			if( held != 0 )
+			node = list->m_head.m_next;
+			held = node->m_value;
+			if ( held != 0 )
 				held->slot00( 1 );
 		}
 	}
 
-	for( int slot = 0; slot < 14; ++slot )
+	for ( int slot = 0; slot < 14; ++slot )
 	{
 		m_first[ slot ] = 0;
 		m_second[ slot ] = 0;
@@ -81,4 +72,3 @@ void Rva005C3740::reset( void )
 	m_at98 = 0;
 	m_at7c = 0;
 }
-

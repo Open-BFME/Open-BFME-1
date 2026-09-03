@@ -1,6 +1,8 @@
-// ?d_0074d210@@YAXXZ
+// ?getAlpha@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ
 // partial score=0.92 date=2026-09-02
 // cl: /O2 /GX-
+// ?getAlphaTerrainTexture@WorldHeightMap@@QAE?AVRva0074D210Handle@@XZ
+// ?getEdgeTerrainTexture@WorldHeightMap@@QAE?AVRva0074D210Handle@@XZ
 
 class TextureBaseClass
 {
@@ -13,12 +15,9 @@ public:
 class Rva0074D210Handle
 {
 public:
-	Rva0074D210Handle();
 	Rva0074D210Handle(TextureBaseClass *p);
 	TextureBaseClass *m_p;
 };
-
-inline Rva0074D210Handle::Rva0074D210Handle() : m_p(0) {}
 
 inline Rva0074D210Handle::Rva0074D210Handle(TextureBaseClass *p) : m_p(p)
 {
@@ -29,8 +28,8 @@ inline Rva0074D210Handle::Rva0074D210Handle(TextureBaseClass *p) : m_p(p)
 class Rva0074D210Owner
 {
 public:
+	Rva0074D210Handle getTerrain();
 	Rva0074D210Handle getAlpha();
-	void getTerrain(Rva0074D210Handle *out);
 
 private:
 	char m_pad[0x120CC];
@@ -39,14 +38,35 @@ private:
 
 Rva0074D210Handle Rva0074D210Owner::getAlpha()
 {
-	Rva0074D210Handle tmp;
-	tmp.m_p = 0;
-	TextureBaseClass *p = m_alpha;
-	if (!p)
+	volatile int guard = 0;
+	if (m_alpha == 0)
 	{
-		getTerrain(&tmp);
+		Rva0074D210Handle tmp = getTerrain();
 		if (tmp.m_p)
 			tmp.m_p->Release_Ref();
 	}
 	return Rva0074D210Handle(m_alpha);
+}
+
+class Rva0074D270Owner
+{
+public:
+	Rva0074D210Handle getTerrain();
+	Rva0074D210Handle getEdge();
+
+private:
+	char m_pad[0x120D4];
+	TextureBaseClass *m_edge;
+};
+
+Rva0074D210Handle Rva0074D270Owner::getEdge()
+{
+	volatile int guard = 0;
+	if (m_edge == 0)
+	{
+		Rva0074D210Handle tmp = getTerrain();
+		if (tmp.m_p)
+			tmp.m_p->Release_Ref();
+	}
+	return Rva0074D210Handle(m_edge);
 }

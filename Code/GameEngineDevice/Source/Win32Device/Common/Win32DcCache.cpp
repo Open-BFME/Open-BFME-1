@@ -29,8 +29,8 @@ HDC DcPool::acquire(void)
 	return CreateCompatibleDC(NULL);
 }
 
-// ??4 release: retail makes a CALL to DeleteDC here where MSVC 7.1 tail-jumps
-// it; every other byte matches. Marked rather than claimed.
+// Retail CALLs DeleteDC (FF 15); /O2 tail-jmps it (FF 25). Every other byte
+// matches. Marked rather than claimed.
 // ?release@DcPool@@QAEXPAX@Z present-unmatched
 // Park the DC in the first empty slot. A slot that was already occupied hands
 // its own DC back, so the loop carries that one onward; whatever is still held

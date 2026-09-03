@@ -1130,51 +1130,6 @@ void ParticleSystem::setSlave( ParticleSystem *slave )
 }  // end setSlave
 
 // ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-ParticleSystem *Make00001B18( void );
-
-class BfmeParticleSystemPtr
-{
-public:
-	operator ParticleSystem *( void ) const
-	{
-		return m_target;
-	}
-
-	ParticleSystem *operator->( void ) const
-	{
-		ParticleSystem *target = m_target;
-		if( !target )
-			target = Make00001B18();
-		return target;
-	}
-
-private:
-	ParticleSystem *m_target;
-};
-
-// BFME m_isSaveable is at +0x1AA, two bytes after m_isDestroyed at +0x1A8.
-// Same lazy slave wrapper at +0x160 as destroy().
-struct BfmeParticleSaveableView
-{
-	unsigned char m_unreconstructed_000[ 0x160 ];
-	BfmeParticleSystemPtr m_slaveSystem;			///< retail this+0x160
-	unsigned char m_unreconstructed_164[ 0x1aa - 0x164 ];
-	unsigned char m_isSaveable;				///< retail this+0x1AA
-};
-
-void ParticleSystem::setSaveable(Bool b)
-{
-	BfmeParticleSaveableView *self = (BfmeParticleSaveableView *)this;
-
-	self->m_isSaveable = b;
-	if( self->m_slaveSystem )
-	{
-		self->m_slaveSystem->setSaveable(b);
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
 /** (Re)start a stopped particle system */
 // ------------------------------------------------------------------------------------------------
 // ?start@ParticleSystem@@QAEXXZ present-unmatched
@@ -1205,6 +1160,28 @@ void ParticleSystem::stop( void )
 // to this same function, and the compiler turns that into a walk down the slave
 // chain. The source below is the reference's recursion unchanged; the loop is the
 // compiler's doing, which is why nothing here spells one.
+ParticleSystem *Make00001B18( void );
+
+class BfmeParticleSystemPtr
+{
+public:
+	operator ParticleSystem *( void ) const
+	{
+		return m_target;
+	}
+
+	ParticleSystem *operator->( void ) const
+	{
+		ParticleSystem *target = m_target;
+		if( !target )
+			target = Make00001B18();
+		return target;
+	}
+
+private:
+	ParticleSystem *m_target;
+};
+
 struct BfmeParticleDestroyView
 {
 	unsigned char m_unreconstructed_000[ 0x160 ];
