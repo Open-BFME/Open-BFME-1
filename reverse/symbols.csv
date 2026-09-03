@@ -83203,3 +83203,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeAccept@Gen_002802F0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002802F0 accepts through
