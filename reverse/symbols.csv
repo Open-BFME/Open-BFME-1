@@ -78479,6 +78479,7 @@ name,address,notes
 ?getAsInt@RGBColor@@QBEIXZ,0x0002D989,ILT thunk to the RGBColor packer
 ?getAsciiString@BfmeStringPresenceDict@@QBE?AVBfmeStringPresenceValue@@HPA_N@Z,0x0002FF6D,address-derived Dict-compatible string lookup
 ?getAsciiString@Dict@@QBE?AVAsciiString@@W4NameKeyType@@PA_N@Z,0x0002FF6D
+?getInt@Dict@@QBEHHPA_N@Z,0x0003A76A,address-derived color Dict reader calls the canonical getInt ILT with an int-compatible key
 ?getAttackFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x00019BEB,AudioEventRTS portion filename switch case 0 names the attack filename accessor
 ?getAttackInfo@ScriptEngine@@QAEPBVAttackPriorityInfo@@ABVAsciiString@@@Z,0x0002C3F4,ScriptActions updateNamedAttackPrioritySet retail ILT call
 ?getAttackRange@BfmeRangedWeaponTemplate@@QBEMPBVObject@@ABVWeaponBonus@@PBUCoord3D@@@Z,0x0002FFB3,alias of the WeaponTemplate spelling pinned below; Weapon.cpp reaches the widened three-argument form through a view class because the reference WeaponTemplate declares the bonus-only one
@@ -80288,6 +80289,7 @@ name,address,notes
 ?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_00036124@Glo012F1024Item@@QAEXXZ,0x00036124,tail-called retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_00040c32@Glo012F1024Item@@QAEXXZ,0x00040C32,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
+?key@StaticNameKey@@QBEHXZ,0x00009304,address-derived color Dict reader converts both canonical StaticNameKey globals through this ILT
 ?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z,0x0003EC7A
 ?kill@Object@@QAEXW4DamageType@@W4DeathType@@@Z,0x00014506,ILT thunk to Object::kill
 ?killRunningParticleSystems@BoneFXUpdate@@IAEXXZ,0x0000628F
