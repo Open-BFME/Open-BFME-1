@@ -2261,6 +2261,7 @@ name,address,notes
 ??0BfmeStrVTF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTH@@QAE@ABV0@@Z,0x0001400B,pin
 ??0BfmeStrVTI@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrVTM@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTN@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
@@ -83320,6 +83321,7 @@ g_bfmeDefaultEG,0x01097114,Open-BFME5 the angle the test at 0x0045B850 falls bac
 g_bfmeDefaultFE,0x012BC0C8,Open-BFME5 the default the reset at 0x007CCD90 points every slot at
 g_bfmeDefaultRateCX,0x012F8234,Open-BFME5 the rate the setter at 0x006FD060 starts from
 g_bfmeDefaultString1284,0x012D5298,address-derived shared empty-string block used by the 0x008B9460 retail body
+g_bfmeDefaultVTM,0x01336E50,Open-BFME5 retail default string returned by the 0x00238870 body
 g_bfmeDirectionWeight1285,0x01075C74,address-derived perpendicular-distance weight used by the 0x008BA970 retail scorer
 g_bfmeDirtyAE,0x012F33F8,Open-BFME5 the singleton the copy at 0x0049C4B0 marks dirty
 g_bfmeDirtyBG,0x012EF418,Open-BFME5 the global the setters at 0x0018F210, 0x0018F270 and 0x0018F2E0 mark before storing
