@@ -59,13 +59,50 @@ advanced setting off: **Heat Effects came up as the one ticked box.** So
 registration, the game's load path and the render are all proved together, and
 `Save` writes them back through code that was already there.
 
+## The button, and the Open-BFME block
+
+`apt_panel.py` builds both, through `tools/aptfile.py`, without moving a byte of
+the original movie.
+
+The nav bar is sprite 147 and it places ONE character -- 146 -- three times,
+telling Save, Reset and Cancel apart only by the instance name on each
+placement. **A click dispatches on that name**: named `RefreshNat` the click
+arrives at `AptOptions::RefreshNat`, measured as `{"hit":"RefreshNat","state":2}`
+on a real mouse click. So the button costs one placement and one detour, and it
+inherits the art, the hover glow and the click sound because it *is* the button
+the other three are.
+
+Its label is two text characters of our own, on two lines -- what ACCEPT CHANGES
+and RESET SETTINGS do, and a fifteen-character label does not fit this button on
+one line. They carry **font `0x1e`**, the button face. An earlier pass reused the
+tab title's character, which is font `0xa`, and the wrong face was obvious on
+sight. A button's own label cannot be set instead: it binds to the ActionScript
+variable `_parent._parent.buttonName`, which appears nowhere in the executable.
+
+The tab's panel has an empty column right of the slider box, and that is where
+Open-BFME says what it has added -- the replay camera keys and the replay pause,
+in the screen's own fonts and colours. Each row is two text characters at two x
+positions, because the UI font is proportional and padding one string with
+spaces does not line a column up. Every line is a feature actually shipped in
+`mods/dist`; drop one from the build and its line comes out of `LINES`.
+
 ## Why it is UNSHIPPED
 
-Only the trigger. A key is the wrong way into a settings screen — this wants a
-button next to ACCEPT CHANGES, and the screen's three buttons are authored into
-the movie. `tools/aptfile.py` can place one (see `docs/apt-ui.md`); wiring its
-click back to the cave through the FSCommand path is the part that has not been
-done. The tab itself is finished and works.
+The button carries `RefreshNat` because that is a command the constructor
+already registers, and a name with no callback behind it does nothing. Two
+consequences, both real:
+
+* the online tab's own Refresh NAT button shares the command. The handler guards
+  on screen state -- it acts only on the normal and advanced tabs and falls
+  through on the online one -- but this is a squat, not a design.
+* the detour runs before the real `RefreshNat`, which still executes afterwards.
+  On the normal tab that is a spurious NAT check, and it is visible: it writes
+  `FirewallNeedToRefresh` and `FirewallPortAllocationDelta` into `Options.ini`.
+
+The fix is to register `AptOptions::Advanced` properly. The pieces are known --
+the constructor builds each binding from an AsciiString and a refcounted
+delegate, whose constructor is at RVA `0x0055F140`. That is the next piece of
+work, and it is what a custom Open-BFME tab would need anyway.
 
 It also shares 046-optionsui's hook address, `AptOptions::update`, so build one
 at a time until 046 is shipped or dropped.

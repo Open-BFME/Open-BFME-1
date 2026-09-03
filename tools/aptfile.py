@@ -56,6 +56,14 @@ NO_CHAR = 0xFFFFFFFF
 
 PLACE_SIZE = 0x40
 
+# A type-2 text character, 0x3c bytes. The two fields that decide whether a
+# string looks native are the font id and the size: the Options screen's panel
+# labels are font 0xa at 18pt, its BUTTON labels are font 0x1e at 16pt, and
+# placing one where the other belongs is immediately visible.
+TEXT_SIZE = 0x3C
+FONT_LABEL, FONT_BUTTON = 0x0A, 0x1E
+ALIGN_LEFT, ALIGN_CENTER = 0, 2
+
 
 class Apt:
     def __init__(self, data):
@@ -201,6 +209,37 @@ class Apt:
         else:
             base = self.u32(self.char_off(cid) + 12)
         struct.pack_into("<2I", self.d, base + 8 * frame, count, ops_off)
+
+    def add_character(self, blob):
+        """Append a character and give it a new id.
+
+        The character table is an array the movie header points at, so growing
+        it means appending a fresh copy one entry longer and repointing the
+        header. The old table is orphaned; nothing else refers to it."""
+        if len(blob) < 8 or struct.unpack_from("<I", blob, 4)[0] != SIG:
+            raise ValueError("a character must carry the 0x09876543 signature")
+        at = self._append(blob)
+        n = self.char_count
+        old = [self.u32(self.char_table + 4 * i) for i in range(n)]
+        table = self._append(struct.pack(f"<{n + 1}I", *old, at))
+        struct.pack_into("<2I", self.d, self.hdr + 0x14, n + 1, table)
+        return n
+
+    def add_text(self, text, font=FONT_LABEL, size=18.0, color=0xFFFFFFFF,
+                 align=ALIGN_LEFT, width=230.0, height=23.5):
+        """Append a text character showing `text`, and return its id.
+
+        A string with no leading `$` renders literally -- the runtime only goes
+        to the string table for `$`-prefixed tokens -- so our own words need no
+        CSF entry and no lang/english.big edit."""
+        blob = struct.pack("<2I4f3If3I2I", TEXT, SIG,
+                           -2.0, -2.0, width, height,
+                           font, align, color, size,
+                           1, 0, 0,
+                           self._append_string(text), self._append_string(""))
+        if len(blob) != TEXT_SIZE:
+            raise ValueError(f"text character is {len(blob)} bytes, expected {TEXT_SIZE}")
+        return self.add_character(blob)
 
     # -- patching in place ---------------------------------------------------
 

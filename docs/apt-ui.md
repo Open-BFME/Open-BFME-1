@@ -192,22 +192,70 @@ So the eleven hidden graphics options cost one call, not a movie edit. See
 
 ## What this makes possible, in order of cost
 
-1. **Relabel and repurpose the existing Options screen.** No format surgery at
-   all. `Options.apt` already carries 5 sliders, 5 checkboxes, 2 dropdowns and
-   3 buttons, all driven by named FSCommands the cave can intercept. Rename
-   them to our settings and read the widgets. This is a real settings menu, in
-   the real UI, for the cost of string edits and a few hooks.
-2. **Grow a label past its slot.** Each token sits in a padded slot with 4-7
-   spare bytes (`$Brightness` has 792, because other content follows). Free
-   within the slot; beyond it, see 3.
-3. **Add rows.** Needs the full APT reader/writer. Tractable — the imports mean
-   a new checkbox is a *placement of an already-imported character*, not a new
-   character definition — but it is the real work, and it is format archaeology
-   rather than game reversing.
+1. **Call what is already wired.** The cheapest route by far, and the one 048
+   took: whole screens exist that nothing navigates to.
+2. **Relabel.** String edits in place, free within a token's padded slot (4-7
+   spare bytes; `$Brightness` has 792 because other content follows). A label
+   with no `$` renders literally, so new text needs no CSF entry.
+3. **Add widgets and text.** `tools/aptfile.py`. A new checkbox is a *placement
+   of an already-imported character*, and new text is a new character plus a
+   grown character table. Both are proved in-game.
+4. **Wire a new button back to the cave.** Solved, and it needs no ActionScript
+   -- see below.
 
-Route 1 is the one to build first: it is most of the value for almost none of
-the risk, and it proves the FSCommand interception that route 3 would need
-anyway.
+## A button's click dispatches on its instance name
+
+The Options nav bar (sprite 147) places ONE character -- 146 -- three times and
+tells the buttons apart only by the name on each placement:
+
+    f0  char 146  depth 33  (-170, -6)  name=Save
+    f4  char 146  depth 17  (   2, -6)  name=Reset
+    f9  char 146  depth  1  ( 172, -6)  name=Cancel
+
+Those line up with the callbacks the screen's constructor registers, each built
+from an AsciiString and a refcounted delegate (whose constructor is at RVA
+`0x0055F140`):
+
+    AptOptions::OnInitialized  0x0055DCA0     AptOptions::Cancel   0x0055DCB0
+    AptOptions::Save           0x00560280     AptOptions::Reset    0x0055E470
+    AptOptions::RefreshNat     0x00560030     APT:VersionNum       0x00104CC0
+
+**A fourth placement of character 146 named `RefreshNat` fires
+`AptOptions::RefreshNat` when clicked.** Measured: the hook logged
+`{"hit":"RefreshNat","state":2}` on a real mouse click. So placing a button and
+catching its click costs one placement and one detour -- no ActionScript, no new
+character -- and the button inherits the art, the hover glow and the click sound
+because it *is* the button the other three are.
+
+What a new NAME still needs is a callback registered under it. Until that is
+done a button must carry a name the constructor already registers, which is why
+048's button is `RefreshNat` and why it is still unshipped.
+
+## Our own text, in the game's own fonts
+
+`aptfile.add_text` appends a type-2 character and `add_character` grows the
+character table -- the table is an array the movie header points at, so growing
+it means appending a fresh copy one entry longer and repointing the header, the
+same trick the op arrays use. A string with **no leading `$` renders literally**,
+so our words need no CSF entry and no `lang/english.big` edit.
+
+    0x00 type=2   0x04 sig      0x08..0x14 bounds x0 y0 x1 y1
+    0x18 font id  0x1c align    0x20 colour ARGB   0x24 size
+    0x34 text     0x38 variable binding
+
+**The font id is what decides whether it looks native.** The Options screen's
+panel labels are font `0xa` at 18pt; its BUTTON labels are font `0x1e` at 16pt.
+They are visibly different faces, and a panel-label character on a button reads
+as wrong on sight. Alignment is `0` left and `2` centre, and the UI font is
+proportional -- a two-column list needs two characters at two x positions,
+because padding one string with spaces does not line a column up.
+
+**A button's own label is a variable, not its name.** The label text characters
+bind to `_parent._parent.buttonName`, which the screen's script sets per
+authored instance; `buttonName` appears nowhere in the executable, so no C++
+sets it and a fourth instance keeps the `...` placeholder. Add text characters
+of your own instead -- on two lines, which is what the authored buttons do.
+
 
 ## Addresses for driving APT from the cave
 
