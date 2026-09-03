@@ -875,6 +875,7 @@ void LANAPI::RequestChat( UnicodeString message, ChatType format )
 	OnChat(m_name, m_localIP, message, format);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameStart.cpp
 // ?RequestGameStart@LANAPI@@UAEXXZ present-unmatched
 void LANAPI::RequestGameStart( void )
 {
