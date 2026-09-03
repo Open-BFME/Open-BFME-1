@@ -3,7 +3,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /GX /Ireference/shims/stlp_nodealloc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // stlport
 // Isolated TU for DefaultProductionExitUpdate::exitObjectViaDoor.
-// Retail 0x002D01E0 (494B). Do not edit UpdateModule.h / InGameUI.h.
+// Retail 0x002D01E0 is 534B (gen-dump / full EH tail), not the 494B drift cut.
+// Wall: loc (Vector3) does not share the std::vector<Coord3D> slot, so
+// sub esp,0x34 vs retail 0x28. Transform_Vector alias tmp already overlaps
+// createPoint. Merging loc into createPoint gets 0x28+EH but loses Z-row DCE
+// (546B). Placement overlay of loc/vector gets 0x28 but drops EH (515B).
+// Do not edit UpdateModule.h / InGameUI.h.
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "vector3.h"
