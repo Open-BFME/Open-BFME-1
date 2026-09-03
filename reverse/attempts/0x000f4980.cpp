@@ -1,95 +1,128 @@
 // ?hasAnyBuildings@Team@@QBE_N_N@Z
-// partial score=0.72 date=2026-09-01
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// stlport
+// partial score=0.96 date=2026-09-03
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// Open-BFME5: Team::hasAnyBuildings, retail 0x000F4980, 184 bytes.
+//
+// Named by the already-matched TeamPrototype::hasAnyBuildings walk. Same Object
+// DLINK PMF as Team::hasAnyObjects. No dead/destroyed filter. Objects with
+// kind-of dword 1 bit 0x400000 are skipped. The Bool flag gates a STRUCTURE
+// (bit 7 of dword 0) filter that also requires Object+0x118 bits 0x0C. A
+// remaining STRUCTURE wins.
 
-// BFME Team::hasAnyBuildings, retail 0x000F4980. The Zero Hour source walks
-// the intrusive TeamMemberList and asks whether a live member is a structure.
-// BFME adds one flag. Its retail body always excludes the template flag in
-// kind-of word 1 bit 22; when the flag is set it also excludes structures whose
-// Object condition word has either of bits 2 and 3 set.
-
-#include "PreRTS.h"
+#include "ObjectDlinkPmf.h"
 
 typedef bool Bool;
-typedef unsigned int UnsignedInt;
 
-class Object;
+#define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
 
-class BfmeThingTemplate
+template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+class DLINK_ITERATOR
 {
 public:
-	BfmeThingTemplate *getFinalOverride();		// ILT 0x000022BB
-};
-
-class BfmeTeamMemberLink
-{
+	typedef OBJCLASS* (OBJCLASS::*GetNextFunc)() const;
+private:
+	OBJCLASS* m_cur;
+	GetNextFunc m_getNextFunc;
 public:
-	static Object *__fastcall next( const void *link );	// ILT 0x00001140
-};
-
-static BfmeThingTemplate *bfmeFinalTemplate( const Object *object )
-{
-	BfmeThingTemplate *value =
-		*(BfmeThingTemplate *const *)((const char *)object + 0x04);
-	if( value )
+	DLINK_ITERATOR(OBJCLASS* cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc)
 	{
-		BfmeThingTemplate *next =
-			*(BfmeThingTemplate **)((char *)value + 0x04);
-		if( next )
-			value = next->getFinalOverride();
 	}
-	return value;
-}
 
+	void advance()
+	{
+		if (m_cur)
+			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
+	}
+
+	Bool done() const
+	{
+		return m_cur == 0;
+	}
+
+	OBJCLASS* cur() const
+	{
+		return m_cur;
+	}
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+
+	void *m_vtable;
+	Overridable *m_nextOverride;
+};
+
+class BfmeObjectTemplateView
+{
+public:
+	void *m_vptr;
+	Overridable *m_template;					// Object+0x04
+};
+
+class BfmeObjectStatusView
+{
+public:
+	unsigned char m_head[0x118];
+	unsigned char m_status118;					// +0x118
+};
+
+class ThingTemplate
+{
+public:
+	unsigned char m_head[0xC8];
+	unsigned int m_kindOf0;						// +0xC8
+	unsigned int m_kindOf1;						// +0xCC
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
-	Bool hasAnyBuildings( Bool bfmeFlag ) const;
+	Bool hasAnyBuildings(Bool bfmeFlag) const;
 
-private:
-	unsigned char m_unmodelled_000[ 0x0c ];
-	Object *m_teamMemberList;
+	void *m_vptr;
+	void *m_proto;
+	void *m_id;
+	Object *m_head;							// +0x0C
+
+	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
+	{
+		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
+	}
 };
 
-// ?hasAnyBuildings@Team@@QBE_N_N@Z
-Bool Team::hasAnyBuildings( Bool bfmeFlag ) const
+static Overridable *bfmeFinalTemplate(Object *obj)
 {
-	typedef Object *(__fastcall *GetNextFunction)( const void * );
-	GetNextFunction getNext = BfmeTeamMemberLink::next;
-	const int thisDelta = -0x64;
-	const unsigned int vbIndex = 0;
-	Object *object = m_teamMemberList;
+	Overridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
+	if (tmpl != 0 && tmpl->m_nextOverride != 0)
+		tmpl = (Overridable *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
 
-	while( object )
+// ?hasAnyBuildings@Team@@QBE_N_N@Z
+Bool Team::hasAnyBuildings(Bool bfmeFlag) const
+{
+	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
-		BfmeThingTemplate *thing = bfmeFinalTemplate( object );
-		const UnsignedInt *kindOf =
-			(const UnsignedInt *)((const char *)thing + 0xc8);
-		const signed char *kindOfBytes = (const signed char *)kindOf;
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+		if ((tmpl->m_kindOf1 & 0x400000) != 0)
+			continue;
 
-		if( (kindOf[1] & 0x00400000u) != 0 )
-			goto next_object;
-
-		if( bfmeFlag &&
-			kindOfBytes[0] < 0 &&
-			(*(const UnsignedInt *)((const char *)object + 0x118) & 0x0cu) != 0 )
-			goto next_object;
-
-		thing = bfmeFinalTemplate( object );
-		kindOfBytes = (const signed char *)thing + 0xc8;
-		if( kindOfBytes[0] < 0 )
-			return true;
-
-	next_object:
-		if( object )
+		if (bfmeFlag)
 		{
-			const char *vbptrAddress = (const char *)object + 0x68;
-			const int *vbtable = *(const int *const *)vbptrAddress;
-			const void *link = vbptrAddress + vbtable[vbIndex] + thisDelta;
-			object = getNext( link );
+			tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+			BfmeObjectStatusView *obj = (BfmeObjectStatusView *)iter.cur();
+			if ((tmpl->m_kindOf0 & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
+				continue;
 		}
-	}
 
+		tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+		if ((tmpl->m_kindOf0 & (1u << 7)) != 0)
+			return true;
+	}
 	return false;
 }
