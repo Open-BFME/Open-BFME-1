@@ -3906,6 +3906,7 @@ name,address,notes
 ??0ios_base@_STL@@IAE@XZ,0x0083F6B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Streams.cpp
 ??0locale@_STL@@QAE@ABV01@@Z,0x00832150,STLport 4.5.3 locale copy constructor; address read from the retail pubimbue REL32 displacement
 ??0locale@_STL@@QAE@XZ,0x00832120,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
+??1?$CComCritSecLock@VCComCriticalSection@ATL@@@ATL@@QAE@XZ,0x009F699A,ATL 7.1 CComCritSecLock cleanup called by CAtlBaseModule::RemoveResourceInstance
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x00906410,0x00907550 deleting destructor directly calls the authentic unsigned-long vector destructor
 ??1?$DynamicVectorClass@PAULegacyMaterialClass@MeshLoadContextClass@@@@UAE@XZ,0x0094EAB0,typed constructor 0x0094E490 stores table 0x00D3D0B0; 0x0094F0E0 wrapper directly calls this scalar destructor
 ??1?$DynamicVectorClass@UTextureStatisticsStruct@@@@UAE@XZ,0x009380E0,0x00938130 wrapper call; typed 0x00937FB0 derived ctor and static statistics vector prove identity; distinct base wrapper at 0x00938080
@@ -9495,6 +9496,7 @@ name,address,notes
 ??9?$BitFlags@$0FG@@@QBE_NABV0@@Z,0x00022C5A,Object::setStatus BitFlags<86> inequality ILT
 ??9ModelConditionFlags@@QBE_NABV0@@Z,0x00035CA1,Open-BFME5 ILT thunk to the ten-dword ModelConditionFlags comparison body at 0x001C2870
 ???0DLinkAt4@@QAE@PAX@Z,0x00024C12,DLink copy/link ctor at +4 of Gen0035E3B0
+??A?$CSimpleArray@PAXV?$CSimpleArrayEqualHelper@PAX@ATL@@@ATL@@QAEAAPAXH@Z,0x009F6921,ATL 7.1 CSimpleArray<HINSTANCE>::operator[] called by CAtlBaseModule::RemoveResourceInstance
 ??A?$hash_map@HHU?$hash@H@_STL@@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x000D6280,int/int hash_map operator[] matched as Gen_hashraw_000d6280; called through its ILT by Player::setTeamRelationship
 ??A?$hash_map@HPAVObject@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHPAVObject@@@_STL@@@3@@_STL@@QAEAAPAVObject@@ABH@Z,0x00005E11,Open-BFME5 ILT for the ObjectID/Object* hash_map operator[]; called by GameLogic::addObjectToLookupTable at 0x0038E490 and jumps to the body at 0x0038B980 matched as Gen_hashraw_0038b980
 ??A?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAEAAW4Relationship@@ABH@Z,0x0001219D,Open-BFME5 ILT; called by ?setPlayerRelationship@Player@@QAEXPBV1@W4Relationship@@@Z at 0x000D7600
@@ -10513,6 +10515,7 @@ name,address,notes
 ?Release_Ref@TextureClass@@QAEXXZ,0x009EB7A0,BFME texture release: WORD refcount+flag bits at [this+4]; auto-delete via vtbl slot 8 when bit24 set ??? TextureClass does NOT derive RefCountClass
 ?Remap_Mesh@MaterialRemapperClass@@QAEXPBVMeshMatDescClass@@PAV2@@Z,0x0092F2C0,callee of the byte-proven clone_materials 0x96DDC0; same stack temp as ecx and args are the two CurMatDesc slots at +0x9c
 ?Remove@?$DLNodeClass@VThumbnailManagerClass@@@@QAEXXZ,0x00041763,pinharvest x4 (thunk)
+?RemoveAt@?$CSimpleArray@PAXV?$CSimpleArrayEqualHelper@PAX@ATL@@@ATL@@QAEHH@Z,0x009F6883,ATL 7.1 CSimpleArray<HINSTANCE>::RemoveAt called by CAtlBaseModule::RemoveResourceInstance
 ?Remove_All@?$SList@VTagBlockIndex@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Remove_All@?$SList@VTagBlockIndex@@@@UAEXXZ,0x0000DBA7,pinharvest x1 (thunk)
 ?Remove_All@?$SList@VTagBlockIndex@@@@UAEXXZ,0x009EDD30,pinharvest x1 (body)
