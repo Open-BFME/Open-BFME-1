@@ -9072,3 +9072,5 @@ _ciCleanupCallbacks	0x008702F0	84	blocked	custom edi-arg callee wall: loop calls
 ?clear@Rva00490570@@QAEXXZ	0x00490570	9	refuted	placeholder superseded by reset@ShellGameLoadScreen on vtable 0x010F9B0C slot 3. t=15min model=cursor-grok-4.6
 ?d_00268340@@YAXXZ	0x00268340	111	blocked	ICF twin of landed ?iniParseAnim@TransportContain@@SAXPAVINI@@PAX1PBX@Z @0x0022CF60; same 111B except REL32 displacements to the same five callees. no new name without duplicating identity. t=10min model=grok
 ?bfmeInRangeD4F0@BfmeWeapD4F0@@QAE_NPBUBfmePt951@@@Z	0x0026D4F0	77	converted	range-vs-gap this-adj [esi-0x18]; callees bfmeValue@Gen_001E1950 and bfmeGapB951. t=25min model=grok
+?bfmeSpawnB950@BfmeModB950@@QAEXPBUCoord3D@@PBVAsciiString@@@Z	0x0026B950	103	partial	length-delta 115/103 register-mirror this ebx vs edi; 12-byte status xor-stores vs push-0/imm; findTemplate+newObject+setPosition+vt+0x50 shape recovered. t=20min model=grok score=0.72 stash=reverse/attempts/0x0026b950.cpp
+?bfmeTickD820@BfmeTailD820@@QAEXXZ	0x0026D820	101	converted	GameLogic findObjectByID + Coord3D; this-adj [esi-8] parent. t=15min model=grok
