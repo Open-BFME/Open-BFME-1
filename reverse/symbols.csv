@@ -83654,3 +83654,5 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ??0BfmeOnlineLoginMember3C@@QAE@XZ,0x00010BE0,OnlineLogin member at +0x3C constructed by ctor 0x005538A0; ILT of GameSpyLoginPreferences-shaped body 0x00082970
 ??_7OnlineLoginFunctorWrapper@@6B@,0x011080B0,16-byte OnlineLogin fscommand functor wrapper vtable (refcount then vptr then this/method)
 ??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x011080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
+?getUnicodeDateBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z,0x00047E6F,ILT of getUnicodeDateBuffer 0x0010D7A0; OnlineHome date writer 0x00546170
+?getUnicodeTimeBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z,0x0002DE9D,ILT of getUnicodeTimeBuffer 0x0010D940; OnlineHome time writer 0x00546170
