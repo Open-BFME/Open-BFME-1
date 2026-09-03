@@ -75044,6 +75044,7 @@ name,address,notes
 ?bfmeRelease@BfmeTagged@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared release the tag-checked assignments call
 ?bfmeReleaseATXA@@YGXPAX@Z,0x00AFD504,pin
 ?bfmeReleaseBTXA@@YGXPAX@Z,0x00AFD510,pin
+?bfmeReleaseNVSQ@BfmeStrNVSQ@@AAEXXZ,0x00887940,pin
 ?bfmeReleaseOld@Gen_0023E120@@QAEXXZ,0x00045557,Open-BFME5 the release of the old block the vector reserve at 0x0023E120 calls after moving
 ?bfmeReleaseOld@Gen_00359A80@@QAEXXZ,0x0002594B,Open-BFME5 the release of the old block the vector reserve at 0x00359A80 calls after moving
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
@@ -75053,6 +75054,7 @@ name,address,notes
 ?bfmeReleaseVGS@BfmeTexVGS@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVGX@BfmeTexVGX@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVMZ@BfmeStrVMZ@@QAEXXZ,0x00887940,pin
+?bfmeReleaseWVSQ@BfmeStrWVSQ@@AAEXXZ,0x008881D0,pin
 ?bfmeRemove1183@BfmeList1183@@QAEXPAUBfmeSlot1183@@@Z,0x0001DFE3,pin
 ?bfmeRemove@BfmeManagerEntryP@@QAEXPAVBfmeOwnedP@@@Z,0x001BE920,BfmeManagerP bfmeRemove at 0x003854C0 reaches this helper through ILT 0x0000B325; ECX is each +0xA8 list entry and the argument is the owned element
 ?bfmeRemove@BfmeManagerP@@QAEXPAVBfmeOwnedP@@@Z,0x000218B9,Open-BFME5 the ICF thunk (to 0x004218B9) the clear at 0x00371120 calls on its manager per element
