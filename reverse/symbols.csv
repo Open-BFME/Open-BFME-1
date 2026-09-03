@@ -72846,6 +72846,7 @@ name,address,notes
 ?bfmeAdjustHeap00531B20@@YAXPAUS4SortElem12Pod@@HHU1@PAX@Z,0x0001D0B6,address-derived adjust-heap callee of gen00531B20; target read from the REL32 at its call site
 ?bfmeAdjustHeap00531C50@@YAXPAUS4SortElem12@@HHU1@PAX@Z,0x0003EDA1,address-derived adjust-heap callee of gen00531C50; target read from the REL32 at its call site
 ?bfmeAdjustHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z,0x009CD1E0,address-derived adjust-heap callee of bfmePopHeapVOU; target read from the REL32 at its call site
+?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
@@ -73304,6 +73305,7 @@ name,address,notes
 ?bfmeCbVJM@@YGXXZ,0x007F6870,pin
 ?bfmeCellRangeVRA@BfmePartVRA@@QAEXPAPAVBfmeCellVRA@@0HHH@Z,0x008F7D10,pin
 ?bfmeCellRangeVRB@BfmePartVRB@@QAEXPAPAVBfmeCellVRB@@0HHH@Z,0x008F7D10,pin
+?bfmeCellRangeVRC@BfmePartVRC@@QAEXPAPAVBfmeCellVRC@@0HHH@Z,0x008F7D10,pin
 ?bfmeCellUpdateVNR@BfmeCellVNR@@QAEXPAVBfmeMgrVNR@@H@Z,0x008FC300,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
