@@ -41,6 +41,11 @@ struct Gen_t_002e19c0_p12cd
 	char m_body[ 12 ];
 };
 
+struct Gen_t_002e20c0_p12cd
+{
+	char m_body[ 12 ];
+};
+
 namespace _STL
 {
 struct __false_type
@@ -160,4 +165,7 @@ template class vector<Gen_t_001fa830_p12cd, allocator<Gen_t_001fa830_p12cd> >;
 
 // ?_M_insert_overflow@?$vector@UGen_t_002e19c0_p12cd@@V?$allocator@UGen_t_002e19c0_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_002e19c0_p12cd@@ABU3@ABU__false_type@2@I_N@Z
 template class vector<Gen_t_002e19c0_p12cd, allocator<Gen_t_002e19c0_p12cd> >;
+
+// ?_M_insert_overflow@?$vector@UGen_t_002e20c0_p12cd@@V?$allocator@UGen_t_002e20c0_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_002e20c0_p12cd@@ABU3@ABU__false_type@2@I_N@Z
+template class vector<Gen_t_002e20c0_p12cd, allocator<Gen_t_002e20c0_p12cd> >;
 }
