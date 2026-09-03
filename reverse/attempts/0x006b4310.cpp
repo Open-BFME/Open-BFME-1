@@ -1,7 +1,10 @@
 // ?update006B4310@Rva006B4310Owner@@QAEXABVAsciiString@@HH@Z
-// partial score=0.86 date=2026-09-03
+// partial score=0.97 date=2026-09-03
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Mutex-guarded three-argument entry update in the 0x006B3C50 owner family.
+// Best: 157/156, sub esp 8 + C6 stack-owned match clear006B44A0 Guard shape.
+// Wall: mutex in eax not edi; 3 args steal callee-saved so ReleaseMutex reloads
+// from stack after pops (+1B). Same MutexGuard lands 2-arg siblings.
 
 class AsciiString;
 
@@ -12,11 +15,10 @@ extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 class Rva006B4310MutexGuard
 {
 public:
-	Rva006B4310MutexGuard(void *handle)
+	explicit Rva006B4310MutexGuard(void *handle)
+		: m_handle(handle), m_owned(0)
 	{
-		m_owned = 0;
-		m_handle = handle;
-		if (WaitForSingleObject(handle, 0xFFFFFFFF) != 0x102)
+		if (WaitForSingleObject(m_handle, 0xFFFFFFFF) != 0x102)
 			m_owned = 1;
 	}
 
@@ -59,7 +61,6 @@ void Rva006B4310Owner::update006B4310(
 	Rva006B4310Owner *self = this;
 	void *handle = self->m_mutex;
 	Rva006B4310MutexGuard guard(handle);
-
 	self->m_entries[index].initialize(first, second);
 	self->finalize(first, second, index);
 }
