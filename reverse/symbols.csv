@@ -83614,3 +83614,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0AITNGuardMachine@@QAE@PAVObject@@@Z,0x0000715D,ILT to AITNGuardMachine ctor 0x0018AFB0; retail onEnter@AITunnelNetworkGuardState call
 ??0AIDockMachine@@QAE@PAVObject@@@Z,0x00014F15,ILT to AIDockMachine ctor 0x0014F7C0; retail onEnter@AIDockState call
 ?damageTeamMembers@Team@@QAE_NM@Z,0x0000D148,ILT to Team::damageTeamMembers 0x000F33F0; TeamPrototype::damageTeamMembers at 0x000F41A0 calls it per instance
+??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003DEAB,ILT to NameKeyType rb-tree find 0x000D0F50; Rva000D4870 map<NameKeyType void*> find at this+0x214
