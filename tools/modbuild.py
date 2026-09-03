@@ -434,6 +434,14 @@ def build_optionsui(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_advancedgfx(pe, feature_dir, probe=False):
+    # AptOptions::update runs only while the Options screen is up, which is
+    # exactly when the key means anything, so nothing polls during a game.
+    return build_feature(pe, feature_dir / "src/advancedgfx.cpp", "advancedgfx_update", (
+        (TARGET_APTOPTIONS_UPDATE, "advancedgfx_update", ("ecx",)),
+    ), probe=probe)
+
+
 def build_modpanel(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/modpanel.cpp", "modpanel_draw", (
         (TARGET_INGAMEUI_POSTDRAW, "modpanel_draw", ("ecx",)),
@@ -609,6 +617,11 @@ UNSHIPPED = {
     "046-optionsui": (build_optionsui,
                       "needs its relabelled apt/options.big shipped with it, and a "
                       "hands-on pass; see mods/features/046-optionsui/README.md"),
+    # Shares 046's hook address (AptOptions::update), so build one at a time
+    # until 046 is either shipped or dropped.
+    "048-advancedgfx": (build_advancedgfx,
+                        "opens BFME's own Custom Graphics tab on F11; needs a button "
+                        "rather than a key before it ships"),
     "047-uiprobe": (build_uiprobe,
                     "an instrument: it opens the Options screen and flips a mod-bus bit "
                     "from the keyboard, for a rig whose mouse does not reach the game"),

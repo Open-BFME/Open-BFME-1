@@ -98,13 +98,12 @@ map:
 +0x2F4 ScrollSpeed  +0x2F8 Brightness  +0x2FC TextureDetail
 ```
 
-**Nine of those widgets do not exist in BFME1's movie.** `Save` null-checks each
-before using it, so the code for Anisotropic Filtering, Terrain Lighting, 3D/2D
-Shadows, Smooth Water Border, Show Props, Show Animations, Heat Effects and
-Disable Dynamic LOD is all present and simply has nothing to bind to. Adding
-those checkboxes to `Options.apt` would light them up with no code change at
-all — and since they are placements of an already-imported character, that is
-the cheapest possible first use of an APT reserialiser.
+**Eleven of those widgets are real, and BFME1 simply never shows them.** They
+are authored into `Options.apt` as a complete Custom Graphics tab and they bind
+themselves the moment the screen is put into state 4 -- which is what
+`AptOptions::showAdvanced` at RVA `0x0055DBA0` does, and what nothing in the
+game calls. See `mods/features/048-advancedgfx/`. (An earlier note here said
+those widgets were missing from the movie. They are not.)
 
 ## Why there are no screenshots
 

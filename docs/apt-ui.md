@@ -134,6 +134,62 @@ moves every following offset, so *adding* content means a full parse and
 reserialise of the movie — character definitions, frame op-code streams and
 ActionScript bytecode.
 
+## The movie format is solved: `tools/aptfile.py`
+
+It parses, walks and re-emits **all 33 movies in a retail install
+byte-identically**, and every one satisfies the layout invariant
+`char_table + 4 * char_count == movie header`. Run it on any `.apt` to
+self-check.
+
+    Apt Data:6\x1a\0                     12-byte magic
+    import table   count x { u32 movie name, u32 symbol name, u32 char id, u32 }
+    string pool
+    character table  count x u32 offset -- 0 where the character is imported
+    movie header (the type-9 character), immediately after the table
+      +0x08 frame count   +0x0c frames    +0x14 char count  +0x18 char table
+      +0x1c width         +0x20 height    +0x28 imports     +0x2c import table
+    each character   { u32 type, u32 0x09876543, ... }
+      1 shape  2 text  3 font  4 button  5 sprite  7 image  9 movie
+    frames   count x { u32 op count, u32 ops offset }
+    ops      op count x u32 offset, each to a type-tagged op struct
+      1 DoAction  2 FrameLabel  3 PlaceObject (0x40 B)  4 RemoveObject
+      5 SetBackgroundColor
+
+Nothing in the file says where the movie header is -- it holds the character
+table offset, and the character table is what would otherwise tell you where the
+movie is. The root is found by scanning for the single `{9, 0x09876543}` a movie
+contains.
+
+**It never moves a byte.** New structures are appended past the end and the only
+existing bytes patched are fixed-size scalar fields, so a no-op edit is
+byte-identical by construction and every offset in the original stays valid.
+Adding a PlaceObject means appending the op, appending a fresh op-pointer array
+one entry longer, and repointing the frame at it; the old array is orphaned,
+which costs a few bytes against moving every offset after it.
+
+That was proved in-game before it was trusted: the three advanced pages
+(characters 187, 198 and 209) placed onto the normal tab's resting frame drew
+their eleven widgets on the Options screen, in the game's own art. The shipped
+048 does not need the edit -- see below -- but the placement worked.
+
+## The Advanced tab was already there
+
+`Options.apt` carries a finished **Custom Graphics** tab at frames 102..121
+behind the label `_open_advanced`: eleven widgets, labels, tooltips and an
+animated open and close. The engine side is finished too -- a slot per widget on
+the screen object, a line each in the load path and in `AptOptions::Save` -- and
+so is the navigation:
+
+    AptOptions::showAdvanced   RVA 0x0055DBA0   __thiscall(screen)
+
+which calls `assignOpen("advanced")` on the movie and sets the screen state to 4.
+Nothing in the game calls it. `AptOptions::InitGadgets` is the per-gadget
+registration callback and its chain runs only at state 4, which is why both
+halves of that function matter and why the widgets read null on the normal tab.
+
+So the eleven hidden graphics options cost one call, not a movie edit. See
+`mods/features/048-advancedgfx/`.
+
 ## What this makes possible, in order of cost
 
 1. **Relabel and repurpose the existing Options screen.** No format surgery at
