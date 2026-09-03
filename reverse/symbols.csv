@@ -2253,6 +2253,7 @@ name,address,notes
 ??0BfmeStrVTB@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTF@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrVTH@@QAE@ABV0@@Z,0x0001400B,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -3440,6 +3441,7 @@ name,address,notes
 ??0Rva00802E70Element@@QAE@XZ,0x00802E70,V2 lane: 28-byte element constructor placement-new'd by ?allocate@Rva007F77B0Block@@QAEXH@Z
 ??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
+??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
 ??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
 ??0Rva4048AString@@QAE@XZ,0x0004048A,Open-BFME6 string default ctor ILT called by 0x00844520
 ??0Rva7F4CC0Child@@QAE@XZ,0x007E86B0,Open-BFME5 child-constructor call pin
@@ -4287,6 +4289,7 @@ name,address,notes
 ??1BfmeStrVTB@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTC@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTF@@QAE@XZ,0x00887940,pin
+??1BfmeStrVTH@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
@@ -83327,4 +83330,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
