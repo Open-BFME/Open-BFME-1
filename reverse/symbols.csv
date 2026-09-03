@@ -75304,6 +75304,7 @@ name,address,notes
 ?bfmeSetVSH@BfmeStrVSH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSI@BfmeStrVSI@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSJ@BfmeStrVSJ@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVSK@BfmeStrVSK@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -82177,6 +82178,7 @@ __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWaitVHM@@YGKPAXK@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
+__imp__AIL_enumerate_3D_providers@12,0x013595AC,Open-BFME5 retail mss32 AIL_enumerate_3D_providers import pointer
 __imp__GetLocalTime@4,0x01358DB8,Open-BFME5 retail GetLocalTime import pointer
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
