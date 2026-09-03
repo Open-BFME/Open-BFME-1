@@ -135,7 +135,26 @@ def main():
     obj = objdir / f"{src.stem}_{tag}.obj"
 
     build.compile_source(src, obj)
-    compiled, relocs = build.read_object_symbol_bytes(obj, a.symbol)
+    try:
+        compiled, relocs = build.read_object_symbol_bytes(obj, a.symbol)
+    except ValueError as e:
+        if "symbol not found in object" not in str(e):
+            raise
+        # The most common worker failure: a guessed mangled name. Show what the
+        # object actually defines, nearest first, so the fix is one copy-paste.
+        import difflib
+        syms = [s["name"] for s in build.read_object_symbols(obj.read_bytes())
+                if s["section"] > 0 and s["name"].startswith(("?", "_", "@")) and not s["name"].startswith(("$", ".", "__real", "??_C"))]
+        want = a.symbol
+        ranked = sorted(set(syms), key=lambda n: -difflib.SequenceMatcher(None, n, want).ratio())
+        print(f"symbol   {want}")
+        print("result   NOT IN OBJECT -- the TU compiled, but defines no symbol by that name.")
+        print("nearest  defined symbols in this object (copy the exact one):")
+        for n in ranked[:8]:
+            print(f"         {n}")
+        print("hint     the class/namespace/const-ness/calling convention in the mangled name must match the C++ you wrote;")
+        print("         `add_match.py` needs the same exact name.")
+        sys.exit(2)
     compiled = bytes(compiled)
 
     size = a.size or ledger_size(rva) or len(compiled)

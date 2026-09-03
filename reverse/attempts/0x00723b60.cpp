@@ -1,4 +1,8 @@
 // ?refreshCache@BfmeA1137@@QAEXXZ
+// partial score=0.9 date=2026-09-03
+// ?refreshCache@BfmeA1137@@QAEXXZ
+// partial score=0.9 date=2026-09-03
+// ?refreshCache@BfmeA1137@@QAEXXZ
 // partial score=0.45 date=2026-09-02
 // cl: /DNDEBUG /MD /EHs-c-
 // Open-BFME5 conversions.
@@ -71,8 +75,11 @@ static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
 
 void BfmeA1137::refreshCache()
 {
+	const BfmeOverride1137 *d = g_bfmeGlo012F15F8;
 	float slot;
-	if (walk(g_bfmeGlo012F15F8)->m_flag40 == 0)
+	const BfmeOverride1137 *f;
+	f = walk(d);
+	if (f->m_flag40 == 0)
 		return;
 	if (m_flag44)
 	{
@@ -84,8 +91,12 @@ void BfmeA1137::refreshCache()
 		return;
 	}
 	slot = WWMath::Random_Float();
-	if (!(slot < walk(g_bfmeGlo012F15F8)->m_54))
+	d = g_bfmeGlo012F15F8;
+	f = walk(d);
+	if (!(slot < f->m_54))
 		return;
 	m_flag44 = 1;
-	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * walk3(g_bfmeGlo012F15F8)->m_50 + g_bfmeK07533C);
+	d = g_bfmeGlo012F15F8;
+	f = walk3(d);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }

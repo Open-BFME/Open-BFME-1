@@ -82,16 +82,17 @@ static const BfmeOverrideTBA *bfmeWalkTBA(const BfmeOverrideTBA *d)
 
 void BfmeThingTBA::bfmeTwoTBA()
 {
-	const BfmeOverrideTBA *f = 0;
-	const BfmeOverrideTBA *d = 0;
+	const BfmeOverrideTBA *f;
+	const BfmeOverrideTBA *d;
 	int a;
 	int b;
 
 	m_bfme4c = 0;
 	m_bfme98 = 0;
-	m_bfmeCount = g_bfmeGlo012F0FE0->m_bfmeFrame;
-
+	const BfmeFrameTBA *q = g_bfmeGlo012F0FE0;
+	m_bfmeCount = q->m_bfmeFrame;
 	f = g_bfmeGlo012F15F8;
+
 	d = bfmeWalkTBA(f);
 	if (d->m_bfmeFlag3a == 0)
 	{
@@ -111,17 +112,8 @@ void BfmeThingTBA::bfmeTwoTBA()
 		d = f;
 	m_bfme38 = d->m_bfme30;
 
-	f = g_bfmeGlo012F15F8;
-	d = f;
-	if (!g_bfmeGlo012F15F8)
-	{
-		b = d->m_bfme34;
-		m_bfme10 = b;
-		return;
-	}
-	if (f->m_nextOverride)
-		f = (const BfmeOverrideTBA *)f->m_nextOverride->getFinalOverride();
-	b = f->m_bfme34;
+	d = bfmeWalkTBA(g_bfmeGlo012F15F8);
+	b = d->m_bfme34;
 	m_bfme10 = b;
 }
 

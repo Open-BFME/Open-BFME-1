@@ -91,7 +91,6 @@ extern void j_00019b23( void );
 extern void j_00023209( void );
 extern void j_000294e2( void );
 extern void j_0003611a( void );
-extern "C" long __ftol2( double );
 
 typedef void (__cdecl *BFMEPathDebugLogFunction)( void *, const char *, ... );
 typedef void (__fastcall *BFMEUpdateGoalCall)( Pathfinder *, Object *, Object *,
@@ -123,6 +122,15 @@ class Rva00216D20
 public:
 	Bool field() const;
 };
+
+class BFMEComputePathView
+{
+public:
+	Bool computePath( PathfindServicesInterface *pathfinder, Coord3D *destination );
+};
+
+typedef Bool (BFMEComputePathView::*BFMEComputePathMember)(
+	PathfindServicesInterface *, Coord3D *);
 
 // The Zero Hour shim omits BFME members before these fields, so its declared offsets cannot be used here.
 struct BFMEApproachPathFields
@@ -960,27 +968,29 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	if (retail->m_isSafePath)
 	{
 		destroyPath();
+		Int extraDistance;
 		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		Coord3D pos1, pos2;
+		Coord3D pos1;
+		Coord3D *pos2 = &pos1 + 1;
 		pos1.set(-1000, -1000, 0);
 		Object *repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
 		}
-		pos2 = pos1;
+		*pos2 = pos1;
 		repulsor = gameLogic->findObjectByID(retail->m_repulsor2);
 		if (repulsor)
 		{
-			pos2 = *repulsor->getPosition();
+			*pos2 = *repulsor->getPosition();
 		}
 		const TAiData *aiData = BFME_PATH_AI->getAiData();
+		extraDistance = (Int)*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(retail->m_object) + 0x18C);
 		retail->m_path = pathfinder->findSafePath(retail->m_object,
 			*reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>( this ) + 0x1A8),
 			retail->m_object->getPosition(),
-			&pos1, &pos2, retail->m_object->getVisionRange() +
-				*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(aiData) + 0x60) +
-				__ftol2(*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(retail->m_object) + 0x18C)));
+			&pos1, pos2, retail->m_object->getVisionRange() +
+				*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(aiData) + 0x60) + extraDistance);
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
@@ -1169,7 +1179,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 			retail->m_requestedDestination.x, retail->m_requestedDestination.y,
 			retail->m_requestedDestination.z);
 	}
-	computePath(pathfinder, &retail->m_requestedDestination);
+	computePath( pathfinder, &retail->m_requestedDestination );
 	if (g_012F0239 && g_012ED4FC)
 	{
 		((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,

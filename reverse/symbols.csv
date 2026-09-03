@@ -912,6 +912,7 @@ name,address,notes
 ??$__copy_backward@PAUGen_t_00776270_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00776270_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x007748D0,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_007762a0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_007762a0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00774970,gen-tgrid payload member
 ??$__copy_backward@PAUGeometryShape@@PAU1@H@_STL@@YAPAUGeometryShape@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,GeometryInfo shape-vector insertion path at retail 0x004FF8F0; 0x24-byte element and StringBase assignment identify the instantiation
+??$__copy_backward@PAURva00244A80Element@@PAU1@H@_STL@@YAPAURva00244A80Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00047758,Open-BFME5 0x002403E0 backward copy ILT
 ??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75C0,gen-tgrid payload member
@@ -1043,6 +1044,7 @@ name,address,notes
 ??$__unguarded_partition@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@_STL@@YAPAURva00364980HeapElement@@PAU1@0U1@URva00364980HeapCompare@@@Z,0x0003FFC1,REL32 wide-element partition target from 0x00366AEF
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
 ??$__uninitialized_copy@PAURunwayInfo@FlightDeckBehavior@@PAU12@@_STL@@YAPAURunwayInfo@FlightDeckBehavior@@PAU12@00ABU__false_type@0@@Z,0x00038C80,Open-BFME5 the range copy the RunwayInfo vector _M_insert_overflow at 0x0039EC70 calls
+??$__uninitialized_copy@PAURva00244A80Element@@PAU1@@_STL@@YAPAURva00244A80Element@@PAU1@00ABU__false_type@0@@Z,0x0002D11E,Open-BFME5 0x002403E0 range copy ILT
 ??$__uninitialized_copy@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095720,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75F0,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE80,gen-tgrid payload member
@@ -1106,6 +1108,7 @@ name,address,notes
 ??$fill@PAPAVObject@@PAV1@@_STL@@YAXPAPAVObject@@0ABQAV1@@Z,0x0003C7F9,ILT thunk used by call site
 ??$fill@PAPAXPAX@_STL@@YAXPAPAX0ABQAX@Z,0x0000A060,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ??$fill@PAUGen_t_0074e320_p16pod@@U1@@_STL@@YAXPAUGen_t_0074e320_p16pod@@0ABU1@@Z,0x00749270,gen-tgrid payload member
+??$fill@PAURva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@0ABU1@@Z,0x00030F58,Open-BFME5 0x002403E0 fill ILT
 ??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QBE?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@1@ABH@Z,0x00041DAD
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@1@ABH@Z,0x0001990C
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHVAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBHVAsciiString@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHVAsciiString@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHVAsciiString@@@_STL@@@2@@1@ABH@Z,0x0000C31F
@@ -1153,6 +1156,7 @@ name,address,notes
 ??$swap@V?$_STLP_alloc_proxy@PAUGen_t_005c4650_m4pod@@U1@V?$allocator@UGen_t_005c4650_m4pod@@@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAUGen_t_005c4650_m4pod@@U1@V?$allocator@UGen_t_005c4650_m4pod@@@_STL@@@0@0@Z,0x005C2CA0,family-emit payload member
 ??$uninitialized_copy@PAGPAG@_STL@@YAPAGPAG00@Z,0x00032277,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 uses; it jumps to the 41-byte body at 0x004D4DA0
 ??$uninitialized_fill_n@PAEIE@_STL@@YAPAEPAEIABE@Z,0x0003932E
+??$uninitialized_fill_n@PAURva00244A80Element@@IU1@@_STL@@YAPAURva00244A80Element@@PAU1@IABU1@@Z,0x00023443,Open-BFME5 0x002403E0 fill construction ILT
 ??0?$BFMEFactoryModuleData@VActiveBodyModuleData@@$0FM@@@QAE@XZ,0x00036818,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VAutoDepositUpdateModuleData@@$0CA@@@QAE@XZ,0x0002EB04,ModuleFactory retail data facade
 ??0?$BFMEFactoryModuleData@VBattlePlanUpdateModuleData@@$0KA@@@QAE@XZ,0x000287C7,ModuleFactory retail data facade
@@ -3327,6 +3331,7 @@ name,address,notes
 ??0Rva000A19E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0014F280StateBase@@QAE@PAXVAsciiString@@@Z,0x00032182,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0019A1D0Member@@QAE@H@Z,0x00018129,ILT thunk to 0x00196D90 member ctor
+??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
 ??0Rva002E9E70Mid@@QAE@ABV0@@Z,0x00033640,Open-BFME5 fresh thiscall copy ctor at ILT of mid member of 0x002E9E70
 ??0Rva0033CopyBase@@QAE@ABV0@@Z,0x0001AB86,Open-BFME5 fresh thiscall copy ctor at ILT of 33B copy twins 0x0033A4C0 and 0x0033ACA0
 ??0Rva003525E0Pair@@QAE@ABV0@@Z,0x00024C12,Open-BFME5 fresh thiscall copy ctor at ILT of SEH 0x003525E0
@@ -78651,6 +78656,7 @@ name,address,notes
 ?getNext@BfmeMgrD74@@QAEPAVBfmeObjNotify3F0@@PAF@Z,0x0002EE60,pin
 ?getNextMission@Campaign@@QAEPAVMission@@PAV2@@Z,0x0003236C
 ?getNextMoodTarget@AIUpdateInterface@@QAEPAVObject@@_N0@Z,0x00003F58,AI idle mood target thunk
+?getNextMoodTarget@Rva001764E0AIUpdate@@QAEPAVObject@@_N0@Z,0x00003F58,AIAttackPursueTargetState update idle-mood target call
 ?getNextPacketRouterSlot@ConnectionManager@@QAEII@Z,0x00033190,DisconnectManager::isLocalPlayerNextPacketRouter loop advances through the router order; ILT target 0x00663BC0
 ?getNextSubToken@INI@@QAEPBDPBD@Z,0x00850B00,INI parser
 ?getNextToken@INI@@QAEPBDH@Z,0x00850970,INI getNextToken with retail zero argument
@@ -78796,6 +78802,7 @@ name,address,notes
 ?getWaterHandle@PolygonTrigger@@QBEPBVWaterHandle@@XZ,0x0000B0C8,TerrainLogic getWaterHandle ILT accessor call
 ?getWeaponSetFlags@BFMEWeaponSetOwner@@QBEABVBFMEWeaponSetFlags@@XZ,0x000209FA,alias of the Object spelling pinned below; AIUpdate.cpp reaches the accessor through a view class because the vendored Object.h does not declare it
 ?getWeaponSetFlags@Object@@QBEABVWeaponSetFlags@@XZ,0x000209FA,BFME Object weapon-set flags accessor ILT; caller 0x002737B0 tests bit 8 before issuing an attack-object command
+?getWhichTurretForCurWeapon@Rva001764E0AIUpdate@@QBE?AW4WhichTurretType@@XZ,0x000346A3,AIAttackPursueTargetState update turret selection call
 ?getWinStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CA10,by-value side prefix + "WinStreak" at VA 0x010804E8 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWinStreak
 ?getWins@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009C650,by-value side prefix + "Wins" at VA 0x010804B4 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWins
 ?getWorstLossStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CDD0,by-value side prefix + "WorstLostStreak" at VA 0x01080528 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWorstLossStreak
@@ -80405,6 +80412,8 @@ name,address,notes
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
 ?methodA@Member0C00739C70@@QAEPAVTextureBaseClass@@HHHHH@Z,0x008FC710,pinharvest
 ?methodB@Member0C00739C70@@QAEPAVTextureBaseClass@@HH@Z,0x008FC660,pinharvest
+?moveAlongWaypointPath@W3DView@@AAEXH@Z,0x0073CB10,address-derived BFME W3DView path helper
+?moveAlongWaypointPath@W3DView@@AAEXH_N@Z,0x00741360,address-derived BFME W3DView path helper with mode
 ?moveMouse@Mouse@@IAEXHHH@Z,0x000141A5
 ?moveRoadSegTo@W3DRoadBuffer@@IAEXHH@Z,0x0003283F,ILT thunk -> 0x70b040 (checkLinkBefore callee)
 ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002E320,pinharvest x1 (thunk)
@@ -80598,6 +80607,7 @@ name,address,notes
 ?pick@BridgeAreaEffectsRandomPositionShim@@QAEXPAVTerrainRoadType@@PBVBridgeInfo@@PAUCoord3D@@@Z,0x000406FB,BridgeBehavior doAreaEffects retail call at 0x001F249D forwards through the incremental thunk to getRandomSurfacePosition
 ?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
 ?pieceAt@BfmeGeometryInfo@@QBEPBUBfmeGeometryPiece@@H@Z,0x0087E150,Single-box distance helper calls the retail GeometryInfo piece accessor
+?pitchCameraOneFrame@W3DView@@AAEXXZ,0x0073C890,address-derived BFME W3DView camera helper
 ?playAttackVoiceResponse@AIUpdateInterface@@IAEXPAVObject@@@Z,0x00002EF0,BFME AIUpdate attack-voice helper ILT; 0x002737B0 passes the state machine goal for direct player or script commands
 ?playAttackVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z,0x0001060E,BFME attack-position voice helper ILT; privateAttackPosition at 0x0027DB50 passes its local goal Coord3D after setting AI_ATTACK_POSITION and the helper dispatches MSG_DO_ATTACK_OBJECT
 ?playAttackVoiceResponse@BFMEAttackVoiceAI@@QAEXPAVObject@@@Z,0x00002EF0,alias of the AIUpdateInterface spelling pinned below; AIUpdate.cpp reaches the helper through a view class because the vendored AIUpdate.h does not declare it
@@ -80990,6 +81000,7 @@ name,address,notes
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
 ?reverseAnimateWindow@BfmeAnimateWindowManager@@QAEXXZ,0x00027B65,Open-BFME5 ILT reached by ControlBar::animateSpecialPowerShortcut; NOT an alias of an existing pin -- this address was previously unpinned, taken from the donor and byte-proved by the rel32 in that call
+?rotateCameraOneFrame@W3DView@@AAEXXZ,0x00743860,address-derived BFME W3DView camera helper
 ?run@BfmeSub58_ACF@@QAE_NPAX0@Z,0x00004633,pin
 ?run@BitFlagsCountInverseIntersectionShim@@QBEHABV1@@Z,0x00786BD0,BitFlags countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
 ?run@BitFlagsHFCountInverseIntersectionShim@@QBEHABV1@@Z,0x00421830,BitFlags@117 countInverseIntersection incremental-link thunk target through a TU-local forwarding shim
@@ -81233,6 +81244,7 @@ name,address,notes
 ?setFullyObscuredByShroud@W3DModelDraw@@UAEX_N@Z,0x0003EF77,ILT; base call from W3DTankTruckDraw::setFullyObscuredByShroud
 ?setGameMessageType@NetGameCommandMsg@@QAEXH@Z,0x00673730,identified from readGameMessage's call site
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00006F50,BFME three-argument GameLogic::setGamePaused; ILT thunk to body 0x00383490
+?setGoalObject@Rva00170460GoalHelper@@QAEXPBVObject@@@Z,0x00027B42,Rva00170460State clear restores its goal object through the retail ILT
 ?setGoalObject@StateMachine@@QAEXPBVObject@@@Z,0x00035A1C,StateMachine goal-object setter ILT; caller 0x002737B0 sets the attack victim and body 0x001705A0 updates the safetied pointer
 ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,Open-BFME5 ILT; called by ?onExit@AIMoveAndEvacuateState@@UAEXW4StateExitType@@@Z at 0x0017A340
 ?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z,0x00036192,BFME AIStateMachine::setGoalWaypoint ILT decoded from the four privateFollowWaypointPath call sites; body is matched at 0x0026EDC0
@@ -81377,6 +81389,7 @@ name,address,notes
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x000361CE,BFME Thing::setTransformMatrix thunk
 ?setTransformMatrix@ThingSetTransformMatrixShim@@QAEXPBVMatrix3D@@@Z,0x001C16A0,Thing::setTransformMatrix incremental-link thunk target through a TU-local forwarding shim
 ?setTurretEnabled@AIUpdateInterface@@QAEXW4WhichTurretType@@_N@Z,0x0002ABBC,BattlePlanUpdate::enableTurret retail REL32 target
+?setTurretTargetObject@Rva001764E0AIUpdate@@QAEXW4WhichTurretType@@PAVObject@@_N@Z,0x0001A0E1,AIAttackPursueTargetState update turret target call
 ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z,0x00043FFE,ILT thunk to 0x18D120; pinned from AIUpdateInterface::setTurretTargetObject @0x26E930
 ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z,0x000468F8,ILT thunk at 0x468F8 jumping to the body at 0x18D260 in the TurretAI cluster; call sites reference the thunk
 ?setUserName@LanLobbyUserNamePrefs@@QAEXVUnicodeString@@@Z,0x00031575,ILT thunk to body 0x000870F0

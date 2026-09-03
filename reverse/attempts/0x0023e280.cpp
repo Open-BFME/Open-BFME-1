@@ -1,64 +1,44 @@
+// ?parseBannerCarrierPosition@@YAXPAVINI@@PAX1PBX@Z
+// partial score=0.97 date=2026-09-03
 // ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
-// partial score=0.75 date=2026-09-02
-// cl: /DNDEBUG /MD /EHsc /Oi
-// Open-BFME5: the HordeContain INI field parser that reads one horde slot,
-// retail 0x0023E280.
-//
-// The line it accepts is `UnitType <name> Pos: <x> <y>`, and both keywords are
-// checked with the /Oi inline strcmp -- `repe cmpsb` over the literal plus its
-// terminator, so the lengths 9 and 4 in the bytes are "UnitType" and "Pos".
-// Either keyword missing throws the usual variadic INIException with code 3.
-//
-// The slot itself is twelve bytes: an AsciiString for the unit type and the two
-// reals of the position. It is allocated with `new` and the pointer -- not the
-// slot -- is what goes into the vector the field-parse row hands over as
-// `store`, which is why the push_back argument is the address of the local. That
-// vector is retail's shared four-byte-pod instantiation at 0x0023DAA0.
-//
-// parseCoord2D writes a Coord2D temporary and the two words are copied out of it
-// individually; retail never lets the parser write into the slot directly.
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Ireference/shims/iniexception
+// stlport
+// Open-BFME5: HordeContain unit-slot position field parser, retail 0x0023E280.
 
 typedef int Int;
 typedef float Real;
 
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	Real x;
 	Real y;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+struct Coord2DTemp
+{
+	Coord2D value;
+	Int unused;
+};
+
 class AsciiString
 {
 public:
-	AsciiString( const char *s );					///< retail 0x00888BC0
-	void set( const char *s );						///< ILT thunk at 0x00028BB9
+	AsciiString( const char *s );
+	void set( const char *s );
 
 private:
 	void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
-class INIException
-{
-public:
-	INIException( Int code, const char *msg, ... );	///< direct call to 0x00850600
-	INIException( const INIException &other );
+#include "Common/INIException.h"
 
-private:
-	Int m_code;
-	const char *m_msg;
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
-	const char *getNextToken( const char *seps );			///< ILT thunk at 0x00850970
-	const char *getNextTokenOrNull( const char *seps );		///< ILT thunk at 0x008509C0
+	const char *getNextToken( const char *seps );
+	const char *getNextTokenOrNull( const char *seps );
 	const char *getSepsColon( void ) const { return m_sepsColon; }
 	static void parseCoord2D( INI *ini, void *instance, void *store, const void *userData );
 
@@ -66,43 +46,31 @@ public:
 	const char *m_sepsColon;
 };
 
-// the shared four-byte-pod vector instantiation, retail push_back at 0x0023DAA0
 struct Gen_t_0023daa0_p4pod
 {
 	int a[ 1 ];
 };
 
-namespace _STL
-{
-template <class Type>
-class allocator
-{
-};
+#include <vector>
 
-template <class Type, class Alloc = allocator<Type> >
-class vector
-{
-public:
-	void push_back( const Type &value );
-
-	Type *m_start;
-	Type *m_finish;
-	Type *m_endOfStorage;
-};
-}
+class HordeContainUnitSlot;
+typedef _STL::vector<HordeContainUnitSlot *> BfmeUnitSlotVector;
 
 class HordeContainUnitSlot
 {
 public:
-	HordeContainUnitSlot( void ) : m_unitType( "" ), m_pos()
+	HordeContainUnitSlot( void ) : m_unitType( "" )
 	{
+		m_pos.x = 0;
+		m_pos.y = 0;
 	}
 
-	AsciiString m_unitType;								///< retail this+0x00
-	Coord2D m_pos;										///< retail this+0x04
+	AsciiString m_unitType;
+	Coord2D m_pos;
 };
 
-void parseHordeContainUnitTypePos( INI *ini, void *instance, void *store, const void *userData )
+void parseHordeContainUnitTypePos( INI *ini, void *instance, void *store,
+	const void *userData )
 {
 	HordeContainUnitSlot *slot = new HordeContainUnitSlot;
 
@@ -117,11 +85,12 @@ void parseHordeContainUnitTypePos( INI *ini, void *instance, void *store, const 
 		throw INIException( 3, "'Pos' expected" );
 
 	{
-		Coord2D pos;
-		INI::parseCoord2D( ini, 0, &pos, 0 );
-		slot->m_pos = pos;
+		Coord2DTemp temp;
+		INI::parseCoord2D( ini, 0, &temp.value, 0 );
+		slot->m_pos.x = temp.value.x;
+		slot->m_pos.y = temp.value.y;
 	}
 
-	( (_STL::vector<Gen_t_0023daa0_p4pod> *)store )->push_back(
-		*(const Gen_t_0023daa0_p4pod *)&slot );
+	( (BfmeUnitSlotVector *)store )->push_back(
+		slot );
 }

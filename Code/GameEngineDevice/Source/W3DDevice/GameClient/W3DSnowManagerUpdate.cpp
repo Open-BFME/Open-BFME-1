@@ -113,7 +113,7 @@ void W3DSnowManager::extraAfterFmod(void)
 	{
 		int state = m_98;
 		if (state == 1 || state == 3)
-			--m_4c;
+		--m_4c;
 		sibling();
 		int state94 = m_94;
 		if (state94 == 2)
