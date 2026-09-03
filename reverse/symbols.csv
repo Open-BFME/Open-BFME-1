@@ -83339,3 +83339,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setSkyBoxTexture007A58C0@WaterSkyBoxSettingsOwner@@QAEXPBVAsciiString@@@Z,0x000435D1,SkyboxSettings reader direct call through the retail ILT to 0x007A58C0
 ?TheEmptyString@AsciiString@@2V1@B,0x01336E50,SkyboxSettings parser registration empty parent label
 ?parseSkyBoxSettings007A5BA0@@YA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z,0x00047BDB,SkyboxSettings registration stores the retail ILT callback
+??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
+??0ShadowLightEnvironment007AF5A0@@QAE@XZ,0x0094AAF0,W3DProjectedShadowManager embedded light-environment constructor at this+0x24
