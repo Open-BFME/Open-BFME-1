@@ -16,7 +16,7 @@ bool __fastcall bfmeCheck300(BfmeCheck300 *check, int b, void *o, void *a);
 
 struct BfmeList300
 {
-	void bfmeDo300(void *o);
+	void bfmeDo(void *o);
 };
 
 class Player
@@ -56,6 +56,6 @@ void BfmeThing300::bfmeGo(void *a)
 	BfmeList300 *list = player->m_list;
 	if (!list)
 		return;
-	list->bfmeDo300(*(void **)((char *)this - 0x20));
+	list->bfmeDo(*(void **)((char *)this - 0x20));
 	m_flag = false;
 }
