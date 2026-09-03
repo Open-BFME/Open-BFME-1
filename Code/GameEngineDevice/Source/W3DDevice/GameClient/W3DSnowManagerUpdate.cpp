@@ -11,6 +11,39 @@
 
 extern "C" double __cdecl fmod(double, double);
 
+class BFMEWeatherOverride
+{
+public:
+	const BFMEWeatherOverride *getFinalOverride() const;
+
+	void *m_vtable;
+	const BFMEWeatherOverride *m_nextOverride;
+	unsigned char m_unmodelled_08[0x30 - 8];
+	int m_30;
+	int m_34;
+	unsigned char m_unmodelled_38[0x3a - 0x38];
+	char m_flag3a;
+	unsigned char m_unmodelled_3b[0x40 - 0x3b];
+	char m_flag40;
+	unsigned char m_unmodelled_41[0x50 - 0x41];
+	int m_50;
+	float m_54Override;
+	char m_flag58;
+	unsigned char m_unmodelled_59[3];
+	int m_5c;
+};
+
+class BFMEFrameState
+{
+public:
+	unsigned char m_unmodelled_00[0x0c];
+	int m_frame;
+};
+
+extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
+extern BFMEFrameState *g_bfmeGlo012F0FE0;
+extern "C" float g_bfmeDefaultBU;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
@@ -30,13 +63,36 @@ public:
 	virtual void update(void);
 	void extraAfterFmod(void);
 	void extraTail(void);
+	void copyFromOverride(void);
+	void sibling(void);
 
 private:
 	unsigned char m_unmodelled_04[0xC - 4];
 	float m_time;				// +0xC
 	float m_velocity;			// +0x10
 	float m_fullTimePeriod;		// +0x14
+	unsigned char m_unmodelled_18[0x38 - 0x18];
+	int m_38;
+	char m_unmodelled_3c;
+	char m_flag3d;
+	unsigned char m_unmodelled_3e[0x4c - 0x3e];
+	int m_4c;
+	unsigned char m_unmodelled_50[0x54 - 0x50];
+	float m_54;
+	int m_58;
+	int m_5c;
+	unsigned char m_unmodelled_60[0x94 - 0x60];
+	int m_94;
+	int m_98;
 };
+
+static const BFMEWeatherOverride *walkSnowOverride(const BFMEWeatherOverride *d)
+{
+	const BFMEWeatherOverride *f = d;
+	if (d && d->m_nextOverride)
+		f = d->m_nextOverride->getFinalOverride();
+	return f;
+}
 
 // ?update@W3DSnowManager@@UAEXXZ
 void W3DSnowManager::update(void)
@@ -45,4 +101,40 @@ void W3DSnowManager::update(void)
 	m_time = fmod(m_time, m_fullTimePeriod);
 	extraAfterFmod();
 	extraTail();
+}
+
+void W3DSnowManager::extraAfterFmod(void)
+{
+	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
+	if (ov->m_flag58 == 0)
+		return;
+
+	if (m_98 != 0)
+	{
+		int state = m_98;
+		if (state == 1 || state == 3)
+			--m_4c;
+		sibling();
+		int state94 = m_94;
+		if (state94 == 2)
+		{
+			int frame = g_bfmeGlo012F0FE0->m_frame;
+			if (frame != state94)
+			{
+				m_98 = 3;
+				ov = walkSnowOverride(g_bfmeGlo012F15F8);
+				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
+				m_94 = frame;
+			}
+		}
+	}
+	else
+	{
+		int frame = g_bfmeGlo012F0FE0->m_frame;
+		if (frame == 2 && m_94 != 2)
+		{
+			m_94 = 2;
+			copyFromOverride();
+		}
+	}
 }

@@ -72,24 +72,20 @@ static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
 void BfmeA1137::refreshCache()
 {
 	float slot;
-	const BfmeOverride1137 *f = walk(g_bfmeGlo012F15F8);
-	if (f->m_flag40 == 0)
+	if (walk(g_bfmeGlo012F15F8)->m_flag40 == 0)
 		return;
 	if (m_flag44)
 	{
-		int n = m_48 - 1;
-		m_48 = n;
-		if (n > 0)
+		--m_48;
+		if (m_48 > 0)
 			return;
 		m_48 = 0;
 		m_flag44 = 0;
 		return;
 	}
 	slot = WWMath::Random_Float();
-	f = walk(g_bfmeGlo012F15F8);
-	if (slot > f->m_54)
+	if (!(slot < walk(g_bfmeGlo012F15F8)->m_54))
 		return;
 	m_flag44 = 1;
-	f = walk3(g_bfmeGlo012F15F8);
-	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * walk3(g_bfmeGlo012F15F8)->m_50 + g_bfmeK07533C);
 }
