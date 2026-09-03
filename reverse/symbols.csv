@@ -83559,44 +83559,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_M_clear@?$vector@URva003A35A0Element@@V?$allocator@URva003A35A0Element@@@_STL@@@_STL@@IAEXXZ,0x00041F15,Open-BFME5 ILT for vector clear at 0x003A3410
-?BfmeRva003A35A0Copy@_STL@@YAPAURva003A35A0Element@@PAU2@00ABU__false_type@1@@Z,0x000287EA,Open-BFME5 ILT for the trailing uninitialized copy at 0x003A3410
-?_M_clear@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@IAEXXZ,0x000490F8,Open-BFME5 ILT for vector clear at 0x0077C6C0
-?BfmeRva0077CC10Copy@_STL@@YAPAURva0077CC10Element@@PAU2@00ABU__false_type@1@@Z,0x0003755B,Open-BFME5 ILT for the trailing uninitialized copy at 0x0077C6C0
-?_M_clear@?$vector@URva00607770Element@@V?$allocator@URva00607770Element@@@_STL@@@_STL@@IAEXXZ,0x0002955F,Open-BFME5 ILT for vector clear at 0x00607570
-?BfmeRva00607770Copy@_STL@@YAPAURva00607770Element@@PAU2@00ABU__false_type@1@@Z,0x00036971,Open-BFME5 ILT for the trailing uninitialized copy at 0x00607570
-?_M_clear@?$vector@URva00608FE0Element@@V?$allocator@URva00608FE0Element@@@_STL@@@_STL@@IAEXXZ,0x00001C94,Open-BFME5 ILT for vector clear at 0x00608DE0
-?BfmeRva00608FE0Copy@_STL@@YAPAURva00608FE0Element@@PAU2@00ABU__false_type@1@@Z,0x0000A042,Open-BFME5 ILT for the trailing uninitialized copy at 0x00608DE0
-?_M_clear@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXXZ,0x0002451E,Open-BFME5 ILT for vector clear at 0x003644D0
-?BfmeRva00365020Copy@_STL@@YAPAURva00365020Element@@PAU2@00ABU__false_type@1@@Z,0x0000D242,Open-BFME5 ILT for the trailing uninitialized copy at 0x003644D0
-?_M_clear@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEXXZ,0x0000B4F6,Open-BFME5 ILT for vector clear at 0x003AC000
-?BfmeRva003AC170Copy@_STL@@YAPAURva003AC170Element@@PAU2@00ABU__false_type@1@@Z,0x00048847,Open-BFME5 ILT for the trailing uninitialized copy at 0x003AC000
-?_M_clear@?$vector@URva000FB210Element@@V?$allocator@URva000FB210Element@@@_STL@@@_STL@@IAEXXZ,0x000290A5,Open-BFME5 ILT for vector clear at 0x000FB080
-?_M_clear@?$vector@URva00366890Element@@V?$allocator@URva00366890Element@@@_STL@@@_STL@@IAEXXZ,0x0003ABED,Open-BFME5 ILT for vector clear at 0x003665C0
-??$BfmeElementConstruct@UGen_t_003b10a0_p48cd@@@_STL@@YAXPAUGen_t_003b10a0_p48cd@@ABU1@@Z,0x000200BD,Open-BFME5 ILT for the element construct called by 0x003B0320
-?_M_clear@?$vector@UGen_t_003b10a0_p48cd@@V?$allocator@UGen_t_003b10a0_p48cd@@@_STL@@@_STL@@IAEXXZ,0x0003B6D3,Open-BFME5 ILT for vector clear at 0x003B0320
-??$BfmeElementConstruct@UGen_t_003b1050_p40cd@@@_STL@@YAXPAUGen_t_003b1050_p40cd@@ABU1@@Z,0x000181A6,Open-BFME5 ILT for the element construct called by 0x003B01B0
-?_M_clear@?$vector@UGen_t_003b1050_p40cd@@V?$allocator@UGen_t_003b1050_p40cd@@@_STL@@@_STL@@IAEXXZ,0x0000A295,Open-BFME5 ILT for vector clear at 0x003B01B0
-??$BfmeElementConstruct@UGen_t_001fa830_p12cd@@@_STL@@YAXPAUGen_t_001fa830_p12cd@@ABU1@@Z,0x00002086,Open-BFME5 target of the element construct call in 0x001FA5B0
-?_M_clear@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0000DC60,Open-BFME5 target of the vector clear call in 0x001FA5B0
-??$BfmeElementConstruct@UGen_t_002e19c0_p12cd@@@_STL@@YAXPAUGen_t_002e19c0_p12cd@@ABU1@@Z,0x0003B8F4,Open-BFME5 target of the element construct call in 0x002E1820
-?_M_clear@?$vector@UGen_t_002e19c0_p12cd@@V?$allocator@UGen_t_002e19c0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00043D33,Open-BFME5 target of the vector clear call in 0x002E1820
-??$BfmeElementConstruct@UGen_t_002e20c0_p12cd@@@_STL@@YAXPAUGen_t_002e20c0_p12cd@@ABU1@@Z,0x0001AE06,Open-BFME5 target of the element construct call in 0x002E1DA0
-?_M_clear@?$vector@UGen_t_002e20c0_p12cd@@V?$allocator@UGen_t_002e20c0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00027F34,Open-BFME5 target of the vector clear call in 0x002E1DA0
-??$BfmeElementConstruct@UGen_t_00375ea0_p12cd@@@_STL@@YAXPAUGen_t_00375ea0_p12cd@@ABU1@@Z,0x0003CB69,Open-BFME5 target of the element construct call in 0x003752F0
-?_M_clear@?$vector@UGen_t_00375ea0_p12cd@@V?$allocator@UGen_t_00375ea0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0003088C,Open-BFME5 target of the vector clear call in 0x003752F0
-??$BfmeElementConstruct@UGen_t_003b1140_p12cd@@@_STL@@YAXPAUGen_t_003b1140_p12cd@@ABU1@@Z,0x000140E2,Open-BFME5 target of the element construct call in 0x003B05F0
-?_M_clear@?$vector@UGen_t_003b1140_p12cd@@V?$allocator@UGen_t_003b1140_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00049265,Open-BFME5 target of the vector clear call in 0x003B05F0
-??$BfmeElementConstruct@UGen_t_003b1c00_p12cd@@@_STL@@YAXPAUGen_t_003b1c00_p12cd@@ABU1@@Z,0x00049F49,Open-BFME5 target of the element construct call in 0x003B14A0
-?_M_clear@?$vector@UGen_t_003b1c00_p12cd@@V?$allocator@UGen_t_003b1c00_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000147BD,Open-BFME5 target of the vector clear call in 0x003B14A0
-??$BfmeElementConstruct@UGen_t_003b1eb0_p12cd@@@_STL@@YAXPAUGen_t_003b1eb0_p12cd@@ABU1@@Z,0x0003C1A0,Open-BFME5 target of the element construct call in 0x003B1C50
-?_M_clear@?$vector@UGen_t_003b1eb0_p12cd@@V?$allocator@UGen_t_003b1eb0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0001BEFA,Open-BFME5 target of the vector clear call in 0x003B1C50
-??$BfmeElementConstruct@UGen_t_00533100_p12cd@@@_STL@@YAXPAUGen_t_00533100_p12cd@@ABU1@@Z,0x00039AC7,Open-BFME5 target of the element construct call in 0x00532B50
-?_M_clear@?$vector@UGen_t_00533100_p12cd@@V?$allocator@UGen_t_00533100_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0003DFE1,Open-BFME5 target of the vector clear call in 0x00532B50
-??1BfmeSubA@@QAE@XZ,0x00887940,Open-BFME5 ICF StringBase<char> release used by Glo012F1024Item::j_0003152a
-?j_00019c36@Glo012F1028Sub@@QAEXAAVBfmeSubA@@H@Z,0x00019C36,Open-BFME5 ILT the Glo012F1028 sub-object consumes each early-vector string
-?bfmeCall3426b@BfmeGlobal_012f1024@@QAEXPAX00@Z,0x0003426B,call-site callee of Glo012F1024Item::j_00010bcc; global 0x012F1024 thiscall with three stack args; ILT 0x0003426B -> 0x003B2D60
-?dlink_next_TeamMemberList@Object@@QBEPAV1@XZ,0x00001140,Object DLINK PMF pfn used by Team member-list walks; ILT 0x00001140 -> 0x000C8980
 ?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
 ?StopStopwatch@@YAKK@Z,0x008793B0,nbench StopStopwatch; retail is Rva008793B0ClockDelta
 ?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
