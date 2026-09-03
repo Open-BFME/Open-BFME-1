@@ -16,3 +16,14 @@ License: STLport license (permissive, BSD-style) — see STLPORT-README.
 Usage: a source file opts in with a `// stlport` line near the top; tools/build.py
 then prepends vendor/stlport to INCLUDE for that file only (STLport shadows
 <cmath>/<cstring>/etc, so it must NOT be global — STL-free matched files use MSVC's).
+
+## Private `src/` headers
+
+`vendor/stlport/src/` holds the headers STLport's own translation units include
+but which live outside the header tree in the tarball: `stlport_prefix.h`,
+`c_locale.h` (the `_Locale_*` C API — a different file from
+`stlport/stl/c_locale.h`) and `aligned_buffer.h`. `Code/stlport/*.cpp` are those
+library sources, so they include them by their upstream spelling
+(`#include "stlport_prefix.h"`); tools/build.py puts `vendor/stlport/src` on
+INCLUDE right behind `vendor/stlport` for `// stlport` files. Same 4.5.3
+tarball as the headers above, unmodified.

@@ -494,7 +494,7 @@ def compiler_environment(root, source=None):
     if os.name == "nt":
         include = str(root / "Vc7" / "include")
         if stlport:
-            include = str(stlport) + os.pathsep + include
+            include = os.pathsep.join([str(stlport), str(stlport / "src"), include])
         env["INCLUDE"] = include
         env["LIB"] = str(root / "Vc7" / "lib")
         # MSVC 7.1 runtime DLLs (msvcp71.dll) live in the toolchain root, not
@@ -504,7 +504,7 @@ def compiler_environment(root, source=None):
 
     include = wine_path(root / "Vc7" / "include")
     if stlport:
-        include = wine_path(stlport) + ";" + include
+        include = ";".join([wine_path(stlport), wine_path(stlport / "src"), include])
     env["INCLUDE"] = include
     env["LIB"] = wine_path(root / "Vc7" / "lib")
     env["WINEPATH"] = ";".join(
