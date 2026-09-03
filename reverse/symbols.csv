@@ -83333,3 +83333,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?ThePlayerList@@3PAVPlayerList@@A,0x00EED748,ScriptActions::doSpeechPlay local-player lookup at retail VA 0x012ED748
+?TheWaterRenderObj@@3PAVWaterSkyBoxSettingsOwner@@A,0x01306D7C,SkyboxSettings reader global proven by the matching writer and WaterRenderObjClass layout
+?setSkyBoxScale@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F,SkyboxSettings reader direct call through the retail ILT to 0x0079F1E0
+?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0
+?setSkyBoxTexture007A58C0@WaterSkyBoxSettingsOwner@@QAEXPBVAsciiString@@@Z,0x000435D1,SkyboxSettings reader direct call through the retail ILT to 0x007A58C0
