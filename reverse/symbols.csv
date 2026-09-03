@@ -78131,6 +78131,7 @@ name,address,notes
 ?g_bfmeVtaVNE@@3PAXA,0x00CED8D4,pin
 ?g_bfmeVtaVNF@@3PAXA,0x00CED8D4,pin
 ?g_bfmeVtbVNE@@3PAXA,0x00CED97C,pin
+?g_bfmeVtbVNG@@3PAXA,0x00CED8F8,pin
 ?g_bfmeVtblEMI@@3PAUBfmeVtblEMI@@A,0x00F37A30,pin
 ?g_bfmeVtcVNF@@3PAXA,0x00CED938,pin
 ?g_bfmeW1026@@3PAVBfmeW1026@@A,0x00EF4B98,pin
