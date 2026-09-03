@@ -9572,6 +9572,7 @@ name,address,notes
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
 ??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7BfmeOwnVSV@@6B@,0x010EC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
+??_7BfmeOwnVSW@@6B@,0x01075D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73386,6 +73387,7 @@ name,address,notes
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
 ?bfmeClearVJZ@BfmeColorVJZ@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSV@BfmeStrVSV@@QAEXXZ,0x00887940,pin
+?bfmeClearVSW@BfmeStrVSW@@QAEXXZ,0x00887940,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -74580,6 +74582,7 @@ name,address,notes
 ?bfmeInitVJO@BfmeMsgVJO@@QAEXPADH@Z,0x007E8850,pin
 ?bfmeInitVLY@BfmeRegVLY@@QAEXXZ,0x0082DA10,pin
 ?bfmeInitVLZ@BfmeRegVLZ@@QAEXXZ,0x0082DA10,pin
+?bfmeInitVSW@BfmeOwnVSW@@QAEXXZ,0x00017D7D,pin
 ?bfmeInitVal1047@@YAXPAUBfmeValS1047@@H@Z,0x00007554,pin
 ?bfmeInitWB@BfmeSubWB@@QAEXPAUBfmeItemWB@@@Z,0x00887C90,pin
 ?bfmeInitialize@BfmeVector12DK@@QAEXHPBUBfmeAllocatorDK@@@Z,0x00028B28,vector storage initialization thunk
