@@ -990,6 +990,7 @@ name,address,notes
 ??$__linear_insert@PAVAsciiString@@V1@U?$less@VAsciiString@@@_STL@@@_STL@@YAXPAVAsciiString@@0V1@U?$less@VAsciiString@@@0@@Z,0x009CD0D0
 ??$__lower_bound@PBIIU?$less@I@_STL@@H@_STL@@YAPBIPBI0ABIU?$less@I@0@PAH@Z,0x00015659,ILT the same resize calls at 0x007868EE to pick the next prime
 ??$__make_heap@PAHU?$less@H@_STL@@HH@_STL@@YAXPAH0U?$less@H@0@00@Z,0x000354A4,ILT thunk to body 0x005125C0
+??$__make_heap@PAHUQ4Sort003D15A0@@HH@_STL@@YAXPAH0UQ4Sort003D15A0@@00@Z,0x00021053,ILT to 0x003CE510 make_heap used by partial_sort at 0x003D00E0
 ??$__make_heap@PAHUQ4Sort004567A0@@HH@_STL@@YAXPAH0UQ4Sort004567A0@@00@Z,0x00453C20,ICF-folded with the Rva00453C20/Q3HeapCompare instantiation at the same address; resolved via decode_calls at __partial_sort<Q4Sort004567A0>
 ??$__make_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@U1@H@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@0PAH@Z,0x0004A318,REL32 wide-element make-heap target from 0x003667F7
 ??$__match@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@J@_STL@@YAPAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@AAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0PAV10@1PAJ@Z,0x00836980,narrow time_get weekday matcher reached directly by assigned retail specialization
@@ -1120,6 +1121,7 @@ name,address,notes
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@QBE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Const_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0001CDEB
 ??$insert_unique@U?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@_STL@@@?$_Rb_tree@PAURva001408C0Target@@PAU1@U?$_Identity@PAURva001408C0Target@@@_STL@@U?$less@PAURva001408C0Target@@@3@V?$allocator@PAURva001408C0Target@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@1@0@Z,0x0003AFD0,AssetList set range-insert ILT to body 0x00140CA0
 ??$sort_heap@PAHU?$less@H@_STL@@@_STL@@YAXPAH0U?$less@H@0@@Z,0x0001CADA,ILT thunk to body 0x00513580
+??$sort_heap@PAHUQ4Sort003D15A0@@@_STL@@YAXPAH0UQ4Sort003D15A0@@@Z,0x00005F06,ILT to 0x003CFA90 sort_heap used by partial_sort at 0x003D00E0
 ??$sort_heap@PAHUQ4Sort004567A0@@@_STL@@YAXPAH0UQ4Sort004567A0@@@Z,0x004546F0,resolved via decode_calls at __partial_sort<Q4Sort004567A0>; final call in the standard partial_sort algorithm shape
 ??$sort_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x00011A95,REL32 wide-element sort-heap target from 0x00366854
 ??$swap@V?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@0@0@Z,0x00066BC0,gen-tgrid shared callee
@@ -1221,6 +1223,7 @@ name,address,notes
 ??0?$SimpleParameterClass@M$0N@@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
+??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,StringBase<unsigned short> const wchar ctor used by populateSideInfo L%d temps
 ??0?$StringBase@G@@QAE@ABV0@@Z,0x00888400,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0?$VectorClass@UAcceleratorTracker@@@@QAE@HPBUAcceleratorTracker@@@Z,0x000187AF,pinharvest x1 (thunk)
@@ -3323,6 +3326,7 @@ name,address,notes
 ??0Rva003525E0Pair@@QAE@ABV0@@Z,0x00024C12,Open-BFME5 fresh thiscall copy ctor at ILT of SEH 0x003525E0
 ??0Rva00364980HeapElement@@QAE@ABU0@@Z,0x0001FE6F,REL32 copy-constructor target from 0x003649A2
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
+??0Rva003B9AD0Inner@@QAE@ABV0@@Z,0x00018782,8-byte member copy ctor called by 0x003B9AD0; retail call goes through this incremental-link thunk to 0x003B8F80
 ??0Rva003DB640Info@@QAE@PAVPathfinder@@PAVObject@@H@Z,0x00042262,lineBlocked 0x003EE850 payload ctor ILT to 0x003DB640
 ??0Rva003E5A50Info@@QAE@PAVPathfinder@@PAVObject@@H@Z,0x00038E88,lineClear 0x003EE970 payload ctor ILT to 0x003E5A50
 ??0Rva0042D170Member04@@QAE@ABU0@@Z,0x00033EC4,4-byte member copy ctor ILT from 0x0042D170
@@ -4178,6 +4182,7 @@ name,address,notes
 ??1BfmeAsciiStringArg@@QAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; the ScriptActions by-value string view
 ??1BfmeAudioEvent491110@@QAE@XZ,0x00026F35,0x00491110 destroys both 0x70-byte temporary audio events through the retail AudioEventRTS destructor thunk
 ??1BfmeAudioEventRTS@@QAE@XZ,0x00026F35,alias of the AudioEventRTS destructor spelling pinned at the same ILT; reached from the ScriptActions view local
+??1BfmeBase1134@@UAE@XZ,0x009A1A40,Open-BFME5 BfmeA1134 destructor base SubsystemInterface body
 ??1BfmeBaseAA@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the unwound clear destructor at 0x0039C6D0 chains to
 ??1BfmeBaseF@@QAE@XZ,0x00029537,Open-BFME5 the base destructor the deleting list destructor at 0x0048C5B0 chains to
 ??1BfmeBaseP@@UAE@XZ,0x009A1A40,Open-BFME5 the primary base destructor the vector-member destructor at 0x00378650 calls
@@ -12773,6 +12778,7 @@ name,address,notes
 ?addBool@Rva007E8810Message@@QAEXPBD_N@Z,0x007E8980,V2 lane: FESL message append key/value bool field
 ?addBridge@Pathfinder@@QAE?AW4PathfindLayerEnum@@PAVBridge@@@Z,0x0003C966,ILT fronting the 87-byte body at 0x003D5850; from TerrainLogic::addLandmarkBridgeToLogic
 ?addCampaign@BfmeLivingWorldCampaignManager@@QAEXPAVLivingWorldCampaign@@@Z,0x003B7030,Open-BFME5 the manager call ParseLivingWorldCampaignBlock ends with
+?addCapEdgeToTrack@BfmeTrackLikeD62640@@QAEXMM@Z,0x0072F390,unidentified track-edge helper called from W3DModelDraw::setHidden (currently gen-dump ?d_0072f390@@YAXXZ)
 ?addChatCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00031115,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addChatCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067FF20,addCommand's jump-table arm for command type 14
 ?addChatLog@Rva007F1F60Feedback@@QAEXPAVRva007E8810Message@@PBURva007F2080ChatLog@@H@Z,0x007F2080,V2 lane: FESL feedback request chat-log array serializer
@@ -12921,6 +12927,7 @@ name,address,notes
 ?anyIntersectionWith@?$BitFlags@$0HE@@@QBE_NABV1@@Z,0x000497D3,pinharvest x1 (thunk)
 ?append@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x000A4F80,STLport basic_string<char>::append(const char* first; const char* last): capacity check; node-alloc (<=0x80) or new; memmove old then new range; called by the ledgered append(const char*) 0x00647990 at 0x006479B2 and by assign(first;last) 0x000A5810 at 0x000A589A; ILT 0x00036DE0
 ?append@PathAppendNodeShim@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0016A4B0,Path appendNode incremental-link thunk target through a TU-local forwarding shim
+?append@Rva008B2EA0Node@@QAEXPAX@Z,0x008927C0,thiscall append called by 0x008B2EA0
 ?append@Rva8CD130State@@QAEXPAX0PAVRva8CD130String@@PAVRva8CD130Value@@HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD130
 ?append@Rva8CD3F0State@@QAEXPAVRva8CD3F0Value@@PAXPAH0HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD3F0
 ?append@Rva8CDA60State@@QAEXPAX00PAVRva8CDA60Value@@HHH@Z,0x008CC690,address-derived stack append helper called by 0x008CDA60
@@ -73017,6 +73024,7 @@ name,address,notes
 ?bfmeAssign@BfmeCopySubA@@QAEXPAU1@@Z,0x000FF8F0,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssign@BfmeCopySubB@@QAEXPAU1@@Z,0x000FFA60,Open-BFME5 helper assignment body used by BfmeCopyElementA
 ?bfmeAssign@BfmeRecordSet@@QAEXPAX@Z,0x00011DB0,Open-BFME5 record-set copy called by 0x0028BFF0
+?bfmeAssign@Gen_0092D720@@QAEXPBD@Z,0x0092D720,assign callee of Mesh name/text setter 0x0092E440
 ?bfmeAssignAVIK@BfmeSubAVIK@@QAEXABV1@@Z,0x009600F0,pin
 ?bfmeAssignBVIK@BfmeSubBVIK@@QAEXABV1@@Z,0x0095C860,pin
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
@@ -73508,6 +73516,7 @@ name,address,notes
 ?bfmeDelArrVHY@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDelArrVJS@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDelVGP@@YAXPAX@Z,0x00881EB0,pin
+?bfmeDelViews@BfmeObjEE@@QAEXXZ,0x0040D970,Open-BFME5 Display deleteViews called from BfmeObjEE destructor
 ?bfmeDeleteSelf@BfmeOwnedD@@QAEPAXI@Z,0x0000E4A8,Open-BFME5 the ICF thunk (to 0x001CBDC0) the element clear at 0x0038A6F0 calls with a flag of 1
 ?bfmeDeleteVMP@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeDestroy@BfmeAptGameWindow@@QAEXXZ,0x00021FC1,APT game window base destruction helper
@@ -73916,6 +73925,7 @@ name,address,notes
 ?bfmeFinishBP1008@BfmeP1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishBQ1008@BfmeQ1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishRV@@YAXH@Z,0x00024848,DF8A0 cdecl finish ILT
+?bfmeFinishTurnArc@Path@@QAEXPAVPathNode@@00M@Z,0x00021BF2,Path helper ILT to FUN_007febb0 at 0x003FEBB0; called from Path::bfmeBuildTurnArc 0x003FFB50
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
 ?bfmeFirst1019@@YAXXZ,0x00005D9E,pin
 ?bfmeFirst1095@BfmeP1095@@QAEHHH@Z,0x0004B290,pin
@@ -74341,6 +74351,7 @@ name,address,notes
 ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z,0x009A76A0,8x8 block helper called from bfmeGo7820
 ?bfmeGo7760@@YAXPAHPAXHHHH1@Z,0x009A7760,8x8 block helper called from bfmeGo7820
 ?bfmeGo9F@BfmeObj9F@@QAEXIE@Z,0x0003C3A8,ILT of BfmeObj9F::bfmeGo9F from the +0xE4 pointer-vector foreach
+?bfmeGoD540@BfmeObjD540@@QAEXVAsciiString@@@Z,0x00033302,Open-BFME5 ILT to 0x0040D540 quoted-string consumer
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
 ?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
@@ -74576,6 +74587,7 @@ name,address,notes
 ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z,0x009EEAC0,Open-BFME5 the member the guarded dispatcher at 0x009EBA60 calls
 ?bfmeIs1000@BfmeThing1000@@QAEDH@Z,0x0003251F,pin
 ?bfmeIsAlive@BfmeItemAK@@QAE_NXZ,0x00001C03,Open-BFME5 the ICF thunk (to 0x00401C03) the compaction at 0x0018BC70 asks each entry
+?bfmeIsBlocked@FXList@@QBE_NXZ,0x00011F77,ILT to FUN_0082DAA0; bool skip used by static doFXObj wrapper 0x00065DE0
 ?bfmeIsComputerControlled@Object@@QBE_NXZ,0x00010EA1,Open-BFME5 ILT thunk to body 0x001BE410; three Pathfinder callers use the controlling Player type check for computer pathfinding behavior; bfme prefix records unrecovered retail spelling
 ?bfmeIsGiantBird@Object@@QBEHXZ,0x0000E462,Open-BFME5 ILT thunk to body 0x001BE9D0; Object AI slot 76 is false in the base AIUpdateInterface and true in GiantBirdAIUpdate; AIAttackState uses the promoted result for BFME attack-mode selection
 ?bfmeIsKindOf@Thing@@QBE_NW4KindOfType@@@Z,0x0003251F,TU ABI alias for authentic Thing::isKindOf ILT used by retail setGoalPositionClipped
@@ -75659,6 +75671,7 @@ name,address,notes
 ?bfmeUnguardedInsertAT@@YAXPAPAVBfmeRecAT@@PAV1@VBfmeCompAT@@@Z,0x0001F1FE,Open-BFME5 the ICF thunk (to 0x0041F1FE) the ranked linear insert at 0x003CE420 hands its unguarded arm to
 ?bfmeUnguardedInsertAU@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x00016275,Open-BFME5 the ICF thunk (to 0x00416275) the linear insert at 0x005134A0 hands its unguarded arm to
 ?bfmeUnguardedInsertAV@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x000044EE,Open-BFME5 the ICF thunk (to 0x004044EE) the linear insert at 0x0052FF70 hands its unguarded arm to
+?bfmeUnitAngle@@YAMPBUCoord3D@@0@Z,0x00022C6E,cdecl acos(dot) of two unit Coord3D; ILT to FUN_007fd650 at 0x003FD650; called from Path::bfmeBuildTurnArc 0x003FFB50
 ?bfmeUnlink1111@BfmeW1111@@QAEXPAVBfmeE1111@@@Z,0x00014FE7,pin
 ?bfmeUnlink@@YAPAUBfmeSplitNode@@PAU1@PAPAU1@11@Z,0x0082CB60,Open-BFME5 the unlinker the tree removes at 0x00587670 and 0x00587750 hand their node to
 ?bfmeUnlockVJR@@YADXZ,0x00905B10,pin
@@ -76657,6 +76670,7 @@ name,address,notes
 ?errorCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPErrorArg@@@Z,0x0000BEE2
 ?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z,0x0001366F,pinharvest x1 (thunk)
 ?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z,0x000486EE,pinharvest x1 (thunk)
+?evaCheckCopy@@YAPAUEvaCheck@@PAU1@00ABUEvaCheckCopyTag@@PAH@Z,0x0000320B,Open-BFME5 24-byte __copy ILT used by EvaCheckVecBase::resize shrink
 ?evaluate@BezierSegmentEvaluateShim@@QBEXMPAUCoord3D@@@Z,0x000B69A0,BezierSegment evaluateBezSegmentAtT incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@Gen000D7180@@QAEPAXPAX@Z,0x000D7180,address-derived callee of the 28-byte self-pair-returning family; target read from the REL32 at its call sites
 ?evaluate@Gen000D7250@@QAEPAXPAX@Z,0x000D7250,address-derived callee of the 28-byte self-pair-returning family; target read from the REL32 at its call sites
@@ -76687,8 +76701,8 @@ name,address,notes
 ?evaluate@ScriptConditionsEvaluateNamedInsideAreaShim@@QAE_NPAVParameter@@0@Z,0x003247A0,ScriptConditions evaluateNamedInsideArea incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@ScriptConditionsEvaluateTeamInsideAreaEntirelyShim@@QAE_NPAVParameter@@00@Z,0x00324AC0,ScriptConditions evaluateTeamInsideAreaEntirely incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@ScriptConditionsEvaluateTeamInsideAreaPartiallyShim@@QAE_NPAVParameter@@00@Z,0x00324670,ScriptConditions evaluateTeamInsideAreaPartially incremental-link thunk target through a TU-local forwarding shim
-?evaluate@U4Curve006095D0@@QBEMH@Z,0x0006A520,U4 lane: float-valued member callee of the blend at 0x006095D0; address-derived name
 ?evaluate@U4Curve006095D0@@QBEMH@Z,0x00038EBF,ILT to 0x0006A520 used by 2D blend at 0x006096A0
+?evaluate@U4Curve006095D0@@QBEMH@Z,0x0006A520,U4 lane: float-valued member callee of the blend at 0x006095D0; address-derived name
 ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@QAE_NHHM@Z,0x00004AFC,BaseHeightMap visible-cliff evaluator ILT thunk
 ?evaluateBezSegmentAtT@BezierSegment@@QBEXMPAUCoord3D@@@Z,0x000059ED
 ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z,0x0000696F
@@ -76719,7 +76733,9 @@ name,address,notes
 ?fill@U1SupplierHigh@@QAEXPAVU1FillTargetHigh@@PAX@Z,0x005C8E90,tail of the slot-2 field collectors reading the 0xB8-0xBC run; address-derived name
 ?fill@U1SupplierLow@@QAEXPAVU1FillTargetLow@@PAX@Z,0x005C8D40,tail of the slot-2 field collectors reading the 0x3C-0x54 run; address-derived name
 ?fillInsert@BfmeVecWR@@QAEXPAUBfmePod16WR@@IABU2@@Z,0x00012EFE,Open-BFME5 16-byte vector fill-insert ILT used by 0x0074E6B0 resize
+?fillInsert@EvaCheckVecBase@@QAEXPAUEvaCheck@@IABU2@@Z,0x00047429,Open-BFME5 EvaCheck vector _M_fill_insert ILT used by EvaCheckVecBase::resize grow
 ?fillInsert@Rva007705D0Vector@@QAEXPAURva007705D0Element@@IABU2@@Z,0x0001CEEF,fill-insert helper called by the resize wrapper at 0x007705D0
+?fillVec005C3A30@@YA?AUBfmeVec3@@PAXH0@Z,0x000209DC,ILT thunk to 0x005C33E0 called by 0x005C3A30
 ?fill_insert@BitVectorFillInsertShim@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x002CC290,_STL bit vector _M_fill_insert incremental-link thunk target through a TU-local forwarding shim
 ?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
@@ -78514,6 +78530,7 @@ name,address,notes
 ?getLayer@BFMEObjectLayerQuery@@QBEHXZ,0x0003A391,alias of the Object spelling pinned below; AIUpdate.cpp reaches the accessor through a view class because the reference Object.h inlines it
 ?getLayer@BfmeSpawnPointCreationObject@@QBE?AW4PathfindLayerEnum@@XZ,0x0003A391,SpawnPoint exit BFME object layer accessor
 ?getLayer@Object@@QBEHXZ,0x0003A391,ILT thunk to the object layer accessor at 0x001BEC20
+?getLayer@Pathfinder@@QAEHPBUCoord3D@@@Z,0x0001A95B,Open-BFME5 ILT Pathfinder cell-layer lookup used by AIUpdate layersCompatible
 ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z,0x0001C675,tightenPath 2-arg BFME getLayer (thunk->0x001A7C20)
 ?getListInScoreScreen@Player@@QBE_NXZ,0x000C9700,returns the byte at Player+0x29c (ZH order m_observer +0x296; m_isPreorder +0x297; Real m_skillPointsModifier +0x298; m_listInScoreScreen +0x29c); the only caller is the score screen 0x004E8519 which matches ZH ScoreScreen.cpp:2185 (isInSinglePlayerGame == FALSE || getListInScoreScreen == TRUE); setter twin 0x000C96F0 stores the byte; ILT 0x00046704
 ?getListboxBottomEntry@@YAHPAU_ListboxData@@@Z,0x004B6BA0
@@ -78618,9 +78635,8 @@ name,address,notes
 ?getPortableFilename@NetFileCommandMsg@@QAE?AV?$StringBase@D@@XZ,0x00044323,ILT thunk to 0x0067D250; NetPacket::GetFileCommandSize at 0x0067D410 calls it beside the ledgered getFileLength on the same class
 ?getPortableFilename@NetFileCommandMsg@@QAE?AVAsciiString@@XZ,0x00044323,ILT thunk to 0x0067D250; same entry as the StringBase<char> spelling, which is how BFME returns AsciiString
 ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk
-?getPosition@Drawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk to 0x0041D090
-?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
+?getPosition@Drawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk to 0x0041D090
 ?getPosition@Object@@QBE?AUCoord3D@@XZ,0x00007AD6,Thing/Object by-value position ILT thunk to 0x0018F790; privateFaceObject at 0x00279180 passes a hidden Coord3D dest
 ?getPreferredHeight@Locomotor@@QBEMXZ,0x0002ECAD,Open-BFME5 ILT thunk to four-byte body 0x001B46A0; reads Locomotor m_preferredHeight at +0x3C as established by the BFME locomotor layout shim
 ?getPristineBonePositions@BFMEDrawableBoneQuery@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x0002319B,BFME Drawable::getPristineBonePositions 6-arg (ret 0x18); thunk to 0x413850
@@ -79698,6 +79714,8 @@ name,address,notes
 ?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?helper@@YGXPAH@Z,0x007EA0A0,address-derived stdcall helper recovered from 0x007EA300
+?helper@BfmeBaseHelper060600@@QAEXHPAX@Z,0x0075BBA0,adjusted-this base helper call target from 0x00760600 (currently gen-dump ?d_0075bba0@@YAXXZ)
+?helper@BfmeFixup2580@@QAEXPAXPAVBfmeFixupChunk2580@@0@Z,0x008A2130,pin
 ?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
@@ -79763,6 +79781,7 @@ name,address,notes
 ?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z,0x00852130
 ?initInternetMultiPlayer@@YAXXZ,0x004E8B80,ZH initInternetMultiPlayer: screenType=3 (0x004E8B86); grabMultiPlayerInfo 0x004E8B90; GadgetTextEntrySetText + winSetFocus(textEntryChat); hides staticTextGameSaved buttonContinue textEntryChat buttonEmote shows listboxChat chatBoxBorder; buttonBuddies hidden iff TheGameSpyInfo && getLocalProfileID()==0 (0x004E8C4C); BuddyRequest SETSTATUS(1) statusString Online -> TheGameSpyBuddyMessageQueue(0x012F71B4)->addRequest +0x18 at 0x004E8CAB; ILT 0x0004AD22; sole caller ScoreScreenInit 0x004E92D1 (mode 5)
 ?initLANMultiPlayer@@YAXXZ,0x004E8A70,ZH initLANMultiPlayer: screenType=2 (0x004E8A71); grabMultiPlayerInfo 0x004E8A7B; GadgetTextEntrySetText(textEntryChat TheEmptyString) winSetFocus(textEntryChat); staticTextGameSaved hidden textEntryChat/buttonEmote/listboxChat/chatBoxBorder shown buttonContinue/buttonBuddies hidden; listbox also stored to [0x012F7730]+0x5c; ILT 0x000081ED; sole caller ScoreScreenInit 0x004E92DD (mode 1)
+?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?initReplayMultiPlayer@@YAXXZ,0x004E8D10,ZH initReplayMultiPlayer: screenType=4 at entry; grabMultiPlayerInfo 0x004E8D1A; winHide(TRUE) on the 7 chat/continue/buddy windows; byte-shape twin of initReplaySinglePlayer except the grab call; ILT 0x00007F6D; sole caller ScoreScreenInit 0x004E929A (replay && isMultiplayer)
 ?initReplaySinglePlayer@@YAXXZ,0x004E89C0,ZH initReplaySinglePlayer: screenType=4 (REPLAY) at entry; grabSinglePlayerInfo 0x004E89CA; winHide(TRUE) on staticTextGameSaved textEntryChat buttonEmote chatBoxBorder buttonContinue buttonBuddies listboxChat (0x012F4178/68/6C/70/64/74/7C); ILT 0x0002BF44; sole caller ScoreScreenInit 0x004E92C5 (replay && !TheRecorder->isMultiplayer)
 ?initSinglePlayer@@YAXXZ,0x004E88E0,ZH initSinglePlayer: screenType=0 (0x004E88F7); TheCampaignManager(0x012F4CB0)+0x14 = floor(localPlayer->+0x25c skill points) +0x18 = TheScriptEngine(0x012F076C)+0x17620 difficulty; grabSinglePlayerInfo 0x004E8936; s_needToFinishSinglePlayerInit(0x012F4182)=1; s_blankLayout(0x012F4184) = TheWindowManager->winCreateLayout(Menus/BlankWindow.wnd) hide(FALSE) bringForward getFirstWindow()->winClearStatus(0x80); ILT 0x0003E612; sole caller ScoreScreenInit 0x004E92F7
@@ -80236,6 +80255,7 @@ name,address,notes
 ?lookup@BfmeSubEntry960@@QAEHPAHPAPAX@Z,0x0002C746,pin
 ?lookup@Gen0035D740Table@@QAEHH@Z,0x00034856,table lookup called by Gen0035D740::makeNode
 ?lookup@GenTable@@QAEMH@Z,0x000184B2,S3 table-lookup-with-fallback family callee (address-derived name)
+?lookup@Rva0007F560Factory@@QAEPAXABVAsciiString@@@Z,0x00001F78,ILT thunk to 0x0007F470 name lookup used by Rva0007F560 ctor
 ?lookup@Rva0019C520Member@@QAEHPAVAsciiString@@H@Z,0x0003562F,ILT thunk to 0x0019B780 lookup on member at +0x630
 ?lookup@Rva00265A00Owner@@QAEPAVRva00265A00Result@@H@Z,0x00020824,address-derived lookup target read from retail RVA 0x00265A00
 ?lookup@Rva00368B80Registry@@QAEPAURva00368B80LookupResult@@I@Z,0x0001DBBA,REL32 bounds-checked pointer lookup target from 0x00368B91
@@ -80614,6 +80634,7 @@ name,address,notes
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
 ?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,pin
+?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
 ?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
@@ -80970,6 +80991,7 @@ name,address,notes
 ?rva0082C6E0CopyValues@@YAPAURva0082C6E0Value@@PAU1@00@Z,0x00018179,0x0082C6E0 vector erase trivial-copy thunk;target=0x00065E30
 ?rva0082C760Acquire@@YAXPAVNodeAllocMutex@_STL@@@Z,0x0082C760,node_alloc real acquire called by _M_acquire_lock
 ?rva008AF650Implementation@@YAXHHH@Z,0x008AF650,Open-BFME5 cdecl implementation called by the 0x008C3E70 stdcall adapter
+?rva008B2EA0Create@@YAPAVRva008B2EA0Node@@XZ,0x00892940,cdecl factory called by 0x008B2EA0
 ?rva008fd2a0@@YAXXZ,0x008FD2A0,DX8 vertex-buffer creation retry calls the already matched no-argument invalidation wrapper
 ?rva00906340CellCtor@@YAXPAX@Z,0x004110D6,Open-BFME5 cell ctor ILT
 ?rva00906340CellDtor@@YAXPAX@Z,0x00430652,Open-BFME5 cell dtor ILT
@@ -81362,6 +81384,9 @@ name,address,notes
 ?submit@Open27110F0Sink@@QAEXHHHH@Z,0x00031840,Open2 0x007110F0 sink submit (ILT)
 ?substr@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBE?AV12@II@Z,0x006550F0,STLport basic_string<char>::substr(pos; n): constructs the hidden return string from [begin+pos; begin+pos+min(n; size-pos)) through the range ctor ILT 0x0002648B; four callers in parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x00659888..0x00659A25; ILT 0x0003D60E
 ?supportTextureFormat@W3DRadarFormatCaps@@QAE_NW4WW3DFormat@@@Z,0x0091B4F0,W3DRadar BFME caps query ABI shim
+?swap@@YAXAAURva00356830Proxy14@@0@Z,0x00017427,alloc-proxy swap helper for Rva00356830Blk
+?swap@@YAXAAURva00356830Proxy8@@0@Z,0x0000D0C1,alloc-proxy swap helper for Rva00356830Blk
+?swap@@YAXAAURva003569D0Proxy14@@0@Z,0x0004B3D5,alloc-proxy swap helper for Rva003569D0Blk
 ?swap@Rva00356830Blk@@QAEXAAV1@@Z,0x00040372
 ?swap@Rva003569D0Blk@@QAEXAAV1@@Z,0x0000EFE3
 ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z,0x000329D4,Open-BFME7: incremental-link thunk for the real body at 0x0049E780 (int3-bounded start; reads m_currContext at +0x60 and m_currentSelectedDrawable at +0x5C); the ledger row for this name sits at 0x0049E901 which is inside that body
@@ -81768,6 +81793,7 @@ _GdipAlloc@4,0x009F6C28,gdiplus.dll import stub (direct REL32 call site; see U3G
 _GdipBitmapLockBits@20,0x009F6BFE,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdipBitmapUnlockBits@8,0x009F6C04,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
 _GdipCloneImage@8,0x009F6C2E,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
+_GdipCreateBitmapFromScan0@24,0x009F6BF8,gdiplus.dll import stub (direct REL32 call site; Bitmap from scan0)
 _GdipDeleteGraphics@4,0x009F6BC2,gdiplus.dll import stub (direct REL32 call site; see W3AtlConversionSupport.cpp)
 _GdipDrawImageI@16,0x009F6C22,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
 _GdipGetImageGraphicsContext@8,0x009F6C1C,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
@@ -83171,30 +83197,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
-?getLayer@Pathfinder@@QAEHPBUCoord3D@@@Z,0x0001A95B,Open-BFME5 ILT Pathfinder cell-layer lookup used by AIUpdate layersCompatible
-??$__make_heap@PAHUQ4Sort003D15A0@@HH@_STL@@YAXPAH0UQ4Sort003D15A0@@00@Z,0x00021053,ILT to 0x003CE510 make_heap used by partial_sort at 0x003D00E0
-??$sort_heap@PAHUQ4Sort003D15A0@@@_STL@@YAXPAH0UQ4Sort003D15A0@@@Z,0x00005F06,ILT to 0x003CFA90 sort_heap used by partial_sort at 0x003D00E0
-?fillVec005C3A30@@YA?AUBfmeVec3@@PAXH0@Z,0x000209DC,ILT thunk to 0x005C33E0 called by 0x005C3A30
-_GdipCreateBitmapFromScan0@24,0x009F6BF8,gdiplus.dll import stub (direct REL32 call site; Bitmap from scan0)
-?helper@BfmeFixup2580@@QAEXPAXPAVBfmeFixupChunk2580@@0@Z,0x008A2130,pin
-?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
-??1BfmeBase1134@@UAE@XZ,0x009A1A40,Open-BFME5 BfmeA1134 destructor base SubsystemInterface body
-?swap@@YAXAAURva00356830Proxy8@@0@Z,0x0000D0C1,alloc-proxy swap helper for Rva00356830Blk
-?swap@@YAXAAURva00356830Proxy14@@0@Z,0x00017427,alloc-proxy swap helper for Rva00356830Blk
-?swap@@YAXAAURva003569D0Proxy14@@0@Z,0x0004B3D5,alloc-proxy swap helper for Rva003569D0Blk
-?bfmeIsBlocked@FXList@@QBE_NXZ,0x00011F77,ILT to FUN_0082DAA0; bool skip used by static doFXObj wrapper 0x00065DE0
-??0Rva003B9AD0Inner@@QAE@ABV0@@Z,0x00018782,8-byte member copy ctor called by 0x003B9AD0; retail call goes through this incremental-link thunk to 0x003B8F80
-?bfmeDelViews@BfmeObjEE@@QAEXXZ,0x0040D970,Open-BFME5 Display deleteViews called from BfmeObjEE destructor
-?evaCheckCopy@@YAPAUEvaCheck@@PAU1@00ABUEvaCheckCopyTag@@PAH@Z,0x0000320B,Open-BFME5 24-byte __copy ILT used by EvaCheckVecBase::resize shrink
-?fillInsert@EvaCheckVecBase@@QAEXPAUEvaCheck@@IABU2@@Z,0x00047429,Open-BFME5 EvaCheck vector _M_fill_insert ILT used by EvaCheckVecBase::resize grow
-??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
-?lookup@Rva0007F560Factory@@QAEPAXABVAsciiString@@@Z,0x00001F78,ILT thunk to 0x0007F470 name lookup used by Rva0007F560 ctor
-?rva008B2EA0Create@@YAPAVRva008B2EA0Node@@XZ,0x00892940,cdecl factory called by 0x008B2EA0
-?append@Rva008B2EA0Node@@QAEXPAX@Z,0x008927C0,thiscall append called by 0x008B2EA0
-?bfmeGoD540@BfmeObjD540@@QAEXVAsciiString@@@Z,0x00033302,Open-BFME5 ILT to 0x0040D540 quoted-string consumer
-?bfmeUnitAngle@@YAMPBUCoord3D@@0@Z,0x00022C6E,cdecl acos(dot) of two unit Coord3D; ILT to FUN_007fd650 at 0x003FD650; called from Path::bfmeBuildTurnArc 0x003FFB50
-?bfmeFinishTurnArc@Path@@QAEXPAVPathNode@@00M@Z,0x00021BF2,Path helper ILT to FUN_007febb0 at 0x003FEBB0; called from Path::bfmeBuildTurnArc 0x003FFB50
-?helper@BfmeBaseHelper060600@@QAEXHPAX@Z,0x0075BBA0,adjusted-this base helper call target from 0x00760600 (currently gen-dump ?d_0075bba0@@YAXXZ)
-?bfmeAssign@Gen_0092D720@@QAEXPBD@Z,0x0092D720,assign callee of Mesh name/text setter 0x0092E440
-?addCapEdgeToTrack@BfmeTrackLikeD62640@@QAEXMM@Z,0x0072F390,unidentified track-edge helper called from W3DModelDraw::setHidden (currently gen-dump ?d_0072f390@@YAXXZ)
