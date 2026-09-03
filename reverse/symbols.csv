@@ -83624,3 +83624,7 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?equal@?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@QBE_NABV12@@Z,0x00838820,
 ??$__get_formatted_time@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083C710,
 ??$__get_formatted_time@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083BCA0,
+?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z,0x0003E80B,ILT to ThingTemplate::isEquivalentTo; Team::countObjectsByThingTemplate at 0x000F2670 calls it per member
+?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
+?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HO@@@0@Z,0x0003DCCB,ILT to Thing::isKindOfMulti 0x00132B20; Team::hasAnyBuildings BitFlags at 0x000F4A70 calls it
+?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
