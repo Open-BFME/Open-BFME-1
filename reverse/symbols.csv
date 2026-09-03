@@ -83656,3 +83656,5 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ??_7OnlineLoginInitGadgetsFunctorWrapper@@6B@,0x011080BC,16-byte OnlineLogin InitGadgets functor wrapper vtable used by _bfme_setAptScreenRef
 ?getUnicodeDateBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z,0x00047E6F,ILT of getUnicodeDateBuffer 0x0010D7A0; OnlineHome date writer 0x00546170
 ?getUnicodeTimeBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z,0x0002DE9D,ILT of getUnicodeTimeBuffer 0x0010D940; OnlineHome time writer 0x00546170
+?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
+?resolveOwnerPosition@AudioEventRTS@@QAEXPAUCoord3D@@PA_N@Z,0x00029AE1,AudioEventRTS owner-position resolve ILT to 0x000B4020 used by the ObjectID constructor
