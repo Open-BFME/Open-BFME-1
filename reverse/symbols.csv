@@ -2243,6 +2243,7 @@ name,address,notes
 ??0BfmeStaticThingF@@QAE@XZ,0x0000A533,Open-BFME5 the constructor the function-local static at 0x005D9D10 runs
 ??0BfmeStrVKI@@QAE@PBD@Z,0x0089E680,alias of landed ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z; same thiscall const-char body used as BfmeStrVKI constructor
 ??0BfmeStrVSY@@QAE@ABV0@@Z,0x0001AB86,pin
+??0BfmeStrVTA@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -4270,6 +4271,7 @@ name,address,notes
 ??1BfmeSplitResultListName@@QAE@XZ,0x00887940,Open-BFME5 HordeContain split-result-list name release body
 ??1BfmeSplitValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the tree removes at 0x00587670 and 0x00587750 run
 ??1BfmeStrVSO@@QAE@XZ,0x00887940,pin
+??1BfmeStrVTA@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
@@ -9575,6 +9577,7 @@ name,address,notes
 ??_7BfmeAptScreenOnlineLogin@@6B@,0x01107F58,OnlineLogin retail virtual table installed by destructor
 ??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
+??_7BfmeEntVTA@@6B@,0x010EC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
 ??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7BfmeOwnVSV@@6B@,0x010EC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
 ??_7BfmeOwnVSW@@6B@,0x01075D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
