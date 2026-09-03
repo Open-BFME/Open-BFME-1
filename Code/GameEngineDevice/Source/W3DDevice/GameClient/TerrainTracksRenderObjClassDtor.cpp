@@ -1,5 +1,3 @@
-// ??1TerrainTracksRenderObjClass@@UAE@XZ
-// partial score=1.0 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // BFME retail 0x0072F110: TerrainTracksRenderObjClass destructor at the
 // retail 0x1304-byte layout (the Zero Hour header is larger).
@@ -9,6 +7,7 @@ typedef unsigned char Bool;
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -24,6 +23,7 @@ private:
 	int m_refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClass : public TerrainTrackRenderBase
 {
 public:

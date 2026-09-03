@@ -1,11 +1,16 @@
-// target experiment for ?doTeamSetUnmanned@ScriptActions@@IAEXABVAsciiString@@@Z
-// partial score=0.50 date=2026-09-03
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink
+// Open-BFME: ScriptActions::doTeamSetUnmanned, retail 0x003024E0, 112 bytes.
+//
+// BFME's implementation forwards the unmanned action to each member's AI
+// command interface.  The team walk uses Object's virtually-inherited DLINK
+// member-function layout from reference/shims/objectdlink.
 
 #define _STLP_NO_EXCEPTIONS 1
 
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
@@ -54,12 +59,7 @@ public:
 
 class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
 
-class BfmeInnerRQ
-{
-public:
-	void bfmeSetRQ(Int object, Int commandSource);
-};
-
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
@@ -69,11 +69,16 @@ public:
 
 class AIUpdateInterface;
 
-typedef Object *(Object::*BfmeGetNextTeamMemberFunc)(void) const;
+class BfmeInnerRQ
+{
+public:
+	void bfmeSetRQ(Int object, Int commandSource);
+};
 
 #define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -97,6 +102,7 @@ public:
 	OBJCLASS *cur() const { return m_cur; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -111,6 +117,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -136,6 +143,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

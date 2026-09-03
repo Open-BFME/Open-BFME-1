@@ -75,10 +75,8 @@
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
-TerrainTracksRenderObjClass::~TerrainTracksRenderObjClass(void)
-{
-	freeTerrainTracksResources();
-}
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassDtor.cpp
+// (retail 0x0072F110)
 
 //=============================================================================
 // TerrainTracksRenderObjClass::TerrainTracksRenderObjClass
