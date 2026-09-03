@@ -47,8 +47,21 @@ BUTTON_NAME = "RefreshNat"
 # Two lines, because that is what ACCEPT CHANGES and RESET SETTINGS do -- a
 # fifteen-character label on one line overflows a button this width.
 LABEL_LINES = ["CUSTOM", "GRAPHICS"]
-LABEL_SIZE = 13.0
-LABEL_X, LABEL_Y, LABEL_LINE_H = 232.0, -31.0, 17.0
+LABEL_SIZE = 16.0                    # what the authored button labels use
+LABEL_X, LABEL_Y, LABEL_LINE_H = 232.0, -26.0, 19.2
+
+# The nav button draws its label twice -- 140 is the dark shadow, 130 the light
+# face on top -- and both carry "...\r...." as their initial text, taking their
+# real words from `buttonName`. The three authored buttons set that variable, so
+# the placeholder never shows for them; ours cannot, so it does, as a dashed row
+# straight through the second line. Clearing the initial text removes it and
+# costs the authored buttons nothing, because the variable supplies their text
+# either way.
+#
+# The carriage return is why a first attempt cleared the wrong pair: a scan for
+# placeholder text that filters on printable characters skips these two and
+# finds only 31 and 46, which belong to a different button style.
+PLACEHOLDER_CHARS = (130, 140)
 LABEL_COLOR = 0xFFD7A34D             # the warm gold the other three labels use
 
 # The advanced tab's resting frame, and the empty column inside its panel --
@@ -91,6 +104,9 @@ def build(src, dst):
                 raise SystemExit(f"nav bar is not the expected three buttons: {sorted(nav)}")
             if "_open_advanced" not in a.labels():
                 raise SystemExit("Options.apt has no _open_advanced tab -- wrong file?")
+
+            for c in PLACEHOLDER_CHARS:
+                a.set_text_string(c, "")
 
             a.place(NAV_FRAME, NAV_BUTTON, BUTTON_DEPTH, BUTTON_X, BUTTON_Y,
                     name=BUTTON_NAME, cid=NAV_SPRITE)

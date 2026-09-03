@@ -74,10 +74,18 @@ the other three are.
 
 Its label is two text characters of our own, on two lines -- what ACCEPT CHANGES
 and RESET SETTINGS do, and a fifteen-character label does not fit this button on
-one line. They carry **font `0x1e`**, the button face. An earlier pass reused the
-tab title's character, which is font `0xa`, and the wrong face was obvious on
-sight. A button's own label cannot be set instead: it binds to the ActionScript
+one line. They carry **font `0x1e` at 16pt, 19.2 units apart**, which puts them
+on the same rows as the authored labels (561-568 and 576-583 on an 800x600
+render). An earlier pass reused the tab title's character, font `0xa` at 18pt,
+and the wrong face was obvious on sight.
+
+A button's own label cannot be set instead: it binds to the ActionScript
 variable `_parent._parent.buttonName`, which appears nowhere in the executable.
+Its placeholder has to be cleared, and it is drawn **twice** -- character 140 is
+the dark shadow, 130 the light face -- both carrying `"...\r...."`. The
+carriage return is why a first attempt cleared 31 and 46, which look like the
+placeholders to any scan that filters on printable strings and belong to a
+different button style.
 
 The tab's panel has an empty column right of the slider box, and that is where
 Open-BFME says what it has added -- the replay camera keys and the replay pause,

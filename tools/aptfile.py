@@ -249,6 +249,17 @@ class Apt:
             raise ValueError(f"op at {op_off:#x} is not a PlaceObject")
         struct.pack_into("<I", self.d, op_off + 0x0C, char)
 
+    def set_text_string(self, cid, text):
+        """Replace a text character's initial string.
+
+        The new string is appended and the character repointed at it, rather
+        than the old bytes being overwritten -- a string may be shared, and
+        editing one in place would change every character that reads it."""
+        off = self.char_off(cid)
+        if not off or self.u32(off) != TEXT:
+            raise ValueError(f"character {cid} is not a text character")
+        struct.pack_into("<I", self.d, off + 0x34, self._append_string(text))
+
     def set_place_pos(self, op_off, x, y):
         if self.u32(op_off) != PLACE_OBJECT:
             raise ValueError(f"op at {op_off:#x} is not a PlaceObject")

@@ -253,8 +253,19 @@ because padding one string with spaces does not line a column up.
 **A button's own label is a variable, not its name.** The label text characters
 bind to `_parent._parent.buttonName`, which the screen's script sets per
 authored instance; `buttonName` appears nowhere in the executable, so no C++
-sets it and a fourth instance keeps the `...` placeholder. Add text characters
-of your own instead -- on two lines, which is what the authored buttons do.
+sets it and a fourth instance keeps the placeholder. Add text characters of your
+own instead -- on two lines, which is what the authored buttons do -- and clear
+the placeholder.
+
+The nav button draws its label **twice**: character 140 is the dark shadow,
+character 130 the light face over it, and both carry `"...\r...."` as their
+initial text. That carriage return matters: a scan for placeholder text that
+filters on printable strings skips both and turns up 31 and 46 instead, which
+belong to a different button style and are not what is on screen.
+
+Matching the authored geometry is worth measuring rather than eyeballing. On an
+800x600 render the authored labels occupy rows 561-568 and 576-583 -- font
+`0x1e` at 16pt, lines 15px apart, which is 19.2 movie units.
 
 
 ## Addresses for driving APT from the cave
