@@ -55,3 +55,52 @@ S3_CRITTER( Rva0016B450, "CritterDesync: ComputePath6" )
 S3_CRITTER( Rva0016B550, "CritterDesync: ComputePath7" )
 S3_CRITTER( Rva0016B770, "CritterDesync: ComputePath8" )
 S3_CRITTER( Rva0016B840, "CritterDesync: ComputePath9" )
+
+struct AIUpdate0016B2C0
+{
+	char m_pad326[0x326];
+	bool m_flag326;
+	bool m_pad327;
+	bool m_flag328;
+};
+
+struct Object0016B2C0
+{
+	char m_pad204[0x204];
+	AIUpdate0016B2C0 *m_ai;
+};
+
+struct Intermediate0016B2C0
+{
+	char m_pad10[0x10];
+	Object0016B2C0 *m_object;
+};
+
+class Rva0016B2C0
+{
+public:
+	bool step();
+
+	char m_pad1C[0x1c];
+	Intermediate0016B2C0 *m_intermediate;
+	char m_pad4D[0x4d - 0x20];
+	bool m_flag4D;
+};
+
+bool Rva0016B2C0::step()
+{
+	if( TheS3Flag && TheS3Sink )
+		Gen0003A17A( TheS3Sink, "CritterDesync: ComputePath3" );
+
+	Intermediate0016B2C0 *it = m_intermediate;
+	Object0016B2C0 *obj = it->m_object;
+	AIUpdate0016B2C0 *ai = obj->m_ai;
+	m_flag4D = true;
+	if( ai->m_flag326 )
+	{
+		ai->m_flag328 = true;
+		ai->m_flag326 = false;
+	}
+	return true;
+}
+
