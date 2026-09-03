@@ -83573,3 +83573,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?findConditionIndex@GarrisonContain@@IAEHXZ,0x00043405,call-site callee of GarrisonContain::calcBestGarrisonPosition; ILT 0x00043405
+?bfmeInit4D0@Gen_0022F4D0@@QAEXPAX@Z,0x00032E61,Open-BFME6 init call for the 0x0022F4D0 dispatch; body at 0x00227DC0
+?bfmeClear4D0@BfmeClear4D0@@QAE_NH@Z,0x0003C06A,Open-BFME6 disable-clear for the 0x0022F4D0 dispatch; body at 0x001C8440
+?bfmeCall4D0@BfmeCall4D0@@QAEXXZ,0x0002AE5F,Open-BFME6 no-arg call for the 0x0022F4D0 dispatch; body at 0x001CA2E0
+?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
+?bfmeSetVoid4D0@BfmeSet4D0@@QAEXXZ,0x00008337,Open-BFME6 void set for the 0x0022F4D0 dispatch; body at 0x00411DD0
