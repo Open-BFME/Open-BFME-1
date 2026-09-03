@@ -83658,3 +83658,4 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?getUnicodeTimeBuffer@@YA?AVUnicodeString@@U_SYSTEMTIME@@@Z,0x0002DE9D,ILT of getUnicodeTimeBuffer 0x0010D940; OnlineHome time writer 0x00546170
 ?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
 ?resolveOwnerPosition@AudioEventRTS@@QAEXPAUCoord3D@@PA_N@Z,0x00029AE1,AudioEventRTS owner-position resolve ILT to 0x000B4020 used by the ObjectID constructor
+?find@StagingRoomMap@@QAE?AUStagingRoomMapIterator@@ABH@Z,0x0001990C,ILT of StagingRoomMap int-to-GameSpyStagingRoom find used by CustomMatch 0x0053AB30
