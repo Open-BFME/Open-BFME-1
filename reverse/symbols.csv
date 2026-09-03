@@ -73034,6 +73034,7 @@ name,address,notes
 ?bfmeAssignVSE@BfmeStrVSE@@QAEAAV1@PBD0@Z,0x0002B297,pin
 ?bfmeAssignVSH@BfmeStrVSH@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSI@BfmeStrVSI@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeAssignVSJ@BfmeStrVSJ@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
@@ -74842,6 +74843,7 @@ name,address,notes
 ?bfmeNotifyVLL@BfmeCtlVLL@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVLN@BfmeCtlVLN@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVSI@BfmeOwnVSI@@QAEXHH@Z,0x000157DA,pin
+?bfmeNotifyVSJ@BfmeOwnVSJ@@QAEXHH@Z,0x000157DA,pin
 ?bfmeNowCBE@@YAPAXXZ,0x008FD440,pin
 ?bfmeObjectEnteringInfluence@Player@@QAEXPAVObject@@@Z,0x00029875,Open-BFME5 Player ILT that adds an Object's power influence; called by recursive transfer wrapper 0x001C3710
 ?bfmeObjectLeavingInfluence@Player@@QAEXPAVObject@@@Z,0x0000EACA,Open-BFME5 Player ILT that removes an Object's power influence; called by recursive transfer wrapper 0x001C3710
@@ -74958,6 +74960,7 @@ name,address,notes
 ?bfmePrepareRelease@BfmeIndexedNodesFM@@QAEXH@Z,0x00020D97,indexed node release preparation thunk
 ?bfmePrintTGD@@YAXPBD@Z,0x0003EBAD,pin
 ?bfmeProbeVSI@BfmeStrVSI@@QAEHPAV1@@Z,0x000220C5,pin
+?bfmeProbeVSJ@BfmeStrVSJ@@QAEHPAV1@@Z,0x000220C5,pin
 ?bfmeProcess1279@BfmeWrapper1279@@QAEXPAX@Z,0x008BD400,address-derived processor called by the 0x008BD4D0 forwarding body
 ?bfmePush1236@BfmeA1236@@QAEXPAX@Z,0x008D2BB0,pin
 ?bfmePushBack@BFMEAnimateWindowListPush@@QAEXABQAVAnimateWindow@@@Z,0x00022D36,BFME out-of-line list<AnimateWindow*>::push_back body 0x45DAE0 via ILT thunk
@@ -75300,6 +75303,7 @@ name,address,notes
 ?bfmeSetVSG@BfmeStrVSG@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSH@BfmeStrVSH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSI@BfmeStrVSI@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVSJ@BfmeStrVSJ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
