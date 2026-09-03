@@ -83675,3 +83675,4 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ??1PeerRequest@@QAE@XZ,0x00016BD5,ILT of PeerRequest dtor used by 0x0053AB90
 ?bind@CountedPtr@@QAEXABVAsciiString@@@Z,0x0002C6D8,ILT to 0x00487750 ICF-folded callee of AudioEventRTS initFromName eventInfo bind
 ?isPositionalAudio@AudioEventRTS@@QBE_NXZ,0x0000F380,ILT to 0x000B28F0 used by AudioEventRTS getSoundClass case 2
+?initFromName@AudioEventRTS@@QAEXABVAsciiString@@@Z,0x0004A86D,ILT to 0x000B2610 used by thin AudioEventRTS constructors
