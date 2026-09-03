@@ -26,6 +26,11 @@ struct Gen_t_003b10a0_p48cd
 	char m_body[ 48 ];
 };
 
+struct Gen_t_003b1050_p40cd
+{
+	char m_body[ 40 ];
+};
+
 namespace _STL
 {
 struct __false_type
@@ -136,4 +141,7 @@ template class vector<Rva00366890Element, allocator<Rva00366890Element> >;
 
 // ?_M_insert_overflow@?$vector@UGen_t_003b10a0_p48cd@@V?$allocator@UGen_t_003b10a0_p48cd@@@_STL@@@_STL@@IAEXPAUGen_t_003b10a0_p48cd@@ABU3@ABU__false_type@2@I_N@Z
 template class vector<Gen_t_003b10a0_p48cd, allocator<Gen_t_003b10a0_p48cd> >;
+
+// ?_M_insert_overflow@?$vector@UGen_t_003b1050_p40cd@@V?$allocator@UGen_t_003b1050_p40cd@@@_STL@@@_STL@@IAEXPAUGen_t_003b1050_p40cd@@ABU3@ABU__false_type@2@I_N@Z
+template class vector<Gen_t_003b1050_p40cd, allocator<Gen_t_003b1050_p40cd> >;
 }
