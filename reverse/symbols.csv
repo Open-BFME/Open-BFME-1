@@ -4264,6 +4264,7 @@ name,address,notes
 ??1BfmeSecondZ@@QAE@XZ,0x00017E63,Open-BFME5 the second member destructor the two-member vector destructor at 0x0035B8A0 runs
 ??1BfmeSplitResultListName@@QAE@XZ,0x00887940,Open-BFME5 HordeContain split-result-list name release body
 ??1BfmeSplitValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the tree removes at 0x00587670 and 0x00587750 run
+??1BfmeStrVSO@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
@@ -73038,6 +73039,7 @@ name,address,notes
 ?bfmeAssignVSI@BfmeStrVSI@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSJ@BfmeStrVSJ@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSM@BfmeStrVSM@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeAssignVSO@BfmeStrVSO@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
@@ -74715,6 +74717,7 @@ name,address,notes
 ?bfmeMakeRecUNB@@YAPAXH@Z,0x008064A0,pin
 ?bfmeMakeResultA@BfmeResultSourceA@@QAE?AUBfmeResultA@@H@Z,0x009F6600,retail callee decoded from the assigned 0x009F2A20 class value forwarder
 ?bfmeMakeTFD@BfmeHolderTFD@@QAEXPAX@Z,0x009DB4B0,pin
+?bfmeMakeVSO@BfmeSrcVSO@@QAE?AVBfmeStrVSO@@XZ,0x00851FA0,pin
 ?bfmeMakeW0@@YAIII@Z,0x0004B28B,Open-BFME5 ILT the variant ctor at 0x00390830 calls
 ?bfmeMakeW1@@YAIII@Z,0x00002B8F,Open-BFME5 ILT the variant ctor at 0x003CA5F0 calls
 ?bfmeMakeW2@@YAIII@Z,0x00025225,Open-BFME5 ILT the variant ctor at 0x0054F770 calls
