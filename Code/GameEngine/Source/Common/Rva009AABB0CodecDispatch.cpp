@@ -1,6 +1,6 @@
+// cl: /DNDEBUG /MD /EHsc
 // ?Rva009AABB0CodecDispatch@@YAXPAURva009AABB0Context@@@Z
-// partial score=0.98 date=2026-09-03
-// Open-BFME5 conversion of the codec dispatch argument marshaler.
+// Open-BFME5: codec dispatch argument marshaler at retail 0x009AABB0.
 
 extern unsigned char g_rva011426A0[];
 
