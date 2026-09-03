@@ -645,43 +645,38 @@ int CanReceiveOnSocket(SOCKET sock)
 #if defined(ENTROPY_NETWORK)
     return abstract_CanReceive( sock );
 #else
+	/* Retail (lotrbfme) shape: select then FD_ISSET, accept only rcode==1. */
 	fd_set fd;
 	struct timeval timeout;
 	int rcode;
-#ifdef SN_SYSTEMS
-	int count = 0;
-#endif
+	int ok;
 
-	// setup the fd set
+	timeout.tv_sec = 0;
+	timeout.tv_usec = 0;
 	FD_ZERO(&fd);
 	FD_SET(sock, &fd);
 
-	// setup the timeout
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 0;
-
-#ifdef SN_SYSTEMS
-repeat:
-#endif
-
-	// do the actual select
 	rcode = select(FD_SETSIZE, &fd, NULL, NULL, &timeout);
-	if((rcode == SOCKET_ERROR) || (rcode == 0))
-		return 0;
+	if (rcode == SOCKET_ERROR)
+		goto clear;
+	if (rcode <= 0)
+		goto zero;
+	if (FD_ISSET(sock, &fd))
+		goto one;
+	goto zero;
+one:
+	ok = 1;
+	goto check;
+zero:
+	ok = 0;
+check:
+	if (rcode == 1)
+		goto done;
+clear:
+	ok = 0;
+done:
+	return ok;
 
-#ifdef SN_SYSTEMS
-	// check for an error, but don't get stuck forever
-	if(GOAGetLastError(sock))
-	{
-		if(++count == 10)
-			return 0;
-
-		goto repeat;
-	}
-#endif
-
-	// it was set
-	return 1;
 #endif
 }
 
@@ -690,40 +685,39 @@ int CanSendOnSocket(SOCKET sock)
 #if defined(ENTROPY_NETWORK)
     return abstract_CanSend( sock );
 #else
+	/* Retail (lotrbfme) shape: select then FD_ISSET, accept only rcode==1. */
 	fd_set fd;
 	struct timeval timeout;
 	int rcode;
-#ifdef SN_SYSTEMS
-	int count = 0;
+	int ok;
 
-repeat:
-#endif
-
-	// setup the fd set
+	timeout.tv_sec = 0;
+	timeout.tv_usec = 0;
 	FD_ZERO(&fd);
 	FD_SET(sock, &fd);
 
-	// setup the timeout
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 0;
-
-	// do the actual select
 	rcode = select(FD_SETSIZE, NULL, &fd, NULL, &timeout);
-	if((rcode == SOCKET_ERROR) || (rcode == 0))
-		return 0;
+	if (rcode == SOCKET_ERROR)
+		goto clear;
+	if (rcode <= 0)
+		goto zero;
+	if (FD_ISSET(sock, &fd))
+		goto one;
+	goto zero;
+one:
+	ok = 1;
+	goto check;
+zero:
+	ok = 0;
+check:
+	if (rcode == 1)
+		goto done;
+clear:
+	ok = 0;
+done:
+	return ok;
 
-#ifdef SN_SYSTEMS
-	// check for an error, but don't get stuck forever
-	if(GOAGetLastError(sock))
-	{
-		if(++count == 10)
-			return 0;
-		goto repeat;
-	}
 #endif
-#endif
-	// it was set
-	return 1;
 }
 
 HOSTENT * getlocalhost(void)

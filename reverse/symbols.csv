@@ -83617,3 +83617,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003DEAB,ILT to NameKeyType rb-tree find 0x000D0F50; Rva000D4870 map<NameKeyType void*> find at this+0x214
 ??0SpawnBoneRow@@QAE@XZ,0x00045561,empty 16-byte row ctor ILT used by SpawnPointProductionExitUpdate::initializeBonePositions ehvec_ctor
 ?convertBonePosToWorldPos@Object@@QBEXPBUCoord3D@@PBVMatrix3D@@PAU2@PAV3@@Z,0x00002243,ILT of Thing::convertBonePosToWorldPos 0x00132530; SpawnPoint initializeBonePositions call
+___WSAFDIsSet@8,0x009F9B70,GameSpy CanSend/CanReceive FD_ISSET
+_CanSendOnSocket,0x00854700,vendored=gamespy-2004
