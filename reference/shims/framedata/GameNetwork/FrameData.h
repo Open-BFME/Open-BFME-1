@@ -49,6 +49,7 @@ public:
 	// through ecx rather than clobbering it.
 	NetCommandRef *addCommand(NetCommandMsg *msg);
 	UnsignedInt getCommandCount();
+	UnsignedInt getAckCommandCount();
 	void zeroFrame();
 	void destroyGameMessages();
 

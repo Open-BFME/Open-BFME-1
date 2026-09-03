@@ -65,6 +65,7 @@ public:
 	FrameDataReturnType allCommandsReady(UnsignedInt frame, Bool debugSpewage);
 	NetCommandList * getFrameCommandList(UnsignedInt frame);
 	UnsignedInt getCommandCount(UnsignedInt frame);
+	UnsignedInt getAckCommandCount(UnsignedInt frame);
 	void setFrameCommandCount(UnsignedInt frame, UnsignedInt commandCount);
 	UnsignedInt getFrameCommandCount(UnsignedInt frame);
 	void zeroFrames(UnsignedInt startingFrame, UnsignedInt numFrames);
@@ -216,6 +217,13 @@ UnsignedInt FrameDataManager::getCommandCount(UnsignedInt frame) {
 	UnsignedInt frameindex = frame % FRAME_DATA_LENGTH;
 
 	return m_frameData[frameindex].getCommandCount();
+}
+
+// ?getAckCommandCount@FrameDataManager@@QAEII@Z
+UnsignedInt FrameDataManager::getAckCommandCount(UnsignedInt frame) {
+	UnsignedInt frameindex = frame % FRAME_DATA_LENGTH;
+
+	return m_frameData[frameindex].getAckCommandCount();
 }
 
 /**
