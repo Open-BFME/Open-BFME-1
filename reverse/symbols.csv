@@ -83629,3 +83629,5 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?isKindOfMulti@Thing@@QBE_NABV?$BitFlags@$0HO@@@0@Z,0x0003DCCB,ILT to Thing::isKindOfMulti 0x00132B20; Team::hasAnyBuildings BitFlags at 0x000F4A70 calls it
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
+??$__write_integer_backward@J@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
+?__write_integer_backward@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
