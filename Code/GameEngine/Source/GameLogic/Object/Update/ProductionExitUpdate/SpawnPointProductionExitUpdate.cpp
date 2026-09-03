@@ -210,72 +210,8 @@ void SpawnPointProductionExitUpdate::initializeBonePositions()
 }
 
 //-------------------------------------------------------------------------------------------------
-// The retail loop uses the original inline occupier-array layout; keep its
-// exact member offsets while the shared class shim remains pointer-based.
-__declspec(naked) void SpawnPointProductionExitUpdate::revalidateOccupiers()
-{
-	__asm {
-		_emit 053h
-		_emit 08Bh
-		_emit 0D9h
-		_emit 08Bh
-		_emit 043h
-		_emit 028h
-		_emit 057h
-		_emit 033h
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 07Eh
-		_emit 02Bh
-		_emit 056h
-		_emit 08Dh
-		_emit 0B3h
-		_emit 0CCh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 08Bh
-		_emit 006h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 012h
-		_emit 08Bh
-		_emit 00Dh
-		_emit 098h
-		_emit 008h
-		_emit 02Fh
-		_emit 001h
-		_emit 050h
-		_emit 0E8h
-		_emit 0DDh
-		_emit 0D0h
-		_emit 0D4h
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 075h
-		_emit 002h
-		_emit 089h
-		_emit 006h
-		_emit 08Bh
-		_emit 043h
-		_emit 028h
-		_emit 047h
-		_emit 083h
-		_emit 0C6h
-		_emit 004h
-		_emit 03Bh
-		_emit 0F8h
-		_emit 07Ch
-		_emit 0DDh
-		_emit 05Eh
-		_emit 05Fh
-		_emit 05Bh
-		_emit 0C3h
-	}
-}
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/SpawnPointProductionExitUpdateRevalidateOccupiers.cpp
+// ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ present-unmatched
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
