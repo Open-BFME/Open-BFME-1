@@ -29,10 +29,14 @@ class ScriptEngine
 
 protected:
 	ScriptCounter *bfmeCounter(AsciiString name);
-	const ScriptCounter *getCounter(AsciiString name);
 };
 
 extern ScriptEngine *TheScriptEngine;
+extern void j_000142b3();
+
+class BfmeGetCounterCall
+{
+};
 
 class ScriptActions
 {
@@ -53,7 +57,11 @@ void ScriptActions::doCounterMathCounter(Parameter *counter,
 	result = destination->m_value;
 	int value;
 	value = 0;
-	source = TheScriptEngine->getCounter(otherCounter->getString());
+	typedef const ScriptCounter *(BfmeGetCounterCall::*GetCounterFunction)(AsciiString);
+	union { void (*raw)(void); GetCounterFunction member; } getCounter;
+	getCounter.raw = j_000142b3;
+	source = (reinterpret_cast<BfmeGetCounterCall *>(TheScriptEngine)
+		->*getCounter.member)(otherCounter->getString());
 	if (source)
 		value = source->m_value;
 

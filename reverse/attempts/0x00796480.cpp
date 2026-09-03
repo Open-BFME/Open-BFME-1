@@ -1,4 +1,6 @@
 // ?W3DGadgetRadioButtonDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+// partial score=0.986 date=2026-09-03
+// ?W3DGadgetRadioButtonDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 // partial score=0.986 date=2026-09-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 typedef int Int;

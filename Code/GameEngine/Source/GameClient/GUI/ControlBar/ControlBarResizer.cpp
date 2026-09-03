@@ -141,12 +141,12 @@ ResizerWindow *ControlBarResizer::findResizerWindow( AsciiString name )
 // ?newResizerWindow@ControlBarResizer@@QAEPAVResizerWindow@@VAsciiString@@@Z present-unmatched
 ResizerWindow *ControlBarResizer::newResizerWindow( AsciiString name )
 {
+	GameWindow *win = NULL;
 	ResizerWindow *newRwin = NEW ResizerWindow;
 	if(!newRwin)
 		return NULL;
 
 	newRwin->m_name = name;
-	GameWindow *win = NULL;
 	win = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey(name));
 	if( !win )
 	{

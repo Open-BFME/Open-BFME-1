@@ -13,7 +13,6 @@ class WWMath
 {
 public:
 	static Real Acos(Real value);
-
 	static __forceinline Real Sqrt(Real value)
 	{
 		__asm {

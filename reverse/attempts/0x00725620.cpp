@@ -1,5 +1,5 @@
-// ?update@BfmeA1137@@QAEXXZ
-// partial score=0.95 date=2026-09-02
+// ?extraAfterFmod@W3DSnowManager@@QAEXXZ
+// partial score=0.95 date=2026-09-03
 // cl: /DNDEBUG /MD /EHs-c-
 // Open-BFME5 conversions.
 // ghidra: FUN_00b25620 retail @ 0x00725620 size 189
@@ -28,8 +28,6 @@ public:
 class BfmeGlo012F0FE0
 {
 public:
-	int frame() const { return m_0c; }
-
 	char m_unmodelled_00[0x0c];
 	int m_0c;
 };
@@ -84,16 +82,16 @@ void BfmeA1137::update()
 				m_98 = 3;
 				ov = walk(g_bfmeGlo012F15F8);
 				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
-				m_94 = frame;
+				m_94 = 2;
 			}
 		}
 	}
 	else
 	{
-		int frame = g_bfmeGlo012F0FE0->frame();
+		int frame = g_bfmeGlo012F0FE0->m_0c;
 		if (frame == 2 && m_94 != 2)
 		{
-			m_94 = 2;
+				m_94 = frame;
 			copyFromOverride();
 		}
 	}

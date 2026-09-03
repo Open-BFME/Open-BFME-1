@@ -48,10 +48,57 @@ struct BfmeG1052
 	int m_bfme18;
 };
 
+enum SlotState
+{
+	SLOT_OPEN,
+	SLOT_CLOSED,
+	SLOT_EASY_AI,
+	SLOT_MED_AI,
+	SLOT_BRUTAL_AI,
+	SLOT_PLAYER
+};
+
+template <typename T>
+class StringBase
+{
+	friend class UnicodeString;
+
+	private:
+	StringBase(const StringBase<T> &other);
+
+	void *m_data;
+};
+
+class UnicodeString : private StringBase<unsigned short>
+{
+public:
+	UnicodeString(const UnicodeString &other)
+		: StringBase<unsigned short>(other)
+	{
+	}
+	~UnicodeString()
+	{
+	}
+};
+
+struct GameSlotConnectInfo
+{
+	unsigned int m_ip;
+	unsigned short m_port;
+};
+
+class GameSlot
+{
+public:
+	void setState(SlotState state, UnicodeString name,
+		const GameSlotConnectInfo *connectInfo);
+};
+
 class BfmeF1052
 {
 public:
 	char bfmeGo1052F(BfmeG1052 *p, int v);
+	char bfmeSetSlot1052(GameSlot *slot, int state, UnicodeString *name);
 
 	char m_bfmePad[0x16c];
 	BfmeSubF1052 m_bfmeSub;
@@ -60,6 +107,17 @@ public:
 char BfmeF1052::bfmeGo1052F(BfmeG1052 *p, int v)
 {
 	p->m_bfme18 = v;
+	m_bfmeSub.bfmeStep1052();
+	m_bfmeSub.bfmeTick1052();
+	return 1;
+}
+
+char BfmeF1052::bfmeSetSlot1052(GameSlot *slot, int state,
+	UnicodeString *name)
+{
+	GameSlotConnectInfo connectInfo = { 0, 0 };
+	GameSlot *target = slot;
+	target->setState((SlotState)state, *name, &connectInfo);
 	m_bfmeSub.bfmeStep1052();
 	m_bfmeSub.bfmeTick1052();
 	return 1;

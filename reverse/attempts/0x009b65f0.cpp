@@ -1,11 +1,13 @@
 // ?Rva009B65F0LoadProbs@@YAXPAE@Z
-// partial score=0.9 date=2026-09-02
+// partial score=0.9 date=2026-09-03
+// ?Rva009B65F0LoadProbs@@YAXPAE@Z
+// partial score=0.9 date=2026-09-03
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 int Rva009B4600DecodeBool(void *state, int probability);
 int bfmeGoUSC(void *state, int count);
 
-extern unsigned char g_bfmeProbUpdate[2][17];		// retail 0x01143348
+extern unsigned char g_bfmeProbUpdate[2][17];
 
 void Rva009B65F0LoadProbs(unsigned char *ctx)
 {
@@ -24,10 +26,10 @@ void Rva009B65F0LoadProbs(unsigned char *ctx)
 			if (ctx[0x704 + i] == 0)
 				ctx[0x704 + i] = 1;
 		}
-	}
+    }
 
-	for (i = 0; i < 2; ++i) {
-		const unsigned char *p = &g_bfmeProbUpdate[i][2];
+for (i = 0; i < 2; ++i) {
+	    const unsigned char *p = &g_bfmeProbUpdate[i][2];
 		for (j = 0; j < 7; ++j) {
 			if (Rva009B4600DecodeBool(state, *p++)) {
 				ctx[0x708 + i * 7 + j] = (unsigned char)(bfmeGoUSC(state, 7) << 1);
@@ -37,8 +39,8 @@ void Rva009B65F0LoadProbs(unsigned char *ctx)
 		}
 	}
 
-	for (i = 0; i < 2; ++i) {
-		const unsigned char *p = &g_bfmeProbUpdate[i][9];
+for (i = 0; i < 2; ++i) {
+	    const unsigned char *p = &g_bfmeProbUpdate[i][9];
 		for (j = 0; j < 8; ++j) {
 			if (Rva009B4600DecodeBool(state, *p++)) {
 				ctx[0x71C + i * 8 + j] = (unsigned char)(bfmeGoUSC(state, 7) << 1);

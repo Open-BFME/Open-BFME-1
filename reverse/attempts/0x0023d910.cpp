@@ -1,5 +1,5 @@
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
-// partial score=0.9 date=2026-09-03
+// partial score=0.94 date=2026-09-03
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.9 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
@@ -68,7 +68,8 @@ private:
 
 void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 {
-	register UnsignedInt poseBit;
+	UnsignedInt flags;
+	UnsignedInt poseBit;
 
 	if ( member == 0 )
 		return;
@@ -76,9 +77,11 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	{
 		member->m_bfmeMemberInterface->bfmeEnterFormationPose( 5 );
 
-		if ( member->m_bfmeModelConditionFlags & 0x00100000 )
+		flags = member->m_bfmeModelConditionFlags;
+		if ( flags & 0x00100000 )
 		{
-			member->m_bfmeModelConditionFlags &= ~0x00100000;
+			flags &= ~0x00100000;
+			member->m_bfmeModelConditionFlags = flags;
 			member->notifyModelConditionChanged();
 		}
 
@@ -88,20 +91,21 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	{
 		member->m_bfmeMemberInterface->bfmeLeaveFormationPose( 5 );
 
-		if ( member->m_bfmeModelConditionFlags & 0x00080000 )
+		flags = member->m_bfmeModelConditionFlags;
+		if ( flags & 0x00080000 )
 		{
-			member->m_bfmeModelConditionFlags &= ~0x00080000;
+			flags &= ~0x00080000;
+			member->m_bfmeModelConditionFlags = flags;
 			member->notifyModelConditionChanged();
 		}
 
 		poseBit = 0x00100000;
 	}
 
-	register UnsignedInt flags = member->m_bfmeModelConditionFlags;
-	if ( ( poseBit & flags ) == 0 )
-	{
-		flags |= poseBit;
-		member->m_bfmeModelConditionFlags = flags;
-		member->notifyModelConditionChanged();
-	}
+	flags = member->m_bfmeModelConditionFlags;
+	if ( ( poseBit & flags ) != 0 )
+		return;
+	flags = flags | poseBit;
+	member->m_bfmeModelConditionFlags = flags;
+	member->notifyModelConditionChanged();
 }

@@ -297,7 +297,6 @@ ControlBarScheme::~ControlBarScheme(void)
 	reset();
 }
 
-// ??0ControlBarScheme@@QAE@XZ present-unmatched
 ControlBarScheme::ControlBarScheme(void)
 {
 
@@ -309,24 +308,18 @@ ControlBarScheme::ControlBarScheme(void)
 	m_side.clear();
 	m_buttonQueueImage = NULL;
 	m_rightHUDImage = NULL;
-	m_buildUpClockColor = GameMakeColor(0,0,0,100);
+	m_buildUpClockColor = GameMakeColor(0,0,0,128);
 	m_borderBuildColor = GAME_COLOR_UNDEFINED;
 	m_borderActionColor = GAME_COLOR_UNDEFINED;
 	m_borderUpgradeColor = GAME_COLOR_UNDEFINED;
 	m_borderSystemColor = GAME_COLOR_UNDEFINED;
+	m_commandBarBorderColor = GAME_COLOR_UNDEFINED;
 	//m_buttonQueueImage = TheMappedImageCollection("")
-	m_optionsButtonEnable = NULL;
 	m_optionsButtonHightlited = NULL;
 	m_optionsButtonPushed = NULL;
 	m_optionsButtonDisabled = NULL;
-	
-	// Added By Sadullah Nader
-	// Initializations needed 
-	
-	m_commandBarBorderColor = 0;
-	
-	//
 	m_idleWorkerButtonEnable = NULL;
+	m_optionsButtonEnable = NULL;
 	m_idleWorkerButtonHightlited = NULL;
 	m_idleWorkerButtonPushed = NULL;
 	m_idleWorkerButtonDisabled = NULL;
@@ -351,12 +344,9 @@ ControlBarScheme::ControlBarScheme(void)
 	m_toggleButtonDownOn = NULL;
 	m_toggleButtonDownPushed = NULL;
 
-	m_commandMarkerImage = NULL;
-	m_expBarForeground = NULL;
-
-	m_powerPurchaseImage = NULL;
-
 	m_generalButtonEnable = NULL;
+	m_powerPurchaseImage = NULL;
+	m_commandMarkerImage = NULL;
 	m_generalButtonHightlited = NULL;
 	m_generalButtonPushed = NULL;
 	m_generalButtonDisabled = NULL;
@@ -364,66 +354,50 @@ ControlBarScheme::ControlBarScheme(void)
 	m_uAttackButtonEnable = NULL;
 	m_uAttackButtonHightlited = NULL;
 	m_uAttackButtonPushed = NULL;
-	
-	m_genArrow = NULL;
-
 	m_minMaxButtonEnable = NULL;
+	m_moneyUL.x = 0;
 	m_minMaxButtonHightlited = NULL;
 	m_minMaxButtonPushed = NULL;
-	
-	m_minMaxUL.x = 0;
-	m_minMaxLR.x = 0;
-
-	m_generalUL.x = 0;
-	m_generalLR.x = 0;
-
-	m_uAttackUL.x = 0;
-	m_uAttackLR.x = 0;
-
-	m_optionsUL.x = 0;
-	m_optionsLR.x = 0;
-
-	m_workerUL.x = 0;
-	m_workerLR.x = 0;
-
-	m_chatUL.x = 0;
-	m_chatLR.x = 0;
-
-	m_beaconUL.x = 0;
-	m_beaconLR.x = 0;
-
-	m_powerBarUL.x = 0;
-	m_powerBarLR.x = 0;
+	m_genArrow = NULL;
 
 	m_minMaxUL.y = 0;
 	m_minMaxLR.y = 0;
-
 	m_generalUL.y = 0;
 	m_generalLR.y = 0;
-
 	m_uAttackUL.y = 0;
 	m_uAttackLR.y = 0;
-
 	m_optionsUL.y = 0;
 	m_optionsLR.y = 0;
-
 	m_workerUL.y = 0;
 	m_workerLR.y = 0;
-
 	m_chatUL.y = 0;
 	m_chatLR.y = 0;
-
 	m_beaconUL.y = 0;
 	m_beaconLR.y = 0;
-
 	m_powerBarUL.y = 0;
 	m_powerBarLR.y = 0;
-	
-	m_moneyUL.x = 0;
+
+	m_minMaxLR.x = 0;
+	m_generalUL.x = 0;
+	m_generalLR.x = 0;
+	m_uAttackUL.x = 0;
+	m_uAttackLR.x = 0;
+	m_optionsUL.x = 0;
+	m_optionsLR.x = 0;
+	m_workerUL.x = 0;
+	m_workerLR.x = 0;
+	m_chatUL.x = 0;
+	m_chatLR.x = 0;
+	m_beaconUL.x = 0;
+	m_beaconLR.x = 0;
+	m_powerBarUL.x = 0;
+	m_powerBarLR.x = 0;
+
+	m_expBarForeground = NULL;
 	m_moneyUL.y = 0;
-	
 	m_moneyLR.x = 0;
 	m_moneyLR.y = 0;
+	m_minMaxUL.x = 0;
 }
 
 

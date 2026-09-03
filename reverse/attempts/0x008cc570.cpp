@@ -13,24 +13,31 @@ struct Rva8CC570StringBlock
 extern Rva8CC570StringBlock g_bfmeDefaultString1284;
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 
-class Rva8CC570String
+class Rva8CC570StringBase
 {
 public:
-	Rva8CC570String()
+	Rva8CC570StringBase()
 	{
 		m_block = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refs;
 	}
-	~Rva8CC570String()
+	~Rva8CC570StringBase()
 	{
-		Rva8CC570StringBlock *block = m_block;
-		--block->m_refs;
-		if (block->m_refs == 0)
-			Rva01337A30ReleaseTable[1](block);
+        Rva8CC570StringBlock *block = m_block;
+        --block->m_refs;
+        if (block->m_refs == 0)
+            Rva01337A30ReleaseTable[1](block);
 	}
 
-private:
+	protected:
 	Rva8CC570StringBlock *m_block;
+};
+
+class Rva8CC570String : private Rva8CC570StringBase
+{
+public:
+	Rva8CC570String() : Rva8CC570StringBase() {}
+	~Rva8CC570String() {}
 };
 
 struct Rva8CC570Name
@@ -38,7 +45,7 @@ struct Rva8CC570Name
 	Rva8CC570StringBlock *m_string;
 };
 
-class Rva8CC570Value
+class Rva8CCCE0Value
 {
 public:
 	virtual void slot0();
@@ -57,25 +64,25 @@ public:
 	}
 };
 
-void rva8C6320PrepareLookup(Rva8CC570Value *fallback, void *scope,
+void rva8C6320PrepareLookup(Rva8CCCE0Value *fallback, void *scope,
 	Rva8CC570Name *name, Rva8CC570Name *&updatedName, Rva8CC570String *key);
-Rva8CC570Value *__stdcall rva89C290Lookup(Rva8CC570String &key, void *scope);
+Rva8CCCE0Value *__stdcall rva89C290Lookup(Rva8CC570String const &key, void *scope);
 
-Rva8CC570Value *rva8CC570LookupValue(Rva8CC570Value *fallback, void *scope,
-	Rva8CC570Name *name)
+Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
 {
-	Rva8CC570Value *result;
+	Rva8CC570Name *&name = *(Rva8CC570Name **)&data;
 	Rva8CC570String key;
 	if (name->m_string->m_length == 0)
-		return fallback;
+		return (Rva8CCCE0Value *)fallback;
 
-	rva8C6320PrepareLookup(fallback, scope, name, name, &key);
-	Rva8CC570Name *resolvedName = name;
-	if (resolvedName != 0)
-	{
-		result = rva89C290Lookup(key, scope);
-		if (result != 0 && result->acceptsLookup())
-			return result;
+    rva8C6320PrepareLookup((Rva8CCCE0Value *)fallback, scope, name, name, &key);
+    Rva8CC570Name const *resolvedName = name;
+    Rva8CCCE0Value *result = 0;
+    if (resolvedName != 0)
+    {
+        result = rva89C290Lookup(key, scope);
+        if (result != 0 && result->acceptsLookup())
+            return result;
 	}
 	return 0;
 }

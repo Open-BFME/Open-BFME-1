@@ -1,7 +1,7 @@
 // ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
 // partial score=0.92 date=2026-09-03
 // ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
-// partial score=0.92 date=2026-09-02
+// partial score=0.92 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 // Open-BFME5: select a HordeContain split result, retail 0x0023CDD0.
@@ -38,7 +38,7 @@ struct BfmeSelectedTemplate
 class BfmeSplitResult
 {
 public:
-	BfmeSelectedTemplate m_template;
+	BfmeOverridable *m_value;
 	int m_rank;
 };
 
@@ -81,17 +81,15 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 			BfmeOverridable *wantedValue = wanted;
 			BfmeSplitResult **current = first;
 				do
-			{
+				{
 					BfmeSplitResult *candidate = *current;
-					if ( candidate->m_template.m_value == wantedValue )
+					if ( candidate->m_value == wantedValue )
 					{
-						BfmeSplitResult *selected = first[ i ];
-						BfmeSelectedTemplate selectedValue = selected->m_template;
-						BfmeSelectedTemplate *output = selectedTemplate;
-						*output = selectedValue;
-						BfmeSplitResult **base = m_splitResultsBegin;
-						BfmeSplitResult *rankResult = base[ i ];
-						return rankResult->m_rank;
+						BfmeSplitResult *result = first[ i ];
+						BfmeOverridable *value = result->m_value;
+						BfmeSelectedTemplate *out = selectedTemplate;
+						out->m_value = value;
+						return m_splitResultsBegin[ i ]->m_rank;
 				}
 				++i;
 				++current;
@@ -100,11 +98,9 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		}
 	}
 
-	register BfmeSplitResult *selected = first[ 0 ];
-	BfmeSelectedTemplate selectedValue = selected->m_template;
-	BfmeSelectedTemplate *output = selectedTemplate;
-	*output = selectedValue;
-	BfmeSplitResult **base = m_splitResultsBegin;
-	BfmeSplitResult *rankResult = base[ 0 ];
-	return rankResult->m_rank;
+	BfmeSplitResult *result = first[ 0 ];
+	BfmeOverridable *value = result->m_value;
+	BfmeSelectedTemplate *out = selectedTemplate;
+	out->m_value = value;
+	return m_splitResultsBegin[ 0 ]->m_rank;
 }

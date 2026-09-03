@@ -1669,7 +1669,7 @@ PathfindLayerEnum TerrainLogic::alignOnTerrain( Real angle, const Coord3D& pos, 
 // ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z present-unmatched
 void TerrainLogic::addBridgeToLogic(BridgeInfo *pInfo, Dict *props, AsciiString bridgeTemplateName)
 {
-	Bridge *pBridge = newInstance(Bridge)(*pInfo, props, bridgeTemplateName);
+	Bridge *pBridge = ::new ((void *)::operator new(0x90)) Bridge(*pInfo, props, bridgeTemplateName);
 	pBridge->setNext(m_bridgeListHead);
 	m_bridgeListHead = pBridge;
 	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge(pBridge);

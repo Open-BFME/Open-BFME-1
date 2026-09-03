@@ -1,8 +1,10 @@
 // ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.97 date=2026-09-03
-// ?parseBannerCarrierPosition@@YAXPAVINI@@PAX1PBX@Z
+// ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.97 date=2026-09-03
 // ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
+// partial score=0.97 date=2026-09-03
+// ?parseBannerCarrierPosition@@YAXPAVINI@@PAX1PBX@Z
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Oi /Ireference/shims/iniexception
 // stlport
 // Open-BFME5: HordeContain unit-slot position field parser, retail 0x0023E280.
@@ -87,9 +89,8 @@ void parseHordeContainUnitTypePos( INI *ini, void *instance, void *store,
 		throw INIException( 3, "'Pos' expected" );
 
 	{
-		Int dummy = 0;
 		Coord2DTemp temp;
-		INI::parseCoord2D( ini, 0, &temp.value, (const void *)dummy );
+		INI::parseCoord2D( ini, 0, &temp.value, 0 );
 		slot->m_pos.x = temp.value.x;
 		slot->m_pos.y = temp.value.y;
 	}

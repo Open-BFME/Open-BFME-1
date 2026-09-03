@@ -22,37 +22,39 @@ enum GeometryType
 };
 
 template <typename T>
+struct StringInlineData
+{
+	int m_refCount;
+	int m_length;
+	T m_text[1];
+};
+
+template <typename T>
 class StringBase
 {
-public:
-	StringBase() {}
-	void init() { m_data = 0; }
+	friend class AsciiString;
+
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<T> &other);
+	~StringBase();
 	void set(const StringBase<T> &other);
-	void releaseBuffer();
 
-private:
-	void *m_data;
+	StringInlineData<T> *m_data;
 };
 
-class AsciiString
+class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString() {}
-	void init() { m_string.init(); }
-	~AsciiString() { m_string.releaseBuffer(); }
-	AsciiString &operator=(const AsciiString &other)
-	{
-		m_string.set(other.m_string);
-		return *this;
-	}
-
-private:
-	StringBase<char> m_string;
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+	void set(const AsciiString &other) { StringBase<char>::set(other); }
 };
 
-struct GeometryShape
+struct BfmeElem60
 {
-	GeometryShape()
+	BfmeElem60()
 		: m_type(GEOMETRY_SPHERE),
 		  m_height(0x3F800000u),
 		  m_majorRadius(0x3F800000u),
@@ -60,30 +62,26 @@ struct GeometryShape
 		  m_unmodelled10(0),
 		  m_unmodelled14(0),
 		  m_unmodelled18(0),
-		  m_name(),
+		m_name(),
 		  m_enabled(true)
 	{
-		m_name.init();
 	}
 
-	GeometryShape(GeometryType type, RealBits height, RealBits majorRadius,
-		RealBits minorRadius)
+	BfmeElem60(GeometryType type, RealBits height, RealBits majorRadius)
 		: m_type(type),
 		  m_height(height),
 		  m_majorRadius(majorRadius),
-		  m_minorRadius(minorRadius),
 		  m_unmodelled10(0),
 		  m_unmodelled14(0),
 		  m_unmodelled18(0),
-		  m_name(),
+		m_name(),
 		  m_enabled(true)
 	{
-		m_name.init();
 	}
 
-	GeometryShape(const GeometryShape &other);
+	BfmeElem60(const BfmeElem60 &other);
 
-	GeometryShape &operator=(const GeometryShape &other)
+	BfmeElem60 &operator=(const BfmeElem60 &other)
 	{
 		m_type = other.m_type;
 		m_height = other.m_height;
@@ -92,7 +90,7 @@ struct GeometryShape
 		m_unmodelled10 = other.m_unmodelled10;
 		m_unmodelled14 = other.m_unmodelled14;
 		m_unmodelled18 = other.m_unmodelled18;
-		m_name = other.m_name;
+		m_name.set(other.m_name);
 		m_enabled = other.m_enabled;
 		return *this;
 	}
@@ -117,28 +115,26 @@ struct GeometryRecord
 	AsciiString m_name;
 };
 
-namespace _STL
+class BfmeVec60
 {
-	template <typename Type>
-	class allocator {};
-
-	template <typename Type, typename Allocator = allocator<Type> >
-	class vector
-	{
 	public:
-		typedef unsigned int size_type;
+		void resize(unsigned newSize, BfmeElem60 value = BfmeElem60());
 
-		void resize(size_type newSize, Type value = Type());
-
-		__forceinline Type &operator[](size_type index) { return m_start[index]; }
-		__forceinline size_type size() const { return (size_type)(m_finish - m_start); }
+		__forceinline BfmeElem60 &operator[](unsigned index) { return m_start[index]; }
+		__forceinline unsigned size() const { return (unsigned)(m_finish - m_start); }
 
 	private:
-		Type *m_start;
-		Type *m_finish;
-		Type *m_endOfStorage;
-	};
-}
+		BfmeElem60 *m_start;
+		BfmeElem60 *m_finish;
+		BfmeElem60 *m_endOfStorage;
+};
+
+struct RawVec
+{
+	void *m_start;
+	void *m_finish;
+	void *m_endOfStorage;
+};
 
 class Snapshot
 {
@@ -148,13 +144,14 @@ public:
 	virtual const char *getName() const;
 };
 
-class GeometryInfo : public Snapshot
+class GeometryInfo
 {
 public:
 	void set(GeometryType type, Bool isSmall, Real height,
 		Real majorRadius, Real minorRadius);
 
 private:
+	int m_unknown00;
 	void calcBoundingStuff();
 
 	Bool m_isSmall;
@@ -168,19 +165,20 @@ private:
 	int m_scalar20;
 	int m_scalar24;
 	int m_scalar28;
-	_STL::vector<GeometryShape> m_shapes;
-	_STL::vector<GeometryRecord> m_records;
+	BfmeVec60 m_shapes;
+	RawVec m_records;
 };
 
 // ?set@GeometryInfo@@QAEXW4GeometryType@@_NMMM@Z
 void GeometryInfo::set(GeometryType type, Bool isSmall, Real height,
 	Real majorRadius, Real minorRadius)
 {
-	RealBits heightBits = *(const RealBits *)&height;
-	RealBits majorBits = *(const RealBits *)&majorRadius;
-	RealBits minorBits = *(const RealBits *)&minorRadius;
-	GeometryShape shape(type, heightBits, majorBits,
-		type == GEOMETRY_BOX ? minorBits : majorBits);
+	BfmeElem60 shape(type, *(const RealBits *)&height,
+		*(const RealBits *)&majorRadius);
+	if (type == GEOMETRY_BOX)
+		shape.m_minorRadius = *(const RealBits *)&minorRadius;
+	else
+		shape.m_minorRadius = *(const RealBits *)&majorRadius;
 	m_isSmall = isSmall;
 
 	if (m_shapes.size() != 1)

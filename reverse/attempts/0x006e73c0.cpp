@@ -1,4 +1,6 @@
 // ?addRect006e@BfmeRender2D@@QAEXABUBfmeFloatRect@@H@Z
+// partial score=0.98 date=2026-09-03
+// ?addRect006e@BfmeRender2D@@QAEXABUBfmeFloatRect@@H@Z
 // partial score=0.98 date=2026-08-28
 // cl: /DNDEBUG /MD /EHsc
 
@@ -18,7 +20,7 @@ struct BfmeFloatRect
 	float bottom;
 };
 
-typedef unsigned int BfmeUInt32;
+typedef unsigned long BfmeUInt32;
 
 struct BfmeRenderVertex
 {

@@ -68,8 +68,10 @@ extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, v
 // Confined to this include: leaving it on re-mangles every protected member
 // declared later in this file (?...@@IAE... becomes ?...@@QAE...), which breaks
 // the ledger rows that name them.
+#define private public
 #define protected public
 #include "dx8wrapper.h"
+#undef private
 #undef protected
 #include "assetmgr.h"
 #include "Lib/BaseType.h"
@@ -110,6 +112,53 @@ extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, v
 // out-of-line body that can auto-delete via the vtable. The shim's
 // TextureBaseClass only spells the inline one, so name the real entry point.
 class BFMETextureRelease { public: void Release_Ref(); };
+extern TCHAR g_bfmeCh1035;
+
+// bfmeGet returns this one-pointer handle by hidden sret storage.  The
+// returned texture owns a reference which the caller releases at scope exit;
+// keep the wrapper local so MSVC emits the retail unwind state and tail.
+class BfmeHandleCX
+{
+	BFMETextureRelease *m_bfmeThing;
+
+public:
+	~BfmeHandleCX()
+	{
+		if (m_bfmeThing)
+			m_bfmeThing->Release_Ref();
+	}
+	operator TextureBaseClass *&()
+	{
+		return *(TextureBaseClass **)&m_bfmeThing;
+	}
+};
+
+BfmeHandleCX __cdecl bfmeGet(int index);
+
+__forceinline void bfmeStoreNull(TCHAR *buffer, TCHAR value)
+{
+		*buffer = value;
+}
+
+class BFMEValueName
+{
+	TCHAR *m_Buffer;
+
+public:
+	BFMEValueName(int initial_len, bool hint_temporary)
+		: m_Buffer(StringClass::m_EmptyString)
+	{
+		((StringClass *)this)->Get_String(initial_len, hint_temporary);
+		TCHAR null_char = g_bfmeCh1035;
+		TCHAR *buffer = m_Buffer;
+		*buffer = null_char;
+	}
+
+	~BFMEValueName()
+	{
+		((StringClass *)this)->Free_String();
+	}
+};
 
 namespace {
 	enum { BFME_SET_TEXTURE_SLOT = 65, BFME_SET_PIXEL_SHADER_SLOT = 107 };
@@ -120,6 +169,28 @@ namespace {
 	{
 		IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
 		(*(BFMESetTextureFn **)device)[BFME_SET_TEXTURE_SLOT](device, stage, texture);
+	}
+
+	__forceinline void bfmeSetDX8Texture(DWORD stage, IDirect3DBaseTexture8 *texture)
+	{
+		if (stage >= MAX_TEXTURE_STAGES)
+		{
+			bfmeSetTexture(stage, texture);
+			number_of_DX8_calls++;
+			return;
+		}
+
+		if (DX8Wrapper::Textures[stage] == texture)
+			return;
+
+		if (DX8Wrapper::Textures[stage])
+			DX8Wrapper::Textures[stage]->Release();
+		DX8Wrapper::Textures[stage] = texture;
+		if (texture)
+			texture->AddRef();
+		bfmeSetTexture(stage, texture);
+		number_of_DX8_calls++;
+		DX8Wrapper::texture_changes++;
 	}
 
 	__forceinline void bfmeSetPixelShader(DWORD handle)
@@ -167,9 +238,12 @@ namespace {
 		number_of_DX8_calls++;                                                               \
 	} else if (DX8Wrapper::TextureStageStates[stage_][state_] != (unsigned)(value_)) {       \
 		if (WW3D::Is_Snapshot_Activated()) {                                                 \
-			StringClass value_name(0, true);                                                 \
-			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(value_name,                   \
+			BFMEValueName value_name(0, true);                                               \
+			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(*(StringClass *)&value_name, \
 				(D3DTEXTURESTAGESTATETYPE)(state_), (value_));                               \
+			SNAPSHOT_SAY(("DX8 - SetTextureStageState(stage: %d, state: %s, value: %s)\n", \
+				(stage_), DX8Wrapper::Get_DX8_Texture_Stage_State_Name(                    \
+					(D3DTEXTURESTAGESTATETYPE)(state_)), value_name));                         \
 		}                                                                                    \
 		DX8Wrapper::TextureStageStates[stage_][state_] = (value_);                           \
 		IDirect3DDevice8 *tss_device_ = DX8Wrapper::_Get_D3D_Device8();                      \
@@ -1520,23 +1594,27 @@ Int FlatShroudTextureShader::set(Int stage)
 {
 	//force WW3D2 system to set it's states so it won't later overwrite our custom settings.
 	if (stage < 2)
-		DX8Wrapper::Set_Texture(stage, W3DShaderManager::getShaderTexture(stage));
+	{
+		BoxSetTexture(stage, (TextureBaseClass *&)bfmeGet(stage));
+	}
 	else	//stages larger than 1 are not supported by W3D so set them directly
-		DX8Wrapper::Set_DX8_Texture(stage, W3DShaderManager::getShaderTexture(stage)->Peek_D3D_Texture());
+	{
+		bfmeSetDX8Texture(stage,
+			((TextureBaseClass &)bfmeGet(stage)).Peek_D3D_Base_Texture());
+	}
 
-	DX8Wrapper::Set_DX8_Texture_Stage_State( stage, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-	DX8Wrapper::Set_DX8_Texture_Stage_State( stage, D3DTSS_COLORARG2, D3DTA_CURRENT );
-	DX8Wrapper::Set_DX8_Texture_Stage_State( stage, D3DTSS_COLOROP,   D3DTOP_MODULATE );
-	DX8Wrapper::Set_DX8_Texture_Stage_State( stage, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
+	BFME_SET_TSS(stage, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	BFME_SET_TSS(stage, D3DTSS_COLORARG2, D3DTA_CURRENT);
+	BFME_SET_TSS(stage, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	BFME_SET_TSS(stage, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+	BFME_SET_TSS(stage, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+	BFME_SET_TSS(stage, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 	//DX8Wrapper::Apply_Render_State_Changes();
-
-	DX8Wrapper::Set_DX8_Texture_Stage_State(stage,  D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
-	DX8Wrapper::Set_DX8_Texture_Stage_State(stage,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);	
 
 	//We need to scale so shroud texel stretches over one full terrain cell.  Each texel
 	//is 1/128 the size of full texture. (assuming 128x128 vid-mem texture).
-	W3DShroud *shroud;
-	if ((shroud=TheTerrainRenderObject->getShroud()) != 0)
+	W3DShroud *shroud = *(W3DShroud **)((char *)TheTerrainRenderObject + 0x30b8);
+	if (shroud != 0)
 	{	///@todo: All this code really only need to be done once per camera/view.  Find a way to optimize it out.
 		D3DXMATRIX inv;
 		float det;
@@ -1553,22 +1631,29 @@ Int FlatShroudTextureShader::set(Int stage)
 
 		float xoffset = 0;
 		float yoffset = 0;
-		Real width=shroud->getCellWidth();
-		Real height=shroud->getCellHeight();
+		Real width=*(Real *)((char *)shroud + 0x10);
+		Real height=*(Real *)((char *)shroud + 0x14);
 
-		if (TheTerrainRenderObject->getMap())
+		if (*(void **)((char *)TheTerrainRenderObject + 0x2ff4))
 		{	//subtract origin position from all coordinates.  Origin is shifted by 1 cell width/height to allow for unused border texels.
-			xoffset = -(float)shroud->getDrawOriginX() + width;
-			yoffset = -(float)shroud->getDrawOriginY() + height;
+			xoffset = -(float)*(Real *)((char *)shroud + 0x2c) + width;
+			yoffset = -(float)*(Real *)((char *)shroud + 0x30) + height;
 		}
 
 		D3DXMatrixTranslation(&offset, xoffset, yoffset,0);
 
-		width = 1.0f/(width*shroud->getTextureWidth());
-		height = 1.0f/(height*shroud->getTextureHeight());
+		width = 1.0f/(width* *(Int *)((char *)shroud + 0x20));
+		height = 1.0f/(height* *(Int *)((char *)shroud + 0x24));
 		D3DXMatrixScaling(&scale, width, height, 1);
-		*((D3DXMATRIX *)&curView) = (inv * offset) * scale;
-		DX8Wrapper::_Set_DX8_Transform((D3DTRANSFORMSTATETYPE )(D3DTS_TEXTURE0+stage), *((Matrix4x4*)&curView));
+		D3DXMATRIX first;
+		D3DXMatrixMultiply(&first, &inv, &offset);
+		D3DXMATRIX second=first;
+		D3DXMATRIX third;
+		D3DXMatrixMultiply(&third, &second, &scale);
+		DX8Wrapper::matrix_changes++;
+		*((D3DXMATRIX *)&curView)=third;
+		DX8CALL(SetTransform((D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0+stage),
+			(D3DMATRIX *)&curView));
 	}
 	m_stageOfSet=stage;
 	return TRUE;

@@ -1,9 +1,5 @@
-// ?refreshCache@BfmeA1137@@QAEXXZ
+// ?extraTail@W3DSnowManager@@QAEXXZ
 // partial score=0.9 date=2026-09-03
-// ?refreshCache@BfmeA1137@@QAEXXZ
-// partial score=0.9 date=2026-09-03
-// ?refreshCache@BfmeA1137@@QAEXXZ
-// partial score=0.45 date=2026-09-02
 // cl: /DNDEBUG /MD /EHs-c-
 // Open-BFME5 conversions.
 // ghidra: FUN_00b23b60 retail @ 0x00723B60 size 184
@@ -46,28 +42,28 @@ class BfmeA1137
 public:
 	void refreshCache();
 
-private:
+public:
 	char m_unmodelled_00[0x44];
 	char m_flag44;
 	char m_unmodelled_45[3];
 	int m_48;
 };
 
-static const BfmeOverride1137 *walk(const BfmeOverride1137 *d)
+static BfmeOverride1137 *walk(BfmeOverride1137 *d)
 {
-	const BfmeOverride1137 *f = d;
+	BfmeOverride1137 *f = d;
 	if (d && d->m_nextOverride)
-		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		f = (BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
 	return f;
 }
 
-static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
+static BfmeOverride1137 *walk3(BfmeOverride1137 *d)
 {
-	const BfmeOverride1137 *f;
+	BfmeOverride1137 *f;
 	if (d == 0)
 		f = 0;
 	else if (d->m_nextOverride)
-		f = (const BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+		f = (BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
 	else
 		f = d;
 	return f;
@@ -75,11 +71,12 @@ static const BfmeOverride1137 *walk3(const BfmeOverride1137 *d)
 
 void BfmeA1137::refreshCache()
 {
-	const BfmeOverride1137 *d = g_bfmeGlo012F15F8;
+	BfmeOverride1137 *d = g_bfmeGlo012F15F8;
 	float slot;
-	const BfmeOverride1137 *f;
-	f = walk(d);
-	if (f->m_flag40 == 0)
+	BfmeOverride1137 *f;
+	if (d && d->m_nextOverride)
+		d = (BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	if (d->m_flag40 == 0)
 		return;
 	if (m_flag44)
 	{
@@ -92,8 +89,9 @@ void BfmeA1137::refreshCache()
 	}
 	slot = WWMath::Random_Float();
 	d = g_bfmeGlo012F15F8;
-	f = walk(d);
-	if (!(slot < f->m_54))
+	if (d && d->m_nextOverride)
+		d = (BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
+	if (!(slot < d->m_54))
 		return;
 	m_flag44 = 1;
 	d = g_bfmeGlo012F15F8;

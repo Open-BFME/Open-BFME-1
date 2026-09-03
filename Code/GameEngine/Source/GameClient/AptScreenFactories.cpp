@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
+#include <list>
 
 // FILE: AptScreenFactories.cpp ///////////////////////////////////////////////
 //
@@ -137,6 +139,8 @@ public:
 			*(const StringBase<unsigned short> *)&other );
 	}
 	~UnicodeString();
+	void format( UnicodeString format, ... );
+	void format( const unsigned short *format, ... );
 	void concat( const unsigned short *text, int length );
 	void set( const UnicodeString &other )
 	{
@@ -183,6 +187,8 @@ class GameWindow
 {
 public:
 	void *winGetUserData();
+	int winHide( bool hide );
+	int winEnable( bool enable );
 };
 UnicodeString GadgetTextEntryGetText( GameWindow *textEntry );
 void GadgetTextEntrySetText( GameWindow *textEntry, UnicodeString text );
@@ -1104,6 +1110,7 @@ class BfmeAptScreenQuickMatchMenu : public BfmeAptScreenBase
 public:
 	BfmeAptScreenQuickMatchMenu( void *context );
 	virtual void slot0();
+	void _bfme_initGadgets();
 
 private:
 	bool m_isMatching;
@@ -1113,39 +1120,39 @@ private:
 	char m_pad221[ 3 ];
 	int m_selectedMap;
 	int m_parentOptionsKey;
-	void *m_parentOptions;
+	GameWindow *m_parentOptions;
 	int m_maxPingKey;
-	void *m_maxPing;
+	GameWindow *m_maxPing;
 	int m_numPlayersKey;
-	void *m_numPlayers;
+	GameWindow *m_numPlayers;
 	int m_ladderKey;
-	void *m_ladder;
+	GameWindow *m_ladder;
 	int m_maxDisconnectsKey;
-	void *m_maxDisconnects;
+	GameWindow *m_maxDisconnects;
 	int m_sideKey;
-	void *m_side;
+	GameWindow *m_side;
 	int m_colorKey;
-	void *m_color;
+	GameWindow *m_color;
 	int m_backKey;
-	void *m_back;
+	GameWindow *m_back;
 	int m_startKey;
-	void *m_start;
+	GameWindow *m_start;
 	int m_currentMatchingLevelKey;
-	void *m_currentMatchingLevel;
+	GameWindow *m_currentMatchingLevel;
 	int m_personalInfoKey;
-	void *m_personalInfo;
+	GameWindow *m_personalInfo;
 	int m_mapSelectKey;
-	void *m_mapSelect;
+	GameWindow *m_mapSelect;
 	int m_parentProgressKey;
-	void *m_parentProgress;
+	GameWindow *m_parentProgress;
 	int m_quickMatchListKey;
-	void *m_quickMatchList;
+	GameWindow *m_quickMatchList;
 	int m_widenKey;
-	void *m_widen;
+	GameWindow *m_widen;
 	int m_stopKey;
-	void *m_stop;
+	GameWindow *m_stop;
 	int m_parentStatsKey;
-	void *m_parentStats;
+	GameWindow *m_parentStats;
 };
 
 BfmeAptScreenQuickMatchMenu::BfmeAptScreenQuickMatchMenu( void *context )
@@ -1259,4 +1266,311 @@ void *createAptScreenOnlineProfile( void *context )
 		return 0;
 
 	return new BfmeOnlineProfileScreen( context );
+}
+
+typedef int Int;
+typedef unsigned int NameKeyType;
+typedef int Color;
+
+class GameWindowManager
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void winSetFocus( GameWindow *window );
+	virtual void slot45(); virtual void slot46(); virtual void slot47(); virtual void slot48();
+	virtual void slot49(); virtual void slot50(); virtual void slot51(); virtual void slot52();
+	virtual void slot53(); virtual void slot54();
+	virtual GameWindow *winGetWindowFromId( GameWindow *parent, NameKeyType id );
+};
+
+extern GameWindowManager *TheWindowManager;
+
+class GameSpyInfoInterface
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25();
+	virtual AsciiString getLocalName();
+	virtual void slot27(); virtual void slot28(); virtual void slot29(); virtual void slot30();
+	virtual void slot31(); virtual void slot32(); virtual void slot33(); virtual void slot34();
+	virtual void slot35(); virtual void slot36(); virtual void slot37(); virtual void slot38();
+	virtual void slot39(); virtual void slot40(); virtual void slot41(); virtual void slot42();
+	virtual void slot43(); virtual void slot44(); virtual void slot45(); virtual void slot46();
+	virtual void slot47(); virtual void slot48(); virtual void slot49(); virtual void slot50();
+	virtual void slot51(); virtual void slot52(); virtual void slot53(); virtual void slot54();
+	virtual void slot55(); virtual void slot56();
+	virtual void registerTextWindow( GameWindow *window );
+};
+
+extern GameSpyInfoInterface *TheGameSpyInfo;
+
+class GameSpyConfigInterface
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual int getPingTimeoutInMs();
+};
+
+extern GameSpyConfigInterface *TheGameSpyConfig;
+
+class LadderInfo;
+typedef std::list<LadderInfo *> LadderInfoList;
+
+class LadderList
+{
+public:
+	const LadderInfo *findLadderByIndex( Int index );
+	const LadderInfoList *getLocalLadders();
+	const LadderInfoList *getSpecialLadders();
+	const LadderInfoList *getStandardLadders();
+};
+
+extern LadderList *TheLadderList;
+
+class QuickMatchPreferences
+{
+public:
+	QuickMatchPreferences();
+	virtual ~QuickMatchPreferences();
+	Int getMaxDisconnects();
+	Int getMaxPoints();
+	Int getMinPoints();
+	Int getNumPlayers();
+	Int getMaxPing();
+	Int getSide();
+
+private:
+	char m_unmodelled[ 16 ];
+};
+
+class Image;
+class ImageCollection
+{
+public:
+	const Image *findImageByName( const AsciiString &name );
+};
+
+extern ImageCollection *TheMappedImageCollection;
+
+class Shell
+{
+public:
+	void showShellMap( bool useShellMap );
+};
+
+extern Shell *TheShell;
+
+class GameSpyStagingRoom
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void reset();
+};
+
+extern GameSpyStagingRoom *TheGameSpyGame;
+
+class GameWindowTransitionsHandler
+{
+public:
+	void setGroup( AsciiString groupName, bool immediate = false );
+};
+
+extern GameWindowTransitionsHandler *TheTransitionHandler;
+
+class BfmeThingEGD
+{
+public:
+	GameWindow *bfmeGoEGD( void *key );
+};
+
+class BfmeQuickMatchLadderPanel
+{
+public:
+	void populateLadderList();
+};
+
+extern BfmeQuickMatchLadderPanel *TheQuickMatchLadderPanel;
+
+class Gen_00505530
+{
+public:
+	void bfmeChanged();
+};
+
+extern int GameSpyColor[];
+enum { GSCOLOR_DEFAULT = 0 };
+enum { MAX_DISCONNECTS_COUNT = 5 };
+static Int MAX_DISCONNECTS[MAX_DISCONNECTS_COUNT] = { 0, 5, 10, 25, 50 };
+static bool isInQuickMatchInit = false;
+static const Image *quickMatchSelectedImage = 0;
+static const Image *quickMatchUnselectedImage = 0;
+static Int quickMatchMaxPingEntries = 0;
+static Int quickMatchMaxPoints = 100;
+static Int quickMatchMinPoints = 0;
+
+void GadgetStaticTextSetText( GameWindow *window, UnicodeString text );
+void GadgetListBoxReset( GameWindow *listBox );
+void GadgetComboBoxReset( GameWindow *comboBox );
+int GadgetComboBoxAddEntry( GameWindow *comboBox, UnicodeString text, Color color );
+void GadgetComboBoxSetSelectedPos( GameWindow *comboBox, Int selected, bool notify = true );
+void GadgetComboBoxGetSelectedPos( GameWindow *comboBox, Int *selected );
+void *GadgetComboBoxGetItemData( GameWindow *comboBox, Int selected );
+void UpdateLocalPlayerStats();
+void UpdateStartButton();
+void populateQMColorComboBox( QuickMatchPreferences &pref );
+void populateQMSideComboBox( Int side, const LadderInfo *ladder );
+void populateQuickMatchMapSelectListbox( QuickMatchPreferences &pref );
+
+static GameWindow *aptButtonBuddies = 0;
+
+#ifndef max
+#define max(a,b) ((a) > (b) ? (a) : (b))
+#endif
+
+void BfmeAptScreenQuickMatchMenu::_bfme_initGadgets()
+{
+	BfmeThingEGD *lookup = (BfmeThingEGD *)this;
+
+	static NameKeyType buttonBuddiesID = 0;
+	buttonBuddiesID = TheNameKeyGenerator->nameToKey(
+		"WOLQuickMatchMenu.wnd:ButtonBuddies" );
+	aptButtonBuddies = TheWindowManager->winGetWindowFromId(
+		0, buttonBuddiesID );
+	if( aptButtonBuddies )
+		aptButtonBuddies->winHide( true );
+
+	m_parentOptions = lookup->bfmeGoEGD( (void *)m_parentOptionsKey );
+	m_maxPing = lookup->bfmeGoEGD( (void *)m_maxPingKey );
+	m_start = lookup->bfmeGoEGD( (void *)m_startKey );
+	m_back = lookup->bfmeGoEGD( (void *)m_backKey );
+	m_mapSelect = lookup->bfmeGoEGD( (void *)m_mapSelectKey );
+	m_numPlayers = lookup->bfmeGoEGD( (void *)m_numPlayersKey );
+	m_ladder = lookup->bfmeGoEGD( (void *)m_ladderKey );
+	m_maxDisconnects = lookup->bfmeGoEGD( (void *)m_maxDisconnectsKey );
+	m_side = lookup->bfmeGoEGD( (void *)m_sideKey );
+	m_color = lookup->bfmeGoEGD( (void *)m_colorKey );
+	m_personalInfo = lookup->bfmeGoEGD( (void *)m_personalInfoKey );
+	m_parentProgress = lookup->bfmeGoEGD( (void *)m_parentProgressKey );
+	m_quickMatchList = lookup->bfmeGoEGD( (void *)m_quickMatchListKey );
+	m_stop = lookup->bfmeGoEGD( (void *)m_stopKey );
+	m_widen = lookup->bfmeGoEGD( (void *)m_widenKey );
+	m_parentStats = lookup->bfmeGoEGD( (void *)m_parentStatsKey );
+
+	TheGameSpyInfo->registerTextWindow( m_quickMatchList );
+
+	if( TheLadderList->getStandardLadders()->size() == 0
+		&& TheLadderList->getSpecialLadders()->size() == 0
+		&& TheLadderList->getLocalLadders()->size() == 0 )
+	{
+		m_ladder->winEnable( false );
+	}
+
+	GameWindow *staticTextTitle = lookup->bfmeGoEGD( (void *)TheNameKeyGenerator->nameToKey(
+		"WOLQuickMatchMenu.wnd:StaticTextTitle" ) );
+	if( staticTextTitle )
+	{
+		UnicodeString tmp;
+		tmp.format( TheGameText->fetch( "GUI:QuickMatchTitle" ),
+			TheGameSpyInfo->getLocalName().str() );
+		GadgetStaticTextSetText( staticTextTitle, tmp );
+	}
+
+	m_start->winHide( false );
+	GadgetListBoxReset( m_quickMatchList );
+	TheWindowManager->winSetFocus( (GameWindow *)this );
+
+	quickMatchSelectedImage = TheMappedImageCollection->findImageByName(
+		AsciiString( "CustomMatch_selected" ) );
+	quickMatchUnselectedImage = TheMappedImageCollection->findImageByName(
+		AsciiString( "CustomMatch_deselected" ) );
+
+	QuickMatchPreferences pref;
+	UnicodeString s;
+	quickMatchMaxPoints = pref.getMaxPoints();
+	quickMatchMinPoints = pref.getMinPoints();
+
+	Color c = GameSpyColor[GSCOLOR_DEFAULT];
+	GadgetComboBoxReset( m_numPlayers );
+	Int i;
+	for( i = 1; i < 5; ++i )
+	{
+		s.format( TheGameText->fetch( "GUI:PlayersVersusPlayers" ), i, i );
+		GadgetComboBoxAddEntry( m_numPlayers, s, c );
+	}
+	GadgetComboBoxSetSelectedPos( m_numPlayers, max( 0, pref.getNumPlayers() ) );
+
+	GadgetComboBoxReset( m_maxDisconnects );
+	GadgetComboBoxAddEntry( m_maxDisconnects, TheGameText->fetch( "GUI:Any" ), c );
+	for( i = 1; i < MAX_DISCONNECTS_COUNT; ++i )
+	{
+		s.format( L"%d", MAX_DISCONNECTS[i] );
+		GadgetComboBoxAddEntry( m_maxDisconnects, s, c );
+	}
+	m_selectedMap = max( 0, pref.getMaxDisconnects() );
+	GadgetComboBoxSetSelectedPos( m_maxDisconnects, m_selectedMap );
+	m_isStopping = false;
+	m_isMatching = true;
+
+	GadgetComboBoxReset( m_maxPing );
+	quickMatchMaxPingEntries = (TheGameSpyConfig->getPingTimeoutInMs() - 1) / 100;
+	quickMatchMaxPingEntries++;
+	for( i = 1; i < quickMatchMaxPingEntries; ++i )
+	{
+		s.format( TheGameText->fetch( "GUI:TimeInMilliseconds" ), i * 100 );
+		GadgetComboBoxAddEntry( m_maxPing, s, c );
+	}
+	GadgetComboBoxAddEntry( m_maxPing, TheGameText->fetch( "GUI:ANY" ), c );
+	m_matchingLevel = pref.getMaxPing();
+	if( m_matchingLevel < 0 )
+		m_matchingLevel = 0;
+	if( m_matchingLevel >= quickMatchMaxPingEntries )
+		m_matchingLevel = quickMatchMaxPingEntries - 1;
+	GadgetComboBoxSetSelectedPos( m_maxPing, m_matchingLevel );
+
+	m_isMatching = false;
+	populateQMColorComboBox( pref );
+
+	Int selected;
+	GadgetComboBoxGetSelectedPos( m_ladder, &selected );
+	Int index = (Int)GadgetComboBoxGetItemData( m_ladder, selected );
+	const LadderInfo *li = TheLadderList->findLadderByIndex( index );
+	populateQMSideComboBox( pref.getSide(), li );
+
+	if( TheQuickMatchLadderPanel )
+		TheQuickMatchLadderPanel->populateLadderList();
+	TheShell->showShellMap( true );
+	TheGameSpyGame->reset();
+
+	GadgetListBoxReset( m_mapSelect );
+	populateQuickMatchMapSelectListbox( pref );
+	UpdateLocalPlayerStats();
+	UpdateStartButton();
+
+	TheTransitionHandler->setGroup( AsciiString( "WOLQuickMatchMenuFade" ) );
+	m_currentMatchingLevel = lookup->bfmeGoEGD( (void *)m_currentMatchingLevelKey );
+	((Gen_00505530 *)this)->bfmeChanged();
+	m_parentStats->winHide( true );
+	m_parentProgress->winHide( true );
+	m_quickMatchList->winHide( true );
+	m_stop->winHide( true );
+	m_widen->winHide( true );
+	isInQuickMatchInit = false;
 }

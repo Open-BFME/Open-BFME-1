@@ -694,16 +694,21 @@ int asyncGethostbyname(char * szName)
 		}
 		stat = 1;
 	}
-	if( stat == 1 )
+	if( !s_asyncDNSThreadDone )
 	{
-		if( s_asyncDNSThreadDone )
+		while( !s_asyncDNSThreadDone )
 		{
-			/* Thread finished */
-			stat = 0;
-			s_asyncDNSLookupInProgress = FALSE;
-			s_asyncDNSThreadHandle = NULL;
-			return( (s_asyncDNSThreadSucceeded)?LOOKUP_SUCCEEDED:LOOKUP_FAILED );
+			Sleep(5);
 		}
+	}
+
+	if (stat == 1 && s_asyncDNSThreadDone)
+	{
+		/* Thread finished */
+		stat = 0;
+		s_asyncDNSLookupInProgress = FALSE;
+		s_asyncDNSThreadHandle = NULL;
+		return( (s_asyncDNSThreadSucceeded)?LOOKUP_SUCCEEDED:LOOKUP_FAILED );
 	}
 
 	return( LOOKUP_INPROGRESS );

@@ -308,7 +308,7 @@ typedef void (FunctorTarget::*FunctorMethod)( void );
 struct FunctorBinding
 {
 	FunctorBinding( FunctorMethod method, FunctorTarget *target )
-		: m_target( target ), m_method( method ) {}
+		: m_target( target ), m_unmodelled( 2 ), m_method( method ) {}
 
 	FunctorTarget *m_target;
 	unsigned int m_unmodelled;
@@ -884,6 +884,7 @@ class __declspec(novtable) __multiple_inheritance BfmeAptScreenInGameChat
 {
 public:
 	BfmeAptScreenInGameChat( void *context );
+	virtual ~BfmeAptScreenInGameChat();
 	void _bfme_initGadgets();
 	void _bfme_onInitialized();
 	void _bfme_onClosed();
@@ -916,20 +917,21 @@ private:
 BfmeAptScreenInGameChat::BfmeAptScreenInGameChat( void *context )
 	: _bfme_AptGameWindow( context )
 {
-	BfmeThingTC *first = &m_firstControl;
-	InGameChatRegistry *registry =
-		(InGameChatRegistry *)( (char *)this + 0x218 );
-	int zero = 0;
+	InGameChatRegistry *registry;
+	char *first;
+	registry = (InGameChatRegistry *)( (char *)this + 0x218 );
+	first = (char *)&m_firstControl;
 	*(const void ***)( (char *)this ) = BfmeAptScreenInGameChatVftable;
 	*(const void ***)( (char *)this + 0x218 ) =
 		BfmeAptScreenInGameChatSecondaryVftable;
-	m_field258 = zero;
-	m_field260 = zero;
-	m_field264 = zero;
-	m_field268 = zero;
-	first->bfmeBaseTC();
-	first->m_bfmeVft = (void *)BfmeAptScreenInGameChatControlVftable;
-	first->m_bfmeWhat = (void *)4;
+	m_field258 = 0;
+	m_field260 = 0;
+	m_field264 = 0;
+	m_field268 = 0;
+	((BfmeThingTC *)first)->bfmeBaseTC();
+	((BfmeThingTC *)first)->m_bfmeVft =
+		(void *)BfmeAptScreenInGameChatControlVftable;
+	((BfmeThingTC *)first)->m_bfmeWhat = (void *)4;
 	BfmeThingTC *second = &m_secondControl;
 	second->bfmeBaseTC();
 	second->m_bfmeVft = (void *)BfmeAptScreenInGameChatControlVftable;
@@ -940,9 +942,9 @@ BfmeAptScreenInGameChat::BfmeAptScreenInGameChat( void *context )
 	m_field293 = false;
 	m_field294 = true;
 	m_field295 = false;
-	m_field298 = zero;
-	m_field29C = zero;
-	m_field2A0 = zero;
+	m_field298 = 0;
+	m_field29C = 0;
+	m_field2A0 = 0;
 
 	if( g_inGameChatScreen == 0 )
 	{

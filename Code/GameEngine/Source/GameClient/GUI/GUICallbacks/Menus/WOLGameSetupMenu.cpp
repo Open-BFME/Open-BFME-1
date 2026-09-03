@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /Ireference/shims/campaignmanagerascii /Ireference/shims/nat /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -80,6 +80,12 @@
 //-------------------------------------------------------------------------------------------------
 class GameSpyStagingRoom;
 
+// BFME's map-transfer predicate receives the game object.  The ZH header only
+// exposes the AsciiString overload; the retail call site passes the staging
+// room itself through the BFME overload below.
+Bool WouldMapTransfer( GameInfo *game );
+#pragma comment(linker, "/alternatename:?WouldMapTransfer@@YA_NPAVGameInfo@@@Z=?j_000393fb@@YAXXZ")
+
 class BfmeVirtualGameSpyInfo
 {
 public:
@@ -133,6 +139,16 @@ public:
 	virtual void slot0BC() = 0;
 	virtual void slot0C0() = 0;
 	virtual GameSpyStagingRoom *getCurrentStagingRoom() = 0;
+	virtual void slot0C8() = 0;
+	virtual void slot0CC() = 0;
+	virtual void slot0D0() = 0;
+	virtual void slot0D4() = 0;
+	virtual void slot0D8() = 0;
+	virtual void slot0DC() = 0;
+	virtual void slot0E0() = 0;
+	virtual void slot0E4() = 0;
+	virtual void slot0E8() = 0;
+	virtual Int addText( UnicodeString message, Color c, GameWindow *win ) = 0;
 };
 
 class BfmeVirtualStagingRoom
@@ -144,6 +160,48 @@ public:
 	virtual void slot00C() = 0;
 	virtual Bool amIHost() = 0;
 	virtual Int getLocalSlotNum() = 0;
+};
+
+class BfmeStartGameInfo
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void startGame( Int gameID ) = 0;
+};
+
+// BFME's StringBase payload starts eight bytes after m_data.  The vendored
+// StringBase wrappers keep str() out of line, but this body has the retail
+// inline access at each of these call sites.
+static __forceinline const char *BfmeStartAsciiString( const AsciiString &string )
+{
+	void *data = *(void *const *)&string;
+	return data ? (const char *)data + 8 : (const char *)0x0107388B;
+}
+
+static __forceinline const unsigned short *BfmeStartUnicodeString( const UnicodeString &string )
+{
+	void *data = *(void *const *)&string;
+	return data ? (const unsigned short *)((const char *)data + 8)
+	            : (const unsigned short *)0x0107388C;
+}
+
+struct BfmeStartMapMetaDataView
+{
+	void *m_displayName;
+	void *m_description;
+	unsigned char m_extent[24];
+	Int m_numPlayers;
+	Bool m_isMultiplayer;
+	Bool m_isScenarioMP;
+	Bool m_isOfficial;
+};
+
+struct BfmeStartGlobalDataView
+{
+	unsigned char m_prefix[0xB0C];
+	Int m_netMinPlayers;
 };
 
 
@@ -902,7 +960,7 @@ static void StartPressed(void)
 	Bool allHaveMap = TRUE;
 	Int playerCount = 0;
 	Int humanCount = 0;
-	GameSpyStagingRoom *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	if (!myGame)
 		return;
 
@@ -912,13 +970,14 @@ static void StartPressed(void)
 	Bool willTransfer = TRUE;
 	if (mapData)
 	{
-		mapDisplayName.format(L"%ls", mapData->m_displayName.str());
-		willTransfer = !mapData->m_isOfficial;
+		const BfmeStartMapMetaDataView *bfmeMapData = (const BfmeStartMapMetaDataView *)mapData;
+		mapDisplayName.format(UnicodeString(L"%ls"), BfmeStartUnicodeString(*(const UnicodeString *)&bfmeMapData->m_displayName));
+		willTransfer = !bfmeMapData->m_isOfficial;
 	}
 	else
 	{
-		mapDisplayName.format(L"%hs", myGame->getMap().str());
-		willTransfer = WouldMapTransfer(myGame->getMap());
+		mapDisplayName.format(UnicodeString(L"%hs"), BfmeStartAsciiString(myGame->getMap()));
+		willTransfer = WouldMapTransfer(myGame);
 	}
 	for( int i = 0; i < MAX_SLOTS; i++ )
 	{
@@ -928,8 +987,8 @@ static void StartPressed(void)
 			if (!myGame->getSlot(i)->hasMap() && !willTransfer)
 			{
 				UnicodeString msg;
-				msg.format(TheGameText->fetch("GUI:PlayerNoMap"), myGame->getSlot(i)->getName().str(), mapDisplayName.str());
-				TheGameSpyInfo->addText(msg, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+				msg.format(TheGameText->fetch("GUI:PlayerNoMap"), BfmeStartUnicodeString(myGame->getSlot(i)->getName()), BfmeStartUnicodeString(mapDisplayName));
+				((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(msg, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 				allHaveMap = FALSE;
 			}
 		}
@@ -943,36 +1002,36 @@ static void StartPressed(void)
 
 	// Check for too many players
 	const MapMetaData *md = TheMapCache->findMap( myGame->getMap() );
-	if (!md || md->m_numPlayers < playerCount)
+	if (!md || ((const BfmeStartMapMetaDataView *)md)->m_numPlayers < playerCount)
 	{
-		if (myGame->amIHost())
+		if (((BfmeVirtualStagingRoom *)myGame)->amIHost())
 		{
 			UnicodeString text;
-			text.format(TheGameText->fetch("LAN:TooManyPlayers"), (md)?md->m_numPlayers:0);
-			TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+			text.format(TheGameText->fetch("LAN:TooManyPlayers"), (md)?((const BfmeStartMapMetaDataView *)md)->m_numPlayers:0);
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 		}
 		return;
 	}
 
 	// Check for observer + AI players
-	if (TheGlobalData->m_netMinPlayers && !humanCount)
+	if (((const BfmeStartGlobalDataView *)TheGlobalData)->m_netMinPlayers && !humanCount)
 	{
-		if (myGame->amIHost())
+		if (((BfmeVirtualStagingRoom *)myGame)->amIHost())
 		{
 			UnicodeString text = TheGameText->fetch("GUI:NeedHumanPlayers");
-			TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 		}
 		return;
 	}
 
 	// Check for too few players
-	if (playerCount < TheGlobalData->m_netMinPlayers)
+	if (playerCount < ((const BfmeStartGlobalDataView *)TheGlobalData)->m_netMinPlayers)
 	{
-		if (myGame->amIHost())
+		if (((BfmeVirtualStagingRoom *)myGame)->amIHost())
 		{
 			UnicodeString text;
 			text.format(TheGameText->fetch("LAN:NeedMorePlayers"),playerCount);
-			TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 		}
 		return;
 	}
@@ -995,13 +1054,13 @@ static void StartPressed(void)
 			}
 		}
 	}
-	if (numRandom + teams.size() < TheGlobalData->m_netMinPlayers)
+	if (numRandom + teams.size() < ((const BfmeStartGlobalDataView *)TheGlobalData)->m_netMinPlayers)
 	{
-		if (myGame->amIHost())
+		if (((BfmeVirtualStagingRoom *)myGame)->amIHost())
 		{
 			UnicodeString text;
 			text.format(TheGameText->fetch("LAN:NeedMoreTeams"));
-			TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 		}
 		return;
 	}
@@ -1010,7 +1069,7 @@ static void StartPressed(void)
 	{
 		UnicodeString text;
 		text.format(TheGameText->fetch("GUI:SandboxMode"));
-		TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 	}
 
 	if(isReady)
@@ -1030,11 +1089,11 @@ static void StartPressed(void)
 		GameSpyCloseOverlay(GSOVERLAY_BUDDY);
 
 		*TheGameSpyGame = *myGame;
-		TheGameSpyGame->startGame(0);
+		((BfmeStartGameInfo *)TheGameSpyGame)->startGame(0);
 	}
 	else if (allHaveMap)
 	{
-		TheGameSpyInfo->addText(TheGameText->fetch("GUI:NotifiedStartIntent"), GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->addText(TheGameText->fetch("GUI:NotifiedStartIntent"), GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 		PeerRequest req;
 		req.peerRequestType = PeerRequest::PEERREQUEST_UTMROOM;
 		req.UTM.isStagingRoom = TRUE;

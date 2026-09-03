@@ -1,10 +1,10 @@
 // ?parseAndAppend@Rva8CF3C0State@@QAEXPAX0PAVRva8CF3C0String@@@Z
-// partial score=0.9 date=2026-09-02
+// partial score=0.45 date=2026-09-03
 // ?parseAndAppend@Rva8CF3C0State@@QAEXPAX0PAVRva8CF3C0String@@@Z
+// partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 struct Rva8CF3C0StringBlock { unsigned short m_refs; char m_gap02[6]; };
-inline void *operator new(unsigned, void *where) { return where; }
 extern Rva8CF3C0StringBlock g_bfmeDefaultString1284;
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 extern void *(__cdecl *g_rva8CF3C0Allocate)(unsigned);
@@ -15,7 +15,7 @@ public:
 	Rva8CF3C0String()
 	{
 		m_block = &g_bfmeDefaultString1284;
-		++m_block->m_refs;
+		++g_bfmeDefaultString1284.m_refs;
 	}
 	~Rva8CF3C0String()
 	{
@@ -49,6 +49,11 @@ public:
 class Rva8CF3C0Node : public Rva8CF3C0Value
 {
 public:
+	static void *operator new(unsigned int size)
+	{
+		return g_rva8CF3C0Allocate(size);
+	}
+	static void operator delete(void *memory);
 	Rva8CF3C0Node();
 	Rva8CF3C0String m_string;
 	Rva8CF3C0Node *m_next;
@@ -75,26 +80,6 @@ public:
 	void parseAndAppend(void *, void *, Rva8CF3C0String *);
 };
 
-static Rva8CF3C0Node *rva8CF3C0AcquireNode()
-{
-	Rva8CF3C0Node *node = g_rva8CF3C0FreeNodes;
-	if (node != 0)
-	{
-		g_rva8CF3C0FreeNodes = node->m_next;
-		Rva8CF3C0Pool *pool = g_rva8CF3C0Pool;
-		if (pool->m_count >= pool->m_capacity)
-			node->m_flags &= ~0x40000000u;
-		else
-			pool->m_items[pool->m_count++] = node;
-		if (node->m_string.m_block != &g_bfmeDefaultString1284)
-			node->m_string.clear(0);
-		return node;
-	}
-
-	void *memory = g_rva8CF3C0Allocate(0x10);
-	return memory != 0 ? new(memory) Rva8CF3C0Node : 0;
-}
-
 void Rva8CF3C0State::parseAndAppend(void *owner, void *scope,
 	Rva8CF3C0String *input)
 {
@@ -104,14 +89,29 @@ void Rva8CF3C0State::parseAndAppend(void *owner, void *scope,
 	else
 		buffer = g_rva8CF3C0Duplicate((const char *)input->m_block + 8);
 
-	char *cursor = buffer;
 	Rva8CF3C0String value;
 	Rva8CF3C0String name;
+	char *cursor = buffer;
 	while ((cursor = parse(cursor, &name, &value)) != 0)
 	{
 		if (name.m_block != &g_bfmeDefaultString1284)
 		{
-			Rva8CF3C0Node *node = rva8CF3C0AcquireNode();
+			Rva8CF3C0Pool *pool = g_rva8CF3C0Pool;
+			Rva8CF3C0Node *node = g_rva8CF3C0FreeNodes;
+			if (node != 0)
+			{
+				g_rva8CF3C0FreeNodes = node->m_next;
+				if (pool->m_count >= pool->m_capacity)
+					node->m_flags &= ~0x40000000u;
+				else
+					pool->m_items[pool->m_count++] = node;
+				if (node->m_string.m_block != &g_bfmeDefaultString1284)
+					node->m_string.clear(0);
+			}
+			else
+			{
+				node = new Rva8CF3C0Node;
+			}
 			node->m_string = value;
 			append(owner, scope, &name, node, 1, 1, 0);
 		}

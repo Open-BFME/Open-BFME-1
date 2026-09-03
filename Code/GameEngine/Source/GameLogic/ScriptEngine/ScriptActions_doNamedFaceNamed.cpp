@@ -1,0 +1,89 @@
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+
+#include "StringInline.h"
+
+typedef bool Bool;
+
+class Object;
+
+enum CommandSourceType { CMD_FROM_SCRIPT = 1 };
+
+class AICommandInterface
+{
+public:
+	void aiFaceObject(Object *object, CommandSourceType source);
+};
+
+class AIUpdateInterface
+{
+public:
+	void clearWaypointQueue();
+
+private:
+	unsigned char m_pad[0x20];
+
+public:
+	AICommandInterface m_command;
+};
+
+class Object
+{
+public:
+	void leaveGroup();
+	unsigned char m_pad[0x204];
+	AIUpdateInterface *m_ai;
+};
+
+class ScriptEngine
+{
+public:
+	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
+	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
+	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
+	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
+	virtual void _16()=0; virtual void _17()=0; virtual void _18()=0; virtual void _19()=0;
+	virtual void _20()=0; virtual void _21()=0; virtual void _22()=0; virtual void _23()=0;
+	virtual void _24()=0; virtual void _25()=0;
+	virtual Object *getUnitNamed(const AsciiString &) = 0;
+};
+
+class ScriptEngineByValue
+{
+public:
+	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
+	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
+	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
+	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
+	virtual void _16()=0; virtual void _17()=0; virtual void _18()=0; virtual void _19()=0;
+	virtual void _20()=0; virtual void _21()=0; virtual void _22()=0; virtual void _23()=0;
+	virtual void _24()=0; virtual void _25()=0; virtual void _26()=0;
+	virtual Object *getUnitNamedByValue(AsciiString name) = 0;
+};
+
+extern ScriptEngine *TheScriptEngine;
+
+class ScriptActions
+{
+protected:
+	void doNamedFaceNamed(const AsciiString &, const AsciiString &);
+};
+
+// ?doNamedFaceNamed@ScriptActions@@IAEXABVAsciiString@@0@Z
+void ScriptActions::doNamedFaceNamed(const AsciiString &unitName, const AsciiString &faceUnitName)
+{
+	Object *obj = TheScriptEngine->getUnitNamed(unitName);
+	if (obj)
+	{
+		Object *faceObj = ((ScriptEngineByValue *)TheScriptEngine)->getUnitNamedByValue(faceUnitName);
+		if (faceObj)
+		{
+			AIUpdateInterface *ai = obj->m_ai;
+			if (ai)
+			{
+				ai->clearWaypointQueue();
+				obj->leaveGroup();
+				ai->m_command.aiFaceObject(faceObj, CMD_FROM_SCRIPT);
+			}
+		}
+	}
+}
