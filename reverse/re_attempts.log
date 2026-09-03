@@ -9020,3 +9020,4 @@ _luaV_execute	0x00997C80	2924	partial	instruction skeleton now aligns 1:1 with r
 RequestGameStart@LANAPI	0x00684E70	137	partial	probe EXACT 137/137; add_match fails E8 rel32 08 vs 01 under build.py ILT pin score=0.97 stash=reverse/attempts/0x00684e70.cpp
 ?countVoters@BFMEDisconnectManager@@QAEHPAX@Z	0x0066BB60	71	landed	stale partial superseded; body in BFMEDisconnectManager_countVoters.cpp
 ?countVoters@BFMEDisconnectManager@@QAEHPAX@Z	0x0066BB60	71	void	partial stash removed; body landed
+?bfmeSetup@Gen_002214F0@@QAEXPAVBfmeThingGJ@@H0@Z	0x002214F0	62	partial	max-by-reference floor-at-one is byte-identical through the lea/jg select; remaining wall is a register-hoist: retail loads a->+0x74 into edx before the a4 store (8b 52 74 then 89 81 a4), this compile stores a4 first then loads the field into eax. Adding a named first local breaks the max pattern (cmp/store swap). t=25min model=grok-4.6 score=0.79 stash=reverse/attempts/0x002214f0.cpp
