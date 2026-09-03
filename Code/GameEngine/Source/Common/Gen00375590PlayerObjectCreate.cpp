@@ -1,10 +1,10 @@
-// ?d_00375590@@YAXXZ
-// partial score=0.98 date=2026-09-03
 // ?createPlayerObject@Gen_00375590@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+//
+// EntryStorage ctor is retail's ILT at 0x0000504C (body 0x00190340); declare
+// only and pin — a same-TU definition blocks add_match.
 
 extern void j_0003f0bc();
-extern void j_0000504c();
 extern void j_0000bf2d();
 extern void j_00004e35();
 
@@ -16,28 +16,9 @@ struct Gen00375590GetReceiver
 class Gen00375590EntryStorage
 {
 public:
-	__declspec(noinline) Gen00375590EntryStorage(int value);
+	Gen00375590EntryStorage(int value);
 	unsigned char m_unmodelled_00[0x88];
 };
-
-struct Gen00375590ConstructorReceiver
-{
-	Gen00375590EntryStorage *construct(int);
-};
-
-Gen00375590EntryStorage::Gen00375590EntryStorage(int value)
-{
-	typedef Gen00375590EntryStorage *
-		(Gen00375590ConstructorReceiver::*Initialize)(int);
-	union
-	{
-		void *asVoid;
-		Initialize asMember;
-	} initializeFunction;
-	initializeFunction.asVoid = (void *)j_0000504c;
-	(reinterpret_cast<Gen00375590ConstructorReceiver *>(this)->*
-		initializeFunction.asMember)(value);
-}
 
 class Gen00375590Entry
 {

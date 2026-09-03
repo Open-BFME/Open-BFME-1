@@ -83597,3 +83597,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??A?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x00018818,call-site operator[] for Gen_002281B0::bfmeUpdate; ILT 0x00018818 -> 0x00227110
 ?initiateIntentToDoSpecialPower@SpecialPowerModule@@QAE_NPBVObject@@PBVCoord3D@@PBVWaypoint@@I@Z,0x000361AB,Open-BFME6 ILT of 0x0026A550 intent
 ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z,0x000251AD,Open-BFME6 ILT of 0x0026A550 finish follow
+??0Gen00375590EntryStorage@@QAE@H@Z,0x0000504C
