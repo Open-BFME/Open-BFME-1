@@ -30,12 +30,16 @@ public:
 	void Release_Ref(void);
 };
 
+class SkyBoxRenderObject
+{
+public:
+	void Release_Ref(void);
+};
+
 #define REF_PTR_RELEASE(x) { if (x) { x->Release_Ref(); x = 0; } }
 
 void W3DRadarResetLock(void);
 void BFME_DX8_Thread_Assert(void);
-void j_00048108(void);
-
 class WaterDestructorGuard
 {
 public:
@@ -63,7 +67,7 @@ private:
 	unsigned char m_before24c[0x110];
 	TextureBaseClass *m_reflectionTexture;
 	unsigned char m_before254[4];
-	void *m_skyBox;
+	SkyBoxRenderObject *m_skyBox;
 	unsigned char m_before2b0[0x58];
 	WaterComRef *m_waterTexture0;
 	WaterComRef *m_waterTexture1;
@@ -89,14 +93,14 @@ WaterRenderObjClass::~WaterRenderObjClass(void)
 		m_indexBuffer = 0;
 	}
 
-	TextureBaseClass *reflection = m_reflectionTexture;
-	if (reflection != 0) {
+	if (m_reflectionTexture != 0) {
+		TextureBaseClass *reflection = m_reflectionTexture;
 		if (reflection != 0)
 			reflection->Release_Ref();
 		m_reflectionTexture = 0;
 	}
 	if (m_skyBox != 0)
-		j_00048108();
+		m_skyBox->Release_Ref();
 
 	if (m_bumpTexture0 != 0) {
 		m_bumpTexture0->Release();
