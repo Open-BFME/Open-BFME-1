@@ -221,7 +221,6 @@ BFME_FLAG_AND_OFFSET( Rva0073A330, 12 )
 	}
 
 BFME_CLEAR_TWO_INTS( Rva000B8E50, 0x0c, 0x24 )
-BFME_CLEAR_TWO_INTS( Rva00490570, 0x08, 0x10 )
 
 // Two adjacent ints, the HIGHER one written first -- source order again.
 class Rva006E1950
