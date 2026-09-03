@@ -83592,3 +83592,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeParseA450@@YAXXZ,0x00CACBE0,parse proc for Rva0022A450 runtime FieldParse
 ?g_bfmeUserA450@@3QBDB,0x00852E00,userData pointer for Rva0022A450 runtime FieldParse
 ?b_00451460@@YAXXZ,0x00451460,ILT target of j_000139e9; MapCache::getUserMapDir body
+??$find@H@?$_Rb_tree@HU?$pair@$$CBHH@_STL@@U?$_Select1st@U?$pair@$$CBHH@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHH@_STL@@@2@@1@ABH@Z,0x000346DA,call-site find for Gen_002281B0::bfmeUpdate; ILT 0x000346DA -> 0x00223160
+?erase@?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHH@_STL@@@2@@2@@Z,0x0002BDA0,call-site erase for Gen_002281B0::bfmeUpdate; ILT 0x0002BDA0 -> 0x00223610
+??A?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x00018818,call-site operator[] for Gen_002281B0::bfmeUpdate; ILT 0x00018818 -> 0x00227110
