@@ -1,16 +1,15 @@
 // ?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ
-// partial score=0.94 date=2026-08-28
+// partial score=0.85 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME: GeometryInfo::getMaxHeightAbovePosition, retail 0x0087E000,
-// 101 bytes.
+// Open-BFME: GeometryInfo::getMaxHeightBelowPosition, retail 0x0087E070,
+// 84 bytes.
 //
 // BFME's GeometryInfo holds a run of shapes, not one: the body walks
-// [this+0x2C, this+0x30) with a 0x24 stride and answers with the tallest
-// enabled shape's height above the object's position.
+// [this+0x2C, this+0x30) with a 0x24 stride and answers with the deepest
+// enabled shape's extent below the object's position.
 //
-// The shape's own contribution is the reference's geometry switch -- a sphere
-// (type 0) contributes its major radius, a cylinder or a box (1 and 2) its
-// height, anything else nothing -- and the z offset at +0x18 is added to it.
+// Only a sphere (type 0) extends below, contributing its major radius;
+// anything else contributes nothing.
 //
 // The running maximum is a select, not a branch: MSVC picks the address of the
 // candidate or of the running best and reloads through it, which is what the
@@ -33,10 +32,10 @@ enum GeometryType
 	GEOMETRY_BOX
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 public:
-	Real getMaxHeightAbovePosition(void) const;
 	Real getMaxHeightBelowPosition(void) const;
 
 private:
@@ -57,38 +56,10 @@ private:
 	BfmeShape *m_shapesEnd;						// this+0x30
 };
 
-Real GeometryInfo::getMaxHeightAbovePosition(void) const
-{
-	Real best = 0.0f;
-
-	for (const BfmeShape *shape = m_shapes; shape != m_shapesEnd; ++shape)
-	{
-		if (!shape->m_enabled)
-			continue;
-
-		Real height = 0.0f;
-		switch (shape->m_type)
-		{
-			case GEOMETRY_SPHERE:
-				height = shape->m_majorRadius;
-				break;
-			case GEOMETRY_CYLINDER:
-			case GEOMETRY_BOX:
-				height = shape->m_height;
-				break;
-		}
-
-		height += shape->m_offsetZ;
-		best = bfmeMax(height, best);
-	}
-
-	return best;
-}
-
 Real GeometryInfo::getMaxHeightBelowPosition(void) const
 {
-	Real depth = 0.0f;
 	Real best = 0.0f;
+	Real depth = 0.0f;
 
 	for (const BfmeShape *shape = m_shapes; shape != m_shapesEnd; ++shape)
 	{
@@ -100,8 +71,9 @@ Real GeometryInfo::getMaxHeightBelowPosition(void) const
 			case GEOMETRY_SPHERE:
 				depth = shape->m_majorRadius;
 				break;
-			case GEOMETRY_CYLINDER:
+
 			case GEOMETRY_BOX:
+			case GEOMETRY_CYLINDER:
 			default:
 				depth = 0.0f;
 				break;
