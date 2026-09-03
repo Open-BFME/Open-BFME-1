@@ -14,6 +14,9 @@ __declspec(dllimport) char *__cdecl strncpy(char *destination, const char *sourc
 __declspec(dllimport) unsigned int __cdecl strcspn(const char *s, const char *reject);
 __declspec(dllimport) void *__cdecl memset(void *dst, int value, unsigned int size);
 __declspec(dllimport) int __cdecl atoi(const char *text);
+__declspec(dllimport) int __stdcall EnumSystemLocalesA(
+    int (__stdcall *callback)(char *), unsigned long flags);
+int __stdcall EnumLocalesProcA(char *);
 
 typedef struct _LOCALECONV {
     const char *name;
@@ -23,6 +26,11 @@ typedef struct _LOCALECONV {
 /* Retail tables at 0x012C80D0 (65) and 0x012C82D8 (23). */
 extern LOCALECONV __rg_language[];
 extern LOCALECONV __rg_country[];
+
+static int __FindFlag;
+static LCID __FndLCID;
+static const char *__FndLang;
+static const char *__FndCtry;
 
 #pragma auto_inline(off)
 
@@ -73,6 +81,8 @@ static const char *__ConvertName(const char *lname, LOCALECONV *table, int table
     return lname;
 }
 
+/* Retail 0x0084E0C0 — keep body non-trivial so the call is not inlined; first
+ * arg arrives in EAX under the same-TU private convention. */
 static int __ParseLocaleString(const char *lname, char *lang, char *ctry, char *page)
 {
     int param = 0;
@@ -144,13 +154,24 @@ static int __ParseLocaleString(const char *lname, char *lang, char *ctry, char *
     return 0;
 }
 
-/* Declared, defined later — private-convention sibling of the wrapper. */
-static int __GetLCID(const char *lang, const char *ctry, LCID *lcid);
+static int __GetLCID(const char *lang, const char *ctry, LCID *lcid)
+{
+    __FindFlag = 0;
+    __FndLang = lang;
+    __FndCtry = ctry;
+    EnumSystemLocalesA(EnumLocalesProcA, 1);
+    if (__FindFlag == 0)
+        return -1;
+    *lcid = __FndLCID;
+    return 0;
+}
 
 static int __GetLCIDFromName(const char *lname, LCID *lcid, char *cp)
 {
-    char lang[65];
+    /* Retail stack: ctry @ +0x10, lang @ +0x58, page @ +0x08 — declare so
+     * first-use memset hits lang (high) then ctry (low). */
     char ctry[65];
+    char lang[65];
     char page[6];
     int result = 0;
 
@@ -169,19 +190,11 @@ static int __GetLCIDFromName(const char *lname, LCID *lcid, char *cp)
         *lcid = 0x400;
     else if (ctry[0] == 0) {
         result = __GetLCID(__ConvertName(lang, __rg_language, 0x41), 0, lcid);
-        if (result != 0) {
-            if (lang[0] == 'C' && lang[1] == 0) {
-                *lcid = 0x400;
-                result = 0;
-            }
-        }
     } else {
         result = __GetLCID(
             __ConvertName(lang, __rg_language, 0x41),
             __ConvertName(ctry, __rg_country, 0x17),
             lcid);
-        if (result != 0)
-            result = __GetLCID(lang, ctry, lcid);
     }
 
     if (result == 0) {
@@ -189,10 +202,8 @@ static int __GetLCIDFromName(const char *lname, LCID *lcid, char *cp)
             my_ltoa(__intGetACP(*lcid), cp);
         else if (lstrcmpiA(page, "OCP") == 0)
             my_ltoa(__intGetOCP(*lcid), cp);
-        else {
+        else
             strncpy(cp, page, 5);
-            cp[5] = 0;
-        }
     }
     return result;
 }
@@ -228,13 +239,4 @@ char *TranslateToSystemKeep(const char *lname, char *buf)
 int GetLCIDFromNameKeep(const char *lname, LCID *lcid, char *cp)
 {
     return __GetLCIDFromName(lname, lcid, cp);
-}
-
-/* Placeholder — must exist for link of this probe TU. */
-static int __GetLCID(const char *lang, const char *ctry, LCID *lcid)
-{
-    (void)lang;
-    (void)ctry;
-    *lcid = 0x400;
-    return 0;
 }
