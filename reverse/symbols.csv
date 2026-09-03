@@ -1997,6 +1997,8 @@ name,address,notes
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0002AA4A,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0003FB61,pinharvest x1 (thunk)
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x00046DE9,pinharvest x1 (thunk)
+??0AIPlayer@@QAE@PAVPlayer@@@Z,0x0002D731,Player setPlayerType constructs the 0x78-byte base AI through this retail ILT
+??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z,0x00004ADE,Player setPlayerType constructs the 0xA0-byte skirmish AI through this retail ILT
 ??0AIUpdateModuleData@@QAE@XZ,0x00010B2C,derived-ICF
 ??0ALU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,AudioLoopUpgrade ModuleFactory body calls the shared ObjectModule constructor ILT
 ??0ALU_UpgradeMux@@QAE@XZ,0x0003D24E,AudioLoopUpgrade calls the independently matched UpgradeMux constructor ILT
