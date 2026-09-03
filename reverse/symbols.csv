@@ -83613,3 +83613,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z,0x0003E8D3,ILT to AIGuardRetaliateMachine ctor 0x0015F240; retail onEnter@AIGuardRetaliateState call
 ??0AITNGuardMachine@@QAE@PAVObject@@@Z,0x0000715D,ILT to AITNGuardMachine ctor 0x0018AFB0; retail onEnter@AITunnelNetworkGuardState call
 ??0AIDockMachine@@QAE@PAVObject@@@Z,0x00014F15,ILT to AIDockMachine ctor 0x0014F7C0; retail onEnter@AIDockState call
+?damageTeamMembers@Team@@QAE_NM@Z,0x0000D148,ILT to Team::damageTeamMembers 0x000F33F0; TeamPrototype::damageTeamMembers at 0x000F41A0 calls it per instance
