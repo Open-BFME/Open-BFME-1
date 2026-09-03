@@ -9618,6 +9618,7 @@ name,address,notes
 ??_7BfmeOwnVSV@@6B@,0x010EC778,Open-BFME5 retail vftable stored by the 0x003B8090 constructor
 ??_7BfmeOwnVSW@@6B@,0x01075D50,Open-BFME5 retail vftable stored by the 0x0061F0C0 constructor
 ??_7BfmeOwnVTU@@6B@,0x01143B3C,Open-BFME5 retail vftable stored by the 0x009CC220 constructor
+??_7BfmeOwnVTY@@6B@,0x010E7688,Open-BFME5 retail vftable stored by the 0x00339DA0 constructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73113,6 +73114,7 @@ name,address,notes
 ?bfmeAssignVSJ@BfmeStrVSJ@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSM@BfmeStrVSM@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSO@BfmeStrVSO@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeAssignVTY@BfmeStrVTY@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAt1079@BfmeL1079@@QAEPAVBfmeM1079@@H@Z,0x0001EC18,pin
 ?bfmeAt1238B@BfmeS1238@@QAEPAV1@H@Z,0x0089CC30,pin
 ?bfmeAt1238C@BfmeU1238@@QAEPAVBfmeS1238@@H@Z,0x008BD1D0,pin
@@ -73461,6 +73463,7 @@ name,address,notes
 ?bfmeClearVSW@BfmeStrVSW@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSY@BfmeStrVSY@@QAEXXZ,0x00887940,pin
 ?bfmeClearVTU@BfmeStrVTU@@QAEXXZ,0x00887940,pin
+?bfmeClearVTY@BfmeStrVTY@@QAEXXZ,0x008881D0,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
