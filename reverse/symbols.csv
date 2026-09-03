@@ -83598,3 +83598,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?initiateIntentToDoSpecialPower@SpecialPowerModule@@QAE_NPBVObject@@PBVCoord3D@@PBVWaypoint@@I@Z,0x000361AB,Open-BFME6 ILT of 0x0026A550 intent
 ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z,0x000251AD,Open-BFME6 ILT of 0x0026A550 finish follow
 ??0Gen00375590EntryStorage@@QAE@H@Z,0x0000504C
+?after@Rva0026BF40Primary@@QAEXPBVCoord3D@@@Z,0x00033C62,Open-BFME6 ILT of 0x0026B9D0
