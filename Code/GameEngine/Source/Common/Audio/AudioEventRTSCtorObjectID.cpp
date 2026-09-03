@@ -1,9 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: AudioEventRTS(const AsciiString &, ObjectID), retail 0x000B4350,
-// 188 bytes. Named by the byte-true call in
-// FlammableUpdateStartBurningSoundThunk.cpp
-// (??0AudioEventRTS@@QAE@ABVAsciiString@@W4ObjectID@@@Z).
+// Open-BFME5: AudioEventRTS constructors.
+//   (const AsciiString &, ObjectID)          retail 0x000B4350, 188B
+//     named by FlammableUpdateStartBurningSoundThunk.cpp
+//   (const AsciiString &, const Coord3D *, int)  retail 0x000B2E10, 180B
+//     named by ScriptActions_doPlaySoundEffectAt_Thunk.cpp
 //
 // Shared field init is the body at 0x000B24C0 (ILT 0x0002E68B). After the name
 // is assigned, +0x08 is released as a refcounted pointer -- the same
@@ -76,6 +77,7 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
+	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
 	virtual ~AudioEventRTS();
 
 	void commonInit(void);
@@ -93,7 +95,9 @@ private:
 	unsigned int m_timeOfDay;		// +0x28
 	ObjectID m_objectID;			// +0x2C
 	int m_ownerType;				// +0x30
-	char m_34[0x6C - 0x34];
+	Coord3D m_position;				// +0x34
+	unsigned char m_flag40;			// +0x40
+	char m_41[0x6C - 0x41];
 	AsciiString m_tail;				// +0x6C
 };
 
@@ -117,4 +121,18 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, ObjectID ownerID)
 	Coord3D pos;
 	resolveOwnerPosition(&pos, reinterpret_cast<bool *>(
 		reinterpret_cast<char *>(&pos) + 0x1C));
+}
+
+// ??0AudioEventRTS@@QAE@ABVAsciiString@@PBUCoord3D@@H@Z
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra)
+{
+	commonInit();
+
+	m_eventName = eventName;
+	m_eventInfo.clear();
+
+	m_position = *positionOfAudio;
+	m_ownerType = 0;
+	m_flag40 = 1;
+	m_timeOfDay = static_cast<unsigned int>(extra);
 }
