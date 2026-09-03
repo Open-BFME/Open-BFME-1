@@ -70,6 +70,57 @@ public:
 	BfmeElem20 *m_bfmeEnd;
 };
 
+class BfmeFlag16
+{
+public:
+	char m_bfmeHead[0x0C];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x03];
+};
+
+class BfmeFlag16Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag16 *m_bfmeBegin;
+	BfmeFlag16 *m_bfmeEnd;
+};
+
+class BfmeFlag24
+{
+public:
+	char m_bfmeHead[0x08];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x0F];
+};
+
+class BfmeFlag24Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag24 *m_bfmeBegin;
+	BfmeFlag24 *m_bfmeEnd;
+};
+
+class BfmeFlag32
+{
+public:
+	char m_bfmeHead[0x1C];
+	unsigned char m_bfmeFlag;
+	char m_bfmeTail[0x03];
+};
+
+class BfmeFlag32Vector
+{
+public:
+	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
+
+	BfmeFlag32 *m_bfmeBegin;
+	BfmeFlag32 *m_bfmeEnd;
+};
+
 class BfmeElem8
 {
 public:
@@ -172,7 +223,15 @@ public:
 	BfmeElem4Vector m_bfmeNames;
 	char m_bfmeMiddle[0x6C - 0x4C];
 	BfmeElem20Vector m_bfmeTable;
-	char m_bfmeMiddleB[0xB4 - 0x74];
+	char m_bfmePad74[0x04];
+	BfmeFlag32Vector m_bfmeFlag32;				// +0x78
+	char m_bfmePad80[0x04];
+	BfmeFlag24Vector m_bfmeFlag24;				// +0x84
+	char m_bfmePad8C[0x04];
+	BfmeElem20Vector m_bfmeFlag20;				// +0x90
+	char m_bfmePad98[0x04];
+	BfmeFlag16Vector m_bfmeFlag16;				// +0x9C
+	char m_bfmeMiddleB[0xB4 - 0xA4];
 	BfmeElem16Vector m_bfmeQueue;
 	char m_bfmeMiddleC[0xC0 - 0xBC];
 	BfmeElem12Vector m_bfmeOuter;
@@ -305,6 +364,28 @@ void Glo012F1024Item::j_00040c32(void)
 		BfmeElem16 *position = m_bfmeQueue.m_bfmeBegin + index;
 		g_bfmeGlobal_012f706c->bfmeGoDGE(position, (char *)position + 4);
 	}
+}
+
+// ?j_0000ca59@Glo012F1024Item@@QAE_NXZ
+bool Glo012F1024Item::j_0000ca59(void)
+{
+	for (unsigned int index = 0; index < m_bfmeFlag16.bfmeSize(); ++index)
+		if (m_bfmeFlag16.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag20.bfmeSize(); ++index)
+		if (m_bfmeFlag20.m_bfmeBegin[index].m_bfmeByte != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag32.bfmeSize(); ++index)
+		if (m_bfmeFlag32.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	for (unsigned int index = 0; index < m_bfmeFlag24.bfmeSize(); ++index)
+		if (m_bfmeFlag24.m_bfmeBegin[index].m_bfmeFlag != 0)
+			return true;
+
+	return false;
 }
 
 // ?j_0002d3e4@Glo012F1024Item@@QAEXXZ
