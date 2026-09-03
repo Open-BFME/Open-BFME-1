@@ -83557,3 +83557,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BfmeSubA@@QAE@XZ,0x00887940,Open-BFME5 ICF StringBase<char> release used by Glo012F1024Item::j_0003152a
 ?j_00019c36@Glo012F1028Sub@@QAEXAAVBfmeSubA@@H@Z,0x00019C36,Open-BFME5 ILT the Glo012F1028 sub-object consumes each early-vector string
 ?bfmeCall3426b@BfmeGlobal_012f1024@@QAEXPAX00@Z,0x0003426B,call-site callee of Glo012F1024Item::j_00010bcc; global 0x012F1024 thiscall with three stack args; ILT 0x0003426B -> 0x003B2D60
+?dlink_next_TeamMemberList@Object@@QBEPAV1@XZ,0x00001140,Object DLINK PMF pfn used by Team member-list walks; ILT 0x00001140 -> 0x000C8980
