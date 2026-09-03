@@ -83661,3 +83661,4 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?find@StagingRoomMap@@QAE?AUStagingRoomMapIterator@@ABH@Z,0x0001990C,ILT of StagingRoomMap int-to-GameSpyStagingRoom find used by CustomMatch 0x0053AB30
 ?applyStagingRoomRefresh@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x00022999,ILT of CustomMatch staging-list refresh callee used by 0x00544DD0
 ?clearLocalStagingState@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x0001118F,ILT to 0x005392B0 used by CustomMatch leaveStaging 0x00539750
+?getSlot@GameSpyStagingRoom@@QAEPAVGameSlot@@H@Z,0x0001EC18,ILT of GameInfo getSlot used by CustomMatch getHostPlayerName 0x00538F90
