@@ -83582,3 +83582,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
 ?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
 ?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
+?bindShown@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0046DA70,WindowManager helper that showAptScreen forwards the named holder to after the vector push_back
+?bindShownWithArg@WindowManager@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x0046DBC0,WindowManager helper that showAptScreenWithArg forwards the named holder and void arg to after the vector push_back
