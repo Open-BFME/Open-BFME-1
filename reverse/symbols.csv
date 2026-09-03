@@ -83635,3 +83635,7 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ??$__write_integer_backward@J@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
 ?__write_integer_backward@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
 ??1facet@locale@_STL@@MAE@XZ,0x00832090,STLport locale::facet destructor; callee of messages dtors 0x00848A30/0x00848B20
+?count@XmlNameSlotList@@QAEHXZ,0x0035EF50,pin for Rva002E2970 applyNameFlags
+?tagAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF60,pin for Rva002E2970 applyNameFlags
+?nameAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF90,pin for Rva002E2970 applyNameFlags
+?finish@XmlNameSlotList@@QAEXXZ,0x0035EE70,pin for Rva002E2970 applyNameFlags
