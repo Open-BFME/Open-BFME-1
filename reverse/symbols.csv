@@ -77106,6 +77106,7 @@ name,address,notes
 ?findTemplate@BFMEThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,INI retail ThingFactory facade
 ?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,BFME one-arg ThingFactory findTemplate; ScriptActions doAddCommandBarButton facade
 ?findTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x00028560,SpawnBehavior retail findTemplate ILT
+?findAttackInfo@ScriptEngine@@AAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z,0x00002969,Open-BFME5 ILT to ScriptEngine::findAttackInfo body 0x0033DBF0
 ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z,0x0000DBD9,first of the find-then-create pair in the Terrain block parser; the second call on the same receiver is the already-matched newTerrain and ZH declares findTerrain immediately above it with the same signature
 ?findUpdateModule@Object@@QAEPAVOCLUpdate@@W4NameKeyType@@@Z,0x0002AE23,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 looks the OCLUpdate module up through it
 ?findUpdateModule@Object@@QAEPAVSupplyWarehouseDockUpdate@@H@Z,0x0002AE23,ScriptActions warehouse-value TU view of the same Object method ILT
@@ -78834,6 +78835,7 @@ name,address,notes
 ?getModelVertices@W3DBridgeGetModelVerticesShim@@QAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x006D7EA0,W3DBridge incremental-link thunk target through a TU-local forwarding shim
 ?getMoodMatrixActionAdjustment@AIUpdateInterface@@QBEIW4MoodMatrixAction@@@Z,0x0002B30F,AI idle mood adjustment thunk
 ?getMoodMatrixValue@AIUpdateInterface@@QBEIXZ,0x0001BB3F,AIUpdate retail caller and pristine mood-filter body identify ILT to 0x00279780
+?getName@AttackPriorityInfo@@QBE?AVAsciiString@@XZ,0x00047AFF,Open-BFME5 ILT to the 32-byte AttackPriorityInfo name getter body 0x001C2E20
 ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
 ?getNATPortAllocationScheme@FirewallHelperClassGetNATPortAllocationSchemeShim@@QAEHHPAG0AA_N1@Z,0x0066E870,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?getName@Anim2DTemplate@@QBE?AVAsciiString@@XZ,0x00012E72,ILT thunk to the Anim2D template name accessor
@@ -81599,6 +81601,7 @@ name,address,notes
 ?setPosition@RadiusDecal@@QAEXABUCoord3D@@@Z,0x00007E50
 ?setPosition@StructureCollapseRetailObject@@QAEXABVStructureCollapsePosition@@_N@Z,0x0001621B,StructureCollapse BFME position setter ILT thunk
 ?setPosition@Thing@@QAEXPBUCoord3D@@@Z,0x0003A1A7,GarrisonContain removal call resolves through the retail ILT to body 0x00132CE0
+?setPriority@AttackPriorityInfo@@QAEXPBVThingTemplate@@H@Z,0x0001600E,Open-BFME5 ILT to AttackPriorityInfo::setPriority body 0x0034ECE0
 ?setPrep@Dict@@AAEPAUDictPair@1@W4NameKeyType@@W4DataType@1@@Z,0x00042749
 ?setProgress@NetFileProgressCommandMsg@@QAEXH@Z,0x000153B6,ILT thunk; real body 0xA740B0
 ?setQuitting@Connection@@QAEXI@Z,0x00661CA0,ZH setQuitting plus a quit-frame argument: stores arg at Connection+0 (the -1 sentinel doSend/sendNetCommandMsg test) and timeGetTime at +4; callers beginPlayerLeave 0x00667371/0x00667393 pass TheGameLogic->getFrame()+1 via ILT 0x0004845A
