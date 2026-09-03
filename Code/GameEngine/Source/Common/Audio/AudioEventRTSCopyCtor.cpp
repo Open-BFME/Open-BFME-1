@@ -1,7 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: AudioEventRTS copy constructor, retail 0x000B2FB0, 451B.
-// ILT 0x00047B27 used by Player::disableRadar / enableRadar MiscAudio by-value.
+// Open-BFME5: AudioEventRTS copy constructor (0x000B2FB0, 451B) and
+// operator= (0x000B2690, 360B). Copy-ctor ILT 0x00047B27 (Player radar
+// MiscAudio by-value). Assign ILT 0x0001F753. The ledger name
+// ??4AudioEventRTS@@QAEAAV0@ABV0@@Z is already a StringBase::set alias
+// at 0x00887C90, so this row is ?assign@ with object-symbol= to the
+// compiled operator=.
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *lpAddend);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
@@ -72,6 +76,7 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AudioEventRTS &right);
+	AudioEventRTS &operator=(const AudioEventRTS &right);
 	virtual ~AudioEventRTS();
 
 private:
@@ -152,4 +157,55 @@ AudioEventRTS::AudioEventRTS(const AudioEventRTS &right)
 		m_objectID = right.m_objectID;
 	else if (m_ownerType == 5)
 		m_objectID = right.m_objectID;
+}
+
+// ??4AudioEventRTS@@QAEAAV0@ABV0@@Z
+AudioEventRTS &AudioEventRTS::operator=(const AudioEventRTS &right)
+{
+	m_filenameToLoad = right.m_filenameToLoad;
+	m_eventInfo = right.m_eventInfo;
+	m_playingHandle = right.m_playingHandle;
+	m_killThisHandle = right.m_killThisHandle;
+	m_eventName = right.m_eventName;
+	m_pitchShift = right.m_pitchShift;
+	m_volume = right.m_volume;
+	m_ownerType = right.m_ownerType;
+	m_timeOfDay = right.m_timeOfDay;
+	m_flag41 = right.m_flag41;
+	m_flag42 = right.m_flag42;
+	m_float4C = right.m_float4C;
+	m_float50 = right.m_float50;
+	m_int58 = right.m_int58;
+	m_int5C = right.m_int5C;
+	m_int54 = right.m_int54;
+	m_attackName = right.m_attackName;
+	m_decayName = right.m_decayName;
+	m_int60 = right.m_int60;
+	m_flag43 = right.m_flag43;
+	m_flag44 = right.m_flag44;
+	m_flag45 = right.m_flag45;
+	m_flag47 = right.m_flag47;
+	m_flag48 = right.m_flag48;
+	m_flag49 = right.m_flag49;
+	m_flag46 = right.m_flag46;
+	m_loopCount = right.m_loopCount;
+	m_int68 = right.m_int68;
+	m_tail = right.m_tail;
+	m_position.x = right.m_position.x;
+	m_position.y = right.m_position.y;
+	m_position.z = right.m_position.z;
+	m_flag40 = right.m_flag40;
+	if (m_ownerType == 1)
+	{
+		m_objectID = right.m_objectID;
+		return *this;
+	}
+	if (m_ownerType == 2)
+	{
+		m_objectID = right.m_objectID;
+		return *this;
+	}
+	if (m_ownerType == 5)
+		m_objectID = right.m_objectID;
+	return *this;
 }
