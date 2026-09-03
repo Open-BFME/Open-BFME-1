@@ -9309,14 +9309,7 @@ name,address,notes
 ??1_bfme_AptGameWindow@@UAE@XZ,0x00465430,dtor twin of 0x00465310: restores vtables 0x010F711C/0x010F7118 releases the AsciiString at +0x24c calls 0x00464E20 then ??1GameWindow ILT 0x0002C98F; deleting dtor 0x00465500; ILT 0x000204C3
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
 ??1locale@_STL@@QAE@XZ,0x00832170,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
-??2@YAPAXI@Z,0x0082E540,0x82E540 is really __new_alloc::allocate (SEH body); stlport static-lib compiles the list-node alloc as operator new
-??2@YAPAXI@Z,0x00873940,pool-new callsite target (per-copy allocator)
-??2@YAPAXI@Z,0x00881EB0,pool-new callsite target (per-copy allocator)
 ??2@YAPAXI@Z,0x00881F30,operator new body
-??2@YAPAXI@Z,0x00881F70,operator new[] body used by WaterRenderObjClass::enableWaterGrid
-??2@YAPAXI@Z,0x009A5920,pool-new callsite target (per-copy allocator)
-??2@YAPAXI@Z,0x009F6C34,pool-new callsite target (thunk)
-??2@YAPAXI@Z,0x009F6FAC,pool-new callsite target (thunk)
 ??2Upgrade@@SAPAXI@Z,0x00881F30,Player::addUpgrade retail class allocator call
 ??3@YAXPAX@Z,0x00881EB0
 ??3@YAXPAX@Z,0x00881EF0,site-decoded x7 (body)
