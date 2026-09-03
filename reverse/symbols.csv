@@ -73302,6 +73302,7 @@ name,address,notes
 ?bfmeCb1098@@YAXXZ,0x00012D69,pin
 ?bfmeCb974D@@YGXXZ,0x0024F2D0,pin
 ?bfmeCbVJM@@YGXXZ,0x007F6870,pin
+?bfmeCellRangeVRA@BfmePartVRA@@QAEXPAPAVBfmeCellVRA@@0HHH@Z,0x008F7D10,pin
 ?bfmeCellUpdateVNR@BfmeCellVNR@@QAEXPAVBfmeMgrVNR@@H@Z,0x008FC300,pin
 ?bfmeChanged@Gen_00411DD0@@AAEXXZ,0x000200D1,Open-BFME5 the member the change-setter at 0x00411DD0 calls
 ?bfmeChanged@Gen_0041B0D0@@AAEXXZ,0x0002E564,Open-BFME5 the member the change-setter at 0x0041B0D0 calls
@@ -75572,6 +75573,7 @@ name,address,notes
 ?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin
+?bfmeTouchVRA@BfmeCellVRA@@QAEXPAVBfmePartVRA@@H@Z,0x008FC300,pin
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
