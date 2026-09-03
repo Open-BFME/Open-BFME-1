@@ -150,13 +150,12 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 		waterZ = 0.0f;
 	}
 
-	BfmeWaterGridNode *node;
 	BfmeWaterGridPoint3 gridLocation;
+	BfmeWaterGridNode *node;
 	BfmeWaterGridList *gridList = *(BfmeWaterGridList * volatile *)&m_waterGridList;
-
-	gridLocation.X = x;
-	node = gridList->m_head;
 	gridLocation.Y = y;
+	node = gridList->m_head;
+	gridLocation.X = x;
 	gridLocation.Z = 0.0f;
 	if (node != (BfmeWaterGridNode *)gridList) {
 		while ((node = node->m_next) != (BfmeWaterGridNode *)gridList) {
@@ -168,9 +167,7 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 	node = mainList->m_head;
 	while (node != (BfmeWaterGridNode *)mainList) {
 		grid = node->m_grid;
-		const BfmeWaterGridPoint2 *point =
-			(const BfmeWaterGridPoint2 *)&gridLocation;
-		if (grid->containsPoint(point))
+		if (grid->containsPoint((const BfmeWaterGridPoint2 *)&gridLocation))
 			goto gridHit;
 		node = node->m_next;
 	}

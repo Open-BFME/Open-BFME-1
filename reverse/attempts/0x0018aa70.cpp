@@ -19,13 +19,13 @@ class GameLogic
 {
 public:
     Object *findObjectByID( ObjectID id );
-    unsigned char m_fields[0x3c];
-    unsigned int m_frame;
-    unsigned int getFrame() const
+    unsigned int getFrame() const volatile
     {
-        return m_frame;
+        return *(const unsigned int *)((const unsigned char *)this + 0x3c);
     }
 };
+
+extern GameLogic *TheGameLogic;
 
 class AIData
 {
@@ -46,8 +46,7 @@ public:
     }
 };
 
-extern "C" const AI * volatile TheAIParseDefinitionAI;
-extern GameLogic *TheGameLogic;
+extern AI * volatile TheAIParseDefinitionAI;
 
 class DamageInfo
 {
@@ -211,10 +210,9 @@ StateReturnType AITNGuardAttackAggressorState::onEnter()
     if (tunnels != 0)
         tunnels->updateNemesis(nemesis);
 
-    unsigned int frame = TheGameLogic->getFrame();
-    AIData *aiData = TheAIParseDefinitionAI->getAiData();
     m_exitConditions.m_attackGiveUpFrame =
-        frame + aiData->m_guardChaseUnitFrames;
+        TheGameLogic->getFrame() +
+        TheAIParseDefinitionAI->getAiData()->m_guardChaseUnitFrames;
     m_attackState = new AIAttackState(
         (StateMachine *)m_machine, true, true, false, &m_exitConditions );
     m_attackState->m_machine->setGoalObject(nemesis);

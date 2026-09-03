@@ -1,8 +1,8 @@
-// ?rva8CC570LookupValue@@YAPAVRva8CC570Value@@PAV1@PAXPAURva8CC570Name@@@Z
-// partial score=0.94 date=2026-09-02
-// ?rva8CC570LookupValue@@YAPAVRva8CC570Value@@PAV1@PAXPAURva8CC570Name@@@Z
+// ?rva8CC570Resolve@@YAPAVRva8CCCE0Value@@PAX00@Z
+// partial score=0.94 date=2026-09-03
+// ?rva8CC570Resolve@@YAPAVRva8CCCE0Value@@PAX00@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable Apt named-value lookup, retail 0x008CC570 (280 bytes).
+// Readable Apt value resolver at retail 0x008CC570 (280 bytes).
 
 struct Rva8CC570StringBlock
 {
@@ -13,31 +13,24 @@ struct Rva8CC570StringBlock
 extern Rva8CC570StringBlock g_bfmeDefaultString1284;
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
 
-class Rva8CC570StringBase
+class Rva8CC570String
 {
 public:
-	Rva8CC570StringBase()
+	Rva8CC570String()
 	{
 		m_block = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refs;
 	}
-	~Rva8CC570StringBase()
+	~Rva8CC570String()
 	{
-        Rva8CC570StringBlock *block = m_block;
-        --block->m_refs;
-        if (block->m_refs == 0)
-            Rva01337A30ReleaseTable[1](block);
+		Rva8CC570StringBlock *block = m_block;
+		--block->m_refs;
+		if (block->m_refs == 0)
+			Rva01337A30ReleaseTable[1](block);
 	}
 
-	protected:
+private:
 	Rva8CC570StringBlock *m_block;
-};
-
-class Rva8CC570String : private Rva8CC570StringBase
-{
-public:
-	Rva8CC570String() : Rva8CC570StringBase() {}
-	~Rva8CC570String() {}
 };
 
 struct Rva8CC570Name
@@ -58,6 +51,11 @@ public:
 	virtual void slot7();
 	virtual void slot8();
 	virtual bool slot9();
+
+	unsigned m_flags;
+	char m_gap[0x18];
+	Rva8CCCE0Value *m_indirect;
+
 	bool acceptsLookup()
 	{
 		return slot9();
@@ -66,7 +64,8 @@ public:
 
 void rva8C6320PrepareLookup(Rva8CCCE0Value *fallback, void *scope,
 	Rva8CC570Name *name, Rva8CC570Name *&updatedName, Rva8CC570String *key);
-Rva8CCCE0Value *__stdcall rva89C290Lookup(Rva8CC570String const &key, void *scope);
+Rva8CCCE0Value *__stdcall rva89C290Lookup(Rva8CC570String const &key,
+	void *scope);
 
 Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
 {
@@ -75,14 +74,15 @@ Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
 	if (name->m_string->m_length == 0)
 		return (Rva8CCCE0Value *)fallback;
 
-    rva8C6320PrepareLookup((Rva8CCCE0Value *)fallback, scope, name, name, &key);
-    Rva8CC570Name const *resolvedName = name;
-    Rva8CCCE0Value *result = 0;
-    if (resolvedName != 0)
-    {
-        result = rva89C290Lookup(key, scope);
-        if (result != 0 && result->acceptsLookup())
-            return result;
+	rva8C6320PrepareLookup((Rva8CCCE0Value *)fallback, scope,
+		name, name, &key);
+	Rva8CC570Name const *resolvedName = name;
+	Rva8CCCE0Value *result = 0;
+	if (resolvedName != 0)
+	{
+		result = rva89C290Lookup(key, scope);
+		if (result != 0 && result->acceptsLookup())
+			return result;
 	}
 	return 0;
 }
