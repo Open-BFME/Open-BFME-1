@@ -78,18 +78,18 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		{
 			BfmeOverridable *wantedValue = wanted;
 			BfmeSplitResult **current = first;
-			do
+				do
 			{
-				BfmeSplitResult *candidate = *current;
-				if ( candidate->m_template.m_value == wantedValue )
-				{
-					BfmeSelectedTemplate *output = selectedTemplate;
-					BfmeSplitResult *selected = first[ i ];
-					BfmeSelectedTemplate selectedValue = selected->m_template;
-					*output = selectedValue;
-					BfmeSplitResult **base = m_splitResultsBegin;
-					BfmeSplitResult *rankResult = base[ i ];
-					return rankResult->m_rank;
+					BfmeSplitResult *candidate = *current;
+					if ( candidate->m_template.m_value == wantedValue )
+					{
+						BfmeSplitResult *selected = first[ i ];
+						BfmeSelectedTemplate selectedValue = selected->m_template;
+						BfmeSelectedTemplate *output = selectedTemplate;
+						*output = selectedValue;
+						BfmeSplitResult **base = m_splitResultsBegin;
+						BfmeSplitResult *rankResult = base[ i ];
+						return rankResult->m_rank;
 				}
 				++i;
 				++current;
@@ -98,9 +98,9 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		}
 	}
 
-	BfmeSelectedTemplate *output = selectedTemplate;
-	BfmeSplitResult *selected = first[ 0 ];
+	register BfmeSplitResult *selected = first[ 0 ];
 	BfmeSelectedTemplate selectedValue = selected->m_template;
+	BfmeSelectedTemplate *output = selectedTemplate;
 	*output = selectedValue;
 	BfmeSplitResult **base = m_splitResultsBegin;
 	BfmeSplitResult *rankResult = base[ 0 ];

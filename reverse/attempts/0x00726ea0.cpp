@@ -1,16 +1,12 @@
 // ?fill@Rva00726EA0TaintFill@@QAEXE@Z
-// partial score=0.99 date=2026-09-02
+// partial score=0.99 date=2026-09-03
 // cl: /DNDEBUG /MD
-//
-// Retail 0x00726EA0: fill two taint buffers when GlobalData::TaintOn is set.
-// TaintAlpha at +0xCA0 and TaintOn at +0xCF5 (docs/ini_schema.md).  The byte
-// argument is raised to TaintAlpha, then splat into a dword and written
-// across m_width x m_height at +0x18 (dwords) and +0x38 (bytes).
+// Retail 0x00726EA0: fill the taint overlay's dword and byte buffers.
 
 class GlobalData
 {
 public:
-	unsigned char m_pad[0xCA0];
+	unsigned char m_pad00[0xCA0];
 	unsigned char m_taintAlpha;
 	unsigned char m_padCA1[0xCF5 - 0xCA1];
 	unsigned char m_taintOn;
@@ -32,6 +28,7 @@ private:
 	unsigned char *m_bytes;
 };
 
+// ?fill@Rva00726EA0TaintFill@@QAEXE@Z
 void Rva00726EA0TaintFill::fill(unsigned char alpha)
 {
 	GlobalData *g = TheWritableGlobalData;
@@ -58,15 +55,15 @@ void Rva00726EA0TaintFill::fill(unsigned char alpha)
 			dst++;
 		}
 	}
-	unsigned char *bytes = m_bytes;
+	unsigned int base = (unsigned int)m_bytes;
 	for (y = 0; y < m_height; y++)
 	{
-		unsigned int x;
-		for (x = 0; x < m_width; )
+		unsigned int i;
+		for (i = 0; i < m_width; )
 		{
-			bytes[x] = alpha;
-			x++;
+			*(char *)(i + base) = alpha;
+			i++;
 		}
-		bytes += m_width;
+		base += m_width;
 	}
 }

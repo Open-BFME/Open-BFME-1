@@ -65,7 +65,6 @@ public:
 };
 
 // Message boxes -------------------------------------
-static GameWindow *messageBoxWindow = NULL;
 static GameWinMsgBoxFunc okFunc = NULL;
 static GameWinMsgBoxFunc cancelFunc = NULL;
 static Bool reOpenPlayerInfoFlag = FALSE;
@@ -75,8 +74,6 @@ static Bool reOpenPlayerInfoFlag = FALSE;
 	*/
 static void messageBoxOK( void )
 {
-	DEBUG_ASSERTCRASH(messageBoxWindow, ("Message box window went away without being there in the first place!"));
-	messageBoxWindow = NULL;
 	if (okFunc)
 	{
 		okFunc();
@@ -90,8 +87,6 @@ static void messageBoxOK( void )
 	*/
 static void messageBoxCancel( void )
 {
-	DEBUG_ASSERTCRASH(messageBoxWindow, ("Message box window went away without being there in the first place!"));
-	messageBoxWindow = NULL;
 	if (cancelFunc)
 	{
 		cancelFunc();
@@ -106,12 +101,6 @@ static void messageBoxCancel( void )
 	*/
 void ClearGSMessageBoxes( void )
 {
-	if (messageBoxWindow)
-	{
-		TheWindowManager->winDestroy(messageBoxWindow);
-		messageBoxWindow = NULL;
-	}
-
 	if (okFunc)
 	{
 		okFunc = NULL;
@@ -129,8 +118,17 @@ void ClearGSMessageBoxes( void )
 	*/
 void GSMessageBoxOk(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newOkFunc)
 {
-	ClearGSMessageBoxes();
-	messageBoxWindow = MessageBoxOk(title, message, messageBoxOK);
+	if (reOpenPlayerInfoFlag)
+	{
+		deleteNotificationBox();
+		reOpenPlayerInfoFlag = FALSE;
+	}
+	if (okFunc)
+		okFunc = NULL;
+	if (cancelFunc)
+		cancelFunc = NULL;
+	MessageBoxOk(title, message, messageBoxOK);
+	reOpenPlayerInfoFlag = TRUE;
 	okFunc = newOkFunc;
 }
 
@@ -140,10 +138,19 @@ void GSMessageBoxOk(UnicodeString title, UnicodeString message, GameWinMsgBoxFun
 	*/
 void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newOkFunc, GameWinMsgBoxFunc newCancelFunc)
 {
-	ClearGSMessageBoxes();
-	messageBoxWindow = MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
-	okFunc = newOkFunc;
+	if (reOpenPlayerInfoFlag)
+	{
+		deleteNotificationBox();
+		reOpenPlayerInfoFlag = FALSE;
+	}
+	if (okFunc)
+		okFunc = NULL;
+	if (cancelFunc)
+		cancelFunc = NULL;
+	MessageBoxOkCancel(title, message, messageBoxOK, messageBoxCancel);
 	cancelFunc = newCancelFunc;
+	reOpenPlayerInfoFlag = TRUE;
+	okFunc = newOkFunc;
 }
 
 /**
@@ -152,10 +159,19 @@ void GSMessageBoxOkCancel(UnicodeString title, UnicodeString message, GameWinMsg
 	*/
 void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBoxFunc newYesFunc, GameWinMsgBoxFunc newNoFunc)
 {
-	ClearGSMessageBoxes();
-	messageBoxWindow = MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
-	okFunc = newYesFunc;
+	if (reOpenPlayerInfoFlag)
+	{
+		deleteNotificationBox();
+		reOpenPlayerInfoFlag = FALSE;
+	}
+	if (okFunc)
+		okFunc = NULL;
+	if (cancelFunc)
+		cancelFunc = NULL;
+	MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
 	cancelFunc = newNoFunc;
+	reOpenPlayerInfoFlag = TRUE;
+	okFunc = newYesFunc;
 }
 
 /**

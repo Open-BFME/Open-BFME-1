@@ -1762,9 +1762,11 @@ void W3DRoadBuffer::updateCounts(RoadSegment *pRoad)
 //=============================================================================
 /** Updates the count and last fields. */
 //=============================================================================
-// ?updateCountsAndFlags@W3DRoadBuffer@@IAEXXZ present-unmatched
 void W3DRoadBuffer::updateCountsAndFlags()
 {
+	if (!m_initialized) {
+		return;
+	}
 	Int i, j;
 	for (i=0; i<m_numRoads; i++) {
 		m_roads[i].m_pt1.last = true;

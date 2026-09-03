@@ -53,6 +53,12 @@
 #include "GameLogic/TerrainLogic.h"
 #include "GameLogic/Weapon.h"
 
+class TerrainLogicTwoArgSnapProbe
+{
+public:
+	PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *);
+};
+
 #include "Common/UnitTimings.h" //Contains the DO_UNIT_TIMINGS define jba.	
 
 
@@ -5155,7 +5161,9 @@ void Pathfinder::snapPosition(Object *obj, Coord3D *pos)
 		adjustDest.y += PATHFIND_CELL_SIZE_F/2;
 	}
 	worldToCell( &adjustDest, &cell );
-	adjustCoordToCell(cell.x, cell.y,  center, *pos, LAYER_GROUND);
+	TerrainLogicTwoArgSnapProbe *terrain = (TerrainLogicTwoArgSnapProbe *)TheTerrainLogic;
+	PathfindLayerEnum layer = terrain->getLayerForDestination(obj, pos);
+	adjustCoordToCell(cell.x, cell.y, center, *pos, layer);
 }
 
 /**

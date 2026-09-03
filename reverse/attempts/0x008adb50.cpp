@@ -1,5 +1,8 @@
 // ?bfmeVisit1236@BfmeNode1236@@QAEXXZ
-// partial score=0.72 date=2026-09-02
+// partial score=0.72 date=2026-09-03
+// Open-BFME5 conversion, recovered from reverse/attempts/0x008adb50.cpp.
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
 class BfmeWalk1236
 {
 public:
@@ -8,14 +11,14 @@ public:
 
 struct BfmeChild1236
 {
-	char m_pad00[0x20];
+	char m_padding00[0x20];
 	void *m_value20;
 	BfmeWalk1236 m_walk;
-	char m_pad28[0x6c - 0x28];
+	char m_padding28[0x44];
 	int m_value6c;
 };
 
-extern void (__cdecl *g_bfmeFn01337874)(void *p, int n);
+extern void (__cdecl *g_bfmeFn01337874)(void *value, int count);
 extern char g_bfmeSentinel012D5598;
 
 class BfmeNode1236
@@ -26,13 +29,14 @@ public:
 private:
 	void *m_vtable;
 	unsigned m_flags;
-	char m_pad08[0x50 - 8];
+	char m_padding08[0x48];
 	BfmeChild1236 *m_child;
 };
 
 void BfmeNode1236::bfmeVisit1236()
 {
-	unsigned flags = m_flags;
+	BfmeNode1236 *self = this;
+	unsigned flags = self->m_flags;
 	unsigned kind = flags;
 	kind &= 0x3f;
 
@@ -59,7 +63,7 @@ check_12:
 	}
 
 do_walk:
-	m_child->m_walk.bfmeWalk1236();
+	self->m_child->m_walk.bfmeWalk1236();
 	return;
 
 check_f:
@@ -70,13 +74,14 @@ check_f:
 		bit >>= 15;
 		if ((((unsigned char)~bit) & 1) != 0)
 			return;
-		BfmeChild1236 *child = m_child;
-		void *value = child->m_value20;
-		if (value && value != &g_bfmeSentinel012D5598)
-		{
-			child->m_value6c = 6;
-			g_bfmeFn01337874(value, 2);
-		}
-		child->m_value20 = 0;
 	}
+
+	BfmeChild1236 *child = self->m_child;
+	void *value = child->m_value20;
+	if (value != 0 && value != &g_bfmeSentinel012D5598)
+	{
+		child->m_value6c = 6;
+		g_bfmeFn01337874(value, 2);
+	}
+	child->m_value20 = 0;
 }

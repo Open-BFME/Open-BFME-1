@@ -1,10 +1,7 @@
 // ?chargePlayerForUnpack@CastleBehavior@@QAEXXZ
-// partial score=0.98 date=2026-09-01
+// partial score=0.98 date=2026-09-03
+// ?chargePlayerForUnpack@CastleBehavior@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
-
-// CastleBehavior::unpack at retail 0x00376590 is the sole caller.  The helper
-// selects the CastleToUnpackForFaction cost by the controlling player's name,
-// withdraws that amount, and remembers it for the pack/refund path.
 
 typedef int Int;
 typedef float Real;

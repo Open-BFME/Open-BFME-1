@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 class GiantBirdRoot
@@ -30,7 +31,35 @@ public:
 	virtual ~GiantBirdAIBase();
 };
 
-class GiantBirdMemberA { public: ~GiantBirdMemberA(); };
+#include <vector>
+
+class AsciiString
+{
+public:
+    ~AsciiString();
+
+private:
+    void *m_data;
+};
+
+struct GiantBirdMemberARecord
+{
+    unsigned char m_bytes[12];
+};
+
+class GiantBirdMemberA
+{
+public:
+    ~GiantBirdMemberA();
+
+private:
+    unsigned char m_padding[0x1c];
+    AsciiString m_name;
+    AsciiString m_description;
+    _STL::vector<GiantBirdMemberARecord> m_records;
+};
+
+template class _STL::vector<GiantBirdMemberARecord>;
 class GiantBirdMemberB { public: ~GiantBirdMemberB(); };
 class GiantBirdNestedTail { public: ~GiantBirdNestedTail(); };
 
@@ -63,6 +92,10 @@ private:
 	unsigned char m_pad3ed[0x13];
 	GiantBirdNested m_nested;
 };
+
+GiantBirdMemberA::~GiantBirdMemberA()
+{
+}
 
 GiantBirdAIUpdate::~GiantBirdAIUpdate()
 {

@@ -44,6 +44,12 @@ extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
 extern BFMEFrameState *g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
 
+class WWMath
+{
+public:
+	static float Random_Float();
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
@@ -88,10 +94,9 @@ private:
 
 static const BFMEWeatherOverride *walkSnowOverride(const BFMEWeatherOverride *d)
 {
-	const BFMEWeatherOverride *f = d;
 	if (d && d->m_nextOverride)
-		f = d->m_nextOverride->getFinalOverride();
-	return f;
+		return d->m_nextOverride->getFinalOverride();
+	return d;
 }
 
 // ?update@W3DSnowManager@@UAEXXZ
@@ -113,7 +118,7 @@ void W3DSnowManager::extraAfterFmod(void)
 	{
 		int state = m_98;
 		if (state == 1 || state == 3)
-		--m_4c;
+			--m_4c;
 		sibling();
 		int state94 = m_94;
 		if (state94 == 2)

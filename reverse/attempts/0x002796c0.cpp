@@ -1,18 +1,11 @@
 // ?bfmeClearModelConditions@AIUpdateInterface@@QAEXXZ
-// partial score=0.96 date=2026-09-02
+// partial score=0.96 date=2026-09-03
 // cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
 // stlport
-//
-// Retail 0x002796C0: AIUpdateInterface helper that builds an 8-bit
-// ModelConditionFlags mask and clearAndSetModelConditionFlags it against
-// an empty set. 114B near-miss: prologue and 8-arg ctor match; default
-// BitFlags/bitset zeroing is xor eax + re-lea of clr vs retail xor ecx
-// preserving ctor-return eax.
 
 #include <bitset>
 
 typedef int Int;
-typedef unsigned int UnsignedInt;
 
 template <int NUMBITS>
 class BitFlags
@@ -25,7 +18,7 @@ public:
 
 	BitFlags(BogusInitType k, Int a, Int b, Int c, Int d, Int e, Int f, Int g, Int h);
 
-	BitFlags() {}
+	BitFlags() : m_bits() {}
 
 	_STL::bitset<NUMBITS> m_bits;
 };

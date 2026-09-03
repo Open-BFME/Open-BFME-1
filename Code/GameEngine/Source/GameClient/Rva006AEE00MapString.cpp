@@ -23,6 +23,7 @@ class Rva006AEE00Tree
 {
 public:
 	void *find(void *key);
+
 	void *header;
 	int count;
 };

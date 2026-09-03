@@ -27,7 +27,6 @@ void Rva00734730::handle(int index, int useObjectHandle)
 	if (index >= *(int *)(self + 0x2A7CB0))
 		return;
 
-	int state;
 	Rva00734730EntryView &entry = *(Rva00734730EntryView *)(self + index * 0xE8);
 	state = entry.m_state;
 	if (state < 0)

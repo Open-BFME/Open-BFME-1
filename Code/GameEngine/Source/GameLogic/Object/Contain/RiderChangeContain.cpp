@@ -204,79 +204,20 @@ Bool RiderChangeContain::isValidContainerFor(const Object* rider, Bool checkCapa
 // ?onContaining@RiderChangeContain@@UAEXPAVObject@@_N@Z present-unmatched
 void RiderChangeContain::onContaining( Object *rider, Bool wasSelected )
 {
-	Object *obj = getObject();
-	m_containing = TRUE;
-	//Remove our existing rider
-	if( m_payloadCreated )
-	{
-		obj->getAI()->aiEvacuateInstantly( TRUE, CMD_FROM_AI );
-	}
-
-	//If the rider is currently selected, transfer selection to the container and preserve other units
-	//that may be already selected. Note that containing the rider will automatically cause it to be 
-	//deselected, so all we have to do is select the container (if not already selected)!
-	Drawable *containDraw = getObject()->getDrawable();
-	if( containDraw && wasSelected && !containDraw->isSelected() )
-	{
-		//Create the selection message
-		GameMessage *teamMsg = TheMessageStream->appendMessage( GameMessage::MSG_CREATE_SELECTED_GROUP );
-		teamMsg->appendBooleanArgument( FALSE );// not creating new team so pass false
-		teamMsg->appendObjectIDArgument( getObject()->getID() );
-		TheInGameUI->selectDrawable( containDraw );
-		TheInGameUI->setDisplayedMaxWarning( FALSE );
-	}
-
-	//Find the rider in the list and set the appropriate model condition
-	const RiderChangeContainModuleData *data = getRiderChangeContainModuleData();
-	for( int i = 0; i < MAX_RIDERS; i++ )
-	{
-		const ThingTemplate *thing = TheThingFactory->findTemplate( data->m_riders[ i ].m_templateName );
-		if( thing->isEquivalentTo( rider->getTemplate() ) )
-		{
-
-			//This is our rider, so set the correct model condition.
-			obj->setModelConditionState( data->m_riders[ i ].m_modelConditionFlagType );
-
-			//Also set the correct weaponset flag
-			obj->setWeaponSetFlag( data->m_riders[ i ].m_weaponSetFlag );
-
-			//Also set the object status
-			obj->setStatus( MAKE_OBJECT_STATUS_MASK( data->m_riders[ i ].m_objectStatusType ) );
-
-			//Set the new commandset override
-			obj->setCommandSetStringOverride( data->m_riders[ i ].m_commandSet );
-			TheControlBar->markUIDirty();	// Refresh the UI in case we are selected
-
-			//Change the locomotor.
-			AIUpdateInterface* ai = obj->getAI();
-			if( ai )
-			{
-				ai->chooseLocomotorSet( data->m_riders[ i ].m_locomotorSetType );
-			}
-
-			if( obj->getStatusBits().test( OBJECT_STATUS_STEALTHED ) )
-			{
-				StealthUpdate* stealth = obj->getStealth();
-				if( stealth )
-				{
-					stealth->markAsDetected();
-				}
-			}
-
-			//Transfer experience from the rider to the bike.
-			ExperienceTracker *riderTracker = rider->getExperienceTracker();
-			ExperienceTracker *bikeTracker = obj->getExperienceTracker();
-			bikeTracker->setVeterancyLevel( riderTracker->getVeterancyLevel(), FALSE );
-			riderTracker->setExperienceAndLevel( 0, FALSE );
-
-			break;
-		}
-	}
-	
-	//Extend base class
 	TransportContain::onContaining( rider, wasSelected );
 
-	m_containing = FALSE;
+	const RiderChangeContainModuleData *data = getRiderChangeContainModuleData();
+	if (data == NULL)
+		return;
+
+	TheGameLogic->deselectObject( rider, PLAYERMASK_ALL, TRUE );
+	if (!wasSelected || *reinterpret_cast<const UnsignedByte *>(
+		reinterpret_cast<const char *>(data) + 0x248) == 0)
+		return;
+
+	TheGameLogic->selectObject(
+		*reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 0x18),
+		PLAYERMASK_ALL, TRUE);
 }
 
 //-------------------------------------------------------------------------------------------------

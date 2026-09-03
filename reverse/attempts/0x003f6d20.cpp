@@ -1,5 +1,7 @@
 // ?costSoFar@PathfindCell@@QAEIPAV1@@Z
-// partial score=0.92 date=2026-09-02
+// partial score=0.92 date=2026-09-03
+// ?costSoFar@PathfindCell@@QAEIPAV1@@Z
+// BFME compact pathfind-cell info layout; recovered from retail 0x003F6D20.
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned int UnsignedInt;
@@ -18,8 +20,8 @@ struct PathfindCellInfo
 	ICoord2D m_pos;
 	PathfindCellInfo *m_pathParent;
 	char m_pad0c[4];
-	unsigned short m_totalCost;
-	unsigned short m_costSoFar;
+	UnsignedShort m_totalCost;
+	UnsignedShort m_costSoFar;
 	char m_pad14[0x14];
 	PathfindCell *m_cell;
 };
@@ -31,7 +33,7 @@ public:
 	UnsignedShort getXIndex(void) const { return m_info->m_pos.x; }
 	UnsignedShort getYIndex(void) const { return m_info->m_pos.y; }
 	UnsignedInt getCostSoFar(void) const { return m_info->m_costSoFar; }
-	__forceinline PathfindCell *getParentCell(void) const
+	PathfindCell *getParentCell(void) const
 	{
 		return m_info ? m_info->m_pathParent ? m_info->m_pathParent->m_cell : 0 : 0;
 	}
@@ -61,7 +63,14 @@ UnsignedInt PathfindCell::costSoFar(PathfindCell *parent)
 		cost += 14;
 
 	int numTurns = 0;
-	PathfindCell *prevCell = parent->getParentCell();
+	PathfindCellInfo *parentInfo = parent->m_info;
+	if (parentInfo)
+		parentInfo = parentInfo->m_pathParent;
+	PathfindCell *prevCell;
+	if (parentInfo)
+		prevCell = parentInfo->m_cell;
+	else
+		prevCell = 0;
 	if (prevCell)
 	{
 		ICoord2D dir;
@@ -72,10 +81,12 @@ UnsignedInt PathfindCell::costSoFar(PathfindCell *parent)
 			int dot = dir.x * prevDir.x + dir.y * prevDir.y;
 			if (dot > 0)
 				numTurns = 4;
-			else if (dot == 0)
-				numTurns = 8;
 			else
-				numTurns = 16;
+			{
+				numTurns = 8;
+				if (dot < 0)
+					numTurns = 16;
+			}
 		}
 	}
 

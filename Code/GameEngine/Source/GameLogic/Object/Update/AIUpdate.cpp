@@ -83,54 +83,8 @@
 extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a( void );
-extern void j_0001c7e2( void );
-extern void j_00005637( void );
-extern void j_000082ba( void );
-extern void j_00011252( void );
-extern void j_00019b23( void );
-extern void j_00023209( void );
-extern void j_000294e2( void );
-extern void j_0003611a( void );
 
 typedef void (__cdecl *BFMEPathDebugLogFunction)( void *, const char *, ... );
-typedef void (__fastcall *BFMEUpdateGoalCall)( Pathfinder *, Object *, Object *,
-	const Coord3D *, PathfindLayerEnum, const char *, Int );
-typedef Bool (__fastcall *BFMEComputeAttackPathCall)( AIUpdateInterface *,
-	PathfindServicesInterface *, PathfindServicesInterface *, const Object *,
-	const Coord3D * );
-typedef Bool (__fastcall *BFMEAdjustDestinationCall)( Pathfinder *, LocomotorSet *,
-	Object *, LocomotorSet *, Coord3D * );
-typedef Bool (__fastcall *BFMEMoveAlliesCall)( Pathfinder *, Bool, Object *, Path *, Bool );
-typedef void (__fastcall *BFMEWakeCall)( AIUpdateInterface * );
-
-// These BFME helpers predate the Zero Hour inline wrappers.  The declarations
-// keep their retail class identities at the call sites below.
-class BFMEActionObject
-{
-public:
-	Bool testStatus( Int status ) const;
-};
-
-class BFMESelectionStatusBits
-{
-public:
-	Bool test( UnsignedInt bit ) const;
-};
-
-class Rva00216D20
-{
-public:
-	Bool field() const;
-};
-
-class BFMEComputePathView
-{
-public:
-	Bool computePath( PathfindServicesInterface *pathfinder, Coord3D *destination );
-};
-
-typedef Bool (BFMEComputePathView::*BFMEComputePathMember)(
-	PathfindServicesInterface *, Coord3D *);
 
 // The Zero Hour shim omits BFME members before these fields, so its declared offsets cannot be used here.
 struct BFMEApproachPathFields
@@ -274,13 +228,59 @@ public:
 	Object *findObjectByID( ObjectID id );			///< retail ILT 0x0001f253
 };
 
-// This is the BFME Pathfinder dword field at +0x844.  The reference header
-// exposes a different inline member, while the target calls this exact
-// thirteen-byte setter body.
+// doPathfind uses the BFME singleton layout directly.  The reference AI
+// declaration puts these members at different offsets, so keep this view local
+// to the body rather than changing the shared header.
+class BFMEPathAIRoot
+{
+public:
+	Pathfinder *pathfinder() const
+	{
+		return *reinterpret_cast<Pathfinder * const *>(
+			reinterpret_cast<const char *>( this ) + 0x0C);
+	}
+
+	const TAiData *getAiData() const
+	{
+		return *reinterpret_cast<TAiData * const *>(
+			reinterpret_cast<const char *>( this ) + 0x14);
+	}
+};
+
 class Rva003D5620DwordSlot
 {
 public:
 	void set( Int value );
+};
+
+class Rva00216D20
+{
+public:
+	Bool field() const;
+};
+
+class BFMEActionObject
+{
+public:
+	Bool testStatus( Int status ) const;
+};
+
+class BFMESelectionStatusBits
+{
+public:
+	Bool test( UnsignedInt bit ) const;
+};
+
+class BFMECrushableLevelQuery
+{
+public:
+	char getCrushableLevel() const;
+};
+
+class BFMEPathfinderMoveAllies
+{
+public:
+	Bool moveAllies( Object *object, Path *path, Bool moveAllies );
 };
 
 struct BFMEPathNodeView
@@ -290,10 +290,48 @@ struct BFMEPathNodeView
 	PathfindLayerEnum m_layer;
 };
 
-#define BFME_PATH_DEBUG_FLAG (*reinterpret_cast<volatile unsigned char *>(0x012F0239))
-#define BFME_PATH_DEBUG_CONTEXT (*reinterpret_cast<void **>(0x012ED4FC))
-#define BFME_PATH_GAME_LOGIC (*reinterpret_cast<BFMEObjectLookup **>(0x012F0898))
-#define BFME_PATH_AI (*reinterpret_cast<AI **>(0x012EF214))
+typedef Bool (__fastcall *BFMEComputeAttackPathCall)( AIUpdateInterface *,
+	PathfindServicesInterface *, PathfindServicesInterface *, Object *,
+	const Coord3D * );
+typedef void (__fastcall *BFMEUpdateGoalCall)( Pathfinder *, Object *, Object *,
+	const Coord3D *, PathfindLayerEnum, const char *, Int );
+typedef Bool (__fastcall *BFMEAdjustDestinationCall)( Pathfinder *, LocomotorSet *,
+	Object *, LocomotorSet *, Coord3D * );
+// VC7.1 reserves __thiscall in a free-function-pointer typedef.  This call
+// has only the receiver, so fastcall gives the same ECX/no-stack ABI.
+typedef void (__fastcall *BFMEWakeCall)( AIUpdateInterface * );
+
+extern void j_00005637( void );
+extern void j_00011252( void );
+extern void j_000294e2( void );
+extern void j_0003611a( void );
+
+__forceinline BFMEPathAIRoot *bfmePathAI()
+{
+	return reinterpret_cast<BFMEPathAIRoot *>( TheAI );
+}
+
+__forceinline BFMEObjectLookup *bfmePathGameLogic()
+{
+	return reinterpret_cast<BFMEObjectLookup *>( TheGameLogic );
+}
+
+#define BFME_PATH_AI bfmePathAI()
+#define BFME_PATH_GAME_LOGIC bfmePathGameLogic()
+
+__forceinline Object *bfmeFindRepulsor( BFMEObjectLookup *gameLogic,
+	BFMEApproachPathFields *retail, Coord3D *position )
+{
+	position->x = -1000.0f;
+	position->y = -1000.0f;
+	position->z = 0.0f;
+	return gameLogic->findObjectByID( retail->m_repulsor1 );
+}
+
+__forceinline Int bfmeCrushableFlag( UnsignedByte level )
+{
+	return level >= 4;
+}
 
 // BFME's pathfinder position test takes the position first and the object
 // last, and asks nothing about crush level; the reference Pathfinder declares
@@ -942,8 +980,88 @@ to call use the PathfindServicesInterface to do a pathfind operation.  This shou
 except by the pathfinder during pathfind queue processing.  jba */
 //-------------------------------------------------------------------------------------------------
 // ?doPathfind@AIUpdateInterface@@ present-unmatched
-#define g_012F0239 BFME_PATH_DEBUG_FLAG
-#define g_012ED4FC BFME_PATH_DEBUG_CONTEXT
+#if 0
+void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
+{
+	if (!m_waitingForPath) {
+		return;
+	}
+	//CRCDEBUG_LOG(("AIUpdateInterface::doPathfind() for object %d\n", getObject()->getID()));
+	m_waitingForPath = FALSE;	 
+	if (m_isSafePath) {
+		destroyPath();
+		Coord3D pos1, pos2;
+		pos1.set(-1000,-1000,0);
+		Object *repulsor = TheGameLogic->findObjectByID(m_repulsor1);
+		if (repulsor) {
+			pos1 = *repulsor->getPosition();
+		}
+		pos2 = pos1;
+		repulsor = TheGameLogic->findObjectByID(m_repulsor2);
+		if (repulsor) {
+			pos2 = *repulsor->getPosition();
+		}
+		m_path = pathfinder->findSafePath(getObject(), m_locomotorSet, 
+			getObject()->getPosition(), 
+			&pos1, 	&pos2, 
+			getObject()->getVisionRange() + TheAI->getAiData()->m_repulsedDistance);
+		return;
+	}
+	if (m_isApproachPath & !isDoingGroundMovement()) {
+		m_isApproachPath = false;
+	}
+	if (m_isApproachPath) {
+		destroyPath();
+		m_path = pathfinder->findClosestPath(getObject(), m_locomotorSet, getObject()->getPosition(), 
+			&m_requestedDestination, m_isBlockedAndStuck, 0.2f, FALSE );
+		if (isDoingGroundMovement() && getPath()) {
+			TheAI->pathfinder()->updateGoal(getObject(), getPath()->getLastNode()->getPosition(),
+				getPath()->getLastNode()->getLayer());
+		}
+		return;
+	}
+	if (m_isAttackPath) {
+		Object *victim = NULL;
+		if (m_requestedVictimID != INVALID_ID) { 
+			victim = TheGameLogic->findObjectByID(m_requestedVictimID);
+		}
+		if (computeAttackPath(pathfinder, victim, &m_requestedDestination))	{	
+			if (getPath()) {
+				TheAI->pathfinder()->updateGoal(getObject(), getPath()->getLastNode()->getPosition(),
+					getPath()->getLastNode()->getLayer());
+			}
+			//CRCDEBUG_LOG(("AIUpdateInterface::doPathfind() - m_isAttackPath = TRUE after computeAttackPath\n"));
+			m_isAttackPath = TRUE; 
+			return;
+		}
+		//CRCDEBUG_LOG(("AIUpdateInterface::doPathfind() - m_isAttackPath = FALSE after computeAttackPath()\n"));
+		m_isAttackPath = FALSE;
+		if (victim) {
+			m_requestedDestination = *victim->getPosition();
+			/* find a pathable destination near the victim.*/
+			TheAI->pathfinder()->adjustToPossibleDestination(getObject(), getLocomotorSet(), &m_requestedDestination);
+			ignoreObstacle(victim); 
+		}
+	} 
+	computePath(pathfinder, &m_requestedDestination);
+	if (m_isFinalGoal && isDoingGroundMovement() && getPath()) {
+		TheAI->pathfinder()->updateGoal(getObject(), getPath()->getLastNode()->getPosition(),
+			getPath()->getLastNode()->getLayer());
+	}
+	if (m_queueForPathFrame > TheGameLogic->getFrame()) {
+		m_waitingForPath = TRUE;
+	}
+#ifdef SLEEPY_AI
+	// if we're no longer waiting for a path, make sure we wake up right away!
+	if (!m_waitingForPath)
+	{
+		wakeUpNow();
+	}
+#endif
+}
+
+#endif
+
 #define TheGameLogic BFME_PATH_GAME_LOGIC
 #define TheAI BFME_PATH_AI
 void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
@@ -968,29 +1086,34 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	if (retail->m_isSafePath)
 	{
 		destroyPath();
-		Int extraDistance;
+		Coord3D pos1, pos2;
+		pos1.x = -1000.0f;
+		pos1.y = -1000.0f;
+		pos1.z = 0.0f;
 		BFMEObjectLookup *gameLogic = BFME_PATH_GAME_LOGIC;
-		Coord3D pos1;
-		Coord3D *pos2 = &pos1 + 1;
-		pos1.set(-1000, -1000, 0);
 		Object *repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
 		}
-		*pos2 = pos1;
+		pos2 = pos1;
 		repulsor = gameLogic->findObjectByID(retail->m_repulsor2);
 		if (repulsor)
 		{
-			*pos2 = *repulsor->getPosition();
+			pos2 = *repulsor->getPosition();
 		}
+		Object *object = retail->m_object;
 		const TAiData *aiData = BFME_PATH_AI->getAiData();
-		extraDistance = (Int)*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(retail->m_object) + 0x18C);
-		retail->m_path = pathfinder->findSafePath(retail->m_object,
+		Int extraDistance = (Int)*reinterpret_cast<const volatile Real *>(
+			reinterpret_cast<const char *>(object) + 0x18C);
+		retail->m_path = pathfinder->findSafePath(object,
 			*reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>( this ) + 0x1A8),
-			retail->m_object->getPosition(),
-			&pos1, pos2, retail->m_object->getVisionRange() +
-				*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(aiData) + 0x60) + extraDistance);
+			object->getPosition(),
+			&pos1, &pos2, object->getVisionRange() +
+				*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(aiData) + 0x60) +
+				extraDistance);
+		*reinterpret_cast<Int *>(reinterpret_cast<char *>(retail->m_object) + 0x18C) = 0;
+		reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
@@ -1102,7 +1225,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		retail->m_path = pathfinder->findClosestPath(retail->m_object,
 			*reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>( this ) + 0x1A8),
 			retail->m_object->getPosition(),
-			&retail->m_requestedDestination, retail->m_isBlockedAndStuck, 0.2f, FALSE);
+			&retail->m_requestedDestination, retail->m_isBlockedAndStuck, 0.05f, FALSE);
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
@@ -1124,48 +1247,45 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 					retail->m_requestedDestination.x, retail->m_requestedDestination.y,
 					retail->m_requestedDestination.z);
 			}
-		}
-
-		Bool moveAllies;
-		if (*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(retail->m_path) + 0x0D) &&
-			!retail->m_object->isKindOf((KindOfType)0x1E))
-		{
-			moveAllies = TRUE;
-		}
-		else
-		{
-			moveAllies = FALSE;
-		}
-		Object *object = retail->m_object;
-		if (object->isKindOf((KindOfType)0x6C) &&
-			!*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(TheAI->getAiData()) + 0xB5))
-		{
-			moveAllies = FALSE;
-		}
-		if (!reinterpret_cast<const Rva00216D20 *>(object)->field() &&
-			object->isKindOf((KindOfType)0x7C))
-		{
-			moveAllies = TRUE;
-		}
-		if (reinterpret_cast<const BFMEActionObject *>(object)->testStatus(0x38) ||
-			reinterpret_cast<const BFMEActionObject *>(object)->testStatus(0x31) ||
-			reinterpret_cast<const BFMESelectionStatusBits *>(object)->test(0x7C))
-		{
-			reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
-			return;
-		}
-		if (moveAllies)
-		{
-			Pathfinder *alliesPathfinder = TheAI->pathfinder();
-			Bool canMoveAllies = object->getCrushableLevel() >= 4;
-			((BFMEMoveAlliesCall)j_000082ba)(alliesPathfinder, canMoveAllies,
-				object, retail->m_path, canMoveAllies);
-			if (g_012F0239 && g_012ED4FC)
+			Bool moveAllies;
+			if (*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(retail->m_path) + 0x0D) &&
+				!retail->m_object->isKindOf((KindOfType)0x1E))
 			{
-				((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
-					"CritterDesync: doPathfind11 -- m_requestedDestination=%g,%g,%g",
-					retail->m_requestedDestination.x, retail->m_requestedDestination.y,
-					retail->m_requestedDestination.z);
+				moveAllies = TRUE;
+			}
+			else
+			{
+				moveAllies = FALSE;
+			}
+			Object *object = retail->m_object;
+			if (object->isKindOf((KindOfType)0x6C) &&
+				!*reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(TheAI->getAiData()) + 0xB5))
+			{
+				moveAllies = FALSE;
+			}
+			if (reinterpret_cast<const Rva00216D20 *>(object)->field() ||
+				object->isKindOf((KindOfType)0x7C))
+			{
+				moveAllies = TRUE;
+			}
+			if (!reinterpret_cast<const BFMEActionObject *>(object)->testStatus(0x38) &&
+				!reinterpret_cast<const BFMEActionObject *>(object)->testStatus(0x31) &&
+				!reinterpret_cast<const BFMESelectionStatusBits *>(object)->test(0x7C) &&
+				moveAllies)
+			{
+				Pathfinder *alliesPathfinder = TheAI->pathfinder();
+				char crushableLevel =
+					reinterpret_cast<const BFMECrushableLevelQuery *>(object)->getCrushableLevel();
+				reinterpret_cast<BFMEPathfinderMoveAllies *>(alliesPathfinder)->moveAllies(
+					object, retail->m_path,
+					!(crushableLevel < 4));
+				if (g_012F0239 && g_012ED4FC)
+				{
+					((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,
+						"CritterDesync: doPathfind11 -- m_requestedDestination=%g,%g,%g",
+						retail->m_requestedDestination.x, retail->m_requestedDestination.y,
+						retail->m_requestedDestination.z);
+				}
 			}
 		}
 		reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
@@ -1208,13 +1328,11 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	{
 		((BFMEWakeCall)j_0003611a)(this);
 	}
-	#endif
+#endif
 	reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
 }
 #undef TheAI
 #undef TheGameLogic
-#undef g_012ED4FC
-#undef g_012F0239
 
 /* Requests a path to be found.  Note that if it is possible to do it without having to use the 
 pathfinder (air units just move point to point) it generates the path immediately.  Otherwise the path

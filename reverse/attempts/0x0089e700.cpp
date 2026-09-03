@@ -32,10 +32,9 @@ void EAStringC::ComputeHash()
 			++s;
 			if (c <= 'Z' && c >= 'A')
 				c += 32;
-			int mixed = c;
-			mixed ^= (int)hash;
-			mixed *= 0x01000193;
-			hash = (unsigned)mixed;
+			c ^= (int)hash;
+			c *= 0x01000193;
+			hash = (unsigned)c;
 			c = (signed char)*s;
 		}
 		while (c);

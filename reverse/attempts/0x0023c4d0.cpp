@@ -59,13 +59,14 @@ struct BfmeObjectHashNode
 	Object *m_bfmeObject;								///< +0x08
 };
 
-class GameLogic
+class GameLogicFrameSlice
 {
 public:
 	Object *bfmeFindObjectByID( UnsignedInt id )
 	{
-		UnsignedInt bucketCount = (UnsignedInt)( m_bfmeBucketsEnd - m_bfmeBuckets );
-		BfmeObjectHashNode *node = m_bfmeBuckets[ id % bucketCount ];
+		GameLogicFrameSlice *logic = this;
+		BfmeObjectHashNode *node = logic->m_bfmeBuckets[
+			id % ( (UnsignedInt)( logic->m_bfmeBucketsEnd - logic->m_bfmeBuckets ) ) ];
 
 		while ( node && node->m_bfmeId != id )
 			node = node->m_bfmeNext;
@@ -81,7 +82,7 @@ public:
 	BfmeObjectHashNode **m_bfmeBucketsEnd;				///< retail this+0xb8
 };
 
-extern GameLogic *TheGameLogic;							///< retail [0x012F0898]
+extern GameLogicFrameSlice *TheGameLogic;							///< retail [0x012F0898]
 
 class BfmeMemberQueue
 {
@@ -143,15 +144,24 @@ Bool BfmeHordeContainPoll::bfmeAllMembersReady( void )
 		if ( member == 0 )
 			continue;
 
-		BfmeMemberSlotState *state = member->m_bfmeAI->m_bfmeSlotState;
+		BfmeMemberAI *ai = member->m_bfmeAI;
+		if ( ai == 0 )
+			continue;
+
+		BfmeMemberSlotState *state = ai->m_bfmeSlotState;
 		BfmeMemberQueue *queue = state->m_bfmeQueue;
 
 		anyResolved = true;
 
-		if ( queue && queue->m_bfmeCount == 0 )
-			continue;
+		if ( queue != 0 )
+		{
+			if ( queue->m_bfmeCount == 0 )
+				continue;
+		}
 
-		if ( state->m_bfmeQueue == 0 || state->m_bfmeQueue->m_bfmeCount != 1 ||
+		queue = state->m_bfmeQueue;
+
+		if ( queue == 0 || queue->m_bfmeCount != 1 ||
 			( member->m_bfmeStatus & 0x10000000 ) )
 			blocked = true;
 	}
