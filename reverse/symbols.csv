@@ -12993,6 +12993,7 @@ name,address,notes
 ?adjust@Rva000C7DC0@@QAEHH@Z,0x000C7D10,address-derived helper called by the accumulator at 0x000C7DC0
 ?adjust@Rva006AE150Entry@@QAEMPAVRva006AE150Argument@@@Z,0x0001D39F,address-derived entry scale helper used by Rva006AE150Owner::compute
 ?adjust@Rva006AE150Owner@@QAEMPAVRva006AE150Argument@@@Z,0x0001DE85,address-derived owner scale helper used by Rva006AE150Owner::compute
+?adjustDestination@Pathfinder@@QAE_NPAVObject@@ABVLocomotorSet@@PAUCoord3D@@PBU4@@Z,0x00027FFC,DefaultProductionExitUpdate exitObjectViaDoor retail call
 ?adjustDisplay@@YAXPAVGameWindow@@H_N@Z,0x004B7CA0,general 3-arg overload; 3 pushes + add esp 0xc at the GadgetListBoxSetBottomVisibleEntry call site 0x004B857A
 ?adjustDisplay@@YAXPAVGameWindow@@_N@Z,0x004B7B20,BFME-only 2-arg overload (no adjustment param); proven from computeTotalHeight's own bytes (0x4B7ED0: 2 pushes + add esp8) distinct from the general 3-arg adjustDisplay@0x4B7CA0 (addEntry's bytes: 3 pushes + add esp0xc)
 ?adjustFontSize@GlobalLanguage@@QAEHH@Z,0x00004E67,this tree names the class GlobalLanguage where the ledger row at 0x00439000 spells it GlobalLanguageData; ILT 0x00004E67 is what InGameUI::addNamedTimer calls and it jumps straight to that body
