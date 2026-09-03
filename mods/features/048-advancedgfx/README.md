@@ -12,8 +12,9 @@ retail game has no way to reach any of them. This turns them on.
 | Dynamic LOD | |
 | Texture Detail *(slider)* | Particle Cap *(slider)* |
 
-Press **F11** on the Options screen to switch to the tab, F11 again to switch
-back.
+A **CUSTOM GRAPHICS** button sits in the Options nav bar beside CANCEL. Click it
+for the tab, click it again to come back. F11 does the same thing from the
+keyboard.
 
 ## Why this is one call and not a mod
 

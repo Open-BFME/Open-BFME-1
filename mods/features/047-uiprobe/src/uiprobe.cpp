@@ -1,5 +1,12 @@
 // 047-uiprobe — INSTRUMENT. Open the Options screen and flip a mod-bus bit from
-// the keyboard, because the test rig has no working mouse.
+// the keyboard, and dump the screen's widget slots.
+//
+// THE MOUSE WORKS AGAIN. This was written for a rig whose pointer never reached
+// the game; after wine went to 11.16 and the display moved to :4, clicking
+// CANCEL closes the Options screen and clicking a placed button dispatches its
+// command. The keyboard paths below are still the fastest way in and F9 is
+// still the only way into a replay without menus, but "no mouse" is no longer
+// true and should not be repeated.
 //
 // 046-optionsui puts three Open-BFME settings on the real Options screen, and
 // demonstrating it needs someone to click a checkbox. On this rig nobody can:

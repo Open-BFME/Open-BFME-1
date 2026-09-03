@@ -439,6 +439,8 @@ def build_advancedgfx(pe, feature_dir, probe=False):
     # exactly when the key means anything, so nothing polls during a game.
     return build_feature(pe, feature_dir / "src/advancedgfx.cpp", "advancedgfx_update", (
         (TARGET_APTOPTIONS_UPDATE, "advancedgfx_update", ("ecx",)),
+        # AptOptions::RefreshNat, the command the nav bar's fourth button carries.
+        (0x00560030, "advancedgfx_refreshnat", ("ecx",)),
     ), probe=probe)
 
 
