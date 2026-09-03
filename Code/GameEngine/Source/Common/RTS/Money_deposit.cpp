@@ -37,6 +37,7 @@ struct MiscAudio
 {
 	char m_bfme_head[0x540];				// the sounds ahead of this one
 	AudioEventRTS m_moneyDepositSound;			// this+0x540
+	AudioEventRTS m_moneyWithdrawSound;			// this+0x5B0
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
@@ -151,8 +152,8 @@ class BfmeDepositTally
 {
 public:
 	UnsignedInt m_bfme_head;
-	UnsignedInt m_bfme_pad;
-	UnsignedInt m_total;					// this+0x08
+	UnsignedInt m_withdrawTotal;				// this+0x04
+	UnsignedInt m_depositTotal;				// this+0x08
 };
 
 extern BfmeDepositTally *TheBfmeDepositTally;
@@ -161,6 +162,7 @@ extern BfmeDepositTally *TheBfmeDepositTally;
 class Money
 {
 public:
+	UnsignedInt withdraw(UnsignedInt amountToWithdraw, Bool playSound = true);
 	void deposit(UnsignedInt amountToDeposit, Bool playSound = true);
 
 private:
@@ -168,6 +170,32 @@ private:
 	UnsignedInt m_money;					// this+0x04
 	Int m_playerIndex;					// this+0x08
 };
+
+UnsignedInt Money::withdraw(UnsignedInt amountToWithdraw, Bool playSound)
+{
+	if (amountToWithdraw > m_money)
+		amountToWithdraw = m_money;
+
+	if (amountToWithdraw == 0)
+		return amountToWithdraw;
+
+	AudioEventRTS event = TheAudio->getMiscAudio()->m_moneyWithdrawSound;
+	event.setPlayerIndex(m_playerIndex);
+
+	if (playSound)
+		TheAudio->addAudioEvent(&event);
+
+	m_money -= amountToWithdraw;
+
+	if (TheBfmeDepositTally != 0 && ThePlayerList != 0)
+	{
+		Player *localPlayer = ThePlayerList->getLocalPlayer();
+		if (localPlayer != 0 && localPlayer->getPlayerIndex() == m_playerIndex)
+			TheBfmeDepositTally->m_withdrawTotal += amountToWithdraw;
+	}
+
+	return amountToWithdraw;
+}
 
 void Money::deposit(UnsignedInt amountToDeposit, Bool playSound)
 {
@@ -188,7 +216,7 @@ void Money::deposit(UnsignedInt amountToDeposit, Bool playSound)
 		Player *localPlayer = ThePlayerList->getLocalPlayer();
 		if (localPlayer != 0 && localPlayer->getPlayerIndex() == m_playerIndex)
 		{
-			TheBfmeDepositTally->m_total += amountToDeposit;
+			TheBfmeDepositTally->m_depositTotal += amountToDeposit;
 		}
 	}
 }
