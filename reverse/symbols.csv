@@ -2267,6 +2267,7 @@ name,address,notes
 ??0BfmeStrVTI@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTM@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrVTN@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeStrVTZ@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
@@ -4312,6 +4313,7 @@ name,address,notes
 ??1BfmeStrVTF@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTH@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTI@@QAE@XZ,0x00887940,pin
+??1BfmeStrVTZ@@QAE@XZ,0x00887940,pin
 ??1BfmeStringArgBase@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; base of the ScriptActions by-value string view
 ??1BfmeStringPresenceValue@@QAE@XZ,0x00887940,AsciiString-compatible temporary destructor
 ??1BfmeSubB1035@@QAE@XZ,0x008976E0,ICF with BfmeChildA destructor used by BfmeSubB1035 destroy
