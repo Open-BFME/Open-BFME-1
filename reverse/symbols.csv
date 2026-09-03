@@ -2260,6 +2260,7 @@ name,address,notes
 ??0BfmeSubB@@QAE@ABV0@@Z,0x00887B60,Open-BFME5 the sub-object copy ctor the copies at 0x00351F30 and 0x00351FB0 call
 ??0BfmeTempCME@@QAE@XZ,0x00037EC5,pin
 ??0BfmeThingBE@@QAE@XZ,0x008BE3B0,Open-BFME5 the constructor the new expression at 0x008BE660 runs on its block
+??0BfmeThingVTD@@QAE@XZ,0x009C85B0,pin
 ??0BfmeUnicodeArgBase@@AAE@ABV0@@Z,0x00888400,alias of the wide string copy constructor pinned at the same address; InGameUI.cpp builds the by-value GadgetRadioSetText argument through a view because the reference header keeps the copy out of line
 ??0BfmeValVNJ@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeVecBaseAY@@QAE@IABUBfmeAllocAY@@@Z,0x00004AF7,ILT to vector_base ctor at 0x00753180
