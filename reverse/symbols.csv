@@ -83673,3 +83673,4 @@ _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 ?g_bfmePeerReqE8@@3HA,0x012B9664,dword copied into PeerRequest+0xE8 by 0x0053AB90
 ??0PeerRequest@@QAE@XZ,0x000171FC,ILT of PeerRequest ctor used by 0x0053AB90
 ??1PeerRequest@@QAE@XZ,0x00016BD5,ILT of PeerRequest dtor used by 0x0053AB90
+?bind@CountedPtr@@QAEXABVAsciiString@@@Z,0x0002C6D8,ILT to 0x00487750 ICF-folded callee of AudioEventRTS initFromName eventInfo bind
