@@ -72764,6 +72764,7 @@ name,address,notes
 ?bfmeAccept@Gen_0026A980@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x0026A980 accepts through
 ?bfmeAccept@Gen_0026C210@@AAEXPAVBfmeSeedTarget@@@Z,0x000289F7,Open-BFME5 ILT the seeder at 0x0026C210 accepts through
 ?bfmeAccept@Gen_0026E160@@AAEXPAVBfmeSeedTarget@@@Z,0x000289F7,Open-BFME5 ILT the seeder at 0x0026E160 accepts through
+?bfmeAccept@Gen_002802F0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002802F0 accepts through
 ?bfmeAccept@Gen_00280CF0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x00280CF0 accepts through
 ?bfmeAccept@Gen_002815B0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002815B0 accepts through
 ?bfmeAccept@Gen_00281CD0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the version block at 0x00281CD0 accepts through
@@ -75289,6 +75290,7 @@ name,address,notes
 ?bfmeSetVOT@BfmeStrVOT@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVOX@BfmeStrVOX@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeSetVSD@BfmeItemVSD@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVSF@BfmeStrVSF@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -83102,6 +83104,7 @@ g_bfmeFlagDMa,0x012B7D84,Open-BFME5 the first flag the quiet test at 0x00563940 
 g_bfmeFlagDMb,0x012F4AFD,Open-BFME5 the second flag the quiet test at 0x00563940 reads
 g_bfmeFlagDMc,0x012F4AFE,Open-BFME5 the third flag the quiet test at 0x00563940 reads
 g_bfmeFlagEC,0x012F9DB8,Open-BFME5 the flag the setter at 0x0073D850 writes
+g_bfmeFlagVSF,0x012ED4E9,Open-BFME5 retail byte flag set by the 0x00062750 body
 g_bfmeFlagsFE,0x012F9C5C,Open-BFME5 the flags the reset at 0x007CCD90 raises
 g_bfmeFourthEB,0x012D7190,Open-BFME5 the fourth word the global reset at 0x009336B0 sets
 g_bfmeFourthFD,0x013549E0,Open-BFME5 the fourth block the clear at 0x00875F90 zeroes
@@ -83117,6 +83120,7 @@ g_bfmeHolderBP,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DD0 writ
 g_bfmeHolderBQ,0x012F1464,Open-BFME5 the singleton the setter at 0x002F0DF0 writes its second flag into
 g_bfmeHolderBS,0x012EF4CC,Open-BFME5 the singleton the clear at 0x002ED870 also clears a flag in
 g_bfmeHolderBU,0x013377D8,Open-BFME5 the singleton the test at 0x00892210 reads its field from
+g_bfmeHostVSF,0x012ED4F0,Open-BFME5 retail string object assigned by the 0x00062750 body
 g_bfmeIndexFA,0x012D5DC8,Open-BFME5 the index the seeder at 0x008D3AB0 clears
 g_bfmeInvalidScore1285,0x0109BF3C,address-derived invalid-direction sentinel returned by the 0x008BA970 retail scorer
 g_bfmeJpegExtendedMessage,0x01081238,JPEG extended message-table text selected for multiple tables
@@ -83127,6 +83131,7 @@ g_bfmeListCK,0x012ED584,Open-BFME5 the list the search at 0x0007B5F0 walks
 g_bfmeListDQ,0x012F3350,Open-BFME5 the list the constructor at 0x00490500 pushes onto
 g_bfmeManagerP,0x012F0898,Open-BFME5 the manager the clear at 0x00371120 hands each element to
 g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score accepted by the 0x008BB3F0 retail body
+g_bfmeNameVSF,0x012ED4EC,Open-BFME5 retail string object assigned by the 0x00062750 body
 g_bfmeOffsetDF,0x01098AD4,Open-BFME5 the offset the clamped difference at 0x001E1950 subtracts
 g_bfmeOwnerBR,0x012F060C,Open-BFME5 the singleton the mark at 0x002E2B50 reaches its target through
 g_bfmePathfindFreeList,0x012F1094,Open-BFME5 PathfindCellInfo intrusive free-list head
@@ -83203,4 +83208,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeAccept@Gen_002802F0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002802F0 accepts through
