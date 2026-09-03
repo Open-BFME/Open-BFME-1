@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?aiDoCommand@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 // Open-BFME: AIUpdateInterface::aiDoCommand, retail 0x00277780, 1953 bytes.
 //
 // The BFME dispatcher is reached through AICommandInterface's secondary vtable
@@ -15,6 +16,7 @@ class PolygonTrigger;
 class CommandButton;
 class Path;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -29,6 +31,7 @@ enum CommandSourceType
 	CMD_FROM_AI = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 	Int m_cmd;                              // +0x00
@@ -46,6 +49,7 @@ struct AICommandParms
 	Path *m_path;                           // +0x98
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandParmsStorage
 {
 public:
@@ -94,6 +98,7 @@ public:
 	virtual void accept(const AICommandParms *parms) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 public:
@@ -115,12 +120,14 @@ protected:
 	char m_afterObject[0x20 - 0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
 protected:

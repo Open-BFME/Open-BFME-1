@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD
+// readable body of ?filterPostRender@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@AAUCoord2D@@AA_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 
 struct Coord2D;
 
@@ -12,6 +13,7 @@ enum FilterModes
 	FM_FIRST = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DFilterInterface
 {
 public:
@@ -23,6 +25,7 @@ public:
 
 static W3DFilterInterface *W3DFilters[1];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:

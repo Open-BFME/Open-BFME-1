@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?read@DataChunkTableOfContents@@QAEXAAVChunkInputStream@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME: DataChunkTableOfContents::read, retail 0x00102F20.
 //
 // This focused TU preserves the BFME layouts used by the adjacent table
@@ -22,7 +23,6 @@ class StringBase
 		void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char> {};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h

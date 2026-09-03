@@ -107,6 +107,7 @@ void W3DPropBuffer::cull(CameraClass * camera)
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBufferDestructor.cpp
 // ??1W3DPropBuffer@@QAE@XZ present-unmatched
 W3DPropBuffer::~W3DPropBuffer(void)
 {

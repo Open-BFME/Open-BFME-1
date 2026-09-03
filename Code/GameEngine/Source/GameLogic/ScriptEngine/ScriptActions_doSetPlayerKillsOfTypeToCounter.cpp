@@ -9,6 +9,7 @@ class Player;
 class ScriptActions;
 struct ScriptCounter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 protected:
@@ -23,12 +24,14 @@ public:
 		Bool *isWildcard);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *getPlayerFromMask(unsigned short mask);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -46,6 +49,7 @@ struct PlayerKills
 	int getKillsOfType(const AsciiString &objectType);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 private:
@@ -69,6 +73,7 @@ static __forceinline int bfmeGetKillsOfType(PlayerKills *kills,
 	return (kills->*fn.member)(objectType);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

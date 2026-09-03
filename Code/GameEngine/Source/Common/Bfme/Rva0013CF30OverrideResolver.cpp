@@ -3,6 +3,7 @@
 // to Overridable::friend_getFinalOverride, and falls back to its owner.  The
 // original owning type and method spelling are not currently recovered.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

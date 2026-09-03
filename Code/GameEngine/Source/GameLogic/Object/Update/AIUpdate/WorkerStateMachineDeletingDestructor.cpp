@@ -7,6 +7,7 @@
 class WorkerStateMachine;
 void Force_WorkerStateMachine_Deleting_Destructor(WorkerStateMachine *machine);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine
 {
 	friend void Force_WorkerStateMachine_Deleting_Destructor(WorkerStateMachine *machine);

@@ -168,6 +168,7 @@ Bfme5TreeIterB __cdecl bfme5SeekKeyB(Bfme5TreeIterB cur, Bfme5TreeIterB end, con
 
 class MultiIniFieldParse;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -231,6 +232,7 @@ void * __cdecl bfme5MakeParseNodeB(INI *ini)
 
 struct Coord3D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:

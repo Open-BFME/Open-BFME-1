@@ -65,6 +65,7 @@ public:
 	virtual void marker();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine
 {
 public:
@@ -72,6 +73,7 @@ public:
 	void deleteInstance() { delete this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerPrimaryStateMachine
 {
 public:
@@ -79,6 +81,7 @@ public:
 	void deleteInstance() { delete this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckStateMachine
 {
 public:
@@ -86,6 +89,7 @@ public:
 	void deleteInstance() { delete this; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

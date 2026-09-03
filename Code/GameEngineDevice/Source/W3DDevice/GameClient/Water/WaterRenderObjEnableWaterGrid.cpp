@@ -8,6 +8,7 @@ typedef unsigned int UnsignedInt;
 
 extern "C" void *memset(void *, int, unsigned int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterMeshData
 {
 public:
@@ -35,6 +36,7 @@ public:
 	~WaterGridResetGuard(void) { W3DRadarResetUnlock(); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 	protected:

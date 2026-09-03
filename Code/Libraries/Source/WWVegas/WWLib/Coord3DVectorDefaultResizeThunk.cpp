@@ -5,6 +5,7 @@
 // The one-argument overload therefore materializes a default Coord3D directly
 // in the outgoing argument slot before forwarding to that overload.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Coord3D() {}

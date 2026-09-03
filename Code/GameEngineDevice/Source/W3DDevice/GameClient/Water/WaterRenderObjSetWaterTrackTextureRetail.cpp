@@ -5,6 +5,7 @@ typedef int Int;
 typedef char Char;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -87,6 +88,7 @@ static __forceinline Bool BFMEWaterTrackIndexInRange(Int index)
 	return (unsigned)index < 6;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -107,6 +109,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:

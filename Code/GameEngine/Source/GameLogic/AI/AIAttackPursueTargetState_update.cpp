@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?update@AIAttackPursueTargetState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Retail 0x001764E0: AIAttackPursueTargetState::update.
 
 typedef bool Bool;
@@ -41,6 +42,7 @@ struct Rva001764E0StateMachine
 	Rva001764E0Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackPursueTargetState
 {
 	unsigned char m_unreconstructed_004[0x18];

@@ -1,5 +1,6 @@
 // BFME cache calculation body at retail 0x0041CEC0.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -57,6 +58,7 @@ public:
 
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 private:
@@ -68,6 +70,7 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 private:

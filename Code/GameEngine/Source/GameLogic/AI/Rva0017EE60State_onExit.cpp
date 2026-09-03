@@ -27,6 +27,7 @@ public:
 	virtual void ignoreObstacle(Object *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -46,6 +47,7 @@ struct Rva0017EE60StateMachine
 	unsigned char m_flag42;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

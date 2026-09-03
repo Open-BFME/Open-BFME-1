@@ -57,6 +57,7 @@ template	<class T> class SList;
 //	manage a	singularly linked	list of objects.	
 //
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/SLNODE.H
 class	GenericSLNode : public AutoPoolClass<GenericSLNode, 256>
 {
 	protected:
@@ -87,6 +88,7 @@ class	GenericSLNode : public AutoPoolClass<GenericSLNode, 256>
 
 
 template	<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/SLNODE.H
 class	SLNode : public GenericSLNode
 {
 	public:

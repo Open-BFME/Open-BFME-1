@@ -13,6 +13,7 @@ struct BfmeParticleSystemHandle
 	BfmeParticleSystemHandle *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 public:

@@ -4,6 +4,7 @@ extern float GetGameClientRandomValueReal(float low, float high, char *file, int
 
 namespace FXParticleSystem {
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D {
     Coord3D(float xValue, float yValue, float zValue) : x(xValue), y(yValue), z(zValue) {}
 

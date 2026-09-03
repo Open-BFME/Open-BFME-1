@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Drawable::setEmoticon, retail 0x004149E0, 218 bytes.
 //
 // This is the Zero Hour source body with BFME's measured Drawable layout.  The
@@ -23,6 +24,7 @@ private:
 	unsigned char m_unmodelled[0x30];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class DrawableIconInfo
 {
 public:
@@ -40,6 +42,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -47,6 +50,7 @@ public:
 	UnsignedInt m_frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -60,6 +64,7 @@ private:
 	DrawableIconInfo *m_iconInfo;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DCollection
 {
 public:

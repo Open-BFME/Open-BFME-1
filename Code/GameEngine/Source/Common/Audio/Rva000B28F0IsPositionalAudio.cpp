@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?isPositionalAudio@AudioEventRTS@@: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 
 // Open-BFME5: AudioEventRTS::isPositionalAudio, retail RVA 0x000B28F0.
 // The BFME AudioEventRTS layout places AudioEventInfo::m_type at +0x38,
@@ -11,6 +12,7 @@ struct AudioEventInfoSlice
 	unsigned char m_type;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

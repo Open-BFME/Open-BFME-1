@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD
+// readable body of ?setDetail@TerrainTracksRenderObjClassSystem@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	char pad[0x1f4];
@@ -23,6 +25,7 @@ public:
 	int refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClassSystem
 {
 public:

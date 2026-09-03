@@ -48,6 +48,7 @@
 **	This is a straw terminator class. It will generate random numbers to fill the data request.
 **	Unlike regular straw terminators, this class will never run out of "data".
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RNDSTRAW.H
 class RandomStraw : public Straw
 {
 	public:

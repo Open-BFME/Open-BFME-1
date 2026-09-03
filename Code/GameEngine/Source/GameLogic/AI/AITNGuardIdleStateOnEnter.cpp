@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD
+// readable body of ?onEnter@AITNGuardIdleState@@: Code/GameEngine/Source/GameLogic/AI/AITNGuard.cpp
 //
 // Retail 0x00189C90: AITNGuardIdleState::onEnter.  The string DIR32 is the
 // BFME compile path baked into GetGameLogicRandomValue's file argument, and
 // 0x24A is that file's line.  State+0x1C is the machine, machine+0x10 is the
 // owner, Object+0x204 is the AI module, AIData+0x40 is m_guardEnemyScanRate.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -14,6 +16,7 @@ public:
 	unsigned int m_frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class TAiData
 {
 public:
@@ -21,6 +24,7 @@ public:
 	int m_guardEnemyScanRate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -32,12 +36,14 @@ public:
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
 	void friend_setGoalObject( Object *obj );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -47,6 +53,7 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -61,6 +68,7 @@ enum StateReturnType
 	STATE_CONTINUE = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AITNGuard.h
 class AITNGuardIdleState
 {
 public:

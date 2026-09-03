@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ??1SuperweaponInfo@@MAE@XZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // BFME SuperweaponInfo destructor from the canonical InGameUI source.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -12,6 +14,7 @@ private:
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -30,6 +33,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class SuperweaponInfo
 {
 protected:

@@ -4,6 +4,7 @@
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:
@@ -15,6 +16,7 @@ private:
 	int m_tunnelCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -25,6 +27,7 @@ private:
 	TunnelTracker *m_tunnelSystem;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -33,6 +36,7 @@ public:
 
 #define TUNNEL_SLOT(n) virtual void unused##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TunnelContain.h
 class TunnelContain
 {
 public:

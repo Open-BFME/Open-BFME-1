@@ -4,6 +4,7 @@
 // returns NULL from the inlined operator, so the bit extract is duplicated
 // onto both arms and MSVC keeps the register form `mov eax,[eax+0xC8]`.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

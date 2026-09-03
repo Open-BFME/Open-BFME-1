@@ -10,6 +10,7 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -54,6 +55,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -117,6 +119,7 @@ public:
 	Bool canReceive(void *upgrade);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -175,6 +178,7 @@ static __forceinline Object *bfmeFirstTeamMember(const Team *team)
 	return (reinterpret_cast<const TeamFirstMemberCall *>(team)->*fn.member)();
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

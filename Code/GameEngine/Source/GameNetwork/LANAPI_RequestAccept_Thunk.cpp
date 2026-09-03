@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // readable body of ?RequestAccept@LANAPI@@UAEXXZ: Code/GameEngine/Source/GameNetwork/lanapi.cpp
+// readable body of ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 // Open-BFME5: LANAPI::RequestAccept, retail 0x00686110, converted out of a
 // machine byte dump. The reference body ports unchanged.
 //

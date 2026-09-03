@@ -2,6 +2,7 @@
 // ??1DX8Caps@@QAE@XZ
 // retail 0x00903E00. Destroys CompactLog, CapsLog, then DriverDLL (Direct3D* has no dtor).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 	void Free_String(void);
@@ -13,6 +14,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8caps.h
 class DX8Caps
 {
 public:

@@ -509,6 +509,7 @@ Real WeaponTemplate::getUnmodifiedAttackRange() const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponTemplate_getDelayBetweenShots.cpp
 // ?getDelayBetweenShots@WeaponTemplate@@QBEHABVWeaponBonus@@@Z present-unmatched
 Int WeaponTemplate::getDelayBetweenShots(const WeaponBonus& bonus) const 
 {
@@ -528,6 +529,7 @@ Int WeaponTemplate::getDelayBetweenShots(const WeaponBonus& bonus) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponTemplate_getClipReloadTime.cpp
 // ?getClipReloadTime@WeaponTemplate@@QBEHABVWeaponBonus@@@Z present-unmatched
 Int WeaponTemplate::getClipReloadTime(const WeaponBonus& bonus) const 
 {
@@ -1564,6 +1566,7 @@ void WeaponStore::handleProjectileDetonation(const WeaponTemplate* wt, const Obj
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponStore_createAndFireTempWeapon.cpp
 // ?createAndFireTempWeapon@WeaponStore@@ present-unmatched
 void WeaponStore::createAndFireTempWeapon(const WeaponTemplate* wt, const Object *source, const Coord3D* pos)
 {
@@ -1576,6 +1579,7 @@ void WeaponStore::createAndFireTempWeapon(const WeaponTemplate* wt, const Object
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponStore_createAndFireTempWeapon.cpp
 // ?createAndFireTempWeapon@WeaponStore@@ present-unmatched
 void WeaponStore::createAndFireTempWeapon(const WeaponTemplate* wt, const Object *source, Object *target)
 {
@@ -2238,6 +2242,7 @@ Bool Weapon::isSourceObjectWithGoalPositionWithinAttackRange( const Object *sour
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isWithinAttackRange.cpp
 // ?isWithinAttackRange@Weapon@@ present-unmatched
 Bool Weapon::isWithinAttackRange(const Object *source, const Coord3D* pos) const
 {
@@ -2256,6 +2261,7 @@ Bool Weapon::isWithinAttackRange(const Object *source, const Coord3D* pos) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isWithinAttackRange.cpp
 // ?isWithinAttackRange@Weapon@@ present-unmatched
 Bool Weapon::isWithinAttackRange(const Object *source, const Object *target) const
 {
@@ -2828,6 +2834,7 @@ void Weapon::preFireWeapon( const Object *source, const Object *victim )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_privateFireWeaponWrappers.cpp
 // ?fireWeapon@Weapon@@ present-unmatched
 Bool Weapon::fireWeapon(const Object *source, Object *target, ObjectID* projectileID)
 {
@@ -2837,6 +2844,7 @@ Bool Weapon::fireWeapon(const Object *source, Object *target, ObjectID* projecti
 
 //-------------------------------------------------------------------------------------------------
 // return true if we auto-reloaded our clip after firing.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_privateFireWeaponWrappers.cpp
 // ?fireWeapon@Weapon@@ present-unmatched
 Bool Weapon::fireWeapon(const Object *source, const Coord3D* pos, ObjectID* projectileID)
 {
@@ -2863,6 +2871,7 @@ void Weapon::fireProjectileDetonationWeapon(const Object *source, const Coord3D*
 //-------------------------------------------------------------------------------------------------
 //Currently, this function was added to allow a script to force fire a weapon,
 //and immediately gain control of the weapon that was fired to give it special orders...
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_privateFireWeaponWrappers.cpp
 // ?forceFireWeapon@Weapon@@QAEPAVObject@@PBV2@PBUCoord3D@@@Z present-unmatched
 Object* Weapon::forceFireWeapon( const Object *source, const Coord3D *pos)
 {
@@ -3242,6 +3251,7 @@ void Weapon::getFiringLineOfSightOrigin(const Object* source, Coord3D& origin) c
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
 // ?isClearFiringLineOfSightTerrain@Weapon@@ present-unmatched
 Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Object* victim) const
 {
@@ -3260,6 +3270,7 @@ Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Object*
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
 // ?isClearFiringLineOfSightTerrain@Weapon@@ present-unmatched
 Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Coord3D& victimPos) const
 {
@@ -3274,6 +3285,7 @@ Bool Weapon::isClearFiringLineOfSightTerrain(const Object* source, const Coord3D
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 /** Determine whether if source was at goalPos whether it would have clear line of sight. */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
 // ?isClearGoalFiringLineOfSightTerrain@Weapon@@ present-unmatched
 Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coord3D& goalPos, const Object* victim) const
 {
@@ -3289,6 +3301,7 @@ Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coo
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 /** Determine whether if source was at goalPos whether it would have clear line of sight. */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isClearFiringLineOfSightTerrain.cpp
 // ?isClearGoalFiringLineOfSightTerrain@Weapon@@ present-unmatched
 Bool Weapon::isClearGoalFiringLineOfSightTerrain(const Object* source, const Coord3D& goalPos, const Coord3D& victimPos) const
 {

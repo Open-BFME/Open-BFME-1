@@ -15,6 +15,7 @@ public:
 
 class Waypoint;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIStateMachine
 {
 public:

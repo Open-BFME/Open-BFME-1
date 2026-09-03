@@ -118,7 +118,7 @@ ShellMenuScheme::ShellMenuScheme( void )
 	
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeDestructorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ShellMenuSchemeDestructor.cpp
 // ??1ShellMenuScheme@@QAE@XZ present-unmatched
 ShellMenuScheme::~ShellMenuScheme( void )
 {

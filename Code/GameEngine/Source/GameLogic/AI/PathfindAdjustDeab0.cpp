@@ -11,6 +11,7 @@ struct Coord3D { float x, y, z; };
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -20,6 +21,7 @@ public:
 	Coord3D m_pos;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -27,6 +29,7 @@ public:
 		const Object *victim, const Coord3D *victimPos, Int flags ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

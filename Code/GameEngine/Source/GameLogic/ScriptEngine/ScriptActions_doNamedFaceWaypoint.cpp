@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// readable body of ?doNamedFaceWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
 #include "StringInline.h"
 
@@ -6,6 +7,7 @@ typedef bool Bool;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -13,6 +15,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -23,12 +26,14 @@ private:
 	Coord3D m_location;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	void aiFacePosition(const Coord3D *position, int source);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -41,6 +46,7 @@ public:
 	AICommandInterface m_command;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -49,6 +55,7 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -92,6 +99,7 @@ public:
 	virtual Object *getUnitNamedByValue(AsciiString name) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

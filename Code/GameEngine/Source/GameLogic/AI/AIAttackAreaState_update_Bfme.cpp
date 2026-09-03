@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@AIAttackAreaState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for retail RVA 0x0017E900.
 
 typedef bool Bool;
@@ -22,6 +23,7 @@ public:
 	UnsignedInt m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 	unsigned char m_pad00[0x3c];
@@ -66,6 +68,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 protected:
@@ -115,6 +118,7 @@ public:
 
 #undef BFME_AI_SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -122,6 +126,7 @@ public:
 	BfmeAIUpdate *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackAreaState : public State
 {
 public:

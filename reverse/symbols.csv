@@ -10572,6 +10572,7 @@ name,address,notes
 ?Render@LineGroupClass@@QAEXAAVRenderInfoClass@@@Z,0x0098ED30
 ?Render@PointGroupClass@@QAEXAAVRenderInfoClass@@H@Z,0x00917B70,derived from Render_Particles call sites; BFME added the int param
 ?Render@Render2DClass@@QAEXXZ,0x00933E50
+?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z,0x00960A30,identity confirmed by StreakLine render call site and Zero Hour signature
 ?Render@WW3D@@SA?AW4WW3DErrorType@@PAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z,0x008FE3C0,pin from packet 008fe7d0 callee
 ?Render@WW3D@@SA_NPAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z,0x008FE3C0,bool-returning reading of the scene/camera Render; same body the enum-named pin at this address points at
 ?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z,0x0095CE80,Open-BFME5 retail streak renderer
@@ -76980,6 +76981,7 @@ name,address,notes
 ?findBestInfoSlow@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@ABEPBVWeaponTemplateSet@@ABV?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@ABV?$BitFlags@$0BB@@@@Z,0x00013ACA,resweep callee back-solved
 ?findBestInfoSlow@WeaponFindBestInfoSlowShim@@QBEPBVWeaponTemplateSet@@ABV?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@ABV?$BitFlags@$0BB@@@@Z,0x00144000,incremental-link thunk target through a TU-local forwarding shim
 ?findBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@VAsciiString@@@Z,0x00034D8D,walks the list at collection+0x0c; identical 246-byte body to findRoad which walks +0x08. Called by the Bridge block
+?findClientUpdateModule@Drawable@@QAEPAVClientUpdateModule@@W4NameKeyType@@@Z,0x00031D2C,LaserFXNugget positional dispatch call target
 ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z,0x0002130F,GarrisonContain closest free point ILT
 ?findClosestRepulsor@AI@@QAEPAVObject@@PBV2@M@Z,0x0002BDB4,AIMoveAwayFromRepulsorsState::onEnter direct-call ILT thunk
 ?findCommandButton@ControlBar@@AAEPBVCommandButton@@ABVAsciiString@@@Z,0x0003B59D,incremental-link thunk read out of the call displacement in populateOCLTimer
@@ -79996,6 +79998,7 @@ name,address,notes
 ?initFromMesh@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,0x0004A2F5,Load_Geom direct call target; identity from W3DShadowGeometry method declaration and retail ILT
 ?initInternetMultiPlayer@@YAXXZ,0x004E8B80,ZH initInternetMultiPlayer: screenType=3 (0x004E8B86); grabMultiPlayerInfo 0x004E8B90; GadgetTextEntrySetText + winSetFocus(textEntryChat); hides staticTextGameSaved buttonContinue textEntryChat buttonEmote shows listboxChat chatBoxBorder; buttonBuddies hidden iff TheGameSpyInfo && getLocalProfileID()==0 (0x004E8C4C); BuddyRequest SETSTATUS(1) statusString Online -> TheGameSpyBuddyMessageQueue(0x012F71B4)->addRequest +0x18 at 0x004E8CAB; ILT 0x0004AD22; sole caller ScoreScreenInit 0x004E92D1 (mode 5)
 ?initLANMultiPlayer@@YAXXZ,0x004E8A70,ZH initLANMultiPlayer: screenType=2 (0x004E8A71); grabMultiPlayerInfo 0x004E8A7B; GadgetTextEntrySetText(textEntryChat TheEmptyString) winSetFocus(textEntryChat); staticTextGameSaved hidden textEntryChat/buttonEmote/listboxChat/chatBoxBorder shown buttonContinue/buttonBuddies hidden; listbox also stored to [0x012F7730]+0x5c; ILT 0x000081ED; sole caller ScoreScreenInit 0x004E92DD (mode 1)
+?initLaser@LaserUpdate@@QAEXPBVObject@@PBUCoord3D@@1H@Z,0x00024FC3,LaserFXNugget four-argument dispatch call target
 ?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?initReplayMultiPlayer@@YAXXZ,0x004E8D10,ZH initReplayMultiPlayer: screenType=4 at entry; grabMultiPlayerInfo 0x004E8D1A; winHide(TRUE) on the 7 chat/continue/buddy windows; byte-shape twin of initReplaySinglePlayer except the grab call; ILT 0x00007F6D; sole caller ScoreScreenInit 0x004E929A (replay && isMultiplayer)
 ?initReplaySinglePlayer@@YAXXZ,0x004E89C0,ZH initReplaySinglePlayer: screenType=4 (REPLAY) at entry; grabSinglePlayerInfo 0x004E89CA; winHide(TRUE) on staticTextGameSaved textEntryChat buttonEmote chatBoxBorder buttonContinue buttonBuddies listboxChat (0x012F4178/68/6C/70/64/74/7C); ILT 0x0002BF44; sole caller ScoreScreenInit 0x004E92C5 (replay && !TheRecorder->isMultiplayer)

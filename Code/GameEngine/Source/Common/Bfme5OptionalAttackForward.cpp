@@ -5,6 +5,7 @@ enum CommandSourceType
 	COMMAND_SOURCE_SCRIPT = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:

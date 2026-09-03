@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: convert AIAttackApproachTargetState::onExit to clean C++.
 //
 // The BFME state, Object, template, locomotor, and AI vtable layouts differ
@@ -11,6 +12,7 @@ typedef float Real;
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -23,12 +25,14 @@ enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 class Object;
 class AIUpdateInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
 	void ignoreObstacle(Object *obj);                 // ILT thunk at 0x0000315C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -154,6 +158,7 @@ struct BFMEApproachTargetFields
 	Bool m_isInitialApproach;                          // retail this+0x73
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

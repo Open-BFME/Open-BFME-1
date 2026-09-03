@@ -9,6 +9,7 @@ class Player;
 class ScriptActions;
 struct ScriptCounter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 protected:
@@ -23,12 +24,14 @@ public:
 		Bool *isWildcard);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -45,6 +48,7 @@ class PlayerLightPoints
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 };
@@ -62,6 +66,7 @@ static __forceinline int bfmeGetLightPoints(Player *player)
 	return (reinterpret_cast<PlayerLightPoints *>(player)->*fn.member)();
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

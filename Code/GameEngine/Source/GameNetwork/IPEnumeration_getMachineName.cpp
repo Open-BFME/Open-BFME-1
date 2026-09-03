@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getMachineName@IPEnumeration@@: Code/GameEngine/Source/GameNetwork/IPEnumeration.cpp
 // BFME's implementation follows the released Zero Hour routine, returning
 // the shared empty string when WinSock setup or hostname discovery fails.
 
@@ -14,6 +15,7 @@ extern "C" __declspec(dllimport) int __stdcall WSAStartup(WORD version, WSADATA 
 extern "C" __declspec(dllimport) int __stdcall WSACleanup(void);
 extern "C" __declspec(dllimport) int __stdcall gethostname(char *name, int length);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -26,6 +28,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/IPEnumeration.h
 class IPEnumeration
 {
 public:

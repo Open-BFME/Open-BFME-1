@@ -1,12 +1,14 @@
 // cl: /DNDEBUG /MD
 // ZH GameLogic.cpp:2184 transition pump, with BFME's member delay.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:
 	bool isFinished();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -18,6 +20,7 @@ public:
 	virtual void update();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

@@ -2,6 +2,7 @@
 // SupplyTruckAIUpdate wrapper around BfmeThingCTA::bfmeGoCTA that stores a
 // Coord3D at +0x34c and a validity byte at +0x358 when the second argument is 0.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -23,6 +24,7 @@ private:
 	void *m_bfmeVal;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIUpdate : public BfmeThingCTA
 {
 public:

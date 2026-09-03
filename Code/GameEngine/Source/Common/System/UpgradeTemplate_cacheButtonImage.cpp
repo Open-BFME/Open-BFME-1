@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?cacheButtonImage@UpgradeTemplate@@QAEXXZ: Code/GameEngine/Source/Common/System/Upgrade.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -24,6 +26,7 @@ public:
 
 extern MappedImageCollection *TheMappedImageCollection;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:

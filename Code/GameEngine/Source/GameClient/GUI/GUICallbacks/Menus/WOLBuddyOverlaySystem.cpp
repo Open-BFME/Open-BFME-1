@@ -64,6 +64,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
@@ -73,6 +74,7 @@ public:
 	~UnicodeString() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -90,6 +92,7 @@ struct RightClickStruct
 	Int pos;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -101,6 +104,7 @@ public:
 	WindowLayout *winGetLayout(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -113,6 +117,7 @@ private:
 	GameWindow *m_windowList;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -168,6 +173,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class BuddyInfo
 {
 public:
@@ -176,6 +182,7 @@ public:
 
 typedef std::map<GPProfile, BuddyInfo> BuddyInfoMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:
@@ -206,6 +213,7 @@ public:
 
 extern GameSpyInfo *TheGameSpyInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyRCMenuData
 {
 public:

@@ -6,17 +6,20 @@
 // widened to float and flags (scale, shared, allow-level, no-feedback). That
 // five-argument body is already pinned at ILT 0x00010096.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ExperienceTracker.h
 class ExperienceTracker
 {
 public:
 	void addExperiencePoints(float experienceGain, bool canScaleForBonus, bool isShared, bool allowLevelGain, bool provideFeedback);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -24,6 +27,7 @@ public:
 	ExperienceTracker *m_experienceTracker;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -58,6 +62,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

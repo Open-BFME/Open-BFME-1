@@ -1,29 +1,36 @@
-// ?reverseAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z
-// partial score=0.97 date=2026-08-31
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reverseAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
+
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	Real x;
 	Real y;
+	Coord2D( void ) {}
+	Coord2D( const Coord2D &that ) : x(that.x), y(that.y) {}
+	~Coord2D( void ) {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
 	Int winSetPosition( Int x, Int y );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindow
 {
 public:
@@ -54,6 +61,7 @@ private:
 	Bool m_finished;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
 class ProcessAnimateWindowSlideFromTopFast
 {
 public:

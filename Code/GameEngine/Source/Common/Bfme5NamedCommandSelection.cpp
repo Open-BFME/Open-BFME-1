@@ -4,6 +4,7 @@ struct BfmeAsciiData
 	unsigned short m_bfmeLength;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -24,6 +25,7 @@ enum CommandSourceType
 	COMMAND_SOURCE_SCRIPT = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -36,6 +38,7 @@ struct BfmeAIHolder
 	AICommandInterface m_bfmeCommands;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -45,6 +48,7 @@ public:
 	BfmeAIHolder *m_bfmeAI;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 public:
@@ -52,12 +56,14 @@ public:
 	AsciiString m_bfmeName;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandSet
 {
 public:
 	const CommandButton *getCommandButton(int index) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

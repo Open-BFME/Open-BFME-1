@@ -442,7 +442,6 @@ Bool StealthUpdate::allowedToStealth( Object *stealthOwner ) const
 //---------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_hintDetectableWhileUnstealthed.cpp
 // ?hintDetectableWhileUnstealthed@StealthUpdate@@IAEXXZ
 
 
@@ -459,6 +458,7 @@ Real StealthUpdate::getFriendlyOpacity() const
 
 //=============================================================================
 // indicate how the given unit is "stealthed" with respect to a given player.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_calcStealthedStatusForPlayer.cpp
 // ?calcStealthedStatusForPlayer@StealthUpdate@@ present-unmatched
 StealthLookType StealthUpdate::calcStealthedStatusForPlayer(const Object* obj, const Player* player)
 {

@@ -12,6 +12,7 @@ class Player;
 class ScriptActions;
 struct ScriptCounter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 protected:
@@ -26,12 +27,14 @@ public:
 		Bool *isWildcard);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -50,6 +53,7 @@ extern PlayerList *ThePlayerList;
 // ILT shared by the already-converted BitFlags setter at 0x001C62B0.
 extern Int bfmeLookup_001c62b0(void *name);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

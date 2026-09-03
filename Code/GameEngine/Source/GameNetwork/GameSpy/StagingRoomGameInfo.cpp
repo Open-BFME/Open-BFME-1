@@ -59,7 +59,6 @@
 
 // GameSpyGameSlot -------------------------------------------
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlotConstructorThunk.cpp
 // ??0GameSpyGameSlot@@ present-unmatched
 GameSpyGameSlot::GameSpyGameSlot()
 {

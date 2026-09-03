@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0Shell@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME5: clean C++ reconstruction of Shell::Shell.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,6 +17,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -32,6 +35,7 @@ protected:
 
 class WindowLayout;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindowManager
 {
 public:
@@ -42,6 +46,7 @@ private:
 	char m_unreconstructed[0x30];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager
 {
 public:
@@ -52,6 +57,7 @@ private:
 	char m_unreconstructed[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell : public SubsystemInterface
 {
 public:

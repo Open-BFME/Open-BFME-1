@@ -14,7 +14,6 @@ struct BfmeNetAddress
 	unsigned short m_port;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class Rva00685640LANAPI
 {
 public:

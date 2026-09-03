@@ -14,6 +14,7 @@ __forceinline void specialAbilityStoreZero( volatile unsigned int *address )
 	*address = 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -37,6 +38,7 @@ private:
 	unsigned int m_word04;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
 	: public SpecialAbilityUpdateModuleDataBase
 {

@@ -6,6 +6,7 @@
 class Drawable;
 typedef _STL::list<Drawable *> DrawableList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -13,6 +14,7 @@ public:
 	unsigned int m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -20,6 +22,7 @@ public:
 	Object *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h
 class PickAndPlayInfo
 {
 public:
@@ -33,6 +36,7 @@ public:
 	char m_unmodelled[0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -47,6 +51,7 @@ public:
 };
 
 #define RVA005AD9C0_SLOT(n) virtual void slot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -76,6 +81,7 @@ public:
 #undef RVA005AD9C0_SLOT
 
 #define RVA005AD9C0_STREAM_SLOT(n) virtual void streamSlot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream
 {
 public:
@@ -95,6 +101,7 @@ extern MessageStream *TheMessageStream;
 void pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type type,
 	PickAndPlayInfo *info);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h
 class CommandTranslator
 {
 public:

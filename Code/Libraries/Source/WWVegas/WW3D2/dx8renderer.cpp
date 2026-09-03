@@ -2134,6 +2134,7 @@ static void Render_FVF_Category_Container_List_Delayed_Passes(FVFCategoryList& l
 	}
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8MeshRendererClass_Flush.cpp
 // ?Flush@DX8MeshRendererClass@@QAEXXZ present-unmatched
 void DX8MeshRendererClass::Flush(void)
 {

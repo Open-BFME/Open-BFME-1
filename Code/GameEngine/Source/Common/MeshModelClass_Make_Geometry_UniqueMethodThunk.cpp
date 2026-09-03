@@ -5,6 +5,7 @@
 #include "vector3.h"
 #include "vector4.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdl.h
 class MeshModelClass
 {
 public:

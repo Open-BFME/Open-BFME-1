@@ -5,6 +5,7 @@
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
     char *m_text;
@@ -15,6 +16,7 @@ public:
     void set(const char *text, int length);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

@@ -289,6 +289,15 @@ void W3DGameClient::reset( void )
 	* in the GameLogic and GameClient themselves */
 //-------------------------------------------------------------------------------------------------
 // ?friend_createDrawable@W3DGameClient@@UAEPAVDrawable@@PBVThingTemplate@@W4DrawableStatus@@@Z present-unmatched
+class BFMERetailDrawable
+{
+public:
+	BFMERetailDrawable( const ThingTemplate *tmplate, DrawableStatus statusBits, Int unknown );
+
+private:
+	unsigned char m_retailData[ 0x3d4 ];
+};
+
 Drawable *W3DGameClient::friend_createDrawable( const ThingTemplate *tmplate,
 																								DrawableStatus statusBits )
 {
@@ -298,7 +307,7 @@ Drawable *W3DGameClient::friend_createDrawable( const ThingTemplate *tmplate,
 	if( tmplate == NULL )
 		return NULL;
 	
-	draw = newInstance(Drawable)( tmplate, statusBits );
+	draw = (Drawable *)new BFMERetailDrawable( tmplate, statusBits, -1 );
 
 	return draw;
 

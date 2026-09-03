@@ -8,6 +8,7 @@ public:
 	virtual ~Rva00382CE0Object();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -16,6 +17,7 @@ public:
 
 extern void BFME_DX8_Thread_Assert(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

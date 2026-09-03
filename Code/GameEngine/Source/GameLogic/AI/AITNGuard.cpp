@@ -642,6 +642,7 @@ StateReturnType AITNGuardReturnState::onEnter( void )
 }
 
 //--------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AITNGuardReturnState_update_Bfme.cpp
 // ?update@AITNGuardReturnState@@ present-unmatched
 struct BfmeReturnMachineView
 {
@@ -761,6 +762,7 @@ void AITNGuardIdleState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AITNGuardIdleStateOnEnter.cpp
 // ?onEnter@AITNGuardIdleState@@ present-unmatched
 StateReturnType AITNGuardIdleState::onEnter( void )
 {

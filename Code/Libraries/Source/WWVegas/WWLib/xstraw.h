@@ -49,6 +49,7 @@
 **	This class is used to manage a buffer as a data source. Data requests will draw from the
 **	buffer supplied until the buffer is exhausted.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/XSTRAW.H
 class BufferStraw : public Straw
 {
 	public:
@@ -71,6 +72,7 @@ class BufferStraw : public Straw
 **	This class is used to manage a file as a data source. Data requests will draw from the
 **	file until the file has been completely read.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/XSTRAW.H
 class FileStraw : public Straw
 {
 	public:

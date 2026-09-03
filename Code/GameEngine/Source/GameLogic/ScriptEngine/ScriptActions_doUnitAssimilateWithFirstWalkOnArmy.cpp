@@ -62,6 +62,7 @@ public:
 	virtual Object *getUnitNamedByValue(BfmeAsciiStringArg name) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine : public BfmeScriptEngineUnitLookup
 {
 };
@@ -79,6 +80,7 @@ void j_0001867e();
 
 typedef int (__fastcall *BfmeFirstWalkOnArmyThunk)(BfmeGlobFEA *gameLogic);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -86,6 +88,7 @@ public:
 	AsciiString m_string;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

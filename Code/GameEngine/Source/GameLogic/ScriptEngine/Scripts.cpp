@@ -624,7 +624,6 @@ struct BfmeScriptListHeads
 	ScriptGroup *m_firstGroup;					///< retail this+0x08
 };
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ScriptList_WriteScriptsDataChunk_Thunk.cpp
 //
 // Blocked on the row's own object-symbol note, which is a variant worth knowing.
 // The row is NAMED ...QAPAV1@H@Z but carries
@@ -1865,6 +1864,7 @@ Bool Condition::ParseConditionDataChunk(DataChunkInput &file, DataChunkInfo *inf
 
 // The exact retail constructor is emitted by TemplateCtorThunk.cpp.
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_getUiText_Thunk.cpp
 // ?getUiStrings@Template@@QBEHQAVAsciiString@@@Z present-unmatched
 Int Template::getUiStrings(AsciiString strings[MAX_PARMS]) const
 {

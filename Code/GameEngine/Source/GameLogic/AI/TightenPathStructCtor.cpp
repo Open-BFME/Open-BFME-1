@@ -27,6 +27,7 @@ class Object;
 class LocomotorSet;
 class Pathfinder;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -36,6 +37,7 @@ struct Coord3D
 
 enum PathfindLayerEnum { LAYER_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

@@ -14,6 +14,7 @@ enum DeathType
 	DEATH_NORMAL = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -21,6 +22,7 @@ public:
 		DeathType deathType = DEATH_NORMAL);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -29,6 +31,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
 class TransportContainModuleData
 {
 public:
@@ -50,6 +53,7 @@ struct ContainedItemsList
 
 #define TRANSPORT_SLOT(n) virtual void unused##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
 class TransportContain
 {
 public:

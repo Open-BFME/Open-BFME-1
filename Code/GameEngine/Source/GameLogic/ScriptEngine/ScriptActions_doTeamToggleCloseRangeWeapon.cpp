@@ -63,6 +63,7 @@ public:
 	virtual void _slot00() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
@@ -81,6 +82,7 @@ public:
 };
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -103,6 +105,7 @@ public:
 	OBJCLASS *cur() const { return m_cur; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 private:
@@ -120,6 +123,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -148,12 +152,14 @@ class NameKeyGenerator;
 extern ScriptEngine *TheScriptEngine;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
 	NameKeyType nameToKey(const char *name);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

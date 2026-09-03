@@ -1,4 +1,5 @@
 // cl: /O2 /Ob0
+// readable body of ??0LookAtTranslator@@: Code/GameEngine/Source/GameClient/MessageStream/LookAtXlat.cpp
 
 extern "C" void * __cdecl memset(void *block, int value, unsigned int bytes);
 #pragma intrinsic(memset)
@@ -9,6 +10,7 @@ union GameMessageArgumentType
 	int pixel[2];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -28,6 +30,7 @@ struct LookAtEvent
 	char m_align[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LookAtXlat.h
 class LookAtTranslator
 {
 public:

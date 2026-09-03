@@ -4,6 +4,7 @@
 // WeaponStore::createAndFireTempWeapon then appends the target's object id
 // onto a circular 12-byte list whose sentinel lives at this+0x7c.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -11,6 +12,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -22,6 +24,7 @@ public:
 
 class WeaponTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:

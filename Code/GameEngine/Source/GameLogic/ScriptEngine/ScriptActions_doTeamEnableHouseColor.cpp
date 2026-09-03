@@ -7,6 +7,7 @@ typedef bool Bool;
 
 class ScriptActions;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 private:
@@ -56,6 +57,7 @@ public:
 	virtual Drawable *getDrawable() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
@@ -66,6 +68,7 @@ public:
 typedef Object *(Object::*BfmeGetNextTeamMemberFunc)(void) const;
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -89,6 +92,7 @@ public:
 	OBJCLASS *cur() const { return m_cur; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 private:
@@ -105,6 +109,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -130,6 +135,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -137,6 +143,7 @@ public:
 	AsciiString m_string;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

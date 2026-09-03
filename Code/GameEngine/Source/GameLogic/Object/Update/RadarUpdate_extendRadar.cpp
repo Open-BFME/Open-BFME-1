@@ -30,6 +30,7 @@ private:
 	UnsignedInt m_bits;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -49,6 +50,7 @@ private:
 	ModelConditionFlags m_modelConditionFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -60,12 +62,14 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RadarUpdate.h
 struct RadarUpdateModuleData
 {
 	unsigned char m_unmodelled_00[8];
 	Real m_radarExtendTime;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RadarUpdate.h
 class RadarUpdate
 {
 public:

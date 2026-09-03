@@ -5,6 +5,7 @@
 // pointers hanging off the node at +0x58 and +0x5C (inner slot +0x68). The
 // walk continues with the node's (now updated) successor.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:

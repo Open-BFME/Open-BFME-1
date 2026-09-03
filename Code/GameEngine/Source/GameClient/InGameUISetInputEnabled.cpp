@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?setInputEnabled@InGameUI@@UAEX_N@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 typedef bool Bool;
 
@@ -11,6 +12,7 @@ extern BfmeSelectionTranslator *TheSelectionTranslator;
 
 // TU-scoped BFME vtable view. The three named slots are the mode resets used
 // when input is re-enabled; the remaining slots preserve their retail offsets.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

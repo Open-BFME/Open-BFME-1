@@ -7,6 +7,7 @@
 // lands on it. Defined out of line here rather than in the class body: an inline
 // virtual is only emitted when something forces it, and with nothing in this
 // translation unit constructing a Pipe the symbol never appeared at all.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/PIPE.H
 class Pipe
 {
 public:

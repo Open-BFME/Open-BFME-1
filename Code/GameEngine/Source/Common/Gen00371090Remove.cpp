@@ -19,6 +19,7 @@ enum ModelConditionFlagType
 	MODEL_CONDITION_FLAG_UNUSED = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

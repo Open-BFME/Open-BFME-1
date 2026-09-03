@@ -3,6 +3,7 @@
 // Retail 0x001B8010 / 0x001B8070: resolve the locomotor template override
 // chain then return min(query(arg) / (float)unsigned(field), this-cap).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

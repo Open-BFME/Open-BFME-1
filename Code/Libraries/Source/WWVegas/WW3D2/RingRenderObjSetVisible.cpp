@@ -60,6 +60,7 @@ protected:
 	unsigned long Bits;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ringobj.h
 class RingRenderObjClass : public RenderObjClass
 {
 public:

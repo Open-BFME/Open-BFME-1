@@ -3,6 +3,7 @@
 // the viewer is type-1, treat a recently-active weapon as a hit. The query
 // callee is still the 725-byte dump at 0x001CF9F0 (ILT 0x00047ED8).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

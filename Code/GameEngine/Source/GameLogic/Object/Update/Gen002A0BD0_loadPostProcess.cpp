@@ -4,6 +4,7 @@
 // with +0x2c, then the same Display/GlobalData scale publish as 0x002A0AD0
 // using the Real at +0x28.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -49,6 +50,7 @@ public:
 	virtual void setAmbient(float value);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -56,6 +58,7 @@ public:
 	float m_value48;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
@@ -70,6 +73,7 @@ public:
 	void *m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 protected:

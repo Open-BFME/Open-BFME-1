@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// readable body of ?doNamedAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
 #include "StringInline.h"
 
@@ -9,12 +10,14 @@ class PolygonTrigger;
 
 enum CommandSourceType { CMD_FROM_SCRIPT = 1 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	void aiAttackArea(const PolygonTrigger *area, CommandSourceType source);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 private:
@@ -24,6 +27,7 @@ public:
 	AICommandInterface m_command;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -32,6 +36,7 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -59,6 +64,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

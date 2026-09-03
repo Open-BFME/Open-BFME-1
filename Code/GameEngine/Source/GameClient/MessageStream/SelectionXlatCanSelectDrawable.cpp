@@ -4,6 +4,7 @@ typedef unsigned int UnsignedInt;
 const Bool FALSE = 0;
 const Bool TRUE = 1;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     float x;
@@ -11,6 +12,7 @@ struct Coord3D
     float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
     int x;
@@ -30,6 +32,7 @@ enum KindOfType
     KINDOF_BFME_SELECTION_REJECTED = 0x85
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 private:
@@ -45,6 +48,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 private:
@@ -72,6 +76,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 private:
@@ -84,6 +89,7 @@ public:
     const Coord3D *getPosition() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 private:
@@ -98,6 +104,7 @@ public:
     Bool isLocallyControlled() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable : public Thing
 {
 private:
@@ -130,6 +137,7 @@ public:
     Bool test(UnsignedInt bit) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -137,12 +145,14 @@ public:
     GameWindow *winGetParent();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 class View
 {
 public:
     Bool worldToScreen(const Coord3D *world, ICoord2D *screen);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

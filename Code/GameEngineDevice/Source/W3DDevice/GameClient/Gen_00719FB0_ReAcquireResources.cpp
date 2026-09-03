@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?ReAcquireResources@W3DShroud@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroud.cpp
 // Retail 0x00719FB0 (151 bytes). BFME W3DShroud resource reacquisition.
 
 typedef unsigned char Bool;
 
 struct IDirect3DBaseTexture8;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -44,6 +46,7 @@ public:
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShroud.h
 class W3DShroud
 {
 public:

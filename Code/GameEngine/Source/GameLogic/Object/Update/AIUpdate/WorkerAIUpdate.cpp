@@ -976,6 +976,7 @@ void WorkerAIUpdate::internalTaskCompleteOrCancelled( DozerTask task )
 //-------------------------------------------------------------------------------------------------
 /** If we were building something, kill the active-construction flag on it */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateOnDelete.cpp
 // ?onDelete@WorkerAIUpdate@@ present-unmatched
 void WorkerAIUpdate::onDelete( void )
 {
@@ -1319,6 +1320,7 @@ void WorkerStateMachine::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/WorkerStateMachineSupplyPredicate.cpp
 // ?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
 Bool WorkerStateMachine::supplyTruckSubMachineWantsToEnter( State *thisState, void* userData )
 {
@@ -1338,6 +1340,7 @@ Bool WorkerStateMachine::supplyTruckSubMachineWantsToEnter( State *thisState, vo
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/WorkerStateMachineReadyToLeave.cpp
 // ?supplyTruckSubMachineReadyToLeave@WorkerStateMachine@@SA_NPAVState@@PAX@Z present-unmatched
 Bool WorkerStateMachine::supplyTruckSubMachineReadyToLeave( State *thisState, void* userData )
 {

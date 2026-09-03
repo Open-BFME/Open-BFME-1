@@ -8,6 +8,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -50,6 +51,7 @@ struct Rva00173C70StateMachine
 	Rva00173C70Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

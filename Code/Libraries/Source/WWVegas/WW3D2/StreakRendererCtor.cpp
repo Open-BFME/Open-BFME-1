@@ -2,6 +2,7 @@
 
 class TextureClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:
@@ -26,6 +27,7 @@ public:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -35,6 +37,7 @@ public:
 
 class VertexFormatXYZUV1;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streakRender.h
 class StreakRendererClass
 {
 public:

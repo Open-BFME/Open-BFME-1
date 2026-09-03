@@ -8,12 +8,14 @@ typedef int Int;
 typedef char Bool;
 typedef unsigned short WCHAR;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
 	Int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo;
@@ -102,6 +104,7 @@ public:
 	virtual void getOrigin( Int *x, Int *y );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

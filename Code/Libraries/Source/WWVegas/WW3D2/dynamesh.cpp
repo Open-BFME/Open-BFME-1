@@ -377,7 +377,6 @@ void DynamicMeshModel::Render(RenderInfoClass & rinfo)
 			// If run ends (mesh ends or state changes) draw, reset indices, set state for next run.
 			if (done || texture_changed || material_changed || shader_changed) {
 				if (buffer_type==BUFFER_TYPE_DYNAMIC_SORTING) {
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp
 // ?Insert_Triangles@SortingRendererClass@@ present-unmatched
 					SortingRendererClass::Insert_Triangles(
 						sphere,

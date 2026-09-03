@@ -252,7 +252,6 @@ unsigned long VertexMaterialClass::Compute_CRC(void) const
 
 // Ambient Get and Sets
 
-// byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
 // RESOLVED. This getter, ?Get_Specular@ and ?Get_Emissive@ all stopped on ONE
 // byte and all on the same one: retail loads the material pointer with
 // `mov eax,[ecx+0x08]` where this tree emitted `[ecx+0x0C]`. The cause was a
@@ -277,6 +276,7 @@ unsigned long VertexMaterialClass::Compute_CRC(void) const
 // 113 translation units read this header (build/match/*.deps.json, including the
 // reference/ copies, which resolve WW3D2 headers to this directory too). The pad
 // was the only difference, and only the two colour-source rows went red.
+// byte-exact reconstruction: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp
 // ?Get_Ambient@VertexMaterialClass@@QBEXPAVVector3@@@Z present-unmatched
 void VertexMaterialClass::Get_Ambient(Vector3 * set) const
 {

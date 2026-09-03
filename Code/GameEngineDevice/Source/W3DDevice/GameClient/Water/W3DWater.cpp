@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/water /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// readable body of ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 struct ID3DXBuffer {
@@ -646,7 +647,6 @@ HRESULT WaterRenderObjClass::initBumpMap(LPDIRECT3DTEXTURE8 *pTex, TextureClass 
 //-------------------------------------------------------------------------------------------------
 /** Create and fill a D3D index buffer with water surface strip indices */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/WaterRenderObjClass_generateIndexBuffer_Thunk.cpp
 // BFME creates the index buffer through a GLOBAL device at 0x01340534, not the
 // m_pDev member the reference uses, and its CreateIndexBuffer takes SIX
 // arguments -- the five the reference passes plus a trailing null. The buffer
@@ -944,6 +944,7 @@ void WaterRenderObjClass::updateMapOverrides(void)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjReset.cpp
 // ?reset@WaterRenderObjClass@@QAEXXZ present-unmatched
 void WaterRenderObjClass::reset( void )
 {
@@ -1128,6 +1129,7 @@ void WaterRenderObjClass::update( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjReplaceSkyboxTextureRetail.cpp
 // ?replaceSkyboxTexture@WaterRenderObjClass@@QAEXABVAsciiString@@0@Z present-unmatched
 void WaterRenderObjClass::replaceSkyboxTexture(const AsciiString& oldTexName, const AsciiString& newTextName)
 {
@@ -1640,7 +1642,7 @@ void WaterRenderObjClass::drawSea(RenderInfoClass & rinfo)
 
 	Matrix3D tm(Transform);
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 // ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
@@ -1888,6 +1890,7 @@ void WaterRenderObjClass::renderWater(void)
 /** Renders (draws) the sky plane.  Will apply current time-of-day settings including
 	* some simple UV scrolling animation. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjRenderSkyRetail.cpp
 // ?renderSky@WaterRenderObjClass@@IAEXXZ present-unmatched
 void WaterRenderObjClass::renderSky(void)
 {
@@ -1979,6 +1982,7 @@ void WaterRenderObjClass::renderSky(void)
 	* it's a flat image. */
 //-------------------------------------------------------------------------------------------------
 ///	@todo: Add code to render properly sorted sun sky body.
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjRenderSkyBodyRetail.cpp
 // ?renderSkyBody@WaterRenderObjClass@@IAEXPAVMatrix3D@@@Z present-unmatched
 void WaterRenderObjClass::renderSkyBody(Matrix3D *mat)
 {	
@@ -2222,7 +2226,7 @@ void WaterRenderObjClass::renderWaterMesh(void)
 
 	Matrix3D tm(Transform);
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Material(m_meshVertexMaterialClass);
@@ -2753,7 +2757,7 @@ void WaterRenderObjClass::drawRiverWater(PolygonTrigger *pTrig)
 
 	Matrix3D tm(1);
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Index_Buffer(ib_access,0);
@@ -3136,7 +3140,7 @@ void WaterRenderObjClass::drawTrapezoidWater(Vector3 points[4])
 
 	Matrix3D tm(1);
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWaterTracks.cpp
 // ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z present-unmatched
 	DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);	//position the water surface
 	DX8Wrapper::Set_Index_Buffer(ib_access,0);
@@ -3234,6 +3238,7 @@ void WaterRenderObjClass::drawTrapezoidWater(Vector3 points[4])
 //debug version where moon rotates with the camera	(always upright on screen)
 //-------------------------------------------------------------------------------------------------
 #if 0
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjRenderSkyBodyRetail.cpp
 // ?renderSkyBody@WaterRenderObjClass@@IAEXPAVMatrix3D@@@Z present-unmatched
 void WaterRenderObjClass::renderSkyBody(Matrix3D *mat)
 {	
@@ -3325,6 +3330,7 @@ void WaterRenderObjClass::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjXferRetail.cpp
 // ?xfer@WaterRenderObjClass@@MAEXPAVXfer@@@Z present-unmatched
 void WaterRenderObjClass::xfer( Xfer *xfer )
 {

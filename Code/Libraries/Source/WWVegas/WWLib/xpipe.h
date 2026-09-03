@@ -49,6 +49,7 @@
 **	that needs to store the data into a memory buffer. This can only serve as the final
 **	link in the chain of pipe segments.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/XPIPE.H
 class BufferPipe : public Pipe
 {
 	public:
@@ -71,6 +72,7 @@ class BufferPipe : public Pipe
 **	needs to store the data to a file. This can only serve as the last link in the chain
 **	of pipe segments.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/XPIPE.H
 class FilePipe : public Pipe
 {
 	public:

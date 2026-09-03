@@ -760,6 +760,7 @@ Bool ActionManager::canEnterObject( const Object *obj, const Object *objectToEnt
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/ActionManagerGetCanAttackObject.cpp
 // ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z present-unmatched
 CanAttackResult ActionManager::getCanAttackObject( const Object *obj, const Object *objectToAttack, CommandSourceType commandSource, AbleToAttackType attackType )
 {

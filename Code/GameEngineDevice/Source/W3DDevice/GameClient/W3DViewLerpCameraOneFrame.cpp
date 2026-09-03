@@ -17,6 +17,7 @@ private:
 	float m[12];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase
 {
 public:
@@ -33,6 +34,7 @@ private:
 	virtual void prefix##8(); virtual void prefix##9(); virtual void prefix##a(); virtual void prefix##b(); \
 	virtual void prefix##c(); virtual void prefix##d(); virtual void prefix##e(); virtual void prefix##f()
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass
 {
 public:
@@ -52,6 +54,7 @@ struct CameraLerpFrames
 	ParabolicEase ease;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 private:

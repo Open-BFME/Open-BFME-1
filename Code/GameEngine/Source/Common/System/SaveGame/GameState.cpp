@@ -1712,7 +1712,7 @@ void GameState::reset( void )
 // ------------------------------------------------------------------------------------------------
 /** Clear any available games entries */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/GameState_clearAvailableGamesMethodThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameState_clearAvailableGames.cpp
 // ?clearAvailableGames@GameState@@AAEXXZ present-unmatched
 void GameState::clearAvailableGames( void )
 {
@@ -2157,6 +2157,7 @@ Bool GameState::isInSaveDirectory(const AsciiString& path) const
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/SaveGame/GameState_getMapLeafName.cpp
 // ?getMapLeafName@GameState@@QBE?AVAsciiString@@ABV2@@Z present-unmatched
 AsciiString GameState::getMapLeafName(const AsciiString& in) const
 {

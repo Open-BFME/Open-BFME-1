@@ -1167,6 +1167,7 @@ void PathfindCell::reset( )
 /**
  * Reset the pathfinding values in the cell.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindCell_startPathfind.cpp
 // ?startPathfind@PathfindCell@@QAE_NPAV1@@Z present-unmatched
 Bool PathfindCell::startPathfind( PathfindCell *goalCell  ) 
 { 
@@ -1651,6 +1652,7 @@ UnsignedInt PathfindCell::costToGoal( PathfindCell *goal )
 	return cost;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindCell_costToHierGoal.cpp
 // ?costToHierGoal@PathfindCell@@QAEIPAV1@@Z present-unmatched
 UnsignedInt PathfindCell::costToHierGoal( PathfindCell *goal )
 {
@@ -2268,6 +2270,7 @@ static  Bool  s_stopForceCalling = FALSE;
 #endif
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindZoneManagerCalculateZones.cpp
 // ?calculateZones@PathfindZoneManager@@QAEXPAPAVPathfindCell@@QAVPathfindLayer@@ABUIRegion2D@@@Z present-unmatched
 void PathfindZoneManager::calculateZones( PathfindCell **map, PathfindLayer layers[], const IRegion2D &globalBounds )
 {
@@ -5142,6 +5145,7 @@ Bool Pathfinder::checkForMovement(const Object *obj, TCheckMovementInfo &info)
  * Adjusts a coordinate to the center of it's cell.
  */
 // Snaps the current position to it's grid location.
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfinderSnapPosition.cpp
 // ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z present-unmatched
 void Pathfinder::snapPosition(Object *obj, Coord3D *pos)
 {
@@ -5169,6 +5173,7 @@ void Pathfinder::snapPosition(Object *obj, Coord3D *pos)
  * Returns coordinates of goal.
  *
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPathfindGoalPosition.cpp
 // ?goalPosition@Pathfinder@@QAE_NPAVObject@@PAUCoord3D@@@Z present-unmatched
 Bool Pathfinder::goalPosition(Object *obj, Coord3D *pos)
 {
@@ -5441,6 +5446,7 @@ Bool Pathfinder::checkForTarget(const Object *obj, 	Int cellX, Int cellY, const 
  * Find an unoccupied spot for a unit to move to that can fire at victim.
  * Returns false if there are no spots available within a reasonable radius.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Pathfinder_adjustTargetDestination.cpp
 // ?adjustTargetDestination@Pathfinder@@QAE_NPBVObject@@0PBUCoord3D@@PBVWeapon@@PAU3@@Z present-unmatched
 Bool Pathfinder::adjustTargetDestination(const Object *obj, const Object *target, const Coord3D *targetPos, 
 																				 const Weapon *weapon, Coord3D *dest)
@@ -12379,6 +12385,7 @@ void Pathfinder::changeBridgeState( PathfindLayerEnum layer, Bool repaired)
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp
 // ?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z present-unmatched
 void Pathfinder::getRadiusAndCenter(const Object *obj, Int &iRadius, Bool &center)
 {
@@ -12745,7 +12752,6 @@ void Pathfinder::updatePos( Object *obj, const Coord3D *newPos)
 /** 
  * Removes the position cell flags for an ai unit.
  */
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/RadarRefreshTerrainThunk.cpp
 // ?removePos@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removePos( Object *obj)
 {

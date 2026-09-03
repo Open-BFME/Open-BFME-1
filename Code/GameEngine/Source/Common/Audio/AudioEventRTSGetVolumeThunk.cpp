@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getVolume@AudioEventRTS@@: Code/GameEngine/Source/Common/Audio/AudioEventRTS.cpp
 
 // Open-BFME5: AudioEventRTS::getVolume, retail 0x000B4960.
 
@@ -8,6 +9,7 @@ struct AudioEventInfoSlice
 	float m_volume;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -15,6 +17,7 @@ public:
 	unsigned int m_statusFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -22,12 +25,14 @@ public:
 	bool m_audible;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
 	Object *findObjectByID(int id);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
@@ -48,6 +53,7 @@ public:
 extern GameLogic *TheGameLogic;
 extern GameClient *TheGameClient;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

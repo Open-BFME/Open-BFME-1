@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?freeTreeBuffers@W3DTreeBuffer@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 // BFME W3DTreeBuffer resource release path.  The BFME layout has per-type
 // vertex/index resources at +0x04/+0x54, five shader/resource slots at
 // +0xA4, and the tree texture/count at +0x1E3914/+0x1E3918.
@@ -11,6 +12,7 @@ extern "C" void _ReadWriteBarrier(void);
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -35,6 +37,7 @@ public:
 	virtual long __stdcall Release_Ref(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -48,6 +51,7 @@ public:
 	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 public:

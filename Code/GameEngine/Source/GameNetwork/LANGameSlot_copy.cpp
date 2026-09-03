@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0GameSlot@@: Code/GameEngine/Source/GameNetwork/GameInfo.cpp
 
 // LANGameSlot::LANGameSlot(const LANGameSlot &), 0x00686D50, 110 bytes.
 //

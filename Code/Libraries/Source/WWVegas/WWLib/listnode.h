@@ -58,6 +58,7 @@
 **	added convenience.
 */
 class GenericList;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class GenericNode {
 	public:
 		GenericNode(void) : NextNode(0), PrevNode(0) {}
@@ -119,6 +120,7 @@ class GenericNode {
 **	This is a generic list handler. It manages N generic nodes. Use the interface class
 **	to the generic list for added convenience.
 */											  
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class GenericList {
 	public:
 		GenericList(void) {
@@ -183,6 +185,7 @@ class GenericList {
 */
 template<class T> class List;
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class Node : public GenericNode {
 	public:
 		List<T> * Main_List(void) const {return((List<T> *)GenericNode::Main_List());}
@@ -222,6 +225,7 @@ class List : public GenericList {
 */
 
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class DataNode : public GenericNode {
 	T Value;
 public:
@@ -245,6 +249,7 @@ public:
 		- EHC
 */
 template<class C, class D>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class ContextDataNode : public DataNode<D> {
 	C Context;
 public:
@@ -261,6 +266,7 @@ public:
 ** uninitialized ContextDataNodes. -DRM
 */
 template<class C, class D>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class SafeContextDataNode : public ContextDataNode<C,D>
 {
 public:
@@ -301,6 +307,7 @@ private:
 	Planet mode.
 */
 template<class PRIMARY, class SECONDARY>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class DoubleNode {
 	void Initialize() { Primary.Set(this); Secondary.Set(this); };
 	PRIMARY PrimaryValue;

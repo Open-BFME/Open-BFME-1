@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // BFME FloatingTextData destructor from the InGameUI floating-text path.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -12,6 +13,7 @@ private:
 
 class DisplayString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -30,6 +32,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class FloatingTextData
 {
 public:

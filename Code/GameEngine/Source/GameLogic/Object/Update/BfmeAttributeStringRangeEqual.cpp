@@ -14,6 +14,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

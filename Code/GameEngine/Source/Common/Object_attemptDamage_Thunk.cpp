@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Clean reconstruction of ?attemptDamage@Object@@QAEXPAVDamageInfo@@@Z.
 //
 // Retail keeps the body module at Object+0x200 and the private-status byte at
@@ -8,6 +9,7 @@
 
 extern "C" const float bfmeConst1075350; // retail 0x01075350
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -15,6 +17,7 @@ public:
 	float m_damageAmount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -44,6 +47,7 @@ public:
 	unsigned char m_flag3ac;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

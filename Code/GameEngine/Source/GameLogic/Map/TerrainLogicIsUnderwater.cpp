@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 
 typedef bool Bool;
 typedef float Real;
@@ -46,6 +47,7 @@ public:
 extern "C" TerrainVisualDispatch *g_bfmeTerrainVisual;
 extern "C" WaterHandle g_bfmeGridWaterHandle;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

@@ -4,6 +4,7 @@
 // if the node is the head or has either link, unlink through +0x10/+0x14
 // and clear both; a node with neither link and not the head is a no-op.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -12,6 +13,7 @@ public:
 	Team *m_next;					// +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:

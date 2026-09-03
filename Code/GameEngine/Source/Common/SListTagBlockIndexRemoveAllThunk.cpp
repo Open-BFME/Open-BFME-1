@@ -5,9 +5,11 @@
 class TagBlockIndex;
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/SLIST.H
 class SList
 {
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 	struct Node
 	{
 		Node *next;

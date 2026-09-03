@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?startPowerRecharge@SpecialPowerModule@@UAEXXZ: Code/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule.cpp
 // Open-BFME5: byte-exact clean C++ implementation of the retail recharge start.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
@@ -34,6 +35,7 @@ private:
 	bool m_sharedNSync;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModuleData
 {
 public:
@@ -41,18 +43,21 @@ public:
 	SpecialPowerTemplate *m_specialPowerTemplate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	void resetOrStartSpecialPowerReadyFrame(const SpecialPowerTemplate *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Player *getControllingPlayer(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -64,6 +69,7 @@ extern GameLogic *TheGameLogic;
 // The retail method runs on the SpecialPowerModule subobject.  The BFME
 // module-data and Object links are immediately before that subobject, while
 // the ZH header puts them at different positive offsets.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
 class SpecialPowerModule
 {
 public:

@@ -152,10 +152,12 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 
 	BfmeWaterGridPoint3 gridLocation;
 	BfmeWaterGridNode *node;
-	BfmeWaterGridList *gridList = *(BfmeWaterGridList * volatile *)&m_waterGridList;
+	BfmeWaterGridList *gridList;
+	Real gridX = x;
 	gridLocation.Y = y;
+	gridList = *(BfmeWaterGridList * volatile *)&m_waterGridList;
 	node = gridList->m_head;
-	gridLocation.X = x;
+	gridLocation.X = gridX;
 	gridLocation.Z = 0.0f;
 	if (node != (BfmeWaterGridNode *)gridList) {
 		while ((node = node->m_next) != (BfmeWaterGridNode *)gridList) {

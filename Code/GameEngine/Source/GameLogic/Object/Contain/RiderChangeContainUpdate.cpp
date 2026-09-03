@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@RiderChangeContain@@UAE?AW4UpdateSleepTime@@XZ: Code/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp
 // Zero Hour RiderChangeContain::update against BFME's retail module layout.
 
 typedef unsigned int UnsignedInt;
@@ -18,12 +19,14 @@ enum DeathType
 	DEATH_TOPPLED = 6
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	void kill(DamageType damageType, DeathType deathType);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -36,6 +39,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RiderChangeContain.h
 class RiderChangeContainModuleData
 {
 public:
@@ -43,6 +47,7 @@ public:
 	UnsignedInt m_scuttleFrames;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
 class TransportContain
 {
 public:
@@ -52,6 +57,7 @@ protected:
 	unsigned char m_unreconstructed_004[0xf4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/RiderChangeContain.h
 class RiderChangeContain : public TransportContain
 {
 public:

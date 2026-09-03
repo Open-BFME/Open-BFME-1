@@ -2,6 +2,7 @@
 // BFME target 0x003F2DB0.  The radial target scan is the separate retail
 // helper at 0x003F18E0; this body only builds its compact work record.
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?adjustTargetDestination@Pathfinder@@QAE_NPBVObject@@0PBUCoord3D@@PBVWeapon@@PAU3@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 typedef int Int;
 typedef unsigned char Bool;
@@ -9,6 +10,7 @@ typedef unsigned char Bool;
 class Object;
 class Weapon;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -16,6 +18,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -24,6 +27,7 @@ struct ICoord2D
 
 struct AdjustTargetInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

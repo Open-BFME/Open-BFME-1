@@ -1,11 +1,13 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventInfo.h
 struct AudioEventInfo
 {
 	unsigned char m_prefix[0x84];
 	int m_type;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 private:
@@ -15,6 +17,7 @@ public:
 	AudioEventInfo *m_info;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioRequest.h
 struct AudioRequest
 {
 	int m_request;
@@ -23,6 +26,7 @@ struct AudioRequest
 	bool m_requiresCheckForSample;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameSounds.h
 class SoundManager
 {
 public:
@@ -42,6 +46,7 @@ public:
 	bool canPlayNow(AudioEventRTS *event);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 class MilesAudioManager : public SoundManager
 {
 public:

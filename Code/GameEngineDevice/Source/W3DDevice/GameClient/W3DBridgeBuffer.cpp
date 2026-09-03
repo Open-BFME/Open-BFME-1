@@ -127,6 +127,7 @@ m_scale(1.0)
 //=============================================================================
 /** Frees objects.  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeDestructor.cpp
 // ??1W3DBridge@@QAE@XZ present-unmatched
 W3DBridge::~W3DBridge(void)
 {
@@ -154,6 +155,7 @@ void W3DBridge::renderBridge(Bool wireframe)
 //=============================================================================
 /** Frees all bridge objects (meshes & texture).  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeClearBridge.cpp
 // ?clearBridge@W3DBridge@@QAEXXZ present-unmatched
 void W3DBridge::clearBridge(void)
 {
@@ -3542,6 +3544,7 @@ void W3DBridgeBuffer::loadBridgesInVertexAndIndexBuffers(RefRenderObjListIterato
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBufferDestructor.cpp
 // ??1W3DBridgeBuffer@@QAE@XZ present-unmatched
 W3DBridgeBuffer::~W3DBridgeBuffer(void)
 {

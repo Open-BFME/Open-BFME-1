@@ -8,6 +8,7 @@
 typedef bool Bool;
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -33,6 +34,7 @@ enum ObjectShroudStatus
 
 class PartitionData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -43,6 +45,7 @@ private:
 	Int m_playerIndex;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -55,6 +58,7 @@ private:
 
 extern PlayerList *ThePlayerList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager
 {
 public:
@@ -63,6 +67,7 @@ public:
 
 extern PartitionManager *ThePartitionManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -81,6 +86,7 @@ public:
 
 // FXNugget's BFME shared base has four virtual slots between the inherited
 // MemoryPoolObject slot and the filter slot.  Its shared stop flag is at +B0.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXNugget
 {
 public:
@@ -106,6 +112,7 @@ struct FXNuggetNode
 	FXNugget *value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXList
 {
 public:

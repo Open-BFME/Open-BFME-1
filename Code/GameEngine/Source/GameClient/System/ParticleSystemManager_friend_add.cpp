@@ -2,6 +2,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem
 {
 private:
@@ -16,6 +17,7 @@ private:
 	friend class ParticleSystemManager;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystemManager
 {
 private:

@@ -65,6 +65,7 @@ public:
 	bool Compute_Intersection(const Vector3 &p0, const Vector3 &p1, float *set_t) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/frustum.h
 class FrustumClass
 {
 public:
@@ -72,6 +73,7 @@ public:
 	Vector3 Corners[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
 {
 public:
@@ -105,6 +107,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:

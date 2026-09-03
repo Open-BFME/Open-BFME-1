@@ -3,6 +3,7 @@
 // Retail 0x005592D0: construct a 0x194-byte PeerRequest, set type 0x11
 // (PEERREQUEST_STOPQUICKMATCH), queue it.  One unused stack argument (ret 4).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class PeerRequest
 {
 public:
@@ -12,6 +13,7 @@ public:
 	char m_bfmeBody[ 0x190 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class GameSpyPeerMessageQueueInterface
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?recreateControlBar@InGameUI@@UAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // Open-BFME5: clean C++ conversion of InGameUI::recreateControlBar.
 
 typedef int Int;
@@ -16,6 +17,7 @@ private:
 	friend class AsciiString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -44,6 +46,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -52,6 +55,7 @@ public:
 
 class WindowLayoutInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -79,12 +83,14 @@ public:
 	virtual GameWindow *winGetWindowFromId( GameWindow *window, Int id );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
 	Int nameToKey( const char *name );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:
@@ -102,6 +108,7 @@ extern ControlBar *TheControlBar;
 
 void HideControlBar( bool immediate );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

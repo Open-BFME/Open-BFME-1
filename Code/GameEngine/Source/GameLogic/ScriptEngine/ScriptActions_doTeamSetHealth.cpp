@@ -16,6 +16,7 @@ inline const T &max(const T &left, const T &right)
 	return left > right ? left : right;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -46,6 +47,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -80,6 +82,7 @@ public:
 	virtual Team *getTeamNamed(BfmeAsciiStringArg name, Bool exact) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
 public:
@@ -141,6 +144,7 @@ public:
 	virtual void _slot00() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
@@ -152,6 +156,7 @@ public:
 };
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -174,6 +179,7 @@ public:
 	OBJCLASS *cur() const { return m_cur; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 private:
@@ -188,6 +194,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

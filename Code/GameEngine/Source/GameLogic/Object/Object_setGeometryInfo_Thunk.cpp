@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setGeometryInfo@Object@@QAEXABVGeometryInfo@@@Z: Code/GameEngine/Source/GameLogic/Object/Object.cpp
 // Object::setGeometryInfo. Assigns GeometryInfo at +0xAC then notifies four
 // optional helpers. Call order is +0x3B0 PartitionData::makeDirty, +0x3B8
 // Rva009A2350::init, +0x3B4 Rva009F2BA0::init, +0x80 BfmeBCNG::bfmeThreeCNG.
@@ -9,6 +10,7 @@ struct BfmeCopyElementA
 	BfmeCopyElementA *bfmeAssign(BfmeCopyElementA *other);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionData
 {
 public:
@@ -33,10 +35,12 @@ public:
 	void bfmeThreeCNG();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

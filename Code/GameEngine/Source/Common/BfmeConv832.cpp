@@ -1,3 +1,4 @@
+// readable body of ?doDisableInput@ScriptActions@@IAEXXZ: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
 class BfmeMgrF14_010
 {
@@ -114,6 +115,7 @@ public:
 };
 extern BfmeMgr4C8 *g_mgr12F4C84;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

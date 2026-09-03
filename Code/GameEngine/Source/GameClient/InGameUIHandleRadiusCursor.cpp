@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?handleRadiusCursor@InGameUI@@IAEXXZ: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 typedef int Int;
 typedef bool Bool;
@@ -6,6 +7,7 @@ typedef bool Bool;
 struct ICoord2D { Int x, y; };
 struct Coord3D { float x, y, z; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 	unsigned char m_pad00[0x24];
@@ -14,6 +16,7 @@ public:
 	Bool hasRadar() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 	unsigned char m_pad00[0x0C];
@@ -28,6 +31,7 @@ public:
 	ICoord2D m_pos;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 	unsigned char m_pad00[0x0C];
@@ -71,12 +75,14 @@ public:
 };
 
 enum CellShroudStatus { SHROUD_CLEAR = 0 };
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager
 {
 public:
 	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *pos) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
 class RadiusDecal
 {
 	unsigned char m_pad00[8];
@@ -92,6 +98,7 @@ extern PlayerList *ThePlayerList;
 extern TacticalViewFadeShim *TheTacticalViewFadeShim;
 extern PartitionManager *TheShroudManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 protected:

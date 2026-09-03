@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
+// readable body of ?calculateZones@PathfindZoneManager@@QAEXPAPAVPathfindCell@@QAVPathfindLayer@@ABUIRegion2D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 #include "Common/BitFlags.h"
 
@@ -7,6 +8,7 @@ class PathfindCell;
 class PathfindLayer;
 struct IRegion2D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:

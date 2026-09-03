@@ -4,6 +4,7 @@
 // Retail 0x002E0040, 82 bytes. Magic 0x2AAAAAAB / sar 1 is a 12-byte stride.
 // The string member assignment is the shared AsciiString::operator= body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

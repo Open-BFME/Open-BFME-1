@@ -1375,6 +1375,7 @@ CanMakeType BuildAssistant::canMakeUnit( Object *builder, const ThingTemplate *w
 /** Some objects will be automatically removed when something is built on them so they
 	* aren't considered as obstacles when placing them */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/BuildAssistant_isRemovableForConstruction.cpp
 // ?isRemovableForConstruction@BuildAssistant@@ present-unmatched
 Bool BuildAssistant::isRemovableForConstruction( Object *obj )
 {

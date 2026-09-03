@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// readable body of ?doAffectObjectPanelFlagsTeam@ScriptActions@@IAEXABVAsciiString@@0_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doAffectObjectPanelFlagsTeam, retail 0x002FC4C0, 138 bytes.
 //
 // Team-member walk via Object's virtually-inherited DLINK PMF
@@ -8,6 +9,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
@@ -39,6 +41,7 @@ private:
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -68,6 +71,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -82,6 +86,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -107,6 +112,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

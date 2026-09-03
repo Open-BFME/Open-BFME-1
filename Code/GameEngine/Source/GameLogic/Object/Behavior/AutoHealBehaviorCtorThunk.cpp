@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ??0AutoHealBehavior@@: Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehavior.cpp
 // DO NOT FOLD THIS INTO AutoHealBehavior.cpp -- the cluster marker that said so is
 // removed. The 5 bytes below are a jmp to 0x001EE950, which functions.csv has
 // matched as a 276-byte ??0SpyVisionUpdate@@QAE@PAVThing@@PBVModuleData@@@Z, and

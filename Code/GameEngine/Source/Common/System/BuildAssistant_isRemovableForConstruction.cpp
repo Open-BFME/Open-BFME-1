@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?isRemovableForConstruction@BuildAssistant@@: Code/GameEngine/Source/Common/System/BuildAssistant.cpp
 
 // BuildAssistant::isRemovableForConstruction, retail 0x000FE5D0 (90 bytes).
 //
@@ -18,6 +19,7 @@ enum KindOfType
 	KINDOF_INERT = 24
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -27,6 +29,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -40,6 +43,7 @@ private:
 	UnsignedInt m_kindof;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -59,6 +63,7 @@ private:
 	const ThingTemplate *m_template;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -74,6 +79,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BuildAssistant.h
 class BuildAssistant
 {
 protected:

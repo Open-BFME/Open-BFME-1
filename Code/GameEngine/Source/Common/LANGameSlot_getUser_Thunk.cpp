@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/languagefilter /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// readable body of ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ: Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 
 #include "Common/UnicodeString.h"
 
@@ -18,6 +19,7 @@ struct LANPlayerAddress
 	UnsignedInt m_bfmeLayoutPad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -45,6 +47,7 @@ protected:
 	UnsignedInt m_bfmeLayoutPad;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANPlayer.h
 class LANPlayer
 {
 public:
@@ -59,6 +62,7 @@ public:
 	LANPlayerAddress m_address;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameSlot : public GameSlot
 {
 public:

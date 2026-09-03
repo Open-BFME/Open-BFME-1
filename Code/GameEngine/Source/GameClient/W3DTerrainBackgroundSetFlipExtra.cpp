@@ -4,6 +4,7 @@
 // REF_PTR_SET the map at +0x4C, then if m_initialized at +0x50 call
 // the four-arg body at 0x007282A0 with (0, 0, m_width, extra).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -22,10 +23,12 @@ private:
 #define REF_PTR_SET(dst, src) \
 	{ if (src) (src)->Add_Ref(); if (dst) (dst)->Release_Ref(); (dst) = (src); }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap : public RefCountClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainBackground.h
 class W3DTerrainBackground
 {
 public:

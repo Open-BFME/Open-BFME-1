@@ -26,6 +26,7 @@ enum CommandSourceType
 	CMD_FROM_SCRIPT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 public:
@@ -39,6 +40,7 @@ public:
 	int m_weaponSlot;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -48,6 +50,7 @@ struct Coord3D
 
 typedef _STL::list<Drawable *> DrawableList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CommandXlat.h
 class PickAndPlayInfo
 {
 public:
@@ -61,6 +64,7 @@ public:
 	unsigned int m_commandButton;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -73,6 +77,7 @@ public:
 void pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type messageType,
 	PickAndPlayInfo *info);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -81,6 +86,7 @@ public:
 	void aiEnter(Object *object, CommandSourceType source);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 private:
@@ -90,6 +96,7 @@ public:
 	AICommandInterface m_commandInterface;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -99,6 +106,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

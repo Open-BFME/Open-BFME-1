@@ -4,6 +4,7 @@
 
 extern "C" __declspec(dllimport) char *strncpy(char *dest, const char *src, unsigned count);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 	unsigned char m_pad[0x9E84];

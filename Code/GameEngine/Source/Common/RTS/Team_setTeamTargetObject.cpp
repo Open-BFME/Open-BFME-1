@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setTeamTargetObject@Team@@QAEXPBVObject@@@Z: Code/GameEngine/Source/Common/RTS/Team.cpp
 //
 // Team::setTeamTargetObject. Zero Hour's body: null clears the id; only
 // computer players above easy difficulty store Object::getID. BFME keeps
@@ -18,6 +19,7 @@ enum GameDifficulty
 	DIFFICULTY_HARD = 2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -29,6 +31,7 @@ private:
 	PlayerType m_playerType;				// +0x2c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -36,6 +39,7 @@ public:
 	Player *m_owningPlayer;					// +8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -46,6 +50,7 @@ private:
 	unsigned int m_id;					// +0x74
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:

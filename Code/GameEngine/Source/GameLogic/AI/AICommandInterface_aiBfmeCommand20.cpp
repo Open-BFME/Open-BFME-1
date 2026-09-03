@@ -23,11 +23,13 @@ class Path;
 enum AICommandType { AICMD_BFME_20 = 0x20 };
 enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
 {
 	char m_bfme_body[0x5C];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 	AICommandType						m_cmd;
@@ -47,6 +49,7 @@ struct AICommandParms
 	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:

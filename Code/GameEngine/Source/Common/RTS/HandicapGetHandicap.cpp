@@ -2,6 +2,7 @@
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
@@ -10,6 +11,7 @@ public:
 	unsigned char m_isBuilding : 1;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Handicap.h
 class Handicap
 {
 public:

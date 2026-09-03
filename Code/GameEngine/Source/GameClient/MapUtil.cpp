@@ -308,6 +308,7 @@ AsciiString MapCache::getUserMapDir() const
 	return tmp;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheGetMapExtension.cpp
 // ?getMapExtension@MapCache@@QBE?AVAsciiString@@XZ present-unmatched
 AsciiString MapCache::getMapExtension() const
 {
@@ -1006,6 +1007,7 @@ Bool isOfficialMap( AsciiString mapName )
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheFindMap.cpp
 // ?findMap@MapCache@@QAEPBVMapMetaData@@VAsciiString@@@Z present-unmatched
 const MapMetaData *MapCache::findMap(AsciiString mapName)
 {

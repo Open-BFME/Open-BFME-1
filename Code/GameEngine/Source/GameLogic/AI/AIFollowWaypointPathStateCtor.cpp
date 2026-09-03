@@ -2,6 +2,7 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -19,6 +20,7 @@ public:
 
 extern int g_AIFollowWaypointPathStateVTable;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIFollowWaypointPathState : public Rva0014F280StateBase
 {
 public:

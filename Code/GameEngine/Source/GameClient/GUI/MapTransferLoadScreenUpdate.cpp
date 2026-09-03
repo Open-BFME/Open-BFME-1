@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD
+// readable body of ?update@MapTransferLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 //
 // Retail 0x0050FF30: the non-virtual update(Int percent) of the APT-era map
 // transfer load screen, driven from _doFileTransfer (ZH FileTransfer.cpp:54
@@ -43,7 +44,6 @@ public:
 
 struct RGBColor;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Mouse.h
 class Mouse
 {
 public:

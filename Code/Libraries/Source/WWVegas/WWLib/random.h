@@ -51,6 +51,7 @@
 **	this class will return an 'int', the actual significance of the random number is
 **	limited to 15 bits (0..32767).
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RANDOM.H
 class RandomClass {
 	public:
 		RandomClass(unsigned seed=0);
@@ -96,6 +97,7 @@ class RandomClass {
 // This random number generator starts breaking down in 64 dimensions
 // behaving very badly in that domain
 // HY 6/14/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RANDOM.H
 class Random2Class {
 	public:
 		Random2Class(unsigned seed=0);
@@ -132,6 +134,7 @@ class Random2Class {
 // This random number generator starts breaking down in 3 dimensions
 // exhibiting a strange bias
 // HY 6/14/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RANDOM.H
 class Random3Class {
 	public:
 		// Retail inlines this constructor in rndstraw.cpp and CALLS it in
@@ -181,6 +184,7 @@ class Random3Class {
 // simulation. Optimized, it's 4 times faster than rand()
 // http://www.math.keio.ac.jp/~matumoto/emt.html
 // HY 6/14/01
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RANDOM.H
 class Random4Class {
 	public:
 		Random4Class(unsigned int seed=4357);

@@ -1,6 +1,7 @@
 // BFME's five-way icon pass dispatch.  These are the surviving retail ILT
 // entry points; the dispatch itself is the recovered clean C++ body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

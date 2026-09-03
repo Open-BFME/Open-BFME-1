@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?startPathfind@PathfindCell@@QAE_NPAV1@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 // Retail 0x003F6940: PathfindCell::startPathfind. BFME unlinks the info record
 // from the free list (back-pointer at +0x30, next at +0x2C), then clears the
@@ -9,6 +10,7 @@ typedef bool Bool;
 
 class PathfindCell;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct PathfindCellInfo
 {
 	int m_first;
@@ -24,6 +26,7 @@ struct PathfindCellInfo
 	PathfindCellInfo *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:

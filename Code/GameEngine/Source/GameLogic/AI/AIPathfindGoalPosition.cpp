@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?goalPosition@Pathfinder@@QAE_NPAVObject@@PAUCoord3D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -14,6 +16,7 @@ enum PathfindLayerEnum
 
 // BFME stores these pathfinding fields at different offsets than the later
 // Zero Hour Object layout used by the shared headers.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -24,6 +27,7 @@ public:
 	void *AIUpdate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

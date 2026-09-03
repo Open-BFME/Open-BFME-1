@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?doTeamRemoveAllOverrideRelations@ScriptActions@@IAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doTeamRemoveAllOverrideRelations, retail 0x002F4D10, 61 bytes.
 //
 // ZH twin. BFME getTeamNamed is slot 17 with a by-value name and extra Bool.
 // Both removeOverride* callees are already pinned at their ILTs.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -33,6 +35,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -40,6 +43,7 @@ public:
 	bool removeOverridePlayerRelationship(int playerIndex);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -65,6 +69,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

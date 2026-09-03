@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME: DataChunkTableOfContents::getName, retail 0x00102D90.
 //
 // The body walks the Mapping list by id and assigns either the matching name

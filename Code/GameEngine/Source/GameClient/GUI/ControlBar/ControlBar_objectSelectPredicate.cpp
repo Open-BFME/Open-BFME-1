@@ -10,6 +10,7 @@ public:
 	bool bfmeTailJB(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeTargetJB
 {
 public:
@@ -17,6 +18,7 @@ public:
 	bool bfmeCheckC80F0(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -113,6 +115,7 @@ public:
 
 extern InGameUI *TheInGameUI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

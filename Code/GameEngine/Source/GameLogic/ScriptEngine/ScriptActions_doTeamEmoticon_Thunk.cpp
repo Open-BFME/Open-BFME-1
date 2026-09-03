@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?doTeamEmoticon@ScriptActions@@IAEXABVAsciiString@@0M@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
 typedef bool Bool;
 typedef int Int;
@@ -7,6 +8,7 @@ typedef float Real;
 class AIGroup;
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -36,6 +38,7 @@ private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -59,18 +62,21 @@ public:
 	virtual Team *getTeamNamed(BfmeAsciiStringArg, Bool) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
 	AIGroup *createGroup();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	void getTeamAsAIGroup(AIGroup *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:
@@ -80,6 +86,7 @@ public:
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

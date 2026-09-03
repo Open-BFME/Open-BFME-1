@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
-// readable body of ?Fabs@WWMath@@: Code/Libraries/Source/WWVegas/WW3D2/coltest.cpp
 
 #include "colmath.h"
 #include "obbox.h"

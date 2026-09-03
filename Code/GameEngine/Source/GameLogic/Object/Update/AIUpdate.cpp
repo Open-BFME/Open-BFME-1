@@ -3752,6 +3752,7 @@ Bool AIUpdateInterface::isAllowedToRespondToAiCommands(const AICommandParms* par
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_aiDoCommand.cpp
 // ?aiDoCommand@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::aiDoCommand(const AICommandParms* parms)
 {
@@ -4083,6 +4084,7 @@ void AIUpdateInterface::privateMoveToObject( Object *obj, CommandSourceType cmdS
 //----------------------------------------------------------------------------------------
 // Face a specified object -- succeed when facing
 //----------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFaceObject.cpp
 // ?privateFaceObject@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFaceObject( Object *obj, CommandSourceType cmdSource )
 {
@@ -4541,6 +4543,7 @@ void AIUpdateInterface::privateFollowPathAppend( const Coord3D *pos, CommandSour
 /**
  * Follow the path defined by the given array of points
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateFollowPath_bfme.cpp
 // ?privateFollowPath@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateFollowPath( const std::vector<Coord3D>* path, Object *ignoreObject, CommandSourceType cmdSource, Bool exitProduction )
 {
@@ -4626,6 +4629,7 @@ void AIUpdateInterface::privateForceAttackObject( Object *victim, Int maxShotsTo
 }
 
 //-----------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGuardRetaliate.cpp
 // ?privateGuardRetaliate@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateGuardRetaliate( Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
 {
@@ -4748,6 +4752,7 @@ void AIUpdateInterface::privateAttackPosition( const Coord3D *pos, Int maxShotsT
 /**
  * Attack move to the given location
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateAttackMoveToPosition.cpp
 // ?privateAttackMoveToPosition@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateAttackMoveToPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
 {
@@ -4802,6 +4807,7 @@ void AIUpdateInterface::privateAttackFollowWaypointPath( const Waypoint *way, In
 /**
  * Begin "seek and destroy"
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateHunt.cpp
 // ?privateHunt@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateHunt( CommandSourceType cmdSource )
 {
@@ -4925,6 +4931,7 @@ void AIUpdateInterface::privateGetHealed( Object *healDepot, CommandSourceType c
 /**
  * Get repaired at the repair depot
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGetRepaired.cpp
 // ?privateGetRepaired@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateGetRepaired( Object *repairDepot, CommandSourceType cmdSource )
 {
@@ -5230,6 +5237,7 @@ void AIUpdateInterface::privateBusy( CommandSourceType cmdSource )
 /**
  * Guard the given spot
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGuardPosition.cpp
 // ?privateGuardPosition@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateGuardPosition( const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource )
 {
@@ -5286,6 +5294,7 @@ void AIUpdateInterface::privateGuardTunnelNetwork( GuardMode guardMode, CommandS
 /**
  * Guard the given spot
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_privateGuardObject.cpp
 // ?privateGuardObject@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::privateGuardObject( Object *objectToGuard, GuardMode guardMode, CommandSourceType cmdSource )
 {
@@ -5595,6 +5604,7 @@ UnsignedInt AIUpdateInterface::getMoodMatrixValue( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterface_getMoodMatrixActionAdjustment.cpp
 // ?getMoodMatrixActionAdjustment@AIUpdateInterface@@ present-unmatched
 UnsignedInt AIUpdateInterface::getMoodMatrixActionAdjustment( MoodMatrixAction action ) const
 {

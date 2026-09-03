@@ -6,6 +6,7 @@
 typedef bool Bool;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -13,6 +14,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheckInfo
 {
 	unsigned m_a;
@@ -20,6 +22,7 @@ struct EvaCheckInfo
 	unsigned m_framesToExpire;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	Bool trigger(const EvaCheckInfo *info, const Coord3D *pos);

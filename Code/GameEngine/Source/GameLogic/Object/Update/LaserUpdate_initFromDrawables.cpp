@@ -5,6 +5,7 @@
 // arg1, parent position, target position, arg4 into the 776-byte body at
 // 0x00603FE0 (ILT 0x00024FC3).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -15,6 +16,7 @@ enum DrawableID
 	INVALID_DRAWABLE_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -22,6 +24,7 @@ public:
 	const Coord3D *getPosition() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LaserUpdate.h
 class LaserUpdate
 {
 public:

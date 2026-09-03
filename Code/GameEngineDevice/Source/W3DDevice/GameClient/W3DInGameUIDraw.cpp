@@ -25,6 +25,7 @@ public:
 	virtual void displayC8();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display : public DisplaySlots
 {
 public:
@@ -43,6 +44,7 @@ public:
 	virtual void windowD4(); virtual void windowD5();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager : public WindowManagerSlots
 {
 public:
@@ -70,6 +72,7 @@ public:
 	virtual void inGameH3();                  // slots 71..73
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DInGameUI.h
 class W3DInGameUI : public W3DInGameUISlots
 {
 public:

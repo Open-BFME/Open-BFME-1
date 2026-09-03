@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD
+// readable body of ?computePath@AIInternalMoveToState@@MAE_NXZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Retail 0x001725B0: AIInternalMoveToState::computePath.  This is the BFME
 // body corresponding to the Zero Hour implementation in AIStates.cpp; BFME
 // records the AI interface's waiting-for-path byte after requesting the path.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -10,6 +12,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -20,18 +23,21 @@ public:
 	bool m_waitingForPath;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 struct Object
 {
 	char m_unknown[ 0x204 ];
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct StateMachine
 {
 	char m_unknown[ 0x10 ];
 	Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 protected:

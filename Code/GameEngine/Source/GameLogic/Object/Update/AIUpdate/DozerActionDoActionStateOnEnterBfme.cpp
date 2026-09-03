@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onEnter@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 
 enum StateReturnType
 {

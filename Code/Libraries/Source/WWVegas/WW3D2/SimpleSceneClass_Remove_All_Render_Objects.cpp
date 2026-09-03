@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Remove_All_Render_Objects@SimpleSceneClass@@UAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 // BFME's SimpleSceneClass has a larger pre-list layout than the Zero Hour class.
 
 class RenderObjClass;
@@ -15,6 +16,7 @@ struct BfmeSceneList
 	BfmeSceneListNode *head;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

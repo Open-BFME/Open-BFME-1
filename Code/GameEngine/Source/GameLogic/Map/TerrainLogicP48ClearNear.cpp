@@ -16,6 +16,7 @@ static Real squareVolatileP48ClearNear(const volatile Real &value)
 	return value * value;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;

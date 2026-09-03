@@ -3,6 +3,7 @@
 // Retail 0x00559360: thiscall.  Queue a 0x194-byte PeerRequest of type 0x12
 // (PEERREQUEST_PUSHSTATS) and clear this+0x3c.  One unused stack argument.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class PeerRequest
 {
 public:
@@ -12,6 +13,7 @@ public:
 	char m_bfmeBody[ 0x190 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class GameSpyPeerMessageQueueInterface
 {
 public:

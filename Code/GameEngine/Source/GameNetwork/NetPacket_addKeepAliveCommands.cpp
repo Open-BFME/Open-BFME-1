@@ -1,4 +1,15 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?addDestroyPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addDisconnectFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addDisconnectKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addDisconnectPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addDisconnectScreenOffCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addDisconnectVoteCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addPlayerLeaveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 // readable twins: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count);
@@ -13,6 +24,7 @@ typedef unsigned short UnsignedShort;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg
 {
 public:
@@ -30,6 +42,7 @@ public:
 	Int m_referenceCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandRef.h
 class NetCommandRef
 {
 public:
@@ -53,6 +66,7 @@ struct NetPacketAddress
 	UnsignedShort port;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
 public:
@@ -94,12 +108,14 @@ public:
 	UnsignedByte m_lastRelay;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetProgressCommandMsg : public NetCommandMsg
 {
 public:
 	UnsignedByte getPercentage();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectVoteCommandMsg : public NetCommandMsg
 {
 public:
@@ -107,6 +123,7 @@ public:
 	UnsignedInt getVoteFrame();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectPlayerCommandMsg : public NetCommandMsg
 {
 public:
@@ -114,24 +131,28 @@ public:
 	UnsignedInt getDisconnectFrame();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetPlayerLeaveCommandMsg : public NetCommandMsg
 {
 public:
 	UnsignedByte getLeavingPlayerID();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectScreenOffCommandMsg : public NetCommandMsg
 {
 public:
 	UnsignedInt getNewFrame();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDisconnectFrameCommandMsg : public NetCommandMsg
 {
 public:
 	UnsignedInt getDisconnectFrame();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetDestroyPlayerCommandMsg : public NetCommandMsg
 {
 public:

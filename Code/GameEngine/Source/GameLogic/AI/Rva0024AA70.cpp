@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: Horde transport admission and linked-member update, retail 0x0024AA70.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -20,6 +21,7 @@ public:
 	unsigned int m_flags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 };

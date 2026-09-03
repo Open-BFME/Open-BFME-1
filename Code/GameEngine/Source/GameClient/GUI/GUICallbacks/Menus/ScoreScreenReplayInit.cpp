@@ -6,6 +6,7 @@
 // two academy windows ZH still hides).  The bodies differ only in the grab
 // callee and the hide order.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

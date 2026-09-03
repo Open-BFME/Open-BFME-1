@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?xfer@WaterRenderObjClass@@MAEXPAVXfer@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // Clean BFME reconstruction of WaterRenderObjClass::xfer at 0x0079FC10.
 
 typedef signed int Int;
@@ -20,6 +21,7 @@ struct XferVersion
 	UnsignedByte m_currentVersion;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -73,6 +75,7 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_guardTargetTypeThrowInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 struct WaterMeshData
 {
 	float height;
@@ -81,6 +84,7 @@ struct WaterMeshData
 	UnsignedByte preferredHeight;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:

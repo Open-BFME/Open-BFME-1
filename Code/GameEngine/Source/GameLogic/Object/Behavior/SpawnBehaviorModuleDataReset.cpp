@@ -15,6 +15,7 @@ private:
 	unsigned int *m_capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpawnBehavior.h
 class SpawnBehaviorModuleData
 {
 public:

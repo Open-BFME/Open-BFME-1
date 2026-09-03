@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?init@TerrainTracksRenderObjClass@@QAEXMMPBD@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 // BFME retail 0x0072F2B0: TerrainTracksRenderObjClass::init at the
 // retail 0x1304-byte layout and BFME texture-handle ABI.
 
@@ -36,6 +37,7 @@ static inline void BFMEAssignTerrainTrackTexture(
 	destination = texture.m_texture;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClass
 {
 public:

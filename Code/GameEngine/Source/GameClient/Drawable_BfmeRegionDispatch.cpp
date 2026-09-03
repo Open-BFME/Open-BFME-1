@@ -5,6 +5,7 @@ enum KindOfType
 	KINDOF_STRUCTURE = 7
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -15,6 +16,7 @@ extern void bfmeRegionRenderA( void *region, int first, int second );
 extern void bfmeRegionRenderB( void *region, int first, int second );
 extern void bfmeRegionRenderC( void *region, int first, int second );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 private:

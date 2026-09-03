@@ -77,6 +77,7 @@ template<class T, class U> class IndexClass;
 **	This is an INI database handler class. It handles a database with a disk format identical
 **	to the INI files commonly used by Windows.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/INI.H
 class INIClass {
 	public:
 		INIClass(void);

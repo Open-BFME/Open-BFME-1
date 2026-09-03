@@ -5,6 +5,7 @@
 // (+0 and +8, so Display is MI with an 8-byte first base), then eh-vector
 // construction of two 0xC-byte members at +0xC0, then the two POD stores.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -21,6 +22,7 @@ public:
 	virtual void slot3();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display : public SubsystemInterface, public DisplaySecond
 {
 public:

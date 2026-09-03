@@ -16,12 +16,14 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Bool bfmeGetRecentDamageSource(ObjectID *sourceID, UnsignedInt seconds) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:

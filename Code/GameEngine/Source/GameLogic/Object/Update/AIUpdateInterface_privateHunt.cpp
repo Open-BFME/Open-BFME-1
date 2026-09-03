@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD
+// readable body of ?privateHunt@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // Retail 0x00279100: AIUpdateInterface::privateHunt. isMobile, inlined
 // isKindOf(KINDOF_PROJECTILE), +0x94 flag, then clear and tail-call
@@ -22,6 +23,7 @@ enum StateID
 	BFME_AI_HUNT = 0x11
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -31,6 +33,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -38,6 +41,7 @@ public:
 	UnsignedInt m_kindof[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -45,6 +49,7 @@ public:
 	ThingTemplate *m_template;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -54,6 +59,7 @@ public:
 	unsigned char m_flags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -68,6 +74,7 @@ public:
 	virtual void setState(StateID state);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

@@ -48,6 +48,7 @@ public:
 	const Open2Triple *fetch(int which);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -60,6 +61,7 @@ public:
 	virtual Real getGroundHeight(Real x, Real y, void *normal) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:
@@ -235,6 +237,7 @@ extern const Real BfmeZeroRange;
 extern const Real BfmeShadowZLimit;
 extern const Real BfmeShadowScale;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
 {
 	unsigned char m_unreconstructed_000[0x74];

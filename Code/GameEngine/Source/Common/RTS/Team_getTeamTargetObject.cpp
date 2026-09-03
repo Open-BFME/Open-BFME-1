@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getTeamTargetObject@Team@@QAEPAVObject@@XZ: Code/GameEngine/Source/Common/RTS/Team.cpp
 //
 // Team::getTeamTargetObject. Zero Hour's body: resolve the stored id, drop
 // stealthed/dead/contained targets, and clear the id when the target is gone.
@@ -8,6 +9,7 @@
 class Object;
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -16,6 +18,7 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;				// retail [0x012F0898]
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
@@ -23,6 +26,7 @@ public:
 	Player *m_owningPlayer;					// +8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -34,6 +38,7 @@ public:
 	unsigned char m_flag344;				// +0x344
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:

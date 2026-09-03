@@ -4,6 +4,7 @@
 // wrapper at 0x00426100 forwards to. Fill value is 24 bytes by value; shrink
 // inlines __copy and reuses the count slot as the unused iterator-tag address.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	char m_b[24];

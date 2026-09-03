@@ -16,7 +16,6 @@ public:
 	virtual void loadPostProcess();
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 template <typename T>
 class StringBase
 {
@@ -25,6 +24,7 @@ protected:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>
 {
 public:
@@ -41,10 +41,12 @@ public:
 	virtual void unused();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder : private PathfinderServices, public Snapshot
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class TAiData : public Snapshot
 {
 public:
@@ -52,6 +54,7 @@ public:
 	TAiData *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup : public Snapshot
 {
 };

@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?reconstitute@AICommandParmsStorage@@QBEXAAUAICommandParms@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME: AICommandParmsStorage::reconstitute, retail 0x00180710, 205 bytes.
 //
 // BFME stores both team-name keys in the saved command block.  The storage
@@ -12,6 +13,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -26,17 +28,20 @@ class PolygonTrigger;
 class CommandButton;
 class Path;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_buffer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
 	Object *findObjectByID(Int id);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamFactory
 {
 public:
@@ -46,6 +51,7 @@ public:
 #define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
 #define TheBfmeTeamFactory (*(TeamFactory **)0x012ED810)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput
 {
 public:
@@ -55,6 +61,7 @@ private:
 	char m_body[0x4c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoOutput
 {
 public:
@@ -63,6 +70,7 @@ public:
 	Bool m_noEffect;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -71,6 +79,7 @@ public:
 	DamageInfoOutput m_out;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 public:
@@ -89,6 +98,7 @@ public:
 	Path *m_path;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandParmsStorage
 {
 private:

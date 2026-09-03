@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00726F70: fill a locked surface with the requested taint color.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -10,6 +11,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:

@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1AIAttackState@@MAE@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for the AIAttackState destructor at 0x0017CA40.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -19,6 +21,7 @@ public:
 	virtual const void *getOriginalVictimPos() const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 protected:
@@ -32,6 +35,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AttackStateMachine : public MemoryPoolObject
 {
 public:
@@ -52,6 +56,7 @@ public:
 	virtual void halt();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -59,6 +64,7 @@ public:
 	~AsciiString();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackState : public State, public NotifyWeaponFiredInterface
 {
 protected:

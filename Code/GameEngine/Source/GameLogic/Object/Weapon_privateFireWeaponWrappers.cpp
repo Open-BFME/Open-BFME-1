@@ -1,9 +1,12 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?fireWeapon@Weapon@@: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
+// readable body of ?forceFireWeapon@Weapon@@QAEPAVObject@@PBV2@PBUCoord3D@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 //
 // Thin Weapon thiscall wrappers around the nine-argument privateFireWeapon
 // body at 0x001E9FD0 (ILT 0x00030A8A). ecx is the weapon and is not reloaded
 // before the inner call.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -11,6 +14,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -20,6 +24,7 @@ public:
 	int m_id; // +0x74
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -28,6 +33,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

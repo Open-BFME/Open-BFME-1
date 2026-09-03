@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?orderAllPassengersToIdle@OpenContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 // Zero Hour OpenContain::orderAllPassengersToIdle expressed against BFME's
 // adjusted contain interface and Object AI layout.
 
@@ -27,6 +28,7 @@ public:
 	void bfmeSetRQ(int object, int commandSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 // Owning destructor at the end of the d_00140de0 family.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

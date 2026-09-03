@@ -5,6 +5,7 @@
 	virtual void PREFIX##6(void); virtual void PREFIX##7(void); \
 	virtual void PREFIX##8(void); virtual void PREFIX##9(void)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

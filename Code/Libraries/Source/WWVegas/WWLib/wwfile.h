@@ -62,7 +62,6 @@
 #endif
 
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/wwfile.h
 class FileClass
 {
 	public:

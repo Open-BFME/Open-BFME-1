@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?evaluateSkirmishNamedAreaExists@ScriptConditions@@IAE_NPAVParameter@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // Clean C++ reconstruction of ScriptConditions::evaluateSkirmishNamedAreaExists.
 
 typedef bool Bool;

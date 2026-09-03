@@ -457,6 +457,7 @@ void	Render2DClass::Internal_Add_Quad_Indicies( int start_vert_index, bool backf
 }
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddQuad.cpp
 // ?Add_Quad@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & v3, const RectClass & uv, unsigned long color )
 {
@@ -518,6 +519,7 @@ void	Render2DClass::Add_Quad( const RectClass & screen, const RectClass & uv, un
 	Add_Quad( screen, uv, color, color, color, color );
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddQuad.cpp
 // ?Add_Quad@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vector2 & v2, const Vector2 & v3, unsigned long color )
 {
@@ -527,6 +529,7 @@ void	Render2DClass::Add_Quad( const Vector2 & v0, const Vector2 & v1, const Vect
 	Internal_Add_Quad_Colors( color );
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DClassAddQuad.cpp
 // ?Add_Quad@Render2DClass@@ present-unmatched
 void	Render2DClass::Add_Quad( const RectClass & screen, unsigned long color )
 {

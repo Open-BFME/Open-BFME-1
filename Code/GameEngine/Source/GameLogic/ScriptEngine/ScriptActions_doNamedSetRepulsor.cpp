@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?doNamedSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doNamedSetRepulsor, retail 0x002FD510, 67 bytes.
 //
 // Identity: executeAction's jump table arm 235 reaches this body, which is ZH
@@ -98,7 +99,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;					// 0x012F076C
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

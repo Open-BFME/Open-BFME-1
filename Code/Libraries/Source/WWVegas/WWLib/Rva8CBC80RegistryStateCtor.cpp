@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of a registry-inserting constructor, retail 0x008CBC80 (132 bytes).
 //
 // Same registry insert as Rva8CB600RegistryCtor.cpp but kind=0x14, this in esi
 // under an SEH frame, shared if/else tail, then the 16-byte subobject at +8 is

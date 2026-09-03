@@ -18,6 +18,7 @@ enum PathfindLayerEnum
 	LAYER_GROUND = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -45,6 +46,7 @@ public:
 };
 
 // BFME adds the source location to the retail updateGoal call.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -78,6 +80,7 @@ private:
 };
 
 // The BFME State keeps its machine pointer at +0x1c.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:

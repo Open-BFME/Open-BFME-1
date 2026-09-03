@@ -278,7 +278,6 @@ SpecialPowerStore::~SpecialPowerStore( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/SpecialPowerStore_findSpecialPowerTemplatePrivate.cpp
 SpecialPowerTemplate* SpecialPowerStore::findSpecialPowerTemplatePrivate( AsciiString name )
 {
 

@@ -7,6 +7,7 @@
 // inlines them into WorkerStateMachine's constructor.
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -17,6 +18,7 @@ public:
 
 class StateMachine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:

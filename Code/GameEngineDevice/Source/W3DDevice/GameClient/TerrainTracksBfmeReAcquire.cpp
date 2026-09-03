@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// readable body of ?ReAcquireResources@TerrainTracksRenderObjClassSystem@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 // BFME retail 0x0072EC10: TerrainTracksRenderObjClassSystem::ReAcquireResources.
 
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	char m_pad[0x1F0];
@@ -27,6 +29,7 @@ public:
 	Int m_refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass
 {
 public:
@@ -46,6 +49,7 @@ public:
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass : public RefCountedResource
 {
 public:
@@ -61,6 +65,7 @@ private:
 	char m_bfmeTail[0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class DX8VertexBufferClass : public RefCountedResource
 {
 public:
@@ -82,6 +87,7 @@ enum
 	DX8_FVF_XYZDUV1 = 0x142
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClassSystem
 {
 public:

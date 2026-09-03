@@ -60,6 +60,7 @@ public:
 	virtual void *getArea(BfmeAsciiStringArg areaName) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine : public ScriptEngineAreaLookup
 {
 };
@@ -70,6 +71,7 @@ public:
 	void setArea(void *area, Bool blocked);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 private:

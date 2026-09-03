@@ -8,6 +8,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 struct AIUpdateInterface
 {
 	char m_unknown[0x140];
@@ -28,6 +29,7 @@ struct Rva00173B20StateMachine
 	Rva00173B20Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

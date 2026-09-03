@@ -5,6 +5,7 @@
 // class name is intentional: this is the address-derived callee pin already
 // used by that tail-pair family.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -98,6 +99,7 @@ public:
 
 extern BFMEDevice *g_bfmeDevice1340534;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -135,6 +137,7 @@ static inline void BFMEAssignSnowTexture(
 	destination = texture.m_texture;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass
 {
 public:
@@ -151,6 +154,7 @@ public:
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass
 {
 	unsigned char m_body[0x18];

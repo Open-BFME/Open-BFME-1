@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD
+// readable body of ?evaluateNamedHasFreeContainerSlots@ScriptConditions@@IAE_NPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // ScriptConditions::evaluateNamedHasFreeContainerSlots.
 
 typedef bool Bool;
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
@@ -29,6 +31,7 @@ public:
 	BfmeNamedContain *m_contain;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -63,6 +66,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:

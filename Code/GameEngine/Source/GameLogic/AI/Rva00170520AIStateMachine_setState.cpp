@@ -32,6 +32,7 @@ struct Rva00170520Object
     Rva00170520AIUpdate *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 protected:

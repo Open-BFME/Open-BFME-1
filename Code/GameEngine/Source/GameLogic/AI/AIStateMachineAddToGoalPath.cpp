@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?addToGoalPath@AIStateMachine@@QAEXPBUCoord3D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME: AIStateMachine::addToGoalPath, retail 0x00187FA0.
 //
 // The BFME class places its goal-path vector at 0x44.  The recovered headers
 // currently describe an older layout, so keep that retail detail local while
 // preserving the original source-level operation.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -81,6 +83,7 @@ protected:
 };
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIStateMachine
 {
 public:

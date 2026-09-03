@@ -20,7 +20,6 @@ struct BfmeNetAddress
 	unsigned short m_port;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANPlayer.h
 class Rva00685240LANPlayer
 {
 public:
@@ -29,7 +28,6 @@ public:
 	BfmeNetAddress m_address;     // +0x14
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class Rva00685240LANAPI
 {
 public:

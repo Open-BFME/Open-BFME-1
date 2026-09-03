@@ -15,6 +15,7 @@ enum ModelConditionFlagType
 	MODEL_CONDITION_RESET = 0x49
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -38,6 +39,7 @@ public:
 	virtual void bfmeReset(int value);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

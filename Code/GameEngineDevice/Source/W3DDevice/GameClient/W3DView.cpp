@@ -594,6 +594,7 @@ void W3DView::getPickRay(const ICoord2D *screen, Vector3 *rayStart, Vector3 *ray
 //-------------------------------------------------------------------------------------------------
 /** set the transform matrix of m_3DCamera, based on m_pos & m_angle */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetCameraTransformBfme.cpp
 // ?setCameraTransform@W3DView@@ present-unmatched
 void W3DView::setCameraTransform( void )
 {
@@ -1077,6 +1078,7 @@ static void renderAIDebug( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewUpdateCameraMovementsBfme.cpp
 // ?updateCameraMovements@W3DView@@ present-unmatched
 Bool W3DView::updateCameraMovements()
 {
@@ -3120,6 +3122,7 @@ void W3DView::rotateCameraOneFrame(void)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewZoomCameraOneFrame.cpp
 // ?zoomCameraOneFrame@W3DView@@ present-unmatched
 void W3DView::zoomCameraOneFrame(void)
 {

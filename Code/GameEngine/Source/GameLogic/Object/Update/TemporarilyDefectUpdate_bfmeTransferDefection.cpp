@@ -14,6 +14,7 @@ class Thing;
 class ModuleData;
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -75,6 +76,7 @@ public:
 	virtual void iface2Anchor() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 protected:
@@ -97,6 +99,7 @@ private:
 	unsigned char m_fxFired;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

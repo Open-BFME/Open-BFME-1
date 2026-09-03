@@ -8,6 +8,7 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short zoneStorageType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -30,6 +31,7 @@ struct BfmeCellResult
 	Int m_field08;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
 {
 public:

@@ -3,6 +3,7 @@
 // Retail 0x003F7250: PathfindCell::setPosUnit. Pos id at info+0x18, goal id
 // at +0x14. Same packed flag nibble as setGoalUnit.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
@@ -18,6 +19,7 @@ public:
 	void finishReset();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCellInfo
 {
 public:
@@ -33,6 +35,7 @@ extern PathfindCellInfo *g_bfmePathfindFreeList;
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:

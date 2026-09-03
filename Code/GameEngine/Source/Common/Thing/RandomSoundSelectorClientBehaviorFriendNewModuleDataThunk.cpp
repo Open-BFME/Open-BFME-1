@@ -42,6 +42,7 @@ private:
 
 class RandomSoundSelectorMap
 {
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 	struct Node
 	{
 		unsigned char m_flag;

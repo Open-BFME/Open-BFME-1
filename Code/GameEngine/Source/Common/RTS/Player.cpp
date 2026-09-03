@@ -886,6 +886,7 @@ void Player::newMap()
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/PlayerSetPlayerType.cpp
 // ?setPlayerType@Player@@QAEXW4PlayerType@@_N@Z present-unmatched
 void Player::setPlayerType(PlayerType t, Bool skirmish)
 {
@@ -2579,6 +2580,7 @@ Bool Player::allowedToBuild(const ThingTemplate *tmplate) const
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Rva000C9740Wrap.cpp
 // ?buildSpecificTeam@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
 void Player::buildSpecificTeam( TeamPrototype *teamProto) 
 {
@@ -3153,6 +3155,7 @@ Bool Player::canBuild(const ThingTemplate *tmplate) const
 }
 
 //=================================================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/PlayerCanAffordBuild.cpp
 // ?canAffordBuild@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
 Bool Player::canAffordBuild( const ThingTemplate *whatToBuild ) const
 {
@@ -3545,7 +3548,6 @@ void Player::addRadar( Bool disableProof )
 //-------------------------------------------------------------------------------------------------
 /** The parameter object has is taking its radar away from the player */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_removeRadar_Thunk.cpp
 void Player::removeRadar( Bool disableProof )
 {
 	Bool hadRadar = hasRadar();
@@ -3568,7 +3570,6 @@ void Player::removeRadar( Bool disableProof )
 }  // end removeRadar
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
 void Player::disableRadar()
 {
 	Bool hadRadar = hasRadar();
@@ -3586,7 +3587,6 @@ void Player::disableRadar()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_radar.cpp
 void Player::enableRadar()
 {
 	Bool hadRadar = hasRadar();
@@ -3999,7 +3999,6 @@ static void localApplyBattlePlanBonusesToObject( Object *obj, void *userData )
 //-------------------------------------------------------------------------------------------------
 //New object or converted object gaining our current battle plan bonuses.
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Player_becomingTeamMember_Thunk.cpp
 // BFME keeps m_battlePlanBonuses at Player+0x70; the vendored class lands it
 // elsewhere.
 #define BFME_BATTLE_PLAN_BONUSES(p) (*(BattlePlanBonuses *const *)((const UnsignedByte *)(p) + 0x70))

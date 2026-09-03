@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHa /Oy-
 // Open-BFME: empty DebugIOOds ctor. Same two-vtable EH shape as DebugIONet.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_io.h
 class DebugIOInterface
 {
 protected:

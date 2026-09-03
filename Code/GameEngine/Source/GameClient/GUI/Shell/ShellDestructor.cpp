@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1Shell@@UAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME: Shell::~Shell, retail 0x0057F7A0, 253 bytes.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -13,6 +15,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -27,6 +30,7 @@ protected:
 	AsciiString m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -44,18 +48,21 @@ public:
 
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/AnimateWindowManager.h
 class AnimateWindowManager
 {
 public:
 	virtual ~AnimateWindowManager();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeManager
 {
 public:
 	~ShellMenuSchemeManager();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -83,6 +90,7 @@ public:
 
 extern AudioManager *TheAudio;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell : public SubsystemInterface
 {
 public:

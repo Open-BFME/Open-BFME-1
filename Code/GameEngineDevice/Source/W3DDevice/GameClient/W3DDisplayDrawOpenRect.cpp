@@ -2,12 +2,14 @@
 
 typedef unsigned long UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
 	int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D
 {
 	ICoord2D lo;
@@ -17,6 +19,7 @@ struct IRegion2D
 extern bool ClipLine2D(ICoord2D *p1, ICoord2D *p2, ICoord2D *c1,
 	ICoord2D *c2, IRegion2D *clipRegion);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
 class RectClass
 {
 public:
@@ -29,6 +32,7 @@ public:
 	float Bottom;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 private:
@@ -40,6 +44,7 @@ public:
 	void disableTexturing() { m_texturingEnabled = 0; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 private:

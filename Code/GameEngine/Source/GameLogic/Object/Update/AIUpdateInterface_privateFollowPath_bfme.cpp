@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?privateFollowPath@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 #include <vector>
 
@@ -11,11 +12,13 @@ enum CommandSourceType
     CMD_FROM_AI = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -28,6 +31,7 @@ public:
     void step2(void *path);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -43,6 +47,7 @@ public:
     void setGoalPosition(const Coord3D *pos);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 protected:

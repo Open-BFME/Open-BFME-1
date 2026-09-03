@@ -4,6 +4,7 @@
 // dword at this+0x5C is still the current TheGameLogic frame the cached float
 // at +0x58 is returned; otherwise the call tails into query.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

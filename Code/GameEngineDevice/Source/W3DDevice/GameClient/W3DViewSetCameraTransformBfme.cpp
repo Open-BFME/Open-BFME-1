@@ -1,17 +1,20 @@
 // ?setCameraTransform@W3DView@@AAEXXZ
 // partial score=0.92 date=2026-09-02
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// readable body of ?setCameraTransform@W3DView@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 
 #include "matrix3d.h"
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	Real x;
 	Real y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -19,6 +22,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D
 {
 	Coord2D lo;
@@ -40,6 +44,7 @@ __forceinline Real clampf( Real value, Real lo, Real hi )
 	virtual void prefix##8(); virtual void prefix##9(); virtual void prefix##a(); virtual void prefix##b(); \
 	virtual void prefix##c(); virtual void prefix##d(); virtual void prefix##e(); virtual void prefix##f()
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass
 {
 public:
@@ -59,6 +64,7 @@ class RenderObjClass;
 template <class T> class RefMultiListIterator;
 typedef RefMultiListIterator<RenderObjClass> RefRenderObjListIterator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 class RTS3DScene
 {
 public:
@@ -66,12 +72,14 @@ public:
 	void destroyLightsIterator( RefRenderObjListIterator *iterator );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:
 	static RTS3DScene *m_3DScene;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:
@@ -93,12 +101,14 @@ public:
 	virtual void updateCenter( CameraClass *camera, RefRenderObjListIterator *lights );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
 	void notifyCameraChange();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	unsigned char m_padding0000[0xA28];
@@ -117,6 +127,7 @@ extern ScriptEngine *TheScriptEngine;
 // BFME's W3DView and terrain vtables predate the shared Zero Hour layouts.
 // Keeping the verified offsets local avoids changing already matched users of
 // those shared headers.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 private:

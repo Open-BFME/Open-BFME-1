@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?replaceSkyboxTexture@WaterRenderObjClass@@QAEXABVAsciiString@@0@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // BFME retail WaterRenderObjClass::replaceSkyboxTexture at 0x007A2670.
 
 typedef int Int;
@@ -25,6 +26,7 @@ public:
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	Char *name, Int mipCount, Int format);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -179,6 +181,7 @@ private:
 	Int m_refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:

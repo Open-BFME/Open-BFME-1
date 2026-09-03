@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Drawable::getPristineBonePositions, retail 0x00413930, 132 bytes.
 
 typedef int Int;

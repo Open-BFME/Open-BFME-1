@@ -1,16 +1,19 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?togglePurchaseScience@ControlBar@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // ControlBar::togglePurchaseScience, retail 0x004A22F0. Visible window at
 // 0x012F4C38+0x259 hides; otherwise the showPurchaseScience body.
 
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	Bool hasPurchaseScience( void );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -21,6 +24,7 @@ private:
 	Player *m_localPlayer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -44,6 +48,7 @@ extern PurchaseScienceWindow *g_purchaseScienceWindow;
 void finishShowPurchaseScience( void );
 void hidePurchaseScience( void );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

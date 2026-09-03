@@ -69,9 +69,11 @@ inline DynamicVectorDummy::DynamicVectorDummy(int size, void *const *array)
 	ActiveCount = 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct PendingSurfaceStruct : public W3DRadarResetSurface
 	{
 		PendingSurfaceStruct(void);

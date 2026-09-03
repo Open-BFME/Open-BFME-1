@@ -2,6 +2,7 @@
 // Method of a subobject at host+0x70: walk OVERRIDE at host+4
 // (this-0x6C), test KindOf bit 2, else return host+0x214 or &host.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

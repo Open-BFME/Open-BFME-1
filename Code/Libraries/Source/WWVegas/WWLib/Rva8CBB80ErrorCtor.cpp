@@ -1,6 +1,5 @@
 // ??0Rva8CBB80Derived@@QAE@XZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of a derived-Rva899F00Base constructor, retail 0x008CBB80.
 
 class Rva899F00Base
 {

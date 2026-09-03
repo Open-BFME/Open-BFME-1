@@ -2,6 +2,7 @@
 // Upstream body and layout:
 // reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 private:
@@ -12,6 +13,7 @@ private:
         NoSkip
     };
 
+    // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
     struct FrameHashEntry
     {
         FrameHashEntry *next;

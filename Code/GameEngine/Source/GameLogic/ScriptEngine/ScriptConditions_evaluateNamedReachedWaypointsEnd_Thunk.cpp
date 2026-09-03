@@ -16,6 +16,7 @@ template <class T> class StringBase
 	~StringBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -36,6 +37,7 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 		*(const StringBase<char> *)&right) == 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -66,24 +68,29 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 	class AIUpdateInterface *getAIUpdateInterface() const
 	{
 		return *(class AIUpdateInterface **)((const char *)this + 0x204);
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 	class Waypoint *getCompletedWaypoint() const
 	{
 		return *(class Waypoint **)((const char *)this + 0x13c);
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -95,6 +102,7 @@ public:
 extern ScriptEngine *TheScriptEngine;
 
 // ?evaluateNamedReachedWaypointsEnd@ScriptConditions@@IAE_NPAVParameter@@0@Z
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:

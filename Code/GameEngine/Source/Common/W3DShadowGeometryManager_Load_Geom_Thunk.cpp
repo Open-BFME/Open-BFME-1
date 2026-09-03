@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
 // Open-BFME5: clean C++ reconstruction of W3DShadowGeometryManager::Load_Geom.
 
 typedef bool Bool;
@@ -14,6 +15,7 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 // BFME's RefCountClass keeps the count immediately after its primary vptr.
 // Release_Ref is inline in the retail build, while Delete_This occupies the
 // first virtual slot.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -34,6 +36,7 @@ private:
 	int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class HashableClass
 {
 public:
@@ -48,6 +51,7 @@ private:
 // The BFME StringBase header is eight bytes (refcount, length, capacity), so
 // its character data begins at m_data+8.  set() remains an out-of-line call;
 // str() is the tiny accessor inlined by the retail compiler.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	int refCount;
@@ -56,6 +60,7 @@ struct AsciiStringData
 	char data[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -124,6 +129,7 @@ private:
 	int m_numTotalsVerts;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 class HashTableClass
 {
 public:

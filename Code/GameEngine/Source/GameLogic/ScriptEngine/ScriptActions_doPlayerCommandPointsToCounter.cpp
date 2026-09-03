@@ -9,6 +9,7 @@ typedef bool Bool;
 class Player;
 class ScriptActions;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 protected:
@@ -23,6 +24,7 @@ public:
 		Bool *isWildcard);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -34,6 +36,7 @@ struct ScriptCounter
 	int m_value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -62,6 +65,7 @@ class PlayerCommandPoints
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 private:
@@ -105,6 +109,7 @@ static __forceinline Player *bfmePlayerFromParameter(Parameter *player)
 	return ThePlayerList->getPlayerFromMask(mask);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

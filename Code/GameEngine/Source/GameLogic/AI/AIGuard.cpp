@@ -833,6 +833,7 @@ void AIGuardPickUpCrateState::onExit( StateExitType status )
 
 //-- AIGuardAttackAggressorState ------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIGuardStateConstructors.cpp
 // ??0AIGuardAttackAggressorState@@ present-unmatched
 AIGuardAttackAggressorState::AIGuardAttackAggressorState( StateMachine *machine ) : 
 	State( machine, "AIGuardAttackAggressorState" )

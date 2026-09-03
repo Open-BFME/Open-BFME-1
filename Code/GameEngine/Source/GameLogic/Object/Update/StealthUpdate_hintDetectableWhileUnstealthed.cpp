@@ -17,6 +17,7 @@ public:
 	bool testForAny( const ObjectStatusMaskType &that ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -30,6 +31,7 @@ private:
 	float m_secondMaterialPassOpacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -49,6 +51,7 @@ private:
 	ObjectStatusMaskType m_status;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -64,6 +67,7 @@ private:
 
 extern PlayerList *ThePlayerList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthUpdate.h
 class StealthUpdateModuleData
 {
 public:
@@ -71,6 +75,7 @@ public:
 	ObjectStatusMaskType m_hintDetectableStates;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthUpdate.h
 class StealthUpdate
 {
 protected:

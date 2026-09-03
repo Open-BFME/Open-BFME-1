@@ -10,6 +10,7 @@ struct SurfaceOps
 	void (__stdcall *release_ref)(SurfaceClass *surface);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:
@@ -50,9 +51,11 @@ private:
 	int growth_step;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 	struct PendingSurfaceStruct
 	{
 		SurfaceClass *surface;

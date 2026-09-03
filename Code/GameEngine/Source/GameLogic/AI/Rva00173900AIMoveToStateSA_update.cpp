@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00173900: the AIMoveToStateSA path/goal update.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -15,6 +16,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 	unsigned char m_unreconstructed_000[0x3c];
@@ -25,6 +27,7 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 	unsigned char m_unreconstructed_000[0x38];
@@ -45,6 +48,7 @@ struct Rva00173900StateMachine
 	Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

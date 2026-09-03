@@ -5,18 +5,21 @@
 enum ScienceType {};
 class ObjectCreationList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	bool hasScience( ScienceType science ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Player *getControllingPlayer() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLSpecialPower.h
 class OCLSpecialPowerModuleData
 {
 public:
@@ -33,6 +36,7 @@ public:
 	const ObjectCreationList *m_defaultOCL;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/OCLSpecialPower.h
 class OCLSpecialPower
 {
 public:

@@ -12,6 +12,7 @@ private:
 	char m_bfmeHead[0x0c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -21,6 +22,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -105,6 +107,7 @@ union BfmeCopyCall
 	(((BfmeCopyReceiver *)(target))->*_call.memberFunction)((source)); \
 } while (0)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public ScienceInfoBase
 {
 public:

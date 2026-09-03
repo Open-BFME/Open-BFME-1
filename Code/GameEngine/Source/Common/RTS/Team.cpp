@@ -1832,6 +1832,7 @@ Relationship Team::getRelationship(const Team *that) const
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Team_setTeamTargetObject.cpp
 // ?setTeamTargetObject@Team@@QAEXPBVObject@@@Z present-unmatched
 void Team::setTeamTargetObject(const Object *target)
 {
@@ -1849,6 +1850,7 @@ void Team::setTeamTargetObject(const Object *target)
 }
 
 // ------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Team_getTeamTargetObject.cpp
 // ?getTeamTargetObject@Team@@QAEPAVObject@@XZ present-unmatched
 Object *Team::getTeamTargetObject(void)
 {

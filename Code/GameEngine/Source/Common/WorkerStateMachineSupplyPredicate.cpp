@@ -1,4 +1,5 @@
 // cl: /O2
+// readable body of ?supplyTruckSubMachineWantsToEnter@WorkerStateMachine@@SA_NPAVState@@PAX@Z: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp
 
 // BFME's State/StateMachine owner links are four bytes earlier than ZH's, and
 // its AI-update and supply-interface views are at Object+0x204 and update+0x344.
@@ -15,16 +16,19 @@ enum AIStateType
 	BFME_AI_SECOND_SUPPLY_STATE = 47
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
 	AIStateType getAIStateType() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
 class SupplyTruckAIInterface
 {
 public:
@@ -43,18 +47,21 @@ public:
 	virtual Bool isForcedIntoWantingState() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 struct Object
 {
 	char m_beforeAIUpdate[0x204];
 	WorkerAIUpdate *m_aiUpdate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct StateMachine
 {
 	char m_beforeOwner[0x10];
 	Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -62,6 +69,7 @@ public:
 	StateMachine *m_machine;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine
 {
 public:

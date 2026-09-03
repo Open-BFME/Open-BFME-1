@@ -31,6 +31,7 @@ struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -44,6 +45,7 @@ private:
 	ObjectID m_id;					// +0x74
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:
@@ -67,6 +69,7 @@ public:
 	unsigned int m_packed;			// +0x0c
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCellInfo
 {
 public:
@@ -82,6 +85,7 @@ inline ObjectID PathfindCell::getGoalUnit( void ) const
 	return INVALID_ID;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:
@@ -91,6 +95,7 @@ private:
 	unsigned char m_body[0x44];		// stride 0x44
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

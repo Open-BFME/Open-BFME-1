@@ -1,3 +1,4 @@
+// readable body of ?getClipReloadTime@WeaponTemplate@@QBEHABVWeaponBonus@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 // BFME retail WeaponTemplate::getClipReloadTime, 0x001E1680.
 // The matched reloadWithBonus caller and the authentic Weapon.cpp source fix
 // both the identity and the RATE_OF_FIRE field used here.
@@ -20,6 +21,7 @@ __forceinline long fast_float2long_round(float f)
 
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -39,6 +41,7 @@ private:
 	float m_field[6];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:

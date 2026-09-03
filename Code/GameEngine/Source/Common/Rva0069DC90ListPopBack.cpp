@@ -43,6 +43,7 @@ private:
 	RefCountedThing *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/Babylon/list.h
 class ListNode
 {
 public:

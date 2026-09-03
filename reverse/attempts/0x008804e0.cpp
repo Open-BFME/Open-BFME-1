@@ -33,15 +33,17 @@ template <typename T>
 class StringBase
 {
 	friend class AsciiString;
+	friend class UnicodeString;
 
-	public:
+private:
 	StringBase() : m_data(0) {}
 	StringBase(const StringBase<T> &other);
 	~StringBase();
-	void set(const StringBase<T> &other);
 
-	private:
 	StringInlineData<T> *m_data;
+
+public:
+	void set(const StringBase<T> &other);
 };
 
 class AsciiString : private StringBase<char>
@@ -49,8 +51,11 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString() : StringBase<char>() {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
-	void set(const AsciiString &other) { StringBase<char>::set(other); }
+	~AsciiString() {}
+	void set(const AsciiString &other)
+	{
+		StringBase<char>::set(*(const StringBase<char> *)&other);
+	}
 };
 
 struct BfmeElem60
@@ -68,28 +73,13 @@ struct BfmeElem60
 	{
 	}
 
-	BfmeElem60(GeometryType type, RealBits height, RealBits majorRadius,
-		RealBits minorRadius)
-		: m_type(type),
-		  m_height(height),
-		  m_majorRadius(majorRadius),
-		  m_minorRadius(type == GEOMETRY_BOX ? minorRadius : majorRadius),
-		  m_unmodelled10(0),
-		  m_unmodelled14(0),
-		  m_unmodelled18(0),
-		m_name(),
-		  m_enabled(true)
-	{
-	}
-
-	BfmeElem60(const BfmeElem60 &other);
-
 	BfmeElem60 &operator=(const BfmeElem60 &other)
 	{
 		m_type = other.m_type;
 		m_height = other.m_height;
 		m_majorRadius = other.m_majorRadius;
 		m_minorRadius = other.m_minorRadius;
+		m_unmodelled10 = other.m_unmodelled10;
 		m_unmodelled10 = other.m_unmodelled10;
 		m_unmodelled14 = other.m_unmodelled14;
 		m_unmodelled18 = other.m_unmodelled18;
@@ -105,7 +95,7 @@ struct BfmeElem60
 	int m_unmodelled10;
 	int m_unmodelled14;
 	int m_unmodelled18;
-	StringBase<char> m_name;
+	AsciiString m_name;
 	Bool m_enabled;
 	char m_padding21[3];
 };
@@ -127,7 +117,7 @@ class BfmeVec60
 		__forceinline unsigned size() const { return (unsigned)(m_finish - m_start); }
 
 	private:
-		BfmeElem60 *m_start;
+	BfmeElem60 *m_start;
 		BfmeElem60 *m_finish;
 		BfmeElem60 *m_endOfStorage;
 };
@@ -176,8 +166,14 @@ private:
 void GeometryInfo::set(GeometryType type, Bool isSmall, Real height,
 	Real majorRadius, Real minorRadius)
 {
-	BfmeElem60 shape(type, *(const RealBits *)&height,
-		*(const RealBits *)&majorRadius, *(const RealBits *)&minorRadius);
+	BfmeElem60 shape;
+	shape.m_type = type;
+	shape.m_height = *(const RealBits *)&height;
+	shape.m_majorRadius = *(const RealBits *)&majorRadius;
+	if (type == GEOMETRY_BOX)
+		shape.m_minorRadius = *(const RealBits *)&minorRadius;
+	else
+		shape.m_minorRadius = *(const RealBits *)&majorRadius;
 	GeometryInfo *self = this;
 	BfmeVec60 *shapes = &self->m_shapes;
 	self->m_isSmall = isSmall;

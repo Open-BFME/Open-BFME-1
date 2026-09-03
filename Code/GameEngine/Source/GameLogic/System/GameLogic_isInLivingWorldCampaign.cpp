@@ -10,6 +10,7 @@ enum RecorderModeType
 	RECORDERMODETYPE_PLAYBACK = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:
@@ -29,6 +30,7 @@ public:
 extern RecorderClass *TheRecorder;
 extern CampaignObject *TheLivingWorldLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

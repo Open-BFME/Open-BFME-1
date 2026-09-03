@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD
+// readable body of ?privateGuardRetaliate@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // Retail 0x002795D0: AIUpdateInterface::privateGuardRetaliate. Null victim
 // guard, clear, setGoalObject, setGoalPositionClipped, setState(0x3e), then
@@ -22,11 +23,13 @@ enum WeaponSlotType
 	PRIMARY_WEAPON = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -34,12 +37,14 @@ public:
 	Int m_maxShotCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	Weapon *getCurrentWeapon(WeaponSlotType *wslot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -60,6 +65,7 @@ public:
 	virtual void setGoalObject(const Object *object);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

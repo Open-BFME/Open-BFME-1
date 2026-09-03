@@ -5,6 +5,7 @@
 // The empty base destructor is what gives the constructor its SEH frame
 // (same trick as AttackNugget_ctor_Thunk.cpp).
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -21,6 +22,7 @@ public:
 	~ObjectTypesBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectTypes.h
 class ObjectTypes : public ObjectTypesBase
 {
 public:

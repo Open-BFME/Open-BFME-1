@@ -1,15 +1,18 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getNextWaypoint@AIFollowWaypointPathState@@IAEPBVWaypoint@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 //
 // AIFollowWaypointPathState::getNextWaypoint — retail 0x0016C480 (75B).
 // Named callers: AIFollowWaypointPathState::update and AIPanicState::update.
 // ALLOW_BACKTRACK shape: random link in [0, 8), prior = current, setGoalPosition
 // to current location. Waypoint links sit at +0x20, count at +0x4c, location at +0xC.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -33,12 +36,14 @@ private:
 	int m_numLinks;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
 	void setGoalPosition(const Coord3D *pos);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIFollowWaypointPathState
 {
 protected:

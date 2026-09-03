@@ -99,7 +99,6 @@ LANAPI::LANAPI( void ) : m_transport(NULL)
 	m_isActive = TRUE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_dtor.cpp
 LANAPI::~LANAPI( void )
 {
 	reset();
@@ -107,6 +106,7 @@ LANAPI::~LANAPI( void )
 		delete m_transport;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_Init.cpp
 // ?init@LANAPI@@UAEXXZ present-unmatched
 void LANAPI::init( void )
 {
@@ -184,6 +184,7 @@ void LANAPI::reset( void )
 	
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestAccept_Thunk.cpp
 // ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::sendMessage(LANMessage *msg, UnsignedInt ip /* = 0 */)
 {
@@ -626,7 +627,6 @@ void LANAPI::RequestLocations( void )
 	sendMessage(&msg);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameJoin.cpp
 // BFME's OnGameJoin takes a THIRD argument and sits at vtable +0x74; the
 // reference declares two and lands it at +0x60.
 #define BFME_LANAPI_V(n) virtual void _bfme_join_v##n( void ) = 0;
@@ -916,7 +916,6 @@ void LANAPI::RequestGameStartTimer( Int seconds )
 	OnGameStartTimer(seconds);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameOptions.cpp
 
 // BFME identifies a LAN participant by an ADDRESS PAIR -- the ip and port that
 // vtable slot 55 hands back -- where the reference compares a bare m_localIP.
@@ -1269,7 +1268,6 @@ __forceinline Int bfmeUnicodeCompare( const UnicodeString &self, const UnicodeSt
 }
 
 // Misc utility functions
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_LookupGame.cpp
 LANGameInfo * LANAPI::LookupGame( UnicodeString gameName )
 {
 	LANGameInfo *theGame = m_games;

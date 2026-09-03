@@ -315,6 +315,7 @@ SuperweaponInfo::SuperweaponInfo(
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/SuperweaponInfoDtor.cpp
 // ??1SuperweaponInfo@@MAE@XZ present-unmatched
 SuperweaponInfo::~SuperweaponInfo()
 {
@@ -329,6 +330,7 @@ SuperweaponInfo::~SuperweaponInfo()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/SuperweaponInfoSetFont.cpp
 // ?setFont@SuperweaponInfo@@QAEXABVAsciiString@@H_N@Z present-unmatched
 void SuperweaponInfo::setFont(const AsciiString& superweaponNormalFont, Int superweaponNormalPointSize, Bool superweaponNormalBold)
 {
@@ -339,6 +341,7 @@ void SuperweaponInfo::setFont(const AsciiString& superweaponNormalFont, Int supe
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/SuperweaponInfoSetText.cpp
 // ?setText@SuperweaponInfo@@QAEXABVUnicodeString@@0@Z present-unmatched
 void SuperweaponInfo::setText(const UnicodeString& name, const UnicodeString& time)
 {
@@ -347,6 +350,7 @@ void SuperweaponInfo::setText(const UnicodeString& name, const UnicodeString& ti
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/SuperweaponInfoDrawName.cpp
 // ?drawName@SuperweaponInfo@@QAEXHHHH@Z present-unmatched
 void SuperweaponInfo::drawName(Int x, Int y, Color color, Color dropColor)
 {
@@ -356,6 +360,7 @@ void SuperweaponInfo::drawName(Int x, Int y, Color color, Color dropColor)
 }
 
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/SuperweaponInfoDrawTime.cpp
 // ?drawTime@SuperweaponInfo@@QAEXHHHH@Z present-unmatched
 void SuperweaponInfo::drawTime(Int x, Int y, Color color, Color dropColor)
 {
@@ -1701,6 +1706,7 @@ void InGameUI::setRadiusCursor(RadiusCursorType cursorType, const SpecialPowerTe
 //-------------------------------------------------------------------------------------------------
 /** handle updating of "radius cursors" that follow the mouse pos */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIHandleRadiusCursor.cpp
 // ?handleRadiusCursor@InGameUI@@IAEXXZ present-unmatched
 void InGameUI::handleRadiusCursor()
 {
@@ -2558,7 +2564,6 @@ void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ...
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUI_addMessageText_Thunk.cpp
 // The message font triple sits with the other per-message state BFME left low
 // in the class, the same way the named-timer block above does.
 struct BfmeMessageFontLayout
@@ -3976,6 +3981,7 @@ Bool InGameUI::isAllSelectedKindOf( KindOfType kindOf ) const
 //-------------------------------------------------------------------------------------------------
 /** Set the input enabled/disabled */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUISetInputEnabled.cpp
 // ?setInputEnabled@InGameUI@@UAEX_N@Z present-unmatched
 void InGameUI::setInputEnabled( Bool enable )
 {

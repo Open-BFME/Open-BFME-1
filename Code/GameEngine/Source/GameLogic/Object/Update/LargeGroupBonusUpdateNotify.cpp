@@ -5,6 +5,7 @@
 // vector at module-data +0x20/+0x24 and invokes a sink from object vtable
 // slot +0x28.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
@@ -17,6 +18,7 @@ public:
 	void finish();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

@@ -10,12 +10,14 @@ typedef bool Bool;
 
 extern "C" double __cdecl tan(double angle);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
 	static Bool Has_Stencil(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -27,6 +29,7 @@ extern GlobalData *TheGlobalData;
 
 enum KindOfType { KINDOF_INVALID = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -133,6 +136,7 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable : public Thing
 {
 };
@@ -143,6 +147,7 @@ class BfmeShadowResource
 
 namespace Shadow
 {
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
 	struct ShadowTypeInfo
 	{
 		unsigned char m_unreconstructed_00[0x98];

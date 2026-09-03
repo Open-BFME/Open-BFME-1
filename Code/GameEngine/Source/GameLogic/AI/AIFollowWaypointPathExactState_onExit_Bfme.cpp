@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?onExit@AIFollowWaypointPathExactState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout view for the retail exact-waypoint exit body.
 
 enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -22,6 +24,7 @@ public:
 
 class Waypoint;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -51,6 +54,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIFollowWaypointPathExactState : public AIInternalMoveToState
 {
 public:

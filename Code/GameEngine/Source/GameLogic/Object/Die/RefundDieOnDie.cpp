@@ -8,6 +8,7 @@ class ModuleData;
 class DamageInfo;
 class UpgradeTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -35,18 +36,21 @@ public:
 	bool isValid() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 class Money
 {
 public:
 	void deposit( UnsignedInt amount, bool playSound = true );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ScoreKeeper.h
 class ScoreKeeper
 {
 public:
 	void addMoneyEarned( int amount );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -64,6 +68,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -93,6 +98,7 @@ private:
 	StringBase( const StringBase<T> &that );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -125,6 +131,7 @@ public:
 	virtual UnicodeString fetch( const char *label, bool *exists = 0 ) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -195,6 +202,7 @@ __forceinline long fast_float2long_round( float value )
 	return result;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
 {
 public:
@@ -210,12 +218,14 @@ private:
 	Object *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
 class BehaviorModuleInterface
 {
 public:
 	virtual void behaviorModuleInterfaceAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleInterface
 {
 public:
@@ -229,6 +239,7 @@ public:
 	bool isDieApplicable( const Object *object, const DamageInfo *damageInfo ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleData
 {
 public:
@@ -246,6 +257,7 @@ public:
 	ObjectFilter m_buildingRequired;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModule : public ObjectModule,
 	public BehaviorModuleInterface,
 	public DieModuleInterface

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z: Code/GameEngine/Source/Common/RTS/ActionManager.cpp
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -32,6 +33,7 @@ enum CanAttackResult
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -65,12 +67,14 @@ public:
 	virtual void iterateContained( BfmeContainIterateFunc func, void *userData, Bool reverse );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	Bool isKindOf( KindOfType kind ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpawnBehavior.h
 class SpawnBehaviorInterface
 {
 public:
@@ -79,6 +83,7 @@ public:
 	virtual Object *getClosestSlave( const Coord3D *pos );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -113,6 +118,7 @@ struct BfmeContainedAttackContext
 	AbleToAttackType attackType;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:

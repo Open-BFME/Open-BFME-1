@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?evaluateNamedExitedArea@ScriptConditions@@IAE_NPAVParameter@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // Clean C++ reconstruction of ScriptConditions::evaluateNamedExitedArea.
 
 typedef bool Bool;
 
 class PolygonTrigger;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

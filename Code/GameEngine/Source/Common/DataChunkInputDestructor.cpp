@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1DataChunkInput@@QAE@XZ: Code/GameEngine/Source/Common/System/DataChunk.cpp
 
 // Open-BFME: DataChunkInput destructor, retail 0x00102910.
 //
@@ -7,24 +8,28 @@
 // mapping list begins at +0x04.  Each node uses its virtual deleting
 // destructor, as in the retail push-1 / vtable-slot-zero calls.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 struct InputChunk
 {
 	virtual ~InputChunk();
 	InputChunk *next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 struct UserParser
 {
 	virtual ~UserParser();
 	UserParser *next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 struct Mapping
 {
 	virtual ~Mapping();
 	Mapping *next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 struct DataChunkTableOfContents
 {
 	Mapping *m_list;
@@ -43,6 +48,7 @@ struct DataChunkTableOfContents
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 	void *m_file;

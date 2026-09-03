@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??0FXListStore@@QAE@XZ: Code/GameEngine/Source/GameClient/FXList.cpp
 // FXListStore constructor. GameEngine::init news this object then
 // immediately calls initSubsystem<FXListStore>.
 
 #include <hash_map>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -19,6 +21,7 @@ private:
 	void *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FXList.h
 class FXListStore : public SubsystemInterface
 {
 public:

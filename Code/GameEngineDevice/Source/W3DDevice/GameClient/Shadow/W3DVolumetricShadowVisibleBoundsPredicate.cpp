@@ -8,6 +8,7 @@ public:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 struct AABoxClass
 {
 	Vector3 Center;
@@ -22,6 +23,7 @@ public:
 
 extern const float BfmeZeroRange;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
 {
 private:

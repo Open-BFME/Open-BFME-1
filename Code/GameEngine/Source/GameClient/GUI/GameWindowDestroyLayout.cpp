@@ -3,6 +3,7 @@
 // Retail 0x004E9CC0: if (this) { layout = winGetLayout(); if (layout)
 // { layout->destroyWindows(); delete layout; } }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -17,6 +18,7 @@ public:
 	virtual void destroyWindows();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

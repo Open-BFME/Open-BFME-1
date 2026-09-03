@@ -4,6 +4,7 @@
 // constructs a StringBase<char> at +4, copies a 12-byte record from the second
 // argument, then stores six more dword arguments and a trailing zero byte.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -14,6 +15,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	unsigned x;

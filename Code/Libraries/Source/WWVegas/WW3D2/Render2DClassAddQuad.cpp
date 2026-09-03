@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Add_Quad@Render2DClass@@: Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // BFME Render2DClass six-color rectangle overload, retail 0x006E7210.
 //
 // BFME's renderer stores a 0x2c-byte vertex in its active batch.  The
@@ -6,6 +7,7 @@
 // renderer, so this TU keeps the older layout local while preserving the
 // public Render2DClass symbol and call signature.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
 class RectClass
 {
 	public:
@@ -34,6 +36,7 @@ typedef BfmeUInt32 (__cdecl *BfmeColorConverter)(BfmeUInt32 color);
 extern "C" float g_BfmeRender2DZ;
 extern "C" BfmeColorConverter g_BfmeColorConverter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 private:

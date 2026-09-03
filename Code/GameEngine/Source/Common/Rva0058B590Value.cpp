@@ -5,6 +5,7 @@ extern "C" __declspec(dllimport) double __cdecl floor( double );
 extern float g_rva0058B590Scale;
 extern float g_bfmeADL;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:

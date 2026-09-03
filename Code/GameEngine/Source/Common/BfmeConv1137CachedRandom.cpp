@@ -5,6 +5,7 @@
 // g_bfmeGlo012F15F8; both +0x40 and this+0x44 set => tail-call
 // GameClientRandomVariable::getValue at override+0x44, else return 1.0f.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -14,6 +15,7 @@ public:
 	const Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable
 {
 public:

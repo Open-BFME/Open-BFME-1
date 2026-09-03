@@ -7,6 +7,7 @@ typedef long Long;
 extern "C" __declspec(dllimport) Long __stdcall InterlockedIncrement(
 	Long volatile *addend );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventInfo.h
 class AudioEventInfo
 {
 public:
@@ -29,6 +30,7 @@ inline AudioEventInfoRef::AudioEventInfoRef( const AudioEventInfo *info )
 		InterlockedIncrement( &const_cast<AudioEventInfo *>( m_info )->m_refCount );
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -39,6 +41,7 @@ public:
 
 extern AudioEventRTS BfmeTheEmptyAudioEvent;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:

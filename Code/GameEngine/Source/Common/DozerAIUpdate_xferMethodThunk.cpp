@@ -19,6 +19,7 @@ struct XferVersion
 // BFME's Xfer dispatch keeps xferVersion at slot 10, xferSnapshot at slot 12,
 // xferUser at slot 9, and the typed transfers at their retail slots.  The
 // unnamed slots are retained so the calls use the original vtable offsets.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -87,6 +88,7 @@ static void invokeDozerBaseXfer(Gen_002B3190 *base, BfmeSeedTarget *xfer)
 	base->bfmeAccept(xfer);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public DozerRootBase, public DozerIface1,
 	public DozerIface2, public DozerIface3, public DozerIface4
 {
@@ -100,12 +102,14 @@ private:
 
 class DozerAIInterface { public: virtual void vslot(); };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerPrimaryStateMachine
 {
 public:
 	virtual ~DozerPrimaryStateMachine();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -122,6 +126,7 @@ public:
 	void bfmeAccept(BfmeSeedTarget *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DozerAIUpdate.h
 class DozerAIUpdate : public AIUpdateInterface, public DozerAIInterface
 {
 protected:

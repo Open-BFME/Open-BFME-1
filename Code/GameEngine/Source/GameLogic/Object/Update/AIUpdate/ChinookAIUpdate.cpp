@@ -1427,6 +1427,7 @@ void ChinookAIUpdate::loadPostProcess( void )
 /**
  * Enter idle state.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/ChinookAIUpdatePrivateIdle.cpp
 // ?privateIdle@ChinookAIUpdate@@ present-unmatched
 void ChinookAIUpdate::privateIdle(CommandSourceType cmdSource)
 {

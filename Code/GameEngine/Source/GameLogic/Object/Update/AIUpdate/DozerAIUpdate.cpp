@@ -484,6 +484,7 @@ void DozerActionDoActionState::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 /** Entering the do action state */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerActionDoActionStateOnEnterBfme.cpp
 // ?onEnter@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ present-unmatched
 StateReturnType DozerActionDoActionState::onEnter( void )
 {
@@ -3609,6 +3610,7 @@ DozerAIUpdate::~DozerAIUpdate( void )
 // ------------------------------------------------------------------------------------------------
 /** Create any sub machines we need to do all our behavior */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdateCreateMachinesBfme.cpp
 // ?createMachines@DozerAIUpdate@@AAEXXZ present-unmatched
 void DozerAIUpdate::createMachines( void )
 {

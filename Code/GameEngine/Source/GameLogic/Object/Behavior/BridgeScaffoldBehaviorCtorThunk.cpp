@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// readable body of ??0BridgeScaffoldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z: Code/GameEngine/Source/GameLogic/Object/Behavior/BridgeScaffoldBehavior.cpp
 // This row was re-homed to a ?j_ name and then RESTORED, and the reason is worth
 // keeping: retail really did fold several module constructors onto one body, and
 // the argument that it could not was wrong.

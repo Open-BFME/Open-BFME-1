@@ -7,13 +7,15 @@
 // second override walk is intentional: retail keeps both final pointers
 // live while it computes the transition fraction.
 
+class BfmeOverrideTBA;
+
 class Overridable
 {
 public:
 	const Overridable *getFinalOverride() const;
 
 	void *m_vtable;
-	const Overridable *m_nextOverride;
+	const BfmeOverrideTBA *m_nextOverride;
 };
 
 class BfmeOverrideTBA : public Overridable
@@ -25,7 +27,7 @@ public:
 	int m_5c;
 };
 
-extern const BfmeOverrideTBA *g_bfmeGlo012F15F8;
+extern BfmeOverrideTBA *g_bfmeGlo012F15F8;
 
 static const BfmeOverrideTBA *walkTBA(const BfmeOverrideTBA *d)
 {
@@ -65,9 +67,9 @@ public:
 void BfmeThingTBA::transitionTBA(void)
 {
 	float fraction;
+	const Overridable *next;
 	const BfmeOverrideTBA *from;
 	const BfmeOverrideTBA *to;
-	const Overridable *next;
 	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
 	const BfmeOverrideTBA *d = walkTBA(f);
 	if (d->m_flag58 == 0 || m_98 == 0)

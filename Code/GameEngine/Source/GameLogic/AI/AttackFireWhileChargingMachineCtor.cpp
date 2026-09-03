@@ -7,6 +7,7 @@ class AIAttackState;
 class State;
 struct StateConditionInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:

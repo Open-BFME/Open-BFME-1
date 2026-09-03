@@ -2982,6 +2982,7 @@ IDirect3DVolumeTexture8* DX8Wrapper::_Create_DX8_Volume_Texture
 }
 
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Create_DX8_Surface.cpp
 // ?_Create_DX8_Surface@DX8Wrapper@@ present-unmatched
 IDirect3DSurface8 * DX8Wrapper::_Create_DX8_Surface(unsigned int width, unsigned int height, WW3DFormat format)
 {
@@ -2998,6 +2999,7 @@ IDirect3DSurface8 * DX8Wrapper::_Create_DX8_Surface(unsigned int width, unsigned
 	return surface;
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Create_DX8_Surface.cpp
 // ?_Create_DX8_Surface@DX8Wrapper@@ present-unmatched
 IDirect3DSurface8 * DX8Wrapper::_Create_DX8_Surface(const char *filename_)
 {
@@ -3253,6 +3255,7 @@ void DX8Wrapper::Set_Light_Environment(LightEnvironmentClass* light_env)
 */
 }
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Get_DX8_Front_Buffer.cpp
 // ?_Get_DX8_Front_Buffer@DX8Wrapper@@ present-unmatched
 IDirect3DSurface8 * DX8Wrapper::_Get_DX8_Front_Buffer()
 {
@@ -3729,6 +3732,7 @@ void DX8Wrapper::Set_Render_Target
 
 
 IDirect3DSwapChain8 *
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Create_Additional_Swap_Chain.cpp
 // ?Create_Additional_Swap_Chain@DX8Wrapper@@ present-unmatched
 DX8Wrapper::Create_Additional_Swap_Chain (HWND render_window)
 {

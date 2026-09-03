@@ -1,14 +1,17 @@
 // cl: /DNDEBUG /DWIN32 /MD
+// readable body of ?doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doNamedSetStoppingDistance, retail 0x002EF710, 67 bytes.
 //
 // ZH twin. BFME Object m_ai is +0x204 and the current locomotor is AI+0x1CC;
 // close-enough distance is locomotor+0x38. The 0.5f floor is the ZH test.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Locomotor.h
 class Locomotor
 {
 public:
@@ -16,6 +19,7 @@ public:
 	float m_closeEnoughDist;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:
@@ -23,6 +27,7 @@ public:
 	Locomotor *m_curLocomotor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -30,6 +35,7 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -64,6 +70,7 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

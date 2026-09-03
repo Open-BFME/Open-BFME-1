@@ -16,7 +16,6 @@ struct PlayerSideFlag
 
 extern PlayerSideFlag *g_campaignReviewPlayer;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 // CampaignReview.apt, object 0x258 bytes.
 class BfmeAptScreenCampaignReview
 {

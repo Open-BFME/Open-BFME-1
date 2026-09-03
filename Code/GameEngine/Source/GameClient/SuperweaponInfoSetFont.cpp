@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// readable body of ?setFont@SuperweaponInfo@@QAEXABVAsciiString@@H_N@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 typedef int Int;
 typedef float Real;
@@ -7,6 +8,7 @@ typedef bool Bool;
 class AsciiString {};
 class GameFont;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -25,6 +27,7 @@ public:
 	Int adjustFontSize(Int point);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
 class FontLibrary
 {
 public:
@@ -34,6 +37,7 @@ public:
 extern GlobalLanguageData *TheGlobalLanguageData;
 extern FontLibrary *TheFontLibrary;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class SuperweaponInfo
 {
 private:

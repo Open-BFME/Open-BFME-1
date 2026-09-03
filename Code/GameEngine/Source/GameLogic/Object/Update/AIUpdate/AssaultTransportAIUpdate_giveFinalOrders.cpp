@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?giveFinalOrders@AssaultTransportAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate.cpp
 // Open-BFME: AssaultTransportAIUpdate::giveFinalOrders, retail 0x002B4950.
 //
 // This BFME body retains the hash-map GameLogic lookup used by retail.  The
@@ -16,6 +17,7 @@ typedef bool Bool;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -28,6 +30,7 @@ enum CommandSourceType
 	CMD_FROM_PLAYER = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -38,6 +41,7 @@ public:
 		CommandSourceType cmdSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 public:
@@ -47,6 +51,7 @@ private:
 	char m_pad04[0x1c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
 public:
@@ -61,6 +66,7 @@ private:
 	char m_pad330[0x340 - 0x330];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -77,6 +83,7 @@ private:
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -99,6 +106,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AssaultTransportAIUpdate.h
 class AssaultTransportAIUpdate
 {
 public:

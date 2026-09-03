@@ -1,10 +1,13 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?isClearFiringLineOfSightTerrain@Weapon@@: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
+// readable body of ?isClearGoalFiringLineOfSightTerrain@Weapon@@: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 //
 // Weapon::isClearFiringLineOfSightTerrain(source, victimPos). ZH adds
 // getMaxHeightAbovePosition onto the source position then asks
 // PartitionManager for terrain LOS; BFME asks TerrainLogic::isClearLineOfSight
 // at vtable +0x3C instead. this is unused, matching the simplified ZH body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -12,12 +15,14 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
 {
 public:
 	float getMaxHeightAbovePosition(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -38,6 +43,7 @@ private:
 	GeometryInfo m_geometry;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -52,6 +58,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

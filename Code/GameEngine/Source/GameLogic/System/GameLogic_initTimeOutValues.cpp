@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?initTimeOutValues@GameLogic@@QAEXXZ: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
 // Retail 0x00383740: GameLogic::initTimeOutValues. ZH GameLogic.cpp:1512.
 // TheNetwork is 0x012F7714, getNumPlayers is vslot +0x94, the timeout array
 // sits at +0x128 (same BFME layout as processProgressComplete). timeGetTime
 // is the ILT at 0x000481E4, not the import.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -24,6 +26,7 @@ extern NetworkInterface *TheNetwork;
 
 extern "C" unsigned long __stdcall bfme_timeGetTime(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

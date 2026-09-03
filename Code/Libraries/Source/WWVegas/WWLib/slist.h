@@ -64,6 +64,7 @@
 #endif
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/SLIST.H
 class SList {
   private:
 		SLNode<T> *HeadNode;    // Note: Constructor not called for pointer.

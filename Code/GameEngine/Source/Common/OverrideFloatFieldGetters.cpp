@@ -4,6 +4,7 @@
 // an override, retail enters the existing out-of-line recursive chain walker
 // through ILT 0x000022BB and reads the requested float from the final object.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

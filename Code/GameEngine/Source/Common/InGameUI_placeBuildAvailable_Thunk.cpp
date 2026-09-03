@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?placeBuildAvailable@InGameUI@@UAEXPBVThingTemplate@@PAVDrawable@@@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 // Open-BFME5: clean C++ reconstruction of InGameUI::placeBuildAvailable.
 // The declarations below retain the BFME retail offsets and virtual slots;
@@ -14,6 +15,7 @@ class Object;
 class Drawable;
 class ThingTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 private:
@@ -24,6 +26,7 @@ public:
 	UnsignedInt m_playerNightColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 private:
@@ -34,12 +37,14 @@ public:
 	Player *getControllingPlayer(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	void setOrientation(float angle);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable : public Thing
 {
 private:
@@ -53,6 +58,7 @@ public:
 	void setIndicatorColor(UnsignedInt color);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 private:
@@ -74,6 +80,7 @@ public:
 		Int unknown);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 private:
@@ -111,6 +118,7 @@ public:
 	virtual void releaseCapture(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

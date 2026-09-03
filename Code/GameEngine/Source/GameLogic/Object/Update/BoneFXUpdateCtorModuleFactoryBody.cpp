@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport
+// readable body of ??1BoneFXUpdate@@MAE@XZ: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp
 // ModuleFactory reaches this body through the named BoneFXUpdate constructor
 // ILT at 0x0000264E, whose jump target is the retail body at 0x00288C50.
 

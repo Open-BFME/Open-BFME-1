@@ -26,6 +26,7 @@ private:
     ~BfmeStringLiteralBase();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -63,6 +64,7 @@ enum NameKeyType
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
@@ -73,6 +75,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -81,6 +84,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -110,6 +114,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface
 {
 public:
@@ -141,6 +146,7 @@ public:
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

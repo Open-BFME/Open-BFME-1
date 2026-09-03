@@ -58,6 +58,7 @@
 // only needs its public calls and global pointers, so keep the retail layout
 // boundary local instead of imposing the Generals header's member layout on
 // this constructor.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DProjectedShadow.h
 class W3DProjectedShadowManager : public ProjectedShadowManager
 {
 public:
@@ -146,7 +147,6 @@ void DoShadows(RenderInfoClass & rinfo, Bool stencilPass)
 
 }
 	
-// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShadowManager_ctor_Thunk.cpp
 struct BfmeTerrainLightPosition
 {
 	Real x;

@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?setWidth@W3DDisplay@@UAEXI@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // readable body of ?setHeight@W3DDisplay@@UAEXI@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
+// readable body of ?setWidth@W3DDisplay@@UAEXI@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/rect.h
 class RectClass
 {
 public:
@@ -19,12 +20,14 @@ public:
 	float Bottom;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass
 {
 public:
 	void Set_Coordinate_Range(const RectClass &range);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

@@ -221,7 +221,6 @@ static TempIndexStruct* Get_Temp_Index_Array(unsigned count)
 //
 // ----------------------------------------------------------------------------
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesThunk.cpp
 // ?Insert_Triangles@SortingRendererClass@@ present-unmatched
 void SortingRendererClass::Insert_Triangles(
 	const SphereClass& bounding_sphere,
@@ -311,7 +310,6 @@ void SortingRendererClass::Insert_Triangles(
 //
 // ----------------------------------------------------------------------------
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SortingRendererInsertTrianglesNoSphere.cpp
 // ?Insert_Triangles@SortingRendererClass@@SAXGGGG@Z
 #if 0
 void SortingRendererClass::Insert_Triangles(

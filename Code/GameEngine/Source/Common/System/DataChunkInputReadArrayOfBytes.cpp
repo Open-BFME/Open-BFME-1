@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?readArrayOfBytes@DataChunkInput@@QAEXPADH@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME: DataChunkInput::readArrayOfBytes, retail 0x00102870.
 //
 // BFME yields to the OS before reading a raw byte array.  The read then
@@ -61,14 +62,14 @@ public:
 	Int dataLeft;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include/Common/DataChunk.h
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkTableOfContents
 {
 	char m_data[0x10];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include/Common/DataChunk.h
 class UserParser;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 protected:

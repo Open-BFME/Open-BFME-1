@@ -34,6 +34,7 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeImage
 {
 	public:
@@ -48,6 +49,7 @@ class ShellMenuSchemeImage
 	void *m_image;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ShellMenuScheme.h
 class ShellMenuSchemeLine
 {
 	public:

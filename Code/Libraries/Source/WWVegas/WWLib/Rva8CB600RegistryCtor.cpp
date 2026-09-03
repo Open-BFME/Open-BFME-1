@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of a registry-inserting constructor, retail 0x008CB600 (101 bytes).
 //
 // Inlines a simplified Rva899F00Base construction: mask/or the +4 bitfield with
 // kind=8 (0xF0008008 / 0x40008008), store base vptr 0x01135D68, push this into

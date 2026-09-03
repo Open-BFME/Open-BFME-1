@@ -2,6 +2,7 @@
 // WorkerAIUpdate wrapper around BfmeThingCTA::bfmeGoCTA.  Same shape as
 // SupplyTruckAIUpdate_setStoredPosition.cpp; stored Coord3D sits at +0x404.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -23,6 +24,7 @@ private:
 	void *m_bfmeVal;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate : public BfmeThingCTA
 {
 public:

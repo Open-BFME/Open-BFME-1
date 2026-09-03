@@ -17,6 +17,7 @@ class Image;
 class GameWindow;
 class WinInstanceData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -30,6 +31,7 @@ struct BfmeWinDrawData
 	Color borderColor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -104,6 +106,7 @@ static inline void bfmeTabControlDefaultDraw( GameWindow *window,
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:

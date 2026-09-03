@@ -5,6 +5,7 @@
 
 #include <string.h>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
 	void ExecCommand(const char *cmdstart, const char *cmdend);

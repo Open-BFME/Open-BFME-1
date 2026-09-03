@@ -1,4 +1,5 @@
 // cl: /O2 /Ob2 /GR- /EHsc /MD /DNDEBUG /DWIN32 /D_WINDOWS
+// readable body of ??1W3DTankTruckDraw@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDraw.cpp
 
 class W3DTankTruckPrimaryBase
 {
@@ -31,6 +32,7 @@ private:
 	unsigned char m_storage[ 12 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -39,6 +41,7 @@ private:
 	unsigned char m_storage[ 0x70 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DTankTruckDraw.h
 class W3DTankTruckDraw : public Gen_dtor_0077bf80
 {
 private:

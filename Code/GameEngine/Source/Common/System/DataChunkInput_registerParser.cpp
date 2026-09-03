@@ -12,6 +12,7 @@ class DataChunkInput;
 struct DataChunkInfo;
 typedef Bool (*DataChunkParserPtr)(DataChunkInput &, DataChunkInfo *, void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_data;
@@ -21,6 +22,7 @@ public:
 	void set(const AsciiString &stringSrc);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class UserParser
 {
 public:
@@ -38,6 +40,7 @@ void UserParser::v(void)
 {
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 	char m_prefix[0x18];

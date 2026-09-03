@@ -294,7 +294,7 @@ SelectionTranslator::~SelectionTranslator()
 /** 
  * If this drawable is a 'friend' of mine, select it.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends_Thunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends.cpp
 // ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z present-unmatched
 Bool SelectionTranslator::selectFriends( Drawable *draw, GameMessage *createTeamMsg, 
 																				 Bool dragSelecting )

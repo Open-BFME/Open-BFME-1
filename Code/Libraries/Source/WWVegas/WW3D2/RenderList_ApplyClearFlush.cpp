@@ -12,6 +12,7 @@ public:
 	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -20,6 +21,7 @@ public:
 		const Vector3 &color, float dest_alpha, float z, unsigned int stencil);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:
@@ -48,6 +50,7 @@ public:
 	virtual void Render(RenderInfoClass &rinfo);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -55,6 +58,7 @@ public:
 	void *ListNode;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListNodeClass
 {
 public:
@@ -70,6 +74,7 @@ public:
 	MultiListNodeClass Head;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 	char pad[0x60];

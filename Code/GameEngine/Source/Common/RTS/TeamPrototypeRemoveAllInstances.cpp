@@ -4,6 +4,7 @@
 // through the DLINK pair at Team+0x10 / +0x14 and optionally invoking a
 // C callback on the detached node.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -12,6 +13,7 @@ public:
 	Team *m_next;					// +0x14
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:

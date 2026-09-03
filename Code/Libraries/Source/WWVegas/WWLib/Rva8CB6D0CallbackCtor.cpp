@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of a derived-Rva899F00Base constructor, retail 0x008CB6D0 (87 bytes).
 //
 // Same family as Code/Libraries/Source/WWVegas/WWLib/ThreadClassCtorThunk.cpp: a
 // __thiscall constructor whose first act is Rva899F00Base(id, kind) at 0x00899F00.

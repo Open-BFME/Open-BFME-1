@@ -34,6 +34,7 @@ private:
 	WatchdogCriticalSection &m_criticalSection;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/thread.h
 class ThreadClass
 {
 public:
@@ -50,6 +51,7 @@ private:
 	int m_priority;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mutex.h
 class MutexClass
 {
 public:

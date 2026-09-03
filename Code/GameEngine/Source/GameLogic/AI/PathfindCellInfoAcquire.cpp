@@ -1,5 +1,6 @@
 // BFME's compact 0x34-byte pathfind-cell info pool operations.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
@@ -8,6 +9,7 @@ struct ICoord2D
 
 class PathfindCell;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCellInfo
 {
 public:
@@ -59,6 +61,7 @@ PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	return info;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:

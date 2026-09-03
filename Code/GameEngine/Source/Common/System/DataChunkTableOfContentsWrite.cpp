@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z: Code/GameEngine/Source/Common/System/DataChunk.cpp
 // Open-BFME: DataChunkTableOfContents::write, retail 0x00102E60.
 //
 // The caller is DataChunkOutput::~DataChunkOutput at 0x001036C0.  Its
@@ -29,7 +30,6 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h
 class OutputStream
 {
 public:

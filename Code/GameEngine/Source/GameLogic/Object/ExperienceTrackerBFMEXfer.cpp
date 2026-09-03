@@ -1,3 +1,4 @@
+// readable body of ?isAcceptingExperiencePoints@ExperienceTracker@@: Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp
 // Byte-matched BFME ExperienceTracker transfer implementation.
 
 typedef int Int;
@@ -5,6 +6,7 @@ typedef int Bool;
 typedef float Real;
 typedef unsigned char UnsignedByte;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -14,6 +16,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 public:
@@ -23,6 +26,7 @@ public:
 	bool m_isTrainable;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -31,6 +35,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -38,12 +43,14 @@ public:
 	ThingTemplate *m_template;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject
 {
 public:
 	void *m_mp;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public MemoryPoolObject, public Thing
 {
 public:
@@ -53,6 +60,7 @@ public:
 
 class Xfer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -69,6 +77,7 @@ public:
 	UnsignedByte m_minor;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -136,6 +145,7 @@ public:
 
 extern ExperienceLevelSystem *TheExperienceLevelSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -145,6 +155,7 @@ public:
 	virtual const char *getSnapshotName() const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ExperienceTracker.h
 class ExperienceTracker : public Snapshot
 {
 public:

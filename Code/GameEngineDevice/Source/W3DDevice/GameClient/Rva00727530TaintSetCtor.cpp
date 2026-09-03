@@ -4,6 +4,7 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 	unsigned char m_pad[0xCA0];
@@ -14,6 +15,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

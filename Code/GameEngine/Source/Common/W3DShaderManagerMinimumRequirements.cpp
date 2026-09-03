@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD
+// readable body of ?testMinimumRequirements@W3DShaderManager@@SA_NPAW4ChipsetType@@PAW4CpuType@@PAH2PAM33@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 
 enum ChipsetType { DC_UNKNOWN = 0 };
 enum CpuType { XX = 0, P3 = 1, P4 = 2, K7 = 3 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h
 class CPUDetectClass
 {
 public:
@@ -25,6 +27,7 @@ public:
 	static void detect();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:

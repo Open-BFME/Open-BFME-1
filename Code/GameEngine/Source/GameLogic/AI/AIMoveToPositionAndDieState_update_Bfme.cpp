@@ -12,6 +12,7 @@ enum StateReturnType
 	STATE_CONTINUE = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -24,12 +25,14 @@ enum PathfindLayerEnum
 	LAYER_GROUND = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
 {
 public:
 	void appendNode(const Coord3D *position, PathfindLayerEnum layer);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -81,6 +84,7 @@ enum DeathType
 	DEATH_NORMAL = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -91,6 +95,7 @@ private:
 	BFMEBodyDamageSource *m_body;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -126,6 +131,7 @@ struct BfmeMoveStateFields
 	unsigned char m_appendGoalPosition;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:

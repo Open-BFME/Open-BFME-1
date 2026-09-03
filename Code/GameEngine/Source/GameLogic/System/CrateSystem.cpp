@@ -172,7 +172,6 @@ void CrateSystem::parseCrateTemplateDefinition(INI* ini)
 	ini->initFromINI(crateTemplate, crateTemplate->getFieldParse());
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CrateSystem_newCrateTemplate_Thunk.cpp
 CrateTemplate *CrateSystem::newCrateTemplate( AsciiString name )
 {
 	// sanity

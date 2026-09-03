@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD
+// readable body of ?postRender@ScreenDefaultFilter@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 //
 // Retail 0x007D46D0: ScreenDefaultFilter::postRender.  BFME passes Coord2D by
 // value (ret 10h) and draws the fullscreen blit through a helper instead of
 // inlining DrawPrimitiveUP.  Twin: ZH W3DShaderManager.cpp postRender.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	float x;

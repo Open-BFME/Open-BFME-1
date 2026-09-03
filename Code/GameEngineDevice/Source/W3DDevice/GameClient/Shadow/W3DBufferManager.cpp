@@ -60,7 +60,6 @@ Int W3DBufferManager::getDX8Format(VBM_FVF_TYPES format)
 	return FVFTypeIndexList[format];
 }
 
-// byte-exact reconstruction: BFME widened the two slot pools beyond the ZH
 // header's declarations.  Keep that drift local to this body so the matched
 // ZH-era methods below continue to compile against their vendored header.
 W3DBufferManager::W3DBufferManager(void)

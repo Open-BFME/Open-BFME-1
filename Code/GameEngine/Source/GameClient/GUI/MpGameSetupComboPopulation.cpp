@@ -21,6 +21,7 @@ protected:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<WideChar>
 {
 public:
@@ -37,6 +38,7 @@ public:
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:
@@ -46,10 +48,11 @@ public:
 
 class AsciiString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences
 {
 public:
-	bool getBool( AsciiString key, bool defaultValue );
+	bool getBool( AsciiString key, bool defaultValue ) const;
 };
 
 class MpGameSetupPreferences
@@ -76,6 +79,7 @@ protected:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -146,11 +150,11 @@ void MpGameSetup::populateMapType()
 	GadgetComboBoxAddEntry( m_mapType, TheGameText->fetch( "Apt:PlayerMadeMaps" ),
 		*(int *)0x012B76F4 );
 
-	AsciiString key( "UseSystemMapDir" );
-	bool useSystemMapDir = m_preferences->getPreferences()->getBool( key, true );
+	bool useSystemMapDir = m_preferences->getPreferences()->getBool(
+		AsciiString( "UseSystemMapDir" ), true );
 	if ( useSystemMapDir )
 		GadgetComboBoxSetSelectedPos( m_mapType, 0, false );
 	else
-		GadgetComboBoxSetSelectedPos( m_mapType, 1, true );
+		GadgetComboBoxSetSelectedPos( m_mapType, 1, false );
 	m_mapType->winBringToTop();
 }

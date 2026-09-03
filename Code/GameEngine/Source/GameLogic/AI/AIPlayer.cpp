@@ -3009,6 +3009,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 /**
  * Checks to see if we're building a dozer.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPlayer_dozerInQueue.cpp
 // ?dozerInQueue@AIPlayer@@IAE_NXZ present-unmatched
 Bool AIPlayer::dozerInQueue( void )
 {

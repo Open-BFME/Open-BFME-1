@@ -41,8 +41,8 @@ private:
 	State *m_currentState;
 };
 
-// upstream layout: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp
 // BFME places the three machine pointers at +0x41c, +0x420 and +0x424.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 public:

@@ -9,6 +9,7 @@ enum DrawableID
 	INVALID_DRAWABLE_ID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

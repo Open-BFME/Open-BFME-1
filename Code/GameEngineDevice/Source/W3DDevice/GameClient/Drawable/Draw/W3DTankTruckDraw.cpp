@@ -153,6 +153,7 @@ DEBUG_CRASH(("test me, may not work (srj)"));
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTankTruckDrawDestructor.cpp
 // ??1W3DTankTruckDraw@@ present-unmatched
 W3DTankTruckDraw::~W3DTankTruckDraw()
 {

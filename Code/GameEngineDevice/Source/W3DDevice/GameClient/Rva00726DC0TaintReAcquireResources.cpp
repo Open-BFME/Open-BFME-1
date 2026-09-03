@@ -5,6 +5,7 @@ typedef unsigned char Bool;
 
 struct IDirect3DBaseTexture8;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -14,6 +15,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:

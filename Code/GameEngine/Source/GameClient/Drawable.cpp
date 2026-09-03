@@ -689,6 +689,7 @@ Bool Drawable::clientOnly_getFirstRenderObjInfo(Coord3D* pos, Real* boundingSphe
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?getProjectileLaunchOffset@Drawable@@QBE_NW4WeaponSlotType@@HPAVMatrix3D@@W4WhichTurretType@@PAUCoord3D@@3@Z present-unmatched
 Bool Drawable::getProjectileLaunchOffset(WeaponSlotType wslot, Int specificBarrelToUse, Matrix3D* launchPos, WhichTurretType tur, Coord3D* turretRotPos, Coord3D* turretPitchPos) const
 {
@@ -788,6 +789,7 @@ Real Drawable::getAnimationScrubScalar( void ) const // lorenzen
 #endif
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_getPristineBonePositions.cpp
 // ?getPristineBonePositions@Drawable@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@H@Z present-unmatched
 Int Drawable::getPristineBonePositions(const char* boneNamePrefix, Int startIndex, Coord3D* positions, Matrix3D* transforms, Int maxBones) const
 {
@@ -900,6 +902,7 @@ void Drawable::setTerrainDecalFadeTarget(Real target, Real rate)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_setShadowsEnabled.cpp
 // ?setShadowsEnabled@Drawable@@QAEX_N@Z present-unmatched
 void Drawable::setShadowsEnabled(Bool enable)
 {
@@ -955,6 +958,7 @@ void Drawable::setFullyObscuredByShroud(Bool fullyObscured)
 /** Set drawable's "selected" status, if not already set.  Also update running
  * total count of selected drawables. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?friend_setSelected@Drawable@@QAEXXZ present-unmatched
 void Drawable::friend_setSelected( void ) 
 { 
@@ -970,6 +974,7 @@ void Drawable::friend_setSelected( void )
 /** Clear drawable's "selected" status, if not already clear.  Also update running
  * total count of selected drawables. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?friend_clearSelected@Drawable@@QAEXXZ present-unmatched
 void Drawable::friend_clearSelected( void ) 
 {
@@ -5020,6 +5025,7 @@ void Drawable::clearEmoticon()
 }
 
 //------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Drawable_setEmoticon.cpp
 // ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z present-unmatched
 void Drawable::setEmoticon( const AsciiString &name, Int duration )
 {
@@ -5972,6 +5978,7 @@ DrawModule const** Drawable::getDrawModules() const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?clearAndSetModelConditionFlags@Drawable@@QAEXABV?$BitFlags@$0HF@@@0@Z present-unmatched
 void Drawable::clearAndSetModelConditionFlags(const ModelConditionFlags& clr, const ModelConditionFlags& setf)
 {
@@ -6107,7 +6114,6 @@ void Drawable::setID( DrawableID id )
 // ------------------------------------------------------------------------------------------------
 /** Return drawable ID, this ID is only good on the client */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/DrawableFields.cpp
 // BFME declares m_id LATER in Drawable than this tree does: retail's getID is
 // `mov eax,[ecx+0x100]; ret` while the vendored class lands it at +0x8C.  The
 // members either side agree -- getInstanceMatrix at +0xD4 and
@@ -6258,6 +6264,7 @@ Bool Drawable::handleWeaponFireFX(WeaponSlotType wslot, Int specificBarrelToUse,
 } 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?getBarrelCount@Drawable@@QBEHW4WeaponSlotType@@@Z present-unmatched
 Int Drawable::getBarrelCount(WeaponSlotType wslot) const
 {
@@ -6619,6 +6626,7 @@ void Drawable::enableAmbientSound( Bool enable )
 
 //-------------------------------------------------------------------------------------------------
 // Enable and disable sound because the map designer wants us too
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeThreeHundredNine.cpp
 // ?enableAmbientSoundFromScript@Drawable@@QAEX_N@Z present-unmatched
 void Drawable::enableAmbientSoundFromScript( Bool enable )
 {
@@ -6707,6 +6715,7 @@ void Drawable::updateHiddenStatus()
 //-------------------------------------------------------------------------------------------------
 /** Hide or un-hide drawable */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/DrawableSetDrawableHidden.cpp
 // ?setDrawableHidden@Drawable@@QAEX_N@Z present-unmatched
 void Drawable::setDrawableHidden( Bool hidden )
 {

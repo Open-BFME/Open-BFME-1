@@ -10,6 +10,7 @@
 
 class SceneClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass
 {
 public:
@@ -17,6 +18,7 @@ public:
 	void *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class GenericMultiListClass
 {
 protected:
@@ -151,6 +153,7 @@ public:
 
 // The empty list view deliberately carries no local layout: only the retail
 // receiver offsets matter, and Internal_Remove supplies the real list body.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SimpleSceneClass
 {
 public:

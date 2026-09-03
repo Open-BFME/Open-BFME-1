@@ -6,6 +6,7 @@
 
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheckInfo
 {
 	unsigned m_a;
@@ -13,6 +14,7 @@ struct EvaCheckInfo
 	unsigned m_c;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheck
 {
 	void resetFromInfo(const EvaCheckInfo *info);

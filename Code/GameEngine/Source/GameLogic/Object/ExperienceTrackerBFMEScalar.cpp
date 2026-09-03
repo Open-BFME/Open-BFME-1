@@ -5,6 +5,7 @@ typedef float Real;
 class ExperienceTracker;
 template <class T> class OVERRIDE;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -27,6 +28,7 @@ __inline const Overridable *Overridable::getFinalOverride() const
 	return this;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
 {
 private:
@@ -37,6 +39,7 @@ private:
 };
 
 template <class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
 class OVERRIDE
 {
 public:
@@ -61,6 +64,7 @@ __forceinline const T *OVERRIDE<T>::operator->() const
 	return operator const T *();
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -78,10 +82,12 @@ __forceinline const ThingTemplate *Thing::getTemplate() const
 	return m_template;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -105,6 +111,7 @@ private:
 	friend class ExperienceTracker;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ExperienceTracker.h
 class ExperienceTracker
 {
 public:

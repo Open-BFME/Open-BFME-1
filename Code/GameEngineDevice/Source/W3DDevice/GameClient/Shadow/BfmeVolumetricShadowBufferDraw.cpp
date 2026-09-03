@@ -6,6 +6,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class VertexBufferLockClass
 {
 protected:
@@ -13,6 +14,7 @@ protected:
 	void *m_vertices;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 class VertexBufferClass
 {
 public:
@@ -23,6 +25,7 @@ public:
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass
 {
 public:
@@ -48,6 +51,7 @@ public:
 	unsigned m_caps;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:

@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD
+// readable body of ?setDrawableHidden@Drawable@@QAEX_N@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -14,6 +16,7 @@ public:
 	virtual void setHidden(bool hidden);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 private:

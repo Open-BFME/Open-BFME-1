@@ -1448,6 +1448,7 @@ void OpenContain::orderAllPassengersToExit( CommandSourceType commandSource, Boo
 
  
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContainOrderPassengersIdle.cpp
 // ?orderAllPassengersToIdle@OpenContain@@ present-unmatched
 void OpenContain::orderAllPassengersToIdle( CommandSourceType commandSource )
 {

@@ -168,7 +168,6 @@ static const BlockParse theTypeTable[] =
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?isValidINIFilename@INI@@ present-unmatched
 Bool INI::isValidINIFilename( const char *filename )
 {
@@ -2081,7 +2080,6 @@ Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, cha
 //-------------------------------------------------------------------------------------------------
 // parse the line and return whether the given line is a Block declaration of the form
 // [whitespace] end [EOL]
-// byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini.cpp
 // ?isEndOfBlock@INI@@ present-unmatched
 Bool INI::isEndOfBlock( char *bufferToCheck )
 {

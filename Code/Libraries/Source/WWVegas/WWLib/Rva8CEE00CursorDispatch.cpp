@@ -1,6 +1,5 @@
 // ?rva8CEE00Dispatch@@YAXPAVRva8CEE00State@@PAURva8CEE00Cursor@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of a cursor-byte dispatch, retail 0x008CEE00 (64 bytes).
 
 class Rva8CEE00Handler
 {

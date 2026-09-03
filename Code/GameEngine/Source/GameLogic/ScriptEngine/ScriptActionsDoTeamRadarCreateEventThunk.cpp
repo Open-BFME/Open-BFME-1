@@ -7,6 +7,7 @@ enum RadarEventType
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     Real x;
@@ -14,6 +15,7 @@ struct Coord3D
     Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -43,6 +45,7 @@ private:
     char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
@@ -52,6 +55,7 @@ public:
     Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -75,6 +79,7 @@ public:
     virtual Team *getTeamNamed(BfmeAsciiStringArg, Bool) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class Radar
 {
 public:

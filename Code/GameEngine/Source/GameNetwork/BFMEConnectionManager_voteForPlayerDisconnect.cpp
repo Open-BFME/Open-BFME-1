@@ -8,6 +8,7 @@ typedef int Int;
 
 class ConnectionManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/DisconnectManager.h
 class DisconnectManager
 {
 public:

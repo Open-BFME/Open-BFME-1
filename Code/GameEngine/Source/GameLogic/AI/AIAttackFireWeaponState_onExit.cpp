@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // stlport
+// readable body of ?onExit@AIAttackFireWeaponState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for AIAttackFireWeaponState::onExit.
 
 typedef bool Bool;
@@ -23,6 +24,7 @@ enum WeaponStatus
 };
 
 template <int NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -54,6 +56,7 @@ private:
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -69,6 +72,7 @@ private:
 	unsigned m_whenPreAttackFinished;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -76,6 +80,7 @@ public:
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -83,6 +88,7 @@ public:
 	Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -98,6 +104,7 @@ protected:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackFireWeaponState : public State
 {
 public:

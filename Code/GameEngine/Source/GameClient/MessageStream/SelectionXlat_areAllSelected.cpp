@@ -54,6 +54,7 @@ public:
 	__forceinline BFMESelectionRedirect *getSelectionRedirect() const { return m_selectionRedirect; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

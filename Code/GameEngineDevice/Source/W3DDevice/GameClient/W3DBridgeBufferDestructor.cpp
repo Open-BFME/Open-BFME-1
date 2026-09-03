@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DBridgeBuffer@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp
 // W3DBridgeBuffer destructor, retail 0x006D8A80 (169 bytes).
 // Body releases the three buffer/material refs at +0/+4/+8. Members then
 // run reverse: 200 W3DBridge objects of 0x114 bytes at +0x18, then texture
@@ -6,6 +7,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -20,6 +22,7 @@ public:
 	Int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -38,6 +41,7 @@ public:
 	TextureClass *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridge
 {
 public:
@@ -45,6 +49,7 @@ public:
 	unsigned char m_bytes[0x114];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridgeBuffer
 {
 public:

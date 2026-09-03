@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // TerrainLogic::getWaypointByName, retail 0x001AA900.
 //
 // BFME keeps the waypoint chain in the same process-global list used by the
@@ -22,6 +23,7 @@ struct BfmeAsciiStringData
 	unsigned short m_unreconstructed_06;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -48,6 +50,7 @@ public:
 	const BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -96,6 +99,7 @@ static Int compareWaypointName(const BfmeWaypointNameString &self,
 	return result;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /MD
+// readable body of ?update@GameSpyLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // ZH LoadScreen.cpp:1877, with BFME's Bool argument on liteupdate.
 
 #define BFME_VSLOT(n) virtual void slot##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetworkInterface.h
 class NetworkInterface
 {
 public:
@@ -22,12 +24,14 @@ public:
 
 extern NetworkInterface *TheNetwork;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LoadScreen.h
 class LoadScreen
 {
 public:
 	virtual void update( int percent );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LoadScreen.h
 class GameSpyLoadScreen : public LoadScreen
 {
 public:

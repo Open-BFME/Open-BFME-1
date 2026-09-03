@@ -2,6 +2,7 @@
 // Retail GameClient layout proof: the vptr occupies +0x00, the inherited
 // AsciiString occupies +0x04..+0x0B, and the client frame is at +0x0C.
 // Keep this claim isolated from the still-vendored full GameClient class.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:

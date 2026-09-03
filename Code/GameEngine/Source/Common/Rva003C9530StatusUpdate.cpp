@@ -1,6 +1,7 @@
 // Address-derived status lookup/update reconstruction at 0x003C9530.
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -19,6 +20,7 @@ extern BfmeObj923G *__stdcall bfmeFind923G( void *owner );
 
 extern void d_003c9470();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

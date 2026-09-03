@@ -2285,6 +2285,7 @@ Bool NetPacket::isRoomForFrameResendRequestMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectScreenOffCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectScreenOffCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -2397,6 +2398,7 @@ Bool NetPacket::isRoomForDisconnectScreenOffMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectFrameCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -2973,6 +2975,7 @@ Bool NetPacket::isRoomForWrapperMessage(NetCommandRef *msg) {
 /**
  * Add a TimeOutGameStart  to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addTimeOutGameStartMessage(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -3069,6 +3072,7 @@ Bool NetPacket::isRoomForTimeOutGameStartMessage(NetCommandRef *msg) {
 /**
  * Add a Progress command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addLoadCompleteMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addLoadCompleteMessage(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -3166,6 +3170,7 @@ Bool NetPacket::isRoomForLoadCompleteMessage(NetCommandRef *msg) {
 /**
  * Add a Progress command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addProgressMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addProgressMessage(NetCommandRef *msg) {
 	if (isRoomForProgressMessage(msg)) {
@@ -3252,6 +3257,7 @@ Bool NetPacket::isRoomForProgressMessage(NetCommandRef *msg) {
 
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectVoteCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectVoteCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -3757,6 +3763,7 @@ Bool NetPacket::isRoomForPacketRouterQueryMessage(NetCommandRef *msg) {
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectPlayerCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -3874,6 +3881,7 @@ Bool NetPacket::isRoomForDisconnectPlayerMessage(NetCommandRef *msg) {
 /**
  * Add a keep alive command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDisconnectKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDisconnectKeepAliveCommand(NetCommandRef *msg) {
 	if (isRoomForDisconnectKeepAliveMessage(msg)) {
@@ -3955,6 +3963,7 @@ Bool NetPacket::isRoomForDisconnectKeepAliveMessage(NetCommandRef *msg) {
 /**
  * Add a keep alive command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addKeepAliveCommand(NetCommandRef *msg) {
 	if (isRoomForKeepAliveMessage(msg)) {
@@ -4164,6 +4173,7 @@ Bool NetPacket::isRoomForRunAheadMessage(NetCommandRef *msg) {
 /**
  * Add a DestroyPlayer command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addDestroyPlayerCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addDestroyPlayerCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;
@@ -4400,6 +4410,7 @@ Bool NetPacket::isRoomForRunAheadMetricsMessage(NetCommandRef *msg) {
 /**
  * Add a player leave command to the packet. Returns true if successful.
  */
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_addKeepAliveCommands.cpp
 // ?addPlayerLeaveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z present-unmatched
 Bool NetPacket::addPlayerLeaveCommand(NetCommandRef *msg) {
 	Bool needNewCommandID = FALSE;

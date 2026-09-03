@@ -387,6 +387,7 @@ Bool ScreenDefaultFilter::preRender(Bool &skipRender, CustomScenePassModes &scen
 	return true;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ScreenDefaultFilter_postRender.cpp
 // ?postRender@ScreenDefaultFilter@@ present-unmatched
 Bool ScreenDefaultFilter::postRender(enum FilterModes mode, Coord2D &scrollDelta,Bool &doExtraRender)
 {
@@ -2559,6 +2560,7 @@ Int RoadShaderPixelShader::shutdown(void)
 	return TRUE;
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/RoadShaderPixelShader_init.cpp
 // ?init@RoadShaderPixelShader@@EAEHXZ present-unmatched
 Int RoadShaderPixelShader::init( void )
 {	
@@ -2609,7 +2611,7 @@ Int RoadShaderPixelShader::set(Int pass)
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ZWRITEENABLE,FALSE);
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_LIGHTING, FALSE);
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHABLENDENABLE,true);	//blend roads into terrain
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
@@ -2729,7 +2731,7 @@ Int RoadShader2Stage::set(Int pass)
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ALPHAOP,   D3DTOP_MODULATE );
 
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_TEXCOORDINDEX, 0 );
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHABLENDENABLE,true);	//blend roads into terrain
 
@@ -2927,6 +2929,7 @@ W3DShaderManager::W3DShaderManager(void)
 // W3DShaderManager::init =======================================================
 /** Walk through all shaders and find versions suitable for current hardware */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00718E90_W3DShaderManager_Init.cpp
 // ?init@W3DShaderManager@@SAXXZ present-unmatched
 void W3DShaderManager::init(void)
 {
@@ -3093,6 +3096,7 @@ Bool W3DShaderManager::filterPreRender(FilterTypes filter, Bool &skipRender, Cus
 /** Call to view filter shaders after rendering is complete.
  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShaderManagerFilterPostRender.cpp
 // ?filterPostRender@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@AAUCoord2D@@AA_N@Z present-unmatched
 Bool W3DShaderManager::filterPostRender(FilterTypes filter, enum FilterModes mode, Coord2D &scrollDelta, Bool &doExtraRender)
 {
@@ -3179,7 +3183,7 @@ void W3DShaderManager::startRenderToTexture(void)
 		if (m_currentFilter == FT_VIEW_MOTION_BLUR_FILTER || m_currentFilter == FT_VIEW_CROSSFADE)
 		{	//these filters rely on the previous frame being visible so we must be careful about clearing
 			//frame buffer.  Only clear the alpha channel
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_ALPHA);	//only clear alpha
 			ShaderClass shader=ShaderClass::_PresetOpaqueSolidShader;
@@ -3192,7 +3196,7 @@ void W3DShaderManager::startRenderToTexture(void)
 			REF_PTR_RELEASE(vmat);	//no need to keep a reference since it's a preset.
 		
 			drawViewport(0x00ffffff | (((Int)(TheWaterTransparency->m_minWaterOpacity*255.0f)) <<24));
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,D3DCOLORWRITEENABLE_RED|D3DCOLORWRITEENABLE_GREEN|D3DCOLORWRITEENABLE_BLUE);	//disable writes to alpha
 		}
@@ -3454,6 +3458,7 @@ Bool testMinimumRequirements(ChipsetType *videoChipType, CpuType *cpuType, Int *
 	return W3DShaderManager::testMinimumRequirements(videoChipType,cpuType,cpuFreq,numRAM,intBenchIndex,floatBenchIndex,memBenchIndex);
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/W3DShaderManagerMinimumRequirements.cpp
 // ?testMinimumRequirements@W3DShaderManager@@SA_NPAW4ChipsetType@@PAW4CpuType@@PAH2PAM33@Z present-unmatched
 Bool W3DShaderManager::testMinimumRequirements(ChipsetType *videoChipType, CpuType *cpuType, Int *cpuFreq, Int *numRAM, Real *intBenchIndex, Real *floatBenchIndex, Real *memBenchIndex)
 {

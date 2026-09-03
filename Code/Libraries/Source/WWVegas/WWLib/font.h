@@ -52,6 +52,7 @@ class Surface;
 **	as drawing text in the font to a surface. This is an abstract base class that is to be
 **	derived into a concrete version. 
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/FONT.H
 class FontClass {
 	public:
 		virtual ~FontClass(void) {}

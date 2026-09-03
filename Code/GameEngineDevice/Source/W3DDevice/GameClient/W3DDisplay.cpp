@@ -552,6 +552,7 @@ void W3DDisplay::getDisplayModeDescription(Int modeIndex, Int *xres, Int *yres, 
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetGamma.cpp
 // ?setGamma@W3DDisplay@@UAEXMMM_N@Z present-unmatched
 void W3DDisplay::setGamma(Real gamma, Real bright, Real contrast, Bool calibrate)
 {
@@ -610,6 +611,7 @@ Bool W3DDisplay::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt
 
 /** Set width of display */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetWidth.cpp
 // ?setWidth@W3DDisplay@@UAEXI@Z present-unmatched
 void W3DDisplay::setWidth( UnsignedInt width )
 {
@@ -626,6 +628,7 @@ void W3DDisplay::setWidth( UnsignedInt width )
 // W3DDisplay::setHeight ======================================================
 /** Set height of display */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplaySetWidth.cpp
 // ?setHeight@W3DDisplay@@UAEXI@Z present-unmatched
 void W3DDisplay::setHeight( UnsignedInt height )
 {
@@ -2094,6 +2097,7 @@ void W3DDisplay::renderLetterBox(UnsignedInt currentTime)
 		}
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayIsLetterBoxFading.cpp
 // ?isLetterBoxFading@W3DDisplay@@UAE_NXZ present-unmatched
 Bool W3DDisplay::isLetterBoxFading(void)
 {
@@ -2105,6 +2109,7 @@ Bool W3DDisplay::isLetterBoxFading(void)
 }
 
 //WST 10/2/2002 added query function.  JSC Integrated 5/20/03
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayIsLetterBoxed.cpp
 // ?isLetterBoxed@W3DDisplay@@UAE_NXZ present-unmatched
 Bool W3DDisplay::isLetterBoxed(void)
 {
@@ -2115,6 +2120,7 @@ Bool W3DDisplay::isLetterBoxed(void)
 /** Create a "light pulse" which is a dynamic light that grows, decays 
 	* and vanishes over several frames */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayCreateLightPulse.cpp
 // ?createLightPulse@W3DDisplay@@UAEXPBUCoord3D@@PBURGBColor@@MMII@Z present-unmatched
 void W3DDisplay::createLightPulse( const Coord3D *pos, const RGBColor *color, 
 																	 Real innerRadius, Real attenuationWidth, 
@@ -2141,6 +2147,7 @@ void W3DDisplay::createLightPulse( const Coord3D *pos, const RGBColor *color,
 	theDynamicLight->Set_Flag(LightClass::FAR_ATTENUATION,true);
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayToggleLetterBox.cpp
 // ?toggleLetterBox@W3DDisplay@@UAEXXZ present-unmatched
 void W3DDisplay::toggleLetterBox(void)
 {
@@ -2154,6 +2161,7 @@ void W3DDisplay::toggleLetterBox(void)
 	}  
 }
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayEnableLetterBox.cpp
 // ?enableLetterBox@W3DDisplay@@UAEX_N@Z present-unmatched
 void W3DDisplay::enableLetterBox(Bool enable)
 {
@@ -2932,6 +2940,7 @@ void W3DDisplay::setClipRegion( IRegion2D *region )
 /* we don't really need to override this call, since we will soon be called to
 	update every shroud cell explicitly...
 */
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayClearShroud.cpp
 // ?clearShroud@W3DDisplay@@UAEXXZ present-unmatched
 void W3DDisplay::clearShroud()
 {

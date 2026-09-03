@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?costToHierGoal@PathfindCell@@QAEIPAV1@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 // Retail 0x003F6CA0: PathfindCell::costToHierGoal. Same arithmetic as ZH
 // AIPathfind.cpp without the DEBUG_CRASH null-info guard.
@@ -23,6 +24,7 @@ __forceinline long fast_float2long_round(float f)
 
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x;
@@ -31,11 +33,13 @@ struct ICoord2D
 
 class PathfindCell;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 struct PathfindCellInfo
 {
 	ICoord2D m_pos;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:

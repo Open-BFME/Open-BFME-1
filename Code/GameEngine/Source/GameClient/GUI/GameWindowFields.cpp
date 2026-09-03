@@ -1,9 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/gamewindow /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-// readable body of ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 // readable body of ?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// readable body of ?winSetPrev@GameWindow@@QAEXPAV1@@Z: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
 //
 // GameWindow field accessors, byte-matched against the reconstructed BFME
 // GameWindow layout (reference/shims/gamewindow/GameClient/GameWindow.h). These

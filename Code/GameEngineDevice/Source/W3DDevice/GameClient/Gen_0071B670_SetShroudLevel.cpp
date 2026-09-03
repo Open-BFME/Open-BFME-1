@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?setShroudLevel@W3DShroud@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroud.cpp
 //
 // Retail 0x0071B670. Update one BFME shroud cell and its terrain mirror.
 
@@ -9,6 +10,7 @@
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 	unsigned char m_pad[0xc86];
@@ -25,6 +27,7 @@ public:
 	void setShroudLevel30BC(int x, int y, UnsignedByte level, bool immediate);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 private:
@@ -51,6 +54,7 @@ extern BfmeTaintManager *TheTaintManager;
 
 unsigned int packShroudPixel(UnsignedByte level);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShroud.h
 class W3DShroud
 {
 public:

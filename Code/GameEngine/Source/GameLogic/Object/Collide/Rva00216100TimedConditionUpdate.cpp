@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD
 // Address-derived timed model-condition update at retail RVA 0x00216100.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

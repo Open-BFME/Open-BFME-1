@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/scriptenginelayout /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-// readable body of ?reverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAE_NPAVAnimateWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -1397,6 +1396,7 @@ void ScriptActions::doStopCameraFollowUnit(void)
 //-------------------------------------------------------------------------------------------------
 /** doSetTeamState */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSetTeamState.cpp
 // ?doSetTeamState@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doSetTeamState(const AsciiString& team, const AsciiString& state)
 {
@@ -1842,6 +1842,7 @@ void ScriptActions::doSetupCamera(const AsciiString& waypoint, Real zoom, Real p
 //-------------------------------------------------------------------------------------------------
 /** doModCameraLookToward */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doModCameraLookToward.cpp
 // ?doModCameraLookToward@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doModCameraLookToward(const AsciiString& waypoint)
 {
@@ -1857,6 +1858,7 @@ void ScriptActions::doModCameraLookToward(const AsciiString& waypoint)
 //-------------------------------------------------------------------------------------------------
 /** doModCameraFinalLookToward */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doModCameraLookToward.cpp
 // ?doModCameraFinalLookToward@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doModCameraFinalLookToward(const AsciiString& waypoint)
 {
@@ -1902,6 +1904,7 @@ void ScriptActions::doModCameraMoveToSelection(void)
 //-------------------------------------------------------------------------------------------------
 /** doResetCamera */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doModCameraLookToward.cpp
 // ?doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z present-unmatched
 void ScriptActions::doResetCamera(const AsciiString& waypoint, Real sec, Real easeIn, Real easeOut)
 {
@@ -2057,6 +2060,7 @@ void ScriptActions::doAttack(const AsciiString& attackerName, const AsciiString&
 //-------------------------------------------------------------------------------------------------
 /** doNamedAttack */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedAttack.cpp
 // ?doNamedAttack@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedAttack(const AsciiString& attackerName, const AsciiString& victimName)
 {
@@ -2277,6 +2281,7 @@ void ScriptActions::updateTeamSetAttitude(const AsciiString& teamName, Int attit
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetRepulsor */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedSetRepulsor.cpp
 // ?doNamedSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
 void ScriptActions::doNamedSetRepulsor(const AsciiString& unitName, Bool repulsor)
 {
@@ -2290,6 +2295,7 @@ void ScriptActions::doNamedSetRepulsor(const AsciiString& unitName, Bool repulso
 //-------------------------------------------------------------------------------------------------
 /** doTeamSetRepulsor */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamSetRepulsor.cpp
 // ?doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
 void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor)
 {
@@ -2316,6 +2322,7 @@ void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor
 //-------------------------------------------------------------------------------------------------
 /** doNamedAttackArea */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedAttackArea.cpp
 // ?doNamedAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedAttackArea(const AsciiString& unitName, const AsciiString& areaName)
 {
@@ -2343,6 +2350,7 @@ void ScriptActions::doNamedAttackArea(const AsciiString& unitName, const AsciiSt
 //-------------------------------------------------------------------------------------------------
 /** doNamedAttackTeam */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedAttackTeam.cpp
 // ?doNamedAttackTeam@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedAttackTeam(const AsciiString& unitName, const AsciiString& teamName)
 {
@@ -2465,6 +2473,7 @@ void ScriptActions::doLoadAllTransports(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doNamedEnterNamed */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedEnterNamed.cpp
 // ?doNamedEnterNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedEnterNamed(const AsciiString& unitSrcName, const AsciiString& unitDestName)
 {
@@ -2838,6 +2847,7 @@ void ScriptActions::doTeamFollowWaypointsExact(const AsciiString& teamName, cons
 //-------------------------------------------------------------------------------------------------
 /** doNamedGuard */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedGuard.cpp
 // ?doNamedGuard@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doNamedGuard(const AsciiString& unitName)
 {
@@ -3280,6 +3290,7 @@ void ScriptActions::doCameraMoveHome(void)
 //-------------------------------------------------------------------------------------------------
 /** doBuildTeam */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doBuildTeam_Thunk.cpp
 // ?doBuildTeam@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doBuildTeam(const AsciiString& teamName)
 {
@@ -3310,6 +3321,7 @@ void ScriptActions::doRecruitTeam(const AsciiString& teamName, Real recruitRadiu
 //-------------------------------------------------------------------------------------------------
 /** doNamedDamage */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedDamage_Thunk.cpp
 // ?doNamedDamage@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
 void ScriptActions::doNamedDamage(const AsciiString& unitName, Int damageAmt)
 {
@@ -3343,6 +3355,7 @@ void ScriptActions::doNamedDelete(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamDelete */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamDelete_Thunk.cpp
 // ?doTeamDelete@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
 void ScriptActions::doTeamDelete(const AsciiString& teamName, Bool ignoreDead)
 {
@@ -3518,6 +3531,7 @@ void ScriptActions::doNamedKill(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamKill */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamKill_Thunk.cpp
 // ?doTeamKill@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doTeamKill(const AsciiString& teamName)
 {
@@ -3547,6 +3561,7 @@ void ScriptActions::doPlayerKill(const AsciiString& playerName)
 //-------------------------------------------------------------------------------------------------
 /** doDisplayText */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDisplayText_Thunk.cpp
 // ?doDisplayText@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doDisplayText(const AsciiString& displayText)
 {
@@ -3771,7 +3786,7 @@ enum
 {
 	SUBTITLE_DURATION = 8000
 };
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSpeechPlay_Thunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSpeechPlay.cpp
 // ?doSpeechPlay@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
 void ScriptActions::doSpeechPlay(const AsciiString& speechName, Bool allowOverlap)
 {	
@@ -4259,6 +4274,7 @@ void ScriptActions::doMergeTeamIntoTeam(const AsciiString& teamSrcName, const As
 //-------------------------------------------------------------------------------------------------
 /** doDisableInput */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv832.cpp
 // ?doDisableInput@ScriptActions@@IAEXXZ present-unmatched
 void ScriptActions::doDisableInput()
 {
@@ -5090,6 +5106,7 @@ void ScriptActions::doNamedSetHeld(const AsciiString& unit, Bool held)
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetStoppingDistance */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedSetStoppingDistance.cpp
 // ?doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z present-unmatched
 void ScriptActions::doNamedSetStoppingDistance(const AsciiString& unit, Real stoppingDistance)
 {
@@ -5868,6 +5885,7 @@ void ScriptActions::doNamedStop(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamStop */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamStop.cpp
 // ?doTeamStop@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
 void ScriptActions::doTeamStop(const AsciiString& teamName, Bool shouldDisband)
 {
@@ -5980,6 +5998,7 @@ void ScriptActions::doTeamRemoveOverrideRelationToPlayer(const AsciiString& team
 //-------------------------------------------------------------------------------------------------
 /** doTeamRemoveAllOverrideRelations */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamRemoveAllOverrideRelations.cpp
 // ?doTeamRemoveAllOverrideRelations@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doTeamRemoveAllOverrideRelations(const AsciiString& teamName)
 {
@@ -6119,6 +6138,7 @@ void ScriptActions::doTeamStartSequentialScript(const AsciiString& teamName, con
 //-------------------------------------------------------------------------------------------------
 /** doTeamStopSequentialScript */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamStopSequentialScript_Thunk.cpp
 // ?doTeamStopSequentialScript@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doTeamStopSequentialScript(const AsciiString& teamName)
 {
@@ -6441,6 +6461,7 @@ void ScriptActions::doSetCaveIndex( const AsciiString& caveName, Int caveIndex )
 //-------------------------------------------------------------------------------------------------
 /** doSetWarehouseValue */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSetWarehouseValue_Thunk.cpp
 // ?doSetWarehouseValue@ScriptActions@@ present-unmatched
 void ScriptActions::doSetWarehouseValue( const AsciiString& warehouseName, Int cashValue )
 {
@@ -7144,6 +7165,7 @@ void ScriptActions::doTeamCaptureNearestUnownedFactionUnit( const AsciiString& t
 //-------------------------------------------------------------------------------------------------
 /** doCreateTeamFromCapturedUnits */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doCreateTeamFromCapturedUnits_Thunk.cpp
 // ?doCreateTeamFromCapturedUnits@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doCreateTeamFromCapturedUnits( const AsciiString& playerName, const AsciiString& teamName )
 {
@@ -7280,6 +7302,7 @@ void ScriptActions::doPlayerSetScienceAvailability( const AsciiString& playerNam
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamEmoticon_Thunk.cpp
 // ?doTeamEmoticon@ScriptActions@@IAEXABVAsciiString@@0M@Z present-unmatched
 void ScriptActions::doTeamEmoticon(const AsciiString& teamName, const AsciiString& emoticonName, Real duration)
 {
@@ -7477,6 +7500,7 @@ void ScriptActions::doC3CameraShake
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedFaceNamed.cpp
 // ?doNamedFaceNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedFaceNamed( const AsciiString &unitName, const AsciiString &faceUnitName )
 {
@@ -7499,6 +7523,7 @@ void ScriptActions::doNamedFaceNamed( const AsciiString &unitName, const AsciiSt
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedFaceWaypoint.cpp
 // ?doNamedFaceWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedFaceWaypoint( const AsciiString &unitName, const AsciiString &faceWaypointName )
 {
@@ -7521,6 +7546,7 @@ void ScriptActions::doNamedFaceWaypoint( const AsciiString &unitName, const Asci
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamFaceNamed.cpp
 // ?doTeamFaceNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doTeamFaceNamed( const AsciiString &teamName, const AsciiString &faceUnitName )
 {
@@ -7551,6 +7577,7 @@ void ScriptActions::doTeamFaceNamed( const AsciiString &teamName, const AsciiStr
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamFaceWaypoint.cpp
 // ?doTeamFaceWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doTeamFaceWaypoint( const AsciiString &teamName, const AsciiString &faceWaypointName )
 {
@@ -7594,6 +7621,7 @@ void ScriptActions::doAffectObjectPanelFlagsUnit(const AsciiString& unitName, co
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doAffectObjectPanelFlagsTeam.cpp
 // ?doAffectObjectPanelFlagsTeam@ScriptActions@@IAEXABVAsciiString@@0_N@Z present-unmatched
 void ScriptActions::doAffectObjectPanelFlagsTeam(const AsciiString& teamName, const AsciiString& flagName, Bool enable)
 {
@@ -7623,6 +7651,7 @@ void ScriptActions::doAffectPlayerSkillset(const AsciiString& playerName, Int sk
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doGuardSupplyCenter_Thunk.cpp
 // ?doGuardSupplyCenter@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
 void ScriptActions::doGuardSupplyCenter(const AsciiString& teamName, Int supplies)
 {

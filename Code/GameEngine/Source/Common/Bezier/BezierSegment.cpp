@@ -197,7 +197,6 @@ Real BezierSegment::getApproximateLength(Real withinTolerance) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/bezier_segment.cpp
 // ?splitSegmentAtT@BezierSegment@@ present-unmatched
 void BezierSegment::splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierSegment &outSeg2) const
 {

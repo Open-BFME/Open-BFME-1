@@ -212,6 +212,7 @@ Int GlobalLanguage::adjustFontSize(Int theFontSize)
 	return pointSize;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/FontDescCtor.cpp
 // ??0FontDesc@@ present-unmatched
 FontDesc::FontDesc(void)
 {

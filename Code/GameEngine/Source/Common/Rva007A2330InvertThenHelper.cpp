@@ -5,6 +5,7 @@
 // byte store to 0x012D6DFC, and the claimed helper at 0x007AA820 via ILT
 // 0x000243B6.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:

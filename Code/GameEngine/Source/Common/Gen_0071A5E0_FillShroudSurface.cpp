@@ -6,6 +6,7 @@
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -17,6 +18,7 @@ extern GlobalData *TheWritableGlobalData;
 
 unsigned int packShroudPixel(UnsignedByte level);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:

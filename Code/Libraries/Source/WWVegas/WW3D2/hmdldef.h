@@ -56,6 +56,7 @@ class SnapPointsClass;
 ** The HmdlNodeDefStruct associates a named render object with
 ** an indexed pivot/bone in the hierarchy tree.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hmdldef.H
 struct HmdlNodeDefStruct
 {
 	char	RenderObjName[2*W3D_NAME_LEN];
@@ -71,6 +72,7 @@ struct HmdlNodeDefStruct
 **	The asset manager stores these objects internally and uses them to 
 **	create instances of HierarchyModels for the user.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hmdldef.H
 class HModelDefClass
 {
 

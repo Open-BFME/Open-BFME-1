@@ -732,21 +732,21 @@ void renderStenciledPlayerColor( UnsignedInt color, UnsignedInt stencilRef, Bool
 	{	//we want to clear the stencil buffer to some known value whereever a player index is stored
 		Int occludedMask=TheW3DShadowManager->getStencilShadowMask();
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILREF,      0x80808080 );
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILMASK,     occludedMask );	//isolate bits containing occluder|playerIndex
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILWRITEMASK,0xffffffff );
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFUNC,  D3DCMP_LESS );	//only draw to pixels that match the reference value
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILZFAIL, D3DSTENCILOP_REPLACE );	
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILPASS,  D3DSTENCILOP_REPLACE );	//pixels which had occluded player colors, get MSB set.
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFAIL,  D3DSTENCILOP_ZERO );	//pixels which had no occluded player colors are cleared.
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_ZFUNC, D3DCMP_NEVER  );	//fail all access to the frame buffer to improve memory bandwidth
 
@@ -782,7 +782,7 @@ void renderStenciledPlayerColor( UnsignedInt color, UnsignedInt stencilRef, Bool
 
 	// turn off the stencil buffer
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILENABLE, FALSE );
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_ALPHABLENDENABLE, FALSE);	//restore shader state
 	DX8Wrapper::Set_DX8_Render_State(D3DRS_SRCBLEND, D3DBLEND_ONE );
@@ -895,10 +895,10 @@ void RTS3DScene::flushOccludedObjectsIntoStencil(RenderInfoClass & rinfo)
 						TheDX8MeshRenderer.Flush();	//render all the submitted meshes using current stencil function
 						SHD_FLUSH;
 						//Disable writing to color buffer since translucent objects are rendered at end of frame.
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 						DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFUNC,  D3DCMP_NEVER );	//never allow frame buffer writes.
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 						DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFAIL,  D3DSTENCILOP_REPLACE );	//always replace existing stencil value
 						renderOneObject(rinfo, (*renderList), localPlayerIndex);
@@ -918,7 +918,7 @@ void RTS3DScene::flushOccludedObjectsIntoStencil(RenderInfoClass & rinfo)
 		//Stencil buffer is now filled with color indices of potentially occluded objects.  We now draw
 		//non-occluder or occludee objects such as small rocks, shrubs, etc. which we don't care about
 		//but need to render here so that they don't interfere with building occlusion.
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILENABLE, FALSE );	//these objects are not stored in stencil
 		RenderObjClass **nonOccluderOrOccludeeList=m_nonOccludersOrOccludees;
@@ -934,13 +934,13 @@ void RTS3DScene::flushOccludedObjectsIntoStencil(RenderInfoClass & rinfo)
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILENABLE, TRUE );
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_ZENABLE, TRUE );
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILREF, 0xffffffff);
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILMASK, 0xffffffff);	//isolate lowest player color
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILWRITEMASK, 0x80);	//only write to MSB
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 // ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z present-unmatched
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILFUNC,  D3DCMP_ALWAYS );	//check if player colors stored in pixel
 		DX8Wrapper::Set_DX8_Render_State(D3DRS_STENCILZFAIL, D3DSTENCILOP_KEEP );
@@ -1131,7 +1131,6 @@ void RTS3DScene::addDynamicLight(W3DDynamicLight * obj)
 //=============================================================================
 /** Adds a dynamic light. */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS3DScene_getADynamicLight_Thunk.cpp
 W3DDynamicLight * RTS3DScene::getADynamicLight(void)
 {
 	// BFME inserted scene state before the dynamic-light list.  Keep the

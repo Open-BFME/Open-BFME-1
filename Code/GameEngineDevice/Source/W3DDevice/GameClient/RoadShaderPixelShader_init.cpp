@@ -1,3 +1,4 @@
+// readable body of ?init@RoadShaderPixelShader@@EAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 // Open-BFME: RoadShaderPixelShader::init, retail 0x007CCE70, 179 bytes.
 //
 // Reset the four FE shader-table slots, require chipset >= 3, then load
@@ -14,6 +15,7 @@ enum ChipsetType
 	BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:

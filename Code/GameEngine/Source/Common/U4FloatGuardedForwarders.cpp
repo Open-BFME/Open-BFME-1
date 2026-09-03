@@ -40,6 +40,7 @@
 // IDENTITY IS NOT RECOVERED.  Every name is address-derived; the two callees
 // are pinned in reverse/symbols.csv at the addresses their REL32s resolve to.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

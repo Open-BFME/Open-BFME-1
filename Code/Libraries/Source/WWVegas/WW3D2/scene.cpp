@@ -214,6 +214,7 @@ void SceneClass::Remove_Render_Object(RenderObjClass * obj)
  * HISTORY:                                                                                    *
  *   12/10/98   GTH : Created.                                                                 *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SceneClass_Render.cpp
 // ?Render@SceneClass@@MAEXAAVRenderInfoClass@@@Z present-unmatched
 void SceneClass::Render(RenderInfoClass & rinfo)
 {
@@ -366,6 +367,7 @@ SimpleSceneClass::~SimpleSceneClass(void)
  * HISTORY:                                                                                    *
  *   8/27/2001  hy : Created.                                                                  *
  *=============================================================================================*/
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Remove_All_Render_Objects.cpp
 // ?Remove_All_Render_Objects@SimpleSceneClass@@UAEXXZ present-unmatched
 void SimpleSceneClass::Remove_All_Render_Objects(void)
 {

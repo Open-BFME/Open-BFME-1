@@ -239,6 +239,7 @@ void RiderChangeContain::createPayload()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContainUpdate.cpp
 // ?update@RiderChangeContain@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
 UpdateSleepTime RiderChangeContain::update()
 {

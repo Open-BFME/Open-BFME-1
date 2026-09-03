@@ -5,6 +5,7 @@
 // then copy three dwords out of the walked override of the singleton at
 // 0x012F15F8.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:

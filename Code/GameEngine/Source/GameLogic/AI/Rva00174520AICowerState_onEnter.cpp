@@ -14,6 +14,7 @@ enum StateReturnType
 };
 
 template <int NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -49,6 +50,7 @@ private:
 	_STL::bitset<32> m_bits;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

@@ -1,12 +1,14 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 struct Coord3D;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	bool isSignificantlyAboveTerrain(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

@@ -59,6 +59,7 @@ GameInfo *TheGameInfo = NULL;
 
 // GameSlot ----------------------------------------
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANGameSlot_copy.cpp
 // ??0GameSlot@@ present-unmatched
 GameSlot::GameSlot()
 {

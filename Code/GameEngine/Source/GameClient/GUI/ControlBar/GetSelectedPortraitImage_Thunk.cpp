@@ -22,6 +22,7 @@ enum RecorderModeType
 	RECORDER_MODE_NONE = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass
 {
 public:

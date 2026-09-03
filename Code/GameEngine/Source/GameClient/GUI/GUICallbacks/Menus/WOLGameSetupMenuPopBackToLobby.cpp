@@ -5,12 +5,14 @@
 // parent is up stores nextScreen and tail-calls TheShell->pop.  BFME adds a
 // second tail-call on a neighbouring global when that parent is gone.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NAT.h
 class NAT
 {
 public:
 	virtual ~NAT();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom
 {
 public:
@@ -19,6 +21,7 @@ public:
 	virtual void reset();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface
 {
 public:
@@ -74,6 +77,7 @@ public:
 	virtual GameSpyStagingRoom *getCurrentStagingRoom();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:

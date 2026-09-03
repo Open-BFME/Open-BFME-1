@@ -99,10 +99,12 @@ public:
 	virtual Waypoint *getWaypointByName(BfmeAsciiStringArg name) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine : public BFMERetailScriptEngineVTable
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic : public TerrainLogicVTable
 {
 };
@@ -110,6 +112,7 @@ class TerrainLogic : public TerrainLogicVTable
 extern ScriptEngine *TheScriptEngine;
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -117,6 +120,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 private:
@@ -136,6 +140,7 @@ public:
 	void setPosition(const StructureCollapsePosition &position, Bool unknown);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?isPurposeOfPath@TerrainLogic@@UAE_NPAVWaypoint@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // TerrainLogic::isPurposeOfPath, retail 0x001AAAC0.
 //
 // This BFME body compares a waypoint's three path labels with the supplied
@@ -23,6 +24,7 @@ public:
 	__declspec(nothrow) int compare(const AsciiString &other) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public AsciiStringCompareShim
 {
 public:
@@ -36,6 +38,7 @@ public:
 	const BfmeAsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint
 {
 public:
@@ -44,6 +47,7 @@ public:
 	AsciiString getPathLabel3(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

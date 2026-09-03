@@ -8,6 +8,7 @@
 typedef int Int;
 typedef unsigned char UnsignedByte;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer
 {
 public:
@@ -24,6 +25,7 @@ public:
 };
 
 template <size_t NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// readable body of ?addEdgeToTrack@TerrainTracksRenderObjClass@@QAEXMM@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 // BFME retail 0x0072F390: the track render object's cap-edge method.
 
 #include "WWMath/vector2.h"
@@ -12,6 +13,7 @@ enum
 	LAYER_GROUND = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -19,12 +21,14 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
 	PathfindLayerEnum getLayer(void) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -32,6 +36,7 @@ public:
 	Object *m_object;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -46,6 +51,7 @@ public:
 		Coord3D *normal = 0, Bool clip = true) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClassSystem
 {
 public:
@@ -53,6 +59,7 @@ public:
 	int m_maxTankTrackEdges;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -70,6 +77,7 @@ static inline float sqr(float value)
 	return value * value;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 struct edgeInfo
 {
 	Vector3 endPointPos[2];
@@ -211,6 +219,7 @@ void BfmeTrackLikeD62640::addCapEdgeToTrack(float x, float y)
 	m_haveAnchor = false;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClass
 {
 public:

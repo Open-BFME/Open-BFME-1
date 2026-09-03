@@ -2,6 +2,7 @@
 
 typedef int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D
 {
 public:
@@ -12,6 +13,7 @@ public:
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -22,6 +24,7 @@ private:
 	ObjectID m_id;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/FiringTracker.h
 class FiringTracker
 {
 public:

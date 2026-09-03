@@ -47,6 +47,7 @@ struct BfmeB1007Flags
 	unsigned char m_bfmeFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanUpdate
 {
 public:
@@ -56,6 +57,7 @@ public:
 	BfmeB1007Flags *m_bfmeFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

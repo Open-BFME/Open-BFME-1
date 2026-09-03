@@ -5,6 +5,7 @@ typedef int Bool;
 #define FALSE 0
 #define TRUE 1
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/frustum.h
 class FrustumClass
 {
 };
@@ -17,6 +18,7 @@ public:
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 class AABoxClass
 {
 public:
@@ -24,6 +26,7 @@ public:
 	Vector3 Extent;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:
@@ -34,6 +37,7 @@ public:
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern const FrustumClass *shadowCameraFrustum;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 	unsigned char m_unreconstructed_000[0x64];
@@ -44,6 +48,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
 {
 public:
@@ -79,6 +84,7 @@ extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
 extern IDirect3DDevice8 *TheD3DDevice;
 extern AABoxClass g_bfmeVisibleShadowBounds;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadowManager
 {
 public:

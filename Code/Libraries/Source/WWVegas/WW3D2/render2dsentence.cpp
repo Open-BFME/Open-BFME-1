@@ -312,6 +312,7 @@ Render2DSentenceClass::Get_Formatted_Text_Extents (const WCHAR *text)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_Reset_Sentence_Data.cpp
 // ?Reset_Sentence_Data@Render2DSentenceClass@@AAEXXZ present-unmatched
 Render2DSentenceClass::Reset_Sentence_Data (void)
 {
@@ -335,6 +336,7 @@ Render2DSentenceClass::Reset_Sentence_Data (void)
 //
 ////////////////////////////////////////////////////////////////////////////////////
 void
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_Release_Pending_Surfaces.cpp
 // ?Release_Pending_Surfaces@Render2DSentenceClass@@AAEXXZ present-unmatched
 Render2DSentenceClass::Release_Pending_Surfaces (void)
 {

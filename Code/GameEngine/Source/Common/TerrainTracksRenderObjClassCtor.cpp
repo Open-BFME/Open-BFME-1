@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD
+// readable body of ??0TerrainTracksRenderObjClass@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 
 struct TerrainTrackEdge
 {
@@ -62,6 +63,7 @@ struct TerrainTrackVector3
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainTracks.h
 class TerrainTracksRenderObjClass : private TerrainTrackBase
 {
 public:

@@ -5,6 +5,7 @@
 extern "C" __declspec(dllimport) void *__stdcall AIL_open_3D_listener(
 	unsigned int provider);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 struct ProviderInfo
 {
 	void *name;
@@ -14,6 +15,7 @@ struct ProviderInfo
 
 enum { MAXPROVIDERS = 64 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/MilesAudioDevice/MilesAudioManager.h
 class MilesAudioManager
 {
 public:

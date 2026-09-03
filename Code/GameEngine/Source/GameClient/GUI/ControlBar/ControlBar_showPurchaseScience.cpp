@@ -1,16 +1,19 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?showPurchaseScience@ControlBar@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp
 // ControlBar::showPurchaseScience, retail 0x004A2290. Tail-jumps the window
 // show helper after populatePurchaseScience.
 
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
 	Bool hasPurchaseScience( void );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
@@ -21,6 +24,7 @@ private:
 	Player *m_localPlayer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -36,6 +40,7 @@ extern PlayerList *ThePlayerList;
 
 void finishShowPurchaseScience( void );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

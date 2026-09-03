@@ -107,6 +107,7 @@ struct BfmeAutoHealDamageData
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorCtorThunk.cpp
 // ??0AutoHealBehavior@@ present-unmatched
 // I claimed here that AutoHealBehaviorCtorThunk.cpp does not hold this body, and
 // that was WRONG. Call sites settle it: several ?friend_newModuleInstance@

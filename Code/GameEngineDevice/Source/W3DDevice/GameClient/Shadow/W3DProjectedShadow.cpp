@@ -218,6 +218,7 @@ public:
 
 
 /******************** Start of W3DProjectedShadowManager implementation ***********************/
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerConstructor.cpp
 // ??0W3DProjectedShadowManager@@QAE@XZ present-unmatched
 W3DProjectedShadowManager::W3DProjectedShadowManager(void)
 {
@@ -269,6 +270,7 @@ Bool W3DProjectedShadowManager::init( void )
 }
 
 
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowReAcquireResources.cpp
 // ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ present-unmatched
 Bool W3DProjectedShadowManager::ReAcquireResources(void)
 {

@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD
+// readable body of ?updateCameraMovements@W3DView@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 // BFME W3DView::updateCameraMovements, retail 0x00744530.
 
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -11,6 +13,7 @@ public:
 	Bool m_disableCameraMovement;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -36,6 +39,7 @@ class Gen0073CA40Owner
 	void updateOneFrame(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -43,6 +47,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D
 {
 	float x;
@@ -55,6 +60,7 @@ struct Coord2D
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 public:

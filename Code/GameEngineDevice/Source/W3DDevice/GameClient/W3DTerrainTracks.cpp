@@ -85,6 +85,7 @@ TerrainTracksRenderObjClass::~TerrainTracksRenderObjClass(void)
 //=============================================================================
 /** Constructor. Just nulls out some variables. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainTracksRenderObjClassCtor.cpp
 // ??0TerrainTracksRenderObjClass@@QAE@XZ present-unmatched
 TerrainTracksRenderObjClass::TerrainTracksRenderObjClass(void)
 {
@@ -169,6 +170,7 @@ Int TerrainTracksRenderObjClass::freeTerrainTracksResources(void)
 //=============================================================================
 /** Setup size settings and allocate W3D texture */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassInit.cpp
 // ?init@TerrainTracksRenderObjClass@@QAEXMMPBD@Z present-unmatched
 void TerrainTracksRenderObjClass::init( Real width, Real length, const Char *texturename)
 {	
@@ -317,6 +319,7 @@ void TerrainTracksRenderObjClass::addCapEdgeToTrack(Real x, Real y)
 * length is reached.  Oldest edges should by faded out by that time.
 */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksBfmeAddCap.cpp
 // ?addEdgeToTrack@TerrainTracksRenderObjClass@@QAEXMM@Z present-unmatched
 void TerrainTracksRenderObjClass::addEdgeToTrack(Real x, Real y)
 {
@@ -568,6 +571,7 @@ void TerrainTracksRenderObjClassSystem::releaseTrack( TerrainTracksRenderObjClas
 //=============================================================================
 /** Constructor. Just nulls out some variables. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainTracksRenderObjClassSystemCtor.cpp
 // ??0TerrainTracksRenderObjClassSystem@@QAE@XZ present-unmatched
 TerrainTracksRenderObjClassSystem::TerrainTracksRenderObjClassSystem()
 {
@@ -605,6 +609,7 @@ TerrainTracksRenderObjClassSystem::~TerrainTracksRenderObjClassSystem( void )
 //=============================================================================
 /** (Re)allocates all W3D assets after a reset.. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksBfmeReAcquire.cpp
 // ?ReAcquireResources@TerrainTracksRenderObjClassSystem@@QAEXXZ present-unmatched
 void TerrainTracksRenderObjClassSystem::ReAcquireResources(void)
 {
@@ -860,6 +865,7 @@ void TerrainTracksRenderObjClassSystem::clearTracks(void)
 
 /**Adjust various paremeters which affect the cost of rendering tracks on the map.
 Parameters are passed via GlobalData*/
+// byte-exact reconstruction: Code/GameEngine/Source/Common/TerrainTracksRenderObjClassSystemSetDetail.cpp
 // ?setDetail@TerrainTracksRenderObjClassSystem@@QAEXXZ present-unmatched
 void TerrainTracksRenderObjClassSystem::setDetail(void)
 {

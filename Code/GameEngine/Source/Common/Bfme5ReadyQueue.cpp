@@ -1,5 +1,6 @@
 // Open-BFME5 conversions: bodies whose callees are already named.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:
@@ -79,6 +80,7 @@ Bfme5IntNode * __stdcall bfme5MakeIntNode(const int *v)
 	return n;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:
@@ -113,6 +115,7 @@ enum CellShroudStatus
 	BFME5_CELLSHROUD_ZERO
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager
 {
 public:

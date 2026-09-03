@@ -154,6 +154,7 @@ m_uniqueID(-1)
 //=============================================================================
 /** Frees index & vertex data. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/RoadTypeDestructor.cpp
 // ??1RoadType@@QAE@XZ present-unmatched
 RoadType::~RoadType(void)
 {
@@ -3137,6 +3138,7 @@ void W3DRoadBuffer::rotateAbout(Vector2 *ptP, Vector2 center, Real angle)
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferDestructor.cpp
 // ??1W3DRoadBuffer@@QAE@XZ present-unmatched
 W3DRoadBuffer::~W3DRoadBuffer(void)
 {
@@ -3149,6 +3151,7 @@ W3DRoadBuffer::~W3DRoadBuffer(void)
 //=============================================================================
 /** Constructor.  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferConstructor.cpp
 // ??0W3DRoadBuffer@@QAE@XZ present-unmatched
 W3DRoadBuffer::W3DRoadBuffer(void)	:
 	m_roads(NULL),

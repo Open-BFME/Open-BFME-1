@@ -19,6 +19,7 @@ public:
 	virtual void secondaryAnchor();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI : public InGameUIPrimary, public InGameUISecondary
 {
 public:
@@ -28,6 +29,7 @@ private:
 	unsigned char m_unmodelled_0C[ 0x13AC - 0x0C ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/Launcher/Toolkit/Support/RefCounted.h
 class RefCounted
 {
 public:
@@ -41,6 +43,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DInGameUI.h
 class W3DInGameUI : public InGameUI
 {
 public:

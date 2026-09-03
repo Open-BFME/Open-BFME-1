@@ -52,6 +52,7 @@
 **	a method class. If it is called as a function (using the function operator), it will return
 **	the CRC value. There are other function operators to submit data for processing.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/CRC.H
 class CRCEngine {
 	public:
 
@@ -116,7 +117,6 @@ class CRCEngine {
 // 12/09/97 EHC - converted from c to c++ static class and added to crc.h and crc.cpp
 //
 #define CRC32(c,crc) (CRC::_Table[((unsigned long)(crc) ^ (c)) & 0xFFL] ^ (((crc) >> 8) & 0x00FFFFFFL))
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/crc.h
 class CRC {
 
 	// CRC for poly 0x04C11DB7

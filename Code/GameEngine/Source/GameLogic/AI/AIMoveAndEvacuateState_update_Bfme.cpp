@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@AIMoveAndEvacuateState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME: AIMoveAndEvacuateState::update, retail 0x00188520.
 // BFME's State stores its machine at +0x1c.  The corresponding ZH source
 // uses +0x20, while BFME's Object, AI module, Team, and dead flag are at
@@ -33,6 +34,7 @@ class AIUpdateInterfacePrefix
 	unsigned char m_unmodelled_000[0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public AIUpdateInterfacePrefix, public AICommandInterface
 {
 };
@@ -73,6 +75,7 @@ public:
 };
 
 // BFME's state-machine owner is at +0x10.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 	unsigned char m_unmodelled_000[0x10];
@@ -83,6 +86,7 @@ public:
 };
 
 // BFME's State base has the machine pointer at +0x1c.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
@@ -98,6 +102,7 @@ protected:
 	Object *getMachineOwner() const { return m_machine->getOwner(); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveAndEvacuateState : public AIInternalMoveToState
 {
 public:

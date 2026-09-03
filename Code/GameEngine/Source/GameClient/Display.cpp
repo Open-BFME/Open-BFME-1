@@ -226,7 +226,6 @@ void Display::draw( void )
 }
 
 /** Sets screen resolution/mode*/
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Display_setDisplayMode_Thunk.cpp
 Bool Display::setDisplayMode( UnsignedInt xres, UnsignedInt yres, UnsignedInt bitdepth, Bool windowed )
 {
 	//Get old values

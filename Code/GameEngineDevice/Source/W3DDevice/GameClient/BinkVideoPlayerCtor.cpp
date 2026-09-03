@@ -20,6 +20,7 @@ private:
 	void *m_surface;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/VideoDevice/Bink/BinkVideoPlayer.h
 class BinkVideoPlayer
 {
 public:

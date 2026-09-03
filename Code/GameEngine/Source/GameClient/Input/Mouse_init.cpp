@@ -1,10 +1,12 @@
 // cl: /O2 /Ob0
+// readable body of ?init@Mouse@@: Code/GameEngine/Source/GameClient/Input/Mouse.cpp
 
 extern "C" void * __cdecl memset(void *block, int value, unsigned int bytes);
 #pragma intrinsic(memset)
 
 __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:
@@ -12,6 +14,7 @@ public:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -21,6 +24,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:

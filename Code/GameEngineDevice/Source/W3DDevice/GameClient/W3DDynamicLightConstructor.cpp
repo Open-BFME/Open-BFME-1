@@ -5,6 +5,7 @@
 // the LightClass subobject ends at this+0x124.  They are represented as
 // ordinary words here so the constructor can reproduce the retail's explicit
 // vptr stores without inventing a local vtable.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/light.h
 class LightClass
 {
 public:
@@ -17,6 +18,7 @@ public:
 	unsigned char m_pad0c[0x118];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDynamicLight.h
 class W3DDynamicLight : public LightClass
 {
 public:

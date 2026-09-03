@@ -154,6 +154,7 @@ RadarObject::~RadarObject( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/RadarObject_isTemporarilyHidden.cpp
 // ?isTemporarilyHidden@RadarObject@@QBE_NXZ present-unmatched
 Bool RadarObject::isTemporarilyHidden() const
 {

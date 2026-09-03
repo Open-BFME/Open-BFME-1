@@ -8,6 +8,7 @@ enum DeathType
 	BFME_DEATH_TYPE_0 = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -24,6 +25,7 @@ struct BfmeKillContext
 	void *m_bfmeOwner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationListStore
 {
 public:

@@ -9,6 +9,7 @@ struct Rva005A4BF0StringHeader
 	unsigned short capacity;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
+// readable body of ?clearBridge@W3DBridge@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBuffer.cpp
 // W3DBridge::clearBridge, retail 0x006D7680 (78 bytes).
 //
 // Zero Hour releases the texture plus three meshes. BFME load() already showed
@@ -8,6 +9,7 @@
 
 typedef int Int;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -22,10 +24,12 @@ public:
 	Int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/mesh.h
 class MeshClass : public RefCountClass
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
 class W3DBridge
 {
 public:

@@ -10,6 +10,7 @@ typedef float Real;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -23,6 +24,7 @@ enum
 	AI_VISIONFACTOR_GUARDINNER = 4
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 class AIGuardMachine
 {
 public:

@@ -310,6 +310,7 @@ Bool ScriptConditions::evaluateAllBuildFacilitiesDestroyed(Parameter *pSideParm 
 //-------------------------------------------------------------------------------------------------
 /** evaluateIsDestroyed */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateIsDestroyed.cpp
 // ?evaluateIsDestroyed@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateIsDestroyed(Parameter *pTeamParm)
 {
@@ -1034,6 +1035,7 @@ Bool ScriptConditions::evaluateNamedCreated(Parameter* pUnitParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamCreated */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateTeamCreated.cpp
 // ?evaluateTeamCreated@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateTeamCreated(Parameter* pTeamParm)
 {
@@ -1453,6 +1455,7 @@ Bool ScriptConditions::evaluatePlayerHasNOrFewerFactionBuildings(Parameter *pBui
 //-------------------------------------------------------------------------------------------------
 /** evaluatePlayerHasPower */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1090.cpp
 // ?evaluatePlayerHasPower@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluatePlayerHasPower(Parameter *pPlayerParm)
 {
@@ -1624,6 +1627,7 @@ Bool ScriptConditions::evaluateAudioHasCompleted(Parameter *pAudioParm)
 //-------------------------------------------------------------------------------------------------
 /** evaluatePlayerSpecialPowerFromUnitTriggered */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1088.cpp
 // ?evaluatePlayerSpecialPowerFromUnitTriggered@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter* pUnitParm)
 {
@@ -1650,6 +1654,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(Parameter *pP
 //-------------------------------------------------------------------------------------------------
 /** evaluatePlayerSpecialPowerFromUnitMidway */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1088.cpp
 // ?evaluatePlayerSpecialPowerFromUnitMidway@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter* pUnitParm)
 {
@@ -1676,6 +1681,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(Parameter *pPlay
 //-------------------------------------------------------------------------------------------------
 /** evaluatePlayerSpecialPowerFromUnitComplete */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1088.cpp
 // ?evaluatePlayerSpecialPowerFromUnitComplete@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter* pUnitParm)
 {
@@ -1702,6 +1708,7 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(Parameter *pPl
 //-------------------------------------------------------------------------------------------------
 /** evaluateUpgradeFromUnitComplete */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1088.cpp
 // ?evaluateUpgradeFromUnitComplete@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateUpgradeFromUnitComplete(Parameter *pPlayerParm, Parameter *pUpgradeParm, Parameter* pUnitParm)
 {
@@ -1728,6 +1735,7 @@ Bool ScriptConditions::evaluateUpgradeFromUnitComplete(Parameter *pPlayerParm, P
 //-------------------------------------------------------------------------------------------------
 /** evaluateScienceAcquired */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1091.cpp
 // ?evaluateScienceAcquired@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateScienceAcquired(Parameter *pPlayerParm, Parameter *pScienceParm)
 {
@@ -1762,6 +1770,7 @@ Bool ScriptConditions::evaluateCanPurchaseScience(Parameter *pPlayerParm, Parame
 //-------------------------------------------------------------------------------------------------
 /** evaluateSciencePurchasePoints */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv1089.cpp
 // ?evaluateSciencePurchasePoints@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateSciencePurchasePoints(Parameter *pPlayerParm, Parameter *pSciencePointParm)
 {
@@ -1777,6 +1786,7 @@ Bool ScriptConditions::evaluateSciencePurchasePoints(Parameter *pPlayerParm, Par
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedHasFreeContainerSlots */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateNamedHasFreeContainerSlots.cpp
 // ?evaluateNamedHasFreeContainerSlots@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateNamedHasFreeContainerSlots(Parameter *pUnitParm)
 {
@@ -1827,6 +1837,7 @@ Bool ScriptConditions::evaluateNamedEnteredArea(Parameter *pUnitParm, Parameter 
 //-------------------------------------------------------------------------------------------------
 /** evaluateNamedExitedArea */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateNamedExitedArea.cpp
 // ?evaluateNamedExitedArea@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateNamedExitedArea(Parameter *pUnitParm, Parameter *pTriggerParm)
 {
@@ -1847,6 +1858,7 @@ Bool ScriptConditions::evaluateNamedExitedArea(Parameter *pUnitParm, Parameter *
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamEnteredAreaEntirely */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateTeamEnteredExitedArea.cpp
 // ?evaluateTeamEnteredAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamEnteredAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
 {
@@ -1867,6 +1879,7 @@ Bool ScriptConditions::evaluateTeamEnteredAreaEntirely(Parameter *pTeamParm, Par
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamEnteredAreaPartially */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateTeamEnteredExitedArea.cpp
 // ?evaluateTeamEnteredAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamEnteredAreaPartially(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
 {
@@ -1887,6 +1900,7 @@ Bool ScriptConditions::evaluateTeamEnteredAreaPartially(Parameter *pTeamParm, Pa
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamExitedAreaEntirely */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateTeamEnteredExitedArea.cpp
 // ?evaluateTeamExitedAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamExitedAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
 {
@@ -1907,6 +1921,7 @@ Bool ScriptConditions::evaluateTeamExitedAreaEntirely(Parameter *pTeamParm, Para
 //-------------------------------------------------------------------------------------------------
 /** evaluateTeamExitedAreaPartially */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateTeamEnteredExitedArea.cpp
 // ?evaluateTeamExitedAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
 Bool ScriptConditions::evaluateTeamExitedAreaPartially(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
 {
@@ -1945,6 +1960,7 @@ Bool ScriptConditions::evaluateMultiplayerAlliedDefeat(void)
 //-------------------------------------------------------------------------------------------------
 /** evaluateMultiplayerPlayerDefeat */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/BfmeConv895.cpp
 // ?evaluateMultiplayerPlayerDefeat@ScriptConditions@@IAE_NXZ present-unmatched
 Bool ScriptConditions::evaluateMultiplayerPlayerDefeat(void)
 {
@@ -2682,6 +2698,7 @@ Bool ScriptConditions::evaluateSkirmishPlayerHasComparisonCapturedUnits(Paramete
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateSkirmishNamedAreaExists.cpp
 // ?evaluateSkirmishNamedAreaExists@ScriptConditions@@IAE_NPAVParameter@@0@Z present-unmatched
 Bool ScriptConditions::evaluateSkirmishNamedAreaExists(Parameter *, Parameter *pTriggerParm)
 {

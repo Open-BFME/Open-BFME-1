@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// readable body of ?pushAsideTree@W3DTreeBuffer@@QAEXW4DrawableID@@PBUCoord3D@@1W4ObjectID@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 // BFME W3DTreeBuffer::pushAsideTree.  The tree records begin at +0x1548 and
 // retain the Zero Hour push-aside algorithm with BFME's +0x40 tree-type,
 // +0x5c drawable, and +0x70..+0x74 push bookkeeping fields.
@@ -6,12 +7,14 @@
 #include "Lib/BaseType.h"
 #include "Common/GameType.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 };
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -51,6 +54,7 @@ struct BfmeTree
 	char m_pad78[0x2c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 public:

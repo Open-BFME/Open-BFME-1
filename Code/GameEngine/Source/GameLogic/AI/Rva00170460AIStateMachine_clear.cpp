@@ -9,6 +9,7 @@ enum StateExitType
 	EXIT_RESET = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 	unsigned char m_unreconstructed_000[0x1f8];
@@ -17,6 +18,7 @@ public:
 	void *m_tail;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -26,6 +28,7 @@ public:
 extern GameLogic *TheGameLogic;
 extern void j_0003d613();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -37,6 +40,7 @@ public:
 	virtual void onExit(StateExitType status) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -52,6 +56,7 @@ public:
 
 #pragma comment(linker, "/alternatename:?setGoalObject@Rva00170460GoalHelper@@QAEXPBVObject@@@Z=?j_00027b42@@YAXXZ")
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:

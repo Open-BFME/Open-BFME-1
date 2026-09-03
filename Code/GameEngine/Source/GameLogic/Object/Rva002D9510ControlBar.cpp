@@ -34,6 +34,7 @@ public:
 	Rva002D9510Value *m_secondStorage;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class ControlBar
 {
 public:

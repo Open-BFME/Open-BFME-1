@@ -17,6 +17,7 @@ enum ModelConditionFlagType
 };
 
 template <int BitCount>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -39,6 +40,7 @@ private:
 typedef BitFlags<86> ObjectStatusMaskType;
 typedef BitFlags<288> ModelConditionFlags;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:

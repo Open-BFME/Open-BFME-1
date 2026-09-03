@@ -5,6 +5,7 @@
 // shape local to the body while reusing the already pinned retail string and
 // MapCache callees.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -38,6 +39,7 @@ struct MapCacheNode
 	BfmeMemberB_000C1490 second;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapCache
 {
 public:
@@ -48,6 +50,7 @@ public:
 
 extern MapCache *TheMapCache;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 private:

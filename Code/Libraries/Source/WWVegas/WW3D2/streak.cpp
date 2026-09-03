@@ -715,6 +715,7 @@ void StreakLineClass::Set_Texture_Reduction_Factor(float trf)
 
  
 
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/SegmentedLineClass_RenderSegLineBFME.cpp
 // ?Render_Seg_Line@StreakLineClass@@ present-unmatched
 void StreakLineClass::Render_Seg_Line(RenderInfoClass & rinfo)
 {

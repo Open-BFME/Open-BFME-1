@@ -9,10 +9,12 @@ extern void j_00007086(void);
 
 typedef int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -39,6 +41,7 @@ public:
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

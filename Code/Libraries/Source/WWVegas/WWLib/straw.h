@@ -47,6 +47,7 @@
 **	versions are presumed to modify the data in some useful way or monitor the data
 **	flow.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/STRAW.H
 class Straw
 {
 	public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?_Get_DX8_Front_Buffer@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // DX8Wrapper::_Get_DX8_Front_Buffer retail 0x00904FF0.
 // ZH CreateImageSurface/GetFrontBuffer, BFME D3D9 GetDisplayMode(0),
 // CreateOffscreenPlainSurface (A8R8G8B8, D3DPOOL_SCRATCH), GetFrontBufferData.
@@ -42,6 +43,7 @@ enum
 	D3DPOOL_SCRATCH = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:

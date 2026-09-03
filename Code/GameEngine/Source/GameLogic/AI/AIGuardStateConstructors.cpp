@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// readable body of ??0AIGuardAttackAggressorState@@: Code/GameEngine/Source/GameLogic/AI/AIGuard.cpp
 // BFME AIGuard state constructors.  The inline AsciiString forwarders preserve
 // MSVC 7.1's in-place by-value temporary and saved-ESP ordering.
 
@@ -6,6 +7,7 @@
 
 class StateMachine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -14,6 +16,7 @@ struct Coord3D
 	void zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -24,6 +27,7 @@ private:
 	char m_stateData[ 0x20 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 class ExitConditions
 {
 public:
@@ -44,6 +48,7 @@ private:
 	unsigned int m_attackGiveUpFrame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 class AIGuardInnerState : public State
 {
 public:
@@ -63,6 +68,7 @@ AIGuardInnerState::AIGuardInnerState( StateMachine *machine ) :
 	m_enterState = false;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 class AIGuardOuterState : public State
 {
 public:
@@ -82,6 +88,7 @@ AIGuardOuterState::AIGuardOuterState( StateMachine *machine ) :
 	m_attackState = 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 class AIGuardAttackAggressorState : public State
 {
 public:

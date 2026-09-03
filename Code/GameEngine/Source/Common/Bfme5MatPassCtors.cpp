@@ -1,5 +1,6 @@
 // Open-BFME5 conversions: two constructors over library base types.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/matpass.h
 class MaterialPassClass
 {
 public:
@@ -32,6 +33,7 @@ Bfme5MaterialPass::Bfme5MaterialPass(int a, int b)
 	++g_bfme5MatPassCount;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MultiplayerSettings.h
 class MultiplayerColorDefinition
 {
 public:

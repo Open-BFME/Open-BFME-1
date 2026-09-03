@@ -4,6 +4,7 @@ typedef int Int;
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -15,6 +16,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException
 {
 public:
@@ -26,6 +28,7 @@ private:
     const char *m_message;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
 class TransportContain
 {
 public:

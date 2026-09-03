@@ -1,4 +1,5 @@
 // cl: /O2
+// readable body of ?calcStealthedStatusForPlayer@StealthUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp
 // Retail 0x002AD150: StealthUpdate::calcStealthedStatusForPlayer.
 // The BFME Object and StealthUpdate layouts used here are the retail layouts;
 // the public ZH headers describe a different Object status/private-status
@@ -23,12 +24,14 @@ enum StealthLookType
 	STEALTHLOOK_INVISIBLE = 5
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	Relationship getRelationship( const Team *that ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -41,6 +44,7 @@ public:
 extern void j_000179bd();
 typedef Bool (__fastcall *PlayerActiveCall)( const Player * );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -65,6 +69,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthUpdate.h
 class StealthUpdateModuleData
 {
 public:
@@ -74,6 +79,7 @@ public:
 	Bool m_disguiseDetected;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StealthUpdate.h
 class StealthUpdate
 {
 protected:

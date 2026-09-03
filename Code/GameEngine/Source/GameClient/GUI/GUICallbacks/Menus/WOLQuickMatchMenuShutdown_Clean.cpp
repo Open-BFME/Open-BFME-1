@@ -5,12 +5,14 @@ typedef bool Bool;
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
 {
 public:
 	void WOLQuickMatchMenuShutdown(void *userData);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:
@@ -32,6 +34,7 @@ public:
 	virtual void unregisterTextWindow(GameWindow *window);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 public:
@@ -44,12 +47,14 @@ public:
 
 #include "ascii_string.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:
 	void reverseAnimatewindow();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:

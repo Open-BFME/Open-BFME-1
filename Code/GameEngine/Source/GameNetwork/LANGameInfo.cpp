@@ -59,6 +59,7 @@ LANGameSlot::LANGameSlot()
 }
 
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/LANGameSlot_getUser_Thunk.cpp
 // ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ present-unmatched
 LANPlayer * LANGameSlot::getUser( void )
 {

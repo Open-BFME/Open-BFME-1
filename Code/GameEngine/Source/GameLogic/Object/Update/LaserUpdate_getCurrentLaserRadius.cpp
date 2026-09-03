@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?getCurrentLaserRadius@LaserUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/LaserUpdate.cpp
 //
 // LaserUpdate::getCurrentLaserRadius — retail 0x00603A00 (63B).
 // Zero Hour source: GeneralsMD/.../LaserUpdate.cpp
@@ -7,12 +8,14 @@
 // Const getDrawModules is the ILT at 0x00040A8E (ICF twin of the non-const
 // getter at 0x00021472); both are `mov eax,[ecx+0x150]; ret`.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class LaserDrawInterface
 {
 public:
 	virtual float getLaserTemplateWidth() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -30,12 +33,14 @@ public:
 	virtual LaserDrawInterface *getLaserDrawInterface() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
 	void **getDrawModules() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LaserUpdate.h
 class LaserUpdate
 {
 public:

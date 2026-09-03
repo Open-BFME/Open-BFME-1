@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?_Create_DX8_Surface@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // DX8Wrapper::_Create_DX8_Surface(width, height, format, pool)
 // retail 0x00904CE0. BFME wraps D3D9 CreateOffscreenPlainSurface (vtable +0x90)
 // on the D3D8-typed device pointer and bumps the DX8 call counter.

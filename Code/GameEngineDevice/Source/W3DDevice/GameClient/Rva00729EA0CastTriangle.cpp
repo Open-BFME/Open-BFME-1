@@ -8,6 +8,7 @@ struct Vector3
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/tri.h
 class TriClass
 {
 public:
@@ -16,6 +17,7 @@ public:
 	void Compute_Normal(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/lineseg.h
 class LineSegClass
 {
 	unsigned char m_pad[0x34];
@@ -23,6 +25,7 @@ class LineSegClass
 
 struct CastResultStruct;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/coltest.h
 class RayCollisionTestClass
 {
 public:
@@ -31,6 +34,7 @@ public:
 	LineSegClass Ray;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/colmath.h
 class CollisionMath
 {
 	public:

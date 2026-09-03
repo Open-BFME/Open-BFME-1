@@ -60,6 +60,7 @@ template<class T> T Gcd(const T & a, const T & n);
 
 
 template<int PRECISION>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/INT.H
 class Int {
 	public:
 
@@ -201,6 +202,7 @@ class Int {
 };
 
 template<class T>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/INT.H
 struct RemainderTable
 {
 	RemainderTable(const T & p) : HasZeroEntry(false)

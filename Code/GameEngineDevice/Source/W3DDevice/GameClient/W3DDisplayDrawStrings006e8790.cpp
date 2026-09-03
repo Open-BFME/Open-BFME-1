@@ -21,6 +21,7 @@ public:
 	virtual void size006e(int *w, int *h);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:

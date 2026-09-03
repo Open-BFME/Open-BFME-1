@@ -390,6 +390,7 @@ void AudioEventRTS::generateFilename( void )
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioEventRTSGetFilenameThunk.cpp
 // ?getFilename@AudioEventRTS@@ present-unmatched
 AsciiString AudioEventRTS::getFilename( void )
 {
@@ -727,6 +728,7 @@ Bool AudioEventRTS::getIsLogicalAudio( void ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/Rva000B28F0IsPositionalAudio.cpp
 // ?isPositionalAudio@AudioEventRTS@@ present-unmatched
 Bool AudioEventRTS::isPositionalAudio( void ) const
 {
@@ -772,6 +774,7 @@ void AudioEventRTS::setAudioPriority( AudioPriority newPriority )
 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioEventRTSGetVolumeThunk.cpp
 // ?getVolume@AudioEventRTS@@ present-unmatched
 Real AudioEventRTS::getVolume( void ) const
 {
@@ -894,6 +897,7 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/Audio/AudioEventRTSGetPlayerIndexThunk.cpp
 // ?getPlayerIndex@AudioEventRTS@@ present-unmatched
 Int AudioEventRTS::getPlayerIndex( void ) const
 {

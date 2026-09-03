@@ -1,5 +1,4 @@
 // ?doFXPos@LaserFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
-// partial score=0.9 date=2026-08-28
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of Laser's positional dispatch.
 
@@ -15,6 +14,7 @@ enum DrawableStatus
 	DRAWABLE_STATUS_NONE = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -24,16 +24,19 @@ class Matrix3D;
 class Object;
 class ThingTemplate;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ClientUpdateModule.h
 class ClientUpdateModule
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
 	char *m_text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -42,12 +45,14 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
 	ClientUpdateModule *findClientUpdateModule(NameKeyType key);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
 class ThingFactory
 {
 public:
@@ -63,6 +68,7 @@ public:
 		DrawableStatus status, Int drawableID);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LaserUpdate.h
 class LaserUpdate : public ClientUpdateModule
 {
 public:
@@ -105,7 +111,11 @@ void LaserFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *, float,
 			if (update)
 			{
 				Coord3D position;
-				if (!secondary)
+				if (secondary)
+				{
+					update->initLaser(0, primary, secondary, 0);
+				}
+				else
 				{
 					position.x = primary->x;
 					position.y = primary->y;
@@ -122,10 +132,6 @@ void LaserFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *, float,
 					{
 						update->initLaser(0, &position, primary, 0);
 					}
-				}
-				else
-				{
-					update->initLaser(0, primary, secondary, 0);
 				}
 			}
 		}

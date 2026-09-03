@@ -9,6 +9,7 @@ class Team;
 class AIGroup;
 class ScriptActions;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -32,12 +33,14 @@ public:
 	virtual Team *getTeamNamed(AsciiString name, Bool unused) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
 	void getTeamAsAIGroup(AIGroup *group);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 };
@@ -46,6 +49,7 @@ class BfmeAIGroupGuardTeamCall
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -66,6 +70,7 @@ static __forceinline void bfmeGroupGuardTeam(AIGroup *group,
 		team, 0, 1);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

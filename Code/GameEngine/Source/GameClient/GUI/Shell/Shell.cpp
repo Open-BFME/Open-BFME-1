@@ -90,6 +90,7 @@ Shell::Shell( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/Shell/ShellDestructor.cpp
 // ??1Shell@@UAE@XZ present-unmatched
 Shell::~Shell( void )
 {

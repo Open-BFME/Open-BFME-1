@@ -1,3 +1,9 @@
+// readable body of ?clearAndSetModelConditionFlags@Drawable@@QAEXABV?$BitFlags@$0HF@@@0@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?enableAmbientSoundFromScript@Drawable@@QAEX_N@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?friend_clearSelected@Drawable@@QAEXXZ: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?friend_setSelected@Drawable@@QAEXXZ: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?getBarrelCount@Drawable@@QBEHW4WeaponSlotType@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
+// readable body of ?getProjectileLaunchOffset@Drawable@@QBE_NW4WeaponSlotType@@HPAVMatrix3D@@W4WhichTurretType@@PAUCoord3D@@3@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 class ModelConditionFlags
 {
 public:
@@ -16,6 +22,7 @@ enum WhichTurretType { BfmeTurret };
 class Matrix3D { unsigned char m[48]; };
 struct Coord3D { float x, y, z; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -58,6 +65,7 @@ void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &cle
 	bfmeApplyModelConditionFlags(true);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class ObjectDrawInterface
 {
 public:
@@ -75,6 +83,7 @@ public:
 	virtual int getBarrelCount(int slot);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -91,6 +100,7 @@ public:
 	virtual ObjectDrawInterface *getObjectDrawInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class DynamicAudioEventRTS
 {
 public:
@@ -114,6 +124,7 @@ public:
 	virtual BfmeSelectionInterface *getSelectionInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:

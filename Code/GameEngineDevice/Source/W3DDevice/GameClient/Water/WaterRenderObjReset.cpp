@@ -1,13 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?reset@WaterRenderObjClass@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 //
 // Clean reconstruction of WaterRenderObjClass::reset at retail 0x007A1390.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWaterTracks.h
 class WaterTracksRenderSystem
 {
 public:
 	void reset(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 struct WaterMeshData
 {
 	float height;
@@ -16,6 +19,7 @@ struct WaterMeshData
 	unsigned char preferredHeight;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:

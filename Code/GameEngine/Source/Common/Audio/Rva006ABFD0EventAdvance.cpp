@@ -4,6 +4,7 @@ typedef unsigned char Byte;
 
 float __cdecl GetGameAudioRandomValueReal(float low, float high, char *file, int line);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

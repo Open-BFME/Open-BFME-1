@@ -29,6 +29,7 @@ public:
 	virtual void slot6c(int a, int b, int c);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:

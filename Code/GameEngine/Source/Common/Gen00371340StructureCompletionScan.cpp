@@ -8,6 +8,7 @@
 
 typedef int ObjectID;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -56,6 +57,7 @@ public:
 	bool hasIncompleteStructure(BfmeY982 *argument);
 
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/Babylon/excel8.h
 	struct Range
 	{
 		ObjectID *begin;

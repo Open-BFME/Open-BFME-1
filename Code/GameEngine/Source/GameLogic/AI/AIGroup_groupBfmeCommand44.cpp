@@ -9,6 +9,7 @@ class PolygonTrigger;
 
 enum CommandSourceType { BFME_COMMAND_SOURCE_PLAYER };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
@@ -41,6 +42,7 @@ struct BfmeMemberNode : public BfmeListNodeBase
 	BfmeGroupMember *m_bfmeValue;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:

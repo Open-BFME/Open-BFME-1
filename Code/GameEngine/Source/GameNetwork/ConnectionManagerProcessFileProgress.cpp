@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetFileProgressCommandMsg
 {
 public:
@@ -34,6 +35,7 @@ namespace _STL
 
 typedef _STL::map<unsigned short, int> FileProgressMap;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager
 {
 private:

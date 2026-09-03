@@ -1,5 +1,6 @@
 // ?zoomCameraOneFrame@W3DView@@AAEXXZ -- retail 0x0073C7C0.
 // stlport
+// readable body of ?zoomCameraOneFrame@W3DView@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 //
 // Ported verbatim from the Zero Hour twin (GeneralsMD/.../W3DView.cpp
 // W3DView::zoomCameraOneFrame). BFME's W3DView carries extra fields ahead of
@@ -12,6 +13,7 @@
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase
 {
 public:
@@ -26,6 +28,7 @@ namespace WWMath
 	inline Real Lerp(Real a, Real b, Real t) { return a + (b - a) * t; }
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -35,6 +38,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 private:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?allocateTreeBuffers@W3DTreeBuffer@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 // BFME retail 0x00732B00: W3DTreeBuffer::allocateTreeBuffers.
 
 typedef int Int;
@@ -45,6 +46,7 @@ public:
 	virtual long __stdcall Release_Ref(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -204,6 +206,7 @@ static __forceinline void BFME_DX8_ErrorCode(unsigned result)
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 public:

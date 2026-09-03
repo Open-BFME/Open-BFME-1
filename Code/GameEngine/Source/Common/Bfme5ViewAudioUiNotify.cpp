@@ -5,6 +5,7 @@
 	virtual void PREFIX##6(void); virtual void PREFIX##7(void); \
 	virtual void PREFIX##8(void); virtual void PREFIX##9(void)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 class View
 {
 public:
@@ -24,6 +25,7 @@ public:
 	virtual void bfmeNotify(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
 public:
@@ -49,6 +51,7 @@ public:
 	virtual void *bfmeCurrent(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:

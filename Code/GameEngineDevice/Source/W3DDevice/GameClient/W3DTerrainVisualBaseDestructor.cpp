@@ -6,6 +6,7 @@
 // base destruction, and final Snapshot vtable restoration seen in retail.
 class Xfer;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -26,6 +27,7 @@ protected:
 	virtual void loadPostProcess() = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
 {
 public:

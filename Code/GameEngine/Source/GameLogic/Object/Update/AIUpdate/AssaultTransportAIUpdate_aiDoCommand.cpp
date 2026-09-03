@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?aiDoCommand@AssaultTransportAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate.cpp
 // Open-BFME: AssaultTransportAIUpdate::aiDoCommand, retail 0x002B4AB0.
 //
 // The command values for this small transport-specific router are 5 (idle),
@@ -13,6 +14,7 @@ typedef int ObjectID;
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -20,6 +22,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 public:
@@ -40,12 +43,14 @@ enum AICommandType
 	AICMD_ATTACKMOVE_TO_POSITION = 0x0f
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 public:
@@ -66,18 +71,21 @@ private:
 	char m_pad24[0x340 - 0x24];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public AssaultTransportAIUpdateBase
 {
 public:
 	virtual void aiDoCommand(const AICommandParms *parms);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AssaultTransportAIUpdate.h
 class AssaultTransportAIInterface
 {
 public:
 	virtual void beginAssault(const Object *object) const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AssaultTransportAIUpdate.h
 class AssaultTransportAIUpdate : public AIUpdateInterface,
 	public AssaultTransportAIInterface
 {

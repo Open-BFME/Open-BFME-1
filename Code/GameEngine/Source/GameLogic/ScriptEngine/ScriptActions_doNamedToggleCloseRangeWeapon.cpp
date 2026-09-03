@@ -66,6 +66,7 @@ public:
 	virtual Object *getUnitNamedByValue(BfmeAsciiStringArg name) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -81,6 +82,7 @@ public:
 	Bool m_useCloseRangeWeapon;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -90,6 +92,7 @@ public:
 extern ScriptEngineByValue *TheScriptEngine;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

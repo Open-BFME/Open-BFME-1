@@ -2,6 +2,7 @@
 
 class MeshModelClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:
@@ -12,6 +13,7 @@ extern DX8MeshRendererClass *TheDX8MeshRenderer;
 extern unsigned int NPatchesLevel;
 extern unsigned int NPatchesGapFillingMode;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshmdl.h
 class MeshModelClass
 {
 	char m_prefix[0xc4];

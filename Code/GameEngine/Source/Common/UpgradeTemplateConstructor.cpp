@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0UpgradeTemplate@@QAE@XZ: Code/GameEngine/Source/Common/System/Upgrade.cpp
 //
 // Focused retail-layout implementation of UpgradeTemplate's constructor.
 // Member names and offsets are corroborated by the matched copy assignment,
 // destructor, and the retail INI field table.  BFME constructs both sound
 // members with the shared default object at 0x01336E50.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -17,6 +19,7 @@ private:
 
 extern int g_bfmeDefaultBG;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
@@ -27,6 +30,7 @@ private:
 	unsigned char m_data[0x6c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:

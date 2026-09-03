@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Create_Additional_Swap_Chain@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 // DX8Wrapper::Create_Additional_Swap_Chain retail 0x00905620.
 // ZH windowed D3DPRESENT_PARAMETERS fill plus D3D9 CreateAdditionalSwapChain
 // (vtable +0x34). SwapEffect is D3DSWAPEFFECT_COPY (3), not the D3D8 VSYNC alias.
@@ -43,6 +44,7 @@ enum
 	D3DSWAPEFFECT_COPY = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:

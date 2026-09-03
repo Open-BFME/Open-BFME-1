@@ -108,6 +108,7 @@ void LookAtTranslator::stopScrolling( void )
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MessageStream/LookAtTranslator_ctor.cpp
 // ??0LookAtTranslator@@ present-unmatched
 LookAtTranslator::LookAtTranslator() :
 	m_isScrolling(false),

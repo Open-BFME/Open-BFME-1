@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
+// readable body of ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // TerrainLogic::deleteBridge, retail 0x001AAF00.
 
 typedef bool Bool;
@@ -8,6 +9,7 @@ enum PathfindLayerEnum
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -15,11 +17,13 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 struct BridgeInfo
 {
 	BridgeInfo();
@@ -38,6 +42,7 @@ struct BridgeInfo
 	Bool damageStateChanged;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:
@@ -57,12 +62,14 @@ private:
 	PathfindLayerEnum m_layer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
 	void changeBridgeState(PathfindLayerEnum layer, Bool open);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
@@ -74,6 +81,7 @@ public:
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -86,6 +94,7 @@ public:
 extern AI *TheAI;
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

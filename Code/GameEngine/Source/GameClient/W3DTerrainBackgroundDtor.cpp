@@ -1,16 +1,19 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DTerrainBackground@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground.cpp
 //
 // Retail 0x00728C50: W3DTerrainBackground destructor.  Calls freeTerrainBuffers
 // then releases the two textures at +0x2C/+0x30 (TextureBaseClass::Release_Ref)
 // the map at +0x4C (inline RefCount) and the +0xC0 block (Gen00881EF0).
 // +0x2C/+0x30 have compiler-generated member dtors so the TU is /EHsc.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
 	void Release_Ref(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -39,6 +42,7 @@ struct TerrainTexPtr
 
 #define REF_PTR_RELEASE(x) { if (x) { x->Release_Ref(); x = 0; } }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainBackground.h
 class W3DTerrainBackground
 {
 public:

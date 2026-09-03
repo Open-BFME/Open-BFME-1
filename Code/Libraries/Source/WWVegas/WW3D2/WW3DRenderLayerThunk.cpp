@@ -39,6 +39,7 @@ public:
 // Last() is one load from [list+0x18], which is LastNode.PrevNode once the
 // vptr, FirstNode and LastNode are laid out in order, and Is_Valid() is the
 // three tests -- this, NextNode, PrevNode -- that retail spells out.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class GenericNode
 {
 public:
@@ -61,6 +62,7 @@ public:
 	bool Is_Valid( void ) const { return GenericNode::Is_Valid(); }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 class GenericList
 {
 public:

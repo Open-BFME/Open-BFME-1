@@ -77,7 +77,6 @@
 **	error handling is required. This is more than likely if greater functionality is derived
 **	from this base class.
 */
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/rawfile.h
 class RawFileClass : public FileClass
 {
 		typedef FileClass BASECLASS;

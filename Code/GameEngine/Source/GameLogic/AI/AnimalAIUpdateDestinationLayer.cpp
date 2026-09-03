@@ -9,6 +9,7 @@ enum PathfindLayerEnum
 	LAYER_WATER = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

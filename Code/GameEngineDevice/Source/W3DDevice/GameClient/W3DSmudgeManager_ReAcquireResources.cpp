@@ -6,9 +6,11 @@
 
 #define SMUDGE_DRAW_SIZE 500
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 	struct SurfaceDescription
 	{
 		unsigned Format;
@@ -33,6 +35,7 @@ W3DRadarResetSurface getBackBufferSurface006e(int index);
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class IndexBufferClass
 {
 public:
@@ -49,6 +52,7 @@ public:
 	};
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8indexbuffer.h
 class DX8IndexBufferClass
 {
 	unsigned char m_bfmeBody[0x18];
@@ -62,6 +66,7 @@ public:
 	DX8IndexBufferClass(unsigned short index_count, UsageType usage = USAGE_DEFAULT);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Smudge.h
 class SmudgeManager
 {
 public:
@@ -75,6 +80,7 @@ private:
 	char m_smudgeManagerPad[0x20];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DSmudge.h
 class W3DSmudgeManager : public SmudgeManager
 {
 public:

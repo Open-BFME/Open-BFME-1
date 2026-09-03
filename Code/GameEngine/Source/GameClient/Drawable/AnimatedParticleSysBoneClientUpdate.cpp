@@ -6,6 +6,7 @@
 // and stop on the first updateBonesForClientParticleSystems that returns true.
 // BFME's interface takes a trailing int (retail push 0); ZH has none.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class ObjectDrawInterface
 {
 public:
@@ -19,6 +20,7 @@ public:
 	virtual bool updateBonesForClientParticleSystems(int);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
 class DrawModule
 {
 public:
@@ -35,12 +37,14 @@ public:
 	virtual ObjectDrawInterface *getObjectDrawInterface();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
 	void **getDrawModules();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Module/AnimatedParticleSysBoneClientUpdate.h
 class AnimatedParticleSysBoneClientUpdate
 {
 public:

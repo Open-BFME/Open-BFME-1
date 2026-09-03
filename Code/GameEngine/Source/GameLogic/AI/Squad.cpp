@@ -166,7 +166,6 @@ Int Squad::getSizeOfGroup(void) const
 // siblings of each other, not of Squad. Both logged mis-anchored?; neither is
 // re-homed, because a 38- and a 62-byte body are not ILT thunks and the
 // ?j_XXXXXXXX convention does not fit them.
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/Squad_isOnSquad.cpp
 // ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
 Bool Squad::isOnSquad(const Object *objToTest) const
 {

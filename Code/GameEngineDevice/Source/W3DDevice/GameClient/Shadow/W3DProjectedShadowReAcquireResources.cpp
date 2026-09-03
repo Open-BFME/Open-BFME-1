@@ -1,3 +1,4 @@
+// readable body of ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp
 typedef long HRESULT;
 
 class ShadowBuffer
@@ -24,6 +25,7 @@ public:
 
 #undef DEVICE_SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DProjectedShadow.h
 class W3DProjectedShadowManager
 {
 public:

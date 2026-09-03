@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// readable body of ?doTeamStop@ScriptActions@@IAEXABVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doTeamStop, retail 0x002FDDB0, 244 bytes.
 //
 // Team-member walk via Object's virtually-inherited DLINK PMF
@@ -8,6 +9,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	char *m_data;
@@ -39,6 +41,7 @@ private:
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
 
 template<class OBJCLASS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 class DLINK_ITERATOR
 {
 public:
@@ -70,6 +73,7 @@ public:
 
 class AIGroup;
 class Player;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 	unsigned char m_pad[0x14];
@@ -78,6 +82,7 @@ public:
 	const AsciiString& getName() const { return m_name; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 	void *m_vptr;
@@ -94,6 +99,7 @@ public:
 	const AsciiString& getName() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 	unsigned char m_pad[0x230];
@@ -102,6 +108,7 @@ public:
 	Team *getDefaultTeam() { return m_defaultTeam; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 	unsigned char m_pad[0x32C];
@@ -118,18 +125,21 @@ public:
 	AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup
 {
 public:
 	void groupIdle(int cmdSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AI
 {
 public:
 	AIGroup *createGroup(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 public:
@@ -169,6 +179,7 @@ enum CommandSourceType
 	CMD_FROM_SCRIPT = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

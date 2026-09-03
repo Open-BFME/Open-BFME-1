@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD
+// readable body of ?doModCameraFinalLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
+// readable body of ?doModCameraLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
+// readable body of ?doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // Open-BFME: ScriptActions::doModCameraLookToward, retail 0x002F8C60, 211 bytes,
 // and its twin doModCameraFinalLookToward, retail 0x002F8D70, 211 bytes.
 //
@@ -25,6 +28,7 @@
 typedef int Int;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -32,7 +36,6 @@ struct Coord3D
 	float z;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 // BFME's string block: the character count is a word at data+4 and the
 // characters begin at data+8.
 struct BfmeAsciiStringData
@@ -45,6 +48,7 @@ struct BfmeAsciiStringData
 
 // The parameter type only has to mangle as AsciiString; it is taken by
 // reference here and never destroyed, so it needs no destructor.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -79,8 +83,8 @@ public:
 	Waypoint *m_next;									// +0x1C
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 // BFME puts getFirstWaypoint at TerrainLogic vtable slot 30.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -117,8 +121,8 @@ public:
 	virtual Waypoint *getFirstWaypoint(void) = 0;		// slot 30, +0x78
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 // BFME puts the two camera-mod look-toward entries at slots 36 and 37.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/View.h
 class View
 {
 public:
@@ -179,7 +183,7 @@ public:
 extern TerrainLogic *TheTerrainLogic;					// 0x012EF4CC
 extern View *TheTacticalView;							// 0x012F1600
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

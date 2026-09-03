@@ -34,6 +34,7 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_NONE = 1
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public RubbleRiseBase,
 	public RubbleRiseInterface1, public RubbleRiseInterface2
 {
@@ -47,6 +48,7 @@ private:
 	int m_updateState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DieModule.h
 class DieModuleInterface
 {
 public:

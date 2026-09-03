@@ -9,6 +9,7 @@ class Player;
 class ScriptActions;
 struct ScriptCounter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine
 {
 protected:
@@ -23,12 +24,14 @@ public:
 		Bool *isWildcard);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList
 {
 public:
 	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
 {
 public:
@@ -41,12 +44,14 @@ struct ScriptCounter
 	int m_value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 struct Money
 {
 	unsigned char m_beforeValue[4];
 	int m_value;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 };
@@ -60,6 +65,7 @@ struct BfmePlayerMoney
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
 protected:

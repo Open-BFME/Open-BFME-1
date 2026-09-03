@@ -845,6 +845,7 @@ void FXList::doFXObj(const Object* primary, const Object* secondary) const
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/FXListStoreCtorThunk.cpp
 // ??0FXListStore@@QAE@XZ present-unmatched
 FXListStore::FXListStore()
 {

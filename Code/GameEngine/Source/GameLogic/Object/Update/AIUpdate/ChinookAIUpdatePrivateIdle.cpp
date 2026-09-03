@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?privateIdle@ChinookAIUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/ChinookAIUpdate.cpp
 // BFME's Chinook idle path is the Zero Hour privateIdle behavior expressed
 // against the retail layouts: the rider list accessor is virtual at +0x104,
 // the owning Object is at adjusted-this-0x18, and Object keeps its AI at +0x204.
@@ -28,6 +29,7 @@ public:
 	void bfmeSetRQ(int object, int commandSource);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -37,6 +39,7 @@ public:
 
 #define CHINOOK_SLOT(n) virtual void unused##n();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ChinookAIUpdate.h
 class ChinookAIUpdate
 {
 public:

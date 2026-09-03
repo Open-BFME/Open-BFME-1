@@ -5,6 +5,7 @@
 
 class Parameter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Condition
 {
 public:

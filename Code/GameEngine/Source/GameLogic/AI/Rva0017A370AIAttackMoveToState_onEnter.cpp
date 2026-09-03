@@ -1,3 +1,4 @@
+// readable body of ?onEnter@AIAttackMoveToState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for retail RVA 0x0017A370.
 
 enum StateReturnType { STATE_CONTINUE = 0 };
@@ -26,6 +27,7 @@ public:
     virtual CommandSourceType getLastCommandSource() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -38,6 +40,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -58,6 +61,7 @@ public:
     Rva0017A370Coord3D m_goalPosition;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveToState
 {
 public:
@@ -68,6 +72,7 @@ public:
     unsigned char m_pad20[0x34];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackMoveToState : public AIMoveToState
 {
 public:

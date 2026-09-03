@@ -3942,7 +3942,7 @@ ControlBarSchemeManager::ControlBarSchemeManager( void )
 //
 // Destructor for the Manager
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManagerDestructorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManagerDestructor.cpp
 // ??1ControlBarSchemeManager@@QAE@XZ present-unmatched
 ControlBarSchemeManager::~ControlBarSchemeManager( void )
 {
@@ -4179,7 +4179,7 @@ void ControlBarSchemeManager::drawBackground( ICoord2D offset )
 }
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplateThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate_4ADE40.cpp
 // ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z present-unmatched
 void ControlBarSchemeManager::setControlBarSchemeByPlayerTemplate( const PlayerTemplate *pt, Bool useSmall)
 {

@@ -40,6 +40,7 @@ template <typename T> class StringBase
 
 class UnicodeString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -73,6 +74,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<WideChar>
 {
 public:
@@ -82,6 +84,7 @@ public:
 	~UnicodeString() {}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
 {
 public:
@@ -101,6 +104,7 @@ public:
 	Int getTeamNumber() const { return m_teamNumber; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
@@ -124,6 +128,7 @@ public:
 	AsciiString getMap() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplate
 {
 public:
@@ -131,6 +136,7 @@ public:
 	AsciiString getName() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
 class PlayerTemplateStore
 {
 public:
@@ -153,6 +159,7 @@ public:
 	virtual UnicodeString fetch( const char *label, Bool *exists = 0 );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 struct GlobalData
 {
 	unsigned char m_unreconstructed_0000[0x0A6C];
@@ -197,6 +204,7 @@ extern const char *g_crcLogFile;
 
 extern UnsignedByte Rva00882F40GetFlag( void );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:

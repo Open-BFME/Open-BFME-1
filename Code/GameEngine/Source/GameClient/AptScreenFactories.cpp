@@ -1272,6 +1272,7 @@ typedef int Int;
 typedef unsigned int NameKeyType;
 typedef int Color;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -1295,6 +1296,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface
 {
 public:
@@ -1319,6 +1321,7 @@ public:
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GSConfig.h
 class GameSpyConfigInterface
 {
 public:
@@ -1333,6 +1336,7 @@ extern GameSpyConfigInterface *TheGameSpyConfig;
 class LadderInfo;
 typedef std::list<LadderInfo *> LadderInfoList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
 class LadderList
 {
 public:
@@ -1344,6 +1348,7 @@ public:
 
 extern LadderList *TheLadderList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/QuickmatchPreferences.h
 class QuickMatchPreferences
 {
 public:
@@ -1361,6 +1366,7 @@ private:
 };
 
 class Image;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 class ImageCollection
 {
 public:
@@ -1369,6 +1375,7 @@ public:
 
 extern ImageCollection *TheMappedImageCollection;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell
 {
 public:
@@ -1377,6 +1384,7 @@ public:
 
 extern Shell *TheShell;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
 class GameSpyStagingRoom
 {
 public:
@@ -1387,6 +1395,7 @@ public:
 
 extern GameSpyStagingRoom *TheGameSpyGame;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:

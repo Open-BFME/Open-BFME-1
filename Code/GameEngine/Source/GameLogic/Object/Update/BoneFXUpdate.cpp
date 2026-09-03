@@ -94,6 +94,7 @@ void BoneFXUpdate::onObjectCreated()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdateCtorModuleFactoryBody.cpp
 // ??1BoneFXUpdate@@MAE@XZ present-unmatched
 BoneFXUpdate::~BoneFXUpdate( void )
 {

@@ -1,3 +1,4 @@
+// readable body of ?evaluateMultiplayerPlayerDefeat@ScriptConditions@@IAE_NXZ: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 struct BfmeGlobFFA
 {
 	virtual void bfmeV0();
@@ -155,6 +156,7 @@ extern BfmeGlobFFD *g_bfmeObjFFD;
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:

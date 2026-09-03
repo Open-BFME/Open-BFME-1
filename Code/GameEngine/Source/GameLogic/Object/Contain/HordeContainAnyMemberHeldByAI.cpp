@@ -55,7 +55,7 @@ public:
 
 #undef BFME_SLOT
 
-// upstream layout: reference/shims/bfmeobject/GameLogic/Object.h
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -65,7 +65,6 @@ public:
 	BfmeMemberAIInterface *m_bfmeAI;							///< retail this+0x204
 };
 
-// upstream layout: STLport 4.5.3 list node
 struct BfmeContainedNode
 {
 	BfmeContainedNode *m_bfmeNext;								///< +0x00

@@ -2,6 +2,7 @@
 
 typedef int NameKeyType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class StaticNameKey
 {
 public:
@@ -13,6 +14,7 @@ private:
 	const char *m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h
 class Dict
 {
 public:

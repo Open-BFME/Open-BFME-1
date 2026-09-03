@@ -1,16 +1,19 @@
 // ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Open-BFME5: clean C++ reconstruction of BFME terrain relighting.
 
 enum TimeOfDay { TIME_OF_DAY_FIRST = 0 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DRoadBuffer.h
 class W3DRoadBuffer
 {
 public:
 	void updateLighting(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 public:
@@ -18,6 +21,7 @@ public:
 	bool m_needUpdate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DPropBuffer.h
 class W3DPropBuffer
 {
 public:
@@ -25,6 +29,7 @@ public:
 	bool m_needUpdate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:

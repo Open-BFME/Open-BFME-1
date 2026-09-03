@@ -24,6 +24,7 @@ private:
 	UnsignedInt m_bits;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlavedUpdate.h
 class SlavedUpdateModuleData
 {
 private:
@@ -33,6 +34,7 @@ public:
 	float m_repairRatePerSecond;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -52,6 +54,7 @@ private:
 	ModelConditionFlags m_modelConditionFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlavedUpdate.h
 class SlavedUpdate
 {
 public:

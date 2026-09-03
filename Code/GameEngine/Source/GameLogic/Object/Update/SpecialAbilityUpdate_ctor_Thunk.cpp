@@ -12,7 +12,6 @@ class Thing;
 class ModuleData;
 class Object;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class __declspec(novtable) ObjectModule
 {
 public:
@@ -93,6 +92,7 @@ private:
 };
 
 // ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate : public SpecialAbilityUpdateBase
 {
 public:

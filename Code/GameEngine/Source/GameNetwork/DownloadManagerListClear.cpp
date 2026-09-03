@@ -29,6 +29,7 @@ public:
 class Gen00627270Owner
 {
 private:
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 	struct Node
 	{
 		Node *next;

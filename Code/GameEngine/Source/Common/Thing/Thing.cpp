@@ -259,7 +259,6 @@ void Thing::setPosition( const Coord3D *pos )
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/ThingShadowTransformThunks.cpp
 void Thing::setOrientation( Real angle )
 {
 	//USE_PERF_TIMER(ThingMatrixStuff)

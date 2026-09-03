@@ -1,9 +1,11 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// readable body of ?buildSpecificTeam@Player@@QAEXPAVTeamPrototype@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 typedef bool Bool;
 
 class TeamPrototype;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:
@@ -19,6 +21,7 @@ public:
 	virtual void buildSpecificAITeam(TeamPrototype *, Bool);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 	char m_unreconstructed[0x220];

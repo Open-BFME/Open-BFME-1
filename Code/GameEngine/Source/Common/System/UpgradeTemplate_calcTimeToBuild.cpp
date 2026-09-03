@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?calcTimeToBuild@UpgradeTemplate@@QBEHPAVPlayer@@@Z: Code/GameEngine/Source/Common/System/Upgrade.cpp
 
 class Player;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate
 {
 public:

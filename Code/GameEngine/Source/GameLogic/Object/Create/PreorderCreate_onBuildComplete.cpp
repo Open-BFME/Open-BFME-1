@@ -16,6 +16,7 @@ enum ModelConditionFlagType
 };
 
 template<int NUMBITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -29,6 +30,7 @@ private:
 
 typedef BitFlags<288> ModelConditionFlags;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -39,6 +41,7 @@ private:
 	unsigned char m_didPreorder;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -68,6 +71,7 @@ private:
 	ModelConditionFlags m_conditionFlags;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PreorderCreate.h
 class PreorderCreate
 {
 public:

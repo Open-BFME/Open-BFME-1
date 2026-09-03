@@ -7,6 +7,7 @@ enum qr2_error_t
 	QR2_ERROR_DUMMY
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class PeerResponse
 {
 public:
@@ -24,6 +25,7 @@ public:
 
 class PeerRequest;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class GameSpyPeerMessageQueueInterface
 {
 public:

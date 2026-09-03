@@ -11,6 +11,7 @@ public:
 	uint32 Read(void *buffer, uint32 bytes);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WW3D/pluglib/w3d_file.h
 struct W3dVectorStruct
 {
 	float x, y, z;
@@ -27,6 +28,7 @@ struct W3dHierarchyStruct
 // Retail allocates exactly count * 0xB4 bytes and therefore has no array
 // cookie. The empty destructor in the later reference header is not part of
 // this BFME-era ABI shape.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pivot.h
 class PivotClass
 {
 public:
@@ -36,6 +38,7 @@ private:
 	unsigned char m_data[0xB4];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htree.h
 class HTreeClass
 {
 public:

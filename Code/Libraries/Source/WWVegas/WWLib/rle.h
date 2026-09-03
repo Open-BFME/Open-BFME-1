@@ -41,6 +41,7 @@
 **	This class will RLE compress and decompress arbitrary blocks of data. This RLE compression
 **	is geared to compressing only runs of 0 bytes. This makes it useful for sprite encoding.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RLE.H
 class RLEEngine 
 {
 	public:

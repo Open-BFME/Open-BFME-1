@@ -39,6 +39,7 @@ struct GeometryRecord
 	StringBase<char> m_name;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -47,6 +48,7 @@ public:
 	virtual const char *getName() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo : public Snapshot
 {
 public:

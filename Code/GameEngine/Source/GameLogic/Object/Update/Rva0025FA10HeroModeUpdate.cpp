@@ -13,6 +13,7 @@ struct Rva0025FA10ModuleData
 	unsigned int m_duration;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 struct GameLogic
 {
 	unsigned char m_lead[ 0x3c ];

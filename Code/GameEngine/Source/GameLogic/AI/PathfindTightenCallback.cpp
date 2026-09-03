@@ -11,6 +11,7 @@ class Object;
 class LocomotorSet;
 class PathfindCell;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
@@ -20,6 +21,7 @@ public:
 		PathfindCell **fromSlot, Bool onlyIfLayer);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:

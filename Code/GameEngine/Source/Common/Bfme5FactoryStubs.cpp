@@ -85,6 +85,7 @@ Bfme5Obj70 * __cdecl bfme5MakeObj70(int arg)
 	return 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:

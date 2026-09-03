@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1W3DPropBuffer@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp
 // Open-BFME: W3DPropBuffer::~W3DPropBuffer, retail 0x00702E50, 268 bytes.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -13,6 +15,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/Launcher/Toolkit/Support/RefCounted.h
 class RefCounted
 {
 public:
@@ -28,6 +31,7 @@ private:
 	UnsignedInt m_refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:
@@ -52,6 +56,7 @@ struct TPropType
 	char m_bounds[0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DPropBuffer.h
 class W3DPropBuffer : Snapshot
 {
 public:

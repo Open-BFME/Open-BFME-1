@@ -40,6 +40,7 @@
 #include	"wwfile.h"
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/RAMFILE.H
 class RAMFileClass : public FileClass
 {
 	public:

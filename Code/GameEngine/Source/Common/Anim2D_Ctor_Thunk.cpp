@@ -9,6 +9,7 @@ typedef int Int;
 
 class Anim2D;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DTemplate
 {
 public:
@@ -22,6 +23,7 @@ public:
 	UnsignedShort getNumFrames() const { return m_numFrames; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Anim2D.h
 class Anim2DCollection
 {
 public:
@@ -29,6 +31,7 @@ public:
 	Anim2D *m_instanceList;                       // retail this+0x0C
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 class Image
 {
 public:
@@ -72,6 +75,7 @@ public:
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
 extern Int __cdecl GetGameClientRandomValue(Int lo, Int hi, char *file, Int line);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
 {
 public:

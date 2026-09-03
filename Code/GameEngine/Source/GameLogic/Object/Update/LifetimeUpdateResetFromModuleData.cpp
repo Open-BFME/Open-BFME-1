@@ -10,6 +10,7 @@ enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
 
 int GetGameLogicRandomValue(int, int, char *, int);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -25,6 +26,7 @@ extern GameLogic *TheGameLogic;
 class Object;
 class ModuleData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule
 {
 protected:
@@ -36,6 +38,7 @@ protected:
 	unsigned char m_pad0C[0x14];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LifetimeUpdate.h
 class LifetimeUpdate : public UpdateModule
 {
 public:
@@ -46,6 +49,7 @@ private:
 	UnsignedInt m_birthFrame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/LifetimeUpdate.h
 class LifetimeUpdateModuleData
 {
 private:

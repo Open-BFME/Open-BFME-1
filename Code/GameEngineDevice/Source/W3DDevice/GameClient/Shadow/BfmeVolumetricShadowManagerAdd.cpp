@@ -8,12 +8,14 @@ typedef float Real;
 extern const float BfmeZeroRange;
 extern const float BfmeShadowTanScale;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
 	static Bool Has_Stencil(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 	unsigned char m_unreconstructed_000[0x64];
@@ -24,6 +26,7 @@ public:
 
 extern GlobalData *TheGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 struct SphereClass
 {
 	float Center[3];
@@ -102,6 +105,7 @@ public:
 	virtual void Get_Obj_Space_Bounding_Sphere(SphereClass &sphere);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -121,6 +125,7 @@ public:
 
 namespace Shadow
 {
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
 	struct ShadowTypeInfo
 	{
 		unsigned char m_unreconstructed_000[0x80];
@@ -130,6 +135,7 @@ namespace Shadow
 	};
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DVolumetricShadow.h
 class W3DVolumetricShadow
 {
 public:

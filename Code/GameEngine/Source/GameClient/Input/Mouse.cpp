@@ -631,6 +631,7 @@ void Mouse::parseIni(void)
 //-------------------------------------------------------------------------------------------------
 /** Initialize the mouse */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/Input/Mouse_init.cpp
 // ?init@Mouse@@ present-unmatched
 void Mouse::init( void )
 {

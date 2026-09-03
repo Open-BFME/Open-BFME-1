@@ -3,6 +3,7 @@
 extern "C" void *__cdecl memset(void *block, int value, unsigned int bytes);
 #pragma intrinsic(memset)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class Bucket
 {
 public:

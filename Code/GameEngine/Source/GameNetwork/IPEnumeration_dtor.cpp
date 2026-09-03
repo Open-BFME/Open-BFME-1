@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??1IPEnumeration@@: Code/GameEngine/Source/GameNetwork/IPEnumeration.cpp
 // BFME's IPEnumeration teardown follows the released Zero Hour loop, with the
 // retail EnumeratedIP layout placing its next pointer at +0x08.
 
@@ -6,6 +7,7 @@ extern "C" __declspec(dllimport) int __stdcall WSACleanup(void);
 
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -15,6 +17,7 @@ private:
 	void *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/IPEnumeration.h
 class EnumeratedIP
 {
 public:
@@ -26,6 +29,7 @@ private:
 	EnumeratedIP *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/IPEnumeration.h
 class IPEnumeration
 {
 public:

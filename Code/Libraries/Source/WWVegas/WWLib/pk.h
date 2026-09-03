@@ -59,6 +59,7 @@
 **	A reasonable use of this technology would be to encrypt only critical data such as the
 **	password for a fast general purpose cryptographic algorithm.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/PK.H
 class PKey
 {
 	public:

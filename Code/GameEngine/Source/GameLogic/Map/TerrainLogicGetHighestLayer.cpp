@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // TerrainLogic::getHighestLayerForDestination, retail 0x001A7D60.
 
 #include <math.h>
@@ -16,6 +17,7 @@ enum BodyDamageType
 	BODY_RUBBLE = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x;
@@ -23,6 +25,7 @@ struct Coord3D
 	Real z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge
 {
 public:
@@ -36,6 +39,7 @@ private:
 	int m_layer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:

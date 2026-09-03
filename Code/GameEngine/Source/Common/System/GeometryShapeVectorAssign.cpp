@@ -19,6 +19,7 @@ public:
 	StringBase &operator=(const StringBase &other);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	StringBase<char> m_string;

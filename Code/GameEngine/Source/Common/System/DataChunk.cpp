@@ -87,7 +87,6 @@ CachedFileInputStream::~CachedFileInputStream(void)
 	}
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/CachedFileInputStream_open_Thunk.cpp
 // BFME's AsciiString carries the eight-byte StringBase header where this TU
 // compiles the four-byte one, so str() is spelled out at retail's offset.
 #define BFME_STR8(s) (*(char *const *)&(s) ? *(char *const *)&(s) + 8 : (char *)"")
@@ -415,6 +414,7 @@ void DataChunkOutput::writeAsciiString( const AsciiString& theString )
 	::fwrite( theString.str(), len , 1, m_tmp_file ); 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkOutputWriteUnicodeString.cpp
 // ?writeUnicodeString@DataChunkOutput@@QAEXVUnicodeString@@@Z present-unmatched
 void DataChunkOutput::writeUnicodeString( UnicodeString theString ) 
 { 
@@ -495,6 +495,7 @@ UnsignedInt DataChunkTableOfContents::getID( const AsciiString& name )
 }
 
 // convert integer identifier to name
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContentsGetName.cpp
 // ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z present-unmatched
 AsciiString DataChunkTableOfContents::getName( UnsignedInt id )	
 {
@@ -509,7 +510,6 @@ AsciiString DataChunkTableOfContents::getName( UnsignedInt id )
 }
 
 // create new ID for given name or return existing mapping
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContents_allocateID.cpp
 UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 {
 	Mapping *m = findMapping( name );
@@ -535,6 +535,7 @@ UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 }
 
 // output the table of m_contents to a binary m_tmp_file stream
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContentsWrite.cpp
 // ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z present-unmatched
 void DataChunkTableOfContents::write( OutputStream &s )
 {
@@ -560,6 +561,7 @@ void DataChunkTableOfContents::write( OutputStream &s )
 // read the table of m_contents from a binary m_tmp_file stream
 // TODO: Should this reset the symbol table?
 // Append symbols to table
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkTableOfContentsRead.cpp
 // ?read@DataChunkTableOfContents@@QAEXAAVChunkInputStream@@@Z present-unmatched
 void DataChunkTableOfContents::read( ChunkInputStream &s)
 {
@@ -629,6 +631,7 @@ DataChunkInput::DataChunkInput( ChunkInputStream *pStream ) : m_file( pStream ),
 	m_fileposOfFirstChunk = m_file->tell();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/DataChunkInputDestructor.cpp
 // ??1DataChunkInput@@QAE@XZ present-unmatched
 DataChunkInput::~DataChunkInput()
 {
@@ -863,6 +866,7 @@ Byte DataChunkInput::readByte(void)
 	return b; 
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkInputReadArrayOfBytes.cpp
 // ?readArrayOfBytes@DataChunkInput@@QAEXPADH@Z present-unmatched
 void DataChunkInput::readArrayOfBytes(char *ptr, Int len) 
 { 
@@ -933,6 +937,7 @@ Dict DataChunkInput::readDict()
 	return d;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/DataChunkInputReadAsciiString.cpp
 // ?readAsciiString@DataChunkInput@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString DataChunkInput::readAsciiString(void) 
 { 

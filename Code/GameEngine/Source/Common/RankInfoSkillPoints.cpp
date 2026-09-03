@@ -1,3 +1,4 @@
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -16,6 +17,7 @@ extern char g_bfmeSideNameB1294[];
 extern char g_bfmeSideNameC1294[];
 extern char g_bfmeSideNameD1294[];
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/RankInfo.h
 class RankInfo
 {
 public:

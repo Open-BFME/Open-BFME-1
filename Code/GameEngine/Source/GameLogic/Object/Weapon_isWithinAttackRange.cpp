@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?isWithinAttackRange@Weapon@@: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 //
 // BFME Weapon::isWithinAttackRange overloads. Named callers
 // (AIAttackAimAtTargetState::onEnter, AIAttackApproachTargetState::updateInternal,
@@ -8,6 +9,7 @@
 // touch ecx, so the inner thiscall reuses the incoming this pointer; that is
 // why retail parks the extra argument in esi rather than ecx.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -15,6 +17,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -22,6 +25,7 @@ public:
 	Coord3D m_position; // retail +0x38 (x / y / z at +0x38 / +0x3c / +0x40)
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:

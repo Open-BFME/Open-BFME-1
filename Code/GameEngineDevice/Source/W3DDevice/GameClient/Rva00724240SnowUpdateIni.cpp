@@ -4,6 +4,7 @@
 // SnowManager's update hook, compare the active texture with the final
 // WeatherSetting override, and replace the texture handle when it changed.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -38,6 +39,7 @@ static const BfmeOverride1137 *walkSnowOverride(const BfmeOverride1137 *d)
 	return d;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass
 {
 public:

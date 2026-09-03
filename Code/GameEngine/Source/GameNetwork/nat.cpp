@@ -1316,7 +1316,6 @@ void NAT::sendMangledPortNumberToTarget(UnsignedShort mangledPort, GameSlot *tar
 	TheGameSpyPeerMessageQueue->addRequest(req);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/NAT_processGlobalMessage_Thunk.cpp
 void NAT::processGlobalMessage(Int slotNum, const char *options) {
 	const char *ptr = options;
 	// skip preceding whitespace.

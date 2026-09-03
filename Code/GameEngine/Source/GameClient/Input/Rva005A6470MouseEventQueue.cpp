@@ -1,11 +1,13 @@
 // cl: /O2 /Ob0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
 	int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -14,6 +16,7 @@ public:
 };
 
 #define RVA005A6470_STREAM_SLOT(n) virtual void slot##n();
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class MessageStream
 {
 public:

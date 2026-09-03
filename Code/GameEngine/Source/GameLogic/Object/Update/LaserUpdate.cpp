@@ -104,6 +104,7 @@ LaserUpdate::LaserUpdate( Thing *thing, const ModuleData* moduleData ) : ClientU
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/LaserUpdateDestructor.cpp
 // ??1LaserUpdate@@ present-unmatched
 LaserUpdate::~LaserUpdate( void )
 {
@@ -406,6 +407,7 @@ void LaserUpdate::initLaser( const Object *parent, const Object *target, const C
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/LaserUpdate_getCurrentLaserRadius.cpp
 // ?getCurrentLaserRadius@LaserUpdate@@ present-unmatched
 Real LaserUpdate::getCurrentLaserRadius() const
 {

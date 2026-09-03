@@ -55,7 +55,6 @@ public:
 	unsigned m_flags;
 	char m_gap[0x18];
 	Rva8CCCE0Value *m_indirect;
-
 	bool acceptsLookup()
 	{
 		return slot9();

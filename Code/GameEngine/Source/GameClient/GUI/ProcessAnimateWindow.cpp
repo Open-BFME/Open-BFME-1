@@ -1062,7 +1062,6 @@ Bool ProcessAnimateWindowSlideFromBottomTimed::updateAnimateWindow( AnimateWindo
 	return FALSE;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromBottomTimed::reverseAnimateWindow( AnimateWindow *animWin )
 {
@@ -1381,6 +1380,7 @@ Bool ProcessAnimateWindowSlideFromTopFast::updateAnimateWindow( AnimateWindow *a
 }
 #endif
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindowSlideFromTopFast_reverseAnimateWindow.cpp
 // ?reverseAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z present-unmatched
 Bool ProcessAnimateWindowSlideFromTopFast::reverseAnimateWindow( AnimateWindow *animWin )
 {

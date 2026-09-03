@@ -8,6 +8,7 @@ enum StateReturnType
     STATE_FAILURE = -2
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
     char m_unknown[0x3c];

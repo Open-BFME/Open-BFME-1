@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ??1W3DTreeBuffer@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 //
 // Retail 0x007206E0 is the BFME W3DTreeBuffer destructor.  The adjacent
 // matched bodies use the same expanded BFME layout: clearAllTrees at
 // 0x0071C7E0, freeTreeBuffers at 0x0071C2D0, the two reset-list members at
 // +0x1458/+0x1480, and the 64-entry tree-type array at +0x1E1CD4.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -68,6 +70,7 @@ public:
 	void clear3098(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer : public Rva007206E0Snapshot
 {
 public:

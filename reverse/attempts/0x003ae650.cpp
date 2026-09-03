@@ -1,6 +1,8 @@
 // ?j_00010712@Glo012F1024Item@@QAEXXZ
 // partial score=0.91 date=2026-09-01
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+
+#include "StringInline.h"
 
 // Open-BFME5: Glo012F1024Entry::bfmeStep, retail 0x003A7320, 62 bytes. The body
 // carried only a machine byte-dump row; the pin naming it went in with
@@ -154,15 +156,6 @@ class Gen_003C02B0
 {
 public:
 	void bfmeRemove(int value);
-};
-
-class AsciiString
-{
-public:
-	~AsciiString(void);
-	operator int(void) const { return (int)this; }
-
-	char *m_bfmeData;
 };
 
 class User : public Glo012F1024Item

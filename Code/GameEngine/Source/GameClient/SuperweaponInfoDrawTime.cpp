@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?drawTime@SuperweaponInfo@@QAEXHHHH@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 
 typedef int Int;
 typedef int Color;
 
 // BFME's DisplayString renderer stages the colors before issuing the draw.
 // This TU-scoped view records the retail vtable slots used by drawTime.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -27,6 +29,7 @@ public:
 	virtual Int getWidth(Int charPos) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class SuperweaponInfo
 {
 private:

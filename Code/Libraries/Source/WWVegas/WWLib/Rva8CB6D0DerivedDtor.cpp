@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ??1Rva8CB6D0Derived@@UAE@XZ, retail 0x008CB790 (129 bytes).
 //
 // Sibling constructor is Code/Libraries/Source/WWVegas/WWLib/Rva8CB6D0CallbackCtor.cpp
 // (0x008CB6D0): Rva899F00Base(0x2A, 8), then callback->vtbl[0](), store at +0x20.

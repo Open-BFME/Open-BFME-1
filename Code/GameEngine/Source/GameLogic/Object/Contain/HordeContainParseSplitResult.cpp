@@ -7,6 +7,7 @@ typedef int Int;
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 extern "C" __declspec(dllimport) int __cdecl atoi( const char * );
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -19,6 +20,7 @@ private:
 
 #include "Common/INIException.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

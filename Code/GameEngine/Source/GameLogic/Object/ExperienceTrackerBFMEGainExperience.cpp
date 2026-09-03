@@ -1,3 +1,4 @@
+// readable body of ?gainExpForLevel@ExperienceTracker@@: Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp
 // Byte-matched BFME ExperienceTracker multi-level experience helper.
 
 typedef bool Bool;
@@ -14,6 +15,7 @@ public:
 
 extern ExperienceLevelSystem *TheExperienceLevelSystem;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ExperienceTracker.h
 class ExperienceTracker
 {
 public:

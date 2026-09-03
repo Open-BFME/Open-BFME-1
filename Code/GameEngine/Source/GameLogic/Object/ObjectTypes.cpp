@@ -46,7 +46,6 @@
 struct BFMEThingFactory { const ThingTemplate *findTemplate(const AsciiString &name); };
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectTypes_ctor_Thunk.cpp
 // ??0ObjectTypes@@ present-unmatched
 ObjectTypes::ObjectTypes()
 {
@@ -54,7 +53,6 @@ ObjectTypes::ObjectTypes()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectTypes_named_ctor_Thunk.cpp
 // ??0ObjectTypes@@ present-unmatched
 ObjectTypes::ObjectTypes(const AsciiString& listName) : m_listName(listName)
 {

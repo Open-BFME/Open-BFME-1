@@ -25,6 +25,7 @@ private:
 	char m_unreconstructed[ 0x0E ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

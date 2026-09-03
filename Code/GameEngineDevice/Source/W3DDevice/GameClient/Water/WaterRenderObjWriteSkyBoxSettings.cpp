@@ -3,6 +3,7 @@
 // Clean reconstruction of the SkyboxSettings chunk writer at retail
 // 0x0079F480.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 private:
@@ -16,6 +17,7 @@ struct Vector3
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput
 {
 public:
@@ -34,6 +36,7 @@ private:
 	friend class WaterRenderObjClass;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:

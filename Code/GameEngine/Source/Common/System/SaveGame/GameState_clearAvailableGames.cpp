@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?clearAvailableGames@GameState@@AAEXXZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 struct AvailableGameInfo
 {
 	char m_data[0x34];
@@ -7,6 +9,7 @@ struct AvailableGameInfo
 	~AvailableGameInfo();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
 class GameState
 {
 private:

@@ -3,6 +3,7 @@
 // Retail 0x002A0AD0: store a Real at +0x28, then 1 - (module+0x14)*(this+0x2c)*arg
 // into TheDisplay vslot 0x9c, and arg*(this+0x2c) into GlobalData+0x48.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:
@@ -48,6 +49,7 @@ public:
 	virtual void setAmbient(float value);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -55,6 +57,7 @@ public:
 	float m_value48;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:

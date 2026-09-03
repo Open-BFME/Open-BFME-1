@@ -4,6 +4,7 @@
 // already-landed hideOptionsGadgets body) then winHide's the info-panel
 // windows true and two others false. ret 4: one unused stack argument.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

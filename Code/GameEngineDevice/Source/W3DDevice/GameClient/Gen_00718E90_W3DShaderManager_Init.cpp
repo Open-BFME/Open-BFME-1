@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// readable body of ?init@W3DShaderManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
+// readable body of ?init@W3DShaderManager@@SAXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 // BFME retail 0x00718E90: W3DShaderManager::init.
 
 typedef int Int;
@@ -24,6 +26,7 @@ public:
 	virtual Int init(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DFilterInterface
 {
 public:
@@ -66,6 +69,7 @@ public:
 	static long LoadAndCreateD3DShader(const char *filename, Dword *shader);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager
 {
 public:

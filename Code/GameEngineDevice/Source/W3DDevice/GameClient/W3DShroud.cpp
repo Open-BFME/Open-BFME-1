@@ -78,6 +78,7 @@
 #define DEFAULT_VISIBLE_TERRAIN 96	//assumed size of visible terrain cells.
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudConstructor.cpp
 // ??0W3DShroud@@ present-unmatched
 W3DShroud::W3DShroud(void)
 {
@@ -100,6 +101,7 @@ W3DShroud::W3DShroud(void)
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071B3D0_W3DShroudDestructor.cpp
 // ??1W3DShroud@@ present-unmatched
 W3DShroud::~W3DShroud(void)
 {
@@ -239,6 +241,7 @@ void W3DShroud::ReleaseResources(void)
 
 //-----------------------------------------------------------------------------
 ///Restore resources that are lost on D3D device reset.
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00719FB0_ReAcquireResources.cpp
 // ?ReAcquireResources@W3DShroud@@ present-unmatched
 Bool W3DShroud::ReAcquireResources(void)
 {
@@ -288,6 +291,7 @@ W3DShroudLevel W3DShroud::getShroudLevel(Int x, Int y)
 }
 
 //-----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071B670_SetShroudLevel.cpp
 // ?setShroudLevel@W3DShroud@@ present-unmatched
 void W3DShroud::setShroudLevel(Int x, Int y, W3DShroudLevel level, Bool textureOnly)
 {

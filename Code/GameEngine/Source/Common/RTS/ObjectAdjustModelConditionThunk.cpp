@@ -70,12 +70,14 @@ enum WeaponSetConditionType
 };
 
 template <int Bits>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 private:
     UnsignedInt m_bits[(Bits + 31) / 32];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:
@@ -95,6 +97,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -117,6 +120,7 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponSet
 {
 public:
@@ -125,6 +129,7 @@ public:
         WeaponSlotType slot, WeaponSetConditionType condition);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:

@@ -1,3 +1,4 @@
+// readable body of ?evaluatePlayerHasPower@ScriptConditions@@IAE_NPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // Open-BFME5 conversions.
 
 struct BfmeT1090
@@ -42,6 +43,7 @@ extern BfmeP1090 *g_bfmeP1090;
 
 class Parameter;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:

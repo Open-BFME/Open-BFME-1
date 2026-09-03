@@ -12,6 +12,7 @@ struct BfmePingStringData
 	char m_text[1];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
@@ -33,6 +34,7 @@ struct BfmePingString
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GSConfig.h
 class GameSpyConfigInterface
 {
 public:
@@ -44,6 +46,7 @@ public:
 
 extern GameSpyConfigInterface *TheGameSpyConfig;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo
 {
 public:

@@ -4,6 +4,7 @@
 // Add_Ref/Release_Ref match the NDEBUG inlines: inc/dec the dword at +4,
 // Delete_This at vtable slot 0 when the count hits zero.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:

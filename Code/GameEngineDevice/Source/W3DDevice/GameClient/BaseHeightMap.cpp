@@ -199,6 +199,7 @@ inline Int IABS(Int x) {	if (x>=0) return x; return -x;};
 //=============================================================================
 /** Frees the w3d resources used to draw the terrain. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapFreeMapResources.cpp
 // ?freeMapResources@BaseHeightMapRenderObjClass@@UAEHXZ present-unmatched
 Int BaseHeightMapRenderObjClass::freeMapResources(void)
 {
@@ -523,6 +524,7 @@ void BaseHeightMapRenderObjClass::ReleaseResources(void)
 // ?ReAcquireResources@BaseHeightMapRenderObjClass@@UAEXXZ present-unmatched
 void BaseHeightMapRenderObjClass::ReAcquireResources(void)
 {
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00718E90_W3DShaderManager_Init.cpp
 // ?init@W3DShaderManager@@ present-unmatched
 	W3DShaderManager::init();	//reaquire resources which may be needed by custom shaders
 
@@ -781,6 +783,7 @@ struct BaseHeightMapResetDualType
 	char m_padding0c[0x98];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
 class GameEngine
 {
 private:
@@ -1731,6 +1734,7 @@ RenderObjClass *	 BaseHeightMapRenderObjClass::Clone(void) const
 //=============================================================================
 /** Loads the roads from the map objects. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap_loadRoadsAndBridges.cpp
 // ?loadRoadsAndBridges@BaseHeightMapRenderObjClass@@QAEXPAVW3DTerrainLogic@@_N@Z present-unmatched
 void BaseHeightMapRenderObjClass::loadRoadsAndBridges(W3DTerrainLogic *pTerrainLogic, Bool saveGame)
 {	
@@ -3770,6 +3774,7 @@ Bool BaseHeightMapRenderObjClass::updateTreePosition(DrawableID id, Coord3D loca
 //=============================================================================
 /** Adds a prop to the prop buffer.*/
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapAddProp.cpp
 // ?addProp@BaseHeightMapRenderObjClass@@QAEXHUCoord3D@@MMABVAsciiString@@@Z present-unmatched
 void BaseHeightMapRenderObjClass::addProp(Int id, Coord3D location, Real angle, Real scale, 
 																					const AsciiString &modelName)
@@ -3912,6 +3917,7 @@ void BaseHeightMapRenderObjClass::staticLightingChanged( void )
 //=============================================================================
 /** When the time of day changes, the lighting changes and we need to update. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapSetTimeOfDay.cpp
 // ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z present-unmatched
 void BaseHeightMapRenderObjClass::setTimeOfDay( TimeOfDay tod )
 {		 

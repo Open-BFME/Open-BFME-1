@@ -1,7 +1,9 @@
+// readable body of ?isTemporarilyHidden@RadarObject@@QBE_NXZ: Code/GameEngine/Source/Common/System/Radar.cpp
 // BFME retail RadarObject visibility predicate, 0x00106B90.
 // Identity is fixed by W3DRadar::renderObjectList: its matched body calls this
 // helper at the source loop's isTemporarilyHidden() test.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -11,6 +13,7 @@ public:
 	int m_stealthLook;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -27,6 +30,7 @@ public:
 	virtual Drawable *getDrawable() const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
 class RadarObject
 {
 public:

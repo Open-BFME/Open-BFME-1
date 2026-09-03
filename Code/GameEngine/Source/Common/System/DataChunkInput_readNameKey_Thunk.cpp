@@ -9,6 +9,7 @@ enum NameKeyType
 	NAMEKEY_INVALID = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 	void *m_data;
@@ -22,6 +23,7 @@ public:
 	~AsciiString();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkTableOfContents
 {
 	void *m_list;
@@ -33,12 +35,14 @@ public:
 	AsciiString getName(unsigned int id);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h
 class ChunkInputStream
 {
 public:
 	virtual Int read(void *pData, Int numBytes) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 struct InputChunk
 {
 	void *vtable;
@@ -51,6 +55,7 @@ struct InputChunk
 	Int dataLeft;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 	ChunkInputStream *m_file;
@@ -106,6 +111,7 @@ public:
 class GameEngine;
 extern GameEngine *TheGameEngine;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:

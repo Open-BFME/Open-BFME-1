@@ -18,6 +18,7 @@ enum
 	LAN_MAX_SLOTS = 8
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	Int m_type;
@@ -38,6 +39,7 @@ struct BfmeLANSlot
 	unsigned char m_bfmeRest[0x68 - 8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo
 {
 public:
@@ -47,6 +49,7 @@ public:
 
 void __cdecl _bfme_fillCurrentLANGameInfo_0068E630(char *buffer, UnsignedInt size);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

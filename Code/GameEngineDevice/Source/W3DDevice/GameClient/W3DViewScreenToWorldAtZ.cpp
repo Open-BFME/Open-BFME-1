@@ -2,12 +2,14 @@
 // readable body of ?screenToWorldAtZ@W3DView@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 // Separate TU so getPickRay is a REL32 call rather than same-TU inlined.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
 	int y;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -33,6 +35,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 public:

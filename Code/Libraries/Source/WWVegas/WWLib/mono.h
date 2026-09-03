@@ -42,6 +42,7 @@
 
 #include	"win.h"
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/MONO.H
 class MonoClass {
 	public:
       typedef enum MonoAttribute {

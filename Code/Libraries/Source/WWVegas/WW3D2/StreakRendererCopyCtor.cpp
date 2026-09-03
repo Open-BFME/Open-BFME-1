@@ -11,6 +11,7 @@ private:
 	TextureClass *m_ptr;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:
@@ -37,6 +38,7 @@ public:
 
 class VertexFormatXYZUV1;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/streakRender.h
 class StreakRendererClass
 {
 public:

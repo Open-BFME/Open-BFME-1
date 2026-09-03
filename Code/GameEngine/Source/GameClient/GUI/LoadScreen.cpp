@@ -1539,6 +1539,7 @@ void MultiPlayerLoadScreen::reset( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MultiPlayerLoadScreenUpdate.cpp
 // ?update@MultiPlayerLoadScreen@@ present-unmatched
 void MultiPlayerLoadScreen::update( Int percent )
 {
@@ -1926,6 +1927,7 @@ void GameSpyLoadScreen::reset( void )
 	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameSpyLoadScreenUpdate.cpp
 // ?update@GameSpyLoadScreen@@ present-unmatched
 void GameSpyLoadScreen::update( Int percent )
 {
@@ -2097,6 +2099,7 @@ void MapTransferLoadScreen::reset( void )
 	m_timeoutText = NULL;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenUpdate.cpp
 // ?update@MapTransferLoadScreen@@ present-unmatched
 void MapTransferLoadScreen::update( Int percent )
 {

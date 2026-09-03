@@ -7,6 +7,7 @@
 class WorkerAIUpdate;
 void Force_WorkerAIUpdate_Deleting_Destructor(WorkerAIUpdate *update);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 	friend void Force_WorkerAIUpdate_Deleting_Destructor(WorkerAIUpdate *update);

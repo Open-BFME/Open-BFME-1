@@ -15,6 +15,7 @@ enum DozerTask
 
 enum { DOZER_NUM_DOCK_POINTS = 3 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;

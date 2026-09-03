@@ -8,11 +8,13 @@
 // 0x0004B12D. The remaining callee (retail 0x0072F390) is still unidentified;
 // pinned here as a plain member so the call resolves.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
     float x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 public:
@@ -62,6 +64,7 @@ public:
     void addCapEdgeToTrack(float x, float y);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 class W3DModelDraw
 {
 public:

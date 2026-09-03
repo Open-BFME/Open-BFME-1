@@ -1,3 +1,4 @@
+// readable body of ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 // ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z
 // partial score=0.82 date=2026-09-02
 //
@@ -11,11 +12,13 @@ typedef float Real;
 
 #define PATHFIND_CELL_SIZE_F 10.0f
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	Real x, y, z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	Int x, y;
@@ -29,6 +32,7 @@ enum PathfindLayerEnum
 
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class TerrainLogic
 {
 public:
@@ -37,6 +41,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:

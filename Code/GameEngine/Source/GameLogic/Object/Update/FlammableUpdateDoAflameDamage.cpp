@@ -15,6 +15,7 @@ enum DeathType
 	DEATH_BURNED = 3
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo
 {
 public:
@@ -30,6 +31,7 @@ public:
 	unsigned char m_pad20[0x3c];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -49,6 +51,7 @@ public:
 	virtual void attemptDamage(DamageInfo *info);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlammableUpdate.h
 class FlammableUpdateModuleData
 {
 private:
@@ -58,6 +61,7 @@ public:
 	int m_aflameDamageAmount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlammableUpdate.h
 class FlammableUpdate
 {
 public:

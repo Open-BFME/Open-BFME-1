@@ -135,6 +135,7 @@ const FieldParse UpgradeTemplate::m_upgradeFieldParseTable[] =
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/UpgradeTemplateConstructor.cpp
 // ??0UpgradeTemplate@@QAE@XZ present-unmatched
 UpgradeTemplate::UpgradeTemplate( void )
 {
@@ -164,6 +165,7 @@ UpgradeTemplate::~UpgradeTemplate( void )
 //-------------------------------------------------------------------------------------------------
 /** Calculate the time it takes (in logic frames) for a player to build this UpgradeTemplate */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/UpgradeTemplate_calcTimeToBuild.cpp
 // ?calcTimeToBuild@UpgradeTemplate@@QBEHPAVPlayer@@@Z present-unmatched
 Int UpgradeTemplate::calcTimeToBuild( Player *player ) const
 {
@@ -209,6 +211,7 @@ static AsciiString getVetUpgradeName(VeterancyLevel v)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/Common/System/UpgradeTemplate_cacheButtonImage.cpp
 // ?cacheButtonImage@UpgradeTemplate@@QAEXXZ present-unmatched
 void UpgradeTemplate::cacheButtonImage()
 {

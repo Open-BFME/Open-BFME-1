@@ -41,6 +41,7 @@ GameMessageParser::GameMessageParser()
 // The exact retail message-taking constructor is emitted by GameMessageParserCtorThunk.cpp.
 
 //----------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameMessageParserDtor.cpp
 // ??1GameMessageParser@@MAE@XZ present-unmatched
 GameMessageParser::~GameMessageParser() 
 {

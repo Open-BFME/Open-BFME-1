@@ -3,6 +3,7 @@
 // The recovered layout is deliberately local: a vptr, an unknown word, the
 // AsciiString at +8, and the owned polymorphic member at +0x8c.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

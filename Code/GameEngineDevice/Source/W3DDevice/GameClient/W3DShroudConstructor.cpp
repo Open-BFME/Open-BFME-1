@@ -1,11 +1,13 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ??0W3DShroud@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroud.cpp
 //
 // Retail 0x0071B590. BFME W3DShroud constructor: 10.0f cell size, filter 4,
 // border alpha from TheWritableGlobalData+0xC86, dirty-cell tree at +0x44.
 
 #include <set>
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 	unsigned char m_pad[0xc86];
@@ -16,6 +18,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -34,6 +37,7 @@ public:
 	TextureBaseClass *m_p;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShroud.h
 class W3DShroud
 {
 public:

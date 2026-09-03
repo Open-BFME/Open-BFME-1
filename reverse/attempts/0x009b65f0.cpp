@@ -7,13 +7,14 @@
 int Rva009B4600DecodeBool(void *state, int probability);
 int bfmeGoUSC(void *state, int count);
 
-extern unsigned char g_bfmeProbUpdate[2][17];
+#define g_bfmeProbUpdate (*(unsigned char (*)[2][17])0x01143348)
 
 void Rva009B65F0LoadProbs(unsigned char *ctx)
 {
+	void *state;
 	int i = 0;
 	unsigned j;
-	void *state = ctx + 0x150;
+	state = ctx + 0x150;
 
 	for (; i < 2; ++i) {
 		if (Rva009B4600DecodeBool(state, g_bfmeProbUpdate[i][0])) {

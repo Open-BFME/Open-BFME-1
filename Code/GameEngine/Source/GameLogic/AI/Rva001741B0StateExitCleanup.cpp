@@ -11,6 +11,7 @@ public:
 	bool m_exitFlag;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -22,6 +23,7 @@ public:
 	Rva001741B0AIUpdate *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct StateMachine
 {
 	char m_unknown[ 0x10 ];

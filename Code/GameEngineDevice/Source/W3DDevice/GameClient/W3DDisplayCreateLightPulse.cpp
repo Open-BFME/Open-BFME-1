@@ -1,3 +1,4 @@
+// readable body of ?createLightPulse@W3DDisplay@@UAEXPBUCoord3D@@PBURGBColor@@MMII@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // ?createLightPulse@W3DDisplay@@UAEXPAVCoord3D@@HHW4RGBColor@@M@Z
 
 struct Vector3
@@ -71,6 +72,7 @@ public:
 
 extern RTS3DSceneLightPulseShim *g_lightPulseScene;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
 public:

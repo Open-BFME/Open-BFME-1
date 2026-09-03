@@ -6,6 +6,7 @@ extern void (__cdecl *g_bfmeFreeDWF)(void *ptr);
 
 class Rva00893960List
 {
+	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
 	struct Node
 	{
 		void *pad;

@@ -112,6 +112,7 @@ U4Ret005F79A0 *u4From005F79A0( U4Ret005F79A0 *out, const int &v )
 	return out;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:

@@ -1,3 +1,4 @@
+// readable body of ??0W3DProjectedShadowManager@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp
 class ShadowLightEnvironment007AF5A0
 {
 public:
@@ -8,12 +9,14 @@ private:
 	unsigned char m_data[0x228];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shadow.h
 class ProjectedShadowManager
 {
 public:
 	~ProjectedShadowManager();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DProjectedShadow.h
 class W3DProjectedShadowManager : public ProjectedShadowManager
 {
 public:

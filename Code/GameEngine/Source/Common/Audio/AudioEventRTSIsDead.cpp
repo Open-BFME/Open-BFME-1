@@ -5,6 +5,7 @@ typedef int ObjectID;
 class Drawable;
 class Object;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameClient.h
 class GameClient
 {
 public:
@@ -22,6 +23,7 @@ public:
 	virtual Drawable *findDrawableByID(ObjectID id);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -38,6 +40,7 @@ extern GameClient *TheGameClient;
 extern GameLogic *TheGameLogic;
 extern LivingWorldOwnerLookup *TheLivingWorldOwnerLookup;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:

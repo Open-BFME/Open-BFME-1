@@ -7,6 +7,7 @@ class AIAttackState;
 class State;
 struct StateConditionInfo;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -45,6 +46,7 @@ private:
 	char m_storage[ 0x70 ];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackAimAtTargetState : public Rva000A19E0StateBase
 {
 public:
@@ -70,6 +72,7 @@ AIAttackAimAtTargetState::AIAttackAimAtTargetState(
 
 class NotifyWeaponFiredInterface;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackFireWeaponState : public Rva000A19E0StateBase
 {
 public:

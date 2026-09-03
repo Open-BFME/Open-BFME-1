@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setPlayerType@Player@@QAEXW4PlayerType@@_N@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
 
 enum PlayerType
 {
@@ -11,6 +12,7 @@ public:
 	virtual ~BfmeOwnedAI();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -23,6 +25,7 @@ private:
 	BfmeOwnedAI *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:
@@ -32,6 +35,7 @@ private:
 	unsigned char m_bfmeBody[0x78];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AISkirmishPlayer.h
 class AISkirmishPlayer
 {
 public:

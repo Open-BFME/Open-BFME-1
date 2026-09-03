@@ -6,6 +6,7 @@
 // the byte verifier for that body.
 void d_002a5a30();
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate
 {
 public:

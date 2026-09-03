@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /GR-
+// readable body of ?Flush@DX8MeshRendererClass@@QAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
 // ?Flush@DX8MeshRendererClass@@QAEXXZ
 // Retail 0x00949DD0 size 193. BFME Flush: rigid then skin FVF lists via
 // inlined MultiList iteration (Render at vtable+4, delayed at +0x18), then
@@ -8,6 +9,7 @@
 class VertexBufferClass;
 class IndexBufferClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8FVFCategoryContainer
 {
 public:
@@ -20,6 +22,7 @@ public:
 	virtual void Render_Delayed_Procedural_Material_Passes(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListNodeClass
 {
 public:
@@ -49,6 +52,7 @@ public:
 
 class CameraClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -59,6 +63,7 @@ public:
 	static void Apply_Default_State(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
 class DX8MeshRendererClass
 {
 public:

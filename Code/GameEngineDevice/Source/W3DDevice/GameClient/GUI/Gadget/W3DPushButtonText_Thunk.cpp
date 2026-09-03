@@ -7,6 +7,7 @@ typedef unsigned char Bool;
 class GameFont;
 struct ICoord2D { Int x, y; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -23,6 +24,7 @@ public:
     virtual void getSize(Int *, Int *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 class WinInstanceData
 {
 public:
@@ -34,6 +36,7 @@ public:
     DisplayString *text;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
 {
 public:

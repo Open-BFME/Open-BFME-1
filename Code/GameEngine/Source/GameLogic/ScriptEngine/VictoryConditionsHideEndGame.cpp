@@ -13,6 +13,7 @@ public:
 
 extern WindowManager *g_theWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display
 {
 public:

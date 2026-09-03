@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // Bridge::isPointOnBridge, retail 0x001A5F40.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -16,6 +17,7 @@ class Vector3
 	float Z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D
 {
 	float loX;
@@ -24,6 +26,7 @@ struct Region2D
 	float hiY;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord3D
 {
 	int x;
@@ -31,6 +34,7 @@ struct ICoord3D
 	int z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PolygonTrigger.h
 class PolygonTrigger
 {
 public:

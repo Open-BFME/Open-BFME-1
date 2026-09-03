@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?update@AITNGuardReturnState@@: Code/GameEngine/Source/GameLogic/AI/AITNGuard.cpp
 // BFME layout reconstruction of AITNGuardReturnState::update at 0x00189C00.
 
 typedef unsigned int ObjectID;
@@ -14,18 +15,21 @@ class Object;
 class Player;
 class Team;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
     Object *findObjectByID( ObjectID id );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/TunnelTracker.h
 class TunnelTracker
 {
 public:
     Object *getCurNemesis();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
@@ -35,12 +39,14 @@ public:
     }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
     Object *getTeamTargetObject();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -66,12 +72,14 @@ public:
     ObjectID m_nemesisID;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIEnterState
 {
 public:
     virtual StateReturnType update();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AITNGuard.h
 class AITNGuardReturnState : public AIEnterState
 {
 public:

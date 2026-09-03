@@ -95,6 +95,7 @@ AssaultTransportAIUpdate::~AssaultTransportAIUpdate( void )
 } 
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate_aiDoCommand.cpp
 // ?aiDoCommand@AssaultTransportAIUpdate@@ present-unmatched
 void AssaultTransportAIUpdate::aiDoCommand(const AICommandParms* parms)
 {
@@ -454,6 +455,7 @@ Bool AssaultTransportAIUpdate::isMemberHealthy( const Object *member ) const
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate_retrieveMembers.cpp
 // ?retrieveMembers@AssaultTransportAIUpdate@@ present-unmatched
 void AssaultTransportAIUpdate::retrieveMembers()
 {
@@ -477,6 +479,7 @@ void AssaultTransportAIUpdate::retrieveMembers()
 }
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate_giveFinalOrders.cpp
 // ?giveFinalOrders@AssaultTransportAIUpdate@@ present-unmatched
 void AssaultTransportAIUpdate::giveFinalOrders()
 {

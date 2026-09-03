@@ -29,6 +29,7 @@ void ObjectStatusMaskType::clear()
 	m_bits.reset();
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponCollide.h
 class FireWeaponCollideModuleData
 {
 public:
@@ -51,6 +52,7 @@ FireWeaponCollideModuleData::FireWeaponCollideModuleData()
 	m_fireOnce = 0;
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
 {
 public:
@@ -59,6 +61,7 @@ public:
 
 void FireWeaponCollideFieldParse(MultiIniFieldParse &);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponCollide.h
 class FireWeaponCollide
 {
 public:

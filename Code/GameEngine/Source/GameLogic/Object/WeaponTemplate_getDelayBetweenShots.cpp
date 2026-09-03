@@ -1,3 +1,4 @@
+// readable body of ?getDelayBetweenShots@WeaponTemplate@@QBEHABVWeaponBonus@@@Z: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 // BFME retail WeaponTemplate::getDelayBetweenShots, 0x001E1610.
 // Sibling of WeaponTemplate::getClipReloadTime at 0x001E1680: min/max at
 // +0x4B8/+0x4BC, GameLogicRandomValue with Weapon.cpp:845, then RATE_OF_FIRE
@@ -21,6 +22,7 @@ __forceinline long fast_float2long_round(float f)
 
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus
 {
 public:
@@ -40,6 +42,7 @@ private:
 	float m_field[6];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate
 {
 public:

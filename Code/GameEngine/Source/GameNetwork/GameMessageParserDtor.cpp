@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
+// readable body of ??1GameMessageParser@@MAE@XZ: Code/GameEngine/Source/GameNetwork/GameMessageParser.cpp
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParserArgumentType
 {
 public:
@@ -9,6 +11,7 @@ public:
 	GameMessageParserArgumentType *m_next;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser
 {
 protected:

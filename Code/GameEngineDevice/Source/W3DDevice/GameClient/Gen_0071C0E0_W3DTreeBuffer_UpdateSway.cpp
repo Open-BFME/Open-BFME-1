@@ -1,4 +1,5 @@
 // cl: /O2 /DNDEBUG /MD
+// readable body of ?updateSway@W3DTreeBuffer@@IAEXABUBreezeInfo@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
 // BFME W3DTreeBuffer::updateSway.  The retail tree records use a 0xa4-byte
 // stride and the BFME buffer keeps the sway arrays at the offsets below.
 
@@ -7,6 +8,7 @@ typedef unsigned int UnsignedInt;
 typedef short Short;
 typedef float Real;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct BreezeInfo
 {
 	Real m_direction;
@@ -31,6 +33,7 @@ struct BfmeTree
 	char m_pad80[0x24];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
 class W3DTreeBuffer
 {
 protected:

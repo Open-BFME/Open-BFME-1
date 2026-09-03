@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?getMoodMatrixActionAdjustment@AIUpdateInterface@@: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 //
 // BFME's ThingTemplate kind-of words begin at +0xc8.  Keep the override
 // walk and the AI object at their retail offsets in this TU; the vendored
@@ -84,6 +85,7 @@ enum MoodActionAdjustment
 	MAA_Affect_Range_Aggressive = 0x00000080
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

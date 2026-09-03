@@ -6,6 +6,7 @@ typedef float Real;
 struct Coord3D;
 class TeamPrototype;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 public:
@@ -22,6 +23,7 @@ public:
 	virtual void recruitSpecificAITeam(TeamPrototype *, Real, const Coord3D *);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 	char m_unreconstructed[0x220];

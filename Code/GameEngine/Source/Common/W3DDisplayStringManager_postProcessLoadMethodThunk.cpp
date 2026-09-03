@@ -11,6 +11,7 @@ typedef unsigned char Bool;
 
 class GameFont;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString
 {
 public:
@@ -23,6 +24,7 @@ public:
 	virtual void setFont(GameFont *font);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayStringManager.h
 class DisplayStringManager
 {
 public:
@@ -41,6 +43,7 @@ public:
 	DisplayString *m_currentCheckpoint;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplayStringManager.h
 class W3DDisplayStringManager : public DisplayStringManager
 {
 public:
@@ -49,6 +52,7 @@ public:
 	DisplayString *m_formationLetterDisplayString;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DrawGroupInfo.h
 class DrawGroupInfo
 {
 public:
@@ -57,6 +61,7 @@ public:
 	Bool m_fontIsBold;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
 class FontLibrary
 {
 public:

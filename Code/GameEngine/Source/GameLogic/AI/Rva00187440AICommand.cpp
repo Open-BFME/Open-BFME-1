@@ -20,6 +20,7 @@ enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
 struct DamageInfo { char m_body[0x5C]; };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 struct AICommandParms
 {
 	AICommandType m_cmd;
@@ -38,6 +39,7 @@ struct AICommandParms
 	AICommandParms(AICommandType, CommandSourceType);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:

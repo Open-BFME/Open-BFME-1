@@ -1,8 +1,10 @@
 // ?addProp@BaseHeightMapRenderObjClass@@QAEXHVCoord3D@@MMABVAsciiString@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?addProp@BaseHeightMapRenderObjClass@@QAEXHUCoord3D@@MMABVAsciiString@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Open-BFME5: clean C++ terrain prop-buffer forwarding body.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 public:
@@ -12,6 +14,7 @@ public:
 };
 class AsciiString;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DPropBuffer.h
 class W3DPropBuffer
 {
 public:
@@ -19,6 +22,7 @@ public:
 		const AsciiString &modelName);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:

@@ -1,10 +1,12 @@
 // cl: /DNDEBUG /MD /EHs-c-
+// readable body of ?createAndFireTempWeapon@WeaponStore@@: Code/GameEngine/Source/GameLogic/Object/Weapon.cpp
 //
 // BFME WeaponStore::createAndFireTempWeapon overloads. allocateNewWeapon and
 // loadAmmoNow are already matched; privateFireWeapon is the nine-arg body at
 // 0x001E9FD0. Named like the Zero Hour store methods: they reload TheWeaponStore
 // rather than using this.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x;
@@ -12,6 +14,7 @@ struct Coord3D
 	float z;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -28,6 +31,7 @@ enum WeaponSlotType
 	PRIMARY_WEAPON = 0
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon
 {
 public:
@@ -44,6 +48,7 @@ public:
 	int m_when; // +0x50
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -52,6 +57,7 @@ public:
 	int m_frame;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore
 {
 public:

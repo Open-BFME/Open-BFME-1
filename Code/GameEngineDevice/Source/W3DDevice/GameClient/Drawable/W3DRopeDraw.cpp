@@ -131,6 +131,7 @@ void W3DRopeDraw::tossSegments()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw_initRopeParms.cpp
 // ?initRopeParms@W3DRopeDraw@@UAEXMMABURGBColor@@MMM@Z present-unmatched
 void W3DRopeDraw::initRopeParms(Real length, Real width, const RGBColor& color, Real wobbleLen, Real wobbleAmp, Real wobbleRate)
 { 

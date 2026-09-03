@@ -2,6 +2,7 @@
 
 typedef int NameKeyType;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData
 {
 	int m_refCount;
@@ -9,7 +10,6 @@ struct AsciiStringData
 	char m_text[1];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 // The inline forwarders over StringBase are what put retail's EH saved-esp
 // store ahead of the in-place ctor `this` (docs/lessons.md, EH transposition).
 template <typename T> class StringBase
@@ -21,6 +21,7 @@ private:
 	AsciiStringData *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -29,6 +30,7 @@ public:
 	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -39,6 +41,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 
 class GameWindow;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
 {
 public:
@@ -102,6 +105,7 @@ public:
 
 extern GameWindowManager *TheWindowManager;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class Transition
 {
 public:
@@ -109,6 +113,7 @@ public:
 	virtual void init(GameWindow *window) = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TransitionWindow
 {
 public:
@@ -126,6 +131,7 @@ private:
 
 class TransitionGroup;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class GameWindowTransitionsHandler
 {
 public:
@@ -140,6 +146,7 @@ private:
 
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
 class TransitionGroup
 {
 public:

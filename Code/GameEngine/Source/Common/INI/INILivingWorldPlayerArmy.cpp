@@ -72,6 +72,7 @@ public:
 	AsciiString m_replenishArmyName;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
@@ -82,6 +83,7 @@ private:
 	Int m_commandPointCost;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
 class ThingFactory
 {
 public:

@@ -306,6 +306,7 @@ ShaderClass ShaderClass::_PresetAlpha2DShader(SC_ALPHA_2D);
 /** Culls the trees, marking the visible flag.  If a tree becomes visible, it sets
 it's sortKey */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071D130_W3DTreeBuffer_Cull.cpp
 // ?cull@W3DTreeBuffer@@IAEXPBVCameraClass@@@Z present-unmatched
 void W3DTreeBuffer::cull(const CameraClass * camera)
 {
@@ -343,6 +344,7 @@ void W3DTreeBuffer::cull(const CameraClass * camera)
 //=============================================================================
 /** Returns the bucket index into m_areaPartition for a given location. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071BFC0_GetPartitionBucket.cpp
 // ?getPartitionBucket@W3DTreeBuffer@@IBEHABUCoord3D@@@Z present-unmatched
 Int W3DTreeBuffer::getPartitionBucket(const Coord3D &pos) const
 {
@@ -364,6 +366,7 @@ Int W3DTreeBuffer::getPartitionBucket(const Coord3D &pos) const
 /** Culls the trees, marking the visible flag.  If a tree becomes visible, it sets
 it's sortKey */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071C0E0_W3DTreeBuffer_UpdateSway.cpp
 // ?updateSway@W3DTreeBuffer@@IAEXABUBreezeInfo@@@Z present-unmatched
 void W3DTreeBuffer::updateSway(const BreezeInfo& info)
 {
@@ -1100,6 +1103,7 @@ void W3DTreeBuffer::updateVertexBuffer(void)
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva007206E0W3DTreeBufferDestructor.cpp
 // ??1W3DTreeBuffer@@QAE@XZ present-unmatched
 W3DTreeBuffer::~W3DTreeBuffer(void)
 {
@@ -1151,6 +1155,7 @@ W3DTreeBuffer::W3DTreeBuffer(void)
 //=============================================================================
 /** Frees the index and vertex buffers. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071C2D0_W3DTreeBuffer_FreeTreeBuffers.cpp
 // ?freeTreeBuffers@W3DTreeBuffer@@QAEXXZ present-unmatched
 void W3DTreeBuffer::freeTreeBuffers(void)
 {
@@ -1255,6 +1260,7 @@ void W3DTreeBuffer::unitMoved(Object *unit)
 //=============================================================================
 /** Allocates the index and vertex buffers. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferBfmeAllocate.cpp
 // ?allocateTreeBuffers@W3DTreeBuffer@@QAEXXZ present-unmatched
 void W3DTreeBuffer::allocateTreeBuffers(void)
 {
@@ -1322,6 +1328,7 @@ void W3DTreeBuffer::clearAllTrees(void)
 //=============================================================================
 /** Removes a tree.  */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRemoveTree.cpp
 // ?removeTree@W3DTreeBuffer@@QAEXW4DrawableID@@@Z present-unmatched
 void W3DTreeBuffer::removeTree(DrawableID id)
 {
@@ -1530,6 +1537,7 @@ Bool W3DTreeBuffer::updateTreePosition(DrawableID id, Coord3D location, Real ang
 //=============================================================================
 /** Push sideways tree or grass. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071CBB0_W3DTreeBuffer_PushAsideTree.cpp
 // ?pushAsideTree@W3DTreeBuffer@@QAEXW4DrawableID@@PBUCoord3D@@1W4ObjectID@@@Z present-unmatched
 void W3DTreeBuffer::pushAsideTree(DrawableID id, const Coord3D *pusherPos, 
 																	const Coord3D *pusherDirection, ObjectID pusherID )

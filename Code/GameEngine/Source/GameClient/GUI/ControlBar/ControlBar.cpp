@@ -658,6 +658,7 @@ void CommandSet::parseCommandButton( INI* ini, void *instance, void *store, cons
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetConstructor.cpp
 // ??0CommandSet@@QAE@ABVAsciiString@@@Z present-unmatched
 CommandSet::CommandSet(const AsciiString& name) : 
 	m_name(name),
@@ -2593,6 +2594,7 @@ void ControlBar::updatePurchaseScience( void )
 //	}
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_showPurchaseScience.cpp
 // ?showPurchaseScience@ControlBar@@QAEXXZ present-unmatched
 void ControlBar::showPurchaseScience( void )
 {
@@ -2647,6 +2649,7 @@ void ControlBar::hidePurchaseScience( void )
 	reinterpret_cast<BfmeGlobal_012f19e8 **>(0x012f19e8)[0]->bfmeCall_000290d2();
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_togglePurchaseScience.cpp
 // ?togglePurchaseScience@ControlBar@@QAEXXZ present-unmatched
 void ControlBar::togglePurchaseScience( void )
 {

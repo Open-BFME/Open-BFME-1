@@ -36,6 +36,7 @@ enum CommandOption
 
 #define BitTest(value, mask) (((value) & (mask)) != 0)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
 {
 private:
@@ -49,6 +50,7 @@ public:
 	WeaponSlotType getWeaponSlot() const { return m_weaponSlot; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable
 {
 private:
@@ -63,6 +65,7 @@ public:
 typedef std::list<Drawable *> DrawableList;
 typedef std::list<Drawable *>::const_iterator DrawableListCIt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
@@ -94,6 +97,7 @@ public:
 #undef BFME_UI_SLOT
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
 class ActionManager
 {
 public:

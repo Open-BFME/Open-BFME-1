@@ -47,6 +47,7 @@
 **	another useful class serves only as a pseudo null-pipe. It will accept data but
 **	just throw it away but pretend that it sent it somewhere.
 */
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/PIPE.H
 class Pipe
 {
 	public:

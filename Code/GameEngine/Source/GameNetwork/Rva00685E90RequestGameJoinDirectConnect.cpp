@@ -35,7 +35,6 @@ struct BfmeUnicodeStringData
 	unsigned short m_pad;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class Rva00685E90UnicodeString
 {
 public:
@@ -48,8 +47,8 @@ private:
 	BfmeUnicodeStringData *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 #pragma pack(push, 1)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 struct LANMessage
 {
 	Int m_type;                              // +0x00
@@ -61,6 +60,7 @@ struct LANMessage
 };
 #pragma pack(pop)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
 {
 public:

@@ -8,6 +8,7 @@ typedef void *HANDLE;
 
 extern "C" __declspec(dllimport) int __stdcall CloseHandle(HANDLE handle);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_io.h
 class DebugIOInterface
 {
 protected:

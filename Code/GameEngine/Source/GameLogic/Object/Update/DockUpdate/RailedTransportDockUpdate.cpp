@@ -86,6 +86,7 @@ RailedTransportDockUpdateModuleData::RailedTransportDockUpdateModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/DockUpdate/RailedTransportDockUpdateConstructor.cpp
 // ??0RailedTransportDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 RailedTransportDockUpdate::RailedTransportDockUpdate( Thing *thing, const ModuleData *moduleData )
 												 : DockUpdate( thing, moduleData )

@@ -1724,6 +1724,7 @@ void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
 //-------------------------------------------------------------------------------------------------
 /** Given a name, return the associated waypoint. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicGetWaypointByName.cpp
 // ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z present-unmatched
 Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
 {
@@ -1750,6 +1751,7 @@ Waypoint *TerrainLogic::getWaypointByID( UnsignedInt id )
 //-------------------------------------------------------------------------------------------------
 /** Return the closest waypoint on the labeled path. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicGetClosestWaypointOnPath.cpp
 // ?getClosestWaypointOnPath@TerrainLogic@@UAEPAVWaypoint@@PBUCoord3D@@VAsciiString@@@Z present-unmatched
 Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiString label )
 {
@@ -1784,6 +1786,7 @@ Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiStrin
 //-------------------------------------------------------------------------------------------------
 /** Return true if the waypoint path containing pWay is labeled with the label. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicIsPurposeOfPath.cpp
 // ?isPurposeOfPath@TerrainLogic@@UAE_NPAVWaypoint@@VAsciiString@@@Z present-unmatched
 Bool TerrainLogic::isPurposeOfPath( Waypoint *pWay, AsciiString label )
 {
@@ -1894,6 +1897,7 @@ PathfindLayerEnum TerrainLogic::getLayerForDestination(const Coord3D *pos)
 //-------------------------------------------------------------------------------------------------
 // this is just like getLayerForDestination, but always return the highest layer that will be <= z at that point
 // (unlike getLayerForDestination, which will return the closest layer)
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicGetHighestLayer.cpp
 // ?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z present-unmatched
 PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *pos, Bool onlyHealthyBridges)
 {
@@ -2180,6 +2184,7 @@ void TerrainLogic::deleteBridges(void)
 //-------------------------------------------------------------------------------------------------
 /** Delete the bridge specified */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicDeleteBridge.cpp
 // ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z present-unmatched
 void TerrainLogic::deleteBridge( Bridge *bridge )
 {
@@ -2321,6 +2326,7 @@ Coord3D TerrainLogic::findFarthestEdgePoint( const Coord3D *farthestFrom ) const
 //-------------------------------------------------------------------------------------------------
 /** See if a location is underwater, and what the water height is. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicIsUnderwater.cpp
 // ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z present-unmatched
 Bool TerrainLogic::isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ )
 {
@@ -2363,6 +2369,7 @@ Bool TerrainLogic::isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ )
 // ------------------------------------------------------------------------------------------------
 /** Get the water table with the highest water Z value at the location */
 // ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_getWaterHandle.cpp
 // ?getWaterHandle@TerrainLogic@@UAEPBVWaterHandle@@MM@Z present-unmatched
 const WaterHandle* TerrainLogic::getWaterHandle( Real x, Real y )
 {

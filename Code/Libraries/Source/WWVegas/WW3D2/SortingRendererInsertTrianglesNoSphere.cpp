@@ -2,6 +2,7 @@
 // SortingRendererClass::Insert_Triangles(start, count, minv, vert)
 // retail 0x009037D0. Forwards a zeroed 12-byte sphere view plus four stack args.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/sphere.h
 class SphereClass
 {
 public:
@@ -16,6 +17,7 @@ public:
 	}
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.h
 class SortingRendererClass
 {
 public:

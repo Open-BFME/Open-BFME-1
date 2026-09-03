@@ -2,6 +2,7 @@
 
 void __cdecl operator delete(void *);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:
@@ -27,6 +28,7 @@ private:
 	char m_pad[0x10];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/htree.h
 class HTreeClass
 {
 public:

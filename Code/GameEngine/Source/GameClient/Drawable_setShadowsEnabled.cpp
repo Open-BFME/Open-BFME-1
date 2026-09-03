@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?setShadowsEnabled@Drawable@@QAEX_N@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Drawable::setShadowsEnabled, retail 0x004140E0, 69 bytes.
 //
 // The matched SlowDeathBehavior caller establishes the identity.  BFME stores

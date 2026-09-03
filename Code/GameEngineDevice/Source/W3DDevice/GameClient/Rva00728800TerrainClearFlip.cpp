@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00728800: clear the flip state for the current terrain tile.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 public:
@@ -17,6 +18,7 @@ union SetFlipStateThunk
 	SetFlipState member;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainBackground.h
 class W3DTerrainBackground
 {
 public:

@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Reset_Sentence_Data@Render2DSentenceClass@@AAEXXZ: Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.cpp
 // Clean BFME layout for Render2DSentenceClass::Reset_Sentence_Data.
 
 class SurfaceClass;
@@ -10,12 +11,14 @@ struct SurfaceOps
 	void (__stdcall *release_ref)(SurfaceClass *surface);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:
 	SurfaceOps *ops;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 struct SentenceDataStruct
 {
 	SurfaceClass *surface;
@@ -51,6 +54,7 @@ private:
 	int growth_step;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
 class Render2DSentenceClass
 {
 public:

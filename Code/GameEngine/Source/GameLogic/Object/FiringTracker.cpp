@@ -53,6 +53,7 @@
 #endif
 
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/FiringTrackerBFMEDtor.cpp
 // ??1FiringTracker@@MAE@XZ present-unmatched
 FiringTracker::~FiringTracker()
 {

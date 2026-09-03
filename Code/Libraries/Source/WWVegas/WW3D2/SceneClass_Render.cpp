@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?Render@SceneClass@@MAEXAAVRenderInfoClass@@@Z: Code/Libraries/Source/WWVegas/WW3D2/scene.cpp
 // BFME SceneClass::Render: ZH body with Set_DX8_ZBias out of line (not
 // Set_DX8_Render_State D3DRS_ZBIAS) and Clear split into color/z/stencil.
 
@@ -15,6 +16,7 @@ class RenderObjClass;
 class ChunkSaveClass;
 class ChunkLoadClass;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass
 {
 public:
@@ -23,6 +25,7 @@ public:
 	int NumRefs;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/shader.h
 class ShaderClass
 {
 public:
@@ -30,6 +33,7 @@ public:
 	static void Invalidate() { ShaderDirty = true; }
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
 public:
@@ -43,6 +47,7 @@ public:
 	static unsigned Convert_Color(const Vector3 &color, float alpha);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D
 {
 public:
@@ -115,6 +120,7 @@ __forceinline void Set_Fog(bool enable, const Vector3 &color, float start, float
 	DX8Wrapper::Set_DX8_Render_State(37, *(unsigned *)(&end));
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/scene.h
 class SceneClass : public RefCountClass
 {
 public:

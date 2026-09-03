@@ -4,6 +4,7 @@
 extern const char g_bfmeEmptyAscii[];
 extern "C" __declspec(dllimport) int __cdecl _stricmp(const char *left, const char *right);
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:

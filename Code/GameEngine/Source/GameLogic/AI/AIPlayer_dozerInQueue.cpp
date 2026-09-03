@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ?dozerInQueue@AIPlayer@@IAE_NXZ: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 //
 // AIPlayer::dozerInQueue — retail 0x00165780 (complete body 76B; dump row
 // listed 69B and cut three bytes into xor al,al). TeamInQueue::includesADozer
@@ -7,6 +8,7 @@
 
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
@@ -14,6 +16,7 @@ public:
 	unsigned int m_kindOf;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class WorkOrder
 {
 public:
@@ -27,6 +30,7 @@ public:
 	unsigned char m_isResourceGatherer;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class TeamInQueue
 {
 public:
@@ -36,6 +40,7 @@ public:
 	WorkOrder *m_workOrders;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer
 {
 protected:

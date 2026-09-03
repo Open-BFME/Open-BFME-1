@@ -1,4 +1,5 @@
 // cl: /O2
+// readable body of ?supplyTruckSubMachineReadyToLeave@WorkerStateMachine@@SA_NPAVState@@PAX@Z: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate.cpp
 // WorkerStateMachine::supplyTruckSubMachineReadyToLeave.  Zero Hour body:
 // not wantsToEnter and isSupplyTruckBrainActiveAndBusy.  Layout matches
 // WorkerStateMachineSupplyPredicate.cpp.
@@ -29,18 +30,21 @@ private:
 	BrainState *m_currentState;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 struct Object
 {
 	char m_beforeAIUpdate[0x204];
 	class WorkerAIUpdate *m_aiUpdate;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 struct StateMachine
 {
 	char m_beforeOwner[0x10];
 	Object *m_owner;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
@@ -48,6 +52,7 @@ public:
 	StateMachine *m_machine;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerAIUpdate
 {
 public:
@@ -66,6 +71,7 @@ Int WorkerAIUpdate::isSupplyTruckBrainActiveAndBusy()
 		&& (m_supplyTruckStateMachine->getCurrentStateID() == ST_BUSY);
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/WorkerAIUpdate.h
 class WorkerStateMachine
 {
 public:

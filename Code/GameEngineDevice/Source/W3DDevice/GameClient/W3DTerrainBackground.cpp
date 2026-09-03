@@ -625,6 +625,7 @@ void W3DTerrainBackground::doTesselatedUpdate(const IRegion2D &partialRange, Wor
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/W3DTerrainBackgroundDtor.cpp
 // ??1W3DTerrainBackground@@QAE@XZ present-unmatched
 W3DTerrainBackground::~W3DTerrainBackground(void)
 {

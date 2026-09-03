@@ -1,6 +1,7 @@
 // ?freeMapResources@BaseHeightMapRenderObjClass@@UAEHXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?freeMapResources@BaseHeightMapRenderObjClass@@UAEHXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Open-BFME5: clean C++ reconstruction of the BFME terrain resource release.
 
 class BaseHeightMapInlineRef
@@ -16,12 +17,14 @@ private:
 	int m_refCount;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
 	void Release_Ref(void);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass
 {
 public:

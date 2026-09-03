@@ -11,6 +11,7 @@ class Drawable;
 class PickAndPlayInfo;
 
 template <int NUM_BITS>
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class BitFlags
 {
 public:
@@ -29,6 +30,7 @@ private:
 
 typedef BitFlags<320> ModelConditionFlags;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
@@ -69,6 +71,7 @@ private:
 
 typedef _STL::list<Drawable *> DrawableList;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage
 {
 public:
@@ -94,6 +97,7 @@ enum ModelCondition
 	MODELCONDITION_CONTINUOUS_FIRE_FAST = 110
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/FiringTracker.h
 class FiringTracker
 {
 private:

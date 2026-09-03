@@ -11,6 +11,7 @@
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase
 {
 public:
@@ -25,6 +26,7 @@ namespace WWMath
 	inline Real Lerp(Real a, Real b, Real t) { return a + (b - a) * t; }
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:

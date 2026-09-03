@@ -1094,6 +1094,7 @@ void Object::setStatus( ObjectStatusMaskType objectStatus, Bool set )
 }
 
 //=============================================================================
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z present-unmatched
 void Object::setScriptStatus( ObjectScriptStatusBit bit, Bool set )
 {
@@ -3773,7 +3774,6 @@ void Object::maskObject( Bool mask )
 /*
  * returns true if the current locomotor is an airborne one
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp
 // Three BFME offsets down one chain. Object::m_ai is at +0x204 where this
 // tree puts it at +0x19c and AIUpdate's current locomotor at +0x1cc against
 // +0x1b8; both are read once and reused, as retail does. The third is inside
