@@ -83569,3 +83569,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BuffNuggetFXNuggetMember@@QAE@XZ,0x00026AB2,12-byte tail destructor ILT used by BuffNuggetFXNugget ctor EH
 ?bfmeG@BfmeList2F260@@QAEXHH@Z,0x0002818C,Open-BFME6 list method tail-called by Gen_0022F260 forwarder; body at 0x000688A5
 ?bfmeSmallRefillPR@@YAPAXI@Z,0x0082C870,STLport __node_alloc<false,0> _S_refill used by bfmeSmallAllocPR at 0x0082E450
+?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
+?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
