@@ -337,6 +337,8 @@ public:
 	static void parseAccelerationReal( INI *ini, void *instance, void *store, const void* userData );
 	// parse angle in degrees and convert to radians
 	static void parseAngleReal( INI *ini, void *instance, void *store, const void *userData );
+	// parse seconds; store milliseconds as UnsignedInt
+	static void parseSecondsToMillis( INI *ini, void *instance, void *store, const void* userData );
 	// note that this parses in degrees/sec, and converts to rads/frame!
 	static void parseAngularVelocityReal( INI *ini, void *instance, void *store, const void *userData );
 	static void parseDamageTypeFlags(INI* ini, void* instance, void* store, const void* userData);
