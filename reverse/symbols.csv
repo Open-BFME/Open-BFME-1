@@ -83538,3 +83538,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_clear@?$vector@UGen_t_003b10a0_p48cd@@V?$allocator@UGen_t_003b10a0_p48cd@@@_STL@@@_STL@@IAEXXZ,0x0003B6D3,Open-BFME5 ILT for vector clear at 0x003B0320
 ??$BfmeElementConstruct@UGen_t_003b1050_p40cd@@@_STL@@YAXPAUGen_t_003b1050_p40cd@@ABU1@@Z,0x000181A6,Open-BFME5 ILT for the element construct called by 0x003B01B0
 ?_M_clear@?$vector@UGen_t_003b1050_p40cd@@V?$allocator@UGen_t_003b1050_p40cd@@@_STL@@@_STL@@IAEXXZ,0x0000A295,Open-BFME5 ILT for vector clear at 0x003B01B0
+??$BfmeElementConstruct@UGen_t_001fa830_p12cd@@@_STL@@YAXPAUGen_t_001fa830_p12cd@@ABU1@@Z,0x00002086,Open-BFME5 target of the element construct call in 0x001FA5B0
+?_M_clear@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0000DC60,Open-BFME5 target of the vector clear call in 0x001FA5B0
