@@ -1,8 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: AudioEventRTS constructors.
-//   (const AsciiString &, ObjectID)          retail 0x000B4350, 188B
+//   (const AsciiString &, ObjectID)              retail 0x000B4350, 188B
 //     named by FlammableUpdateStartBurningSoundThunk.cpp
+//   (const AsciiString &, DrawableID)            retail 0x000B44F0, 188B
 //   (const AsciiString &, const Coord3D *, int)  retail 0x000B2E10, 180B
 //     named by ScriptActions_doPlaySoundEffectAt_Thunk.cpp
 //
@@ -17,6 +18,11 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volati
 enum ObjectID
 {
 	INVALID_ID = 0
+};
+
+enum DrawableID
+{
+	INVALID_DRAWABLE_ID = 0
 };
 
 struct Coord3D
@@ -77,6 +83,7 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
+	AudioEventRTS(const AsciiString &eventName, DrawableID drawableID);
 	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
 	virtual ~AudioEventRTS();
 
@@ -118,6 +125,26 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, ObjectID ownerID)
 
 	// Retail reuses the dead eventName argument slot as the Bool out-param.
 	// The Coord3D local sits at [esp+0x10]; that slot is 0x1C bytes later.
+	Coord3D pos;
+	resolveOwnerPosition(&pos, reinterpret_cast<bool *>(
+		reinterpret_cast<char *>(&pos) + 0x1C));
+}
+
+// ??0AudioEventRTS@@QAE@ABVAsciiString@@W4DrawableID@@@Z
+AudioEventRTS::AudioEventRTS(const AsciiString &eventName, DrawableID drawableID)
+{
+	commonInit();
+
+	m_eventName = eventName;
+	m_eventInfo.clear();
+
+	m_objectID = static_cast<ObjectID>(drawableID);
+	m_timeOfDay = 0;
+	if (drawableID)
+		m_ownerType = 1;
+	else
+		m_objectID = INVALID_ID;
+
 	Coord3D pos;
 	resolveOwnerPosition(&pos, reinterpret_cast<bool *>(
 		reinterpret_cast<char *>(&pos) + 0x1C));
