@@ -4347,6 +4347,7 @@ name,address,notes
 ??1BroadcastStealthUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1BroadcastStealthUpdateModuleDataMemberB@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1BuddyMessage@@QAE@XZ,0x00021445
+??1BuffNuggetFXNuggetMember@@QAE@XZ,0x00026AB2,12-byte tail destructor ILT used by BuffNuggetFXNugget ctor EH
 ??1Buffer@@QAE@XZ,0x0001A401,pinharvest x1 (thunk)
 ??1Buffer@@QAE@XZ,0x00887940,pinharvest x1 (body)
 ??1Buffer@@QAE@XZ,0x009E1E60
@@ -10493,6 +10494,7 @@ name,address,notes
 ?Make_Unique@VertexMaterialClass@@QAEXXZ,0x00920ED0,zh-sweep callee pin derived from retail REL32 displacement
 ?MatPassTaskPool@@3VMatPassTaskPoolClass@@A,0x0134B13C,Open-BFME5 retail material pass task pool
 ?MessageBoxOk@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ@Z,0x0004A340,ILT thunk used by call site
+?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
 ?MultiByteToWideCharSingleLine@@YA?AV?$basic_string@GU?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@PBD@Z,0x00028C7C,incremental-link thunk used by both Buddy message and request callbacks
 ?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,0x008D80C0,rel32 pin for exact-ambiguous landing
 ?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
@@ -10917,9 +10919,11 @@ name,address,notes
 ?Simple_Evaluate_Pivot@HTreeClass@@QBE_NPAVHAnimClass@@HMABVMatrix3D@@PAV3@@Z,0x00953620,rel32 pin for layout-fixed landing
 ?Single_Anim_Progress@Animatable3DObjClass@@IAEXXZ,0x00982870,called by Animatable3DObjClass::Render
 ?Start@ParticleEmitterClass@@QAEXXZ,0x0097F090
+?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
 ?Start_Movie_Capture@WW3D@@SAXPBDM@Z,0x009E7FD0,pinharvest x1 (body)
 ?StaticGameLODNames@@3PAPBDA,0x00EA73E4,GameLODManager::getStaticGameLODIndex direct DIR32; six retail names VeryLow through Custom
 ?Stop@ThreadClass@@QAEXXZ,0x009DB5A0,Watchdog::stop tail call and BFME no-argument wait-and-clear thread body
+?StopStopwatch@@YAKK@Z,0x008793B0,nbench StopStopwatch; retail is Rva008793B0ClockDelta
 ?String@CRC@@SAKPBDK@Z,0x009E7FD0
 ?StructureCollapseRandom@@YAHHHPBDH@Z,0x00001BAE,StructureCollapse begin deterministic random ILT thunk
 ?SyncTime@WW3D@@0IA,0x0133F420,StreakRendererClass retail constructor WW3D synchronization time
@@ -12860,6 +12864,7 @@ name,address,notes
 ?actionB@BfmeObjE10@@QAEXH@Z,0x000122AB,pin
 ?activate@BfmeRva491F0Object@@QAEXXZ,0x0002AE5F,assigned-body helper for Rva002491F0
 ?active@Rva000DF7F0Player@@QBE_NXZ,0x000179BD,Open-BFME5 fresh thiscall bool at ILT of !query 0x000DF7F0
+?add@AIGroup@@QAEXPAVObject@@@Z,0x0002B7E2,Team::getTeamAsAIGroup matched caller; ILT to 0x001526C0
 ?add@BuffManagerRegistry@@QAEXPAVBuffManager@@@Z,0x00033956,BuffManager registry insertion ILT
 ?add@DynamicVectorAddPtrPairShim@@QAE_NABUPtrPairStruct@PointerRemapClass@@@Z,0x000D0AE0,DynamicVectorClass Add PtrPair incremental-link thunk target through a TU-local forwarding shim
 ?add@GenActionSink@@QAEXPAXPBDH1HHHH@Z,0x00015235,S3 action-sink forwarder family callee (address-derived name)
@@ -13106,6 +13111,7 @@ name,address,notes
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
 ?assign@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x0002B297,Open-BFME5 ILT thunk to the body already matched at 0x000A5810; the room-name assignment in ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z at 0x0064C9E0 reaches it through this thunk
 ?assign@AsciiStringTarget@@QAEXABVAsciiString@@@Z,0x0003EC57,ILT thunk to AsciiString assignment body 0x005217A0
+?assign@BuffNuggetFXNuggetMember@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by BuffNuggetFXNugget ctor
 ?assign@DefaultModuleTemplate0AssignShim@FXParticleSystem@@QAEXPBX@Z,0x000111C6,DefaultModuleTemplate<0> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate1AssignShim@FXParticleSystem@@QAEXPBX@Z,0x0001EC36,DefaultModuleTemplate<1> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate2AssignShim@FXParticleSystem@@QAEXPBX@Z,0x00002A09,DefaultModuleTemplate<2> assignment thunk used through a TU-local layout shim
@@ -72980,6 +72986,7 @@ name,address,notes
 ?bfmeAdjustHeap00531C50@@YAXPAUS4SortElem12@@HHU1@PAX@Z,0x0003EDA1,address-derived adjust-heap callee of gen00531C50; target read from the REL32 at its call site
 ?bfmeAdjustHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z,0x009CD1E0,address-derived adjust-heap callee of bfmePopHeapVOU; target read from the REL32 at its call site
 ?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
+?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAlloc1036@@YAPAXH@Z,0x00881F30,pin
@@ -73074,6 +73081,7 @@ name,address,notes
 ?bfmeApply@Gen_0052F050Owner@@QAEXPAX@Z,0x0002B210,Open-BFME5 ILT the __stdcall wrapper at 0x0052F050 calls through
 ?bfmeApply@Gen_00574F40Owner@@QAEXPAX@Z,0x00013471,Open-BFME5 ILT the __stdcall wrapper at 0x00574F40 calls through
 ?bfmeApply@Gen_006C89F0Target@@QAE_NPAX0_N@Z,0x000486EE,Open-BFME5 ILT the guarded delegate at 0x006C89F0 appends a false and calls through
+?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
 ?bfmeApplyAHB@BfmeThingAHB@@QAEXH@Z,0x000306F2,pin
 ?bfmeApplyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Open-BFME5 ILT to body 0x0076A570; named modifier apply with duration called by Object wrapper 0x001C1DA0
 ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z,0x0002272D,Open-BFME5 ILT thunk to body 0x001E1CA0; ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z at 0x001E2840 calls it twice on the set from TheWritableGlobalData +0xB94 and on the one at +0x4A8 of the template at this+4; address-derived name
@@ -73291,6 +73299,7 @@ name,address,notes
 ?bfmeCall2440@Team@@QAEXPAX0@Z,0x00045B60,ILT thunk to body 0x000F75B0
 ?bfmeCall3426b@BfmeGlobal_012f1024@@QAEXPAX00@Z,0x0003426B,call-site callee of Glo012F1024Item::j_00010bcc; global 0x012F1024 thiscall with three stack args; ILT 0x0003426B -> 0x003B2D60
 ?bfmeCall40F39@BfmeGlobal_012f1024@@QAEXPAX00E@Z,0x00040F39,call-site callee candidate for Glo012F1024Item::j_0002d3e4; the global at 0x012F1024 is loaded into thiscall ecx and the four stack arguments match the 0x003B4510 body
+?bfmeCall4D0@BfmeCall4D0@@QAEXXZ,0x0002AE5F,Open-BFME6 no-arg call for the 0x0022F4D0 dispatch; body at 0x001CA2E0
 ?bfmeCall71BA0@BfmeHelper71BA0@@QAEHXZ,0x00980890,Open-BFME5 address-derived guarded helper tail-call from the 0x00971BA0 body
 ?bfmeCall916D@BfmeTail916D@@QAEXPAX@Z,0x0001192D,pin
 ?bfmeCall922F@BfmeTail922F@@QAEXPAXH@Z,0x0002B4F9,pin
@@ -73460,6 +73469,7 @@ name,address,notes
 ?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
 ?bfmeCheck1170@BfmeM1170@@QAEDXZ,0x00023FA6,pin
 ?bfmeCheck1181@BfmeP1181@@QAEHPAUBfmePair1181@@0PAX0@Z,0x00013DC2,pin
+?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
@@ -73491,6 +73501,7 @@ name,address,notes
 ?bfmeClear1003@BfmeB1003@@QAEXXZ,0x0000A754,pin
 ?bfmeClear1024@BfmeList1024@@QAEXXZ,0x00015640,pin
 ?bfmeClear1035@BfmeSubB1035@@QAEXXZ,0x0089C880,pin
+?bfmeClear4D0@BfmeClear4D0@@QAE_NH@Z,0x0003C06A,Open-BFME6 disable-clear for the 0x0022F4D0 dispatch; body at 0x001C8440
 ?bfmeClear7@@YAX_N00ABUVector3@@MMI@Z,0x00904250,BFME DX8Wrapper::Clear 7-arg form called from 0x007D4A80
 ?bfmeClear927A@BfmeSub927A@@QAEXXZ,0x0004278A,pin
 ?bfmeClear987@BfmeDrop987@@QAEXHH@Z,0x00014506,pin
@@ -73694,12 +73705,14 @@ name,address,notes
 ?bfmeDo1235@BfmeN1235@@QAEXPAX0@Z,0x008AE180,pin
 ?bfmeDo1275@BfmeA1275@@QAEXHHPAVBfmeQ1275@@HH@Z,0x00023448,pin
 ?bfmeDo1276@BfmeA1276@@QAEXHHPAVBfmeQ1276@@HH@Z,0x00002400,pin
+?bfmeDo300@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?bfmeDo912C@BfmeThing912C@@QAEXPAUBfmeNode912C@@@Z,0x009F4D80,pin
 ?bfmeDo916C@BfmeSub916C@@QAEXPAX@Z,0x008F7B50,pin
 ?bfmeDo977B@BfmeMgr977@@QAEXHPAX@Z,0x0003BCCD,pin
 ?bfmeDo979A@BfmeActA979@@QAEXH@Z,0x00009494,pin
 ?bfmeDo985@BfmeHub985@@QAEXXZ,0x000290D2,pin
 ?bfmeDo@BfmeK1101@@QAEXPAX0H@Z,0x000445FD,call-site callee of Gen_00219800::bfmeDispatch; ILT 0x000445FD -> iterateContained@TunnelTracker 0x000F8B10
+?bfmeDo@BfmeList300@@QAEXPAX@Z,0x000304E0,Open-BFME6 list dispatch for the 0x0022F300 go; body past thunk 0x000304E0
 ?bfmeDoAXA@@YAXPAUBfmeBoxAXA@@PAX111@Z,0x0093B340,pin
 ?bfmeDoBCC@@YAXPAX@Z,0x0004B2BD,pin
 ?bfmeDoBDA@@YGXPAUBfmeSubBDA@@PAX@Z,0x0002CEEE,pin
@@ -73958,6 +73971,7 @@ name,address,notes
 ?bfmeFillURC@BfmeSrcURC@@QAEDPAXPAD0@Z,0x007E8A80,pin
 ?bfmeFillV14@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x00830030
 ?bfmeFillV16@@YAPADPADID@Z,0x0082ADE0,Open-BFME5 char_traits assign fill for 0x0082FB10
+?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
@@ -74402,6 +74416,7 @@ name,address,notes
 ?bfmeFwdTwoSUA@BfmeThingSUA@@QAEXHD@Z,0x0082FB10,pin
 ?bfmeFwdTwoSVA@BfmeThingSVA@@QAEXHH@Z,0x008309C0,pin
 ?bfmeG1076@BfmeQ1076@@QAEXH@Z,0x0003936A,pin
+?bfmeG@BfmeList2F260@@QAEXHH@Z,0x0002818C,Open-BFME6 list method tail-called by Gen_0022F260 forwarder; body at 0x000688A5
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00018C1E,address-derived helper; target read from the guarded eight-index loop REL32 at 0x00529237
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
@@ -74496,6 +74511,7 @@ name,address,notes
 ?bfmeGet_002198b0@BfmeChainResult@@QAEPAXXZ,0x00036165,Open-BFME5 ILT the lookup at 0x002198B0 tail-jumps through
 ?bfmeGet_002198d0@BfmeChainResult@@QAEPAXXZ,0x000456E2,Open-BFME5 ILT the lookup at 0x002198D0 tail-jumps through
 ?bfmeGlobalCGD@@YAXXZ,0x009A3AD0,pin
+?bfmeGo1057A@BfmeA1057@@QAEXH@Z,0x00046A1F,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00046A1F -> bfmeGo1057A 0x00410D80
 ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z,0x009A76A0,8x8 block helper called from bfmeGo7820
 ?bfmeGo7760@@YAXPAHPAXHHHH1@Z,0x009A7760,8x8 block helper called from bfmeGo7820
 ?bfmeGo9F@BfmeObj9F@@QAEXIE@Z,0x0003C3A8,ILT of BfmeObj9F::bfmeGo9F from the +0xE4 pointer-vector foreach
@@ -74654,6 +74670,7 @@ name,address,notes
 ?bfmeInit1078@BfmeQ1078@@QAEXXZ,0x0001D9CB,pin
 ?bfmeInit1098@BfmeCtx1098@@QAEXHH@Z,0x00021F21,pin
 ?bfmeInit1177@BfmeBuf1177@@QAEXPADH@Z,0x00850920,pin
+?bfmeInit4D0@Gen_0022F4D0@@QAEXPAX@Z,0x00032E61,Open-BFME6 init call for the 0x0022F4D0 dispatch; body at 0x00227DC0
 ?bfmeInit929C@@YAXPAD@Z,0x009F7244,pin
 ?bfmeInit929G@BfmeThing929G@@QAEXXZ,0x0089E700,pin
 ?bfmeInit936G@BfmeThing936G@@QAEXXZ,0x00843990,pin
@@ -74780,6 +74797,7 @@ name,address,notes
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
+?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
 ?bfmeLockVJR@@YAXXZ,0x00903090,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
@@ -75141,6 +75159,7 @@ name,address,notes
 ?bfmeQueryKE@@YGIPAXH@Z,0x009F8890,pin
 ?bfmeQuerySG@BfmeSrcSG@@QAEHXZ,0x00039324,pin
 ?bfmeRandom2B7@@YANHMPBDH@Z,0x0002CCA5,pin
+?bfmeRandomPositive@@YAKK@Z,0x00879140,nbench abs_randwc remap; same body as ?bfmeRandomPositive@@YAHH@Z (u32 is unsigned long)
 ?bfmeRangeBase@WeaponTemplate@@ABEMPBVObject@@ABVWeaponBonus@@M@Z,0x00009598,Open-BFME5 ILT thunk to body 0x001E2670; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 gets its unbonused range from it with the negated z of the position; address-derived name
 ?bfmeRangeErrorQX@BfmeThingQX@@QAEXXZ,0x000132CD,pin
 ?bfmeRankPointsFromStats@@YAHPAVGen_uw_00025c1b@@H@Z,0x00022976,ILT to 0x004DA980 rank-points helper
@@ -75461,6 +75480,7 @@ name,address,notes
 ?bfmeSetVSI@BfmeStrVSI@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSJ@BfmeStrVSJ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSK@BfmeStrVSK@@QAEXPBDH@Z,0x00887D20,pin
+?bfmeSetVoid4D0@BfmeSet4D0@@QAEXXZ,0x00008337,Open-BFME6 void set for the 0x0022F4D0 dispatch; body at 0x00411DD0
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -75485,6 +75505,7 @@ name,address,notes
 ?bfmeSmallFreePZ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeQJ@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeSmallFreeVLX@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeSmallRefillPR@@YAPAXI@Z,0x0082C870,STLport __node_alloc<false,0> _S_refill used by bfmeSmallAllocPR at 0x0082E450
 ?bfmeSmallVLV@@YAPAXI@Z,0x0082E540,pin
 ?bfmeSmallVLW@@YAPAXI@Z,0x0082E450,pin
 ?bfmeSortAVJX@@YAXPAUBfmeElemVJX@@0UBfmeCmpVJX@@@Z,0x009F3FD0,pin
@@ -75974,6 +75995,8 @@ name,address,notes
 ?bind@BFX_Member@@QAEHPAVMemoryPool@@@Z,0x0002AE23,Open-BFME5 pin
 ?bind@TextureHolder@@QAEXABVBFMEWaterTrackTextureHandle@@@Z,0x0003652A,texture-handle bind/assign thiscall from ScreenZoomFilter::init
 ?bind@UDPBindShim@@QAEHIG@Z,0x00684900,UDP Bind incremental-link thunk target through a TU-local forwarding shim
+?bindShown@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0046DA70,WindowManager helper that showAptScreen forwards the named holder to after the vector push_back
+?bindShownWithArg@WindowManager@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x0046DBC0,WindowManager helper that showAptScreenWithArg forwards the named holder and void arg to after the vector push_back
 ?bkt_num_key@AudioEventHashtableBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z,0x000B8670,incremental-link thunk target through a TU-local forwarding shim
 ?bkt_num_key@AudioEventInfoBktNumKeyShim@_STL@@QBEIABVAsciiString@@I@Z,0x000B8670,incremental-link thunk target through a TU-local forwarding shim
 ?blendTileData@BFMERetailWorldHeightMap@@QAEXPAUTBlendTileInfo@@H@Z,0x000167F7,retail WorldHeightMap::blendTileData ILT thunk
@@ -76535,6 +76558,7 @@ name,address,notes
 ?create_node@AnimateWindowListCreateNodeShim@_STL@@QAEPAU?$_List_node@PAVAnimateWindow@@@2@ABQAVAnimateWindow@@@Z,0x0045DAE0,incremental-link thunk target through a TU-local forwarding shim
 ?currentCommandPoints@LivingWorldPlayerArmy@@QBEHXZ,0x00033AC8,LivingWorldPlayerArmy loadPostProcess retail call at 0x00365833 uses the ILT thunk to the 0x003619C0 command-point calculation body
 ?d_00794790@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794790,caller-proven BFME special push-button image path
+?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
 ?d_00881770@@YAXHHHUSomeStruct@@@Z,0x00881770,pin
 ?d_008859d0@Rva00886A20Class@@QAEXPBDPAD@Z,0x008859D0,pin
 ?deallocate@?$__node_alloc@$00$0A@@_STL@@SAXPAXI@Z,0x0001D35E,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 frees the old block through
@@ -77025,6 +77049,7 @@ name,address,notes
 ?findCommandButton@ControlBar@@AAEPBVCommandButton@@ABVAsciiString@@@Z,0x0003B59D,incremental-link thunk read out of the call displacement in populateOCLTimer
 ?findCommandButton@ControlBar@@QAEPBVCommandButton@@ABVAsciiString@@@Z,0x0003B59D,doTeamUseCommandButtonOnNamed BFME ControlBar ILT
 ?findCommandSet@ControlBar@@QAEPBVCommandSet@@ABVAsciiString@@@Z,0x00048CCA,ControlBar::findCommandSet via ILT thunk
+?findConditionIndex@GarrisonContain@@IAEHXZ,0x00043405,call-site callee of GarrisonContain::calcBestGarrisonPosition; ILT 0x00043405
 ?findControlBarOverride@GameLogic@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509
 ?findControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z,0x0000442B,Open-BFME5 ILT thunk to 0x004AD740; REL32 target of setControlBarScheme at 0x004AD8B5
 ?findControlBarScheme@ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate@@QAEPAVControlBarScheme@@VControlBarSchemeAsciiString@@@Z,0x0000442B,TU-local view forwards through the existing ControlBarSchemeManager::findControlBarScheme ILT at 0x0000442B for the 0x004ADE40 clean C++ body
@@ -77062,6 +77087,7 @@ name,address,notes
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0009A510,Open-BFME5 the lookup StateMachine::getGoalObject forwards to; reloc_names carries the same address
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
 ?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@VAsciiString@@@Z,0x0000D3FA,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk); BFME takes the name by value
+?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
 ?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,WindowManager bfme_setAptText at 0x0046CBF0 passes this+0x44 and the AsciiString key; helper returns the listener plus UnicodeString record
 ?findOrInsert@ControlBarOverrideMapABI@@QAEAAPBVCommandButton@@ABVAsciiString@@@Z,0x00008170,Open-BFME5 control-bar override hash-map subscript ILT
 ?findOwnerByID@LivingWorldOwnerLookup@@QAEPAXH@Z,0x00020379,AudioEventRTS isDead owner-type 5 branch calls this lookup through the matched ILT
@@ -78797,6 +78823,7 @@ name,address,notes
 ?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,0x00025A7C
 ?getMap@GameInfo@@QBE?AVAsciiString@@XZ,0x0002F28E
 ?getMap@GameInfo@@QBE?AVAsciiString@@XZ,0x00098E70,returns a copy of the AsciiString at this+0x3c = m_mapName (lower-cased and looked up in TheMapCache by 0x006233E0; formatted as map=%s by generateLadderGameResultsPacket at 0x006392DA via ILT 0x0002F28E; written as the Map key by SkirmishBattleHonors::write 0x0009EB2D); ICF-shared 32 B copy getter so the name follows the GameInfo callers; ledger row is the TerrainRoads dup placeholder
+?getMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000079F5,ILT thunk to MapCache::getMapDir; called from getUserMapDir and writeCacheINI
 ?getMapTo@GameInfoMapShim@@QBEPAVAsciiString@@PAV2@@Z,0x0002F28E,ILT thunk for GameInfo getMap hidden return
 ?getMaxDisconnectFrame@DisconnectManager@@IAEIXZ,0x0002CDCC,ILT thunk; real body 0xA6B620
 ?getMaxHeightAbovePosition@GeometryInfo@@QBEMXZ,0x0087E000,Open-BFME5 called by ?getFiringLineOfSightOrigin@Weapon@@IBEXPBVObject@@AAUCoord3D@@@Z at 0x001E1A30
@@ -83589,3 +83616,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeTokA450@@3QBDB,0x00EA6918,token pointer for Rva0022A450 runtime FieldParse
 ?bfmeParseA450@@YAXXZ,0x00CACBE0,parse proc for Rva0022A450 runtime FieldParse
 ?g_bfmeUserA450@@3QBDB,0x00852E00,userData pointer for Rva0022A450 runtime FieldParse
+?b_00451460@@YAXXZ,0x00451460,ILT target of j_000139e9; MapCache::getUserMapDir body
