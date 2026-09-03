@@ -1,6 +1,5 @@
-// ?d_0027b3a0@@YAXXZ
-// partial score=0.99 date=2026-09-03
 // ?doPathfind@AIUpdateInterface@@ present-unmatched
+// partial score=0.90 date=2026-09-03
 #define g_012F0239 BFME_PATH_DEBUG_FLAG
 #define g_012ED4FC BFME_PATH_DEBUG_CONTEXT
 #define TheGameLogic BFME_PATH_GAME_LOGIC

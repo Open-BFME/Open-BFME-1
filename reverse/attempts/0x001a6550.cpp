@@ -2,6 +2,8 @@
 // partial score=0.72 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 
+#include <algorithm>
+
 // Open-BFME: TerrainLogic 48-byte record release at 0x001A6550.  Subtracts
 // min(amount, field28) from the occupancy word and resets the slot when it
 // hits zero, notifying TheTerrainVisual vtable +0xAC.
@@ -89,27 +91,24 @@ private:
 
 int TerrainLogicP48Release::release(TerrainLogicP48Rec *record, int amount)
 {
-	TerrainLogicP48Rec *slot = record;
-	int current = slot->field28;
+    int current = record->field28;
 	TerrainLogicP48Release *self = this;
-	int amt = amount;
-	int *picked = amt < current ? &amount : &current;
-	int take = *picked;
-	int remain = slot->field28 - take;
-	slot->field28 = remain;
+    int take = std::min(amount, current);
+	int remain = record->field28 - take;
+	record->field28 = remain;
 	if (remain <= 0)
 	{
-		(*(TerrainVisualAc **)0x012F7014)->notifyKey(slot->key);
-		slot->m0 = 0;
-		slot->m4 = 0;
-		slot->m8 = 0;
-		slot->key = 0;
-		slot->m10 = 0;
-		slot->m14 = 0;
-		slot->m18 = 0;
-		slot->field28 = 1;
-		slot->m2c = 1;
-		slot->m2d = 1;
+		(*(TerrainVisualAc **)0x012F7014)->notifyKey(record->key);
+		record->m0 = 0;
+		record->m4 = 0;
+		record->m8 = 0;
+		record->key = 0;
+		record->m10 = 0;
+		record->m14 = 0;
+		record->m18 = 0;
+		record->field28 = 1;
+		record->m2c = 1;
+		record->m2d = 1;
 		self->m_frameStamp = (*(GameLogicFrame **)0x012F0898)->frame;
 	}
 	return take;

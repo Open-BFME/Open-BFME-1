@@ -643,39 +643,83 @@ StateReturnType AITNGuardReturnState::onEnter( void )
 
 //--------------------------------------------------------------------------------------
 // ?update@AITNGuardReturnState@@ present-unmatched
+struct BfmeReturnMachineView
+{
+	char pad0[0x10];
+	void *owner;
+	char pad14[0x3c];
+	void *goal;
+};
+
+struct BfmeReturnStateView
+{
+	char pad0[0x1c];
+	BfmeReturnMachineView *machine;
+};
+
+struct BfmeReturnOwnerView
+{
+	char pad0[0x23c];
+	void *assist;
+};
+
+struct BfmeReturnAIView
+{
+	char pad0[0x22c];
+	void *target;
+};
+
+struct BfmeReturnTargetView
+{
+	char pad0[0x74];
+	void *value;
+};
+
+struct BfmeReturnOwnerLookup
+{
+	BfmeReturnAIView *lookup();
+};
+
+struct BfmeReturnTargetCheck
+{
+	void *check();
+};
+
+struct BfmeReturnBaseUpdate
+{
+	int update();
+};
+
 StateReturnType AITNGuardReturnState::update( void )
 {
-	Player *ownerPlayer = getMachineOwner()->getControllingPlayer();
-	if (getMachineOwner()->getTeam()) {
-		Object *teamVictim = getMachineOwner()->getTeam()->getTeamTargetObject();
-		if (teamVictim)	{	
-			getGuardMachine()->setNemesisID(teamVictim->getID());
-			return STATE_FAILURE; // Fail to return goes to inner attack state.	
+	// BFME's AI state layout is narrower than the maintained Zero Hour view.
+	BfmeReturnStateView *state = (BfmeReturnStateView *)this;
+	BfmeReturnAIView *ai = ((BfmeReturnOwnerLookup *)state->machine->owner)->lookup();
+	BfmeReturnOwnerView *owner = (BfmeReturnOwnerView *)state->machine->owner;
+	BfmeReturnTargetCheck *guardTarget = (BfmeReturnTargetCheck *)owner->assist;
+	if (guardTarget)
+	{
+		BfmeReturnTargetView *victim = (BfmeReturnTargetView *)guardTarget->check();
+		if (victim)
+		{
+			state->machine->goal = victim->value;
+			return STATE_FAILURE;
 		}
 	}
-	// Check tunnel for target.
-	TunnelTracker *tunnels = NULL;
-	if (ownerPlayer) {
-		tunnels = ownerPlayer->getTunnelSystem();
-	}
-
-	if (tunnels) {
-		Object *nemesis = tunnels->getCurNemesis();
-		if (nemesis) {
-			// Check distance.  
-			//Coord3D dist;
-			//Coord3D curPos;
-			//dist.set()
-			getGuardMachine()->setNemesisID(nemesis->getID());
-			return STATE_FAILURE; // Fail to return goes to inner attack state.	
+	if (ai)
+	{
+		BfmeReturnTargetCheck *target = (BfmeReturnTargetCheck *)ai->target;
+		if (target)
+		{
+			BfmeReturnTargetView *victim = (BfmeReturnTargetView *)target->check();
+			if (victim)
+			{
+				state->machine->goal = victim->value;
+				return STATE_FAILURE;
+			}
 		}
 	}
-
-	// Just let the return movement finish.
-	StateReturnType ret = AIEnterState::update();
-	if (ret==STATE_CONTINUE) return STATE_CONTINUE;
-	return STATE_SUCCESS;
-	
+	return (StateReturnType)(-((BfmeReturnBaseUpdate *)this)->update());
 }
 
 //--------------------------------------------------------------------------------------

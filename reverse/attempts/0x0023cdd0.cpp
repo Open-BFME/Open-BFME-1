@@ -1,4 +1,6 @@
 // ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
+// partial score=0.92 date=2026-09-03
+// ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
 // partial score=0.92 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // stlport

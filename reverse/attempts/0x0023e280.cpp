@@ -1,3 +1,5 @@
+// ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z
+// partial score=0.97 date=2026-09-03
 // ?parseBannerCarrierPosition@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.97 date=2026-09-03
 // ?parseHordeContainUnitTypePos@@YAXPAVINI@@PAX1PBX@Z

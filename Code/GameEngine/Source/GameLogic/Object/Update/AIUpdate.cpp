@@ -1090,9 +1090,9 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 			pos2 = *repulsor->getPosition();
 		}
 		Object *object = retail->m_object;
+		const TAiData *aiData = BFME_PATH_AI->getAiData();
 		Int extraDistance = (Int)*reinterpret_cast<const volatile Real *>(
 			reinterpret_cast<const char *>(object) + 0x18C);
-		const TAiData *aiData = BFME_PATH_AI->getAiData();
 		retail->m_path = pathfinder->findSafePath(object,
 			*reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>( this ) + 0x1A8),
 			object->getPosition(),
@@ -1318,7 +1318,6 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 	reinterpret_cast<Rva003D5620DwordSlot *>(BFME_PATH_AI->pathfinder())->set(0);
 }
 #undef TheAI
-#undef TheGameLogic
 #undef TheGameLogic
 
 /* Requests a path to be found.  Note that if it is possible to do it without having to use the 

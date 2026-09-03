@@ -28,10 +28,15 @@ private:
 
 Rva006CEE30PointerSet &Rva006CEE30PointerSet::insert(void *name)
 {
-	if (name && m_values.insert(
-		static_cast<Rva006CEE30Key>(bfmeGoEMEb(name))).second)
+	if (!name)
+		goto done;
 	{
+		_STL::pair<Rva006CEE30Set::iterator, bool> result =
+			m_values.insert(static_cast<Rva006CEE30Key>(bfmeGoEMEb(name)));
+		if (!result.second)
+			goto done;
 		m_changed = true;
 	}
+	done:
 	return *this;
 }

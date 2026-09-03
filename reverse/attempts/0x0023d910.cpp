@@ -1,5 +1,7 @@
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.9 date=2026-09-03
+// ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
+// partial score=0.9 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 // Open-BFME5: HordeContain member formation-pose transition, retail 0x0023D910.
@@ -95,9 +97,11 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 		poseBit = 0x00100000;
 	}
 
-	if ( ( poseBit & member->m_bfmeModelConditionFlags ) == 0 )
+	register UnsignedInt flags = member->m_bfmeModelConditionFlags;
+	if ( ( poseBit & flags ) == 0 )
 	{
-		member->m_bfmeModelConditionFlags |= poseBit;
+		flags |= poseBit;
+		member->m_bfmeModelConditionFlags = flags;
 		member->notifyModelConditionChanged();
 	}
 }

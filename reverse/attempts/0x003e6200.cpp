@@ -1,5 +1,5 @@
 // ??0Rva003E6200Info@@QAE@PAVPathfinder@@PAVObject@@PAXPBUCoord3D@@H@Z
-// partial score=0.87 date=2026-09-02
+// partial score=0.95 date=2026-09-03
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003E6200: five-argument pathfinding query payload constructor.
@@ -53,29 +53,33 @@ public:
 	Rva003E6200Info(Pathfinder *pathfinder, Object *obj, void *arg3,
 		const Coord3D *pos, Int arg5);
 
-	Pathfinder * m_pathfinder;
+	Pathfinder * volatile m_pathfinder;
 	Object * volatile m_obj;
 	void * volatile m_arg3;
 	Bool m_notComputer;
 	Bool m_center;
 	Int m_radius;
 	PathfindLayerEnum m_layer;
-	Int m_arg5;
+	Int volatile m_arg5;
 	Int m_pad1C;
 	Int m_pad20;
-	Int m_zero24;
-	Coord3D m_pos;
+	Int volatile m_zero24;
+	volatile Coord3D m_pos;
 };
 
 Rva003E6200Info::Rva003E6200Info(Pathfinder *pathfinder, Object *obj, void *arg3,
 	const Coord3D *pos, Int arg5)
 {
-	m_pathfinder = pathfinder;
-	m_obj = obj;
-	m_arg3 = arg3;
-	m_arg5 = arg5;
+	register Pathfinder *p = pathfinder;
+	register Int n = arg5;
+	register Object *object = obj;
+	register void *extra = arg3;
+	m_obj = object;
+	m_arg3 = extra;
+	m_pathfinder = p;
+	m_arg5 = n;
 	m_zero24 = 0;
-	Object *o = obj;
+	Object *o = object;
 	const Coord3D *c = pos;
 
 	m_pos.x = pos->x;

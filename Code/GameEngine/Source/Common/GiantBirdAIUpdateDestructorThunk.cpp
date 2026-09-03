@@ -47,6 +47,9 @@ struct GiantBirdMemberARecord
     unsigned char m_bytes[12];
 };
 
+template class _STL::vector<GiantBirdMemberARecord>;
+typedef _STL::vector<GiantBirdMemberARecord> GiantBirdRecordVector;
+
 class GiantBirdMemberA
 {
 public:
@@ -56,10 +59,9 @@ private:
     unsigned char m_padding[0x1c];
     AsciiString m_name;
     AsciiString m_description;
-    _STL::vector<GiantBirdMemberARecord> m_records;
+    GiantBirdRecordVector m_records;
 };
 
-template class _STL::vector<GiantBirdMemberARecord>;
 class GiantBirdMemberB { public: ~GiantBirdMemberB(); };
 class GiantBirdNestedTail { public: ~GiantBirdNestedTail(); };
 
@@ -95,8 +97,6 @@ private:
 
 GiantBirdMemberA::~GiantBirdMemberA()
 {
-	GiantBirdMemberA *self = this;
-	(void)self;
 }
 
 GiantBirdAIUpdate::~GiantBirdAIUpdate()

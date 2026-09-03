@@ -1,4 +1,6 @@
 // ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
+// partial score=0.55 date=2026-09-03
+// ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
 // partial score=0.55 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: the horde-container readiness poll over its id set, retail

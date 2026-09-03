@@ -35,8 +35,7 @@ public:
 			++other.m_p->m_refs;
 		if (m_p)
 			m_p->Release_Ref();
-		TextureBaseClass *p = other.m_p;
-		m_p = p;
+		m_p = other.m_p;
 		return *this;
 	}
 
