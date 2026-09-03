@@ -83533,3 +83533,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_clear@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEXXZ,0x0000B4F6,Open-BFME5 ILT for vector clear at 0x003AC000
 ?BfmeRva003AC170Copy@_STL@@YAPAURva003AC170Element@@PAU2@00ABU__false_type@1@@Z,0x00048847,Open-BFME5 ILT for the trailing uninitialized copy at 0x003AC000
 ?_M_clear@?$vector@URva000FB210Element@@V?$allocator@URva000FB210Element@@@_STL@@@_STL@@IAEXXZ,0x000290A5,Open-BFME5 ILT for vector clear at 0x000FB080
+?_M_clear@?$vector@URva00366890Element@@V?$allocator@URva00366890Element@@@_STL@@@_STL@@IAEXXZ,0x0003ABED,Open-BFME5 ILT for vector clear at 0x003665C0
