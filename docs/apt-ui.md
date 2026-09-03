@@ -16,6 +16,46 @@ Generals-era 2D that 2.22 never flushes. Four hook points, all firing, all
 silent, with a provably correct call — because the primitive itself is
 vestigial.
 
+## The Generals 2D path is dead in 2.22, and that is now settled
+
+Five hook points, in a live replay, on a display whose input works, all firing,
+none drawing:
+
+| hook | RVA | fired | drew |
+|---|---|---|---|
+| `InGameUI::postDraw` entry | `0x004469F0` | 3,600 | nothing |
+| `W3DDisplay::draw` entry | `0x006F3FC0` | 3,600 | nothing |
+| `GameWindowManager` repaint | `0x006C4A50` | **0** | never called in-game |
+| `InGameUI::postDraw` **tail** | `0x004476E2` | 3,600 | nothing |
+| `W3DDisplay::draw`, late | `0x006F40DC` | 0 | branch not taken |
+
+Both primitives were tried: `drawFillRect`, and a full `DisplayString` built the
+way the engine builds its own — manager, font from `TheGlobalLanguageData`, text,
+colour, `draw(x, y)`. Neither reaches the screen. Through the same vtable
+pointer, `getWidth`/`getHeight` return the real resolution, so the calls land.
+
+The third row is the tell: **the window manager's repaint is never called
+during a game.** There are no GameWindows in-game to repaint, because the HUD is
+`AptPalantir`. Together with the menus, the score screen and the spell store,
+that accounts for the whole interface.
+
+So an in-game panel that belongs to BFME has to be APT. There is no second
+route: the one this project kept reaching for has been vestigial since 2.22.
+That is the same conclusion the spellbook question arrives at from the other
+direction, and it means one piece of work — the reserialiser — unlocks both.
+
+## Testing without a mouse
+
+The rig cannot click. `RecorderClass::playbackFile` at RVA `0x0009B150` takes an
+AsciiString **filename** (not a path -- it hands it to the opener at
+`0x00099490`, one of the four callers of `getReplayDir`) and starts the replay
+outright. It is the whole of `ReplayMenuSystem`'s Load branch, and
+`TheRecorder` is at VA `0x012ED62C`.
+
+047-uiprobe binds it to F9. One keypress goes from the main menu to a running
+replay with no menus and no pointer, which is what made the table above
+possible. `AptMainMenu::Options`' own handler is on F5 the same way.
+
 ## The spike: change a label, repack, load it
 
 Done, and it worked on the first attempt. Two same-length edits inside

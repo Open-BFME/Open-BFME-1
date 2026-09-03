@@ -421,8 +421,9 @@ def build_drawprobe(pe, feature_dir, probe=False):
     return build_feature(pe, feature_dir / "src/drawprobe.cpp", "drawprobe_a", (
         (0x004469F0, "drawprobe_a", ("ecx",)),   # InGameUI::postDraw entry
         (0x006F3FC0, "drawprobe_b", ("ecx",)),   # W3DDisplay::draw entry
-        (0x006C4A50, "drawprobe_c", ("ecx",)),   # GameWindowManager repaint entry -- the
-                                                 # 2D pass whose own output demonstrably draws
+        (0x006C4A50, "drawprobe_c", ("ecx",)),   # GameWindowManager repaint entry
+        (0x004476E2, "drawprobe_d", ("ecx",)),   # InGameUI::postDraw's TAIL, two
+                                                 # instructions before its ret
     ), probe=probe)
 
 

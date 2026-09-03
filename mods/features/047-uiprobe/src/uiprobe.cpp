@@ -11,6 +11,8 @@
 //   F5   both halves of AptMainMenu::Options' own handler at RVA 0x0051D9B0:
 //        the transition start at 0x0051D590 with the main-menu screen from
 //        0x012F49B4, then the show at 0x0055E290 with its literal (0, 1)
+//   F9   play a replay outright -- RecorderClass::playbackFile, which is what
+//        ReplayMenuSystem's Load branch calls. No menus, no mouse.
 //   F6   flip the bus's rotate bit, so the checkbox visibly follows it and the
 //        screen is proved to be showing OUR state and not the game's
 //
@@ -32,6 +34,8 @@ typedef short(__stdcall *GetAsyncKey)(int);
 typedef void(__cdecl *ShowOptions)(int a, int b);
 // MSVC 7.1 rejects __thiscall here; this is the documented __fastcall spelling.
 typedef void(__fastcall *StartTransition)(void *self, void *edx);
+typedef void(__fastcall *AsciiCtor)(void *self, void *edx, const char *text);
+typedef void(__fastcall *PlaybackFile)(void *self, void *edx, void *ascii_string);
 
 #define c_getasynckey (*(GetAsyncKey *)0x01358FE8)
 #define c_showoptions ((ShowOptions)0x0095E290)
@@ -41,13 +45,34 @@ typedef void(__fastcall *StartTransition)(void *self, void *edx);
 #define c_menutransition ((StartTransition)0x0091D590)
 #define TheMainMenuScreen (*(void **)0x012F49B4)
 
+// The whole reason this instrument exists. ReplayMenuSystem (the .wnd handler
+// the FunctionLexicon binds at 0x012A94EC) ends its Load branch by building an
+// AsciiString of the file and calling this on TheRecorder -- so a key can put
+// the game in a replay with no menus and no mouse, which is the only way to
+// test anything that draws in-game on this rig.
+#define c_ascii ((AsciiCtor)0x00C88BC0)
+#define c_playback ((PlaybackFile)0x0049B150)
+#define TheRecorder (*(void **)0x012ED62C)
+
+// AsciiString is taken by value and destroyed by the callee, the same contract
+// as InGameUI::message's format.
+static void play_replay(const char *path) {
+    void *rec = TheRecorder;
+    if (rec == 0) {
+        return;
+    }
+    void *name = 0;
+    c_ascii(&name, 0, path);
+    c_playback(rec, 0, name);
+}
+
 #define MOD_BUS ((volatile unsigned char *)0x01416000)
 #define BUS_MAGIC 0x4D46424Ful
 enum { BUS_ROTATE = 4, BUS_TILT = 5, BUS_ZOOM = 6 };
 
-enum { VK_F5 = 0x74, VK_F6 = 0x75, VK_F7 = 0x76, VK_F8 = 0x77 };
+enum { VK_F5 = 0x74, VK_F6 = 0x75, VK_F7 = 0x76, VK_F8 = 0x77, VK_F9 = 0x78 };
 
-static int s_f5, s_f6, s_f7, s_f8;
+static int s_f5, s_f6, s_f7, s_f8, s_f9;
 
 // showOptions stores its two arguments in the byte pair at 0x012F4AD0/D1 before
 // naming Options.apt, so they select something about the screen. The real
@@ -75,6 +100,18 @@ extern "C" __declspec(dllexport) void __cdecl uiprobe_frame(void *ecx) {
         }
     } else {
         s_f5 = 0;
+    }
+
+    if (down(VK_F9)) {
+        if (!s_f9) {
+            s_f9 = 1;
+            // A bare filename: playbackFile hands it to the opener at RVA
+            // 0x00099490, and that is one of the four callers of getReplayDir,
+            // so the directory is prepended for us.
+            play_replay("downloaded.rep");
+        }
+    } else {
+        s_f9 = 0;
     }
 
     if (down(VK_F7)) {
