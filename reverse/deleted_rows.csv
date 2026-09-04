@@ -24405,3 +24405,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001e2bd0@@YAXXZ,0x001E2BD0,gen-dump placeholder retracted: the range is owned by a real Weapon method landed by the fleet on 2026-09-04
 ?d_001e2a70@@YAXXZ,0x001E2A70,gen-dump placeholder retracted: the range is owned by a real Weapon method landed by the fleet on 2026-09-04
 ?bfmeGoBVC@BfmeThingBVC@@QAEPAXPAX000@Z,0x001E7480,generic ABI-shape claim superseded by caller-backed ?bfmeGetLOSVictimPos@Weapon@@QBE?AUCoord3D@@PBVObject@@0H@Z over the same byte-verified 35-byte range
+??1Gen_00427390@@UAE@XZ,0x00427390,generic destructor identity superseded by caller-backed ??1FXNugget@@UAE@XZ over the same byte-verified 83-byte range

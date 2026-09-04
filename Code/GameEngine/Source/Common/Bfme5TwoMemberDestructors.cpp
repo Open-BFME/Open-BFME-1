@@ -1,4 +1,4 @@
-// Four destructors that only have to unwind two members.
+// Three destructors that only have to unwind two members.
 //
 // Every body is empty in source. The frame exists because both members have
 // destructors, and the two calls are those members going away in reverse
@@ -60,17 +60,6 @@ private:
 	BfmeDtorMemberC m_bfmeSecond;				// +0x1B8
 };
 
-class Gen_00427390
-{
-public:
-	virtual ~Gen_00427390(void);
-
-private:
-	int m_bfmeField;					// +0x04
-	BfmeDtorMemberD m_bfmeFirst;				// +0x08
-	BfmeDtorMemberD m_bfmeSecond;				// +0x0C
-};
-
 class Gen_0043DB30
 {
 public:
@@ -88,11 +77,6 @@ Gen_001031B0::~Gen_001031B0(void)
 
 // ??1Gen_0014B790@@UAE@XZ
 Gen_0014B790::~Gen_0014B790(void)
-{
-}
-
-// ??1Gen_00427390@@UAE@XZ
-Gen_00427390::~Gen_00427390(void)
 {
 }
 
