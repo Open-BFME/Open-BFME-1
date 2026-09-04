@@ -82738,3 +82738,7 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0AsciiStringXB@@QAE@ABV0@@Z,0x00887B60,pin
 ??1AsciiStringXB@@QAE@XZ,0x00887940,pin
+??0AsciiStringXC@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXC@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXC@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifier at 0x002D4310 raises
