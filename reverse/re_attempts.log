@@ -9309,3 +9309,5 @@ _ciCallCallback	0x008712F0	369	partial	boundary=retail 369B; identity via exact 
 ?apply2@Rva005222A0Host@@QAEXH@Z	0x00522360	66	converted	exact sibling of apply0; vslot1 imm2; t=25 model=cursor-grok-4.6
 ?apply3@Rva005222A0Host@@QAEXH@Z	0x005223C0	66	converted	exact sibling of apply0; vslot1 imm3; t=25 model=cursor-grok-4.6
 ?apply@Rva00522420Host@@QAEXH@Z	0x00522420	52	converted	exact +0x40 sibling; no m_34/m_38 stores; vslot1 imm0; t=25 model=cursor-grok-4.6
+?pushMapSelect@Rva0051D960Host@@QAEXH@Z	0x0051D960	35	converted	exact TheShell->push Menus/MapSelectMenu.wnd false; same StringBase in-place slot as ShowLanLobby; t=15 model=cursor-grok-4.6
+?checkDefaultSave@Rva0051D9D0Host@@QAEXH@Z	0x0051D9D0	51	converted	exact TheGameState->doesSaveGameExist(00000000.sav) then this+0x264=1; callee already landed at 0x0010FB20; t=15 model=cursor-grok-4.6
