@@ -95,6 +95,7 @@ public:
 	AsciiString getText(int index) const;
 	void setDisplayedStats(int index);
 	unsigned int getColor(int index) const;
+	int getStartFrame(int index) const;
 
 private:
 	char m_head[0x14];
@@ -157,6 +158,20 @@ unsigned int SubtitleManager::getColor(int index) const
 	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
 	message->setText("Index out of range in SubTitleManager::GetColor().")->show(true);
 	return 0xFFFF00FF;
+}
+
+int SubtitleManager::getStartFrame(int index) const
+{
+	if (index < m_entries.size())
+		return m_entries[index]->m_bulk.words[4];
+
+	_bfme_debugRecordCallsite(1);
+	SubtitleDebugManager *manager = TheGen001336E5C;
+	manager->beginReport();
+	manager = TheGen001336E5C;
+	SubtitleCrashMessage *message = manager->getCrashMessage(0, 0);
+	message->setText("Index out of range in SubTitleManager::GetStartFrame.")->show(true);
+	return 0x7FFFFFFF;
 }
 
 SubtitleEntry::SubtitleEntry(const SubtitleEntry &that) :
