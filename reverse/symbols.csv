@@ -174,6 +174,7 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBHI@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHI@0@ABU10@@Z,0x0001C67A,ILT the int-keyed tree copy at 0x000AAC90 calls to build the pair in its new node
 ??$_Construct@U?$pair@$$CBHPAX@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHPAX@0@ABU10@@Z,0x0001AB59,Open-BFME5 ILT the int-to-pointer hashtable _M_insert at 0x000D3600 copy-constructs the node value through
 ??$_Construct@U?$pair@$$CBHUGen_t_003e2580_p12cd@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUGen_t_003e2580_p12cd@@@0@ABU10@@Z,0x0002446A,Open-BFME5 the value _Construct the tree _M_insert at 0x003DBDC0 reaches
+??$_Construct@U?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@0@ABU10@@Z,0x0000317F,Open-BFME5 ILT the FXListStore hashtable insert_unique_noresize at 0x0042DF60 copy-constructs the 40-byte pair through; jumps to 0x0042DD00
 ??$_Construct@U?$pair@$$CBHUOpen2Mapped382010@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped382010@_STL@@@0@ABU10@@Z,0x00049AD5,Open2 0x00382010 hashtable node construct (ILT)
 ??$_Construct@U?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped494DA0@_STL@@@0@ABU10@@Z,0x0003974D,Open2 0x00494DA0 hashtable node construct (ILT)
 ??$_Construct@U?$pair@$$CBHUOpen2Mapped498B30@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUOpen2Mapped498B30@_STL@@@0@ABU10@@Z,0x0002B260,Open2 0x00498B30 hashtable node construct (ILT)
@@ -2247,6 +2248,11 @@ name,address,notes
 ??0BfmeMemberB_00632360@@QAE@ABV0@@Z,0x00028218,Open-BFME5 the second-member copy ctor the two-member ctor at 0x00632360 calls
 ??0BfmeMemberB_009CAA70@@QAE@ABV0@@Z,0x009CA8F0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CAA70 calls
 ??0BfmeMemberB_009CF070@@QAE@ABV0@@Z,0x009CEBF0,Open-BFME5 the second-member copy ctor the two-member ctor at 0x009CF070 calls
+??0BfmeMsg1052@@QAE@PADH@Z,0x007E8850,FESL message ctor alias used by bfmeDo1052
+??0BfmeMsg803A00@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803A00
+??0BfmeMsg803B60@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803B60
+??0BfmeMsg803BF0@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803BF0
+??0BfmeMsg803C90@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803C90
 ??0BfmeMsgVJH@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeMsgVJI@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
@@ -4321,6 +4327,11 @@ name,address,notes
 ??1BfmeMidB@@QAE@XZ,0x009D82D0,Open-BFME5 the middle member destructor the vector-member destructor at 0x009D83D0 runs second
 ??1BfmeMidC@@QAE@XZ,0x009D7A70,Open-BFME5 the last member destructor the vector-member destructor at 0x009D83D0 runs first
 ??1BfmeMilitarySubtitleRecord@@QAE@XZ,0x00018CE1,ILT for the military-subtitle record destructor InGameUI::removeMilitarySubtitle calls at 0x004431B0; jumps to 0x0043EBF0 which the ledger already holds as a thunk onto releaseBuffer - the record's only destructible member is the UnicodeString at +0x00
+??1BfmeMsg1052@@QAE@XZ,0x007E86C0,FESL message dtor alias used by bfmeDo1052
+??1BfmeMsg803A00@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803A00
+??1BfmeMsg803B60@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803B60
+??1BfmeMsg803BF0@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803BF0
+??1BfmeMsg803C90@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803C90
 ??1BfmeMsgVJH@@QAE@XZ,0x007E86C0,pin
 ??1BfmeMsgVJI@@QAE@XZ,0x007E86C0,pin
 ??1BfmeNodeZ@@QAE@XZ,0x00042A32,node dtor in bfmeUnregister 0x0035AC30
@@ -9056,6 +9067,7 @@ name,address,notes
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
 ??1Rva007A1230Cell@@QAE@XZ,0x00430652,address-derived four-byte cell destructor ILT used by both six-element arrays at 0x007A1230
 ??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
+??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
 ??1Rva0082AE40TailBase@@UAE@XZ,0x0082AE40,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -13008,6 +13020,11 @@ name,address,notes
 ?addInformPlayerLeaveFrameCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00679B00,addCommand's jump-table arm for command type 8
 ?addInt64@Rva007E8810Message@@QAEXPBD_J@Z,0x007E8E90,V2 lane: FESL message append key/value __int64 field via %I64d
 ?addInt@BfmeC994@@QAEXPBDH@Z,0x007E88D0,FESL transaction sender appends its TID integer through the recovered message field writer
+?addInt@BfmeMsg1052@@QAEXPBDH@Z,0x007E88D0,FESL message addInt alias used by bfmeDo1052
+?addInt@BfmeMsg803A00@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803A00
+?addInt@BfmeMsg803B60@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803B60
+?addInt@BfmeMsg803BF0@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803BF0
+?addInt@BfmeMsg803C90@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803C90
 ?addInt@Rva007E8810Message@@QAEXPBDH@Z,0x007E88D0,V2 lane: FESL message append key/value int field
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00022BFB,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addKeepAliveCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067BC40,addCommand's jump-table arm for command type 12
@@ -74627,6 +74644,7 @@ name,address,notes
 ?bfmeGoD540@BfmeObjD540@@QAEXVAsciiString@@@Z,0x00033302,Open-BFME5 ILT to 0x0040D540 quoted-string consumer
 ?bfmeGoD820@BfmeHelpD820@@QAEXPAVObject@@PBUCoord3D@@H@Z,0x00002B49,ILT to FUN_005bb090 used by 0x0026D820
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
+?bfmeGoVJH@BfmeOwner803BF0@@QAEXH@Z,0x00803970,bfmeGoVJH alias for 0x00803BF0 caller
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
 ?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
 ?bfmeGoalA1003@BfmeHold1003@@QAEPAXXZ,0x0000E570,pin
@@ -76220,6 +76238,7 @@ name,address,notes
 ?checkState@BfmeSubHelperCAB@@QAEHPAX00@Z,0x00034C93,pin
 ?checkValid@BfmeItemE63@@QAE_NXZ,0x0004B015,pin
 ?chooseBestWeaponForTarget@WeaponSet@@QAE_NPBVObject@@0W4WeaponChoiceCriteria@@W4CommandSourceType@@@Z,0x001EC3F0,callee pin from Object.cpp REL32 site
+?claim@Rva00800460Arena@@QAEPAXH_N@Z,0x008003F0,jabba util.cpp arena claim; skipped convert pin for 0x801EC0
 ?clamp@Rva006ABFD0Event@@QAEXMM@Z,0x00001B77,ILT thunk to 0x000B2860 called from 0x006AE250
 ?clampSkyboxSubobject@WaterRenderObjClass@@QAEXPAVBfmeSkyBoxRenderObjClass@@@Z,0x0002BEB3,assigned Water skybox texture clamp helper thunk
 ?classic@locale@_STL@@SAABV12@XZ,0x008321F0,STLport locale classic accessor thunk read from num_get_float retail call
@@ -77881,6 +77900,8 @@ name,address,notes
 ?g_bfmeKeb@@3MA,0x00D32A80,Open-BFME5 float scale of 0x0087EBB0
 ?g_bfmeKey1026@@3PADA,0x00D096E8,pin
 ?g_bfmeKey1027@@3PADA,0x00D096F4,pin
+?g_bfmeKey803A00A@@3PADA,0x00D2C00C,string key A for 0x00803A00
+?g_bfmeKey803A00B@@3PADA,0x00D2C74C,string key B for 0x00803A00
 ?g_bfmeKeyAVHC@@3HA,0x00D2B580,pin
 ?g_bfmeKeyBVHC@@3HA,0x00D2B578,pin
 ?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
@@ -77985,6 +78006,8 @@ name,address,notes
 ?g_bfmeNameURC@@3PADA,0x00D2ACA4,pin
 ?g_bfmeNext1221@@3PAIA,0x00F391A4,pin
 ?g_bfmeNowVNH@@3P6AHXZA,0x00F59544,pin
+?g_bfmeNumLobbies803BF0@@3PADA,0x00D2B4E8,NUM-LOBBIES string for 0x00803BF0
+?g_bfmeNumRegions803B60@@3PADA,0x00D2B4B8,NUM-REGIONS string for 0x00803B60
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
 ?g_bfmeObj2EGE@@3PAVBfmeObj2EGE@@A,0x00EF148C,pin
 ?g_bfmeObj985@@3PAUBfmeObj985@@A,0x00EF4B40,pin
@@ -78958,6 +78981,10 @@ name,address,notes
 ?getInfoResponseForRequest@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A910,Buddy request callback helper identified by its GP callback registration and identity copies into the request response
 ?getInfoResponseForStatus@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A980,Buddy status callback helper identified by its GP callback registration and writes into the status response
 ?getInt64@Rva007E8810Message@@QAE_JPBD_J@Z,0x007E8930,V2 lane: FESL message lookup __int64 field by key with default
+?getInt@BfmeSrc803A00@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803A00
+?getInt@BfmeSrc803B60@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803B60
+?getInt@BfmeSrc803BF0@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803BF0
+?getInt@BfmeSrc803C90@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803C90
 ?getInt@Dict@@QBEHHPA_N@Z,0x0003A76A,address-derived color Dict reader calls the canonical getInt ILT with an int-compatible key
 ?getInt@Rva007E8810Message@@QAEHPBDH@Z,0x007E8900,V2 lane: FESL message lookup int field by key with default
 ?getInt@UserPreferences@@QBEHVAsciiString@@H@Z,0x000443B9,incremental-link thunk fronting the unclaimed body 0x000A9490
@@ -80827,6 +80854,7 @@ name,address,notes
 ?markZonesDirty@BFMEZoneDirtyManager@@QAEX_N0@Z,0x004030D0,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h declares one argument, not two
 ?markZonesDirty@PathfindZoneManager@@QAEX_N0@Z,0x00015307,Open-BFME5 ILT; two arguments in BFME where the reference takes one; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 passes false and true
 ?maxAbove@BfmeObjEB@@QBEMXZ,0x0087E000,Open-BFME5 max-height callee of 0x0087EBB0
+?measure@Rva00801EC0Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x00801740,jabba demangler measure sibling of fill 0x801EC0
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,0x0000E43A
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
@@ -80966,6 +80994,7 @@ name,address,notes
 ?parse@QuadDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00043BF8,Open-BFME5 pin
 ?parse@RenderObjectDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00037713,Open-BFME5 RenderObjectDrawTemplate retail parser
 ?parse@RenderObjectUpdateTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00002E3C,Open-BFME5 pin
+?parse@Rva00800780Addr@@QAEXPBDH@Z,0x007E86D0,jabba demangler connect-reply Addr parse alias of Rva007E8760Addr::parse
 ?parse@SphereEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00034847,Open-BFME5 SphereEmissionVolumeTemplate retail parser
 ?parse@SphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002337B,Open-BFME5 SphericalEmissionVelocityTemplate retail parser
 ?parse@StreakDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002BCBA,Streak draw template parse call pin
@@ -81570,6 +81599,10 @@ name,address,notes
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
 ?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
 ?send@BfmeMgr089@@QAEXPAX0@Z,0x0002836C,pin
+?send@BfmeOwner803A00@@QAEXPAVBfmeMsg803A00@@@Z,0x008038F0,FESL submit for 0x00803A00
+?send@BfmeOwner803B60@@QAEXPAVBfmeMsg803B60@@@Z,0x008038F0,FESL submit for 0x00803B60
+?send@BfmeOwner803BF0@@QAEXPAVBfmeMsg803BF0@@@Z,0x008038F0,FESL submit for 0x00803BF0
+?send@BfmeOwner803C90@@QAEXPAVBfmeMsg803C90@@@Z,0x008038F0,FESL submit alias for 0x00803C90
 ?send@BfmeSub2B8_112@@QAEXPAXH@Z,0x0000E700,pin
 ?send@ConnectionManagerSendFrameDataShim@@QAEXII@Z,0x00664D20,ConnectionManager sendFrameDataToPlayer incremental-link thunk target through a TU-local forwarding shim
 ?send@NATSendMangledPortShim@@QAEXGPAVGameSlot@@@Z,0x006718A0,NAT sendMangledPortNumberToTarget incremental-link thunk target through a TU-local forwarding shim
@@ -83815,36 +83848,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BfmeMsg1052@@QAE@PADH@Z,0x007E8850,FESL message ctor alias used by bfmeDo1052
-??1BfmeMsg1052@@QAE@XZ,0x007E86C0,FESL message dtor alias used by bfmeDo1052
-?addInt@BfmeMsg1052@@QAEXPBDH@Z,0x007E88D0,FESL message addInt alias used by bfmeDo1052
-??0BfmeMsg803C90@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803C90
-??1BfmeMsg803C90@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803C90
-?addInt@BfmeMsg803C90@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803C90
-?getInt@BfmeSrc803C90@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803C90
-?send@BfmeOwner803C90@@QAEXPAVBfmeMsg803C90@@@Z,0x008038F0,FESL submit alias for 0x00803C90
-??0BfmeMsg803B60@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803B60
-??1BfmeMsg803B60@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803B60
-?addInt@BfmeMsg803B60@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803B60
-?getInt@BfmeSrc803B60@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803B60
-?send@BfmeOwner803B60@@QAEXPAVBfmeMsg803B60@@@Z,0x008038F0,FESL submit for 0x00803B60
-?g_bfmeNumRegions803B60@@3PADA,0x00D2B4B8,NUM-REGIONS string for 0x00803B60
-??0BfmeMsg803BF0@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803BF0
-??1BfmeMsg803BF0@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803BF0
-?addInt@BfmeMsg803BF0@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803BF0
-?getInt@BfmeSrc803BF0@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803BF0
-?send@BfmeOwner803BF0@@QAEXPAVBfmeMsg803BF0@@@Z,0x008038F0,FESL submit for 0x00803BF0
-?bfmeGoVJH@BfmeOwner803BF0@@QAEXH@Z,0x00803970,bfmeGoVJH alias for 0x00803BF0 caller
-?g_bfmeNumLobbies803BF0@@3PADA,0x00D2B4E8,NUM-LOBBIES string for 0x00803BF0
-??0BfmeMsg803A00@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803A00
-??1BfmeMsg803A00@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803A00
-?addInt@BfmeMsg803A00@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803A00
-?getInt@BfmeSrc803A00@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803A00
-?send@BfmeOwner803A00@@QAEXPAVBfmeMsg803A00@@@Z,0x008038F0,FESL submit for 0x00803A00
-?g_bfmeKey803A00A@@3PADA,0x00D2C00C,string key A for 0x00803A00
-?g_bfmeKey803A00B@@3PADA,0x00D2C74C,string key B for 0x00803A00
-??$_Construct@U?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@0@ABU10@@Z,0x0000317F,Open-BFME5 ILT the FXListStore hashtable insert_unique_noresize at 0x0042DF60 copy-constructs the 40-byte pair through; jumps to 0x0042DD00
-??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
-?parse@Rva00800780Addr@@QAEXPBDH@Z,0x007E86D0,jabba demangler connect-reply Addr parse alias of Rva007E8760Addr::parse
-?measure@Rva00801EC0Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x00801740,jabba demangler measure sibling of fill 0x801EC0
-?claim@Rva00800460Arena@@QAEPAXH_N@Z,0x008003F0,jabba util.cpp arena claim; skipped convert pin for 0x801EC0
