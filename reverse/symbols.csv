@@ -82757,3 +82757,6 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??1LifetimeUpdate@@MAE@XZ,0x0002C6F1,destructor ILT to 0x00297DE0
 ??_GLifetimeUpdate@@MAEPAXI@Z,0x00028CFE,primary class vftable slot zero ILT to 0x002982A0
 ??1Module@@UAE@XZ,0x00047C53,base destructor ILT used by the optimized UpdateModule teardown
+??0AsciiStringXG@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXG@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXG@@QAEXABV1@@Z,0x00887C90,pin
