@@ -152,7 +152,7 @@ public:
 
 void Rva006AEE00::init()
 {
-	register Rva006AEE00Tree *tree = &m_tree;
+	Rva006AEE00Tree *tree = &m_tree;
 	if (tree->count)
 	{
 		Rva006AEE00TreeHeader *header =

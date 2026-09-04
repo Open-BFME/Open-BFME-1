@@ -99,9 +99,10 @@ void *Rva001CF980::query()
 		if ( !obj->isKindOf( KINDOF_0x6C ) )
 			return 0;
 	}
-	if ( obj )
+	void *candidate = obj;
+	if ( candidate )
 	{
-		Rva001CF980Iface *iface = obj->m_iface;
+		Rva001CF980Iface *iface = ((Rva001CF980 *)candidate)->m_iface;
 		if ( iface )
 			return iface->slot26();
 	}

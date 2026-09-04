@@ -120,19 +120,23 @@ int Pathfinder::bfmeCellTypeFiveOrOutside(const Coord3D *pos, PathfindLayerEnum 
 Bool Pathfinder::bfmeCellAvoidsThreeTypes(const Coord3D *pos, PathfindLayerEnum layer)
 {
 	ICoord2D cellIndex;
-	if (!worldToCell(pos, &cellIndex))
-	{
-		PathfindCell *cell = getCell(layer, cellIndex.x, cellIndex.y);
-		if (cell != 0)
-		{
-			unsigned int type = cell->m_bfmeFlags & 7;
-			if (type == 5)
-				return false;
-			if (type == 1)
-				return false;
-			if (type == 2)
-				return false;
-		}
-	}
+	PathfindCell *cell;
+	if (worldToCell(pos, &cellIndex))
+		goto passable;
+	cell = getCell(layer, cellIndex.x, cellIndex.y);
+	if (cell == 0)
+		goto passable;
+	unsigned int type = cell->m_bfmeFlags & 7;
+	if (type == 5)
+		goto blocked;
+	if (type == 1)
+		goto blocked;
+	if (type == 2)
+		goto blocked;
+
+passable:
 	return true;
+
+blocked:
+	return false;
 }

@@ -148,11 +148,14 @@ AsciiString AudioEventRTS::generateFilenamePrefix(AudioType audioTypeToPlay, boo
 	case AT_SoundEffectAlt:
 	{
 		const AsciiString &folder = TheAudio->getAudioSettings()->m_soundsFolder;
-		const Int length = folder.getData() ? folder.getData()->length : 0;
+		Int length = folder.getData() ? folder.getData()->length : 0;
 		if (folder.getData())
 			retStr.concat((const char *)folder.getData() + 8, length);
 		else
+		{
+			length = 0;
 			retStr.concat("", length);
+		}
 		break;
 	}
 	case AT_AmbientStream:

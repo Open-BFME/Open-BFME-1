@@ -10069,6 +10069,7 @@ name,address,notes
 ?Update_Non_New_Particles@ParticleBufferClass@@IAEXI@Z,0x00988060
 ?Update_Sub_Object_Transforms@RenderObjClass@@UAEXXZ,0x0091FB90,empty base implementation the Animatable3DObjClass override chains to
 ?Update_Visual_Particle_State@ParticleBufferClass@@IAEXXZ,0x00986FC0
+?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z,0x009056F0,callee pin used by Rva00727050TaintBuf init
 ?W3DGadgetPushButtonImageDrawOne@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00795140,caller-proven from W3DGadgetPushButtonImageDraw dispatch
 ?W3DGadgetPushButtonImageDrawThree@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794120,caller-proven from W3DGadgetPushButtonImageDraw dispatch
 ?W3DRadarResetLock@@YAXXZ,0x00903090,W3DRadar reset direct-call device lock
@@ -75801,6 +75802,7 @@ name,address,notes
 ?fill@BfmeRvaA760Output@@QAEXPAH@Z,0x00031525,assigned body helper for Rva0024A760
 ?fill@BfmeShadowBufferEntry@@QAEXPAE@Z,0x00034BE9,buffer build fill helper via retail ILT
 ?fill@Rva001A0320Owner@@QAEXHPAVRva0019A7D0Vector@@@Z,0x0002A26B,ILT thunk to 0x0019FD00 fill helper
+?fill@Rva00727050TaintFillThunk@@QAEXE@Z,0x0002CFE3,callee pin used by Rva00727050TaintBuf init
 ?fill@U1SupplierHigh@@QAEXPAVU1FillTargetHigh@@PAX@Z,0x005C8E90,tail of the slot-2 field collectors reading the 0xB8-0xBC run; address-derived name
 ?fill@U1SupplierLow@@QAEXPAVU1FillTargetLow@@PAX@Z,0x005C8D40,tail of the slot-2 field collectors reading the 0x3C-0x54 run; address-derived name
 ?fillCellAlongLine@BfmeAttackQuery@@QAEXPBUICoord2D@@0HPAUBfmeCellResult@@@Z,0x00042E01,BFME attack query line fill thunk used by checkCandidate
@@ -79803,6 +79805,7 @@ name,address,notes
 ?radarToWorld@Radar@@QAE_NPBUICoord2D@@PAUCoord3D@@@Z,0x00011513,screenPixelToWorld call target (incremental-link thunk)
 ?rbDecrement@@YAPAXPAX@Z,0x0082B8E0,STLport _M_decrement called from 0x006AEE90
 ?rbIncrement@@YAPAXPAX@Z,0x0082B870,STLport _M_increment called from 0x006AEE00
+?reacquire@Rva00727050TaintReAcquireThunk@@QAEXXZ,0x000357D3,callee pin used by Rva00727050TaintBuf init
 ?reacquire@W3DVolumetricShadowManagerReAcquireShim@@QAE_NXZ,0x007C1180,W3DVolumetricShadowManager ReAcquireResources incremental-link thunk target through a TU-local forwarding shim
 ?read@UDPReadShim@@QAEHPAEIPAUsockaddr_in@@@Z,0x00684630,UDP Read incremental-link thunk target through a TU-local forwarding shim
 ?readAdditionalDisconnectsFromUserFile@@YIHH@Z,0x004DB0B0,GetAdditionalDisconnectsFromUserFile helper uses the retail one-argument ECX calling convention
@@ -79996,6 +79999,7 @@ name,address,notes
 ?reset@WaterTracksRenderSystem@@QAEXXZ,0x0001933F,retail ILT called by WaterRenderObjClass reset and forwarding to 0x007AAF10
 ?resetAll@SubsystemInterfaceList@@QAEXXZ,0x009A1D20,GameEngine::reset direct call at 0x0006E80C; ZH SubsystemInterfaceList reset-all implementation iterates registered subsystems in reverse order
 ?resetAll@Y3ResetTail_005C5A00@@QAEXXZ,0x005C5A00,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
+?resetGrid@BfmeTaintManager@@QAEXXZ,0x00880E30,callee pin used by Rva00727050TaintBuf init
 ?resetHelper4949a@@YAXXZ,0x0004949A,TerrainLogic::reset free-function ILT to 0x0018EE40
 ?resetModes@LookAtTranslator@@QAEXXZ,0x00048626,Open-BFME5 the tail call of doDisableInput with ecx = TheLookAtTranslator at 0x012F4C84; jumps to 0x005B5440
 ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk

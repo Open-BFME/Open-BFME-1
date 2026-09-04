@@ -19,6 +19,7 @@ public:
 	unsigned size() const { return (unsigned)(m_finish - m_start); }
 
 	void resize(unsigned n, BfmePod16WR value);
+	void resize(unsigned n);
 	void fillInsert(BfmePod16WR *pos, unsigned n, const BfmePod16WR &value);
 
 	BfmePod16WR *m_start;
@@ -35,4 +36,10 @@ void BfmeVecWR::resize(unsigned n, BfmePod16WR value)
 	}
 	else
 		fillInsert(end(), n - size(), value);
+}
+
+void BfmeVecWR::resize(unsigned n)
+{
+	BfmePod16WR value;
+	resize(n, value);
 }
