@@ -83724,3 +83724,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?bfmeGetLOSVictimPos@Weapon@@QBE?AUCoord3D@@PBVObject@@0H@Z,0x0003ABE3,Open-BFME5 ILT thunk to 0x001E7480; Weapon LOS victim-aim helper called from Object-victim isClearFiringLineOfSightTerrain
 ?TheAI@@3PAVAI@@A,0x012EF214,Open-BFME5 TheAI singleton; same VA as _TheAIParseDefinitionAI; Goal-Object LOS reads pathfinder at +0x0C
 ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z,0x00001915,Open-BFME5 ILT thunk to 0x003DB160; Pathfinder 2-Coord3D adjust used by isClearGoalFiringLineOfSightTerrain Object overload
+?findUpgradeByKey@UpgradeCenter@@QBEPBVUpgradeTemplate@@W4NameKeyType@@@Z,0x0010A9B0,UpgradeCenter list walk by NameKey; ILT 0x0001AD43; Player difficulty-bonus grant callee
