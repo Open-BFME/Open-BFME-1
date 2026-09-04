@@ -83764,3 +83764,6 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?fire@BezierLaunchHelper@@QAE_NPAVObject@@00PAX@Z,0x00048D06,ILT 0x00048D06 -> 0x001E63A0; last thiscall from BezierProjectileBehavior::handle 0x001F08B0
 ?allocate@Rva00802040Arr@@QAEXH@Z,0x00801BD0,FESL Arr allocate alias of Rva00801600::allocate; pin for 0x802040
 ?set@Rva00802040Buf@@QAEXPAX@Z,0x007F7F50,FESL Buf set; pin for 0x802040
+?createAndFireTempWeapon@WeaponStore@@QAEXPBVWeaponTemplate@@PBUCoord3D@@PBVObject@@1H@Z,0x00006FCD,ILT 0x00006FCD -> 0x001EA940; 5-arg createAndFire from BezierProjectileBehavior::projectileFire
+?createAndFireTempWeapon@WeaponStore@@QAEXPBVWeaponTemplate@@PBVObject@@PAV3@@Z,0x0002FC66,ILT 0x0002FC66 -> 0x001EAA40; 3-arg object createAndFire from BezierProjectileBehavior::projectileFire
+?bfmeSet@Gen_00411DD0@@QAEX_N@Z,0x00008337,ILT 0x00008337 -> 0x00411DD0; Drawable bool setter used by BezierProjectileBehavior::projectileFire
