@@ -1,57 +1,81 @@
-// ?d_0027df90@@YAXXZ
-// partial score=0.85 date=2026-09-03
-class AsciiString;
+// ?privateCommandButton@AIUpdatePrivateCommandButtonShim@@QAEXPBVCommandButton@@W4CommandSourceType@@@Z
+// partial score=0.91 date=2026-09-04
+// cl: /DNDEBUG /MD /EHs-c-
+// AIUpdatePrivateCommandButtonShim::privateCommandButton — retail 0x0027DF90 / 140B.
+// Dump sibling of setAttitude in Code/gen_asm/d_0027db50.asm.
+// ZH: AIUpdateInterface::privateCommandButton (AIUpdate.cpp present-unmatched).
+// BFME: MAX_COMMANDS_PER_SET is 20; getCommandType is the dword at button+0x10;
+// GUI_COMMAND_STOP is 0xD.  The projectile reject is getFinalOverride on the
+// ThingTemplate at Object+4, then bit 0x2000000 at template+0xC8.
+// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
+
+enum { MAX_COMMANDS_PER_SET = 20 };
 
 enum CommandSourceType
 {
-	COMMAND_SOURCE_UNKNOWN = 0
+	CMD_FROM_AI = 2
 };
 
-class AICommandInterface
+enum GUICommandType
+{
+	GUI_COMMAND_STOP = 0xD
+};
+
+class AsciiString;
+class CommandButton;
+class CommandSet;
+class ControlBar;
+class Overridable;
+class Object;
+class AICommandInterface;
+
+class AIUpdatePrivateCommandButtonShim
 {
 public:
-	void aiIdle(CommandSourceType source);
+	void privateCommandButton(const CommandButton *commandButton, CommandSourceType cmdSource);
+
+	unsigned char m_beforeObject[8];
+	Object *m_object;
 };
 
-struct BfmeAIHolder
-{
-	char m_bfmeFields[0x20];
-	AICommandInterface m_bfmeCommands;
-};
-
-class BfmeOverridable
+class Overridable
 {
 public:
-	BfmeOverridable *friend_getFinalOverride(void);
+	const Overridable *getFinalOverride() const;
 
-	char m_bfmeFields[4];
-	BfmeOverridable *m_bfmeNext;
-	char m_bfme08[0xC0];
-	unsigned int m_bfmeFlags;
+	unsigned char m_beforeNext[4];
+	Overridable *m_next;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+	unsigned char m_beforeKindOf[0xC8 - 8];
+	unsigned int m_kindOf;
 };
 
 class Object
 {
 public:
-	const AsciiString &getCommandSetString(void) const;
+	const AsciiString &getCommandSetString() const;
 
-	char m_bfmeFields[4];
-	BfmeOverridable *m_bfmeOverride;
-	char m_bfme08[0x1FC];
-	BfmeAIHolder *m_bfmeAI;
+	unsigned char m_beforeTemplate[4];
+	ThingTemplate *m_template;
+	unsigned char m_beforeAI[0x204 - 8];
+	AICommandInterface *m_ai;
 };
 
 class CommandButton
 {
-	public:
-	char m_bfmeFields[0x10];
-	int m_bfmeType;
+public:
+	unsigned char m_beforeType[0x10];
+	GUICommandType m_command;
 };
 
 class CommandSet
 {
 public:
-	const CommandButton *getCommandButton(int index) const;
+	const CommandButton *getCommandButton(int i) const;
 };
 
 class ControlBar
@@ -60,45 +84,46 @@ public:
 	const CommandSet *findCommandSet(const AsciiString &name);
 };
 
-extern ControlBar *TheControlBar;
-
-class Gen_0027DF90
+class AICommandInterface
 {
 public:
-	void bfmeIdleForButton(const CommandButton * volatile button, CommandSourceType source);
-
-private:
-	char m_bfmeFields[8];
-	Object *m_bfmeObject;
+	void aiIdle(CommandSourceType cmd);
 };
 
-// ?bfmeIdleForButton@Gen_0027DF90@@QAEXPBVCommandButton@@W4CommandSourceType@@@Z
-void Gen_0027DF90::bfmeIdleForButton(const CommandButton * volatile button,
-	CommandSourceType source)
+ControlBar *TheControlBar;
+
+void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton *commandButton, CommandSourceType cmdSource)
 {
-	if (button == 0)
+	const CommandButton *button = commandButton;
+	if (!button)
 		return;
 
-	Object *object = m_bfmeObject;
-	BfmeOverridable *resolved = object->m_bfmeOverride;
-	if (resolved != 0 && resolved->m_bfmeNext != 0)
-		resolved = resolved->m_bfmeNext->friend_getFinalOverride();
-
-	if ((resolved->m_bfmeFlags & 0x02000000) || object == 0)
+	Object *owner = m_object;
+	ThingTemplate *tmpl = owner->m_template;
+	if (tmpl)
+	{
+		Overridable *next = tmpl->m_next;
+		if (next)
+			tmpl = static_cast<ThingTemplate *>(const_cast<Overridable *>(next->getFinalOverride()));
+	}
+	if (tmpl->m_kindOf & 0x2000000)
 		return;
-	BfmeAIHolder *ai = object->m_bfmeAI;
-	if (ai == 0)
-		return;
-
-	const AsciiString &name = object->getCommandSetString();
-	const CommandSet *commandSet = TheControlBar->findCommandSet(name);
-	if (commandSet == 0)
+	if (!owner)
 		return;
 
-	CommandSourceType idleSource = source;
-	for (int index = 0; index < 20; ++index) {
-		const CommandButton *candidate = commandSet->getCommandButton(index);
-		if (candidate == button && button->m_bfmeType == 13)
-			ai->m_bfmeCommands.aiIdle(idleSource);
+	AICommandInterface *ai = owner->m_ai;
+	if (!ai)
+		return;
+
+	const CommandSet *commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
+	if (!commandSet)
+		return;
+
+	CommandSourceType src = cmdSource;
+	for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
+	{
+		const CommandButton *aCommandButton = commandSet->getCommandButton(i);
+		if (button == aCommandButton && button->m_command == GUI_COMMAND_STOP)
+			reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
 	}
 }
