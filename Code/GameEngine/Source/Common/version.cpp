@@ -54,6 +54,7 @@ Version::Version()
 #endif
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionSetVersion.cpp
 // ?setVersion@Version@@ present-unmatched
 void Version::setVersion(Int major, Int minor, Int buildNum,
 												 Int localBuildNum, AsciiString user, AsciiString location,
