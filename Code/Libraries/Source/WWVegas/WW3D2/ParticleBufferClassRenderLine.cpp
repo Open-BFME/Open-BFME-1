@@ -1,6 +1,38 @@
-// ?Render_Line@ParticleBufferClass@@IAEXAAVRenderInfoClass@@@Z
-// partial score=0.88 date=2026-09-02
-// banked ZH Render_Line for 0x0098AD00
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
+#define Matrix4x4 Matrix4
+#include "part_buf.h"
+#include "part_emt.h"
+#include "ww3d.h"
+#include "rinfo.h"
+#include "scene.h"
+#include "camera.h"
+#include "predlod.h"
+#include "pot.h"
+#include "bound.h"
+#include "simplevec.h"
+#include "sphere.h"
+#include "wwprofile.h"
+#include <limits.h>
+#include "vp.h"
+#include "texture.h"
+#include "dx8wrapper.h"
+#include "vector3.h"
+
+
+// Inlined context from part_buf.cpp; emitted copy already has its own owner.
+inline int ParticleBufferClass::Is_Freeze_Random(void) const
+{
+	if (LineRenderer != NULL) {
+		return LineRenderer->Is_Freeze_Random();
+	}
+	return false;
+}
+// ParticleBufferClass::Render_Line, retail 0x0098AD00, 1763 bytes.
+// /EHsc is intentional: the default /EHsc- treats extern-C atexit as throwing
+// and adds EH states 0/2/4 around the local-static vector registrations. State
+// 2 then induces a function-wide EBX constant-2 allocation, obscuring the root
+// cause as register/CSE drift. Retail omits those state writes. /EHsc matches
+// both the registrations and the entire body without barriers or forced locals.
 void ParticleBufferClass::Render_Line(RenderInfoClass & rinfo)
 {
 
@@ -97,5 +129,3 @@ void ParticleBufferClass::Render_Line(RenderInfoClass & rinfo)
 		}
 	}
 }
-
-
