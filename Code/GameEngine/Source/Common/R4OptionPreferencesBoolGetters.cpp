@@ -47,6 +47,7 @@ typedef unsigned char Bool;   ///< a byte, not bool: retail never zero-extends t
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *a, const char *b );
 extern "C" __declspec( dllimport ) int __cdecl atoi( const char *text );
+extern "C" __declspec( dllimport ) double __cdecl atof( const char *text );
 
 struct CustomAsciiStringShim
 {
@@ -77,6 +78,28 @@ struct CustomPreferenceMapShim
 struct R4GlobalDataShim { unsigned char m_bytes[ 0x1000 ]; };
 extern R4GlobalDataShim *TheGlobalData;             ///< retail [0x012ED5C8]
 
+struct R4AudioSettingsShim
+{
+	unsigned char m_bytes[ 0x8c ];
+	float m_ambientVolume;
+	float m_movieVolume;
+};
+
+class AudioManager
+{
+public:
+	R4AudioSettingsShim *getAudioSettings( void )
+	{
+		typedef R4AudioSettingsShim *(__fastcall *Getter)( AudioManager * );
+		return ( (Getter)m_vtable[ 72 ] )( this );
+	}
+
+private:
+	void **m_vtable;
+};
+
+extern AudioManager *TheAudio;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class OptionPreferences
 {
@@ -97,6 +120,7 @@ public:
 	Bool getUseEAX3( void );
 	Bool getAlternateMouseSetup( void );
 	float getBrightness( void );
+	float getMovieVolume( void );
 };
 
 #define R4_PREF_BODY( GETTER, KEY, OFFSET, COMPARE )                          \
@@ -177,3 +201,24 @@ float OptionPreferences::getBrightness( void )
 	float brightness = (float)atoi( text );
 	return brightness;
 }
+
+#define R4_VOLUME_BODY( GETTER, KEY, FIELD )                                 \
+	float OptionPreferences::GETTER( void )                                   \
+	{                                                                         \
+		CustomAsciiStringShim key;                                             \
+		key.init( KEY );                                                       \
+		CustomPreferenceMapShim *map =                                        \
+			(CustomPreferenceMapShim *)( (unsigned char *)this + 4 );           \
+		CustomMapNodeShim *node = map->find( &key );                           \
+		key.destroy();                                                         \
+		if ( node == map->m_header )                                           \
+			return TheAudio->getAudioSettings()->FIELD * 100.0f;                \
+		CustomStringDataShim *data = node->m_value;                            \
+		const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : ""; \
+		float volume = (float)atof( text );                                    \
+		if ( volume < 0.0f )                                                   \
+			volume = 0.0f;                                                      \
+		return volume;                                                         \
+	}
+
+R4_VOLUME_BODY( getMovieVolume,   "MovieVolume",   m_movieVolume )
