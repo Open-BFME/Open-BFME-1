@@ -82529,3 +82529,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?apply@Gen003C0110Result@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
 ?Gen003C0350Find@@YGPAVGen003C0350Lookup@@PAX@Z,0x00032A56,ILT to lookup body 0x003C0110; callee of 0x003C0350
 ?apply@Gen003C0350Lookup@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
+?clearOwned@Rva003C1A50@@QAEXXZ,0x000214E0,ILT to clear body 0x003C0EF0; callee of 0x003C1A50
+?clearTwoVec@Rva003C1A50@@QAEXXZ,0x0001B333,ILT to clear body 0x003C0F70; callee of 0x003C1A50
+?clearSingleton@Rva003C1A50@@QAEXXZ,0x00024875,ILT to clear body 0x003C0DB0; callee of 0x003C1A50
+?go@Glo012F706CType@@QAEXXZ,0x0001F7DF,ILT to bfmeGoBLE 0x00610050; callee of 0x003C1A50
+?resetUi@Glo012F706CType@@QAEXXZ,0x00015834,ILT to resetUiState 0x0060FFC0; callee of 0x003C1A50
