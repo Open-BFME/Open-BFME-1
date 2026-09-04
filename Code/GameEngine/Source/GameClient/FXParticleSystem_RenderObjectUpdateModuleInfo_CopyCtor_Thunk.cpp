@@ -5,6 +5,17 @@ class Xfer;
 
 namespace FXParticleSystem {
 
+// Stand-in for the GameClientRandomVariable this class really holds twelve of
+// (DoXfer in fx_particle_system_bulk.cpp xfers each slot through
+// xferRandomVariable): the real class declares an out-of-line operator=, and
+// retail copies these slots inline, so this TU keeps a trivially-copyable
+// twelve-byte aggregate instead of pulling that header in.
+struct VariableBlock {
+    unsigned int value0;
+    unsigned int value1;
+    unsigned int value2;
+};
+
 class RenderObjectUpdateModuleInfo {
 public:
     RenderObjectUpdateModuleInfo(const RenderObjectUpdateModuleInfo &that);
@@ -13,30 +24,28 @@ public:
     virtual void LoadPostProcess();
     virtual void DoXfer(Xfer &xfer);
     RenderObjectUpdateModuleInfo &operator=(const RenderObjectUpdateModuleInfo &that);
+
+private:
+    VariableBlock m_blocks[12];
+    unsigned int m_94;
 };
 
 // ??0RenderObjectUpdateModuleInfo@FXParticleSystem@@QAE@ABV01@@Z
 RenderObjectUpdateModuleInfo::RenderObjectUpdateModuleInfo(const RenderObjectUpdateModuleInfo &that)
 {
-    struct VariableBlock {
-        unsigned int value0;
-        unsigned int value1;
-        unsigned int value2;
-    };
-
-    *(VariableBlock *)((char *)this + 0x4) = *(const VariableBlock *)((const char *)&that + 0x4);
-    *(VariableBlock *)((char *)this + 0x10) = *(const VariableBlock *)((const char *)&that + 0x10);
-    *(VariableBlock *)((char *)this + 0x1c) = *(const VariableBlock *)((const char *)&that + 0x1c);
-    *(VariableBlock *)((char *)this + 0x28) = *(const VariableBlock *)((const char *)&that + 0x28);
-    *(VariableBlock *)((char *)this + 0x34) = *(const VariableBlock *)((const char *)&that + 0x34);
-    *(VariableBlock *)((char *)this + 0x40) = *(const VariableBlock *)((const char *)&that + 0x40);
-    *(VariableBlock *)((char *)this + 0x4c) = *(const VariableBlock *)((const char *)&that + 0x4c);
-    *(VariableBlock *)((char *)this + 0x58) = *(const VariableBlock *)((const char *)&that + 0x58);
-    *(VariableBlock *)((char *)this + 0x64) = *(const VariableBlock *)((const char *)&that + 0x64);
-    *(VariableBlock *)((char *)this + 0x70) = *(const VariableBlock *)((const char *)&that + 0x70);
-    *(VariableBlock *)((char *)this + 0x7c) = *(const VariableBlock *)((const char *)&that + 0x7c);
-    *(VariableBlock *)((char *)this + 0x88) = *(const VariableBlock *)((const char *)&that + 0x88);
-    *(unsigned int *)((char *)this + 0x94) = *(const unsigned int *)((const char *)&that + 0x94);
+    m_blocks[0] = that.m_blocks[0];
+    m_blocks[1] = that.m_blocks[1];
+    m_blocks[2] = that.m_blocks[2];
+    m_blocks[3] = that.m_blocks[3];
+    m_blocks[4] = that.m_blocks[4];
+    m_blocks[5] = that.m_blocks[5];
+    m_blocks[6] = that.m_blocks[6];
+    m_blocks[7] = that.m_blocks[7];
+    m_blocks[8] = that.m_blocks[8];
+    m_blocks[9] = that.m_blocks[9];
+    m_blocks[10] = that.m_blocks[10];
+    m_blocks[11] = that.m_blocks[11];
+    m_94 = that.m_94;
 }
 
 }
