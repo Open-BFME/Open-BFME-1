@@ -4550,7 +4550,6 @@ name,address,notes
 ??1Gen_dtor_00264b40@@UAE@XZ,0x000400D9,gen-dtor class destructor
 ??1Gen_dtor_00264e70@@UAE@XZ,0x0002C3E5,gen-dtor class destructor
 ??1Gen_dtor_002657d0@@UAE@XZ,0x0001CCA1,gen-dtor class destructor
-??1Gen_dtor_00265900@@UAE@XZ,0x00028961,gen-dtor class destructor
 ??1Gen_dtor_00265ab0@@UAE@XZ,0x00025577,gen-dtor class destructor
 ??1Gen_dtor_00265cd0@@UAE@XZ,0x0000DFB7,gen-dtor class destructor
 ??1Gen_dtor_00265db0@@UAE@XZ,0x000175B7,gen-dtor class destructor
@@ -32243,8 +32242,6 @@ name,address,notes
 ?b_00265880@@YAXXZ,0x00265880,gen-thunk body
 ?b_002658b0@@YAXXZ,0x002658B0,gen-thunk body
 ?b_002658f0@@YAXXZ,0x002658F0,gen-thunk body
-?b_00265900@@YAXXZ,0x00265900,gen-thunk body
-?b_00265930@@YAXXZ,0x00265930,gen-thunk body
 ?b_00265950@@YAXXZ,0x00265950,gen-thunk body
 ?b_00265960@@YAXXZ,0x00265960,gen-thunk body
 ?b_002659f0@@YAXXZ,0x002659F0,gen-thunk body
@@ -82731,3 +82728,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GPlayerUpgradeSpecialPower@@MAEPAXI@Z,0x00031174,primary class vtable slot zero ILT to 0x00264090
 ??1RepairSpecialPower@@MAE@XZ,0x000228F9,destructor ILT to 0x00264840
 ??_GRepairSpecialPower@@MAEPAXI@Z,0x00037DDF,primary class vtable slot zero ILT to 0x00264920
+??1ScavengerSpecialPower@@MAE@XZ,0x00028961,destructor ILT to 0x00265930
+??_GScavengerSpecialPower@@MAEPAXI@Z,0x00003F94,primary class vtable slot zero ILT to 0x00265900

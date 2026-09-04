@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class ScavengerSpecialPower : public SpecialPowerModule
 {
 public:
 	ScavengerSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~ScavengerSpecialPower();
 };
 
 ScavengerSpecialPower::ScavengerSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+ScavengerSpecialPower::~ScavengerSpecialPower()
 {
 }
