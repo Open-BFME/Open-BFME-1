@@ -82319,3 +82319,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
 ?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ,0x0000F94D,Skirmish state pending-update dispatcher call
 ?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
+??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
