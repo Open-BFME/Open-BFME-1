@@ -82449,3 +82449,10 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
 ??$__copy@PAUElem003AF7A0@@PAU1@H@_STL@@YAPAUElem003AF7A0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A1A0,Open-BFME5 ILT the range copy the vector erase at 0x003AF7A0 calls
 ?resolveBlockZones@@YAXHHPAGH@Z,0x00402760,Open-BFME5 pin: cdecl-mangled static alias of resolveBlockZones used by bfmeApplyBlockZoneRaw
+??$__copy@PAUElem003AF800@@PAU1@H@_STL@@YAPAUElem003AF800@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A10F,Open-BFME5 ILT range copy for vector erase 0x003AF800
+??$__copy@PAUElem003AF860@@PAU1@H@_STL@@YAPAUElem003AF860@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00011B8F,Open-BFME5 ILT range copy for vector erase 0x003AF860
+??$__copy@PAUElem003AF8C0@@PAU1@H@_STL@@YAPAUElem003AF8C0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001FBC2,Open-BFME5 ILT range copy for vector erase 0x003AF8C0
+??$__copy@PAUElem003AF980@@PAU1@H@_STL@@YAPAUElem003AF980@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000489C8,Open-BFME5 ILT range copy for vector erase 0x003AF980
+??$__copy@PAUElem003AF9E0@@PAU1@H@_STL@@YAPAUElem003AF9E0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002D006,Open-BFME5 ILT range copy for vector erase 0x003AF9E0
+??$__copy@PAUElem003B2540@@PAU1@H@_STL@@YAPAUElem003B2540@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000830F,Open-BFME5 ILT range copy for vector erase 0x003B2540
+??$__copy@PAUElem003B2830@@PAU1@H@_STL@@YAPAUElem003B2830@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DCBE,Open-BFME5 ILT range copy for vector erase 0x003B2830
