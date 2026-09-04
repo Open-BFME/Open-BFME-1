@@ -82525,3 +82525,73 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?anyReady@Rva003BF540@@QBE_NXZ,0x0000EA7F,ILT to anyReady@Rva003BD830Owner 0x003BD830; callee of test@Rva003BF540 @ 0x003BEAF0
+?anyMatching@Rva003BF540@@QAE_NH@Z,0x0000B63B,ILT to anyMatching@Rva003BDEC0 0x003BDEC0; callee of test@Rva003BF540 @ 0x003BEAF0
+?disabled@Gen_00609320@@QBE_NXZ,0x00048C4D,ILT to bfmeDisabled body 0x00609320; bool-shaped pin for test@Rva003BF540 @ 0x003BEAF0
+?bfmeDisabled@Gen_00609320@@QBEEXZ,0x00048C4D,ILT uchar spelling for bfmeDisabled body 0x00609320; callee of test@Rva003BF540
+?g_bfmeStateDF@@3PAVGen_00609320@@A,0x012F7048,decorated pin for test@Rva003BF540 global load
+?probe@Gen003BFB20Owner@@QAE_NPAX@Z,0x0000961A,ILT to 0x003CB790; callee of 0x003BFB20
+?finish@Rva003BFB20@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFB20
+?notify@Gen003BFB20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFB20
+?TheWritableGlobalData@@3PAVGlo012ED5C8Type@@A,0x012ED5C8,typed pin for Rva003BFB20::run global load
+?TheLivingWorldCampaignManager@@3PAVGlo012F1024Type@@A,0x012F1024,typed pin for Rva003BFB20::run campaign step
+?fill@Gen003C9470Owner@@QAEXPAXPAUGen003BC9C0Pair@@@Z,0x00033EBA,thiscall fill used by Rva003BC9C0::run at 0x003BC9C0; ILT to 0x003C9470
+?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
+?apply@BfmeHost4164E0@@QAEXHHHH@Z,0x0003A2A1,ILT to sibling apply body 0x00416440; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
+?finish@Rva003BFAB0@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFAB0
+?checkForTarget@Pathfinder@@QAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z,0x0004864E,ILT to 0x003ECF90; callee of Rva003EEB50::run
+?clear@Gen003BFC20Owner@@QAEXXZ,0x00040016,ILT to clear body 0x003CAD90; callee of 0x003BFC20
+?notify@Gen003BFC20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFC20
+?finish@Rva003BFC20@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFC20
+?probe@Gen003C0350Owner@@QAEPAXPAX@Z,0x0002BF0D,ILT to find body 0x003C8A50; callee of 0x003C0350
+?fill@Gen003C0350Found@@QAE_NPAX0@Z,0x000325B0,ILT to fill body 0x00619840; callee of 0x003C0350
+?apply@Gen003C0110Result@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
+?Gen003C0350Find@@YGPAVGen003C0350Lookup@@PAX@Z,0x00032A56,ILT to lookup body 0x003C0110; callee of 0x003C0350
+?apply@Gen003C0350Lookup@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
+?clearOwned@Rva003C1A50@@QAEXXZ,0x000214E0,ILT to clear body 0x003C0EF0; callee of 0x003C1A50
+?clearTwoVec@Rva003C1A50@@QAEXXZ,0x0001B333,ILT to clear body 0x003C0F70; callee of 0x003C1A50
+?clearSingleton@Rva003C1A50@@QAEXXZ,0x00024875,ILT to clear body 0x003C0DB0; callee of 0x003C1A50
+?go@Glo012F706CType@@QAEXXZ,0x0001F7DF,ILT to bfmeGoBLE 0x00610050; callee of 0x003C1A50
+?resetUi@Glo012F706CType@@QAEXXZ,0x00015834,ILT to resetUiState 0x0060FFC0; callee of 0x003C1A50
+?bfmeLayersCompatible@@YA_NPBVPathfindCell@@0@Z,0x00025F04,Open-BFME5 ILT thunk to bfmeLayersCompatible at 0x004022D0
+?Set_Mesh@AABTreeClass@@QAEXPAVMeshGeometryClass@@@Z,0x0096A620,callee of MeshGeometryClass::operator= CullTree clone; 10B store at this+0x18
+??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
+??1FeslEchoMessage@@QAE@XZ,0x007E86C0,FESL message buffer destructor
+?addInt@FeslEchoMessage@@QAEXPBDH@Z,0x007E88D0,FESL integer field writer
+?addString@FeslEchoMessage@@QAEXPBD0@Z,0x007E8A10,FESL string field writer
+?sendFeslMessage@@YAXPAXPBD0@Z,0x007F93E0,FESL routed message sender
+?g_feslTransactionIdKey@@3PADA,0x00D2C144,FESL TID field key
+?g_feslTypeKey@@3PADA,0x00D2B490,FESL TYPE field key
+?g_feslUserIdKey@@3PADA,0x00D2B558,FESL UGID field key
+?g_feslSecretKey@@3PADA,0x00D2B560,FESL SECRET field key
+?g_feslDirectRoute@@3PADA,0x00D2C300,FESL direct route marker
+?releaseCodecMembers@@YAXPAUCodecState@@@Z,0x009A4A60,codec state nested-member release
+?releaseCodecBuffer@@YAXPAPAX@Z,0x009A6EC0,codec buffer owner release
+?releaseCodecCallback@@YAXPAPAX@Z,0x009A5E60,codec callback owner release
+?freeCodecMemory@@YAXPAX@Z,0x009A5980,codec allocator free thunk
+?bfmeSlashOrDefaultName@@YA?AVAsciiString@@ABV1@0@Z,0x00044E3B,Open-BFME5 ILT to slash-or-default AsciiString helper body 0x001945D0
+?publishLanEndpoint@@YAXPAVLANGameInfo@@PADPAXH@Z,0x00049E86,LAN endpoint publisher thunk
+?resetLanGameState@@YAXXZ,0x0001C9D6,LAN current-game reset thunk
+?processInactiveLanMessages@@YAXXZ,0x00039202,inactive LAN message pump thunk
+?getSlot@LANGameInfo@@QAEPAVGameSlot@@H@Z,0x0001EC18,LAN game slot lookup thunk
+?g_lanConnection@@3PAXA,0x00EF3C1C,active LAN endpoint connection
+?g_lanEndpointBuffer@@3PADA,0x00EF3CC4,LAN endpoint publication buffer
+?notify04@Rva003BAD00Owner@@QAEXABVAsciiString@@H@Z,0x00027287,Open-BFME5 ILT thunk to body 0x003BAD00; ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z at 0x003CA7C0 calls it with the border-effect key and a zero
+?TheBfmeComA@@3PAUBfmeComUnknown@@A,0x01306F20,GenAlpha::h00024D2A COM pointer A
+?TheBfmeComB@@3PAUBfmeComUnknown@@A,0x01306F1C,GenAlpha::h00024D2A COM pointer B
+?TheBfmeReleaseOwner@@3PAVRva007ADB80Owner@@A,0x01306DE8,GenAlpha::h00024D2A releaseReferences target
+?afterRelease@GenAlpha@@QAEXXZ,0x0003139A,GenAlpha::h00024D2A follow-up thiscall ILT (body 0x007B96E0)
+?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
+??$__copy@PAUElem003AF7A0@@PAU1@H@_STL@@YAPAUElem003AF7A0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A1A0,Open-BFME5 ILT the range copy the vector erase at 0x003AF7A0 calls
+?resolveBlockZones@@YAXHHPAGH@Z,0x00402760,Open-BFME5 pin: cdecl-mangled static alias of resolveBlockZones used by bfmeApplyBlockZoneRaw
+??$__copy@PAUElem003AF800@@PAU1@H@_STL@@YAPAUElem003AF800@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A10F,Open-BFME5 ILT range copy for vector erase 0x003AF800
+??$__copy@PAUElem003AF860@@PAU1@H@_STL@@YAPAUElem003AF860@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00011B8F,Open-BFME5 ILT range copy for vector erase 0x003AF860
+??$__copy@PAUElem003AF8C0@@PAU1@H@_STL@@YAPAUElem003AF8C0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001FBC2,Open-BFME5 ILT range copy for vector erase 0x003AF8C0
+??$__copy@PAUElem003AF980@@PAU1@H@_STL@@YAPAUElem003AF980@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000489C8,Open-BFME5 ILT range copy for vector erase 0x003AF980
+??$__copy@PAUElem003AF9E0@@PAU1@H@_STL@@YAPAUElem003AF9E0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002D006,Open-BFME5 ILT range copy for vector erase 0x003AF9E0
+??$__copy@PAUElem003B2540@@PAU1@H@_STL@@YAPAUElem003B2540@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000830F,Open-BFME5 ILT range copy for vector erase 0x003B2540
+??$__copy@PAUElem003B2830@@PAU1@H@_STL@@YAPAUElem003B2830@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DCBE,Open-BFME5 ILT range copy for vector erase 0x003B2830
+??0Rva00590010FourString@@QAE@ABVUnicodeString@@000@Z,0x0004B2B3,ILT for the four-UnicodeString ctor used by Rva005929E0::replace
+??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
+??$__copy@PAUElem003AF920@@PAU1@H@_STL@@YAPAUElem003AF920@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00008DE1,Open-BFME5 ILT range copy for vector erase 0x003AF920
+??$__copy@PAUElem003B6FD0@@PAU1@H@_STL@@YAPAUElem003B6FD0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002950A,Open-BFME5 ILT range copy for vector erase 0x003B6FD0
