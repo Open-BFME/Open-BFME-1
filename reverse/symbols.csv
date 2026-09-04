@@ -83743,3 +83743,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,Open-BFME5 ILT to FXList four-arg doFXPos body 0x008280D0; same thunk as BridgeAreaEffectsFXShim::doFXPos
 ??0Rva00800630Owner@@QAE@XZ,0x00800340,Rva00802380Owner ctor member at +0x18 this-zero3
 ?unidentified_000144bb@WindowManager@@QAEXH@Z,0x000144BB,ILT -> 0x004674E0; WindowManager thiscall(-1) from soloMordorFadeLoadGame; body is bfmePop@Gen_004674E0
+??0Rva00801FB0Elem@@QAE@XZ,0x00801FB0,FESL Rva00802A10 allocate element ctor still dump
