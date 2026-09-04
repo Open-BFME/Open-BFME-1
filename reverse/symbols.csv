@@ -83686,3 +83686,6 @@ ___ParseLocaleString,0x0084E0C0,STLport 4.5.3 __ParseLocaleString; eax-in privat
 ?isAnyKindOf@Thing@@QBE_NABUKindOfMask@@@Z,0x0004250A,KindOfMask struct ILT used by WeaponSet::chooseBestWeaponForTarget
 ?insertGame@BfmeAptScreenOnlineCustomMatch@@QAEHPAVGameSpyStagingRoom@@@Z,0x0002E0FF,ILT of Apt CustomMatch insertGame used by applyStagingRoomRefresh 0x0053FC00
 ?add@WindowManager@@QAEXPAXPBDH1HHHH@Z,0x00015235,CallChild action-sink used by applyStagingRoomRefresh join-button Enable/Disable
+__Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGUISTIC_CASING
+__Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
+__Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
