@@ -1,19 +1,20 @@
-class Rva00368C10Mask
+class AttributeModifierCategoryMask
 {
 public:
 	unsigned int m_bits;
 };
 
-class Rva00368C10Values
+class AttributeModifierPoolUpdate
 {
 public:
 	char m_unreconstructed[ 0x48 ];
 	int m_values[ 8 ];
 
-	int valueFor(const Rva00368C10Mask *mask) const;
+	int bfmeGetCountForCategoryMask(const AttributeModifierCategoryMask *mask) const;
 };
 
-int Rva00368C10Values::valueFor(const Rva00368C10Mask *mask) const
+int AttributeModifierPoolUpdate::bfmeGetCountForCategoryMask(
+	const AttributeModifierCategoryMask *mask) const
 {
 	int index;
 	for( index = 0; index < 7; ++index )
@@ -26,5 +27,3 @@ int Rva00368C10Values::valueFor(const Rva00368C10Mask *mask) const
 found:
 	return m_values[index + 1];
 }
-
-// @?valueFor@Rva00368C10Values@@QBEHPBVRva00368C10Mask@@@Z 0x00368C10

@@ -4,52 +4,53 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 template <typename T>
-const T &Rva003690A0Min(const T &left, const T &right)
+const T &AttributeModifierMin(const T &left, const T &right)
 {
 	return right < left ? right : left;
 }
 
-class Rva00368C10Mask
+class AttributeModifierCategoryMask
 {
 public:
 	unsigned int m_bits;
 };
 
-class Rva00368C10Values
+class AttributeModifierPoolUpdate
 {
 public:
-	int valueFor(const Rva00368C10Mask *mask) const;
+	int bfmeGetCountForCategoryMask(
+		const AttributeModifierCategoryMask *mask) const;
 };
 
-class AttributeModifierPoolUpdate;
-class Rva00369860State;
+class AttributeModifierDefinition;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
-	friend class Rva00369860State;
+	friend class AttributeModifierDefinition;
 
 private:
 	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate(void) const;
 };
 
-class Rva00369860Pair
+class AttributeModifierIntPair
 {
 public:
 	int m_first;
 	int m_second;
 };
 
-class Rva00369860Range
+class AttributeModifierIntPairRange
 {
 public:
 	__forceinline void clear(void) { erase(m_begin, m_end); }
 
 private:
-	__forceinline Rva00369860Pair *erase(Rva00369860Pair *first, Rva00369860Pair *last)
+	__forceinline AttributeModifierIntPair *erase(
+		AttributeModifierIntPair *first, AttributeModifierIntPair *last)
 	{
 		int count = m_end - last;
-		Rva00369860Pair *output = first;
+		AttributeModifierIntPair *output = first;
 		while( count > 0 )
 		{
 			*output = *last;
@@ -61,16 +62,16 @@ private:
 		return first;
 	}
 
-	Rva00369860Pair *m_begin;
-	Rva00369860Pair *m_end;
-	Rva00369860Pair *m_capacity;
+	AttributeModifierIntPair *m_begin;
+	AttributeModifierIntPair *m_end;
+	AttributeModifierIntPair *m_capacity;
 };
 
-class Rva00369860State
+class AttributeModifierDefinition
 {
 public:
-	Rva00369860Range m_pairs;
-	Rva00368C10Mask m_mask;
+	AttributeModifierIntPairRange m_pairs;
+	AttributeModifierCategoryMask m_mask;
 	char m_unreconstructed10[ 4 ];
 	int m_mode;
 	int m_field18;
@@ -86,7 +87,7 @@ public:
 	int secondaryValueFor(const Object *object) const;
 };
 
-void Rva00369860State::reset(int mode)
+void AttributeModifierDefinition::reset(int mode)
 {
 	m_mode = mode;
 	m_field18 = 0;
@@ -104,39 +105,32 @@ void Rva00369860State::reset(int mode)
 	m_secondaryValues[2] = 0;
 }
 
-// @?reset@Rva00369860State@@QAEXH@Z 0x00369860
-
-int Rva00369860State::primaryValueFor(const Object *object) const
+int AttributeModifierDefinition::primaryValueFor(const Object *object) const
 {
 	if( !m_flag8C || object == 0 )
 		return m_primaryValues[0];
 
-	// Only this lookup interface is proven; the concrete bonus-source type is opaque.
-	Rva00368C10Values *values =
-		(Rva00368C10Values *)object->bfmeFindAttributeModifierPoolUpdate();
+	AttributeModifierPoolUpdate *values =
+		object->bfmeFindAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_primaryValues[0];
 
-	int index = values->valueFor(&m_mask) - 1;
-	index = Rva003690A0Min(index, 2);
+	int index = values->bfmeGetCountForCategoryMask(&m_mask) - 1;
+	index = AttributeModifierMin(index, 2);
 	return index >= 0 ? m_primaryValues[index] : m_primaryValues[0];
 }
 
-// @?primaryValueFor@Rva00369860State@@QBEHPBVObject@@@Z 0x003690A0
-
-int Rva00369860State::secondaryValueFor(const Object *object) const
+int AttributeModifierDefinition::secondaryValueFor(const Object *object) const
 {
 	if( !m_flag8C || object == 0 )
 		return m_secondaryValues[0];
 
-	Rva00368C10Values *values =
-		(Rva00368C10Values *)object->bfmeFindAttributeModifierPoolUpdate();
+	AttributeModifierPoolUpdate *values =
+		object->bfmeFindAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_secondaryValues[0];
 
-	int index = values->valueFor(&m_mask) - 1;
-	index = Rva003690A0Min(index, 2);
+	int index = values->bfmeGetCountForCategoryMask(&m_mask) - 1;
+	index = AttributeModifierMin(index, 2);
 	return index >= 0 ? m_secondaryValues[index] : m_secondaryValues[0];
 }
-
-// @?secondaryValueFor@Rva00369860State@@QBEHPBVObject@@@Z 0x00369120

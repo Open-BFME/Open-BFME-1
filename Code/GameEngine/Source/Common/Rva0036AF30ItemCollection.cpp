@@ -19,7 +19,7 @@ private:
 	Rva00367DC0Pair *m_last;
 };
 
-class Rva0036AF30Item
+class AttributeModifierDefinition
 {
 public:
 	Rva00367DC0PairRange m_pairs;
@@ -31,21 +31,21 @@ public:
 	int secondaryValueFor(const Object *object) const;
 };
 
-class Rva0036AF30ItemRange
+class AttributeModifierDefinitionRange
 {
 public:
 	unsigned int size(void) const { return m_end - m_begin; }
-	Rva0036AF30Item *operator[](int index) const { return m_begin[index]; }
+	AttributeModifierDefinition *operator[](int index) const { return m_begin[index]; }
 
-	Rva0036AF30Item **m_begin;
-	Rva0036AF30Item **m_end;
+	AttributeModifierDefinition **m_begin;
+	AttributeModifierDefinition **m_end;
 };
 
 class Rva0036AF30ItemCollection
 {
 public:
 	char m_unreconstructed[ 8 ];
-	Rva0036AF30ItemRange m_items;
+	AttributeModifierDefinitionRange m_items;
 
 	int indexOf(int key) const;
 	int valueAt(int index) const;
@@ -55,8 +55,8 @@ public:
 
 int Rva0036AF30ItemCollection::indexOf(int key) const
 {
-	Rva0036AF30Item **cursor = m_items.m_begin;
-	Rva0036AF30Item **end = m_items.m_end;
+	AttributeModifierDefinition **cursor = m_items.m_begin;
+	AttributeModifierDefinition **end = m_items.m_end;
 	int index = 0;
 	while( cursor != end )
 	{
@@ -75,7 +75,7 @@ int Rva0036AF30ItemCollection::valueAt(int index) const
 	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
 		return 0;
 
-	Rva0036AF30Item *item = m_items[index];
+	AttributeModifierDefinition *item = m_items[index];
 	return item ? item->m_value : 0;
 }
 
@@ -88,7 +88,7 @@ int Rva0036AF30ItemCollection::primaryValueAt(
 	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
 		return 0;
 
-	Rva0036AF30Item *item = m_items[index];
+	AttributeModifierDefinition *item = m_items[index];
 	return item ? item->primaryValueFor(object) : 0;
 }
 
@@ -101,7 +101,7 @@ int Rva0036AF30ItemCollection::secondaryValueAt(
 	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
 		return 0;
 
-	Rva0036AF30Item *item = m_items[index];
+	AttributeModifierDefinition *item = m_items[index];
 	return item ? item->secondaryValueFor(object) : 0;
 }
 
