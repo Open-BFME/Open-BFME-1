@@ -2,7 +2,7 @@
 // Isolated 1054 category-table fragments already named by BfmeConv1054.cpp.
 // 0x005CD4E0 is the last quartet of bfmeTailA1054Impl (make 8 + ILT 0x0003C9CF).
 // 0x005CEF60 is H4+H5 then the cdecl A tail. 0x005D10E0 is key1+key2 then
-// the cdecl B tail.
+// the cdecl B tail. 0x005CD990 is H7+H8 with no tail.
 
 int bfmeMake1054( int n );
 
@@ -113,4 +113,21 @@ void __cdecl bfmeInitKey12_005D10E0( BfmeCategoryHead1054 *p )
 	p->m_zero28 = z;
 	p->m_zero2c = z;
 	bfmeTailB1054Cdecl( reinterpret_cast<BfmeB1054 *>( p ) );
+}
+
+// H7+H8 with no tail -- the last two quartets of bfmeTailA1054Impl.
+// Retail pops both make args in one add esp,8 and writes the H8 zeros
+// before the handle and callback.
+void __cdecl bfmeInitH78_005CD990( BfmeA1054 *p )
+{
+	int z = 0;
+	p->m_h7 = bfmeMake1054( 7 );
+	p->m_fn7 = reinterpret_cast<void ( * )( void )>( 0x00441c09 );
+	p->m_78 = z;
+	p->m_7c = z;
+	int h8 = bfmeMake1054( 8 );
+	p->m_88 = z;
+	p->m_8c = z;
+	p->m_h8 = h8;
+	p->m_fn8 = reinterpret_cast<void ( * )( void )>( 0x0043c9cf );
 }
