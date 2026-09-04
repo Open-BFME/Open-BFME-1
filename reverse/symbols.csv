@@ -11335,6 +11335,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@URva00608FE0Element@@V?$allocator@URva00608FE0Element@@@_STL@@@_STL@@IAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000E656,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva0061B4B0Element@@V?$allocator@URva0061B4B0Element@@@_STL@@@_STL@@IAEXPAURva0061B4B0Element@@ABU3@ABU__false_type@2@I_N@Z,0x00048A45,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva006AACB0Element@@V?$allocator@URva006AACB0Element@@@_STL@@@_STL@@IAEXPAURva006AACB0Element@@ABU3@ABU__false_type@2@I_N@Z,0x00003134,Open-BFME5 a callee of a vector push_back
+?_M_insert_overflow@?$vector@PAVSubtitleEntry@@V?$allocator@PAVSubtitleEntry@@@_STL@@@_STL@@IAEXPAPAVSubtitleEntry@@ABQAV3@ABU__true_type@2@I_N@Z,0x0081DAD0,SubtitleManager addSubtitle vector overflow path; exact STLport pointer specialization
 ?_M_insert_overflow@?$vector@URva006F2C70Element@@V?$allocator@URva006F2C70Element@@@_STL@@@_STL@@IAEXPAURva006F2C70Element@@ABU3@ABU__false_type@2@I_N@Z,0x0003D023,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva00774090Element@@V?$allocator@URva00774090Element@@@_STL@@@_STL@@IAEXPAURva00774090Element@@ABU3@ABU__false_type@2@I_N@Z,0x000418AD,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva00775FE0Element@@V?$allocator@URva00775FE0Element@@@_STL@@@_STL@@IAEXPAURva00775FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000FBC8,Open-BFME5 a callee of a vector push_back

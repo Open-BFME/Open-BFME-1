@@ -1,8 +1,12 @@
+// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB
+// stlport
 // BFME SubtitleManager indexed accessors.  Their release-build bounds failure
 // path feeds the original diagnostic strings through the shared debug manager.
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
+
+#include <vector>
 
 class SubtitleCrashMessage
 {
@@ -80,22 +84,15 @@ public:
 	int m_tailSecond;
 };
 
-class SubtitleEntryVector
-{
-public:
-	SubtitleEntryVector() : m_start(0), m_finish(0), m_end(0) {}
-	int size() const { return m_finish - m_start; }
-	SubtitleEntry *operator[](int index) const { return m_start[index]; }
-
-	SubtitleEntry **m_start;
-	SubtitleEntry **m_finish;
-	SubtitleEntry **m_end;
-};
+typedef SubtitleEntry *(__cdecl *CreateSubtitleEntry)(AsciiString *, int,
+	const AsciiString &, unsigned int, int, int, int, int, int);
 
 class SubtitleManager
 {
 public:
-	SubtitleManager(int first, int second, const AsciiString &name);
+	SubtitleManager(CreateSubtitleEntry createEntry, int second, const AsciiString &name);
+	void addSubtitle(const AsciiString &label, unsigned int color, int style,
+		int alignment, int line, int startFrame, int endFrame);
 	bool hasBeenDisplayed(int index) const;
 	AsciiString getText(int index) const;
 	void setDisplayedStats(int index);
@@ -103,19 +100,20 @@ public:
 	int getStartFrame(int index) const;
 
 private:
-	int m_first;
+	CreateSubtitleEntry m_createEntry;
 	int m_second;
 	AsciiString m_name;
 	AsciiString m_secondaryName;
 	int m_count;
-	SubtitleEntryVector m_entries;
+	_STL::vector<SubtitleEntry *> m_entries;
 	int m_startFrame;
 	int m_state[15];
 	bool m_enabled;
 };
 
-SubtitleManager::SubtitleManager(int first, int second, const AsciiString &name) :
-	m_first(first),
+SubtitleManager::SubtitleManager(CreateSubtitleEntry createEntry, int second,
+	const AsciiString &name) :
+	m_createEntry(createEntry),
 	m_second(second),
 	m_name(name),
 	m_secondaryName(),
@@ -143,9 +141,17 @@ SubtitleManager::SubtitleManager(int first, int second, const AsciiString &name)
 	m_state[14] = 0;
 }
 
+void SubtitleManager::addSubtitle(const AsciiString &label, unsigned int color,
+	int style, int alignment, int line, int startFrame, int endFrame)
+{
+	SubtitleEntry *entry = m_createEntry(&m_secondaryName, m_count, label, color,
+		style, alignment, line, startFrame, endFrame);
+	m_entries.push_back(entry);
+}
+
 bool SubtitleManager::hasBeenDisplayed(int index) const
 {
-	if (index < m_entries.size())
+	if (index < (int)m_entries.size())
 		return m_entries[index]->m_bulk.fields.displayed;
 
 	_bfme_debugRecordCallsite(1);
@@ -159,7 +165,7 @@ bool SubtitleManager::hasBeenDisplayed(int index) const
 
 AsciiString SubtitleManager::getText(int index) const
 {
-	if (index < m_entries.size())
+	if (index < (int)m_entries.size())
 		return m_entries[index]->getText();
 
 	_bfme_debugRecordCallsite(1);
@@ -173,7 +179,7 @@ AsciiString SubtitleManager::getText(int index) const
 
 void SubtitleManager::setDisplayedStats(int index)
 {
-	if (index < m_entries.size())
+	if (index < (int)m_entries.size())
 	{
 		m_entries[index]->m_bulk.fields.displayed = true;
 		return;
@@ -189,7 +195,7 @@ void SubtitleManager::setDisplayedStats(int index)
 
 unsigned int SubtitleManager::getColor(int index) const
 {
-	if (index < m_entries.size())
+	if (index < (int)m_entries.size())
 		return m_entries[index]->m_bulk.fields.color;
 
 	_bfme_debugRecordCallsite(1);
@@ -203,7 +209,7 @@ unsigned int SubtitleManager::getColor(int index) const
 
 int SubtitleManager::getStartFrame(int index) const
 {
-	if (index < m_entries.size())
+	if (index < (int)m_entries.size())
 		return m_entries[index]->m_bulk.words[4];
 
 	_bfme_debugRecordCallsite(1);
