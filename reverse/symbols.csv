@@ -82737,3 +82737,4 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??0AsciiStringXK@@QAE@ABV0@@Z,0x00887B60,pin
 ??1AsciiStringXK@@QAE@XZ,0x00887940,pin
 ?set@AsciiStringXK@@QAEXABV1@@Z,0x00887C90,pin
+?GridScaleRva007D4AF0@@YAPAUGridGlobals@@XZ,0x00031944,retail grid0x007D4AF0 call at0x007D4B4B;thunk to0x00421E70
