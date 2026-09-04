@@ -83684,3 +83684,5 @@ ___ParseLocaleString,0x0084E0C0,STLport 4.5.3 __ParseLocaleString; eax-in privat
 ?bfmeEstimate@Weapon@@QBEMPBVObject@@0@Z,0x0001538E,ILT used by WeaponSet::chooseBestWeaponForTarget
 ?bfmeSpecialOk@Weapon@@QBE_NPBVObject@@0@Z,0x00032123,ILT used by WeaponSet::chooseBestWeaponForTarget
 ?isAnyKindOf@Thing@@QBE_NABUKindOfMask@@@Z,0x0004250A,KindOfMask struct ILT used by WeaponSet::chooseBestWeaponForTarget
+?insertGame@BfmeAptScreenOnlineCustomMatch@@QAEHPAVGameSpyStagingRoom@@@Z,0x0002E0FF,ILT of Apt CustomMatch insertGame used by applyStagingRoomRefresh 0x0053FC00
+?add@WindowManager@@QAEXPAXPBDH1HHHH@Z,0x00015235,CallChild action-sink used by applyStagingRoomRefresh join-button Enable/Disable
