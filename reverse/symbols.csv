@@ -82555,15 +82555,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0SaveGameInfo@@QAE@ABV0@@Z,0x00029B86,AvailableGameInfo copy constructor calls the SaveGameInfo copy constructor through this ILT
-g_bfmeVtableVWa,0x010F9AD8,Open-BFME5 the base table the display owner at 0x00491D20 installs first
-g_bfmeVtableVWc,0x010F9C08,Open-BFME5 the owner table the display owner at 0x00491D20 installs second
-g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 pushes onto
-??0BfmeStrVW@@QAE@ABV0@@Z,0x00887B60,pin
-??1BfmeStrVW@@QAE@XZ,0x00887940,pin
-??1BfmeBaseVW@@QAE@XZ,0x004902A0,Open-BFME5 the list-unhooking base destructor the owner unwind funclet runs
-?TheMultiplayerSettings@@3PAVMultiplayerSettings@@A,0x012ED5FC,TheMultiplayerSettings singleton; DIR32 at Rva0051B560Host::bfmeProvide
-??1W3DProjectedShadow@@QAE@XZ,0x00022962,ILT used when the projected-shadow manager explicitly destroys a recycled shadow
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0002EDDE,ILT to the real MultiplayerColorDefinition copy constructor at 0x0008E470
 g_bfmeVtableVY,0x010EDAD8,Open-BFME5 the table the wide-text copy ctor at 0x0049A070 installs
 ??0BfmeWideVY@@QAE@ABV0@@Z,0x00888400,pin
