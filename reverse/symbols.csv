@@ -9779,7 +9779,6 @@ name,address,notes
 ?Resize@?$SimpleVecClass@VVector2@@@@UAE_NH@Z,0x00031593,hit-decoded x4 (thunk)
 ?Resize@?$SimpleVecClass@VVector3@@@@UAE_NH@Z,0x00031593,hit-decoded x13 (thunk)
 ?Resize@?$SimpleVecClass@VVector3i16@@@@UAE_NH@Z,0x00031593,pinharvest x3 (thunk)
-?Resize@?$SimpleVecClass@VVector4@@@@UAE_NH@Z,0x00031593,site-decoded x3 (thunk)
 ?Resize@?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE_NHPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x0093E4D0,pinharvest (call-site decode from ?Resize@?$DynamicVectorClass@U_ENUM_VALUE@EnumParameterClass@@@@ at 0x93E700; body not source-owned)
 ?ResolveIP@@YAIVAsciiString@@@Z,0x0003DC08,ILT thunk to 0x00682EF0; the address LANAPI::SetLocalIP(AsciiString) at 0x00686C10 encodes
 ?RetailScriptVTable@@3PAPAXA,0x010E858C,Open-BFME5 retail Script vtable value
