@@ -1,5 +1,5 @@
 // ?groundPathPassableCallback@GroundPathPassableStruct@@QAEHPAVPathfindCell@@0HH@Z
-// partial score=0.94 date=2026-09-02
+// partial score=0.94 date=2026-09-04
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003E5B80: BFME's member form of the sibling of ZH

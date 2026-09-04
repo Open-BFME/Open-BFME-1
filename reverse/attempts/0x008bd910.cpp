@@ -1,4 +1,6 @@
 // ?bfmeRouteNode1282@@YGXPAVBfmeNodeDX@@H@Z
+// partial score=0.96 date=2026-09-04
+// ?bfmeRouteNode1282@@YGXPAVBfmeNodeDX@@H@Z
 // partial score=0.96 date=2026-08-30
 class BfmeNodeDX
 {

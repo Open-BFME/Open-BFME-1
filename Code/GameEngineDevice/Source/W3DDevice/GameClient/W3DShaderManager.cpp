@@ -3253,7 +3253,7 @@ enum GraphicsVenderID
 	for coding around specific driver bugs.
  */
 //=============================================================================
-#if 0
+#if 1
 ChipsetType W3DShaderManager::getChipset( void )
 {
 	//check if globaldata has an override for current chipset
@@ -3343,6 +3343,7 @@ ChipsetType W3DShaderManager::getChipset( void )
 }
 #endif
 
+#if 0
 // Retail's active implementation is the compact global override accessor.
 // Keep the historical hardware-probing reconstruction above for reference,
 // but emit the exact retail body from this C++ translation unit.
@@ -3379,6 +3380,7 @@ __declspec(naked) ChipsetType W3DShaderManager::getChipset( void )
 		_emit 0C3h
 	}
 }
+#endif
 
 //=============================================================================
 // WaterRenderObjClass::LoadAndCreateShader

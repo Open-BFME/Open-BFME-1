@@ -710,57 +710,113 @@ void OpenContain::removeFromContainViaIterator( ContainedItemsList::iterator it,
 
 }
 
+// The retail OpenContain implementation predates the current Object and AI
+// declarations.  These narrow views retain its BFME field and subinterface
+// offsets without changing the shared headers.
+class BfmeOpenScatterThing
+{
+public:
+	Real bfmeRelativeAngleTo( const Coord3D *point ) const;
+	Int getLayer() const;
+	Real getOrientation() const
+	{
+		return *reinterpret_cast<const Real *>(reinterpret_cast<const char *>(this) + 0x44);
+	}
+	void setPosition( const Coord3D *position );
+	void bfmeRecordTransform( UnsignedInt flags );
+
+	UnsignedInt getObjectStatus() const
+	{
+		return *reinterpret_cast<const UnsignedInt *>(reinterpret_cast<const char *>(this) + 0x94);
+	}
+
+	const Coord3D *getPosition() const
+	{
+		return reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(this) + 0x38);
+	}
+
+	void *getAI() const
+	{
+		return *reinterpret_cast<void *const *>(reinterpret_cast<const char *>(this) + 0x204);
+	}
+};
+
+class BfmeOpenScatterAICommand
+{
+public:
+	void aiMoveToPosition( const Coord3D *position, Int commandSource );
+};
+
+class BfmeOpenScatterAIUpdate
+{
+public:
+	void ignoreObstacle( void *object );
+};
+
+class BfmeOpenScatterTerrainLogic
+{
+public:
+	virtual void slot0( void ) = 0;
+	virtual void slot1( void ) = 0;
+	virtual void slot2( void ) = 0;
+	virtual void slot3( void ) = 0;
+	virtual void slot4( void ) = 0;
+	virtual void slot5( void ) = 0;
+	virtual void slot6( void ) = 0;
+	virtual Real getLayerHeight( Real x, Real y, Int layer, Coord3D *normal, Bool clip ) = 0;
+};
+
 //-------------------------------------------------------------------------------------------------
 // ?scatterToNearbyPosition@OpenContain@@ present-unmatched
-void OpenContain::scatterToNearbyPosition(Object* rider)
+void OpenContain::scatterToNearbyPosition( Object *rider )
 {
-	Object *theContainer = getObject();
+	BfmeOpenScatterThing *theContainer = *reinterpret_cast<BfmeOpenScatterThing **>(reinterpret_cast<char *>(this) + 0x08);
+	register BfmeOpenScatterThing *theRider = reinterpret_cast<BfmeOpenScatterThing *>(rider);
+	Real angle;
 
-	//
-	// for now we will just set the position of the object that is being removed from us
-	// at a random angle away from our center out some distance
-	//
-	
-	//
-	// pick an angle that is in the view of the current camera position so that
-	// the thing will come out "toward" the player and they can see it
-	// NOPE, can't do that ... all players screen angles will be different, unless
-	// we maintain the angle of each players screen in the player structure or something
-	//
-	Real angle = GameLogicRandomValueReal( 0.0f, 2.0f * PI );
-//	angle = TheTacticalView->getAngle();
-//	angle -= GameLogicRandomValueReal( PI / 3.0f, 2.0f * (PI / 3.0F) );
+#line 906 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\OpenContain.cpp"
+	angle = GetGameLogicRandomValueReal( 0.0f, 2.0f * 3.14159265358979323846f,
+		__FILE__, __LINE__ );
 
-	Real minRadius = theContainer->getGeometryInfo().getBoundingCircleRadius();
+	if( (theRider->getObjectStatus() & 0x10000000) == 0 )
+	{
+		angle = theContainer->getOrientation() + theContainer->bfmeRelativeAngleTo( theRider->getPosition() );
+	}
+
+	Real minRadius = *reinterpret_cast<const Real *>(reinterpret_cast<const char *>(theContainer) + 0xBC);
 	Real maxRadius = minRadius + minRadius / 2.0f;
-	const Coord3D *containerPos = theContainer->getPosition();
-	Real dist = GameLogicRandomValueReal( minRadius, maxRadius );
+	const Coord3D *containerPosition = theContainer->getPosition();
+
+#line 921 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\OpenContain.cpp"
+	Real dist = GetGameLogicRandomValueReal( minRadius, maxRadius, __FILE__, __LINE__ );
 
 	Coord3D pos;
-	pos.x = dist * Cos( angle ) + containerPos->x;
-	pos.y = dist * Sin( angle ) + containerPos->y;
-	pos.z = TheTerrainLogic->getLayerHeight( pos.x, pos.y, theContainer->getLayer() );
+	pos.x = dist * Cos( angle ) + containerPosition->x;
+	pos.y = dist * Sin( angle ) + containerPosition->y;
+	pos.z = reinterpret_cast<BfmeOpenScatterTerrainLogic *>(TheTerrainLogic)->getLayerHeight(
+		pos.x, pos.y, theContainer->getLayer(), 0, 1 );
 
-	// set orientation
-	rider->setOrientation( angle );
-
-	AIUpdateInterface *ai = rider->getAI();
+	BfmeOpenScatterAIUpdate *ai = reinterpret_cast<BfmeOpenScatterAIUpdate *>(theRider->getAI());
 	if( ai )
 	{
-		// set position of the object at center of building and move them toward pos
-		rider->setPosition( theContainer->getPosition() );
-		ai->ignoreObstacle(theContainer);
-		ai->aiMoveToPosition( &pos, CMD_FROM_AI );
+		if( (theRider->getObjectStatus() & 0x10000000) != 0 )
+		{
+			theRider->setPosition( theContainer->getPosition() );
+			theRider->bfmeRecordTransform(
+				*reinterpret_cast<const UnsignedInt *>(reinterpret_cast<const char *>(TheGameLogic) + 0x3C) );
+			theRider->setPosition( theContainer->getPosition() );
+		}
 
-	}  // end if
+		ai->ignoreObstacle( theContainer );
+		reinterpret_cast<BfmeOpenScatterAICommand *>(reinterpret_cast<char *>(ai) + 0x20)->aiMoveToPosition( &pos, 2 );
+	}
 	else
 	{
-
-		// no ai, just set position at the target pos
-		rider->setPosition( &pos );
-
-	}  // end else
+		theRider->setPosition( &pos );
+	}
 }
+
+#line 766 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\OpenContain.cpp"
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain_onContaining.cpp

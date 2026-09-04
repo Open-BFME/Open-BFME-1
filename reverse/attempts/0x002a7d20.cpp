@@ -1,29 +1,21 @@
 // ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
 // partial score=0.83 date=2026-09-04
-// ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
-// partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD
-//
-// Retail 0x002A7D20: SpecialAbilityUpdate::getSpecialObjectMax.  Returns the
-// module-data dword at +0x20C unless the special-power type (template+0x14
-// after the same one-level override walk getSpecialPowerType uses) is 0x27
-// and the target object at this+0xAC is present and is neither kind 6 nor
-// kind 0x62.
 
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
 	virtual ~Overridable();
-
 	Overridable *friend_getFinalOverride( void );
-
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
 public:
@@ -31,16 +23,19 @@ public:
 	SpecialPowerType m_specialPowerType;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	bool isKindOf( KindOfType t ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -49,6 +44,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
 {
 public:
@@ -58,6 +54,7 @@ public:
 	UnsignedInt m_maxSpecialObjects;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate
 {
 public:
@@ -86,19 +83,19 @@ UnsignedInt SpecialAbilityUpdate::getSpecialObjectMax() const
 		tmpl = (const SpecialPowerTemplate *)o;
 	}
 
-	switch( tmpl->m_specialPowerType )
-	{
-	default:
-		return md->m_maxSpecialObjects;
-	case SPECIAL_POWER_TYPE_27:
-		if( target )
-		{
-			if( target->isKindOf( KINDOF_6 ) )
-				return md->m_maxSpecialObjects;
-			if( target->isKindOf( KINDOF_62 ) )
-				return md->m_maxSpecialObjects;
-			return 0;
-		}
-		return md->m_maxSpecialObjects;
-	}
+	goto test_special;
+
+return_max:
+	return md->m_maxSpecialObjects;
+
+test_special:
+	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
+		goto return_max;
+	if( !target )
+		goto return_max;
+	if( target->isKindOf( KINDOF_6 ) )
+		goto return_max;
+	if( target->isKindOf( KINDOF_62 ) )
+		goto return_max;
+	return 0;
 }

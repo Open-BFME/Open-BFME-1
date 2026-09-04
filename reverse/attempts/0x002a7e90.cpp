@@ -51,7 +51,7 @@ public:
 	unsigned char m_unmodelled_000[ 0x1D8 ];
 	const SpecialPowerTemplate *m_specialPowerTemplate;
 	unsigned char m_unmodelled_1DC[ 0x210 - 0x1DC ];
-	volatile UnsignedInt m_field210;
+	UnsignedInt m_field210;
 };
 
 class SpecialAbilityUpdate
@@ -70,9 +70,8 @@ private:
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
 void SpecialAbilityUpdate::apply()
 {
-	int id = m_targetID;
 	const SpecialAbilityUpdateModuleData *md = m_moduleData;
-	const UnsignedInt *maxField = &md->m_field210;
+	int id = m_targetID;
 	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
 	Object *target = TheGameLogic->findObjectByID( id );
 
@@ -86,7 +85,8 @@ void SpecialAbilityUpdate::apply()
 
 	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
 	{
-		m_fieldA8 = *maxField;
+		UnsignedInt max = md->m_field210;
+		m_fieldA8 = max;
 		return;
 	}
 	if( !target )
@@ -98,8 +98,7 @@ void SpecialAbilityUpdate::apply()
 	goto store_zero;
 
 	store_field:
-		UnsignedInt max = *maxField;
-		m_fieldA8 = max;
+		m_fieldA8 = md->m_field210;
 	return;
 
 store_zero:

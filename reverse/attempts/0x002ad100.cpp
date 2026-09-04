@@ -1,14 +1,8 @@
 // ?apply@Rva002AD100@@QAEXXZ
 // partial score=0.63 date=2026-09-04
-// ?apply@Rva002AD100@@QAEXXZ
-// partial score=0.62 date=2026-09-02
 // cl: /DNDEBUG /MD
-//
-// Retail 0x002AD100: thiscall wrapper that resolve()s the object at this+8
-// and then calls the 0x002ACD90 sibling with two +0x38 Coord3D pointers --
-// the object's own position twice when resolve returns null, otherwise the
-// object's position and the resolved object's position.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
 	float x, y, z;
@@ -24,10 +18,7 @@ class RvaC4390Second
 {
 public:
 	RvaC4390First *resolve( int allowLookup );
-	Coord3D *getPosition()
-	{
-		return reinterpret_cast<Coord3D *>(reinterpret_cast<unsigned char *>( this ) + 0x38);
-	}
+	Coord3D *getPosition() { return &m_pos; }
 
 	unsigned char m_pad[ 0x38 ];
 	Coord3D m_pos;
@@ -56,7 +47,6 @@ void Rva002AD100::apply()
 		self->sibling( m_object->getPosition(), m_object->getPosition() );
 		return;
 	}
-
 	Rva002AD100 *self = this;
-	self->sibling( m_object->getPosition(), &resolved->m_pos );
+	self->sibling( &m_object->m_pos, &resolved->m_pos );
 }

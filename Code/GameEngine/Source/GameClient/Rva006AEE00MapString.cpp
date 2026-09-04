@@ -181,7 +181,7 @@ void Rva006AEE00::init()
 	{
 		Rva006AEE00Info *info = current->value.second;
 		if (info->m_lowPassCutoff == 0 && !(info->m_flags & 0x600))
-			tree->insert_unique(reinterpret_cast<Rva006AEE00Tree::InsertResult *>(&it),
+			 tree->insert_unique(reinterpret_cast<Rva006AEE00Tree::InsertResult *>(&it),
 				*info->getName());
 		Rva006AEE00Hashtable::Node *next = current->next;
 		current = next != 0 ? next : owner->skipToNext(current);
