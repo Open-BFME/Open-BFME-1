@@ -82299,3 +82299,17 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
 ?TheDX8Caps@@3PAEA,0x01340578,caps pointer Allocate_DX8_Dynamic_Buffer reads at +0x13b for NPATCHES
+??$_M_allocate_and_copy@PAPAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPAPAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee at 0x003CF650)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee; const-iterator form)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
+?BfmeDynamicSortingVertexArray@@3PAVSortingVertexBufferClass@@A,0x013467DC,Open-BFME5 sorting-array buffer pointer BoxDynamicVBAccess allocate at 0x0091F040 stores
+?BfmeDynamicSortingVertexArraySize@@3GA,0x013467E0,Open-BFME5 sorting-array capacity BoxDynamicVBAccess allocate at 0x0091F040 grows
+?BfmeDynamicDX8VertexBuffer@@3PAVBfmeDX8VertexBuffer@@A,0x01346754,Open-BFME5 per-slot DX8 buffer pointers BoxDynamicVBAccess allocate at 0x0091F5B0 stores
+?BfmeDynamicDX8VertexBufferSize@@3PAGA,0x013467B4,Open-BFME5 per-slot DX8 capacities BoxDynamicVBAccess allocate at 0x0091F5B0 grows
+?BfmeDynamicFVFTable@@3PAIA,0x0113BD28,Open-BFME5 per-slot FVF words BoxDynamicVBAccess DX8 allocate at 0x0091F5B0 passes to the 0x20-byte ctor
+?BfmeCurrentCaps@@3PAEA,0x01340578,Open-BFME5 DX8 caps object pointer; NPatches flag at +0x13b as dx8indexbuffer.cpp already reads
+??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,Open-BFME5 SortingVertexBufferClass ctor; object-symbol of matched dump at 0x0091DFD0; BoxDynamicVBAccess allocate at 0x0091F040 calls it
