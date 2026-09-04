@@ -82511,3 +82511,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?clear@Gen003BFC20Owner@@QAEXXZ,0x00040016,ILT to clear body 0x003CAD90; callee of 0x003BFC20
 ?notify@Gen003BFC20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFC20
 ?finish@Rva003BFC20@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFC20
+?probe@Gen003C0350Owner@@QAEPAXPAX@Z,0x0002BF0D,ILT to find body 0x003C8A50; callee of 0x003C0350
+?fill@Gen003C0350Found@@QAE_NPAX0@Z,0x000325B0,ILT to fill body 0x00619840; callee of 0x003C0350
+?apply@Gen003C0110Result@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
+?Gen003C0350Find@@YGPAVGen003C0350Lookup@@PAX@Z,0x00032A56,ILT to lookup body 0x003C0110; callee of 0x003C0350
+?apply@Gen003C0350Lookup@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
