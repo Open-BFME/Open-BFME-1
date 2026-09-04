@@ -82730,3 +82730,19 @@ _g_cursorResources,0x00EF77A8,BFME native cursor handle table indexed by cursor 
 ?g_timedOperationSerial@@3IA,0x00EA737C,timed-operation key serial at retail VA 0x012A737C
 ?TimedOperationInputLocked@@3HA,0x00EED530,timed-operation input lock state used by GameEngine client update
 ?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
+??0AsciiStringWR@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWR@@QAE@XZ,0x00887940,pin
+?set@AsciiStringWR@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeGlobalWR,0x012F1484,Open-BFME5 the global whose override entry the accessors at 0x0043FC50 and siblings consult
+??0AsciiStringWS@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWS@@QAE@XZ,0x00887940,pin
+?set@AsciiStringWS@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeGlobalWS,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
+??0AsciiStringWT@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWT@@QAE@XZ,0x00887940,pin
+?set@AsciiStringWT@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeGlobalWT,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
+??0AsciiStringWU@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWU@@QAE@XZ,0x00887940,pin
+?set@AsciiStringWU@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
