@@ -1,9 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?deleteAllFonts@FontLibrary@@IAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameFont.cpp
-
-// Open-BFME5: FontLibrary::deleteAllFonts, retail 0x00722190, 90 bytes, from
-// the thunk queue -- the name sat on a five-byte thunk and this is the body it
-// jumps to.
+// W3DSmudgeManager::ReleaseResources, retail 0x00722190, 90 bytes.
 //
 // The lock and unlock at either end are a guard object, not two bare calls:
 // that is what gives the body its SEH frame and the two unwind writes, which
@@ -26,39 +22,51 @@ public:
 	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
 };
 
-class BfmeFontRef
+class IndexBufferRef
 {
 public:
-	virtual void bfmeDestroy(void);				// slot 0
+	virtual void destroy(void);					// slot 0
 
-	Int m_bfmeRefCount;					// +0x04
+	Int m_refCount;							// +0x04
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameFont.h
-class FontLibrary
+class SmudgeManager
 {
-protected:
-	void deleteAllFonts(void);
+public:
+	virtual ~SmudgeManager();
 
 private:
-	char m_bfmeHead[0x34];
-	BfmeFontRef *m_bfmeFont;				// +0x34
+	char m_body[0x20];
 };
 
-// ?deleteAllFonts@FontLibrary@@IAEXXZ
-void FontLibrary::deleteAllFonts(void)
+class W3DSmudgeManager : public SmudgeManager
+{
+public:
+	virtual void ReleaseResources(void);
+
+private:
+	void *m_smudgeGroup;
+	void *m_posBuffer;
+	void *m_RGBABuffer;
+	void *m_sizeBuffer;
+	IndexBufferRef *m_indexBuffer;
+};
+
+// ?ReleaseResources@W3DSmudgeManager@@UAEXXZ
+void W3DSmudgeManager::ReleaseResources(void)
 {
 	BfmeRadarResetLock lock;
 
 	// The handle goes into a local: read through the member the compiler
 	// cannot use the decrement's own flags and reloads the count to test it.
-	BfmeFontRef *font = m_bfmeFont;
+	IndexBufferRef *indexBuffer = m_indexBuffer;
 
-	if (font)
+	if (indexBuffer)
 	{
-		if (--font->m_bfmeRefCount == 0)
-			font->bfmeDestroy();
+		if (--indexBuffer->m_refCount == 0)
+			indexBuffer->destroy();
 
-		m_bfmeFont = 0;
+		m_indexBuffer = 0;
 	}
 }

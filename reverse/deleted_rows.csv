@@ -24471,3 +24471,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_EBfmeMapChunk@@QAEPAXI@Z,0x006D1F90,invented element identity replaced by W3DTerrainBackground vector deleting destructor; retail passes the proven destructor ILT and 0xC4 element size
 ??0Rva00722120@@QAE@XZ,0x00722120,address-derived identity replaced by W3DSmudgeManager::W3DSmudgeManager; W3DTerrainVisual allocates the exact 0x44-byte object through ILT 0x00043DE2 and invokes its virtual init
 ?bfmeGoBCB@BfmeThingBCB@@QAEXXZ,0x00722160,generated class and method identity replaced by W3DSmudgeManager::init; the body calls the empty SmudgeManager::init through ILT 0x0003D0BE then dispatches ReAcquireResources at virtual slot 0x10
+?deleteAllFonts@FontLibrary@@IAEXXZ,0x00722190,wrong identity removed: W3DSmudgeManager vtable slot 0x0C points through ILT 0x000309CC to this body and it releases the documented m_indexBuffer at object offset 0x34

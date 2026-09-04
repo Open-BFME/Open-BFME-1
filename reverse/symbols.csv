@@ -75630,7 +75630,6 @@ name,address,notes
 ?decompressData@CompressionManager@@SAHPBXHPAXH@Z,0x0081E890,CachedFileInputStream open retail decompression call
 ?defaultHandler@BfmeMsgHandler@@QAEHHPAX0@Z,0x00010AF0,pin
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
-?deleteAllFonts@FontLibrary@@IAEXXZ,0x000309CC,pinharvest x1 (thunk)
 ?deleteAllFonts@FontLibraryDeleteAllFontsShim@@QAEXXZ,0x00722190,FontLibrary incremental-link thunk target through a TU-local forwarding shim
 ?deleteBuildTooltipLayout@ControlBar@@QAEXXZ,0x00027336,Open-BFME5 correction: this ILT is called with ecx = TheControlBar at 0x012F33F8 in doDisableInput and jumps to 0x004C1450. Player::addScience independently fixes 0x012F33F8 as TheControlBar by inlining markUIDirty as a byte store at +0x24. It was pinned as LookAtTranslator::resetModes
 ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z,0x000419FC,REL32 pin from Radar::removeObject body
@@ -82752,3 +82751,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??0W3DSmudgeManager@@QAE@XZ,0x00043DE2,W3DTerrainVisual 0x44-byte smudge manager allocation constructor ILT
 ??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
 ?init@SmudgeManager@@UAEXXZ,0x0003D0BE,W3DSmudgeManager init base call ILT
+?ReleaseResources@W3DSmudgeManager@@UAEXXZ,0x000309CC,W3DSmudgeManager vtable slot 0x0C ILT
+?init@W3DSmudgeManager@@UAEXXZ,0x00034360,W3DSmudgeManager vtable slot 0x04 ILT
+?ReAcquireResources@W3DSmudgeManager@@UAEXXZ,0x0001CD05,W3DSmudgeManager vtable slot 0x10 ILT
