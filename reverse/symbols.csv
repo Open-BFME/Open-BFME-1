@@ -9527,8 +9527,6 @@ name,address,notes
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?LANbuttonPushed@@3_NA,0x012F3D4A,LAN overlay shared flag; NetworkDirectConnectSystem back-button set
-?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
-?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
