@@ -83746,3 +83746,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ??0Rva00801FB0Elem@@QAE@XZ,0x00801FB0,FESL Rva00802A10 allocate element ctor still dump
 ?TheShell@@3PAVShell@@A,0x012F4B58,TheShell singleton; startNextCampaignGame popImmediate/hide
 ?TheCampaignManager@@3PAVCampaignManager@@A,0x012F4CB0,TheCampaignManager used by ScoreScreen startNextCampaignGame and initSinglePlayer
+?postTimedOp@@YAXVLoadGameFadeHolder@@PAX@Z,0x0000FC72,ILT -> 0x0007BA90; cdecl (Holder key) poster used by postLoadGameFadeSteps
