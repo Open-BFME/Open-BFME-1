@@ -210,6 +210,7 @@ private:
 class RecorderClass {
 public:
     void stopPlayback();
+    void stopRecording();
 
 protected:
     AsciiString readAsciiString();
@@ -219,6 +220,7 @@ protected:
     void readArgument(GameMessageArgumentDataType type, GameMessage *msg);
     void cullBadCommands();
     void updatePlayback();
+    void logGameEnd();
 
 private:
     int m_padding0;
@@ -226,11 +228,28 @@ private:
     int m_padding8;
     FILE *m_file;
     AsciiString m_fileName;
-    char m_padding14[0x2a8 - 0x14];
+    char m_padding14[0x29c - 0x14];
+    int m_originalGameMode;
+    char m_padding2a0[0x2a8 - 0x2a0];
     bool m_doingAnalysis;
     char m_padding2a9[0x2b0 - 0x2a9];
     int m_nextFrame;
 };
+
+class NetworkInterface;
+extern NetworkInterface *TheNetwork;
+
+void RecorderClass::stopRecording()
+{
+    logGameEnd();
+    if (TheNetwork)
+        m_originalGameMode = -1;
+    if (m_file != 0) {
+        fclose(m_file);
+        m_file = 0;
+    }
+    m_fileName.clear();
+}
 
 void RecorderClass::stopPlayback()
 {
