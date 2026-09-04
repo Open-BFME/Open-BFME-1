@@ -24459,3 +24459,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Gen_006D8800@@QAE@XZ,0x006D8800,Generated identity replaced by W3DBridge::W3DBridge; the W3DBridgeBuffer vector-constructor call pairs this body with the known W3DBridge destructor at 0x006D88A0.
 ??0Rva00707090@@QAE@XZ,0x00707090,Address-derived constructor replaced by RoadType::RoadType; adjacent RoadType destructor and upstream field order identify the 0x24-byte object.
 ??0Gen_00707170@@QAE@XZ,0x00707170,Generated identity replaced by RoadSegment::RoadSegment; the 0xBC-byte layout and adjacent RoadSegment assignment operator identify the constructor.
+??0Gen_004ADC80@@QAE@XZ,0x004ADC80,"generic clean-C++ identity replaced by ControlBarSchemeManager::ControlBarSchemeManager; upstream layout, matching destructor, and constructor operations identify the same 16-byte object"
