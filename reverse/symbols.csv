@@ -35462,7 +35462,6 @@ name,address,notes
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
 ?b_002ce360@@YAXXZ,0x002CE360,gen-thunk body
 ?b_002ce3a0@@YAXXZ,0x002CE3A0,gen-thunk body
-?b_002ce440@@YAXXZ,0x002CE440,gen-thunk body
 ?b_002ce450@@YAXXZ,0x002CE450,gen-thunk body
 ?b_002ce4e0@@YAXXZ,0x002CE4E0,gen-thunk body
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
@@ -82758,3 +82757,4 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z,0x00009B47,DockUpdateInterface vftable slot 0x0C ILT to 0x002CE5B0
 ?getRailedTransportDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVRailedTransportDockUpdateInterface@@XZ,0x0000178A,primary vftable slot 0x2C ILT to 0x002CE320
 ?getDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVDockUpdateInterface@@XZ,0x0001FA3C,BehaviorModuleInterface vftable slot 0x54 ILT to 0x002CE340
+?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
