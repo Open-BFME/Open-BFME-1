@@ -64,3 +64,26 @@ Gen_00491580::Gen_00491580(const AsciiStringVX &first,
 	: m_bfmeFirst(first), m_bfmeSecond(second)
 {
 }
+
+class Gen_00491880 : public BfmeBaseVX
+{
+public:
+	Gen_00491880(const AsciiStringVX &first, const AsciiStringVX &second,
+		const AsciiStringVX &third);
+
+	virtual ~Gen_00491880(void);
+
+	BfmeStrVX m_bfmeFirst;					// +0x10
+	BfmeStrVX m_bfmeSecond;					// +0x14
+	BfmeStrVX m_bfmeThird;					// +0x18
+	int m_bfmeCount;					// +0x1C
+	int m_bfmeLimit;					// +0x20
+};
+
+// ??0Gen_00491880@@QAE@ABVAsciiStringVX@@00@Z
+Gen_00491880::Gen_00491880(const AsciiStringVX &first,
+	const AsciiStringVX &second, const AsciiStringVX &third)
+	: m_bfmeFirst(first), m_bfmeSecond(second), m_bfmeThird(third),
+	  m_bfmeCount(1), m_bfmeLimit(1)
+{
+}

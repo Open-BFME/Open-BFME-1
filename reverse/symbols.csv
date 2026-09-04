@@ -82619,3 +82619,6 @@ g_bfmeListVX,0x012F3350,Open-BFME5 the list the two-string ctor at 0x00491580 pu
 ?primaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x00025D92,ILT to exact AttributeModifierDefinition primary value selector at 0x003690A0
 ?secondaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x0003E1A3,ILT to exact AttributeModifierDefinition secondary value selector at 0x00369120
 ?bfmeGetCountForCategoryMask@AttributeModifierPoolUpdate@@QBEHPBVAttributeModifierCategoryMask@@@Z,0x00021323,ILT to exact pool category-count lookup at 0x00368C10; original verb unresolved
+??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
+??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringVZ@@QAE@XZ,0x00887940,pin
