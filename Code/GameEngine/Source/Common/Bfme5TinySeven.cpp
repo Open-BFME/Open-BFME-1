@@ -36,21 +36,3 @@ void Gen_0095C7F0::bfmeInit(void)
 	m_bfmeFirst = 0;
 	m_bfmeSecond = 0;
 }
-
-class Gen_0096A630
-{
-public:
-	int bfmeOffset(void) const;
-
-private:
-	int m_bfmeHead[2];					// +0x00
-	int m_bfmeRows;						// +0x08
-	int m_bfmeGap;						// +0x0C
-	int m_bfmeColumns;					// +0x10
-};
-
-// ?bfmeOffset@Gen_0096A630@@QBEHXZ
-int Gen_0096A630::bfmeOffset(void) const
-{
-	return (m_bfmeColumns + m_bfmeRows * 8) * 4 + 0x1C;
-}

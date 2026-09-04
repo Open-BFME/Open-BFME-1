@@ -24455,3 +24455,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1Rva004ACD70Object@@QAE@XZ,0x004ACD70,Address-derived duplicate removed; ControlBarSchemeImage destructor owns this exact 12-byte body. The emitted shim remains for its distinct ICF alias at 0x00580830.
 ?rva008896D0Get@@YADXZ,0x008896D0,Address-derived duplicate removed; _bfme_debugReportingEnabled owns this exact caller-identified 12-byte predicate.
 ?rva0060D3D0Get@@YAEXZ,0x0060D3D0,Address-derived duplicate removed; BfmeLivingWorldManager::isCampaignVictorious owns this caller-identified 9-byte predicate.
+?bfmeOffset@Gen_0096A630@@QBEHXZ,0x0096A630,Generated duplicate removed; AABTreeClass::Compute_Ram_Size owns this caller-identified 17-byte size formula.
