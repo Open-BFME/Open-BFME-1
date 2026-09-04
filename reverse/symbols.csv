@@ -525,6 +525,7 @@ name,address,notes
 ??$_Destroy@PAVProductionPrerequisite@@@_STL@@YAXPAVProductionPrerequisite@@0@Z,0x00011D47
 ??$_Destroy@PAVW3DAnimationInfo@@@_STL@@YAXPAVW3DAnimationInfo@@0@Z,0x00001663,ILT thunk used by call site
 ??$_M_allocate_and_copy@PAH@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEPAHIPAH0@Z,0x000673D0,gen-tgrid shared callee
+??$_M_allocate_and_copy@PAPAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPAPAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee at 0x003CF650)
 ??$_M_allocate_and_copy@PAUGen_t_00065800_p4cd@@@?$vector@UGen_t_00065800_p4cd@@V?$allocator@UGen_t_00065800_p4cd@@@_STL@@@_STL@@IAEPAUGen_t_00065800_p4cd@@IPAU2@0@Z,0x000656F0,gen-tgrid payload member
 ??$_M_allocate_and_copy@PAUGen_t_00068fa0_p12cd@@@?$vector@UGen_t_00068fa0_p12cd@@V?$allocator@UGen_t_00068fa0_p12cd@@@_STL@@@_STL@@IAEPAUGen_t_00068fa0_p12cd@@IPAU2@0@Z,0x00068CF0,gen-tgrid payload member
 ??$_M_allocate_and_copy@PAUGen_t_000d1420_p4pod@@@?$vector@UGen_t_000d1420_p4pod@@V?$allocator@UGen_t_000d1420_p4pod@@@_STL@@@_STL@@IAEPAUGen_t_000d1420_p4pod@@IPAU2@0@Z,0x000CD450,gen-tgrid payload member
@@ -551,6 +552,12 @@ name,address,notes
 ??$_M_allocate_and_copy@PAUGen_t_00745890_p24cd@@@?$vector@UGen_t_00745890_p24cd@@V?$allocator@UGen_t_00745890_p24cd@@@_STL@@@_STL@@IAEPAUGen_t_00745890_p24cd@@IPAU2@0@Z,0x007417A0,gen-tgrid payload member
 ??$_M_allocate_and_copy@PAUGen_t_007709c0_p24cd@@@?$vector@UGen_t_007709c0_p24cd@@V?$allocator@UGen_t_007709c0_p24cd@@@_STL@@@_STL@@IAEPAUGen_t_007709c0_p24cd@@IPAU2@0@Z,0x00769170,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBQAVObject@@@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEPAPAVObject@@IPBQAV2@0@Z,0x0004547B,ILT thunk -> 0x4a0140 (vector<Object*>::operator= callee)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee; const-iterator form)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
 ??$_M_allocate_and_copy@PBUGen_t_00095d30_p8pod@@@?$vector@UGen_t_00095d30_p8pod@@V?$allocator@UGen_t_00095d30_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_00095d30_p8pod@@IPBU2@0@Z,0x00095760,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000a7cb0_p4pod@@@?$vector@UGen_t_000a7cb0_p4pod@@V?$allocator@UGen_t_000a7cb0_p4pod@@@_STL@@@_STL@@IAEPAUGen_t_000a7cb0_p4pod@@IPBU2@0@Z,0x000A7820,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000b0560_p8pod@@@?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_000b0560_p8pod@@IPBU2@0@Z,0x000B0200,gen-tgrid payload member
@@ -76247,6 +76254,7 @@ name,address,notes
 ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z,0x00027C96,ILT to the matched checkDestination body at 0x003DD7A0; reached from the adjust cascade at 0x003DEAB0
 ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@3PAPAVPathfindCell@@E@Z,0x003F0F40,BFME 13-arg checkForAdjust body used by TightenPathCallbackInfo
 ?checkForAdjust@Pathfinder@@QAE_NPAVObject@@PBVLocomotorSet@@_NHHHPAUCoord3D@@2@Z,0x00018BE7,ILT to the 8-arg BFME checkForAdjust body at 0x003D6210; ZH iRadius/center/groupDest params are gone; called twice by the adjust cascade at 0x003DEAB0
+?checkSpecial@AIGroup@@QAE_NPBUCoord3D@@H@Z,0x0002D565,ILT to 0x00154F00 from tryGroupSpecial 0x001599A0
 ?checkState@BfmeSubHelperCAB@@QAEHPAX00@Z,0x00034C93,pin
 ?checkValid@BfmeItemE63@@QAE_NXZ,0x0004B015,pin
 ?chooseBestWeaponForTarget@WeaponSet@@QAE_NPBVObject@@0W4WeaponChoiceCriteria@@W4CommandSourceType@@@Z,0x001EC3F0,callee pin from Object.cpp REL32 site
@@ -81145,6 +81153,7 @@ name,address,notes
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
 ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z,0x0002E636,AIGroup prep before follow-as-team walk; body 0x0015AB50
+?prepSpecial@AIGroup@@QAEXXZ,0x00006258,ILT to 0x00150A10 from tryGroupSpecial 0x001599A0
 ?prepare@Rva0019BC00Owner@@QAEXH@Z,0x00020D97,ILT thunk to 0x00197750 prepare before field writes
 ?prepare@Rva002BC470StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?prepare@Rva002BC4E0StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
@@ -81663,6 +81672,7 @@ name,address,notes
 ?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x006624A0,ZH twin exact: function-static NetPacket at 0x012F76FC; NEW_NETCOMMANDREF 0x00676240; NetPacket::addCommand 0x006811B0; ConstructBigCommandPacketList 0x006814B0 split path; addMessage 0x00673200 + setRelay at ref+0xC; callers queueLocalCommand relayCommand sendLocalCommandDirect sendLocalCommand via ILT 0x00026D3C
 ?sendPlayerDestruct@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0004B0B0,DisconnectManager status update destruction dispatch through ILT to the existing 0x0066B550 body
 ?sendSignal@BfmeObjE65@@QAEXHH@Z,0x00014506,pin
+?sendSpecial@AIGroup@@QAEXPBUCoord3D@@HHHH@Z,0x0001A6B3,ILT to 0x00157BE0 from tryGroupSpecial 0x001599A0
 ?sendToManglerFromPort@FirewallHelperClass@@QAE_NIGG_N@Z,0x00022C00
 ?sendToManglerFromPort@FirewallHelperClassSendToManglerFromPortShim@@QAE_NIGG_N@Z,0x0066EC50,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?sendVoteCommand@BfmeDisconnectVoteSender@@QAEXHPAVConnectionManager@@@Z,0x0002EE79,alias of the DisconnectManager spelling pinned below; voteForPlayerDisconnect reaches sendVoteCommand through a view class because both callees are defined earlier in the same TU and MSVC inlines them where retail calls
@@ -82086,6 +82096,7 @@ name,address,notes
 ?trigger@BfmeObjEB2@@QAEXHH@Z,0x00014506,pin
 ?trigger@BfmeObjF62@@QAEXHH@Z,0x00014506,pin
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
+?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
 ?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
 ?turnOffScreen@DisconnectManager@@IAEXH@Z,0x00044AD0,ILT thunk; real body 0x66B270
 ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z,0x0066BFE0,ZH twin minus hidePacketRouterTimeout: showScreen via 0x0050E9A0; m_disconnectState+0xC=SCREENON(0); m_lastKeepAliveSendTime+0x10=-1; populateDisconnectScreen 0x0066BEF0; resetPlayerTimeouts 0x0066B980; +0x258=0; m_timeOfDisconnectScreenOn+0x25C=timeGetTime; sole caller BFMEDisconnectManager::update 0x0066CAEF; ILT 0x00034900
@@ -83885,14 +83896,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_M_allocate_and_copy@PAPAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPAPAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee at 0x003CF650)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee; const-iterator form)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
-?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
-?prepSpecial@AIGroup@@QAEXXZ,0x00006258,ILT to 0x00150A10 from tryGroupSpecial 0x001599A0
-?checkSpecial@AIGroup@@QAE_NPBUCoord3D@@H@Z,0x0002D565,ILT to 0x00154F00 from tryGroupSpecial 0x001599A0
-?sendSpecial@AIGroup@@QAEXPBUCoord3D@@HHHH@Z,0x0001A6B3,ILT to 0x00157BE0 from tryGroupSpecial 0x001599A0
