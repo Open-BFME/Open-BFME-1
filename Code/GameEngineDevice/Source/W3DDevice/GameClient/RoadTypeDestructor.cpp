@@ -29,6 +29,7 @@ class AsciiString
 {
 public:
 	~AsciiString();
+	void clear() { m_data = 0; }
 
 private:
 	void *m_data;
@@ -60,14 +61,32 @@ protected:
 class RoadType : public RoadTypeBase
 {
 public:
+	RoadType();
 	~RoadType();
 
 private:
 	RefCounted *m_vertexRoad;
 	RefCounted *m_indexRoad;
-	char m_fields[0x14];
+	int m_numRoadVertices;
+	int m_numRoadIndices;
+	int m_uniqueID;
+	bool m_isAutoLoaded;
+	char m_alignment[3];
+	int m_stackingOrder;
 	AsciiString m_texturePath;
 };
+
+RoadType::RoadType()
+{
+	m_vertexRoad = 0;
+	m_indexRoad = 0;
+	m_numRoadVertices = 0;
+	m_numRoadIndices = 0;
+	m_uniqueID = -1;
+	m_isAutoLoaded = false;
+	m_stackingOrder = 0;
+	m_texturePath.clear();
+}
 
 RoadType::~RoadType()
 {

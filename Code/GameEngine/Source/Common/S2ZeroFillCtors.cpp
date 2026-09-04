@@ -140,35 +140,6 @@ Rva0060AA40::Rva0060AA40()
 	m_18 = 0;
 }
 
-class Rva00707090
-{
-public:
-	Rva00707090();
-	int m_00;
-	int m_04;
-	int m_08;
-	int m_0C;
-	int m_10;
-	int m_14;
-	bool m_18;
-	int m_1C;
-	int m_20;
-};
-
-// @??0Rva00707090@@QAE@XZ 0x00707090
-Rva00707090::Rva00707090()
-{
-	m_00 = 0;
-	m_04 = 0;
-	m_08 = 0;
-	m_0C = 0;
-	m_10 = 0;
-	m_14 = -1;
-	m_18 = false;
-	m_1C = 0;
-	m_20 = 0;
-}
-
 class Rva00762070
 {
 public:
