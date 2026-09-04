@@ -33,15 +33,23 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class CloudBreakSpecialPower : public SpecialPowerModule
 {
 public:
 	CloudBreakSpecialPower( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~CloudBreakSpecialPower();
 };
 
 CloudBreakSpecialPower::CloudBreakSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+CloudBreakSpecialPower::~CloudBreakSpecialPower()
 {
 }
