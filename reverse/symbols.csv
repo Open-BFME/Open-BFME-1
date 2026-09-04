@@ -82541,3 +82541,4 @@ g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 push
 ??0BfmeStrVW@@QAE@ABV0@@Z,0x00887B60,pin
 ??1BfmeStrVW@@QAE@XZ,0x00887940,pin
 ??1BfmeBaseVW@@QAE@XZ,0x004902A0,Open-BFME5 the list-unhooking base destructor the owner unwind funclet runs
+?TheMultiplayerSettings@@3PAVMultiplayerSettings@@A,0x012ED5FC,TheMultiplayerSettings singleton; DIR32 at Rva0051B560Host::bfmeProvide
