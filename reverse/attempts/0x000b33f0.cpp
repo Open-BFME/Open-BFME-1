@@ -9,9 +9,6 @@
 
 typedef int Int;
 
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-
 enum AudioType
 {
 	AT_Music = 0,
@@ -23,37 +20,63 @@ enum AudioType
 
 template <typename T> class StringBase
 {
-public:
-	void concat(const T *text, Int length);
-};
+    friend class AsciiString;
 
-class AsciiString
-{
-public:
+	private:
 	struct Header
 	{
 		int refCount;
 		unsigned short length;
 		unsigned short capacity;
-		char data[1];
+		T data[1];
 	};
 
-	AsciiString() : m_data(0) {}
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-	void concat(const AsciiString &other);
-	void concat(const char *text, Int length);
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &other);
+	~StringBase();
+
+	public:
+	void concat(const StringBase<T> &other);
+	void concat(const T *text, Int length);
+
+	private:
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+
+	typedef StringBase<char>::Header Header;
+
+	void concat(const AsciiString &other)
+	{
+		StringBase<char>::concat(*(const StringBase<char> *)&other);
+	}
+
+	void concat(const char *text, Int length)
+	{
+		StringBase<char>::concat(text, length);
+	}
+
+	void concatBase(const char *text, Int length)
+	{
+		StringBase<char>::concat(text, length);
+	}
+
 	Header *getData() const { return m_data; }
+	Int getLength() const { return m_data ? m_data->length : 0; }
 
 	void concatPeek(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->length : 0;
 		const char *text = other.m_data ? &other.m_data->data[0] : "";
-		concat(text, length);
+		StringBase<char>::concat(text, length);
 	}
-
-	private:
-	Header *m_data;
 };
 
 class AudioSettings
@@ -126,14 +149,17 @@ AsciiString AudioEventRTS::generateFilenamePrefix(AudioType audioTypeToPlay, boo
 	case AT_SoundEffectAlt:
 	{
 		const AsciiString &folder = TheAudio->getAudioSettings()->m_soundsFolder;
-		const Int length = folder.getData() ? folder.getData()->length : 0;
-		if (!folder.getData())
-			goto empty_folder;
-		retStr.concat((const char *)folder.getData() + 8, length);
-		goto folder_done;
-	empty_folder:
-			retStr.concat("", length);
-		folder_done:
+		Int length = folder.getData() ? folder.getData()->length : 0;
+		if (folder.getData())
+		{
+			const char *text = (const char *)folder.getData() + 8;
+			retStr.concat(text, length);
+		}
+		else
+		{
+			const char *text = "";
+			retStr.concat(text, length);
+		}
 		break;
 	}
 	case AT_AmbientStream:

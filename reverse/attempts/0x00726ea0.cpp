@@ -1,8 +1,9 @@
 // ?fill@Rva00726EA0TaintFill@@QAEXE@Z
-// partial score=0.99 date=2026-09-03
+// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Retail 0x00726EA0: fill the taint overlay's dword and byte buffers.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -55,15 +56,15 @@ void Rva00726EA0TaintFill::fill(unsigned char alpha)
 			dst++;
 		}
 	}
-	unsigned int base = (unsigned int)m_bytes;
+	unsigned int row = (unsigned int)m_bytes;
 	for (y = 0; y < m_height; y++)
 	{
 		unsigned int i;
 		for (i = 0; i < m_width; )
 		{
-			*(char *)(i + base) = alpha;
+			*(char *)(i + row) = alpha;
 			i++;
 		}
-		base += m_width;
+		row += m_width;
 	}
 }

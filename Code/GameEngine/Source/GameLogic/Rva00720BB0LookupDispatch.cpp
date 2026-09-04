@@ -12,6 +12,12 @@ struct Rva00720BB0Context
 	int entryCount;
 };
 
+void Rva00720BB0Context::dispatch( int index, void *request )
+{
+	(void)index;
+	(void)request;
+}
+
 extern "C" bool __fastcall Rva00720BB0LookupDispatch( Rva00720BB0Context *self, void *, void *owner, void *request )
 {
 	if ( owner == 0 ) {

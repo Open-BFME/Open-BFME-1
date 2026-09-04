@@ -48,6 +48,7 @@ public:
 	int bfmeCellTypeTwoWithoutFlag(const Coord3D *pos, PathfindLayerEnum layer);
 	int bfmeCellTypeFiveOrOutside(const Coord3D *pos, PathfindLayerEnum layer);
 	Bool bfmeCellAvoidsThreeTypes(const Coord3D *pos, PathfindLayerEnum layer);
+	int bfmeCellAvoidsThreeTypesInt(const Coord3D *pos, PathfindLayerEnum layer);
 };
 
 int Pathfinder::bfmeCellTypeTwo(const Coord3D *pos, PathfindLayerEnum layer)
@@ -124,19 +125,33 @@ Bool Pathfinder::bfmeCellAvoidsThreeTypes(const Coord3D *pos, PathfindLayerEnum 
 	if (worldToCell(pos, &cellIndex))
 		goto passable;
 	cell = getCell(layer, cellIndex.x, cellIndex.y);
-	if (cell == 0)
-		goto passable;
-	unsigned int type = cell->m_bfmeFlags & 7;
-	if (type == 5)
-		goto blocked;
-	if (type == 1)
-		goto blocked;
-	if (type == 2)
-		goto blocked;
-
+	if (cell != 0)
+		goto examine;
 passable:
 	return true;
+examine:
+	{
+		unsigned int type = cell->m_bfmeFlags & 7;
+		if (type == 5)
+			return false;
+		if (type == 1)
+			return false;
+		if (type == 2)
+			return false;
+	}
+	return true;
+}
 
-blocked:
+int Pathfinder::bfmeCellAvoidsThreeTypesInt(const Coord3D *pos, PathfindLayerEnum layer)
+{
+	ICoord2D cellIndex;
+	if (worldToCell(pos, &cellIndex))
+		return true;
+	PathfindCell *cell = getCell(layer, cellIndex.x, cellIndex.y);
+	if (cell == 0 ||
+		((cell->m_bfmeFlags & 7) != 5 &&
+		 (cell->m_bfmeFlags & 7) != 1 &&
+		 (cell->m_bfmeFlags & 7) != 2))
+		return true;
 	return false;
 }

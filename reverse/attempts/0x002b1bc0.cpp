@@ -1,6 +1,9 @@
 // ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z
 // partial score=0.94 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
 // Object.cpp reloc-named callee: applyTopplingForce@ToppleUpdate
 // Identity: ILT 0x0003FC97 thunks here; Object.cpp REL32; ZH ToppleUpdate.cpp twin;
 // landed ctor at ToppleUpdateCtorThunk.cpp pins the same instance/module layout.
@@ -174,6 +177,22 @@ public:
 	bool test(int bit) const;
 };
 
+class ModelNotifyBits
+{
+public:
+	bool test(int bit) const
+	{
+		return (m_bits & (1u << bit)) != 0;
+	}
+	void set(int bit)
+	{
+		m_bits |= 1u << bit;
+	}
+
+private:
+	unsigned int m_bits;
+};
+
 class Drawable
 {
 public:
@@ -202,6 +221,14 @@ public:
 	void setPosition(const Coord3D *);
 	void setOrientation(Real);
 	Real getOrientation(void) const { return m_orientation; }
+	void setModelConditionState(int bit)
+	{
+		if (!m_modelNotifyBits.test(bit))
+		{
+			m_modelNotifyBits.set(bit);
+			notifyModelConditionChanged();
+		}
+	}
 
 	unsigned char m_pad004[0x34];
 	Coord3D m_position;
@@ -209,7 +236,7 @@ public:
 	unsigned char m_pad048[0x2C];
 	ObjectID m_id;
 	unsigned char m_pad078[0x98];
-	unsigned int m_modelNotifyBits;
+	ModelNotifyBits m_modelNotifyBits;
 	unsigned char m_pad114[4];
 	unsigned int m_stumpModelBits;
 	unsigned char m_pad11c[0x228];
@@ -218,13 +245,18 @@ public:
 
 class ThingTemplate;
 
-class ObjectStatusBits
+template<int NUMBITS>
+class BitFlags
 {
 public:
-	int m_a;
-	int m_b;
-	int m_c;
+	BitFlags() { }
+	void clear() { m_bits.reset(); }
+
+private:
+	_STL::bitset<NUMBITS> m_bits;
 };
+
+typedef BitFlags<86> ObjectStatusBits;
 
 class ThingFactory
 {
@@ -369,30 +401,27 @@ void ToppleUpdate::applyTopplingForce(const Coord3D *toppleDirection, Real toppl
 		m_numAngleDeltaX = 1;
 	m_angleDeltaX = (desiredAngleX - curAngleX) / m_numAngleDeltaX;
 
-	Object *obj = getObject();
-	if ((obj->m_modelNotifyBits & 1) == 0)
-	{
-		obj->m_modelNotifyBits |= 1;
-		obj->notifyModelConditionChanged();
-	}
+	getObject()->setModelConditionState(0);
 
-	if (d->m_toppleFX && !d->m_toppleFX->bfmeIsBlocked())
-		d->m_toppleFX->doFXObj(obj, 0);
+	{
+		FXList *toppleFX = d->m_toppleFX;
+		Object *obj = getObject();
+		if (toppleFX && !toppleFX->bfmeIsBlocked())
+			toppleFX->doFXObj(obj, 0);
+	}
 
 	if (d->m_stumpName.m_data && *(unsigned short *)(d->m_stumpName.m_data + 4) != 0)
 	{
 		const ThingTemplate *ttn = TheThingFactory->findTemplate(d->m_stumpName);
-		bits.m_a = 0;
-		bits.m_b = 0;
-		bits.m_c = 0;
+		bits.clear();
 		Object *stump = TheThingFactory->newObject(ttn, 0, &bits, 0);
 		if (stump)
 		{
-			stump->setPosition(&obj->m_position);
-			stump->setOrientation(obj->m_orientation);
+			stump->setPosition(&getObject()->m_position);
+			stump->setOrientation(getObject()->m_orientation);
 			m_stumpID = stump->m_id;
 
-			Drawable *ownerDraw = obj->getDrawable();
+			Drawable *ownerDraw = getObject()->getDrawable();
 			if (ownerDraw && ownerDraw->m_conditionFlags.test(0x4f) == true)
 			{
 				if ((stump->m_stumpModelBits & 0x8000) == 0)

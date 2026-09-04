@@ -83,30 +83,27 @@ Rva00892640Item *Rva00892730CopyItems(
     Rva00892640Item *first, Rva00892640Item *last,
     Rva00892640Item *dest)
 {
-    Rva00892640Item *destination = dest;
-    Rva00892640Item *source = first;
-    Rva00892640Item *limit = last;
-    int count = (int)(limit - source);
-    source--;
-    destination += count - 1;
+    int count = (int)(last - first);
+    last--;
+    dest += count - 1;
     if (count)
     {
         do
         {
-            Rva00892640Handle *incoming = source->handle;
+            Rva00892640Handle *incoming = last->handle;
             ++incoming->refs;
-            Rva00892640Item *slot = destination;
+            Rva00892640Item *slot = dest;
             Rva00892640Handle *old = slot->handle;
             --old->refs;
             if (old->refs == 0)
                 g_rva00892640Deleter->destroy(old);
-            slot->handle = source->handle;
-            slot->extra = source->extra;
-            source--;
-            destination--;
+            slot->handle = last->handle;
+            slot->extra = last->extra;
+            last--;
+            dest--;
             --count;
         }
         while (count);
     }
-    return destination;
+    return dest;
 }

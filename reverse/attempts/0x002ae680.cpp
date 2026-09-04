@@ -1,9 +1,8 @@
 // ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ
+// partial score=0.74 date=2026-09-04
+// ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ
 // partial score=0.74 date=2026-09-02
 // cl: /DNDEBUG /MD
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 typedef float Real;
 
@@ -29,31 +28,12 @@ class StructureCollapseObject
 public:
 	void *m_vtable;
 	StructureCollapseTemplate *m_template;
-	StructureCollapseTemplate *getTemplate() const
-	{
-		const char *slot = reinterpret_cast<const char *>( this );
-		slot += 4;
-		return *reinterpret_cast<StructureCollapseTemplate *const volatile *>( slot );
-	}
 };
 
 static __forceinline StructureCollapseTemplate *getStructureCollapseTemplate(
 	StructureCollapseObject *object)
 {
 	char *slot = reinterpret_cast<char *>(object);
-	slot += 4;
-	return *reinterpret_cast<StructureCollapseTemplate *volatile *>(slot);
-}
-
-static __forceinline bool structureCollapseTemplateExists(StructureCollapseTemplate *t)
-{
-	return t != 0;
-}
-
-static __forceinline StructureCollapseTemplate *getStructureCollapseTemplateVolatile(
-	volatile StructureCollapseObject *object)
-{
-	volatile char *slot = reinterpret_cast<volatile char *>(object);
 	slot += 4;
 	return *reinterpret_cast<StructureCollapseTemplate *volatile *>(slot);
 }
@@ -69,10 +49,6 @@ class StructureCollapseRetailLayout
 {
 public:
 	Real getCollapseHeight();
-	StructureCollapseObject *getObject()
-	{
-		return m_object;
-	}
 
 private:
 	void *m_vtable;
@@ -113,7 +89,7 @@ Real StructureCollapseRetailLayout::getCollapseHeight()
 		return m_moduleData->m_minCollapseHeight;
 
 	t2 = getSecondCollapseTemplate( this );
-	if( !structureCollapseTemplateExists( t2 ) )
+	if( !t2 )
 		return t2->m_geometry.getMaxHeightAbovePosition();
 	StructureCollapseTemplate *o2 = t2->m_nextOverride;
 	if( o2 )

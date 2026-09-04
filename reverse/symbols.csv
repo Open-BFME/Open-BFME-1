@@ -899,6 +899,7 @@ name,address,notes
 ??$__copy_backward@PAUGen_t_0074a990_p128pod@@PAU1@H@_STL@@YAPAUGen_t_0074a990_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00749360,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_0074aa60_p128pod@@PAU1@H@_STL@@YAPAUGen_t_0074aa60_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00749570,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_0074ab00_p128pod@@PAU1@H@_STL@@YAPAUGen_t_0074ab00_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x007495D0,gen-tgrid payload member
+??$__copy_backward@PAUGen_t_0074d9c0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_0074d9c0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00020A4A,typed helper for 36-byte vector fill insert
 ??$__copy_backward@PAUGen_t_0074e320_p16pod@@PAU1@H@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00749570,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_00761410_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00761410_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0075E820,gen-tgrid payload member
 ??$__copy_backward@PAUGen_t_00761540_p128pod@@PAU1@H@_STL@@YAPAUGen_t_00761540_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0075EAA0,gen-tgrid payload member
@@ -1040,6 +1041,7 @@ name,address,notes
 ??$__unguarded_partition@PAHHUQ4Sort00533470@@@_STL@@YAPAHPAH0HUQ4Sort00533470@@@Z,0x0052EEC0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAHHUQ4Sort00755050@@@_STL@@YAPAHPAH0HUQ4Sort00755050@@@Z,0x00753720,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@_STL@@YAPAURva00364980HeapElement@@PAU1@0U1@URva00364980HeapCompare@@@Z,0x0003FFC1,REL32 wide-element partition target from 0x00366AEF
+??$__uninitialized_copy@PAUGen_t_0074d9c0_p128pod@@PAU1@@_STL@@YAPAUGen_t_0074d9c0_p128pod@@PAU1@00ABU__false_type@0@@Z,0x00021A1C,typed helper for 36-byte vector fill insert
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
 ??$__uninitialized_copy@PAURunwayInfo@FlightDeckBehavior@@PAU12@@_STL@@YAPAURunwayInfo@FlightDeckBehavior@@PAU12@00ABU__false_type@0@@Z,0x00038C80,Open-BFME5 the range copy the RunwayInfo vector _M_insert_overflow at 0x0039EC70 calls
 ??$__uninitialized_copy@PAURva00244A80Element@@PAU1@@_STL@@YAPAURva00244A80Element@@PAU1@00ABU__false_type@0@@Z,0x0002D11E,Open-BFME5 0x002403E0 range copy ILT
@@ -1104,6 +1106,7 @@ name,address,notes
 ??$fill@PAMM@_STL@@YAXPAM0ABM@Z,0x00011171,Open-BFME5 ILT thunk to 0x00459A00 - the fill() both fill-arms of _M_fill_insert at 0x00459D90 call; same TU 0x390 bytes below it
 ??$fill@PAPAVObject@@PAV1@@_STL@@YAXPAPAVObject@@0ABQAV1@@Z,0x0003C7F9,ILT thunk used by call site
 ??$fill@PAPAXPAX@_STL@@YAXPAPAX0ABQAX@Z,0x0000A060,vector<void*>::_M_fill_insert REL32 call via ILT thunk
+??$fill@PAUGen_t_0074d9c0_p128pod@@U1@@_STL@@YAXPAUGen_t_0074d9c0_p128pod@@0ABU1@@Z,0x0003EF9F,typed helper for 36-byte vector fill insert
 ??$fill@PAUGen_t_0074e320_p16pod@@U1@@_STL@@YAXPAUGen_t_0074e320_p16pod@@0ABU1@@Z,0x00749270,gen-tgrid payload member
 ??$fill@PAURva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@0ABU1@@Z,0x00030F58,Open-BFME5 0x002403E0 fill ILT
 ??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QBE?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@1@ABH@Z,0x00041DAD
@@ -1844,6 +1847,7 @@ name,address,notes
 ??0ActiveShroudUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004709B
 ??0ActiveShroudUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0AdaptiveDeltaMotionChannelClass@@QAE@XZ,0x00978340
+??0AnimSet@GenericObjectCreationNugget@@QAE@ABU01@@Z,0x001D6B80,BFME2 three-string AnimSet copy constructor used by parseAnimSet
 ??0AnimalAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AnimalAIUpdate ctor base call
 ??0Animatable3DObjClass@@QAE@ABV0@@Z,0x00982D10
 ??0Animatable3DObjClass@@QAE@PBD@Z,0x00981EF0
@@ -2523,6 +2527,7 @@ name,address,notes
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062
 ??0GenericObjectCreationNugget@@QAE@XZ,0x00006DB1,Open-BFME5 parseDebris retail constructor thunk
+??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z,0x00100580,BFME GeometryInfo five-argument constructor called by W3DPropBuffer construction removal
 ??0GeometryUpgradeBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C315,GeometryUpgrade ctor base call
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
@@ -2938,6 +2943,7 @@ name,address,notes
 ??0Rva00802D00Element@@QAE@XZ,0x00802D00,V2 lane: 64-byte element constructor placement-new'd by ?allocate@Rva007F7810Block@@QAEXH@Z
 ??0Rva00802E70Element@@QAE@XZ,0x00802E70,V2 lane: 28-byte element constructor placement-new'd by ?allocate@Rva007F77B0Block@@QAEXH@Z
 ??0Rva008030C0Elem@@QAE@XZ,0x00802FC0,FESL Rva00803080 pool-init element default ctor; ??_L target of 0x008030C0
+??0Rva00891540DebugIOCon@@QAE@XZ,0x00891320,address-derived factory callee proven by 0x00891540
 ??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
 ??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
@@ -3457,6 +3463,8 @@ name,address,notes
 ??1?$set@PAVGameSpyStagingRoom@@U?$less@PAVGameSpyStagingRoom@@@_STL@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,0x0001F514
 ??1?$vector@U?$pair@HVAsciiString@@@_STL@@V?$allocator@U?$pair@HVAsciiString@@@_STL@@@2@@_STL@@QAE@XZ,0x00574BC0,destructor of the 8-byte {Int colour AsciiString side} row vector at BfmeAptScreenScoreScreen+0x264: releases the AsciiString at +4 of every element then frees the buffer (node alloc under 0x80 else operator delete); the element type is pinned by its readers ScoreScreen:PlayerColor:%d 0x00571DF0 (prints [i*8]) ScoreScreen:PlayerFaction:%d 0x00571E50 (copies [i*8+4].str()) NumOfPlayers 0x005731E0 (count = (end-begin)/8) and its writer the row adder 0x00576C20 (push_back 0x005758B0 of {MultiplayerColor rgb of getApparentColor player->+0x28 side}); ILT 0x00045E8F; caller the screen dtor 0x0057514E plus EH funclets uw_00c35968 uw_00c35c08
 ??1?$vector@UEvaCheckInfoRecord@@V?$allocator@UEvaCheckInfoRecord@@@_STL@@@_STL@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfoRecord> destructor at 0x00426220; the same body EvaCheckInfoVec's own dtor inlines into
+??1?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@XZ,0x000FF7D0,BFME GeometryInfo record-vector destructor
+??1?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@XZ,0x000FF700,BFME GeometryInfo shape-vector destructor
 ??1?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@XZ,0x0001642D,resweep callee back-solved
 ??1?$vector@UMem003BB060Element@@V?$allocator@UMem003BB060Element@@@_STL@@@_STL@@QAE@XZ,0x003BB060,Mem003BB060 uses the exact STLport vector destructor body; element stride 0x14 and call targets are proven by the target range
 ??1?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@XZ,0x000658A0,SubsystemLegend.cpp TU copy of vector<AsciiString> dtor (unfolded; GameAudio.cpp has its own at 0x006FA6xx)
@@ -3469,6 +3477,7 @@ name,address,notes
 ??1ActAsDozerState@@UAE@XZ,0x0003C943,constructor-installed vtable 0x010CA428 first slot reaches deleting wrapper 0x002C9BC0; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActAsSupplyTruckState@@UAE@XZ,0x0003CCB8,constructor-installed vtable 0x010CA490 first slot reaches deleting wrapper 0x002C9C00; wrapper directly calls this scalar-destructor ILT thunk
 ??1ActiveCategoryStackClass@@UAE@XZ,0x0002A08B,pinharvest x1 (thunk)
+??1AnimSet@GenericObjectCreationNugget@@QAE@XZ,0x001D6700,BFME2 three-string AnimSet destructor used by parseAnimSet
 ??1AnimateWindow@@UAE@XZ,0x0002F973,ILT thunk; retail call sites use the thunk
 ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ,0x000142EA,AnimationSoundClientBehaviorModuleData dtor member +0x8
 ??1AppendLockClass@IndexBufferClass@@QAE@XZ,0x0091D020,retail AppendLockClass index destructor target used by constructVolumeVB
@@ -8789,6 +8798,8 @@ name,address,notes
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
 ??_7DebugIOFlat@@6B@,0x0113517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
 ??_7DebugIOInterface@@6B@,0x01135044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
+??_7DebugIONet@@6B@,0x0113507C,address-derived network vptr in 0x0088FE00
+??_7DebugIOOds@@6B@,0x01135060,address-derived ODS vptr in 0x0088FA10
 ??_7DefaultUpdateModuleInfo@FXParticleSystem@@6B@,0x01110C38,DefaultUpdateModuleInfo retail vtable
 ??_7DelayedLuaEventList@@6B@,0x01085E10,Open-BFME5 vtable the DelayedLuaEventList constructor at 0x000EDBB0 stores at +0
 ??_7DeployStyleAIUpdateModuleDataVtbl@@6B@,0x01089B68,DeployStyleAIUpdate vtbl
@@ -10731,6 +10742,7 @@ name,address,notes
 ?_M_fill_insert@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXPAPAVDrawable@@IABQAV3@@Z,0x000395CC,pin for vector<Drawable*>::resize callee (packet 001dc360)
 ?_M_fill_insert@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QAEXPAPAXIABQAX@Z,0x00067740,gen-tgrid shared callee
 ?_M_fill_insert@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXPAUCoord3D@@IABU3@@Z,0x00006B45,Open-BFME5 ILT; sole callee of vector<Coord3D>::resize insert branch at 0x000B7C90
+?_M_fill_insert@?$vector@UGen_t_0074d9c0_p128pod@@V?$allocator@UGen_t_0074d9c0_p128pod@@@_STL@@@_STL@@QAEXPAUGen_t_0074d9c0_p128pod@@IABU3@@Z,0x00033BA9,typed helper for the 36-byte vector resize at 0x0074E710
 ?_M_fill_insert@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEXPAUICoord2D@@IABU3@@Z,0x000160C2,Open-BFME5 ILT the ICoord2D vector resize uses; it jumps to the _M_fill_insert body at 0x00452450
 ?_M_fill_insert@?$vector@UQ3SortElem4@@V?$allocator@UQ3SortElem4@@@_STL@@@_STL@@QAEXPAUQ3SortElem4@@IABU3@@Z,0x009CD390
 ?_M_fill_insert@?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@I_N@Z,0x0000886E
@@ -11257,6 +11269,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_00715d40_p4pod@@V?$allocator@UGen_t_00715d40_p4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00715d40_p4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00715770,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_00719c80_p12pod@@V?$allocator@UGen_t_00719c80_p12pod@@@_STL@@@_STL@@IAEXPAUGen_t_00719c80_p12pod@@ABU3@ABU__false_type@2@I_N@Z,0x00719AF0,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_007463a0_p24cd@@V?$allocator@UGen_t_007463a0_p24cd@@@_STL@@@_STL@@IAEXPAUGen_t_007463a0_p24cd@@ABU3@ABU__false_type@2@I_N@Z,0x00745960,gen-tgrid payload member
+?_M_insert_overflow@?$vector@UGen_t_0074d9c0_p128pod@@V?$allocator@UGen_t_0074d9c0_p128pod@@@_STL@@@_STL@@IAEXPAUGen_t_0074d9c0_p128pod@@ABU3@ABU__false_type@2@I_N@Z,0x0001454C,typed helper for 36-byte vector fill insert
 ?_M_insert_overflow@?$vector@UGen_t_0074e320_p16pod@@V?$allocator@UGen_t_0074e320_p16pod@@@_STL@@@_STL@@IAEXPAUGen_t_0074e320_p16pod@@ABU3@ABU__false_type@2@I_N@Z,0x0074DB50,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_00754630_m4pod@@V?$allocator@UGen_t_00754630_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00754630_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00753FC0,family-emit payload member
 ?_M_insert_overflow@?$vector@UGen_t_00774250_p24cd@@V?$allocator@UGen_t_00774250_p24cd@@@_STL@@@_STL@@IAEXPAUGen_t_00774250_p24cd@@ABU3@ABU__false_type@2@I_N@Z,0x00771B10,gen-tgrid payload member
@@ -74781,6 +74794,7 @@ name,address,notes
 ?bfmeUnguardedInsertAT@@YAXPAPAVBfmeRecAT@@PAV1@VBfmeCompAT@@@Z,0x0001F1FE,Open-BFME5 the ICF thunk (to 0x0041F1FE) the ranked linear insert at 0x003CE420 hands its unguarded arm to
 ?bfmeUnguardedInsertAU@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x00016275,Open-BFME5 the ICF thunk (to 0x00416275) the linear insert at 0x005134A0 hands its unguarded arm to
 ?bfmeUnguardedInsertAV@@YAXPAPAVBfmeRecAU@@PAV1@VBfmeCompAU@@@Z,0x000044EE,Open-BFME5 the ICF thunk (to 0x004044EE) the linear insert at 0x0052FF70 hands its unguarded arm to
+?bfmeUninitializedFillN36@@YAPAUGen_t_0074d9c0_p128pod@@PAU1@IABU1@@Z,0x00023817,typed helper for 36-byte vector fill insert
 ?bfmeUnitAngle@@YAMPBUCoord3D@@0@Z,0x00022C6E,cdecl acos(dot) of two unit Coord3D; ILT to FUN_007fd650 at 0x003FD650; called from Path::bfmeBuildTurnArc 0x003FFB50
 ?bfmeUnlink1111@BfmeW1111@@QAEXPAVBfmeE1111@@@Z,0x00014FE7,pin
 ?bfmeUnlink@@YAPAUBfmeSplitNode@@PAU1@PAPAU1@11@Z,0x0082CB60,Open-BFME5 the unlinker the tree removes at 0x00587670 and 0x00587750 hand their node to
@@ -77744,6 +77758,7 @@ name,address,notes
 ?getNATPortAllocationScheme@FirewallHelperClassGetNATPortAllocationSchemeShim@@QAEHHPAG0AA_N1@Z,0x0066E870,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?getName@Anim2DTemplate@@QBE?AVAsciiString@@XZ,0x00012E72,ILT thunk to the Anim2D template name accessor
 ?getName@AttackPriorityInfo@@QBE?AVAsciiString@@XZ,0x00047AFF,Open-BFME5 ILT to the 32-byte AttackPriorityInfo name getter body 0x001C2E20
+?getName@BfmeGameSlot@@QBE?AVUnicodeString@@XZ,0x0003A20B,Open-BFME5 BFME GameSlot view used by the Skirmish APT player-name copier at 0x00579790
 ?getName@CrateTemplate@@QBE?AVAsciiString@@XZ,0x000259D7,Open-BFME5 ILT; ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z at 0x003795E0 compares each vector entry on the name it returns by value
 ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z,0x00002ECD,ILT thunk found directly in DataChunkInput::readDict retail bytes
 ?getName@EmotionNugget@@QBE?AVBfmeEmotionName@@XZ,0x00036DC2,addNugget call-site ILT target for the AsciiString value-return body at 0x0037CB90

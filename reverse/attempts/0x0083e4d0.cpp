@@ -48,6 +48,12 @@ public:
 	static void assign(T &c1, const T &c2) { c1 = c2; }
 };
 
+template <class T>
+inline T (max)(T a, T b)
+{
+	return a < b ? b : a;
+}
+
 template <class Pointer, class Value, class Alloc>
 class _STLP_alloc_proxy : public Alloc
 {
@@ -105,8 +111,7 @@ basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 	{
 		const size_type old_len = size();
 		size_type one = 1;
-		size_type mx = *(old_len < one ? &one : &old_len);
-		const size_type len = old_len + mx + 1;
+		const size_type len = old_len + (max)(old_len, one) + 1;
 		pointer new_start = _M_end_of_storage.allocate(len);
 		new_pos = uninitialized_copy(_M_start, p, new_start);
 		if (new_pos)

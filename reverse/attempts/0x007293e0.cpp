@@ -1,11 +1,12 @@
 // ?advanceLeft@Rva007293E0Terrain@@QAE_NAAUICoord2D@@HHHH@Z
-// partial score=0.55 date=2026-09-03
+// partial score=0.55 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Retail 0x007293E0: advance the left edge through a terrain tile.
 
 typedef bool Bool;
 
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;

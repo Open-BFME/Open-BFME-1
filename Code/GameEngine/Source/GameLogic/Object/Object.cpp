@@ -2348,22 +2348,9 @@ Bool Object::isFactionStructure(void) const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isNonFactionStructure@Object@@QBE_NXZ present-unmatched
-Bool Object::isNonFactionStructure(void) const
-{
-	const ThingTemplate *tmplate = *(const ThingTemplate **)((const char *)this + 4);
-	if (tmplate && *(const ThingTemplate **)((const char *)tmplate + 4))
-		tmplate = (const ThingTemplate *)tmplate->getFinalOverride();
-	if (*(const unsigned char *)((const char *)tmplate + 0xC8) & 0x80)
-	{
-		Bool result = FALSE;
-		if (!reinterpret_cast<const BfmeKindOfTester *>(this)->isAnyKindOf(
-			BfmeKindOfMask( 61, 62, 63, 64, 134 )))
-			result = TRUE;
-		return result;
-	}
-	return FALSE;
-}
+// ?isNonFactionStructure@Object@@QBE_NXZ is defined in
+// Object_isNonFactionStructure.cpp so its BFME six-dword mask layout stays
+// isolated from the other Object bodies in this ZH-layout translation unit.
 
 void localIsHero( Object *obj, void* userData )
 {

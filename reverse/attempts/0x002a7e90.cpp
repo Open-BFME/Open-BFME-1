@@ -1,4 +1,6 @@
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
+// partial score=0.97 date=2026-09-04
+// ?apply@SpecialAbilityUpdate@@QAEXXZ
 // partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD
 //
@@ -9,12 +11,6 @@
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
 typedef unsigned int UnsignedInt;
-
-static __forceinline void copyUnsignedInt( const UnsignedInt *source,
-	UnsignedInt *destination )
-{
-	*destination = *source;
-}
 
 class Overridable
 {

@@ -1,28 +1,41 @@
-// ?bfmeAddYW@BfmeLinkYW@@QAEXPAV1@@Z
-// partial score=0.58 date=2026-09-02
-// cl: /O2 /Ob0
+// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z
+// partial score=0.99 date=2026-09-04
+// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z present-unmatched
+// cl: /O2 /Ob2
 
-class BfmeLinkYW
+class PartitionFilter;
+
+struct PartitionFilterLinkView
 {
-public:
-	BfmeLinkYW *m_bfmeUnknown;
-	BfmeLinkYW *m_bfmeNext;
-
-	void bfmeAddYW(BfmeLinkYW *node);
+	void *vtable;
+	PartitionFilter *m_next;
 };
 
-void BfmeLinkYW::bfmeAddYW(BfmeLinkYW *node)
+class PartitionFilter
 {
-	BfmeLinkYW *walk = this;
-	BfmeLinkYW *next = walk->m_bfmeNext;
-	if (next)
+public:
+	virtual bool allow(void *object) = 0;
+	PartitionFilter *link(PartitionFilter *next);
+	PartitionFilter *m_next;
+};
+
+PartitionFilter *PartitionFilter::link(PartitionFilter *next)
+{
+	PartitionFilterLinkView *cursor = 0;
+	PartitionFilter *candidate = m_next;
+	if (candidate != 0)
 	{
 		do
 		{
-			walk = next;
-			next = walk->m_bfmeNext;
-		} while (next);
+			cursor = (PartitionFilterLinkView *)(unsigned int)candidate;
+			candidate = cursor->*(&PartitionFilterLinkView::m_next);
+		}
+		while (candidate != 0);
+		cursor->m_next = next;
 	}
-
-	walk->m_bfmeNext = node;
+	else
+	{
+		m_next = next;
+	}
+	return this;
 }

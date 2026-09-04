@@ -51,13 +51,14 @@ public:
 
 	__forceinline const char *reverseFindSlash(void) const
 	{
-		const char *start = m_data ? &m_data->data[0] : "";
+		char seen;
+		const char *start = str();
 		const char *p = start + (m_data ? m_data->length : 0);
 		if (p == start)
 			return 0;
 		do
 		{
-			char seen = p[-1];
+			seen = p[-1];
 			--p;
 			if (seen == '\\')
 				return p;
@@ -101,9 +102,24 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 	if (TheFileSystem->doesFileExist(strToAdjust.str()))
 		return;
 
-	const char *slash = strToAdjust.reverseFindSlash();
-	if (!slash)
+	const char *slash;
+	const char *start = strToAdjust.str();
+	const char *p = start + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
+	if (p == start)
 		return;
+	do
+	{
+		char seen = p[-1];
+		--p;
+		if (seen == '\\')
+		{
+			slash = p;
+			goto foundSlash;
+		}
+	} while (p != start);
+	return;
+
+foundSlash:
 
 	AsciiString filename(slash);
 	strToAdjust.set(generateFilenamePrefix(m_eventInfo->m_soundType, true));

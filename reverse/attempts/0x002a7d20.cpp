@@ -1,4 +1,6 @@
 // ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
+// partial score=0.83 date=2026-09-04
+// ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
 // partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD
 //
@@ -84,13 +86,16 @@ UnsignedInt SpecialAbilityUpdate::getSpecialObjectMax() const
 		tmpl = (const SpecialPowerTemplate *)o;
 	}
 
-	while( tmpl->m_specialPowerType == SPECIAL_POWER_TYPE_27 && target )
+	for( ;; )
 	{
+		if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
+			return md->m_maxSpecialObjects;
+		if( !target )
+			return md->m_maxSpecialObjects;
 		if( target->isKindOf( KINDOF_6 ) )
-			break;
+			return md->m_maxSpecialObjects;
 		if( target->isKindOf( KINDOF_62 ) )
-			break;
+			return md->m_maxSpecialObjects;
 		return 0;
 	}
-	return md->m_maxSpecialObjects;
 }

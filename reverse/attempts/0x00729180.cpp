@@ -1,10 +1,11 @@
 // ?reacquireTexture@Rva00729180Terrain@@QAEEXZ
-// partial score=0.7 date=2026-09-03
+// partial score=0.7 date=2026-09-04
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00729180: reacquire the terrain background texture and its filter.
 
 typedef unsigned char Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -56,6 +57,7 @@ public:
 	TerrainTexture *m_p;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
 {
 public:
@@ -63,6 +65,7 @@ public:
 		int format, int mipCount);
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -95,22 +98,28 @@ private:
 Bool Rva00729180Terrain::reacquireTexture()
 {
 	TerrainTextureSlot *texture;
-	if (m_state != 2)
+	if (m_state == 2)
 	{
-		if (m_textureType == 4 ||
-			TheWritableGlobalData->m_textureReductionFactor)
+		if (m_texture.m_p)
 		{
-			texture = &m_texture;
-			if (texture->m_p == 0)
-			{
-				*texture = m_map->getFlatTexture(
-					m_xOrigin, m_yOrigin, m_width, 0x20, 0x19);
-				texture->getFilter()->m_uAddress = 1;
-				texture->getFilter()->m_vAddress = 1;
-				if (m_refresh)
-					texture->update();
-				return 1;
-			}
+			m_texture.m_p->Release_Ref();
+			m_texture.m_p = 0;
+		}
+		return 0;
+	}
+	if (m_textureType == 4 ||
+		TheWritableGlobalData->m_textureReductionFactor)
+	{
+		texture = &m_texture;
+		if (texture->m_p == 0)
+		{
+			*texture = m_map->getFlatTexture(
+				m_xOrigin, m_yOrigin, m_width, 0x20, 0x19);
+			texture->getFilter()->m_uAddress = 1;
+			texture->getFilter()->m_vAddress = 1;
+			if (m_refresh)
+				texture->update();
+			return 1;
 		}
 		return 0;
 	}
