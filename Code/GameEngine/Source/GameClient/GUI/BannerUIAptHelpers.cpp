@@ -3,7 +3,8 @@
 // BannerUI.apt helpers. DeleteBanner is reloc-named by the matched
 // BannerUI::removeMovieBanner caller; AddBanner / SetBannerProgress share the
 // same sprintf / BannerUI.apt lookup / scripted-UI dispatch shape.
-// SetBannerState (0x0050D5B0) is banked: jump table matches, 4B frame wall.
+// SetBannerState homes the movie temporary in the dead state arg slot
+// (retail sub esp,0x10) — a named local adds 4B.
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(
 	char *destination, const char *format, ... );
@@ -59,6 +60,24 @@ void AddBanner( int id, const AsciiString &name, const AsciiString &label )
 	g_theWindowManager->unidentified_00015235(
 		g_theWindowManager->unidentified_00036854( movie ),
 		"AddBanner", 3, idText, name.str(), label.str(), 0, 0 );
+}
+
+void SetBannerState( int id, unsigned int state )
+{
+	char idText[ 16 ];
+	const char *label;
+	sprintf( idText, "%d", id );
+	switch( state )
+	{
+	case 0: label = "_available"; break;
+	case 1: label = "_engaging"; break;
+	case 2: label = "_waiting"; break;
+	case 3: label = "_disabled"; break;
+	default: return;
+	}
+	g_theWindowManager->unidentified_00015235(
+		g_theWindowManager->unidentified_00036854( AsciiString( "BannerUI.apt" ) ),
+		"SetBannerState", 2, idText, label, 0, 0, 0 );
 }
 
 void SetBannerProgress( int id, int progress )
