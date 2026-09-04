@@ -4758,7 +4758,6 @@ name,address,notes
 ??1Gen_dtor_002cd180@@UAE@XZ,0x0004418E,gen-dtor class destructor
 ??1Gen_dtor_002cdbc0@@UAE@XZ,0x0004324D,gen-dtor class destructor
 ??1Gen_dtor_002cdd60@@UAE@XZ,0x0001A3B6,gen-dtor class destructor
-??1Gen_dtor_002ce580@@UAE@XZ,0x00007FD6,gen-dtor class destructor
 ??1Gen_dtor_002ceea0@@UAE@XZ,0x00038BC2,gen-dtor class destructor
 ??1Gen_dtor_002cef60@@UAE@XZ,0x0003CFB5,gen-dtor class destructor
 ??1Gen_dtor_002cf290@@UAE@XZ,0x000016E5,gen-dtor class destructor
@@ -35460,7 +35459,6 @@ name,address,notes
 ?b_002ce1b0@@YAXXZ,0x002CE1B0,gen-thunk body
 ?b_002ce290@@YAXXZ,0x002CE290,gen-thunk body
 ?b_002ce2c0@@YAXXZ,0x002CE2C0,gen-thunk body
-?b_002ce2d0@@YAXXZ,0x002CE2D0,gen-thunk body
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
 ?b_002ce320@@YAXXZ,0x002CE320,gen-thunk body
 ?b_002ce340@@YAXXZ,0x002CE340,gen-thunk body
@@ -35470,7 +35468,6 @@ name,address,notes
 ?b_002ce450@@YAXXZ,0x002CE450,gen-thunk body
 ?b_002ce4e0@@YAXXZ,0x002CE4E0,gen-thunk body
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
-?b_002ce580@@YAXXZ,0x002CE580,gen-thunk body
 ?b_002ce5b0@@YAXXZ,0x002CE5B0,gen-thunk body
 ?b_002ce7c0@@YAXXZ,0x002CE7C0,gen-thunk body
 ?b_002ce7e0@@YAXXZ,0x002CE7E0,gen-thunk body
@@ -82758,3 +82755,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1RailedTransportDockUpdateModuleData@@UAE@XZ,0x0001771F,destructor ILT to 0x002CE7B0
 ??_GRailedTransportDockUpdateModuleData@@UAEPAXI@Z,0x0000AEFC,vftable slot zero ILT to 0x002CE780
 ??_7DockUpdateModuleData@@6B@,0x01073744,base vftable restored by RailedTransportDockUpdateModuleData destructor
+??1RailedTransportDockUpdate@@MAE@XZ,0x00007FD6,destructor ILT to 0x002CE2D0
+??_GRailedTransportDockUpdate@@MAEPAXI@Z,0x00036877,primary vftable slot zero ILT to 0x002CE580
+??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
