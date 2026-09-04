@@ -82659,3 +82659,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1AsciiStringWH@@QAE@XZ,0x00887940,pin
 ??0AsciiStringWI@@QAE@ABV0@@Z,0x00887B60,pin
 ??1AsciiStringWI@@QAE@XZ,0x00887940,pin
+??0UnicodeStringWJ@@QAE@ABV0@@Z,0x00888400,pin
+??1UnicodeStringWJ@@QAE@XZ,0x008881D0,pin
+??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
+??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
+??0AsciiStringWK@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWK@@QAE@XZ,0x00887940,pin
