@@ -7,22 +7,22 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-struct Rva00367DC0Pair;
+struct AttributeModifierValue;
 
-class Rva00367DC0PairRange
+class AttributeModifierValueRange
 {
 public:
-	Bool find(unsigned int key, unsigned int *value) const;
+	Bool findValue(unsigned int attribute, unsigned int *value) const;
 
 private:
-	Rva00367DC0Pair *m_first;
-	Rva00367DC0Pair *m_last;
+	AttributeModifierValue *m_first;
+	AttributeModifierValue *m_last;
 };
 
 class AttributeModifierDefinition
 {
 public:
-	Rva00367DC0PairRange m_values;
+	AttributeModifierValueRange m_values;
 };
 
 class AttributeModifierDefinitionRange
@@ -61,7 +61,7 @@ Bool AttributeModifierDefinitionStore::getValue(
 
 	// Retail evaluates the slot separately for the null check and dispatch.
 	_ReadWriteBarrier();
-	return definitions[modifierIndex]->m_values.find(
+	return definitions[modifierIndex]->m_values.findValue(
 		static_cast<unsigned int>(attribute),
 		reinterpret_cast<unsigned int *>(value));
 }

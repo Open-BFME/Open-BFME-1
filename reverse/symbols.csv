@@ -75944,7 +75944,6 @@ name,address,notes
 ?find@Rva000F9270Factory@@QAEPAVRva000F9270Product@@PAX@Z,0x00028560,retail REL32 at 0x000F927B targets the factory lookup ILT at 0x00028560
 ?find@Rva000F92B0Factory@@QAEPAVRva000F92B0Product@@PAX@Z,0x00028560,retail REL32 at 0x000F92BB targets the factory lookup ILT at 0x00028560
 ?find@Rva002BD630TeamFactory@@QAEPAXH@Z,0x00044C2E,address-derived team lookup used by 0x002BD630
-?find@Rva00367DC0PairRange@@QBE_NIPAI@Z,0x00014C18,retail jump thunk to the byte-verified pair-range lookup at 0x00367DC0
 ?find@Rva003BAD00Owner@@QAEPAVGen003B9DC0Node@@H@Z,0x003B9DC0,container lookup called by the three virtual-notify members in V4LookupThenVirtualNotify.cpp; address-derived name
 ?find@Rva003BF540@@QAEPAVGen003BD7D0Node@@H@Z,0x003BD7D0,keyed lookup called by 0x003BEB50 and 0x003BD880; address-derived name
 ?find@Rva0058C100CommandManager@@QAEPAXPBVAsciiString@@@Z,0x0003B59D,ControlBar command lookup thunk used by the observer command callbacks
@@ -82596,3 +82595,4 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ?getValue@AttributeModifierDefinitionStore@@QBE_NHHPAM@Z,0x0001CE31,ILT to body 0x0036AFB0; additive and multiplicative AttributeModifierPoolUpdate accumulators query modifier index attribute and float output
 ?TheAttributeModifierDefinitionStore@@3PAVAttributeModifierDefinitionStore@@A,0x012F07E4,global store used by AttributeModifierPoolUpdate additive and multiplicative accumulators
 ?findDefinition@AttributeModifierDefinitionStore@@QAEPAUAttributeModifierDefinition@@I@Z,0x0001DBBA,AttributeModifierPoolUpdate active-entry test resolves each modifier key through the definition store
+?findValue@AttributeModifierValueRange@@QBE_NIPAI@Z,0x00014C18,ILT to exact AttributeModifierValueRange lookup body 0x00367DC0; called by AttributeModifierDefinitionStore::getValue
