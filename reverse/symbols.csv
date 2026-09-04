@@ -35461,7 +35461,6 @@ name,address,notes
 ?b_002ce2c0@@YAXXZ,0x002CE2C0,gen-thunk body
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
 ?b_002ce360@@YAXXZ,0x002CE360,gen-thunk body
-?b_002ce3a0@@YAXXZ,0x002CE3A0,gen-thunk body
 ?b_002ce450@@YAXXZ,0x002CE450,gen-thunk body
 ?b_002ce4e0@@YAXXZ,0x002CE4E0,gen-thunk body
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
@@ -71962,7 +71961,6 @@ name,address,notes
 ?bfmeAccept@Gen_002C4BD0@@AAEXPAVBfmeSeedTarget@@@Z,0x0000EC6E,Open-BFME5 ILT the seeder at 0x002C4BD0 accepts through
 ?bfmeAccept@Gen_002C58B0@@AAEXPAVBfmeSeedTarget@@@Z,0x00043441,Open-BFME5 ILT the seeder at 0x002C58B0 accepts through
 ?bfmeAccept@Gen_002CDC70@@AAEXPAVBfmeSeedTarget@@@Z,0x0001D043,Open-BFME5 ILT the seeder at 0x002CDC70 accepts through
-?bfmeAccept@Gen_002CE3A0@@AAEXPAVBfmeSeedTarget@@@Z,0x0001D043,Open-BFME5 ILT the seeder at 0x002CE3A0 accepts through
 ?bfmeAccept@Gen_002CEED0@@AAEXPAVBfmeSeedTarget@@@Z,0x0001D043,Open-BFME5 ILT the seeder at 0x002CEED0 accepts through
 ?bfmeAccept@Gen_002CF710@@AAEXPAVBfmeSeedTarget@@@Z,0x0001D043,Open-BFME5 ILT the seeder at 0x002CF710 accepts through
 ?bfmeAccept@Gen_002CFFD0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002CFFD0 accepts through
@@ -82758,3 +82756,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?getRailedTransportDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVRailedTransportDockUpdateInterface@@XZ,0x0000178A,primary vftable slot 0x2C ILT to 0x002CE320
 ?getDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVDockUpdateInterface@@XZ,0x0001FA3C,BehaviorModuleInterface vftable slot 0x54 ILT to 0x002CE340
 ?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
+?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
+?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z,0x0003AF53,primary vftable ILT to 0x002CE3A0

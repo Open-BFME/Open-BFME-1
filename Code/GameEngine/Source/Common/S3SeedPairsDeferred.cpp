@@ -553,26 +553,6 @@ private:
 	BfmeSubAccept_0002C41C m_bfmeSub7;		// +0x364
 };
 
-class Gen_002CE3A0
-{
-public:
-	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0001D043
-
-	char m_bfmePad0[0x8C];
-	char m_bfmeItem0;				// +0x8C
-	char m_bfmePad1[0x3];
-	char m_bfmeItem1;				// +0x90
-	char m_bfmePad2[0x3];
-	char m_bfmeItem2;				// +0x94
-	char m_bfmePad3[0x3];
-	char m_bfmeItem3;				// +0x98
-	char m_bfmePad4[0x3];
-	char m_bfmeItem4;				// +0x9C
-};
-
 class Gen_002CEED0
 {
 public:
@@ -1029,24 +1009,6 @@ void Gen_002C58B0::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeTakeAt8C(&m_bfmeItem6);
 		m_bfmeSub7.bfmeAccept(target);
 	}
-}
-
-// ?bfmeSeed@Gen_002CE3A0@@QAEXPAVBfmeSeedTarget@@@Z		119 bytes
-void Gen_002CE3A0::bfmeSeed(BfmeSeedTarget *target)
-{
-	BfmeSeedPair pair;
-
-	pair.m_bfmeFirst = 1;
-	pair.m_bfmeSecond = 1;
-
-	target->bfmeSeed(&pair);
-	bfmeAccept(target);
-
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem0);
-	target->bfmeTakeAt6C(&m_bfmeItem1);
-	bfmeHandOver_0000C9B4(target, &m_bfmeItem2);
-	target->bfmeTakeAt6C(&m_bfmeItem3);
-	target->bfmeTakeAt78(&m_bfmeItem4);
 }
 
 // ?bfmeSeed@Gen_002CEED0@@QAEXPAVBfmeSeedTarget@@@Z		82 bytes
