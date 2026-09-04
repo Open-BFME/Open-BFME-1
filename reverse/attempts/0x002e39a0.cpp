@@ -138,12 +138,12 @@ extern AudioManager *TheAudio;
 int CurDrawablePlaySound(lua_State *state)
 {
 	LuaDrawableLink *selection = g_obj12F060C->m_drawable;
-	register lua_State *luaState = state;
 	Drawable *drawable = selection == 0 ? 0 : selection->m_drawable;
+	unsigned int stateValue = (unsigned int)state;
 	if (drawable == 0)
 		return 0;
-	if (lua_gettop(luaState) > 0 && TheAudio != 0) {
-		AudioEventRTS event(lua_tostring(luaState, 1), drawable->getID());
+	if (lua_gettop((lua_State *)stateValue) > 0 && TheAudio != 0) {
+		AudioEventRTS event(lua_tostring((lua_State *)stateValue, 1), drawable->getID());
 		TheAudio->addAudioEvent(&event);
 	}
 	return 0;

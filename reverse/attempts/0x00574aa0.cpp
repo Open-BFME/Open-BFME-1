@@ -55,16 +55,22 @@ struct S4SortElem8
 	bool BfmeLess00574AA0(S4SortElem8 const &other) const;
 };
 
+union BfmeFlagMirror
+{
+	unsigned raw;
+	unsigned shifted;
+};
+
 bool S4SortElem8::BfmeLess00574AA0(S4SortElem8 const &other) const
 {
-	unsigned leftFlags = State->Flags;
-	unsigned leftShifted = leftFlags;
+	BfmeFlagMirror leftFlags;
+	leftFlags.raw = State->Flags;
 	unsigned rightFlags = other.State->Flags;
-	leftShifted >>= 25;
+	leftFlags.shifted >>= 25;
 	unsigned char rightSpecial = (unsigned char)(rightFlags >> 25);
-	unsigned char leftSpecial = (unsigned char)leftShifted;
+	unsigned char leftSpecial = (unsigned char)leftFlags.shifted;
 	if ((leftSpecial ^ rightSpecial) & 1)
-		return (leftFlags >> 25) & 1;
+		return (leftFlags.raw >> 25) & 1;
 	if (Army->SortKey != other.Army->SortKey)
 		return Army->SortKey > other.Army->SortKey;
 	return Army->getName().bfmeCompare(other.Army->getName()) < 0;

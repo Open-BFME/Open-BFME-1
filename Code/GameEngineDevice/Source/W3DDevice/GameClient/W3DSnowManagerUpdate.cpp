@@ -11,13 +11,18 @@
 
 extern "C" double __cdecl fmod(double, double);
 
-class BFMEWeatherOverride
+class BfmeOverridable
 {
 public:
-	const BFMEWeatherOverride *getFinalOverride() const;
+	const BfmeOverridable *getFinalOverride() const;
 
 	void *m_vtable;
-	const BFMEWeatherOverride *m_nextOverride;
+	const BfmeOverridable *m_nextOverride;
+	};
+
+class BFMEWeatherOverride : public BfmeOverridable
+{
+public:
 	unsigned char m_unmodelled_08[0x30 - 8];
 	int m_30;
 	int m_34;
@@ -104,7 +109,7 @@ private:
 static const BFMEWeatherOverride *walkSnowOverride(const BFMEWeatherOverride *d)
 {
 	if (d && d->m_nextOverride)
-		return d->m_nextOverride->getFinalOverride();
+		return (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	return d;
 }
 
@@ -120,38 +125,37 @@ void W3DSnowManager::update(void)
 void W3DSnowManager::extraAfterFmod(void)
 {
 	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
-	BFMEFrameState *frame;
 	if (ov->m_flag58 == 0)
 		return;
 
 	if (m_98 != 0)
 	{
 		int state = m_98;
+		int frame;
+		int state94 = 2;
 		if (state == 1 || state == 3)
 			--m_4c;
 		sibling();
-		int state94 = m_94;
-		if (state94 == 2)
+		if (m_94 == state94)
 		{
-			frame = g_bfmeGlo012F0FE0;
-			if (frame->m_frame != state94)
+			frame = g_bfmeGlo012F0FE0->m_frame;
+			if (frame != state94)
 			{
 				m_98 = 3;
 				ov = walkSnowOverride(g_bfmeGlo012F15F8);
 				m_4c = (int)((g_bfmeDefaultBU - m_54) * ov->m_5c);
-				m_94 = frame->m_frame;
+				m_94 = frame;
 			}
 		}
 	}
 	else
 	{
-		frame = g_bfmeGlo012F0FE0;
-		if (frame->m_frame != 2)
-			return;
-		if (m_94 == 2)
-			return;
-		m_94 = 2;
-		copyFromOverride();
+		int frame = g_bfmeGlo012F0FE0->m_frame;
+		if (frame == 2 && m_94 != 2)
+		{
+			m_94 = frame;
+			copyFromOverride();
+		}
 	}
 }
 

@@ -129,7 +129,6 @@ void BfmeThingTBA::bfmeThreeTBA()
 	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
 	const BfmeOverrideTBA *from;
 	const BfmeOverrideTBA *to;
-	const BfmeOverrideTBA *next;
 	BfmeOverrideTBA *d = (BfmeOverrideTBA *)bfmeWalkTBA(f);
 	float fraction;
 
@@ -143,7 +142,8 @@ void BfmeThingTBA::bfmeThreeTBA()
 	}
 	else
 	{
-		next = (const BfmeOverrideTBA *)f->m_nextOverride;
+		const BfmeOverrideTBA *next =
+			(const BfmeOverrideTBA *)f->m_nextOverride;
 		if (next != 0)
 		{
 			from = (const BfmeOverrideTBA *)next->getFinalOverride();

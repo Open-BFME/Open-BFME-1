@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Ireference/shims/stlp_nodealloc /Ivendor/stlport
 //
 // Retail 0x006AEE00: thiscall returning StringBase by hidden pointer.  If the
 // ready byte at +0x630 is clear, run init.  Find in the tree at +0x64, maybe
@@ -49,6 +49,28 @@ public:
 	unsigned int m_lowPassCutoff;
 };
 
+#include "Common/STLTypedefs.h"
+
+struct Rva006AEE00Less
+{
+	bool operator()(const StringBase<char> &, const StringBase<char> &) const;
+};
+
+struct Rva006AEE00Hash
+{
+	unsigned int operator()(const StringBase<char> &) const;
+};
+
+struct Rva006AEE00Equal
+{
+	bool operator()(const StringBase<char> &, const StringBase<char> &) const;
+};
+
+typedef _STL::set<StringBase<char>, Rva006AEE00Less> Rva006AEE00ActualSet;
+typedef _STL::hash_map<StringBase<char>, Rva006AEE00Info *,
+	Rva006AEE00Hash, Rva006AEE00Equal>
+	Rva006AEE00ActualHashtable;
+
 class Rva006AEE00Hashtable
 {
 public:
@@ -68,9 +90,16 @@ public:
 	{
 		Node *current;
 		Rva006AEE00Hashtable *table;
+
+		Iterator &operator++()
+		{
+			Node *next = current->next;
+			current = next != 0 ? next : table->skipToNext(current);
+			return *this;
+		}
 	};
 
-	void begin(Iterator *result);
+	Iterator begin();
 	unsigned int bucketCount() const
 	{
 		return (unsigned int)(m_finish - m_start);
@@ -158,33 +187,22 @@ public:
 
 void Rva006AEE00::init()
 {
-	Rva006AEE00Tree *tree = &m_tree;
-	if (tree->count)
+	Rva006AEE00ActualSet *tree =
+		reinterpret_cast<Rva006AEE00ActualSet *>(&m_tree);
+	if (!tree->empty())
 	{
-		Rva006AEE00TreeHeader *header =
-			reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
-		tree->erase(header->parent);
-		header = reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
-		header->left = header;
-		header->parent = 0;
-		header->right = header;
-		tree->count = 0;
+		tree->clear();
 	}
 
-	Rva006AEE00Hashtable *table =
-		reinterpret_cast<Rva006AEE00Hashtable *>(reinterpret_cast<char *>(this) + 0x70);
-	Rva006AEE00Hashtable::Iterator it;
-	table->begin(&it);
-	Rva006AEE00Hashtable::Node *current = it.current;
-	Rva006AEE00Hashtable *owner = it.table;
-	while (current)
+	Rva006AEE00ActualHashtable *table =
+		reinterpret_cast<Rva006AEE00ActualHashtable *>(reinterpret_cast<char *>(this) + 0x70);
+	Rva006AEE00ActualHashtable::iterator it = table->begin();
+	while (it._M_cur)
 	{
-		Rva006AEE00Info *info = current->value.second;
+		Rva006AEE00Info *info = it._M_cur->_M_val.second;
 		if (info->m_lowPassCutoff == 0 && !(info->m_flags & 0x600))
-			 tree->insert_unique(reinterpret_cast<Rva006AEE00Tree::InsertResult *>(&it),
-				*info->getName());
-		Rva006AEE00Hashtable::Node *next = current->next;
-		current = next != 0 ? next : owner->skipToNext(current);
+			tree->insert(*info->getName());
+		++it;
 	}
 	m_ready = 1;
 }

@@ -33,8 +33,11 @@ public:
 // @?find@Rva00786BD0@@QBEPAXI@Z 0x00786BD0
 void *Rva00786BD0::find( unsigned int key ) const
 {
-	unsigned int buckets = (unsigned int)( m_bucketEnd - m_bucketBegin );
-	Open2HashNode *node = m_bucketBegin[ key % buckets ];
+	Open2HashNode **bucketBegin = m_bucketBegin;
+	Open2HashNode **bucketEnd = m_bucketEnd;
+	unsigned int buckets = (unsigned int)( bucketEnd - bucketBegin );
+	unsigned int slot = key % buckets;
+	Open2HashNode *node = m_bucketBegin[ slot ];
 
 	while( node != 0 && node->m_key != key )
 		node = node->m_next;

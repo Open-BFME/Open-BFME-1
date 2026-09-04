@@ -1,31 +1,9 @@
 // ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
-// partial score=0.94 date=2026-09-03
+// partial score=0.94 date=2026-09-04
 // ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
-// partial score=0.94 date=2026-09-03
+// Started from reverse/attempts/0x0023c4d0.cpp (score 0.94).
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
-// Open-BFME5: the horde-container readiness poll over its id set, retail
-// 0x0023C4D0.
-//
-// The set at this+0x30 is retail's STLport red-black tree, walked through the
-// shared _Rb_global<bool>::_M_increment at 0x0082B870; the sentinel is re-read
-// from the member every iteration because the increment call can move it, which
-// is why `this` is spilled to the frame before the loop.
-//
-// Each id is resolved through TheGameLogic's object hash, inlined: the bucket
-// vector runs from +0xB4 to +0xB8, the index is the id modulo the bucket count
-// -- an unsigned `div`, so the count is a pointer difference divided by four --
-// and the chain is walked comparing the key at node+4 until it matches. The
-// value lives at node+8. Retail reloads the bucket base after the divide
-// because `div` clobbers it.
-//
-// A resolved object marks the poll as non-empty and then runs the two-stage
-// test. The reload of the queue pointer at +0x1c after the first stage is not a
-// missed CSE: the null branch reaches that point with the register already
-// zero, so the merged block has to read it again.
-//
-// The result is `not blocked`, and an empty poll is false rather than true --
-// the two exits are distinct in retail.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -55,16 +33,16 @@ struct _Rb_global
 struct BfmeIdNode
 {
 	_STL::_Rb_tree_node_base m_bfmeBase;
-	UnsignedInt m_bfmeId;								///< retail node+0x10
+	UnsignedInt m_bfmeId;
 };
 
 class Object;
 
 struct BfmeObjectHashNode
 {
-	BfmeObjectHashNode *m_bfmeNext;						///< +0x00
-	UnsignedInt m_bfmeId;								///< +0x04
-	Object *m_bfmeObject;								///< +0x08
+	BfmeObjectHashNode *m_bfmeNext;
+	UnsignedInt m_bfmeId;
+	Object *m_bfmeObject;
 };
 
 typedef int ObjectID;
@@ -89,20 +67,20 @@ public:
 	ObjectPtrHash m_objects;
 };
 
-extern GameLogic *TheGameLogic;							///< retail [0x012F0898]
+extern GameLogic *TheGameLogic;
 
 class BfmeMemberQueue
 {
 public:
 	int m_bfmeUnknown00;
-	int m_bfmeCount;									///< retail this+0x04
+	int m_bfmeCount;
 };
 
 class BfmeMemberSlotState
 {
 public:
 	char m_bfmeHead[ 0x1c ];
-	BfmeMemberQueue *m_bfmeQueue;						///< retail this+0x1c
+	BfmeMemberQueue *m_bfmeQueue;
 };
 
 struct BfmeMemberSlotStateVolatile
@@ -115,17 +93,16 @@ class BfmeMemberAI
 {
 public:
 	char m_bfmeHead[ 0x30 ];
-	BfmeMemberSlotState *m_bfmeSlotState;				///< retail this+0x30
+	BfmeMemberSlotState *m_bfmeSlotState;
 };
 
-// upstream layout: reference/shims/bfmeobject/GameLogic/Object.h
 class Object
 {
 public:
 	char m_bfmeHead[ 0x114 ];
-	UnsignedInt m_bfmeStatus;							///< retail this+0x114
+	UnsignedInt m_bfmeStatus;
 	char m_bfmeGap[ 0x204 - 0x118 ];
-	BfmeMemberAI *m_bfmeAI;								///< retail this+0x204
+	BfmeMemberAI *m_bfmeAI;
 };
 
 __forceinline BfmeMemberSlotState *bfmeGetSlotState( const Object *member )
@@ -140,10 +117,9 @@ public:
 
 private:
 	char m_bfmeHead[ 0x30 ];
-	_STL::_Rb_tree_node_base *m_bfmeIdSet;				///< retail this+0x30
+	_STL::_Rb_tree_node_base *m_bfmeIdSet;
 };
 
-// ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
 Bool BfmeHordeContainPoll::bfmeAllMembersReady( void )
 {
 	Bool blocked = false;

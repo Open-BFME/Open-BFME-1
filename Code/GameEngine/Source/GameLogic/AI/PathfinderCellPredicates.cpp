@@ -34,6 +34,7 @@ public:
 			unsigned int m_bfmeGap2 : 11;
 		};
 	};
+	unsigned int getType(void) const { return m_bfmeFlags & 7; }
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -129,17 +130,18 @@ Bool Pathfinder::bfmeCellAvoidsThreeTypes(const Coord3D *pos, PathfindLayerEnum 
 		goto examine;
 passable:
 	return true;
-examine:
+	examine:
 	{
-		unsigned int type = cell->m_bfmeFlags & 7;
-		if (type == 5)
-			return false;
-		if (type == 1)
-			return false;
-		if (type == 2)
-			return false;
+		if (cell->getType() == 5)
+			goto blocked;
+		if (cell->getType() == 1)
+			goto blocked;
+		if (cell->getType() == 2)
+			goto blocked;
 	}
 	return true;
+blocked:
+	return false;
 }
 
 int Pathfinder::bfmeCellAvoidsThreeTypesInt(const Coord3D *pos, PathfindLayerEnum layer)
