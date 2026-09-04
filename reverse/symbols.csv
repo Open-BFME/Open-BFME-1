@@ -3482,6 +3482,7 @@ name,address,notes
 ??0Rva00801FB0Elem@@QAE@XZ,0x00801FB0,FESL Rva00802A10 allocate element ctor still dump
 ??0Rva00802D00Element@@QAE@XZ,0x00802D00,V2 lane: 64-byte element constructor placement-new'd by ?allocate@Rva007F7810Block@@QAEXH@Z
 ??0Rva00802E70Element@@QAE@XZ,0x00802E70,V2 lane: 28-byte element constructor placement-new'd by ?allocate@Rva007F77B0Block@@QAEXH@Z
+??0Rva008030C0Elem@@QAE@XZ,0x00802FC0,FESL Rva00803080 pool-init element default ctor; ??_L target of 0x008030C0
 ??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
 ??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
@@ -4479,6 +4480,7 @@ name,address,notes
 ??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
 ??1EvaSideSoundsVec@@QAE@XZ,0x0003763C,ILT thunk to the retail Eva side-sound container destructor at 0x00424890; unidentified beyond its shape
 ??1FXBoneInfo@@QAE@XZ,0x00007928,resweep callee back-solved
+??1FXNugget@@UAE@XZ,0x000033F0,ILT to FXNugget dtor body 0x00427390; callee of ParticleSystemFXNugget dtor
 ??1File@@UAE@XZ,0x009CB8C0,called by the File scalar deleting destructor
 ??1FileInfoStruct@MixFileCreator@@QAE@XZ,0x00013D40,pinharvest x1 (thunk)
 ??1FileInfoStruct@MixFileCreator@@QAE@XZ,0x0001BFDB,pinharvest x1 (thunk)
@@ -9676,6 +9678,7 @@ name,address,notes
 ??_7BfmeOwnVUH@@6B@,0x0109DE9C,Open-BFME5 retail derived vftable stored by the 0x001B5550 destructor
 ??_7BfmeOwnVUJ@@6B@,0x010FB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
 ??_7BfmeOwnVUM@@6B@,0x010E8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
+??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -11064,6 +11067,7 @@ name,address,notes
 ?TheInstantDeathBehaviorPool@?1??getClassMemoryPool@InstantDeathBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF814,pool-glue cascade static (back-solved)
 ?TheKeepObjectDiePool@?1??getClassMemoryPool@KeepObjectDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC24,pool-glue cascade static (back-solved)
 ?TheLAN@@3PAVLANAPI@@A,0x012F7730,LANAPI* singleton; NetworkDirectConnectSystem RequestSetName at +0x60
+?TheLadderList@@3PAVLadderList@@A,0x012F70E8,LadderList* global used by PopupHostGame createGame findLadderByIndex
 ?TheLaserUpdatePool@?1??getClassMemoryPool@LaserUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF7028,pool-glue cascade static (back-solved)
 ?TheLifetimeUpdatePool@?1??getClassMemoryPool@LifetimeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFFB8,pool-glue cascade static (back-solved)
 ?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
@@ -13208,6 +13212,7 @@ name,address,notes
 ?assign@RenderObjectDrawTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x00007E14,RenderObjectDrawModuleTemplate assignment thunk used through a TU-local layout shim
 ?assign@RenderObjectUpdateTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x0003E2C5,RenderObjectUpdateModuleTemplate assignment thunk used through a TU-local layout shim
 ?assign@StlStr@@QAEAAV1@PBD0@Z,0x0002B297,STLport basic_string<char>::assign(first last) ILT used by CustomMatch applySlotPlayerTemplate 0x0053CE60
+?assign@StlWStr@@QAEAAV1@PBG0@Z,0x00004A75,wstring assign(first last) ILT used by PopupHostGame createGame 0x004D58F0
 ?assign@StringClassAssignShim@@QAEABVStringClass@@ABV2@@Z,0x0013B600,StringClass assignment incremental-link thunk target through a TU-local forwarding shim
 ?assignTeamReference@ScriptEngine@@QAEXABVAsciiString@@PAVTeam@@@Z,0x0001F82A,SET_TEAM_REFERENCE dispatch calls the canonical reference-map insertion body
 ?assignUnitReference@ScriptEngine@@QAEXABVAsciiString@@PAVObject@@@Z,0x0003D663,SET_UNIT_REFERENCE dispatch calls the canonical reference-map insertion body
@@ -73139,6 +73144,7 @@ name,address,notes
 ?bfmeAllowsBase@Gen_0026c5d0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x0026C5D0 defers through
 ?bfmeAllowsBase@Gen_002983b0@@AAE_NXZ,0x0002FE05,Open-BFME5 ILT the predicate at 0x002983B0 defers through
 ?bfmeAllowsRelationship@BfmeRelationTest@@QBE_NHPBVBfmeRelationEntry@@@Z,0x00037349,Object relationship body calls this protected ILT for special relation tests
+?bfmeAllowsRelationship@WeaponTemplate@@QBE_NHPAX@Z,0x00037349,ILT 0x00037349 -> 0x001E4090; damage-type/override allow from shouldProjectileCollideWith
 ?bfmeAny1133@BfmeThing1133@@QBEDABVBfmeBits1133@@@Z,0x000497D3,pin
 ?bfmeAnyBridgeAt@Bfme5BridgeList@@QAEDPBUCoord3D@@@Z,0x00012A99,retail getLayerForDestination calls the ILT thunk to the matched 0x003D5DA0 body
 ?bfmeAnyVKQ@BfmeBlockVKQ@@QAEDABV1@@Z,0x00026F62,pin
@@ -73616,6 +73622,7 @@ name,address,notes
 ?bfmeClearVUG@BfmeStrVUG@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUH@BfmeStrVUH@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
+?bfmeClearVUO@BfmeStrVUO@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
@@ -73765,6 +73772,8 @@ name,address,notes
 ?bfmeDelArrVJS@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDelVGP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeDelViews@BfmeObjEE@@QAEXXZ,0x0040D970,Open-BFME5 Display deleteViews called from BfmeObjEE destructor
+?bfmeDelayA@Drawable@@QAEXH@Z,0x0003F288,ILT 0x0003F288 -> 0x00810D30; fire-at producer-shrouded delay
+?bfmeDelayB@Drawable@@QAEXH@Z,0x00046A1F,ILT 0x00046A1F -> 0x00810D80; fire-at cell-clear delay
 ?bfmeDeleteSelf@BfmeOwnedD@@QAEPAXI@Z,0x0000E4A8,Open-BFME5 the ICF thunk (to 0x001CBDC0) the element clear at 0x0038A6F0 calls with a flag of 1
 ?bfmeDeleteVMP@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeDestroy@BfmeAptGameWindow@@QAEXXZ,0x00021FC1,APT game window base destruction helper
@@ -75197,6 +75206,7 @@ name,address,notes
 ?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
 ?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
+?bfmePair@Drawable@@QAEXHH@Z,0x0002019E,ILT 0x0002019E -> 0x00814380; fire-at ModuleData pair drawable setter
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
 ?bfmeParseA450@@YAXXZ,0x00CACBE0,parse proc for Rva0022A450 runtime FieldParse
 ?bfmePartition@@YAPAVGen00363820Elem@@PAXPAV1@00H@Z,0x0004700A,five-arg partition called by Gen00363820::handle
@@ -75267,6 +75277,7 @@ name,address,notes
 ?bfmeReady@BfmeReadyGate@@QAE_NXZ,0x0002E8ED,Open-BFME5 readiness predicate ILT used by 0x003D55C0
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRebuildZones@BfmePathfindZoneManager@@QAEXPAXPAUBfmePathfindLayer44@@PAUBfmePathfindExtent@@@Z,0x00020A13,Open-BFME5 zone rebuild ILT thunk used by 0x003D5790
+?bfmeRecordTransform@Object@@QAEXI@Z,0x0002BB43,ILT 0x0002BB43 -> 0x001C0BE0 Drawable::bfmeRecordTransform ICF; fire-at Object this
 ?bfmeRecordVHJ@@YAXH@Z,0x008896A0,pin
 ?bfmeRefreshCompletedUpgrades@Rva0038AD90Object@@QAEXXZ,0x0001B9A5,ILT thunk called by the BFME GameLogic object indicator conversion
 ?bfmeRefreshFormation@BfmeHordeContainOwner@@QAEXXZ,0x0001798B,Open-BFME5 retail ILT called by delayed HordeContain refresh
@@ -76144,6 +76155,7 @@ name,address,notes
 ?calcBoundingStuff@GeometryInfo@@AAEXXZ,0x0087EE60,Open-BFME5 tail-call target of parseGeometryIsSmall at 0x0087F160
 ?calcCameraConstraints@W3DView@@AAEXXZ,0x00740CF0,BFME W3DView helper body 0x00740CF0 via ILT 0x00014934
 ?calcCostToBuild@ThingTemplate@@QBEHPBVPlayer@@H@Z,0x0000DA8A,Player::canAffordBuild at 0x000C99D0 calls the retail ThingTemplate cost body with this Player and build index -1
+?calcFlightPath@BezierProjectileBehavior@@QAE_N_N@Z,0x00021BD9,ILT 0x00021BD9 -> 0x001EF5E0; BezierProjectileBehavior::projectileFireAtObjectOrPosition recalc path
 ?calcNumPrereqUnitsOwned@ProductionPrerequisite@@ABEHPBVPlayer@@QAH@Z,0x000379B1
 ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00020865,ILT thunk to the hover-or-wings physics transform helper
 ?calcPhysicsXformThrust@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00027651,ILT thunk to the thrust physics transform helper
@@ -76196,6 +76208,7 @@ name,address,notes
 ?check@Gen00842A00@@QAEHXZ,0x00842A00,address-derived REL32 callee of the node-flag updaters; thiscall on a sub-object; result compared against zero
 ?check@Rva00170120Locomotor@@QAEMPAURva00170120Object@@@Z,0x0001A334,Rva00170120State update cur-locomotor check via existing retail thunk
 ?check@Rva0051D690Shell@@QAE_NXZ,0x0002000E,ILT TheShell predicate used by 0x0051D690
+?checkBoxAllowObservers@@3PAVGameWindow@@A,0x012F3F1C,PopupHostGame.wnd:CheckBoxAllowObservers static used by createGame
 ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z,0x00027C96,ILT to the matched checkDestination body at 0x003DD7A0; reached from the adjust cascade at 0x003DEAB0
 ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@3PAPAVPathfindCell@@E@Z,0x003F0F40,BFME 13-arg checkForAdjust body used by TightenPathCallbackInfo
 ?checkForAdjust@Pathfinder@@QAE_NPAVObject@@PBVLocomotorSet@@_NHHHPAUCoord3D@@2@Z,0x00018BE7,ILT to the 8-arg BFME checkForAdjust body at 0x003D6210; ZH iRadius/center/groupDest params are gone; called twice by the adjust cascade at 0x003DEAB0
@@ -76429,6 +76442,7 @@ name,address,notes
 ?collect@U1Rest_005CF1F0@@QAEXPAXPAVU1Supplier_005CF1F0@@@Z,0x005CEE90,member collect tail of 0x005CF1F0; address-derived name
 ?collect@Y3AdjTail_005C98E0@@QAEXPAVY3AdjOut@@@Z,0x005C98E0,Y4 lane: restored pin the Y3 lane needs; a concurrent whole-file rewrite of symbols.csv dropped it. Address is the one its own address-derived name states and the one its five callers REL32 to.
 ?collectScoreKeeperStats@StatsCollector@@AAEXXZ,0x00026765,StatsCollector update call through retail incremental-link thunk
+?comboBoxLadderName@@3PAVGameWindow@@A,0x012F3F28,PopupHostGame.wnd:ComboBoxLadderName static used by createGame
 ?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
 ?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
 ?compare@AsciiString@@QBEHPBD@Z,0x0004B01A,ILT of StringBase<char>::compare(const char*) used by CustomMatch handleSlashCommands 0x00539E60
@@ -77131,6 +77145,7 @@ name,address,notes
 ?find@HashMap008FF850@@QAE?AUHashIter008FF850@@ABH@Z,0x008FF560,STLport tree find ICF target of map unsigned-key peek wrapper 0x008FF850
 ?find@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,isValidMap lookup thunk
 ?find@ModuleTemplateMap@@QBE?AUModuleTemplateMapIterator@@ABH@Z,0x0000C054,ILT thunk to the NameKey-keyed module template map find at 0x001265D0
+?find@Object@@QAEPAXH@Z,0x00009C41,ILT 0x00009C41 launcher query from WeaponTemplate::shouldProjectileCollideWith burned check
 ?find@ObjectTypeCount@@QBEPAUObjectTypeCountNode@@ABVAsciiString@@@Z,0x0002F3E7,object-count tree lookup target decoded from ScriptEngine getObjectCount
 ?find@Open26A2FD0Logic@@QAEPAVOpen26A2FD0Object@@PAX@Z,0x0001F253,Open2 0x006A2FD0 lookup (ILT)
 ?find@Open2FlagMap344B20@@QAEPAUOpen2FlagNode344B20@@ABVOpen2FlagName344B20@@@Z,0x0003B32C,Open2 0x00344B20 flag lookup callee
@@ -78794,6 +78809,7 @@ name,address,notes
 ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z,0x0002481B,pinharvest x6 (thunk)
 ?getAdjustedVisionRangeForObject@AIAdjustedVisionRangeForObjectShim@@SAMPBVObject@@H@Z,0x0014A620,AI incremental-link static thunk target through a TU-local forwarding shim
 ?getAdjustsDestination@AIInternalMoveToState@@IBE_NXZ,0x00010109,ILT to the assigned 0x001724B0 body called by AIInternalMoveToState computePath at 0x001725B0
+?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z,0x00001C17,ILT 0x00001C17 -> 0x001E65C0; 4-arg aim/center helper from BezierProjectile fire-at
 ?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z,0x0001858E,Open-BFME5 canonical Object ammo-pip query ILT thunk to body 0x001BE2C0; surviving Object.cpp implementation and retail Object WeaponSet offset 0x264
 ?getArchiveFilenameForFile@ArchiveFileSystem@@QBE?AVAsciiString@@ABV2@@Z,0x009CA2A0,called by ArchiveFileSystem::openFile at 0x009CA62B; ZH openFile calls exactly this before assigning and length-checking the result
 ?getArchivedFileInfo@ArchiveFile@@IBEPBUArchivedFileInfo@@ABVAsciiString@@@Z,0x009D0900,archive entry lookup used by getFileInfo and openFile
@@ -78904,6 +78920,7 @@ name,address,notes
 ?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
 ?getFinalOverride@Rva226790Template@@QAEPAV1@XZ,0x000022BB,address-derived template override-chain ILT thunk
+?getFinalOverride@ThingTemplate@@QAEPAV1@XZ,0x000022BB,ILT 0x000022BB fence-width override walk from shouldProjectileCollideWith
 ?getFirstItemIn_TeamMemberList@Team@@QBEPAVObject@@XZ,0x0003FD41,Team::getFirstItemIn_TeamMemberList resolves to the retail 5-byte ILT at 0x0003FD41, whose body is the proven +0x0C team-member-head getter used by evaluateTeamCanPathToWaypoint
 ?getFirstObject@GameLogic@@QAEPAVObject@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
 ?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,ILT thunk to FontLibrary::getFont from HeaderTemplateManager::populateGameFonts
@@ -78972,6 +78989,7 @@ name,address,notes
 ?getMaxDisconnectFrame@DisconnectManager@@IAEIXZ,0x0002CDCC,ILT thunk; real body 0xA6B620
 ?getMaxHeightAbovePosition@GeometryInfo@@QBEMXZ,0x0087E000,Open-BFME5 called by ?getFiringLineOfSightOrigin@Weapon@@IBEXPBVObject@@AAUCoord3D@@@Z at 0x001E1A30
 ?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ,0x0087E070,Open-BFME5 GeometryInfo lower extent paired with the independently pinned upper-extent body and called by calcPitches
+?getMinimumAttackRange@WeaponTemplate@@QBEMXZ,0x0001D7F5,ILT 0x0001D7F5 -> 0x001E15D0 matched getMinimumAttackRange; BezierProjectile fire-at
 ?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ,0x00043EEB
 ?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
 ?getModelIndices@W3DBridge@@IAEHPAGHHPAVMeshClass@@@Z,0x0003881B
@@ -79145,6 +79163,7 @@ name,address,notes
 ?getUnitDirectionVector2D@Thing@@QBEPBUCoord3D@@XZ,0x00040246,ILT to the Thing direction accessor read by Pathfinder::buildActualPath at 0x003E10F0
 ?getUnknownBytesPerSecond@Network@@UAEMXZ,0x00681CD0,vtable 0x0111A968 slot 49 (+0xC4) via ILT 0x0000AFA6; same shape tail-jumping ?getUnknownBytesPerSecond@Transport 0x00683F00
 ?getUnknownPacketsPerSecond@Network@@UAEMXZ,0x00681D00,vtable 0x0111A968 slot 50 (+0xC8) via ILT 0x00039806; same shape tail-jumping ?getUnknownPacketsPerSecond@Transport 0x00684080
+?getUnmodifiedAttackRange@WeaponTemplate@@QBEMXZ,0x00030F03,ILT 0x00030F03 -> 0x001E1600; scale-speed max range from BezierProjectile fire-at
 ?getUnpackCost@CastleBehavior@@QBEIPAVPlayer@@@Z,0x00017C10,CastleBehavior unpack cost helper ILT to assigned body 0x0036F750
 ?getUnsignedIntFromRegistry@@YA_NPAXVAsciiString@@1AAI@Z,0x001091E0,registry DWORD primitive via thunk 0x1D21E
 ?getUpgradeActivationMasks@UpgradeMuxData@@QBEXAAV?$BitFlags@$0IA@@@0@Z,0x0002644F,pinharvest x1 (thunk)
@@ -81976,6 +81995,8 @@ name,address,notes
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
 ?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
 ?testStatus@Object@@QBE_NH@Z,0x000016A4,Object status ILT used by BezierProjectileBehavior::handle; same body as testStatus@BFMEActionObject
+?textEntryGameName@@3PAVGameWindow@@A,0x012F3F14,PopupHostGame.wnd:TextEntryGameName static used by createGame
+?textEntryGamePassword@@3PAVGameWindow@@A,0x012F3F30,PopupHostGame.wnd:TextEntryGamePassword static used by createGame
 ?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
 ?timeOutGameStart@GameLogic@@QAEXXZ,0x00383730,mov byte [ecx+0x148] = 1 is m_forceGameStartByTimeOut (follows m_progressComplete[8] at +0x120 and m_progressCompleteTimeout[8] at +0x128); ZH GameLogic::timeOutGameStart; called with ecx = TheGameLogic from BFMEConnectionManager::processIncomingCommand case 17 (NETCOMMANDTYPE_TIMEOUTSTART) at 0x0066A590 via ILT 0x00012AA8
 ?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
@@ -82239,6 +82260,7 @@ name,address,notes
 ?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT
 ?wouldIgnite@FlammableUpdate@@QAE_NXZ,0x00016653
 ?write@ConditionWriteChunkShim@@SAXAAVDataChunkOutput@@PAVCondition@@@Z,0x00352DB0,Condition WriteConditionDataChunk incremental-link thunk target through a TU-local forwarding shim
+?write@CustomMatchPreferences@@UAE_NXZ,0x00030495,CustomMatchPreferences::write folds onto UserPreferences::write; createGame 0x004D58F0
 ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z,0x00102E60,DataChunkOutput::~DataChunkOutput callsite at retail 0x001036C0 writes the CkMp table through m_contents
 ?write@LANPreferences@@QAE_NXZ,0x00030495,LANPreferences::write folds onto UserPreferences::write; System back-button
 ?write@MapCacheWriteCacheINIShim@@QAEX_N@Z,0x004550C0,MapCache writeCacheINI incremental-link thunk target through a TU-local forwarding shim
@@ -83787,23 +83809,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0Rva008030C0Elem@@QAE@XZ,0x00802FC0,FESL Rva00803080 pool-init element default ctor; ??_L target of 0x008030C0
-??1FXNugget@@UAE@XZ,0x000033F0,ILT to FXNugget dtor body 0x00427390; callee of ParticleSystemFXNugget dtor
-?calcFlightPath@BezierProjectileBehavior@@QAE_N_N@Z,0x00021BD9,ILT 0x00021BD9 -> 0x001EF5E0; BezierProjectileBehavior::projectileFireAtObjectOrPosition recalc path
-?getUnmodifiedAttackRange@WeaponTemplate@@QBEMXZ,0x00030F03,ILT 0x00030F03 -> 0x001E1600; scale-speed max range from BezierProjectile fire-at
-?getMinimumAttackRange@WeaponTemplate@@QBEMXZ,0x0001D7F5,ILT 0x0001D7F5 -> 0x001E15D0 matched getMinimumAttackRange; BezierProjectile fire-at
-?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z,0x00001C17,ILT 0x00001C17 -> 0x001E65C0; 4-arg aim/center helper from BezierProjectile fire-at
-?bfmeDelayA@Drawable@@QAEXH@Z,0x0003F288,ILT 0x0003F288 -> 0x00810D30; fire-at producer-shrouded delay
-?bfmeDelayB@Drawable@@QAEXH@Z,0x00046A1F,ILT 0x00046A1F -> 0x00810D80; fire-at cell-clear delay
-?bfmePair@Drawable@@QAEXHH@Z,0x0002019E,ILT 0x0002019E -> 0x00814380; fire-at ModuleData pair drawable setter
-?bfmeRecordTransform@Object@@QAEXI@Z,0x0002BB43,ILT 0x0002BB43 -> 0x001C0BE0 Drawable::bfmeRecordTransform ICF; fire-at Object this
-?find@Object@@QAEPAXH@Z,0x00009C41,ILT 0x00009C41 launcher query from WeaponTemplate::shouldProjectileCollideWith burned check
-?bfmeAllowsRelationship@WeaponTemplate@@QBE_NHPAX@Z,0x00037349,ILT 0x00037349 -> 0x001E4090; damage-type/override allow from shouldProjectileCollideWith
-?getFinalOverride@ThingTemplate@@QAEPAV1@XZ,0x000022BB,ILT 0x000022BB fence-width override walk from shouldProjectileCollideWith
-?assign@StlWStr@@QAEAAV1@PBG0@Z,0x00004A75,wstring assign(first last) ILT used by PopupHostGame createGame 0x004D58F0
-?TheLadderList@@3PAVLadderList@@A,0x012F70E8,LadderList* global used by PopupHostGame createGame findLadderByIndex
-?textEntryGameName@@3PAVGameWindow@@A,0x012F3F14,PopupHostGame.wnd:TextEntryGameName static used by createGame
-?checkBoxAllowObservers@@3PAVGameWindow@@A,0x012F3F1C,PopupHostGame.wnd:CheckBoxAllowObservers static used by createGame
-?comboBoxLadderName@@3PAVGameWindow@@A,0x012F3F28,PopupHostGame.wnd:ComboBoxLadderName static used by createGame
-?textEntryGamePassword@@3PAVGameWindow@@A,0x012F3F30,PopupHostGame.wnd:TextEntryGamePassword static used by createGame
-?write@CustomMatchPreferences@@UAE_NXZ,0x00030495,CustomMatchPreferences::write folds onto UserPreferences::write; createGame 0x004D58F0
