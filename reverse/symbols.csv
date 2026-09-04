@@ -2961,7 +2961,6 @@ name,address,notes
 ??0Rva006E6C10Base@@QAE@XZ,0x00032F1F,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E6C10
 ??0Rva006FB500Base@@QAE@XZ,0x00020004,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006FB500
 ??0Rva006FB780Product@@QAE@P6AXXZ00@Z,0x0003574C,ILT to product ctor body 0x007E3A80
-??0Rva00722120Base@@QAE@XZ,0x000354E5,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x00722120
 ??0Rva00740BC0Elem@@QAE@XZ,0x0003ABCF,element constructor of the 0x14-byte arrays built at 0x00740AE0
 ??0Rva0076F980Mid@@QAE@ABV0@@Z,0x00007A63,Open-BFME5 fresh thiscall copy ctor at ILT of 12-byte mid member of 0x0076F980
 ??0Rva00770CB0Base@@QAE@ABV0@@Z,0x00887B60,offset-zero base copy called by the aggregate copy ctor at 0x00770CB0
@@ -82749,3 +82748,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1W3DTerrainBackground@@QAE@XZ,0x0002B9A4,FlatHeightMap 0xC4-element m_tiles vector destructor ILT
 ??_VW3DTerrainBackground@@SAXPAX@Z,0x00881EF0,W3DTerrainBackground array deallocator used by FlatHeightMap m_tiles cleanup
 ?deleteTerrainIndexArray@@YAXPAX@Z,0x00881EF0,HeightMapRenderObjClass terrain index array deallocator
+??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
+??0W3DSmudgeManager@@QAE@XZ,0x00043DE2,W3DTerrainVisual 0x44-byte smudge manager allocation constructor ILT
+??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
