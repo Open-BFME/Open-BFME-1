@@ -121,6 +121,7 @@ public:
 	Bool getAlternateMouseSetup( void );
 	float getBrightness( void );
 	float getMovieVolume( void );
+	float getAmbientVolume( void );
 };
 
 #define R4_PREF_BODY( GETTER, KEY, OFFSET, COMPARE )                          \
@@ -222,3 +223,4 @@ float OptionPreferences::getBrightness( void )
 	}
 
 R4_VOLUME_BODY( getMovieVolume,   "MovieVolume",   m_movieVolume )
+R4_VOLUME_BODY( getAmbientVolume, "AmbientVolume", m_ambientVolume )
