@@ -180,13 +180,14 @@ void Weapon::preFireWeapon(const Object *source, int arg2, int arg3)
 	tmpl->notifyPreFire(this, source, arg2, arg3);
 
 	float speed = tmpl->m_weaponSpeed;
-	FXList *fx = tmpl->m_fireFX;
+	FXList *const fx = tmpl->m_fireFX;
 	const Coord3D *posA = source->getDrawable()->getPosition();
 	const Matrix3D *mtx = source->getDrawable()->getTransformMatrix();
 	const Coord3D *posB = source->getDrawable()->getPosition();
 	if (fx)
 	{
-		if (!fx->isEmpty())
-			fx->doFXPos(posB, mtx, speed, posA);
+		FXList &fxRef = *fx;
+		if (!fxRef.isEmpty())
+			fxRef.doFXPos(posB, mtx, speed, posA);
 	}
 }

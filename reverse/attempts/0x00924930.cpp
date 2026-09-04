@@ -1,5 +1,7 @@
 // ??4MeshGeometryClass@@QAEAAV0@ABV0@@Z
 // partial score=0.93 date=2026-09-04
+// ??4MeshGeometryClass@@QAEAAV0@ABV0@@Z
+// partial score=0.93 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 //
 // MeshGeometryClass::operator= at 0x00924930.  Local ABI-slice replica of the
@@ -15,10 +17,7 @@
 #include "always.h"
 #include "refcount.h"
 #include "bittype.h"
-#include "sharebuf.h"
 #include "vector3.h"
-#include "vector3i.h"
-#include "vector4.h"
 #include "sphere.h"
 #include "multilist.h"
 
@@ -43,21 +42,21 @@ public:
 	MeshGeometryClass & operator = (const MeshGeometryClass & that);
 
 protected:
-	ShareBufferClass<char> *						UserText;			///< retail this+0x10
-	ShareBufferClass<char> *						MeshName;			///< retail this+0x14
+	RefCountClass * UserText; ///< retail this+0x10
+	RefCountClass * MeshName; ///< retail this+0x14
 	int										Flags;				///< retail this+0x18
 	char										SortLevel;			///< retail this+0x1c
 	uint32									W3dAttributes;		///< retail this+0x20
 	int										PolyCount;			///< retail this+0x24
 	int										VertexCount;		///< retail this+0x28
-	ShareBufferClass<Vector3i16> *				Poly;				///< retail this+0x2c
-	RefCountClass *							Extra[4][2];		///< retail this+0x30 .. +0x4c
-	RefCountClass *							Vertex;				///< retail this+0x50
-	RefCountClass *							VertexNorm;			///< retail this+0x54
-	RefCountClass *							PlaneEq;			///< retail this+0x58
-	RefCountClass *							VertexShadeIdx;		///< retail this+0x5c
-	RefCountClass *							VertexBoneLink;		///< retail this+0x60
-	RefCountClass *							PolySurfaceType;	///< retail this+0x64
+	RefCountClass * Poly; ///< retail this+0x2c
+	RefCountClass * Extra[4][2]; ///< retail this+0x30 .. +0x4c
+	RefCountClass * Vertex; ///< retail this+0x50
+	RefCountClass * VertexNorm; ///< retail this+0x54
+	RefCountClass * PlaneEq; ///< retail this+0x58
+	RefCountClass * VertexShadeIdx; ///< retail this+0x5c
+	RefCountClass * VertexBoneLink; ///< retail this+0x60
+	RefCountClass * PolySurfaceType; ///< retail this+0x64
 	Vector3									BoundBoxMin;		///< retail this+0x68
 	Vector3									BoundBoxMax;		///< retail this+0x74
 	SphereClass								BoundSphere;		///< retail this+0x80
@@ -67,43 +66,41 @@ protected:
 // ??4MeshGeometryClass@@QAEAAV0@ABV0@@Z present-unmatched
 MeshGeometryClass & MeshGeometryClass::operator = (const MeshGeometryClass & that)
 {
-	MeshGeometryClass *destination = this;
-	const MeshGeometryClass *source = &that;
-	if (destination != source) {
-		destination->Flags = source->Flags;
-		destination->SortLevel = source->SortLevel;
-		destination->W3dAttributes = source->W3dAttributes;
-		destination->PolyCount = source->PolyCount;
-		destination->VertexCount = source->VertexCount;
+	if (this != &that) {
+		Flags = that.Flags;
+		SortLevel = that.SortLevel;
+		W3dAttributes = that.W3dAttributes;
+		PolyCount = that.PolyCount;
+		VertexCount = that.VertexCount;
 
-		destination->BoundBoxMin = source->BoundBoxMin;
-		destination->BoundBoxMax = source->BoundBoxMax;
-		destination->BoundSphere = source->BoundSphere;
+		BoundBoxMin = that.BoundBoxMin;
+		BoundBoxMax = that.BoundBoxMax;
+		BoundSphere = that.BoundSphere;
 
-		REF_PTR_SET(destination->UserText, source->UserText);
-		REF_PTR_SET(destination->MeshName, source->MeshName);
-		REF_PTR_SET(destination->Poly, source->Poly);
-		REF_PTR_SET(destination->PolySurfaceType, source->PolySurfaceType);
-		REF_PTR_SET(destination->VertexBoneLink, source->VertexBoneLink);
+		REF_PTR_SET(UserText, that.UserText);
+		REF_PTR_SET(MeshName, that.MeshName);
+		REF_PTR_SET(Poly, that.Poly);
+		REF_PTR_SET(PolySurfaceType, that.PolySurfaceType);
+		REF_PTR_SET(VertexBoneLink, that.VertexBoneLink);
 
 		for (int col = 0; col < 2; col++) {
-			REF_PTR_SET(destination->Extra[0][col], source->Extra[0][col]);
-			REF_PTR_SET(destination->Extra[1][col], source->Extra[1][col]);
-			REF_PTR_SET(destination->Extra[2][col], source->Extra[2][col]);
-			REF_PTR_SET(destination->Extra[3][col], source->Extra[3][col]);
+			REF_PTR_SET(Extra[0][col], that.Extra[0][col]);
+			REF_PTR_SET(Extra[1][col], that.Extra[1][col]);
+			REF_PTR_SET(Extra[2][col], that.Extra[2][col]);
+			REF_PTR_SET(Extra[3][col], that.Extra[3][col]);
 		}
 
-		REF_PTR_SET(destination->Vertex, source->Vertex);
-		REF_PTR_SET(destination->VertexNorm, source->VertexNorm);
-		REF_PTR_SET(destination->PlaneEq, source->PlaneEq);
-		REF_PTR_SET(destination->VertexShadeIdx, source->VertexShadeIdx);
+		REF_PTR_SET(Vertex, that.Vertex);
+		REF_PTR_SET(VertexNorm, that.VertexNorm);
+		REF_PTR_SET(PlaneEq, that.PlaneEq);
+		REF_PTR_SET(VertexShadeIdx, that.VertexShadeIdx);
 
-		REF_PTR_RELEASE(destination->CullTree);
-		if (source->CullTree) {
-			destination->CullTree = NEW_REF(AABTreeClass, ());
-			*destination->CullTree = *source->CullTree;
-			destination->CullTree->Set_Mesh(destination);
+		REF_PTR_RELEASE(CullTree);
+		if (that.CullTree) {
+			CullTree = NEW_REF(AABTreeClass, ());
+			*CullTree = *that.CullTree;
+			CullTree->Set_Mesh(this);
 		}
 	}
-	return *destination;
+	return *this;
 }

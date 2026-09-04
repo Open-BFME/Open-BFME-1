@@ -15,6 +15,8 @@
 typedef int Int;
 typedef unsigned char Bool;
 
+#include <string.h>
+
 enum AudioType
 {
 	AT_Music = 0
@@ -51,19 +53,7 @@ public:
 
 	__forceinline const char *reverseFindSlash(void) const
 	{
-		char seen;
-		const char *start = str();
-		const char *p = start + (m_data ? m_data->length : 0);
-		if (p == start)
-			return 0;
-		do
-		{
-			seen = p[-1];
-			--p;
-			if (seen == '\\')
-				return p;
-		} while (p != start);
-		return 0;
+		return strrchr(str(), '\\');
 	}
 
 	StringHeader *m_data;
@@ -99,29 +89,27 @@ public:
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
 void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 {
-	if (TheFileSystem->doesFileExist(strToAdjust.str()))
-		return;
+    const char *path = strToAdjust.str();
+    if (TheFileSystem->doesFileExist(path))
+        return;
 
-	const char *slash;
-	const char *start = strToAdjust.str();
-	const char *p = start + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
-	if (p == start)
-		return;
-	do
-	{
-		char seen = p[-1];
-		--p;
-		if (seen == '\\')
-		{
-			slash = p;
-			goto foundSlash;
-		}
-	} while (p != start);
-	return;
+    const char *p;
+    const char *start;
+    start = strToAdjust.str();
+    p = start + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
+    if (p == start)
+        return;
 
-foundSlash:
-
-	AsciiString filename(slash);
-	strToAdjust.set(generateFilenamePrefix(m_eventInfo->m_soundType, true));
-	strToAdjust.concat(filename);
+    do
+    {
+        char seen = p[-1];
+        --p;
+        if (seen == '\\')
+        {
+            AsciiString filename(p);
+            strToAdjust.set(generateFilenamePrefix(m_eventInfo->m_soundType, true));
+            strToAdjust.concat(filename);
+            return;
+        }
+    } while (p != start);
 }

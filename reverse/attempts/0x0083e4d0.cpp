@@ -48,12 +48,6 @@ public:
 	static void assign(T &c1, const T &c2) { c1 = c2; }
 };
 
-template <class T>
-inline T (max)(T a, T b)
-{
-	return a < b ? b : a;
-}
-
 template <class Pointer, class Value, class Alloc>
 class _STLP_alloc_proxy : public Alloc
 {
@@ -97,7 +91,7 @@ template <class CharT, class Traits, class Alloc>
 typename basic_string<CharT, Traits, Alloc>::pointer
 basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 {
-	pointer new_pos = p;
+	pointer new_pos;
 	if (_M_finish + 1 < _M_end_of_storage._M_data)
 	{
 		_M_construct_null(_M_finish + 1);
@@ -106,12 +100,14 @@ basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 			Traits::move(p + 1, p, n);
 		Traits::assign(*p, c);
 		++_M_finish;
+		new_pos = p;
 	}
 	else
 	{
 		const size_type old_len = size();
 		size_type one = 1;
-		const size_type len = old_len + (max)(old_len, one) + 1;
+		const size_type &mx = *(old_len < one ? &one : &old_len);
+		const size_type len = old_len + mx + 1;
 		pointer new_start = _M_end_of_storage.allocate(len);
 		new_pos = uninitialized_copy(_M_start, p, new_start);
 		if (new_pos)
@@ -120,8 +116,8 @@ basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 		_M_construct_null(new_finish);
 		_M_deallocate_block();
 		_M_start = new_start;
-		_M_finish = new_finish;
 		_M_end_of_storage._M_data = new_start + len;
+		_M_finish = new_finish;
 	}
 	return new_pos;
 }

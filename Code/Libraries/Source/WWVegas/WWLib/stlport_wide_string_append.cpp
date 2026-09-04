@@ -97,6 +97,12 @@ public:
 	basic_string &append(const CharT *first, const CharT *last,
 		const forward_iterator_tag &);
 
+	private:
+	template <class InputIterator>
+	basic_string &append(InputIterator first, InputIterator last,
+		const forward_iterator_tag &);
+
+	public:
 	size_type size(void) const
 	{
 		return (size_type)(_M_finish - _M_start);
@@ -162,10 +168,55 @@ basic_string<CharT, Traits, Alloc>::append(const CharT *first, const CharT *last
 	return *this;
 }
 
+template <class CharT, class Traits, class Alloc>
+template <class InputIterator>
+basic_string<CharT, Traits, Alloc> &
+basic_string<CharT, Traits, Alloc>::append(InputIterator first, InputIterator last,
+	const forward_iterator_tag &)
+{
+	const CharT *l = last;
+	const CharT *f = first;
+	if (f != l)
+	{
+		const typename basic_string<CharT, Traits, Alloc>::size_type old_size = size();
+		difference_type n = l - f;
+		if (old_size + (size_type)n > capacity())
+		{
+			size_type n_sz = (size_type)n;
+			size_type mx = *(old_size < n_sz ? &n_sz : &old_size);
+			const size_type len = old_size + mx + 1;
+			pointer new_start = _M_end_of_storage.allocate(len);
+			pointer new_finish = uninitialized_copy(_M_start, _M_finish, new_start);
+			new_finish = uninitialized_copy(f, l, new_finish);
+			_M_construct_null(new_finish);
+			_M_deallocate_block();
+			_M_start = new_start;
+			_M_finish = new_finish;
+			_M_end_of_storage._M_data = new_start + len;
+		}
+		else
+		{
+			const CharT *f1 = f;
+			++f1;
+			uninitialized_copy(f1, l, _M_finish + 1);
+			_M_construct_null(_M_finish + n);
+			*_M_finish = *f;
+			_M_finish += n;
+		}
+	}
+	return *this;
+}
+
 template basic_string<unsigned short, char_traits<unsigned short>,
 	allocator<unsigned short> > &
 basic_string<unsigned short, char_traits<unsigned short>,
 	allocator<unsigned short> >::append(const unsigned short *,
 	const unsigned short *, const forward_iterator_tag &);
+
+template basic_string<unsigned short, char_traits<unsigned short>,
+	allocator<unsigned short> > &
+basic_string<unsigned short, char_traits<unsigned short>,
+	allocator<unsigned short> >::append<unsigned short *>(unsigned short *,
+	unsigned short *, const forward_iterator_tag &);
 
 }

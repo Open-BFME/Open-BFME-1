@@ -193,6 +193,25 @@ private:
 	unsigned int m_bits;
 };
 
+class StumpModelBits
+{
+public:
+	StumpModelBits(unsigned int bits) : m_bits(bits) { }
+
+	bool operator&(const StumpModelBits &mask) const
+	{
+		return (m_bits & mask.m_bits) != 0;
+	}
+	StumpModelBits &operator|=(const StumpModelBits &mask)
+	{
+		m_bits |= mask.m_bits;
+		return *this;
+	}
+
+private:
+	unsigned int m_bits;
+};
+
 class Drawable
 {
 public:
@@ -238,7 +257,7 @@ public:
 	unsigned char m_pad078[0x98];
 	ModelNotifyBits m_modelNotifyBits;
 	unsigned char m_pad114[4];
-	unsigned int m_stumpModelBits;
+	StumpModelBits m_stumpModelBits;
 	unsigned char m_pad11c[0x228];
 	unsigned char m_privateStatus;
 };
@@ -319,10 +338,10 @@ private:
 
 class BfmeToppleCollideModuleInterface { public: virtual void slot(); };
 
-class ToppleUpdate : public UpdateModule, public BfmeToppleCollideModuleInterface
+class ToppleUpdateApplyTopplingForceShim : public UpdateModule, public BfmeToppleCollideModuleInterface
 {
 public:
-	void applyTopplingForce(const Coord3D *toppleDirection, Real toppleSpeed, UnsignedInt options);
+	void apply(const Coord3D *toppleDirection, Real toppleSpeed, UnsignedInt options);
 
 private:
 	Real m_angularVelocity;
@@ -344,9 +363,8 @@ extern AI *TheAI;
 extern ThingFactory *TheThingFactory;
 
 // ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z
-void ToppleUpdate::applyTopplingForce(const Coord3D *toppleDirection, Real toppleSpeed, UnsignedInt options)
+void ToppleUpdateApplyTopplingForceShim::apply(const Coord3D *toppleDirection, Real toppleSpeed, UnsignedInt options)
 {
-	ObjectStatusBits bits;
 	if (getObject()->m_privateStatus & 1)
 		return;
 
@@ -413,7 +431,7 @@ void ToppleUpdate::applyTopplingForce(const Coord3D *toppleDirection, Real toppl
 	if (d->m_stumpName.m_data && *(unsigned short *)(d->m_stumpName.m_data + 4) != 0)
 	{
 		const ThingTemplate *ttn = TheThingFactory->findTemplate(d->m_stumpName);
-		bits.clear();
+		ObjectStatusBits bits;
 		Object *stump = TheThingFactory->newObject(ttn, 0, &bits, 0);
 		if (stump)
 		{
@@ -424,9 +442,9 @@ void ToppleUpdate::applyTopplingForce(const Coord3D *toppleDirection, Real toppl
 			Drawable *ownerDraw = getObject()->getDrawable();
 			if (ownerDraw && ownerDraw->m_conditionFlags.test(0x4f) == true)
 			{
-				if ((stump->m_stumpModelBits & 0x8000) == 0)
-				{
-					stump->m_stumpModelBits |= 0x8000;
+			if ((stump->m_stumpModelBits & StumpModelBits(0x8000)) == 0)
+			{
+				stump->m_stumpModelBits |= StumpModelBits(0x8000);
 					stump->notifyModelConditionChanged();
 				}
 			}

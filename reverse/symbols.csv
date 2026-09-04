@@ -255,6 +255,7 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBJVLadderPref@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBJVLadderPref@@@0@ABU10@@Z,0x0002367D,Open-BFME5 ILT the Long-to-LadderPref _Rb_tree _M_insert at 0x000AAD50 constructs the node value through
 ??$_Construct@U?$pair@$$CBV?$StringBase@G@@URva0054EF10Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBV?$StringBase@G@@URva0054EF10Value@@@0@ABU10@@Z,0x00034617,Open-BFME5 the value _Construct the tree _M_insert at 0x0054EF10 reaches
 ??$_Construct@U?$pair@$$CBV?$StringBase@G@@URva0068FAF0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBV?$StringBase@G@@URva0068FAF0Value@@@0@ABU10@@Z,0x0000B3ED,Open-BFME5 the value _Construct the tree _M_insert at 0x0068FAF0 reaches
+??$_Construct@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@0@ABU10@@Z,0x00035B0C,retail ICF thunk used by 0x006AB4A0
 ??$_Construct@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@UCoord3D@@@0@ABU10@@Z,0x0000D71F,ILT called by _M_copy at 0x000BFF71 to build the pair in the freshly allocated 0x20-byte node
 ??$_Construct@U?$pair@$$CBVAsciiString@@URva0007D900Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@URva0007D900Value@@@0@ABU10@@Z,0x0002487A,Open-BFME5 the value _Construct the tree _M_insert at 0x0007D900 reaches
 ??$_Construct@U?$pair@$$CBVAsciiString@@URva00093670Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@URva00093670Value@@@0@ABU10@@Z,0x0002F3CE,Open-BFME5 the value _Construct the tree _M_insert at 0x00093670 reaches
@@ -2383,6 +2384,7 @@ name,address,notes
 ??0Gen_t_001c40f0_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_001c4120_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_001c5350_p12cd@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
+??0Gen_t_001da8b0_p12cd@@QAE@ABU1@@Z,0x001D6B80,BFME2 three-string AnimSet copy body under the generated vector element identity
 ??0Gen_t_001f2850_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_00221cb0_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_002225b0_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
@@ -6054,6 +6056,7 @@ name,address,notes
 ??1Gen_t_001d76f0_m12cd@@QAE@XZ,0x001D6700,family-emit payload member
 ??1Gen_t_001d78e0_m12cd@@QAE@XZ,0x001D6700,family-emit payload member
 ??1Gen_t_001d7b10_p12cd@@QAE@XZ,0x001D6700,gen-tgrid payload member
+??1Gen_t_001da8b0_p12cd@@QAE@XZ,0x001D6700,BFME2 three-string AnimSet destructor under the generated vector element identity
 ??1Gen_t_001db910_p4cd@@QAE@XZ,0x0000D828,gen-tgrid payload member
 ??1Gen_t_001df8d0_p24cd@@QAE@XZ,0x0003C272,gen-tgrid payload member
 ??1Gen_t_001df900_p24cd@@QAE@XZ,0x0003C272,gen-tgrid payload member
@@ -8227,6 +8230,7 @@ name,address,notes
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
+??1Rva006ABC60TrailingMember@@QAE@XZ,0x00009BB0,retail helper destructor thunk used by 0x006ABC60
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
 ??1Rva007A1230Cell@@QAE@XZ,0x00430652,address-derived four-byte cell destructor ILT used by both six-element arrays at 0x007A1230
@@ -10167,6 +10171,7 @@ name,address,notes
 ?_M_allocate_buffers@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NPADH@Z,0x008416C0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_allocate_buffers@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NPAGH@Z,0x008420B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,resweep callee back-solved
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004B308,retail ICF thunk used by 0x006AB4A0
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,direct-hashtable spelling of the ParticleSystemTemplate bucket helper; same demangled instantiation as the existing @5 pin
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,rel32 pin for exact-ambiguous landing
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0000E8E0,pinharvest x1 (thunk)

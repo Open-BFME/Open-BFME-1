@@ -41,7 +41,13 @@ public:
 };
 
 extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
-extern BFMEFrameState *g_bfmeGlo012F0FE0;
+class BFMEFrameStateRef
+{
+public:
+	BFMEFrameState *operator->() const { return m_p; }
+	BFMEFrameState *m_p;
+};
+extern BFMEFrameStateRef g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
 extern "C" float g_bfmeK1121004;
 extern "C" float g_bfmeK075C6C;
@@ -141,9 +147,7 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		register BFMEFrameState *q = g_bfmeGlo012F0FE0;
-		int frame = q->m_frame;
-		if (frame == 2 && m_94 != 2)
+		if (g_bfmeGlo012F0FE0->m_frame == 2 && m_94 != 2)
 		{
 			m_94 = 2;
 			copyFromOverride();
