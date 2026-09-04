@@ -6,18 +6,31 @@ public:
 	void Release_Ref();
 };
 
+class D3DSurfaceInterface
+{
+public:
+	virtual unsigned long __stdcall QueryInterface() = 0;
+	virtual unsigned long __stdcall AddRef() = 0;
+	virtual unsigned long __stdcall Release() = 0;
+};
+
 class W3DMouseSurfaceRef
 {
 public:
-	W3DMouseSurfaceRef() : m_surface(0) {}
-	~W3DMouseSurfaceRef()
+	W3DMouseSurfaceRef();
+	W3DMouseSurfaceRef(D3DSurfaceInterface *surface) : m_surface(surface) {}
+	~W3DMouseSurfaceRef();
+	W3DMouseSurfaceRef &operator=(const W3DMouseSurfaceRef &that)
 	{
-		if (m_surface)
-			m_surface->Release_Ref();
+		D3DSurfaceInterface *oldSurface = m_surface;
+		if (oldSurface)
+			oldSurface->Release();
+		m_surface = that.m_surface;
+		return *this;
 	}
 
 private:
-	TextureClass *m_surface;
+	D3DSurfaceInterface *m_surface;
 };
 
 class Win32Mouse
@@ -38,6 +51,7 @@ public:
 	virtual ~W3DMouse();
 
 private:
+	void freeD3DAssets();
 	W3DMouseSurfaceRef m_currentD3DSurface[21];
 	unsigned char m_gap5E80[8];
 	int m_currentPolygonCursor;
@@ -82,4 +96,25 @@ W3DMouse::W3DMouse() : m_camera(0)
 	m_currentAnimFrame = 0;
 	m_drawing = false;
 	m_currentFMS = 1.0f / 1000.0f;
+}
+
+void W3DMouse::freeD3DAssets()
+{
+	D3DSurfaceInterface *noSurface = 0;
+	TextureClass *noTexture = 0;
+	for (int frame = 0; frame < 21; ++frame)
+		m_currentD3DSurface[frame] = noSurface;
+
+	for (int cursor = 0; cursor < 50; ++cursor)
+	{
+		for (int frame = 0; frame < 21; ++frame)
+		{
+			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame];
+			if (texture)
+			{
+				texture->Release_Ref();
+				g_w3dMouseCursorTextures[cursor][frame] = noTexture;
+			}
+		}
+	}
 }
