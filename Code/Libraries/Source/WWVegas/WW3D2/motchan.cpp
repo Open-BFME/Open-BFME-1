@@ -436,58 +436,75 @@ bool TimeCodedMotionChannelClass::Load_W3D(ChunkLoadClass & cload)
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?TimeCodedMotionChannelClass::Get_Vector present-unmatched
 void	TimeCodedMotionChannelClass::Get_Vector(float32 frame,float * setvec)
-{		
-	
-  uint32	tc0;
-  
-  tc0 = frame;
-	
-  uint32 pidx = get_index( tc0 );						
-  uint32 p2idx;
-  
-  if (pidx == ((NumTimeCodes - 1) * PacketSize))  {
-  	
-     float32 *frm = (float32 *) &Data[pidx+1];	 									
-                           
-		for (int i=0; i < VectorLen; i++)  {
-	  	
-	   	setvec[i] = frm[i];
-	     
-	  }               
-     
-     return;		  
-             
-  }
-  else {
-  	p2idx = pidx + PacketSize;
-  }
-  
-  uint32 time = Data[p2idx];
+{
+	// BFME inlines get_index here (one call: __ftol2). Search only when
+	// frame < cached packet time; no CachedIdx writeback; lerp is open-coded.
+	uint32 tc0 = (uint32)(int)frame;
+	uint32 pidx;
 
-   if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
-		float32 *frm = (float32 *) &Data[pidx+1];
-		for (int i=0; i < VectorLen; i++) {
-			setvec[i] = frm[i];
+	if (tc0 < (Data[CachedIdx] & 0x7FFFFFFF))
+	{
+		int rightIdx = (int)NumTimeCodes;
+		int leftIdx = 0;
+		rightIdx -= 2;
+		for (;;)
+		{
+			int mid = (leftIdx + rightIdx) / 2;
+			uint32 *pkt = Data + mid * (int)PacketSize;
+			uint32 t0 = *pkt;
+			if (tc0 < (t0 & 0x7FFFFFFF))
+			{
+				rightIdx = mid;
+				continue;
+			}
+			if (tc0 < (pkt[PacketSize] & 0x7FFFFFFF))
+			{
+				pidx = (uint32)(pkt - Data);
+				break;
+			}
+			if (leftIdx ^ mid)
+			{
+				leftIdx = mid;
+				continue;
+			}
+			leftIdx++;
 		}
+	}
+	else
+		pidx = CachedIdx;
+
+	uint32 p2idx;
+	if (pidx == ((NumTimeCodes - 1) * PacketSize))
+	{
+		float32 *frm = (float32 *)&Data[pidx + 1];
+		for (int i = 0; i < VectorLen; i++)
+			setvec[i] = frm[i];
 		return;
-   }
+	}
+	else
+		p2idx = pidx + PacketSize;
 
-  float32 time1 = (Data[pidx]  & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-  float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-  
-  float32 ratio = (frame - time1) / (time2 - time1);	
-     
-  float32 *frame1 = (float32 *) &Data[pidx+1];
-  float32 *frame2 = (float32 *) &Data[p2idx+1];
-  					
-  for (int i=0; i < VectorLen; i++)  {
-  	
-     setvec[i] = WWMath::Lerp(frame1[i],frame2[i],ratio);
-     
-  }               
+	uint32 time = Data[p2idx];
+	if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG)
+	{
+		float32 *frm = (float32 *)&Data[pidx + 1];
+		for (int i = 0; i < VectorLen; i++)
+			setvec[i] = frm[i];
+		return;
+	}
 
+	float32 time1 = (float32)(Data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+	float32 time2 = (float32)(time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+	float32 ratio = (frame - time1) / (time2 - time1);
+	float32 *frame1 = (float32 *)&Data[pidx + 1];
+	float32 *frame2 = (float32 *)&Data[p2idx + 1];
+	for (int i = 0; i < VectorLen; i++)
+	{
+		float a = frame1[i];
+		float b = frame2[i];
+		setvec[i] = a + (b - a) * ratio;
+	}
 }	// Get_Vector
 
 
