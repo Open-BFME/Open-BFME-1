@@ -83767,3 +83767,16 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?createAndFireTempWeapon@WeaponStore@@QAEXPBVWeaponTemplate@@PBUCoord3D@@PBVObject@@1H@Z,0x00006FCD,ILT 0x00006FCD -> 0x001EA940; 5-arg createAndFire from BezierProjectileBehavior::projectileFire
 ?createAndFireTempWeapon@WeaponStore@@QAEXPBVWeaponTemplate@@PBVObject@@PAV3@@Z,0x0002FC66,ILT 0x0002FC66 -> 0x001EAA40; 3-arg object createAndFire from BezierProjectileBehavior::projectileFire
 ?bfmeSet@Gen_00411DD0@@QAEX_N@Z,0x00008337,ILT 0x00008337 -> 0x00411DD0; Drawable bool setter used by BezierProjectileBehavior::projectileFire
+?TheLAN@@3PAVLANAPI@@A,0x012F7730,LANAPI* singleton; NetworkDirectConnectSystem RequestSetName at +0x60
+?editPlayerName@@3PAVGameWindow@@A,0x012F3EC4,NetworkDirectConnect.wnd:TextEntryPlayerName; System back-button GadgetTextEntryGetText
+?buttonPushed@@3_NA,0x012F3E9D,NetworkDirectConnect.cpp file-static; System GBM_SELECTED guard and back-button set
+?LANbuttonPushed@@3_NA,0x012F3D4A,LAN overlay shared flag; NetworkDirectConnectSystem back-button set
+?buttonBackID@@3HA,0x012F3EA0,NetworkDirectConnect.wnd:ButtonBack name key; System compare
+?buttonHostID@@3HA,0x012F3EA4,NetworkDirectConnect.wnd:ButtonHost name key; System compare
+?buttonJoinID@@3HA,0x012F3EA8,NetworkDirectConnect.wnd:ButtonJoin name key; System compare
+?HostDirectConnectGame@@YAXXZ,0x0000A0E7,ILT from NetworkDirectConnectSystem host arm
+?JoinDirectConnectGame@@YAXXZ,0x000208E7,ILT from NetworkDirectConnectSystem join arm
+??ALANPreferences@@QAEAAVAsciiString@@ABV1@@Z,0x0003E6DA,LANPreferences map[] used as prefs[UserName] in NetworkDirectConnectSystem
+?write@LANPreferences@@QAE_NXZ,0x00030495,LANPreferences::write folds onto UserPreferences::write; System back-button
+??1LANPreferences@@QAE@XZ,0x00040DB3,non-virtual spelling of LANPreferences dtor ILT already pinned as UAE
+??APreferenceMap@@QAEAAVAsciiString@@ABV1@@Z,0x0003E6DA,UserPreferences map[] this+4 spelling used by NetworkDirectConnectSystem prefs[UserName]
