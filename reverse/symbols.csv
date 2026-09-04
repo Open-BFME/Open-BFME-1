@@ -11915,6 +11915,7 @@ name,address,notes
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
+?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
 ?areAllQueuesEmpty@Network@@UAE_NXZ,0x00681A10,vtable 0x0111A968 slot 25 (+0x64) via ILT 0x000149E8; tail-jumps conMgr 0x00662DF0 without a null check; that body loops the 8 connections at conMgr+0x04 calling isQueueEmpty@Connection 0x00661C90 = ZH ConnectionManager::canILeave and ZH areAllQueuesEmpty is exactly return m_conMgr->canILeave()
 ?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
@@ -79908,6 +79909,7 @@ name,address,notes
 ?renderBuffer@BfmeVolumetricShadowBufferOwner@@QAEXXZ,0x000465C9,render buffer helper ILT
 ?renderBuffer@W3DVolumetricShadow@@QAEXXZ,0x000465C9,render helper ILT
 ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z,0x00040809,REL32 pin for WaterRenderObjClass::updateRenderTargetTextures
+?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
 ?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
 ?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
