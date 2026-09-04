@@ -82568,8 +82568,13 @@ g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00
 ??0W3DMouseSurfaceRef@@QAE@XZ,0x00006A8C,W3DMouse surface-reference default constructor ILT used by its EH vector constructor
 ??1W3DMouseSurfaceRef@@QAE@XZ,0x008FC5B0,W3DMouse surface-reference destructor used by freeD3DAssets and its EH vector constructor
 ?setCursor@Win32Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum base call
-??1W3DMouseThreadHandle@@QAE@XZ,0x009DB400,W3DMouse thread owned-handle destructor
-?Stop@W3DMouseThread@@QAEXXZ,0x009DB5A0,W3DMouse thread stop call
 ??1Win32Mouse@@UAE@XZ,0x0002BC1A,W3DMouse destructor base-destructor ILT
 ?g_w3dMouseD3DDevice@@3PAVD3DDeviceInterface@@A,0x01340534,W3DMouse destructor Direct3D device global
-?g_w3dMouseThread@@3VW3DMouseThread@@A,0x012F9808,W3DMouse global polling thread object
+??1MouseThreadHandle@@QAE@XZ,0x009DB400,W3DMouse polling thread owned-handle destructor
+?Stop@MouseThreadClass@@QAEXXZ,0x009DB5A0,W3DMouse polling thread stop call
+?g_w3dMouseThread@@3VMouseThreadClass@@A,0x012F9808,W3DMouse global polling thread object
+??0MouseThreadRunGuard@@QAE@PAX_N@Z,0x009DB3B0,W3DMouse polling loop run-guard constructor
+??1MouseThreadRunGuard@@QAE@XZ,0x009DB400,W3DMouse polling loop run-guard destructor
+?g_w3dMouseThreadRunLock@@3EA,0x012F9800,W3DMouse polling loop run lock
+?g_w3dMouseIsThread@@3_NA,0x012F8788,W3DMouse polling-thread active flag
+?g_w3dMouseDrawTarget@@3PAVW3DMouseDrawInterface@@A,0x012F4C5C,W3DMouse polling draw target

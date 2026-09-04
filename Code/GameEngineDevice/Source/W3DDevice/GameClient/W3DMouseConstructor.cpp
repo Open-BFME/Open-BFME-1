@@ -57,18 +57,44 @@ public:
 	D3DDeviceVTable *m_vtable;
 };
 
-class W3DMouseThreadHandle
+class MouseThreadHandle
 {
 public:
-	~W3DMouseThreadHandle();
+	~MouseThreadHandle();
 };
 
-class W3DMouseThread
+class MouseThreadClass
 {
 public:
 	void Stop();
+	virtual void Thread_Function();
 	unsigned char m_unmodelled[0x50];
-	W3DMouseThreadHandle *m_handle;
+	MouseThreadHandle *m_handle;
+};
+
+class MouseThreadRunGuard
+{
+public:
+	MouseThreadRunGuard(void *lock, bool acquire);
+	~MouseThreadRunGuard();
+	bool isRunning() const { return m_running; }
+
+private:
+	void *m_lock;
+	bool m_running;
+};
+
+class W3DMouseDrawInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void draw() = 0;
 };
 
 class W3DMouse : public Win32Mouse
@@ -98,7 +124,10 @@ extern TextureClass *g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
 extern D3DDeviceInterface *g_w3dMouseD3DDevice;
-extern W3DMouseThread g_w3dMouseThread;
+extern MouseThreadClass g_w3dMouseThread;
+extern unsigned char g_w3dMouseThreadRunLock;
+extern bool g_w3dMouseIsThread;
+extern W3DMouseDrawInterface *g_w3dMouseDrawTarget;
 
 W3DMouse::W3DMouse() : m_camera(0)
 {
@@ -164,4 +193,19 @@ W3DMouse::~W3DMouse()
 	delete g_w3dMouseThread.m_handle;
 	g_w3dMouseThread.m_handle = 0;
 	g_w3dMouseThread.Stop();
+}
+
+void MouseThreadClass::Thread_Function()
+{
+	for (;;)
+	{
+		MouseThreadRunGuard guard(&g_w3dMouseThreadRunLock, true);
+		if (!guard.isRunning())
+			break;
+
+		g_w3dMouseIsThread = true;
+		if (g_w3dMouseDrawTarget)
+			g_w3dMouseDrawTarget->draw();
+		g_w3dMouseIsThread = false;
+	}
 }
