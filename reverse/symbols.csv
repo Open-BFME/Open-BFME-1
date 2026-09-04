@@ -82754,3 +82754,4 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??_GMonsterDockUpdate@@MAEPAXI@Z,0x0000EF61,primary class vftable slot zero ILT to 0x002CDBC0
 ??1MonsterDockUpdateModuleData@@UAE@XZ,0x0001A3B6,destructor ILT to 0x002CDD90
 ??_GMonsterDockUpdateModuleData@@UAEPAXI@Z,0x000234A2,class vftable slot zero ILT to 0x002CDD60
+?apply82AA0@ZoomSettings@@QAEXH@Z,0x0000BA64,retail ScreenZoomFilter set0x007D1F00 direct calls at0x007D1F71 and0x007D201C
