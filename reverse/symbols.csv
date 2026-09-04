@@ -10181,6 +10181,7 @@ name,address,notes
 ?GadgetListBoxReset@@YAXPAVGameWindow@@@Z,0x0000A3DF
 ?GadgetListBoxSetBottomVisibleEntry@@YAXPAVGameWindow@@H@Z,0x004B8550
 ?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,ILT thunk used by GadgetComboBoxSetColors
+?GadgetListBoxSetColumnWidths@@YAXPAVGameWindow@@HPAH@Z,0x0000A6D7,ILT of 0x004B83B0 listbox column-width setter used by Apt insertGame 0x0053F210
 ?GadgetListBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,0x000013CF,Open-BFME5 ILT thunk to the body already matched at 0x004B7260; ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z at 0x00478550 dispatches to it on the matching style bit
 ?GadgetRadioSetSelection@@YAXPAVGameWindow@@_N@Z,0x00034536
 ?GadgetRadioSetText@@YAXPAVGameWindow@@VBfmeUnicodeStringArg@@@Z,0x000424F1,ILT for ?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z (jumps to 0x004BC6E0); the view type only changes the by-value argument's spelling
