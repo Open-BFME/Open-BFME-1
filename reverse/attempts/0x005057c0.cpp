@@ -37,7 +37,7 @@ public:
 
 extern char g_bfmeQuickMatchFlag;
 extern const char *g_bfmeQuickMatchPending;
-extern Shell *TheShell;
+extern Shell * volatile TheShell;
 
 class BfmeQuickMatchShutdownBody
 {
@@ -50,10 +50,19 @@ public:
 	void finish(void);
 };
 
+struct BfmeQuickMatchVtable
+{
+	char m_slots[0x10];
+	void (BfmeQuickMatchShutdownBody::*m_slot4)(bool);
+};
+
 void BfmeQuickMatchShutdownBody::finish(void)
 {
-	g_bfmeQuickMatchFlag = 0;
-	slot4(true);
+	{
+		BfmeQuickMatchVtable *vtable = *(BfmeQuickMatchVtable **)this;
+		g_bfmeQuickMatchFlag = 0;
+		(this->*(vtable->m_slot4))(true);
+	}
 	TheShell->shutdownComplete((WindowLayout *)this, g_bfmeQuickMatchPending != 0);
 	if (g_bfmeQuickMatchPending)
 		TheShell->push(AsciiString(g_bfmeQuickMatchPending), false);

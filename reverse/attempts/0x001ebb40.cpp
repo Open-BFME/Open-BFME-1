@@ -1,5 +1,7 @@
 // ?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z
 // partial score=0.92 date=2026-09-04
+// ?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z
+// partial score=0.92 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: WeaponSet::releaseWeaponLock, retail 0x001EBB40 size 99.
 // Focused TU: WeaponSet.cpp keeps the ZH body (lock word only). BFME also
@@ -82,6 +84,5 @@ void WeaponSet::releaseWeaponLock(WeaponLockType lockType)
 		return;
 	}
 	m_curWeaponLockedStatus = (WeaponLockType)none;
-	ModelConditionFlags::BogusInitType init = (ModelConditionFlags::BogusInitType)none;
-	obj->clearModelConditionFlags(ModelConditionFlags(init, 0x88, 0x89, 0x8A));
+	obj->clearModelConditionFlags(ModelConditionFlags((ModelConditionFlags::BogusInitType)none, 0x88, 0x89, 0x8A));
 }

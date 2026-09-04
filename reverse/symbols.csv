@@ -2652,6 +2652,7 @@ name,address,notes
 ??0MaterialPassClass@@QAE@XZ,0x009333A0
 ??0MaterialRemapperClass@@QAE@PAVMaterialInfoClass@@0@Z,0x0092FD60,callee of the byte-proven clone_materials 0x96DDC0; ecx=stack temp and args are (srcmesh.MatInfo this->MatInfo) with EH state 0
 ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003BEDA,module ctor (friend_newModuleInstance retail call target)
+??0MeshClass@@QAE@XZ,0x0092C270,BFME MeshClass constructor called by the prototype mesh loader
 ??0MeshGeometryClass@@QAE@ABV0@@Z,0x009267E0,base copy ctor; REL32 target of MeshModelClass copy ctor at 0x0094EC44
 ??0MeshLoadContextClass@@AAE@XZ,0x00970180,BFME mesh-load context constructor called by MeshModelClass::Load_W3D
 ??0MeshMatDescClass@@QAE@ABV0@@Z,0x0092C0D0,REL32 target of MeshModelClass copy ctor at 0x0094ECE0 and 0x0094ED1F
@@ -9586,6 +9587,7 @@ name,address,notes
 ?Get_Char_Data@Rva00941400Font@@QAEPBURva00941400CharRecord@@G@Z,0x009412F0,address-derived callee pin from the 0x00941400 retail call
 ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
 ?Get_Color_Array@MeshMatDescClass@@QAEPAIH_N@Z,0x0002F8E2,
+?Get_Current_Asset@AssetRegistry@@QAE?AVAssetReference@@XZ,0x009EEF10,address-derived no-argument counted asset lookup called by Rva009EBDC0
 ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00907BE0
 ?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00906FE0,DX8 texture-stage snapshot value-name retail callee
 ?Get_Deformed_Vertices@BfmeShadowMesh@@QAEXPAVVector3@@@Z,0x0092C390,shadow entry skinned vertex deformation call
@@ -9669,6 +9671,7 @@ name,address,notes
 ?LoadAndCreateD3DShader@BfmeVertexShaderLoader@@SAJPBDPAK@Z,0x000078CE,BFME Glow vertex shader loader ILT called by W3DShaderManager::init
 ?LoadAndCreateD3DShader@W3DShaderManager@@SAJPBDPAK@Z,0x0001FC99,FlatTerrainShaderPixelShader retail two-argument loader thunk
 ?Load_W3D@AdaptiveDeltaMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977CC0
+?Load_W3D@MeshClass@@QAE_NAAVChunkLoadClass@@@Z,0x0092D0D0,BFME bool MeshClass loader called by the prototype mesh loader
 ?Load_W3D@TimeCodedMotionChannelClass@@QAE_NAAVChunkLoadClass@@@Z,0x00977A00
 ?Log_DX8_ErrorCode@@YAXI@Z,0x0087CAC0,hit-decoded x5 (body)
 ?MD5Update@@YAXPAUMD5_CTX@@PAEI@Z,0x0086AE20
@@ -79877,6 +79880,7 @@ name,address,notes
 ?parse@QuadDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00043BF8,Open-BFME5 pin
 ?parse@RenderObjectDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00037713,Open-BFME5 RenderObjectDrawTemplate retail parser
 ?parse@RenderObjectUpdateTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00002E3C,Open-BFME5 pin
+?parse@Rva007FF700Date@@QAEHPBD@Z,0x007FF530,Rva007FF700Date date parser from the FESL blob cursor call sites
 ?parse@Rva00800780Addr@@QAEXPBDH@Z,0x007E86D0,jabba demangler connect-reply Addr parse alias of Rva007E8760Addr::parse
 ?parse@SphereEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00034847,Open-BFME5 SphereEmissionVolumeTemplate retail parser
 ?parse@SphericalEmissionVelocityTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0002337B,Open-BFME5 SphericalEmissionVelocityTemplate retail parser

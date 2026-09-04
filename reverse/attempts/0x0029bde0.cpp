@@ -1,3 +1,5 @@
+// ?walk@Gen0029BDE0@@QAEXPAVBfmeHelperD77@@_N@Z
+// partial score=0.94 date=2026-09-04
 // ?d_0029bde0@@YAXXZ
 // partial score=0.94 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc

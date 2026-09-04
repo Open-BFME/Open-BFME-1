@@ -1,5 +1,5 @@
 // ?bfmeParse_0048BD60@@YAXPAVBfmeIni@@PAUBfmeParsedHolder@@@Z
-// partial score=0.9 date=2026-09-02
+// partial score=0.9 date=2026-09-04
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
 #include <new>

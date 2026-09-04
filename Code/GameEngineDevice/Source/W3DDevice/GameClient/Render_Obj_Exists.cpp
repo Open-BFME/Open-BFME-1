@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// stlport
 
 // Open-BFME5: the wrapper and its AssetRegistry lookup implementation.
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
 
 struct CRITICAL_SECTION
 {
@@ -33,11 +37,7 @@ public:
 	unsigned int nameToLowercaseKey(const char *name);
 };
 
-struct AssetRegistryEntry
-{
-	AssetRegistryEntry *m_next;
-	unsigned int m_key;
-};
+typedef _STL::hash_map<unsigned int, void *> AssetRegistryHash;
 
 class AssetRegistry
 {
@@ -47,9 +47,8 @@ public:
 private:
 	unsigned char m_unmodelled_000[0x2c];
 	CRITICAL_SECTION m_lock;
-	AssetRegistryEntry **m_buckets_begin;
-	AssetRegistryEntry **m_buckets_end;
-	unsigned char m_unmodelled_050[0x1a0];
+	AssetRegistryHash m_assets;
+	unsigned char m_unmodelled_058[0x198];
 	NameKeyGenerator *m_hash_context;
 };
 
@@ -62,11 +61,8 @@ bool AssetRegistry::Render_Obj_Exists_Impl(const char *name)
 	unsigned int key = m_hash_context->nameToLowercaseKey(name);
 	if (key == 0)
 		return false;
-	AssetRegistryEntry *entry = m_buckets_begin[
-		key % (unsigned int)(m_buckets_end - m_buckets_begin)];
-	while (entry != 0 && entry->m_key != key)
-		entry = entry->m_next;
-	return entry != 0;
+	AssetRegistryHash::iterator it = m_assets.find(key);
+	return it != m_assets.end();
 }
 
 // ?Render_Obj_Exists@@YA_NPBD@Z

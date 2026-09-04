@@ -210,23 +210,43 @@ public:
 
 extern char g_bfmeSpecialKeyVtable;
 
-class BfmeProcess1236
+class BfmeQuery1279
 {
 public:
-	void bfmeProcess1236(BfmeNode2_1236 *node);
+	void bfmeQuery1279(void *value, int zero, void **other, void **result);
 };
 
-void BfmeProcess1236::bfmeProcess1236(BfmeNode2_1236 *node)
+struct BfmeInput1279
 {
+	void *m_value;
+};
+
+class BfmeWrapper1279
+{
+public:
+	void bfmeProcess1279(void *value);
+	void bfmeForwardValue1279(void *value);
+	void bfmeForward1279(BfmeInput1279 *input);
+
+private:
+	BfmeQuery1279 *m_query;
+};
+
+void BfmeWrapper1279::bfmeProcess1279(void *value)
+{
+	BfmeNode2_1236 *node = (BfmeNode2_1236 *)value;
 	if (node) {
-		if (!((unsigned char)(~(node->m_flags >> 15)) & 1) && node->m_provider) {
-			BfmeLookup1236 *lookup = node->m_provider->bfmeGetLookup1236();
-			BfmeKey1236 &key = node->m_key;
-			if (key.m_vtable != &g_bfmeSpecialKeyVtable && lookup) {
-				if (lookup->bfmeLookup1236(key) == node)
-					lookup->bfmeErase1236(key);
+		if (!((unsigned char)(~(node->m_flags >> 15)) & 1)) {
+			BfmeProvider1236 *provider = node->m_provider;
+			if (provider) {
+				BfmeLookup1236 *lookup = provider->bfmeGetLookup1236();
+				BfmeKey1236 &key = node->m_key;
+				if (key.m_vtable != &g_bfmeSpecialKeyVtable && lookup) {
+					if (lookup->bfmeLookup1236(key) == node)
+						lookup->bfmeErase1236(key);
+				}
 			}
+			node->bfmeFinish1236();
 		}
-		node->bfmeFinish1236();
 	}
 }

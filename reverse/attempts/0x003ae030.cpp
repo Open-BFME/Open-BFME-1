@@ -88,20 +88,21 @@ void Glo012F1024Item::j_0002a969(void)
 {
 	Glo012F1024Item *self = this;
 	unsigned int index = 0;
-	int keep = -1;
+  int keep = -1;
 
 	for (; index < (unsigned int)(self->m_bfmeFlag32End - self->m_bfmeFlag32Begin); ++index)
 	{
 		_ReadWriteBarrier();
 		const BfmeFlag32 *begin = self->m_bfmeFlag32Begin;
-		char flag = (char)(begin + index)->m_bfmeFlag;
-		float n = (begin + index)->m_bfmeN;
+		char flag;
+		float n;
+		unsigned int h;
 		BfmeNode20 *node = new BfmeNode20(
 			(begin + index)->m_bfmeA,
 			(begin + index)->m_bfmeVec,
-			n,
-			(begin + index)->m_bfmeH,
-			flag);
+			n = (begin + index)->m_bfmeN,
+			h = (begin + index)->m_bfmeH,
+			flag = (char)(begin + index)->m_bfmeFlag);
 		keep = -1;
 		Glo012F1028->j_00003f0d(node);
 	}

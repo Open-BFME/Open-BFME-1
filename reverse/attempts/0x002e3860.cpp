@@ -1,4 +1,6 @@
 // ?CurDrawableGetCurrentTargetDistance@@YAHPAUlua_State@@@Z
+// partial score=0.99 date=2026-09-04
+// ?CurDrawableGetCurrentTargetDistance@@YAHPAUlua_State@@@Z
 // partial score=0.98 date=2026-09-02
 // ?CurDrawableGetCurrentTargetDistance@@YAHPAUlua_State@@@Z
 // partial score=0.98 date=2026-08-28
@@ -172,15 +174,13 @@ int CurDrawablePrevAnimation(lua_State *state)
 int CurDrawableGetCurrentTargetDistance(lua_State *state)
 {
 	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
-	if (drawable != 0) {
+	if (drawable != 0 && drawable->m_owner != 0) {
 		LuaTargetOwner *owner = drawable->m_owner;
-		if (owner != 0) {
-			Coord3D *position = &owner->m_target->m_targetPosition;
+		if (owner->m_target != 0) {
+			const Coord3D *position = &owner->m_target->m_targetPosition;
 			LuaTargetRecord *target = owner->m_target;
-			if (target != 0) {
-				lua_pushnumber(state, sqrt(target->getDistanceSquared(position)));
-				return 1;
-			}
+			lua_pushnumber(state, sqrt(target->getDistanceSquared(position)));
+			return 1;
 		}
 	}
 

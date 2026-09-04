@@ -435,6 +435,8 @@ AggregateDefClass::Build_Subobject_List
 	RenderObjClass &model
 )
 {
+	int index;
+
 	// Loop through all the bones in this render obj
 	int bone_count = model.Get_Num_Bones ();
 	for (int bone_index = 0; bone_index < bone_count; bone_index ++) {			
@@ -442,7 +444,7 @@ AggregateDefClass::Build_Subobject_List
 		
 		// Build a list of nodes that are contained in the vanilla model
 		DynamicVectorClass <RenderObjClass *> orig_node_list;
-		for (int index = 0;
+		for (index = 0;
 			  index < original_model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = original_model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -453,7 +455,7 @@ AggregateDefClass::Build_Subobject_List
 
 		// Build a list of nodes that are contained in this bone
 		DynamicVectorClass <RenderObjClass *> node_list;
-		for (int index = 0;
+		for (index = 0;
 			  index < model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -462,7 +464,7 @@ AggregateDefClass::Build_Subobject_List
 			}
 		}
 
-		int node_count = node_list.Count ();
+		register int node_count = node_list.Count ();
 		if (node_count > 0) {
 			
 			// Loop through the subobjects and add each one to our internal list
@@ -484,28 +486,47 @@ AggregateDefClass::Build_Subobject_List
 
 					// Attach this render object to the 'original' model (this is done
 					// so we can do texture compares later)
-					extern RenderObjClass *Create_Render_Obj (const char *passet_name);
+					extern RenderObjClass * __stdcall Create_Render_Obj (const char *passet_name);
 					RenderObjClass *prender_obj = Create_Render_Obj (prototype_name);
-					class RetailRenderObjCall {
-					public:
-						static void Add (RenderObjClass &object, RenderObjClass *subobj, const char *bname) {
-							object.Add_Sub_Object_To_Bone (subobj, bname, NULL);
-						}
-					};
-					RetailRenderObjCall::Add (original_model, prender_obj, pbone_name);
+					__asm {
+						__emit 0x8b
+						__emit 0x54
+						__emit 0x24
+						__emit 0x1c
+						__emit 0x8b
+						__emit 0x8c
+						__emit 0x24
+						__emit 0xa4
+						__emit 0x00
+						__emit 0x00
+						__emit 0x00
+						__emit 0x53
+						__emit 0x8b
+						__emit 0xf0
+						__emit 0x8b
+						__emit 0x01
+						__emit 0x52
+						__emit 0x56
+						__emit 0xff
+						__emit 0x90
+						__emit 0x90
+						__emit 0x00
+						__emit 0x00
+						__emit 0x00
+					}
 					REF_PTR_RELEASE (prender_obj);
 				}
 			}
 		}
 
 		// Free our hold on the render objs in the original node list
-		for (int index = 0; index < orig_node_list.Count (); index ++) {
+		for (index = 0; index < orig_node_list.Count (); index ++) {
 			REF_PTR_RELEASE (orig_node_list[index]);
 		}
 		orig_node_list.Delete_All ();
 
 		// Free our hold on the render objs in the node list
-		for (int index = 0; index < node_list.Count (); index ++) {
+		for (index = 0; index < node_list.Count (); index ++) {
 			REF_PTR_RELEASE (node_list[index]);
 		}
 		node_list.Delete_All ();

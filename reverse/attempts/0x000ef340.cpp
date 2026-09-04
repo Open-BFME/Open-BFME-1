@@ -1,4 +1,6 @@
 // ?hasAnyBuildFacility@Team@@QBE_NXZ
+// partial score=0.96 date=2026-09-04
+// ?hasAnyBuildFacility@Team@@QBE_NXZ
 // partial score=0.96 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 // Open-BFME5: Team::hasAnyBuildFacility, retail 0x000EF340, 99 bytes

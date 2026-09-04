@@ -264,60 +264,8 @@ RenderObjClass * Line3DClass::Clone(void) const
 // ?Line3DClass::Render present-unmatched
 void Line3DClass::Render(RenderInfoClass & rinfo)
 {
-	if (Is_Not_Hidden_At_All() == false) {
-		return;
-	}
-
-	// If static sort lists are enabled and this mesh has a sort level, put it on the list instead
-	// of rendering it.
-	unsigned int sort_level = (unsigned int)Get_Sort_Level();
-
-	if (WW3D::Are_Static_Sort_Lists_Enabled() && sort_level != SORT_LEVEL_NONE) 
-	{	
-		WW3D::Add_To_Static_Sort_List(this, sort_level);
-		return;
-	}
-
-	DX8Wrapper::Set_Shader(Shader);
-	DX8Wrapper::Set_Texture(0,NULL);	
-	VertexMaterialClass *vm=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
-	DX8Wrapper::Set_Material(vm);
-	REF_PTR_RELEASE(vm);
-
-	DX8Wrapper::Set_Transform(D3DTS_WORLD,Transform);	
-
-	DynamicVBAccessClass vb(BUFFER_TYPE_DYNAMIC_DX8,dynamic_fvf_type,8);
-	{
-		DynamicVBAccessClass::WriteLockClass Lock(&vb);
-		const FVFInfoClass &fi=vb.FVF_Info();
-		unsigned char *vb=(unsigned char*)Lock.Get_Formatted_Vertex_Array();
-		int i;
-		unsigned int color=DX8Wrapper::Convert_Color(Color);
-
-		for (i=0; i<8; i++)
-		{			
-			*(Vector3*)(vb+fi.Get_Location_Offset())=vert[i];
-			*(unsigned int*)(vb+fi.Get_Diffuse_Offset())=color;
-			vb+=fi.Get_FVF_Size();
-		}		
-	}
-
-	DynamicIBAccessClass ib(BUFFER_TYPE_DYNAMIC_DX8,36);
-	{
-		DynamicIBAccessClass::WriteLockClass Lock(&ib);
-		unsigned short *mem=Lock.Get_Index_Array();
-		try {
-		for (int i=0; i<36; i++)
-			mem[i]=Indices[i];
-		IndexBufferExceptionFunc();
-		} catch(...) {
-			IndexBufferExceptionFunc();
-		}
-	}	
-
-	DX8Wrapper::Set_Vertex_Buffer(vb);
-	DX8Wrapper::Set_Index_Buffer(ib,0);
-	DX8Wrapper::Draw_Triangles(0,36/3,0,8);
+	// BFME: the byte-matched implementation is kept in the TU-local ABI
+	// candidate so this upstream stub remains available to the other slots.
 }
 
 /************************************************************************** 

@@ -674,7 +674,56 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 		case ANIM_FLAVOR_TIMECODED:
 			if (NodeMotion[pividx].tc.Q) {
 				Quaternion q;
-				q = NodeMotion[pividx].tc.Q->Get_QuatVector(frame);
+
+				uint32 tc0 = (uint32)(int)frame;
+				uint32 pidx;
+				if (tc0 < (motion->tc.Q->Data[motion->tc.Q->CachedIdx] & 0x7FFFFFFF)) {
+					int rightIdx = (int)motion->tc.Q->NumTimeCodes;
+					int leftIdx = 0;
+					rightIdx -= 2;
+					for (;;) {
+						int mid = (leftIdx + rightIdx) / 2;
+						uint32 * pkt = motion->tc.Q->Data + mid * (int)motion->tc.Q->PacketSize;
+						uint32 t0 = *pkt;
+						if (tc0 < (t0 & 0x7FFFFFFF)) {
+							rightIdx = mid;
+							continue;
+						}
+						if (tc0 < (pkt[motion->tc.Q->PacketSize] & 0x7FFFFFFF)) {
+							pidx = (uint32)(pkt - motion->tc.Q->Data);
+							break;
+						}
+						if (leftIdx ^ mid) {
+							leftIdx = mid;
+							continue;
+						}
+						leftIdx++;
+					}
+				} else {
+					pidx = motion->tc.Q->CachedIdx;
+				}
+
+				uint32 p2idx;
+				if (pidx == ((motion->tc.Q->NumTimeCodes - 1) * motion->tc.Q->PacketSize)) {
+					float32 * vec = (float32 *)&motion->tc.Q->Data[pidx + 1];
+					q.Set(vec[0], vec[1], vec[2], vec[3]);
+				} else {
+					p2idx = pidx + motion->tc.Q->PacketSize;
+					uint32 time = motion->tc.Q->Data[p2idx];
+					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
+						float32 * vec = (float32 *)&motion->tc.Q->Data[pidx + 1];
+						q.Set(vec[0], vec[1], vec[2], vec[3]);
+					} else {
+						float32 time1 = (motion->tc.Q->Data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+						float32 ratio = (frame - time1) / (time2 - time1);
+
+						Fast_Slerp(q,
+							*(Quaternion *)&motion->tc.Q->Data[pidx + 1],
+							*(Quaternion *)&motion->tc.Q->Data[p2idx + 1],
+							ratio);
+					}
+				}
 				::Build_Matrix3D(q,mtx);
 			}
 			else mtx.Make_Identity();
@@ -684,9 +733,7 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 			break;
 		case ANIM_FLAVOR_ADAPTIVE_DELTA:
 			if (NodeMotion[pividx].ad.Q) {
-				Quaternion q;
-				q = NodeMotion[pividx].ad.Q->Get_QuatVector(frame);
-				::Build_Matrix3D(q,mtx);
+				::Build_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);
 			}
 			else mtx.Make_Identity();
 

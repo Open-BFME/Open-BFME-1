@@ -1,4 +1,6 @@
 // ?bfmeUnregister@@YAXPAVBfmeSecondZ@@@Z
+// partial score=0.95 date=2026-09-04
+// ?bfmeUnregister@@YAXPAVBfmeSecondZ@@@Z
 // partial score=0.95 date=2026-08-30
 // Two destructors over a vector and a second member.
 //
@@ -90,8 +92,9 @@ void __cdecl bfmeUnregister(BfmeSecondZ *second)
 		BfmeElementZ *element = second->m_bfmeFinish - 1;
 
 		while (element->hasNodes()) {
+			BfmeNodeZ *node = element->popNode();
 			_ReadWriteBarrier();
-			delete element->popNode();
+			delete node;
 		}
 
 		--second->m_bfmeFinish;

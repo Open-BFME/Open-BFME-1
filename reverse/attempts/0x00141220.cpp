@@ -1,4 +1,8 @@
 // ?bfmeFind@Gen_00141220@@QBEPAVBfmeTreeNode@@PBX@Z
+// partial score=0.9 date=2026-09-04
+// ?bfmeFind@Gen_00141220@@QBEPAVBfmeTreeNode@@PBX@Z
+// partial score=0.9 date=2026-09-04
+// ?bfmeFind@Gen_00141220@@QBEPAVBfmeTreeNode@@PBX@Z
 // partial score=0.9 date=2026-08-25
 // Retail 0x00141220, 96 bytes. Two names sit on the address -- both spellings
 // of a red-black tree _M_find over a BitFlags key -- and reproducing either
