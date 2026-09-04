@@ -5623,7 +5623,6 @@ name,address,notes
 ??1Gen_dtor_00712100@@UAE@XZ,0x00044A67,gen-dtor class destructor
 ??1Gen_dtor_007158c0@@UAE@XZ,0x0000A1F0,gen-dtor class destructor
 ??1Gen_dtor_007207f0@@UAE@XZ,0x0002711A,gen-dtor class destructor
-??1Gen_dtor_00722ba0@@UAE@XZ,0x0002CED5,gen-dtor class destructor
 ??1Gen_dtor_007255d0@@UAE@XZ,0x0001E5F1,gen-dtor class destructor
 ??1Gen_dtor_0072f1a0@@UAE@XZ,0x00017774,gen-dtor class destructor
 ??1Gen_dtor_00730560@@UAE@XZ,0x0002F77F,gen-dtor class destructor
@@ -82754,3 +82753,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?ReleaseResources@W3DSmudgeManager@@UAEXXZ,0x000309CC,W3DSmudgeManager vtable slot 0x0C ILT
 ?init@W3DSmudgeManager@@UAEXXZ,0x00034360,W3DSmudgeManager vtable slot 0x04 ILT
 ?ReAcquireResources@W3DSmudgeManager@@UAEXXZ,0x0001CD05,W3DSmudgeManager vtable slot 0x10 ILT
+??1SmudgeManager@@UAE@XZ,0x00029555,W3DSmudgeManager destructor base call ILT
+??1W3DSmudgeManager@@UAE@XZ,0x0002CED5,W3DSmudgeManager deleting destructor call ILT
+??_GW3DSmudgeManager@@UAEPAXI@Z,0x00023281,W3DSmudgeManager vftable slot zero ILT
