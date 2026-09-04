@@ -82433,3 +82433,13 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ,0x00029208,tracked slave particle-system accessor
 ??1ParticleSystemHandle@@QAE@XZ,0x00013994,tracked particle-system handle unlink destructor
 ?Set_Mesh@AABTreeClass@@QAEXPAVMeshGeometryClass@@@Z,0x0096A620,callee of MeshGeometryClass::operator= CullTree clone; 10B store at this+0x18
+??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
+??1FeslEchoMessage@@QAE@XZ,0x007E86C0,FESL message buffer destructor
+?addInt@FeslEchoMessage@@QAEXPBDH@Z,0x007E88D0,FESL integer field writer
+?addString@FeslEchoMessage@@QAEXPBD0@Z,0x007E8A10,FESL string field writer
+?sendFeslMessage@@YAXPAXPBD0@Z,0x007F93E0,FESL routed message sender
+?g_feslTransactionIdKey@@3PADA,0x00D2C144,FESL TID field key
+?g_feslTypeKey@@3PADA,0x00D2B490,FESL TYPE field key
+?g_feslUserIdKey@@3PADA,0x00D2B558,FESL UGID field key
+?g_feslSecretKey@@3PADA,0x00D2B560,FESL SECRET field key
+?g_feslDirectRoute@@3PADA,0x00D2C300,FESL direct route marker
