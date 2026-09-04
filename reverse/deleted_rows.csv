@@ -24423,3 +24423,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeReadVLS@@YAXPAXH@Z,0x0068E630,synthetic identity superseded by fillCurrentLANGameInfo; three matched LAN message callers and identified LANGameInfo callees establish the same byte-verified 112-byte body.
 ?bfmeReset@Gen_00383B00@@QAEXXZ,0x00383B00,synthetic identity superseded by GameLogic::resetPlayerLeaveStatus; the Network::init caller and PlayerLeaveStatus diagnostic identify the same byte-verified 45-byte body.
 ?get@Rva00383B90@@QAEPAXH@Z,0x00383B90,address-derived identity superseded by GameLogic::getPlayerLeaveStatus; adjacency to its matched setter and the shared eight-record layout identify the same byte-verified 31-byte body.
+??0BfmeA1142@@QAE@D@Z,0x006D1C80,synthetic identity superseded by HeightMapRenderObjClass::HeightMapRenderObjClass(int); the matched adjustTerrainLOD caller identifies the same byte-verified 131-byte body.

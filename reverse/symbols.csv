@@ -1991,7 +1991,6 @@ name,address,notes
 ??0BfmeBase1137C@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140A@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140B@@QAE@XZ,0x0001B522,pin
-??0BfmeBase1142@@QAE@XZ,0x00048BE4,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBigVSZ@@QAE@ABV0@@Z,0x00047B27,pin
@@ -82161,7 +82160,6 @@ _g_bfmeList1199,0x00EF3350,pin
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
 _g_bfmeOwner1179,0x00F40584,pin
-_g_bfmeS1142,0x00EF8008,pin
 _g_bfmeS1177,0x00CCED70,pin
 _g_bfmeSITable,0x00EF77A8,global 0x190-dword table cleared by BfmeThingSI ctor
 _g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
@@ -82173,10 +82171,6 @@ _g_bfmeV1137B,0x00D1E23C,pin
 _g_bfmeV1137C,0x00D0CA7C,pin
 _g_bfmeV1140A,0x00D0C64C,pin
 _g_bfmeV1140B,0x00D0C814,pin
-_g_bfmeV1142A,0x00D1DC88,pin
-_g_bfmeV1142B,0x00D1DC80,pin
-_g_bfmeV1142C,0x00D1DC74,pin
-_g_bfmeV1142D,0x00D1DC60,pin
 _g_bfmeV1159,0x00D26B14,pin
 _g_bfmeV1187,0x00D2C768,pin
 _g_bfmeV1188,0x00D128D0,pin
@@ -82745,3 +82739,8 @@ g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry a
 ?isLocalPlayer@LANGameSlot@@QBE_NXZ,0x0002DB2D,LANGameSlot local-player predicate used before serializing current game state
 ?resetPlayerLeaveStatus@GameLogic@@QAEXXZ,0x00383B00,Network::init caller and PlayerLeaveStatus diagnostic identify the eight-record reset method
 ?getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,indexed accessor adjacent to the matched setter over the same eight PlayerLeaveStatus records
+_g_heightMapRenderObjVtableAtZero,0x00D1DC88,HeightMapRenderObjClass primary vtable used by its BFME constructor
+_g_heightMapRenderObjVtableAtEight,0x00D1DC80,HeightMapRenderObjClass secondary vtable at object offset 8
+_g_heightMapRenderObjVtableAtC8,0x00D1DC74,HeightMapRenderObjClass secondary vtable at object offset 0xC8
+_g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vtable at object offset 0xCC
+?TheHeightMap@@3PAVHeightMapRenderObjClass@@A,0x00EF8008,global current HeightMapRenderObjClass assigned by its constructor
