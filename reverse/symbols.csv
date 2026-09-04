@@ -83738,3 +83738,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?notifyPreFire@WeaponTemplate@@QAEXPAVWeapon@@PBVObject@@HH@Z,0x00005704,Open-BFME5 ILT to WeaponTemplate pre-fire list walk body 0x001E6310; called from preFireWeapon 0x001E8970
 ?getTransformMatrix@Drawable@@QBEPBVMatrix3D@@XZ,0x00017512,Open-BFME5 ILT to Drawable::getTransformMatrix (FUN_0081cec0); preFireWeapon doFXPos path
 ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,Open-BFME5 ILT to FXList four-arg doFXPos body 0x008280D0; same thunk as BridgeAreaEffectsFXShim::doFXPos
+?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z,0x00699E50,Miles playing-audio handle lookup; setReverb callee
+??0Rva00800630Owner@@QAE@XZ,0x00800340,Rva00802380Owner ctor member at +0x18 this-zero3
