@@ -63,8 +63,8 @@ class BfmeSeedTarget
 public:
 	virtual void bfmeSlot0(void);
 	virtual bool bfmeSlot1(void);
-	virtual void bfmeSlot2(void);
-	virtual void bfmeSlot3(void);
+	virtual bool bfmeSlot2(void);
+	virtual bool bfmeSlot3(void);
 	virtual bool bfmeSkip(void);		// slot 4, vtable+0x10
 	virtual void bfmeSlot5(void);
 	virtual void bfmeSlot6(void);
@@ -99,6 +99,70 @@ public:
 	virtual void bfmeTakeAt8C(void *item);		// slot 35, vtable+0x8C
 };
 
+struct BfmeFlagsAXB
+{
+	unsigned char m_bfmeOne;
+	unsigned char m_bfmeTwo;
+};
+
+class BfmeSrcAXB;
+
+class BfmeThingAXB
+{
+public:
+	void bfmeSendAXB(BfmeSrcAXB *src, BfmeFlagsAXB *flags);
+};
+
+class BfmeAcceptManager
+{
+public:
+	virtual void bfmeSlot0(void);
+	virtual void bfmeSlot1(void);
+	virtual void bfmeSlot2(void);
+	virtual void bfmeSlot3(void);
+	virtual void bfmeSlot4(void);
+	virtual void bfmeSlot5(void);
+	virtual void bfmeSlot6(void);
+	virtual void bfmeSlot7(void);
+	virtual void bfmeSlot8(void);
+	virtual void bfmeSlot9(void);
+	virtual void bfmeSlot10(void);
+	virtual void bfmeSlot11(void);
+	virtual void bfmeSlot12(void);
+	virtual void bfmeSlot13(void);
+	virtual void bfmeSlot14(void);
+	virtual void bfmeSlot15(void);
+	virtual void bfmeSlot16(void);
+	virtual void bfmeSlot17(void);
+	virtual void bfmeSlot18(void);
+	virtual void bfmeSlot19(void);
+	virtual void bfmeSlot20(void);
+	virtual void *bfmeRegister(void *owner, void *item);
+	virtual void bfmeSlot22(void);
+	virtual void bfmeSlot23(void);
+	virtual void bfmeSlot24(void);
+	virtual void bfmeSlot25(void);
+	virtual void bfmeSlot26(void);
+	virtual void bfmeSlot27(void);
+	virtual void bfmeSlot28(void);
+	virtual void bfmeSlot29(void);
+	virtual void bfmeSlot30(void);
+	virtual void bfmeSlot31(void);
+	virtual void bfmeSlot32(void);
+	virtual void bfmeSlot33(void);
+	virtual void bfmeSlot34(void);
+	virtual void bfmeSlot35(void);
+	virtual void bfmeSlot36(void);
+	virtual void bfmeSlot37(void);
+	virtual void bfmeSlot38(void);
+	virtual void bfmeSlot39(void);
+	virtual void bfmeSlot40(void);
+	virtual void bfmeSlot41(void);
+	virtual void bfmeSlot42(void);
+	virtual void bfmeSlot43(void);
+	virtual bool bfmeCheck(void *field);
+};
+
 // ?bfmeHandOver_000353C8@@YAXPAVBfmeSeedTarget@@PAX@Z		// 140 bytes
 __declspec(noinline) void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *item)
 {
@@ -121,7 +185,39 @@ class BfmeSubAccept_0002C41C
 {
 public:
 	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0002C41C
+
+private:
+	char m_bfmePad0[0xC];
+	void *m_bfmeField;
 };
+
+// ?bfmeAccept@BfmeSubAccept_0002C41C@@QAEXPAVBfmeSeedTarget@@@Z		// 187 bytes
+void BfmeSubAccept_0002C41C::bfmeAccept(BfmeSeedTarget *target)
+{
+	BfmeSeedPair pair;
+	volatile unsigned char accepted;
+
+	if (target->bfmeSlot3())
+		return;
+
+	pair.m_bfmeFirst = 1;
+	pair.m_bfmeSecond = 2;
+	target->bfmeSeed(&pair);
+
+	if (target->bfmeSlot2())
+		accepted = !g_mgr12EF1D8
+			? false
+			: reinterpret_cast<BfmeAcceptManager *>(g_mgr12EF1D8)->bfmeCheck(m_bfmeField);
+	target->bfmeTakeAt8C((void *)&accepted);
+
+	void *item = m_bfmeField;
+	target->bfmeTakeAt74(&item);
+	reinterpret_cast<BfmeThingAXB *>(this)->bfmeSendAXB(
+		reinterpret_cast<BfmeSrcAXB *>(target), reinterpret_cast<BfmeFlagsAXB *>(&pair));
+
+	if (accepted && target->bfmeSlot1() && g_mgr12EF1D8)
+		m_bfmeField = reinterpret_cast<BfmeAcceptManager *>(g_mgr12EF1D8)->bfmeRegister(this, item);
+}
 
 void bfmeHandOver_0000240A(BfmeSeedTarget *target, void *item);		// ILT 0x0000240A
 void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);		// ILT 0x0000C9B4
@@ -409,7 +505,7 @@ private:
 
 	char m_bfmePad0[0x24];
 	BfmeSubAccept_0002C41C m_bfmeSub0;		// +0x24
-	char m_bfmePad1[0x6F];
+	char m_bfmePad1[0x60];
 	char m_bfmeItem1;				// +0x94
 	char m_bfmePad2[0x3];
 	char m_bfmeItem2;				// +0x98
