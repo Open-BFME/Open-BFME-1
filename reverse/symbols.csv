@@ -4618,7 +4618,6 @@ name,address,notes
 ??1Gen_dtor_002846d0@@UAE@XZ,0x000438AB,gen-dtor class destructor
 ??1Gen_dtor_00285490@@UAE@XZ,0x0003FDD2,gen-dtor class destructor
 ??1Gen_dtor_00285d00@@UAE@XZ,0x00006E0B,gen-dtor class destructor
-??1Gen_dtor_00287100@@UAE@XZ,0x000142A4,gen-dtor class destructor
 ??1Gen_dtor_00287350@@UAE@XZ,0x0003F59E,gen-dtor class destructor
 ??1Gen_dtor_00288460@@UAE@XZ,0x000049D5,gen-dtor class destructor
 ??1Gen_dtor_00289550@@UAE@XZ,0x0001BCE8,gen-dtor class destructor
@@ -33235,7 +33234,6 @@ name,address,notes
 ?b_00286ad0@@YAXXZ,0x00286AD0,gen-thunk body
 ?b_00286c40@@YAXXZ,0x00286C40,gen-thunk body
 ?b_00286db0@@YAXXZ,0x00286DB0,gen-thunk body
-?b_00286dc0@@YAXXZ,0x00286DC0,gen-thunk body
 ?b_00286df0@@YAXXZ,0x00286DF0,gen-thunk body
 ?b_00286e00@@YAXXZ,0x00286E00,gen-thunk body
 ?b_00286e10@@YAXXZ,0x00286E10,gen-thunk body
@@ -33249,7 +33247,6 @@ name,address,notes
 ?b_00287040@@YAXXZ,0x00287040,gen-thunk body
 ?b_00287050@@YAXXZ,0x00287050,gen-thunk body
 ?b_00287070@@YAXXZ,0x00287070,gen-thunk body
-?b_00287100@@YAXXZ,0x00287100,gen-thunk body
 ?b_00287130@@YAXXZ,0x00287130,gen-thunk body
 ?b_002871f0@@YAXXZ,0x002871F0,gen-thunk body
 ?b_00287290@@YAXXZ,0x00287290,gen-thunk body
@@ -82747,3 +82744,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??0AABTreeBuilderClass@@QAE@XZ,0x0096B350,Open-BFME5 retail builder constructor callee of MeshGeometryClass::Generate_Culling_Tree
 ??1LargeGroupBonusUpdate@@MAE@XZ,0x0000D125,destructor ILT to 0x002974D0
 ??_GLargeGroupBonusUpdate@@MAEPAXI@Z,0x000106C2,primary class vftable slot zero ILT to 0x002977F0
+??1SmartBombTargetHomingUpdate@@MAE@XZ,0x000142A4,destructor ILT to 0x00286DC0
+??_GSmartBombTargetHomingUpdate@@MAEPAXI@Z,0x0002E89D,primary class vtable slot zero ILT to 0x00287100

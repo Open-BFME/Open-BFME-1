@@ -24547,3 +24547,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00296de0@@UAEPAXI@Z,0x00296DE0,generated deleting-destructor identity replaced by LargeGroupAudioUpdate scalar deleting destructor; primary class vftable slot zero points through ILT 0x0003B1F6
 ??1Rva002974D0NestedDtor@@UAE@XZ,0x002974D0,generated identity replaced by byte-verified LargeGroupBonusUpdate destructor
 ??_GGen_dtor_002977f0@@UAEPAXI@Z,0x002977F0,generated identity replaced by byte-verified LargeGroupBonusUpdate destructor
+??1Rva00286DC0NestedDtor@@UAE@XZ,0x00286DC0,generated identity replaced by byte-verified SmartBombTargetHomingUpdate destructor
+??_GGen_dtor_00287100@@UAEPAXI@Z,0x00287100,generated identity replaced by byte-verified SmartBombTargetHomingUpdate destructor
