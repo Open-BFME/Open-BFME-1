@@ -33,6 +33,8 @@ class CreateModule : public BehaviorModule,
 {
 public:
 	CreateModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~CreateModule();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerCreate.h
@@ -40,9 +42,15 @@ class SpecialPowerCreate : public CreateModule
 {
 public:
 	SpecialPowerCreate( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SpecialPowerCreate();
 };
 
 SpecialPowerCreate::SpecialPowerCreate( Thing *thing, const ModuleData *moduleData )
 	: CreateModule( thing, moduleData )
+{
+}
+
+SpecialPowerCreate::~SpecialPowerCreate()
 {
 }

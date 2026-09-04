@@ -4490,7 +4490,6 @@ name,address,notes
 ??1Gen_dtor_0024fb00@@UAE@XZ,0x0003DEF1,gen-dtor class destructor
 ??1Gen_dtor_0024fd70@@UAE@XZ,0x000377A9,gen-dtor class destructor
 ??1Gen_dtor_0024fe20@@UAE@XZ,0x00031DEF,gen-dtor class destructor
-??1Gen_dtor_00250190@@UAE@XZ,0x0001FF69,gen-dtor class destructor
 ??1Gen_dtor_00250380@@UAE@XZ,0x0000A7BD,gen-dtor class destructor
 ??1Gen_dtor_00250570@@UAE@XZ,0x0003DE10,gen-dtor class destructor
 ??1Gen_dtor_00250710@@UAE@XZ,0x00003A99,gen-dtor class destructor
@@ -31268,11 +31267,9 @@ name,address,notes
 ?b_00250000@@YAXXZ,0x00250000,gen-thunk body
 ?b_00250070@@YAXXZ,0x00250070,gen-thunk body
 ?b_002500b0@@YAXXZ,0x002500B0,gen-thunk body
-?b_002500c0@@YAXXZ,0x002500C0,gen-thunk body
 ?b_002500e0@@YAXXZ,0x002500E0,gen-thunk body
 ?b_002500f0@@YAXXZ,0x002500F0,gen-thunk body
 ?b_00250100@@YAXXZ,0x00250100,gen-thunk body
-?b_00250190@@YAXXZ,0x00250190,gen-thunk body
 ?b_002501c0@@YAXXZ,0x002501C0,gen-thunk body
 ?b_00250210@@YAXXZ,0x00250210,gen-thunk body
 ?b_00250250@@YAXXZ,0x00250250,gen-thunk body
@@ -82739,3 +82736,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ?GridScaleRva007D4AF0@@YAPAUGridGlobals@@XZ,0x00031944,retail grid0x007D4AF0 call at0x007D4B4B;thunk to0x00421E70
 ?GridScaleRva007D95B0@@YAPAUGridGlobals@@XZ,0x0000D7A6,retail grid0x007D95B0 call at0x007D960B;thunk to0x00421E40
 ??1StreakRendererClass@@QAE@XZ,0x0095C780,StreakLineClass destructor calls StreakRenderer member at +0x154; frees m_vertexBuffer +0x48 and releases Texture +0 matching streakRender.cpp
+??1SpecialPowerCreate@@MAE@XZ,0x0001FF69,destructor ILT to 0x002500C0
+??_GSpecialPowerCreate@@MAEPAXI@Z,0x0002ACE8,primary class vtable slot zero ILT to 0x00250190
