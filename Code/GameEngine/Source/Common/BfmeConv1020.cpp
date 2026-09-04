@@ -117,24 +117,6 @@ int bfmeGo1020I(int a, void *b)
 	return 1;
 }
 
-class BfmeLog1020
-{
-public:
-	void bfmeSend1020(int m);
-};
-
-extern BfmeLog1020 *g_bfmeLog1020;
-extern int g_bfmeMsg1020;
-extern char g_bfmeC1020;
-extern char g_bfmeD1020;
-
-void bfmeGo1020K(void)
-{
-	g_bfmeLog1020->bfmeSend1020(g_bfmeMsg1020);
-	g_bfmeC1020 = 1;
-	g_bfmeD1020 = 0;
-}
-
 class BfmeM1020;
 
 class BfmeN1020
