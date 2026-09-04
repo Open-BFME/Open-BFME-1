@@ -8093,6 +8093,7 @@ name,address,notes
 ??1PSPlayerStats@@QAE@XZ,0x00025C1B,PSRequest retail member destructor
 ??1PSResponse@@QAE@XZ,0x0003B0CF,ILT the PSResponse deque pop_front calls at 0x00656BE1; its target adds four to this and tail-jumps to ??1PSPlayerStats
 ??1ParticleSysBoneInfo@@QAE@XZ,0x000033B9,pinharvest x1 (thunk)
+??1ParticleSystemHandle@@QAE@XZ,0x00013994,tracked particle-system handle unlink destructor
 ??1ParticleSystemTemplateBase@FXParticleSystem@@UAE@XZ,0x00002F5E,Open-BFME5 pin
 ??1ParticleSystemTemplateMemberA@FXParticleSystem@@QAE@XZ,0x000244BF,Open-BFME5 pin
 ??1ParticleUplinkCannonUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
@@ -11707,6 +11708,7 @@ name,address,notes
 ?add@U1Sink@@QAEXPBD@Z,0x005C49D0,sink append target of the four inserter rows; address-derived name
 ?add@WideMulti@@QAEXPBUWideFieldParse@@I@Z,0x00850920,call-site callee of Rva0022A450::buildFieldParse
 ?add@WideMulti@@QAEXPBVWideFieldParse@@I@Z,0x00850920,MultiIniFieldParse::add-shaped bounded pair-of-arrays appender; address-derived name
+?add@WindowManager@@QAEXPAXPBDH0HHHH@Z,0x00015235,AptPalantir OnInitialized action sink
 ?add@WindowManager@@QAEXPAXPBDH1HHHH@Z,0x00015235,CallChild action-sink used by applyStagingRoomRefresh join-button Enable/Disable
 ?addAckBothCommand@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0003DDA7,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addAckCommand@NetPacket@@IAE_NPAVNetCommandRef@@GE@Z,0x0067DEC0,decode_calls: shared third-call target of addAckBothCommand/addAckStage1Command/addAckStage2Command (0x680290/0x6802D0/0x680310); chased through thunk 0x004060BE
@@ -11923,6 +11925,7 @@ name,address,notes
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
 ?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
+?aptPalantirOnButtonAlert@@YAXPAD@Z,0x000127BA,AptPalantir OnBttnAlert callback ILT registered by name
 ?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
 ?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
 ?aptPalantirOnButtonOptions@@YAXXZ,0x00048C07,AptPalantir::OnBttnOptions callback ILT registered by name
@@ -11930,6 +11933,7 @@ name,address,notes
 ?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
 ?aptPalantirOnButtonSpellStore@@YAXXZ,0x00041597,AptPalantir::OnBttnSpellStore callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
+?aptPalantirOnInitialized@@YAXXZ,0x0001F62C,AptPalantir OnInitialized callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirOnRollOverButtonCommand@@YAXXZ,0x00020428,AptPalantir::OnRollOverBttnCommand callback ILT registered by name
 ?aptPalantirOnSpellBookUIShown@@YAXXZ,0x0002F01D,AptPalantir::OnSpellBookUIShown callback ILT registered by name
@@ -71941,6 +71945,7 @@ name,address,notes
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
 ?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z,0x009CC020,pin
+?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0000C586,Open-BFME5 ILT to 0x0032C090 body for bfmeAreaGate at 0x0032C400
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
@@ -75491,6 +75496,7 @@ name,address,notes
 ?disconnectLocalPlayer@ConnectionManager@@QAEXXZ,0x006665E0,ZH twin exact: disconnectPlayer(i) (ILT 0x00028D5D -> 0x00666300) for every i != m_localSlot(+0x12028); sole caller Network::update 0x00682CA1 when Network+0xC==2 just before MSG_CLEAR_GAME_DATA 0x1D is appended; ILT 0x00029744
 ?disconnectPlayer@ConnectionManager@@QAE?AW4PlayerLeaveCode@@H@Z,0x00028D5D,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x000201F3,DisconnectManager status update player removal through ILT to the existing 0x0066C040 body
+?dismissAlert@AptPalantir@@QAEXXZ,0x0003C902,AptPalantir alert dismissal thunk
 ?dispatch@BfmeRvaBA00View@@QAEXPAVBfmeRvaBA00Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BA00
 ?dispatch@BfmeRvaBB60View@@QAEXPAVBfmeRvaBB60Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BB60
 ?dispatch@Rva005121A0Service@@QAEXPAX0_NH@Z,0x000267F1,address-scoped four-argument service dispatch ILT observed in retail 0x0056FD30
@@ -75562,6 +75568,7 @@ name,address,notes
 ?dx8_vertices@Debug_Statistics@@3HA,0x01346DF0,Open-BFME5 retail DX8 vertex counter
 ?editPlayerName@@3PAVGameWindow@@A,0x012F3EC4,NetworkDirectConnect.wnd:TextEntryPlayerName; System back-button GadgetTextEntryGetText
 ?emit@LookAtTranslator@@QAEXPAULookAtEvent@@@Z,0x005A6470,LookAtTranslator event emit is ICF with Rva005A6470MouseEventQueue::emit
+?emptyParticleSystem@@YAPAVParticleSystem@@XZ,0x00001B18,tracked particle-system handle null object
 ?enableRadar@Player@@QAEXXZ,0x00043207
 ?enableRadar@PlayerEnableRadarShim@@QAEXXZ,0x000CC2C0,Player::enableRadar incremental-link thunk target through a TU-local forwarding shim
 ?enableWaterGrid@WaterRenderObjClass@@QAEX_N@Z,0x000366E7
@@ -76069,11 +76076,23 @@ name,address,notes
 ?g_Va01336E50@@3V?@D@@A,0x01336E50,AsciiString::TheEmptyString copied by 0x006AEE00
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_aptPalantirBrightJewel@@3PADA,0x00C80FC0,AptPalantir bright jewel value
+?g_aptPalantirHeroOne@@3PADA,0x00D09E68,AptPalantir Hero1 literal
+?g_aptPalantirHeroPrefix@@3PADA,0x00D096F4,AptPalantir Hero prefix literal
+?g_aptPalantirHideAlert@@3PADA,0x00D096FC,AptPalantir HideAlert action name
+?g_aptPalantirInitialized@@3EA,0x00EB7D84,AptPalantir OnInitialized state byte
+?g_aptPalantirJewelBrightened@@3EA,0x00EF4AFD,AptPalantir jewel-brightened state byte
+?g_aptPalantirJewelName@@3PADA,0x00D09BC4,AptPalantir jewel property name
+?g_aptPalantirNormalJewel@@3PADA,0x00C81238,AptPalantir normal jewel value
+?g_aptPalantirNumberFormat@@3PADA,0x00C7C7B4,AptPalantir integer format literal
+?g_aptPalantirOne@@3PADA,0x00D09E6C,AptPalantir one literal
 ?g_aptPalantirRadarBottom@@3HA,0x00EF4AF8,bottom edge of the AptPalantir radar clip rectangle
 ?g_aptPalantirRadarLeft@@3HA,0x00EF4AEC,left edge of the AptPalantir radar clip rectangle
 ?g_aptPalantirRadarRight@@3HA,0x00EF4AF4,right edge of the AptPalantir radar clip rectangle
 ?g_aptPalantirRadarTop@@3HA,0x00EF4AF0,top edge of the AptPalantir radar clip rectangle
 ?g_aptPalantirSpellPrefix@@3PADA,0x00D096E0,validated five-character prefix accepted by AptPalantir::OnBttnSpell
+?g_aptPalantirUIState@@3PAVPalantirUIState@@A,0x00EF7048,AptPalantir UI interaction state
+?g_aptPalantirWindow@@3HA,0x00EB7D80,AptPalantir window index passed to WindowManager add
 ?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
 ?g_bfme1017G@@3DA,0x00F3781C,pin
 ?g_bfme1017H@@3HA,0x00F37800,pin
@@ -77795,6 +77814,7 @@ name,address,notes
 ?getShroudedStatus@PartitionData@@QAE?AW4ObjectShroudStatus@@H@Z,0x008F8110,Open-BFME5 tail-jmp callee of ?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z at 0x001C7B30; body range-checks the player index against 16 and indexes a per-player array at this+0x24
 ?getSideIconImage@PlayerTemplate@@QBEPBVImage@@XZ,0x0003FFEE,ILT of the real SideIconImage getter at 0x000E0B80
 ?getSkillPointsNeeded@RankInfo@@QBEHABVAsciiString@@@Z,0x000066A4,Open-BFME5 ILT thunk to body 0x003A0860; resetRank passes Player::m_side and consumes the returned next-rank threshold; BFME RankInfo has five side override fields at 0x14..0x24
+?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ,0x00029208,tracked slave particle-system accessor
 ?getSlot@BfmeDisconnectVoteMsg@@QAEEXZ,0x000058B7,alias of the NetCommandMsg spelling pinned at the same ILT; DisconnectManager.cpp reaches it through a view class
 ?getSlot@BfmeGameInfo@@QAEPAVBfmeGameSlot@@H@Z,0x0001EC18,LANAPI::sendMessage direct-connect slot lookup ILT through TU-local BFME layout shim
 ?getSlot@GameSpyStagingRoom@@QAEPAVGameSlot@@H@Z,0x000061D6,same ICF body as 0x0001EC18; CustomMatch applyLocalSlot 0x005392B0 encodes this ILT
@@ -79884,7 +79904,6 @@ name,address,notes
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
 ?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
-?releaseBuffer@UnicodeString@@IAEXXZ,0x0000D828,site-decoded x9 (thunk)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,retail body called by the GS message-box UnicodeString temporaries
 ?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
 ?releaseCell@Pathfinder@@QAEXPAVPathfindCell@@H@Z,0x003F8820,BFME refresh-list cell invalidation helper; address-derived ABI spelling
@@ -80204,6 +80223,7 @@ name,address,notes
 ?secondaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x0003E1A3,retail jump thunk to the byte-verified secondary state lookup at 0x00369120
 ?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
+?selectHero@AptPalantir@@QAEXH@Z,0x00002383,AptPalantir hero selector thunk
 ?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
 ?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
 ?selectSpell@AptPalantir@@QAEXH@Z,0x0001EDDA,AptPalantir OnBttnSpell dispatches the parsed one-based spell index
@@ -80284,6 +80304,7 @@ name,address,notes
 ?set@UnicodeString@@QAEXABV1@@Z,0x00887C90,additive; per-TU copy (static 0x01336E2C)
 ?setActionType@ScriptAction@@QAEXW4ScriptActionType@1@@Z,0x00038A46,ILT for ScriptAction::setActionType called by the type-taking constructor
 ?setAnimData@BFMEAnimateWindowLayout@@QAEXUICoord2D@@000UBFMECoord2D@@II@Z,0x003D5B9,BFME Coord2D ABI layout call to AnimateWindow::setAnimData
+?setAptPalantirAlertVisible@@YAXH_N@Z,0x0001136A,AptPalantir alert visibility action thunk
 ?setAsciiString@Dict@@QAEPAVAsciiString@@V2@@Z,0x00009304,Dict setAsciiString used by MapObject::setWaypointName
 ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z,0x00040D95,ILT to matched body 0x00150FE0; callee of updateTeamSetAttitude 0x002F29E0
 ?setAttitude@AIUpdateInterface@@QAEXW4AttitudeType@@@Z,0x00030553,Open-BFME5 ILT thunk to body 0x0027DEF0 in the AIUpdate range; ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z at 0x00150FE0 calls it on each member AI read from Object+0x204
