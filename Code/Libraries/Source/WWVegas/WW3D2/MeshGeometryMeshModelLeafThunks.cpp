@@ -17,9 +17,6 @@ struct MeshGeomInner
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass
 {
-protected:
-	void Generate_Culling_Tree();
-
 public:
 	const char *Get_User_Text();
 
@@ -47,28 +44,6 @@ const char *MeshGeometryClass::Get_User_Text()
 	if (data)
 		return data->text;
 	return 0;
-}
-
-// ?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ
-// ICF-alias of Get_User_Text retail body.
-__declspec(naked) void MeshGeometryClass::Generate_Culling_Tree()
-{
-	__asm {
-		_emit 08Bh
-		_emit 041h
-		_emit 010h
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 004h
-		_emit 08Bh
-		_emit 040h
-		_emit 00Ch
-		_emit 0C3h
-		_emit 033h
-		_emit 0C0h
-		_emit 0C3h
-	}
 }
 
 // ?Replace_Texture@MeshModelClass@@QAEXPAVTextureClass@@0@Z
