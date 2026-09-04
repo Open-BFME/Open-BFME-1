@@ -2581,7 +2581,6 @@ name,address,notes
 ??0HeightDieUpdateModuleData@@QAE@XZ,0x0002C9D0,module-glue cascade callee (from retail call site)
 ??0HeightMapRenderObjClass@@QAE@H@Z,0x00045304,BFME adjustTerrainLOD ILT; body 0x006D1C80 reads Bool argument and returns 4
 ??0HeroDieBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HeroDie ctor base
-??0HeroModeSpecialAbilityUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 HeroModeSpecialAbilityUpdate base pin
 ??0HighlanderBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001BE3C,link thunk to the HighlanderBody constructor; named from the ModuleFactory registration that pairs "HighlanderBody" with factory 0x0011F4B0
 ??0HijackerUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003A382,module ctor (friend_newModuleInstance retail call target)
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
@@ -4529,7 +4528,6 @@ name,address,notes
 ??1Gen_dtor_0025e850@@UAE@XZ,0x00048C11,gen-dtor class destructor
 ??1Gen_dtor_0025eb10@@UAE@XZ,0x0002CF75,gen-dtor class destructor
 ??1Gen_dtor_0025f290@@UAE@XZ,0x00033C12,gen-dtor class destructor
-??1Gen_dtor_0025f9e0@@UAE@XZ,0x0002A9CD,gen-dtor class destructor
 ??1Gen_dtor_0025fb50@@UAE@XZ,0x00023948,gen-dtor class destructor
 ??1Gen_dtor_0025fe70@@UAE@XZ,0x000450AC,gen-dtor class destructor
 ??1Gen_dtor_0025ffc0@@UAE@XZ,0x00034090,gen-dtor class destructor
@@ -31973,11 +31971,9 @@ name,address,notes
 ?b_0025f6c0@@YAXXZ,0x0025F6C0,gen-thunk body
 ?b_0025f8a0@@YAXXZ,0x0025F8A0,gen-thunk body
 ?b_0025f8f0@@YAXXZ,0x0025F8F0,gen-thunk body
-?b_0025f900@@YAXXZ,0x0025F900,gen-thunk body
 ?b_0025f930@@YAXXZ,0x0025F930,gen-thunk body
 ?b_0025f940@@YAXXZ,0x0025F940,gen-thunk body
 ?b_0025f9d0@@YAXXZ,0x0025F9D0,gen-thunk body
-?b_0025f9e0@@YAXXZ,0x0025F9E0,gen-thunk body
 ?b_0025fa10@@YAXXZ,0x0025FA10,gen-thunk body
 ?b_0025fa60@@YAXXZ,0x0025FA60,gen-thunk body
 ?b_0025fa80@@YAXXZ,0x0025FA80,gen-thunk body
@@ -82725,3 +82721,5 @@ g_bfmeMaterialXP,0x0134B210,Open-BFME5 the default VertexMaterialClass the initi
 g_bfmeSourceXP,0x012D6E40,Open-BFME5 the word the initialiser at 0x009569A0 copies from
 g_bfmeTargetXP,0x012D7300,Open-BFME5 the word the initialiser at 0x009569A0 copies into
 g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0 raises
+??1HeroModeSpecialAbilityUpdate@@MAE@XZ,0x0002A9CD,destructor ILT to 0x0025F900
+??_GHeroModeSpecialAbilityUpdate@@MAEPAXI@Z,0x000499EF,primary class vtable slot zero ILT to 0x0025F9E0

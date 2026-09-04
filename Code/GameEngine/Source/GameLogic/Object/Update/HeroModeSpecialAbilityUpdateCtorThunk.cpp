@@ -38,23 +38,31 @@ public:
 	virtual void moduleInterfaceAnchor();
 };
 
-class HeroModeSpecialAbilityUpdateBase : public BehaviorModule,
+class SpecialAbilityUpdate : public BehaviorModule,
 	public SpecialPowerModuleInterface,
 	public SpecialPowerModuleExtra,
 	public ModuleInterface
 {
 public:
-	HeroModeSpecialAbilityUpdateBase( Thing *thing, const ModuleData *moduleData );
+	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+	virtual ~SpecialAbilityUpdate();
 };
 
-class HeroModeSpecialAbilityUpdate : public HeroModeSpecialAbilityUpdateBase
+class HeroModeSpecialAbilityUpdate : public SpecialAbilityUpdate
 {
 public:
 	HeroModeSpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~HeroModeSpecialAbilityUpdate();
 };
 
 // ??0HeroModeSpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 HeroModeSpecialAbilityUpdate::HeroModeSpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData )
-	: HeroModeSpecialAbilityUpdateBase( thing, moduleData )
+	: SpecialAbilityUpdate( thing, moduleData )
+{
+}
+
+HeroModeSpecialAbilityUpdate::~HeroModeSpecialAbilityUpdate()
 {
 }
