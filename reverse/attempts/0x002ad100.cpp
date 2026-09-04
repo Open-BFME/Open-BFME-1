@@ -22,6 +22,10 @@ class RvaC4390Second
 {
 public:
 	RvaC4390First *resolve( int allowLookup );
+	Coord3D *getPosition()
+	{
+		return reinterpret_cast<Coord3D *>(reinterpret_cast<unsigned char *>( this ) + 0x38);
+	}
 
 	unsigned char m_pad[ 0x38 ];
 	Coord3D m_pos;
@@ -44,8 +48,11 @@ private:
 void Rva002AD100::apply()
 {
 	RvaC4390First *resolved = m_object->resolve( 0 );
-	if( !resolved )
-		sibling( &m_object->m_pos, &m_object->m_pos );
-	else
+	if( resolved )
+	{
 		sibling( &m_object->m_pos, &resolved->m_pos );
+		return;
+	}
+	RvaC4390First *view = reinterpret_cast<RvaC4390First *>( m_object );
+	sibling( &m_object->m_pos, &view->m_pos );
 }

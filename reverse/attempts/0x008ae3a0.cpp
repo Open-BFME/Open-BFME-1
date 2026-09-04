@@ -53,27 +53,27 @@ extern BfmeEntry008AE3A0 **g_bfmeArr1233;
 extern int g_bfmeCount1233;
 extern int g_bfmeFallbackDB;
 
-int bfmeVisit008AE3A0(register BfmeEntry008AE3A0 *entry, volatile int count)
+int bfmeVisit008AE3A0(BfmeEntry008AE3A0 *entry, volatile int count)
 {
 	if (count < 1)
 		return g_bfmeFallbackDB;
 
 	BfmeEntry008AE3A0 *last = g_bfmeArr1233[g_bfmeCount1233 - 1];
-	unsigned flags = ((BfmeEntry008AE3A0 *)entry)->m_kind;
+	BfmeEntry008AE3A0 *current = entry;
+	unsigned flags = current->m_kind;
 	unsigned kind = flags & 0x3F;
 	if (kind == 0x13 && ((unsigned char)~(flags >> 15) & 1) == 0)
 		return g_bfmeFallbackDB;
 
-	unsigned lastKind = last->m_kind & 0x3F;
 	int value;
-	if (lastKind == 1 || lastKind == 0x2A)
+	if ((last->m_kind & 0x3F) == 1 || (last->m_kind & 0x3F) == 0x2A)
 	{
 		if (((unsigned char)~(last->m_kind >> 15) & 1) == 0)
 		{
 			BfmeEntry008AE3A0 *lookupArg = last;
-			if (lastKind != 1)
+			if ((last->m_kind & 0x3F) != 1)
 				lookupArg = (BfmeEntry008AE3A0 *)last->m_value20;
-			value = entry->m_owner->m_lookup->m_value.bfmeGo1034F(
+			value = current->m_owner->m_lookup->m_value.bfmeGo1034F(
 				(int)((char *)lookupArg + 8)) + 1;
 		}
 		else
@@ -84,8 +84,8 @@ int bfmeVisit008AE3A0(register BfmeEntry008AE3A0 *entry, volatile int count)
 
 	if (--value < 0)
 		return g_bfmeFallbackDB;
-	((BfmeThingCBC *)entry)->bfmeStepCBC(value);
-	entry->m_owner->m_flag = count != 0;
+	((BfmeThingCBC *)current)->bfmeStepCBC(value);
+	current->m_owner->m_flag = count != 0;
 
 	return g_bfmeFallbackDB;
 }

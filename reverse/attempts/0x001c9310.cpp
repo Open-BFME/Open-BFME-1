@@ -42,13 +42,14 @@ private:
 
 int Rva001C9310::value()
 {
+	int v;
 	Rva001C9310Thing *thing = m_template;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
-	int v = thing->m_value_448;
+	v = thing->m_value_448;
 
 	thing = m_template;
 	if ( thing )

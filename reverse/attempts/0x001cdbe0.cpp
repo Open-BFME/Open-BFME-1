@@ -34,15 +34,15 @@ private:
 
 Bool Object::rva001CDBE0() const
 {
-	Object *self;
-	GameLogic *gameLogic;
-	self = (Object *)this;
+	Object *self = (Object *)this;
+	const GameLogic *gameLogic;
 	gameLogic = TheGameLogic;
 	if (gameLogic == 0)
 		return false;
 	if (self->testStatus(OBJECT_STATUS_BIT_25))
 		return false;
+	Bool result = true;
 	if (gameLogic->m_frame < self->m_safeOcclusionFrame)
-		return false;
-	return true;
+		result = false;
+	return result;
 }

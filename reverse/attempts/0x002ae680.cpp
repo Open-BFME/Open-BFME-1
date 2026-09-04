@@ -10,7 +10,7 @@ typedef float Real;
 class GeometryInfo
 {
 public:
-	Real getMaxHeightAbovePosition() const;
+	Real getMaxHeightAbovePosition() volatile const;
 };
 
 class StructureCollapseTemplate
@@ -29,6 +29,12 @@ class StructureCollapseObject
 public:
 	void *m_vtable;
 	StructureCollapseTemplate *m_template;
+	StructureCollapseTemplate *getTemplate()
+	{
+		char *slot = reinterpret_cast<char *>( this );
+		slot += 4;
+		return *reinterpret_cast<StructureCollapseTemplate *volatile *>( slot );
+	}
 };
 
 static __forceinline StructureCollapseTemplate *getStructureCollapseTemplate(
@@ -82,13 +88,11 @@ Real StructureCollapseRetailLayout::getCollapseHeight()
 	if( height < md->m_minCollapseHeight )
 		return m_moduleData->m_minCollapseHeight;
 
-	StructureCollapseTemplate *t2 = getStructureCollapseTemplate( m_object );
-	if( structureCollapseTemplateExists( t2 ) )
-	{
-		StructureCollapseTemplate *o2 = t2->m_nextOverride;
-		if( o2 )
-			t2 = o2->friend_getFinalOverride();
+	StructureCollapseTemplate *t2 = m_object->getTemplate();
+	if( !structureCollapseTemplateExists( t2 ) )
 		return t2->m_geometry.getMaxHeightAbovePosition();
-	}
+	StructureCollapseTemplate *o2 = t2->m_nextOverride;
+	if( o2 )
+		t2 = o2->friend_getFinalOverride();
 	return t2->m_geometry.getMaxHeightAbovePosition();
 }

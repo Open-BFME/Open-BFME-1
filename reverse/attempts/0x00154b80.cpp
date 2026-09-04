@@ -47,13 +47,13 @@ private:
 	unsigned int m_kindof[3];
 };
 
+void __cdecl operator delete(void *);
+
 class Path
 {
 public:
 	~Path();
 };
-
-void __cdecl operator delete(void *);
 
 class BodyModuleInterface
 {

@@ -68,8 +68,8 @@ private:
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
 void SpecialAbilityUpdate::apply()
 {
-	int id = m_targetID;
 	const SpecialAbilityUpdateModuleData *md = m_moduleData;
+	int id = m_targetID;
 	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
 	Object *target = TheGameLogic->findObjectByID( id );
 
@@ -82,11 +82,24 @@ void SpecialAbilityUpdate::apply()
 	}
 
 	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
-		m_fieldA8 = md->m_field210;
-	else if( !target )
-		m_fieldA8 = 0;
-	else if( target->isKindOf( KINDOF_6 ) || target->isKindOf( KINDOF_62 ) )
-		m_fieldA8 = md->m_field210;
-	else
-		m_fieldA8 = 0;
+	{
+		const UnsignedInt *fieldValue = &md->m_field210;
+		m_fieldA8 = *fieldValue;
+		return;
+	}
+	if( !target )
+		goto store_zero;
+	if( target->isKindOf( KINDOF_6 ) )
+		goto store_field;
+	if( target->isKindOf( KINDOF_62 ) )
+		goto store_field;
+	goto store_zero;
+
+	store_field:
+	const UnsignedInt *specialFieldValue = &md->m_field210;
+	m_fieldA8 = *specialFieldValue;
+	return;
+
+store_zero:
+	m_fieldA8 = 0;
 }

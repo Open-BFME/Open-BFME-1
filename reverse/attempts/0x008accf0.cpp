@@ -59,8 +59,8 @@ struct BfmeLookupObject008ACCF0
 int bfmeLookup008ACCF0(BfmeLookupObject008ACCF0 *object,
 	BfmeLookupString008ACCF0 *key, unsigned char include)
 {
+	BfmeLookupString008ACCF0 *needle = key;
 	register unsigned char useSecond = include;
-	register BfmeLookupString008ACCF0 *needle = key;
 	for (;;)
 	{
 		BfmeLookupTable008ACCF0 *table = object->m_owner->m_holder->m_table;

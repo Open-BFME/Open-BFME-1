@@ -24,8 +24,75 @@ class Rva006AEE00Tree
 public:
 	void *find(void *key);
 
+	struct InsertResult
+	{
+		void *iterator;
+		bool inserted;
+	};
+
+	void insert_unique(InsertResult *result, const StringBase<char> &key);
+	void erase(void *root);
+
 	void *header;
 	int count;
+};
+
+class Rva006AEE00Info
+{
+public:
+	virtual void vfn00();
+	virtual const StringBase<char> *getName();
+
+	char m_pad38[0x38 - 4];
+	unsigned int m_flags;
+	char m_pad84[0x84 - 0x3c];
+	unsigned int m_lowPassCutoff;
+};
+
+class Rva006AEE00Hashtable
+{
+public:
+	struct Value
+	{
+		StringBase<char> first;
+		Rva006AEE00Info *second;
+	};
+
+	struct Node
+	{
+		Node *next;
+		Value value;
+	};
+
+	struct Iterator
+	{
+		Node *current;
+		Rva006AEE00Hashtable *table;
+	};
+
+	void begin(Iterator *result);
+	unsigned int bucketCount() const
+	{
+		return (unsigned int)(m_finish - m_start);
+	}
+
+	unsigned int bucketNumber(const StringBase<char> &key, unsigned int count) const;
+
+	Node *skipToNext(Node *current)
+	{
+		unsigned int bucket = bucketNumber(current->value.first, bucketCount());
+		unsigned int count = bucketCount();
+		Node *next = 0;
+		while (next == 0 && ++bucket < count)
+			next = reinterpret_cast<Node *>(m_start[bucket]);
+		return next;
+	}
+
+	char m_pad00[4];
+	void **m_start;
+	void **m_finish;
+	void **m_end;
+	unsigned int m_count;
 };
 
 class Rva006AEE00
@@ -72,4 +139,46 @@ StringBase<char> Rva006AEE00::getPrev(void *key)
 		it = header;
 	it = rbDecrement(it);
 	return *reinterpret_cast<StringBase<char> *>((char *)it + 0x10);
+}
+
+class Rva006AEE00TreeHeader
+{
+public:
+	int color;
+	void *parent;
+	void *left;
+	void *right;
+};
+
+void Rva006AEE00::init()
+{
+	register Rva006AEE00Tree *tree = &m_tree;
+	if (tree->count)
+	{
+		Rva006AEE00TreeHeader *header =
+			reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
+		tree->erase(header->parent);
+		header = reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
+		header->left = header;
+		header->parent = 0;
+		header->right = header;
+		tree->count = 0;
+	}
+
+	Rva006AEE00Hashtable *table =
+		reinterpret_cast<Rva006AEE00Hashtable *>(reinterpret_cast<char *>(this) + 0x70);
+	Rva006AEE00Hashtable::Iterator it;
+	table->begin(&it);
+	Rva006AEE00Hashtable::Node *current = it.current;
+	Rva006AEE00Hashtable *owner = it.table;
+	while (current)
+	{
+		Rva006AEE00Info *info = current->value.second;
+		if (info->m_lowPassCutoff == 0 && !(info->m_flags & 0x600))
+			tree->insert_unique(reinterpret_cast<Rva006AEE00Tree::InsertResult *>(&it),
+				*info->getName());
+		Rva006AEE00Hashtable::Node *next = current->next;
+		current = next != 0 ? next : owner->skipToNext(current);
+	}
+	m_ready = 1;
 }

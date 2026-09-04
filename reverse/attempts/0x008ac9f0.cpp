@@ -3,7 +3,7 @@
 // Open-BFME5 conversion.
 // cl: /I Code/Libraries/Source/WWVegas/WWLib /I Code/Libraries/Source/WWVegas/WWMath
 
-#include "../../../Libraries/Source/WWVegas/WWMath/wwmath.h"
+#include "../../Code/Libraries/Source/WWVegas/WWMath/wwmath.h"
 
 void d_008ac790(void);
 

@@ -174,7 +174,7 @@ extern Int buttonJoinID;
 WindowMsgHandledType NetworkDirectConnectSystem( GameWindow *window, UnsignedInt msg,
 	UnsignedInt mData1, UnsignedInt mData2 )
 {
-	UnicodeString txtInput;
+    UnicodeString txtInput;
 
 	switch( msg )
 	{
@@ -213,7 +213,7 @@ WindowMsgHandledType NetworkDirectConnectSystem( GameWindow *window, UnsignedInt
 					prefs["UserName"] = UnicodeStringToQuotedPrintable(name);
 					prefs.write();
 
-					while (name.getLength() > 12)
+            while (name.getLength() > 12)
 						name.removeLastChar();
 					TheLAN->RequestSetName(name);
 

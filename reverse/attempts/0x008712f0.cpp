@@ -556,7 +556,7 @@ void ciCleanupCallbacks(CHAT chat)
 	}
 }
 
-static void ciCallCallback(CHAT chat, ciCallbackData *data)
+extern "C" static void ciCallCallback(CHAT chat, ciCallbackData *data)
 {
 	void *param;
 

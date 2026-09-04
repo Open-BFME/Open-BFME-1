@@ -1398,16 +1398,9 @@ Real Object::getLargestWeaponRange() const
 }
 
 //=============================================================================
-// ?setFiringConditionForCurrentWeapon@Object@@QBEXXZ present-unmatched
-void Object::setFiringConditionForCurrentWeapon() const
-{
-	if (m_drawable)
-	{
-		WeaponSlotType wslot = m_weaponSet.getCurWeaponSlot();
-		ModelConditionFlags c = m_weaponSet.getModelConditionForWeaponSlot(wslot, WSF_FIRING);
-		m_drawable->clearAndSetModelConditionFlags(s_allWeaponFireFlags[wslot], c);
-	}
-}
+// ?setFiringConditionForCurrentWeapon@Object@@QBEXXZ is defined in
+// Object_setFiringConditionForCurrentWeapon.cpp so the BFME 320-bit
+// ModelConditionFlags ABI is kept separate from this ZH-layout TU.
 
 //=============================================================================
 // ?setModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z present-unmatched

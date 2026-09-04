@@ -33,16 +33,28 @@ public:
 	int m_5c;
 };
 
-class BFMEFrameState
+class BFMEFrameBase
 {
 public:
+	int getFrame(void) const
+	{
+		return m_frame;
+	}
+
 	unsigned char m_unmodelled_00[0x0c];
 	int m_frame;
+};
+
+class BFMEFrameState : public BFMEFrameBase
+{
 };
 
 extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
 extern BFMEFrameState *g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
+extern "C" float g_bfmeK1121004;
+extern "C" float g_bfmeK075C6C;
+extern "C" float g_bfmeK07533C;
 
 class WWMath
 {
@@ -81,7 +93,10 @@ private:
 	int m_38;
 	char m_unmodelled_3c;
 	char m_flag3d;
-	unsigned char m_unmodelled_3e[0x4c - 0x3e];
+	unsigned char m_unmodelled_3e[0x44 - 0x3e];
+	char m_flag44;
+	unsigned char m_unmodelled_45[3];
+	int m_48;
 	int m_4c;
 	unsigned char m_unmodelled_50[0x54 - 0x50];
 	float m_54;
@@ -135,11 +150,44 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		int frame = g_bfmeGlo012F0FE0->m_frame;
-		if (frame == 2 && m_94 != 2)
+		if (g_bfmeGlo012F0FE0->getFrame() == 2)
 		{
-			m_94 = 2;
-			copyFromOverride();
+			if (m_94 != 2)
+			{
+				m_94 = 2;
+				copyFromOverride();
+			}
 		}
 	}
+}
+
+// ?extraTail@W3DSnowManager@@QAEXXZ
+void W3DSnowManager::extraTail(void)
+{
+	BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
+	float slot;
+	BFMEWeatherOverride *f;
+	if (d && d->m_nextOverride)
+		d = (BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+	if (d->m_flag40 == 0)
+		return;
+	if (m_flag44)
+	{
+		--m_48;
+		if (m_48 > 0)
+			return;
+		m_48 = 0;
+		m_flag44 = 0;
+		return;
+	}
+	slot = WWMath::Random_Float();
+	d = g_bfmeGlo012F15F8;
+	if (d && d->m_nextOverride)
+		d = (BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+	if (!(slot < d->m_54Override))
+		return;
+	m_flag44 = 1;
+	d = g_bfmeGlo012F15F8;
+	f = (BFMEWeatherOverride *)walkSnowOverride(d);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }

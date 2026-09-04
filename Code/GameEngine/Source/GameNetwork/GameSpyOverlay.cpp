@@ -183,9 +183,9 @@ void GSMessageBoxYesNo(UnicodeString title, UnicodeString message, GameWinMsgBox
 	if (cancelFunc)
 		cancelFunc = NULL;
 	MessageBoxYesNo(title, message, messageBoxOK, messageBoxCancel);
+	reOpenPlayerInfoFlag = TRUE;
 	okFunc = newYesFunc;
 	cancelFunc = newNoFunc;
-	reOpenPlayerInfoFlag = TRUE;
 }
 
 /**

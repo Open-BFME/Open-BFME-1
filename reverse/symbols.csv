@@ -8188,6 +8188,7 @@ name,address,notes
 ??1Rva0004B227TailBase@@UAE@XZ,0x0004B227,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0004B68CMultiBase@@UAE@XZ,0x0004B68C,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00078460Elem@@QAE@XZ,0x0001F951,Open-BFME5 ILT the 0x00078460 implicit dtor hands to ??_M as the element destructor
+??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
@@ -9551,6 +9552,7 @@ name,address,notes
 ?Make_Unique@VertexMaterialClass@@QAEXXZ,0x00920ED0,zh-sweep callee pin derived from retail REL32 displacement
 ?MatPassTaskPool@@3VMatPassTaskPoolClass@@A,0x0134B13C,Open-BFME5 retail material pass task pool
 ?MessageBoxOk@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ@Z,0x0004A340,ILT thunk used by call site
+?MessageBoxYesNo@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ1@Z,0x0003DF69,retail ILT thunk called by GSMessageBoxYesNo at 0x00627F19
 ?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
 ?MultiByteToWideCharSingleLine@@YA?AV?$basic_string@GU?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@PBD@Z,0x00028C7C,incremental-link thunk used by both Buddy message and request callbacks
 ?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,0x008D80C0,rel32 pin for exact-ambiguous landing
@@ -77167,6 +77169,7 @@ name,address,notes
 ?gen0025BE10@@YAXPAUElem8@@PBU1@@Z,0x0025BE10,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen00261140@@YAXPAX00HH@Z,0x00261140,address-derived callee of the 28-byte zero-tail forwarder family; target read from the REL32 at its call sites
 ?gen00261530@@YAXPAUElem16@@PBU1@@Z,0x00261530,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
+?gen002616d0@@YAXPAX00@Z,0x002616D0,address-derived sort-heap callee of the eight-byte partial-sort body at 0x00261920
 ?gen00261920@@YAXPAX00H0@Z,0x00261920,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
 ?gen00293640@@YAXPAUElem8@@PBU1@@Z,0x00293640,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen00299BB0@Gen002B2070_00299BB0@@QAEXXZ,0x00299BB0,address-derived callee of the 16-byte call-then-tail-call pair family; target read from the REL32 at its call sites
@@ -79864,6 +79867,7 @@ name,address,notes
 ?release@Gen0002857E@@QAEXXZ,0x000442B0,address-derived Release-style callee of Rva00691040Handle; ILT to 0x006BA220
 ?release@Mem00887940@@QAEXXZ,0x00887940,StringBase releaseBuffer body called from destructor BODIES at 0x003B8450 and 0x003B8710; same address as the destructor it folds with
 ?release@Rva0005C6B0Holder@@QAEXXZ,0x0005C6B0,out-of-line release of the small-buffer conversion holder; reached from 0x0005E1E0 via ILT 0x0002F0AE
+?release@Rva00199180Held@@QAEXXZ,0x000384E7,address-derived held release called by 0x00199180
 ?release@Rva0048C200String@@QAEXXZ,0x00887940,StringBase compatible release body
 ?release@Rva006ABFD0File@@QAEXXZ,0x000311BF,ILT thunk to 0x00691080 called from 0x006ABFD0
 ?release@Rva007D6AB0SubPtr@@QAEXXZ,0x009EB7A0,retail callee decoded from assigned filter destructor at 0x007D6AB0
@@ -79878,6 +79882,7 @@ name,address,notes
 ?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x0000D828,site-decoded x9 (thunk)
+?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,retail body called by the GS message-box UnicodeString temporaries
 ?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
 ?releaseCell@Pathfinder@@QAEXPAVPathfindCell@@H@Z,0x003F8820,BFME refresh-list cell invalidation helper; address-derived ABI spelling
 ?releaseD3DCursorTextures@W3DMouse@@AAE_NW4MouseCursor@Mouse@@@Z,0x000484C8,retail W3DMouse::setCursor DX8 release call; ILT targets body 0x00700530 whose loop releases the 21 surface/texture slots

@@ -26,28 +26,56 @@ struct StringHeader
 	char data[1];
 };
 
-class StringBase
+template <typename T> class StringBase
 {
 public:
-	void concat(const StringBase &other);
-	void concat(const char *text, Int length);
+	void concat(const StringBase<T> &other);
+	void concat(const T *text, Int length);
 
-	StringHeader *m_data;
+	struct Header
+	{
+		int refCount;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	friend class AsciiString;
+
+	private:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<T> &other);
+	~StringBase();
+
+	Header *m_data;
 };
 
-class AsciiString : public StringBase
+class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString() { m_data = 0; }
-	AsciiString(const AsciiString &other);
-	~AsciiString();
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+	StringBase<char>::Header *getData() const { return m_data; }
+
+	void concat(const AsciiString &other)
+	{
+		StringBase<char>::concat(*(const StringBase<char> *)&other);
+	}
+
+	void concat(const char *text, Int length)
+	{
+		StringBase<char>::concat(text, length);
+	}
 
 	void concatPeek(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->length : 0;
 		const char *text = other.m_data ? &other.m_data->data[0] : "";
-		concat(text, length);
+		StringBase<char>::concat(text, length);
 	}
+
+	private:
 };
 
 class AudioSettings
@@ -120,9 +148,9 @@ AsciiString AudioEventRTS::generateFilenamePrefix(AudioType audioTypeToPlay, boo
 	case AT_SoundEffectAlt:
 	{
 		const AsciiString &folder = TheAudio->getAudioSettings()->m_soundsFolder;
-		const Int length = folder.m_data ? folder.m_data->length : 0;
-		if (folder.m_data)
-			retStr.concat((const char *)folder.m_data + 8, length);
+		const Int length = folder.getData() ? folder.getData()->length : 0;
+		if (folder.getData())
+			retStr.concat((const char *)folder.getData() + 8, length);
 		else
 			retStr.concat("", length);
 		break;

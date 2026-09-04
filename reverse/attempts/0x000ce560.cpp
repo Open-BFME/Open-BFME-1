@@ -91,6 +91,8 @@ public:
 // ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z
 void Player::friend_applyDifficultyBonusesForObject(Object *obj, Bool apply)
 {
+	const Player *player = this;
+
 	if (!apply)
 		return;
 	if (!obj)
@@ -105,9 +107,9 @@ void Player::friend_applyDifficultyBonusesForObject(Object *obj, Bool apply)
 		return;
 
 	AsciiString name;
-	if (TheGameLogic->_bfme_isInMultiplayerOrSkirmishGame() && m_ai)
+	if (TheGameLogic->_bfme_isInMultiplayerOrSkirmishGame() && player->m_ai)
 	{
-		switch (m_ai->getAIDifficulty())
+		switch (player->m_ai->getAIDifficulty())
 		{
 		case DIFFICULTY_EASY:
 			name.set("Upgrade_EasyAIMultiPlayer");
