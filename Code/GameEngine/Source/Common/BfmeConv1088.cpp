@@ -4,24 +4,64 @@
 // readable body of ?evaluateUpgradeFromUnitComplete@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // Open-BFME5 conversions.
 
-struct BfmeE1088
+typedef int Int;
+typedef bool Bool;
+typedef unsigned short PlayerMaskType;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameType.h
+enum ObjectID
 {
-	char m_bfmePad[0x74];
-	int m_bfme74;
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString
+{
+	char *m_text;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
+class Parameter
+{
+public:
+	const AsciiString &getString(void) const { return m_string; }
+
+private:
+	unsigned char m_beforeString[0x10];
+	AsciiString m_string;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object
+{
+public:
+	ObjectID getID(void) const { return m_id; }
+
+private:
+	unsigned char m_beforeID[0x74];
+	ObjectID m_id;
+};
+
+// Player (upstream Player.h m_playerIndex; retail reads it at +0x24, see
+// RTS/Player.cpp:638). The invented name stays because bfmeLook1088's
+// symbols.csv pin mangles it.
 struct BfmeR1088
 {
 	char m_bfmePad[0x24];
-	int m_bfme24;
+	Int m_playerIndex;
 };
 
+// PlayerList (ThePlayerList shares g_bfmeD1088's address); bfmeLook1088 is the
+// getEachPlayerFromMask ILT thunk, pinned under this name.
 class BfmeD1088
 {
 public:
 	BfmeR1088 *bfmeLook1088(short *h);
 };
 
+// ScriptEngine (TheScriptEngine shares g_bfmeP1088's address). bfmeNext1088 is
+// the pinned name of the resolver that turns a player Parameter into a mask.
 class BfmeP1088
 {
 public:
@@ -51,7 +91,7 @@ public:
 	virtual void bfmeSlot1088P_23(void);
 	virtual void bfmeSlot1088P_24(void);
 	virtual void bfmeSlot1088P_25(void);
-	virtual BfmeE1088 *bfmeSlot1088P_26(int a);
+	virtual Object *getUnitNamed(const AsciiString &unitName);	// slot 26, vtable+0x68
 	virtual void bfmeSlot1088P_27(void);
 	virtual void bfmeSlot1088P_28(void);
 	virtual void bfmeSlot1088P_29(void);
@@ -70,10 +110,10 @@ public:
 	virtual void bfmeSlot1088P_42(void);
 	virtual void bfmeSlot1088P_43(void);
 	virtual void bfmeSlot1088P_44(void);
-	virtual char bfmeSlot1088P_45(int a, int b, int c, int d);
-	virtual char bfmeSlot1088P_46(int a, int b, int c, int d);
-	virtual char bfmeSlot1088P_47(int a, int b, int c, int d);
-	virtual char bfmeSlot1088P_48(int a, int b, int c, int d);
+	virtual Bool isSpecialPowerTriggered(Int playerIndex, const AsciiString &completedPower, Bool removeFromList, ObjectID sourceObj);
+	virtual Bool isSpecialPowerMidway(Int playerIndex, const AsciiString &completedPower, Bool removeFromList, ObjectID sourceObj);
+	virtual Bool isSpecialPowerComplete(Int playerIndex, const AsciiString &completedPower, Bool removeFromList, ObjectID sourceObj);
+	virtual Bool isUpgradeComplete(Int playerIndex, const AsciiString &upgrade, Bool removeFromList, ObjectID sourceObj);
 	virtual void bfmeSlot1088P_49(void);
 	int bfmeNext1088(int a);
 };
@@ -81,50 +121,45 @@ public:
 extern BfmeD1088 *g_bfmeD1088;
 extern BfmeP1088 *g_bfmeP1088;
 
-class Parameter;
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
 {
 protected:
-	bool evaluatePlayerSpecialPowerFromUnitTriggered(
-		Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm);
-	bool evaluatePlayerSpecialPowerFromUnitMidway(
-		Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm);
-	bool evaluatePlayerSpecialPowerFromUnitComplete(
-		Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm);
-	bool evaluateUpgradeFromUnitComplete(
-		Parameter *playerParm, Parameter *upgradeParm, Parameter *unitParm);
+	Bool evaluatePlayerSpecialPowerFromUnitTriggered(
+		Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm);
+	Bool evaluatePlayerSpecialPowerFromUnitMidway(
+		Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm);
+	Bool evaluatePlayerSpecialPowerFromUnitComplete(
+		Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm);
+	Bool evaluateUpgradeFromUnitComplete(
+		Parameter *pPlayerParm, Parameter *pUpgradeParm, Parameter *pUnitParm);
 };
 
+// BFME resolves the player Parameter to a PlayerMaskType and asks every player
+// in it, where Zero Hour's playerFromParam yielded one Player. Retail hands the
+// unit Parameter's own address to getUnitNamed as the AsciiString reference.
+
 // ?evaluatePlayerSpecialPowerFromUnitTriggered@ScriptConditions@@IAE_NPAVParameter@@00@Z
-bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
-	Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm)
+Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
+	Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm)
 {
-	int sourceID = 0;
+	ObjectID sourceID = INVALID_ID;
 
-	if (unitParm) {
-		BfmeE1088 *unit = g_bfmeP1088->bfmeSlot1088P_26(
-			reinterpret_cast<int>(unitParm));
+	if (pUnitParm) {
+		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
-		if (!unit)
+		if (!pUnit)
 			return false;
-		sourceID = unit->m_bfme74;
+		sourceID = pUnit->getID();
 	}
-	unitParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(playerParm)));
-	while ((short)reinterpret_cast<int>(unitParm)) {
-		BfmeR1088 *player = g_bfmeD1088->bfmeLook1088(
-			reinterpret_cast<short *>(&unitParm));
+	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	while (playerMask) {
+		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
-		if (player) {
-			int playerIndex = player->m_bfme24;
+		if (pPlayer) {
+			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->bfmeSlot1088P_45(
-					playerIndex,
-					reinterpret_cast<int>(specialPowerParm) + 0x10,
-					1,
-					sourceID))
+			if (g_bfmeP1088->isSpecialPowerTriggered(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -132,33 +167,26 @@ bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
 }
 
 // ?evaluatePlayerSpecialPowerFromUnitMidway@ScriptConditions@@IAE_NPAVParameter@@00@Z
-bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
-	Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm)
+Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
+	Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm)
 {
-	int sourceID = 0;
+	ObjectID sourceID = INVALID_ID;
 
-	if (unitParm) {
-		BfmeE1088 *unit = g_bfmeP1088->bfmeSlot1088P_26(
-			reinterpret_cast<int>(unitParm));
+	if (pUnitParm) {
+		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
-		if (!unit)
+		if (!pUnit)
 			return false;
-		sourceID = unit->m_bfme74;
+		sourceID = pUnit->getID();
 	}
-	unitParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(playerParm)));
-	while ((short)reinterpret_cast<int>(unitParm)) {
-		BfmeR1088 *player = g_bfmeD1088->bfmeLook1088(
-			reinterpret_cast<short *>(&unitParm));
+	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	while (playerMask) {
+		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
-		if (player) {
-			int playerIndex = player->m_bfme24;
+		if (pPlayer) {
+			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->bfmeSlot1088P_46(
-					playerIndex,
-					reinterpret_cast<int>(specialPowerParm) + 0x10,
-					1,
-					sourceID))
+			if (g_bfmeP1088->isSpecialPowerMidway(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -166,33 +194,26 @@ bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
 }
 
 // ?evaluatePlayerSpecialPowerFromUnitComplete@ScriptConditions@@IAE_NPAVParameter@@00@Z
-bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
-	Parameter *playerParm, Parameter *specialPowerParm, Parameter *unitParm)
+Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
+	Parameter *pPlayerParm, Parameter *pSpecialPowerParm, Parameter *pUnitParm)
 {
-	int sourceID = 0;
+	ObjectID sourceID = INVALID_ID;
 
-	if (unitParm) {
-		BfmeE1088 *unit = g_bfmeP1088->bfmeSlot1088P_26(
-			reinterpret_cast<int>(unitParm));
+	if (pUnitParm) {
+		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
-		if (!unit)
+		if (!pUnit)
 			return false;
-		sourceID = unit->m_bfme74;
+		sourceID = pUnit->getID();
 	}
-	unitParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(playerParm)));
-	while ((short)reinterpret_cast<int>(unitParm)) {
-		BfmeR1088 *player = g_bfmeD1088->bfmeLook1088(
-			reinterpret_cast<short *>(&unitParm));
+	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	while (playerMask) {
+		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
-		if (player) {
-			int playerIndex = player->m_bfme24;
+		if (pPlayer) {
+			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->bfmeSlot1088P_47(
-					playerIndex,
-					reinterpret_cast<int>(specialPowerParm) + 0x10,
-					1,
-					sourceID))
+			if (g_bfmeP1088->isSpecialPowerComplete(playerIndex, pSpecialPowerParm->getString(), true, sourceID))
 				return true;
 		}
 	}
@@ -200,33 +221,26 @@ bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
 }
 
 // ?evaluateUpgradeFromUnitComplete@ScriptConditions@@IAE_NPAVParameter@@00@Z
-bool ScriptConditions::evaluateUpgradeFromUnitComplete(
-	Parameter *playerParm, Parameter *upgradeParm, Parameter *unitParm)
+Bool ScriptConditions::evaluateUpgradeFromUnitComplete(
+	Parameter *pPlayerParm, Parameter *pUpgradeParm, Parameter *pUnitParm)
 {
-	int sourceID = 0;
+	ObjectID sourceID = INVALID_ID;
 
-	if (unitParm) {
-		BfmeE1088 *unit = g_bfmeP1088->bfmeSlot1088P_26(
-			reinterpret_cast<int>(unitParm));
+	if (pUnitParm) {
+		Object *pUnit = g_bfmeP1088->getUnitNamed(*reinterpret_cast<const AsciiString *>(pUnitParm));
 
-		if (!unit)
+		if (!pUnit)
 			return false;
-		sourceID = unit->m_bfme74;
+		sourceID = pUnit->getID();
 	}
-	unitParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(playerParm)));
-	while ((short)reinterpret_cast<int>(unitParm)) {
-		BfmeR1088 *player = g_bfmeD1088->bfmeLook1088(
-			reinterpret_cast<short *>(&unitParm));
+	PlayerMaskType playerMask = g_bfmeP1088->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	while (playerMask) {
+		BfmeR1088 *pPlayer = g_bfmeD1088->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
 
-		if (player) {
-			int playerIndex = player->m_bfme24;
+		if (pPlayer) {
+			Int playerIndex = pPlayer->m_playerIndex;
 
-			if (g_bfmeP1088->bfmeSlot1088P_48(
-					playerIndex,
-					reinterpret_cast<int>(upgradeParm) + 0x10,
-					1,
-					sourceID))
+			if (g_bfmeP1088->isUpgradeComplete(playerIndex, pUpgradeParm->getString(), true, sourceID))
 				return true;
 		}
 	}
