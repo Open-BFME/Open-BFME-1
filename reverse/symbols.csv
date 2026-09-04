@@ -677,10 +677,12 @@ name,address,notes
 ??$__copy@PAUElem003AF800@@PAU1@H@_STL@@YAPAUElem003AF800@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A10F,Open-BFME5 ILT range copy for vector erase 0x003AF800
 ??$__copy@PAUElem003AF860@@PAU1@H@_STL@@YAPAUElem003AF860@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00011B8F,Open-BFME5 ILT range copy for vector erase 0x003AF860
 ??$__copy@PAUElem003AF8C0@@PAU1@H@_STL@@YAPAUElem003AF8C0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001FBC2,Open-BFME5 ILT range copy for vector erase 0x003AF8C0
+??$__copy@PAUElem003AF920@@PAU1@H@_STL@@YAPAUElem003AF920@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00008DE1,Open-BFME5 ILT range copy for vector erase 0x003AF920
 ??$__copy@PAUElem003AF980@@PAU1@H@_STL@@YAPAUElem003AF980@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000489C8,Open-BFME5 ILT range copy for vector erase 0x003AF980
 ??$__copy@PAUElem003AF9E0@@PAU1@H@_STL@@YAPAUElem003AF9E0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002D006,Open-BFME5 ILT range copy for vector erase 0x003AF9E0
 ??$__copy@PAUElem003B2540@@PAU1@H@_STL@@YAPAUElem003B2540@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000830F,Open-BFME5 ILT range copy for vector erase 0x003B2540
 ??$__copy@PAUElem003B2830@@PAU1@H@_STL@@YAPAUElem003B2830@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DCBE,Open-BFME5 ILT range copy for vector erase 0x003B2830
+??$__copy@PAUElem003B6FD0@@PAU1@H@_STL@@YAPAUElem003B6FD0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002950A,Open-BFME5 ILT range copy for vector erase 0x003B6FD0
 ??$__copy@PAUFXBoneInfo@@PAU1@H@_STL@@YAPAUFXBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,resweep callee back-solved
 ??$__copy@PAUFactionVictoryParameters@@PAU1@H@_STL@@YAPAUFactionVictoryParameters@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x001DE760,STLport random-access __copy over the 0x18-byte FactionVictoryParameters (AsciiString::set + 5 dwords per element; n=(last-first)/0x18); callers vector::erase 0x001DFE7B and ??0VictorySystem 0x001E025F; the element type is the retail struct name from the assert string at 0x000C32CB (iniParseFactionVictoryDefinition) rather than a Gen_t_ tag, which the closure predicate counts as anonymous; the two gen-tgrid pins on this address are placeholders for the same body
 ??$__copy@PAUGen006EDEA0@@PAU1@H@_STL@@YAPAUGen006EDEA0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DC23,STLport range copy ILT called by the exact Gen006EDEA0 vector erase at 0x006F2A10
@@ -2856,6 +2858,7 @@ name,address,notes
 ??0Rva00572CA0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x00572CA0,address-derived per FunctorBindConstructors.cpp convention: news the 0x18-byte functor wrapper with vtable 0x0110A958 (slot 1 = ?invoke@Rva00571770FunctorInvoke: this=object+delta jmp code) fills object/code/delta from the 4 stack args refcount=1 and stores it through the ecx out-pointer; 7 callers in the ScoreScreen APT ctor 0x005782D6 0x00578332 0x0057838E 0x005783EA 0x00578446 0x005784A2 0x005784FE binding the fscommand handlers; ILT 0x0003E3C9
 ??0Rva0057D2D0Base@@QAE@ABV0@@Z,0x0001AA73,Open-BFME5 base copy constructor called by 0x0057ECF0
 ??0Rva005862C0Member@@QAE@ABV0@@Z,0x0003CA29,Open-BFME5 member copy constructor called by 0x00587050
+??0Rva00590010FourString@@QAE@ABVUnicodeString@@000@Z,0x0004B2B3,ILT for the four-UnicodeString ctor used by Rva005929E0::replace
 ??0Rva005E92E0@@QAE@ABV0@@Z,0x005E9310,copy constructor called by the 31-byte new-T(*this) clone at 0x005E92E0; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
 ??0Rva005E9750@@QAE@ABV0@@Z,0x005E9780,copy constructor called by the 31-byte new-T(*this) clone at 0x005E9750; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
 ??0Rva005E9970@@QAE@ABV0@@Z,0x005E99A0,copy constructor called by the 31-byte new-T(*this) clone at 0x005E9970; target read from that call site REL32 (body = clone + 0x30); address-derived name; identity not recovered
@@ -8213,6 +8216,7 @@ name,address,notes
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
+??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
 ??1Rva007A1230Cell@@QAE@XZ,0x00430652,address-derived four-byte cell destructor ILT used by both six-element arrays at 0x007A1230
@@ -82456,14 +82460,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0Rva00590010FourString@@QAE@ABVUnicodeString@@000@Z,0x0004B2B3,ILT for the four-UnicodeString ctor used by Rva005929E0::replace
-??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
-??$__copy@PAUElem003AF800@@PAU1@H@_STL@@YAPAUElem003AF800@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A10F,Open-BFME5 ILT range copy for vector erase 0x003AF800
-??$__copy@PAUElem003AF860@@PAU1@H@_STL@@YAPAUElem003AF860@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00011B8F,Open-BFME5 ILT range copy for vector erase 0x003AF860
-??$__copy@PAUElem003AF8C0@@PAU1@H@_STL@@YAPAUElem003AF8C0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001FBC2,Open-BFME5 ILT range copy for vector erase 0x003AF8C0
-??$__copy@PAUElem003AF980@@PAU1@H@_STL@@YAPAUElem003AF980@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000489C8,Open-BFME5 ILT range copy for vector erase 0x003AF980
-??$__copy@PAUElem003AF9E0@@PAU1@H@_STL@@YAPAUElem003AF9E0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002D006,Open-BFME5 ILT range copy for vector erase 0x003AF9E0
-??$__copy@PAUElem003B2540@@PAU1@H@_STL@@YAPAUElem003B2540@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000830F,Open-BFME5 ILT range copy for vector erase 0x003B2540
-??$__copy@PAUElem003B2830@@PAU1@H@_STL@@YAPAUElem003B2830@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DCBE,Open-BFME5 ILT range copy for vector erase 0x003B2830
-??$__copy@PAUElem003AF920@@PAU1@H@_STL@@YAPAUElem003AF920@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00008DE1,Open-BFME5 ILT range copy for vector erase 0x003AF920
-??$__copy@PAUElem003B6FD0@@PAU1@H@_STL@@YAPAUElem003B6FD0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002950A,Open-BFME5 ILT range copy for vector erase 0x003B6FD0
