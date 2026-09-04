@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-void __cdecl bfmeLockVJR();
+void __cdecl W3DRadarResetLock();
 char __cdecl bfmeUnlockVJR();
 
 class BfmeThingVJR
@@ -106,7 +106,7 @@ int BfmeThingVJR::bfmeGoVJR(int force)
 {
 	if (force || (m_bfme3c == 0 && m_bfme40 == 0))
 	{
-		bfmeLockVJR();
+		W3DRadarResetLock();
 		bfmeV164VJR(3);
 		bfmeUnlockVJR();
 	}

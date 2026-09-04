@@ -73515,7 +73515,6 @@ name,address,notes
 ?bfmeGetFormationRefreshValue@BfmeHordeOwner@@QAEIXZ,0x00023727,Open-BFME5 retail ILT called by HordeContain refresh threshold check
 ?bfmeGetHordeMemberCount@Object@@QBEHXZ,0x00030715,Open-BFME5 ILT thunk to body 0x001BFDF0; Object m_contain at +0x1FC asks virtual slot +0x68 for a horde interface then calls its count slot +0x150 with false; bfme prefix records unrecovered retail spelling
 ?bfmeGetID@BfmeDrawableWithID@@QAEIXZ,0x00009B01,Open-BFME5 ILT both drawable lookup-table wrappers at 0x00431C20 and 0x00430B50 read the id through
-?bfmeGetIdVHM@@YAHXZ,0x009DB580,pin
 ?bfmeGetInterface@Object@@QAEPAVBfmeRelationInterface@@XZ,0x0000B3E3,Open-BFME5 relation interface lookup called by 0x002875C0
 ?bfmeGetLOSVictimPos@Weapon@@QBE?AUCoord3D@@PBVObject@@0H@Z,0x0003ABE3,Open-BFME5 ILT thunk to 0x001E7480; Weapon LOS victim-aim helper called from Object-victim isClearFiringLineOfSightTerrain
 ?bfmeGetLastDamagePlayerIndex@Object@@QBEHXZ,0x0000515A,Open-BFME5 ILT thunk to body 0x001BF060; BodyModuleInterface last-damage slot 15 supplies sourcePlayerMask resolved through PlayerList and returned as Player index; bfme prefix records unrecovered retail spelling
@@ -73845,7 +73844,6 @@ name,address,notes
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
-?bfmeLockVJR@@YAXXZ,0x00903090,pin
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1051@BfmeLog1051@@QAEXHPADH0HHHH@Z,0x00015235,pin
@@ -81593,7 +81591,6 @@ __imp_?bfmeCmp1026@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCmp1027@@YAHPAD0H@Z,0x00F594BC,pin
 __imp_?bfmeCopyVGK@@YAXPADPBD@Z,0x00F5948C,pin
 __imp_?bfmeEnterTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58D18,pin
-__imp_?bfmeEnterVHM@@YGXPAUBfmeCsVHM@@@Z,0x00F58D18,pin
 __imp_?bfmeFindSRA@@YGPAXPAXH@Z,0x00F59010,pin
 __imp_?bfmeFmt1064@@YAHPADI0H@Z,0x00F5932C,pin
 __imp_?bfmeFmt1067@@YAHPADI0H@Z,0x00F5932C,pin
@@ -81612,7 +81609,6 @@ __imp_?bfmeImport928G@@YGXPAX@Z,0x00F58F08,pin
 __imp_?bfmeImport930C@@YAXPAX@Z,0x00F593D4,pin
 __imp_?bfmeInitTTD@@YGJPAXH@Z,0x00F59188,pin
 __imp_?bfmeLeaveTEA@@YGXPAUBfmeLockTEA@@@Z,0x00F58E74,pin
-__imp_?bfmeLeaveVHM@@YGXPAUBfmeCsVHM@@@Z,0x00F58E74,pin
 __imp_?bfmeLenVGI@@YAIPBG@Z,0x00F59524,pin
 __imp_?bfmeLock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58D18,pin
 __imp_?bfmeLockVGP@@YGHPAH@Z,0x00F58E54,pin
@@ -81642,7 +81638,6 @@ __imp_?bfmeUnlock1040@@YGXPAUBfmeCs1040@@@Z,0x00F58E74,pin
 __imp_?bfmeWait1012@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
-__imp_?bfmeWaitVHM@@YGKPAXK@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__AIL_enumerate_3D_providers@12,0x013595AC,Open-BFME5 retail mss32 AIL_enumerate_3D_providers import pointer
 __imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::move; same slot as memmove
@@ -82741,3 +82736,6 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ??1AsciiStringWW@@QAE@XZ,0x00887940,pin
 ??1Gen_00193D50@@UAE@XZ,0x00195550,Open-BFME5 slot 0 of the table 0x0109C004
 ??1BfmeGuardWW@@QAE@XZ,0x00195550,Open-BFME5 stand-in for the sub-object the copy ctor at 0x00193D50 protects with unwind state 0
+__imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
+__imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
+__imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer

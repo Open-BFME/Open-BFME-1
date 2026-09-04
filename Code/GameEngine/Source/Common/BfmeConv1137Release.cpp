@@ -6,7 +6,7 @@
 // (the same texture-like reference item7's destructor also touches).
 // Called by the destructor thunk at 0x000491C5 -- see BfmeConv1137Term.cpp.
 
-void __cdecl bfmeLockVJR();
+void __cdecl W3DRadarResetLock();
 char __cdecl bfmeUnlockVJR();
 
 class BfmeTexRel1137
@@ -34,11 +34,11 @@ struct BfmeIface1137
 	BfmeIfaceVtbl1137 *vtbl;
 };
 
-class BfmeScopedLock1137
+class W3DResourceResetGuard
 {
 public:
-	BfmeScopedLock1137() { bfmeLockVJR(); }
-	~BfmeScopedLock1137() { bfmeUnlockVJR(); }
+	W3DResourceResetGuard() { W3DRadarResetLock(); }
+	~W3DResourceResetGuard() { bfmeUnlockVJR(); }
 };
 
 class BfmeA1137Release
@@ -53,7 +53,7 @@ public:
 
 void BfmeA1137Release::bfmeReleaseResources()
 {
-	BfmeScopedLock1137 lock;
+	W3DResourceResetGuard lock;
 
 	BfmeTexRel1137 *t = m_bfme6c;
 	if (t)

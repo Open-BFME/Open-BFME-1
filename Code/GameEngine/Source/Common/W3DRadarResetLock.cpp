@@ -76,20 +76,19 @@ struct BfmeCsVHM
 	char m_bfmePad[24];
 };
 
-__declspec(dllimport) unsigned long __stdcall bfmeWaitVHM(void *h, unsigned long ms);
-__declspec(dllimport) void __stdcall bfmeEnterVHM(BfmeCsVHM *cs);
-__declspec(dllimport) void __stdcall bfmeLeaveVHM(BfmeCsVHM *cs);
-
-int __cdecl bfmeGetIdVHM();
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long milliseconds);
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCsVHM *critical_section);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCsVHM *critical_section);
+extern "C" unsigned long __stdcall GetCurrentThreadId();
 
 extern void *g_bfmeEventVHM;
 extern BfmeCsVHM g_bfmeCsVHM;
 extern volatile int g_bfmeOwnerVHM;
 extern volatile int g_bfmeDepthVHM;
 
-void __cdecl bfmeLockVHM()
+void __cdecl W3DRadarResetLock()
 {
-	if (bfmeWaitVHM(g_bfmeEventVHM, 20000) == 0x102)
+	if (WaitForSingleObject(g_bfmeEventVHM, 20000) == 0x102)
 	{
 		if (bfmeCheckVHJ())
 		{
@@ -98,8 +97,8 @@ void __cdecl bfmeLockVHM()
 			g_bfmeLogVHJ->bfmeOwn6cVHJ(0, 0)->bfmeSlot38VHJ("A thread held onto DirectX for more than 20000msec.")->bfmeSlot4cVHJ(2);
 		}
 	}
-	bfmeEnterVHM(&g_bfmeCsVHM);
-	g_bfmeOwnerVHM = bfmeGetIdVHM();
+	EnterCriticalSection(&g_bfmeCsVHM);
+	g_bfmeOwnerVHM = GetCurrentThreadId();
 	g_bfmeDepthVHM = g_bfmeDepthVHM + 1;
-	bfmeLeaveVHM(&g_bfmeCsVHM);
+	LeaveCriticalSection(&g_bfmeCsVHM);
 }

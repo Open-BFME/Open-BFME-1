@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?setGamma@W3DDisplay@@UAEXMMM_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 
-void __cdecl bfmeLockVHM(void);
+void __cdecl W3DRadarResetLock(void);
 char __cdecl bfmeUnlock1179(void);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
@@ -11,15 +11,15 @@ public:
 	static void Set_Gamma(float gamma, float bright, float contrast, bool calibrate, bool uselimit);
 };
 
-class BfmeDx8Lock
+class W3DRadarResetGuard
 {
 public:
-	BfmeDx8Lock(void)
+	W3DRadarResetGuard(void)
 	{
-		bfmeLockVHM();
+		W3DRadarResetLock();
 	}
 
-	~BfmeDx8Lock(void)
+	~W3DRadarResetGuard(void)
 	{
 		bfmeUnlock1179();
 	}
@@ -42,6 +42,6 @@ void W3DDisplay::setGamma(float gamma, float bright, float contrast, bool calibr
 	if (m_windowed)
 		return;
 
-	BfmeDx8Lock lock;
+	W3DRadarResetGuard lock;
 	DX8Wrapper::Set_Gamma(gamma, bright, contrast, calibrate, false);
 }
