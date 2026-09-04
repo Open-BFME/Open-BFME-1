@@ -1,5 +1,7 @@
 // ?preFireWeapon@Weapon@@QAEXPBVObject@@HH@Z
 // partial score=0.98 date=2026-09-04
+// ?preFireWeapon@Weapon@@QAEXPBVObject@@HH@Z
+// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Open-BFME5: Weapon::preFireWeapon, retail 0x001E8970 size 403.
 // Three-arg BFME pre-fire: GameLogicRandomValue(0, template+0x504) into this+0x58,
@@ -180,14 +182,13 @@ void Weapon::preFireWeapon(const Object *source, int arg2, int arg3)
 	tmpl->notifyPreFire(this, source, arg2, arg3);
 
 	float speed = tmpl->m_weaponSpeed;
-	FXList *const fx = tmpl->m_fireFX;
+	FXList *fx = tmpl->m_fireFX;
 	const Coord3D *posA = source->getDrawable()->getPosition();
 	const Matrix3D *mtx = source->getDrawable()->getTransformMatrix();
 	const Coord3D *posB = source->getDrawable()->getPosition();
 	if (fx)
 	{
-		FXList &fxRef = *fx;
-		if (!fxRef.isEmpty())
-			fxRef.doFXPos(posB, mtx, speed, posA);
+		if (!fx->isEmpty())
+			fx->doFXPos(posB, mtx, speed, posA);
 	}
 }

@@ -74,7 +74,7 @@ class HostIface
 {
 public:
 	QV(00); QV(01); QV(02); QV(03);
-	virtual void notify(int flag);
+	virtual void notify(bool flag);
 };
 
 class Object
@@ -112,7 +112,7 @@ public:
 	virtual void s6();
 	virtual void s7();
 	virtual const Coord3D *queryRally();
-	virtual void releaseLastExit();
+	void releaseLastExit();
 
 	unsigned m_currentDelay;
 	Coord3D m_rallyPoint;
@@ -138,8 +138,7 @@ void QueueProductionExitUpdate::releaseLastExit()
 		return;
 	}
 
-	int notAir = !reinterpret_cast<Thing *>(host)->isKindOf(KINDOF_AIRCRAFT);
-	iface->notify(notAir);
+	iface->notify(!reinterpret_cast<Thing *>(host)->isKindOf(KINDOF_AIRCRAFT));
 	host->clearModelConditionState(MODELCONDITION_3);
 	host->clearModelConditionState(MODELCONDITION_2);
 

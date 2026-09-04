@@ -311,28 +311,30 @@ void QueueProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType)
 			reinterpret_cast<char *>(this) - 0x1C);
 
 	const Matrix3D *transform = creationObject->getTransformMatrix();
-	Vector3 loc;
-	loc.Set(md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z);
-	transform->Transform_Vector(*transform, loc, &loc);
-
-	bool creationInAir = false;
-	if (TheTerrainLogic)
-	{
-		Real ground = TheTerrainLogic->getGroundHeight(loc.X, loc.Y, 0);
-		if (ground + g_bfmeDefaultBU < loc.Z)
-		{
-			creationInAir = true;
-			if (!md->m_allowAirborneCreationData)
-				loc.Z = TheTerrainLogic
-					? TheTerrainLogic->getGroundHeight(loc.X, loc.Y, 0)
-					: BfmeZeroRange;
-		}
-	}
-
 	Coord3D createPoint;
-	createPoint.x = loc.X;
-	createPoint.y = loc.Y;
-	createPoint.z = loc.Z;
+	bool creationInAir = false;
+	{
+		Vector3 loc;
+		loc.Set(md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z);
+		transform->Transform_Vector(*transform, loc, &loc);
+
+		if (TheTerrainLogic)
+		{
+			Real ground = TheTerrainLogic->getGroundHeight(loc.X, loc.Y, 0);
+			if (ground + g_bfmeDefaultBU < loc.Z)
+			{
+				creationInAir = true;
+				if (!md->m_allowAirborneCreationData)
+					loc.Z = TheTerrainLogic
+						? TheTerrainLogic->getGroundHeight(loc.X, loc.Y, 0)
+						: BfmeZeroRange;
+			}
+		}
+
+		createPoint.x = loc.X;
+		createPoint.y = loc.Y;
+		createPoint.z = loc.Z;
+	}
 
 	AIUpdateInterface *ai = produced->getAIUpdateInterface();
 	if (ai && ai->isDoingGroundMovement())

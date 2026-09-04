@@ -61,7 +61,7 @@ struct BfmeManager1282
 };
 
 extern BfmeManager1282 *g_bfmeHolderBU;
-extern void *g_bfmeEmitContext1282;
+extern void *g_bfmeExtra1282;
 extern unsigned char g_bfmeDispatchEnabled1281;
 extern unsigned char g_bfmeSecondaryEnabled1282;
 
@@ -82,7 +82,7 @@ void __stdcall bfmeRouteNode1282(BfmeNodeDX *node, int emit)
 			return;
 		BfmeFlagList1282 *flags = detail->m_flags;
 		if (emit != 0)
-			node->bfmeEmit1281(0x200, g_bfmeEmitContext1282, 1);
+			node->bfmeEmit1281(0x200, g_bfmeExtra1282, 1);
 		if (flags == 0)
 			return;
 		for (int index = 0; index < flags->m_count; ++index) {

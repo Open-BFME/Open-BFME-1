@@ -2,7 +2,7 @@
 // partial score=0.96 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 
-#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Dedicated TU for Glo012F1028Sub::bfmeFinish so the three matched
 // siblings in Glo012F1028Sub_bfmeNotify.cpp keep their codegen.

@@ -25,9 +25,9 @@ private:
 
 void Gen_008951B0::find(BfmeNodeFD **out, void *key) const
 {
-	BfmeNodeFD *node = m_head;
-	if (node)
+	if (m_head)
 	{
+		BfmeNodeFD *node = m_head;
 		void *k = key;
 		do
 		{

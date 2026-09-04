@@ -91,7 +91,7 @@ template <class CharT, class Traits, class Alloc>
 typename basic_string<CharT, Traits, Alloc>::pointer
 basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 {
-	pointer new_pos;
+	pointer new_pos = p;
 	if (_M_finish + 1 < _M_end_of_storage._M_data)
 	{
 		_M_construct_null(_M_finish + 1);
@@ -100,7 +100,6 @@ basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 			Traits::move(p + 1, p, n);
 		Traits::assign(*p, c);
 		++_M_finish;
-		new_pos = p;
 	}
 	else
 	{
@@ -116,8 +115,8 @@ basic_string<CharT, Traits, Alloc>::_M_insert_aux(pointer p, CharT c)
 		_M_construct_null(new_finish);
 		_M_deallocate_block();
 		_M_start = new_start;
-		_M_end_of_storage._M_data = new_start + len;
 		_M_finish = new_finish;
+		_M_end_of_storage._M_data = new_start + len;
 	}
 	return new_pos;
 }

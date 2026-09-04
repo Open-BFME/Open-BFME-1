@@ -15,7 +15,6 @@
 typedef int Int;
 typedef unsigned char Bool;
 
-#include <string.h>
 
 enum AudioType
 {
@@ -39,7 +38,7 @@ public:
 	void set(const AsciiString &other);
 	void concat(const char *text, Int length);
 
-	void concat(const AsciiString &other)
+	__forceinline void concat(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->length : 0;
 		const char *text = other.m_data ? &other.m_data->data[0] : "";
@@ -53,7 +52,19 @@ public:
 
 	__forceinline const char *reverseFindSlash(void) const
 	{
-		return strrchr(str(), '\\');
+		char seen;
+		const char *start = str();
+		const char *p = start + (m_data ? m_data->length : 0);
+		if (p == start)
+			return 0;
+		do
+		{
+			seen = p[-1];
+			--p;
+			if (seen == '\\')
+				return p;
+		} while (p != start);
+		return 0;
 	}
 
 	StringHeader *m_data;
@@ -89,20 +100,17 @@ public:
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
 void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 {
-    const char *path = strToAdjust.str();
-    if (TheFileSystem->doesFileExist(path))
+    if (TheFileSystem->doesFileExist(strToAdjust.str()))
         return;
 
-    const char *p;
-    const char *start;
-    start = strToAdjust.str();
-    p = start + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
-    if (p == start)
+    const char *str = strToAdjust.str();
+    const char *p = str + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
+    if (p == str)
         return;
 
-    do
+    while (p != str)
     {
-        char seen = p[-1];
+        const char seen = p[-1];
         --p;
         if (seen == '\\')
         {
@@ -111,5 +119,5 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
             strToAdjust.concat(filename);
             return;
         }
-    } while (p != start);
+    }
 }

@@ -81437,6 +81437,8 @@ __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
 __imp__InterlockedIncrement@4,0x01358E5C,Open-BFME5 retail InterlockedIncrement import pointer
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
+__imp__Rva00891FA0SendRecord,0x01337840,address-derived diagnostics record callback slot called by 0x00891FA0
+__imp__Rva00891FA0SendText,0x01337844,address-derived diagnostics text callback slot called by 0x00891FA0
 __imp___strnicmp,0x00F594BC,CRT import used by the _level prefix path helper
 __imp__bfme006EE640Memmove,0x0135945C,retail memmove IAT slot used by the exact STLport vector erase at 0x006EE640
 __imp__bfmeApply1170@4,0x00F5906C,pin
@@ -82479,6 +82481,8 @@ g_bfmeVtableDQb,0x010F9B0C,Open-BFME5 the derived table the constructor at 0x004
 g_bfmeZeroCY,0x01075350,Open-BFME5 the constant the ratio at 0x0075F3D0 falls back to
 g_rva0058BED0NextId,0x012F4B9C,address-derived update alias for the 0x0058BED0 identifier counter
 g_rva0058BED0ReadId,0x012F4B9C,address-derived read alias for the 0x0058BED0 identifier counter
+g_rva00891FA0Ready,0x01337808,address-derived diagnostics readiness flag read by 0x00891FA0
+g_rva00891FA0Value,0x013377F4,address-derived diagnostics value read by 0x00891FA0
 g_rva8CB8C0InitBounds,0x013378B4,address-derived bounds initializer function pointer called by 0x008CB8C0
 g_rva8CD130IdleHook,0x01337810,address-derived Apt idle hook pointer read by 0x008CD130
 g_rva8CD3F0RouteIndices,0x012D5A10,address-derived route index table read by 0x008CD3F0

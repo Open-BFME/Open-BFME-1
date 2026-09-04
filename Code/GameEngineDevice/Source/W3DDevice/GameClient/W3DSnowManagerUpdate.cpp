@@ -158,6 +158,7 @@ void W3DSnowManager::extraAfterFmod(void)
 // ?extraTail@W3DSnowManager@@QAEXXZ
 void W3DSnowManager::extraTail(void)
 {
+	W3DSnowManager *self = this;
 	const BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
 	float slot;
 	const BFMEWeatherOverride *f;
@@ -165,13 +166,13 @@ void W3DSnowManager::extraTail(void)
 		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (d->m_flag40 == 0)
 		return;
-	if (m_flag44)
+	if (self->m_flag44)
 	{
-		--m_48;
-		if (m_48 > 0)
+		--self->m_48;
+		if (self->m_48 > 0)
 			return;
-		m_48 = 0;
-		m_flag44 = 0;
+		self->m_48 = 0;
+		self->m_flag44 = 0;
 		return;
 	}
 	slot = WWMath::Random_Float();
@@ -180,8 +181,8 @@ void W3DSnowManager::extraTail(void)
 		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (!(slot < d->m_54Override))
 		return;
-	m_flag44 = 1;
+	self->m_flag44 = 1;
 	d = g_bfmeGlo012F15F8;
 	f = walkSnowOverride(d);
-	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
+	self->m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }
