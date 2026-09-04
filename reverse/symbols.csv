@@ -83690,3 +83690,7 @@ __Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGU
 __Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
 __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
 ?getGameName@GameSpyStagingRoom@@QAE?AVUnicodeString@@XZ,0x0002C7B4,ILT of staging-room wide string at +0x418 used by CustomMatch 0x0053B980
+?compare@AsciiString@@QBEHPBD@Z,0x0004B01A,ILT of StringBase<char>::compare(const char*) used by CustomMatch handleSlashCommands 0x00539E60
+?format@UnicodeString@@QAAXV1@ZZ,0x00889190,MSVC-compressed alias of UnicodeString::format already pinned as QAAXVUnicodeString@@ZZ
+?GameSpyColor@@3PAHA,0x012B9200,GameSpyColor[] first dword used as addText color by CustomMatch handleSlashCommands
+?isThreadHosting@@3HA,0x012F73D8,isThreadHosting int used as /host format arg by CustomMatch handleSlashCommands
