@@ -16,7 +16,7 @@ struct RGBColor
 class Drawable
 {
 public:
-	void bfmeApplyTint(RGBColor color, UnsignedInt preColorTime,
+	void applyTint(RGBColor color, UnsignedInt preColorTime,
 		UnsignedInt postColorTime, UnsignedInt sustainedColorTime,
 		Real frequency, Real amplitude);
 
@@ -80,7 +80,7 @@ void TintDrawableFXNugget::doFXObj(const Object *primary,
 	{
 		Drawable *tintDrawable = primary->getDrawable();
 		tintDrawable->m_status |= 0x20;
-		primary->getDrawable()->bfmeApplyTint(m_color, m_preColorTime,
+		primary->getDrawable()->applyTint(m_color, m_preColorTime,
 			m_postColorTime, m_sustainedColorTime, m_frequency,
 			m_amplitude);
 	}

@@ -72125,7 +72125,6 @@ name,address,notes
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
-?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME5 TintDrawableFXNugget retail tint helper ILT; body 0x00412040
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
 ?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z,0x009CC020,pin
@@ -82730,3 +82729,4 @@ _g_cursorResources,0x00EF77A8,BFME native cursor handle table indexed by cursor 
 ?g_timedOperationHead@@3PAVTimedOperationNode@@A,0x00EED584,timed-operation queue head at retail VA 0x012ED584
 ?g_timedOperationSerial@@3IA,0x00EA737C,timed-operation key serial at retail VA 0x012A737C
 ?TimedOperationInputLocked@@3HA,0x00EED530,timed-operation input lock state used by GameEngine client update
+?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
