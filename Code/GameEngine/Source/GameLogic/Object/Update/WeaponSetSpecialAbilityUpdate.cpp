@@ -43,16 +43,24 @@ class SpecialAbilityUpdate : public BehaviorModule,
 {
 public:
 	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+	virtual ~SpecialAbilityUpdate();
 };
 
 class WeaponSetSpecialAbilityUpdate : public SpecialAbilityUpdate
 {
 public:
 	WeaponSetSpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~WeaponSetSpecialAbilityUpdate();
 };
 
 WeaponSetSpecialAbilityUpdate::WeaponSetSpecialAbilityUpdate(
 	Thing *thing, const ModuleData *moduleData )
 	: SpecialAbilityUpdate( thing, moduleData )
+{
+}
+
+WeaponSetSpecialAbilityUpdate::~WeaponSetSpecialAbilityUpdate()
 {
 }
