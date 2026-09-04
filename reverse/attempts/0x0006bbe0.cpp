@@ -1,7 +1,7 @@
 // ?execute@GameEngine@@UAEXXZ
-// partial score=0.995 date=2026-09-04
-// ?execute@GameEngine@@UAEXXZ
-// partial score=0.995 date=2026-08-29
+// partial score=0.9969 date=2026-09-04
+// Aggregate-local ordering fixes self to -0x1c; raw storage, declaration/
+// lifetime, EH, inline-asm, and compiler-flag variants did not swap oldScale.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 
 #include <string.h>
@@ -203,17 +203,20 @@ struct GlobalDataLayout
 	message->setText(reason)->show(true); \
 } while (0)
 
+struct BfmeExecutePair { float oldScale; GameEngine *self; };
+
 // ?execute@GameEngine@@UAEXXZ present-unmatched
 void GameEngine::execute(void)
 {
-	GameEngine *self = this;
+	BfmeExecutePair locals;
+	locals.self = this;
 	if (InitialFrameTime == 0)
 		InitialFrameTime = bfme_timeGetTime();
-	while (!self->m_quitting)
+	while (!locals.self->m_quitting)
 	{
 		try
 		{
-			self->update();
+			locals.self->update();
 		}
 		catch (INIException *e)
 		{
@@ -251,7 +254,7 @@ void GameEngine::execute(void)
 		if (TheGlobalData->fastMode)
 			LimitFrameRate = false;
 
-		const float oldScale = LogicTimeScale;
+		locals.oldScale = LogicTimeScale;
 		NetworkInterface *network = TheNetwork;
 		if (!network)
 			goto force_normal_speed;
@@ -259,7 +262,7 @@ void GameEngine::execute(void)
 			goto force_normal_speed;
 		if (DisablePacingB)
 			goto force_normal_speed;
-		if (self->m_clientFramePeriod != 1)
+		if (locals.self->m_clientFramePeriod != 1)
 			goto pacing_done;
 
 		LogicTimeScale = 1.0f;
@@ -291,7 +294,7 @@ void GameEngine::execute(void)
 				desired = 1.0f;
 		}
 
-		LogicTimeScale = (desired + oldScale) * 0.5f;
+		LogicTimeScale = (desired + locals.oldScale) * 0.5f;
 
 	pacing_done:
 		if (LogicTimeScale != One)
@@ -303,7 +306,7 @@ void GameEngine::execute(void)
 		else if (LimitFrameRate)
 		{
 			UnsignedInt now = bfme_timeGetTime();
-			int limit = (int)(1000.0f / ((float)self->m_maxFPS * LogicTimeScale) + (float)LogicFrameAdjustment);
+			int limit = (int)(1000.0f / ((float)locals.self->m_maxFPS * LogicTimeScale) + (float)LogicFrameAdjustment);
 			UnsignedInt elapsed = now - PreviousFrameTime;
 			FrameElapsedTime = elapsed;
 			UnsignedInt remaining;
