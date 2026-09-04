@@ -83870,3 +83870,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
 ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z,0x00040D95,ILT to matched body 0x00150FE0; callee of updateTeamSetAttitude 0x002F29E0
 ?groupHunt@AIGroup@@QAEXW4CommandSourceType@@@Z,0x00039491,ILT to matched body 0x00156270; callee of doTeamHunt 0x002F3600
+??4locale@_STL@@QAEAAV01@ABV01@@Z,0x00832180,STLport locale assign non-const-ref return; twin of ABV pin for ios_base::imbue
