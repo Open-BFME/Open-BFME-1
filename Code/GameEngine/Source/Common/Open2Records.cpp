@@ -71,29 +71,6 @@ inline void *operator new( unsigned int, void *place ) { return place; }
 inline void operator delete( void *, void * ) {}
 
 // -------------------------------------------------------------------------
-// 0x000FCED0 -- 73 bytes, ctor
-class Open2Rec0FCED0
-{
-public:
-	Open2Rec0FCED0( const Open2Rec0FCED0 &other );
-	int m_at00;
-	int m_at04;
-	int m_at08;
-	int m_at0c;
-	int m_at10;
-	int m_at14;
-	int m_at18;
-	AsciiString m_at1c;
-	unsigned char m_at20;
-};
-
-// @??0Open2Rec0FCED0@@QAE@ABV0@@Z 0x000FCED0
-Open2Rec0FCED0::Open2Rec0FCED0( const Open2Rec0FCED0 &other )
-	: m_at00( other.m_at00 ), m_at04( other.m_at04 ), m_at08( other.m_at08 ), m_at0c( other.m_at0c ), m_at10( other.m_at10 ), m_at14( other.m_at14 ), m_at18( other.m_at18 ), m_at1c( other.m_at1c ), m_at20( other.m_at20 )
-{
-}
-
-// -------------------------------------------------------------------------
 // 0x00134500 -- 105 bytes, ctor
 class Open2Rec134500
 {
