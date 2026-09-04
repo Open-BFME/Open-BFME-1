@@ -82592,3 +82592,7 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ?Execute@MouseThreadClass@@QAEXXZ,0x009DB650,W3DMouse polling-thread execute call
 ?g_w3dMouseCursorImages@@3PAPAXA,0x012F86C0,W3DMouse polygon cursor image table
 ?setCursor@Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum virtual base call
+?bfmeGetBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT to additive accumulator body 0x00369460; matched Object::getVisionRange caller queries attribute 14
+?isModifierActive@AttributeModifierPoolUpdate@@ABE_NIPBUAttributeModifierEntry@@@Z,0x00037B32,ILT to body 0x00368B80; AttributeModifierPoolUpdate accumulator passes current frame and each 16-byte modifier entry
+?getValue@AttributeModifierDefinitionStore@@QBE_NHHPAM@Z,0x0001CE31,ILT to body 0x0036AFB0; additive and multiplicative AttributeModifierPoolUpdate accumulators query modifier index attribute and float output
+?TheAttributeModifierDefinitionStore@@3PAVAttributeModifierDefinitionStore@@A,0x012F07E4,global store used by AttributeModifierPoolUpdate additive and multiplicative accumulators
