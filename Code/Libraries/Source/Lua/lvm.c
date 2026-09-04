@@ -370,7 +370,11 @@ static void adjust_varargs (lua_State *L, StkId base, int nfixargs) {
 ** Executes the given Lua function. Parameters are between [base,top).
 ** Returns n such that the the results are between [n,top).
 */
-// luaV_execute present-unmatched
+/* MSVC 7.1 emits no instruction for this compiler-only barrier. It keeps
+   OP_JMPONT's pop tail distinct from OP_JMPONF's identical pop tail, matching
+   retail's two basic blocks without adding a runtime operation. */
+void _WriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
 StkId luaV_execute (lua_State *L, const Closure *cl, StkId base) {
   const Proto *const tf = cl->f.l;
   StkId top;  /* keep top local, for performance */
@@ -666,25 +670,29 @@ StkId luaV_execute (lua_State *L, const Closure *cl, StkId base) {
           dojump(pc, i);
         }
         else {
+          _WriteBarrier();
           top--;
         }
         break;
       }
       case OP_JMPONF: {
         int t = ttype(top-1);
-        if (t == LUA_TNIL) { dojump(pc, i); break; }
-        if (t == 6) {
-          if (!bvalue(top-1)) { dojump(pc, i); break; }
+        if (t == LUA_TNIL || (t == 6 && !bvalue(top-1))) {
+          dojump(pc, i);
         }
-        top--;
+        else {
+          top--;
+        }
         break;
       }
       case OP_JMP: {
         dojump(pc, i);
         break;
       }
-      case OP_PUSHNILJMP: {
-        ttype(top++) = LUA_TNIL;
+      case OP_PUSHNILJMP: {  /* EA: pushes a real boolean false, not nil */
+        bvalue(top) = 0;
+        ttype(top) = 6;
+        top++;
         pc++;
         break;
       }

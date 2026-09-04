@@ -41,7 +41,10 @@ the point of change in the file itself as well as here.
 
     lvm.c       58   the boolean tag itself: `not` yields a boolean, the four
                      conditional-jump opcodes test it, tostring/lessthan handle
-                     it, and OP_PUSHBOOL is dispatched
+                     it, and OP_PUSHBOOL is dispatched. OP_PUSHNILJMP pushes
+                     EA boolean false. A zero-instruction MSVC _WriteBarrier
+                     keeps the two conditional-jump pop tails separate;
+                     this compiler-shaping addition is not claimed as EA source.
     lcode.c     31   OP_PUSHBOOL's opcode-mode table entry; `true` compiles to
                      OP_PUSHBOOL rather than stock's PUSHINT 1; plus
                      `codepushbool`, a function with NO upstream counterpart
