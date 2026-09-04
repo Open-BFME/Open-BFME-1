@@ -82488,12 +82488,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?lookup@BfmeHead416B90@@QAEPAXH@Z,0x0004775D,ILT to head indexed getter 0x001C3A00; callee of BfmeHost416B90::getSlot @ 0x416B90
-?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
-?TheGameLogic@@3PAVGameLogic40D9@@A,0x012F0898,GameLogic* typed for BfmeHost40D9::walk @ 0x40D9E0
-?TheShell@@3PAVShell40D9@@A,0x012F4B58,TheShell* typed for BfmeHost40D9::walk @ 0x40D9E0
-?TheGameClient@@3PAVClientRoot4120@@A,0x012F1464,TheGameClient* typed for bfmeBumpClientGuard @ 0x4120E0
-?g_bfmeCounter4120@@3HA,0x012F12F0,client-guard counter incremented by bfmeBumpClientGuard @ 0x4120E0
 ?anyReady@Rva003BF540@@QBE_NXZ,0x0000EA7F,ILT to anyReady@Rva003BD830Owner 0x003BD830; callee of test@Rva003BF540 @ 0x003BEAF0
 ?anyMatching@Rva003BF540@@QAE_NH@Z,0x0000B63B,ILT to anyMatching@Rva003BDEC0 0x003BDEC0; callee of test@Rva003BF540 @ 0x003BEAF0
 ?disabled@Gen_00609320@@QBE_NXZ,0x00048C4D,ILT to bfmeDisabled body 0x00609320; bool-shaped pin for test@Rva003BF540 @ 0x003BEAF0
