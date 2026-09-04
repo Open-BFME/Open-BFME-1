@@ -83842,3 +83842,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?send@BfmeOwner803A00@@QAEXPAVBfmeMsg803A00@@@Z,0x008038F0,FESL submit for 0x00803A00
 ?g_bfmeKey803A00A@@3PADA,0x00D2C00C,string key A for 0x00803A00
 ?g_bfmeKey803A00B@@3PADA,0x00D2C74C,string key B for 0x00803A00
+??$_Construct@U?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHUGen_t_0042dc10_p36cd@_STL@@@0@ABU10@@Z,0x0000317F,Open-BFME5 ILT the FXListStore hashtable insert_unique_noresize at 0x0042DF60 copy-constructs the 40-byte pair through; jumps to 0x0042DD00
