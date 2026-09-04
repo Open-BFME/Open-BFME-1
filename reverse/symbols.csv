@@ -83758,3 +83758,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?getPtr@Rva00803620Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803620
 ?apply@Rva00803620Sink@@QAEXPAXPAD001@Z,0x00808CB0,FESL browser sink apply 5-arg; pin for 0x803620
 ?TheGameSpyConfig@@3PAVGameSpyConfigInterface@@A,0x012F70E4,GameSpyConfigInterface* global read by RankPoints ctor 0x004DAFA0
+?m@Gen_007f9590@@QAEXH@Z,0x007F9590,already shim; pin alias ok
+??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
