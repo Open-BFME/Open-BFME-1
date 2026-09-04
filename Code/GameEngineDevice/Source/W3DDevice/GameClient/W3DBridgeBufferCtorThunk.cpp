@@ -8,11 +8,11 @@
 //
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
-class BridgeInfo
+class W3DBridge
 {
 public:
-	BridgeInfo();					///< element ctor at 0x00437AF6
-	~BridgeInfo();				///< element dtor at 0x00418174
+	W3DBridge();					///< element ctor at 0x00437AF6
+	~W3DBridge();				///< element dtor at 0x00418174
 
 private:
 	unsigned char m_unreconstructed_00[0x114];
@@ -22,22 +22,22 @@ private:
 // destructible subobject precedes the array. The six words at +0 are that base:
 // its constructor writes +0xC, which is the one store retail makes before the
 // array is built, and its declared destructor is what earns the extra state.
-class BridgeBufferBase
+class W3DBridgeBufferPrefix
 {
 public:
-	BridgeBufferBase() : m_0c(0) {}
-	~BridgeBufferBase();
+	W3DBridgeBufferPrefix() : m_bridgeTexture(0) {}
+	~W3DBridgeBufferPrefix();
 
-	unsigned int m_00;
-	unsigned int m_04;
-	unsigned int m_08;
-	unsigned int m_0c;
-	unsigned int m_10;
-	unsigned int m_14;
+	unsigned int m_vertexBridge;
+	unsigned int m_indexBridge;
+	unsigned int m_vertexMaterial;
+	unsigned int m_bridgeTexture;
+	unsigned int m_curNumBridgeVertices;
+	unsigned int m_curNumBridgeIndices;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBridgeBuffer.h
-class W3DBridgeBuffer : public BridgeBufferBase
+class W3DBridgeBuffer : public W3DBridgeBufferPrefix
 {
 public:
 	W3DBridgeBuffer();
@@ -46,24 +46,24 @@ private:
 	void freeBridgeBuffers(void);		///< ILT 0x00003E59
 	void allocateBridgeBuffers(void);	///< ILT 0x0002EF2D
 
-	BridgeInfo m_bridges[200];		///< retail this+0x18 .. +0xD7B8
-	unsigned int m_d7b8;
-	bool m_d7bc;
+	W3DBridge m_bridges[200];		///< retail this+0x18 .. +0xD7B8
+	unsigned int m_numBridges;
+	bool m_initialized;
 };
 
 // ??0W3DBridgeBuffer@@QAE@XZ
 W3DBridgeBuffer::W3DBridgeBuffer()
 {
-	m_d7bc = false;
-	m_08 = 0;
-	m_00 = 0;
-	m_04 = 0;
-	m_10 = 0;
-	m_14 = 0;
-	m_d7b8 = 0;
+	m_initialized = false;
+	m_vertexMaterial = 0;
+	m_vertexBridge = 0;
+	m_indexBridge = 0;
+	m_curNumBridgeVertices = 0;
+	m_curNumBridgeIndices = 0;
+	m_numBridges = 0;
 
 	freeBridgeBuffers();
 	allocateBridgeBuffers();
 
-	m_d7bc = true;
+	m_initialized = true;
 }
