@@ -1951,7 +1951,6 @@ name,address,notes
 ??0BattlePlanUpdateModuleData@@QAE@XZ,0x0003025B
 ??0BeaconClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0BeaconClientUpdateModuleData@@QAE@XZ,0x000286C3,module-glue cascade callee (from retail call site)
-??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00113C60,Open-BFME5 base constructor the Collide and Damage module constructors forward to
 ??0BezierSegment@@QAE@XZ,0x00043A9A
 ??0BfmeAllocProxy1@@QAE@PAXPAD@Z,0x000281E6,Open-BFME5 the end-pointer proxy constructor the byte-element vector constructor at 0x005C46C0 runs
 ??0BfmeAllocProxy_000F9F70@@QAE@PAXPAUBfmeElem_000F9F70@@@Z,0x00006F5F,Open-BFME5 the end-pointer proxy constructor the sized-vector constructor at 0x000F9F70 runs
@@ -2765,7 +2764,6 @@ name,address,notes
 ??0ObjectCreationUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000246B8,ObjectCreationUpgrade ctor for friend_new
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ObjectHelper@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,packet 001c0ea0 callee pin
-??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,hit-decoded x2 (thunk)
 ??0ObjectTypes@@QAE@XZ,0x0003D415,pin for ObjectTypesTemp ctor callee (packet 002ed6c0)
 ??0ObjectWeaponStatusHelperBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,ObjectWeaponStatusHelper ctor base call
 ??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,Ghidra-owned constructor thunk
@@ -20426,7 +20424,6 @@ name,address,notes
 ?b_00113be0@@YAXXZ,0x00113BE0,gen-thunk body
 ?b_00113c20@@YAXXZ,0x00113C20,gen-thunk body
 ?b_00113c30@@YAXXZ,0x00113C30,gen-thunk body
-?b_00113c60@@YAXXZ,0x00113C60,gen-thunk body
 ?b_00113d10@@YAXXZ,0x00113D10,gen-thunk body
 ?b_00113d20@@YAXXZ,0x00113D20,gen-thunk body
 ?b_00113d30@@YAXXZ,0x00113D30,gen-thunk body
@@ -82756,3 +82753,4 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GOneRingPenaltyUpdate@@MAEPAXI@Z,0x0000B131,primary class vftable slot zero ILT to 0x00298FA0
 ??1RubbleRiseUpdate@@MAE@XZ,0x00046BE6,destructor ILT to 0x002A3540
 ??_GRubbleRiseUpdate@@MAEPAXI@Z,0x00021C06,primary class vftable slot zero ILT to 0x002A37E0
+??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,shared ObjectModule constructor ILT to 0x00113C60; called by named object-module constructors
