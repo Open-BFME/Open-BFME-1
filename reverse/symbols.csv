@@ -4668,7 +4668,6 @@ name,address,notes
 ??1Gen_dtor_00297410@@UAE@XZ,0x0003D302,gen-dtor class destructor
 ??1Gen_dtor_002975e0@@UAE@XZ,0x000137D7,gen-dtor class destructor
 ??1Gen_dtor_002977f0@@UAE@XZ,0x0000D125,gen-dtor class destructor
-??1Gen_dtor_002982a0@@UAE@XZ,0x0002C6F1,gen-dtor class destructor
 ??1Gen_dtor_00298a70@@UAE@XZ,0x000137C8,gen-dtor class destructor
 ??1Gen_dtor_00298fa0@@UAE@XZ,0x00034AB3,gen-dtor class destructor
 ??1Gen_dtor_00299050@@UAE@XZ,0x0002A86F,gen-dtor class destructor
@@ -33922,7 +33921,6 @@ name,address,notes
 ?b_00297930@@YAXXZ,0x00297930,gen-thunk body
 ?b_00297d30@@YAXXZ,0x00297D30,gen-thunk body
 ?b_00297d60@@YAXXZ,0x00297D60,gen-thunk body
-?b_00297de0@@YAXXZ,0x00297DE0,gen-thunk body
 ?b_00297e00@@YAXXZ,0x00297E00,gen-thunk body
 ?b_00297e50@@YAXXZ,0x00297E50,gen-thunk body
 ?b_00297e60@@YAXXZ,0x00297E60,gen-thunk body
@@ -33935,7 +33933,6 @@ name,address,notes
 ?b_002980a0@@YAXXZ,0x002980A0,gen-thunk body
 ?b_00298200@@YAXXZ,0x00298200,gen-thunk body
 ?b_00298210@@YAXXZ,0x00298210,gen-thunk body
-?b_002982a0@@YAXXZ,0x002982A0,gen-thunk body
 ?b_002982d0@@YAXXZ,0x002982D0,gen-thunk body
 ?b_00298320@@YAXXZ,0x00298320,gen-thunk body
 ?b_00298370@@YAXXZ,0x00298370,gen-thunk body
@@ -82757,3 +82754,6 @@ _D3DXMatrixScaling@16,0x009FB6F4,d3dx9.lib d3dxmath.obj public dispatch stub; Fa
 _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x68 retail slot0x012DBE60; init at0x009FB756
 ??1LifetimeUpdateModuleData@@UAE@XZ,0x0003F053,destructor ILT to 0x00298000
 ??_GLifetimeUpdateModuleData@@UAEPAXI@Z,0x00027C46,class vftable slot zero ILT to 0x00297FD0
+??1LifetimeUpdate@@MAE@XZ,0x0002C6F1,destructor ILT to 0x00297DE0
+??_GLifetimeUpdate@@MAEPAXI@Z,0x00028CFE,primary class vftable slot zero ILT to 0x002982A0
+??1Module@@UAE@XZ,0x00047C53,base destructor ILT used by the optimized UpdateModule teardown

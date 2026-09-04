@@ -24519,3 +24519,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00297fd0@@UAEPAXI@Z,0x00297FD0,generated deleting-destructor identity replaced by LifetimeUpdateModuleData scalar deleting destructor; class vftable slot zero points through ILT 0x00027C46
 ?m@Gen_00298000@@QAEXXZ,0x00298000,generated store-method identity replaced by LifetimeUpdateModuleData::~LifetimeUpdateModuleData; deleting destructor 0x00297FD0 calls it through ILT 0x0003F053
 ??_GLifetimeUpdateModuleData@@UAEPAXI@Z,0x005BF290,wrong ICF alias removed: the LifetimeUpdateModuleData vftable reaches its actual deleting destructor at 0x00297FD0 through ILT 0x00027C46
+?dup_00297de0@@YAXXZ,0x00297DE0,address-derived alias replaced by LifetimeUpdate::~LifetimeUpdate; primary class deleting destructor calls it through ILT 0x0002C6F1 and the named constructor establishes the three-interface layout
+??_GGen_dtor_002982a0@@UAEPAXI@Z,0x002982A0,generated deleting-destructor identity replaced by LifetimeUpdate scalar deleting destructor; primary class vftable slot zero points through ILT 0x00028CFE
