@@ -24393,3 +24393,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_002f3490@@YAXXZ,0x002F3490,gen-dump placeholder superseded by the recovered ?doTeamGuardObject@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
 ?d_002f33d0@@YAXXZ,0x002F33D0,gen-dump placeholder superseded by the recovered ?doTeamGuardPosition@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
 ?d_002f3520@@YAXXZ,0x002F3520,gen-dump placeholder superseded by the recovered ?doTeamGuardArea@ScriptActions@@IAEXABVAsciiString@@00@Z identity and exact C++ body
+?d_0091f040@@YAXXZ,0x0091F040,"gen-dump placeholder superseded by the real identity of these bytes: ?Allocate_Sorting_Dynamic_Buffer@BoxDynamicVBAccessClass@@QAEXXZ, byte-verified from Code/Libraries/Source/WWVegas/WW3D2/BoxDynamicVBAccess_AllocateSorting.cpp over the same 274-byte range. The Code/gen_asm/d_0091cbf0.asm dump reproduces those bytes but carries no identity."
