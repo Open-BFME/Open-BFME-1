@@ -82548,3 +82548,7 @@ g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 push
 ?TheMultiplayerSettings@@3PAVMultiplayerSettings@@A,0x012ED5FC,TheMultiplayerSettings singleton; DIR32 at Rva0051B560Host::bfmeProvide
 ??1W3DProjectedShadow@@QAE@XZ,0x00022962,ILT used when the projected-shadow manager explicitly destroys a recycled shadow
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0002EDDE,ILT to the real MultiplayerColorDefinition copy constructor at 0x0008E470
+g_bfmeVtableVY,0x010EDAD8,Open-BFME5 the table the wide-text copy ctor at 0x0049A070 installs
+??0BfmeWideVY@@QAE@ABV0@@Z,0x00888400,pin
+??1BfmeWideVY@@QAE@XZ,0x008881D0,pin
+??1BfmeGuardVY@@QAE@XZ,0x003BEAC0,Open-BFME5 slot 0 of the table 0x010EDAD8; the unwind action for the copy ctor at 0x0049A070
