@@ -2,7 +2,7 @@
 // stlport
 //
 // Open-BFME5: more PA-style vector::erase(first,last) 77B siblings on
-// d_003ad560. Unique strides only (skip 0x20 ICF twins 0x003AF920/0x003B6FD0).
+// d_003ad560. Unique strides plus same-size 0x20 twins (distinct __copy callees).
 
 #include <vector>
 
@@ -19,6 +19,8 @@
 
 BFME_PA_ERASE_ELEM( Elem003AF800, 0x30 );
 BFME_PA_ERASE_ELEM( Elem003AF860, 0x20 );
+BFME_PA_ERASE_ELEM( Elem003AF920, 0x20 );
+BFME_PA_ERASE_ELEM( Elem003B6FD0, 0x20 );
 BFME_PA_ERASE_ELEM( Elem003AF8C0, 0x0C );
 BFME_PA_ERASE_ELEM( Elem003AF980, 0x14 );
 BFME_PA_ERASE_ELEM( Elem003AF9E0, 0x10 );
