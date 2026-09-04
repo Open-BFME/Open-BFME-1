@@ -82539,11 +82539,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheGameState@@3PAVGameState@@A,0x012EF190,TheGameState singleton; same VA as TheRva005121A0Service
-?Gen005150A0@@YAXPAURva005154F0Elem@@00HPAX@Z,0x005150A0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
-?Gen00513980@@YAXPAURva005154F0Elem@@0PAX@Z,0x00513980,address-derived introsort-layer callee; already-landed Rva00513980; target read from the REL32 at its call site and followed through its ILT thunk
-?setup@Rva0051A5A0Host@@QAEXH@Z,0x00518FF0,address-derived thiscall callee; target read from the REL32 at its call site and followed through its ILT thunk
-?Gen005139E0@@YAXPAPAX0PAX@Z,0x005139E0,address-derived callee; target read from the REL32 at its call site and followed through its ILT thunk
 ??0SaveGameInfo@@QAE@ABV0@@Z,0x00029B86,AvailableGameInfo copy constructor calls the SaveGameInfo copy constructor through this ILT
 g_bfmeVtableVWa,0x010F9AD8,Open-BFME5 the base table the display owner at 0x00491D20 installs first
 g_bfmeVtableVWc,0x010F9C08,Open-BFME5 the owner table the display owner at 0x00491D20 installs second
