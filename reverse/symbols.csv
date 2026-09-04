@@ -2829,6 +2829,7 @@ name,address,notes
 ??0Rva003525E0Pair@@QAE@ABV0@@Z,0x00024C12,Open-BFME5 fresh thiscall copy ctor at ILT of SEH 0x003525E0
 ??0Rva00364980HeapElement@@QAE@ABU0@@Z,0x0001FE6F,REL32 copy-constructor target from 0x003649A2
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
+??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
 ??0Rva003B9AD0Inner@@QAE@ABV0@@Z,0x00018782,8-byte member copy ctor called by 0x003B9AD0; retail call goes through this incremental-link thunk to 0x003B8F80
 ??0Rva003DB640Info@@QAE@PAVPathfinder@@PAVObject@@H@Z,0x00042262,lineBlocked 0x003EE850 payload ctor ILT to 0x003DB640
 ??0Rva003E5A50Info@@QAE@PAVPathfinder@@PAVObject@@H@Z,0x00038E88,lineClear 0x003EE970 payload ctor ILT to 0x003E5A50
@@ -8755,6 +8756,7 @@ name,address,notes
 ??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
 ??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
 ??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
+??_7BfmeOwnVVA@@6B@,0x0110FFEC,Open-BFME5 retail vftable stored by the 0x005D2840 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -11908,6 +11910,11 @@ name,address,notes
 ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
+?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
+?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
+?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
+?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
+?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
 ?areAllQueuesEmpty@Network@@UAE_NXZ,0x00681A10,vtable 0x0111A968 slot 25 (+0x64) via ILT 0x000149E8; tail-jumps conMgr 0x00662DF0 without a null check; that body loops the 8 connections at conMgr+0x04 calling isQueueEmpty@Connection 0x00661C90 = ZH ConnectionManager::canILeave and ZH areAllQueuesEmpty is exactly return m_conMgr->canILeave()
 ?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
@@ -72348,6 +72355,7 @@ name,address,notes
 ?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
 ?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUV@BfmeStrVUV@@QAEXXZ,0x00887940,pin
+?bfmeClearVVA@BfmeStrVVA@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
@@ -74044,6 +74052,7 @@ name,address,notes
 ?bfmeReleaseOld@Gen_00359A80@@QAEXXZ,0x0002594B,Open-BFME5 the release of the old block the vector reserve at 0x00359A80 calls after moving
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
 ?bfmeReleaseRef@BfmeTextureS@@QAEXXZ,0x009EB7A0,Open-BFME5 the reference release the destructor at 0x00757830 runs over its elements
+?bfmeReleaseRefVVA@BfmeTexVVA@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseULD@BfmeCurULD@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVGR@BfmeTexVGR@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseVGS@BfmeTexVGS@@QAEXXZ,0x009EB7A0,pin
@@ -75071,6 +75080,8 @@ name,address,notes
 ?clear@?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAEXXZ,0x00005B73,pinharvest x1 (thunk)
 ?clear@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@QAEXXZ,0x0008F880,NameKeyGenerator aux hash_map hashtable<>::clear() proven via freeSockets tail-jmp
 ?clear@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEXXZ,0x000458BD
+?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
+?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
 ?clear@AsciiString@@QAEXXZ,0x00887940,retail AsciiString::clear body called from DictPair::copyFrom
 ?clear@BaseHeightMapResetList@@QAEX_N@Z,0x0094CE50,BaseHeightMap reset list cleanup helper at +0xC0 and +0xE8
 ?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
@@ -75138,8 +75149,10 @@ name,address,notes
 ?clone_materials@MeshModelClass@@IAEXABV1@@Z,0x0096DDC0,REL32 target of MeshModelClass copy ctor at 0x0094ED42
 ?close@File@@UAEXXZ,0x000309CC,pinharvest x1 (thunk)
 ?close@Open2LiveHandle@@QAEXXZ,0x009DB5A0,Open2 0x006407D0 and 0x00644950 handle close
+?close@PalantirAptWindow@@QAEXH@Z,0x0002144A,AptPalantir OnClosed callback closes its registered APT window
 ?closeDataChunk@DataChunkOutput@@QAEXXZ,0x00004B42
 ?closeKeyboard@DirectInputKeyboard@@IAEXXZ,0x0004A13D,zh_sweep packet 006bb53f callee pin
+?closePortrait@AptPalantirRegionPanel@@QAEXH@Z,0x00021468,AptPalantir OnRegionPortraitClosed dispatches the parsed region identifier
 ?collect@U1Rest_005CD8E0@@QAEXPAXPAVU1Supplier_005CD8E0@@@Z,0x005CD410,member collect tail of 0x005CD8E0; address-derived name
 ?collect@U1Rest_005CE640@@QAEXPAXPAVU1Supplier_005CE640@@@Z,0x005CDD80,member collect tail of 0x005CE640; address-derived name
 ?collect@U1Rest_005CF1F0@@QAEXPAXPAVU1Supplier_005CF1F0@@@Z,0x005CEE90,member collect tail of 0x005CF1F0; address-derived name
@@ -78813,6 +78826,7 @@ name,address,notes
 ?hide@AptPalantir@@QAEX_N@Z,0x0001420E,ILT to body 0x00592CD0; the AptPalantir callback table at 0x00565F30 names its RenderRadar RenderRadarViewBox ClipRadar and OnInitialized methods; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@BannerUI@@QAEX_N@Z,0x0003A062,ILT to body 0x005839D0; BannerUI is independently identified by its existing parser and constructor sources; HideControlBar passes TRUE and ShowControlBar passes FALSE
 ?hide@BfmeQuickMatchHideOptionsGadgetsBody@@QAEX_N@Z,0x000459B2,Open-BFME5 ILT hideOptionsGadgets at 0x00505670 the showInfo body at 0x00505C00 calls
+?hide@Radar@@QAEXXZ,0x0001827D,AptPalantir immediate-hide notification guarded by TheRadar
 ?hide@Rva00592D60Panel@@QAEX_N@Z,0x00027F2A,address-derived panel hide thunk called by the 0x00592D60 update
 ?hide@Shell@@QAEX_N@Z,0x000428ED,GameLogic::prepareNewGame direct-call ILT thunk
 ?hideAptWindow@WindowManager@@QAE_NH@Z,0x0002144A,BannerUI::hide(TRUE) call; WindowManager entry 0x00467460 hides the indexed APT window when its slot is active
@@ -80146,7 +80160,9 @@ name,address,notes
 ?second@Gen_00943CF0@@AAEXPAX000@Z,0x009433A0,address-derived helper call recovered from 0x00943CF0
 ?second@Rva003C0E40@@QAEXH@Z,0x003BEBA0,second half of the chained pair at 0x003C0E40; address-derived name
 ?secondaryValueFor@Rva0036AF30Item@@QBEHPBVObject@@@Z,0x0003E1A3,retail jump thunk to the byte-verified secondary state lookup at 0x00369120
+?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
+?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
 ?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
 ?send@BfmeMgr089@@QAEXPAX0@Z,0x0002836C,pin
 ?send@BfmeOwner803A00@@QAEXPAVBfmeMsg803A00@@@Z,0x008038F0,FESL submit for 0x00803A00
