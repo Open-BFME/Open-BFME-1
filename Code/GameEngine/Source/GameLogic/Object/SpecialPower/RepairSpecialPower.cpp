@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class RepairSpecialPower : public SpecialPowerModule
 {
 public:
 	RepairSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~RepairSpecialPower();
 };
 
 RepairSpecialPower::RepairSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+RepairSpecialPower::~RepairSpecialPower()
 {
 }

@@ -24595,3 +24595,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00263b50@@UAEPAXI@Z,0x00263B50,address-derived identity replaced by byte-verified PlayerHealSpecialPower destructor
 ??1Rva00263FA0MultiTailDtor@@UAE@XZ,0x00263FA0,address-derived identity replaced by byte-verified PlayerUpgradeSpecialPower destructor
 ??_GGen_dtor_00264090@@UAEPAXI@Z,0x00264090,address-derived identity replaced by byte-verified PlayerUpgradeSpecialPower destructor
+??1Rva00264840MultiTailDtor@@UAE@XZ,0x00264840,address-derived identity replaced by byte-verified RepairSpecialPower destructor
+??_GGen_dtor_00264920@@UAEPAXI@Z,0x00264920,address-derived identity replaced by byte-verified RepairSpecialPower destructor
