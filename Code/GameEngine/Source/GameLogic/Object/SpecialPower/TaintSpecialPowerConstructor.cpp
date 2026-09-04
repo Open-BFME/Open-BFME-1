@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class TaintSpecialPower : public SpecialPowerModule
 {
 public:
 	TaintSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~TaintSpecialPower();
 };
 
 TaintSpecialPower::TaintSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+TaintSpecialPower::~TaintSpecialPower()
 {
 }
