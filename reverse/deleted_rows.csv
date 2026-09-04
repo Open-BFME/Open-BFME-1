@@ -24460,3 +24460,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Rva00707090@@QAE@XZ,0x00707090,Address-derived constructor replaced by RoadType::RoadType; adjacent RoadType destructor and upstream field order identify the 0x24-byte object.
 ??0Gen_00707170@@QAE@XZ,0x00707170,Generated identity replaced by RoadSegment::RoadSegment; the 0xBC-byte layout and adjacent RoadSegment assignment operator identify the constructor.
 ??0Gen_004ADC80@@QAE@XZ,0x004ADC80,"generic clean-C++ identity replaced by ControlBarSchemeManager::ControlBarSchemeManager; upstream layout, matching destructor, and constructor operations identify the same 16-byte object"
+??0LaserUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035D91,wrong identity removed: this incremental-link thunk jumps to the independently matched ToppleUpdate constructor and is called only by ToppleUpdate ModuleFactory
+??0Rva603790Ctor@@QAE@PAVThing@@PBVModuleData@@@Z,0x00603790,address-derived identity replaced by LaserUpdate::LaserUpdate; the LaserUpdate ModuleFactory ILT at 0x00006780 jumps to this body
