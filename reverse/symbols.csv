@@ -82395,3 +82395,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_aptPalantirOne@@3PADA,0x00D09E6C,AptPalantir one literal
 ?g_aptPalantirNumberFormat@@3PADA,0x00C7C7B4,AptPalantir integer format literal
 ?g_aptPalantirHideAlert@@3PADA,0x00D096FC,AptPalantir HideAlert action name
+?emptyParticleSystem@@YAPAVParticleSystem@@XZ,0x00001B18,tracked particle-system handle null object
+?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ,0x00029208,tracked slave particle-system accessor
+??1ParticleSystemHandle@@QAE@XZ,0x00013994,tracked particle-system handle unlink destructor
