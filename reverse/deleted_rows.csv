@@ -24440,3 +24440,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeGoDZC@BfmeThingDZC@@QAE_NXZ,0x00662E30,Duplicate generated identity removed; caller-backed BFMEConnectionManager::hasLeaveRequestTimedOut owns this exact 42-byte body.
 ?bfmeGoNG@@YAXXZ,0x00662CE0,Duplicate generated identity removed; caller-backed BFMEConnectionManager::playMessageReceivedSound owns this exact 40-byte body.
 ?bfmeGo1032D@BfmeD1032@@QAEXH@Z,0x00663750,Duplicate generated identity removed; caller-backed BFMEConnectionManager::voteForPlayerDisconnect owns this exact 26-byte body.
+?copy@Rva000C94D0@@QAEEPAURva000C94D0Vec@@@Z,0x000C94D0,Address-derived duplicate removed; Player::getAiBaseCenter owns this exact caller-backed 46-byte body.
+?wrap@Rva000C9480@@QAEHXZ,0x000C9480,Address-derived duplicate removed; Player::getPlayerDifficulty owns this exact 27-byte body.
+?set@Rva000C9C70@@QAEXH@Z,0x000C9C70,Address-derived duplicate removed; Player::setAttackedBy owns this exact caller-backed 30-byte body.
