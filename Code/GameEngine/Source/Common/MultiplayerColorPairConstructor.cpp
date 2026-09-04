@@ -38,6 +38,7 @@ namespace _STL
 	{
 		pair(const int &firstValue, const MultiplayerColorDefinition &secondValue);
 		pair(const pair &other);
+		~pair(void);
 
 		const int first;
 		MultiplayerColorDefinition second;
@@ -51,6 +52,10 @@ namespace _STL
 
 	pair<const int, MultiplayerColorDefinition>::pair(const pair &other) :
 		first(other.first), second(other.second)
+	{
+	}
+
+	pair<const int, MultiplayerColorDefinition>::~pair(void)
 	{
 	}
 }
