@@ -82734,3 +82734,7 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GCombineHordeSpecialPower@@MAEPAXI@Z,0x000086D9,primary class vtable slot zero ILT to 0x00259870
 ??1DarknessSpecialPower@@MAE@XZ,0x00029A28,destructor ILT to 0x00259BD0
 ??_GDarknessSpecialPower@@MAEPAXI@Z,0x0001F8D4,primary class vtable slot zero ILT to 0x00259CA0
+?Get_Single_Texture@MeshMatDescClass@@QBE?AVBfmeHandleCX@@HH@Z,0x0092C9D0,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Get_Texture@MeshMatDescClass@@QBE?AVBfmeHandleCX@@HHH@Z,0x00929A20,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Set_Single_Texture@MeshMatDescClass@@QAEXABVBfmeHandleCX@@HH@Z,0x00929900,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Set_Texture@MeshMatDescClass@@QAEXHABVBfmeHandleCX@@HH@Z,0x0092C220,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
