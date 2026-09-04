@@ -82460,3 +82460,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??$find@I@?$_Rb_tree@IU?$pair@$$CBIUBfmePackedMapVal20@@@_STL@@U?$_Select1st@U?$pair@$$CBIUBfmePackedMapVal20@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIUBfmePackedMapVal20@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIUBfmePackedMapVal20@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIUBfmePackedMapVal20@@@_STL@@@2@@1@ABI@Z,0x000369BC,ICF twin of unsigned-key Rb_tree::find at 0x404A70 via ILT; callee of BfmePackedUshortMapHost::findPacked @ 0x4063C0
