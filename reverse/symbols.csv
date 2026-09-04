@@ -35468,7 +35468,6 @@ name,address,notes
 ?b_002ce450@@YAXXZ,0x002CE450,gen-thunk body
 ?b_002ce4e0@@YAXXZ,0x002CE4E0,gen-thunk body
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
-?b_002ce5b0@@YAXXZ,0x002CE5B0,gen-thunk body
 ?b_002ce7c0@@YAXXZ,0x002CE7C0,gen-thunk body
 ?b_002ce7e0@@YAXXZ,0x002CE7E0,gen-thunk body
 ?b_002ce800@@YAXXZ,0x002CE800,gen-thunk body
@@ -72499,7 +72498,6 @@ name,address,notes
 ?bfmeChanged@Gen_00505550@@AAEXXZ,0x00023A29,Open-BFME5 the member the change-setter at 0x00505550 calls
 ?bfmeChanged@Gen_005899B0@@AAEXXZ,0x0001D354,Open-BFME5 the member the change-setter at 0x005899B0 calls
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
-?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
 ?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
 ?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
@@ -82758,3 +82756,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1RailedTransportDockUpdate@@MAE@XZ,0x00007FD6,destructor ILT to 0x002CE2D0
 ??_GRailedTransportDockUpdate@@MAEPAXI@Z,0x00036877,primary vftable slot zero ILT to 0x002CE580
 ??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
+?isClearToEnter@DockUpdate@@UBE_NPBVObject@@@Z,0x000422E9,RailedTransportDockUpdate override base-call ILT to 0x002CA770
+?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z,0x00009B47,DockUpdateInterface vftable slot 0x0C ILT to 0x002CE5B0
