@@ -24443,3 +24443,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?copy@Rva000C94D0@@QAEEPAURva000C94D0Vec@@@Z,0x000C94D0,Address-derived duplicate removed; Player::getAiBaseCenter owns this exact caller-backed 46-byte body.
 ?wrap@Rva000C9480@@QAEHXZ,0x000C9480,Address-derived duplicate removed; Player::getPlayerDifficulty owns this exact 27-byte body.
 ?set@Rva000C9C70@@QAEXH@Z,0x000C9C70,Address-derived duplicate removed; Player::setAttackedBy owns this exact caller-backed 30-byte body.
+?Reset@Line3DClassResetThunk@@QAEXABVVector3@@0M@Z,0x009520C0,Synthetic derived-class duplicate removed; canonical Line3DClass::Reset owns the exact 336-byte upstream-backed body.

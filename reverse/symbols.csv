@@ -82718,19 +82718,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?fillCurrentLANGameInfo@@YAXPADI@Z,0x0002A6D5,three LAN message-building callers identify the current-game serializer helper
-?isLocalPlayer@LANGameSlot@@QBE_NXZ,0x0002DB2D,LANGameSlot local-player predicate used before serializing current game state
-?resetPlayerLeaveStatus@GameLogic@@QAEXXZ,0x00383B00,Network::init caller and PlayerLeaveStatus diagnostic identify the eight-record reset method
-?getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,indexed accessor adjacent to the matched setter over the same eight PlayerLeaveStatus records
-_g_heightMapRenderObjVtableAtZero,0x00D1DC88,HeightMapRenderObjClass primary vtable used by its BFME constructor
-_g_heightMapRenderObjVtableAtEight,0x00D1DC80,HeightMapRenderObjClass secondary vtable at object offset 8
-_g_heightMapRenderObjVtableAtC8,0x00D1DC74,HeightMapRenderObjClass secondary vtable at object offset 0xC8
-_g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vtable at object offset 0xCC
-?TheHeightMap@@3PAVHeightMapRenderObjClass@@A,0x00EF8008,global current HeightMapRenderObjClass assigned by its constructor
-?findAptMovieIndex@WindowManager@@QAEHABVAsciiString@@@Z,0x0046CB50,BannerUI.apt callers identify the movie registry index lookup body
-?find@AptMovieRegistry@@QAEPAUAptMovieRecord@@ABVAsciiString@@@Z,0x00014D49,WindowManager APT movie registry lookup thunk
-?getCountForCategoryMask@AttributeModifierPoolUpdate@@QBEHPBVAttributeModifierCategoryMask@@@Z,0x00021323,category-mask count lookup used by both AttributeModifierDefinition value selectors
-?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,module-name-key-based AttributeModifierPoolUpdate finder used by modifier application and value selection
 ?applyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Object wrapper forwards named modifier application to the pool through this ILT
 ?getAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Object wrapper identifies the multiplicative AttributeModifierPoolUpdate accumulator ILT
 ?getAttributeModifierBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,vision-range and healing callers identify the additive AttributeModifierPoolUpdate accumulator ILT
