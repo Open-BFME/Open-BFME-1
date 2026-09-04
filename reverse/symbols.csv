@@ -9675,6 +9675,7 @@ name,address,notes
 ??_7BfmeOwnVTY@@6B@,0x010E7688,Open-BFME5 retail vftable stored by the 0x00339DA0 constructor
 ??_7BfmeOwnVUH@@6B@,0x0109DE9C,Open-BFME5 retail derived vftable stored by the 0x001B5550 destructor
 ??_7BfmeOwnVUJ@@6B@,0x010FB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
+??_7BfmeOwnVUM@@6B@,0x010E8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73600,6 +73601,7 @@ name,address,notes
 ?bfmeClearELAa@BfmeThingELAb@@QAEXXZ,0x0004278A,pin
 ?bfmeClearMembers@@YAXPAVLGA_MemberObj@@@Z,0x00034DC9,Open-BFME5 ILT thunk to body 0x003D4080; ??1LGA_MemberObj@@QAE@XZ at 0x003D4490 calls it on this as a cdecl of one pointer before its member vector is released; address-derived name
 ?bfmeClearNVUL@BfmeStrNVUL@@AAEXXZ,0x00887940,pin
+?bfmeClearNVUM@BfmeStrNVUM@@AAEXXZ,0x00887940,pin
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
@@ -73615,6 +73617,7 @@ name,address,notes
 ?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
+?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
