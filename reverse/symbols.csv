@@ -9570,6 +9570,7 @@ name,address,notes
 ??4WtVecPod12@@QAEAAV0@ABV0@@Z,0x000185BB,WeaponTemplate::operator= 12-byte-element vector assign ILT (body 0x001E71D0)
 ??4Y3AssignTail_005CBEE0@@QAEAAV0@ABV0@@Z,0x005CBEE0,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ??4_ArcInfoStruct@VehicleCurveClass@@QAEAAU01@ABU01@@Z,0x00933C60,additive pin -- second copy of the assignment op compiled against a 116-byte _ArcInfoStruct (packet 009347c0)
+??4locale@_STL@@QAEAAV01@ABV01@@Z,0x00832180,STLport locale assign non-const-ref return; twin of ABV pin for ios_base::imbue
 ??4locale@_STL@@QAEABV01@ABV01@@Z,0x00832180,STLport 4.5.3 locale assignment; address read from the retail pubimbue REL32 displacement
 ??8?$VectorClass@H@@UBE_NABV0@@Z,0x00AFEDF0
 ??8@YAHABVMatrix4x4@@0@Z,0x00B01950,zh-sweep callee pin derived from retail REL32 displacement
@@ -79262,6 +79263,7 @@ name,address,notes
 ?grabMultiPlayerInfo@@YAXXZ,0x004E8050,body of the ILT 0x00042640 already pinned under this name; ZH grabMultiPlayerInfo: map<Int Player*> scores (erase 0x004E3060 dtor 0x004E4CF0) MutiPlayer_ScoreScreen backdrop via findImageByName then for 8 slots TheGameInfo->getSlot(i) name key -> ThePlayerList->findPlayerWithNameKey -> calculateScore (0x000E8D90) keyed with the adder trick; hideWindows(count) 0x004E8204; observers -> setObserverWindows 0x004E8230 else populatePlayerInfo 0x004E8237; callers initSkirmish 0x004E883A initLAN 0x004E8A7B initInternet 0x004E8B90 initReplayMulti 0x004E8D1A
 ?grabSinglePlayerInfo@@YAXXZ,0x004E8320,ZH grabSinglePlayerInfo: local player (or first human when observer) -> populatePlayerInfo(p 0) 0x004E8393; then the 6-relation loop USA/CHINA/GLA x FRIEND/ENEMY with the Generals literals America China GLA (0x01100C5C/4C/40) over 32 players (getNthPlayer) gated by isInSinglePlayerGame 0x004E850E || isPlayerActive and getRelationship==ALLIES(2)/ENEMIES(0) accumulating ScoreGather then label GUI:+side+Allies/Enemies -> TheGameText->fetch -> populateSideInfo 0x004E86B6; hideWindows(count) 0x004E86E8; ILT 0x000077C5; callers initSinglePlayer 0x004E8936 initReplaySinglePlayer 0x004E89CA
 ?grantScience@Player@@QAEXW4ScienceType@@@Z,0x0000C33D,ILT thunk to Player::grantScience; identity from Zero Hour ScriptActions.cpp doPlayerGrantScience
+?groupAttackArea@AIGroup@@QAEXPAVPolygonTrigger@@W4CommandSourceType@@@Z,0x0002D5B5,ILT to 0x00156A30; callee of doTeamAttackArea 0x002F2A50
 ?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00041CD1
 ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z,0x0001C0D0,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
@@ -82815,6 +82817,7 @@ __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWaitVHM@@YGKPAXK@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__AIL_enumerate_3D_providers@12,0x013595AC,Open-BFME5 retail mss32 AIL_enumerate_3D_providers import pointer
+__imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::move; same slot as memmove
 __imp__GetLocalTime@4,0x01358DB8,Open-BFME5 retail GetLocalTime import pointer
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
