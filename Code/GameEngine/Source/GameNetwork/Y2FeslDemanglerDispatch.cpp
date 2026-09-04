@@ -1,10 +1,7 @@
-// ?onDispatch@Rva00800E50Owner@@QAEXPAURva00800E50Header@@@Z
-// partial score=0.99 date=2026-09-04
 // cl: /GX-
 // jabba gamebrowserdemangler.cpp inbound dispatch @ 0x00800E50 (230B).
 // Logs "<-D", promotes raw header into Rva007E8810, switches on FourCC:
 // ECHO -> onConnectReply; PROB+flag -> bfmeDo1052; PROB -> bfmeFreeVNC.
-// Residue: retail jns vs ours jge after test eax,eax (same predicate; known emitter).
 
 class Rva007E8810Message
 {
@@ -67,7 +64,8 @@ void Rva00800E50Owner::onDispatch( Rva00800E50Header *hdr )
 	char flagged;
 
 	flags = hdr->m_04;
-	if( flags < 0 && ( flags & 0x40000000 ) )
+	// Bit-form of the sign test emits retail's jns (flags < 0 emits jge).
+	if( ( flags & 0x80000000 ) && ( flags & 0x40000000 ) )
 		flagged = 1;
 	else
 		flagged = 0;
@@ -76,8 +74,7 @@ void Rva00800E50Owner::onDispatch( Rva00800E50Header *hdr )
 
 	{
 		Rva007E8810Message msg;
-		// Init order counter-swaps MSVC's load emission so retail's
-		// [esi+0xc] then [esi+8] pair lands, with m_14/m_10 correct.
+		// Counter-swap load temps so MSVC emits retail [esi+0xc] then [esi+8].
 		int first;
 		int second;
 		int t04;

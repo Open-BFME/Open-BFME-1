@@ -83849,3 +83849,7 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?measure@Rva00802550Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x008023B0,demangler fill 0x802550 measure sibling pin
+?Rva007F91D0@@YAXPAURva00800E50Header@@PBD@Z,0x007F91D0,jabba demangler inbound dispatch log helper
+?bfmeDo1052@Rva00800E50Owner@@QAEXHPAURva00800E50Stamp@@H@Z,0x00800BD0,jabba demangler PROB+flag handler alias of 0x800BD0
+?bfmeFreeVNC@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800CD0,jabba demangler PROB handler alias of 0x800CD0
+?onConnectReply@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800780,jabba demangler ECHO handler alias of landed 0x800780
