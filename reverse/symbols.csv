@@ -4761,7 +4761,6 @@ name,address,notes
 ??1Gen_dtor_002ceea0@@UAE@XZ,0x00038BC2,gen-dtor class destructor
 ??1Gen_dtor_002cf290@@UAE@XZ,0x000016E5,gen-dtor class destructor
 ??1Gen_dtor_002cf860@@UAE@XZ,0x0003F896,gen-dtor class destructor
-??1Gen_dtor_002cfb30@@UAE@XZ,0x00012157,gen-dtor class destructor
 ??1Gen_dtor_002cfee0@@UAE@XZ,0x000172BF,gen-dtor class destructor
 ??1Gen_dtor_002d0780@@UAE@XZ,0x0004B295,gen-dtor class destructor
 ??1Gen_dtor_002d18c0@@UAE@XZ,0x0003FF58,gen-dtor class destructor
@@ -35501,8 +35500,6 @@ name,address,notes
 ?b_002cfa50@@YAXXZ,0x002CFA50,gen-thunk body
 ?b_002cfac0@@YAXXZ,0x002CFAC0,gen-thunk body
 ?b_002cfb00@@YAXXZ,0x002CFB00,gen-thunk body
-?b_002cfb30@@YAXXZ,0x002CFB30,gen-thunk body
-?b_002cfb60@@YAXXZ,0x002CFB60,gen-thunk body
 ?b_002cfb70@@YAXXZ,0x002CFB70,gen-thunk body
 ?b_002cfc30@@YAXXZ,0x002CFC30,gen-thunk body
 ?b_002cfc60@@YAXXZ,0x002CFC60,gen-thunk body
@@ -82758,3 +82755,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1SupplyCenterDockUpdateModuleData@@UAE@XZ,0x0002EE56,destructor ILT to 0x002CF600
 ??_GSupplyCenterDockUpdateModuleData@@UAEPAXI@Z,0x00009F2A,class vftable slot zero ILT to 0x002CF5D0
 ?Get_Frame_Row_Column_Count_Log2@PointGroupClass@@QAEEXZ,0x00912120,ParticleBuffer copy constructor 0x00989A20 call at +0xE7A; getter reads PointGroup FrameRowColumnCountLog2 byte +0x20
+??1SupplyWarehouseDockUpdateModuleData@@UAE@XZ,0x00012157,destructor ILT to 0x002CFB60
+??_GSupplyWarehouseDockUpdateModuleData@@UAEPAXI@Z,0x0003C7F4,class vftable slot zero ILT to 0x002CFB30
