@@ -82734,3 +82734,6 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GGrantUpgradeCreate@@MAEPAXI@Z,0x000080DA,primary class vtable slot zero ILT to 0x0024F9A0
 ??1PreorderCreate@@MAE@XZ,0x00042D75,destructor ILT to 0x0024FEC0
 ??_GPreorderCreate@@MAEPAXI@Z,0x00049823,primary class vtable slot zero ILT to 0x0024FF90
+??0AsciiStringXK@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXK@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXK@@QAEXABV1@@Z,0x00887C90,pin
