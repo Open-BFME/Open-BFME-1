@@ -540,6 +540,11 @@ name,address,notes
 ??$_M_allocate_and_copy@PAUGen_t_007709c0_p24cd@@@?$vector@UGen_t_007709c0_p24cd@@V?$allocator@UGen_t_007709c0_p24cd@@@_STL@@@_STL@@IAEPAUGen_t_007709c0_p24cd@@IPAU2@0@Z,0x00769170,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBQAVObject@@@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEPAPAVObject@@IPBQAV2@0@Z,0x0004547B,ILT thunk -> 0x4a0140 (vector<Object*>::operator= callee)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001A780,ILT thunk -> 0x003CEAE0 (vector<void*>::operator= callee; const-iterator form)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
 ??$_M_allocate_and_copy@PBUGen_t_00095d30_p8pod@@@?$vector@UGen_t_00095d30_p8pod@@V?$allocator@UGen_t_00095d30_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_00095d30_p8pod@@IPBU2@0@Z,0x00095760,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000a7cb0_p4pod@@@?$vector@UGen_t_000a7cb0_p4pod@@V?$allocator@UGen_t_000a7cb0_p4pod@@@_STL@@@_STL@@IAEPAUGen_t_000a7cb0_p4pod@@IPBU2@0@Z,0x000A7820,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000b0560_p8pod@@@?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_000b0560_p8pod@@IPBU2@0@Z,0x000B0200,gen-tgrid payload member
@@ -2987,6 +2992,7 @@ name,address,notes
 ??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0Snapshot@@QAE@XZ,0x00044030,ILT thunk; real body 0x627200
 ??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
+??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,pinharvest x1 (thunk)
 ??0SpawnBehaviorFourthBase@@QAE@XZ,0x0003D24E,SpawnBehavior fourth interface base constructor ILT
 ??0SpawnBehaviorModuleDataMemberC@@QAE@XZ,0x000071E4,Open-BFME5 constructor callee pin
@@ -8806,6 +8812,7 @@ name,address,notes
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
 ??_7Rva00490350Base@@6B@,0x010F9AD8,address-derived base vtable at retail 0x00490350
 ??_7Rva00490350Derived@@6B@,0x010F9AE4,address-derived derived vtable at retail 0x00490350
@@ -9038,12 +9045,18 @@ name,address,notes
 ?BfmeCopyBackward002DFC60@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00002289,address-scoped spelling for the 12-byte S4SortElem copy_backward ILT called by retail 0x002E0FE0
 ?BfmeCopyBackward0052D370@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00019CBD,address-scoped spelling for the 12-byte copy_backward ILT called by retail 0x0052FE90
 ?BfmeCopyBackward00570F50@_STL@@YAPAUS4SortElem12@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x0002ABE9,address-scoped spelling for the 12-byte POD copy_backward ILT called by retail 0x00573900
+?BfmeCurrentCaps@@3PAEA,0x01340578,Open-BFME5 DX8 caps object pointer; NPatches flag at +0x13b as dx8indexbuffer.cpp already reads
 ?BfmeDetonatorInfoUninitializedCopy@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@00ABU__false_type@1@@Z,0x00027782,Open-BFME5 ILT for _STL::__uninitialized_copy on MinefieldBehavior DetonatorInfo at 0x00570920
 ?BfmeDetonatorInfoUninitializedFillN@_STL@@YAPAUDetonatorInfo@MinefieldBehavior@@PAU23@IABU23@ABU__false_type@1@@Z,0x00019E89,Open-BFME5 ILT for _STL::__uninitialized_fill_n on MinefieldBehavior DetonatorInfo at 0x00570970
+?BfmeDynamicDX8VertexBuffer@@3PAVBfmeDX8VertexBuffer@@A,0x01346754,Open-BFME5 per-slot DX8 buffer pointers BoxDynamicVBAccess allocate at 0x0091F5B0 stores
 ?BfmeDynamicDX8VertexBufferInUse@@3PA_NA,0x01346740,Open-BFME5 per-slot in-use flags the BoxDynamicVBAccessClass destructor at 0x0091D9E0 clears; DIR32 sites are masked by the byte gate so this records which global it is
 ?BfmeDynamicDX8VertexBufferOffset@@3PAGA,0x01346794,Open-BFME5 per-slot vertex offsets the BoxDynamicVBAccessClass destructor at 0x0091D9E0 advances
+?BfmeDynamicDX8VertexBufferSize@@3PAGA,0x013467B4,Open-BFME5 per-slot DX8 capacities BoxDynamicVBAccess allocate at 0x0091F5B0 grows
+?BfmeDynamicFVFTable@@3PAIA,0x0113BD28,Open-BFME5 per-slot FVF words BoxDynamicVBAccess DX8 allocate at 0x0091F5B0 passes to the 0x20-byte ctor
+?BfmeDynamicSortingVertexArray@@3PAVSortingVertexBufferClass@@A,0x013467DC,Open-BFME5 sorting-array buffer pointer BoxDynamicVBAccess allocate at 0x0091F040 stores
 ?BfmeDynamicSortingVertexArrayInUse@@3_NA,0x013467D8,Open-BFME5 sorting-array in-use flag the BoxDynamicVBAccessClass destructor at 0x0091D9E0 clears
 ?BfmeDynamicSortingVertexArrayOffset@@3GA,0x013467E4,Open-BFME5 sorting-array vertex offset the BoxDynamicVBAccessClass destructor at 0x0091D9E0 advances
+?BfmeDynamicSortingVertexArraySize@@3GA,0x013467E0,Open-BFME5 sorting-array capacity BoxDynamicVBAccess allocate at 0x0091F040 grows
 ?BfmeElementConstruct@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@1@ABU21@@Z,0x0002A400,Open-BFME5 ILT for _STL::_Construct on pair<ICoord2D Coord3D> as its vector _M_insert_overflow reaches it
 ?BfmeElementConstruct@_STL@@YAXPAU?$pair@W4ObjectID@@I@1@ABU21@@Z,0x000267F6,Open-BFME5 ILT for _STL::_Construct on pair<ObjectID unsigned int> as vector<pair<ObjectID unsigned int>>::_M_insert_overflow reaches it
 ?BfmeElementConstruct@_STL@@YAXPAU?$pair@W4ObjectID@@W41@@1@ABU21@@Z,0x0001FA1E,Open-BFME5 ILT for _STL::_Construct on pair<ObjectID ObjectID> as vector<pair<ObjectID ObjectID>>::_M_insert_overflow reaches it
@@ -9875,6 +9888,7 @@ name,address,notes
 ?TheCreateObjectDiePool@?1??getClassMemoryPool@CreateObjectDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFBFC,pool-glue cascade static (back-solved)
 ?TheCrushDiePool@?1??getClassMemoryPool@CrushDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC04,pool-glue cascade static (back-solved)
 ?TheCurrentBannerMovie@@3HA,0x00EB8188,BannerUI movie-operation selection read and cleared by the callback installed at 0x0058327D
+?TheDX8Caps@@3PAEA,0x01340578,caps pointer Allocate_DX8_Dynamic_Buffer reads at +0x13b for NPATCHES
 ?TheDefaultProductionExitUpdatePool@?1??getClassMemoryPool@DefaultProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04F4,pool-glue cascade static (back-solved)
 ?TheDefectorSpecialPowerPool@?1??getClassMemoryPool@DefectorSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC74,pool-glue cascade static (back-solved)
 ?TheDeletionUpdatePool@?1??getClassMemoryPool@DeletionUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF00,pool-glue cascade static (back-solved)
@@ -11888,6 +11902,7 @@ name,address,notes
 ?applyPacket@Rva0015A190Owner@@QAEXPAURva0015A190Packet@@H@Z,0x00048C43,ILT to 0x00159AD0 from applyOrFallback 0x0015A190
 ?applyRva1C7370@Object@@QAEXABVModelConditionFlags@@_N@Z,0x000307E7,Open-BFME6 RVA 162CD0 flag-apply helper call pin
 ?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00025162,address-derived second target updater called by retail 0x002D9510
+?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
 ?applySingle@Gen00587600@@QAEXH@Z,0x000489D2,Open-BFME5 fresh ILT alias for the single-argument sibling at 0x0051A820
 ?applyStagingRoomRefresh@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x00022999,ILT of CustomMatch staging-list refresh callee used by 0x00544DD0
 ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
@@ -72315,6 +72330,7 @@ name,address,notes
 ?bfmeClearNVUL@BfmeStrNVUL@@AAEXXZ,0x00887940,pin
 ?bfmeClearNVUM@BfmeStrNVUM@@AAEXXZ,0x00887940,pin
 ?bfmeClearNVUN@BfmeStrNVUN@@AAEXXZ,0x00887940,pin
+?bfmeClearNVUY@BfmeStrNVUY@@AAEXXZ,0x00887940,pin
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
@@ -72336,6 +72352,7 @@ name,address,notes
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUN@BfmeStrWVUN@@AAEXXZ,0x008881D0,pin
+?bfmeClearWVUY@BfmeStrWVUY@@AAEXXZ,0x008881D0,pin
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -72916,7 +72933,6 @@ name,address,notes
 ?bfmeFlagForRead@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0004278F,read-only flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlagForWrite@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0002E1CC,writable flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlush1038@@YAXXZ,0x00897110,pin
-?refreshGameSlots@SkirmishScreenState@@QAEXXZ,0x00024267,Skirmish pending-update dispatcher call
 ?bfmeFlush11@SkirmishScreenState@@QAEXXZ,0x000091C4,ILT thunk to assigned body 0x0052A940
 ?bfmeFlush1282@BfmeBroadcast1282@@QAEXXZ,0x008A1940,address-derived final queue flush called by the 0x008BAAB0 retail body
 ?bfmeFlush1285@BfmeBroadcast1285@@QAEXXZ,0x008A1940,address-derived queue flush called by the 0x008BB570 retail body
@@ -73229,7 +73245,6 @@ name,address,notes
 ?bfmeFwdTwoSVA@BfmeThingSVA@@QAEXHH@Z,0x008309C0,pin
 ?bfmeG1076@BfmeQ1076@@QAEXH@Z,0x0003936A,pin
 ?bfmeG@BfmeList2F260@@QAEXHH@Z,0x0002818C,Open-BFME6 list method tail-called by Gen_0022F260 forwarder; body at 0x000688A5
-?refreshGameSlot@SkirmishScreenState@@QAEXH@Z,0x00018C1E,Skirmish pending-update dispatcher call
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00029C35,address-derived helper; target read from the first REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002D38A@Gen_00529B10@@QAEXH@Z,0x0002D38A,address-derived helper; target read from the third REL32 in the guarded eight-index loop at 0x00529B10
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x0002EA91,address-derived helper; target read from the second REL32 in the guarded eight-index loop at 0x00529B10
@@ -74619,6 +74634,7 @@ name,address,notes
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
+?bfmeTranslateVUY@BfmeStrWVUY@@QAEXABVBfmeStrNVUY@@@Z,0x008891F0,pin
 ?bfmeTry1009@BfmeC1009@@QAEDPAX0@Z,0x0001D813,pin
 ?bfmeTry1033@BfmeSub1033@@QAEHPAVBfmeF1033@@@Z,0x000220C5,pin
 ?bfmeTry996@BfmeB996@@QAEDHHPAD@Z,0x00038163,pin
@@ -77610,6 +77626,7 @@ name,address,notes
 ?getMaxHeightAbovePosition@GeometryInfo@@QBEMXZ,0x0087E000,Open-BFME5 called by ?getFiringLineOfSightOrigin@Weapon@@IBEXPBVObject@@AAUCoord3D@@@Z at 0x001E1A30
 ?getMaxHeightBelowPosition@GeometryInfo@@QBEMXZ,0x0087E070,Open-BFME5 GeometryInfo lower extent paired with the independently pinned upper-extent body and called by calcPitches
 ?getMinimumAttackRange@WeaponTemplate@@QBEMXZ,0x0001D7F5,ILT 0x0001D7F5 -> 0x001E15D0 matched getMinimumAttackRange; BezierProjectile fire-at
+?getMissionObjectiveCount@CampaignManager@@QAEHXZ,0x0002A62B,ILT to 0x003BDF70 for ScoreKeeper::countMissionObjectives
 ?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ,0x00043EEB
 ?getModelConditionForWeaponSlot@WeaponSet@@SA?AV?$BitFlags@$0BEA@@@W4WeaponSlotType@@W4WeaponSetConditionType@@@Z,0x0004ADC7,BFME WeaponSet model-condition lookup called by Object weapon-status update
 ?getModelIndices@W3DBridge@@IAEHPAGHHPAVMeshClass@@@Z,0x0003881B
@@ -79148,6 +79165,9 @@ name,address,notes
 ?isLocalPlayerNextPacketRouter@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,0x0003904F,DisconnectManager status update local-router gate through ILT to the existing 0x0066C260 body
 ?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z,0x0003E504,Open-BFME5 ILT; called by ?isSupplySourceSafe@AIPlayer@@QAE_NH@Z at 0x00166A10
 ?isMassSelectable@Object@@QBE_NXZ,0x00001C03,Open-BFME5 ILT; called by ?isMassSelectable@Drawable@@QBE_NXZ at 0x00411FE0
+?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z,0x0000DFDA,ILT to 0x003BF6C0 for ScoreKeeper::countMissionObjectives
+?isMissionObjectiveEligible@CampaignManager@@QAEEH@Z,0x00039A77,ILT to 0x003BF630 for ScoreKeeper::countMissionObjectives
+?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z,0x00013084,ILT to 0x003BDFB0 for ScoreKeeper::countMissionObjectives
 ?isMobile@Object@@QBE_NXZ,0x00017607,Open-BFME5 the thunk AIUpdateInterface privateDock tests before docking; Zero Hour names the same call
 ?isMultiplayer@RecorderClass@@QAE_NXZ,0x0004A7A5,retail target of getSciencePurchaseCost REPLAY-mode check; thunk-table entry (real body FUN_00497800); Bool RecorderClass::isMultiplayer(void) per reference Recorder.h
 ?isNone@AsciiString@@QBE_NXZ,0x008881A0,same body the ledger claims as StringBase<char>::isNone; pinned from findSingleSubObj @0x761F40
@@ -79769,8 +79789,15 @@ name,address,notes
 ?refresh@Rva00454200Element@@QAEXXZ,0x000102FD,Open-BFME5 ILT reached by the cursor advance at 0x00454200
 ?refresh@Rva0060C120@@QAEXXZ,0x00025CED,Open2 0x0060C120 callee (ILT -> 0x0061CE00)
 ?refresh@Rva00845250Node@@QAEXXZ,0x00833D90,U2 lane: member called on both arguments of the comparison at 0x00845250; unnamed dump elsewhere
+?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ,0x0000F94D,Skirmish state pending-update dispatcher call
 ?refreshAmbientSound@Drawable@@AAEXXZ,0x0002E564,Drawable::replaceModelConditionState reaches the no-argument ambient-state callee through its retail ILT
+?refreshGameSlot@SkirmishScreenState@@QAEXH@Z,0x00018C1E,Skirmish pending-update dispatcher call
+?refreshGameSlots@SkirmishScreenState@@QAEXXZ,0x00024267,Skirmish pending-update dispatcher call
 ?refreshPair@@YGXHH@Z,0x00019E6B,pin stdcall 6x2 refresh helper ILT->0x00699180
+?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
+?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
+?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
+?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0002F8DD,pinharvest x1 (thunk)
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
 ?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
@@ -80564,6 +80591,7 @@ name,address,notes
 ?unidentified_0001A483@WindowManager@@QAEXXZ,0x0001A483,CampaignReview final WindowManager update
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
 ?unidentified_0001e0ab@GameLogicShim@@QAE_NXZ,0x0001E0AB,ILT thunk -> body 0x00382C20: true when TheGameLogic mode is 1/2/5 or TheRecorder plays back a multiplayer session; gates the score-screen fade in hideEndGame; address-derived shim name
+?unidentified_0002181E@Object@@QAEXABV?$BitFlags@$0GA@@@H@Z,0x0002181E,ILT for Object setSingleModelCondition BitFlags<96> forward
 ?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z,0x0002181E,UNIDENTIFIED Object helper reached by the address-derived body at 0x000F20F0
 ?unidentified_00025CD4@WindowLookupShim@@QAEPAXHH@Z,0x00025CD4,UNIDENTIFIED lookup on the global at 0x012ED88C taking a name key and a flag; address-derived name; do not treat as an identity
 ?unidentified_0002e9a1@WindowManager@@QAEXH@Z,0x0002E9A1,ILT -> 0x0046B340; WindowManager thiscall(-1) from parchmentMapFadeLoadGame
@@ -82295,28 +82323,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
-?TheDX8Caps@@3PAEA,0x01340578,caps pointer Allocate_DX8_Dynamic_Buffer reads at +0x13b for NPATCHES
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
-??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
-?BfmeDynamicSortingVertexArray@@3PAVSortingVertexBufferClass@@A,0x013467DC,Open-BFME5 sorting-array buffer pointer BoxDynamicVBAccess allocate at 0x0091F040 stores
-?BfmeDynamicSortingVertexArraySize@@3GA,0x013467E0,Open-BFME5 sorting-array capacity BoxDynamicVBAccess allocate at 0x0091F040 grows
-?BfmeDynamicDX8VertexBuffer@@3PAVBfmeDX8VertexBuffer@@A,0x01346754,Open-BFME5 per-slot DX8 buffer pointers BoxDynamicVBAccess allocate at 0x0091F5B0 stores
-?BfmeDynamicDX8VertexBufferSize@@3PAGA,0x013467B4,Open-BFME5 per-slot DX8 capacities BoxDynamicVBAccess allocate at 0x0091F5B0 grows
-?BfmeDynamicFVFTable@@3PAIA,0x0113BD28,Open-BFME5 per-slot FVF words BoxDynamicVBAccess DX8 allocate at 0x0091F5B0 passes to the 0x20-byte ctor
-?BfmeCurrentCaps@@3PAEA,0x01340578,Open-BFME5 DX8 caps object pointer; NPatches flag at +0x13b as dx8indexbuffer.cpp already reads
-?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
-?getMissionObjectiveCount@CampaignManager@@QAEHXZ,0x0002A62B,ILT to 0x003BDF70 for ScoreKeeper::countMissionObjectives
-?isMissionObjectiveEligible@CampaignManager@@QAEEH@Z,0x00039A77,ILT to 0x003BF630 for ScoreKeeper::countMissionObjectives
-?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z,0x00013084,ILT to 0x003BDFB0 for ScoreKeeper::countMissionObjectives
-?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z,0x0000DFDA,ILT to 0x003BF6C0 for ScoreKeeper::countMissionObjectives
-?unidentified_0002181E@Object@@QAEXABV?$BitFlags@$0GA@@@H@Z,0x0002181E,ILT for Object setSingleModelCondition BitFlags<96> forward
-?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
-?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
-?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
-?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ,0x0000F94D,Skirmish state pending-update dispatcher call
-?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
-??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
