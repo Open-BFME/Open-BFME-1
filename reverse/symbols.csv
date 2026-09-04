@@ -11915,6 +11915,11 @@ name,address,notes
 ?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
 ?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
 ?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
+?g_aptPalantirRadarLeft@@3HA,0x00EF4AEC,left edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarTop@@3HA,0x00EF4AF0,top edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarRight@@3HA,0x00EF4AF4,right edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarBottom@@3HA,0x00EF4AF8,bottom edge of the AptPalantir radar clip rectangle
+?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
