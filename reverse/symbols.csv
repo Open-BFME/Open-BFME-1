@@ -4518,7 +4518,6 @@ name,address,notes
 ??1Gen_dtor_002592f0@@UAE@XZ,0x0001F76C,gen-dtor class destructor
 ??1Gen_dtor_002598d0@@UAE@XZ,0x0000B37F,gen-dtor class destructor
 ??1Gen_dtor_00259ee0@@UAE@XZ,0x0002C78C,gen-dtor class destructor
-??1Gen_dtor_0025a060@@UAE@XZ,0x00022F8E,gen-dtor class destructor
 ??1Gen_dtor_0025a140@@UAE@XZ,0x0001DF89,gen-dtor class destructor
 ??1Gen_dtor_0025a530@@UAE@XZ,0x00007180,gen-dtor class destructor
 ??1Gen_dtor_0025a620@@UAE@XZ,0x00033AF0,gen-dtor class destructor
@@ -31737,10 +31736,8 @@ name,address,notes
 ?b_00259f20@@YAXXZ,0x00259F20,gen-thunk body
 ?b_00259f50@@YAXXZ,0x00259F50,gen-thunk body
 ?b_00259f90@@YAXXZ,0x00259F90,gen-thunk body
-?b_00259fa0@@YAXXZ,0x00259FA0,gen-thunk body
 ?b_00259fc0@@YAXXZ,0x00259FC0,gen-thunk body
 ?b_00259fd0@@YAXXZ,0x00259FD0,gen-thunk body
-?b_0025a060@@YAXXZ,0x0025A060,gen-thunk body
 ?b_0025a090@@YAXXZ,0x0025A090,gen-thunk body
 ?b_0025a0d0@@YAXXZ,0x0025A0D0,gen-thunk body
 ?b_0025a0e0@@YAXXZ,0x0025A0E0,gen-thunk body
@@ -82739,3 +82736,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ?Set_Single_Texture@MeshMatDescClass@@QAEXABVBfmeHandleCX@@HH@Z,0x00929900,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
 ?Set_Texture@MeshMatDescClass@@QAEXHABVBfmeHandleCX@@HH@Z,0x0092C220,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
 ??4TextureVectorBaseCtorShim@@QAEAAV0@ABV0@@Z,0x0092F810,MaterialInfo copy ctor930E00 passes Textures base at +0x20;existing VectorClass assignment body with virtual element resize/copy
+??1DefectorSpecialPower@@MAE@XZ,0x00022F8E,destructor ILT to 0x00259FA0
+??_GDefectorSpecialPower@@MAEPAXI@Z,0x0000CE19,primary class vtable slot zero ILT to 0x0025A060

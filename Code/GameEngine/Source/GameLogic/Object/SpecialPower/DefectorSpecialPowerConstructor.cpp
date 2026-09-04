@@ -33,6 +33,8 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DefectorSpecialPower.h
@@ -40,9 +42,15 @@ class DefectorSpecialPower : public SpecialPowerModule
 {
 public:
 	DefectorSpecialPower( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~DefectorSpecialPower();
 };
 
 DefectorSpecialPower::DefectorSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+DefectorSpecialPower::~DefectorSpecialPower()
 {
 }
