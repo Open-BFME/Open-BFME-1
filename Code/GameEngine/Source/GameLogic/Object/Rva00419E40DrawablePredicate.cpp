@@ -9,7 +9,7 @@ typedef unsigned int UnsignedInt;
 
 enum KindOfType
 {
-	KINDOF_SMALL_MISSILE = 47
+	KINDOF_IGNORED_IN_GUI = 47
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
@@ -65,7 +65,17 @@ public:
 class Object : public Thing
 {
 public:
+	// Upstream types the viewer Player *, but the callee is pinned only under
+	// this Object * spelling (symbols.csv ILT 0x00047ED8); retyping it needs an
+	// alias pin, so ThePlayerList's local-player slot keeps the same type below.
 	bool query(Object *viewer, int extra);
+
+	inline bool isEffectivelyDead() const { return (m_privateStatus & EFFECTIVELY_DEAD) != 0; }
+
+	enum ObjectPrivateStatusBits
+	{
+		EFFECTIVELY_DEAD = (1 << 0)
+	};
 
 	unsigned char m_unreconstructed_004[0x344 - 4];
 	unsigned char m_privateStatus;
@@ -121,11 +131,11 @@ int bfmeDrawableFilter00419E40(Object *object, Rva00419E40Context *context)
 		goto failure;
 	if (finalTemplate->m_field045C != context->m_field04)
 		goto failure;
-	if ((object->m_privateStatus & 1) != 0)
+	if (object->isEffectivelyDead())
 		goto failure;
 	if (!object->query(ThePlayerList->m_localPlayer, 1))
 		goto failure;
-	if (object->isKindOf(KINDOF_SMALL_MISSILE))
+	if (object->isKindOf(KINDOF_IGNORED_IN_GUI))
 		goto failure;
 
 	return false;
