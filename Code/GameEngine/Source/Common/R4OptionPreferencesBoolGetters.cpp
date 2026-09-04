@@ -46,6 +46,7 @@ typedef unsigned char Bool;   ///< a byte, not bool: retail never zero-extends t
 
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *a, const char *b );
+extern "C" __declspec( dllimport ) int __cdecl atoi( const char *text );
 
 struct CustomAsciiStringShim
 {
@@ -95,6 +96,7 @@ public:
 	Bool getDisplayForeignLanguage( void );
 	Bool getUseEAX3( void );
 	Bool getAlternateMouseSetup( void );
+	float getBrightness( void );
 };
 
 #define R4_PREF_BODY( GETTER, KEY, OFFSET, COMPARE )                          \
@@ -158,4 +160,20 @@ Bool OptionPreferences::getAlternateMouseSetup( void )
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
 	return strcmp( text, "yes" ) != 0;
+}
+
+float OptionPreferences::getBrightness( void )
+{
+	CustomAsciiStringShim key;
+	key.init( "Brightness" );
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)( (unsigned char *)this + 4 );
+	CustomMapNodeShim *node = map->find( &key );
+	key.destroy();
+	if ( node == map->m_header )
+		return 50.0f;
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
+	float brightness = (float)atoi( text );
+	return brightness;
 }
