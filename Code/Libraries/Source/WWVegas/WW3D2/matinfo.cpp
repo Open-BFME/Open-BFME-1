@@ -184,19 +184,8 @@ MaterialRemapperClass::MaterialRemapperClass(MaterialInfoClass * src,MaterialInf
 	}
 }
 
-// ??1MaterialRemapperClass@@QAE@XZ present-unmatched
-MaterialRemapperClass::~MaterialRemapperClass(void)
-{
-	SrcMatInfo->Release_Ref();
-	DestMatInfo->Release_Ref();
-
-	if (TextureRemaps) {
-		delete[] TextureRemaps;
-	}
-	if (VertexMaterialRemaps) {
-		delete[] VertexMaterialRemaps;
-	}
-}
+// ??1MaterialRemapperClass@@QAE@XZ
+// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MaterialRemapper.cpp
 
 // ?Remap_Texture@MaterialRemapperClass@@QAEPAVTextureClass@@PAV2@@Z present-unmatched
 TextureClass * MaterialRemapperClass::Remap_Texture(TextureClass * src)
