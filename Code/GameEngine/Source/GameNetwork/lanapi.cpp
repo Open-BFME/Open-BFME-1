@@ -897,7 +897,7 @@ void LANAPI::ResetGameStartTimer( void )
 	m_gameStartSeconds = 0;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameStartTimer.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/LANAPI_RequestGameStart.cpp
 // ?RequestGameStartTimer@LANAPI@@UAEXH@Z present-unmatched
 void LANAPI::RequestGameStartTimer( Int seconds )
 {

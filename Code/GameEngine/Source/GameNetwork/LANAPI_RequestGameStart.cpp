@@ -1,25 +1,40 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // readable body of ?RequestGameStart@LANAPI@@UAEXXZ: Code/GameEngine/Source/GameNetwork/lanapi.cpp
+// readable body of ?RequestGameStartTimer@LANAPI@@UAEXH@Z: Code/GameEngine/Source/GameNetwork/lanapi.cpp
 // readable body of ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z: Code/GameEngine/Source/GameNetwork/LANAPI_RequestAccept_Thunk.cpp
 //
-// Retail 0x00684E70, 137 bytes. Zero Hour's RequestGameStart only sends MSG_GAME_START;
-// BFME's host path first broadcasts the serialized game-info block (literal type 0x0D,
-// _bfme_fillCurrentLANGameInfo_0068E630 into msg+0x22 after fillInLANMessage) before
-// OnGameStart at vtable+0x90. The present-unmatched lanapi.cpp body is 94 bytes with
-// m_localIP host check and no options copy.
+// The host-side game-start requests of LANAPI. Both are present-unmatched in
+// lanapi.cpp because BFME diverges from Zero Hour in the same three places:
+// the host test compares the address PAIR handed back by vtable+0xDC (not a
+// bare m_localIP), the message types are 0x0D / 0x0E (ZH: 11 / 12), and the
+// payload fields are stored before fillInLANMessage runs.
 //
-//   LANAPI      +0x3D  m_inLobby
+// RequestGameStart, retail 0x00684E70, 137 bytes: Zero Hour only sends
+// MSG_GAME_START; BFME's host first broadcasts the serialized game-info block
+// (_bfme_fillCurrentLANGameInfo_0068E630 into msg+0x22) before OnGameStart.
+// The present-unmatched lanapi.cpp body is 94 bytes with no options copy.
+//
+// RequestGameStartTimer, retail 0x00684F30, 165 bytes: the lanapi.cpp body is
+// 141 bytes with the type stored after fillInLANMessage where retail writes
+// 0x0E and StartTimer.seconds first.
+//
+//   LANAPI      +0x1C  m_gameStartTime = timeGetTime() + 1000
+//               +0x20  m_gameStartSeconds = seconds ? seconds - 1 : 0
+//               +0x3D  m_inLobby, early out when set
 //               +0x40  m_currentGame; host at +0x88/+0x8C
-//               +0x4C  m_transport->update()
+//               +0x4C  m_transport->update() after send
 //               +0x90  OnGameStart, vtable slot 36
-//               +0xC4  fillInLANMessage
-//               +0xDC  _bfme_localAddress
-//   LANMessage  size 0x1DC; type 0x0D before fillInLANMessage; options at +0x22 after.
+//               +0x94  OnGameStartTimer, vtable slot 37
+//               +0xC4  fillInLANMessage, vtable slot 49
+//               +0xDC  _bfme_localAddress, vtable slot 55
+//   LANMessage  size 0x1DC; type at +0x00, GameOptions.options / StartTimer.seconds at +0x22.
 
 typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
+
+extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
 void __cdecl _bfme_fillCurrentLANGameInfo_0068E630(char *buffer, unsigned int size);
 
@@ -108,6 +123,11 @@ struct LANMessage
 			char options[0x196 + 1];			///< +0x022
 		} GameOptions;
 
+		struct
+		{
+			Int seconds;					///< +0x022
+		} StartTimer;
+
 		unsigned char m_unreconstructed_22[0x1DC - 0x22];
 	};
 };
@@ -153,7 +173,7 @@ public:
 	virtual void bfmeRetailSlot34(void) = 0;
 	virtual void bfmeRetailSlot35(void) = 0;
 	virtual void OnGameStart(void) = 0;				///< +0x90
-	virtual void bfmeRetailSlot37(void) = 0;
+	virtual void OnGameStartTimer(Int seconds) = 0;			///< +0x94
 	virtual void bfmeRetailSlot38(void) = 0;
 	virtual void bfmeRetailSlot39(void) = 0;
 	virtual void bfmeRetailSlot40(void) = 0;
@@ -174,12 +194,16 @@ public:
 	virtual BfmeNetAddress *_bfme_localAddress(void) = 0;		///< +0xDC
 
 	virtual void RequestGameStart(void);
+	virtual void RequestGameStartTimer(Int seconds);
 
 protected:
 	void sendMessage(LANMessage *msg, UnsignedInt ip);
 
 private:
-	unsigned char m_unreconstructed_04[0x3D - 0x04];
+	unsigned char m_unreconstructed_04[0x1C - 0x04];
+	UnsignedInt m_gameStartTime;					///< +0x1C
+	Int m_gameStartSeconds;						///< +0x20
+	unsigned char m_unreconstructed_24[0x3D - 0x24];
 	Bool m_inLobby;							///< +0x3D
 	unsigned char m_unreconstructed_3e[0x40 - 0x3E];
 	LANGameInfo *m_currentGame;					///< +0x40
@@ -255,4 +279,32 @@ void LANAPI::RequestGameStart(void)
 	sendMessage(&msg, 0);
 	m_transport->update();
 	OnGameStart();
+}
+
+void LANAPI::RequestGameStartTimer(Int seconds)
+{
+	if (m_inLobby)
+		return;
+
+	BfmeLANGameInfoHost *game =
+		reinterpret_cast<BfmeLANGameInfoHost *>(m_currentGame);
+	if (game == 0)
+		return;
+
+	BfmeNetAddress *me = _bfme_localAddress();
+	if (game->m_hostIP != me->m_ip || game->m_hostPort != me->m_port)
+		return;
+
+	m_gameStartTime = timeGetTime() + 1000;
+
+	Int timerSeconds = seconds;
+	m_gameStartSeconds = timerSeconds ? timerSeconds - 1 : 0;
+
+	LANMessage msg;
+	msg.LANMessageType = 14;
+	msg.StartTimer.seconds = timerSeconds;
+	fillInLANMessage(&msg);
+	sendMessage(&msg, 0);
+	m_transport->update();
+	OnGameStartTimer(timerSeconds);
 }
