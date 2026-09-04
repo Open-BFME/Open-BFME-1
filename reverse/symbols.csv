@@ -11031,6 +11031,7 @@ name,address,notes
 ?TheObjectCreationListStore@@3PAVObjectCreationListStore@@A,0x012EF738,ObjectCreationListStore* global read by InstantDeathBehavior parseOCL
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
 ?TheOpenContainPool@?1??getClassMemoryPool@OpenContain@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA60,pool-glue cascade static (back-solved)
+?TheParticleSystemManager@@3PAVParticleSystemManager@@A,0x00EF64BC,ParticleSystemManager* global; DIR32 0x012F64BC in updateSubObjectsFromShroud / same slot as g_bfme923GlobA
 ?ThePlayerList@@3PAVPlayerList@@A,0x00EED748,ScriptActions::doSpeechPlay local-player lookup at retail VA 0x012ED748
 ?ThePlayerTemplateStore@@3PAVPlayerTemplateStore@@A,0x00EED750,PlayerTemplateStore* global read by CustomMatchPreferences::getPreferredFaction
 ?ThePoisonedBehaviorPool@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF82C,pool-glue cascade static (back-solved)
@@ -81719,6 +81720,7 @@ name,address,notes
 ?someInsideSomeOutside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5CE0,the first of the two calls ScriptConditions::evaluateTeamInsideAreaPartially (0x00324670) makes on the team it looked up before falling back on allInside; the reference declares exactly that const member beside allInside with the same pair
 ?spin@LockClass@FastCriticalSectionClass@@CIXPAI@Z,0x00026FA8,FastCriticalSectionClass::LockClass spin-acquire (shared out-of-line body reached via ILT thunk); StringClass locks resolve here
 ?spyVisionRandom@@YAHHHPBDH@Z,0x00001BAE,SpyVisionUpdate random-delay ILT
+?start@ParticleSystem@@QAEXXZ,0x0000FFD3,ILT to start body 0x005BDD90 ([this+0x1A7]=0); updateSubObjectsFromShroud not-hidden arm
 ?start@W3DShaderManagerStartRenderToTextureShim@@SAXXZ,0x007171F0,W3DShaderManager incremental-link static thunk target through a TU-local forwarding shim
 ?startProneEffects@ProneUpdate@@AAEXXZ,0x00042884,Open-BFME5 the thunk ProneUpdate goProne calls on the transition into prone; Zero Hour names the same call
 ?startRenderToTexture@W3DShaderManager@@SAXXZ,0x000154E7
@@ -81745,6 +81747,7 @@ name,address,notes
 ?step@U1CallReceiver_005C5BD0@@QAEXH@Z,0x0001B77A,address-derived U1 call-sequence receiver step ILT
 ?stop@BFMENetworkThreadBase@@QAEXXZ,0x009DB5A0,Watchdog stop tail target from retail body
 ?stop@BfmeRvaBA00AI@@QAEXH@Z,0x00008337,assigned-body helper for Rva0024BA00
+?stop@ParticleSystem@@QAEXXZ,0x00013075,ILT to stop body 0x005BDDA0 ([this+0x1A7]=1); updateSubObjectsFromShroud hidden arm
 ?stop@Rva00592A10Owner@@QAEXXZ,0x000193CB,address-derived active-state stop thunk called by the 0x00592A10 reset
 ?stopAllBoneFX@BoneFXUpdate@@QAEXXZ,0x0002728C
 ?stopDocking@SiegeDockingBehavior@@AAEXXZ,0x00018F89,SiegeDockingBehavior destructor body call target
