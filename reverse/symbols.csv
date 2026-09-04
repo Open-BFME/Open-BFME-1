@@ -83881,3 +83881,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?groupGuardObject@AIGroup@@QAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z,0x0003257E,TEAM_GUARD_OBJECT executeAction arm 207 callee; ILT groupGuardObject(unit GUARDMODE_NORMAL CMD_FROM_SCRIPT)
 ?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
 ?applyPacket@Rva0015A190Owner@@QAEXPAURva0015A190Packet@@H@Z,0x00048C43,ILT to 0x00159AD0 from applyOrFallback 0x0015A190
+?groupGuardAreaFromPosition@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@PBUCoord3D@@@Z,0x0000C658,TEAM_GUARD_AREA_FROM_POSITION tail of shared 0x002F3520 body
+?groupGuardArea@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000AABF,TEAM_GUARD_AREA tail of shared 0x002F3520 body
