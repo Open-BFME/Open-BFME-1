@@ -4521,7 +4521,6 @@ name,address,notes
 ??1Gen_dtor_0025a140@@UAE@XZ,0x0001DF89,gen-dtor class destructor
 ??1Gen_dtor_0025a530@@UAE@XZ,0x00007180,gen-dtor class destructor
 ??1Gen_dtor_0025a620@@UAE@XZ,0x00033AF0,gen-dtor class destructor
-??1Gen_dtor_0025a8e0@@UAE@XZ,0x000313D6,gen-dtor class destructor
 ??1Gen_dtor_0025ac50@@UAE@XZ,0x00032E25,gen-dtor class destructor
 ??1Gen_dtor_0025ae30@@UAE@XZ,0x000227B4,gen-dtor class destructor
 ??1Gen_dtor_0025ae70@@UAE@XZ,0x00031548,gen-dtor class destructor
@@ -31784,11 +31783,9 @@ name,address,notes
 ?b_0025a790@@YAXXZ,0x0025A790,gen-thunk body
 ?b_0025a7c0@@YAXXZ,0x0025A7C0,gen-thunk body
 ?b_0025a800@@YAXXZ,0x0025A800,gen-thunk body
-?b_0025a810@@YAXXZ,0x0025A810,gen-thunk body
 ?b_0025a830@@YAXXZ,0x0025A830,gen-thunk body
 ?b_0025a840@@YAXXZ,0x0025A840,gen-thunk body
 ?b_0025a8d0@@YAXXZ,0x0025A8D0,gen-thunk body
-?b_0025a8e0@@YAXXZ,0x0025A8E0,gen-thunk body
 ?b_0025a910@@YAXXZ,0x0025A910,gen-thunk body
 ?b_0025a930@@YAXXZ,0x0025A930,gen-thunk body
 ?b_0025a990@@YAXXZ,0x0025A990,gen-thunk body
@@ -82738,3 +82735,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??4TextureVectorBaseCtorShim@@QAEAAV0@ABV0@@Z,0x0092F810,MaterialInfo copy ctor930E00 passes Textures base at +0x20;existing VectorClass assignment body with virtual element resize/copy
 ??1DefectorSpecialPower@@MAE@XZ,0x00022F8E,destructor ILT to 0x00259FA0
 ??_GDefectorSpecialPower@@MAEPAXI@Z,0x0000CE19,primary class vtable slot zero ILT to 0x0025A060
+??1DevastateSpecialPower@@MAE@XZ,0x000313D6,destructor ILT to 0x0025A810
+??_GDevastateSpecialPower@@MAEPAXI@Z,0x00038104,primary class vtable slot zero ILT to 0x0025A8E0

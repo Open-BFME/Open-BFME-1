@@ -24581,3 +24581,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_00717c90@@YAXXZ,0x00717C90,Placeholder superseded by verified shader manager C++ conversion; remove union-merge resurrection
 ??1Rva00259FA0MultiTailDtor@@UAE@XZ,0x00259FA0,address-derived identity replaced by byte-verified DefectorSpecialPower destructor
 ??_GGen_dtor_0025a060@@UAEPAXI@Z,0x0025A060,address-derived identity replaced by byte-verified DefectorSpecialPower destructor
+??1Rva0025A810MultiTailDtor@@UAE@XZ,0x0025A810,address-derived identity replaced by byte-verified DevastateSpecialPower destructor
+??_GGen_dtor_0025a8e0@@UAEPAXI@Z,0x0025A8E0,address-derived identity replaced by byte-verified DevastateSpecialPower destructor
