@@ -83762,3 +83762,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
 ?testStatus@Object@@QBE_NH@Z,0x000016A4,Object status ILT used by BezierProjectileBehavior::handle; same body as testStatus@BFMEActionObject
 ?fire@BezierLaunchHelper@@QAE_NPAVObject@@00PAX@Z,0x00048D06,ILT 0x00048D06 -> 0x001E63A0; last thiscall from BezierProjectileBehavior::handle 0x001F08B0
+?allocate@Rva00802040Arr@@QAEXH@Z,0x00801BD0,FESL Arr allocate alias of Rva00801600::allocate; pin for 0x802040
+?set@Rva00802040Buf@@QAEXPAX@Z,0x007F7F50,FESL Buf set; pin for 0x802040
