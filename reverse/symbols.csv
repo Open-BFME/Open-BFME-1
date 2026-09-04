@@ -82448,3 +82448,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?afterRelease@GenAlpha@@QAEXXZ,0x0003139A,GenAlpha::h00024D2A follow-up thiscall ILT (body 0x007B96E0)
 ?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
 ??$__copy@PAUElem003AF7A0@@PAU1@H@_STL@@YAPAUElem003AF7A0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A1A0,Open-BFME5 ILT the range copy the vector erase at 0x003AF7A0 calls
+?resolveBlockZones@@YAXHHPAGH@Z,0x00402760,Open-BFME5 pin: cdecl-mangled static alias of resolveBlockZones used by bfmeApplyBlockZoneRaw
