@@ -12,21 +12,33 @@ private:
 	void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
+template <typename Character>
+class StringBase
 {
 public:
-	UnicodeString() : m_data(0) {}
+	StringBase() : m_data(0) {}
+	void set(const StringBase<Character> &text);
+
+protected:
+	void *m_data;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
+class UnicodeString : public StringBase<unsigned short>
+{
+public:
+	UnicodeString() {}
 	UnicodeString(const UnicodeString &other);
 	~UnicodeString();
-	void set(const UnicodeString &text);
+	void set(const UnicodeString &text)
+	{
+		StringBase<unsigned short>::set(text);
+	}
 	bool isEmpty() const
 	{
 		return m_data == 0 || *(const unsigned short *)((const char *)m_data + 4) == 0;
 	}
 
-private:
-	void *m_data;
 };
 
 class AptTextListener
@@ -65,10 +77,9 @@ namespace rts
 
 typedef std::hash_map<AsciiString, AptTextRecord, rts::hash<AsciiString>, rts::equal_to<AsciiString> > AptTextRecordHashMap;
 
-class AptTextRecordMap : private AptTextRecordHashMap
+class AptTextRecordMap : public AptTextRecordHashMap
 {
 public:
-	AptTextRecord *findOrInsert(const AsciiString &name);
 	void clearListener(const AsciiString &name)
 	{
 		iterator it = AptTextRecordHashMap::find(name);
@@ -76,11 +87,6 @@ public:
 			it->second.listener = 0;
 	}
 };
-
-AptTextRecord *AptTextRecordMap::findOrInsert(const AsciiString &name)
-{
-	return &operator[](name);
-}
 
 class WindowManager
 {
@@ -97,7 +103,7 @@ private:
 // ?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z
 void WindowManager::bfme_setAptText(const AsciiString &name, const UnicodeString &text)
 {
-	AptTextRecord *record = m_aptTextRecords.findOrInsert(name);
+	AptTextRecord *record = &m_aptTextRecords[name];
 	record->text.set(text);
 
 	if (record->listener != 0)
@@ -107,7 +113,7 @@ void WindowManager::bfme_setAptText(const AsciiString &name, const UnicodeString
 void WindowManager::bfme_bindAptText(const AsciiString &name, const UnicodeString &text, AptTextListener *listener)
 {
 	if (listener) {
-		AptTextRecord *record = m_aptTextRecords.findOrInsert(name);
+		AptTextRecord *record = &m_aptTextRecords[name];
 		record->listener = listener;
 		if (record->text.isEmpty())
 			record->text.set(text);

@@ -76143,7 +76143,6 @@ name,address,notes
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
 ?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@VAsciiString@@@Z,0x0000D3FA,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk); BFME takes the name by value
 ?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
-?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,WindowManager bfme_setAptText at 0x0046CBF0 passes this+0x44 and the AsciiString key; helper returns the listener plus UnicodeString record
 ?findOrInsert@ControlBarOverrideMapABI@@QAEAAPBVCommandButton@@ABVAsciiString@@@Z,0x00008170,Open-BFME5 control-bar override hash-map subscript ILT
 ?findOwnerByID@LivingWorldOwnerLookup@@QAEPAXH@Z,0x00020379,AudioEventRTS isDead owner-type 5 branch calls this lookup through the matched ILT
 ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z,0x0002A216,Open-BFME5 ILT; returns the particle system by value into a hidden slot for ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10
