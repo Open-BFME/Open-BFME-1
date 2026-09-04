@@ -50,11 +50,13 @@ private:
 void Rva002AD100::apply()
 {
 	RvaC4390First *resolved = m_object->resolve( 0 );
-	if( resolved )
-		goto resolved_path;
-	sibling( &m_object->m_pos, &m_object->m_pos );
-	return;
+	if( !resolved )
+	{
+		Rva002AD100 *self = this;
+		self->sibling( m_object->getPosition(), m_object->getPosition() );
+		return;
+	}
 
-resolved_path:
-	sibling( &m_object->m_pos, &resolved->m_pos );
+	Rva002AD100 *self = this;
+	self->sibling( m_object->getPosition(), &resolved->m_pos );
 }

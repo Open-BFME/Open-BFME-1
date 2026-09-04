@@ -135,6 +135,7 @@ extern ArmorStore *TheArmorStore;		// 0x012EF4E8
 class ArmorStore : public SubsystemInterface
 {
 public:
+	~ArmorStore();
 	void init() {}
 	void reset() {}
 	void update() {}
@@ -144,6 +145,12 @@ private:
 	typedef std::hash_map< NameKeyType, ArmorTemplate, rts::hash<NameKeyType>, rts::equal_to<NameKeyType> > ArmorTemplateMap;
 	ArmorTemplateMap m_armorTemplates;		// +0x08
 };
+
+// ??1ArmorStore@@UAE@XZ
+ArmorStore::~ArmorStore()
+{
+	m_armorTemplates.clear();
+}
 
 // ?findArmorTemplate@ArmorStore@@QBEPBVArmorTemplate@@VAsciiString@@@Z
 // nameToKey is called through the const char* overload, not the AsciiString

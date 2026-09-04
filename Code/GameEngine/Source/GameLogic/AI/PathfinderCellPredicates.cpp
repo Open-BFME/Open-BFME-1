@@ -122,25 +122,19 @@ Bool Pathfinder::bfmeCellAvoidsThreeTypes(const Coord3D *pos, PathfindLayerEnum 
 {
 	ICoord2D cellIndex;
 	if (worldToCell(pos, &cellIndex))
-	{
 		return true;
-	}
-	else
+	PathfindCell *cell = getCell(layer, cellIndex.x, cellIndex.y);
+	if (cell == 0)
+		return true;
+	switch (cell->m_bfmeFlags & 7)
 	{
-		PathfindCell *cell = getCell(layer, cellIndex.x, cellIndex.y);
-		if (cell != 0)
-		{
-			unsigned int type = cell->m_bfmeFlags & 7;
-			if (type == 5)
-				return false;
-			if (type == 1)
-				return false;
-			if (type == 2)
-				return false;
+		case 5:
+		case 1:
+		case 2:
+			return false;
+		default:
 			return true;
-		}
 	}
-	return true;
 }
 
 int Pathfinder::bfmeCellAvoidsThreeTypesInt(const Coord3D *pos, PathfindLayerEnum layer)

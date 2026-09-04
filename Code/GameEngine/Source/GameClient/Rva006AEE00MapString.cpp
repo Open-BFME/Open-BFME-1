@@ -32,7 +32,6 @@ public:
 
 	void insert_unique(InsertResult *result, const StringBase<char> &key);
 	void erase(void *root);
-	void clear();
 
 	void *header;
 	int count;
@@ -157,26 +156,20 @@ public:
 	void *right;
 };
 
-void Rva006AEE00Tree::clear()
-{
-	if (count)
-	{
-		Rva006AEE00TreeHeader *header =
-			reinterpret_cast<Rva006AEE00TreeHeader *>(this->header);
-		erase(header->parent);
-		header = reinterpret_cast<Rva006AEE00TreeHeader *>(this->header);
-		header->left = header;
-		header->parent = 0;
-		header->right = header;
-		count = 0;
-	}
-}
-
 void Rva006AEE00::init()
 {
 	Rva006AEE00Tree *tree = &m_tree;
 	if (tree->count)
-		tree->clear();
+	{
+		Rva006AEE00TreeHeader *header =
+			reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
+		tree->erase(header->parent);
+		header = reinterpret_cast<Rva006AEE00TreeHeader *>(tree->header);
+		header->left = header;
+		header->parent = 0;
+		header->right = header;
+		tree->count = 0;
+	}
 
 	Rva006AEE00Hashtable *table =
 		reinterpret_cast<Rva006AEE00Hashtable *>(reinterpret_cast<char *>(this) + 0x70);

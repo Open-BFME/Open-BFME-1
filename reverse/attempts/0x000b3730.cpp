@@ -38,28 +38,10 @@ template <typename T>
 class StringBase
 {
 public:
-	__forceinline const char *reverseFind(char c) const
-	{
-		char seen;
-		const char *start = m_data ? &m_data->data[0] : "";
-		const char *p = start + (m_data ? m_data->length : 0);
-		if (p == start)
-			return 0;
-		while (p != start)
-		{
-			seen = p[-1];
-			--p;
-			if (seen == c)
-				return p;
-		}
-		return 0;
-	}
-
-protected:
-	const StringHeader *m_data;
+	StringHeader *m_data;
 };
 
-class AsciiString : private StringBase<char>
+class AsciiString : public StringBase<char>
 {
 public:
 	AsciiString(const char *text);
@@ -76,7 +58,7 @@ public:
 		concat(text, length);
 	}
 
-	const char *str(void)
+	const char *str(void) const
 	{
 		return m_data ? m_data->peek() : "";
 	}
@@ -84,11 +66,6 @@ public:
 	const StringHeader *data(void) const
 	{
 		return m_data;
-	}
-
-	__forceinline const char *reverseFind(char c) const
-	{
-		return StringBase<char>::reverseFind(c);
 	}
 
 };
@@ -123,13 +100,27 @@ public:
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
 void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 {
-	if (TheFileSystem->doesFileExist(strToAdjust.str()))
+	const char *path = strToAdjust.str();
+	if (TheFileSystem->doesFileExist(path))
 		return;
 
-	if (const char *str = strToAdjust.reverseFind('\\'))
+	StringBase<char> &string = strToAdjust;
+	char *start = string.m_data ? &string.m_data->data[0] : (char *)"";
+	const StringHeader *data = string.m_data;
+	char *p = start + (data ? data->length : 0);
+	if (p == start)
+		return;
+	while (p != start)
 	{
-		AsciiString filename = str;
-		strToAdjust = generateFilenamePrefix(m_eventInfo->m_soundType, true);
-		strToAdjust.concat(filename);
+		char seen = p[-1];
+		--p;
+		if (seen == '\\')
+		{
+			AsciiString filename = p;
+			const AudioType audioType = m_eventInfo->m_soundType;
+			strToAdjust = generateFilenamePrefix(audioType, true);
+			strToAdjust.concat(filename);
+			return;
+		}
 	}
 }

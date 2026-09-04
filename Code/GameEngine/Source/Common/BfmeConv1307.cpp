@@ -11,7 +11,8 @@ public:
 	char m_bfmeFlag3d;
 	char m_bfmePad3e[6];
 	char m_bfmeFlag;
-	char m_bfmePad45[7];
+	char m_bfmePad45[0x48 - 0x45];
+	int m_bfme48;
 	int m_bfme4c;
 	float m_bfme50;
 	float m_bfme54;
@@ -31,6 +32,7 @@ public:
 	void bfmeOneTBA();
 	void bfmeTwoTBA();
 	void bfmeThreeTBA();
+	void bfmeFourTBA();
 };
 
 void BfmeThingTBA::bfmeGoTBA()
@@ -59,7 +61,11 @@ public:
 	int m_bfme34;
 	char m_bfmePad38[2];
 	char m_bfmeFlag3a;
-	char m_bfmePad3b[0x58 - 0x3b];
+	char m_bfmePad3b[0x40 - 0x3b];
+	char m_bfmeFlag40;
+	char m_bfmePad41[0x50 - 0x41];
+	int m_bfme50Override;
+	float m_bfme54Override;
 	char m_bfmeFlag58;
 	char m_bfmePad59[3];
 	int m_bfme5c;
@@ -74,6 +80,15 @@ public:
 
 extern BfmeOverrideTBA *g_bfmeGlo012F15F8;
 extern BfmeFrameTBA *g_bfmeGlo012F0FE0;
+extern "C" float g_bfmeK1121004;
+extern "C" float g_bfmeK075C6C;
+extern "C" float g_bfmeK07533C;
+
+class WWMath
+{
+public:
+	static float Random_Float();
+};
 
 static const BfmeOverrideTBA *bfmeWalkTBA(const BfmeOverrideTBA *d)
 {
@@ -127,10 +142,9 @@ void BfmeThingTBA::bfmeTwoTBA()
 void BfmeThingTBA::bfmeThreeTBA()
 {
 	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
+	const BfmeOverrideTBA *from;
+	const BfmeOverrideTBA *to;
 	BfmeOverrideTBA *d = (BfmeOverrideTBA *)bfmeWalkTBA(f);
-	BfmeOverrideTBA *next;
-	BfmeOverrideTBA *from;
-	BfmeOverrideTBA *to;
 	float fraction;
 
 	if (d->m_bfmeFlag58 == 0 || m_bfme98 == 0)
@@ -143,16 +157,17 @@ void BfmeThingTBA::bfmeThreeTBA()
 	}
 	else
 	{
-		next = (BfmeOverrideTBA *)f->m_nextOverride;
-		if (next == 0)
+		const BfmeOverrideTBA *next =
+			(const BfmeOverrideTBA *)f->m_nextOverride;
+		if (next != 0)
 		{
-			from = f;
-			to = f;
+			from = (const BfmeOverrideTBA *)next->getFinalOverride();
+			to = (const BfmeOverrideTBA *)next->getFinalOverride();
 		}
 		else
 		{
-			from = (BfmeOverrideTBA *)next->getFinalOverride();
-			to = (BfmeOverrideTBA *)next->getFinalOverride();
+			from = f;
+			to = f;
 		}
 	}
 	fraction = (float)(from->m_bfme5c - m_bfme4c) / (float)to->m_bfme5c;
@@ -191,6 +206,36 @@ void BfmeThingTBA::bfmeThreeTBA()
 		fraction / m_bfme50 : *(const float *)0x01075334;
 	m_bfme38f = m_bfme58f + (m_bfme5cf - m_bfme58f) * blend;
 	m_bfme10f = m_bfme60 + (m_bfme64 - m_bfme60) * blend;
+}
+
+void BfmeThingTBA::bfmeFourTBA()
+{
+	const BfmeOverrideTBA *d = g_bfmeGlo012F15F8;
+	float slot;
+	if (d && d->m_nextOverride)
+		d = (const BfmeOverrideTBA *)d->m_nextOverride->getFinalOverride();
+	if (d->m_bfmeFlag40 == 0)
+		return;
+	if (m_bfmeFlag)
+	{
+		--m_bfme48;
+		if (m_bfme48 > 0)
+			return;
+		m_bfme48 = 0;
+		m_bfmeFlag = 0;
+		return;
+	}
+	slot = WWMath::Random_Float();
+	d = g_bfmeGlo012F15F8;
+	if (d && d->m_nextOverride)
+		d = (const BfmeOverrideTBA *)d->m_nextOverride->getFinalOverride();
+	if (!(slot < d->m_bfme54Override))
+		return;
+	m_bfmeFlag = 1;
+	d = g_bfmeGlo012F15F8;
+	const BfmeOverrideTBA *f = bfmeWalkTBA(d);
+	m_bfme48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 +
+		g_bfmeK075C6C) * f->m_bfme50Override + g_bfmeK07533C);
 }
 
 class BfmeSinkTBB

@@ -53,6 +53,8 @@
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 #include <stdlib.h>
 
+#include "../../reference/shims/w3ddisplaystring/GameClient/DisplayString.h"
+
 // USER INCLUDES //////////////////////////////////////////////////////////////
 #include "GameClient/GadgetCheckBox.h"
 #include "GameClient/GameWindowGlobal.h"
@@ -326,7 +328,6 @@ void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 	// draw the box image
 	if( boxImage )
 	{
-
 		start.x = origin.x + instData->m_imageOffset.x + checkOffsetFromLeft;
 		start.y = origin.y +  3;
 		end.x = start.x + (size.y - 6);

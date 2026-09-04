@@ -12023,9 +12023,9 @@ name,address,notes
 ?assign@PrimitiveAnimationChannelFloatAssignShim@@QAEABV1@ABV1@@Z,0x000A4B60,PrimitiveAnimationChannelClass float assignment incremental-link thunk target through a TU-local forwarding shim
 ?assign@PrimitiveAnimationChannelVector3AssignShim@@QAEABV1@ABV1@@Z,0x00439140,PrimitiveAnimationChannelClass Vector3 assignment incremental-link thunk target through a TU-local forwarding shim
 ?assign@Q2FlagOwner@@QAEXH@Z,0x00416FA0,void __thiscall setter taking one index; both arms of every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) call this one body; address-derived name; identity not recovered
-?assign@Rva003BA9C0Range@@QAEXPAX0@Z,0x00024C17,range assignment called by the exact Rva003BA500 constructor
 ?assign@RenderObjectDrawTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x00007E14,RenderObjectDrawModuleTemplate assignment thunk used through a TU-local layout shim
 ?assign@RenderObjectUpdateTemplateAssignShim@FXParticleSystem@@QAEXPBX@Z,0x0003E2C5,RenderObjectUpdateModuleTemplate assignment thunk used through a TU-local layout shim
+?assign@Rva003BA9C0Range@@QAEXPAX0@Z,0x00024C17,range assignment called by the exact Rva003BA500 constructor
 ?assign@StlStr@@QAEAAV1@PBD0@Z,0x0002B297,STLport basic_string<char>::assign(first last) ILT used by CustomMatch applySlotPlayerTemplate 0x0053CE60
 ?assign@StlWStr@@QAEAAV1@PBG0@Z,0x00004A75,wstring assign(first last) ILT used by PopupHostGame createGame 0x004D58F0
 ?assign@StringClassAssignShim@@QAEABVStringClass@@ABV2@@Z,0x0013B600,StringClass assignment incremental-link thunk target through a TU-local forwarding shim
@@ -78919,6 +78919,7 @@ name,address,notes
 ?handleMatch@BfmeBaseA97@@QAEXPAX0@Z,0x0000E719,pin
 ?handleMatch@BfmeBaseDF9@@QAEXPAX0@Z,0x000240EB,pin
 ?handleNode@Rva006BDB00@@QAEXPAVRva006BDB00Node@@@Z,0x00004043,address-derived callee of Rva006BDB00::drain; ILT to 0x006BD1A0
+?handlePartitionCellMaintenance@BfmeVisionPartition@@QAEXPAX@Z,0x00004462,address-derived partition-cell callee used by the BFME vision-spied edge handlers
 ?handleStateTwo@BfmeMessageStateHandler@@QAEXH@Z,0x0003FFDA,message handler state-two transition call
 ?hasAchievedVictory@VictoryConditions@@UAE_NPAVPlayer@@@Z,0x0035F270,vtable 0x010E8D90 slot 9 (+0x24) via ILT 0x00035661 = ZH VictoryConditionsInterface slot order; ZH body plus BFME gates isPlayerObserver 0x000C9CF0 -> false and the defeat counter +0xC0 > 0; loops m_players +0x14 calling slot +0x2C and areAllies 0x0035F150; on success TheGameLogic->bfme_setPlayerVictoryFrame(i) 0x00383C30
 ?hasAnyBuildFacility@BfmeTeamInstanceLink@@QBE_NXZ,0x0003F594,Open-BFME5 view-class spelling of the ILT already pinned as ?hasAnyBuildFacility@Team@@QBE_NXZ; TeamPrototype::hasAnyBuildFacility calls it through the view so the in-TU definition cannot inline

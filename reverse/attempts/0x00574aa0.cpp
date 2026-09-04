@@ -57,12 +57,14 @@ struct S4SortElem8
 
 bool S4SortElem8::BfmeLess00574AA0(S4SortElem8 const &other) const
 {
-	const S4SortElem8 *right = &other;
 	unsigned leftFlags = State->Flags;
-	unsigned rightFlags = right->State->Flags;
-	if (((leftFlags >> 25) ^ (rightFlags >> 25)) & 1)
-		return (leftFlags >> 25) & 1;
-	if (Army->SortKey != right->Army->SortKey)
-		return Army->SortKey > right->Army->SortKey;
-	return Army->getName().bfmeCompare(right->Army->getName()) < 0;
+	const S4SortElem8 &right = other;
+	unsigned rightFlags = right.State->Flags;
+	unsigned leftSpecial = leftFlags >> 25;
+	unsigned rightSpecial = rightFlags >> 25;
+	if (leftSpecial != rightSpecial)
+		return leftSpecial != 0;
+	if (Army->SortKey != other.Army->SortKey)
+		return Army->SortKey > other.Army->SortKey;
+	return Army->getName().bfmeCompare(other.Army->getName()) < 0;
 }

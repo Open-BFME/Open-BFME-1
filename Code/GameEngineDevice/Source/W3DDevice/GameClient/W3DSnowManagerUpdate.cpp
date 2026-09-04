@@ -120,7 +120,6 @@ void W3DSnowManager::update(void)
 void W3DSnowManager::extraAfterFmod(void)
 {
 	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
-	BFMEFrameState *frame;
 	if (ov->m_flag58 == 0)
 		return;
 
@@ -145,8 +144,7 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		frame = g_bfmeGlo012F0FE0;
-		if (frame->m_frame == 2 && m_94 != 2)
+		if (g_bfmeGlo012F0FE0->m_frame == 2 && m_94 != 2)
 		{
 			m_94 = 2;
 			copyFromOverride();
