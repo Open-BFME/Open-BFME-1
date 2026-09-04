@@ -72916,14 +72916,12 @@ name,address,notes
 ?bfmeFlagForRead@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0004278F,read-only flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlagForWrite@ScriptEngine@@IAEPA_NVAsciiString@@@Z,0x0002E1CC,writable flag lookup target decoded from ScriptEngine setFlag
 ?bfmeFlush1038@@YAXXZ,0x00897110,pin
-?bfmeFlush10@Gen0052AD00@@QAEXXZ,0x00024267,ILT thunk to 0x005291F0
-?bfmeFlush11@Gen0052AD00@@QAEXXZ,0x000091C4,ILT thunk to assigned body 0x0052A940
+?bfmeFlush10@SkirmishScreenState@@QAEXXZ,0x00024267,ILT thunk to 0x005291F0
+?bfmeFlush11@SkirmishScreenState@@QAEXXZ,0x000091C4,ILT thunk to assigned body 0x0052A940
 ?bfmeFlush1282@BfmeBroadcast1282@@QAEXXZ,0x008A1940,address-derived final queue flush called by the 0x008BAAB0 retail body
 ?bfmeFlush1285@BfmeBroadcast1285@@QAEXXZ,0x008A1940,address-derived queue flush called by the 0x008BB570 retail body
-?bfmeFlush12@Gen0052AD00@@QAEXXZ,0x000176B6,ILT thunk to 0x00526600
-?bfmeFlush13@Gen0052AD00@@QAEXXZ,0x00017E7C,ILT thunk to 0x00523400
-?bfmeFlush14@Gen0052AD00@@QAEXXZ,0x0000F94D,ILT thunk to 0x00529B10
-?bfmeFlush15@Gen0052AD00@@QAEXXZ,0x00013025,ILT thunk to 0x005260F0
+?bfmeFlush12@SkirmishScreenState@@QAEXXZ,0x000176B6,ILT thunk to 0x00526600
+?bfmeFlush15@SkirmishScreenState@@QAEXXZ,0x00013025,ILT thunk to 0x005260F0
 ?bfmeFlush@Rva003D8530Owner@@QAEXXZ,0x00009787,Open-BFME5 ILT thunk to body 0x003D55C0; ??1MemoryPool@@QAE@XZ at 0x001F84C0 calls it once on the same sub-object after the slot loop; address-derived name
 ?bfmeFlushQO@BfmeThingQO@@QAEXH@Z,0x0088A230,pin
 ?bfmeFlushSTA@@YAXXZ,0x0088A670,pin
@@ -82319,3 +82317,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
 ?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
+?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ,0x0000F94D,Skirmish state pending-update dispatcher call
+?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record

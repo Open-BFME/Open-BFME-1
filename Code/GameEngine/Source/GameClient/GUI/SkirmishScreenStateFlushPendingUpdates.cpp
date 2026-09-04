@@ -1,6 +1,6 @@
 // cl: /EHs-c-
 
-class Gen0052AD00Owner
+class SkirmishScreenOwner
 {
 public:
 	virtual void slot00(void) = 0;
@@ -21,20 +21,20 @@ public:
 	void bfmeGoBPF(void *value, void *context);
 };
 
-class Gen0052AD00
+class SkirmishScreenState
 {
 public:
-	bool bfmeFlushFlags(void);
+	bool flushPendingUpdates(void);
 	void bfmeFlush11(void);
-	void bfmeFlush14(void);
+	void refreshAllPlayerControls(void);
 	void bfmeFlush15(void);
 	void bfmeFlush10(void);
 	void bfmeFlush12(void);
-	void bfmeFlush13(void);
+	void applySecondaryGame(void);
 
 private:
 	unsigned char m_unmodelled00[4];
-	Gen0052AD00Owner *m_owner;
+	SkirmishScreenOwner *m_owner;
 	void *m_first;
 	void *m_second;
 	bool m_flag10;
@@ -49,8 +49,8 @@ private:
 };
 
 // Clear each pending flag and dispatch its corresponding refresh operation.
-// ?bfmeFlushFlags@Gen0052AD00@@QAE_NXZ
-bool Gen0052AD00::bfmeFlushFlags(void)
+// ?flushPendingUpdates@SkirmishScreenState@@QAE_NXZ
+bool SkirmishScreenState::flushPendingUpdates(void)
 {
 	bool changed = false;
 	if (m_enabled)
@@ -65,7 +65,7 @@ bool Gen0052AD00::bfmeFlushFlags(void)
 	if (m_flag14)
 	{
 		m_flag14 = false;
-		bfmeFlush14();
+		refreshAllPlayerControls();
 		changed = true;
 	}
 	if (m_flag15)
@@ -89,7 +89,7 @@ bool Gen0052AD00::bfmeFlushFlags(void)
 	if (m_flag13)
 	{
 		m_flag13 = false;
-		bfmeFlush13();
+		applySecondaryGame();
 		changed = true;
 	}
 	return changed;
@@ -97,8 +97,8 @@ bool Gen0052AD00::bfmeFlushFlags(void)
 
 // Validate the two pending objects and forward the surviving secondary object
 // through the embedded BPF helper.
-// ?bfmeFlush13@Gen0052AD00@@QAEXXZ
-void Gen0052AD00::bfmeFlush13(void)
+// ?applySecondaryGame@SkirmishScreenState@@QAEXXZ
+void SkirmishScreenState::applySecondaryGame(void)
 {
 	if (m_first && !m_owner->bfmeAccept(m_first))
 		m_first = 0;
