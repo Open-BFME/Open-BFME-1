@@ -4670,7 +4670,6 @@ name,address,notes
 ??1Gen_dtor_002977f0@@UAE@XZ,0x0000D125,gen-dtor class destructor
 ??1Gen_dtor_00297fd0@@UAE@XZ,0x0003F053,gen-dtor class destructor
 ??1Gen_dtor_002982a0@@UAE@XZ,0x0002C6F1,gen-dtor class destructor
-??1Gen_dtor_00298480@@UAE@XZ,0x00028EB6,gen-dtor class destructor
 ??1Gen_dtor_00298a70@@UAE@XZ,0x000137C8,gen-dtor class destructor
 ??1Gen_dtor_00298fa0@@UAE@XZ,0x00034AB3,gen-dtor class destructor
 ??1Gen_dtor_00299050@@UAE@XZ,0x0002A86F,gen-dtor class destructor
@@ -33947,8 +33946,6 @@ name,address,notes
 ?b_002983d0@@YAXXZ,0x002983D0,gen-thunk body
 ?b_002983e0@@YAXXZ,0x002983E0,gen-thunk body
 ?b_00298470@@YAXXZ,0x00298470,gen-thunk body
-?b_00298480@@YAXXZ,0x00298480,gen-thunk body
-?b_002984b0@@YAXXZ,0x002984B0,gen-thunk body
 ?b_002984f0@@YAXXZ,0x002984F0,gen-thunk body
 ?b_00298530@@YAXXZ,0x00298530,gen-thunk body
 ?b_002985d0@@YAXXZ,0x002985D0,gen-thunk body
@@ -82755,3 +82752,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1ModelConditionSpecialAbilityUpdate@@MAE@XZ,0x0001DE1C,destructor ILT to 0x00298380
 ??_GModelConditionSpecialAbilityUpdate@@MAEPAXI@Z,0x0002E244,primary class vftable slot zero ILT to 0x002984C0
 ??1SpecialAbilityUpdate@@UAE@XZ,0x000243A7,base destructor ILT to matched body 0x002AA910
+??1ModelConditionSpecialAbilityUpdateModuleData@@UAE@XZ,0x00028EB6,destructor ILT to 0x002984B0
+??_GModelConditionSpecialAbilityUpdateModuleData@@UAEPAXI@Z,0x0003AE95,class vftable slot zero ILT to 0x00298480
+??1SpecialAbilityUpdateModuleData@@UAE@XZ,0x0001980D,base destructor ILT to matched body 0x002A5CC0
