@@ -11926,6 +11926,7 @@ name,address,notes
 ?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
 ?renderRadar@AptPalantir@@QAEXHHHHPAH@Z,0x0000FC5E,AptPalantir RenderRadar rectangle dispatcher
 ?aptPalantirRenderRadar@@YAXPBUPalantirPoint@@0@Z,0x00044544,AptPalantir::RenderRadar callback ILT registered by name
+?aptPalantirRenderRadarViewBox@@YAXXZ,0x00019501,AptPalantir::RenderRadarViewBox callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
