@@ -83817,3 +83817,14 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0BfmeMsg1052@@QAE@PADH@Z,0x007E8850,FESL message ctor alias used by bfmeDo1052
 ??1BfmeMsg1052@@QAE@XZ,0x007E86C0,FESL message dtor alias used by bfmeDo1052
 ?addInt@BfmeMsg1052@@QAEXPBDH@Z,0x007E88D0,FESL message addInt alias used by bfmeDo1052
+??0BfmeMsg803C90@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803C90
+??1BfmeMsg803C90@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803C90
+?addInt@BfmeMsg803C90@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803C90
+?getInt@BfmeSrc803C90@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803C90
+?send@BfmeOwner803C90@@QAEXPAVBfmeMsg803C90@@@Z,0x008038F0,FESL submit alias for 0x00803C90
+??0BfmeMsg803B60@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803B60
+??1BfmeMsg803B60@@QAE@XZ,0x007E86C0,FESL msg dtor for 0x00803B60
+?addInt@BfmeMsg803B60@@QAEXPBDH@Z,0x007E88D0,FESL addInt for 0x00803B60
+?getInt@BfmeSrc803B60@@QAEHPBDH@Z,0x007E8900,FESL getInt for 0x00803B60
+?send@BfmeOwner803B60@@QAEXPAVBfmeMsg803B60@@@Z,0x008038F0,FESL submit for 0x00803B60
+?g_bfmeNumRegions803B60@@3PADA,0x00D2B4B8,NUM-REGIONS string for 0x00803B60
