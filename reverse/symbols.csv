@@ -82441,3 +82441,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getSlot@LANGameInfo@@QAEPAVGameSlot@@H@Z,0x0001EC18,LAN game slot lookup thunk
 ?g_lanConnection@@3PAXA,0x00EF3C1C,active LAN endpoint connection
 ?g_lanEndpointBuffer@@3PADA,0x00EF3CC4,LAN endpoint publication buffer
+?notify04@Rva003BAD00Owner@@QAEXABVAsciiString@@H@Z,0x00027287,Open-BFME5 ILT thunk to body 0x003BAD00; ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z at 0x003CA7C0 calls it with the border-effect key and a zero
