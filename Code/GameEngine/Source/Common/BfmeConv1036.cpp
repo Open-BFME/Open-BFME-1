@@ -22,45 +22,6 @@ BfmeA1036 *BfmeA1036::bfmeGo1036A(void *h)
 	return this;
 }
 
-class BfmeSubB1036
-{
-public:
-	char m_bfmePad[8];
-	void *m_bfmeHead;
-};
-
-struct BfmeIt1036
-{
-	BfmeSubB1036 *m_bfmeOwner;
-	void *m_bfmeCur;
-};
-
-void *bfmeAlloc1036(int n);
-
-class BfmeB1036
-{
-public:
-	BfmeIt1036 *bfmeGo1036B(void);
-
-	char m_bfmePad[0x8c];
-	BfmeSubB1036 m_bfmeSub;
-};
-
-BfmeIt1036 *BfmeB1036::bfmeGo1036B(void)
-{
-	BfmeIt1036 *p = (BfmeIt1036 *)bfmeAlloc1036(8);
-
-	if (p != 0) {
-		BfmeSubB1036 *s = &m_bfmeSub;
-
-		p->m_bfmeOwner = s;
-		p->m_bfmeCur = s->m_bfmeHead;
-		return p;
-	}
-
-	return 0;
-}
-
 void bfmeRelease1036(void *p);
 
 class BfmeE1036
@@ -89,4 +50,3 @@ void BfmeE1036::bfmeGo1036E(void)
 	m_bfmeB = z;
 	m_bfmeC = z;
 }
-

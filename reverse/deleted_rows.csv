@@ -24408,3 +24408,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1Gen_00427390@@UAE@XZ,0x00427390,generic destructor identity superseded by caller-backed ??1FXNugget@@UAE@XZ over the same byte-verified 83-byte range
 ?bfmeFind@Gen_001EAEB0@@QBEPAVBfmeSlotDK@@XZ,0x001EAEB0,generic search identity superseded by caller-backed ?findAmmoPipShowingWeapon@WeaponSet@@QBEPBVWeapon@@XZ over the same byte-verified 40-byte range
 ?bfmeApply@@YAXXZ,0x00097360,generic free-function identity superseded by caller-backed ?restoreGlobalDataFields@RecorderClass@@QAEXXZ over the same byte-verified 35-byte range
+?bfmeGo1036B@BfmeB1036@@QAEPAUBfmeIt1036@@XZ,0x007123F0,"synthetic identity superseded by RTS3DScene::createLightsIterator; the ILT at 0x00042A0A and reference W3DScene source identify the body, which is byte-verified over the same 37-byte range."
