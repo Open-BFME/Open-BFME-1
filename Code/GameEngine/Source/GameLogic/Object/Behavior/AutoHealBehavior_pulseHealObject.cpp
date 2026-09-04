@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: AutoHealBehavior::pulseHealObject, retail 0x001EECB0 size 121.
 // Same +4/+8/+0x2C/+0x30 facade as the landed onDamage body. BFME adds
-// Object::bfmeGetBonus(0x11) onto the module-data healing amount and truncates
+// Object::getAttributeModifierBonus(0x11) onto the module-data healing amount and truncates
 // through __ftol2 before the Object vcalls at +0x40/+0x44. Particle pulse is
 // not in this 121B body. Focused TU -- do not fold into AutoHealBehavior.cpp.
 
@@ -31,7 +31,7 @@ public:
 	virtual Bool attemptHealingFromSoleBenefactor(
 		Real amount, const Object *source, UnsignedInt duration);
 
-	Bool bfmeGetBonus(Int kind, Real *out) const;
+	Bool getAttributeModifierBonus(Int kind, Real *out) const;
 };
 
 struct AutoHealBehaviorModuleData
@@ -65,7 +65,7 @@ void AutoHealBehavior::pulseHealObject(Object *obj)
 
 	const AutoHealBehaviorModuleData *data = m_moduleData;
 	Real bonus;
-	m_object->bfmeGetBonus(0x11, &bonus);
+	m_object->getAttributeModifierBonus(0x11, &bonus);
 	Int truncated = (Int)((Real)data->m_healingAmount + bonus);
 	if (data->m_radius == 0)
 		obj->attemptHealing((Real)truncated, m_object);

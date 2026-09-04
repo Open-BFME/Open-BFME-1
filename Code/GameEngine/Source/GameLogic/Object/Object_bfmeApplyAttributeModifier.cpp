@@ -72,14 +72,14 @@ public:
 class AttributeModifierPoolUpdate
 {
 public:
-	Bool bfmeApplyAttributeModifier(const AsciiString &name, int duration);
+	Bool applyAttributeModifier(const AsciiString &name, int duration);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
-	Bool bfmeApplyAttributeModifier(const AsciiString &name, int duration);
+	Bool applyAttributeModifier(const AsciiString &name, int duration);
 
 private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
@@ -87,7 +87,7 @@ private:
 	ContainModuleInterface *m_contain;
 };
 
-Bool Object::bfmeApplyAttributeModifier(const AsciiString &name, int duration)
+Bool Object::applyAttributeModifier(const AsciiString &name, int duration)
 {
 	if (name.length() == 1)
 		return false;
@@ -107,7 +107,7 @@ Bool Object::bfmeApplyAttributeModifier(const AsciiString &name, int duration)
 	AttributeModifierPoolUpdate *pool = findAttributeModifierPoolUpdate();
 	if (pool)
 	{
-		Bool applied = pool->bfmeApplyAttributeModifier(name, duration);
+		Bool applied = pool->applyAttributeModifier(name, duration);
 		return applied ? true : false;
 	}
 	return false;

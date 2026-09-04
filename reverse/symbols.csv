@@ -72122,7 +72122,6 @@ name,address,notes
 ?bfmeApply@Gen_006C89F0Target@@QAE_NPAX0_N@Z,0x000486EE,Open-BFME5 ILT the guarded delegate at 0x006C89F0 appends a false and calls through
 ?bfmeApply@TunnelTracker@@QAEXPAVObject@@PAX@Z,0x00037CD1,call-site callee of Gen_00219C70::bfmeRemove; ILT 0x00037CD1 -> 0x000F8870
 ?bfmeApplyAHB@BfmeThingAHB@@QAEXH@Z,0x000306F2,pin
-?bfmeApplyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Open-BFME5 ILT to body 0x0076A570; named modifier apply with duration called by Object wrapper 0x001C1DA0
 ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z,0x0002272D,Open-BFME5 ILT thunk to body 0x001E1CA0; ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z at 0x001E2840 calls it twice on the set from TheWritableGlobalData +0xB94 and on the one at +0x4A8 of the template at this+4; address-derived name
 ?bfmeApplyCDB@@YAXPAX0@Z,0x0001224C,pin
 ?bfmeApplyCVA@BfmeThingCVA@@QAEXXZ,0x00022999,pin
@@ -73503,12 +73502,7 @@ name,address,notes
 ?bfmeGetAllocator@Gen_0036e170@@ABE?AVBfmeAllocator@@XZ,0x000441BB,Open-BFME5 ILT the copy constructor at 0x0036E170 gets its allocator through
 ?bfmeGetAllocator@Gen_005862c0@@ABE?AVBfmeAllocator@@XZ,0x0003FFB7,Open-BFME5 ILT the copy constructor at 0x005862C0 gets its allocator through
 ?bfmeGetArrVGR@BfmeMeshVGR@@QAEPAUBfmeTexBufVGR@@HH_N@Z,0x0092BE50,pin
-?bfmeGetAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Open-BFME5 ILT thunk to body 0x00368C50; body initializes the output to 1.0 and multiplies matching attribute entries while bfme names record unresolved retail API spelling
 ?bfmeGetBUZA@BfmeSubBUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x0092C9D0,pin
-?bfmeGetBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT to additive accumulator body 0x00369460; matched Object::getVisionRange caller queries attribute 14
-?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local ABI view used by Object::getVisionRange; real target is AttributeModifierPoolUpdate::bfmeGetBonus
-?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
-?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::bfmeFindAttributeModifierPoolUpdate
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
 ?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
@@ -82734,34 +82728,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
-?reportFatalError@@YGXPAVFatalErrorContext@@PAD@Z,0x009F6D00,fatal error reporter used when a timed-operation node has no operation
-?g_missingTimedOperationMessage@@3PADA,0x00DE1CE4,fatal diagnostic for a timed-operation node without an operation
-?g_millisecondsToSeconds@@3MA,0x00C766EC,shared time conversion used by TimedOperationNode::update
-?update@TimedOperationNode@@QAEIXZ,0x0007B8E0,timed-operation node update called by the queue pump
-?updateTimedOperations@@YAIXZ,0x0007B990,single-caller timed-operation queue pump in GameEngine client update
-?append@TimedOperationList@@QAEXPAX@Z,0x0007B5A0,timed-operation queue tail append used by postTimedOp
-?g_timedOperationHead@@3PAVTimedOperationNode@@A,0x00EED584,timed-operation queue head at retail VA 0x012ED584
-?g_timedOperationSerial@@3IA,0x00EA737C,timed-operation key serial at retail VA 0x012A737C
-?TimedOperationInputLocked@@3HA,0x00EED530,timed-operation input lock state used by GameEngine client update
-?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
-??0AsciiStringWR@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWR@@QAE@XZ,0x00887940,pin
-?set@AsciiStringWR@@QAEXABV1@@Z,0x00887C90,pin
-g_bfmeGlobalWR,0x012F1484,Open-BFME5 the global whose override entry the accessors at 0x0043FC50 and siblings consult
-??0AsciiStringWS@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWS@@QAE@XZ,0x00887940,pin
-?set@AsciiStringWS@@QAEXABV1@@Z,0x00887C90,pin
-g_bfmeGlobalWS,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
-??0AsciiStringWT@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWT@@QAE@XZ,0x00887940,pin
-?set@AsciiStringWT@@QAEXABV1@@Z,0x00887C90,pin
-g_bfmeGlobalWT,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
-??0AsciiStringWU@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWU@@QAE@XZ,0x00887940,pin
-?set@AsciiStringWU@@QAEXABV1@@Z,0x00887C90,pin
-g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
-?setPlayerLeaveStatus@GameLogic@@QAEXHH@Z,0x00383BC0,Network leave-command and disconnect-vote callers identify the eight-player leave-status setter
 ?fillCurrentLANGameInfo@@YAXPADI@Z,0x0002A6D5,three LAN message-building callers identify the current-game serializer helper
 ?isLocalPlayer@LANGameSlot@@QBE_NXZ,0x0002DB2D,LANGameSlot local-player predicate used before serializing current game state
 ?resetPlayerLeaveStatus@GameLogic@@QAEXXZ,0x00383B00,Network::init caller and PlayerLeaveStatus diagnostic identify the eight-record reset method
@@ -82775,3 +82741,9 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ?find@AptMovieRegistry@@QAEPAUAptMovieRecord@@ABVAsciiString@@@Z,0x00014D49,WindowManager APT movie registry lookup thunk
 ?getCountForCategoryMask@AttributeModifierPoolUpdate@@QBEHPBVAttributeModifierCategoryMask@@@Z,0x00021323,category-mask count lookup used by both AttributeModifierDefinition value selectors
 ?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,module-name-key-based AttributeModifierPoolUpdate finder used by modifier application and value selection
+?applyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Object wrapper forwards named modifier application to the pool through this ILT
+?getAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Object wrapper identifies the multiplicative AttributeModifierPoolUpdate accumulator ILT
+?getAttributeModifierBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,vision-range and healing callers identify the additive AttributeModifierPoolUpdate accumulator ILT
+?getAttributeModifierBonus@Object@@QBE_NHPAM@Z,0x0000BECE,WeaponTemplate attack-range and AutoHeal callers identify the Object modifier-bonus wrapper ILT
+?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local Object.cpp ABI view of the AttributeModifierPoolUpdate additive bonus method
+?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate

@@ -33,8 +33,8 @@ extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 class AttributeModifierPoolUpdate
 {
 public:
-	Bool bfmeGetBonus(Int attribute, Real *bonus);
-	Bool bfmeGetAttributeModifierMultiplier(Int attribute, Real *multiplier);
+	Bool getAttributeModifierBonus(Int attribute, Real *bonus);
+	Bool getAttributeModifierMultiplier(Int attribute, Real *multiplier);
 
 private:
 	Bool isModifierActive(UnsignedInt frame, const AttributeModifierEntry *entry) const;
@@ -46,7 +46,7 @@ private:
 
 // The matched Object::getVisionRange caller proves this is the additive
 // accumulator; the sibling at 0x00368C50 uses the same entries and multiplies.
-Bool AttributeModifierPoolUpdate::bfmeGetBonus(Int attribute, Real *bonus)
+Bool AttributeModifierPoolUpdate::getAttributeModifierBonus(Int attribute, Real *bonus)
 {
 	*bonus = 0.0f;
 	Bool found = false;
@@ -76,7 +76,7 @@ Bool AttributeModifierPoolUpdate::bfmeGetBonus(Int attribute, Real *bonus)
 
 // The exact Object wrapper at 0x001BFDD0 proves the multiplicative sibling's
 // class and role even though its original retail method spelling is unknown.
-Bool AttributeModifierPoolUpdate::bfmeGetAttributeModifierMultiplier(
+Bool AttributeModifierPoolUpdate::getAttributeModifierMultiplier(
 	Int attribute, Real *multiplier)
 {
 	*multiplier = 1.0f;

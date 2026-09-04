@@ -7,9 +7,8 @@
 //
 // AttributeModifierPoolUpdate is proven by the finder body's module-name key
 // literal and by that class's matched getModuleNameKey implementation.  The
-// original finder/query verbs and selector enum spelling are not recoverable
-// from retail, so the bfme-prefixed names and Int deliberately describe only
-// the semantics that the bytes establish.
+// The selector enum spelling is not recoverable from retail, so Int describes
+// only the semantics established by the bytes.
 
 typedef int Int;
 typedef bool Bool;
@@ -18,24 +17,23 @@ typedef float Real;
 class AttributeModifierPoolUpdate
 {
 public:
-	Bool bfmeGetAttributeModifierMultiplier(Int which, Real *out);
+	Bool getAttributeModifierMultiplier(Int which, Real *out);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 public:
-	Bool bfmeGetAttributeModifierMultiplier(Int which, Real *out) const;
+	Bool getAttributeModifierMultiplier(Int which, Real *out) const;
 
 private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate(void) const;
 };
 
-// ?bfmeGetAttributeModifierMultiplier@Object@@QBE_NHPAM@Z
-Bool Object::bfmeGetAttributeModifierMultiplier(Int which, Real *out) const
+Bool Object::getAttributeModifierMultiplier(Int which, Real *out) const
 {
 	AttributeModifierPoolUpdate *pool = findAttributeModifierPoolUpdate();
 	if (pool == 0)
 		return false;
-	return pool->bfmeGetAttributeModifierMultiplier(which, out);
+	return pool->getAttributeModifierMultiplier(which, out);
 }

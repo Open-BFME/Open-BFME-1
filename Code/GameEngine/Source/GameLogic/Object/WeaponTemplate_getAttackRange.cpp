@@ -18,7 +18,7 @@ struct Coord3D
 class Object
 {
 public:
-	Bool bfmeGetBonus( Int which, Real *value ) const;
+	Bool getAttributeModifierBonus( Int which, Real *value ) const;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
@@ -50,7 +50,7 @@ Real WeaponTemplate::getAttackRange( const Object *source,
 	rangeBonus = 0.0f;
 	if( source )
 	{
-		if( source->bfmeGetBonus( 6, &rangeBonus ) )
+		if( source->getAttributeModifierBonus( 6, &rangeBonus ) )
 			return ( rangeBonus + 1.0f ) * *rangeStorage;
 	}
 	return *rangeStorage;
