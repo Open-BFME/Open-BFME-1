@@ -82564,3 +82564,4 @@ g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00
 ?g_w3dMouseCursorTextures@@3PAY0BF@PAVTextureClass@@A,0x012F8798,W3DMouse 50 by 21 cursor texture table
 ?g_w3dMouseCursorModels@@3PAPAXA,0x012F85F8,W3DMouse cursor model table
 ?g_w3dMouseCursorAnims@@3PAPAXA,0x012F8530,W3DMouse cursor animation table
+?Rva00739B30@@YAXPAVRva00609560Item@@H@Z,0x00739B30
