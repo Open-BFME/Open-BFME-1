@@ -1,37 +1,63 @@
 // ?onUpgradeCompleted@Player@@QAEXPBVUpgradeTemplate@@@Z
-// partial score=0.68 date=2026-08-31
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// stlport
+// partial score=0.89 date=2026-09-04
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// Player::onUpgradeCompleted, retail 0x000CE480, 169 bytes (reloc_names 166
+// omitted the ret 4).
+//
+// Reloc-named from the matched addUpgrade completion call. Player+0x288 is the
+// team-prototype circular-list header pointer (same walk as hasAnyObjects).
+// Each prototype's instance head is at +0x274 and advances through
+// Team::_bfme_nextInInstanceList (ILT 0x00022A70). Members sit at Team+0x0C
+// and step through Object's virtually-inherited DLINK PMF
+// {pfn=0x00401140, delta=-100, vbindex=0}. Meat is updateUpgradeModules
+// (ILT 0x00027FCF). The UpgradeTemplate argument is unused; it still
+// produces retail's ret 4.
+//
+// Best compile: 158B, correct PMF vbptr+0x68 / delta -100 dispatch and both
+// callees. Remaining wall is the Team DLINK esi-fold: /O2 LICMs the constant
+// PMF to `mov edi, pfn` before `team->m_head`, keeps team in eax, allocates
+// sub esp,0x0C not 0x10, and drops the 0x10-aligned `mov edi,edi` /
+// `lea ecx,[ecx]` nops. /Og- sinks the PMF after the head load (198B).
+// /Oy- emits the 3-byte nop and edx/eax dispatch but introduces a frame
+// pointer. Source rewrites and the flag matrix do not flip the esi/eax
+// team-cursor swap.
 
-#define Player ZHPlayer
-#include "PreRTS.h"
-#include "Common/Team.h"
-#include "GameLogic/Object.h"
-#undef Player
-
-#include <list>
+#include "ObjectDlinkPmf.h"
 
 class UpgradeTemplate;
 
-class BfmeTeamInstanceLink
+class ObjectUpgradeView
 {
 public:
-	Team *_bfme_nextInInstanceList();
+	void updateUpgradeModules();
 };
 
-struct BfmeTeamPrototypeInstances
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+class Team
 {
-	unsigned char m_unmodelled[0x274];
-	Team *m_head;
+public:
+	Team *_bfme_nextInInstanceList();				// ILT 0x00022A70
+
+	void *m_vptr;
+	void *m_proto;
+	void *m_id;
+	Object *m_head;							// +0x0C
 };
 
-struct BfmeTeamMembers
+class TeamPrototype
 {
-	unsigned char m_unmodelled[0x0C];
-	Object *m_head;
+public:
+	unsigned char m_unmodelled_000[0x274];
+	Team *m_teamInstanceList;					// +0x274
 };
 
-typedef _STL::list<TeamPrototype *> BfmePlayerTeamList;
+class BfmeTeamListNode
+{
+public:
+	BfmeTeamListNode *m_next;
+	BfmeTeamListNode *m_prev;
+	TeamPrototype *m_proto;
+};
 
 class Player
 {
@@ -39,26 +65,22 @@ public:
 	void onUpgradeCompleted(const UpgradeTemplate *upgradeTemplate);
 
 private:
-	unsigned char m_unmodelled[0x288];
-	BfmePlayerTeamList m_playerTeamPrototypes;
+	unsigned char m_head[0x288];
+	BfmeTeamListNode *m_playerTeams;				// +0x288
 };
 
+// ?onUpgradeCompleted@Player@@QAEXPBVUpgradeTemplate@@@Z
 void Player::onUpgradeCompleted(const UpgradeTemplate *)
 {
-	for (BfmePlayerTeamList::iterator it = m_playerTeamPrototypes.begin();
-		it != m_playerTeamPrototypes.end(); ++it)
+	BfmeTeamListNode *head = m_playerTeams;
+	for (BfmeTeamListNode *node = head->m_next; node != m_playerTeams; node = node->m_next)
 	{
-		Team *team = ((BfmeTeamPrototypeInstances *)*it)->m_head;
-		while (team)
+		for (Team *team = node->m_proto->m_teamInstanceList; team; team = team->_bfme_nextInInstanceList())
 		{
-			DLINK_ITERATOR<Object> objects(
-				((BfmeTeamMembers *)team)->m_head, Object::dlink_next_TeamMemberList);
-			while (!objects.done())
-			{
-				objects.cur()->updateUpgradeModules();
-				objects.advance();
-			}
-			team = ((BfmeTeamInstanceLink *)team)->_bfme_nextInInstanceList();
+			Object *cur = team->m_head;
+			BfmeGetNextTeamMemberFunc getNext = Object::dlink_next_TeamMemberList;
+			for (; cur != 0; cur = (cur->*getNext)())
+				((ObjectUpgradeView *)cur)->updateUpgradeModules();
 		}
 	}
 }
