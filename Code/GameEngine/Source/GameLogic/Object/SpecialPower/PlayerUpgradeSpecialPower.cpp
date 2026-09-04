@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class PlayerUpgradeSpecialPower : public SpecialPowerModule
 {
 public:
 	PlayerUpgradeSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~PlayerUpgradeSpecialPower();
 };
 
 PlayerUpgradeSpecialPower::PlayerUpgradeSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+PlayerUpgradeSpecialPower::~PlayerUpgradeSpecialPower()
 {
 }
