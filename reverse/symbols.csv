@@ -77246,22 +77246,18 @@ name,address,notes
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
 ?g_lastPacketRouterStallFrame@@3IA,0x012F7704,last packet-router frame that triggered the native frame-stall gate
 ?g_lookup@@3P6APAXPAX0@ZA,0x0135933C,address-derived IAT lookup recovered from 0x0093D2D0
-?g_mgr12ED5EC@@3PAVBfmeMgrD5E@@A,0x012ED5EC,pin
 ?g_mgr12ED748@@3PAVBfmeMgrD74@@A,0x00EED748,pin
 ?g_mgr12EF1D8@@3PAUBfmeMgrContainerF1D@@A,0x00EEF1D8,pin
 ?g_mgr12F076C@@3PAVBfmeMgrF07@@A,0x00EF076C,pin
 ?g_mgr12F0898@@3PAVBfmeMgr089@@A,0x00EF0898,pin
 ?g_mgr12F148C@@3PAVBfmeMgrF14@@A,0x00EF148C,pin
-?g_mgr12F148C@@3PAVBfmeMgrF14_010@@A,0x012F148C,pin
 ?g_mgr12F1600@@3PAVBfmeMgr160@@A,0x00EF1600,pin
 ?g_mgr12F19E8@@3PAVBfmeMgr19E@@A,0x012F19E8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr33F@@A,0x012F33F8,pin
-?g_mgr12F33F8@@3PAVBfmeMgr33F_010@@A,0x012F33F8,pin
 ?g_mgr12F33F8@@3PAVBfmeMgr412@@A,0x00EF33F8,pin
 ?g_mgr12F4184@@3PAVBfmeMgr418@@A,0x012F4184,pin
 ?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
 ?g_mgr12F4C5C@@3PAVBfmeMgr4C5@@A,0x012F4C5C,pin
-?g_mgr12F4C84@@3PAVBfmeMgr4C8@@A,0x012F4C84,pin
 ?g_millisecondsToSeconds@@3MA,0x00C766EC,shared time conversion used by TimedOperationNode::update
 ?g_missingTimedOperationMessage@@3PADA,0x00DE1CE4,fatal diagnostic for a timed-operation node without an operation
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
@@ -80852,14 +80848,9 @@ name,address,notes
 ?startThreads@GameResultsQueue@@UAEXXZ,0x006406D0,GameResultsQueue vtable 0x01119380 slot +0x24 in the ZH interface order; endThreads vslot +0x28 first then new(0x54) GameResultsThreadClass + Execute; ZH GameResultsThread.cpp:128; present-unmatched row
 ?statusCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyStatusArg@@@Z,0x0003BD8B
 ?stencil@Rva00785FD0Renderer@@QAEXXZ,0x00041EC0,ILT to claimed 0x0078B280 stencil helper
-?step1@BfmeMgrF14_010@@QAEXH@Z,0x0003EBDF,pin
 ?step1@BfmeSub30_7F0@@QAEXXZ,0x0002D308,pin
 ?step1@BfmeSubVfn1A6@@QAEXXZ,0x0002D308,pin
-?step2@BfmeMgr4C5@@QAEXH@Z,0x00016A68,pin
 ?step2@BfmeSub30_7F0@@QAEXPAX@Z,0x00016E55,pin
-?step3@BfmeSub32A@@QAEXH@Z,0x000032AB,pin
-?step4@BfmeMgr33F_010@@QAEXXZ,0x00027336,pin
-?step5@BfmeMgr4C8@@QAEXXZ,0x00048626,pin
 ?step@BfmeFinishDispatcherAGA@@QAEXPAX0@Z,0x00014F51,BFME finish-list dispatch layout alias; retail call uses this at object offset -0x20
 ?step@Gen0035F050@@QAEHXZ,0x00049AE4,poll loop callee returns int so test eax eax
 ?step@Gen0035F050@@QAE_NXZ,0x00049AE4,poll loop callee via ILT thunk to FUN_0075ee70
@@ -82747,3 +82738,5 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ?getAttributeModifierBonus@Object@@QBE_NHPAM@Z,0x0000BECE,WeaponTemplate attack-range and AutoHeal callers identify the Object modifier-bonus wrapper ILT
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local Object.cpp ABI view of the AttributeModifierPoolUpdate additive bonus method
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate
+?setInputEnabled@InGameUI@@QAEX_N@Z,0x0003EBDF,ScriptActions disable-input and enable-input paths identify the InGameUI setter ILT
+?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
