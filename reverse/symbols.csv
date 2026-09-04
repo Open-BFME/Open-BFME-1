@@ -82556,3 +82556,6 @@ g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00
 ??0BfmeStrWA@@QAE@PBD@Z,0x00888BC0,pin
 ??1BfmeStrWA@@QAE@XZ,0x00887940,pin
 ??1BfmeGuardWA@@QAE@XZ,0x004724D0,Open-BFME5 slot 0 of the table 0x010F760C; the unwind action for the ctor at 0x00471EC0
+?Rva00605F00@@YGPAIPAI@Z,0x00605F00
+?__copy@_STL@@YAPADPAD00ABUrandom_access_iterator_tag@1@PAH@Z,0x000B98F0
+?set@Rva0006AB10Curve@@QAEXMMHH@Z,0x0006AB10
