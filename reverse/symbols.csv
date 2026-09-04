@@ -82578,3 +82578,10 @@ g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00
 ?g_w3dMouseThreadRunLock@@3EA,0x012F9800,W3DMouse polling loop run lock
 ?g_w3dMouseIsThread@@3_NA,0x012F8788,W3DMouse polling-thread active flag
 ?g_w3dMouseDrawTarget@@3PAVW3DMouseDrawInterface@@A,0x012F4C5C,W3DMouse polling draw target
+?g_w3dMouseThread@@3VW3DMouseThread@@A,0x012F9808,W3DMouse global polling thread object
+g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 installs
+??0BfmeStrWB@@QAE@PBD@Z,0x00888BC0,pin
+??1BfmeStrWB@@QAE@XZ,0x00887940,pin
+??1BfmeGuardWB@@QAE@XZ,0x00471850,Open-BFME5 slot 0 of the table 0x010F756C; the unwind action for the ctor at 0x00471390
+??1BfmeQuadWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x24 sub-object destructor; only the unwind funclet references it
+??1BfmeOneWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x30 sub-object destructor; only the unwind funclet references it
