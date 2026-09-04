@@ -79269,6 +79269,7 @@ name,address,notes
 ?grantScience@Player@@QAEXW4ScienceType@@@Z,0x0000C33D,ILT thunk to Player::grantScience; identity from Zero Hour ScriptActions.cpp doPlayerGrantScience
 ?groupAttackArea@AIGroup@@QAEXPAVPolygonTrigger@@W4CommandSourceType@@@Z,0x0002D5B5,ILT to 0x00156A30; callee of doTeamAttackArea 0x002F2A50
 ?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00041CD1
+?groupAttackTeam@AIGroup@@QAEXPBVTeam@@HW4CommandSourceType@@@Z,0x0001FF00,ILT to 0x00156070; callee of doAttack 0x002F2840 TEAM_ATTACK_TEAM
 ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z,0x0001C0D0,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
