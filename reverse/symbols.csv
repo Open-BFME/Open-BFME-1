@@ -82503,3 +82503,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?notify@Gen003BFB20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFB20
 ?TheWritableGlobalData@@3PAVGlo012ED5C8Type@@A,0x012ED5C8,typed pin for Rva003BFB20::run global load
 ?TheLivingWorldCampaignManager@@3PAVGlo012F1024Type@@A,0x012F1024,typed pin for Rva003BFB20::run campaign step
+?fill@Gen003C9470Owner@@QAEXPAXPAUGen003BC9C0Pair@@@Z,0x00033EBA,thiscall fill used by Rva003BC9C0::run at 0x003BC9C0; ILT to 0x003C9470
