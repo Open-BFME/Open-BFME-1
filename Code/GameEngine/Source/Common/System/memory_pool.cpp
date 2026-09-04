@@ -2,11 +2,23 @@
 
 #include <string.h>
 
-// Internal allocator dispatch: the pool routes allocate/size/free through a table
-// of function pointers resolved at init. Addresses are supplied by the patcher.
-extern void *(__cdecl *g_poolAllocate)(unsigned int, MemoryPool::AllocType);
+// `namespace MemoryPool` is retail's own name: the eight `_`-prefixed entry
+// points in this file are exported under it (reverse/exports.csv ordinals
+// 1361-1368, mangled as free functions with an enum AllocType in that scope).
+// It is not Zero Hour's `class MemoryPool` (GameMemory.h:280); the two never
+// share a TU.
+//
+// The game does not link these entry points directly. d_00882e10 (0x00882E10,
+// still a gen-dump) resolves each export by name at startup into a .bss pointer
+// table, and every caller -- global operator new/delete in WWLib/mem_ops.cpp,
+// _Reallocate below -- goes through that table, which is why the call sites
+// are DIR32 slots rather than REL32 calls. symbols.csv pins two of the slots:
+// __gameMemAllocPtr (0x0130E9B4 -> _Allocate) and __gameMemFreePtr
+// (0x0130E9AC -> _Free). The block-size slot (0x0130E9B0 -> _GetBlockSize) is
+// unpinned, so its name here is a placeholder.
+extern "C" void *(__cdecl *__gameMemAllocPtr)(unsigned int, int);
+extern "C" void (__cdecl *__gameMemFreePtr)(void *, int);
 extern unsigned int (__cdecl *g_poolBlockSize)(void *);
-extern void (__cdecl *g_poolFree)(void *, MemoryPool::AllocType);
 
 
 static int g_refCount;
@@ -874,13 +886,13 @@ __declspec(naked) void MemoryPool::_Free(void *ptr, MemoryPool::AllocType type)
 
 void *MemoryPool::_Reallocate(void *ptr, unsigned int size, MemoryPool::AllocType type)
 {
-    void *newPtr = size ? g_poolAllocate(size, type) : 0;
+    void *newPtr = size ? __gameMemAllocPtr(size, type) : 0;
     unsigned int oldSize = ptr ? g_poolBlockSize(ptr) : 0;
     if (size != 0 && oldSize != 0) {
         memcpy(newPtr, ptr, size < oldSize ? size : oldSize);
     }
     if (ptr != 0) {
-        g_poolFree(ptr, type);
+        __gameMemFreePtr(ptr, type);
     }
     return newPtr;
 }
