@@ -4668,7 +4668,6 @@ name,address,notes
 ??1Gen_dtor_00297410@@UAE@XZ,0x0003D302,gen-dtor class destructor
 ??1Gen_dtor_002975e0@@UAE@XZ,0x000137D7,gen-dtor class destructor
 ??1Gen_dtor_002977f0@@UAE@XZ,0x0000D125,gen-dtor class destructor
-??1Gen_dtor_00297fd0@@UAE@XZ,0x0003F053,gen-dtor class destructor
 ??1Gen_dtor_002982a0@@UAE@XZ,0x0002C6F1,gen-dtor class destructor
 ??1Gen_dtor_00298a70@@UAE@XZ,0x000137C8,gen-dtor class destructor
 ??1Gen_dtor_00298fa0@@UAE@XZ,0x00034AB3,gen-dtor class destructor
@@ -33932,8 +33931,6 @@ name,address,notes
 ?b_00297eb0@@YAXXZ,0x00297EB0,gen-thunk body
 ?b_00297f10@@YAXXZ,0x00297F10,gen-thunk body
 ?b_00297f70@@YAXXZ,0x00297F70,gen-thunk body
-?b_00297fd0@@YAXXZ,0x00297FD0,gen-thunk body
-?b_00298000@@YAXXZ,0x00298000,gen-thunk body
 ?b_00298010@@YAXXZ,0x00298010,gen-thunk body
 ?b_002980a0@@YAXXZ,0x002980A0,gen-thunk body
 ?b_00298200@@YAXXZ,0x00298200,gen-thunk body
@@ -82758,3 +82755,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 _D3DXMatrixMultiply@12,0x009FACAD,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x0C retail slot0x012DBE04
 _D3DXMatrixScaling@16,0x009FB6F4,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x84 retail slot0x012DBE7C; init at0x009FB6C6
 _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x68 retail slot0x012DBE60; init at0x009FB756
+??1LifetimeUpdateModuleData@@UAE@XZ,0x0003F053,destructor ILT to 0x00298000
+??_GLifetimeUpdateModuleData@@UAEPAXI@Z,0x00027C46,class vftable slot zero ILT to 0x00297FD0
