@@ -82754,3 +82754,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??_GSupplyCenterDockUpdate@@MAEPAXI@Z,0x0002D844,primary class vftable slot zero ILT to 0x002CF290
 ??1SupplyWarehouseDockUpdate@@MAE@XZ,0x0003F896,destructor ILT to 0x002CF6B0
 ??_GSupplyWarehouseDockUpdate@@MAEPAXI@Z,0x0000D4A9,primary class vftable slot zero ILT to 0x002CF860
+?bfmeHighlightDrawQuad@@YAXI@Z,0x00018BB0,retail highlight postRender0x007D7040 direct call at0x007D72A3
+?bfmeHighlightApply@@YAXIPAXIPAUTexture@@PAUIDirect3DSurface8@@12@Z,0x0003F242,retail highlight postRender0x007D7040 direct call at0x007D72DA
