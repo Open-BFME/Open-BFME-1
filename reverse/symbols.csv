@@ -83873,3 +83873,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??4locale@_STL@@QAEAAV01@ABV01@@Z,0x00832180,STLport locale assign non-const-ref return; twin of ABV pin for ios_base::imbue
 __imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::move; same slot as memmove
 ?groupAttackArea@AIGroup@@QAEXPAVPolygonTrigger@@W4CommandSourceType@@@Z,0x0002D5B5,ILT to 0x00156A30; callee of doTeamAttackArea 0x002F2A50
+?aiBfmeCommand45@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x00019628,aiBfmeCommand45 ILT from groupBfmeCommand45; AICMD 0x45 builder at 0x00152C20
