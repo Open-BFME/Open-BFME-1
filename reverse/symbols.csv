@@ -4528,7 +4528,6 @@ name,address,notes
 ??1Gen_dtor_0025cc50@@UAE@XZ,0x0004854A,gen-dtor class destructor
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
 ??1Gen_dtor_0025d0b0@@UAE@XZ,0x00039BCB,gen-dtor class destructor
-??1Gen_dtor_0025d6b0@@UAE@XZ,0x0001AC99,gen-dtor class destructor
 ??1Gen_dtor_0025d8f0@@UAE@XZ,0x0004770D,gen-dtor class destructor
 ??1Gen_dtor_0025dbb0@@UAE@XZ,0x0004653D,gen-dtor class destructor
 ??1Gen_dtor_0025dbe0@@UAE@XZ,0x000157E4,gen-dtor class destructor
@@ -31916,11 +31915,9 @@ name,address,notes
 ?b_0025d560@@YAXXZ,0x0025D560,gen-thunk body
 ?b_0025d590@@YAXXZ,0x0025D590,gen-thunk body
 ?b_0025d5d0@@YAXXZ,0x0025D5D0,gen-thunk body
-?b_0025d5e0@@YAXXZ,0x0025D5E0,gen-thunk body
 ?b_0025d600@@YAXXZ,0x0025D600,gen-thunk body
 ?b_0025d610@@YAXXZ,0x0025D610,gen-thunk body
 ?b_0025d6a0@@YAXXZ,0x0025D6A0,gen-thunk body
-?b_0025d6b0@@YAXXZ,0x0025D6B0,gen-thunk body
 ?b_0025d6e0@@YAXXZ,0x0025D6E0,gen-thunk body
 ?b_0025d7a0@@YAXXZ,0x0025D7A0,gen-thunk body
 ?b_0025d7e0@@YAXXZ,0x0025D7E0,gen-thunk body
@@ -82737,3 +82734,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00872680 hands to TableMap; body sits immediately below it
 ??1ElvenWoodSpecialPower@@MAE@XZ,0x000253C9,destructor ILT to 0x0025B300
 ??_GElvenWoodSpecialPower@@MAEPAXI@Z,0x0000EB51,primary class vtable slot zero ILT to 0x0025B5B0
+??1FreezingRainSpecialPower@@MAE@XZ,0x0001AC99,destructor ILT to 0x0025D5E0
+??_GFreezingRainSpecialPower@@MAEPAXI@Z,0x000221C4,primary class vtable slot zero ILT to 0x0025D6B0

@@ -24585,3 +24585,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_0025a8e0@@UAEPAXI@Z,0x0025A8E0,address-derived identity replaced by byte-verified DevastateSpecialPower destructor
 ??1Rva0025B300MultiTailDtor@@UAE@XZ,0x0025B300,address-derived identity replaced by byte-verified ElvenWoodSpecialPower destructor
 ??_GGen_dtor_0025b5b0@@UAEPAXI@Z,0x0025B5B0,address-derived identity replaced by byte-verified ElvenWoodSpecialPower destructor
+??1Rva0025D5E0MultiTailDtor@@UAE@XZ,0x0025D5E0,address-derived identity replaced by byte-verified FreezingRainSpecialPower destructor
+??_GGen_dtor_0025d6b0@@UAEPAXI@Z,0x0025D6B0,address-derived identity replaced by byte-verified FreezingRainSpecialPower destructor

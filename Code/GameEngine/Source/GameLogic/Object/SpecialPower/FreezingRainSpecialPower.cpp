@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class FreezingRainSpecialPower : public SpecialPowerModule
 {
 public:
 	FreezingRainSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~FreezingRainSpecialPower();
 };
 
 FreezingRainSpecialPower::FreezingRainSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+FreezingRainSpecialPower::~FreezingRainSpecialPower()
 {
 }
