@@ -8545,6 +8545,7 @@ name,address,notes
 ??1UserPreferencesFilename@@QAE@XZ,0x008881D0,Open-BFME5 BFME UnicodeString filename destructor body
 ??1UserPreferencesMap@@QAE@XZ,0x0000B992,Open-BFME5 UserPreferences STL map destructor ILT
 ??1VictoryConditions@@UAE@XZ,0x0035F880,installs vtable 0x010E8D90 calls hideEndGameScreen 0x0035F770 then the VictoryConditionsInterface vtable 0x010E8D28 and ??1SubsystemInterface 0x009A1A40; called by the scalar deleting dtor 0x0035F8F0 via ILT 0x000087F6
+??1VictoryParameterVector@@QAE@XZ,0x00032DD5,VictorySystem destructor member at +0xEC; ILT targets the 0x001DFD90 vector destructor
 ??1Video@@QAE@XZ,0x0001642D
 ??1W3DAnimationInfo@@QAE@XZ,0x00020018,ILT thunk used by call site
 ??1W3DDisplayStringBase@@UAE@XZ,0x0000D823,Open-BFME5 pin
@@ -82698,4 +82699,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1VictoryParameterVector@@QAE@XZ,0x00032DD5,VictorySystem destructor member at +0xEC; ILT targets the 0x001DFD90 vector destructor
