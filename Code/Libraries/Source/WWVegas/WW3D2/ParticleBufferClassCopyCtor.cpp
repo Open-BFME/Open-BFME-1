@@ -1,9 +1,13 @@
-// ??0ParticleBufferClass@@QAE@ABV0@@Z
-// partial score=0.88 date=2026-09-02
-// ??0ParticleBufferClass@@QAE@ABV0@@Z
-// partial score=0.78 date=2026-09-02
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
-// banked attempt for ??0ParticleBufferClass@@QAE@ABV0@@Z @ 0x00989A20
+// ParticleBufferClass copy constructor, retail 0x00989A20, 4714 bytes.
+// Identity: byte-matched Clone at 0x0098ACA0 calls this constructor.
+// The renderer texture getters return owning one-pointer handles, not raw
+// pointers: retail passes hidden return slots, sets EH states, and releases
+// each handle after Set_Texture. The public legacy renderer headers retain
+// raw-pointer declarations; use the already-matched getter ABI locally.
+// Four handle temporaries account for the retail 0x1c frame (the ZH raw-pointer
+// calls produce 0x0c). Set_Texture's legacy TextureClass* is a handle address,
+// as its matched implementation in pointgr.cpp/linegrp.cpp demonstrates.
 #define Matrix4x4 Matrix4
 #include "part_buf.h"
 #include "part_emt.h"
@@ -11,6 +15,17 @@
 #include "pointgr.h"
 #include "linegrp.h"
 #include "seglinerenderer.h"
+#include "texture.h"
+
+class RefCountedHandle {
+public:
+ TextureClass *Pointer;
+ ~RefCountedHandle() { if (Pointer) Pointer->Release_Ref(); }
+ // The existing setter declaration takes an opaque pointer to the handle.
+ operator TextureClass *() { return reinterpret_cast<TextureClass *>(this); }
+};
+class Rva00912850Owner { public: RefCountedHandle getHandle() const; };
+class Rva0098ECE0Owner { public: RefCountedHandle getHandle() const; };
 
 ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 	RenderObjClass(src),
@@ -274,7 +289,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 			PointGroup = W3DNEW PointGroupClass();
 			PointGroup->Set_Flag(PointGroupClass::TRANSFORM, true);
 			PointGroup->Set_Flag(PointGroupClass::BILLBOARD, true);
-			PointGroup->Set_Texture(src.PointGroup->Peek_Texture());
+			PointGroup->Set_Texture(reinterpret_cast<const Rva00912850Owner *>(src.PointGroup)->getHandle());
 			PointGroup->Set_Shader(src.PointGroup->Get_Shader());
 			PointGroup->Set_Point_Mode(PointGroupClass::TRIS);
 			PointGroup->Set_Frame_Row_Column_Count_Log2(src.PointGroup->Get_Frame_Row_Column_Count_Log2());
@@ -286,7 +301,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 			PointGroup = W3DNEW PointGroupClass();
 			PointGroup->Set_Flag(PointGroupClass::TRANSFORM, true);
 			PointGroup->Set_Flag(PointGroupClass::BILLBOARD, true);
-			PointGroup->Set_Texture(src.PointGroup->Peek_Texture());
+			PointGroup->Set_Texture(reinterpret_cast<const Rva00912850Owner *>(src.PointGroup)->getHandle());
 			PointGroup->Set_Shader(src.PointGroup->Get_Shader());
 			PointGroup->Set_Point_Mode(PointGroupClass::QUADS);
 			PointGroup->Set_Frame_Row_Column_Count_Log2(src.PointGroup->Get_Frame_Row_Column_Count_Log2());
@@ -303,7 +318,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 			WWASSERT(src.LineGroup);
 			LineGroup = W3DNEW LineGroupClass();
 			LineGroup->Set_Flag(LineGroupClass::TRANSFORM, true);
-			LineGroup->Set_Texture(src.LineGroup->Peek_Texture());
+			LineGroup->Set_Texture(reinterpret_cast<const Rva0098ECE0Owner *>(src.LineGroup)->getHandle());
 			LineGroup->Set_Shader(src.LineGroup->Get_Shader());
 			LineGroup->Set_Line_Mode(LineGroupClass::TETRAHEDRON);
 			TailPosition = NEW_REF( ShareBufferClass<Vector3> , (MaxNum, "ParticleBufferClass::TailPosition", 0) );
@@ -315,7 +330,7 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 			WWASSERT(src.LineGroup);
 			LineGroup = W3DNEW LineGroupClass();
 			LineGroup->Set_Flag(LineGroupClass::TRANSFORM, true);
-			LineGroup->Set_Texture(src.LineGroup->Peek_Texture());
+			LineGroup->Set_Texture(reinterpret_cast<const Rva0098ECE0Owner *>(src.LineGroup)->getHandle());
 			LineGroup->Set_Shader(src.LineGroup->Get_Shader());
 			LineGroup->Set_Line_Mode(LineGroupClass::PRISM);
 			TailPosition = NEW_REF( ShareBufferClass<Vector3> , (MaxNum, "ParticleBufferClass::TailPosition", 0) );
@@ -340,10 +355,9 @@ ParticleBufferClass::ParticleBufferClass(const ParticleBufferClass & src) :
 
 	if (((int)LodCount - (int)DecimationThreshold - 1) < minlod) {
 		if (minlod < 0) minlod = 0;
-		if (minlod > (int)LodCount) minlod = LodCount;
+		else if (minlod > (int)LodCount) minlod = LodCount;
 		DecimationThreshold = LodCount - minlod - 1;
 	}
 
 	TotalActiveCount++;
 }
-

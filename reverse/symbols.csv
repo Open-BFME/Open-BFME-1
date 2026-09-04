@@ -82757,3 +82757,4 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??_GRepairDockUpdateModuleData@@UAEPAXI@Z,0x000389C4,class vftable slot zero ILT to 0x002CEF60
 ??1SupplyCenterDockUpdateModuleData@@UAE@XZ,0x0002EE56,destructor ILT to 0x002CF600
 ??_GSupplyCenterDockUpdateModuleData@@UAEPAXI@Z,0x00009F2A,class vftable slot zero ILT to 0x002CF5D0
+?Get_Frame_Row_Column_Count_Log2@PointGroupClass@@QAEEXZ,0x00912120,ParticleBuffer copy constructor 0x00989A20 call at +0xE7A; getter reads PointGroup FrameRowColumnCountLog2 byte +0x20
