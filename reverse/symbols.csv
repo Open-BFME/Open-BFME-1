@@ -83893,3 +83893,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
 ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
+?prepSpecial@AIGroup@@QAEXXZ,0x00006258,ILT to 0x00150A10 from tryGroupSpecial 0x001599A0
+?checkSpecial@AIGroup@@QAE_NPBUCoord3D@@H@Z,0x0002D565,ILT to 0x00154F00 from tryGroupSpecial 0x001599A0
+?sendSpecial@AIGroup@@QAEXPBUCoord3D@@HHHH@Z,0x0001A6B3,ILT to 0x00157BE0 from tryGroupSpecial 0x001599A0
