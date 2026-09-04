@@ -24453,3 +24453,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?wrap@Rva000C95E0@@QAEXH@Z,0x000C95E0,Address-derived duplicate removed; Player::preTeamDestroy owns this exact 18-byte body.
 ?get@Gen_006e9530@@QBEEXZ,0x006E9530,Generated getter identity superseded by W3DDisplay::isLetterBoxed; vtable position and member layout identify the exact seven-byte body.
 ??1Rva004ACD70Object@@QAE@XZ,0x004ACD70,Address-derived duplicate removed; ControlBarSchemeImage destructor owns this exact 12-byte body. The emitted shim remains for its distinct ICF alias at 0x00580830.
+?rva008896D0Get@@YADXZ,0x008896D0,Address-derived duplicate removed; _bfme_debugReportingEnabled owns this exact caller-identified 12-byte predicate.

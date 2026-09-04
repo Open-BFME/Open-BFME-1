@@ -72523,7 +72523,6 @@ name,address,notes
 ?bfmeCheckC80F0@Object@@QAE_NXZ,0x0004039A,callee pin for ControlBar objectSelectPredicate 0x004A6570 thunk to FUN_005c80f0
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
-?bfmeCheckVHJ@@YADXZ,0x008896D0,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin

@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-char __cdecl bfmeCheckVHJ();
+bool __cdecl _bfme_debugReportingEnabled();
 void __cdecl bfmeRecordVHJ(int n);
 
 class BfmeMsgVHJ
@@ -90,7 +90,7 @@ void __cdecl W3DRadarResetLock()
 {
 	if (WaitForSingleObject(g_bfmeEventVHM, 20000) == 0x102)
 	{
-		if (bfmeCheckVHJ())
+		if (_bfme_debugReportingEnabled())
 		{
 			bfmeRecordVHJ(1);
 			g_bfmeLogVHJ->bfmeOwn60VHJ();

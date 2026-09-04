@@ -20,7 +20,7 @@ void __cdecl bfmeGoVHI(BfmeMultiVHI *m)
 	m->bfmeAddVHI(bfmeGetParseCVHI(), 0x84);
 }
 
-char __cdecl bfmeCheckVHJ();
+bool __cdecl _bfme_debugReportingEnabled();
 void __cdecl bfmeRecordVHJ(int n);
 
 class BfmeMsgVHJ
@@ -93,7 +93,7 @@ extern BfmeLogVHJ *g_bfmeLogVHJ;
 
 int __cdecl bfmeGoVHJ()
 {
-	if (bfmeCheckVHJ())
+	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
 		g_bfmeLogVHJ->bfmeOwn60VHJ();
@@ -104,7 +104,7 @@ int __cdecl bfmeGoVHJ()
 
 char __stdcall bfmeGoVHK(int a, int b, int c, int d, int e, int f)
 {
-	if (bfmeCheckVHJ())
+	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
 		g_bfmeLogVHJ->bfmeOwn60VHJ();

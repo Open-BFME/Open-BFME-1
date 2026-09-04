@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-char __cdecl bfmeCheckVHJ();
+bool __cdecl _bfme_debugReportingEnabled();
 void __cdecl bfmeRecordVHJ(int n);
 
 class BfmeMsgVHJ
@@ -73,7 +73,7 @@ extern BfmeLogVHJ *g_bfmeLogVHJ;
 
 void __stdcall bfmeGoVHL(int a)
 {
-	if (bfmeCheckVHJ())
+	if (_bfme_debugReportingEnabled())
 	{
 		bfmeRecordVHJ(1);
 		g_bfmeLogVHJ->bfmeOwn60VHJ();
