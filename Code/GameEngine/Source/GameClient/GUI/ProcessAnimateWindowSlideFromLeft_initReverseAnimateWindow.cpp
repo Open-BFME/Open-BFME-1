@@ -1,16 +1,26 @@
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z
-// partial score=0.98 date=2026-09-02
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc
+// readable body of
+// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z:
+// Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
+//
+// Retail 0x00495B10, 100 bytes. Delay at +4, startTime at +0x34, vel at +0x2C.
+// getVel is an sret call (ILT 0x0000E548); time is _bfme_timeGetTime@0.
 
 typedef unsigned int UnsignedInt;
-typedef bool Bool;
 typedef float Real;
 
 struct Coord2D
 {
 	Real x;
 	Real y;
+
+	Coord2D(void) {}
+	Coord2D(Real x_, Real y_) : x(x_), y(y_) {}
+	Coord2D(const Coord2D &that) : x(that.x), y(that.y) {}
+	~Coord2D(void) {}
 };
+
+extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
 class AnimateWindow
 {
@@ -20,31 +30,20 @@ public:
 	Coord2D getVel(void);
 	void setStartTime(UnsignedInt value) { m_startTime = value; }
 	void setVel(Coord2D value) { m_vel = value; }
-private:
+
 	UnsignedInt m_delay;
 	unsigned char m_padding0[0x24];
 	Coord2D m_vel;
 	UnsignedInt m_startTime;
 };
 
-extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
-
-class ProcessAnimateWindow
-{
-public:
-	virtual ~ProcessAnimateWindow();
-	virtual void initAnimateWindow(AnimateWindow *window) = 0;
-	virtual void initReverseAnimateWindow(AnimateWindow *window, UnsignedInt maxDelay) = 0;
-	virtual Bool updateAnimateWindow(AnimateWindow *window) = 0;
-	virtual Bool reverseAnimateWindow(AnimateWindow *window) = 0;
-};
-
-class ProcessAnimateWindowSlideFromLeft : public ProcessAnimateWindow
+class ProcessAnimateWindowSlideFromLeft
 {
 public:
 	virtual void initReverseAnimateWindow(AnimateWindow *window, UnsignedInt maxDelay);
 };
 
+// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z
 void ProcessAnimateWindowSlideFromLeft::initReverseAnimateWindow(
 	AnimateWindow *window, UnsignedInt maxDelay)
 {
