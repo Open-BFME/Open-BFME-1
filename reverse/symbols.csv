@@ -4685,7 +4685,6 @@ name,address,notes
 ??1Gen_dtor_002ab080@@UAE@XZ,0x00042BA9,gen-dtor class destructor
 ??1Gen_dtor_002ab620@@UAE@XZ,0x000056C3,gen-dtor class destructor
 ??1Gen_dtor_002acd50@@UAE@XZ,0x0003EFC7,gen-dtor class destructor
-??1Gen_dtor_002ae3a0@@UAE@XZ,0x00021FBC,gen-dtor class destructor
 ??1Gen_dtor_002af3a0@@UAE@XZ,0x0001F523,gen-dtor class destructor
 ??1Gen_dtor_002b0c30@@UAE@XZ,0x000356C0,gen-dtor class destructor
 ??1Gen_dtor_002b1210@@UAE@XZ,0x00049BCF,gen-dtor class destructor
@@ -34435,14 +34434,12 @@ name,address,notes
 ?b_002ad380@@YAXXZ,0x002AD380,gen-thunk body
 ?b_002ad670@@YAXXZ,0x002AD670,gen-thunk body
 ?b_002adfb0@@YAXXZ,0x002ADFB0,gen-thunk body
-?b_002ae130@@YAXXZ,0x002AE130,gen-thunk body
 ?b_002ae1c0@@YAXXZ,0x002AE1C0,gen-thunk body
 ?b_002ae1d0@@YAXXZ,0x002AE1D0,gen-thunk body
 ?b_002ae1f0@@YAXXZ,0x002AE1F0,gen-thunk body
 ?b_002ae2e0@@YAXXZ,0x002AE2E0,gen-thunk body
 ?b_002ae2f0@@YAXXZ,0x002AE2F0,gen-thunk body
 ?b_002ae310@@YAXXZ,0x002AE310,gen-thunk body
-?b_002ae3a0@@YAXXZ,0x002AE3A0,gen-thunk body
 ?b_002ae3d0@@YAXXZ,0x002AE3D0,gen-thunk body
 ?b_002ae520@@YAXXZ,0x002AE520,gen-thunk body
 ?b_002ae5e0@@YAXXZ,0x002AE5E0,gen-thunk body
@@ -82753,3 +82750,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,shared ObjectModule constructor ILT to 0x00113C60; called by named object-module constructors
 ??1SlavedUpdate@@MAE@XZ,0x000393DD,destructor ILT to 0x002A41D0
 ??_GSlavedUpdate@@MAEPAXI@Z,0x000206B2,primary class vftable slot zero ILT to 0x002A43B0
+??1StructureCollapseUpdate@@MAE@XZ,0x00021FBC,destructor ILT to 0x002AE130
+??_GStructureCollapseUpdate@@MAEPAXI@Z,0x0001555F,primary class vftable slot zero ILT to 0x002AE3A0
