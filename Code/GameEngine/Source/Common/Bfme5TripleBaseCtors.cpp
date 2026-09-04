@@ -52,15 +52,6 @@ public:
 	virtual void bfmeSlotB(void);
 };
 
-class Gen_00253C30 : public BfmeBaseP0, public BfmeBasePA, public BfmeBasePB<3>
-{
-public:
-	Gen_00253C30(void *first, void *second);
-	virtual void bfmeSlot0(void);
-	virtual void bfmeSlotA(void);
-	virtual void bfmeSlotB(void);
-};
-
 // ??0Gen_00200AE0@@QAE@PAX0@Z
 Gen_00200AE0::Gen_00200AE0(void *first, void *second)
 	: BfmeBaseP0(first, second)
@@ -75,12 +66,6 @@ Gen_00216300::Gen_00216300(void *first, void *second)
 
 // ??0Gen_00250690@@QAE@PAX0@Z
 Gen_00250690::Gen_00250690(void *first, void *second)
-	: BfmeBaseP0(first, second)
-{
-}
-
-// ??0Gen_00253C30@@QAE@PAX0@Z
-Gen_00253C30::Gen_00253C30(void *first, void *second)
 	: BfmeBaseP0(first, second)
 {
 }
