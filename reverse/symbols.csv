@@ -82535,3 +82535,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setup@Rva0051A5A0Host@@QAEXH@Z,0x00518FF0,address-derived thiscall callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen005139E0@@YAXPAPAX0PAX@Z,0x005139E0,address-derived callee; target read from the REL32 at its call site and followed through its ILT thunk
 ??0SaveGameInfo@@QAE@ABV0@@Z,0x00029B86,AvailableGameInfo copy constructor calls the SaveGameInfo copy constructor through this ILT
+g_bfmeVtableVWa,0x010F9AD8,Open-BFME5 the base table the display owner at 0x00491D20 installs first
+g_bfmeVtableVWc,0x010F9C08,Open-BFME5 the owner table the display owner at 0x00491D20 installs second
+g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 pushes onto
+??0BfmeStrVW@@QAE@ABV0@@Z,0x00887B60,pin
+??1BfmeStrVW@@QAE@XZ,0x00887940,pin
+??1BfmeBaseVW@@QAE@XZ,0x004902A0,Open-BFME5 the list-unhooking base destructor the owner unwind funclet runs
