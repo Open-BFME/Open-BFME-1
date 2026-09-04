@@ -82434,3 +82434,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?releaseCodecBuffer@@YAXPAPAX@Z,0x009A6EC0,codec buffer owner release
 ?releaseCodecCallback@@YAXPAPAX@Z,0x009A5E60,codec callback owner release
 ?freeCodecMemory@@YAXPAX@Z,0x009A5980,codec allocator free thunk
+?bfmeSlashOrDefaultName@@YA?AVAsciiString@@ABV1@0@Z,0x00044E3B,Open-BFME5 ILT to slash-or-default AsciiString helper body 0x001945D0
