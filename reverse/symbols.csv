@@ -83875,3 +83875,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
+?getCurLocomotorSpeed@AIUpdateInterface@@QAEMXZ,0x0003DAA5,getCurLocomotorSpeed ILT from recompute 0x00154B80; body 0x0026EC30
