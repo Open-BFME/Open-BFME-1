@@ -49,7 +49,6 @@ public:
 
 	int indexOf(int key) const;
 	int valueAt(int index) const;
-	bool findPairAt(int index, unsigned int key, unsigned int *value) const;
 	int primaryValueAt(int index, const Object *object) const;
 	int secondaryValueAt(int index, const Object *object) const;
 };
@@ -81,25 +80,6 @@ int Rva0036AF30ItemCollection::valueAt(int index) const
 }
 
 // @?valueAt@Rva0036AF30ItemCollection@@QBEHH@Z 0x0036AF70
-
-bool Rva0036AF30ItemCollection::findPairAt(
-	int index,
-	unsigned int key,
-	unsigned int *value) const
-{
-	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
-		return false;
-
-	Rva0036AF30Item **items = m_items.m_begin;
-	if( items[index] == 0 )
-		return false;
-	// Retail independently evaluates the slot for the check and the dispatch.
-	_ReadWriteBarrier();
-
-	return items[index]->m_pairs.find(key, value);
-}
-
-// @?findPairAt@Rva0036AF30ItemCollection@@QBE_NHIPAI@Z 0x0036AFB0
 
 int Rva0036AF30ItemCollection::primaryValueAt(
 	int index,
