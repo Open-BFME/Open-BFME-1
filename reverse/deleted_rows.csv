@@ -24413,3 +24413,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeReset1203@@YAXXZ,0x004CB010,"synthetic identity superseded by DeinitLanGameGadgets; its ILT and canonical menu source identify the body, byte-verified over the same 301-byte range with BFME-specific LAN cleanup."
 ?bfmeResetZB@BfmeThingZB@@QAEXXZ,0x003F6EC0,"synthetic identity superseded by PathfindCell::reset; the ILT and canonical AIPathfind source identify the body, byte-verified over the same 60-byte BFME cell layout."
 ?getVal@BfmeThingEC3@@QAEMXZ,0x0026EC30,synthetic identity superseded by AIUpdateInterface::getCurLocomotorSpeed; its matched Drawable caller and canonical AI call sites identify the same byte-verified 29-byte body.
+?bfmeSetCursor1170@BfmeM1170@@QAEXH@Z,0x006BC190,synthetic identity superseded by Win32Mouse::setCursor; matched W3DMouse callers and the canonical Win32 implementation identify the same byte-verified 83-byte body.
