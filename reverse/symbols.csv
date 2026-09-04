@@ -82595,3 +82595,6 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ?findValue@AttributeModifierValueRange@@QBE_NIPAI@Z,0x00014C18,ILT to exact AttributeModifierValueRange lookup body 0x00367DC0; called by AttributeModifierDefinitionStore::getValue
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local ABI view used by Object::getVisionRange; real target is AttributeModifierPoolUpdate::bfmeGetBonus
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::bfmeFindAttributeModifierPoolUpdate
+?set@BfmeStrWD@@QAEXPBDH@Z,0x00887D20,pin
+??1BfmeStrWD@@QAE@XZ,0x00887940,pin
+??1BfmeGuardWD@@QAE@XZ,0x00887940,Open-BFME5 stand-in for the unwind action of the ctor at 0x00421B80; declared-only so the frame survives, referenced only by the funclet
