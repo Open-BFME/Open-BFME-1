@@ -83717,3 +83717,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0053A280,GameList tooltip callback pushed by Apt OnlineCustomMatch onInitGadget 0x0053A710 via winSetTooltipFunc
 ?stop@Rva0069AEB0Node@@QAEXH@Z,0x0002C5CF,AEB0 release callee via ILT
 ?finish@Rva0069AEB0Node@@QAEXPAX@Z,0x000287F4,AEB0 release callee via ILT
+?refreshPair@@YGXHH@Z,0x00019E6B,pin stdcall 6x2 refresh helper ILT->0x00699180
