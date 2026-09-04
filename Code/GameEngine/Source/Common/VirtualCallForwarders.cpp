@@ -173,7 +173,6 @@ extern VDispatch *g_Va012F079C;
 extern VDispatch *g_Va012F1270;
 extern VDispatch *g_Va012F148C;
 extern VDispatch *g_Va012F1600;
-extern VDispatch *g_Va012F4B98;
 extern VDispatch *g_Va012F7014;
 extern VDispatch *g_Va01336E5C;
 
@@ -235,11 +234,6 @@ void Rva00323070VCall( void )
 void Rva00323080VCall( void )
 {
 	g_Va012F079C->v14();
-}
-
-void Rva00563C40VCall( void )
-{
-	g_Va012F4B98->v10();
 }
 
 void Rva008894F0VCall( void )
