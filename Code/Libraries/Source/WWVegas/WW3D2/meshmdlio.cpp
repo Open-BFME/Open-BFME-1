@@ -116,6 +116,8 @@
 */
 class MeshLoadContextClass : public W3DMPO
 {
+	W3DMPO_GLUE(MeshLoadContextClass)
+
 private:
 	MeshLoadContextClass(void);
 	~MeshLoadContextClass(void);
@@ -241,8 +243,7 @@ public:
 // ?Load_W3D@MeshModelClass@@UAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
 WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 {
-	register MeshLoadContextClass * context = NULL;
-	MeshModelClass * self = this;
+	MeshLoadContextClass * context = NULL;
 
 	/*
 	**	Open the first chunk, it should be the mesh header
@@ -267,13 +268,13 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 	char *	tmpname;
 	int		namelen;
 	
-	self->Reset(context->Header.NumTris,context->Header.NumVertices,1);
+	Reset(context->Header.NumTris,context->Header.NumVertices,1);
 	
 	namelen = strlen(context->Header.ContainerName);
 	namelen += strlen(context->Header.MeshName);
 	namelen += 2;
-	self->W3dAttributes = context->Header.Attributes;	
-	self->SortLevel = context->Header.SortLevel;
+	W3dAttributes = context->Header.Attributes;	
+	SortLevel = context->Header.SortLevel;
 	tmpname = W3DNEWARRAY char[namelen];
 	memset(tmpname,0,namelen);
 
@@ -283,22 +284,22 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 	}
 	strcat(tmpname,context->Header.MeshName);
 
-	self->Set_Name(tmpname);
+	Set_Name(tmpname);
 
 	delete[] tmpname;
 	tmpname = NULL;
 
-	context->AlternateMatDesc.Set_Vertex_Count(self->VertexCount);
-	context->AlternateMatDesc.Set_Polygon_Count(self->PolyCount);
+	context->AlternateMatDesc.Set_Vertex_Count(VertexCount);
+	context->AlternateMatDesc.Set_Polygon_Count(PolyCount);
 
 	/*
 	** Set Bounding Info
 	*/
-	self->BoundBoxMin.Set(context->Header.Min.X,context->Header.Min.Y,context->Header.Min.Z);
-	self->BoundBoxMax.Set(context->Header.Max.X,context->Header.Max.Y,context->Header.Max.Z);
+	BoundBoxMin.Set(context->Header.Min.X,context->Header.Min.Y,context->Header.Min.Z);
+	BoundBoxMax.Set(context->Header.Max.X,context->Header.Max.Y,context->Header.Max.Z);
 
-	self->BoundSphereCenter.Set(context->Header.SphCenter.X,context->Header.SphCenter.Y,context->Header.SphCenter.Z);
-	self->BoundSphereRadius = context->Header.SphRadius;
+	BoundSphereCenter.Set(context->Header.SphCenter.X,context->Header.SphCenter.Y,context->Header.SphCenter.Z);
+	BoundSphereRadius = context->Header.SphRadius;
 
 	/*
 	** Flags
@@ -310,28 +311,28 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 			case W3D_MESH_FLAG_GEOMETRY_TYPE_NORMAL:
 				break;
 			case W3D_MESH_FLAG_GEOMETRY_TYPE_CAMERA_ALIGNED:
-				self->Set_Flag(ALIGNED,true);
+				Set_Flag(ALIGNED,true);
 				break;
 			case W3D_MESH_FLAG_GEOMETRY_TYPE_CAMERA_ORIENTED:
-				self->Set_Flag(ORIENTED,true);
+				Set_Flag(ORIENTED,true);
 				break;
 			case W3D_MESH_FLAG_GEOMETRY_TYPE_SKIN:
-				self->Set_Flag(SKIN,true);
-				self->Set_Flag(ALLOW_NPATCHES,true);
+				Set_Flag(SKIN,true);
+				Set_Flag(ALLOW_NPATCHES,true);
 				break;
 		} 
 	}
 
 	if (context->Header.Attributes & W3D_MESH_FLAG_TWO_SIDED) {
-		self->Set_Flag(TWO_SIDED,true);
+		Set_Flag(TWO_SIDED,true);
 	}
 
 	if (context->Header.Attributes & W3D_MESH_FLAG_CAST_SHADOW) {
-		self->Set_Flag(CAST_SHADOW,true);
+		Set_Flag(CAST_SHADOW,true);
 	}
 
 	if (context->Header.Attributes & W3D_MESH_FLAG_NPATCHABLE) {
-		self->Set_Flag(ALLOW_NPATCHES,true);
+		Set_Flag(ALLOW_NPATCHES,true);
 	}
 
 	// Configure the load sequence for prelighting.
@@ -345,7 +346,7 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 			case WW3D::PRELIT_MODE_LIGHTMAP_MULTI_TEXTURE:
 				if (context->Header.Attributes & W3D_MESH_FLAG_PRELIT_LIGHTMAP_MULTI_TEXTURE) {
 					context->PrelitChunkID = W3D_CHUNK_PRELIT_LIGHTMAP_MULTI_TEXTURE;
-					self->Set_Flag (PRELIT_LIGHTMAP_MULTI_TEXTURE, true);
+					Set_Flag (PRELIT_LIGHTMAP_MULTI_TEXTURE, true);
 					break;
 				}
 				// Else fall thru...
@@ -353,7 +354,7 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 			case WW3D::PRELIT_MODE_LIGHTMAP_MULTI_PASS:
 				if (context->Header.Attributes & W3D_MESH_FLAG_PRELIT_LIGHTMAP_MULTI_PASS) {
 					context->PrelitChunkID = W3D_CHUNK_PRELIT_LIGHTMAP_MULTI_PASS;
-					self->Set_Flag (PRELIT_LIGHTMAP_MULTI_PASS, true);
+					Set_Flag (PRELIT_LIGHTMAP_MULTI_PASS, true);
 					break;
 				}
 				// Else fall thru...
@@ -361,7 +362,7 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 			case WW3D::PRELIT_MODE_VERTEX:
 				if (context->Header.Attributes & W3D_MESH_FLAG_PRELIT_VERTEX) {
 					context->PrelitChunkID = W3D_CHUNK_PRELIT_VERTEX;
-					self->Set_Flag (PRELIT_VERTEX, true);
+					Set_Flag (PRELIT_VERTEX, true);
 					break;
 				}
 				// Else fall thru...
@@ -378,24 +379,24 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 		
 		// For backwards compatibility, test for obsolete lightmap flag.
 		if (context->Header.Attributes & OBSOLETE_W3D_MESH_FLAG_LIGHTMAPPED) {
-			self->Set_Flag (PRELIT_LIGHTMAP_MULTI_PASS, true);
+		Set_Flag (PRELIT_LIGHTMAP_MULTI_PASS, true);
 		}
 
 		// Else this mesh has no prelighting.
 	}
 
-	self->read_chunks(cload,context);
+	read_chunks(cload,context);
 
 	/*
 	** If this is a pre-3.0 mesh and it has vertex influences,
 	** fixup the bone indices to account for the new root node
 	*/
-	if ((context->Header.Version < W3D_MAKE_VERSION(3,0)) && (self->Get_Flag(SKIN))) {
+	if ((context->Header.Version < W3D_MAKE_VERSION(3,0)) && (Get_Flag(SKIN))) {
 
-		uint16 * links = self->get_bone_links();
+		uint16 * links = get_bone_links();
 		WWASSERT(links);
 		
-		for (int bi = 0; bi < self->Get_Vertex_Count(); bi++) {
+		for (int bi = 0; bi < Get_Vertex_Count(); bi++) {
 			links[bi] += 1;
 		}
 	}
@@ -403,16 +404,16 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 	/*
 	** If this mesh is collideable and no AABTree was in the file, generate one now
 	*/
-	if (	(((self->W3dAttributes & W3D_MESH_FLAG_COLLISION_TYPE_MASK) >> W3D_MESH_FLAG_COLLISION_TYPE_SHIFT) != 0) &&
-			(self->CullTree == NULL)) 
+	if (	(((W3dAttributes & W3D_MESH_FLAG_COLLISION_TYPE_MASK) >> W3D_MESH_FLAG_COLLISION_TYPE_SHIFT) != 0) &&
+			(CullTree == NULL)) 
 	{
-		self->Generate_Culling_Tree();
+		Generate_Culling_Tree();
 	}
 
 	/*
 	** Transfer the materials into the MatInfo
 	*/
-	self->install_materials(context);
+	install_materials(context);
 
 	/*
 	** Delete the temporary LoadInfo object
@@ -422,13 +423,13 @@ WW3DErrorType MeshModelClass::Load_W3D(ChunkLoadClass & cload)
 	/*
 	** Post-process the model: optimize passes, activate fog etc.
 	*/
-	self->post_process();
+	post_process();
 
-	return (WW3DErrorType)1;
+	return WW3D_ERROR_OK;
 
 Error:
 
-	return (WW3DErrorType)0;
+	return WW3D_ERROR_LOAD_FAILED;
 }
 
 

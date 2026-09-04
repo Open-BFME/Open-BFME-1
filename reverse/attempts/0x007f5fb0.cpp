@@ -17,15 +17,10 @@ public:
 	virtual int v28(); virtual int v29(); virtual int v30(); virtual int v31();
 	virtual void slot32(void *a, void *b, bool z, void *c, void *d);
 
-	void wrap(void *a, void *b, void *c, void *d) throw();
+	virtual void wrap(void *a, void *b, void *c, void *d) throw();
 };
 
 void Rva007F5FB0::wrap(void *a, void *b, void *c, void *d) throw()
 {
-	void *last = d;
-	void *next = c;
-	bool z = false;
-	void *prior = b;
-	void *first = a;
-	slot32(first, prior, z, next, last);
+	slot32(a, b, false, c, d);
 }

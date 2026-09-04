@@ -13,13 +13,13 @@ public:
 class Rva00789220VectorA
 {
 public:
-	Rva00789220VectorA()
+	Rva00789220VectorA(unsigned int count)
 	{
 		m_begin = 0;
 		m_end = 0;
 		m_capacityEnd = 0;
 		m_extra = 0;
-		bfmeReserve(100);
+		bfmeReserve(count);
 	}
 	~Rva00789220VectorA();
 	void bfmeReserve(unsigned int count);
@@ -34,13 +34,13 @@ public:
 class Rva00789220VectorB
 {
 public:
-	Rva00789220VectorB()
+	Rva00789220VectorB(unsigned int count)
 	{
 		m_begin = 0;
 		m_end = 0;
 		m_capacityEnd = 0;
 		m_extra = 0;
-		bfmeReserve(100);
+		bfmeReserve(count);
 	}
 	~Rva00789220VectorB();
 	void bfmeReserve(unsigned int count);
@@ -64,6 +64,8 @@ public:
 // @??0Rva00789220Holder@@QAE@PAX@Z 0x00789220
 Rva00789220Holder::Rva00789220Holder(void *source) :
 	Rva00789220Base(source),
-	m_value04(0)
+	m_value04(0),
+	m_first(100),
+	m_second(100)
 {
 }

@@ -15,6 +15,14 @@ struct Coord3D
 	Real x, y, z;
 };
 
+struct PlanarDelta
+{
+	volatile Real x;
+	Real y;
+	Real z;
+	Real lengthSqr() const { return x * x + y * y; }
+};
+
 class Object
 {
 public:
@@ -81,14 +89,13 @@ Bool ExitConditions::shouldExit(const StateMachine *machine) const
 
 	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius)
 	{
-		volatile Real planarDelta[3];
+		PlanarDelta deltaAggressor;
 		const Coord3D *objPos = machine->getGoalObject()->getPosition();
 		Real objY = *reinterpret_cast<volatile const Real *>(&objPos->y);
-		planarDelta[0] = objPos->x - m_center.x;
-		Real deltaY = objY - m_center.y;
-		Real deltaYSquared = deltaY * deltaY;
+		deltaAggressor.x = objPos->x - m_center.x;
+		deltaAggressor.y = objY - m_center.y;
 
-		if (deltaYSquared + planarDelta[0] * planarDelta[0] > m_radiusSqr)
+		if (deltaAggressor.lengthSqr() > m_radiusSqr)
 			return true;
 	}
 

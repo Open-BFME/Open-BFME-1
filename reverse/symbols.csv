@@ -1876,6 +1876,8 @@ name,address,notes
 ??0AsciiStringWF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWH@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWI@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWK@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWL@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
 ??0AssistedTargetingUpdateModuleData@@QAE@XZ,0x000104B5,pinharvest x1 (thunk)
 ??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
@@ -2085,6 +2087,7 @@ name,address,notes
 ??0BfmeStrWA@@QAE@PBD@Z,0x00888BC0,pin
 ??0BfmeStrWB@@QAE@PBD@Z,0x00888BC0,pin
 ??0BfmeStrZD@@QAE@PBX@Z,0x00888BC0,pin
+??0BfmeStreakObject@@QAE@XZ,0x009566D0,retail callee pin for W3DStreakDraw constructor
 ??0BfmeString52DBC0@@QAE@ABV0@@Z,0x00887B60,Rva0052DBC0 string member copy constructor
 ??0BfmeStringArgBase@@AAE@ABV0@@Z,0x00887B60,alias of the AsciiString copy constructor pinned at the same address; ScriptActions.cpp builds by-value string arguments through a view because the reference header inlines the addref
 ??0BfmeStringLiteralBase@@AAE@PBD@Z,0x00888BC0,alias of the retail one-dword AsciiString literal constructor pinned at the same address; the by-value format argument delegates to it so the copy stays visible
@@ -3175,6 +3178,9 @@ name,address,notes
 ??0UndeadBodyModuleData@@QAE@XZ,0x000015FA,pinharvest x1 (thunk)
 ??0UnicodeString@@QAE@ABV0@@Z,0x00887B60,site-decoded x3 (body)
 ??0UnicodeString@@QAE@PBG@Z,0x00888DE0,Open-BFME5 GameTextManager failed-message constructor callee
+??0UnicodeStringWJ@@QAE@ABV0@@Z,0x00888400,pin
+??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
+??0UnicodeStringWL@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnitCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00009AED,module ctor (friend_newModuleInstance retail call target)
 ??0UnpauseSpecialPowerUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048635,module ctor (friend_newModuleInstance retail call target)
 ??0UnpauseSpecialPowerUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
@@ -3518,6 +3524,8 @@ name,address,notes
 ??1AsciiStringWF@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWH@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWI@@QAE@XZ,0x00887940,pin
+??1AsciiStringWK@@QAE@XZ,0x00887940,pin
+??1AsciiStringWL@@QAE@XZ,0x00887940,pin
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -8517,6 +8525,9 @@ name,address,notes
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
+??1UnicodeStringWJ@@QAE@XZ,0x008881D0,pin
+??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
+??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
 ??1UnitCrateCollideModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1UnitCrateCollideModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1UnitCrateCollideModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -9228,6 +9239,7 @@ name,address,notes
 ?Bind@UDP@@QAEHIG@Z,0x00047FA0
 ?Blend_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M1MM@Z,0x009546B0
 ?BoxSetTexture@@YAXIAAPAVTextureBaseClass@@@Z,0x00905AC0,TU-local texture binding ABI for BoxRenderObjClass::render_box
+?Build_Definition@ParticleEmitterClass@@QBEPAVParticleEmitterDefClass@@XZ,0x0097FD70,callee pin for ParticleEmitterClass::Save
 ?Build_Quaternion@@YA?AVQuaternion@@ABVMatrix3D@@@Z,0x008DBA40,rel32 pin for exact-ambiguous landing
 ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z,0x00942430
 ?Build_Textures@Render2DSentenceClass@@AAEXXZ,0x0093DD60
@@ -9876,6 +9888,7 @@ name,address,notes
 ?Rva0088EB90@@YAPAXPAXI@Z,0x0088EB90,pin
 ?Rva00897330NotifyFree@@YAXPAX@Z,0x00897330,address decoded from the retail REL32 call site; name is address-derived
 ?Rva008FCE00SurfaceOperation@@YAXXZ,0x008FCE00,address-derived ABI alias for unnamed W3DRadarResetSurface operation used by 0x00732B00
+?Rva009ACBA0SetupBounding@@YAPAHPAURva009ACC40State@@H@Z,0x009ACBA0,callee pin for the codec selector wrapper
 ?Rva009B4390CodecCall@@YAXPAXH0HHHHHHHHHHHH@Z,0x009B4390
 ?Rva009B4600DecodeBool@@YAHPAXH@Z,0x009B4600,Open-BFME5 second instance of the arithmetic decoder bool landed byte-exact at 0x009B4800; 114 bytes with the same state layout as the normalizer at 0x009B4680; callee of the token tree at 0x009B50F0 and the probability loader at 0x009B65F0; address-derived name
 ?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
@@ -80610,6 +80623,7 @@ name,address,notes
 ?setIndicatorColor@Drawable@@QAEXH@Z,0x00028C09,the Int-taking spelling this tree compiles for the same ILT already pinned as QAEXI@Z; changedTeam feeds it whichever indicator colour the time of day selects
 ?setIndicatorColor@Drawable@@QAEXI@Z,0x00028C09,Open-BFME5 ILT thunk to body 0x004186E0; ?changedTeam@Drawable@@QAEXXZ at 0x00418830 feeds it whichever indicator colour the time of day selects
 ?setInputEnabled@BfmeInGameUI_setInputEnabled@@QAEX_N@Z,0x0003EBDF,ILT thunk ScriptActions doEnableInput
+?setInt@BfmeStreakObject@@QAEXH@Z,0x00955C20,retail callee pin for W3DStreakDraw constructor
 ?setInt@UserPreferences@@QAEXVAsciiString@@H@Z,0x00009B3D,incremental-link thunk fronting the unclaimed body 0x000A96F0
 ?setIsLogicalAudio@AudioEventRTS@@QAEX_N@Z,0x00008206,doSoundPlayFromNamed logical-audio ILT thunk
 ?setIsLogicalAudio@BfmeAudioEventRTS@@QAEX_N@Z,0x00008206,alias of the AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
@@ -80681,6 +80695,7 @@ name,address,notes
 ?setQuitting@Connection@@QAEXI@Z,0x00661CA0,ZH setQuitting plus a quit-frame argument: stores arg at Connection+0 (the -1 sentinel doSend/sendNetCommandMsg test) and timeGetTime at +4; callers beginPlayerLeave 0x00667371/0x00667393 pass TheGameLogic->getFrame()+1 via ILT 0x0004845A
 ?setRange@GameClientRandomVariable@FXParticleSystem@@QAEXMMW4DistributionType@12@@Z,0x00006C58,DefaultUpdateModuleInfo random-range setter ILT
 ?setRange@GameLogicRandomVariable@@QAEXMMW4DistributionType@1@@Z,0x0004AD54,BoneFX parser calls the retail incremental-link thunk
+?setReal@BfmeStreakObject@@QAEXH@Z,0x00955B70,retail callee pin for W3DStreakDraw constructor
 ?setReal@UserPreferences@@QAEXVAsciiString@@M@Z,0x000A9650,formats the Real through 0x000A9170 ("%g" VA 0x01080F24 after fld/fstp qword) then the setAsciiString virtual +0x1c; ILT 0x000445C1 used by setTimePlayed 0x0009C220; twin of the pinned setInt body 0x000A96F0 which formats "%d" through 0x000A9010
 ?setReceivingDifficultyBonus@Object@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
 ?setRepairModelConditionStates@SlavedUpdate@@QAEXW4ModelConditionFlagType@@@Z,0x002A44E0,dependency pin for assigned SlavedUpdate repair-state body
@@ -80688,6 +80703,7 @@ name,address,notes
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
 ?setSequentialTimer@ScriptEngine@@QAEXPAVObject@@H@Z,0x00044A1C,ScriptEngine object sequential timer ILT used by assigned attack-area-for-seconds body
 ?setSequentialTimer@ScriptEngine@@QAEXPAVTeam@@H@Z,0x00010DC5,TEAM_SPIN_FOR_FRAMECOUNT canonical tail call; ILT targets the sequential-script timer body at 0x003399D0
+?setShader@BfmeStreakObject@@QAEXVShaderClass@@@Z,0x00955B50,retail callee pin for W3DStreakDraw constructor
 ?setShadowStencil@W3DVolumetricShadowManager@@QAEXH@Z,0x000463A3,render helper ILT
 ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z,0x0000FAC9
 ?setShoreLineDetail@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
@@ -80712,6 +80728,7 @@ name,address,notes
 ?setTerrainTextureFilters@@YAXI@Z,0x00038389
 ?setText1C@BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@QAEXVAsciiString@@@Z,0x00675A20,probe: plain-class variant of the setter
 ?setText@WinInstanceDataShim@@QAEXVUnicodeString@@@Z,0x00004205,WinInstanceData::setText via ILT thunk
+?setTexture@BfmeStreakObject@@QAEXABQAVTextureClass@@@Z,0x00955880,retail callee pin for W3DStreakDraw constructor
 ?setTimeOfDay@W3DGameClientShadowShim@@QAEXW4TimeOfDay@@@Z,0x0003E42D,W3DGameClient setTimeOfDay shadow helper shim
 ?setTimeOfDay@W3DGameClientWaterShim@@QAEXW4TimeOfDay@@@Z,0x00031728,W3DGameClient setTimeOfDay water helper shim
 ?setTimePlayed@SkirmishBattleHonors@@QAEXVAsciiString@@M@Z,0x0009C220,BFME per-side variant of ZH SkirmishBattleHonors::setTimePlayed: concat("TimePlayed" at VA 0x01080488) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setReal body 0x000A9650 via ILT 0x000445C1; ret 8
@@ -80724,6 +80741,7 @@ name,address,notes
 ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z,0x00043FFE,ILT thunk to 0x18D120; pinned from AIUpdateInterface::setTurretTargetObject @0x26E930
 ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z,0x000468F8,ILT thunk at 0x468F8 jumping to the body at 0x18D260 in the TurretAI cluster; call sites reference the thunk
 ?setUserName@LanLobbyUserNamePrefs@@QAEXVUnicodeString@@@Z,0x00031575,ILT thunk to body 0x000870F0
+?setVector@BfmeStreakObject@@QAEXPBUBfmeStreakVector@@@Z,0x00955BC0,retail callee pin for W3DStreakDraw constructor
 ?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,0x00016A68,ILT thunk Mouse setVisibility
 ?setVoteFrame@NetDisconnectVoteCommandMsg@@QAEXI@Z,0x000436C1,ILT thunk; real body 0xA73D50
 ?setWakeFrame@ALU_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
@@ -82138,6 +82156,8 @@ _g_bfmeV1196,0x00C9FB78,pin
 _g_bfmeVA1199,0x00CF9AD8,pin
 _g_bfmeVB1199,0x00CF9B60,pin
 _g_guardTargetTypeThrowInfo,0x00DDFE5C,ThrowInfo used by the GuardTargetType transfer helper
+_g_rva01142c68,0x01142C68,codec unsigned table base for Rva009AC4B0AddValue
+_g_rva01143064,0x01143064,codec signed table base for Rva009AC4B0AddValue
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _gen000d7010,0x000D7010,xfer element helper for xferRva00347C40

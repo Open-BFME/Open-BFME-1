@@ -41,15 +41,13 @@ private:
 int Rva007DCAF0::reset()
 {
 	char tmp;
+	int zero = 0;
 	if (m_04)
 		m_04->lpVtbl->Release(m_04);
 	if (m_08)
 		m_08->lpVtbl->Release(m_08);
-	m_04 = 0;
-	m_08 = 0;
-	void *p34 = m_34;
-	void *p38 = m_38;
-	m_38 = Rva007DCAF0Helper(p38, p38, p34, &tmp, 0);
+	m_38 = Rva007DCAF0Helper((m_04 = 0, m_08 = 0, m_38),
+		m_38, m_34, &tmp, zero);
 	if (m_4C)
 		m_4C->lpVtbl->Release(m_4C);
 	m_4C = 0;

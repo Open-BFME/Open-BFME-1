@@ -1,5 +1,7 @@
 // ?apply@BfmeLevelActionRegistry@@QAEXPBDPAX@Z
 // partial score=0.96 date=2026-09-04
+// ?apply@BfmeLevelActionRegistry@@QAEXPBDPAX@Z
+// partial score=0.96 date=2026-09-04
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
 #include <exception>

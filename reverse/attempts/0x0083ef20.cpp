@@ -19,8 +19,7 @@ struct Callback
 	typedef void (*event_callback)(int, void *, int);
 	event_callback fn;
 	int index;
-	Callback(event_callback f = event_callback(), int n = int()) : fn(f), index(n) {}
-	~Callback() {}
+	Callback() : fn(0), index(0) {}
 };
 
 template <class T>
@@ -48,13 +47,14 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 		T *p = (T *)u2_import_01359474(old_ptr, bytes);
 		if (p != 0)
 		{
+			Callback zero;
 			T *end = (T *)(count * sizeof(T) + (unsigned int)p);
 			T *dst = p + old_count;
 			if (dst != end)
 			{
 				do
 				{
-					*dst = T();
+					*dst = zero;
 					++dst;
 				}
 				while (dst != end);

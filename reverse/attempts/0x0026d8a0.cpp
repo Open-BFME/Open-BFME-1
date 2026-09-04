@@ -1,10 +1,8 @@
 // ?setAbilityBits@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.97 date=2026-09-03
+// partial score=0.97 date=2026-09-04
+// ?setAbilityBits@SpecialAbilityUpdate@@QAEXXZ
+// Started from reverse/attempts/0x0026d8a0.cpp; first probe lever: local definition order.
 // cl: /DNDEBUG /MD /EHsc
-// Partial 132/135: SET twin of clearAbilityBits. Logic recovered (begin, flag25c
-// gate, switch +0x258 -> or 0x800/0x400/0x200 into Object+0x12c, jmp notify).
-// Residue: retail keeps mask in eax (mov eax,imm / test eax,edx / or edx,eax);
-// MSVC folds to test ah / or imm (-3B). Same wall as HordeGarrisonContain ctor.
 
 class Object
 {
@@ -27,6 +25,7 @@ class SpecialAbilityUpdate
 public:
 	void setAbilityBits(void);
 	void begin(void);
+
 private:
 	void *m_vtable;
 	SpecialAbilityUpdateModuleData *m_moduleData;

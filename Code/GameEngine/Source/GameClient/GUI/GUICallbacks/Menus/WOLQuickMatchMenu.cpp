@@ -2168,7 +2168,7 @@ public:
 	virtual void slot25( void );
 	virtual BfmeAptAsciiString getLocalName( void );
 	virtual void slot27( void );
-	virtual void slot28( void );
+	virtual int getLocalProfileID( void );
 	virtual void slot29( void );
 	virtual void slot30( void );
 	virtual void slot31( void );
@@ -2261,7 +2261,7 @@ void BfmeAptScreenQuickMatchMenu::PopulateQMLadderListBox( GameWindow *win )
 
 	QuickMatchPreferences pref;
 	AsciiString userPrefFilename;
-	Int localProfile = TheGameSpyInfo->getLocalProfileID();
+	Int localProfile = ((BfmeAptGameSpyInfo *)TheGameSpyInfo)->getLocalProfileID();
 
 	Color specialColor = GameSpyColor[GSCOLOR_MAP_SELECTED];
 	Color normalColor = GameSpyColor[GSCOLOR_MAP_UNSELECTED];

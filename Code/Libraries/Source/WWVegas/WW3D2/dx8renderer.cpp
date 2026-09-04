@@ -1478,13 +1478,16 @@ void DX8SkinFVFCategoryContainer::Render(void)
 	clearVisibleSkinList();
 }
 
-// ?Check_If_Mesh_Fits@DX8SkinFVFCategoryContainer@@UAE_NPAVMeshModelClass@@@Z present-unmatched
 bool DX8SkinFVFCategoryContainer::Check_If_Mesh_Fits(MeshModelClass* mmc)
 {
 	if (!unknown_D8) return true;	// No IB created - mesh will fit as a new ib will be created when inserting
-	int required_polygons=mmc->Get_Polygon_Count();
+	int required_polygons = *reinterpret_cast<const int *>(
+		*reinterpret_cast<const int * const *>(
+			reinterpret_cast<const char *>(mmc) + 0x9c));
+	int pass_count = *reinterpret_cast<const int *>(
+		reinterpret_cast<const char *>(mmc) + 0x24);
 
-	if ((required_polygons*3*mmc->Get_Pass_Count())<=unknown_D8->Get_Index_Count()-unknown_DC) {
+	if ((required_polygons*3*pass_count)<=unknown_D8->Get_Index_Count()-unknown_DC) {
 		return true;
 	}
 	return false;

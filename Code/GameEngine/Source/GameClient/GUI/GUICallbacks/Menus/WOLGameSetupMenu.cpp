@@ -147,8 +147,22 @@ public:
 	virtual void slot0DC() = 0;
 	virtual void slot0E0() = 0;
 	virtual void slot0E4() = 0;
-	virtual void slot0E8() = 0;
+	virtual void unregisterTextWindow( GameWindow *window ) = 0;
 	virtual Int addText( UnicodeString message, Color c, GameWindow *win ) = 0;
+};
+
+class BfmeWOLMapSelectLayout
+{
+public:
+	virtual void slot00() = 0;
+	virtual ~BfmeWOLMapSelectLayout();
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1C() = 0;
+	virtual void destroyWindows() = 0;
 };
 
 class BfmeVirtualStagingRoom
@@ -1689,12 +1703,12 @@ static void shutdownComplete( WindowLayout *layout )
 //-------------------------------------------------------------------------------------------------
 void WOLGameSetupMenuShutdown( WindowLayout *layout, void *userData )
 {
-	TheGameSpyInfo->unregisterTextWindow(listboxGameSetupChat);
+	((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->unregisterTextWindow(listboxGameSetupChat);
 
 	if( WOLMapSelectLayout )
 	{
-		WOLMapSelectLayout->destroyWindows();
-		WOLMapSelectLayout->deleteInstance();
+		((BfmeWOLMapSelectLayout *)WOLMapSelectLayout)->destroyWindows();
+		delete (BfmeWOLMapSelectLayout *)WOLMapSelectLayout;
 		WOLMapSelectLayout = NULL;
 	}
 	parentWOLGameSetup = NULL;
