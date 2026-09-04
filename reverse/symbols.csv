@@ -3589,6 +3589,7 @@ name,address,notes
 ??0SiegeDeploySpecialPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001DD40,Open-BFME5 SiegeDeploySpecialPower base constructor pin
 ??0SiegeDeploySpecialPowerModuleDataBase@@QAE@XZ,0x00023FE7,SiegeDeploySpecialPowerModuleData base ctor from retail call site
 ??0SiegeEngineContainModuleData@@QAE@XZ,0x0003D055,SiegeEngineContain ModuleData ctor
+??0SimpleObjectIterator@@QAE@XZ,0x000197DB,SimpleObjectIterator ctor ILT from groupTightenToPosition 0x00155720
 ??0SkirmishBattleHonors@@QAE@VUnicodeString@@@Z,0x0009E130,UserPreferences ctor ILT 0x0004B19B then vtable 0x01080460; takes the per-user directory UnicodeString by value (compared with TheEmptyString; released at exit); concat L"SkirmishStats.ini" and loads through vslot+4 body 0x000ACD50; on failure loads the ASCII path through vslot+8 0x000A9230 and migrates slot 0 name / SlotList; finally setBool("UseMapListTooltips") ILT 0x00017CC9; ZH SkirmishBattleHonors.cpp:80 load("SkirmishStats.ini")
 ??0SkyboxTextureSet@@QAE@XZ,0x000B83B0,Open-BFME5 constructor new'd by parseSkyboxTextureSet; 0x18 bytes - vtable 0x01082BE4 at +0 then five zeroed dwords
 ??0SlaughterHordeContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037FAB,Open-BFME5 SlaughterHordeContain base constructor pin
@@ -13100,7 +13101,9 @@ name,address,notes
 ?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target
 ?aiBfmeAttackObject@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x00039C89,AICommand command 0x39 ILT used by BFME named giant-bird attack
 ?aiEnter@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x000442A1,Open-BFME5 ILT thunk fronting body 0x000D89C0
+?aiEvacuate@AICommandInterface@@QAEX_NW4CommandSourceType@@@Z,0x000344C3,aiEvacuate ILT from groupEvacuate ground arm
 ?aiFacePosition@AICommandInterface@@QAEXPBUCoord3D@@H@Z,0x00040732,AICommandInterface aiFacePosition ILT used by assigned ScriptActions face bodies
+?aiFollowPathAppend@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000BAC8,aiFollowPathAppend ILT from groupTightenToPosition addWaypoint arm; body 0x00153480
 ?aiGetHealed@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003CF10,packet 002817b0 pin
 ?aiGuardPosition@Open2Commands156070@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00013D68,Open2 0x00156070 guard command (ILT)
 ?aiGuardPosition@Open2Commands1568A0@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00014FDD,Open2 0x001568A0 guard command (ILT)
@@ -13108,6 +13111,7 @@ name,address,notes
 ?aiGuardPosition@Open2Commands156960@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x000171C0,Open2 0x00156960 guard command (ILT)
 ?aiIdle@AICommandInterface@@QAEXW4CommandSourceType@@@Z,0x00024D70,ILT thunk to the AI idle command reached through the base at ai+0x20
 ?aiMoveAwayFromUnit@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0000B627,BFME inline command body called by the move-allies cell callback at 0x003EC070
+?aiMoveToAndEvacuate@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x00027903,aiMoveToAndEvacuate ILT from groupEvacuate aircraft arm
 ?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0003436A,Open-BFME5 AI movement thunk alias
 ?aiPreTeamDestroy@AIPlayer@@QAEXPBVTeam@@@Z,0x00161430,Player preTeamDestroy tail target; canonical AIPlayer queue-removal body matches retail structure
 ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5A30,the call ScriptConditions::evaluateTeamInsideAreaEntirely (0x00324AC0) makes on the team it looked up with the trigger area and the type parameter; the reference declares exactly that const member with that pair and nothing else in Team takes it
@@ -73646,6 +73650,7 @@ name,address,notes
 ?bfmeClearVUO@BfmeStrVUO@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
 ?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
+?bfmeClearVUV@BfmeStrVUV@@QAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
@@ -74439,6 +74444,7 @@ name,address,notes
 ?bfmeFreeArrDMC@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDMD@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrDME@@YAXPAX@Z,0x00881EF0,pin
+?bfmeFreeArray@@YAXPAX@Z,0x00881EF0,TerrainLogic::reset delete[] of +0x18
 ?bfmeFreeArrayTVB@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrayTXA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeArrayUND@@YAXPAX@Z,0x00881EF0,pin
@@ -76429,6 +76435,7 @@ name,address,notes
 ?clear@W3DAnimationInfoAllocateAndCopyShim@_STL@@QAEXXZ,0x003B0E90,_STL vector _M_clear W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?clear@W3DRadarResetSurface@@QAEXI@Z,0x008FC830,W3DRadar reset BFME value-surface clear
 ?clear@WindowVideoHashtableClearShim@_STL@@QAEXXZ,0x004984F0,_STL hashtable clear GameWindow/WindowVideo incremental-link thunk target through a TU-local forwarding shim
+?clearA@Member48@@QAEXXZ,0x0000AAE7,TerrainLogic::reset list::clear ILT to 0x001ACC70
 ?clearAllEvents@Radar@@IAEXXZ,0x00028C27
 ?clearAllProps@W3DPropBuffer@@QAEXXZ,0x000298BB
 ?clearAllRoads@W3DRoadBuffer@@QAEXXZ,0x000336F9,first of the seven calls W3DRoadBuffer::loadRoads makes at 0x007105D0, entered with this unchanged; named by position against the four already-named calls that follow it. Body 0x00706E60
@@ -76655,6 +76662,7 @@ name,address,notes
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
 ?copyFromQueueNode@BFMENetworkQueueItem@@QAEXPAX@Z,0x00030C60,native BFME queue item copy helper for wrapper queue +0x14
 ?copyFromQueueNode@BFMENetworkQueueItemcopyFromQueueNodeShim@@QAEXPAX@Z,0x00658CE0,BFMENetworkQueueItem::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
+?copyP48@@YAPAUBfmeTerrainP48@@PAU1@00ABURandomAccessIteratorTag@@PAH@Z,0x00035B5C,TerrainLogic::reset P48 __copy ILT
 ?copySurfaceRects006e@@YAXVW3DRadarResetSurface@@PBUBfmeRect@@01H@Z,0x00904D20,W3DDisplay drawImage direct-surface copy target read from retail REL32
 ?copyTeamReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x00011DDD,SET_TEAM_REFERENCE_TO_REFERNECE dispatch calls the canonical reference-copy body
 ?copyUnitReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x0003CB50,SET_UNIT_REFERENCE_TO_REFERENCE dispatch calls the canonical reference-copy body
@@ -78972,6 +78980,7 @@ name,address,notes
 ?getHeightAboveTerrain@Thing@@QBEMXZ,0x00005948,hit-decoded x8 (thunk)
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,0x00001C30,pinharvest x1 (thunk)
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,0x00005948,pinharvest x1 (thunk)
+?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z,0x00006091,TerrainLogic::getHighestLayerForDestination ILT from groupEvacuate 0x00156690
 ?getID@AIGroup@@QAEIXZ,0x000131DD
 ?getID@Drawable@@QBE?AW4DrawableID@@XZ,0x00009B01
 ?getID@Open26A2FD0Drawable@@QAEIXZ,0x00009B01,Open2 0x006A2FD0 id read (ILT)
@@ -79257,7 +79266,9 @@ name,address,notes
 ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z,0x0001C0D0,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
+?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
 ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z,0x0004115F,Open-BFME5 ILT at guardSupplyCenter 0x001669C0; receives the adjusted warehouse position with normal guard mode and script command source
+?groupHunt@AIGroup@@QAEXW4CommandSourceType@@@Z,0x00039491,ILT to matched body 0x00156270; callee of doTeamHunt 0x002F3600
 ?groupIdle@AIGroup@@QAEXH@Z,0x0000F871,ILT to AIGroup::groupIdle body 0x00155B90
 ?grouping@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00033032,retail callee ILT decoded from assigned basic_ios imbue at 0x0053F690
 ?grow@BfmeShortVecWN@@QAEXIPAX@Z,0x0003C353,Open-BFME5 vector-base grow ILT used by 0x0074D5B0 short fill
@@ -80297,6 +80308,7 @@ name,address,notes
 ?insert@BfmeSubMap3B3@@QAEPAPAXPAX@Z,0x00038B22,pin
 ?insert@BfmeVec60@@QAEXPAUBfmeElem60@@IABU2@@Z,0x0087FDC0,Open-BFME5 grow fill-insert of 0x00880260
 ?insert@RelationshipHashtableInsertShim@_STL@@QAEAAU?$pair@$$CBHW4Relationship@@@2@ABU32@@Z,0x00787140,incremental-link thunk target through a TU-local forwarding shim
+?insert@SimpleObjectIterator@@QAEXPAVObject@@M@Z,0x0002CAE8,SimpleObjectIterator::insert ILT from groupTightenToPosition 0x00155720
 ?insert@W3DRoadBufferInsertTeeShim@@QAEXVVector2@@HM@Z,0x0070BC00,W3DRoadBuffer insertTee incremental-link thunk target through a TU-local forwarding shim
 ?insertGame@BfmeAptScreenOnlineCustomMatch@@QAEHPAVGameSpyStagingRoom@@@Z,0x0002E0FF,ILT of Apt CustomMatch insertGame used by applyStagingRoomRefresh 0x0053FC00
 ?insertHelper@BfmeVector28@@QAEXPAXABUBfmeItem28@@0HH@Z,0x00032272,pin
@@ -80634,6 +80646,7 @@ name,address,notes
 ?isPlayerVotedOut@DisconnectManagerIsPlayerVotedOutShim@@QAE_NHPAVConnectionManager@@@Z,0x0066BC30,DisconnectManager incremental-link thunk target through a TU-local forwarding shim
 ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z,0x00014637
 ?isPositionalAudio@AudioEventRTS@@QBE_NXZ,0x0000F380,ILT to 0x000B28F0 used by AudioEventRTS getSoundClass case 2
+?isReady@AIGroup@@QAEDXZ,0x000104B0,AIGroup ready gate from groupFollowWaypointPathAsTeam 0x00155A80
 ?isReady@BfmeRvaB7E0AI@@QAE_NXZ,0x00012E3B,assigned-body helper for Rva00247E80
 ?isReady@BfmeRvaBA00AI@@QAE_NXZ,0x00012E3B,assigned-body helper for Rva0024BA00
 ?isRoomForChatMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x0067DDE0,decode_calls: first call site inside addChatCommand (0x0067FF20); idiom-verified
@@ -81119,6 +81132,7 @@ name,address,notes
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
+?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z,0x0002E636,AIGroup prep before follow-as-team walk; body 0x0015AB50
 ?prepare@Rva0019BC00Owner@@QAEXH@Z,0x00020D97,ILT thunk to 0x00197750 prepare before field writes
 ?prepare@Rva002BC470StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?prepare@Rva002BC4E0StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
@@ -81400,6 +81414,7 @@ name,address,notes
 ?reset@WaterTracksRenderSystem@@QAEXXZ,0x0001933F,retail ILT called by WaterRenderObjClass reset and forwarding to 0x007AAF10
 ?resetAll@SubsystemInterfaceList@@QAEXXZ,0x009A1D20,GameEngine::reset direct call at 0x0006E80C; ZH SubsystemInterfaceList reset-all implementation iterates registered subsystems in reverse order
 ?resetAll@Y3ResetTail_005C5A00@@QAEXXZ,0x005C5A00,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
+?resetHelper4949a@@YAXXZ,0x0004949A,TerrainLogic::reset free-function ILT to 0x0018EE40
 ?resetModes@LookAtTranslator@@QAEXXZ,0x00048626,Open-BFME5 the tail call of doDisableInput with ecx = TheLookAtTranslator at 0x012F4C84; jumps to 0x005B5440
 ?resetNextMoodCheckTime@AIUpdateInterface@@QAEXXZ,0x00022C82,Open-BFME5 retail AI mood-check reset thunk
 ?resetOrStartSpecialPowerReadyFrame@Player@@QAEXPBVSpecialPowerTemplate@@@Z,0x00036E67,ILT callee of SpecialPowerModule::startPowerRecharge; body 0x000D2710
@@ -81687,6 +81702,7 @@ name,address,notes
 ?setActionType@ScriptAction@@QAEXW4ScriptActionType@1@@Z,0x00038A46,ILT for ScriptAction::setActionType called by the type-taking constructor
 ?setAnimData@BFMEAnimateWindowLayout@@QAEXUICoord2D@@000UBFMECoord2D@@II@Z,0x003D5B9,BFME Coord2D ABI layout call to AnimateWindow::setAnimData
 ?setAsciiString@Dict@@QAEPAVAsciiString@@V2@@Z,0x00009304,Dict setAsciiString used by MapObject::setWaypointName
+?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z,0x00040D95,ILT to matched body 0x00150FE0; callee of updateTeamSetAttitude 0x002F29E0
 ?setAttitude@AIUpdateInterface@@QAEXW4AttitudeType@@@Z,0x00030553,Open-BFME5 ILT thunk to body 0x0027DEF0 in the AIUpdate range; ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z at 0x00150FE0 calls it on each member AI read from Object+0x204
 ?setBestWinStreak@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009CBF0,BFME per-side variant of ZH SkirmishBattleHonors::setBestWinStreak: concat("BestWinStreak" at VA 0x01080504) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
 ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z,0x00017CC9,incremental-link thunk
@@ -81821,6 +81837,7 @@ name,address,notes
 ?setOverallWinStreak@SkirmishBattleHonors@@QAEXH@Z,0x0009CE70,setInt("OverallWinStreak" at VA 0x0108053C; val) via the pinned setInt ILT 0x00009B3D; 36 B; ZH SkirmishBattleHonors setter shape
 ?setOverallWorstLossStreak@SkirmishBattleHonors@@QAEXH@Z,0x0009CF90,setInt("OverallWorstLossStreak" at VA 0x01080584; val) via the pinned setInt ILT 0x00009B3D; 36 B; ZH SkirmishBattleHonors setter shape
 ?setOverridePlayerRelationship@Team@@QAEXHW4Relationship@@@Z,0x00022048,ILT thunk to the body at 0x000F4780; named by its matched caller doTeamSetOverrideRelationToPlayer 0x002F85C0 which reaches it with the player index and the relation the script arm supplies
+?setOverrideTeamRelationship@Team@@QAEXIH@Z,0x000340B3,ILT to 0x004F46D0; callee of doTeamSetOverrideRelationToTeam 0x002F4C20
 ?setPasswordMode@@YAXW4PasswordMode@@@Z,0x004D7AF0,pinharvest x2 (body)
 ?setPeer@Rva007F9B80@@QAEXPAX@Z,0x007F9590,stores peer pointer on the 0x6B8 service object
 ?setPercentage@NetProgressCommandMsg@@QAEXE@Z,0x00030C56,pinharvest x1 (thunk)
@@ -81956,6 +81973,7 @@ name,address,notes
 ?sleepUntil@ObjectHelper@@QAEXI@Z,0x000159AB,Object::setStatus helper ILT
 ?slowDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1W4ObjectID@@@Z,0x0004A327,Pathfinder::slowDoesPathExist resolves to the retail ILT at 0x0004A327 and its body at 0x003EDF90; target evaluateTeamCanPathToWaypoint calls this exact four-argument path check
 ?someInsideSomeOutside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5CE0,the first of the two calls ScriptConditions::evaluateTeamInsideAreaPartially (0x00324670) makes on the team it looked up before falling back on allInside; the reference declares exactly that const member beside allInside with the same pair
+?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z,0x00004746,SimpleObjectIterator::sort ILT from groupTightenToPosition 0x00155720
 ?spin@LockClass@FastCriticalSectionClass@@CIXPAI@Z,0x00026FA8,FastCriticalSectionClass::LockClass spin-acquire (shared out-of-line body reached via ILT thunk); StringClass locks resolve here
 ?spyVisionRandom@@YAHHHPBDH@Z,0x00001BAE,SpyVisionUpdate random-delay ILT
 ?start@ParticleSystem@@QAEXXZ,0x0000FFD3,ILT to start body 0x005BDD90 ([this+0x1A7]=0); updateSubObjectsFromShroud not-hidden arm
