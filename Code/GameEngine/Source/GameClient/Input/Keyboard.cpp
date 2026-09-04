@@ -48,6 +48,25 @@
 // rather than in the shared header, which other TUs match against as-is.
 namespace {
 	struct BfmeKeyName { WideChar stdKey; WideChar shifted; WideChar shifted2; };
+
+	class BfmeKeyboardMessageStream
+	{
+	public:
+		virtual void slot00( void );
+		virtual void slot01( void );
+		virtual void slot02( void );
+		virtual void slot03( void );
+		virtual void slot04( void );
+		virtual void slot05( void );
+		virtual void slot06( void );
+		virtual void slot07( void );
+		virtual void slot08( void );
+		virtual void slot09( void );
+		virtual void slot10( void );
+		virtual void slot11( void );
+		virtual void slot12( void );
+		virtual GameMessage *appendMessage( int type );
+	};
 }
 #define m_keyNames (*(BfmeKeyName (*)[Keyboard::KEY_NAMES_COUNT])((char *)this + 0x818))
 
@@ -62,51 +81,34 @@ Keyboard *TheKeyboard = NULL;
 /** Given the state of the device, create messages from the input and
 	* place them on the message stream */
 //-------------------------------------------------------------------------------------------------
-// ?createStreamMessages@Keyboard@@ present-unmatched
 void Keyboard::createStreamMessages( void )
 {
-	
-	// santiy
+	// sanity
 	if( TheMessageStream == NULL )
 		return;
 
-	KeyboardIO *key = getFirstKey();
+	KeyboardIO *key = *(KeyboardIO **)((char *)this + 0x0C);
+	KeyboardIO *end = *(KeyboardIO **)((char *)this + 0x10);
 	GameMessage *msg = NULL;
-	while( key->key != KEY_NONE )
+	while( key != end )
 	{
-
-		// add message to stream
-		if( BitTest( key->state, KEY_STATE_DOWN ) )
+		if( key->status != KeyboardIO::STATUS_USED )
 		{
+			if( BitTest( key->state, KEY_STATE_DOWN ) )
+				msg = ((BfmeKeyboardMessageStream *)TheMessageStream)->appendMessage( 0x15 );
+			else if( BitTest( key->state, KEY_STATE_UP ) )
+				msg = ((BfmeKeyboardMessageStream *)TheMessageStream)->appendMessage( 0x16 );
 
-			msg = TheMessageStream->appendMessage( GameMessage::MSG_RAW_KEY_DOWN );
-			DEBUG_ASSERTCRASH( msg, ("Unable to append key down message to stream\n") );
+			if( msg )
+			{
+				msg->appendIntegerArgument( key->key );
+				msg->appendIntegerArgument( key->state );
+			}
 
-		}  // end if
-		else if( BitTest( key->state, KEY_STATE_UP ) )
-		{
-
-			msg = TheMessageStream->appendMessage( GameMessage::MSG_RAW_KEY_UP );
-			DEBUG_ASSERTCRASH( msg, ("Unable to append key up message to stream\n") );
-
-		}  // end else if
-		else
-		{
-
-			DEBUG_CRASH(( "Unknown key state when creating msg stream\n" ));
-			
-		}  // end else
-
-		// fill out message arguments
-		if( msg )
-		{
-			msg->appendIntegerArgument( key->key );
-			msg->appendIntegerArgument( key->state );
+			key->status = KeyboardIO::STATUS_USED;
 		}
 
-		// next key please
 		key++;
-
 	}  // end while
 
 }  // end createStreamMessages
