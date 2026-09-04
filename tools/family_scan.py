@@ -141,6 +141,23 @@ def mask_mnemonics(body, md):
     return ("\n".join(names)).encode("utf-8") if covered == len(body) else None
 
 
+def ends_in_return_or_jump(body, md):
+    """Check the final decoded instruction, not its last operand byte.
+
+    `ret 4` ends in 00, and direct jumps end in their displacement. Conversely,
+    an immediate ending in C3 is not a return. Require complete decoding in
+    every grouping mode; padding after a truncated instruction is not proof.
+    This is a candidate filter, not a replacement for boundary/identity proof.
+    """
+    last = None
+    covered = 0
+    for insn in md.disasm(body, 0):
+        last = insn
+        covered += insn.size
+    return (last is not None and covered == len(body)
+            and last.mnemonic in ("ret", "jmp"))
+
+
 def load_real_pins():
     pins = set()
     with io.open(ROOT / "reverse" / "symbols.csv", encoding="utf-8",
@@ -253,11 +270,9 @@ def main():
     ap.set_defaults(mode="operand")
     args = ap.parse_args()
 
-    md = None
-    if args.mode in ("operand", "mnemonic"):
-        import capstone
-        md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
-        md.detail = True
+    import capstone
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = args.mode == "operand"
 
     real_pins = load_real_pins()
     attempted, dead = load_attempted()
@@ -272,7 +287,7 @@ def main():
         if len(window) != size + 1 or window[size] != 0xCC:
             continue                       # must END at padding
         body = window[:size]
-        if body[-1] not in (0xC3, 0xC2, 0xE9, 0xEB) and body[-2:-1] != b"\xff":
+        if not ends_in_return_or_jump(body, md):
             continue                       # must end in a ret or a jmp
         if registers_a_local_static(body, rva):
             local_statics += 1
