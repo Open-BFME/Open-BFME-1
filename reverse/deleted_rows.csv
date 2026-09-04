@@ -24549,3 +24549,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_002977f0@@UAEPAXI@Z,0x002977F0,generated identity replaced by byte-verified LargeGroupBonusUpdate destructor
 ??1Rva00286DC0NestedDtor@@UAE@XZ,0x00286DC0,generated identity replaced by byte-verified SmartBombTargetHomingUpdate destructor
 ??_GGen_dtor_00287100@@UAEPAXI@Z,0x00287100,generated identity replaced by byte-verified SmartBombTargetHomingUpdate destructor
+??1Rva0027FF70NestedDtor@@UAE@XZ,0x0027FF70,generated identity replaced by byte-verified AttributeModifierAuraUpdate destructor
+??_GGen_dtor_002802a0@@UAEPAXI@Z,0x002802A0,generated identity replaced by byte-verified AttributeModifierAuraUpdate destructor
