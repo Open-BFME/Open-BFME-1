@@ -33,6 +33,8 @@ class CreateModule : public BehaviorModule,
 {
 public:
 	CreateModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~CreateModule();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/PreorderCreate.h
@@ -40,9 +42,15 @@ class PreorderCreate : public CreateModule
 {
 public:
 	PreorderCreate( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~PreorderCreate();
 };
 
 PreorderCreate::PreorderCreate( Thing *thing, const ModuleData *moduleData )
 	: CreateModule( thing, moduleData )
+{
+}
+
+PreorderCreate::~PreorderCreate()
 {
 }

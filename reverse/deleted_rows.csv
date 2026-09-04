@@ -24563,3 +24563,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeInitAGB@BfmeThingAGB@@QAEPAV1@PAX0@Z,0x0024F450,generated identity replaced by byte-verified CreateModule constructor/destructor
 ??1Rva0024F8B0MultiTailDtor@@UAE@XZ,0x0024F8B0,address-derived identity replaced by byte-verified GrantUpgradeCreate destructor
 ??_GGen_dtor_0024f9a0@@UAEPAXI@Z,0x0024F9A0,address-derived identity replaced by byte-verified GrantUpgradeCreate destructor
+??1Rva0024FEC0MultiTailDtor@@UAE@XZ,0x0024FEC0,address-derived identity replaced by byte-verified PreorderCreate destructor
+??_GGen_dtor_0024ff90@@UAEPAXI@Z,0x0024FF90,address-derived identity replaced by byte-verified PreorderCreate destructor
