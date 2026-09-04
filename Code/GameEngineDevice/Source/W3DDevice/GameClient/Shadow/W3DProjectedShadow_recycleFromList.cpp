@@ -11,7 +11,7 @@ struct W3DProjectedShadow
 	~W3DProjectedShadow(void);
 };
 
-class Rva007AFAA0Manager
+class W3DProjectedShadowManager
 {
 public:
 	bool recycleFromList(W3DProjectedShadow *shadow, W3DProjectedShadow **list);
@@ -23,7 +23,7 @@ private:
 	int m_decalCount;
 };
 
-bool Rva007AFAA0Manager::recycleFromList(W3DProjectedShadow *shadow, W3DProjectedShadow **list)
+bool W3DProjectedShadowManager::recycleFromList(W3DProjectedShadow *shadow, W3DProjectedShadow **list)
 {
 	W3DProjectedShadow *prev = 0;
 	W3DProjectedShadow *cur = *list;
