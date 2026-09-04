@@ -4756,7 +4756,6 @@ name,address,notes
 ??1Gen_dtor_002c9c00@@UAE@XZ,0x0003CCB8,gen-dtor class destructor
 ??1Gen_dtor_002caff0@@UAE@XZ,0x00037411,gen-dtor class destructor
 ??1Gen_dtor_002cd180@@UAE@XZ,0x0004418E,gen-dtor class destructor
-??1Gen_dtor_002cdd60@@UAE@XZ,0x0001A3B6,gen-dtor class destructor
 ??1Gen_dtor_002cfee0@@UAE@XZ,0x000172BF,gen-dtor class destructor
 ??1Gen_dtor_002d0780@@UAE@XZ,0x0004B295,gen-dtor class destructor
 ??1Gen_dtor_002d18c0@@UAE@XZ,0x0003FF58,gen-dtor class destructor
@@ -35441,8 +35440,6 @@ name,address,notes
 ?b_002cdc40@@YAXXZ,0x002CDC40,gen-thunk body
 ?b_002cdc70@@YAXXZ,0x002CDC70,gen-thunk body
 ?b_002cdcf0@@YAXXZ,0x002CDCF0,gen-thunk body
-?b_002cdd60@@YAXXZ,0x002CDD60,gen-thunk body
-?b_002cdd90@@YAXXZ,0x002CDD90,gen-thunk body
 ?b_002cddf0@@YAXXZ,0x002CDDF0,gen-thunk body
 ?b_002cdf00@@YAXXZ,0x002CDF00,gen-thunk body
 ?b_002cdf70@@YAXXZ,0x002CDF70,gen-thunk body
@@ -82755,3 +82752,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?bfmeHighlightApply@@YAXIPAXIPAUTexture@@PAUIDirect3DSurface8@@12@Z,0x0003F242,retail highlight postRender0x007D7040 direct call at0x007D72DA
 ??1MonsterDockUpdate@@MAE@XZ,0x0004324D,destructor ILT to 0x002CDAE0
 ??_GMonsterDockUpdate@@MAEPAXI@Z,0x0000EF61,primary class vftable slot zero ILT to 0x002CDBC0
+??1MonsterDockUpdateModuleData@@UAE@XZ,0x0001A3B6,destructor ILT to 0x002CDD90
+??_GMonsterDockUpdateModuleData@@UAEPAXI@Z,0x000234A2,class vftable slot zero ILT to 0x002CDD60
