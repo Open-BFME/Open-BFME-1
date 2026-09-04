@@ -83788,3 +83788,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0Rva008030C0Elem@@QAE@XZ,0x00802FC0,FESL Rva00803080 pool-init element default ctor; ??_L target of 0x008030C0
+??1FXNugget@@UAE@XZ,0x000033F0,ILT to FXNugget dtor body 0x00427390; callee of ParticleSystemFXNugget dtor
