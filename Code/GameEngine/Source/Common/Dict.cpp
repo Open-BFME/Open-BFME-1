@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/asciistringsetoutofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -519,51 +519,13 @@ void Dict::setReal(NameKeyType key, Real value)
 }
 
 // -----------------------------------------------------
-__declspec(naked) void Dict::setAsciiString(NameKeyType, const AsciiString&)
+void Dict::setAsciiString(NameKeyType key, const AsciiString& value)
 {
-	__asm {
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 004h
-		_emit 056h
-		_emit 06Ah
-		_emit 003h
-		_emit 050h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 0E8h
-		_emit 0DAh
-		_emit 09Eh
-		_emit 0FDh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 00Ch
-		_emit 083h
-		_emit 0C0h
-		_emit 004h
-		_emit 051h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 012h
-		_emit 0F4h
-		_emit 081h
-		_emit 000h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 045h
-		_emit 070h
-		_emit 0FBh
-		_emit 0FFh
-		_emit 05Eh
-		_emit 0C2h
-		_emit 008h
-		_emit 000h
-	}
+	validate();
+	DictPair* pair = setPrep(key, DICT_ASCIISTRING);
+	*pair->asAsciiString() = value;
+	sortPairs();
+	validate();
 }
 
 // -----------------------------------------------------
