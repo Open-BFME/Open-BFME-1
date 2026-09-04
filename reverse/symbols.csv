@@ -8623,7 +8623,7 @@ name,address,notes
 ??4Matrix3@@QAEAAV0@ABVMatrix3D@@@Z,0x008D9150
 ??4MeshGeometryClass@@QAEAAV0@ABV0@@Z,0x00924930,sole call from the byte-proven copy ctor 0x9267E0 where ZH has *this = that; exactly two callers exe-wide (copy ctor + the 0x94DA40 gap that is MeshModelClass::operator=)
 ??4MeshMatDescClass@@QAEAAV0@ABV0@@Z,0x0092BB00,MeshMatDesc copy constructor direct same-TU call target
-??4MultiplayerColorDefinition@@QAEAAV0@ABV0@@Z,0x00027B56,ILT thunk for MultiplayerColorDefinition::operator= found via decode_calls at newMultiplayerColorDefinition call site
+??4MultiplayerColorDefinition@@QAEPAV0@ABV0@@Z,0x00027B56,ILT thunk for MultiplayerColorDefinition::operator= found via decode_calls at newMultiplayerColorDefinition call site
 ??4OBBoxClass@@QAEAAV0@ABV0@@Z,0x009316A0
 ??4Open2Stats6589E0@@QAEAAV0@ABV0@@Z,0x0001C783,Open2 0x006589E0 stats assignment (ILT)
 ??4PSPlayerStats@@QAEAAV0@ABV0@@Z,0x000A5950,Open-BFME5 ILT the BFMENetworkQueueItem1 assignment at 0x00658340 copies its stats through
