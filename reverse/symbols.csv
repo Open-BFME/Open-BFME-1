@@ -83734,3 +83734,7 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z,0x00699E50,Miles playing-audio handle lookup; setReverb callee
 ?isFinished@TransitionHandler@@QAE_NXZ,0x00042E6F,ILT of GameWindowTransitionsHandler::isFinished; parchmentMapFadeLoadGame view class
 ?unidentified_0002e9a1@WindowManager@@QAEXH@Z,0x0002E9A1,ILT -> 0x0046B340; WindowManager thiscall(-1) from parchmentMapFadeLoadGame
+?getPreAttackDelay@Weapon@@QBEHPBVObject@@HH@Z,0x00013818,Open-BFME5 ILT to Weapon::getPreAttackDelay body 0x001E6F10; preFireWeapon 0x001E8970 calls this three-arg form
+?notifyPreFire@WeaponTemplate@@QAEXPAVWeapon@@PBVObject@@HH@Z,0x00005704,Open-BFME5 ILT to WeaponTemplate pre-fire list walk body 0x001E6310; called from preFireWeapon 0x001E8970
+?getTransformMatrix@Drawable@@QBEPBVMatrix3D@@XZ,0x00017512,Open-BFME5 ILT to Drawable::getTransformMatrix (FUN_0081cec0); preFireWeapon doFXPos path
+?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,Open-BFME5 ILT to FXList four-arg doFXPos body 0x008280D0; same thunk as BridgeAreaEffectsFXShim::doFXPos
