@@ -82377,3 +82377,14 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?ThePartitionManager@@3PAVPartitionManager@@A,0x012ED5B8,findSupplyCenter ThePartitionManager VA; separate from TheShroudManager 0x012ED5BC
+?link@PartitionFilter@@QAEPAV1@PAV1@@Z,0x009F2AE0,PartitionFilter +4 next-walk used by findSupplyCenter; body is gen-dump d_009f2ae0
+?getClosestObject@PartitionManager@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@@@Z,0x009F26A0,findSupplyCenter 4-arg thiscall; 33B wrapper already matched as bfmeGo1050D
+?aptPalantirOnInitialized@@YAXXZ,0x0001F62C,AptPalantir OnInitialized callback ILT registered by name
+?g_aptPalantirInitialized@@3EA,0x00EB7D84,AptPalantir OnInitialized state byte
+?g_aptPalantirJewelBrightened@@3EA,0x00EF4AFD,AptPalantir jewel-brightened state byte
+?g_aptPalantirWindow@@3HA,0x00EB7D80,AptPalantir window index passed to WindowManager add
+?g_aptPalantirJewelName@@3PADA,0x00D09BC4,AptPalantir jewel property name
+?g_aptPalantirBrightJewel@@3PADA,0x00C80FC0,AptPalantir bright jewel value
+?g_aptPalantirNormalJewel@@3PADA,0x00C81238,AptPalantir normal jewel value
+?add@WindowManager@@QAEXPAXPBDH0HHHH@Z,0x00015235,AptPalantir OnInitialized action sink
