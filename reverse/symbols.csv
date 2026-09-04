@@ -79513,7 +79513,6 @@ name,address,notes
 ?lookup@Rva0007F560Factory@@QAEPAXABVAsciiString@@@Z,0x00001F78,ILT thunk to 0x0007F470 name lookup used by Rva0007F560 ctor
 ?lookup@Rva0019C520Member@@QAEHPAVAsciiString@@H@Z,0x0003562F,ILT thunk to 0x0019B780 lookup on member at +0x630
 ?lookup@Rva00265A00Owner@@QAEPAVRva00265A00Result@@H@Z,0x00020824,address-derived lookup target read from retail RVA 0x00265A00
-?lookup@Rva00368B80Registry@@QAEPAURva00368B80LookupResult@@I@Z,0x0001DBBA,REL32 bounds-checked pointer lookup target from 0x00368B91
 ?lookup@Rva007FA2C0@@QAEPAURva007F96C0Rec@@PAX@Z,0x007F9530,FESL transactor TXN record lookup called from 0x007F96C0
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
 ?lookupByField@BfmeMgr2B0@@QAEPAUBfmeNode2B0@@PAX@Z,0x0003A751,pin
@@ -82596,3 +82595,4 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ?isModifierActive@AttributeModifierPoolUpdate@@ABE_NIPBUAttributeModifierEntry@@@Z,0x00037B32,ILT to body 0x00368B80; AttributeModifierPoolUpdate accumulator passes current frame and each 16-byte modifier entry
 ?getValue@AttributeModifierDefinitionStore@@QBE_NHHPAM@Z,0x0001CE31,ILT to body 0x0036AFB0; additive and multiplicative AttributeModifierPoolUpdate accumulators query modifier index attribute and float output
 ?TheAttributeModifierDefinitionStore@@3PAVAttributeModifierDefinitionStore@@A,0x012F07E4,global store used by AttributeModifierPoolUpdate additive and multiplicative accumulators
+?findDefinition@AttributeModifierDefinitionStore@@QAEPAUAttributeModifierDefinition@@I@Z,0x0001DBBA,AttributeModifierPoolUpdate active-entry test resolves each modifier key through the definition store

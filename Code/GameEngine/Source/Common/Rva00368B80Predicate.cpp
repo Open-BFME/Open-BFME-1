@@ -1,13 +1,13 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
 
-struct Rva00368B80Entry
+struct AttributeModifierEntry
 {
 	unsigned int m_key;
 	unsigned int m_unused;
 	unsigned int m_limit;
 };
 
-struct Rva00368B80Flags
+struct AttributeModifierDefinitionFlags
 {
 	int getSingleBit() const
 	{
@@ -23,36 +23,38 @@ struct Rva00368B80Flags
 	unsigned int m_bits;
 };
 
-struct Rva00368B80LookupResult
+struct AttributeModifierDefinition
 {
 	char m_unused[ 12 ];
-	Rva00368B80Flags m_flags;
+	AttributeModifierDefinitionFlags m_flags;
 };
 
-struct Rva00368B80Registry
+struct AttributeModifierDefinitionStore
 {
-	Rva00368B80LookupResult *lookup( unsigned int key );
+	AttributeModifierDefinition *findDefinition( unsigned int key );
 };
 
-extern Rva00368B80Registry *g_rva00368B80Registry;
+extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 
-struct Rva00368B80Predicate
+class AttributeModifierPoolUpdate
 {
-	bool test( unsigned int value, const Rva00368B80Entry *entry ) const;
+private:
+	bool isModifierActive( unsigned int frame,
+		const AttributeModifierEntry *entry ) const;
 
 	char m_unused[ 0x30 ];
-	unsigned int m_limits[ 7 ];
+	unsigned int m_activationFrames[ 7 ];
 };
 
-bool Rva00368B80Predicate::test( unsigned int value,
-	const Rva00368B80Entry *entry ) const
+bool AttributeModifierPoolUpdate::isModifierActive( unsigned int frame,
+	const AttributeModifierEntry *entry ) const
 {
-	int index = g_rva00368B80Registry->lookup( entry->m_key )
+	int index = TheAttributeModifierDefinitionStore->findDefinition( entry->m_key )
 		->m_flags.getSingleBit();
 
-	bool belowLimit = value < entry->m_limit;
+	bool belowLimit = frame < entry->m_limit;
 	bool atOrBelowThreshold =
-		index >= 0 && value <= m_limits[ index ];
+		index >= 0 && frame <= m_activationFrames[ index ];
 	if( belowLimit && !atOrBelowThreshold )
 		return true;
 
