@@ -82435,3 +82435,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?releaseCodecCallback@@YAXPAPAX@Z,0x009A5E60,codec callback owner release
 ?freeCodecMemory@@YAXPAX@Z,0x009A5980,codec allocator free thunk
 ?bfmeSlashOrDefaultName@@YA?AVAsciiString@@ABV1@0@Z,0x00044E3B,Open-BFME5 ILT to slash-or-default AsciiString helper body 0x001945D0
+?publishLanEndpoint@@YAXPAVLANGameInfo@@PADPAXH@Z,0x00049E86,LAN endpoint publisher thunk
+?resetLanGameState@@YAXXZ,0x0001C9D6,LAN current-game reset thunk
+?processInactiveLanMessages@@YAXXZ,0x00039202,inactive LAN message pump thunk
+?getSlot@LANGameInfo@@QAEPAVGameSlot@@H@Z,0x0001EC18,LAN game slot lookup thunk
+?g_lanConnection@@3PAXA,0x00EF3C1C,active LAN endpoint connection
+?g_lanEndpointBuffer@@3PADA,0x00EF3CC4,LAN endpoint publication buffer
