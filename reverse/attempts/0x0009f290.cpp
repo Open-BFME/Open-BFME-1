@@ -32,10 +32,12 @@ void Rva0009F090WideListData::insertCopies(
 	const UnicodeString &value)
 {
 	unsigned int n = count;
+	const UnicodeString *v;
+	Rva0009F090WideNode *p;
 	if (n > 0)
 	{
-		const UnicodeString *v = &value;
-		Rva0009F090WideNode *p = position;
+		v = &value;
+		p = position;
 		do
 		{
 			Rva0009F090WideNode *node =

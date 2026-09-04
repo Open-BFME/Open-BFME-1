@@ -35,7 +35,7 @@ public:
 	void privateCommandButton(const CommandButton *commandButton, CommandSourceType cmdSource);
 
 	unsigned char m_beforeObject[8];
-	Object *m_object;
+	Object * volatile m_object;
 };
 
 class Overridable
@@ -68,6 +68,8 @@ public:
 class CommandButton
 {
 public:
+	GUICommandType getCommandType() const { return m_command; }
+
 	unsigned char m_beforeType[0x10];
 	GUICommandType m_command;
 };
@@ -94,12 +96,15 @@ ControlBar *TheControlBar;
 
 void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton *commandButton, CommandSourceType cmdSource)
 {
-	const CommandButton *button = commandButton;
-	if (!button)
+	const CommandButton * volatile *buttonArg =
+		reinterpret_cast<const CommandButton * volatile *>(&commandButton);
+	if (!*buttonArg)
 		return;
 
-	Object *owner = m_object;
-	ThingTemplate *tmpl = owner->m_template;
+	Object *owner = reinterpret_cast<Object *>(reinterpret_cast<unsigned int>(m_object) + 0);
+	volatile unsigned char *objectBytes = reinterpret_cast<volatile unsigned char *>(owner);
+	objectBytes += 4;
+	ThingTemplate *tmpl = *reinterpret_cast<ThingTemplate * volatile *>(objectBytes);
 	if (tmpl)
 	{
 		Overridable *next = tmpl->m_next;
@@ -108,22 +113,22 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 	}
 	if (tmpl->m_kindOf & 0x2000000)
 		return;
-	if (!owner)
-		return;
-
-	AICommandInterface *ai = owner->m_ai;
-	if (!ai)
-		return;
-
-	const CommandSet *commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
-	if (!commandSet)
-		return;
-
-	CommandSourceType src = cmdSource;
-	for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
+	if (owner)
 	{
-		const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-		if (button == aCommandButton && button->m_command == GUI_COMMAND_STOP)
-			reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+		AICommandInterface *ai = owner->m_ai;
+		if (ai)
+		{
+			const CommandSet *commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
+			if (commandSet)
+			{
+				CommandSourceType src = cmdSource;
+				for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
+				{
+					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
+					if (aCommandButton == *buttonArg && (*buttonArg)->getCommandType() == GUI_COMMAND_STOP)
+						reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+				}
+			}
+		}
 	}
 }

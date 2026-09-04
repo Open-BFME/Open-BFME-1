@@ -22,7 +22,7 @@ public:
 class BfmeB996
 {
 public:
-	char sendIfState7(BfmePkt996 *pkt);
+	bool sendIfState7(BfmePkt996 *pkt);
 
 private:
 	char m_bfmePad[4];
@@ -30,7 +30,7 @@ private:
 	int m_bfmeKind;
 };
 
-char BfmeB996::sendIfState7(BfmePkt996 *pkt)
+bool BfmeB996::sendIfState7(BfmePkt996 *pkt)
 {
 	if (m_bfmeKind == 7)
 	{
@@ -38,8 +38,7 @@ char BfmeB996::sendIfState7(BfmePkt996 *pkt)
 		BfmePkt996 *p = pkt;
 		int want = p->m_size;
 		int got = dev->send(p, want);
-		int eq = (got == p->m_size);
-		return (char)eq;
+		return got == p->m_size;
 	}
 	return 0;
 }

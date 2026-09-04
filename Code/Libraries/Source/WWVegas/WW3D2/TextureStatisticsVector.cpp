@@ -196,6 +196,20 @@ VectorClass<T>::~VectorClass()
 }
 
 template<class T>
+int VectorClass<T>::ID(T const &object)
+{
+	if (!IsValid)
+		return 0;
+
+	for (int index = 0; index < VectorMax; ++index)
+	{
+		if ((*this)[index] == object)
+			return index;
+	}
+	return -1;
+}
+
+template<class T>
 void VectorClass<T>::Clear()
 {
 	if (Vector != 0 && IsAllocated)
@@ -259,6 +273,8 @@ template VectorClass<TextureStatisticsStruct>::VectorClass(
 	unsigned, TextureStatisticsStruct const *);
 template bool VectorClass<TextureStatisticsStruct>::Resize(
 	int, TextureStatisticsStruct const *);
+template int VectorClass<TextureStatisticsStruct>::ID(
+	TextureStatisticsStruct const &);
 template void DynamicVectorClass<TextureStatisticsStruct>::Clear();
 template bool DynamicVectorClass<TextureStatisticsStruct>::Add(
 	TextureStatisticsStruct const &);

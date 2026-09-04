@@ -31,15 +31,20 @@ private:
 
 LineCoord3D LineEmissionVolumeModule::getPosition(float, float, float, float)
 {
-    LineCoord3D start = m_start;
-    LineCoord3D end = m_end;
-    LineCoord3D delta(end.x - start.x, end.y - start.y, end.z - start.z);
-    volatile float scale = GetGameClientRandomValueReal(
+    LineCoord3D delta;
+    LineCoord3D start;
+    LineCoord3D end;
+    start = m_start;
+    end = m_end;
+    delta.x = end.x - start.x;
+    delta.y = end.y - start.y;
+    delta.z = end.z - start.z;
+    float scale = GetGameClientRandomValueReal(
         0.0f,
         1.0f,
         "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterlinevolumemodule.cpp",
         114);
-    return LineCoord3D(
+    return makeLineCoord(
         scale * delta.z + start.z,
         scale * delta.y + start.y,
         scale * delta.x + start.x);

@@ -14,6 +14,15 @@ extern "C" __declspec(dllimport) void *__cdecl u2_import_01359474(void *p, unsig
 namespace _STL
 {
 
+struct Callback
+{
+	typedef void (*event_callback)(int, void *, int);
+	event_callback fn;
+	int index;
+	Callback(event_callback f = event_callback(), int n = int()) : fn(f), index(n) {}
+	~Callback() {}
+};
+
 template <class T>
 struct GrowPair
 {
@@ -66,16 +75,6 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 	return out;
 }
 
-struct Callback
-{
-	enum event { erase_event = 0, imbue_event = 1, copyfmt_event = 2 };
-	typedef void (*event_callback)(event, void *, int);
-	event_callback fn;
-	int index;
-};
-
-template GrowPair<long> *grow_array(GrowPair<long> *, long *, unsigned int, unsigned int);
-template GrowPair<void *> *grow_array(GrowPair<void *> *, void **, unsigned int, unsigned int);
 template GrowPair<Callback> *grow_array(GrowPair<Callback> *, Callback *, unsigned int, unsigned int);
 
 }

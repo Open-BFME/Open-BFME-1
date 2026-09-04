@@ -235,11 +235,11 @@ public:
 
 void BfmeThingCB::bfmeGoCB( BfmeBool flag )
 {
-	BfmeThingCBTarget *target = m_target;
+	BfmeThingCBTarget *target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
 	if( target )
 	{
 		target->slot104( !flag );
 		target = m_target;
-		return target->slot100( flag );
+		target->slot100( flag );
 	}
 }

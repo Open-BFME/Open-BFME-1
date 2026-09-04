@@ -1,19 +1,12 @@
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
 // partial score=0.97 date=2026-09-04
-// ?apply@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.97 date=2026-09-04
-// ?apply@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD
-//
-// Retail 0x002A7E90: stores module-data+0x210 into this+0xA8 unless the
-// special-power type is 0x27 and the target is missing or neither kind 6
-// nor kind 0x62.
 
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
 typedef unsigned int UnsignedInt;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
@@ -22,6 +15,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
 public:
@@ -29,16 +23,19 @@ public:
 	SpecialPowerType m_specialPowerType;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
 	bool isKindOf( KindOfType t ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
@@ -47,6 +44,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
 {
 public:
@@ -56,6 +54,7 @@ public:
 	UnsignedInt m_field210;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdate
 {
 public:
@@ -72,8 +71,8 @@ private:
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
 void SpecialAbilityUpdate::apply()
 {
-	const SpecialAbilityUpdateModuleData *md = m_moduleData;
 	int id = m_targetID;
+	const SpecialAbilityUpdateModuleData *md = m_moduleData;
 	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
 	Object *target = TheGameLogic->findObjectByID( id );
 
@@ -91,18 +90,13 @@ void SpecialAbilityUpdate::apply()
 		m_fieldA8 = max;
 		return;
 	}
-	if( !target )
-		goto store_zero;
-	if( target->isKindOf( KINDOF_6 ) )
-		goto store_field;
-	if( target->isKindOf( KINDOF_62 ) )
-		goto store_field;
-	goto store_zero;
+	if( target &&
+		( target->isKindOf( KINDOF_6 ) || target->isKindOf( KINDOF_62 ) ) )
+	{
+		UnsignedInt max = md->m_field210;
+		m_fieldA8 = max;
+		return;
+	}
 
-	store_field:
-		m_fieldA8 = md->m_field210;
-	return;
-
-store_zero:
 	m_fieldA8 = 0;
 }

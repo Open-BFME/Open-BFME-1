@@ -1,10 +1,11 @@
 // ?assignShroudTextureToGlobal@@YAXXZ
-// partial score=0.95 date=2026-09-02
+// partial score=0.95 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x0071A680. Pulls the +0x30B8 shroud object's texture handle and
-// assigns it onto g_bfmeTableDU, then bfmeTwoRB(5, 0).
+// Retail 0x0071A680. Assign the shroud texture handle to the BFME global
+// table and notify the texture stage.
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureBaseClass
 {
 public:
@@ -13,39 +14,40 @@ public:
 	unsigned short m_refs;
 };
 
-class BfmeHandleCX
-{
-public:
-	BfmeHandleCX(const BfmeHandleCX &other)
-	{
-		m_p = other.m_p;
-		if (other.m_p)
-			++other.m_p->m_refs;
-	}
-
-	~BfmeHandleCX()
-	{
-		if (m_p)
-			m_p->Release_Ref();
-	}
-
-	BfmeHandleCX &operator=(const BfmeHandleCX &other)
-	{
-		if (other.m_p)
-			++other.m_p->m_refs;
-		if (m_p)
-			m_p->Release_Ref();
-		m_p = other.m_p;
-		return *this;
-	}
-
-	TextureBaseClass *m_p;
-};
-
 class ShroudTextureSource
 {
 public:
-	BfmeHandleCX getTexture() const;
+	class Handle
+	{
+	public:
+		Handle(const Handle &other)
+		{
+			m_p = other.m_p;
+			if (other.m_p)
+				++other.m_p->m_refs;
+		}
+
+		~Handle()
+		{
+			if (m_p)
+				m_p->Release_Ref();
+		}
+
+		const Handle &operator=(const Handle &other)
+		{
+			if (other.m_p)
+				++other.m_p->m_refs;
+			if (m_p)
+				m_p->Release_Ref();
+			TextureBaseClass *source = other.m_p;
+			m_p = source;
+			return *this;
+		}
+
+		TextureBaseClass *m_p;
+	};
+
+	Handle getTexture() const;
 };
 
 class BfmeGlobal_012f7fe0
@@ -57,17 +59,18 @@ public:
 };
 
 extern BfmeGlobal_012f7fe0 *TheBfmeGlobal_012f7fe0;
-extern BfmeHandleCX g_bfmeTableDU;
+extern ShroudTextureSource::Handle g_bfmeTableDU[];
 void bfmeTwoRB(int k, int f);
 
-#pragma comment(linker, "/alternatename:?getTexture@ShroudTextureSource@@QBE?AVBfmeHandleCX@@XZ=?j_00013bbf@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getTexture@ShroudTextureSource@@QBE?AVHandle@1@XZ=?j_00013bbf@@YAXXZ")
 
+// ?assignShroudTextureToGlobal@@YAXXZ
 void assignShroudTextureToGlobal(void)
 {
 	ShroudTextureSource *shroud = TheBfmeGlobal_012f7fe0->m_shroud;
 	if (shroud)
 	{
-		g_bfmeTableDU = shroud->getTexture();
+		g_bfmeTableDU[0] = shroud->getTexture();
 		bfmeTwoRB(5, 0);
 	}
 }

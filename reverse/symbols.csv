@@ -1874,6 +1874,8 @@ name,address,notes
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWF@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWH@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWI@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
 ??0AssistedTargetingUpdateModuleData@@QAE@XZ,0x000104B5,pinharvest x1 (thunk)
 ??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
@@ -3514,6 +3516,8 @@ name,address,notes
 ??1AsciiStringVX@@QAE@XZ,0x00887940,pin
 ??1AsciiStringVZ@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWF@@QAE@XZ,0x00887940,pin
+??1AsciiStringWH@@QAE@XZ,0x00887940,pin
+??1AsciiStringWI@@QAE@XZ,0x00887940,pin
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -11606,6 +11610,7 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@ABVUnicodeString@@@Z,0x00021B16,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D370)
 ?_M_lower_bound@?@V?@G@@U?@CBV?@G@@URva0054EF10Value@@@_STL@@U?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@3@U?@V?@G@@@3@V?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@3@@_STL@@ABEPAU?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@2@ABV?@G@@@Z,0x0003FABC,ILT to wide-string tree _M_lower_bound 0x0054EE40
 ?_M_open@_Filebuf_base@_STL@@QAE_NPBDH@Z,0x0084A144,STLport filename open overload shares the byte-verified descriptor open tail at +4
+?_M_output_error@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAEHXZ,0x008433A0,STLport 4.5.3 narrow basic_filebuf overflow callee; matched body at 0x008433A0
 ?_M_page_size@_Filebuf_base@_STL@@1IA,0x012C7ED0,Open-BFME5 shared page-size static the _Filebuf_base constructor at 0x00849F40 fills from GetSystemInfo; DIR32 sites are masked by the byte gate so this records which global it is
 ?_M_push_back_aux_v@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXABH@Z,0x006472C0,gen-tgrid shared callee
 ?_M_push_back_aux_v@?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXABQAVMapObject@@@Z,0x00008553,pinharvest x4 (thunk)
@@ -11659,6 +11664,7 @@ name,address,notes
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@XZ,0x00460DA0,zhstl per-site callee copy (body proven byte-equal)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x00013BF6,site-decoded x1 (thunk)
 ?_M_switch_to_input_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843680,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
+?_M_switch_to_output_mode@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ,0x008433C0,STLport 4.5.3 narrow basic_filebuf overflow callee; matched body at 0x008433C0
 ?_M_switch_to_output_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843590,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_throw_failure@ios_base@_STL@@IAEXXZ,0x0083E8F0,FX particle ostream put setstate failure callee
 ?_M_underflow_aux@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAEGXZ,0x008436E0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
@@ -78110,6 +78116,8 @@ name,address,notes
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
+?groupFollowWaypointPath@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00155890,normal waypoint-path member walk; callee aiFollowWaypointPath ILT 0x00031179
+?groupFollowWaypointPathAsTeamClearFormation@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00155A10,BFME clears formation ID +0x31c then follows waypoint as a team; callee aiFollowWaypointPathAsTeam ILT 0x00003BF2
 ?groupFollowWaypointPathAsTeamExact@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00155AF0,exact waypoint-path member walk; callee aiFollowWaypointPathAsTeam ILT 0x0002169D
 ?groupFollowWaypointPathExact@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x001558F0,exact waypoint-path member walk; callee aiFollowWaypointPathExact ILT 0x0002480C
 ?groupGuardArea@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000AABF,TEAM_GUARD_AREA tail of shared 0x002F3520 body

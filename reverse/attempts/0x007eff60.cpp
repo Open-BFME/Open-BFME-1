@@ -13,8 +13,12 @@ public:
 
 void Rva007EFF60::call(void *a, void *b)
 {
-	void (*fn)(void *, void *) = m_fn;
-	if (!fn)
+	switch (m_fn != 0)
+	{
+	case 0:
 		return;
-	fn(a, b);
+	default:
+		m_fn(a, b);
+		break;
+	}
 }

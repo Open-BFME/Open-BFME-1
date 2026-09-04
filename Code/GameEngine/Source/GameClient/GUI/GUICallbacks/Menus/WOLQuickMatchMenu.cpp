@@ -2206,6 +2206,7 @@ class BfmeAptScreenQuickMatchMenu
 {
 public:
 	void _bfme_initGadgets( void );
+	void PopulateQMLadderListBox( GameWindow *win );
 
 private:
 	char m_unmodelled[ 0x218 ];
@@ -2250,6 +2251,92 @@ private:
 	NameKeyType m_parentStatsKey;
 	GameWindow *m_parentStats;
 };
+
+void BfmeAptScreenQuickMatchMenu::PopulateQMLadderListBox( GameWindow *win )
+{
+	if (!m_ladder)
+		return;
+
+	isPopulatingLadderBox = true;
+
+	QuickMatchPreferences pref;
+	AsciiString userPrefFilename;
+	Int localProfile = TheGameSpyInfo->getLocalProfileID();
+
+	Color specialColor = GameSpyColor[GSCOLOR_MAP_SELECTED];
+	Color normalColor = GameSpyColor[GSCOLOR_MAP_UNSELECTED];
+	Color favoriteColor = GameSpyColor[GSCOLOR_MAP_UNSELECTED];
+	Int index;
+	GadgetListBoxReset( win );
+
+	std::set<const LadderInfo *> usedLadders;
+
+	// start with "No Ladder"
+	index = GadgetListBoxAddEntryText( win, TheGameText->fetch("GUI:NoLadder"), normalColor, -1 );
+	GadgetListBoxSetItemData( win, 0, index );
+
+	// add the last ladder
+	Int selectedPos = 0;
+	AsciiString lastLadderAddr = pref.getLastLadderAddr();
+	UnsignedShort lastLadderPort = pref.getLastLadderPort();
+	const LadderInfo *info = TheLadderList->findLadder( lastLadderAddr, lastLadderPort );
+	if (isValidLadder(info))
+	{
+		usedLadders.insert(info);
+		index = GadgetListBoxAddEntryText( win, info->name, favoriteColor, -1 );
+		GadgetListBoxSetItemData( win, (void *)(info->index), index );
+		selectedPos = index;
+	}
+
+	// our recent ladders
+	LadderPreferences ladPref;
+	ladPref.loadProfile( localProfile );
+	const LadderPrefMap recentLadders = ladPref.getRecentLadders();
+	for (LadderPrefMap::const_iterator cit = recentLadders.begin(); cit != recentLadders.end(); ++cit)
+	{
+		AsciiString addr = cit->second.address;
+		UnsignedShort port = cit->second.port;
+		if (addr == lastLadderAddr && port == lastLadderPort)
+			continue;
+		const LadderInfo *info = TheLadderList->findLadder( addr, port );
+		if (isValidLadder(info) && usedLadders.find(info) == usedLadders.end())
+		{
+			usedLadders.insert(info);
+			index = GadgetListBoxAddEntryText( win, info->name, favoriteColor, -1 );
+			GadgetListBoxSetItemData( win, (void *)(info->index), index );
+		}
+	}
+
+	// special ladders
+	const LadderInfoList *lil = TheLadderList->getSpecialLadders();
+	LadderInfoList::const_iterator lit;
+	for (lit = lil->begin(); lit != lil->end(); ++lit)
+	{
+		const LadderInfo *info = *lit;
+		if (isValidLadder(info) && usedLadders.find(info) == usedLadders.end())
+		{
+			usedLadders.insert(info);
+			index = GadgetListBoxAddEntryText( win, info->name, specialColor, -1 );
+			GadgetListBoxSetItemData( win, (void *)(info->index), index );
+		}
+	}
+
+	// standard ladders
+	lil = TheLadderList->getStandardLadders();
+	for (lit = lil->begin(); lit != lil->end(); ++lit)
+	{
+		const LadderInfo *info = *lit;
+		if (isValidLadder(info) && usedLadders.find(info) == usedLadders.end())
+		{
+			usedLadders.insert(info);
+			index = GadgetListBoxAddEntryText( win, info->name, normalColor, -1 );
+			GadgetListBoxSetItemData( win, (void *)(info->index), index );
+		}
+	}
+
+	GadgetListBoxSetSelected( win, selectedPos );
+	isPopulatingLadderBox = false;
+}
 
 void BfmeAptScreenQuickMatchMenu::_bfme_initGadgets( void )
 {
