@@ -9313,3 +9313,4 @@ _ciCallCallback	0x008712F0	369	partial	boundary=retail 369B; identity via exact 
 ?checkDefaultSave@Rva0051D9D0Host@@QAEXH@Z	0x0051D9D0	51	converted	exact TheGameState->doesSaveGameExist(00000000.sav) then this+0x264=1; callee already landed at 0x0010FB20; t=15 model=cursor-grok-4.6
 ?Rva005154F0@@YAXPAURva005154F0Elem@@0@Z	0x005154F0	75	converted	exact STLport sort driver; 2-arg; volatile first dummy; callee 0x005150A0 + landed Rva00513980 @ 0x00513980; t=25min model=grok-4.6
 ?apply@Rva0051A5A0Host@@QAEXXZ	0x0051A5A0	29	converted	exact thiscall; setup(0) @ 0x00518FF0 + landed bfmeGo1078A + tail bfmeShutdown +0x25C; t=15min model=grok-4.6
+?Rva005146F0@@YAXPAPAX0PAX@Z	0x005146F0	70	converted	exact void** >16 split; Gen005139E0 + landed bfmeGoDIB; t=10min model=grok-4.6
