@@ -1,5 +1,4 @@
 // ??0StreakLineClass@@QAE@XZ
-// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
 // readable body of ??0StreakLineClass@@QAE@XZ:
 // Code/Libraries/Source/WWVegas/WW3D2/streak.cpp
@@ -9,11 +8,10 @@
 // RenderObjClass ctor at 0x009204B0, then SegLineRendererClass at +0x104 and
 // StreakRendererClass at +0x154 -- the same offsets streak.cpp already uses.
 //
-// Probe 202/207: vector stores and callee calls match. Wall is EH state
-// numbers -- retail `mov byte [esp+0x14], 5` / `6` before the two renderer
-// ctors, ours emits `3` and omits the state-6 store (5 bytes). Adding a
-// Personalities dtor member picks up a state but also zeros the two vtable
-// writes and hoists the EH-state store ahead of them.
+// Retail EH map has null states 1 and 3 for Vector3/Vector4 array
+// construction within the inlined vector constructors. Their real empty
+// default constructors retain these states; treating either type as POD
+// removes a state even though the zero-length vector emits no allocation.
 
 class RefCountClass
 {
@@ -46,30 +44,17 @@ protected:
 
 #include "simplevec.h"
 
-class VectorStateGuard
-{
-public:
-	~VectorStateGuard();
-};
-
-template <class T>
-class GuardedSimpleDynVecClass : public SimpleDynVecClass<T>, private VectorStateGuard
-{
-public:
-	GuardedSimpleDynVecClass(int size = 0) : SimpleDynVecClass<T>(size) {}
-};
-
 class Vector3
 {
 public:
-	~Vector3();
+ Vector3() {}
 	float X, Y, Z;
 };
 
 class Vector4
 {
 public:
-	~Vector4();
+ Vector4() {}
 	float X, Y, Z, W;
 };
 
@@ -107,7 +92,7 @@ private:
 	unsigned int MaxSubdivisionLevels;
 	unsigned int *Personalities;
 	float NormalizedScreenArea;
-	GuardedSimpleDynVecClass<Vector3> PointLocations;
+	SimpleDynVecClass<Vector3> PointLocations;
 	SimpleDynVecClass<Vector4> PointColors;
 	SimpleDynVecClass<float> PointWidths;
 	SegLineRendererClass LineRenderer;
