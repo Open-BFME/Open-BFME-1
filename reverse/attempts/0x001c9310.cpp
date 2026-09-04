@@ -33,31 +33,36 @@ class Rva001C9310
 public:
 	int value();
 
-private:
+
+
 	void *m_vptr;
 	Rva001C9310Thing *m_template;
 	char m_gap[ 0x210 - 8 ];
 	Rva001C9310Scale *m_scaleSrc;
 };
 
-int Rva001C9310::value()
+static int rva001C9310Value(Rva001C9310 *self)
 {
-	int v;
-	Rva001C9310Thing *thing = m_template;
+	Rva001C9310Thing *thing = self->m_template;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
-	v = thing->m_value_448;
+	int v = thing->m_value_448;
 
-	thing = m_template;
+	thing = self->m_template;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
 	if ( thing->m_flags_d0 & 0x2000000 )
-		return m_scaleSrc->m_scale * v;
+		return self->m_scaleSrc->m_scale * v;
 	return v;
+}
+
+int Rva001C9310::value()
+{
+	return rva001C9310Value(this);
 }

@@ -1,4 +1,6 @@
 // ?bfmeSyncEGF@BfmeThingEGF@@QAEXXZ
+// partial score=0.95 date=2026-09-04
+// ?bfmeSyncEGF@BfmeThingEGF@@QAEXXZ
 // partial score=0.95 date=2026-09-03
 // Open-BFME6: convert 0x00271B40 list-tag shadow sync, sibling of bfmeGoEGFc.
 // 249B body exact except 3 else-path thiscall sites: retail mov ecx,edi then

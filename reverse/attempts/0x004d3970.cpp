@@ -7,7 +7,6 @@
 // sibling keeps that TU untouched. BFME stores string length as a word at +4
 // (not ZH wcslen), RequestSetName is vtable +0x60, and by-value UnicodeString
 // args need the StringBase-forwarding copy for the EH saved-esp order.
-
 typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -56,12 +55,12 @@ private:
 class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
+    AsciiString() : StringBase<char>() {}
+    AsciiString( const char *text ) : StringBase<char>( text ) {}
+    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
+    ~AsciiString() {}
 
-	AsciiString &operator=( const AsciiString &other );
+    AsciiString &operator=( const AsciiString &other );
 };
 
 class UnicodeString : private StringBase<WideChar>
@@ -92,32 +91,27 @@ public:
 };
 
 // UserPreferences layout: vptr@0, STLport map@+4, AsciiString filename.
-// prefs["UserName"] is map::operator[] with this = prefs+4.
 class PreferenceMap
 {
-	void *m_header;
-	void *m_nodeCount;
-	void *m_pad;
+    void *m_header;
+    void *m_nodeCount;
+    void *m_pad;
 
 public:
-	AsciiString &operator[]( const AsciiString &key );
+    AsciiString &operator[]( const AsciiString &key );
 };
 
 class LANPreferences
 {
-	void *m_vptr;
-	PreferenceMap m_map;
-	AsciiString m_filename;
+    void *m_vptr;
+    PreferenceMap m_map;
+    AsciiString m_filename;
 
 public:
-	LANPreferences();
-	~LANPreferences();
-	Bool write();
-
-	AsciiString &operator[]( const AsciiString &key )
-	{
-		return m_map[key];
-	}
+    LANPreferences();
+    ~LANPreferences();
+    Bool write();
+    AsciiString &operator[]( const AsciiString &key ) { return m_map[key]; }
 };
 
 class LANAPI

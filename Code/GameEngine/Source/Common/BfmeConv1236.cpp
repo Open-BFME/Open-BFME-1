@@ -133,13 +133,19 @@ BfmeZero1236::BfmeZero1236()
 		m_values[i] = 0;
 }
 
+class BfmeChild1236;
+
 class BfmeNode1236
 {
 public:
 	void bfmeVisit1236();
 
 private:
-	char m_padding[0x58];
+	void *m_vtable;
+	unsigned m_flags;
+	char m_padding08[0x48];
+	BfmeChild1236 *m_child;
+	char m_padding54[4];
 
 public:
 	BfmeNode1236 *m_next;
@@ -153,7 +159,7 @@ struct BfmeList1236
 class BfmeWalk1236
 {
 public:
-	void bfmeWalk1236();
+	__declspec(noinline) void bfmeWalk1236();
 
 private:
 	BfmeList1236 *m_list;
@@ -166,4 +172,68 @@ void BfmeWalk1236::bfmeWalk1236()
 		node->bfmeVisit1236();
 		node = node->m_next;
 	}
+}
+
+struct BfmeChild1236
+{
+	char m_padding00[0x20];
+	void *m_value20;
+	BfmeWalk1236 m_walk;
+	char m_padding28[0x44];
+	int m_value6c;
+};
+
+typedef void (__cdecl *BfmeNode1236Function)(void *, int);
+
+void BfmeNode1236::bfmeVisit1236()
+{
+	register BfmeNode1236 *self = this;
+	unsigned flags = self->m_flags;
+	unsigned kind = flags;
+	kind &= 0x3f;
+
+	if (kind == 0x0d)
+		goto check_d;
+	goto check_12;
+
+check_d:
+	{
+		unsigned bit = flags;
+		bit >>= 15;
+		if ((((unsigned char)~bit) & 1) == 0)
+			goto do_walk;
+	}
+
+check_12:
+	if (kind != 0x12)
+		goto check_f;
+	{
+		unsigned bit = flags;
+		bit >>= 15;
+		if ((((unsigned char)~bit) & 1) != 0)
+			goto check_f;
+	}
+
+do_walk:
+	self->m_child->m_walk.bfmeWalk1236();
+	return;
+
+check_f:
+	if (kind != 0x0f)
+		return;
+	{
+		unsigned bit = flags;
+		bit >>= 15;
+		if ((((unsigned char)~bit) & 1) != 0)
+			return;
+	}
+
+	BfmeChild1236 *child = self->m_child;
+	void *value = child->m_value20;
+	if (value != 0 && value != (void *)0x012D5598)
+	{
+		child->m_value6c = 6;
+		(*(BfmeNode1236Function)0x01337874)(value, 2);
+	}
+	child->m_value20 = 0;
 }

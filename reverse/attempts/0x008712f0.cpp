@@ -1,5 +1,7 @@
 // _ciCallCallback
 // partial score=0.93 date=2026-09-04
+// _ciCallCallback
+// partial score=0.93 date=2026-09-04
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy Chat SDK -- ciFreeCallbackData + ciCleanupCallbacks +
    ciCallCallback + ciCallCallbacks, retail 0x0086FDA0 / 0x008702F0 /
@@ -770,9 +772,9 @@ extern "C" static void ciCallCallback(CHAT chat, ciCallbackData *data)
 	case CALLBACK_ENTER_CHANNEL:
 	{
 		ciCallbackEnterChannelParams *callbackParams = (ciCallbackEnterChannelParams *)data->callbackParams;
-		chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
+      chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
 		ciJoinCallbackCalled(chat, CHANNEL);
-		callback(chat, SUCCESS, RESULT, CHANNEL, param);
+      callback(chat, SUCCESS, RESULT, CHANNEL, param);
 		break;
 	}
 

@@ -22,7 +22,7 @@ class RvaC4390Second
 {
 public:
 	RvaC4390First *resolve( int allowLookup );
-	Coord3D *getPosition()
+	volatile Coord3D *getPosition()
 	{
 		return reinterpret_cast<Coord3D *>(reinterpret_cast<unsigned char *>( this ) + 0x38);
 	}
@@ -37,7 +37,7 @@ public:
 	void apply();
 
 private:
-	void sibling( Coord3D *a, Coord3D *b );
+	void sibling( volatile Coord3D *a, volatile Coord3D *b );
 
 	void *m_vtable;
 	void *m_moduleData;
@@ -48,11 +48,12 @@ private:
 void Rva002AD100::apply()
 {
 	RvaC4390First *resolved = m_object->resolve( 0 );
-	if( resolved )
+	if( !resolved )
 	{
-		sibling( &m_object->m_pos, &resolved->m_pos );
+		Rva002AD100 *self = this;
+		self->sibling( m_object->getPosition(), &m_object->m_pos );
 		return;
 	}
-	RvaC4390First *view = reinterpret_cast<RvaC4390First *>( m_object );
-	sibling( &m_object->m_pos, &view->m_pos );
+	Rva002AD100 *self = this;
+	self->sibling( &m_object->m_pos, &resolved->m_pos );
 }

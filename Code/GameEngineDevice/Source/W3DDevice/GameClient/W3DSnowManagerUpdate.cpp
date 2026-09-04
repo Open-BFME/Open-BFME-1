@@ -33,20 +33,11 @@ public:
 	int m_5c;
 };
 
-class BFMEFrameBase
+class BFMEFrameState
 {
 public:
-	int getFrame(void) const
-	{
-		return m_frame;
-	}
-
 	unsigned char m_unmodelled_00[0x0c];
 	int m_frame;
-};
-
-class BFMEFrameState : public BFMEFrameBase
-{
 };
 
 extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
@@ -150,13 +141,12 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		if (g_bfmeGlo012F0FE0->getFrame() == 2)
+		register BFMEFrameState *q = g_bfmeGlo012F0FE0;
+		int frame = q->m_frame;
+		if (frame == 2 && m_94 != 2)
 		{
-			if (m_94 != 2)
-			{
-				m_94 = 2;
-				copyFromOverride();
-			}
+			m_94 = 2;
+			copyFromOverride();
 		}
 	}
 }
@@ -164,11 +154,11 @@ void W3DSnowManager::extraAfterFmod(void)
 // ?extraTail@W3DSnowManager@@QAEXXZ
 void W3DSnowManager::extraTail(void)
 {
-	BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
+	const BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
 	float slot;
-	BFMEWeatherOverride *f;
+	const BFMEWeatherOverride *f;
 	if (d && d->m_nextOverride)
-		d = (BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (d->m_flag40 == 0)
 		return;
 	if (m_flag44)
@@ -183,11 +173,11 @@ void W3DSnowManager::extraTail(void)
 	slot = WWMath::Random_Float();
 	d = g_bfmeGlo012F15F8;
 	if (d && d->m_nextOverride)
-		d = (BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
+		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (!(slot < d->m_54Override))
 		return;
 	m_flag44 = 1;
 	d = g_bfmeGlo012F15F8;
-	f = (BFMEWeatherOverride *)walkSnowOverride(d);
+	f = walkSnowOverride(d);
 	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }

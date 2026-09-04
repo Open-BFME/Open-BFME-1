@@ -169,10 +169,11 @@ private:
 // ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z
 void AIGroup::groupEvacuate(CommandSourceType cmdSource)
 {
+	BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
 	CommandSourceType src = cmdSource;
-	BfmeGroupAI *ai;
 	Object *obj;
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
+	BfmeGroupAI *ai;
+	for (;
 			it != m_bfmeMembers;
 			it = it->m_bfmeNext)
 	{

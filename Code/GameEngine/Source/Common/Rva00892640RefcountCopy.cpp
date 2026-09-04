@@ -49,3 +49,64 @@ Rva00892640Item *Rva00892640CopyItems(
 
     return dest;
 }
+
+// ?Rva008926D0CopyItems@@YAPAURva00892640Item@@PAU1@00@Z
+Rva00892640Item *Rva008926D0CopyItems(
+    Rva00892640Item *first, Rva00892640Item *last,
+    Rva00892640Item *dest)
+{
+    Rva00892640Item *src = first;
+    Rva00892640Item *end = last;
+    if (src != end)
+    {
+        do
+        {
+            Rva00892640Handle *incoming = src->handle;
+            Rva00892640Item *slot = dest++;
+            ++incoming->refs;
+            Rva00892640Handle *old = slot->handle;
+            --old->refs;
+            if (old->refs == 0)
+                g_rva00892640Deleter->destroy(old);
+            slot->handle = src->handle;
+            slot->extra = src->extra;
+            ++src;
+        }
+        while (src != end);
+    }
+
+    return dest;
+}
+
+// ?Rva00892730CopyItems@@YAPAURva00892640Item@@PAU1@00@Z
+Rva00892640Item *Rva00892730CopyItems(
+    Rva00892640Item *first, Rva00892640Item *last,
+    Rva00892640Item *dest)
+{
+    Rva00892640Item *destination = dest;
+    Rva00892640Item *source = first;
+    Rva00892640Item *limit = last;
+    int count = (int)(limit - source);
+    source--;
+    destination += count - 1;
+    if (count)
+    {
+        do
+        {
+            Rva00892640Handle *incoming = source->handle;
+            ++incoming->refs;
+            Rva00892640Item *slot = destination;
+            Rva00892640Handle *old = slot->handle;
+            --old->refs;
+            if (old->refs == 0)
+                g_rva00892640Deleter->destroy(old);
+            slot->handle = source->handle;
+            slot->extra = source->extra;
+            source--;
+            destination--;
+            --count;
+        }
+        while (count);
+    }
+    return destination;
+}

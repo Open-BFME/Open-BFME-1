@@ -1,5 +1,7 @@
 // ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z
 // partial score=0.97 date=2026-09-04
+// ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z
+// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // BFME's difficulty bonus is an AI-upgrade grant, not ZH's health/weapon-bonus
 // pair. Object::setReceivingDifficultyBonus (matched) calls this through the

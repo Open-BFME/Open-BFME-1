@@ -1,5 +1,7 @@
 // ?recompute@AIGroup@@QAEXXZ
 // partial score=0.97 date=2026-09-04
+// ?recompute@AIGroup@@QAEXXZ
+// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME: AIGroup::recompute, retail 0x00154B80, 276 bytes.

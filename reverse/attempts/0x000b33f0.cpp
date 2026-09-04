@@ -9,6 +9,9 @@
 
 typedef int Int;
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 enum AudioType
 {
 	AT_Music = 0,
@@ -18,64 +21,39 @@ enum AudioType
 	AT_SoundEffectAlt = 4
 };
 
-struct StringHeader
-{
-	int refCount;
-	unsigned short length;
-	unsigned short capacity;
-	char data[1];
-};
-
 template <typename T> class StringBase
 {
 public:
-	void concat(const StringBase<T> &other);
 	void concat(const T *text, Int length);
+};
 
+class AsciiString
+{
+public:
 	struct Header
 	{
 		int refCount;
 		unsigned short length;
 		unsigned short capacity;
-		T data[1];
+		char data[1];
 	};
 
-	friend class AsciiString;
-
-	private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	StringBase<char>::Header *getData() const { return m_data; }
-
-	void concat(const AsciiString &other)
-	{
-		StringBase<char>::concat(*(const StringBase<char> *)&other);
-	}
-
-	void concat(const char *text, Int length)
-	{
-		StringBase<char>::concat(text, length);
-	}
+	AsciiString() : m_data(0) {}
+	AsciiString(const AsciiString &other);
+	~AsciiString();
+	void concat(const AsciiString &other);
+	void concat(const char *text, Int length);
+	Header *getData() const { return m_data; }
 
 	void concatPeek(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->length : 0;
 		const char *text = other.m_data ? &other.m_data->data[0] : "";
-		StringBase<char>::concat(text, length);
+		concat(text, length);
 	}
 
 	private:
+	Header *m_data;
 };
 
 class AudioSettings
@@ -148,14 +126,14 @@ AsciiString AudioEventRTS::generateFilenamePrefix(AudioType audioTypeToPlay, boo
 	case AT_SoundEffectAlt:
 	{
 		const AsciiString &folder = TheAudio->getAudioSettings()->m_soundsFolder;
-		Int length = folder.getData() ? folder.getData()->length : 0;
-		if (folder.getData())
-			retStr.concat((const char *)folder.getData() + 8, length);
-		else
-		{
-			length = 0;
+		const Int length = folder.getData() ? folder.getData()->length : 0;
+		if (!folder.getData())
+			goto empty_folder;
+		retStr.concat((const char *)folder.getData() + 8, length);
+		goto folder_done;
+	empty_folder:
 			retStr.concat("", length);
-		}
+		folder_done:
 		break;
 	}
 	case AT_AmbientStream:

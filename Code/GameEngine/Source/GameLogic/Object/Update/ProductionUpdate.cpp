@@ -1183,24 +1183,6 @@ void ProductionUpdate::cancelAndRefundAllProduction( void )
 }  // end cancelAndRefundAllProduction
 
 // ------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------
-// ?setHoldDoorOpen@ProductionUpdate@@ present-unmatched
-void ProductionUpdate::setHoldDoorOpen(ExitDoorType exitDoor, Bool holdIt)
-{
-	if (exitDoor >= DOOR_1 && exitDoor < DOOR_COUNT_MAX)
-	{
-		DoorInfo& door = m_doors[exitDoor];
-		door.m_holdOpen = holdIt;
-		if (holdIt && door.m_doorOpenedFrame == 0 && door.m_doorWaitOpenFrame == 0 && door.m_doorClosedFrame == 0)
-		{
-			door.m_doorOpenedFrame = TheGameLogic->getFrame();
-			m_setFlags.set( theOpeningFlags[exitDoor] );
-			m_flagsDirty = TRUE;
-		}
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
 /** Helper method to retrieve a production update interface from an object if one is present */
 // ------------------------------------------------------------------------------------------------
 /*static*/ ProductionUpdateInterface *ProductionUpdate::getProductionUpdateInterfaceFromObject( Object *obj )

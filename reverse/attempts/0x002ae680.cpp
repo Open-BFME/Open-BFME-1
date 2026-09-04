@@ -29,11 +29,11 @@ class StructureCollapseObject
 public:
 	void *m_vtable;
 	StructureCollapseTemplate *m_template;
-	StructureCollapseTemplate *getTemplate()
+	StructureCollapseTemplate *getTemplate() const
 	{
-		char *slot = reinterpret_cast<char *>( this );
+		const char *slot = reinterpret_cast<const char *>( this );
 		slot += 4;
-		return *reinterpret_cast<StructureCollapseTemplate *volatile *>( slot );
+		return *reinterpret_cast<StructureCollapseTemplate *const volatile *>( slot );
 	}
 };
 
@@ -50,6 +50,14 @@ static __forceinline bool structureCollapseTemplateExists(StructureCollapseTempl
 	return t != 0;
 }
 
+static __forceinline StructureCollapseTemplate *getStructureCollapseTemplateVolatile(
+	volatile StructureCollapseObject *object)
+{
+	volatile char *slot = reinterpret_cast<volatile char *>(object);
+	slot += 4;
+	return *reinterpret_cast<StructureCollapseTemplate *volatile *>(slot);
+}
+
 class StructureCollapseModuleData
 {
 public:
@@ -61,12 +69,27 @@ class StructureCollapseRetailLayout
 {
 public:
 	Real getCollapseHeight();
+	StructureCollapseObject *getObject()
+	{
+		return m_object;
+	}
 
 private:
 	void *m_vtable;
 	StructureCollapseModuleData *m_moduleData;
 	StructureCollapseObject *m_object;
 };
+
+static __forceinline StructureCollapseTemplate *getSecondCollapseTemplate(
+	volatile StructureCollapseRetailLayout *self)
+{
+	StructureCollapseObject *object = *reinterpret_cast<
+		StructureCollapseObject *volatile *>(
+			reinterpret_cast<volatile char *>(self) + 8);
+	volatile char *slot = reinterpret_cast<volatile char *>(object);
+	slot += 4;
+	return *reinterpret_cast<StructureCollapseTemplate *volatile *>(slot);
+}
 
 Real StructureCollapseRetailLayout::getCollapseHeight()
 {
@@ -84,11 +107,12 @@ Real StructureCollapseRetailLayout::getCollapseHeight()
 		md = m_moduleData;
 	}
 
+	StructureCollapseTemplate *t2;
 	Real height = t->m_geometry.getMaxHeightAbovePosition();
 	if( height < md->m_minCollapseHeight )
 		return m_moduleData->m_minCollapseHeight;
 
-	StructureCollapseTemplate *t2 = m_object->getTemplate();
+	t2 = getSecondCollapseTemplate( this );
 	if( !structureCollapseTemplateExists( t2 ) )
 		return t2->m_geometry.getMaxHeightAbovePosition();
 	StructureCollapseTemplate *o2 = t2->m_nextOverride;

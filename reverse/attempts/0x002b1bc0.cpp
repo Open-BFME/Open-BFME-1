@@ -223,6 +223,7 @@ class ObjectStatusBits
 public:
 	int m_a;
 	int m_b;
+	int m_c;
 };
 
 class ThingFactory
@@ -383,6 +384,7 @@ void ToppleUpdate::applyTopplingForce(const Coord3D *toppleDirection, Real toppl
 		const ThingTemplate *ttn = TheThingFactory->findTemplate(d->m_stumpName);
 		bits.m_a = 0;
 		bits.m_b = 0;
+		bits.m_c = 0;
 		Object *stump = TheThingFactory->newObject(ttn, 0, &bits, 0);
 		if (stump)
 		{

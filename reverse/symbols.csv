@@ -1118,6 +1118,7 @@ name,address,notes
 ??$sort_heap@PAHUQ4Sort003D15A0@@@_STL@@YAXPAH0UQ4Sort003D15A0@@@Z,0x00005F06,ILT to 0x003CFA90 sort_heap used by partial_sort at 0x003D00E0
 ??$sort_heap@PAHUQ4Sort004567A0@@@_STL@@YAXPAH0UQ4Sort004567A0@@@Z,0x004546F0,resolved via decode_calls at __partial_sort<Q4Sort004567A0>; final call in the standard partial_sort algorithm shape
 ??$sort_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x00011A95,REL32 wide-element sort-heap target from 0x00366854
+??$sort_heap@PAUS4SortElem8@@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@0US4Cmp00575AA0@@@Z,0x00577460,STLport score-row sort_heap callee reached by the partial-sort body at 0x00577690
 ??$swap@V?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@0@0@Z,0x00066BC0,gen-tgrid shared callee
 ??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x00069970,zhstl per-site callee copy (body proven byte-equal)
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@@2@@0@0@Z,0x0058CCE0,family-emit payload member
@@ -9443,6 +9444,7 @@ name,address,notes
 ?GenAdjust005757E0@@YAXPAUGen8ByteElement@@HHU1@P6A_NABU1@2@Z@Z,0x005757E0,address-derived REL32 callee of a heap-pop helper reached through the ILT thunk at 0x00027138; cdecl with six pushed dwords
 ?GenCharToBit0012A430@@3PAY0BA@CA,0x0112A430,address-derived 32-byte alphanumeric-to-bit lookup table used by ParseAlphaNumericBitMask
 ?GenKey0012A7918@@3VGenKey@@A,0x00EA7918,address-derived lazy key global used by BfmeStringPresenceOwner
+?GenPartition00261010@@YAPAUQ3SortElem8@@PAU1@0U1@P6A_NABU1@2@Z@Z,0x00261010,address-derived partition callee of the pinned eight-byte introsort body
 ?GenerateNextCommandID@@YAGXZ,0x00030558,ILT thunk; real body 0xA82D10
 ?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ,0x00924C30,pinharvest x1 (body)
 ?GenericObjectCreationNuggetCommonFields@@3QBUFieldParse@@B,0x0109F320,Open-BFME5 parseDebris retail common field table
@@ -11892,6 +11894,7 @@ name,address,notes
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
 ?apply@Rva00202DF0Head@@QAEXPAVRva00202DF0Face@@H@Z,0x000157DA,address-derived callee of Rva00202DF0Part::seed; ILT to 0x002B2040
+?apply@Rva0025CAA0ElvenWoodDispatch@@QAEXPAVRva0025CAA0Subject@@PAVRva0025CAA0Context@@@Z,0x000170DA,address-derived dispatch call from the 73-byte Elven Wood body
 ?apply@Rva0025D7E0FreezingRainDispatch@@QAEXPAVRva0025D7E0Subject@@PAVRva0025D7E0Context@@@Z,0x000170DA,address-derived dispatch target read from retail RVA 0x0025D7E0
 ?apply@Rva003BF540@@QAEX_N@Z,0x003BD960,boolean applier called by the mirrored-flag update at 0x003BF540; address-derived name
 ?apply@Rva0069AFC0Block@@QAEXPAX0000@Z,0x000017BC,ILT to 5-arg channel apply used by Rva0069AFC0Owner::call
@@ -75824,6 +75827,7 @@ name,address,notes
 ?filter@BfmeFilterC9E@@QAE_NPAX@Z,0x000250F4,pin
 ?filterSetup@W3DShaderManager@@SA_NW4FilterModes@@W4FilterTypes@@@Z,0x00716AA0,address-derived callee of 0x0073B650
 ?filterSetup@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@@Z,0x00040C23,ILT call target used by the 0x0073B5F0 validated setter
+?finalize@BfmeMapObjectExtra@@QAEXPAX@Z,0x00045566,address-derived final cleanup helper called by 0x0019A260
 ?finalize@Rva002BC260Goal@@QAEXXZ,0x00049AE9,address-derived goal finalizer used by 0x002BC260
 ?find2@BfmeMgrF5F@@QAEPAXHPAX0H@Z,0x0001F253,pin
 ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIPBDII@Z,0x00654BE0,STLport basic_string<char>::find(const char* s; size_type pos; size_type n): -1 on empty; clamps pos; std::search via ILT 0x0000F574 over [begin+pos; end) for [s; s+n); returns index or npos; callers parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x006597BE; ILT 0x0003DA4B
@@ -75970,6 +75974,7 @@ name,address,notes
 ?finish@Rva0024A760@@QAEXPAVBfmeRvaA760Object@@@Z,0x0003DEE7,assigned body helper for Rva0024A760
 ?finish@Rva00259670Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00041A4C,address-derived completion target read from retail RVA 0x00259670
 ?finish@Rva00259DD0Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00029FFA,address-derived completion target read from retail RVA 0x00259DD0
+?finish@Rva0025CAA0Primary@@QAEXPAVRva0025CAA0Subject@@@Z,0x0003E757,address-derived finalisation call from the 73-byte Elven Wood body
 ?finish@Rva0025D7E0Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00018A34,address-derived completion target read from retail RVA 0x0025D7E0
 ?finish@Rva002BC470StateAction@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?finish@Rva002BC4E0StateAction@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
@@ -78878,6 +78883,7 @@ name,address,notes
 ?helper@Rva006AE610@@AAEXHPAX@Z,0x00021C1F,ILT thunk to 0x006ADAE0 called from 0x006AE610
 ?helper@Rva007A2330@@QAEXPAPAVRva007A2330Target@@@Z,0x000243B6,ILT to claimed gen-dump 0x007AA820
 ?helper@Rva007FA2C0@@QAEXPAXH@Z,0x007FA170,FESL transactor slot helper called from 0x007FA310
+?helper@Rva00894120Vector@@QAEXPAX00@Z,0x00893F10,address-derived helper target proven by 0x00894120
 ?helper@W3DView@@AAEXXZ,0x00042F23,thunk the 0x00742DF0 W3DView body calls before rebuilding the camera
 ?helper_006f4660@@YGXHHHH@Z,0x0093EB50,Open-BFME5 pin for 0x006F4660 four-arg wrapper
 ?hide@AptPalantir@@QAEX_N@Z,0x0001420E,ILT to body 0x00592CD0; the AptPalantir callback table at 0x00565F30 names its RenderRadar RenderRadarViewBox ClipRadar and OnInitialized methods; HideControlBar passes TRUE and ShowControlBar passes FALSE
@@ -79747,6 +79753,7 @@ name,address,notes
 ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z,0x0002E636,AIGroup prep before follow-as-team walk; body 0x0015AB50
 ?prepSpecial@AIGroup@@QAEXXZ,0x00006258,ILT to 0x00150A10 from tryGroupSpecial 0x001599A0
 ?prepare@Rva0019BC00Owner@@QAEXH@Z,0x00020D97,ILT thunk to 0x00197750 prepare before field writes
+?prepare@Rva0025EB40State@@QAEXXZ,0x002A9420,address-derived base call from the 53-byte model-condition update body
 ?prepare@Rva002BC470StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?prepare@Rva002BC4E0StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
 ?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
@@ -80861,6 +80868,7 @@ name,address,notes
 ?winSetTooltipFunc@GameWindow@@QAEHP6AXPAV1@PAVWinInstanceData@@I@Z@Z,0x0003D127,Ghidra GrabWindowInfo call-site thunk
 ?winSetUserData@GameWindow@@QAEXPAX@Z,0x00002E69
 ?withdraw@Money@@QAEII_N@Z,0x00041894,ILT Money::withdraw (body 0xC8610)
+?worldLineNoHit@Pathfinder@@QAE_NPBUCoord3D@@0@Z,0x00030ECC,address-derived world line predicate called by 0x001A3280
 ?worldToCell@Pathfinder@@AAEXPBUCoord3D@@PAUICoord2D@@@Z,0x000171E8,ILT thunk to the world-to-cell conversion at 0x003D7EC0; name is descriptive of what the body does
 ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x000171E8
 ?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT

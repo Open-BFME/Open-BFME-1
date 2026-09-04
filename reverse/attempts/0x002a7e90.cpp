@@ -10,6 +10,12 @@ enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
 typedef unsigned int UnsignedInt;
 
+static __forceinline void copyUnsignedInt( const UnsignedInt *source,
+	UnsignedInt *destination )
+{
+	*destination = *source;
+}
+
 class Overridable
 {
 public:
@@ -83,8 +89,7 @@ void SpecialAbilityUpdate::apply()
 
 	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
 	{
-		const UnsignedInt *fieldValue = &md->m_field210;
-		m_fieldA8 = *fieldValue;
+		m_fieldA8 = md->m_field210;
 		return;
 	}
 	if( !target )
@@ -96,8 +101,7 @@ void SpecialAbilityUpdate::apply()
 	goto store_zero;
 
 	store_field:
-	const UnsignedInt *specialFieldValue = &md->m_field210;
-	m_fieldA8 = *specialFieldValue;
+	m_fieldA8 = md->m_field210;
 	return;
 
 store_zero:
