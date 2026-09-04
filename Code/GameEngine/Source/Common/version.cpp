@@ -141,6 +141,7 @@ UnicodeString Version::getFullUnicodeVersion( void )
 	return version;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetAsciiBuildTime.cpp
 // ?getAsciiBuildTime@Version@@ present-unmatched
 AsciiString Version::getAsciiBuildTime( void )
 {
