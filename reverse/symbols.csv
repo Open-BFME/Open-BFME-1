@@ -83859,3 +83859,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?copyP48@@YAPAUBfmeTerrainP48@@PAU1@00ABURandomAccessIteratorTag@@PAH@Z,0x00035B5C,TerrainLogic::reset P48 __copy ILT
 ?resetHelper4949a@@YAXXZ,0x0004949A,TerrainLogic::reset free-function ILT to 0x0018EE40
 ?bfmeFreeArray@@YAXPAX@Z,0x00881EF0,TerrainLogic::reset delete[] of +0x18
+?insert@SimpleObjectIterator@@QAEXPAVObject@@M@Z,0x0002CAE8,SimpleObjectIterator::insert ILT from groupTightenToPosition 0x00155720
+??0SimpleObjectIterator@@QAE@XZ,0x000197DB,SimpleObjectIterator ctor ILT from groupTightenToPosition 0x00155720
+?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z,0x00004746,SimpleObjectIterator::sort ILT from groupTightenToPosition 0x00155720
+?aiFollowPathAppend@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000BAC8,aiFollowPathAppend ILT from groupTightenToPosition addWaypoint arm; body 0x00153480
