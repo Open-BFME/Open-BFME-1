@@ -80078,7 +80078,6 @@ name,address,notes
 ?qr2_buffer_add@@YAXPAXPBD@Z,0x00855360,Open-BFME5 zh_sweep packet 0064e570 callee pin
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
-?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,pin
 ?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
@@ -81727,7 +81726,6 @@ _bfmeCbEOEa,0x0003A760,pin
 _bfmeCbEOEb,0x0001F951,pin
 _bfmeCheck1252,0x008DB1F0,pin
 _bfmeCiThinkFromEsi,0x008601F0,GameSpy Chat static think helper with chat carried in ESI
-_bfmeConst1075350,0x00C75350,pin
 _bfmeCopy1152,0x00005934,pin
 _bfmeCopy1153,0x00005934,pin
 _bfmeCopy1154,0x00005934,pin
@@ -82718,3 +82716,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
 ?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
 _g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
+?getFormationMovementSpeed@AIUpdateInterface@@QAEMPAVObject@@@Z,0x000230AB,BFME AI locomotor-controller speed calculation thunk used by getCurLocomotorSpeed
+_g_zeroLocomotorSpeed,0x00C75350,shared zero float returned when no locomotor controller is active

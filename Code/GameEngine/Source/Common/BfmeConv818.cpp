@@ -51,30 +51,6 @@ bool BfmeThingD4C::checkCondition()
 	return ((BfmeSubD4C*)this)->fallback();
 }
 
-class BfmeSub1CC_EC3
-{
-public:
-	float query(void *val);
-};
-
-extern "C" const float bfmeConst1075350;
-
-struct BfmeThingEC3
-{
-	unsigned char pad[8];
-	void *m_val8;
-	unsigned char pad2[0x1cc - 0xc];
-	BfmeSub1CC_EC3 *m_sub1CC;
-	float getVal();
-};
-
-float BfmeThingEC3::getVal()
-{
-	if (m_sub1CC)
-		return m_sub1CC->query(m_val8);
-	return bfmeConst1075350;
-}
-
 struct BfmeGlobalMgr12F0898
 {
 	unsigned char pad[0x3c];
