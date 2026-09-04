@@ -83754,3 +83754,6 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?getPtr@Rva00803730Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803730
 ?getBool@Rva00803730Getter@@QAE_NPBDD@Z,0x007E89C0,FESL attr getBool alias of bfmeGoVMQ; pin for 0x803730
 ?apply@Rva00803730Sink@@QAEXPAX_N00@Z,0x00809C60,FESL browser sink apply; pin for 0x803730
+?getStr@Rva00803620Getter@@QAEDPAXPADH@Z,0x007E8A80,FESL attr getStr alias of bfmeGoUPB; pin for 0x803620
+?getPtr@Rva00803620Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803620
+?apply@Rva00803620Sink@@QAEXPAXPAD001@Z,0x00808CB0,FESL browser sink apply 5-arg; pin for 0x803620
