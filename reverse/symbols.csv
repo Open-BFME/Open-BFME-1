@@ -82755,3 +82755,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1ModelConditionSpecialAbilityUpdateModuleData@@UAE@XZ,0x00028EB6,destructor ILT to 0x002984B0
 ??_GModelConditionSpecialAbilityUpdateModuleData@@UAEPAXI@Z,0x0003AE95,class vftable slot zero ILT to 0x00298480
 ??1SpecialAbilityUpdateModuleData@@UAE@XZ,0x0001980D,base destructor ILT to matched body 0x002A5CC0
+_D3DXMatrixMultiply@12,0x009FACAD,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x0C retail slot0x012DBE04
+_D3DXMatrixScaling@16,0x009FB6F4,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x84 retail slot0x012DBE7C; init at0x009FB6C6
+_D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x68 retail slot0x012DBE60; init at0x009FB756
