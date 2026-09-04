@@ -79,18 +79,6 @@ void __stdcall bfmeGo1026B(int a, char b)
 		x->bfmeSet1026(8, (char)(b == 0));
 }
 
-class BfmeW1026
-{
-public:
-	void bfmeUse1026(int n);
-
-	char m_bfmePad[0x508];
-	void (__cdecl *m_bfmeFn)(int);
-	char m_bfmeFlag;
-};
-
-extern BfmeW1026 *g_bfmeW1026;
-
 class BfmeReg1026
 {
 public:
@@ -130,20 +118,6 @@ void *BfmeD1026::bfmeGo1026D(unsigned int f)
 		bfmeFree1026(this);
 
 	return this;
-}
-
-extern char g_bfmeKey1026[];
-__declspec(dllimport) int __cdecl bfmeCmp1026(char *a, char *b, int n);
-
-void bfmeGo1026E(char *s)
-{
-	if (s == 0)
-		return;
-
-	if (bfmeCmp1026(s, g_bfmeKey1026, 7) != 0)
-		return;
-
-	g_bfmeW1026->bfmeUse1026(s[7] - 0x31);
 }
 
 class BfmeSrc1026
