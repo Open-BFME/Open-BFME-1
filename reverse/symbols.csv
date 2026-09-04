@@ -4660,7 +4660,6 @@ name,address,notes
 ??1Gen_dtor_00295670@@UAE@XZ,0x000155F0,gen-dtor class destructor
 ??1Gen_dtor_00295720@@UAE@XZ,0x0002DC9A,gen-dtor class destructor
 ??1Gen_dtor_00295c40@@UAE@XZ,0x0000D76F,gen-dtor class destructor
-??1Gen_dtor_00296de0@@UAE@XZ,0x0001767A,gen-dtor class destructor
 ??1Gen_dtor_00297410@@UAE@XZ,0x0003D302,gen-dtor class destructor
 ??1Gen_dtor_002975e0@@UAE@XZ,0x000137D7,gen-dtor class destructor
 ??1Gen_dtor_002977f0@@UAE@XZ,0x0000D125,gen-dtor class destructor
@@ -33825,7 +33824,6 @@ name,address,notes
 ?b_00296200@@YAXXZ,0x00296200,gen-thunk body
 ?b_00296210@@YAXXZ,0x00296210,gen-thunk body
 ?b_00296230@@YAXXZ,0x00296230,gen-thunk body
-?b_00296250@@YAXXZ,0x00296250,gen-thunk body
 ?b_00296280@@YAXXZ,0x00296280,gen-thunk body
 ?b_002962c0@@YAXXZ,0x002962C0,gen-thunk body
 ?b_00296300@@YAXXZ,0x00296300,gen-thunk body
@@ -33866,7 +33864,6 @@ name,address,notes
 ?b_00296c80@@YAXXZ,0x00296C80,gen-thunk body
 ?b_00296d40@@YAXXZ,0x00296D40,gen-thunk body
 ?b_00296d50@@YAXXZ,0x00296D50,gen-thunk body
-?b_00296de0@@YAXXZ,0x00296DE0,gen-thunk body
 ?b_00296e10@@YAXXZ,0x00296E10,gen-thunk body
 ?b_00296e60@@YAXXZ,0x00296E60,gen-thunk body
 ?b_00296ed0@@YAXXZ,0x00296ED0,gen-thunk body
@@ -82747,3 +82744,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GCritterEmitterUpdate@@MAEPAXI@Z,0x000260AD,primary class vftable slot zero ILT to 0x0028B7E0
 ??1DelayedWeaponSetUpgradeUpdate@@MAE@XZ,0x000241EF,destructor ILT to 0x0028C230
 ??_GDelayedWeaponSetUpgradeUpdate@@MAEPAXI@Z,0x0002350B,primary class vftable slot zero ILT to 0x0028C3E0
+??1LargeGroupAudioUpdate@@MAE@XZ,0x0001767A,destructor ILT to 0x00296250
+??_GLargeGroupAudioUpdate@@MAEPAXI@Z,0x0003B1F6,primary class vftable slot zero ILT to 0x00296DE0
