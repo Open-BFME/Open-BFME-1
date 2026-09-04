@@ -450,11 +450,7 @@ static void codelineinfo (FuncState *fs) {
    luaK_code2's growcode/lineinfo tail instead of going through the general
    luaK_code2 dispatch switch. Descriptive name -- no upstream counterpart
    (stock Lua 4.0.1 has no OP_PUSHBOOL; it is part of EA's boolean-type fork).
-   Pinned to 0x0099EF70 by call sites; 149/151 bytes exact -- the remaining
-   diff is a call-vs-encode scheduling swap around the codelineinfo() call
-   that several source reorderings failed to flip, so this row is not yet
-   claimable via add_match (byte-exact required). */
-// _codepushbool present-unmatched
+   Pinned to 0x0099EF70 by simpleexp call sites. */
 void codepushbool (FuncState *fs, int b) {
   int arg = (b != 0);
   Instruction i;
@@ -465,6 +461,9 @@ void codepushbool (FuncState *fs, int b) {
     fs->f->maxstacksize = fs->stacklevel;
   }
   i = CREATE_S(OP_PUSHBOOL, arg);
+  /* Reconstruction shaping: opcode 6 makes i nonzero. This second use
+     keeps encoding before codelineinfo without emitting an instruction. */
+  __assume(i != 0);
   codelineinfo(fs);
   luaM_growvector(fs->L, fs->f->code, fs->pc, 1, Instruction,
                   "code size overflow", MAX_INT);
