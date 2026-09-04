@@ -82663,10 +82663,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0AsciiStringWH@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWH@@QAE@XZ,0x00887940,pin
-??0AsciiStringWI@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWI@@QAE@XZ,0x00887940,pin
 ??0UnicodeStringWJ@@QAE@ABV0@@Z,0x00888400,pin
 ??1UnicodeStringWJ@@QAE@XZ,0x008881D0,pin
 ??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
