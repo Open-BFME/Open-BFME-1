@@ -3189,7 +3189,6 @@ name,address,notes
 ??0UndeadBodyModuleData@@QAE@XZ,0x000015FA,pinharvest x1 (thunk)
 ??0UnicodeString@@QAE@ABV0@@Z,0x00887B60,site-decoded x3 (body)
 ??0UnicodeString@@QAE@PBG@Z,0x00888DE0,Open-BFME5 GameTextManager failed-message constructor callee
-??0UnicodeStringWJ@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWL@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWN@@QAE@ABV0@@Z,0x00888400,pin
@@ -8549,7 +8548,6 @@ name,address,notes
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
-??1UnicodeStringWJ@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWN@@QAE@XZ,0x008881D0,pin
