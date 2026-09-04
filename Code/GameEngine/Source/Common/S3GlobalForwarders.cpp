@@ -86,9 +86,6 @@ extern BfmeGlobal_012f4b70 *TheBfmeGlobal_012f4b70;				// 0x012F4B70
 class BfmeGlobal_012f4b98
 {
 public:
-	void bfmeCall_000131a1(void);					// retail 0x000131A1
-	void bfmeCall_00024ebf(void);					// retail 0x00024EBF
-	void bfmeCall_00040caa(void);					// retail 0x00040CAA
 	void bfmeCall_00045c91(void);					// retail 0x00045C91
 };
 
@@ -211,24 +208,6 @@ void Gen_0046ed70(void)
 void Gen_0055bd20(void)
 {
 	TheBfmeGlobal_012f19e8->bfmeCall_000290d2();
-}
-
-// ?Gen_00563a30@@YAXXZ
-void Gen_00563a30(void)
-{
-	TheBfmeGlobal_012f4b98->bfmeCall_00040caa();
-}
-
-// ?Gen_00563a40@@YAXXZ
-void Gen_00563a40(void)
-{
-	TheBfmeGlobal_012f4b98->bfmeCall_000131a1();
-}
-
-// ?Gen_00563aa0@@YAXXZ
-void Gen_00563aa0(void)
-{
-	TheBfmeGlobal_012f4b98->bfmeCall_00024ebf();
 }
 
 // ?Gen_006a3790@@YAXXZ
