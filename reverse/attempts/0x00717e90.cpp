@@ -1,9 +1,25 @@
 // ?setShroudTex@W3DShaderManager@@SAHH@Z
-// partial score=0.88 date=2026-09-02
+// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // ?setShroudTex@W3DShaderManager@@SAHH@Z
-// Retail 0x00717E90. ZH twin W3DShaderManager::setShroudTex with BFME
-// BoxSetTexture handle, inlined TSS cache/snapshot, D3D9 transform slots.
+// Retail 0x00717E90, 2072 bytes: W3DShaderManager::setShroudTex(int stage).
+// ZH semantic twin W3DShaderManager.cpp, BoxSetTexture handle, TSS snapshots,
+// D3D9 transform slots. Retail ILT 0x330F targets this body; callsites
+// 0x006F95F2 and 0x0071072A pass stage=1. Other calls: 0x0071F422/0x007383DC.
+// No matched caller has yet supplied a decorated callee identity; these
+// calling-context facts support the upstream twin rather than prove its name.
+// Breakthrough: the old 1871-byte bank did NOT dead-store-eliminate StringClass
+// initialization. Its COFF relocation at +0xBC calls the out-of-line ctor.
+// __forceinline below restores all eight retail snapshot constructors.
+// Current output: 2071 bytes. First five snapshot constructors match. Only
+// null-char/buffer load scheduling differs in constructors 6-8; constructor 7
+// uses 5-byte mov al,[NullChar] rather than retail 6-byte mov dl,[NullChar],
+// causing the one-byte shortfall. Entire transform/return tail from retail
+// +0x68E is instruction-identical at compiled offset minus one.
+// Tried without improvement: null/pointer locals and declaration order,
+// dereference/memcpy/inline Clear helper, out-of-class ctor, forced dtor,
+// reference/temporary snapshot name, macro vs inline/template setter,
+// qualifiers, /G5 /G7 /Og- /Ob1. Keep original defaults plus forced ctor.
 
 class TextureBaseClass
 {
@@ -35,7 +51,7 @@ class StringClass
 	void Free_String(void);
 
 public:
-	StringClass(int initial_len, bool hint_temporary)
+	__forceinline StringClass(int initial_len, bool hint_temporary)
 		: m_Buffer(m_EmptyString)
 	{
 		Get_String(initial_len, hint_temporary);
