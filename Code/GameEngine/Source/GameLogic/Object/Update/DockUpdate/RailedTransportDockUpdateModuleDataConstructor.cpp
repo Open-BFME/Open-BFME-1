@@ -17,10 +17,15 @@ class RailedTransportDockUpdateModuleData : public DockUpdateModuleData
 
 public:
 	RailedTransportDockUpdateModuleData();
+	virtual ~RailedTransportDockUpdateModuleData();
 };
 
 RailedTransportDockUpdateModuleData::RailedTransportDockUpdateModuleData()
 {
 	m_pullInsideDurationInFrames = 0;
 	m_pushOutsideDurationInFrames = 0;
+}
+
+RailedTransportDockUpdateModuleData::~RailedTransportDockUpdateModuleData()
+{
 }
