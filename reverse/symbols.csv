@@ -2833,7 +2833,6 @@ name,address,notes
 ??0RadiusDecalTemplate@@QAE@XZ,0x00029C71,Open-BFME5 DynamicShroud decal member constructor pin
 ??0RadiusDecalUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0RailedTransportAIUpdateModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0RailedTransportDockUpdateModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)
 ??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,retail ModuleFactory cp081 constructor thunk
 ??0RandomSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002C1E7,link thunk to the RandomSoundSelectorClientBehavior constructor; named from the ModuleFactory registration that pairs "RandomSoundSelectorClientBehavior" with factory 0x00122040
 ??0RandomSoundSelectorClientBehaviorModuleData@@QAE@XZ,0x0001F528,module-data constructor called by RandomSoundSelectorClientBehavior::friend_newModuleData at 0x0012BE60
@@ -35474,7 +35473,6 @@ name,address,notes
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
 ?b_002ce580@@YAXXZ,0x002CE580,gen-thunk body
 ?b_002ce5b0@@YAXXZ,0x002CE5B0,gen-thunk body
-?b_002ce760@@YAXXZ,0x002CE760,gen-thunk body
 ?b_002ce780@@YAXXZ,0x002CE780,gen-thunk body
 ?b_002ce7b0@@YAXXZ,0x002CE7B0,gen-thunk body
 ?b_002ce7c0@@YAXXZ,0x002CE7C0,gen-thunk body
@@ -82758,3 +82756,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??_GW3DSmudgeManager@@UAEPAXI@Z,0x00023281,W3DSmudgeManager vftable slot zero ILT
 ?reset@SmudgeManager@@UAEXXZ,0x0002DFAB,W3DSmudgeManager reset base call ILT
 ?reset@W3DSmudgeManager@@UAEXXZ,0x000017B7,W3DSmudgeManager vtable slot 0x08 ILT
+??0RailedTransportDockUpdateModuleData@@QAE@XZ,0x0001999D,RailedTransportDockUpdateModuleData constructor ILT to 0x002CE760
+??_7RailedTransportDockUpdateModuleData@@6B@,0x010CADD0,vftable stored by constructor 0x002CE760
