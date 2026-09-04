@@ -152,7 +152,7 @@ const ObjectCreationList* OCLSpecialPower::findOCL() const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1OCLSpecialPower@@MAE@XZ present-unmatched
+// Protected visibility preserves retail's MAE destructor and deleting-wrapper symbols.
 OCLSpecialPower::~OCLSpecialPower( void )
 {
 
@@ -309,4 +309,3 @@ void OCLSpecialPower::loadPostProcess( void )
 	SpecialPowerModule::loadPostProcess();
 
 }  // end loadPostProcess
-
