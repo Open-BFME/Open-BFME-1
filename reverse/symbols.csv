@@ -9679,6 +9679,7 @@ name,address,notes
 ??_7BfmeOwnVUJ@@6B@,0x010FB7C0,Open-BFME5 retail derived vftable stored by the 0x0049C740 destructor
 ??_7BfmeOwnVUM@@6B@,0x010E8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
 ??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
+??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73623,6 +73624,7 @@ name,address,notes
 ?bfmeClearVUH@BfmeStrVUH@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUO@BfmeStrVUO@@AAEXXZ,0x00887940,pin
+?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
