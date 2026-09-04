@@ -1,6 +1,8 @@
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.99 date=2026-09-04
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
+// partial score=0.99 date=2026-09-04
+// ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.94 date=2026-09-03
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.9 date=2026-09-03
@@ -112,7 +114,7 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	}
 
 	flags = member->m_bfmeModelConditionFlags.m_bits;
-	if ( ( poseBit.m_bits & flags ) != 0 )
+	if ( ( flags & poseBit.m_bits ) != 0 )
 		return;
 	member->m_bfmeModelConditionFlags.set( poseBit.m_bits );
 	member->notifyModelConditionChanged();

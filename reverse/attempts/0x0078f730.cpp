@@ -1,4 +1,6 @@
 // ?rva0078F730Select@@YAXPAURva0078F730Selectable@@@Z
+// partial score=0.93 date=2026-09-04
+// ?rva0078F730Select@@YAXPAURva0078F730Selectable@@@Z
 // partial score=0.93 date=2026-09-02
 // cl: /O2 /Ob1 /GF /Gy /MD /EHsc /GR /DNDEBUG /DWIN32 /D_WINDOWS
 

@@ -1,6 +1,8 @@
 // ?isIdle@AIUpdateInterface@@UBE_NXZ
 // partial score=0.97 date=2026-09-04
 // ?isIdle@AIUpdateInterface@@UBE_NXZ
+// partial score=0.97 date=2026-09-04
+// ?isIdle@AIUpdateInterface@@UBE_NXZ
 // cl: /DNDEBUG /MD
 
 typedef bool Bool;

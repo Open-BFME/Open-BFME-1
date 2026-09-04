@@ -1,6 +1,8 @@
 // ?reset@Rva005C3740@@QAEXXZ
 // partial score=0.98 date=2026-09-04
 // ?reset@Rva005C3740@@QAEXXZ
+// partial score=0.98 date=2026-09-04
+// ?reset@Rva005C3740@@QAEXXZ
 // partial score=0.98 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // Drain an embedded-sentinel list while count is nonzero, then zero the two

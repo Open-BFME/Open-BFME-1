@@ -1,4 +1,6 @@
 // ?showAptSaveLoad@@YAXPAXHD@Z
+// partial score=0.9 date=2026-09-04
+// ?showAptSaveLoad@@YAXPAXHD@Z
 // partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 // ?showAptSaveLoad@@YAXPAXHD@Z

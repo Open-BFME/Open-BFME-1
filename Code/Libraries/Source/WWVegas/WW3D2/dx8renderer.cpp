@@ -882,6 +882,12 @@ bool DX8RigidFVFCategoryContainer::Check_If_Mesh_Fits(MeshModelClass* mmc)
 
 // ----------------------------------------------------------------------------
 
+class BfmeC998
+{
+public:
+	void bfmeGo998C(int value);
+};
+
 class Vertex_Split_Table
 {
 	MeshModelClass* mmc;
@@ -936,12 +942,17 @@ public:
 
 	const Vector3* Get_Vertex_Array() const
 	{
-		return mmc->Get_Vertex_Array();
+		return (*reinterpret_cast<ShareBufferClass<Vector3> * const *>(reinterpret_cast<const char *>(mmc)+0x30))->Get_Array();
 	}
 
 	const Vector3* Get_Vertex_Normal_Array() const
 	{
-		return mmc->Get_Vertex_Normal_Array();
+		union {
+			void (BfmeC998::*void_function)(int);
+			const Vector3 *(BfmeC998::*normal_function)(int);
+		} function;
+		function.void_function=&BfmeC998::bfmeGo998C;
+		return (((BfmeC998 *)mmc)->*function.normal_function)(0);
 	}
 
 	const unsigned* Get_Color_Array(unsigned index) const
@@ -954,10 +965,12 @@ public:
 		return mmc->Get_UV_Array_By_Index(uv_array_index);
 	}
 
-	unsigned Get_Vertex_Count() const
+	const unsigned& Get_Vertex_Count() const
 	{
-		return mmc->Get_Vertex_Count();
+		return *reinterpret_cast<const unsigned *>(reinterpret_cast<const char *>(mmc)+0x28);
 	}
+
+
 
 	unsigned Get_Polygon_Count() const
 	{
@@ -1030,6 +1043,27 @@ public:
 
 // ----------------------------------------------------------------------------
 
+class BfmeFVFInfo
+{
+public:
+	unsigned FVF;
+	unsigned fvf_size;
+	unsigned location_offset;
+	unsigned normal_offset;
+	unsigned blend_offset;
+	unsigned texcoord_offset[8];
+	unsigned diffuse_offset;
+	unsigned specular_offset;
+	unsigned bfme_fvf_info_tail;
+
+	unsigned Get_Location_Offset() const { return location_offset; }
+	unsigned Get_Normal_Offset() const { return normal_offset; }
+	unsigned Get_Tex_Offset(unsigned n) const { return texcoord_offset[n]; }
+	unsigned Get_Diffuse_Offset() const { return diffuse_offset; }
+	unsigned Get_Specular_Offset() const { return specular_offset; }
+	unsigned Get_FVF_Size() const { return fvf_size; }
+};
+
 // ?Add_Mesh@DX8RigidFVFCategoryContainer@@UAEXPAVMeshModelClass@@@Z present-unmatched
 void DX8RigidFVFCategoryContainer::Add_Mesh(MeshModelClass* mmc_)
 {
@@ -1053,7 +1087,7 @@ void DX8RigidFVFCategoryContainer::Add_Mesh(MeshModelClass* mmc_)
 			vertex_buffer=NEW_REF(DX8VertexBufferClass,(
 				FVF,
 				vb_size,
-				(DX8Wrapper::Get_Current_Caps()->Support_NPatches() && WW3D::Get_NPatches_Level()>1) ? DX8VertexBufferClass::USAGE_NPATCHES : DX8VertexBufferClass::USAGE_DEFAULT));
+				(*(const unsigned char*)((const char*)DX8Wrapper::Get_Current_Caps()+0x13b) && WW3D::Get_NPatches_Level()>1) ? DX8VertexBufferClass::USAGE_NPATCHES : DX8VertexBufferClass::USAGE_DEFAULT));
 		}
 	}
 
@@ -1062,7 +1096,7 @@ void DX8RigidFVFCategoryContainer::Add_Mesh(MeshModelClass* mmc_)
 	*/
 
 	VertexBufferClass::AppendLockClass l(vertex_buffer,used_vertices,split_table.Get_Vertex_Count());
-	const FVFInfoClass fi=vertex_buffer->FVF_Info();
+	const BfmeFVFInfo fi=*(const BfmeFVFInfo*)&vertex_buffer->FVF_Info();
 	unsigned char *vb=(unsigned char*) l.Get_Vertex_Array();
 	unsigned int i;
 	const Vector3 *locs=split_table.Get_Vertex_Array();

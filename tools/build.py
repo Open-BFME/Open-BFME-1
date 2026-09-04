@@ -772,9 +772,23 @@ def format_bytes(data):
     return " ".join(f"{byte:02x}" for byte in data)
 
 
+_FUNCTION_ROWS_CACHE = {}
+
+
 def load_all_function_rows():
-    with FUNCTIONS.open("r", encoding="utf-8", newline="") as handle:
-        return list(csv.DictReader(handle))
+    # One verification parsed the 30 MB ledger four times (11.6 s of a 27 s
+    # add_match hold on the ledger lock, measured 2026-09-04 with 40 fleet
+    # seats queued behind it). Memoize per process, keyed on the file's identity
+    # so a ledger rewritten mid-run is re-read rather than served stale.
+    st = FUNCTIONS.stat()
+    key = (st.st_mtime_ns, st.st_size)
+    rows = _FUNCTION_ROWS_CACHE.get(key)
+    if rows is None:
+        with FUNCTIONS.open("r", encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        _FUNCTION_ROWS_CACHE.clear()
+        _FUNCTION_ROWS_CACHE[key] = rows
+    return [dict(row) for row in rows]
 
 
 def load_function_rows():
@@ -1693,10 +1707,16 @@ def verify_source_claims(only=None):
         matched_sources.setdefault(row["name"], set()).add(row["source"])
 
     problems = []
-    sources = sorted((ROOT / "Code").rglob("*.cpp"))
-    if only:
-        sources = [p for p in sources
-                   if any(sel in p.relative_to(ROOT).as_posix() for sel in only)]
+    direct = [ROOT / sel for sel in (only or ())]
+    if only and all(p.suffix.lower() == ".cpp" and p.is_file() for p in direct):
+        # the delta path names whole source files; walking all of Code/ and
+        # relative_to() on 12k paths cost 3.7 s per add_match under the lock
+        sources = sorted(set(direct))
+    else:
+        sources = sorted((ROOT / "Code").rglob("*.cpp"))
+        if only:
+            sources = [p for p in sources
+                       if any(sel in p.relative_to(ROOT).as_posix() for sel in only)]
     for path in sources:
         rel = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8", errors="replace")

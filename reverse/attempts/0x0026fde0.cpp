@@ -1,4 +1,6 @@
 // ?bfmeGoGX@BfmeThingGX@@QAEXXZ
+// partial score=0.92 date=2026-09-04
+// ?bfmeGoGX@BfmeThingGX@@QAEXXZ
 // partial score=0.92 date=2026-09-03
 // cl: /O2 /DNDEBUG /MD
 // Advance: if the stashed next is empty, stop the current thing when its

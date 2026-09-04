@@ -1,5 +1,7 @@
 // ?fill@Rva00726EA0TaintFill@@QAEXE@Z
 // partial score=0.99 date=2026-09-04
+// ?fill@Rva00726EA0TaintFill@@QAEXE@Z
+// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Retail 0x00726EA0: fill the taint overlay's dword and byte buffers.
 

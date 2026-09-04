@@ -1,5 +1,7 @@
 // ?bfmeDraw1293@BfmeOverlay1293@@QAEXXZ
 // partial score=0.98 date=2026-09-04
+// ?bfmeDraw1293@BfmeOverlay1293@@QAEXXZ
+// partial score=0.98 date=2026-09-04
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 

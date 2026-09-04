@@ -111,8 +111,11 @@ int CurDrawableIsCurrentTargetKindof(lua_State *state)
 
 int CurDrawableSetTransitionAnimState(lua_State *state)
 {
-	if (g_obj12F060C->m_drawable != 0 && lua_gettop(state) > 0) {
-		g_obj12F060C->m_drawable->m_transitionAnimState.set(lua_tostring(state, 1));
+	if (g_obj12F060C->m_drawable != 0) {
+		if (lua_gettop(state) > 0) {
+			g_obj12F060C->m_drawable->m_transitionAnimState.set(lua_tostring(state, 1));
+			return 0;
+		}
 	}
 	return 0;
 }

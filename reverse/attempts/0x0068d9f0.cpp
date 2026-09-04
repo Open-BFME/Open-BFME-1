@@ -1,4 +1,6 @@
 // ?rva68d9f0@@YAPADPAD00@Z
+// partial score=0.95 date=2026-09-04
+// ?rva68d9f0@@YAPADPAD00@Z
 // partial score=0.95 date=2026-09-02
 // The three byte-identical 33-byte bodies at 0x0068D990, 0x0068D9C0 and
 // 0x0068D9F0 -- the reading counterpart of BoundedByteCursorWrites.cpp.

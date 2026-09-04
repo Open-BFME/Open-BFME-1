@@ -7,13 +7,17 @@
 // element count (`jl` then `jae`), which is one `>= 0` and one `< size()`
 // written as a pair, not a single range test.  Both failures share the tail.
 
-class Rva0028F4D0
+class BfmeListYQ
 {
 public:
-	void refresh( void );
+	void bfmePickYQ( void );
 
 	char m_pad[ 0x80 ];
-	void **m_begin;
+	union
+	{
+		void **m_begin;
+		int m_beginAddress;
+	};
 	void **m_end;
 	char m_pad2[ 4 ];
 	void *m_current;
@@ -21,16 +25,17 @@ public:
 	int m_index;
 };
 
-// @?refresh@Rva0028F4D0@@QAEXXZ 0x0028F4D0
-void Rva0028F4D0::refresh( void )
+// @?bfmePickYQ@BfmeListYQ@@QAEXXZ 0x0028F4D0
+void BfmeListYQ::bfmePickYQ( void )
 {
 	int index = m_index;
 	if( index >= 0 )
 	{
-		unsigned int count = (unsigned int)( m_end - m_begin );
+		int count = ( (int)m_end - m_beginAddress ) >> 2;
 		if( (unsigned int)index < count )
 		{
-			m_current = m_begin[ index ];
+			void **begin = *(void ** volatile *)((char *)this + 0x80);
+			m_current = begin[ index ];
 			return;
 		}
 	}

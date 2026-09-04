@@ -1,4 +1,6 @@
 // ?copyAt@Rva002060B0Owner@@QBEXPAURva002060B0Triple@@H@Z
+// partial score=0.93 date=2026-09-04
+// ?copyAt@Rva002060B0Owner@@QBEXPAURva002060B0Triple@@H@Z
 // partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /MD
 // Open-BFME: 61-byte vector-or-fallback triple copy at retail 0x002060B0.
@@ -8,9 +10,47 @@
 
 struct Rva002060B0Triple
 {
+	void copyTo(Rva002060B0Triple *out) const
+	{
+		out->m_a = m_a;
+		out->m_b = m_b;
+		out->m_c = m_c;
+	}
+
 	int m_a;
 	int m_b;
 	int m_c;
+};
+
+class Rva002060B0Value
+{
+public:
+	const Rva002060B0Triple &triple() const { return m_triple; }
+
+private:
+	char m_pad[8];
+	Rva002060B0Triple m_triple;
+};
+
+class Rva002060B0Fallback
+{
+public:
+	const Rva002060B0Triple &triple() const { return m_triple; }
+
+private:
+	char m_pad[0x38];
+	Rva002060B0Triple m_triple;
+};
+
+class Rva002060B0Vector
+{
+public:
+	int size() const { return m_end - m_begin; }
+	Rva002060B0Value *const &operator[](int index) const { return m_begin[index]; }
+
+private:
+	Rva002060B0Value **m_begin;
+	Rva002060B0Value **m_end;
 };
 
 class Rva002060B0Owner
@@ -20,23 +60,17 @@ public:
 
 private:
 	char m_pad0[8];
-	char *m_fallback;
+	Rva002060B0Fallback *m_fallback;
 	char m_padC[0x24 - 0x0C];
-	char **m_begin;
-	char **m_end;
+	Rva002060B0Vector m_values;
 };
 
 void Rva002060B0Owner::copyAt(Rva002060B0Triple *out, int index) const
 {
-	Rva002060B0Triple *src;
-	if (index >= 0)
-	{
-		if ((unsigned int)index < (unsigned int)(m_end - m_begin))
-			src = (Rva002060B0Triple *)(m_begin[index] + 8);
-		else
-			src = (Rva002060B0Triple *)(m_fallback + 0x38);
-	}
-	else
-		src = (Rva002060B0Triple *)(m_fallback + 0x38);
-	*out = *src;
+	Rva002060B0Triple *dst = out;
+	const Rva002060B0Triple &src =
+		(index >= 0 && (unsigned int)index < (unsigned int)m_values.size())
+		? m_values[index]->triple()
+		: m_fallback->triple();
+	src.copyTo(dst);
 }

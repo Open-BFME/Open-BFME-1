@@ -1,4 +1,6 @@
 // ?fixup@BfmeVec12@@QAEXXZ
+// partial score=0.99 date=2026-09-04
+// ?fixup@BfmeVec12@@QAEXXZ
 // partial score=0.99 date=2026-09-02
 // cl: /O2
 
@@ -45,8 +47,7 @@ void BfmeVec12::fixup()
 	{
 		BfmeElem12 *e = (BfmeElem12 *)(off + (unsigned int)begin);
 		e->m_ptr = TheBfmeAlloc12->make(&e->m_sub);
-		BfmeSub12 *sub = (BfmeSub12 *)(const char *)((unsigned int)m_begin + off + 8);
-		sub->construct();
+		((BfmeElem12 *)(off + (unsigned int)m_begin))->m_sub.construct();
 		begin = m_begin;
 		last = m_end;
 		n = last - begin;

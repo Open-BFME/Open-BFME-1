@@ -1,6 +1,8 @@
 // ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
 // partial score=0.99 date=2026-09-04
 // ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
+// partial score=0.99 date=2026-09-04
+// ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
 // partial score=0.99 date=2026-09-02
 class Object
 {

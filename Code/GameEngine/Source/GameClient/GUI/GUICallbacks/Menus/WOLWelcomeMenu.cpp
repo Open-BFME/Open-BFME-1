@@ -104,8 +104,20 @@ class BfmeWOLPeerResponse : public PeerResponse
 // BFME's GameSpyGroupRoom carries one dword of tail storage beyond the
 // reference declaration.  The larger type is part of the by-value ABI for
 // GameSpyInfo::addGroupRoom.
-class BfmeWOLGameSpyGroupRoom : public GameSpyGroupRoom
+class BfmeWOLGameSpyGroupRoom
 {
+	public:
+	BfmeWOLGameSpyGroupRoom();
+	BfmeWOLGameSpyGroupRoom( const BfmeWOLGameSpyGroupRoom &that );
+	~BfmeWOLGameSpyGroupRoom();
+
+	AsciiString m_name;
+	UnicodeString m_translatedName;
+	Int m_groupID;
+	Int m_numWaiting;
+	Int m_maxWaiting;
+	Int m_numGames;
+	Int m_numPlaying;
 	char m_bfmeTail[4];
 };
 
@@ -116,6 +128,8 @@ class BfmeWOLGlobalData
 public:
 	Int m_firewallBehavior;
 };
+
+extern void j_0003aae9();
 
 // The BFME GameSpyInfo vtable inserts methods in the interface used by this
 // callback: setCurrentGroupRoom is slot 0x28 and
@@ -799,7 +813,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 					BfmeWOLGameSpyGroupRoom room;
 					room.m_groupID = resp.groupRoom.id;
 					room.m_maxWaiting = resp.groupRoom.maxWaiting;
-					room.m_name = resp.groupRoomName.c_str();
+					((StringBase<char> *)&room.m_name)->set( resp.groupRoomName.c_str(), resp.groupRoomName.c_str() ? (Int)strlen( resp.groupRoomName.c_str() ) : 0 );
 					room.m_translatedName = UnicodeString(L"TEST");
 					room.m_numGames = resp.groupRoom.numGames;
 					room.m_numPlaying = resp.groupRoom.numPlaying;
@@ -843,6 +857,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 					GameSpyCloseAllOverlays();
 					GSMessageBoxOk( title, body );
 					TheShell->pop();
+					j_0003aae9();
 				}
 				break;
 			}

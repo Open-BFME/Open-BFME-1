@@ -1,17 +1,12 @@
 // ?rva68d990@@YAPADPAD00@Z
+// partial score=0.95 date=2026-09-04
+// ?rva68d990@@YAPADPAD00@Z
 // partial score=0.95 date=2026-09-02
 // The three byte-identical 33-byte bodies at 0x0068D990, 0x0068D9C0 and
 // 0x0068D9F0 -- the reading counterpart of BoundedByteCursorWrites.cpp.
 //
 // Same three-pointer cdecl shape and the same unsigned limit guard; the store
 // is reversed so one byte is copied out of the cursor instead of into it.
-
-#if 1
-static __forceinline void rva68d9_store( char *destination, char value )
-{
-	*destination = value;
-}
-#endif
 
 #define BFME_BOUNDED_BYTE_READ( NAME )                                        \
 	char *NAME( char *cursor, char *out, char *limit )                        \
@@ -21,7 +16,7 @@ static __forceinline void rva68d9_store( char *destination, char value )
 			return cursor;                                                    \
 		}                                                                     \
                                                                               \
-		rva68d9_store( out, *cursor );                                          \
+		*out = *cursor;                                                         \
                                                                               \
 		return cursor + 1;                                                    \
 	}

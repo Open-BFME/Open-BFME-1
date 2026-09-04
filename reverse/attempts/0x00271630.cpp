@@ -1,5 +1,5 @@
-// ?bfmeGoHA@BfmeThingHA@@QAEXXZ
-// partial score=0.92 date=2026-09-03
+// ?d_00271630@@YAXXZ
+// partial score=0.92 date=2026-09-04
 class BfmeHostHA
 {
 public:
@@ -38,7 +38,7 @@ private:
 	unsigned char m_bfmePad00[8];
 	void *m_bfmeObject;                 // +0x08
 	unsigned char m_bfmePad0C[0x24];    // +0x0C
-	BfmeHostHA *m_bfmeHost;             // +0x30
+	BfmeHostHA *m_bfmeHost;
 	unsigned char m_bfmePad34[0x14];    // +0x34
 	void *m_bfmeSaved;                  // +0x48
 };

@@ -1,4 +1,6 @@
 // ?applyField@BfmeApplyFieldHolder@@QAEXABVRva0060FD30Base@@@Z
+// partial score=0.92 date=2026-09-04
+// ?applyField@BfmeApplyFieldHolder@@QAEXABVRva0060FD30Base@@@Z
 // partial score=0.92 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 

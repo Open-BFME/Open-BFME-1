@@ -13,6 +13,9 @@ __declspec(dllimport) void *__cdecl malloc(unsigned int size);
 __declspec(dllimport) void __cdecl free(void *memory);
 __declspec(dllimport) char *__cdecl strcpy(char *destination, const char *source);
 __declspec(dllimport) char *__cdecl strcat(char *destination, const char *source);
+__declspec(dllimport) unsigned int __cdecl strlen(const char *text);
+__declspec(dllimport) void *__cdecl memcpy(void *destination, const void *source,
+    unsigned int count);
 __declspec(dllimport) int __stdcall lstrcmpiA(const char *left, const char *right);
 __declspec(dllimport) int __stdcall EnumSystemLocalesA(
     int (__stdcall *callback)(char *), unsigned long flags);
@@ -292,5 +295,122 @@ char *Rva0084EF00(LocaleCodePageObject_0084EED0 *object)
         char *buffer = locale_buffer_0084EF00;
         __ConvertFromACP(buffer, 9, object->codePage);
         return buffer;
+    }
+}
+
+extern char *__cdecl Rva0084DE40Tail(char *buffer);
+
+char *Rva0084ECA0(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x1f, locale_buffer_0084EED0, 0x104);
+    {
+        char *buffer = locale_buffer_0084EED0;
+        __ConvertFromACP(buffer, 0x50, object->codePage);
+        return Rva0084DE40Tail(buffer);
+    }
+}
+
+char *Rva0084ECE0(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x20, locale_buffer_0084EF00, 0x104);
+    {
+        char *buffer = locale_buffer_0084EF00;
+        __ConvertFromACP(buffer, 0x50, object->codePage);
+        return Rva0084DE40Tail(buffer);
+    }
+}
+
+extern char locale_buffer_008504C0[];
+extern char locale_output_008504C0[];
+extern unsigned short locale_separator_008504C0;
+extern char *__cdecl Rva0084ED20Tail(LocaleCodePageObject_0084EED0 *object);
+
+char *Rva008504C0(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x1f, locale_buffer_008504C0, 0x104);
+    {
+        char *buffer;
+        char *converted;
+        char *destination;
+        char *suffix;
+        char *suffixEnd;
+        char ch;
+        unsigned int suffixSize;
+
+        buffer = locale_buffer_008504C0;
+        __ConvertFromACP(buffer, 0x50, object->codePage);
+        converted = Rva0084DE40Tail(buffer);
+        strcpy(locale_output_008504C0, converted);
+
+        destination = locale_output_008504C0;
+        --destination;
+        do
+        {
+            ch = destination[1];
+            ++destination;
+        } while (ch);
+        *(unsigned short *)destination = locale_separator_008504C0;
+
+        suffix = Rva0084ED20Tail(object);
+        suffixSize = strlen(suffix);
+
+        destination = locale_output_008504C0;
+        --destination;
+        do
+        {
+            ch = destination[1];
+            ++destination;
+        } while (ch);
+        memcpy(destination, suffix, suffixSize);
+        return locale_output_008504C0;
+    }
+}
+
+extern char locale_buffer_00850560[];
+extern char locale_output_00850560[];
+extern unsigned short locale_separator_00850560;
+
+char *Rva00850560(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x20, locale_buffer_00850560, 0x104);
+    {
+        char *buffer;
+        char *converted;
+        char *destination;
+        char *suffix;
+        char *suffixEnd;
+        char ch;
+        unsigned int suffixSize;
+
+        buffer = locale_buffer_00850560;
+        __ConvertFromACP(buffer, 0x50, object->codePage);
+        converted = Rva0084DE40Tail(buffer);
+        strcpy(locale_output_00850560, converted);
+
+        destination = locale_output_00850560;
+        --destination;
+        do
+        {
+            ch = destination[1];
+            ++destination;
+        } while (ch);
+        *(unsigned short *)destination = locale_separator_00850560;
+
+        suffix = Rva0084ED20Tail(object);
+        suffixSize = strlen(suffix);
+
+        destination = locale_output_00850560;
+        --destination;
+        do
+        {
+            ch = destination[1];
+            ++destination;
+        } while (ch);
+        memcpy(destination, suffix, suffixSize);
+        return locale_output_00850560;
     }
 }

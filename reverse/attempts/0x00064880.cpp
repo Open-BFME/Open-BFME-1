@@ -1,4 +1,6 @@
 // ?isAfter@Rva00064770Tree@@QBE_NI@Z
+// partial score=0.95 date=2026-09-04
+// ?isAfter@Rva00064770Tree@@QBE_NI@Z
 // partial score=0.95 date=2026-09-02
 // cl: /DNDEBUG /MD /EHs-c-
 // Near-miss for 0x00064880. Sibling of isBefore@Rva00064770Tree. Exact 39-byte

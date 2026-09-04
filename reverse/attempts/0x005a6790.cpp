@@ -1,4 +1,6 @@
 // ?setMode@LookAtTranslator@@QAEHH@Z
+// partial score=0.93 date=2026-09-04
+// ?setMode@LookAtTranslator@@QAEHH@Z
 // partial score=0.93 date=2026-09-02
 // cl: /O2 /Ob0
 // ?setMode@LookAtTranslator@@QAEHH@Z

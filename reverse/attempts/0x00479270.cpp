@@ -1,4 +1,6 @@
 // ?selectAndCall@Rva00479270Router@@QAEHXZ
+// partial score=0.91 date=2026-09-04
+// ?selectAndCall@Rva00479270Router@@QAEHXZ
 // partial score=0.91 date=2026-08-29
 class Rva00479270Router
 {
@@ -20,6 +22,5 @@ int Rva00479270Router::selectAndCall( void )
 		return m_primary->slot1();
 	}
 
-	Rva00479270Router *fallback = m_fallback;
-	return fallback->slot1();
+	return m_fallback->slot1();
 }

@@ -1,4 +1,6 @@
 // ??$__copy@PAUGen_t_00777e90_p32cd@@PAU1@H@_STL@@YAPAUGen_t_00777e90_p32cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z
+// partial score=0.99 date=2026-09-04
+// ??$__copy@PAUGen_t_00777e90_p32cd@@PAU1@H@_STL@@YAPAUGen_t_00777e90_p32cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z
 // partial score=0.992 date=2026-09-04
 // ??$__copy@PAUGen_t_00777e90_p32cd@@PAU1@H@_STL@@YAPAUGen_t_00777e90_p32cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z
 // partial score=0.976 date=2026-09-02

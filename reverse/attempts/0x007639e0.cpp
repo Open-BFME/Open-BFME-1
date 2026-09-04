@@ -1,5 +1,7 @@
 // ?method@Gen_007639E0@@QAEHXZ
 // partial score=0.97 date=2026-09-04
+// ?method@Gen_007639E0@@QAEHXZ
+// partial score=0.97 date=2026-09-04
 // ?method@Gen_007639E0@@QAEHXZ -- retail 0x007639E0.
 // cl: /DNDEBUG /MD /EHsc /O2
 // W3DModelDraw-family helper reconstructed from the retail virtual-call shape.

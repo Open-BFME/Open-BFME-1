@@ -1,4 +1,6 @@
 // ?bfmeFindFloat@Gen_00141940@@QAEPAMPBX@Z
+// partial score=0.9 date=2026-09-04
+// ?bfmeFindFloat@Gen_00141940@@QAEPAMPBX@Z
 // partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 // Small map-value lookup wrappers used by the AI construction path.

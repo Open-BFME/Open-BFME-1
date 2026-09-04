@@ -1,5 +1,7 @@
 // ?joinTeam@AIUpdateInterface@@UAEXXZ
 // partial score=0.99 date=2026-09-04
+// ?joinTeam@AIUpdateInterface@@UAEXXZ
+// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD
 //
 // Retail 0x0027D4F0: AIUpdateInterface::joinTeam.
