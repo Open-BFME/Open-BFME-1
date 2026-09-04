@@ -77051,11 +77051,9 @@ name,address,notes
 ?g_bfmeShortFormat@@3QBDB,0x01144314,address-derived short format string from retail 0x009D957F
 ?g_bfmeSignedByteFormat@@3QBDB,0x011442AC,address-derived signed-byte format string from the DIR32 operand at retail 0x009D93FA
 ?g_bfmeSink1010@@3PAVBfmeSink1010@@A,0x00EF0898,pin
-?g_bfmeSinkA994@@3PAVBfmeSinkA994@@A,0x00EF7014,pin
 ?g_bfmeSinkAAA@@3PAVBfmeSinkAAA@@A,0x00EF33F8,pin
 ?g_bfmeSinkAAB@@3PAVBfmeSinkAAB@@A,0x00EF33F8,pin
 ?g_bfmeSinkB1010@@3PAVBfmeSinkB1010@@A,0x00EF1464,pin
-?g_bfmeSinkB994@@3PAVBfmeSinkB994@@A,0x00EF1464,pin
 ?g_bfmeSinkBFC@@3PAVBfmeSinkBFC@@A,0x00EF6924,pin
 ?g_bfmeSinkBHD@@3PAVBfmeSinkBHD@@A,0x00EED668,pin
 ?g_bfmeSinkBLC@@3PAVBfmeSinkBLC@@A,0x00EED600,pin
@@ -82711,3 +82709,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?TheTerrainVisual@@3PAVTerrainVisual@@A,0x00EF7014,BFME global used by InGameUI::destroyPlacementIcons
+?TheGameClient@@3PAVGameClient@@A,0x00EF1464,BFME global used by InGameUI::destroyPlacementIcons
+?destroyPlacementIcons@InGameUI@@IAEXXZ,0x0043AF00,canonical protected method body identified by matched placeBuildAvailable caller and reference header
