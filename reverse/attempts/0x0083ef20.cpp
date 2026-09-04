@@ -39,7 +39,7 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 		T *p = (T *)u2_import_01359474(old_ptr, bytes);
 		if (p != 0)
 		{
-			T *end = (T *)((unsigned int)p + bytes);
+			T *end = (T *)(count * sizeof(T) + (unsigned int)p);
 			T *dst = p + old_count;
 			if (dst != end)
 			{
@@ -68,8 +68,10 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 
 struct Callback
 {
-    int a;
-    int b;
+	enum event { erase_event = 0, imbue_event = 1, copyfmt_event = 2 };
+	typedef void (*event_callback)(event, void *, int);
+	event_callback fn;
+	int index;
 };
 
 template GrowPair<long> *grow_array(GrowPair<long> *, long *, unsigned int, unsigned int);

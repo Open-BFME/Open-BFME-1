@@ -103,7 +103,7 @@ public:
 void rva8CF030BuildArray(Rva8CF030State *state, void *)
 {
 	Rva8CF030String unusedString;
-	Rva8CF030State *owner = state;
+	register Rva8CF030State *owner = state;
 	Rva8CF030Value *top = owner->m_stack[owner->m_count - 1];
 	Rva8CF030Value *countValue = owner->m_stack[owner->m_count - 2];
 	int count = countValue->toInteger();

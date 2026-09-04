@@ -39,7 +39,7 @@ LineCoord3D LineEmissionVolumeModule::getPosition(float, float, float, float)
         1.0f,
         "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterlinevolumemodule.cpp",
         114);
-    return makeLineCoord(
+    return LineCoord3D(
         scale * delta.z + start.z,
         scale * delta.y + start.y,
         scale * delta.x + start.x);

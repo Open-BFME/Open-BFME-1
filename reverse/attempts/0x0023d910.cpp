@@ -1,4 +1,6 @@
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
+// partial score=0.99 date=2026-09-04
+// ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.94 date=2026-09-03
 // ?bfmeApplyMemberFormationState@BfmeHordeContainOwner@@QAEXPAVObject@@@Z
 // partial score=0.9 date=2026-09-03
@@ -21,27 +23,23 @@ public:
 	virtual void bfmeEnterFormationPose( int pose ) = 0;
 };
 
+class BfmeFormationFlagWord
+{
+public:
+	void set( UnsignedInt bit ) { m_bits |= bit; }
+	UnsignedInt m_bits;
+};
+
 class Object
 {
 public:
 	void notifyModelConditionChanged( void );
 
 	char m_bfmeHead[ 0x12c ];
-	UnsignedInt m_bfmeModelConditionFlags;
+	BfmeFormationFlagWord m_bfmeModelConditionFlags;
 	char m_bfmeGap[ 0x200 - 0x130 ];
 	BfmeHordeMemberInterface *m_bfmeMemberInterface;
 };
-
-static __forceinline void bfmeSetFormationPoseFlag( Object *member,
-	UnsignedInt &flags, UnsignedInt &bit )
-{
-	if ( ( bit & flags ) == 0 )
-	{
-		member->m_bfmeModelConditionFlags = ( flags |= bit );
-		bit = flags;
-		member->notifyModelConditionChanged();
-	}
-}
 
 class BfmeHordeContainView
 {
@@ -79,7 +77,7 @@ private:
 
 void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 {
-	UnsignedInt poseBit;
+	BfmeFormationFlagWord poseBit;
 	UnsignedInt flags;
 
 	if ( member == 0 )
@@ -88,31 +86,34 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	{
 		member->m_bfmeMemberInterface->bfmeEnterFormationPose( 5 );
 
-		flags = member->m_bfmeModelConditionFlags;
+		flags = member->m_bfmeModelConditionFlags.m_bits;
 		if ( flags & 0x00100000 )
 		{
 			flags &= ~0x00100000;
-			member->m_bfmeModelConditionFlags = flags;
+			member->m_bfmeModelConditionFlags.m_bits = flags;
 			member->notifyModelConditionChanged();
 		}
 
-		poseBit = 0x00080000;
+		poseBit.m_bits = 0x00080000;
 	}
 	else
 	{
 		member->m_bfmeMemberInterface->bfmeLeaveFormationPose( 5 );
 
-		flags = member->m_bfmeModelConditionFlags;
+		flags = member->m_bfmeModelConditionFlags.m_bits;
 		if ( flags & 0x00080000 )
 		{
 			flags &= ~0x00080000;
-			member->m_bfmeModelConditionFlags = flags;
+			member->m_bfmeModelConditionFlags.m_bits = flags;
 			member->notifyModelConditionChanged();
 		}
 
-		poseBit = 0x00100000;
+		poseBit.m_bits = 0x00100000;
 	}
 
-	flags = member->m_bfmeModelConditionFlags;
-	bfmeSetFormationPoseFlag( member, flags, poseBit );
+	flags = member->m_bfmeModelConditionFlags.m_bits;
+	if ( ( flags & poseBit.m_bits ) != 0 )
+		return;
+	member->m_bfmeModelConditionFlags.set( poseBit.m_bits );
+	member->notifyModelConditionChanged();
 }

@@ -15,13 +15,6 @@ public:
 	void showAptScreen( AsciiString name, int unused );
 };
 
-class FlagValue
-{
-public:
-	volatile int m_value;
-	void operator=( int value ) { m_value = value; }
-};
-
 class AptSaveLoad
 {
 public:
@@ -30,14 +23,13 @@ public:
 	int m_274;
 	volatile char m_278;
 	char m_pad279[ 3 ];
-	unsigned int m_27c;
-	void setMode( int mode ) { m_27c = mode; }
+	int m_27c;
 };
 
 extern AptSaveLoad *TheAptSaveLoad;
 extern Shell *TheShell;
 
-void showAptSaveLoad( void *arg0, int flags, volatile char extra )
+void showAptSaveLoad( void *arg0, int flags, const volatile char extra )
 {
 	if ( TheAptSaveLoad != 0 )
 		return;
@@ -58,16 +50,14 @@ void showAptSaveLoad( void *arg0, int flags, volatile char extra )
 		}
 		else if ( flagBits & 2 )
 		{
-			AptSaveLoad *q2;
-			AptSaveLoad *p2;
-			q2 = TheAptSaveLoad;
-			value = extra;
-			( (unsigned int *)q2 )[ 159 ] = 2;
-			p2 = TheAptSaveLoad;
-			p2->m_278 = value;
+			char value2 = extra;
+			AptSaveLoad *p2 = TheAptSaveLoad;
+			p2->m_27c = 2;
+			AptSaveLoad *q2 = TheAptSaveLoad;
+			q2->m_278 = value2;
 			return;
 		}
-		else if ( flagBits & 4 )
+	else if ( flagBits & 4 )
 	{
 		q = TheAptSaveLoad;
 		q->m_27c = 4;

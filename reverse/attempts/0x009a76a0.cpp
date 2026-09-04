@@ -1,4 +1,4 @@
-// ?bfmeGo76A0@@YAXPAHPAXHHH1@Z
+// ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z
 // partial score=0.78 date=2026-09-03
 // Open-BFME5 conversion of the four-tap 32-bit filter helper.
 

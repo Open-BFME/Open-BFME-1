@@ -9534,7 +9534,7 @@ name,address,notes
 ?GenKey0012A7918@@3VGenKey@@A,0x00EA7918,address-derived lazy key global used by BfmeStringPresenceOwner
 ?GenPartition00261010@@YAPAUQ3SortElem8@@PAU1@0U1@P6A_NABU1@2@Z@Z,0x00261010,address-derived partition callee of the pinned eight-byte introsort body
 ?GenerateNextCommandID@@YAGXZ,0x00030558,ILT thunk; real body 0xA82D10
-?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ,0x00924C30,pinharvest x1 (body)
+?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ,0x00925060,Load_W3D call-site and body layout identify the BFME implementation
 ?GenericObjectCreationNuggetCommonFields@@3QBUFieldParse@@B,0x0109F320,Open-BFME5 parseDebris retail common field table
 ?GenericObjectCreationNuggetDebrisFields@@3QBUFieldParse@@B,0x0109FA78,Open-BFME5 parseDebris retail debris field table
 ?Get@Base64Straw@@UAEHPAXH@Z,0x009E7B80
@@ -9750,6 +9750,7 @@ name,address,notes
 ?ResetInGameChat@@YAXXZ,0x00033A6E
 ?Reset_Collection@CullSystemClass@@QAEXXZ,0x008E21C0
 ?Reset_Device@DX8Wrapper@@SA_N_N@Z,0x009082B0,pinharvest x1 (body)
+?Reset_Geometry@MeshGeometryClass@@QAEXHH_N@Z,0x009268C0,BFME three-argument ABI pin used by Load_W3D
 ?Resize@?$SimpleVecClass@M@@UAE_NH@Z,0x00038ECE,site-decoded x1 (thunk)
 ?Resize@?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@UAE_NH@Z,0x00038ECE,site-decoded x3 (thunk)
 ?Resize@?$SimpleVecClass@PAVBSPClass@@@@UAE_NH@Z,0x00038ECE,site-decoded x3 (thunk)
@@ -9941,6 +9942,7 @@ name,address,notes
 ?Set_Texture@SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x00960050
 ?Set_Transform@RenderObjClass@@UAEXABVMatrix3D@@@Z,0x009201A0
 ?Set_UV_Source@VertexMaterialClass@@QAEXHH@Z,0x00921250,zh-sweep callee pin derived from retail REL32 displacement
+?Set_User_Text@MeshGeometryClass@@QAEXPAD@Z,0x00924C40,Load_W3D call-site and +0x10 field access identify the BFME setter
 ?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z,0x00904510,DynamicVB binding ABI for BoxRenderObjClass::render_box
 ?ShowControlBar@@YAXH@Z,0x00024848,ShowControlBar int
 ?ShowControlBar@@YAX_N@Z,0x00024848,ILT/body ShowControlBar for letterbox
@@ -78084,6 +78086,7 @@ name,address,notes
 ?get_allocator@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x00009C28,ILT the same resize calls at 0x00786920
 ?get_allocator@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QBE?AV?$allocator@PBVLocomotorTemplate@@@2@XZ,0x0001D534,pinharvest x1 (thunk)
 ?get_allocator@BfmeVecAY@@QBE?AUBfmeAllocAY@@XZ,0x00035724,ILT to empty allocator return at 0x007525C0
+?get_bone_links@MeshGeometryClass@@IAEPAG_N@Z,0x009246B0,Load_W3D call-site and vertex-link loop identify the BFME accessor
 ?get_shade_indices@MeshGeometryClass@@IAEPAK_N@Z,0x00924600,Open-BFME5 retail MeshGeometryClass shade-index accessor pin
 ?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z,0x00977FF0
 ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
@@ -78107,6 +78110,8 @@ name,address,notes
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
+?groupFollowWaypointPathAsTeamExact@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00155AF0,exact waypoint-path member walk; callee aiFollowWaypointPathAsTeam ILT 0x0002169D
+?groupFollowWaypointPathExact@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x001558F0,exact waypoint-path member walk; callee aiFollowWaypointPathExact ILT 0x0002480C
 ?groupGuardArea@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000AABF,TEAM_GUARD_AREA tail of shared 0x002F3520 body
 ?groupGuardAreaFromPosition@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@PBUCoord3D@@@Z,0x0000C658,TEAM_GUARD_AREA_FROM_POSITION tail of shared 0x002F3520 body
 ?groupGuardObject@AIGroup@@QAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z,0x0003257E,TEAM_GUARD_OBJECT executeAction arm 207 callee; ILT groupGuardObject(unit GUARDMODE_NORMAL CMD_FROM_SCRIPT)
@@ -79741,6 +79746,7 @@ name,address,notes
 ?notify@Q4Base00D35D68@@QAEXHH@Z,0x008975D0,two-argument __thiscall member called at the top of the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ?notify@Rva00589690@@AAEXXZ,0x0003643A,Open-BFME5 fresh thiscall at ILT of set-byte+notify 0x00589690
 ?notify@Rva0069F4D0Block@@QAEXPAXH@Z,0x0003F5F8,ILT to channel notify used by Rva0069F4D0Owner::notify
+?notify@Rva00802A90Elem@@QAEXPAURva00802A90Query@@PAXHH@Z,0x00801CB0,Rva00802A90FeslBrowserQuery member callee
 ?notify@T_007ea120@@QAEXPAX@Z,0x007EA0A0,FESL notify used by hub teardown
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?notifyModelConditionChanged@AIUpdateInterface@@QAEXXZ,0x0002191D,address-derived GiantBird AI condition notifier used by 0x002BDF10
@@ -80046,6 +80052,7 @@ name,address,notes
 ?readRequestGameSpyStatsAuthKeyMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,0x0067EB80,identified by the type-5 constructor and setText1C it calls; source is one instruction pair off
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,0x000322F4,shared replay Unicode string reader thunk
 ?readUntilSemicolon@@YAXPAVFile@@PADH@Z,0x004843E0,decoded from parseDefaultColor call site
+?read_chunks@MeshGeometryClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,0x00927950,Load_W3D call-site and chunk-loop body identify the BFME reader
 ?read_dcg@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D500,rel32 pin for read_material_pass
 ?read_dig@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D810,rel32 pin for read_material_pass
 ?read_material_pass@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096FB60,BFME bool-returning material pass loader called by read_prelit_material

@@ -1,7 +1,5 @@
 // ?Rva009A86F0Initialize@@YAHPAURva009A86F0Context@@@Z
 // partial score=0.93 date=2026-09-04
-// ?Rva009A86F0Initialize@@YAXPAURva009A86F0Context@@@Z
-// partial score=0.93 date=2026-09-03
 // Open-BFME5 conversion of the codec workspace initializer.
 
 class Bucket
@@ -11,7 +9,7 @@ public:
 	static void *__cdecl operator new(unsigned int bytes, BucketMagicEnum tag);
 };
 
-void __cdecl d_009a85f0(void *what);
+extern void __cdecl d_009a85f0();
 
 struct Rva009A86F0Context
 {
@@ -51,7 +49,7 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 	unsigned int tailSize;
 	unsigned int bufferSize;
 	unsigned int bufferSize2;
-	d_009a85f0(self);
+	((void (__cdecl *)(void *))d_009a85f0)(self);
 
 	void *first = Bucket::operator new(0x320, Bucket::Bucket_GLUE_NOT_IMPLEMENTED);
 	self->m_at00 = first;
@@ -118,6 +116,6 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 	return 1;
 
 failure:
-	d_009a85f0(self);
+	((void (__cdecl *)(void *))d_009a85f0)(self);
 	return 0;
 }
