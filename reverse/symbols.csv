@@ -13206,6 +13206,7 @@ name,address,notes
 ?applyFirst@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00031F75,address-derived first target updater called by retail 0x002D9510
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
 ?applyNamed@ScriptEngine@@QAEXPAX0@Z,0x00340F10,ScriptEngine named-apply callee of walkNamed
+?applyPacket@Rva0015A190Owner@@QAEXPAURva0015A190Packet@@H@Z,0x00048C43,ILT to 0x00159AD0 from applyOrFallback 0x0015A190
 ?applyRva1C7370@Object@@QAEXABVModelConditionFlags@@_N@Z,0x000307E7,Open-BFME6 RVA 162CD0 flag-apply helper call pin
 ?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00025162,address-derived second target updater called by retail 0x002D9510
 ?applySingle@Gen00587600@@QAEXH@Z,0x000489D2,Open-BFME5 fresh ILT alias for the single-argument sibling at 0x0051A820
@@ -78882,6 +78883,7 @@ name,address,notes
 ?getCampaignDifficulty@OptionPreferences@@QAEHXZ,0x00032B5A
 ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
 ?getCell@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@HH@Z,0x00020671
+?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
 ?getCenterPoint@PolygonTrigger@@QBEXPAUCoord3D@@@Z,0x00007AD6,PolygonTrigger center point ILT used by the four-argument guard-area helper
 ?getChipset@BfmeChipsetQuery@@SA?AW4ChipsetType@@XZ,0x000162A7,alias of ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ pinned at the same ILT; declared-only view so the call keeps the ordinary convention where the same-TU definition would use MSVC's private one
 ?getChipset@W3DShaderManager@@SA?AW4ChipsetType@@XZ,0x000162A7
@@ -78913,6 +78915,7 @@ name,address,notes
 ?getCount@BfmeRvaA760CountOwner@@QAEHXZ,0x00020824,assigned body helper for Rva0024A760
 ?getCount@BfmeRvaBA90Member@@QAEHXZ,0x00020824,assigned body helper for Rva0024BA90
 ?getCountdownPercent@OCLUpdate@@QAEMXZ,0x00047069,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 passes its result to the text display
+?getCurLocomotorSpeed@AIUpdateInterface@@QAEMXZ,0x0003DAA5,getCurLocomotorSpeed ILT from recompute 0x00154B80; body 0x0026EC30
 ?getCurNemesis@TunnelTracker@@QAEPAVObject@@XZ,0x00025766,REL32 pin from TunnelTracker::updateNemesis @0xF90D0
 ?getCurWeaponLockedStatus@BFMEWeaponSetLockShim@@QBEHXZ,0x000201E4,Object isCurWeaponLocked retail ILT to the raw BFME WeaponSet lock-state accessor at 0x001EAF40
 ?getCurrentCampaign@CampaignManager@@QAEPAVCampaign@@XZ,0x005BB510,CampaignManager+8 getter; setEditDescription / startNextCampaignGame family
@@ -79270,7 +79273,11 @@ name,address,notes
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
+?groupGuardArea@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000AABF,TEAM_GUARD_AREA tail of shared 0x002F3520 body
+?groupGuardAreaFromPosition@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@PBUCoord3D@@@Z,0x0000C658,TEAM_GUARD_AREA_FROM_POSITION tail of shared 0x002F3520 body
+?groupGuardObject@AIGroup@@QAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z,0x0003257E,TEAM_GUARD_OBJECT executeAction arm 207 callee; ILT groupGuardObject(unit GUARDMODE_NORMAL CMD_FROM_SCRIPT)
 ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z,0x0004115F,Open-BFME5 ILT at guardSupplyCenter 0x001669C0; receives the adjusted warehouse position with normal guard mode and script command source
+?groupHarvest@AIGroup@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000FAFB,TEAM_HARVEST executeAction arm 468 callee; ILT to 0x001565D0 harvest-at-waypoint
 ?groupHunt@AIGroup@@QAEXW4CommandSourceType@@@Z,0x00039491,ILT to matched body 0x00156270; callee of doTeamHunt 0x002F3600
 ?groupIdle@AIGroup@@QAEXH@Z,0x0000F871,ILT to AIGroup::groupIdle body 0x00155B90
 ?grouping@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00033032,retail callee ILT decoded from assigned basic_ios imbue at 0x0053F690
@@ -82077,6 +82084,7 @@ name,address,notes
 ?trigger@BfmeObjEB2@@QAEXHH@Z,0x00014506,pin
 ?trigger@BfmeObjF62@@QAEXHH@Z,0x00014506,pin
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
+?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
 ?turnOffScreen@DisconnectManager@@IAEXH@Z,0x00044AD0,ILT thunk; real body 0x66B270
 ?turnOnScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z,0x0066BFE0,ZH twin minus hidePacketRouterTimeout: showScreen via 0x0050E9A0; m_disconnectState+0xC=SCREENON(0); m_lastKeepAliveSendTime+0x10=-1; populateDisconnectScreen 0x0066BEF0; resetPlayerTimeouts 0x0066B980; +0x258=0; m_timeOfDisconnectScreenOn+0x25C=timeGetTime; sole caller BFMEDisconnectManager::update 0x0066CAEF; ILT 0x00034900
 ?u1Call_005C7110@@YAXPAX00PAPAX@Z,0x005C7110,cdecl four-argument callee of 0x005C8320; address-derived name
@@ -83875,11 +83883,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
-?getCurLocomotorSpeed@AIUpdateInterface@@QAEMXZ,0x0003DAA5,getCurLocomotorSpeed ILT from recompute 0x00154B80; body 0x0026EC30
-?groupHarvest@AIGroup@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000FAFB,TEAM_HARVEST executeAction arm 468 callee; ILT to 0x001565D0 harvest-at-waypoint
-?groupGuardObject@AIGroup@@QAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z,0x0003257E,TEAM_GUARD_OBJECT executeAction arm 207 callee; ILT groupGuardObject(unit GUARDMODE_NORMAL CMD_FROM_SCRIPT)
-?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
-?applyPacket@Rva0015A190Owner@@QAEXPAURva0015A190Packet@@H@Z,0x00048C43,ILT to 0x00159AD0 from applyOrFallback 0x0015A190
-?groupGuardAreaFromPosition@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@PBUCoord3D@@@Z,0x0000C658,TEAM_GUARD_AREA_FROM_POSITION tail of shared 0x002F3520 body
-?groupGuardArea@AIGroup@@QAEXPAVPolygonTrigger@@W4GuardMode@@W4CommandSourceType@@@Z,0x0000AABF,TEAM_GUARD_AREA tail of shared 0x002F3520 body
