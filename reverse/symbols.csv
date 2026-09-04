@@ -82486,3 +82486,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?TheGameLogic@@3PAVGameLogic40D9@@A,0x012F0898,GameLogic* typed for BfmeHost40D9::walk @ 0x40D9E0
 ?TheShell@@3PAVShell40D9@@A,0x012F4B58,TheShell* typed for BfmeHost40D9::walk @ 0x40D9E0
+?TheGameClient@@3PAVClientRoot4120@@A,0x012F1464,TheGameClient* typed for bfmeBumpClientGuard @ 0x4120E0
+?g_bfmeCounter4120@@3HA,0x012F12F0,client-guard counter incremented by bfmeBumpClientGuard @ 0x4120E0
