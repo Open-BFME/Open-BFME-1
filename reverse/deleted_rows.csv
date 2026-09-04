@@ -24447,3 +24447,7 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Open2Rec0FCED0@@QAE@ABV0@@Z,0x000FCED0,Address-derived duplicate removed; GeometryShape copy constructor owns this exact vector-element body.
 ?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,False out-of-line helper claim removed; the helper is inlined and STLport hash_map::operator[] owns this exact 193-byte body.
 ??0BfmeModuleData_0036CDD0@@QAE@XZ,0x0036CDD0,Address-derived module-data identity superseded by CastleMemberBehaviorModuleData; its factory reaches this exact 58-byte constructor.
+?set@Rva000C95A0@@QAEXH@Z,0x000C95A0,Address-derived duplicate removed; Player::setTeamDelaySeconds owns this exact 20-byte body.
+?wrap@Rva000C9560@@QAE_NH@Z,0x000C9560,Address-derived duplicate removed; Player::isSupplySourceSafe owns this exact 20-byte body.
+?wrap@Rva000C95C0@@QAEXPAVTeam@@H@Z,0x000C95C0,Address-derived duplicate removed; Player::guardSupplyCenter owns this exact 18-byte body.
+?wrap@Rva000C95E0@@QAEXH@Z,0x000C95E0,Address-derived duplicate removed; Player::preTeamDestroy owns this exact 18-byte body.
