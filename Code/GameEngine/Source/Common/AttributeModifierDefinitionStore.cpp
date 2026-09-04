@@ -3,26 +3,26 @@ extern "C" void _ReadWriteBarrier(void);
 
 class Object;
 
-struct Rva00367DC0Pair
+struct AttributeModifierValue
 {
-	unsigned int m_key;
+	unsigned int m_attribute;
 	unsigned int m_value;
 };
 
-class Rva00367DC0PairRange
+class AttributeModifierValueRange
 {
 public:
-	bool find(unsigned int key, unsigned int *value) const;
+	bool findValue(unsigned int attribute, unsigned int *value) const;
 
 private:
-	Rva00367DC0Pair *m_first;
-	Rva00367DC0Pair *m_last;
+	AttributeModifierValue *m_first;
+	AttributeModifierValue *m_last;
 };
 
 class AttributeModifierDefinition
 {
 public:
-	Rva00367DC0PairRange m_pairs;
+	AttributeModifierValueRange m_values;
 	char m_unreconstructed08[ 0x0C ];
 	int m_key;
 	int m_value;
