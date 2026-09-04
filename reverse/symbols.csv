@@ -73385,10 +73385,7 @@ name,address,notes
 ?bfmeGetArrVGR@BfmeMeshVGR@@QAEPAUBfmeTexBufVGR@@HH_N@Z,0x0092BE50,pin
 ?bfmeGetAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Open-BFME5 ILT thunk to body 0x00368C50; body initializes the output to 1.0 and multiplies matching attribute entries while bfme names record unresolved retail API spelling
 ?bfmeGetBUZA@BfmeSubBUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x0092C9D0,pin
-?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 queries bonus 14 through
 ?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME5 ILT thunk to body 0x001BFDB0; ?getAttackRange@WeaponTemplate@@QBEM... at 0x001E2730 queries bonus 6 on the source object through it with an out pointer; address-derived name
-?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,alias of the Object spelling pinned below; Object.cpp reaches the getter through a view class because the reference Object.h does not declare it
-?bfmeGetBonusSource@Object@@ABEPAVBfmeVisionBonusSource@@XZ,0x000202ED,Open-BFME5 ILT Object::getVisionRange at 0x001C17C0 asks for the bonus source through
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
 ?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
@@ -82596,3 +82593,5 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ?TheAttributeModifierDefinitionStore@@3PAVAttributeModifierDefinitionStore@@A,0x012F07E4,global store used by AttributeModifierPoolUpdate additive and multiplicative accumulators
 ?findDefinition@AttributeModifierDefinitionStore@@QAEPAUAttributeModifierDefinition@@I@Z,0x0001DBBA,AttributeModifierPoolUpdate active-entry test resolves each modifier key through the definition store
 ?findValue@AttributeModifierValueRange@@QBE_NIPAI@Z,0x00014C18,ILT to exact AttributeModifierValueRange lookup body 0x00367DC0; called by AttributeModifierDefinitionStore::getValue
+?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local ABI view used by Object::getVisionRange; real target is AttributeModifierPoolUpdate::bfmeGetBonus
+?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::bfmeFindAttributeModifierPoolUpdate

@@ -21,7 +21,7 @@ public:
 	int valueFor(const Rva00368C10Mask *mask) const;
 };
 
-class BfmeVisionBonusSource;
+class AttributeModifierPoolUpdate;
 class Rva00369860State;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -30,7 +30,7 @@ class Object
 	friend class Rva00369860State;
 
 private:
-	BfmeVisionBonusSource *bfmeGetBonusSource(void) const;
+	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate(void) const;
 };
 
 class Rva00369860Pair
@@ -113,7 +113,7 @@ int Rva00369860State::primaryValueFor(const Object *object) const
 
 	// Only this lookup interface is proven; the concrete bonus-source type is opaque.
 	Rva00368C10Values *values =
-		(Rva00368C10Values *)object->bfmeGetBonusSource();
+		(Rva00368C10Values *)object->bfmeFindAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_primaryValues[0];
 
@@ -130,7 +130,7 @@ int Rva00369860State::secondaryValueFor(const Object *object) const
 		return m_secondaryValues[0];
 
 	Rva00368C10Values *values =
-		(Rva00368C10Values *)object->bfmeGetBonusSource();
+		(Rva00368C10Values *)object->bfmeFindAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_secondaryValues[0];
 

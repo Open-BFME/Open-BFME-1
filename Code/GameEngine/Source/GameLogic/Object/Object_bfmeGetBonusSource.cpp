@@ -11,22 +11,22 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-class BfmeVisionBonusSource;
+class AttributeModifierPoolUpdate;
 class Module;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
 private:
-	BfmeVisionBonusSource *bfmeGetBonusSource() const;
+	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate() const;
 
 protected:
 	Module *findModule(NameKeyType key) const;
 };
 
-BfmeVisionBonusSource *Object::bfmeGetBonusSource() const
+AttributeModifierPoolUpdate *Object::bfmeFindAttributeModifierPoolUpdate() const
 {
 	static NameKeyType key_AttributeModifierPoolUpdate =
 		TheNameKeyGenerator->nameToKey("AttributeModifierPoolUpdate");
-	return reinterpret_cast<BfmeVisionBonusSource *>(findModule(key_AttributeModifierPoolUpdate));
+	return reinterpret_cast<AttributeModifierPoolUpdate *>(findModule(key_AttributeModifierPoolUpdate));
 }
