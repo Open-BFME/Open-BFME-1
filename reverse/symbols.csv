@@ -4760,7 +4760,6 @@ name,address,notes
 ??1Gen_dtor_002cdd60@@UAE@XZ,0x0001A3B6,gen-dtor class destructor
 ??1Gen_dtor_002ceea0@@UAE@XZ,0x00038BC2,gen-dtor class destructor
 ??1Gen_dtor_002cf290@@UAE@XZ,0x000016E5,gen-dtor class destructor
-??1Gen_dtor_002cf5d0@@UAE@XZ,0x0002EE56,gen-dtor class destructor
 ??1Gen_dtor_002cf860@@UAE@XZ,0x0003F896,gen-dtor class destructor
 ??1Gen_dtor_002cfb30@@UAE@XZ,0x00012157,gen-dtor class destructor
 ??1Gen_dtor_002cfee0@@UAE@XZ,0x000172BF,gen-dtor class destructor
@@ -35489,8 +35488,6 @@ name,address,notes
 ?b_002cf290@@YAXXZ,0x002CF290,gen-thunk body
 ?b_002cf2c0@@YAXXZ,0x002CF2C0,gen-thunk body
 ?b_002cf5a0@@YAXXZ,0x002CF5A0,gen-thunk body
-?b_002cf5d0@@YAXXZ,0x002CF5D0,gen-thunk body
-?b_002cf600@@YAXXZ,0x002CF600,gen-thunk body
 ?b_002cf610@@YAXXZ,0x002CF610,gen-thunk body
 ?b_002cf6b0@@YAXXZ,0x002CF6B0,gen-thunk body
 ?b_002cf6e0@@YAXXZ,0x002CF6E0,gen-thunk body
@@ -82758,3 +82755,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?buildFieldParse@MonsterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001C008,unique ILT to 0x002CDA00
 ??1RepairDockUpdateModuleData@@UAE@XZ,0x0003CFB5,destructor ILT to 0x002CEF90
 ??_GRepairDockUpdateModuleData@@UAEPAXI@Z,0x000389C4,class vftable slot zero ILT to 0x002CEF60
+??1SupplyCenterDockUpdateModuleData@@UAE@XZ,0x0002EE56,destructor ILT to 0x002CF600
+??_GSupplyCenterDockUpdateModuleData@@UAEPAXI@Z,0x00009F2A,class vftable slot zero ILT to 0x002CF5D0

@@ -24496,3 +24496,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_002cef60@@UAEPAXI@Z,0x002CEF60,generated deleting-destructor identity replaced by RepairDockUpdateModuleData scalar deleting destructor; class vftable slot zero points through ILT 0x000389C4 to this body
 ?m@Gen_002cef90@@QAEXXZ,0x002CEF90,generated store-method identity replaced by RepairDockUpdateModuleData::~RepairDockUpdateModuleData; deleting destructor 0x002CEF60 calls it through ILT 0x0003CFB5
 ??_GRepairDockUpdateModuleData@@UAEPAXI@Z,0x005BF290,wrong ICF alias removed: the RepairDockUpdateModuleData vftable reaches its actual deleting destructor at 0x002CEF60 through ILT 0x000389C4
+??_GGen_dtor_002cf5d0@@UAEPAXI@Z,0x002CF5D0,generated deleting-destructor identity replaced by SupplyCenterDockUpdateModuleData scalar deleting destructor; class vftable slot zero points through ILT 0x00009F2A
+?m@Gen_002cf600@@QAEXXZ,0x002CF600,generated store-method identity replaced by SupplyCenterDockUpdateModuleData::~SupplyCenterDockUpdateModuleData; deleting destructor 0x002CF5D0 calls it through ILT 0x0002EE56
