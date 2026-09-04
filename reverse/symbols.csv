@@ -79776,7 +79776,6 @@ name,address,notes
 ?notifyNotReady@BfmeRvaB7E0Manager@@QAEXPAX@Z,0x009F2670,assigned-body helper for Rva00247E80
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
 ?notifyOther@BfmeLinkedObjBE@@QAEXPAV1@PAX@Z,0x000389D3,pin
-?notifyPreFire@WeaponTemplate@@QAEXPAVWeapon@@PBVObject@@HH@Z,0x00005704,Open-BFME5 ILT to WeaponTemplate pre-fire list walk body 0x001E6310; called from preFireWeapon 0x001E8970
 ?notifyReady@BfmeRvaB7E0Manager@@QAEXPAX@Z,0x009F2660,assigned-body helper for Rva00247E80
 ?notifyScriptEngine@SpecialPowerCompletionDie@@QAEXXZ,0x00017981,Open-BFME5 ILT from zh_sweep packet 00256070
 ?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay terrain shroud-notification target read from retail REL32
