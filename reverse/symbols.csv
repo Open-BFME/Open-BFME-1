@@ -4522,7 +4522,6 @@ name,address,notes
 ??1Gen_dtor_0025a620@@UAE@XZ,0x00033AF0,gen-dtor class destructor
 ??1Gen_dtor_0025ac50@@UAE@XZ,0x00032E25,gen-dtor class destructor
 ??1Gen_dtor_0025ae30@@UAE@XZ,0x000227B4,gen-dtor class destructor
-??1Gen_dtor_0025ae70@@UAE@XZ,0x00031548,gen-dtor class destructor
 ??1Gen_dtor_0025bbf0@@UAE@XZ,0x00002F86,gen-dtor class destructor
 ??1Gen_dtor_0025cc50@@UAE@XZ,0x0004854A,gen-dtor class destructor
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
@@ -31782,13 +31781,11 @@ name,address,notes
 ?b_0025acc0@@YAXXZ,0x0025ACC0,gen-thunk body
 ?b_0025acf0@@YAXXZ,0x0025ACF0,gen-thunk body
 ?b_0025ad40@@YAXXZ,0x0025AD40,gen-thunk body
-?b_0025ad50@@YAXXZ,0x0025AD50,gen-thunk body
 ?b_0025ad80@@YAXXZ,0x0025AD80,gen-thunk body
 ?b_0025ad90@@YAXXZ,0x0025AD90,gen-thunk body
 ?b_0025ae20@@YAXXZ,0x0025AE20,gen-thunk body
 ?b_0025ae30@@YAXXZ,0x0025AE30,gen-thunk body
 ?b_0025ae60@@YAXXZ,0x0025AE60,gen-thunk body
-?b_0025ae70@@YAXXZ,0x0025AE70,gen-thunk body
 ?b_0025aea0@@YAXXZ,0x0025AEA0,gen-thunk body
 ?b_0025aee0@@YAXXZ,0x0025AEE0,gen-thunk body
 ?b_0025b2b0@@YAXXZ,0x0025B2B0,gen-thunk body
@@ -82725,3 +82722,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GWeaponChangeSpecialPowerModule@@MAEPAXI@Z,0x000320DD,primary class vtable slot zero ILT to 0x0026CCD0
 ??1CashHackSpecialPower@@MAE@XZ,0x00010370,destructor ILT to 0x00258300
 ??_GCashHackSpecialPower@@MAEPAXI@Z,0x0003BEF8,primary class vtable slot zero ILT to 0x00258560
+??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
+??_GDominateEnemySpecialPower@@MAEPAXI@Z,0x0001CD9B,primary class vtable slot zero ILT to 0x0025AE70

@@ -43,6 +43,7 @@ class SpecialAbilityUpdate : public BehaviorModule,
 {
 public:
 	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+	virtual ~SpecialAbilityUpdate();
 
 private:
 	// Twelve bytes of state that only this derived class pins down: the fourth
@@ -58,6 +59,7 @@ class DominateEnemySpecialPowerHelper
 {
 public:
 	DominateEnemySpecialPowerHelper() {}
+	~DominateEnemySpecialPowerHelper() {}
 
 	virtual void dominateEnemySpecialPowerHelperAnchor();
 };
@@ -67,11 +69,18 @@ class DominateEnemySpecialPower : public SpecialAbilityUpdate
 public:
 	DominateEnemySpecialPower( Thing *thing, const ModuleData *moduleData );
 
+protected:
+	virtual ~DominateEnemySpecialPower();
+
 private:
 	DominateEnemySpecialPowerHelper m_helper;		// +0x20
 };
 
 DominateEnemySpecialPower::DominateEnemySpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialAbilityUpdate( thing, moduleData )
+{
+}
+
+DominateEnemySpecialPower::~DominateEnemySpecialPower()
 {
 }

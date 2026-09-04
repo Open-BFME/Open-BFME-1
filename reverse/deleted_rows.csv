@@ -24609,3 +24609,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_0026ccd0@@UAEPAXI@Z,0x0026CCD0,address-derived identity replaced by byte-verified WeaponChangeSpecialPowerModule destructor
 ??1Rva00258300MultiTailDtor@@UAE@XZ,0x00258300,address-derived identity replaced by byte-verified CashHackSpecialPower destructor
 ??_GGen_dtor_00258560@@UAEPAXI@Z,0x00258560,address-derived identity replaced by byte-verified CashHackSpecialPower destructor
+??1Rva0025AD50MultiTailDtor@@UAE@XZ,0x0025AD50,address-derived identity replaced by byte-verified DominateEnemySpecialPower destructor
+??_GGen_dtor_0025ae70@@UAEPAXI@Z,0x0025AE70,address-derived identity replaced by byte-verified DominateEnemySpecialPower destructor
