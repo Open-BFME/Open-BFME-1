@@ -82326,3 +82326,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
 ?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
 ?hide@Radar@@QAEXXZ,0x0001827D,AptPalantir immediate-hide notification guarded by TheRadar
+?close@PalantirAptWindow@@QAEXH@Z,0x0002144A,AptPalantir OnClosed callback closes its registered APT window
+?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
