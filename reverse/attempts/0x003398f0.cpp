@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
-// partial score=0.78
+// partial score=0.78 date=2026-09-04
 //
 // Open-BFME5: ScriptEngine-shaped AsciiString forwarder at retail 0x003398F0
 // (42B). add ecx,0x17088 then cdecl helper ILT 0x00044E3B -> 0x001945D0.
