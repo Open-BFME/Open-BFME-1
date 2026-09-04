@@ -74,6 +74,11 @@ public:
 	GUICommandType m_command;
 };
 
+inline bool isStopButton(const CommandButton *button)
+{
+	return button->getCommandType() == GUI_COMMAND_STOP;
+}
+
 class CommandSet
 {
 public:
@@ -113,23 +118,20 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 		return;
 	if (owner)
 	{
+		const CommandSet *commandSet;
 		AICommandInterface *ai = owner->m_ai;
 		if (ai)
 		{
-			const CommandSet *commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
+			commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
 			if (commandSet)
 			{
 				CommandSourceType src = cmdSource;
 				for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
 				{
 					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-					const CommandButton *requestedButton =
-						*reinterpret_cast<const CommandButton * volatile *>(&commandButton);
-					if (requestedButton == aCommandButton)
-					{
-						if (requestedButton->getCommandType() == GUI_COMMAND_STOP)
-							reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
-					}
+					if (aCommandButton == *(const CommandButton * volatile *)&commandButton &&
+						isStopButton(*(const CommandButton * volatile *)&commandButton))
+						reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
 				}
 			}
 		}

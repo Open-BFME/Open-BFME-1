@@ -435,8 +435,6 @@ AggregateDefClass::Build_Subobject_List
 	RenderObjClass &model
 )
 {
-	int index;
-
 	// Loop through all the bones in this render obj
 	int bone_count = model.Get_Num_Bones ();
 	for (int bone_index = 0; bone_index < bone_count; bone_index ++) {			
@@ -444,7 +442,7 @@ AggregateDefClass::Build_Subobject_List
 		
 		// Build a list of nodes that are contained in the vanilla model
 		DynamicVectorClass <RenderObjClass *> orig_node_list;
-		for (index = 0;
+		for (int index = 0;
 			  index < original_model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = original_model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -455,7 +453,7 @@ AggregateDefClass::Build_Subobject_List
 
 		// Build a list of nodes that are contained in this bone
 		DynamicVectorClass <RenderObjClass *> node_list;
-		for (index = 0;
+		for (int index = 0;
 			  index < model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -494,13 +492,13 @@ AggregateDefClass::Build_Subobject_List
 		}
 
 		// Free our hold on the render objs in the original node list
-		for (index = 0; index < orig_node_list.Count (); index ++) {
+		for (int index = 0; index < orig_node_list.Count (); index ++) {
 			REF_PTR_RELEASE (orig_node_list[index]);
 		}
 		orig_node_list.Delete_All ();
 
 		// Free our hold on the render objs in the node list
-		for (index = 0; index < node_list.Count (); index ++) {
+		for (int index = 0; index < node_list.Count (); index ++) {
 			REF_PTR_RELEASE (node_list[index]);
 		}
 		node_list.Delete_All ();
@@ -559,7 +557,7 @@ AggregateDefClass::Load_W3D (ChunkLoadClass &chunk_load)
 		switch (chunk_load.Cur_Chunk_ID()) {
 
 			case W3D_CHUNK_AGGREGATE_HEADER:
-				error = Read_Header(chunk_load);
+				error = (WW3DErrorType)Read_Header(chunk_load);
 				break;
 
 			case W3D_CHUNK_AGGREGATE_INFO:
@@ -595,12 +593,11 @@ AggregateDefClass::Load_W3D (ChunkLoadClass &chunk_load)
 //
 //	Read_Header
 //
-WW3DErrorType
-// ?Read_Header@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
+bool
 AggregateDefClass::Read_Header (ChunkLoadClass &chunk_load)
 {
-	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_LOAD_FAILED;
+	// BFME keeps the byte-sized success result in a callee-saved register.
+	bool ret_val = false;
 
 	// Is this the header chunk?
 	W3dAggregateHeaderStruct header = { 0 };
@@ -611,10 +608,9 @@ AggregateDefClass::Read_Header (ChunkLoadClass &chunk_load)
 		m_Version = header.Version;
 
 		// Success!
-		ret_val = WW3D_ERROR_OK;
+		ret_val = true;
 	}
 
-	// Return the WW3D_ERROR_TYPE return code
 	return ret_val;
 }
 
@@ -643,7 +639,7 @@ AggregateDefClass::Read_Info (ChunkLoadClass &chunk_load)
 			  isubobject ++) {
 
 			// Read this subobject's definition from the file
-			ret_val = Read_Subobject (chunk_load);
+				ret_val = (WW3DErrorType)Read_Subobject (chunk_load);
 		}				
 	}
 
@@ -656,12 +652,11 @@ AggregateDefClass::Read_Info (ChunkLoadClass &chunk_load)
 //
 //	Read_Subobject
 //
-WW3DErrorType
-// ?Read_Subobject@AggregateDefClass@@MAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z present-unmatched
+bool
 AggregateDefClass::Read_Subobject (ChunkLoadClass &chunk_load)
 {
-	// Assume error
-	WW3DErrorType ret_val = WW3D_ERROR_LOAD_FAILED;
+	// BFME returns a byte-sized success result.
+	bool ret_val = false;
 
 	// Read the subobject information from the file
 	W3dAggregateSubobjectStruct subobj_info = { 0 };
@@ -671,10 +666,9 @@ AggregateDefClass::Read_Subobject (ChunkLoadClass &chunk_load)
 		Add_Subobject (subobj_info);
 
 		// Success!
-		ret_val = WW3D_ERROR_OK;
+		ret_val = true;
 	}
 
-	// Return the WW3D_ERROR_TYPE return code
 	return ret_val;
 }
 

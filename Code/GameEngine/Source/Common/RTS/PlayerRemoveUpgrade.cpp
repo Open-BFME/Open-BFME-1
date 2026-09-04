@@ -1,8 +1,5 @@
-// ?removeUpgrade@Player@@QAEXPBVUpgradeTemplate@@@Z
-// partial score=0.9 date=2026-09-01
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?removeUpgrade@Player@@QAEXPBVUpgradeTemplate@@@Z:
-// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/Player.cpp
+// Clean C++ reconstruction of Player::removeUpgrade().
 
 typedef unsigned int UnsignedInt;
 
@@ -33,13 +30,13 @@ private:
 class UpgradeMaskType
 {
 public:
-	void clear( const UpgradeTemplate *upgradeTemplate )
+	void clear(const UpgradeTemplate *upgradeTemplate)
 	{
 		UnsignedInt bit = upgradeTemplate->getUpgradeMask();
-		UnsignedInt index = bit >> 5;
+		UnsignedInt *word = &m_bits[bit >> 5];
 		UnsignedInt mask = 1U << (bit & 31);
-		UnsignedInt value = m_bits[index] & ~mask;
-		m_bits[index] = value;
+		UnsignedInt value = *word & ~mask;
+		*word = value;
 	}
 
 private:
@@ -49,10 +46,10 @@ private:
 class Player
 {
 public:
-	void removeUpgrade( const UpgradeTemplate *upgradeTemplate );
+	void removeUpgrade(const UpgradeTemplate *upgradeTemplate);
 
 private:
-	Upgrade *findUpgrade( const UpgradeTemplate *upgradeTemplate )
+	Upgrade *findUpgrade(const UpgradeTemplate *upgradeTemplate)
 	{
 		for (Upgrade *upgrade = m_upgradeList; upgrade != 0; upgrade = upgrade->m_next)
 		{
@@ -69,9 +66,9 @@ private:
 	UpgradeMaskType m_upgradesCompleted;
 };
 
-void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
+void Player::removeUpgrade(const UpgradeTemplate *upgradeTemplate)
 {
-	Upgrade *upgrade = findUpgrade( upgradeTemplate );
+	Upgrade *upgrade = findUpgrade(upgradeTemplate);
 
 	if (upgrade != 0)
 	{
@@ -82,7 +79,7 @@ void Player::removeUpgrade( const UpgradeTemplate *upgradeTemplate )
 		else
 			m_upgradeList = upgrade->m_next;
 
-		m_upgradesInProgress.clear( upgradeTemplate );
-		m_upgradesCompleted.clear( upgradeTemplate );
+		m_upgradesInProgress.clear(upgradeTemplate);
+		m_upgradesCompleted.clear(upgradeTemplate);
 	}
 }

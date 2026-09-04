@@ -1,6 +1,5 @@
-// ?enableEmitters@W3DTankTruckDraw@@IAEX_N@Z
-// partial score=0.57 date=2026-09-02
 // cl: /O2 /Ob2 /GR- /EHsc- /MD /DNDEBUG /DWIN32 /D_WINDOWS
+// Open-BFME BFME-layout reconstruction of W3DTankTruckDraw::enableEmitters.
 
 class ParticleSystem
 {
@@ -14,17 +13,18 @@ ParticleSystem *Make00001B18();
 class BfmeTankTruckParticlePtr
 {
 public:
-	operator ParticleSystem *() const { return m_target; }
+	operator bool() const { return m_system != 0; }
+
 	ParticleSystem *operator->() const
 	{
-		ParticleSystem *target = m_target;
-		if( !target )
-			target = Make00001B18();
-		return target;
+		if( !m_system )
+			return Make00001B18();
+		return m_system;
 	}
-private:
-	ParticleSystem *m_target;
-	unsigned char m_unreconstructed_004[ 8 ];
+
+	ParticleSystem *m_system;
+	BfmeTankTruckParticlePtr *m_previous;
+	BfmeTankTruckParticlePtr *m_next;
 };
 
 class W3DTankTruckDraw
@@ -42,6 +42,7 @@ protected:
 	void enableEmitters( bool enable );
 };
 
+// ?enableEmitters@W3DTankTruckDraw@@IAEX_N@Z 0x007800A0
 void W3DTankTruckDraw::enableEmitters( bool enable )
 {
 	createEmitters();
@@ -63,4 +64,3 @@ void W3DTankTruckDraw::enableEmitters( bool enable )
 	if( m_powerslideEffect && !enable )
 		m_powerslideEffect->stop();
 }
-

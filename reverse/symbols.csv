@@ -2650,6 +2650,7 @@ name,address,notes
 ??0MaterialRemapperClass@@QAE@PAVMaterialInfoClass@@0@Z,0x0092FD60,callee of the byte-proven clone_materials 0x96DDC0; ecx=stack temp and args are (srcmesh.MatInfo this->MatInfo) with EH state 0
 ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003BEDA,module ctor (friend_newModuleInstance retail call target)
 ??0MeshGeometryClass@@QAE@ABV0@@Z,0x009267E0,base copy ctor; REL32 target of MeshModelClass copy ctor at 0x0094EC44
+??0MeshLoadContextClass@@AAE@XZ,0x00970180,BFME mesh-load context constructor called by MeshModelClass::Load_W3D
 ??0MeshMatDescClass@@QAE@ABV0@@Z,0x0092C0D0,REL32 target of MeshModelClass copy ctor at 0x0094ECE0 and 0x0094ED1F
 ??0MeshMatDescClass@@QAE@XZ,0x0092A2B0
 ??0MeshModelClass@@QAE@ABV0@@Z,0x0094EC20,Open-BFME5 retail MeshModelClass copy constructor pin
@@ -2956,6 +2957,7 @@ name,address,notes
 ??0Rva00770CB0Base@@QAE@ABV0@@Z,0x00887B60,offset-zero base copy called by the aggregate copy ctor at 0x00770CB0
 ??0Rva00770CB0Member12@@QAE@ABV0@@Z,0x00037934,12-byte member copy called by the aggregate copy ctor at 0x00770CB0
 ??0Rva00784560StringBase@@IAE@ABV0@@Z,0x00888400,retail Unicode string copy-constructor thunk for the assigned 0x00784560 viewport setup
+??0Rva00789220Base@@QAE@PAX@Z,0x00887B60,AsciiString-like leading member copy constructor
 ??0Rva0078FA30Base@@QAE@H@Z,0x00048F09,retail ILT constructor call decoded from the exact 0x0078FA30 factory body
 ??0Rva007A12C0CachedVolume@@QAE@PAX0@Z,0x0002687D,address-derived cached-volume constructor ILT forwarding to assigned body 0x007A0DF0
 ??0Rva007B12F0Base@@QAE@XZ,0x0000AF38,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x007B12F0
@@ -8142,6 +8144,7 @@ name,address,notes
 ??1MemoryWriteFile@@UAE@XZ,0x009CB590,called by the MemoryWriteFile scalar deleting destructor
 ??1MeshClass@@UAE@XZ,0x0092D990,0x0092E490 wrapper call; MeshClass field cleanup and dual W3DMPO/RenderObj vtables; -8 adjustor thunk reaches same deleting destructor
 ??1MeshGeometryClass@@UAE@XZ,0x00927880,source structure and vtable/base calls align; BFME-only third Reset_Geometry argument explains 99/101-byte delta; 0x00927F10 wrapper calls target
+??1MeshLoadContextClass@@AAE@XZ,0x0096FD30,BFME mesh-load context destructor called by MeshModelClass::Load_W3D
 ??1MeshModelClass@@UAE@XZ,0x0094ED60,0x0094F2E0 deleting wrapper directly calls this body; destructor installs the MeshModel vtables also used by the exact 0x0094EC20 copy constructor
 ??1MilitarySubtitleData@InGameUI@@QAE@XZ,0x00018CE1,ILT thunk to the military subtitle record destructor
 ??1MissingAnimClass@@UAE@XZ,0x00002C7A,ILT thunk; retail call sites use the thunk
@@ -9568,6 +9571,7 @@ name,address,notes
 ?Get_Bounding_Sphere@MeshGeometryClass@@QAEXPAVSphereClass@@@Z,0x00924E70
 ?Get_Char_Data@FontCharsClass@@AAEPBVFontCharsClassCharDataStruct@@G@Z,0x00941290,the private class-declared spelling render2dsentence.h emits for the body already pinned as ?Get_Char_Data@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z; same function, the donor declared it public and struct
 ?Get_Char_Data@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z,0x00941290,body
+?Get_Char_Data@Rva00941400Font@@QAEPBURva00941400CharRecord@@G@Z,0x009412F0,address-derived callee pin from the 0x00941400 retail call
 ?Get_Char_Spacing@FontCharsClass@@QAEHG@Z,0x009414D0,body
 ?Get_Color_Array@MeshMatDescClass@@QAEPAIH_N@Z,0x0002F8E2,
 ?Get_DX8_Render_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,0x00907BE0
@@ -9761,6 +9765,7 @@ name,address,notes
 ?Replace_Texture@MeshModelClass@@QAEXPAVTextureClass@@0@Z,0x00924C30,pinharvest x1 (body)
 ?Replace_VertexMaterial@MeshModelClass@@QAEXPAVVertexMaterialClass@@0@Z,0x00924C30,pinharvest x1 (body)
 ?Reset@HAnimComboClass@@QAEXXZ,0x00974DC0
+?Reset@MeshModelClass@@QAEXHHH_N@Z,0x0094DFD0,BFME four-argument mesh reset reached from the exact Load_W3D header path
 ?Reset@TerrainTracksRenderObjClassSystem@@QAEXXZ,0x0003205B,W3DTerrainVisual reset terrain tracks call through retail ILT
 ?Reset@W3DShadowManager@@QAEXXZ,0x00012D1E,W3DTerrainVisual reset shadow manager call through retail ILT
 ?ResetInGameChat@@YAXXZ,0x00033A6E
@@ -10207,6 +10212,8 @@ name,address,notes
 ?W3DGadgetPushButtonImageDrawThree@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794120,caller-proven from W3DGadgetPushButtonImageDraw dispatch
 ?W3DRadarResetLock@@YAXXZ,0x00903090,W3DRadar reset direct-call device lock
 ?W3DRadarResetUnlock@@YAXXZ,0x00905B10,W3DRadar reset direct-call device unlock
+?WouldMapTransfer@@YA_NPAVGameInfo@@@Z,0x000393FB,BFME GameInfo overload called by WOLGameSetupMenu
+?WouldMapTransfer@@YA_NPAVGameInfo@@@Z,0x004515F0,BFME GameInfo overload body candidate for re-linked callers
 ?Write@ChunkSaveClass@@QAEKPBXK@Z,0x009E18A0
 ?WriteConditionDataChunk@Condition@@SAXAAVDataChunkOutput@@PAV1@@Z,0x0003DA91
 ?WriteGroupDataChunk@@YAXAAVDataChunkOutput@@PAVScriptList@@PAVScriptGroup@@@Z,0x000285D3,ScriptList group writer via ILT thunk
@@ -72477,6 +72484,7 @@ name,address,notes
 ?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
+?bfmeCheck@BfmePred490@@QAEDPAX0@Z,0x00033915,ILT target from retail 0x00220490
 ?bfmeCheckA@@YAHPAX@Z,0x00894D90,Open-BFME5 the guard the cleanup at 0x00783A50 calls
 ?bfmeCheckAttackViewAltHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x0000204A,pin Pathfinder attack-view alt helper ILT target
 ?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z,0x00005484,pin Pathfinder attack-view helper ILT target
@@ -74144,6 +74152,7 @@ name,address,notes
 ?bfmePredV30@@YAHHHD@Z,0x0003B557,Open-BFME5 3-arg predicate for 0x0082E680 find-if
 ?bfmePrep911E@BfmeSub911E@@QAEXXZ,0x0090F140,pin
 ?bfmePrep986C@BfmeC986@@QAEXXZ,0x00006258,pin
+?bfmePrep@Gen_00220490@@QAEXXZ,0x0000C1E9,ILT target from retail 0x00220490
 ?bfmePrep@Gen_006A6AF0@@QAEXHH@Z,0x000299A1,Open-BFME5 ILT from 0x006A6AF0 grid walk
 ?bfmePrep@Gen_00742DA0@@QAEXH@Z,0x0001AB54,Open-BFME5 ILT from 0x00742DA0 flag reset
 ?bfmePrepVNI@BfmeUpdateVNI@@QAEXXZ,0x00017D5F,Open-BFME5 address-derived preparation call from the 0x00298530 update
@@ -74266,6 +74275,8 @@ name,address,notes
 ?bfmeReserve@Gen_000B54C0@@AAEXHPAX@Z,0x00043E37,Open-BFME5 ILT the vector assignment at 0x000B54C0 reserves through
 ?bfmeReserve@Gen_002F8980@@AAEXHPAX@Z,0x00015ABE,Open-BFME5 ILT the vector assignment at 0x002F8980 reserves through
 ?bfmeReserve@Gen_003A9560@@AAEXHPAX@Z,0x00027098,Open-BFME5 ILT the vector assignment at 0x003A9560 reserves through
+?bfmeReserve@Rva00789220VectorA@@QAEXI@Z,0x00016E96,ILT for first hash bucket initializer
+?bfmeReserve@Rva00789220VectorB@@QAEXI@Z,0x000330A5,ILT for second hash bucket initializer
 ?bfmeReserveVKJ@BfmeStrVKJ@@QAEXIHIHI@Z,0x0089E570,pin
 ?bfmeReserveVKK@BfmeStrVKK@@QAEXIHIHI@Z,0x0089E570,pin
 ?bfmeReserveVLT@BfmeStrVLT@@QAEXI@Z,0x00025243,pin
@@ -77843,6 +77854,7 @@ name,address,notes
 ?getGameSpySlot@GameSpyStagingRoom@@QAEPAVGameSpyGameSlot@@H@Z,0x000061D6,ICF alias: this thunk chains to the GameInfo::getSlot body at 0x0061E8B0; the slot accessors compile to the same bytes
 ?getGoalObject@BfmeStateMachine@@QAEPAVBfmeTargetObject@@XZ,0x0000E570,BannerCarrier target predicate reads the source state machine goal object
 ?getGoalObject@StateMachine@@QAEPAVObject@@XZ,0x0000E570,retail AIEnterState::update call target
+?getGoalObject@StateMachine@@QBEPBVObject@@XZ,0x000479BA,retail ExitConditions shouldExit const goal-object call target
 ?getGridResolution@WaterRenderObjClass@@QAEXPAM00@Z,0x0001125C,pinharvest x1 (thunk)
 ?getGridTransform@WaterRenderObjClass@@QAEXPAVMatrix3D@@@Z,0x00019376,ILT thunk; real body 0xB9FB50
 ?getGroup@Object@@QAEPAVAIGroup@@XZ,0x008F9550,derived-ICF
@@ -79398,6 +79410,7 @@ name,address,notes
 ?insert_unique_noresize@?$hashtable@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_008534e0_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_008534e0_p12cd@@@2@@Z,0x00852760,gen-tgrid payload member
 ?insert_unique_noresize@?$hashtable@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00853590_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_00853590_p12cd@@@2@@Z,0x00852760,gen-tgrid payload member
 ?insert_unique_noresize@?$hashtable@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@6@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVBucket@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@PAVBucket@@@2@@Z,0x0008FAB0,NameKeyGenerator aux hash_map hashtable<>::insert_unique_noresize() proven via nameToKey(const char*) insert call site
+?install_materials@MeshModelClass@@IAEXPAVMeshLoadContextClass@@@Z,0x0096E7C0,BFME material transfer called by Load_W3D
 ?internalCreateEvent@Radar@@IAEXPBUCoord3D@@W4RadarEventType@@MPBURGBAColorInt@@2@Z,0x000280D8,Open-BFME5 Radar::createEvent internalCreateEvent ILT decoded from 0x00108140
 ?internalSetState@StateMachine@@QAE?AW4StateReturnType@@I@Z,0x000294E7,ILT fronting 0x000A1360; from State::friend_checkForSleepTransitions
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
@@ -79965,6 +79978,7 @@ name,address,notes
 ?portableMapPathToRealMapPath@GameState@@QBE?AV?$StringBase@D@@ABV2@@Z,0x0010F550,same body as the AsciiString-typed ledger row; BFME AsciiString is StringBase<char> so the callee mangles with the instantiation
 ?postLoad@ExperienceLevelSystem@@QAEXPAVObject@@@Z,0x00008DFA,ExperienceTracker transfer calls the retail ExperienceLevelSystem post-load helper through its ILT
 ?postTimedOp@@YAXVLoadGameFadeHolder@@PAX@Z,0x0000FC72,ILT -> 0x0007BA90; cdecl (Holder key) poster used by postLoadGameFadeSteps
+?post_process@MeshModelClass@@IAEXXZ,0x0096E750,BFME mesh post-process called by Load_W3D
 ?pre@Gen0004A5A7@@QAEXXZ,0x0004A5A7,leading member call of the 0x003D0EE0 nested walk reached via incremental-link thunk; address-derived name
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
@@ -80074,6 +80088,7 @@ name,address,notes
 ?readUnicodeString@@YA?AVUnicodeString@@PAU_iobuf@@@Z,0x000322F4,shared replay Unicode string reader thunk
 ?readUntilSemicolon@@YAXPAVFile@@PADH@Z,0x004843E0,decoded from parseDefaultColor call site
 ?read_chunks@MeshGeometryClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,0x00927950,Load_W3D call-site and chunk-loop body identify the BFME reader
+?read_chunks@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096FF70,BFME mesh chunk dispatcher called by Load_W3D
 ?read_dcg@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D500,rel32 pin for read_material_pass
 ?read_dig@MeshModelClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096D810,rel32 pin for read_material_pass
 ?read_material_pass@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096FB60,BFME bool-returning material pass loader called by read_prelit_material

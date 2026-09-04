@@ -87,7 +87,7 @@ def rewrite(raw, keep):
     return b"".join(kept), dropped
 
 
-def atomic_write_bytes(path, data, retries=40, delay=0.25):
+def atomic_write_bytes(path, data, retries=240, delay=0.25):
     """Replace `path` with `data` so no reader ever sees a torn file.
 
     A plain write_bytes truncates first and fills 30 MB afterwards; a reader
@@ -95,7 +95,8 @@ def atomic_write_bytes(path, data, retries=40, delay=0.25):
     -- that is how symbols.csv lost 14,858 rows on 2026-09-02. Write beside
     the target, fsync, then rename over it. On Windows the rename fails with
     PermissionError while a reader still holds the old file open, so retry
-    briefly; readers are short.
+    for up to a minute: with 40 fleet seats each re-reading the 30 MB ledger,
+    ten seconds of retries was not enough on 2026-09-04.
     """
     import os
     import time

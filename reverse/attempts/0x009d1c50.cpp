@@ -29,9 +29,10 @@ private:
 
 char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 {
+	int (__cdecl **classifySlot)(int) = &g_bfmeFn1182;
 	_ReadWriteBarrier();
 	out->releaseBuffer();
-	int (__cdecl *classify)(int) = g_bfmeFn1182;
+	int (__cdecl *classify)(int) = *classifySlot;
 	while (m_pos < m_end)
 	{
 		if (classify(static_cast<signed char>(m_buf[m_pos])) == 0)

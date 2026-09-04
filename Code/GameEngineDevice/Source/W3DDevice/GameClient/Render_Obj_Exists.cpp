@@ -15,16 +15,16 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
 class CriticalSectionLock
 {
 public:
-	explicit CriticalSectionLock(int lock) : m_lock(lock)
+	explicit CriticalSectionLock(CRITICAL_SECTION *lock) : m_lock(lock)
 	{
-		EnterCriticalSection((CRITICAL_SECTION *)m_lock);
+		EnterCriticalSection(m_lock);
 	}
 	~CriticalSectionLock()
 	{
-		LeaveCriticalSection((CRITICAL_SECTION *)m_lock);
+		LeaveCriticalSection(m_lock);
 	}
 
-	int m_lock;
+	CRITICAL_SECTION *m_lock;
 };
 
 class NameKeyGenerator
@@ -58,13 +58,15 @@ extern AssetRegistry *g_theAssetRegistry;
 // ?Render_Obj_Exists_Impl@AssetRegistry@@QAE_NPBD@Z
 bool AssetRegistry::Render_Obj_Exists_Impl(const char *name)
 {
-	CriticalSectionLock lock((int)&m_lock);
-	unsigned int key = m_hash_context->nameToLowercaseKey(name);
+	register AssetRegistry *self = this;
+	register CRITICAL_SECTION *critical = &self->m_lock;
+	CriticalSectionLock lock(critical);
+	unsigned int key = self->m_hash_context->nameToLowercaseKey(name);
 	AssetRegistryEntry *entry = 0;
 	if (key != 0)
 	{
-		entry = m_buckets_begin[
-			key % (unsigned int)(m_buckets_end - m_buckets_begin)];
+		entry = self->m_buckets_begin[
+			key % (unsigned int)(self->m_buckets_end - self->m_buckets_begin)];
 		while (entry != 0 && entry->m_key != key)
 			entry = entry->m_next;
 	}

@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+# A fleet seat: keeps one engine busy. $1 = engine, $2 = seat id.
+#   engines: grok | sol | luna        -> claim a whole dump file (>= 12 bodies), smallest first
+#            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
+#            for up to 3 sessions while it is still a dump and the last banked partial
+#            scored >= 0.5 (each session restarts from the stash)
+#   luna = codex gpt-5.6-luna at reasoning effort max; sol = codex gpt-5.6-sol medium
+cd "$(dirname "$0")/.." || exit 1
+ENGINE="$1"; SEAT="$2"
+case "$ENGINE" in
+  lunahigh*) CMODEL=luna-high; CM="gpt-5.6-luna"; CE="high";;
+  luna*) CMODEL=luna-max; CM="gpt-5.6-luna"; CE="max";;
+  solhigh*) CMODEL=sol-high; CM="gpt-5.6-sol"; CE="high";;
+  sol*)  CMODEL=sol;      CM="gpt-5.6-sol";  CE="medium";;
+  *)     CMODEL=grok;;
+esac
+BIGNOTE="LARGE body. You have this whole session for it; previous sessions may have banked a stash (START FROM STASH line) -- continue from it, do not restart from scratch. Identify class and callees first (vtable_lookup.py, symbols.csv pins, ZH twin), get the control-flow skeleton compiling, then iterate with probe.py on the FIRST divergence only, one lever at a time (docs/shape_levers.md). Before you stop, ALWAYS bank your best attempt with re_log.py --stash and an honest --score; the next session resumes from it."
+
+run_engine() {  # $1 brief, $2 log
+  if [ "${ENGINE#grok}" != "$ENGINE" ]; then
+    "$HOME/.grok/bin/grok.exe" -p "$(cat "$1")" --always-approve --output-format plain > "$2" 2>&1 < /dev/null
+  else
+    # codex echoes a full turn diff of the whole tree every turn (1.5GB logs seen):
+    # keep only non-diff lines, capped in length
+    # wall-clock cap: max-effort sessions were observed running 5h on one file
+    # with nothing landed; a fresh session re-briefs from the live ledger + stashes
+    timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" "$(cat "$1")" 2>&1 < /dev/null \
+      | grep -a -v -E '^(diff --git |index [0-9a-f]+[.][.]|[+][+][+] |--- |@@ |[-+])' | cut -c1-400 > "$2"
+  fi
+}
+
+while true; do
+  if [ "${ENGINE%big}" != "$ENGINE" ]; then
+    RVA=$(python build/pick_big.py 1 | tr -d '\r' | head -1)
+    [ -z "$RVA" ] && { echo "seat $SEAT: no big body picked; retry in 60s"; sleep 60; continue; }
+    for PASS in 1 2 3; do
+      BRIEF="build/brief_seat_${ENGINE}${SEAT}_${RVA}_p${PASS}.txt"
+      python tools/brief.py --rvas "$RVA" --model "$CMODEL" --limit 1 --note "$BIGNOTE (session $PASS of 3)" > "$BRIEF" 2>/dev/null || break
+      LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${RVA}_p${PASS}.log"
+      echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVA p$PASS" >> build/fleet_logs/seats.log
+      run_engine "$BRIEF" "$LOG"
+      echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVA p$PASS" >> build/fleet_logs/seats.log
+      # continue only while still a dump and the latest banked score >= 0.5
+      python - "$RVA" <<'PY' || break
+import csv, re, sys
+rva = sys.argv[1].lower()
+src = next((r.get("source") or "" for r in csv.DictReader(open("reverse/functions.csv", newline="", encoding="utf-8", errors="replace")) if (r.get("target_rva") or "").lower() == rva), "")
+if not src.endswith(".asm"):
+    sys.exit(1)   # landed
+last = None
+for l in open("reverse/re_attempts.log", encoding="utf-8", errors="replace"):
+    p = l.rstrip("\n").split("\t")
+    if len(p) >= 5 and p[1].lower() == rva:
+        last = p
+if not last:
+    sys.exit(1)
+m = re.search(r"score=([0-9.]+)", last[4])
+sys.exit(0 if (m and float(m.group(1)) >= 0.5 and "stash=" in last[4]) else 1)
+PY
+      sleep 5
+    done
+  elif [ "${ENGINE%class}" != "$ENGINE" ]; then
+    # class lane: the dump slots of one warm vtable (most slots already landed C++)
+    python build/pick_class.py > build/.pick_class_$SEAT.txt 2>/dev/null
+    RVAS=$(head -1 build/.pick_class_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no warm class picked; retry in 120s"; sleep 120; continue; }
+    RVAS=$(head -1 build/.pick_class_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 8 --note "$NOTE Work the class as a unit: the landed slot sources give you the class definition and cl: flags; the slot index gives each dump body its ZH method name. Verify each name against the body's own bytes (callees, field offsets) before pinning it in symbols.csv (tools/pin_consistency.py --symbol NAME first, --check after). Land each body with add_match.py as soon as probe.py prints EXACT; bank anything close with re_log.py partial --stash --score before moving on." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%mid}" != "$ENGINE" ]; then
+    # mid lane: 3 bodies of 300..1000 B from one dump file whose neighbours are already C++
+    RVAS=$(python build/pick_mid.py 3 300 1000 | tr -d '\r' | tr '\n' ' ')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no mid bodies picked; retry in 60s"; sleep 60; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 3 --note "MID-SIZE bodies (300-1000 B) from one dump file whose address neighbours are ALREADY landed as real C++. Before writing anything: rg the neighbouring landed rows in reverse/functions.csv (addresses just below and above each target), open those .cpp files and reuse their class layouts, pins, callee declarations and cl: flags -- they were proven against retail. Then identity from symbols.csv pins and the ZH twin, skeleton compiling, probe.py on the FIRST divergence only, one lever at a time (docs/shape_levers.md). Land each body with add_match.py as soon as it is EXACT; after ~35 min on one body bank it (re_log.py partial --stash --score) and move to the next. Never leave without banking your best attempt for every body you touched." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%fin}" != "$ENGINE" ]; then
+    # finish lane: 2 bodies whose banked partial scored >= 0.9, start from the stash
+    RVAS=$(python build/pick_finish.py 4 0.9 | tr -d '\r' | tr '\n' ' ')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no finish bodies picked; retry in 60s"; sleep 60; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 4 --note "NEAR-LANDED bodies: each has a banked stash scoring 0.9+ (START FROM STASH line). Do not rewrite from scratch. Compile the stash, run probe.py, and work ONLY the first divergence with one lever at a time from docs/shape_levers.md (register mirror = local definition order / loads above guard / IAT CSE; sib-order; eh-transposition; fall-through flag tail). Land with add_match.py; if still short, re-bank with an honest score and what you tried." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+  else
+    FILE=$(python build/pick_file.py 12 | tr -d '\r')
+    [ -z "$FILE" ] && { echo "seat $SEAT: no file picked; retry in 60s"; sleep 60; continue; }
+    STEM=$(basename "$FILE" .asm)
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    python tools/brief.py --dump "$FILE" --model "$CMODEL" --limit 40 > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $FILE"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+  fi
+  sleep 5
+done

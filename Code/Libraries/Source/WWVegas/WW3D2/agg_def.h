@@ -149,9 +149,9 @@ class AggregateDefClass
 		//
 		//	Loading methods
 		//
-		virtual WW3DErrorType		Read_Header (ChunkLoadClass &chunk_load);
+		virtual bool				Read_Header (ChunkLoadClass &chunk_load);
 		virtual WW3DErrorType		Read_Info (ChunkLoadClass &chunk_load);
-		virtual WW3DErrorType		Read_Subobject (ChunkLoadClass &chunk_load);
+		virtual bool				Read_Subobject (ChunkLoadClass &chunk_load);
 		virtual WW3DErrorType		Read_Class_Info (ChunkLoadClass &chunk_load);
 
 		//

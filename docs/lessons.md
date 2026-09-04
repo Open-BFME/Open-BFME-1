@@ -2250,6 +2250,30 @@ and only fails against a wrong future implementation. Both are worth writing;
 certify nothing.** At least three tests written in one day passed with and without
 the fix they claimed to cover.
 
+## The allocator ranks values by first MATERIALIZATION, and an address counts before a load
+
+0x001E24F0 (78 B) was exact except retail loaded the second parameter into eax
+before the first into edx. Local definition order, reference parameters and
+copying the later pointer's fields into locals all left the order alone: every
+one of those spellings still LOADS through the first parameter first. What moved
+it was materializing an ADDRESS through the second parameter before anything
+else: `const float *tp = &other->m_x;` and reading `tp[0]`, `tp[1]`. The address
+folds back into `[eax+0x38]`, so the only visible change is which pointer the
+allocator claimed first. **Definition order is a proxy; the allocator's real
+order is first materialization, and taking a field address is a materialization
+that emits no instruction.** Row in `shape_levers.md`: "Two parameter loads swapped".
+
+The same day, 20 spellings of a 68 B x87 body (0x005F9810) failed to move a
+different wall: retail keeps three products on the FPU stack and stores them
+after an `fxch st(2)`; every clean shape stores each product as it is made.
+Constructor body versus initializer list, const-float references, copy
+constructor, destructor, `operator=`, member versus free operator, inline versus
+`__forceinline`, an explicit out-pointer with `*out=` or per-field stores, a
+by-value helper, in-place `*=`, named temporaries, and `/Ob1 /O1 /Ox /Op` all
+produce the interleaved form. That list lives in the attempt record so the next
+session starts from "needs a new mechanism", not from variant one. **A negative
+result is a finding when it is specific enough to stop a repeat.**
+
 ## Design a defect out rather than avoiding it
 
 Filter 2 had to avoid two known traps -- set-equality over additive symbol

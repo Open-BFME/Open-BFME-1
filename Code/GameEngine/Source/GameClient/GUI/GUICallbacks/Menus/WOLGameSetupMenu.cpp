@@ -80,6 +80,10 @@
 //-------------------------------------------------------------------------------------------------
 class GameSpyStagingRoom;
 
+// BFME clears the menu's retail state block through the already matched
+// 0x004F0970 body (the 0x0001B095 incremental-link thunk).
+void bfmeClearStateVJ( void );
+
 // BFME's map-transfer predicate receives the game object.  The ZH header only
 // exposes the AsciiString overload; the retail call site passes the staging
 // room itself through the BFME overload below.
@@ -1728,7 +1732,7 @@ void WOLGameSetupMenuShutdown( WindowLayout *layout, void *userData )
 	}
 	parentWOLGameSetup = NULL;
 	EnableSlotListUpdates(FALSE);
-	DeinitWOLGameGadgets();
+	bfmeClearStateVJ();
 	if (TheEstablishConnectionsMenu != NULL)
 	{
 		TheEstablishConnectionsMenu->endMenu();

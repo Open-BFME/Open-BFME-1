@@ -1,37 +1,39 @@
-// ?rva00B00260RotateVec3Array@@YAXPAURva00B00260Vec3@@PBU1@PBURva00B00260Mat3D@@H@Z
-// partial score=0.93 date=2026-09-02
-// cl: /DNDEBUG /MD /EHs-c-
-// Array rotate: 3x4 Matrix3D times Vec3, translation column unused.
+// ?rva00B00260RotateVec3Array@@YAXPAVVector3@@PBV1@ABVMatrix3D@@H@Z
+// partial score=0.96 date=2026-09-04
+// cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 
-struct Rva00B00260Vec3
+#include "vector3.h"
+#include "matrix3d.h"
+
+class Rva00B00260MatrixView : public Matrix3D
 {
-	float x;
-	float y;
-	float z;
+public:
+	static __forceinline void rotateArray(Vector3 *out, const Vector3 *in,
+		const Matrix3D &matrix, int count)
+	{
+		const Rva00B00260MatrixView &m =
+			(const Rva00B00260MatrixView &)matrix;
+		while (count--)
+		{
+			float row0z = m.Row[0][2] * in->Z;
+			out->X = row0z + m.Row[0][1] * in->Y + m.Row[0][0] * in->X;
+			out->Y = (m.Row[1][0] * in->X + m.Row[1][1] * in->Y + m.Row[1][2] * in->Z);
+			out->Z = (m.Row[2][0] * in->X + m.Row[2][1] * in->Y + m.Row[2][2] * in->Z);
+			++in;
+			++out;
+		}
+	}
 };
 
-struct Rva00B00260Mat3D
-{
-	float m[3][4];
-};
-
-void rva00B00260RotateVec3Array(Rva00B00260Vec3 *out, const Rva00B00260Vec3 *in,
-	const Rva00B00260Mat3D *mtx, int count)
+void rva00B00260RotateVec3Array(Vector3 *out, const Vector3 *in,
+	const Matrix3D &mtx, int count)
 {
 	int n = count;
-	Rva00B00260Vec3 *d = out;
-	const Rva00B00260Mat3D *m = mtx;
-	const Rva00B00260Vec3 *s = in;
+	Vector3 *d = out;
+	const Vector3 *s = in;
 
 	if (n <= 0)
 		return;
 
-	while (n--)
-	{
-		d->x = s->z * m->m[0][2] + s->y * m->m[0][1] + s->x * m->m[0][0];
-		d->y = s->x * m->m[1][0] + s->z * m->m[1][2] + s->y * m->m[1][1];
-		d->z = s->z * m->m[2][2] + s->y * m->m[2][1] + s->x * m->m[2][0];
-		++s;
-		++d;
-	}
+	Rva00B00260MatrixView::rotateArray(d, s, mtx, n);
 }

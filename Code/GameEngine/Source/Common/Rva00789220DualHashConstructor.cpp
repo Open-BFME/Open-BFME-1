@@ -1,6 +1,6 @@
-// ??0Rva00789220Holder@@QAE@PAX@Z
-// partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc /O2
+// 0x00789220 -- copy the leading string-like base and initialize two
+// 100-bucket hash containers.
 
 class Rva00789220Base
 {

@@ -41,6 +41,7 @@ public:
 	static ContainEntry m_containData[MAX_COMMANDS_PER_SET];
 };
 
+#pragma optimize("t", on)
 Object *ControlBar::findContainedObject(GameWindow *win)
 {
 	int i;
@@ -50,16 +51,19 @@ Object *ControlBar::findContainedObject(GameWindow *win)
 		if (m_containData[i].control == win)
 		{
 			ObjectID id = m_containData[i].objectID;
+			if (!id)
+				goto contained_not_found;
 
-			if (id)
-			{
-				ObjectPtrHash::iterator it = TheGameLogic->m_objHash.find(id);
-				if (it != TheGameLogic->m_objHash.end())
-					return (*it).second;
-			}
-			break;
+			ObjectPtrHash::iterator it = TheGameLogic->m_objHash.find(id);
+			if (it == TheGameLogic->m_objHash.end())
+				goto contained_not_found;
+			return (*it).second;
 		}
 	}
 
 	return 0;
+
+contained_not_found:
+	return 0;
 }
+#pragma optimize("", on)

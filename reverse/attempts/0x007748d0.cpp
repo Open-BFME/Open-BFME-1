@@ -7,7 +7,7 @@
 
 namespace _STL
 {
-struct random_access_iterator_tag
+struct __declspec(align(4)) random_access_iterator_tag
 {
 };
 }
@@ -35,10 +35,11 @@ struct Gen_t_00777e90_p32cd
 
 	Gen_t_00777e90_p32cd &operator=(const Gen_t_00777e90_p32cd &other)
 	{
+		const _STL::random_access_iterator_tag category =
+			_STL::random_access_iterator_tag();
 		m_first = other.m_first;
 		if (&other.m_range != &m_range)
 		{
-			_STL::random_access_iterator_tag category;
 			m_range.assign(other.m_range.m_begin, other.m_range.m_end, category);
 		}
 		m_tail = other.m_tail;

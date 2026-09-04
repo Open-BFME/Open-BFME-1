@@ -1,9 +1,5 @@
-// ?shouldExit@ExitConditions@@UBE_NPBVStateMachine@@@Z
-// partial score=0.99 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
-
-// Open-BFME: ExitConditions::shouldExit, retail 0x0015BF80, 135 bytes.
-// ZH twin with BFME 2D (x,y) radius test. Position is Object+0x38.
+// Clean C++ reconstruction of the ZH ExitConditions::shouldExit twin.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -22,21 +18,21 @@ class Object
 {
 public:
 	char m_bfmeHead[0x38];
-	Coord3D m_pos;					// +0x38
+	Coord3D m_pos;
 	const Coord3D *getPosition(void) const { return &m_pos; }
 };
 
 class StateMachine
 {
 public:
-	Object *getGoalObject(void) const;
+	const Object *getGoalObject(void) const;
 };
 
 class GameLogic
 {
 public:
 	char m_bfmeHead[0x3C];
-	UnsignedInt m_frame;				// +0x3C
+	UnsignedInt m_frame;
 };
 
 extern GameLogic *TheGameLogic;
@@ -65,7 +61,6 @@ public:
 	virtual Bool shouldExit(const StateMachine *machine) const;
 };
 
-// ?shouldExit@ExitConditions@@UBE_NPBVStateMachine@@@Z
 Bool ExitConditions::shouldExit(const StateMachine *machine) const
 {
 	if (!machine->getGoalObject())

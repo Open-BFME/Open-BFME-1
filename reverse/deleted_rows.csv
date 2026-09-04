@@ -24401,3 +24401,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_001dff40@@YAXXZ,0x001DFF40,"gen-dump placeholder superseded by the real identity of these bytes: ??1VictorySystem@@UAE@XZ, byte-verified from Code/GameEngine/Source/GameLogic/VictorySystemDestructor.cpp over the same 101-byte range. The Code/gen_asm/d_001dc690.asm dump reproduces those bytes but carries no identity."
 ?d_001e6310@@YAXXZ,0x001E6310,"gen-dump placeholder superseded by ?notifyPreFire@WeaponTemplate@@QAEXPAVWeapon@@HPBVObject@@H@Z, byte-verified from Code/GameEngine/Source/GameLogic/Object/Weapon/WeaponTemplate_notifyPreFire.cpp over the same 114-byte range"
 ?d_001e6c20@@YAXXZ,0x001E6C20,"gen-dump placeholder superseded by ?getPercentReadyToFire@Weapon@@QBEMXZ, byte-verified from Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_getPercentReadyToFire.cpp over the same 128-byte function body"
+?d_001e28c0@@YAXXZ,0x001E28C0,gen-dump placeholder retracted: the range is owned by a real Weapon method landed by the fleet on 2026-09-04
+?d_001e2bd0@@YAXXZ,0x001E2BD0,gen-dump placeholder retracted: the range is owned by a real Weapon method landed by the fleet on 2026-09-04
+?d_001e2a70@@YAXXZ,0x001E2A70,gen-dump placeholder retracted: the range is owned by a real Weapon method landed by the fleet on 2026-09-04

@@ -14,23 +14,11 @@ public:
 	int m_word;
 };
 
-class Rva007579F0Object : public Q3EhBaseOne
+class Q3EhMember000658A0
 {
 public:
-	Rva007579F0Object(void);
-	virtual ~Rva007579F0Object(void);
+	~Q3EhMember000658A0();
 
-private:
-	int m_08;
-	int m_0C;
-	void *m_10;
-	float m_14;
-	unsigned int m_18;
-	unsigned char m_1C;
-	unsigned char m_pad1D[3];
-	unsigned int m_20;
-	unsigned int m_24;
-	unsigned int m_28;
 	unsigned int m_2C;
 	unsigned int m_30;
 	unsigned int m_34;
@@ -51,40 +39,65 @@ private:
 	unsigned int m_70;
 };
 
+class Rva007579F0Object
+{
+public:
+	Rva007579F0Object(void);
+	virtual ~Rva007579F0Object(void);
+	virtual void slot();
+
+private:
+	int m_word;
+	int m_08;
+	int m_0C;
+	void *m_10;
+	float m_14;
+	unsigned int m_18;
+	unsigned char m_1C;
+	unsigned char m_pad1D[3];
+	unsigned int m_20;
+	unsigned int m_24;
+	unsigned int m_28;
+	Q3EhMember000658A0 m_sub;
+};
+
 // ??0Rva007579F0Object@@QAE@XZ
 Rva007579F0Object::Rva007579F0Object(void)
 {
+	int zero = 0;
 	int neg = -1;
+	int one = -neg;
+	float oneFloat = 1.0f;
 
 	m_08 = neg;
 	m_0C = neg;
-	m_2C = 0;
-	m_30 = 0;
-	m_34 = 0;
-	m_68 = neg;
-	m_6C = neg;
-	m_58 = 0;
-	m_70 = 0;
+	m_sub.m_2C = zero;
+	m_sub.m_30 = zero;
+	m_sub.m_34 = zero;
+	m_sub.m_68 = neg;
+	m_sub.m_6C = neg;
+	m_sub.m_58 = zero;
+	m_sub.m_70 = zero;
 	_ReadWriteBarrier();
-	m_4C = 1.0f;
-	m_50 = 1.0f;
-	m_54 = 1.0f;
-	m_5C = 1;
-	m_60 = 1;
-	m_64 = 1;
-	m_14 = 1.0f;
-	m_44 = 1.0f;
-	m_10 = 0;
-	m_20 = 1;
-	m_24 = 0;
-	m_28 = 0;
-	m_18 = 0;
-	m_1C = 0;
-	m_38 = 1;
-	m_3C = 0;
-	m_40 = 0;
-	m_48 = 0;
+	m_sub.m_4C = oneFloat;
+	m_sub.m_50 = oneFloat;
+	m_sub.m_54 = oneFloat;
+	m_sub.m_5C = one;
+	m_sub.m_60 = one;
+	m_sub.m_64 = one;
+	m_14 = oneFloat;
+	m_sub.m_44 = oneFloat;
+	m_10 = (void *)zero;
+	m_20 = one;
+	m_24 = zero;
+	m_28 = zero;
+	m_18 = zero;
+	m_1C = (unsigned char)zero;
+	m_sub.m_38 = one;
+	m_sub.m_3C = zero;
+	m_sub.m_40 = zero;
+	m_sub.m_48 = zero;
 	_ReadWriteBarrier();
-	m_58 = 0;
-	m_70 = 0;
+	m_sub.m_58 = zero;
+	m_sub.m_70 = zero;
 }

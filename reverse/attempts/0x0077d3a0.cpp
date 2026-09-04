@@ -220,32 +220,29 @@ public:
 	virtual void slot101( BfmeBool );
 	virtual void slot102( BfmeBool );
 	virtual void slot103( BfmeBool );
-	virtual void slot104( BfmeBool );
+	virtual int slot104( BfmeBool );
 };
 
-class BfmeThingCB
+class BfmeThingCBState
 {
-private:
+protected:
 	unsigned char m_unreconstructed_000[ 0x0c ];
 	BfmeThingCBTarget *m_target;
+};
 
+class BfmeThingCB : private BfmeThingCBState
+{
 public:
-	BfmeThingCBTarget *getTarget() const
-	{
-		return m_target;
-	}
-
 	void bfmeGoCB( BfmeBool flag );
 };
 
 void BfmeThingCB::bfmeGoCB( BfmeBool flag )
 {
-	unsigned long targetAddress = reinterpret_cast<unsigned long>( getTarget() );
-	BfmeThingCBTarget *target = reinterpret_cast<BfmeThingCBTarget *>( targetAddress );
+	BfmeThingCBTarget *target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
 	if( target )
 	{
 		target->slot104( !flag );
-		target = getTarget();
-		target->slot100( flag );
+		target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
+		return target->slot100( flag );
 	}
 }

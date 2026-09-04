@@ -13,6 +13,10 @@
 // t=28 model=cursor-grok-4.6
 
 // Stash of the near-miss body only. Do not merge as-is.
+// cl: /DNDEBUG /MD /EHsc
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class BfmeMap12
 {
@@ -88,14 +92,15 @@ void Glo012F1024Item::j_0002a969(void)
 
 	for (; index < (unsigned int)(self->m_bfmeFlag32End - self->m_bfmeFlag32Begin); ++index)
 	{
-		BfmeFlag32 *begin = self->m_bfmeFlag32Begin;
+		_ReadWriteBarrier();
+		const BfmeFlag32 *begin = self->m_bfmeFlag32Begin;
 		char flag = (char)(begin + index)->m_bfmeFlag;
 		float n = (begin + index)->m_bfmeN;
 		unsigned int h = (begin + index)->m_bfmeH;
 		BfmeNode20 *node = new BfmeNode20(
 			(begin + index)->m_bfmeA,
 			(begin + index)->m_bfmeVec,
-			n,
+			 n,
 			h,
 			flag);
 		keep = -1;

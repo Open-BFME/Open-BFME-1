@@ -15,6 +15,10 @@ struct LineCoord3D {
     float z;
 };
 
+struct ScaleHolder {
+    float value;
+};
+
 __forceinline LineCoord3D makeLineCoord(float z, float y, float x)
 {
     return LineCoord3D(x, y, z);
@@ -35,15 +39,15 @@ LineCoord3D LineEmissionVolumeModule::getPosition(float, float, float, float)
     LineCoord3D start = m_start;
     LineCoord3D end = m_end;
     LineCoord3D delta(end.x - start.x, end.y - start.y, end.z - start.z);
-    volatile float scale = GetGameClientRandomValueReal(
-        0.0f,
-        1.0f,
-        "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterlinevolumemodule.cpp",
-        114);
+    ScaleHolder scale;
     return makeLineCoord(
-        scale * delta.z + start.z,
-        scale * delta.y + start.y,
-        scale * delta.x + start.x);
+        (scale.value = GetGameClientRandomValueReal(
+            0.0f,
+            1.0f,
+            "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterlinevolumemodule.cpp",
+            114)) * delta.z + start.z,
+        scale.value * delta.y + start.y,
+        scale.value * delta.x + start.x);
 }
 
 }

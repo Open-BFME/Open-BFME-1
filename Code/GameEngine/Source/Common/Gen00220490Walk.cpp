@@ -1,8 +1,5 @@
-// ?d_00220490@@YAXXZ
-// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME6: 0x00220490. Walk the circular list at this+0x28; on a one-result
-// predicate, override-walk the payload and call two virtuals at this+0x20.
+// Open-BFME5: circular-list predicate walk at retail RVA 0x00220490.
 
 struct BfmeNode490
 {
@@ -41,7 +38,6 @@ public:
 	int bfmeWalk();
 };
 
-// ?bfmeWalk@Gen_00220490@@QAEHXZ
 int Gen_00220490::bfmeWalk()
 {
 	bfmePrep();
@@ -52,10 +48,10 @@ int Gen_00220490::bfmeWalk()
 	{
 		do
 		{
-			void *extra = *(void **)((char *)ctx + 0x168);
 			void *obj = n->value;
 			n = n->next;
-			if (((BfmePred490 *)((char *)this - 0x10))->bfmeCheck(obj, extra) == 1)
+			if (((BfmePred490 *)((char *)this - 0x10))->bfmeCheck(
+				obj, *(void **)((char *)ctx + 0x168)) == 1)
 			{
 				void *arg = *(void **)((char *)obj + 4);
 				if (arg != 0)

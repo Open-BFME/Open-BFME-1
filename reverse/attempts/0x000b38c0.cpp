@@ -52,30 +52,47 @@ public:
 	long m_refCount;
 };
 
+class AudioEventInfo : public Counted
+{
+};
+
+class CountedPtr
+{
+public:
+	void clear(void)
+	{
+		if (m_ptr)
+		{
+			m_ptr->Release_Ref();
+			m_ptr = 0;
+		}
+	}
+
+	AudioEventInfo *m_ptr;
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS
 {
 public:
+	virtual ~AudioEventRTS();
 	void setEventName(AsciiString name);
 
 private:
-	char m_pad0[8];
-	Counted *m_eventInfo;		// +0x08
-	char m_pad1[8];
+	AsciiString m_filenameToLoad;
+	CountedPtr m_eventInfo;		// +0x08
+	unsigned int m_playingHandle;
+	unsigned int m_killThisHandle;
 	AsciiString m_eventName;	// +0x14
 };
 
 // ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z
 void AudioEventRTS::setEventName(AsciiString name)
 {
-	AsciiString *const eventName = reinterpret_cast<AsciiString *>(reinterpret_cast<char *>(this) + 0x14);
+	register AsciiString *const eventName = reinterpret_cast<AsciiString *>(reinterpret_cast<char *>(this) + 0x14);
 	if (name.compare(*eventName) != 0)
 	{
-		if (m_eventInfo)
-		{
-			m_eventInfo->Release_Ref();
-			m_eventInfo = 0;
-		}
+		m_eventInfo.clear();
 		*eventName = name;
 	}
 }

@@ -193,9 +193,9 @@ void Thing::setPositionZ( Real z )
 	{
 		Real oldAngle;
 		Coord3D oldPos;
-		const Real *cachedPosX = &m_cachedPos.x;
-		oldPos.x = cachedPosX[0];
+		const Coord3D *cachedPos = &m_cachedPos;
 		oldAngle = m_cachedAngle;
+		oldPos.x = cachedPos->x;
 		oldPos.y = m_cachedPos.y;
 		oldPos.z = m_cachedPos.z;
 		Matrix3D oldMtx = m_transform;
