@@ -40,6 +40,7 @@ class BfmeSplitResult
 public:
 	BfmeOverridable *m_value;
 	int m_rank;
+	BfmeOverridable *getValue() const { return m_value; }
 };
 
 class BfmeHordeContainOwner
@@ -80,17 +81,16 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		{
 			BfmeOverridable *wantedValue = wanted;
 			BfmeSplitResult **current = first;
+			BfmeSplitResult *result;
 				do
 				{
-					BfmeSplitResult *candidate = *current;
-					if ( candidate->m_value == wantedValue )
-					{
-						BfmeSplitResult *result = first[ i ];
-						BfmeOverridable *value = result->m_value;
-						BfmeSelectedTemplate *out = selectedTemplate;
-						out->m_value = value;
-						return m_splitResultsBegin[ i ]->m_rank;
-				}
+				BfmeSplitResult *candidate = *current;
+				if ( candidate->m_value == wantedValue )
+				{
+					result = first[ i ];
+					selectedTemplate->m_value = result->getValue();
+					return m_splitResultsBegin[ i ]->m_rank;
+					}
 				++i;
 				++current;
 			}
@@ -99,8 +99,6 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 	}
 
 	BfmeSplitResult *result = first[ 0 ];
-	BfmeOverridable *value = result->m_value;
-	BfmeSelectedTemplate *out = selectedTemplate;
-	out->m_value = value;
+	selectedTemplate->m_value = result->getValue();
 	return m_splitResultsBegin[ 0 ]->m_rank;
 }

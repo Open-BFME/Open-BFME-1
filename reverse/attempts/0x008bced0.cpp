@@ -9,9 +9,9 @@ struct BfmeMatrix1236
 
 void bfmeCombine1236(BfmeTransform1236 *result, BfmeTransform1236 *left, BfmeTransform1236 *right)
 {
+	float *output = (float *)result;
 	BfmeMatrix1236 a = *(BfmeMatrix1236 *)left;
 	BfmeMatrix1236 b = *(BfmeMatrix1236 *)right;
-	float *output = (float *)result;
 	output[0] = a.m_values[0] * b.m_values[0] + a.m_values[4] * b.m_values[1];
 	output[1] = a.m_values[1] * b.m_values[0] + a.m_values[5] * b.m_values[1];
 	float value = b.m_values[5] * a.m_values[4];

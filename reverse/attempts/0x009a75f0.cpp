@@ -11,25 +11,22 @@ void __cdecl bfmeFilter75F0(
 	int columns,
 	const int *weights)
 {
-	int rowCount = rows;
-	int columnCount = columns;
-	const int *coefficient = weights;
-	if ((unsigned int)rowCount > 0)
+	if ((unsigned int)rows > 0)
 	{
-		int delta = sourceDelta;
-		unsigned char *sourcePointer = source;
+		int rowCount = rows;
 		do
 		{
+			const int *coefficient = weights;
 			int column = 0;
-			register unsigned char *previous = sourcePointer - delta;
-			unsigned char *next = sourcePointer + delta;
+			unsigned char *previous = source - sourceDelta;
+			unsigned char *next = source + sourceDelta;
 
-			if ((unsigned int)columnCount > 0)
+			if ((unsigned int)columns > 0)
 			{
 				do
 				{
-					int value = next[delta] * coefficient[3];
-					value += sourcePointer[0] * coefficient[1];
+					int value = next[sourceDelta] * coefficient[3];
+					value += source[0] * coefficient[1];
 					value += next[0] * coefficient[2];
 					value += previous[0] * coefficient[0];
 					value = (value + 0x40) >> 7;
@@ -38,16 +35,16 @@ void __cdecl bfmeFilter75F0(
 					else if (value > 0xFF)
 						value = 0xFF;
 					destination[column] = (unsigned short)value;
-					++sourcePointer;
+					++source;
 					++next;
 					++previous;
 					++column;
 				}
-				while ((unsigned int)column < (unsigned int)columnCount);
+				while ((unsigned int)column < (unsigned int)columns);
 			}
 
-			sourcePointer += sourcePitch - columnCount;
-			destination += columnCount;
+			source += sourcePitch - columns;
+			destination += columns;
 		}
 		while (--rowCount != 0);
 	}

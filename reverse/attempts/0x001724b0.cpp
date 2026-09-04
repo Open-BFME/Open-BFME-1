@@ -45,11 +45,10 @@ struct StateMachine
 	Object *m_owner;
 };
 
-extern Bool g_logCritterDesync;
-struct _iobuf;
-typedef _iobuf FILE;
-extern FILE *g_critterDesyncLog;
-extern "C" int __cdecl fprintf(FILE *log, const char *format, ...);
+extern unsigned char g_012F0239;
+extern void *g_012ED4FC;
+extern void j_0003a17a(void);
+typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);
 
 class State
 {
@@ -72,16 +71,16 @@ class AIInternalMoveToState : public State
 Bool AIInternalMoveToState::getAdjustsDestination() const
 {
 	AIInternalMoveToState *self = (AIInternalMoveToState *)this;
-	if (g_logCritterDesync && g_critterDesyncLog)
-		fprintf(g_critterDesyncLog,
+	if (g_012F0239 && g_012ED4FC)
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: getAdjustsDestination() entered.");
 
 	StateMachine *machine = self->m_machine;
 	Object *obj = machine->m_owner;
 	if (obj->m_statusParachutingByte < 0)
 	{
-		if (g_logCritterDesync && g_critterDesyncLog)
-			fprintf(g_critterDesyncLog,
+		if (g_012F0239 && g_012ED4FC)
+			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: getAdjustsDestination1 - parachuting returning FALSE.");
 		return false;
 	}
@@ -89,14 +88,14 @@ Bool AIInternalMoveToState::getAdjustsDestination() const
 	AIUpdateInterface *ai = obj->m_ai;
 	if (ai && !ai->isAllowedToAdjustDestination())
 	{
-		if (g_logCritterDesync && g_critterDesyncLog)
-			fprintf(g_critterDesyncLog,
+		if (g_012F0239 && g_012ED4FC)
+			((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: getAdjustsDestination1 - isAllowedToAdjustDestination FALSE, returning FALSE.");
 		return false;
 	}
 
-	if (g_logCritterDesync && g_critterDesyncLog)
-		fprintf(g_critterDesyncLog,
+	if (g_012F0239 && g_012ED4FC)
+		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: getAdjustsDestination1 - m_adjustsDestinations = %s",
 			self->m_adjustDestinations ? "TRUE" : "FALSE");
 

@@ -51,6 +51,8 @@
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 #include <stdlib.h>
 
+#include "../../../../../../../reference/shims/w3ddisplaystring/GameClient/DisplayString.h"
+
 // USER INCLUDES //////////////////////////////////////////////////////////////
 #include "GameClient/GadgetCheckBox.h"
 #include "GameClient/GameWindowGlobal.h"
@@ -284,9 +286,9 @@ void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
-				boxImage		= GadgetCheckBoxGetDisabledCheckedBoxImage( window );
+				boxImage		= *(const Image **)((char *)window + 0xCC);
 		else
-				boxImage		= GadgetCheckBoxGetDisabledUncheckedBoxImage( window );
+				boxImage		= *(const Image **)((char *)window + 0xC0);
 
 	}  // end if
 	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
@@ -297,9 +299,9 @@ void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
-			boxImage		= GadgetCheckBoxGetHiliteCheckedBoxImage( window );
+			boxImage		= *(const Image **)((char *)window + 0x138);
 		else
-			boxImage		= GadgetCheckBoxGetHiliteUncheckedBoxImage( window );
+			boxImage		= *(const Image **)((char *)window + 0x12C);
 
 	}  // end else if
 	else
@@ -310,9 +312,9 @@ void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 
 		// check box
 		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
-			boxImage		= GadgetCheckBoxGetEnabledCheckedBoxImage( window );
+			boxImage		= *(const Image **)((char *)window + 0x60);
 		else
-			boxImage		= GadgetCheckBoxGetEnabledUncheckedBoxImage( window );
+			boxImage		= *(const Image **)((char *)window + 0x54);
 
 	}  // end else
 

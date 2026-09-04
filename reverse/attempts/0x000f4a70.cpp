@@ -25,11 +25,7 @@ class DLINK_ITERATOR
 public:
 	typedef OBJCLASS* (OBJCLASS::*GetNextFunc)() const;
 private:
-	union
-	{
-		OBJCLASS* m_cur;
-		unsigned int m_curBits;
-	};
+	OBJCLASS* m_cur;
 	GetNextFunc m_getNextFunc;
 public:
 	DLINK_ITERATOR(OBJCLASS* cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc)
@@ -38,14 +34,13 @@ public:
 
 	void advance()
 	{
-		if (m_cur == 0)
-			return;
-		m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
+		if (m_cur)
+			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
 	}
 
 	Bool done() const
 	{
-		return m_curBits == 0;
+		return m_cur == 0;
 	}
 
 	OBJCLASS* cur() const
@@ -151,6 +146,8 @@ Bool Team::hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag)
 			*reinterpret_cast<const KindOfMask126 *>(&kindOf),
 			KINDOFMASK_NONE))
 			return true;
+		if (iter.cur())
+			continue;
 	}
 	return false;
 }

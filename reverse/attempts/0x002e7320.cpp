@@ -72,21 +72,23 @@ public:
 	}
 };
 
-__forceinline BfmeSortElem20TailElement *bfmeCopySortElem20Tail(
-	const BfmeSortElem20TailElement *first,
-	const BfmeSortElem20TailElement *last,
-	BfmeSortElem20TailElement *result)
+namespace _STL
 {
-	BfmeSortElem20TailElement *destination = result;
-	for (; first != last; ++first, ++destination)
-		_STL::_Construct(destination, *first);
-	return destination;
+	template <class InputIter, class ForwardIter>
+	__forceinline ForwardIter __uninitialized_copy(
+		InputIter first, InputIter last, ForwardIter result)
+	{
+		ForwardIter current = result;
+		for (; first != last; ++first, ++current)
+			_Construct(&*current, *first);
+		return current;
+	}
 }
 
 BfmeSortElem20Tail::BfmeSortElem20Tail(const BfmeSortElem20Tail &other)
 	: Base(other.size(), other.get_allocator())
 {
-	this->_M_finish = bfmeCopySortElem20Tail(
+	this->_M_finish = _STL::__uninitialized_copy(
 		other._M_start, other._M_finish, this->_M_start);
 }
 

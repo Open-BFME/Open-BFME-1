@@ -37,6 +37,7 @@ class RenderObjClass : public RefCountClass, public MultiListObjectClass
 {
 public:
 	RenderObjClass();
+	virtual int Class_ID() const;
 	virtual ~RenderObjClass();
 
 protected:
@@ -44,6 +45,19 @@ protected:
 };
 
 #include "simplevec.h"
+
+class VectorStateGuard
+{
+public:
+	~VectorStateGuard();
+};
+
+template <class T>
+class GuardedSimpleDynVecClass : public SimpleDynVecClass<T>, private VectorStateGuard
+{
+public:
+	GuardedSimpleDynVecClass(int size = 0) : SimpleDynVecClass<T>(size) {}
+};
 
 class Vector3
 {
@@ -87,12 +101,13 @@ class StreakLineClass : public RenderObjClass
 {
 public:
 	StreakLineClass();
+	virtual RenderObjClass *Clone() const;
 
 private:
 	unsigned int MaxSubdivisionLevels;
 	unsigned int *Personalities;
 	float NormalizedScreenArea;
-	SimpleDynVecClass<Vector3> PointLocations;
+	GuardedSimpleDynVecClass<Vector3> PointLocations;
 	SimpleDynVecClass<Vector4> PointColors;
 	SimpleDynVecClass<float> PointWidths;
 	SegLineRendererClass LineRenderer;
