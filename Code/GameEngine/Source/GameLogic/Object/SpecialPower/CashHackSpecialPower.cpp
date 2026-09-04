@@ -99,7 +99,7 @@ CashHackSpecialPower::CashHackSpecialPower( Thing *thing, const ModuleData *modu
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ??1CashHackSpecialPower@@MAE@XZ present-unmatched
+// Protected visibility preserves retail's MAE destructor and deleting-wrapper symbols.
 CashHackSpecialPower::~CashHackSpecialPower( void )
 {
 
