@@ -45,30 +45,11 @@ public:
 	void bfmeUseDXI(int r);
 };
 
-class BfmeSubDXJ
-{
-public:
-	void bfmeUseDXJ(int r);
-};
-
 extern BfmeGlobDXI *g_bfmeObjDXI;
-
-struct BfmeHeldDXJ
-{
-	unsigned char m_bfmeHead[0x154];
-	BfmeSubDXJ m_bfmeSub;
-};
-
-extern BfmeHeldDXJ *g_bfmeObjDXJ;
 
 void bfmeGoDXI(void *a)
 {
 	g_bfmeObjDXI->bfmeUseDXI(bfmeCvtDXI(a));
-}
-
-void bfmeGoDXJ(void *a)
-{
-	g_bfmeObjDXJ->m_bfmeSub.bfmeUseDXJ(bfmeCvtDXI(a));
 }
 
 extern "C" __declspec(dllimport) void __stdcall bfmeCloseDXK(void *h);
