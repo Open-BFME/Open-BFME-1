@@ -82333,3 +82333,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
 ?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
 ?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
+?closePortrait@AptPalantirRegionPanel@@QAEXH@Z,0x00021468,AptPalantir OnRegionPortraitClosed dispatches the parsed region identifier
+?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
