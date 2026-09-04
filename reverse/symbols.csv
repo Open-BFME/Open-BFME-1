@@ -82611,59 +82611,11 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0002EDDE,ILT to the real MultiplayerColorDefinition copy constructor at 0x0008E470
-g_bfmeVtableVY,0x010EDAD8,Open-BFME5 the table the wide-text copy ctor at 0x0049A070 installs
-??0BfmeWideVY@@QAE@ABV0@@Z,0x00888400,pin
-??1BfmeWideVY@@QAE@XZ,0x008881D0,pin
-??1BfmeGuardVY@@QAE@XZ,0x003BEAC0,Open-BFME5 slot 0 of the table 0x010EDAD8; the unwind action for the copy ctor at 0x0049A070
-g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00471EC0 installs
-??0BfmeStrWA@@QAE@PBD@Z,0x00888BC0,pin
-??1BfmeStrWA@@QAE@XZ,0x00887940,pin
-??1BfmeGuardWA@@QAE@XZ,0x004724D0,Open-BFME5 slot 0 of the table 0x010F760C; the unwind action for the ctor at 0x00471EC0
-?Rva00605F00@@YGPAIPAI@Z,0x00605F00
-?__copy@_STL@@YAPADPAD00ABUrandom_access_iterator_tag@1@PAH@Z,0x000B98F0
-?set@Rva0006AB10Curve@@QAEXMMHH@Z,0x0006AB10
-??0Win32Mouse@@QAE@XZ,0x00042370,W3DMouse constructor base call through the incremental-link thunk
-??_7W3DMouse@@6B@,0x01120928,W3DMouse constructor vftable store
-?g_w3dMouseCursorTextures@@3PAY0BF@PAVTextureClass@@A,0x012F8798,W3DMouse 50 by 21 cursor texture table
-?g_w3dMouseCursorModels@@3PAPAXA,0x012F85F8,W3DMouse cursor model table
-?g_w3dMouseCursorAnims@@3PAPAXA,0x012F8530,W3DMouse cursor animation table
-?Rva00739B30@@YAXPAVRva00609560Item@@H@Z,0x00739B30
-??0W3DMouseSurfaceRef@@QAE@XZ,0x00006A8C,W3DMouse surface-reference default constructor ILT used by its EH vector constructor
-??1W3DMouseSurfaceRef@@QAE@XZ,0x008FC5B0,W3DMouse surface-reference destructor used by freeD3DAssets and its EH vector constructor
-?setCursor@Win32Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum base call
-??1Win32Mouse@@UAE@XZ,0x0002BC1A,W3DMouse destructor base-destructor ILT
-?g_w3dMouseD3DDevice@@3PAVD3DDeviceInterface@@A,0x01340534,W3DMouse destructor Direct3D device global
-??1MouseThreadHandle@@QAE@XZ,0x009DB400,W3DMouse polling thread owned-handle destructor
-?Stop@MouseThreadClass@@QAEXXZ,0x009DB5A0,W3DMouse polling thread stop call
-?g_w3dMouseThread@@3VMouseThreadClass@@A,0x012F9808,W3DMouse global polling thread object
-??0MouseThreadRunGuard@@QAE@PAX_N@Z,0x009DB3B0,W3DMouse polling loop run-guard constructor
-??1MouseThreadRunGuard@@QAE@XZ,0x009DB400,W3DMouse polling loop run-guard destructor
-?g_w3dMouseThreadRunLock@@3EA,0x012F9800,W3DMouse polling loop run lock
-?g_w3dMouseIsThread@@3_NA,0x012F8788,W3DMouse polling-thread active flag
-?g_w3dMouseDrawTarget@@3PAVW3DMouseDrawInterface@@A,0x012F4C5C,W3DMouse polling draw target
-?g_w3dMouseThread@@3VW3DMouseThread@@A,0x012F9808,W3DMouse global polling thread object
-g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 installs
-??0BfmeStrWB@@QAE@PBD@Z,0x00888BC0,pin
-??1BfmeStrWB@@QAE@XZ,0x00887940,pin
-??1BfmeGuardWB@@QAE@XZ,0x00471850,Open-BFME5 slot 0 of the table 0x010F756C; the unwind action for the ctor at 0x00471390
-??1BfmeQuadWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x24 sub-object destructor; only the unwind funclet references it
-??1BfmeOneWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x30 sub-object destructor; only the unwind funclet references it
-?Is_Running@MouseThreadClass@@QAE_NXZ,0x009DB590,W3DMouse redraw-mode polling-thread running check
-?prepareStop@MouseThreadGuardOwner@@QAEXXZ,0x0001E7F4,W3DMouse redraw-mode stop preparation ILT
-?assign@MouseThreadGuardOwner@@QAEXPAVMouseThreadRunGuard@@@Z,0x0000A54C,W3DMouse polling-thread run-guard assignment ILT
-??0MouseThreadRunGuard@@QAE@PAXH@Z,0x009DB3B0,W3DMouse polling-thread heap run-guard constructor
-?Execute@MouseThreadClass@@QAEXXZ,0x009DB650,W3DMouse polling-thread execute call
-?g_w3dMouseCursorImages@@3PAPAXA,0x012F86C0,W3DMouse polygon cursor image table
-?setCursor@Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum virtual base call
-?bfmeGetBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 ILT to additive accumulator body 0x00369460; matched Object::getVisionRange caller queries attribute 14
-?isModifierActive@AttributeModifierPoolUpdate@@ABE_NIPBUAttributeModifierEntry@@@Z,0x00037B32,ILT to body 0x00368B80; AttributeModifierPoolUpdate accumulator passes current frame and each 16-byte modifier entry
-?getValue@AttributeModifierDefinitionStore@@QBE_NHHPAM@Z,0x0001CE31,ILT to body 0x0036AFB0; additive and multiplicative AttributeModifierPoolUpdate accumulators query modifier index attribute and float output
-?TheAttributeModifierDefinitionStore@@3PAVAttributeModifierDefinitionStore@@A,0x012F07E4,global store used by AttributeModifierPoolUpdate additive and multiplicative accumulators
-?findDefinition@AttributeModifierDefinitionStore@@QAEPAUAttributeModifierDefinition@@I@Z,0x0001DBBA,AttributeModifierPoolUpdate active-entry test resolves each modifier key through the definition store
-?findValue@AttributeModifierValueRange@@QBE_NIPAI@Z,0x00014C18,ILT to exact AttributeModifierValueRange lookup body 0x00367DC0; called by AttributeModifierDefinitionStore::getValue
-?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local ABI view used by Object::getVisionRange; real target is AttributeModifierPoolUpdate::bfmeGetBonus
-?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::bfmeFindAttributeModifierPoolUpdate
-?set@BfmeStrWD@@QAEXPBDH@Z,0x00887D20,pin
-??1BfmeStrWD@@QAE@XZ,0x00887940,pin
-??1BfmeGuardWD@@QAE@XZ,0x00887940,Open-BFME5 stand-in for the unwind action of the ctor at 0x00421B80; declared-only so the frame survives, referenced only by the funclet
+??0AsciiStringWF@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWF@@QAE@XZ,0x00887940,pin
+??1Gen_0014C7A0@@UAE@XZ,0x0014E100,Open-BFME5 slot 0 of the table 0x010959D4; the virtual destructor of the class the ctor at 0x0014C7A0 builds
+??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringVX@@QAE@XZ,0x00887940,pin
+g_bfmeListVX,0x012F3350,Open-BFME5 the list the two-string ctor at 0x00491580 pushes onto
+??1BfmeBaseVX@@UAE@XZ,0x00490FF0,Open-BFME5 slot 0 of the base table 0x010F9AD8
+??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
