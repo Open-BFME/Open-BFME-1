@@ -24466,3 +24466,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Rva0071EA00@@QAE@XZ,0x0071EAC0,address-derived identity replaced by TTreeType::TTreeType; reciprocal 0x5C constructor for W3DTreeBuffer m_treeTypes
 ?reset@Rva00728A80Reset@@QAEXXZ,0x00728A80,address-derived class identity replaced by W3DTerrainBackground::reset; the object layout overlaps the proven W3DTerrainBackground fields and the body is in its contiguous method family
 ?isEdgeAligned@Rva007288B0Terrain@@QAE_NHHH@Z,0x007288B0,address-derived class identity replaced by W3DTerrainBackground::isEdgeAligned; map and terrain member offsets match the proven class layout
+?resetBuffers@Rva00728C20TerrainReset@@QAEXXZ,0x00728C20,address-derived wrapper class removed; the body invokes W3DTerrainBackground::freeTerrainBuffers on the same this pointer and is adjacent to the proven W3DTerrainBackground destructor
