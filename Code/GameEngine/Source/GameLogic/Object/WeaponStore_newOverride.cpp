@@ -1,5 +1,3 @@
-// ?newOverride@WeaponStore@@IAEPAVWeaponTemplate@@PAV2@@Z
-// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 // Open-BFME5: WeaponStore::newOverride, retail 0x001E9AF0 size 268.
@@ -8,14 +6,15 @@
 // next at +4, marks +0x528, then replaces any same-nameKey entry in the
 // vector at +8. Source with +0x528 set is refused. Focused TU.
 //
-// Near-miss 265/268: prologue, new, copy-assign, next-link, +0x528 mark, and
-// the nameKey walk match. Retail's erase reloads finish from [edi+4] before
-// memmove; MSVC 7.1 CSEs that load against the loop's end pointer (ecx),
-// dropping three bytes and shifting the later jump offsets. volatile and
-// member-function reloads either swap ecx/edx or spill ebx and break the
-// prologue.
+// STLport erase inlines as memmove(pos, pos+1, finish-(pos+1)) then --finish.
+// MSVC 7.1 CSEs the finish load against the walk's cached ecx; retail still
+// emits `mov ecx, [edi+4]`. A volatile source / plain dest forces that reload
+// without moving the count out of ecx.
 
 #include <vector>
+
+extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int);
+#define memmove (*bfme_memmove_ptr)
 
 class WeaponTemplate
 {
@@ -30,6 +29,22 @@ public:
 	char m_pad_010[0x528 - 0x10];
 	unsigned char m_copiedOverride;
 	char m_pad_529[0x53C - 0x529];
+};
+
+struct WeaponTemplateVec
+{
+	WeaponTemplate **_M_start;
+	WeaponTemplate **_M_finish;
+	WeaponTemplate **_M_end_of_storage;
+
+	void erase(WeaponTemplate **pos)
+	{
+		WeaponTemplate **last = *(WeaponTemplate ** volatile *)&_M_finish;
+		WeaponTemplate **next = pos + 1;
+		if (last != next)
+			memmove(pos, next, (char *)last - (char *)next);
+		--_M_finish;
+	}
 };
 
 class WeaponStore
@@ -66,7 +81,7 @@ WeaponTemplate *WeaponStore::newOverride(WeaponTemplate *weaponTemplate)
 	{
 		if ((*it)->m_nameKey == key)
 		{
-			items.erase(it);
+			((WeaponTemplateVec *)&items)->erase(it);
 			break;
 		}
 	}
