@@ -74391,7 +74391,6 @@ name,address,notes
 ?bfmeSend1011@BfmeA1011@@QAEXHHHHH@Z,0x000061E5,pin
 ?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
 ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z,0x00803110,pin
-?bfmeSend1032@BfmeSink1032@@QAEXHPAVBfmeD1032@@@Z,0x000147D1,pin
 ?bfmeSend1051@BfmeSub1051@@QAEXHHHHHH@Z,0x0087F590,pin
 ?bfmeSend1177@BfmeQ1177@@QAEXHPAUBfmeBuf1177@@@Z,0x00851910,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
@@ -76710,7 +76709,6 @@ name,address,notes
 ?g_bfmeGlobMC@@3PAVBfmeGlobMC@@A,0x00EED668,pin
 ?g_bfmeGlobNC@@3PAVBfmeGlobNC@@A,0x00EF1028,pin
 ?g_bfmeGlobNF@@3PAVBfmeGlobNF@@A,0x00EF0898,pin
-?g_bfmeGlobNG@@3PAVBfmeGlobNG@@A,0x00EED668,pin
 ?g_bfmeGlobPB@@3PAVBfmeGlobPB@@A,0x00EF8058,pin
 ?g_bfmeGlobQC@@3PAVBfmeGlobQC@@A,0x00EF8058,pin
 ?g_bfmeGlobQE@@3PAVBfmeGlobQE@@A,0x00F06EEC,pin

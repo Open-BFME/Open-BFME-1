@@ -1,19 +1,5 @@
 extern "C" __declspec(dllimport) unsigned int __stdcall bfmeTickDZC();
 
-struct BfmeThingDZC
-{
-	bool bfmeGoDZC();
-	unsigned char m_bfmeHead[0x12110];
-	unsigned int m_bfmeT;
-};
-
-bool BfmeThingDZC::bfmeGoDZC()
-{
-	if (!m_bfmeT)
-		return false;
-	return bfmeTickDZC() - m_bfmeT > 10000;
-}
-
 class BfmeUiDZD
 {
 public:
