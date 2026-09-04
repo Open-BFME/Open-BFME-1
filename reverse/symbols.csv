@@ -1108,6 +1108,7 @@ name,address,notes
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x000EEF40,STLport map find callee for Gen_00371090 remove
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003AD0F,pinharvest x1 (thunk)
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QBE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Const_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003AD0F,pinharvest x1 (thunk)
+??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QBE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Const_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003DB09,pinharvest x1 (thunk)
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAX@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0003DEAB,ILT to NameKeyType rb-tree find 0x000D0F50; Rva000D4870 map<NameKeyType void*> find at this+0x214
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0036E040,CastleBehavior unpack cost STLport map find body
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0000C054
@@ -8482,6 +8483,7 @@ name,address,notes
 ??1Z1Elem0076AE50@@QAE@XZ,0x00762EC0,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
 ??1ZigZagLinearOffsetTextureMapperClass@@UAE@XZ,0x00967110,constructor 0x00965350 installs vtable 0x0113E4C0 whose first slot is deleting wrapper 0x009670F0; that wrapper directly calls this scalar body
 ??1_bfme_AptGameWindow@@UAE@XZ,0x000204C3,DisconnectScreen destructor chains through the established APT base destructor ILT
+??1_bfme_AptGameWindow@@UAE@XZ,0x00465430,dtor twin of 0x00465310: restores vtables 0x010F711C/0x010F7118 releases the AsciiString at +0x24c calls 0x00464E20 then ??1GameWindow ILT 0x0002C98F; deleting dtor 0x00465500; ILT 0x000204C3
 ??1facet@locale@_STL@@MAE@XZ,0x00832090,STLport locale::facet destructor; callee of messages dtors 0x00848A30/0x00848B20
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
 ??1locale@_STL@@QAE@XZ,0x00832170,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
@@ -9525,6 +9527,8 @@ name,address,notes
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?LANbuttonPushed@@3_NA,0x012F3D4A,LAN overlay shared flag; NetworkDirectConnectSystem back-button set
+?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
+?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
@@ -71626,6 +71630,7 @@ name,address,notes
 ?begin@FirewallHelperDetectionBeginUpdateShim@@QAE_NXZ,0x0066EFA0,FirewallHelperClass detectionBeginUpdate incremental-link thunk target through a TU-local forwarding shim
 ?begin@Rva0025FA10HeroModeUpdate@@QAEXXZ,0x00017D5F,address-derived base update target read from retail RVA 0x0025FA10
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00032957,ILT of beginPlayerLeave used by RelayCommandsToCommandList 0x00682B64
+?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00667320,int-return alias of the matched QAEXPAX body; eax is PlayerLeaveCode (1=LOCAL)
 ?beginState@Gen0060CBB0@@AAEXXZ,0x00014862,ILT to 0x0060CC00 identified by the exact state update at 0x0060CC70
 ?bfmeAbortAbility@SpecialAbilityUpdate@@QAEXXZ,0x0001466E,Open-BFME5 ILT thunk to body 0x002A5A30; exact helper dispatches SpecialAbilityUpdate onExit(false true)
 ?bfmeAbove@Gen_001de260@@QBEHPBMH@Z,0x000473C5,ILT to the exact landed integer threshold predicate at 0x001DE260
