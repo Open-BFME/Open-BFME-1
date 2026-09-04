@@ -31,6 +31,10 @@ forever, and the follow-up row could only ask a human to disregard it. `void`
 is the one status that retracts rather than decides; see VOID_STATUS.
 """
 import re
+import hashlib
+import json
+import os
+import uuid
 from datetime import date
 from pathlib import Path
 
@@ -297,13 +301,64 @@ def _bank(symbol, rva_text, source_text, score_text):
         raise SystemExit(
             f"--stash {source_text}: {size} bytes, outside 1..{STASH_LIMIT}. "
             f"An empty body banks nothing; a huge one is not one function.")
+    from portable_lock import lock, unlock
     score = float(score_text)
-    target = _stash_path(int(rva_text, 16))
+    rva = int(rva_text, 16)
+    target = _stash_path(rva)
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_bytes(
-        f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
-        .encode("utf-8") + source.read_bytes())
-    return f"score={score} stash={target.relative_to(RE_ATTEMPTS.parent.parent).as_posix()}"
+    history = RE_ATTEMPTS.parent / "attempt_history" / f"0x{rva:08x}"
+    history.mkdir(parents=True, exist_ok=True)
+    # Lock files live in ignored build/, never among the tracked evidence.
+    lockdir = RE_ATTEMPTS.parent.parent / "build" / "attempt_locks"
+    lockdir.mkdir(parents=True, exist_ok=True)
+    with (lockdir / f"{rva:08x}.lock").open("a+b") as handle:
+        lock(handle, exclusive=True)
+        try:
+            previous = stash_for(rva)
+            if previous:
+                archive_attempt(history, target.read_bytes(), symbol, previous[1])
+            incoming = source.read_bytes()
+            # Resuming the canonical stash must not nest its metadata headers.
+            lines = incoming.splitlines(keepends=True)
+            if len(lines) > 1 and _STASH_SCORE.fullmatch(lines[1].decode().strip()):
+                incoming = b"".join(lines[2:])
+            candidate = (f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
+                         .encode("utf-8") + incoming)
+            archived = archive_attempt(history, candidate, symbol, score)
+            # Scores are author estimates, not byte proof. Preserve every body;
+            # the preferred pointer only moves on an improvement, not recency.
+            if previous is None or score > previous[1]:
+                atomic_bytes(target, candidate)
+            preferred = score if previous is None else max(score, previous[1])
+        finally:
+            unlock(handle)
+    base = RE_ATTEMPTS.parent.parent
+    return (f"score={preferred} stash={target.relative_to(base).as_posix()} "
+            f"submitted={score} alternative={archived.relative_to(base).as_posix()}")
+
+
+def atomic_bytes(path, data):
+    tmp = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
+    try:
+        tmp.write_bytes(data)
+        os.replace(tmp, path)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def archive_attempt(directory, data, symbol, score):
+    """Immutable source evidence, separate from active stashes retired on landing."""
+    digest = hashlib.sha256(data).hexdigest()
+    path = directory / (digest + ".json")
+    payload = {"schema": 1, "sha256": digest, "symbol": data.splitlines()[0].decode()[3:],
+               "score_kind": "author-estimate", "score": score,
+               "source": data.decode("utf-8", errors="strict")}
+    if path.exists():
+        if json.loads(path.read_text(encoding="utf-8")) != payload:
+            raise ValueError(f"immutable attempt archive differs: {path}")
+    else:
+        atomic_bytes(path, json.dumps(payload, ensure_ascii=True, indent=2).encode())
+    return path
 
 
 def _record(argv):

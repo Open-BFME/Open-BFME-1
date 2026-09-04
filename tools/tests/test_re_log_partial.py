@@ -6,6 +6,7 @@ both before and in a finally -- monkeypatch restores the attribute but not the
 cache built from it, so a leaked index would decide later tests in this process.
 """
 import sys
+import json
 from pathlib import Path
 
 import pytest
@@ -172,3 +173,38 @@ def test_partial_without_a_body_is_refused(log):
     assert "requires --stash" in refusal and "blocked" in refusal, refusal
     re_log._reset()
     assert re_log.stash_for(RVA) is None
+
+
+def test_lower_scored_attempt_keeps_best_and_archives_both(log, tmp_path):
+    body = tmp_path / "attempt.cpp"
+    for value, score in [(1, "0.99"), (2, "0.80")]:
+        body.write_text(f"int f() {{ return {value}; }}\n")
+        assert record(SYM, hex(RVA), "16", "partial", "trial",
+                      "--stash", str(body), "--score", score) is None
+    path, score = re_log.stash_for(RVA)
+    assert score == .99 and "return 1" in path.read_text()
+    variants = list((log.parent / "attempt_history" / f"0x{RVA:08x}").glob("*.json"))
+    assert len(variants) == 2
+    assert {json.loads(p.read_text())["score"] for p in variants} == {.99, .8}
+    last = log.read_text().splitlines()[-1]
+    assert "score=0.99 stash=" in last and "submitted=0.8" in last
+
+
+def test_higher_score_replaces_pointer_but_keeps_original(log, tmp_path):
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 1; }")
+    re_log._bank(SYM, hex(RVA), str(body), ".8")
+    body.write_text("int f() { return 2; }")
+    re_log._bank(SYM, hex(RVA), str(body), ".99")
+    path, score = re_log.stash_for(RVA)
+    assert score == .99 and "return 2" in path.read_text()
+    assert len(list((log.parent / "attempt_history").rglob("*.json"))) == 2
+
+
+def test_rebank_stash_does_not_nest_headers(log, tmp_path):
+    body = tmp_path / "attempt.cpp"
+    body.write_text("int f() { return 1; }")
+    re_log._bank(SYM, hex(RVA), str(body), ".8")
+    path, _ = re_log.stash_for(RVA)
+    re_log._bank(SYM, hex(RVA), str(path), ".9")
+    assert path.read_text().count("// partial score=") == 1
