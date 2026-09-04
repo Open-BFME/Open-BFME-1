@@ -83715,3 +83715,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
 ?_M_insert_overflow@?$vector@ULinearTarget@@V?$allocator@ULinearTarget@@@_STL@@@_STL@@QAEXPAULinearTarget@@ABU3@ABU__false_type@2@I_N@Z,0x00001B6D,ILT to vector 12-byte _M_insert_overflow 0x001E91A0; WeaponTemplate::parseLinearTarget
 ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0053A280,GameList tooltip callback pushed by Apt OnlineCustomMatch onInitGadget 0x0053A710 via winSetTooltipFunc
+?stop@Rva0069AEB0Node@@QAEXH@Z,0x0002C5CF,AEB0 release callee via ILT
+?finish@Rva0069AEB0Node@@QAEXPAX@Z,0x000287F4,AEB0 release callee via ILT
