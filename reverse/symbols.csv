@@ -82738,23 +82738,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?applyAttributeModifier@AttributeModifierPoolUpdate@@QAE_NABVAsciiString@@H@Z,0x00049585,Object wrapper forwards named modifier application to the pool through this ILT
-?getAttributeModifierMultiplier@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000247D5,Object wrapper identifies the multiplicative AttributeModifierPoolUpdate accumulator ILT
-?getAttributeModifierBonus@AttributeModifierPoolUpdate@@QAE_NHPAM@Z,0x000282D6,vision-range and healing callers identify the additive AttributeModifierPoolUpdate accumulator ILT
-?getAttributeModifierBonus@Object@@QBE_NHPAM@Z,0x0000BECE,WeaponTemplate attack-range and AutoHeal callers identify the Object modifier-bonus wrapper ILT
-?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local Object.cpp ABI view of the AttributeModifierPoolUpdate additive bonus method
-?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate
-?setInputEnabled@InGameUI@@QAEX_N@Z,0x0003EBDF,ScriptActions disable-input and enable-input paths identify the InGameUI setter ILT
-?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
-?iterateCellsAlongLine@Pathfinder@@AAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUGroundPathPassableInfo@@@Z,0x00013DC2,isGroundPathPassable cell-space line walk using its pathfinder and diameter context
-?find@FontCharDataMap@@QAEPAUFontCharDataMapNode@@PAG@Z,0x0093DCE0,FontCharsClass character-data map lookup body
-?loadCharacterData@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z,0x00940D40,FontCharsClass cache-miss character data loader
-??0AsciiStringWW@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWW@@QAE@XZ,0x00887940,pin
-??1Gen_00193D50@@UAE@XZ,0x00195550,Open-BFME5 slot 0 of the table 0x0109C004
-??1BfmeGuardWW@@QAE@XZ,0x00195550,Open-BFME5 stand-in for the sub-object the copy ctor at 0x00193D50 protects with unwind state 0
-__imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
-__imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
-__imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer
-?startAmbientSound@Drawable@@AAEX_N@Z,0x000294B5,Zero Hour Drawable method identity; BFME caller reaches the same ILT
-?applyPendingModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,exact clearAndSetModelConditionFlags caller applies the staged masks before draw-module queries
