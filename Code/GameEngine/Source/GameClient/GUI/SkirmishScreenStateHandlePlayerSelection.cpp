@@ -79,7 +79,7 @@ class SkirmishScreenState
 {
 public:
 	bool handlePlayerSelection( int index );
-	void refreshPlayerControls( int index );
+	void refreshPlayerTeamControl( int index );
 
 private:
 	unsigned char m_vtable[ 4 ];
@@ -130,7 +130,7 @@ bool SkirmishScreenState::handlePlayerSelection( int index )
 	if( m_owner->setPlayerState( slot, state, name ) )
 	{
 		if( slot->isAI() ^ wasAI )
-			refreshPlayerControls( index );
+			refreshPlayerTeamControl( index );
 		m_dirty = true;
 		return true;
 	}

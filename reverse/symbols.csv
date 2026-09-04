@@ -82316,3 +82316,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z,0x00013084,ILT to 0x003BDFB0 for ScoreKeeper::countMissionObjectives
 ?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z,0x0000DFDA,ILT to 0x003BF6C0 for ScoreKeeper::countMissionObjectives
 ?unidentified_0002181E@Object@@QAEXABV?$BitFlags@$0GA@@@H@Z,0x0002181E,ILT for Object setSingleModelCondition BitFlags<96> forward
+?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
+?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
+?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
