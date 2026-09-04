@@ -10092,7 +10092,7 @@ name,address,notes
 ?TheInactiveBodyPool@?1??getClassMemoryPool@InactiveBody@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF988,pool-glue cascade static (back-solved)
 ?TheInstantDeathBehaviorPool@?1??getClassMemoryPool@InstantDeathBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF814,pool-glue cascade static (back-solved)
 ?TheKeepObjectDiePool@?1??getClassMemoryPool@KeepObjectDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC24,pool-glue cascade static (back-solved)
-?TheLAN@@3PAVLANAPI@@A,0x012F7730,LANAPI* singleton; NetworkDirectConnectSystem RequestSetName at +0x60
+?TheLAN@@3PAVLANAPI@@A,0x00EF7730,LANAPI singleton; DIR32 references resolve to retail VA 0x012F7730
 ?TheLadderList@@3PAVLadderList@@A,0x012F70E8,LadderList* global used by PopupHostGame createGame findLadderByIndex
 ?TheLaserUpdatePool@?1??getClassMemoryPool@LaserUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF7028,pool-glue cascade static (back-solved)
 ?TheLifetimeUpdatePool@?1??getClassMemoryPool@LifetimeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFFB8,pool-glue cascade static (back-solved)
@@ -82156,7 +82156,6 @@ _g_bfmeHeapSize1149,0x00F0B200,pin
 _g_bfmeHeapSize1150,0x00F0B1B4,pin
 _g_bfmeK1127,0x00C75350,pin
 _g_bfmeList1199,0x00EF3350,pin
-_g_bfmeMain1203,0x00EF7730,pin
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
 _g_bfmeOwner1179,0x00F40584,pin
@@ -82166,7 +82165,6 @@ _g_bfmeSITable,0x00EF77A8,global 0x190-dword table cleared by BfmeThingSI ctor
 _g_bfmeState56AD10A,0x012F1028,Rva0056AD10 first state source
 _g_bfmeState56AD10B,0x012F0898,Rva0056AD10 second state source
 _g_bfmeTab1182,0x00F4CC58,pin
-_g_bfmeTab1203,0x00EF3C00,pin
 _g_bfmeV1134,0x00CF0AE0,pin
 _g_bfmeV1137A,0x00D20FD4,pin
 _g_bfmeV1137B,0x00D1E23C,pin
@@ -82715,3 +82713,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0AsciiStringWP@@QAE@ABV0@@Z,0x00887B60,pin
 ??1AsciiStringWP@@QAE@XZ,0x00887940,pin
 ??1Gen_003A87D0@@UAE@XZ,0x003A88E0,Open-BFME5 slot 0 of the table 0x010EC774
+_g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
