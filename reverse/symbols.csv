@@ -2257,7 +2257,6 @@ name,address,notes
 ??0FXNugget@@QAE@XZ,0x00428590,BFME's 225-byte FXNugget constructor; the 9-byte body at 0x00061D90 that already carries this name is an ICF alias of `mov eax,ecx / mov [eax],0 / ret`
 ??0FastAllocatorGeneral@@QAE@XZ,0x00B027B0
 ??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
-??0FellBeastSwoopPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower ctor base
 ??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
 ??0FileSystem@@QAE@XZ,0x00022CA5
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
@@ -4525,7 +4524,6 @@ name,address,notes
 ??1Gen_dtor_0025bbf0@@UAE@XZ,0x00002F86,gen-dtor class destructor
 ??1Gen_dtor_0025cc50@@UAE@XZ,0x0004854A,gen-dtor class destructor
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
-??1Gen_dtor_0025d0b0@@UAE@XZ,0x00039BCB,gen-dtor class destructor
 ??1Gen_dtor_0025d8f0@@UAE@XZ,0x0004770D,gen-dtor class destructor
 ??1Gen_dtor_0025dbb0@@UAE@XZ,0x0004653D,gen-dtor class destructor
 ??1Gen_dtor_0025dbe0@@UAE@XZ,0x000157E4,gen-dtor class destructor
@@ -31884,12 +31882,10 @@ name,address,notes
 ?b_0025cf10@@YAXXZ,0x0025CF10,gen-thunk body
 ?b_0025cf40@@YAXXZ,0x0025CF40,gen-thunk body
 ?b_0025cf90@@YAXXZ,0x0025CF90,gen-thunk body
-?b_0025cfa0@@YAXXZ,0x0025CFA0,gen-thunk body
 ?b_0025cfd0@@YAXXZ,0x0025CFD0,gen-thunk body
 ?b_0025cfe0@@YAXXZ,0x0025CFE0,gen-thunk body
 ?b_0025d070@@YAXXZ,0x0025D070,gen-thunk body
 ?b_0025d0a0@@YAXXZ,0x0025D0A0,gen-thunk body
-?b_0025d0b0@@YAXXZ,0x0025D0B0,gen-thunk body
 ?b_0025d0e0@@YAXXZ,0x0025D0E0,gen-thunk body
 ?b_0025d130@@YAXXZ,0x0025D130,gen-thunk body
 ?b_0025d170@@YAXXZ,0x0025D170,gen-thunk body
@@ -82724,3 +82720,6 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GCashHackSpecialPower@@MAEPAXI@Z,0x0003BEF8,primary class vtable slot zero ILT to 0x00258560
 ??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
 ??_GDominateEnemySpecialPower@@MAEPAXI@Z,0x0001CD9B,primary class vtable slot zero ILT to 0x0025AE70
+??1FellBeastSwoopPower@@MAE@XZ,0x00039BCB,destructor ILT to 0x0025CFA0
+??_GFellBeastSwoopPower@@MAEPAXI@Z,0x0001C003,primary class vtable slot zero ILT to 0x0025D0B0
+??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower constructor call-site ILT to the proven SpecialAbilityUpdate constructor

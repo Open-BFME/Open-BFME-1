@@ -38,19 +38,23 @@ public:
 	virtual void moduleInterfaceAnchor();
 };
 
-class FellBeastSwoopPowerBase : public BehaviorModule,
+class SpecialAbilityUpdate : public BehaviorModule,
 	public SpecialPowerModuleInterface,
 	public SpecialPowerModuleExtra,
 	public ModuleInterface
 {
 public:
-	FellBeastSwoopPowerBase(Thing *thing, const ModuleData *moduleData);
+	SpecialAbilityUpdate(Thing *thing, const ModuleData *moduleData);
+	virtual ~SpecialAbilityUpdate();
 };
 
-class FellBeastSwoopPower : public FellBeastSwoopPowerBase
+class FellBeastSwoopPower : public SpecialAbilityUpdate
 {
 public:
 	FellBeastSwoopPower(Thing *thing, const ModuleData *moduleData);
+
+protected:
+	virtual ~FellBeastSwoopPower();
 
 private:
 	unsigned char m_pad[0xC4]; // 0x24 .. 0xE7
@@ -59,7 +63,11 @@ private:
 
 // ??0FellBeastSwoopPower@@QAE@PAVThing@@PBVModuleData@@@Z
 FellBeastSwoopPower::FellBeastSwoopPower(Thing *thing, const ModuleData *moduleData)
-	: FellBeastSwoopPowerBase(thing, moduleData)
+	: SpecialAbilityUpdate(thing, moduleData)
 {
 	m_e8 = 0;
+}
+
+FellBeastSwoopPower::~FellBeastSwoopPower()
+{
 }
