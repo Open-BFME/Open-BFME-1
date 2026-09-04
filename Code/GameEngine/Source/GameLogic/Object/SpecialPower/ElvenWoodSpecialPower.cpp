@@ -33,15 +33,25 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class ElvenWoodSpecialPower : public SpecialPowerModule
 {
 public:
 	ElvenWoodSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~ElvenWoodSpecialPower();
 };
 
 ElvenWoodSpecialPower::ElvenWoodSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+ElvenWoodSpecialPower::~ElvenWoodSpecialPower()
 {
 }
