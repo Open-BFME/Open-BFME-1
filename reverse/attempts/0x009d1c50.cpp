@@ -3,10 +3,7 @@
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the classifier tokeniser at retail RVA 0x009D1C50.
 
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-
-extern "C" int (__cdecl *g_bfmeFn1182)(int c);
+__declspec(dllimport) int __cdecl isspace(int c);
 
 class BfmeLayoutVHH
 {
@@ -29,13 +26,10 @@ private:
 
 char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 {
-	int (__cdecl **classifySlot)(int) = &g_bfmeFn1182;
-	_ReadWriteBarrier();
 	out->releaseBuffer();
-	int (__cdecl *classify)(int) = *classifySlot;
 	while (m_pos < m_end)
 	{
-		if (classify(static_cast<signed char>(m_buf[m_pos])) == 0)
+		if (isspace(static_cast<signed char>(m_buf[m_pos])) == 0)
 			break;
 		++m_pos;
 	}
@@ -52,6 +46,6 @@ char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 		if (m_pos >= m_end)
 			break;
 	}
-	while (classify(static_cast<signed char>(m_buf[m_pos])) == 0);
+	while (isspace(static_cast<signed char>(m_buf[m_pos])) == 0);
 	return 1;
 }

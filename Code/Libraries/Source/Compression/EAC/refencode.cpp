@@ -237,28 +237,42 @@ static int refcompress(unsigned char *from, int len, unsigned char *dest, int ma
 
 int GCALL REF_encode(void *compresseddata, const void *source, int sourcesize, int *opts)
 {
-    int    maxback=131072;
-    int     quick=0;
-    int    plen;
-    int    hlen;
+    unsigned int v = (unsigned int)sourcesize;
+    unsigned char *d = (unsigned char *)compresseddata;
+    unsigned int t = v;
+    volatile unsigned char *vd = d;
+    int hlen;
+    (void)opts;
 
-
-    /* simple fb6 header */
-
-    if (sourcesize>0xffffff)  // 32 bit header required
+    if (sourcesize > 0xffffff)
     {
-        gputm(compresseddata,   (unsigned int) 0x90fb, 2);
-        gputm((char *)compresseddata+2, (unsigned int) sourcesize, 4);
-        hlen = 6L;
+        d[1] = (unsigned char)0xfb;
+        t >>= 24;
+        vd[0] = (unsigned char)0x90;
+        vd[2] = (unsigned char)t;
+        t = v >> 16;
+        vd[3] = (unsigned char)t;
+        t = v >> 8;
+        vd[4] = (unsigned char)t;
+        vd[5] = (unsigned char)v;
+        hlen = 6;
     }
     else
     {
-        gputm(compresseddata,   (unsigned int) 0x10fb, 2);
-        gputm((char *)compresseddata+2, (unsigned int) sourcesize, 3);
-        hlen = 5L;
+        d[1] = (unsigned char)0xfb;
+        t = v >> 16;
+        vd[0] = (unsigned char)0x10;
+        vd[2] = (unsigned char)t;
+        t = v >> 8;
+        vd[3] = (unsigned char)t;
+        vd[4] = (unsigned char)v;
+        hlen = 5;
     }
-    plen = hlen+refcompress((unsigned char *)source, sourcesize, (unsigned char *)compresseddata+hlen, maxback, quick);
-    return(plen);
+    {
+        typedef int (__cdecl *RefCompressQuick)(unsigned char *, int, unsigned char *, int);
+        return hlen + ((RefCompressQuick)refcompress)(
+            (unsigned char *)source, sourcesize, d + hlen, 0);
+    }
 }
 
 #endif

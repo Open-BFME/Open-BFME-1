@@ -1,4 +1,6 @@
 // ?findContainedObject@ControlBar@@QAEPAVObject@@PAVGameWindow@@@Z
+// partial score=0.99 date=2026-09-04
+// ?findContainedObject@ControlBar@@QAEPAVObject@@PAVGameWindow@@@Z
 // partial score=0.94 date=2026-09-02
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport

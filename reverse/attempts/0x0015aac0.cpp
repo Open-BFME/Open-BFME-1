@@ -1,5 +1,7 @@
 // ?computeSize@Rva0015AAC0Owner@@QAEXPAM@Z
 // partial score=0.97 date=2026-09-04
+// ?computeSize@Rva0015AAC0Owner@@QAEXPAM@Z
+// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: leftover of d_00153d10.asm at 0x0015AAC0, 114 bytes.
 // Same owner as the 0x0015A790 bucket rebuild and the 0x0015A560 max walk.

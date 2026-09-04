@@ -1,4 +1,6 @@
 // ??0Rva007579F0Object@@QAE@XZ
+// partial score=0.97 date=2026-09-04
+// ??0Rva007579F0Object@@QAE@XZ
 // partial score=0.96 date=2026-09-02
 // 0x00757960 -- constructor of Rva007579F0Object, whose destructor is already
 // landed at 0x007579F0. Derived vftable first, then defaults in retail store
@@ -39,15 +41,13 @@ public:
 	unsigned int m_70;
 };
 
-class Rva007579F0Object
+class Rva007579F0Object : public Q3EhBaseOne
 {
 public:
 	Rva007579F0Object(void);
 	virtual ~Rva007579F0Object(void);
-	virtual void slot();
 
 private:
-	int m_word;
 	int m_08;
 	int m_0C;
 	void *m_10;
@@ -64,40 +64,37 @@ private:
 // ??0Rva007579F0Object@@QAE@XZ
 Rva007579F0Object::Rva007579F0Object(void)
 {
-	int zero = 0;
 	int neg = -1;
-	int one = -neg;
-	float oneFloat = 1.0f;
 
 	m_08 = neg;
 	m_0C = neg;
-	m_sub.m_2C = zero;
-	m_sub.m_30 = zero;
-	m_sub.m_34 = zero;
+	m_sub.m_2C = 0;
+	m_sub.m_30 = 0;
+	m_sub.m_34 = 0;
 	m_sub.m_68 = neg;
 	m_sub.m_6C = neg;
-	m_sub.m_58 = zero;
-	m_sub.m_70 = zero;
+	m_sub.m_58 = 0;
+	m_sub.m_70 = 0;
 	_ReadWriteBarrier();
-	m_sub.m_4C = oneFloat;
-	m_sub.m_50 = oneFloat;
-	m_sub.m_54 = oneFloat;
-	m_sub.m_5C = one;
-	m_sub.m_60 = one;
-	m_sub.m_64 = one;
-	m_14 = oneFloat;
-	m_sub.m_44 = oneFloat;
-	m_10 = (void *)zero;
-	m_20 = one;
-	m_24 = zero;
-	m_28 = zero;
-	m_18 = zero;
-	m_1C = (unsigned char)zero;
-	m_sub.m_38 = one;
-	m_sub.m_3C = zero;
-	m_sub.m_40 = zero;
-	m_sub.m_48 = zero;
+	m_sub.m_4C = 1.0f;
+	m_sub.m_50 = 1.0f;
+	m_sub.m_54 = 1.0f;
+	m_sub.m_5C = 1;
+	m_sub.m_60 = 1;
+	m_sub.m_64 = 1;
+	m_14 = 1.0f;
+	m_sub.m_44 = 1.0f;
+	m_10 = 0;
+	m_20 = 1;
+	m_24 = 0;
+	m_28 = 0;
+	m_18 = 0;
+	m_1C = 0;
+	m_sub.m_38 = 1;
+	m_sub.m_3C = 0;
+	m_sub.m_40 = 0;
+	m_sub.m_48 = 0;
 	_ReadWriteBarrier();
-	m_sub.m_58 = zero;
-	m_sub.m_70 = zero;
+	m_sub.m_58 = 0;
+	m_sub.m_70 = 0;
 }

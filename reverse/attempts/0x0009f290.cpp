@@ -1,6 +1,6 @@
 // ?insertCopies@Rva0009F090WideListData@@QAEXPAURva0009F090WideNode@@IABVUnicodeString@@@Z
 // partial score=0.95 date=2026-09-02
-// cl: /DNDEBUG /MD /EHsc
+// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 
 class UnicodeString
 {
@@ -31,22 +31,17 @@ void Rva0009F090WideListData::insertCopies(
 	unsigned int count,
 	const UnicodeString &value)
 {
-	unsigned int n = count;
-	if (n > 0)
+	const UnicodeString *v = &value;
+	Rva0009F090WideNode *p = position;
+	for (; count > 0; --count)
 	{
-		const UnicodeString *v = &value;
-		Rva0009F090WideNode *p = position;
-		do
-		{
-			Rva0009F090WideNode *node =
-				(Rva0009F090WideNode *)Rva0009F290Allocate(sizeof(Rva0009F090WideNode));
-			Rva0009F290Construct(&node->value, *v);
-			Rva0009F090WideNode *previous = p->previous;
-			node->next = p;
-			node->previous = previous;
-			previous->next = node;
-			p->previous = node;
-			--n;
-		} while (n);
+		Rva0009F090WideNode *node =
+			(Rva0009F090WideNode *)Rva0009F290Allocate(sizeof(Rva0009F090WideNode));
+		Rva0009F290Construct(&node->value, *v);
+		Rva0009F090WideNode *previous = p->previous;
+		node->next = p;
+		node->previous = previous;
+		previous->next = node;
+		p->previous = node;
 	}
 }

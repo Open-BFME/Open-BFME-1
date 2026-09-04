@@ -118,8 +118,8 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 		return;
 	if (owner)
 	{
-		const CommandSet *commandSet;
-		AICommandInterface *ai = owner->m_ai;
+			AICommandInterface *ai = owner->m_ai;
+			const CommandSet *commandSet;
 		if (ai)
 		{
 			commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
@@ -129,9 +129,15 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 				for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
 				{
 					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-					if (aCommandButton == *(const CommandButton * volatile *)&commandButton &&
-						isStopButton(*(const CommandButton * volatile *)&commandButton))
-						reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+					if (commandButton == aCommandButton)
+					{
+						switch (commandButton->getCommandType())
+						{
+						case GUI_COMMAND_STOP:
+							reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+							break;
+						}
+					}
 				}
 			}
 		}

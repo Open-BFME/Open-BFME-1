@@ -9253,6 +9253,7 @@ name,address,notes
 ?Cast_OBBox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,0x0096AEE0,derived-ICF
 ?Cast_Ray_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVRayCollisionTestClass@@@Z,0x0096ADC0
 ?ChangeBuffer@EAStringC@@AAEXIIIW4CBPushZero@1@I@Z,0x0089E570,EA Apt 2.00.00 string buffer helper
+?Check@Rva0093C4A0Target@@QAE_NPAX00@Z,0x0093C4A0,address-derived three-argument callee pin from the 0x0093C870 retail wrapper
 ?Check_Is_Transform_Identity@@YI_NABVMatrix3D@@@Z,0x0091FF40,register-convention alias of the static inline Check_Is_Transform_Identity; same body as the cdecl-mangled row
 ?Clear@?$VectorClass@M@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@U_ArcInfoStruct@VehicleCurveClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
@@ -77784,6 +77785,7 @@ name,address,notes
 ?getCommandSetString@Object@@QBEABVAsciiString@@XZ,0x00029DC0,Object::getCommandSetString via ILT thunk
 ?getCommandTypeAsAsciiString@GameMessage@@SA?AVAsciiString@@W4Type@1@@Z,0x00040A1B
 ?getCompressionType@CompressionManager@@SA?AW4CompressionType@@PBXH@Z,0x0081E560,decode_calls pin for isDataCompressed/getUncompressedSize callee
+?getConstSlot@GameInfo@@QBEPBVGameSlot@@H@Z,0x000170BC,Target 0x0050FE50 calls the incremental-link thunk for the matched GameInfo::getConstSlot body
 ?getContainCount@BfmeNamedContain@@QBEHXZ,0x000347E3,Contain count getter; ILT used by evaluateNamedHasFreeContainerSlots 0x00323CD0
 ?getContainCount@TunnelTracker@@QAEIH@Z,0x00036165,Open-BFME5 ILT; BFME gives it an argument the reference does not have and ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z at 0x003782D0 passes zero at both call sites
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824

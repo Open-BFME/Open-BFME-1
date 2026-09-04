@@ -435,6 +435,8 @@ AggregateDefClass::Build_Subobject_List
 	RenderObjClass &model
 )
 {
+	int index;
+
 	// Loop through all the bones in this render obj
 	int bone_count = model.Get_Num_Bones ();
 	for (int bone_index = 0; bone_index < bone_count; bone_index ++) {			
@@ -442,7 +444,7 @@ AggregateDefClass::Build_Subobject_List
 		
 		// Build a list of nodes that are contained in the vanilla model
 		DynamicVectorClass <RenderObjClass *> orig_node_list;
-		for (int index = 0;
+		for (index = 0;
 			  index < original_model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = original_model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -453,7 +455,7 @@ AggregateDefClass::Build_Subobject_List
 
 		// Build a list of nodes that are contained in this bone
 		DynamicVectorClass <RenderObjClass *> node_list;
-		for (int index = 0;
+		for (index = 0;
 			  index < model.Get_Num_Sub_Objects_On_Bone (bone_index);
 			  index ++) {
 			RenderObjClass *psubobj = model.Get_Sub_Object_On_Bone (index, bone_index);
@@ -484,21 +486,24 @@ AggregateDefClass::Build_Subobject_List
 
 					// Attach this render object to the 'original' model (this is done
 					// so we can do texture compares later)
-					RenderObjClass *prender_obj = WW3DAssetManager::Get_Instance ()->Create_Render_Obj (prototype_name);
-					((RenderObjClass &)original_model).Add_Sub_Object_To_Bone (prender_obj, pbone_name);
+					extern RenderObjClass *Create_Render_Obj (const char *passet_name);
+					RenderObjClass *prender_obj = Create_Render_Obj (prototype_name);
+					((int (__thiscall *)(RenderObjClass *, RenderObjClass *, const char *, const Vector3 *))
+						(*(void ***)&original_model)[0x90 / sizeof (void *)])
+						(&original_model, prender_obj, pbone_name, NULL);
 					REF_PTR_RELEASE (prender_obj);
 				}
 			}
 		}
 
 		// Free our hold on the render objs in the original node list
-		for (int index = 0; index < orig_node_list.Count (); index ++) {
+		for (index = 0; index < orig_node_list.Count (); index ++) {
 			REF_PTR_RELEASE (orig_node_list[index]);
 		}
 		orig_node_list.Delete_All ();
 
 		// Free our hold on the render objs in the node list
-		for (int index = 0; index < node_list.Count (); index ++) {
+		for (index = 0; index < node_list.Count (); index ++) {
 			REF_PTR_RELEASE (node_list[index]);
 		}
 		node_list.Delete_All ();

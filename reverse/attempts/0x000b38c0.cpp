@@ -89,10 +89,14 @@ private:
 // ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z
 void AudioEventRTS::setEventName(AsciiString name)
 {
-	register AsciiString *const eventName = reinterpret_cast<AsciiString *>(reinterpret_cast<char *>(this) + 0x14);
+	const AsciiString *eventName = &m_eventName;
 	if (name.compare(*eventName) != 0)
 	{
-		m_eventInfo.clear();
-		*eventName = name;
+		if (m_eventInfo.m_ptr)
+		{
+			m_eventInfo.m_ptr->Release_Ref();
+			m_eventInfo.m_ptr = 0;
+		}
+		*const_cast<AsciiString *>(eventName) = name;
 	}
 }
