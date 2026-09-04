@@ -83699,3 +83699,11 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?TheGameSpyPeerMessageQueue@@3PAVGameSpyPeerMessageQueueInterface@@A,0x012F71C8,GameSpyPeerMessageQueue* global used by CustomMatch applySlotColor 0x0053CB90
 ?compare@UnicodeString@@QBEHABV1@@Z,0x000226EC,StringBase<unsigned short>::compare ILT used as UnicodeString::compare by CustomMatch applySlotColor 0x0053CB90
 ?assign@StlStr@@QAEAAV1@PBD0@Z,0x0002B297,STLport basic_string<char>::assign(first last) ILT used by CustomMatch applySlotPlayerTemplate 0x0053CE60
+?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BDA@@@@Z,0x0000B95B,Object clearModelConditionFlags ILT used by WeaponSet::setWeaponLock / releaseWeaponLock (USING_A/B/C)
+?findWeaponTemplateSet@BfmeThingTemplate@@QBEPBVWeaponTemplateSet@@ABVWeaponSetFlags@@XZ,0x00021044,ILT to ThingTemplate::findWeaponTemplateSet body 0x001467E0; WeaponSet::updateWeaponSet
+?findWeaponTemplatePrivate@BfmeWeaponStore@@IBEPAVWeaponTemplate@@W4NameKeyType@@@Z,0x0000D486,ILT to WeaponStore::findWeaponTemplatePrivate body 0x001E42F0; WeaponSet::updateWeaponSet
+?allocateNewWeapon@BfmeWeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z,0x000122BF,ILT to WeaponStore::allocateNewWeapon body 0x001BDD90; WeaponSet::updateWeaponSet
+?TheWeaponStore@@3PAVBfmeWeaponStore@@A,0x00EEF738,WeaponStore global as BfmeWeaponStore view for updateWeaponSet ILT calls
+?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
+?loadAmmoNow@BfmeWeapon@@QAEXPBVObject@@@Z,0x0000FED4,ILT to Weapon::loadAmmoNow body 0x001E9D60; WeaponSet::updateWeaponSet
+?findWeaponTemplatePrivate@BfmeWeaponStore@@QBEPAVWeaponTemplate@@W4NameKeyType@@@Z,0x0000D486,public spelling of the ILT already pinned as IBE; WeaponSet::updateWeaponSet
