@@ -75054,7 +75054,6 @@ name,address,notes
 ?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@0@Z,0x00030CFB,ILT of AsciiString overload of bfme_setAptText at 0x0046CC30; translates then findOrInsert
 ?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z,0x0000BDCA,DisconnectMenu setPlayerName calls the established APT text setter through this ILT
 ?bfme_setPlayerDefeatFrame@GameLogic@@QAEXH@Z,0x00383C00,slot < 8: record[slot]+8 (the Defeat frame field printed by 0x00387A50) = TheGameLogic->m_frame
-?bfme_setPlayerLeaveStatus@GameLogic@@QAEXHH@Z,0x00383BC0,slot < 8: record[slot].status at +0x1b0 = arg2 and record[slot].quitFrame at +0x1b4 = m_frame (+0x3c); status 1 = graceful (Network PLAYERLEAVE frame-command handler at 0x00682B81 in 0x00682A90) status 2 = voted out (Network::voteForPlayerDisconnect body 0x00682270 at 0x0068228B); strings graceful/voted out decoded by 0x00387A50; ILT 0x00006442
 ?bfme_setPlayerVictoryFrame@GameLogic@@QAEXH@Z,0x00383C30,slot < 8: record[slot]+0xc (the Victory frame field printed by 0x00387A50) = TheGameLogic->m_frame
 ?bfme_showBackground@WindowManager@@QAEXH@Z,0x00009494,DisconnectScreen constructor calls the established background helper through this ILT
 ?bind@BFX_Member@@QAEHPAVMemoryPool@@@Z,0x0002AE23,Open-BFME5 pin
@@ -82746,3 +82745,4 @@ g_bfmeGlobalWT,0x012F1484,Open-BFME5 the global whose override entry the entry a
 ??1AsciiStringWU@@QAE@XZ,0x00887940,pin
 ?set@AsciiStringWU@@QAEXABV1@@Z,0x00887C90,pin
 g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
+?setPlayerLeaveStatus@GameLogic@@QAEXHH@Z,0x00383BC0,Network leave-command and disconnect-vote callers identify the eight-player leave-status setter
