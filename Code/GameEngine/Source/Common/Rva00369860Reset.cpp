@@ -18,7 +18,7 @@ public:
 class AttributeModifierPoolUpdate
 {
 public:
-	int bfmeGetCountForCategoryMask(
+	int getCountForCategoryMask(
 		const AttributeModifierCategoryMask *mask) const;
 };
 
@@ -30,7 +30,7 @@ class Object
 	friend class AttributeModifierDefinition;
 
 private:
-	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate(void) const;
+	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate(void) const;
 };
 
 class AttributeModifierIntPair
@@ -111,11 +111,11 @@ int AttributeModifierDefinition::primaryValueFor(const Object *object) const
 		return m_primaryValues[0];
 
 	AttributeModifierPoolUpdate *values =
-		object->bfmeFindAttributeModifierPoolUpdate();
+		object->findAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_primaryValues[0];
 
-	int index = values->bfmeGetCountForCategoryMask(&m_mask) - 1;
+	int index = values->getCountForCategoryMask(&m_mask) - 1;
 	index = AttributeModifierMin(index, 2);
 	return index >= 0 ? m_primaryValues[index] : m_primaryValues[0];
 }
@@ -126,11 +126,11 @@ int AttributeModifierDefinition::secondaryValueFor(const Object *object) const
 		return m_secondaryValues[0];
 
 	AttributeModifierPoolUpdate *values =
-		object->bfmeFindAttributeModifierPoolUpdate();
+		object->findAttributeModifierPoolUpdate();
 	if( values == 0 )
 		return m_secondaryValues[0];
 
-	int index = values->bfmeGetCountForCategoryMask(&m_mask) - 1;
+	int index = values->getCountForCategoryMask(&m_mask) - 1;
 	index = AttributeModifierMin(index, 2);
 	return index >= 0 ? m_secondaryValues[index] : m_secondaryValues[0];
 }

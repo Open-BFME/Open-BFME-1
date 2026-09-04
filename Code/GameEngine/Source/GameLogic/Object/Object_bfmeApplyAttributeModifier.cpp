@@ -82,7 +82,7 @@ public:
 	Bool bfmeApplyAttributeModifier(const AsciiString &name, int duration);
 
 private:
-	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate() const;
+	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
 	unsigned char m_pad000[0x1fc];
 	ContainModuleInterface *m_contain;
 };
@@ -104,7 +104,7 @@ Bool Object::bfmeApplyAttributeModifier(const AsciiString &name, int duration)
 		}
 	}
 
-	AttributeModifierPoolUpdate *pool = bfmeFindAttributeModifierPoolUpdate();
+	AttributeModifierPoolUpdate *pool = findAttributeModifierPoolUpdate();
 	if (pool)
 	{
 		Bool applied = pool->bfmeApplyAttributeModifier(name, duration);

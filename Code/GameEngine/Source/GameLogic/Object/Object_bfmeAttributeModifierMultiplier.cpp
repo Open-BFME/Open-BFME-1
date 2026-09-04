@@ -28,13 +28,13 @@ public:
 	Bool bfmeGetAttributeModifierMultiplier(Int which, Real *out) const;
 
 private:
-	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate(void) const;
+	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate(void) const;
 };
 
 // ?bfmeGetAttributeModifierMultiplier@Object@@QBE_NHPAM@Z
 Bool Object::bfmeGetAttributeModifierMultiplier(Int which, Real *out) const
 {
-	AttributeModifierPoolUpdate *pool = bfmeFindAttributeModifierPoolUpdate();
+	AttributeModifierPoolUpdate *pool = findAttributeModifierPoolUpdate();
 	if (pool == 0)
 		return false;
 	return pool->bfmeGetAttributeModifierMultiplier(which, out);

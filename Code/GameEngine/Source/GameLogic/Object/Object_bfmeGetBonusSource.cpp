@@ -18,13 +18,13 @@ class Module;
 class Object
 {
 private:
-	AttributeModifierPoolUpdate *bfmeFindAttributeModifierPoolUpdate() const;
+	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
 
 protected:
 	Module *findModule(NameKeyType key) const;
 };
 
-AttributeModifierPoolUpdate *Object::bfmeFindAttributeModifierPoolUpdate() const
+AttributeModifierPoolUpdate *Object::findAttributeModifierPoolUpdate() const
 {
 	static NameKeyType key_AttributeModifierPoolUpdate =
 		TheNameKeyGenerator->nameToKey("AttributeModifierPoolUpdate");

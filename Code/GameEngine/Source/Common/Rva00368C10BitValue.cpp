@@ -10,10 +10,10 @@ public:
 	char m_unreconstructed[ 0x48 ];
 	int m_values[ 8 ];
 
-	int bfmeGetCountForCategoryMask(const AttributeModifierCategoryMask *mask) const;
+	int getCountForCategoryMask(const AttributeModifierCategoryMask *mask) const;
 };
 
-int AttributeModifierPoolUpdate::bfmeGetCountForCategoryMask(
+int AttributeModifierPoolUpdate::getCountForCategoryMask(
 	const AttributeModifierCategoryMask *mask) const
 {
 	int index;
