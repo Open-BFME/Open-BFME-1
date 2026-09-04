@@ -34,6 +34,7 @@ class AttributeModifierPoolUpdate
 {
 public:
 	Bool bfmeGetBonus(Int attribute, Real *bonus);
+	Bool bfmeGetAttributeModifierMultiplier(Int attribute, Real *multiplier);
 
 private:
 	Bool isModifierActive(UnsignedInt frame, const AttributeModifierEntry *entry) const;
@@ -67,6 +68,37 @@ Bool AttributeModifierPoolUpdate::bfmeGetBonus(Int attribute, Real *bonus)
 			{
 				found = true;
 				*bonus += value;
+			}
+		}
+	}
+	return found;
+}
+
+// The exact Object wrapper at 0x001BFDD0 proves the multiplicative sibling's
+// class and role even though its original retail method spelling is unknown.
+Bool AttributeModifierPoolUpdate::bfmeGetAttributeModifierMultiplier(
+	Int attribute, Real *multiplier)
+{
+	*multiplier = 1.0f;
+	Bool found = false;
+	if (TheGameLogic)
+	{
+		Real value;
+		UnsignedInt frame = TheGameLogic->m_frame;
+		for (AttributeModifierEntry *entry = m_modifiersBegin;
+			entry != m_modifiersEnd;
+			++entry)
+		{
+			if (isModifierActive(frame, entry))
+			{
+				value = 0.0f;
+				if (TheAttributeModifierDefinitionStore->getValue(
+					static_cast<Int>(entry->m_nameKey), attribute,
+					&value))
+				{
+					found = true;
+					*multiplier *= value;
+				}
 			}
 		}
 	}
