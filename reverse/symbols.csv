@@ -4484,7 +4484,6 @@ name,address,notes
 ??1Gen_dtor_0024d4b0@@UAE@XZ,0x0001BDB0,gen-dtor class destructor
 ??1Gen_dtor_0024ea90@@UAE@XZ,0x0001445C,gen-dtor class destructor
 ??1Gen_dtor_0024f3c0@@UAE@XZ,0x0003B813,gen-dtor class destructor
-??1Gen_dtor_0024f4d0@@UAE@XZ,0x0001C657,gen-dtor class destructor
 ??1Gen_dtor_0024f6a0@@UAE@XZ,0x0000DD5F,gen-dtor class destructor
 ??1Gen_dtor_0024f6f0@@UAE@XZ,0x00008058,gen-dtor class destructor
 ??1Gen_dtor_0024f7d0@@UAE@XZ,0x0003FFF8,gen-dtor class destructor
@@ -31210,14 +31209,11 @@ name,address,notes
 ?b_0024f390@@YAXXZ,0x0024F390,gen-thunk body
 ?b_0024f3c0@@YAXXZ,0x0024F3C0,gen-thunk body
 ?b_0024f3f0@@YAXXZ,0x0024F3F0,gen-thunk body
-?b_0024f400@@YAXXZ,0x0024F400,gen-thunk body
 ?b_0024f420@@YAXXZ,0x0024F420,gen-thunk body
 ?b_0024f430@@YAXXZ,0x0024F430,gen-thunk body
 ?b_0024f440@@YAXXZ,0x0024F440,gen-thunk body
-?b_0024f450@@YAXXZ,0x0024F450,gen-thunk body
 ?b_0024f4a0@@YAXXZ,0x0024F4A0,gen-thunk body
 ?b_0024f4b0@@YAXXZ,0x0024F4B0,gen-thunk body
-?b_0024f4d0@@YAXXZ,0x0024F4D0,gen-thunk body
 ?b_0024f500@@YAXXZ,0x0024F500,gen-thunk body
 ?b_0024f560@@YAXXZ,0x0024F560,gen-thunk body
 ?b_0024f5a0@@YAXXZ,0x0024F5A0,gen-thunk body
@@ -81803,11 +81799,6 @@ _bfmeVft1050F,0x00D28D30,pin
 _bfmeVft1053A,0x00D2BBE8,pin
 _bfmeVft1055B,0x00D376D0,pin
 _bfmeVft1055C,0x00D37720,pin
-_bfmeVftAGBa,0x00C9C9D0,pin
-_bfmeVftAGBb,0x00CA372C,pin
-_bfmeVftAGBc,0x00CB1404,pin
-_bfmeVftAGBd,0x00CB1340,pin
-_bfmeVftAGBe,0x00CB132C,pin
 _bfmeVftAPA,0x00C73734,pin
 _bfmeVftARCa,0x00C73744,pin
 _bfmeVftARCb,0x00CEA230,pin
@@ -82742,3 +82733,6 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??0DestroyModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D9A7,constructor ILT to 0x00253C30
 ??1DestroyModule@@MAE@XZ,0x00008F80,destructor ILT to 0x00253C00
 ??_GDestroyModule@@MAEPAXI@Z,0x0000F911,primary class vtable slot zero ILT to 0x00253CB0
+??0CreateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026CAB,constructor ILT called by seven named derived constructors
+??1CreateModule@@MAE@XZ,0x0001C657,destructor ILT to 0x0024F400
+??_GCreateModule@@MAEPAXI@Z,0x0003020B,primary class vtable slot zero ILT to 0x0024F4D0
