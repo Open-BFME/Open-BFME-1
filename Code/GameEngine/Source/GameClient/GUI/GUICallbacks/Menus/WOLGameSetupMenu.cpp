@@ -165,6 +165,18 @@ public:
 	virtual void destroyWindows() = 0;
 };
 
+// WindowLayout::hide is virtual in BFME at vtable slot 0x10, while the
+// vendored ZH header exposes it as a non-virtual member.
+class BfmeVirtualHideLayout
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot4() = 0;
+	virtual void slot8() = 0;
+	virtual void slotC() = 0;
+	virtual void hide( Bool immediate ) = 0;
+};
+
 class BfmeVirtualStagingRoom
 {
 public:
@@ -1663,13 +1675,16 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 //-------------------------------------------------------------------------------------------------
 /** This is called when a shutdown is complete for this menu */
 //-------------------------------------------------------------------------------------------------
-static void shutdownComplete( WindowLayout *layout )
+// Retail spells this file-static helper `shutdownComplete`; give the source
+// body a TU-specific name so the flat reverse ledger cannot confuse it with
+// the other menu copies.
+static void shutdownCompleteWOLGameSetupMenu( WindowLayout *layout )
 {
 
 	isShuttingDown = false;
 
 	// hide the layout
-	layout->hide( TRUE );
+	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
 
 	// our shutdown is complete
 	TheShell->shutdownComplete( layout, (nextScreen != NULL) );
@@ -1682,7 +1697,7 @@ static void shutdownComplete( WindowLayout *layout )
 		}
 		else
 		{
-			TheShell->push(nextScreen);
+			TheShell->push( AsciiString(nextScreen) );
 		}
 	}
 
@@ -1727,7 +1742,7 @@ void WOLGameSetupMenuShutdown( WindowLayout *layout, void *userData )
 	if( popImmediate )
 	{
 
-		shutdownComplete( layout );
+		shutdownCompleteWOLGameSetupMenu( layout );
 		return;
 
 	}  //end if
@@ -1759,7 +1774,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished() && TheTransitionHandler->isFinished())
 	{
-		shutdownComplete(layout);
+		shutdownCompleteWOLGameSetupMenu(layout);
 		return;
 	}
 

@@ -230,16 +230,22 @@ private:
 	BfmeThingCBTarget *m_target;
 
 public:
+	BfmeThingCBTarget *getTarget() const
+	{
+		return m_target;
+	}
+
 	void bfmeGoCB( BfmeBool flag );
 };
 
 void BfmeThingCB::bfmeGoCB( BfmeBool flag )
 {
-	BfmeThingCBTarget *target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
+	unsigned long targetAddress = reinterpret_cast<unsigned long>( getTarget() );
+	BfmeThingCBTarget *target = reinterpret_cast<BfmeThingCBTarget *>( targetAddress );
 	if( target )
 	{
 		target->slot104( !flag );
-		target = m_target;
+		target = getTarget();
 		target->slot100( flag );
 	}
 }

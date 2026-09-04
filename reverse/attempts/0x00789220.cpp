@@ -10,45 +10,49 @@ public:
 	void *m_table;
 };
 
-class Rva00789220VectorA
+class Rva00789220VectorStorage
+{
+protected:
+	Rva00789220VectorStorage()
+	{
+		m_begin = 0;
+		m_end = 0;
+	}
+	~Rva00789220VectorStorage();
+
+	void *m_pad00;
+	void * volatile m_begin;
+	void * volatile m_end;
+};
+
+class Rva00789220VectorA : public Rva00789220VectorStorage
 {
 public:
 	Rva00789220VectorA(unsigned int count)
 	{
-		m_begin = 0;
-		m_end = 0;
 		m_capacityEnd = 0;
 		m_extra = 0;
 		bfmeReserve(count);
 	}
-	~Rva00789220VectorA();
 	void bfmeReserve(unsigned int count);
 
-	void *m_pad00;
-	void *m_begin;
-	void *m_end;
-	void *m_capacityEnd;
+	void * volatile m_capacityEnd;
 	void *m_extra;
 };
 
-class Rva00789220VectorB
+class Rva00789220VectorB : public Rva00789220VectorStorage
 {
 public:
 	Rva00789220VectorB(unsigned int count)
 	{
-		m_begin = 0;
-		m_end = 0;
-		m_capacityEnd = 0;
+		void * volatile *capacityEnd = &m_capacityEnd;
+		*capacityEnd = 0;
 		m_extra = 0;
 		bfmeReserve(count);
 	}
-	~Rva00789220VectorB();
 	void bfmeReserve(unsigned int count);
 
-	void *m_pad00;
-	void *m_begin;
-	void *m_end;
-	void *m_capacityEnd;
+	void * volatile m_capacityEnd;
 	void *m_extra;
 };
 

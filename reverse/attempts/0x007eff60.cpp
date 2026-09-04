@@ -1,3 +1,5 @@
+// ?d_007eff60@@YAXXZ
+// partial score=0.92 date=2026-09-04
 // ?call@Rva007EFF60@@QAEXPAX0@Z
 // partial score=0.92 date=2026-09-02
 // cl: /O2

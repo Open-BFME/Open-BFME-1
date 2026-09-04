@@ -1,6 +1,6 @@
 // ?d_005f9ab0@@YAXXZ
 // partial score=0.99 date=2026-08-30
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /Op
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2
 extern float GetGameClientRandomValueReal(float low, float high, char *file, int line);
 
 namespace FXParticleSystem {
@@ -35,7 +35,7 @@ LineCoord3D LineEmissionVolumeModule::getPosition(float, float, float, float)
     LineCoord3D start = m_start;
     LineCoord3D end = m_end;
     LineCoord3D delta(end.x - start.x, end.y - start.y, end.z - start.z);
-    float scale = GetGameClientRandomValueReal(
+    volatile float scale = GetGameClientRandomValueReal(
         0.0f,
         1.0f,
         "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterlinevolumemodule.cpp",

@@ -13,14 +13,9 @@ typedef bool Bool;
 struct Coord3D
 {
 	Real x, y, z;
-};
-
-struct PlanarDelta
-{
-	volatile Real x;
-	Real y;
-	Real z;
-	Real lengthSqr() const { return x * x + y * y; }
+	Coord3D() {}
+	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
+	Real lengthSqr() const { return x * x + y * y + z * z; }
 };
 
 class Object
@@ -89,11 +84,11 @@ Bool ExitConditions::shouldExit(const StateMachine *machine) const
 
 	if (m_conditionsToConsider & ATTACK_ExitIfOutsideRadius)
 	{
-		PlanarDelta deltaAggressor;
-		const Coord3D *objPos = machine->getGoalObject()->getPosition();
-		Real objY = *reinterpret_cast<volatile const Real *>(&objPos->y);
-		deltaAggressor.x = objPos->x - m_center.x;
-		deltaAggressor.y = objY - m_center.y;
+		Coord3D deltaAggressor;
+		Coord3D objPos = *machine->getGoalObject()->getPosition();
+		deltaAggressor.x = objPos.x - m_center.x;
+		deltaAggressor.y = objPos.y - m_center.y;
+		deltaAggressor.z = 0;
 
 		if (deltaAggressor.lengthSqr() > m_radiusSqr)
 			return true;

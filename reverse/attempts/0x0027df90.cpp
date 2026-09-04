@@ -71,7 +71,7 @@ public:
 	GUICommandType getCommandType() const { return m_command; }
 
 	unsigned char m_beforeType[0x10];
-	volatile GUICommandType m_command;
+	GUICommandType m_command;
 };
 
 class CommandSet
@@ -123,9 +123,13 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 				for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
 				{
 					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-					if (aCommandButton == *(const CommandButton * volatile *)&commandButton &&
-						(*(const CommandButton * volatile *)&commandButton)->getCommandType() == GUI_COMMAND_STOP)
-						reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+					const CommandButton *requestedButton =
+						*reinterpret_cast<const CommandButton * volatile *>(&commandButton);
+					if (requestedButton == aCommandButton)
+					{
+						if (requestedButton->getCommandType() == GUI_COMMAND_STOP)
+							reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
+					}
 				}
 			}
 		}
