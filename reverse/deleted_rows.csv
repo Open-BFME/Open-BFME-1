@@ -24456,3 +24456,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?rva008896D0Get@@YADXZ,0x008896D0,Address-derived duplicate removed; _bfme_debugReportingEnabled owns this exact caller-identified 12-byte predicate.
 ?rva0060D3D0Get@@YAEXZ,0x0060D3D0,Address-derived duplicate removed; BfmeLivingWorldManager::isCampaignVictorious owns this caller-identified 9-byte predicate.
 ?bfmeOffset@Gen_0096A630@@QBEHXZ,0x0096A630,Generated duplicate removed; AABTreeClass::Compute_Ram_Size owns this caller-identified 17-byte size formula.
+??0Gen_006D8800@@QAE@XZ,0x006D8800,Generated identity replaced by W3DBridge::W3DBridge; the W3DBridgeBuffer vector-constructor call pairs this body with the known W3DBridge destructor at 0x006D88A0.
