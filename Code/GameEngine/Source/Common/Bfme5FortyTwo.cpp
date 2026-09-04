@@ -1,5 +1,5 @@
-// Four more: a third masked table read, a three-float difference, a search
-// over four slots and a linear search.
+// Three more: a third masked table read, a three-float difference and a
+// linear search.
 
 extern int g_bfmeTableDJc[];					// retail 0x012AD6B0
 
@@ -62,44 +62,6 @@ BfmeVec3DG Gen_00148990::bfmeDelta(const BfmeVec3DG *point) const
 	delta.m_bfmeZ = point->m_bfmeZ - m_bfmeZ;
 
 	return delta;
-}
-
-class BfmeOwnerDK
-{
-public:
-	char m_bfmeHead[0x4FB];					// +0x000
-	bool m_bfmeReady;					// +0x4FB
-};
-
-class BfmeSlotDK
-{
-public:
-	int m_bfmeHead;						// +0x00
-	BfmeOwnerDK *m_bfmeOwner;				// +0x04
-};
-
-class Gen_001EAEB0
-{
-public:
-	BfmeSlotDK *bfmeFind(void) const;
-
-private:
-	int m_bfmeHead[2];					// +0x00
-	BfmeSlotDK *m_bfmeSlots[4];				// +0x08
-};
-
-// ?bfmeFind@Gen_001EAEB0@@QBEPAVBfmeSlotDK@@XZ
-BfmeSlotDK *Gen_001EAEB0::bfmeFind(void) const
-{
-	for (int index = 0; index < 4; ++index)
-	{
-		BfmeSlotDK *slot = m_bfmeSlots[index];
-
-		if (slot != 0 && slot->m_bfmeOwner->m_bfmeReady)
-			return slot;
-	}
-
-	return 0;
 }
 
 class BfmeThingDK
