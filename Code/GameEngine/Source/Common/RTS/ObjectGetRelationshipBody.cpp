@@ -7,9 +7,9 @@ typedef bool Bool;
 enum KindOfType
 {
 	KINDOF_IMMOBILE = 2,
-	KINDOF_BFME_RELATION_CARRIER = 108,
-	KINDOF_BFME_RELATION_SOURCE = 132,
-	KINDOF_BFME_SPECIAL_RELATION = 139
+	KINDOF_UNRECONSTRUCTED_108 = 108,
+	KINDOF_UNRECONSTRUCTED_132 = 132,
+	KINDOF_UNRECONSTRUCTED_139 = 139
 };
 
 enum Relationship
@@ -110,6 +110,15 @@ public:
 
 	Team *getTeam() const { return m_team; }
 
+	Bool getIsUndetectedDefector() const { return (m_privateStatus & UNDETECTED_DEFECTOR) != 0; }
+
+	// Upstream keeps these private to Object; the shim below is the only reader here.
+	enum ObjectPrivateStatusBits
+	{
+		EFFECTIVELY_DEAD = (1 << 0),
+		UNDETECTED_DEFECTOR = (1 << 1)
+	};
+
 	unsigned char m_pad008[0x130 - 8];
 	UnsignedInt m_status130;
 	unsigned char m_pad134[0x23C - 0x134];
@@ -120,7 +129,7 @@ public:
 	UnsignedInt m_value280;
 	void *m_relationData;
 	unsigned char m_pad288[0x344 - 0x288];
-	unsigned char m_relationshipFlags;
+	unsigned char m_privateStatus;
 };
 
 class ObjectGetRelationshipShim : public Object
@@ -137,18 +146,18 @@ Relationship ObjectGetRelationshipShim::get(const Object *that) const
 		if ((targetTemplate->m_kindOf[1] & 0x00400000) != 0
 			&& that->isKindOf(KINDOF_IMMOBILE))
 		{
-			if (isKindOf(KINDOF_BFME_SPECIAL_RELATION)
+			if (isKindOf(KINDOF_UNRECONSTRUCTED_139)
 				&& (m_status130 & 0x00001000) != 0)
 				return ENEMIES;
 
 			const Object *relationSource;
-			if (isKindOf(KINDOF_BFME_RELATION_SOURCE))
+			if (isKindOf(KINDOF_UNRECONSTRUCTED_132))
 			{
 				relationSource = this;
 			}
 			else
 			{
-				if (!isKindOf(KINDOF_BFME_RELATION_CARRIER))
+				if (!isKindOf(KINDOF_UNRECONSTRUCTED_108))
 					goto ordinary_relationship;
 
 				BfmeRelationInterface *relationInterface = bfmeGetRelationInterface();
@@ -156,7 +165,7 @@ Relationship ObjectGetRelationshipShim::get(const Object *that) const
 					goto ordinary_relationship;
 
 				const Object *containedSource = bfmeGetRelationInterface()->bfmeGetRelationSource();
-				if (!containedSource || !containedSource->isKindOf(KINDOF_BFME_RELATION_SOURCE))
+				if (!containedSource || !containedSource->isKindOf(KINDOF_UNRECONSTRUCTED_132))
 					goto ordinary_relationship;
 				relationSource = containedSource;
 			}
@@ -173,14 +182,15 @@ Relationship ObjectGetRelationshipShim::get(const Object *that) const
 	}
 
 ordinary_relationship:
-	const Team *myTeam = m_team;
+	const Team *myTeam = getTeam();
 	if (myTeam && that)
 	{
-		if ((m_relationshipFlags & 2) != 0)
-			return NEUTRAL;
-		if ((that->m_relationshipFlags & 2) != 0)
-			return ALLIES;
-		return myTeam->getRelationship(that->getTeam());
+		if (getIsUndetectedDefector())
+			return NEUTRAL; // so my AI does not give away my position by auto acquire
+		else if (that->getIsUndetectedDefector())
+			return ALLIES; // so I treat undetected defectors like they were my very own
+		else
+			return myTeam->getRelationship(that->getTeam());
 	}
 
 	return NEUTRAL;
