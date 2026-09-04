@@ -46,13 +46,13 @@ public:
 	unsigned char m_padding[3];
 };
 
-class Gen00529110
+class SkirmishScreenState
 {
 public:
 	virtual void slot0(void);
 	virtual void slot1(void);
 	virtual void slot2(void);
-	~Gen00529110();
+	~SkirmishScreenState();
 
 private:
 	Gen00529110Owner *m_owner;
@@ -82,11 +82,11 @@ private:
 	void *m_field128;
 };
 
-extern Gen00529110 *TheGen00529110;
+extern SkirmishScreenState *TheSkirmishScreenState;
 
 // Tear down the UI controller after restoring its owner's presentation state.
-// ??1Gen00529110@@QAE@XZ
-Gen00529110::~Gen00529110()
+// ??1SkirmishScreenState@@QAE@XZ
+SkirmishScreenState::~SkirmishScreenState()
 {
 	if (m_visible)
 	{
@@ -95,6 +95,6 @@ Gen00529110::~Gen00529110()
 		if (m_owner->bfmeShouldRestore())
 			m_owner->bfmeRestore();
 	}
-	if (TheGen00529110 == this)
-		TheGen00529110 = 0;
+	if (TheSkirmishScreenState == this)
+		TheSkirmishScreenState = 0;
 }
