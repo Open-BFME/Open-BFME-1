@@ -73077,7 +73077,6 @@ name,address,notes
 ?bfmeFindDGH@@YGPAVBfmeSubDGH@@PAX@Z,0x00032786,pin
 ?bfmeFindDGI@@YGPAVBfmeSubDGI@@PAX@Z,0x00032786,pin
 ?bfmeFindEGCa@BfmeSubEGCa@@QAEPAUBfmeResEGC@@PAX@Z,0x00038E4C,pin
-?bfmeFindEGCb@BfmeSubEGCb@@QAEPAUBfmeResEGC@@PAX@Z,0x00014D49,pin
 ?bfmeFindEVB@BfmeGlobEVB@@QAEPAUBfmeObjEVB@@PAX@Z,0x0001F253,pin
 ?bfmeFindEZC@BfmeSubEZC@@QAEPAUBfmeResEZC@@PAX@Z,0x00037D6C,pin
 ?bfmeFindFBD@BfmeGlobFBD@@QAEPAUBfmeObjFBD@@PAX@Z,0x0001F253,pin
@@ -80971,7 +80970,6 @@ name,address,notes
 ?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z,0x0002181E,UNIDENTIFIED Object helper reached by the address-derived body at 0x000F20F0
 ?unidentified_00025CD4@WindowLookupShim@@QAEPAXHH@Z,0x00025CD4,UNIDENTIFIED lookup on the global at 0x012ED88C taking a name key and a flag; address-derived name; do not treat as an identity
 ?unidentified_0002e9a1@WindowManager@@QAEXH@Z,0x0002E9A1,ILT -> 0x0046B340; WindowManager thiscall(-1) from parchmentMapFadeLoadGame
-?unidentified_00036854@WindowManager@@QAEHABVAsciiString@@@Z,0x00036854,ILT -> 0x0046CB50; BannerUI.apt movie-index lookup used by DeleteBanner (this+0x58 find, return record+8 or -1)
 ?unidentified_0003A085@BfmeAptScreenCampaignReview@@QAEXXZ,0x0003A085,CampaignReview post-registration UI update
 ?unidentified_0003ADD7@NameKeyGeneratorShim@@QAEHPBD@Z,0x0003ADD7,UNIDENTIFIED characters-to-key call used by Player::getProductionCostChangePercent; address-derived name; ICF-folded so the existing findMemoryPool and concat pins share these bytes but describe other call sites
 ?unidentified_000CFE80@BfmePlayerScienceAvailability@@QAE?AW4ScienceAvailabilityType@@ABVAsciiString@@@Z,0x00030260,alias of the Player spelling pinned at the same ILT; ScriptActions.cpp reaches it through a view because the reference header has no such member. Address-derived name, not an identity
@@ -82744,3 +82742,5 @@ _g_heightMapRenderObjVtableAtEight,0x00D1DC80,HeightMapRenderObjClass secondary 
 _g_heightMapRenderObjVtableAtC8,0x00D1DC74,HeightMapRenderObjClass secondary vtable at object offset 0xC8
 _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vtable at object offset 0xCC
 ?TheHeightMap@@3PAVHeightMapRenderObjClass@@A,0x00EF8008,global current HeightMapRenderObjClass assigned by its constructor
+?findAptMovieIndex@WindowManager@@QAEHABVAsciiString@@@Z,0x0046CB50,BannerUI.apt callers identify the movie registry index lookup body
+?find@AptMovieRegistry@@QAEPAUAptMovieRecord@@ABVAsciiString@@@Z,0x00014D49,WindowManager APT movie registry lookup thunk

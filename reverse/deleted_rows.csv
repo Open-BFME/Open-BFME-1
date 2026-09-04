@@ -24425,3 +24425,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?get@Rva00383B90@@QAEPAXH@Z,0x00383B90,address-derived identity superseded by GameLogic::getPlayerLeaveStatus; adjacency to its matched setter and the shared eight-record layout identify the same byte-verified 31-byte body.
 ??0BfmeA1142@@QAE@D@Z,0x006D1C80,synthetic identity superseded by HeightMapRenderObjClass::HeightMapRenderObjClass(int); the matched adjustTerrainLOD caller identifies the same byte-verified 131-byte body.
 ??0Rva004F07F0@@QAE@ABV0@@Z,0x004F07F0,address-derived copy-constructor identity superseded by GameInfo::operator=; the matched GameSpyStagingRoom assignment caller and skipped vtable field identify the same byte-verified 159-byte body.
+?bfmeGoEGCb@BfmeThingEGCb@@QAEHPAX@Z,0x0046CB50,synthetic identity superseded by WindowManager::findAptMovieIndex; four matched BannerUI.apt callers identify the same byte-verified 29-byte movie registry lookup.

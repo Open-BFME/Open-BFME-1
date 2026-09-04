@@ -65,12 +65,6 @@ public:
 	BfmeResEGC *bfmeFindEGCa(void *a);
 };
 
-class BfmeSubEGCb
-{
-public:
-	BfmeResEGC *bfmeFindEGCb(void *a);
-};
-
 struct BfmeThingEGCa
 {
 	int bfmeGoEGCa(void *a);
@@ -81,21 +75,6 @@ struct BfmeThingEGCa
 int BfmeThingEGCa::bfmeGoEGCa(void *a)
 {
 	BfmeResEGC *r = m_bfmeSub.bfmeFindEGCa(a);
-	if (!r)
-		return -1;
-	return r->m_bfmeX;
-}
-
-struct BfmeThingEGCb
-{
-	int bfmeGoEGCb(void *a);
-	unsigned char m_bfmeHead[0x58];
-	BfmeSubEGCb m_bfmeSub;
-};
-
-int BfmeThingEGCb::bfmeGoEGCb(void *a)
-{
-	BfmeResEGC *r = m_bfmeSub.bfmeFindEGCb(a);
 	if (!r)
 		return -1;
 	return r->m_bfmeX;
@@ -173,4 +152,3 @@ void BfmeThingEGD::bfmeGoEGD(void *a)
 {
 	g_bfmeObjEGD->bfmeVirt55EGD(this, a);
 }
-
