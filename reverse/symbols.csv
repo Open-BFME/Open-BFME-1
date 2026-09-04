@@ -82737,3 +82737,4 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GDefectorSpecialPower@@MAEPAXI@Z,0x0000CE19,primary class vtable slot zero ILT to 0x0025A060
 ??1DevastateSpecialPower@@MAE@XZ,0x000313D6,destructor ILT to 0x0025A810
 ??_GDevastateSpecialPower@@MAEPAXI@Z,0x00038104,primary class vtable slot zero ILT to 0x0025A8E0
+_bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00872680 hands to TableMap; body sits immediately below it
