@@ -11914,6 +11914,7 @@ name,address,notes
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
 ?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
 ?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
+?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
@@ -76046,6 +76047,7 @@ name,address,notes
 ?g_Va01336E50@@3V?@D@@A,0x01336E50,AsciiString::TheEmptyString copied by 0x006AEE00
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_aptPalantirSpellPrefix@@3PADA,0x00D096E0,validated five-character prefix accepted by AptPalantir::OnBttnSpell
 ?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
 ?g_bfme1017G@@3DA,0x00F3781C,pin
 ?g_bfme1017H@@3HA,0x00F37800,pin
@@ -80169,6 +80171,7 @@ name,address,notes
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
 ?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
 ?selectObject@GameLogic@@QAEXPAVObject@@_NG1@Z,0x00008107,ILT used by the command-center selection callback at 0x0038AE10
+?selectSpell@AptPalantir@@QAEXH@Z,0x0001EDDA,AptPalantir OnBttnSpell dispatches the parsed one-based spell index
 ?send@BfmeMgr089@@QAEXPAX0@Z,0x0002836C,pin
 ?send@BfmeOwner803A00@@QAEXPAVBfmeMsg803A00@@@Z,0x008038F0,FESL submit for 0x00803A00
 ?send@BfmeOwner803B60@@QAEXPAVBfmeMsg803B60@@@Z,0x008038F0,FESL submit for 0x00803B60
@@ -82344,24 +82347,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
-?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
-?hide@Radar@@QAEXXZ,0x0001827D,AptPalantir immediate-hide notification guarded by TheRadar
-?close@PalantirAptWindow@@QAEXH@Z,0x0002144A,AptPalantir OnClosed callback closes its registered APT window
-?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
-??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
-?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
-?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
-?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
-?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
-?closePortrait@AptPalantirRegionPanel@@QAEXH@Z,0x00021468,AptPalantir OnRegionPortraitClosed dispatches the parsed region identifier
-?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
-?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
-?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
-?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
-?TheLivingWorldCampaignManager@@3PAVBfmeLivingWorldCampaignManager@@A,0x012F1024,Open-BFME5 manager global; same slot as g_bfmeSwitchDR / initSubsystem literal
-?findByKey@BfmeLivingWorldCampaignManager@@QAEPAVBfmeLwcmFindResult@@PAX@Z,0x0000D422,Open-BFME5 ILT to 0x003B4590; callee of 0x003B8260
-?applyPointer@BfmeLwcmFindResult@@QAEXPAPAX@Z,0x00026EA9,Open-BFME5 ILT to 0x003A95D0; callee of 0x003B8260
-?g_aptPalantirSpellPrefix@@3PADA,0x00D096E0,validated five-character prefix accepted by AptPalantir::OnBttnSpell
-?selectSpell@AptPalantir@@QAEXH@Z,0x0001EDDA,AptPalantir OnBttnSpell dispatches the parsed one-based spell index
-?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
