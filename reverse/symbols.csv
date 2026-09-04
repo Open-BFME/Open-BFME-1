@@ -3557,6 +3557,7 @@ name,address,notes
 ??1BfmeElemUHA@@QAE@XZ,0x00030652,pin
 ??1BfmeElemUJA@@QAE@XZ,0x00018FCF,pin
 ??1BfmeElemVVC@@QAE@XZ,0x0003EAB8,pin
+??1BfmeElemVVD@@QAE@XZ,0x0001479A,pin
 ??1BfmeElementA@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementB@@QAE@XZ,0x0001AAD2,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementC@@QAE@XZ,0x00937390,Open-BFME5 the element destructor the array-owning destructors call
@@ -8744,6 +8745,7 @@ name,address,notes
 ??_7BfmeBaseVUH@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
 ??_7BfmeBaseVUJ@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
 ??_7BfmeBaseVUQ@@6B@,0x01073744,Open-BFME5 retail base vftable stored by the 0x00352C20 destructor
+??_7BfmeBaseVVD@@6B@,0x010F35D4,Open-BFME5 retail base vftable stored by the 0x005B5330 destructor
 ??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
 ??_7BfmeEntVTA@@6B@,0x010EC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
@@ -8760,6 +8762,7 @@ name,address,notes
 ??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
 ??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
 ??_7BfmeOwnVVA@@6B@,0x0110FFEC,Open-BFME5 retail vftable stored by the 0x005D2840 destructor
+??_7BfmeOwnVVD@@6B@,0x0110DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -82322,6 +82325,7 @@ g_bfmeSideNameC1294,0x010804BC,address-derived third side-name string used by th
 g_bfmeSideNameD1294,0x010804C4,address-derived fourth side-name string used by the 0x003A0860 retail body
 g_bfmeSingletonH,0x012F706C,Open-BFME5 the singleton the clear at 0x003C0DB0 hands each element to
 g_bfmeSingletonR,0x012F1464,Open-BFME5 the singleton the clear at 0x0038D000 tail-calls a virtual on
+g_bfmeSingletonVVD,0x012F4C84,Open-BFME5 retail singleton pointer cleared by the 0x005B5330 destructor
 g_bfmeSinkAM,0x012F706C,Open-BFME5 the singleton the remove at 0x003BEBA0 tells before taking the entry out
 g_bfmeSinkY,0x012ED668,Open-BFME5 the singleton the clear at 0x00613CC0 hands each element to
 g_bfmeSrcCF,0x012B5100,Open-BFME5 the table the copy at 0x00421E50 reads
