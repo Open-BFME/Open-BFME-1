@@ -83728,3 +83728,6 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?lookAtPlayerID@@3HA,0x012F4018,PopupPlayerInfo lookAtPlayerID; SetLookAtPlayer stores the profile id; PopulatePlayerInfoWindows reads it
 ?lookAtPlayerName@@3V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@A,0x012F4024,PopupPlayerInfo lookAtPlayerName STLport string; SetLookAtPlayer assigns nick.str()
 ??4WeaponTemplate@@QAEAAV0@ABV0@@Z,0x0001AF3C,Open-BFME5 ILT thunk to WeaponTemplate copy-assign 0x001E80A0; newOverride at 0x001E9AF0 calls this after default ctor
+??4WtVecCoord2D@@QAEAAV0@ABV0@@Z,0x00026C6A,WeaponTemplate::operator= scatter vector assign ILT (8-byte Coord2D elements; body 0x001E7330)
+??4WtVecPod12@@QAEAAV0@ABV0@@Z,0x000185BB,WeaponTemplate::operator= 12-byte-element vector assign ILT (body 0x001E71D0)
+??4WtTail@@QAEAAV0@ABV0@@Z,0x00001E79,WeaponTemplate::operator= tail member assign ILT (body 0x001E5880)
