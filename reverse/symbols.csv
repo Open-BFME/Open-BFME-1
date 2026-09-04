@@ -4517,7 +4517,6 @@ name,address,notes
 ??1Gen_dtor_00258560@@UAE@XZ,0x00010370,gen-dtor class destructor
 ??1Gen_dtor_002592f0@@UAE@XZ,0x0001F76C,gen-dtor class destructor
 ??1Gen_dtor_002598d0@@UAE@XZ,0x0000B37F,gen-dtor class destructor
-??1Gen_dtor_00259ca0@@UAE@XZ,0x00029A28,gen-dtor class destructor
 ??1Gen_dtor_00259ee0@@UAE@XZ,0x0002C78C,gen-dtor class destructor
 ??1Gen_dtor_0025a060@@UAE@XZ,0x00022F8E,gen-dtor class destructor
 ??1Gen_dtor_0025a140@@UAE@XZ,0x0001DF89,gen-dtor class destructor
@@ -31724,11 +31723,9 @@ name,address,notes
 ?b_00259b50@@YAXXZ,0x00259B50,gen-thunk body
 ?b_00259b80@@YAXXZ,0x00259B80,gen-thunk body
 ?b_00259bc0@@YAXXZ,0x00259BC0,gen-thunk body
-?b_00259bd0@@YAXXZ,0x00259BD0,gen-thunk body
 ?b_00259bf0@@YAXXZ,0x00259BF0,gen-thunk body
 ?b_00259c00@@YAXXZ,0x00259C00,gen-thunk body
 ?b_00259c90@@YAXXZ,0x00259C90,gen-thunk body
-?b_00259ca0@@YAXXZ,0x00259CA0,gen-thunk body
 ?b_00259cd0@@YAXXZ,0x00259CD0,gen-thunk body
 ?b_00259d90@@YAXXZ,0x00259D90,gen-thunk body
 ?b_00259dd0@@YAXXZ,0x00259DD0,gen-thunk body
@@ -82735,3 +82732,5 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ??_GCloudBreakSpecialPower@@MAEPAXI@Z,0x00009D54,primary class vtable slot zero ILT to 0x00259130
 ??1CombineHordeSpecialPower@@MAE@XZ,0x0000BD52,destructor ILT to 0x00259740
 ??_GCombineHordeSpecialPower@@MAEPAXI@Z,0x000086D9,primary class vtable slot zero ILT to 0x00259870
+??1DarknessSpecialPower@@MAE@XZ,0x00029A28,destructor ILT to 0x00259BD0
+??_GDarknessSpecialPower@@MAEPAXI@Z,0x0001F8D4,primary class vtable slot zero ILT to 0x00259CA0

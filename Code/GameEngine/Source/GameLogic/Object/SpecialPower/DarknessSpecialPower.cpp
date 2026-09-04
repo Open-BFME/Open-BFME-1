@@ -33,15 +33,23 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class DarknessSpecialPower : public SpecialPowerModule
 {
 public:
 	DarknessSpecialPower( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~DarknessSpecialPower();
 };
 
 DarknessSpecialPower::DarknessSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+DarknessSpecialPower::~DarknessSpecialPower()
 {
 }
