@@ -4758,7 +4758,6 @@ name,address,notes
 ??1Gen_dtor_002cd180@@UAE@XZ,0x0004418E,gen-dtor class destructor
 ??1Gen_dtor_002cdbc0@@UAE@XZ,0x0004324D,gen-dtor class destructor
 ??1Gen_dtor_002cdd60@@UAE@XZ,0x0001A3B6,gen-dtor class destructor
-??1Gen_dtor_002cf290@@UAE@XZ,0x000016E5,gen-dtor class destructor
 ??1Gen_dtor_002cf860@@UAE@XZ,0x0003F896,gen-dtor class destructor
 ??1Gen_dtor_002cfee0@@UAE@XZ,0x000172BF,gen-dtor class destructor
 ??1Gen_dtor_002d0780@@UAE@XZ,0x0004B295,gen-dtor class destructor
@@ -35476,12 +35475,10 @@ name,address,notes
 ?b_002cf0f0@@YAXXZ,0x002CF0F0,gen-thunk body
 ?b_002cf140@@YAXXZ,0x002CF140,gen-thunk body
 ?b_002cf150@@YAXXZ,0x002CF150,gen-thunk body
-?b_002cf170@@YAXXZ,0x002CF170,gen-thunk body
 ?b_002cf1a0@@YAXXZ,0x002CF1A0,gen-thunk body
 ?b_002cf1e0@@YAXXZ,0x002CF1E0,gen-thunk body
 ?b_002cf1f0@@YAXXZ,0x002CF1F0,gen-thunk body
 ?b_002cf280@@YAXXZ,0x002CF280,gen-thunk body
-?b_002cf290@@YAXXZ,0x002CF290,gen-thunk body
 ?b_002cf2c0@@YAXXZ,0x002CF2C0,gen-thunk body
 ?b_002cf5a0@@YAXXZ,0x002CF5A0,gen-thunk body
 ?b_002cf610@@YAXXZ,0x002CF610,gen-thunk body
@@ -82756,3 +82753,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??_GSupplyWarehouseDockUpdateModuleData@@UAEPAXI@Z,0x0003C7F4,class vftable slot zero ILT to 0x002CFB30
 ??1RepairDockUpdate@@MAE@XZ,0x00038BC2,destructor ILT to 0x002CEDC0
 ??_GRepairDockUpdate@@MAEPAXI@Z,0x00022F16,primary class vftable slot zero ILT to 0x002CEEA0
+??1SupplyCenterDockUpdate@@MAE@XZ,0x000016E5,destructor ILT to 0x002CF170
+??_GSupplyCenterDockUpdate@@MAEPAXI@Z,0x0002D844,primary class vftable slot zero ILT to 0x002CF290
