@@ -83732,3 +83732,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ??4WtVecPod12@@QAEAAV0@ABV0@@Z,0x000185BB,WeaponTemplate::operator= 12-byte-element vector assign ILT (body 0x001E71D0)
 ??4WtTail@@QAEAAV0@ABV0@@Z,0x00001E79,WeaponTemplate::operator= tail member assign ILT (body 0x001E5880)
 ?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z,0x00699E50,Miles playing-audio handle lookup; setReverb callee
+?isFinished@TransitionHandler@@QAE_NXZ,0x00042E6F,ILT of GameWindowTransitionsHandler::isFinished; parchmentMapFadeLoadGame view class
+?unidentified_0002e9a1@WindowManager@@QAEXH@Z,0x0002E9A1,ILT -> 0x0046B340; WindowManager thiscall(-1) from parchmentMapFadeLoadGame
