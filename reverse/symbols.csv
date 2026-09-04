@@ -82456,3 +82456,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$__copy@PAUElem003AF9E0@@PAU1@H@_STL@@YAPAUElem003AF9E0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002D006,Open-BFME5 ILT range copy for vector erase 0x003AF9E0
 ??$__copy@PAUElem003B2540@@PAU1@H@_STL@@YAPAUElem003B2540@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000830F,Open-BFME5 ILT range copy for vector erase 0x003B2540
 ??$__copy@PAUElem003B2830@@PAU1@H@_STL@@YAPAUElem003B2830@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DCBE,Open-BFME5 ILT range copy for vector erase 0x003B2830
+??0Rva00590010FourString@@QAE@ABVUnicodeString@@000@Z,0x0004B2B3,ILT for the four-UnicodeString ctor used by Rva005929E0::replace
+??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
