@@ -24446,3 +24446,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?Reset@Line3DClassResetThunk@@QAEXABVVector3@@0M@Z,0x009520C0,Synthetic derived-class duplicate removed; canonical Line3DClass::Reset owns the exact 336-byte upstream-backed body.
 ??0Open2Rec0FCED0@@QAE@ABV0@@Z,0x000FCED0,Address-derived duplicate removed; GeometryShape copy constructor owns this exact vector-element body.
 ?findOrInsert@AptTextRecordMap@@QAEPAUAptTextRecord@@ABVAsciiString@@@Z,0x0046B490,False out-of-line helper claim removed; the helper is inlined and STLport hash_map::operator[] owns this exact 193-byte body.
+??0BfmeModuleData_0036CDD0@@QAE@XZ,0x0036CDD0,Address-derived module-data identity superseded by CastleMemberBehaviorModuleData; its factory reaches this exact 58-byte constructor.
