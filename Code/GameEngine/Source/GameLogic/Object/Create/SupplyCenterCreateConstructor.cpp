@@ -33,6 +33,8 @@ class CreateModule : public BehaviorModule,
 {
 public:
 	CreateModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~CreateModule();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyCenterCreate.h
@@ -40,9 +42,15 @@ class SupplyCenterCreate : public CreateModule
 {
 public:
 	SupplyCenterCreate( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SupplyCenterCreate();
 };
 
 SupplyCenterCreate::SupplyCenterCreate( Thing *thing, const ModuleData *moduleData )
 	: CreateModule( thing, moduleData )
+{
+}
+
+SupplyCenterCreate::~SupplyCenterCreate()
 {
 }
