@@ -82430,3 +82430,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_feslUserIdKey@@3PADA,0x00D2B558,FESL UGID field key
 ?g_feslSecretKey@@3PADA,0x00D2B560,FESL SECRET field key
 ?g_feslDirectRoute@@3PADA,0x00D2C300,FESL direct route marker
+?releaseCodecMembers@@YAXPAUCodecState@@@Z,0x009A4A60,codec state nested-member release
+?releaseCodecBuffer@@YAXPAPAX@Z,0x009A6EC0,codec buffer owner release
+?releaseCodecCallback@@YAXPAPAX@Z,0x009A5E60,codec callback owner release
+?freeCodecMemory@@YAXPAX@Z,0x009A5980,codec allocator free thunk
