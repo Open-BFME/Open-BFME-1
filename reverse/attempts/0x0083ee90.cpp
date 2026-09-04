@@ -39,7 +39,7 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 		T *p = (T *)u2_import_01359474(old_ptr, bytes);
 		if (p != 0)
 		{
-			T *end = (T *)((unsigned int)p + bytes);
+			T *end = (T *)(bytes + (unsigned int)p);
 			T *dst = p + old_count;
 			if (dst != end)
 			{

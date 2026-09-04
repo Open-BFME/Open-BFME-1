@@ -87,6 +87,7 @@ public:
 		return object;
 	}
 	static void operator delete(void *);
+	char m_gap10[0x0c];
 };
 
 class Rva8CF030State
@@ -112,21 +113,21 @@ void rva8CF030BuildArray(Rva8CF030State *state, void *)
 	for (; index < count; ++index)
 	{
 		Rva8CF030Value *value = owner->m_stack[owner->m_count - index - 3];
-		Rva8CF030List *owner = value->getList();
-		Rva8CF030List *list = (Rva8CF030List *)(owner->m_nextTagged & ~1u);
+		Rva8CF030List *listOwner = value->getList();
+		Rva8CF030List *list = (Rva8CF030List *)(listOwner->m_nextTagged & ~1u);
 		if (list == 0)
 		{
 			Rva8CF030List *created = new Rva8CF030ListNode(value);
-			owner = value->getList();
-			Rva8CF030List *old = (Rva8CF030List *)(owner->m_nextTagged & ~1u);
+			listOwner = value->getList();
+			Rva8CF030List *old = (Rva8CF030List *)(listOwner->m_nextTagged & ~1u);
 			if (created != 0)
 				created->addRef();
 			if (old != 0)
 				old->release();
 			if (created == 0)
-				owner->m_nextTagged = 0;
+				listOwner->m_nextTagged = 0;
 			else
-				owner->m_nextTagged = (unsigned)created | (created->tagged() == true ? 1u : 0u);
+				listOwner->m_nextTagged = (unsigned)created | (created->tagged() == true ? 1u : 0u);
 			list = created;
 		}
 		items[index] = list;

@@ -1,5 +1,5 @@
 // ?bfmeNextToken@Gen009D1C50@@QAEDPAVBfmeLayoutVHH@@@Z
-// partial score=0.91 date=2026-09-02
+// partial score=0.93 date=2026-09-04
 // cl: /DNDEBUG /MD /O2
 // Clean C++ conversion of the classifier tokeniser at retail RVA 0x009D1C50.
 
@@ -29,30 +29,28 @@ private:
 
 char Gen009D1C50::bfmeNextToken(BfmeLayoutVHH *out)
 {
-	BfmeLayoutVHH &output = *out;
 	_ReadWriteBarrier();
-	Gen009D1C50 *self = this;
-	output.releaseBuffer();
+	out->releaseBuffer();
 	int (__cdecl *classify)(int) = g_bfmeFn1182;
-	while (self->m_pos < self->m_end)
+	while (m_pos < m_end)
 	{
-		if (classify(static_cast<signed char>(self->m_buf[self->m_pos])) == 0)
+		if (classify(static_cast<signed char>(m_buf[m_pos])) == 0)
 			break;
-		++self->m_pos;
+		++m_pos;
 	}
-	if (self->m_pos >= self->m_end)
+	if (m_pos >= m_end)
 	{
-		self->m_pos = self->m_end;
+		m_pos = m_end;
 		return 0;
 	}
 	do
 	{
-		char ch = self->m_buf[self->m_pos];
-		output.bfmeCatVHH(&ch, 1);
-		++self->m_pos;
-		if (self->m_pos >= self->m_end)
+		char ch = m_buf[m_pos];
+		out->bfmeCatVHH(&ch, 1);
+		++m_pos;
+		if (m_pos >= m_end)
 			break;
 	}
-	while (classify(static_cast<signed char>(self->m_buf[self->m_pos])) == 0);
+	while (classify(static_cast<signed char>(m_buf[m_pos])) == 0);
 	return 1;
 }

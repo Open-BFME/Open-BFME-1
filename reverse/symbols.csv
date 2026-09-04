@@ -1230,6 +1230,7 @@ name,address,notes
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
 ??0?$StringBase@D@@IAE@ABV0@@Z,0x00887B60,protected StringBase char copy ctor
+??0?$StringBase@D@@QAE@ABV0@@Z,0x00887B60,public narrow StringBase copy used by notification dispatch
 ??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,StringBase<unsigned short> const wchar ctor used by populateSideInfo L%d temps
 ??0?$StringBase@G@@QAE@ABV0@@Z,0x00888400,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -1870,6 +1871,9 @@ name,address,notes
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x00887B60,pinharvest x4 (body)
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
+??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWF@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
 ??0AssistedTargetingUpdateModuleData@@QAE@XZ,0x000104B5,pinharvest x1 (thunk)
 ??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
@@ -3022,6 +3026,7 @@ name,address,notes
 ??0SiegeEngineContainModuleData@@QAE@XZ,0x0003D055,SiegeEngineContain ModuleData ctor
 ??0SimpleObjectIterator@@QAE@XZ,0x000197DB,SimpleObjectIterator ctor ILT from groupTightenToPosition 0x00155720
 ??0SkirmishBattleHonors@@QAE@VUnicodeString@@@Z,0x0009E130,UserPreferences ctor ILT 0x0004B19B then vtable 0x01080460; takes the per-user directory UnicodeString by value (compared with TheEmptyString; released at exit); concat L"SkirmishStats.ini" and loads through vslot+4 body 0x000ACD50; on failure loads the ASCII path through vslot+8 0x000A9230 and migrates slot 0 name / SlotList; finally setBool("UseMapListTooltips") ILT 0x00017CC9; ZH SkirmishBattleHonors.cpp:80 load("SkirmishStats.ini")
+??0SkirmishPreferences@@QAE@XZ,0x00047767,retail incremental-link constructor call target used by the Skirmish start callback
 ??0SkyboxTextureSet@@QAE@XZ,0x000B83B0,Open-BFME5 constructor new'd by parseSkyboxTextureSet; 0x18 bytes - vtable 0x01082BE4 at +0 then five zeroed dwords
 ??0SlaughterHordeContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037FAB,Open-BFME5 SlaughterHordeContain base constructor pin
 ??0SlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
@@ -3506,6 +3511,9 @@ name,address,notes
 ??1ArchivedFileInfo@@QAE@XZ,0x009CC600,archive directory entry dtor
 ??1ArrowStormUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1AsciiString@@QAE@XZ,0x00887940,pinharvest x4 (body)
+??1AsciiStringVX@@QAE@XZ,0x00887940,pin
+??1AsciiStringVZ@@QAE@XZ,0x00887940,pin
+??1AsciiStringWF@@QAE@XZ,0x00887940,pin
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -3556,6 +3564,7 @@ name,address,notes
 ??1BfmeBaseT@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the destructor at 0x004B1670 chains to
 ??1BfmeBaseTerm1137A@@UAE@XZ,0x0045B060,pin BfmeA1137 destructor base-class delegate call target
 ??1BfmeBaseVW@@QAE@XZ,0x004902A0,Open-BFME5 the list-unhooking base destructor the owner unwind funclet runs
+??1BfmeBaseVX@@UAE@XZ,0x00490FF0,Open-BFME5 slot 0 of the base table 0x010F9AD8
 ??1BfmeBaseX@@UAE@XZ,0x009A1A40,Open-BFME5 the base destructor the body vector destructor at 0x00490100 chains to
 ??1BfmeBaseZ@@QAE@XZ,0x0002B4AE,Open-BFME5 the base destructor the two-vector destructor at 0x000E54B0 chains to
 ??1BfmeBigVSZ@@QAE@XZ,0x00887940,pin
@@ -3850,6 +3859,9 @@ name,address,notes
 ??1Gen009DB4D0@@QAE@XZ,0x009DB4D0,S3 delete-and-clear family callee destructor (address-derived name)
 ??1GenBase003BB1E0@@QAE@XZ,0x003BB260,base destructor tail-jumped by the vptr-only derived destructors in V4VptrDestructorTails.cpp; counterpart of the base constructor pinned at 0x003BB1E0
 ??1GenRoot0082AE40@@UAE@XZ,0x0082AE40,Open-BFME5 the root destructor the /Od chain at 0x0082AE60 calls
+??1Gen_0014C7A0@@UAE@XZ,0x0014E100,Open-BFME5 slot 0 of the table 0x010959D4; the virtual destructor of the class the ctor at 0x0014C7A0 builds
+??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
+??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
 ??1Gen_0051b720Base@@QAE@XZ,0x0004634E,ILT thunk to body 0x00490470
 ??1Gen_dtor_0005fa60@@UAE@XZ,0x00031160,gen-dtor class destructor
 ??1Gen_dtor_0005fe80@@UAE@XZ,0x00007CB1,gen-dtor class destructor
@@ -8416,6 +8428,7 @@ name,address,notes
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
 ??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose first slot is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
+??1SkirmishPreferences@@UAE@XZ,0x00046B82,retail incremental-link destructor call target used by the Skirmish start callback
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
 ??1SlaughterHordeContainModuleDataBase@@UAE@XZ,0x000471A4,Open-BFME5 pin
 ??1Snapshot@@QAE@XZ,0x00887940,DamageInfo destructor subobject calls (packet 000c3410) -- additive pin alongside existing 0x009A1A40 row
@@ -73448,6 +73461,7 @@ name,address,notes
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
 ?bfmeGetCanAttackContained@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00047663,BFME ActionManager structure-attack helper; getCanAttackObject calls its incremental-link thunk before the normal attack query
 ?bfmeGetCellByIndicesTwin@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@HH@Z,0x00042249,Open-BFME5 second ILT thunk to duplicate getCell body 0x003D4F00
+?bfmeGetCountForCategoryMask@AttributeModifierPoolUpdate@@QBEHPBVAttributeModifierCategoryMask@@@Z,0x00021323,ILT to exact pool category-count lookup at 0x00368C10; original verb unresolved
 ?bfmeGetCrewSpeedMultiplier@Object@@QBEMXZ,0x000277AA,Open-BFME5 ILT thunk to body 0x001BF020; null m_contain at +0x1FC returns 1.0 otherwise tail-forwards to ContainModuleInterface slot 48 (+0xC0); bfme prefix records unrecovered retail spelling
 ?bfmeGetCurrentVictimIfAttacking@Object@@QBEPAV1@XZ,0x0000B366,Open-BFME5 ILT thunk to body 0x001BE070; Object m_ai at +0x204; AIUpdateInterface isAttacking slot 97 (+0x184) gates the pinned getCurrentVictim call; bfme prefix records unrecovered retail spelling
 ?bfmeGetEBN@BfmeObjEBN@@QAEPAUBfmeSubEBN@@XZ,0x00046538,pin
@@ -74983,6 +74997,8 @@ name,address,notes
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
 ?bfme_getPlayerLeaveStatus@GameLogic@@QAEPAUPlayerLeaveStatus@@H@Z,0x00383B90,slot < 8 returns this+0x1b0+slot*0x1c else NULL; neighbour of 0x00383BC0 on the same record array
 ?bfme_hideBackground@WindowManager@@QAEX_N@Z,0x0000BD7F,DisconnectScreen destructor calls the established background helper through this ILT
+?bfme_notificationModeFive@@YAXVAsciiString@@VUnicodeString@@@Z,0x004EA5F0,notification implementation selected by non-five game modes
+?bfme_notificationOtherMode@@YAXVAsciiString@@VUnicodeString@@@Z,0x004EB2A0,notification implementation selected by game mode five
 ?bfme_preloadAssets_impl@ControlBarSchemeManager@@QAEXXZ,0x00027566,Open-BFME5 ControlBar scheme preload tail-call target
 ?bfme_processLogicCRC@GameLogic@@QAEXIHIPAVGameMessage@@_NI@Z,0x0038B430,E tier 1 via the corrected TheNetwork vcall seed: GameLogic member (this=ecx reads m_frame +0x3C) called from the logicMessageDispatcher MSG_LOGIC_CRC slot loop at 0x0039A0D6 (args crc=arg0 slot=msg+0x14 frame msg flag 0) from 0x0038DDF0 and from the Recorder 0x0009B60A via ILT 0x00038361; keeps a per-frame list at GameLogic+0x44 of 0x18-byte {frame crc count mask} nodes in which each player slot reports its CRC (ZH GameLogicDispatch.cpp MSG_LOGIC_CRC m_cachedCRCs taken out of line); when count reaches TheNetwork->getNumPlayers (+0x94 at 0x0038B64F) or the Recorder count the node is freed; a CRC that disagrees with the node calls bfme_appendGameOverDetails 0x00387A50 (0x0038B597) logs through 0x00388C10 posts GameMessage 0x449 (crc frame timestamp bools) and ends with TheNetwork->quitGame (+0x78 at 0x0038B841) unless TheRecorder(0x012ED62C) is in playback; no ZH twin; signature inferred from the call sites; behaviour-derived name
 ?bfme_resetPlayerLeaveStatus@GameLogic@@QAEXXZ,0x00383B00,zeroes the 8 PlayerLeaveStatus records (stride 0x1c) at GameLogic+0x1b0: status quitFrame defeatFrame victoryFrame = 0; notPresent byte at +0x10 = 1; field at +0x14 = 0xff; the record name comes from the Slot %d: PlayerLeaveStatus does not exist log in 0x00387A50; called with ecx = TheGameLogic from the Network::init body 0x00681E40 at 0x00681EDF via ILT 0x00003797
@@ -75010,6 +75026,7 @@ name,address,notes
 ?build@ActiveBodyModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x002284A0,ActiveBodyModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
 ?build@BroadcastStealthUpdateModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x00289800,BroadcastStealthUpdateModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
 ?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@PAVGen003BD8D0Arg@@HH@Z,0x003A3E90,three-argument member called on the lookup result by 0x003BD8D0; address-derived name
+?build@Gen_00371340@@QAEPAVObject@@PAVThingTemplate@@HPAX@Z,0x0000983B,typed ABI pin for the assigned BUILD_BASE_BUILDING body
 ?build@Rva0006A980Cursor@@QAEXPBU1@@Z,0x00069F00,__thiscall callee of the 0x0006A980 copy constructor invoked on the sub-object at this+8 (U3_iterator_ctor.cpp); identity not recovered
 ?build@W3DRadarBuildTerrainTextureShim@@QAEXPAVTerrainLogic@@@Z,0x006C39D0,W3DRadar buildTerrainTexture incremental-link thunk target through a TU-local forwarding shim
 ?buildBuffer@W3DVolumetricShadow@@QAEXXZ,0x0003A396,render helper ILT
@@ -79942,6 +79959,7 @@ name,address,notes
 ?prependDirtyModule@PartitionDirtyListOwner@@QAEXPAVPartitionData@@@Z,0x008F8C50,descriptive name; BFME-only dirty-list link helper called from PartitionData::makeDirty
 ?prependToList@Drawable@@QAEXPAPAV1@@Z,0x00025C84,Open-BFME5 ILT; called by ?registerDrawable@GameClient@@UAEXPAVDrawable@@@Z at 0x0042E530
 ?preprocessMacro@INI@@SAPBDPBD@Z,0x008524B0,provisional name for BFME INI macro substitution; called by scanInt/scanReal
+?primaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x00025D92,ILT to exact AttributeModifierDefinition primary value selector at 0x003690A0
 ?privateDock@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z,0x0004872F,Open-BFME5 ILT from zh_sweep packet 002c5820
 ?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z,0x00030A8A,ILT to the nine-arg body at 0x001E9FD0
 ?probe@Gen003BFB20Owner@@QAE_NPAX@Z,0x0000961A,ILT to 0x003CB790; callee of 0x003BFB20
@@ -80417,6 +80435,7 @@ name,address,notes
 ?second@BfmeRvaCD10Base@@QAEXXZ,0x0003CBD7,assigned-body helper for Rva0024CD10
 ?second@Gen_00943CF0@@AAEXPAX000@Z,0x009433A0,address-derived helper call recovered from 0x00943CF0
 ?second@Rva003C0E40@@QAEXH@Z,0x003BEBA0,second half of the chained pair at 0x003C0E40; address-derived name
+?secondaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x0003E1A3,ILT to exact AttributeModifierDefinition secondary value selector at 0x00369120
 ?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
 ?selectFriends@SelectionTranslator@@AAE_NPAVDrawable@@PAVGameMessage@@_N@Z,0x000282B8
 ?selectHero@AptPalantir@@QAEXH@Z,0x00002383,AptPalantir hero selector thunk
@@ -81940,6 +81959,7 @@ _bfme_asin,0x009F7D86,internal asin helper called by ASin
 _bfme_debugAllocInnerAllocate_82AD80,0x0082AD80,STLport __debug_alloc inner allocate callee of 0x0082B700
 _bfme_debugAllocInnerDeallocate_82AD90,0x0082AD90,STLport __debug_alloc inner deallocate callee of 0x0082B780
 _bfme_memmove_ptr,0x00F5945C,Open-BFME5 STLport memmove import address slot
+_bfme_showNotificationBox_4ECD10,0x004ECD10,object symbol backing matched showNotificationBox body
 _bfme_timeGetTime@0,0x000481E4,ILT thunk for timeGetTime (non-dllimport call sites in ProcessAnimateWindow.cpp)
 _bind@12,0x0081BE38,vendored=gamespy-2004
 _breakstat,0x0099BC90,decode_calls pin for _stat callee
@@ -82539,6 +82559,7 @@ g_bfmeLimitsDF,0x012F401C,Open-BFME5 the limits the band search at 0x00553DF0 wa
 g_bfmeListCK,0x012ED584,Open-BFME5 the list the search at 0x0007B5F0 walks
 g_bfmeListDQ,0x012F3350,Open-BFME5 the list the constructor at 0x00490500 pushes onto
 g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 pushes onto
+g_bfmeListVX,0x012F3350,Open-BFME5 the list the two-string ctor at 0x00491580 pushes onto
 g_bfmeManagerP,0x012F0898,Open-BFME5 the manager the clear at 0x00371120 hands each element to
 g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score accepted by the 0x008BB3F0 retail body
 g_bfmeNameVSF,0x012ED4EC,Open-BFME5 retail string object assigned by the 0x00062750 body
@@ -82627,17 +82648,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0AsciiStringWF@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWF@@QAE@XZ,0x00887940,pin
-??1Gen_0014C7A0@@UAE@XZ,0x0014E100,Open-BFME5 slot 0 of the table 0x010959D4; the virtual destructor of the class the ctor at 0x0014C7A0 builds
-??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringVX@@QAE@XZ,0x00887940,pin
-g_bfmeListVX,0x012F3350,Open-BFME5 the list the two-string ctor at 0x00491580 pushes onto
-??1BfmeBaseVX@@UAE@XZ,0x00490FF0,Open-BFME5 slot 0 of the base table 0x010F9AD8
-??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
-?primaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x00025D92,ILT to exact AttributeModifierDefinition primary value selector at 0x003690A0
-?secondaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x0003E1A3,ILT to exact AttributeModifierDefinition secondary value selector at 0x00369120
-?bfmeGetCountForCategoryMask@AttributeModifierPoolUpdate@@QBEHPBVAttributeModifierCategoryMask@@@Z,0x00021323,ILT to exact pool category-count lookup at 0x00368C10; original verb unresolved
-??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
-??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringVZ@@QAE@XZ,0x00887940,pin

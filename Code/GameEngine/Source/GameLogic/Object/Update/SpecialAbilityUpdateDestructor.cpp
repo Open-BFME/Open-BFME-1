@@ -9,13 +9,17 @@
 #include <list>
 #include <bitset>
 
+class Object;
+class SpecialAbilityUpdateModuleData;
+
 class Gen_dtor_00113f20
 {
 public:
 	virtual ~Gen_dtor_00113f20();
 
-private:
-	unsigned char m_pad[8];
+protected:
+	SpecialAbilityUpdateModuleData *m_moduleData;
+	Object *m_object;
 };
 
 class SpecialAbilityUpdateBaseInterface1
@@ -97,6 +101,10 @@ public:
 		m_bits.set(bit2);
 		m_bits.set(bit3);
 	}
+	void set(int bit)
+	{
+		m_bits.set(bit);
+	}
 
 private:
 	_STL::bitset<NUMBITS> m_bits;
@@ -133,7 +141,7 @@ public:
 	unsigned char m_unmodelled_128[0x1fc - 0x128];
 	void *m_field1fc;
 	void *m_field200;
-	AIUpdateInterface *m_ai;
+	void *m_ai;
 	unsigned char m_unmodelled_208[0x3a0 - 0x208];
 	UnsignedInt m_field3a0;
 };
@@ -421,14 +429,12 @@ private:
 
 	SpecialAbilityUpdateModuleData *getModuleData() const
 	{
-		return *reinterpret_cast<SpecialAbilityUpdateModuleData *const *>(
-			reinterpret_cast<const unsigned char *>(this) + 4);
+		return m_moduleData;
 	}
 
 	Object *getObject() const
 	{
-		return *reinterpret_cast<Object *const *>(
-			reinterpret_cast<const unsigned char *>(this) + 8);
+		return m_object;
 	}
 };
 
@@ -451,21 +457,23 @@ extern void j_00035706();
 extern void j_000359bd();
 extern void j_000401bf();
 extern void j_000434c3();
+extern void j_0001336d();
 
 // ?onExit@SpecialAbilityUpdate@@AAEX_N0@Z
 void SpecialAbilityUpdate::onExit(bool cleanup, bool aborted)
 {
-	Object *object = getObject();
-	SpecialAbilityUpdateModuleData *data = getModuleData();
+	void *ai;
+	register Object *object = getObject();
+	register const SpecialAbilityUpdateModuleData *data = getModuleData();
 
 	j_0002333a();
-	ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 23, 24, 37);
-	object->setStatus(status, false);
+	object->setStatus(
+		ObjectStatusMaskType(ObjectStatusMaskType::kInit, 23, 24, 37), false);
 
-	AIUpdateInterface *ai = object->m_ai;
+	ai = object->m_ai;
 	if (ai != 0)
 	{
-		ai->m_isInUpdate = 0;
+		*((unsigned char *)ai + 0x338) = 0;
 		BFME_CALL_NOARG(BfmeNoArgCall, ai, j_000359bd);
 	}
 
@@ -568,11 +576,11 @@ void SpecialAbilityUpdate::onExit(bool cleanup, bool aborted)
 							data->m_field1c8, data->m_field1cc);
 						BFME_CALL_TWOARG(BfmeTwoArgCall, target, j_0002852e,
 							data->m_field1c8, data->m_field1cc);
-						AIUpdateInterface *targetAI = object->m_ai;
+						void *targetAI = object->m_ai;
 						if (targetAI != 0)
 							BFME_CALL_TWOARG(BfmeTwoArgCall,
 								(unsigned char *)targetAI + 0x20,
-								j_0001336d, data->m_field1cc, 0);
+								j_0001336d, data->m_field1cc, 2);
 					}
 				}
 			}

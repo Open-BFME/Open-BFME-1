@@ -99,10 +99,9 @@ void *Rva001CF980::query()
 		if ( !obj->isKindOf( KINDOF_0x6C ) )
 			return 0;
 	}
-	unsigned int candidateAddress = (unsigned int)obj;
-	if ( candidateAddress )
+	register Rva001CF980 *candidate = obj;
+	if ( candidate )
 	{
-		Rva001CF980 *candidate = (Rva001CF980 *)candidateAddress;
 		Rva001CF980Iface *iface = candidate->m_iface;
 		if ( iface )
 			return iface->slot26();

@@ -9,12 +9,6 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-static __forceinline void bfmeSetFormationFlag( UnsignedInt &flags,
-	UnsignedInt bit )
-{
-	flags |= bit;
-}
-
 #define BFME_SLOT( N ) virtual int bfmeSlot##N( void ) = 0
 
 class BfmeHordeMemberInterface
@@ -37,6 +31,17 @@ public:
 	char m_bfmeGap[ 0x200 - 0x130 ];
 	BfmeHordeMemberInterface *m_bfmeMemberInterface;
 };
+
+static __forceinline void bfmeSetFormationPoseFlag( Object *member,
+	UnsignedInt &flags, UnsignedInt &bit )
+{
+	if ( ( bit & flags ) == 0 )
+	{
+		member->m_bfmeModelConditionFlags = ( flags |= bit );
+		bit = flags;
+		member->notifyModelConditionChanged();
+	}
+}
 
 class BfmeHordeContainView
 {
@@ -74,8 +79,8 @@ private:
 
 void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 {
-	UnsignedInt flags;
 	UnsignedInt poseBit;
+	UnsignedInt flags;
 
 	if ( member == 0 )
 		return;
@@ -109,8 +114,5 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	}
 
 	flags = member->m_bfmeModelConditionFlags;
-	if ( ( flags & poseBit ) != 0 )
-		return;
-	member->m_bfmeModelConditionFlags |= poseBit;
-	member->notifyModelConditionChanged();
+	bfmeSetFormationPoseFlag( member, flags, poseBit );
 }

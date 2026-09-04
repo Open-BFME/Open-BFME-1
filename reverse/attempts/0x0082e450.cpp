@@ -1,5 +1,5 @@
 // ?bfmeSmallAllocPR@@YAPAXI@Z
-// partial score=0.95 date=2026-09-03
+// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc /Og-
 // readable callee of ?bfmeAllocPR@@YAPAXI@Z: Code/GameEngine/Source/Common/BfmeTwoHundredSeventySeven.cpp
 // Open-BFME: STLport __node_alloc<false,0>::_M_allocate, retail 0x0082E450, 152 bytes.
@@ -25,8 +25,6 @@ class _Node_Alloc_Lock
 	int m_dummy;
 
 public:
-	void *m_block;
-
 	_Node_Alloc_Lock()
 	{
 		if (__threads)
@@ -51,6 +49,13 @@ struct BfmeFreeListNode
 	BfmeFreeListNode *m_next;
 };
 
+class BfmeAllocationResult
+{
+public:
+	BfmeAllocationResult() {}
+	void *value;
+};
+
 extern BfmeFreeListNode *bfmeFreeList[0x10];
 
 void *bfmeSmallRefillPR(unsigned int bytes);
@@ -59,10 +64,11 @@ void *bfmeSmallAllocPR(unsigned int bytes)
 {
 	BfmeFreeListNode * volatile *my_free_list =
 		bfmeFreeList + ((bytes - 1) >> 3);
+	BfmeAllocationResult result;
 	_STL::_Node_Alloc_Lock<false, 0> lock_instance;
-	if ((lock_instance.m_block = *my_free_list) != 0)
-		*my_free_list = ((BfmeFreeListNode *)lock_instance.m_block)->m_next;
+	if ((result.value = *my_free_list) != 0)
+		*my_free_list = ((BfmeFreeListNode *)result.value)->m_next;
 	else
-		lock_instance.m_block = bfmeSmallRefillPR(bytes);
-	return lock_instance.m_block;
+		result.value = bfmeSmallRefillPR(bytes);
+	return result.value;
 }

@@ -68,8 +68,8 @@ GrowPair<T> *grow_array(GrowPair<T> *out, T *old_ptr, unsigned int old_count, un
 
 struct Callback
 {
-	int a;
-	int b;
+    int a;
+    int b;
 };
 
 template GrowPair<long> *grow_array(GrowPair<long> *, long *, unsigned int, unsigned int);

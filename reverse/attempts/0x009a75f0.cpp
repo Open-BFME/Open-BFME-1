@@ -1,7 +1,5 @@
 // ?bfmeFilter75F0@@YAXPAEPAGHHHHPBH@Z
-// partial score=0.78 date=2026-09-03
-// Open-BFME5 conversion of the four-tap 16-bit filter helper.
-
+// partial score=0.73 date=2026-09-04
 void __cdecl bfmeFilter75F0(
 	unsigned char *source,
 	unsigned short *destination,
@@ -11,17 +9,16 @@ void __cdecl bfmeFilter75F0(
 	int columns,
 	const int *weights)
 {
-	unsigned int rowCount = (unsigned int)rows;
+	int rowCount = rows;
+	int columnCount = columns;
+	const int *coefficient = weights;
 	if ((unsigned int)rowCount > 0)
 	{
-		int columnCount = columns;
-		const int *coefficient = weights;
 		do
 		{
 			int column = 0;
 			unsigned char *previous = source - sourceDelta;
 			unsigned char *next = source + sourceDelta;
-
 			if ((unsigned int)columnCount > 0)
 			{
 				do
@@ -43,7 +40,6 @@ void __cdecl bfmeFilter75F0(
 				}
 				while ((unsigned int)column < (unsigned int)columnCount);
 			}
-
 			source += sourcePitch - columnCount;
 			destination += columnCount;
 		}

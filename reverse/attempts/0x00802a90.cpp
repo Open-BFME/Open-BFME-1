@@ -1,10 +1,14 @@
-// ?go@Rva00802A90Owner@@QAE_NPAURva00802A90Query@@HH@Z
+// ?go@Rva00802A90Owner@@QAE_NPAURva00802A90Query@@_NH@Z
 // partial score=0.9 date=2026-09-04
 // cl: /GX-
 // jabba gamebrowser slot go @ 0x00802A90 (160B).
 
+struct Rva00802A90Query;
+
 struct Rva00802A90Elem
 {
+	void notify( Rva00802A90Query *q, void *ctx, int flag, int id );
+
 	char m_head[8];
 	int m_key;
 	char m_tail[0x80 - 0xC];
@@ -16,12 +20,10 @@ struct Rva00802A90Query
 	int m_key;
 };
 
-void __stdcall Rva00801CB0( Rva00802A90Query *q, void *ctx, int flag, int id );
-
 class Rva00802A90Owner
 {
 public:
-	bool go( Rva00802A90Query *q, int flag, int id );
+	bool go( Rva00802A90Query *q, bool flag, int id );
 
 	void *m_00;
 	void *m_04;
@@ -32,21 +34,25 @@ public:
 	int m_token;
 };
 
-bool Rva00802A90Owner::go( Rva00802A90Query *q, int flag, int id )
+bool Rva00802A90Owner::go( Rva00802A90Query *q, bool flag, int id )
 {
-	if( (unsigned char)flag )
+	if( flag )
 	{
+		int idx;
+		Rva00802A90Elem *base;
+		Rva00802A90Elem *elem;
+
 		if( id != m_token )
 			return false;
-		int idx = m_index;
+		idx = m_index;
 		if( idx >= m_count )
 			return false;
-		Rva00802A90Elem *base = m_base;
-		Rva00802A90Elem *elem = (Rva00802A90Elem *)( (char *)base + ( idx << 7 ) );
+		base = m_base;
+		elem = (Rva00802A90Elem *)( (char *)base + ( idx << 7 ) );
 		if( !elem )
 			return false;
 		m_index = idx + 1;
-		Rva00801CB0( q, m_04, flag, id );
+		elem->notify( q, m_04, flag, id );
 		return m_index >= m_count;
 	}
 	else
@@ -57,7 +63,7 @@ bool Rva00802A90Owner::go( Rva00802A90Query *q, int flag, int id )
 		{
 			if( p->m_key == q->m_key )
 			{
-				Rva00801CB0( q, m_04, 0, id );
+				p->notify( q, m_04, 0, id );
 				return false;
 			}
 			p = (Rva00802A90Elem *)( (char *)p + 0x80 );

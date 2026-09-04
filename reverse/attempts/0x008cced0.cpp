@@ -1,4 +1,6 @@
 // ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
+// partial score=0.78 date=2026-09-04
+// ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
 // partial score=0.78 date=2026-09-02
 // ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
@@ -105,21 +107,19 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, volatile int limit)
 
 		unsigned opcode = *execute.m_cursor++;
 		if (execute.m_stopped)
-			break;
+			goto afterExecution;
 		if (limit >= zero && execute.m_cursor - start > limit)
-		{
-			pushValue(g_bfmeFallbackDB);
-			break;
-		}
+			goto pushFallback;
 		if (opcode == (unsigned)zero)
 		{
-			if (limit >= zero)
-				pushValue(g_bfmeFallbackDB);
-			break;
+			if (limit < zero)
+				goto afterExecution;
+			goto pushFallback;
 		}
 		g_bfmeR1226Opcodes[opcode](this, &execute);
 	}
 
+afterExecution:
 	if (m_count > m_savedStackBase)
 	{
 		int excess = m_count - m_savedStackBase;
@@ -128,6 +128,13 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, volatile int limit)
 		if (excess > zero)
 			popValues(excess);
 	}
+	goto finishCleanup;
+
+pushFallback:
+	pushValue(g_bfmeFallbackDB);
+	goto afterExecution;
+
+finishCleanup:
 	m_savedStackBase = oldStackBase;
 
 	if (limit == -1)

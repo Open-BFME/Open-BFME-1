@@ -11,11 +11,11 @@ void __cdecl bfmeGo76A0(
 	int columns,
 	void *weights)
 {
-	if ((unsigned int)rows > 0)
+	int rowCount = rows;
+	int columnCount = columns;
+	const int *coefficient = (const int *)weights;
+	if ((unsigned int)rowCount > 0)
 	{
-		int columnCount = columns;
-		const int *coefficient = (const int *)weights;
-		int rowCount = rows;
 		int delta = sourceDelta;
 		unsigned char *sourcePointer = (unsigned char *)sourceAddress;
 
