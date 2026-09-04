@@ -83694,3 +83694,7 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?format@UnicodeString@@QAAXV1@ZZ,0x00889190,MSVC-compressed alias of UnicodeString::format already pinned as QAAXVUnicodeString@@ZZ
 ?GameSpyColor@@3PAHA,0x012B9200,GameSpyColor[] first dword used as addText color by CustomMatch handleSlashCommands
 ?isThreadHosting@@3HA,0x012F73D8,isThreadHosting int used as /host format arg by CustomMatch handleSlashCommands
+?isPlayer@GameSlot@@QBE_NVAsciiString@@@Z,0x0001F0EB,ILT of GameSlot::isPlayer(AsciiString) used by CustomMatch applySlotColor 0x0053CB90
+??4StlStr@@QAEAAV0@PBD@Z,0x00013746,STLport basic_string<char> assign ILT used as StlStr::operator= by CustomMatch applySlotColor 0x0053CB90
+?TheGameSpyPeerMessageQueue@@3PAVGameSpyPeerMessageQueueInterface@@A,0x012F71C8,GameSpyPeerMessageQueue* global used by CustomMatch applySlotColor 0x0053CB90
+?compare@UnicodeString@@QBEHABV1@@Z,0x000226EC,StringBase<unsigned short>::compare ILT used as UnicodeString::compare by CustomMatch applySlotColor 0x0053CB90
