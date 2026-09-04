@@ -17,11 +17,17 @@ public:
 	virtual void _bfme_slot3( void ) = 0;
 	virtual void _bfme_slot4( void ) = 0;
 	virtual void _bfme_slot5( void ) = 0;
-	virtual void _bfme_slot6( void ) = 0;
+	virtual AsciiString getAsciiString( AsciiString key, AsciiString defaultValue ) = 0;
 	virtual void setAsciiString( AsciiString key, AsciiString value ) = 0;
 
+	AsciiString getProfileCreatedDate( void );
 	void setProfileCreatedDate( void );
 };
+
+AsciiString SkirmishBattleHonors::getProfileCreatedDate( void )
+{
+	return getAsciiString( "ProfileCreatedDate", AsciiString::TheEmptyString );
+}
 
 void SkirmishBattleHonors::setProfileCreatedDate( void )
 {
