@@ -25,7 +25,7 @@ a byte-exact landing on 2026-09-02; the mechanism is in `docs/lessons.md`.
 Also check that the attempts log entry is not stale: `grep ,0xRVA, reverse/functions.csv`
 -- if the row already points at a `.cpp`, someone landed it.
 
-## Large-body results from the Astra campaign (2026-09-04)
+## Verified results from the Astra campaign (2026-09-04)
 
 These are targeted hypotheses, not flags to apply to every translation unit.
 Each landed through the ordinary relocation-aware byte and identity gates.
@@ -35,6 +35,7 @@ Each landed through the ordinary relocation-aware byte and identity gates.
 | Two identical branch tails merge into one; body is seven bytes short | In `luaV_execute` (0x00997C80, 2924 B), an MSVC `_WriteBarrier` intrinsic inside one conditional-pop arm preserves both tails while emitting no instruction or relocation. `_ReadWriteBarrier` also worked; `_ReadBarrier` added five bytes. Document this as reconstruction shaping, not original source. The same experiment did not solve Weapon or road-junction register drift. |
 | A large constructor lacks 16 frame bytes and several EH states | In the ParticleBuffer copy constructor (0x00989A20, 4714 B), four texture getters return owning one-pointer handles through hidden result slots. Legacy raw-pointer declarations hid their lifetimes. TU-local ABI shims, normal destructors, and the retail `else if` LOD clamp recovered the whole body. Check getter retain, setter handle-address consumption, cleanup release, and a matched caller before assigning identity. |
 | Constant-2 register reuse spreads through a body with local statics | `ParticleBufferClass::Render_Line` (0x0098AD00, 1763 B) needed `/EHsc` instead of the build default `/EHsc-`. The default emitted extra EH states 0/2/4 around `atexit` registrations; that state 2 induced unrelated-looking EBX reuse. Retail omits those states. Correcting the exception model recovered the whole body without forced registers or barriers. |
+| Final `rep movsd` setup has its source address and count loads swapped | In the terrain matrix helper (0x007DCF00, 281 B), put the final matrix assignment inside each branch after its last matrix multiplication. MSVC still merges the copy tails but emits retail's `lea esi` before `mov ecx,16`. Explicit intrinsic `memcpy` did not help. Independent relocation review also corrected the old bank's terrain-global name and reversed scale signs; masked equality alone hid both defects. |
 
 ## Fleet tools (all read-only except add_match/re_log)
 
