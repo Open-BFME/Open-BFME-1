@@ -36,12 +36,18 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class StopSpecialPower : public SpecialPowerModule
 {
 public:
 	StopSpecialPower( Thing *thing, const ModuleData *moduleData );
+
+protected:
+	virtual ~StopSpecialPower();
 
 private:
 	unsigned char m_pad14[0x18];
@@ -53,4 +59,8 @@ StopSpecialPower::StopSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
 {
 	m_2c = 0;
+}
+
+StopSpecialPower::~StopSpecialPower()
+{
 }

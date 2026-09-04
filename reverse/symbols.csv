@@ -4561,7 +4561,6 @@ name,address,notes
 ??1Gen_dtor_0026a9f0@@UAE@XZ,0x0001BBE4,gen-dtor class destructor
 ??1Gen_dtor_0026aff0@@UAE@XZ,0x00019565,gen-dtor class destructor
 ??1Gen_dtor_0026b1f0@@UAE@XZ,0x00018AC0,gen-dtor class destructor
-??1Gen_dtor_0026b4a0@@UAE@XZ,0x00046E57,gen-dtor class destructor
 ??1Gen_dtor_0026b5e0@@UAE@XZ,0x0000AE2F,gen-dtor class destructor
 ??1Gen_dtor_0026b770@@UAE@XZ,0x00020202,gen-dtor class destructor
 ??1Gen_dtor_0026b8b0@@UAE@XZ,0x0000A187,gen-dtor class destructor
@@ -32418,12 +32417,10 @@ name,address,notes
 ?b_0026b310@@YAXXZ,0x0026B310,gen-thunk body
 ?b_0026b340@@YAXXZ,0x0026B340,gen-thunk body
 ?b_0026b390@@YAXXZ,0x0026B390,gen-thunk body
-?b_0026b3a0@@YAXXZ,0x0026B3A0,gen-thunk body
 ?b_0026b3c0@@YAXXZ,0x0026B3C0,gen-thunk body
 ?b_0026b3f0@@YAXXZ,0x0026B3F0,gen-thunk body
 ?b_0026b400@@YAXXZ,0x0026B400,gen-thunk body
 ?b_0026b490@@YAXXZ,0x0026B490,gen-thunk body
-?b_0026b4a0@@YAXXZ,0x0026B4A0,gen-thunk body
 ?b_0026b4d0@@YAXXZ,0x0026B4D0,gen-thunk body
 ?b_0026b570@@YAXXZ,0x0026B570,gen-thunk body
 ?b_0026b5b0@@YAXXZ,0x0026B5B0,gen-thunk body
@@ -82729,3 +82726,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GScavengerSpecialPower@@MAEPAXI@Z,0x00003F94,primary class vtable slot zero ILT to 0x00265900
 ??1SplitHordeSpecialPower@@MAE@XZ,0x00016450,destructor ILT to 0x0026B080
 ??_GSplitHordeSpecialPower@@MAEPAXI@Z,0x0002C494,primary class vtable slot zero ILT to 0x0026B160
+??1StopSpecialPower@@MAE@XZ,0x00046E57,destructor ILT to 0x0026B3A0
+??_GStopSpecialPower@@MAEPAXI@Z,0x00036179,primary class vtable slot zero ILT to 0x0026B4A0
