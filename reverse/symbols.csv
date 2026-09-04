@@ -82310,3 +82310,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?BfmeDynamicDX8VertexBufferSize@@3PAGA,0x013467B4,Open-BFME5 per-slot DX8 capacities BoxDynamicVBAccess allocate at 0x0091F5B0 grows
 ?BfmeDynamicFVFTable@@3PAIA,0x0113BD28,Open-BFME5 per-slot FVF words BoxDynamicVBAccess DX8 allocate at 0x0091F5B0 passes to the 0x20-byte ctor
 ?BfmeCurrentCaps@@3PAEA,0x01340578,Open-BFME5 DX8 caps object pointer; NPatches flag at +0x13b as dx8indexbuffer.cpp already reads
+?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
