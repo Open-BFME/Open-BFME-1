@@ -82315,3 +82315,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isMissionObjectiveEligible@CampaignManager@@QAEEH@Z,0x00039A77,ILT to 0x003BF630 for ScoreKeeper::countMissionObjectives
 ?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z,0x00013084,ILT to 0x003BDFB0 for ScoreKeeper::countMissionObjectives
 ?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z,0x0000DFDA,ILT to 0x003BF6C0 for ScoreKeeper::countMissionObjectives
+?unidentified_0002181E@Object@@QAEXABV?$BitFlags@$0GA@@@H@Z,0x0002181E,ILT for Object setSingleModelCondition BitFlags<96> forward
