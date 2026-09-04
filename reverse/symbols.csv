@@ -4534,7 +4534,6 @@ name,address,notes
 ??1Gen_dtor_0025de60@@UAE@XZ,0x000393A6,gen-dtor class destructor
 ??1Gen_dtor_0025e850@@UAE@XZ,0x00048C11,gen-dtor class destructor
 ??1Gen_dtor_0025eb10@@UAE@XZ,0x0002CF75,gen-dtor class destructor
-??1Gen_dtor_0025f1f0@@UAE@XZ,0x00023669,gen-dtor class destructor
 ??1Gen_dtor_0025f290@@UAE@XZ,0x00033C12,gen-dtor class destructor
 ??1Gen_dtor_0025f9e0@@UAE@XZ,0x0002A9CD,gen-dtor class destructor
 ??1Gen_dtor_0025fb50@@UAE@XZ,0x00023948,gen-dtor class destructor
@@ -31987,10 +31986,8 @@ name,address,notes
 ?b_0025f0b0@@YAXXZ,0x0025F0B0,gen-thunk body
 ?b_0025f0e0@@YAXXZ,0x0025F0E0,gen-thunk body
 ?b_0025f120@@YAXXZ,0x0025F120,gen-thunk body
-?b_0025f130@@YAXXZ,0x0025F130,gen-thunk body
 ?b_0025f150@@YAXXZ,0x0025F150,gen-thunk body
 ?b_0025f160@@YAXXZ,0x0025F160,gen-thunk body
-?b_0025f1f0@@YAXXZ,0x0025F1F0,gen-thunk body
 ?b_0025f220@@YAXXZ,0x0025F220,gen-thunk body
 ?b_0025f260@@YAXXZ,0x0025F260,gen-thunk body
 ?b_0025f290@@YAXXZ,0x0025F290,gen-thunk body
@@ -82736,3 +82733,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GElvenWoodSpecialPower@@MAEPAXI@Z,0x0000EB51,primary class vtable slot zero ILT to 0x0025B5B0
 ??1FreezingRainSpecialPower@@MAE@XZ,0x0001AC99,destructor ILT to 0x0025D5E0
 ??_GFreezingRainSpecialPower@@MAEPAXI@Z,0x000221C4,primary class vtable slot zero ILT to 0x0025D6B0
+??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
+??_GGrabPassengerSpecialPower@@MAEPAXI@Z,0x00010E51,primary class vtable slot zero ILT to 0x0025F1F0
