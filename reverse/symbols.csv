@@ -82756,3 +82756,5 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1SmudgeManager@@UAE@XZ,0x00029555,W3DSmudgeManager destructor base call ILT
 ??1W3DSmudgeManager@@UAE@XZ,0x0002CED5,W3DSmudgeManager deleting destructor call ILT
 ??_GW3DSmudgeManager@@UAEPAXI@Z,0x00023281,W3DSmudgeManager vftable slot zero ILT
+?reset@SmudgeManager@@UAEXXZ,0x0002DFAB,W3DSmudgeManager reset base call ILT
+?reset@W3DSmudgeManager@@UAEXXZ,0x000017B7,W3DSmudgeManager vtable slot 0x08 ILT

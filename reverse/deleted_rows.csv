@@ -24474,3 +24474,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?deleteAllFonts@FontLibrary@@IAEXXZ,0x00722190,wrong identity removed: W3DSmudgeManager vtable slot 0x0C points through ILT 0x000309CC to this body and it releases the documented m_indexBuffer at object offset 0x34
 ?dup_007225d0@@YAXXZ,0x007225D0,masked FontLibrary destructor alias replaced by W3DSmudgeManager::~W3DSmudgeManager; the body stores its vftable then calls its proven ReleaseResources and the SmudgeManager destructor
 ??_GGen_dtor_00722ba0@@UAEPAXI@Z,0x00722BA0,generated deleting-destructor identity replaced by W3DSmudgeManager scalar deleting destructor; its vtable slot zero points through ILT 0x00023281 to this body
+?j_00722180@@YAXXZ,0x00722180,generated gap thunk replaced by the real W3DSmudgeManager::reset identity; vtable slot 0x08 points here and the body tail-jumps through the SmudgeManager::reset ILT
