@@ -98,7 +98,7 @@ GrantUpgradeCreate::GrantUpgradeCreate( Thing *thing, const ModuleData* moduleDa
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1GrantUpgradeCreate@@MAE@XZ present-unmatched
+// ??1GrantUpgradeCreate@@MAE@XZ
 GrantUpgradeCreate::~GrantUpgradeCreate( void )
 {
 
