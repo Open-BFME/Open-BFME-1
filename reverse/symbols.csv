@@ -72883,7 +72883,6 @@ name,address,notes
 ?bfmeDropVGO@@YAXPAX@Z,0x00895320,pin
 ?bfmeDropVIH@BfmeSubVIH@@QAEXPAVBfmeThingVIH@@@Z,0x0081C3D0,pin
 ?bfmeDropXA@BfmeListXA@@QAEXPAX@Z,0x0001FF82,pin
-?bfmeDropZB@BfmeSubZB@@QAEXPAX@Z,0x000203D8,pin
 ?bfmeDtor918P@BfmeSub918P@@QAEXXZ,0x000414BB,pin
 ?bfmeDtor918Q@BfmeSub918Q@@QAEXXZ,0x0083F810,pin
 ?bfmeDtor927B@BfmeObj927B@@QAEXXZ,0x00036E9E,pin
@@ -81835,7 +81834,6 @@ _bfmePiDisconnectCleanupFromEsi,0x008572E0,GameSpy Peer static disconnect cleanu
 _bfmePiThinkFromEsi,0x00857370,GameSpy Peer static think helper with peer carried in ESI
 _bfmeQuery1239,0x00892370,pin
 _bfmeQuery1240,0x00892370,pin
-_bfmeRegZB,0x00EF1094,pin
 _bfmeReload1221,0x008D3AE0,pin
 _bfmeReport1233,0x009F7D80,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
@@ -82718,3 +82716,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1AsciiStringWP@@QAE@XZ,0x00887940,pin
 ??1Gen_003A87D0@@UAE@XZ,0x003A88E0,Open-BFME5 slot 0 of the table 0x010EC774
 _g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
+?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
+_g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
