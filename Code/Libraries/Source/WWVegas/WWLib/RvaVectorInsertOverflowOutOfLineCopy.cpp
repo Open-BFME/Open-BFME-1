@@ -82,6 +82,52 @@ Rva003AC170Element *__cdecl BfmeRva003AC170Copy(
 	Rva003AC170Element *first, Rva003AC170Element *last,
 	Rva003AC170Element *result, const __false_type &);
 
+// The trailing copies are pinned under per-element names, so one overload
+// set on the tag argument is what lets a single template body reach each.
+// The pointers go by reference: a by-value parameter survives inlining as a
+// temp, and that temp lands in a different register than the direct load.
+__forceinline Rva003A35A0Element *uninitialized_copy(
+	Rva003A35A0Element *const &first, Rva003A35A0Element *const &last,
+	Rva003A35A0Element *const &result, const __false_type &tag)
+{
+	return BfmeRva003A35A0Copy(first, last, result, tag);
+}
+
+__forceinline Rva0077CC10Element *uninitialized_copy(
+	Rva0077CC10Element *const &first, Rva0077CC10Element *const &last,
+	Rva0077CC10Element *const &result, const __false_type &tag)
+{
+	return BfmeRva0077CC10Copy(first, last, result, tag);
+}
+
+__forceinline Rva00607770Element *uninitialized_copy(
+	Rva00607770Element *const &first, Rva00607770Element *const &last,
+	Rva00607770Element *const &result, const __false_type &tag)
+{
+	return BfmeRva00607770Copy(first, last, result, tag);
+}
+
+__forceinline Rva00608FE0Element *uninitialized_copy(
+	Rva00608FE0Element *const &first, Rva00608FE0Element *const &last,
+	Rva00608FE0Element *const &result, const __false_type &tag)
+{
+	return BfmeRva00608FE0Copy(first, last, result, tag);
+}
+
+__forceinline Rva00365020Element *uninitialized_copy(
+	Rva00365020Element *const &first, Rva00365020Element *const &last,
+	Rva00365020Element *const &result, const __false_type &tag)
+{
+	return BfmeRva00365020Copy(first, last, result, tag);
+}
+
+__forceinline Rva003AC170Element *uninitialized_copy(
+	Rva003AC170Element *const &first, Rva003AC170Element *const &last,
+	Rva003AC170Element *const &result, const __false_type &tag)
+{
+	return BfmeRva003AC170Copy(first, last, result, tag);
+}
+
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 {
@@ -122,31 +168,30 @@ protected:
 	Type *_M_end_of_storage;
 };
 
-template <>
-void vector<Rva003A35A0Element, allocator<Rva003A35A0Element> >::_M_insert_overflow(
-	Rva003A35A0Element *position, const Rva003A35A0Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
+template <class Type, class Allocator>
+void vector<Type, Allocator>::_M_insert_overflow(
+	Type *position, const Type &value, const __false_type &,
+	unsigned int fillLength, bool atEnd)
 {
 	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
 	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
 	unsigned int length = growth + oldSize;
 
-	Rva003A35A0Element *newStart;
+	Type *newStart;
 	if (length)
 	{
-		unsigned int bytes = length * sizeof(Rva003A35A0Element);
+		unsigned int bytes = length * sizeof(Type);
 		if (bytes > 128)
-			newStart = (Rva003A35A0Element *)vectorLargeAllocate(bytes);
+			newStart = (Type *)vectorLargeAllocate(bytes);
 		else
-			newStart = (Rva003A35A0Element *)vectorSmallAllocate(bytes);
+			newStart = (Type *)vectorSmallAllocate(bytes);
 	}
 	else
 	{
 		newStart = 0;
 	}
 
-	Rva003A35A0Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
+	Type *newFinish = uninitialized_copy(_M_start, position, newStart);
 
 	if (fillLength == 1)
 	{
@@ -159,7 +204,7 @@ void vector<Rva003A35A0Element, allocator<Rva003A35A0Element> >::_M_insert_overf
 	}
 
 	if (!atEnd)
-		newFinish = BfmeRva003A35A0Copy(position, _M_finish, newFinish,
+		newFinish = uninitialized_copy(position, _M_finish, newFinish,
 			reinterpret_cast<const __false_type &>(atEnd));
 
 	_M_clear();
@@ -170,249 +215,20 @@ void vector<Rva003A35A0Element, allocator<Rva003A35A0Element> >::_M_insert_overf
 }
 
 // ?_M_insert_overflow@?$vector@URva003A35A0Element@@V?$allocator@URva003A35A0Element@@@_STL@@@_STL@@IAEXPAURva003A35A0Element@@ABU3@ABU__false_type@2@I_N@Z
-
-template <>
-void vector<Rva0077CC10Element, allocator<Rva0077CC10Element> >::_M_insert_overflow(
-	Rva0077CC10Element *position, const Rva0077CC10Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
-{
-	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
-	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
-	unsigned int length = growth + oldSize;
-
-	Rva0077CC10Element *newStart;
-	if (length)
-	{
-		unsigned int bytes = length * sizeof(Rva0077CC10Element);
-		if (bytes > 128)
-			newStart = (Rva0077CC10Element *)vectorLargeAllocate(bytes);
-		else
-			newStart = (Rva0077CC10Element *)vectorSmallAllocate(bytes);
-	}
-	else
-	{
-		newStart = 0;
-	}
-
-	Rva0077CC10Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
-
-	if (fillLength == 1)
-	{
-		BfmeElementConstruct(newFinish, value);
-		++newFinish;
-	}
-	else
-	{
-		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
-	}
-
-	if (!atEnd)
-		newFinish = BfmeRva0077CC10Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
-
-	_M_clear();
-
-	_M_finish = newFinish;
-	_M_start = newStart;
-	_M_end_of_storage = newStart + length;
-}
+template class vector<Rva003A35A0Element, allocator<Rva003A35A0Element> >;
 
 // ?_M_insert_overflow@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@IAEXPAURva0077CC10Element@@ABU3@ABU__false_type@2@I_N@Z
-
-template <>
-void vector<Rva00607770Element, allocator<Rva00607770Element> >::_M_insert_overflow(
-	Rva00607770Element *position, const Rva00607770Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
-{
-	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
-	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
-	unsigned int length = growth + oldSize;
-
-	Rva00607770Element *newStart;
-	if (length)
-	{
-		unsigned int bytes = length * sizeof(Rva00607770Element);
-		if (bytes > 128)
-			newStart = (Rva00607770Element *)vectorLargeAllocate(bytes);
-		else
-			newStart = (Rva00607770Element *)vectorSmallAllocate(bytes);
-	}
-	else
-	{
-		newStart = 0;
-	}
-
-	Rva00607770Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
-
-	if (fillLength == 1)
-	{
-		BfmeElementConstruct(newFinish, value);
-		++newFinish;
-	}
-	else
-	{
-		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
-	}
-
-	if (!atEnd)
-		newFinish = BfmeRva00607770Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
-
-	_M_clear();
-
-	_M_finish = newFinish;
-	_M_start = newStart;
-	_M_end_of_storage = newStart + length;
-}
+template class vector<Rva0077CC10Element, allocator<Rva0077CC10Element> >;
 
 // ?_M_insert_overflow@?$vector@URva00607770Element@@V?$allocator@URva00607770Element@@@_STL@@@_STL@@IAEXPAURva00607770Element@@ABU3@ABU__false_type@2@I_N@Z
-
-template <>
-void vector<Rva00608FE0Element, allocator<Rva00608FE0Element> >::_M_insert_overflow(
-	Rva00608FE0Element *position, const Rva00608FE0Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
-{
-	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
-	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
-	unsigned int length = growth + oldSize;
-
-	Rva00608FE0Element *newStart;
-	if (length)
-	{
-		unsigned int bytes = length * sizeof(Rva00608FE0Element);
-		if (bytes > 128)
-			newStart = (Rva00608FE0Element *)vectorLargeAllocate(bytes);
-		else
-			newStart = (Rva00608FE0Element *)vectorSmallAllocate(bytes);
-	}
-	else
-	{
-		newStart = 0;
-	}
-
-	Rva00608FE0Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
-
-	if (fillLength == 1)
-	{
-		BfmeElementConstruct(newFinish, value);
-		++newFinish;
-	}
-	else
-	{
-		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
-	}
-
-	if (!atEnd)
-		newFinish = BfmeRva00608FE0Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
-
-	_M_clear();
-
-	_M_finish = newFinish;
-	_M_start = newStart;
-	_M_end_of_storage = newStart + length;
-}
+template class vector<Rva00607770Element, allocator<Rva00607770Element> >;
 
 // ?_M_insert_overflow@?$vector@URva00608FE0Element@@V?$allocator@URva00608FE0Element@@@_STL@@@_STL@@IAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z
-
-template <>
-void vector<Rva00365020Element, allocator<Rva00365020Element> >::_M_insert_overflow(
-	Rva00365020Element *position, const Rva00365020Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
-{
-	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
-	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
-	unsigned int length = growth + oldSize;
-
-	Rva00365020Element *newStart;
-	if (length)
-	{
-		unsigned int bytes = length * sizeof(Rva00365020Element);
-		if (bytes > 128)
-			newStart = (Rva00365020Element *)vectorLargeAllocate(bytes);
-		else
-			newStart = (Rva00365020Element *)vectorSmallAllocate(bytes);
-	}
-	else
-	{
-		newStart = 0;
-	}
-
-	Rva00365020Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
-
-	if (fillLength == 1)
-	{
-		BfmeElementConstruct(newFinish, value);
-		++newFinish;
-	}
-	else
-	{
-		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
-	}
-
-	if (!atEnd)
-		newFinish = BfmeRva00365020Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
-
-	_M_clear();
-
-	_M_finish = newFinish;
-	_M_start = newStart;
-	_M_end_of_storage = newStart + length;
-}
+template class vector<Rva00608FE0Element, allocator<Rva00608FE0Element> >;
 
 // ?_M_insert_overflow@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXPAURva00365020Element@@ABU3@ABU__false_type@2@I_N@Z
-
-template <>
-void vector<Rva003AC170Element, allocator<Rva003AC170Element> >::_M_insert_overflow(
-	Rva003AC170Element *position, const Rva003AC170Element &value,
-	const __false_type &, unsigned int fillLength, bool atEnd)
-{
-	unsigned int oldSize = (unsigned int)(_M_finish - _M_start);
-	const unsigned int &growth = oldSize < fillLength ? fillLength : oldSize;
-	unsigned int length = growth + oldSize;
-
-	Rva003AC170Element *newStart;
-	if (length)
-	{
-		unsigned int bytes = length * sizeof(Rva003AC170Element);
-		if (bytes > 128)
-			newStart = (Rva003AC170Element *)vectorLargeAllocate(bytes);
-		else
-			newStart = (Rva003AC170Element *)vectorSmallAllocate(bytes);
-	}
-	else
-	{
-		newStart = 0;
-	}
-
-	Rva003AC170Element *newFinish = uninitialized_copy(
-		_M_start, position, newStart);
-
-	if (fillLength == 1)
-	{
-		BfmeElementConstruct(newFinish, value);
-		++newFinish;
-	}
-	else
-	{
-		newFinish = uninitialized_fill_n(newFinish, fillLength, value);
-	}
-
-	if (!atEnd)
-		newFinish = BfmeRva003AC170Copy(position, _M_finish, newFinish,
-			reinterpret_cast<const __false_type &>(atEnd));
-
-	_M_clear();
-
-	_M_finish = newFinish;
-	_M_start = newStart;
-	_M_end_of_storage = newStart + length;
-}
+template class vector<Rva00365020Element, allocator<Rva00365020Element> >;
 
 // ?_M_insert_overflow@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEXPAURva003AC170Element@@ABU3@ABU__false_type@2@I_N@Z
+template class vector<Rva003AC170Element, allocator<Rva003AC170Element> >;
 }
