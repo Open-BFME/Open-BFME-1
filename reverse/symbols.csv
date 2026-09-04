@@ -83710,3 +83710,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?apply@Rva0069B440Block@@QAEXPAX0@Z,0x00047A64,ILT to channel apply used by Rva0069B440Owner::call
 ?notify@Rva0069F4D0Block@@QAEXPAXH@Z,0x0003F5F8,ILT to channel notify used by Rva0069F4D0Owner::notify
 ?apply@Rva0069AFC0Block@@QAEXPAX0000@Z,0x000017BC,ILT to 5-arg channel apply used by Rva0069AFC0Owner::call
+?BfmeCoord2DConstruct@_STL@@YAXPAUCoord2D@@ABU2@@Z,0x00046AF1,ILT to 8-byte Coord2D _Construct 0x001E21F0; WeaponTemplate::parseScatterTarget
+?_M_insert_overflow@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@QAEXPAUCoord2D@@ABU3@ABU__false_type@2@I_N@Z,0x0001CB9D,ILT to vector 8-byte _M_insert_overflow 0x001E9020; WeaponTemplate::parseScatterTarget
