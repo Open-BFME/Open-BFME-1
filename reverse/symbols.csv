@@ -82323,3 +82323,31 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
+?TheDX8Caps@@3PAEA,0x01340578,caps pointer Allocate_DX8_Dynamic_Buffer reads at +0x13b for NPATCHES
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0001C58F,ILT thunk -> 0x000D1250 (vector<void*>::operator= ICF copy at 0x000D34C0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x0003B77D,ILT thunk -> 0x0039BFF0 (vector<void*>::operator= ICF copy at 0x0039C590)
+??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
+?BfmeDynamicSortingVertexArray@@3PAVSortingVertexBufferClass@@A,0x013467DC,Open-BFME5 sorting-array buffer pointer BoxDynamicVBAccess allocate at 0x0091F040 stores
+?BfmeDynamicSortingVertexArraySize@@3GA,0x013467E0,Open-BFME5 sorting-array capacity BoxDynamicVBAccess allocate at 0x0091F040 grows
+?BfmeDynamicDX8VertexBuffer@@3PAVBfmeDX8VertexBuffer@@A,0x01346754,Open-BFME5 per-slot DX8 buffer pointers BoxDynamicVBAccess allocate at 0x0091F5B0 stores
+?BfmeDynamicDX8VertexBufferSize@@3PAGA,0x013467B4,Open-BFME5 per-slot DX8 capacities BoxDynamicVBAccess allocate at 0x0091F5B0 grows
+?BfmeDynamicFVFTable@@3PAIA,0x0113BD28,Open-BFME5 per-slot FVF words BoxDynamicVBAccess DX8 allocate at 0x0091F5B0 passes to the 0x20-byte ctor
+?BfmeCurrentCaps@@3PAEA,0x01340578,Open-BFME5 DX8 caps object pointer; NPatches flag at +0x13b as dx8indexbuffer.cpp already reads
+?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
+?getMissionObjectiveCount@CampaignManager@@QAEHXZ,0x0002A62B,ILT to 0x003BDF70 for ScoreKeeper::countMissionObjectives
+?isMissionObjectiveEligible@CampaignManager@@QAEEH@Z,0x00039A77,ILT to 0x003BF630 for ScoreKeeper::countMissionObjectives
+?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z,0x00013084,ILT to 0x003BDFB0 for ScoreKeeper::countMissionObjectives
+?isMissionObjectiveComplete@CampaignManager@@QAEEH@Z,0x0000DFDA,ILT to 0x003BF6C0 for ScoreKeeper::countMissionObjectives
+?unidentified_0002181E@Object@@QAEXABV?$BitFlags@$0GA@@@H@Z,0x0002181E,ILT for Object setSingleModelCondition BitFlags<96> forward
+?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
+?refreshPlayerFactionControl@SkirmishScreenState@@QAEXH_N@Z,0x0002EA91,rebuilds the faction control for one Skirmish APT slot
+?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
+?refreshAllPlayerControls@SkirmishScreenState@@QAEXXZ,0x0000F94D,Skirmish state pending-update dispatcher call
+?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
+??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
+?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
+?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
+?hide@Radar@@QAEXXZ,0x0001827D,AptPalantir immediate-hide notification guarded by TheRadar
