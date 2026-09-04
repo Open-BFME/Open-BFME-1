@@ -1,53 +1,5 @@
-// Six more: a deadline test with a bit read behind it, two size/flag tests, a
-// linear search, a two-member swap and a walk that hands back the node ahead
-// of the one it was given.
-
-class BfmeClockCJ
-{
-public:
-	int m_bfmeHead[15];					// +0x00
-	int m_bfmeNow;						// +0x3C
-	char m_bfmeGap[0x50];					// +0x40
-	unsigned char m_bfmeEnabled;				// +0x90
-};
-
-extern BfmeClockCJ *g_bfmeSwitchCJ;				// retail 0x012F0898
-
-class BfmeBitsCS
-{
-public:
-	char m_bfmeHead[0x90];					// +0x00
-	unsigned char m_bfmeBits;				// +0x90
-};
-
-class Gen_00298B80
-{
-public:
-	unsigned char bfmeExpired(void) const;
-
-private:
-	int m_bfmeHead[2];					// +0x00
-	BfmeBitsCS *m_bfmeBits;					// +0x08
-	int m_bfmeGap[5];					// +0x0C
-	unsigned int m_bfmeDeadline;				// +0x20
-};
-
-// ?bfmeExpired@Gen_00298B80@@QBEEXZ
-unsigned char Gen_00298B80::bfmeExpired(void) const
-{
-	unsigned int now = (unsigned int)g_bfmeSwitchCJ->m_bfmeNow;
-
-	if (now < m_bfmeDeadline)
-		return 0;
-
-	unsigned char bits = m_bfmeBits->m_bfmeBits;
-
-	bits = bits >> 2;
-	bits = ~bits;
-	bits = bits & 1;
-
-	return bits;
-}
+// Five more: two size/flag tests, a linear search, a two-member swap and a walk
+// that hands back the node ahead of the one it was given.
 
 class BfmeTripleCS
 {

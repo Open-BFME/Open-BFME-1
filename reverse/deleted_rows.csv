@@ -24523,3 +24523,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_002982a0@@UAEPAXI@Z,0x002982A0,generated deleting-destructor identity replaced by LifetimeUpdate scalar deleting destructor; primary class vftable slot zero points through ILT 0x00028CFE
 ?dup_00298870@@YAXXZ,0x00298870,address-derived alias replaced by OCLUpdate::~OCLUpdate; primary class deleting destructor calls it through ILT 0x000137C8 and the named constructor establishes the three-interface layout
 ??_GGen_dtor_00298a70@@UAEPAXI@Z,0x00298A70,generated deleting-destructor identity replaced by OCLUpdate scalar deleting destructor; primary class vftable slot zero points through ILT 0x0001ED3A
+?bfmeExpired@Gen_00298B80@@QBEEXZ,0x00298B80,generated class and method identity replaced by OCLUpdate::shouldCreate; upstream body matches the frame deadline and under-construction status-bit test and ILT 0x00047AE6 reaches it

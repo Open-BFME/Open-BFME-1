@@ -33956,7 +33956,6 @@ name,address,notes
 ?b_00298ae0@@YAXXZ,0x00298AE0,gen-thunk body
 ?b_00298b40@@YAXXZ,0x00298B40,gen-thunk body
 ?b_00298b70@@YAXXZ,0x00298B70,gen-thunk body
-?b_00298b80@@YAXXZ,0x00298B80,gen-thunk body
 ?b_00298bb0@@YAXXZ,0x00298BB0,gen-thunk body
 ?b_00298ce0@@YAXXZ,0x00298CE0,gen-thunk body
 ?b_00298d10@@YAXXZ,0x00298D10,gen-thunk body
@@ -82626,7 +82625,6 @@ g_bfmeStateEE,0x012ED5AC,Open-BFME5 the state the clamped read at 0x00752F00 tak
 g_bfmeStateFA,0x013387E0,Open-BFME5 the state the seeder at 0x008D3AB0 fills
 g_bfmeStepCG,0x010F1BC8,Open-BFME5 the step the pair at 0x004223D0 subtracts
 g_bfmeStringPool1284,0x01337A30,address-derived refcounted-string pool used by the 0x008B9460 retail body
-g_bfmeSwitchCJ,0x012F0898,Open-BFME5 the switch the accumulators at 0x000E8AF0 read
 g_bfmeSwitchDR,0x012F1024,Open-BFME5 the switch the offset at 0x00588F00 reads
 g_bfmeTableBZ,0x01141708,Open-BFME5 the table the loader at 0x009A65E0 copies
 g_bfmeTableC7E0,0x0134C7E0,table pushed by bfmeGo7820 first call
@@ -82759,3 +82757,4 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ?set@AsciiStringXG@@QAEXABV1@@Z,0x00887C90,pin
 ??1OCLUpdate@@MAE@XZ,0x000137C8,destructor ILT to 0x00298870
 ??_GOCLUpdate@@MAEPAXI@Z,0x0001ED3A,primary class vftable slot zero ILT to 0x00298A70
+?shouldCreate@OCLUpdate@@IAE_NXZ,0x00047AE6,ILT to 0x00298B80; upstream OCLUpdate deadline and under-construction predicate
