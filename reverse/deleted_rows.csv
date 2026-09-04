@@ -24414,3 +24414,7 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeResetZB@BfmeThingZB@@QAEXXZ,0x003F6EC0,"synthetic identity superseded by PathfindCell::reset; the ILT and canonical AIPathfind source identify the body, byte-verified over the same 60-byte BFME cell layout."
 ?getVal@BfmeThingEC3@@QAEMXZ,0x0026EC30,synthetic identity superseded by AIUpdateInterface::getCurLocomotorSpeed; its matched Drawable caller and canonical AI call sites identify the same byte-verified 29-byte body.
 ?bfmeSetCursor1170@BfmeM1170@@QAEXH@Z,0x006BC190,synthetic identity superseded by Win32Mouse::setCursor; matched W3DMouse callers and the canonical Win32 implementation identify the same byte-verified 83-byte body.
+??0BfmeTimedOpNode@@QAE@VLoadGameFadeHolder@@PAX@Z,0x0007BA00,synthetic class identity superseded by TimedOperationNode constructor over the same byte-verified 68-byte body.
+??1BfmeTimedOpNode@@UAE@XZ,0x0007B8B0,synthetic class identity superseded by TimedOperationNode destructor over the same byte-verified 33-byte body.
+?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,synthetic class identity superseded by TimedOperationNode::update over the same byte-verified 138-byte body.
+?_bfme_updateTimedOps@@YAIXZ,0x0007B990,machine-generated spelling superseded by updateTimedOperations over the same byte-verified 64-byte single-caller queue pump.

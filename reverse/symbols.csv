@@ -2017,7 +2017,6 @@ name,address,notes
 ??0BfmeDX8IndexBuffer@@QAE@GW4UsageType@0@@Z,0x0091D0A0,view-class alias of ??0DX8IndexBufferClass@@QAE@GW4UsageType@0@@Z; W3DVolumetricShadow.cpp allocates the retail 0x18-byte size through a standalone view because the vendored class is four bytes shorter
 ??0BfmeDX8VertexBuffer@@QAE@IGW4UsageType@0@I@Z,0x0091F2F0,view-class alias of ??0DX8VertexBufferClass@@QAE@IGW4UsageType@0@I@Z; W3DVolumetricShadow.cpp allocates the retail 0x20-byte size through a standalone view because the vendored class is four bytes shorter
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
-??0BfmeErr1042@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr2_1043@@QAE@XZ,0x000180D9,pin
 ??0BfmeLegendString@@QAE@ABU0@@Z,0x00887B60,SubsystemLegend.cpp AsciiString stand-in copy ctor (StringBase<char> copy ctor body)
@@ -9249,7 +9248,6 @@ name,address,notes
 ?BfmeTheEmptyAudioEvent@@3VAudioEventRTS@@A,0x012F1318,Open-BFME5 the shared empty audio event ThingTemplate::getSound at 0x00416FA0 falls back to; getPerUnitSound at 0x00416FE0 uses the same global
 ?BfmeTheMapObjectExtra@@3VBfmeMapObjectExtra@@A,0x012ED5E0,Open-BFME5 the global object freeListOfMapObjects at 0x00746E90 resets; loaded as an immediate address so it is an object not a pointer
 ?BfmeTheMapObjectListHolder@@3PAVBfmeMapObjectListHolder@@A,0x012ED5DC,Open-BFME5 holds the map-object list head that freeListOfMapObjects at 0x00746E90 frees and clears
-?BfmeTimedOpInputLocked@@3HA,0x012ED530,timed-operation input lock state used by GameEngine::_bfme_updateClientSubsystems
 ?BfmeTransitionInfoUninitializedCopy@_STL@@YAPAUTransitionInfo@State@@PBU23@0PAU23@ABU__false_type@1@@Z,0x0001AB72,Open-BFME5 ILT for the shared 12-byte-element _STL::__uninitialized_copy at 0x000A0AE0
 ?BfmeTransitionInfoUninitializedFillN@_STL@@YAPAUTransitionInfo@State@@PAU23@IABU23@ABU__false_type@1@@Z,0x0001D60B,Open-BFME5 ILT for _STL::__uninitialized_fill_n on State TransitionInfo at 0x000A0B30
 ?BfmeWeaponRecoilInfoUninitializedCopy@_STL@@YAPAUWeaponRecoilInfo@W3DModelDraw@@PAU23@00ABU__false_type@1@@Z,0x00027525,Open-BFME5 ILT for _STL::__uninitialized_copy on W3DModelDraw WeaponRecoilInfo at 0x0020E2C0
@@ -11847,7 +11845,6 @@ name,address,notes
 ?_bfme_updateOnlinePlayerStats@@YAXPAVPlayer@@@Z,0x000A5D40,cdecl(Player*) called by the score screen init at 0x00576EEC when game type +0x25C == 3 and TheGameSpyGame 0x012F7198 +0x43C; BFME twin of the PSPlayerStats update inside ZH ScoreScreen.cpp populatePlayerInfo: amIObserver early-out; isLocalAlliedDefeat/Victory/isLocalDefeat; sawCRCMismatch (TheGameLogic+0x6C) and +0x290 count as loss/disconnect; isPlayerDefeated(idx) slot +0x50; faction buckets gondor/rohan/isengard/mordor; getEndFrame; UNCLAIMED 4125 B
 ?_bfme_updateScreen@DisconnectMenu@@QAEXXZ,0x0050E5F0,no ZH twin; if the DisconnectScreen.apt layout 0x012F4960 exists call its slot +0x8(NULL) (ZH WindowLayout::runUpdate position); sole caller BFMEDisconnectManager::update 0x0066C8EE as its first call every frame; reached through ILT 0x000036FC
 ?_bfme_updateSkirmishBattleHonors@@YAXPAVPlayer@@@Z,0x000A41F0,cdecl(Player*) called by the score screen init 0x00576C20 at 0x00576ECC (push edi local player; add esp 4) when its game type +0x25C == 1; BFME twin of ZH ScoreScreen.cpp updateSkirmishBattleHonors: early-out unless isLocalAlliedDefeat/Victory (vcalls +0x38/+0x34) or the player is inactive; SkirmishPreferences ctor 0x0009F850; duration from getEndFrame +0x44 at 0x000A42A8; per-side (PlayerTemplate+0x08 Side) win/loss counters via the 0x0009Cxxx setters keyed by map name
-?_bfme_updateTimedOps@@YAIXZ,0x0007B990,cdecl no-arg pump of the global list 0x012ED584 (nodes: +4 next +8 op object +0xC started +0x10 start time +0x14 key; pushed by 0x0007BA90 with refcounted ops); head->update(elapsedSeconds firstCall) via 0x0007B8E0 returns flags: bit1 pops and deletes the node; returns flags & 5 to the GameEngine +0x80 body which locks input/mouse and updates 0x012F4C50 while bit0 is set
 ?_bfme_useGameOverEndScreen@@YA_NXZ,0x002ED8F0,free function (no this) called by doVictory 0x002F1CA9 and doDefeat 0x002F1DE6 to pick APT:EndGameOver over APT:EndVictorious/APT:EndDefeat; true when ThePlayerList local player is observer-or-dead (0x000DF7F0) or ScriptEngine::hasShownMPLocalDefeatWindow 0x00337180 (+0x17636) or (LAN/INTERNET and TheGameLogic+0x290 == 0); generalises the ZH showObserverWindow test
 ?_get_osfflags@_SgI@@YAHHPAX@Z,0x00849EC0,STLport 4.5.3 Win32 descriptor mode helper called by _Filebuf_base open
 ?accept@Rva00809500Sink@@QAEXPAURva00809500Entry@@@Z,0x00808ED0,U2 lane: thiscall member called on the lookup result at 0x00809500
@@ -73004,7 +73001,6 @@ name,address,notes
 ?bfmeFallback1281@BfmeSlotDispatcher1281@@QAEXPAXHH@Z,0x008BC710,address-derived fallback callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
-?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal1043@@YGXPAVBfmeErr1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFb1148@BfmeS1148@@QAEDXZ,0x00020437,pin
@@ -76878,7 +76874,6 @@ name,address,notes
 ?g_bfmeMgrUDE@@3PAVBfmeMgrUDE@@A,0x00EF0898,pin
 ?g_bfmeMgrVLS@@3PAVBfmeMgrVLS@@A,0x00EF7730,pin
 ?g_bfmeMgrVOJ@@3PAVBfmeMgrVOJ@@A,0x00EF076C,pin
-?g_bfmeMillisecondsToSeconds@@3MA,0x00C766EC,float milliseconds-to-seconds scale used by BfmeTimedOpNode::update
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
@@ -76886,7 +76881,6 @@ name,address,notes
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
 ?g_bfmeMsg1038@@3PADA,0x00D29AD4,pin
-?g_bfmeMsg1042@@3PADA,0x00DE1CE4,pin
 ?g_bfmeMsg1043@@3PADA,0x00DE1CE4,pin
 ?g_bfmeMsg2_1043@@3PADA,0x00E07858,pin
 ?g_bfmeMsgAUUA@@3PADA,0x00D2C690,pin
@@ -81007,7 +81001,6 @@ name,address,notes
 ?update@BfmeRva491F0View@@QAEXPAXH@Z,0x0002CE44,assigned-body helper for Rva002491F0
 ?update@BfmeShadowBufferEntry@@QAEXXZ,0x00021030,buffer build update helper via retail ILT
 ?update@BfmeThingDTK@@QAEXXZ,0x00168270,address-derived update using the existing BfmeThingDTK helper pin
-?update@BfmeTimedOpNode@@QAEIXZ,0x0007B8E0,address-derived timed-operation node update callee decoded from the direct REL32 in _bfme_updateTimedOps
 ?update@GameLogic@@UAEXXZ,0x0038DA10,the main logic tick; calls setFPMode popSleepyUpdate getCRC RecorderClass::getMode and VictorySystem::update at 0x0038DC4D; reached through ILT 0x0003A9C7 and loads TheNetwork 0x012F7714
 ?update@LoadScreen@@UAEXH@Z,0x00003FE4,ZH LoadScreen base update called by BFME load screens
 ?update@MapTransferLoadScreen@@QAEXH@Z,0x0050FF30,E tier 1 via the corrected TheNetwork vcall seed: the non-virtual update(Int percent) of the APT-era screen _doFileTransfer 0x0066CE60 drives - called with ecx = ls at 0x0066CED0 (ls->update(0)) and 0x0066D11A (ls->update(fileTransferPercent)) exactly at ZH FileTransfer.cpp:54/124 right after ls->processTimeout = ILT 0x000362B9 -> 0x00510130 (ledger ?processTimeout@MapTransferLoadScreen@@); body inlines ZH MapTransferLoadScreen::update + LoadScreen::update: TheNetwork(0x012F7714)->update(FALSE) at 0x0050FF3F; TheMouse 0x012F4C5C setCursorTooltip(TheEmptyString -1 NULL 1.0f) 0x005A56F0; TheGameEngine +0x40 serviceWindowsOS; TheWindowManager/g_theWindowManager +0x14; TheDisplay +0x14 update and +0x1C draw; the percent arg and this are unused
@@ -82720,13 +82713,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?TheTerrainVisual@@3PAVTerrainVisual@@A,0x00EF7014,BFME global used by InGameUI::destroyPlacementIcons
-?TheGameClient@@3PAVGameClient@@A,0x00EF1464,BFME global used by InGameUI::destroyPlacementIcons
-?destroyPlacementIcons@InGameUI@@IAEXXZ,0x0043AF00,canonical protected method body identified by matched placeBuildAvailable caller and reference header
-??0AsciiStringWP@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWP@@QAE@XZ,0x00887940,pin
-??1Gen_003A87D0@@UAE@XZ,0x003A88E0,Open-BFME5 slot 0 of the table 0x010EC774
-_g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
 ?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
 _g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
 ?getFormationMovementSpeed@AIUpdateInterface@@QAEMPAVObject@@@Z,0x000230AB,BFME AI locomotor-controller speed calculation thunk used by getCurLocomotorSpeed
@@ -82734,3 +82720,13 @@ _g_zeroLocomotorSpeed,0x00C75350,shared zero float returned when no locomotor co
 ?isCursorVisible@Win32Mouse@@QAE_NXZ,0x00023FA6,BFME Win32Mouse two-flag cursor visibility predicate
 __imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
 _g_cursorResources,0x00EF77A8,BFME native cursor handle table indexed by cursor and direction frame
+??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
+?reportFatalError@@YGXPAVFatalErrorContext@@PAD@Z,0x009F6D00,fatal error reporter used when a timed-operation node has no operation
+?g_missingTimedOperationMessage@@3PADA,0x00DE1CE4,fatal diagnostic for a timed-operation node without an operation
+?g_millisecondsToSeconds@@3MA,0x00C766EC,shared time conversion used by TimedOperationNode::update
+?update@TimedOperationNode@@QAEIXZ,0x0007B8E0,timed-operation node update called by the queue pump
+?updateTimedOperations@@YAIXZ,0x0007B990,single-caller timed-operation queue pump in GameEngine client update
+?append@TimedOperationList@@QAEXPAX@Z,0x0007B5A0,timed-operation queue tail append used by postTimedOp
+?g_timedOperationHead@@3PAVTimedOperationNode@@A,0x00EED584,timed-operation queue head at retail VA 0x012ED584
+?g_timedOperationSerial@@3IA,0x00EA737C,timed-operation key serial at retail VA 0x012A737C
+?TimedOperationInputLocked@@3HA,0x00EED530,timed-operation input lock state used by GameEngine client update

@@ -7,39 +7,39 @@
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
-class BfmeErr1042
+class FatalErrorContext
 {
 public:
-	BfmeErr1042();
-	char m_bfmePad[0xc];
+	FatalErrorContext();
+	char m_fields[0xc];
 };
 
-extern char g_bfmeMsg1042[];
-__declspec(noreturn) void __stdcall bfmeFatal1042(BfmeErr1042 *e, char *m);
-extern float g_bfmeMillisecondsToSeconds;
+extern char g_missingTimedOperationMessage[];
+__declspec(noreturn) void __stdcall reportFatalError(FatalErrorContext *context, char *message);
+extern float g_millisecondsToSeconds;
 
-class BfmeTimedOperation
+class TimedOperation
 {
 public:
-	virtual ~BfmeTimedOperation(void);
+	virtual ~TimedOperation(void);
 	virtual unsigned int update(float elapsedSeconds, bool firstCall);
 };
 
-class BfmeTimedOpNode
+class TimedOperationNode
 {
 public:
-	virtual ~BfmeTimedOpNode(void);
+	virtual ~TimedOperationNode(void);
 	unsigned int update(void);                         // retail 0x0007B8E0
-	BfmeTimedOpNode *m_next;                           // +0x04
-	BfmeTimedOperation *m_operation;                   // +0x08
+	TimedOperationNode *m_next;                        // +0x04
+	TimedOperation *m_operation;                       // +0x08
 	bool m_started;                                    // +0x0c
 	char m_pad[3];
 	unsigned int m_startTime;                          // +0x10
 };
 
-extern BfmeTimedOpNode *g_bfmeTimedOpHead;           // retail 0x012ED584
+extern TimedOperationNode *g_timedOperationHead;     // retail 0x012ED584
 
-unsigned int BfmeTimedOpNode::update(void)
+unsigned int TimedOperationNode::update(void)
 {
 	bool firstCall = false;
 	unsigned int now = timeGetTime();
@@ -51,35 +51,35 @@ unsigned int BfmeTimedOpNode::update(void)
 		m_started = true;
 	}
 
-	float elapsedSeconds = now * g_bfmeMillisecondsToSeconds
-		- m_startTime * g_bfmeMillisecondsToSeconds;
-	BfmeTimedOperation *operation = m_operation;
+	float elapsedSeconds = now * g_millisecondsToSeconds
+		- m_startTime * g_millisecondsToSeconds;
+	TimedOperation *operation = m_operation;
 
 	if (operation == 0)
 	{
-		BfmeErr1042 e;
-		bfmeFatal1042(&e, g_bfmeMsg1042);
+		FatalErrorContext context;
+		reportFatalError(&context, g_missingTimedOperationMessage);
 	}
 
 	return operation->update(elapsedSeconds, firstCall);
 }
 
-// ?_bfme_updateTimedOps@@YAIXZ
-unsigned int _bfme_updateTimedOps(void)
+// ?updateTimedOperations@@YAIXZ
+unsigned int updateTimedOperations(void)
 {
 	unsigned int flags = 0;
 
-	if (g_bfmeTimedOpHead != 0)
+	if (g_timedOperationHead != 0)
 	{
-		flags = g_bfmeTimedOpHead->update();
+		flags = g_timedOperationHead->update();
 
 		if (flags & 2)
 		{
-			BfmeTimedOpNode *head = g_bfmeTimedOpHead;
-			g_bfmeTimedOpHead = head->m_next;
+			TimedOperationNode *head = g_timedOperationHead;
+			g_timedOperationHead = head->m_next;
 			delete head;
 
-			if (g_bfmeTimedOpHead == 0)
+			if (g_timedOperationHead == 0)
 				flags &= 4;
 		}
 	}

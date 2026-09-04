@@ -214,7 +214,7 @@ public:
 	void _bfme_setEngineVisibility(bool visible);
 };
 
-unsigned int _bfme_updateTimedOps(void);
+unsigned int updateTimedOperations(void);
 
 #define GameLogicClient (*(GameLogicClientUpdate **)0x012F0898)
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
@@ -233,8 +233,7 @@ extern int BfmeSavedClientFrame;
 extern int BfmeSkippedClientFrames;
 #define SavedClientFrame BfmeSavedClientFrame
 #define SkippedClientFrames BfmeSkippedClientFrames
-extern int BfmeTimedOpInputLocked;
-#define TimedOpInputLocked BfmeTimedOpInputLocked
+extern int TimedOperationInputLocked;
 
 void GameEngine::_bfme_updateClientFrameRatio(void)
 {
@@ -343,12 +342,12 @@ void GameEngine::_bfme_updateClientSubsystems(void)
 	GameClientSubsystem->update();
 	MessageStreamSubsystem->propagateMessages();
 
-	unsigned int timedOps = _bfme_updateTimedOps();
+	unsigned int timedOps = updateTimedOperations();
 	int inputLocked = timedOps & 1;
 	if (inputLocked)
 		InputLockSubsystem->update();
 
-	if (inputLocked != TimedOpInputLocked)
+	if (inputLocked != TimedOperationInputLocked)
 	{
 		if (inputLocked)
 		{
@@ -365,7 +364,7 @@ void GameEngine::_bfme_updateClientSubsystems(void)
 
 	ClientSubsystem *audio = AudioSubsystem;
 	ClientSubsystemVtable *audioVtable = *(ClientSubsystemVtable **)audio;
-	TimedOpInputLocked = inputLocked;
+	TimedOperationInputLocked = inputLocked;
 	audioVtable->update(audio, audioVtable);
 	ClientSubsystem *auxiliary = AuxiliarySubsystem;
 	ClientSubsystemVtableEax *auxiliaryVtable = *(ClientSubsystemVtableEax **)auxiliary;
