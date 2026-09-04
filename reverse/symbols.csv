@@ -72507,7 +72507,6 @@ name,address,notes
 ?bfmeChanged@Gen_005899D0@@AAEXXZ,0x0000271B,Open-BFME5 the member the change-setter at 0x005899D0 calls
 ?bfmeCheck1003@BfmeA1003@@QAEDPAX@Z,0x000422E9,pin
 ?bfmeCheck1026@BfmeQ1026@@QAEDHHH@Z,0x0002BC92,pin
-?bfmeCheck1181@BfmeP1181@@QAEHPAUBfmePair1181@@0PAX0@Z,0x00013DC2,pin
 ?bfmeCheck300@@YI_NPAVBfmeCheck300@@HPAX1@Z,0x000357D8,Open-BFME6 guard check for the 0x0022F300 dispatch; fastcall check,objA-twice form; body at 0x002551F0
 ?bfmeCheck961@BfmeGate961@@QAEDXZ,0x00041FF1,pin
 ?bfmeCheck986B@@YAHXZ,0x000162A7,pin
@@ -72656,7 +72655,6 @@ name,address,notes
 ?bfmeConv1066@@YAPAVBfmeX1066@@PAVBfmeH1066@@@Z,0x00010901,pin
 ?bfmeConv1087@BfmeN1087@@QAEHH@Z,0x000483B5,pin
 ?bfmeConv1101@BfmeC1101@@QAEHPAD@Z,0x0003ADD7,pin
-?bfmeConv1181@BfmeP1181@@QAEXPAXPAUBfmePair1181@@@Z,0x000171E8,pin
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeConvertUVB@@YAHPADPAPAX@Z,0x00807AB0,pin
@@ -82740,3 +82738,4 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate
 ?setInputEnabled@InGameUI@@QAEX_N@Z,0x0003EBDF,ScriptActions disable-input and enable-input paths identify the InGameUI setter ILT
 ?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
+?iterateCellsAlongLine@Pathfinder@@AAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUGroundPathPassableInfo@@@Z,0x00013DC2,isGroundPathPassable cell-space line walk using its pathfinder and diameter context
