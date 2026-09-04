@@ -38,10 +38,37 @@ class Win32Mouse
 public:
 	Win32Mouse();
 	virtual ~Win32Mouse();
+	virtual void setCursor(int cursor);
 
 protected:
 	unsigned char m_unmodelled[0x5E24];
 	int m_currentCursor;
+};
+
+class D3DDeviceInterface;
+struct D3DDeviceVTable
+{
+	void *m_slots[12];
+	int (__stdcall *ShowCursor)(D3DDeviceInterface *device, int show);
+};
+class D3DDeviceInterface
+{
+public:
+	D3DDeviceVTable *m_vtable;
+};
+
+class W3DMouseThreadHandle
+{
+public:
+	~W3DMouseThreadHandle();
+};
+
+class W3DMouseThread
+{
+public:
+	void Stop();
+	unsigned char m_unmodelled[0x50];
+	W3DMouseThreadHandle *m_handle;
 };
 
 class W3DMouse : public Win32Mouse
@@ -52,6 +79,7 @@ public:
 
 private:
 	void freeD3DAssets();
+	void freeW3DAssets();
 	W3DMouseSurfaceRef m_currentD3DSurface[21];
 	unsigned char m_gap5E80[8];
 	int m_currentPolygonCursor;
@@ -69,6 +97,8 @@ private:
 extern TextureClass *g_w3dMouseCursorTextures[50][21];
 extern void *g_w3dMouseCursorModels[50];
 extern void *g_w3dMouseCursorAnims[50];
+extern D3DDeviceInterface *g_w3dMouseD3DDevice;
+extern W3DMouseThread g_w3dMouseThread;
 
 W3DMouse::W3DMouse() : m_camera(0)
 {
@@ -117,4 +147,21 @@ void W3DMouse::freeD3DAssets()
 			}
 		}
 	}
+}
+
+W3DMouse::~W3DMouse()
+{
+	D3DDeviceInterface *device = g_w3dMouseD3DDevice;
+	if (device)
+	{
+		device->m_vtable->ShowCursor(device, 0);
+		Win32Mouse::setCursor(2);
+	}
+
+	freeD3DAssets();
+	freeW3DAssets();
+
+	delete g_w3dMouseThread.m_handle;
+	g_w3dMouseThread.m_handle = 0;
+	g_w3dMouseThread.Stop();
 }
