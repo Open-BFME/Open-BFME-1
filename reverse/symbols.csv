@@ -82407,25 +82407,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?aptPalantirOnInitialized@@YAXXZ,0x0001F62C,AptPalantir OnInitialized callback ILT registered by name
-?g_aptPalantirInitialized@@3EA,0x00EB7D84,AptPalantir OnInitialized state byte
-?g_aptPalantirJewelBrightened@@3EA,0x00EF4AFD,AptPalantir jewel-brightened state byte
-?g_aptPalantirWindow@@3HA,0x00EB7D80,AptPalantir window index passed to WindowManager add
-?g_aptPalantirJewelName@@3PADA,0x00D09BC4,AptPalantir jewel property name
-?g_aptPalantirBrightJewel@@3PADA,0x00C80FC0,AptPalantir bright jewel value
-?g_aptPalantirNormalJewel@@3PADA,0x00C81238,AptPalantir normal jewel value
-?add@WindowManager@@QAEXPAXPBDH0HHHH@Z,0x00015235,AptPalantir OnInitialized action sink
-?aptPalantirOnButtonAlert@@YAXPAD@Z,0x000127BA,AptPalantir OnBttnAlert callback ILT registered by name
-?dismissAlert@AptPalantir@@QAEXXZ,0x0003C902,AptPalantir alert dismissal thunk
-?selectHero@AptPalantir@@QAEXH@Z,0x00002383,AptPalantir hero selector thunk
-?setAptPalantirAlertVisible@@YAXH_N@Z,0x0001136A,AptPalantir alert visibility action thunk
-?g_aptPalantirUIState@@3PAVPalantirUIState@@A,0x00EF7048,AptPalantir UI interaction state
-?g_aptPalantirHeroPrefix@@3PADA,0x00D096F4,AptPalantir Hero prefix literal
-?g_aptPalantirHeroOne@@3PADA,0x00D09E68,AptPalantir Hero1 literal
-?g_aptPalantirOne@@3PADA,0x00D09E6C,AptPalantir one literal
-?g_aptPalantirNumberFormat@@3PADA,0x00C7C7B4,AptPalantir integer format literal
-?g_aptPalantirHideAlert@@3PADA,0x00D096FC,AptPalantir HideAlert action name
-?emptyParticleSystem@@YAPAVParticleSystem@@XZ,0x00001B18,tracked particle-system handle null object
-?getSlave@ParticleSystem@@QAE?AVParticleSystemHandle@@XZ,0x00029208,tracked slave particle-system accessor
-??1ParticleSystemHandle@@QAE@XZ,0x00013994,tracked particle-system handle unlink destructor
-?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0000C586,Open-BFME5 ILT to 0x0032C090 body for bfmeAreaGate at 0x0032C400
