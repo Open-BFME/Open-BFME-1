@@ -83878,3 +83878,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
 ?getCurLocomotorSpeed@AIUpdateInterface@@QAEMXZ,0x0003DAA5,getCurLocomotorSpeed ILT from recompute 0x00154B80; body 0x0026EC30
 ?groupHarvest@AIGroup@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000FAFB,TEAM_HARVEST executeAction arm 468 callee; ILT to 0x001565D0 harvest-at-waypoint
+?groupGuardObject@AIGroup@@QAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z,0x0003257E,TEAM_GUARD_OBJECT executeAction arm 207 callee; ILT groupGuardObject(unit GUARDMODE_NORMAL CMD_FROM_SCRIPT)

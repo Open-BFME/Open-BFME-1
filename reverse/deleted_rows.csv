@@ -24390,3 +24390,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?clear@Rva00490570@@QAEXXZ,0x00490570,"placeholder identity superseded: vtable 0x010F9B0C slot 3 is ShellGameLoadScreen::reset beside landed init slot 2 and update slot 1. The 9-byte body nulls m_loadScreen at +0x08 and m_progressBar at +0x10."
 ?d_002f3710@@YAXXZ,0x002F3710,gen-dump placeholder superseded by the recovered ?doPlayerRepairStructure@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
 ?d_002f3670@@YAXXZ,0x002F3670,gen-dump placeholder superseded by the recovered ?doTeamHarvest@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
+?d_002f3490@@YAXXZ,0x002F3490,gen-dump placeholder superseded by the recovered ?doTeamGuardObject@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
