@@ -28,7 +28,7 @@ public:
 	void bfmeFlush11(void);
 	void refreshAllPlayerControls(void);
 	void bfmeFlush15(void);
-	void bfmeFlush10(void);
+	void refreshGameSlots(void);
 	void bfmeFlush12(void);
 	void applySecondaryGame(void);
 
@@ -77,7 +77,7 @@ bool SkirmishScreenState::flushPendingUpdates(void)
 	if (m_flag10)
 	{
 		m_flag10 = false;
-		bfmeFlush10();
+		refreshGameSlots();
 		changed = true;
 	}
 	if (m_flag12)

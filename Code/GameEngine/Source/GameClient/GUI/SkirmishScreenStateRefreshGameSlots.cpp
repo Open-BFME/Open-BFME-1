@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class Gen005291F0Owner
+class SkirmishScreenOwner
 {
 public:
 	virtual void bfmeSlot0(void) = 0;
@@ -15,15 +15,15 @@ public:
 	virtual bool bfmeContains(int value) = 0;
 };
 
-class Gen_005291F0
+class SkirmishScreenState
 {
 public:
-	void bfmeRefresh(void);
-	void bfmeGen00018C1E(int index);
+	void refreshGameSlots(void);
+	void refreshGameSlot(int index);
 
 private:
 	unsigned char m_unmodelled[4];
-	Gen005291F0Owner *m_owner;
+	SkirmishScreenOwner *m_owner;
 	int m_first;
 	int m_second;
 	unsigned char m_unmodelled10[2];
@@ -33,10 +33,10 @@ private:
 	bool m_running;
 };
 
-// The helper keeps its retail ILT in its name because neither the call site nor
-// the still-anonymous target body exposes a retail spelling.
-// ?bfmeRefresh@Gen_005291F0@@QAEXXZ
-void Gen_005291F0::bfmeRefresh(void)
+// Refresh every populated game slot as one transaction, then mark the two
+// dependent views dirty so the pending-update dispatcher rebuilds them.
+// ?refreshGameSlots@SkirmishScreenState@@QAEXXZ
+void SkirmishScreenState::refreshGameSlots(void)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -48,7 +48,7 @@ void Gen_005291F0::bfmeRefresh(void)
 	{
 		m_running = true;
 		for (int index = 0; index < 8; ++index)
-			bfmeGen00018C1E(index);
+			refreshGameSlot(index);
 
 		m_firstDirty = true;
 		m_secondDirty = true;
