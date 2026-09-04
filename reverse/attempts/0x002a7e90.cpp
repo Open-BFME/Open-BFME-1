@@ -85,7 +85,8 @@ void SpecialAbilityUpdate::apply()
 
 	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
 	{
-		m_fieldA8 = md->m_field210;
+		UnsignedInt max = md->m_field210;
+		m_fieldA8 = max;
 		return;
 	}
 	if( !target )
@@ -97,7 +98,7 @@ void SpecialAbilityUpdate::apply()
 	goto store_zero;
 
 	store_field:
-	m_fieldA8 = md->m_field210;
+		m_fieldA8 = md->m_field210;
 	return;
 
 store_zero:

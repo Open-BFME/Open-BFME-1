@@ -27,6 +27,11 @@ struct StringHeader
 	unsigned short length;
 	unsigned short capacity;
 	char data[1];
+
+	__forceinline const char *peek(void) const
+	{
+		return &data[0];
+	}
 };
 
 class AsciiString
@@ -36,6 +41,7 @@ public:
 	~AsciiString();
 
 	void set(const AsciiString &other);
+	AsciiString &operator=(const AsciiString &other);
 	void concat(const char *text, Int length);
 
 	__forceinline void concat(const AsciiString &other)
@@ -45,29 +51,29 @@ public:
 		concat(text, length);
 	}
 
-	const char *str(void) const
+	const char *str(void)
 	{
-		return m_data ? &m_data->data[0] : "";
+		return m_data ? m_data->peek() : "";
 	}
 
-	__forceinline const char *reverseFindSlash(void) const
+	__forceinline const char *reverseFindSlash(void)
 	{
 		char seen;
 		const char *start = str();
 		const char *p = start + (m_data ? m_data->length : 0);
 		if (p == start)
 			return 0;
-		do
+		while (p != start)
 		{
 			seen = p[-1];
 			--p;
 			if (seen == '\\')
 				return p;
-		} while (p != start);
+		}
 		return 0;
 	}
 
-	StringHeader *m_data;
+	const StringHeader *m_data;
 };
 
 class FileSystem
@@ -103,21 +109,11 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
     if (TheFileSystem->doesFileExist(strToAdjust.str()))
         return;
 
-    const char *str = strToAdjust.str();
-    const char *p = str + (strToAdjust.m_data ? strToAdjust.m_data->length : 0);
-    if (p == str)
-        return;
+	const char *str = strToAdjust.reverseFindSlash();
+	if (!str)
+		return;
 
-    while (p != str)
-    {
-        const char seen = p[-1];
-        --p;
-        if (seen == '\\')
-        {
-            AsciiString filename(p);
-            strToAdjust.set(generateFilenamePrefix(m_eventInfo->m_soundType, true));
-            strToAdjust.concat(filename);
-            return;
-        }
-    }
+	AsciiString filename = str;
+	strToAdjust = generateFilenamePrefix(m_eventInfo->m_soundType, true);
+	strToAdjust.concat(filename);
 }

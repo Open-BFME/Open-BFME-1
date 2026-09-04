@@ -86,19 +86,19 @@ UnsignedInt SpecialAbilityUpdate::getSpecialObjectMax() const
 		tmpl = (const SpecialPowerTemplate *)o;
 	}
 
-	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
-		goto return_max;
-	if( target )
-		goto check_kinds;
-	goto return_max;
-
-return_max:
-	return md->m_maxSpecialObjects;
-
-check_kinds:
-	if( target->isKindOf( KINDOF_6 ) )
-		goto return_max;
-	if( target->isKindOf( KINDOF_62 ) )
-		goto return_max;
-	return 0;
+	switch( tmpl->m_specialPowerType )
+	{
+	default:
+		return md->m_maxSpecialObjects;
+	case SPECIAL_POWER_TYPE_27:
+		if( target )
+		{
+			if( target->isKindOf( KINDOF_6 ) )
+				return md->m_maxSpecialObjects;
+			if( target->isKindOf( KINDOF_62 ) )
+				return md->m_maxSpecialObjects;
+			return 0;
+		}
+		return md->m_maxSpecialObjects;
+	}
 }

@@ -133,13 +133,16 @@ examine:
 	{
 		unsigned int type = cell->m_bfmeFlags & 7;
 		if (type == 5)
-			return false;
+			goto blocked;
 		if (type == 1)
-			return false;
+			goto blocked;
 		if (type == 2)
-			return false;
+			goto blocked;
 	}
 	return true;
+
+blocked:
+	return false;
 }
 
 int Pathfinder::bfmeCellAvoidsThreeTypesInt(const Coord3D *pos, PathfindLayerEnum layer)

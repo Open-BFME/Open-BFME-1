@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHs-c-
 // readable body of ?update@W3DSnowManager@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp
 
 // Retail 0x00725AC0. W3DSnowManager::update -- ZH's
@@ -41,13 +41,7 @@ public:
 };
 
 extern BFMEWeatherOverride *g_bfmeGlo012F15F8;
-class BFMEFrameStateRef
-{
-public:
-	BFMEFrameState *operator->() const { return m_p; }
-	BFMEFrameState *m_p;
-};
-extern BFMEFrameStateRef g_bfmeGlo012F0FE0;
+extern BFMEFrameState *g_bfmeGlo012F0FE0;
 extern "C" float g_bfmeDefaultBU;
 extern "C" float g_bfmeK1121004;
 extern "C" float g_bfmeK075C6C;
@@ -147,10 +141,15 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		if (g_bfmeGlo012F0FE0->m_frame == 2 && m_94 != 2)
+		register const BFMEFrameState *frame = g_bfmeGlo012F0FE0;
+		int state = 2;
+		if (frame->m_frame == state)
 		{
-			m_94 = 2;
-			copyFromOverride();
+			if (m_94 != state)
+			{
+				m_94 = state;
+				copyFromOverride();
+			}
 		}
 	}
 }
@@ -158,21 +157,20 @@ void W3DSnowManager::extraAfterFmod(void)
 // ?extraTail@W3DSnowManager@@QAEXXZ
 void W3DSnowManager::extraTail(void)
 {
-	W3DSnowManager *self = this;
 	const BFMEWeatherOverride *d = g_bfmeGlo012F15F8;
 	float slot;
-	const BFMEWeatherOverride *f;
+	BFMEWeatherOverride *f;
 	if (d && d->m_nextOverride)
 		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (d->m_flag40 == 0)
 		return;
-	if (self->m_flag44)
+	if (m_flag44)
 	{
-		--self->m_48;
-		if (self->m_48 > 0)
+		--m_48;
+		if (m_48 > 0)
 			return;
-		self->m_48 = 0;
-		self->m_flag44 = 0;
+		m_48 = 0;
+		m_flag44 = 0;
 		return;
 	}
 	slot = WWMath::Random_Float();
@@ -181,8 +179,8 @@ void W3DSnowManager::extraTail(void)
 		d = (const BFMEWeatherOverride *)d->m_nextOverride->getFinalOverride();
 	if (!(slot < d->m_54Override))
 		return;
-	self->m_flag44 = 1;
+	m_flag44 = 1;
 	d = g_bfmeGlo012F15F8;
-	f = walkSnowOverride(d);
-	self->m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
+	f = (BFMEWeatherOverride *)walkSnowOverride(d);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }

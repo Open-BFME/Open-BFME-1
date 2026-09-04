@@ -59,8 +59,11 @@ void Rva006B4310Owner::update006B4310(
 	const AsciiString &first, int second, int index)
 {
 	Rva006B4310Owner *self = this;
-	void *handle = self->m_mutex;
+	register void *handle = self->m_mutex;
 	Rva006B4310MutexGuard guard(handle);
-	self->m_entries[index].initialize(first, second);
-	self->finalize(first, second, index);
+	register int indexLocal = index;
+	register int secondLocal = second;
+	register const AsciiString *firstLocal = &first;
+	self->m_entries[indexLocal].initialize(*firstLocal, secondLocal);
+	self->finalize(*firstLocal, secondLocal, indexLocal);
 }

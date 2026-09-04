@@ -16,11 +16,12 @@ public:
     virtual int read996(void);
 };
 
-class BfmeB996
+class Rva007E32A0State
 {
 public:
     char bfmeTry996(int first, int second, char *stop);
     bool readUntil(int first, int second);
+    bool forward(int first, int second, int third, int *thirdOut, int enabled);
 
 private:
     char m_pad[4];
@@ -29,44 +30,37 @@ private:
     int m_limit;
 };
 
-class BfmeForwardView
+bool Rva007E32A0State::readUntil(int first, int second)
 {
-public:
-    bool forward(int first, int second, int third, int *thirdOut, int enabled);
-};
+    if (m_kind == 6) {
+        int secondValue;
+        int firstValue;
+        char stop = 0;
 
-bool BfmeB996::readUntil(int first, int second)
-{
-    BfmeB996 *reader = this;
-    if (m_kind != 6)
-        goto failure;
+        if (bfmeTry996((int)&firstValue, (int)&secondValue, &stop)) {
+            do {
+                if (stop)
+                    return false;
+                if (firstValue == second)
+                    break;
 
-    int secondValue;
-    int firstValue;
-    char stop = 0;
+                int value = secondValue - 8;
+                if (m_dev->read996() + value > m_limit)
+                    return false;
+                m_dev->set996(value, 1);
 
-    if (reader->bfmeTry996((int)&firstValue, (int)&secondValue, &stop)) {
-        do {
-            if (stop)
-                goto failure;
-            if (firstValue == second)
-                break;
+            } while (bfmeTry996((int)&firstValue, (int)&secondValue, &stop));
+        }
 
-            int value = secondValue - 8;
-            if (m_dev->read996() + value > m_limit)
-                goto failure;
-            m_dev->set996(value, 1);
-
-        } while (reader->bfmeTry996((int)&firstValue, (int)&secondValue, &stop));
+        if (!stop && firstValue == second) {
+            m_dev->set996(-8, 1);
+            if (m_kind == 6 && forward(
+                    first, second, firstValue, &secondValue, 1))
+                return true;
+        }
     }
-
-    if (!stop && firstValue == second) {
-        m_dev->set996(-8, 1);
-        if (m_kind == 6)
-            return ((BfmeForwardView *)this)->forward(
-                first, second, firstValue, &secondValue, 1);
+    else {
+        return false;
     }
-
-failure:
     return false;
 }

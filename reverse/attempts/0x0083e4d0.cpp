@@ -1,4 +1,6 @@
 // ?_M_insert_aux@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEPAGPAGG@Z
+// partial score=0.91 date=2026-09-04
+// ?_M_insert_aux@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEPAGPAGG@Z
 // partial score=0.9 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 

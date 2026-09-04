@@ -25,8 +25,7 @@ class LivingWorldArmyState
 {
 public:
 	unsigned char Prefix[0xD0];
-	unsigned Unused : 25;
-	unsigned Special : 1;
+	unsigned Flags;
 };
 
 struct S4SortElem8
@@ -39,8 +38,8 @@ struct S4SortElem8
 
 bool S4SortElem8::BfmeLess00574AA0(S4SortElem8 const &other) const
 {
-	if (State->Special != other.State->Special)
-		return State->Special != 0;
+	if (((State->Flags >> 25) ^ (other.State->Flags >> 25)) & 1)
+		return (State->Flags >> 25) & 1;
 	if (Army->SortKey != other.Army->SortKey)
 		return Army->SortKey > other.Army->SortKey;
 	return Army->getName().bfmeCompare(other.Army->getName()) < 0;
