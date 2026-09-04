@@ -231,6 +231,23 @@ What a new NAME still needs is a callback registered under it. Until that is
 done a button must carry a name the constructor already registers, which is why
 048's button is `RefreshNat` and why it is still unshipped.
 
+## The Options screen's widget map
+
+`AptOptions::InitGadgets` (RVA `0x005625C0`) caches every gadget on the screen
+object as the APT runtime creates it, which is the whole map. Recovered while
+046-optionsui was alive; that feature is gone but the addresses are not.
+
+    +0x284 Resolution   +0x288 Detail      +0x28C OnlineIp
+    +0x290 HealthBars   +0x294 AlternateMouseSetUp   +0x29C ShowUnitDecals
+    +0x2BC AnisotropicTextureFiltering     +0x2C0 TerrainLighting
+    +0x2C4 3dShadows    +0x2C8 2dShadows   +0x2CC SmoothWaterBorder
+    +0x2D0 ShowProps    +0x2D4 ShowAnimations        +0x2D8 HeatEffects
+    +0x2DC DisableDynamicLOD               +0x2E0..+0x2F0 the five volume sliders
+    +0x2F4 ScrollSpeed  +0x2F8 Brightness  +0x2FC TextureDetail
+
+    GadgetCheckBoxIsChecked(w)      RVA 0x004B3230  __cdecl -> bit 2 of status
+    GadgetCheckBoxSetChecked(w, b)  RVA 0x004B31D0  __cdecl, and it repaints
+
 ## Our own text, in the game's own fonts
 
 `aptfile.add_text` appends a type-2 character and `add_character` grows the

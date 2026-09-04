@@ -101,3 +101,28 @@ python3 tools/modbuild.py --dist    # -> mods/dist/lotrbfme.exe (needs wine)
 ```
 
 Tests, and what producing `measured.jsonl` costs: `docs/measuring.md`.
+
+## A mod can ship data as well as code
+
+`mods/dist` was an exe and a manifest. 048-advancedgfx does not fit that: its
+button and its panel text live in `Options.apt`, so shipping the exe alone gives
+a mod with no button and shipping the archive alone gives a button that does
+nothing.
+
+So `modbuild.DATA` names, per feature, the archives it rebuilds and the module
+in its directory that does the rebuilding:
+
+    DATA = {"048-advancedgfx": [("apt/options.big", "apt_panel")]}
+
+`--dist` writes `mods/dist/apt/options.big` beside the exe and records it in the
+manifest with its sha256 and the baseline it came from. Both halves are
+reproducible: two consecutive `--dist` runs give identical hashes for the exe
+and the archive, and the manifest agrees with both.
+
+The source is a **tracked baseline**,
+`baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big`. The retail exe
+baseline was already tracked and this is the same idea at 516 KB against 16 MB;
+without it the archive could only be built from whatever happens to sit in
+someone's install, which is not a build. A feature that declares data and finds
+its baseline missing fails the build with the path it wanted, and a non-dist
+build prints what it would have written rather than quietly omitting it.

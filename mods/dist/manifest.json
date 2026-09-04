@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "2fd0da709fc2c1fbf69c3e06dbc8df437d9d76f394d63a29d535397d9b50a82a",
+    "sha256": "9af8b6219ec8037363918f712ac66f34d1f60f3de7897d0f23571fd6ac0e1faa",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 3643
+    "used": 4011
   },
   "features": [
     {
@@ -37,6 +37,14 @@
       "target_rva": "0x004410C0"
     },
     {
+      "name": "048-advancedgfx",
+      "target_rva": "0x0055DC00"
+    },
+    {
+      "name": "048-advancedgfx",
+      "target_rva": "0x00560030"
+    },
+    {
       "name": "033-retrytime",
       "target_rva": "0x006623DE"
     },
@@ -47,6 +55,14 @@
     {
       "name": "042-tracksfix",
       "target_rva": "0x0072FEB0"
+    }
+  ],
+  "data": [
+    {
+      "path": "mods/dist/apt/options.big",
+      "from": "baselines/bfme1/workshop-vanilla-1.03/files/apt/options.big",
+      "sha256": "f4188c7361ca63ad9e4c1e284266fbd3a2f81e5422ab6380e2be2326c8a8a1b5",
+      "size": 536494
     }
   ]
 }

@@ -3,6 +3,12 @@
 Eleven graphics settings ship inside BFME1, finished on both sides, and the
 retail game has no way to reach any of them. This turns them on.
 
+![The Custom Graphics tab, opened from the nav-bar button this feature adds](custom-graphics.png)
+
+The eleven settings are BFME's own, bound to its own load and save code. The
+CUSTOM GRAPHICS button and the OPEN-BFME block are ours, both placed into
+`Options.apt` by `apt_panel.py`.
+
 | | |
 |---|---|
 | Anisotropic Texture Filtering | Smooth Water Border |
@@ -12,9 +18,13 @@ retail game has no way to reach any of them. This turns them on.
 | Dynamic LOD | |
 | Texture Detail *(slider)* | Particle Cap *(slider)* |
 
-A **CUSTOM GRAPHICS** button sits in the Options nav bar beside CANCEL. Click it
-for the tab, click it again to come back. F11 does the same thing from the
-keyboard.
+**SHIPPED** in `mods/dist`. A **CUSTOM GRAPHICS** button sits in the Options nav
+bar beside CANCEL. Click it for the tab, click it again to come back. F11 does
+the same thing from the keyboard.
+
+This mod is two files. `mods/dist/lotrbfme.exe` carries the code and
+`mods/dist/apt/options.big` carries the button and the panel text -- install one
+without the other and either the button does not exist or it does nothing.
 
 ## Why this is one call and not a mod
 
@@ -94,23 +104,25 @@ positions, because the UI font is proportional and padding one string with
 spaces does not line a column up. Every line is a feature actually shipped in
 `mods/dist`; drop one from the build and its line comes out of `LINES`.
 
-## Why it is UNSHIPPED
+## Where the button is placed, and why not on the nav bar
 
-The button carries `RefreshNat` because that is a command the constructor
-already registers, and a name with no callback behind it does nothing. Two
-consequences, both real:
+On the movie's own tab frames -- 29 where the normal tab rests and 120 where the
+advanced one does -- not inside the shared nav sprite. Both look identical, and
+the nav sprite is the obvious place, but it is drawn on **every** tab including
+the online one. The online tab has the game's own Refresh NAT button, which
+carries the very command ours does, and the handler cannot tell two buttons
+apart. Placing ours only where those two tabs rest leaves the online tab's
+button unambiguous.
 
-* the online tab's own Refresh NAT button shares the command. The handler guards
-  on screen state -- it acts only on the normal and advanced tabs and falls
-  through on the online one -- but this is a squat, not a design.
-* the detour runs before the real `RefreshNat`, which still executes afterwards.
-  On the normal tab that is a spurious NAT check, and it is visible: it writes
-  `FirewallNeedToRefresh` and `FirewallPortAllocationDelta` into `Options.ini`.
+## The detour swallows the call
 
-The fix is to register `AptOptions::Advanced` properly. The pieces are known --
-the constructor builds each binding from an AsciiString and a refcounted
-delegate, whose constructor is at RVA `0x0055F140`. That is the next piece of
-work, and it is what a custom Open-BFME tab would need anyway.
+Sharing `AptOptions::RefreshNat` is only safe because the detour can suppress
+it. `PE.shim`'s `swallow_ret` turns a detour into a conditional replacement: the
+payload returns non-zero to say it handled the call and the shim returns to the
+caller with `ret 4` instead of running the function at all. Returning zero falls
+through to the original, which is what happens on the online tab.
 
-It also shares 046-optionsui's hook address, `AptOptions::update`, so build one
-at a time until 046 is shipped or dropped.
+Without it the real handler ran after ours and kicked a genuine NAT refresh --
+not theoretical, it wrote `FirewallNeedToRefresh` and
+`FirewallPortAllocationDelta` into `Options.ini`. Measured after the change:
+two clicks and an ACCEPT CHANGES, and neither key came back.

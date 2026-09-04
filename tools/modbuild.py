@@ -14,6 +14,7 @@ external rather than pulling one in.
 """
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import shutil
@@ -29,6 +30,11 @@ from cave import PE  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
+# Retail game data the mods rebuild from. The exe baseline was already tracked;
+# this is the same idea, three orders of magnitude smaller, and without it a
+# feature that lives partly in the game's data cannot be built reproducibly from
+# a clone -- only from whatever happens to be in someone's install.
+BASELINE_DATA = BASELINE.parent
 OUT = ROOT / "build/mods/lotrbfme.exe"
 DIST = ROOT / "mods/dist"
 
@@ -70,12 +76,10 @@ TARGET_INGAMEUI_UPDATE = 0x004410C0
 # 044-modpanel. InGameUI::postDraw -- the pass that runs after the world, so the
 # panel lands over the battle rather than under it.
 TARGET_INGAMEUI_POSTDRAW = 0x004469F0
-# 046-optionsui. BfmeAptScreenOptions::update, vtable 0x0110912C slot +0x14 --
+# 048-advancedgfx. BfmeAptScreenOptions::update, vtable 0x0110912C slot +0x14 --
 # it ticks only while the Options screen is up, which is exactly the window in
-# which the three checkboxes exist. And AptOptions::Save at its entry, before it
-# has read a single widget.
+# which the key means anything, so nothing polls during a game.
 TARGET_APTOPTIONS_UPDATE = 0x0055DC00
-TARGET_APTOPTIONS_SAVE = 0x00560280
 
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
@@ -332,7 +336,10 @@ def _rebase(image, delta):
 def build_feature(pe, source, entry, hooks, probe=False, defines=()):
     """Compile one feature's .cpp, lay it in the cave, and hook its entries.
 
-    `hooks` is (target rva, exported name, shim arguments) per detour."""
+    `hooks` is (target rva, exported name, shim arguments) per detour, or a
+    fourth element to make the detour a conditional replacement: the payload
+    returns non-zero to swallow the call and `ret` that many argument bytes
+    instead of running the function. See PE.shim."""
     with tempfile.TemporaryDirectory() as tmp:
         stem = Path(source).stem
         obj = compile_payload(source, Path(tmp) / f"{stem}.obj", probe=probe,
@@ -349,10 +356,12 @@ def build_feature(pe, source, entry, hooks, probe=False, defines=()):
                          f"0x{pe.image_base + rva:08X}")
 
     detours = []
-    for target, name, args in hooks:
+    for hook in hooks:
+        target, name, args = hook[0], hook[1], hook[2]
+        swallow_ret = hook[3] if len(hook) > 3 else None
         if name not in entries:
             raise SystemExit(f"{Path(source).name} exports {sorted(entries)}, not {name}")
-        start = pe.detour_call(target, entries[name], args=args)
+        start = pe.detour_call(target, entries[name], args=args, swallow_ret=swallow_ret)
         detours.append(dict(target=target, entry=name, code_rva=start,
                             code_len=pe.cave_rva + pe.cave_used - start))
     return dict(code_rva=rva, code_len=len(blob), detours=detours)
@@ -427,20 +436,18 @@ def build_drawprobe(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
-def build_optionsui(pe, feature_dir, probe=False):
-    return build_feature(pe, feature_dir / "src/optionsui.cpp", "optionsui_update", (
-        (TARGET_APTOPTIONS_UPDATE, "optionsui_update", ("ecx",)),
-        (TARGET_APTOPTIONS_SAVE, "optionsui_save", ("ecx",)),
-    ), probe=probe)
-
-
 def build_advancedgfx(pe, feature_dir, probe=False):
     # AptOptions::update runs only while the Options screen is up, which is
     # exactly when the key means anything, so nothing polls during a game.
     return build_feature(pe, feature_dir / "src/advancedgfx.cpp", "advancedgfx_update", (
         (TARGET_APTOPTIONS_UPDATE, "advancedgfx_update", ("ecx",)),
-        # AptOptions::RefreshNat, the command the nav bar's fourth button carries.
-        (0x00560030, "advancedgfx_refreshnat", ("ecx",)),
+        # AptOptions::RefreshNat, the command the nav bar's fourth button
+        # carries. The online tab's own Refresh NAT button carries it too, so
+        # this one SWALLOWS the call when it acts and lets it through when it
+        # does not -- otherwise a click on our button would also kick a real NAT
+        # refresh, which is observable: it writes FirewallNeedToRefresh into
+        # Options.ini. RefreshNat ends in `ret 4`.
+        (0x00560030, "advancedgfx_refreshnat", ("ecx",), 4),
     ), probe=probe)
 
 
@@ -562,6 +569,13 @@ FEATURES = {"020-gameresult": build_gameresult,
             # real build orders, placement goes 0.7-2.6s unpredictable to
             # 0.43-0.65s. docs/net-fixes.md has the numbers.
             "033-retrytime": build_retrytime,
+            # Promoted once the three things holding it back were gone: the
+            # button stopped squatting a shared command (it swallows
+            # RefreshNat when it acts and lets the online tab's own button
+            # through when it does not), mods/dist learned to carry the data
+            # half of a mod, and 046 -- which detoured the same
+            # AptOptions::update -- was retired. See its README.
+            "048-advancedgfx": build_advancedgfx,
             # Promoted 2026-08-30 on a verified end-to-end run: in a real replay
             # the logic frame held at 937 for 3,176 client iterations while the
             # camera stayed live, and screenshots 8s apart differ by 5437 px
@@ -580,6 +594,18 @@ FEATURES = {"020-gameresult": build_gameresult,
             # See mods/features/043-replaycam/README.md.
             "043-replaycam": build_replaycam,
             }
+# Features that ship a DATA file as well as code, as (archive path under the
+# game root, module in the feature directory exposing build(src, dst)).
+#
+# 048 is the reason this exists. Its button and its panel text live in
+# Options.apt, not in the exe -- ship the exe alone and the button does not
+# exist, ship the archive alone and the button does nothing. A mod build that
+# could only carry code could not carry it at all.
+DATA = {
+    "048-advancedgfx": [("apt/options.big", "apt_panel")],
+}
+
+
 # Selected only by name, and refused by --dist. mods/dist is the artifact
 # every ladder player runs: an instrument writes tens of lines a second, and a
 # candidate has not earned a place in it until the spike measuring it is green.
@@ -610,20 +636,6 @@ UNSHIPPED = {
     "040-horplus": (build_horplus, "a development camera modernization; build it to its own path"),
     # 044 and 045 both hook InGameUI::postDraw, so cave.py refuses to build them
     # together. That is the tool working: select one at a time.
-    # UNSHIPPED on purpose, and not because it is unfinished. It changes what
-    # three existing checkboxes MEAN, so it is only honest alongside the
-    # relabelled apt/options.big that apt_labels.py produces. Shipped alone, a
-    # box still reading "Show All Health Bars" would drive the replay camera --
-    # exactly the silent surprise this project refuses. Ship the pair or
-    # neither. It also has not been driven by hand yet: see its README.
-    "046-optionsui": (build_optionsui,
-                      "needs its relabelled apt/options.big shipped with it, and a "
-                      "hands-on pass; see mods/features/046-optionsui/README.md"),
-    # Shares 046's hook address (AptOptions::update), so build one at a time
-    # until 046 is either shipped or dropped.
-    "048-advancedgfx": (build_advancedgfx,
-                        "opens BFME's own Custom Graphics tab on F11; needs a button "
-                        "rather than a key before it ships"),
     "047-uiprobe": (build_uiprobe,
                     "an instrument: it opens the Options screen and flips a mod-bus bit "
                     "from the keyboard, for a rig whose mouse does not reach the game"),
@@ -669,6 +681,40 @@ def reserve_mod_bus(pe):
             f"0x{MOD_BUS_VA:08X} compiled into it. Change MOD_BUS_VA here and the "
             f"MOD_BUS define in each feature together, or they read stale memory.")
     return rva
+
+
+def build_data(names, dist_dir):
+    """Rebuild each selected feature's data archive from the tracked baseline.
+
+    Returns the manifest entries. With `dist_dir` None nothing is written --
+    the build is not a dist -- but the feature is still named, because a mod
+    whose button lives in the archive is not installed by copying the exe and a
+    silent omission here is exactly the kind that gets found in-game."""
+    entries = []
+    for name in names:
+        for rel, module in DATA.get(name, ()):
+            src = BASELINE_DATA / rel
+            if not src.exists():
+                raise SystemExit(
+                    f"{name} ships {rel}, but the retail baseline for it is missing: "
+                    f"{src}. It is tracked in git; a clone should already have it.")
+            if dist_dir is None:
+                print(f"  {name}: ALSO needs {rel}; --dist writes it, or run "
+                      f"mods/features/{name}/{module}.py <retail {rel}> <out>")
+                continue
+            dst = dist_dir / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            spec = importlib.util.spec_from_file_location(
+                module, ROOT / "mods/features" / name / f"{module}.py")
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            mod.build(str(src), str(dst))
+            blob = dst.read_bytes()
+            entries.append({"path": str(dst.relative_to(ROOT)),
+                            "from": str(src.relative_to(ROOT)),
+                            "sha256": hashlib.sha256(blob).hexdigest(),
+                            "size": len(blob)})
+    return entries
 
 
 def main():
@@ -739,6 +785,8 @@ def main():
     pe.save(out)
     print(f"wrote {out} ({len(pe.data):,} bytes, cave used {pe.cave_used}/{pe.cave_size})")
 
+    data_built = build_data(names, DIST if a.dist else None)
+
     if a.dist:
         DIST.mkdir(parents=True, exist_ok=True)
         exe = DIST / "lotrbfme.exe"
@@ -770,6 +818,7 @@ def main():
             "features": [
                 {"name": n, "target_rva": f"0x{t:08X}"} for t, n in sorted(claimed.items())
             ],
+            "data": data_built,
         }
         (DIST / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         print(f"dist: {exe} + manifest.json")

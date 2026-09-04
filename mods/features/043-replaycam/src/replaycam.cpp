@@ -160,13 +160,17 @@ enum {
 };
 
 // The mod bus: the first 0x40 bytes of the cave, reserved by modbuild.py, and
-// the only way a separately-linked feature can talk to this one. 046-optionsui
-// writes these three from the Options screen.
+// the only way a separately-linked feature can talk to this one.
 //
-// The MAGIC is the gate, not the byte. A build without 046 leaves the bus
-// zeroed, and zero must not read as "every camera axis off" -- so an unclaimed
-// bus means everything is enabled, which is exactly how this feature behaved
-// before the bus existed.
+// NOTHING WRITES THESE THREE TODAY. 046-optionsui did, from the Options screen,
+// and it was retired -- its idea was to relabel three of the game's own
+// checkboxes to mean camera settings, which 048-advancedgfx replaced with a tab
+// of our own. The reader stays because the bus is the contract, not the writer.
+//
+// The MAGIC is the gate, not the byte. An unclaimed bus reads zeroed, and zero
+// must not mean "every camera axis off" -- so no magic means everything is
+// enabled, which is exactly how this feature behaved before the bus existed and
+// is why retiring the only writer changed no behaviour.
 #define MOD_BUS ((volatile unsigned char *)0x01416000)
 #define BUS_MAGIC 0x4D46424Ful /* 'OBFM' */
 enum { BUS_ROTATE = 4, BUS_TILT = 5, BUS_ZOOM = 6 };

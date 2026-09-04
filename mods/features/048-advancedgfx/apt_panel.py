@@ -39,16 +39,26 @@ import aptfile                                          # noqa: E402
 from aptfile import Apt                                 # noqa: E402
 
 NAV_SPRITE, NAV_BUTTON = 147, 146
-NAV_FRAME = 0        # where Save is placed, so the button is up from the start
 
-BUTTON_X, BUTTON_Y = 342.0, -6.0     # the next step in the row
-BUTTON_DEPTH, LABEL_DEPTH = 40, 41
+# The button goes on the MOVIE's own tab frames, not into the shared nav sprite.
+# Both would look identical, but the nav bar is drawn on every tab including the
+# online one -- and the online tab has the game's own Refresh NAT button, which
+# carries the same command ours does. Two buttons, one command, no way to tell
+# them apart from the handler. Placing ours only where the normal and advanced
+# tabs rest keeps the online tab's button unambiguous.
+BUTTON_FRAMES = (29, 120)
+
+# The nav bar sits at (512.2, 740) on the movie, so its own three buttons are at
+# -170, 2 and 172 from there. Ours continues the row at +342.
+NAV_X, NAV_Y = 512.2, 740.0
+BUTTON_X, BUTTON_Y = NAV_X + 342.0, NAV_Y - 6.0
+BUTTON_DEPTH, LABEL_DEPTH = 960, 962
 BUTTON_NAME = "RefreshNat"
 # Two lines, because that is what ACCEPT CHANGES and RESET SETTINGS do -- a
 # fifteen-character label on one line overflows a button this width.
 LABEL_LINES = ["CUSTOM", "GRAPHICS"]
 LABEL_SIZE = 16.0                    # what the authored button labels use
-LABEL_X, LABEL_Y, LABEL_LINE_H = 232.0, -26.0, 19.2
+LABEL_X, LABEL_Y, LABEL_LINE_H = NAV_X + 232.0, NAV_Y - 26.0, 19.2
 
 # The nav button draws its label twice -- 140 is the dark shadow, 130 the light
 # face on top -- and both carry "...\r...." as their initial text, taking their
@@ -108,14 +118,15 @@ def build(src, dst):
             for c in PLACEHOLDER_CHARS:
                 a.set_text_string(c, "")
 
-            a.place(NAV_FRAME, NAV_BUTTON, BUTTON_DEPTH, BUTTON_X, BUTTON_Y,
-                    name=BUTTON_NAME, cid=NAV_SPRITE)
-            for i, line in enumerate(LABEL_LINES):
-                c = a.add_text(line, font=aptfile.FONT_BUTTON, size=LABEL_SIZE,
-                               color=LABEL_COLOR, align=aptfile.ALIGN_CENTER,
-                               width=226.5)
-                a.place(NAV_FRAME, c, LABEL_DEPTH + i, LABEL_X,
-                        LABEL_Y + LABEL_LINE_H * i, cid=NAV_SPRITE)
+            for frame in BUTTON_FRAMES:
+                a.place(frame, NAV_BUTTON, BUTTON_DEPTH, BUTTON_X, BUTTON_Y,
+                        name=BUTTON_NAME)
+                for i, line in enumerate(LABEL_LINES):
+                    c = a.add_text(line, font=aptfile.FONT_BUTTON, size=LABEL_SIZE,
+                                   color=LABEL_COLOR, align=aptfile.ALIGN_CENTER,
+                                   width=226.5)
+                    a.place(frame, c, LABEL_DEPTH + i, LABEL_X,
+                            LABEL_Y + LABEL_LINE_H * i)
 
             for i, (key, desc) in enumerate(LINES):
                 y = BLOCK_Y + LINE_H * i

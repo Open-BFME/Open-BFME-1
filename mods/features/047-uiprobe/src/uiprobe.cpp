@@ -1,5 +1,5 @@
-// 047-uiprobe — INSTRUMENT. Open the Options screen and flip a mod-bus bit from
-// the keyboard, and dump the screen's widget slots.
+// 047-uiprobe — INSTRUMENT. Open the Options screen from the keyboard, put the
+// game straight into a replay, and dump the Options screen's widget slots.
 //
 // THE MOUSE WORKS AGAIN. This was written for a rig whose pointer never reached
 // the game; after wine went to 11.16 and the display moved to :4, clicking
@@ -8,12 +8,11 @@
 // still the only way into a replay without menus, but "no mouse" is no longer
 // true and should not be repeated.
 //
-// 046-optionsui puts three Open-BFME settings on the real Options screen, and
-// demonstrating it needs someone to click a checkbox. On this rig nobody can:
-// wine's DirectInput wants a pointer grab, the grab breaks pointer motion on
-// every headless compositor available here, and without the grab the game
-// tracks the cursor (hover lights up) but never sees a button. The KEYBOARD
-// works everywhere, so this drives the same code paths from keys instead.
+// It was written when anything on the Options screen needed a mouse click to
+// demonstrate and this rig had none: wine's DirectInput wanted a pointer grab,
+// the grab broke pointer motion on every headless compositor available, and
+// without it the game tracked the cursor but never saw a button. The keyboard
+// worked, so this drives the same code paths from keys.
 //
 //   F5   both halves of AptMainMenu::Options' own handler at RVA 0x0051D9B0:
 //        the transition start at 0x0051D590 with the main-menu screen from

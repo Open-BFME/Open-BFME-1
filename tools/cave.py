@@ -220,7 +220,7 @@ class PE:
         return start
 
     # --- the shim ------------------------------------------------------
-    def shim(self, entry_va, at_va, args=("ecx",)):
+    def shim(self, entry_va, at_va, args=("ecx",), swallow_ret=None):
         """The overlay's only machine code: save everything, call `entry_va`,
         put everything back.
 
@@ -238,11 +238,28 @@ class PE:
         explicit arguments are on the stack. It is meaningful ONLY when the hook
         sits at the function's entry, before the body has pushed anything.
 
+        `swallow_ret` turns the detour into a CONDITIONAL REPLACEMENT: the
+        payload returns non-zero to say "I handled this", and the shim returns
+        to the caller instead of running the function at all, with `ret
+        swallow_ret` (0 for a plain `ret`). Returning zero falls through to the
+        original exactly as before. That is the only way a mod can suppress a
+        function it shares with the game -- prepending cannot un-run what comes
+        after it.
+
+        Two constraints come with it, and both are why it is opt-in. The verdict
+        arrives in eax and the shim ends with `pop eax` / `test`, so on the
+        fall-through path EAX AND THE FLAGS ARE CLOBBERED -- fine at a function
+        ENTRY, where both are caller-scratch, and wrong anywhere else. And the
+        payload must return int rather than void.
+
         Generated rather than written: this is the whole reason a feature can be
         one .cpp file, and hand-maintaining it per feature is how the two blobs
         this replaced both grew their own copy of the same mistake.
         """
-        body = bytearray([PUSHAD, PUSHFD, CLD])
+        body = bytearray()
+        if swallow_ret is not None:
+            body += bytes([0x6A, 0x00])            # push 0 -- the verdict slot
+        body += bytes([PUSHAD, PUSHFD, CLD])
         pushed = 0
         for name in reversed(args):   # cdecl: the last argument is pushed first
             if name in PUSH_REG:
@@ -253,6 +270,8 @@ class PE:
                 # above the return address at the entry esp -- which is what
                 # pushad/pushfd and this shim's own pushes now sit below.
                 disp = SAVED_BYTES + 4 * pushed + 4 + 4 * index
+                if swallow_ret is not None:
+                    disp += 4                      # the verdict slot sits below
                 if disp > 0x7F:
                     raise CaveError(f"stack argument {index} is out of one-byte reach")
                 body += bytes([0xFF, 0x74, 0x24, disp])   # push dword ptr [esp+disp]
@@ -261,10 +280,19 @@ class PE:
             pushed += 1
         body += bytes([CALL_REL32]) + struct.pack("<i", entry_va - (at_va + len(body) + 5))
         body += bytes([0x83, 0xC4, 4 * len(args)])  # cdecl: the caller pops
+        if swallow_ret is not None:
+            # Stash the verdict in the slot before popfd/popad destroy eax, then
+            # read it back once the target's registers are restored.
+            body += bytes([0x89, 0x44, 0x24, SAVED_BYTES])   # mov [esp+36], eax
         body += bytes([POPFD, POPAD])
+        if swallow_ret is not None:
+            ret = (bytes([0xC3]) if swallow_ret == 0
+                   else bytes([0xC2]) + struct.pack("<H", swallow_ret))
+            body += bytes([0x58, 0x85, 0xC0])                # pop eax; test eax, eax
+            body += bytes([0x74, len(ret)]) + ret            # jz over it; else return
         return bytes(body)
 
-    def detour_call(self, target_rva, entry_va, args=("ecx",)):
+    def detour_call(self, target_rva, entry_va, args=("ecx",), swallow_ret=None):
         """Detour `target_rva` through a generated shim into `entry_va`.
 
         The shim's `call` is relative, so it has to be emitted for the address
@@ -272,7 +300,7 @@ class PE:
         and refuses the blob if the two ever disagree."""
         return self.detour(target_rva,
                            payload=self.shim(entry_va, self.image_base + self.next_rva(),
-                                             args=args))
+                                             args=args, swallow_ret=swallow_ret))
 
     def save(self, out):
         out = Path(out)
