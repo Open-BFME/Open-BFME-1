@@ -79961,7 +79961,6 @@ name,address,notes
 ?realMapPathToPortableMapPath@GameState@@QBE?AV?$StringBase@D@@ABV2@@Z,0x0010F280,same body as the AsciiString-typed ledger row; BFME AsciiString is StringBase<char> so the callee mangles with the instantiation
 ?reallyDoFX@ParticleSystemFXNugget@@IBEXPBUCoord3D@@PBVMatrix3D@@PBVObject@@2@Z,0x0000F105,zh-landmulti per-site callee copy (body proven byte-equal)
 ?recenterTurret@TurretAI@@QAEXXZ,0x0003B679,ILT thunk to 0x18C8D0; pinned from AIUpdateInterface::recenterTurret @0x26EA10
-?recycle@Rva007AFAA0Shadow@@QAEXXZ,0x00022962,ILT to 0x007AEC10 from recycleFromList at 0x007AFAA0
 ?refresh@Gen0060BE20@@AAEXXZ,0x00025CED,refresh ILT used by exact Living World eye tower gate at 0x0060BE20
 ?refresh@Rva000F72D0FrameCachedValue@@AAEXPAX@Z,0x0004154C,retail REL32 at 0x000F72EC targets the frame-cache refresh ILT at 0x0004154C
 ?refresh@Rva00454200Element@@QAEXXZ,0x000102FD,Open-BFME5 ILT reached by the cursor advance at 0x00454200
@@ -82542,3 +82541,4 @@ g_bfmeListVW,0x012F3350,Open-BFME5 the list the display owner at 0x00491D20 push
 ??1BfmeStrVW@@QAE@XZ,0x00887940,pin
 ??1BfmeBaseVW@@QAE@XZ,0x004902A0,Open-BFME5 the list-unhooking base destructor the owner unwind funclet runs
 ?TheMultiplayerSettings@@3PAVMultiplayerSettings@@A,0x012ED5FC,TheMultiplayerSettings singleton; DIR32 at Rva0051B560Host::bfmeProvide
+??1W3DProjectedShadow@@QAE@XZ,0x00022962,ILT used when the projected-shadow manager explicitly destroys a recycled shadow

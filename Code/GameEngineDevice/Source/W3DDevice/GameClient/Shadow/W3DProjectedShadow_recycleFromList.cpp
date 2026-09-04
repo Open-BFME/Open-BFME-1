@@ -2,31 +2,31 @@
 // decal count for the five decal-typed kinds, and push the node onto the free
 // list at this+0x10. Retail 0x007AFAA0, 133 bytes.
 
-struct Rva007AFAA0Shadow
+struct W3DProjectedShadow
 {
 	unsigned char m_pad0[0x34];
 	int m_type;
 	unsigned char m_pad1[0x9C];
-	Rva007AFAA0Shadow *m_next;
-	void recycle(void);
+	W3DProjectedShadow *m_next;
+	~W3DProjectedShadow(void);
 };
 
 class Rva007AFAA0Manager
 {
 public:
-	bool recycleFromList(Rva007AFAA0Shadow *shadow, Rva007AFAA0Shadow **list);
+	bool recycleFromList(W3DProjectedShadow *shadow, W3DProjectedShadow **list);
 
 private:
 	unsigned char m_pad0[0x10];
-	Rva007AFAA0Shadow *m_free;
+	W3DProjectedShadow *m_free;
 	unsigned char m_pad1[0x23C];
 	int m_decalCount;
 };
 
-bool Rva007AFAA0Manager::recycleFromList(Rva007AFAA0Shadow *shadow, Rva007AFAA0Shadow **list)
+bool Rva007AFAA0Manager::recycleFromList(W3DProjectedShadow *shadow, W3DProjectedShadow **list)
 {
-	Rva007AFAA0Shadow *prev = 0;
-	Rva007AFAA0Shadow *cur = *list;
+	W3DProjectedShadow *prev = 0;
+	W3DProjectedShadow *cur = *list;
 
 	if (!cur)
 		return false;
@@ -53,7 +53,7 @@ bool Rva007AFAA0Manager::recycleFromList(Rva007AFAA0Shadow *shadow, Rva007AFAA0S
 
 			shadow->m_next = m_free;
 			m_free = shadow;
-			shadow->recycle();
+			shadow->~W3DProjectedShadow();
 			return true;
 		}
 
