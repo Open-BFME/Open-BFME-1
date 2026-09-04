@@ -24464,3 +24464,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Rva603790Ctor@@QAE@PAVThing@@PBVModuleData@@@Z,0x00603790,address-derived identity replaced by LaserUpdate::LaserUpdate; the LaserUpdate ModuleFactory ILT at 0x00006780 jumps to this body
 ??1Rva0071EA00@@QAE@XZ,0x0071EA00,address-derived identity replaced by TTreeType::~TTreeType; W3DTreeBuffer destroys 64 elements of this exact 0x5C extent
 ??0Rva0071EA00@@QAE@XZ,0x0071EAC0,address-derived identity replaced by TTreeType::TTreeType; reciprocal 0x5C constructor for W3DTreeBuffer m_treeTypes
+?reset@Rva00728A80Reset@@QAEXXZ,0x00728A80,address-derived class identity replaced by W3DTerrainBackground::reset; the object layout overlaps the proven W3DTerrainBackground fields and the body is in its contiguous method family
+?isEdgeAligned@Rva007288B0Terrain@@QAE_NHHH@Z,0x007288B0,address-derived class identity replaced by W3DTerrainBackground::isEdgeAligned; map and terrain member offsets match the proven class layout

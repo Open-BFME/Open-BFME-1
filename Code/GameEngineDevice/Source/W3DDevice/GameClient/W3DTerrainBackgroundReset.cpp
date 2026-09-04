@@ -1,6 +1,6 @@
 extern "C" void Gen00881EF0( void *memory );
 
-class Rva00728A80Reset
+class W3DTerrainBackground
 {
 public:
 	void reset( void );
@@ -17,7 +17,7 @@ private:
 	void *m_C0;
 };
 
-void Rva00728A80Reset::reset( void )
+void W3DTerrainBackground::reset( void )
 {
 	m_84 = m_7C = m_80 = m_78 = 1;
 	m_B8 = 0;

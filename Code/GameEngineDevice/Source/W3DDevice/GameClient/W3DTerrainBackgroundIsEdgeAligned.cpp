@@ -3,15 +3,15 @@
 
 typedef bool Bool;
 
-class Rva007288B0HeightMap
+class WorldHeightMap
 {
 public:
 	unsigned char m_pad00[0x08];
-	int m_width;
-	int m_height;
+	int m_xExtent;
+	int m_yExtent;
 };
 
-class Rva007288B0Terrain
+class W3DTerrainBackground
 {
 public:
 	Bool isEdgeAligned(int yArg, int xArg, int requested);
@@ -21,7 +21,7 @@ private:
 	int m_xOrigin;
 	int m_yOrigin;
 	int m_width;
-	Rva007288B0HeightMap *m_map;
+	WorldHeightMap *m_map;
 	unsigned char m_pad50[0x28];
 	int m_78;
 	unsigned char m_pad7c[0x1c];
@@ -36,16 +36,16 @@ private:
 	int m_b8;
 };
 
-// ?isEdgeAligned@Rva007288B0Terrain@@QAE_NHHH@Z
-Bool Rva007288B0Terrain::isEdgeAligned(int x, int y, int requested)
+// ?isEdgeAligned@W3DTerrainBackground@@QAE_NHHH@Z
+Bool W3DTerrainBackground::isEdgeAligned(int x, int y, int requested)
 {
 	int yValue = y;
-	Rva007288B0HeightMap *map = m_map;
-	int limitY = map->m_height - 1;
+	WorldHeightMap *map = m_map;
+	int limitY = map->m_yExtent - 1;
 	if (yValue != 0)
 		goto afterMapRightEdge;
 	{
-		int limitX = map->m_width - 1;
+		int limitX = map->m_xExtent - 1;
 		if (m_xOrigin + x == limitX)
 			goto resultTrue;
 	}
