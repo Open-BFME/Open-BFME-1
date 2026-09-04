@@ -3666,7 +3666,6 @@ name,address,notes
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BfmeListE@@QAE@XZ,0x00013449,Open-BFME5 the list member destructor the three-member destructor at 0x000F8A40 runs twice
 ??1BfmeLockVHX@@QAE@XZ,0x009DB400,pin
-??1BfmeMapChunk@@QAE@XZ,0x0002B9A4,Open-BFME5 ILT thunk; ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ at 0x006D2690 hands it to the eh vector destructor iterator as the element destructor of the 0xC4-byte array at +0x30D8; address-derived name
 ??1BfmeMidA@@QAE@XZ,0x00035D8C,Open-BFME5 the middle member destructor the vector-member destructor at 0x003643C0 runs
 ??1BfmeMidB@@QAE@XZ,0x009D82D0,Open-BFME5 the middle member destructor the vector-member destructor at 0x009D83D0 runs second
 ??1BfmeMidC@@QAE@XZ,0x009D7A70,Open-BFME5 the last member destructor the vector-member destructor at 0x009D83D0 runs first
@@ -82746,3 +82745,7 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?deallocateControlBarSchemeListNode@@YAXPAXI@Z,0x0082E5F0,ControlBarSchemeManager scheme-list node deallocator
 ??0TTreeType@@QAE@XZ,0x00012148,W3DTreeBuffer 64-element m_treeTypes constructor ILT
 ??1TTreeType@@QAE@XZ,0x00032CF9,W3DTreeBuffer 64-element m_treeTypes destructor ILT
+??0W3DTerrainBackground@@QAE@XZ,0x0004149D,FlatHeightMap 0xC4-element m_tiles vector constructor ILT
+??1W3DTerrainBackground@@QAE@XZ,0x0002B9A4,FlatHeightMap 0xC4-element m_tiles vector destructor ILT
+??_VW3DTerrainBackground@@SAXPAX@Z,0x00881EF0,W3DTerrainBackground array deallocator used by FlatHeightMap m_tiles cleanup
+?deleteTerrainIndexArray@@YAXPAX@Z,0x00881EF0,HeightMapRenderObjClass terrain index array deallocator

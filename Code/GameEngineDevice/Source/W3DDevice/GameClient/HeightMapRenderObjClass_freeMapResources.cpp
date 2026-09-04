@@ -5,7 +5,7 @@
 // bytes. The body carried only a machine byte-dump row; reverse/reloc_names.csv
 // holds the name with identity=real.
 //
-// The chunk array at +0x30D8 goes first, between a bare radar-reset lock and
+// The W3DTerrainBackground tile array at +0x30D8 goes first, between a bare radar-reset lock and
 // unlock -- two calls, not the guard object FontLibrary::deleteAllFonts uses:
 // a guard would need an unwind frame and there is none here. Its elements are
 // 0xC4 bytes and have a destructor, so the delete reads the count from the
@@ -27,14 +27,16 @@ typedef int Int;
 
 void W3DRadarResetLock(void);					// retail 0x00903090
 void W3DRadarResetUnlock(void);					// retail 0x00905B10
+void deleteTerrainIndexArray(void *memory);
 
-class BfmeMapChunk
+class W3DTerrainBackground
 {
 public:
-	~BfmeMapChunk();
+	~W3DTerrainBackground();
+	static void operator delete[](void *memory);
 
 private:
-	char m_bfmeBody[0xC4];
+	char m_body[0xC4];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/HeightMap.h
@@ -46,7 +48,7 @@ public:
 private:
 	char m_bfmeHead[0x30D4 - 0x04];		// the compiler supplies the vptr at +0
 	short *m_bfmeIndices;					// +0x30D4
-	BfmeMapChunk *m_bfmeChunks;				// +0x30D8
+	W3DTerrainBackground *m_tiles;			// +0x30D8
 	Int m_bfme30DC;						// +0x30DC
 	Int m_bfme30E0;						// +0x30E0
 	Int m_bfme30E4;						// +0x30E4
@@ -55,15 +57,15 @@ private:
 // ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ
 Int HeightMapRenderObjClass::freeMapResources(void)
 {
-	if (m_bfmeChunks)
+	if (m_tiles)
 	{
 		W3DRadarResetLock();
 
-		delete [] m_bfmeChunks;
+		delete [] m_tiles;
 
 		W3DRadarResetUnlock();
 
-		m_bfmeChunks = 0;
+		m_tiles = 0;
 	}
 
 	m_bfme30E0 = 0;
@@ -72,7 +74,7 @@ Int HeightMapRenderObjClass::freeMapResources(void)
 
 	if (m_bfmeIndices)
 	{
-		delete [] m_bfmeIndices;
+		deleteTerrainIndexArray(m_bfmeIndices);
 
 		m_bfmeIndices = 0;
 	}

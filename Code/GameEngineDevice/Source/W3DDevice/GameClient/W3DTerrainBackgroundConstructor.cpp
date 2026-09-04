@@ -1,13 +1,13 @@
 // cl: /DNDEBUG /MD
-// Retail 0x00729AE0: leaf thiscall constructor.
+// Retail 0x00729AE0: W3DTerrainBackground constructor.
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class Rva00729AE0
+class W3DTerrainBackground
 {
 public:
-	Rva00729AE0();
+	W3DTerrainBackground();
 
 private:
 	int m_00, m_04, m_08, m_0C, m_10, m_14, m_18;
@@ -27,8 +27,8 @@ private:
 	int m_B8, m_BC, m_C0;
 };
 
-// ??0Rva00729AE0@@QAE@XZ
-Rva00729AE0::Rva00729AE0()
+// ??0W3DTerrainBackground@@QAE@XZ
+W3DTerrainBackground::W3DTerrainBackground()
 {
 	m_00 = 0;
 	m_04 = 0;
