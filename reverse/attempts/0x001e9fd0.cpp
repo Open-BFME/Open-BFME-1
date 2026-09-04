@@ -1,12 +1,12 @@
 // ?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z
-// partial score=0.31 date=2026-09-04
+// partial score=0.33 date=2026-09-04
 // cl: /DNDEBUG /MD /O2 /Ob2 /GX-
 // Open-BFME5: Weapon::privateFireWeapon, retail 0x001E9FD0 size 1253.
-// Nine-arg thiscall named by the matched wrappers at 0x001EA5F0 / 0x001EA630 /
-// 0x001EA6D0 / 0x001EA700 and WeaponStore::createAndFireTempWeapon. ILT
-// 0x00030A8A. BFME adds sourcePos and victimId on top of the ZH eight-arg
-// form; computeBonus, processRequestAssistance, getDelayBetweenShots,
-// reloadAmmo and getRemainingAmmo are already matched.
+// extraBonusFlags then source, then bitcast WeaponBonus ctor. Stub-only
+// (no later locals) emits eax=0x3f800000 stores and edx=extra; the full
+// body steals the schedule: frame 0x24 vs 0x20, esi=this not ebp, extra
+// loaded after the six stores. Linear helper 0x001E49E0 is ecx=vec
+// eax=index edi=source esi=out (144B x87 sin/cos + getGroundHeight).
 
 struct Coord3D
 {
@@ -106,7 +106,7 @@ class WeaponTemplate;
 class LinearTargets
 {
 public:
-	Coord3D *aim(int index, const Object *source, Coord3D *out);
+	void aim(int index, const Object *source, Coord3D *out);
 	char *m_begin;
 	char *m_end;
 	char *m_cap;
@@ -208,6 +208,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern TerrainLogic *TheTerrainLogic;
+extern float g_bfmeZeroCY;
 
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 
@@ -217,11 +218,10 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 	int isDetonation, int ignoreRanges, int extraBonusFlags,
 	int *projectileID)
 {
-	const Object *src = source;
-	Weapon *self = this;
 	unsigned extra = (unsigned)extraBonusFlags;
+	const Object *src = source;
 	WeaponBonus bonus;
-	self->computeBonus(src, extra, bonus);
+	computeBonus(src, extra, bonus);
 
 	if (projectileID)
 		*projectileID = 0;
@@ -230,14 +230,14 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 		return false;
 
 	const Object *vic = victim;
-	if (m_template->m_requestAssistRange != 0.0f && vic)
+	if (m_template->m_requestAssistRange != g_bfmeZeroCY && vic)
 		processRequestAssistance(src, vic);
 
 	if (m_template->m_isLeechRangeWeapon)
 	{
-		int extra = (int)(float)m_template->m_timingExtra;
+		int timing = (int)(float)m_template->m_timingExtra;
 		int one = 1;
-		int *add = extra < 1 ? &one : &extra;
+		int *add = timing < 1 ? &one : &timing;
 		m_leechWeaponRangeActive = TheGameLogic->getFrame() + *add;
 	}
 
@@ -273,11 +273,12 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 	Coord3D *aimed = (Coord3D *)&bonus;
 	if (isDetonation)
 	{
-		self->m_template->bfmeTellLO(self, src, vic, &bonus);
+		m_template->bfmeTellLO(this, src, vic, &bonus);
 	}
 	else if (m_template->m_linearTargets.m_end != m_template->m_linearTargets.m_begin)
 	{
-		int n = (int)(m_template->m_linearTargets.m_end - m_template->m_linearTargets.m_begin) / 12;
+		int n = (int)(m_template->m_linearTargets.m_end
+			- m_template->m_linearTargets.m_begin) / 12;
 		int i = 0;
 		while (i < n)
 		{
@@ -288,8 +289,8 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 					vic, aimed, bonus, isDetonation, ignoreRanges,
 					this, projectileID, 1);
 			}
-			int *rec = (int *)(m_template->m_linearTargets.m_begin + m_linearIndex * 12);
-			int flag = rec[2];
+			int flag = ((int *)(m_template->m_linearTargets.m_begin
+				+ m_linearIndex * 12))[2];
 			m_linearIndex = (m_linearIndex + 1) % n;
 			if (flag)
 				break;
@@ -374,9 +375,9 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 		}
 	}
 
-	int timing = (int)(float)m_template->m_timingExtra;
-	if (timing > 0)
-		m_whenLastReloadStarted = TheGameLogic->getFrame() + (unsigned)timing;
+	int extraTime = (int)(float)m_template->m_timingExtra;
+	if (extraTime > 0)
+		m_whenLastReloadStarted = TheGameLogic->getFrame() + (unsigned)extraTime;
 
 	return reloaded;
 }
