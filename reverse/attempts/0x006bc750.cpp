@@ -1,4 +1,6 @@
 // ?hide@Rva006BC750@@QAEXXZ
+// partial score=0.9 date=2026-09-04
+// ?hide@Rva006BC750@@QAEXXZ
 // partial score=0.9 date=2026-09-02
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Hide the drawable at [this+0xC] then walk its +0x150 module array.

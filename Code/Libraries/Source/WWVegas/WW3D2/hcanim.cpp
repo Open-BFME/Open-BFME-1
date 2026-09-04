@@ -668,22 +668,23 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
 // ?HCompressedAnimClass::Get_Transform present-unmatched
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
+	uint32 tc0;
+	uint32 pidx;
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
 	  
 		switch(Flavor) {
 		case ANIM_FLAVOR_TIMECODED:
 		{
-			TimeCodedMotionChannelClass * qchan = motion->tc.Q;
+			TimeCodedMotionChannelClass * qchan = NodeMotion[pividx].tc.Q;
 			if (qchan) {
-				uint32 tc0;
-				uint32 pidx;
 				uint32 * data = qchan->Data;
-				Quaternion q(1);
+				Quaternion q;
 
-				tc0 = (uint32)(int)frame;
-				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
-					int leftIdx = 0;
+				tc0 = frame;
+				pidx = qchan->CachedIdx;
+				if (tc0 < (data[pidx] & 0x7FFFFFFF)) {
 					int rightIdx = (int)qchan->NumTimeCodes;
+					int leftIdx = 0;
 					rightIdx -= 2;
 					for (;;) {
 						int mid = (leftIdx + rightIdx) / 2;
@@ -703,34 +704,28 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 						}
 						leftIdx++;
 					}
-				} else {
-					pidx = qchan->CachedIdx;
 				}
 
 				uint32 p2idx;
 				if (pidx == ((qchan->NumTimeCodes - 1) * qchan->PacketSize)) {
 					float32 * vec = (float32 *)&data[pidx + 1];
-					q.X = vec[0];
-					q.Y = vec[1];
-					q.Z = vec[2];
-					q.W = vec[3];
+					q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
 				} else {
 					p2idx = pidx + qchan->PacketSize;
 					uint32 time = data[p2idx];
 					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
 						float32 * vec = (float32 *)&data[pidx + 1];
-						q.X = vec[0];
-						q.Y = vec[1];
-						q.Z = vec[2];
-						q.W = vec[3];
+						q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
 					} else {
 						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 ratio = (frame - time1) / (time2 - time1);
+						float32 * frame1 = (float32 *)&data[pidx + 1];
+						float32 * frame2 = (float32 *)&data[p2idx + 1];
 
 						Fast_Slerp(q,
-							*(Quaternion *)&data[pidx + 1],
-							*(Quaternion *)&data[p2idx + 1],
+							*(Quaternion *)frame1,
+							*(Quaternion *)frame2,
 							 ratio);
 					}
 				}

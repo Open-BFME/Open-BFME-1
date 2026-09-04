@@ -20,5 +20,6 @@ int Rva00479270Router::selectAndCall( void )
 		return m_primary->slot1();
 	}
 
-	return m_fallback->slot1();
+	Rva00479270Router *fallback = m_fallback;
+	return fallback->slot1();
 }

@@ -1,4 +1,6 @@
 // ?link@Rva0060FE50@@QAEXPAUBfmeIntrusiveNode60FE50@@@Z
+// partial score=0.95 date=2026-09-04
+// ?link@Rva0060FE50@@QAEXPAUBfmeIntrusiveNode60FE50@@@Z
 // partial score=0.95 date=2026-08-31
 struct BfmeIntrusiveOwner60FE50;
 
@@ -28,8 +30,8 @@ private:
 
 void Rva0060FE50::link( BfmeIntrusiveNode60FE50 *node )
 {
-	volatile int empty = 0;
 	BfmeIntrusiveOwner60FE50 *owner = m_owner;
+	volatile int empty = 0;
 	node->m_owner = owner;
 
 	if ( owner != 0 )
@@ -39,9 +41,9 @@ void Rva0060FE50::link( BfmeIntrusiveNode60FE50 *node )
 		node->m_next = 0;
 		owner->m_last = node;
 
-		if ( previous != 0 )
+		if ( node->m_previous != 0 )
 		{
-			previous->m_next = node;
+			node->m_previous->m_next = node;
 			return;
 		}
 

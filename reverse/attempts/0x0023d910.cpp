@@ -112,7 +112,7 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 	}
 
 	flags = member->m_bfmeModelConditionFlags.m_bits;
-	if ( ( flags & poseBit.m_bits ) != 0 )
+	if ( ( poseBit.m_bits & flags ) != 0 )
 		return;
 	member->m_bfmeModelConditionFlags.set( poseBit.m_bits );
 	member->notifyModelConditionChanged();

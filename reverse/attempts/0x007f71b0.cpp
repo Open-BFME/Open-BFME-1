@@ -1,10 +1,6 @@
 // ?bfmeGoVJT@BfmeThingVJT@@QAEXHH@Z
 // partial score=0.95 date=2026-09-04
 // EA FESL gamebrowser host-slot registration at retail 0x007F71B0.
-//
-// The four host slots are 0x94 bytes apart.  This method fills the first
-// unused slot, publishes it, then sends the selected browser request.
-
 // cl: /O2 /Ob0
 
 class BfmeMsgVJH
@@ -170,7 +166,7 @@ void BfmeThingVJT::bfmeGoVJT(volatile int a1, int a2) throw()
 			goto found;
 		++slot;
 	}
-		m_bfme1cFailure->send((BfmeHostVJT *)zero, -0x65);
+	m_bfme1cFailure->send((BfmeHostVJT *)zero, -0x65);
 	return;
 
 found:

@@ -6,6 +6,13 @@
 // Same three-pointer cdecl shape and the same unsigned limit guard; the store
 // is reversed so one byte is copied out of the cursor instead of into it.
 
+#if 1
+static __forceinline void rva68d9_store( char *destination, char value )
+{
+	*destination = value;
+}
+#endif
+
 #define BFME_BOUNDED_BYTE_READ( NAME )                                        \
 	char *NAME( char *cursor, char *out, char *limit )                        \
 	{                                                                         \
@@ -14,7 +21,7 @@
 			return cursor;                                                    \
 		}                                                                     \
                                                                               \
-		*out = *cursor;                                                       \
+		rva68d9_store( out, *cursor );                                          \
                                                                               \
 		return cursor + 1;                                                    \
 	}

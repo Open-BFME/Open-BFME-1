@@ -45,7 +45,8 @@ void BfmeVec12::fixup()
 	{
 		BfmeElem12 *e = (BfmeElem12 *)(off + (unsigned int)begin);
 		e->m_ptr = TheBfmeAlloc12->make(&e->m_sub);
-		((BfmeElem12 *)(off + (unsigned int)m_begin))->m_sub.construct();
+		BfmeSub12 *sub = (BfmeSub12 *)(const char *)((unsigned int)m_begin + off + 8);
+		sub->construct();
 		begin = m_begin;
 		last = m_end;
 		n = last - begin;

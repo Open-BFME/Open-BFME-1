@@ -1,4 +1,6 @@
 // ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
+// partial score=0.99 date=2026-09-04
+// ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
 // partial score=0.99 date=2026-09-02
 class Object
 {
@@ -25,7 +27,7 @@ public:
 
 private:
 	unsigned long unknown;
-	Rva21B310Data *data;
+	Rva21B310Data * volatile data;
 	Object *owner;
 	char gap0C[0x9B0];
 	Rva21B310Node *objects;
@@ -43,8 +45,7 @@ int Rva21B310RelationshipCapacity::accepts(Object *object)
 			++count;
 		}
 
-		Rva21B310Data *capacityData = data;
-		return count < capacityData->capacity;
+		return count < data->capacity;
 	}
 
 	return acceptRelated(object);

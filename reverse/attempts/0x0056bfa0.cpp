@@ -48,19 +48,15 @@ void showAptSaveLoad( void *arg0, int flags, const volatile char extra )
 			TheAptSaveLoad->m_278 = value;
 			return;
 		}
-		else if ( flagBits & 2 )
+		if ( flagBits & 2 )
 		{
-			char value2 = extra;
-			AptSaveLoad *p2 = TheAptSaveLoad;
-			p2->m_27c = 2;
-			AptSaveLoad *q2 = TheAptSaveLoad;
-			q2->m_278 = value2;
+			TheAptSaveLoad->m_27c = 2;
+			TheAptSaveLoad->m_278 = extra;
 			return;
 		}
-	else if ( flagBits & 4 )
+	if ( flagBits & 4 )
 	{
-		q = TheAptSaveLoad;
-		q->m_27c = 4;
+		TheAptSaveLoad->m_27c = 4;
 	}
 	TheAptSaveLoad->m_278 = extra;
 }

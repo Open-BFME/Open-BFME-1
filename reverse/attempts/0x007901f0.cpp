@@ -330,7 +330,7 @@ void W3DGadgetCheckBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 	{
 		start.x = origin.x + instData->m_imageOffset.x + checkOffsetFromLeft;
 		start.y = origin.y +  3;
-		end.x = start.x + (size.y - 6);
+		end.x = (size.y - 6) + start.x;
 		end.y = start.y + (size.y - 6);
 		TheWindowManager->winDrawImage( boxImage, start.x, start.y, 
 																	  end.x, end.y );

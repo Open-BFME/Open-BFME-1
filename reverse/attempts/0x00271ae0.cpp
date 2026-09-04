@@ -1,6 +1,6 @@
 // ?count@Rva00271AE0Owner@@QAEHXZ
 // partial score=0.96 date=2026-09-03
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Os
 
 class Rva00271AE0Named
 {
@@ -24,27 +24,31 @@ public:
 	Rva00271AE0Named *m_primary;
 };
 
-class Rva00271AE0Owner
+class Rva00271AE0OwnerBase
+{
+protected:
+	char m_pad00[0x30];
+	Rva00271AE0Host *m_host;
+};
+
+class Rva00271AE0Owner : public Rva00271AE0OwnerBase
 {
 public:
 	int count(void);
-
-private:
-	char m_pad00[0x30];
-	Rva00271AE0Host *m_host;
 };
 
 // ?count@Rva00271AE0Owner@@QAEHXZ
 int Rva00271AE0Owner::count(void)
 {
-	int id = m_host->m_primary != 0
-		? m_host->m_primary->getID() : 0xF423F;
+	Rva00271AE0Host *host = m_host;
+	Rva00271AE0Named *named = host->m_primary;
+	int id = named != 0 ? named->getID() : 0xF423F;
 	if (id == 0xF423F)
 	{
-		id = m_host->m_fallback != 0
-			? m_host->m_fallback->getID() : 0xF423F;
+		named = host->m_fallback;
+		id = named != 0 ? named->getID() : 0xF423F;
 	}
 	if (id != 6)
 		return 0;
-	return (m_host->m_end - m_host->m_begin) / 6;
+	return (host->m_end - host->m_begin) / 6;
 }

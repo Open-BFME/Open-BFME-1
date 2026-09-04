@@ -262,3 +262,35 @@ char *Rva0084E600UseConvertToCPB(int fromCP, int toCP, const char *from,
     char *result = __ConvertToCP(fromCP, toCP, from, size, resultSize);
     return result ? result : fromCP ? (char *)from : result;
 }
+
+extern char locale_buffer_0084EED0[];
+
+typedef struct LocaleCodePageObject_0084EED0
+{
+    LCID locale;
+    char codePage[1];
+} LocaleCodePageObject_0084EED0;
+
+char *Rva0084EED0(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x28, locale_buffer_0084EED0, 9);
+    {
+        char *buffer = locale_buffer_0084EED0;
+        __ConvertFromACP(buffer, 9, object->codePage);
+        return buffer;
+    }
+}
+
+extern char locale_buffer_0084EF00[];
+
+char *Rva0084EF00(LocaleCodePageObject_0084EED0 *object)
+{
+    LCID locale = object->locale;
+    GetLocaleInfoA(locale, 0x29, locale_buffer_0084EF00, 9);
+    {
+        char *buffer = locale_buffer_0084EF00;
+        __ConvertFromACP(buffer, 9, object->codePage);
+        return buffer;
+    }
+}

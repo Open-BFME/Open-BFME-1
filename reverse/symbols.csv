@@ -598,6 +598,7 @@ name,address,notes
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@1@ABVAsciiString@@@Z,0x0000DCFB,same ILT as ?find@SuperweaponMap@@QAEPAUSuperweaponMapNode@@ABVAsciiString@@@Z above; InGameUI.cpp instantiates the real map so the lookup mangles as _M_find. ILT jumps to 0x00448FE0 the ledger's STLport _M_find over an AsciiString key
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x009C9AA0,directory-tree lookup ArchiveFileSystem::doesFileExist calls at 0x009CA1D8
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00003071
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00039103,Win32LocalFileSystem slot 5 FilenameList find callee
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@1@ABVAsciiString@@@Z,0x0000F727
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@PAVSkyboxTextureSet@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVSkyboxTextureSet@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVSkyboxTextureSet@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAVSkyboxTextureSet@@@_STL@@@1@ABVAsciiString@@@Z,0x000B8A10,Open-BFME5 REL32 target of parseSkyboxTextureSet's find; divides by the bucket count out of the vector at +4/+8
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@@1@ABVAsciiString@@@Z,0x0003343D,APT text hash_map find instantiation reaches 0x0046A3A0
@@ -1882,6 +1883,10 @@ name,address,notes
 ??0AsciiStringWN@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWO@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWP@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWR@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWS@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWT@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWU@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
 ??0AssistedTargetingUpdateModuleData@@QAE@XZ,0x000104B5,pinharvest x1 (thunk)
 ??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
@@ -2251,6 +2256,7 @@ name,address,notes
 ??0FXListDieModuleData@@QAE@XZ,0x00025EBE,derived-ICF
 ??0FXNugget@@QAE@XZ,0x00428590,BFME's 225-byte FXNugget constructor; the 9-byte body at 0x00061D90 that already carries this name is an ICF alias of `mov eax,ecx / mov [eax],0 / ret`
 ??0FastAllocatorGeneral@@QAE@XZ,0x00B027B0
+??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
 ??0FellBeastSwoopPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower ctor base
 ??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
 ??0FileSystem@@QAE@XZ,0x00022CA5
@@ -3536,6 +3542,10 @@ name,address,notes
 ??1AsciiStringWN@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWO@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWP@@QAE@XZ,0x00887940,pin
+??1AsciiStringWR@@QAE@XZ,0x00887940,pin
+??1AsciiStringWS@@QAE@XZ,0x00887940,pin
+??1AsciiStringWT@@QAE@XZ,0x00887940,pin
+??1AsciiStringWU@@QAE@XZ,0x00887940,pin
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -10204,6 +10214,7 @@ name,address,notes
 ?TheWorkerAIUpdatePool@?1??getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF047C,pool-glue cascade static (back-solved)
 ?TheWritableGlobalData@@3PAVGlo012ED5C8Type@@A,0x012ED5C8,typed pin for Rva003BFB20::run global load
 ?TheWritableGlobalData@@3PAVGlobalData@@A,0x012ED5C8,GlobalData* global
+?TimedOperationInputLocked@@3HA,0x00EED530,timed-operation input lock state used by GameEngine client update
 ?U2Put00832830_do@@YA?AUU2PutIter@@ABU1@ABUU2PutFlags@@HPAX2H@Z,0x00832830,U2 lane: cdecl callee of the put forwarder at 0x00832830; unnamed dump elsewhere
 ?U2Put00832DB0_do@@YA?AUU2PutIter@@ABU1@ABUU2PutFlags@@HPAX2H@Z,0x00832DB0,U2 lane: cdecl callee of the put forwarder at 0x00832DB0; unnamed dump elsewhere
 ?U2Put00833170_do@@YA?AUU2PutIter@@ABU1@ABUU2PutFlags@@HPAX2H@Z,0x00833170,U2 lane: cdecl callee of the put forwarder at 0x00833170; unnamed dump elsewhere
@@ -12037,6 +12048,7 @@ name,address,notes
 ?append@Rva8CD130State@@QAEXPAX0PAVRva8CD130String@@PAVRva8CD130Value@@HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD130
 ?append@Rva8CD3F0State@@QAEXPAVRva8CD3F0Value@@PAXPAH0HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD3F0
 ?append@Rva8CDA60State@@QAEXPAX00PAVRva8CDA60Value@@HHH@Z,0x008CC690,address-derived stack append helper called by 0x008CDA60
+?append@TimedOperationList@@QAEXPAX@Z,0x0007B5A0,timed-operation queue tail append used by postTimedOp
 ?appendBooleanArgument@GameMessage@@QAEX_N@Z,0x000032AB,GameMessage::appendBooleanArgument thunk
 ?appendDrawableIDArgument@GameMessage@@QAEXI@Z,0x000154BF,GameMessage::appendDrawableIDArgument thunk
 ?appendIntegerArgument@GameMessage@@QAEXH@Z,0x00001370,GameMessage::appendIntegerArgument thunk
@@ -12099,6 +12111,7 @@ name,address,notes
 ?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
 ?applySingle@Gen00587600@@QAEXH@Z,0x000489D2,Open-BFME5 fresh ILT alias for the single-argument sibling at 0x0051A820
 ?applyStagingRoomRefresh@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x00022999,ILT of CustomMatch staging-list refresh callee used by 0x00544DD0
+?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
 ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
@@ -74551,6 +74564,7 @@ name,address,notes
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
 ?bfmeSizeVNQ@BfmeItemVNQ@@QAEHXZ,0x009212E0,pin
 ?bfmeSkip1092@BfmeE1092@@QAEDPAVBfmeR1092@@@Z,0x00003B1B,pin
+?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ,0x009D8C30,Gen009D8C30 helper identity from read and skip body
 ?bfmeSkyBoxPosition0079F360@WaterRenderObjClass@@ABE?AUVector3@@XZ,0x00010F14,address-derived WaterRenderObjClass skybox-position ILT forwarding to matched body 0x0079F360
 ?bfmeSkyBoxZRotation0079F3E0@WaterRenderObjClass@@ABEMXZ,0x00016EA5,private-access spelling of matched WaterRenderObjClass skybox Z-rotation accessor through its retail ILT
 ?bfmeSlashOrDefaultName@@YA?AVAsciiString@@ABV1@0@Z,0x00044E3B,Open-BFME5 ILT to slash-or-default AsciiString helper body 0x001945D0
@@ -77254,6 +77268,8 @@ name,address,notes
 ?g_mgr12F4B98@@3PAUBfmeMgr112@@A,0x00EF4B98,pin
 ?g_mgr12F4C5C@@3PAVBfmeMgr4C5@@A,0x012F4C5C,pin
 ?g_mgr12F4C84@@3PAVBfmeMgr4C8@@A,0x012F4C84,pin
+?g_millisecondsToSeconds@@3MA,0x00C766EC,shared time conversion used by TimedOperationNode::update
+?g_missingTimedOperationMessage@@3PADA,0x00DE1CE4,fatal diagnostic for a timed-operation node without an operation
 ?g_networkTimingOverruns@@3HA,0x012F7724,native network frame-timing overrun counter
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
@@ -77290,6 +77306,8 @@ name,address,notes
 ?g_theGameLogic@@3PAUGameLogicState@@A,0x012F0898,LargeGroupBonus game-logic global
 ?g_theTransitionHandler@@3PAVGameWindowTransitionsHandler@@A,0x012F3330,TheTransitionHandler singleton
 ?g_theWindowManager@@3PAVWindowManager@@A,0x012F19E8,HideQuitMenu WindowManager global
+?g_timedOperationHead@@3PAVTimedOperationNode@@A,0x00EED584,timed-operation queue head at retail VA 0x012ED584
+?g_timedOperationSerial@@3IA,0x00EA737C,timed-operation key serial at retail VA 0x012A737C
 ?g_u1Empty@@3QBDB,0x0107388B,U1 empty string used by 0x005C71F0
 ?g_u1False@@3QBDB,0x01092BB0,U1 false text used by 0x005C7410
 ?g_u1True@@3QBDB,0x01092BD0,U1 true text used by 0x005C7410
@@ -79391,6 +79409,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@2@@Z,0x0000FB41,ILT thunk to the tree hinted insert at 0x00475E20; the map spelling whose mapped type is a four-byte enumeration
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@_N@2@@Z,0x0002DA10,MapUtil bool tree unique insert thunk
 ?insert_unique@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@_N@2@ABVAsciiString@@@Z,0x0001BC02
+?insert_unique@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@_N@2@ABVAsciiString@@@Z,0x000033AF,Win32LocalFileSystem slot 5 FilenameList insert callee
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@2@U32@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00015E1F,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044DE70)
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00013EC1,LanguageFilter structural recursive callee
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030512,resweep callee back-solved
@@ -80248,6 +80267,7 @@ name,address,notes
 ?repopulateBuildTooltipLayout@ControlBar@@QAEXXZ,0x00038F4B,REL32 pin from ControlBar::setSquishedControlBarConfig @0x49D0B0
 ?report@Glo012F4B98Type@@QAEXHM@Z,0x0058C240,called on the global at 0x012F4B98 with a count and 7.0f by 0x003BCA90; address-derived name
 ?report@Glo012F4B98Type@@QAEXPAXPBD@Z,0x00043E4B,0x003C3AE0 calls the incremental-link thunk for Glo012F4B98Type::report with record field +0x0c and string 0x0043695d; implementation is 0x0058C240
+?reportFatalError@@YGXPAVFatalErrorContext@@PAD@Z,0x009F6D00,fatal error reporter used when a timed-operation node has no operation
 ?requestApproachPath@AIUpdateInterface@@QAEXPAUCoord3D@@@Z,0x00015D93,AIMoveAndTightenState::onEnter retail REL32 call target
 ?requestCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyRequestArg@@@Z,0x00031D9F
 ?requestSafePath@AIUpdateInterface@@QAEXW4ObjectID@@@Z,0x00001410,AIMoveAwayFromRepulsorsState::onEnter direct-call ILT thunk
@@ -80547,6 +80567,10 @@ name,address,notes
 ?set@AsciiString@@QAEXPBD@Z,0x00028BB9,AsciiString set from text
 ?set@AsciiString@@QAEXPBDH@Z,0x00887D20,AsciiString assignment from a pointer and length
 ?set@AsciiStringField@@QAEXPAVAsciiString@@@Z,0x0002AF90,AsciiStringField set used by MapObject::setWaypointName
+?set@AsciiStringWR@@QAEXABV1@@Z,0x00887C90,pin
+?set@AsciiStringWS@@QAEXABV1@@Z,0x00887C90,pin
+?set@AsciiStringWT@@QAEXABV1@@Z,0x00887C90,pin
+?set@AsciiStringWU@@QAEXABV1@@Z,0x00887C90,pin
 ?set@BFMEWeatherAsciiString@@QAEXPBDH@Z,0x00887D20,Open-BFME5 WeatherSetting two-argument string setter
 ?set@BFMEZBiasSetter@@SAXM@Z,0x00905990,float-ABI shim for BFME's older DX8 Z-bias body called by BaseHeightMapScorchSetZBias
 ?set@BfmeQuickMatchSlot@@QAEXABV1@@Z,0x00887C90,string-member assignment used by ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z
@@ -80706,6 +80730,7 @@ name,address,notes
 ?setPlayerIndex@AudioEventRTS@@QAEXH@Z,0x0003AC88,doSoundPlayFromNamed player-index ILT thunk
 ?setPlayerIndex@BfmeAudioEventRTS@@QAEXH@Z,0x0003AC88,alias of the AudioEventRTS spelling pinned at the same ILT; reached from the ScriptActions view local
 ?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
+?setPlayerLeaveStatus@GameLogic@@QAEXHH@Z,0x00383BC0,Network leave-command and disconnect-vote callers identify the eight-player leave-status setter
 ?setPlayerName@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003FD87,DisconnectManager populate screen ILT thunk
 ?setPlayerTemplate@CustomMatchPreferences@@QAEXH@Z,0x00031BC9,ILT of CustomMatchPreferences player-template setter used by 0x005392B0
 ?setPlayerTimeoutTime@DisconnectMenu@@QAEXHH@Z,0x00020EB4,DisconnectManager status update percentage setter through ILT to the existing 0x0050ED70 body
@@ -81007,6 +81032,7 @@ name,address,notes
 ?update@Rva007E4AD0Vp6Stream@@QAEXXZ,0x007E4AD0,assigned helper body call for Rva007E4B80Vp6Stream
 ?update@Rva00802CD0Element@@QAEXPBVRva007F4F90LobbyCounts@@H@Z,0x00802CD0,V2 lane: browser lobby element update from a four-int lobby-count record
 ?update@ScreenCrossFadeFilterUpdateFadeLevelShim@@QAE_NXZ,0x007D35B0,ScreenCrossFadeFilter updateFadeLevel incremental-link thunk target through a TU-local forwarding shim
+?update@TimedOperationNode@@QAEIXZ,0x0007B8E0,timed-operation node update called by the queue pump
 ?update@Transport@@QAEXXZ,0x00001EC4,Transport::update for LANAPI::RequestLobbyLeave forced path
 ?update@TransportContain@@UAE?AW4UpdateSleepTime@@XZ,0x000133EF,RiderChangeContain update tail-call target through retail ILT
 ?update@VictorySystem@@UAEXXZ,0x001DFBA0,vtable 0x0109FD8C slot 5 (+0x14) via ILT 0x0000C630; called from the GameLogic update body 0x0038DA10 at 0x0038DC4D; early-out until +0x100; active grid (+0x104 0/1 -> +0xF8/+0xFC) fed to 0x001B1AD0 then 0x001DFAA0 and 0x001DE3C0
@@ -81051,6 +81077,7 @@ name,address,notes
 ?updateSubObjectsFromShroud@BfmeW3DModelDrawShroud@@QAEXXZ,0x00762500,view-class alias of ?updateSubObjectsFromShroud@W3DModelDraw@@AAEXXZ; W3DModelDraw.cpp reaches the zero-argument member setFullyObscuredByShroud ends with through a view because the vendored class does not declare it
 ?updateSubObjectsFromShroud@W3DModelDraw@@AAEXXZ,0x00762500,Open-BFME5 the zero-argument member setFullyObscuredByShroud ends with; unnamed in the image and named here for what the call site does with it
 ?updateTeamStates@Player@@QAEXXZ,0x000CE140,body Player::updateTeamStates; iterates std::list at Player+0x288 (m_playerTeamPrototypes) calling one method per node; pinned by ?updateTeamStates@PlayerList@@QAEXXZ at 0x000DF390 via ILT 0x00022548
+?updateTimedOperations@@YAIXZ,0x0007B990,single-caller timed-operation queue pump in GameEngine client update
 ?updateUpgradeModules@Object@@QAEXXZ,0x00027FCF,ILT thunk used by giveUpgrade call site
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
 ?upgradeSkill@AptPalantir@@QAEXXZ,0x00024EBF,AptPalantir OnBttnSkillUpgrade dispatcher
@@ -82598,6 +82625,10 @@ g_bfmeFullBX,0x012D71AC,Open-BFME5 the size the setter at 0x00938A50 writes
 g_bfmeGameCW,0x012F706C,Open-BFME5 the singleton the flag test at 0x00609320 reads
 g_bfmeGameLogic1294,0x012F0898,address-derived game-logic global read by the 0x003A0860 retail body
 g_bfmeGateBT,0x012F9D04,Open-BFME5 the gate the probe at 0x007D74B0 tests
+g_bfmeGlobalWR,0x012F1484,Open-BFME5 the global whose override entry the accessors at 0x0043FC50 and siblings consult
+g_bfmeGlobalWS,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
+g_bfmeGlobalWT,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
+g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
 g_bfmeGridWaterHandle,0x012EF4D4,TerrainLogic getWaterHandle retail grid-water singleton
 g_bfmeHalfBX,0x012D71A8,Open-BFME5 the half size the setter at 0x00938A50 derives
 g_bfmeHeadCA,0x012F3350,Open-BFME5 the list head the destructor at 0x004902A0 unhooks itself from

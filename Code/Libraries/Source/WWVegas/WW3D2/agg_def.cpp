@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+extern void __cdecl operator delete[] (void *) throw ();
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -489,7 +490,7 @@ AggregateDefClass::Build_Subobject_List
 					// so we can do texture compares later)
 					// MSVC 7.1 keeps the original-model reference live across this
 					// call, which changes the retail frame and consumes EBP.  The
-					class RetailRenderObjCallView {
+					class __declspec (novtable) RetailRenderObjCallView {
 					public:
 						virtual void slot00 (void) = 0;
 						virtual void slot01 (void) = 0;
@@ -527,11 +528,17 @@ AggregateDefClass::Build_Subobject_List
 						virtual void slot33 (void) = 0;
 						virtual void slot34 (void) = 0;
 						virtual void slot35 (void) = 0;
-						virtual int Add_Sub_Object_To_Bone (RenderObjClass *, const char *, const Vector3 *) = 0;
+						virtual int Add_Sub_Object_To_Bone (RenderObjClass *, const char *, const Vector3 *) throw () = 0;
+						static __forceinline void Attach (RenderObjClass *model, RenderObjClass *subobj, const char *bone)
+						{
+							((RetailRenderObjCallView *)model)->Add_Sub_Object_To_Bone (subobj, bone, NULL);
+						}
 					};
 					RenderObjClass *prender_obj = Create_Render_Obj (prototype_name);
-					((RetailRenderObjCallView *)&original_model)->Add_Sub_Object_To_Bone (prender_obj, pbone_name, NULL);
-					REF_PTR_RELEASE (prender_obj);
+					RetailRenderObjCallView::Attach (&original_model, prender_obj, pbone_name);
+					if (prender_obj != NULL) {
+						prender_obj->Release_Ref ();
+					}
 				}
 			}
 		}

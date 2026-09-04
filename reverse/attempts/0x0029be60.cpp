@@ -1,9 +1,6 @@
 // ?d_0029be60@@YAXXZ
-// partial score=0.94 date=2026-09-02
+// partial score=0.94 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
-//
-// Retail 0x0029BE60: walk this+8, and for type==1 nodes whose query matches,
-// virtual slot +0x20 with node+0x10 then continue from the saved next.
 
 class BfmeHelperD77
 {
@@ -42,7 +39,6 @@ private:
 	Gen0029BE60Node *m_head;
 };
 
-// ?walk@Gen0029BE60@@QAEXPAVBfmeHelperD77@@@Z
 void Gen0029BE60::walk(BfmeHelperD77 *target)
 {
 	Gen0029BE60Node *node = m_head;

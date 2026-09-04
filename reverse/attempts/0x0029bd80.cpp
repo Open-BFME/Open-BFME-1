@@ -1,3 +1,5 @@
+// ?find@Gen0029BD80@@QAEXPAVBfmeHelperD77@@@Z
+// partial score=0.92 date=2026-09-04
 // ?d_0029bd80@@YAXXZ
 // partial score=0.92 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
@@ -52,11 +54,10 @@ void Gen0029BD80::find(BfmeHelperD77 *target)
 		return;
 	do
 	{
-		BfmeHelperD77 *query = target;
 		int type = node->m_type;
 		if (type == 1 || type == 3)
 		{
-			if (query->query(node->m_key))
+			if (target->query(node->m_key))
 			{
 				applyPayload(node->m_payload);
 				return;

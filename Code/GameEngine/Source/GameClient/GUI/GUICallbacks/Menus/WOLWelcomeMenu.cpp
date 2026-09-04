@@ -98,8 +98,126 @@ public:
 // PeerResponse ABI without changing the shared header.
 class BfmeWOLPeerResponse : public PeerResponse
 {
-	char m_bfmeTail[0x174];
+	char m_bfmeTail[0x170];
 };
+
+// BFME's GameSpyGroupRoom carries one dword of tail storage beyond the
+// reference declaration.  The larger type is part of the by-value ABI for
+// GameSpyInfo::addGroupRoom.
+class BfmeWOLGameSpyGroupRoom : public GameSpyGroupRoom
+{
+	char m_bfmeTail[4];
+};
+
+class BfmeWOLGlobalData
+{
+	char m_bfmeBody[0xb14];
+
+public:
+	Int m_firewallBehavior;
+};
+
+// The BFME GameSpyInfo vtable inserts methods in the interface used by this
+// callback: setCurrentGroupRoom is slot 0x28 and
+// getMaxMessagesPerUpdate is slot 0x16c.  Keep the view local to this TU.
+#define BFME_WOL_GSI_SLOT(n) virtual void slot##n( void ) = 0
+class BfmeWOLGameSpyInfo
+{
+public:
+	BFME_WOL_GSI_SLOT(00);
+	BFME_WOL_GSI_SLOT(01);
+	BFME_WOL_GSI_SLOT(02);
+	BFME_WOL_GSI_SLOT(03);
+	virtual void addGroupRoom( BfmeWOLGameSpyGroupRoom room ) = 0;
+	BFME_WOL_GSI_SLOT(05);
+	BFME_WOL_GSI_SLOT(06);
+	BFME_WOL_GSI_SLOT(07);
+	BFME_WOL_GSI_SLOT(08);
+	BFME_WOL_GSI_SLOT(09);
+	virtual void setCurrentGroupRoom( Int groupID ) = 0;
+	BFME_WOL_GSI_SLOT(11);
+	BFME_WOL_GSI_SLOT(12);
+	BFME_WOL_GSI_SLOT(13);
+	BFME_WOL_GSI_SLOT(14);
+	BFME_WOL_GSI_SLOT(15);
+	BFME_WOL_GSI_SLOT(16);
+	BFME_WOL_GSI_SLOT(17);
+	BFME_WOL_GSI_SLOT(18);
+	BFME_WOL_GSI_SLOT(19);
+	BFME_WOL_GSI_SLOT(20);
+	BFME_WOL_GSI_SLOT(21);
+	BFME_WOL_GSI_SLOT(22);
+	BFME_WOL_GSI_SLOT(23);
+	BFME_WOL_GSI_SLOT(24);
+	BFME_WOL_GSI_SLOT(25);
+	BFME_WOL_GSI_SLOT(26);
+	BFME_WOL_GSI_SLOT(27);
+	BFME_WOL_GSI_SLOT(28);
+	BFME_WOL_GSI_SLOT(29);
+	BFME_WOL_GSI_SLOT(30);
+	BFME_WOL_GSI_SLOT(31);
+	BFME_WOL_GSI_SLOT(32);
+	BFME_WOL_GSI_SLOT(33);
+	BFME_WOL_GSI_SLOT(34);
+	BFME_WOL_GSI_SLOT(35);
+	BFME_WOL_GSI_SLOT(36);
+	BFME_WOL_GSI_SLOT(37);
+	BFME_WOL_GSI_SLOT(38);
+	BFME_WOL_GSI_SLOT(39);
+	BFME_WOL_GSI_SLOT(40);
+	BFME_WOL_GSI_SLOT(41);
+	BFME_WOL_GSI_SLOT(42);
+	BFME_WOL_GSI_SLOT(43);
+	BFME_WOL_GSI_SLOT(44);
+	BFME_WOL_GSI_SLOT(45);
+	BFME_WOL_GSI_SLOT(46);
+	BFME_WOL_GSI_SLOT(47);
+	BFME_WOL_GSI_SLOT(48);
+	BFME_WOL_GSI_SLOT(49);
+	BFME_WOL_GSI_SLOT(50);
+	BFME_WOL_GSI_SLOT(51);
+	BFME_WOL_GSI_SLOT(52);
+	BFME_WOL_GSI_SLOT(53);
+	BFME_WOL_GSI_SLOT(54);
+	BFME_WOL_GSI_SLOT(55);
+	BFME_WOL_GSI_SLOT(56);
+	BFME_WOL_GSI_SLOT(57);
+	BFME_WOL_GSI_SLOT(58);
+	BFME_WOL_GSI_SLOT(59);
+	BFME_WOL_GSI_SLOT(60);
+	BFME_WOL_GSI_SLOT(61);
+	BFME_WOL_GSI_SLOT(62);
+	BFME_WOL_GSI_SLOT(63);
+	BFME_WOL_GSI_SLOT(64);
+	BFME_WOL_GSI_SLOT(65);
+	BFME_WOL_GSI_SLOT(66);
+	BFME_WOL_GSI_SLOT(67);
+	BFME_WOL_GSI_SLOT(68);
+	BFME_WOL_GSI_SLOT(69);
+	BFME_WOL_GSI_SLOT(70);
+	BFME_WOL_GSI_SLOT(71);
+	BFME_WOL_GSI_SLOT(72);
+	BFME_WOL_GSI_SLOT(73);
+	BFME_WOL_GSI_SLOT(74);
+	BFME_WOL_GSI_SLOT(75);
+	BFME_WOL_GSI_SLOT(76);
+	BFME_WOL_GSI_SLOT(77);
+	BFME_WOL_GSI_SLOT(78);
+	BFME_WOL_GSI_SLOT(79);
+	BFME_WOL_GSI_SLOT(80);
+	BFME_WOL_GSI_SLOT(81);
+	BFME_WOL_GSI_SLOT(82);
+	BFME_WOL_GSI_SLOT(83);
+	BFME_WOL_GSI_SLOT(84);
+	BFME_WOL_GSI_SLOT(85);
+	BFME_WOL_GSI_SLOT(86);
+	BFME_WOL_GSI_SLOT(87);
+	BFME_WOL_GSI_SLOT(88);
+	BFME_WOL_GSI_SLOT(89);
+	BFME_WOL_GSI_SLOT(90);
+	virtual Int getMaxMessagesPerUpdate( void ) = 0;
+};
+#undef BFME_WOL_GSI_SLOT
 
 
 #ifdef _INTERNAL
@@ -638,8 +756,6 @@ void WOLWelcomeMenuShutdown( WindowLayout *layout, void *userData )
 //-------------------------------------------------------------------------------------------------
 void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 {
-	Int allowedMessages;
-
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished() && TheTransitionHandler->isFinished())
 		shutdownComplete(layout);
@@ -654,7 +770,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 	{
 		if (TheFirewallHelper->behaviorDetectionUpdate())
 		{
-			TheWritableGlobalData->m_firewallBehavior = TheFirewallHelper->getFirewallBehavior();
+			((BfmeWOLGlobalData *)TheWritableGlobalData)->m_firewallBehavior = TheFirewallHelper->getFirewallBehavior();
 
 			TheFirewallHelper->writeFirewallBehavior();
 
@@ -671,7 +787,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 		HandleBuddyResponses();
 		HandlePersistentStorageResponses();
 
-		allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+		Int allowedMessages = ((BfmeWOLGameSpyInfo *)TheGameSpyInfo)->getMaxMessagesPerUpdate();
 		Bool sawImportantMessage = FALSE;
 		BfmeWOLPeerResponse resp;
 		while (allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse( resp ))
@@ -680,7 +796,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 			{
 			case PeerResponse::PEERRESPONSE_GROUPROOM:
 				{
-					GameSpyGroupRoom room;
+					BfmeWOLGameSpyGroupRoom room;
 					room.m_groupID = resp.groupRoom.id;
 					room.m_maxWaiting = resp.groupRoom.maxWaiting;
 					room.m_name = resp.groupRoomName.c_str();
@@ -688,7 +804,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 					room.m_numGames = resp.groupRoom.numGames;
 					room.m_numPlaying = resp.groupRoom.numPlaying;
 					room.m_numWaiting = resp.groupRoom.numWaiting;
-					TheGameSpyInfo->addGroupRoom( room );
+					((BfmeWOLGameSpyInfo *)TheGameSpyInfo)->addGroupRoom( room );
 					if (room.m_groupID == 0)
 					{
 						enableControls( TRUE );
@@ -702,7 +818,7 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 					if (resp.joinGroupRoom.ok)
 					{
 						//buttonPushed = TRUE;
-						TheGameSpyInfo->setCurrentGroupRoom(resp.joinGroupRoom.id);
+						((BfmeWOLGameSpyInfo *)TheGameSpyInfo)->setCurrentGroupRoom(resp.joinGroupRoom.id);
 						//GSMessageBoxOk( TheGameText->fetch("GUI:GSErrorTitle"), TheGameText->fetch("GUI:GSGroupRoomJoinOK") );
 
 						buttonPushed = TRUE;

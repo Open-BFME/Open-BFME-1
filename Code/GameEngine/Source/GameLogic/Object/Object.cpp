@@ -1454,26 +1454,6 @@ void Object::clearAndSetModelConditionState( ModelConditionFlagType clr, ModelCo
 }
 
 //=============================================================================
-// ?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0HF@@@@Z present-unmatched
-void Object::clearModelConditionFlags( const ModelConditionFlags& clr )
-{
-	if (m_drawable)
-	{
-		m_drawable->clearModelConditionFlags(clr);
-	}
-}
-
-//=============================================================================
-// ?setModelConditionFlags@Object@@QAEXABV?$BitFlags@$0HF@@@@Z present-unmatched
-void Object::setModelConditionFlags( const ModelConditionFlags& set )
-{
-	if (m_drawable)
-	{
-		m_drawable->setModelConditionFlags(set);
-	}
-}
-
-//=============================================================================
 // ?clearAndSetModelConditionFlags@Object@@QAEXABV?$BitFlags@$0HF@@@0@Z present-unmatched
 void Object::clearAndSetModelConditionFlags( const ModelConditionFlags& clr, const ModelConditionFlags& set )
 {
