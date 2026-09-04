@@ -35460,7 +35460,6 @@ name,address,notes
 ?b_002ce290@@YAXXZ,0x002CE290,gen-thunk body
 ?b_002ce2c0@@YAXXZ,0x002CE2C0,gen-thunk body
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
-?b_002ce320@@YAXXZ,0x002CE320,gen-thunk body
 ?b_002ce340@@YAXXZ,0x002CE340,gen-thunk body
 ?b_002ce360@@YAXXZ,0x002CE360,gen-thunk body
 ?b_002ce3a0@@YAXXZ,0x002CE3A0,gen-thunk body
@@ -82758,3 +82757,4 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
 ?isClearToEnter@DockUpdate@@UBE_NPBVObject@@@Z,0x000422E9,RailedTransportDockUpdate override base-call ILT to 0x002CA770
 ?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z,0x00009B47,DockUpdateInterface vftable slot 0x0C ILT to 0x002CE5B0
+?getRailedTransportDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVRailedTransportDockUpdateInterface@@XZ,0x0000178A,primary vftable slot 0x2C ILT to 0x002CE320
