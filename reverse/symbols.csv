@@ -82721,3 +82721,7 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower constructor call-site ILT to the proven SpecialAbilityUpdate constructor
 ??1GiveUpgradeUpdate@@MAE@XZ,0x000157E4,destructor ILT to 0x0025DA10
 ??_GGiveUpgradeUpdate@@MAEPAXI@Z,0x0002A7A7,primary class vtable slot zero ILT to 0x0025DBE0
+g_bfmeMaterialXP,0x0134B210,Open-BFME5 the default VertexMaterialClass the initialiser at 0x009569A0 allocates
+g_bfmeSourceXP,0x012D6E40,Open-BFME5 the word the initialiser at 0x009569A0 copies from
+g_bfmeTargetXP,0x012D7300,Open-BFME5 the word the initialiser at 0x009569A0 copies into
+g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0 raises
