@@ -82336,3 +82336,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?closePortrait@AptPalantirRegionPanel@@QAEXH@Z,0x00021468,AptPalantir OnRegionPortraitClosed dispatches the parsed region identifier
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
+?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
+?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
