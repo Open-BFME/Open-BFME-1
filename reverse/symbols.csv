@@ -83749,6 +83749,5 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?postTimedOp@@YAXVLoadGameFadeHolder@@PAX@Z,0x0000FC72,ILT -> 0x0007BA90; cdecl (Holder key) poster used by postLoadGameFadeSteps
 ?TheRecorder@@3PAVRecorderClass@@A,0x012ED62C,TheRecorder singleton; GetReplayFilenameFromListbox getLastReplayFileName
 ?getCurrentCampaign@CampaignManager@@QAEPAVCampaign@@XZ,0x005BB510,CampaignManager+8 getter; setEditDescription / startNextCampaignGame family
-??0Rva00801FB0Elem@@QAE@XZ,0x00801FB0,FESL Rva00801FB0Elem ctor 106B; twin Rva00800630Owner
 ??3Rva00803080Request@@SAXPAXI@Z,0x007F0190,FESL Rva00803080Request sized delete alias of Gen007F0190
 ?unidentified_00036854@WindowManager@@QAEHABVAsciiString@@@Z,0x00036854,ILT -> 0x0046CB50; BannerUI.apt movie-index lookup used by DeleteBanner (this+0x58 find, return record+8 or -1)
