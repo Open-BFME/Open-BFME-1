@@ -22,6 +22,7 @@ import csv
 import json
 import re
 import sys
+import re_log
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,10 @@ a hint and check the evidence lines. Land with
 resists after ~40 minutes bank it:
 `python3 tools/re_log.py record SYM 0xRVA SIZE partial "evidence t=Xmin model=MODEL" --stash FILE.cpp --score 0.NN`
 and move on.
+For a narrow codegen hypothesis, tools/shape_search.py tests explicit C++ alternatives
+with a trial/plateau budget; see docs/throughput-tools.md. Read probe's experiment
+history before repeating a spelling. Record blocker=NAME for a shared missing
+callee/layout and explain what changed before retrying a banked attempt.
 HARD RULES: never run git commands (the orchestrator owns VCS); never run a full ./build.sh;
 never edit files under Code/gen_asm/; only touch your assigned bodies; new sources go in
 the class's home directory under Code/ with descriptive names.
@@ -61,14 +66,7 @@ def load():
                 pins.setdefault(int(r[1], 16), []).append((r[0], r[2] if len(r) > 2 else ""))
             except ValueError:
                 pass
-    latest = {}
-    for l in open(ROOT / "reverse/re_attempts.log", encoding="utf-8", errors="replace"):
-        p = l.rstrip("\n").split("\t")
-        if len(p) >= 5:
-            try:
-                latest[int(p[1], 16)] = p
-            except ValueError:
-                pass
+    latest = re_log.latest_records(ROOT / "reverse/re_attempts.log")
     near = {}
     mj = ROOT / "build/zh_sweep/match.json"
     if mj.exists():
@@ -97,6 +95,15 @@ def describe(rva, rows, pins, latest, near):
             parts.append(f"    START FROM STASH: {st.group(1)}")
     if rva in near:
         parts.append(f"    ZH twin: {near[rva]}")
+    from source_donors import lookup
+    for donor in lookup(rva, int(r["target_size"])):
+        parts.append(f"    Similar operand-shape donor (hypothesis only): {donor['name']} @ {donor['source']}; verify constants/callees independently")
+    stash = re_log.stash_for(rva)
+    if stash:
+        parts.append(f"    PREFERRED STASH: {stash[0].relative_to(ROOT).as_posix()} (author estimate {stash[1]}; verify it)")
+        history = ROOT / "reverse/attempt_history" / f"0x{rva:08x}"
+        if history.exists():
+            parts.append(f"    Saved alternatives: {history.relative_to(ROOT).as_posix()} (immutable source JSON)")
     # mechanical evidence (callees, callers, vtable slot, strings, fields,
     # landed neighbours) so the session does not spend its first half hour
     # re-deriving it from the bytes; never let it break a brief
@@ -109,6 +116,14 @@ def describe(rva, rows, pins, latest, near):
     return "\n".join(parts)
 
 
+def picker_note(text):
+    lines = text.splitlines()
+    for index, line in enumerate(lines):
+        if line.startswith("NOTE: "):
+            return "\n".join([line[6:]] + lines[index + 1:])
+    raise ValueError("class picker produced no NOTE; refusing an incomplete class brief")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dump", help="assign every remaining dump row in this gen_asm file")
@@ -116,8 +131,11 @@ def main():
     ap.add_argument("--csv", help="worklist CSV with an 'rva' column")
     ap.add_argument("--limit", type=int, default=30)
     ap.add_argument("--note", default="", help="extra context placed at the top")
+    ap.add_argument("--note-file", type=Path, help="picker output: include NOTE and its complete slot table")
     ap.add_argument("--model", default="MODEL", help="model tag for re_log evidence")
     a = ap.parse_args()
+    if a.note_file:
+        a.note = picker_note(a.note_file.read_text(encoding="utf-8")) + "\n" + a.note
 
     rows, pins, latest, near = load()
     targets = []

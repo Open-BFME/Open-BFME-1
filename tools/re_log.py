@@ -112,6 +112,35 @@ def _parse(fields):
     return None
 
 
+def latest_records(path=None):
+    """Latest live five-field verdict per RVA; annotations/cited addresses do not vote.
+
+    Retractions affect only their exact (symbol, boundary), matching _load.
+    Three-field symbol-only verdicts remain handled by standing_status.
+    """
+    records = {}
+    path = path or RE_ATTEMPTS
+    if not path.exists():
+        return {}
+    for index, line in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines()):
+        fields = line.split("\t")
+        if len(fields) < 5:
+            continue
+        parsed = _parse(fields)
+        symbol, status, rva = parsed
+        if rva is None:
+            continue
+        key = symbol, rva
+        if status == VOID_STATUS:
+            records.pop(key, None)
+        elif status in VERDICT_STATUSES:
+            records[key] = index, fields
+    latest = {}
+    for (_, rva), (_, fields) in sorted(records.items(), key=lambda item: item[1][0]):
+        latest[rva] = fields
+    return latest
+
+
 def _load():
     global _BY_BOUNDARY, _LATEST, _ATTEMPTS
     if _BY_BOUNDARY is not None:
@@ -392,6 +421,8 @@ def _record(argv):
         raise SystemExit(_record.__doc__)
     symbol, rva_text, size_text, status = argv[0], argv[1], argv[2], argv[3]
     evidence = " ".join(argv[4:])
+    from fleet_run import run_tag
+    evidence = run_tag(evidence)
     if status not in VERDICT_STATUSES and status != VOID_STATUS:
         raise SystemExit(
             f"unknown status {status!r}. Dead ends: {sorted(DEAD_END_STATUSES)}; "

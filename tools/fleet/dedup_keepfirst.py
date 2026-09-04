@@ -3,7 +3,7 @@
 The union-merge artifact after every rebase; see docs/lessons.md."""
 import sys
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
 import os, ledger_io, portable_lock
 with open(ROOT / "reverse/.add_match.lock", "a+") as h:

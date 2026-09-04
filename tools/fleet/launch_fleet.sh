@@ -4,6 +4,7 @@
 # Weighted by measured bytes/session from build/fleet_logs (luna 1271, lunabig 672, lunafin 636).
 cd "$(dirname "$0")/.." || exit 1
 mkdir -p build/fleet_logs
+python tools/source_donors.py --refresh || exit 1
 N=${1:-25}; B=${2:-0}; F=${3:-5}; M=${4:-10}
 launch() { nohup bash build/seat.sh "$1" "$2" > "build/fleet_logs/seat_$1$2.supervisor.log" 2>&1 < /dev/null & disown; sleep 2; }
 for i in $(seq 1 "$N"); do launch luna "$i"; done

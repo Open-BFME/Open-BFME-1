@@ -15,12 +15,17 @@ import csv, re, sys, json, subprocess, collections
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
+from fleet_run import active_rvas
+from class_context import find_header
 ROOT = Path('.').resolve()
 dry = '--dry' in sys.argv
 want_vt = None
 if '--vt' in sys.argv:
     want_vt = int(sys.argv[sys.argv.index('--vt') + 1], 16)
 rank = json.load(open(ROOT / 'build/vtable_class_rank.json'))
+# Reuse known context before opening a larger anonymous vtable. This is a
+# scheduling hypothesis, not identity evidence; live rows still filter below.
+rank.sort(key=lambda e: (bool(e.get('names')), e['landed'] / max(e['slots'], 1), e['dump_b']), reverse=True)
 claims = ROOT / 'build/fleet_class_claimed.txt'
 lf = (ROOT / 'build/.fleet_claims.lock').open('a'); lock(lf, exclusive=True)
 taken = {int(l.strip(), 16) for l in claims.read_text().splitlines() if l.strip()} if claims.exists() else set()
@@ -37,10 +42,11 @@ def klass(n):
     m = re.match(r'\?[^@]+@([A-Za-z_][A-Za-z0-9_]*)@@', n or '')
     return m.group(1) if m else None
 chosen = None
+active = active_rvas(ROOT)
 for e in rank:
     if want_vt and e['vt'] != want_vt: continue
     if e['vt'] in taken and not want_vt: continue
-    live = [a for a in e['dump_rvas'] if fn.get(a, {}).get('source', '').endswith('.asm')]
+    live = [a for a in e['dump_rvas'] if fn.get(a, {}).get('source', '').endswith('.asm') and f'0x{a:08x}' not in active]
     if not live: continue
     chosen = (e, live); break
 if not chosen:
@@ -56,14 +62,7 @@ while True:
     if j != vt and j in refs: break   # next code-referenced vtable starts here
     slots.append(f - base); j += 4
 name = e['names'][0][0] if e['names'] else '?'
-zh = subprocess.run(['rg', '-l', '-m1', f'class {name}\b', 'reference/CnC_Generals_Zero_Hour/Generals', '--iglob', '*.h'], capture_output=True, text=True).stdout.strip().split('\n')[0]
-virt = []
-if zh:
-    txt = open(zh, encoding='utf-8', errors='replace').read()
-    m = re.search(r'class\s+' + name + r'\b[^{]*\{(.*?)\n\};', txt, re.S)
-    if m:
-        for v in re.finditer(r'virtual\s+[^;{]*?\b(~?\w+)\s*\(', m.group(1)):
-            virt.append(v.group(1))
+zh, virt = find_header(ROOT, name)
 lines = []
 for i, s in enumerate(slots):
     r = fn.get(s)

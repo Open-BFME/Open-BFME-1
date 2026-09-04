@@ -18,14 +18,13 @@ BIGNOTE="LARGE body. You have this whole session for it; previous sessions may h
 
 run_engine() {  # $1 brief, $2 log
   if [ "${ENGINE#grok}" != "$ENGINE" ]; then
-    "$HOME/.grok/bin/grok.exe" -p "$(cat "$1")" --always-approve --output-format plain > "$2" 2>&1 < /dev/null
+    python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" "$HOME/.grok/bin/grok.exe" -p "$(cat "$1")" --always-approve --output-format plain < /dev/null
   else
     # codex echoes a full turn diff of the whole tree every turn (1.5GB logs seen):
     # keep only non-diff lines, capped in length
     # wall-clock cap: max-effort sessions were observed running 5h on one file
     # with nothing landed; a fresh session re-briefs from the live ledger + stashes
-    timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" "$(cat "$1")" 2>&1 < /dev/null \
-      | grep -a -v -E '^(diff --git |index [0-9a-f]+[.][.]|[+][+][+] |--- |@@ |[-+])' | cut -c1-400 > "$2"
+    python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" "$(cat "$1")" < /dev/null
   fi
 }
 
@@ -34,29 +33,15 @@ while true; do
     RVA=$(python build/pick_big.py 1 | tr -d '\r' | head -1)
     [ -z "$RVA" ] && { echo "seat $SEAT: no big body picked; retry in 60s"; sleep 60; continue; }
     for PASS in 1 2 3; do
+      BEFORE=$(python tools/fleet_run.py --fingerprint "$RVA" | tr -d '\r')
       BRIEF="build/brief_seat_${ENGINE}${SEAT}_${RVA}_p${PASS}.txt"
       python tools/brief.py --rvas "$RVA" --model "$CMODEL" --limit 1 --note "$BIGNOTE (session $PASS of 3)" > "$BRIEF" 2>/dev/null || break
       LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${RVA}_p${PASS}.log"
       echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVA p$PASS" >> build/fleet_logs/seats.log
       run_engine "$BRIEF" "$LOG"
       echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVA p$PASS" >> build/fleet_logs/seats.log
-      # continue only while still a dump and the latest banked score >= 0.5
-      python - "$RVA" <<'PY' || break
-import csv, re, sys
-rva = sys.argv[1].lower()
-src = next((r.get("source") or "" for r in csv.DictReader(open("reverse/functions.csv", newline="", encoding="utf-8", errors="replace")) if (r.get("target_rva") or "").lower() == rva), "")
-if not src.endswith(".asm"):
-    sys.exit(1)   # landed
-last = None
-for l in open("reverse/re_attempts.log", encoding="utf-8", errors="replace"):
-    p = l.rstrip("\n").split("\t")
-    if len(p) >= 5 and p[1].lower() == rva:
-        last = p
-if not last:
-    sys.exit(1)
-m = re.search(r"score=([0-9.]+)", last[4])
-sys.exit(0 if (m and float(m.group(1)) >= 0.5 and "stash=" in last[4]) else 1)
-PY
+      # Repeating a score/date is not progress; require a changed preferred body.
+      python tools/fleet_run.py --can-retry "$RVA" --before "$BEFORE" || break
       sleep 5
     done
   elif [ "${ENGINE%class}" != "$ENGINE" ]; then
@@ -64,11 +49,10 @@ PY
     python build/pick_class.py > build/.pick_class_$SEAT.txt 2>/dev/null
     RVAS=$(head -1 build/.pick_class_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no warm class picked; retry in 120s"; sleep 120; continue; }
-    RVAS=$(head -1 build/.pick_class_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
     # shellcheck disable=SC2086
-    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 8 --note "$NOTE Work the class as a unit: the landed slot sources give you the class definition and cl: flags; the slot index gives each dump body its ZH method name. Verify each name against the body's own bytes (callees, field offsets) before pinning it in symbols.csv (tools/pin_consistency.py --symbol NAME first, --check after). Land each body with add_match.py as soon as probe.py prints EXACT; bank anything close with re_log.py partial --stash --score before moving on." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 8 --note-file "build/.pick_class_$SEAT.txt" --note "Work the class as a unit: reuse landed slot sources and align the proposed ZH order against proven slots. Verify each name against the body's own bytes before pinning it (tools/pin_consistency.py --symbol NAME first, --check after). Probe EXACT is masked shape only; add_match.py must verify relocations before landing. Bank close bodies with re_log.py partial --stash --score." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"

@@ -51,3 +51,15 @@ def test_cli_exposes_ret_cleanup_family_in_every_mode(monkeypatch, capsys, mode)
     out = capsys.readouterr().out
     assert "bodies scanned: 2" in out
     assert "unattempted rows reachable: 2" in out
+
+
+def test_one_bad_boundary_does_not_retire_other_shape_siblings(monkeypatch, capsys):
+    body = bytes.fromhex("8b 44 24 04 89 01 c2 04 00")
+    rows = [("first", 0x1000, len(body)), ("second", 0x2000, len(body)), ("third", 0x3000, len(body))]
+    monkeypatch.setattr(family_scan, "candidates", lambda *args: iter(rows))
+    monkeypatch.setattr(family_scan, "load_real_pins", lambda: set())
+    monkeypatch.setattr(family_scan, "load_attempted", lambda: ({0x1000}, {0x1000}))
+    monkeypatch.setattr(family_scan.build, "read_target_bytes", lambda *args: body + b"\xcc")
+    monkeypatch.setattr(sys, "argv", ["family_scan.py", "--operand"])
+    family_scan.main()
+    assert "unattempted rows reachable: 2" in capsys.readouterr().out

@@ -158,6 +158,8 @@ def main():
                         help="TEST-ONLY: operate on a copy of the repo rooted here "
                              "instead of the live ledger (default: repo root)")
     args = parser.parse_args()
+    from fleet_run import run_tag
+    args.notes = run_tag(args.notes)
 
     root = args.root.resolve()
     functions_csv = root / "reverse" / "functions.csv"

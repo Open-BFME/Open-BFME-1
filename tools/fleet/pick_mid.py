@@ -16,6 +16,8 @@ import csv, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
+from fleet_run import active_rvas
+from re_log import latest_records, DEAD_END_STATUSES
 ROOT = Path('.').resolve()
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 dry = '--dry' in sys.argv
@@ -26,12 +28,9 @@ claims = ROOT / 'build' / 'fleet_mid_claimed.txt'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
 taken = {l.strip().lower() for l in claims.read_text().splitlines() if l.strip()} if claims.exists() else set()
+taken |= active_rvas(ROOT)
 
-latest = {}
-for l in open(ROOT / 'reverse/re_attempts.log', encoding='utf-8', errors='replace'):
-    p = l.rstrip('\n').split('\t')
-    if len(p) >= 5 and p[1].startswith('0x'):
-        latest[p[1].lower()] = p[4]
+latest = {f'0x{rva:08x}': fields for rva, fields in latest_records(ROOT / 'reverse/re_attempts.log').items()}
 
 rows = []
 for _ in range(4):
@@ -60,13 +59,8 @@ landed.sort()
 import bisect
 
 def blocked(rva):
-    ev = latest.get(rva, '')
-    if not ev:
-        return False
-    if 'blocked' in ev or 'no-match' in ev:
-        return True
-    m = re.search(r'score=([0-9.]+)', ev)
-    return bool(m) and float(m.group(1)) < 0.5   # a refuted shape; leave it
+    record = latest.get(rva)
+    return bool(record and record[3] in DEAD_END_STATUSES)
 
 best = None
 for f, rvas in files.items():

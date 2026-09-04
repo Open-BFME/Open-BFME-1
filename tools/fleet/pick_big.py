@@ -11,6 +11,8 @@ import csv, sys, time, datetime
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
+from fleet_run import active_rvas
+from re_log import latest_records
 ROOT = Path('.').resolve()
 claims = ROOT / 'build' / 'fleet_big_claimed.txt'
 n_want = int(sys.argv[1]) if len(sys.argv) > 1 else 2
@@ -21,16 +23,10 @@ lock(lf, exclusive=True)
 taken = set()
 if claims.exists():
     taken = {l.strip().lower() for l in claims.read_text().splitlines() if l.strip()}
+taken |= active_rvas(ROOT)
 
-latest = {}
+latest = {f'0x{rva:08x}': fields for rva, fields in latest_records(ROOT / 'reverse/re_attempts.log').items()}
 today = datetime.date.today().isoformat()
-try:
-    for l in open(ROOT / 'reverse/re_attempts.log', encoding='utf-8', errors='replace'):
-        p = l.rstrip('\n').split('\t')
-        if len(p) >= 5 and p[1].startswith('0x'):
-            latest[p[1].lower()] = p
-except OSError:
-    pass
 
 def read_rows():
     for _ in range(4):   # a torn read mid-write yields None fields; retry

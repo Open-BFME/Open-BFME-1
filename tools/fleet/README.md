@@ -5,6 +5,12 @@ Tracked copies of the scripts that ran the 2026-09-04 luna fleet (40 codex
 which is gitignored scratch, so the orchestrator copies this directory to
 `build/` before launching: `cp tools/fleet/* build/`.
 
+The throughput update adds immutable run records, cross-lane active RVA claims,
+complete class-note delivery, donor briefs and bounded compiler search. See
+[the operating guide](../../docs/throughput-tools.md) for deployment and
+measurement. Copy scripts only when seats are being restarted; merging a tool
+change does not replace a shell that is already executing an older copy.
+
 | Script | Role |
 |---|---|
 | `launch_fleet.sh N B F M` | start N file-lane, B big-body, F finish-lane, M mid-lane seats plus the watchdog and harvest loop |

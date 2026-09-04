@@ -10,6 +10,8 @@ import csv, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
+from fleet_run import active_rvas
+from re_log import latest_records
 ROOT = Path('.').resolve()
 seats_log = ROOT / 'build' / 'fleet_logs' / 'seats.log'
 n_want = int(sys.argv[1]) if len(sys.argv) > 1 else 2
@@ -24,6 +26,7 @@ if seats_log.exists():
         if m:
             busy[m.group(3).lower()] = (m.group(2) == '->')
 claimed = set()
+claimed |= active_rvas(ROOT)
 for cf in ('fleet_big_claimed.txt', 'fleet_fin_claimed.txt'):
     p = ROOT / 'build' / cf
     if p.exists():
@@ -32,11 +35,7 @@ for cf in ('fleet_big_claimed.txt', 'fleet_fin_claimed.txt'):
 # (still 0.9+, no longer busy) was observed; record every pick permanently
 fin_claims = ROOT / 'build' / 'fleet_fin_claimed.txt'
 
-latest = {}
-for l in open(ROOT / 'reverse/re_attempts.log', encoding='utf-8', errors='replace'):
-    p = l.rstrip('\n').split('\t')
-    if len(p) >= 5 and p[1].startswith('0x'):
-        latest[p[1].lower()] = p
+latest = {f'0x{rva:08x}': fields for rva, fields in latest_records(ROOT / 'reverse/re_attempts.log').items()}
 
 cands = []
 for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):

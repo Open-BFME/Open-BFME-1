@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile one TU, diff one symbol against retail, and name the wall.
 
-Read-only: writes only its own scratch object under build/probe/, never touches
+Read-only: writes its cache and experiment history under build/, never touches
 the ledgers or the lock. This is the inner loop of every conversion, packaged:
 
   python3 tools/probe.py Code/.../Foo.cpp "?bar@Foo@@QAEXXZ" 0x0048ACF0 [--size N] [--all]
@@ -20,7 +20,6 @@ Size defaults to retail's ledger row for the RVA when one exists.
 """
 import argparse
 import csv
-import hashlib
 import re
 import sys
 from pathlib import Path
@@ -30,12 +29,14 @@ import build
 
 ROOT = Path(__file__).resolve().parents[1]
 LEVERS = {
-    "exact": "nothing to do -- land it with tools/add_match.py",
+    "exact": "instruction shape matches; validate callees and identity with tools/add_match.py before claiming a conversion",
     "sib-order": "shape_levers.md row 1: add the pointer as an integer on the right of the counter: *(T*)(i + (unsigned)p)",
     "eh-transposition": "shape_levers.md row 2: by-value string class must be `: private StringBase<T>` with INLINE forwarding copy ctor/dtor (reference/shims/stringinline/StringInline.h)",
     "register-mirror": "shape_levers.md rows 3-5: reorder local DEFINITIONS to retail's first-use order; copy params to locals just before the guard; call dllimports directly (IAT CSE)",
     "adjacent-swap": "shape_levers.md rows 3-4: two values materialized in the other order -- swap the two local DEFINITIONS (or move the param copies to just before the guard); if one side is an EH state store see row 2",
     "length-delta": "shape/CSE/inline difference at the first divergent instruction -- see shape_levers.md rows 6, 8, 9 (flag tail, `new` statement, trivially-copyable arg)",
+    "operand-change": "compare literal values, field offsets and branch destinations before changing register allocation",
+    "instruction-change": "different operations or inconsistent register mapping; inspect the first differing instruction before choosing a lever",
 }
 
 
@@ -58,8 +59,11 @@ def disasm(data, base=0):
 
 def masked(data, relocs):
     d = bytearray(data)
-    for ro, _t, _n in relocs:
-        for k in range(4):
+    for ro, kind, _n in relocs:
+        width = build.RELOC_WIDTH.get(kind)
+        if width is None or ro < 0:
+            raise ValueError("unknown relocation type or negative offset")
+        for k in range(width):
             if ro + k < len(d):
                 d[ro + k] = 0
     return bytes(d)
@@ -80,11 +84,16 @@ def classify(ret_ins, our_ins, ret_b, our_b):
         return "length-delta"
     swaps = renames = sib = 0
     eh = False
+    mapping, reverse_mapping = {}, {}
     i = 0
     n = len(ret_ins)
     while i < n:
         r, o = ret_ins[i], our_ins[i]
         if r.bytes == o.bytes:
+            for reg in REG.findall(r.op_str):
+                if mapping.get(reg, reg) != reg or reverse_mapping.get(reg, reg) != reg:
+                    return "instruction-change"
+                mapping[reg] = reverse_mapping[reg] = reg
             i += 1
             continue
         if i + 1 < n and ret_ins[i].bytes == our_ins[i + 1].bytes and ret_ins[i + 1].bytes == our_ins[i].bytes:
@@ -100,11 +109,14 @@ def classify(ret_ins, our_ins, ret_b, our_b):
             if rr == oo and "[" in r.op_str and r.op_str != o.op_str:
                 sib += 1
             else:
+                for left, right in zip(REG.findall(r.op_str), REG.findall(o.op_str)):
+                    if mapping.get(left, right) != right or reverse_mapping.get(right, left) != left:
+                        return "instruction-change"
+                    mapping[left], reverse_mapping[right] = right, left
                 renames += 1
             i += 1
             continue
-        renames += 1
-        i += 1
+        return "operand-change" if r.mnemonic == o.mnemonic else "instruction-change"
     if eh:
         return "eh-transposition"
     if sib and not renames and not swaps:
@@ -129,12 +141,9 @@ def main():
         rva -= 0x400000
     src = Path(a.source)
     src = src if src.is_absolute() else (ROOT / src).resolve()
-    tag = hashlib.md5(str(src).encode()).hexdigest()[:10]
-    objdir = ROOT / "build" / "probe"
-    objdir.mkdir(parents=True, exist_ok=True)
-    obj = objdir / f"{src.stem}_{tag}.obj"
-
-    build.compile_source(src, obj)
+    from experiment_store import compile_cached, record_result
+    obj, reused = compile_cached(src)
+    print(f"compile  {'reused verified dependency cache' if reused else 'compiled new experiment'}")
     try:
         compiled, relocs = build.read_object_symbol_bytes(obj, a.symbol)
     except ValueError as e:
@@ -162,6 +171,8 @@ def main():
     secs = build.pe_sections(image)
     off = build.rva_to_file_offset(secs, rva)
     retail = image[off: off + size]
+    outcome = record_result(src, a.symbol, rva, retail, compiled, relocs)
+    print(f"history  {outcome['seen_before']} prior experiment(s) with this instruction/relocation result")
 
     ours_m = masked(compiled, relocs)
     ret_m = masked(retail, relocs)
@@ -176,8 +187,10 @@ def main():
     first = diffs[0] if diffs else min(len(compiled), size)
     print(f"diffs    {len(diffs)} non-reloc byte(s); first at +{first}")
 
-    ret_ins = disasm(retail)
-    our_ins = disasm(compiled)
+    # Diagnose only concrete differences; link-time addresses are not register
+    # or literal mismatches. They still require the normal strict byte gate.
+    ret_ins = disasm(ret_m)
+    our_ins = disasm(ours_m)
     kind = classify(ret_ins, our_ins, ret_m, ours_m)
     # Evidence: the instruction pairs that differ. The label is a candidate
     # cause keyed on byte pattern; the same pattern can have another source
@@ -186,8 +199,7 @@ def main():
         return m[ins.address: ins.address + ins.size]
     pairs = [(r, o) for r, o in zip(ret_ins, our_ins)
              if masked_ins(r, ret_m) != masked_ins(o, ours_m)]
-    covered = sum(len(r.bytes) for r, _ in pairs)
-    confidence = "high" if kind == "exact" or (pairs and covered >= len(diffs)) else "low"
+    confidence = "pattern only"
     print(f"candidate {kind}  (confidence {confidence}; verify against the evidence below)")
     print(f"lever     {LEVERS[kind]}")
     for r, o in pairs[:6]:

@@ -11,6 +11,7 @@ import csv, collections, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
+from fleet_run import active_rvas
 ROOT = Path('.').resolve()
 seats_log = ROOT / 'build' / 'fleet_logs' / 'seats.log'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
@@ -23,6 +24,7 @@ if seats_log.exists():
         if m:
             busy[m.group(3)] = (m.group(2) == '->', m.group(1))
 busy_stems = {stem for stem, (on, _) in busy.items() if on}
+active = active_rvas(ROOT)
 # sessions older than 3h with no 'done' are dead seats, not busy (log has only HH:MM; be lenient)
 
 minb = int(sys.argv[1]) if len(sys.argv) > 1 else 6
@@ -42,6 +44,8 @@ for r in rows:
     if not rva.startswith('0x'):
         continue
     if s.endswith('.asm'):
+        if rva.lower() in active:
+            busy_stems.add(Path(s).stem)
         b[s] += int(r.get('target_size') or 0); n[s] += 1
         a = int(rva, 16); lo[s] = min(lo.get(s, a), a); hi[s] = max(hi.get(s, a), a)
     elif r.get('status') == 'matched' and not s.startswith('Code/gen_'):

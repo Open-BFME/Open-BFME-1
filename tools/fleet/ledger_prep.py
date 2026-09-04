@@ -7,7 +7,7 @@ r"""Pre-harvest repair of the two mechanical states that stalled harvest on 2026
 Runs under the ledger lock. Safe to run any time."""
 import os, subprocess, sys
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
 import portable_lock
 BS = chr(92).encode()

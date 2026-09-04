@@ -60,8 +60,8 @@ FILTERS, each of which exists because omitting it cost a run:
     first splits a partially-attempted family into two apparently distinct
     groups -- that is exactly how 0x001EEAE0 and 0x001F35C0 were reported as
     two families of 6 and 7 when they were one family of 7;
-  * drop a whole family if any member carries a `refuted` or `blocked` verdict:
-    a refutation refutes the SHAPE, so the siblings are dead too;
+  * retire a member with a live dead-end verdict; a boundary refutation does
+    not refute every sibling in an operand/mnemonic hypothesis;
   * drop bodies that call _atexit -- their source needs a function-local static
     of class type, and MSVC numbers those destructor helpers `_$E<n>` PER
     TRANSLATION UNIT, so the second such TU in the image always collides with
@@ -83,6 +83,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import build
+import re_log
 
 ROOT = Path(__file__).resolve().parent.parent
 ADDRESS_DERIVED = re.compile(
@@ -172,36 +173,16 @@ def load_real_pins():
     return pins
 
 
-DEAD_VERDICTS = ("refuted", "blocked")
-
-
 def load_attempted():
-    """Two sets, because a prior attempt means two different things.
+    """Return live attempted and dead-end boundaries, honoring void records.
 
-    `seen` is every address the log mentions. Dropping those members but KEEPING
-    the family is right after a `converted` verdict: the siblings that did not
-    land are still worth doing, and dropping the family instead would hide them.
-
-    `dead` is addresses whose row carried a `refuted` or `blocked` verdict. There
-    the whole family is finished, because a family is ONE function and a
-    refutation refutes the shape, not the address. Keeping it alive re-queues the
-    same shape under a NEW ANCHOR as soon as the logged members are skipped --
-    which is exactly what happened: three families totalling 36 rows resurfaced
-    at the top of the queue, one of them the local-static guard shape that had
-    already been backed out TWICE, and all three were confirmed byte-identical in
-    normal form to the shapes they re-anchored from.
+    Addresses mentioned only in evidence are not attempts. Deferrals retain
+    siblings as context; dead-end members are removed individually. Shared
+    blockers require explicit evidence, not merely equal normalized bytes.
     """
-    seen, dead = set(), set()
-    with io.open(ROOT / "reverse" / "re_attempts.log", encoding="utf-8",
-                 errors="replace") as fh:
-        for line in fh:
-            fields = line.split("\t")
-            verdict = fields[3].strip().lower() if len(fields) > 3 else ""
-            addresses = {int(m.group(1), 16)
-                         for m in re.finditer(r"0x([0-9A-Fa-f]{8})", line)}
-            seen |= addresses
-            if verdict in DEAD_VERDICTS:
-                dead |= addresses
+    latest = re_log.latest_records(ROOT / "reverse/re_attempts.log")
+    seen = set(latest)
+    dead = {rva for rva, fields in latest.items() if fields[3] in re_log.DEAD_END_STATUSES}
     return seen, dead
 
 
@@ -314,9 +295,12 @@ def main():
     for key, members in groups.items():
         if len(members) < args.min_members:
             continue
-        # A refutation refutes the SHAPE, so one dead member kills the family.
+        # Boundary evidence about one member cannot refute every other body
+        # sharing an operand/mnemonic skeleton. Retire only the actual member.
         if any(m[0] in dead for m in members):
             refuted += 1
+        members = [m for m in members if m[0] not in dead]
+        if len(members) < args.min_members:
             continue
         fresh = [m for m in members if m[0] not in attempted]   # AFTER grouping
         if fresh:
@@ -331,7 +315,7 @@ def main():
     print("families >= %d with unattempted members: %d"
           % (args.min_members, len(families)))
     print("unattempted rows reachable: %d" % sum(f[1] for f in families))
-    print("families dropped as refuted/blocked shapes: %d" % refuted)
+    print("families containing retired boundary members: %d" % refuted)
     print("bodies skipped as function-local-static TUs: %d" % local_statics)
     print("unattempted singletons (regex-sweep territory): %d" % singletons)
 
