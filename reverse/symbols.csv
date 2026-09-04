@@ -11925,6 +11925,12 @@ name,address,notes
 ?renderRadar@AptPalantir@@QAEXHHHHPAH@Z,0x0000FC5E,AptPalantir RenderRadar rectangle dispatcher
 ?aptPalantirRenderRadar@@YAXPBUPalantirPoint@@0@Z,0x00044544,AptPalantir::RenderRadar callback ILT registered by name
 ?aptPalantirRenderRadarViewBox@@YAXXZ,0x00019501,AptPalantir::RenderRadarViewBox callback ILT registered by name
+?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
+?showOptions@AptPalantir@@QAEXXZ,0x000131A1,AptPalantir OnBttnOptions dispatcher
+?upgradeSkill@AptPalantir@@QAEXXZ,0x00024EBF,AptPalantir OnBttnSkillUpgrade dispatcher
+?aptPalantirOnButtonSpellStore@@YAXXZ,0x00041597,AptPalantir::OnBttnSpellStore callback ILT registered by name
+?aptPalantirOnButtonOptions@@YAXXZ,0x00048C07,AptPalantir::OnBttnOptions callback ILT registered by name
+?aptPalantirOnButtonSkillUpgrade@@YAXXZ,0x0003B0C5,AptPalantir::OnBttnSkillUpgrade callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
