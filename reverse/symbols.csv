@@ -82712,3 +82712,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?TheTerrainVisual@@3PAVTerrainVisual@@A,0x00EF7014,BFME global used by InGameUI::destroyPlacementIcons
 ?TheGameClient@@3PAVGameClient@@A,0x00EF1464,BFME global used by InGameUI::destroyPlacementIcons
 ?destroyPlacementIcons@InGameUI@@IAEXXZ,0x0043AF00,canonical protected method body identified by matched placeBuildAvailable caller and reference header
+??0AsciiStringWP@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWP@@QAE@XZ,0x00887940,pin
+??1Gen_003A87D0@@UAE@XZ,0x003A88E0,Open-BFME5 slot 0 of the table 0x010EC774
