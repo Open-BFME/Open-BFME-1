@@ -94,6 +94,7 @@ public:
 	Bool getRefreshNet( void );
 	Bool getDisplayForeignLanguage( void );
 	Bool getUseEAX3( void );
+	Bool getAlternateMouseSetup( void );
 };
 
 #define R4_PREF_BODY( GETTER, KEY, OFFSET, COMPARE )                          \
@@ -142,4 +143,19 @@ Bool OptionPreferences::getUseEAX3( void )
 	CustomStringDataShim *data = node->m_value;
 	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
 	return strcmp( text, "yes" ) == 0;
+}
+
+Bool OptionPreferences::getAlternateMouseSetup( void )
+{
+	CustomAsciiStringShim key;
+	key.init( "AlternateMouseSetup" );
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)( (unsigned char *)this + 4 );
+	CustomMapNodeShim *node = map->find( &key );
+	key.destroy();
+	if ( node == map->m_header )
+		return TheGlobalData->m_bytes[ 0x60 ];
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
+	return strcmp( text, "yes" ) != 0;
 }
