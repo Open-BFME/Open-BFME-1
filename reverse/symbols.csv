@@ -9639,6 +9639,7 @@ name,address,notes
 ?ReAcquireResources@TerrainTracksRenderObjClassSystem@@QAEXXZ,0x000337DF,ILT called by matched TerrainTracks setDetail body at 0x0072F080
 ?ReAcquireResources@W3DProjectedShadowManager@@QAE_NXZ,0x00026D1E,pinharvest x1 (thunk)
 ?ReAcquireResources@W3DVolumetricShadowManager@@QAE_NXZ,0x0000F9B6,pinharvest x1 (thunk)
+?ReAcquireResources@WaterTracksRenderSystemInitShim@@QAEXXZ,0x000206BC,retail WaterTracks init call through the assigned ReAcquireResources body
 ?Re_Hash@?$HashTemplateClass@UTriangleSide@@USideIndexInfo@@@@AAEXXZ,0x0094F120,zh-sweep callee pin derived from retail REL32 displacement
 ?Read@ChunkLoadClass@@QAEKPAXK@Z,0x009E15C0
 ?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z,0x00039EBE,ILT thunk; real body 0x684630 (recvfrom; identity confirmed, register allocation still differs)
@@ -75379,6 +75380,7 @@ name,address,notes
 ?construct@TextureVectorBaseCtorShim@@QAEXHH@Z,0x0092FBA0,Open-BFME5 texture vector retail base constructor
 ?construct@VeterancyCrateCollideModuleDataBaseShim@@QAEXXZ,0x000441CA,VeterancyCrateCollide base
 ?construct@WanderAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,WanderAIUpdate base
+?construct@WaterTracksObjInitShim@@QAEPAV1@XZ,0x00027C0A,retail WaterTracks init pool constructor call through the assigned body
 ?constructBuddyMessageAt@@YAXPAXABVBuddyMessage@@@Z,0x00020E69,BuddyMessage list _M_create_node value construct
 ?constructGameMessage@NetGameCommandMsg@@QAEPAVGameMessage@@XZ,0x00675ED0,the first call NetPacket::addGameCommand (0x0067CA00 - addCommand's jump-table arm for command type 4) makes on msg->getCommand(); the reference opens that body with cmdMsg->constructGameMessage() and nothing else reaches it
 ?construct_from@CategoryModuleTemplate06BaseCopyShim@FXParticleSystem@@QAEXPBX@Z,0x00026CC9,CMT06 copy base
@@ -79490,7 +79492,6 @@ name,address,notes
 ?localApplyBattlePlanBonusesToObject@@YAXPAVObject@@PAX@Z,0x000D5A40,Player::becomingTeamMember retail helper
 ?localPixelToRadar@Radar@@QAE_NPBUICoord2D@@PAU2@@Z,0x00004D59
 ?localPixelToRadar@RadarLocalPixelToRadarShim@@QAE_NPBUICoord2D@@PAU2@@Z,0x00107AB0,Radar incremental-link thunk target through a TU-local forwarding shim
-?logGameEnd@RecorderClass@@IAEXXZ,0x00097280,RecorderClass::stopRecording caller reaches the exact clean C++ logGameEnd body
 ?lookAtPlayerID@@3HA,0x012F4018,PopupPlayerInfo lookAtPlayerID; SetLookAtPlayer stores the profile id; PopulatePlayerInfoWindows reads it
 ?lookAtPlayerName@@3V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@A,0x012F4024,PopupPlayerInfo lookAtPlayerName STLport string; SetLookAtPlayer assigns nick.str()
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x000317A5,Open-BFME5 retail guard inner-target scan
@@ -80558,6 +80559,7 @@ name,address,notes
 ?setRange@GameLogicRandomVariable@@QAEXMMW4DistributionType@1@@Z,0x0004AD54,BoneFX parser calls the retail incremental-link thunk
 ?setReal@UserPreferences@@QAEXVAsciiString@@M@Z,0x000A9650,formats the Real through 0x000A9170 ("%g" VA 0x01080F24 after fld/fstp qword) then the setAsciiString virtual +0x1c; ILT 0x000445C1 used by setTimePlayed 0x0009C220; twin of the pinned setInt body 0x000A96F0 which formats "%d" through 0x000A9010
 ?setReceivingDifficultyBonus@Object@@QAEX_N@Z,0x00016F2C,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
+?setRepairModelConditionStates@SlavedUpdate@@QAEXW4ModelConditionFlagType@@@Z,0x002A44E0,dependency pin for assigned SlavedUpdate repair-state body
 ?setScienceAvailability@Player@@QAEXW4ScienceType@@W4ScienceAvailabilityType@@@Z,0x00010DED,ILT thunk to Player::setScienceAvailability; identity from Zero Hour ScriptActions.cpp
 ?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
 ?setSequentialTimer@ScriptEngine@@QAEXPAVObject@@H@Z,0x00044A1C,ScriptEngine object sequential timer ILT used by assigned attack-area-for-seconds body

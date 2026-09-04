@@ -10,7 +10,7 @@ public:
 	PreferenceTreeShim( const PreferenceTreeShim &other );
 	~PreferenceTreeShim();
 
-private:
+	private:
 	unsigned int m_tree[ 3 ];
 };
 
@@ -20,7 +20,7 @@ public:
 	PreferenceMapShim( const PreferenceMapShim &other ) : m_tree( other.m_tree ) {}
 	~PreferenceMapShim() {}
 
-private:
+	private:
 	PreferenceTreeShim m_tree;
 };
 
@@ -30,7 +30,7 @@ public:
 	UnicodeStringShim( const UnicodeStringShim &other );
 	~UnicodeStringShim();
 
-private:
+	private:
 	void *m_data;
 };
 

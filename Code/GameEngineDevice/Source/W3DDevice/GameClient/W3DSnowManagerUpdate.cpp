@@ -72,16 +72,17 @@ public:
 	virtual void update(void);
 	void extraAfterFmod(void);
 	void extraTail(void);
+	void transitionTBA(void);
 	void copyFromOverride(void);
 	void sibling(void);
 
 private:
 	unsigned char m_unmodelled_04[0xC - 4];
 	float m_time;				// +0xC
-	float m_velocity;			// +0x10
+	union { float m_velocity; float m_10f; };	// +0x10
 	float m_fullTimePeriod;		// +0x14
 	unsigned char m_unmodelled_18[0x38 - 0x18];
-	int m_38;
+	union { int m_38; float m_38f; };
 	char m_unmodelled_3c;
 	char m_flag3d;
 	unsigned char m_unmodelled_3e[0x44 - 0x3e];
@@ -89,11 +90,13 @@ private:
 	unsigned char m_unmodelled_45[3];
 	int m_48;
 	int m_4c;
-	unsigned char m_unmodelled_50[0x54 - 0x50];
+	float m_50;
 	float m_54;
-	int m_58;
-	int m_5c;
-	unsigned char m_unmodelled_60[0x94 - 0x60];
+	union { int m_58; float m_58f; };
+	union { int m_5c; float m_5cf; };
+	float m_60;
+	float m_64;
+	unsigned char m_unmodelled_68[0x94 - 0x68];
 	int m_94;
 	int m_98;
 };
@@ -117,6 +120,7 @@ void W3DSnowManager::update(void)
 void W3DSnowManager::extraAfterFmod(void)
 {
 	const BFMEWeatherOverride *ov = walkSnowOverride(g_bfmeGlo012F15F8);
+	BFMEFrameState *frame;
 	if (ov->m_flag58 == 0)
 		return;
 
@@ -141,15 +145,11 @@ void W3DSnowManager::extraAfterFmod(void)
 	}
 	else
 	{
-		register const BFMEFrameState *frame = g_bfmeGlo012F0FE0;
-		int state = 2;
-		if (frame->m_frame == state)
+		frame = g_bfmeGlo012F0FE0;
+		if (frame->m_frame == 2 && m_94 != 2)
 		{
-			if (m_94 != state)
-			{
-				m_94 = state;
-				copyFromOverride();
-			}
+			m_94 = 2;
+			copyFromOverride();
 		}
 	}
 }
@@ -183,4 +183,74 @@ void W3DSnowManager::extraTail(void)
 	d = g_bfmeGlo012F15F8;
 	f = (BFMEWeatherOverride *)walkSnowOverride(d);
 	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
+}
+
+void W3DSnowManager::transitionTBA(void)
+{
+	BFMEWeatherOverride *f = g_bfmeGlo012F15F8;
+	const BFMEWeatherOverride *d = walkSnowOverride(f);
+	const BFMEWeatherOverride *next;
+	const BFMEWeatherOverride *from;
+	const BFMEWeatherOverride *to;
+	float fraction;
+
+	if (d->m_flag58 == 0 || m_98 == 0)
+		return;
+
+	if (f == 0)
+	{
+		from = 0;
+		to = 0;
+	}
+	else
+	{
+		next = (const BFMEWeatherOverride *)f->m_nextOverride;
+		if (next == 0)
+		{
+			from = f;
+			to = f;
+		}
+		else
+		{
+			from = (const BFMEWeatherOverride *)next->getFinalOverride();
+			to = (const BFMEWeatherOverride *)next->getFinalOverride();
+		}
+	}
+	fraction = (float)(from->m_5c - m_4c) / (float)to->m_5c;
+	if (fraction > *(const float *)0x01075334)
+	{
+		// The real method is the same class's override reset operation.
+		copyFromOverride();
+		return;
+	}
+
+	if (fraction > m_54)
+	{
+		m_98 = 3;
+		float blend = (fraction - m_54) /
+			(*(const float *)0x01075334 - m_54);
+		m_38f = m_5cf - (m_5cf - m_58f) * blend;
+		m_10f = m_64 - (m_64 - m_60) * blend;
+		return;
+	}
+
+	if (fraction > m_50)
+	{
+		m_98 = 2;
+		m_38f = m_5cf;
+		m_10f = m_64;
+		return;
+	}
+
+	if (fraction <= *(const float *)0x01075350)
+	{
+		copyFromOverride();
+		return;
+	}
+
+	m_98 = 1;
+	float blend = m_50 > *(const float *)0x0112100C ?
+		fraction / m_50 : *(const float *)0x01075334;
+	m_38f = m_58f + (m_5cf - m_58f) * blend;
+	m_10f = m_60 + (m_64 - m_60) * blend;
 }

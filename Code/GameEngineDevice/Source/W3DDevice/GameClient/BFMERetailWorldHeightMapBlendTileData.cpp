@@ -1,3 +1,4 @@
+// cl: /Oy-
 // Retail 0x0074A240, 91 bytes: the real body behind the blendTileData thunk.
 //
 // The first call widens the word at +0x00 of the info block with xor eax,eax
@@ -50,5 +51,56 @@ void BFMERetailWorldHeightMapBlendTileDataShim::blendTileData(TBlendTileInfo *in
 
 		if (offset)
 			bfmeBlendTileEmit(TheBfmeBlendBuffer, TheBfmeBlendScratch, offset + 3, size * size);
+	}
+}
+
+#pragma intrinsic(_rotr)
+extern "C" unsigned long _rotr(unsigned long value, int shift);
+
+union BfmeBlendPixel
+{
+	unsigned long whole;
+	unsigned char bytes[4];
+};
+
+void bfmeBlendTileEmit(char *buffer, char *scratch, int offset, int count)
+{
+	volatile int remaining;
+	if (count > 0)
+	{
+		remaining = count;
+		do
+		{
+			register BfmeBlendPixel color;
+			register BfmeBlendPixel blended;
+			color.whole = *(unsigned long *)buffer;
+			unsigned long alpha = *(unsigned char *)offset;
+			unsigned long inverse = 0xff - alpha;
+			offset += 4;
+			blended.whole = *(unsigned long *)scratch;
+
+			unsigned char value = (unsigned char)((color.bytes[0] * alpha
+				+ blended.bytes[0] * inverse) >> 8);
+			blended.bytes[0] = value;
+			blended.whole = _rotr(blended.whole, 8);
+			color.whole = _rotr(color.whole, 8);
+
+			value = (unsigned char)((color.bytes[0] * alpha
+				+ blended.bytes[0] * inverse) >> 8);
+			blended.bytes[0] = value;
+			blended.whole = _rotr(blended.whole, 8);
+			color.whole = _rotr(color.whole, 8);
+
+			value = (unsigned char)((color.bytes[0] * alpha
+				+ blended.bytes[0] * inverse) >> 8);
+			blended.bytes[0] = value;
+			blended.whole = _rotr(blended.whole, 16);
+			color.whole = _rotr(color.whole, 16);
+
+			*(unsigned long *)scratch = blended.whole;
+			scratch += 4;
+			buffer += 4;
+			--remaining;
+		} while (remaining != 0);
 	}
 }

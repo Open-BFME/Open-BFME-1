@@ -1,4 +1,6 @@
 // ??0Rva003E5A50Info@@QAE@PAVPathfinder@@PAVObject@@H@Z
+// partial score=0.93 date=2026-09-04
+// ??0Rva003E5A50Info@@QAE@PAVPathfinder@@PAVObject@@H@Z
 // partial score=0.96 date=2026-09-02
 // cl: /DNDEBUG /MD
 //

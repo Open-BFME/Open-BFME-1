@@ -34,7 +34,32 @@ struct StringHeader
 	}
 };
 
-class AsciiString
+template <typename T>
+class StringBase
+{
+public:
+	__forceinline const char *reverseFind(char c) const
+	{
+		char seen;
+		const char *start = m_data ? &m_data->data[0] : "";
+		const char *p = start + (m_data ? m_data->length : 0);
+		if (p == start)
+			return 0;
+		while (p != start)
+		{
+			seen = p[-1];
+			--p;
+			if (seen == c)
+				return p;
+		}
+		return 0;
+	}
+
+protected:
+	const StringHeader *m_data;
+};
+
+class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString(const char *text);
@@ -56,24 +81,16 @@ public:
 		return m_data ? m_data->peek() : "";
 	}
 
-	__forceinline const char *reverseFindSlash(void)
+	const StringHeader *data(void) const
 	{
-		char seen;
-		const char *start = str();
-		const char *p = start + (m_data ? m_data->length : 0);
-		if (p == start)
-			return 0;
-		while (p != start)
-		{
-			seen = p[-1];
-			--p;
-			if (seen == '\\')
-				return p;
-		}
-		return 0;
+		return m_data;
 	}
 
-	const StringHeader *m_data;
+	__forceinline const char *reverseFind(char c) const
+	{
+		return StringBase<char>::reverseFind(c);
+	}
+
 };
 
 class FileSystem
@@ -106,14 +123,13 @@ public:
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
 void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 {
-    if (TheFileSystem->doesFileExist(strToAdjust.str()))
-        return;
-
-	const char *str = strToAdjust.reverseFindSlash();
-	if (!str)
+	if (TheFileSystem->doesFileExist(strToAdjust.str()))
 		return;
 
-	AsciiString filename = str;
-	strToAdjust = generateFilenamePrefix(m_eventInfo->m_soundType, true);
-	strToAdjust.concat(filename);
+	if (const char *str = strToAdjust.reverseFind('\\'))
+	{
+		AsciiString filename = str;
+		strToAdjust = generateFilenamePrefix(m_eventInfo->m_soundType, true);
+		strToAdjust.concat(filename);
+	}
 }

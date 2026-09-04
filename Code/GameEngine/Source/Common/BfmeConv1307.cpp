@@ -72,7 +72,7 @@ public:
 	int m_bfmeFrame;
 };
 
-extern BfmeOverrideTBA * volatile g_bfmeGlo012F15F8;
+extern BfmeOverrideTBA *g_bfmeGlo012F15F8;
 extern BfmeFrameTBA *g_bfmeGlo012F0FE0;
 
 static const BfmeOverrideTBA *bfmeWalkTBA(const BfmeOverrideTBA *d)
@@ -126,15 +126,14 @@ void BfmeThingTBA::bfmeTwoTBA()
 
 void BfmeThingTBA::bfmeThreeTBA()
 {
-	register BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
-	const BfmeOverrideTBA *d = bfmeWalkTBA(f);
-	const BfmeOverrideTBA *next;
-	const BfmeOverrideTBA *from;
-	const BfmeOverrideTBA *to;
+	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
+	BfmeOverrideTBA *d = (BfmeOverrideTBA *)bfmeWalkTBA(f);
+	BfmeOverrideTBA *next;
+	BfmeOverrideTBA *from;
+	BfmeOverrideTBA *to;
 	float fraction;
-	BfmeThingTBA *self = this;
 
-	if (d->m_bfmeFlag58 == 0 || self->m_bfme98 == 0)
+	if (d->m_bfmeFlag58 == 0 || m_bfme98 == 0)
 		return;
 
 	if (f == 0)
@@ -144,7 +143,7 @@ void BfmeThingTBA::bfmeThreeTBA()
 	}
 	else
 	{
-		next = (const BfmeOverrideTBA *)f->m_nextOverride;
+		next = (BfmeOverrideTBA *)f->m_nextOverride;
 		if (next == 0)
 		{
 			from = f;
@@ -152,32 +151,32 @@ void BfmeThingTBA::bfmeThreeTBA()
 		}
 		else
 		{
-			from = (const BfmeOverrideTBA *)next->getFinalOverride();
-			to = (const BfmeOverrideTBA *)next->getFinalOverride();
+			from = (BfmeOverrideTBA *)next->getFinalOverride();
+			to = (BfmeOverrideTBA *)next->getFinalOverride();
 		}
 	}
-	fraction = (float)(from->m_bfme5c - self->m_bfme4c) / (float)to->m_bfme5c;
+	fraction = (float)(from->m_bfme5c - m_bfme4c) / (float)to->m_bfme5c;
 	if (fraction > *(const float *)0x01075334)
 	{
 		bfmeTwoTBA();
 		return;
 	}
 
-	if (fraction > self->m_bfme54)
+	if (fraction > m_bfme54)
 	{
-		self->m_bfme98 = 3;
-		float blend = (fraction - self->m_bfme54) /
-			(*(const float *)0x01075334 - self->m_bfme54);
-		self->m_bfme38f = self->m_bfme5cf - (self->m_bfme5cf - self->m_bfme58f) * blend;
-		self->m_bfme10f = self->m_bfme64 - (self->m_bfme64 - self->m_bfme60) * blend;
+		m_bfme98 = 3;
+		float blend = (fraction - m_bfme54) /
+			(*(const float *)0x01075334 - m_bfme54);
+		m_bfme38f = m_bfme5cf - (m_bfme5cf - m_bfme58f) * blend;
+		m_bfme10f = m_bfme64 - (m_bfme64 - m_bfme60) * blend;
 		return;
 	}
 
-	if (fraction > self->m_bfme50)
+	if (fraction > m_bfme50)
 	{
-		self->m_bfme98 = 2;
-		self->m_bfme38f = self->m_bfme5cf;
-		self->m_bfme10f = self->m_bfme64;
+		m_bfme98 = 2;
+		m_bfme38f = m_bfme5cf;
+		m_bfme10f = m_bfme64;
 		return;
 	}
 
@@ -187,11 +186,11 @@ void BfmeThingTBA::bfmeThreeTBA()
 		return;
 	}
 
-	self->m_bfme98 = 1;
-	float blend = self->m_bfme50 > *(const float *)0x0112100C ?
-		fraction / self->m_bfme50 : *(const float *)0x01075334;
-	self->m_bfme38f = self->m_bfme58f + (self->m_bfme5cf - self->m_bfme58f) * blend;
-	self->m_bfme10f = self->m_bfme60 + (self->m_bfme64 - self->m_bfme60) * blend;
+	m_bfme98 = 1;
+	float blend = m_bfme50 > *(const float *)0x0112100C ?
+		fraction / m_bfme50 : *(const float *)0x01075334;
+	m_bfme38f = m_bfme58f + (m_bfme5cf - m_bfme58f) * blend;
+	m_bfme10f = m_bfme60 + (m_bfme64 - m_bfme60) * blend;
 }
 
 class BfmeSinkTBB
