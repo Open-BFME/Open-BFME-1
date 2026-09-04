@@ -24436,3 +24436,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Gen_006869C0@@QAE@ABV0@@Z,0x006869C0,address-derived identity superseded by LANPlayer::LANPlayer(const LANPlayer&); the matched LANGameSlot copy caller identifies the same byte-verified 122-byte body and its three UnicodeString members.
 ?bfmeGetCharVLI@BfmeFontVLI@@QAEPBXG@Z,0x00941290,synthetic identity superseded by FontCharsClass::Get_Char_Data; the established class symbol and font-cache helper layout identify the same byte-verified 81-byte body.
 ?bfmeLockVHM@@YAXXZ,0x00903090,Generated identity superseded by caller-backed W3DRadarResetLock; exact 134-byte C++ body retained under the canonical name.
+?bfmeApplyModelConditionFlags@Drawable@@AAEX_N@Z,0x0041AA90,Generated helper identity superseded by applyPendingModelConditionFlags; exact caller-backed 111-byte C++ body.

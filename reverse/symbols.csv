@@ -72128,7 +72128,6 @@ name,address,notes
 ?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
-?bfmeApplyModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,Open-BFME5 ILT reached after storing Drawable clear and set model-condition masks
 ?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
@@ -74574,7 +74573,6 @@ name,address,notes
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
 ?bfmeStartAllSpecialPowerRecharges@Object@@QBEXXZ,0x00026490,Open-BFME5 ILT thunk to body 0x001BE820; walks Object behaviors at +0x1F0 and calls special-power interface slot +0x40 after the behavior-interface query at +0x1C; bfme prefix records unrecovered retail spelling
-?bfmeStartAmbientSound@Drawable@@AAEX_N@Z,0x000294B5,Open-BFME5 ILT reached by enableAmbientSoundFromScript before ambient-state refresh
 ?bfmeStartSA@BfmeSubSA@@QAEXXZ,0x0000F0A6,pin
 ?bfmeStartSE@BfmeThingSE@@QAEXXZ,0x0000E9A3,pin
 ?bfmeStartTD@BfmeSubTD@@QAEXPAX@Z,0x00047B27,pin
@@ -82739,3 +82737,5 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 __imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
 __imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
 __imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer
+?startAmbientSound@Drawable@@AAEX_N@Z,0x000294B5,Zero Hour Drawable method identity; BFME caller reaches the same ILT
+?applyPendingModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,exact clearAndSetModelConditionFlags caller applies the staged masks before draw-module queries

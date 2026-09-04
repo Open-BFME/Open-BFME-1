@@ -1,3 +1,4 @@
+// BFME-specific Drawable reconstructions whose upstream bodies differ from Zero Hour.
 // readable body of ?clearAndSetModelConditionFlags@Drawable@@QAEXABV?$BitFlags@$0HF@@@0@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ?enableAmbientSoundFromScript@Drawable@@QAEX_N@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ?friend_clearSelected@Drawable@@QAEXXZ: Code/GameEngine/Source/GameClient/Drawable.cpp
@@ -17,8 +18,8 @@ struct BfmeRecordOwnerRB
 	ModelConditionFlags m_bfmeRecord;
 };
 
-enum WeaponSlotType { BfmeWeaponSlot };
-enum WhichTurretType { BfmeTurret };
+enum WeaponSlotType { PRIMARY_WEAPON };
+enum WhichTurretType { TURRET_INVALID };
 class Matrix3D { unsigned char m[48]; };
 struct Coord3D { float x, y, z; };
 
@@ -27,42 +28,42 @@ class Drawable
 {
 public:
 	void replaceModelConditionState(const ModelConditionFlags &state, bool dirty, unsigned int effect);
-	void bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
-	int bfmeGetBarrelCount(int slot) const;
+	void clearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set);
+	int getBarrelCount(WeaponSlotType slot) const;
 	bool getProjectileLaunchOffset(WeaponSlotType slot, int barrel, Matrix3D *launch,
 		WhichTurretType turret, Coord3D *turretRotation, Coord3D *turretPitch) const;
-	void bfmeEnableAmbientSoundFromScript(bool enable);
+	void enableAmbientSoundFromScript(bool enable);
 	void friend_setSelected();
 	void friend_clearSelected();
 
 private:
-	void bfmeApplyModelConditionFlags(bool immediate);
-	void bfmeStartAmbientSound(bool onlyIfPermanent);
+	void applyPendingModelConditionFlags(bool immediate);
+	void startAmbientSound(bool onlyIfPermanent);
 	void refreshAmbientSound();
 	unsigned char m_bfmeHead[0x140];
-	bool m_bfmeAmbientSoundEnabled;
-	bool m_bfmeAmbientSoundEnabledFromScript;
+	bool m_ambientSoundEnabled;
+	bool m_ambientSoundEnabledFromScript;
 	unsigned char m_bfmeGap142;
-	bool m_bfmeSelected;
-	class DynamicAudioEventRTS *m_bfmeAmbientSoundA;
-	class DynamicAudioEventRTS *m_bfmeAmbientSoundB;
-	class DynamicAudioEventRTS *m_bfmeAmbientSoundC;
-	class DrawModule **m_bfmeDrawModules;
+	bool m_selected;
+	class DynamicAudioEventRTS *m_ambientSound;
+	class DynamicAudioEventRTS *m_damagedAmbientSound;
+	class DynamicAudioEventRTS *m_selectedAmbientSound;
+	class DrawModule **m_drawModules;
 	unsigned char m_bfmeGap154[4];
-	class BfmeSelectionModule **m_bfmeSelectionModules;
+	class SelectionModule **m_selectionModules;
 	unsigned char m_bfmeGap15c[0xf4];
-	mutable ModelConditionFlags m_bfmeConditionState;
-	mutable ModelConditionFlags m_bfmeClearMask;
-	mutable ModelConditionFlags m_bfmeSetMask;
+	mutable ModelConditionFlags m_conditionState;
+	mutable ModelConditionFlags m_pendingConditionClear;
+	mutable ModelConditionFlags m_pendingConditionSet;
 	unsigned char m_bfmeGap2c8[0xeb];
-	mutable bool m_bfmeIsModelDirty;
+	mutable bool m_isModelDirty;
 };
 
-void Drawable::bfmeClearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set)
+void Drawable::clearAndSetModelConditionFlags(const ModelConditionFlags &clear, const ModelConditionFlags &set)
 {
-	m_bfmeClearMask = clear;
-	m_bfmeSetMask = set;
-	bfmeApplyModelConditionFlags(true);
+	m_pendingConditionClear = clear;
+	m_pendingConditionSet = set;
+	applyPendingModelConditionFlags(true);
 }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
@@ -105,23 +106,23 @@ class DynamicAudioEventRTS
 {
 public:
 	unsigned char m_bfmeHead[0x10];
-	unsigned int m_bfmePlayingHandle;
+	unsigned int m_playingHandle;
 };
 
-class BfmeSelectionInterface
+class SelectionInterface
 {
 public:
 	virtual void selected();
 	virtual void unselected();
 };
 
-class BfmeSelectionModule
+class SelectionModule
 {
 public:
 	virtual void anchor00(); virtual void anchor04(); virtual void anchor08(); virtual void anchor0c();
 	virtual void anchor10(); virtual void anchor14(); virtual void anchor18(); virtual void anchor1c();
 	virtual void anchor20(); virtual void anchor24();
-	virtual BfmeSelectionInterface *getSelectionInterface();
+	virtual SelectionInterface *getSelectionInterface();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
@@ -138,34 +139,34 @@ public:
 
 extern AudioManager *TheAudio;
 
-void Drawable::bfmeEnableAmbientSoundFromScript(bool enable)
+void Drawable::enableAmbientSoundFromScript(bool enable)
 {
-	m_bfmeAmbientSoundEnabledFromScript = enable;
+	m_ambientSoundEnabledFromScript = enable;
 	if (enable)
 	{
-		bfmeStartAmbientSound(false);
+		startAmbientSound(false);
 		refreshAmbientSound();
 		return;
 	}
 
-	if (m_bfmeAmbientSoundA)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundA->m_bfmePlayingHandle);
-	if (m_bfmeAmbientSoundB)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundB->m_bfmePlayingHandle);
-	if (m_bfmeAmbientSoundC)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundC->m_bfmePlayingHandle);
+	if (m_ambientSound)
+		TheAudio->removeAudioEvent(m_ambientSound->m_playingHandle);
+	if (m_damagedAmbientSound)
+		TheAudio->removeAudioEvent(m_damagedAmbientSound->m_playingHandle);
+	if (m_selectedAmbientSound)
+		TheAudio->removeAudioEvent(m_selectedAmbientSound->m_playingHandle);
 }
 
 void Drawable::friend_setSelected()
 {
-	if (m_bfmeSelected)
+	if (m_selected)
 		return;
 
-	m_bfmeSelected = true;
+	m_selected = true;
 	refreshAmbientSound();
-	bfmeStartAmbientSound(false);
+	startAmbientSound(false);
 
-	BfmeSelectionModule **module = m_bfmeSelectionModules;
+	SelectionModule **module = m_selectionModules;
 	if (!module)
 		return;
 
@@ -173,7 +174,7 @@ void Drawable::friend_setSelected()
 	{
 		if (!*module)
 			return;
-		BfmeSelectionInterface *interface = (*module)->getSelectionInterface();
+		SelectionInterface *interface = (*module)->getSelectionInterface();
 		if (interface)
 			interface->selected();
 		++module;
@@ -182,18 +183,18 @@ void Drawable::friend_setSelected()
 
 void Drawable::friend_clearSelected()
 {
-	if (!m_bfmeSelected)
+	if (!m_selected)
 		return;
 
-	m_bfmeSelected = false;
-	if (m_bfmeAmbientSoundC)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundC->m_bfmePlayingHandle);
-	if (m_bfmeAmbientSoundA)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundA->m_bfmePlayingHandle);
-	if (m_bfmeAmbientSoundB)
-		TheAudio->removeAudioEvent(m_bfmeAmbientSoundB->m_bfmePlayingHandle);
+	m_selected = false;
+	if (m_selectedAmbientSound)
+		TheAudio->removeAudioEvent(m_selectedAmbientSound->m_playingHandle);
+	if (m_ambientSound)
+		TheAudio->removeAudioEvent(m_ambientSound->m_playingHandle);
+	if (m_damagedAmbientSound)
+		TheAudio->removeAudioEvent(m_damagedAmbientSound->m_playingHandle);
 
-	BfmeSelectionModule **module = m_bfmeSelectionModules;
+	SelectionModule **module = m_selectionModules;
 	if (!module)
 		return;
 
@@ -201,43 +202,43 @@ void Drawable::friend_clearSelected()
 	{
 		if (!*module)
 			return;
-		BfmeSelectionInterface *interface = (*module)->getSelectionInterface();
+		SelectionInterface *interface = (*module)->getSelectionInterface();
 		if (interface)
 			interface->unselected();
 		++module;
 	} while (module);
 }
 
-void Drawable::bfmeApplyModelConditionFlags(bool immediate)
+void Drawable::applyPendingModelConditionFlags(bool immediate)
 {
-	if (!m_bfmeIsModelDirty && !immediate)
+	if (!m_isModelDirty && !immediate)
 		return;
 
-	m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
-	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	m_conditionState.clearAndSet(m_pendingConditionClear, m_pendingConditionSet);
+	for (DrawModule **module = m_drawModules; *module; ++module)
 	{
 		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
 		if (interface)
-			interface->replaceModelConditionState(m_bfmeConditionState, immediate, 0);
+			interface->replaceModelConditionState(m_conditionState, immediate, 0);
 	}
-	m_bfmeIsModelDirty = false;
+	m_isModelDirty = false;
 }
 
-int Drawable::bfmeGetBarrelCount(int slot) const
+int Drawable::getBarrelCount(WeaponSlotType slot) const
 {
-	if (m_bfmeIsModelDirty)
+	if (m_isModelDirty)
 	{
-		m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
-		for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+		m_conditionState.clearAndSet(m_pendingConditionClear, m_pendingConditionSet);
+		for (DrawModule **module = m_drawModules; *module; ++module)
 		{
 			ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
 			if (interface)
-				interface->replaceModelConditionState(m_bfmeConditionState, false, 0);
+				interface->replaceModelConditionState(m_conditionState, false, 0);
 		}
-		m_bfmeIsModelDirty = false;
+		m_isModelDirty = false;
 	}
 
-	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	for (DrawModule **module = m_drawModules; *module; ++module)
 	{
 		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
 		if (interface)
@@ -253,22 +254,22 @@ int Drawable::bfmeGetBarrelCount(int slot) const
 bool Drawable::getProjectileLaunchOffset(WeaponSlotType slot, int barrel, Matrix3D *launch,
 	WhichTurretType turret, Coord3D *turretRotation, Coord3D *turretPitch) const
 {
-	if (m_bfmeIsModelDirty)
+	if (m_isModelDirty)
 	{
-		m_bfmeConditionState.clearAndSet(m_bfmeClearMask, m_bfmeSetMask);
-		for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+		m_conditionState.clearAndSet(m_pendingConditionClear, m_pendingConditionSet);
+		for (DrawModule **module = m_drawModules; *module; ++module)
 		{
 			ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
 			if (interface)
-				interface->replaceModelConditionState(m_bfmeConditionState, false, 0);
+				interface->replaceModelConditionState(m_conditionState, false, 0);
 		}
-		m_bfmeIsModelDirty = false;
+		m_isModelDirty = false;
 	}
 
-	for (DrawModule **module = m_bfmeDrawModules; *module; ++module)
+	for (DrawModule **module = m_drawModules; *module; ++module)
 	{
 		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
-		if (interface && interface->getProjectileLaunchOffset(m_bfmeConditionState, slot,
+		if (interface && interface->getProjectileLaunchOffset(m_conditionState, slot,
 			barrel, launch, turret, turretRotation, turretPitch))
 			return true;
 	}
