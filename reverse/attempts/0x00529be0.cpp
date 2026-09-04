@@ -1,54 +1,76 @@
-// ?bfmeValidateSets@Gen00529BE0@@QAE_NXZ
-// partial score=0.78 date=2026-09-02
-// cl: /EHs-c-
+// ?d_00529be0@@YAXXZ
+// partial score=0.41 date=2026-09-04
+// cl: /O2 /DNDEBUG /MD /EHsc
 
-class Gen00529BE0Gate
+int bfmeMake_00529B60( int first, int second );
+unsigned int bfmeHash0002A473( unsigned int value, unsigned int type );
+unsigned int bfmeHashCombineA( unsigned int value, unsigned int salt );
+short skirmishControlIndex( int first, int second );
+
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
+
+class SkirmishScreenControls
 {
 public:
-	bool active(void);
+	bool isInitialized( void );
+
 private:
-	unsigned char m_data[0x40];
+	unsigned char m_unmodelled[ 0x40 ];
 };
 
-int bfmeSeed(int left, int right, ...);
-int bfmeMix(int value, unsigned int key);
-short bfmePick(int left, int right);
-
-class Gen00529BE0
+class SkirmishScreenState
 {
 public:
-	bool bfmeValidateSets(void);
+	bool shouldRefresh( void );
+
 private:
-	unsigned char m_unmodelled[0x28];
-	Gen00529BE0Gate m_gate;
-	void *m_first[8];
-	void *m_second[8];
-	void *m_third[8];
-	void *m_fourth[8];
-	unsigned char m_unmodelledE8[0x20];
-	void *m_required;
+	unsigned char m_unmodelled00[ 0x28 ];
+	SkirmishScreenControls m_controls;
+	void *m_playerTypeControls[ 8 ];
+	void *m_colorControls[ 8 ];
+	void *m_factionControls[ 8 ];
+	void *m_teamControls[ 8 ];
+	void *m_startPositionControls[ 8 ];
+	void *m_refreshTarget;
 };
 
-// Walk four independently selected pointer sets until the keyed state reaches
-// its sentinel. Any missing selected entry rejects the state.
-// ?bfmeValidateSets@Gen00529BE0@@QAE_NXZ
-bool Gen00529BE0::bfmeValidateSets(void)
+// A refresh is safe only after every control in all four slot columns exists;
+// the retail iterator visits the eight slot keys in its hashed order.
+// ?shouldRefresh@SkirmishScreenState@@QAE_NXZ
+bool SkirmishScreenState::shouldRefresh( void )
 {
-	if (m_gate.active() && m_required == 0)
-		return false;
+	if( !m_controls.isInitialized() )
+		goto notReady;
+	if( !m_refreshTarget )
+		goto notReady;
 
-	int state = bfmeSeed(0, 0);
-	while (bfmeMix(state, 0xB9DC8031) != 0x66DE9C79)
 	{
-		if (m_first[bfmePick(state, state)] == 0)
-			return false;
-		if (m_second[bfmePick(state, state)] == 0)
-			return false;
-		if (m_third[bfmePick(state, state)] == 0)
-			return false;
-		if (m_fourth[bfmePick(state, state)] == 0)
-			return false;
-		state = bfmeMix(state, 0xE4CD9C42);
+		int key = bfmeMake_00529B60( 0, 0 );
+		_ReadWriteBarrier();
+checkKey:
+		if( bfmeHash0002A473( key, 0xB9DC8031 ) == 0x66DE9C79 )
+			return true;
+
+		{
+			int index = skirmishControlIndex( key, key );
+			if( !m_playerTypeControls[ index ] )
+				return false;
+			index = skirmishControlIndex( key, key );
+			if( !m_colorControls[ index ] )
+				return false;
+			index = skirmishControlIndex( key, key );
+			if( !m_factionControls[ index ] )
+				return false;
+			index = skirmishControlIndex( key, key );
+			if( !m_teamControls[ index ] )
+				return false;
+		}
+		key = bfmeHashCombineA( key, 0xE4CD9C42 );
+		goto checkKey;
 	}
-	return true;
+
+notReady:
+	_ReadWriteBarrier();
+	return false;
 }
