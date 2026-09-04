@@ -83800,3 +83800,10 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?find@Object@@QAEPAXH@Z,0x00009C41,ILT 0x00009C41 launcher query from WeaponTemplate::shouldProjectileCollideWith burned check
 ?bfmeAllowsRelationship@WeaponTemplate@@QBE_NHPAX@Z,0x00037349,ILT 0x00037349 -> 0x001E4090; damage-type/override allow from shouldProjectileCollideWith
 ?getFinalOverride@ThingTemplate@@QAEPAV1@XZ,0x000022BB,ILT 0x000022BB fence-width override walk from shouldProjectileCollideWith
+?assign@StlWStr@@QAEAAV1@PBG0@Z,0x00004A75,wstring assign(first last) ILT used by PopupHostGame createGame 0x004D58F0
+?TheLadderList@@3PAVLadderList@@A,0x012F70E8,LadderList* global used by PopupHostGame createGame findLadderByIndex
+?textEntryGameName@@3PAVGameWindow@@A,0x012F3F14,PopupHostGame.wnd:TextEntryGameName static used by createGame
+?checkBoxAllowObservers@@3PAVGameWindow@@A,0x012F3F1C,PopupHostGame.wnd:CheckBoxAllowObservers static used by createGame
+?comboBoxLadderName@@3PAVGameWindow@@A,0x012F3F28,PopupHostGame.wnd:ComboBoxLadderName static used by createGame
+?textEntryGamePassword@@3PAVGameWindow@@A,0x012F3F30,PopupHostGame.wnd:TextEntryGamePassword static used by createGame
+?write@CustomMatchPreferences@@UAE_NXZ,0x00030495,CustomMatchPreferences::write folds onto UserPreferences::write; createGame 0x004D58F0
