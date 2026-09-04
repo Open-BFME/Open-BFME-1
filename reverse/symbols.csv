@@ -83866,3 +83866,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z,0x00006091,TerrainLogic::getHighestLayerForDestination ILT from groupEvacuate 0x00156690
 ?aiMoveToAndEvacuate@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x00027903,aiMoveToAndEvacuate ILT from groupEvacuate aircraft arm
 ?aiEvacuate@AICommandInterface@@QAEX_NW4CommandSourceType@@@Z,0x000344C3,aiEvacuate ILT from groupEvacuate ground arm
+?setOverrideTeamRelationship@Team@@QAEXIH@Z,0x000340B3,ILT to 0x004F46D0; callee of doTeamSetOverrideRelationToTeam 0x002F4C20
