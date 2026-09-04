@@ -82585,3 +82585,10 @@ g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 i
 ??1BfmeGuardWB@@QAE@XZ,0x00471850,Open-BFME5 slot 0 of the table 0x010F756C; the unwind action for the ctor at 0x00471390
 ??1BfmeQuadWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x24 sub-object destructor; only the unwind funclet references it
 ??1BfmeOneWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x30 sub-object destructor; only the unwind funclet references it
+?Is_Running@MouseThreadClass@@QAE_NXZ,0x009DB590,W3DMouse redraw-mode polling-thread running check
+?prepareStop@MouseThreadGuardOwner@@QAEXXZ,0x0001E7F4,W3DMouse redraw-mode stop preparation ILT
+?assign@MouseThreadGuardOwner@@QAEXPAVMouseThreadRunGuard@@@Z,0x0000A54C,W3DMouse polling-thread run-guard assignment ILT
+??0MouseThreadRunGuard@@QAE@PAXH@Z,0x009DB3B0,W3DMouse polling-thread heap run-guard constructor
+?Execute@MouseThreadClass@@QAEXXZ,0x009DB650,W3DMouse polling-thread execute call
+?g_w3dMouseCursorImages@@3PAPAXA,0x012F86C0,W3DMouse polygon cursor image table
+?setCursor@Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum virtual base call
