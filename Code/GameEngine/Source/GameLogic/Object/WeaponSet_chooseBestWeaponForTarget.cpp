@@ -189,10 +189,7 @@ static int getVictimAntiMask(const Object *victim)
 		return 0;
 	}
 
-	int ground = 2;
-	if (victim->isKindOf((KindOfType)7))
-		ground += 0x100;
-	return ground;
+	return 2 + (victim->isKindOf((KindOfType)7) ? 0x100 : 0);
 }
 
 // ?chooseBestWeaponForTarget@WeaponSet@@QAE_NPBVObject@@0W4WeaponChoiceCriteria@@W4CommandSourceType@@@Z
