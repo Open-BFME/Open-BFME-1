@@ -9666,6 +9666,7 @@ name,address,notes
 ??_7BfmeAptScreenSecondary@@6B@,0x01105690,second-base vtable restored at +0x3C after CustomMatch member dtors
 ??_7BfmeBaseVUH@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x001B5550 destructor
 ??_7BfmeBaseVUJ@@6B@,0x0107FCB0,Open-BFME5 retail base vftable stored by the 0x0049C740 destructor
+??_7BfmeBaseVUQ@@6B@,0x01073744,Open-BFME5 retail base vftable stored by the 0x00352C20 destructor
 ??_7BfmeDerived1283@@6B@,0x01136E0C,address-derived derived-class vtable written by the 0x008BE700 retail constructor
 ??_7BfmeE1124@@6B@,0x00D2FB8C,pin
 ??_7BfmeEntVTA@@6B@,0x010EC77C,Open-BFME5 retail vftable stored by the 0x003A92A0 copy helper
@@ -9680,6 +9681,7 @@ name,address,notes
 ??_7BfmeOwnVUM@@6B@,0x010E8F34,Open-BFME5 retail vftable stored by the 0x00360F90 destructor
 ??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
 ??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
+??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
@@ -73625,6 +73627,7 @@ name,address,notes
 ?bfmeClearVUJ@BfmeStrVUJ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUO@BfmeStrVUO@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
+?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
