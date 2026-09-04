@@ -2286,6 +2286,7 @@ name,address,notes
 ??0Gen00375590EntryStorage@@QAE@H@Z,0x0000504C
 ??0Gen0048D200@@QAE@XZ,0x0048D200,default ctor called by the 89-byte niladic new-factory family (Q4NewNiladicFactories.cpp); address-derived name; identity not recovered
 ??0Gen00522E00@@QAE@XZ,0x0001B879,address-derived 0x4C-byte self-registering class; ILT to ctor body 0x00522E00 called by the discarded-new factory 0x00510AC0
+??0Gen00529110Member28@@QAE@XZ,0x0004081D,ILT constructor callee identified by SkirmishScreenState constructor at 0x00528F60
 ??0Gen005EC600@@QAE@PAVHost005EC580@@@Z,0x005EC600,ctor called by the 93-byte allocate-then-construct factory family (Q4NewOwnerFactories.cpp); address-derived name; identity not recovered
 ??0Gen005EC870@@QAE@PAVHost005EC7F0@@@Z,0x005EC870,ctor called by the 93-byte allocate-then-construct factory family (Q4NewOwnerFactories.cpp); address-derived name; identity not recovered
 ??0Gen005ECCC0@@QAE@PAVHost005ECC40@@@Z,0x005ECCC0,ctor called by the 93-byte allocate-then-construct factory family (Q4NewOwnerFactories.cpp); address-derived name; identity not recovered
@@ -11742,6 +11743,7 @@ name,address,notes
 ?_bfme_populateSinglePlayer@BfmeAptScreenScoreScreen@@QAEXXZ,0x00575B70,no ZH twin (APT screen): +0x25c = 0; reads the local player's ScoreKeeper (Player+0x348: +0x3d4 units built +0x45c buildings built +0x46c +0x34c money...) against TheWritableGlobalData(0x012ED5C8)+0x1224..+0x1250 weights into the 7x3 battleStat table at +0x294 and total +0x278; objectives APT:objective%d from the script objectives list; hero veterancy bitset at +0x2e8 from SubMenus/HeroVeterancy/HeroSelection%d/icon/Image; APT:HeroPointsIncrement APT:UnitPointsIncrement APT:ScoreMapName LW:RegionBonusArmy LW:RegionLegendaryBonus LW:RegionBonusResource APT:ScoreRegionBonus%d Result/Infos/ScoreMap/Picture/Image SubMenus/TerritoryBonus/TerritoryMap/TerritoryMap/Picture/Image; ILT 0x0003D08C; sole caller the opener 0x005775FC (type 0)
 ?_bfme_recordPointsEarned@BfmeAcademyPointRecorder@@QAEXH@Z,0x0001B969,Open-BFME5 shape-only pin: the thunk Player addSciencePurchasePoints calls for points earned; thiscall on the subobject at player+0x348 with the delta
 ?_bfme_refreshLoginState@BfmeAptScreenOnlineLogin@@QAEXXZ,0x000371FF,ILT to OnlineLogin helper 0x005531D0 called by syncLoginGadgets
+?_bfme_refreshProfile@BfmeAptScreenSkirmish@@QAEXXZ,0x0057CAC0,BFME Skirmish profile refresh callback called by close
 ?_bfme_releaseElements@EvaSideSoundsVec@@QAEXXZ,0x00037BF0,ILT thunk to the retail Eva side-sound element release loop at 0x00424300; unidentified beyond its shape
 ?_bfme_removeNamedAptGadget@WindowManager@@QAEXABVAsciiString@@@Z,0x00047B31,ILT of WindowManager +0x6C vector unbind; Home dtor 0x00545FF0 removes OnlineHome/Gadgets/Image and ImageLevelIconMain
 ?_bfme_reportDesync@GameLogic@@QAEXXZ,0x00388C10,GameLogic member called twice by bfme_processLogicCRC 0x0038B765/0x0038B859: first statement sets sawCRCMismatch TheGameLogic+0x6C = 1 (0x00388C35) then shows GUI:DesyncTitle/GUI:DesyncText and writes DESYNC-%s-%s.txt / DESYNC-%s-%s-%s.txt through TheFileSystem openFile 0x009C8860 (fake/forced desync banners 0x010EB2A8/0x010EB218); 1744 B; outside the slice
@@ -80875,6 +80877,7 @@ name,address,notes
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBX1111@Z,0x00015235,ILT thunk -> body 0x004675F0; eight-dword __thiscall scripted-UI event dispatcher on g_theWindowManager: (0xB; event name; arg count; up to five args); pushes ShowEndGame/HideEndGame from the VictoryConditions banner bodies; address-derived name
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBX1HHH@Z,0x00015235,DisconnectMenu timeout percentage passes two string arguments through the established scripted-UI dispatcher ILT
 ?unidentified_00015235@WindowManager@@QAEXHPBDHPBXHHHH@Z,0x00015235,DisconnectMenu setPlayerName invokes HideKickButton through the established scripted-UI dispatcher ILT
+?unidentified_00017AF8@SkirmishPreferences@@QAE_NXZ,0x00017AF8,address-derived SkirmishPreferences profile-state predicate
 ?unidentified_0001A483@WindowManager@@QAEXXZ,0x0001A483,CampaignReview final WindowManager update
 ?unidentified_0001FC99@@YAHPBDPAI@Z,0x0001FC99,UNIDENTIFIED cdecl shader loader; address-derived name; loads shaders\monochrome.pso for ScreenBWFilter::init
 ?unidentified_0001e0ab@GameLogicShim@@QAE_NXZ,0x0001E0AB,ILT thunk -> body 0x00382C20: true when TheGameLogic mode is 1/2/5 or TheRecorder plays back a multiplayer session; gates the score-screen fade in hideEndGame; address-derived shim name

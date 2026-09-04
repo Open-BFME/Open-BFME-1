@@ -1,9 +1,7 @@
-// ?go@Rva00802A90Owner@@QAE_NPAURva00802A90Query@@_NH@Z
+// ?go@Rva00802A90Owner@@QAE_NPAURva00802A90Query@@HH@Z
 // partial score=0.9 date=2026-09-04
 // cl: /GX-
 // jabba gamebrowser slot go @ 0x00802A90 (160B).
-
-#define bool unsigned
 
 struct Rva00802A90Elem
 {
@@ -23,7 +21,7 @@ void __stdcall Rva00801CB0( Rva00802A90Query *q, void *ctx, int flag, int id );
 class Rva00802A90Owner
 {
 public:
-	bool go( Rva00802A90Query *q, bool flag, int id );
+	bool go( Rva00802A90Query *q, int flag, int id );
 
 	void *m_00;
 	void *m_04;
@@ -34,9 +32,9 @@ public:
 	int m_token;
 };
 
-bool Rva00802A90Owner::go( Rva00802A90Query *q, bool flag, int id )
+bool Rva00802A90Owner::go( Rva00802A90Query *q, int flag, int id )
 {
-	if( flag )
+	if( (unsigned char)flag )
 	{
 		if( id != m_token )
 			return false;
@@ -59,7 +57,7 @@ bool Rva00802A90Owner::go( Rva00802A90Query *q, bool flag, int id )
 		{
 			if( p->m_key == q->m_key )
 			{
-				Rva00801CB0( q, m_04, flag, id );
+				Rva00801CB0( q, m_04, 0, id );
 				return false;
 			}
 			p = (Rva00802A90Elem *)( (char *)p + 0x80 );

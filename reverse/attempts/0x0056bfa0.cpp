@@ -68,26 +68,21 @@ void showAptSaveLoad( void *arg0, int flags, volatile char extra )
 	TheAptSaveLoad->m_270 = argument;
 	TheAptSaveLoad->m_274 = flags;
 	int flagBits = flags;
-	if ( flagBits & 1 )
-	{
-		TheAptSaveLoad->m_27c = 1;
-		value = extra;
-		TheAptSaveLoad->m_278 = value;
-		return;
-	}
-	else
-	{
-		if ( flagBits & 2 )
+		if ( flagBits & 1 )
 		{
-			p = TheAptSaveLoad;
+			TheAptSaveLoad->m_27c = 1;
 			value = extra;
-			p->m_27c = 2;
-			q = TheAptSaveLoad;
-			q->m_278 = value;
+			TheAptSaveLoad->m_278 = value;
 			return;
 		}
-	}
-	if ( flagBits & 4 )
+		else if ( flagBits & 2 )
+		{
+			value = extra;
+			*(long *)( (char *)TheAptSaveLoad + 0x27c ) = 2;
+			TheAptSaveLoad->m_278 = value;
+			return;
+		}
+		else if ( flagBits & 4 )
 	{
 		q = TheAptSaveLoad;
 		q->m_27c = 4;

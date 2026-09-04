@@ -83,17 +83,19 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, volatile int limit)
 
 	int zero = 0;
 	BfmeR1226ExecContext execute;
-	execute.m_cursor = start;
 	execute.m_unknown04 = (int)value;
 	execute.m_heldValue = (BfmeR1226Value *)zero;
+	execute.m_cursor = start;
 	execute.m_end = (unsigned char *)zero;
-	execute.m_stopped = (bool)zero;
 	execute.m_created = makeValue(value, zero, &g_rva8CCED0RouteMarker, 1, 1, zero);
-	int oldStackBase = m_savedStackBase;
-	m_savedStackBase = m_count;
+	execute.m_stopped = (bool)zero;
+	volatile int oldStackBase = m_savedStackBase;
 	bool stopped = false;
-	while (m_stop == zero)
+	m_savedStackBase = m_count;
+	for (;;)
 	{
+		if (m_stop != zero)
+			break;
 		if (execute.m_end != (unsigned char *)zero && execute.m_cursor == execute.m_end)
 		{
 			execute.m_heldValue->release();
