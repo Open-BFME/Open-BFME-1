@@ -24553,3 +24553,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_002802a0@@UAEPAXI@Z,0x002802A0,generated identity replaced by byte-verified AttributeModifierAuraUpdate destructor
 ??1Rva002818B0NestedDtor@@UAE@XZ,0x002818B0,generated identity replaced by byte-verified AutoPickUpUpdate destructor
 ??_GGen_dtor_00281c50@@UAEPAXI@Z,0x00281C50,generated identity replaced by byte-verified AutoPickUpUpdate destructor
+??1Rva00205000NestedDtor@@UAE@XZ,0x00205000,generated identity replaced by byte-verified RunOffMapBehavior destructor
+??_GGen_dtor_00205170@@UAEPAXI@Z,0x00205170,generated identity replaced by byte-verified RunOffMapBehavior destructor
