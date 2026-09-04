@@ -1,5 +1,4 @@
-// ?d_00287670@@YAXXZ
-// partial score=0.99 date=2026-09-03
+// Open-BFME5: recovered BFME AI reset helper.
 class Object;
 
 class GameLogicFrameSlice
@@ -76,7 +75,7 @@ int Gen_00287670::bfmeUpdate(void)
 	if (m_bfmeObjectID != 0) {
 		Object *object = TheGameLogic->bfmeFind(m_bfmeObjectID);
 		if (object != 0) {
-			if ((object->m_bfmeConditionA & 1) ||
+			if (!(object->m_bfmeConditionA & 1) &&
 				(object->m_bfmeConditionB & 1))
 				return 11;
 		}
