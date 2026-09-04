@@ -73105,7 +73105,6 @@ name,address,notes
 ?bfmeFindUDD@BfmeSubUDD@@QAEPAXH@Z,0x00026C47,pin
 ?bfmeFindUDE@BfmeMgrUDE@@QAEPAVBfmeRecUDE@@H@Z,0x0001F253,pin
 ?bfmeFindUPB@@YAPAXPAX0@Z,0x007EBCA0,pin
-?bfmeFindVLI@BfmeMapVLI@@QAEPAUBfmeNodeVLI@@PAG@Z,0x0093DCE0,pin
 ?bfmeFindVMQ@@YAPADPBD0@Z,0x007EBCA0,pin
 ?bfmeFindVNC@BfmeKeyVNC@@QAEPAXPBDH@Z,0x007E8900,pin
 ?bfmeFinish1003@BfmeB1003@@QAEXXZ,0x0003FBF7,pin
@@ -73844,7 +73843,6 @@ name,address,notes
 ?bfmeLinkRelation@@YAXPAXPAVObject@@H@Z,0x0001253F,Open-BFME5 optional relation link called by 0x00283460
 ?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
-?bfmeLoadVLI@BfmeFontVLI@@QAEPBXG@Z,0x00940D40,pin
 ?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
 ?bfmeLockVJR@@YAXXZ,0x00903090,pin
@@ -82737,3 +82735,5 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ?setInputEnabled@InGameUI@@QAEX_N@Z,0x0003EBDF,ScriptActions disable-input and enable-input paths identify the InGameUI setter ILT
 ?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
 ?iterateCellsAlongLine@Pathfinder@@AAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUGroundPathPassableInfo@@@Z,0x00013DC2,isGroundPathPassable cell-space line walk using its pathfinder and diameter context
+?find@FontCharDataMap@@QAEPAUFontCharDataMapNode@@PAG@Z,0x0093DCE0,FontCharsClass character-data map lookup body
+?loadCharacterData@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z,0x00940D40,FontCharsClass cache-miss character data loader
