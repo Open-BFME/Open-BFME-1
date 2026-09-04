@@ -313,8 +313,7 @@ UpdateSleepTime BoneFXUpdate::update( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWLib/UpdateInitializationThunks.cpp
-// ?initTimes@BoneFXUpdate@@IAEXXZ present-unmatched
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate_initTimes.cpp
 void BoneFXUpdate::initTimes() {
 	Int i;
 	const BoneFXUpdateModuleData *d = getBoneFXUpdateModuleData();
