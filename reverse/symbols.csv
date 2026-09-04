@@ -82739,3 +82739,4 @@ _D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub
 ?set@AsciiStringXK@@QAEXABV1@@Z,0x00887C90,pin
 ?GridScaleRva007D4AF0@@YAPAUGridGlobals@@XZ,0x00031944,retail grid0x007D4AF0 call at0x007D4B4B;thunk to0x00421E70
 ?GridScaleRva007D95B0@@YAPAUGridGlobals@@XZ,0x0000D7A6,retail grid0x007D95B0 call at0x007D960B;thunk to0x00421E40
+??1StreakRendererClass@@QAE@XZ,0x0095C780,StreakLineClass destructor calls StreakRenderer member at +0x154; frees m_vertexBuffer +0x48 and releases Texture +0 matching streakRender.cpp
