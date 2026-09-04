@@ -33,15 +33,23 @@ class SpecialPowerModule : public BehaviorModule,
 {
 public:
 	SpecialPowerModule( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~SpecialPowerModule();
 };
 
 class CombineHordeSpecialPower : public SpecialPowerModule
 {
 public:
 	CombineHordeSpecialPower( Thing *thing, const ModuleData *moduleData );
+protected:
+	virtual ~CombineHordeSpecialPower();
 };
 
 CombineHordeSpecialPower::CombineHordeSpecialPower( Thing *thing, const ModuleData *moduleData )
 	: SpecialPowerModule( thing, moduleData )
+{
+}
+
+CombineHordeSpecialPower::~CombineHordeSpecialPower()
 {
 }
