@@ -82552,3 +82552,7 @@ g_bfmeVtableVY,0x010EDAD8,Open-BFME5 the table the wide-text copy ctor at 0x0049
 ??0BfmeWideVY@@QAE@ABV0@@Z,0x00888400,pin
 ??1BfmeWideVY@@QAE@XZ,0x008881D0,pin
 ??1BfmeGuardVY@@QAE@XZ,0x003BEAC0,Open-BFME5 slot 0 of the table 0x010EDAD8; the unwind action for the copy ctor at 0x0049A070
+g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00471EC0 installs
+??0BfmeStrWA@@QAE@PBD@Z,0x00888BC0,pin
+??1BfmeStrWA@@QAE@XZ,0x00887940,pin
+??1BfmeGuardWA@@QAE@XZ,0x004724D0,Open-BFME5 slot 0 of the table 0x010F760C; the unwind action for the ctor at 0x00471EC0
