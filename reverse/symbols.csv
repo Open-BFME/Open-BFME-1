@@ -35457,7 +35457,6 @@ name,address,notes
 ?b_002cdf00@@YAXXZ,0x002CDF00,gen-thunk body
 ?b_002cdf70@@YAXXZ,0x002CDF70,gen-thunk body
 ?b_002ce1b0@@YAXXZ,0x002CE1B0,gen-thunk body
-?b_002ce290@@YAXXZ,0x002CE290,gen-thunk body
 ?b_002ce2c0@@YAXXZ,0x002CE2C0,gen-thunk body
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
 ?b_002ce360@@YAXXZ,0x002CE360,gen-thunk body
@@ -75060,7 +75059,6 @@ name,address,notes
 ?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z,0x00741D30,BFME W3DView helper body 0x00741D30 via ILT 0x0000A8DF
 ?buildFieldParse@AIUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00019772,pinharvest x1 (thunk)
 ?buildFieldParse@ActiveBodyModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00019772,ILT thunk; real body 0x6284A0
-?buildFieldParse@Gen00004052@@SAXAAVWideMulti@@@Z,0x00004052,base-class buildFieldParse reached via incremental-link thunk; address-derived name
 ?buildFieldParse@Gen00005245@@SAXAAVWideMulti@@@Z,0x00005245,base-class buildFieldParse reached via incremental-link thunk; address-derived name
 ?buildFieldParse@Gen00005B46@@SAXAAVWideMulti@@@Z,0x00005B46,base-class buildFieldParse reached via incremental-link thunk; address-derived name
 ?buildFieldParse@Gen0000629E@@SAXAAVWideMulti@@@Z,0x0000629E,base-class buildFieldParse reached via incremental-link thunk; address-derived name
@@ -82758,3 +82756,6 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
 ?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
 ?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z,0x0003AF53,primary vftable ILT to 0x002CE3A0
+?buildFieldParse@DockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00004052,RailedTransportDockUpdateModuleData base builder ILT to 0x002CAB10
+?buildFieldParse@RailedTransportDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00014326,unique ILT to 0x002CE290
+?buildFieldParse@Gen00004052@@SAXAAVWideMulti@@@Z,0x00004052,base-class buildFieldParse reached via incremental-link thunk; address-derived name retained for remaining WideBuildFieldParse rows
