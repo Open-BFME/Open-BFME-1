@@ -3556,6 +3556,7 @@ name,address,notes
 ??1BfmeElemTZB@@QAE@XZ,0x00018FCF,pin
 ??1BfmeElemUHA@@QAE@XZ,0x00030652,pin
 ??1BfmeElemUJA@@QAE@XZ,0x00018FCF,pin
+??1BfmeElemVVC@@QAE@XZ,0x0003EAB8,pin
 ??1BfmeElementA@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementB@@QAE@XZ,0x0001AAD2,Open-BFME5 the element destructor the array-owning destructors call
 ??1BfmeElementC@@QAE@XZ,0x00937390,Open-BFME5 the element destructor the array-owning destructors call
@@ -9966,6 +9967,7 @@ name,address,notes
 ?TheObjectCreationUpgradePool@?1??getClassMemoryPool@ObjectCreationUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0598,pool-glue cascade static (back-solved)
 ?TheOpenContainPool@?1??getClassMemoryPool@OpenContain@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA60,pool-glue cascade static (back-solved)
 ?TheParticleSystemManager@@3PAVParticleSystemManager@@A,0x00EF64BC,ParticleSystemManager* global; DIR32 0x012F64BC in updateSubObjectsFromShroud / same slot as g_bfme923GlobA
+?ThePartitionManager@@3PAVPartitionManager@@A,0x012ED5B8,findSupplyCenter ThePartitionManager VA; separate from TheShroudManager 0x012ED5BC
 ?ThePlayerList@@3PAVPlayerList@@A,0x00EED748,ScriptActions::doSpeechPlay local-player lookup at retail VA 0x012ED748
 ?ThePlayerTemplateStore@@3PAVPlayerTemplateStore@@A,0x00EED750,PlayerTemplateStore* global read by CustomMatchPreferences::getPreferredFaction
 ?ThePoisonedBehaviorPool@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF82C,pool-glue cascade static (back-solved)
@@ -11914,30 +11916,21 @@ name,address,notes
 ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
+?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
 ?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
 ?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
-?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
-?g_aptPalantirRadarLeft@@3HA,0x00EF4AEC,left edge of the AptPalantir radar clip rectangle
-?g_aptPalantirRadarTop@@3HA,0x00EF4AF0,top edge of the AptPalantir radar clip rectangle
-?g_aptPalantirRadarRight@@3HA,0x00EF4AF4,right edge of the AptPalantir radar clip rectangle
-?g_aptPalantirRadarBottom@@3HA,0x00EF4AF8,bottom edge of the AptPalantir radar clip rectangle
-?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
-?renderRadar@AptPalantir@@QAEXHHHHPAH@Z,0x0000FC5E,AptPalantir RenderRadar rectangle dispatcher
-?aptPalantirRenderRadar@@YAXPBUPalantirPoint@@0@Z,0x00044544,AptPalantir::RenderRadar callback ILT registered by name
-?aptPalantirRenderRadarViewBox@@YAXXZ,0x00019501,AptPalantir::RenderRadarViewBox callback ILT registered by name
-?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
-?showOptions@AptPalantir@@QAEXXZ,0x000131A1,AptPalantir OnBttnOptions dispatcher
-?upgradeSkill@AptPalantir@@QAEXXZ,0x00024EBF,AptPalantir OnBttnSkillUpgrade dispatcher
-?aptPalantirOnButtonSpellStore@@YAXXZ,0x00041597,AptPalantir::OnBttnSpellStore callback ILT registered by name
 ?aptPalantirOnButtonOptions@@YAXXZ,0x00048C07,AptPalantir::OnBttnOptions callback ILT registered by name
 ?aptPalantirOnButtonSkillUpgrade@@YAXXZ,0x0003B0C5,AptPalantir::OnBttnSkillUpgrade callback ILT registered by name
-?aptPalantirOnRollOverButtonCommand@@YAXXZ,0x00020428,AptPalantir::OnRollOverBttnCommand callback ILT registered by name
-?onShown@AptPalantirSpellBook@@QAEXXZ,0x00035F85,AptPalantir OnSpellBookUIShown dispatches through the +0x17C subobject
-?aptPalantirOnSpellBookUIShown@@YAXXZ,0x0002F01D,AptPalantir::OnSpellBookUIShown callback ILT registered by name
+?aptPalantirOnButtonSpell@@YAXPAD@Z,0x0003F6E8,AptPalantir::OnBttnSpell callback ILT registered by name
+?aptPalantirOnButtonSpellStore@@YAXXZ,0x00041597,AptPalantir::OnBttnSpellStore callback ILT registered by name
 ?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
 ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
+?aptPalantirOnRollOverButtonCommand@@YAXXZ,0x00020428,AptPalantir::OnRollOverBttnCommand callback ILT registered by name
+?aptPalantirOnSpellBookUIShown@@YAXXZ,0x0002F01D,AptPalantir::OnSpellBookUIShown callback ILT registered by name
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
 ?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
+?aptPalantirRenderRadar@@YAXPBUPalantirPoint@@0@Z,0x00044544,AptPalantir::RenderRadar callback ILT registered by name
+?aptPalantirRenderRadarViewBox@@YAXXZ,0x00019501,AptPalantir::RenderRadarViewBox callback ILT registered by name
 ?areAllQueuesEmpty@Network@@UAE_NXZ,0x00681A10,vtable 0x0111A968 slot 25 (+0x64) via ILT 0x000149E8; tail-jumps conMgr 0x00662DF0 without a null check; that body loops the 8 connections at conMgr+0x04 calling isQueueEmpty@Connection 0x00661C90 = ZH ConnectionManager::canILeave and ZH areAllQueuesEmpty is exactly return m_conMgr->canILeave()
 ?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
@@ -71934,6 +71927,7 @@ name,address,notes
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
 ?bfmeApplyModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,Open-BFME5 ILT reached after storing Drawable clear and set model-condition masks
+?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
@@ -72380,6 +72374,7 @@ name,address,notes
 ?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUV@BfmeStrVUV@@QAEXXZ,0x00887940,pin
 ?bfmeClearVVA@BfmeStrVVA@@AAEXXZ,0x00887940,pin
+?bfmeClearVVC@BfmeStrVVC@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
@@ -76067,6 +76062,10 @@ name,address,notes
 ?g_Va01336E50@@3V?@D@@A,0x01336E50,AsciiString::TheEmptyString copied by 0x006AEE00
 ?g_activeObj12F0610@@3PAXA,0x00EF0610,pin
 ?g_aiTargetDispatchSuppressed@@3_NA,0x012F08A0,address-derived global suppression flag read by the AI update target dispatcher
+?g_aptPalantirRadarBottom@@3HA,0x00EF4AF8,bottom edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarLeft@@3HA,0x00EF4AEC,left edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarRight@@3HA,0x00EF4AF4,right edge of the AptPalantir radar clip rectangle
+?g_aptPalantirRadarTop@@3HA,0x00EF4AF0,top edge of the AptPalantir radar clip rectangle
 ?g_aptPalantirSpellPrefix@@3PADA,0x00D096E0,validated five-character prefix accepted by AptPalantir::OnBttnSpell
 ?g_bannerAptCallbacksRegistered@@3_NA,0x012F495A,BannerUI one-time callback registration guard
 ?g_bfme1017G@@3DA,0x00F3781C,pin
@@ -77525,6 +77524,7 @@ name,address,notes
 ?getClassMemoryPool@Anim2D@@CAPAVMemoryPool@@XZ,0x00AFF960,pinharvest x3 (body)
 ?getClassMemoryPool@ObjectDefectionHelper@@SAPAVMemoryPool@@XZ,0x0000B9CE,pinharvest x1 (thunk)
 ?getClassMemoryPool@VertexMaterialClass@@CAPAXXZ,0x6B22FA14,packet 00921eba callee pin
+?getClosestObject@PartitionManager@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@@@Z,0x009F26A0,findSupplyCenter 4-arg thiscall; 33B wrapper already matched as bfmeGo1050D
 ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ,0x0002DAE2,StructureCollapse BFME height helper ILT thunk
 ?getColor@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@H@Z,0x00021EC2
 ?getCommandButton@CommandSet@@QBEPBVCommandButton@@H@Z,0x00003F80,Open-BFME5 ILT thunk to the body already matched at 0x0049C590 - the same thunk reverse/symbols.csv already carries under the CommandSetShim spelling; ?getCommandButtonSourceObject@AIGroup@@QAEPAVObject@@W4GUICommandType@@@Z at 0x00151430 calls it under the real name
@@ -79326,6 +79326,7 @@ name,address,notes
 ?less@AsciiStringLessShim@@SA_NABVAsciiString@@0@Z,0x006451D0,AsciiString less-than incremental-link thunk target through a TU-local forwarding shim
 ?limit@Rva006AE150Argument@@QAEMXZ,0x000173AF,address-derived scaled-value limit helper used by Rva006AE150Owner::compute
 ?link@BfmeLinkedObj@@QAEXPAV1@H@Z,0x0000CBB7,pin
+?link@PartitionFilter@@QAEPAV1@PAV1@@Z,0x009F2AE0,PartitionFilter +4 next-walk used by findSupplyCenter; body is gen-dump d_009f2ae0
 ?linkWindow@GameWindowManager@@QAEXPAVGameWindow@@@Z,0x0002B87D,winSetParent depth Open-BFME4+Grok
 ?liteupdate@Network@@UAEX_N@Z,0x00681930,vtable 0x0111A968 slot 9 (+0x24) via ILT 0x00009D0E; ZH liteupdate: if (m_conMgr) m_conMgr->update(m_localStatus==INGAME) through ConnectionManager vtable 0x0111A2B0 slot +0x08 (update@BFMEConnectionManager 0x0066AB30) with the caller's Bool forwarded as 2nd arg; called by update 0x00682C95 and after updateLoadProgress by load screens 0x00491ED7 0x0051BC32 and startNewGame 0x003958D8 (ZH LoadScreen.cpp:1513-1514 GameLogic.cpp:2169-2170)
 ?load@GameWindowTransitionsHandler@@QAEXXZ,0x00027921,ILT thunk -> body 0x48B8D0; called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
@@ -79554,6 +79555,7 @@ name,address,notes
 ?onRandomGate@Gen0060BE20@@AAEXXZ,0x00012846,random-gate ILT used by exact Living World eye tower gate at 0x0060BE20
 ?onRemovedFrom@Object@@QAEXPAV1@@Z,0x00023D30,ILT thunk to already-matched body 0x001CBAE0; resolved via decode_calls at TunnelTracker::onTunnelDestroyed
 ?onRemoving@BfmeRvaBBD0Owner@@QAEXPAVBfmeRvaBBD0Object@@@Z,0x0003F396,assigned-body helper for Rva0024BBD0
+?onShown@AptPalantirSpellBook@@QAEXXZ,0x00035F85,AptPalantir OnSpellBookUIShown dispatches through the +0x17C subobject
 ?onTunnelCreated@TunnelTracker@@QAEXPBVObject@@@Z,0x00038938,Open-BFME5 retail tunnel created pin
 ?onTunnelDestroyed@TunnelTracker@@QAEXPBVObject@@@Z,0x000304E0,Open-BFME5 retail tunnel destroyed pin
 ?onUpgradeCompleted@Player@@QAEXPBVUpgradeTemplate@@@Z,0x0002F856,Player::addUpgrade retail completion callback call ILT
@@ -79935,6 +79937,7 @@ name,address,notes
 ?renderBuffer@W3DVolumetricShadow@@QAEXXZ,0x000465C9,render helper ILT
 ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z,0x00040809,REL32 pin for WaterRenderObjClass::updateRenderTargetTextures
 ?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
+?renderRadar@AptPalantir@@QAEXHHHHPAH@Z,0x0000FC5E,AptPalantir RenderRadar rectangle dispatcher
 ?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
 ?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
@@ -80481,7 +80484,9 @@ name,address,notes
 ?showBuildTooltipLayout@ControlBarshowBuildTooltipLayoutShim@@QAEXPAVGameWindow@@@Z,0x000E7240,ControlBar::showBuildTooltipLayout incremental-link thunk target through a TU-local forwarding shim
 ?showChat@DisconnectMenu@@QAEXVUnicodeString@@@Z,0x00023E1B,ILT thunk; the DisconnectMenu chat sink ConnectionManager::processDisconnectChat ends on
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,0x0001E1A0,ILT thunk for ScriptActions timer display
+?showOptions@AptPalantir@@QAEXXZ,0x000131A1,AptPalantir OnBttnOptions dispatcher
 ?showScreen@DisconnectMenu@@QAEXXZ,0x0050E9A0,ZH DisconnectMenu::showScreen twin: HideDiplomacy 0x0052ADE0 / HideInGameChat 0x00512670 / 0x00598F30 (ZH HideQuitMenu position; ledger name hidePurchaseScience is suspect) / HideSaveLoadMenu 0x005696D0 then UI singleton 0x012F148C slot +0x150(1) then TheWindowManager 0x012F1B40 slot +0x6C (winCreateLayout position) with literal DisconnectScreen.apt 0x01087A9C stored to 0x012F4960 and layout slot 0(0); this-less like hideScreen; sole caller DisconnectManager::turnOnScreen 0x0066BFE4; ILT 0x00020144
+?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
 ?shutdown@GameResultsThread@@QAEXXZ,0x009DB5A0,Open-BFME5 GameResultsQueue worker shutdown
 ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ,0x0002C6E7
 ?shutdown@TerrainTracksShutdownShim@@QAEXXZ,0x0072EDF0,TerrainTracksRenderObjClassSystem::shutdown incremental-link thunk target through a TU-local forwarding shim
@@ -80726,6 +80731,7 @@ name,address,notes
 ?updateTeamStates@Player@@QAEXXZ,0x000CE140,body Player::updateTeamStates; iterates std::list at Player+0x288 (m_playerTeamPrototypes) calling one method per node; pinned by ?updateTeamStates@PlayerList@@QAEXXZ at 0x000DF390 via ILT 0x00022548
 ?updateUpgradeModules@Object@@QAEXXZ,0x00027FCF,ILT thunk used by giveUpgrade call site
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
+?upgradeSkill@AptPalantir@@QAEXXZ,0x00024EBF,AptPalantir OnBttnSkillUpgrade dispatcher
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
 ?usePluralShadowName@BfmeThingTemplateShadowSelector@@QBE_NXZ,0x0087E8D0,ThingTemplate validateAudio body calls this retail predicate on its +0x60 shadow-selection subobject
 ?use_facet@Rva005380A0@@QAEPAXPBX@Z,0x008321D0,Open-BFME5 thiscall of cdecl locale wrapper
@@ -82367,7 +82373,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?ThePartitionManager@@3PAVPartitionManager@@A,0x012ED5B8,findSupplyCenter ThePartitionManager VA; separate from TheShroudManager 0x012ED5BC
-?link@PartitionFilter@@QAEPAV1@PAV1@@Z,0x009F2AE0,PartitionFilter +4 next-walk used by findSupplyCenter; body is gen-dump d_009f2ae0
-?getClosestObject@PartitionManager@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@@@Z,0x009F26A0,findSupplyCenter 4-arg thiscall; 33B wrapper already matched as bfmeGo1050D
-?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
