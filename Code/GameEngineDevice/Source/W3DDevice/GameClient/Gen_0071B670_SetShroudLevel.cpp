@@ -72,14 +72,19 @@ private:
 	void *m_20;
 	void *m_24;
 	int m_shroudFilter;
-	int m_2c;
-	int m_30;
-	UnsignedByte m_34;
+	float m_drawOriginX;             // positional, W3DShroud.h:119-122
+	float m_drawOriginY;
+	UnsignedByte m_drawFogOfWar;     // W3DShroud.cpp:104-107, the sibling destructor clears it after both fog arrays
 	UnsignedByte m_clearDstTexture;
+	// upstream spells this m_boderShroudLevel; the other W3DShroud TUs keep the
+	// corrected name, so this one follows them
 	UnsignedByte m_borderShroudLevel;
 	UnsignedByte m_pad37;
-	UnsignedByte *m_38;
-	UnsignedByte *m_3c;
+	UnsignedByte *m_finalFogData;    // W3DShroud.cpp:317-318
+	UnsignedByte *m_currentFogData;  // positional, W3DShroud.h:125-126
+	// BFME-only: the fog interpolation at 0x0071B840 walks just m_dirty while this
+	// is set and every cell otherwise; the ctor and 0x0071B770 both set it, so the
+	// insert below is what keeps that walk complete
 	UnsignedByte m_40;
 	UnsignedByte m_pad41[3];
 	_STL::set<int> m_dirty;
@@ -99,7 +104,7 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 		if (!textureOnly)
 		{
 			int cell = x + y * m_numCellsX;
-			m_38[cell] = level;
+			m_finalFogData[cell] = level;
 			if (m_40)
 				m_dirty.insert(cell);
 		}
