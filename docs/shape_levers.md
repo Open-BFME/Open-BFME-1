@@ -37,6 +37,35 @@ Each landed through the ordinary relocation-aware byte and identity gates.
 | Constant-2 register reuse spreads through a body with local statics | `ParticleBufferClass::Render_Line` (0x0098AD00, 1763 B) needed `/EHsc` instead of the build default `/EHsc-`. The default emitted extra EH states 0/2/4 around `atexit` registrations; that state 2 induced unrelated-looking EBX reuse. Retail omits those states. Correcting the exception model recovered the whole body without forced registers or barriers. |
 | Final `rep movsd` setup has its source address and count loads swapped | In the terrain matrix helper (0x007DCF00, 281 B), put the final matrix assignment inside each branch after its last matrix multiplication. MSVC still merges the copy tails but emits retail's `lea esi` before `mov ecx,16`. Explicit intrinsic `memcpy` did not help. Independent relocation review also corrected the old bank's terrain-global name and reversed scale signs; masked equality alone hid both defects. |
 
+## Additional verified family results (2026-09-04)
+
+- Shader resource cleanup: an inline `int decrement(int *p) { return --*p; }`
+  followed by a separate member zero test preserves retail's address materialization.
+  Use the global object directly in the guarded `Release_Ref()` call; caching it
+  in a local changes register allocation. This recovered shutdown (0x00717DA0,
+  187 B), dependent-resource cleanup (0x00717C90, 218 B), and resource creation
+  (0x00716770, 399 B). Counter wrapper classes and volatile fields were unnecessary.
+  Identify the object independently: VA 0x012F9D1C holds a DX8 vertex buffer,
+  proved by the matched constructor at 0x0091F2F0, despite an old bank calling it
+  a texture. COM `Release` alone does not identify the resource subtype.
+- Lua `codepushbool` (0x0099EF70, 151 B): `__assume(i != 0)` after instruction
+  encoding preserves the encode/codelineinfo ordering without emitting bytes.
+  The assumption is justified by the nonzero OP_PUSHBOOL opcode, not merely by
+  the desired disassembly. Do not generalize it to opcodes that may encode zero.
+- StreakLine construction: the real empty Vector3/Vector4 constructors retain
+  null EH states that a POD declaration loses. Nonthrowing array deallocation
+  also recovered the StreakLine and MaterialInfo destructors. Inspect the actual
+  member constructors and deallocation contract before inventing guard objects.
+- MaterialRemapper mesh mapping (0x0092F2C0, 493 B): retain each source owning
+  texture handle as a loop local, while passing the remapped temporary to the
+  setter. Nested getter/setter expressions give different cleanup lifetimes.
+- Display clock wipe (0x006EBF20, 2319 B): restore the original parentheses in
+  `start + (width / 2 * percent)` and equivalent height expressions. They constrain
+  MSVC 7.1 x87 reassociation even when the algebra is otherwise equivalent.
+
+These are verified source-shape examples, not claims that the reconstructed
+spelling is the original EA source. Failed neighboring hypotheses remain banked.
+
 ## Fleet tools (all read-only except add_match/re_log)
 
 | Need | Tool |
