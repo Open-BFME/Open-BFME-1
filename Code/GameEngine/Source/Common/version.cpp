@@ -74,6 +74,7 @@ UnsignedInt Version::getVersionNumber( void )
 	return m_major << 16 | m_minor;
 }
 
+// byte-exact reconstruction: Code/GameEngine/Source/Common/VersionGetAsciiVersion.cpp
 // ?getAsciiVersion@Version@@ present-unmatched
 AsciiString Version::getAsciiVersion( void )
 {
