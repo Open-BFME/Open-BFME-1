@@ -668,8 +668,6 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
 // ?HCompressedAnimClass::Get_Transform present-unmatched
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
-	uint32 tc0;
-	uint32 pidx;
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
 	  
 		switch(Flavor) {
@@ -677,8 +675,10 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 		{
 			TimeCodedMotionChannelClass * qchan = motion->tc.Q;
 			if (qchan) {
+				uint32 tc0;
+				uint32 pidx;
 				uint32 * data = qchan->Data;
-				Quaternion q;
+				Quaternion q(1);
 
 				tc0 = (uint32)(int)frame;
 				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
@@ -724,7 +724,6 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 						q.Z = vec[2];
 						q.W = vec[3];
 					} else {
-						Quaternion q;
 						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 ratio = (frame - time1) / (time2 - time1);

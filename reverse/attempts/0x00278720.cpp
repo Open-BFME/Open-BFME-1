@@ -1,10 +1,7 @@
 // ?isIdle@AIUpdateInterface@@UBE_NXZ
-// partial score=0.97 date=2026-09-02
+// partial score=0.97 date=2026-09-04
+// ?isIdle@AIUpdateInterface@@UBE_NXZ
 // cl: /DNDEBUG /MD
-//
-// Retail 0x00278720: AIUpdateInterface::isIdle. Effectively-dead at Object+0x344
-// bit 0, optional linked-object AI isIdle at vtable +0x180, then tail-call
-// State::isIdle at the current-state pointer StateMachine+0x1c.
 
 typedef bool Bool;
 
@@ -26,6 +23,7 @@ class StateMachine
 public:
 	unsigned char m_unmodelled_00[0x1C];
 	State *m_currentState;
+	State *getCurrentState() const { return m_currentState; }
 };
 
 #define BFME_AI_SLOT(n) virtual void unusedSlot##n();
@@ -102,9 +100,11 @@ Bool AIUpdateInterface::isIdle() const
 				}
 			}
 		}
-		State *cur = m_stateMachine->m_currentState;
+		State *cur = m_stateMachine->getCurrentState();
 		if (cur)
+		{
 			return cur->isIdle();
+		}
 	}
 return_true:
 	return true;

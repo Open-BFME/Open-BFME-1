@@ -1,5 +1,5 @@
 // ?d_008bd230@@YAXXZ
-// partial score=0.95 date=2026-08-30
+// partial score=0.95 date=2026-09-04
 class BfmeNode1279;
 
 class BfmeQuery1279
@@ -19,28 +19,6 @@ public:
 	BfmeNode1279 *m_previous;
 	BfmeNode1279 *m_next;
 };
-
-struct BfmeInput1279
-{
-	void *m_value;
-};
-
-class BfmeWrapper1279
-{
-public:
-	void bfmeProcess1279(void *value);
-	void bfmeForward1279(BfmeInput1279 *input);
-
-private:
-	BfmeQuery1279 *m_query;
-};
-
-void BfmeWrapper1279::bfmeForward1279(BfmeInput1279 *input)
-{
-	void *other;
-	m_query->bfmeQuery1279(input->m_value, 0, &other, (void **)&input);
-	bfmeProcess1279(input);
-}
 
 BfmeNode1279 *BfmeQuery1279::bfmeInsert1279(void *value, BfmeNode1279 *node)
 {

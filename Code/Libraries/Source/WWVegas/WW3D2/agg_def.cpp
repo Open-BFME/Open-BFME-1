@@ -435,6 +435,7 @@ AggregateDefClass::Build_Subobject_List
 	RenderObjClass &model
 )
 {
+	extern RenderObjClass * Create_Render_Obj (const char *passet_name);
 	int index;
 
 	// Loop through all the bones in this render obj
@@ -488,54 +489,49 @@ AggregateDefClass::Build_Subobject_List
 					// so we can do texture compares later)
 					// MSVC 7.1 keeps the original-model reference live across this
 					// call, which changes the retail frame and consumes EBP.  The
-					// retail direct/free and virtual dispatches are emitted here as
-					// the narrow, proven code-generation workaround.
-					extern RenderObjClass * __stdcall Create_Render_Obj (const char *passet_name);
+					class RetailRenderObjCallView {
+					public:
+						virtual void slot00 (void) = 0;
+						virtual void slot01 (void) = 0;
+						virtual void slot02 (void) = 0;
+						virtual void slot03 (void) = 0;
+						virtual void slot04 (void) = 0;
+						virtual void slot05 (void) = 0;
+						virtual void slot06 (void) = 0;
+						virtual void slot07 (void) = 0;
+						virtual void slot08 (void) = 0;
+						virtual void slot09 (void) = 0;
+						virtual void slot10 (void) = 0;
+						virtual void slot11 (void) = 0;
+						virtual void slot12 (void) = 0;
+						virtual void slot13 (void) = 0;
+						virtual void slot14 (void) = 0;
+						virtual void slot15 (void) = 0;
+						virtual void slot16 (void) = 0;
+						virtual void slot17 (void) = 0;
+						virtual void slot18 (void) = 0;
+						virtual void slot19 (void) = 0;
+						virtual void slot20 (void) = 0;
+						virtual void slot21 (void) = 0;
+						virtual void slot22 (void) = 0;
+						virtual void slot23 (void) = 0;
+						virtual void slot24 (void) = 0;
+						virtual void slot25 (void) = 0;
+						virtual void slot26 (void) = 0;
+						virtual void slot27 (void) = 0;
+						virtual void slot28 (void) = 0;
+						virtual void slot29 (void) = 0;
+						virtual void slot30 (void) = 0;
+						virtual void slot31 (void) = 0;
+						virtual void slot32 (void) = 0;
+						virtual void slot33 (void) = 0;
+						virtual void slot34 (void) = 0;
+						virtual void slot35 (void) = 0;
+						virtual int Add_Sub_Object_To_Bone (RenderObjClass *, const char *, const Vector3 *) = 0;
+					};
 					RenderObjClass *prender_obj = Create_Render_Obj (prototype_name);
-					__asm {
-						__emit 0x8b
-						__emit 0x54
-						__emit 0x24
-						__emit 0x1c
-						__emit 0x8b
-						__emit 0x8c
-						__emit 0x24
-						__emit 0xa4
-						__emit 0x00
-						__emit 0x00
-						__emit 0x00
-						__emit 0x83
-						__emit 0xc4
-						__emit 0x04
-						__emit 0x53
-						__emit 0x8b
-						__emit 0xf0
-						__emit 0x8b
-						__emit 0x01
-						__emit 0x52
-						__emit 0x56
-						__emit 0xff
-						__emit 0x90
-						__emit 0x90
-						__emit 0x00
-						__emit 0x00
-						__emit 0x00
-						__emit 0x3b
-						__emit 0xf3
-						__emit 0x74
-						__emit 0x0b
-						__emit 0xff
-						__emit 0x4e
-						__emit 0x04
-						__emit 0x75
-						__emit 0x06
-						__emit 0x8b
-						__emit 0x06
-						__emit 0x8b
-						__emit 0xce
-						__emit 0xff
-						__emit 0x10
-					}
+					((RetailRenderObjCallView *)&original_model)->Add_Sub_Object_To_Bone (prender_obj, pbone_name, NULL);
+					REF_PTR_RELEASE (prender_obj);
 				}
 			}
 		}

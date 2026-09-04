@@ -1,8 +1,7 @@
 // ?value@Rva001C9310@@QAEHXZ
-// partial score=0.9 date=2026-09-02
+// partial score=0.9 date=2026-09-04
+// ?value@Rva001C9310@@QAEHXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// Two handwritten OVERRIDE walks of m_template at +4: load dword +0x448,
-// then if dword +0xD0 has bit 0x2000000 multiply by [this+0x210]+0x28.
 
 class Overridable
 {
@@ -33,37 +32,23 @@ class Rva001C9310
 public:
 	int value();
 
-
-
 	void *m_vptr;
 	Rva001C9310Thing *m_template;
 	char m_gap[ 0x210 - 8 ];
 	Rva001C9310Scale *m_scaleSrc;
 };
 
-static __forceinline int rva001C9310_firstValue( Rva001C9310 *object )
-{
-	Rva001C9310Thing *thing = object->m_template;
-	if ( thing )
-	{
-		if ( thing->m_nextOverride )
-			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
-	}
-	return thing->m_value_448;
-}
-
 int Rva001C9310::value()
 {
 	Rva001C9310Thing *thing = m_template;
-	register Rva001C9310 *owner = this;
-	register int v;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
-	v = thing->m_value_448;
+	register int v = thing->m_value_448;
 
+	register Rva001C9310 *owner = this;
 	thing = owner->m_template;
 	if ( thing )
 	{

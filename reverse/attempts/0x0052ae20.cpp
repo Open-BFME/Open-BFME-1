@@ -1,38 +1,44 @@
 // ?bfmeFindNthPred@@YAHH@Z
-// partial score=0.9 date=2026-09-02
+// partial score=0.9 date=2026-09-04
+// ?bfmeFindNthPred@@YAHH@Z
 // stlport
 // cl: /EHs-c-
 
-class Glo012F1028Type
+class CampaignManager
 {
 public:
-	int count();
-	bool pred(int index);
+	int getMissionObjectiveCount();
+	bool isMissionObjectiveEligible( int index );
 };
 
-extern Glo012F1028Type *Glo012F1028;
+extern CampaignManager *TheCampaignManager;
 
-// Return the index of the n-th entry accepted by the global collection's
-// predicate, or -1 when the collection is absent or has too few matches.
-// ?bfmeFindNthPred@@YAHH@Z
-int bfmeFindNthPred(int n)
+// Return the index of the n-th eligible mission objective, or -1 when the
+// campaign manager is absent or fewer than n eligible objectives exist.
+int bfmeFindNthPred( int n )
 {
-	register int count;
-	register int i;
 	int remain = n;
 
-	if (Glo012F1028 == 0)
+	if ( TheCampaignManager == 0 )
 		return -1;
 
-	count = Glo012F1028->count();
-	for (i = 0; i < count; ++i)
-	{
-		if (Glo012F1028->pred(i))
-		{
-			if (remain <= 0)
-				return i;
-			--remain;
-		}
-	}
+	int count = TheCampaignManager->getMissionObjectiveCount();
+	int i = 0;
+	int current;
+
+loop:
+	if ( i >= count )
+		goto failed;
+	current = i++;
+	if ( !TheCampaignManager->isMissionObjectiveEligible( current ) )
+		goto loop;
+	if ( remain <= 0 )
+		goto succeeded;
+	--remain;
+	goto loop;
+
+failed:
 	return -1;
+succeeded:
+	return current;
 }

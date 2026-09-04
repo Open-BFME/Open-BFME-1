@@ -92,10 +92,8 @@ static inline void bfmeConcat( AsciiString &s, char c )
 	((StringBase<char> *)&s)->concat( &c, 1 );
 }
 
-static inline void bfmeConcat( AsciiString &s, const char *v )
-{
-	((StringBase<char> *)&s)->concat( v, v ? (int)strlen( v ) : 0 );
-}
+static void (AsciiString::* const bfmeKeepAsciiConcat)(const AsciiString &) =
+	&AsciiString::concat;
 
 static inline const char *bfmeFind( const AsciiString &s, char c )
 {
@@ -245,71 +243,6 @@ Bool Win32LocalFileSystem::doesFileExist(const Char *filename) const
 		return TRUE;
 	}
 	return FALSE;
-}
-
-// ?getFileListInDirectory@Win32LocalFileSystem@@UBEXABVAsciiString@@00AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z present-unmatched
-void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDirectory, const AsciiString& originalDirectory, const AsciiString& searchName, FilenameList & filenameList, Bool searchSubdirectories) const
-{
-	HANDLE fileHandle = NULL;
-	WIN32_FIND_DATA findData;
-
-	char search[_MAX_PATH];
-	AsciiString asciisearch;
-	asciisearch = originalDirectory;
-	bfmeConcat(asciisearch, currentDirectory);
-	bfmeConcat(asciisearch, searchName);
-	strcpy(search, bfmeStr(asciisearch));
-
-	Bool done = FALSE;
-
-	fileHandle = FindFirstFile(search, &findData);
-	done = (fileHandle == INVALID_HANDLE_VALUE);
-
-	while (!done)	{
-		if (!(findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
-				(strcmp(findData.cFileName, ".") && strcmp(findData.cFileName, ".."))) {
-			// if we haven't already, add this filename to the list.
-				// a stl set should only allow one copy of each filename
-				AsciiString newFilename;
-				newFilename = originalDirectory;
-				bfmeConcat(newFilename, currentDirectory);
-				bfmeConcat(newFilename, findData.cFileName);
-				if (filenameList.find(newFilename) == filenameList.end()) {
-					filenameList.insert(newFilename);
-				}
-		}
-
-		done = (FindNextFile(fileHandle, &findData) == 0);
-	}
-	FindClose(fileHandle);
-
-	if (searchSubdirectories) {
-		AsciiString subdirsearch;
-		subdirsearch = originalDirectory;
-		bfmeConcat(subdirsearch, currentDirectory);
-		bfmeConcat(subdirsearch, "*.");
-		fileHandle = FindFirstFile(bfmeStr(subdirsearch), &findData);
-		done = fileHandle == INVALID_HANDLE_VALUE;
-
-		while (!done) {
-			if ((findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
-					(strcmp(findData.cFileName, ".") && strcmp(findData.cFileName, ".."))) {
-
-					AsciiString tempsearchstr;
-					bfmeConcat(tempsearchstr, currentDirectory);
-					bfmeConcat(tempsearchstr, findData.cFileName);
-					bfmeConcat(tempsearchstr, '\\');
-					
-					// recursively add files in subdirectories if required.
-					getFileListInDirectory(tempsearchstr, originalDirectory, searchName, filenameList, searchSubdirectories);
-			}
-
-			done = (FindNextFile(fileHandle, &findData) == 0);
-		}
-
-		FindClose(fileHandle);
-	}
-
 }
 
 // ?getFileInfo@Win32LocalFileSystem@@UBE_NABVAsciiString@@PAUFileInfo@@@Z

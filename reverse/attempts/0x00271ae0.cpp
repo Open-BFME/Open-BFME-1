@@ -37,16 +37,14 @@ private:
 // ?count@Rva00271AE0Owner@@QAEHXZ
 int Rva00271AE0Owner::count(void)
 {
-	int id = 0;
-	Rva00271AE0Host *host = m_host;
-	Rva00271AE0Named *named = host->m_primary;
-	id = named != 0 ? named->getID() : 0xF423F;
+	int id = m_host->m_primary != 0
+		? m_host->m_primary->getID() : 0xF423F;
 	if (id == 0xF423F)
 	{
-		named = host->m_fallback;
-		id = named != 0 ? named->getID() : 0xF423F;
+		id = m_host->m_fallback != 0
+			? m_host->m_fallback->getID() : 0xF423F;
 	}
 	if (id != 6)
 		return 0;
-	return (host->m_end - host->m_begin) / 6;
+	return (m_host->m_end - m_host->m_begin) / 6;
 }

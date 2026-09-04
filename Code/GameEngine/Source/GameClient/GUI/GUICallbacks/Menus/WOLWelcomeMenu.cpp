@@ -92,6 +92,15 @@ public:
 	virtual void hide( Bool immediate ) = 0;
 };
 
+// BFME keeps the full 0x330-byte PeerResponse on the stack here.  The shared
+// Zero Hour header has the same accessed fields, but a shorter string layout;
+// keep the retail tail TU-local so the response calls still use the proven
+// PeerResponse ABI without changing the shared header.
+class BfmeWOLPeerResponse : public PeerResponse
+{
+	char m_bfmeTail[0x174];
+};
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -629,6 +638,8 @@ void WOLWelcomeMenuShutdown( WindowLayout *layout, void *userData )
 //-------------------------------------------------------------------------------------------------
 void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 {
+	Int allowedMessages;
+
 	// We'll only be successful if we've requested to 
 	if(isShuttingDown && TheShell->isAnimFinished() && TheTransitionHandler->isFinished())
 		shutdownComplete(layout);
@@ -660,9 +671,9 @@ void WOLWelcomeMenuUpdate( WindowLayout * layout, void *userData)
 		HandleBuddyResponses();
 		HandlePersistentStorageResponses();
 
-		Int allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+		allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
 		Bool sawImportantMessage = FALSE;
-		PeerResponse resp;
+		BfmeWOLPeerResponse resp;
 		while (allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse( resp ))
 		{
 			switch (resp.peerResponseType)

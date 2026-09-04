@@ -1,5 +1,5 @@
-// ?d_00286140@@YAXXZ
-// partial score=0.92 date=2026-09-03
+// ?onDelete@BattlePlanUpdate@@UAEXXZ
+// partial score=0.92 date=2026-09-04
 class BfmeReleasedItem;
 
 class GameLogicFrameSlice
@@ -30,13 +30,13 @@ public:
 	Player *bfmeResolve(void);
 };
 
-class Gen_00286140
+class BattlePlanUpdate
 {
 public:
-	void bfmeDispatch(void);
+	virtual void onDelete(void);
 
 private:
-	char m_bfmeFields[8];
+	char m_bfmeFields[4];
 	BfmeResolutionKey *m_bfmeKey;
 	char m_bfme0C[0x20];
 	BattlePlanStatus m_bfmeStatus;
@@ -46,8 +46,7 @@ private:
 	int m_bfmeHandle;
 };
 
-// ?bfmeDispatch@Gen_00286140@@QAEXXZ
-void Gen_00286140::bfmeDispatch(void)
+void BattlePlanUpdate::onDelete(void)
 {
 	if (m_bfmeHandle != 0) {
 		GameLogicFrameSlice *logic = TheGameLogic;
@@ -59,12 +58,7 @@ void Gen_00286140::bfmeDispatch(void)
 	Player *target = m_bfmeKey->bfmeResolve();
 	if (target != 0) {
 		BattlePlanStatus status = m_bfmeStatus;
-		switch (status) {
-		case BATTLE_PLAN_NONE:
-			break;
-		default:
+		if (status != BATTLE_PLAN_NONE)
 			target->changeBattlePlan(status, -1, m_bfmeBonuses);
-			break;
-		}
 	}
 }

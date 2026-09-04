@@ -59,6 +59,21 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             b += f"{name},{rva},gen-dump placeholder retracted: range owned by real C++ {real[rva.upper()]} landed by the fleet".encode() + term
         ledger_io.atomic_write_bytes(d, b)
         print(f"ledger_prep: retracted {dropped} gen placeholder row(s) shadowed by real C++")
+    # a union merge can resurrect a row that deleted_rows.csv tombstoned
+    # (name + rva); drop it again
+    tomb = set()
+    for line in (ROOT / "reverse/deleted_rows.csv").read_bytes().splitlines()[1:]:
+        f = [norm(x) for x in line.split(b",")]
+        if len(f) >= 2 and f[1].startswith("0x"):
+            tomb.add((f[0], f[1].upper()))
+    raw = p.read_bytes()
+    def keep2(f):
+        f = [norm(x) for x in f]
+        return not (len(f) > 2 and (f[0], f[2].upper()) in tomb)
+    new2, dropped2 = ledger_io.rewrite(raw, keep2)
+    if dropped2:
+        ledger_io.atomic_write_bytes(p, new2)
+        print(f"ledger_prep: dropped {dropped2} resurrected tombstoned row(s)")
     # seats append LF rows into a CRLF ledger; normalize before the check
     subprocess.run([sys.executable, str(ROOT / "tools/dedup_csv.py")], cwd=ROOT, env=dict(os.environ, HARVEST_HAS_LOCK="1"))
     if not os.environ.get("HARVEST_HAS_LOCK"):

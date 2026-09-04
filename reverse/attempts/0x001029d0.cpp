@@ -1,4 +1,6 @@
 // ?bfmeFlushFS@BfmeThingFS@@QAEXXZ
+// partial score=0.9 date=2026-09-04
+// ?bfmeFlushFS@BfmeThingFS@@QAEXXZ
 // partial score=0.9 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: waiting-list flush on a Thing-like owner, retail 0x001029D0.
@@ -59,8 +61,7 @@ void BfmeThingFS::bfmeFlushFS(void)
 		int amt = e->amount;
 		vt->apply(o, amt, v + amt);
 		e = m_list;
-		if (e == 0)
-			goto afterWalk;
+		if (e != 0)
 		{
 			int take = e->amount;
 			do
@@ -69,7 +70,6 @@ void BfmeThingFS::bfmeFlushFS(void)
 				e = e->next;
 			} while (e != 0);
 		}
-	afterWalk:;
 	}
 
 	e = m_list;

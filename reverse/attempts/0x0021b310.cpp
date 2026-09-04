@@ -25,7 +25,7 @@ public:
 
 private:
 	unsigned long unknown;
-	Rva21B310Data * volatile data;
+	Rva21B310Data *data;
 	Object *owner;
 	char gap0C[0x9B0];
 	Rva21B310Node *objects;
@@ -43,7 +43,8 @@ int Rva21B310RelationshipCapacity::accepts(Object *object)
 			++count;
 		}
 
-		return count < data->capacity;
+		Rva21B310Data *capacityData = data;
+		return count < capacityData->capacity;
 	}
 
 	return acceptRelated(object);

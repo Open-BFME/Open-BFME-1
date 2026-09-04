@@ -77443,6 +77443,7 @@ name,address,notes
 ?gen002EA750@@YAXPAX0H0@Z,0x002EA750,address-derived callee of the 26-byte zero-third forwarder family; target read from the REL32 at its call sites
 ?gen002EACD0@@YAXPAX00HH@Z,0x002EACD0,address-derived callee of the 28-byte zero-tail forwarder family; target read from the REL32 at its call sites
 ?gen002EADF0@@YAXPAX0H0@Z,0x002EADF0,address-derived callee of the 26-byte zero-third forwarder family; target read from the REL32 at its call sites
+?gen002EADF0Helper@@YAXPAXPAVRva002E8FC0@@1V1@0H@Z,0x002EABF0,helper called through ILT thunk 0x00032BAF from the by-value forwarder at 0x002EADF0; target read from the REL32 chain
 ?gen002EB330@@YAXPAX00H0@Z,0x002EB330,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
 ?gen0033B900@@YAXPAUElem8@@PBU1@@Z,0x0033B900,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen0033B980@@YAXPAUElem16@@PBU1@@Z,0x0033B980,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
@@ -77866,6 +77867,7 @@ name,address,notes
 ?getFirstObject@GameLogic@@QAEPAVObject@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
 ?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,ILT thunk to FontLibrary::getFont from HeaderTemplateManager::populateGameFonts
 ?getFont@FontLibraryBFMERetail@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,Open-BFME5 BFME retail FontLibrary ABI alias
+?getFormationMovementSpeed@AIUpdateInterface@@QAEMPAVObject@@@Z,0x000230AB,BFME AI locomotor-controller speed calculation thunk used by getCurLocomotorSpeed
 ?getFormationMovementSpeed@BfmeAIUpdateInterface@@QAEMPAVBfmeUpdateObject@@@Z,0x000230AB,ILT thunk used by AOD formation update
 ?getFormationMovementStep@BfmeAIUpdateInterface@@QAEMPAVBfmeUpdateObject@@@Z,0x00024F7D,ILT thunk used by AOD formation update
 ?getFrameCommandList@ConnectionManager@@QAEPAVNetCommandList@@I@Z,0x00663450,ZH twin: new NetCommandList(0x10 bytes ctor 0x00672EA0) reset 0x006731A0; per FrameDataManager at +0x120E4 appendList(0x00673580) of getFrameCommandList 0x006706A0 then resetFrame(frame-FRAMES_TO_KEEP;TRUE) 0x006706D0 with FRAMES_TO_KEEP global 0x012BA08C=0x41; sole caller Network frame tick 0x00682AB6; ILT 0x0001EF5B
@@ -79457,6 +79459,7 @@ name,address,notes
 ?isCliffMappedTexture@WorldHeightMapIsCliffMappedTextureShim@@QAE_NHH@Z,0x00728250,WorldHeightMap incremental-link thunk target through a TU-local forwarding shim
 ?isContextCommand@CommandButton@@QBE_NXZ,0x0004B1DC,InGameUI retail call uses the import thunk to FUN_0089AE80
 ?isCurWeaponLocked@Rva0016F9E0SourceLockShim@@QBE_NXZ,0x0002443D,BFME AIAttackState locked weapon check thunk
+?isCursorVisible@Win32Mouse@@QAE_NXZ,0x00023FA6,BFME Win32Mouse two-flag cursor visibility predicate
 ?isDataCompressed@CompressionManager@@SA_NPBXH@Z,0x0081E980,CachedFileInputStream open retail compression probe
 ?isDieApplicable@DieMuxData@@QBE_NPBVObject@@PBVDamageInfo@@@Z,0x000357D8,Open-BFME5 ILT from zh_sweep packet 00256070
 ?isDrawableEffectivelyHidden@Drawable@@QBE_NXZ,0x00012E3B,CanSelectDrawable retail ILT
@@ -80190,6 +80193,7 @@ name,address,notes
 ?releaseRef@W3DRadarResetTextureRef@@QAEXXZ,0x009EB7A0,W3DRadar reset texture release ABI shim
 ?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
 ?releaseResources@Gen0045A970_00723FB0@@QAEXXZ,0x000491C5,assigned 0x00723FB0 snow reacquire cleanup call resolves through the matched release thunk
+?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
 ?releaseTrack@TerrainTracksRenderObjClassSystem@@AAEXPAVTerrainTracksRenderObjClass@@@Z,0x000357E7,Open-BFME5 ILT; ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ at 0x0072EDF0 releases each unbound track through it
 ?releaseTrack@WaterTracksRenderSystem@@IAEXPAVWaterTracksObj@@@Z,0x0000E250
 ?releaseWindowPointers@@YAXXZ,0x004C3170,pinharvest x1 (body)
@@ -81654,6 +81658,7 @@ __imp__InterlockedIncrement@4,0x01358E5C,Open-BFME5 retail InterlockedIncrement 
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
 __imp__Rva00891FA0SendRecord,0x01337840,address-derived diagnostics record callback slot called by 0x00891FA0
 __imp__Rva00891FA0SendText,0x01337844,address-derived diagnostics text callback slot called by 0x00891FA0
+__imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
 __imp___strnicmp,0x00F594BC,CRT import used by the _level prefix path helper
 __imp__bfme006EE640Memmove,0x0135945C,retail memmove IAT slot used by the exact STLport vector erase at 0x006EE640
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
@@ -82185,10 +82190,13 @@ _g_bfmeV1189,0x00D1291C,pin
 _g_bfmeV1196,0x00C9FB78,pin
 _g_bfmeVA1199,0x00CF9AD8,pin
 _g_bfmeVB1199,0x00CF9B60,pin
+_g_cursorResources,0x00EF77A8,BFME native cursor handle table indexed by cursor and direction frame
 _g_guardTargetTypeThrowInfo,0x00DDFE5C,ThrowInfo used by the GuardTargetType transfer helper
 _g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
+_g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
 _g_rva01142c68,0x01142C68,codec unsigned table base for Rva009AC4B0AddValue
 _g_rva01143064,0x01143064,codec signed table base for Rva009AC4B0AddValue
+_g_zeroLocomotorSpeed,0x00C75350,shared zero float returned when no locomotor controller is active
 _gameTextPrepare@16,0x009F6D76,GameTextManager reset prepare helper shim
 _gameTextRelease,0x00881EF0,GameTextManager reset release helper shim
 _gen000d7010,0x000D7010,xfer element helper for xferRva00347C40

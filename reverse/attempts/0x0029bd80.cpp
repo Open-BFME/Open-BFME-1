@@ -52,10 +52,11 @@ void Gen0029BD80::find(BfmeHelperD77 *target)
 		return;
 	do
 	{
+		BfmeHelperD77 *query = target;
 		int type = node->m_type;
 		if (type == 1 || type == 3)
 		{
-			if (target->query(node->m_key))
+			if (query->query(node->m_key))
 			{
 				applyPayload(node->m_payload);
 				return;
