@@ -82338,3 +82338,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
 ?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
 ?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
+?TheLivingWorldCampaignManager@@3PAVBfmeLivingWorldCampaignManager@@A,0x012F1024,Open-BFME5 manager global; same slot as g_bfmeSwitchDR / initSubsystem literal
+?findByKey@BfmeLivingWorldCampaignManager@@QAEPAVBfmeLwcmFindResult@@PAX@Z,0x0000D422,Open-BFME5 ILT to 0x003B4590; callee of 0x003B8260
+?applyPointer@BfmeLwcmFindResult@@QAEXPAPAX@Z,0x00026EA9,Open-BFME5 ILT to 0x003A95D0; callee of 0x003B8260
