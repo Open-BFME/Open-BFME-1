@@ -4556,7 +4556,6 @@ name,address,notes
 ??1Gen_dtor_0026b5e0@@UAE@XZ,0x0000AE2F,gen-dtor class destructor
 ??1Gen_dtor_0026b8b0@@UAE@XZ,0x0000A187,gen-dtor class destructor
 ??1Gen_dtor_0026c1a0@@UAE@XZ,0x0001CF12,gen-dtor class destructor
-??1Gen_dtor_0026c1e0@@UAE@XZ,0x0003610B,gen-dtor class destructor
 ??1Gen_dtor_0026c6f0@@UAE@XZ,0x00037F56,gen-dtor class destructor
 ??1Gen_dtor_0026c790@@UAE@XZ,0x0003E5E5,gen-dtor class destructor
 ??1Gen_dtor_0026cee0@@UAE@XZ,0x0002C179,gen-dtor class destructor
@@ -32425,7 +32424,6 @@ name,address,notes
 ?b_0026bfb0@@YAXXZ,0x0026BFB0,gen-thunk body
 ?b_0026bfd0@@YAXXZ,0x0026BFD0,gen-thunk body
 ?b_0026c020@@YAXXZ,0x0026C020,gen-thunk body
-?b_0026c030@@YAXXZ,0x0026C030,gen-thunk body
 ?b_0026c060@@YAXXZ,0x0026C060,gen-thunk body
 ?b_0026c070@@YAXXZ,0x0026C070,gen-thunk body
 ?b_0026c080@@YAXXZ,0x0026C080,gen-thunk body
@@ -32435,7 +32433,6 @@ name,address,notes
 ?b_0026c190@@YAXXZ,0x0026C190,gen-thunk body
 ?b_0026c1a0@@YAXXZ,0x0026C1A0,gen-thunk body
 ?b_0026c1d0@@YAXXZ,0x0026C1D0,gen-thunk body
-?b_0026c1e0@@YAXXZ,0x0026C1E0,gen-thunk body
 ?b_0026c210@@YAXXZ,0x0026C210,gen-thunk body
 ?b_0026c260@@YAXXZ,0x0026C260,gen-thunk body
 ?b_0026c320@@YAXXZ,0x0026C320,gen-thunk body
@@ -82723,3 +82720,5 @@ g_bfmeTargetXP,0x012D7300,Open-BFME5 the word the initialiser at 0x009569A0 copi
 g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0 raises
 ??1HeroModeSpecialAbilityUpdate@@MAE@XZ,0x0002A9CD,destructor ILT to 0x0025F900
 ??_GHeroModeSpecialAbilityUpdate@@MAEPAXI@Z,0x000499EF,primary class vtable slot zero ILT to 0x0025F9E0
+??1ToggleHiddenSpecialAbilityUpdate@@MAE@XZ,0x0003610B,destructor ILT to 0x0026C030
+??_GToggleHiddenSpecialAbilityUpdate@@MAEPAXI@Z,0x0002C8CC,primary class vtable slot zero ILT to 0x0026C1E0

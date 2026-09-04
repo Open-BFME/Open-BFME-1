@@ -46,12 +46,16 @@ class SpecialAbilityUpdate : public BehaviorModule,
 {
 public:
 	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+	virtual ~SpecialAbilityUpdate();
 };
 
 class ToggleHiddenSpecialAbilityUpdate : public SpecialAbilityUpdate
 {
 public:
 	ToggleHiddenSpecialAbilityUpdate( Thing *, const ModuleData * );
+
+protected:
+	virtual ~ToggleHiddenSpecialAbilityUpdate();
 
 private:
 	unsigned int m_hidden;
@@ -61,5 +65,9 @@ ToggleHiddenSpecialAbilityUpdate::ToggleHiddenSpecialAbilityUpdate(
 	Thing *thing, const ModuleData *moduleData )
 	: SpecialAbilityUpdate( thing, moduleData ),
 	  m_hidden( 0 )
+{
+}
+
+ToggleHiddenSpecialAbilityUpdate::~ToggleHiddenSpecialAbilityUpdate()
 {
 }
