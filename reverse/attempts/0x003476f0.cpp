@@ -24,6 +24,7 @@ private:
 	Data *m_data;
 	StringBase() {}
 	StringBase(const StringBase &other);
+	~StringBase();
 };
 
 class AsciiString : private StringBase<char>
@@ -31,7 +32,7 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString() {}
 	AsciiString(const AsciiString &other) throw() : StringBase<char>(other) {}
-	~AsciiString() throw();
+	~AsciiString() {}
 	int compare(const AsciiString &other) const;
 };
 

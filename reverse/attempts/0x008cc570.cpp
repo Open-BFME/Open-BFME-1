@@ -63,7 +63,7 @@ public:
 
 void rva8C6320PrepareLookup(Rva8CCCE0Value *fallback, void *scope,
 	Rva8CC570Name *name, Rva8CC570Name *&updatedName, Rva8CC570String *key);
-Rva8CCCE0Value *__stdcall rva89C290Lookup(Rva8CC570String const &key,
+void *__stdcall rva89C290Lookup(Rva8CC570String const &key,
 	void *scope);
 
 Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
@@ -76,12 +76,12 @@ Rva8CCCE0Value *rva8CC570Resolve(void *fallback, void *scope, void *data)
 	rva8C6320PrepareLookup((Rva8CCCE0Value *)fallback, scope,
 		name, name, &key);
 	Rva8CC570Name const *resolvedName = name;
-	Rva8CCCE0Value *result = 0;
+	void *result = 0;
 	if (resolvedName != 0)
 	{
 		result = rva89C290Lookup(key, scope);
-		if (result != 0 && result->acceptsLookup())
-			return result;
+		if (result != 0 && ((Rva8CCCE0Value *)result)->acceptsLookup())
+			return (Rva8CCCE0Value *)result;
 	}
 	return 0;
 }

@@ -1,5 +1,7 @@
 // ?endPreparation@SpecialAbilityUpdate@@QAEXXZ
 // partial score=0.98 date=2026-09-04
+// ?endPreparation@SpecialAbilityUpdate@@QAEXXZ
+// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 

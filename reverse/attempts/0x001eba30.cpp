@@ -10,6 +10,12 @@
 typedef int Int;
 typedef bool Bool;
 
+enum ObjectID
+{
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
+};
+
 enum WeaponSlotType
 {
 	PRIMARY_WEAPON = 0,
@@ -26,11 +32,12 @@ enum WeaponLockType
 
 class Weapon;
 class Object;
+class WeaponTemplateSet;
 
 class GameLogic
 {
 public:
-	Object *findObjectByID(Int id);
+	Object *findObjectByID(ObjectID id);
 };
 
 extern GameLogic *TheGameLogic;
@@ -62,28 +69,42 @@ public:
 	unsigned int m_conditionWord4;
 };
 
-class WeaponSet
+class Snapshot
+{
+public:
+	virtual void crc();
+	virtual void xfer();
+	virtual void loadPostProcess();
+};
+
+class WeaponSet : public Snapshot
 {
 public:
 	Bool setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType);
 
 private:
-	unsigned char m_pad_00[8];
+	const WeaponTemplateSet *m_curWeaponTemplateSet;
 	Weapon *m_weapons[4];
 	WeaponSlotType m_curWeapon;
 	WeaponLockType m_curWeaponLockedStatus;
-	unsigned char m_pad_20[0x34 - 0x20];
-	Int m_objectId;
+	unsigned int m_filledWeaponSlotMask;
+	Int m_totalAntiMask;
+	unsigned int m_totalDamageTypeMask;
+	Bool m_hasPitchLimit;
+	Bool m_hasDamageWeapon;
+	unsigned char m_pad_2e[0x34 - 0x2e];
+	ObjectID m_objectId;
 };
 
 // ?setWeaponLock@WeaponSet@@QAE_NW4WeaponSlotType@@W4WeaponLockType@@@Z
 Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType)
 {
-	Object *obj = TheGameLogic->findObjectByID(m_objectId);
+	const Object *obj = TheGameLogic->findObjectByID(m_objectId);
 
 	if (lockType != NOT_LOCKED)
 	{
-		if (m_weapons[weaponSlot] != 0)
+		weapon = m_weapons[weaponSlot];
+		if (weapon != 0)
 		{
 			WeaponLockType permanent = LOCKED_PERMANENTLY;
 			if (lockType == permanent)
@@ -98,7 +119,7 @@ Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType
 			}
 
 			if (obj)
-				obj->clearModelConditionFlags(ModelConditionFlags(ModelConditionFlags::kInit, 0x88, 0x89, 0x8A));
+				const_cast<Object *>(obj)->clearModelConditionFlags(ModelConditionFlags(ModelConditionFlags::kInit, 0x88, 0x89, 0x8A));
 
 			unsigned int mask;
 			switch (m_curWeapon - PRIMARY_WEAPON)
@@ -130,8 +151,8 @@ Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType
 			unsigned int cur = obj->m_conditionWord4;
 			if ((cur & mask) == 0)
 			{
-				obj->m_conditionWord4 = cur | mask;
-				obj->notifyModelConditionChanged();
+				const_cast<Object *>(obj)->m_conditionWord4 = cur | mask;
+				const_cast<Object *>(obj)->notifyModelConditionChanged();
 			}
 			return true;
 		}

@@ -1,5 +1,5 @@
 // ?privateIdle@AIUpdateInterface@@MAEXW4CommandSourceType@@@Z
-// partial score=0.8 date=2026-09-03
+// partial score=0.8 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x0027D670: AIUpdateInterface::privateIdle.  BFME keeps the
@@ -38,6 +38,7 @@ public:
 	BfmeOverridable *m_nextOverride;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public BfmeOverridable
 {
 public:
@@ -45,6 +46,7 @@ public:
 	UnsignedInt m_kindof[3];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing
 {
 public:
@@ -71,6 +73,7 @@ struct BfmeContainedList
 
 #define BFME_CONTAIN_SLOT(N) virtual Int containSlot##N() = 0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
 public:
@@ -102,12 +105,14 @@ public:
 
 #undef BFME_CONTAIN_SLOT
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
 public:
 	void aiIdle( CommandSourceType cmdSource );
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
 {
 public:
@@ -128,6 +133,7 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
@@ -170,6 +176,7 @@ static ContainModuleInterface *bfmeContainOf( const AIUpdateInterface *ai )
 
 #define BFME_AI_SLOT(N) virtual Int aiSlot##N() = 0
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
 {
 public:

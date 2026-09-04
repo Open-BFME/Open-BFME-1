@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /Ireference/shims/stlp_nodealloc /Ivendor/stlport
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
 //
 // Retail 0x006AEE00: thiscall returning StringBase by hidden pointer.  If the
 // ready byte at +0x630 is clear, run init.  Find in the tree at +0x64, maybe
@@ -8,9 +9,11 @@ template <typename T> class StringBase
 {
 	friend class Rva006AEE00;
 
-private:
+	public:
 	StringBase(const StringBase<T> &other);
 	~StringBase();
+
+	private:
 	void *m_data;
 };
 
@@ -28,10 +31,30 @@ public:
 	{
 		void *iterator;
 		bool inserted;
+		InsertResult() {}
+		InsertResult(const InsertResult &other)
+			: iterator(other.iterator), inserted(other.inserted) {}
 	};
 
-	void insert_unique(InsertResult *result, const StringBase<char> &key);
+	InsertResult insert_unique(const StringBase<char> &key);
 	void erase(void *root);
+
+	struct Header
+	{
+		int color;
+		void *parent;
+		void *left;
+		void *right;
+	};
+
+	void clearRaw()
+	{
+		erase(((Header *)header)->parent);
+		((Header *)header)->left = header;
+		((Header *)header)->parent = 0;
+		((Header *)header)->right = header;
+		count = 0;
+	}
 
 	void *header;
 	int count;
@@ -49,7 +72,8 @@ public:
 	unsigned int m_lowPassCutoff;
 };
 
-#include "Common/STLTypedefs.h"
+#include <hash_map>
+#include <set>
 
 struct Rva006AEE00Less
 {
@@ -130,6 +154,22 @@ public:
 	unsigned int m_count;
 };
 
+static __forceinline Rva006AEE00Hashtable::Node *
+rva006AEE00Next(Rva006AEE00Hashtable::Node *current,
+	Rva006AEE00Hashtable *table)
+{
+	Rva006AEE00Hashtable::Node *next;
+	if (current->next)
+		return current->next;
+	unsigned int bucket = table->bucketNumber(current->value.first);
+	unsigned int count = table->bucketCount();
+	next = 0;
+	while (next == 0 && ++bucket < count)
+		next = reinterpret_cast<Rva006AEE00Hashtable::Node *>(
+			table->m_start[bucket]);
+	return next;
+}
+
 class Rva006AEE00
 {
 public:
@@ -187,22 +227,27 @@ public:
 
 void Rva006AEE00::init()
 {
-	Rva006AEE00ActualSet *tree =
+	Rva006AEE00ActualSet *actualTree =
 		reinterpret_cast<Rva006AEE00ActualSet *>(&m_tree);
-	if (!tree->empty())
+	if (!actualTree->empty())
 	{
-		tree->clear();
+		actualTree->clear();
 	}
+	Rva006AEE00Tree *tree = &m_tree;
 
-	Rva006AEE00ActualHashtable *table =
-		reinterpret_cast<Rva006AEE00ActualHashtable *>(reinterpret_cast<char *>(this) + 0x70);
-	Rva006AEE00ActualHashtable::iterator it = table->begin();
-	while (it._M_cur)
+	Rva006AEE00Hashtable::Iterator it =
+		reinterpret_cast<Rva006AEE00Hashtable *>(reinterpret_cast<char *>(this) + 0x70)->begin();
+	Rva006AEE00Hashtable::Node *current = it.current;
+	if (current)
 	{
-		Rva006AEE00Info *info = it._M_cur->_M_val.second;
-		if (info->m_lowPassCutoff == 0 && !(info->m_flags & 0x600))
-			tree->insert(*info->getName());
-		++it;
+		Rva006AEE00Hashtable *table = it.table;
+		while (current)
+		{
+			Rva006AEE00Info *info = current->value.second;
+			if (info->m_lowPassCutoff == 0 && !(info->m_flags & 0x600))
+				tree->insert_unique(*info->getName());
+			current = rva006AEE00Next(current, table);
+		}
 	}
 	m_ready = 1;
 }

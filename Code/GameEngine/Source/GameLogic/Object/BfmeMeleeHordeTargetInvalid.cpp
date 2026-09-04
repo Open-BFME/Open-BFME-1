@@ -1,7 +1,4 @@
-// ?bfmeMeleeHordeTargetInvalid@@YA_NPAVObject@@0@Z
-// partial score=0.84 date=2026-09-03
-// cl: /DNDEBUG /MD
-// Retail 0x00175820: the BFME melee-horde target predicate.
+// Retail 0x00175820: BFME melee-horde target predicate.
 
 typedef float Real;
 typedef int Int;
@@ -28,18 +25,23 @@ struct Coord3D
 	}
 };
 
-class Vector2
+struct Rva00175820Vector2
 {
-public:
-	Real x;
-	Real y;
-	static Real Dot_Product(const Vector2 &left, const Vector2 &right);
+	Real X;
+	Real Y;
+	__forceinline Rva00175820Vector2(Real x, Real y) : X(x), Y(y) {}
+	__forceinline friend Real operator *(const Rva00175820Vector2 &left,
+		const Rva00175820Vector2 &right)
+	{
+		return left.X * right.X + left.Y * right.Y;
+	}
 };
 
-Real Vector2::Dot_Product(const Vector2 &left, const Vector2 &right)
+union Rva00175820BoolInt
 {
-	return left.x * right.x + left.y * right.y;
-}
+	int integer;
+	Bool boolean;
+};
 
 class Thing
 {
@@ -53,14 +55,13 @@ class RvaC4390Second
 {
 public:
 	char m_bfmeHead[0x94];
-	unsigned char m_bfmeFlags;
 	RvaC4390First *resolve(Int kind);
 };
 
 class BfmeSub1CC_EC3
 {
 public:
-	Bool queryBelowQuarter(void *value);
+	int queryBelowQuarter(void *value);
 };
 
 class Rva001BDFF0
@@ -83,7 +84,6 @@ public:
 	const Coord3D *getPosition() const { return &m_position; }
 };
 
-// ?bfmeMeleeHordeTargetInvalid@@YA_NPAVObject@@0@Z
 Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target)
 {
 	if (target == 0)
@@ -102,13 +102,18 @@ Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target)
 	delta.sub(source->getPosition());
 	const Coord3D *direction =
 		((Thing *)target)->getUnitDirectionVector2D();
-	if (Vector2::Dot_Product(*(const Vector2 *)direction,
-		*(const Vector2 *)&delta) < BfmeZeroRange)
+	Rva00175820Vector2 direction2(direction->x, direction->y);
+	if (!(direction2 * *(const Rva00175820Vector2 *)&delta
+		< BfmeZeroRange))
 	{
 		BfmeSub1CC_EC3 *locomotor =
 			(BfmeSub1CC_EC3 *)((Rva001BDFF0 *)target)->get();
 		if (locomotor != 0)
-			return locomotor->queryBelowQuarter(target);
+		{
+			Rva00175820BoolInt result;
+			result.integer = locomotor->queryBelowQuarter(target);
+			return result.boolean;
+		}
 	}
 
 no:

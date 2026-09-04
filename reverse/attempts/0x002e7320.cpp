@@ -72,15 +72,22 @@ public:
 	}
 };
 
+__forceinline BfmeSortElem20TailElement *bfmeCopySortElem20Tail(
+	const BfmeSortElem20TailElement *first,
+	const BfmeSortElem20TailElement *last,
+	BfmeSortElem20TailElement *result)
+{
+	BfmeSortElem20TailElement *destination = result;
+	for (; first != last; ++first, ++destination)
+		_STL::_Construct(destination, *first);
+	return destination;
+}
+
 BfmeSortElem20Tail::BfmeSortElem20Tail(const BfmeSortElem20Tail &other)
 	: Base(other.size(), other.get_allocator())
 {
-	const Element *first = other._M_start;
-	const Element *last = other._M_finish;
-	Element *current = this->_M_start;
-	for (; first != last; ++first, ++current)
-		_STL::_Construct(current, *first);
-	this->_M_finish = current;
+	this->_M_finish = bfmeCopySortElem20Tail(
+		other._M_start, other._M_finish, this->_M_start);
 }
 
 struct S4SortElem20

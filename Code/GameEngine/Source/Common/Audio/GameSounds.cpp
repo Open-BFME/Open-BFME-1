@@ -343,12 +343,40 @@ Bool SoundManager::canPlayNow( AudioEventRTS *event )
 	return false;
 }
 
+class BfmeAudioEventInfoForVoice
+{
+public:
+	char m_pad[0x38];
+	unsigned char m_type;
+};
+
+class BfmeAudioEventRTSForVoice
+{
+public:
+	char m_pad[8];
+	BfmeAudioEventInfoForVoice *m_eventInfo;
+};
+
+class Rva006A2FD0
+{
+public:
+	char handle( void *key );
+};
+
+class BfmeB1007
+{
+public:
+	char bfmeGo1007B( void *key );
+};
+
 //-------------------------------------------------------------------------------------------------
-// ?violatesVoice@SoundManager@@ present-unmatched
 Bool SoundManager::violatesVoice( AudioEventRTS *event )
 {
-	if (event->getAudioEventInfo()->m_type & ST_VOICE) {
-		return (event->getObjectID() && TheAudio->isObjectPlayingVoice(event->getObjectID()));
+	BfmeAudioEventRTSForVoice *bfmeEvent = (BfmeAudioEventRTSForVoice *)event;
+	BfmeAudioEventInfoForVoice *eventInfo = bfmeEvent->m_eventInfo;
+	if (eventInfo->m_type & 0x10) {
+		return ((Rva006A2FD0 *)this)->handle( (void *)event->getObjectID() ) ||
+			((BfmeB1007 *)this)->bfmeGo1007B( (void *)event->getDrawableID() );
 	}
 	return false;
 }

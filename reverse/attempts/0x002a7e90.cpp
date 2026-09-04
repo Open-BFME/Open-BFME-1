@@ -1,6 +1,8 @@
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
 // partial score=0.97 date=2026-09-04
 // ?apply@SpecialAbilityUpdate@@QAEXXZ
+// partial score=0.97 date=2026-09-04
+// ?apply@SpecialAbilityUpdate@@QAEXXZ
 // partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD
 //

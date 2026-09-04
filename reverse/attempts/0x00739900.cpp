@@ -165,13 +165,16 @@ public:
 	int NumRefs;
 };
 
-bool Rva00739900Forward( void *object, float value )
+typedef bool (*BoolForward)( void *, float );
+
+unsigned char Rva00739900Forward( register void *object, float value )
 {
-	if ( !object )
+	RenderObjClass *robj = (RenderObjClass *)object;
+	if ( !robj )
 		return false;
 
 	register unsigned char result = 0;
-	MaterialInfoClass *minfo = ( (RenderObjClass *)object )->Get_Material_Info();
+	MaterialInfoClass *minfo = robj->Get_Material_Info();
 	if ( minfo )
 	{
 		for ( int i = 0; i < minfo->Vertex_Material_Count(); i++ )
@@ -188,11 +191,11 @@ bool Rva00739900Forward( void *object, float value )
 		return result;
 	}
 
-	int count = ( (RenderObjClass *)object )->Get_Num_Sub_Objects();
+	int count = robj->Get_Num_Sub_Objects();
 	for ( int i = 0; i < count; i++ )
 	{
-		RenderObjClass *sub = ( (RenderObjClass *)object )->Get_Sub_Object( i );
-		unsigned char child = (unsigned char)Rva00739900Forward( sub, value );
+		RenderObjClass *sub = robj->Get_Sub_Object( i );
+		const bool child = ((BoolForward)Rva00739900Forward)( sub, value );
 		if ( result || child )
 			result = 1;
 		if ( sub )

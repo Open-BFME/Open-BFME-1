@@ -78,8 +78,7 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 		Rva8CD520String name;
 		if (rva8CD520Type(value) != 1)
 			value = value->m_inner;
-		int output;
-		output = 0;
+		int output = 0;
 		rva8C6320Resolve(context->m_owner, context->m_scope,
 			(char *)value + 8, &output, &name);
 		value = state->resolve(context->m_owner, context->m_scope, &name, 1, 1, 0);

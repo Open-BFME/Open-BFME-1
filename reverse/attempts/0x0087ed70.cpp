@@ -41,14 +41,8 @@ private:
 Real GeometryShape::getBoundingSphereRadius() const
 {
 	volatile Real compilerZero = 0.0f;
-	GeometryType type = m_type;
-	switch (type)
+	switch (m_type)
 	{
-		case GEOMETRY_SPHERE:
-			return sqrt(geometrySqr(m_centerOffset.x) +
-				geometrySqr(m_centerOffset.y) +
-				geometrySqr(m_centerOffset.z)) + m_majorRadius;
-
 		case GEOMETRY_CYLINDER:
 			return sqrt(
 				geometrySqr(sqrt(geometrySqr(m_centerOffset.x) +
@@ -58,8 +52,13 @@ Real GeometryShape::getBoundingSphereRadius() const
 					geometrySqr(m_centerOffset.y) +
 					geometrySqr(m_centerOffset.z));
 
+		case GEOMETRY_SPHERE:
+			return sqrt(geometrySqr(m_centerOffset.x) +
+				geometrySqr(m_centerOffset.y) +
+				geometrySqr(m_centerOffset.z)) + m_majorRadius;
+
 		default:
-			if (type != GEOMETRY_BOX)
+			if (m_type != GEOMETRY_BOX)
 				return compilerZero;
 	}
 

@@ -1,7 +1,4 @@
-// ??0EmotionNugget@@QAE@XZ
-// partial score=0.98 date=2026-09-03
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
-// ??0EmotionNugget@@QAE@XZ present-unmatched
 
 #include "Common/AsciiString.h"
 #include <string.h>
@@ -15,6 +12,7 @@ struct ZeroTwenty
 	{
 		int *p = value;
 		unsigned c = 20;
+		c += (unsigned)(p - value);
 		memset(p, 0, c * sizeof(int));
 	}
 	Int value[20];

@@ -43,7 +43,7 @@ private:
 	char m_pad150[0x114];
 	BfmeVisionPartition m_partition;
 	char m_pad268[0x34];
-	volatile UnsignedInt m_visionSpiedMask;
+	UnsignedInt m_visionSpiedMask;
 };
 
 class Gen001C9AC0
@@ -59,7 +59,7 @@ private:
 	char m_pad150[0x114];
 	BfmeVisionPartition m_partition;
 	char m_pad268[0x34];
-	volatile UnsignedInt m_visionSpiedMask;
+	UnsignedInt m_visionSpiedMask;
 };
 
 static BfmeNotifyVKP *visionDrawable( void *self )
@@ -93,7 +93,7 @@ void Gen001C9A10::handle( Int player )
 	if( mapped == -1 )
 		return;
 
-	if( ((1 << (mapped & 0x1f)) & m_visionSpiedBy[mapped >> 5]) != 0 )
+	if( (1 << (mapped & 0x1f)) & m_visionSpiedBy[mapped >> 5] )
 		return;
 	m_visionSpiedBy[mapped >> 5] |= (1 << (mapped & 0x1f));
 	refreshVision( this );

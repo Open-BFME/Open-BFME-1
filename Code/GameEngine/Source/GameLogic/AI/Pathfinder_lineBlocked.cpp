@@ -82,9 +82,9 @@ public:
 	unsigned char m_centerInCell;
 	unsigned char m_considerTransient;
 	unsigned char m_padding1a[2];
-	Int m_acceptableSurfaces;
-	Int m_ignoredObstacleID;
-	BfmeMoveQuery m_working;
+	Int m_acceptableSurfaces;								// retail this+0x1c
+	Int m_ignoredObstacleID;								// retail this+0x20
+	BfmeMoveQuery m_working;								// retail this+0x24
 	Int m_allyFixedCount;
 	unsigned char m_enemyFixed;
 	unsigned char m_allyMoving;

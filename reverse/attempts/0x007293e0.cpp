@@ -80,9 +80,9 @@ Bool Rva007293E0Terrain::advanceLeft(ICoord2D &left, int xOffset,
 	int xOrigin = m_xOrigin;
 	int limitX = mapWidth - xOrigin;
 	int limitY = mapHeight - yOrigin;
-	maxY += height;
 	limitX--;
 	limitY--;
+	maxY += height;
 	if (left.y < maxY)
 	{
 		do

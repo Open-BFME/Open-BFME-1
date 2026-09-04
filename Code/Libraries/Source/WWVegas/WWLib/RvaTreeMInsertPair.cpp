@@ -1109,3 +1109,23 @@ Rva009EDBE0Tree::iterator BfmeRbTreeInsertAnchor009EDBE0( Rva009EDBE0Tree *tree,
 	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
 }
 
+struct Rva002A1E90Value
+{
+	char m_body[ 16 ];
+};
+
+typedef _STL::pair<const unsigned int, Rva002A1E90Value> Rva002A1E90Pair;
+
+typedef _STL::_Rb_tree<unsigned int, Rva002A1E90Pair,
+	_STL::_Select1st<Rva002A1E90Pair>, _STL::less<unsigned int>,
+	_STL::allocator<Rva002A1E90Pair> > Rva002A1E90Tree;
+
+// retail 0x002A1C20
+Rva002A1E90Tree::iterator BfmeRbTreeInsertAnchor002A1C20(
+	Rva002A1E90Tree *tree, _STL::_Rb_tree_node_base *x,
+	_STL::_Rb_tree_node_base *y, const Rva002A1E90Pair &v,
+	_STL::_Rb_tree_node_base *w )
+{
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+}
+

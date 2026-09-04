@@ -1,12 +1,5 @@
-// ??0BfmeAptScreenBase@@QAE@PAX@Z
-// partial score=0.99 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// ??0BfmeAptScreenBase@@QAE@PAX@Z
-// Common 0x218-byte APT screen base constructor, retail 0x00477BC0, 210 bytes.
-// Named by the matched BfmeAptScreenQuickMatchMenu caller (reloc_names).
-// Installs the GameWindow vtable 0x010F7778 and constructs WinInstanceData at
-// +0x30 (ILT 0x0001D845 -> ??0WinInstanceData@@QAE@XZ). Layout is the BFME
-// GameWindow slice in reference/shims/gamewindow/GameClient/GameWindow.h.
+// BfmeAptScreenBase constructor at retail 0x00477BC0 (210B).
 
 class WinInstanceData
 {
@@ -70,7 +63,6 @@ private:
 	void *m_editData;
 };
 
-// ??0BfmeAptScreenBase@@QAE@PAX@Z present-unmatched
 BfmeAptScreenBase::BfmeAptScreenBase( void *context )
 {
 	const BfmeAptScreenContext *ctx = (const BfmeAptScreenContext *)context;
@@ -84,7 +76,9 @@ BfmeAptScreenBase::BfmeAptScreenBase( void *context )
 	m_regionLoX = ctx->x;
 	m_regionLoY = ctx->y;
 	m_regionHiX = ctx->width + ctx->x;
-	m_regionHiY = ctx->height + ctx->y;
+	const BfmeAptScreenContext *q = (const BfmeAptScreenContext *)context;
+	const BfmeAptScreenContext *p = ctx;
+	m_regionHiY = q->height + p->y;
 	m_cursorX = zero;
 	m_cursorY = zero;
 	m_userData = 0;

@@ -1,22 +1,4 @@
-// ?attackOptimizedTarget@AIStateTargetDispatch@@QAEXPAVThing@@@Z
-// partial score=0.96 date=2026-09-04
-// cl: /DNDEBUG /MD /EHs-c-
-// AIStateTargetDispatch::attackOptimizedTarget — retail 0x0027E070 / 194B.
-// 186B / 194B: prologue, regs (ebx=target, edi=m_ai@+0x204, ebp=this,
-// esi=this+8), all six calls, terrain vslot +0xBC, and integer x/y spill
-// match. Tail is the only miss: ours `fld y; fmul [eax+4]; fld x; fmul [eax];
-// faddp; fcomp; test; jne` vs retail `fld [eax]; fld [eax+4]; fld y;
-// fmul st(1); fxch st(2); fmul x; faddp st(2); fxch; fcomp; fstp; test; jnp`.
-// Tried Coord3D/Coord2D copies, tx/ty temps, <= invert, /O1 /G6 /Op /Oi —
-// all keep the two-operand memory-fmul form. Next lever is whatever forces
-// both pointer floats onto the x87 stack before the first multiply.
-// Dump sibling of BoneFXUpdate::initTimes in Code/gen_asm/d_0027db50.asm.
-// Caller: AIUpdateTargetDispatch::attackTarget (AIUpdateTargetDispatch_Thunk.cpp)
-// when the owning Thing is KINDOF_BFME_6C.  this+8 is the owning Object*;
-// target+0x204 is the other unit's AI (same BfmeHordeMember refresh predicate
-// used by HordeContain / PathfindMoveAllies).  Continues into
-// attackOrdinaryTarget when both units face the same way (2D dir dot > 0).
-// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
+// Retail 0x0027E070: optimized target dispatch.
 
 enum Relationship
 {
@@ -36,6 +18,17 @@ struct Coord3D
 	float x;
 	float y;
 	float z;
+};
+
+struct Coord2D
+{
+	float x;
+	float y;
+	__forceinline Coord2D(float xValue, float yValue) : x(xValue), y(yValue) {}
+	__forceinline friend float operator *(const Coord2D &left, const Coord2D &right)
+	{
+		return left.x * right.x + left.y * right.y;
+	}
 };
 
 class BfmeHordeMember
@@ -128,7 +121,7 @@ public:
 	virtual bool probePosition(const Coord3D *pos);
 };
 
-TerrainLogic *TheTerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 void AIStateTargetDispatch::attackOptimizedTarget(Thing *target)
 {
@@ -156,6 +149,8 @@ void AIStateTargetDispatch::attackOptimizedTarget(Thing *target)
 	dir.y = selfDir->y;
 	dir.z = selfDir->z;
 	const Coord3D *targetDir = target->getUnitDirectionVector2D();
-	if (targetDir->x * dir.x + targetDir->y * dir.y > 0.0f)
-		attackOrdinaryTarget(target);
+	Coord2D targetDir2(targetDir->x, targetDir->y);
+	if (targetDir2 * *reinterpret_cast<const Coord2D *>(&dir) <= 0.0f)
+		return;
+	attackOrdinaryTarget(target);
 }

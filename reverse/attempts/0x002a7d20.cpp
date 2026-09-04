@@ -1,5 +1,7 @@
 // ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
 // partial score=0.83 date=2026-09-04
+// ?getSpecialObjectMax@SpecialAbilityUpdate@@QBEIXZ
+// partial score=0.83 date=2026-09-04
 // cl: /DNDEBUG /MD
 
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };

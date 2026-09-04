@@ -73,7 +73,6 @@ public:
 
 void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
 {
-	int zero = 0;
 	if (limit == -1)
 	{
 		m_ownedValues[m_ownedCount++] = (BfmeR1226Value *)valueArgument;
@@ -82,6 +81,7 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
 	BfmeR1226Value *value = (BfmeR1226Value *)valueArgument;
 
 	unsigned char *start = (unsigned char *)code;
+	int zero = 0;
 	BfmeR1226ExecContext execute;
 	execute.m_cursor = start;
 	execute.m_heldValue = value;

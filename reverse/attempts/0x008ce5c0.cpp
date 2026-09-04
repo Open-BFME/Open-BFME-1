@@ -5,11 +5,12 @@
 
 struct Rva8CE5C0StringBlock { unsigned short m_refs; };
 extern void (__cdecl **Rva01337A30ReleaseTable)(void *);
+extern void *(__cdecl *g_rva8CE5C0Allocate)(unsigned);
 
 class Rva8CE5C0String
 {
 public:
-	Rva8CE5C0String(const char *text) { set(text); }
+	Rva8CE5C0String(const char *text);
 	Rva8CE5C0String(const Rva8CE5C0String &other)
 	{
 		m_block = other.m_block;
@@ -45,24 +46,30 @@ class Rva8CE5C0Object : public Rva8CE5C0Value
 public:
 	Rva8CE5C0Object(void *record, Rva8CE5C0Value *top, int property,
 		void *context);
-	static void *operator new(unsigned size);
+	static void *operator new(unsigned size)
+	{
+		void *raw = g_rva8CE5C0Allocate(size);
+		return (char *)raw + 8;
+	}
 	static void operator delete(void *);
+	char m_gap08[0x34];
 };
 
 class Rva8CE5C0State
 {
 public:
 	void append(void *, void *, Rva8CE5C0String *, Rva8CE5C0Value *, int, int, int);
+	char m_gap00[0x0c];
 	int m_count;
 	int m_unused;
 	Rva8CE5C0Value **m_stack;
-	char m_gap0c[0x50];
+	char m_gap18[0x44];
 	int m_line;
 	int m_column;
 };
 
 struct Rva8CE5C0ContextRoot { char m_gap00[0x50]; int *m_properties; };
-struct Rva8CE5C0Context { Rva8CE5C0ContextRoot *m_root; char m_gap04[4]; void *m_result; };
+struct Rva8CE5C0Context { char m_gap00[0x50]; Rva8CE5C0ContextRoot *m_root; };
 struct Rva8CE5C0Cursor { unsigned char *m_position; Rva8CE5C0Context *m_context; void *m_scope; };
 struct Rva8CE5C0Record { const char *m_name; char m_gap04[8]; unsigned m_size; int m_line; int m_column; };
 

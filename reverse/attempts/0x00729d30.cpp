@@ -60,7 +60,7 @@ void Rva00729D30Terrain::checkEdges(int xOffset, int yOffset, int width,
       {
           *top = true;
       }
-      if (!m_map->test(m_xOrigin + centerX, m_yOrigin + maxY))
+      if (!m_map->test(m_xOrigin + centerX, maxY + m_yOrigin))
       {
           *right = true;
       }

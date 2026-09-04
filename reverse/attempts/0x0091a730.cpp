@@ -1,6 +1,6 @@
 // ??0StreakLineClass@@QAE@XZ
 // partial score=0.97 date=2026-09-04
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
 // readable body of ??0StreakLineClass@@QAE@XZ:
 // Code/Libraries/Source/WWVegas/WW3D2/streak.cpp
 //
@@ -18,56 +18,53 @@
 class RefCountClass
 {
 public:
+	RefCountClass();
+	virtual void Delete_This();
 	virtual ~RefCountClass();
-	int RefCount;
+	int NumRefs;
 };
 
-class PersistClass
+class MultiListObjectClass
 {
 public:
-	virtual void On_Post_Load();
+	MultiListObjectClass();
+	virtual ~MultiListObjectClass();
+	void *ListNode;
 };
 
 // upstream layout: reference/shims/sweep/rendobj.h (BFME RenderObjClass is 0xC8)
-class RenderObjClass : public RefCountClass, public PersistClass
+class RenderObjClass : public RefCountClass, public MultiListObjectClass
 {
 public:
 	RenderObjClass();
+	virtual ~RenderObjClass();
 
 protected:
-	char m_rest[0xC8 - 12];
+	char m_tail[0xB8];
 };
 
-template <class T>
-class SimpleVecClass
+#include "simplevec.h"
+
+class Vector3
 {
 public:
-	SimpleVecClass() : Vector(0), VectorMax(0) {}
-	virtual ~SimpleVecClass();
-
-protected:
-	T *Vector;
-	int VectorMax;
+	~Vector3();
+	float X, Y, Z;
 };
 
-template <class T>
-class SimpleDynVecClass : public SimpleVecClass<T>
+class Vector4
 {
 public:
-	SimpleDynVecClass() : ActiveCount(0) {}
-
-protected:
-	int ActiveCount;
+	~Vector4();
+	float X, Y, Z, W;
 };
-
-class Vector3;
-class Vector4;
 
 // upstream layout: Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
 {
 public:
 	SegLineRendererClass();
+	~SegLineRendererClass();
 
 private:
 	char m_storage[0x50];
@@ -78,6 +75,7 @@ class StreakRendererClass
 {
 public:
 	StreakRendererClass();
+	~StreakRendererClass();
 
 private:
 	char m_storage[0x4C];
@@ -104,7 +102,12 @@ private:
 // ??0StreakLineClass@@QAE@XZ
 StreakLineClass::StreakLineClass(void) :
 	MaxSubdivisionLevels(0),
-	NormalizedScreenArea(0.0f)
+	NormalizedScreenArea(0.0f),
+	PointLocations(0),
+	PointColors(0),
+	PointWidths(0),
+	LineRenderer(),
+	StreakRenderer()
 {
 	Personalities = 0;
 }

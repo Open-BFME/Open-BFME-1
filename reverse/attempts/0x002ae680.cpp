@@ -1,5 +1,7 @@
 // ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ
 // partial score=0.75 date=2026-09-04
+// ?getCollapseHeight@StructureCollapseRetailLayout@@QAEMXZ
+// partial score=0.75 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 
 typedef float Real;

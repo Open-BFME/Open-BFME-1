@@ -46,49 +46,59 @@ struct StateMachine
 };
 
 extern Bool g_logCritterDesync;
-extern void *g_critterDesyncLog;
-extern void __cdecl logCritterDesync(void *log, const char *format, ...);
+struct _iobuf;
+typedef _iobuf FILE;
+extern FILE *g_critterDesyncLog;
+extern "C" int __cdecl fprintf(FILE *log, const char *format, ...);
 
-class AIInternalMoveToState
+class State
 {
-protected:
+	protected:
+	virtual void stateSlot();
+	unsigned char m_beforeMachine[0x18];
+	StateMachine *m_machine;
+};
+
+class AIInternalMoveToState : public State
+{
+	protected:
 	Bool getAdjustsDestination() const;
 
-private:
-	unsigned char m_beforeMachine[0x1c];
-	StateMachine *m_machine;
+	private:
 	unsigned char m_beforeAdjustDestinations[0x4c - 0x20];
 	Bool m_adjustDestinations;
 };
 
 Bool AIInternalMoveToState::getAdjustsDestination() const
 {
+	AIInternalMoveToState *self = (AIInternalMoveToState *)this;
 	if (g_logCritterDesync && g_critterDesyncLog)
-		logCritterDesync(g_critterDesyncLog,
+		fprintf(g_critterDesyncLog,
 			"CritterDesync: getAdjustsDestination() entered.");
 
-	const Object *object = m_machine->m_owner;
-	if (object->m_statusParachutingByte < 0)
+	StateMachine *machine = self->m_machine;
+	Object *obj = machine->m_owner;
+	if (obj->m_statusParachutingByte < 0)
 	{
 		if (g_logCritterDesync && g_critterDesyncLog)
-			logCritterDesync(g_critterDesyncLog,
+			fprintf(g_critterDesyncLog,
 				"CritterDesync: getAdjustsDestination1 - parachuting returning FALSE.");
 		return false;
 	}
 
-	const AIUpdateInterface *ai = object->m_ai;
+	AIUpdateInterface *ai = obj->m_ai;
 	if (ai && !ai->isAllowedToAdjustDestination())
 	{
 		if (g_logCritterDesync && g_critterDesyncLog)
-			logCritterDesync(g_critterDesyncLog,
+			fprintf(g_critterDesyncLog,
 				"CritterDesync: getAdjustsDestination1 - isAllowedToAdjustDestination FALSE, returning FALSE.");
 		return false;
 	}
 
 	if (g_logCritterDesync && g_critterDesyncLog)
-		logCritterDesync(g_critterDesyncLog,
+		fprintf(g_critterDesyncLog,
 			"CritterDesync: getAdjustsDestination1 - m_adjustsDestinations = %s",
-			m_adjustDestinations ? "TRUE" : "FALSE");
+			self->m_adjustDestinations ? "TRUE" : "FALSE");
 
-	return m_adjustDestinations;
+	return self->m_adjustDestinations;
 }

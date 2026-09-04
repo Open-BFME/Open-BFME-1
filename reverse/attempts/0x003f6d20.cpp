@@ -63,15 +63,7 @@ UnsignedInt PathfindCell::costSoFar(PathfindCell *parent)
 		cost += 14;
 
 	int numTurns = 0;
-	PathfindCellInfo *parentInfo = parent->m_info;
-	if (parentInfo)
-		parentInfo = parentInfo->m_pathParent;
-	PathfindCell *prevCell;
-	if (parentInfo)
-		prevCell = parentInfo->m_cell;
-	else
-		prevCell = 0;
-	if (prevCell)
+	for (PathfindCell *prevCell = parent->getParentCell(); prevCell; prevCell = 0)
 	{
 		ICoord2D dir;
 		dir.x = prevCell->getXIndex() - parent->getXIndex();

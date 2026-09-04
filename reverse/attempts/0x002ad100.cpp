@@ -1,5 +1,7 @@
 // ?apply@Rva002AD100@@QAEXXZ
 // partial score=0.63 date=2026-09-04
+// ?apply@Rva002AD100@@QAEXXZ
+// partial score=0.63 date=2026-09-04
 // cl: /DNDEBUG /MD
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

@@ -19,6 +19,7 @@ public:
 	unsigned size() const { return (unsigned)(m_finish - m_start); }
 
 	void resize(unsigned n, BfmePod16WR value);
+	void resize(unsigned n);
 	void fillInsert(BfmePod16WR *pos, unsigned n, const BfmePod16WR &value);
 
 	BfmePod16WR *m_start;
@@ -32,6 +33,20 @@ void BfmeVecWR::resize(unsigned n, BfmePod16WR value)
 	{
 		BfmePod16WR *dest = m_start + n;
 		m_finish = bfmeCopyWR(end(), end(), dest, *reinterpret_cast<BfmeTagWR *>(&n), (int *)0);
+	}
+	else
+		fillInsert(end(), n - size(), value);
+}
+
+// ?resize@BfmeVecWR@@QAEXI@Z 0x0074E790
+void BfmeVecWR::resize(unsigned n)
+{
+	BfmePod16WR value = BfmePod16WR();
+	if (n < size())
+	{
+		BfmePod16WR *dest = m_start + n;
+		m_finish = bfmeCopyWR(end(), end(), dest,
+			*reinterpret_cast<BfmeTagWR *>(&n), (int *)0);
 	}
 	else
 		fillInsert(end(), n - size(), value);
