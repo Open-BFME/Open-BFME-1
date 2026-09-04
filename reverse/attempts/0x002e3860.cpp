@@ -175,9 +175,10 @@ int CurDrawableGetCurrentTargetDistance(lua_State *state)
 	if (drawable != 0) {
 		LuaTargetOwner *owner = drawable->m_owner;
 		if (owner != 0) {
-			if (owner->m_target != 0) {
-				LuaTargetRecord *target = owner->m_target;
-				lua_pushnumber(state, sqrt(target->getDistanceSquared(&target->m_targetPosition)));
+			Coord3D *position = &owner->m_target->m_targetPosition;
+			LuaTargetRecord *target = owner->m_target;
+			if (target != 0) {
+				lua_pushnumber(state, sqrt(target->getDistanceSquared(position)));
 				return 1;
 			}
 		}

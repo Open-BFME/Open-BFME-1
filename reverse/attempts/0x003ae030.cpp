@@ -96,12 +96,11 @@ void Glo012F1024Item::j_0002a969(void)
 		const BfmeFlag32 *begin = self->m_bfmeFlag32Begin;
 		char flag = (char)(begin + index)->m_bfmeFlag;
 		float n = (begin + index)->m_bfmeN;
-		unsigned int h = (begin + index)->m_bfmeH;
 		BfmeNode20 *node = new BfmeNode20(
 			(begin + index)->m_bfmeA,
 			(begin + index)->m_bfmeVec,
 			n,
-			h,
+			(begin + index)->m_bfmeH,
 			flag);
 		keep = -1;
 		Glo012F1028->j_00003f0d(node);

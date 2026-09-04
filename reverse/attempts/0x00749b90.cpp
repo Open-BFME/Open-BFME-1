@@ -1,6 +1,6 @@
 // ?d_00749b90@@YAXXZ
 // partial score=0.9 date=2026-08-29
-// cl: /Gy
+// cl: /Oy- /Gy
 // Two bit-array setters from the 0x0074xxxx run.  Identity is not recovered;
 // names are address-derived.
 //
@@ -34,23 +34,21 @@ public:
 // @?setBit@Rva00749B90@@QAEXHHD@Z 0x00749B90
 void Rva00749B90::setBit( int x, int y, char value )
 {
-	register int column = x;
-	register int row = y;
-	if( column < 0 )
+	if( x < 0 )
 		return;
-	if( row < 0 )
+	if( y < 0 )
 		return;
-	if( row >= m_height )
+	if( y >= m_height )
 		return;
-	if( column >= m_width )
+	if( x >= m_width )
 		return;
 
-	int index = m_pitch * row + ( column >> 3 );
+	int index = m_pitch * y + ( x >> 3 );
 	if( (unsigned int)index >= (unsigned int)( m_end - m_begin ) )
 		return;
 
 	unsigned char *slot = m_begin + index;
-	unsigned char mask = (unsigned char)( 1 << ( column & 7 ) );
+	unsigned char mask = (unsigned char)( 1 << ( x & 7 ) );
 	unsigned char current = *slot;
 
 	if( value )

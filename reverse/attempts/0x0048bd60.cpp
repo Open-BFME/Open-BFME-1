@@ -56,25 +56,20 @@ struct BfmeParsedValue0048BD60
 extern const unsigned char Rva0048BD60FieldTable[];
 void *bfmeNodeAllocate0048BD60(unsigned int bytes);
 
-static __forceinline void bfmeAppend0048BD60(
-	BfmeParsed0048BD60 *parsed,
-	BfmeParsedNode0048BD60 *position)
-{
-	BfmeParsedNode0048BD60 *node =
-		static_cast<BfmeParsedNode0048BD60 *>(bfmeNodeAllocate0048BD60(12));
-	new (&node->value) BfmeParsedValue0048BD60(parsed);
-	BfmeParsedNode0048BD60 *next = position->next;
-	node->previous = position;
-	node->next = next;
-	next->previous = node;
-	position->next = node;
-}
-
 void bfmeParse_0048BD60(BfmeIni *ini, BfmeParsedHolder *holder)
 {
-	BfmeParsedNode0048BD60 *position = holder->list.head;
 	BfmeParsed0048BD60 *parsed = new BfmeParsed0048BD60;
 	ini->initFromINI(parsed, Rva0048BD60FieldTable);
+	BfmeParsedNode0048BD60 *position = holder->list.head;
 	if (parsed)
-		bfmeAppend0048BD60(parsed, position);
+	{
+		BfmeParsedNode0048BD60 *node =
+			static_cast<BfmeParsedNode0048BD60 *>(bfmeNodeAllocate0048BD60(12));
+		new (&node->value) BfmeParsedValue0048BD60(parsed);
+		BfmeParsedNode0048BD60 *next = position->next;
+		node->previous = position;
+		node->next = next;
+		next->previous = node;
+		position->next = node;
+	}
 }

@@ -1878,6 +1878,9 @@ name,address,notes
 ??0AsciiStringWI@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWK@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringWL@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWM@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWN@@QAE@ABV0@@Z,0x00887B60,pin
+??0AsciiStringWO@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AssaultTransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AssaultTransportAIUpdate ctor base call
 ??0AssistedTargetingUpdateModuleData@@QAE@XZ,0x000104B5,pinharvest x1 (thunk)
 ??0AttackNugget@@QAE@XZ,0x00022B42,Open-BFME5 retail ILT target for AttackNugget parser constructor call
@@ -3183,6 +3186,7 @@ name,address,notes
 ??0UnicodeStringWJ@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWL@@QAE@ABV0@@Z,0x00888400,pin
+??0UnicodeStringWN@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnitCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00009AED,module ctor (friend_newModuleInstance retail call target)
 ??0UnpauseSpecialPowerUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048635,module ctor (friend_newModuleInstance retail call target)
 ??0UnpauseSpecialPowerUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
@@ -3528,6 +3532,9 @@ name,address,notes
 ??1AsciiStringWI@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWK@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWL@@QAE@XZ,0x00887940,pin
+??1AsciiStringWM@@QAE@XZ,0x00887940,pin
+??1AsciiStringWN@@QAE@XZ,0x00887940,pin
+??1AsciiStringWO@@QAE@XZ,0x00887940,pin
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1AttributeModifierAuraUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -3874,6 +3881,8 @@ name,address,notes
 ??1GenBase003BB1E0@@QAE@XZ,0x003BB260,base destructor tail-jumped by the vptr-only derived destructors in V4VptrDestructorTails.cpp; counterpart of the base constructor pinned at 0x003BB1E0
 ??1GenRoot0082AE40@@UAE@XZ,0x0082AE40,Open-BFME5 the root destructor the /Od chain at 0x0082AE60 calls
 ??1Gen_0014C7A0@@UAE@XZ,0x0014E100,Open-BFME5 slot 0 of the table 0x010959D4; the virtual destructor of the class the ctor at 0x0014C7A0 builds
+??1Gen_003A8910@@UAE@XZ,0x003A89C0,Open-BFME5 slot 0 of the table 0x010EC778
+??1Gen_003A8A70@@UAE@XZ,0x003A8B10,Open-BFME5 slot 0 of the table 0x010EC780
 ??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
 ??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
 ??1Gen_0051b720Base@@QAE@XZ,0x0004634E,ILT thunk to body 0x00490470
@@ -8531,6 +8540,7 @@ name,address,notes
 ??1UnicodeStringWJ@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
+??1UnicodeStringWN@@QAE@XZ,0x008881D0,pin
 ??1UnitCrateCollideModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1UnitCrateCollideModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1UnitCrateCollideModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -77264,6 +77274,8 @@ name,address,notes
 ?g_pair@@3P6GXPAX0@ZA,0x013590FC,address-derived IAT call recovered from 0x0093C400
 ?g_processVal13596B8@@3P6GXH@ZA,0x00F596B8,pin
 ?g_quitMenuLayout@@3PAXA,0x012F4AD4,HideQuitMenu layout global
+?g_recorderSavedGlobalFlag@@3EA,0x012ED624,RecorderClass saved byte restored into TheWritableGlobalData+0x11EC by restoreGlobalDataFields
+?g_recorderSavedGlobalValue@@3HA,0x012ED620,RecorderClass saved scalar restored into TheWritableGlobalData+0x11F0 by restoreGlobalDataFields
 ?g_release@@3P6GXPAX@ZA,0x013590C8,address-derived IAT call recovered from 0x0093C400
 ?g_rva001B59ScaleConstant@@3MC,0x00EACFE0,retail 0.2 scale constant used by override float getters
 ?g_rva0051B5F0Large@@3URva0051B5F0Large@@A,0x00D05FBC,Open-BFME5 packed thirteen-byte preset global
@@ -82700,15 +82712,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0AsciiStringWM@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWM@@QAE@XZ,0x00887940,pin
-??1Gen_003A8A70@@UAE@XZ,0x003A8B10,Open-BFME5 slot 0 of the table 0x010EC780
-??0AsciiStringWN@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWN@@QAE@XZ,0x00887940,pin
-??0UnicodeStringWN@@QAE@ABV0@@Z,0x00888400,pin
-??1UnicodeStringWN@@QAE@XZ,0x008881D0,pin
-??0AsciiStringWO@@QAE@ABV0@@Z,0x00887B60,pin
-??1AsciiStringWO@@QAE@XZ,0x00887940,pin
-??1Gen_003A8910@@UAE@XZ,0x003A89C0,Open-BFME5 slot 0 of the table 0x010EC778
-?g_recorderSavedGlobalValue@@3HA,0x012ED620,RecorderClass saved scalar restored into TheWritableGlobalData+0x11F0 by restoreGlobalDataFields
-?g_recorderSavedGlobalFlag@@3EA,0x012ED624,RecorderClass saved byte restored into TheWritableGlobalData+0x11EC by restoreGlobalDataFields

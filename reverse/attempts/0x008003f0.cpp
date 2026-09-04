@@ -34,8 +34,7 @@ void *Rva008003F0Arena::claim( int size, bool align )
 	else
 		pad = 0;
 	unsigned used = m_used;
-	char *result = m_base + used + pad;
-	unsigned next = used + pad + (unsigned)size;
+	unsigned next = (unsigned)size + (used + pad);
 	if( next > m_cap )
 	{
 		Rva007EB810Get()->fail(
@@ -44,6 +43,7 @@ void *Rva008003F0Arena::claim( int size, bool align )
 			0xd1 );
 		return 0;
 	}
+	char *result = m_base + used + pad;
 	m_used = next;
 	return result;
 }
