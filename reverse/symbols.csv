@@ -82701,3 +82701,13 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0AsciiStringWM@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWM@@QAE@XZ,0x00887940,pin
+??1Gen_003A8A70@@UAE@XZ,0x003A8B10,Open-BFME5 slot 0 of the table 0x010EC780
+??0AsciiStringWN@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWN@@QAE@XZ,0x00887940,pin
+??0UnicodeStringWN@@QAE@ABV0@@Z,0x00888400,pin
+??1UnicodeStringWN@@QAE@XZ,0x008881D0,pin
+??0AsciiStringWO@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWO@@QAE@XZ,0x00887940,pin
+??1Gen_003A8910@@UAE@XZ,0x003A89C0,Open-BFME5 slot 0 of the table 0x010EC778
