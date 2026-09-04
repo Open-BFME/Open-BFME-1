@@ -48,6 +48,7 @@ class OptionPreferences
 {
 public:
 	bool hasSeenLogoMovies(void);
+	bool hasGotOnline(void);
 
 private:
 	unsigned char m_unreconstructed_00[4];
@@ -60,6 +61,22 @@ bool OptionPreferences::hasSeenLogoMovies(void)
 	PreferenceNode *it;
 	{
 		AsciiString key("HasSeenLogoMovies");
+		it = m_prefs.find(key);
+	}
+
+	if (it == m_prefs.end())
+		return false;
+
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
+		return true;
+	return false;
+}
+
+bool OptionPreferences::hasGotOnline(void)
+{
+	PreferenceNode *it;
+	{
+		AsciiString key("HasGotOnline");
 		it = m_prefs.find(key);
 	}
 
