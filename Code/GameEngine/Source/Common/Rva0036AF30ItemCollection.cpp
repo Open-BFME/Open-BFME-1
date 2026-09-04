@@ -41,11 +41,11 @@ public:
 	AttributeModifierDefinition **m_end;
 };
 
-class Rva0036AF30ItemCollection
+class AttributeModifierDefinitionStore
 {
 public:
 	char m_unreconstructed[ 8 ];
-	AttributeModifierDefinitionRange m_items;
+	AttributeModifierDefinitionRange m_definitions;
 
 	int indexOf(int key) const;
 	int valueAt(int index) const;
@@ -53,10 +53,10 @@ public:
 	int secondaryValueAt(int index, const Object *object) const;
 };
 
-int Rva0036AF30ItemCollection::indexOf(int key) const
+int AttributeModifierDefinitionStore::indexOf(int key) const
 {
-	AttributeModifierDefinition **cursor = m_items.m_begin;
-	AttributeModifierDefinition **end = m_items.m_end;
+	AttributeModifierDefinition **cursor = m_definitions.m_begin;
+	AttributeModifierDefinition **end = m_definitions.m_end;
 	int index = 0;
 	while( cursor != end )
 	{
@@ -68,41 +68,33 @@ int Rva0036AF30ItemCollection::indexOf(int key) const
 	return -1;
 }
 
-// @?indexOf@Rva0036AF30ItemCollection@@QBEHH@Z 0x0036AF30
-
-int Rva0036AF30ItemCollection::valueAt(int index) const
+int AttributeModifierDefinitionStore::valueAt(int index) const
 {
-	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
+	if( index < 0 || (unsigned int)index > m_definitions.size() - 1 )
 		return 0;
 
-	AttributeModifierDefinition *item = m_items[index];
+	AttributeModifierDefinition *item = m_definitions[index];
 	return item ? item->m_value : 0;
 }
 
-// @?valueAt@Rva0036AF30ItemCollection@@QBEHH@Z 0x0036AF70
-
-int Rva0036AF30ItemCollection::primaryValueAt(
+int AttributeModifierDefinitionStore::primaryValueAt(
 	int index,
 	const Object *object) const
 {
-	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
+	if( index < 0 || (unsigned int)index > m_definitions.size() - 1 )
 		return 0;
 
-	AttributeModifierDefinition *item = m_items[index];
+	AttributeModifierDefinition *item = m_definitions[index];
 	return item ? item->primaryValueFor(object) : 0;
 }
 
-// @?primaryValueAt@Rva0036AF30ItemCollection@@QBEHHPBVObject@@@Z 0x0036B000
-
-int Rva0036AF30ItemCollection::secondaryValueAt(
+int AttributeModifierDefinitionStore::secondaryValueAt(
 	int index,
 	const Object *object) const
 {
-	if( index < 0 || (unsigned int)index > m_items.size() - 1 )
+	if( index < 0 || (unsigned int)index > m_definitions.size() - 1 )
 		return 0;
 
-	AttributeModifierDefinition *item = m_items[index];
+	AttributeModifierDefinition *item = m_definitions[index];
 	return item ? item->secondaryValueFor(object) : 0;
 }
-
-// @?secondaryValueAt@Rva0036AF30ItemCollection@@QBEHHPBVObject@@@Z 0x0036B040
