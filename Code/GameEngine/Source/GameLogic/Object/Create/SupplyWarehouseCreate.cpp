@@ -51,7 +51,7 @@ SupplyWarehouseCreate::SupplyWarehouseCreate( Thing *thing, const ModuleData* mo
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1SupplyWarehouseCreate@@MAE@XZ present-unmatched
+// ??1SupplyWarehouseCreate@@MAE@XZ
 SupplyWarehouseCreate::~SupplyWarehouseCreate( void )
 {
 
