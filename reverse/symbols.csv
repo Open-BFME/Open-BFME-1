@@ -83178,6 +83178,7 @@ _ciAddNAMESFilter,0x0086C5A0,upstream chatMain.c NAMES filter helper whose retur
 _ciAddTOPICFilter,0x0086C570,GameSpy Chat channel-topic filter constructor
 _ciAddWHOFilter,0x0086C650,gamespy-chat: registered by chatGetBasicUserInfo at 0x00861370 right after the WHO send
 _ciBufferPreAppend,0x0085A740,gamespy-chatSocket internal call from exact ciSocketSend caller
+_ciCallCallback,0x008712F0,gamespy-chat: static EAX/ESI dispatcher called from exact _ciCallCallbacks; dump still at 0x008712F0
 _ciCallCallbacks,0x008714F0,gamespy-chat: final callee of ciThink at 0x008601F0 - takes the chat handle and an ID
 _ciChannelEntering,0x00871850,gamespy-chat: marks channel as entering
 _ciChannelLeft,0x00871A30,Open-BFME5 the channel bookkeeping _chatLeaveChannel at 0x008609B0 runs after the PART goes out
