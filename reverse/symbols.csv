@@ -35482,7 +35482,6 @@ name,address,notes
 ?b_002cef60@@YAXXZ,0x002CEF60,gen-thunk body
 ?b_002cef90@@YAXXZ,0x002CEF90,gen-thunk body
 ?b_002cefa0@@YAXXZ,0x002CEFA0,gen-thunk body
-?b_002cf0c0@@YAXXZ,0x002CF0C0,gen-thunk body
 ?b_002cf0f0@@YAXXZ,0x002CF0F0,gen-thunk body
 ?b_002cf140@@YAXXZ,0x002CF140,gen-thunk body
 ?b_002cf150@@YAXXZ,0x002CF150,gen-thunk body
@@ -82759,3 +82758,4 @@ g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifi
 ?buildFieldParse@RailedTransportDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00014326,unique ILT to 0x002CE290
 ?buildFieldParse@Gen00004052@@SAXAAVWideMulti@@@Z,0x00004052,base-class buildFieldParse reached via incremental-link thunk; address-derived name retained for remaining WideBuildFieldParse rows
 ?buildFieldParse@RepairDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00030521,unique ILT to 0x002CECF0
+?buildFieldParse@SupplyCenterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0000CBFD,unique ILT to 0x002CF0C0
