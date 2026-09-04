@@ -40,20 +40,23 @@ public:
     virtual ~GiveUpgradeUpdateIface3();
 };
 
-class GiveUpgradeUpdateBase : public GiveUpgradeUpdateGrandBase, public GiveUpgradeUpdateIface1, public GiveUpgradeUpdateIface2, public GiveUpgradeUpdateIface3
+class SpecialAbilityUpdate : public GiveUpgradeUpdateGrandBase, public GiveUpgradeUpdateIface1, public GiveUpgradeUpdateIface2, public GiveUpgradeUpdateIface3
 {
 public:
-    GiveUpgradeUpdateBase(Thing *, const ModuleData *);
-    virtual ~GiveUpgradeUpdateBase();
+    SpecialAbilityUpdate(Thing *, const ModuleData *);
+    virtual ~SpecialAbilityUpdate();
 
 private:
     unsigned char m_pad[0xC4];
 };
 
-class GiveUpgradeUpdate : public GiveUpgradeUpdateBase
+class GiveUpgradeUpdate : public SpecialAbilityUpdate
 {
 public:
     GiveUpgradeUpdate(Thing *, const ModuleData *);
+
+protected:
+    __declspec(noinline) virtual ~GiveUpgradeUpdate();
 
 private:
     bool m_e8;
@@ -64,6 +67,10 @@ private:
 
 // ??0GiveUpgradeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 GiveUpgradeUpdate::GiveUpgradeUpdate(Thing *t, const ModuleData *m)
-    : GiveUpgradeUpdateBase(t, m), m_e8(false), m_e9(false), m_ec(0)
+    : SpecialAbilityUpdate(t, m), m_e8(false), m_e9(false), m_ec(0)
+{
+}
+
+GiveUpgradeUpdate::~GiveUpgradeUpdate()
 {
 }

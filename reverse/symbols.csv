@@ -2561,7 +2561,6 @@ name,address,notes
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
 ??0GiantBirdGuardReturnState@@QAE@PAX@Z,0x0001C292,GiantBirdGuardReturnState constructor ILT identified by adjacent exact literal name getter and allocation size
-??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,GiveUpgradeUpdate ctor base call; ILT thunk for SpecialAbilityUpdate ctor (body 0x002A6360)
 ??0GiveUpgradeUpdateModuleDataBase@@QAE@XZ,0x0003F503,GiveUpgradeUpdateModuleData ctor base
 ??0GlobalData@@QAE@XZ,0x00001807,ILT; ctor call site in GlobalData::newOverride 0x00085BA0
 ??0GloriousChargeSpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 GloriousCharge base constructor thunk pin
@@ -4526,7 +4525,6 @@ name,address,notes
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
 ??1Gen_dtor_0025d8f0@@UAE@XZ,0x0004770D,gen-dtor class destructor
 ??1Gen_dtor_0025dbb0@@UAE@XZ,0x0004653D,gen-dtor class destructor
-??1Gen_dtor_0025dbe0@@UAE@XZ,0x000157E4,gen-dtor class destructor
 ??1Gen_dtor_0025de60@@UAE@XZ,0x000393A6,gen-dtor class destructor
 ??1Gen_dtor_0025e850@@UAE@XZ,0x00048C11,gen-dtor class destructor
 ??1Gen_dtor_0025eb10@@UAE@XZ,0x0002CF75,gen-dtor class destructor
@@ -31912,7 +31910,6 @@ name,address,notes
 ?b_0025d970@@YAXXZ,0x0025D970,gen-thunk body
 ?b_0025d9a0@@YAXXZ,0x0025D9A0,gen-thunk body
 ?b_0025da00@@YAXXZ,0x0025DA00,gen-thunk body
-?b_0025da10@@YAXXZ,0x0025DA10,gen-thunk body
 ?b_0025da40@@YAXXZ,0x0025DA40,gen-thunk body
 ?b_0025dac0@@YAXXZ,0x0025DAC0,gen-thunk body
 ?b_0025dad0@@YAXXZ,0x0025DAD0,gen-thunk body
@@ -31922,7 +31919,6 @@ name,address,notes
 ?b_0025db10@@YAXXZ,0x0025DB10,gen-thunk body
 ?b_0025dba0@@YAXXZ,0x0025DBA0,gen-thunk body
 ?b_0025dbb0@@YAXXZ,0x0025DBB0,gen-thunk body
-?b_0025dbe0@@YAXXZ,0x0025DBE0,gen-thunk body
 ?b_0025dc10@@YAXXZ,0x0025DC10,gen-thunk body
 ?b_0025dc20@@YAXXZ,0x0025DC20,gen-thunk body
 ?b_0025dc50@@YAXXZ,0x0025DC50,gen-thunk body
@@ -82723,3 +82719,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??1FellBeastSwoopPower@@MAE@XZ,0x00039BCB,destructor ILT to 0x0025CFA0
 ??_GFellBeastSwoopPower@@MAEPAXI@Z,0x0001C003,primary class vtable slot zero ILT to 0x0025D0B0
 ??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower constructor call-site ILT to the proven SpecialAbilityUpdate constructor
+??1GiveUpgradeUpdate@@MAE@XZ,0x000157E4,destructor ILT to 0x0025DA10
+??_GGiveUpgradeUpdate@@MAEPAXI@Z,0x0002A7A7,primary class vtable slot zero ILT to 0x0025DBE0
