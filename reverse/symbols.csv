@@ -83863,3 +83863,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0SimpleObjectIterator@@QAE@XZ,0x000197DB,SimpleObjectIterator ctor ILT from groupTightenToPosition 0x00155720
 ?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z,0x00004746,SimpleObjectIterator::sort ILT from groupTightenToPosition 0x00155720
 ?aiFollowPathAppend@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000BAC8,aiFollowPathAppend ILT from groupTightenToPosition addWaypoint arm; body 0x00153480
+?getHighestLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PBUCoord3D@@_N@Z,0x00006091,TerrainLogic::getHighestLayerForDestination ILT from groupEvacuate 0x00156690
+?aiMoveToAndEvacuate@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x00027903,aiMoveToAndEvacuate ILT from groupEvacuate aircraft arm
+?aiEvacuate@AICommandInterface@@QAEX_NW4CommandSourceType@@@Z,0x000344C3,aiEvacuate ILT from groupEvacuate ground arm
