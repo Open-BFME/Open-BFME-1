@@ -63,6 +63,7 @@ class SegLineRendererClass
 {
 public:
 	SegLineRendererClass();
+	SegLineRendererClass(const SegLineRendererClass &);
 	~SegLineRendererClass();
 
 private:
@@ -74,6 +75,7 @@ class StreakRendererClass
 {
 public:
 	StreakRendererClass();
+	StreakRendererClass(const StreakRendererClass &);
 	~StreakRendererClass();
 
 private:
@@ -86,6 +88,7 @@ class StreakLineClass : public RenderObjClass
 {
 public:
 	StreakLineClass();
+	StreakLineClass(const StreakLineClass &);
 	virtual RenderObjClass *Clone() const;
 
 private:
@@ -111,3 +114,15 @@ StreakLineClass::StreakLineClass(void) :
 {
 	Personalities = 0;
 }
+
+// The retail copy constructor deliberately default-constructs RenderObjClass.
+StreakLineClass::StreakLineClass(const StreakLineClass &src) :
+ MaxSubdivisionLevels(src.MaxSubdivisionLevels),
+ Personalities(src.Personalities),
+ NormalizedScreenArea(src.NormalizedScreenArea),
+ PointLocations(src.PointLocations),
+ PointColors(src.PointColors),
+ PointWidths(src.PointWidths),
+ LineRenderer(src.LineRenderer),
+ StreakRenderer(src.StreakRenderer)
+{}
