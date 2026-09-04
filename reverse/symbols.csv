@@ -82365,21 +82365,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
-?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
-?hide@Radar@@QAEXXZ,0x0001827D,AptPalantir immediate-hide notification guarded by TheRadar
-?close@PalantirAptWindow@@QAEXH@Z,0x0002144A,AptPalantir OnClosed callback closes its registered APT window
-?aptPalantirOnClosed@@YAXXZ,0x00034022,AptPalantir::OnClosed callback ILT registered by name
-??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
-?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
-?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
-?selectHero@AptPalantirHeroSelector@@QAEXH@Z,0x00002383,AptPalantir OnBttnHeroSelect dispatches the parsed one-based hero index
-?aptPalantirOnButtonHeroSelect@@YAXPAD@Z,0x0004A606,AptPalantir::OnBttnHeroSelect callback ILT registered by name
-?closePortrait@AptPalantirRegionPanel@@QAEXH@Z,0x00021468,AptPalantir OnRegionPortraitClosed dispatches the parsed region identifier
-?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z,0x0001CFF3,AptPalantir::OnRegionPortraitClosed callback ILT registered by name
-?aptPalantirRenderGlobe@@YAXPBUPalantirPoint@@0@Z,0x0002D09C,AptPalantir::RenderGlobe callback ILT registered by name
-?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
-?aptPalantirRenderMovie@@YAXPBUPalantirPoint@@0@Z,0x0001A0F0,AptPalantir::RenderMovie callback ILT registered by name
 ?ThePartitionManager@@3PAVPartitionManager@@A,0x012ED5B8,findSupplyCenter ThePartitionManager VA; separate from TheShroudManager 0x012ED5BC
 ?link@PartitionFilter@@QAEPAV1@PAV1@@Z,0x009F2AE0,PartitionFilter +4 next-walk used by findSupplyCenter; body is gen-dump d_009f2ae0
 ?getClosestObject@PartitionManager@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@@@Z,0x009F26A0,findSupplyCenter 4-arg thiscall; 33B wrapper already matched as bfmeGo1050D
