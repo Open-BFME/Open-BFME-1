@@ -123,23 +123,3 @@ void __stdcall bfmeGo1027D(BfmeZ1027 *p, int *out)
 
 	*out = base + (int)p->m_bfmeSub.bfmeVal1027();
 }
-
-class BfmeW1027
-{
-public:
-	void bfmeSel1027(int n);
-};
-
-extern BfmeW1027 *g_bfmeW1027;
-extern char g_bfmeKey1027[];
-__declspec(dllimport) int __cdecl bfmeCmp1027(char *a, char *b, int n);
-__declspec(dllimport) int __cdecl bfmeAtoi1027(char *s);
-
-void bfmeGo1027E(char *s)
-{
-	if (bfmeCmp1027(s, g_bfmeKey1027, 4) != 0)
-		return;
-
-	g_bfmeW1027->bfmeSel1027(bfmeAtoi1027(s + 4) - 1);
-}
-
