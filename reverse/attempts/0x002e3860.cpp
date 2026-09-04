@@ -172,11 +172,14 @@ int CurDrawablePrevAnimation(lua_State *state)
 int CurDrawableGetCurrentTargetDistance(lua_State *state)
 {
 	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
-	if (drawable != 0 && drawable->m_owner != 0) {
-		register LuaTargetRecord *target = drawable->m_owner->m_target;
-		if (target != 0) {
-			lua_pushnumber(state, sqrt(target->getDistanceSquared(&target->m_targetPosition)));
-			return 1;
+	if (drawable != 0) {
+		LuaTargetOwner *owner = drawable->m_owner;
+		if (owner != 0) {
+			if (owner->m_target != 0) {
+				LuaTargetRecord *target = owner->m_target;
+				lua_pushnumber(state, sqrt(target->getDistanceSquared(&target->m_targetPosition)));
+				return 1;
+			}
 		}
 	}
 

@@ -1,4 +1,6 @@
 // ?bfmeGoCB@BfmeThingCB@@QAEXE@Z
+// partial score=0.75 date=2026-09-04
+// ?bfmeGoCB@BfmeThingCB@@QAEXE@Z
 // partial score=0.75 date=2026-09-02
 // cl: /O1 /Ob2 /GR- /EHsc- /MD /DNDEBUG /DWIN32 /D_WINDOWS
 
@@ -238,11 +240,11 @@ public:
 
 void BfmeThingCB::bfmeGoCB( BfmeBool flag )
 {
-	BfmeThingCBTarget *target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
+	BfmeThingCBTarget *target = m_target;
 	if( target )
 	{
 		target->slot104( !flag );
-		target = *reinterpret_cast<BfmeThingCBTarget * volatile *>( &m_target );
+		target = m_target;
 		return target->slot100( flag );
 	}
 }

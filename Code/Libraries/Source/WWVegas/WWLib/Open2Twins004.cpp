@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// Five more instantiations of STLport's hashtable::_M_insert, landed as
+// Five more instantiations of STLport's hashtable::_M_insert, plus the
+// matching operator[] for the 0x00494DA0 table, landed as
 // relocation-blind twins of
 // Code/Libraries/Source/WWVegas/WWLib/stlport_hashtable_int_int_insert.cpp
 // (0x000D3430).  Each differs from the model in exactly two slots: its own
@@ -46,6 +47,9 @@ template <class T1, class T2>
 struct pair
 {
 	typedef T1 first_type;
+	typedef T2 second_type;
+
+	pair(const T1 &key) : first(key), second() {}
 
 	T1 first;
 	T2 second;
@@ -104,6 +108,31 @@ public:
 	typedef _Hashtable_node<Value> _Node;
 
 	Value &_M_insert(const Value &obj);
+
+	struct iterator
+	{
+		_Node *_M_cur;
+	};
+
+	iterator find(const Key &key)
+	{
+		iterator it;
+		it._M_cur = (_Node *)_M_buckets[_M_bkt_num_key(key)];
+
+		while (it._M_cur != 0)
+		{
+			if (it._M_cur->_M_val.first == key)
+				break;
+			it._M_cur = it._M_cur->_M_next;
+		}
+		return it;
+	}
+
+	typename Value::second_type &operator[](const Key &key)
+	{
+		_Node *cur = find(key)._M_cur;
+		return cur == 0 ? _M_insert(Value(key)).second : cur->_M_val.second;
+	}
 
 private:
 	void resize(size_type numElementsHint);			// retail 0x000D10F0
@@ -164,6 +193,10 @@ typedef pair<const Int, Open2Mapped494DA0> Open2Pair494DA0;
 template Open2Pair494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
 	_Select1st<Open2Pair494DA0>, equal_to<Int>,
 	allocator<Open2Pair494DA0> >::_M_insert(const Open2Pair494DA0 &);
+
+template Open2Mapped494DA0 &hashtable<Open2Pair494DA0, Int, hash<Int>,
+	_Select1st<Open2Pair494DA0>, equal_to<Int>,
+	allocator<Open2Pair494DA0> >::operator[](const Int &);
 
 
 struct Open2Mapped498B30 { Int m_value; };

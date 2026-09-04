@@ -97,6 +97,15 @@ def describe(rva, rows, pins, latest, near):
             parts.append(f"    START FROM STASH: {st.group(1)}")
     if rva in near:
         parts.append(f"    ZH twin: {near[rva]}")
+    # mechanical evidence (callees, callers, vtable slot, strings, fields,
+    # landed neighbours) so the session does not spend its first half hour
+    # re-deriving it from the bytes; never let it break a brief
+    try:
+        sys.path.insert(0, str(ROOT / "tools/fleet"))
+        import context_pack
+        parts += ["    " + l for l in context_pack.pack(rva)[1:]]
+    except Exception as e:  # noqa: BLE001
+        parts.append(f"    (context pack unavailable: {e})")
     return "\n".join(parts)
 
 

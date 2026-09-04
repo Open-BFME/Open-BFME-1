@@ -1,5 +1,8 @@
 // ?Rva009AA8F0Dispatch@@YAXPAURva009AA8F0Context@@HPAURva009AA8F0Block@@@Z
 // partial score=0.98 date=2026-09-04
+// ?Rva009AA8F0Dispatch@@YAXPAURva009AA8F0Context@@HPAURva009AA8F0Block@@@Z
+// Open-BFME5 conversion of the codec dispatch body at retail 0x009AA8F0.
+
 struct Rva009AA8F0Context
 {
 	unsigned char m_pad0[0x08];

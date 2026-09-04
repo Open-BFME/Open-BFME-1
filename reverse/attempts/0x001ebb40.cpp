@@ -82,5 +82,6 @@ void WeaponSet::releaseWeaponLock(WeaponLockType lockType)
 		return;
 	}
 	m_curWeaponLockedStatus = (WeaponLockType)none;
-	obj->clearModelConditionFlags(ModelConditionFlags((ModelConditionFlags::BogusInitType)none, 0x88, 0x89, 0x8A));
+	ModelConditionFlags::BogusInitType init = (ModelConditionFlags::BogusInitType)none;
+	obj->clearModelConditionFlags(ModelConditionFlags(init, 0x88, 0x89, 0x8A));
 }

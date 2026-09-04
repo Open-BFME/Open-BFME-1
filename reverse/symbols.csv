@@ -11234,6 +11234,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_000a8780_p8cd@@V?$allocator@UGen_t_000a8780_p8cd@@@_STL@@@_STL@@IAEXPAUGen_t_000a8780_p8cd@@ABU3@ABU__false_type@2@I_N@Z,0x000A8500,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_000b0910_p8pod@@V?$allocator@UGen_t_000b0910_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_000b0910_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x000B0760,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_000b1da0_p8cd@@V?$allocator@UGen_t_000b1da0_p8cd@@@_STL@@@_STL@@IAEXPAUGen_t_000b1da0_p8cd@@ABU3@ABU__false_type@2@I_N@Z,0x000B19F0,gen-tgrid payload member
+?_M_insert_overflow@?$vector@UGen_t_000bbe70_m4pod@@V?$allocator@UGen_t_000bbe70_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_000bbe70_m4pod@@ABU3@ABU__true_type@2@I_N@Z,0x0003B075,vector true_type overflow callee for Rva0039C8C0
 ?_M_insert_overflow@?$vector@UGen_t_000bc800_p4pod@@V?$allocator@UGen_t_000bc800_p4pod@@@_STL@@@_STL@@IAEXPAUGen_t_000bc800_p4pod@@ABU3@ABU__false_type@2@I_N@Z,0x000BBE70,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_000bc840_m4pod@@V?$allocator@UGen_t_000bc840_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_000bc840_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x000BBFC0,family-emit payload member
 ?_M_insert_overflow@?$vector@UGen_t_000bc880_m4pod@@V?$allocator@UGen_t_000bc880_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_000bc880_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x000BC110,family-emit payload member
@@ -71962,6 +71963,7 @@ name,address,notes
 ?bfmeAccepts@BfmeFourSlotEntry@@QAE_NPAVBfmeFourSlotSource@@HH@Z,0x002E85C,address-derived enabled-slot predicate
 ?bfmeAccepts@Gen_00684b90Holder@@QAEHPAX@Z,0x00004F6B,Open-BFME5 ILT the guard at 0x00684B90 asks its holder through
 ?bfmeActME@BfmeThingME@@QAEXXZ,0x0000C4EB,pin
+?bfmeActivate1236@BfmeNode1236@@QAEXXZ,0x008D2810,call target from exact 0x008BDD10 filtered node walk
 ?bfmeActive@BfmeSubF2C@@QAE_NXZ,0x00010758,ILT thunk to Gen_0026E570 bfmeActive
 ?bfmeAdd1011@BfmeB1011@@QAEPAPAXPAX@Z,0x0002AF13,pin
 ?bfmeAdd1023@BfmeH1023@@QAEXHH@Z,0x000157DA,pin
@@ -77959,6 +77961,7 @@ name,address,notes
 ?getNextTokenOrNull@INI@@QAEPBDPBD@Z,0x008509C0
 ?getNickForMessage@@YAXPAVGPConnection@@PAUGPGetInfoResponseArg@@PAX@Z,0x0063A8E0,Buddy message callback helper identified by its GP callback registration and nick copy into the message response
 ?getNightIndicatorColor@Object@@QBEHXZ,0x0001D18D,Open-BFME5 ILT thunk to the body already matched at 0x001BE530; ?changedTeam@Drawable@@QAEXXZ at 0x00418830 calls it on the night branch
+?getNthInList@ObjectTypes@@QBE?AVAsciiString@@H@Z,0x000177A6,BFME inline object type list accessor forwards to the vector thunk
 ?getNthPlayer@PlayerList@@QAEPAVPlayer@@H@Z,0x00044F30,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
 ?getNthPlayerTemplate@PlayerTemplateStore@@QAEPBVPlayerTemplate@@H@Z,0x00037BD2,ILT thunk to the indexed PlayerTemplate lookup
 ?getNumChunks@NetWrapperCommandMsg@@QAEIXZ,0x00018BEC,ILT thunk; real body 0xA73F20 (mov eax,[ecx+0x30];ret)

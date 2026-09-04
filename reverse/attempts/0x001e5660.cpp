@@ -1,4 +1,6 @@
 // ?getRemainingAmmo@Weapon@@QBEI_N@Z
+// partial score=0.98 date=2026-09-04
+// ?getRemainingAmmo@Weapon@@QBEI_N@Z
 // partial score=0.94 date=2026-08-31
 // cl: /DNDEBUG /MD /EHsc
 typedef unsigned int UnsignedInt;
@@ -36,6 +38,8 @@ public:
 class Object
 {
 public:
+	BfmeAmmoProvider *getAmmoProvider() const { return m_ammoProvider; }
+
 	char m_padding[0x1fc];
 	BfmeAmmoProvider *m_ammoProvider;
 };
@@ -82,7 +86,7 @@ UnsignedInt Weapon::getRemainingAmmo(Bool countReloadingAsEmpty) const
 	if(weaponTemplate->m_ammoDescriptor.isValid())
 	{
 		Object *owner = g_bfmeAmmoGameLogic->findObjectByID(m_ownerID);
-		BfmeAmmoProvider *provider = owner ? owner->m_ammoProvider : 0;
+		BfmeAmmoProvider *provider = owner ? owner->getAmmoProvider() : 0;
 		if(provider)
 		{
 			UnsignedInt remaining = provider->getRemainingAmmo(&m_template->m_ammoDescriptor);

@@ -100,7 +100,7 @@ void Glo012F1024Item::j_0002a969(void)
 		BfmeNode20 *node = new BfmeNode20(
 			(begin + index)->m_bfmeA,
 			(begin + index)->m_bfmeVec,
-			 n,
+			n,
 			h,
 			flag);
 		keep = -1;

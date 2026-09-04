@@ -1,10 +1,14 @@
 // ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z
-// partial score=0.97 date=2026-09-03
+// partial score=0.97 date=2026-09-04
+// ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z
+// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: AudioEventRTS::setEventName, retail 0x000B38C0, 140 bytes.
 // Named by the byte-true call in Code/GameEngine/Source/Common/INI/ini.cpp
 // (?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z).
+// Best probe: 140B size-exact; only the EBP versus EBX name-pointer mirror
+// remains after the layout and local-definition-order probes.
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
@@ -38,10 +42,10 @@ public:
 	AsciiString &operator=(const AsciiString &other);
 };
 
-class Counted
+class AudioEventInfo
 {
 public:
-	virtual ~Counted();
+	virtual ~AudioEventInfo();
 
 	void Release_Ref(void)
 	{
@@ -52,19 +56,15 @@ public:
 	long m_refCount;
 };
 
-class AudioEventInfo : public Counted
-{
-};
-
 class CountedPtr
 {
 public:
-	void clear(void)
+	void operator=(int nullValue)
 	{
 		if (m_ptr)
 		{
 			m_ptr->Release_Ref();
-			m_ptr = 0;
+			m_ptr = (AudioEventInfo *)nullValue;
 		}
 	}
 
@@ -89,14 +89,9 @@ private:
 // ?setEventName@AudioEventRTS@@QAEXVAsciiString@@@Z
 void AudioEventRTS::setEventName(AsciiString name)
 {
-	const AsciiString *eventName = &m_eventName;
-	if (name.compare(*eventName) != 0)
+	if (name.compare(m_eventName) != 0)
 	{
-		if (m_eventInfo.m_ptr)
-		{
-			m_eventInfo.m_ptr->Release_Ref();
-			m_eventInfo.m_ptr = 0;
-		}
-		*const_cast<AsciiString *>(eventName) = name;
+		m_eventInfo = 0;
+		m_eventName = name;
 	}
 }

@@ -4,6 +4,21 @@
 
 typedef bool Bool;
 
+class BfmeTransitionFlags
+{
+public:
+	explicit BfmeTransitionFlags(unsigned int bits = 0) : m_bits(bits) {}
+
+	Bool testForAny(const BfmeTransitionFlags &that) const volatile
+	{
+		unsigned int value = m_bits;
+		value &= that.m_bits;
+		return value != 0;
+	}
+
+	unsigned int m_bits;
+};
+
 class Rva00493F30Controller
 {
 public:
@@ -19,28 +34,28 @@ public:
 	void finishTransition(void);
 private:
 	unsigned char m_padding0[8];
-	unsigned int m_flags;
+	BfmeTransitionFlags m_flags;
 	unsigned char m_padding1[0x20c];
 	Rva00493F30Controller m_controller;
 	unsigned char m_padding2[0x1c];
 	unsigned int m_mode;
 	unsigned char m_padding3[0x14];
-	volatile unsigned int m_previousFlags;
+	volatile BfmeTransitionFlags m_previousFlags;
 };
 
 Bool Rva00493F30TransitionState::updateState(void)
 {
-	const unsigned int transitionFlag = 0x10;
-	if ((m_previousFlags & transitionFlag) == 0)
+	const BfmeTransitionFlags transitionFlag(0x10);
+	if (!m_previousFlags.testForAny(transitionFlag))
 	{
-		if ((m_flags & transitionFlag) != 0 && (m_mode & 1) != 0)
+		if (m_flags.testForAny(transitionFlag) && (m_mode & 1) != 0)
 			m_controller.begin();
 	}
-	else if ((m_flags & transitionFlag) == 0)
+	else if (!m_flags.testForAny(transitionFlag))
 	{
 		finishTransition();
 	}
-	m_previousFlags = m_flags;
+	m_previousFlags.m_bits = m_flags.m_bits;
 	if ((m_mode & 1) != 0)
 		m_controller.update();
 	return true;

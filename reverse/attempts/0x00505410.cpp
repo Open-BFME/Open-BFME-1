@@ -1,4 +1,6 @@
 // ?update@BfmeQuickMatchProgressBody@@QAEXXZ
+// partial score=0.93 date=2026-09-04
+// ?update@BfmeQuickMatchProgressBody@@QAEXXZ
 // partial score=0.93 date=2026-09-02
 // cl: /DNDEBUG /MD
 

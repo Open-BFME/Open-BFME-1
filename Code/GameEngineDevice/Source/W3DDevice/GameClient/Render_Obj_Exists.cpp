@@ -58,17 +58,14 @@ extern AssetRegistry *g_theAssetRegistry;
 // ?Render_Obj_Exists_Impl@AssetRegistry@@QAE_NPBD@Z
 bool AssetRegistry::Render_Obj_Exists_Impl(const char *name)
 {
-	AssetRegistryEntry *entry;
-	int critical = (int)&m_lock;
-	volatile CriticalSectionLock lock(critical);
+	CriticalSectionLock lock((int)&m_lock);
 	unsigned int key = m_hash_context->nameToLowercaseKey(name);
-	if (key != 0)
-	{
-		entry = m_buckets_begin[
-			key % (unsigned int)(m_buckets_end - m_buckets_begin)];
-		while (entry != 0 && entry->m_key != key)
-			entry = entry->m_next;
-	}
+	if (key == 0)
+		return false;
+	AssetRegistryEntry *entry = m_buckets_begin[
+		key % (unsigned int)(m_buckets_end - m_buckets_begin)];
+	while (entry != 0 && entry->m_key != key)
+		entry = entry->m_next;
 	return entry != 0;
 }
 

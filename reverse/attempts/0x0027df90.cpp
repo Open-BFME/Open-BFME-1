@@ -1,5 +1,7 @@
 // ?privateCommandButton@AIUpdatePrivateCommandButtonShim@@QAEXPBVCommandButton@@W4CommandSourceType@@@Z
-// partial score=0.91 date=2026-09-04
+// partial score=0.98 date=2026-09-04
+// ?privateCommandButton@AIUpdatePrivateCommandButtonShim@@QAEXPBVCommandButton@@W4CommandSourceType@@@Z
+// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD /EHs-c-
 // AIUpdatePrivateCommandButtonShim::privateCommandButton — retail 0x0027DF90 / 140B.
 // Dump sibling of setAttitude in Code/gen_asm/d_0027db50.asm.
@@ -7,6 +9,8 @@
 // BFME: MAX_COMMANDS_PER_SET is 20; getCommandType is the dword at button+0x10;
 // GUI_COMMAND_STOP is 0xD.  The projectile reject is getFinalOverride on the
 // ThingTemplate at Object+4, then bit 0x2000000 at template+0xC8.
+// Best probe: 142B vs 140B; target register roles match and only the volatile
+// command-button operand materialization adds two loop bytes.
 // upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp
 
 enum { MAX_COMMANDS_PER_SET = 20 };
@@ -118,8 +122,8 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 		return;
 	if (owner)
 	{
-			AICommandInterface *ai = owner->m_ai;
-			const CommandSet *commandSet;
+		const CommandSet *commandSet;
+		AICommandInterface *ai = owner->m_ai;
 		if (ai)
 		{
 			commandSet = TheControlBar->findCommandSet(owner->getCommandSetString());
@@ -129,15 +133,9 @@ void AIUpdatePrivateCommandButtonShim::privateCommandButton(const CommandButton 
 				for (int i = 0; i < MAX_COMMANDS_PER_SET; ++i)
 				{
 					const CommandButton *aCommandButton = commandSet->getCommandButton(i);
-					if (commandButton == aCommandButton)
-					{
-						switch (commandButton->getCommandType())
-						{
-						case GUI_COMMAND_STOP:
-							reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
-							break;
-						}
-					}
+					if (aCommandButton == *(const CommandButton * volatile *)&commandButton &&
+						isStopButton(*(const CommandButton * volatile *)&commandButton))
+						reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20)->aiIdle(src);
 				}
 			}
 		}
