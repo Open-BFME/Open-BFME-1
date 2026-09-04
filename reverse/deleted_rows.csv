@@ -24391,3 +24391,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_002f3710@@YAXXZ,0x002F3710,gen-dump placeholder superseded by the recovered ?doPlayerRepairStructure@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
 ?d_002f3670@@YAXXZ,0x002F3670,gen-dump placeholder superseded by the recovered ?doTeamHarvest@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
 ?d_002f3490@@YAXXZ,0x002F3490,gen-dump placeholder superseded by the recovered ?doTeamGuardObject@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
+?d_002f33d0@@YAXXZ,0x002F33D0,gen-dump placeholder superseded by the recovered ?doTeamGuardPosition@ScriptActions@@IAEXABVAsciiString@@0@Z identity and exact C++ body
