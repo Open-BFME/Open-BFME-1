@@ -55,43 +55,6 @@ BfmeVec3EP Gen_001C1D60::bfmeGetRow(void) const
 	return out;
 }
 
-class BfmeSlotEP
-{
-public:
-	int m_bfmeA;						// +0x00
-	int m_bfmeB;						// +0x04
-	int m_bfmeC;						// +0x08
-	int m_bfmeD;						// +0x0C
-	bool m_bfmeArmed;					// +0x10
-	char m_bfmePad[3];					// +0x11
-	int m_bfmeMask;						// +0x14
-	int m_bfmeTail;						// +0x18
-};
-
-class Gen_00383B00
-{
-public:
-	void bfmeReset(void);
-
-private:
-	char m_bfmeHead[0x1B0];					// +0x000
-	BfmeSlotEP m_bfmeSlots[8];				// +0x1B0
-};
-
-// ?bfmeReset@Gen_00383B00@@QAEXXZ
-void Gen_00383B00::bfmeReset(void)
-{
-	for (int index = 0; index < 8; ++index)
-	{
-		m_bfmeSlots[index].m_bfmeArmed = true;
-		m_bfmeSlots[index].m_bfmeB = 0;
-		m_bfmeSlots[index].m_bfmeC = 0;
-		m_bfmeSlots[index].m_bfmeD = 0;
-		m_bfmeSlots[index].m_bfmeA = 0;
-		m_bfmeSlots[index].m_bfmeMask = 0xFF;
-	}
-}
-
 class BfmeThingEP
 {
 public:

@@ -24421,3 +24421,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeSet1246@BfmeA1246@@QAEXUBfmeV1246@@HHHHH@Z,0x00412040,synthetic identity superseded by Drawable::applyTint; the matched TintDrawableFXNugget caller identifies the same byte-verified 70-byte BFME tint-envelope setter.
 ?set@Rva00383BC0@@QAEXHH@Z,0x00383BC0,address-derived identity superseded by GameLogic::setPlayerLeaveStatus; Network leave-command and disconnect-vote callers identify the same byte-verified 40-byte body.
 ?bfmeReadVLS@@YAXPAXH@Z,0x0068E630,synthetic identity superseded by fillCurrentLANGameInfo; three matched LAN message callers and identified LANGameInfo callees establish the same byte-verified 112-byte body.
+?bfmeReset@Gen_00383B00@@QAEXXZ,0x00383B00,synthetic identity superseded by GameLogic::resetPlayerLeaveStatus; the Network::init caller and PlayerLeaveStatus diagnostic identify the same byte-verified 45-byte body.
+?get@Rva00383B90@@QAEPAXH@Z,0x00383B90,address-derived identity superseded by GameLogic::getPlayerLeaveStatus; adjacency to its matched setter and the shared eight-record layout identify the same byte-verified 31-byte body.
