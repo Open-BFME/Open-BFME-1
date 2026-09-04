@@ -82559,3 +82559,8 @@ g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00
 ?Rva00605F00@@YGPAIPAI@Z,0x00605F00
 ?__copy@_STL@@YAPADPAD00ABUrandom_access_iterator_tag@1@PAH@Z,0x000B98F0
 ?set@Rva0006AB10Curve@@QAEXMMHH@Z,0x0006AB10
+??0Win32Mouse@@QAE@XZ,0x00042370,W3DMouse constructor base call through the incremental-link thunk
+??_7W3DMouse@@6B@,0x01120928,W3DMouse constructor vftable store
+?g_w3dMouseCursorTextures@@3PAY0BF@PAVTextureClass@@A,0x012F8798,W3DMouse 50 by 21 cursor texture table
+?g_w3dMouseCursorModels@@3PAPAXA,0x012F85F8,W3DMouse cursor model table
+?g_w3dMouseCursorAnims@@3PAPAXA,0x012F8530,W3DMouse cursor animation table
