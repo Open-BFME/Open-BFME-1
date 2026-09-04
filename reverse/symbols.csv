@@ -83855,3 +83855,8 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isReady@AIGroup@@QAEDXZ,0x000104B0,AIGroup ready gate from groupFollowWaypointPathAsTeam 0x00155A80
 ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z,0x0002E636,AIGroup prep before follow-as-team walk; body 0x0015AB50
+?measure@Rva00802550Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x008023B0,demangler fill 0x802550 measure sibling pin
+?clearA@Member48@@QAEXXZ,0x0000AAE7,TerrainLogic::reset list::clear ILT to 0x001ACC70
+?copyP48@@YAPAUBfmeTerrainP48@@PAU1@00ABURandomAccessIteratorTag@@PAH@Z,0x00035B5C,TerrainLogic::reset P48 __copy ILT
+?resetHelper4949a@@YAXXZ,0x0004949A,TerrainLogic::reset free-function ILT to 0x0018EE40
+?bfmeFreeArray@@YAXPAX@Z,0x00881EF0,TerrainLogic::reset delete[] of +0x18
