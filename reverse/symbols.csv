@@ -4542,7 +4542,6 @@ name,address,notes
 ??1Gen_dtor_00260b20@@UAE@XZ,0x0002147C,gen-dtor class destructor
 ??1Gen_dtor_00261280@@UAE@XZ,0x00016220,gen-dtor class destructor
 ??1Gen_dtor_002616a0@@UAE@XZ,0x0001BA72,gen-dtor class destructor
-??1Gen_dtor_00263b50@@UAE@XZ,0x0003DE15,gen-dtor class destructor
 ??1Gen_dtor_00263c60@@UAE@XZ,0x0003CE9D,gen-dtor class destructor
 ??1Gen_dtor_00264090@@UAE@XZ,0x000231B9,gen-dtor class destructor
 ??1Gen_dtor_00264290@@UAE@XZ,0x0000D968,gen-dtor class destructor
@@ -32171,13 +32170,11 @@ name,address,notes
 ?b_002639a0@@YAXXZ,0x002639A0,gen-thunk body
 ?b_002639d0@@YAXXZ,0x002639D0,gen-thunk body
 ?b_00263a10@@YAXXZ,0x00263A10,gen-thunk body
-?b_00263a20@@YAXXZ,0x00263A20,gen-thunk body
 ?b_00263a40@@YAXXZ,0x00263A40,gen-thunk body
 ?b_00263a50@@YAXXZ,0x00263A50,gen-thunk body
 ?b_00263a60@@YAXXZ,0x00263A60,gen-thunk body
 ?b_00263ab0@@YAXXZ,0x00263AB0,gen-thunk body
 ?b_00263b40@@YAXXZ,0x00263B40,gen-thunk body
-?b_00263b50@@YAXXZ,0x00263B50,gen-thunk body
 ?b_00263b80@@YAXXZ,0x00263B80,gen-thunk body
 ?b_00263ba0@@YAXXZ,0x00263BA0,gen-thunk body
 ?b_00263be0@@YAXXZ,0x00263BE0,gen-thunk body
@@ -82734,3 +82731,5 @@ _bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00
 ??_GGrabPassengerSpecialPower@@MAEPAXI@Z,0x00010E51,primary class vtable slot zero ILT to 0x0025F1F0
 ??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
 ??_GOCLSpecialPower@@MAEPAXI@Z,0x000037D3,primary class vtable slot zero ILT to 0x00262B90
+??1PlayerHealSpecialPower@@MAE@XZ,0x0003DE15,destructor ILT to 0x00263A20
+??_GPlayerHealSpecialPower@@MAEPAXI@Z,0x0000BD89,primary class vtable slot zero ILT to 0x00263B50
