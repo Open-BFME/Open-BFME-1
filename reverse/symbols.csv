@@ -83698,3 +83698,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ??4StlStr@@QAEAAV0@PBD@Z,0x00013746,STLport basic_string<char> assign ILT used as StlStr::operator= by CustomMatch applySlotColor 0x0053CB90
 ?TheGameSpyPeerMessageQueue@@3PAVGameSpyPeerMessageQueueInterface@@A,0x012F71C8,GameSpyPeerMessageQueue* global used by CustomMatch applySlotColor 0x0053CB90
 ?compare@UnicodeString@@QBEHABV1@@Z,0x000226EC,StringBase<unsigned short>::compare ILT used as UnicodeString::compare by CustomMatch applySlotColor 0x0053CB90
+?assign@StlStr@@QAEAAV1@PBD0@Z,0x0002B297,STLport basic_string<char>::assign(first last) ILT used by CustomMatch applySlotPlayerTemplate 0x0053CE60
