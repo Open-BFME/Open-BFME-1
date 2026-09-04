@@ -11,10 +11,31 @@
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+// upstream vocabulary: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 class ModelConditionFlags
 {
 public:
 	UnsignedInt m_bits[ 10 ];
+
+	inline Bool any() const
+	{
+		for( UnsignedInt i = 0; i < 10; ++i )
+		{
+			if( m_bits[ i ] != 0 )
+				return true;
+		}
+		return false;
+	}
+
+	inline Bool operator==( const ModelConditionFlags &that ) const
+	{
+		for( UnsignedInt i = 0; i < 10; ++i )
+		{
+			if( m_bits[ i ] != that.m_bits[ i ] )
+				return false;
+		}
+		return true;
+	}
 
 	void clearAndSet( const ModelConditionFlags &clear,
 		const ModelConditionFlags &set );
@@ -138,7 +159,7 @@ class Drawable : public DrawableBase
 {
 public:
 	void replaceModelConditionState( const ModelConditionFlags &flags,
-		UnsignedInt a, UnsignedInt b );
+		UnsignedInt forceReplace, UnsignedInt b );
 
 private:
 	// This no-argument member is the retail callee reached through ILT
@@ -161,73 +182,44 @@ private:
 
 // ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@II@Z
 void Drawable::replaceModelConditionState( const ModelConditionFlags &flags,
-	UnsignedInt a, UnsignedInt b )
+	UnsignedInt forceReplace, UnsignedInt b )
 {
-	register Drawable *self = this;
-	register UnsignedInt *state;
 	ModelConditionFlags newFlags = flags;
-	UnsignedInt i = 0;
 
-	for( ; i < 10; ++i )
-	{
-		if( self->m_setMask.m_bits[ i ] != 0 )
-			goto apply_masks;
-	}
-	for( i = 0; i < 10; ++i )
-	{
-		if( self->m_clearMask.m_bits[ i ] != 0 )
-			goto apply_masks;
-	}
-	goto masks_done;
+	if( m_setMask.any() || m_clearMask.any() )
+		newFlags.clearAndSet( m_clearMask, m_setMask );
 
-apply_masks:
-	newFlags.clearAndSet( self->m_clearMask, self->m_setMask );
-
-masks_done:
-	if( (unsigned char)a == 0 )
-	{
-		for( i = 0; i < 10; ++i )
-		{
-			if( self->m_conditionState.m_bits[ i ] != newFlags.m_bits[ i ] )
-				goto flags_changed;
-		}
+	if( (unsigned char)forceReplace == 0 && m_conditionState == newFlags )
 		return;
-	}
 
-flags_changed:
 	if( (newFlags.m_bits[ 4 ] & 0x80000) != 0 )
 	{
-		if( (self->m_conditionState.m_bits[ 4 ] & 0x80000) == 0 &&
-			self->m_flag141 != 0 && self->m_flag140 != 0 )
+		if( (m_conditionState.m_bits[ 4 ] & 0x80000) == 0 &&
+			m_flag141 != 0 && m_flag140 != 0 )
 		{
-			self->refreshAmbientSound();
+			refreshAmbientSound();
 		}
 	}
-	else if( (self->m_conditionState.m_bits[ 4 ] & 0x80000) != 0 )
+	else if( (m_conditionState.m_bits[ 4 ] & 0x80000) != 0 )
 	{
-		if( self->m_ambientSound != 0 )
+		if( m_ambientSound != 0 )
 		{
-			TheAudio->removeAudioEvent( self->m_ambientSound->m_playingHandle );
+			TheAudio->removeAudioEvent( m_ambientSound->m_playingHandle );
 		}
 	}
 
-	self->m_conditionState = newFlags;
+	m_conditionState = newFlags;
 
-	if( (unsigned char)a == 1 )
-		goto update_modules;
-	goto mark_dirty;
-
-update_modules:
-	state = self->m_conditionState.m_bits;
-	for( DrawModule **dm = self->m_drawModules; *dm != 0; ++dm )
+	if( (unsigned char)forceReplace == 1 )
 	{
-		ObjectDrawInterface *di = (*dm)->getObjectDrawInterface();
-		if( di != 0 )
-			di->replaceModelConditionState( *(ModelConditionFlags *)state, true, b );
+		for( DrawModule **dm = m_drawModules; *dm != 0; ++dm )
+		{
+			ObjectDrawInterface *di = (*dm)->getObjectDrawInterface();
+			if( di != 0 )
+				di->replaceModelConditionState( m_conditionState, true, b );
+		}
+		m_isModelDirty = false;
 	}
-	self->m_isModelDirty = false;
-	return;
-
-mark_dirty:
-	self->m_isModelDirty = true;
+	else
+		m_isModelDirty = true;
 }
