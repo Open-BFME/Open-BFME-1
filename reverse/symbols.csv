@@ -82737,3 +82737,7 @@ _g_heightMapRenderObjVtableAtCC,0x00D1DC60,HeightMapRenderObjClass secondary vta
 ?iterateCellsAlongLine@Pathfinder@@AAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUGroundPathPassableInfo@@@Z,0x00013DC2,isGroundPathPassable cell-space line walk using its pathfinder and diameter context
 ?find@FontCharDataMap@@QAEPAUFontCharDataMapNode@@PAG@Z,0x0093DCE0,FontCharsClass character-data map lookup body
 ?loadCharacterData@FontCharsClass@@QAEPBUFontCharsClassCharDataStruct@@G@Z,0x00940D40,FontCharsClass cache-miss character data loader
+??0AsciiStringWW@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringWW@@QAE@XZ,0x00887940,pin
+??1Gen_00193D50@@UAE@XZ,0x00195550,Open-BFME5 slot 0 of the table 0x0109C004
+??1BfmeGuardWW@@QAE@XZ,0x00195550,Open-BFME5 stand-in for the sub-object the copy ctor at 0x00193D50 protects with unwind state 0
