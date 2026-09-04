@@ -3526,10 +3526,78 @@ Bool Object::isSelectable() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isMassSelectable@Object@@QBE_NXZ present-unmatched
+class BfmeMassSelectableUIResult;
+
+class BfmeMassSelectableUIBase
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29(); virtual void slot30(); virtual void slot31();
+	virtual void slot32(); virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38(); virtual void slot39();
+	virtual void slot40(); virtual void slot41(); virtual void slot42(); virtual void slot43();
+	virtual void slot44(); virtual void slot45(); virtual void slot46();
+};
+
+class BfmeMassSelectableUI : public BfmeMassSelectableUIBase
+{
+public:
+	virtual BfmeMassSelectableUIResult *slot47();
+};
+
+class BfmeMassSelectableUIResult
+{
+public:
+	unsigned char m_pad00[0x10];
+	int m_type;
+};
+
 Bool Object::isMassSelectable() const
 {
-	return isSelectable() && !isKindOf(KINDOF_STRUCTURE);
+	{
+		const void *firstTemplate = *reinterpret_cast<const void *volatile *>(
+			reinterpret_cast<char *>(const_cast<Object *>(this)) + 4);
+		if (firstTemplate)
+			firstTemplate = reinterpret_cast<const Overridable *>(firstTemplate)->getFinalOverride();
+
+		if (*reinterpret_cast<const UnsignedInt *>(
+				reinterpret_cast<const char *>(firstTemplate) + 0xcc) & 0x02000000)
+			return TRUE;
+	}
+
+	if (*reinterpret_cast<const UnsignedByte *>(
+			reinterpret_cast<const char *>(this) + 0x90) & 8)
+		return FALSE;
+
+	const void *secondTemplate = *reinterpret_cast<const void *volatile *>(
+		reinterpret_cast<char *>(const_cast<Object *>(this)) + 4);
+	if (secondTemplate)
+		secondTemplate = reinterpret_cast<const Overridable *>(secondTemplate)->getFinalOverride();
+
+	if (*reinterpret_cast<const UnsignedByte *>(
+			reinterpret_cast<const char *>(secondTemplate) + 0x4ca))
+		goto checkKindOf;
+	if (*reinterpret_cast<const UnsignedByte *>(
+		reinterpret_cast<const char *>(this) + 0x344) & 1)
+		return FALSE;
+
+checkKindOf:
+	if (isKindOf((KindOfType)0x48))
+		return FALSE;
+
+	Bool selectable = *reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(this) + 0x340);
+	BfmeMassSelectableUI *ui = reinterpret_cast<BfmeMassSelectableUI *>(TheInGameUI);
+	BfmeMassSelectableUIResult *result = ui->slot47();
+	if (result && result->m_type == 0x17 && isKindOf((KindOfType)0x3b))
+		selectable = TRUE;
+	return selectable;
 }
 
 //-------------------------------------------------------------------------------------------------

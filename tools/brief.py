@@ -126,6 +126,11 @@ def main():
     for rva in targets:
         r = rows.get(rva)
         if r and r["source"].endswith((".asm", ".s")):
+            p = latest.get(rva)
+            # SecuROM post-link bodies (55 89 E5 frames, opaque predicates) can never
+            # byte-match clean C++; 32 sessions re-proved that at ~35 min each.
+            if a.dump and p and p[3] in ("blocked", "no-match") and "SecuROM" in p[4]:
+                continue
             if rva not in live:
                 live.append(rva)
         else:

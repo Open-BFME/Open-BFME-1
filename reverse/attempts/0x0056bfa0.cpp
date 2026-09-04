@@ -35,6 +35,13 @@ public:
 	void showAptScreen( AsciiString name, int unused );
 };
 
+class FlagValue
+{
+public:
+	volatile int m_value;
+	void operator=( int value ) { m_value = value; }
+};
+
 class AptSaveLoad
 {
 public:
@@ -43,7 +50,7 @@ public:
 	int m_274;
 	volatile char m_278;
 	char m_pad279[ 3 ];
-	volatile int m_27c;
+	long m_27c;
 };
 
 extern AptSaveLoad *TheAptSaveLoad;
@@ -51,29 +58,39 @@ extern Shell *TheShell;
 
 void showAptSaveLoad( void *arg0, int flags, volatile char extra )
 {
-	if ( TheAptSaveLoad == 0 )
+	if ( TheAptSaveLoad != 0 )
+		return;
+	AptSaveLoad *q;
+	AptSaveLoad *p;
+	char value;
+	void *argument = arg0;
+	TheShell->showAptScreen( AsciiString( "SaveLoad.apt" ), 0 );
+	TheAptSaveLoad->m_270 = argument;
+	TheAptSaveLoad->m_274 = flags;
+	int flagBits = flags;
+	if ( flagBits & 1 )
 	{
-		TheShell->showAptScreen( AsciiString( "SaveLoad.apt" ), 0 );
-		TheAptSaveLoad->m_270 = arg0;
-		TheAptSaveLoad->m_274 = flags;
-		if ( flags & 1 )
-		{
-			TheAptSaveLoad->m_27c = 1;
-			TheAptSaveLoad->m_278 = extra;
-			return;
-		}
-		if ( flags & 2 )
-		{
-			AptSaveLoad *p = TheAptSaveLoad;
-			p->m_27c = 2;
-			TheAptSaveLoad->m_278 = extra;
-			return;
-		}
-		if ( flags & 4 )
-		{
-			AptSaveLoad *q = TheAptSaveLoad;
-			q->m_27c = 4;
-		}
-		TheAptSaveLoad->m_278 = extra;
+		TheAptSaveLoad->m_27c = 1;
+		value = extra;
+		TheAptSaveLoad->m_278 = value;
+		return;
 	}
+	else
+	{
+		if ( flagBits & 2 )
+		{
+			p = TheAptSaveLoad;
+			value = extra;
+			p->m_27c = 2;
+			q = TheAptSaveLoad;
+			q->m_278 = value;
+			return;
+		}
+	}
+	if ( flagBits & 4 )
+	{
+		q = TheAptSaveLoad;
+		q->m_27c = 4;
+	}
+	TheAptSaveLoad->m_278 = extra;
 }

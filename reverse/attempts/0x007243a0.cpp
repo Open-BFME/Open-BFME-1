@@ -66,12 +66,12 @@ public:
 
 void BfmeThingTBA::transitionTBA(void)
 {
+	BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
+	BfmeOverrideTBA *d = (BfmeOverrideTBA *)walkTBA(f);
 	float fraction;
-	const Overridable *next;
-	const BfmeOverrideTBA *from;
-	const BfmeOverrideTBA *to;
-	const BfmeOverrideTBA *f = g_bfmeGlo012F15F8;
-	const BfmeOverrideTBA *d = walkTBA(f);
+	BfmeOverrideTBA *from;
+	BfmeOverrideTBA *to;
+	BfmeOverrideTBA *next;
 	if (d->m_flag58 == 0 || m_98 == 0)
 		return;
 
@@ -82,7 +82,7 @@ void BfmeThingTBA::transitionTBA(void)
 	}
 	else
 	{
-		next = f->m_nextOverride;
+		next = (BfmeOverrideTBA *)f->m_nextOverride;
 		if (next == 0)
 		{
 			from = f;
@@ -90,8 +90,8 @@ void BfmeThingTBA::transitionTBA(void)
 		}
 		else
 		{
-			from = (const BfmeOverrideTBA *)next->getFinalOverride();
-			to = (const BfmeOverrideTBA *)next->getFinalOverride();
+			from = (BfmeOverrideTBA *)next->getFinalOverride();
+			to = (BfmeOverrideTBA *)next->getFinalOverride();
 		}
 	}
 	fraction = (float)(from->m_5c - m_4c) / (float)to->m_5c;

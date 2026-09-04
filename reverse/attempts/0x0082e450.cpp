@@ -56,13 +56,13 @@ void *bfmeSmallRefillPR(unsigned int bytes);
 
 void *bfmeSmallAllocPR(unsigned int bytes)
 {
+	void *block;
 	BfmeFreeListNode * volatile *my_free_list =
 		bfmeFreeList + ((bytes - 1) >> 3);
 	_STL::_Node_Alloc_Lock<false, 0> lock_instance;
-	BfmeFreeListNode *block = *my_free_list;
-	if (block)
-		*my_free_list = block->m_next;
+	if ((block = *my_free_list) != 0)
+		*my_free_list = ((BfmeFreeListNode *)block)->m_next;
 	else
-		block = (BfmeFreeListNode *)bfmeSmallRefillPR(bytes);
+		block = bfmeSmallRefillPR(bytes);
 	return block;
 }

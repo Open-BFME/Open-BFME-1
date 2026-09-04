@@ -1,6 +1,5 @@
 // ??0Rva89ACB0Holder@@QAE@PAVBfmeHeld99CB0@@@Z
-// partial score=0.9 date=2026-09-02
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc
 
 class Rva0089C860State
 {
@@ -31,6 +30,8 @@ public:
 		flags |= 0x0000801c;
 		m_flags = flags;
 	}
+
+	virtual ~BfmeBase99CB0();
 
 protected:
 	unsigned int m_flags;

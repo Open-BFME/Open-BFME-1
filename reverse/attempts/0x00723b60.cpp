@@ -46,7 +46,7 @@ public:
 	char m_unmodelled_00[0x44];
 	char m_flag44;
 	char m_unmodelled_45[3];
-	volatile int m_48;
+	int m_48;
 };
 
 static BfmeOverride1137 *walk(BfmeOverride1137 *d)
@@ -72,6 +72,7 @@ static BfmeOverride1137 *walk3(BfmeOverride1137 *d)
 void BfmeA1137::refreshCache()
 {
 	BfmeOverride1137 *d = g_bfmeGlo012F15F8;
+	const BfmeOverride1137 *f;
 	float slot;
 	if (d && d->m_nextOverride)
 		d = (BfmeOverride1137 *)d->m_nextOverride->getFinalOverride();
@@ -94,6 +95,6 @@ void BfmeA1137::refreshCache()
 		return;
 	m_flag44 = 1;
 	d = g_bfmeGlo012F15F8;
-	d = walk3(d);
-	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * d->m_50 + g_bfmeK07533C);
+	f = walk3(d);
+	m_48 = (int)((WWMath::Random_Float() * g_bfmeK1121004 + g_bfmeK075C6C) * f->m_50 + g_bfmeK07533C);
 }

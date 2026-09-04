@@ -14,9 +14,15 @@ extern char Rva0078F730NegativeHandler[];
 extern char Rva0078F730PositiveHandler[];
 void rva0078F730Apply( Rva0078F730Selectable *item );
 
+__forceinline int rva0078F730IsNegative( void *unused, Rva0078F730Selectable *item )
+{
+	(void)unused;
+	return ((unsigned char *)item)[4] & 0x80;
+}
+
 void rva0078F730Select( Rva0078F730Selectable *item )
 {
-	if( item->m_sign < 0 )
+	if( rva0078F730IsNegative( 0, item ) )
 		item->m_handler = Rva0078F730NegativeHandler;
 	else
 		item->m_handler = Rva0078F730PositiveHandler;

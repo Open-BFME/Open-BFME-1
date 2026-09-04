@@ -46,20 +46,28 @@ private:
 
 void Object::updateSupplyStatus(int maxSupply, int currentSupply)
 {
-	if (currentSupply > 0)
+	if (currentSupply <= 0)
 	{
-		UnsignedInt mask = 0x100000;
-		if (!(m_conditionFlags.m_words[2] & mask))
+		UnsignedInt flags = *reinterpret_cast<volatile UnsignedInt *>(
+			reinterpret_cast<char *>(this) + 0x118);
+		if (flags & 0x100000)
 		{
-			m_conditionFlags.m_words[2] |= mask;
+			flags &= 0xffefffff;
+			*reinterpret_cast<volatile UnsignedInt *>(
+				reinterpret_cast<char *>(this) + 0x118) = flags;
 			notifyModelConditionChanged();
 		}
 	}
 	else
 	{
-		if (m_conditionFlags.m_words[2] & 0x100000)
+		UnsignedInt flags = *reinterpret_cast<volatile UnsignedInt *>(
+			reinterpret_cast<char *>(this) + 0x118);
+		UnsignedInt mask = 0x100000;
+		if (!(flags & mask))
 		{
-			m_conditionFlags.m_words[2] &= 0xffefffff;
+			flags |= mask;
+			*reinterpret_cast<volatile UnsignedInt *>(
+				reinterpret_cast<char *>(this) + 0x118) = flags;
 			notifyModelConditionChanged();
 		}
 	}

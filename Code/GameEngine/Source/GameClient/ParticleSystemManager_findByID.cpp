@@ -1,5 +1,7 @@
 // ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z
-// partial score=0.9 date=2026-09-01
+// Open-BFME: ParticleSystemManager::findParticleSystemByID, retail 0x005C3B30 (171 bytes).
+// The list is the 12-byte intrusive-handle list at this+0x80. A returned
+// handle is inserted into the particle system's handle chain before return.
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned int UnsignedInt;
@@ -10,7 +12,7 @@ enum ParticleSystemID
 };
 
 class ParticleSystem;
-ParticleSystem *bfmeInvalidParticleSystemHandle();
+ParticleSystem *Make00001B18();
 
 class BfmeParticleSystemHandle
 {
@@ -18,10 +20,11 @@ public:
 	BfmeParticleSystemHandle(ParticleSystem *system = 0) :
 		m_system(system), m_previous(0), m_next(0) { }
 	BfmeParticleSystemHandle(const BfmeParticleSystemHandle &that);
+	~BfmeParticleSystemHandle() throw();
 	operator bool() const { return m_system != 0; }
 	ParticleSystem *operator->() const
 	{
-		return m_system ? m_system : bfmeInvalidParticleSystemHandle();
+		return m_system ? m_system : Make00001B18();
 	}
 
 	ParticleSystem *m_system;
@@ -39,18 +42,25 @@ public:
 	ParticleSystemID m_id;
 };
 
-BfmeParticleSystemHandle::BfmeParticleSystemHandle(
-	const BfmeParticleSystemHandle &that ) :
-	m_system(that.m_system), m_previous(0), m_next(0)
+__forceinline BfmeParticleSystemHandle::BfmeParticleSystemHandle(
+	const BfmeParticleSystemHandle &that )
 {
-	if (m_system)
+	ParticleSystem *system = that.m_system;
+	m_system = system;
+	if (system)
 	{
-		m_previous = m_system->m_lastHandle;
-		m_system->m_lastHandle = this;
+		m_previous = system->m_lastHandle;
+		m_next = 0;
+		system->m_lastHandle = this;
 		if (m_previous)
 			m_previous->m_next = this;
 		else
 			m_system->m_firstHandle = this;
+	}
+	else
+	{
+		m_previous = 0;
+		m_next = 0;
 	}
 }
 
@@ -106,7 +116,6 @@ private:
 	BfmeParticleSystemList m_systems;
 };
 
-// ?findParticleSystemByID@ParticleSystemManager@@AAE?AVBfmeParticleSystemHandle@@W4ParticleSystemID@@@Z
 BfmeParticleSystemHandle ParticleSystemManager::findParticleSystemByID(
 	ParticleSystemID id )
 {

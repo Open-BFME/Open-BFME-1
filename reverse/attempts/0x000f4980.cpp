@@ -1,4 +1,6 @@
 // ?hasAnyBuildings@Team@@QBE_N_N@Z
+// partial score=0.96 date=2026-09-04
+// ?hasAnyBuildings@Team@@QBE_N_N@Z
 // partial score=0.96 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 // Open-BFME5: Team::hasAnyBuildings, retail 0x000F4980, 184 bytes.

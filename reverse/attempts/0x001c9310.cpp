@@ -41,28 +41,25 @@ public:
 	Rva001C9310Scale *m_scaleSrc;
 };
 
-static int rva001C9310Value(Rva001C9310 *self)
+int Rva001C9310::value()
 {
+	Rva001C9310 *self = this;
+	Rva001C9310 *owner = self;
 	Rva001C9310Thing *thing = self->m_template;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
-	int v = thing->m_value_448;
+	register int v = thing->m_value_448;
 
-	thing = self->m_template;
+	thing = owner->m_template;
 	if ( thing )
 	{
 		if ( thing->m_nextOverride )
 			thing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();
 	}
 	if ( thing->m_flags_d0 & 0x2000000 )
-		return self->m_scaleSrc->m_scale * v;
+		return owner->m_scaleSrc->m_scale * v;
 	return v;
-}
-
-int Rva001C9310::value()
-{
-	return rva001C9310Value(this);
 }

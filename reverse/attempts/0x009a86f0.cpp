@@ -9,7 +9,7 @@ public:
 	static void *__cdecl operator new(unsigned int bytes, BucketMagicEnum tag);
 };
 
-void __cdecl d_009a85f0(void *what);
+extern void __cdecl d_009a85f0();
 
 struct Rva009A86F0Context
 {
@@ -49,7 +49,7 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 	unsigned int tailSize;
 	unsigned int bufferSize;
 	unsigned int bufferSize2;
-	d_009a85f0(self);
+	((void (__cdecl *)(void *))d_009a85f0)(self);
 
 	void *first = Bucket::operator new(0x320, Bucket::Bucket_GLUE_NOT_IMPLEMENTED);
 	self->m_at00 = first;
@@ -70,10 +70,10 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 	self->m_at11c = third;
 	if (third == 0)
 		goto failure;
-	halfCount2 = self->m_count >> 1;
-	halfCount2 += 0;
 	self->m_at110 = (void *)(((unsigned int)self->m_at11c + 0x1f) & ~0x1f);
 
+	halfCount2 = self->m_count >> 1;
+	halfCount2 += 0;
 	void *fourth = Bucket::operator new(
 		(halfCount2 + 0xa) << 4, Bucket::Bucket_GLUE_NOT_IMPLEMENTED);
 	self->m_at120 = fourth;
@@ -103,9 +103,9 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 		Bucket::Bucket_GLUE_NOT_IMPLEMENTED);
 	if (self->m_at700 == 0)
 		goto failure;
-	tailSize = self->m_count2 * 4 + 0x20;
 	self->m_at6f4 = (void *)(((unsigned int)self->m_at700 + 0x1f) & ~0x1f);
 
+	tailSize = self->m_count2 * 4 + 0x20;
 	void *eighth = Bucket::operator new(
 		tailSize,
 		Bucket::Bucket_GLUE_NOT_IMPLEMENTED);
@@ -116,6 +116,6 @@ int __cdecl Rva009A86F0Initialize(Rva009A86F0Context *self)
 	return 1;
 
 failure:
-	d_009a85f0(self);
+	((void (__cdecl *)(void *))d_009a85f0)(self);
 	return 0;
 }

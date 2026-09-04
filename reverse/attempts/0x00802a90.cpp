@@ -3,6 +3,8 @@
 // cl: /GX-
 // jabba gamebrowser slot go @ 0x00802A90 (160B).
 
+#define bool unsigned
+
 struct Rva00802A90Elem
 {
 	char m_head[8];
@@ -36,17 +38,13 @@ bool Rva00802A90Owner::go( Rva00802A90Query *q, bool flag, int id )
 {
 	if( flag )
 	{
-		int idx;
-		Rva00802A90Elem *base;
-		Rva00802A90Elem *elem;
-
 		if( id != m_token )
 			return false;
-		idx = m_index;
+		int idx = m_index;
 		if( idx >= m_count )
 			return false;
-		base = m_base;
-		elem = (Rva00802A90Elem *)( (char *)base + ( idx << 7 ) );
+		Rva00802A90Elem *base = m_base;
+		Rva00802A90Elem *elem = (Rva00802A90Elem *)( (char *)base + ( idx << 7 ) );
 		if( !elem )
 			return false;
 		m_index = idx + 1;
@@ -61,7 +59,7 @@ bool Rva00802A90Owner::go( Rva00802A90Query *q, bool flag, int id )
 		{
 			if( p->m_key == q->m_key )
 			{
-				Rva00801CB0( q, m_04, 0, id );
+				Rva00801CB0( q, m_04, flag, id );
 				return false;
 			}
 			p = (Rva00802A90Elem *)( (char *)p + 0x80 );

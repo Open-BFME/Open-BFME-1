@@ -346,6 +346,7 @@ name,address,notes
 ??$_Construct@UGen_t_007463a0_p24cd@@U1@@_STL@@YAXPAUGen_t_007463a0_p24cd@@ABU1@@Z,0x007416E0,gen-tgrid payload member
 ??$_Construct@UGen_t_00774250_p24cd@@U1@@_STL@@YAXPAUGen_t_00774250_p24cd@@ABU1@@Z,0x00768D20,gen-tgrid payload member
 ??$_Construct@UGen_t_00776080_p32cd@@U1@@_STL@@YAXPAUGen_t_00776080_p32cd@@ABU1@@Z,0x00770B20,gen-tgrid payload member
+??$_Construct@UGen_t_00776240_p128pod@@U1@@_STL@@YAXPAUGen_t_00776240_p128pod@@ABU1@@Z,0x000375CE,callee of vector insert at 0x0077CC60; same STLport construct body as the pinned 0x000375CE helper
 ??$_Construct@UGen_t_008fb570_p8pod@@U1@@_STL@@YAXPAUGen_t_008fb570_p8pod@@ABU1@@Z,0x008F9C70,RVA 0x008FB570 exact auxiliary call target
 ??$_Construct@UGen_t_008fbc70_p8cd@@U1@@_STL@@YAXPAUGen_t_008fbc70_p8cd@@ABU1@@Z,0x008F9C70,gen-tgrid payload member
 ??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,0x0004A818,rel32 pin for exact-ambiguous landing
@@ -2333,6 +2334,7 @@ name,address,notes
 ??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
 ??0Gen_dtor_002aaec0@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 RousingSpeechUpdate retail base constructor ILT
 ??0Gen_dtor_007f6d20@@QAE@XZ,0x00800280,V2 lane: 8-byte element constructor placement-new'd by ?allocate@Rva007F78E0Block@@QAEXH@Z; same class the tree pins ??1Gen_dtor_007f6d20@@UAE@XZ at 0x00800290
+??0Gen_dtor_009eb9e0@@QAE@XZ,0x009F2140,W3DRenderObjectSnapshot allocated member constructor paired with the destructor at RVA 0x009F23C0
 ??0Gen_t_00062210_mc4@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_00062900_k4@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
 ??0Gen_t_0007ccc0_k4@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
@@ -2525,6 +2527,7 @@ name,address,notes
 ??0Gen_t_007650c0_mc4@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_007650f0_m4cd@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
 ??0Gen_t_00768c40_k4@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
+??0Gen_t_00776240_p128pod@@QAE@ABU0@@Z,0x00772E10,188-byte element copy constructor called by vector insert at 0x0077CC60
 ??0Gen_t_00852240_p12cd@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
 ??0Gen_t_008ffa00_p12cd@@QAE@ABU0@@Z,0x004FB1B0,gen-tgrid payload member
 ??0Gen_t_009ca980_k4@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
@@ -6302,6 +6305,7 @@ name,address,notes
 ??1Gen_t_007707b0_p24cd@@QAE@XZ,0x0003ECC0,gen-tgrid payload member
 ??1Gen_t_00770af0_p32cd@@QAE@XZ,0x00769D90,gen-tgrid payload member
 ??1Gen_t_00771d80_p32cd@@QAE@XZ,0x00769D90,gen-tgrid payload member
+??1Gen_t_00776240_p128pod@@QAE@XZ,0x00774D40,188-byte element destructor called by vector insert at 0x0077CC60
 ??1Gen_t_00777e90_p32cd@@QAE@XZ,0x00769D90,gen-tgrid payload member
 ??1Gen_t_00777f40_p32cd@@QAE@XZ,0x00769D90,gen-tgrid payload member
 ??1Gen_t_00894a10_k4@@QAE@XZ,0x00894160,gen-tgrid payload member
@@ -8756,6 +8760,7 @@ name,address,notes
 ??ATeamPrototypeMap@@QAEAAPAVTeamPrototype@@ABUTeamPrototypeKey@@@Z,0x00003B20,ILT thunk to the team prototype map slot accessor
 ??M@YA_NABVAsciiString@@0@Z,0x00015898
 ??R?$less@UGen_t_00093990_mc4@@@_STL@@QBE_NABUGen_t_00093990_mc4@@0@Z,0x00093170,family-emit payload member
+??R?$less@URva0019BC70Key@@@_STL@@QBE_NABURva0019BC70Key@@0@Z,0x0000B050,retail call target for the Rva0019BC70Key comparator
 ??R?$less@V?$StringBase@G@@@_STL@@QBE_NABV?$StringBase@G@@0@Z,0x000036F7,ILT thunk to the wide-string tree comparator at 0x0054ED50
 ??R?$less@VAsciiString@@@_STL@@QBE_NABVAsciiString@@0@Z,0x00043D42,Open-BFME5 the callee the hinted insert_unique reaches
 ??RBfmeCompAO@@QAE_NHH@Z,0x00024055,Open-BFME5 the ICF thunk (to 0x00424055) the linear insert at 0x00453020 compares through
@@ -9059,6 +9064,7 @@ name,address,notes
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHAnimClass@@M@Z,0x00953AD0,generic per-pivot evaluator
 ?Anim_Update@HTreeClass@@QAEXABVMatrix3D@@PAVHRawAnimClass@@M@Z,0x00953EB0,uncompressed-animation evaluator
 ?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z,0x00028CE0,TeamInQueue disband call pin
+?Apply@CameraClass@@QAEXXZ,0x00933190,retail WaterRenderObjClass::renderMirror caller at 0x007A2B00 CameraClass::Apply body verified
 ?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
 ?Apply_Default_State@DX8Wrapper@@SAXXZ,0x009095A0,BFME DX8MeshRendererClass::Flush tail; snapshot-inlined default-state body at historical 0x009095A0
 ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,0x00904890
@@ -9078,6 +9084,7 @@ name,address,notes
 ?BaseHeightMapScorchStageChanges@@3IA,0x01340568,BaseHeightMap drawScorches sampler-state counter
 ?Base_Update@HTreeClass@@QAEXABVMatrix3D@@@Z,0x009528D0
 ?Begin_Chunk@ChunkSaveClass@@QAE_NK@Z,0x009E16F0
+?Begin_Render@WW3D@@SA?AW4WW3DErrorType@@_N0ABVVector3@@MP6AXXZ@Z,0x008FE280,retail WaterRenderObjClass::renderMirror caller at 0x007A2B00 Begin_Render body verified
 ?Bfme000BD360Construct@_STL@@YAXPAUP5Elem000BD360@@ABU2@@Z,0x0000A97A,Open-BFME5 ILT for the construct the push_back at 0x000BD360 reaches
 ?Bfme00365520Construct@@YAXPAUP6Elem00365520@@ABU1@@Z,0x00003193,Open-BFME5 ILT the element construct the inlined push_back at 0x00365520 calls
 ?Bfme003AC1C0Construct@@YAXPAUP6Elem003AC1C0@@ABU1@@Z,0x00015C85,Open-BFME5 ILT the element construct the inlined push_back at 0x003AC1C0 calls
@@ -9906,6 +9913,7 @@ name,address,notes
 ?Set_Render_Device@DX8Wrapper@@KA_NHHHHH_N00@Z,0x0090B020,pinharvest x5 (body)
 ?Set_Render_Device@DX8Wrapper@@KA_NPBDHHHH_N@Z,0x0090B850,pinharvest x3 (body)
 ?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@_N@Z,0x009052B0,packet 00906fa0 -- Set_Render_Target(IDirect3DSwapChain8*) calling Set_Render_Target(IDirect3DSurface8*,bool)
+?Set_Render_Target_With_Z@DX8Wrapper@@SAXPAVTextureClass@@PAVZTextureClass@@@Z,0x00906F10,retail WaterRenderObjClass::renderMirror caller at 0x007A2B00 Set_Render_Target_With_Z body verified
 ?Set_Shader@DX8Wrapper@@SAXABVShaderClass@@@Z,0x000173C3,W3DBibBuffer renderBibs retail ILT call
 ?Set_Shader@LineGroupClass@@QAEXABVShaderClass@@@Z,0x0098E940,derived from ParticleBufferClass main ctor aligned call sites
 ?Set_Shader@PointGroupClass@@QAEXVShaderClass@@@Z,0x009120E0,derived from ParticleBufferClass main ctor aligned call sites
@@ -11093,6 +11101,7 @@ name,address,notes
 ?_M_insert@?$_Rb_tree@PBVThingTemplate@@PBV1@U?$_Identity@PBVThingTemplate@@@_STL@@U?$less@PBVThingTemplate@@@3@V?$allocator@PBVThingTemplate@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@PBVThingTemplate@@U?$_Nonconst_traits@PBVThingTemplate@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABQBVThingTemplate@@0@Z,0x009A4130,decoded from insert_unique call site
 ?_M_insert@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@QBVThingTemplate@@H@2@0@Z,0x009A4130,decoded from SelectionXlat insert_unique call site
 ?_M_insert@?$_Rb_tree@UGen_t_00093990_mc4@@U1@U?$_Identity@UGen_t_00093990_mc4@@@_STL@@U?$less@UGen_t_00093990_mc4@@@3@V?$allocator@UGen_t_00093990_mc4@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@UGen_t_00093990_mc4@@U?$_Nonconst_traits@UGen_t_00093990_mc4@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABUGen_t_00093990_mc4@@0@Z,0x00093670,family-emit payload member
+?_M_insert@?$_Rb_tree@URva0019BC70Key@@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@U?$less@URva0019BC70Key@@@3@V?$allocator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@2@0@Z,0x00014C31,retail call target for the Rva0019BC70Tree node insertion helper
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@UCoord3D@@@2@0@Z,0x000086A2
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@2@0@Z,0x000086A2,Open-BFME5 ICF pin for InGameUI SuperweaponInfo _M_insert
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@0@Z,0x00026283,WOLLogin tree insert thunk
@@ -11332,6 +11341,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_00754630_m4pod@@V?$allocator@UGen_t_00754630_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00754630_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00753FC0,family-emit payload member
 ?_M_insert_overflow@?$vector@UGen_t_00774250_p24cd@@V?$allocator@UGen_t_00774250_p24cd@@@_STL@@@_STL@@IAEXPAUGen_t_00774250_p24cd@@ABU3@ABU__false_type@2@I_N@Z,0x00771B10,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_00776080_p32cd@@V?$allocator@UGen_t_00776080_p32cd@@@_STL@@@_STL@@IAEXPAUGen_t_00776080_p32cd@@ABU3@ABU__false_type@2@I_N@Z,0x00774580,gen-tgrid payload member
+?_M_insert_overflow@?$vector@UGen_t_00776240_p128pod@@V?$allocator@UGen_t_00776240_p128pod@@@_STL@@@_STL@@IAEXPAUGen_t_00776240_p128pod@@ABU3@ABU__false_type@2@I_N@Z,0x0077C6C0,callee of vector insert overflow at 0x0077CC60; same 188-byte STLport vector helper
 ?_M_insert_overflow@?$vector@UGen_t_00787d40_m4pod@@V?$allocator@UGen_t_00787d40_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00787d40_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00786F50,family-emit payload member
 ?_M_insert_overflow@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x000251D0,rel32 pin for exact-ambiguous landing
 ?_M_insert_overflow@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2
@@ -11917,6 +11927,7 @@ name,address,notes
 ?aiEvacuate@AICommandInterface@@QAEX_NW4CommandSourceType@@@Z,0x000344C3,aiEvacuate ILT from groupEvacuate ground arm
 ?aiFacePosition@AICommandInterface@@QAEXPBUCoord3D@@H@Z,0x00040732,AICommandInterface aiFacePosition ILT used by assigned ScriptActions face bodies
 ?aiFollowPathAppend@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0000BAC8,aiFollowPathAppend ILT from groupTightenToPosition addWaypoint arm; body 0x00153480
+?aiFollowWaypointPathExact@AICommandInterface@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00152E20,BFME command 0x32 exact waypoint path body
 ?aiGetHealed@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003CF10,packet 002817b0 pin
 ?aiGuardPosition@Open2Commands156070@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00013D68,Open2 0x00156070 guard command (ILT)
 ?aiGuardPosition@Open2Commands1568A0@@QAEXPBUCoord3D@@W4GuardMode@@W4CommandSourceType@@@Z,0x00014FDD,Open2 0x001568A0 guard command (ILT)
@@ -75532,9 +75543,11 @@ name,address,notes
 ?createEx@Rva0005FA90Factory@@AAEPAXPAX00000@Z,0x0005ECD0,six-argument __thiscall callee of the 0x0005FA90 forwarder (U3_table_lookup_and_forwarder.cpp); identity not recovered
 ?createGroup@AI@@QAEPAVAIGroup@@XZ,0x0003B570,doTeamAttackNamed BFME createGroup thunk
 ?createInactiveTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@0@Z,0x000F7AB0,call displacement in initTeam @0x000F8232 (via thunk 0xD15C)
+?createInternal@ObjectCreationList@@ABEPAVObject@@PBV2@PBVCoord3D@@1MI@Z,0x0003E360,retail REL32 target decoded from assigned 0x00262DA0
 ?createLightsIterator@RTS3DScene@@QAEPAV?$RefMultiListIterator@VRenderObjClass@@@@XZ,0x007123F0,BFME identity bfmeGo1036B body 0x007123F0 via ILT 0x00042A0A
 ?createMemoryPool@MemoryPoolFactory@@QAEPAVMemoryPool@@PBDHHH@Z,0x0003ADD7,pool-glue cascade callee (ICF-folded with findMemoryPool)
 ?createNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@0M0@Z,0x0002C8EA
+?createParticleSystem@ParticleSystemManager@@QAE?AVBfmeParticleSystemHandle@@PBVParticleSystemTemplate@@_N@Z,0x0000EBE7,handle-returning BFME particle-system factory called by W3DTankDraw::createEmitters at 0x0077EC40
 ?createRadiusDecal@RadiusDecalTemplate@@QBEXABUCoord3D@@MPBVPlayer@@AAVRadiusDecal@@@Z,0x00037826,RadiusDecalUpdate::createRadiusDecal retail callee
 ?createVictoryConditions@@YAPAVVictoryConditionsInterface@@XZ,0x0035F810,ZH createVictoryConditions: new(0xC4) then ??0VictoryConditions 0x0035F430 via ILT 0x0004ADC2 at 0x0035F844; called by GameEngine::init 0x0007A0A6 whose result feeds initSubsystem<VictoryConditionsInterface> with &TheVictoryConditions 0x012F079C pushed at 0x0007A0BC
 ?create_node@AnimateWindowListCreateNodeShim@_STL@@QAEPAU?$_List_node@PAVAnimateWindow@@@2@ABQAVAnimateWindow@@@Z,0x0045DAE0,incremental-link thunk target through a TU-local forwarding shim
@@ -79029,6 +79042,7 @@ name,address,notes
 ?helper@BfmeBaseHelper060600@@QAEXHPAX@Z,0x0075BBA0,adjusted-this base helper call target from 0x00760600 (currently gen-dump ?d_0075bba0@@YAXXZ)
 ?helper@BfmeFixup2580@@QAEXPAXPAVBfmeFixupChunk2580@@0@Z,0x008A2130,pin
 ?helper@ControlBar@@QAEXXZ,0x00038F4B,setSquishedControlBarConfig helper call; ILT thunk for body 0x004C1920
+?helper@Gen_00896320@@QAEXPAX00@Z,0x008961E0,call target of the exact 0x00896320 append wrapper
 ?helper@Gen_00942BC0@@AAEXPAHPAX11H@Z,0x00942430,address-derived helper call recovered from 0x00942BC0
 ?helper@PoisonedBehaviorOwnerShim@@QAE?AW4UpdateSleepTime@@HPAXHH@Z,0x000202A7,PoisonedBehavior update sleep-time helper shim
 ?helper@Rva0056C090@@QAEHXZ,0x00003EA4,Open-BFME5 thunk to 0x0056AB50
@@ -79251,6 +79265,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@URva001291F0Key@@U?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@_STL@@@3@U?$less@URva001291F0Key@@@3@V?$allocator@U?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva001291F0Key@@URva001291F0Value@@@2@@Z,0x0000228E,Open-BFME5 ILT for the tree insert_unique the map insert at 0x001291F0 forwards to
 ?insert_unique@?$_Rb_tree@URva00146AB0Key@@U?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@_STL@@@3@U?$less@URva00146AB0Key@@@3@V?$allocator@U?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva00146AB0Key@@URva00146AB0Value@@@2@@Z,0x00009462,Open-BFME5 ILT for the tree insert_unique the map insert at 0x00146AB0 forwards to
 ?insert_unique@?$_Rb_tree@URva0019BC70Key@@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@U?$less@URva0019BC70Key@@@3@V?$allocator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@2@@Z,0x0000A4E8,Open-BFME5 ILT for the tree insert_unique the map insert at 0x0019BC70 forwards to
+?insert_unique@?$_Rb_tree@URva0019BC70Key@@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@U?$less@URva0019BC70Key@@@3@V?$allocator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@2@@Z,0x00027133,retail call target for the Rva0019BC70Tree return path
 ?insert_unique@?$_Rb_tree@URva001DAE10Key@@U?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@_STL@@@3@U?$less@URva001DAE10Key@@@3@V?$allocator@U?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva001DAE10Key@@URva001DAE10Value@@@2@@Z,0x0001F389,Open-BFME5 ILT for the tree insert_unique the map insert at 0x001DAE10 forwards to
 ?insert_unique@?$_Rb_tree@URva00225C90Key@@U?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@_STL@@@3@U?$less@URva00225C90Key@@@3@V?$allocator@U?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva00225C90Key@@URva00225C90Value@@@2@@Z,0x00030698,Open-BFME5 ILT for the tree insert_unique the map insert at 0x00225C90 forwards to
 ?insert_unique@?$_Rb_tree@URva002271A0Key@@U?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@_STL@@@3@U?$less@URva002271A0Key@@@3@V?$allocator@U?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva002271A0Key@@URva002271A0Value@@@2@@Z,0x00011D3D,Open-BFME5 ILT for the tree insert_unique the map insert at 0x002271A0 forwards to
@@ -79457,6 +79472,7 @@ name,address,notes
 ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
 ?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
+?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z,0x0000583A,callee pin from SiegeEngineContain isValidContainerFor at 0x0022BF30
 ?isValidToUseOn@CommandButton@@QBE_NPBVObject@@0PBUCoord3D@@W4CommandSourceType@@@Z,0x00005C4A,doTeamUseCommandButtonOnNamed BFME CommandButton ILT
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,ILT thunk to TurretAI::isWeaponSlotOnTurret at 0x0018C7A0
 ?isWithinTargetPitch@Weapon@@QBE_NPBVObject@@0@Z,0x00005533,Open-BFME5 ILT thunk fronting body 0x001E2C50

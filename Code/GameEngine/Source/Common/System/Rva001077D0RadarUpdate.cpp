@@ -1,5 +1,5 @@
 // ?update@Rva001077D0Radar@@QAEXXZ
-// partial score=0.96 date=2026-08-31
+// Byte-exact BFME Radar update view for retail 0x001077D0.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 class Rva001077D0FrameSource
@@ -46,6 +46,11 @@ public:
 class Rva001077D0ReferencePointer
 {
 public:
+	__forceinline Rva001077D0Reference *get() const
+	{
+		return pointer;
+	}
+
 	__forceinline void clear()
 	{
 		if (pointer)
@@ -54,7 +59,6 @@ public:
 			pointer = 0;
 		}
 	}
-
 
 private:
 	Rva001077D0Reference *pointer;
@@ -110,8 +114,10 @@ void Rva001077D0Radar::update()
 		if (event.active == 1 && event.createFrame != 0
 			&& currentFrame > event.dieFrame)
 		{
+			Rva001077D0Reference *reference = event.reference.get();
 			event.active = 0;
-			event.reference.clear();
+			if (reference)
+				event.reference.clear();
 		}
 	}
 

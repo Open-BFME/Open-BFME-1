@@ -1,4 +1,6 @@
 // ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
+// partial score=0.92 date=2026-09-04
+// ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
 // partial score=0.92 date=2026-09-03
 // ?bfmeSelectSplitResult@BfmeHordeContainOwner@@QAEHPAVBfmeSplitResultInput@@PAUBfmeSelectedTemplate@@@Z
 // partial score=0.92 date=2026-09-03
@@ -40,7 +42,6 @@ class BfmeSplitResult
 public:
 	BfmeOverridable *m_value;
 	int m_rank;
-	BfmeOverridable *getValue() const { return m_value; }
 };
 
 class BfmeHordeContainOwner
@@ -79,17 +80,17 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		UnsignedInt i = 0;
 		if ( count > 0 )
 		{
+			BfmeSplitResult *result;
 			BfmeOverridable *wantedValue = wanted;
 			BfmeSplitResult **current = first;
-			BfmeSplitResult *result;
 				do
 				{
 				BfmeSplitResult *candidate = *current;
 				if ( candidate->m_value == wantedValue )
 				{
-					result = first[ i ];
-					selectedTemplate->m_value = result->getValue();
-					return m_splitResultsBegin[ i ]->m_rank;
+					selectedTemplate->m_value = first[ i ]->m_value;
+					int rank = m_splitResultsBegin[ i ]->m_rank;
+					return rank;
 					}
 				++i;
 				++current;
@@ -98,7 +99,7 @@ int BfmeHordeContainOwner::bfmeSelectSplitResult(
 		}
 	}
 
-	BfmeSplitResult *result = first[ 0 ];
-	selectedTemplate->m_value = result->getValue();
-	return m_splitResultsBegin[ 0 ]->m_rank;
+	selectedTemplate->m_value = first[ 0 ]->m_value;
+	int rank = m_splitResultsBegin[ 0 ]->m_rank;
+	return rank;
 }

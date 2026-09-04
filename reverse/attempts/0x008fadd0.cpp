@@ -1,3 +1,5 @@
+// ?processPending@ShroudManagerImpl008FBA40@@AAEX_N@Z
+// partial score=0.96 date=2026-09-04
 // ?d_008fadd0@@YAXXZ
 // partial score=0.96 date=2026-08-28
 // cl: /DNDEBUG /EHsc

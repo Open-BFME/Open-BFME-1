@@ -62,7 +62,7 @@ void Rva00726EA0TaintFill::fill(unsigned char alpha)
 		unsigned int i;
 		for (i = 0; i < m_width; )
 		{
-		*(char *)(i + row) = alpha;
+			*(char *)(i + row) = alpha;
 			i++;
 		}
 		row += m_width;

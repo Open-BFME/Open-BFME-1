@@ -17,6 +17,7 @@ namespace _STL {
 
 class string {
 public:
+	typedef unsigned size_type;
 	unsigned size() const { return (unsigned)(_M_finish - _M_start); }
 	char operator[](unsigned n) const { return _M_start[n]; }
 
@@ -40,11 +41,12 @@ ptrdiff_t __cdecl __insert_grouping(unsigned short *first, unsigned short *last,
 
 	first += basechars;
 	unsigned short *cur_group = last;
+	string::size_type n = 0;
 	int groupsize = 0;
 
-	for (unsigned n = 0;;) {
-		if (n < grouping.size())
-			groupsize = (int)(signed char)grouping[n];
+	while (true) {
+		groupsize = n < grouping.size()
+			? (int)(signed char)grouping[n] : groupsize;
 		++n;
 
 		if (groupsize <= 0 || groupsize >= (int)(cur_group - first))

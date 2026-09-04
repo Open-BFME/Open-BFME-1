@@ -11,17 +11,18 @@ void __cdecl bfmeFilter75F0(
 	int columns,
 	const int *weights)
 {
-	if ((unsigned int)rows > 0)
+	unsigned int rowCount = (unsigned int)rows;
+	if ((unsigned int)rowCount > 0)
 	{
-		int rowCount = rows;
+		int columnCount = columns;
+		const int *coefficient = weights;
 		do
 		{
-			const int *coefficient = weights;
 			int column = 0;
 			unsigned char *previous = source - sourceDelta;
 			unsigned char *next = source + sourceDelta;
 
-			if ((unsigned int)columns > 0)
+			if ((unsigned int)columnCount > 0)
 			{
 				do
 				{
@@ -40,11 +41,11 @@ void __cdecl bfmeFilter75F0(
 					++previous;
 					++column;
 				}
-				while ((unsigned int)column < (unsigned int)columns);
+				while ((unsigned int)column < (unsigned int)columnCount);
 			}
 
-			source += sourcePitch - columns;
-			destination += columns;
+			source += sourcePitch - columnCount;
+			destination += columnCount;
 		}
 		while (--rowCount != 0);
 	}

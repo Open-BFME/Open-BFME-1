@@ -34,8 +34,9 @@ private:
 
 Bool Object::rva001CDBE0() const
 {
-	Object *self = (Object *)this;
+	Object *self;
 	const GameLogic *gameLogic;
+	self = (Object *)this;
 	gameLogic = TheGameLogic;
 	if (gameLogic == 0)
 		return false;

@@ -266,7 +266,30 @@ static void adjustDisplay( GameWindow *window, Int adjustment, Bool updateSlider
 //=============================================================================
 __declspec(noinline) void __cdecl adjustDisplay( GameWindow *window, Bool updateSlider )
 {
-	adjustDisplay( window, 0, updateSlider );
+	ListboxData *list = (ListboxData *)window->winGetUserData();
+
+	if( list->slider != NULL )
+	{
+		SliderData *sData;
+		ICoord2D sliderSize, sliderChildSize;
+		GameWindow *child;
+
+		sData = (SliderData *)list->slider->winGetUserData();
+		list->slider->winGetSize( &sliderSize.x, &sliderSize.y );
+		sData->maxVal = list->totalHeight - ( list->displayHeight - TOTAL_OUTLINE_HEIGHT ) + 1;
+		if( sData->maxVal < 0 )
+			sData->maxVal = 0;
+
+		child = list->slider->winGetChild();
+		child->winGetSize( &sliderChildSize.x, &sliderChildSize.y );
+		sData->numTicks = (float)((sliderSize.y - sliderChildSize.y) / (float)sData->maxVal);
+
+		if( updateSlider )
+			TheWindowManager->winSendSystemMsg( list->slider,
+				GSM_SET_SLIDER,
+				(sData->maxVal - list->displayPos),
+				0 );
+	}
 }
 
 // adjustDisplay ==============================================================

@@ -12,14 +12,20 @@ struct BfmeNineWordRequest
 		m_firstFlag = 0;
 		m_secondFlag = 0;
 		m_mode = 0;
-		for (int i = 0; i < 8; ++i)
-			m_words[i] = 0;
+		m_words[0] = 0;
+		m_words[1] = 0;
+		m_words[2] = 0;
+		m_words[3] = 0;
+		m_words[4] = 0;
+		m_words[5] = 0;
+		m_words[6] = 0;
+		m_words[7] = 0;
 	}
 
+	int m_words[8];
 	unsigned char m_firstFlag;
 	unsigned char m_secondFlag;
 	unsigned short m_mode;
-	int m_words[8];
 };
 
 class BfmeRequestOwner
@@ -31,6 +37,7 @@ public:
 
 void BfmeRequestOwner::forwardEmptyRequest(int selector)
 {
+	BfmeRequestOwner *self = this;
 	BfmeNineWordRequest request;
-	forwardRequest(selector, request);
+	self->forwardRequest(selector, request);
 }

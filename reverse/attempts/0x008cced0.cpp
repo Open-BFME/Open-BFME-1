@@ -71,8 +71,9 @@ public:
 	int m_savedStackBase;
 };
 
-void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
+void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, volatile int limit)
 {
+	unsigned char *start = (unsigned char *)code;
 	if (limit == -1)
 	{
 		m_ownedValues[m_ownedCount++] = (BfmeR1226Value *)valueArgument;
@@ -80,19 +81,17 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
 	}
 	BfmeR1226Value *value = (BfmeR1226Value *)valueArgument;
 
-	unsigned char *start = (unsigned char *)code;
 	int zero = 0;
 	BfmeR1226ExecContext execute;
 	execute.m_cursor = start;
-	execute.m_heldValue = value;
+	execute.m_unknown04 = (int)value;
+	execute.m_heldValue = (BfmeR1226Value *)zero;
 	execute.m_end = (unsigned char *)zero;
 	execute.m_stopped = (bool)zero;
 	execute.m_created = makeValue(value, zero, &g_rva8CCED0RouteMarker, 1, 1, zero);
 	int oldStackBase = m_savedStackBase;
 	m_savedStackBase = m_count;
 	bool stopped = false;
-	int executionLimit = limit;
-
 	while (m_stop == zero)
 	{
 		if (execute.m_end != (unsigned char *)zero && execute.m_cursor == execute.m_end)
@@ -105,14 +104,14 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
 		unsigned opcode = *execute.m_cursor++;
 		if (execute.m_stopped)
 			break;
-		if (executionLimit >= zero && execute.m_cursor - start > executionLimit)
+		if (limit >= zero && execute.m_cursor - start > limit)
 		{
 			pushValue(g_bfmeFallbackDB);
 			break;
 		}
 		if (opcode == (unsigned)zero)
 		{
-			if (executionLimit >= zero)
+			if (limit >= zero)
 				pushValue(g_bfmeFallbackDB);
 			break;
 		}
@@ -122,14 +121,14 @@ void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, int limit)
 	if (m_count > m_savedStackBase)
 	{
 		int excess = m_count - m_savedStackBase;
-		if (executionLimit >= zero)
+		if (limit >= zero)
 			--excess;
 		if (excess > zero)
 			popValues(excess);
 	}
 	m_savedStackBase = oldStackBase;
 
-	if (executionLimit == -1)
+	if (limit == -1)
 	{
 		m_ownedValues[m_ownedCount - 1]->release();
 		--m_ownedCount;

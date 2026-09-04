@@ -1,4 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink
+// stlport
+#include <vector>
+#include "ObjectDlinkPmf.h"
 
 // Address-derived reconstruction.  The retail body lazily allocates the
 // seven-dword object stored at +0x54 and forwards its argument with a true
@@ -24,6 +27,57 @@ private:
 	int m_18;
 };
 
+enum ObjectID
+{
+	INVALID_OBJECT_ID = 0
+};
+
+template<class OBJCLASS>
+class Rva001705A0DlinkIterator
+{
+public:
+	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
+
+	Rva001705A0DlinkIterator( OBJCLASS *cur, GetNextFunc getNextFunc )
+		: m_cur( cur ), m_getNextFunc( getNextFunc ) {}
+
+	void advance()
+	{
+		if ( m_cur )
+			m_cur = (m_cur->*m_getNextFunc)();
+	}
+
+	bool done() const { return m_cur == 0; }
+	OBJCLASS *cur() const { return m_cur; }
+
+private:
+	OBJCLASS *m_cur;
+	GetNextFunc m_getNextFunc;
+};
+
+class Rva001705A0Team
+{
+public:
+	void *m_vptr;
+	void *m_proto;
+	void *m_id;
+	Object *m_head;
+};
+
+class Rva001705A0ObjectIDView
+{
+public:
+	unsigned char m_pad[0x74];
+	ObjectID m_id;
+	ObjectID getID() const { return m_id; }
+};
+
+class Rva001705A0IDVectorView
+{
+public:
+	_STL::vector<ObjectID> m_ids;
+};
+
 inline Rva001705A0Inner::Rva001705A0Inner()
 {
 	m_vtable = &Gen01083E78;
@@ -33,6 +87,26 @@ inline Rva001705A0Inner::Rva001705A0Inner()
 	m_10 = 0;
 	m_14 = 0;
 	m_18 = 0;
+}
+
+void Rva001705A0Inner::apply( int value, bool enabled )
+{
+	if ( value == 0 )
+		return;
+
+	if ( enabled )
+		((Rva001705A0IDVectorView *)((char *)this + 4))->m_ids.clear();
+
+	Rva001705A0Team *team = (Rva001705A0Team *)value;
+	for ( Rva001705A0DlinkIterator<Object> iter =
+			Rva001705A0DlinkIterator<Object>( team->m_head,
+				Object::dlink_next_TeamMemberList );
+			!iter.done(); iter.advance() )
+	{
+		Rva001705A0ObjectIDView *object =
+			(Rva001705A0ObjectIDView *)iter.cur();
+		((Rva001705A0IDVectorView *)((char *)this + 4))->m_ids.push_back( object->getID() );
+	}
 }
 
 class Rva001705A0Owner

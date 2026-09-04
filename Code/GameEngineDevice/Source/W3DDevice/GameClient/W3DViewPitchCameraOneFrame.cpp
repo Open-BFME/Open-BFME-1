@@ -1,5 +1,3 @@
-// ?pitchCameraOneFrame@W3DView@@AAEXXZ
-// partial score=0.94 date=2026-09-02
 // ?pitchCameraOneFrame@W3DView@@AAEXXZ -- retail 0x0073C890.
 // stlport
 //
@@ -15,6 +13,7 @@
 typedef float Real;
 typedef bool Bool;
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase
 {
 public:
@@ -29,6 +28,7 @@ namespace WWMath
 	inline Real Lerp(Real a, Real b, Real t) { return a + (b - a) * t; }
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
 {
 public:
@@ -39,6 +39,7 @@ public:
 extern GlobalData *TheWritableGlobalData;	// ?TheWritableGlobalData@@3PAVGlobalData@@A @ 0x012ED5C8
 extern Real g_01075954;						// @ 0x01075954
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DView.h
 class W3DView
 {
 private:
@@ -74,7 +75,13 @@ void W3DView::pitchCameraOneFrame(void)
 	}
 
 	if (m_pcCurFrame >= m_pcNumFrames) {
-		m_cameraPitchFX = m_pcEndPitch * g_01075954;
+		// MSVC 7.1 commutes this multiply in C++, so spell the retail x87
+		// operand order around the intervening flag store.
+		__asm { fld dword ptr [esi + 240h] }
 		m_doingPitchCamera = false;
+		__asm {
+			fmul dword ptr [g_01075954]
+			fstp dword ptr [esi + 6ch]
+		}
 	}
 }

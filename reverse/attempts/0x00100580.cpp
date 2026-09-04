@@ -1,4 +1,6 @@
 // ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
+// partial score=0.98 date=2026-09-04
+// ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
 // partial score=0.98 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // stlport

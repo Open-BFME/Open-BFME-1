@@ -1,5 +1,3 @@
-// ?d_008bced0@@YAXXZ
-// partial score=0.96 date=2026-08-30
 struct BfmeTransform1236;
 
 struct BfmeMatrix1236
@@ -11,16 +9,18 @@ void bfmeCombine1236(BfmeTransform1236 *result, BfmeTransform1236 *left, BfmeTra
 {
 	float *output = (float *)result;
 	BfmeMatrix1236 a = *(BfmeMatrix1236 *)left;
+	const float &a4 = a.m_values[4];
+	const float &a0 = a.m_values[0];
 	BfmeMatrix1236 b = *(BfmeMatrix1236 *)right;
-	output[0] = a.m_values[0] * b.m_values[0] + a.m_values[4] * b.m_values[1];
+	output[0] = a0 * b.m_values[0] + a4 * b.m_values[1];
 	output[1] = a.m_values[1] * b.m_values[0] + a.m_values[5] * b.m_values[1];
-	float value = b.m_values[5] * a.m_values[4];
-	value += b.m_values[4] * a.m_values[0];
+	float value = a.m_values[4] * b.m_values[5];
+	value += a.m_values[0] * b.m_values[4];
 	output[4] = value;
 	value = b.m_values[5] * a.m_values[5];
 	value += b.m_values[4] * a.m_values[1];
 	output[5] = value;
-	value = b.m_values[13] * a.m_values[4];
+	value = a4 * b.m_values[13];
 	value += b.m_values[12] * a.m_values[0];
 	value += a.m_values[12];
 	output[12] = value;

@@ -1,12 +1,15 @@
 // ??1DX8MeshRendererClass@@QAE@XZ
-// partial score=0.9 date=2026-08-30
+// partial score=0.9 date=2026-09-04
+// Structural recovery of the MeshRenderer destructor at 0x00949D00.
+// The two embedded list members are the BFME build's distinct list bases.
+
 extern char g_bfmeSimpleVectorVtable1292;
 extern char g_bfmeVectorBaseVtable1292;
 
 class BfmeSimpleVector1292
 {
 public:
-	__forceinline ~BfmeSimpleVector1292()
+	__declspec(nothrow) __forceinline ~BfmeSimpleVector1292()
 	{
 		register void **zero = 0;
 		m_vtable = &g_bfmeSimpleVectorVtable1292;
@@ -21,7 +24,7 @@ public:
 		m_count = 0;
 	}
 
-private:
+	private:
 	void *m_vtable;
 	void **m_vector;
 	int m_count;

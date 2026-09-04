@@ -72,15 +72,15 @@ public:
 void rva8C6320PrepareRoute(int first, void *second, void *data,
 	int *lookup, Rva8D0B00String *key);
 
-void rva8D0B00RouteAction(Rva8D0B00State *state, Rva8D0B00Context *context)
+void rva8D0B00RouteAction(Rva8D0B00State *state,
+	Rva8D0B00Context *context)
 {
 	Rva8D0B00State *owner = state;
-	Rva8D0B00Value *top;
-	top = owner->m_stack[owner->m_count - 1];
-	int number;
-	number = owner->m_stack[owner->m_count - 2]->toInteger();
+	int count = owner->m_count;
+	Rva8D0B00Value *top = owner->m_stack[count - 1];
+	Rva8D0B00Value *under = owner->m_stack[count - 2];
+	int number = under->toInteger();
 	Rva8D0B00String key;
-	int lookup = 0;
 
 	unsigned flags = top->m_flags;
 	int type = flags & 0x3f;
@@ -100,6 +100,7 @@ void rva8D0B00RouteAction(Rva8D0B00State *state, Rva8D0B00Context *context)
 		*(unsigned char *)&flags = (unsigned char)~*(unsigned char *)&flags;
 		if (!(*(unsigned char *)&flags & 1))
 		{
+			int lookup = 0;
 			Rva8D0B00Value *stringValue = type == 1 ? top : top->m_indirect;
 			rva8C6320PrepareRoute(*(int *)((char *)context + 4),
 				*(void **)((char *)context + 8),
@@ -117,7 +118,7 @@ void rva8D0B00RouteAction(Rva8D0B00State *state, Rva8D0B00Context *context)
 			value->release();
 	}
 	owner->m_count -= 2;
-	owner->finish(number != 0 ? number : *(int *)((char *)context + 4),
+	owner->finish(number != 0 ? number : *(int *)((char *)callContext + 4),
 		top, number);
 	top->release();
 }

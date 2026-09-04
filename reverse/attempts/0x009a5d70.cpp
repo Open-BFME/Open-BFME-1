@@ -41,17 +41,17 @@ void __cdecl bfmeInitD70(void *self, void *src)
 	unsigned int c = dst->m_at48;
 
 	dst->m_at94 = b;
-	unsigned int d;
-	unsigned int ab = b * a;
-	unsigned int hold = ab;
+	register unsigned int ab = b * a;
 	dst->m_at84 = ab;
-	d = dst->m_at4C;
-	unsigned int ab4 = hold >> 2;
+	register unsigned int d = dst->m_at4C;
+	unsigned int ab4 = ab >> 2;
 	dst->m_at8C = ab + ab4 * 2;
 	dst->m_at90 = a;
 
-	unsigned int e = (c - (a * 8)) >> 1;
-	dst->m_at78 = (c + 1) * e;
+	unsigned int e = c - (a * 8);
+	e >>= 1;
+	unsigned int cPlusOne = c + 1;
+	dst->m_at78 = e * cPlusOne;
 	unsigned int f = (dst->m_at44 + e * 2) * c;
 	dst->m_at98 = c;
 
