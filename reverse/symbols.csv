@@ -82507,3 +82507,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
 ?apply@BfmeHost4164E0@@QAEXHHHH@Z,0x0003A2A1,ILT to sibling apply body 0x00416440; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
 ?finish@Rva003BFAB0@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFAB0
+?checkForTarget@Pathfinder@@QAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z,0x0004864E,ILT to 0x003ECF90; callee of Rva003EEB50::run
