@@ -83719,3 +83719,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?finish@Rva0069AEB0Node@@QAEXPAX@Z,0x000287F4,AEB0 release callee via ILT
 ?refreshPair@@YGXHH@Z,0x00019E6B,pin stdcall 6x2 refresh helper ILT->0x00699180
 ?bfmeCanAutoFire@AutoAbilityBehavior@@QBE_NXZ,0x00008ECC,Open-BFME5 ILT thunk to body 0x001EDC00; AutoAbilityBehavior Object+8 AsciiString+0x20 command-ready predicate; bfme prefix records unrecovered retail spelling
+?pulseHealObject@AutoHealBehavior@@QAEXPAVObject@@@Z,0x00045B2E,Open-BFME5 ILT thunk to body 0x001EECB0; same +4/+8/+0x2C/+0x30 facade as onDamage; bfmeGetBonus 0x11 then Object vcalls +0x40/+0x44
