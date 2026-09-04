@@ -82493,3 +82493,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?disabled@Gen_00609320@@QBE_NXZ,0x00048C4D,ILT to bfmeDisabled body 0x00609320; bool-shaped pin for test@Rva003BF540 @ 0x003BEAF0
 ?bfmeDisabled@Gen_00609320@@QBEEXZ,0x00048C4D,ILT uchar spelling for bfmeDisabled body 0x00609320; callee of test@Rva003BF540
 ?g_bfmeStateDF@@3PAVGen_00609320@@A,0x012F7048,decorated pin for test@Rva003BF540 global load
+?probe@Gen003BFB20Owner@@QAE_NPAX@Z,0x0000961A,ILT to 0x003CB790; callee of 0x003BFB20
+?finish@Rva003BFB20@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFB20
+?notify@Gen003BFB20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFB20
+?TheWritableGlobalData@@3PAVGlo012ED5C8Type@@A,0x012ED5C8,typed pin for Rva003BFB20::run global load
+?TheLivingWorldCampaignManager@@3PAVGlo012F1024Type@@A,0x012F1024,typed pin for Rva003BFB20::run campaign step
