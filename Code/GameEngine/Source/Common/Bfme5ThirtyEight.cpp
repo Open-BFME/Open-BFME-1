@@ -1,26 +1,5 @@
-// Five more: a pair of globals copied into a third, two more gated
-// accumulators, a planar difference returned by value, and a bounded attach.
-
-class BfmeTargetDG
-{
-public:
-	char m_bfmeHead[0x11EC];				// +0x0000
-	unsigned char m_bfmeFlag;				// +0x11EC
-	char m_bfmeGap[3];					// +0x11ED
-	int m_bfmeValue;					// +0x11F0
-};
-
-extern BfmeTargetDG *g_bfmeTargetDG;				// retail 0x012ED5C8
-extern int g_bfmeValueDG;					// retail 0x012ED620
-extern unsigned char g_bfmeFlagDG;				// retail 0x012ED624
-
-// ?bfmeApply@@YAXXZ
-void __cdecl bfmeApply(void)
-{
-	g_bfmeTargetDG->m_bfmeFlag = g_bfmeFlagDG;
-
-	g_bfmeTargetDG->m_bfmeValue = g_bfmeValueDG;
-}
+// Four more: two gated accumulators, a planar difference returned by value,
+// and a bounded attach.
 
 class BfmeClockCJ
 {

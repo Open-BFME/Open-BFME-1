@@ -82580,7 +82580,6 @@ g_bfmeFirstCF,0x012B5628,Open-BFME5 the first factor the scale at 0x00458430 mul
 g_bfmeFirstEB,0x01346DDC,Open-BFME5 the first word the global reset at 0x009336B0 zeroes
 g_bfmeFirstEG,0x012B87AC,Open-BFME5 the first word the constructor at 0x005A7460 copies
 g_bfmeFirstFD,0x01353520,Open-BFME5 the first block the clear at 0x00875F90 zeroes
-g_bfmeFlagDG,0x012ED624,Open-BFME5 the flag the apply at 0x00097360 copies
 g_bfmeFlagDMa,0x012B7D84,Open-BFME5 the first flag the quiet test at 0x00563940 reads
 g_bfmeFlagDMb,0x012F4AFD,Open-BFME5 the second flag the quiet test at 0x00563940 reads
 g_bfmeFlagDMc,0x012F4AFE,Open-BFME5 the third flag the quiet test at 0x00563940 reads
@@ -82670,14 +82669,12 @@ g_bfmeTableENa,0x012A6670,Open-BFME5 the table the masked read at 0x001C6300 ind
 g_bfmeTableENb,0x012A8D40,Open-BFME5 the table the masked read at 0x001C6390 indexes
 g_bfmeTableFA,0x012B4FC8,Open-BFME5 the table the store at 0x00746DA0 writes into
 g_bfmeTableSrcBQ,0x012B5040,Open-BFME5 the table the copy at 0x00421E20 reads
-g_bfmeTargetDG,0x012ED5C8,Open-BFME5 the target the apply at 0x00097360 writes into
 g_bfmeTerrainVisual,0x012F7014,TerrainLogic getWaterHandle retail terrain-visual singleton
 g_bfmeThingCB,0x012F49D0,Open-BFME5 the singleton the test at 0x00521E30 reads its field from
 g_bfmeThirdEB,0x012D718C,Open-BFME5 the third word the global reset at 0x009336B0 sets
 g_bfmeThirdEG,0x012B87B4,Open-BFME5 the third word the constructor at 0x005A7460 copies
 g_bfmeThirdFD,0x01354C00,Open-BFME5 the third block the clear at 0x00875F90 zeroes
 g_bfmeUint32Scale,0x01075358,address-derived 2^32 float conversion fixup used by the unsigned scale update at 0x00784480
-g_bfmeValueDG,0x012ED620,Open-BFME5 the value the apply at 0x00097360 copies
 g_bfmeVtableCZ,0x0112D210,Open-BFME5 the table the constructor at 0x0081E480 installs
 g_bfmeVtableDQa,0x010F9AD8,Open-BFME5 the base table the constructor at 0x00490500 installs first
 g_bfmeVtableDQb,0x010F9B0C,Open-BFME5 the derived table the constructor at 0x00490500 installs second
@@ -82710,3 +82707,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0AsciiStringWO@@QAE@ABV0@@Z,0x00887B60,pin
 ??1AsciiStringWO@@QAE@XZ,0x00887940,pin
 ??1Gen_003A8910@@UAE@XZ,0x003A89C0,Open-BFME5 slot 0 of the table 0x010EC778
+?g_recorderSavedGlobalValue@@3HA,0x012ED620,RecorderClass saved scalar restored into TheWritableGlobalData+0x11F0 by restoreGlobalDataFields
+?g_recorderSavedGlobalFlag@@3EA,0x012ED624,RecorderClass saved byte restored into TheWritableGlobalData+0x11EC by restoreGlobalDataFields
