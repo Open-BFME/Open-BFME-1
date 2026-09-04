@@ -58,6 +58,43 @@ def read_ledger(path, spec):
     return out.stdout
 
 
+def read_blobs(paths, spec):
+    """Read one state's evidence in one Git process, retaining raw blob bytes.
+
+    The batch protocol is length-framed: bodies can contain newlines or NULs.
+    Never substitute the working tree for a missing index/commit object.
+    """
+    paths = list(paths)
+    if spec is None:
+        return {path: path.read_bytes() for path in paths}
+    if not paths:
+        return {}
+    requests = [f"{spec}:{path.relative_to(ROOT).as_posix()}" for path in paths]
+    if any("\n" in request or "\r" in request for request in requests):
+        raise SystemExit("check_csv: newline in Git blob request")
+    out = subprocess.run(["git", "-C", str(ROOT), "cat-file", "--batch"],
+                         input=("\n".join(requests) + "\n").encode("utf-8"),
+                         capture_output=True)
+    if out.returncode:
+        raise SystemExit(f"check_csv: git cat-file failed: "
+                         f"{out.stderr.decode(errors='replace').strip()}")
+    stream = io.BytesIO(out.stdout)
+    blobs = {}
+    for path, request in zip(paths, requests):
+        header = stream.readline().rstrip(b"\n").split()
+        if len(header) != 3 or header[1] != b"blob" or not header[2].isdigit():
+            raise SystemExit(f"check_csv: cannot read {request}: "
+                             f"{b' '.join(header).decode(errors='replace')}")
+        size = int(header[2])
+        blob = stream.read(size)
+        if len(blob) != size or stream.read(1) != b"\n":
+            raise SystemExit(f"check_csv: incomplete Git blob {request}")
+        blobs[path] = blob
+    if stream.read(1):
+        raise SystemExit("check_csv: unexpected data after Git blob batch")
+    return blobs
+
+
 def known_sources(spec):
     """Sources a ledger row may legally reference for the given state.
 
@@ -318,6 +355,8 @@ def check_attempts(spec, problems):
         if len(row) == 7 and row[5] == "matched":
             matched.setdefault(row[2].lower(), []).append((row[0], row[4]))
 
+    blobs = read_blobs((ROOT / rel for rel in paths
+                        if ATTEMPT_NAME.match(rel[len(ATTEMPTS_DIR):])), spec)
     for rel in paths:
         name = rel[len(ATTEMPTS_DIR):]
         if not ATTEMPT_NAME.match(name):
@@ -325,7 +364,7 @@ def check_attempts(spec, problems):
                 f"{rel}: name must be the lowercase rva it banks, e.g. "
                 f"0x000c8220.cpp — serving looks the stash up by address.")
             continue
-        blob = read_ledger(ROOT / rel, spec)
+        blob = blobs[ROOT / rel]
         if len(blob) > ATTEMPT_LIMIT:
             problems.append(f"{rel}: {len(blob)} bytes, over {ATTEMPT_LIMIT}. "
                             f"That is not one function body; delete it.")
