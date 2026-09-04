@@ -82354,3 +82354,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
 ??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
 ??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
+?selectCommand@AptPalantirCommandHandler@@QAEXH@Z,0x0002B706,AptPalantir OnBttnCommand dispatches the parsed one-based command index
+?aptPalantirOnButtonCommand@@YAXPAD@Z,0x00001942,AptPalantir::OnBttnCommand callback ILT registered by name
