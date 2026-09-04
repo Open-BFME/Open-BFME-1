@@ -47,7 +47,7 @@ public:
 	BfmeLANSlot m_slot[LAN_MAX_SLOTS];
 };
 
-void __cdecl _bfme_fillCurrentLANGameInfo_0068E630(char *buffer, UnsignedInt size);
+void __cdecl fillCurrentLANGameInfo(char *buffer, UnsignedInt size);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
 class LANAPI
@@ -127,7 +127,7 @@ void LANAPI::_bfme_requestSerializedGameInfo_00685000(Bool unused, TransportAddr
 	LANMessage message;
 	fillInLANMessage(&message);
 	message.m_type = LANMSG_SERIALIZED_GAME_INFO;
-	_bfme_fillCurrentLANGameInfo_0068E630(message.m_serializedGameInfo,
+	fillCurrentLANGameInfo(message.m_serializedGameInfo,
 		LAN_SERIALIZED_GAME_INFO_LENGTH);
 	sendMessage(&message, (UnsignedInt)destination);
 

@@ -11755,7 +11755,6 @@ name,address,notes
 ?_bfme_debugReportingEnabled@@YA_NXZ,0x008896D0,cdecl bool: reads TheGen001336E5C-shaped debug manager global 0x01336E5C+0x9F4B directly; guards whether the release crash-report chain runs, resolved via decode_calls at GameLODManager::getAudioLODIndex
 ?_bfme_detach@U1Sub@@QAEXXZ,0x0002129C,Open-BFME5 ILT thunk to body 0x001DA3F0; ?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z at 0x005C21D0 calls it on this before replacing the target - shape-only name in the same synthetic family as the class
 ?_bfme_doVictoryAndEndGame@ScriptActions@@IAEXXZ,0x002F7B60,executeAction jump table 0x0070D6A0[3] (ZH ScriptAction::VICTORY position) -> arm 0x0030522C -> ILT 0x000202C5; doVictory 0x002F1C10 then TheCampaignManager 0x012F1024 +0x1D = 1 (SetVictorious(TRUE)) then TheScriptEngine 0x012F076C vcall +0x30 startEndGameTimer = the tail of ZH doVictory that BFME split off the shared core; arm 0x0030524A (action 510) calls the core alone
-?_bfme_fillCurrentLANGameInfo_0068E630@@YAXPADI@Z,0x0002A6D5,BFME-only current-game serializer helper ILT proven from body 0x0068E630
 ?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
 ?_bfme_findOrCreateFactionVictoryParameters@VictorySystem@@QAEPAUFactionVictoryParameters@@ABVAsciiString@@@Z,0x001E04B0,only caller is the FactionVictoryData parser 0x000C327E; lookup 0x001DF350 (0x7fffffff = missing) into the +0xEC vector of 0x18-byte entries else push_back {name 0 0 0 0 0} and return the last; struct name from the assert string at 0x010839F8
 ?_bfme_getFrameHeadroom@Network@@UAEHXZ,0x006819E0,vtable 0x0111A968 slot 17 (+0x44) via ILT 0x000238BC; if (m_conMgr) tail-jumps getFrameHeadroom@BFMEConnectionManager 0x00664320 else 0; ZH getPacketArrivalCushion shape but the callee derives frames of headroom from conMgr+0x1205C/+0x12060 not an arrival cushion; consumer 0x0006BE07 clamps it to 10 for the logic time-scale 0x012A72A4
@@ -72510,7 +72509,6 @@ name,address,notes
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
 ?bfmeCheckVHJ@@YADXZ,0x008896D0,pin
-?bfmeCheckVLS@BfmeSubVLS@@QAE_NXZ,0x0002DB2D,pin
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
@@ -72845,7 +72843,6 @@ name,address,notes
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
-?bfmeDoVLS@@YAXPAVBfmeThingVLS@@PAXH@Z,0x00041579,pin
 ?bfmeDone1038@BfmeB1038@@QAEXXZ,0x000142A9,pin
 ?bfmeDone1045@BfmeSub1045@@QAEXXZ,0x007E86C0,pin
 ?bfmeDoneVJK@BfmeMsgVJK@@QAEXXZ,0x007E86C0,pin
@@ -76870,7 +76867,6 @@ name,address,notes
 ?g_bfmeMgrTJA@@3PAVBfmeMgrTJA@@A,0x00EF086C,pin
 ?g_bfmeMgrUDD@@3PAVBfmeMgrUDD@@A,0x00EF1028,pin
 ?g_bfmeMgrUDE@@3PAVBfmeMgrUDE@@A,0x00EF0898,pin
-?g_bfmeMgrVLS@@3PAVBfmeMgrVLS@@A,0x00EF7730,pin
 ?g_bfmeMgrVOJ@@3PAVBfmeMgrVOJ@@A,0x00EF076C,pin
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
@@ -82719,13 +82715,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
-_g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
-?getFormationMovementSpeed@AIUpdateInterface@@QAEMPAVObject@@@Z,0x000230AB,BFME AI locomotor-controller speed calculation thunk used by getCurLocomotorSpeed
-_g_zeroLocomotorSpeed,0x00C75350,shared zero float returned when no locomotor controller is active
-?isCursorVisible@Win32Mouse@@QAE_NXZ,0x00023FA6,BFME Win32Mouse two-flag cursor visibility predicate
-__imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
-_g_cursorResources,0x00EF77A8,BFME native cursor handle table indexed by cursor and direction frame
 ??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
 ?reportFatalError@@YGXPAVFatalErrorContext@@PAD@Z,0x009F6D00,fatal error reporter used when a timed-operation node has no operation
 ?g_missingTimedOperationMessage@@3PADA,0x00DE1CE4,fatal diagnostic for a timed-operation node without an operation
@@ -82754,3 +82743,5 @@ g_bfmeGlobalWT,0x012F1484,Open-BFME5 the global whose override entry the entry a
 ?set@AsciiStringWU@@QAEXABV1@@Z,0x00887C90,pin
 g_bfmeGlobalWU,0x012F1484,Open-BFME5 the global whose override entry the entry accessors consult
 ?setPlayerLeaveStatus@GameLogic@@QAEXHH@Z,0x00383BC0,Network leave-command and disconnect-vote callers identify the eight-player leave-status setter
+?fillCurrentLANGameInfo@@YAXPADI@Z,0x0002A6D5,three LAN message-building callers identify the current-game serializer helper
+?isLocalPlayer@LANGameSlot@@QBE_NXZ,0x0002DB2D,LANGameSlot local-player predicate used before serializing current game state

@@ -36,7 +36,7 @@ typedef unsigned short UnsignedShort;
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 
-void __cdecl _bfme_fillCurrentLANGameInfo_0068E630(char *buffer, unsigned int size);
+void __cdecl fillCurrentLANGameInfo(char *buffer, unsigned int size);
 
 struct BfmeNetAddress
 {
@@ -275,7 +275,7 @@ void LANAPI::RequestGameStart(void)
 	LANMessage msg;
 	msg.LANMessageType = 13;
 	fillInLANMessage(&msg);
-	_bfme_fillCurrentLANGameInfo_0068E630(msg.GameOptions.options, 0x196);
+	fillCurrentLANGameInfo(msg.GameOptions.options, 0x196);
 	sendMessage(&msg, 0);
 	m_transport->update();
 	OnGameStart();
