@@ -13,6 +13,9 @@
 // default constructors retain these states; treating either type as POD
 // removes a state even though the zero-length vector emits no allocation.
 
+// Array deallocation is nonthrowing; preserve the retail unwind lifetimes.
+void operator delete[](void *) throw();
+
 class RefCountClass
 {
 public:
