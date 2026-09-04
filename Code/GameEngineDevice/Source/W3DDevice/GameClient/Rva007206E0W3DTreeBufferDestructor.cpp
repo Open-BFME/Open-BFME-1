@@ -40,10 +40,10 @@ private:
 
 // The tree-type element destructor is reached through the existing ILT at
 // 0x00432CF9 (which targets the matched 0x0071EA00 destructor).
-class Rva007206E0TreeType
+class TTreeType
 {
 public:
-	~Rva007206E0TreeType(void);
+	~TTreeType(void);
 
 private:
 	unsigned char m_body[0x5C];
@@ -84,12 +84,12 @@ private:
 	Gen_uwm_0094cdf0 m_resetList1458;
 	Gen_uwm_0094cdf0 m_resetList1480;
 	unsigned char m_pad14A8[0x1E1CD4 - 0x14A8];
-	Rva007206E0TreeType m_treeTypes[64];
+	TTreeType m_treeTypes[64];
 	unsigned char m_pad1E33D4[0x1E3914 - 0x1E33D4];
 	Rva007206E0TextureRef m_treeTexture;
 };
 
-#pragma comment(linker, "/alternatename:??1Rva007206E0TreeType@@QAE@XZ=?j_00032cf9@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1TTreeType@@QAE@XZ=?j_00032cf9@@YAXXZ")
 // ??1W3DTreeBuffer@@QAE@XZ
 W3DTreeBuffer::~W3DTreeBuffer(void)
 {

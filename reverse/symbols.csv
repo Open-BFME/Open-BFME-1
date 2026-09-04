@@ -82744,3 +82744,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifier at 0x002D4310 raises
 ?allocateControlBarSchemeListNode@@YAPAXI@Z,0x0082E540,ControlBarSchemeManager scheme-list sentinel allocator
 ?deallocateControlBarSchemeListNode@@YAXPAXI@Z,0x0082E5F0,ControlBarSchemeManager scheme-list node deallocator
+??0TTreeType@@QAE@XZ,0x00012148,W3DTreeBuffer 64-element m_treeTypes constructor ILT
+??1TTreeType@@QAE@XZ,0x00032CF9,W3DTreeBuffer 64-element m_treeTypes destructor ILT
