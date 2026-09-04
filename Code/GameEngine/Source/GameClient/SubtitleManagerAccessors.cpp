@@ -1,6 +1,9 @@
 // BFME SubtitleManager indexed accessors.  Their release-build bounds failure
 // path feeds the original diagnostic strings through the shared debug manager.
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 class SubtitleCrashMessage
 {
 public:
@@ -80,6 +83,7 @@ public:
 class SubtitleEntryVector
 {
 public:
+	SubtitleEntryVector() : m_start(0), m_finish(0), m_end(0) {}
 	int size() const { return m_finish - m_start; }
 	SubtitleEntry *operator[](int index) const { return m_start[index]; }
 
@@ -91,6 +95,7 @@ public:
 class SubtitleManager
 {
 public:
+	SubtitleManager(int first, int second, const AsciiString &name);
 	bool hasBeenDisplayed(int index) const;
 	AsciiString getText(int index) const;
 	void setDisplayedStats(int index);
@@ -98,9 +103,45 @@ public:
 	int getStartFrame(int index) const;
 
 private:
-	char m_head[0x14];
+	int m_first;
+	int m_second;
+	AsciiString m_name;
+	AsciiString m_secondaryName;
+	int m_count;
 	SubtitleEntryVector m_entries;
+	int m_startFrame;
+	int m_state[15];
+	bool m_enabled;
 };
+
+SubtitleManager::SubtitleManager(int first, int second, const AsciiString &name) :
+	m_first(first),
+	m_second(second),
+	m_name(name),
+	m_secondaryName(),
+	m_count(0),
+	m_entries(),
+	m_enabled(false)
+{
+	m_startFrame = 0x7FFFFFFF;
+	// Keep the sentinel visible before the remaining state is cleared, as retail does.
+	_ReadWriteBarrier();
+	m_state[0] = 0;
+	m_state[1] = 0;
+	m_state[2] = 0;
+	m_state[3] = 0;
+	m_state[4] = 0;
+	m_state[5] = 0;
+	m_state[6] = 0;
+	m_state[7] = 0;
+	m_state[8] = 0;
+	m_state[9] = 0;
+	m_state[10] = 0;
+	m_state[11] = 0;
+	m_state[12] = 0;
+	m_state[13] = 0;
+	m_state[14] = 0;
+}
 
 bool SubtitleManager::hasBeenDisplayed(int index) const
 {
