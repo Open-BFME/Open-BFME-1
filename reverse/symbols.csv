@@ -82525,22 +82525,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?fill@Gen003C9470Owner@@QAEXPAXPAUGen003BC9C0Pair@@@Z,0x00033EBA,thiscall fill used by Rva003BC9C0::run at 0x003BC9C0; ILT to 0x003C9470
-?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
-?apply@BfmeHost4164E0@@QAEXHHHH@Z,0x0003A2A1,ILT to sibling apply body 0x00416440; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
-?finish@Rva003BFAB0@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFAB0
-?checkForTarget@Pathfinder@@QAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z,0x0004864E,ILT to 0x003ECF90; callee of Rva003EEB50::run
-?clear@Gen003BFC20Owner@@QAEXXZ,0x00040016,ILT to clear body 0x003CAD90; callee of 0x003BFC20
-?notify@Gen003BFC20Owner@@QAEXXZ,0x0002DE89,ILT to bfmeNotify 0x003CAD20; callee of 0x003BFC20
-?finish@Rva003BFC20@@QAEXXZ,0x0000A754,ILT to finish body 0x003BEC30; callee of 0x003BFC20
-?probe@Gen003C0350Owner@@QAEPAXPAX@Z,0x0002BF0D,ILT to find body 0x003C8A50; callee of 0x003C0350
-?fill@Gen003C0350Found@@QAE_NPAX0@Z,0x000325B0,ILT to fill body 0x00619840; callee of 0x003C0350
-?apply@Gen003C0110Result@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
-?Gen003C0350Find@@YGPAVGen003C0350Lookup@@PAX@Z,0x00032A56,ILT to lookup body 0x003C0110; callee of 0x003C0350
-?apply@Gen003C0350Lookup@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
-?clearOwned@Rva003C1A50@@QAEXXZ,0x000214E0,ILT to clear body 0x003C0EF0; callee of 0x003C1A50
-?clearTwoVec@Rva003C1A50@@QAEXXZ,0x0001B333,ILT to clear body 0x003C0F70; callee of 0x003C1A50
-?clearSingleton@Rva003C1A50@@QAEXXZ,0x00024875,ILT to clear body 0x003C0DB0; callee of 0x003C1A50
-?go@Glo012F706CType@@QAEXXZ,0x0001F7DF,ILT to bfmeGoBLE 0x00610050; callee of 0x003C1A50
-?resetUi@Glo012F706CType@@QAEXXZ,0x00015834,ILT to resetUiState 0x0060FFC0; callee of 0x003C1A50
-?assign@Rva003BA9C0Range@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by Rva003BA500 ctor
