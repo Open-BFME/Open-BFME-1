@@ -9961,10 +9961,12 @@ name,address,notes
 ?TheFireWeaponWhenDeadBehaviorPool@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF7CC,pool-glue cascade static (back-solved)
 ?TheFlammableUpdatePool@?1??getClassMemoryPool@FlammableUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF60,pool-glue cascade static (back-solved)
 ?TheFloatUpdatePool@?1??getClassMemoryPool@FloatUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF80,pool-glue cascade static (back-solved)
+?TheGameClient@@3PAVClientRoot4120@@A,0x012F1464,TheGameClient* typed for bfmeBumpClientGuard @ 0x4120E0
 ?TheGameClientClientUpdate@@3PAVClientFrameSubsystem@@A,0x012F1464,GameClient pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheGameEngine@@3PAVGameEngine@@A,0x012ED524,BFME TheGameEngine*; DataChunk Sleep(0)+serviceWindowsOS yield sites
 ?TheGameInfo@@3PAVGameInfo@@A,0x012F708C,retail GameInfo singleton used by load screen fallback
 ?TheGameLODManager@@3PAVGameLODManager@@A,0x012ED5AC,GameLODManager* global
+?TheGameLogic@@3PAVGameLogic40D9@@A,0x012F0898,GameLogic* typed for BfmeHost40D9::walk @ 0x40D9E0
 ?TheGameLogic@@3PAVGameLogic@@A,0x00EF0898,GameLogic* global; the same 0x012F0898 the matched ?doEvaEnabledDisabled@ScriptActions@@IAEX_N@Z writes at +0x96
 ?TheGameLogic@@3PAVGameLogicFrameSlice@@A,0x012F0898,game logic global used for the current frame slice in AI target dispatch
 ?TheGameLogic@@3PAVGameLogicPortraitShim@@A,0x012F0898,BFME portrait selector game-logic global
@@ -10034,6 +10036,7 @@ name,address,notes
 ?TheScienceStore@@3PAVScienceStore@@A,0x012ED7AC,the science-store pointer INI::parseScienceVector loads at 0x000BCDCF before calling friend_lookupScience
 ?TheScriptDebugWindowDLL@@3PAXA,0x00EF0758,debug-window module used by ScriptEngine message dispatch
 ?TheScriptEngine@@3PAVScriptEngine@@A,0x00EF076C,ScriptEngine global proven by SignalUIInteraction retail DIR32 and independently referenced by script action vcall sites
+?TheShell@@3PAVShell40D9@@A,0x012F4B58,TheShell* typed for BfmeHost40D9::walk @ 0x40D9E0
 ?TheShell@@3PAVShell@@A,0x012F4B58,TheShell singleton; startNextCampaignGame popImmediate/hide
 ?TheShellHookNames@@3PAPBDA,0x00EB3DC0,Shell hook name table proven by SignalUIInteraction indexed retail DIR32 and canonical EA Scripts.cpp data
 ?TheShroudCrateCollidePool@?1??getClassMemoryPool@ShroudCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA20,pool-glue cascade static (back-solved)
@@ -76376,6 +76379,7 @@ name,address,notes
 ?g_bfmeCountTB@@3HA,0x00F0BCA8,pin
 ?g_bfmeCountTDB@@3HA,0x00F40594,pin
 ?g_bfmeCountWE@@3HA,0x0130BCA8,Open-BFME5 locale once-counter at 0x0083B6C0
+?g_bfmeCounter4120@@3HA,0x012F12F0,client-guard counter incremented by bfmeBumpClientGuard @ 0x4120E0
 ?g_bfmeCsDWC@@3UBfmeCsDWA@@A,0x00F36E60,pin
 ?g_bfmeCsVHM@@3UBfmeCsVHM@@A,0x00F3F4E8,pin
 ?g_bfmeCurEYE@@3PAXA,0x00EED5D8,pin
@@ -77679,6 +77683,7 @@ name,address,notes
 ?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
 ?getFinalOverride@BfmeLocomotorTemplate@@QAEPAV1@XZ,0x000022BB,AODHordeContain large-unit hook reaches the existing locomotor override-chain walker
 ?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
+?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
 ?getFinalOverride@Rva226790Template@@QAEPAV1@XZ,0x000022BB,address-derived template override-chain ILT thunk
 ?getFinalOverride@ThingTemplate@@QAEPAV1@XZ,0x000022BB,ILT 0x000022BB fence-width override walk from shouldProjectileCollideWith
@@ -79462,6 +79467,7 @@ name,address,notes
 ?lookAtPlayerID@@3HA,0x012F4018,PopupPlayerInfo lookAtPlayerID; SetLookAtPlayer stores the profile id; PopulatePlayerInfoWindows reads it
 ?lookAtPlayerName@@3V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@A,0x012F4024,PopupPlayerInfo lookAtPlayerName STLport string; SetLookAtPlayer assigns nick.str()
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x000317A5,Open-BFME5 retail guard inner-target scan
+?lookup@BfmeHead416B90@@QAEPAXH@Z,0x0004775D,ILT to head indexed getter 0x001C3A00; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?lookup@BfmeMgr412@@QAEPAVBfmeObj412@@PAX@Z,0x00048CCA,pin
 ?lookup@BfmeSubEntry960@@QAEHPAHPAPAX@Z,0x0002C746,pin
 ?lookup@Gen0035D740Table@@QAEHH@Z,0x00034856,table lookup called by Gen0035D740::makeNode
@@ -82482,9 +82488,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?lookup@BfmeHead416B90@@QAEPAXH@Z,0x0004775D,ILT to head indexed getter 0x001C3A00; callee of BfmeHost416B90::getSlot @ 0x416B90
-?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
-?TheGameLogic@@3PAVGameLogic40D9@@A,0x012F0898,GameLogic* typed for BfmeHost40D9::walk @ 0x40D9E0
-?TheShell@@3PAVShell40D9@@A,0x012F4B58,TheShell* typed for BfmeHost40D9::walk @ 0x40D9E0
-?TheGameClient@@3PAVClientRoot4120@@A,0x012F1464,TheGameClient* typed for bfmeBumpClientGuard @ 0x4120E0
-?g_bfmeCounter4120@@3HA,0x012F12F0,client-guard counter incremented by bfmeBumpClientGuard @ 0x4120E0

@@ -93,6 +93,7 @@ public:
 	Bool getUnitDecals( void );
 	Bool getRefreshNet( void );
 	Bool getDisplayForeignLanguage( void );
+	Bool getUseEAX3( void );
 };
 
 #define R4_PREF_BODY( GETTER, KEY, OFFSET, COMPARE )                          \
@@ -127,3 +128,18 @@ R4_PREF_BODY( getAllHealthBars,               "AllHealthBars",               0xA
 R4_PREF_BODY( getUnitDecals,                  "UnitDecals",                  0xA75, strcmp )
 R4_PREF_BODY( getRefreshNet,                  "RefreshNet",                  0xC08, strcmp )
 R4_PREF_BODY( getDisplayForeignLanguage,      "DisplayForeignLanguage",      0xC09, strcmp )
+
+Bool OptionPreferences::getUseEAX3( void )
+{
+	CustomAsciiStringShim key;
+	key.init( "UseEAX3" );
+	CustomPreferenceMapShim *map =
+		(CustomPreferenceMapShim *)( (unsigned char *)this + 4 );
+	CustomMapNodeShim *node = map->find( &key );
+	key.destroy();
+	if ( node == map->m_header )
+		return 0;
+	CustomStringDataShim *data = node->m_value;
+	const char *text = data ? (const char *)( (unsigned char *)data + 8 ) : "";
+	return strcmp( text, "yes" ) == 0;
+}
