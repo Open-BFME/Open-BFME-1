@@ -83707,3 +83707,4 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 ?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
 ?loadAmmoNow@BfmeWeapon@@QAEXPBVObject@@@Z,0x0000FED4,ILT to Weapon::loadAmmoNow body 0x001E9D60; WeaponSet::updateWeaponSet
 ?findWeaponTemplatePrivate@BfmeWeaponStore@@QBEPAVWeaponTemplate@@W4NameKeyType@@@Z,0x0000D486,public spelling of the ILT already pinned as IBE; WeaponSet::updateWeaponSet
+?apply@Rva0069B440Block@@QAEXPAX0@Z,0x00047A64,ILT to channel apply used by Rva0069B440Owner::call
