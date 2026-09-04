@@ -1,4 +1,6 @@
 // ?finish@BfmeQuickMatchShutdownBody@@QAEXXZ
+// partial score=0.93 date=2026-09-04
+// ?finish@BfmeQuickMatchShutdownBody@@QAEXXZ
 // partial score=0.93 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 
@@ -37,7 +39,7 @@ public:
 
 extern char g_bfmeQuickMatchFlag;
 extern const char *g_bfmeQuickMatchPending;
-extern Shell * volatile TheShell;
+extern Shell *TheShell;
 
 class BfmeQuickMatchShutdownBody
 {
@@ -50,19 +52,10 @@ public:
 	void finish(void);
 };
 
-struct BfmeQuickMatchVtable
-{
-	char m_slots[0x10];
-	void (BfmeQuickMatchShutdownBody::*m_slot4)(bool);
-};
-
 void BfmeQuickMatchShutdownBody::finish(void)
 {
-	{
-		BfmeQuickMatchVtable *vtable = *(BfmeQuickMatchVtable **)this;
-		g_bfmeQuickMatchFlag = 0;
-		(this->*(vtable->m_slot4))(true);
-	}
+	g_bfmeQuickMatchFlag = 0;
+	slot4(true);
 	TheShell->shutdownComplete((WindowLayout *)this, g_bfmeQuickMatchPending != 0);
 	if (g_bfmeQuickMatchPending)
 		TheShell->push(AsciiString(g_bfmeQuickMatchPending), false);

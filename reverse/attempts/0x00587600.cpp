@@ -2,6 +2,10 @@
 // partial score=0.93 date=2026-09-03
 struct BfmeApplyNode;
 
+struct BfmeApplyFalseType
+{
+};
+
 struct BfmeApplyIterator
 {
 	BfmeApplyIterator(const BfmeApplyIterator &other) : m_bfmeNode(other.m_bfmeNode) {}
@@ -12,8 +16,8 @@ struct BfmeApplyIterator
 class BfmeApplyVector
 {
 public:
-	void bfmeOverflow(int *position, const int &first, const int &second,
-		int firstCount, int secondCount);
+	void bfmeOverflow(int *position, const int &first,
+		const BfmeApplyFalseType &, int firstCount, bool secondCount);
 
 	void bfmeAppend(const int &value)
 	{
@@ -25,7 +29,8 @@ public:
 		}
 		else
 		{
-			bfmeOverflow(m_bfmeFinish, value, value, 1, 1);
+			bfmeOverflow(m_bfmeFinish, value,
+				reinterpret_cast<const BfmeApplyFalseType &>(value), 1, true);
 		}
 	}
 

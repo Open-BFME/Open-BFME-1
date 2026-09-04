@@ -1,10 +1,9 @@
 // ?refreshArmor@Rva0020E9A0ArmorCache@@QAEXXZ
-// partial score=0.93 date=2026-09-02
+// partial score=0.96 date=2026-09-04
 // cl: /O2
-// Open-BFME: 83-byte armor-cache refresh at retail 0x0020E9A0. Vector start at
-// +8 is incremented by one pointer then dereferenced; a null finder skips the
-// override walk; otherwise next-at-+4 is getFinalOverride'd. Find-armor on
-// &flags at +0xD0; on a new slot copy +4/+8 into +0xD8/+0xDC and cache it.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class BfmeSubInnerEFF
 {
@@ -22,7 +21,13 @@ struct BfmeArmorSlotE9A
 class BfmeArmorFinderE9A
 {
 public:
-	BfmeArmorSlotE9A *bfmeFindArmorE9A(const void *flags);
+	BfmeArmorSlotE9A *bfmeFindArmorE9A(const void *flags) const;
+	const BfmeArmorFinderE9A *bfmeGetFinalOverride() const
+	{
+		if (m_nextOverride)
+			return (const BfmeArmorFinderE9A *)m_nextOverride->bfmeGetFinalOverride();
+		return this;
+	}
 
 	char m_pad00[4];
 	BfmeSubInnerEFF *m_nextOverride;
@@ -46,20 +51,10 @@ private:
 void Rva0020E9A0ArmorCache::refreshArmor()
 {
 	BfmeArmorFinderE9A **s = m_start;
-	s = (BfmeArmorFinderE9A **)((char *)s + 4);
-	BfmeArmorFinderE9A *finder = *s;
-	BfmeArmorFinderE9A *resolved;
-	if (!finder)
-		resolved = 0;
-	else
-	{
-		BfmeSubInnerEFF *next = finder->m_nextOverride;
-		if (next)
-			resolved = (BfmeArmorFinderE9A *)next->bfmeGetFinalOverride();
-		else
-			resolved = finder;
-	}
-
+	++s;
+	_ReadWriteBarrier();
+	const BfmeArmorFinderE9A *finder = *s;
+	const BfmeArmorFinderE9A *resolved = finder ? finder->bfmeGetFinalOverride() : 0;
 	BfmeArmorSlotE9A *slot = resolved->bfmeFindArmorE9A(&m_flags);
 	if (slot && slot != m_cached)
 	{

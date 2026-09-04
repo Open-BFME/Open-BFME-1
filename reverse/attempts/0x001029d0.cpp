@@ -59,7 +59,8 @@ void BfmeThingFS::bfmeFlushFS(void)
 		int amt = e->amount;
 		vt->apply(o, amt, v + amt);
 		e = m_list;
-		if (e != 0)
+		if (e == 0)
+			goto afterWalk;
 		{
 			int take = e->amount;
 			do
@@ -68,6 +69,7 @@ void BfmeThingFS::bfmeFlushFS(void)
 				e = e->next;
 			} while (e != 0);
 		}
+	afterWalk:;
 	}
 
 	e = m_list;

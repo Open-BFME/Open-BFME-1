@@ -75,12 +75,14 @@ PY
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%mid}" != "$ENGINE" ]; then
     # mid lane: 3 bodies of 300..1000 B from one dump file whose neighbours are already C++
-    RVAS=$(python build/pick_mid.py 3 300 1000 | tr -d '\r' | tr '\n' ' ')
+    case "$ENGINE" in *big*) MIDARGS="2 1000 1600";; *) MIDARGS="3 300 1000";; esac   # lunabigmid = upper window
+    # shellcheck disable=SC2086
+    RVAS=$(python build/pick_mid.py $MIDARGS | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no mid bodies picked; retry in 60s"; sleep 60; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
     # shellcheck disable=SC2086
-    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 3 --note "MID-SIZE bodies (300-1000 B) from one dump file whose address neighbours are ALREADY landed as real C++. Before writing anything: rg the neighbouring landed rows in reverse/functions.csv (addresses just below and above each target), open those .cpp files and reuse their class layouts, pins, callee declarations and cl: flags -- they were proven against retail. Then identity from symbols.csv pins and the ZH twin, skeleton compiling, probe.py on the FIRST divergence only, one lever at a time (docs/shape_levers.md). Land each body with add_match.py as soon as it is EXACT; after ~35 min on one body bank it (re_log.py partial --stash --score) and move to the next. Never leave without banking your best attempt for every body you touched." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 3 --note "MID-SIZE bodies (${MIDARGS#* } B window) from one dump file whose address neighbours are ALREADY landed as real C++. Before writing anything: rg the neighbouring landed rows in reverse/functions.csv (addresses just below and above each target), open those .cpp files and reuse their class layouts, pins, callee declarations and cl: flags -- they were proven against retail. Then identity from symbols.csv pins and the ZH twin, skeleton compiling, probe.py on the FIRST divergence only, one lever at a time (docs/shape_levers.md). Land each body with add_match.py as soon as it is EXACT; after ~35 min on one body bank it (re_log.py partial --stash --score) and move to the next. Never leave without banking your best attempt for every body you touched." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"

@@ -1,4 +1,6 @@
 // ?lookupAndStore@Rva00801940LookupStore@@QAEHPAX0@Z
+// partial score=0.96 date=2026-09-04
+// ?lookupAndStore@Rva00801940LookupStore@@QAEHPAX0@Z
 // partial score=0.96 date=2026-09-01
 int __stdcall bfmeLookRH(void *table, void *key);
 

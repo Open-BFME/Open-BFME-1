@@ -714,30 +714,6 @@ Locomotor::Locomotor(const Locomotor& that)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??4Locomotor@@IAEAAV0@ABV0@@Z present-unmatched
-Locomotor& Locomotor::operator=(const Locomotor& that)
-{
-	if (this != &that)
-	{
-		m_template = that.m_template;
-		m_brakingFactor = that.m_brakingFactor;
-		m_maxLift = that.m_maxLift;
-		m_maxSpeed = that.m_maxSpeed;
-		m_maxAccel = that.m_maxAccel;
-		m_maxBraking = that.m_maxBraking;
-		m_maxTurnRate = that.m_maxTurnRate;
-		m_flags = that.m_flags;
-		m_closeEnoughDist = that.m_closeEnoughDist;
-#ifdef CIRCLE_FOR_LANDING
-		m_circleThresh = that.m_circleThresh;
-#endif
-		m_preferredHeight = that.m_preferredHeight;
-		m_preferredHeightDamping = that.m_preferredHeightDamping;
-	}
-	return *this;
-}
-
-//-------------------------------------------------------------------------------------------------
 // ??1Locomotor@@MAE@XZ
 Locomotor::~Locomotor() 
 {

@@ -1,3 +1,5 @@
+// ?bfmeDoPE@BfmeThingPE@@QAEIPBDII@Z
+// partial score=0.98 date=2026-09-04
 // ?bfmeDoPE@BfmeThingPE@@QAEXPADPAXH@Z
 // partial score=0.98 date=2026-08-31
 // stlport

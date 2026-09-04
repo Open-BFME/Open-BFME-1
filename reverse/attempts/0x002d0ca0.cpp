@@ -1,4 +1,6 @@
 // ?setRallyPoint@QueueProductionExitUpdate@@UAEXPBUCoord3D@@@Z
+// partial score=0.9 date=2026-09-04
+// ?setRallyPoint@QueueProductionExitUpdate@@UAEXPBUCoord3D@@@Z
 // partial score=0.9 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /O2 /Ob2
 // Retail 0x002D0CA0, 81 bytes: QueueProductionExitUpdate::setRallyPoint.

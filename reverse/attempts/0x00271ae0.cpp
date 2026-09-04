@@ -37,7 +37,7 @@ private:
 // ?count@Rva00271AE0Owner@@QAEHXZ
 int Rva00271AE0Owner::count(void)
 {
-	int id;
+	int id = 0;
 	Rva00271AE0Host *host = m_host;
 	Rva00271AE0Named *named = host->m_primary;
 	id = named != 0 ? named->getID() : 0xF423F;

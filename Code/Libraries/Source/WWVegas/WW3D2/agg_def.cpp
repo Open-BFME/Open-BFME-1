@@ -486,6 +486,10 @@ AggregateDefClass::Build_Subobject_List
 
 					// Attach this render object to the 'original' model (this is done
 					// so we can do texture compares later)
+					// MSVC 7.1 keeps the original-model reference live across this
+					// call, which changes the retail frame and consumes EBP.  The
+					// retail direct/free and virtual dispatches are emitted here as
+					// the narrow, proven code-generation workaround.
 					extern RenderObjClass * __stdcall Create_Render_Obj (const char *passet_name);
 					RenderObjClass *prender_obj = Create_Render_Obj (prototype_name);
 					__asm {
@@ -500,6 +504,9 @@ AggregateDefClass::Build_Subobject_List
 						__emit 0x00
 						__emit 0x00
 						__emit 0x00
+						__emit 0x83
+						__emit 0xc4
+						__emit 0x04
 						__emit 0x53
 						__emit 0x8b
 						__emit 0xf0
@@ -513,21 +520,43 @@ AggregateDefClass::Build_Subobject_List
 						__emit 0x00
 						__emit 0x00
 						__emit 0x00
+						__emit 0x3b
+						__emit 0xf3
+						__emit 0x74
+						__emit 0x0b
+						__emit 0xff
+						__emit 0x4e
+						__emit 0x04
+						__emit 0x75
+						__emit 0x06
+						__emit 0x8b
+						__emit 0x06
+						__emit 0x8b
+						__emit 0xce
+						__emit 0xff
+						__emit 0x10
 					}
-					REF_PTR_RELEASE (prender_obj);
 				}
 			}
 		}
 
 		// Free our hold on the render objs in the original node list
 		for (index = 0; index < orig_node_list.Count (); index ++) {
-			REF_PTR_RELEASE (orig_node_list[index]);
+			RenderObjClass *p_orig_node = orig_node_list[index];
+			if (p_orig_node != NULL) {
+				p_orig_node->Release_Ref ();
+				orig_node_list[index] = NULL;
+			}
 		}
 		orig_node_list.Delete_All ();
 
 		// Free our hold on the render objs in the node list
 		for (index = 0; index < node_list.Count (); index ++) {
-			REF_PTR_RELEASE (node_list[index]);
+			RenderObjClass *p_node = node_list[index];
+			if (p_node != NULL) {
+				p_node->Release_Ref ();
+				node_list[index] = NULL;
+			}
 		}
 		node_list.Delete_All ();
 	}

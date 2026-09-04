@@ -668,29 +668,33 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
 // ?HCompressedAnimClass::Get_Transform present-unmatched
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
+	uint32 tc0;
+	uint32 pidx;
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
 	  
-	switch(Flavor) {
+		switch(Flavor) {
 		case ANIM_FLAVOR_TIMECODED:
-			if (NodeMotion[pividx].tc.Q) {
+		{
+			TimeCodedMotionChannelClass * qchan = motion->tc.Q;
+			if (qchan) {
+				uint32 * data = qchan->Data;
 				Quaternion q;
 
-				uint32 tc0 = (uint32)(int)frame;
-				uint32 pidx;
-				if (tc0 < (motion->tc.Q->Data[motion->tc.Q->CachedIdx] & 0x7FFFFFFF)) {
-					int rightIdx = (int)motion->tc.Q->NumTimeCodes;
+				tc0 = (uint32)(int)frame;
+				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
 					int leftIdx = 0;
+					int rightIdx = (int)qchan->NumTimeCodes;
 					rightIdx -= 2;
 					for (;;) {
 						int mid = (leftIdx + rightIdx) / 2;
-						uint32 * pkt = motion->tc.Q->Data + mid * (int)motion->tc.Q->PacketSize;
+						uint32 * pkt = data + mid * (int)qchan->PacketSize;
 						uint32 t0 = *pkt;
 						if (tc0 < (t0 & 0x7FFFFFFF)) {
 							rightIdx = mid;
 							continue;
 						}
-						if (tc0 < (pkt[motion->tc.Q->PacketSize] & 0x7FFFFFFF)) {
-							pidx = (uint32)(pkt - motion->tc.Q->Data);
+						if (tc0 < (pkt[qchan->PacketSize] & 0x7FFFFFFF)) {
+							pidx = (uint32)(pkt - data);
 							break;
 						}
 						if (leftIdx ^ mid) {
@@ -700,28 +704,35 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 						leftIdx++;
 					}
 				} else {
-					pidx = motion->tc.Q->CachedIdx;
+					pidx = qchan->CachedIdx;
 				}
 
 				uint32 p2idx;
-				if (pidx == ((motion->tc.Q->NumTimeCodes - 1) * motion->tc.Q->PacketSize)) {
-					float32 * vec = (float32 *)&motion->tc.Q->Data[pidx + 1];
-					q.Set(vec[0], vec[1], vec[2], vec[3]);
+				if (pidx == ((qchan->NumTimeCodes - 1) * qchan->PacketSize)) {
+					float32 * vec = (float32 *)&data[pidx + 1];
+					q.X = vec[0];
+					q.Y = vec[1];
+					q.Z = vec[2];
+					q.W = vec[3];
 				} else {
-					p2idx = pidx + motion->tc.Q->PacketSize;
-					uint32 time = motion->tc.Q->Data[p2idx];
+					p2idx = pidx + qchan->PacketSize;
+					uint32 time = data[p2idx];
 					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
-						float32 * vec = (float32 *)&motion->tc.Q->Data[pidx + 1];
-						q.Set(vec[0], vec[1], vec[2], vec[3]);
+						float32 * vec = (float32 *)&data[pidx + 1];
+						q.X = vec[0];
+						q.Y = vec[1];
+						q.Z = vec[2];
+						q.W = vec[3];
 					} else {
-						float32 time1 = (motion->tc.Q->Data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+						Quaternion q;
+						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 ratio = (frame - time1) / (time2 - time1);
 
 						Fast_Slerp(q,
-							*(Quaternion *)&motion->tc.Q->Data[pidx + 1],
-							*(Quaternion *)&motion->tc.Q->Data[p2idx + 1],
-							ratio);
+							*(Quaternion *)&data[pidx + 1],
+							*(Quaternion *)&data[p2idx + 1],
+							 ratio);
 					}
 				}
 				::Build_Matrix3D(q,mtx);
@@ -731,6 +742,7 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 			if (motion->tc.Y) motion->tc.Y->Get_Vector(frame, &(mtx[1][3]));
 			if (motion->tc.Z) motion->tc.Z->Get_Vector(frame, &(mtx[2][3]));
 			break;
+		}
 		case ANIM_FLAVOR_ADAPTIVE_DELTA:
 			if (NodeMotion[pividx].ad.Q) {
 				::Build_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);

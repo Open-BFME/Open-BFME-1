@@ -1,9 +1,7 @@
 // ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z
-// partial score=0.9 date=2026-09-02
+// partial score=0.9 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // TextureLoader::Validate_Texture_Size(unsigned&, unsigned&)
-// retail 0x009056F0. Two-argument BFME overload: next power-of-two per axis,
-// clamped to the current device max texture size. No 8:1 aspect pass.
 
 struct D3DCapsPrefix
 {
@@ -48,7 +46,6 @@ static unsigned Valid_Texture_Dimension(unsigned dimension, unsigned maximum)
 	return result;
 }
 
-// ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z
 void TextureLoader::Validate_Texture_Size(unsigned &width, unsigned &height)
 {
 	const DX8Caps *currentCaps = DX8Wrapper::Get_Current_Caps();

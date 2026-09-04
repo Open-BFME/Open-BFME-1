@@ -92,6 +92,11 @@ static inline void bfmeConcat( AsciiString &s, char c )
 	((StringBase<char> *)&s)->concat( &c, 1 );
 }
 
+static inline void bfmeConcat( AsciiString &s, const char *v )
+{
+	((StringBase<char> *)&s)->concat( v, v ? (int)strlen( v ) : 0 );
+}
+
 static inline const char *bfmeFind( const AsciiString &s, char c )
 {
 	const char *p = bfmeStr( s );
@@ -251,9 +256,9 @@ void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDire
 	char search[_MAX_PATH];
 	AsciiString asciisearch;
 	asciisearch = originalDirectory;
-	asciisearch.concat(currentDirectory);
-	asciisearch.concat(searchName);
-	strcpy(search, asciisearch.str());
+	bfmeConcat(asciisearch, currentDirectory);
+	bfmeConcat(asciisearch, searchName);
+	strcpy(search, bfmeStr(asciisearch));
 
 	Bool done = FALSE;
 
@@ -267,8 +272,8 @@ void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDire
 				// a stl set should only allow one copy of each filename
 				AsciiString newFilename;
 				newFilename = originalDirectory;
-				newFilename.concat(currentDirectory);
-				newFilename.concat(findData.cFileName);
+				bfmeConcat(newFilename, currentDirectory);
+				bfmeConcat(newFilename, findData.cFileName);
 				if (filenameList.find(newFilename) == filenameList.end()) {
 					filenameList.insert(newFilename);
 				}
@@ -281,9 +286,9 @@ void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDire
 	if (searchSubdirectories) {
 		AsciiString subdirsearch;
 		subdirsearch = originalDirectory;
-		subdirsearch.concat(currentDirectory);
-		subdirsearch.concat("*.");
-		fileHandle = FindFirstFile(subdirsearch.str(), &findData);
+		bfmeConcat(subdirsearch, currentDirectory);
+		bfmeConcat(subdirsearch, "*.");
+		fileHandle = FindFirstFile(bfmeStr(subdirsearch), &findData);
 		done = fileHandle == INVALID_HANDLE_VALUE;
 
 		while (!done) {
@@ -291,9 +296,9 @@ void Win32LocalFileSystem::getFileListInDirectory(const AsciiString& currentDire
 					(strcmp(findData.cFileName, ".") && strcmp(findData.cFileName, ".."))) {
 
 					AsciiString tempsearchstr;
-					tempsearchstr.concat(currentDirectory);
-					tempsearchstr.concat(findData.cFileName);
-					tempsearchstr.concat('\\');
+					bfmeConcat(tempsearchstr, currentDirectory);
+					bfmeConcat(tempsearchstr, findData.cFileName);
+					bfmeConcat(tempsearchstr, '\\');
 					
 					// recursively add files in subdirectories if required.
 					getFileListInDirectory(tempsearchstr, originalDirectory, searchName, filenameList, searchSubdirectories);
