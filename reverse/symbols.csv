@@ -10818,6 +10818,7 @@ name,address,notes
 ?Rva007F0120@@YAXPAX0@Z,0x007F0120,two-arg cdecl init when bfmeGo929C returns null
 ?Rva007F8D30@@YAXXZ,0x007F8D30,Y2 lane: address-derived; the no-argument teardown 0x007EB650 runs before the DirtySock module shutdown
 ?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
+?Rva007F91D0@@YAXPAURva00800E50Header@@PBD@Z,0x007F91D0,jabba demangler inbound dispatch log helper
 ?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
 ?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
 ?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
@@ -73822,6 +73823,7 @@ name,address,notes
 ?bfmeDo1026@BfmeStore1026@@QAEXH@Z,0x0001D0DE,pin
 ?bfmeDo1037@BfmeG1037@@QAEXHH@Z,0x00013CCD,pin
 ?bfmeDo1052@BfmeH1052@@QAEXHPAVBfmeI1052@@H@Z,0x00800BD0,pin
+?bfmeDo1052@Rva00800E50Owner@@QAEXHPAURva00800E50Stamp@@H@Z,0x00800BD0,jabba demangler PROB+flag handler alias of 0x800BD0
 ?bfmeDo1081@BfmeD1081@@QAEDPAVBfmeE1081@@PAD1H@Z,0x0004A327,pin
 ?bfmeDo1100@@YAXH@Z,0x00024848,pin
 ?bfmeDo1207@BfmeA1207@@QAEXABUBfmeV1207@@00000H@Z,0x00024BCC,pin
@@ -74528,6 +74530,7 @@ name,address,notes
 ?bfmeFreeVG@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVH@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeVMN@@YAXPAX@Z,0x00881EB0,pin
+?bfmeFreeVNC@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800CD0,jabba demangler PROB handler alias of 0x800CD0
 ?bfmeFreeVNY@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeVOK@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeVOL@@YAXPAXI@Z,0x0082E5F0,pin
@@ -80855,6 +80858,7 @@ name,address,notes
 ?markZonesDirty@PathfindZoneManager@@QAEX_N0@Z,0x00015307,Open-BFME5 ILT; two arguments in BFME where the reference takes one; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 passes false and true
 ?maxAbove@BfmeObjEB@@QBEMXZ,0x0087E000,Open-BFME5 max-height callee of 0x0087EBB0
 ?measure@Rva00801EC0Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x00801740,jabba demangler measure sibling of fill 0x801EC0
+?measure@Rva00802550Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x008023B0,demangler fill 0x802550 measure sibling pin
 ?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z,0x0000E43A
 ?method@Rva00409850SubObject@@QAEXE@Z,0x0003207E,incremental link thunk
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
@@ -80936,6 +80940,7 @@ name,address,notes
 ?okToPlayRadarEdgeSound@Player@@QAE_NXZ,0x000141F0,Open-BFME5 ILT; the third condition of both radar edge tests in Player::disableRadar 0x000CC1C0 and Player::enableRadar 0x000CC2C0
 ?onAccept@Rva007FA2C0@@QAEXPAX@Z,0x007F9FD0,FESL helper from 0x007FA2C0 accept path
 ?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
+?onConnectReply@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800780,jabba demangler ECHO handler alias of landed 0x800780
 ?onContaining@BfmeRvaBBD0Owner@@QAEXPAVBfmeRvaBBD0Object@@@Z,0x000088FF,assigned-body helper for Rva0024BBD0
 ?onContaining@OpenContain@@UAEXPAVObject@@_N@Z,0x000476F9,packet 00219850 pin
 ?onContaining@TransportContain@@UAEXPAVObject@@_N@Z,0x0022DD10,callee pin from RiderChangeContain onContaining at 0x0022B3E0
@@ -83848,8 +83853,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?measure@Rva00802550Owner@@QAEXPAVRva007FBEF0GameRecord@@@Z,0x008023B0,demangler fill 0x802550 measure sibling pin
-?Rva007F91D0@@YAXPAURva00800E50Header@@PBD@Z,0x007F91D0,jabba demangler inbound dispatch log helper
-?bfmeDo1052@Rva00800E50Owner@@QAEXHPAURva00800E50Stamp@@H@Z,0x00800BD0,jabba demangler PROB+flag handler alias of 0x800BD0
-?bfmeFreeVNC@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800CD0,jabba demangler PROB handler alias of 0x800CD0
-?onConnectReply@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800780,jabba demangler ECHO handler alias of landed 0x800780
