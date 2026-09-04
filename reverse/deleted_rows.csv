@@ -24621,3 +24621,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_0026c1e0@@UAEPAXI@Z,0x0026C1E0,address-derived identity replaced by byte-verified ToggleHiddenSpecialAbilityUpdate destructor
 ??1Rva0026DCB0MultiTailDtor@@UAE@XZ,0x0026DCB0,address-derived identity replaced by byte-verified WeaponSetSpecialAbilityUpdate destructor
 ??_GGen_dtor_0026ddd0@@UAEPAXI@Z,0x0026DDD0,address-derived identity replaced by byte-verified WeaponSetSpecialAbilityUpdate destructor
+??1Rva0026E010MultiTailDtor@@UAE@XZ,0x0026E010,address-derived identity replaced by byte-verified WoundArrowUpdate destructor
+??_GGen_dtor_0026e130@@UAEPAXI@Z,0x0026E130,address-derived identity replaced by byte-verified WoundArrowUpdate destructor

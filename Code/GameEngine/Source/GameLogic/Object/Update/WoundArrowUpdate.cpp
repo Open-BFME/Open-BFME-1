@@ -46,12 +46,16 @@ class SpecialAbilityUpdate : public BehaviorModule,
 {
 public:
 	SpecialAbilityUpdate( Thing *thing, const ModuleData *moduleData );
+	virtual ~SpecialAbilityUpdate();
 };
 
 class WoundArrowUpdate : public SpecialAbilityUpdate
 {
 public:
 	WoundArrowUpdate( Thing *, const ModuleData * );
+
+protected:
+	virtual ~WoundArrowUpdate();
 
 private:
 	bool m_hasAppliedWound;
@@ -60,5 +64,9 @@ private:
 WoundArrowUpdate::WoundArrowUpdate( Thing *thing, const ModuleData *moduleData )
 	: SpecialAbilityUpdate( thing, moduleData ),
 	  m_hasAppliedWound( false )
+{
+}
+
+WoundArrowUpdate::~WoundArrowUpdate()
 {
 }
