@@ -1,5 +1,5 @@
 // _ciCallCallback
-// partial score=0.62 date=2026-09-04
+// partial score=0.93 date=2026-09-04
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy Chat SDK -- ciFreeCallbackData + ciCleanupCallbacks +
    ciCallCallback + ciCallCallbacks, retail 0x0086FDA0 / 0x008702F0 /
@@ -562,6 +562,9 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 
 	param = data->param;
 
+	/* Separate case statements so MSVC keeps a dword jump table. Cluster
+	   each shared-arity family so its last member is seen before the next
+	   family; that flushes bodies in retail order. */
 	switch(data->type)
 	{
 	case CALLBACK_RAW:
@@ -588,22 +591,6 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_INVITED:
-	{
-		ciCallbackInvitedParams *callbackParams = (ciCallbackInvitedParams *)data->callbackParams;
-		chatInvited callback = (chatInvited)data->callback;
-		callback(chat, CHANNEL, USER, param);
-		break;
-	}
-
-	case CALLBACK_CHANNEL_MESSAGE:
-	{
-		ciCallbackChannelMessageParams *callbackParams = (ciCallbackChannelMessageParams *)data->callbackParams;
-		chatChannelMessage callback = (chatChannelMessage)data->callback;
-		callback(chat, CHANNEL, USER, MESSAGE, TYPE, param);
-		break;
-	}
-
 	case CALLBACK_KICKED:
 	{
 		ciCallbackKickedParams *callbackParams = (ciCallbackKickedParams *)data->callbackParams;
@@ -620,14 +607,6 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_USER_PARTED:
-	{
-		ciCallbackUserPartedParams *callbackParams = (ciCallbackUserPartedParams *)data->callbackParams;
-		chatUserParted callback = (chatUserParted)data->callback;
-		callback(chat, CHANNEL, USER, WHY, REASON, KICKER, param);
-		break;
-	}
-
 	case CALLBACK_USER_CHANGED_NICK:
 	{
 		ciCallbackUserChangedNickParams *callbackParams = (ciCallbackUserChangedNickParams *)data->callbackParams;
@@ -636,60 +615,11 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_TOPIC_CHANGED:
-	{
-		ciCallbackTopicChangedParams *callbackParams = (ciCallbackTopicChangedParams *)data->callbackParams;
-		chatTopicChanged callback = (chatTopicChanged)data->callback;
-		callback(chat, CHANNEL, TOPIC, param);
-		break;
-	}
-
-	case CALLBACK_CHANNEL_MODE_CHANGED:
-	{
-		ciCallbackChannelModeChangedParams *callbackParams = (ciCallbackChannelModeChangedParams *)data->callbackParams;
-		chatChannelModeChanged callback = (chatChannelModeChanged)data->callback;
-		callback(chat, CHANNEL, MODE, param);
-		break;
-	}
-
 	case CALLBACK_USER_MODE_CHANGED:
 	{
 		ciCallbackUserModeChangedParams *callbackParams = (ciCallbackUserModeChangedParams *)data->callbackParams;
 		chatUserModeChanged callback = (chatUserModeChanged)data->callback;
 		callback(chat, CHANNEL, USER, MODE, param);
-		break;
-	}
-
-	case CALLBACK_USER_LIST_UPDATED:
-	{
-		ciCallbackUserListUpdatedParams *callbackParams = (ciCallbackUserListUpdatedParams *)data->callbackParams;
-		chatUserListUpdated callback = (chatUserListUpdated)data->callback;
-		callback(chat, CHANNEL, param);
-		break;
-	}
-
-	case CALLBACK_ENUM_CHANNELS_EACH:
-	{
-		ciCallbackEnumChannelsEachParams *callbackParams = (ciCallbackEnumChannelsEachParams *)data->callbackParams;
-		chatEnumChannelsCallbackEach callback = (chatEnumChannelsCallbackEach)data->callback;
-		callback(chat, SUCCESS, INDEX, CHANNEL, TOPIC, NUM_USERS, param);
-		break;
-	}
-
-	case CALLBACK_ENUM_CHANNELS_ALL:
-	{
-		ciCallbackEnumChannelsAllParams *callbackParams = (ciCallbackEnumChannelsAllParams *)data->callbackParams;
-		chatEnumChannelsCallbackAll callback = (chatEnumChannelsCallbackAll)data->callback;
-		callback(chat, SUCCESS, NUM_CHANNELS, (const char **)CHANNELS, (const char **)TOPICS, NUM_USERS, param);
-		break;
-	}
-
-	case CALLBACK_ENTER_CHANNEL:
-	{
-		ciCallbackEnterChannelParams *callbackParams = (ciCallbackEnterChannelParams *)data->callbackParams;
-		chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
-		ciJoinCallbackCalled(chat, CHANNEL);
-		callback(chat, SUCCESS, RESULT, CHANNEL, param);
 		break;
 	}
 
@@ -709,6 +639,22 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
+	case CALLBACK_CHANGE_NICK:
+	{
+		ciCallbackChangeNickParams *callbackParams = (ciCallbackChangeNickParams *)data->callbackParams;
+		chatChangeNickCallback callback = (chatChangeNickCallback)data->callback;
+		callback(chat, SUCCESS, OLD_NICK, NEW_NICK, param);
+		break;
+	}
+
+	case CALLBACK_CHANNEL_MESSAGE:
+	{
+		ciCallbackChannelMessageParams *callbackParams = (ciCallbackChannelMessageParams *)data->callbackParams;
+		chatChannelMessage callback = (chatChannelMessage)data->callback;
+		callback(chat, CHANNEL, USER, MESSAGE, TYPE, param);
+		break;
+	}
+
 	case CALLBACK_GET_CHANNEL_PASSWORD:
 	{
 		ciCallbackGetChannelPasswordParams *callbackParams = (ciCallbackGetChannelPasswordParams *)data->callbackParams;
@@ -717,35 +663,11 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_ENUM_USERS:
-	{
-		ciCallbackEnumUsersParams *callbackParams = (ciCallbackEnumUsersParams *)data->callbackParams;
-		chatEnumUsersCallback callback = (chatEnumUsersCallback)data->callback;
-		callback(chat, SUCCESS, CHANNEL, NUM_USERS, (const char **)USERS, MODES, param);
-		break;
-	}
-
-	case CALLBACK_GET_USER_INFO:
-	{
-		ciCallbackGetUserInfoParams *callbackParams = (ciCallbackGetUserInfoParams *)data->callbackParams;
-		chatGetUserInfoCallback callback = (chatGetUserInfoCallback)data->callback;
-		callback(chat, SUCCESS, NICK, USER, NAME, ADDRESS, NUM_CHANNELS, (const char **)CHANNELS, param);
-		break;
-	}
-
 	case CALLBACK_GET_BASIC_USER_INFO:
 	{
 		ciCallbackGetBasicUserInfoParams *callbackParams = (ciCallbackGetBasicUserInfoParams *)data->callbackParams;
 		chatGetBasicUserInfoCallback callback = (chatGetBasicUserInfoCallback)data->callback;
 		callback(chat, SUCCESS, NICK, USER, ADDRESS, param);
-		break;
-	}
-
-	case CALLBACK_GET_CHANNEL_BASIC_USER_INFO:
-	{
-		ciCallbackGetChannelBasicUserInfoParams *callbackParams = (ciCallbackGetChannelBasicUserInfoParams *)data->callbackParams;
-		chatGetChannelBasicUserInfoCallback callback = (chatGetChannelBasicUserInfoCallback)data->callback;
-		callback(chat, SUCCESS, CHANNEL, NICK, USER, ADDRESS, param);
 		break;
 	}
 
@@ -773,14 +695,6 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_CHANGE_NICK:
-	{
-		ciCallbackChangeNickParams *callbackParams = (ciCallbackChangeNickParams *)data->callbackParams;
-		chatChangeNickCallback callback = (chatChangeNickCallback)data->callback;
-		callback(chat, SUCCESS, OLD_NICK, NEW_NICK, param);
-		break;
-	}
-
 	case CALLBACK_NEW_USER_LIST:
 	{
 		ciCallbackNewUserListParams *callbackParams = (ciCallbackNewUserListParams *)data->callbackParams;
@@ -797,6 +711,46 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
+	case CALLBACK_USER_PARTED:
+	{
+		ciCallbackUserPartedParams *callbackParams = (ciCallbackUserPartedParams *)data->callbackParams;
+		chatUserParted callback = (chatUserParted)data->callback;
+		callback(chat, CHANNEL, USER, WHY, REASON, KICKER, param);
+		break;
+	}
+
+	case CALLBACK_ENUM_CHANNELS_EACH:
+	{
+		ciCallbackEnumChannelsEachParams *callbackParams = (ciCallbackEnumChannelsEachParams *)data->callbackParams;
+		chatEnumChannelsCallbackEach callback = (chatEnumChannelsCallbackEach)data->callback;
+		callback(chat, SUCCESS, INDEX, CHANNEL, TOPIC, NUM_USERS, param);
+		break;
+	}
+
+	case CALLBACK_ENUM_CHANNELS_ALL:
+	{
+		ciCallbackEnumChannelsAllParams *callbackParams = (ciCallbackEnumChannelsAllParams *)data->callbackParams;
+		chatEnumChannelsCallbackAll callback = (chatEnumChannelsCallbackAll)data->callback;
+		callback(chat, SUCCESS, NUM_CHANNELS, (const char **)CHANNELS, (const char **)TOPICS, NUM_USERS, param);
+		break;
+	}
+
+	case CALLBACK_ENUM_USERS:
+	{
+		ciCallbackEnumUsersParams *callbackParams = (ciCallbackEnumUsersParams *)data->callbackParams;
+		chatEnumUsersCallback callback = (chatEnumUsersCallback)data->callback;
+		callback(chat, SUCCESS, CHANNEL, NUM_USERS, (const char **)USERS, MODES, param);
+		break;
+	}
+
+	case CALLBACK_GET_CHANNEL_BASIC_USER_INFO:
+	{
+		ciCallbackGetChannelBasicUserInfoParams *callbackParams = (ciCallbackGetChannelBasicUserInfoParams *)data->callbackParams;
+		chatGetChannelBasicUserInfoCallback callback = (chatGetChannelBasicUserInfoCallback)data->callback;
+		callback(chat, SUCCESS, CHANNEL, NICK, USER, ADDRESS, param);
+		break;
+	}
+
 	case CALLBACK_GET_GLOBAL_KEYS:
 	{
 		ciCallbackGetGlobalKeysParams *callbackParams = (ciCallbackGetGlobalKeysParams *)data->callbackParams;
@@ -805,11 +759,60 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
+	case CALLBACK_USER_LIST_UPDATED:
+	{
+		ciCallbackUserListUpdatedParams *callbackParams = (ciCallbackUserListUpdatedParams *)data->callbackParams;
+		chatUserListUpdated callback = (chatUserListUpdated)data->callback;
+		callback(chat, CHANNEL, param);
+		break;
+	}
+
+	case CALLBACK_ENTER_CHANNEL:
+	{
+		ciCallbackEnterChannelParams *callbackParams = (ciCallbackEnterChannelParams *)data->callbackParams;
+		chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
+		ciJoinCallbackCalled(chat, CHANNEL);
+		callback(chat, SUCCESS, RESULT, CHANNEL, param);
+		break;
+	}
+
+	case CALLBACK_GET_USER_INFO:
+	{
+		ciCallbackGetUserInfoParams *callbackParams = (ciCallbackGetUserInfoParams *)data->callbackParams;
+		chatGetUserInfoCallback callback = (chatGetUserInfoCallback)data->callback;
+		callback(chat, SUCCESS, NICK, USER, NAME, ADDRESS, NUM_CHANNELS, (const char **)CHANNELS, param);
+		break;
+	}
+
 	case CALLBACK_GET_CHANNEL_KEYS:
 	{
 		ciCallbackGetChannelKeysParams *callbackParams = (ciCallbackGetChannelKeysParams *)data->callbackParams;
 		chatGetChannelKeysCallback callback = (chatGetChannelKeysCallback)data->callback;
 		callback(chat, SUCCESS, CHANNEL, USER, NUM, (const char **)KEYS, (const char **)VALUES, param);
+		break;
+	}
+
+	case CALLBACK_INVITED:
+	{
+		ciCallbackInvitedParams *callbackParams = (ciCallbackInvitedParams *)data->callbackParams;
+		chatInvited callback = (chatInvited)data->callback;
+		callback(chat, CHANNEL, USER, param);
+		break;
+	}
+
+	case CALLBACK_TOPIC_CHANGED:
+	{
+		ciCallbackTopicChangedParams *callbackParams = (ciCallbackTopicChangedParams *)data->callbackParams;
+		chatTopicChanged callback = (chatTopicChanged)data->callback;
+		callback(chat, CHANNEL, TOPIC, param);
+		break;
+	}
+
+	case CALLBACK_CHANNEL_MODE_CHANGED:
+	{
+		ciCallbackChannelModeChangedParams *callbackParams = (ciCallbackChannelModeChangedParams *)data->callbackParams;
+		chatChannelModeChanged callback = (chatChannelModeChanged)data->callback;
+		callback(chat, CHANNEL, MODE, param);
 		break;
 	}
 
