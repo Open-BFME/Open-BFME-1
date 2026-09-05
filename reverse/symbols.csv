@@ -83374,3 +83374,6 @@ _bfmeVftableBX,0x00673744,Open-BFME5 the vftable the inline base destructor at 0
 ??1StringBaseNarrowBZ@@IAE@XZ,0x00887940,pin
 ??1BfmeElemBZ@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00075D70 runs
 _bfmeVftableBZ,0x00673744,Open-BFME5 the vftable the second base restores at 0x00075D70
+??1StringBaseNarrowCB@@IAE@XZ,0x00887940,pin
+??1BfmeElemCB@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00619BB0 runs
+_bfmeVftableCB,0x00673744,Open-BFME5 the vftable the second base restores at 0x00619BB0
