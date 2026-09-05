@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2ab808ef76961f275f40883a94dea938fcaddff8db542cfa8fd83bad178c70f2",
+  "symbol": "?d_004da980@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?d_004da980@@YAXXZ\n// partial score=0.86 date=2026-09-05\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n\n#include <map>\n\ntypedef std::map<int, int> PerGeneralMap;\n\nclass Gen_uw_00025c1b\n{\npublic:\n\tint id;\n\tPerGeneralMap wins;\n\tPerGeneralMap losses;\n};\n\nstruct RankPoints\n{\n\tint m_ranks[10];\n\tfloat m_winMultiplier;\n\tfloat m_lostMultiplier;\n};\n\nextern RankPoints *g_bfmeLimitsDF;\n\nint bfmeRankPointsFromStats( register Gen_uw_00025c1b *stats, register int side )\n{\n\tint rankPoints = 0;\n\tint zero;\n\tPerGeneralMap::iterator it;\n\n\tif ( stats->id == 0 || !g_bfmeLimitsDF )\n\t\treturn 0;\n\n\trankPoints = 0;\n\tint key = side;\n\tit = stats->wins.find( key );\n\tif ( it != stats->wins.end() )\n\t{\n\t\tvolatile int value = it->second;\n\t\trankPoints = (int)( (float)value * g_bfmeLimitsDF->m_winMultiplier );\n\t}\n\n\tit = stats->losses.find( key );\n\tif ( it != stats->losses.end() )\n\t{\n\t\tvolatile int value = it->second;\n\t\trankPoints = (int)( (float)value * g_bfmeLimitsDF->m_lostMultiplier + (float)rankPoints );\n\t}\n\n\tzero = 0;\n\treturn *( rankPoints < 0 ? &zero : &rankPoints );\n}\n"
+}
