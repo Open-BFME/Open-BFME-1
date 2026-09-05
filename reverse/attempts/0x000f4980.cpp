@@ -1,5 +1,5 @@
 // ?hasAnyBuildings@Team@@QBE_N_N@Z
-// partial score=0.96 date=2026-09-04
+// partial score=0.99 date=2026-09-05
 // ?hasAnyBuildings@Team@@QBE_N_N@Z
 // partial score=0.96 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
@@ -105,12 +105,21 @@ static Overridable *bfmeFinalTemplate(Object *obj)
 	return tmpl;
 }
 
+static Overridable *bfmeFinalTemplateGuard(Object *obj)
+{
+	if (!obj) return 0;
+	Overridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
+	if (tmpl != 0 && tmpl->m_nextOverride != 0)
+		tmpl = (Overridable *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
+
 // ?hasAnyBuildings@Team@@QBE_N_N@Z
 Bool Team::hasAnyBuildings(Bool bfmeFlag) const
 {
 	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
-		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplateGuard(iter.cur());
 		if ((tmpl->m_kindOf1 & 0x400000) != 0)
 			continue;
 
