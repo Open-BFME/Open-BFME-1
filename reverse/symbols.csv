@@ -83184,3 +83184,16 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0StringBaseNarrowAH@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAH@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAH@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAH@@QAAXVAsciiStringAH@@ZZ,0x00888FF0,pin
+??0StringBaseNarrowAI@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAI@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAI@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAI@@QAAXVAsciiStringAI@@ZZ,0x00888FF0,pin
+?bfmeLookupAI@BfmeTableAI@@QAE?AVAsciiStringAI@@V2@@Z,0x00047992,Open-BFME5 the table lookup the numbered key at 0x00573580 forwards to
+??0StringBaseNarrowAJ@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAJ@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAJ@@QAAXVAsciiStringAJ@@ZZ,0x00888FF0,pin
+?bfmeSetAJ@BfmeRoomAJ@@QAEXPBD0@Z,0x0002B297,Open-BFME5 the room key set the start-game announcement at 0x00649DB0 makes
