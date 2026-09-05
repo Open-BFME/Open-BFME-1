@@ -42,7 +42,7 @@ a virtual call through slot `+0x14`; it does not assert a more specific effect.
 | 2 | Updates PartitionManager and the singleton at `0x012ED5C4`; walks all objects and calls the transform/frame recorder when object `+0x168` differs from the current simulation frame. | Records phase 2. Does not increment the simulation frame. |
 | 3 | Processes the first half of sleepy-update vector 0 (`GameLogic+0xC4`). Due entries may call their update module and receive a new wake frame. | Records phase 3; writes `GameLogic+0x100` around callbacks; updates entry wake frame `+0x14`; may change heap indices `+0x18/+0x1C` and move expired entries to `GameLogic+0xF4`. |
 | 4 | Processes the second half of sleepy-update vector 0. | Same sleepy-entry changes as phase 3. It begins at `size/2`, complementing phase 3's stop at `size/2`. |
-| 5 | Processes sleepy-update vectors 1 and 2, then updates AI. After the common deferred-destruction drain, updates ShroudManager, TaintManager, singleton `0x012ED83C`, LargeGroupAudio, ObjectCreationListStore, LocomotorStore, VictoryConditions, ExperienceLevelSystem, and the member at `GameLogic+0x170`; it also calls the unresolved GameLogic phase-5 helper at body RVA `0x0038AE90`. | Same sleepy-entry changes; records phase 5. No simulation-frame increment. |
+| 5 | Processes sleepy-update vectors 1 and 2, then updates AI. After the common deferred-owned-entry drain, it calls `GameLogic::processDestroyList` at body RVA `0x0038AE90`, then updates ShroudManager, TaintManager, singleton `0x012ED83C`, LargeGroupAudio, ObjectCreationListStore, LocomotorStore, VictoryConditions, ExperienceLevelSystem, and the member at `GameLogic+0x170`. | Same sleepy-entry changes; destroys every object pending end-of-frame deletion and removes its update modules from the phase vectors; records phase 5. No simulation-frame increment. |
 | 6 | Processes sleepy-update vector 3. | Same sleepy-entry changes; records phase 6. No simulation-frame increment. |
 
 The jump table at VA `0x0078E264` maps phase 3 and phase 4 to the common vector-0
@@ -84,6 +84,29 @@ block at `0x0038DE89..0x0038DECF`. Phases 3–6 select sleepy queues at
 post-simulation subsystem batch at `0x0038E116..0x0038E17F`. Every normal phase
 passes the copy-protection check, but only phase 1 passes the final object walk
 and simulation-frame increment.
+
+## Phase 5 pending-object destruction
+
+The body at RVA `0x0038AE90..0x0038B046` is the 438-byte
+`GameLogic::processDestroyList`. The 430-byte Ghidra inventory entry stops after
+`pop edi` and omits the remaining epilogue; the following `INT3` establishes the
+correct end. Its phase-5 call is at `0x0038E144`, and the exact GameLogic clear
+routine at `0x0038D000` calls the same body through ILT `0x00015028`.
+
+For each object in the STLport list at `GameLogic+0x104`, the function walks the
+null-terminated behavior-module array at `Object+0x1F0`. Each behavior's update
+interface is queried through virtual slot `+0x20`. A scheduled update has its
+index and phase fields at `UpdateModule+0x18/+0x1C` reset to `-1`, then is
+removed by swap-and-pop. Negative-phase entries come from the vector at
+`GameLogic+0xF4`; phases 0 through 3 select the four vectors beginning at
+`GameLogic+0xC4` with stride 12. When an entry moves, the function repairs the
+moved module's phase and index fields.
+
+The object is then removed from the AI pathfinding map, unlinked from the
+GameLogic object list at `+0xA8/+0xAC`, erased from the ObjectID lookup hash at
+`+0xB0`, and deleted through its scalar deleting destructor. Finally, the
+pending-destruction list is cleared. Phase 5 is therefore the end-of-frame
+object destruction phase, not an unnamed finish transition.
 
 ## Phase 1 ordering
 
@@ -211,7 +234,7 @@ not been proven by runtime or multiplayer traces.
 | `getCRC` at `0x00383150` and CRC handler at `0x0038B430` | sufficiently understood | argument and message flow visible in caller; handler mapped |
 | deferred owned-entry clear at `0x0038A6F0` | already understood and exact | 92-byte clean C++ match in `Bfme5SelfRangeClears.cpp` |
 | GameLogic clear/walk at `0x0038D000` | already understood and exact, related lifecycle evidence | exact 112-byte clean C++; proves `+0xA8` object list and `+0x15C` vector coexist in the layout |
-| phase-5 helper at `0x0038AE90` | unresolved and materially blocking naming | 430 bytes; called at `0x0038E144`; recover before naming the phase-5 transition |
+| `GameLogic::processDestroyList` at `0x0038AE90` | behavior and identity solved; clean C++ near match banked | corrected boundary is 438 bytes; phase-5 caller, clear-path caller, field effects, and destruction order agree; remaining 416/438-byte mismatch is register allocation |
 | helper on `GameLogic+0x170`, body `0x00367810` | already exact but address-derived | 164-byte clean C++ shows a gated 0x58-byte-entry walk; owning field identity still unproven |
 | phase-1 helper body `0x00783050` | unresolved and materially blocking start/load semantics | call at `0x0038DB13` only for phase 1 under `+0x11D` |
 | AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
@@ -232,22 +255,18 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Recover `0x0038AE90` (430 bytes).** Start from its call at `0x0038E144`
-   with `this == GameLogic`. Resolve its direct callees and all writes to
-   `GameLogic`; compare its other caller from the exact `0x0038D000` clear
-   routine. Land it independently if clean C++ matches.
-2. **Recover the `+0x11D` branch.** Disassemble body RVA `0x00783050`, find all
+1. **Recover the `+0x11D` branch.** Disassemble body RVA `0x00783050`, find all
    callers and writes/xrefs to `GameLogic+0x11D`, and inspect neighboring
    start/load methods. The deliverable is a proven field/helper name or a
    precise address-derived implementation, not a guessed `startNewGame` label.
-3. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
+2. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
    and `0x005CE7F0` together with object vtable slot `+0x3C`. Record effects on
    object `+0x90`, `+0x98`, and `+0x1A4`. Land any tractable exact body on its
    own.
-4. **Close singleton identities.** Trace constructors, set-name strings, and
+3. **Close singleton identities.** Trace constructors, set-name strings, and
    vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
    caller or constructor outranks an address-derived symbol pin.
-5. **Declare the BFME ABI and TU-local layout.** In
+4. **Declare the BFME ABI and TU-local layout.** In
    `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
    verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
    vectors `+0xC4..+0xFC`, current update `+0x100`, mode `+0x10C`, gate
