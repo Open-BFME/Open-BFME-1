@@ -82789,3 +82789,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0Gen00043699@@QAE@XZ,0x00008067,"136-byte attribute entry ctor: zeroes six vector fields, both 24-byte blocks, metadata offsets 0x78..0x84"
 ?bfmeInternAttributeEntry@@YAIPAVGen00043699@@@Z,0x00037FD8,"Attribute intern cdecl entry pointer; pool 0x12F1000, stride 136, compare loop, bare ret at 0x39EEE7"
 ??1GameClient@@UAE@XZ,0x00025FB8,"GameClient base destructor; ILT to 0x597680, W3DGameClient subclass with SubsystemInterface and Snapshot vtables independently identified"
+?Set_Device_Resolution@WW3D@@SA_NHHHH_N@Z,0x008FD1C0,Retail wrapper calls DX8Wrapper then test al/setne al/ret; bool return independently verified; corrects prior enum-return assumption
