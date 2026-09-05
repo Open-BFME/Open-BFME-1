@@ -83032,3 +83032,8 @@ g_bfmePalantirZE,0x012F19E8,Open-BFME5 the palantir the hero-rank update at 0x00
 ?format@UnicodeStringZF@@QAAXV1@ZZ,0x00889190,pin
 ?bfmeStoreZF@BfmePalantirZF@@QAEXABVAsciiStringZF@@ABVUnicodeStringZF@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565450
 g_bfmePalantirZF,0x012F19E8,Open-BFME5 the palantir the production-count update at 0x00565450 writes to
+??0StringBaseNarrowZG@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowZG@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZG@@QAAXVAsciiStringZG@@ZZ,0x00888FF0,pin
+?bfmeStoreZG@BfmePalantirZG@@QAEXABVAsciiStringZG@@ABVUnicodeStringZG@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x0052B540
+g_bfmePalantirZG,0x012F19E8,Open-BFME5 the palantir the player-table write at 0x0052B540 uses
