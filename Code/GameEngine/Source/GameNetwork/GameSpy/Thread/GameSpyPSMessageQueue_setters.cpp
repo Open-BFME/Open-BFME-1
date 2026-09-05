@@ -30,3 +30,8 @@ void GameSpyPSMessageQueue::setNick(_STL::string nick)
 {
 	m_nick = nick;
 }
+
+void GameSpyPSMessageQueue::setPassword(_STL::string password)
+{
+	m_password = password;
+}
