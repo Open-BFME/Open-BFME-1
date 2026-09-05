@@ -82883,3 +82883,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B callee: cdecl eight arguments, stride/index/width/height and source/dest buffers; callback passed through unchanged"
 ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z,0x009AEEE0,Full488B callee: cdecl context/two buffer offsets/plane selector; YUV plane and stride dispatch confirmed
 ?copyPlane009AF0D0@@YAXPAURva009AF320Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B eight-argument cdecl plane helper; third argument is running numeric fragment index, not a pointer"
+?testVersionPlayback@RecorderClass@@QAE_NVAsciiString@@@Z,0x00025185,Full retail reviewed: 9BDF0 replay header/version/INI comparison bool with by-value string destruction ret4; 99070 recorder dtor file close/member/base cleanup
+??1RecorderClass@@QAE@XZ,0x0001F55F,Full retail reviewed: 9BDF0 replay header/version/INI comparison bool with by-value string destruction ret4; 99070 recorder dtor file close/member/base cleanup
