@@ -82818,3 +82818,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?findByNameB@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x0000A592,"Lead verified359DC0: name probe table+2C, equality, returns stored pointer+4 or null; ret4"
 ??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z,0x0001EC13,"Lead verified ILT to matched thin extra ctorB2D90; 70B AudioEventRTS, name reference and zero extra"
 ??$__push_heap@PAUS4SortElem12@@HU1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@HHU1@US4Cmp00574DF0@@@Z,0x0001F325,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
+??$__make_heap@PAUS4SortElem12@@US4Cmp00574DF0@@U1@H@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@0PAH@Z,0x0002E2C6,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
+??$sort_heap@PAUS4SortElem12@@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@@Z,0x00035BC0,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
