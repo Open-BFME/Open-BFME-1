@@ -82810,3 +82810,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?lookForInnerTarget@AIGuardRetaliateMachine@@QAE_NXZ,0x0003F71F,Typed thiscall bool machine target lookup; retail ECX machine and AL result; ILT to15ECE0
 ?getSlot@Rva0069F740Owner@@QAE?AURva0069F740Ref@@HH@Z,0x0001815B,"Independent ABI review of69D620: thiscall, two int args plus hidden return buffer; writes one node pointer and returns buffer, ret12"
 ?objectTypesFromParam@ScriptConditions@@KAXPAVParameter@@PAVObjectTypes@@@Z,0x0003DF4B,Peer verified cdecl two-pointer parser at34F7B0; Parameter/ObjectTypes arguments and ret caller cleanup
+?getPlayerDifficulty@Player@@QBE?AW4GameDifficulty@@XZ,0x000217D8,"Peer and lead verified ILT toC9480; player difficulty enum, const thiscall"
+?duplicate@Script@@QBEPAV1@XZ,0x0004589F,Peer identified Script clone; ILT to35B680 allocates64B and calls Script copy ctor
