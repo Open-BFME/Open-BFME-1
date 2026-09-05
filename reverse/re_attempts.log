@@ -9591,3 +9591,4 @@ SUMMARY	0x00000000	0	note	Call-sequence pool, rebuilt with capstone decoding (in
 ?processCommandList@GameLogic@@QAEXXZ	0x00383050	47	converted	t=20min model=gpt-6 exact clean C++; out-of-line command drain matches inlined phase-1 twin; corrected prior VA/RVA confusion and retracted invented BfmeThingID identity
 ?checkDisabledStatus@Object@@QAEXXZ	0x001C5780	102	converted	exact clean C++; corrected 102-byte boundary; phase-1 caller and Object.cpp donor prove identity; t=12m model=gpt-6
 ?clearStatus@Object@@QAEXW4ObjectStatusTypes@@@Z	0x00162CD0	71	converted	exact clean C++; 86-bit status-mask construction and setStatus(mask false) prove identity; replaces wrong model-condition claim; t=14m model=gpt-6
+?checkIgnoreAICommandStatus@Object@@QAEXXZ	0x001CE7B0	45	converted	exact clean C++; phase predicate bit 73 plus retail status-name table and paired setter prove IGNORE_AI_COMMAND expiry; t=18m model=gpt-6
