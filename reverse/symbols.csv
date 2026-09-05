@@ -506,6 +506,7 @@ name,address,notes
 ??$_Destroy@PAUNugget@ModuleInfo@@@_STL@@YAXPAUNugget@ModuleInfo@@0@Z,0x0004883D,resweep callee back-solved
 ??$_Destroy@PAUParticleSysBoneInfo@@@_STL@@YAXPAUParticleSysBoneInfo@@0@Z,0x0001C19D,pinharvest x1 (thunk)
 ??$_Destroy@PAUPrereqUnitRec@ProductionPrerequisite@@@_STL@@YAXPAUPrereqUnitRec@ProductionPrerequisite@@0@Z,0x0000CBE4,resweep callee back-solved
+??$_Destroy@PAURva00146940Element@@@_STL@@YAXPAURva00146940Element@@0@Z,0x00037AF1,address-derived Rva00146940Element _Destroy folds with GeometryShape's identical 0x24-byte layout instantiation
 ??$_Destroy@PAURva00365070Element@@@_STL@@YAXPAURva00365070Element@@0@Z,0x00040D1D,ILT reached by the 0x00365070 vector assignment
 ??$_Destroy@PAURva003AC170Element@@@_STL@@YAXPAURva003AC170Element@@0@Z,0x0000C75C,Lead independently verified helper body bytes and220B virtual element semantics
 ??$_Destroy@PAURva003B20C0Element@_STL@@@_STL@@YAXPAURva003B20C0Element@0@0@Z,0x0004A593,"Retail: mov eax,[esi]; push 0; mov ecx,esi; call [eax]; add esi,0x24; cmp esi,edi; jne. That is p->~T() through vftable slot 0 (scalar deleting dtor, do-not-free) over a 36-byte polymorphic element. Matched as Rva003A8F40Destroy. Pin is the STLport _Destroy instantiation for this virtual 36-byte type, not a nonvirtual range destroyer."
@@ -578,6 +579,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBUNugget@ModuleInfo@@@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEPAUNugget@ModuleInfo@@IPBU23@0@Z,0x000313AE,resweep callee back-solved
 ??$_M_allocate_and_copy@PBUParticleSysBoneInfo@@@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEPAUParticleSysBoneInfo@@IPBU2@0@Z,0x000286AA,pinharvest x1 (thunk)
 ??$_M_allocate_and_copy@PBUPrereqUnitRec@ProductionPrerequisite@@@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEPAUPrereqUnitRec@ProductionPrerequisite@@IPBU23@0@Z,0x00014470,resweep callee back-solved
+??$_M_allocate_and_copy@PBURva00146940Element@@@?$vector@URva00146940Element@@V?$allocator@URva00146940Element@@@_STL@@@_STL@@IAEPAURva00146940Element@@IPBU2@0@Z,0x00048464,address-derived Rva00146940Element _M_allocate_and_copy folds with GeometryShape's identical 0x24-byte layout instantiation
 ??$_M_allocate_and_copy@PBURva00365070Element@@@?$vector@URva00365070Element@@V?$allocator@URva00365070Element@@@_STL@@@_STL@@IAEPAURva00365070Element@@IPBU2@0@Z,0x000321E1,ILT reached by the 0x00365070 vector assignment
 ??$_M_allocate_and_copy@PBURva003AC170Element@@@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEPAURva003AC170Element@@IPBU2@0@Z,0x0003CF60,Lead independently verified helper body bytes and220B virtual element semantics
 ??$_M_allocate_and_copy@PBURva003B20C0Element@_STL@@@?$vector@URva003B20C0Element@_STL@@V?$allocator@URva003B20C0Element@_STL@@@2@@_STL@@IAEPAURva003B20C0Element@1@IPBU21@0@Z,0x0000AF7E,"Retail: lea eax,[eax+eax*8]; shl eax,2 (count*36), allocate, then loop call 0x00032BF0 (_Construct already pinned for Rva003B20C0Element) and add esi,0x24. Same construct helper and stride as uninitialized_copy. Already matched as vector<Rva003B6020Element>::_M_allocate_and_copy; ICF-identical 36-byte construct walk. Pin names this type's member-template, which is the caller specialization, not a different width."
@@ -695,6 +697,7 @@ name,address,notes
 ??$__copy@PAUElem003B6FD0@@PAU1@H@_STL@@YAPAUElem003B6FD0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002950A,Open-BFME5 ILT range copy for vector erase 0x003B6FD0
 ??$__copy@PAUFXBoneInfo@@PAU1@H@_STL@@YAPAUFXBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,resweep callee back-solved
 ??$__copy@PAUFactionVictoryParameters@@PAU1@H@_STL@@YAPAUFactionVictoryParameters@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x001DE760,STLport random-access __copy over the 0x18-byte FactionVictoryParameters (AsciiString::set + 5 dwords per element; n=(last-first)/0x18); callers vector::erase 0x001DFE7B and ??0VictorySystem 0x001E025F; the element type is the retail struct name from the assert string at 0x000C32CB (iniParseFactionVictoryDefinition) rather than a Gen_t_ tag, which the closure predicate counts as anonymous; the two gen-tgrid pins on this address are placeholders for the same body
+??$__copy@PAUGen0003B8FE@@PAU1@H@_STL@@YAPAUGen0003B8FE@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003B967,address-derived __copy<Gen0003B8FE*> shift helper for vector::erase at 0x00147EB0
 ??$__copy@PAUGen006EDEA0@@PAU1@H@_STL@@YAPAUGen006EDEA0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DC23,STLport range copy ILT called by the exact Gen006EDEA0 vector erase at 0x006F2A10
 ??$__copy@PAUGen_dtor_00023989b@@PAU1@H@_STL@@YAPAUGen_dtor_00023989b@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002112F,Open-BFME5 pin: templated __copy helper instantiated for the 44-byte-stride vector<T>::erase at 0x00252E70 (thunks_015.cpp target)
 ??$__copy@PAUGen_dtor_0002a8bab@@PAU1@H@_STL@@YAPAUGen_dtor_0002a8bab@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00044EE5,Open-BFME5 pin: templated __copy helper instantiated for the 44-byte-stride vector<T>::erase at 0x00777EE0 (thunks_033.cpp target)
@@ -750,6 +753,7 @@ name,address,notes
 ??$__copy@PAUPayload@DeliverPayloadNugget@@PAU12@H@_STL@@YAPAUPayload@DeliverPayloadNugget@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000097CD,rel32 pin for exact-ambiguous landing
 ??$__copy@PAUPrereqUnitRec@ProductionPrerequisite@@PAU12@H@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00027598,retail target of vector<PrereqUnitRec>::erase call to __copy over pointer-to-PrereqUnitRec
 ??$__copy@PAUQuantityModifier@@PAU1@H@_STL@@YAPAUQuantityModifier@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,pinharvest x1 (thunk)
+??$__copy@PAURva004262F0Elem@@PAU1@H@_STL@@YAPAURva004262F0Elem@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B888,address-derived __copy<Rva004262F0Elem*> shift helper for vector::erase at 0x004262F0
 ??$__copy@PAUVideo@@PAU1@H@_STL@@YAPAUVideo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC
 ??$__copy@PAV?$BitFlags@$0HB@@@PAV1@H@_STL@@YAPAV?$BitFlags@$0HB@@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024BE5,BFME PathfindZoneManager pending-cell vector clear ILT
 ??$__copy@PAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@PAV12@H@_STL@@YAPAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@0@PAV10@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC,resweep callee back-solved
@@ -783,6 +787,7 @@ name,address,notes
 ??$__copy@PBUNugget@ModuleInfo@@PAU12@H@_STL@@YAPAUNugget@ModuleInfo@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003B688,resweep callee back-solved
 ??$__copy@PBUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00030F26,hit-decoded x2 (thunk)
 ??$__copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@H@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008391,resweep callee back-solved
+??$__copy@PBURva00146940Element@@PAU1@H@_STL@@YAPAURva00146940Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000381E0,address-derived Rva00146940Element __copy folds with GeometryShape's identical 0x24-byte layout instantiation
 ??$__copy@PBURva00365070Element@@PAU1@H@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0002F914,ILT reached by the 0x00365070 vector assignment
 ??$__copy@PBURva003AC170Element@@PAU1@H@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00044E40,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__copy@PBURva003B20C0Element@_STL@@PAU12@H@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000835A,"Retail uses the same 0x38E38E39 sar-3 /36 magic, then a counted loop that assigns while skipping +0: UnicodeString::set at +4 (0x00887C90), thiscall at +8 through ILT 0x00007A63, dwords +0x14/+0x18/+0x1C, bytes +0x20/+0x21/+0x22, add 0x24. Skipping +0 is compiler-generated operator= leaving the vptr alone. The gen-tgrid name __copy_backward of a 128-byte POD on 0x003B5EA0 is a candidate, not this body. Pinning __copy of the virtual 36-byte element is the specialization that matches the bytes."
@@ -1111,6 +1116,7 @@ name,address,notes
 ??$__uninitialized_copy@PBUNugget@ModuleInfo@@PAU12@@_STL@@YAPAUNugget@ModuleInfo@@PBU12@0PAU12@ABU__false_type@0@@Z,0x0001819C,resweep callee back-solved
 ??$__uninitialized_copy@PBUParticleSysBoneInfo@@PAU1@@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000032A6,pinharvest x1 (thunk)
 ??$__uninitialized_copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABU__false_type@0@@Z,0x000178B4,resweep callee back-solved
+??$__uninitialized_copy@PBURva00146940Element@@PAU1@@_STL@@YAPAURva00146940Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0002CC69,address-derived Rva00146940Element __uninitialized_copy folds with GeometryShape's identical 0x24-byte layout instantiation
 ??$__uninitialized_copy@PBURva00365070Element@@PAU1@@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001738C,ILT reached by the 0x00365070 vector assignment
 ??$__uninitialized_copy@PBURva003AC170Element@@PAU1@@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001381D,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__uninitialized_copy@PBURva003B20C0Element@_STL@@PAU12@@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABU__false_type@0@@Z,0x00026DD2,"Retail: while first!=last call 0x00032BF0 (_Construct for this type), add esi,0x24 and edi,0x24. Matched as rva003AB940CopyWalk stride-36. __false_type uninitialized_copy is the non-POD path, which a virtual destructor requires. Same _Construct as allocate_and_copy."
@@ -8395,6 +8401,7 @@ name,address,notes
 ??1Rva003B6680@@UAE@XZ,0x0000817A,Deleting wrapper3ABEF0 calls ILT817A -> primary dtor3B16B0
 ??1Rva003BB590Tree@@QAE@XZ,0x32fd3,Reviewed ILT to2360C0 complete124B set tree cleanup; member at8
 ??1Rva004029F0@@QAE@XZ,0x00040138,Open-BFME5 ILT thunk to body 0x004029F0; ?freeBlocks@PathfindZoneManager@@AAEXXZ at 0x00403760 hands it to the eh vector destructor iterator as the element destructor of the 0x228-byte array at +0x23624; address-derived name
+??1Rva004262F0Elem@@QAE@XZ,0x00002BC6,address-derived non-virtual dtor for vector::erase at 0x004262F0 (direct call shape not the UAE scalar-deleting family)
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
@@ -10736,6 +10743,7 @@ name,address,notes
 ?_M_clear@?$vector@URva000B19F0Element@_STL@@V?$allocator@URva000B19F0Element@_STL@@@2@@_STL@@IAEXXZ,0x00010230,Open-BFME5 the vector _M_clear the insert at 0x000B19F0 calls
 ?_M_clear@?$vector@URva000FB210Element@@V?$allocator@URva000FB210Element@@@_STL@@@_STL@@IAEXXZ,0x000290A5,Open-BFME5 ILT for vector clear at 0x000FB080
 ?_M_clear@?$vector@URva00143CE0Element@_STL@@V?$allocator@URva00143CE0Element@_STL@@@2@@_STL@@IAEXXZ,0x00039707,Open-BFME5 the vector _M_clear the insert at 0x00143CE0 calls
+?_M_clear@?$vector@URva00146940Element@@V?$allocator@URva00146940Element@@@_STL@@@_STL@@IAEXXZ,0x00014A06,address-derived Rva00146940Element _M_clear folds with GeometryShape's identical 0x24-byte layout instantiation
 ?_M_clear@?$vector@URva00146940Element@_STL@@V?$allocator@URva00146940Element@_STL@@@2@@_STL@@IAEXXZ,0x00005F42,Open-BFME5 the vector _M_clear the insert at 0x00146940 calls
 ?_M_clear@?$vector@URva001999C0Element@@V?$allocator@URva001999C0Element@@@_STL@@@_STL@@IAEXXZ,0x00024EC4,Open-BFME5 ILT for vector clear at 0x00197D30
 ?_M_clear@?$vector@URva0019A900Element@_STL@@V?$allocator@URva0019A900Element@_STL@@@2@@_STL@@IAEXXZ,0x00026DB9,Open-BFME5 the vector _M_clear the insert at 0x0019A900 calls
@@ -12047,10 +12055,15 @@ name,address,notes
 ?_M_reallocate_map@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXI_N@Z,0x00007978,ILT reached by deque int push back auxiliary at 0x006472C0
 ?_M_reallocate_map@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI_N@Z,0x003688E0,gen-tgrid shared callee
 ?_M_reallocate_map@?$deque@UGen_t_00089c70_p12cd@@V?$allocator@UGen_t_00089c70_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00089850,gen-tgrid payload member
+?_M_reallocate_map@?$deque@UGen_t_00089ce0_p4pod@@V?$allocator@UGen_t_00089ce0_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x0000F6C3,ILT reached by deque POD4 push back auxiliary at 0x00089CE0
 ?_M_reallocate_map@?$deque@UGen_t_00359760_p12cd@@V?$allocator@UGen_t_00359760_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00356FA0,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00359790_p12cd@@V?$allocator@UGen_t_00359790_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00357170,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00359c20_p12cd@@V?$allocator@UGen_t_00359c20_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x003573A0,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00359c50_p12cd@@V?$allocator@UGen_t_00359c50_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00357570,gen-tgrid payload member
+?_M_reallocate_map@?$deque@UGen_t_0035ae40_p4pod@@V?$allocator@UGen_t_0035ae40_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x00031E08,ILT reached by deque POD4 push back auxiliary at 0x0035AE40
+?_M_reallocate_map@?$deque@UGen_t_0035aec0_p4pod@@V?$allocator@UGen_t_0035aec0_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x0002049B,ILT reached by deque POD4 push back auxiliary at 0x0035AEC0
+?_M_reallocate_map@?$deque@UGen_t_0035b2a0_p4pod@@V?$allocator@UGen_t_0035b2a0_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x00025B9E,ILT reached by deque POD4 push back auxiliary at 0x0035B2A0
+?_M_reallocate_map@?$deque@UGen_t_0035b320_p4pod@@V?$allocator@UGen_t_0035b320_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x0000CB12,ILT reached by deque POD4 push back auxiliary at 0x0035B320
 ?_M_reallocate_map@?$deque@UGen_t_00368e70_p12cd@@V?$allocator@UGen_t_00368e70_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x003688E0,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00593270_p12cd@@V?$allocator@UGen_t_00593270_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00591230,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00595870_p12cd@@V?$allocator@UGen_t_00595870_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x0003791B,retail ILT called by the 0x00594220 deque auxiliary
