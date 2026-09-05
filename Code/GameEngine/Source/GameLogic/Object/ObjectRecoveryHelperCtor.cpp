@@ -27,30 +27,36 @@ class ObjectHelper : public UpdateModule
 {
 public:
 	ObjectHelper(Thing *thing, const ModuleData *moduleData);
+	virtual ~ObjectHelper();
 };
 
-class __declspec(novtable) ObjectRecoveryHelperIface1
+class __declspec(novtable) BehaviorModuleInterface
 {
 public:
-	virtual void objectRecoveryIface1Anchor();
+	virtual void behaviorModuleInterfaceAnchor();
 };
 
-class __declspec(novtable) ObjectRecoveryHelperIface2
+class __declspec(novtable) UpdateModuleInterface
 {
 public:
-	virtual void objectRecoveryIface2Anchor();
+	virtual void updateModuleInterfaceAnchor();
 };
 
 class ObjectRecoveryHelper : public ObjectHelper,
-	public ObjectRecoveryHelperIface1,
-	public ObjectRecoveryHelperIface2
+	public BehaviorModuleInterface,
+	public UpdateModuleInterface
 {
 public:
 	ObjectRecoveryHelper(Thing *thing, const ModuleData *moduleData);
+	virtual ~ObjectRecoveryHelper();
 };
 
 ObjectRecoveryHelper::ObjectRecoveryHelper(Thing *thing, const ModuleData *moduleData)
 	: ObjectHelper(thing, moduleData)
 {
 	setWakeFrame(m_object, UPDATE_SLEEP_FOREVER);
+}
+
+ObjectRecoveryHelper::~ObjectRecoveryHelper()
+{
 }

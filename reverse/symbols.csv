@@ -4313,7 +4313,6 @@ name,address,notes
 ??1Gen_dtor_001c0e70@@UAE@XZ,0x0002514E,gen-dtor class destructor
 ??1Gen_dtor_001c0fe0@@UAE@XZ,0x00015140,gen-dtor class destructor
 ??1Gen_dtor_001c1010@@UAE@XZ,0x00012634,gen-dtor class destructor
-??1Gen_dtor_001c1170@@UAE@XZ,0x0003A7A1,gen-dtor class destructor
 ??1Gen_dtor_001c11a0@@UAE@XZ,0x0001DC37,gen-dtor class destructor
 ??1Gen_dtor_001c12b0@@UAE@XZ,0x0001DC41,gen-dtor class destructor
 ??1Gen_dtor_001c12e0@@UAE@XZ,0x00028BF5,gen-dtor class destructor
@@ -26447,7 +26446,6 @@ name,address,notes
 ?b_001c1040@@YAXXZ,0x001C1040,gen-thunk body
 ?b_001c10d0@@YAXXZ,0x001C10D0,gen-thunk body
 ?b_001c1160@@YAXXZ,0x001C1160,gen-thunk body
-?b_001c1170@@YAXXZ,0x001C1170,gen-thunk body
 ?b_001c11a0@@YAXXZ,0x001C11A0,gen-thunk body
 ?b_001c11d0@@YAXXZ,0x001C11D0,gen-thunk body
 ?b_001c1210@@YAXXZ,0x001C1210,gen-thunk body
@@ -31547,7 +31545,6 @@ name,address,notes
 ?b_00256c80@@YAXXZ,0x00256C80,gen-thunk body
 ?b_00256c90@@YAXXZ,0x00256C90,gen-thunk body
 ?b_00256cd0@@YAXXZ,0x00256CD0,gen-thunk body
-?b_00256d20@@YAXXZ,0x00256D20,gen-thunk body
 ?b_00256d40@@YAXXZ,0x00256D40,gen-thunk body
 ?b_00256d50@@YAXXZ,0x00256D50,gen-thunk body
 ?b_00256d70@@YAXXZ,0x00256D70,gen-thunk body
@@ -82723,3 +82720,8 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_7ObjectDefectionHelper@@6BBehaviorModuleInterface@@@,0x0109E4B0,secondary vtable at this+0x0C
 ??_7ObjectDefectionHelper@@6B@,0x0109E4A0,secondary vtable at this+0x10
 ??1ObjectHelper@@UAE@XZ,0x0002514E,ObjectDefectionHelper destructor tail call reaches the UpdateModule destructor alias
+??1ObjectRecoveryHelper@@UAE@XZ,0x0003A7A1,destructor ILT to 0x00256D20
+??_GObjectRecoveryHelper@@UAEPAXI@Z,0x0003CA60,primary class vtable slot zero ILT to 0x001C1170
+??_7ObjectRecoveryHelper@@6BObjectModule@@@,0x0109E694,primary vtable installed by the named constructor and destructor
+??_7ObjectRecoveryHelper@@6BBehaviorModuleInterface@@@,0x0109E5D0,secondary vtable at this+0x0C
+??_7ObjectRecoveryHelper@@6B@,0x0109E5C4,secondary vtable at this+0x10

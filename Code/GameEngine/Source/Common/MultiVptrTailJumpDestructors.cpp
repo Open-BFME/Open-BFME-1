@@ -464,16 +464,6 @@ Rva0024FC70MultiTailDtor::~Rva0024FC70MultiTailDtor()
 {
 }
 
-class Rva00256D20MultiTailDtor : public Rva0002514EMultiBase, public TailMixinA, public TailMixinB
-{
-public:
-	virtual ~Rva00256D20MultiTailDtor();
-};
-
-Rva00256D20MultiTailDtor::~Rva00256D20MultiTailDtor()
-{
-}
-
 class Rva00256DB0MultiTailDtor : public Rva0002514EMultiBase, public TailMixinA, public TailMixinB
 {
 public:
