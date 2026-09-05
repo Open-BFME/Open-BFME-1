@@ -5718,13 +5718,6 @@ name,address,notes
 ??1Gen_dtor_008323f0@@UAE@XZ,0x00832410,gen-dtor class destructor
 ??1Gen_dtor_00832420@@UAE@XZ,0x00832440,gen-dtor class destructor
 ??1Gen_dtor_00832450@@UAE@XZ,0x00832470,gen-dtor class destructor
-??1Gen_dtor_008325a0@@UAE@XZ,0x00840900,gen-dtor class destructor
-??1Gen_dtor_008325e0@@UAE@XZ,0x00843D90,gen-dtor class destructor
-??1Gen_dtor_00832620@@UAE@XZ,0x00843E30,gen-dtor class destructor
-??1Gen_dtor_00832660@@UAE@XZ,0x008441B0,gen-dtor class destructor
-??1Gen_dtor_008326a0@@UAE@XZ,0x008441F0,gen-dtor class destructor
-??1Gen_dtor_008326e0@@UAE@XZ,0x008444E0,gen-dtor class destructor
-??1Gen_dtor_00832720@@UAE@XZ,0x008444F0,gen-dtor class destructor
 ??1Gen_dtor_00837460@@UAE@XZ,0x00837480,gen-dtor class destructor
 ??1Gen_dtor_008374d0@@UAE@XZ,0x008374F0,gen-dtor class destructor
 ??1Gen_dtor_00837540@@UAE@XZ,0x00837560,gen-dtor class destructor
@@ -82757,3 +82750,17 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1ios_base@_STL@@UAE@XZ,0x0083F730,STLport 4.5.3 ios_base destructor; both typed basic_ios destructors tail-call this shared base body
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
+??1?$ctype@G@_STL@@MAE@XZ,0x00840900,STLport 4.5.3 wide ctype destructor; exact virtual method table proves identity
+??_7?$ctype@G@_STL@@6B@,0x00D2EA54,retail STLport 4.5.3 wide ctype vtable identified by its virtual method signatures
+??1?$codecvt@DDH@_STL@@MAE@XZ,0x00843D90,STLport 4.5.3 narrow codecvt destructor; exact virtual method table proves identity
+??_7?$codecvt@DDH@_STL@@6B@,0x00D2EA8C,retail STLport 4.5.3 narrow codecvt vtable identified by its virtual method signatures
+??1?$codecvt@GDH@_STL@@MAE@XZ,0x00843E30,STLport 4.5.3 wide codecvt destructor; exact virtual method table proves identity
+??_7?$codecvt@GDH@_STL@@6B@,0x00D2EAB0,retail STLport 4.5.3 wide codecvt vtable identified by its virtual method signatures
+??1?$collate@D@_STL@@MAE@XZ,0x008441B0,STLport 4.5.3 narrow collate destructor; exact virtual method table proves identity
+??_7?$collate@D@_STL@@6B@,0x00D2EAD4,retail STLport 4.5.3 narrow collate vtable identified by its virtual method signatures
+??1?$collate@G@_STL@@MAE@XZ,0x008441F0,STLport 4.5.3 wide collate destructor; exact virtual method table proves identity
+??_7?$collate@G@_STL@@6B@,0x00D2EAE8,retail STLport 4.5.3 wide collate vtable identified by its virtual method signatures
+??1?$numpunct@D@_STL@@MAE@XZ,0x008444E0,STLport 4.5.3 narrow numpunct destructor; exact virtual method table proves identity
+??_7?$numpunct@D@_STL@@6B@,0x00D2EAFC,retail STLport 4.5.3 narrow numpunct vtable identified by its virtual method signatures
+??1?$numpunct@G@_STL@@MAE@XZ,0x008444F0,STLport 4.5.3 wide numpunct destructor; exact virtual method table proves identity
+??_7?$numpunct@G@_STL@@6B@,0x00D2EB18,retail STLport 4.5.3 wide numpunct vtable identified by its virtual method signatures

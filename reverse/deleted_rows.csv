@@ -24677,3 +24677,17 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1Rva0083F810TailDtor@@UAE@XZ,0x0083F810,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
 ??_GGen_dtor_00538230@@UAEPAXI@Z,0x00538230,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
 ??_GGen_dtor_0083f820@@UAEPAXI@Z,0x0083F820,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
+??1Rva00840900TailDtor@@UAE@XZ,0x00840900,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_008325a0@@UAEPAXI@Z,0x008325A0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva00843D90TailDtor@@UAE@XZ,0x00843D90,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_008325e0@@UAEPAXI@Z,0x008325E0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva00843E30TailDtor@@UAE@XZ,0x00843E30,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_00832620@@UAEPAXI@Z,0x00832620,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva008441B0TailDtor@@UAE@XZ,0x008441B0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_00832660@@UAEPAXI@Z,0x00832660,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva008441F0TailDtor@@UAE@XZ,0x008441F0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_008326a0@@UAEPAXI@Z,0x008326A0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva008444E0TailDtor@@UAE@XZ,0x008444E0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_008326e0@@UAEPAXI@Z,0x008326E0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva008444F0TailDtor@@UAE@XZ,0x008444F0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??_GGen_dtor_00832720@@UAEPAXI@Z,0x00832720,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
