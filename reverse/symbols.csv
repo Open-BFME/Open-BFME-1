@@ -4469,7 +4469,6 @@ name,address,notes
 ??1Gen_dtor_00217590@@UAE@XZ,0x0002CD81,gen-dtor class destructor
 ??1Gen_dtor_00217700@@UAE@XZ,0x0004B68C,gen-dtor class destructor
 ??1Gen_dtor_002180c0@@UAE@XZ,0x00012D8C,gen-dtor class destructor
-??1Gen_dtor_00218800@@UAE@XZ,0x0000807B,gen-dtor class destructor
 ??1Gen_dtor_00218990@@UAE@XZ,0x00041D21,gen-dtor class destructor
 ??1Gen_dtor_00218d40@@UAE@XZ,0x0002CE12,gen-dtor class destructor
 ??1Gen_dtor_00219c40@@UAE@XZ,0x0002748F,gen-dtor class destructor
@@ -29470,11 +29469,9 @@ name,address,notes
 ?b_002184d0@@YAXXZ,0x002184D0,gen-thunk body
 ?b_00218620@@YAXXZ,0x00218620,gen-thunk body
 ?b_00218660@@YAXXZ,0x00218660,gen-thunk body
-?b_00218670@@YAXXZ,0x00218670,gen-thunk body
 ?b_00218690@@YAXXZ,0x00218690,gen-thunk body
 ?b_00218760@@YAXXZ,0x00218760,gen-thunk body
 ?b_00218770@@YAXXZ,0x00218770,gen-thunk body
-?b_00218800@@YAXXZ,0x00218800,gen-thunk body
 ?b_00218830@@YAXXZ,0x00218830,gen-thunk body
 ?b_00218870@@YAXXZ,0x00218870,gen-thunk body
 ?b_002188b0@@YAXXZ,0x002188B0,gen-thunk body
@@ -82746,3 +82743,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7SalvageCrateCollide@@6BObjectModule@@@,0x010AA8CC,primary vtable installed by the named constructor and destructor
 ??_7SalvageCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA808,secondary vtable at this+0x0C
 ??_7SalvageCrateCollide@@6B@,0x010AA7E8,secondary vtable at this+0x10
+??1ShroudCrateCollide@@MAE@XZ,0x0000807B,destructor ILT to 0x00218670
+??_GShroudCrateCollide@@MAEPAXI@Z,0x00021BB6,primary class vtable slot zero ILT to 0x00218800
+??_7ShroudCrateCollide@@6BObjectModule@@@,0x010AAA6C,primary vtable installed by the named constructor and destructor
+??_7ShroudCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA9A8,secondary vtable at this+0x0C
+??_7ShroudCrateCollide@@6B@,0x010AA988,secondary vtable at this+0x10

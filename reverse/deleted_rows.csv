@@ -24654,3 +24654,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00217e30@@UAEPAXI@Z,0x00217E30,generated destructor placeholder superseded by the byte-verified MoneyCrateCollide deleting destructor identity
 ??1Rva00218090MultiTailDtor@@UAE@XZ,0x00218090,address-derived placeholder superseded by the byte-verified SalvageCrateCollide destructor identity
 ??_GGen_dtor_00218190@@UAEPAXI@Z,0x00218190,generated destructor placeholder superseded by the byte-verified SalvageCrateCollide deleting destructor identity
+??1Rva00218670MultiTailDtor@@UAE@XZ,0x00218670,address-derived placeholder superseded by the byte-verified ShroudCrateCollide destructor identity
+??_GGen_dtor_00218800@@UAEPAXI@Z,0x00218800,generated destructor placeholder superseded by the byte-verified ShroudCrateCollide deleting destructor identity

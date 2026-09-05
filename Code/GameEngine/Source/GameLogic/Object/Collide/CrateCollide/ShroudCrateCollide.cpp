@@ -10,3 +10,7 @@ ShroudCrateCollide::ShroudCrateCollide(Thing *thing, const ModuleData *moduleDat
 	: CrateCollide(thing, moduleData)
 {
 }
+
+ShroudCrateCollide::~ShroudCrateCollide()
+{
+}
