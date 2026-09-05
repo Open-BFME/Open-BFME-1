@@ -11,9 +11,9 @@
 // adds the amount into a global, and only when the money being deposited
 // belongs to the local player: the +0x0C of ThePlayerList is getLocalPlayer
 // and its +0x24 the player index, the same offset Player_radar.cpp reads.
-// The global at 0x012ED63C is not identified -- nothing here says more than
-// that it has a running total at +8 -- so it is modelled under a descriptive
-// name rather than a guessed one.
+// The global at 0x012ED63C is TheStatsCollector. Its exact update,
+// writeFileEnd, collectMsgStats, startScrollTime, and endScrollTime callees all
+// use the same receiver, and this file reaches its money counters at +4/+8.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -146,17 +146,16 @@ private:
 
 extern PlayerList *ThePlayerList;
 
-// Unidentified global at 0x012ED63C: a running total at +8 that only the local
-// player's deposits reach.
-class BfmeDepositTally
+// StatsCollector slice used by Money::withdraw/deposit.
+class StatsCollector
 {
 public:
 	UnsignedInt m_bfme_head;
-	UnsignedInt m_withdrawTotal;				// this+0x04
-	UnsignedInt m_depositTotal;				// this+0x08
+	UnsignedInt m_moneyWithdrawn;			// this+0x04
+	UnsignedInt m_moneyDeposited;			// this+0x08
 };
 
-extern BfmeDepositTally *TheBfmeDepositTally;
+extern StatsCollector *TheStatsCollector;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
 class Money
@@ -187,11 +186,11 @@ UnsignedInt Money::withdraw(UnsignedInt amountToWithdraw, Bool playSound)
 
 	m_money -= amountToWithdraw;
 
-	if (TheBfmeDepositTally != 0 && ThePlayerList != 0)
+	if (TheStatsCollector != 0 && ThePlayerList != 0)
 	{
 		Player *localPlayer = ThePlayerList->getLocalPlayer();
 		if (localPlayer != 0 && localPlayer->getPlayerIndex() == m_playerIndex)
-			TheBfmeDepositTally->m_withdrawTotal += amountToWithdraw;
+			TheStatsCollector->m_moneyWithdrawn += amountToWithdraw;
 	}
 
 	return amountToWithdraw;
@@ -211,12 +210,12 @@ void Money::deposit(UnsignedInt amountToDeposit, Bool playSound)
 
 	m_money += amountToDeposit;
 
-	if (TheBfmeDepositTally != 0 && ThePlayerList != 0)
+	if (TheStatsCollector != 0 && ThePlayerList != 0)
 	{
 		Player *localPlayer = ThePlayerList->getLocalPlayer();
 		if (localPlayer != 0 && localPlayer->getPlayerIndex() == m_playerIndex)
 		{
-			TheBfmeDepositTally->m_depositTotal += amountToDeposit;
+			TheStatsCollector->m_moneyDeposited += amountToDeposit;
 		}
 	}
 }

@@ -75625,7 +75625,7 @@ name,address,notes
 ?clearDisabled@Object@@QAE_NW4DisabledType@@@Z,0x0003C06A,ILT thunk used by setScriptStatus call site
 ?clearFlag@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001B6F3,ScriptEngine clearTeamFlags retail ILT thunk
 ?clearGameData@BfmeGameLogicPause@@QAEX_N0@Z,0x0001C46D,PopupSaveLoad BFME two-Bool clearGameData call through retail ILT
-?clearGameData@GameLogic@@QAEX_N_N@Z,0x00396B00,ZH GameLogic::clearGameData(showScoreScreen) plus a second Bool: TheStatsCollector(0x012EF18C)->writeFileEnd 0x0050B6C0; TheScriptActions(0x012ED63C)->closeWindows 0x004A2900; score-screen push gated on the two Bools and m_gameMode (+0x10c) not 8/4; TheGameEngine(0x012ED524)->reset vslot +0x10 at 0x00396BFC; m_gameMode = 8 GAME_NONE at 0x00396BFF; TheGameEngine->setQuitting(1) if TheWritableGlobalData+0xb80 (m_initialFile) is non-empty; TheMessageStream(0x012ED5EC)->appendMessage(0x3eb MSG_DESTROY_SELECTED_GROUP); closeWindows 0x00396950 at 0x00396C6A; m_background (+0xa4) destroyWindows then deleteInstance; called from the MSG_CLEAR_GAME_DATA arm at 0x003977BB via ILT 0x0001C46D
+?clearGameData@GameLogic@@QAEX_N_N@Z,0x00396B00,ZH GameLogic::clearGameData(showScoreScreen) plus a second Bool: Watchdog (0x012EF18C)->suppressTimeouts 0x0010B6C0; TheStatsCollector (0x012ED63C)->writeFileEnd 0x000A2900; TheScriptActions (0x012F0620)->closeWindows(FALSE) through virtual slot +0x28; score-screen push gated on the two Bools and m_gameMode (+0x10c) not 8/4; TheGameEngine (0x012ED524)->reset vslot +0x10 at 0x00396BFC; m_gameMode = 8 GAME_NONE at 0x00396BFF; called from MSG_CLEAR_GAME_DATA at 0x003977BB via ILT 0x0001C46D
 ?clearLeaveRequestTime@BFMEConnectionManager@@QAEXXZ,0x00662E70,zeroes +0x12110 (the leave-request stamp); sole caller 0x00682B55 in 0x00682A90 when the router sees its own PLAYERLEAVE execute; ILT 0x000316DD
 ?clearLocalStagingState@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x0001118F,ILT to 0x005392B0 used by CustomMatch leaveStaging 0x00539750
 ?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BDA@@@@Z,0x0000B95B,Object clearModelConditionFlags ILT used by WeaponSet::setWeaponLock / releaseWeaponLock (USING_A/B/C)
@@ -83211,3 +83211,4 @@ g_bfmeTextAL,0x012F147C,Open-BFME5 the text table the version text at 0x000AED00
 ??1StringBaseWideAM@@IAE@XZ,0x008881D0,pin
 ?format@UnicodeStringAM@@QAAXV1@ZZ,0x00889190,pin
 g_bfmeTextAM,0x012F147C,Open-BFME5 the text table the time-played text at 0x0009C4B0 fetches its format from
+?TheStatsCollector@@3PAVStatsCollector@@A,0x00ED63C,Global VA 0x012ED63C is the receiver for exact StatsCollector update 0x000A2E60 writeFileEnd 0x000A2900 collectMsgStats 0x000A21F0 startScrollTime 0x000A22B0 and endScrollTime 0x000A22D0 bodies; matched Money methods use counters +4/+8

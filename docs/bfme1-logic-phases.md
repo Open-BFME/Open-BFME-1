@@ -133,7 +133,12 @@ The following order is instruction-level fact:
 7. Logic CRC generation and message creation occur at
    `0x0038DC50..0x0038DDF5`.
 8. Optional singleton `0x012ED4FC` updates, followed by the phase-1-only
-   singleton `0x012ED63C` and Recorder (`0x0038DDF5..0x0038DE27`).
+   `TheStatsCollector` (`0x012ED63C`) and Recorder
+   (`0x0038DDF5..0x0038DE27`). The direct call at `0x0038DE16` follows ILT
+   `0x000467D1` to the exact `StatsCollector::update` body at RVA
+   `0x000A2E60`. Independent calls on the same global reach exact
+   `writeFileEnd`, `collectMsgStats`, `startScrollTime`, and `endScrollTime`
+   bodies; the matched Money methods access its money counters at `+4/+8`.
 9. Every node starting at `TheCommandList+8` is passed to the GameLogic command
    processor with argument zero; CommandList is then reset through virtual slot
    `+0x10` (`0x0038DE2A..0x0038DE50`). Commands are therefore consumed and
@@ -257,7 +262,8 @@ not been proven by runtime or multiplayer traces.
 | `Object::checkNoCollisionsStatus()` at `0x001CE7F0` | solved and byte-exact | corrected RVA (the earlier `0x005CE7F0` was a VA); when the nonzero expiration at `Object+0x33C` is older than the current frame, clears status bit 4 (`NO_COLLISIONS`) and zeros the expiration |
 | `Object::updatePendingDamage()` at `0x001C7B80` | solved and byte-exact | Object vtable `0x0109EE58` slot `+0x3C`; decrements delay `DamageInfo+0x24`, applies records only after the delay becomes negative through virtual `attemptDamage` at slot `+0x38`, then erases the 92-byte record |
 | `TheLuaScriptEngine` global `0x012F060C` | solved | constructor-tag registration and matched `initSubsystem<LuaScriptEngine>` call prove the identity; phase 1 calls virtual `update` at slot `+0x14` |
-| singleton globals `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify their called bodies and constructor tags before assigning subsystem names |
+| `TheStatsCollector` global `0x012ED63C` | solved | five exact member-function callees share this receiver; phase 1 calls exact `StatsCollector::update` at RVA `0x000A2E60` |
+| singleton global `0x012ED83C` | unresolved and a naming blocker | identify its constructor tag before assigning a subsystem name |
 
 ## Reconstruction status and attack plan
 
