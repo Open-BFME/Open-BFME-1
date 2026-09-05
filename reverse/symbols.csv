@@ -82823,3 +82823,7 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?bfmeNotifyCell@VictorySystem@@QAEXIPAUBfmeVec1268@@@Z,0x0000ED4A,"Lead verified ILT to1DF930; thiscall player index and coordinate pointer, ret8, dispatches actions on spatial results"
 ?registerItem@BfmeSinkAM@@QAEXHPAVGen_003BEA30@@H@Z,0x0001DF02,"Lead traced6176A0: handle key, item float coordinates, integer variant selects template; ret12"
 ?_M_insert_overflow@?$vector@PAVGen_003BEA30@@V?$allocator@PAVGen_003BEA30@@@_STL@@@_STL@@IAEXPAPAVGen_003BEA30@@ABQAV3@ABU__true_type@2@I_N@Z,0x000151C2,Lead verified3C0950 POD4B vector growth and insert; same element pointer layout
+??$_Destroy@PAURva003AC170Element@@@_STL@@YAXPAURva003AC170Element@@0@Z,0x0000C75C,Lead independently verified helper body bytes and220B virtual element semantics
+??$_M_allocate_and_copy@PBURva003AC170Element@@@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEPAURva003AC170Element@@IPBU2@0@Z,0x0003CF60,Lead independently verified helper body bytes and220B virtual element semantics
+??$__copy@PBURva003AC170Element@@PAU1@H@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00044E40,Lead independently verified helper body bytes and220B virtual element semantics
+??$__uninitialized_copy@PBURva003AC170Element@@PAU1@@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001381D,Lead independently verified helper body bytes and220B virtual element semantics
