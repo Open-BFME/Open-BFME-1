@@ -82800,3 +82800,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?resizeCandidateWindow@IMEManager@@QAEXH@Z,0x0002C68D,Independently inspected retail ILT/body ABI; GUI method receiver and argument layout verified
 _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGetProperty import slot0x135956C
 ?getName@TransitionGroup@@QAE?AVAsciiString@@XZ,0x0001DBF6,Independently inspected retail ILT/body ABI; GUI method receiver and argument layout verified
+?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z,0x0004154C,Float radius proven through F67B0 to partition query 9F63D0 floating range arithmetic
