@@ -16,34 +16,40 @@ private:
 	unsigned char m_data[8];
 };
 
-class RespawnBodyIface1
+class BehaviorModuleInterface
 {
 public:
-	virtual void respawnBodyIface1Anchor();
+	virtual void behaviorModuleInterfaceAnchor();
 };
 
-class RespawnBodyIface2
+class BodyModuleInterface
 {
 public:
-	virtual void respawnBodyIface2Anchor();
+	virtual void bodyModuleInterfaceAnchor();
 };
 
-class RespawnBodyBase : public BehaviorModule,
-	public RespawnBodyIface1,
-	public RespawnBodyIface2
+class ActiveBody : public BehaviorModule,
+	public BehaviorModuleInterface,
+	public BodyModuleInterface
 {
 public:
-	RespawnBodyBase(Thing *thing, const ModuleData *moduleData);
+	ActiveBody(Thing *thing, const ModuleData *moduleData);
+	virtual ~ActiveBody();
 };
 
-class RespawnBody : public RespawnBodyBase
+class RespawnBody : public ActiveBody
 {
 public:
 	RespawnBody(Thing *thing, const ModuleData *moduleData);
+	virtual ~RespawnBody();
 };
 
 // ??0RespawnBody@@QAE@PAVThing@@PBVModuleData@@@Z
 RespawnBody::RespawnBody(Thing *thing, const ModuleData *moduleData)
-	: RespawnBodyBase(thing, moduleData)
+	: ActiveBody(thing, moduleData)
+{
+}
+
+RespawnBody::~RespawnBody()
 {
 }

@@ -2847,7 +2847,6 @@ name,address,notes
 ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E8D0,module ctor (friend_newModuleInstance retail call target)
 ??0RepairSpecialPowerModuleData@@QAE@XZ,0x0001C486,RepairSpecialPower ModuleData ctor
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
-??0RespawnBodyBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025509,RespawnBody ctor base
 ??0RespawnBodyModuleDataBase@@QAE@XZ,0x00036818,RespawnBody module-data base constructor ILT
 ??0RespawnPolicyMember@@QAE@XZ,0x0003747A,RespawnBody policy member constructor ILT
 ??0RespawnUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000FA38,link thunk to the RespawnUpdate constructor; named from the ModuleFactory registration that pairs "RespawnUpdate" with factory 0x0011CC00
@@ -4416,7 +4415,6 @@ name,address,notes
 ??1Gen_dtor_00213720@@UAE@XZ,0x0003E414,gen-dtor class destructor
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
 ??1Gen_dtor_00214490@@UAE@XZ,0x00019D0D,gen-dtor class destructor
-??1Gen_dtor_00214770@@UAE@XZ,0x00020F40,gen-dtor class destructor
 ??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
 ??1Gen_dtor_00214c30@@UAE@XZ,0x00040D40,gen-dtor class destructor
 ??1Gen_dtor_00214e70@@UAE@XZ,0x0003C8C1,gen-dtor class destructor
@@ -29056,11 +29054,9 @@ name,address,notes
 ?b_00214620@@YAXXZ,0x00214620,gen-thunk body
 ?b_00214650@@YAXXZ,0x00214650,gen-thunk body
 ?b_00214690@@YAXXZ,0x00214690,gen-thunk body
-?b_002146a0@@YAXXZ,0x002146A0,gen-thunk body
 ?b_002146c0@@YAXXZ,0x002146C0,gen-thunk body
 ?b_002146d0@@YAXXZ,0x002146D0,gen-thunk body
 ?b_00214760@@YAXXZ,0x00214760,gen-thunk body
-?b_00214770@@YAXXZ,0x00214770,gen-thunk body
 ?b_002147a0@@YAXXZ,0x002147A0,gen-thunk body
 ?b_002147e0@@YAXXZ,0x002147E0,gen-thunk body
 ?b_002149d0@@YAXXZ,0x002149D0,gen-thunk body
@@ -82732,3 +82728,9 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_7PorcupineFormationBodyModule@@6BBehaviorModule@@@,0x010A8FB0,primary vtable installed by the named constructor and destructor
 ??_7PorcupineFormationBodyModule@@6BBehaviorModuleInterface@@@,0x010A8EE8,secondary vtable at this+0x0C
 ??_7PorcupineFormationBodyModule@@6BBodyModuleInterface@@@,0x010A8E18,secondary vtable at this+0x10
+??0ActiveBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025509,RespawnBody constructor base-call ILT to 0x00211A50
+??1RespawnBody@@UAE@XZ,0x00020F40,destructor ILT to 0x002146A0
+??_GRespawnBody@@UAEPAXI@Z,0x00019970,primary class vtable slot zero ILT to 0x00214770
+??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
+??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
+??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
