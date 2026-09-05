@@ -82866,3 +82866,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?name003A72F0@Glo012F1024Item@@QAE?AVAsciiString@@XZ,0x0000CA95,"Full3A72F032B copies member4 viaAscii copy887B60 tohiddenreturn buffer,ret4; no unsupported User identity"
 ?m@Glo012F1028Type@@QAEXABVAsciiString@@@Z,0x00030B3E,Retail3BCB403B ret4 noop; caller passes temporary AsciiString address; no invented behavior
 ?load@INI@@QAEXVAsciiString@@HPAVXfer@@P6AXPAV1@@Z@Z,0x00853CB0,Retail853CE3 stores thirdarg toINI s_xfer130CE54;853D5F calls fourtharg cdecl with INI pointer. Corrects old reload/xfer labels
+?findUpdateModule@Object@@QAEPAVStealthUpdate@@W4NameKeyType@@@Z,0x0002AE23,Existing matchedObject findModule1BEE6063B; caller key isStealthUpdate
+?update002AD250@StealthUpdate@@QAEXXZ,0x000272AF,"Reviewed full238B2AD250 updates frame timers20/24/28, active2D and object status; neutral RVA name avoids invented idle callback identity"
