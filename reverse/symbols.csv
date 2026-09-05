@@ -8403,6 +8403,7 @@ name,address,notes
 ??1Rva000491E3TailBase@@UAE@XZ,0x000491E3,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0004B227TailBase@@UAE@XZ,0x0004B227,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00078460Elem@@QAE@XZ,0x0001F951,Open-BFME5 ILT the 0x00078460 implicit dtor hands to ??_M as the element destructor
+??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
@@ -75754,6 +75755,7 @@ name,address,notes
 ?construct@RenderObjectUpdateTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00035490,RenderObjectUpdateModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@Rva0012A170ModuleData@@QAEPAV1@XZ,0x00012233,address-derived spelling for the module-data constructor thunk called by the 0x0012A170 factory
 ?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
+?construct@Rva005E5E60CtorShim@@QAEXAAURva005E5E60Sys@@PBX@Z,0x000151FE,Open-BFME5 near-twin of LightningDrawModuleCtorShim::construct; forwards to ILT thunk at 0x000151FE
 ?construct@ShaderVectorBaseCtorShim@@QAEXHH@Z,0x009305D0,Open-BFME5 shader vector retail base constructor
 ?construct@SphereEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0004018D,SphereEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@SphereEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0001598D,SphereEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
@@ -76568,6 +76570,7 @@ name,address,notes
 ?freeMapResources@W3DStatusCircle@@QAEHXZ,0x00014BC3,derived-ICF
 ?freeScorchBuffers@BaseHeightMapRenderObjClass@@AAEXXZ,0x00040728,incremental thunk called by freeMapResources
 ?freeSockets@NameKeyGenerator@@AAEXXZ,0x000226E7,pinharvest x4 (thunk)
+?freeSockets@Rva0008FE00Owner@@AAEXXZ,0x000226E7,Open-BFME5 near-twin sibling of NameKeyGenerator::freeSockets; reuses the same pinned 0x226E7 callee
 ?freeStaticStrings@GameWindowManager@@UAEXXZ,0x00040B7E,GameWindowManager dtor call target (incremental-link thunk)
 ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ,0x00044AA3,link thunk; called by allocateTerrainBuffers at 0x00728770
 ?freeTerrainTracksResources@TerrainTracksRenderObjClass@@QAEHXZ,0x00014BC3,derived-ICF
@@ -80211,6 +80214,7 @@ name,address,notes
 ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z,0x00029311
 ?onExit@AIInternalMoveToStateOnExitShim@@QAEXW4StateExitType@@@Z,0x00172D80,AIInternalMoveToState::onExit incremental-link thunk target through a TU-local forwarding shim
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
+?onExit@Rva002985D0Update@@AAEX_N0@Z,0x0000F975,Open-BFME5 near-twin sibling of SpecialAbilityUpdate::onExit; reuses the pinned ILT at 0x0000F975
 ?onExit@Rva002BDF10Base@@UAEXW4StateExitType@@@Z,0x00008990,address-derived GiantBird-family base exit thunk used by 0x002BDF10
 ?onExit@SpecialAbilityUpdate@@AAEX_N0@Z,0x0000F975,SpecialAbilityUpdate destructor cleanup call target
 ?onLevelStart@Drawable@@QAEXXZ,0x00015B81,Open-BFME5 ILT thunk to body 0x00412500; GameLogic start-new-game sequence and the exact Drawable module broadcast establish onLevelStart semantics
@@ -82167,6 +82171,7 @@ _bfmeArrayNew,0x00881F70,address-derived array allocator target from the direct 
 _bfmeAssert1263,0x00032231,pin
 _bfmeCall1128A,0x008479C0,pin
 _bfmeCall1128B,0x00847B20,pin
+_bfmeCall_002efb20,0x002EFB20,alternate REL32 name for the still-a-dump helper at 0x002EFB20 currently matched as FlammableUpdate::getModuleNameKey (unproven thiscall no-arg identity); this caller pushes 2 explicit stack args and cleans them itself
 _bfmeCbAKC,0x00032155,pin
 _bfmeCbEMB,0x00863440,pin
 _bfmeCbEOEa,0x0003A760,pin
