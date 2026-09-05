@@ -498,36 +498,6 @@ void DX8Wrapper::Invalidate_Cached_Render_States(void)
 
 }
 
-// retail 0x00907960 (401 B): a smaller BFME reshape of this function -- no
-// TextureLoader::Deinit() call, and the ShatterSystem/PointGroupClass and
-// BoxRenderObjClass/SHD_SHUTDOWN calls compiled down to trivial stubs (or
-// were retargeted), so they are named by address here rather than by the
-// Zero Hour symbol. TheDX8MeshRenderer is reached through a BFME pointer
-// (see Code/Libraries/Source/WWVegas/WW3D2/WW3D_SetNPatchesLevelThunk.cpp),
-// not the Zero Hour global object, and is loaded twice (once per call).
-void Rva0090F260Nop(void);
-void Rva00912CF0(void);
-void d_0091daa0(void);
-void bfmeGo911C(void);
-struct Gen_00944c30 { void m(); };
-extern DX8MeshRendererClass *g_bfmeMeshRendererSingleton;   // 0x0134B0E8
-
-// Minimal reinterpretation of the tail of DX8Caps (StringClass DriverDLL,
-// IDirect3D8* Direct3D, StringClass CapsLog, StringClass CompactLog) so the
-// implicit destructor is used exactly once in the whole program: retail
-// inlines this cleanup (3 StringClass dtor calls + operator delete) directly
-// into Do_Onetime_Device_Dependent_Shutdowns rather than emitting a
-// separate ~DX8Caps().
-struct BfmeCapsShutdownShim
-{
-	unsigned char pad0[0x29C];
-	StringClass DriverDLL;
-	void *Direct3D;
-	StringClass CapsLog;
-	StringClass CompactLog;
-
-};
-
 // ?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns(void)
 {
@@ -544,22 +514,21 @@ void DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns(void)
 	REF_PTR_RELEASE(render_state.material);
 	for (i=0;i<CurrentCaps->Get_Max_Textures_Per_Pass();++i) REF_PTR_RELEASE(render_state.Textures[i]);
 
+
+	TextureLoader::Deinit();
 	SortingRendererClass::Deinit();
-	d_0091daa0();
+	DynamicVBAccessClass::_Deinit();
 	DynamicIBAccessClass::_Deinit();
-	Rva00912CF0();
-	Rva0090F260Nop();
+	ShatterSystem::Shutdown();
+	PointGroupClass::_Shutdown();
 	VertexMaterialClass::Shutdown();
-	bfmeGo911C();
-	g_bfmeMeshRendererSingleton->Shutdown();
-	((Gen_00944c30 *)g_bfmeMeshRendererSingleton)->m();
+	BoxRenderObjClass::Shutdown();
+	SHD_SHUTDOWN;
+	TheDX8MeshRenderer.Shutdown();
+	MissingTexture::_Deinit();
 
 	if (CurrentCaps) {
-		BfmeCapsShutdownShim *caps = reinterpret_cast<BfmeCapsShutdownShim *>(CurrentCaps);
-		caps->CompactLog.~StringClass();
-		caps->CapsLog.~StringClass();
-		caps->DriverDLL.~StringClass();
-		operator delete(caps);
+		delete CurrentCaps;
 		CurrentCaps=NULL;
 	}
 
