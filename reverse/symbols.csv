@@ -4469,7 +4469,6 @@ name,address,notes
 ??1Gen_dtor_00217590@@UAE@XZ,0x0002CD81,gen-dtor class destructor
 ??1Gen_dtor_00217700@@UAE@XZ,0x0004B68C,gen-dtor class destructor
 ??1Gen_dtor_002180c0@@UAE@XZ,0x00012D8C,gen-dtor class destructor
-??1Gen_dtor_00218d40@@UAE@XZ,0x0002CE12,gen-dtor class destructor
 ??1Gen_dtor_00219c40@@UAE@XZ,0x0002748F,gen-dtor class destructor
 ??1Gen_dtor_0021c050@@UAE@XZ,0x0004A674,gen-dtor class destructor
 ??1Gen_dtor_0021d700@@UAE@XZ,0x00005C4F,gen-dtor class destructor
@@ -8287,7 +8286,6 @@ name,address,notes
 ??1Rva000486C1MultiBase@@UAE@XZ,0x000486C1,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva000491E3TailBase@@UAE@XZ,0x000491E3,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0004B227TailBase@@UAE@XZ,0x0004B227,base destructor address decoded from the retail REL32 tail jump; name is address-derived
-??1Rva0004B68CMultiBase@@UAE@XZ,0x0004B68C,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00078460Elem@@QAE@XZ,0x0001F951,Open-BFME5 ILT the 0x00078460 implicit dtor hands to ??_M as the element destructor
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
@@ -29481,12 +29479,10 @@ name,address,notes
 ?b_00218a00@@YAXXZ,0x00218A00,gen-thunk body
 ?b_00218be0@@YAXXZ,0x00218BE0,gen-thunk body
 ?b_00218c20@@YAXXZ,0x00218C20,gen-thunk body
-?b_00218c30@@YAXXZ,0x00218C30,gen-thunk body
 ?b_00218c50@@YAXXZ,0x00218C50,gen-thunk body
 ?b_00218c90@@YAXXZ,0x00218C90,gen-thunk body
 ?b_00218ca0@@YAXXZ,0x00218CA0,gen-thunk body
 ?b_00218d30@@YAXXZ,0x00218D30,gen-thunk body
-?b_00218d40@@YAXXZ,0x00218D40,gen-thunk body
 ?b_00218d70@@YAXXZ,0x00218D70,gen-thunk body
 ?b_00218d90@@YAXXZ,0x00218D90,gen-thunk body
 ?b_00218e70@@YAXXZ,0x00218E70,gen-thunk body
@@ -82750,3 +82746,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7UnitCrateCollide@@6BObjectModule@@@,0x010AAB8C,primary vtable installed by the named constructor and destructor
 ??_7UnitCrateCollide@@6BBehaviorModuleInterface@@@,0x010AAAC8,secondary vtable at this+0x0C
 ??_7UnitCrateCollide@@6B@,0x010AAAAC,secondary vtable at this+0x10
+??1VeterancyCrateCollide@@MAE@XZ,0x0002CE12,destructor ILT to 0x00218C30
+??_GVeterancyCrateCollide@@MAEPAXI@Z,0x00022ADE,primary class vtable slot zero ILT to 0x00218D40
+??_7VeterancyCrateCollide@@6BObjectModule@@@,0x010AACAC,primary vtable installed by the named constructor and destructor
+??_7VeterancyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AABE8,secondary vtable at this+0x0C
+??_7VeterancyCrateCollide@@6B@,0x010AABCC,secondary vtable at this+0x10

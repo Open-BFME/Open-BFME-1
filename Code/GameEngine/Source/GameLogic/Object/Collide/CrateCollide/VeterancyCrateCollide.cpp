@@ -10,3 +10,7 @@ VeterancyCrateCollide::VeterancyCrateCollide(Thing *thing, const ModuleData *mod
 	: CrateCollide(thing, moduleData)
 {
 }
+
+VeterancyCrateCollide::~VeterancyCrateCollide()
+{
+}
