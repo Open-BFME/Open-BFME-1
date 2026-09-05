@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0643917f1e0e16e1874e49af1b02683fd41d200d96b9df6a59fa67293fec9786",
+  "symbol": "?d_000f6b50@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?d_000f6b50@@YAXXZ\n// partial score=0.55 date=2026-09-05\n// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc\n// stlport\n\n// Open-BFME: see HashIntP12cdEraseThunks banked attempt (reverse/attempts/0x000d64a0.cpp) --\n// same hash_int_p12cd family, const_iterator erase overload, 0x000F6B50.\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <hash_map>\n\ntypedef int Int;\ntypedef bool Bool;\n\n// 0x000F6B50\nstruct Gen_t_000f73d0_p12cd { int a[3]; Gen_t_000f73d0_p12cd(); Gen_t_000f73d0_p12cd(const Gen_t_000f73d0_p12cd&); ~Gen_t_000f73d0_p12cd(); Gen_t_000f73d0_p12cd& operator=(const Gen_t_000f73d0_p12cd&); };\nbool operator==(const Gen_t_000f73d0_p12cd&, const Gen_t_000f73d0_p12cd&);\nbool operator<(const Gen_t_000f73d0_p12cd&, const Gen_t_000f73d0_p12cd&);\n\ntypedef _STL::pair<const int, Gen_t_000f73d0_p12cd> Pair_000f73d0;\ntypedef _STL::hashtable<Pair_000f73d0, int, _STL::hash<int>,\n\t_STL::_Select1st<Pair_000f73d0>, _STL::equal_to<int>,\n\t_STL::allocator<Pair_000f73d0> > Table_000f73d0;\n\ntemplate class _STL::hashtable<Pair_000f73d0, int, _STL::hash<int>,\n\t_STL::_Select1st<Pair_000f73d0>, _STL::equal_to<int>,\n\t_STL::allocator<Pair_000f73d0> >;\n"
+}
