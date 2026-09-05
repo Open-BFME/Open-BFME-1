@@ -148,9 +148,9 @@ The following order is instruction-level fact:
     function increments `GameLogic+0x3C` at `0x0038E225`. It then sets
     `GameClient+0xC4 = 1`.
 
-The exact names of the two status-expiry helpers and virtual slot `+0x3C` are
-not established. Their addresses and predicates should be preserved until
-callers or vtables prove them; they must not be classified as cosmetic work.
+The exact identity of virtual slot `+0x3C` is not established. Its address and
+caller position should be preserved until the object vtable proves it; it must
+not be classified as cosmetic work.
 
 ## CRC behavior
 
@@ -249,7 +249,7 @@ not been proven by runtime or multiplayer traces.
 | `Object::checkDisabledStatus()` at `0x001C5780` | solved and byte-exact | corrected 102-byte boundary includes the complete epilogue; checks 11 disabled bits against expiration frames rooted at `Object+0x1A8`, calls `clearDisabled(type)`, and clears the bit |
 | `Object::clearStatus(ObjectStatusTypes)` at `0x00162CD0` | solved and byte-exact | corrected an older `clearModelConditionState` identity: the body builds one bit in an 86-bit object-status mask and calls `setStatus(mask, false)`; both expiry helpers call it |
 | `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0` | solved and byte-exact | status bit 73 is `IGNORE_AI_COMMAND`; when the nonzero expiration at `Object+0x338` is older than the current frame, clears the status and zeros the expiration |
-| phase-1 `NO_COLLISIONS` expiry helper at `0x001CE7F0` | behavior solved; name pending | corrected RVA (the earlier `0x005CE7F0` was a VA); status bit 4 is `NO_COLLISIONS`, with its expiration at `Object+0x33C` |
+| `Object::checkNoCollisionsStatus()` at `0x001CE7F0` | solved and byte-exact | corrected RVA (the earlier `0x005CE7F0` was a VA); when the nonzero expiration at `Object+0x33C` is older than the current frame, clears status bit 4 (`NO_COLLISIONS`) and zeros the expiration |
 | singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
 
 ## Reconstruction status and attack plan
@@ -265,12 +265,11 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Finish naming the phase-1 object tail.** Resolve body `0x001CE7F0`
-   together with object vtable slot `+0x3C`. The other two bodies,
-   `Object::checkDisabledStatus()` at `0x001C5780` and
-   `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0`, are exact. Record
-   the remaining `NO_COLLISIONS` effect at `Object+0x33C` and land the body on
-   its own.
+1. **Finish naming the phase-1 object tail.** Resolve object vtable slot
+   `+0x3C`. Its three preceding helpers are exact:
+   `Object::checkDisabledStatus()` at `0x001C5780`,
+   `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0`, and
+   `Object::checkNoCollisionsStatus()` at `0x001CE7F0`.
 2. **Close singleton identities.** Trace constructors, set-name strings, and
    vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
    caller or constructor outranks an address-derived symbol pin.
