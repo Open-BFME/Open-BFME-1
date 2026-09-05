@@ -83097,3 +83097,7 @@ g_bfmePalantirZG,0x012F19E8,Open-BFME5 the palantir the player-table write at 0x
 ??1StringBaseNarrowZT@@IAE@XZ,0x00887940,pin
 ?format@StringBaseNarrowZT@@QAAXVAsciiStringZT@@ZZ,0x00888FF0,pin
 ?bfmeNameZS@BfmeOrderZS@@QAE?AVAsciiStringZS@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00675D40 formats
+??0StringBaseNarrowZU@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZU@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZU@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZU@@QAAXVAsciiStringZU@@ZZ,0x00888FF0,pin
