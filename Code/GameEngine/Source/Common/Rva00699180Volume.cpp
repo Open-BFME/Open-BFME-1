@@ -88,3 +88,42 @@ void Rva00699180Owner::refreshPair(int a, int b)
 			*((unsigned char *)this + 0x188 + (b + a * 2) * 4 + i) = 2;
 	}
 }
+
+void Rva00699180Owner::setVolumes(float volume, unsigned char flags)
+{
+	if (flags & 1)
+	{
+		m_base[4] = volume;
+		m_base[5] = volume;
+		for (int i = 0; i < 2; ++i)
+			refreshPair(2, i);
+	}
+	if (flags & 2)
+	{
+		m_base[0] = volume;
+		refreshPair(0, 0);
+	}
+	if (flags & 4)
+	{
+		m_base[1] = volume;
+		refreshPair(0, 1);
+	}
+	if (flags & 8)
+	{
+		m_base[2] = volume;
+		m_base[8] = volume;
+		m_base[3] = volume;
+		m_base[9] = volume;
+		for (int i = 0; i < 2; ++i)
+			refreshPair(1, i);
+		for (int i = 0; i < 2; ++i)
+			refreshPair(4, i);
+	}
+	if (flags & 0x10)
+	{
+		m_base[6] = volume;
+		m_base[7] = volume;
+		for (int i = 0; i < 2; ++i)
+			refreshPair(3, i);
+	}
+}
