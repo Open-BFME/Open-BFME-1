@@ -1,0 +1,82 @@
+// ?update@Rva003A2070Obj@@QAEXM@Z
+// partial score=0.05 date=2026-09-05
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+
+// Open-BFME5: partial reconstruction of the 404 B dump body at 0x003A2070.
+// NOT byte-exact -- banked as a partial for whoever draws this body next.
+//
+// What is proven from a capstone disassembly of the retail dump bytes
+// (Code/gen_asm/d_0039d230.asm, PROC ?d_003a2070@@YAXXZ):
+//
+//   thiscall(this=ecx -> esi, float arg at [esp+4])
+//   fld dword ptr [esp+4]
+//   fld qword ptr [0x10ec708]        ; unpinned double global (period?)
+//   call 0x9f70cc                    ; ji_009f70cc = _CIfmod (gen_small/imports_000.cpp)
+//   fsubr dword ptr [esp+0x14]       ; st0 = arg - fmod(arg, global)
+//   fstp dword ptr [esi+0x18]        ; this->+0x18 = arg - fmod(arg, global)
+//   edx = this->+0x2c ; ecx = this->+0x30 ; count = (ecx-edx) via magic-const
+//   divide-by-0xB8 (0xB21642C9, sar 7, sign-fix) -- 0xB8 is the SAME element
+//   width as the already-landed vector<Rva003A35A0Element> (RvaVectorPushBack.cpp)
+//   and U6Elem003A2410 (U6StlAllocatorWidths.cpp), so this->+0x2c/+0x30 is a
+//   vector<Elem0xB8>::begin()/end() pair, count = size().
+//   if (size() < 4) return;
+//
+// That guard is the only part landed here byte-for-byte-reliably. Past it,
+// retail builds TWO stack frames (mov [esp+N],reg mixed with push) for calls
+// through TheTacticalView (0x012F1600) vtable slot +0x2c and, later,
+// TheTerrainLogic (0x012EF4CC) vtable slot +0x18, and twice through the
+// thunk j_000481fd -> FUN_007a1a30 (gen_small/thunks_034.cpp), which is
+// itself an unclaimed 563 B function (ghidra_functions.csv: 0x3A1A30) with
+// no ledger row -- so its true signature (arg count/types) is not provable
+// from this side. Also note: TheTacticalView's real BFME vtable is NOT the
+// ZH layout -- reverse/re_attempts.log's doRotateCameraTowardObject entry
+// proves BFME inserted ~5 extra virtuals before the ZH slot for
+// rotateCameraTowardObject (ZH +0xB8 vs BFME +0xCC), so slot +0x2c cannot
+// be assumed to be ZH's View::setHeight. Use the raw-slot VDispatch
+// technique from Code/GameEngine/Source/Common/VirtualCallForwarders.cpp
+// (a placeholder class with N virtuals, calling only vN at the observed
+// byte offset) rather than guessing a real method name -- DIR32 relocations
+// (the global pointer loads) are masked by probe.py/build.py's single
+// function byte compare, so the placeholder global's real link address is
+// irrelevant to matching this body.
+//
+// Fields observed on `this` (esi): +0x18 float; +0x2c/+0x30 vector<Elem>
+// begin/end; +0x48 a 12-byte record (three dwords read individually,
+// address-taken and passed to both external calls); +0x50 another field
+// read near the end. Not enough to name the class.
+
+struct Rva003A2070Elem
+{
+	char m_body[ 0xB8 ];
+};
+
+class Rva003A2070Obj
+{
+public:
+	void update( float dt );
+
+private:
+	char               m_pad0[ 0x18 ];
+	float              m_accum;              // +0x18
+	char               m_pad1[ 0x2C - 0x1C ];
+	Rva003A2070Elem   *m_begin;               // +0x2C
+	Rva003A2070Elem   *m_end;                 // +0x30
+};
+
+extern "C" double g_Rva010EC708;              // unpinned; DIR32 masked
+
+extern "C" double fmod( double, double );
+
+void Rva003A2070Obj::update( float dt )
+{
+	m_accum = dt - (float)fmod( (double)dt, g_Rva010EC708 );
+
+	unsigned int count = (unsigned int)( m_end - m_begin );
+	if ( count < 4 )
+		return;
+
+	// Past this point retail builds mixed push/stack-slot argument frames for
+	// two virtual calls (TheTacticalView +0x2C, TheTerrainLogic +0x18) and two
+	// calls through j_000481fd whose real parameter list is unrecovered --
+	// left unimplemented, see the notes above and the banked stash.
+}

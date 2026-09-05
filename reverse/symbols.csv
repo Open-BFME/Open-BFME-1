@@ -3128,6 +3128,8 @@ name,address,notes
 ??0StealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00019939,module ctor (friend_newModuleInstance retail call target)
 ??0StickyBombUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0StreakDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0000F56A,StreakDrawModuleTemplate clone copy-ctor pin
+??0StringBaseNarrowAA@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAB@@IAE@PBD@Z,0x00888BC0,pin
 ??0StringBaseNarrowYX@@IAE@PBD@Z,0x00888BC0,pin
 ??0StringBaseNarrowZB@@IAE@PBD@Z,0x00888BC0,pin
 ??0StringBaseNarrowZC@@IAE@PBD@Z,0x00888BC0,pin
@@ -8584,6 +8586,8 @@ name,address,notes
 ??1StopSpecialPower@@MAE@XZ,0x00046E57,destructor ILT to 0x0026B3A0
 ??1Straw@@UAE@XZ,0x009E1A90
 ??1StreakRendererClass@@QAE@XZ,0x0095C780,StreakLineClass destructor calls StreakRenderer member at +0x154; frees m_vertexBuffer +0x48 and releases Texture +0 matching streakRender.cpp
+??1StringBaseNarrowAA@@IAE@XZ,0x00887940,pin
+??1StringBaseNarrowAB@@IAE@XZ,0x00887940,pin
 ??1StringBaseNarrowYX@@IAE@XZ,0x00887940,pin
 ??1StringBaseNarrowZB@@IAE@XZ,0x00887940,pin
 ??1StringBaseNarrowZC@@IAE@XZ,0x00887940,pin
@@ -10249,6 +10253,8 @@ name,address,notes
 ?Rva0088EB90@@YAPAXPAXI@Z,0x0088EB90,pin
 ?Rva00897330NotifyFree@@YAXPAX@Z,0x00897330,address decoded from the retail REL32 call site; name is address-derived
 ?Rva008FCE00SurfaceOperation@@YAXXZ,0x008FCE00,address-derived ABI alias for unnamed W3DRadarResetSurface operation used by 0x00732B00
+?Rva0090F260Nop@@YAXXZ,0x0090F260,alias for already-matched thiscall stub Gen_0090f260::m (single ret) called here with no this-setup at 0x00907960; static/cdecl call shape at this site
+?Rva00912CF0@@YAXXZ,0x00912CF0,static call target inside DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns (0x00907960); no this setup, 358B real function per ghidra_functions.csv, not yet in ledger
 ?Rva00990030Lookup@@YAIPAUlua_State@@H@Z,0x00990030,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
 ?Rva00990210Lookup@@YAIPAUlua_State@@H@Z,0x00990210,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
 ?Rva009ACBA0SetupBounding@@YAPAHPAURva009ACC40State@@H@Z,0x009ACBA0,callee pin for the codec selector wrapper
@@ -74008,6 +74014,7 @@ name,address,notes
 ?bfmeKindFAH@BfmeObjFAH@@QAEHPAX@Z,0x0004A719,pin
 ?bfmeLadderCountCompleted@@YAHHHPAD_JPAX@Z,0x0065BC80,"Lead full45B callback trace: context esp+18, forwards5dwords incl64bit length to member, int1 ifnull, cdecl"
 ?bfmeLadderRankHttpComplete@@YAHHHPAD_JPAX@Z,0x0065BCC0,"Lead independently traced45B callback65BCC0 (64-bit length, int return),115B signed-int map654E90 (returns mapped pointer slot+14), and request caller ABI"
+?bfmeLastAA@BfmeNodeAA@@QAEPAV1@XZ,0x000022BB,Open-BFME5 the chain-tail walk the dynamic-name builder at 0x0036E370 uses
 ?bfmeLayerForPosition@Pathfinder@@QAEHPAVObject@@UCoord3D@@@Z,0x00040F52,Open-BFME5 Pathfinder ILT to body 0x003E5CA0; returns ground layer 1 or bridge layer 2..15 for an Object position
 ?bfmeLayersCompatible@@YA_NPBVPathfindCell@@0@Z,0x00025F04,Open-BFME5 ILT thunk to bfmeLayersCompatible at 0x004022D0
 ?bfmeLen1223@BfmeSub1223@@QAEHXZ,0x0089CC10,pin
@@ -76459,6 +76466,8 @@ name,address,notes
 ?format@BFMERetailAsciiString@@QAAXV1@ZZ,0x00888FF0,BannerUI one-dword retail AsciiString format alias
 ?format@HeaderTemplateString@@QAAXV1@ZZ,0x00888FF0,Open-BFME5 HeaderTemplateManager init relocation
 ?format@NATProbeString@@QAAXV1@ZZ,0x00888FF0,NAT sendAProbe string formatter body
+?format@StringBaseNarrowAA@@QAAXVAsciiStringAA@@ZZ,0x00888FF0,pin
+?format@StringBaseNarrowAB@@QAAXVAsciiStringAB@@ZZ,0x00888FF0,pin
 ?format@StringBaseNarrowZF@@QAAXVAsciiStringZF@@ZZ,0x00888FF0,pin
 ?format@StringBaseNarrowZG@@QAAXVAsciiStringZG@@ZZ,0x00888FF0,pin
 ?format@StringBaseNarrowZH@@QAAXVAsciiStringZH@@ZZ,0x00888FF0,pin
@@ -83087,10 +83096,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0StringBaseNarrowAA@@IAE@PBD@Z,0x00888BC0,pin
-??1StringBaseNarrowAA@@IAE@XZ,0x00887940,pin
-?format@StringBaseNarrowAA@@QAAXVAsciiStringAA@@ZZ,0x00888FF0,pin
-?bfmeLastAA@BfmeNodeAA@@QAEPAV1@XZ,0x000022BB,Open-BFME5 the chain-tail walk the dynamic-name builder at 0x0036E370 uses
-??0StringBaseNarrowAB@@IAE@PBD@Z,0x00888BC0,pin
-??1StringBaseNarrowAB@@IAE@XZ,0x00887940,pin
-?format@StringBaseNarrowAB@@QAAXVAsciiStringAB@@ZZ,0x00888FF0,pin
