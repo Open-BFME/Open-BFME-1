@@ -82816,3 +82816,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?findNamedContainer@BFMEScriptEngineFlagLookup@@AAEPAVBfmeNamedContainer0033c340@@ABVAsciiString@@@Z,0x000485BD,"Lead verified 33C290: canonical name to player-indexed container; ret4, caller preserves this"
 ?findByNameA@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x000323F8,"Lead verified359D40: name probe table+0C, equality, returns stored pointer+4 or null; ret4"
 ?findByNameB@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x0000A592,"Lead verified359DC0: name probe table+2C, equality, returns stored pointer+4 or null; ret4"
+??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z,0x0001EC13,"Lead verified ILT to matched thin extra ctorB2D90; 70B AudioEventRTS, name reference and zero extra"
