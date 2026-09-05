@@ -4078,7 +4078,6 @@ name,address,notes
 ??1Gen_dtor_000fd6f0@@UAE@XZ,0x0001B207,gen-dtor class destructor
 ??1Gen_dtor_000fe210@@UAE@XZ,0x000010FA,gen-dtor class destructor
 ??1Gen_dtor_00100660@@UAE@XZ,0x000309F4,gen-dtor class destructor
-??1Gen_dtor_00102e10@@UAE@XZ,0x0002BB61,gen-dtor class destructor
 ??1Gen_dtor_00103180@@UAE@XZ,0x000068CF,gen-dtor class destructor
 ??1Gen_dtor_00105540@@UAE@XZ,0x00028763,gen-dtor class destructor
 ??1Gen_dtor_001075b0@@UAE@XZ,0x0003AC51,gen-dtor class destructor
@@ -20041,8 +20040,6 @@ name,address,notes
 ?b_00102d00@@YAXXZ,0x00102D00,gen-thunk body
 ?b_00102d90@@YAXXZ,0x00102D90,gen-thunk body
 ?b_00102df0@@YAXXZ,0x00102DF0,gen-thunk body
-?b_00102e10@@YAXXZ,0x00102E10,gen-thunk body
-?b_00102e40@@YAXXZ,0x00102E40,gen-thunk body
 ?b_00102e60@@YAXXZ,0x00102E60,gen-thunk body
 ?b_00102f20@@YAXXZ,0x00102F20,gen-thunk body
 ?b_001030d0@@YAXXZ,0x001030D0,gen-thunk body
@@ -82755,3 +82752,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7LockWeaponCreate@@6BObjectModule@@@,0x010B18E4,primary vtable shared with the neighboring constructor
 ??_7LockWeaponCreate@@6BBehaviorModuleInterface@@@,0x010B1820,secondary vtable at this+0x0C
 ??_7LockWeaponCreate@@6B@,0x010B180C,secondary vtable at this+0x10
+??1GameFont@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40
+??_GGameFont@@MAEPAXI@Z,0x0000B2CB,vtable slot zero ILT to 0x00102E10
+??_7GameFont@@6B@,0x01086344,vtable shared by the named constructor and destructor
