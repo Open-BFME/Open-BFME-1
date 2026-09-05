@@ -38,7 +38,7 @@ a virtual call through slot `+0x14`; it does not assert a more specific effect.
 
 | Phase | Work performed | Direct state changes |
 |---:|---|---|
-| 1 | Runs the logic-debug-frame helper and the freeze gate; queries the network packet-router state; runs the phase-1 object special case; updates ScriptEngine, the singleton at `0x012F060C`, TerrainLogic, and optional VictorySystem; creates periodic logic CRC messages; updates optional stats/action systems and Recorder; consumes the command list; performs per-object interface work and the phase-1 object tail. | Records phase 1 at `GameLogic+0x168`; may set `GameClient+0xC4` false on freeze or true after a completed phase; conditionally increments the simulation frame at `GameLogic+0x3C` exactly once near the end. |
+| 1 | Runs the logic-debug-frame helper and the freeze gate; queries the network packet-router state; runs the phase-1 object special case; updates ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem; creates periodic logic CRC messages; updates optional stats/action systems and Recorder; consumes the command list; performs per-object interface work and the phase-1 object tail. | Records phase 1 at `GameLogic+0x168`; may set `GameClient+0xC4` false on freeze or true after a completed phase; conditionally increments the simulation frame at `GameLogic+0x3C` exactly once near the end. |
 | 2 | Updates PartitionManager and the singleton at `0x012ED5C4`; walks all objects and calls the transform/frame recorder when object `+0x168` differs from the current simulation frame. | Records phase 2. Does not increment the simulation frame. |
 | 3 | Processes the first half of sleepy-update vector 0 (`GameLogic+0xC4`). Due entries may call their update module and receive a new wake frame. | Records phase 3; writes `GameLogic+0x100` around callbacks; updates entry wake frame `+0x14`; may change heap indices `+0x18/+0x1C` and move expired entries to `GameLogic+0xF4`. |
 | 4 | Processes the second half of sleepy-update vector 0. | Same sleepy-entry changes as phase 3. It begins at `size/2`, complementing phase 3's stop at `size/2`. |
@@ -124,9 +124,12 @@ The following order is instruction-level fact:
    `0x0038DB83..0x0038DC06` under several global predicates. The exact purpose
    of its two object-interface callees remains unresolved.
 5. A helper on `TheAI+0xC` is called at `0x0038DC06`, followed by `setFPMode`.
-6. ScriptEngine, `0x012F060C`, TerrainLogic, and optional VictorySystem update
+6. ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem update
    at `0x0038DC1C..0x0038DC4D`. VictorySystem's update is independently mapped
-   to body RVA `0x001DFBA0`.
+   to body RVA `0x001DFBA0`. The LuaScriptEngine identity is direct: the
+   `GameEngine::init` registration block at `0x00079F36` pushes the literal
+   `"TheLuaScriptEngine"`, then passes global `0x012F060C` to the matched
+   `initSubsystem<LuaScriptEngine>` body at RVA `0x00074ED0`.
 7. Logic CRC generation and message creation occur at
    `0x0038DC50..0x0038DDF5`.
 8. Optional singleton `0x012ED4FC` updates, followed by the phase-1-only
@@ -253,7 +256,8 @@ not been proven by runtime or multiplayer traces.
 | `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0` | solved and byte-exact | status bit 73 is `IGNORE_AI_COMMAND`; when the nonzero expiration at `Object+0x338` is older than the current frame, clears the status and zeros the expiration |
 | `Object::checkNoCollisionsStatus()` at `0x001CE7F0` | solved and byte-exact | corrected RVA (the earlier `0x005CE7F0` was a VA); when the nonzero expiration at `Object+0x33C` is older than the current frame, clears status bit 4 (`NO_COLLISIONS`) and zeros the expiration |
 | `Object::updatePendingDamage()` at `0x001C7B80` | solved and byte-exact | Object vtable `0x0109EE58` slot `+0x3C`; decrements delay `DamageInfo+0x24`, applies records only after the delay becomes negative through virtual `attemptDamage` at slot `+0x38`, then erases the 92-byte record |
-| singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
+| `TheLuaScriptEngine` global `0x012F060C` | solved | constructor-tag registration and matched `initSubsystem<LuaScriptEngine>` call prove the identity; phase 1 calls virtual `update` at slot `+0x14` |
+| singleton globals `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify their called bodies and constructor tags before assigning subsystem names |
 
 ## Reconstruction status and attack plan
 
