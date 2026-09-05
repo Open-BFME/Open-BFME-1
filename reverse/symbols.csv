@@ -82857,3 +82857,8 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?first@Glo012F1028Sub@@QAEXXZ,0x00028051,Reviewed3C735059B marks each holder+30 pointer item+A8 true
 ?refreshEntries003BEC30@Rva003C1A50@@QAEXXZ,0x0000A754,"Reviewed3BEC30167B loops owner+C vector flagged1D entries, resolves name and refreshes member; not a clear operation"
 ?after@Glo012F4B98Type@@QAEXXZ,0x0001CAE9,Reviewed58EFF0129B releases buffers4CC/480/484 and resets fields460..47C
+?consume@Glo012F1028Sub@@QAEXPAVAsciiString@@@Z,0x00045B88,Reviewed full3C88E0283B selects pointer record by AsciiString compare and releases old state when selection changes
+?refresh003CAD90@Glo012F1028Sub@@QAEXXZ,0x00040016,Reviewed full3CAD9088B rebuild/notify then reset counters; replaces misleading clear alias in this draft
+?invoke@GameLogic@@QAEXXZ,0x0003B417,Existing matched38385011B owner170 tail dispatch
+?lookup@Glo012F1024Type@@QAEHPAVAsciiString@@@Z,0x0000577C,"Matched3B40A0203B compares AsciiString against32B record names+4, returns index or-1"
+?stepFlag@Glo012F1024Entry@@QAEXXZ,0x0001FB18,Reviewed3A737052B reset field8 branch on18 then notify matched3CAD20
