@@ -24650,3 +24650,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00214e70@@UAEPAXI@Z,0x00214E70,generated deleting-destructor identity superseded by SymbioticStructuresBody vtable evidence
 ??1Rva00217B20MultiTailDtor@@UAE@XZ,0x00217B20,address-derived placeholder superseded by the byte-verified HealCrateCollide destructor identity
 ??_GGen_dtor_00217be0@@UAEPAXI@Z,0x00217BE0,generated destructor placeholder superseded by the byte-verified HealCrateCollide deleting destructor identity
+??1Rva00217D60MultiTailDtor@@UAE@XZ,0x00217D60,address-derived placeholder superseded by the byte-verified MoneyCrateCollide destructor identity
+??_GGen_dtor_00217e30@@UAEPAXI@Z,0x00217E30,generated destructor placeholder superseded by the byte-verified MoneyCrateCollide deleting destructor identity

@@ -10,3 +10,7 @@ MoneyCrateCollide::MoneyCrateCollide(Thing *thing, const ModuleData *moduleData)
 	: CrateCollide(thing, moduleData)
 {
 }
+
+MoneyCrateCollide::~MoneyCrateCollide()
+{
+}
