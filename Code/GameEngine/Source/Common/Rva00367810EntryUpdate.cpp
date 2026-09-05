@@ -1,10 +1,24 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
+// Retail RVA 0x00367810, 164 bytes, thiscall, direct call through ILT thunk
+// RVA 0x000159C9.  The sole caller in the image is phase 5 of
+// GameLogic::update (RVA 0x0038DA10): at RVA 0x0038E17B,
+// `lea ecx,[ebp+0x170]` passes the embedded GameLogic+0x170 store as this.
+// The same member is built by the body at RVA 0x00366B90 (GameLogic ctor at
+// RVA 0x00392B27), torn down by the body at RVA 0x003643C0 (GameLogic dtor at
+// RVA 0x0038F220), and serviced in GameLogic::startNewGame by the body at
+// RVA 0x00367470 (at RVA 0x00395E70), so +0x170 is one embedded store object.
+//
 // The body is gated by one virtual predicate and the Living World predicate,
 // then walks the same 0x58-byte entry range used by the neighboring bodies.
 // Flagged entries dispatch their own update; otherwise state 2 advances to 3
-// once the simulation frame reaches the entry's frame.  Names remain
-// descriptive because the owning subsystem is not proven.
+// once the simulation frame reaches the entry's frame.  The entries carry the
+// LivingWorld reinforcement/auto-summon INI fields (RegionName,
+// AddReinforcementArmy, Close/Medium/FarDistanceTime, AutoSummon) and the
+// entry body formats retail's "Auto-Summoning army %s into battle" string, so
+// the narrowest evidence-supported description is the embedded LivingWorld
+// reinforcement-army (auto-summon) store.  Class and method names stay
+// address-derived because the exact C++ class name is not proven.
 
 class Rva00367810VirtualGate;
 
