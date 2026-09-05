@@ -1,5 +1,9 @@
 // ?bfmeMeshHitTest1290@@YG_NPAUBfmeMesh1290@@PBUBfmeTransform2_1290@@HH@Z
-// partial score=0.68 date=2026-08-30
+// partial score=0.75 date=2026-09-05
+// ?bfmeMeshHitTest1290@@YG_NPAUBfmeMesh1290@@PBUBfmeTransform2_1290@@HH@Z
+// Grok draft review: complete same-TU caller gives the static triangle helper
+// retail ECX receiver plus caller-clean floating args. Helper303B strict;
+// caller still differs. Both bodies must remain together; no progress claim.
 struct BfmeVector2_1290
 {
 	float x;
@@ -19,7 +23,6 @@ struct BfmeTransform2_1290
 class BfmeTriangle1290
 {
 public:
-	bool bfmeContains1290(float x, float y) const;
 
 	BfmeVector2_1290 points[3];
 };
@@ -32,6 +35,24 @@ struct BfmeMesh1290
 	BfmeVector2_1290 *m_vertices;
 	short *m_indices;
 };
+
+static int bfmeContains1283(const BfmeTriangle1290 *triangle, float x, float y)
+{
+	int inside = 0;
+	if (((triangle->points[0].y <= y && y < triangle->points[2].y) || (triangle->points[2].y <= y && y < triangle->points[0].y)) &&
+		triangle->points[0].x + (triangle->points[2].x - triangle->points[0].x) * (y - triangle->points[0].y) / (triangle->points[2].y - triangle->points[0].y) > x)
+		inside = 1;
+
+	if (((triangle->points[1].y <= y && y < triangle->points[0].y) || (triangle->points[0].y <= y && y < triangle->points[1].y)) &&
+		triangle->points[1].x + (triangle->points[0].x - triangle->points[1].x) * (y - triangle->points[1].y) / (triangle->points[0].y - triangle->points[1].y) > x)
+		inside = !inside;
+
+	if (((triangle->points[2].y <= y && y < triangle->points[1].y) || (triangle->points[1].y <= y && y < triangle->points[2].y)) &&
+		triangle->points[2].x + (triangle->points[1].x - triangle->points[2].x) * (y - triangle->points[2].y) / (triangle->points[1].y - triangle->points[2].y) > x)
+		inside = !inside;
+
+	return inside;
+}
 
 bool __stdcall bfmeMeshHitTest1290(BfmeMesh1290 *mesh, const BfmeTransform2_1290 *transform,
 	int pointX, int pointY)
@@ -59,7 +80,7 @@ bool __stdcall bfmeMeshHitTest1290(BfmeMesh1290 *mesh, const BfmeTransform2_1290
 			source2.y * transform->m01 + transform->tx;
 		triangle.points[2].y = source2.x * transform->m10 +
 			source2.y * transform->m11 + transform->ty;
-		if (triangle.bfmeContains1290(x, y))
+		if (bfmeContains1283(&triangle, x, y))
 			return true;
 		indices += 3;
 	}
