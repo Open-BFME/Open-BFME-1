@@ -82919,3 +82919,5 @@ g_bfmeDirtyYH,0x012F3E6D,Open-BFME5 the dirty flag the commit at 0x004D1080 rais
 g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058D990 consults
 ?forward4125F0@Drawable@@QAEXH_N@Z,0x00039BAD,Reviewed18B 4125F0 forwards Drawable3BC to34B 409850 signed slot1..5 and bool action passed to74B409790
 ?addObject@Radar@@QAEXPAVObject@@@Z,0x00001F5A,"Reviewed full734B1086C0 creates16B radar record, stores Object20C and inserts sorted Radar10/14 list"
+?queryCached@BfmeSub1CC_EC3@@QAEMPAVObject@@@Z,0x0001FF19,"Reviewed25B1B9590 cached float at58 and deadline5C, expired path1B7E90 reads Object200/204"
+?cache1B4980@BfmeSub1CC_EC3@@QAEXMI@Z,0x00013016,Reviewed26B1B4980 stores float58 and deadline current GameLogic3C plus frames in5C
