@@ -82821,3 +82821,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??$__make_heap@PAUS4SortElem12@@US4Cmp00574DF0@@U1@H@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@0PAH@Z,0x0002E2C6,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ??$sort_heap@PAUS4SortElem12@@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@@Z,0x00035BC0,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ?bfmeNotifyCell@VictorySystem@@QAEXIPAUBfmeVec1268@@@Z,0x0000ED4A,"Lead verified ILT to1DF930; thiscall player index and coordinate pointer, ret8, dispatches actions on spatial results"
+?registerItem@BfmeSinkAM@@QAEXHPAVGen_003BEA30@@H@Z,0x0001DF02,"Lead traced6176A0: handle key, item float coordinates, integer variant selects template; ret12"
+?_M_insert_overflow@?$vector@PAVGen_003BEA30@@V?$allocator@PAVGen_003BEA30@@@_STL@@@_STL@@IAEXPAPAVGen_003BEA30@@ABQAV3@ABU__true_type@2@I_N@Z,0x000151C2,Lead verified3C0950 POD4B vector growth and insert; same element pointer layout
