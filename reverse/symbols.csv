@@ -83007,3 +83007,28 @@ g_bfmePalantirZB,0x012F19E8,Open-BFME5 the palantir the power-cap update at 0x00
 g_bfmePalantirZC,0x012F19E8,Open-BFME5 the palantir the multiplier update at 0x00565A80 writes to
 ?logicMessageDispatcher@GameLogic@@QAEXPAVGameMessage@@PAX@Z,0x0003FF67,ILT thunk to the 11543-byte GameLogic message dispatcher body at RVA 0x00397540; processCommandList caller at 0x00383066 passes GameMessage pointer and null user data
 ?clearStatus@Object@@QAEXW4ObjectStatusTypes@@@Z,0x00031F7A,ILT thunk to 0x00162CD0; body constructs an 86-bit ObjectStatusMaskType and calls setStatus(mask false)
+??0StringBaseNarrowZD@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowZD@@IAE@XZ,0x00887940,pin
+??0StringBaseWideZD@@IAE@PBG@Z,0x00888DE0,pin
+??1StringBaseWideZD@@IAE@XZ,0x008881D0,pin
+?set@StringBaseWideZD@@QAEXPBGH@Z,0x008885C0,pin
+?format@UnicodeStringZD@@QAAXV1@ZZ,0x00889190,pin
+?bfmeStoreZD@BfmePalantirZD@@QAEXABVAsciiStringZD@@ABVUnicodeStringZD@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565940
+g_bfmePalantirZD,0x012F19E8,Open-BFME5 the palantir the command-point update at 0x00565940 writes to
+??0StringBaseNarrowZE@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZE@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZE@@IAE@XZ,0x00887940,pin
+??1StringBaseWideZE@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringZE@@QAAXV1@ZZ,0x00889190,pin
+?bfmeStoreZE@BfmePalantirZE@@QAEXABVAsciiStringZE@@ABVUnicodeStringZE@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565720
+g_bfmeTextZE,0x012F147C,Open-BFME5 the text table the hero-rank update at 0x00565720 fetches from
+g_bfmePalantirZE,0x012F19E8,Open-BFME5 the palantir the hero-rank update at 0x00565720 writes to
+??0StringBaseNarrowZF@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowZF@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZF@@QAAXVAsciiStringZF@@ZZ,0x00888FF0,pin
+??0StringBaseWideZF@@IAE@PBG@Z,0x00888DE0,pin
+??1StringBaseWideZF@@IAE@XZ,0x008881D0,pin
+?set@StringBaseWideZF@@QAEXPBGH@Z,0x008885C0,pin
+?format@UnicodeStringZF@@QAAXV1@ZZ,0x00889190,pin
+?bfmeStoreZF@BfmePalantirZF@@QAEXABVAsciiStringZF@@ABVUnicodeStringZF@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565450
+g_bfmePalantirZF,0x012F19E8,Open-BFME5 the palantir the production-count update at 0x00565450 writes to
