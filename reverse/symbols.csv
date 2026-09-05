@@ -82779,3 +82779,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7SubtitleEntry@@6B@,0x0112CF0C,vtable installed by the SubtitleEntry constructor
 ??0SubtitleEntryUnicodeBase@@QAE@ABVUnicodeString@@@Z,0x00888400,SubtitleEntry TU-local UnicodeString copy constructor alias
 ??1SubtitleEntryUnicodeBase@@QAE@XZ,0x008881D0,SubtitleEntry TU-local UnicodeString destructor alias
+?xferBlob_0010CC40@@YAXPAVXfer@@PAX@Z,0x00035814,"Address-qualified cdecl field transfer; retail 0x000F9CF0 calls ILT to 0x0010CC40; target takes Xfer then field pointer on stack, versioned virtual xfer calls, bare ret"
