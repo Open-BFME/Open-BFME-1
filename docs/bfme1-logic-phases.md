@@ -140,14 +140,17 @@ The following order is instruction-level fact:
 11. After the later shared drain and copy-protection check, phase 1 walks the
     object list again at `0x0038E1C3..0x0038E212`. It conditionally calls three
     helpers based on object `+0x1A4`, bit `0x200` at `+0x98`, and bit `0x10` at
-    `+0x90`, then always calls object virtual slot `+0x3C`.
+    `+0x90`, then always calls object virtual slot `+0x3C`. The first helper is
+    `Object::checkDisabledStatus()` at RVA `0x001C5780`: it tests all 11
+    `DisabledType` bits and clears each active type whose expiration frame at
+    `Object+0x1A8+4*type` is no later than the current simulation frame.
 12. If byte `GameLogic+0xA0` is clear and byte `GameLogic+0x40` is set, the
     function increments `GameLogic+0x3C` at `0x0038E225`. It then sets
     `GameClient+0xC4 = 1`.
 
-The exact names of several phase-1 object methods are not established. Their
-addresses and predicates should be preserved until callers or vtables prove
-them; they must not be classified as cosmetic work.
+The exact names of the two model-condition helpers and virtual slot `+0x3C`
+are not established. Their addresses and predicates should be preserved until
+callers or vtables prove them; they must not be classified as cosmetic work.
 
 ## CRC behavior
 
@@ -243,7 +246,8 @@ not been proven by runtime or multiplayer traces.
 | `GameLogic::processCommandList()` at `0x00383050` | solved and byte-exact | 47-byte clean C++; walks `TheCommandList+8`, calls `logicMessageDispatcher(message, NULL)`, then resets the list; the normal phase-1 path inlines the same body at `0x0038DE2A` |
 | AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
 | command processor body `0x00797540` | sufficiently understood for ordering | each CommandList node and argument zero are explicit; detailed command dispatch is separate work |
-| phase-1 object helpers `0x005C5780`, `0x005CE7B0`, `0x005CE7F0` | unresolved and semantically relevant | exact predicates at `0x0038E1D4..0x0038E203`; recover as a group with the object vtable |
+| `Object::checkDisabledStatus()` at `0x001C5780` | solved and byte-exact | corrected 102-byte boundary includes the complete epilogue; checks 11 disabled bits against expiration frames rooted at `Object+0x1A8`, calls `clearDisabled(type)`, and clears the bit |
+| phase-1 model-condition helpers `0x001CE7B0`, `0x001CE7F0` | unresolved and semantically relevant | corrected RVAs (the earlier `0x005C...` values were VAs); exact predicates at `0x0038E1E1..0x0038E203`; recover with object vtable slot `+0x3C` |
 | singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
 
 ## Reconstruction status and attack plan
@@ -259,10 +263,11 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
-   and `0x005CE7F0` together with object vtable slot `+0x3C`. Record effects on
-   object `+0x90`, `+0x98`, and `+0x1A4`. Land any tractable exact body on its
-   own.
+1. **Finish naming the phase-1 object tail.** Resolve bodies `0x001CE7B0` and
+   `0x001CE7F0` together with object vtable slot `+0x3C`. The third body,
+   `Object::checkDisabledStatus()` at `0x001C5780`, is exact. Record the
+   remaining effects on object `+0x90`, `+0x98`, `+0x338`, and `+0x33C`, and
+   land each tractable body on its own.
 2. **Close singleton identities.** Trace constructors, set-name strings, and
    vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
    caller or constructor outranks an address-derived symbol pin.
