@@ -5730,10 +5730,6 @@ name,address,notes
 ??1Gen_dtor_008410c0@@UAE@XZ,0x00849AB0,gen-dtor class destructor
 ??1Gen_dtor_008427d0@@UAE@XZ,0x008427F0,gen-dtor class destructor
 ??1Gen_dtor_00842950@@UAE@XZ,0x00842970,gen-dtor class destructor
-??1Gen_dtor_00848490@@UAE@XZ,0x00847F30,gen-dtor class destructor
-??1Gen_dtor_008484b0@@UAE@XZ,0x00847FD0,gen-dtor class destructor
-??1Gen_dtor_008484d0@@UAE@XZ,0x00848070,gen-dtor class destructor
-??1Gen_dtor_008484f0@@UAE@XZ,0x00848110,gen-dtor class destructor
 ??1Gen_dtor_00848ba0@@UAE@XZ,0x00848A30,gen-dtor class destructor
 ??1Gen_dtor_00848be0@@UAE@XZ,0x00848B20,gen-dtor class destructor
 ??1Gen_dtor_00849af0@@UAE@XZ,0x00849990,gen-dtor class destructor
@@ -82764,3 +82760,11 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7?$numpunct@D@_STL@@6B@,0x00D2EAFC,retail STLport 4.5.3 narrow numpunct vtable identified by its virtual method signatures
 ??1?$numpunct@G@_STL@@MAE@XZ,0x008444F0,STLport 4.5.3 wide numpunct destructor; exact virtual method table proves identity
 ??_7?$numpunct@G@_STL@@6B@,0x00D2EB18,retail STLport 4.5.3 wide numpunct vtable identified by its virtual method signatures
+??1?$moneypunct@D$00@_STL@@MAE@XZ,0x00847F30,STLport 4.5.3 moneypunct char true destructor; retail RTTI proves specialization
+??_7?$moneypunct@D$00@_STL@@6B@,0x00D2FADC,retail STLport 4.5.3 moneypunct char true vtable with matching RTTI descriptor
+??1?$moneypunct@D$0A@@_STL@@MAE@XZ,0x00847FD0,STLport 4.5.3 moneypunct char false destructor; retail RTTI proves specialization
+??_7?$moneypunct@D$0A@@_STL@@6B@,0x00D2FB08,retail STLport 4.5.3 moneypunct char false vtable with matching RTTI descriptor
+??1?$moneypunct@G$00@_STL@@MAE@XZ,0x00848070,STLport 4.5.3 moneypunct wide true destructor; retail RTTI proves specialization
+??_7?$moneypunct@G$00@_STL@@6B@,0x00D2FB34,retail STLport 4.5.3 moneypunct wide true vtable with matching RTTI descriptor
+??1?$moneypunct@G$0A@@_STL@@MAE@XZ,0x00848110,STLport 4.5.3 moneypunct wide false destructor; retail RTTI proves specialization
+??_7?$moneypunct@G$0A@@_STL@@6B@,0x00D2FB60,retail STLport 4.5.3 moneypunct wide false vtable with matching RTTI descriptor

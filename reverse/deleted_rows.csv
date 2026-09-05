@@ -24691,3 +24691,11 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_008326e0@@UAEPAXI@Z,0x008326E0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
 ??1Rva008444F0TailDtor@@UAE@XZ,0x008444F0,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
 ??_GGen_dtor_00832720@@UAEPAXI@Z,0x00832720,placeholder superseded by byte-exact STLport locale facet identity in Code/Libraries/Source/WWVegas/WWLib/stlport_locale_facet_destructors.cpp
+??1Rva00847F30TailDtor@@UAE@XZ,0x00847F30,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??_GGen_dtor_00848490@@UAEPAXI@Z,0x00848490,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??1Rva00847FD0TailDtor@@UAE@XZ,0x00847FD0,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??_GGen_dtor_008484b0@@UAEPAXI@Z,0x008484B0,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??1Rva00848070TailDtor@@UAE@XZ,0x00848070,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??_GGen_dtor_008484d0@@UAEPAXI@Z,0x008484D0,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??1Rva00848110TailDtor@@UAE@XZ,0x00848110,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
+??_GGen_dtor_008484f0@@UAEPAXI@Z,0x008484F0,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
