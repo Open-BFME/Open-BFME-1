@@ -72503,6 +72503,7 @@ name,address,notes
 ?bfmeBaseRD@BfmeThingRD@@QAEXPAV1@@Z,0x00887B60,pin
 ?bfmeBaseSE@BfmeThingSE@@QAEXXZ,0x0000AF38,pin
 ?bfmeBaseSJ@BfmeThingSJ@@QAEXH@Z,0x0090E3D0,pin
+??0BfmeThingSJ@@QAE@H@Z,0x0090E3D0,constructor body shared with the matched bfmeBaseSJ implementation
 ?bfmeBaseSK@BfmeThingSK@@QAEXH@Z,0x009DB4E0,pin
 ?bfmeBaseTA@BfmeThingTA@@QAEXXZ,0x0000AF38,pin
 ?bfmeBaseTB@BfmeThingTB@@QAEXHH@Z,0x00899F00,pin
@@ -82449,6 +82450,7 @@ _bfmeVftSG,0x00D0C920,pin
 _bfmeVftSH,0x00D2824C,pin
 _bfmeVftSI,0x00D1CE80,pin
 _bfmeVftSJ,0x00D1DF58,pin
+??_7Rva0090E470Thing@@6B@,0x0113A668,address-derived vftable written by the 0x0090E470 constructor; class identity not recovered
 _bfmeVftSK,0x00D20918,pin
 _bfmeVftTA,0x00D283DC,pin
 _bfmeVftTB,0x00D37220,pin
