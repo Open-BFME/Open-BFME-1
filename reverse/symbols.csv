@@ -82928,3 +82928,4 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?q4Notify001E5FD0@@YAXPAVINI@@PAVRva002DCBA0@@PAXPBX@Z,0x000045E3,"Reviewed96B INI multi-field callback and four-argument caller; INI*,instance*,store*,const userdata* matching INIFieldParseProc"
 ?xferBase2298B0@BfmeBase002298B0@@AAEXPAVXfer@@@Z,0x000489DC,"Decoded489DC JMP2298B0 and reviewed complete snapshot routine through ret at229E22; typed Xfer receiver argument, not old22CD40 label"
 ??1AsciiStringYJ@@QAE@XZ,0x00887940,pin
+?invoke37C600@Rva0037C600Callback@@QAEXXZ,0x00015E2E,"Reviewed full508B37C600 callback body via15E2E; no stack args, deadlines and Object updates, address-derived label replaces unproved stop name"
