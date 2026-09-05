@@ -36,17 +36,22 @@ public:
 	void fill( void * source, Gen003BC9C0Pair * result );
 };
 
-class BfmeThingHI
+// Local adapter to the incremental-link thunk at 0x000378F8. The body that
+// thunk reaches, BfmeThingHI::bfmeGoHI at 0x00609800, is matched with an
+// (int, int, int) signature. This translation unit needs the folded
+// pair-and-zero call shape, so it declares its own class instead of
+// asserting a second bfmeGoHI overload on BfmeThingHI.
+class BfmeCallJ378F8
 {
 public:
-	void bfmeGoHI( Gen003BDC50CallPair pair, int third );
+	void invoke( Gen003BDC50CallPair pair, int third );
 
 	char m_pad00[ 0xC ];
 	int  m_at0C;
 	void * m_at10;
 };
 
-extern BfmeThingHI * volatile Glo012F7048;
+extern BfmeCallJ378F8 * volatile Glo012F7048;
 
 struct Rva003BDC50Locals
 {
@@ -77,7 +82,7 @@ void Rva003BDC50::run()
 	if( !Glo012F7048 )
 		return;
 
-	Glo012F7048->bfmeGoHI(
+	Glo012F7048->invoke(
 		*(Gen003BDC50CallPair *)&locals.result, 0 );
 
 	// MSVC 7.1 does not reproduce this temporary's post-call stack schedule.

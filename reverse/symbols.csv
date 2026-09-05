@@ -73800,7 +73800,7 @@ name,address,notes
 ?bfmeGoD820@BfmeHelpD820@@QAEXPAVObject@@PBUCoord3D@@H@Z,0x00002B49,ILT to FUN_005bb090 used by 0x0026D820
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
 ?bfmeGoHI@BfmeThingHI@@QAEXHHH@Z,0x000378F8,ILT to BfmeThingHI::bfmeGoHI body at 0x00609800; called by Rva003BDC50
-?bfmeGoHI@BfmeThingHI@@QAEXUGen003BDC50CallPair@@H@Z,0x000378F8,folded pair-and-zero call target at 0x00609800; called by Rva003BDC50
+?invoke@BfmeCallJ378F8@@QAEXUGen003BDC50CallPair@@H@Z,0x000378F8,local thiscall adapter to the BfmeThingHI::bfmeGoHI thunk; called by Rva003BDC50::run
 ?bfmeGoVJH@BfmeOwner803BF0@@QAEXH@Z,0x00803970,bfmeGoVJH alias for 0x00803BF0 caller
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
 ?bfmeGoal952@BfmeHolder952@@QAEPAVBfmeTarget952@@XZ,0x0000E570,pin
