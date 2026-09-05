@@ -148,8 +148,8 @@ The following order is instruction-level fact:
     function increments `GameLogic+0x3C` at `0x0038E225`. It then sets
     `GameClient+0xC4 = 1`.
 
-The exact names of the two model-condition helpers and virtual slot `+0x3C`
-are not established. Their addresses and predicates should be preserved until
+The exact names of the two status-expiry helpers and virtual slot `+0x3C` are
+not established. Their addresses and predicates should be preserved until
 callers or vtables prove them; they must not be classified as cosmetic work.
 
 ## CRC behavior
@@ -247,7 +247,8 @@ not been proven by runtime or multiplayer traces.
 | AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
 | command processor body `0x00797540` | sufficiently understood for ordering | each CommandList node and argument zero are explicit; detailed command dispatch is separate work |
 | `Object::checkDisabledStatus()` at `0x001C5780` | solved and byte-exact | corrected 102-byte boundary includes the complete epilogue; checks 11 disabled bits against expiration frames rooted at `Object+0x1A8`, calls `clearDisabled(type)`, and clears the bit |
-| phase-1 model-condition helpers `0x001CE7B0`, `0x001CE7F0` | unresolved and semantically relevant | corrected RVAs (the earlier `0x005C...` values were VAs); exact predicates at `0x0038E1E1..0x0038E203`; recover with object vtable slot `+0x3C` |
+| `Object::clearStatus(ObjectStatusTypes)` at `0x00162CD0` | solved and byte-exact | corrected an older `clearModelConditionState` identity: the body builds one bit in an 86-bit object-status mask and calls `setStatus(mask, false)`; both expiry helpers call it |
+| phase-1 status-expiry helpers `0x001CE7B0`, `0x001CE7F0` | behavior solved; names pending | corrected RVAs (the earlier `0x005C...` values were VAs); clear `IGNORE_AI_COMMAND` (bit 73) at frame `Object+0x338` and `NO_COLLISIONS` (bit 4) at frame `Object+0x33C`, respectively |
 | singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
 
 ## Reconstruction status and attack plan
