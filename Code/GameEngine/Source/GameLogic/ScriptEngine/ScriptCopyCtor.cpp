@@ -36,6 +36,8 @@ public:
 	~AsciiString() {}
 };
 
+// Retail Script table10E858C: post-load352C00, name352C10, transfer350EF0.
+// The name getter returns "Script"; it is not an Xfer-taking crc slot.
 class Snapshot
 {
 public:
@@ -43,9 +45,9 @@ public:
 	virtual ~Snapshot();
 
 protected:
-	virtual void crc(Xfer *xfer) = 0;
-	virtual void xfer(Xfer *xfer) = 0;
 	virtual void loadPostProcess() = 0;
+	virtual const char *getSnapshotName() const = 0;
+	virtual void xfer(Xfer *xfer) = 0;
 };
 
 class OrCondition
@@ -66,9 +68,9 @@ public:
 	Script();
 	Script(const Script &that);
 	virtual ~Script();
-	virtual void crc(Xfer *xfer);
-	virtual void xfer(Xfer *xfer);
 	virtual void loadPostProcess();
+	virtual const char *getSnapshotName() const;
+	virtual void xfer(Xfer *xfer);
 
 private:
 	AsciiString m_scriptName;

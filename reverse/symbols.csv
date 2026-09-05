@@ -82946,3 +82946,6 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ??$__adjust_heap@PAUS4SortElem12@@HU1@US4Cmp00573A30@@@_STL@@YAXPAUS4SortElem12@@HHU1@US4Cmp00573A30@@@Z,0x0003DF00,"Full166B571B70 twelve-byte adjust_heap: signed first-word compare and full three-word moves,7dword cdecl arguments"
 ??0BfmeBoxYP@@QAE@ABUBfmePairYP@@0@Z,0x000277EB,Open-BFME5 the bounds constructor the initialiser at 0x00C6C350 calls
 ??1BfmeBoxYP@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the bounds object; referenced only by the atexit helper
+?loadPostProcess@Script@@UAEXXZ,0x00006EB5,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
+?getSnapshotName@Script@@UBEPBDXZ,0x00044017,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
+?xfer@Script@@UAEXPAVXfer@@@Z,0x0001044C,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
