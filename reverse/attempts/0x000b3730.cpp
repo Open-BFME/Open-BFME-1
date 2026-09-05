@@ -1,20 +1,10 @@
 // ?adjustForLocalization@AudioEventRTS@@IAEXAAVAsciiString@@@Z
-// partial score=0.93 date=2026-09-04
+// partial score=0.99 date=2026-09-05
 // cl: /DNDEBUG /MD /EHsc
-
-// Open-BFME5: AudioEventRTS::adjustForLocalization, retail 0x000B3730, 272B.
-// Probe 276 vs 272. Prologue (edi=arg, esi=this in str() delay slot) and the
-// found-path (filename at reused arg slot, prefix hidden-retval at the push-ecx
-// slot, set from eax, dtor prefix, peek-concat leaf, dtor filename) already
-// match. Wall: inlined reverseFind must return a pointer so the caller emits
-// an extra test eax/je (+4). Putting the loop in this function removes that
-// test but swaps esi/edi and drops the peek-concat. Start pointer is edx not
-// ecx (lea edx,[eax+8] vs lea ecx). Pin generateFilenamePrefix at ILT
-// 0x0003B769 before landing. TheFileSystem is DIR32 0x0134CB48.
+// Open-BFME: AudioEventRTS::adjustForLocalization, retail 0x000B3730, 272B.
 
 typedef int Int;
 typedef unsigned char Bool;
-
 
 enum AudioType
 {
@@ -41,6 +31,8 @@ public:
 	StringHeader *m_data;
 };
 
+extern const char g_bfmeEmptyAscii[];
+
 class AsciiString : public StringBase<char>
 {
 public:
@@ -54,26 +46,25 @@ public:
 	__forceinline void concat(const AsciiString &other)
 	{
 		const Int length = other.m_data ? other.m_data->length : 0;
-		const char *text = other.m_data ? &other.m_data->data[0] : "";
+		const char *text = other.m_data ? &other.m_data->data[0] : g_bfmeEmptyAscii;
 		concat(text, length);
 	}
 
 	const char *str(void) const
 	{
-		return m_data ? m_data->peek() : "";
+		return m_data ? m_data->peek() : g_bfmeEmptyAscii;
 	}
 
 	const StringHeader *data(void) const
 	{
 		return m_data;
 	}
-
 };
 
 class FileSystem
 {
 public:
-	Bool doesFileExist(const char *filename) const;
+	bool doesFileExist(const char *filename) const;
 };
 
 extern FileSystem *TheFileSystem;
@@ -105,22 +96,20 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
 		return;
 
 	StringBase<char> &string = strToAdjust;
-	char *start = string.m_data ? &string.m_data->data[0] : (char *)"";
-	const StringHeader *data = string.m_data;
-	char *p = start + (data ? data->length : 0);
-	if (p == start)
-		return;
-	while (p != start)
-	{
-		char seen = p[-1];
-		--p;
-		if (seen == '\\')
-		{
-			AsciiString filename = p;
+  const char *start = string.m_data ? &string.m_data->data[0]
+                                    : g_bfmeEmptyAscii;
+  const StringHeader *data = string.m_data;
+  const char *p = start + (data ? data->length : 0);
+  for (; p != start; --p)
+  {
+    char seen = p[-1];
+    if (seen == '\\')
+    {
+			AsciiString filename = p - 1;
 			const AudioType audioType = m_eventInfo->m_soundType;
 			strToAdjust = generateFilenamePrefix(audioType, true);
 			strToAdjust.concat(filename);
-			return;
-		}
-	}
+      return;
+    }
+  }
 }
