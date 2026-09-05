@@ -1057,6 +1057,8 @@ name,address,notes
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00574DF0@@@Z,0x005719B0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@00US4Cmp002EB8E0@@@Z,0x002EA750,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem8@@U1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@00US4Cmp00575AA0@@@Z,0x000046FB,matched final-insertion wrapper at 0x00576FF0 calls this zero-third STLport helper through its ILT
+??$__unguarded_linear_insert@PAUBfmeSortPair@@U1@UBfmeSortCompare@@@_STL@@YAXPAUBfmeSortPair@@U1@UBfmeSortCompare@@@Z,0x009F2DF0,alternate REL32 name for the already-matched bfmeLinearInsertFloatAscending BfmeLinearInsertFloat.cpp; template unguarded-arm dispatch of the near-twin linear_insert for BfmeSortPair ascending
+??$__unguarded_linear_insert@PAUBfmeSortPair@@U1@UBfmeSortCompareDescending@@@_STL@@YAXPAUBfmeSortPair@@U1@UBfmeSortCompareDescending@@@Z,0x009F2E30,alternate REL32 name for the already-matched bfmeLinearInsertFloatDescending BfmeLinearInsertFloat.cpp; template unguarded-arm dispatch of the near-twin linear_insert for BfmeSortPair descending
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp002E1690@@@Z,0x00042F91,retail __linear_insert at 0x002E0FE0 direct call-site ILT
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00531FA0@@@Z,0x0001649B,retail __linear_insert at 0x0052FE90 direct call-site ILT to the 109-byte unguarded insertion body at 0x0052F110
 ??$__unguarded_linear_insert@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@U1@US4Cmp00532740@@@Z,0x0002209D,retail __linear_insert at 0x00531860 calls the STLport unguarded insert ILT; target follows to 0x0092F280
@@ -80993,6 +80995,7 @@ name,address,notes
 ?set@Rva002EA550Str@@QAEXABV1@@Z,0x00887C90,Open-BFME5 string set used by 20-byte copy_backward at 0x002EA550
 ?set@Rva002EECE0@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
 ?set@Rva002EED00@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
+?set@Rva0052DD50AsciiString@@QAEXPBDH@Z,0x00887D20
 ?set@Rva00802040Buf@@QAEXPAX@Z,0x007F7F50,FESL Buf set; pin for 0x802040
 ?set@Rva00802810Element@@QAEXPBVRva007F4EF0Lobby@@PAVRva007F7980Browser@@@Z,0x00802810,V2 lane: 64-byte browser lobby element fill from a lobby record
 ?set@Rva00802DF0Element@@QAEXPBVRva007F4E50Region@@PAVRva007F7980Browser@@@Z,0x00802DF0,V2 lane: 28-byte browser region element fill from a region record
