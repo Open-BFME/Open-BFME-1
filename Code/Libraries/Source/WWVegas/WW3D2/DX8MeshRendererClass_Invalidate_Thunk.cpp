@@ -1,306 +1,164 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?Invalidate@DX8MeshRendererClass@@QAEX_N@Z: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: BFME renderer invalidation with its intrusive registered-mesh list.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.h
+class MeshModelClass
+{
+	char prefix[0xbc];
+
+public:
+	MeshModelClass **registered_mesh_prev;
+	MeshModelClass *registered_mesh_next;
+};
+
+class RegisteredMeshList
+{
+public:
+	MeshModelClass *head;
+
+	__forceinline void Reset_List()
+	{
+		while (head != 0) {
+			MeshModelClass *mesh = head;
+			MeshModelClass **previous = mesh->registered_mesh_prev;
+			if (previous != 0) {
+				*previous = mesh->registered_mesh_next;
+				if (mesh->registered_mesh_next != 0) {
+					mesh->registered_mesh_next->registered_mesh_prev = mesh->registered_mesh_prev;
+				}
+				mesh->registered_mesh_prev = 0;
+			}
+		}
+	}
+};
+
+static RegisteredMeshList _RegisteredMeshList;
+
+class MultiListNodeClass
+{
+public:
+	MultiListNodeClass *prev;
+	MultiListNodeClass *next;
+	MultiListNodeClass *next_list;
+	void *object;
+	void *list;
+
+	MultiListNodeClass()
+	{
+		prev = next = next_list = 0;
+		object = 0;
+		list = 0;
+	}
+};
+
+class MultiListObjectClass;
+
+class MultiListObjectClass
+{
+public:
+	virtual ~MultiListObjectClass();
+};
+
+class GenericMultiListClass
+{
+public:
+	virtual ~GenericMultiListClass();
+	GenericMultiListClass()
+	{
+		head.next = head.prev = &head;
+		head.object = 0;
+		head.next_list = 0;
+	}
+
+protected:
+	MultiListNodeClass head;
+	MultiListObjectClass *Internal_Remove_List_Head();
+};
+
+class DX8FVFCategoryContainer : public MultiListObjectClass
+{
+public:
+	virtual ~DX8FVFCategoryContainer();
+};
+
+class FVFCategoryList : public GenericMultiListClass
+{
+public:
+	DX8FVFCategoryContainer *Remove_Head()
+	{
+		return static_cast<DX8FVFCategoryContainer *>(Internal_Remove_List_Head());
+	}
+};
+
+class SimpleDynVecFVFLists
+{
+public:
+	virtual ~SimpleDynVecFVFLists();
+	virtual bool Resize(int size);
+
+	FVFCategoryList **vector;
+	int vector_max;
+	int active_count;
+
+	int Count() const
+	{
+		return active_count;
+	}
+
+	FVFCategoryList *operator[](int index)
+	{
+		return vector[index];
+	}
+
+	void Delete_All(bool allow_shrink = true)
+	{
+		active_count = 0;
+		if (allow_shrink && active_count < vector_max / 4) {
+			Resize(active_count);
+		}
+	}
+};
+
+class CameraClass;
+
 class DX8MeshRendererClass
 {
 public:
-	void Invalidate(bool);
+	void Invalidate(bool shutdown = false);
+
+protected:
+	bool enable_lighting;
+	CameraClass *camera;
+	SimpleDynVecFVFLists texture_category_container_lists_rigid;
+	FVFCategoryList *texture_category_container_list_skin;
 };
 
-// ?Invalidate@DX8MeshRendererClass@@QAEX_N@Z
-__declspec(naked) void DX8MeshRendererClass::Invalidate(bool)
+static __forceinline void Invalidate_FVF_Category_Container_List(FVFCategoryList &list)
 {
-	__asm {
-        __emit 0xa1
-        __emit 0xe4
-        __emit 0xb0
-        __emit 0x34
-        __emit 0x01
-        __emit 0x53
-        __emit 0x55
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x74
-        __emit 0x36
-        __emit 0x8b
-        __emit 0x88
-        __emit 0xbc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xcb
-        __emit 0x8d
-        __emit 0x90
-        __emit 0xbc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x22
-        __emit 0x8b
-        __emit 0xb0
-        __emit 0xc0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x05
-        __emit 0xc0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x31
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0a
-        __emit 0x89
-        __emit 0x88
-        __emit 0xbc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x1a
-        __emit 0xa1
-        __emit 0xe4
-        __emit 0xb0
-        __emit 0x34
-        __emit 0x01
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x75
-        __emit 0xca
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x14
-        __emit 0x57
-        __emit 0x33
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x7e
-        __emit 0x3c
-        __emit 0x8b
-        __emit 0x55
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x34
-        __emit 0xba
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x43
-        __emit 0x45
-        __emit 0x09
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xff
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x30
-        __emit 0x45
-        __emit 0x09
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x75
-        __emit 0xed
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x0c
-        __emit 0xb8
-        __emit 0x3b
-        __emit 0xcb
-        __emit 0x74
-        __emit 0x06
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xff
-        __emit 0x12
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x14
-        __emit 0x47
-        __emit 0x3b
-        __emit 0xf8
-        __emit 0x7c
-        __emit 0xc4
-        __emit 0x8b
-        __emit 0x75
-        __emit 0x18
-        __emit 0x3b
-        __emit 0xf3
-        __emit 0x5f
-        __emit 0x74
-        __emit 0x2e
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x05
-        __emit 0x45
-        __emit 0x09
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xff
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xf2
-        __emit 0x44
-        __emit 0x09
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x75
-        __emit 0xed
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x18
-        __emit 0x3b
-        __emit 0xcb
-        __emit 0x74
-        __emit 0x06
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xff
-        __emit 0x10
-        __emit 0x89
-        __emit 0x5d
-        __emit 0x18
-        __emit 0x38
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x75
-        __emit 0x37
-        __emit 0x6a
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x91
-        __emit 0xa2
-        __emit 0xf3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x24
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x04
-        __emit 0x89
-        __emit 0x59
-        __emit 0x08
-        __emit 0x89
-        __emit 0x59
-        __emit 0x04
-        __emit 0x89
-        __emit 0x19
-        __emit 0x89
-        __emit 0x59
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x59
-        __emit 0x10
-        __emit 0x89
-        __emit 0x09
-        __emit 0x89
-        __emit 0x48
-        __emit 0x08
-        __emit 0x89
-        __emit 0x58
-        __emit 0x10
-        __emit 0x89
-        __emit 0x58
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xfc
-        __emit 0xcf
-        __emit 0x13
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x89
-        __emit 0x45
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4d
-        __emit 0x08
-        __emit 0x99
-        __emit 0x83
-        __emit 0xe2
-        __emit 0x03
-        __emit 0x03
-        __emit 0xc2
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x89
-        __emit 0x59
-        __emit 0x0c
-        __emit 0x7e
-        __emit 0x06
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x53
-        __emit 0xff
-        __emit 0x52
-        __emit 0x04
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+	DX8FVFCategoryContainer *container;
+	while ((container = list.Remove_Head()) != 0) {
+		delete container;
 	}
+}
+
+void DX8MeshRendererClass::Invalidate(bool shutdown)
+{
+	_RegisteredMeshList.Reset_List();
+
+	for (int i = 0; i < texture_category_container_lists_rigid.Count(); ++i) {
+		Invalidate_FVF_Category_Container_List(*texture_category_container_lists_rigid[i]);
+		delete texture_category_container_lists_rigid[i];
+	}
+
+	if (texture_category_container_list_skin != 0) {
+		Invalidate_FVF_Category_Container_List(*texture_category_container_list_skin);
+		delete texture_category_container_list_skin;
+		texture_category_container_list_skin = 0;
+	}
+
+	if (!shutdown) {
+		texture_category_container_list_skin = new FVFCategoryList;
+	}
+
+	texture_category_container_lists_rigid.Delete_All();
 }
