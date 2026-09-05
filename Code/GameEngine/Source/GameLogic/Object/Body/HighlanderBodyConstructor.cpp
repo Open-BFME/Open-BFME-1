@@ -13,6 +13,13 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
@@ -20,29 +27,29 @@ public:
 	virtual void bodyModuleInterfaceAnchor();
 };
 
-class ModuleInterface
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
+class ActiveBody : public BehaviorModule,
+	public BehaviorModuleInterface,
+	public BodyModuleInterface
 {
 public:
-	virtual void moduleInterfaceAnchor();
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
-class BodyModule : public BehaviorModule,
-	public BodyModuleInterface,
-	public ModuleInterface
-{
-public:
-	BodyModule( Thing *thing, const ModuleData *moduleData );
+	ActiveBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~ActiveBody();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HighlanderBody.h
-class HighlanderBody : public BodyModule
+class HighlanderBody : public ActiveBody
 {
 public:
 	HighlanderBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~HighlanderBody();
 };
 
 HighlanderBody::HighlanderBody( Thing *thing, const ModuleData *moduleData )
-	: BodyModule( thing, moduleData )
+	: ActiveBody( thing, moduleData )
+{
+}
+
+HighlanderBody::~HighlanderBody()
 {
 }

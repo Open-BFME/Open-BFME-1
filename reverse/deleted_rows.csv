@@ -24633,3 +24633,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?bfmeInitARD@BfmeThingARD@@QAEPAV1@PAX0@Z,0x001C11D0,address-derived constructor identity superseded by adjacent ObjectRepulsorHelper method and literal evidence
 ??1Rva00256DB0MultiTailDtor@@UAE@XZ,0x00256DB0,address-derived placeholder superseded by the byte-verified ObjectRepulsorHelper destructor
 ??_GGen_dtor_001c12b0@@UAEPAXI@Z,0x001C12B0,generated deleting-destructor identity superseded by ObjectRepulsorHelper vtable evidence
+??1Rva00213800MultiTailDtor@@UAE@XZ,0x00213800,address-derived placeholder superseded by the byte-verified HighlanderBody destructor
+??_GGen_dtor_002138c0@@UAEPAXI@Z,0x002138C0,generated deleting-destructor identity superseded by HighlanderBody vtable evidence

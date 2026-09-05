@@ -4414,7 +4414,6 @@ name,address,notes
 ??1Gen_dtor_002131f0@@UAE@XZ,0x000275BB,gen-dtor class destructor
 ??1Gen_dtor_00213410@@UAE@XZ,0x00017EA4,gen-dtor class destructor
 ??1Gen_dtor_00213720@@UAE@XZ,0x0003E414,gen-dtor class destructor
-??1Gen_dtor_002138c0@@UAE@XZ,0x000408F9,gen-dtor class destructor
 ??1Gen_dtor_00213aa0@@UAE@XZ,0x0004B15F,gen-dtor class destructor
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
 ??1Gen_dtor_00214040@@UAE@XZ,0x00010C67,gen-dtor class destructor
@@ -28999,10 +28998,8 @@ name,address,notes
 ?b_00213750@@YAXXZ,0x00213750,gen-thunk body
 ?b_002137b0@@YAXXZ,0x002137B0,gen-thunk body
 ?b_002137f0@@YAXXZ,0x002137F0,gen-thunk body
-?b_00213800@@YAXXZ,0x00213800,gen-thunk body
 ?b_00213820@@YAXXZ,0x00213820,gen-thunk body
 ?b_00213830@@YAXXZ,0x00213830,gen-thunk body
-?b_002138c0@@YAXXZ,0x002138C0,gen-thunk body
 ?b_002138f0@@YAXXZ,0x002138F0,gen-thunk body
 ?b_00213950@@YAXXZ,0x00213950,gen-thunk body
 ?b_00213990@@YAXXZ,0x00213990,gen-thunk body
@@ -82723,3 +82720,9 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_7ObjectRepulsorHelper@@6BObjectHelper@@@,0x0109E7B4,primary vtable installed by the named constructor and destructor
 ??_7ObjectRepulsorHelper@@6BBehaviorModuleInterface@@@,0x0109E6F0,secondary vtable at this+0x0C
 ??_7ObjectRepulsorHelper@@6BUpdateModuleInterface@@@,0x0109E6E4,secondary vtable at this+0x10
+??1ActiveBody@@UAE@XZ,0x00017EEA,derived body destructors tail-call the ActiveBody destructor
+??1HighlanderBody@@UAE@XZ,0x000408F9,destructor ILT to 0x00213800
+??_GHighlanderBody@@UAEPAXI@Z,0x0004477E,primary class vtable slot zero ILT to 0x002138C0
+??_7HighlanderBody@@6BBehaviorModuleInterface@@@,0x010A86C0,secondary vtable at this+0x0C
+??_7HighlanderBody@@6BBodyModuleInterface@@@,0x010A85F0,secondary vtable at this+0x10
+??_7HighlanderBody@@6BBehaviorModule@@@,0x010A8788,primary vtable installed by the named constructor and destructor
