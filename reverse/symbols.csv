@@ -82022,6 +82022,8 @@ __imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
 __imp__Rva00891FA0SendRecord,0x01337840,address-derived diagnostics record callback slot called by 0x00891FA0
 __imp__Rva00891FA0SendText,0x01337844,address-derived diagnostics text callback slot called by 0x00891FA0
+__imp__SHGetPathFromIDListA@8,0x01359168,Open-BFME retail SHELL32 SHGetPathFromIDListA import pointer
+__imp__SHGetSpecialFolderLocation@12,0x0135916C,Open-BFME retail SHELL32 SHGetSpecialFolderLocation import pointer
 __imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
 __imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer
 __imp___strnicmp,0x00F594BC,CRT import used by the _level prefix path helper

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bc6750e9449fad0e1c11783fa4a7869cb13093c0f645045f70c54a674aa90c92",
+  "symbol": "?fixup@BfmeVec12@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?fixup@BfmeVec12@@QAEXXZ\n// partial score=0.99 date=2026-09-04\n// ?fixup@BfmeVec12@@QAEXXZ\n// partial score=0.99 date=2026-09-02\n// cl: /O2\n\nstruct BfmeSub12\n{\n\tvoid construct();\n\tunsigned char m_bytes[4];\n};\n\nstruct BfmeElem12\n{\n\tvoid *m_ptr;\n\tunsigned char m_mid[4];\n\tBfmeSub12 m_sub;\n};\n\nclass BfmeAlloc12\n{\npublic:\n\tvoid *make(BfmeSub12 *sub);\n};\n\nextern BfmeAlloc12 *TheBfmeAlloc12;\n\nclass BfmeVec12\n{\npublic:\n\tvoid fixup();\n\n\tBfmeElem12 *m_begin;\n\tBfmeElem12 *m_end;\n};\n\nvoid BfmeVec12::fixup()\n{\n\tBfmeElem12 *begin = m_begin;\n\tBfmeElem12 *last = m_end;\n\tunsigned int n = last - begin;\n\tunsigned int i = 0;\n\tif (n == 0)\n\t\treturn;\n\tunsigned int off = 0;\n\tdo\n\t{\n\t\tBfmeElem12 *e = (BfmeElem12 *)(off + (unsigned int)begin);\n\t\te->m_ptr = TheBfmeAlloc12->make(&e->m_sub);\n\t\t((BfmeElem12 *)(off + (unsigned int)m_begin))->m_sub.construct();\n\t\tbegin = m_begin;\n\t\tlast = m_end;\n\t\tn = last - begin;\n\t\t++i;\n\t\toff += 12;\n\t} while (i < n);\n}\n"
+}
