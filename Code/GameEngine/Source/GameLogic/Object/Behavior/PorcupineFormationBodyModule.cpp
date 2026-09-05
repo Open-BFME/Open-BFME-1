@@ -34,16 +34,22 @@ class ActiveBody : public BehaviorModule,
 {
 public:
 	ActiveBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~ActiveBody();
 };
 
 class PorcupineFormationBodyModule : public ActiveBody
 {
 public:
 	PorcupineFormationBodyModule( Thing *thing, const ModuleData *moduleData );
+	virtual ~PorcupineFormationBodyModule();
 };
 
 PorcupineFormationBodyModule::PorcupineFormationBodyModule(
 	Thing *thing, const ModuleData *moduleData )
 	: ActiveBody( thing, moduleData )
+{
+}
+
+PorcupineFormationBodyModule::~PorcupineFormationBodyModule()
 {
 }
