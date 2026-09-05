@@ -82951,3 +82951,8 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?xfer@Script@@UAEXPAVXfer@@@Z,0x0001044C,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?bfmeFindYQ@BfmeThingYQ@@QAEPAVBfmeEntryYQ@@HH@Z,0x0004AF84,Open-BFME5 the entry lookup the anchor selector at 0x00423300 calls
 ??1Vector3YQ@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the static fallback point; referenced only by the atexit helper
+??0BfmeHelperYS@@QAE@XZ,0x00013921,Open-BFME5 the helper constructor the attach at 0x00755E70 runs once
+??1BfmeHelperYS@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the static helper; referenced only by the atexit helper
+?bfmeAttachYS@BfmeHelperYS@@QAEXPAVGen_00755E70@@@Z,0x00001019,Open-BFME5 the attach the static helper performs at 0x00755E70
+?bfmeFinishYS@Gen_00755E70@@QAEXXZ,0x00022219,Open-BFME5 the finish step the attach at 0x00755E70 calls on itself
+g_bfmeCurrentYS,0x01304B64,Open-BFME5 the global the attach at 0x00755E70 publishes the static helper through
