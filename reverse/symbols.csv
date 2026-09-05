@@ -82936,3 +82936,8 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?bfmeNext1087@BfmeP1087@@QAEGPAVParameter@@@Z,0x000230B5,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
 ?bfmeLook1087@BfmeD1087@@QAEPAUBfmeR1087@@PAG@Z,0x0002EE60,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
 ?queryRva001CAEE0@Object@@QBE_NPBVPlayer@@@Z,0x00003B1B,Full50B1CAEE0 reads nullable viewer+2C; this matched caller supplies Player from DF4A0; typed ABI without legacy Object cast
+?queryRva001C9980@Object@@QAE_NXZ,0x00019B5F,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
+?setCurrentlySelectedAIGroup@Player@@QAEXPAVAIGroup@@@Z,0x00005DD0,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
+?addAIGroupToCurrentSelection@Player@@QAEXPAVAIGroup@@@Z,0x000325D8,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
+?queryInterfaceRva001BF6B0@Object@@QAEPAVBfmeInterface001BF6B0@@XZ,0x0000F8E4,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
+?notifyRva001C8830@Object@@QAEXPAVPlayer@@@Z,0x0001FE3D,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
