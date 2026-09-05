@@ -66,10 +66,12 @@ The exact clean C++ callee at body RVA `0x0038A6F0`, called at `0x0038E10C` by
 every normal phase, deletes those entries and restores an empty range. This
 ordering explains the otherwise strange reset at entry.
 
-If `GameLogic+0x11D` is set, phase 1 calls the unresolved helper whose body is
-RVA `0x00783050`, sets `GameClient+0xC4 = 1`, and returns. Other phases return
-without that call (`0x0038DB02..0x0038DB3D`). The field is a start/load gate,
-but its exact BFME name remains unproven.
+If `GameLogic+0x11D` is set, phase 1 calls
+`GameLogic::processCommandList()` at RVA `0x00383050`, sets
+`GameClient+0xC4 = 1`, and returns. Other phases return without that call
+(`0x0038DB02..0x0038DB3D`). This is a command-only transition path: the helper
+dispatches every pending command and resets `TheCommandList`, while the rest of
+the phase-1 simulation work is skipped.
 
 On the normal path, phase 1 optionally calls the network virtual at slot
 `+0x8C` (`0x0038DB40..0x0038DB57`). The return value is unused. All phases then
@@ -199,8 +201,10 @@ These are distinct gates:
 - Logic/camera freeze is inside phase 1. A rejected freeze path executes the
   debug-frame prefix and depth-counter entry, sets `GameClient+0xC4 = 0`, then
   returns before phase recording, CRC, commands, objects, or frame increment.
-- `GameLogic+0x11D` is an early start/load branch after the deferred vector was
-  reset. Its exact field name and helper at RVA `0x00783050` are unresolved.
+- `GameLogic+0x11D` is an early command-only transition gate after the deferred
+  vector was reset. The BFME `GameState::loadGame` mission-save branch sets it
+  at `0x00110B6F`; the GameLogic constructor, `init`, and reset/default paths
+  clear it. Its original field name remains unproven.
 - Game modes 4 and 8 suppress both CRC work and the frame-1024 copy-protection
   check. Mode 2 separately suppresses the multiplayer CRC cadence.
 - The frame increments only when phase 1 completes, `GameLogic+0xA0 == 0`, and
@@ -236,7 +240,7 @@ not been proven by runtime or multiplayer traces.
 | GameLogic clear/walk at `0x0038D000` | already understood and exact, related lifecycle evidence | exact 112-byte clean C++; proves `+0xA8` object list and `+0x15C` vector coexist in the layout |
 | `GameLogic::processDestroyList` at `0x0038AE90` | behavior and identity solved; clean C++ near match banked | corrected boundary is 438 bytes; phase-5 caller, clear-path caller, field effects, and destruction order agree; remaining 416/438-byte mismatch is register allocation |
 | helper on `GameLogic+0x170`, body `0x00367810` | already exact but address-derived | 164-byte clean C++ shows a gated 0x58-byte-entry walk; owning field identity still unproven |
-| phase-1 helper body `0x00783050` | unresolved and materially blocking start/load semantics | call at `0x0038DB13` only for phase 1 under `+0x11D` |
+| `GameLogic::processCommandList()` at `0x00383050` | solved and byte-exact | 47-byte clean C++; walks `TheCommandList+8`, calls `logicMessageDispatcher(message, NULL)`, then resets the list; the normal phase-1 path inlines the same body at `0x0038DE2A` |
 | AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
 | command processor body `0x00797540` | sufficiently understood for ordering | each CommandList node and argument zero are explicit; detailed command dispatch is separate work |
 | phase-1 object helpers `0x005C5780`, `0x005CE7B0`, `0x005CE7F0` | unresolved and semantically relevant | exact predicates at `0x0038E1D4..0x0038E203`; recover as a group with the object vtable |
@@ -255,18 +259,14 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Recover the `+0x11D` branch.** Disassemble body RVA `0x00783050`, find all
-   callers and writes/xrefs to `GameLogic+0x11D`, and inspect neighboring
-   start/load methods. The deliverable is a proven field/helper name or a
-   precise address-derived implementation, not a guessed `startNewGame` label.
-2. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
+1. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
    and `0x005CE7F0` together with object vtable slot `+0x3C`. Record effects on
    object `+0x90`, `+0x98`, and `+0x1A4`. Land any tractable exact body on its
    own.
-3. **Close singleton identities.** Trace constructors, set-name strings, and
+2. **Close singleton identities.** Trace constructors, set-name strings, and
    vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
    caller or constructor outranks an address-derived symbol pin.
-4. **Declare the BFME ABI and TU-local layout.** In
+3. **Declare the BFME ABI and TU-local layout.** In
    `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
    verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
    vectors `+0xC4..+0xFC`, current update `+0x100`, mode `+0x10C`, gate

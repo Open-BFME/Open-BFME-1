@@ -83008,3 +83008,4 @@ g_bfmePalantirZB,0x012F19E8,Open-BFME5 the palantir the power-cap update at 0x00
 ?format@UnicodeStringZC@@QAAXV1@ZZ,0x00889190,pin
 ?bfmeStoreZC@BfmePalantirZC@@QAEXABVAsciiStringZC@@ABVUnicodeStringZC@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565A80
 g_bfmePalantirZC,0x012F19E8,Open-BFME5 the palantir the multiplier update at 0x00565A80 writes to
+?logicMessageDispatcher@GameLogic@@QAEXPAVGameMessage@@PAX@Z,0x0003FF67,ILT thunk to the 11543-byte GameLogic message dispatcher body at RVA 0x00397540; processCommandList caller at 0x00383066 passes GameMessage pointer and null user data
