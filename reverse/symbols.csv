@@ -82786,3 +82786,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setText@NetChatCommandMsg@@QAEXVUnicodeString@@@Z,0x006752B0,"NetChatCommandMsg::setText; ILT 0x31151; this+0x1c StringBase assignment, by-value UnicodeString destruction, ret 4 independently reviewed"
 ??0W3DVideoBuffer@@QAE@H@Z,0x0002B733,"W3DVideoBuffer constructor ILT; actual body calls VideoBuffer base, installs vtable 0x112165c, initializes fields through +0x4a; allocation 0x4c verified"
 ??0ConnectionManager@@QAE@XZ,0x00049A94,ConnectionManager ctor ILT 0x49a94 inspected; body installs vtable 0x111a2b0 and connection arrays; Network init vtable slot 1 and existing field layout
+??0Gen00043699@@QAE@XZ,0x00008067,"136-byte attribute entry ctor: zeroes six vector fields, both 24-byte blocks, metadata offsets 0x78..0x84"
+?bfmeInternAttributeEntry@@YAIPAVGen00043699@@@Z,0x00037FD8,"Attribute intern cdecl entry pointer; pool 0x12F1000, stride 136, compare loop, bare ret at 0x39EEE7"
