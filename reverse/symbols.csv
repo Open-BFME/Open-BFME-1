@@ -83313,3 +83313,8 @@ _bfmeVftableBG,0x00715C60,Open-BFME5 the vftable the named constructor at 0x0060
 ?bfmeFindBH@BfmeRegistryBH@@QAEPAXVAsciiStringBH@@@Z,0x00020F04,Open-BFME5 the registry lookup the named apply at 0x002F83D0 makes
 ?bfmeApplyBH@BfmeApplierBH@@QAEXPAX0PAVBfmeSubBH@@@Z,0x000033B4,Open-BFME5 the apply the named lookup at 0x002F83D0 forwards to
 g_bfmeRegistryBH,0x012ED80C,Open-BFME5 the registry the named apply at 0x002F83D0 asks
+??0StringBaseNarrowBI@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBI@@IAE@XZ,0x00887940,pin
+?bfmeLookupBI@@YGPAVBfmeThingBI@@H@Z,0x00005024,Open-BFME5 the key lookup the name-for-key at 0x007696B0 makes
+?bfmeNameBI@BfmeThingBI@@QAE?AVAsciiStringBI@@XZ,0x00012A7B,Open-BFME5 the name the key lookup at 0x007696B0 returns
+?g_bfmeDefaultBI@@3VAsciiStringBI@@A,0x00F36E50,Open-BFME5 the default name the key lookup at 0x007696B0 falls back to
