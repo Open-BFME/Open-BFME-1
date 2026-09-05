@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -185,10 +185,6 @@ static AsciiString realAsStr(Real val)
 // UserPreferences Class 
 //-----------------------------------------------------------------------------
 
-UserPreferences::UserPreferences( void )
-{
-}
-
 // byte-exact reconstruction: Code/GameEngine/Source/Common/UserPreferencesDestructorThunk.cpp
 // ??1UserPreferences@@UAE@XZ present-unmatched
 UserPreferences::~UserPreferences( void )
@@ -283,26 +279,12 @@ void UserPreferences::setAsciiString(AsciiString key, AsciiString val)
 // QuickMatchPreferences base class 
 //-----------------------------------------------------------------------------
 
-QuickMatchPreferences::QuickMatchPreferences()
-{
-	AsciiString userPrefFilename;
-	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
-	userPrefFilename.format("LoTRB4MEOnline\\QMPref%d.ini", localProfile);
-	load(userPrefFilename);
-}
-
 // Thunk-dump converted to clean C++ (0xAAFA0, 11B): sets the
 // QuickMatchPreferences vtable then tail-jumps into the already-matched
 // UserPreferences dtor (0x3F25B) -- same ICF-adjacent shape as
 // OptionPreferences::~OptionPreferences, proven via retail disasm.
 QuickMatchPreferences::~QuickMatchPreferences()
 {
-}
-
-// ?setMapSelected@QuickMatchPreferences@@QAEXABVAsciiString@@_N@Z present-unmatched
-void QuickMatchPreferences::setMapSelected(const AsciiString& mapName, Bool selected)
-{
-	(*this)[AsciiStringToQuotedPrintable(mapName)] = (selected)?"1":"0";
 }
 
 // ?isMapSelected@QuickMatchPreferences@@QAE_NABVAsciiString@@@Z present-unmatched
@@ -585,17 +567,6 @@ Int QuickMatchPreferences::getSide( void )
 //-----------------------------------------------------------------------------
 // CustomMatchPreferences base class 
 //-----------------------------------------------------------------------------
-
-// ??0CustomMatchPreferences@@QAE@XZ
-CustomMatchPreferences::CustomMatchPreferences()
-{
-	AsciiString userPrefFilename;
-	// BFME added seven vtable slots before getLocalProfileID; see
-	// BfmeGameSpyInfoLocalProfileView above.
-	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
-	userPrefFilename.format("LoTRB4MEOnline\\CustomPref%d.ini", localProfile);
-	load(userPrefFilename);
-}
 
 CustomMatchPreferences::~CustomMatchPreferences()
 {
@@ -1023,14 +994,6 @@ void CustomMatchPreferences::setUseStats( Bool useStats )
 // GameSpyMiscPreferences base class 
 //-----------------------------------------------------------------------------
 
-GameSpyMiscPreferences::GameSpyMiscPreferences()
-{
-	AsciiString userPrefFilename;
-	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
-	userPrefFilename.format("LoTRB4MEOnline\\GSMiscPref%d.ini", localProfile);
-	load(userPrefFilename);
-}
-
 // ??1GameSpyMiscPreferences@@UAE@XZ present-unmatched
 GameSpyMiscPreferences::~GameSpyMiscPreferences()
 {
@@ -1226,16 +1189,6 @@ __declspec(naked) Int GameSpyMiscPreferences::getMaxMessagesPerUpdate( void )
 // IgnorePreferences base class 
 //-----------------------------------------------------------------------------
 
-// Open-BFME5: exact clean C++ constructor with the BFME profile ABI.
-IgnorePreferences::IgnorePreferences()
-{
-	AsciiString userPrefFilename;
-	//	if(!TheGameSpyInfo)
-	Int localProfile = reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID();
-	userPrefFilename.format("LoTRB4MEOnline\\IgnorePref%d.ini", localProfile);
-	load(userPrefFilename);
-}
-
 // ??1IgnorePreferences@@UAE@XZ present-unmatched
 IgnorePreferences::~IgnorePreferences()
 {
@@ -1276,10 +1229,6 @@ IgnorePrefMap IgnorePreferences::getIgnores(void)
 //-----------------------------------------------------------------------------
 // LadderPreferences base class 
 //-----------------------------------------------------------------------------
-
-LadderPreferences::LadderPreferences()
-{
-}
 
 LadderPreferences::~LadderPreferences()
 {
