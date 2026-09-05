@@ -83337,3 +83337,6 @@ g_bfmeSinkBM,0x012F148C,Open-BFME5 the sink the report send at 0x0042B3D0 submit
 ?bfmeLookupBN@BfmeOtherBN@@QAEPAXABVAsciiStringBN@@@Z,0x00028560,Open-BFME5 the second lookup the resolve at 0x002DE300 makes
 g_bfmeRegistryBN,0x012EF738,Open-BFME5 the registry the two-name resolve at 0x002DE300 asks first
 g_bfmeOtherBN,0x012EF1D8,Open-BFME5 the second registry the resolve at 0x002DE300 asks
+??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
+??0Gen_003A8BE0@@QAE@ABU0@@Z,0x00041CE0,three-string element copy constructor thunk called by retail 0x003AB280
+?get_allocator@?$vector@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003A8BE0@@@2@XZ,0x00035A4E,allocator accessor call target from retail 0x003AB280
