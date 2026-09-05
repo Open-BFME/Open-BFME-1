@@ -1,27 +1,38 @@
 // ?onEnter@AITNGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.95 date=2026-09-05
+// partial score=0.99 date=2026-09-05
 // cl: /DNDEBUG /MD /EHsc
 // BFME layout reconstruction of AITNGuardAttackAggressorState::onEnter at
-// retail 0x0018AA70.
+// retail 0x0018AA70. 275 of 279 bytes match; the instruction stream is
+// identical to retail end to end, including every branch target, spill slot
+// and callee-saved push.
 //
-// Fixed from the prior stash: findObjectByID's parameter must be `int` (not
-// the ObjectID typedef) to bind the ILT thunk at 0x0001F253 that
-// reverse/symbols.csv already carries for the H-mangled overload, and
-// TheAIParseDefinitionAI must be `extern "C"` (matching every other landed
-// file that touches it), not a mangled C++ global -- both now resolve and
-// byte-match through the tunnels->updateNemesis(nemesis) call, 266/279 bytes.
+// Three changes carried this from the previous bank's 13-byte residue to 4:
+//   1. A `machine` local holds m_machine across the findObjectByID call, so
+//      the owner is re-read from it (`machine->m_owner`) instead of from
+//      `this` again. Retail keeps that pointer in EDI and drops the second
+//      `mov eax,[esi+0x1c]`; without the local we emitted three extra bytes
+//      and only saved two callee-saved registers instead of retail's three.
+//   2. getFrame() reads through a volatile pointer.
+//   3. TheAIParseDefinitionAI is declared `AI *volatile`.
+// Together 2 and 3 stop MSVC from hoisting the second global load above the
+// first dereference, which restores retail's interleaved load order
+//   TheGameLogic -> [+0x3c] -> TheAIParseDefinitionAI -> [+0x14] -> [+0x3c].
 //
-// Remaining 13-byte diff is entirely a register-allocation choice (ecx vs
-// edx) for evaluating TheGameLogic->getFrame() +
-// TheAIParseDefinitionAI->getAiData()->m_guardChaseUnitFrames feeding the
-// AIAttackState constructor's `m_exitConditions` argument. Every rephrasing
-// tried -- a temp for either operand, an AIData* cache, swapping the operand
-// order, dropping const-volatile off getFrame() -- reallocates registers
-// across the WHOLE function (not just this expression) and always regresses
-// the byte match elsewhere, never improves it. Looks like a whole-function
-// MSVC 7.1 scheduling artifact rather than a source-shape bug; the next
-// attempt should look for a different overall statement order/variable set
-// for the whole function body, not just this one expression.
+// Remaining 4 bytes at +0x96..+0xa5 are a pure ECX/EDX mirror on those two
+// global loads: retail puts TheGameLogic in ECX and TheAIParseDefinitionAI
+// in EDX, we get the opposite pair. Instruction order, operands and lengths
+// are otherwise identical.
+//
+// Tried and did not move the mirror: compound `+=`; address-of-field local;
+// direct `m_data` member read; a nested scope; locals for either or both
+// globals in both definition orders; swapped addition operands; separate
+// frame and chase locals in both orders; an AIData* local; an inline getter
+// on AIData; an inline getter plus the accessor; a volatile read inside
+// getAiData; volatile on TheGameLogic (loses a byte and 99 more diffs);
+// `extern "C"` on TheGameLogic; a leading dummy member on GameLogic;
+// declaration order of the two globals; a static inline free function for
+// the whole deadline; a setter on TunnelNetworkExitConditions; explicit
+// casts on either operand; and /EHsc- and /EHa instead of /EHsc.
 
 typedef unsigned int ObjectID;
 
@@ -40,7 +51,7 @@ public:
     Object *findObjectByID( int id );
     unsigned int getFrame() const volatile
     {
-        return *(const unsigned int *)((const unsigned char *)this + 0x3c);
+        return *(const volatile unsigned int *)((const volatile unsigned char *)this + 0x3c);
     }
 };
 
@@ -65,7 +76,7 @@ public:
     }
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+extern "C" AI *volatile TheAIParseDefinitionAI;
 
 class DamageInfo
 {
@@ -217,11 +228,12 @@ StateReturnType AITNGuardAttackAggressorState::onEnter()
         m_machine->m_nemesisID = nemID;
     }
 
-    Object *nemesis = TheGameLogic->findObjectByID(m_machine->getNemesisID());
+    BfmeGuardMachine *machine = m_machine;
+    Object *nemesis = TheGameLogic->findObjectByID(machine->getNemesisID());
     if (nemesis == 0)
         return STATE_SUCCESS;
 
-    Player *ownerPlayer = m_machine->m_owner->getControllingPlayer();
+    Player *ownerPlayer = machine->m_owner->getControllingPlayer();
     TunnelTracker *tunnels = 0;
     if (ownerPlayer != 0)
         tunnels = ownerPlayer->getTunnelSystem();
