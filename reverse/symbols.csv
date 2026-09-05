@@ -83058,3 +83058,28 @@ g_bfmePalantirZG,0x012F19E8,Open-BFME5 the palantir the player-table write at 0x
 ??1StringBaseNarrowZK@@IAE@XZ,0x00887940,pin
 ?format@StringBaseNarrowZK@@QAAXVAsciiStringZK@@ZZ,0x00888FF0,pin
 ?bfmeTypeNameZK@BfmeMessageZK@@SA?AVAsciiStringZK@@H@Z,0x00040A1B,Open-BFME5 the command-type name the description at 0x00674B30 formats
+??0StringBaseNarrowZM@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZM@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZM@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZM@@QAAXVAsciiStringZM@@ZZ,0x00888FF0,pin
+?bfmeNameZM@BfmeOrderZM@@QAE?AVAsciiStringZM@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00674F00 formats
+??0StringBaseNarrowZN@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZN@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZN@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZN@@QAAXVAsciiStringZN@@ZZ,0x00888FF0,pin
+?bfmeNameZN@BfmeOrderZN@@QAE?AVAsciiStringZN@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00674FF0 formats
+??0StringBaseNarrowZO@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZO@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZO@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZO@@QAAXVAsciiStringZO@@ZZ,0x00888FF0,pin
+?bfmeNameZO@BfmeOrderZO@@QAE?AVAsciiStringZO@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x006756E0 formats
+??0StringBaseNarrowZP@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZP@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZP@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZP@@QAAXVAsciiStringZP@@ZZ,0x00888FF0,pin
+?bfmeNameZP@BfmeOrderZP@@QAE?AVAsciiStringZP@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x006757D0 formats
+??0StringBaseNarrowZQ@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZQ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZQ@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZQ@@QAAXVAsciiStringZQ@@ZZ,0x00888FF0,pin
+?bfmeNameZQ@BfmeOrderZQ@@QAE?AVAsciiStringZQ@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x006758C0 formats
