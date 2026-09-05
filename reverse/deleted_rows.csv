@@ -24673,3 +24673,7 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1Rva0083FEC0MultiTailDtor@@UAE@XZ,0x0083FEC0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
 ??_GGen_dtor_005379b0@@UAEPAXI@Z,0x005379B0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
 ??_GGen_dtor_0083ffb0@@UAEPAXI@Z,0x0083FFB0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
+??1Rva00538210TailDtor@@UAE@XZ,0x00538210,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
+??1Rva0083F810TailDtor@@UAE@XZ,0x0083F810,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
+??_GGen_dtor_00538230@@UAEPAXI@Z,0x00538230,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
+??_GGen_dtor_0083f820@@UAEPAXI@Z,0x0083F820,placeholder superseded by byte-exact STLport basic_ios identity in Code/Libraries/Source/WWVegas/WWLib/stlport_basic_ios_destructors.cpp
