@@ -525,6 +525,7 @@ struct BfmeCapsShutdownShim
 	void *Direct3D;
 	StringClass CapsLog;
 	StringClass CompactLog;
+
 };
 
 // ?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@ present-unmatched
@@ -554,7 +555,11 @@ void DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns(void)
 	((Gen_00944c30 *)g_bfmeMeshRendererSingleton)->m();
 
 	if (CurrentCaps) {
-		delete reinterpret_cast<BfmeCapsShutdownShim *>(CurrentCaps);
+		BfmeCapsShutdownShim *caps = reinterpret_cast<BfmeCapsShutdownShim *>(CurrentCaps);
+		caps->CompactLog.~StringClass();
+		caps->CapsLog.~StringClass();
+		caps->DriverDLL.~StringClass();
+		operator delete(caps);
 		CurrentCaps=NULL;
 	}
 
