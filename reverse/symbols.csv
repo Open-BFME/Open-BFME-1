@@ -82931,3 +82931,5 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?invoke37C600@Rva0037C600Callback@@QAEXXZ,0x00015E2E,"Reviewed full508B37C600 callback body via15E2E; no stack args, deadlines and Object updates, address-derived label replaces unproved stop name"
 ?Rva00990210Lookup@@YAIPAUlua_State@@H@Z,0x00990210,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
 ?Rva00990030Lookup@@YAIPAUlua_State@@H@Z,0x00990030,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
+?BfmeCopyBackward002EA550@_STL@@YAPAUS4SortElem20@@PAU2@00ABUrandom_access_iterator_tag@1@PAH@Z,0x00035206,Reviewed20B record copy_backward2EA550 and vector-tail assignment2E13B0; typed assignment returns receiver
+?set@BfmeSortElem20Tail@@QAEAAV1@ABV1@@Z,0x00033640,Reviewed20B record copy_backward2EA550 and vector-tail assignment2E13B0; typed assignment returns receiver
