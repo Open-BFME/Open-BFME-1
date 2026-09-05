@@ -10,3 +10,7 @@ HealCrateCollide::HealCrateCollide(Thing *thing, const ModuleData *moduleData)
 	: CrateCollide(thing, moduleData)
 {
 }
+
+HealCrateCollide::~HealCrateCollide()
+{
+}
