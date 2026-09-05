@@ -94,7 +94,7 @@ Int Condition::getUiStrings(AsciiString strings[MAX_PARMS])
 	return pTemplate->getUiStrings(strings);
 }
 
-// ?getUiText@ScriptAction@@QAE?AVAsciiString@@XZ
+// ?getUiText@Condition@@QAE?AVAsciiString@@XZ
 AsciiString Condition::getUiText(void)
 {
 	AsciiString uiText;
