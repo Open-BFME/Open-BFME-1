@@ -19,6 +19,7 @@ the first divergence, and a SYMPTOM -> LEVER line keyed to docs/shape_levers.md:
 Size defaults to retail's ledger row for the RVA when one exists.
 """
 import argparse
+import bisect
 import csv
 import re
 import sys
@@ -37,6 +38,7 @@ LEVERS = {
     "length-delta": "shape/CSE/inline difference at the first divergent instruction -- see shape_levers.md rows 6, 8, 9 (flag tail, `new` statement, trivially-copyable arg)",
     "operand-change": "compare literal values, field offsets and branch destinations before changing register allocation",
     "instruction-change": "different operations or inconsistent register mapping; inspect the first differing instruction before choosing a lever",
+    "relocation-layout-drift": "object relocations no longer identify the same retail operands; use the raw instruction evidence to fix layout before diagnosing register or literal changes",
 }
 
 
@@ -54,6 +56,7 @@ def ledger_size(rva):
 def disasm(data, base=0):
     import capstone
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = True
     return list(md.disasm(bytes(data), base))
 
 
@@ -67,6 +70,48 @@ def masked(data, relocs):
             if ro + k < len(d):
                 d[ro + k] = 0
     return bytes(d)
+
+
+def diagnostic_streams(retail, compiled, relocs):
+    """Decode original bytes; normalize only corresponding address operands.
+
+    COFF offsets describe the object, not retail. Applying them to retail
+    before decoding can erase opcodes after even a one-byte layout change.
+    Raw streams are always returned for display. Classification may ignore a
+    relocation only when both decoders identify the same operand field in
+    corresponding instructions at that offset. This is not a byte-match gate.
+    """
+    ret_raw, our_raw = disasm(retail), disasm(compiled)
+    ret_by_start = {ins.address: ins for ins in ret_raw}
+    starts = [ins.address for ins in our_raw]
+    ret_norm, our_norm = bytearray(retail), bytearray(compiled)
+    unmapped = []
+
+    def field_at(ins, offset, width):
+        for field in ("imm", "disp"):
+            if (getattr(ins, field + "_size") == width
+                    and ins.address + getattr(ins, field + "_offset") == offset):
+                return field
+        return None
+
+    for offset, kind, name in relocs:
+        width = build.RELOC_WIDTH.get(kind)
+        if width is None or offset < 0:
+            raise ValueError("unknown relocation type or negative offset")
+        index = bisect.bisect_right(starts, offset) - 1
+        ours = our_raw[index] if index >= 0 else None
+        target = ret_by_start.get(ours.address) if ours is not None else None
+        field = field_at(ours, offset, width) if ours is not None else None
+        if (target is None or field is None or target.size != ours.size
+                or target.mnemonic != ours.mnemonic
+                or field_at(target, offset, width) != field):
+            unmapped.append((offset, kind, name))
+            continue
+        ret_norm[offset:offset + width] = bytes(width)
+        our_norm[offset:offset + width] = bytes(width)
+
+    return (ret_raw, our_raw, disasm(ret_norm), disasm(our_norm),
+            bytes(ret_norm), bytes(our_norm), unmapped)
 
 
 REG = re.compile(r"\b(e?[abcd]x|e?[sd]i|e?[sb]p|[abcd][lh])\b")
@@ -187,18 +232,19 @@ def main():
     first = diffs[0] if diffs else min(len(compiled), size)
     print(f"diffs    {len(diffs)} non-reloc byte(s); first at +{first}")
 
-    # Diagnose only concrete differences; link-time addresses are not register
-    # or literal mismatches. They still require the normal strict byte gate.
-    ret_ins = disasm(ret_m)
-    our_ins = disasm(ours_m)
-    kind = classify(ret_ins, our_ins, ret_m, ours_m)
+    (ret_raw, our_raw, ret_ins, our_ins, ret_diag, our_diag,
+     unmapped) = diagnostic_streams(retail, compiled, relocs)
+    kind = ("relocation-layout-drift" if unmapped else
+            classify(ret_ins, our_ins, ret_diag, our_diag))
+    if unmapped:
+        print(f"layout   {len(unmapped)} relocation site(s) do not align with retail operands; raw disassembly preserved")
     # Evidence: the instruction pairs that differ. The label is a candidate
     # cause keyed on byte pattern; the same pattern can have another source
     # (a control-flow shape looked like a register mirror on 0x00339B90).
     def masked_ins(ins, m):
         return m[ins.address: ins.address + ins.size]
-    pairs = [(r, o) for r, o in zip(ret_ins, our_ins)
-             if masked_ins(r, ret_m) != masked_ins(o, ours_m)]
+    pairs = [(r, o) for r, o in zip(ret_raw, our_raw)
+             if masked_ins(r, ret_diag) != masked_ins(o, our_diag)]
     confidence = "pattern only"
     print(f"candidate {kind}  (confidence {confidence}; verify against the evidence below)")
     print(f"lever     {LEVERS[kind]}")
@@ -209,7 +255,7 @@ def main():
 
     def rows(ins):
         return [(i.address, " ".join(f"{b:02x}" for b in i.bytes), f"{i.mnemonic} {i.op_str}") for i in ins]
-    R, O = rows(ret_ins), rows(our_ins)
+    R, O = rows(ret_raw), rows(our_raw)
     lo = 0 if a.all else max(0, first - 24)
     hi = max(len(retail), len(compiled)) if a.all else first + 40
     print()
