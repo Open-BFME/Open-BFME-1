@@ -2762,7 +2762,6 @@ name,address,notes
 ??0ObjectCreationUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
 ??0ObjectHelper@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,packet 001c0ea0 callee pin
 ??0ObjectTypes@@QAE@XZ,0x0003D415,pin for ObjectTypesTemp ctor callee (packet 002ed6c0)
-??0ObjectWeaponStatusHelperBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,ObjectWeaponStatusHelper ctor base call
 ??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,Ghidra-owned constructor thunk
 ??0OpenContainModuleData@@QAE@XZ,0x00044030,CaveContain factory constructor target
 ??0OptionPreferences@@QAE@XZ,0x0003713C
@@ -4317,7 +4316,6 @@ name,address,notes
 ??1Gen_dtor_001c12b0@@UAE@XZ,0x0001DC41,gen-dtor class destructor
 ??1Gen_dtor_001c12e0@@UAE@XZ,0x00028BF5,gen-dtor class destructor
 ??1Gen_dtor_001c1310@@UAE@XZ,0x0001EF6A,gen-dtor class destructor
-??1Gen_dtor_001c1480@@UAE@XZ,0x000222B9,gen-dtor class destructor
 ??1Gen_dtor_001c14b0@@UAE@XZ,0x00002F04,gen-dtor class destructor
 ??1Gen_dtor_001c2d60@@UAE@XZ,0x0001E182,gen-dtor class destructor
 ??1Gen_dtor_001c3f30@@UAE@XZ,0x00028E70,gen-dtor class destructor
@@ -26457,7 +26455,6 @@ name,address,notes
 ?b_001c13d0@@YAXXZ,0x001C13D0,gen-thunk body
 ?b_001c1460@@YAXXZ,0x001C1460,gen-thunk body
 ?b_001c1470@@YAXXZ,0x001C1470,gen-thunk body
-?b_001c1480@@YAXXZ,0x001C1480,gen-thunk body
 ?b_001c14b0@@YAXXZ,0x001C14B0,gen-thunk body
 ?b_001c14e0@@YAXXZ,0x001C14E0,gen-thunk body
 ?b_001c1530@@YAXXZ,0x001C1530,gen-thunk body
@@ -31577,7 +31574,6 @@ name,address,notes
 ?b_002571f0@@YAXXZ,0x002571F0,gen-thunk body
 ?b_002572a0@@YAXXZ,0x002572A0,gen-thunk body
 ?b_00257390@@YAXXZ,0x00257390,gen-thunk body
-?b_00257500@@YAXXZ,0x00257500,gen-thunk body
 ?b_00257520@@YAXXZ,0x00257520,gen-thunk body
 ?b_00257530@@YAXXZ,0x00257530,gen-thunk body
 ?b_00257570@@YAXXZ,0x00257570,gen-thunk body
@@ -80585,7 +80581,6 @@ name,address,notes
 ?setWakeFrame@GBB_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeWorkerAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
-?setWakeFrame@ObjectWeaponStatusHelperBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@PassiveAreaEffectUpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@UpdateModule@@IAEXPAVObject@@I@Z,0x000157DA,RadiusDecalUpdate protected retail callee
 ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,StructureCollapse wake-frame ILT thunk
@@ -82722,6 +82717,11 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??1ObjectHelper@@UAE@XZ,0x0002514E,ObjectDefectionHelper destructor tail call reaches the UpdateModule destructor alias
 ??1ObjectRecoveryHelper@@UAE@XZ,0x0003A7A1,destructor ILT to 0x00256D20
 ??_GObjectRecoveryHelper@@UAEPAXI@Z,0x0003CA60,primary class vtable slot zero ILT to 0x001C1170
-??_7ObjectRecoveryHelper@@6BObjectModule@@@,0x0109E694,primary vtable installed by the named constructor and destructor
 ??_7ObjectRecoveryHelper@@6BBehaviorModuleInterface@@@,0x0109E5D0,secondary vtable at this+0x0C
-??_7ObjectRecoveryHelper@@6B@,0x0109E5C4,secondary vtable at this+0x10
+??_7ObjectRecoveryHelper@@6BObjectHelper@@@,0x0109E694,primary vtable installed by the named constructor and destructor
+??_7ObjectRecoveryHelper@@6BUpdateModuleInterface@@@,0x0109E5C4,secondary vtable at this+0x10
+??1ObjectWeaponStatusHelper@@UAE@XZ,0x000222B9,destructor ILT to 0x00257500
+??_GObjectWeaponStatusHelper@@UAEPAXI@Z,0x0000BF0A,primary class vtable slot zero ILT to 0x001C1480
+??_7ObjectWeaponStatusHelper@@6BObjectHelper@@@,0x0109E8D4,primary vtable installed by the named constructor and destructor
+??_7ObjectWeaponStatusHelper@@6BBehaviorModuleInterface@@@,0x0109E810,secondary vtable at this+0x0C
+??_7ObjectWeaponStatusHelper@@6BUpdateModuleInterface@@@,0x0109E804,secondary vtable at this+0x10

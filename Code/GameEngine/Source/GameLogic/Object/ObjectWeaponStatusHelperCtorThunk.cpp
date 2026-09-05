@@ -20,44 +20,46 @@ enum UpdateSleepTime
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
-class BehaviorModule
+class UpdateModule
 {
 public:
-	virtual void behaviorModuleAnchor();
-	virtual ~BehaviorModule();
+	virtual void updateModuleAnchor();
+	virtual ~UpdateModule();
+
+protected:
+	void setWakeFrame(Object *obj, UpdateSleepTime when);
 
 	unsigned int m_04;
 	Object *m_object;							///< retail this+0x08
 };
 
-class __declspec(novtable) ObjectWeaponStatusHelperIface1
+class __declspec(novtable) BehaviorModuleInterface
 {
 public:
-	virtual void objectWeaponStatusIface1Anchor();
+	virtual void behaviorModuleInterfaceAnchor();
 };
 
-class __declspec(novtable) ObjectWeaponStatusHelperIface2
+class __declspec(novtable) UpdateModuleInterface
 {
 public:
-	virtual void objectWeaponStatusIface2Anchor();
+	virtual void updateModuleInterfaceAnchor();
 };
 
-class ObjectWeaponStatusHelperBase : public BehaviorModule
+class ObjectHelper : public UpdateModule
 {
 public:
-	ObjectWeaponStatusHelperBase(Thing *thing, const ModuleData *moduleData);
-
-protected:
-	void setWakeFrame(Object *obj, UpdateSleepTime when);
+	ObjectHelper(Thing *thing, const ModuleData *moduleData);
+	virtual ~ObjectHelper();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectWeaponStatusHelper.h
-class ObjectWeaponStatusHelper : public ObjectWeaponStatusHelperBase,
-	public ObjectWeaponStatusHelperIface1,
-	public ObjectWeaponStatusHelperIface2
+class ObjectWeaponStatusHelper : public ObjectHelper,
+	public BehaviorModuleInterface,
+	public UpdateModuleInterface
 {
 public:
 	ObjectWeaponStatusHelper(Thing *thing, const ModuleData *moduleData);
+	virtual ~ObjectWeaponStatusHelper();
 
 protected:
 	Object *getObject(void) const { return m_object; }
@@ -65,8 +67,12 @@ protected:
 
 // ??0ObjectWeaponStatusHelper@@QAE@PAVThing@@PBVModuleData@@@Z
 ObjectWeaponStatusHelper::ObjectWeaponStatusHelper(Thing *thing, const ModuleData *moduleData)
-	: ObjectWeaponStatusHelperBase(thing, moduleData)
+	: ObjectHelper(thing, moduleData)
 {
 	// Unlike other helpers, this one needs to start active.
 	setWakeFrame(getObject(), UPDATE_SLEEP_NONE);
+}
+
+ObjectWeaponStatusHelper::~ObjectWeaponStatusHelper()
+{
 }
