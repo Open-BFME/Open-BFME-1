@@ -82882,3 +82882,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?_M_insert_overflow@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@IAEXPAW4ParticleSystemID@@ABW43@ABU__false_type@2@I_N@Z,0x0003E63F,Reviewed full retail callee: 5BDE00 coordinate stores CC/DC/EC and clears1A4; 288AF0 four-byte vector overflow with count/atend andret20
 ?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B callee: cdecl eight arguments, stride/index/width/height and source/dest buffers; callback passed through unchanged"
 ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z,0x009AEEE0,Full488B callee: cdecl context/two buffer offsets/plane selector; YUV plane and stride dispatch confirmed
+?copyPlane009AF0D0@@YAXPAURva009AF320Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B eight-argument cdecl plane helper; third argument is running numeric fragment index, not a pointer"
