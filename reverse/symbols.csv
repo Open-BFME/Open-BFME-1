@@ -82853,3 +82853,7 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?isOpen@Glo012F706CType@@QBE_NXZ,0x000485D1,Existing matched60D48046B three-field campaign gate
 ?allowed@Rva003BF540@@QAE_NXZ,0x00025A77,Existing matched3BED0066B same-owner predicate chain
 ?show00592D60@Glo012F4B98Type@@QAEXPAVAsciiString@@P6AX_N@Z@Z,0x00043E4B,Reviewed592D60 first arg string pointer sent as window message40; second stored508 and consumed by589290 as cdecl callback(bool)
+?setCampaign@Glo012F1024Type@@QAEXPAVAsciiString@@@Z,0x00012756,Reviewed3B41A0131B same campaign manager selection by AsciiString; called with MordorCampaign/GondorCampaign
+?first@Glo012F1028Sub@@QAEXXZ,0x00028051,Reviewed3C735059B marks each holder+30 pointer item+A8 true
+?refreshEntries003BEC30@Rva003C1A50@@QAEXXZ,0x0000A754,"Reviewed3BEC30167B loops owner+C vector flagged1D entries, resolves name and refreshes member; not a clear operation"
+?after@Glo012F4B98Type@@QAEXXZ,0x0001CAE9,Reviewed58EFF0129B releases buffers4CC/480/484 and resets fields460..47C
