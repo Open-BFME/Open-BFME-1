@@ -4313,7 +4313,6 @@ name,address,notes
 ??1Gen_dtor_001c0fe0@@UAE@XZ,0x00015140,gen-dtor class destructor
 ??1Gen_dtor_001c1010@@UAE@XZ,0x00012634,gen-dtor class destructor
 ??1Gen_dtor_001c11a0@@UAE@XZ,0x0001DC37,gen-dtor class destructor
-??1Gen_dtor_001c12b0@@UAE@XZ,0x0001DC41,gen-dtor class destructor
 ??1Gen_dtor_001c12e0@@UAE@XZ,0x00028BF5,gen-dtor class destructor
 ??1Gen_dtor_001c1310@@UAE@XZ,0x0001EF6A,gen-dtor class destructor
 ??1Gen_dtor_001c14b0@@UAE@XZ,0x00002F04,gen-dtor class destructor
@@ -26445,10 +26444,8 @@ name,address,notes
 ?b_001c10d0@@YAXXZ,0x001C10D0,gen-thunk body
 ?b_001c1160@@YAXXZ,0x001C1160,gen-thunk body
 ?b_001c11a0@@YAXXZ,0x001C11A0,gen-thunk body
-?b_001c11d0@@YAXXZ,0x001C11D0,gen-thunk body
 ?b_001c1210@@YAXXZ,0x001C1210,gen-thunk body
 ?b_001c12a0@@YAXXZ,0x001C12A0,gen-thunk body
-?b_001c12b0@@YAXXZ,0x001C12B0,gen-thunk body
 ?b_001c12e0@@YAXXZ,0x001C12E0,gen-thunk body
 ?b_001c1310@@YAXXZ,0x001C1310,gen-thunk body
 ?b_001c1340@@YAXXZ,0x001C1340,gen-thunk body
@@ -31545,7 +31542,6 @@ name,address,notes
 ?b_00256d40@@YAXXZ,0x00256D40,gen-thunk body
 ?b_00256d50@@YAXXZ,0x00256D50,gen-thunk body
 ?b_00256d70@@YAXXZ,0x00256D70,gen-thunk body
-?b_00256db0@@YAXXZ,0x00256DB0,gen-thunk body
 ?b_00256dd0@@YAXXZ,0x00256DD0,gen-thunk body
 ?b_00256de0@@YAXXZ,0x00256DE0,gen-thunk body
 ?b_00256e20@@YAXXZ,0x00256E20,gen-thunk body
@@ -72023,7 +72019,6 @@ name,address,notes
 ?bfmeBaseAB@BfmeThingAB@@QAEXPAX@Z,0x0001AD0C,pin
 ?bfmeBaseAGB@BfmeThingAGB@@QAEXPAX0@Z,0x000170E4,pin
 ?bfmeBaseARC@BfmeThingARC@@QAEXXZ,0x009A1A30,pin
-?bfmeBaseARD@BfmeThingARD@@QAEXPAX0@Z,0x00021BE8,pin
 ?bfmeBaseASA@BfmeThingASA@@QAEXPAX@Z,0x000399F5,pin
 ?bfmeBaseASC@BfmeThingASC@@QAEXPAX@Z,0x00047B27,pin
 ?bfmeBaseAUA@BfmeThingAUA@@QAEXXZ,0x0001B522,pin
@@ -81698,9 +81693,6 @@ _bfmeVftAPA,0x00C73734,pin
 _bfmeVftARCa,0x00C73744,pin
 _bfmeVftARCb,0x00CEA230,pin
 _bfmeVftARCc,0x00CEA21C,pin
-_bfmeVftARDa,0x00C9E7B4,pin
-_bfmeVftARDb,0x00C9E6F0,pin
-_bfmeVftARDc,0x00C9E6E4,pin
 _bfmeVftASAa,0x00CEAD58,pin
 _bfmeVftASAb,0x00CF3558,pin
 _bfmeVftASAc,0x00CF3554,pin
@@ -82725,3 +82717,9 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_7ObjectWeaponStatusHelper@@6BObjectHelper@@@,0x0109E8D4,primary vtable installed by the named constructor and destructor
 ??_7ObjectWeaponStatusHelper@@6BBehaviorModuleInterface@@@,0x0109E810,secondary vtable at this+0x0C
 ??_7ObjectWeaponStatusHelper@@6BUpdateModuleInterface@@@,0x0109E804,secondary vtable at this+0x10
+??0ObjectRepulsorHelper@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000D062,constructor ILT to 0x001C11D0
+??1ObjectRepulsorHelper@@UAE@XZ,0x0001DC41,destructor ILT to 0x00256DB0
+??_GObjectRepulsorHelper@@UAEPAXI@Z,0x000063ED,primary class vtable slot zero ILT to 0x001C12B0
+??_7ObjectRepulsorHelper@@6BObjectHelper@@@,0x0109E7B4,primary vtable installed by the named constructor and destructor
+??_7ObjectRepulsorHelper@@6BBehaviorModuleInterface@@@,0x0109E6F0,secondary vtable at this+0x0C
+??_7ObjectRepulsorHelper@@6BUpdateModuleInterface@@@,0x0109E6E4,secondary vtable at this+0x10
