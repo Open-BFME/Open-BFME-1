@@ -80447,7 +80447,6 @@ name,address,notes
 ?push_back@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXABQAVDrawable@@@Z,0x0004A151,BFME attack-voice DrawableList insertion
 ?push_back@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXABQAVObject@@@Z,0x00019E70,ILT thunk
 ?push_back@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXABVAsciiString@@@Z,0x00032317,Open-BFME5 ILT thunk to body 0x000638C0 - a second per-TU copy of the same template the ledger already matches at 0x00757E20; ?addPublicBone@ModelConditionInfo@@QBEXABVAsciiString@@@Z at 0x00772BF0 appends through it
-?push_back@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXABVAsciiString@@@Z,0x0003827B,Open-BFME5 pin: site-specific incremental-link thunk to the push_back<AsciiString> body, the candidate retail's Rva00465200GameWindow::showPalantirScreen and its twin _bfme_showAptScreen both call through
 ?push_back_aux@DequeGameResultsResponseThunkShim@_STL@@QAEXPBX@Z,0x006421D0,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePingRequestThunkShim@_STL@@QAEXPBX@Z,0x00660750,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePingResponseThunkShim@_STL@@QAEXPBX@Z,0x00660880,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
@@ -81900,7 +81899,6 @@ __CIasin,0x009F7D86
 __CIfmod,0x009F6FB2,hit-decoded x2 (body)
 __CIpow,0x009F6FB2
 __CxxThrowException@8,0x00850600,CRT throw helper
-__CxxThrowException@8,0x009F6D00,ILT reached by the second (unreachable continuation) throw call in Rva00268340 iniParseAnim twin at 0x00268340
 __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
 __Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
 __Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGUISTIC_CASING
