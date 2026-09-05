@@ -66,6 +66,21 @@ Each landed through the ordinary relocation-aware byte and identity gates.
 These are verified source-shape examples, not claims that the reconstructed
 spelling is the original EA source. Failed neighboring hypotheses remain banked.
 
+## Solo viewport family results (2026-09-05 UTC)
+
+- Viewport rendering at 0x00716AD0 (913 B): all instructions matched but 38
+  stack-displacement bytes differed. Two separate display-dimension floats,
+  instead of a `Coord2D` local or a two-element array, restore retail's stack
+  placement. Constructor, assignment, inheritance, and declaration-order changes
+  did not fix the aggregate version. The vertex-buffer layout and owning append
+  lock came from independently matched creation and lock functions.
+- The adjacent quad renderer at 0x00716F50 (532 B) reuses that model. Keep
+  `inverse = 1.0f / size` and `halfTexel = inverse * 0.5f` as separate locals;
+  a single expression lets MSVC fold the numerator, removing a retail FPU
+  instruction. Populate each vertex's position, color, and UVs together. Both
+  complete bodies passed the normal relocation-aware byte gate and have a
+  matched highlight-filter caller. Neither needs new symbol pins or inline asm.
+
 ## Fleet tools (all read-only except add_match/re_log)
 
 | Need | Tool |

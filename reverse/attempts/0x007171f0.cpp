@@ -1,8 +1,10 @@
 // ?startRenderToTexture@W3DShaderManager@@SAXXZ
-// partial score=0.97 date=2026-09-04
+// partial score=0.99 date=2026-09-04
+// ?startRenderToTexture@W3DShaderManager@@SAXXZ
+// Solo refinement: shared scratch lifetimes recover the complete retail stack frame.
 // W3DShaderManager::startRenderToTexture, retail RVA0x007171F0, 445 bytes.
-// Bank: all instructions align; 11 non-relocation bytes are stack offsets.
-// Ours frame16 vs retail20; Coord2D and Vector3 locals occupy different slots.
+// Bank: 445/445B, four remaining ECX/EDX register bytes at +11D,+123,+129,+132.
+// Frame20 and all local offsets now match retail using the shared Scratch union.
 // Hardware test uses device slot3; Set_Render_Target9052B0; Clear904250.
 // Soft-edge flag GlobalData+0x8C; opacity data+0x301C; filters2/3 use alpha-only blit,4 clears.
 // Inline decrement and float getter restore retail material and clear instruction shapes.
@@ -46,8 +48,10 @@ class W3DShaderManager {public:static void startRenderToTexture();
  static IDirect3DSurface8 *m_newRenderSurface,*m_oldDepthSurface;
  static int m_currentFilter;
 };
-static __forceinline void DrawAlpha(float alpha){Coord2D dims={1,1};bfmeDrawFilterUV(0xffffff|((int)(alpha)<<24),0,&dims);}
+union Scratch {Coord2D dims;float opacity;ShaderClass shader;};
+
 void W3DShaderManager::startRenderToTexture() {
+ Scratch slot;
  if(m_renderingToTexture || !m_newRenderSurface || !m_oldDepthSurface)return;
  if(ScreenDevice && ScreenDevice->v->TestCooperativeLevel(ScreenDevice)!=0)return;
  DX8Wrapper::Set_Render_Target(m_newRenderSurface,true);
@@ -55,13 +59,13 @@ void W3DShaderManager::startRenderToTexture() {
  if(ShaderGlobalData->showSoftWaterEdge){
   if(m_currentFilter==2 || m_currentFilter==3){
    DX8Wrapper::Set_DX8_Render_State(168,8);
-   ShaderClass shader;shader.bits=(ScreenOpaqueShader&~8)|7;
-   DX8Wrapper::Set_Shader(shader);
+   slot.shader.bits=(ScreenOpaqueShader&~8)|7;
+   DX8Wrapper::Set_Shader(slot.shader);
    VertexMaterialClass *p=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
    DX8Wrapper::Set_Material(p);
    if(p)p->Release_Ref();
-   DrawAlpha(ShaderWaterData->getOpacity()*255.0f);
+   int alpha=(int)(ShaderWaterData->getOpacity()*255.0f);slot.dims.x=1;slot.dims.y=1;bfmeDrawFilterUV(0xffffff|(alpha<<24),0,&slot.dims);
    DX8Wrapper::Set_DX8_Render_State(168,7);
-  }else DX8Wrapper::Clear(true,false,false,Vector3(0,0,0),ShaderWaterData->getOpacity(),1,0);
- }else if(m_currentFilter==4)DX8Wrapper::Clear(true,false,false,Vector3(0,0,0),ShaderWaterData->getOpacity(),1,0);
+  }else {slot.opacity=ShaderWaterData->getOpacity();DX8Wrapper::Clear(true,false,false,Vector3(0,0,0),slot.opacity,1,0);}
+ }else if(m_currentFilter==4){slot.opacity=ShaderWaterData->getOpacity();DX8Wrapper::Clear(true,false,false,Vector3(0,0,0),slot.opacity,1,0);}
 }
