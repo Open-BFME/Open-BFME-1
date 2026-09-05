@@ -1,8 +1,27 @@
 // ?onEnter@AITNGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.98 date=2026-09-03
+// partial score=0.95 date=2026-09-05
 // cl: /DNDEBUG /MD /EHsc
 // BFME layout reconstruction of AITNGuardAttackAggressorState::onEnter at
 // retail 0x0018AA70.
+//
+// Fixed from the prior stash: findObjectByID's parameter must be `int` (not
+// the ObjectID typedef) to bind the ILT thunk at 0x0001F253 that
+// reverse/symbols.csv already carries for the H-mangled overload, and
+// TheAIParseDefinitionAI must be `extern "C"` (matching every other landed
+// file that touches it), not a mangled C++ global -- both now resolve and
+// byte-match through the tunnels->updateNemesis(nemesis) call, 266/279 bytes.
+//
+// Remaining 13-byte diff is entirely a register-allocation choice (ecx vs
+// edx) for evaluating TheGameLogic->getFrame() +
+// TheAIParseDefinitionAI->getAiData()->m_guardChaseUnitFrames feeding the
+// AIAttackState constructor's `m_exitConditions` argument. Every rephrasing
+// tried -- a temp for either operand, an AIData* cache, swapping the operand
+// order, dropping const-volatile off getFrame() -- reallocates registers
+// across the WHOLE function (not just this expression) and always regresses
+// the byte match elsewhere, never improves it. Looks like a whole-function
+// MSVC 7.1 scheduling artifact rather than a source-shape bug; the next
+// attempt should look for a different overall statement order/variable set
+// for the whole function body, not just this one expression.
 
 typedef unsigned int ObjectID;
 
@@ -18,7 +37,7 @@ enum StateReturnType
 class GameLogic
 {
 public:
-    Object *findObjectByID( ObjectID id );
+    Object *findObjectByID( int id );
     unsigned int getFrame() const volatile
     {
         return *(const unsigned int *)((const unsigned char *)this + 0x3c);
@@ -46,7 +65,7 @@ public:
     }
 };
 
-extern AI * volatile TheAIParseDefinitionAI;
+extern "C" AI *TheAIParseDefinitionAI;
 
 class DamageInfo
 {
@@ -198,12 +217,11 @@ StateReturnType AITNGuardAttackAggressorState::onEnter()
         m_machine->m_nemesisID = nemID;
     }
 
-    BfmeGuardMachine *guard = m_machine;
-    Object *nemesis = TheGameLogic->findObjectByID(guard->getNemesisID());
+    Object *nemesis = TheGameLogic->findObjectByID(m_machine->getNemesisID());
     if (nemesis == 0)
         return STATE_SUCCESS;
 
-    Player *ownerPlayer = guard->m_owner->getControllingPlayer();
+    Player *ownerPlayer = m_machine->m_owner->getControllingPlayer();
     TunnelTracker *tunnels = 0;
     if (ownerPlayer != 0)
         tunnels = ownerPlayer->getTunnelSystem();
