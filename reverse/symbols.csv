@@ -82812,3 +82812,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?objectTypesFromParam@ScriptConditions@@KAXPAVParameter@@PAVObjectTypes@@@Z,0x0003DF4B,Peer verified cdecl two-pointer parser at34F7B0; Parameter/ObjectTypes arguments and ret caller cleanup
 ?getPlayerDifficulty@Player@@QBE?AW4GameDifficulty@@XZ,0x000217D8,"Peer and lead verified ILT toC9480; player difficulty enum, const thiscall"
 ?duplicate@Script@@QBEPAV1@XZ,0x0004589F,Peer identified Script clone; ILT to35B680 allocates64B and calls Script copy ctor
+?findPositionAround@@YA_NPBUCoord3D@@PBUFindPositionOptions@@PAU1@@Z,0x00026C4C,"Independent peer and lead verified free cdecl findPositionAround; ILT to1AF610, uses ThePartitionManager"
