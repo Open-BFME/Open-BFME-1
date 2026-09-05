@@ -82842,3 +82842,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??A?$map@HPAUBfmeLadderCountRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBfmeLadderCountRecord@@@_STL@@@3@@_STL@@QAEAAPAUBfmeLadderCountRecord@@ABH@Z,0x0000C3B0,Lead independently traced115B654E90 signed-int key map returning node+14 mapped pointer; same rank-request helper
 ?bfmeLadderCountCompleted@@YAHHHPAD_JPAX@Z,0x0065BC80,"Lead full45B callback trace: context esp+18, forwards5dwords incl64bit length to member, int1 ifnull, cdecl"
 ?stopRotOrPitchSound@TurretAI@@AAEXXZ,0x0018D460,"Lead traced32B18D460: checks audio event atthis+20, TheAudio remove-event slot4C with handle+2C; matches ZH stopRotOrPitchSound"
+?lastNode00087A80@BfmeSubBIA@@QAEPAVBfmeAskResult@@XZ,0x000022BB,Lead traced87A80 final override node walk via next+4; returns node pointer
+?g_bfmeGlobal012F18F0@@3PAVBfmeGlobal012F18F0@@A,0x00EF18F0,RVA of VA012F18F0; matched parseWaterTransparencyDefinitionC3A00 reads/writes this WaterTransparency override pointer
