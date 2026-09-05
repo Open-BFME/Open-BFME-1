@@ -21,6 +21,7 @@ a byte-exact landing on 2026-09-02; the mechanism is in `docs/lessons.md`.
 | A trivially-copyable class arg gets built as a local + pushed copy | Give the class a declared copy ctor/dtor (non-trivial) so it is constructed in place. |
 | "Owning class unidentified" | `python3 tools/vtable_lookup.py <vtable VA>` -- retail slot table, ledger names per slot, and the ctors/dtors that install it. |
 | Callee "unpinned" in an old stash | Look it up again -- `reverse/zh_sweep/requeue_resolved_callees.csv` lists 72 bodies whose blockers have since been pinned. |
+| Extra register saves or local copies around a non-inlined helper taking a local's address | Check the real helper's definition in the original TU. MSVC 7.1 uses knowledge that the helper does not retain the pointer even with `__declspec(noinline)`. `python3 tools/callee_visibility.py` reproduces this; [controls and limits](callee_visibility.md). Do not invent a non-retaining stub. |
 
 Also check that the attempts log entry is not stale: `grep ,0xRVA, reverse/functions.csv`
 -- if the row already points at a `.cpp`, someone landed it.

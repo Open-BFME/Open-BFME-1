@@ -6,7 +6,6 @@ Run: python3 tools/callee_visibility.py
 """
 import hashlib
 import json
-from pathlib import Path
 import uuid
 
 import build

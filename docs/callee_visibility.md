@@ -53,10 +53,14 @@ retention explanation as the small control. `getVertexBuffer` has a separate
 inlining effect and must not be conflated with it.
 
 The 14,081 B bank is **not exact**: it still has 1,254 non-relocation byte
-differences against retail. The first application elsewhere, adding the
-upstream-shaped `AIGroup::getCenter` companion to the `recompute` bank at
-`0x00154B80`, left its nine-byte scheduling mismatch unchanged. That companion
-was itself not byte-exact. No additional conversion is claimed from this lever.
+differences against retail. The first application elsewhere, adding
+`AIGroup::getCenter` to the `recompute` bank at `0x00154B80`, left its nine-byte
+scheduling mismatch unchanged. That remained true after recovering the actual
+222 B centroid body, including BFME's extra `Object::isMobile()` predicate.
+The centroid landed independently in `AIGroupCenter.cpp`: replacing raw list
+nodes with the real STLport list/iterator corrected its EBX/EBP assignment.
+That conversion demonstrates a separate type-context effect, not a successful
+application of the non-retention lever to `recompute`.
 
 ## When to investigate it
 
