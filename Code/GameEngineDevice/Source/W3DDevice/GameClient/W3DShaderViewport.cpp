@@ -117,3 +117,43 @@ void ShaderViewportRva00716AD0(int color,bool useSize,const Coord2D *givenSize) 
  if (old) ((ReleaseResource)old->vt[2])(old);
  if (++ShaderQuadIndex >= 50) ShaderQuadIndex = 0;
 }
+
+// Retail RVA 0x00716F50, 532 bytes. Highlight postRender calls this through
+// ILT 0x18BB0 at RVA 0x007D72A3. The dimensions are interpreted as signed by
+// retail's FILD; the original method spelling is not asserted here.
+// Keep reciprocal and half-texel values separate, and populate each vertex
+// completely before the next. Combining 1/size*0.5 folds a retail FPU operation.
+void ShaderQuadRva00716F50(int size) {
+ if(!ShaderQuadBuffer)return;
+ {
+  VertexBufferClass::AppendLockClass lock(ShaderQuadBuffer,ShaderQuadIndex*4,4,ShaderQuadIndex?0x1000:0x2000);
+  Vertex *v=(Vertex*)lock.Get_Vertex_Array();
+float inverse = 1.0f / size;
+  float halfTexel = inverse * 0.5f;
+v[0].pos=Vec4(1,1,0,1);
+v[0].color=0xffffffff;
+v[0].u=1+halfTexel;
+  v[0].v=halfTexel;
+v[1].pos=Vec4(1,-1,0,1);
+v[1].color=0xffffffff;
+v[1].u=1+halfTexel;
+  v[1].v=1+halfTexel;
+v[2].pos=Vec4(-1,1,0,1);
+v[2].color=0xffffffff;
+v[2].u=halfTexel;
+  v[2].v=halfTexel;
+v[3].pos=Vec4(-1,-1,0,1);
+v[3].color=0xffffffff;
+v[3].u=halfTexel;
+  v[3].v=1+halfTexel;
+ }
+ Resource *dev=ShaderQuadDevice;
+ Resource *old = 0;
+ unsigned offset = 0, stride = 0;
+ ((GetStream)dev->vt[101])(dev,0,&old,&offset,&stride);
+ ((SetStream)dev->vt[100])(dev,0,ShaderQuadBuffer->buffer,0,ShaderQuadBuffer->info->vertexSize);
+ ((DrawPrimitive)dev->vt[81])(dev,5,ShaderQuadIndex*4,2);
+ ((SetStream)dev->vt[100])(dev,0,old,offset,stride);
+ if(old)((ReleaseResource)old->vt[2])(old);
+ if(++ShaderQuadIndex>=50)ShaderQuadIndex=0;
+}
