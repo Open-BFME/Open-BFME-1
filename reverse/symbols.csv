@@ -29419,7 +29419,6 @@ name,address,notes
 ?b_00217550@@YAXXZ,0x00217550,gen-thunk body
 ?b_00217590@@YAXXZ,0x00217590,gen-thunk body
 ?b_002175c0@@YAXXZ,0x002175C0,gen-thunk body
-?b_00217620@@YAXXZ,0x00217620,gen-thunk body
 ?b_00217640@@YAXXZ,0x00217640,gen-thunk body
 ?b_00217650@@YAXXZ,0x00217650,gen-thunk body
 ?b_00217660@@YAXXZ,0x00217660,gen-thunk body
@@ -82751,3 +82750,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7VeterancyCrateCollide@@6BObjectModule@@@,0x010AACAC,primary vtable installed by the named constructor and destructor
 ??_7VeterancyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AABE8,secondary vtable at this+0x0C
 ??_7VeterancyCrateCollide@@6B@,0x010AABCC,secondary vtable at this+0x10
+??1CollideModule@@UAE@XZ,0x0004B68C,destructor ILT to the shared body at 0x00217620
