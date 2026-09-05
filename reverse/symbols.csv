@@ -991,7 +991,9 @@ name,address,notes
 ??$__find_if@PAUBannerMovieEntry@@VBannerMovieEntryMatches@@@_STL@@YAPAUBannerMovieEntry@@PAU1@0VBannerMovieEntryMatches@@ABUrandom_access_iterator_tag@0@@Z,0x00581CE0,BannerUI 28-byte entry search; predicate compares the id at entry+4
 ??$__find_if@PBDU?$_Eq_char_bound@V?$char_traits@D@_STL@@@_STL@@@_STL@@YAPBDPBD0U?$_Eq_char_bound@V?$char_traits@D@_STL@@@0@ABUrandom_access_iterator_tag@0@@Z,0x006528B0,gen-tgrid shared callee
 ??$__find_if@V?$reverse_iterator@PBD@_STL@@U?$_Eq_char_bound@V?$char_traits@D@_STL@@@2@@_STL@@YA?AV?$reverse_iterator@PBD@0@V10@0U?$_Eq_char_bound@V?$char_traits@D@_STL@@@0@ABUrandom_access_iterator_tag@0@@Z,0x004C4530,gen-tgrid shared callee
+?_M_do_lock@?$_STLP_mutex_spin@$0A@@_STL@@SAXPCJ@Z,0x0082C760,STLport _STLP_mutex_spin<0>::_M_do_lock body
 ??$__get_decimal_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0AAH@Z,0x008391D0,
+??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAHH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x008392A0,STLport __get_integer<char,int> helper called by __get_decimal_integer at 0x008391D0
 ??$__get_decimal_integer@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0AAH@Z,0x0083B0D0,
 ??$__get_formatted_time@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083BCA0,
 ??$__get_formatted_time@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@PBD@_STL@@YAPBDV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0PBD1ABV_Time_Info@0@AAHPAUtm@@@Z,0x0083C710,
