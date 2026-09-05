@@ -33,7 +33,43 @@
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 #include "Common/GameState.h"
+#pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+extern "C" void free(void *);
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		free(p); \
+	} \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		free(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
 #include "Common/Team.h"
+#pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 #include "Common/ThingFactory.h"
 #include "Common/PerfTimer.h"
 #include "Common/Player.h"
@@ -112,10 +148,117 @@ struct BfmeTeamRelationMapView
 	TeamRelationMapType m_map;
 };
 
+struct BfmeTeamOverrideFields
+{
+	unsigned char m_unmodelled_000[ 0xec ];
+	BfmeTeamRelationMapView *m_teamRelations;
+};
+
 static BfmeTeamRelationMapView *bfmeTeamRelations( const Team *that )
 {
 	return *(BfmeTeamRelationMapView **)((const char *)that + 0xec);
 }
+
+class BfmeObjectDlinkObject;
+
+class BfmeObjectVirtualTail
+{
+public:
+	unsigned char m_vt[ 4 ];
+};
+
+class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+{
+public:
+	unsigned char m_carrier[ 4 ];
+};
+
+class BfmeObjectVtbl
+{
+public:
+	virtual void bfmeObjectSlot0();
+};
+
+class BfmeObjectDlinkBase
+{
+public:
+	BfmeObjectDlinkObject *dlink_next_TeamMemberList() const;
+};
+
+class BfmeObjectDlinkPad
+{
+public:
+	unsigned char m_pad[ 0x64 ];
+};
+
+class BfmeObjectDlinkObject : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+{
+public:
+	unsigned char m_tail[ 0x40 ];
+};
+
+typedef BfmeObjectDlinkObject *(BfmeObjectDlinkObject::*BfmeGetNextTeamMemberFunc)() const;
+
+template <class ObjectType> class BfmeDlinkIterator
+{
+public:
+	BfmeDlinkIterator( ObjectType *cur, BfmeGetNextTeamMemberFunc getNext )
+		: m_cur( cur ), m_getNext( getNext ) { }
+
+	Bool done() const { return m_cur == NULL; }
+	ObjectType *cur() const { return m_cur; }
+
+	void advance()
+	{
+		if (m_cur)
+			m_cur = (m_cur->*m_getNext)();
+	}
+
+private:
+	ObjectType *m_cur;
+	BfmeGetNextTeamMemberFunc m_getNext;
+};
+
+struct BfmeTeamMemberListView
+{
+	unsigned char m_unmodelled_000[ 0x0c ];
+	BfmeObjectDlinkObject *m_head;
+
+	BfmeDlinkIterator<BfmeObjectDlinkObject> iterate() const
+	{
+		return BfmeDlinkIterator<BfmeObjectDlinkObject>( m_head, BfmeObjectDlinkBase::dlink_next_TeamMemberList );
+	}
+};
+
+struct BfmeTeamMemberObjectView
+{
+	Bool isEffectivelyDead() const
+	{
+		return (*(const UnsignedByte *)((const char *)this + 0x344) & 1) != 0;
+	}
+
+	Bool isDestroyed() const
+	{
+		return (*(const UnsignedByte *)((const char *)this + 0x90) & 1) != 0;
+	}
+
+	void *getContain() const
+	{
+		return *(void *const *)((const char *)this + 0x1fc);
+	}
+};
+
+class BfmeContainedTeamObject
+{
+public:
+	void updateTeam( Team *team );
+};
+
+extern void j_00001140();
+extern void j_0000902f();
+#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVBfmeObjectDlinkObject@@@Z=?j_00001140@@YAXXZ")
+#pragma comment(linker, "/alternatename:?updateTeam@BfmeContainedTeamObject@@QAEXPAVTeam@@@Z=?j_0000902f@@YAXXZ")
 
 class BfmeTeamInstanceIterator
 {
@@ -1885,13 +2028,22 @@ Object *Team::getTeamTargetObject(void)
 }
 
 // ------------------------------------------------------------------------
-// ?setOverrideTeamRelationship@Team@@QAEXIW4Relationship@@@Z present-unmatched
- void Team::setOverrideTeamRelationship( TeamID teamID, Relationship r)
+void Team::setOverrideTeamRelationship( TeamID teamID, Relationship r)
 {
 	if (teamID != TEAM_ID_INVALID )
 	{
 		// note that this creates the entry if it doesn't exist.
-		m_teamRelations->m_map[teamID] = r;
+		((BfmeTeamOverrideFields *)this)->m_teamRelations->m_map[teamID] = r;
+
+		for (BfmeDlinkIterator<BfmeObjectDlinkObject> iter = ((const BfmeTeamMemberListView *)this)->iterate(); !iter.done(); iter.advance())
+		{
+			BfmeTeamMemberObjectView *obj = (BfmeTeamMemberObjectView *)(Object *)iter.cur();
+			if (obj->isEffectivelyDead() || obj->isDestroyed())
+				continue;
+
+			if (obj->getContain())
+				((BfmeContainedTeamObject *)obj)->updateTeam( this );
+		}
 	}
 }
 
