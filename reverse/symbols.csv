@@ -11619,6 +11619,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPAVWeaponTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x00012067,newWeaponTemplate STL growth call target (incremental-link thunk)
 ?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x0001CBFC,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0000F830,SlowDeath parseFX retail overflow helper
+?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,ILT reached by InstantDeathBehavior parseFX twin at 0x0028BB10
 ?_M_insert_overflow@?$vector@PBVImage@@V?$allocator@PBVImage@@@_STL@@@_STL@@IAEXPAPBVImage@@ABQBV3@ABU__true_type@2@I_N@Z,0x004715B0,Open-BFME5 grow path of the image vector at BFMERetailCommandButton+0x138
 ?_M_insert_overflow@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@ABQBV3@ABU__true_type@2@I_N@Z,0x00043333,pinned from newModuleDataFromINI @0x1295F0 which is byte-exact apart from this call
 ?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0002E65E,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk)
@@ -81886,6 +81887,7 @@ __CIasin,0x009F7D86
 __CIfmod,0x009F6FB2,hit-decoded x2 (body)
 __CIpow,0x009F6FB2
 __CxxThrowException@8,0x00850600,CRT throw helper
+__CxxThrowException@8,0x009F6D00,ILT reached by the second (unreachable continuation) throw call in Rva00268340 iniParseAnim twin at 0x00268340
 __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
 __Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
 __Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGUISTIC_CASING
