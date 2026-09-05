@@ -83233,3 +83233,12 @@ g_bfmeBufferAN,0x012F19F0,Open-BFME5 the shared buffer the level-path builder at
 ??1StringBaseNarrowAR@@IAE@XZ,0x00887940,pin
 g_bfmeWindowManagerAR,0x012F1B40,Open-BFME5 the window manager the replay-control load at 0x0043E3E0 asks
 g_bfmeReplayControlAR,0x012F1490,Open-BFME5 the window the replay-control load at 0x0043E3E0 stores
+??0StringBaseNarrowAS@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAS@@IAE@XZ,0x00887940,pin
+?bfmeRefreshAS@BfmeResolverAS@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the name resolve at 0x002DAE80 runs first
+?bfmeFindAS@BfmeRegistryAS@@QAEPAXVAsciiStringAS@@@Z,0x0000D3FA,Open-BFME5 the registry lookup the name resolve at 0x002DAE80 stores
+g_bfmeRegistryAS,0x012EF738,Open-BFME5 the registry the name resolve at 0x002DAE80 asks
+??0StringBaseNarrowAT@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAT@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAT@BfmeMoveToStateAT@@QAEXPAXVAsciiStringAT@@@Z,0x00032182,Open-BFME5 the base initialiser the AIMoveToState constructor at 0x00185700 calls
+_bfmeVftableAT,0x0069B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
