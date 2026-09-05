@@ -82871,3 +82871,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?TheTeamFactory@@3PAVTeamFactory@@A,0x00EED810,RVA of retailVA12ED810; team factory pointer in creation andlookup paths
 ?createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z,0x0002D3D0,"FullF7E70155B reviewed: nullproto returnnull, singleton reuse fromproto274, otherwise alloc110 ctor withproto andincrementedfactoryID1C; sets31/32"
 ?xferObjectID0010C3C0@@YAXPAVXfer@@PAI@Z,0x0000C9B4,"Previously reviewed10C3C025B helper: ObjectID literal,width4,virtual90; correctedunsignedObjectID pointer"
+?getNthName@ModuleInfo@@QBE?AVBFMERetailAsciiString@@H@Z,0x0000EB56,"Full13B2F097B validates signedindex and20B count, AsciiString copy ofnugget0 orsharedempty intohiddenreturnbuffer,ret8"
+?TheGhostObjectManager@@3PAVGhostObjectManager@@A,0x00EEF4FC,CorrectRVA ofVA12EF4FC; namedZH ghostpredicate andretailvirtual1C Object* dispatch
