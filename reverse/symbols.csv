@@ -83278,3 +83278,13 @@ _bfmeGuardTableAY,0x0069B558,Open-BFME5 the guard table the state constructor at
 ?bfmeBaseInitAZ@BfmeStateAZ@@QAEXPAXVAsciiStringAZ@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x0018AE90 calls
 _bfmeVftableAZ,0x0069B7A0,Open-BFME5 the vftable the state constructor at 0x0018AE90 installs
 _bfmeGuardTableAZ,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AE90 points at
+??0StringBaseNarrowBB@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBB@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBB@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBB@BfmeStateBB@@QAEXPAXVAsciiStringBB@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0017F7F0 calls
+_bfmeVftableBB,0x0069A6C0,Open-BFME5 the vftable the state constructor at 0x0017F7F0 installs
+??0StringBaseNarrowBA@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBA@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBA@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBA@BfmeStateBA@@QAEXPAXVAsciiStringBA@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0017FA10 calls
+_bfmeVftableBA,0x0069A7B0,Open-BFME5 the vftable the state constructor at 0x0017FA10 installs
