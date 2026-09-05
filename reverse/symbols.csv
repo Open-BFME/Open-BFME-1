@@ -83242,3 +83242,5 @@ g_bfmeRegistryAS,0x012EF738,Open-BFME5 the registry the name resolve at 0x002DAE
 ??1StringBaseNarrowAT@@IAE@XZ,0x00887940,pin
 ?bfmeBaseInitAT@BfmeMoveToStateAT@@QAEXPAXVAsciiStringAT@@@Z,0x00032182,Open-BFME5 the base initialiser the AIMoveToState constructor at 0x00185700 calls
 _bfmeVftableAT,0x0069B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
+?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A,0x00EED4FC,GameEngine::init constructs the 16-byte vptr-plus-AsciiString-range object at 0x00079316 and stores VA 0x012ED4FC; logger 0x00065C80 appends strings and getCRC caller transfers them under literal CRCParameterCheck
+?erase@CRCParameterList@@QAEXPAVAsciiString@@0@Z,0x00024C17,CRCParameterCheck clear at 0x00065A40 passes its begin/end pointers to this exact ILT target; body 0x00065960 destroys each AsciiString and moves finish to begin

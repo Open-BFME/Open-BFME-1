@@ -38,7 +38,7 @@ a virtual call through slot `+0x14`; it does not assert a more specific effect.
 
 | Phase | Work performed | Direct state changes |
 |---:|---|---|
-| 1 | Runs the logic-debug-frame helper and the freeze gate; queries the network packet-router state; runs the phase-1 object special case; updates ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem; creates periodic logic CRC messages; updates optional stats/action systems and Recorder; consumes the command list; performs per-object interface work and the phase-1 object tail. | Records phase 1 at `GameLogic+0x168`; may set `GameClient+0xC4` false on freeze or true after a completed phase; conditionally increments the simulation frame at `GameLogic+0x3C` exactly once near the end. |
+| 1 | Runs the logic-debug-frame helper and the freeze gate; queries the network packet-router state; runs the phase-1 object special case; updates ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem; creates periodic logic CRC messages; clears the optional `CRCParameterCheck`; updates StatsCollector and Recorder; consumes the command list; performs per-object interface work and the phase-1 object tail. | Records phase 1 at `GameLogic+0x168`; clears the accumulated RNG/pathfinding CRC diagnostic strings; may set `GameClient+0xC4` false on freeze or true after a completed phase; conditionally increments the simulation frame at `GameLogic+0x3C` exactly once near the end. |
 | 2 | Updates PartitionManager and CollisionManager (`TheCollisionManager`, VA `0x012ED5C4`). CollisionManager's virtual update forwards to its owned collision-data object at `+0x0C`. It then walks all objects and calls the transform/frame recorder when object `+0x168` differs from the current simulation frame. | Records phase 2. CollisionManager brackets three collision-processing calls with its owned data's busy byte at `+0xC06D`. Does not increment the simulation frame. |
 | 3 | Processes the first half of sleepy-update vector 0 (`GameLogic+0xC4`). Due entries may call their update module and receive a new wake frame. | Records phase 3; writes `GameLogic+0x100` around callbacks; updates entry wake frame `+0x14`; may change heap indices `+0x18/+0x1C` and move expired entries to `GameLogic+0xF4`. |
 | 4 | Processes the second half of sleepy-update vector 0. | Same sleepy-entry changes as phase 3. It begins at `size/2`, complementing phase 3's stop at `size/2`. |
@@ -132,9 +132,14 @@ The following order is instruction-level fact:
    `initSubsystem<LuaScriptEngine>` body at RVA `0x00074ED0`.
 7. Logic CRC generation and message creation occur at
    `0x0038DC50..0x0038DDF5`.
-8. Optional singleton `0x012ED4FC` updates, followed by the phase-1-only
-   `TheStatsCollector` (`0x012ED63C`) and Recorder
-   (`0x0038DDF5..0x0038DE27`). The direct call at `0x0038DE16` follows ILT
+8. Optional `TheCRCParameterCheck` (VA `0x012ED4FC`) clears its accumulated
+   `AsciiString` range, followed by the phase-1-only `TheStatsCollector`
+   (`0x012ED63C`) and Recorder (`0x0038DDF5..0x0038DE27`). The identity is
+   fixed by its exact constructor at RVA `0x000659C0`, its vector-appending
+   logger at `0x00065C80`, and the `GameLogic::getCRC` caller of RVA
+   `0x00065D90`, which transfers the same vector under the literal block name
+   `"CRCParameterCheck"`. `GameEngine::reset` calls the same exact clear body
+   at RVA `0x00065A40`. The direct call at `0x0038DE16` follows ILT
    `0x000467D1` to the exact `StatsCollector::update` body at RVA
    `0x000A2E60`. Independent calls on the same global reach exact
    `writeFileEnd`, `collectMsgStats`, `startScrollTime`, and `endScrollTime`
