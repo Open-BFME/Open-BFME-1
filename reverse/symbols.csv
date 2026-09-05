@@ -4989,7 +4989,7 @@ name,address,notes
 ??1Gen_dtor_00471850@@UAE@XZ,0x00023457,gen-dtor class destructor
 ??1Gen_dtor_004724d0@@UAE@XZ,0x0001C0A3,gen-dtor class destructor
 ??1Gen_dtor_00473370@@UAE@XZ,0x00048DBF,gen-dtor class destructor
-??1Gen_dtor_004734d0@@UAE@XZ,0x00047064,gen-dtor class destructor
+??1GameFont@@MAE@XZ,0x00047064,destructor ILT to 0x004734B0 used by the retail scalar deleting wrapper
 ??1Gen_dtor_004735c0@@UAE@XZ,0x0000B636,gen-dtor class destructor
 ??1Gen_dtor_00473aa0@@UAE@XZ,0x00015F5F,gen-dtor class destructor
 ??1Gen_dtor_00473ad0@@UAE@XZ,0x000364A3,gen-dtor class destructor
@@ -82732,9 +82732,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7LockWeaponCreate@@6BObjectModule@@@,0x010B18E4,primary vtable shared with the neighboring constructor
 ??_7LockWeaponCreate@@6BBehaviorModuleInterface@@@,0x010B1820,secondary vtable at this+0x0C
 ??_7LockWeaponCreate@@6B@,0x010B180C,secondary vtable at this+0x10
-??1GameFont@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40
-??_GGameFont@@MAEPAXI@Z,0x0000B2CB,vtable slot zero ILT to 0x00102E10
-??_7GameFont@@6B@,0x01086344,vtable shared by the named constructor and destructor
+??1Mapping@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40
+??_GMapping@@MAEPAXI@Z,0x0000B2CB,vtable slot zero ILT to 0x00102E10
+??_7Mapping@@6B@,0x01086344,vtable shared by the named constructor and destructor
 ??1?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@UAE@XZ,0x0083FEC0,STLport 4.5.3 wide basic_streambuf destructor; adjacent constructor and vtable prove identity
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
@@ -82772,3 +82772,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1PopupMessageData@@UAE@XZ,0x00047005,destructor ILT to 0x0043F4B0 used by the retail scalar deleting wrapper
 ??_GPopupMessageData@@UAEPAXI@Z,0x000230C4,vtable slot zero ILT to the scalar deleting destructor at 0x0043F480
 ??_7PopupMessageData@@6B@,0x00CF58C4,vtable installed by matched InGameUI::popupMessage for its m_popupMessageData allocation
+??0GameFont@@QAE@XZ,0x000310A7,constructor ILT to 0x004735A0
+??_GGameFont@@MAEPAXI@Z,0x000111A3,GameFont vtable slot zero ILT to 0x004734D0
+??_7GameFont@@6B@,0x010F7628,vtable installed by FontLibrary font builder

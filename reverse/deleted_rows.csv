@@ -24705,3 +24705,9 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??1Rva0043F4B0MultiTailDtor@@UAE@XZ,0x0043F4B0,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
 ??_GGen_dtor_0043f480@@UAEPAXI@Z,0x0043F480,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
 ?getUiText@Condition@@QAE?AVAsciiString@@XZ,0x00352DB0,wrong identity: cdecl condition-chunk writer taking two arguments; exact C++ WriteConditionDataChunk verified at this address; actual getUiText is 0x00355E20/395B
+??0GameFont@@QAE@XZ,0x00102DF0,identity corrected to ??0Mapping@@QAE@XZ using the owning call graph and EA reference layout
+??1GameFont@@MAE@XZ,0x00102E40,identity corrected to ??1Mapping@@MAE@XZ using the owning call graph and EA reference layout
+??_GGameFont@@MAEPAXI@Z,0x00102E10,identity corrected to ??_GMapping@@MAEPAXI@Z using the owning call graph and EA reference layout
+??0Rva004735A0@@QAE@XZ,0x004735A0,identity corrected to ??0GameFont@@QAE@XZ using the owning call graph and EA reference layout
+??1Rva004734B0MultiTailDtor@@UAE@XZ,0x004734B0,identity corrected to ??1GameFont@@MAE@XZ using the owning call graph and EA reference layout
+??_GGen_dtor_004734d0@@UAEPAXI@Z,0x004734D0,identity corrected to ??_GGameFont@@MAEPAXI@Z using the owning call graph and EA reference layout
