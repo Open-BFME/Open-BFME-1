@@ -82956,3 +82956,15 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?bfmeAttachYS@BfmeHelperYS@@QAEXPAVGen_00755E70@@@Z,0x00001019,Open-BFME5 the attach the static helper performs at 0x00755E70
 ?bfmeFinishYS@Gen_00755E70@@QAEXXZ,0x00022219,Open-BFME5 the finish step the attach at 0x00755E70 calls on itself
 g_bfmeCurrentYS,0x01304B64,Open-BFME5 the global the attach at 0x00755E70 publishes the static helper through
+??0AsciiStringYT@@QAE@PBD@Z,0x00888BC0,pin
+??1AsciiStringYT@@QAE@XZ,0x00887940,pin
+?bfmeFindYT@BfmeRegistryYT@@QAEPAXABVAsciiStringYT@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the side dispatch at 0x0058ECA0
+?bfmeUseYT@BfmeRegistryYT@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the side dispatch at 0x0058ECA0
+g_bfmeRegistryYT,0x012F33F8,Open-BFME5 the command registry the side dispatch at 0x0058ECA0 consults
+??0AsciiStringYU@@QAE@PBD@Z,0x00888BC0,pin
+??1AsciiStringYU@@QAE@XZ,0x00887940,pin
+?bfmeActiveYU@BfmeObserverYU@@QAE_NXZ,0x0001D1C9,Open-BFME5 the observer predicate the dispatch at 0x0058EDB0 tests
+?bfmeFindYU@BfmeRegistryYU@@QAEPAXABVAsciiStringYU@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the dispatch at 0x0058EDB0
+?bfmeUseYU@BfmeRegistryYU@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EDB0
+g_bfmeObserverYU,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EDB0 checks
+g_bfmeRegistryYU,0x012F33F8,Open-BFME5 the command registry the dispatch at 0x0058EDB0 consults
