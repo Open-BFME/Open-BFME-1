@@ -9719,6 +9719,7 @@ name,address,notes
 ?ExceptionFilter@DebugExceptionhandler@@SGJPAU_EXCEPTION_POINTERS@@@Z,0x0088E5F0
 ?Execute@MouseThreadClass@@QAEXXZ,0x009DB650,W3DMouse polling-thread execute call
 ?Execute@ThreadClass@@QAEXXZ,0x009DB650,additive: the address is also claimed as ?openLiveHandle@BFMENetworkBackend@@QAEXXZ; it sits beside the Set_Priority body at 0x009DB540 which is what a thread.cpp compiland looks like
+??0BFMEPeerThreadView@@QAE@PAVBFMENetworkLock@@@Z,0x0001C00D,BFME PeerThreadClass constructor view used by GameSpyPeerMessageQueue::startThread
 ?Fast_Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,0x008DC4C0
 ?Find_Asset@AssetRegistry@@QAE?AVAssetReference@@PBD@Z,0x009EEC60,address-derived AssetRegistry counted lookup callee at 0x009EBEC0
 ?Find_Color_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@HHPAI@Z,0x009021C0,pinharvest x1 (body)
