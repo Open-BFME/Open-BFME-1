@@ -83217,3 +83217,4 @@ g_bfmeTextAM,0x012F147C,Open-BFME5 the text table the time-played text at 0x0009
 ?format@StringBaseNarrowAN@@QAAXVAsciiStringAN@@ZZ,0x00888FF0,pin
 ?bfmeAssembleAN@@YAXHPADPBDHHHHHH@Z,0x00893410,Open-BFME5 the nine-argument assembler the level-path builder at 0x004675F0 calls
 g_bfmeBufferAN,0x012F19F0,Open-BFME5 the shared buffer the level-path builder at 0x004675F0 fills
+?TheBuildAssistant@@3PAVBuildAssistant@@A,0x00ED83C,GameEngine::init at 0x00079B36 pushes TheBuildAssistant then global VA 0x012ED83C and calls matched initSubsystem<BuildAssistant> 0x00074390; constructor 0x0037CC20 installs vtable 0x010EA8D4 whose update slot +0x14 reaches 0x0037CAC0

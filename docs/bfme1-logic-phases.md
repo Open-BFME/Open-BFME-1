@@ -42,7 +42,7 @@ a virtual call through slot `+0x14`; it does not assert a more specific effect.
 | 2 | Updates PartitionManager and the singleton at `0x012ED5C4`; walks all objects and calls the transform/frame recorder when object `+0x168` differs from the current simulation frame. | Records phase 2. Does not increment the simulation frame. |
 | 3 | Processes the first half of sleepy-update vector 0 (`GameLogic+0xC4`). Due entries may call their update module and receive a new wake frame. | Records phase 3; writes `GameLogic+0x100` around callbacks; updates entry wake frame `+0x14`; may change heap indices `+0x18/+0x1C` and move expired entries to `GameLogic+0xF4`. |
 | 4 | Processes the second half of sleepy-update vector 0. | Same sleepy-entry changes as phase 3. It begins at `size/2`, complementing phase 3's stop at `size/2`. |
-| 5 | Processes sleepy-update vectors 1 and 2, then updates AI. After the common deferred-owned-entry drain, it calls `GameLogic::processDestroyList` at body RVA `0x0038AE90`, then updates ShroudManager, TaintManager, singleton `0x012ED83C`, LargeGroupAudio, ObjectCreationListStore, LocomotorStore, VictoryConditions, ExperienceLevelSystem, and the member at `GameLogic+0x170`. | Same sleepy-entry changes; destroys every object pending end-of-frame deletion and removes its update modules from the phase vectors; records phase 5. No simulation-frame increment. |
+| 5 | Processes sleepy-update vectors 1 and 2, then updates AI. After the common deferred-owned-entry drain, it calls `GameLogic::processDestroyList` at body RVA `0x0038AE90`, then updates ShroudManager and TaintManager; calls the empty `BuildAssistant::update` hook; and updates LargeGroupAudio, ObjectCreationListStore, LocomotorStore, VictoryConditions, ExperienceLevelSystem, and the member at `GameLogic+0x170`. | Same sleepy-entry changes; destroys every object pending end-of-frame deletion and removes its update modules from the phase vectors; records phase 5. `BuildAssistant::update` changes no state in BFME 1.03. No simulation-frame increment. |
 | 6 | Processes sleepy-update vector 3. | Same sleepy-entry changes; records phase 6. No simulation-frame increment. |
 
 The jump table at VA `0x0078E264` maps phase 3 and phase 4 to the common vector-0
@@ -263,7 +263,7 @@ not been proven by runtime or multiplayer traces.
 | `Object::updatePendingDamage()` at `0x001C7B80` | solved and byte-exact | Object vtable `0x0109EE58` slot `+0x3C`; decrements delay `DamageInfo+0x24`, applies records only after the delay becomes negative through virtual `attemptDamage` at slot `+0x38`, then erases the 92-byte record |
 | `TheLuaScriptEngine` global `0x012F060C` | solved | constructor-tag registration and matched `initSubsystem<LuaScriptEngine>` call prove the identity; phase 1 calls virtual `update` at slot `+0x14` |
 | `TheStatsCollector` global `0x012ED63C` | solved | five exact member-function callees share this receiver; phase 1 calls exact `StatsCollector::update` at RVA `0x000A2E60` |
-| singleton global `0x012ED83C` | unresolved and a naming blocker | identify its constructor tag before assigning a subsystem name |
+| `TheBuildAssistant` global `0x012ED83C` | solved and byte-exact update | `GameEngine::init` pairs this global with the `"TheBuildAssistant"` tag and matched `initSubsystem<BuildAssistant>`; constructor vtable `0x010EA8D4` slot `+0x14` reaches the one-byte `BuildAssistant::update` at RVA `0x0037CAC0` |
 
 ## Reconstruction status and attack plan
 
@@ -278,9 +278,10 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Close singleton identities.** Trace constructors, set-name strings, and
-   vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
-   caller or constructor outranks an address-derived symbol pin.
+1. **Singleton identities closed.** `0x012F060C` is `TheLuaScriptEngine`,
+   `0x012ED63C` is `TheStatsCollector`, and `0x012ED83C` is
+   `TheBuildAssistant`. Their constructor tags, matched callees, and vtable
+   slots are recorded above.
 2. **Declare the BFME ABI and TU-local layout.** In
    `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
    verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
