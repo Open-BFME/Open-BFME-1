@@ -4448,7 +4448,6 @@ name,address,notes
 ??1Gen_dtor_0020e540@@UAE@XZ,0x000190A1,gen-dtor class destructor
 ??1Gen_dtor_0020e970@@UAE@XZ,0x00006690,gen-dtor class destructor
 ??1Gen_dtor_00210b70@@UAE@XZ,0x00017EEA,gen-dtor class destructor
-??1Gen_dtor_00212950@@UAE@XZ,0x0003843D,gen-dtor class destructor
 ??1Gen_dtor_00212c40@@UAE@XZ,0x0003E086,gen-dtor class destructor
 ??1Gen_dtor_00212f90@@UAE@XZ,0x00016469,gen-dtor class destructor
 ??1Gen_dtor_002131f0@@UAE@XZ,0x000275BB,gen-dtor class destructor
@@ -29162,11 +29161,9 @@ name,address,notes
 ?b_00212810@@YAXXZ,0x00212810,gen-thunk body
 ?b_00212860@@YAXXZ,0x00212860,gen-thunk body
 ?b_00212870@@YAXXZ,0x00212870,gen-thunk body
-?b_00212880@@YAXXZ,0x00212880,gen-thunk body
 ?b_002128a0@@YAXXZ,0x002128A0,gen-thunk body
 ?b_002128b0@@YAXXZ,0x002128B0,gen-thunk body
 ?b_00212940@@YAXXZ,0x00212940,gen-thunk body
-?b_00212950@@YAXXZ,0x00212950,gen-thunk body
 ?b_00212980@@YAXXZ,0x00212980,gen-thunk body
 ?b_00212b40@@YAXXZ,0x00212B40,gen-thunk body
 ?b_00212bb0@@YAXXZ,0x00212BB0,gen-thunk body
@@ -82751,3 +82748,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7VeterancyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AABE8,secondary vtable at this+0x0C
 ??_7VeterancyCrateCollide@@6B@,0x010AABCC,secondary vtable at this+0x10
 ??1CollideModule@@UAE@XZ,0x0004B68C,destructor ILT to the shared body at 0x00217620
+??1DelayedDeathBody@@UAE@XZ,0x0003843D,destructor ILT to 0x00212880
+??_GDelayedDeathBody@@UAEPAXI@Z,0x0004858B,primary class vtable slot zero ILT to 0x00212950
+??_7DelayedDeathBody@@6BBehaviorModule@@@,0x010A7E90,primary vtable shared by the named constructor and destructor
+??_7DelayedDeathBody@@6BBodyModuleInterface@@@,0x010A7DC8,secondary vtable at this+0x0C
+??_7DelayedDeathBody@@6BModuleInterface@@@,0x010A7CF8,secondary vtable at this+0x10

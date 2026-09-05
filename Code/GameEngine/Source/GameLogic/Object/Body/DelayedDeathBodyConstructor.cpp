@@ -43,6 +43,7 @@ class RespawnBody : public BehaviorModule,
 {
 public:
 	RespawnBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~RespawnBody();
 
 private:
 	unsigned char m_unmodelled_14[ 0xE0 - 0x14 ];
@@ -52,6 +53,7 @@ class DelayedDeathBody : public RespawnBody
 {
 public:
 	DelayedDeathBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~DelayedDeathBody();
 
 private:
 	bool m_unmodelled_E0;			// +0xE0
@@ -60,5 +62,9 @@ private:
 
 DelayedDeathBody::DelayedDeathBody( Thing *thing, const ModuleData *moduleData )
 	: RespawnBody( thing, moduleData ), m_unmodelled_E0( false ), m_unmodelled_E1( false )
+{
+}
+
+DelayedDeathBody::~DelayedDeathBody()
 {
 }
