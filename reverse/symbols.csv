@@ -82803,3 +82803,6 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z,0x0004154C,Float radius proven through F67B0 to partition query 9F63D0 floating range arithmetic
 ??0BFMENativeNetwork@@QAE@XZ,0x0001E8F8,Native network constructor ILT -> matched construct at 0x006818B0; factory allocates 0x40 bytes
 ?getCounter@ScriptEngine@@QAEPAUScriptCounter@@VAsciiString@@@Z,0x000142B3,"Counter lookup ILT ->344B20; by-value string thiscall, caller consumes pointed 32-bit counter value"
+?findGroup@ScriptEngine@@IAEPAVScriptGroup@@VAsciiString@@PAV3@@Z,0x00007AC7,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
+?findScript@ScriptEngine@@IAEPAVScript@@VAsciiString@@PAV3@@Z,0x0000D97C,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
+?notify@BfmeEnableListener@@QAE_NABVAsciiString@@0_N@Z,0x000065EB,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
