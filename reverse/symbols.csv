@@ -83295,3 +83295,4 @@ _bfmeVftableBA,0x0069A7B0,Open-BFME5 the vftable the state constructor at 0x0017
 ??1StringBaseNarrowBC@@IAE@XZ,0x00887940,pin
 ?bfmeBaseInitBC@BfmeStateBC@@QAEXPAXVAsciiStringBC@@@Z,0x00032182,Open-BFME5 the base initialiser the named state constructor at 0x0017F3F0 calls
 _bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 0x0017F3F0 installs
+?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper
