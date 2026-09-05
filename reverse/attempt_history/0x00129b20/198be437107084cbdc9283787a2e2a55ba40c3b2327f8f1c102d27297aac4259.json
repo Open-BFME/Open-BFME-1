@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "198be437107084cbdc9283787a2e2a55ba40c3b2327f8f1c102d27297aac4259",
+  "symbol": "??1?$_Rb_tree@IU?$pair@$$CBIPAUOpen2State129B20@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAUOpen2State129B20@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAUOpen2State129B20@@@_STL@@@2@@_STL@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ??1?$_Rb_tree@IU?$pair@$$CBIPAUOpen2State129B20@@@_STL@@U?$_Select1st@U?$pair@$$CBIPAUOpen2State129B20@@@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAUOpen2State129B20@@@_STL@@@2@@_STL@@QAE@XZ\n// partial score=0.85 date=2026-09-05\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n//\n// twin of the eighteen-way ICF fold at retail 0x006587F0 (matched in\n// Code/GameEngine/Source/Common/StateMachine.cpp as\n// _Rb_tree<int, pair<const int, State *> >::~_Rb_tree). Retail 0x00129B20 is\n// the same 8-byte-node destructor body for a different int-keyed pointer map;\n// the sole pinned callee (reverse/symbols.csv) already names the payload\n// \"Open2State129B20\", so this is that instantiation's destructor. No matched\n// caller further identifies the owning class, so the type stays\n// address-derived per the twin-lane identity policy.\n\n#define _BFME_RETAIL_TREE_INSERT_LAYOUT\n#include <map>\n\nstruct Open2State129B20;\n\ntypedef _STL::pair<const unsigned int, Open2State129B20 *> Rva00129B20Pair;\n\ntemplate class _STL::_Rb_tree<unsigned int, Rva00129B20Pair, _STL::_Select1st<Rva00129B20Pair>,\n\t_STL::less<unsigned int>, _STL::allocator<Rva00129B20Pair> >;\n"
+}
