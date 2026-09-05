@@ -1030,6 +1030,7 @@ name,address,notes
 ??$__pop_heap@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@H@_STL@@YAXPAURva00364980HeapElement@@00U1@URva00364980HeapCompare@@PAH@Z,0x0001479F,REL32 wide-element pop-heap target from 0x00366838
 ??$__push_heap@PAHHHUQ4Cmp00344A60@@@_STL@@YAXPAHHHHUQ4Cmp00344A60@@@Z,0x00035A35,push-heap call target decoded from the retail adjust-heap body at 0x00342D60
 ??$__push_heap@PAHHHUQ4Cmp00453BB0@@@_STL@@YAXPAHHHHUQ4Cmp00453BB0@@@Z,0x004529D0,ICF-shared with S4Cmp004529D0 push_heap callee of the adjust-heap instantiation at 0x00453200
+??$__push_heap@PAHHHUQ4Cmp00453C20@@@_STL@@YAXPAHHHHUQ4Cmp00453C20@@@Z,0x00452A50,ICF-shared with S4Cmp00452A50 push_heap callee of the adjust-heap instantiation at 0x00453290
 ??$__push_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x00019B6E,retail __adjust_heap at 0x005135F0 tails through this ILT to the 243-byte BfmeRecAU pointer sift-up body at 0x00513190
 ??$__push_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAV@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAV@@@Z,0x0000FB37,dedicated ILT to the second 243-byte BfmeRecAU pointer sift-up specialization at 0x0052F4D0; separate body fixes a distinct comparator instantiation
 ??$__push_heap@PAUBfmeScoreEntry@@HU1@UBfmeScoreEntryLess@@@_STL@@YAXPAUBfmeScoreEntry@@HHU1@UBfmeScoreEntryLess@@@Z,0x0001C819,Open-BFME5 score-entry STLport push-heap callee for the exact adjust-heap specialization at 0x00571C40
@@ -8990,6 +8991,7 @@ name,address,notes
 ??RMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@QBE_NABV?$BitFlags@$0BB@@@0@Z,0x00010B1D,resweep callee back-solved
 ??RQ4Cmp00344A60@@QBE_NHH@Z,0x00024B81,comparator call target decoded from the retail adjust-heap body at 0x00342D60
 ??RQ4Cmp00453BB0@@QBE_NHH@Z,0x00024055,ICF-shared with BfmeCompAO comparator callee of the adjust-heap instantiation at 0x00453200
+??RQ4Cmp00453C20@@QBE_NHH@Z,0x00039CB1,ICF-shared with BfmeCompAP comparator callee of the adjust-heap instantiation at 0x00453290
 ??RQ4Sort0034BFC0@@QBE_NHH@Z,0x00024B81,ILT thunk to the Q4Sort0034BFC0 comparator body at 0x0033D5E0, resolved via decode_calls at the __median<int,Q4Sort0034BFC0> call site
 ??RQ4Sort004566F0@@QBE_NHH@Z,0x00024055,ILT thunk to the Q4Sort004566F0 comparator body at 0x00451F60, resolved via decode_calls at the __median<int,Q4Sort004566F0> call site
 ??RQ4Sort004567A0@@QBE_NHH@Z,0x00039CB1,ILT thunk to the Q4Sort004567A0 comparator body at 0x00451E90, resolved via decode_calls at the __median<int,Q4Sort004567A0> call site
@@ -82549,6 +82551,7 @@ _g_heightMapRenderObjVtableAtEight,0x00D1DC80,HeightMapRenderObjClass secondary 
 _g_heightMapRenderObjVtableAtZero,0x00D1DC88,HeightMapRenderObjClass primary vtable used by its BFME constructor
 _g_lanGameGadgets,0x00EF3C00,BFME LAN game options gadget-state globals rooted at parentLanGameOptions
 _g_pathfindCellInfoPool,0x00EF1094,BFME PathfindCellInfo pool registry passed to the release helper
+_g_rva005c5100ThrowInfo,0x011DFE5C,ThrowInfo used by the particle-system validation at 0x005C5100 (address-derived; not yet matched to a named ZH exception type)
 _g_rva01142c68,0x01142C68,codec unsigned table base for Rva009AC4B0AddValue
 _g_rva01143064,0x01143064,codec signed table base for Rva009AC4B0AddValue
 _g_zeroLocomotorSpeed,0x00C75350,shared zero float returned when no locomotor controller is active
