@@ -13,6 +13,13 @@ private:
 	unsigned char m_data[8];
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BehaviorModule.h
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface
 {
@@ -20,19 +27,14 @@ public:
 	virtual void bodyModuleInterfaceAnchor();
 };
 
-class ModuleInterface
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ActiveBody.h
+class ActiveBody : public BehaviorModule,
+	public BehaviorModuleInterface,
+	public BodyModuleInterface
 {
 public:
-	virtual void moduleInterfaceAnchor();
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
-class BodyModule : public BehaviorModule,
-	public BodyModuleInterface,
-	public ModuleInterface
-{
-public:
-	BodyModule( Thing *thing, const ModuleData *moduleData );
+	ActiveBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~ActiveBody();
 
 private:
 	// The three module bases reach +0x14; StructureBody's own first member is
@@ -41,16 +43,21 @@ private:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureBody.h
-class StructureBody : public BodyModule
+class StructureBody : public ActiveBody
 {
 public:
 	StructureBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~StructureBody();
 
 private:
 	int m_unmodelled_E0;			// +0xE0, zeroed by the constructor
 };
 
 StructureBody::StructureBody( Thing *thing, const ModuleData *moduleData )
-	: BodyModule( thing, moduleData ), m_unmodelled_E0( 0 )
+	: ActiveBody( thing, moduleData ), m_unmodelled_E0( 0 )
+{
+}
+
+StructureBody::~StructureBody()
 {
 }

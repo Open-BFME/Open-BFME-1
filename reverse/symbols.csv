@@ -4416,7 +4416,6 @@ name,address,notes
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
 ??1Gen_dtor_00214490@@UAE@XZ,0x00019D0D,gen-dtor class destructor
 ??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
-??1Gen_dtor_00214c30@@UAE@XZ,0x00040D40,gen-dtor class destructor
 ??1Gen_dtor_00214e70@@UAE@XZ,0x0003C8C1,gen-dtor class destructor
 ??1Gen_dtor_00215d90@@UAE@XZ,0x0000F781,gen-dtor class destructor
 ??1Gen_dtor_00215dc0@@UAE@XZ,0x0000FC31,gen-dtor class destructor
@@ -29063,11 +29062,9 @@ name,address,notes
 ?b_00214ac0@@YAXXZ,0x00214AC0,gen-thunk body
 ?b_00214af0@@YAXXZ,0x00214AF0,gen-thunk body
 ?b_00214b40@@YAXXZ,0x00214B40,gen-thunk body
-?b_00214b50@@YAXXZ,0x00214B50,gen-thunk body
 ?b_00214b70@@YAXXZ,0x00214B70,gen-thunk body
 ?b_00214b90@@YAXXZ,0x00214B90,gen-thunk body
 ?b_00214ba0@@YAXXZ,0x00214BA0,gen-thunk body
-?b_00214c30@@YAXXZ,0x00214C30,gen-thunk body
 ?b_00214c60@@YAXXZ,0x00214C60,gen-thunk body
 ?b_00214cc0@@YAXXZ,0x00214CC0,gen-thunk body
 ?b_00214ce0@@YAXXZ,0x00214CE0,gen-thunk body
@@ -82734,3 +82731,8 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
 ??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
 ??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
+??1StructureBody@@UAE@XZ,0x00040D40,destructor ILT to 0x00214B50
+??_GStructureBody@@UAEPAXI@Z,0x00041132,primary class vtable slot zero ILT to 0x00214C30
+??_7StructureBody@@6BBehaviorModule@@@,0x010A94B8,primary vtable installed by the named constructor and destructor
+??_7StructureBody@@6BBehaviorModuleInterface@@@,0x010A93F0,secondary vtable at this+0x0C
+??_7StructureBody@@6BBodyModuleInterface@@@,0x010A9320,secondary vtable at this+0x10

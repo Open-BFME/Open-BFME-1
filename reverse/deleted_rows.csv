@@ -24643,3 +24643,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_002142a0@@UAEPAXI@Z,0x002142A0,generated deleting-destructor identity superseded by PorcupineFormationBodyModule vtable evidence
 ??1Rva002146A0MultiTailDtor@@UAE@XZ,0x002146A0,address-derived placeholder superseded by the byte-verified RespawnBody destructor
 ??_GGen_dtor_00214770@@UAEPAXI@Z,0x00214770,generated deleting-destructor identity superseded by RespawnBody vtable evidence
+??1Rva00214B50MultiTailDtor@@UAE@XZ,0x00214B50,address-derived placeholder superseded by the byte-verified StructureBody destructor
+??_GGen_dtor_00214c30@@UAEPAXI@Z,0x00214C30,generated deleting-destructor identity superseded by StructureBody vtable evidence
