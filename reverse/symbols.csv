@@ -83330,3 +83330,10 @@ g_bfmeSinkBL,0x012F148C,Open-BFME5 the sink the report send at 0x0042B370 submit
 ??1StringBaseNarrowBM@@IAE@XZ,0x00887940,pin
 ?bfmeSubmitBM@BfmeSinkBM@@QAEXVAsciiStringBM@@HPAVBfmeBlobBM@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B3D0 makes
 g_bfmeSinkBM,0x012F148C,Open-BFME5 the sink the report send at 0x0042B3D0 submits to
+??0StringBaseNarrowBN@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBN@@IAE@XZ,0x00887940,pin
+?bfmeRefreshBN@BfmeResolverBN@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the two-name resolve at 0x002DE300 runs first
+?bfmeFindBN@BfmeRegistryBN@@QAEPAXVAsciiStringBN@@@Z,0x0000D3FA,Open-BFME5 the first registry lookup the resolve at 0x002DE300 makes
+?bfmeLookupBN@BfmeOtherBN@@QAEPAXABVAsciiStringBN@@@Z,0x00028560,Open-BFME5 the second lookup the resolve at 0x002DE300 makes
+g_bfmeRegistryBN,0x012EF738,Open-BFME5 the registry the two-name resolve at 0x002DE300 asks first
+g_bfmeOtherBN,0x012EF1D8,Open-BFME5 the second registry the resolve at 0x002DE300 asks
