@@ -82925,3 +82925,4 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?iterRel001DCF20@@YAXPAVObject@@PAX@Z,0x001DCF20,"Reviewed27B cdecl callback: Object arg, user Object at0 and byte flag4 set when getRelationship returns ENEMIES0"
 ?allows@Rva001E4090@@QAE_NPAX0@Z,0x00037349,"Independently decoded37349 JMP1E4090; recursive call same155B function, no speculative WeaponTemplate identity"
 ?q4Notify001E5C90@@YAXPAVINI@@PAVBfmeThingUBA@@PAXPBX@Z,0x0002171F,"Reviewed96B INI multi-field callback and four-argument caller; INI*,instance*,store*,const userdata* matching INIFieldParseProc"
+?q4Notify001E5FD0@@YAXPAVINI@@PAVRva002DCBA0@@PAXPBX@Z,0x000045E3,"Reviewed96B INI multi-field callback and four-argument caller; INI*,instance*,store*,const userdata* matching INIFieldParseProc"
