@@ -82808,3 +82808,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?notify@BfmeEnableListener@@QAE_NABVAsciiString@@0_N@Z,0x000065EB,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
 ?findRainOfFireUpdateInterface@@YAPAVRainOfFireUpdateInterface@@PAVObject@@@Z,0x0028CCD0,Independently verified 43B typed same-TU helper; private EAX Object argument generated with real destructor caller; RainOfFire BMI vslot 0x78
 ?lookForInnerTarget@AIGuardRetaliateMachine@@QAE_NXZ,0x0003F71F,Typed thiscall bool machine target lookup; retail ECX machine and AL result; ILT to15ECE0
+?getSlot@Rva0069F740Owner@@QAE?AURva0069F740Ref@@HH@Z,0x0001815B,"Independent ABI review of69D620: thiscall, two int args plus hidden return buffer; writes one node pointer and returns buffer, ret12"
