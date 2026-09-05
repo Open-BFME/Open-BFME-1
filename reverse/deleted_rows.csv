@@ -24669,3 +24669,7 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_0024fd70@@UAEPAXI@Z,0x0024FD70,generated destructor placeholder superseded by the byte-verified LockWeaponCreate deleting destructor identity
 ??1Rva00102E40MultiTailDtor@@UAE@XZ,0x00102E40,address-derived placeholder superseded by the byte-verified GameFont destructor identity
 ??_GGen_dtor_00102e10@@UAEPAXI@Z,0x00102E10,generated destructor placeholder superseded by the byte-verified GameFont deleting destructor identity
+??1Rva0083FB50MultiTailDtor@@UAE@XZ,0x0083FB50,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
+??1Rva0083FEC0MultiTailDtor@@UAE@XZ,0x0083FEC0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
+??_GGen_dtor_005379b0@@UAEPAXI@Z,0x005379B0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp
+??_GGen_dtor_0083ffb0@@UAEPAXI@Z,0x0083FFB0,address-derived placeholder superseded by byte-exact STLport basic_streambuf identity in Code/Libraries/Source/WWVegas/WWLib/stlport_streambuf_destructors.cpp

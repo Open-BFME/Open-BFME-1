@@ -5097,7 +5097,6 @@ name,address,notes
 ??1Gen_dtor_0052e300@@UAE@XZ,0x0000169F,gen-dtor class destructor
 ??1Gen_dtor_0052e340@@UAE@XZ,0x0000EEA3,gen-dtor class destructor
 ??1Gen_dtor_0052e490@@UAE@XZ,0x0002D39E,gen-dtor class destructor
-??1Gen_dtor_005379b0@@UAE@XZ,0x0083FB50,gen-dtor class destructor
 ??1Gen_dtor_00538230@@UAE@XZ,0x000414BB,gen-dtor class destructor
 ??1Gen_dtor_00538c20@@UAE@XZ,0x0001338B,gen-dtor class destructor
 ??1Gen_dtor_00538c60@@UAE@XZ,0x0003C51A,gen-dtor class destructor
@@ -5735,7 +5734,6 @@ name,address,notes
 ??1Gen_dtor_0083ec30@@UAE@XZ,0x0083E8B0,gen-dtor class destructor
 ??1Gen_dtor_0083f820@@UAE@XZ,0x0083F810,gen-dtor class destructor
 ??1Gen_dtor_0083f860@@UAE@XZ,0x0083F730,gen-dtor class destructor
-??1Gen_dtor_0083ffb0@@UAE@XZ,0x0083FEC0,gen-dtor class destructor
 ??1Gen_dtor_00840d20@@UAE@XZ,0x00840780,gen-dtor class destructor
 ??1Gen_dtor_00841080@@UAE@XZ,0x00849A10,gen-dtor class destructor
 ??1Gen_dtor_008410c0@@UAE@XZ,0x00849AB0,gen-dtor class destructor
@@ -8303,7 +8301,6 @@ name,address,notes
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
 ??1Rva0082AE40TailBase@@UAE@XZ,0x0082AE40,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
-??1Rva00832170MultiBase@@QAE@XZ,0x00832170,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0083F730TailBase@@UAE@XZ,0x0083F730,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00887940MultiBase@@QAE@XZ,0x00887940,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva008881D0MultiBase@@QAE@XZ,0x008881D0,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -82755,3 +82752,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1GameFont@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40
 ??_GGameFont@@MAEPAXI@Z,0x0000B2CB,vtable slot zero ILT to 0x00102E10
 ??_7GameFont@@6B@,0x01086344,vtable shared by the named constructor and destructor
+??1?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@UAE@XZ,0x0083FEC0,STLport 4.5.3 wide basic_streambuf destructor; adjacent constructor and vtable prove identity
+??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
+??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor

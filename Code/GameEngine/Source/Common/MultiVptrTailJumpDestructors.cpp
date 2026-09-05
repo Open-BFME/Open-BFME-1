@@ -186,12 +186,6 @@ public:
 	virtual ~Rva000486C1MultiBase();
 };
 
-class Rva00832170MultiBase
-{
-public:
-	~Rva00832170MultiBase();
-};
-
 class Rva00887940MultiBase
 {
 public:
@@ -517,26 +511,6 @@ public:
 };
 
 Rva0081D7B0MultiTailDtor::~Rva0081D7B0MultiTailDtor()
-{
-}
-
-class Rva0083FB50MultiTailDtor : public TailPad72, public Rva00832170MultiBase
-{
-public:
-	virtual ~Rva0083FB50MultiTailDtor();
-};
-
-Rva0083FB50MultiTailDtor::~Rva0083FB50MultiTailDtor()
-{
-}
-
-class Rva0083FEC0MultiTailDtor : public TailPad24, public Rva00832170MultiBase
-{
-public:
-	virtual ~Rva0083FEC0MultiTailDtor();
-};
-
-Rva0083FEC0MultiTailDtor::~Rva0083FEC0MultiTailDtor()
 {
 }
 
