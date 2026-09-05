@@ -83261,3 +83261,20 @@ _bfmeVftableAV,0x00698188,Open-BFME5 the vftable the state constructor at 0x0017
 ?bfmeBaseInitAW@BfmeStateAW@@QAEXPAXVAsciiStringAW@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0018AE00 calls
 _bfmeVftableAW,0x0069B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
 ?processPathfindQueue@Pathfinder@@QAEXXZ,0x000313A9,GameLogic phase call at 0x0038DC0E supplies TheAI+0x0C (Pathfinder); ILT targets 716-byte RVA 0x003DC190 whose zone refresh terrain bounds 512-slot request queue object lookup and doPathfind loop match AIPathfind.cpp
+??0StringBaseNarrowAX@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAX@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAX@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAX@BfmeStateAX@@QAEXPAXVAsciiStringAX@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x001804B0 calls
+_bfmeVftableAX,0x0069AE00,Open-BFME5 the vftable the state constructor at 0x001804B0 installs
+??0StringBaseNarrowAY@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAY@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAY@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAY@BfmeStateAY@@QAEXPAXVAsciiStringAY@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x0018AD00 calls
+_bfmeVftableAY,0x0069B650,Open-BFME5 the vftable the state constructor at 0x0018AD00 installs
+_bfmeGuardTableAY,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AD00 points at
+??0StringBaseNarrowAZ@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAZ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAZ@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAZ@BfmeStateAZ@@QAEXPAXVAsciiStringAZ@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x0018AE90 calls
+_bfmeVftableAZ,0x0069B7A0,Open-BFME5 the vftable the state constructor at 0x0018AE90 installs
+_bfmeGuardTableAZ,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AE90 points at
