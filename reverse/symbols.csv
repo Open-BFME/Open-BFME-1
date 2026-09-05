@@ -4456,7 +4456,6 @@ name,address,notes
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
 ??1Gen_dtor_00214490@@UAE@XZ,0x00019D0D,gen-dtor class destructor
 ??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
-??1Gen_dtor_00214e70@@UAE@XZ,0x0003C8C1,gen-dtor class destructor
 ??1Gen_dtor_00215d90@@UAE@XZ,0x0000F781,gen-dtor class destructor
 ??1Gen_dtor_00215dc0@@UAE@XZ,0x0000FC31,gen-dtor class destructor
 ??1Gen_dtor_00216360@@UAE@XZ,0x00039D1F,gen-dtor class destructor
@@ -29290,7 +29289,6 @@ name,address,notes
 ?b_00214b90@@YAXXZ,0x00214B90,gen-thunk body
 ?b_00214ba0@@YAXXZ,0x00214BA0,gen-thunk body
 ?b_00214c60@@YAXXZ,0x00214C60,gen-thunk body
-?b_00214cc0@@YAXXZ,0x00214CC0,gen-thunk body
 ?b_00214ce0@@YAXXZ,0x00214CE0,gen-thunk body
 ?b_00214cf0@@YAXXZ,0x00214CF0,gen-thunk body
 ?b_00214d00@@YAXXZ,0x00214D00,gen-thunk body
@@ -29308,9 +29306,7 @@ name,address,notes
 ?b_00214dc0@@YAXXZ,0x00214DC0,gen-thunk body
 ?b_00214dd0@@YAXXZ,0x00214DD0,gen-thunk body
 ?b_00214e60@@YAXXZ,0x00214E60,gen-thunk body
-?b_00214e70@@YAXXZ,0x00214E70,gen-thunk body
 ?b_00214ea0@@YAXXZ,0x00214EA0,gen-thunk body
-?b_00214f00@@YAXXZ,0x00214F00,gen-thunk body
 ?b_00214f60@@YAXXZ,0x00214F60,gen-thunk body
 ?b_00214f70@@YAXXZ,0x00214F70,gen-thunk body
 ?b_00215040@@YAXXZ,0x00215040,gen-thunk body
@@ -82736,3 +82732,268 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0AsciiStringXB@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXB@@QAE@XZ,0x00887940,pin
+??0AsciiStringXC@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXC@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXC@@QAEXABV1@@Z,0x00887C90,pin
+g_bfmeStateXC,0x012F33F8,Open-BFME5 the state object whose dirty flag the notifier at 0x002D4310 raises
+?allocateControlBarSchemeListNode@@YAPAXI@Z,0x0082E540,ControlBarSchemeManager scheme-list sentinel allocator
+?deallocateControlBarSchemeListNode@@YAXPAXI@Z,0x0082E5F0,ControlBarSchemeManager scheme-list node deallocator
+??0TTreeType@@QAE@XZ,0x00012148,W3DTreeBuffer 64-element m_treeTypes constructor ILT
+??1TTreeType@@QAE@XZ,0x00032CF9,W3DTreeBuffer 64-element m_treeTypes destructor ILT
+??0W3DTerrainBackground@@QAE@XZ,0x0004149D,FlatHeightMap 0xC4-element m_tiles vector constructor ILT
+??1W3DTerrainBackground@@QAE@XZ,0x0002B9A4,FlatHeightMap 0xC4-element m_tiles vector destructor ILT
+??_VW3DTerrainBackground@@SAXPAX@Z,0x00881EF0,W3DTerrainBackground array deallocator used by FlatHeightMap m_tiles cleanup
+?deleteTerrainIndexArray@@YAXPAX@Z,0x00881EF0,HeightMapRenderObjClass terrain index array deallocator
+??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
+??0W3DSmudgeManager@@QAE@XZ,0x00043DE2,W3DTerrainVisual 0x44-byte smudge manager allocation constructor ILT
+??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
+?init@SmudgeManager@@UAEXXZ,0x0003D0BE,W3DSmudgeManager init base call ILT
+?ReleaseResources@W3DSmudgeManager@@UAEXXZ,0x000309CC,W3DSmudgeManager vtable slot 0x0C ILT
+?init@W3DSmudgeManager@@UAEXXZ,0x00034360,W3DSmudgeManager vtable slot 0x04 ILT
+?ReAcquireResources@W3DSmudgeManager@@UAEXXZ,0x0001CD05,W3DSmudgeManager vtable slot 0x10 ILT
+??1SmudgeManager@@UAE@XZ,0x00029555,W3DSmudgeManager destructor base call ILT
+??1W3DSmudgeManager@@UAE@XZ,0x0002CED5,W3DSmudgeManager deleting destructor call ILT
+??_GW3DSmudgeManager@@UAEPAXI@Z,0x00023281,W3DSmudgeManager vftable slot zero ILT
+?reset@SmudgeManager@@UAEXXZ,0x0002DFAB,W3DSmudgeManager reset base call ILT
+?reset@W3DSmudgeManager@@UAEXXZ,0x000017B7,W3DSmudgeManager vtable slot 0x08 ILT
+??0RailedTransportDockUpdateModuleData@@QAE@XZ,0x0001999D,RailedTransportDockUpdateModuleData constructor ILT to 0x002CE760
+??_7RailedTransportDockUpdateModuleData@@6B@,0x010CADD0,vftable stored by constructor 0x002CE760
+??1RailedTransportDockUpdateModuleData@@UAE@XZ,0x0001771F,destructor ILT to 0x002CE7B0
+??_GRailedTransportDockUpdateModuleData@@UAEPAXI@Z,0x0000AEFC,vftable slot zero ILT to 0x002CE780
+??_7DockUpdateModuleData@@6B@,0x01073744,base vftable restored by RailedTransportDockUpdateModuleData destructor
+??1RailedTransportDockUpdate@@MAE@XZ,0x00007FD6,destructor ILT to 0x002CE2D0
+??_GRailedTransportDockUpdate@@MAEPAXI@Z,0x00036877,primary vftable slot zero ILT to 0x002CE580
+??1DockUpdate@@UAE@XZ,0x0004418E,RailedTransportDockUpdate destructor tail-call ILT to DockUpdate destructor 0x002CCD10
+?isClearToEnter@DockUpdate@@UBE_NPBVObject@@@Z,0x000422E9,RailedTransportDockUpdate override base-call ILT to 0x002CA770
+?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z,0x00009B47,DockUpdateInterface vftable slot 0x0C ILT to 0x002CE5B0
+?getRailedTransportDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVRailedTransportDockUpdateInterface@@XZ,0x0000178A,primary vftable slot 0x2C ILT to 0x002CE320
+?getDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVDockUpdateInterface@@XZ,0x0001FA3C,BehaviorModuleInterface vftable slot 0x54 ILT to 0x002CE340
+?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
+?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
+?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z,0x0003AF53,primary vftable ILT to 0x002CE3A0
+?buildFieldParse@DockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00004052,RailedTransportDockUpdateModuleData base builder ILT to 0x002CAB10
+?buildFieldParse@RailedTransportDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00014326,unique ILT to 0x002CE290
+?buildFieldParse@Gen00004052@@SAXAAVWideMulti@@@Z,0x00004052,base-class buildFieldParse reached via incremental-link thunk; address-derived name retained for remaining WideBuildFieldParse rows
+?buildFieldParse@RepairDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00030521,unique ILT to 0x002CECF0
+?buildFieldParse@SupplyCenterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0000CBFD,unique ILT to 0x002CF0C0
+?buildFieldParse@SupplyWarehouseDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001AAE6,unique ILT to 0x002CF680
+?buildFieldParse@MonsterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001C008,unique ILT to 0x002CDA00
+??1RepairDockUpdateModuleData@@UAE@XZ,0x0003CFB5,destructor ILT to 0x002CEF90
+??_GRepairDockUpdateModuleData@@UAEPAXI@Z,0x000389C4,class vftable slot zero ILT to 0x002CEF60
+??1SupplyCenterDockUpdateModuleData@@UAE@XZ,0x0002EE56,destructor ILT to 0x002CF600
+??_GSupplyCenterDockUpdateModuleData@@UAEPAXI@Z,0x00009F2A,class vftable slot zero ILT to 0x002CF5D0
+?Get_Frame_Row_Column_Count_Log2@PointGroupClass@@QAEEXZ,0x00912120,ParticleBuffer copy constructor 0x00989A20 call at +0xE7A; getter reads PointGroup FrameRowColumnCountLog2 byte +0x20
+??1SupplyWarehouseDockUpdateModuleData@@UAE@XZ,0x00012157,destructor ILT to 0x002CFB60
+??_GSupplyWarehouseDockUpdateModuleData@@UAEPAXI@Z,0x0003C7F4,class vftable slot zero ILT to 0x002CFB30
+??1RepairDockUpdate@@MAE@XZ,0x00038BC2,destructor ILT to 0x002CEDC0
+??_GRepairDockUpdate@@MAEPAXI@Z,0x00022F16,primary class vftable slot zero ILT to 0x002CEEA0
+??1SupplyCenterDockUpdate@@MAE@XZ,0x000016E5,destructor ILT to 0x002CF170
+??_GSupplyCenterDockUpdate@@MAEPAXI@Z,0x0002D844,primary class vftable slot zero ILT to 0x002CF290
+??1SupplyWarehouseDockUpdate@@MAE@XZ,0x0003F896,destructor ILT to 0x002CF6B0
+??_GSupplyWarehouseDockUpdate@@MAEPAXI@Z,0x0000D4A9,primary class vftable slot zero ILT to 0x002CF860
+?bfmeHighlightDrawQuad@@YAXI@Z,0x00018BB0,retail highlight postRender0x007D7040 direct call at0x007D72A3
+?bfmeHighlightApply@@YAXIPAXIPAUTexture@@PAUIDirect3DSurface8@@12@Z,0x0003F242,retail highlight postRender0x007D7040 direct call at0x007D72DA
+??1MonsterDockUpdate@@MAE@XZ,0x0004324D,destructor ILT to 0x002CDAE0
+??_GMonsterDockUpdate@@MAEPAXI@Z,0x0000EF61,primary class vftable slot zero ILT to 0x002CDBC0
+??1MonsterDockUpdateModuleData@@UAE@XZ,0x0001A3B6,destructor ILT to 0x002CDD90
+??_GMonsterDockUpdateModuleData@@UAEPAXI@Z,0x000234A2,class vftable slot zero ILT to 0x002CDD60
+?apply82AA0@ZoomSettings@@QAEXH@Z,0x0000BA64,retail ScreenZoomFilter set0x007D1F00 direct calls at0x007D1F71 and0x007D201C
+??1ModelConditionSpecialAbilityUpdate@@MAE@XZ,0x0001DE1C,destructor ILT to 0x00298380
+??_GModelConditionSpecialAbilityUpdate@@MAEPAXI@Z,0x0002E244,primary class vftable slot zero ILT to 0x002984C0
+??1SpecialAbilityUpdate@@UAE@XZ,0x000243A7,base destructor ILT to matched body 0x002AA910
+??1ModelConditionSpecialAbilityUpdateModuleData@@UAE@XZ,0x00028EB6,destructor ILT to 0x002984B0
+??_GModelConditionSpecialAbilityUpdateModuleData@@UAEPAXI@Z,0x0003AE95,class vftable slot zero ILT to 0x00298480
+??1SpecialAbilityUpdateModuleData@@UAE@XZ,0x0001980D,base destructor ILT to matched body 0x002A5CC0
+_D3DXMatrixMultiply@12,0x009FACAD,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x0C retail slot0x012DBE04
+_D3DXMatrixScaling@16,0x009FB6F4,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x84 retail slot0x012DBE7C; init at0x009FB6C6
+_D3DXMatrixTranslation@16,0x009FB784,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x68 retail slot0x012DBE60; init at0x009FB756
+??1LifetimeUpdateModuleData@@UAE@XZ,0x0003F053,destructor ILT to 0x00298000
+??_GLifetimeUpdateModuleData@@UAEPAXI@Z,0x00027C46,class vftable slot zero ILT to 0x00297FD0
+??1LifetimeUpdate@@MAE@XZ,0x0002C6F1,destructor ILT to 0x00297DE0
+??_GLifetimeUpdate@@MAEPAXI@Z,0x00028CFE,primary class vftable slot zero ILT to 0x002982A0
+??1Module@@UAE@XZ,0x00047C53,base destructor ILT used by the optimized UpdateModule teardown
+??0AsciiStringXG@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXG@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXG@@QAEXABV1@@Z,0x00887C90,pin
+??1OCLUpdate@@MAE@XZ,0x000137C8,destructor ILT to 0x00298870
+??_GOCLUpdate@@MAEPAXI@Z,0x0001ED3A,primary class vftable slot zero ILT to 0x00298A70
+?shouldCreate@OCLUpdate@@IAE_NXZ,0x00047AE6,ILT to 0x00298B80; upstream OCLUpdate deadline and under-construction predicate
+??1OneRingPenaltyUpdate@@MAE@XZ,0x00034AB3,destructor ILT to 0x00298CE0
+??_GOneRingPenaltyUpdate@@MAEPAXI@Z,0x0000B131,primary class vftable slot zero ILT to 0x00298FA0
+??1RubbleRiseUpdate@@MAE@XZ,0x00046BE6,destructor ILT to 0x002A3540
+??_GRubbleRiseUpdate@@MAEPAXI@Z,0x00021C06,primary class vftable slot zero ILT to 0x002A37E0
+??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,shared ObjectModule constructor ILT to 0x00113C60; called by named object-module constructors
+??1SlavedUpdate@@MAE@XZ,0x000393DD,destructor ILT to 0x002A41D0
+??_GSlavedUpdate@@MAEPAXI@Z,0x000206B2,primary class vftable slot zero ILT to 0x002A43B0
+??1StructureCollapseUpdate@@MAE@XZ,0x00021FBC,destructor ILT to 0x002AE130
+??_GStructureCollapseUpdate@@MAEPAXI@Z,0x0001555F,primary class vftable slot zero ILT to 0x002AE3A0
+??1StructureToppleUpdate@@MAE@XZ,0x0001F523,destructor ILT to 0x002AEF80
+??_GStructureToppleUpdate@@MAEPAXI@Z,0x0002DE2A,primary class vftable slot zero ILT to 0x002AF3A0
+??1ToppleUpdate@@MAE@XZ,0x00049BCF,destructor ILT to 0x002B0F60
+??_GToppleUpdate@@MAEPAXI@Z,0x0000CCCF,primary class vftable slot zero ILT to 0x002B1210
+??1DefaultProductionExitUpdate@@MAE@XZ,0x000172BF,destructor ILT to 0x002CFC30
+??_GDefaultProductionExitUpdate@@MAEPAXI@Z,0x0003518E,primary class vftable slot zero ILT to 0x002CFEE0
+??1CritterEmitterUpdate@@MAE@XZ,0x0003409F,destructor ILT to 0x0028B600
+??_GCritterEmitterUpdate@@MAEPAXI@Z,0x000260AD,primary class vftable slot zero ILT to 0x0028B7E0
+??1DelayedWeaponSetUpgradeUpdate@@MAE@XZ,0x000241EF,destructor ILT to 0x0028C230
+??_GDelayedWeaponSetUpgradeUpdate@@MAEPAXI@Z,0x0002350B,primary class vftable slot zero ILT to 0x0028C3E0
+??1LargeGroupAudioUpdate@@MAE@XZ,0x0001767A,destructor ILT to 0x00296250
+??_GLargeGroupAudioUpdate@@MAEPAXI@Z,0x0003B1F6,primary class vftable slot zero ILT to 0x00296DE0
+??1AABTreeBuilderClass@@QAE@XZ,0x0096BE90,Open-BFME5 retail builder destructor callee of MeshGeometryClass::Generate_Culling_Tree
+??0AABTreeBuilderClass@@QAE@XZ,0x0096B350,Open-BFME5 retail builder constructor callee of MeshGeometryClass::Generate_Culling_Tree
+??1LargeGroupBonusUpdate@@MAE@XZ,0x0000D125,destructor ILT to 0x002974D0
+??_GLargeGroupBonusUpdate@@MAEPAXI@Z,0x000106C2,primary class vftable slot zero ILT to 0x002977F0
+??1SmartBombTargetHomingUpdate@@MAE@XZ,0x000142A4,destructor ILT to 0x00286DC0
+??_GSmartBombTargetHomingUpdate@@MAEPAXI@Z,0x0002E89D,primary class vtable slot zero ILT to 0x00287100
+??1AttributeModifierAuraUpdate@@MAE@XZ,0x0002F621,destructor ILT to 0x0027FF70
+??_GAttributeModifierAuraUpdate@@MAEPAXI@Z,0x00018FDE,primary class vtable slot zero ILT to 0x002802A0
+??1AutoPickUpUpdate@@MAE@XZ,0x000448A0,destructor ILT to 0x002818B0
+??_GAutoPickUpUpdate@@MAEPAXI@Z,0x00030783,primary class vftable slot zero ILT to 0x00281C50
+??1RunOffMapBehavior@@MAE@XZ,0x0002404B,destructor ILT to 0x00205000
+??_GRunOffMapBehavior@@MAEPAXI@Z,0x00001366,primary class vtable slot zero ILT to 0x00205170
+??0DestroyModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D9A7,constructor ILT to 0x00253C30
+??1DestroyModule@@MAE@XZ,0x00008F80,destructor ILT to 0x00253C00
+??_GDestroyModule@@MAEPAXI@Z,0x0000F911,primary class vtable slot zero ILT to 0x00253CB0
+??0CreateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026CAB,constructor ILT called by seven named derived constructors
+??1CreateModule@@MAE@XZ,0x0001C657,destructor ILT to 0x0024F400
+??_GCreateModule@@MAEPAXI@Z,0x0003020B,primary class vtable slot zero ILT to 0x0024F4D0
+??1GrantUpgradeCreate@@MAE@XZ,0x00003175,destructor ILT to 0x0024F8B0
+??_GGrantUpgradeCreate@@MAEPAXI@Z,0x000080DA,primary class vtable slot zero ILT to 0x0024F9A0
+??1PreorderCreate@@MAE@XZ,0x00042D75,destructor ILT to 0x0024FEC0
+??_GPreorderCreate@@MAEPAXI@Z,0x00049823,primary class vtable slot zero ILT to 0x0024FF90
+??0AsciiStringXK@@QAE@ABV0@@Z,0x00887B60,pin
+??1AsciiStringXK@@QAE@XZ,0x00887940,pin
+?set@AsciiStringXK@@QAEXABV1@@Z,0x00887C90,pin
+?GridScaleRva007D4AF0@@YAPAUGridGlobals@@XZ,0x00031944,retail grid0x007D4AF0 call at0x007D4B4B;thunk to0x00421E70
+?GridScaleRva007D95B0@@YAPAUGridGlobals@@XZ,0x0000D7A6,retail grid0x007D95B0 call at0x007D960B;thunk to0x00421E40
+??1StreakRendererClass@@QAE@XZ,0x0095C780,StreakLineClass destructor calls StreakRenderer member at +0x154; frees m_vertexBuffer +0x48 and releases Texture +0 matching streakRender.cpp
+??1SpecialPowerCreate@@MAE@XZ,0x0001FF69,destructor ILT to 0x002500C0
+??_GSpecialPowerCreate@@MAEPAXI@Z,0x0002ACE8,primary class vtable slot zero ILT to 0x00250190
+??1SupplyCenterCreate@@MAE@XZ,0x0000A7BD,destructor ILT to 0x002502B0
+??_GSupplyCenterCreate@@MAEPAXI@Z,0x00004827,primary class vtable slot zero ILT to 0x00250380
+??1SupplyWarehouseCreate@@MAE@XZ,0x0003DE10,destructor ILT to 0x002504B0
+??_GSupplyWarehouseCreate@@MAEPAXI@Z,0x0003F657,primary class vtable slot zero ILT to 0x00250570
+??1SpecialPowerModule@@MAE@XZ,0x0002041E,shared SpecialPowerModule destructor ILT to 0x00268F30
+??1CloudBreakSpecialPower@@MAE@XZ,0x00007379,destructor ILT to 0x00259060
+??_GCloudBreakSpecialPower@@MAEPAXI@Z,0x00009D54,primary class vtable slot zero ILT to 0x00259130
+??1CombineHordeSpecialPower@@MAE@XZ,0x0000BD52,destructor ILT to 0x00259740
+??_GCombineHordeSpecialPower@@MAEPAXI@Z,0x000086D9,primary class vtable slot zero ILT to 0x00259870
+??1DarknessSpecialPower@@MAE@XZ,0x00029A28,destructor ILT to 0x00259BD0
+??_GDarknessSpecialPower@@MAEPAXI@Z,0x0001F8D4,primary class vtable slot zero ILT to 0x00259CA0
+?Get_Single_Texture@MeshMatDescClass@@QBE?AVBfmeHandleCX@@HH@Z,0x0092C9D0,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Get_Texture@MeshMatDescClass@@QBE?AVBfmeHandleCX@@HHH@Z,0x00929A20,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Set_Single_Texture@MeshMatDescClass@@QAEXABVBfmeHandleCX@@HH@Z,0x00929900,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+?Set_Texture@MeshMatDescClass@@QAEXHABVBfmeHandleCX@@HH@Z,0x0092C220,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
+??4TextureVectorBaseCtorShim@@QAEAAV0@ABV0@@Z,0x0092F810,MaterialInfo copy ctor930E00 passes Textures base at +0x20;existing VectorClass assignment body with virtual element resize/copy
+??1DefectorSpecialPower@@MAE@XZ,0x00022F8E,destructor ILT to 0x00259FA0
+??_GDefectorSpecialPower@@MAEPAXI@Z,0x0000CE19,primary class vtable slot zero ILT to 0x0025A060
+??1DevastateSpecialPower@@MAE@XZ,0x000313D6,destructor ILT to 0x0025A810
+??_GDevastateSpecialPower@@MAEPAXI@Z,0x00038104,primary class vtable slot zero ILT to 0x0025A8E0
+_bfmeVisitXM,0x00872650,Open-BFME5 the per-entry callback the table walk at 0x00872680 hands to TableMap; body sits immediately below it
+??1ElvenWoodSpecialPower@@MAE@XZ,0x000253C9,destructor ILT to 0x0025B300
+??_GElvenWoodSpecialPower@@MAEPAXI@Z,0x0000EB51,primary class vtable slot zero ILT to 0x0025B5B0
+??1FreezingRainSpecialPower@@MAE@XZ,0x0001AC99,destructor ILT to 0x0025D5E0
+??_GFreezingRainSpecialPower@@MAEPAXI@Z,0x000221C4,primary class vtable slot zero ILT to 0x0025D6B0
+??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
+??_GGrabPassengerSpecialPower@@MAEPAXI@Z,0x00010E51,primary class vtable slot zero ILT to 0x0025F1F0
+??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
+??_GOCLSpecialPower@@MAEPAXI@Z,0x000037D3,primary class vtable slot zero ILT to 0x00262B90
+??1PlayerHealSpecialPower@@MAE@XZ,0x0003DE15,destructor ILT to 0x00263A20
+??_GPlayerHealSpecialPower@@MAEPAXI@Z,0x0000BD89,primary class vtable slot zero ILT to 0x00263B50
+??1PlayerUpgradeSpecialPower@@MAE@XZ,0x000231B9,destructor ILT to 0x00263FA0
+??_GPlayerUpgradeSpecialPower@@MAEPAXI@Z,0x00031174,primary class vtable slot zero ILT to 0x00264090
+??1RepairSpecialPower@@MAE@XZ,0x000228F9,destructor ILT to 0x00264840
+??_GRepairSpecialPower@@MAEPAXI@Z,0x00037DDF,primary class vtable slot zero ILT to 0x00264920
+??1ScavengerSpecialPower@@MAE@XZ,0x00028961,destructor ILT to 0x00265930
+??_GScavengerSpecialPower@@MAEPAXI@Z,0x00003F94,primary class vtable slot zero ILT to 0x00265900
+??1SplitHordeSpecialPower@@MAE@XZ,0x00016450,destructor ILT to 0x0026B080
+??_GSplitHordeSpecialPower@@MAEPAXI@Z,0x0002C494,primary class vtable slot zero ILT to 0x0026B160
+??1StopSpecialPower@@MAE@XZ,0x00046E57,destructor ILT to 0x0026B3A0
+??_GStopSpecialPower@@MAEPAXI@Z,0x00036179,primary class vtable slot zero ILT to 0x0026B4A0
+??1TaintSpecialPower@@MAE@XZ,0x00020202,destructor ILT to 0x0026B6A0
+??_GTaintSpecialPower@@MAEPAXI@Z,0x0000A493,primary class vtable slot zero ILT to 0x0026B770
+??1WeaponChangeSpecialPowerModule@@MAE@XZ,0x00041ADD,destructor ILT to 0x0026CD00
+??_GWeaponChangeSpecialPowerModule@@MAEPAXI@Z,0x000320DD,primary class vtable slot zero ILT to 0x0026CCD0
+??1CashHackSpecialPower@@MAE@XZ,0x00010370,destructor ILT to 0x00258300
+??_GCashHackSpecialPower@@MAEPAXI@Z,0x0003BEF8,primary class vtable slot zero ILT to 0x00258560
+??1DominateEnemySpecialPower@@MAE@XZ,0x00031548,destructor ILT to 0x0025AD50
+??_GDominateEnemySpecialPower@@MAEPAXI@Z,0x0001CD9B,primary class vtable slot zero ILT to 0x0025AE70
+??1FellBeastSwoopPower@@MAE@XZ,0x00039BCB,destructor ILT to 0x0025CFA0
+??_GFellBeastSwoopPower@@MAEPAXI@Z,0x0001C003,primary class vtable slot zero ILT to 0x0025D0B0
+??0SpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,FellBeastSwoopPower constructor call-site ILT to the proven SpecialAbilityUpdate constructor
+??1GiveUpgradeUpdate@@MAE@XZ,0x000157E4,destructor ILT to 0x0025DA10
+??_GGiveUpgradeUpdate@@MAEPAXI@Z,0x0002A7A7,primary class vtable slot zero ILT to 0x0025DBE0
+g_bfmeMaterialXP,0x0134B210,Open-BFME5 the default VertexMaterialClass the initialiser at 0x009569A0 allocates
+g_bfmeSourceXP,0x012D6E40,Open-BFME5 the word the initialiser at 0x009569A0 copies from
+g_bfmeTargetXP,0x012D7300,Open-BFME5 the word the initialiser at 0x009569A0 copies into
+g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0 raises
+??1HeroModeSpecialAbilityUpdate@@MAE@XZ,0x0002A9CD,destructor ILT to 0x0025F900
+??_GHeroModeSpecialAbilityUpdate@@MAEPAXI@Z,0x000499EF,primary class vtable slot zero ILT to 0x0025F9E0
+??1ToggleHiddenSpecialAbilityUpdate@@MAE@XZ,0x0003610B,destructor ILT to 0x0026C030
+??_GToggleHiddenSpecialAbilityUpdate@@MAEPAXI@Z,0x0002C8CC,primary class vtable slot zero ILT to 0x0026C1E0
+??1WeaponSetSpecialAbilityUpdate@@MAE@XZ,0x000094A8,destructor ILT to 0x0026DCB0
+??_GWeaponSetSpecialAbilityUpdate@@MAEPAXI@Z,0x000298A2,primary class vtable slot zero ILT to 0x0026DDD0
+??1WoundArrowUpdate@@MAE@XZ,0x00003BD4,destructor ILT to 0x0026E010
+??_GWoundArrowUpdate@@MAEPAXI@Z,0x0003170F,primary class vtable slot zero ILT to 0x0026E130
+??1ObjectDefectionHelper@@UAE@XZ,0x00039667,destructor ILT to 0x002562C0
+??_GObjectDefectionHelper@@UAEPAXI@Z,0x0001BFB8,primary class vtable slot zero ILT to 0x001C0FB0
+??_7ObjectDefectionHelper@@6BObjectModule@@@,0x0109E574,primary vtable installed by the named constructor and destructor
+??_7ObjectDefectionHelper@@6BBehaviorModuleInterface@@@,0x0109E4B0,secondary vtable at this+0x0C
+??_7ObjectDefectionHelper@@6B@,0x0109E4A0,secondary vtable at this+0x10
+??1ObjectHelper@@UAE@XZ,0x0002514E,ObjectDefectionHelper destructor tail call reaches the UpdateModule destructor alias
+??1ObjectRecoveryHelper@@UAE@XZ,0x0003A7A1,destructor ILT to 0x00256D20
+??_GObjectRecoveryHelper@@UAEPAXI@Z,0x0003CA60,primary class vtable slot zero ILT to 0x001C1170
+??_7ObjectRecoveryHelper@@6BBehaviorModuleInterface@@@,0x0109E5D0,secondary vtable at this+0x0C
+??_7ObjectRecoveryHelper@@6BObjectHelper@@@,0x0109E694,primary vtable installed by the named constructor and destructor
+??_7ObjectRecoveryHelper@@6BUpdateModuleInterface@@@,0x0109E5C4,secondary vtable at this+0x10
+??1ObjectWeaponStatusHelper@@UAE@XZ,0x000222B9,destructor ILT to 0x00257500
+??_GObjectWeaponStatusHelper@@UAEPAXI@Z,0x0000BF0A,primary class vtable slot zero ILT to 0x001C1480
+??_7ObjectWeaponStatusHelper@@6BObjectHelper@@@,0x0109E8D4,primary vtable installed by the named constructor and destructor
+??_7ObjectWeaponStatusHelper@@6BBehaviorModuleInterface@@@,0x0109E810,secondary vtable at this+0x0C
+??_7ObjectWeaponStatusHelper@@6BUpdateModuleInterface@@@,0x0109E804,secondary vtable at this+0x10
+??0ObjectRepulsorHelper@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000D062,constructor ILT to 0x001C11D0
+??1ObjectRepulsorHelper@@UAE@XZ,0x0001DC41,destructor ILT to 0x00256DB0
+??_GObjectRepulsorHelper@@UAEPAXI@Z,0x000063ED,primary class vtable slot zero ILT to 0x001C12B0
+??_7ObjectRepulsorHelper@@6BObjectHelper@@@,0x0109E7B4,primary vtable installed by the named constructor and destructor
+??_7ObjectRepulsorHelper@@6BBehaviorModuleInterface@@@,0x0109E6F0,secondary vtable at this+0x0C
+??_7ObjectRepulsorHelper@@6BUpdateModuleInterface@@@,0x0109E6E4,secondary vtable at this+0x10
+??1ActiveBody@@UAE@XZ,0x00017EEA,derived body destructors tail-call the ActiveBody destructor
+??1HighlanderBody@@UAE@XZ,0x000408F9,destructor ILT to 0x00213800
+??_GHighlanderBody@@UAEPAXI@Z,0x0004477E,primary class vtable slot zero ILT to 0x002138C0
+??_7HighlanderBody@@6BBehaviorModuleInterface@@@,0x010A86C0,secondary vtable at this+0x0C
+??_7HighlanderBody@@6BBodyModuleInterface@@@,0x010A85F0,secondary vtable at this+0x10
+??_7HighlanderBody@@6BBehaviorModule@@@,0x010A8788,primary vtable installed by the named constructor and destructor
+??1ImmortalBody@@UAE@XZ,0x0004B15F,destructor ILT to 0x002139E0
+??_GImmortalBody@@UAEPAXI@Z,0x0003C8AD,primary class vtable slot zero ILT to 0x00213AA0
+??_7ImmortalBody@@6BBehaviorModule@@@,0x010A8980,primary vtable installed by the named constructor and destructor
+??_7ImmortalBody@@6BBehaviorModuleInterface@@@,0x010A88B8,secondary vtable at this+0x0C
+??_7ImmortalBody@@6BBodyModuleInterface@@@,0x010A87E8,secondary vtable at this+0x10
+??1OathbreakerBody@@UAE@XZ,0x00010C67,destructor ILT to 0x00213F80
+??_GOathbreakerBody@@UAEPAXI@Z,0x0001C0B7,primary class vtable slot zero ILT to 0x00214040
+??_7OathbreakerBody@@6BBehaviorModule@@@,0x010A8D40,primary vtable installed by the named constructor and destructor
+??_7OathbreakerBody@@6BBehaviorModuleInterface@@@,0x010A8C78,secondary vtable at this+0x0C
+??_7OathbreakerBody@@6BBodyModuleInterface@@@,0x010A8BA8,secondary vtable at this+0x10
+??1PorcupineFormationBodyModule@@UAE@XZ,0x0003B494,destructor ILT to 0x002141C0
+??_GPorcupineFormationBodyModule@@UAEPAXI@Z,0x00007BD0,primary class vtable slot zero ILT to 0x002142A0
+??_7PorcupineFormationBodyModule@@6BBehaviorModule@@@,0x010A8FB0,primary vtable installed by the named constructor and destructor
+??_7PorcupineFormationBodyModule@@6BBehaviorModuleInterface@@@,0x010A8EE8,secondary vtable at this+0x0C
+??_7PorcupineFormationBodyModule@@6BBodyModuleInterface@@@,0x010A8E18,secondary vtable at this+0x10
+??0ActiveBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025509,RespawnBody constructor base-call ILT to 0x00211A50
+??1RespawnBody@@UAE@XZ,0x00020F40,destructor ILT to 0x002146A0
+??_GRespawnBody@@UAEPAXI@Z,0x00019970,primary class vtable slot zero ILT to 0x00214770
+??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
+??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
+??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
+??1StructureBody@@UAE@XZ,0x00040D40,destructor ILT to 0x00214B50
+??_GStructureBody@@UAEPAXI@Z,0x00041132,primary class vtable slot zero ILT to 0x00214C30
+??_7StructureBody@@6BBehaviorModule@@@,0x010A94B8,primary vtable installed by the named constructor and destructor
+??_7StructureBody@@6BBehaviorModuleInterface@@@,0x010A93F0,secondary vtable at this+0x0C
+??_7StructureBody@@6BBodyModuleInterface@@@,0x010A9320,secondary vtable at this+0x10
+??0SymbioticStructuresBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00214F00,constructor body identified by its class vtables and adjacent named methods
+??1SymbioticStructuresBody@@UAE@XZ,0x0003C8C1,destructor ILT to 0x00214CC0
+??_GSymbioticStructuresBody@@UAEPAXI@Z,0x0002458C,primary class vtable slot zero ILT to 0x00214E70
+??_7SymbioticStructuresBody@@6BBehaviorModule@@@,0x010A96B0,primary vtable installed by the named constructor and destructor
+??_7SymbioticStructuresBody@@6BBehaviorModuleInterface@@@,0x010A95E8,secondary vtable at this+0x0C
+??_7SymbioticStructuresBody@@6BBodyModuleInterface@@@,0x010A9518,secondary vtable at this+0x10
