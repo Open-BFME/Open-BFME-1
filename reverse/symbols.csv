@@ -83365,3 +83365,6 @@ __imp_??_VBfmeElemBV@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator
 ?bfmeFreeBW@@YAXPAX@Z,0x00895320,Open-BFME5 the release the element destructor at 0x00892CD0 makes
 __imp_??3BfmeElemBW@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x00892CD0 calls
 __imp_??_VBfmeElemBW@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x00892CD0 calls
+??1BfmeElemBX@@QAE@XZ,0x0000D828,Open-BFME5 the element destructor the array teardown at 0x001F6D40 runs
+??1BfmeMemberBX@@QAE@XZ,0x00026AB2,Open-BFME5 the member destructor the teardown at 0x001F6D40 runs first
+_bfmeVftableBX,0x00673744,Open-BFME5 the vftable the inline base destructor at 0x001F6D40 restores
