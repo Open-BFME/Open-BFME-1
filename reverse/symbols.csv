@@ -82837,3 +82837,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?q4Parse001E5940@@YAXPAVINI@@PAVMade001E5940@@HH@Z,0x002DC7B0,"Lead traced matched96B INI multi-field parser2DC7B0: consumes INI and instance, trailing zero args unused; cdecl"
 ?bfmeNamedAudio0046F1A0@@YAXPBD@Z,0x00002E0F,"Lead traced168B46F1A0: AudioEvent construction fromchar*, TheAudio slotsAC/44 then destructor; cdecl"
 ?updateConqueredEffects003C7130@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z,0x000461A0,"Lead traced296B3C7130: ConqueredEffectFlareup/Evenglow operations for argument+28 and owner entries, ret4; not remove"
+?bfmeLadderRankHttpComplete@@YAHHHPAD_JPAX@Z,0x0065BCC0,"Lead independently traced45B callback65BCC0 (64-bit length, int return),115B signed-int map654E90 (returns mapped pointer slot+14), and request caller ABI"
+??A?$map@HPAUBFMELadderHttpRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBFMELadderHttpRecord@@@_STL@@@3@@_STL@@QAEAAPAUBFMELadderHttpRecord@@ABH@Z,0x0000C3B0,"Lead independently traced45B callback65BCC0 (64-bit length, int return),115B signed-int map654E90 (returns mapped pointer slot+14), and request caller ABI"
