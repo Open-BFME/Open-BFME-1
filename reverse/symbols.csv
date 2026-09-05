@@ -12174,7 +12174,6 @@ name,address,notes
 ?appendWideCharArgument@GameMessage@@QAEXABG@Z,0x000028C9,GameMessage::appendWideCharArgument thunk
 ?apply82AA0@ZoomSettings@@QAEXH@Z,0x0000BA64,retail ScreenZoomFilter set0x007D1F00 direct calls at0x007D1F71 and0x007D201C
 ?apply@BfmeHost4164E0@@QAEXHHHH@Z,0x0003A2A1,ILT to sibling apply body 0x00416440; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
-?apply@BfmeObjectFlagApply@@QAEXABUBfmeModelConditionFlags@@_N@Z,0x001C7370,alias of the applyRva1C7370 spelling pinned below; Object.cpp reaches the helper through a view class because ModelConditionFlags is a BitFlags typedef there
 ?apply@BfmeRva49250Control@@QAEXPAVBfmeRva49250Object@@@Z,0x00002D3D,assigned body helper for Rva00249250
 ?apply@BfmeRvaA760Object@@QAEXH@Z,0x000122AB,assigned body helper for Rva0024A760
 ?apply@BfmeSub210_4B0@@QAEXMH@Z,0x000326F5,pin
@@ -75291,7 +75290,6 @@ name,address,notes
 ?clearLeaveRequestTime@BFMEConnectionManager@@QAEXXZ,0x00662E70,zeroes +0x12110 (the leave-request stamp); sole caller 0x00682B55 in 0x00682A90 when the router sees its own PLAYERLEAVE execute; ILT 0x000316DD
 ?clearLocalStagingState@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x0001118F,ILT to 0x005392B0 used by CustomMatch leaveStaging 0x00539750
 ?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BDA@@@@Z,0x0000B95B,Object clearModelConditionFlags ILT used by WeaponSet::setWeaponLock / releaseWeaponLock (USING_A/B/C)
-?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z,0x00031F7A,ILT thunk to 0x00162CD0; identified from ZH AIStates.cpp clearModelConditionState call site
 ?clearOwned@Rva003C1A50@@QAEXXZ,0x000214E0,ILT to clear body 0x003C0EF0; callee of 0x003C1A50
 ?clearPopupMessageData@InGameUI@@QAEXXZ,0x0000F5F6,ILT fronting the 125-byte body at 0x0043B890; from InGamePopupMessageSystem
 ?clearSingleton@Rva003C1A50@@QAEXXZ,0x00024875,ILT to clear body 0x003C0DB0; callee of 0x003C1A50
