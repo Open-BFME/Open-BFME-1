@@ -82832,3 +82832,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??1S4SortElem20@@QAE@XZ,0x0002AB2B,"Lead reviewed matched76B2E9E10 destructor; tail+8 then string+0,20B element"
 ?gen002EADF0Helper@@YAXPAXPAUS4SortElem20@@1U1@0H@Z,0x00032BAF,"Lead traced 2EABF0: assigns first element to third pointer, adjusts heap with by-value20B pivot, destroys pivot; cdecl"
 ?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
+??$__unguarded_partition@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAPAUS4SortElem12@@PAU1@0U1@US4Cmp00574DF0@@@Z,0x000270B1,"Lead independently reproduced and disassembled120B partition: signed key comparison,12B stride and full3dword swap"
