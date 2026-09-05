@@ -82830,3 +82830,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??0S4SortElem20@@QAE@ABU0@@Z,0x00036B10,Lead disassembled and independently reproduced87B copy ctor2E8FC0; string+flag+12B tail
 ?bfmeIterSwapS4SortElem20@@YAXPAUS4SortElem20@@0@Z,0x0003A76F,"Lead traced162B2EA1A0: copy temporary, memberwise assignments each direction, temporary cleanup, cdecl2ptr"
 ??1S4SortElem20@@QAE@XZ,0x0002AB2B,"Lead reviewed matched76B2E9E10 destructor; tail+8 then string+0,20B element"
+?gen002EADF0Helper@@YAXPAXPAUS4SortElem20@@1U1@0H@Z,0x00032BAF,"Lead traced 2EABF0: assigns first element to third pointer, adjusts heap with by-value20B pivot, destroys pivot; cdecl"
+?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
