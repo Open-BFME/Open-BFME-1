@@ -82902,3 +82902,11 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??0Rva003BB540Element@@QAE@XZ,0x19b28,"Reviewed ILT to3B9610 existing99B ctor; first string, dword4, tree8"
 ??0Rva003BB540Element@@QAE@ABU0@@Z,0x48923,"Reviewed ILT to3B9AD0 existing87B copy; string, dword, tree copy"
 ??1Rva003BB590Tree@@QAE@XZ,0x32fd3,Reviewed ILT to2360C0 complete124B set tree cleanup; member at8
+??1AsciiStringYH@@QAE@XZ,0x00887940,pin
+?set@AsciiStringYH@@QAEXABV1@@Z,0x00887C90,pin
+?bfmeNotifyYH@BfmeThingYH@@QAEXXZ,0x0003DCEE,Open-BFME5 the notifier the label commit at 0x004D1080 calls on the global 0x012F4B58
+?bfmeRefreshYH@BfmeOtherYH@@QAEXH@Z,0x0000BD7F,Open-BFME5 the refresh the label commit at 0x004D1080 calls on the global 0x012F19E8
+g_bfmeBaseYH,0x012ED5C8,Open-BFME5 the base whose embedded label at +0xB84 the commit at 0x004D1080 sets
+g_bfmeThingYH,0x012F4B58,Open-BFME5 the notifier target of the commit at 0x004D1080
+g_bfmeOtherYH,0x012F19E8,Open-BFME5 the optional refresh target of the commit at 0x004D1080
+g_bfmeDirtyYH,0x012F3E6D,Open-BFME5 the dirty flag the commit at 0x004D1080 raises
