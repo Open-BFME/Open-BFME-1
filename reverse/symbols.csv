@@ -9089,6 +9089,7 @@ name,address,notes
 ??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
 ??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
 ??_7BfmeOwnVVA@@6B@,0x0110FFEC,Open-BFME5 retail vftable stored by the 0x005D2840 destructor
+??_7BfmeOwnVVB@@6B@,0x0109BFAC,BfmeOwnVVB vftable stored by the 0x00190490 destructor
 ??_7BfmeOwnVVD@@6B@,0x0110DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
 ??_7BfmeOwnVVE@@6B@,0x0113C308,Open-BFME5 retail derived vftable stored by the 0x0092B6A0 destructor
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
