@@ -82949,3 +82949,5 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?loadPostProcess@Script@@UAEXXZ,0x00006EB5,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?getSnapshotName@Script@@UBEPBDXZ,0x00044017,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?xfer@Script@@UAEXPAVXfer@@@Z,0x0001044C,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
+?bfmeFindYQ@BfmeThingYQ@@QAEPAVBfmeEntryYQ@@HH@Z,0x0004AF84,Open-BFME5 the entry lookup the anchor selector at 0x00423300 calls
+??1Vector3YQ@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the static fallback point; referenced only by the atexit helper
