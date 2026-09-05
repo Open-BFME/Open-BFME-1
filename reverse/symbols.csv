@@ -83197,3 +83197,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1StringBaseNarrowAJ@@IAE@XZ,0x00887940,pin
 ?format@StringBaseNarrowAJ@@QAAXVAsciiStringAJ@@ZZ,0x00888FF0,pin
 ?bfmeSetAJ@BfmeRoomAJ@@QAEXPBD0@Z,0x0002B297,Open-BFME5 the room key set the start-game announcement at 0x00649DB0 makes
+??0StringBaseNarrowAK@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAK@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAK@@QAAXVAsciiStringAK@@ZZ,0x00888FF0,pin
+?bfmeResetAK@@YAXXZ,0x00007B03,Open-BFME5 the reset the drive scan at 0x006BA720 runs first
+__imp__GetDriveTypeA@4,0x01358D8C,Open-BFME5 retail KERNEL32 GetDriveTypeA import pointer
