@@ -83202,3 +83202,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?format@StringBaseNarrowAK@@QAAXVAsciiStringAK@@ZZ,0x00888FF0,pin
 ?bfmeResetAK@@YAXXZ,0x00007B03,Open-BFME5 the reset the drive scan at 0x006BA720 runs first
 __imp__GetDriveTypeA@4,0x01358D8C,Open-BFME5 retail KERNEL32 GetDriveTypeA import pointer
+??0StringBaseWideAL@@IAE@PBG@Z,0x00888DE0,pin
+??0StringBaseWideAL@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideAL@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringAL@@QAAXV1@ZZ,0x00889190,pin
+g_bfmeTextAL,0x012F147C,Open-BFME5 the text table the version text at 0x000AED00 fetches its format from
