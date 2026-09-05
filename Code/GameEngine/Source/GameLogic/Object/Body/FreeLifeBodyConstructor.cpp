@@ -58,6 +58,7 @@ class RespawnBody : public BehaviorModule,
 {
 public:
 	RespawnBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~RespawnBody();
 
 private:
 	unsigned char m_unmodelled_14[ 0xE0 - 0x14 ];
@@ -67,6 +68,7 @@ class FreeLifeBody : public RespawnBody
 {
 public:
 	FreeLifeBody( Thing *thing, const ModuleData *moduleData );
+	virtual ~FreeLifeBody();
 
 private:
 	bool m_unmodelled_E0;			// +0xE0
@@ -87,4 +89,8 @@ FreeLifeBody::FreeLifeBody( Thing *thing, const ModuleData *moduleData )
 	// would put +0xE0 and +0xE4 first, since that is where they sit.
 	m_unmodelled_E0 = ((const FreeLifeBodyModuleData *)getModuleData())->m_unmodelled_6C;
 	m_unmodelled_E4 = ((const FreeLifeBodyModuleData *)getModuleData())->m_unmodelled_64;
+}
+
+FreeLifeBody::~FreeLifeBody()
+{
 }
