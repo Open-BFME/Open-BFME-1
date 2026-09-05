@@ -21,6 +21,7 @@ name,target_rva,reason
 ?d_0007b990@@YAXXZ,0x0007B990,gen-dump placeholder superseded by the recovered _bfme_updateTimedOps identity and exact C++ body
 ?d_002918b0@@YAXXZ,0x002918B0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeSetYE@BfmeMarksYE@@QAEXEE@Z owns this range."
 ?d_00651fe0@@YAXXZ,0x00651FE0,"gen-* placeholder resurrected by the union merge of PR #94 onto master; the real identity ?bfmeNextXP@BfmeWalkerXP@@QAEXXZ owns this range."
+??A?$map@HVAsciiString@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHVAsciiString@@@_STL@@@3@@_STL@@QAEAAVAsciiString@@ABH@Z,0x00228310,"generic map copy was a false identity claim; the caller-proven copy at 0x000AB0C0 belongs to GameSpyInfo::addToSavedIgnoreList, while this 0x00228310 body remains covered under ?dup_00228310@@YAXXZ"
 ??1?$VectorClass@E@@UAE@XZ,0x00AFF130,retail vtable for VectorClass<unsigned char> is 0x113ac74 (proven by pointgr.cpp ctor) but the folded body at 0x00AFF130 loads 0x11bc44c; ICF folds only identical code so this cannot be that body
 ??1?$VectorClass@PAUtThreadInfoType@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by Except.cpp ctor) not the 0x11bc44c this body loads
 ??1?$VectorClass@PAVDefinitionClass@@@@UAE@XZ,0x00AFF130,vtable is 0x113a0fc (proven by definitionmgr.cpp ctor) not the 0x11bc44c this body loads

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "77e3432d8c57f2bbe056340aaa8eb097d74510337696680a1451831a052d38c8",
+  "symbol": "?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z\n// partial score=0.93 date=2026-09-05\n// cl: /DNDEBUG /MD /EHsc\n\n// S4SortElem8::BfmeLess00574AA0, retail 0x00574AA0, 224 bytes.\n\nclass AsciiString\n{\npublic:\n\tint compare( const AsciiString &other ) const;\n\t~AsciiString();\n\nprivate:\n\tvoid *m_data;\n};\n\nclass LivingWorldArmy\n{\npublic:\n\tAsciiString getName() const;\n\tunsigned char m_prefix[ 0x44 ];\n\tint m_sortKey;\n};\n\nclass LivingWorldArmyState\n{\npublic:\n\tunsigned char m_prefix[ 0xD0 ];\n\tunsigned int m_unusedFlags : 25;\n\tunsigned int m_flag : 1;\n\tunsigned int m_remainingFlags : 6;\n};\n\nstruct S4SortElem8\n{\n\tLivingWorldArmy *m_army;\n\tLivingWorldArmyState *m_state;\n\n\tbool BfmeLess00574AA0( const S4SortElem8 &other ) const;\n};\n\nbool S4SortElem8::BfmeLess00574AA0( const S4SortElem8 &other ) const\n{\n\tregister const S4SortElem8 *right = &other;\n\tif ( m_state->m_flag != right->m_state->m_flag )\n\t\treturn m_state->m_flag;\n\tif ( m_army->m_sortKey != right->m_army->m_sortKey )\n\t\treturn m_army->m_sortKey > right->m_army->m_sortKey;\n\treturn m_army->getName().compare( right->m_army->getName() ) < 0;\n}\n"
+}

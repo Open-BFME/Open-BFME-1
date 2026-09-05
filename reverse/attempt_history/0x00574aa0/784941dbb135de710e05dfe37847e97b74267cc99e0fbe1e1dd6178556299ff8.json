@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "symbol": "?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z\n// partial score=0.94 date=2026-09-01\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\ntemplate <typename T> struct StringInlineData\n{\n\tint m_refCount;\n\tint m_length;\n\tT m_text[1];\n};\n\ntemplate <typename T> class StringBase\n{\n\tfriend class AsciiString;\n\nprivate:\n\tStringBase() : m_data( 0 ) {}\n\tStringBase( const T *text );\n\tStringBase( const StringBase<T> &other );\n\t~StringBase();\n\n\tStringInlineData<T> *m_data;\n};\n\nclass AsciiString : private StringBase<char>\n{\npublic:\n\tAsciiString() : StringBase<char>() {}\n\tAsciiString( const AsciiString &other ) : StringBase<char>( other ) {}\n\t~AsciiString() {}\n\tint bfmeCompare(AsciiString const &other) const;\n};\n\nclass LivingWorldArmy\n{\npublic:\n\tAsciiString getName() const;\n\n\tunsigned char Prefix[0x44];\n\tint SortKey;\n};\n\nclass LivingWorldArmyState\n{\npublic:\n\tunsigned char Prefix[0xD0];\n\tunsigned Flags;\n};\n\nstruct S4SortElem8\n{\n\tLivingWorldArmy *Army;\n\tLivingWorldArmyState *State;\n\n\tbool BfmeLess00574AA0(S4SortElem8 const &other) const;\n};\n\nbool S4SortElem8::BfmeLess00574AA0(S4SortElem8 const &other) const\n{\n\tunsigned leftFlags = State->Flags;\n\tunsigned rightFlags = other.State->Flags;\n\tif (((leftFlags >> 25) ^ (rightFlags >> 25)) & 1)\n\t\treturn (leftFlags >> 25) & 1;\n\tif (Army->SortKey != other.Army->SortKey)\n\t\treturn Army->SortKey > other.Army->SortKey;\n\treturn Army->getName().bfmeCompare(other.Army->getName()) < 0;\n}\n"
+}
