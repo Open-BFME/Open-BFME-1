@@ -82968,3 +82968,9 @@ g_bfmeRegistryYT,0x012F33F8,Open-BFME5 the command registry the side dispatch at
 ?bfmeUseYU@BfmeRegistryYU@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EDB0
 g_bfmeObserverYU,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EDB0 checks
 g_bfmeRegistryYU,0x012F33F8,Open-BFME5 the command registry the dispatch at 0x0058EDB0 consults
+??0AsciiStringYV@@QAE@PBD@Z,0x00888BC0,pin
+??1AsciiStringYV@@QAE@XZ,0x00887940,pin
+?bfmeFindYV@BfmeRegistryYV@@QAEPAXABVAsciiStringYV@@@Z,0x0003B59D,Open-BFME5 registry lookup used by the dispatch at 0x0058EED0
+?bfmeUseYV@BfmeRegistryYV@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EED0
+g_bfmeObserverYV,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EED0 checks
+g_bfmeRegistryYV,0x012F33F8,Open-BFME5 the command registry the dispatch at 0x0058EED0 consults
