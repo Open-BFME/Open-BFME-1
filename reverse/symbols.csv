@@ -6008,6 +6008,7 @@ name,address,notes
 ??1Gen_dtor_009ebe70@@UAE@XZ,0x009EBC70,gen-dtor class destructor
 ??1Gen_dtor_009ed840@@UAE@XZ,0x009ED2F0,gen-dtor class destructor
 ??1Gen_dtor_009f2600@@UAE@XZ,0x009F5970,gen-dtor class destructor
+?cleanup@Gen_dtor_009f2600@@QAEXXZ,0x009F4ED0,cleanup operation called by Gen_dtor_009f2600 destructor at 0x009F5970
 ??1Gen_dtor_009f43d0@@UAE@XZ,0x009F2B60,gen-dtor class destructor
 ??1Gen_dtor_00b025b0@@UAE@XZ,0x0095C710,gen-dtor class destructor
 ??1Gen_dtor_00b02600@@UAE@XZ,0x00B02620,gen-dtor class destructor
