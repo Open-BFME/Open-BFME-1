@@ -1041,6 +1041,7 @@ name,address,notes
 ??$__partial_sort@PAHHUQ4Sort005156D0@@@_STL@@YAXPAH000UQ4Sort005156D0@@@Z,0x00515550,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__partial_sort@PAHHUQ4Sort00533470@@@_STL@@YAXPAH000UQ4Sort00533470@@@Z,0x00532DF0,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__partial_sort@PAHHUQ4Sort00755050@@@_STL@@YAXPAH000UQ4Sort00755050@@@Z,0x00754C60,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
+??$__partial_sort@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@000US4Cmp002E1690@@@Z,0x00041D71,S4 STLport partial_sort callee of the 0x002E1B60 introsort loop; target read from the retail ILT
 ??$__pop_heap@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@H@_STL@@YAXPAURva00364980HeapElement@@00U1@URva00364980HeapCompare@@PAH@Z,0x0001479F,REL32 wide-element pop-heap target from 0x00366838
 ??$__push_heap@PAHHHUQ4Cmp00344A60@@@_STL@@YAXPAHHHHUQ4Cmp00344A60@@@Z,0x00035A35,push-heap call target decoded from the retail adjust-heap body at 0x00342D60
 ??$__push_heap@PAHHHUQ4Cmp00453BB0@@@_STL@@YAXPAHHHHUQ4Cmp00453BB0@@@Z,0x004529D0,ICF-shared with S4Cmp004529D0 push_heap callee of the adjust-heap instantiation at 0x00453200
@@ -1077,6 +1078,7 @@ name,address,notes
 ??$__unguarded_partition@PAHHUQ4Sort00755050@@@_STL@@YAPAHPAH0HUQ4Sort00755050@@@Z,0x00753720,STLport sort helper called by the 140-byte __introsort_loop family (Q4IntrosortLoop.cpp); address-derived template argument; identity not recovered
 ??$__unguarded_partition@PAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@_STL@@YAPAURva00364980HeapElement@@PAU1@0U1@URva00364980HeapCompare@@@Z,0x0003FFC1,REL32 wide-element partition target from 0x00366AEF
 ??$__unguarded_partition@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAPAUS4SortElem12@@PAU1@0U1@US4Cmp00574DF0@@@Z,0x000270B1,"Lead independently reproduced and disassembled120B partition: signed key comparison,12B stride and full3dword swap"
+??$__unguarded_partition@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAPAUS4SortElem12@@PAU1@0U1@US4Cmp002E1690@@@Z,0x00038F05,S4 STLport unguarded_partition callee of the 0x002E1B60 introsort loop; target read from the retail ILT
 ??$__uninitialized_copy@PAUGen_t_003c1800_p2pod@@PAU1@@_STL@@YAPAUGen_t_003c1800_p2pod@@PAU1@00ABU__false_type@0@@Z,0x000413A3,"Independent full retail helper review: 2-byte copy/backward/fill/placement-fill and existing 3C16A0 overflow; RVA-derived POD type, no guessed game owner"
 ??$__uninitialized_copy@PAUGen_t_0074d9c0_p128pod@@PAU1@@_STL@@YAPAUGen_t_0074d9c0_p128pod@@PAU1@00ABU__false_type@0@@Z,0x00021A1C,typed helper for 36-byte vector fill insert
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
