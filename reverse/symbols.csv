@@ -82806,3 +82806,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?findGroup@ScriptEngine@@IAEPAVScriptGroup@@VAsciiString@@PAV3@@Z,0x00007AC7,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
 ?findScript@ScriptEngine@@IAEPAVScript@@VAsciiString@@PAV3@@Z,0x0000D97C,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
 ?notify@BfmeEnableListener@@QAE_NABVAsciiString@@0_N@Z,0x000065EB,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
+?findRainOfFireUpdateInterface@@YAPAVRainOfFireUpdateInterface@@PAVObject@@@Z,0x0028CCD0,Independently verified 43B typed same-TU helper; private EAX Object argument generated with real destructor caller; RainOfFire BMI vslot 0x78
