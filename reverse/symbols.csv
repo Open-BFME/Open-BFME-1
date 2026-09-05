@@ -72805,7 +72805,6 @@ name,address,notes
 ?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x0004A91C,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
-?bfmeDropRN@BfmeThingRN@@QAEXH@Z,0x00031F7A,pin
 ?bfmeDropTWB@BfmeListTWB@@QAEXXZ,0x00800290,pin
 ?bfmeDropUC@BfmeSubUC@@QAEXPAVBfmeThingUC@@@Z,0x0081C3D0,pin
 ?bfmeDropVE@BfmeSubVE@@QAEXPAX@Z,0x0000871A,pin
