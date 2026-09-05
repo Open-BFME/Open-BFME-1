@@ -1,10 +1,7 @@
-// ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z
-// partial score=0.7 date=2026-09-04
 // cl: /GX- /GS
-// jabba gamebrowserpinger.cpp add-pending-request @ 0x00803110 (332B).
-// Asserts m_08 / capacity 0x80; bfmeGoUVB formats address; Rva008085A0 sends
-// 8-byte (*b,*c) payload; records id+tick+args; bfmeSetVMO(count+1).
-// Pin: ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z
+// EA FESL client SDK ("jabba") -- add-pending-request from
+// gamebrowserpinger.cpp.  Assertion path and source file are in the retail
+// image; the matched caller is BfmeH1028::bfmeGo1028H.
 
 struct Rva007EB810Diag
 {
@@ -94,28 +91,21 @@ void BfmeSink1028::bfmeSend1028( int a, int *b, int *c )
 	pc = c;
 	payload[1] = *pc;
 	payload[0] = *pb;
-	if( bfmeGoUVB( (BfmeRecUVB *)a, addr ) == 0 )
-		goto done;
-
-	id = Rva008085A0( m_08, addr, (const char *)payload, 8 );
-	if( id < 0 )
-		goto fail_ping;
-	else
-		goto success;
-
-success:
-	m_0C[m_10].m_00 = id;
-	m_0C[m_10].m_04 = (int)Rva007E9B70Get()->now();
-	m_0C[m_10].m_0C = *pc;
-	m_0C[m_10].m_08 = *pb;
-	( (BfmeSvcVMO *)this )->bfmeSetVMO( m_10 + 1 );
-	return;
-
-fail_ping:
-	Rva007EB810Get()->fail(
-		"false",
-		"\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserpinger.cpp",
-		0xA4 );
-done:
-	;
+	if( bfmeGoUVB( (BfmeRecUVB *)a, addr ) != 0 )
+	{
+		id = Rva008085A0( m_08, addr, (const char *)payload, 8 );
+		if( id >= 0 )
+		{
+			m_0C[m_10].m_00 = id;
+			m_0C[m_10].m_04 = (int)Rva007E9B70Get()->now();
+			m_0C[m_10].m_0C = *pc;
+			m_0C[m_10].m_08 = *pb;
+			( (BfmeSvcVMO *)this )->bfmeSetVMO( m_10 + 1 );
+			return;
+		}
+		Rva007EB810Get()->fail(
+			"false",
+			"\\views\\feslbuild_main\\jabba\\fesl\\source\\gamebrowser\\gamebrowserpinger.cpp",
+			0xA4 );
+	}
 }
