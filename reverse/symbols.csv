@@ -83368,3 +83368,5 @@ __imp_??_VBfmeElemBW@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator
 ??1BfmeElemBX@@QAE@XZ,0x0000D828,Open-BFME5 the element destructor the array teardown at 0x001F6D40 runs
 ??1BfmeMemberBX@@QAE@XZ,0x00026AB2,Open-BFME5 the member destructor the teardown at 0x001F6D40 runs first
 _bfmeVftableBX,0x00673744,Open-BFME5 the vftable the inline base destructor at 0x001F6D40 restores
+??1BfmeElemBY@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array teardown at 0x0092A3D0 runs
+?bfmeResetBY@BfmeHolderBY@@QAEXHHH@Z,0x00929310,Open-BFME5 the reset the destructor at 0x0092A3D0 runs first
