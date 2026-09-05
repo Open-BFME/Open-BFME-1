@@ -79523,6 +79523,7 @@ name,address,notes
 ?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
 ?initialize@Rva14BAD0List@@QAEPAU1@PADH@Z,0x00021C42,Open-BFME5 RVA 14BAD0 list head initializer thunk pin
 ?initializeBonePositions@SpawnPointProductionExitUpdate@@AAEXXZ,0x0003B566
+?initializeBuckets@Rva000DA590HashTable@@AAEXI@Z,0x0001C5C6,ILT reached by Rva000DA590Map ctor at 0x000DA590
 ?initializeBuckets@TeamRelationHashTable@@AAEXI@Z,0x00016A59,retail REL32 at 0x000F7726 targets the ILT for STLport hashtable _M_initialize_buckets
 ?initializeRva006B3C50@@YGXPAX@Z,0x0004AC82,address-derived stdcall ILT recovered from 0x006B3C50
 ?initiateIntentToDoSpecialPower@SpecialPowerModule@@QAE_NPBVObject@@PBVCoord3D@@PBVWaypoint@@I@Z,0x000361AB,Open-BFME6 ILT of 0x0026A550 intent
@@ -82060,6 +82061,9 @@ __imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
 __imp__GetLocalTime@4,0x01358DB8,Open-BFME5 retail GetLocalTime import pointer
 __imp__GetTempPathA@8,0x01358E00,Open-BFME5 retail GetTempPathA import pointer
 __imp__GetTickCount@0,0x01358E0C,Open-BFME5 retail GetTickCount import pointer
+__imp__GetTimeFormatA@24,0x01358E10,Open-BFME5 retail GetTimeFormatA import pointer
+__imp__GetTimeFormatW@24,0x01358E14,Open-BFME5 retail GetTimeFormatW import pointer
+__imp__GetVersionExA@4,0x01358E20,Open-BFME5 retail GetVersionExA import pointer
 __imp__InterlockedIncrement@4,0x01358E5C,Open-BFME5 retail InterlockedIncrement import pointer
 __imp__LeaveCriticalSection@4,0x00F58E74,retail KERNEL32 import pointer
 __imp__MultiByteToWideChar@24,0x01358EA0,retail IAT slot for MultiByteToWideChar
