@@ -1,0 +1,267 @@
+# BFME1 `GameLogic` phase update
+
+This note describes retail BFME 1.03 code beginning at RVA `0x0038DA10`
+(VA `0x0078DA10`). It is a semantic recovery of the phase dispatcher, not a
+byte-exact reconstruction or a multiplayer fix.
+
+## Boundary and identity
+
+The previously reported 2,094-byte boundary is wrong. As an exclusive end, RVA
+`0x0038E23E` cuts off the final byte of `mov edx,[esp+0x28]`, which begins at
+`0x0038E23B`; the next instruction begins at `0x0038E23F`. The function
+continues through `ret 4` at `0x0038E25E`; alignment begins at `0x0038E261`.
+The verified range is therefore:
+
+| Item | Value | Status |
+|---|---:|---|
+| Entry RVA / VA | `0x0038DA10` / `0x0078DA10` | proven from the ILT target and caller |
+| Exclusive end | `0x0038E261` | proven by complete instruction decoding and `ret 4` |
+| Size | `0x851` = 2,129 bytes | proven |
+| ILT thunk | RVA `0x0003A9C7` | exact five-byte thunk, already matched |
+| Caller | `GameEngine::_bfme_updateNetworkAndLogic`, RVA `0x0006BAE0` | exact clean C++ already matched |
+| Virtual slot | `GameLogic` slot `+0x20` (index 8) | call at `0x0006BB86`; vtable entries point to VA `0x0043A9C7` |
+| ABI | virtual `thiscall`, one 32-bit phase argument | load at `0x0038DA47`; `ret 4` at `0x0038E25E` |
+| Current ledger owner | none for the body; only its ILT thunk is claimed | checked in `reverse/functions.csv` |
+
+The `reverse/symbols.csv` label `?update@GameLogic@@UAEXXZ` describes the old
+parameterless Zero Hour signature. It cannot be the retail BFME ABI. Keep the
+name as comparison evidence until the correct BFME declaration is recovered.
+
+Two vtable images contain the thunk VA at slot `+0x20`: bases `0x010EB574` and
+`0x0111CA5C`, with the entries at `0x010EB594` and `0x0111CA7C`. This establishes
+the dispatch slot but does not by itself identify both concrete classes.
+
+## Phase table
+
+All addresses in the table are RVAs. “Update” on an unresolved singleton means
+a virtual call through slot `+0x14`; it does not assert a more specific effect.
+
+| Phase | Work performed | Direct state changes |
+|---:|---|---|
+| 1 | Runs the logic-debug-frame helper and the freeze gate; queries the network packet-router state; runs the phase-1 object special case; updates ScriptEngine, the singleton at `0x012F060C`, TerrainLogic, and optional VictorySystem; creates periodic logic CRC messages; updates optional stats/action systems and Recorder; consumes the command list; performs per-object interface work and the phase-1 object tail. | Records phase 1 at `GameLogic+0x168`; may set `GameClient+0xC4` false on freeze or true after a completed phase; conditionally increments the simulation frame at `GameLogic+0x3C` exactly once near the end. |
+| 2 | Updates PartitionManager and the singleton at `0x012ED5C4`; walks all objects and calls the transform/frame recorder when object `+0x168` differs from the current simulation frame. | Records phase 2. Does not increment the simulation frame. |
+| 3 | Processes the first half of sleepy-update vector 0 (`GameLogic+0xC4`). Due entries may call their update module and receive a new wake frame. | Records phase 3; writes `GameLogic+0x100` around callbacks; updates entry wake frame `+0x14`; may change heap indices `+0x18/+0x1C` and move expired entries to `GameLogic+0xF4`. |
+| 4 | Processes the second half of sleepy-update vector 0. | Same sleepy-entry changes as phase 3. It begins at `size/2`, complementing phase 3's stop at `size/2`. |
+| 5 | Processes sleepy-update vectors 1 and 2, then updates AI. After the common deferred-destruction drain, updates ShroudManager, TaintManager, singleton `0x012ED83C`, LargeGroupAudio, ObjectCreationListStore, LocomotorStore, VictoryConditions, ExperienceLevelSystem, and the member at `GameLogic+0x170`; it also calls the unresolved GameLogic phase-5 helper at body RVA `0x0038AE90`. | Same sleepy-entry changes; records phase 5. No simulation-frame increment. |
+| 6 | Processes sleepy-update vector 3. | Same sleepy-entry changes; records phase 6. No simulation-frame increment. |
+
+The jump table at VA `0x0078E264` maps phase 3 and phase 4 to the common vector-0
+case at `0x0038DEF1`, phase 5 to `0x0038DEFA`, and phase 6 to `0x0038DF06`.
+The phase value remains live because the vector-0 loop splits its range at
+`0x0038DF30` and `0x0038DF67`.
+
+## Common control flow
+
+Entry first maintains a reentrancy depth at `GameLogic+0x1A0`. When the old
+value is zero, `0x0038DA3C` calls `setFPMode`; `0x0038DA4B` increments the depth.
+Every return path decrements it (`0x0038DACF`, `0x0038DB25`, or
+`0x0038E244`). This is proven counter behavior. Calling it a frame counter
+would be wrong.
+
+Only phase 1 enters the freeze test at `0x0038DA57`. After that gate, every
+admitted phase resets the end of the deferred-owned-entry vector: the retail
+self-range copy at `0x0038DAAE..0x0038DAFC` reduces to
+`GameLogic+0x160 = GameLogic+0x15C`. Work during the phase may append entries.
+The exact clean C++ callee at body RVA `0x0038A6F0`, called at `0x0038E10C` by
+every normal phase, deletes those entries and restores an empty range. This
+ordering explains the otherwise strange reset at entry.
+
+If `GameLogic+0x11D` is set, phase 1 calls the unresolved helper whose body is
+RVA `0x00783050`, sets `GameClient+0xC4 = 1`, and returns. Other phases return
+without that call (`0x0038DB02..0x0038DB3D`). The field is a start/load gate,
+but its exact BFME name remains unproven.
+
+On the normal path, phase 1 optionally calls the network virtual at slot
+`+0x8C` (`0x0038DB40..0x0038DB57`). The return value is unused. All phases then
+write their phase to `GameLogic+0x168`, save `GameLogic+0x6B`, set that byte to
+one, and restore it in the epilogue. Zero Hour layout and the RAII-shaped code
+support the name `m_isInUpdate`, while the save/set/restore behavior itself is
+proven at `0x0038DB57..0x0038DB80` and `0x0038E23B..0x0038E251`.
+
+Phase 1 owns the large front half through `0x0038DE83`. Phase 2 has its own
+block at `0x0038DE89..0x0038DECF`. Phases 3–6 select sleepy queues at
+`0x0038DED4..0x0038E0F4`. The shared drain follows. Phase 5 then runs its
+post-simulation subsystem batch at `0x0038E116..0x0038E17F`. Every normal phase
+passes the copy-protection check, but only phase 1 passes the final object walk
+and simulation-frame increment.
+
+## Phase 1 ordering
+
+The following order is instruction-level fact:
+
+1. ScriptEngine's logic-debug-frame helper is called at `0x0038DA5D`.
+2. TacticalView and ScriptEngine freeze predicates run at
+   `0x0038DA62..0x0038DA90`.
+3. A pending `MSG_CLEAR_GAME_DATA` (`0x1D`) is queried at `0x0038DA92`; when
+   present, ScriptEngine is force-unfrozen at `0x0038DAA3`. Without it, the
+   function sets `GameClient+0xC4 = 0` and returns at `0x0038DAC2`.
+4. After the common entry bookkeeping, a frame-2-only object block runs at
+   `0x0038DB83..0x0038DC06` under several global predicates. The exact purpose
+   of its two object-interface callees remains unresolved.
+5. A helper on `TheAI+0xC` is called at `0x0038DC06`, followed by `setFPMode`.
+6. ScriptEngine, `0x012F060C`, TerrainLogic, and optional VictorySystem update
+   at `0x0038DC1C..0x0038DC4D`. VictorySystem's update is independently mapped
+   to body RVA `0x001DFBA0`.
+7. Logic CRC generation and message creation occur at
+   `0x0038DC50..0x0038DDF5`.
+8. Optional singleton `0x012ED4FC` updates, followed by the phase-1-only
+   singleton `0x012ED63C` and Recorder (`0x0038DDF5..0x0038DE27`).
+9. Every node starting at `TheCommandList+8` is passed to the GameLogic command
+   processor with argument zero; CommandList is then reset through virtual slot
+   `+0x10` (`0x0038DE2A..0x0038DE50`). Commands are therefore consumed and
+   cleared during phase 1, before phases 2–6.
+10. The object list at `GameLogic+0xA8` receives interface work at
+    `0x0038DE53..0x0038DE83`.
+11. After the later shared drain and copy-protection check, phase 1 walks the
+    object list again at `0x0038E1C3..0x0038E212`. It conditionally calls three
+    helpers based on object `+0x1A4`, bit `0x200` at `+0x98`, and bit `0x10` at
+    `+0x90`, then always calls object virtual slot `+0x3C`.
+12. If byte `GameLogic+0xA0` is clear and byte `GameLogic+0x40` is set, the
+    function increments `GameLogic+0x3C` at `0x0038E225`. It then sets
+    `GameClient+0xC4 = 1`.
+
+The exact names of several phase-1 object methods are not established. Their
+addresses and predicates should be preserved until callers or vtables prove
+them; they must not be classified as cosmetic work.
+
+## CRC behavior
+
+CRC work is phase 1 only and is skipped in game modes 4 and 8
+(`0x0038DC50..0x0038DC70`). It also requires a Recorder. Multiplayer/replay
+cadence divides the current frame by the interval at `TheGameInfo+8`; mode 2
+suppresses that path (`0x0038DC7E..0x0038DCAE`). A debug frame window rooted at
+global `0x012A6F38` can force the path and uses writable-global-data offset
+`+0xCB4` (`0x0038DCAE..0x0038DCE8`).
+
+The CRC is calculated by the `getCRC` callee with body RVA `0x00383150`. Retail
+then appends message type `0x449` and arguments in this order: CRC, current
+simulation frame, a Recorder playback boolean, and a final false/debug flag
+(`0x0038DD84..0x0038DDDE`). Under debug flags it calls the mapped
+`bfme_processLogicCRC` body at RVA `0x0038B430` before continuing. This all
+happens before Recorder update, command consumption, sleepy updates, deferred
+destruction, the phase-1 object tail, and the frame increment. A repeated
+phase 1 can therefore calculate and enqueue another CRC against the state at
+that invocation; it is not a harmless network-only poll.
+
+## Sleepy-update partition
+
+Four vector triplets begin at `GameLogic+0xC4`, with stride `0x0C`. For each
+selected vector, the loop examines pointer entries in vector order. An entry is
+due when its `+0x14` wake frame is no greater than the current frame
+(`0x0038DF79..0x0038DF92`). Its owner is at `+0x08`; owner disabled state is at
+`+0x1A4`. The small polymorphic object embedded at entry `+0x10` supplies a
+disabled-types mask through slot `+0x04` and performs the update through slot
+zero.
+
+Around an admitted callback, `GameLogic+0x100` is set to the entry and then
+cleared (`0x0038DFBC..0x0038DFF1`). A callback sleep below one is clamped to
+one; owner flag bit one at `+0x90` chooses the sentinel `0x3FFFFFFF`. The next
+wake frame is current frame plus sleep, saturated at that sentinel
+(`0x0038DFFB..0x0038E01A`). Sentinel entries are removed from the active vector
+and appended to the vector at `GameLogic+0xF4`, while entry indices `+0x18` and
+`+0x1C` are repaired (`0x0038E03E..0x0038E0DA`).
+
+Phase 3 stops at half of vector 0. Phase 4 starts at half of the then-current
+vector 0. Because the vector can be mutated while it is processed, reproducing
+the exact index and removal order matters; a range-for rewrite would not be
+behaviorally equivalent without proof.
+
+## Pause, loading, and game mode
+
+These are distinct gates:
+
+- Network admission is outside this function in
+  `GameEngine::_bfme_updateNetworkAndLogic`. It is tested only for phase 1.
+  Phases 2–6 reach this function unconditionally from that caller.
+- Logic/camera freeze is inside phase 1. A rejected freeze path executes the
+  debug-frame prefix and depth-counter entry, sets `GameClient+0xC4 = 0`, then
+  returns before phase recording, CRC, commands, objects, or frame increment.
+- `GameLogic+0x11D` is an early start/load branch after the deferred vector was
+  reset. Its exact field name and helper at RVA `0x00783050` are unresolved.
+- Game modes 4 and 8 suppress both CRC work and the frame-1024 copy-protection
+  check. Mode 2 separately suppresses the multiplayer CRC cadence.
+- The frame increments only when phase 1 completes, `GameLogic+0xA0 == 0`, and
+  `GameLogic+0x40 != 0`.
+
+## Rejection, retry, and framedrain
+
+A rejected phase-1 network admission never enters `0x0038DA10`. It changes
+`GameClient+0xC4` in the exact caller and omits every operation described here.
+A later retry is a fresh phase-1 call. This differs from an in-function freeze
+rejection, which runs the phase-1 debug/freeze prefix and depth bookkeeping
+before returning.
+
+Feature `034-framedrain` inserted extra calls to
+`_bfme_updateNetworkAndLogic(1)`. Every admitted extra call repeats the complete
+phase-1 workload: script and terrain work, eligible CRC creation, Recorder and
+command consumption, phase-1 object work, deferred destruction, object-tail
+maintenance, and potentially one simulation-frame increment. It does not run
+phases 2–6 between those repetitions. The reported desync is consistent with
+violating the retail one-through-six ordering, but the precise desync cause has
+not been proven by runtime or multiplayer traces.
+
+## Dependency status
+
+| Dependency | Status for this target | Evidence / next question |
+|---|---|---|
+| `_bfme_updateNetworkAndLogic` at `0x0006BAE0` | already understood and exact | matched clean C++; proves phase-1-only admission and slot `+0x20` |
+| ILT `0x0003A9C7` | already understood and exact | matched five-byte thunk to target |
+| `setFPMode` at `0x008FC4C0` | sufficiently understood | same direct callee and role as source donor |
+| VictorySystem update at `0x001DFBA0` | sufficiently understood | vtable slot and phase-1 caller mapped |
+| `getCRC` at `0x00383150` and CRC handler at `0x0038B430` | sufficiently understood | argument and message flow visible in caller; handler mapped |
+| deferred owned-entry clear at `0x0038A6F0` | already understood and exact | 92-byte clean C++ match in `Bfme5SelfRangeClears.cpp` |
+| GameLogic clear/walk at `0x0038D000` | already understood and exact, related lifecycle evidence | exact 112-byte clean C++; proves `+0xA8` object list and `+0x15C` vector coexist in the layout |
+| phase-5 helper at `0x0038AE90` | unresolved and materially blocking naming | 430 bytes; called at `0x0038E144`; recover before naming the phase-5 transition |
+| helper on `GameLogic+0x170`, body `0x00367810` | already exact but address-derived | 164-byte clean C++ shows a gated 0x58-byte-entry walk; owning field identity still unproven |
+| phase-1 helper body `0x00783050` | unresolved and materially blocking start/load semantics | call at `0x0038DB13` only for phase 1 under `+0x11D` |
+| AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
+| command processor body `0x00797540` | sufficiently understood for ordering | each CommandList node and argument zero are explicit; detailed command dispatch is separate work |
+| phase-1 object helpers `0x005C5780`, `0x005CE7B0`, `0x005CE7F0` | unresolved and semantically relevant | exact predicates at `0x0038E1D4..0x0038E203`; recover as a group with the object vtable |
+| singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
+
+## Reconstruction status and attack plan
+
+The existing Zero Hour derived `GameLogic::update(void)` was compiled against
+the corrected target range. It produces 1,010 bytes versus retail's 2,129,
+first diverges at stack allocation `0x0038DA25` (`0x1C` versus `0x2C`), lacks
+the phase argument, and has unresolved calls. It is a semantic donor, not a
+valid BFME partial, so it has not been banked under the primary RVA. There is
+no build/link or runtime verification for a BFME phase-update replacement.
+
+Use these bounded jobs for subsequent Codex runs. Each job should update this
+document with proven names and addresses; only the final job should edit the
+primary implementation TU.
+
+1. **Recover `0x0038AE90` (430 bytes).** Start from its call at `0x0038E144`
+   with `this == GameLogic`. Resolve its direct callees and all writes to
+   `GameLogic`; compare its other caller from the exact `0x0038D000` clear
+   routine. Land it independently if clean C++ matches.
+2. **Recover the `+0x11D` branch.** Disassemble body RVA `0x00783050`, find all
+   callers and writes/xrefs to `GameLogic+0x11D`, and inspect neighboring
+   start/load methods. The deliverable is a proven field/helper name or a
+   precise address-derived implementation, not a guessed `startNewGame` label.
+3. **Name the phase-1 object tail.** Resolve bodies `0x005C5780`, `0x005CE7B0`,
+   and `0x005CE7F0` together with object vtable slot `+0x3C`. Record effects on
+   object `+0x90`, `+0x98`, and `+0x1A4`. Land any tractable exact body on its
+   own.
+4. **Close singleton identities.** Trace constructors, set-name strings, and
+   vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
+   caller or constructor outranks an address-derived symbol pin.
+5. **Declare the BFME ABI and TU-local layout.** In
+   `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
+   verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
+   vectors `+0xC4..+0xFC`, current update `+0x100`, mode `+0x10C`, gate
+   `+0x11D`, phase `+0x168`, member `+0x170`, and depth `+0x1A0`. Give the
+   method one integer phase argument and preserve the unusual self-range reset.
+6. **Build in slices.** First match entry, early returns, and epilogue; then
+   phases 3–6; then phase 2; finally phase 1. After each meaningful shape run
+   `tools/probe.py` or `tools/explain_mismatch.py` with RVA `0x0038DA10` and
+   size `2129`. Do not add a ledger row until the entire body matches.
+7. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
+   and the AGENTS.md `partial --stash --score` workflow only when the dedicated
+   phase-aware body is close enough to help the next worker. Do not bank the
+   1,010-byte parameterless donor and do not use naked/emit code.
+
+Semantic recovery here is strong enough to state what each phase schedules and
+where the authoritative frame advances. Byte-exact reconstruction remains
+open. Runtime behavior and multiplayer correctness remain untested.
