@@ -83259,3 +83259,4 @@ _bfmeVftableAV,0x00698188,Open-BFME5 the vftable the state constructor at 0x0017
 ??1StringBaseNarrowAW@@IAE@XZ,0x00887940,pin
 ?bfmeBaseInitAW@BfmeStateAW@@QAEXPAXVAsciiStringAW@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0018AE00 calls
 _bfmeVftableAW,0x0069B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
+?processPathfindQueue@Pathfinder@@QAEXXZ,0x000313A9,GameLogic phase call at 0x0038DC0E supplies TheAI+0x0C (Pathfinder); ILT targets 716-byte RVA 0x003DC190 whose zone refresh terrain bounds 512-slot request queue object lookup and doPathfind loop match AIPathfind.cpp

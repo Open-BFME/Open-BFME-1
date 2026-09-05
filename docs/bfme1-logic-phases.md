@@ -123,7 +123,12 @@ The following order is instruction-level fact:
 4. After the common entry bookkeeping, a frame-2-only object block runs at
    `0x0038DB83..0x0038DC06` under several global predicates. The exact purpose
    of its two object-interface callees remains unresolved.
-5. A helper on `TheAI+0xC` is called at `0x0038DC06`, followed by `setFPMode`.
+5. `Pathfinder::processPathfindQueue()` is called on `TheAI->m_pathfinder`
+   (`TheAI+0x0C`) at `0x0038DC0E`, followed by `setFPMode`. Its ILT is RVA
+   `0x000313A9`; the 716-byte body is RVA `0x003DC190` (VA `0x007DC190`).
+   The body recalculates zones when needed, refreshes logical terrain bounds,
+   and services queued object path requests until the per-frame cell budget is
+   consumed.
 6. ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem update
    at `0x0038DC1C..0x0038DC4D`. VictorySystem's update is independently mapped
    to body RVA `0x001DFBA0`. The LuaScriptEngine identity is direct: the
@@ -259,7 +264,7 @@ not been proven by runtime or multiplayer traces.
 | `GameLogic::processDestroyList` at `0x0038AE90` | behavior and identity solved; clean C++ near match banked | corrected boundary is 438 bytes; phase-5 caller, clear-path caller, field effects, and destruction order agree; remaining 416/438-byte mismatch is register allocation |
 | helper on `GameLogic+0x170`, body `0x00367810` | already exact but address-derived | 164-byte clean C++ shows a gated 0x58-byte-entry walk; owning field identity still unproven |
 | `GameLogic::processCommandList()` at `0x00383050` | solved and byte-exact | 47-byte clean C++; walks `TheCommandList+8`, calls `logicMessageDispatcher(message, NULL)`, then resets the list; the normal phase-1 path inlines the same body at `0x0038DE2A` |
-| AI subobject helper body `0x007DC190` | unresolved but not a codegen blocker | called on `[TheAI+0x0C]` at `0x0038DC0E` in every normal phase |
+| `Pathfinder::processPathfindQueue`, body RVA `0x003DC190` | solved identity and behavior; body remains a byte-true dump | called on `TheAI->m_pathfinder` at `+0x0C`; source twin and complete body state/queue layout agree |
 | command processor body `0x00797540` | sufficiently understood for ordering | each CommandList node and argument zero are explicit; detailed command dispatch is separate work |
 | `Object::checkDisabledStatus()` at `0x001C5780` | solved and byte-exact | corrected 102-byte boundary includes the complete epilogue; checks 11 disabled bits against expiration frames rooted at `Object+0x1A8`, calls `clearDisabled(type)`, and clears the bit |
 | `Object::clearStatus(ObjectStatusTypes)` at `0x00162CD0` | solved and byte-exact | corrected an older `clearModelConditionState` identity: the body builds one bit in an 86-bit object-status mask and calls `setStatus(mask, false)`; both expiry helpers call it |
