@@ -82827,3 +82827,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??$_M_allocate_and_copy@PBURva003AC170Element@@@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEPAURva003AC170Element@@IPBU2@0@Z,0x0003CF60,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__copy@PBURva003AC170Element@@PAU1@H@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00044E40,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__uninitialized_copy@PBURva003AC170Element@@PAU1@@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001381D,Lead independently verified helper body bytes and220B virtual element semantics
+??0S4SortElem20@@QAE@ABU0@@Z,0x00036B10,Lead disassembled and independently reproduced87B copy ctor2E8FC0; string+flag+12B tail
