@@ -138,6 +138,11 @@ public:
 	virtual void clearAdditionalDisconnects( void );
 	virtual void readAdditionalDisconnects( void );
 	virtual void updateAdditionalGameSpyDisconnections(Int count);
+
+	// Non-virtual: Open-BFME sibling of leaveGroupRoom at retail 0x00634DD0,
+	// issuing PEERREQUEST_STARTGAMELIST instead of PEERREQUEST_LEAVEGROUPROOM.
+	// Added here (not virtual) so no existing vtable slot shifts.
+	void startGameList( void );
 private:
 	Bool m_sawFullGameList;
 	Bool m_isDisconAfterGameStart;
