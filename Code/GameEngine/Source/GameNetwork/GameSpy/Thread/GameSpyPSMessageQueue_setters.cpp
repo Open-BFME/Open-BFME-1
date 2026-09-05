@@ -25,3 +25,8 @@ void GameSpyPSMessageQueue::setEmail(_STL::string email)
 {
 	m_email = email;
 }
+
+void GameSpyPSMessageQueue::setNick(_STL::string nick)
+{
+	m_nick = nick;
+}
