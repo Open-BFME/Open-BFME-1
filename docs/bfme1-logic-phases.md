@@ -284,6 +284,18 @@ the phase argument, and has unresolved calls. It is a semantic donor, not a
 valid BFME partial, so it has not been banked under the primary RVA. There is
 no build/link or runtime verification for a BFME phase-update replacement.
 
+A subsequent dedicated `GameLogic::update(int)` experiment modeled the proven
+BFME offsets, early returns, phase dispatcher, four sleepy vectors, deferred
+vector, phase-5 subsystem batch, copy-protection gate, and phase-1 object tail.
+Inlining the sleepy loop once (after selecting its vector range) produced
+1,765 bytes and 522 decoded instructions versus retail's 2,129 bytes and 637
+instructions. Its mnemonic-sequence similarity was 0.604, 60 relocation sites
+no longer aligned with corresponding retail operands, and the first structural
+divergence remained in the prologue/register allocation. This is a useful
+negative result, not a near miss: the source was not banked. The missing retail
+CRC/debug-string construction and the exact STLport heap mutation are still too
+large to tune after the entry layout has drifted.
+
 Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
