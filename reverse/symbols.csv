@@ -83361,3 +83361,7 @@ g_bfmeOtherBN,0x012EF1D8,Open-BFME5 the second registry the resolve at 0x002DE30
 ??1BfmeElemBV@@QAE@XZ,0x008A20B0,Open-BFME5 the element destructor the vector delete at 0x008A2ED0 runs
 __imp_??3BfmeElemBV@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x008A2ED0 calls
 __imp_??_VBfmeElemBV@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x008A2ED0 calls
+?bfmeCheckBW@@YAHPAX@Z,0x00894D90,Open-BFME5 the check the element destructor at 0x00892CD0 makes
+?bfmeFreeBW@@YAXPAX@Z,0x00895320,Open-BFME5 the release the element destructor at 0x00892CD0 makes
+__imp_??3BfmeElemBW@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x00892CD0 calls
+__imp_??_VBfmeElemBW@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x00892CD0 calls
