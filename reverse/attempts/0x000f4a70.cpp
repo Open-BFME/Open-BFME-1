@@ -1,5 +1,5 @@
 // ?hasAnyBuildings@Team@@QAE_NV?$BitFlags@$0MA@@@_N@Z
-// partial score=0.98 date=2026-09-03
+// partial score=0.99 date=2026-09-05
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 // Open-BFME5: Team::hasAnyBuildings(BitFlags<192>, Bool), retail 0x000F4A70, 190 bytes.
 //
@@ -124,12 +124,21 @@ static Overridable *bfmeFinalTemplate(Object *obj)
 	return tmpl;
 }
 
+static Overridable *bfmeFinalTemplateGuard(Object *obj)
+{
+	if (!obj) return 0;
+	Overridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
+	if (tmpl != 0 && tmpl->m_nextOverride != 0)
+		tmpl = (Overridable *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
+
 // ?hasAnyBuildings@Team@@QAE_NV?$BitFlags@$0MA@@@_N@Z
 Bool Team::hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag)
 {
 	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
-		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplateGuard(iter.cur());
 		if ((tmpl->m_kindOf1 & 0x400000) != 0)
 			continue;
 
@@ -146,8 +155,6 @@ Bool Team::hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag)
 			*reinterpret_cast<const KindOfMask126 *>(&kindOf),
 			KINDOFMASK_NONE))
 			return true;
-		if (iter.cur())
-			continue;
 	}
 	return false;
 }
