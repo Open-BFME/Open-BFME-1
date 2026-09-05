@@ -82828,3 +82828,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ??$__copy@PBURva003AC170Element@@PAU1@H@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00044E40,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__uninitialized_copy@PBURva003AC170Element@@PAU1@@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001381D,Lead independently verified helper body bytes and220B virtual element semantics
 ??0S4SortElem20@@QAE@ABU0@@Z,0x00036B10,Lead disassembled and independently reproduced87B copy ctor2E8FC0; string+flag+12B tail
+?bfmeIterSwapS4SortElem20@@YAXPAUS4SortElem20@@0@Z,0x0003A76F,"Lead traced162B2EA1A0: copy temporary, memberwise assignments each direction, temporary cleanup, cdecl2ptr"
+??1S4SortElem20@@QAE@XZ,0x0002AB2B,"Lead reviewed matched76B2E9E10 destructor; tail+8 then string+0,20B element"
