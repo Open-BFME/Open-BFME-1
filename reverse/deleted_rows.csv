@@ -24704,3 +24704,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Rva0043F460@@QAE@XZ,0x0043F460,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
 ??1Rva0043F4B0MultiTailDtor@@UAE@XZ,0x0043F4B0,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
 ??_GGen_dtor_0043f480@@UAEPAXI@Z,0x0043F480,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
+?getUiText@Condition@@QAE?AVAsciiString@@XZ,0x00352DB0,wrong identity: cdecl condition-chunk writer taking two arguments; exact C++ WriteConditionDataChunk verified at this address; actual getUiText is 0x00355E20/395B
