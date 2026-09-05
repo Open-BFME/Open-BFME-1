@@ -82846,3 +82846,6 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?g_bfmeGlobal012F18F0@@3PAVBfmeGlobal012F18F0@@A,0x00EF18F0,RVA of VA012F18F0; matched parseWaterTransparencyDefinitionC3A00 reads/writes this WaterTransparency override pointer
 ?bfmeAptLevel00465CE0@@YAHPAVBfmeH1065@@@Z,0x00010901,"Lead traced85B465CE0: returns -1,null;12,no ancestor;otherwise ancestor+250 APT level"
 ?invokeAtLevel@GenActionSink@@QAEPAEHPBDH0HHHH@Z,0x00015235,"Lead traced204B4675F0: rejects level>=12 unsigned, formats /_level%d, invokesAPT893410, returns global result byte pointer"
+?findLightPointLevel@@YGPAVLightPointLevel@@PAXPAVAsciiString@@@Z,0x00028AF6,Reviewed39C1A0 full153B pointer-range search and AsciiString comparison; ignoresECX andret8
+?_M_insert_overflow@?$vector@PAVLightPointLevel@@V?$allocator@PAVLightPointLevel@@@_STL@@@_STL@@IAEXPAPAVLightPointLevel@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003A6F2,Reviewed39C440 STL pointer vector growth allocation copies fill andret20
+?g_lightPointThrowInfo@@3HA,0x00DDFC30,Correct RVA ofVA11DFC30; decoded catchable RTTI INIException size8 copy448621
