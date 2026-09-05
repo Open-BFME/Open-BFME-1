@@ -82912,3 +82912,8 @@ g_bfmeOtherYH,0x012F19E8,Open-BFME5 the optional refresh target of the commit at
 g_bfmeDirtyYH,0x012F3E6D,Open-BFME5 the dirty flag the commit at 0x004D1080 raises
 ?_M_insert@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@0@Z,0x0001E128,"Reviewed ILT1E128 to EED60 full188B; 28B tree node and signed pair<int,int> key, same TeamFactory matched find specialization"
 ?query1A6320@TerrainLogic@@QAEPAUBfme1A6320Record@@PAVBfmeE5B30Object@@PAUCoord3D@@M@Z,0x0001DFED,Reviewed 1A6320 query plus full 1A4A00 enumeration and 1A3280 callback; returns selected 48-byte record whose first member is Coord3D
+??0AsciiStringYI@@QAE@PBD@Z,0x00888BC0,pin
+??1AsciiStringYI@@QAE@XZ,0x00887940,pin
+?bfmeFindYI@BfmeRegistryYI@@QAEPAXABVAsciiStringYI@@@Z,0x0003B59D,Open-BFME5 the lookup the command select at 0x0058D990 calls on the registry 0x012F33F8
+?bfmeUseYI@BfmeRegistryYI@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 the dispatch the command select at 0x0058D990 calls on the registry 0x012F33F8
+g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058D990 consults
