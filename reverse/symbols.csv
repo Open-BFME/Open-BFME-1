@@ -83038,3 +83038,23 @@ g_bfmePalantirZF,0x012F19E8,Open-BFME5 the palantir the production-count update 
 g_bfmePalantirZG,0x012F19E8,Open-BFME5 the palantir the player-table write at 0x0052B540 uses
 ?updatePendingDamage@Object@@UAEXXZ,0x00004E71,Object vtable 0x0109EE58 slot +0x3C; ILT thunk to exact body 0x001C7B80; phase-1 object-tail caller
 ?TheLuaScriptEngine@@3PAVLuaScriptEngine@@A,0x00EF060C,GameEngine::init at 0x00079F36 pushes TheLuaScriptEngine then global VA 0x012F060C and calls matched initSubsystem<LuaScriptEngine> 0x00074ED0; GameLogic phase 1 calls its virtual update slot +0x14 at 0x0038DC2F
+??0StringBaseNarrowZH@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZH@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZH@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZH@@QAAXVAsciiStringZH@@ZZ,0x00888FF0,pin
+?bfmeNameZH@BfmeOrderZH@@QAE?AVAsciiStringZH@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00674C30 formats
+??0StringBaseNarrowZI@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZI@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZI@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZI@@QAAXVAsciiStringZI@@ZZ,0x00888FF0,pin
+?bfmeNameZI@BfmeOrderZI@@QAE?AVAsciiStringZI@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00674D20 formats
+??0StringBaseNarrowZJ@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZJ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZJ@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZJ@@QAAXVAsciiStringZJ@@ZZ,0x00888FF0,pin
+?bfmeNameZJ@BfmeOrderZJ@@QAE?AVAsciiStringZJ@@XZ,0x0002D204,Open-BFME5 the order name the description at 0x00674E10 formats
+??0StringBaseNarrowZK@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowZK@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowZK@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowZK@@QAAXVAsciiStringZK@@ZZ,0x00888FF0,pin
+?bfmeTypeNameZK@BfmeMessageZK@@SA?AVAsciiStringZK@@H@Z,0x00040A1B,Open-BFME5 the command-type name the description at 0x00674B30 formats
