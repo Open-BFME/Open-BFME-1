@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bfa58468d86704fbf7f600595083f66da37acf9b5e8510dd1dff764cfab6fa2a",
+  "symbol": "?addObjectID@Rva003C5700Holder@@QAEXUGen_t_003c54a0_m4pod@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?addObjectID@Rva003C5700Holder@@QAEXUGen_t_003c54a0_m4pod@@@Z\n// partial score=0.95 date=2026-09-05\n// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB\n// stlport\n//\n// Twin of 0x0018B9A0 (Rva0018B9A0AddObjectID.cpp): vector push_back at +0x04,\n// inlined addObjectID. The overflow path calls the already-matched\n// vector<Gen_t_003c54a0_m4pod> growth helper at 0x003C54A0\n// (Code/gen_small/fam_001.cpp family f265_b7a8aa), so the element type here\n// must reuse that exact decorated name and cl: line. Address-derived \u2014\n// owning type is not recovered.\n\n#include <vector>\n\nstruct Gen_t_003c54a0_m4pod { int a[1]; };\nbool operator==(const Gen_t_003c54a0_m4pod&, const Gen_t_003c54a0_m4pod&);\nbool operator<(const Gen_t_003c54a0_m4pod&, const Gen_t_003c54a0_m4pod&);\n\nclass Rva003C5700Holder\n{\npublic:\n\tvoid addObjectID( Gen_t_003c54a0_m4pod id );\n\nprivate:\n\tint m_vptr;\n\t_STL::vector<Gen_t_003c54a0_m4pod> m_ids;\n};\n\nvoid Rva003C5700Holder::addObjectID( Gen_t_003c54a0_m4pod id )\n{\n\tm_ids.push_back( id );\n}\n"
+}
