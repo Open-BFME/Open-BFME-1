@@ -1,12 +1,11 @@
-// ?startRenderToTexture@W3DShaderManager@@SAXXZ
-// partial score=0.99 date=2026-09-04
-// ?startRenderToTexture@W3DShaderManager@@SAXXZ
-// Solo refinement: shared scratch lifetimes recover the complete retail stack frame.
-// W3DShaderManager::startRenderToTexture, retail RVA0x007171F0, 445 bytes.
-// Bank: 445/445B, four remaining ECX/EDX register bytes at +11D,+123,+129,+132.
-// Frame20 and all local offsets now match retail using the shared Scratch union.
-// Hardware test uses device slot3; Set_Render_Target9052B0; Clear904250.
-// Soft-edge flag GlobalData+0x8C; opacity data+0x301C; filters2/3 use alpha-only blit,4 clears.
+// ?start@W3DShaderManagerStartRenderToTextureShim@@SAXXZ
+// partial score=0.99 date=2026-09-05
+// Readable BFME body for the static render-to-texture setup at retail 0x007171F0, 445 bytes.
+// W3DShaderManager::startRenderToTexture (0x000154E7, matched thunk elsewhere) forwards to
+// this TU-local shim so the real body can be a plain static member function here.
+// Frame20 and all local offsets match retail using the shared Scratch union.
+// Hardware test uses device slot3; Set_Render_Target 0x009052B0; Clear 0x00904250.
+// Soft-edge flag GlobalData+0x8C; opacity data+0x301C; filters 2/3 use alpha-only blit, 4 clears.
 // Inline decrement and float getter restore retail material and clear instruction shapes.
 // cl: /DNDEBUG /MD
 struct IDirect3DSurface8;
@@ -43,14 +42,16 @@ public:
  }
 };
 void bfmeDrawFilterUV(int,int,Coord2D*);
-class W3DShaderManager {public:static void startRenderToTexture();
+class W3DShaderManagerStartRenderToTextureShim {
+public:
+ static void start();
  static bool m_renderingToTexture;
  static IDirect3DSurface8 *m_newRenderSurface,*m_oldDepthSurface;
  static int m_currentFilter;
 };
 union Scratch {Coord2D dims;float opacity;ShaderClass shader;};
 
-void W3DShaderManager::startRenderToTexture() {
+void W3DShaderManagerStartRenderToTextureShim::start() {
  Scratch slot;
  if(m_renderingToTexture || !m_newRenderSurface || !m_oldDepthSurface)return;
  if(ScreenDevice && ScreenDevice->v->TestCooperativeLevel(ScreenDevice)!=0)return;

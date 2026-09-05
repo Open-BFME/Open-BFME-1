@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a01aa439b831d76b2cab145886bb7bab6dd7cde0c477eb55cffd2d07093f5245",
+  "symbol": "?rva0078F730Select@@YAXPAURva0078F730Selectable@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?rva0078F730Select@@YAXPAURva0078F730Selectable@@@Z\n// partial score=0.93 date=2026-09-04\n// ?rva0078F730Select@@YAXPAURva0078F730Selectable@@@Z\n// partial score=0.93 date=2026-09-02\n// cl: /O2 /Ob1 /GF /Gy /MD /EHsc /GR /DNDEBUG /DWIN32 /D_WINDOWS\n\nstruct Rva0078F730Selectable\n{\n\tchar m_head[ 4 ];\n\tsigned char m_sign;\n\tchar m_gap[ 0x13 ];\n\tvoid *m_handler;\n};\n\nextern char Rva0078F730NegativeHandler[];\nextern char Rva0078F730PositiveHandler[];\nvoid rva0078F730Apply( Rva0078F730Selectable *item );\n\n__forceinline int rva0078F730IsNegative( void *unused, Rva0078F730Selectable *item )\n{\n\t(void)unused;\n\treturn ((unsigned char *)item)[4] & 0x80;\n}\n\nvoid rva0078F730Select( Rva0078F730Selectable *item )\n{\n\tif( rva0078F730IsNegative( 0, item ) )\n\t\titem->m_handler = Rva0078F730NegativeHandler;\n\telse\n\t\titem->m_handler = Rva0078F730PositiveHandler;\n\n\trva0078F730Apply( item );\n}\n"
+}

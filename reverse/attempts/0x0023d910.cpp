@@ -79,8 +79,8 @@ private:
 
 void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 {
-	BfmeFormationFlagWord poseBit;
 	UnsignedInt flags;
+	UnsignedInt poseBit;
 
 	if ( member == 0 )
 		return;
@@ -96,7 +96,7 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 			member->notifyModelConditionChanged();
 		}
 
-		poseBit.m_bits = 0x00080000;
+		poseBit = 0x00080000;
 	}
 	else
 	{
@@ -110,12 +110,11 @@ void BfmeHordeContainOwner::bfmeApplyMemberFormationState( Object *member )
 			member->notifyModelConditionChanged();
 		}
 
-		poseBit.m_bits = 0x00100000;
+		poseBit = 0x00100000;
 	}
 
-	flags = member->m_bfmeModelConditionFlags.m_bits;
-	if ( ( flags & poseBit.m_bits ) != 0 )
+	if ( ( poseBit & member->m_bfmeModelConditionFlags.m_bits ) != 0 )
 		return;
-	member->m_bfmeModelConditionFlags.set( poseBit.m_bits );
+	member->m_bfmeModelConditionFlags.set( poseBit );
 	member->notifyModelConditionChanged();
 }

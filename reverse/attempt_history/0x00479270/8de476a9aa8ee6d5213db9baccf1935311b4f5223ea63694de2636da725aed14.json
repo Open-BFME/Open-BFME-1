@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8de476a9aa8ee6d5213db9baccf1935311b4f5223ea63694de2636da725aed14",
+  "symbol": "?selectAndCall@Rva00479270Router@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?selectAndCall@Rva00479270Router@@QAEHXZ\n// partial score=0.91 date=2026-09-04\n// ?selectAndCall@Rva00479270Router@@QAEHXZ\r\n// partial score=0.91 date=2026-08-29\r\nclass Rva00479270Router\r\n{\r\npublic:\r\n\tvirtual int slot0( void ) = 0;\r\n\tvirtual int slot1( void ) = 0;\r\n\r\n\tint selectAndCall( void );\r\n\r\nprivate:\r\n\tRva00479270Router *m_primary;\r\n\tRva00479270Router *m_fallback;\r\n};\r\n\r\nint Rva00479270Router::selectAndCall( void )\n{\n\tif ( m_primary )\n\t{\n\t\treturn m_primary->slot1();\n\t}\n\n\treturn m_fallback->slot1();\n}\n"
+}

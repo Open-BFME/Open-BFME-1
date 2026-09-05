@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0e46558eb0b88b20909b78aaba7549c813a8a8a29201bce71ef94878962dacf7",
+  "symbol": "?isAfter@Rva00064770Tree@@QBE_NI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9487179487179487,
+  "source": "// ?isAfter@Rva00064770Tree@@QBE_NI@Z\n// partial score=0.9487179487179487 date=2026-09-05\n// ?isAfter@Rva00064770Tree@@QBE_NI@Z\n// cl: /DNDEBUG /MD /EHs-c-\n\ntypedef int Int;\ntypedef unsigned int UnsignedInt;\n\nstruct Rva00064770Node\n{\n\tInt m_colour;\n\tRva00064770Node *m_parent;\n\tRva00064770Node *m_left;\n\tRva00064770Node *m_right;\n\tunsigned char m_unreconstructed_10[0x18];\n\tUnsignedInt m_key;\n};\n\nextern \"C\" Rva00064770Node *__cdecl _W3RbDecrement(Rva00064770Node *node);\n\nclass Rva00064770Tree\n{\npublic:\n\tbool isAfter(UnsignedInt key) const;\n\nprivate:\n\tRva00064770Node *m_header;\n\tInt m_count;\n};\n\nbool Rva00064770Tree::isAfter(UnsignedInt key) const\n{\n\tif (m_count == 0)\n\t{\n\t\treturn true;\n\t}\n\n\tRva00064770Node *p = _W3RbDecrement(m_header);\n\treturn p->m_key < key;\n}\n"
+}

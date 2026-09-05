@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3fb16f3de24797062bf0b3deb78f0f8162a384aae9266b88d1446e8efa22c7f1",
+  "symbol": "?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z\n// partial score=0.99 date=2026-09-04\n// ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z\n// partial score=0.99 date=2026-09-04\n// ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z\n// partial score=0.99 date=2026-09-02\nclass Object\n{\npublic:\n\tint getRelationship(const Object *other) const;\n};\n\nstruct Rva21B310Data\n{\n\tchar gap[0x17C];\n\tunsigned int capacity;\n};\n\nstruct Rva21B310Node\n{\n\tRva21B310Node *next;\n};\n\nclass Rva21B310RelationshipCapacity\n{\npublic:\n\tint accepts(Object *object);\n\tint acceptRelated(Object *object);\n\nprivate:\n\tunsigned long unknown;\n\tRva21B310Data * volatile data;\n\tObject *owner;\n\tchar gap0C[0x9B0];\n\tRva21B310Node *objects;\n};\n\nint Rva21B310RelationshipCapacity::accepts(Object *object)\n{\n\tif (object->getRelationship(owner) == 0) {\n\t\tRva21B310Node *end = objects;\n\t\tRva21B310Node *node = end->next;\n\t\tunsigned int count = 0;\n\n\t\twhile (node != end) {\n\t\t\tnode = node->next;\n\t\t\t++count;\n\t\t}\n\n\t\treturn count < data->capacity;\n\t}\n\n\treturn acceptRelated(object);\n}\n"
+}
