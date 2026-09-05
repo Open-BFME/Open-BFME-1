@@ -143,14 +143,16 @@ The following order is instruction-level fact:
     `+0x90`, then always calls object virtual slot `+0x3C`. The first helper is
     `Object::checkDisabledStatus()` at RVA `0x001C5780`: it tests all 11
     `DisabledType` bits and clears each active type whose expiration frame at
-    `Object+0x1A8+4*type` is no later than the current simulation frame.
+    `Object+0x1A8+4*type` is no later than the current simulation frame. The
+    final virtual is `Object::updatePendingDamage()` at RVA `0x001C7B80`. It
+    subtracts one frame from each 92-byte queued `DamageInfo` record at
+    `Object+0x34C`; a delay that becomes negative is applied through
+    `attemptDamage()` and erased from the vector.
 12. If byte `GameLogic+0xA0` is clear and byte `GameLogic+0x40` is set, the
     function increments `GameLogic+0x3C` at `0x0038E225`. It then sets
     `GameClient+0xC4 = 1`.
 
-The exact identity of virtual slot `+0x3C` is not established. Its address and
-caller position should be preserved until the object vtable proves it; it must
-not be classified as cosmetic work.
+The entire phase-1 object tail is now identified and byte-exact in clean C++.
 
 ## CRC behavior
 
@@ -250,6 +252,7 @@ not been proven by runtime or multiplayer traces.
 | `Object::clearStatus(ObjectStatusTypes)` at `0x00162CD0` | solved and byte-exact | corrected an older `clearModelConditionState` identity: the body builds one bit in an 86-bit object-status mask and calls `setStatus(mask, false)`; both expiry helpers call it |
 | `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0` | solved and byte-exact | status bit 73 is `IGNORE_AI_COMMAND`; when the nonzero expiration at `Object+0x338` is older than the current frame, clears the status and zeros the expiration |
 | `Object::checkNoCollisionsStatus()` at `0x001CE7F0` | solved and byte-exact | corrected RVA (the earlier `0x005CE7F0` was a VA); when the nonzero expiration at `Object+0x33C` is older than the current frame, clears status bit 4 (`NO_COLLISIONS`) and zeros the expiration |
+| `Object::updatePendingDamage()` at `0x001C7B80` | solved and byte-exact | Object vtable `0x0109EE58` slot `+0x3C`; decrements delay `DamageInfo+0x24`, applies records only after the delay becomes negative through virtual `attemptDamage` at slot `+0x38`, then erases the 92-byte record |
 | singleton globals `0x012F060C`, `0x012ED63C`, `0x012ED83C` | unresolved and naming blockers | identify from constructors/vtables before assigning subsystem names |
 
 ## Reconstruction status and attack plan
@@ -265,25 +268,20 @@ Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Finish naming the phase-1 object tail.** Resolve object vtable slot
-   `+0x3C`. Its three preceding helpers are exact:
-   `Object::checkDisabledStatus()` at `0x001C5780`,
-   `Object::checkIgnoreAICommandStatus()` at `0x001CE7B0`, and
-   `Object::checkNoCollisionsStatus()` at `0x001CE7F0`.
-2. **Close singleton identities.** Trace constructors, set-name strings, and
+1. **Close singleton identities.** Trace constructors, set-name strings, and
    vtables for globals `0x012F060C`, `0x012ED63C`, and `0x012ED83C`. A matched
    caller or constructor outranks an address-derived symbol pin.
-3. **Declare the BFME ABI and TU-local layout.** In
+2. **Declare the BFME ABI and TU-local layout.** In
    `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
    verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
    vectors `+0xC4..+0xFC`, current update `+0x100`, mode `+0x10C`, gate
    `+0x11D`, phase `+0x168`, member `+0x170`, and depth `+0x1A0`. Give the
    method one integer phase argument and preserve the unusual self-range reset.
-6. **Build in slices.** First match entry, early returns, and epilogue; then
+3. **Build in slices.** First match entry, early returns, and epilogue; then
    phases 3–6; then phase 2; finally phase 1. After each meaningful shape run
    `tools/probe.py` or `tools/explain_mismatch.py` with RVA `0x0038DA10` and
    size `2129`. Do not add a ledger row until the entire body matches.
-7. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
+4. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
    and the AGENTS.md `partial --stash --score` workflow only when the dedicated
    phase-aware body is close enough to help the next worker. Do not bank the
    1,010-byte parameterless donor and do not use naked/emit code.

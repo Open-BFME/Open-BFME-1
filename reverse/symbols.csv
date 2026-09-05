@@ -83036,3 +83036,4 @@ g_bfmePalantirZF,0x012F19E8,Open-BFME5 the palantir the production-count update 
 ?format@StringBaseNarrowZG@@QAAXVAsciiStringZG@@ZZ,0x00888FF0,pin
 ?bfmeStoreZG@BfmePalantirZG@@QAEXABVAsciiStringZG@@ABVUnicodeStringZG@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x0052B540
 g_bfmePalantirZG,0x012F19E8,Open-BFME5 the palantir the player-table write at 0x0052B540 uses
+?updatePendingDamage@Object@@UAEXXZ,0x00004E71,Object vtable 0x0109EE58 slot +0x3C; ILT thunk to exact body 0x001C7B80; phase-1 object-tail caller
