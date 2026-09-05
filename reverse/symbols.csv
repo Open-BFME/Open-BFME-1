@@ -82941,3 +82941,5 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?addAIGroupToCurrentSelection@Player@@QAEXPAVAIGroup@@@Z,0x000325D8,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?queryInterfaceRva001BF6B0@Object@@QAEPAVBfmeInterface001BF6B0@@XZ,0x0000F8E4,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?notifyRva001C8830@Object@@QAEXPAVPlayer@@@Z,0x0001FE3D,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
+?notify0C@Rva003BAD00Owner@@QAEXABVAsciiString@@PBXH@Z,0x0000B316,"Reviewed full dispatcher3BAD70/3BAD30: AsciiString key by reference, payload pointer passed to virtual0C and integer1 to virtual08"
+?notify08@Rva003BAD00Owner@@QAEXABVAsciiString@@H@Z,0x00006BAE,"Reviewed full dispatcher3BAD70/3BAD30: AsciiString key by reference, payload pointer passed to virtual0C and integer1 to virtual08"
