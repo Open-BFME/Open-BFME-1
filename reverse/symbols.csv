@@ -3473,6 +3473,7 @@ name,address,notes
 ??1?$collate@D@_STL@@MAE@XZ,0x008441B0,STLport 4.5.3 narrow collate destructor; exact virtual method table proves identity
 ??1?$collate@G@_STL@@MAE@XZ,0x008441F0,STLport 4.5.3 wide collate destructor; exact virtual method table proves identity
 ??1?$ctype@G@_STL@@MAE@XZ,0x00840900,STLport 4.5.3 wide ctype destructor; exact virtual method table proves identity
+??1?$hashtable@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@@2@@_STL@@QAE@XZ,0x0002AE64,ILT reached by Rva000678B0Body dtor at 0x000678B0
 ??1?$hashtable@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0042dc10_p36cd@@@_STL@@@2@@_STL@@QAE@XZ,0x0002D286,ILT of hashtable dtor from FXListStore dtor
 ??1?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAE@XZ,0x00010217,ILT of hashtable dtor from TeamRelationMap dtor
 ??1?$hashtable@U?$pair@$$CBIW4Rva000D3FA0Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Rva000D3FA0Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Rva000D3FA0Relationship@@@_STL@@@2@@_STL@@QAE@XZ,0x000247DF,ILT reached by Rva000D3FA0Map dtor at 0x000D3FA0
@@ -8168,6 +8169,7 @@ name,address,notes
 ??1ImmortalBody@@UAE@XZ,0x0004B15F,destructor ILT to 0x002139E0
 ??1InGameChatSlot@@QAE@XZ,0x0004598F,ILT of the 0x10-byte InGameChat slot destructor used at this+0x270 and +0x280
 ??1InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00017391,Open-BFME5 retail trailing allocator destructor body
+??1Keyboard@@UAE@XZ,0x0002208E,gen-dump base dtor reached by DirectInputKeyboard dtor at 0x006BB460
 ??1LANGameSlot@@QAE@XZ,0x00029A69,ILT thunk read out of LANGameInfo::setSlot call displacement; real body 0x006858A0 (d_006858a0, gen-dump)
 ??1LANPreferences@@QAE@XZ,0x00040DB3,non-virtual spelling of LANPreferences dtor ILT already pinned as UAE
 ??1LANPreferences@@UAE@XZ,0x00040DB3,PopulateRemoteIPComboBox direct-call ILT thunk to LANPreferences destructor
@@ -8476,6 +8478,7 @@ name,address,notes
 ??1Rva008D6260HeaderedDeleting@@UAE@XZ,0x008D5F70,address decoded from the retail REL32 call site; name is address-derived
 ??1Rva008D62C0HeaderedDeleting@@UAE@XZ,0x008D5FD0,address decoded from the retail REL32 call site; name is address-derived
 ??1Rva008D6320HeaderedDeleting@@UAE@XZ,0x008D5FF0,address decoded from the retail REL32 call site; name is address-derived
+??1Rva0090BC40TailBase@@UAE@XZ,0x009EB810,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0091FC10MultiBase@@UAE@XZ,0x0091FC10,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0092B6A0TailBase@@UAE@XZ,0x0092B6A0,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0093BE00MultiBase@@UAE@XZ,0x0093BE00,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -75504,6 +75507,7 @@ name,address,notes
 ?clear@?$_List_base@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAEXXZ,0x00627270,DownloadManager list_base<QueuedDownload> clear clone; ILT thunk 0x3AA1C
 ?clear@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAEXXZ,0x009CAC00,Open-BFME5 clear the ArchivedDirectoryInfo tree destructor at 0x009C9570 calls; the ledger already carries this address under a machine-derived template name
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00067540_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x00067040,gen-tgrid payload member
+?clear@?$hashtable@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000678b0_p36cd@@@_STL@@@2@@_STL@@QAEXXZ,0x000429F6,ILT reached by Rva000678B0Body dtor at 0x000678B0
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_0008fa10_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0008fa10_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008fa10_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x0008F880,gen-tgrid payload member
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_000d3170_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d3170_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d3170_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x000CF510,gen-tgrid payload member
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_000d8250_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_000d8250_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000d8250_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x000D66F0,gen-tgrid payload member
@@ -79927,6 +79931,8 @@ name,address,notes
 ?j000055a6@Rva002995E0Base@@QAEXXZ,0x000055A6,thiscall pin over matched forwarding thunk for Rva002995E0::update sibling call
 ?j0001085c@Rva002995E0Base@@QAEXXZ,0x0001085C,thiscall pin over matched forwarding thunk for Rva002995E0::update sibling call
 ?j00017c79@Rva002995E0Base@@QAEXXZ,0x00017C79,thiscall pin over matched forwarding thunk for Rva002995E0::update sibling call
+?j0003767d@Rva00285300Base@@QAEXXZ,0x0003767D,thiscall pin over matched forwarding thunk for Rva00285300::update sibling call
+?j000454d0@Rva00285300Base@@QAEXPAVObject@@@Z,0x000454D0,thiscall pin over matched forwarding thunk for Rva00285300::update sibling call
 ?j_00007e96@?$vector@PAVRva003C2280Item@@V?$allocator@PAVRva003C2280Item@@@_STL@@@_STL@@IAEXPAPAVRva003C2280Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00007E96,STLport pointer vector overflow ILT for Rva003C2280Owner
 ?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_00008c0b@Glo012F1028Type@@QAEXXZ,0x00008C0B,conditional global notification thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
