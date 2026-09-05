@@ -5723,7 +5723,6 @@ name,address,notes
 ??1Gen_dtor_00837540@@UAE@XZ,0x00837560,gen-dtor class destructor
 ??1Gen_dtor_008375b0@@UAE@XZ,0x008375D0,gen-dtor class destructor
 ??1Gen_dtor_0083b310@@UAE@XZ,0x00836520,gen-dtor class destructor
-??1Gen_dtor_0083ec30@@UAE@XZ,0x0083E8B0,gen-dtor class destructor
 ??1Gen_dtor_0083f860@@UAE@XZ,0x0083F730,gen-dtor class destructor
 ??1Gen_dtor_00840d20@@UAE@XZ,0x00840780,gen-dtor class destructor
 ??1Gen_dtor_00841080@@UAE@XZ,0x00849A10,gen-dtor class destructor
@@ -8286,7 +8285,6 @@ name,address,notes
 ??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
 ??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
-??1Rva0082AE40TailBase@@UAE@XZ,0x0082AE40,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00832090TailBase@@UAE@XZ,0x00832090,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00887940MultiBase@@QAE@XZ,0x00887940,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva008881D0MultiBase@@QAE@XZ,0x008881D0,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -82768,3 +82766,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7?$moneypunct@G$00@_STL@@6B@,0x00D2FB34,retail STLport 4.5.3 moneypunct wide true vtable with matching RTTI descriptor
 ??1?$moneypunct@G$0A@@_STL@@MAE@XZ,0x00848110,STLport 4.5.3 moneypunct wide false destructor; retail RTTI proves specialization
 ??_7?$moneypunct@G$0A@@_STL@@6B@,0x00D2FB60,retail STLport 4.5.3 moneypunct wide false vtable with matching RTTI descriptor
+??1failure@ios_base@_STL@@UAE@XZ,0x0083E8B0,STLport 4.5.3 ios_base::failure destructor; retail vtable RTTI names the class
+??1__Named_exception@_STL@@UAE@XZ,0x0082AE40,STLport 4.5.3 __Named_exception destructor ICF body; ios_base::failure tail-call and RTTI hierarchy prove identity
+??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
