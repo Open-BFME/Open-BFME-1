@@ -1,6 +1,19 @@
-// ??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.55 date=2026-09-05
 // cl: /DNDEBUG /MD /EHsc
+//
+// GateOpenAndCloseBehavior's constructor, recovered as real C++ in place of
+// the byte dump that previously held this address.
+//
+// Three source-shape choices carry the byte match. The module-data pointer is
+// read into a local only where it is first needed, so the shared -1 stays in
+// EAX across the inlined UpdateModule constructor and reaches the +0x40 field
+// before EAX is reloaded with the module data. The +0x30 flag is assigned
+// after the +0x28 mode, which lets MSVC keep the constant 1 in EDX for both
+// the +0x44 field and that flag. The remaining fields keep the order in which
+// retail stores them.
+//
+// Field names beyond the recovered base chain are still unknown, so they carry
+// their offsets. The base chain itself is real: ObjectModule at 0x00113C60 is
+// matched, and BehaviorModule and UpdateModule are inlined here.
 
 typedef unsigned int UnsignedInt;
 class Thing;
@@ -115,22 +128,16 @@ private:
 GateOpenAndCloseBehavior::GateOpenAndCloseBehavior(Thing *thing, const ModuleData *moduleData)
 	: UpdateModule(thing, moduleData)
 {
+	m_field40 = -1;
+	m_field44 = 1;
+	m_field48 = 0;
 	const GateOpenAndCloseBehaviorModuleDataView *data =
 		reinterpret_cast<const GateOpenAndCloseBehaviorModuleDataView *>(m_moduleData);
-
-	m_indexInLogic = -1;
-	m_updateState = -1;
-	m_nextCallFrameAndPhase = 0;
-	m_field40 = -1;
-
 	m_field28 = (data->m_startsClosed == 0) ? 3 : 1;
+	m_field30 = true;
 	m_field38 = 100.0f / (float)data->m_openCloseFrames;
 	m_field34 = 100.0f;
 	m_field3c = TheGameLogic->m_frame;
 	m_field2c = 0;
 	m_field24 = 0;
-
-	m_field44 = 1;
-	m_field30 = true;
-	m_field48 = 0;
 }
