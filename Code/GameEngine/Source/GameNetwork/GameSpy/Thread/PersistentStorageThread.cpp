@@ -72,15 +72,6 @@ _STLP_END_NAMESPACE
 
 //-------------------------------------------------------------------------
 
-// ??0PSRequest@@ present-unmatched
-PSRequest::PSRequest()
-{
-	player.reset();
-	requestType = PSREQUEST_READPLAYERSTATS;
-	addDiscon = addDesync = FALSE;
-	lastHouse = -1;
-}
-
 //-------------------------------------------------------------------------
 
 #define DEBUG_MAP(x) for (it = stats.x.begin(); it != stats.x.end(); ++it) \
