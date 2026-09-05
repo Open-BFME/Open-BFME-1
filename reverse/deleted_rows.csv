@@ -24665,3 +24665,5 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_00212950@@UAEPAXI@Z,0x00212950,generated destructor placeholder superseded by the byte-verified DelayedDeathBody deleting destructor identity
 ??1Rva002132B0MultiTailDtor@@UAE@XZ,0x002132B0,address-derived placeholder superseded by the byte-verified FreeLifeBody destructor identity
 ??_GGen_dtor_00213410@@UAEPAXI@Z,0x00213410,generated destructor placeholder superseded by the byte-verified FreeLifeBody deleting destructor identity
+??1Rva0024FC70MultiTailDtor@@UAE@XZ,0x0024FC70,address-derived placeholder superseded by the byte-verified LockWeaponCreate destructor identity
+??_GGen_dtor_0024fd70@@UAEPAXI@Z,0x0024FD70,generated destructor placeholder superseded by the byte-verified LockWeaponCreate deleting destructor identity

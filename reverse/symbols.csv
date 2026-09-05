@@ -4505,7 +4505,6 @@ name,address,notes
 ??1Gen_dtor_0024f6f0@@UAE@XZ,0x00008058,gen-dtor class destructor
 ??1Gen_dtor_0024f7d0@@UAE@XZ,0x0003FFF8,gen-dtor class destructor
 ??1Gen_dtor_0024fb00@@UAE@XZ,0x0003DEF1,gen-dtor class destructor
-??1Gen_dtor_0024fd70@@UAE@XZ,0x000377A9,gen-dtor class destructor
 ??1Gen_dtor_0024fe20@@UAE@XZ,0x00031DEF,gen-dtor class destructor
 ??1Gen_dtor_00250710@@UAE@XZ,0x00003A99,gen-dtor class destructor
 ??1Gen_dtor_00250850@@UAE@XZ,0x00008607,gen-dtor class destructor
@@ -8250,7 +8249,6 @@ name,address,notes
 ??1Rva00019565FlatBase@@UAE@XZ,0x00019565,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0001AA9BMultiBase@@UAE@XZ,0x0001AA9B,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0001AA9BTailBase@@UAE@XZ,0x0001AA9B,base destructor address decoded from the retail REL32 tail jump; name is address-derived
-??1Rva0001C657MultiBase@@UAE@XZ,0x0001C657,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0001C774FlatBase@@UAE@XZ,0x0001C774,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0002041EMultiBase@@UAE@XZ,0x0002041E,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva00020BA3TailBase@@UAE@XZ,0x00020BA3,base destructor address decoded from the retail REL32 tail jump; name is address-derived
@@ -31380,13 +31378,11 @@ name,address,notes
 ?b_0024fb90@@YAXXZ,0x0024FB90,gen-thunk body
 ?b_0024fc20@@YAXXZ,0x0024FC20,gen-thunk body
 ?b_0024fc60@@YAXXZ,0x0024FC60,gen-thunk body
-?b_0024fc70@@YAXXZ,0x0024FC70,gen-thunk body
 ?b_0024fc90@@YAXXZ,0x0024FC90,gen-thunk body
 ?b_0024fca0@@YAXXZ,0x0024FCA0,gen-thunk body
 ?b_0024fcb0@@YAXXZ,0x0024FCB0,gen-thunk body
 ?b_0024fd40@@YAXXZ,0x0024FD40,gen-thunk body
 ?b_0024fd50@@YAXXZ,0x0024FD50,gen-thunk body
-?b_0024fd70@@YAXXZ,0x0024FD70,gen-thunk body
 ?b_0024fda0@@YAXXZ,0x0024FDA0,gen-thunk body
 ?b_0024fdc0@@YAXXZ,0x0024FDC0,gen-thunk body
 ?b_0024fe00@@YAXXZ,0x0024FE00,gen-thunk body
@@ -82754,3 +82750,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_7FreeLifeBody@@6BBehaviorModule@@@,0x010A8538,primary vtable shared by the named constructor and destructor
 ??_7FreeLifeBody@@6BBodyModuleInterface@@@,0x010A8470,secondary vtable at this+0x0C
 ??_7FreeLifeBody@@6BModuleInterface@@@,0x010A83A0,secondary vtable at this+0x10
+??1LockWeaponCreate@@MAE@XZ,0x000377A9,destructor ILT to 0x0024FC70
+??_GLockWeaponCreate@@MAEPAXI@Z,0x00037D2B,primary class vtable slot zero ILT to 0x0024FD70
+??_7LockWeaponCreate@@6BObjectModule@@@,0x010B18E4,primary vtable shared with the neighboring constructor
+??_7LockWeaponCreate@@6BBehaviorModuleInterface@@@,0x010B1820,secondary vtable at this+0x0C
+??_7LockWeaponCreate@@6B@,0x010B180C,secondary vtable at this+0x10

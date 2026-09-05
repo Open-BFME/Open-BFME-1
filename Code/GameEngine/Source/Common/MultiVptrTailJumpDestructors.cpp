@@ -104,14 +104,6 @@ public:
 	unsigned int m_pad[ 2 ];
 };
 
-class Rva0001C657MultiBase
-{
-public:
-	virtual ~Rva0001C657MultiBase();
-
-	unsigned int m_pad[ 2 ];
-};
-
 class Rva0002041EMultiBase
 {
 public:
@@ -285,16 +277,6 @@ public:
 };
 
 Rva0020D930MultiTailDtor::~Rva0020D930MultiTailDtor()
-{
-}
-
-class Rva0024FC70MultiTailDtor : public Rva0001C657MultiBase, public TailMixinA, public TailMixinB
-{
-public:
-	virtual ~Rva0024FC70MultiTailDtor();
-};
-
-Rva0024FC70MultiTailDtor::~Rva0024FC70MultiTailDtor()
 {
 }
 
