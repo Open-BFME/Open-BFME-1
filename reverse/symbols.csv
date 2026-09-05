@@ -82896,3 +82896,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?fadeQueueKey@@3IA,0xed588,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ??1Rva003B6680@@UAE@XZ,0x0000817A,Deleting wrapper3ABEF0 calls ILT817A -> primary dtor3B16B0
 ??_GRva003B6680@@UAEPAXI@Z,0x0000993F,"Full30B deleting wrapper exact, tableCEC850 contains40993F; COFF E weak alias resolves this G body"
+?refreshPair@Rva00699180Owner@@QAEXHH@Z,0x00019E6B,Reviewed thiscall volume helper ILT to 00699180; complete 450B body independently exact
