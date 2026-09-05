@@ -72,3 +72,42 @@ void Rva00571AB0( BfmeScoreEntry *first, BfmeScoreEntry *last,
 	for ( BfmeScoreEntry *i = first; i != last; ++i )
 		Rva00570CC0( i, *i, comp );
 }
+
+// Open-BFME5: STLport's score-entry heap adjustment at retail 0x00571C40.
+// The comparator is pointer-based in this BFME specialization, while the
+// heap stores complete 16-byte BfmeScoreEntry records.
+namespace _STL
+{
+
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __push_heap( RandomAccessIterator first, Distance holeIndex,
+	Distance topIndex, Tp value, Compare comp );
+
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __adjust_heap( RandomAccessIterator first, Distance holeIndex,
+	Distance len, Tp value, Compare comp )
+{
+	Distance topIndex = holeIndex;
+	Distance secondChild = 2 * holeIndex + 2;
+	while ( secondChild < len )
+	{
+		if ( comp( first + secondChild,
+			first + ( secondChild - 1 ) ) )
+			--secondChild;
+		*( first + holeIndex ) = *( first + secondChild );
+		holeIndex = secondChild;
+		secondChild = 2 * ( secondChild + 1 );
+	}
+	if ( secondChild == len )
+	{
+		*( first + holeIndex ) = *( first + ( secondChild - 1 ) );
+		holeIndex = secondChild - 1;
+	}
+	__push_heap( first, holeIndex, topIndex, value, comp );
+}
+
+template void __adjust_heap<BfmeScoreEntry *, int, BfmeScoreEntry,
+	BfmeScoreEntryLess>( BfmeScoreEntry *, int, int, BfmeScoreEntry,
+	BfmeScoreEntryLess );
+
+}

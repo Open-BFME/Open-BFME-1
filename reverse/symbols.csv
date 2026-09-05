@@ -1021,6 +1021,7 @@ name,address,notes
 ??$__push_heap@PAHHHUQ4Cmp00344A60@@@_STL@@YAXPAHHHHUQ4Cmp00344A60@@@Z,0x00035A35,push-heap call target decoded from the retail adjust-heap body at 0x00342D60
 ??$__push_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x00019B6E,retail __adjust_heap at 0x005135F0 tails through this ILT to the 243-byte BfmeRecAU pointer sift-up body at 0x00513190
 ??$__push_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAV@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAV@@@Z,0x0000FB37,dedicated ILT to the second 243-byte BfmeRecAU pointer sift-up specialization at 0x0052F4D0; separate body fixes a distinct comparator instantiation
+??$__push_heap@PAUBfmeScoreEntry@@HU1@UBfmeScoreEntryLess@@@_STL@@YAXPAUBfmeScoreEntry@@HHU1@UBfmeScoreEntryLess@@@Z,0x0001C819,Open-BFME5 score-entry STLport push-heap callee for the exact adjust-heap specialization at 0x00571C40
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00575AA0@@@Z,0x000127B0,retail __adjust_heap at 0x005757E0 direct call-site ILT to the 104-byte push-heap body at 0x00574FC0
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z,0x009F2E90,Open-BFME5 the sift-up the __adjust_heap at 0x009F3110 tails into
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F34B0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F34B0@@@Z,0x009F2F00,Open-BFME5 the sift-up the __adjust_heap at 0x009F3190 tails into
