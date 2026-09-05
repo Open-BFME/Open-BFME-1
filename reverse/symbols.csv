@@ -82785,3 +82785,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_0107C64C@@3MC,0x0107C64C,Retail axis-scale 1/255 float constant; raw bytes 8180803b independently checked
 ?setText@NetChatCommandMsg@@QAEXVUnicodeString@@@Z,0x006752B0,"NetChatCommandMsg::setText; ILT 0x31151; this+0x1c StringBase assignment, by-value UnicodeString destruction, ret 4 independently reviewed"
 ??0W3DVideoBuffer@@QAE@H@Z,0x0002B733,"W3DVideoBuffer constructor ILT; actual body calls VideoBuffer base, installs vtable 0x112165c, initializes fields through +0x4a; allocation 0x4c verified"
+??0ConnectionManager@@QAE@XZ,0x00049A94,ConnectionManager ctor ILT 0x49a94 inspected; body installs vtable 0x111a2b0 and connection arrays; Network init vtable slot 1 and existing field layout
