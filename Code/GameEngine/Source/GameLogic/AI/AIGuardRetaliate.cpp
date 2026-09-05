@@ -635,21 +635,6 @@ StateReturnType AIGuardRetaliateReturnState::onEnter( void )
 }
 
 //--------------------------------------------------------------------------------------
-// ?update@AIGuardRetaliateReturnState@@ present-unmatched
-StateReturnType AIGuardRetaliateReturnState::update( void )
-{
-	UnsignedInt now = TheGameLogic->getFrame();
-	if (now >= m_nextReturnScanTime)
-	{
-		m_nextReturnScanTime = now + TheAI->getAiData()->m_guardEnemyReturnScanRate;
-		if (getGuardMachine()->lookForInnerTarget()) 
-			return STATE_FAILURE; // early termination because we found a target.
-	}
-
-	// Just let the return movement finish.
-	return AIInternalMoveToState::update();
-}
-
 //--------------------------------------------------------------------------------------
 // ?onExit@AIGuardRetaliateReturnState@@ present-unmatched
 void AIGuardRetaliateReturnState::onExit( StateExitType status )
