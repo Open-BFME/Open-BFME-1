@@ -82833,3 +82833,5 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?gen002EADF0Helper@@YAXPAXPAUS4SortElem20@@1U1@0H@Z,0x00032BAF,"Lead traced 2EABF0: assigns first element to third pointer, adjusts heap with by-value20B pivot, destroys pivot; cdecl"
 ?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
 ??$__unguarded_partition@PAUS4SortElem12@@U1@US4Cmp00574DF0@@@_STL@@YAPAUS4SortElem12@@PAU1@0U1@US4Cmp00574DF0@@@Z,0x000270B1,"Lead independently reproduced and disassembled120B partition: signed key comparison,12B stride and full3dword swap"
+??0Made001E5940@@QAE@XZ,0x002DC520,"Lead traced131B ctor2DC520: base ctor, vptr and members throughA0, returns this; allocatedA4"
+?q4Parse001E5940@@YAXPAVINI@@PAVMade001E5940@@HH@Z,0x002DC7B0,"Lead traced matched96B INI multi-field parser2DC7B0: consumes INI and instance, trailing zero args unused; cdecl"
