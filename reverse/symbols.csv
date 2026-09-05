@@ -4944,7 +4944,6 @@ name,address,notes
 ??1Gen_dtor_0043bf70@@UAE@XZ,0x00029E15,gen-dtor class destructor
 ??1Gen_dtor_0043cd30@@UAE@XZ,0x0003F1A7,gen-dtor class destructor
 ??1Gen_dtor_0043db00@@UAE@XZ,0x000198A3,gen-dtor class destructor
-??1Gen_dtor_0043f480@@UAE@XZ,0x00047005,gen-dtor class destructor
 ??1Gen_dtor_00440810@@UAE@XZ,0x000407B9,gen-dtor class destructor
 ??1Gen_dtor_00440840@@UAE@XZ,0x000011E5,gen-dtor class destructor
 ??1Gen_dtor_00440a10@@UAE@XZ,0x000489BE,gen-dtor class destructor
@@ -82769,3 +82768,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1failure@ios_base@_STL@@UAE@XZ,0x0083E8B0,STLport 4.5.3 ios_base::failure destructor; retail vtable RTTI names the class
 ??1__Named_exception@_STL@@UAE@XZ,0x0082AE40,STLport 4.5.3 __Named_exception destructor ICF body; ios_base::failure tail-call and RTTI hierarchy prove identity
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
+??0PopupMessageData@@QAE@XZ,0x00046FC4,constructor ILT to 0x0043F460; matched InGameUI::popupMessage independently inlines the same construction
+??1PopupMessageData@@UAE@XZ,0x00047005,destructor ILT to 0x0043F4B0 used by the retail scalar deleting wrapper
+??_GPopupMessageData@@UAEPAXI@Z,0x000230C4,vtable slot zero ILT to the scalar deleting destructor at 0x0043F480
+??_7PopupMessageData@@6B@,0x00CF58C4,vtable installed by matched InGameUI::popupMessage for its m_popupMessageData allocation

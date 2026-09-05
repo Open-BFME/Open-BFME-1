@@ -24701,3 +24701,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_008484f0@@UAEPAXI@Z,0x008484F0,placeholder superseded by RTTI-proven STLport moneypunct identity in Code/Libraries/Source/WWVegas/WWLib/stlport_moneypunct_destructors.cpp
 ??1Rva0083E8B0TailDtor@@UAE@XZ,0x0083E8B0,placeholder superseded by RTTI-proven STLport ios_base::failure identity in Code/Libraries/Source/WWVegas/WWLib/stlport_ios_failure_destructor.cpp
 ??_GGen_dtor_0083ec30@@UAEPAXI@Z,0x0083EC30,placeholder superseded by RTTI-proven STLport ios_base::failure identity in Code/Libraries/Source/WWVegas/WWLib/stlport_ios_failure_destructor.cpp
+??0Rva0043F460@@QAE@XZ,0x0043F460,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
+??1Rva0043F4B0MultiTailDtor@@UAE@XZ,0x0043F4B0,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
+??_GGen_dtor_0043f480@@UAEPAXI@Z,0x0043F480,placeholder superseded by caller-proven PopupMessageData identity in Code/GameEngine/Source/GameClient/PopupMessageData.cpp
