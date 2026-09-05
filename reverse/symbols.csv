@@ -83348,3 +83348,5 @@ g_bfmeOtherBN,0x012EF1D8,Open-BFME5 the second registry the resolve at 0x002DE30
 ?setFromLua@BfmeDelayedLuaEvent@@QAEXPAUlua_State@@H@Z,0x000436D5,local thiscall adapter to Lua event value setter thunk
 ?invoke@BfmeCallJ63@@QAEPAXPAX@Z,0x0000634D,local thiscall adapter to drawable event lookup thunk
 ?invoke@BfmeCallJ3D@@QAEXPAXHPAUBfmeDelayedLuaEventList@@@Z,0x0003D4E7,local thiscall adapter to member event dispatch thunk
+??0StringBaseNarrowBQ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBQ@@IAE@XZ,0x00887940,pin
