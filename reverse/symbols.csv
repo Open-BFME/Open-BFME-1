@@ -83304,3 +83304,7 @@ _bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 
 ?bfmeClearBF@AsciiStringBF@@QAEXXZ,0x00887940,pin
 ?bfmeFindBF@BfmeRegistryBF@@QAEPAXABVAsciiStringBF@@@Z,0x0001D606,Open-BFME5 the lookup the handle resolve at 0x0013EE70 caches
 g_bfmeRegistryBF,0x012F6924,Open-BFME5 the registry the handle resolve at 0x0013EE70 needs
+??0StringBaseNarrowBG@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBG@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBG@BfmeNamedBG@@QAEXVAsciiStringBG@@@Z,0x0001BD5B,Open-BFME5 the base initialiser the named constructor at 0x0060AAE0 calls
+_bfmeVftableBG,0x00715C60,Open-BFME5 the vftable the named constructor at 0x0060AAE0 installs
