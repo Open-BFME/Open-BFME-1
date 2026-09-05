@@ -80075,7 +80075,6 @@ name,address,notes
 ?recenterTurret@TurretAI@@QAEXXZ,0x0003B679,ILT thunk to 0x18C8D0; pinned from AIUpdateInterface::recenterTurret @0x26EA10
 ?refresh@Gen0060BE20@@AAEXXZ,0x00025CED,refresh ILT used by exact Living World eye tower gate at 0x0060BE20
 ?refresh@Q1Receiver0134FAAC@@QAEXXZ,0x009EFF50,Q1 receiver refresh helper used by the 0x009F1A60 body
-?refresh@Rva000F72D0FrameCachedValue@@AAEXPAX@Z,0x0004154C,retail REL32 at 0x000F72EC targets the frame-cache refresh ILT at 0x0004154C
 ?refresh@Rva00454200Element@@QAEXXZ,0x000102FD,Open-BFME5 ILT reached by the cursor advance at 0x00454200
 ?refresh@Rva0060C120@@QAEXXZ,0x00025CED,Open2 0x0060C120 callee (ILT -> 0x0061CE00)
 ?refresh@Rva00845250Node@@QAEXXZ,0x00833D90,U2 lane: member called on both arguments of the comparison at 0x00845250; unnamed dump elsewhere
