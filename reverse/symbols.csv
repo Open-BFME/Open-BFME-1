@@ -5697,7 +5697,7 @@ name,address,notes
 ??1Gen_dtor_0081c530@@UAE@XZ,0x0081C520,gen-dtor class destructor
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
-??1Gen_dtor_0081d960@@UAE@XZ,0x0081D7B0,gen-dtor class destructor
+??1SubtitleEntry@@MAE@XZ,0x0081D7B0,destructor body called by the retail scalar deleting wrapper
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
 ??1Gen_dtor_008231d0@@UAE@XZ,0x008267E0,gen-dtor class destructor
 ??1Gen_dtor_0082c040@@UAE@XZ,0x0082AE60,gen-dtor class destructor
@@ -82775,3 +82775,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0GameFont@@QAE@XZ,0x000310A7,constructor ILT to 0x004735A0
 ??_GGameFont@@MAEPAXI@Z,0x000111A3,GameFont vtable slot zero ILT to 0x004734D0
 ??_7GameFont@@6B@,0x010F7628,vtable installed by FontLibrary font builder
+??_GSubtitleEntry@@MAEPAXI@Z,0x0081D960,SubtitleEntry vtable slot zero scalar deleting destructor
+??_7SubtitleEntry@@6B@,0x0112CF0C,vtable installed by the SubtitleEntry constructor
+??0SubtitleEntryUnicodeBase@@QAE@ABVUnicodeString@@@Z,0x00888400,SubtitleEntry TU-local UnicodeString copy constructor alias
+??1SubtitleEntryUnicodeBase@@QAE@XZ,0x008881D0,SubtitleEntry TU-local UnicodeString destructor alias

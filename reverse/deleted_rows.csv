@@ -24711,3 +24711,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??0Rva004735A0@@QAE@XZ,0x004735A0,identity corrected to ??0GameFont@@QAE@XZ using the owning call graph and EA reference layout
 ??1Rva004734B0MultiTailDtor@@UAE@XZ,0x004734B0,identity corrected to ??1GameFont@@MAE@XZ using the owning call graph and EA reference layout
 ??_GGen_dtor_004734d0@@UAEPAXI@Z,0x004734D0,identity corrected to ??_GGameFont@@MAEPAXI@Z using the owning call graph and EA reference layout
+??0Rva0081D760@@QAE@ABVWideStr@@HHHHHH@Z,0x0081D760,placeholder superseded by manager-accessor-proven SubtitleEntry identity in Code/GameEngine/Source/GameClient/SubtitleEntryConstructorDestructor.cpp
+??1Rva0081D7B0MultiTailDtor@@UAE@XZ,0x0081D7B0,placeholder superseded by manager-accessor-proven SubtitleEntry identity in Code/GameEngine/Source/GameClient/SubtitleEntryConstructorDestructor.cpp
+??_GGen_dtor_0081d960@@UAEPAXI@Z,0x0081D960,placeholder superseded by manager-accessor-proven SubtitleEntry identity in Code/GameEngine/Source/GameClient/SubtitleEntryConstructorDestructor.cpp
