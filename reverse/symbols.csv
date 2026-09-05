@@ -82849,3 +82849,7 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?findLightPointLevel@@YGPAVLightPointLevel@@PAXPAVAsciiString@@@Z,0x00028AF6,Reviewed39C1A0 full153B pointer-range search and AsciiString comparison; ignoresECX andret8
 ?_M_insert_overflow@?$vector@PAVLightPointLevel@@V?$allocator@PAVLightPointLevel@@@_STL@@@_STL@@IAEXPAPAVLightPointLevel@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003A6F2,Reviewed39C440 STL pointer vector growth allocation copies fill andret20
 ?g_lightPointThrowInfo@@3HA,0x00DDFC30,Correct RVA ofVA11DFC30; decoded catchable RTTI INIException size8 copy448621
+?notifyTarget@Glo012F4B98Type@@QAEXXZ,0x000371C3,Existing matched58962020B bit-guarded notify
+?isOpen@Glo012F706CType@@QBE_NXZ,0x000485D1,Existing matched60D48046B three-field campaign gate
+?allowed@Rva003BF540@@QAE_NXZ,0x00025A77,Existing matched3BED0066B same-owner predicate chain
+?show00592D60@Glo012F4B98Type@@QAEXPAVAsciiString@@P6AX_N@Z@Z,0x00043E4B,Reviewed592D60 first arg string pointer sent as window message40; second stored508 and consumed by589290 as cdecl callback(bool)
