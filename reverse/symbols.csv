@@ -82935,3 +82935,4 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?set@BfmeSortElem20Tail@@QAEAAV1@ABV1@@Z,0x00033640,Reviewed20B record copy_backward2EA550 and vector-tail assignment2E13B0; typed assignment returns receiver
 ?bfmeNext1087@BfmeP1087@@QAEGPAVParameter@@@Z,0x000230B5,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
 ?bfmeLook1087@BfmeD1087@@QAEPAUBfmeR1087@@PAG@Z,0x0002EE60,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
+?queryRva001CAEE0@Object@@QBE_NPBVPlayer@@@Z,0x00003B1B,Full50B1CAEE0 reads nullable viewer+2C; this matched caller supplies Player from DF4A0; typed ABI without legacy Object cast
