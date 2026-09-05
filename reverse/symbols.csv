@@ -82791,3 +82791,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1GameClient@@UAE@XZ,0x00025FB8,"GameClient base destructor; ILT to 0x597680, W3DGameClient subclass with SubsystemInterface and Snapshot vtables independently identified"
 ?Set_Device_Resolution@WW3D@@SA_NHHHH_N@Z,0x008FD1C0,Retail wrapper calls DX8Wrapper then test al/setne al/ret; bool return independently verified; corrects prior enum-return assumption
 ?getKillsOfKindOf@PlayerKills@@QAEHV?$BitFlags@$0MA@@@0@Z,0x00036D72,typed thiscall alias of the ILT previously reached via union j_00036d72; two BitFlags<192> by value; independently reviewed matched callee and caller types
+?hasIncompleteStructure@CastleBehavior@@QAE_NPBVThingTemplate@@@Z,0x00009453,typed thiscall alias of the ILT previously reached via union j_00009453; independently reviewed matched callee and caller types
