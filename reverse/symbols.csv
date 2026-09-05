@@ -83301,3 +83301,6 @@ _bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 
 ??1StringBaseWideBE@@IAE@XZ,0x008881D0,pin
 ?bfmeSendBE@@YAXHVUnicodeStringBE@@@Z,0x00022237,Open-BFME5 the sender the queued-text send at 0x0054D320 calls
 ?doDamageLine@StructureToppleUpdate@@IAEXPAVObject@@PBVWeaponTemplate@@MMMM@Z,0x00049BAC,retail doDamageLine ILT named by applyCrushingDamage
+?bfmeClearBF@AsciiStringBF@@QAEXXZ,0x00887940,pin
+?bfmeFindBF@BfmeRegistryBF@@QAEPAXABVAsciiStringBF@@@Z,0x0001D606,Open-BFME5 the lookup the handle resolve at 0x0013EE70 caches
+g_bfmeRegistryBF,0x012F6924,Open-BFME5 the registry the handle resolve at 0x0013EE70 needs
