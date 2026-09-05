@@ -83244,3 +83244,18 @@ g_bfmeRegistryAS,0x012EF738,Open-BFME5 the registry the name resolve at 0x002DAE
 _bfmeVftableAT,0x0069B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
 ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A,0x00EED4FC,GameEngine::init constructs the 16-byte vptr-plus-AsciiString-range object at 0x00079316 and stores VA 0x012ED4FC; logger 0x00065C80 appends strings and getCRC caller transfers them under literal CRCParameterCheck
 ?erase@CRCParameterList@@QAEXPAVAsciiString@@0@Z,0x00024C17,CRCParameterCheck clear at 0x00065A40 passes its begin/end pointers to this exact ILT target; body 0x00065960 destroys each AsciiString and moves finish to begin
+??0StringBaseNarrowAU@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAU@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAU@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAU@BfmeStateAU@@QAEXPAXVAsciiStringAU@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0015D000 calls
+_bfmeVftableAU,0x00696348,Open-BFME5 the vftable the state constructor at 0x0015D000 installs
+??0StringBaseNarrowAV@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAV@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAV@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAV@BfmeStateAV@@QAEXPAXVAsciiStringAV@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x00171680 calls
+_bfmeVftableAV,0x00698188,Open-BFME5 the vftable the state constructor at 0x00171680 installs
+??0StringBaseNarrowAW@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAW@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAW@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAW@BfmeStateAW@@QAEXPAXVAsciiStringAW@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0018AE00 calls
+_bfmeVftableAW,0x0069B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
