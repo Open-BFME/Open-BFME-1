@@ -83212,3 +83212,8 @@ g_bfmeTextAL,0x012F147C,Open-BFME5 the text table the version text at 0x000AED00
 ?format@UnicodeStringAM@@QAAXV1@ZZ,0x00889190,pin
 g_bfmeTextAM,0x012F147C,Open-BFME5 the text table the time-played text at 0x0009C4B0 fetches its format from
 ?TheStatsCollector@@3PAVStatsCollector@@A,0x00ED63C,Global VA 0x012ED63C is the receiver for exact StatsCollector update 0x000A2E60 writeFileEnd 0x000A2900 collectMsgStats 0x000A21F0 startScrollTime 0x000A22B0 and endScrollTime 0x000A22D0 bodies; matched Money methods use counters +4/+8
+??0StringBaseNarrowAN@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAN@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAN@@QAAXVAsciiStringAN@@ZZ,0x00888FF0,pin
+?bfmeAssembleAN@@YAXHPADPBDHHHHHH@Z,0x00893410,Open-BFME5 the nine-argument assembler the level-path builder at 0x004675F0 calls
+g_bfmeBufferAN,0x012F19F0,Open-BFME5 the shared buffer the level-path builder at 0x004675F0 fills
