@@ -82923,3 +82923,4 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?cache1B4980@BfmeSub1CC_EC3@@QAEXMI@Z,0x00013016,Reviewed26B1B4980 stores float58 and deadline current GameLogic3C plus frames in5C
 ?TheActionManager@@3PAVBFMEActionManager@@A,0x012ED700,"Canonical action manager singleton as loaded by166B1DCF50, existing five-argument canEnterObject ABI"
 ?iterRel001DCF20@@YAXPAVObject@@PAX@Z,0x001DCF20,"Reviewed27B cdecl callback: Object arg, user Object at0 and byte flag4 set when getRelationship returns ENEMIES0"
+?allows@Rva001E4090@@QAE_NPAX0@Z,0x00037349,"Independently decoded37349 JMP1E4090; recursive call same155B function, no speculative WeaponTemplate identity"
