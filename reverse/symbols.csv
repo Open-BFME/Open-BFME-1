@@ -83207,3 +83207,7 @@ __imp__GetDriveTypeA@4,0x01358D8C,Open-BFME5 retail KERNEL32 GetDriveTypeA impor
 ??1StringBaseWideAL@@IAE@XZ,0x008881D0,pin
 ?format@UnicodeStringAL@@QAAXV1@ZZ,0x00889190,pin
 g_bfmeTextAL,0x012F147C,Open-BFME5 the text table the version text at 0x000AED00 fetches its format from
+??0StringBaseWideAM@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideAM@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringAM@@QAAXV1@ZZ,0x00889190,pin
+g_bfmeTextAM,0x012F147C,Open-BFME5 the text table the time-played text at 0x0009C4B0 fetches its format from
