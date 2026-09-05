@@ -680,6 +680,7 @@ name,address,notes
 ??$__bfme_find_impl@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x004C4530,Open-BFME5 AsciiString list find implementation target
 ??$__copy@PAUBannerMovieEntry@@PAU1@H@_STL@@YAPAUBannerMovieEntry@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00581DB0,BannerUI movie-entry vector clear; 28-byte POD copy helper shared with the retail template body
 ??$__copy@PAUBfmeSplitResultValue@@PAU1@H@_STL@@YAPAUBfmeSplitResultValue@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00014D7B,Open-BFME5 retail ILT for HordeContain split-result vector clear
+??$__copy@PAUBfmeVecElem_000FAFF0@@PAU1@H@_STL@@YAPAUBfmeVecElem_000FAFF0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00046A6F,address-derived __copy<BfmeVecElem_000FAFF0*> shift helper for vector::erase at 0x000FAF90
 ??$__copy@PAUCoord3D@@PAU1@H@_STL@@YAPAUCoord3D@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0013DF60,zhstl per-site callee copy (body proven byte-equal)
 ??$__copy@PAUElem00147180@@PAU1@H@_STL@@YAPAUElem00147180@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000311EC,Open-BFME5 ILT the range copy the vector erase at 0x00147180 calls
 ??$__copy@PAUElem003AF7A0@@PAU1@H@_STL@@YAPAUElem003AF7A0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000A1A0,Open-BFME5 ILT the range copy the vector erase at 0x003AF7A0 calls
@@ -695,6 +696,8 @@ name,address,notes
 ??$__copy@PAUFXBoneInfo@@PAU1@H@_STL@@YAPAUFXBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,resweep callee back-solved
 ??$__copy@PAUFactionVictoryParameters@@PAU1@H@_STL@@YAPAUFactionVictoryParameters@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x001DE760,STLport random-access __copy over the 0x18-byte FactionVictoryParameters (AsciiString::set + 5 dwords per element; n=(last-first)/0x18); callers vector::erase 0x001DFE7B and ??0VictorySystem 0x001E025F; the element type is the retail struct name from the assert string at 0x000C32CB (iniParseFactionVictoryDefinition) rather than a Gen_t_ tag, which the closure predicate counts as anonymous; the two gen-tgrid pins on this address are placeholders for the same body
 ??$__copy@PAUGen006EDEA0@@PAU1@H@_STL@@YAPAUGen006EDEA0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001DC23,STLport range copy ILT called by the exact Gen006EDEA0 vector erase at 0x006F2A10
+??$__copy@PAUGen_dtor_00023989b@@PAU1@H@_STL@@YAPAUGen_dtor_00023989b@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002112F,Open-BFME5 pin: templated __copy helper instantiated for the 44-byte-stride vector<T>::erase at 0x00252E70 (thunks_015.cpp target)
+??$__copy@PAUGen_dtor_0002a8bab@@PAU1@H@_STL@@YAPAUGen_dtor_0002a8bab@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00044EE5,Open-BFME5 pin: templated __copy helper instantiated for the 44-byte-stride vector<T>::erase at 0x00777EE0 (thunks_033.cpp target)
 ??$__copy@PAUGen_p12pod@@PAU1@H@_STL@@YAPAUGen_p12pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00717C20,ICF alias of 12-byte POD __copy
 ??$__copy@PAUGen_t_00065960_p4cd@@PAU1@H@_STL@@YAPAUGen_t_00065960_p4cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000653C0,gen-tgrid payload member
 ??$__copy@PAUGen_t_000bca20_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000bca20_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000B98F0,gen-tgrid payload member
@@ -4042,6 +4045,8 @@ name,address,notes
 ??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
 ??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
 ??1Gen_0051b720Base@@QAE@XZ,0x0004634E,ILT thunk to body 0x00490470
+??1Gen_dtor_00023989b@@QAE@XZ,0x00023989,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call, distinct from the mis-shaped UAE pin already at this address)
+??1Gen_dtor_0002a8bab@@QAE@XZ,0x0002A8BA,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call) for the 0x00777EE0 sibling erase
 ??1Gen_dtor_0005fa60@@UAE@XZ,0x00031160,gen-dtor class destructor
 ??1Gen_dtor_0005fe80@@UAE@XZ,0x00007CB1,gen-dtor class destructor
 ??1Gen_dtor_00062240@@UAE@XZ,0x0000D828,gen-dtor class destructor
