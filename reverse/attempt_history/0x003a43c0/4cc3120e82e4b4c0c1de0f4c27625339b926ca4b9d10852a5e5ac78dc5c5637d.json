@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4cc3120e82e4b4c0c1de0f4c27625339b926ca4b9d10852a5e5ac78dc5c5637d",
+  "symbol": "?bfmeContains@Gen003A43C0@@QBE_NPBX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.4,
+  "source": "// ?bfmeContains@Gen003A43C0@@QBE_NPBX@Z\n// partial score=0.4 date=2026-09-05\n// cl: /DNDEBUG /MD /O2\n// Clean C++ conversion of the pointer-array membership scan at retail RVA 0x003A43C0.\n\nstruct Gen003A43C0Element\n{\n\tunsigned char m_pad[0xA4];\n\tvoid *m_key;\n};\n\nclass Gen003A43C0\n{\npublic:\n\tbool bfmeContains(const void *key) const;\n\nprivate:\n\tunsigned char m_pad[0x48];\n\tGen003A43C0Element *const *m_begin;\n\tGen003A43C0Element *const *m_end;\n};\n\nbool Gen003A43C0::bfmeContains(const void *key) const\n{\n\tint count = static_cast<int>(m_end - m_begin);\n\tif (count <= 0)\n\t\treturn false;\n\n\tGen003A43C0Element *const *ptr = m_begin;\n\tint i = 0;\n\tdo\n\t{\n\t\tif ((*ptr)->m_key == key)\n\t\t\treturn true;\n\t\t++i;\n\t\t++ptr;\n\t}\n\twhile (i < static_cast<int>(m_end - m_begin));\n\n\treturn false;\n}\n"
+}
