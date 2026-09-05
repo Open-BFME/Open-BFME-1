@@ -82974,3 +82974,9 @@ g_bfmeRegistryYU,0x012F33F8,Open-BFME5 the command registry the dispatch at 0x00
 ?bfmeUseYV@BfmeRegistryYV@@QAEXHPAX@Z,0x0003BCCD,Open-BFME5 registry dispatch used by the dispatch at 0x0058EED0
 g_bfmeObserverYV,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EED0 checks
 g_bfmeRegistryYV,0x012F33F8,Open-BFME5 the command registry the dispatch at 0x0058EED0 consults
+??0StringBaseZA@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseZA@@IAE@XZ,0x00887940,pin
+??0ParticleSystemTemplateZA@@QAE@ABVAsciiStringZA@@@Z,0x0002677E,Open-BFME5 the particle-system template constructor used by 0x005CFF50
+??1ParticleSystemTemplateZA@@QAE@XZ,0x0002083D,Open-BFME5 the template destructor the 0x005CFF50 atexit thunk calls
+??0ParticleSystemZA@@QAE@PAVParticleSystemTemplateZA@@HH@Z,0x0002E3C0,Open-BFME5 the particle-system constructor used by 0x005CFF50
+??1ParticleSystemZA@@QAE@XZ,0x00007CBB,Open-BFME5 the particle-system destructor the 0x005CFF50 atexit thunk calls
