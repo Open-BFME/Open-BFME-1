@@ -10174,7 +10174,6 @@ name,address,notes
 ?Rva007E8640Copy@@YAXPADIPBD@Z,0x007E8640,U2 lane: bounded string copy called by the setters at 0x00801470 and 0x008014A0
 ?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
 ?Rva007EB410NetConnStatus@@YAHHPAXH@Z,0x007EB410,Y2 lane: NetConnStatus -- the body names itself in its own warning string; three-argument query with the third unused
-?Rva007EB520NetConnMAC@@YAIPAX@Z,0x007EB520,Y2 lane: NetConnMAC -- the body names itself in both of its log lines; NetConnStatus hands it the 0xF0-byte Adapter block
 ?Rva007EB810Get@@YAPAURva007EB810Diag@@XZ,0x007EB810,U2 lane: cdecl getter of the diagnostic reporter used by the FESL asserts at 0x008013F0 and 0x00802980
 ?Rva007EBAA0@@YAXXZ,0x007EBAA0,init helper when diagnostic getter returns null
 ?Rva007EBC40@@YAPADPBD0@Z,0x007EBC40,Y2 FESL message bool-field lookup; cdecl record plus key returns value text or null
@@ -72020,7 +72019,6 @@ name,address,notes
 ?bfmeAccept@BfmeSubAccept_00007289@@QAEXPAVBfmeSeedTarget@@@Z,0x00007289,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_00016B85@@QAEXPAVBfmeSeedTarget@@@Z,0x00016B85,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_0001DE5D@@QAEXPAVBfmeSeedTarget@@@Z,0x0001DE5D,Open-BFME5 ILT a seeder sub-object accepts through
-?bfmeAccept@BfmeSubAccept_00029DAC@@QAEXPAVBfmeSeedTarget@@@Z,0x00029DAC,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_0002C41C@@QAEXPAVBfmeSeedTarget@@@Z,0x0002C41C,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_00031A07@@QAEXPAVBfmeSeedTarget@@@Z,0x00031A07,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_000328EE@@QAEXPAVBfmeSeedTarget@@@Z,0x000328EE,Open-BFME5 ILT a seeder sub-object accepts through
@@ -74023,7 +74021,6 @@ name,address,notes
 ?bfmeLengthErrorQX@BfmeThingQX@@QAEXXZ,0x00042DC0,pin
 ?bfmeLine1226@BfmeR1226@@QAEXPAD@Z,0x008A0F40,pin
 ?bfmeLinkRelation@@YAXPAXPAVObject@@H@Z,0x0001253F,Open-BFME5 optional relation link called by 0x00283460
-?bfmeListEAC@BfmeUiEAC@@QAEXPAXPBDH00HHH@Z,0x00015235,pin
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
@@ -74436,7 +74433,6 @@ name,address,notes
 ?bfmeRegisterC0600@Rva006C0600Registry@@QAEXPAXH@Z,0x0003A37D,Open-BFME5 address-derived descriptor registration call from the 0x006C0600 initializer
 ?bfmeRegisterDAA@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAB@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
-?bfmeRegisterDAC@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAD@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterDAE@@YGXPAXIIP6AX0@Z@Z,0x009F6D76,pin
 ?bfmeRegisterHouseColor@@YAXPBD0@Z,0x00900D70,the two-argument __cdecl function the HouseColor parser hands its two strings to; unnamed in the image
@@ -74599,7 +74595,6 @@ name,address,notes
 ?bfmeSend991@BfmeC991@@QAEDHH@Z,0x0000BD11,pin
 ?bfmeSendAAA@BfmeSinkAAA@@QAEXPAX_NH@Z,0x00044409,pin
 ?bfmeSendAAB@BfmeSinkAAB@@QAEXPAX_NH@Z,0x00044409,pin
-?bfmeSendAC@BfmeNextAC@@QAEXPAUBfmeOutAC@@@Z,0x00043E91,pin
 ?bfmeSendAFB@@YGXPAX0@Z,0x00007A45,pin
 ?bfmeSendAIB@BfmeSinkAIB@@QAEXPAVBfmeListAIB@@PAX@Z,0x008520A0,pin
 ?bfmeSendAMB@BfmeSinkAMB@@QAEXPAX0@Z,0x000160D1,pin
@@ -74679,7 +74674,6 @@ name,address,notes
 ?bfmeSetIndicatorOn@Drawable@@QAEX_N@Z,0x00018CF5,public spelling used by the BFME GameLogic object indicator conversion
 ?bfmeSetLocsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A300,pin
 ?bfmeSetNeedsGateOpenRaw@Team@@QAEXHH@Z,0x0000E6B5,TEAM_NEEDS_OPEN_GATE canonical callee consumes the low byte of the full stack-word flag
-?bfmeSetOneCAC@BfmePairCAC@@QAEXHH@Z,0x0004A43A,pin
 ?bfmeSetPG@BfmeThingPG@@QAEXHPAX@Z,0x00021C1F,pin
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
@@ -74698,7 +74692,6 @@ name,address,notes
 ?bfmeSetTexVHA@@YAXIAAPAVBfmeTexVHA@@@Z,0x00905AC0,pin
 ?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
 ?bfmeSetTopVIF@@YAXPAUBfmeLuaVHR@@H@Z,0x0098FDE0,pin
-?bfmeSetTwoCAC@BfmePairCAC@@QAEXHH@Z,0x00046B00,pin
 ?bfmeSetUND@BfmeStrUND@@QAEXPBD@Z,0x00887C90,pin
 ?bfmeSetUPA@BfmeStrUPA@@QAEXPBD@Z,0x00887B60,pin
 ?bfmeSetUntilVOJ@BfmeObjVOJ@@QAEXHI@Z,0x0003364A,pin
@@ -74741,7 +74734,6 @@ name,address,notes
 ?bfmeShowDZF@BfmeUiDZF@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeShowDisconnectScreen@@YAXXZ,0x0050E9A0,the this-less spelling retail's DisconnectManager::turnOnScreen calls; the same body is pinned as ?showScreen@DisconnectMenu@@QAEXXZ and as the gen-thunk ?b_0050e9a0@@YAXXZ, but the call site passes no receiver
 ?bfmeShowEAA@BfmeUiEAA@@QAEXPAXPBDH01HHH@Z,0x00015235,pin
-?bfmeShowEAC@BfmeUiEAC@@QAEXPAXPBDH0HHHH@Z,0x00015235,pin
 ?bfmeShroudedVNI@@YADPAX@Z,0x000C3F80,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeSinVNB@@YAMM@Z,0x00873910,pin
@@ -75403,7 +75395,6 @@ name,address,notes
 ?clear3098@BaseHeightMapResetBuffer@@QAEXXZ,0x00045D72,BaseHeightMap reset call for BFME buffer at this+0x3098
 ?clear30A0@BaseHeightMapResetBuffer@@QAEXXZ,0x000404D0,BaseHeightMap reset call for BFME buffer at this+0x30A0
 ?clear30A4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003A5E4,BaseHeightMap reset call for BFME buffer at this+0x30A4
-?clear30AC@BaseHeightMapResetBuffer@@QAEXXZ,0x000336F9,BaseHeightMap reset call for BFME buffer at this+0x30AC
 ?clear30B0@BaseHeightMapResetBuffer@@QAEXXZ,0x00003E59,BaseHeightMap reset call for BFME buffer at this+0x30B0
 ?clear30B4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003697B,BaseHeightMap reset call for BFME buffer at this+0x30B4
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
@@ -76730,7 +76721,6 @@ name,address,notes
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
-?g_bfmeArgEAC@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArr1233@@3PAPAVBfmeE1233@@A,0x00F38750,pin
 ?g_bfmeArr1242@@3PAPAVBfmeE1242@@A,0x00F38750,pin
 ?g_bfmeArr1243@@3PAPAVBfmeE1243@@A,0x00F38750,pin
@@ -77387,7 +77377,6 @@ name,address,notes
 ?g_bfmeUiDZE@@3PAVBfmeUiDZE@@A,0x00EF19E8,pin
 ?g_bfmeUiDZF@@3PAVBfmeUiDZF@@A,0x00EF19E8,pin
 ?g_bfmeUiEAA@@3PAVBfmeUiEAA@@A,0x00EF19E8,pin
-?g_bfmeUiEAC@@3PAVBfmeUiEAC@@A,0x00EF19E8,pin
 ?g_bfmeUnicodeStringFormat@@3QBDB,0x0114451C,address-derived UnicodeString format string from retail 0x009D9AAC
 ?g_bfmeUnsignedByteFormat@@3QBDB,0x011442BC,address-derived unsigned-byte format string from the DIR32 operand at retail 0x009D943A
 ?g_bfmeUnsignedIntFormat@@3QBDB,0x01144304,address-derived unsigned-int format string from retail 0x009D953E
@@ -78603,7 +78592,6 @@ name,address,notes
 ?handle@Gen00049FDA@@QAE_NXZ,0x00049FDA,address-derived callee of a guarded REL32 tail call; target read from the REL32 at its call site
 ?handle@Gen0004A7A5@@QAEXXZ,0x0004A7A5,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0004AA98@@QAEXXZ,0x0004AA98,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
-?handle@Gen0004AFAC@@QAEXH@Z,0x0004AFAC,ILT e9 thunk for 18B void wrap at 0x000C9B40
 ?handle@Gen0004B227@@QAEXXZ,0x0004B227,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0005CC00@@QAEXXZ,0x0005CC00,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen0005EE90@@QAEXXZ,0x0005EE90,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
@@ -79976,13 +79964,6 @@ name,address,notes
 ?lookupStatForPlayer@PeerThreadClass@@QAEHW4RoomType@@PBD1@Z,0x00647DD0,ZH PeerThread.cpp:371 line for line: packStatKey(nick;key) into a std::string via 0x00647CD0; roomType 1 (GroupRoom) searches the map at this+0x94 roomType 2 (StagingRoom) the map at this+0xa0 (_M_find ILT 0x0002E159); returns node+0x1c or 0; nine calls from getPlayerInfo 0x0064AA70 via ILT 0x0003733A
 ?lower_bound@AsciiStringTreeLowerBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x00633900,incremental-link thunk target through a TU-local forwarding shim
 ?m0003CAD3@Q1Receiver012F4820@@QAEXH@Z,0x0003CAD3,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x005091B0
-?m009EC970@Q1Receiver0134FAAC@@QAEXH@Z,0x009EC970,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBBE0
-?m009EC9A0@Q1Receiver0134FAAC@@QAEXH@Z,0x009EC9A0,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBC00
-?m009ECA30@Q1Receiver0134FAAC@@QAEXH@Z,0x009ECA30,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBC50
-?m009EEEC0@Q1Receiver0134FAAC@@QAEXH@Z,0x009EEEC0,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBBC0
-?m009F0BD0@Q1Receiver0134FAAC@@QAEXH@Z,0x009F0BD0,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBAC0
-?m009F0D40@Q1Receiver0134FAAC@@QAEXH@Z,0x009F0D40,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBB20
-?m009F19E0@Q1Receiver0134FAAC@@QAEXH@Z,0x009F19E0,address-derived callee of the global-guarded forward family; target read from the REL32 at its call site 0x009EBA80
 ?m@Gen_001ef410@@QAEXXZ,0x0004049E,Open-BFME5 ILT the chain at 0x001FBC40 calls first
 ?m@Gen_002d9b20@@QAEXXZ,0x0002DF5B,Open-BFME5 ILT the loadPostProcess chains at 0x001EE8A0 and its family tail-jump through
 ?m@Gen_00409040Registry@@QAEXPAX@Z,0x00409040,Open-BFME5 address-derived name; call target of 0x00604BE0 via ILT 0x000281C8; identity not asserted
@@ -83106,3 +83087,10 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0StringBaseNarrowAA@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAA@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAA@@QAAXVAsciiStringAA@@ZZ,0x00888FF0,pin
+?bfmeLastAA@BfmeNodeAA@@QAEPAV1@XZ,0x000022BB,Open-BFME5 the chain-tail walk the dynamic-name builder at 0x0036E370 uses
+??0StringBaseNarrowAB@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAB@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAB@@QAAXVAsciiStringAB@@ZZ,0x00888FF0,pin
