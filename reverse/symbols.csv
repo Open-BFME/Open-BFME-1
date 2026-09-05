@@ -4311,7 +4311,6 @@ name,address,notes
 ??1Gen_dtor_001bbc10@@UAE@XZ,0x00012EB3,gen-dtor class destructor
 ??1Gen_dtor_001bde70@@UAE@XZ,0x0001CB6B,gen-dtor class destructor
 ??1Gen_dtor_001c0e70@@UAE@XZ,0x0002514E,gen-dtor class destructor
-??1Gen_dtor_001c0fb0@@UAE@XZ,0x00039667,gen-dtor class destructor
 ??1Gen_dtor_001c0fe0@@UAE@XZ,0x00015140,gen-dtor class destructor
 ??1Gen_dtor_001c1010@@UAE@XZ,0x00012634,gen-dtor class destructor
 ??1Gen_dtor_001c1170@@UAE@XZ,0x0003A7A1,gen-dtor class destructor
@@ -26443,7 +26442,6 @@ name,address,notes
 ?b_001c0ef0@@YAXXZ,0x001C0EF0,gen-thunk body
 ?b_001c0f80@@YAXXZ,0x001C0F80,gen-thunk body
 ?b_001c0f90@@YAXXZ,0x001C0F90,gen-thunk body
-?b_001c0fb0@@YAXXZ,0x001C0FB0,gen-thunk body
 ?b_001c0fe0@@YAXXZ,0x001C0FE0,gen-thunk body
 ?b_001c1010@@YAXXZ,0x001C1010,gen-thunk body
 ?b_001c1040@@YAXXZ,0x001C1040,gen-thunk body
@@ -31523,7 +31521,6 @@ name,address,notes
 ?b_002561d0@@YAXXZ,0x002561D0,gen-thunk body
 ?b_00256200@@YAXXZ,0x00256200,gen-thunk body
 ?b_00256240@@YAXXZ,0x00256240,gen-thunk body
-?b_002562c0@@YAXXZ,0x002562C0,gen-thunk body
 ?b_002562e0@@YAXXZ,0x002562E0,gen-thunk body
 ?b_002562f0@@YAXXZ,0x002562F0,gen-thunk body
 ?b_00256360@@YAXXZ,0x00256360,gen-thunk body
@@ -82720,3 +82717,9 @@ g_bfmeReadyXP,0x0134B208,Open-BFME5 the ready flag the initialiser at 0x009569A0
 ??_GWeaponSetSpecialAbilityUpdate@@MAEPAXI@Z,0x000298A2,primary class vtable slot zero ILT to 0x0026DDD0
 ??1WoundArrowUpdate@@MAE@XZ,0x00003BD4,destructor ILT to 0x0026E010
 ??_GWoundArrowUpdate@@MAEPAXI@Z,0x0003170F,primary class vtable slot zero ILT to 0x0026E130
+??1ObjectDefectionHelper@@UAE@XZ,0x00039667,destructor ILT to 0x002562C0
+??_GObjectDefectionHelper@@UAEPAXI@Z,0x0001BFB8,primary class vtable slot zero ILT to 0x001C0FB0
+??_7ObjectDefectionHelper@@6BObjectModule@@@,0x0109E574,primary vtable installed by the named constructor and destructor
+??_7ObjectDefectionHelper@@6BBehaviorModuleInterface@@@,0x0109E4B0,secondary vtable at this+0x0C
+??_7ObjectDefectionHelper@@6B@,0x0109E4A0,secondary vtable at this+0x10
+??1ObjectHelper@@UAE@XZ,0x0002514E,ObjectDefectionHelper destructor tail call reaches the UpdateModule destructor alias

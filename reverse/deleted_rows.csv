@@ -24623,3 +24623,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ??_GGen_dtor_0026ddd0@@UAEPAXI@Z,0x0026DDD0,address-derived identity replaced by byte-verified WeaponSetSpecialAbilityUpdate destructor
 ??1Rva0026E010MultiTailDtor@@UAE@XZ,0x0026E010,address-derived identity replaced by byte-verified WoundArrowUpdate destructor
 ??_GGen_dtor_0026e130@@UAEPAXI@Z,0x0026E130,address-derived identity replaced by byte-verified WoundArrowUpdate destructor
+??1Rva002562C0MultiTailDtor@@UAE@XZ,0x002562C0,address-derived placeholder superseded by the byte-verified ObjectDefectionHelper destructor
+??_GGen_dtor_001c0fb0@@UAEPAXI@Z,0x001C0FB0,generated deleting-destructor identity superseded by ObjectDefectionHelper vtable evidence
+??_GObjectDefectionHelper@@UAEPAXI@Z,0x00415D20,"retracted identity conflict: the body installs vtable 0x010F11C4, while the named ObjectDefectionHelper constructor installs 0x0109E574 whose deleting-destructor slot reaches 0x001C0FB0"
