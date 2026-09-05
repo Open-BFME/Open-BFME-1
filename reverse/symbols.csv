@@ -82780,3 +82780,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0SubtitleEntryUnicodeBase@@QAE@ABVUnicodeString@@@Z,0x00888400,SubtitleEntry TU-local UnicodeString copy constructor alias
 ??1SubtitleEntryUnicodeBase@@QAE@XZ,0x008881D0,SubtitleEntry TU-local UnicodeString destructor alias
 ?xferBlob_0010CC40@@YAXPAVXfer@@PAX@Z,0x00035814,"Address-qualified cdecl field transfer; retail 0x000F9CF0 calls ILT to 0x0010CC40; target takes Xfer then field pointer on stack, versioned virtual xfer calls, bare ret"
+?rva008AC790@BfmeSlotState1289@@QAEXXZ,0x008AC790,Address-qualified thiscall helper; retail prologue consumes ECX and initializes receiver values at +0x48
+?g_01076C24@@3MC,0x01076C24,Retail axis-scale 0.01f constant; raw bytes 0ad7233c independently checked
+?g_0107C64C@@3MC,0x0107C64C,Retail axis-scale 1/255 float constant; raw bytes 8180803b independently checked
