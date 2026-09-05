@@ -10,3 +10,7 @@ UnitCrateCollide::UnitCrateCollide(Thing *thing, const ModuleData *moduleData)
 	: CrateCollide(thing, moduleData)
 {
 }
+
+UnitCrateCollide::~UnitCrateCollide()
+{
+}
