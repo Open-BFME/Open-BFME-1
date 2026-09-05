@@ -82993,3 +82993,18 @@ g_bfmePalantirYX,0x012F19E8,Open-BFME5 the palantir the rank update at 0x0056586
 ?set@AsciiStringYW@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeStoreYW@BfmePalantirYW@@QAEXABVAsciiStringYW@@0@Z,0x00030CFB,Open-BFME5 the palantir property store used by 0x00565620
 g_bfmePalantirYW,0x012F19E8,Open-BFME5 the palantir the update at 0x00565620 writes to
+??0StringBaseNarrowZB@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowZB@@IAE@XZ,0x00887940,pin
+??0StringBaseWideZB@@IAE@PBG@Z,0x00888DE0,pin
+??1StringBaseWideZB@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringZB@@QAAXV1@ZZ,0x00889190,pin
+?bfmeStoreZB@BfmePalantirZB@@QAEXABVAsciiStringZB@@ABVUnicodeStringZB@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565BB0
+g_bfmePalantirZB,0x012F19E8,Open-BFME5 the palantir the power-cap update at 0x00565BB0 writes to
+??0StringBaseNarrowZC@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowZC@@IAE@XZ,0x00887940,pin
+??0StringBaseWideZC@@IAE@PBG@Z,0x00888DE0,pin
+??1StringBaseWideZC@@IAE@XZ,0x008881D0,pin
+?set@StringBaseWideZC@@QAEXPBGH@Z,0x008885C0,pin
+?format@UnicodeStringZC@@QAAXV1@ZZ,0x00889190,pin
+?bfmeStoreZC@BfmePalantirZC@@QAEXABVAsciiStringZC@@ABVUnicodeStringZC@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565A80
+g_bfmePalantirZC,0x012F19E8,Open-BFME5 the palantir the multiplier update at 0x00565A80 writes to
