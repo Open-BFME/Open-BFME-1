@@ -324,16 +324,6 @@ Rva002132B0MultiTailDtor::~Rva002132B0MultiTailDtor()
 {
 }
 
-class Rva00218090MultiTailDtor : public Rva0004B68CMultiBase, public TailMixinA, public TailMixinB
-{
-public:
-	virtual ~Rva00218090MultiTailDtor();
-};
-
-Rva00218090MultiTailDtor::~Rva00218090MultiTailDtor()
-{
-}
-
 class Rva00218670MultiTailDtor : public Rva0004B68CMultiBase, public TailMixinA, public TailMixinB
 {
 public:

@@ -10,3 +10,7 @@ SalvageCrateCollide::SalvageCrateCollide(Thing *thing, const ModuleData *moduleD
 	: CrateCollide(thing, moduleData)
 {
 }
+
+SalvageCrateCollide::~SalvageCrateCollide()
+{
+}
