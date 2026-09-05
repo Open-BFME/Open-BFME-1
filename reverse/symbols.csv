@@ -82926,3 +82926,4 @@ g_bfmeRegistryYI,0x012F33F8,Open-BFME5 the command registry the select at 0x0058
 ?allows@Rva001E4090@@QAE_NPAX0@Z,0x00037349,"Independently decoded37349 JMP1E4090; recursive call same155B function, no speculative WeaponTemplate identity"
 ?q4Notify001E5C90@@YAXPAVINI@@PAVBfmeThingUBA@@PAXPBX@Z,0x0002171F,"Reviewed96B INI multi-field callback and four-argument caller; INI*,instance*,store*,const userdata* matching INIFieldParseProc"
 ?q4Notify001E5FD0@@YAXPAVINI@@PAVRva002DCBA0@@PAXPBX@Z,0x000045E3,"Reviewed96B INI multi-field callback and four-argument caller; INI*,instance*,store*,const userdata* matching INIFieldParseProc"
+?xferBase2298B0@BfmeBase002298B0@@AAEXPAVXfer@@@Z,0x000489DC,"Decoded489DC JMP2298B0 and reviewed complete snapshot routine through ret at229E22; typed Xfer receiver argument, not old22CD40 label"
