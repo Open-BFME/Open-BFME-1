@@ -83300,3 +83300,4 @@ _bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 
 ??0StringBaseWideBE@@IAE@ABV0@@Z,0x00888400,pin
 ??1StringBaseWideBE@@IAE@XZ,0x008881D0,pin
 ?bfmeSendBE@@YAXHVUnicodeStringBE@@@Z,0x00022237,Open-BFME5 the sender the queued-text send at 0x0054D320 calls
+?doDamageLine@StructureToppleUpdate@@IAEXPAVObject@@PBVWeaponTemplate@@MMMM@Z,0x00049BAC,retail doDamageLine ILT named by applyCrushingDamage

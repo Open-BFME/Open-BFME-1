@@ -1,4 +1,4 @@
-// cl: /ICode/GameEngine/Include /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /ICode/GameEngine/Source/Common/System /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /ICode/GameEngine/Include /DNDEBUG /MD /EHsc /Ireference/shims/asciistring_copyctor_outofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /ICode/GameEngine/Source/Common/System /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -218,7 +218,19 @@ void StructureToppleUpdate::doAngleFX(Real curAngle, Real newAngle)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // theta is the angle of the building with respect to the ground.
-// ?applyCrushingDamage@StructureToppleUpdate@@ present-unmatched
+class BfmeGeometryInfo
+{
+public:
+	Real boxMajorRadius() const;
+	Real boxMinorRadius() const;
+};
+
+struct BfmeStructureToppleModuleData
+{
+	unsigned char padding[0x60];
+	AsciiString crushingWeaponName;
+};
+
 void StructureToppleUpdate::applyCrushingDamage(Real theta) 
 {
 //	static const Real THETA_CEILING = PI/8; // This weapon won't do any damage until theta is less than this value.
@@ -228,45 +240,62 @@ void StructureToppleUpdate::applyCrushingDamage(Real theta)
 																												// building is falling in.
 
 	const StructureToppleUpdateModuleData *d = getStructureToppleUpdateModuleData();
+	Object *building = getObject();
+	Real orientationAngle;
+	Real toppleAngle;
+	Real angle;
+	Real minorComponent;
+	Real majorComponent;
+	BfmeGeometryInfo *geometry;
+	Real cosine;
+	Real sine;
+	Coord3D temp3D;
+	Real facingWidth;
+	const WeaponTemplate* wt;
+	Real maxDistance;
+	Real jcos;
+	Real jsin;
+	Real j;
 	if (theta > THETA_CEILING) {
 		return;
 	}
 
-	Object *building = getObject();
-	Real orientationAngle = building->getOrientation();
-	Real toppleAngle = m_toppleDirection.toAngle();
+	building = getObject();
+	orientationAngle = building->getOrientation();
+	toppleAngle = m_toppleDirection.toAngle();
 
 	// Figure out the width of the projection of the boundary of the building along the topple direction.
 	// Do this because the amount of ground that is affected will be different if the building falls
 	// in different orientations.
-	Real angle = orientationAngle - toppleAngle;
-	Real minorComponent = building->getGeometryInfo().getMinorRadius() * Cos(angle);
-	Real majorComponent = building->getGeometryInfo().getMajorRadius() * Sin(angle);
+	angle = orientationAngle - toppleAngle;
+	geometry = reinterpret_cast<BfmeGeometryInfo *>(reinterpret_cast<char *>(building) + 0xac);
+	cosine = Cos(angle);
+	minorComponent = cosine * geometry->boxMinorRadius();
+	sine = Sin(angle);
+	majorComponent = sine * geometry->boxMajorRadius();
 
-	Coord3D temp3D;
 	temp3D.x = majorComponent;
 	temp3D.y = minorComponent;
 	temp3D.z = 0.0f;
 	
-	Real facingWidth = temp3D.length() / 2;
+	facingWidth = temp3D.length() / 2;
 
 	// Get the crushing weapon.
-	const WeaponTemplate* wt = TheWeaponStore->findWeaponTemplate(d->m_crushingWeaponName);
+	wt = TheWeaponStore->findWeaponTemplate(
+		reinterpret_cast<BfmeStructureToppleModuleData *>(const_cast<StructureToppleUpdateModuleData *>(d))->crushingWeaponName);
 	if (wt == NULL) {
 		return;
 	}
 
 	// The furthest away from the base of the building to explode on.
-	Real maxDistance = m_buildingHeight * (1.0 - Sin(theta));
+	maxDistance = m_buildingHeight * (1.0 - Sin(theta));
 
 	/*
 	 * Fire explosions at regular intervals across the area that the building is currently
 	 * crushing.  The explosions occur across the face and along the length of the building.
 	 */
-	Real jcos;
-	Real jsin;
 //	Coord3D target;
-	for (Real j = m_lastCrushedLocation; j < maxDistance; j += WEAPON_SPACING_PERPENDICULAR) {
+	for (j = m_lastCrushedLocation; j < maxDistance; j += WEAPON_SPACING_PERPENDICULAR) {
 		jcos = j * Cos(toppleAngle);
 		jsin = j * Sin(toppleAngle);
 		doDamageLine(building, wt, jcos, jsin, facingWidth, toppleAngle);
