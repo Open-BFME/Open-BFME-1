@@ -82899,3 +82899,6 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?refreshPair@Rva00699180Owner@@QAEXHH@Z,0x00019E6B,Reviewed thiscall volume helper ILT to 00699180; complete 450B body independently exact
 ?lookup@Glo012F706CType@@QAEPAURva00615D50Object@@PBUICoord2D@@H@Z,0x0002934D,Reviewed ILT to615D50 full513B coordinate/category lookup returns object; point x/y read at615E32/615EB0
 ?applyOwner@Rva003BF540@@QAEXPAVGen003BD7D0Node@@@Z,0x00025798,Reviewed ILT to3BF190 full444B receives node from same-owner find and handles null
+??0Rva003BB540Element@@QAE@XZ,0x19b28,"Reviewed ILT to3B9610 existing99B ctor; first string, dword4, tree8"
+??0Rva003BB540Element@@QAE@ABU0@@Z,0x48923,"Reviewed ILT to3B9AD0 existing87B copy; string, dword, tree copy"
+??1Rva003BB590Tree@@QAE@XZ,0x32fd3,Reviewed ILT to2360C0 complete124B set tree cleanup; member at8
