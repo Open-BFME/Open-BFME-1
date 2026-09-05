@@ -83290,3 +83290,8 @@ _bfmeVftableBB,0x0069A6C0,Open-BFME5 the vftable the state constructor at 0x0017
 ??1StringBaseNarrowBA@@IAE@XZ,0x00887940,pin
 ?bfmeBaseInitBA@BfmeStateBA@@QAEXPAXVAsciiStringBA@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0017FA10 calls
 _bfmeVftableBA,0x0069A7B0,Open-BFME5 the vftable the state constructor at 0x0017FA10 installs
+??0StringBaseNarrowBC@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBC@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBC@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBC@BfmeStateBC@@QAEXPAXVAsciiStringBC@@@Z,0x00032182,Open-BFME5 the base initialiser the named state constructor at 0x0017F3F0 calls
+_bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 0x0017F3F0 installs
