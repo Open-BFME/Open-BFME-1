@@ -82815,3 +82815,4 @@ _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGet
 ?findPositionAround@@YA_NPBUCoord3D@@PBUFindPositionOptions@@PAU1@@Z,0x00026C4C,"Independent peer and lead verified free cdecl findPositionAround; ILT to1AF610, uses ThePartitionManager"
 ?findNamedContainer@BFMEScriptEngineFlagLookup@@AAEPAVBfmeNamedContainer0033c340@@ABVAsciiString@@@Z,0x000485BD,"Lead verified 33C290: canonical name to player-indexed container; ret4, caller preserves this"
 ?findByNameA@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x000323F8,"Lead verified359D40: name probe table+0C, equality, returns stored pointer+4 or null; ret4"
+?findByNameB@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x0000A592,"Lead verified359DC0: name probe table+2C, equality, returns stored pointer+4 or null; ret4"
