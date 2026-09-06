@@ -10767,6 +10767,7 @@ name,address,notes
 ?TEST_KINDOFMASK_ANY@@YA_NABV?$BitFlags@$0HE@@@0@Z,0x000497D3,REL32 pin for retail ThingTemplate kindof test
 ?TheAI@@3PAVAI@@A,0x012EF214,Open-BFME5 TheAI singleton; same VA as _TheAIParseDefinitionAI; Goal-Object LOS reads pathfinder at +0x0C
 ?TheAIUpdateInterfacePool@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFE30,pool-glue cascade static (back-solved)
+?TheActionManager@@3PAVActionManager@@A,0x00EED700,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002B6BF0 calls; autopin
 ?TheActionManager@@3PAVBFMEActionManager@@A,0x012ED700,"Canonical action manager singleton as loaded by166B1DCF50, existing five-argument canEnterObject ABI"
 ?TheActiveBodyPool@?1??getClassMemoryPool@ActiveBody@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF928,pool-glue cascade static (back-solved)
 ?TheAnimatedParticleSysBoneClientUpdatePool@?1??getClassMemoryPool@AnimatedParticleSysBoneClientUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF7018,pool-glue cascade static (back-solved)
@@ -75940,6 +75941,7 @@ name,address,notes
 ?canFireWeaponAtObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4WeaponSlotType@@@Z,0x0000378D,Open-BFME5 retail ILT thunk to body 0x000C4280; direct call from InGameUI weapon eligibility
 ?canGetHealedAt@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,0x0001B090,Open-BFME5 ILT thunk fronting body 0x000C5140
 ?canPlayNow@SoundManager@@QAE_NPAVAudioEventRTS@@@Z,0x006B64A0,MilesAudioManager checkForSample matched inherited caller
+?canResumeConstructionOf@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z,0x000466C8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002B6BF0 calls; autopin
 ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z,0x00003E7C,Open-BFME5 retail cave index switch pin
 ?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
 ?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
