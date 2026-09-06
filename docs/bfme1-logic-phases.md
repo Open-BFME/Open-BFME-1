@@ -4,6 +4,9 @@ This note describes retail BFME 1.03 code beginning at RVA `0x0038DA10`
 (VA `0x0078DA10`). It is a semantic recovery of the phase dispatcher, not a
 byte-exact reconstruction or a multiplayer fix.
 
+The six substantial callees still surrounding this body are inventoried in
+[`bfme1-update-dependency-map.md`](bfme1-update-dependency-map.md).
+
 ## Boundary and identity
 
 The previously reported 2,094-byte boundary is wrong. As an exclusive end, RVA
