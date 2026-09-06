@@ -80178,6 +80178,7 @@ name,address,notes
 ?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
 ?invoke@Q3ScriptDispatcher@@QAEXPAUQ3ScriptMovie@@PBDH1PAX222@Z,0x004675F0,address-derived script-dispatch entry shared by the seven bool toggle wrappers; read from the REL32 at their call sites and followed through its ILT thunk
 ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@HHHH@Z,0x004135C0,S4 sink method of the Lua string-command family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
+?invoke@S4Sink004135C0@@QAEXABVAsciiString@@_NHHH@Z,0x000391C6,ABI-compatible bool alias for ObjectHideSubObject callbacks, which call the same incremental-link thunk
 ?invokeAtLevel@GenActionSink@@QAEPAEHPBDH0HHHH@Z,0x00015235,"Lead traced204B4675F0: rejects level>=12 unsigned, formats /_level%d, invokesAPT893410, returns global result byte pointer"
 ?isAbleToAttack@Object@@QBE_NXZ,0x00001FD7,ILT thunk pin from PartitionFilterRepulsor::allow packet 001ddb10 (target body 0x001C9C10)
 ?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ,0x0000678A
