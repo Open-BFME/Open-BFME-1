@@ -6,6 +6,7 @@ both before and in a finally -- monkeypatch restores the attribute but not the
 cache built from it, so a leaked index would decide later tests in this process.
 """
 import sys
+import hashlib
 import json
 from pathlib import Path
 
@@ -208,3 +209,47 @@ def test_rebank_stash_does_not_nest_headers(log, tmp_path):
     path, _ = re_log.stash_for(RVA)
     re_log._bank(SYM, hex(RVA), str(path), ".9")
     assert path.read_text().count("// partial score=") == 1
+
+
+def test_bom_source_is_normalized_before_metadata(log, tmp_path):
+    """A BOM at the source start must not become a compiler identifier."""
+    body = tmp_path / "bom-source.cpp"
+    body.write_bytes(re_log.UTF8_BOM + b"// near miss\nvoid Sym() {}\n")
+
+    assert record(SYM, hex(RVA), "16", "partial", "bom source",
+                  "--stash", str(body), "--score", "0.8") is None
+
+    path, score = re_log.stash_for(RVA)
+    raw = path.read_bytes()
+    assert score == 0.8
+    assert raw.startswith(f"// {SYM}\n// partial score=0.8 date=".encode())
+    assert re_log.UTF8_BOM not in raw
+    assert raw.endswith(b"// near miss\nvoid Sym() {}\n")
+
+
+def test_resumed_bom_bank_repairs_preferred_body_and_archives_original(log,
+                                                                        tmp_path):
+    """A same-score resume repairs line-three BOM without replacing the best body."""
+    target = re_log._stash_path(RVA)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    old = (f"// {SYM}\n// partial score=0.80 date=2026-09-05\n".encode()
+           + re_log.UTF8_BOM + b"int f() { return 1; }\n")
+    target.write_bytes(old)
+    incoming = tmp_path / "resumed-bom.cpp"
+    incoming.write_bytes(re_log.UTF8_BOM + b"int f() { return 2; }\n")
+
+    result = re_log._bank(SYM, hex(RVA), str(incoming), "0.80")
+
+    repaired = target.read_bytes()
+    assert result.startswith("score=0.8 ")
+    assert repaired == (f"// {SYM}\n// partial score=0.80 date=2026-09-05\n".encode()
+                       + b"int f() { return 1; }\n")
+    assert re_log.UTF8_BOM not in repaired
+    assert re_log.stash_for(RVA)[1] == 0.8
+
+    history = log.parent / "attempt_history" / f"0x{RVA:08x}"
+    archived = [json.loads(path.read_text(encoding="utf-8"))
+                for path in history.glob("*.json")]
+    assert any(entry["sha256"] == hashlib.sha256(old).hexdigest()
+               and entry["source"] == old.decode("utf-8")
+               for entry in archived), "the malformed preferred bytes must remain archived"

@@ -267,6 +267,7 @@ STASH_LIMIT = 64 * 1024
 # The range lives in the pattern so a hand-edited 5.0 is caught on read, not
 # quietly ranked above every honest stash.
 _STASH_SCORE = re.compile(r"^// partial score=(0(?:\.\d+)?|1(?:\.0+)?) date=\d{4}-\d{2}-\d{2}$")
+UTF8_BOM = b"\xef\xbb\xbf"
 
 
 def _stash_path(rva):
@@ -292,6 +293,46 @@ def stash_for(rva):
             f"{path}: line 2 must read '// partial score=<0..1> date=<iso>', "
             f"got {lines[1:2]}. Rewrite it or delete the stash.")
     return path, float(score.group(1))
+
+
+def _strip_leading_bom(data):
+    """Return ``data`` without a UTF-8 BOM at its current start."""
+    if data.startswith(UTF8_BOM):
+        return data[len(UTF8_BOM):]
+    return data
+
+
+def _source_body(data):
+    """Return a source body with optional stash headers and BOM removed.
+
+    A resumed attempt can pass the active stash back as ``--stash``.  Strip
+    its two metadata lines before rebuilding fresh headers, and normalize the
+    BOM both before and after that strip so a BOM on line three is handled.
+    """
+    data = _strip_leading_bom(data)
+    lines = data.splitlines(keepends=True)
+    if len(lines) > 1 and _STASH_SCORE.fullmatch(
+            lines[1].decode("utf-8", errors="replace").strip()):
+        data = b"".join(lines[2:])
+    return _strip_leading_bom(data)
+
+
+def _normalise_stash_bytes(data):
+    """Repair BOM placement in a banked stash while preserving its headers.
+
+    A source saved with a BOM starts with it before its first comment.  A
+    previously banked source has the two stash metadata lines prepended, so
+    the same BOM sits at the start of line three.  Normalize once before and
+    once after recognizing those metadata lines; the returned bank remains a
+    valid stash, retaining its original score/date and body bytes otherwise.
+    """
+    data = _strip_leading_bom(data)
+    lines = data.splitlines(keepends=True)
+    if len(lines) > 1 and _STASH_SCORE.fullmatch(
+            lines[1].decode("utf-8", errors="replace").strip()):
+        body = _strip_leading_bom(b"".join(lines[2:]))
+        return b"".join(lines[:2]) + body
+    return data
 
 
 def stats():
@@ -344,13 +385,14 @@ def _bank(symbol, rva_text, source_text, score_text):
         lock(handle, exclusive=True)
         try:
             previous = stash_for(rva)
+            previous_raw = target.read_bytes() if previous else None
+            previous_normalised = (_normalise_stash_bytes(previous_raw)
+                                   if previous_raw is not None else None)
             if previous:
-                archive_attempt(history, target.read_bytes(), symbol, previous[1])
-            incoming = source.read_bytes()
-            # Resuming the canonical stash must not nest its metadata headers.
-            lines = incoming.splitlines(keepends=True)
-            if len(lines) > 1 and _STASH_SCORE.fullmatch(lines[1].decode().strip()):
-                incoming = b"".join(lines[2:])
+                # Preserve the exact earlier bytes in immutable history before
+                # repairing a BOM that was left below the metadata headers.
+                archive_attempt(history, previous_raw, symbol, previous[1])
+            incoming = _source_body(source.read_bytes())
             candidate = (f"// {symbol}\n// partial score={score} date={date.today().isoformat()}\n"
                          .encode("utf-8") + incoming)
             archived = archive_attempt(history, candidate, symbol, score)
@@ -358,6 +400,11 @@ def _bank(symbol, rva_text, source_text, score_text):
             # the preferred pointer only moves on an improvement, not recency.
             if previous is None or score > previous[1]:
                 atomic_bytes(target, candidate)
+            elif previous_raw != previous_normalised:
+                # A same-score (or lower-score) resume must still repair an old
+                # line-three BOM, while retaining the already preferred body
+                # and its original score/date metadata.
+                atomic_bytes(target, previous_normalised)
             preferred = score if previous is None else max(score, previous[1])
         finally:
             unlock(handle)
