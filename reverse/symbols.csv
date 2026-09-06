@@ -74791,6 +74791,7 @@ name,address,notes
 ?bfmeRelease1036@@YAXPAX@Z,0x00804330,pin
 ?bfmeRelease964@BfmeItem964@@QAEXXZ,0x000024A5,pin
 ?bfmeRelease@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,Open-BFME5 the ICF thunk (to 0x00432D1C) the drop helper at 0x003CFC90 gives a borrowed reference back through
+?deleteOverrides@Overridable@@QAEPAV1@XZ,0x00032D1C,LocomotorStore::reset at 0x001B7160 calls the shared override-chain cleanup thunk
 ?bfmeRelease@BfmeRingOwnerA@@QAEXH@Z,0x00039D97,Gen_00587C50 first ring release thunk
 ?bfmeRelease@BfmeRingOwnerB@@QAEXH@Z,0x00037353,Gen_00587C50 second ring release thunk
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
