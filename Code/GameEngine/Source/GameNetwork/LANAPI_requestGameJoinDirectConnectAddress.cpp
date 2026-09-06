@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /GX
 
-// Retail 0x00685E90, LANAPI vtable slot 12 (table at 0x0111AF50).
+// LANAPI::requestGameJoinDirectConnectAddress, retail 0x00685E90, LANAPI
+// vtable slot 12 (table at 0x0111AF50).
 // This is Zero Hour's RequestGameJoinDirectConnect flow with BFME's address
 // pair in place of a bare IP and BFME's three-argument OnGameJoin callback.
 
