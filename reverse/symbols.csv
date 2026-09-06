@@ -82033,6 +82033,7 @@ name,address,notes
 ?setName@BFMETransitionGroup@@QAEXVBFMETransitionAsciiString@@@Z,0x00489B60,retail TransitionGroup::setName
 ?setName@Image@@QAEXVAsciiString@@@Z,0x0003EDBA,thunk to 0x000C2420; the body is byte-identical to three other setName instantiations so the call site is what pins it - the MappedImage parser at 0x000C2480 calls this one
 ?setName@Object@@QAEXVAsciiString@@@Z,0x00027BBA,Open-BFME5 Object by-value name setter called by replacement-state transfer at 0x001C5620
+?setName@MapObject@@QAEXABVAsciiString@@@Z,0x0004340F,handleNameChange at 0x00388970 calls the MapObject name setter ILT; WorldHeightMap.cpp provides the matching setter body
 ?setNameAndType@DictPair@Dict@@QAEXW4NameKeyType@@W4DataType@2@@Z,0x00038D02,retail DictPair::setNameAndType body (unclaimed, called by setPrep/remove)
 ?setNewFrame@NetDisconnectScreenOffCommandMsg@@QAEXI@Z,0x0000930E,pinharvest x1 (thunk)
 ?setNextDockActionFrame@AIDockProcessDockState@@QAEXXZ,0x00011F13,link thunk; called by AIDockProcessDockState::update at 0x0014FCE0
@@ -82114,6 +82115,7 @@ name,address,notes
 ?setStatus@Object@@QAEXV?$BitFlags@$0CN@@@_N@Z,0x0001366F,hit-decoded x8 (thunk)
 ?setStatusBit@RailedTransportStatusBitShim@@QAEXH_N@Z,0x00032DEE,Railed transport action status-bit ABI shim to retail Object::setStatusBit thunk
 ?setTeamRelationship@Player@@QAEXPBVTeam@@W4Relationship@@@Z,0x000147D6,ScriptActions doPlayerSetOverrideRelationToTeam Player member call
+?setThingTemplate@MapObject@@QAEXPBVThingTemplate@@@Z,0x000420FF,WorldHeightMap.cpp declares the MapObject template setter; handleNameChange at 0x00388970 calls this retail ILT
 ?setTerrainTextureFilters@@YAXI@Z,0x00038389
 ?setText1C@BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@QAEXVAsciiString@@@Z,0x00675A20,probe: plain-class variant of the setter
 ?setText@NetChatCommandMsg@@QAEXVUnicodeString@@@Z,0x006752B0,"NetChatCommandMsg::setText; ILT 0x31151; this+0x1c StringBase assignment, by-value UnicodeString destruction, ret 4 independently reviewed"
