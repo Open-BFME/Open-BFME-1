@@ -1810,6 +1810,7 @@ name,address,notes
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00001DA7,pinharvest x1 (thunk)
 ??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
 ??0?$_Vector_base@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003AB860Elem@@@1@@Z,0x000430EF,vector base constructor call target from retail 0x003AB860 (twin of 0x003AB280)
+??0?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAE@PBDH@Z,0x0004A958,ILT thunk (to 0x0093C660) called by the LobbyUtils.cpp basic_ifstream(const char*,int) ctor 0x0053FB00 with (name, mode|in)
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@ABV01@@Z,0x0001CB11
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x0004048A,map<unsigned int std::string>::operator[] default-value construction through the retail ILT
 ??0?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@QAE@ABV01@@Z,0x0003050D,T2 lane: ILT thunk to 0x004FB220 (unsigned-short basic_string copy ctor); paired with the char ctor thunk 0x0001CB11 -> 0x004FB1B0
@@ -9210,8 +9211,10 @@ name,address,notes
 ??S?$bitset@$0BDA@@_STL@@QBE?AV01@XZ,0x00030B07,Open-BFME5 BitFlags<304> complement operator ILT thunk to body 0x001C4B30; ModelConditionFlags::clearAndSet calls it
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
+??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x011075E0,basic_ifstream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
+??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
 ??_7?$codecvt@DDH@_STL@@6B@,0x00D2EA8C,retail STLport 4.5.3 narrow codecvt vtable identified by its virtual method signatures
@@ -9420,6 +9423,7 @@ name,address,notes
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
+??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
 ??_C@_0BA@CLLFEOBD@CreateObjectDie?$AA@,0x00C90868,pool-glue cascade static (back-solved)
