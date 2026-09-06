@@ -18,12 +18,85 @@ class GameSlot;
 void GadgetComboBoxGetSelectedPos(GameWindow *window, int *selected);
 void *GadgetComboBoxGetItemData(GameWindow *window, int selected);
 void _bfme_closeAptScreen(const AsciiString &screenName);
+extern "C" void *memset(void *destination, int value, unsigned int size);
 
 class Gen005207C0Member
 {
 public:
 	void bfmeReset(void);
+
+private:
+	char m_unmodelled[4];
+	int m_field04;
+	int m_field08;
+	int m_field0c;
+	int m_field10;
+	class Fields
+	{
+	public:
+		int m_field00;
+		int m_field04;
+		int m_field08;
+		int m_field0c;
+		int m_field10;
+		int m_field14;
+		int m_field18;
+		int m_field1c;
+		void operator=(int value)
+		{
+			m_field00 = value;
+			m_field04 = value;
+			m_field08 = value;
+			m_field0c = value;
+			m_field10 = value;
+			m_field14 = value;
+			m_field18 = value;
+			m_field1c = value;
+		}
+	};
+	Fields m_fields;
+	class Ref
+	{
+	public:
+		virtual void release(int count);
+	};
+	Ref *m_field34;
+	bool m_field38;
 };
+
+class S4Holder0046DBB0
+{
+public:
+	void take0046DEF0(const AsciiString &name);
+};
+
+// ?bfmeReset@Gen005207C0Member@@QAEXXZ
+void Gen005207C0Member::bfmeReset(void)
+{
+	{
+		AsciiString name("AptMapPreview::Picture");
+		(reinterpret_cast<S4Holder0046DBB0 **>(0x012f19e8))[0]->take0046DEF0(name);
+	}
+	{
+		AsciiString name("AptMapPreview::MapGadgetInit");
+		_bfme_closeAptScreen(name);
+	}
+
+	m_field04 = 0;
+	m_field08 = 0;
+	m_field0c = 0;
+	m_field10 = 0;
+	if (m_field38)
+	{
+		if (m_field34)
+		{
+			m_field34->release(1);
+			m_field34 = 0;
+			m_field38 = false;
+		}
+	}
+	memset(&m_fields, 0, sizeof(m_fields));
+}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot
@@ -133,7 +206,7 @@ private:
 	bool m_backgroundVisible;
 	unsigned char m_unmodelled19[0x0F];
 	Gen005207C0Member m_previewState;
-	unsigned char m_unmodelled29[0x7F];
+	unsigned char m_unmodelled29[0x43];
 	GameWindow *m_colorCombos[8];
 	GameWindow *m_playerTemplateCombos[8];
 	unsigned char m_unmodelledE8[0x3C];
