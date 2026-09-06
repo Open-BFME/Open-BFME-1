@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8ef2f2bd14f7870d61b77269f347fcf436408544b27d42a6e67f1467a3896c77",
+  "symbol": "?contains@Rva003D5B70@@QAE_NHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?contains@Rva003D5B70@@QAE_NHH@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2\n\nstruct Rva003D5B70Cell\n{\n    char m_pad00[0x0C];\n    unsigned int m_flags;\n};\n\nclass Rva003D5B70Info\n{\nprivate:\n    char m_pad00[0x10];\n\npublic:\n    Rva003D5B70Cell **m_rows;\n    int m_minX;\n    int m_minY;\n    int m_maxX;\n    int m_maxY;\n};\n\nclass Rva003D5B70\n{\npublic:\n    bool contains(int x, int y);\n\nprivate:\n    Rva003D5B70Info *m_info;\n};\n\nbool Rva003D5B70::contains(int x, int y)\n{\n    Rva003D5B70Info *info = m_info;\n    if (x < info->m_minX || x > info->m_maxX ||\n        y < info->m_minY || y > info->m_maxY)\n        return true;\n\n    Rva003D5B70Cell *cell = info->m_rows[x] + y;\n    if (cell == 0)\n        return true;\n\n    unsigned int flags = cell->m_flags;\n    unsigned int high = flags >> 21;\n    if ((high & 1) != 0)\n        return false;\n\n    unsigned int type = flags & 7;\n    if (type == 2)\n        return false;\n    if (type == 5)\n        return false;\n    if (type == 4)\n        return false;\n    if (type == 1)\n        return false;\n    return true;\n}\n"
+}
