@@ -79803,7 +79803,7 @@ name,address,notes
 ?internalSetState@StateMachine@@QAE?AW4StateReturnType@@I@Z,0x000294E7,ILT fronting 0x000A1360; from State::friend_checkForSleepTransitions
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
 ?interpolate@BfmeStateDF@@QAEXPAUGen0060CBB0Pair@@00M@Z,0x0003B430,Living World eye tower interpolation ILT called by exact beginState at 0x0060CC00
-?intersect_obbox_brute_force@MeshGeometryClass@@AAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,MeshGeometryClass brute-force OBBox arm reached by the tail jump at 0x0092793D
+?intersect_obbox_brute_force@MeshGeometryClass@@IAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,MeshGeometryClass protected brute-force OBBox arm reached by the tail jump at 0x0092793D; object symbol confirms protected access
 ?intersectsVisibleBounds@W3DVolumetricShadow@@QBE_NABVAABoxClass@@@Z,0x00034789,render helper ILT
 ?invoke37C600@Rva0037C600Callback@@QAEXXZ,0x00015E2E,"Reviewed full508B37C600 callback body via15E2E; no stack args, deadlines and Object updates, address-derived label replaces unproved stop name"
 ?invoke@GameLogic@@QAEXXZ,0x0003B417,Existing matched38385011B owner170 tail dispatch
