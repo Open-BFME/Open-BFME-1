@@ -82144,6 +82144,7 @@ _GetChallenge,0x009D39A0,gstats.c GetChallenge(statsgame_t): NULL game -> g_stat
 _GetCurrentThreadId@0,0x009DB580,Watchdog update call target from retail REL32
 _HideControlBar,0x00002847,HideControlBar letterbox
 _ImmAssociateContext@8,0x009F8878,retail import thunk for ImmAssociateContext
+_ImmGetCompositionStringW@16,0x009F888A,retail import thunk for ImmGetCompositionStringW
 _ImmGetProperty@8,0x009F8890,Independently inspected retail ILT/body ABI; ImmGetProperty import slot0x135956C
 _ImmNotifyIME@16,0x009F8884,retail import thunk for ImmNotifyIME
 _ImmSetOpenStatus@8,0x009F887E,retail import thunk for ImmSetOpenStatus
