@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d3ad68d4587663f76d20e56f1f678e1d3b50674f63502f8d443f35c8b2ea04f7",
+  "symbol": "??0?$ShareBufferClass@VVector4@@@@QAE@HPBDH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.35,
+  "source": "// ??0?$ShareBufferClass@VVector4@@@@QAE@HPBDH@Z\n// partial score=0.35 date=2026-09-05\n// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep\n#define Matrix4x4 Matrix4\n//\n// FUZZY-TWIN of ??0?$ShareBufferClass@E@@QAE@HPBDH@Z (0x005F3A70, 131B,\n// Code/Libraries/Source/WWVegas/WW3D2/part_buf.cpp): same ShareBufferClass<T>\n// three-arg constructor (count, name, alignment), but T is Vector4 (16\n// bytes, `shl eax,4` instead of the twin's unsigned-char no-shift) --\n// part_buf.cpp itself instantiates ShareBufferClass<Vector4> for\n// ParticleBufferClass::Diffuse/TailDiffuse via NEW_REF. Same pattern as\n// Code/Libraries/Source/WWVegas/WW3D2/MeshGeometryShareBufferInstantiations.cpp:\n// force the COMDAT with a throwaway caller in an isolated TU using the same\n// header set and flags part_buf.cpp uses.\n\n#include \"part_buf.h\"\n\nvoid rva00923f70ForceEmit(int count)\n{\n\tShareBufferClass<Vector4> *diffuse =\n\t\tnew ShareBufferClass<Vector4>(count, \"ParticleBufferClass::Diffuse\", 0);\n\tdiffuse->Clear();\n}\n"
+}
