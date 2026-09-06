@@ -9156,6 +9156,12 @@ name,address,notes
 ??4Rva000A8490Mid10@@QAEAAV0@ABV0@@Z,0x0002114D,Open-BFME5 assign of the 12-byte mid at +0x10 used by 0x000A8490
 ??4Rva000A8490Mid24@@QAEAAV0@ABV0@@Z,0x000303B4,Open-BFME5 assign of the mid at +0x24 used by 0x000A8490
 ??4Rva000FA3F0@@QAEAAV0@ABV0@@Z,0x0001802F,near-twin pin: 0x000FA0E0 CopyRange operator= call target (ILT thunk j_0001802f)
+??4Rva00138BA0A@@QAEAAV0@ABV0@@Z,0x0001071C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00138BA0 calls; autopin
+??4Rva00138BA0B@@QAEAAV0@ABV0@@Z,0x00018A70,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00138BA0 calls; autopin
+??4Rva00138BA0C@@QAEAAV0@ABV0@@Z,0x000434DC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00138BA0 calls; autopin
+??4Rva00146B10A@@QAEAAV0@ABV0@@Z,0x0001071C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00146B10 calls; autopin
+??4Rva00146B10B@@QAEAAV0@ABV0@@Z,0x00018A70,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00146B10 calls; autopin
+??4Rva00146B10C@@QAEAAV0@ABV0@@Z,0x000434DC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00146B10 calls; autopin
 ??4Rva002E9E70Mid@@QAEAAV0@ABV0@@Z,0x00033640,Open-BFME5 assign of the mid member used by 0x002E17F0
 ??4Rva002EA550Mid@@QAEAAV0@ABV0@@Z,0x00033640,Open-BFME5 mid assign used by 20-byte copy_backward at 0x002EA550
 ??4Rva00364980HeapElement@@QAEAAU0@ABU0@@Z,0x000470F0,REL32 wide heap element assignment target from 0x00363CF2
@@ -10809,6 +10815,7 @@ name,address,notes
 ?TheDeployStyleAIUpdatePool@?1??getClassMemoryPool@DeployStyleAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF024C,pool-glue cascade static (back-solved)
 ?TheDestroyDiePool@?1??getClassMemoryPool@DestroyDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC0C,pool-glue cascade static (back-solved)
 ?TheDisconnectMenu@@3PAVDisconnectMenu@@A,0x012F4964,DisconnectMenu* global null-checked at the top of ConnectionManager::processDisconnectChat
+?TheDisplay@@3PAVDisplay@@A,0x00EF1270,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059D870 calls; autopin
 ?TheDisplay@@3PAVDisplay@@A,0x012F1270,Display* global
 ?TheDozerAIUpdatePool@?1??getClassMemoryPool@DozerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0254,pool-glue cascade static (back-solved)
 ?TheDynamicShroudClearingRangeUpdatePool@?1??getClassMemoryPool@DynamicShroudClearingRangeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF20,pool-glue cascade static (back-solved)
