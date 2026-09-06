@@ -501,6 +501,7 @@ name,address,notes
 ??$_Construct@VPlayerTemplate@@V1@@_STL@@YAXPAVPlayerTemplate@@ABV1@@Z,0x00024321,Open-BFME5 PlayerTemplate construction ILT
 ??$_Construct@VProductionPrerequisite@@V1@@_STL@@YAXPAVProductionPrerequisite@@ABV1@@Z,0x0003AA26,resweep callee back-solved
 ??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x00033AAA,ILT thunk used by call site
+??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
 ??$_Destroy@PAUGen_t_000b0c00_p8cd@@@_STL@@YAXPAUGen_t_000b0c00_p8cd@@0@Z,0x000B0960,gen-tgrid payload member
 ??$_Destroy@PAUGen_t_000e8340_p12cd@@@_STL@@YAXPAUGen_t_000e8340_p12cd@@0@Z,0x000BD5E0,gen-tgrid payload member
 ??$_Destroy@PAUGen_t_000ffa60_p16cd@@@_STL@@YAXPAUGen_t_000ffa60_p16cd@@0@Z,0x000FEAC0,gen-tgrid payload member
@@ -523,6 +524,7 @@ name,address,notes
 ??$_Destroy@PAURva00365070Element@@@_STL@@YAXPAURva00365070Element@@0@Z,0x00040D1D,ILT reached by the 0x00365070 vector assignment
 ??$_Destroy@PAURva003AC170Element@@@_STL@@YAXPAURva003AC170Element@@0@Z,0x0000C75C,Lead independently verified helper body bytes and220B virtual element semantics
 ??$_Destroy@PAURva003B20C0Element@_STL@@@_STL@@YAXPAURva003B20C0Element@0@0@Z,0x0004A593,"Retail: mov eax,[esi]; push 0; mov ecx,esi; call [eax]; add esi,0x24; cmp esi,edi; jne. That is p->~T() through vftable slot 0 (scalar deleting dtor, do-not-free) over a 36-byte polymorphic element. Matched as Rva003A8F40Destroy. Pin is the STLport _Destroy instantiation for this virtual 36-byte type, not a nonvirtual range destroyer."
+??$_Destroy@PAUS4Poly00136170@@@_STL@@YAXPAUS4Poly00136170@@0@Z,0x00030ADA,0x00138D70 call +0x00bb ILT enters matched width-92 virtual walk body 0x00135800
 ??$_Destroy@PAVOpen2Elem138090@@@_STL@@YAXPAVOpen2Elem138090@@0@Z,0x00026F71,Open2 0x138090 vector twin callee
 ??$_Destroy@PAVOpen2Elem3B5860@@@_STL@@YAXPAVOpen2Elem3B5860@@0@Z,0x0001AC62,Open2 0x3b5860 vector twin callee
 ??$_Destroy@PAVOpen2Elem3B59D0@@@_STL@@YAXPAVOpen2Elem3B59D0@@0@Z,0x0002227D,Open2 0x3b59d0 vector twin callee
@@ -563,6 +565,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
+??$_M_allocate_and_copy@PBUGen00762250@@@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEPAUGen00762250@@IPBU2@0@Z,0x0002DB4B,0x00770830 call +0x0059 ILT enters matched allocate-and-copy body 0x007690F0
 ??$_M_allocate_and_copy@PBUGen_t_00095d30_p8pod@@@?$vector@UGen_t_00095d30_p8pod@@V?$allocator@UGen_t_00095d30_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_00095d30_p8pod@@IPBU2@0@Z,0x00095760,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000a7cb0_p4pod@@@?$vector@UGen_t_000a7cb0_p4pod@@V?$allocator@UGen_t_000a7cb0_p4pod@@@_STL@@@_STL@@IAEPAUGen_t_000a7cb0_p4pod@@IPBU2@0@Z,0x000A7820,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000b0560_p8pod@@@?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_000b0560_p8pod@@IPBU2@0@Z,0x000B0200,gen-tgrid payload member
@@ -596,6 +599,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBURva00365070Element@@@?$vector@URva00365070Element@@V?$allocator@URva00365070Element@@@_STL@@@_STL@@IAEPAURva00365070Element@@IPBU2@0@Z,0x000321E1,ILT reached by the 0x00365070 vector assignment
 ??$_M_allocate_and_copy@PBURva003AC170Element@@@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@IAEPAURva003AC170Element@@IPBU2@0@Z,0x0003CF60,Lead independently verified helper body bytes and220B virtual element semantics
 ??$_M_allocate_and_copy@PBURva003B20C0Element@_STL@@@?$vector@URva003B20C0Element@_STL@@V?$allocator@URva003B20C0Element@_STL@@@2@@_STL@@IAEPAURva003B20C0Element@1@IPBU21@0@Z,0x0000AF7E,"Retail: lea eax,[eax+eax*8]; shl eax,2 (count*36), allocate, then loop call 0x00032BF0 (_Construct already pinned for Rva003B20C0Element) and add esi,0x24. Same construct helper and stride as uninitialized_copy. Already matched as vector<Rva003B6020Element>::_M_allocate_and_copy; ICF-identical 36-byte construct walk. Pin names this type's member-template, which is the caller specialization, not a different width."
+??$_M_allocate_and_copy@PBUS4Poly00136170@@@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEPAUS4Poly00136170@@IPBU2@0@Z,0x0000AC27,0x00138D70 call +0x0059 ILT enters matched 0x00138C40 allocate-and-copy body
 ??$_M_allocate_and_copy@PBVOpen2Elem138090@@@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEPAVOpen2Elem138090@@IPBV2@0@Z,0x00045174,Open2 0x138090 vector twin callee
 ??$_M_allocate_and_copy@PBVOpen2Elem3B5860@@@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEPAVOpen2Elem3B5860@@IPBV2@0@Z,0x0002E221,Open2 0x3b5860 vector twin callee
 ??$_M_allocate_and_copy@PBVOpen2Elem3B59D0@@@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEPAVOpen2Elem3B59D0@@IPBV2@0@Z,0x0000A78B,Open2 0x3b59d0 vector twin callee
@@ -785,6 +789,7 @@ name,address,notes
 ??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
 ??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
+??$__copy@PBUGen00762250@@PAU1@H@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008341,0x00770830 calls +0x00b1 and +0x00e4 ILT enters matched width-56 copy body 0x0075EAA0
 ??$__copy@PBUGen_t_000b0c00_p8cd@@PAU1@H@_STL@@YAPAUGen_t_000b0c00_p8cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000B0290,gen-tgrid payload member
 ??$__copy@PBUGen_t_000e8340_p12cd@@PAU1@H@_STL@@YAPAUGen_t_000e8340_p12cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000E7BC0,gen-tgrid payload member
 ??$__copy@PBUGen_t_000ffa60_p16cd@@PAU1@H@_STL@@YAPAUGen_t_000ffa60_p16cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000FC5D0,gen-tgrid payload member
@@ -810,6 +815,7 @@ name,address,notes
 ??$__copy@PBURva00365070Element@@PAU1@H@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0002F914,ILT reached by the 0x00365070 vector assignment
 ??$__copy@PBURva003AC170Element@@PAU1@H@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00044E40,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__copy@PBURva003B20C0Element@_STL@@PAU12@H@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000835A,"Retail uses the same 0x38E38E39 sar-3 /36 magic, then a counted loop that assigns while skipping +0: UnicodeString::set at +4 (0x00887C90), thiscall at +8 through ILT 0x00007A63, dwords +0x14/+0x18/+0x1C, bytes +0x20/+0x21/+0x22, add 0x24. Skipping +0 is compiler-generated operator= leaving the vptr alone. The gen-tgrid name __copy_backward of a 128-byte POD on 0x003B5EA0 is a candidate, not this body. Pinning __copy of the virtual 36-byte element is the specialization that matches the bytes."
+??$__copy@PBUS4Poly00136170@@PAU1@H@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B136,0x00138D70 calls +0x00b1 and +0x00e4 ILT enters matched width-92 copy body 0x00138800
 ??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
 ??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
 ??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
@@ -1107,6 +1113,7 @@ name,address,notes
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
 ??$__uninitialized_copy@PAURunwayInfo@FlightDeckBehavior@@PAU12@@_STL@@YAPAURunwayInfo@FlightDeckBehavior@@PAU12@00ABU__false_type@0@@Z,0x00038C80,Open-BFME5 the range copy the RunwayInfo vector _M_insert_overflow at 0x0039EC70 calls
 ??$__uninitialized_copy@PAURva00244A80Element@@PAU1@@_STL@@YAPAURva00244A80Element@@PAU1@00ABU__false_type@0@@Z,0x0002D11E,Open-BFME5 0x002403E0 range copy ILT
+??$__uninitialized_copy@PBUGen00762250@@PAU1@@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00027E35,0x00770830 call +0x0119 ILT enters matched width-56 copy walk body 0x00768BF0
 ??$__uninitialized_copy@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095720,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75F0,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE80,gen-tgrid payload member
@@ -1154,6 +1161,7 @@ name,address,notes
 ??$__uninitialized_copy@PBURva00365070Element@@PAU1@@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001738C,ILT reached by the 0x00365070 vector assignment
 ??$__uninitialized_copy@PBURva003AC170Element@@PAU1@@_STL@@YAPAURva003AC170Element@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001381D,Lead independently verified helper body bytes and220B virtual element semantics
 ??$__uninitialized_copy@PBURva003B20C0Element@_STL@@PAU12@@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABU__false_type@0@@Z,0x00026DD2,"Retail: while first!=last call 0x00032BF0 (_Construct for this type), add esi,0x24 and edi,0x24. Matched as rva003AB940CopyWalk stride-36. __false_type uninitialized_copy is the non-POD path, which a virtual destructor requires. Same _Construct as allocate_and_copy."
+??$__uninitialized_copy@PBUS4Poly00136170@@PAU1@@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00013CBE,0x00138D70 call +0x0119 ILT enters matched width-92 copy walk body 0x00138B20
 ??$__uninitialized_copy@PBVOpen2Elem138090@@PAV1@@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000370AB,Open2 0x138090 vector twin callee
 ??$__uninitialized_copy@PBVOpen2Elem3B5860@@PAV1@@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0002ECCB,Open2 0x3b5860 vector twin callee
 ??$__uninitialized_copy@PBVOpen2Elem3B59D0@@PAV1@@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x00031F34,Open2 0x3b59d0 vector twin callee
@@ -10914,6 +10922,7 @@ name,address,notes
 ?_M_clear@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@IAEXXZ,0x0002F4D2,Open-BFME5 ILT for the vector<pair<ObjectID ObjectID>> teardown reached from _M_insert_overflow
 ?_M_clear@?$vector@UAnimSet@GenericObjectCreationNugget@@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@IAEXXZ,0x00018B97,ILT the AnimSet vector overflow calls at 0x00755D96 to clear the old buffer
 ?_M_clear@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXXZ,0x000DE970,ICF-folded with the gen-tgrid vec_p16cd instantiation at the same address; resolved via direct disassembly at _M_insert_overflow<EvaSideSounds>
+?_M_clear@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEXXZ,0x00011A8B,0x00770830 call +0x0062 ILT enters matched vector<Gen00762250> destructor body 0x00770650
 ?_M_clear@?$vector@UGen_t_00065800_p4cd@@V?$allocator@UGen_t_00065800_p4cd@@@_STL@@@_STL@@IAEXXZ,0x000630B0,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_00068fa0_p12cd@@V?$allocator@UGen_t_00068fa0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00068F50,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@IAEXXZ,0x000B0B90,gen-tgrid payload member
@@ -11006,6 +11015,7 @@ name,address,notes
 ?_M_clear@?$vector@URva0077BFB0Element@@V?$allocator@URva0077BFB0Element@@@_STL@@@_STL@@IAEXXZ,0x0002C570,Open-BFME5 ILT vector clear callee
 ?_M_clear@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@IAEXXZ,0x000490F8,Open-BFME5 ILT for vector clear at 0x0077C6C0
 ?_M_clear@?$vector@URva0081D280Element@@V?$allocator@URva0081D280Element@@@_STL@@@_STL@@IAEXXZ,0x0081D0F0,Open-BFME5 vector clear callee
+?_M_clear@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEXXZ,0x00008A7B,0x00138D70 call +0x0062 ILT enters matched vector<S4Poly00136170> destructor body 0x00136170
 ?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
 ?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
