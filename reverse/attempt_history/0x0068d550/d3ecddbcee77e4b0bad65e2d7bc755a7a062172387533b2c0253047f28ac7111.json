@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d3ecddbcee77e4b0bad65e2d7bc755a7a062172387533b2c0253047f28ac7111",
+  "symbol": "?rva68d550@@YAPADPAD0I0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?rva68d550@@YAPADPAD0I0@Z\n// partial score=0.85 date=2026-09-06\n#include <string.h>\n#pragma intrinsic(memcpy)\n\nchar *rva68d550(char *cursor, char *out, unsigned n, char *limit)\n{\n\tif (limit != 0 && (cursor > limit || cursor + n > limit))\n\t\treturn cursor;\n\n\tmemcpy(out, cursor, n);\n\tchar *result = cursor + n;\n\treturn result;\n}\n"
+}

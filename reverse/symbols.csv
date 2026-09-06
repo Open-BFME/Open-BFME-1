@@ -75734,6 +75734,7 @@ name,address,notes
 ?bfmeStopAZC@BfmeModeAZC@@QAEXH@Z,0x0003DB77,FreezingRain helper calls the mode singleton through its thiscall stop method
 ?bfmeStopAll1158@BfmeOwner1158@@QAEXPAVBfmeArg1158@@@Z,0x0001DA8E,ILT thunk to body 0x00414960
 ?bfmeStopBEH@BfmeThingBEH@@QAEXXZ,0x000193CB,pin
+?bfmeStopGF@BfmeModeGF@@QAEXH@Z,0x0003DB77,pin
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
 ?bfmeStopTwoAQA@BfmeSubAQA@@QAEXXZ,0x000263EB,pin
 ?bfmeStore1173@BfmeSlot1173@@QAEXPAXH@Z,0x00802550,pin
@@ -77477,6 +77478,8 @@ name,address,notes
 ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z,0x0002278C,Open-BFME5 the incremental-link thunk Object setReceivingDifficultyBonus calls; Zero Hour names the same call
 ?friend_awakenUpdateModule@GameLogic@@QAEXPAVObject@@PAVUpdateModule@@I@Z,0x00009944
 ?friend_changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,ILT spelling used by BridgeBehavior::removeScaffolding to preserve the retail indirection
+?friend_checkForSleepTransitions@State@@QAE?AW4StateReturnType@@W42@@Z,0x00038442,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000A0760 calls; autopin
+?friend_checkForTransitions@State@@QAE?AW4StateReturnType@@W42@@Z,0x0001EC5E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000A0760 calls; autopin
 ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z,0x0000D8BE,first of the find-then-create pair in the CrateData block; the second call on the same receiver is the already-matched newCrateTemplate and ZH declares this one beside it
 ?friend_getFinalOverride@BFMELocomotorOverride@@QAEPAV1@XZ,0x000022BB,alias of the LocomotorOverridable spelling pinned below; AIUpdate.cpp reaches the chain walker through a view class because the reference Locomotor reads its template instead
 ?friend_getFinalOverride@BfmeOverridable@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT the override walk in Rva2225E0Filter::accepts at 0x003A04A0 recurses through
@@ -78093,6 +78096,7 @@ name,address,notes
 ?g_bfmeModeAAA@@3PAUBfmeModeAAA@@A,0x00EF19E8,pin
 ?g_bfmeModeAAB@@3PAUBfmeModeAAB@@A,0x00EF19E8,pin
 ?g_bfmeModeAZC@@3PAUBfmeModeAZC@@A,0x00EF0FE0,pin
+?g_bfmeModeGF@@3PAVBfmeModeGF@@A,0x00EF0FE0,pin
 ?g_bfmeMsg1020@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1021@@3HA,0x00EB7D80,pin
 ?g_bfmeMsg1037@@3PADA,0x00D29AB0,pin
@@ -80842,6 +80846,7 @@ name,address,notes
 ?isPlayerVotedOut@DisconnectManagerIsPlayerVotedOutShim@@QAE_NHPAVConnectionManager@@@Z,0x0066BC30,DisconnectManager incremental-link thunk target through a TU-local forwarding shim
 ?isPointOnBridge@Bridge@@QAE_NPBUCoord3D@@@Z,0x00014637
 ?isPositionalAudio@AudioEventRTS@@QBE_NXZ,0x0000F380,ILT to 0x000B28F0 used by AudioEventRTS getSoundClass case 2
+?isQueueEmpty@Connection@@QAE_NXZ,0x0001DDB8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00662DF0 calls; autopin
 ?isReady@AIGroup@@QAEDXZ,0x000104B0,AIGroup ready gate from groupFollowWaypointPathAsTeam 0x00155A80
 ?isReady@BfmeRvaB7E0AI@@QAE_NXZ,0x00012E3B,assigned-body helper for Rva00247E80
 ?isReady@BfmeRvaBA00AI@@QAE_NXZ,0x00012E3B,assigned-body helper for Rva0024BA00
@@ -82254,9 +82259,9 @@ name,address,notes
 ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z,0x000468F8,ILT thunk at 0x468F8 jumping to the body at 0x18D260 in the TurretAI cluster; call sites reference the thunk
 ?setUserName@LanLobbyUserNamePrefs@@QAEXVUnicodeString@@@Z,0x00031575,ILT thunk to body 0x000870F0
 ?setVector@BfmeStreakObject@@QAEXPBUBfmeStreakVector@@@Z,0x00955BC0,retail callee pin for W3DStreakDraw constructor
+?setVideoBuffer@GameWindowInstanceData@@QAEXXZ,0x0002E073,retail BFME WindowVideo init callee; ABI-shaped no-argument instance-data setter
 ?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,0x00016A68,ILT thunk Mouse setVisibility
 ?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
-?setVideoBuffer@GameWindowInstanceData@@QAEXXZ,0x0002E073,retail BFME WindowVideo init callee; ABI-shaped no-argument instance-data setter
 ?setVoteFrame@NetDisconnectVoteCommandMsg@@QAEXI@Z,0x000436C1,ILT thunk; real body 0xA73D50
 ?setWakeFrame@ALU_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@GBB_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
@@ -84349,5 +84354,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeStopGF@BfmeModeGF@@QAEXH@Z,0x0003DB77,pin
-?g_bfmeModeGF@@3PAVBfmeModeGF@@A,0x00EF0FE0,pin
