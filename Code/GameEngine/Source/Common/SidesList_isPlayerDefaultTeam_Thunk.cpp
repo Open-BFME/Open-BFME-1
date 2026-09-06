@@ -1,393 +1,120 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseascii /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/buildlistinfo /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 
-class TeamsInfo;
-class SidesList { public: bool isPlayerDefaultTeam(TeamsInfo *); };
+#include <string.h>
 
-// ?isPlayerDefaultTeam@SidesList@@QAE_NPAVTeamsInfo@@@Z
-__declspec(naked) bool SidesList::isPlayerDefaultTeam(TeamsInfo *)
+#pragma intrinsic(memcmp)
+
+template <class T>
+class StringBase
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xc0
-		__emit 0x71
-		__emit 0x00
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x10
-		__emit 0x53
-		__emit 0x55
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x33
-		__emit 0xff
-		__emit 0x57
-		__emit 0xb9
-		__emit 0xb8
-		__emit 0x75
-		__emit 0x2a
-		__emit 0x01
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x20
-		__emit 0xe8
-		__emit 0xe5
-		__emit 0x2a
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x34
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x3f
-		__emit 0x97
-		__emit 0xe9
-		__emit 0xff
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x68
-		__emit 0x1c
-		__emit 0x3e
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x30
-		__emit 0xe8
-		__emit 0x5e
-		__emit 0x0d
-		__emit 0x6f
-		__emit 0x00
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xc4
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x3b
-		__emit 0xc7
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x58
-		__emit 0x04
-		__emit 0x39
-		__emit 0x7e
-		__emit 0x28
-		__emit 0x89
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0f
-		__emit 0x8e
-		__emit 0xa2
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc6
-		__emit 0x30
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x30
-		__emit 0x6a
-		__emit 0x00
-		__emit 0xb9
-		__emit 0x18
-		__emit 0x79
-		__emit 0x2a
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x85
-		__emit 0x2a
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x51
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x3c
-		__emit 0xe8
-		__emit 0xdf
-		__emit 0x96
-		__emit 0xe9
-		__emit 0xff
-		__emit 0x85
-		__emit 0xdb
-		__emit 0x74
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x50
-		__emit 0x01
-		__emit 0x8a
-		__emit 0x08
-		__emit 0x40
-		__emit 0x84
-		__emit 0xc9
-		__emit 0x75
-		__emit 0xf9
-		__emit 0x2b
-		__emit 0xc2
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x09
-		__emit 0x0f
-		__emit 0xb7
-		__emit 0x69
-		__emit 0x04
-		__emit 0x8d
-		__emit 0x71
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x07
-		__emit 0x33
-		__emit 0xed
-		__emit 0xbe
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x3b
-		__emit 0xe8
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0x7c
-		__emit 0x02
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0x8b
-		__emit 0xfb
-		__emit 0x33
-		__emit 0xd2
-		__emit 0xf3
-		__emit 0xa6
-		__emit 0x74
-		__emit 0x05
-		__emit 0x1b
-		__emit 0xd2
-		__emit 0x83
-		__emit 0xda
-		__emit 0xff
-		__emit 0x85
-		__emit 0xd2
-		__emit 0x75
-		__emit 0x08
-		__emit 0x2b
-		__emit 0xe8
-		__emit 0x8b
-		__emit 0xd5
-		__emit 0x85
-		__emit 0xd2
-		__emit 0x74
-		__emit 0x59
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x55
-		__emit 0x10
-		__emit 0x6f
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x30
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x83
-		__emit 0xc2
-		__emit 0x18
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x30
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x4a
-		__emit 0x28
-		__emit 0x40
-		__emit 0x3b
-		__emit 0xc1
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0f
-		__emit 0x8c
-		__emit 0x65
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x21
-		__emit 0x10
-		__emit 0x6f
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xfc
-		__emit 0x0f
-		__emit 0x6f
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xeb
-		__emit 0x0f
-		__emit 0x6f
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
+public:
+	bool startsWith(const T *text, int length) const;
+};
+
+class AsciiString
+{
+private:
+	struct Header
+	{
+		int references;
+		unsigned short length;
+		unsigned short capacity;
+		char data[1];
+	};
+
+	Header *m_data;
+	void releaseBuffer(void);
+
+public:
+	~AsciiString(void) { releaseBuffer(); }
+
+	const char *str(void) const
+	{
+		return m_data ? m_data->data : "";
 	}
+
+	bool startsWith(const char *text, int length) const
+	{
+		return ((const StringBase<char> *)this)->startsWith(text, length);
+	}
+
+	int compare(const char *text) const
+	{
+		int otherLength = text ? (int)strlen(text) : 0;
+		int thisLength = m_data ? m_data->length : 0;
+		const char *thisData = m_data ? m_data->data : "";
+		int count = thisLength < otherLength ? thisLength : otherLength;
+		int result = memcmp(thisData, text, count);
+		if (result != 0)
+			return result;
+		return thisLength - otherLength;
+	}
+};
+
+enum NameKeyType
+{
+	NameKeyTypeUnknown
+};
+
+class StaticNameKey
+{
+public:
+	NameKeyType key(void) const;
+};
+
+extern const StaticNameKey TheKey_teamName;
+extern const StaticNameKey TheKey_playerName;
+
+class Dict
+{
+public:
+	AsciiString getAsciiString(NameKeyType key, bool *exists) const;
+};
+
+class TeamsInfo
+{
+public:
+	Dict *getDict(void) { return &m_dict; }
+
+private:
+	Dict m_dict;
+};
+
+struct SidesInfo
+{
+	Dict *getDict(void) { return &m_dict; }
+
+	Dict m_dict;
+	char m_padding[23];
+};
+
+class SidesList
+{
+public:
+	bool isPlayerDefaultTeam(TeamsInfo *t);
+
+private:
+	char m_prefix[40];
+	int m_numSides;
+	char m_between[4];
+	SidesInfo m_sides[1];
+};
+
+bool SidesList::isPlayerDefaultTeam(TeamsInfo *t)
+{
+	AsciiString tname = t->getDict()->getAsciiString(
+		TheKey_teamName.key(), 0);
+	if (((StringBase<char> *)&tname)->startsWith("team", 4))
+	{
+		register const char *rest = tname.str() + 4;
+		int j;
+		for (j = 0; j < m_numSides; j++)
+		{
+			AsciiString pname = m_sides[j].getDict()->getAsciiString(
+				TheKey_playerName.key(), 0);
+			if (pname.compare(rest) == 0)
+				return true;
+		}
+	}
+	return false;
 }
