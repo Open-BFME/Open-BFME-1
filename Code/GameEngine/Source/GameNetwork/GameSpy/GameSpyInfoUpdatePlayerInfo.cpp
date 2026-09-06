@@ -1,11 +1,6 @@
 // ?updatePlayerInfo@GameSpyInfo@@UAEXVPlayerInfo@@VAsciiString@@@Z
-// partial score=0.96 date=2026-09-05
-// cl: /O2 /Ob0 /EHsc
-
-// BFME's PlayerInfo grew a third AsciiString before the integer fields.  The
-// ordinary PeerDefs TU uses the ZH layout, so keep this ABI slice local to the
-// update body.  The map remains the real STLport instantiation: its operator[]
-// is the retail helper at 0x006359C0.
+// BFME adds a third AsciiString to PlayerInfo, so this body keeps its ABI
+// layout local instead of inheriting the Zero Hour layout from PeerDefs.cpp.
 
 #include <map>
 #include "../../../../../reference/shims/stringinline/StringInline.h"
@@ -145,7 +140,6 @@ private:
 	PlayerInfoMap m_playerInfoMap;
 };
 
-// ?updatePlayerInfo@GameSpyInfo@@UAEXVPlayerInfo@@VAsciiString@@@Z
 void GameSpyInfo::updatePlayerInfo(PlayerInfo pi, AsciiString oldNick)
 {
 	char *oldNickData = *reinterpret_cast<char *const *>(&oldNick);
