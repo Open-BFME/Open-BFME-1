@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7ed28700d1af46eb766939bb7a21b3088dd319be9e44d43d89dbd2ce77fa29c9",
+  "symbol": "?bfmeLookupFJ@BfmeTableFJ@@QAEPAXPBD@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeLookupFJ@BfmeTableFJ@@QAEPAXPBD@Z (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 43/44; sole residue is add eax,0x2b8 where retail uses lea edx,[ecx+0x2b8].\n// Pin: ?bfmeFindFJ@@YGHPAUBfmeMapFJ@@PBD@Z,0x007F76F0\nstruct BfmeMapFJ\n{\n\tunsigned char m_bfmeMapDataFJ[8];\n};\n\nint __stdcall bfmeFindFJ(BfmeMapFJ *map, const char *key);\n\nclass BfmeOwnerFJ\n{\npublic:\n\tunsigned char m_bfmeHeadFJ[0x2b8];\n\tBfmeMapFJ m_bfmeMapFJ;\n};\n\nclass BfmeTableFJ\n{\npublic:\n\tvoid *bfmeLookupFJ(const char *key);\n\n\tunsigned char m_bfmeHeadFJ[4];\n\tBfmeOwnerFJ *m_bfmeOwnerFJ;\n\tunsigned char m_bfmeMidFJ[0x20];\n\tvoid **m_bfmeSlotsFJ;\n};\n\nvoid *BfmeTableFJ::bfmeLookupFJ(const char *key)\n{\n\tBfmeMapFJ *map = &m_bfmeOwnerFJ->m_bfmeMapFJ;\n\tconst char *name = key;\n\tint index = bfmeFindFJ(map, name);\n\tif (index == -1)\n\t\treturn 0;\n\n\treturn m_bfmeSlotsFJ[index];\n}\n"
+}
