@@ -9225,6 +9225,7 @@ name,address,notes
 ??RWOLLoginAsciiStringLess@@QBE_NABVAsciiString@@0@Z,0x00043D42,WOLLogin retail AsciiString comparator thunk
 ??S?$bitset@$0BDA@@_STL@@QBE?AV01@XZ,0x00030B07,Open-BFME5 BitFlags<304> complement operator ILT thunk to body 0x001C4B30; ModelConditionFlags::clearAndSet calls it
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
+??_7?$ShareBufferClass@PAVVertexMaterialClass@@@@6B@,0x0113C300,ShareBufferClass<VertexMaterialClass*> vftable stored by the inlined base destructor in 0x0092A220
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
@@ -9289,6 +9290,7 @@ name,address,notes
 ??_7CategoryModuleTemplate8Sub@FXParticleSystem@@6B@,0x0107375C,CategoryModuleTemplate8 interim sub vtbl
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
+??_7DX8TextureCategoryClass@@6B@,0x0113D020,DX8TextureCategoryClass vftable stored by its destructor 0x00946540
 ??_7DebugIOFlat@@6B@,0x0113517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
 ??_7DebugIOInterface@@6B@,0x01135044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
 ??_7DebugIONet@@6B@,0x0113507C,address-derived network vptr in 0x0088FE00
@@ -9355,6 +9357,7 @@ name,address,notes
 ??_7Made001E5BC0@@6B@,0x010CF058,Open-BFME5 vftable the constructor at 0x002DE130 installs over the base one
 ??_7Made001E6170@@6B@,0x010CF1C4,Open-BFME5 vftable the constructor at 0x002DE930 installs over the base one
 ??_7Mapping@@6B@,0x01086344,vtable shared by the named constructor and destructor
+??_7MatBufferClass@@6B@,0x0113C310,MatBufferClass vftable stored by its destructor 0x0092A220
 ??_7MoneyCrateCollide@@6B@,0x010AA6B8,secondary vtable at this+0x10
 ??_7MoneyCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA6D8,secondary vtable at this+0x0C
 ??_7MoneyCrateCollide@@6BObjectModule@@@,0x010AA79C,primary vtable installed by the named constructor and destructor
@@ -9386,6 +9389,7 @@ name,address,notes
 ??_7RAMFile@@6B@,0x01143C58,installed by RAMFile ctor at 0x009D1980 and by the matched ??1RAMFile@@MAE@XZ
 ??_7RailedTransportDockUpdateModuleData@@6B@,0x010CADD0,vftable stored by constructor 0x002CE760
 ??_7RawFileClass@@6B@,0x01145548,14 of 17 slots are matched @RawFileClass@@ methods
+??_7RefCountClass@@6B@,0x011135AC,RefCountClass vftable (the BfmeBaseVVE table) stored by inlined base destructors
 ??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
 ??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
 ??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
@@ -9442,9 +9446,9 @@ name,address,notes
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
+??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
-??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
 ??_8?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,alias of the STLport library basic_ofstream<char> vbtable for the aliased (name mode) ctor 0x0084B980
 ??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
@@ -10667,6 +10671,7 @@ name,address,notes
 ?TheCrushDiePool@?1??getClassMemoryPool@CrushDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC04,pool-glue cascade static (back-solved)
 ?TheCurrentBannerMovie@@3HA,0x00EB8188,BannerUI movie-operation selection read and cleared by the callback installed at 0x0058327D
 ?TheDX8Caps@@3PAEA,0x01340578,caps pointer Allocate_DX8_Dynamic_Buffer reads at +0x13b for NPATCHES
+?TheDX8MeshRenderer@@3PAVDX8MeshRendererClass@@A,0x0134B0E8,BFME keeps the mesh renderer as a pointer global (loaded and null-checked by 0x00946540)
 ?TheDefaultProductionExitUpdatePool@?1??getClassMemoryPool@DefaultProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04F4,pool-glue cascade static (back-solved)
 ?TheDefectorSpecialPowerPool@?1??getClassMemoryPool@DefectorSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC74,pool-glue cascade static (back-solved)
 ?TheDeletionUpdatePool@?1??getClassMemoryPool@DeletionUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF00,pool-glue cascade static (back-solved)
@@ -10845,6 +10850,7 @@ name,address,notes
 ?U2Put0083C590_do@@YA?AUU2PutIter@@U1@PAX1N@Z,0x0083C590,U2 lane: cdecl callee of the double-argument put forwarder 0x30 bytes before it; unnamed dump elsewhere
 ?UnicodeStringToQuotedPrintable@@YA?AVAsciiString@@VUnicodeString@@@Z,0x00105F40,authoritative WWLib quoted_printable.cpp identity; BFME UnicodeString +0x08 view
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
+?Unregister_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z,0x00945F20,called by DX8TextureCategoryClass dtor 0x00946540 for each polygon renderer head
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
@@ -82167,6 +82173,7 @@ _NewBucketSet,0x009D5BB0,vendored=gamespy-2004
 _ProcessAdHocData,0x00868E40,vendored=gamespy-2004
 _ProcessMainListData,0x008680D0,vendored=gamespy-2004
 _RunBenchmark,0x00873DA0,called by W3DShaderManager testMinimumRequirements at 0x0071792B
+_Rva00458FC0,0x00458FC0,selection fallback helper called by Rva00459060
 _Rva0051D1E0Forward,0x0003EA45,Open-BFME5 ILT thunk to the shared 0x0051D1E0 body called by the 0x0051D2A0 and 0x0051D2C0 mode forwarders
 _Rva007F0000,0x007F0000,cdecl one-argument allocator; the C spelling the Y4DirtySock TU needs for the address already pinned as ?Rva007F0000Alloc@@YAPAXH@Z
 _Rva007F0000Alloc,0x007F0000,Y4 lane: C-callable spelling of the allocator
@@ -83642,4 +83649,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-_Rva00458FC0,0x00458FC0,selection fallback helper called by Rva00459060
