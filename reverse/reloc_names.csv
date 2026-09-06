@@ -412,8 +412,8 @@ name,target_rva,target_size,source,notes
 ??1Gen_dtor_002da420@@UAE@XZ,0x002DA2D0,32,Code/gen_small/dtors_004.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_002da5e0@@UAE@XZ,0x002DA4A0,32,Code/gen_small/dtors_004.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@UGen_t_002dc5f0_p8pod@@V?$allocator@UGen_t_002dc5f0_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_002dc5f0_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x002DC3D0,264,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
-?q4Notify001E6240@@YAXPAXPAVMade001E6240@@HH@Z,0x002DCF10,76,Code/GameEngine/Source/Common/Q4MakeNotifyLink.cpp,reloc-derived;call-sites=1;identity=real
-??0Made001E5AF0@@QAE@XZ,0x002DED90,97,Code/GameEngine/Source/Common/Q4MakeNotifyLink.cpp,reloc-derived;call-sites=1;identity=real
+?q4Notify001E6240@@YAXPAXPAVMade001E6240@@HH@Z,0x002DCF10,76,Code/GameEngine/Source/Common/WeaponNuggetParse.cpp,reloc-derived;call-sites=1;identity=real
+??0Made001E5AF0@@QAE@XZ,0x002DED90,97,Code/GameEngine/Source/Common/WeaponNuggetParse.cpp,reloc-derived;call-sites=1;identity=real
 ?Gen002DFFD0@@YAXPAX0000@Z,0x002DFFD0,80,Code/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
 ?gen002E0CD0@@YAXPAX00HH@Z,0x002E0CD0,118,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
 ?gen002E0D70@@YAXPAX0H0@Z,0x002E0D70,66,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
