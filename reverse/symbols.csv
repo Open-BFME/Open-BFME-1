@@ -83848,3 +83848,6 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ??0BfmeDrawBaseERH@@QAE@PAVBfmeThingERH@@PBVBfmeModuleDataERH@@@Z,0x00036AED,pin
 _bfmeVtERHa,0x00D22EA8,pin
 _bfmeVtERHb,0x00D22DD8,pin
+?q3MakeHeap@@YAXPAUQ3SortElem8@@0H0PAH@Z,0x009F34B0,callee of Gen009F3B80
+?q3AdjustHeap@@YAXPAUQ3SortElem8@@HHHHH@Z,0x009F3190,callee of Gen009F3B80
+?q3SortHeap@@YAXPAUQ3SortElem8@@0H@Z,0x009F3990,callee of Gen009F3B80
