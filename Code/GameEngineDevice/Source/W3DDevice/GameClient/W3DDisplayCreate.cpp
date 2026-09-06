@@ -1,5 +1,17 @@
+// cl: /DNDEBUG /MD /EHsc
 // readable body of ?createLightPulse@W3DDisplay@@UAEXPBUCoord3D@@PBURGBColor@@MMII@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
-// ?createLightPulse@W3DDisplay@@UAEXPAVCoord3D@@HHW4RGBColor@@M@Z
+// readable body of ?createVideoBuffer@W3DDisplay@@UAEPAVVideoBuffer@@_N@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
+//
+// The two W3DDisplay overrides that hand back something newly made: a dynamic
+// light taken from the scene's pool, and a video buffer in the best pixel
+// format the device will accept. Neither reads a W3DDisplay field, which is why
+// they can share a translation unit -- the object they are members of is stated
+// here as the two slots and nothing else, and the two files this replaces each
+// carried their own copy of exactly that.
+//
+// createLightPulse's own mangled name is the second line the old file carried:
+// ?createLightPulse@W3DDisplay@@UAEXPAVCoord3D@@HHW4RGBColor@@M@Z is the Zero
+// Hour signature, and the ledger's PBUCoord3D@@PBURGBColor@@MMII is BFME's.
 
 struct Vector3
 {
@@ -72,6 +84,52 @@ public:
 
 extern RTS3DSceneLightPulseShim *g_lightPulseScene;
 
+void __cdecl W3DRadarResetLock(void);
+char __cdecl bfmeUnlock1179(void);
+
+class W3DRadarResetGuard
+{
+public:
+	W3DRadarResetGuard(void)
+	{
+		W3DRadarResetLock();
+	}
+
+	~W3DRadarResetGuard(void)
+	{
+		bfmeUnlock1179();
+	}
+};
+
+enum WW3DFormat
+{
+	WW3D_FORMAT_UNKNOWN = 0
+};
+
+class W3DRadarFormatCaps
+{
+public:
+	bool supportTextureFormat(WW3DFormat format);
+};
+
+extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
+
+int Rva00903060Get(void);
+int Rva00739D20(int format, bool allowAlpha);
+
+class VideoBuffer
+{
+};
+
+class W3DVideoBuffer : public VideoBuffer
+{
+public:
+	W3DVideoBuffer(int format);
+
+private:
+	unsigned char m_pad[0x4C];
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay
 {
@@ -79,8 +137,10 @@ public:
 	virtual void createLightPulse(const Coord3D *position, const RGBColor *color,
 		float innerRadius, float attenuationWidth, unsigned int increaseTime,
 		unsigned int decayTime);
+	virtual VideoBuffer *createVideoBuffer(bool allowAlpha);
 };
 
+// ?createLightPulse@W3DDisplay@@UAEXPBUCoord3D@@PBURGBColor@@MMII@Z
 void W3DDisplay::createLightPulse(const Coord3D *position, const RGBColor *color,
 	float innerRadius, float attenuationWidth, unsigned int increaseTime,
 	unsigned int decayTime)
@@ -96,4 +156,35 @@ void W3DDisplay::createLightPulse(const Coord3D *position, const RGBColor *color
 	light->setFrameFade(increaseTime, decayTime);
 	light->setDecayRange();
 	light->setDecayColor();
+}
+
+// ?createVideoBuffer@W3DDisplay@@UAEPAVVideoBuffer@@_N@Z
+VideoBuffer *W3DDisplay::createVideoBuffer(bool allowAlpha)
+{
+	W3DRadarResetGuard lock;
+	int format = 0;
+
+	if (allowAlpha && TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x15))
+		format = 5;
+	else
+	{
+		int native = Rva00903060Get();
+		if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)native))
+			format = Rva00739D20(native, allowAlpha);
+		if (format == 0)
+		{
+			if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x16))
+				format = 2;
+			else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x14))
+				format = 1;
+			else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x17))
+				format = 3;
+			else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x18))
+				format = 4;
+			else
+				return 0;
+		}
+	}
+
+	return new W3DVideoBuffer(format);
 }
