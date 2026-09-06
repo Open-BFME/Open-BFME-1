@@ -12269,7 +12269,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@V?$BitFlags@$0HF@@@V?$allocator@V?$BitFlags@$0HF@@@@_STL@@@_STL@@IAEXPAV?$BitFlags@$0HF@@@ABV3@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@IAEXPAVArmorTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x0000E868,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x000112C0,resweep callee back-solved
-?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x0003827B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009CD390 calls; autopin
 ?_M_insert_overflow@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldArmy@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,replenish retail call at 0x003655D3 invokes the vector<LivingWorldArmy> overflow-insert ILT thunk
 ?_M_insert_overflow@?$vector@VLivingWorldPlayerArmy@@V?$allocator@VLivingWorldPlayerArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldPlayerArmy@@ABV3@ABU__false_type@2@I_N@Z,0x000345B8,Open-BFME5 REL32 pin from addPlayerArmy; ILT thunk to 0x003665C0
 ?_M_insert_overflow@?$vector@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@IAEXPAVMoney@@ABV3@ABU__false_type@2@I_N@Z,0x0087FBE0,Open-BFME5 retail Money vector overflow pin
@@ -76157,7 +76156,6 @@ name,address,notes
 ?comboBoxLadderName@@3PAVGameWindow@@A,0x012F3F28,PopupHostGame.wnd:ComboBoxLadderName static used by createGame
 ?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
-?compare@?$StringBase@D@@QBEHABV1@@Z,0x00027471,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00093E60 calls; autopin
 ?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
 ?compare@AsciiString@@QBEHPBD@Z,0x0004B01A,ILT of StringBase<char>::compare(const char*) used by CustomMatch handleSlashCommands 0x00539E60
 ?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z,0x000220C5,AsciiString::compare via ILT thunk
