@@ -84023,3 +84023,9 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??1Gen00776240Field2C@@QAE@XZ,0x00026A9E,destructor for the 0x1C-byte member at +0x2C in Gen_t_00776240_p128pod
+??1?$vector@VOpen2Elem7716A0@@V?$allocator@VOpen2Elem7716A0@@@_STL@@@_STL@@QAE@XZ,0x000134AD,destructor for the 12-byte vector member at +0x54 in Gen_t_00776240_p128pod
+??1Gen00776240Field60@@QAE@XZ,0x0003FFD0,destructor for the 12-byte vector member at +0x60 in Gen_t_00776240_p128pod
+??1Gen00776240Field70@@QAE@XZ,0x000411A5,destructor for the 12-byte tree member at +0x70 in Gen_t_00776240_p128pod
+??1Gen00776240Field7C@@QAE@XZ,0x000455E8,element destructor callback for the four 12-byte members at +0x7C in Gen_t_00776240_p128pod
+??1Gen00776240FieldB0@@QAE@XZ,0x00026AB2,destructor for the 12-byte member at +0xB0 in Gen_t_00776240_p128pod
