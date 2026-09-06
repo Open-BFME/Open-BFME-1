@@ -83838,3 +83838,5 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?bfmeIsNonFactionERE@BfmeObjectERE@@QAEDXZ,0x0003BD3B,pin
 ?getForegroundMarkerPos@ControlBar@@QAEXPAH0@Z,0x0002C147,Caller-backed W3DCommandBarForegroundDraw at0079CD60; root decoded ILT and checked reference implementation
 ?drawForeground@ControlBarSchemeManager@@QAEXUICoord2D@@@Z,0x00012099,Caller-backed W3DCommandBarForegroundDraw at0079CD60; root decoded ILT and checked reference implementation
+??0BfmeMeshVecERF@@QAE@PAVBfmeMeshERF@@@Z,0x00946FE0,pin
+?bfmeInsertERF@BfmeContainerERF@@QAEXPAVBfmeMeshVecERF@@H@Z,0x00948820,pin
