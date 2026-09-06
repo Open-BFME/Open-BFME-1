@@ -245,3 +245,36 @@ void Rva003D0EE0::run()
 
 	m_done = true;
 }
+
+// ---------------------------------------------------- LargeGroupAudio ---
+// 0x003D2440, 61 bytes.  GameLogic phase 5 calls this through the
+// LargeGroupAudio subsystem vtable.  Its inner loop is the already matched
+// 0x003D2410 shape above, inlined here; the shared 0x00025603 callee thunk
+// fixes the element call identity.
+
+class LargeGroupAudio
+{
+public:
+	virtual void update();
+
+	char m_lead[ 8 ];
+	Rva003D2410 **m_begin;
+	Rva003D2410 **m_end;
+	char m_mid[ 0x20 ];
+	bool m_done;
+};
+
+void LargeGroupAudio::update()
+{
+	if ( m_done )
+		return;
+
+	Rva003D2410 **it = m_begin;
+	Rva003D2410 **end = m_end;
+	for ( ; it != end; ++it )
+	{
+		Rva003D2410 *group = *it;
+		for ( Gen00025603 **e = group->m_begin; e != group->m_end; ++e )
+			( *e )->call();
+	}
+}
