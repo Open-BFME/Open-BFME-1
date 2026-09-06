@@ -83579,13 +83579,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$_M_allocate_and_copy@PBUGen00762250@@@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEPAUGen00762250@@IPBU2@0@Z,0x0002DB4B,0x00770830 call +0x0059 ILT enters matched allocate-and-copy body 0x007690F0
-?_M_clear@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEXXZ,0x00011A8B,0x00770830 call +0x0062 ILT enters matched vector<Gen00762250> destructor body 0x00770650
-??$__copy@PBUGen00762250@@PAU1@H@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008341,0x00770830 calls +0x00b1 and +0x00e4 ILT enters matched width-56 copy body 0x0075EAA0
-??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
-??$__uninitialized_copy@PBUGen00762250@@PAU1@@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00027E35,0x00770830 call +0x0119 ILT enters matched width-56 copy walk body 0x00768BF0
-??$_M_allocate_and_copy@PBUS4Poly00136170@@@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEPAUS4Poly00136170@@IPBU2@0@Z,0x0000AC27,0x00138D70 call +0x0059 ILT enters matched 0x00138C40 allocate-and-copy body
-?_M_clear@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEXXZ,0x00008A7B,0x00138D70 call +0x0062 ILT enters matched vector<S4Poly00136170> destructor body 0x00136170
-??$__copy@PBUS4Poly00136170@@PAU1@H@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B136,0x00138D70 calls +0x00b1 and +0x00e4 ILT enters matched width-92 copy body 0x00138800
-??$_Destroy@PAUS4Poly00136170@@@_STL@@YAXPAUS4Poly00136170@@0@Z,0x00030ADA,0x00138D70 call +0x00bb ILT enters matched width-92 virtual walk body 0x00135800
-??$__uninitialized_copy@PBUS4Poly00136170@@PAU1@@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00013CBE,0x00138D70 call +0x0119 ILT enters matched width-92 copy walk body 0x00138B20
