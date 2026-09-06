@@ -30,6 +30,7 @@ public:
 	UnicodeString() {}
 	UnicodeString(const UnicodeString &other);
 	~UnicodeString();
+	void translate(const AsciiString &text);
 	void set(const UnicodeString &text)
 	{
 		StringBase<unsigned short>::set(text);
@@ -91,6 +92,7 @@ public:
 class WindowManager
 {
 public:
+	void bfme_setAptText(const AsciiString &name, const AsciiString &text);
 	void bfme_setAptText(const AsciiString &name, const UnicodeString &text);
 	void bfme_bindAptText(const AsciiString &name, const UnicodeString &text, AptTextListener *listener);
 
@@ -99,6 +101,18 @@ private:
 	char m_bfmeHead[0x44];
 	AptTextRecordMap m_aptTextRecords;
 };
+
+// ?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@0@Z
+void WindowManager::bfme_setAptText(const AsciiString &name, const AsciiString &text)
+{
+	UnicodeString unicodeText;
+	unicodeText.translate(text);
+	AptTextRecord *record = &m_aptTextRecords[name];
+	record->text.set(unicodeText);
+
+	if (record->listener != 0)
+		record->listener->setText(&record->text);
+}
 
 // ?bfme_setAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@@Z
 void WindowManager::bfme_setAptText(const AsciiString &name, const UnicodeString &text)
