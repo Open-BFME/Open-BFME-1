@@ -12583,7 +12583,7 @@ name,address,notes
 ?advanceNextPlayPortion@Rva006ABFD0Event@@QAEXXZ,0x0001079E,ILT thunk to AudioEventRTS::advanceNextPlayPortion 0x000B3320
 ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z,0x000077B6,Open-BFME5 ILT thunk from CommandButton::isReady call site (body 0x001C5A30)
 ?after@Glo012F4B98Type@@QAEXXZ,0x0001CAE9,Reviewed58EFF0129B releases buffers4CC/480/484 and resets fields460..47C
-?after@Rva0026BF40Primary@@QAEXPBVCoord3D@@@Z,0x00033C62,Open-BFME6 ILT of 0x0026B9D0
+?after@TaintSpecialPower@@QAEXPBVCoord3D@@@Z,0x00033C62,ILT of 0x0026B9D0; the class is proven by the vftable ??0TaintSpecialPower@@ stores, the method name is still a placeholder
 ?afterRelease@GenAlpha@@QAEXXZ,0x0003139A,GenAlpha::h00024D2A follow-up thiscall ILT (body 0x007B96E0)
 ?afterWalk@BfmeObjF9@@QAEXXZ,0x0087EE60,Open-BFME5 post-walk callee of 0x0087F9C0
 ?aiAttackObject@AICommandInterface@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x0002EDCF,retail AIEnterState::update call target
@@ -12676,7 +12676,7 @@ name,address,notes
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
 ?apply@Rva00202DF0Head@@QAEXPAVRva00202DF0Face@@H@Z,0x000157DA,address-derived callee of Rva00202DF0Part::seed; ILT to 0x002B2040
-?apply@Rva0025CAA0ElvenWoodDispatch@@QAEXPAVRva0025CAA0Subject@@PAVRva0025CAA0Context@@@Z,0x000170DA,address-derived dispatch call from the 73-byte Elven Wood body
+?doSpecialPowerAtLocation@SpecialPowerModuleInterface@@QAEXPAVSpecialPowerLocation@@PAVSpecialPowerCommandOptions@@@Z,0x000170DA,ILT of 0x0026A620; the shared SpecialPowerModule location entry point the ElvenWood override chains to
 ?apply@Rva0025D7E0FreezingRainDispatch@@QAEXPAVRva0025D7E0Subject@@PAVRva0025D7E0Context@@@Z,0x000170DA,address-derived dispatch target read from retail RVA 0x0025D7E0
 ?apply@Rva003BF540@@QAEX_N@Z,0x003BD960,boolean applier called by the mirrored-flag update at 0x003BF540; address-derived name
 ?apply@Rva0069AFC0Block@@QAEXPAX0000@Z,0x000017BC,ILT to 5-arg channel apply used by Rva0069AFC0Owner::call
@@ -76731,7 +76731,7 @@ name,address,notes
 ?finish@Rva0024A760@@QAEXPAVBfmeRvaA760Object@@@Z,0x0003DEE7,assigned body helper for Rva0024A760
 ?finish@Rva00259670Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00041A4C,address-derived completion target read from retail RVA 0x00259670
 ?finish@Rva00259DD0Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00029FFA,address-derived completion target read from retail RVA 0x00259DD0
-?finish@Rva0025CAA0Primary@@QAEXPAVRva0025CAA0Subject@@@Z,0x0003E757,address-derived finalisation call from the 73-byte Elven Wood body
+?finish@ElvenWoodSpecialPower@@QAEXPAVSpecialPowerLocation@@@Z,0x0003E757,ILT of 0x0025C220; the class is proven by the vftable ??0ElvenWoodSpecialPower@@ stores but the method name is still a placeholder
 ?finish@Rva0025D7E0Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00018A34,address-derived completion target read from retail RVA 0x0025D7E0
 ?finish@Rva002BC470StateAction@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?finish@Rva002BC470StateAction_2BC5D0@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC5D0 state action (near-twin pin)
@@ -76763,7 +76763,7 @@ name,address,notes
 ?finishTail@Rva56E070StateOwner@@QAEXXZ,0x0004895F,address-scoped state-owner tail ILT observed in both exits of retail 0x0056FD30
 ?finishTransition@Rva00493F30TransitionState@@QAEXXZ,0x00005925,Rva00493F30 transition completion thunk to assigned 0x00493EA0 body
 ?fire@BezierLaunchHelper@@QAE_NPAVObject@@00PAX@Z,0x00048D06,ILT 0x00048D06 -> 0x001E63A0; last thiscall from BezierProjectileBehavior::handle 0x001F08B0
-?first@BfmeRvaCD10Base@@QAEXXZ,0x0000F510,assigned-body helper for Rva0024CD10
+?first@HordeTransportContainBase@@QAEXXZ,0x0000F510,first unidentified call HordeTransportContain::update makes on the object start (0x0024CAE0)
 ?first@Gen_00943CF0@@AAEXPAXPAPAX11@Z,0x009432B0,address-derived helper call recovered from 0x00943CF0
 ?first@Glo012F1028Sub@@QAEXXZ,0x00028051,Reviewed3C735059B marks each holder+30 pointer item+A8 true
 ?first@Rva003C0E40@@QAEHH@Z,0x003C0500,first half of the chained pair at 0x003C0E40; address-derived name
@@ -81128,7 +81128,6 @@ name,address,notes
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
 ?rva000b2cc0@@YGXPAXH@Z,0x00025306,Open-BFME5 ILT stdcall of push0+data wrapper
 ?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
-?rva0024CD10Message@@YAHHHHH@Z,0x00001BAE,assigned-body helper for Rva0024CD10
 ?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
 ?rva002EB010Helper@@YAXPAURva002EB010Elem@@0HPAX@Z,0x00041D17,Open-BFME5 helper called by 20-byte shrink loop at 0x002EB010
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
@@ -81203,7 +81202,7 @@ name,address,notes
 ?scoreRowFinalInsertionSort@@YAXPAUScoreRowSortValue@@00@Z,0x0000CF59,retail ILT for the eight-byte score-row final insertion helper
 ?scoreRowIntrosort@@YAXPAUScoreRowSortValue@@0HH0@Z,0x0000B451,retail ILT for the eight-byte score-row introsort helper
 ?searchListForRadarLocationMatch@Radar@@IAEPAVObject@@PAVRadarObject@@PAUICoord2D@@@Z,0x0000C6DA
-?second@BfmeRvaCD10Base@@QAEXXZ,0x0003CBD7,assigned-body helper for Rva0024CD10
+?second@HordeTransportContainBase@@QAEXXZ,0x0003CBD7,second unidentified call HordeTransportContain::update makes on the object start (0x0024C940)
 ?second@Gen_00943CF0@@AAEXPAX000@Z,0x009433A0,address-derived helper call recovered from 0x00943CF0
 ?second@Rva003C0E40@@QAEXH@Z,0x003BEBA0,second half of the chained pair at 0x003C0E40; address-derived name
 ?secondaryValueFor@AttributeModifierDefinition@@QBEHPBVObject@@@Z,0x0003E1A3,ILT to exact AttributeModifierDefinition secondary value selector at 0x00369120
@@ -81616,7 +81615,7 @@ name,address,notes
 ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z,0x000329D4,Open-BFME7: incremental-link thunk for the real body at 0x0049E780 (int3-bounded start; reads m_currContext at +0x60 and m_currentSelectedDrawable at +0x5C); the ledger row for this name sits at 0x0049E901 which is inside that body
 ?tagAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF60,pin for Rva002E2970 applyNameFlags
 ?tail@Gen_00417cb0@@QAEXPAX@Z,0x00417A70,Open-BFME5 address-derived name; tail-jmp target of 0x00417CB0 via ILT 0x000294B5; identity not asserted
-?tail@Rva0024CD10@@QAEXXZ,0x000133EF,assigned-body helper for Rva0024CD10
+?update@TransportContain@@QAEXXZ,0x000133EF,base-class update HordeTransportContain::update tail-calls; 0x0022D660 is slot 0 of TransportContain UpdateModule vftable 0x00CAD410
 ?tail@Rva00259670Primary@@QAEXXZ,0x00036561,address-derived tail call read from retail RVA 0x00259670
 ?take0046DBB0@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DBB0,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take0046DD00@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DD00,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
