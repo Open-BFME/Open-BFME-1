@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?Add_Quad@Render2DClass@@QAEXABVRectClass@@K@Z
+// readable body of ?Add_Quad@Render2DClass@@QAEXABVRectClass@@K@Z: Code/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // BFME Render2DClass single-color rectangle overload, retail 0x006E73C0.
 // Hardcoded UV (0,0)-(1,1); sibling of the six-color body in Render2DClassAddQuad.cpp.
 //

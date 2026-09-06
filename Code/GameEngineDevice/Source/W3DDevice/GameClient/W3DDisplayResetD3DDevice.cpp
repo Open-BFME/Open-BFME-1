@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?Reset_D3D_Device@@YAXH@Z (upstream free function; BFME twin
-// adds a W3DRadarResetGuard lock and a clipCursorToClient() call around the
-// ZH logic): reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
+// Readable C++ for ?Reset_D3D_Device@@YAXH@Z, an upstream free function whose
+// BFME twin adds a W3DRadarResetGuard lock and a clipCursorToClient() call
+// around the ZH logic.
+// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 
 void __cdecl W3DRadarResetLock(void);
 char __cdecl bfmeUnlock1179(void);

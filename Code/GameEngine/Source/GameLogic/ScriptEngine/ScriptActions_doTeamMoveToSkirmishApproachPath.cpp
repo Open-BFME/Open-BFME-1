@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
-// readable body of the BFME skirmish approach-path team action at retail
+// Readable C++ for the BFME skirmish approach-path team action at retail
 // 0x002F2E40 (461 bytes).
 
 typedef bool Bool;

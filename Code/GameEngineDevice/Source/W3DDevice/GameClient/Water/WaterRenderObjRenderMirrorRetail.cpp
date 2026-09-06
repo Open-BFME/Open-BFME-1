@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/water /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// readable body of ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z
+// readable body of ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp
 
 #define Matrix4x4 Matrix4  // BFME renamed it
 
@@ -92,9 +92,7 @@ void WaterRenderObjClass::renderMirror(CameraClass *cam)
 
 	{
 		WaterTextureRef ztexture;
-		DX8Wrapper::Set_Render_Target_With_Z(
-			(TextureClass *)&m_pReflectionTexture,
-			(ZTextureClass *)&ztexture);
+		DX8Wrapper::Set_Render_Target_With_Z((TextureClass *)&m_pReflectionTexture, (ZTextureClass *)&ztexture);
 	}
 
 	WW3D::Begin_Render(false, true, Vector3(0.0f, 0.0f, 0.0f));
