@@ -83882,3 +83882,4 @@ _g_rva0130E988LoadLibraryA,0x0130E988,late-bound kernel32 LoadLibraryA pointer u
 ?rva001B3510@Rva001CD990FiringTracker@@QAEXPBVWeapon@@HPBXE@Z,0x00035D0A,Root traced ILT00035D0A to001B3510; complete805-byte firing tracker body ends RET10 at001B3832. Existing firing tracker family plus this caller proves four stack arguments. Address-derived member symbol avoids overclaiming target semantics. Removed unused mismangled alternatename directive.
 ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ,0x0018A240,"Root verified ILT00021D23 ->0018A240/437B; body reads owner team/template attackCommonTarget flag then stores target ID to machine+50 and scans player tunnel tracker+22C, matching AITNGuardMachine::lookForInnerTarget. Corrected caller to STLport and independently verified its complete local findBestTunnel134B plus274-byte caller."
 ?setLifetimeRange@DeletionUpdate@@QAEXII@Z,0x0028C6E0,callee of DamageFieldNugget::doNugget
+?bfmeHashFI@@YAIPAX0@Z,0x00007518,pin
