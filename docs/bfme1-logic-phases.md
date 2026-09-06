@@ -276,6 +276,7 @@ not been proven by runtime or multiplayer traces.
 | `TheBuildAssistant` global `0x012ED83C` | solved and byte-exact update | `GameEngine::init` pairs this global with the `"TheBuildAssistant"` tag and matched `initSubsystem<BuildAssistant>`; constructor vtable `0x010EA8D4` slot `+0x14` reaches the one-byte `BuildAssistant::update` at RVA `0x0037CAC0` |
 | `TheLargeGroupAudio` global `0x012F1044` | solved and byte-exact update | constructor vtable `0x010EE13C` slot `+0x14` reaches `LargeGroupAudio::update` at RVA `0x003D2440`; its 61-byte clean C++ body walks the outer group vector and each group's `+0x18..+0x1C` element vector, calling the established `0x00025603` element thunk |
 | `TheWeaponStore` global `0x012EF738` | solved and byte-exact update | `GameEngine::init` constructor/tag evidence and WeaponStore vtable `0x010A13C8` identify the singleton; slot `+0x14` reaches the one-byte empty `WeaponStore::update` at RVA `0x001E17B0` through ILT `0x0000FFB0` |
+| `TheExperienceLevelSystem` global `0x012F0888` | solved and byte-exact update | constructor vtable `0x010EA948` slot `+0x14` reaches `ExperienceLevelSystem::update` at RVA `0x0037F4C0` through ILT `0x0001270B`; the 180-byte clean C++ body drains the `+0x1C` pending-level list, resolves each nonzero ObjectID through `GameLogic`'s `+0xB0` hash, skips null or status-bit-0 objects, calls the pending-level apply body `0x0037F280`, and clears the list |
 
 ## Reconstruction status and attack plan
 
