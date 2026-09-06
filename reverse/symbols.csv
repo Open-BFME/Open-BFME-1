@@ -10826,6 +10826,7 @@ name,address,notes
 ?TheDeployStyleAIUpdatePool@?1??getClassMemoryPool@DeployStyleAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF024C,pool-glue cascade static (back-solved)
 ?TheDestroyDiePool@?1??getClassMemoryPool@DestroyDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC0C,pool-glue cascade static (back-solved)
 ?TheDisconnectMenu@@3PAVDisconnectMenu@@A,0x012F4964,DisconnectMenu* global null-checked at the top of ConnectionManager::processDisconnectChat
+?TheDisplay@@3PAVDisplay@@A,0x00EF1270,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0073DE40 calls; autopin
 ?TheDisplay@@3PAVDisplay@@A,0x012F1270,Display* global
 ?TheDozerAIUpdatePool@?1??getClassMemoryPool@DozerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0254,pool-glue cascade static (back-solved)
 ?TheDynamicShroudClearingRangeUpdatePool@?1??getClassMemoryPool@DynamicShroudClearingRangeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF20,pool-glue cascade static (back-solved)
@@ -73360,6 +73361,7 @@ name,address,notes
 ?bfmeCopy1029@@YAXPADH0@Z,0x007E8640,pin
 ?bfmeCopy1279@BfmeQ1279@@QAEXPAD0H@Z,0x007E8A80,pin
 ?bfmeCopy2E@@YAPAUBfmeElem2E@@PBU1@0PAU1@ABUBfmeFalse2E@@@Z,0x0087FFC0,Open-BFME5 remainder copy of 0x008802E0
+?bfmeCopyAudioEvent@Rva00694D10Fields@@QAEXPBX@Z,0x00047B27,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00694D10 calls; autopin
 ?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z,0x0087EFA0,Open-BFME5 uninit-copy of 0x0087FBE0
 ?bfmeCopyBZD@@YAXPADPBDI@Z,0x009F70BA,pin
 ?bfmeCopyBaseCND@BfmeBaseCND@@QAEXPAU1@@Z,0x000171CA,pin
