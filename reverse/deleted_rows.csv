@@ -3,6 +3,8 @@ name,target_rva,reason
 ?d_000ee770@@YAXXZ,0x000EE770,"gen-dump placeholder superseded by the recovered BfmeIterableObject::bfmeIterate identity and exact C++ body"
 ?d_0040eff0@@YAXXZ,0x0040EFF0,"gen-dump placeholder superseded by the recovered Display::bfmeStopMovie identity and exact C++ body"
 ?d_005ef9a0@@YAXXZ,0x005EF9A0,"gen-dump placeholder superseded by the recovered BfmeSubAccept_00007289 identity and exact C++ body"
+?d_00249250@@YAXXZ,0x00249250,"generated placeholder superseded by the byte-exact C++ identity at the same range"
+?d_00249310@@YAXXZ,0x00249310,"generated placeholder superseded by the byte-exact C++ identity at the same range"
 ?d_005ee650@@YAXXZ,0x005EE650,"gen-dump placeholder superseded by the recovered BfmeSubAccept_000061B3 identity and exact C++ body"
 ?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x000410AB,"five-byte incremental-link thunk claim retracted so the exact BFME body at 0x004B6D40 can carry the name; the thunk bytes return to the gen-thunk pool."
 ?d_00823190@@YAXXZ,0x00823190,"gen-dump placeholder superseded by the real identity of ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z, byte-verified from the LZH wrapper source over the same 30-byte range."

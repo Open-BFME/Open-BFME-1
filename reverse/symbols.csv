@@ -83874,3 +83874,4 @@ _g_rva0130E9A8,0x0130E9A8,"Root read retail125-byte body: GetModuleHandleA(NULL)
 _g_rva0130E9B0,0x0130E9B0,"Root read retail125-byte body: GetModuleHandleA(NULL), eight exact MemoryPool export strings and destination stores at VA0130E998..B4. Six new data pins name only the exact operand addresses; existing alloc/free slots agree with mem_ops.cpp. All18 relocations resolved, no emitted vtables."
 ?drawImage@Display@@QAEXPBVImage@@MMMMHH@Z,0x0000A114,"Root traced ILT0000A114 to0040D900/70B: virtual begin slotB0, seven-argument draw slotD4, end slotDC, RET1C. Caller explicitly converts four integer coordinates to real; image and color/mode arguments match source reference draw. Both relocations strictly resolved; no vtable emitted."
 ?bfmeDeallocEU@@YAXPAXI@Z,0x0082E5F0,pin
+?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
