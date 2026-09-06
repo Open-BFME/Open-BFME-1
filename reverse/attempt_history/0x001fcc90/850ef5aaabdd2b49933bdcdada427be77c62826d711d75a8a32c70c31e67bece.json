@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "850ef5aaabdd2b49933bdcdada427be77c62826d711d75a8a32c70c31e67bece",
+  "symbol": "?bfmeCheckGD@@YADPAVBfmeObjGD@@@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeCheckGD@@YADPAVBfmeObjGD@@@Z (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 57/57 exact size; retail places the shared return-0 block EARLY at +0x09 and\n// jumps BACKWARD to it from the flags test, MSVC places it at the tail.\n// Pins: ?bfmeGetGD@... 0x000022BB, ?bfmeValueGD@... 0x0003A391\nclass BfmeThingGD\n{\npublic:\n\tunsigned char m_bfmeHeadGD[0xc8];\n\tunsigned char m_bfmeFlagsGD;\n};\n\nclass BfmeInnerGD\n{\npublic:\n\tBfmeThingGD *bfmeGetGD(void);\n};\n\nclass BfmeHolderGD\n{\npublic:\n\tunsigned char m_bfmeHeadGD[4];\n\tBfmeInnerGD *m_bfmeInnerGD;\n};\n\nclass BfmeObjGD\n{\npublic:\n\tint bfmeValueGD(void);\n\n\tunsigned char m_bfmeHeadGD[4];\n\tBfmeHolderGD *m_bfmeHolderGD;\n};\n\nchar __cdecl bfmeCheckGD(BfmeObjGD *obj)\n{\n\tif (obj == 0)\n\t\treturn 0;\n\n\tBfmeHolderGD *holder = obj->m_bfmeHolderGD;\n\tBfmeThingGD *thing = (BfmeThingGD *)holder;\n\n\tif (holder != 0 && holder->m_bfmeInnerGD != 0)\n\t\tthing = holder->m_bfmeInnerGD->bfmeGetGD();\n\n\tif ((thing->m_bfmeFlagsGD & 4) != 0)\n\t\treturn 0;\n\n\treturn obj->bfmeValueGD() == 1;\n}\n"
+}
