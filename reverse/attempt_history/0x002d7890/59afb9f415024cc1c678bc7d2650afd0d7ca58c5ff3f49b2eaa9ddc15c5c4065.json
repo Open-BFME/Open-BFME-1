@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "59afb9f415024cc1c678bc7d2650afd0d7ca58c5ff3f49b2eaa9ddc15c5c4065",
+  "symbol": "?d_002d7890@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_002d7890@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// 59/59 exact size; only the second x87 pair is transposed - retail does\n// fld [esi+0x74] then fmul BfmeShadowScale, MSVC does fld the constant then\n// fmul the member. Pins: resolve 0x00020824, apply 0x00010A23.\ntypedef float Real;\n\nextern const Real g_bfmeK1239;\nextern const Real BfmeShadowScale;\n\nclass BfmeTargetGL\n{\npublic:\n\tvoid bfmeApplyGL(void *tail, Real ratio, int extra);\n};\n\nclass BfmeHolderGL\n{\npublic:\n\tBfmeTargetGL *bfmeResolveGL(void);\n};\n\nclass BfmeThingGL\n{\npublic:\n\tunsigned char m_bfmeHeadGL[0x70];\n\tint m_bfmeExtraGL;\n\tReal m_bfmeAmountGL;\n\tunsigned char m_bfmeTailGL[4];\n};\n\nclass BfmeSecondGL\n{\npublic:\n\tvoid bfmeGoGL(void);\n};\n\nvoid BfmeSecondGL::bfmeGoGL(void)\n{\n\tchar *base = (char *)this;\n\n\tBfmeHolderGL *holder = *(BfmeHolderGL **)(base - 8);\n\tBfmeThingGL *thing = *(BfmeThingGL **)(base - 0xc);\n\tBfmeTargetGL *target = holder->bfmeResolveGL();\n\n\tif (target == 0)\n\t\treturn;\n\n\ttarget->bfmeApplyGL(thing->m_bfmeTailGL,\n\t\t(thing->m_bfmeAmountGL - g_bfmeK1239) / (thing->m_bfmeAmountGL * BfmeShadowScale),\n\t\tthing->m_bfmeExtraGL);\n}\n"
+}
