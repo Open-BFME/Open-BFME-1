@@ -82287,6 +82287,10 @@ __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with opt
 __Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
 __Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGUISTIC_CASING
 __RTC_CheckEsp,0x009F7502,MSVC 7.1 /GZ stack-pointer check helper; address read from the second REL32 of the frame-checked wrapper family
+_Rva00819630,0x00819630,address-derived DirtySock TAPI transport allocation callee called by 0x00812DD0
+_Rva01358DDC,0x01358DDC,address-derived TAPI callback slot used by the constructors at 0x00812DD0 and 0x008139A0
+_Rva01358E3C,0x01358E3C,address-derived TAPI callback slot used by the constructor at 0x00812DD0
+_Rva01358E44,0x01358E44,address-derived TAPI callback slot used by the failure path at 0x00812DD0
 __ReadUCS2CharFromUTF8String,0x0085C0F0,vendored=gamespy-2004
 __TI1?AVINIException@@,0x00DDFC30,retail INIException throw type descriptor used by the exact UpgradeMuxData removal exception path
 __UCS2ToUTF8ConversionLengthOnly,0x0085C3D0,vendored=gamespy-2004
