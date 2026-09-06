@@ -76499,6 +76499,7 @@ name,address,notes
 ?dispatch@BfmeRvaBB60View@@QAEXPAVBfmeRvaBB60Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BB60
 ?dispatch@Rva005121A0Service@@QAEXPAX0_NH@Z,0x000267F1,address-scoped four-argument service dispatch ILT observed in retail 0x0056FD30
 ?dispatch@Rva00720BB0Context@@QAEXHPAX@Z,0x00039680,Rva00720BB0 retail transfer thunk
+?dispatch@Rva00736AF0Context@@QAEXHPAX@Z,0x00034EC3,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00736AF0 calls; autopin
 ?dispatchC20@Rva00720BB0Context@@QAEXHPAX@Z,0x0003DBEF,Rva00720C20 call-site ILT to 0x00720BB0
 ?dispatchIndexedValue@@YAXPAXH0HPAH1@Z,0x00858070,Open-BFME5 dual indexed dispatch implementation target
 ?dispatchMember@Rva21C710MemberDispatch@@QAEXPAVRva21C710Object@@PAX@Z,0x0002CE44,address-derived member dispatch ILT thunk
