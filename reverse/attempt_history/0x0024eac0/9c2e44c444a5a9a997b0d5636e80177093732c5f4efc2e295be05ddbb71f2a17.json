@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9c2e44c444a5a9a997b0d5636e80177093732c5f4efc2e295be05ddbb71f2a17",
+  "symbol": "?d_0024eac0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ?d_0024eac0@@YAXXZ\n// partial score=0.88 date=2026-09-06\n// 47/48. The negative-offset load is settled: `mov ecx,[esi-0x18]` is a plain\n// cast on this (see negative-this-is-raw-arithmetic), and the shrink-wrapped\n// `pop esi` between the test and the branch falls out on its own.\n// Residue: retail materialises the 0x400 mask into eax and uses it twice\n// (`mov eax,0x400` / `test eax,edx` / `or edx,eax`), while MSVC folds it into\n// `test ah,4` and `or eax,0x400`, saving one byte. Tried a named int local for\n// the mask, a separate local for the loaded flags, and an inline setter on the\n// host class taking the bit as its parameter. All fold. Constant-hoisting\n// class, same wall as 0x00511830.\nclass BfmeHostAZ\n{\npublic:\n\tvoid bfmeNotifyAZ(void);\t// pin at thunk 0x0002191D\n\n\tunsigned char m_bfmeHeadAZ[0x110];\n\tint m_bfmeFlagsAZ;\n};\n\nclass BfmeOwnAZ\n{\npublic:\n\tvoid bfmeMarkAZ(void *value);\n\tvoid bfmeForwardAZ(void *value);\t// pin at thunk 0x00005C22\n};\n\nvoid BfmeOwnAZ::bfmeMarkAZ(void *value)\n{\n\tbfmeForwardAZ(value);\n\n\tBfmeHostAZ *host = *(BfmeHostAZ **)((char *)this - 0x18);\n\tint flags = host->m_bfmeFlagsAZ;\n\tint bit = 0x400;\n\n\tif ((flags & bit) == 0)\n\t{\n\t\thost->m_bfmeFlagsAZ = flags | bit;\n\t\thost->bfmeNotifyAZ();\n\t}\n}\n"
+}
