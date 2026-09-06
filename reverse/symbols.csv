@@ -63897,6 +63897,7 @@ name,address,notes
 ?b_00677140@@YAXXZ,0x00677140,gen-thunk body
 ?b_006771a0@@YAXXZ,0x006771A0,gen-thunk body
 ?b_00677200@@YAXXZ,0x00677200,gen-thunk body
+?FillBufferWithDisconnectKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z,0x00677240,pin
 ?b_00677240@@YAXXZ,0x00677240,gen-thunk body
 ?b_00677280@@YAXXZ,0x00677280,gen-thunk body
 ?b_006772f0@@YAXXZ,0x006772F0,gen-thunk body
