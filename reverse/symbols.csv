@@ -1219,6 +1219,7 @@ name,address,notes
 ??$fill@PAUGen_t_0074e320_p16pod@@U1@@_STL@@YAXPAUGen_t_0074e320_p16pod@@0ABU1@@Z,0x00749270,gen-tgrid payload member
 ??$fill@PAURva00244A80Element@@U1@@_STL@@YAXPAURva00244A80Element@@0ABU1@@Z,0x00030F58,Open-BFME5 0x002403E0 fill ILT
 ??$fill@PAURva0076D560Record@@U1@@_STL@@YAXPAURva0076D560Record@@0ABU1@@Z,0x0004433C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0076D560 calls; autopin
+??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QAE?AU?$_Rb_tree_iterator@HU?$_Nonconst_traits@H@_STL@@@1@ABH@Z,0x0000B221,retail call at 0x00769D00 reaches the set<int> find body at 0x00765520 through ILT thunk 0x0000B221
 ??$find@H@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@QBE?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@1@ABH@Z,0x00041DAD
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHH@_STL@@U?$_Select1st@U?$pair@$$CBHH@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHH@_STL@@@2@@1@ABH@Z,0x000346DA,call-site find for Gen_002281B0::bfmeUpdate; ILT 0x000346DA -> 0x00223160
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@1@ABH@Z,0x0001990C
