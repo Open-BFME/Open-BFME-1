@@ -14,20 +14,26 @@ public:
 
 void BfmeA1151::bfmeSwap1151(BfmeA1151 *o)
 {
-	int n1;
-	int n4;
-	int *n3;
-	int *n2;
+	// /Od picks frame slots by a name-derived order, so every local name below
+	// is load bearing: change one and the ebp offsets permute. Re-verify with
+	// ./build.sh after any rename here.
+	int first;
+	int second;
+	int *theirs;
+	int *self;
 
-	n1 = m_bfme00;
+	first = m_bfme00;
 	m_bfme00 = o->m_bfme00;
-	o->m_bfme00 = n1;
+	o->m_bfme00 = first;
 
-	n3 = &o->m_bfme04;
-	n2 = &m_bfme04;
-	n4 = *n2;
-	*n2 = *n3;
-	*n3 = n4;
+	// The second field is swapped through addresses taken up front, unlike the
+	// first: retail keeps both `lea`s live across the exchange, and rewriting
+	// this as a direct three-line swap folds them away.
+	theirs = &o->m_bfme04;
+	self = &m_bfme04;
+	second = *self;
+	*self = *theirs;
+	*theirs = second;
 
 	bfmeSwapC1151(&m_bfme08, &o->m_bfme08);
 }
