@@ -83877,3 +83877,4 @@ _g_rva0130E9B0,0x0130E9B0,"Root read retail125-byte body: GetModuleHandleA(NULL)
 ?bfmeDeallocEU@@YAXPAXI@Z,0x0082E5F0,pin
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
 ?bfmeSetReferenceEW@BfmeTargetEW@@QAEXPAVBfmeRefEW@@@Z,0x0091FC90,pin
+?rva001B3510@Rva001CD990FiringTracker@@QAEXPBVWeapon@@HPBXE@Z,0x00035D0A,Root traced ILT00035D0A to001B3510; complete805-byte firing tracker body ends RET10 at001B3832. Existing firing tracker family plus this caller proves four stack arguments. Address-derived member symbol avoids overclaiming target semantics. Removed unused mismangled alternatename directive.
