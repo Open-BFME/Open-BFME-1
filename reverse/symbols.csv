@@ -83830,3 +83830,5 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?bfmeInnerEQK@@YAXHPAUBfmeVec3EQK@@0U1@HH@Z,0x00034AB8,pin
 ?bfmeInnerEQM@@YAXHPAUBfmeVec3EQK@@0U1@HH@Z,0x0000DF5D,pin
 ?updateFades@ScriptEngine@@IAEXXZ,0x0000F8DF,BFME ScriptEngine fade update body called via ILT
+?bfmeBringToTopERC@BfmeWindowERC@@QAEHXZ,0x0000FE66,pin
+?g_bfmeWindowManagerERC@@3PAVBfmeWindowManagerERC@@A,0x00EF1B40,pin
