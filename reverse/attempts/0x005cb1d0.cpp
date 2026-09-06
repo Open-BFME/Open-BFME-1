@@ -1,42 +1,50 @@
-// ??4U1Assign_005CB1D0@@QAEAAV0@ABV0@@Z
-// partial score=0.95 date=2026-09-05
-// Attempt at 0x005CB1D0 (60 B), sibling of the U1_CLONE_ASSIGN family in
-// Code/GameEngine/Source/Common/U1CloneAssignOperators.cpp.  Byte-identical
-// to that family except the parameter's tail-subobject address is computed
-// with `lea eax,[ebx+4] / push eax` instead of `add ebx,4 / push ebx`.  This
-// TU tries an explicit operator= call spelling (rather than `m_tail =
-// rhs.m_tail;`) to see whether that changes which register the allocator
-// clobbers for the address computation.
-
-class U1Clonable_B1D0
+// ?bfmeCopyHW@BfmeHolderHW@@QAEAAV1@ABV1@@Z (identity unknown)
+// partial score=0.95 date=2026-09-06
+// 57/60 at exact size. Everything matches except +0x26: retail emits
+//   lea eax,[ebx+4] ; push eax
+// where MSVC emits
+//   add ebx,4 ; push ebx
+// i.e. retail keeps the (dead) reference parameter in ebx and MSVC clobbers
+// it. Tried: helper taking const& / taking a pointer with explicit &, a
+// second-base upcast (BfmeSubHW as base at +4), a user-declared operator=,
+// a named reference local hoisted to the top (that one moves the prologue
+// instead), the assignment before the pointer store, and a pointer local for
+// `other`. All produce the identical 3-byte residue -- this is the
+// argument-shuttle register-allocation class, already logged unreachable.
+// The helper is the thunk at 0x0000FF29 -> 0x005C93C0 (still unclaimed).
+class BfmeSrcHW
 {
 public:
-	virtual ~U1Clonable_B1D0();
-	virtual U1Clonable_B1D0 *clone();
+	virtual void bfmeReleaseHW(int flag);
+	virtual BfmeSrcHW *bfmeCloneHW(void);
 };
 
-class U1Tail_005CB1D0
+class BfmeSubHW
 {
 public:
-	U1Tail_005CB1D0 &operator=( const U1Tail_005CB1D0 &rhs );
+	BfmeSubHW &operator=(const BfmeSubHW &other);	// pin ??4BfmeSubHW@@QAEAAV0@ABV0@@Z,0x0000FF29
+
+	int m_bfmeSubDataHW;
 };
 
-class U1Assign_005CB1D0
+class BfmeHolderHW
 {
 public:
-	U1Assign_005CB1D0 &operator=( const U1Assign_005CB1D0 &rhs );
+	BfmeHolderHW &bfmeCopyHW(const BfmeHolderHW &other);
 
-	U1Clonable_B1D0 *m_held;
-	U1Tail_005CB1D0 m_tail;
+	BfmeSrcHW *m_bfmePtrHW;
+	BfmeSubHW m_bfmeSubHW;
 };
 
-U1Assign_005CB1D0 &U1Assign_005CB1D0::operator=( const U1Assign_005CB1D0 &rhs )
+BfmeHolderHW &BfmeHolderHW::bfmeCopyHW(const BfmeHolderHW &other)
 {
-	U1Clonable_B1D0 *source = rhs.m_held;
-	U1Clonable_B1D0 *copy = source ? source->clone() : 0;
-	delete m_held;
-	m_held = copy;
-	const U1Tail_005CB1D0 *tp = &rhs.m_tail;
-	m_tail = *tp;
+	BfmeSrcHW *copy = other.m_bfmePtrHW ? other.m_bfmePtrHW->bfmeCloneHW() : 0;
+
+	if (m_bfmePtrHW)
+		m_bfmePtrHW->bfmeReleaseHW(1);
+
+	m_bfmePtrHW = copy;
+	m_bfmeSubHW = other.m_bfmeSubHW;
+
 	return *this;
 }
