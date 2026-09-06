@@ -83842,3 +83842,4 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?bfmeInsertERF@BfmeContainerERF@@QAEXPAVBfmeMeshVecERF@@H@Z,0x00948820,pin
 ?getBackgroundMarkerPos@ControlBar@@QAEXPAH0@Z,0x00025022,Root decoded25022->49D2E0 and3788A->4AD9C0; W3DControlBar.cpp755+ and ControlBarScheme.cpp4175+ establish matching background operations. Both symbols had no pins before addition.
 ?drawBackground@ControlBarSchemeManager@@QAEXUICoord2D@@@Z,0x0003788A,Root decoded25022->49D2E0 and3788A->4AD9C0; W3DControlBar.cpp755+ and ControlBarScheme.cpp4175+ establish matching background operations. Both symbols had no pins before addition.
+?rva008F7460@ShroudManager@@QAEXPBUCoord3D@@IW4ValueOrThreat@@HPAU2@@Z,0x008F7460,Caller-backed ScriptActions002F5380; ShroudManager engine-init tag; forwards this+0x0C to008FBD00
