@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5766a205466f0fcfe38c753cb12bb2949a6f3c8fc2ad539c63230875c9acb273",
+  "symbol": "?reset@GameSlot@@UAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?reset@GameSlot@@UAEXXZ\n// partial score=0.82 date=2026-09-02\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n\nclass AsciiString\n{\npublic:\n\tvoid clear();\n\nprivate:\n\tvoid *m_data;\n};\n\nstruct GameSlotConnectInfo\n{\n\tGameSlotConnectInfo() : m_port(0) {}\n\n\tunsigned short m_port;\n\tunsigned short m_padding;\n};\n\nclass GameSlot\n{\npublic:\n\tvirtual void reset();\n\nprivate:\n\tint m_state;\n\tbool m_isAccepted;\n\tbool m_hasMap;\n\tbool m_isMuted;\n\tchar m_pad0b;\n\tint m_color;\n\tint m_startPos;\n\tint m_playerTemplate;\n\tint m_teamNumber;\n\tint m_origColor;\n\tint m_origStartPos;\n\tint m_origPlayerTemplate;\n\tvoid *m_name;\n\tAsciiString m_slotNameKeyText;\n\tunsigned int m_ip;\n\tGameSlotConnectInfo m_connectInfo;\n\tint m_nat;\n\tunsigned int m_lastFrameInGame;\n\tbool m_disconnected;\n};\n\n// ?reset@GameSlot@@UAEXXZ\nvoid GameSlot::reset()\n{\n\tint emptyValue = -1;\n\tGameSlotConnectInfo emptyConnectInfo;\n\tm_connectInfo = emptyConnectInfo;\n\tm_state = 1;\n\tm_isAccepted = false;\n\tm_hasMap = true;\n\tm_color = emptyValue;\n\tm_startPos = emptyValue;\n\tm_playerTemplate = emptyValue;\n\tm_teamNumber = emptyValue;\n\tm_nat = 1;\n\tm_lastFrameInGame = 0;\n\tm_disconnected = false;\n\tm_ip = 0;\n\tm_isMuted = false;\n\tm_origPlayerTemplate = emptyValue;\n\tm_origStartPos = emptyValue;\n\tm_origColor = emptyValue;\n\tm_slotNameKeyText.clear();\n}\n"
+}
