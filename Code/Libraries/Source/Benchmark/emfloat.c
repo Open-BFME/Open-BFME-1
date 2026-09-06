@@ -185,7 +185,7 @@ return(StopStopwatch(elapsed));
 ** Set an internal floating-point-format number to zero.
 ** sign determines the sign of the zero.
 */
-static void SetInternalFPFZero(InternalFPF *dest,
+__forceinline static void SetInternalFPFZero(InternalFPF *dest,
                         uchar sign)
 {
 int i;          /* Index */
@@ -474,31 +474,26 @@ return;
 */
 void RoundInternalFPF(InternalFPF *ptr)
 {
-/* int i; */
-
 if (ptr->type == IFPF_IS_NORMAL ||
         ptr->type == IFPF_IS_SUBNORMAL)
 {
-        denormalize(ptr, MIN_EXP);
+        int exponent_difference = ptr->exp - MIN_EXP;
+        if (exponent_difference < 0)
+        {
+                exponent_difference = -exponent_difference;
+                if (exponent_difference >= INTERNAL_FPF_PRECISION * 16)
+                {
+                        SetInternalFPFZero(ptr, ptr->sign);
+                }
+                else
+                {
+                        ptr->exp += exponent_difference;
+                        StickyShiftRightMant(ptr, exponent_difference);
+                }
+        }
         if (ptr->type != IFPF_IS_ZERO)
         {
-
-                /* clear the extraneous bits */
                 ptr->mantissa[3] &= 0xfff8;
-/*              for (i=4; i<INTERNAL_FPF_PRECISION; i++)
-                {
-                        ptr->mantissa[i] = 0;
-                }
-*/
-                /*
-                ** Check for overflow
-                */
-/*              Does not do anything as ptr->exp is a short and MAX_EXP=37268
-		if (ptr->exp > MAX_EXP)
-                {
-                        SetInternalFPFInfinity(ptr, ptr->sign);
-                }
-*/
         }
 }
 return;
