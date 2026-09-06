@@ -703,6 +703,7 @@ name,address,notes
 ??$__adjust_heap@PAHHHUQ4Cmp00753DD0@@@_STL@@YAXPAHHHHUQ4Cmp00753DD0@@@Z,0x007538A0,__adjust_heap instantiation called by the 83-byte STLport __make_heap family (Q4MakeHeap.cpp); address-derived template argument; identity not recovered
 ??$__adjust_heap@PAHHHUQ4Sort004567A0@@@_STL@@YAXPAHHHHUQ4Sort004567A0@@@Z,0x00453290,ICF-folded with the Q4Cmp00453C20 instantiation at the same address; resolved via decode_calls at __partial_sort<Q4Sort004567A0>
 ??$__adjust_heap@PAPAVBfmeRecAU@@HPAV1@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@HHPAV1@VBfmeCompAU@@@Z,0x0001A618,dedicated ILT to the 259-byte BfmeRecAU pointer adjust-heap body at 0x005135F0; its tail call names the exact BfmeCompAU push-heap specialization
+??$__adjust_heap@PAPAVRva00532DF0Rec@@HPAV1@VRva00532DF0Comp@@@_STL@@YAXPAPAVRva00532DF0Rec@@HHPAV1@VRva00532DF0Comp@@@Z,0x000113F1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00532DF0 calls; autopin
 ??$__adjust_heap@PAUS4SortElem12@@HU1@US4Cmp00573A30@@@_STL@@YAXPAUS4SortElem12@@HHU1@US4Cmp00573A30@@@Z,0x0003DF00,"Full166B571B70 twelve-byte adjust_heap: signed first-word compare and full three-word moves,7dword cdecl arguments"
 ??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp00261140@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00261140@@@Z,0x00260D80,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__adjust_heap@PAUS4SortElem8@@HU1@US4Cmp00437D80@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp00437D80@@@Z,0x004379B0,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -1069,6 +1070,7 @@ name,address,notes
 ??$__make_heap@PAHUQ4Sort003D15A0@@HH@_STL@@YAXPAH0UQ4Sort003D15A0@@00@Z,0x00021053,ILT to 0x003CE510 make_heap used by partial_sort at 0x003D00E0
 ??$__make_heap@PAHUQ4Sort004567A0@@HH@_STL@@YAXPAH0UQ4Sort004567A0@@00@Z,0x00453C20,ICF-folded with the Rva00453C20/Q3HeapCompare instantiation at the same address; resolved via decode_calls at __partial_sort<Q4Sort004567A0>
 ??$__make_heap@PAPAVBfmeRecAU@@VBfmeCompAU@@PAV1@H@_STL@@YAXPAPAVBfmeRecAU@@0VBfmeCompAU@@0PAH@Z,0x0000FC4F,retail ILT called by the 264-byte BfmeRecAU pointer partial-sort body at 0x00515550
+??$__make_heap@PAPAVRva00532DF0Rec@@VRva00532DF0Comp@@PAV1@H@_STL@@YAXPAPAVRva00532DF0Rec@@0VRva00532DF0Comp@@0PAH@Z,0x00016897,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00532DF0 calls; autopin
 ??$__make_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@U1@H@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@0PAH@Z,0x0004A318,REL32 wide-element make-heap target from 0x003667F7
 ??$__make_heap@PAUS4SortElem12@@US4Cmp00574DF0@@U1@H@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@0PAH@Z,0x0002E2C6,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ??$__match@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@PAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@J@_STL@@YAPAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@AAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0PAV10@1PAJ@Z,0x00836980,narrow time_get weekday matcher reached directly by assigned retail specialization
@@ -1241,6 +1243,7 @@ name,address,notes
 ??$sort_heap@PAHUQ4Sort003D15A0@@@_STL@@YAXPAH0UQ4Sort003D15A0@@@Z,0x00005F06,ILT to 0x003CFA90 sort_heap used by partial_sort at 0x003D00E0
 ??$sort_heap@PAHUQ4Sort004567A0@@@_STL@@YAXPAH0UQ4Sort004567A0@@@Z,0x004546F0,resolved via decode_calls at __partial_sort<Q4Sort004567A0>; final call in the standard partial_sort algorithm shape
 ??$sort_heap@PAPAVBfmeRecAU@@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@0VBfmeCompAU@@@Z,0x0004A048,retail ILT called by the 264-byte BfmeRecAU pointer partial-sort body at 0x00515550
+??$sort_heap@PAPAVRva00532DF0Rec@@VRva00532DF0Comp@@@_STL@@YAXPAPAVRva00532DF0Rec@@0VRva00532DF0Comp@@@Z,0x0000AD1C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00532DF0 calls; autopin
 ??$sort_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x00011A95,REL32 wide-element sort-heap target from 0x00366854
 ??$sort_heap@PAUS4SortElem12@@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@@Z,0x00035BC0,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ??$sort_heap@PAUS4SortElem8@@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@0US4Cmp00575AA0@@@Z,0x00577460,STLport score-row sort_heap callee reached by the partial-sort body at 0x00577690
@@ -1987,6 +1990,7 @@ name,address,notes
 ??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,Open-BFME7 ILT thunk of the out-of-line AsciiString copy (0x0005EE50) that the PlayerInfoMap hinted insert_unique at 0x00634650 calls after MSVC stops inlining the forwarder
+??0AsciiString@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009D0C50 calls; autopin
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
@@ -9555,6 +9559,8 @@ name,address,notes
 ??_8?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC5C,STLport static library basic_ofstream<unsigned short> vbtable (ctor 0x0084BF70)
 ??_8?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,alias of the STLport library basic_ofstream<char> vbtable for the aliased (name mode) ctor 0x0084B980
 ??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
+??_C@_00CNPNBAHC@?$AA@,0x00C7388B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00532DF0 calls; autopin
+??_C@_06CHOPLBCB@WHO?5?$CFs?$AA@,0x00D311D8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
 ??_C@_0BA@CLLFEOBD@CreateObjectDie?$AA@,0x00C90868,pool-glue cascade static (back-solved)
@@ -9630,6 +9636,7 @@ name,address,notes
 ??_C@_0CE@MMFOENO@AnimatedParticleSysBoneClientUpd@,0x00C8F7CC,pool-glue cascade static (back-solved)
 ??_C@_0L@BJCDJCGK@UpgradeDie?$AA@,0x00C90838,pool-glue cascade static (back-solved)
 ??_C@_0L@BJHONFCE@DestroyDie?$AA@,0x00C908C0,pool-glue cascade static (back-solved)
+??_C@_0L@OBFJOAEI@MODE?5?$CFs?5?$CLb?$AA@,0x00D311D8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
 ??_C@_0L@PMFBCIMB@ActiveBody?$AA@,0x00C8FB98,pool-glue cascade static (back-solved)
 ??_C@_0M@BLHDDDNA@LaserUpdate?$AA@,0x00C90534,pool-glue cascade static (back-solved)
 ??_C@_0M@EADCCBCH@OpenContain?$AA@,0x00C90BA4,pool-glue cascade static (back-solved)
@@ -83194,6 +83201,7 @@ _ciAddBANFilter,0x0086C710,gamespy-chat: ban filter registered by chatBanUserA i
 _ciAddCDKEYFilter,0x0086CB80,GameSpy Chat CD-key response filter constructor
 _ciAddCallback_,0x00870350,gamespy-chat: 8-arg deferred-callback enqueue; 0x00861DA0 calls it with type 25 (CALLBACK_NICK_ERROR) and sizeof-params 16
 _ciAddFilter,0x0086C3A0,GameSpy Chat chatHandlers.c static filter constructor; authentic source order and _ciAddJOINFilter call target prove ownership
+_ciAddFilterRva00861470,0x0086C680,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
 _ciAddGETCHANKEYFilter,0x0086CA10,gamespy-chat: 7-arg filter registered by chatGetChannelKeys at 0x00861C60 on the whole-room branch
 _ciAddGETCKEYFilter,0x0086C8F0,gamespy-chat: 8-arg filter registered by chatGetChannelKeys at 0x00861C60 on the per-user branch
 _ciAddGETKEYFilter,0x0086C7E0,gamespy-chat: 7-arg filter registered by chatGetGlobalKeys at 0x00861940
