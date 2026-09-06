@@ -75250,6 +75250,7 @@ name,address,notes
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
 ?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
 ?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
+?bfmeStop1013@BfmeUnit1013@@QAEXD@Z,0x0004A1FB,pin;compiler char-parameter alias for the same body
 ?bfmeStop1019@BfmeA1019@@QAEXH@Z,0x00044A53,pin
 ?bfmeStop1027@BfmeX1027@@QAEXXZ,0x0001F212,pin
 ?bfmeStop1038F@BfmeAObj1038@@QAEXXZ,0x008A0B00,pin
