@@ -9704,7 +9704,7 @@ name,address,notes
 ?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z,0x00013471,address-scoped spelling for the element comparison ILT called by retail 0x005757E0
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
 ?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
-?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
+?BfmeNodeValueConstruct000BF790@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeParticleSystemXferHandle@@YAXAAVXfer@@PAX@Z,0x00008CA1,BFME particle-system handle serialization helper called by ParticleSystem DoXfer
 ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z,0x00034815,BFME particle-system matrix serialization helper called by ParticleSystem DoXfer
