@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 #define Matrix4x4 Matrix4
 
+// Open-BFME7: retail built this TU with the array/scalar delete declared nothrow (no EH-state
+// reset after vector-constructor iterators; see docs/shape_levers.md).
+void __cdecl operator delete[](void *) throw();
+void __cdecl operator delete(void *) throw();
 #include "hlod.h"
 #include "chunkio.h"
 

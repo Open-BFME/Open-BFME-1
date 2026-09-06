@@ -9284,6 +9284,9 @@ name,address,notes
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$ShareBufferClass@PAVVertexMaterialClass@@@@6B@,0x0113C300,ShareBufferClass<VertexMaterialClass*> vftable stored by the inlined base destructor in 0x0092A220
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
+??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC40,STLport static library basic_ifstream<unsigned short> vftable
 ??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
@@ -9483,6 +9486,8 @@ name,address,notes
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
 ??_7Rva0090E470Thing@@6B@,0x0113A668,address-derived vftable written by the 0x0090E470 constructor; class identity not recovered
 ??_7Rva0090E570Thing@@6B@,0x0113A6B0,address-derived vftable written by the 0x0090E570 constructor (byte-twin of 0x0090E470); class identity not recovered
+??_7Rva0097BB40HLod@@6BMultiListObjectClass@@@,0x00D3EBE4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
+??_7Rva0097BB40HLod@@6BRefCountClass@@@,0x00D3EBE8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7SalvageCrateCollide@@6B@,0x010AA7E8,secondary vtable at this+0x10
 ??_7SalvageCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA808,secondary vtable at this+0x0C
 ??_7SalvageCrateCollide@@6BObjectModule@@@,0x010AA8CC,primary vtable installed by the named constructor and destructor
@@ -9944,6 +9949,7 @@ name,address,notes
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline1DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@DX8Wrapper@@SAX_N00ABVVector3@@MMI@Z,0x00904250,BFME 7-arg Clear color/z/stencil split from ZH 6-arg
+?Clear_Pending_Delete_Lists@Rva00949D00Renderer@@QAEXXZ,0x00945ED0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ?Close_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E13E0
 ?Close_Micro_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E1480
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVTriClass@@PAUCastResultStruct@@@Z,0x008E0C30
@@ -10029,6 +10035,7 @@ name,address,notes
 ?Free@DistLODClass@@AAEXXZ,0x00014BC3
 ?Free@FastAllocatorGeneral@@QAEXPAX@Z,0x00AFEBC0
 ?Free@HTreeClass@@AAEXXZ,0x00952230,HTreeClass storage reset reached on hierarchy load failure
+?Free@Rva0097BB40HLod@@IAEXXZ,0x009796A0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ?FreeMemory@@YAXPAXPAH@Z,0x008794C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877C70 calls; autopin
 ?Free_All_Geoms@W3DShadowGeometryManager@@QAEXXZ,0x00002365,site-decoded x2 (thunk)
 ?Free_Definitions@DefinitionMgrClass@@SAXXZ,0x000309CC,pinharvest x1 (thunk)
@@ -10340,6 +10347,7 @@ name,address,notes
 ?Intersection_Test@CollisionMath@@SA_NABVSphereClass@@ABVAABoxClass@@@Z,0x008E3600
 ?Intersection_Test@CollisionMath@@SA_NABVSphereClass@@ABVOBBoxClass@@@Z,0x008E3600,derived-ICF
 ?Inv_Sqrt@WWMath@@SIMM@Z,0x00027A43,WWMath::Inv_Sqrt (naked __fastcall) incremental-link thunk (body 0x00131C90); called by Quaternion::Normalize and Axis_To_Quat, owned by wwmath.cpp
+?Invalidate@Rva00949D00Renderer@@QAEX_N@Z,0x00947BD0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ,0x00903C50,End_Render depth Open-BFME4+Grok
 ?IsCommandSynchronized@@YA_NW4NetCommandType@@@Z,0x00001FB9,caller-typed Bool declaration through the ILT thunk for the Int body at 0x00682E50
 ?IsMungeSortOnLoadEnabled@WW3D@@2_NA,0x0133F42E,WW3D static bool read by MeshModelClass::post_process 0x0096E750 before compute_static_sort_levels

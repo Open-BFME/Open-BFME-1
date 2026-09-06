@@ -30,6 +30,10 @@ protected:
 
 void operator delete[](void *) throw();
 
+// Open-BFME7: retail built this TU with the array/scalar delete declared nothrow (no EH-state
+// reset after vector-constructor iterators; see docs/shape_levers.md).
+void __cdecl operator delete[](void *) throw();
+void __cdecl operator delete(void *) throw();
 #include "simplevec.h"
 
 class Vector3
@@ -101,7 +105,6 @@ Bitmap2DObjClass::Bitmap2DObjClass()
       m_vgx()
 {}
 
-// ??0Bitmap2DObjClass@@QAE@ABV0@@Z present-unmatched
 Bitmap2DObjClass::Bitmap2DObjClass(const Bitmap2DObjClass &source)
 	: m_vertices(source.m_vertices),
 	  m_widths(source.m_widths),
