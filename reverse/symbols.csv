@@ -83845,3 +83845,6 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?rva008F7460@ShroudManager@@QAEXPBUCoord3D@@IW4ValueOrThreat@@HPAU2@@Z,0x008F7460,Caller-backed ScriptActions002F5380; ShroudManager engine-init tag; forwards this+0x0C to008FBD00
 ??0BfmeCrateERG@@QAE@XZ,0x00026CBA,pin
 ?bfmeAssignERG@BfmeCrateERG@@QAEXABV1@@Z,0x00048725,pin
+??0BfmeDrawBaseERH@@QAE@PAVBfmeThingERH@@PBVBfmeModuleDataERH@@@Z,0x00036AED,pin
+_bfmeVtERHa,0x00D22EA8,pin
+_bfmeVtERHb,0x00D22DD8,pin
