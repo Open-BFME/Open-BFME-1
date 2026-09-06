@@ -84289,3 +84289,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??_C@_02KEGNLNML@?0?5?$AA@,0x0109DF5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
 ??_C@_01EEMJAFIK@?6?$AA@,0x01080294,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
 ?g_rva012F49B4@@3PAURva012F49B4Thing@@A,0x012F49B4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
+?Rva003B7780FieldParseTable@@3QBUFieldParse@@B,0x010ECDC8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
+?addAudioEvent@Rva003B7780Owner@@QAEXPAVRva003B7740@@@Z,0x00015DD4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
+??_C@_0CO@MLONBKDB@ParseAudioEventBlock?3?3Invalid?5da@,0x010ECD8C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
