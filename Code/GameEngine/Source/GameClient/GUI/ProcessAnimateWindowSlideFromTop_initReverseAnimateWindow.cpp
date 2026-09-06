@@ -1,7 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAEXPAVAnimateWindow@@I@Z:
-// Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
+// readable body of ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAEXPAVAnimateWindow@@I@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 //
 // Retail 0x00495F80, 100 bytes. Same shape as SlideFromLeft; sits after the
 // landed SlideFromTop ctor at 0x00495F30.

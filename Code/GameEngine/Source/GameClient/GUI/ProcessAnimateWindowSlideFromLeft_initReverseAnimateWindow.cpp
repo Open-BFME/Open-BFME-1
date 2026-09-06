@@ -1,7 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z:
-// Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
+// readable body of ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAEXPAVAnimateWindow@@I@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 //
 // Retail 0x00495B10, 100 bytes. Delay at +4, startTime at +0x34, vel at +0x2C.
 // getVel is an sret call (ILT 0x0000E548); time is _bfme_timeGetTime@0.
