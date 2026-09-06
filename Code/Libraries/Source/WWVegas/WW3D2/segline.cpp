@@ -35,6 +35,10 @@
  * Functions:                                                                                  *
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+// Open-BFME7: retail built this TU with the array/scalar delete declared nothrow (no EH-state
+// reset after vector-constructor iterators; see docs/shape_levers.md).
+void __cdecl operator delete[](void *) throw();
+void __cdecl operator delete(void *) throw();
 #include "segline.h"
 #include "ww3d.h"
 #include "rinfo.h"
