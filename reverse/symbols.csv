@@ -73542,6 +73542,9 @@ name,address,notes
 ?bfmeDtorCAD@BfmeRefCAD@@QAEXXZ,0x00030841,pin
 ?bfmeDtorCBF@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeDtorCDE@BfmeThingCDE@@QAEXXZ,0x008F8340,pin
+?ArrayDeleteHelperBodyThunk@@YGXPAXII0@Z,0x009F6D76,callee pin for stdcall array-delete helper
+?d_008f7990@BfmeThingCDE@@QAEXXZ,0x008F7990,callee pin for CDE cleanup helper
+?d_008f7ec0@BfmeThingCDE@@QAEXXZ,0x008F7EC0,callee pin for CDE entry sweep helper
 ?bfmeDtorCHA@BfmeRefCHA@@QAEXXZ,0x009DB400,pin
 ?bfmeDtorCHB@BfmeRefCHB@@QAEXXZ,0x0003FA7B,pin
 ?bfmeDtorCHC@BfmeRefCHC@@QAEXXZ,0x009DB4D0,pin
