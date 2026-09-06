@@ -83994,3 +83994,5 @@ _bfmeRva0036CFD0Callback,0x0002DC95,"Root disassembled full query36FF70/524 and 
 ?g_bfmeModeGF@@3PAVBfmeModeGF@@A,0x00EF0FE0,pin
 ?bfmeApplyGG@BfmePrimaryGG@@QAEXPAXH@Z,0x000157DA,pin
 ?g_bfmeAudioGG@@3PAVBfmeAudioGG@@A,0x00EED668,pin
+?bfmeOwnGJ@BfmeOwnerGJ@@QAEMMM@Z,0x00036FCA,pin
+?g_bfmeTerrainGJ@@3PAVBfmeTerrainGJ@@A,0x00EEF4CC,pin
