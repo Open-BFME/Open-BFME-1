@@ -1,15 +1,16 @@
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z
-// partial score=0.94 date=2026-09-06
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z
+// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
-// Readable body of ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z.
-// Retail 0x00497640, 230 bytes.  This is the x-axis update used by the
-// SlideFromRightFast process selected in AnimateWindowManager.
+// Readable body of ?updateAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z.
+// Retail 0x004965B0, 238 bytes.  This is the y-axis update used by the
+// SlideFromBottom process selected in AnimateWindowManager.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+// Retail's -1.0f clamp is the address-pinned BfmeShadowScale field at 0x0109BF3C.
 extern const Real BfmeShadowScale;
 
 struct ICoord2D
@@ -62,10 +63,10 @@ private:
 	Bool m_finished;
 };
 
-class ProcessAnimateWindowSlideFromRightFast
+class ProcessAnimateWindowSlideFromBottom
 {
 public:
-	virtual ~ProcessAnimateWindowSlideFromRightFast();
+	virtual ~ProcessAnimateWindowSlideFromBottom();
 	virtual void initAnimateWindow(AnimateWindow *);
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual Bool updateAnimateWindow(AnimateWindow *);
@@ -80,8 +81,8 @@ private:
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z
-Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *animWin)
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z
+Bool ProcessAnimateWindowSlideFromBottom::updateAnimateWindow(AnimateWindow *animWin)
 {
 	if (!animWin)
 		return true;
@@ -99,22 +100,25 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *
 	ICoord2D curPos = animWin->getCurPos();
 	ICoord2D endPos = animWin->getEndPos();
 	Coord2D vel = animWin->getVel();
-	curPos.x += (Int)vel.x;
+	curPos.y += (Int)vel.y;
 
-	if (curPos.x < endPos.x)
+	if (curPos.y < endPos.y)
 	{
-		curPos.x = endPos.x;
+		curPos.y = endPos.y;
 		animWin->setFinished(true);
+		win->winSetPosition(curPos.x, curPos.y);
 		return true;
 	}
 
 	win->winSetPosition(curPos.x, curPos.y);
 	animWin->setCurPos(curPos);
 
-	if (curPos.x - endPos.x <= m_slowDownThreshold)
-		vel.x *= m_slowDownRatio;
-	if (vel.x < 1.0f)
-		vel.x = 1.0f;
+	if (curPos.y - endPos.y <= m_slowDownThreshold)
+		vel.y *= m_slowDownRatio;
+	if (vel.y >= BfmeShadowScale)
+		vel.y = BfmeShadowScale;
 	animWin->setVel(vel);
 	return false;
 }
+
+

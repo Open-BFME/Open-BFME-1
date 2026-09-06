@@ -1,16 +1,14 @@
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z
-// partial score=0.94 date=2026-09-06
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z
+// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
-// Readable body of ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z.
-// Retail 0x00497640, 230 bytes.  This is the x-axis update used by the
-// SlideFromRightFast process selected in AnimateWindowManager.
+// Readable body of ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z.
+// Retail 0x00495CC0, 230 bytes.  This is the x-axis update used by the
+// SlideFromLeft process selected in AnimateWindowManager.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 typedef bool Bool;
-
-extern const Real BfmeShadowScale;
 
 struct ICoord2D
 {
@@ -62,10 +60,10 @@ private:
 	Bool m_finished;
 };
 
-class ProcessAnimateWindowSlideFromRightFast
+class ProcessAnimateWindowSlideFromLeft
 {
 public:
-	virtual ~ProcessAnimateWindowSlideFromRightFast();
+	virtual ~ProcessAnimateWindowSlideFromLeft();
 	virtual void initAnimateWindow(AnimateWindow *);
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual Bool updateAnimateWindow(AnimateWindow *);
@@ -80,8 +78,8 @@ private:
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z
-Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *animWin)
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z
+Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow(AnimateWindow *animWin)
 {
 	if (!animWin)
 		return true;
@@ -101,7 +99,7 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *
 	Coord2D vel = animWin->getVel();
 	curPos.x += (Int)vel.x;
 
-	if (curPos.x < endPos.x)
+	if (curPos.x > endPos.x)
 	{
 		curPos.x = endPos.x;
 		animWin->setFinished(true);
@@ -111,7 +109,7 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *
 	win->winSetPosition(curPos.x, curPos.y);
 	animWin->setCurPos(curPos);
 
-	if (curPos.x - endPos.x <= m_slowDownThreshold)
+	if (endPos.x - curPos.x <= m_slowDownThreshold)
 		vel.x *= m_slowDownRatio;
 	if (vel.x < 1.0f)
 		vel.x = 1.0f;
