@@ -108,7 +108,7 @@ public:
 	virtual void vfn20(void *sub);
 };
 
-void __cdecl bfmeHelper760(void *obj, int zero);
+int __cdecl bfmeHelper760(void *obj, int zero);
 
 void __stdcall bfmeAttachSubAF0(void *k1, void *k2)
 {

@@ -10925,6 +10925,7 @@ name,address,notes
 ?ThePropagandaTowerBehaviorPool@?1??getClassMemoryPool@PropagandaTowerBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF834,pool-glue cascade static (back-solved)
 ?TheQueueProductionExitUpdatePool@?1??getClassMemoryPool@QueueProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04FC,pool-glue cascade static (back-solved)
 ?TheRadar@@3PAVRadar@@A,0x012EF0E4,Radar* global; identified by engine-init constructor-tag string "TheRadar" at RVA 0x0761dc pushed immediately before ctor call that stores to this address (WinMain-style subsystem construction block at 0x47a08b-0x47a09a, alongside TheRecorder@0x12ed62c and TheVictoryConditions@0x12f079c constructed the same way)
+?refreshObjectColor@Radar@@QAEXPAX@Z,0x00011383,Radar helper call resolves through the existing j_00011383 ILT used by bfmeHelper760 at retail 0x002ED760
 ?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheRadarUpdatePool@?1??getClassMemoryPool@RadarUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0018,pool-glue cascade static (back-solved)
 ?TheRadarUpgradePool@?1??getClassMemoryPool@RadarUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05B8,pool-glue cascade static (back-solved)
@@ -74397,7 +74398,7 @@ name,address,notes
 ?bfmeHelpFD@BfmeObjFD@@QAEXXZ,0x0001992F,pin
 ?bfmeHelpVML@@YAXPAHHHH@Z,0x0001D30E,Open-BFME5 REL32 from 0x0048E9A0 thunk to FUN_0088e730
 ?bfmeHelpWI@@YAHH@Z,0x0004B2BD,Open-BFME5 REL32 from stdcall wrapper 0x0078AD90
-?bfmeHelper760@@YAXPAXH@Z,0x002ED760,pin
+?bfmeHelper760@@YAHPAXH@Z,0x002ED760,integer status return proven by mov eax,1 on every retail exit
 ?bfmeHelper98FDE0@@YAXPAXH@Z,0x0098FDE0,pin
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
 ?bfmeHelper996070@@YAXPAX00PBD@Z,0x00996070,pin
