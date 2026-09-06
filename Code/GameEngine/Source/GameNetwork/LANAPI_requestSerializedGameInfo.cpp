@@ -1,10 +1,18 @@
 // cl: /DNDEBUG /MD /GX
 //
-// Retail 0x00685000, LANAPI vtable slot 21.  This is a BFME-only request
+// LANAPI::_bfme_requestSerializedGameInfo, retail 0x00685000, vtable slot 21.  This is a BFME-only request
 // between Zero Hour's RequestGameOptions and RequestGameCreate slots.  Its
 // callers pass a flag and a TransportAddress pointer; the flag is unused.
 // Message type 0x12 carries BFME's fixed-size serialized LAN game-info block
-// and is paired with BFME-only callback slot 39.
+// and is paired with BFME-only callback slot 39 (0x00689170), which this body
+// also invokes directly when one of the game's slots holds the local address.
+//
+// Both names keep the _bfme_ marker because neither slot exists in Zero Hour,
+// so no retail name is available for either; only the addresses that used to
+// disambiguate them are gone. Note that the body SENDS the block rather than
+// asking for it -- type 0x11 (LANMSG_REQUEST_GAME_INFO, sent by slot 12) is
+// the request this answers -- but "request" is kept as the Request* family
+// name every LANAPI caller-side slot carries.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -74,7 +82,7 @@ public:
 	virtual void _bfme_slot18(void) = 0;
 	virtual void _bfme_slot19(void) = 0;
 	virtual void _bfme_slot20(void) = 0;
-	virtual void _bfme_requestSerializedGameInfo_00685000(Bool unused, TransportAddress *destination);
+	virtual void _bfme_requestSerializedGameInfo(Bool unused, TransportAddress *destination);
 	virtual void _bfme_slot22(void) = 0;
 	virtual void _bfme_slot23(void) = 0;
 	virtual void _bfme_slot24(void) = 0;
@@ -92,7 +100,7 @@ public:
 	virtual void _bfme_slot36(void) = 0;
 	virtual void _bfme_slot37(void) = 0;
 	virtual void _bfme_slot38(void) = 0;
-	virtual void _bfme_onSerializedGameInfo_00689170(TransportAddress *from, Int playerSlot,
+	virtual void _bfme_onSerializedGameInfo(TransportAddress *from, Int playerSlot,
 		char *buffer, UnsignedInt size) = 0;
 	virtual void _bfme_slot40(void) = 0;
 	virtual void _bfme_slot41(void) = 0;
@@ -118,8 +126,8 @@ protected:
 	LANGameInfo *m_currentGame;
 };
 
-// ?_bfme_requestSerializedGameInfo_00685000@LANAPI@@UAEX_NPAUTransportAddress@@@Z
-void LANAPI::_bfme_requestSerializedGameInfo_00685000(Bool unused, TransportAddress *destination)
+// ?_bfme_requestSerializedGameInfo@LANAPI@@UAEX_NPAUTransportAddress@@@Z
+void LANAPI::_bfme_requestSerializedGameInfo(Bool unused, TransportAddress *destination)
 {
 	if (!m_currentGame)
 		return;
@@ -139,7 +147,7 @@ void LANAPI::_bfme_requestSerializedGameInfo_00685000(Bool unused, TransportAddr
 		if (slotAddress->m_ip == localAddress->m_ip &&
 			slotAddress->m_port == localAddress->m_port)
 		{
-			_bfme_onSerializedGameInfo_00689170(_bfme_localAddress(), playerSlot,
+			_bfme_onSerializedGameInfo(_bfme_localAddress(), playerSlot,
 				message.m_serializedGameInfo, LAN_SERIALIZED_GAME_INFO_LENGTH);
 			break;
 		}
