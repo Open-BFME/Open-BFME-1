@@ -1,5 +1,3 @@
-// ?d_00287a50@@YAXXZ
-// partial score=0.9 date=2026-09-05
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?onObjectCreated@BoneFXUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp
 // Open-BFME5: TWIN lane. 0x00287A50 is a byte-twin (relocations masked) of
