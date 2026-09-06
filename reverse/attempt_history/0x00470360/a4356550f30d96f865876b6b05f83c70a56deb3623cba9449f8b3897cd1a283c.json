@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a4356550f30d96f865876b6b05f83c70a56deb3623cba9449f8b3897cd1a283c",
+  "symbol": "??1Rva00470360@@UAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ??1Rva00470360@@UAE@XZ\n// partial score=0.55 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME5: near-twin of ??1LivingWorldCampaignManager (0x003B7D30,\n// LivingWorldCampaignManagerDestructor.cpp); same single-vtable shape, but this\n// body reports a nested value through g_mgr12F19E8 before clearing a pointer\n// member and chaining to the already-landed base destructor Gen_uwm_0001ff0a.\n\nvoid j_0003a4ae();\n\nclass BfmeObjMD\n{\npublic:\n\tvoid bfmeOneMD(int h);\n};\n\nextern BfmeObjMD *g_mgr12F19E8;\n\nclass Gen_uwm_0001ff0a\n{\npublic:\n\t~Gen_uwm_0001ff0a();\n};\n\nstruct Rva00470360Inner\n{\n\tunsigned char m_pad[0x250];\n\tint m_value;\n};\n\nclass Rva00470360 : public Gen_uwm_0001ff0a\n{\npublic:\n\tvirtual ~Rva00470360();\n\nprivate:\n\tunsigned char m_pad[0x24 - 4];\n\tRva00470360Inner *m_ptr;\n};\n\n// ?d_00470360@@YAXXZ\nRva00470360::~Rva00470360()\n{\n\tRva00470360Inner *p = m_ptr;\n\tg_mgr12F19E8->bfmeOneMD(p->m_value);\n\tj_0003a4ae();\n\tm_ptr = 0;\n}\n"
+}

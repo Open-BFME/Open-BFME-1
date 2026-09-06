@@ -3705,6 +3705,7 @@ name,address,notes
 ??1?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@QAE@XZ,0x00046D9E,pair destructor thunk called by the hash erase twin at 0x00692D50
 ??1?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@QAE@XZ,0x0000A277,AptTextRecord operator[] temporary-pair destructor ILT; jumps to 0x00467710
 ??1?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@QAE@XZ,0x000200FE
+??1?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@QAE@XZ,0x0003D2B7,ILT thunk called at +0x3e of hashtable erase 0x004609B0 (node pair destructor)
 ??1?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@QAE@XZ,0x000184A3,twin of the 0x0046B840 operator[] callee for retail 0x00461A00
 ??1?$pair@$$CBVAsciiString@@URva0046AF20Mapped@@@_STL@@QAE@XZ,0x000335FA,operator[] retail temporary-pair destructor ILT; jumps to 0x00467770
 ??1?$pair@$$CBVAsciiString@@URva0046C000Mapped@@@_STL@@QAE@XZ,0x000258F6,operator[] retail temporary-pair destructor ILT; jumps to 0x004682A0
@@ -3956,6 +3957,7 @@ name,address,notes
 ??1BfmeTailV@@QAE@XZ,0x00887940,Open-BFME5 the tail member destructor the vector-member destructors run
 ??1BfmeTailW@@QAE@XZ,0x00887940,Open-BFME5 the tail member destructor the multi-member vector destructors run
 ??1BfmeThingE@@QAE@XZ,0x0000E68D,Open-BFME5 the middle member destructor the three-member destructor at 0x000F8A40 runs
+??1BfmeThingUB@@QAE@XZ,0x009EB810,pin near-twin base dtor reuses BfmeThingUB bfmeResetUB body v2
 ??1BfmeVecElem_000FAFF0@@QAE@XZ,0x0002C3BD,Open-BFME5 the element destructor the vector destroy at 0x000FAFF0 runs over its live range
 ??1BfmeVecElem_000FEAF0@@QAE@XZ,0x000312B9,Open-BFME5 the element destructor the vector destroy at 0x000FEAF0 runs over its live range
 ??1BfmeWaypointNameString@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; the camera look-toward TU names the by-value return of Waypoint::getName separately so it does not emit the AsciiString destructor name the ledger resolves to a different thunk
@@ -9881,6 +9883,7 @@ name,address,notes
 ?Execute@MouseThreadClass@@QAEXXZ,0x009DB650,W3DMouse polling-thread execute call
 ?Execute@ThreadClass@@QAEXXZ,0x009DB650,additive: the address is also claimed as ?openLiveHandle@BFMENetworkBackend@@QAEXXZ; it sits beside the Set_Priority body at 0x009DB540 which is what a thread.cpp compiland looks like
 ?Fast_Slerp@@YAXAAVQuaternion@@ABV1@1M@Z,0x008DC4C0
+?FillBufferWithDisconnectKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z,0x00677240,pin
 ?Find_Asset@AssetRegistry@@QAE?AVAssetReference@@PBD@Z,0x009EEC60,address-derived AssetRegistry counted lookup callee at 0x009EBEC0
 ?Find_Color_Mode@DX8Wrapper@@KA_NW4_D3DFORMAT@@HHPAI@Z,0x009021C0,pinharvest x1 (body)
 ?Find_POT@@YAHH@Z,0x00AFFAB0
@@ -10866,6 +10869,7 @@ name,address,notes
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00044ADF,bucket-key helper called by the hash erase twin at 0x005C9B80
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004A741,bucket-key helper called by the hash erase twin at 0x00692D50
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0000E8E0,pinharvest x1 (thunk)
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0003068E,ILT thunk called at +0x25 of hashtable erase 0x004609B0 (bucket index)
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004004D,rel32 pin for exact-ambiguous landing
 ?_M_bkt_num_key@?$hashtable@URva000B8AE0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000B8AE0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000B8AE0Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000B8AE0 calls
 ?_M_bkt_num_key@?$hashtable@URva000D6770Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000D6770ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000D6770Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x000160DB,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000D6770 calls
@@ -63906,7 +63910,6 @@ name,address,notes
 ?b_00677140@@YAXXZ,0x00677140,gen-thunk body
 ?b_006771a0@@YAXXZ,0x006771A0,gen-thunk body
 ?b_00677200@@YAXXZ,0x00677200,gen-thunk body
-?FillBufferWithDisconnectKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z,0x00677240,pin
 ?b_00677240@@YAXXZ,0x00677240,gen-thunk body
 ?b_00677280@@YAXXZ,0x00677280,gen-thunk body
 ?b_006772f0@@YAXXZ,0x006772F0,gen-thunk body
@@ -73018,6 +73021,7 @@ name,address,notes
 ?bfmeClearWVUM@BfmeStrWVUM@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUN@BfmeStrWVUN@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUY@BfmeStrWVUY@@AAEXXZ,0x008881D0,pin
+?bfmeClipSegment6DF730@BfmePolygon6DF1F0@@QBEDPBUBfmeCoord6DF1F0@@0PAU2@H@Z,0x0000C9AA,"address-derived four-argument clip called by the 0x006DF730 retail body on the +0x1C pointer; the thunk targets 0x0018FBF0, in the same block as the two pinned predicates (0x0018F8A0, 0x0018FA20) and the pinned centre-point getter (0x0018F790) reached through the same field"
 ?bfmeClose1086@BfmeD1086@@QAEXXZ,0x008F7B30,pin
 ?bfmeClose1222@BfmeSub1222@@QAEXXZ,0x0089C880,pin
 ?bfmeClose1280@BfmeE1280@@QAEXXZ,0x00042A32,pin
@@ -73871,6 +73875,7 @@ name,address,notes
 ?bfmeFreeSmall007883D0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
 ?bfmeFreeSmallCFB@@YAXPADI@Z,0x0082E5F0,pin
+?bfmeFreeString@StringClass@@QAEXXZ,0x009DB7A0,pin near-twin reuses Free_String body
 ?bfmeFreeTA@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeTMB@@YAXPAX@Z,0x008068B0,pin
 ?bfmeFreeTQD@@YAXPAXH@Z,0x007F0170,pin
@@ -83538,4 +83543,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeClipSegment6DF730@BfmePolygon6DF1F0@@QBEDPBUBfmeCoord6DF1F0@@0PAU2@H@Z,0x0000C9AA,"address-derived four-argument clip called by the 0x006DF730 retail body on the +0x1C pointer; the thunk targets 0x0018FBF0, in the same block as the two pinned predicates (0x0018F8A0, 0x0018FA20) and the pinned centre-point getter (0x0018F790) reached through the same field"

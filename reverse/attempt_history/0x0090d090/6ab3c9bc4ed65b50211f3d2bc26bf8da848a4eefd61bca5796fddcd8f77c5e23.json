@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6ab3c9bc4ed65b50211f3d2bc26bf8da848a4eefd61bca5796fddcd8f77c5e23",
+  "symbol": "??1Rva0090D090@@UAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ??1Rva0090D090@@UAE@XZ\n// partial score=0.55 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME5: near-twin of ??1Rva00491DB0DisplayOwner (0x00491DB0,\n// Rva00491DB0DisplayOwnerDtor.cpp); same single-vtable shape, but the +0x14\n// member here is a plain owned pointer whose vtable slot 1 is invoked directly\n// (rather than a TheDisplay vcall), and the tail call reuses the already-landed\n// BfmeThingUB::bfmeResetUB instead of a plain thunk.\n\nclass Rva0090D090Owned\n{\npublic:\n\tvirtual void slot0();\n\tvirtual void slot1(int);\n};\n\nclass StringClass\n{\npublic:\n\t~StringClass();\n};\n\nclass BfmeThingUB\n{\npublic:\n\t~BfmeThingUB();\nprivate:\n\tvoid *m_bfmeVft;\n};\n\nclass Rva0090D090 : public BfmeThingUB\n{\npublic:\n\tvirtual ~Rva0090D090();\n\nprivate:\n\tunsigned char m_pad[0x14 - 4 - 4];\n\tRva0090D090Owned *m_owned;\n\tStringClass m_str;\n};\n\n// ?d_0090d090@@YAXXZ\nRva0090D090::~Rva0090D090()\n{\n\tif (m_owned)\n\t\tm_owned->slot1(1);\n}\n"
+}
