@@ -82542,7 +82542,7 @@ __imp__SHGetPathFromIDListA@8,0x01359168,Open-BFME retail SHELL32 SHGetPathFromI
 __imp__SHGetSpecialFolderLocation@12,0x0135916C,Open-BFME retail SHELL32 SHGetSpecialFolderLocation import pointer
 __imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
 __imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer
-__imp___strnicmp,0x00F594BC,CRT import used by the _level prefix path helper
+__imp___strnicmp,0x00F59348,MSVCR71 _strnicmp IAT slot; retail import identity verified
 __imp__bfme006EE640Memmove,0x0135945C,retail memmove IAT slot used by the exact STLport vector erase at 0x006EE640
 __imp__bfmeCloseDWE@4,0x00F590C8,pin
 __imp__bfmeCloseDXK@4,0x00F591A8,pin
@@ -82584,7 +82584,7 @@ __imp__bfmeTickDZC@0,0x00F59544,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x00F593BC,pin
 __imp__ftell,0x00F593EC,pin
-__imp__itoa,0x00F5935C,pin
+__imp__itoa,0x00F592FC,MSVCR71 _itoa IAT slot; retail import identity verified
 __imp__sprintf,0x0135948C,Open-BFME5 retail sprintf import pointer
 __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
 __imp__strchr,0x00F5949C,pin

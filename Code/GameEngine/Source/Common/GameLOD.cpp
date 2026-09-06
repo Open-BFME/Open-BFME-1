@@ -42,6 +42,10 @@
 #include "GameClient/GameClient.h"
 #include "Common/UserPreferences.h"
 
+// Retail dynamic LOD name comparison uses the MSVCR71 _memicmp import.
+extern "C" __declspec(dllimport) int __cdecl _memicmp(
+	const void *left, const void *right, unsigned int count);
+
 #define DEFINE_PARTICLE_SYSTEM_NAMES
 #include "GameClient/ParticleSys.h"
 
@@ -704,7 +708,7 @@ static __forceinline Int compareLODNameNoCase(const AsciiString &name, const cha
 	Int nameLength = header ? header->length : 0;
 	const char *nameText = header ? header->data : &emptyString;
 	Int compareLength = nameLength < lodNameLength ? nameLength : lodNameLength;
-	Int result = _strnicmp(nameText, lodName, compareLength);
+	Int result = _memicmp(nameText, lodName, compareLength);
 	return result == 0 ? nameLength - lodNameLength : result;
 }
 

@@ -3,8 +3,8 @@
 
 typedef int Int;
 
-extern "C" __declspec(dllimport) int __cdecl _strnicmp(
-	const char *left, const char *right, unsigned count);
+extern "C" __declspec(dllimport) int __cdecl _memicmp(
+	const void *left, const void *right, unsigned count);
 extern "C" unsigned __cdecl strlen(const char *text);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -30,7 +30,7 @@ public:
 		}
 
 		Int count = thisLength < otherLength ? thisLength : otherLength;
-		Int comparison = _strnicmp(thisText, other, count);
+		Int comparison = _memicmp(thisText, other, count);
 		if (comparison != 0)
 			return comparison;
 		return thisLength - otherLength;

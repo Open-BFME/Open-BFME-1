@@ -55,6 +55,10 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
+// Retail getCursorIndex compares bounded bytes through the MSVCR71 _memicmp import.
+extern "C" __declspec(dllimport) int __cdecl _memicmp(
+	const void *left, const void *right, unsigned int count);
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -1194,7 +1198,7 @@ static __forceinline Int compareCursorName(const AsciiString &name, const char *
 		? reinterpret_cast<const char *>(nameData) + 8
 		: "";
 	Int compareLength = nameLength < cursorLength ? nameLength : cursorLength;
-	Int result = _strnicmp(nameText, cursorName, compareLength);
+	Int result = _memicmp(nameText, cursorName, compareLength);
 	if (result != 0)
 		return result;
 	return nameLength - cursorLength;
