@@ -1,6 +1,4 @@
 name,address,notes
-??1BfmePathfindZoneManager@@QAE@XZ,0x00012328,destructor target called by Pathfinder::~Pathfinder at 0x003DC040
-??1BfmePathfinderDtorObject@@QAE@XZ,0x0001FE2E,destructor target called by Pathfinder::~Pathfinder at 0x003DC040
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -366,6 +364,7 @@ name,address,notes
 ??$_Construct@UGen_t_008fbc70_p8cd@@U1@@_STL@@YAXPAUGen_t_008fbc70_p8cd@@ABU1@@Z,0x008F9C70,gen-tgrid payload member
 ??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,0x0004A818,rel32 pin for exact-ambiguous landing
 ??$_Construct@UHorzLine@@U1@@_STL@@YAXPAUHorzLine@@ABU1@@Z,0x0002E91A,ILT the HorzLine vector overflow calls at 0x00069127 to build the inserted element
+??$_Construct@ULevelUpFXInfo@@U1@@_STL@@YAXPAULevelUpFXInfo@@ABU1@@Z,0x0000EBFB,ExperienceLevel LevelUpFx vector element copy constructor helper
 ??$_Construct@UModelConditionInfo@@U1@@_STL@@YAXPAUModelConditionInfo@@ABU1@@Z,0x000375CE,Open-BFME5 ModelConditionInfo construction thunk
 ??$_Construct@UNoFlyZone@@U1@@_STL@@YAXPAUNoFlyZone@@ABU1@@Z,0x0002713D,Open-BFME5 ILT to the out-of-line STLport _Construct at 0x00148920 (ledgered as tg_00148920); ?addNoFlyZone@AerialPathfinder@@QAEXPAVPolygonTrigger@@M@Z at 0x00148C10 copies its zone into the fresh list node through it
 ??$_Construct@UNugget@ModuleInfo@@U12@@_STL@@YAXPAUNugget@ModuleInfo@@ABU12@@Z,0x00006FD2,resweep callee back-solved
@@ -655,6 +654,7 @@ name,address,notes
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00469D20Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00469D20Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00469D20Mapped@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00469D20Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x00014D49,ILT thunk to the hashtable bucket lookup at 0x0046A470; the hash_map spelling of the same table
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00469FC0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00469FC0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00469FC0Mapped@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00469FC0Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x0002F612,ILT thunk to the hashtable bucket lookup at 0x0046A540; the hash_map spelling of the same table
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x00031D68,ILT thunk to the hashtable bucket lookup at 0x00613BB0; the hash_map spelling of the same table
+??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@@_STL@@QBEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x00031D68,ILT31D68 to613BB0; root independently verified complete emitted159B helper in this caller TU
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x0003CC81,ILT thunk to the hashtable bucket lookup at 0x006931A0; the hash_map spelling of the same table
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva006A7AD0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva006A7AD0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva006A7AD0Mapped@@@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva006A7AD0Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x0000691A,ILT thunk to the hashtable bucket lookup at 0x006A7F80; the hash_map spelling of the same table
 ??$_M_ignore_buffered@DV?$char_traits@D@_STL@@U?$_Is_not_wspace@V?$char_traits@D@_STL@@@2@U?$_Scan_for_not_wspace@V?$char_traits@D@_STL@@@2@@_STL@@YAXPAV?$basic_istream@DV?$char_traits@D@_STL@@@0@PAV?$basic_streambuf@DV?$char_traits@D@_STL@@@0@U?$_Is_not_wspace@V?$char_traits@D@_STL@@@0@U?$_Scan_for_not_wspace@V?$char_traits@D@_STL@@@0@_N4@Z,0x0001A49C,assigned 0x0053A1E0 direct retail callee ILT to assigned 0x00539BC0 body
@@ -1361,6 +1361,7 @@ name,address,notes
 ??0?$VectorClass@VHashItem@?$UniqueArrayClass@VFaceClass@MeshBuilderClass@@@@@@QAE@HPBVHashItem@?$UniqueArrayClass@VFaceClass@MeshBuilderClass@@@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x00933D30,matched Render2DClass constructor call target
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x000187AF,pinharvest x1 (thunk)
+??0?$VectorClass@VResolutionDescClass@@@@QAE@HPBVResolutionDescClass@@@Z,0x000187AF,Open-BFME7 second ILT thunk of the ResolutionDesc VectorClass ctor called by the DynamicVectorClass ctor at 0x0013B6A0 in dx8wrapper.cpp (hand-checked additive)
 ??0?$VectorClass@VShaderClass@@@@QAE@HPBVShaderClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,0x000187AF,site-decoded x1 (thunk)
 ??0?$VectorClass@VVector4@@@@QAE@HPBVVector4@@@Z,0x00906240,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
@@ -3159,6 +3160,7 @@ name,address,notes
 ??0Rva7F4CC0Child@@QAE@XZ,0x007E86B0,Open-BFME5 child-constructor call pin
 ??0Rva899F00Base@@QAE@PBDH@Z,0x00899F00
 ??0Rva8CB820Payload@@QAE@HHHHHHHHHHHHH@Z,0x008AD100,address-derived secondary-base constructor called by 0x008CB820
+??0S4Elem007746E0@@QAE@XZ,0x0000345E,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
 ??0S4Guarded0055BA20@@QAE@H@Z,0x005538A0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BAA0@@QAE@H@Z,0x005484E0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BB20@@QAE@H@Z,0x00536DC0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -4012,6 +4014,8 @@ name,address,notes
 ??1BfmeOtherX@@QAE@XZ,0x00024D8E,Open-BFME5 the last member destructor the multi-member vector destructor at 0x000A83D0 runs first
 ??1BfmeOwnedMember@@QAE@XZ,0x00887940,Open-BFME5 provisional destructor for the owned member the zeroing constructors unwind
 ??1BfmeParticleSystemHandle@@QAE@XZ,0x00013994,Open-BFME5 ILT; the value ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 gets back from its lookup is released through it
+??1BfmePathfindZoneManager@@QAE@XZ,0x00012328,destructor target called by Pathfinder::~Pathfinder at 0x003DC040
+??1BfmePathfinderDtorObject@@QAE@XZ,0x0001FE2E,destructor target called by Pathfinder::~Pathfinder at 0x003DC040
 ??1BfmeQuadWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x24 sub-object destructor; only the unwind funclet references it
 ??1BfmeRangeValue@@QAE@XZ,0x000205A9,Open-BFME5 the carried value destructor the range erase at 0x0076D720 runs
 ??1BfmeSecondY@@QAE@XZ,0x0002A699,Open-BFME5 the second member destructor the two-member vector destructor at 0x0035B960 runs
@@ -9185,6 +9189,7 @@ name,address,notes
 ??4Rva00630D00UStr@@QAEAAV0@ABV0@@Z,0x00888530,Open-BFME5 assign of the unicode-string member used by firstpush copies
 ??4Rva00698DD0Base@@QAEAAV0@ABV0@@Z,0x0001F753,Open-BFME5 fresh thiscall assign at ILT of derived assign 0x00698DD0
 ??4Rva0076F980Mid@@QAEAAV0@ABV0@@Z,0x00007A63,Open-BFME5 assign of the 12-byte mid member used by 0x0034F780
+??4S4Elem007746E0@@QAEAAV0@ABV0@@Z,0x00046CC2,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
 ??4ScienceInfoBase@@QAEAAV0@ABV0@@Z,0x00048725,Open-BFME5 ScienceInfo overridable-base assignment
 ??4ScienceVecStorage@@QAEAAV0@ABV0@@Z,0x0002A185,Open-BFME5 ScienceInfo prerequisite-vector assignment ILT
 ??4SegLineRendererClass@@QAEAAV0@ABV0@@Z,0x009600F0
@@ -10765,6 +10770,7 @@ name,address,notes
 ?StartStopwatch@@YAKXZ,0x008793A0,nbench StartStopwatch; retail is the clock() import thunk ?ji_008793a0@@YAXXZ
 ?Start_Movie_Capture@WW3D@@SAXPBDM@Z,0x009E7FD0,pinharvest x1 (body)
 ?StaticGameLODNames@@3PAPBDA,0x00EA73E4,GameLODManager::getStaticGameLODIndex direct DIR32; six retail names VeryLow through Custom
+?StickyShiftRightMant@@YAXPAUInternalFPF@@H@Z,0x00879740,BYTEmark emfloat helper; retail callee of RoundInternalFPF at 0x00879810
 ?Stop@MouseThreadClass@@QAEXXZ,0x009DB5A0,W3DMouse polling thread stop call
 ?Stop@ThreadClass@@QAEXXZ,0x009DB5A0,Watchdog::stop tail call and BFME no-argument wait-and-clear thread body
 ?StopStopwatch@@YAKK@Z,0x008793B0,nbench StopStopwatch; retail is Rva008793B0ClockDelta
@@ -12025,6 +12031,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x0000791E,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000028C4,Open-BFME7 additive: retail call target used by the landed row at 0x003CFE10 (thunk drift repair)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
+?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0003B075,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001E8670 calls; autopin
 ?_M_insert_overflow@?$vector@IV?$allocator@I@_STL@@@_STL@@IAEXPAIABIABU__true_type@2@I_N@Z,0x0001CBFC,Audio handle vector growth ILT called by 0x006145C0
 ?_M_insert_overflow@?$vector@MV?$allocator@M@_STL@@@_STL@@IAEXPAMABMABU__true_type@2@I_N@Z,0x000264D1,Open-BFME5 ILT thunk to 0x000D32E0 - the overflow arm of _M_fill_insert at 0x00459D90. That body already carries a generated four-byte-POD _M_insert_overflow identity (Gen_t_000d6300_m4pod) which agrees the element is four bytes wide
 ?_M_insert_overflow@?$vector@PAVBfmeArmyIcon@@V?$allocator@PAVBfmeArmyIcon@@@_STL@@@_STL@@IAEXPAPAVBfmeArmyIcon@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001E051,retail findArmyIcon overflow call directly identifies vector<BfmeArmyIcon*> overflow helper
@@ -12048,8 +12055,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x0001CBFC,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0000F830,SlowDeath parseFX retail overflow helper
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,ILT reached by InstantDeathBehavior parseFX twin at 0x0028BB10
-??$_Construct@ULevelUpFXInfo@@U1@@_STL@@YAXPAULevelUpFXInfo@@ABU1@@Z,0x0000EBFB,ExperienceLevel LevelUpFx vector element copy constructor helper
-?_M_insert_overflow@?$vector@ULevelUpFXInfo@@V?$allocator@ULevelUpFXInfo@@@_STL@@@_STL@@IAEXPAULevelUpFXInfo@@ABU3@ABU__false_type@2@I_N@Z,0x00381300,ExperienceLevel LevelUpFx vector eight-byte element overflow helper
 ?_M_insert_overflow@?$vector@PBVImage@@V?$allocator@PBVImage@@@_STL@@@_STL@@IAEXPAPBVImage@@ABQBV3@ABU__true_type@2@I_N@Z,0x004715B0,Open-BFME5 grow path of the image vector at BFMERetailCommandButton+0x138
 ?_M_insert_overflow@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@ABQBV3@ABU__true_type@2@I_N@Z,0x00043333,pinned from newModuleDataFromINI @0x1295F0 which is byte-exact apart from this call
 ?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0002E65E,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk)
@@ -12232,6 +12237,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_00787d40_m4pod@@V?$allocator@UGen_t_00787d40_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00787d40_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00786F50,family-emit payload member
 ?_M_insert_overflow@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x000251D0,rel32 pin for exact-ambiguous landing
 ?_M_insert_overflow@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2
+?_M_insert_overflow@?$vector@ULevelUpFXInfo@@V?$allocator@ULevelUpFXInfo@@@_STL@@@_STL@@IAEXPAULevelUpFXInfo@@ABU3@ABU__false_type@2@I_N@Z,0x00381300,ExperienceLevel LevelUpFx vector eight-byte element overflow helper
 ?_M_insert_overflow@?$vector@ULinearTarget@@V?$allocator@ULinearTarget@@@_STL@@@_STL@@QAEXPAULinearTarget@@ABU3@ABU__false_type@2@I_N@Z,0x00001B6D,ILT to vector 12-byte _M_insert_overflow 0x001E91A0; WeaponTemplate::parseLinearTarget
 ?_M_insert_overflow@?$vector@UNamedReveal@@V?$allocator@UNamedReveal@@@_STL@@@_STL@@IAEXPAUNamedReveal@@ABU3@ABU__false_type@2@I_N@Z,0x0002EC58,Open-BFME5 ILT; the grow path of the same push_back
 ?_M_insert_overflow@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEXPAUNugget@ModuleInfo@@ABU34@ABU__false_type@2@I_N@Z,0x0001ADBB,resweep callee back-solved
@@ -12475,6 +12481,7 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009C9CE0,pin
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFC80,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls; matched RvaTreeBoundsAsciiString.cpp
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
+?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@ABVAsciiString@@@Z,0x005B2E30,HotKey map operator[] lower_bound target
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x00003585,ILT thunk to the tree lower-bound walk at 0x0033F2E0; the map spelling whose mapped type is a four-byte enumeration
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x0002BF9E,ILT thunk to the tree lower-bound walk at 0x003B9A10; the map spelling whose mapped type is a four-byte enumeration
@@ -12890,6 +12897,7 @@ name,address,notes
 ?anyReady@Rva003BF540@@QBE_NXZ,0x0000EA7F,ILT to anyReady@Rva003BD830Owner 0x003BD830; callee of test@Rva003BF540 @ 0x003BEAF0
 ?append@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x000A4F80,STLport basic_string<char>::append(const char* first; const char* last): capacity check; node-alloc (<=0x80) or new; memmove old then new range; called by the ledgered append(const char*) 0x00647990 at 0x006479B2 and by assign(first;last) 0x000A5810 at 0x000A589A; ILT 0x00036DE0
 ?append@PathAppendNodeShim@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0016A4B0,Path appendNode incremental-link thunk target through a TU-local forwarding shim
+?append@Rva0019BE80TeamRec@@QAEHPBVDict@@@Z,0x00045DC7,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
 ?append@Rva008B2EA0Node@@QAEXPAX@Z,0x008927C0,thiscall append called by 0x008B2EA0
 ?append@Rva8CD130State@@QAEXPAX0PAVRva8CD130String@@PAVRva8CD130Value@@HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD130
 ?append@Rva8CD3F0State@@QAEXPAVRva8CD3F0Value@@PAXPAH0HHH@Z,0x008CC690,address-derived Apt stack append helper called by 0x008CD3F0
@@ -72811,6 +72819,7 @@ name,address,notes
 ?bfmeApplyERD@@YAXPAUBfmeObjectERD@@M@Z,0x000246A4,pin
 ?bfmeApplyFW@BfmeSubFW@@QAEXPAX0@Z,0x00024C17,pin
 ?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
+?bfmeApplyGG@BfmePrimaryGG@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
@@ -73870,6 +73879,7 @@ name,address,notes
 ?bfmeFirstBK@BfmeTargetBK@@QAEXVAsciiStringBK@@H@Z,0x00003CE2,Open-BFME5 the first forward the setter at 0x00731800 makes
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
 ?bfmeFirstFU@BfmeSubFU@@QAEXPAX@Z,0x0001F753,pin
+?bfmeFirstGK@BfmeSubGK@@QAEXPAVBfmeThingGK@@@Z,0x0000FED4,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
 ?bfmeFix1035@@YAXPAPADPADPAVBfmeG1035@@@Z,0x009DBB90,pin
 ?bfmeFlagCWB@@3IA,0x00EF1034,pin
@@ -74915,6 +74925,7 @@ name,address,notes
 ?bfmeOtherANA@BfmeThingANA@@QAEHPAXH@Z,0x00025CD4,pin
 ?bfmeOverflowV34@BfmeVecV34@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F580
 ?bfmeOverflowV45@BfmeVecV45@@QAEXPAH0PADI_N@Z,0x0001F4FB,Open-BFME5 insert-overflow pin for 0x0082F610
+?bfmeOwnGJ@BfmeOwnerGJ@@QAEMMM@Z,0x00036FCA,pin
 ?bfmeOwner1001@BfmeX1001@@QAEPAXXZ,0x00020824,pin
 ?bfmePair@Drawable@@QAEXHH@Z,0x0002019E,ILT 0x0002019E -> 0x00814380; fire-at ModuleData pair drawable setter
 ?bfmeParametersForPlayer@VictorySystem@@QAEPAVGen_001de260@@H@Z,0x00033CA8,ILT to the player-to-FactionVictoryParameters lookup at 0x001DE880
@@ -75148,6 +75159,10 @@ name,address,notes
 ?bfmeRunFAA@BfmeSubFAA@@QAEXH@Z,0x00030887,pin
 ?bfmeRunFBG@BfmeItemFBG@@QAEXH@Z,0x00031228,pin
 ?bfmeRunFDB@BfmeThingFDB@@QAEXPAX@Z,0x00048F36,pin
+?bfmeRunKD@BfmeTgtKD@@QAEDPAXVBfmeArgKD@@0@Z,0x0003FE77,pin
+?bfmeRunKE@BfmeTgtKE@@QAEDPAXVBfmeArgKE@@0@Z,0x0003C795,pin
+?bfmeRunLA@BfmeTgtLA@@QAEXVBfmeArgLA@@PAX1@Z,0x0004461B,pin
+?bfmeRunLB@BfmeTgtLB@@QAEXVBfmeArgLB@@PAX1@Z,0x00010B72,pin
 ?bfmeRunReadyAction@BfmeObjectAI@@QAEXXZ,0x0000E35E,Open-BFME5 AI action ILT used by 0x003D55C0
 ?bfmeRunTFD@BfmeHolderTFD@@QAEXXZ,0x009DB4D0,pin
 ?bfmeRunTGD@@YAXHH@Z,0x0000630C,pin
@@ -75162,6 +75177,7 @@ name,address,notes
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondBK@BfmeTargetBK@@QAEXVAsciiStringBK@@@Z,0x00003B66,Open-BFME5 the second forward the setter at 0x00731800 makes
 ?bfmeSecondFU@BfmeSubFU@@QAEXPAX@Z,0x00019A6A,pin
+?bfmeSecondGK@BfmeSubGK@@QAEXPAVBfmeThingGK@@HPAVBfmeArgGK@@H@Z,0x0001F1D1,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSel1027@BfmeW1027@@QAEXH@Z,0x00002383,pin
 ?bfmeSelect6BE90@BfmeRecordHook6BE90@@QAEXPAUBfmeRecord6BE90@@HH@Z,0x000418E9,Open-BFME5 address-derived adjusted-this record selection call from 0x0076BE90
@@ -75259,6 +75275,7 @@ name,address,notes
 ?bfmeSetCurrentExperience@ExperienceTracker@@QAEXM@Z,0x00034D29,"Root traced ILT00034D29->001B2060 full10B mov eax,[esp+4];mov [ecx+C],eax;ret4. Matched ExperienceTracker ctor/xfer place Real currentExperience at+C; caller fild/fstp proves float ABI. Address-derived behavioral helper name; no original method-name claim."
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
 ?bfmeSetFP@BfmeSubFP@@QAEXPBD0@Z,0x0002B297,pin
+?bfmeSetGM@BfmeDerivedGM@@QAEXPAX@Z,0x007F9590,pin
 ?bfmeSetGoalPosition@BfmeSub30_7F0@@QAEXPBUCoord3D@@@Z,0x0000314D,address-derived sink goal setter used by 0x002BCE00
 ?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
@@ -75320,6 +75337,7 @@ name,address,notes
 ?bfmeSetVSJ@BfmeStrVSJ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSK@BfmeStrVSK@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVoid4D0@BfmeSet4D0@@QAEXXZ,0x00008337,Open-BFME6 void set for the 0x0022F4D0 dispatch; body at 0x00411DD0
+?bfmeSetWakeIS@BfmeWakeIS@@QAEXPAXH@Z,0x000157DA,pin
 ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z,0x0002B21A,Open-BFME5 ILT thunk to body 0x00402A80; BFME zone-block waypoint list insertion/removal helper
 ?bfmeSetWidthsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A380,pin
 ?bfmeSetYD@BfmeThingYD@@QAEXH@Z,0x0002BECC,pin
@@ -76156,6 +76174,7 @@ name,address,notes
 ?clear@ProductionPrerequisiteAllocateAndCopyShim@_STL@@QAEXXZ,0x003AFE10,_STL vector _M_clear ProductionPrerequisite incremental-link thunk target through a TU-local forwarding shim
 ?clear@RadarDeleteListResourcesShim@@QAEXXZ,0x00106A90,Radar deleteListResources incremental-link thunk target through a TU-local forwarding shim
 ?clear@RadiusDecal@@QAEXXZ,0x00026F35,pinharvest x3 (thunk)
+?clear@Rva0019BE80TeamRec@@QAEXXZ,0x0002DF65,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
 ?clear@Rva0036CA00Str@@QAEXXZ,0x00887940
 ?clear@Rva00591560Context@@QAEXPAVRva00591560Resource@@@Z,0x00002E69,address-derived context resource setter called by the 0x00591560 callback
 ?clear@Rva00596AE0Queue@@QAEXXZ,0x000099B7,address-derived queue clear used by the 0x00596AE0 reset
@@ -76547,6 +76566,7 @@ name,address,notes
 ?dispatch@BfmeCommandButtonDispatchILT@@QAEXPAX0@Z,0x00017A12,Command button callback dispatch incremental-link thunk used by the callback walk
 ?dispatch@BfmeRvaBA00View@@QAEXPAVBfmeRvaBA00Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BA00
 ?dispatch@BfmeRvaBB60View@@QAEXPAVBfmeRvaBB60Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BB60
+?dispatch@Rva001FD120Dispatch@@QAEXPAVObject@@I@Z,0x00028AE2,"Root reviewed ILT28AE2 ->1FCE70/55 guarded AI victim dispatch; thiscall Object pointer and unused second32-bit argument, ret8"
 ?dispatch@Rva005121A0Service@@QAEXPAX0_NH@Z,0x000267F1,address-scoped four-argument service dispatch ILT observed in retail 0x0056FD30
 ?dispatch@Rva00720BB0Context@@QAEXHPAX@Z,0x00039680,Rva00720BB0 retail transfer thunk
 ?dispatch@Rva00736AF0Context@@QAEXHPAX@Z,0x00034EC3,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00736AF0 calls; autopin
@@ -76894,6 +76914,7 @@ name,address,notes
 ?finalize@Rva002BC260Goal@@QAEXXZ,0x00049AE9,address-derived goal finalizer used by 0x002BC260
 ?find2@BfmeMgrF5F@@QAEPAXHPAX0H@Z,0x0001F253,pin
 ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIPBDII@Z,0x00654BE0,STLport basic_string<char>::find(const char* s; size_type pos; size_type n): -1 on empty; clamps pos; std::search via ILT 0x0000F574 over [begin+pos; end) for [s; s+n); returns index or npos; callers parsePlayerKVPairs@GameSpyPSMessageQueueInterface 0x006597BE; ILT 0x0003DA4B
+?find@?$hash_map@HUGen_p12cd@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHUGen_p12cd@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHUGen_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@@2@ABH@Z,0x00014BEB,"Root independently reviewed complete source, exact full symbol extent and resolved relocations; no emitted vtable. Replaced numeric empty-string address with real literal, raw iterator aliasing with standard iterator/end/second access, and integer-cast redirect with proven pointer-returning BfmeOverridable getFinalOverride. All changes preserve121B exact. Root independently compiled full map::find helper60B and compared to37E9D0 reached through14BEB: integer hash buckets, key comparison, two-word iterator result, ret8; no relocations. New pin preserves actual compiler-emitted helper and known map layout."
 ?find@?$hash_map@HW4Relationship@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHW4Relationship@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@2@ABH@Z,0x0001D8CC,ILT; PlayerRelationMap find in Player::getRelationship 0x000D19C0
 ?find@?$hash_map@IW4Relationship@@U?$hash@I@_STL@@U?$equal_to@I@3@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIW4Relationship@@@_STL@@@2@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@2@ABI@Z,0x0002D0B0,ILT; TeamRelationMap find in Player::getRelationship 0x000D19C0
 ?find@AptMovieRegistry@@QAEPAUAptMovieRecord@@ABVAsciiString@@@Z,0x00014D49,WindowManager APT movie registry lookup thunk
@@ -77403,6 +77424,7 @@ name,address,notes
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
 ?g_bfmeAudioFU@@3PAVBfmeAudioFU@@A,0x00EED668,pin
+?g_bfmeAudioGG@@3PAVBfmeAudioGG@@A,0x00EED668,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB1019@@3PAVBfmeB1019@@A,0x00EED668,pin
@@ -78043,6 +78065,7 @@ name,address,notes
 ?g_bfmeTarget986B@@3PADA,0x00F071E4,pin
 ?g_bfmeTbl1064@@3PAPADA,0x00D05E9C,pin
 ?g_bfmeTbl1065@@3PAPADA,0x00D0C3B0,pin
+?g_bfmeTerrainGJ@@3PAVBfmeTerrainGJ@@A,0x00EEF4CC,pin
 ?g_bfmeThingBHG@@3PAUBfmeThingBHG@@A,0x00EF49B4,pin
 ?g_bfmeThingVNH@@3PAUBfmeThingVNH@@A,0x00EF49D0,pin
 ?g_bfmeThreeAOA@@3PAVBfmeThreeAOA@@A,0x00EF1B40,pin
@@ -78221,6 +78244,7 @@ name,address,notes
 ?g_rva00785FD0Queue@@3PAURva00785FD0Node@@A,0x01306978,APT queue sentinel for 0x00785FD0
 ?g_rva00785FD0Renderer@@3PAVRva00785FD0Renderer@@A,0x01306954,APT renderer singleton for 0x00785FD0
 ?g_rva007A2330Flag@@3DA,0x012D6DFC,byte flag stored by 0x007A2330 before the helper call
+?g_rva00893030Manager@@3PAVRva00893030Manager@@A,0x013377D4,retail 0x00893030 loads the manager pointer from 0x013377D4
 ?g_rva00914860Limit@@3HA,0x0134126C,Open-BFME5 pool size threshold used by the 0x00914860 sizing update
 ?g_rva00914860PoolA@@3VRva00914860PoolA@@A,0x01341264,Open-BFME5 first pool object used by the 0x00914860 sizing update
 ?g_rva00914860PoolB@@3VRva00914860PoolB@@A,0x01343698,Open-BFME5 second pool object used by the 0x00914860 sizing update
@@ -80441,6 +80465,7 @@ name,address,notes
 ?invoke@LoadGameFadeWrapper@@UAEIM_N@Z,0x47eba,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
 ?invoke@Q3ScriptDispatcher@@QAEXPAUQ3ScriptMovie@@PBDH1PAX222@Z,0x004675F0,address-derived script-dispatch entry shared by the seven bool toggle wrappers; read from the REL32 at their call sites and followed through its ILT thunk
+?invoke@Rva00893030Manager@@QAEXVRva00893030Ref@@PAX11@Z,0x00895C50,retail 0x00893030 calls the four-argument thiscall manager body at 0x00895C50
 ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@HHHH@Z,0x004135C0,S4 sink method of the Lua string-command family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@_NHHH@Z,0x000391C6,ABI-compatible bool alias for ObjectHideSubObject callbacks, which call the same incremental-link thunk
 ?invokeAtLevel@GenActionSink@@QAEPAEHPBDH0HHHH@Z,0x00015235,"Lead traced204B4675F0: rejects level>=12 unsigned, formats /_level%d, invokesAPT893410, returns global result byte pointer"
@@ -81154,6 +81179,7 @@ name,address,notes
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
 ?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
+?query@Rva0036ff70Module@@QAEHP6AHPAX0@Z0@Z,0x0004A73C,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
 ?queryCached@BfmeSub1CC_EC3@@QAEMPAVObject@@@Z,0x0001FF19,"Reviewed25B1B9590 cached float at58 and deadline5C, expired path1B7E90 reads Object200/204"
 ?queryInterfaceRva001BF6B0@Object@@QAEPAVBfmeInterface001BF6B0@@XZ,0x0000F8E4,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?queryRva001C9980@Object@@QAE_NXZ,0x00019B5F,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
@@ -81524,6 +81550,7 @@ name,address,notes
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
 ?rva000b2cc0@@YGXPAXH@Z,0x00025306,Open-BFME5 ILT stdcall of push0+data wrapper
 ?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
+?rva00108520@Radar@@QAE_NHPAUCoord3D@@@Z,0x0001B6D0,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
 ?rva001B3510@Rva001CD990FiringTracker@@QAEXPBVWeapon@@HPBXE@Z,0x00035D0A,Root traced ILT00035D0A to001B3510; complete805-byte firing tracker body ends RET10 at001B3832. Existing firing tracker family plus this caller proves four stack arguments. Address-derived member symbol avoids overclaiming target semantics. Removed unused mismangled alternatename directive.
 ?rva001EFB20@BezierProjectileBehavior@@QAEXPAVObject@@@Z,0x001EFB20,"Root reviewed complete source, exact full symbol extent and all resolved relocations; no emitted vtable. Root traced ILT3107->1EFB20/356B (Object pointer, this+44/+48 path, ret4), ILT5358->1F1B90/260B (boolean low byte tested, increments primary+78, ret4), ILT12E8B->1F1620/449B (primary owner+8 and ret4). Secondary this is primary+20; packet counter+58 equals primary+78. Removed generated-symbol fallback pragmas; no original semantic helper names asserted."
 ?rva001F1620@BezierProjectileBehavior@@QAEX_N@Z,0x001F1620,"Root reviewed complete source, exact full symbol extent and all resolved relocations; no emitted vtable. Root traced ILT3107->1EFB20/356B (Object pointer, this+44/+48 path, ret4), ILT5358->1F1B90/260B (boolean low byte tested, increments primary+78, ret4), ILT12E8B->1F1620/449B (primary owner+8 and ret4). Secondary this is primary+20; packet counter+58 equals primary+78. Removed generated-symbol fallback pragmas; no original semantic helper names asserted."
@@ -83038,6 +83065,7 @@ _bfmeQuery1240,0x00892370,pin
 _bfmeReload1221,0x008D3AE0,pin
 _bfmeReport1233,0x009F7D80,pin
 _bfmeRetailCritterDesyncLog,0x0003A17A,Open-BFME6 BFME desync trace logger (cdecl sink+message) reached from AIDockMoveToDockState onEnter
+_bfmeRva0036CFD0Callback,0x0002DC95,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
 _bfmeSearch1155,0x0082F1A0,pin
 _bfmeStep1211A,0x008D0B00,pin
 _bfmeStep1211B,0x008CD130,pin
@@ -83279,6 +83307,7 @@ _ciAddLISTFilter,0x0086C4A0,GameSpy Chat channel-list filter constructor
 _ciAddNAMESFilter,0x0086C5A0,upstream chatMain.c NAMES filter helper whose return becomes chatEnumUsersA's blocking ID
 _ciAddTOPICFilter,0x0086C570,GameSpy Chat channel-topic filter constructor
 _ciAddWHOFilter,0x0086C650,gamespy-chat: registered by chatGetBasicUserInfo at 0x00861370 right after the WHO send
+_ciApplyChangesToMode,0x0086CDF0,"Root traced commandMODE table identity and complete276B handler. Shared authentic ciApplyChangesToMode has125 executable bytes,3-byte compiler alignment and13-entry52B in-text jump table: total180B to86CEA3 inclusive, followed byCC padding untilnextfunction86CEB0. Entire180B independently matched, including every table relocation/local destination and atoi import. Previous125B dump under-covered its table; no adjacent claim overlaps180B. All17 complete source symbols retain exact bytes and resolved relocations. No artificial anchor, register-ABI placeholder or synthetic helper."
 _ciBufferPreAppend,0x0085A740,gamespy-chatSocket internal call from exact ciSocketSend caller
 _ciCallCallback,0x008712F0,gamespy-chat: static EAX/ESI dispatcher called from exact _ciCallCallbacks; dump still at 0x008712F0
 _ciCallCallbacks,0x008714F0,gamespy-chat: final callee of ciThink at 0x008601F0 - takes the chat handle and an ID
@@ -83989,30 +84018,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?clear@Rva0019BE80TeamRec@@QAEXXZ,0x0002DF65,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
-?append@Rva0019BE80TeamRec@@QAEHPBVDict@@@Z,0x00045DC7,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
-?StickyShiftRightMant@@YAXPAUInternalFPF@@H@Z,0x00879740,BYTEmark emfloat helper; retail callee of RoundInternalFPF at 0x00879810
-?query@Rva0036ff70Module@@QAEHP6AHPAX0@Z0@Z,0x0004A73C,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
-?rva00108520@Radar@@QAE_NHPAUCoord3D@@@Z,0x0001B6D0,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
-_bfmeRva0036CFD0Callback,0x0002DC95,"Root disassembled full query36FF70/524 and callback36CFD0/145: callback returns full EAX0/1, caller tests EAX after two cdecl arguments. Corrected callback from bool to int, added typed address-derived symbol instead of casting a generated no-arg thunk, and corrected query pin signature. Root inspected Radar108520/152: two stack args, explicit AL0/1, ret8; corrected void to bool return. Replaced hardcoded CastleBehavior string address with real literal. Full286B target, all22 relocation sites, literal and secondary-object offsets independently verified; no emitted vtable."
-?bfmeApplyGG@BfmePrimaryGG@@QAEXPAXH@Z,0x000157DA,pin
-?g_bfmeAudioGG@@3PAVBfmeAudioGG@@A,0x00EED668,pin
-?bfmeOwnGJ@BfmeOwnerGJ@@QAEMMM@Z,0x00036FCA,pin
-?g_bfmeTerrainGJ@@3PAVBfmeTerrainGJ@@A,0x00EEF4CC,pin
-?find@?$hash_map@HUGen_p12cd@@U?$hash@H@_STL@@U?$equal_to@H@3@V?$allocator@U?$pair@$$CBHUGen_p12cd@@@_STL@@@3@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHUGen_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_p12cd@@@_STL@@@2@@2@ABH@Z,0x00014BEB,"Root independently reviewed complete source, exact full symbol extent and resolved relocations; no emitted vtable. Replaced numeric empty-string address with real literal, raw iterator aliasing with standard iterator/end/second access, and integer-cast redirect with proven pointer-returning BfmeOverridable getFinalOverride. All changes preserve121B exact. Root independently compiled full map::find helper60B and compared to37E9D0 reached through14BEB: integer hash buckets, key comparison, two-word iterator result, ret8; no relocations. New pin preserves actual compiler-emitted helper and known map layout."
-?bfmeFirstGK@BfmeSubGK@@QAEXPAVBfmeThingGK@@@Z,0x0000FED4,pin
-?bfmeSecondGK@BfmeSubGK@@QAEXPAVBfmeThingGK@@HPAVBfmeArgGK@@H@Z,0x0001F1D1,pin
-??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@2@@_STL@@QBEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@W4Rva00614D10Mapped@@@_STL@@@1@ABVAsciiString@@@Z,0x00031D68,ILT31D68 to613BB0; root independently verified complete emitted159B helper in this caller TU
-??0S4Elem007746E0@@QAE@XZ,0x0000345E,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
-??4S4Elem007746E0@@QAEAAV0@ABV0@@Z,0x00046CC2,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
-?bfmeSetGM@BfmeDerivedGM@@QAEXPAX@Z,0x007F9590,pin
-?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@ABVAsciiString@@@Z,0x005B2E30,HotKey map operator[] lower_bound target
-?bfmeSetWakeIS@BfmeWakeIS@@QAEXPAXH@Z,0x000157DA,pin
-_ciApplyChangesToMode,0x0086CDF0,"Root traced commandMODE table identity and complete276B handler. Shared authentic ciApplyChangesToMode has125 executable bytes,3-byte compiler alignment and13-entry52B in-text jump table: total180B to86CEA3 inclusive, followed byCC padding untilnextfunction86CEB0. Entire180B independently matched, including every table relocation/local destination and atoi import. Previous125B dump under-covered its table; no adjacent claim overlaps180B. All17 complete source symbols retain exact bytes and resolved relocations. No artificial anchor, register-ABI placeholder or synthetic helper."
-?invoke@Rva00893030Manager@@QAEXVRva00893030Ref@@PAX11@Z,0x00895C50,retail 0x00893030 calls the four-argument thiscall manager body at 0x00895C50
-?g_rva00893030Manager@@3PAVRva00893030Manager@@A,0x013377D4,retail 0x00893030 loads the manager pointer from 0x013377D4
-?bfmeRunKD@BfmeTgtKD@@QAEDPAXVBfmeArgKD@@0@Z,0x0003FE77,pin
-?bfmeRunKE@BfmeTgtKE@@QAEDPAXVBfmeArgKE@@0@Z,0x0003C795,pin
-?bfmeRunLA@BfmeTgtLA@@QAEXVBfmeArgLA@@PAX1@Z,0x0004461B,pin
-?bfmeRunLB@BfmeTgtLB@@QAEXVBfmeArgLB@@PAX1@Z,0x00010B72,pin
-?dispatch@Rva001FD120Dispatch@@QAEXPAVObject@@I@Z,0x00028AE2,"Root reviewed ILT28AE2 ->1FCE70/55 guarded AI victim dispatch; thiscall Object pointer and unused second32-bit argument, ret8"
