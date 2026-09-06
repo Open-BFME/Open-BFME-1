@@ -83635,3 +83635,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?_M_pop_back_aux@Rva006A04E0AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
+?_M_pop_back_aux@Rva006A3A00AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
