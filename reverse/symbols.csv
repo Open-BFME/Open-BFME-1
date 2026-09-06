@@ -1357,7 +1357,6 @@ name,address,notes
 ??0?$VectorClass@UTextureStatisticsStruct@@@@QAE@IPBUTextureStatisticsStruct@@@Z,0x009374A0,DynamicVectorClass<TextureStatisticsStruct> retail base-constructor REL32 target
 ??0?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAE@HPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VHashItem@?$UniqueArrayClass@VFaceClass@MeshBuilderClass@@@@@@QAE@HPBVHashItem@?$UniqueArrayClass@VFaceClass@MeshBuilderClass@@@@@Z,0x000187AF,pinharvest x1 (thunk)
-??0?$VectorClass@VKeyClass@Curve3DClass@@@@QAE@HPBVKeyClass@Curve3DClass@@@Z,0x000187AF,Open-BFME7 additive: retail call target used by the landed row at 0x0013B6A0 (thunk drift repair)
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x00933D30,matched Render2DClass constructor call target
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VShaderClass@@@@QAE@HPBVShaderClass@@@Z,0x000187AF,pinharvest x1 (thunk)
@@ -1433,30 +1432,10 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@PAPAVGameResultsRequest@@PAV1@V?$allocator@PAVGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsRequest@@@1@PAPAVGameResultsRequest@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
 ??0?$_STLP_alloc_proxy@PAPAVGameResultsResponse@@PAV1@V?$allocator@PAVGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsResponse@@@1@PAPAVGameResultsResponse@@@Z,0x008F9A20,shared alloc_proxy ctor body (4 template instances)
 ??0?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@QAE@ABV?$allocator@PAX@1@PAPAX@Z,0x00065430,gen-tgrid shared callee
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x0000E3A9,Open-BFME7 additive: retail call target used by the landed row at 0x00099260 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x0001C36E,Open-BFME7 additive: retail call target used by the landed row at 0x000CF070 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x00023E9D,Open-BFME7 additive: retail call target used by the landed row at 0x0009EF10 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x00029690,Open-BFME7 additive: retail call target used by the landed row at 0x000CF250 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x0002DAE7,Open-BFME7 additive: retail call target used by the landed row at 0x000CEB90 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x00039EC8,Open-BFME7 additive: retail call target used by the landed row at 0x000CF160 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x0004AF1B,Open-BFME7 additive: retail call target used by the landed row at 0x00092EC0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@PAUAudioRequest@@@_STL@@U12@V?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAUAudioRequest@@@_STL@@@1@PAU?$_List_node@PAUAudioRequest@@@1@@Z,0x0007F9F0,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@PAVParticleSystem@@@_STL@@U12@V?$allocator@U?$_List_node@PAVParticleSystem@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAVParticleSystem@@@_STL@@@1@PAU?$_List_node@PAVParticleSystem@@@1@@Z,0x00024091
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@PAVShellMenuSchemeImage@@@_STL@@U12@V?$allocator@U?$_List_node@PAVShellMenuSchemeImage@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@PAVShellMenuSchemeImage@@@_STL@@@1@PAU?$_List_node@PAVShellMenuSchemeImage@@@1@@Z,0x0002244E,ILT; alloc_proxy ctor reached from the _List_base ctor at 0x0059FE90
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x0000B9D3,Open-BFME7 additive: retail call target used by the landed row at 0x001C3BC0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x00021878,Open-BFME7 additive: retail call target used by the landed row at 0x0010E320 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x00021F2B,Open-BFME7 additive: retail call target used by the landed row at 0x00151760 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x00029488,Open-BFME7 additive: retail call target used by the landed row at 0x000CF340 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x0002B071,Open-BFME7 additive: retail call target used by the landed row at 0x0014BA90 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x00033E10,Open-BFME7 additive: retail call target used by the landed row at 0x001C3C30 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@U?$pair@VAsciiString@@M@_STL@@@_STL@@@1@PAU?$_List_node@U?$pair@VAsciiString@@M@_STL@@@1@@Z,0x0006EED0,zhstl per-site callee copy (body proven byte-equal)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x0000FC63,Open-BFME7 additive: retail call target used by the landed row at 0x003BF930 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000162D9,Open-BFME7 additive: retail call target used by the landed row at 0x001F3170 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x0002395C,Open-BFME7 additive: retail call target used by the landed row at 0x0058F250 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000242BC,Open-BFME7 additive: retail call target used by the landed row at 0x007535E0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000328AD,Open-BFME7 additive: retail call target used by the landed row at 0x001F3130 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000393F1,Open-BFME7 additive: retail call target used by the landed row at 0x0037E350 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000434EB,Open-BFME7 additive: retail call target used by the landed row at 0x005C3F30 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@UCoord3D@@@_STL@@U12@V?$allocator@U?$_List_node@UCoord3D@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_List_node@UCoord3D@@@_STL@@@1@PAU?$_List_node@UCoord3D@@@1@@Z,0x000BED60,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_00069970_p12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_00069970_p12cd@@@_STL@@@2@@_STL@@QAE@ABV01@@Z,0x00069570,gen-tgrid payload member
 ??0?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_000de040_p12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_000de040_p12cd@@@_STL@@@2@@_STL@@QAE@ABV01@@Z,0x000DDFA0,gen-tgrid payload member
@@ -1576,51 +1555,18 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_003a7590_mc4@@UGen_t_003a7590_m24cd@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_003a7590_mc4@@UGen_t_003a7590_m24cd@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_003a7590_mc4@@UGen_t_003a7590_m24cd@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_003a7590_mc4@@UGen_t_003a7590_m24cd@@@_STL@@@1@@Z,0x003A6690,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_00404a10_mc4@@UGen_t_00404a10_m32cd@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_00404a10_mc4@@UGen_t_00404a10_m32cd@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_00404a10_mc4@@UGen_t_00404a10_m32cd@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_00404a10_mc4@@UGen_t_00404a10_m32cd@@@_STL@@@1@@Z,0x00404150,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_00631b20_mc4@@UGen_t_00631b20_m32cd@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_00631b20_mc4@@UGen_t_00631b20_m32cd@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBUGen_t_00631b20_mc4@@UGen_t_00631b20_m32cd@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBUGen_t_00631b20_mc4@@UGen_t_00631b20_m32cd@@@_STL@@@1@@Z,0x00631030,family-emit payload member
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0000F461,Open-BFME7 additive: retail call target used by the landed row at 0x0033B710 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x00017F62,Open-BFME7 additive: retail call target used by the landed row at 0x0036DE30 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0001CF26,Open-BFME7 additive: retail call target used by the landed row at 0x00194EE0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0002AFE0,Open-BFME7 additive: retail call target used by the landed row at 0x001D6F30 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0003C871,Open-BFME7 additive: retail call target used by the landed row at 0x0036DE60 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0003D884,Open-BFME7 additive: retail call target used by the landed row at 0x00194EB0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@1@@Z,0x0013E980,zhstl per-site callee copy (body proven byte-equal)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@1@@Z,0x0001AD39,Open-BFME7 additive: retail call target used by the landed row at 0x00235970 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@1@@Z,0x00043455,Open-BFME7 additive: retail call target used by the landed row at 0x002A1BF0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@1@@Z,0x000A8F20,zhstl per-site callee copy (body proven byte-equal)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@1@@Z,0x0094C1B0,Open-BFME7 additive: retail call target used by the landed row at 0x0094C4C0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@1@@Z,0x009CECF0,Open-BFME7 additive: retail call target used by the landed row at 0x009CF0F0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@1@@Z,0x006310D0,zhstl per-site callee copy (body proven byte-equal)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@1@@Z,0x009C9300,Open-BFME7 additive: retail call target used by the landed row at 0x009C9460 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@1@@Z,0x009CECA0,Open-BFME7 additive: retail call target used by the landed row at 0x009CF0C0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x0000F1DC,Open-BFME7 additive: retail call target used by the landed row at 0x0033B770 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x0001A37F,Open-BFME7 additive: retail call target used by the landed row at 0x003D3610 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x000220CA,Open-BFME7 additive: retail call target used by the landed row at 0x0033B740 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x0002BE13,Open-BFME7 additive: retail call target used by the landed row at 0x0033B7A0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x0003A503,Open-BFME7 additive: retail call target used by the landed row at 0x0021AFF0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x0003A6F7,Open-BFME7 additive: retail call target used by the landed row at 0x005B2A00 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@@Z,0x000EE310,zhstl per-site callee copy (body proven byte-equal)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x00002A4F,Open-BFME7 additive: retail call target used by the landed row at 0x00092F90 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x000137F0,Open-BFME7 additive: retail call target used by the landed row at 0x0007FE70 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x0001DE12,Open-BFME7 additive: retail call target used by the landed row at 0x00072670 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x0003427F,Open-BFME7 additive: retail call target used by the landed row at 0x00072AE0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x000372DB,Open-BFME7 additive: retail call target used by the landed row at 0x0007FE40 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x0004273A,Open-BFME7 additive: retail call target used by the landed row at 0x000A0DF0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x00044EF4,Open-BFME7 additive: retail call target used by the landed row at 0x000A9DE0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@1@@Z,0x0006E5A0,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@1@@Z,0x0000F461,pinharvest x1 (thunk)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@_STL@@@1@PAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@1@@Z,0x000403CC,Open-BFME7 additive: retail call target used by the landed row at 0x000BF0D0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_004d49b0_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_004d49b0_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_004d49b0_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_004d49b0_m4pod@@@1@@Z,0x004D4550,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_00539470_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_00539470_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_00539470_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_00539470_m4pod@@@1@@Z,0x005389E0,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_00631be0_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_00631be0_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_00631be0_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_00631be0_m4pod@@@1@@Z,0x00631130,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_00666e70_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_00666e70_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_00666e70_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_00666e70_m4pod@@@1@@Z,0x00665050,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_006dbf20_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_006dbf20_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_006dbf20_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_006dbf20_m4pod@@@1@@Z,0x006DB670,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@UGen_t_00764dd0_m4pod@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@UGen_t_00764dd0_m4pod@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@UGen_t_00764dd0_m4pod@@@_STL@@@1@PAU?$_Rb_tree_node@UGen_t_00764dd0_m4pod@@@1@@Z,0x007612A0,family-emit payload member
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x00006F2D,Open-BFME7 additive: retail call target used by the landed row at 0x00235880 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0001EAD8,Open-BFME7 additive: retail call target used by the landed row at 0x0036DEC0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0001F35C,Open-BFME7 additive: retail call target used by the landed row at 0x000EEBA0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0003D393,Open-BFME7 additive: retail call target used by the landed row at 0x002966E0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x00047433,Open-BFME7 additive: retail call target used by the landed row at 0x0025BA50 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0004905D,Open-BFME7 additive: retail call target used by the landed row at 0x0013F840 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0004A782,Open-BFME7 additive: retail call target used by the landed row at 0x00072AB0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@VAsciiString@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Rb_tree_node@VAsciiString@@@_STL@@@1@PAU?$_Rb_tree_node@VAsciiString@@@1@@Z,0x0006E750,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAUGen_t_00066a90_p4cd@@U1@V?$allocator@UGen_t_00066a90_p4cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_00066a90_p4cd@@@1@PAUGen_t_00066a90_p4cd@@@Z,0x000668C0,gen-tgrid payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_00069cc0_p16cd@@U1@V?$allocator@UGen_t_00069cc0_p16cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_00069cc0_p16cd@@@1@PAUGen_t_00069cc0_p16cd@@@Z,0x000694D0,gen-tgrid payload member
@@ -1895,13 +1841,6 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@PAUGen_t_007d69c0_m4pod@@U1@V?$allocator@UGen_t_007d69c0_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_007d69c0_m4pod@@@1@PAUGen_t_007d69c0_m4pod@@@Z,0x007D65D0,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_008ff3e0_p12cd@@U1@V?$allocator@UGen_t_008ff3e0_p12cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_008ff3e0_p12cd@@@1@PAUGen_t_008ff3e0_p12cd@@@Z,0x00753140,gen-tgrid payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_009f51f0_p8cd@@U1@V?$allocator@UGen_t_009f51f0_p8cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_009f51f0_p8cd@@@1@PAUGen_t_009f51f0_p8cd@@@Z,0x009F4AA0,gen-tgrid payload member
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00009264,Open-BFME7 additive: retail call target used by the landed row at 0x000729F0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00011F40,Open-BFME7 additive: retail call target used by the landed row at 0x000728A0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x000258A6,Open-BFME7 additive: retail call target used by the landed row at 0x00068DB0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00036DE5,Open-BFME7 additive: retail call target used by the landed row at 0x00066C70 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x0003828F,Open-BFME7 additive: retail call target used by the landed row at 0x000728D0 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x000399E1,Open-BFME7 additive: retail call target used by the landed row at 0x00095140 (thunk drift repair)
-??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00042A19,Open-BFME7 additive: retail call target used by the landed row at 0x000729A0 (thunk drift repair)
 ??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00065430,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@U_Slist_node_base@_STL@@U?$_Slist_node@H@2@V?$allocator@U?$_Slist_node@H@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Slist_node@H@_STL@@@1@U_Slist_node_base@1@@Z,0x007122F0,gen-tgrid shared callee
 ??0?$_Vector_base@HV?$allocator@H@_STL@@@_STL@@QAE@IABV?$allocator@H@1@@Z,0x00066A90,gen-tgrid shared callee
@@ -2145,7 +2084,6 @@ name,address,notes
 ??0BattlePlanUpdateModuleData@@QAE@XZ,0x0003025B
 ??0BeaconClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0BeaconClientUpdateModuleData@@QAE@XZ,0x000286C3,module-glue cascade callee (from retail call site)
-??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME7 additive: retail call target used by the landed row at 0x0036CEA0 (thunk drift repair)
 ??0BezierSegment@@QAE@XZ,0x00043A9A
 ??0BfmeAllocProxy1@@QAE@PAXPAD@Z,0x000281E6,Open-BFME5 the end-pointer proxy constructor the byte-element vector constructor at 0x005C46C0 runs
 ??0BfmeAllocProxy_000F9F70@@QAE@PAXPAUBfmeElem_000F9F70@@@Z,0x00006F5F,Open-BFME5 the end-pointer proxy constructor the sized-vector constructor at 0x000F9F70 runs
@@ -2469,7 +2407,6 @@ name,address,notes
 ??0FXNugget@@QAE@XZ,0x00428590,BFME's 225-byte FXNugget constructor; the 9-byte body at 0x00061D90 that already carries this name is an ICF alias of `mov eax,ecx / mov [eax],0 / ret`
 ??0FastAllocatorGeneral@@QAE@XZ,0x00B027B0
 ??0FatalErrorContext@@QAE@XZ,0x00013A8E,error context constructed before fatal timed-operation reports
-??0FellBeastSwoopPowerBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME7 additive: retail call target used by the landed row at 0x0025CF40 (thunk drift repair)
 ??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
 ??0FileSystem@@QAE@XZ,0x00022CA5
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
@@ -2778,7 +2715,6 @@ name,address,notes
 ??0GhostObjectManager@@QAE@XZ,0x00008652
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
 ??0GiantBirdGuardReturnState@@QAE@PAX@Z,0x0001C292,GiantBirdGuardReturnState constructor ILT identified by adjacent exact literal name getter and allocation size
-??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME7 additive: retail call target used by the landed row at 0x0025D9A0 (thunk drift repair)
 ??0GiveUpgradeUpdateModuleDataBase@@QAE@XZ,0x0003F503,GiveUpgradeUpdateModuleData ctor base
 ??0Glo012F4B98Type@@QAE@XZ,0x0002E7CB,pin ctor of address-derived Glo012F4B98Type reached via ILT thunk 0002E7CB (target FUN_00b9d9f0 / retail 0x006FD9F0) from factory Rva006FC330
 ??0GlobalData@@QAE@XZ,0x00001807,ILT; ctor call site in GlobalData::newOverride 0x00085BA0
@@ -2800,7 +2736,6 @@ name,address,notes
 ??0HeightDieUpdateModuleData@@QAE@XZ,0x0002C9D0,module-glue cascade callee (from retail call site)
 ??0HeightMapRenderObjClass@@QAE@H@Z,0x00045304,BFME adjustTerrainLOD ILT; body 0x006D1C80 reads Bool argument and returns 4
 ??0HeroDieBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,HeroDie ctor base
-??0HeroModeSpecialAbilityUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME7 additive: retail call target used by the landed row at 0x0025F8A0 (thunk drift repair)
 ??0HighlanderBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001BE3C,link thunk to the HighlanderBody constructor; named from the ModuleFactory registration that pairs "HighlanderBody" with factory 0x0011F4B0
 ??0HijackerUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003A382,module ctor (friend_newModuleInstance retail call target)
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
@@ -2986,7 +2921,6 @@ name,address,notes
 ??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,shared ObjectModule constructor ILT to 0x00113C60; called by named object-module constructors
 ??0ObjectRepulsorHelper@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000D062,constructor ILT to 0x001C11D0
 ??0ObjectTypes@@QAE@XZ,0x0003D415,pin for ObjectTypesTemp ctor callee (packet 002ed6c0)
-??0ObjectWeaponStatusHelperBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00021BE8,Open-BFME7 additive: retail call target used by the landed row at 0x001C1340 (thunk drift repair)
 ??0OneRingPenaltyUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039F9A,Ghidra-owned constructor thunk
 ??0OpenContainModuleData@@QAE@XZ,0x00044030,CaveContain factory constructor target
 ??0OptionPreferences@@QAE@XZ,0x0003713C
@@ -3078,7 +3012,6 @@ name,address,notes
 ??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E8D0,module ctor (friend_newModuleInstance retail call target)
 ??0RepairSpecialPowerModuleData@@QAE@XZ,0x0001C486,RepairSpecialPower ModuleData ctor
 ??0ReplaceObjectUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
-??0RespawnBodyBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025509,Open-BFME7 additive: retail call target used by the landed row at 0x00214650 (thunk drift repair)
 ??0RespawnBodyModuleDataBase@@QAE@XZ,0x00036818,RespawnBody module-data base constructor ILT
 ??0RespawnPolicyMember@@QAE@XZ,0x0003747A,RespawnBody policy member constructor ILT
 ??0RespawnUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000FA38,link thunk to the RespawnUpdate constructor; named from the ModuleFactory registration that pairs "RespawnUpdate" with factory 0x0011CC00
@@ -3655,7 +3588,6 @@ name,address,notes
 ??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x00013449,ResourceGatheringManager list destructor ILT
-??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x000383CF,Open-BFME7 additive: retail call target used by the landed row at 0x0023EF90 (thunk drift repair)
 ??1?$_List_base@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@QAE@XZ,0x0002CFD4,ILT thunk; retail call sites use the thunk
 ??1?$_List_base@PAVBfmeRva493A0Object@@V?$allocator@PAVBfmeRva493A0Object@@@_STL@@@_STL@@QAE@XZ,0x0000E68D,assigned list destructor call target for Rva002493A0
 ??1?$_List_base@PAVCampaign@@V?$allocator@PAVCampaign@@@_STL@@@_STL@@QAE@XZ,0x00015686,CampaignManager destructor STLport list base teardown
@@ -4136,7 +4068,6 @@ name,address,notes
 ??1CivilianSpawnUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1CivilianSpawnUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921380,0x00921430 deleting wrapper directly calls this body; exact constructor 0x00921390 and Clone 0x009213E0 form the contiguous ClassicEnvironmentMapper emission group
-??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,Open-BFME7 additive: retail call target used by the landed row at 0x00921F50 (thunk drift repair)
 ??1ClearanceTestingSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1ClearanceTestingSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x000309F4,Open-BFME5 pin
 ??1CloudBreakSpecialPower@@MAE@XZ,0x00007379,destructor ILT to 0x00259060
@@ -8469,7 +8400,6 @@ name,address,notes
 ??1LockClass@MutexClass@@QAE@XZ,0x009DB400
 ??1LockWeaponCreate@@MAE@XZ,0x000377A9,destructor ILT to 0x0024FC70
 ??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
-??1LogicalDecalClass@MultiFixedPoolDecalSystemClass@@QAE@XZ,0x0003CC2C,Open-BFME7 additive: retail call target used by the landed row at 0x005D7480 (thunk drift repair)
 ??1Mapping@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40
 ??1MatBufferClass@@UAE@XZ,0x0092A220,matched constructors bracket target; source vtable/ref-release/base-dtor structure aligns with known BFME Array +0x08 layout; 0x0092BA40 wrapper call
 ??1MaterialInfoClass@@UAE@XZ,0x00930F60,0x009312B0 deleting wrapper calls target; matched 0x00930E00 copy constructor and three owned material vectors prove class layout
@@ -8565,8 +8495,6 @@ name,address,notes
 ??1PSPlayerStats@@QAE@XZ,0x00025C1B,PSRequest retail member destructor
 ??1PSResponse@@QAE@XZ,0x0003B0CF,ILT the PSResponse deque pop_front calls at 0x00656BE1; its target adds four to this and tail-jumps to ??1PSPlayerStats
 ??1ParticleSysBoneInfo@@QAE@XZ,0x000033B9,pinharvest x1 (thunk)
-??1ParticleSysBoneInfo@@QAE@XZ,0x00022FE3,Open-BFME7 additive: retail call target used by the landed row at 0x0012A830 (thunk drift repair)
-??1ParticleSysBoneInfo@@QAE@XZ,0x0004A462,Open-BFME7 additive: retail call target used by the landed row at 0x000A8170 (thunk drift repair)
 ??1ParticleSystemHandle@@QAE@XZ,0x00013994,tracked particle-system handle unlink destructor
 ??1ParticleSystemTemplateBase@FXParticleSystem@@UAE@XZ,0x00002F5E,Open-BFME5 pin
 ??1ParticleSystemTemplateMemberA@FXParticleSystem@@QAE@XZ,0x000244BF,Open-BFME5 pin
@@ -8605,7 +8533,6 @@ name,address,notes
 ??1Q3EhMember0089C900@@QAE@XZ,0x0089C900,address-derived member destructor of the EH-guarded destructor family; read from the REL32 at its call site and followed through its ILT thunk
 ??1Q4Sub00C9CC70@@QAE@XZ,0x0089CC70,subobject destructor at +8 in the 94-byte polymorphic destructor family (Q4VptrPairDtors.cpp); address-derived name; identity not recovered
 ??1QuantityModifier@@QAE@XZ,0x000033B9,pinharvest x1 (thunk)
-??1QuantityModifier@@QAE@XZ,0x00022FE3,Open-BFME7 additive: retail call target used by the landed row at 0x0012A830 (thunk drift repair)
 ??1QueuedDownload@@QAE@XZ,0x00044733
 ??1QuickMatchPreferences@@UAE@XZ,0x00010073
 ??1RAMFile@@MAE@XZ,0x00029555,pinharvest x1 (thunk)
@@ -9189,7 +9116,6 @@ name,address,notes
 ??4BfmeIntMap@@QAEAAV0@ABV0@@Z,0x00048013,Open-BFME5 operator= of the 12-byte member at ProductionPrerequisite+0x0C; the ILT here jumps to the _Rb_tree<int> assignment at 0x00064E90
 ??4BfmeLegendString@@QAEAAU0@ABU0@@Z,0x00887C90,SubsystemLegend.cpp AsciiString stand-in operator=; retail AsciiString::operator= body
 ??4BfmeRendererListBase@@QAEAAV0@ABV0@@Z,0x00887B60,provisional structural name: the four-byte base half of Render2DSentenceClass::PendingSurfaceStruct::Renderers; the address is an ICF group the ledger leads with StringBase<char>?s copy ctor
-??4BfmeRendererVectorBase@@QAEAAV0@ABV0@@Z,0x0093CEA0,Open-BFME7 additive: retail call target used by the landed row at 0x0093E8E0 (thunk drift repair)
 ??4BfmeRva004262F0Map@@QAEAAV0@ABV0@@Z,0x000083E1,28-byte copy 0x004259E0 tree-backed member assignment at offset16; ILT enters424AC0
 ??4BfmeSentenceDataStruct@@QAEAAU0@ABU0@@Z,0x0093D9B0,retail SentenceData record assignment used by assigned vector Add body
 ??4BfmeSmallScaleDownString@@QAEAAU0@ABU0@@Z,0x00887C90,Open-BFME5 view-class spelling of the AsciiString copy-assignment already pinned as ??4AsciiString@@QAEAAV0@ABV0@@Z; declared-not-defined on the view so retail out-of-line call survives instead of the vendored inline expansion
@@ -9867,7 +9793,6 @@ name,address,notes
 ??_U@YAPAXI@Z,0x00881F30
 ??_V@YAXPAX@Z,0x00881EB0
 ??_VW3DTerrainBackground@@SAXPAX@Z,0x00881EF0,W3DTerrainBackground array deallocator used by FlatHeightMap m_tiles cleanup
-??__C@YGXPAX0IHP6EX00@ZP6EX0@Z@Z,0x009F7036,Open-BFME7 additive: retail call target used by the landed row at 0x004FA490 (thunk drift repair)
 ?Add@?$DynamicVectorClass@PAVVertexMaterialClass@@@@QAE_NABQAVVertexMaterialClass@@@Z,0x0092F7C0,rel32 pin for exact-ambiguous landing
 ?Add@?$DynamicVectorClass@UPtrPairStruct@PointerRemapClass@@@@QAE_NABUPtrPairStruct@PointerRemapClass@@@Z,0x00002A36,pinharvest x1 (thunk)
 ?Add@?$DynamicVectorClass@VModelNodeClass@HLodClass@@@@QAE_NABVModelNodeClass@HLodClass@@@Z,0x0097B080,pin for HLod Add_Sub_Object_To_Bone (rel32)
@@ -10072,7 +9997,6 @@ name,address,notes
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@DX8Wrapper@@SAX_N00ABVVector3@@MMI@Z,0x00904250,BFME 7-arg Clear color/z/stencil split from ZH 6-arg
 ?Clear_Pending_Delete_Lists@Rva00949D00Renderer@@QAEXXZ,0x00945ED0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
-?Close@CFile@D3DXCore@@QAEJXZ,0x00A3C834,Open-BFME7 additive: retail call target used by the landed row at 0x00A3C875 (thunk drift repair)
 ?Close_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E13E0
 ?Close_Micro_Chunk@ChunkLoadClass@@QAE_NXZ,0x009E1480
 ?Collide@CollisionMath@@SA_NABVAABoxClass@@ABVVector3@@ABVTriClass@@PAUCastResultStruct@@@Z,0x008E0C30
@@ -10137,7 +10061,6 @@ name,address,notes
 ?DualIndexedDispatchSecond@@3HA,0x00EB96A8,Open-BFME5 dual indexed dispatch second global
 ?DualIndexedDispatchSixFirst@@3HA,0x00EB9670,Open-BFME5 six-value dual indexed dispatch first global
 ?DualIndexedDispatchSixSecond@@3HA,0x00EB9690,Open-BFME5 six-value dual indexed dispatch second global
-?EmitInstSimple@CShaderProgram@D3DXShader@@IAEJK@Z,0x00ABE8EE,Open-BFME7 additive: retail call target used by the landed row at 0x00ABEE42 (thunk drift repair)
 ?EmptyScript@ScriptList@@0PAVScript@@A,0x012F078C,Open-BFME5 retail ScriptList recovery singleton
 ?EnableSlotListUpdates@@YAX_N@Z,0x000345EF,ILT thunk to body 0x006237A0
 ?Enable_Fog@ShaderClass@@QAEXPBD@Z,0x00910F90,derived from ParticleBufferClass main ctor aligned call sites
@@ -11161,11 +11084,6 @@ name,address,notes
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva005C9B80Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00044ADF,bucket-key helper called by the hash erase twin at 0x005C9B80
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva00692D50Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004A741,bucket-key helper called by the hash erase twin at 0x00692D50
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0000E8E0,pinharvest x1 (thunk)
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x000160DB,Open-BFME7 additive: retail call target used by the landed row at 0x000D6F50 (thunk drift repair)
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001E4E3,Open-BFME7 additive: retail call target used by the landed row at 0x00424010 (thunk drift repair)
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001ECD6,Open-BFME7 additive: retail call target used by the landed row at 0x00389BE0 (thunk drift repair)
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00044ADF,Open-BFME7 additive: retail call target used by the landed row at 0x0033F3F0 (thunk drift repair)
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PBVCommandButton@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00047B45,Open-BFME7 additive: retail call target used by the landed row at 0x00389BC0 (thunk drift repair)
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0003068E,ILT thunk called at +0x25 of hashtable erase 0x004609B0 (bucket index)
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004004D,rel32 pin for exact-ambiguous landing
 ?_M_bkt_num_key@?$hashtable@URva000B8AE0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000B8AE0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000B8AE0Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000B8AE0 calls
@@ -12105,9 +12023,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x0000791E,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000028C4,Open-BFME7 additive: retail call target used by the landed row at 0x003CFE10 (thunk drift repair)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001F4FB,Open-BFME7 additive: retail call target used by the landed row at 0x00067740 (thunk drift repair)
-?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0003B075,Open-BFME7 additive: retail call target used by the landed row at 0x002108D0 (thunk drift repair)
-?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000486BC,Open-BFME7 additive: retail call target used by the landed row at 0x00754670 (thunk drift repair)
 ?_M_insert_overflow@?$vector@IV?$allocator@I@_STL@@@_STL@@IAEXPAIABIABU__true_type@2@I_N@Z,0x0001CBFC,Audio handle vector growth ILT called by 0x006145C0
 ?_M_insert_overflow@?$vector@MV?$allocator@M@_STL@@@_STL@@IAEXPAMABMABU__true_type@2@I_N@Z,0x000264D1,Open-BFME5 ILT thunk to 0x000D32E0 - the overflow arm of _M_fill_insert at 0x00459D90. That body already carries a generated four-byte-POD _M_insert_overflow identity (Gen_t_000d6300_m4pod) which agrees the element is four bytes wide
 ?_M_insert_overflow@?$vector@PAVBfmeArmyIcon@@V?$allocator@PAVBfmeArmyIcon@@@_STL@@@_STL@@IAEXPAPAVBfmeArmyIcon@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001E051,retail findArmyIcon overflow call directly identifies vector<BfmeArmyIcon*> overflow helper
@@ -12115,7 +12030,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
 ?_M_insert_overflow@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CE4F,Open-BFME5 ILT; CrateSystem::newCrateTemplate vector growth call at retail 0x0037A418
 ?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001F4FB,Open-BFME7 additive: retail call target used by the landed row at 0x00067740 (thunk drift repair)
 ?_M_insert_overflow@?$vector@PAVEmotion@@V?$allocator@PAVEmotion@@@_STL@@@_STL@@IAEXPAPAVEmotion@@ABQAV3@ABU__true_type@2@I_N@Z,0x00022E4E,EmotionTrackerUpdate vector overflow ILT
 ?_M_insert_overflow@?$vector@PAVEmotionNugget@@V?$allocator@PAVEmotionNugget@@@_STL@@@_STL@@IAEXPAPAVEmotionNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002FC61,addNugget retail vector overflow ILT target
 ?_M_insert_overflow@?$vector@PAVExperienceScalarTable@@V?$allocator@PAVExperienceScalarTable@@@_STL@@@_STL@@IAEXPAPAVExperienceScalarTable@@ABQAV3@ABU__true_type@2@I_N@Z,0x0037F7D0,Open-BFME5 grow path of the vector at TheExperienceLevelSystem+0x20
@@ -12135,7 +12049,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PBVImage@@V?$allocator@PBVImage@@@_STL@@@_STL@@IAEXPAPBVImage@@ABQBV3@ABU__true_type@2@I_N@Z,0x004715B0,Open-BFME5 grow path of the image vector at BFMERetailCommandButton+0x138
 ?_M_insert_overflow@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@ABQBV3@ABU__true_type@2@I_N@Z,0x00043333,pinned from newModuleDataFromINI @0x1295F0 which is byte-exact apart from this call
 ?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0002E65E,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk)
-?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,Open-BFME7 additive: retail call target used by the landed row at 0x002097E0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@IAEXPAPBVThingTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x0000C5F4,zh_sweep packet 001dc59e callee pin
 ?_M_insert_overflow@?$vector@U?$pair@PAVSubsystemInterface@@PAX@_STL@@V?$allocator@U?$pair@PAVSubsystemInterface@@PAX@_STL@@@2@@_STL@@IAEXPAU?$pair@PAVSubsystemInterface@@PAX@2@ABU32@ABU__false_type@2@I_N@Z,0x009A1E50,vector<pair<SubsystemInterface* void*>> growth path called by SubsystemInterfaceList::initSubsystem
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00009052,pinharvest x1 (thunk)
@@ -12555,12 +12468,10 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@2@ABVAsciiString@@@Z,0x0001B60D,UserPreferences retail key-erase lower-bound thunk candidate
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@2@ABVAsciiString@@@Z,0x0002D029,UserPreferences retail lower-bound thunk candidate
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
-?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@ABVAsciiString@@@Z,0x0002D029,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009C9CE0,pin
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFC80,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls; matched RvaTreeBoundsAsciiString.cpp
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
-?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x0002D029,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x00003585,ILT thunk to the tree lower-bound walk at 0x0033F2E0; the map spelling whose mapped type is a four-byte enumeration
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x0002BF9E,ILT thunk to the tree lower-bound walk at 0x003B9A10; the map spelling whose mapped type is a four-byte enumeration
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva00448C60Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00448C60Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00448C60Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva00448C60Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x000090F2,ILT thunk to the tree lower-bound walk at 0x00448AD0; the map spelling whose mapped type is a four-byte enumeration
@@ -12568,7 +12479,6 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva00475300Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x0002ECA8,ILT thunk to the tree lower-bound walk at 0x00474CD0; the map spelling whose mapped type is a four-byte enumeration
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x0003FABC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0054FA30 calls; autopin
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
-?_M_lower_bound@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x0002D029,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_lower_bound@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@ABVUnicodeString@@@Z,0x00021B16,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044D370)
 ?_M_lower_bound@?@V?@G@@U?@CBV?@G@@URva0054EF10Value@@@_STL@@U?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@3@U?@V?@G@@@3@V?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@3@@_STL@@ABEPAU?@U?@CBV?@G@@URva0054EF10Value@@@_STL@@@2@ABV?@G@@@Z,0x0003FABC,ILT to wide-string tree _M_lower_bound 0x0054EE40
 ?_M_open@_Filebuf_base@_STL@@QAE_NPBDH@Z,0x0084A144,STLport filename open overload shares the byte-verified descriptor open tail at +4
@@ -12595,7 +12505,6 @@ name,address,notes
 ?_M_range_initialize@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEXPBD0ABUforward_iterator_tag@2@@Z,0x0002648B,Open-BFME5 ILT the char basic_string copy constructor at 0x004FB1B0 calls; it jumps to the 97-byte body at 0x004FA6F0
 ?_M_range_initialize@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEXPBG0ABUforward_iterator_tag@2@@Z,0x00013796,Open-BFME5 ILT the wide basic_string copy constructor at 0x004FB220 calls; it jumps to the 106-byte body at 0x004FA770
 ?_M_reallocate_map@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXI_N@Z,0x00007978,ILT reached by deque int push back auxiliary at 0x006472C0
-?_M_reallocate_map@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXI_N@Z,0x009EE360,Open-BFME7 additive: retail call target used by the landed row at 0x009EF0D0 (thunk drift repair)
 ?_M_reallocate_map@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI_N@Z,0x003688E0,gen-tgrid shared callee
 ?_M_reallocate_map@?$deque@UGen_t_00089c70_p12cd@@V?$allocator@UGen_t_00089c70_p12cd@@@_STL@@@_STL@@IAEXI_N@Z,0x00089850,gen-tgrid payload member
 ?_M_reallocate_map@?$deque@UGen_t_00089ce0_p4pod@@V?$allocator@UGen_t_00089ce0_p4pod@@@_STL@@@_STL@@IAEXI_N@Z,0x0000F6C3,ILT reached by deque POD4 push back auxiliary at 0x00089CE0
@@ -12659,18 +12568,13 @@ name,address,notes
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@2@ABVAsciiString@@@Z,0x0001FD2A,UserPreferences retail key-erase upper-bound thunk candidate
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@2@ABVAsciiString@@@Z,0x0002C958,UserPreferences retail upper-bound thunk candidate
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@ABVAsciiString@@@Z,0x00018ADE,pinharvest x1 (thunk)
-?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@ABVAsciiString@@@Z,0x0002C958,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x00018ADE,pinharvest x1 (thunk)
-?_M_upper_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x0002C958,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_upper_bound@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x00018ADE,pinharvest x1 (thunk)
-?_M_upper_bound@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x0002C958,Open-BFME7 additive: retail call target used by the landed row at 0x0007DF30 (thunk drift repair)
 ?_M_use_facet@locale@_STL@@QBEPAVfacet@12@ABVid@12@@Z,0x008321D0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_write@_Filebuf_base@_STL@@QAE_NPADH@Z,0x0084A7B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_PresetAdditiveSpriteShader@ShaderClass@@2V1@A,0x012D6E2C,StreakRendererClass retail constructor additive sprite shader preset
 ?_Rebalance@?$_Rb_global@_N@_STL@@SAXPAU_Rb_tree_node_base@2@AAPAU32@@Z,0x0082C9D0,insert-side twin of the _Rebalance_for_erase pin 0x190 later; called by every matched _Rb_tree _M_insert instantiation; body opens x->_M_color=red
 ?_Rebalance_for_erase@?$_Rb_global@_N@_STL@@SAPAU_Rb_tree_node_base@2@PAU32@AAPAU32@11@Z,0x0082CB60
-?_S_maximum@_Rb_tree_node_base@_STL@@SAPAU12@PAU12@@Z,0x0003191C,Open-BFME7 additive: retail call target used by the landed row at 0x0082CB60 (thunk drift repair)
-?_S_minimum@_Rb_tree_node_base@_STL@@SAPAU12@PAU12@@Z,0x00008044,Open-BFME7 additive: retail call target used by the landed row at 0x0082CB60 (thunk drift repair)
 ?_Transfer@?$_List_global@_N@_STL@@SAXPAU_List_node_base@2@00@Z,0x0082BA90,family-emit shared callee
 ?__copy@_STL@@YAPADPAD00ABUrandom_access_iterator_tag@1@PAH@Z,0x000B98F0
 ?__stlp_deallocate_small@@YAXPAXI@Z,0x0082E5F0,alias for the already-pinned STLport __node_alloc<0,0>::_M_deallocate small-block pool deallocator, used directly (not through the template) by TensileFormationUpdateMember::~TensileFormationUpdateMember
@@ -12695,7 +12599,6 @@ name,address,notes
 ?_bfme_debugReportingEnabled@@YA_NXZ,0x008896D0,cdecl bool: reads TheGen001336E5C-shaped debug manager global 0x01336E5C+0x9F4B directly; guards whether the release crash-report chain runs, resolved via decode_calls at GameLODManager::getAudioLODIndex
 ?_bfme_detach@U1Sub@@QAEXXZ,0x0002129C,Open-BFME5 ILT thunk to body 0x001DA3F0; ?apply@U1Sub@@QAEAAV1@PAVU1CachedHolder@@@Z at 0x005C21D0 calls it on this before replacing the target - shape-only name in the same synthetic family as the class
 ?_bfme_doVictoryAndEndGame@ScriptActions@@IAEXXZ,0x002F7B60,executeAction jump table 0x0070D6A0[3] (ZH ScriptAction::VICTORY position) -> arm 0x0030522C -> ILT 0x000202C5; doVictory 0x002F1C10 then TheCampaignManager 0x012F1024 +0x1D = 1 (SetVictorious(TRUE)) then TheScriptEngine 0x012F076C vcall +0x30 startEndGameTimer = the tail of ZH doVictory that BFME split off the shared core; arm 0x0030524A (action 510) calls the core alone
-?_bfme_fillCurrentLANGameInfo_0068E630@@YAXPADI@Z,0x0002A6D5,Open-BFME7 additive: retail call target used by the landed row at 0x00684E70 (thunk drift repair)
 ?_bfme_findFactionVictoryParametersIndex@VictorySystem@@AAEIABVAsciiString@@@Z,0x0002D2EA,ILT target 0x001DF350 scans VictorySystem +0xEC FactionVictoryParameters names and returns 0x7fffffff when absent
 ?_bfme_findOrCreateFactionVictoryParameters@VictorySystem@@QAEPAUFactionVictoryParameters@@ABVAsciiString@@@Z,0x001E04B0,only caller is the FactionVictoryData parser 0x000C327E; lookup 0x001DF350 (0x7fffffff = missing) into the +0xEC vector of 0x18-byte entries else push_back {name 0 0 0 0 0} and return the last; struct name from the assert string at 0x010839F8
 ?_bfme_getFrameHeadroom@Network@@UAEHXZ,0x006819E0,vtable 0x0111A968 slot 17 (+0x44) via ILT 0x000238BC; if (m_conMgr) tail-jumps getFrameHeadroom@BFMEConnectionManager 0x00664320 else 0; ZH getPacketArrivalCushion shape but the callee derives frames of headroom from conMgr+0x1205C/+0x12060 not an arrival cushion; consumer 0x0006BE07 clamps it to 10 for the logic time-scale 0x012A72A4
@@ -12785,7 +12688,6 @@ name,address,notes
 ?_bfme_updateOnlinePlayerStats@@YAXPAVPlayer@@@Z,0x000A5D40,cdecl(Player*) called by the score screen init at 0x00576EEC when game type +0x25C == 3 and TheGameSpyGame 0x012F7198 +0x43C; BFME twin of the PSPlayerStats update inside ZH ScoreScreen.cpp populatePlayerInfo: amIObserver early-out; isLocalAlliedDefeat/Victory/isLocalDefeat; sawCRCMismatch (TheGameLogic+0x6C) and +0x290 count as loss/disconnect; isPlayerDefeated(idx) slot +0x50; faction buckets gondor/rohan/isengard/mordor; getEndFrame; UNCLAIMED 4125 B
 ?_bfme_updateScreen@DisconnectMenu@@QAEXXZ,0x0050E5F0,no ZH twin; if the DisconnectScreen.apt layout 0x012F4960 exists call its slot +0x8(NULL) (ZH WindowLayout::runUpdate position); sole caller BFMEDisconnectManager::update 0x0066C8EE as its first call every frame; reached through ILT 0x000036FC
 ?_bfme_updateSkirmishBattleHonors@@YAXPAVPlayer@@@Z,0x000A41F0,cdecl(Player*) called by the score screen init 0x00576C20 at 0x00576ECC (push edi local player; add esp 4) when its game type +0x25C == 1; BFME twin of ZH ScoreScreen.cpp updateSkirmishBattleHonors: early-out unless isLocalAlliedDefeat/Victory (vcalls +0x38/+0x34) or the player is inactive; SkirmishPreferences ctor 0x0009F850; duration from getEndFrame +0x44 at 0x000A42A8; per-side (PlayerTemplate+0x08 Side) win/loss counters via the 0x0009Cxxx setters keyed by map name
-?_bfme_updateTimedOps@@YAIXZ,0x00036921,Open-BFME7 additive: retail call target used by the landed row at 0x0006B910 (thunk drift repair)
 ?_bfme_useGameOverEndScreen@@YA_NXZ,0x002ED8F0,free function (no this) called by doVictory 0x002F1CA9 and doDefeat 0x002F1DE6 to pick APT:EndGameOver over APT:EndVictorious/APT:EndDefeat; true when ThePlayerList local player is observer-or-dead (0x000DF7F0) or ScriptEngine::hasShownMPLocalDefeatWindow 0x00337180 (+0x17636) or (LAN/INTERNET and TheGameLogic+0x290 == 0); generalises the ZH showObserverWindow test
 ?_get_osfflags@_SgI@@YAHHPAX@Z,0x00849EC0,STLport 4.5.3 Win32 descriptor mode helper called by _Filebuf_base open
 ?accept@Rva00809500Sink@@QAEXPAURva00809500Entry@@@Z,0x00808ED0,U2 lane: thiscall member called on the lookup result at 0x00809500
@@ -12948,7 +12850,6 @@ name,address,notes
 ?aiMoveToObject@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0001C26A,typed AI movement thunk used by QueueProductionExitUpdate::releaseLastExit
 ?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x0003436A,Open-BFME5 AI movement thunk alias
 ?aiPreTeamDestroy@AIPlayer@@QAEXPBVTeam@@@Z,0x00161430,Player preTeamDestroy tail target; canonical AIPlayer queue-removal body matches retail structure
-?allCommandsReady@FrameData@@QAE?AW4FrameDataReturnType@@_N@Z,0x00026C79,Open-BFME7 additive: retail call target used by the landed row at 0x00670890 (thunk drift repair)
 ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z,0x000F5A30,the call ScriptConditions::evaluateTeamInsideAreaEntirely (0x00324AC0) makes on the team it looked up with the trigger area and the type parameter; the reference declares exactly that const member with that pair and nothing else in Team takes it
 ?allOnSameFrame@DisconnectManager@@IAE_NPAVConnectionManager@@@Z,0x00020DB5,DisconnectManager status update frame-alignment gate through ILT to the existing 0x0066C160 body
 ?allocArg@GameMessage@@AAEPAUArgument@1@XZ,0x0002CC8C,GameMessage::allocArg private helper not yet converted to C++; retail target of the append*Argument leaves' call
@@ -13082,7 +12983,6 @@ name,address,notes
 ?areAllQueuesEmpty@Network@@UAE_NXZ,0x00681A10,vtable 0x0111A968 slot 25 (+0x64) via ILT 0x000149E8; tail-jumps conMgr 0x00662DF0 without a null check; that body loops the 8 connections at conMgr+0x04 calling isQueueEmpty@Connection 0x00661C90 = ZH ConnectionManager::canILeave and ZH areAllQueuesEmpty is exactly return m_conMgr->canILeave()
 ?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
-?ask@BfmeSubBIA@@QAEPAV1@XZ,0x000022BB,Open-BFME7 additive: retail call target used by the landed row at 0x0021FC10 (thunk drift repair)
 ?assign@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x0002B297,Open-BFME5 ILT thunk to the body already matched at 0x000A5810; the room-name assignment in ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z at 0x0064C9E0 reaches it through this thunk
 ?assign@AsciiStringTarget@@QAEXABVAsciiString@@@Z,0x0003EC57,ILT thunk to AsciiString assignment body 0x005217A0
 ?assign@BuffNuggetFXNuggetMember@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by BuffNuggetFXNugget ctor
@@ -20855,8 +20755,6 @@ name,address,notes
 ?b_00102d00@@YAXXZ,0x00102D00,gen-thunk body
 ?b_00102d90@@YAXXZ,0x00102D90,gen-thunk body
 ?b_00102df0@@YAXXZ,0x00102DF0,gen-thunk body
-?b_00102e10@@YAXXZ,0x00102E10,Open-BFME7 additive: retail call target used by the landed row at 0x0000B2CB (thunk drift repair)
-?b_00102e40@@YAXXZ,0x00102E40,Open-BFME7 additive: retail call target used by the landed row at 0x0002BB61 (thunk drift repair)
 ?b_00102e60@@YAXXZ,0x00102E60,gen-thunk body
 ?b_00102f20@@YAXXZ,0x00102F20,gen-thunk body
 ?b_001030d0@@YAXXZ,0x001030D0,gen-thunk body
@@ -21389,7 +21287,6 @@ name,address,notes
 ?b_00113be0@@YAXXZ,0x00113BE0,gen-thunk body
 ?b_00113c20@@YAXXZ,0x00113C20,gen-thunk body
 ?b_00113c30@@YAXXZ,0x00113C30,gen-thunk body
-?b_00113c60@@YAXXZ,0x00113C60,Open-BFME7 additive: retail call target used by the landed row at 0x000170E4 (thunk drift repair)
 ?b_00113d10@@YAXXZ,0x00113D10,gen-thunk body
 ?b_00113d20@@YAXXZ,0x00113D20,gen-thunk body
 ?b_00113d30@@YAXXZ,0x00113D30,gen-thunk body
@@ -27458,25 +27355,20 @@ name,address,notes
 ?b_001c0ef0@@YAXXZ,0x001C0EF0,gen-thunk body
 ?b_001c0f80@@YAXXZ,0x001C0F80,gen-thunk body
 ?b_001c0f90@@YAXXZ,0x001C0F90,gen-thunk body
-?b_001c0fb0@@YAXXZ,0x001C0FB0,Open-BFME7 additive: retail call target used by the landed row at 0x0000E1D8 (thunk drift repair)
 ?b_001c0fe0@@YAXXZ,0x001C0FE0,gen-thunk body
 ?b_001c1010@@YAXXZ,0x001C1010,gen-thunk body
 ?b_001c1040@@YAXXZ,0x001C1040,gen-thunk body
 ?b_001c10d0@@YAXXZ,0x001C10D0,gen-thunk body
 ?b_001c1160@@YAXXZ,0x001C1160,gen-thunk body
-?b_001c1170@@YAXXZ,0x001C1170,Open-BFME7 additive: retail call target used by the landed row at 0x0000ABB4 (thunk drift repair)
 ?b_001c11a0@@YAXXZ,0x001C11A0,gen-thunk body
-?b_001c11d0@@YAXXZ,0x001C11D0,Open-BFME7 additive: retail call target used by the landed row at 0x0000D062 (thunk drift repair)
 ?b_001c1210@@YAXXZ,0x001C1210,gen-thunk body
 ?b_001c12a0@@YAXXZ,0x001C12A0,gen-thunk body
-?b_001c12b0@@YAXXZ,0x001C12B0,Open-BFME7 additive: retail call target used by the landed row at 0x000063ED (thunk drift repair)
 ?b_001c12e0@@YAXXZ,0x001C12E0,gen-thunk body
 ?b_001c1310@@YAXXZ,0x001C1310,gen-thunk body
 ?b_001c1340@@YAXXZ,0x001C1340,gen-thunk body
 ?b_001c13d0@@YAXXZ,0x001C13D0,gen-thunk body
 ?b_001c1460@@YAXXZ,0x001C1460,gen-thunk body
 ?b_001c1470@@YAXXZ,0x001C1470,gen-thunk body
-?b_001c1480@@YAXXZ,0x001C1480,Open-BFME7 additive: retail call target used by the landed row at 0x0000BF0A (thunk drift repair)
 ?b_001c14b0@@YAXXZ,0x001C14B0,gen-thunk body
 ?b_001c14e0@@YAXXZ,0x001C14E0,gen-thunk body
 ?b_001c1530@@YAXXZ,0x001C1530,gen-thunk body
@@ -29511,7 +29403,6 @@ name,address,notes
 ?b_00204f60@@YAXXZ,0x00204F60,gen-thunk body
 ?b_00204f90@@YAXXZ,0x00204F90,gen-thunk body
 ?b_00204ff0@@YAXXZ,0x00204FF0,gen-thunk body
-?b_00205000@@YAXXZ,0x00205000,Open-BFME7 additive: retail call target used by the landed row at 0x0002404B (thunk drift repair)
 ?b_00205020@@YAXXZ,0x00205020,gen-thunk body
 ?b_00205030@@YAXXZ,0x00205030,gen-thunk body
 ?b_00205040@@YAXXZ,0x00205040,gen-thunk body
@@ -29519,7 +29410,6 @@ name,address,notes
 ?b_002050b0@@YAXXZ,0x002050B0,gen-thunk body
 ?b_002050c0@@YAXXZ,0x002050C0,gen-thunk body
 ?b_002050e0@@YAXXZ,0x002050E0,gen-thunk body
-?b_00205170@@YAXXZ,0x00205170,Open-BFME7 additive: retail call target used by the landed row at 0x00001366 (thunk drift repair)
 ?b_002051a0@@YAXXZ,0x002051A0,gen-thunk body
 ?b_002051c0@@YAXXZ,0x002051C0,gen-thunk body
 ?b_00205200@@YAXXZ,0x00205200,gen-thunk body
@@ -29979,11 +29869,9 @@ name,address,notes
 ?b_00212810@@YAXXZ,0x00212810,gen-thunk body
 ?b_00212860@@YAXXZ,0x00212860,gen-thunk body
 ?b_00212870@@YAXXZ,0x00212870,gen-thunk body
-?b_00212880@@YAXXZ,0x00212880,Open-BFME7 additive: retail call target used by the landed row at 0x0003843D (thunk drift repair)
 ?b_002128a0@@YAXXZ,0x002128A0,gen-thunk body
 ?b_002128b0@@YAXXZ,0x002128B0,gen-thunk body
 ?b_00212940@@YAXXZ,0x00212940,gen-thunk body
-?b_00212950@@YAXXZ,0x00212950,Open-BFME7 additive: retail call target used by the landed row at 0x0000611D (thunk drift repair)
 ?b_00212980@@YAXXZ,0x00212980,gen-thunk body
 ?b_00212b40@@YAXXZ,0x00212B40,gen-thunk body
 ?b_00212bb0@@YAXXZ,0x00212BB0,gen-thunk body
@@ -30011,13 +29899,11 @@ name,address,notes
 ?b_002131f0@@YAXXZ,0x002131F0,gen-thunk body
 ?b_00213220@@YAXXZ,0x00213220,gen-thunk body
 ?b_00213280@@YAXXZ,0x00213280,gen-thunk body
-?b_002132b0@@YAXXZ,0x002132B0,Open-BFME7 additive: retail call target used by the landed row at 0x00017EA4 (thunk drift repair)
 ?b_002132d0@@YAXXZ,0x002132D0,gen-thunk body
 ?b_002132e0@@YAXXZ,0x002132E0,gen-thunk body
 ?b_002132f0@@YAXXZ,0x002132F0,gen-thunk body
 ?b_00213380@@YAXXZ,0x00213380,gen-thunk body
 ?b_00213390@@YAXXZ,0x00213390,gen-thunk body
-?b_00213410@@YAXXZ,0x00213410,Open-BFME7 additive: retail call target used by the landed row at 0x000083CD (thunk drift repair)
 ?b_00213440@@YAXXZ,0x00213440,gen-thunk body
 ?b_002134e0@@YAXXZ,0x002134E0,gen-thunk body
 ?b_00213690@@YAXXZ,0x00213690,gen-thunk body
@@ -30026,18 +29912,14 @@ name,address,notes
 ?b_00213750@@YAXXZ,0x00213750,gen-thunk body
 ?b_002137b0@@YAXXZ,0x002137B0,gen-thunk body
 ?b_002137f0@@YAXXZ,0x002137F0,gen-thunk body
-?b_00213800@@YAXXZ,0x00213800,Open-BFME7 additive: retail call target used by the landed row at 0x000408F9 (thunk drift repair)
 ?b_00213820@@YAXXZ,0x00213820,gen-thunk body
 ?b_00213830@@YAXXZ,0x00213830,gen-thunk body
-?b_002138c0@@YAXXZ,0x002138C0,Open-BFME7 additive: retail call target used by the landed row at 0x00043EFA (thunk drift repair)
 ?b_002138f0@@YAXXZ,0x002138F0,gen-thunk body
 ?b_00213950@@YAXXZ,0x00213950,gen-thunk body
 ?b_00213990@@YAXXZ,0x00213990,gen-thunk body
 ?b_002139d0@@YAXXZ,0x002139D0,gen-thunk body
-?b_002139e0@@YAXXZ,0x002139E0,Open-BFME7 additive: retail call target used by the landed row at 0x0004B15F (thunk drift repair)
 ?b_00213a00@@YAXXZ,0x00213A00,gen-thunk body
 ?b_00213a10@@YAXXZ,0x00213A10,gen-thunk body
-?b_00213aa0@@YAXXZ,0x00213AA0,Open-BFME7 additive: retail call target used by the landed row at 0x0003C8AD (thunk drift repair)
 ?b_00213ad0@@YAXXZ,0x00213AD0,gen-thunk body
 ?b_00213b30@@YAXXZ,0x00213B30,gen-thunk body
 ?b_00213b70@@YAXXZ,0x00213B70,gen-thunk body
@@ -30067,21 +29949,17 @@ name,address,notes
 ?b_00213f20@@YAXXZ,0x00213F20,gen-thunk body
 ?b_00213f30@@YAXXZ,0x00213F30,gen-thunk body
 ?b_00213f70@@YAXXZ,0x00213F70,gen-thunk body
-?b_00213f80@@YAXXZ,0x00213F80,Open-BFME7 additive: retail call target used by the landed row at 0x00010C67 (thunk drift repair)
 ?b_00213fa0@@YAXXZ,0x00213FA0,gen-thunk body
 ?b_00213fb0@@YAXXZ,0x00213FB0,gen-thunk body
-?b_00214040@@YAXXZ,0x00214040,Open-BFME7 additive: retail call target used by the landed row at 0x00001A4B (thunk drift repair)
 ?b_00214070@@YAXXZ,0x00214070,gen-thunk body
 ?b_002140b0@@YAXXZ,0x002140B0,gen-thunk body
 ?b_00214140@@YAXXZ,0x00214140,gen-thunk body
 ?b_00214170@@YAXXZ,0x00214170,gen-thunk body
 ?b_002141b0@@YAXXZ,0x002141B0,gen-thunk body
-?b_002141c0@@YAXXZ,0x002141C0,Open-BFME7 additive: retail call target used by the landed row at 0x0003B494 (thunk drift repair)
 ?b_002141e0@@YAXXZ,0x002141E0,gen-thunk body
 ?b_002141f0@@YAXXZ,0x002141F0,gen-thunk body
 ?b_00214200@@YAXXZ,0x00214200,gen-thunk body
 ?b_00214290@@YAXXZ,0x00214290,gen-thunk body
-?b_002142a0@@YAXXZ,0x002142A0,Open-BFME7 additive: retail call target used by the landed row at 0x00007BD0 (thunk drift repair)
 ?b_002142d0@@YAXXZ,0x002142D0,gen-thunk body
 ?b_00214310@@YAXXZ,0x00214310,gen-thunk body
 ?b_00214350@@YAXXZ,0x00214350,gen-thunk body
@@ -30095,24 +29973,19 @@ name,address,notes
 ?b_00214620@@YAXXZ,0x00214620,gen-thunk body
 ?b_00214650@@YAXXZ,0x00214650,gen-thunk body
 ?b_00214690@@YAXXZ,0x00214690,gen-thunk body
-?b_002146a0@@YAXXZ,0x002146A0,Open-BFME7 additive: retail call target used by the landed row at 0x00020F40 (thunk drift repair)
 ?b_002146c0@@YAXXZ,0x002146C0,gen-thunk body
 ?b_002146d0@@YAXXZ,0x002146D0,gen-thunk body
 ?b_00214760@@YAXXZ,0x00214760,gen-thunk body
-?b_00214770@@YAXXZ,0x00214770,Open-BFME7 additive: retail call target used by the landed row at 0x00019970 (thunk drift repair)
 ?b_002147a0@@YAXXZ,0x002147A0,gen-thunk body
 ?b_002147e0@@YAXXZ,0x002147E0,gen-thunk body
 ?b_002149d0@@YAXXZ,0x002149D0,gen-thunk body
 ?b_00214ac0@@YAXXZ,0x00214AC0,gen-thunk body
 ?b_00214af0@@YAXXZ,0x00214AF0,gen-thunk body
 ?b_00214b40@@YAXXZ,0x00214B40,gen-thunk body
-?b_00214b50@@YAXXZ,0x00214B50,Open-BFME7 additive: retail call target used by the landed row at 0x00040D40 (thunk drift repair)
 ?b_00214b70@@YAXXZ,0x00214B70,gen-thunk body
 ?b_00214b90@@YAXXZ,0x00214B90,gen-thunk body
 ?b_00214ba0@@YAXXZ,0x00214BA0,gen-thunk body
-?b_00214c30@@YAXXZ,0x00214C30,Open-BFME7 additive: retail call target used by the landed row at 0x00035904 (thunk drift repair)
 ?b_00214c60@@YAXXZ,0x00214C60,gen-thunk body
-?b_00214cc0@@YAXXZ,0x00214CC0,Open-BFME7 additive: retail call target used by the landed row at 0x0003C8C1 (thunk drift repair)
 ?b_00214ce0@@YAXXZ,0x00214CE0,gen-thunk body
 ?b_00214cf0@@YAXXZ,0x00214CF0,gen-thunk body
 ?b_00214d00@@YAXXZ,0x00214D00,gen-thunk body
@@ -30130,9 +30003,7 @@ name,address,notes
 ?b_00214dc0@@YAXXZ,0x00214DC0,gen-thunk body
 ?b_00214dd0@@YAXXZ,0x00214DD0,gen-thunk body
 ?b_00214e60@@YAXXZ,0x00214E60,gen-thunk body
-?b_00214e70@@YAXXZ,0x00214E70,Open-BFME7 additive: retail call target used by the landed row at 0x00007F18 (thunk drift repair)
 ?b_00214ea0@@YAXXZ,0x00214EA0,gen-thunk body
-?b_00214f00@@YAXXZ,0x00214F00,Open-BFME7 additive: retail call target used by the landed row at 0x0002CD86 (thunk drift repair)
 ?b_00214f60@@YAXXZ,0x00214F60,gen-thunk body
 ?b_00214f70@@YAXXZ,0x00214F70,gen-thunk body
 ?b_00215040@@YAXXZ,0x00215040,gen-thunk body
@@ -30251,7 +30122,6 @@ name,address,notes
 ?b_00217550@@YAXXZ,0x00217550,gen-thunk body
 ?b_00217590@@YAXXZ,0x00217590,gen-thunk body
 ?b_002175c0@@YAXXZ,0x002175C0,gen-thunk body
-?b_00217620@@YAXXZ,0x00217620,Open-BFME7 additive: retail call target used by the landed row at 0x0004B68C (thunk drift repair)
 ?b_00217640@@YAXXZ,0x00217640,gen-thunk body
 ?b_00217650@@YAXXZ,0x00217650,gen-thunk body
 ?b_00217660@@YAXXZ,0x00217660,gen-thunk body
@@ -30269,19 +30139,15 @@ name,address,notes
 ?b_00217ab0@@YAXXZ,0x00217AB0,gen-thunk body
 ?b_00217ad0@@YAXXZ,0x00217AD0,gen-thunk body
 ?b_00217b10@@YAXXZ,0x00217B10,gen-thunk body
-?b_00217b20@@YAXXZ,0x00217B20,Open-BFME7 additive: retail call target used by the landed row at 0x000211E3 (thunk drift repair)
 ?b_00217b40@@YAXXZ,0x00217B40,gen-thunk body
 ?b_00217b50@@YAXXZ,0x00217B50,gen-thunk body
-?b_00217be0@@YAXXZ,0x00217BE0,Open-BFME7 additive: retail call target used by the landed row at 0x00002F7C (thunk drift repair)
 ?b_00217c10@@YAXXZ,0x00217C10,gen-thunk body
 ?b_00217cd0@@YAXXZ,0x00217CD0,gen-thunk body
 ?b_00217d10@@YAXXZ,0x00217D10,gen-thunk body
 ?b_00217d50@@YAXXZ,0x00217D50,gen-thunk body
-?b_00217d60@@YAXXZ,0x00217D60,Open-BFME7 additive: retail call target used by the landed row at 0x000370A6 (thunk drift repair)
 ?b_00217d80@@YAXXZ,0x00217D80,gen-thunk body
 ?b_00217d90@@YAXXZ,0x00217D90,gen-thunk body
 ?b_00217e20@@YAXXZ,0x00217E20,gen-thunk body
-?b_00217e30@@YAXXZ,0x00217E30,Open-BFME7 additive: retail call target used by the landed row at 0x00001177 (thunk drift repair)
 ?b_00217e60@@YAXXZ,0x00217E60,gen-thunk body
 ?b_00217fc0@@YAXXZ,0x00217FC0,gen-thunk body
 ?b_00218000@@YAXXZ,0x00218000,gen-thunk body
@@ -30289,12 +30155,10 @@ name,address,notes
 ?b_00218030@@YAXXZ,0x00218030,gen-thunk body
 ?b_00218070@@YAXXZ,0x00218070,gen-thunk body
 ?b_00218080@@YAXXZ,0x00218080,gen-thunk body
-?b_00218090@@YAXXZ,0x00218090,Open-BFME7 additive: retail call target used by the landed row at 0x00006578 (thunk drift repair)
 ?b_002180b0@@YAXXZ,0x002180B0,gen-thunk body
 ?b_002180c0@@YAXXZ,0x002180C0,gen-thunk body
 ?b_002180f0@@YAXXZ,0x002180F0,gen-thunk body
 ?b_00218180@@YAXXZ,0x00218180,gen-thunk body
-?b_00218190@@YAXXZ,0x00218190,Open-BFME7 additive: retail call target used by the landed row at 0x00010839 (thunk drift repair)
 ?b_002181c0@@YAXXZ,0x002181C0,gen-thunk body
 ?b_00218200@@YAXXZ,0x00218200,gen-thunk body
 ?b_00218270@@YAXXZ,0x00218270,gen-thunk body
@@ -30304,29 +30168,23 @@ name,address,notes
 ?b_002184d0@@YAXXZ,0x002184D0,gen-thunk body
 ?b_00218620@@YAXXZ,0x00218620,gen-thunk body
 ?b_00218660@@YAXXZ,0x00218660,gen-thunk body
-?b_00218670@@YAXXZ,0x00218670,Open-BFME7 additive: retail call target used by the landed row at 0x0000807B (thunk drift repair)
 ?b_00218690@@YAXXZ,0x00218690,gen-thunk body
 ?b_00218760@@YAXXZ,0x00218760,gen-thunk body
 ?b_00218770@@YAXXZ,0x00218770,gen-thunk body
-?b_00218800@@YAXXZ,0x00218800,Open-BFME7 additive: retail call target used by the landed row at 0x00013FF7 (thunk drift repair)
 ?b_00218830@@YAXXZ,0x00218830,gen-thunk body
 ?b_00218870@@YAXXZ,0x00218870,gen-thunk body
 ?b_002188b0@@YAXXZ,0x002188B0,gen-thunk body
-?b_002188c0@@YAXXZ,0x002188C0,Open-BFME7 additive: retail call target used by the landed row at 0x00041D21 (thunk drift repair)
 ?b_002188e0@@YAXXZ,0x002188E0,gen-thunk body
 ?b_002188f0@@YAXXZ,0x002188F0,gen-thunk body
 ?b_00218980@@YAXXZ,0x00218980,gen-thunk body
-?b_00218990@@YAXXZ,0x00218990,Open-BFME7 additive: retail call target used by the landed row at 0x00012BAC (thunk drift repair)
 ?b_002189c0@@YAXXZ,0x002189C0,gen-thunk body
 ?b_00218a00@@YAXXZ,0x00218A00,gen-thunk body
 ?b_00218be0@@YAXXZ,0x00218BE0,gen-thunk body
 ?b_00218c20@@YAXXZ,0x00218C20,gen-thunk body
-?b_00218c30@@YAXXZ,0x00218C30,Open-BFME7 additive: retail call target used by the landed row at 0x0002CE12 (thunk drift repair)
 ?b_00218c50@@YAXXZ,0x00218C50,gen-thunk body
 ?b_00218c90@@YAXXZ,0x00218C90,gen-thunk body
 ?b_00218ca0@@YAXXZ,0x00218CA0,gen-thunk body
 ?b_00218d30@@YAXXZ,0x00218D30,gen-thunk body
-?b_00218d40@@YAXXZ,0x00218D40,Open-BFME7 additive: retail call target used by the landed row at 0x000140B5 (thunk drift repair)
 ?b_00218d70@@YAXXZ,0x00218D70,gen-thunk body
 ?b_00218d90@@YAXXZ,0x00218D90,gen-thunk body
 ?b_00218e70@@YAXXZ,0x00218E70,gen-thunk body
@@ -32192,14 +32050,11 @@ name,address,notes
 ?b_0024f390@@YAXXZ,0x0024F390,gen-thunk body
 ?b_0024f3c0@@YAXXZ,0x0024F3C0,gen-thunk body
 ?b_0024f3f0@@YAXXZ,0x0024F3F0,gen-thunk body
-?b_0024f400@@YAXXZ,0x0024F400,Open-BFME7 additive: retail call target used by the landed row at 0x0001C657 (thunk drift repair)
 ?b_0024f420@@YAXXZ,0x0024F420,gen-thunk body
 ?b_0024f430@@YAXXZ,0x0024F430,gen-thunk body
 ?b_0024f440@@YAXXZ,0x0024F440,gen-thunk body
-?b_0024f450@@YAXXZ,0x0024F450,Open-BFME7 additive: retail call target used by the landed row at 0x00026CAB (thunk drift repair)
 ?b_0024f4a0@@YAXXZ,0x0024F4A0,gen-thunk body
 ?b_0024f4b0@@YAXXZ,0x0024F4B0,gen-thunk body
-?b_0024f4d0@@YAXXZ,0x0024F4D0,Open-BFME7 additive: retail call target used by the landed row at 0x00012594 (thunk drift repair)
 ?b_0024f500@@YAXXZ,0x0024F500,gen-thunk body
 ?b_0024f560@@YAXXZ,0x0024F560,gen-thunk body
 ?b_0024f5a0@@YAXXZ,0x0024F5A0,gen-thunk body
@@ -32223,12 +32078,10 @@ name,address,notes
 ?b_0024f810@@YAXXZ,0x0024F810,gen-thunk body
 ?b_0024f860@@YAXXZ,0x0024F860,gen-thunk body
 ?b_0024f8a0@@YAXXZ,0x0024F8A0,gen-thunk body
-?b_0024f8b0@@YAXXZ,0x0024F8B0,Open-BFME7 additive: retail call target used by the landed row at 0x00003175 (thunk drift repair)
 ?b_0024f8d0@@YAXXZ,0x0024F8D0,gen-thunk body
 ?b_0024f8e0@@YAXXZ,0x0024F8E0,gen-thunk body
 ?b_0024f970@@YAXXZ,0x0024F970,gen-thunk body
 ?b_0024f980@@YAXXZ,0x0024F980,gen-thunk body
-?b_0024f9a0@@YAXXZ,0x0024F9A0,Open-BFME7 additive: retail call target used by the landed row at 0x000080DA (thunk drift repair)
 ?b_0024f9d0@@YAXXZ,0x0024F9D0,gen-thunk body
 ?b_0024fa40@@YAXXZ,0x0024FA40,gen-thunk body
 ?b_0024fa80@@YAXXZ,0x0024FA80,gen-thunk body
@@ -32237,13 +32090,11 @@ name,address,notes
 ?b_0024fb90@@YAXXZ,0x0024FB90,gen-thunk body
 ?b_0024fc20@@YAXXZ,0x0024FC20,gen-thunk body
 ?b_0024fc60@@YAXXZ,0x0024FC60,gen-thunk body
-?b_0024fc70@@YAXXZ,0x0024FC70,Open-BFME7 additive: retail call target used by the landed row at 0x000377A9 (thunk drift repair)
 ?b_0024fc90@@YAXXZ,0x0024FC90,gen-thunk body
 ?b_0024fca0@@YAXXZ,0x0024FCA0,gen-thunk body
 ?b_0024fcb0@@YAXXZ,0x0024FCB0,gen-thunk body
 ?b_0024fd40@@YAXXZ,0x0024FD40,gen-thunk body
 ?b_0024fd50@@YAXXZ,0x0024FD50,gen-thunk body
-?b_0024fd70@@YAXXZ,0x0024FD70,Open-BFME7 additive: retail call target used by the landed row at 0x00037D2B (thunk drift repair)
 ?b_0024fda0@@YAXXZ,0x0024FDA0,gen-thunk body
 ?b_0024fdc0@@YAXXZ,0x0024FDC0,gen-thunk body
 ?b_0024fe00@@YAXXZ,0x0024FE00,gen-thunk body
@@ -32252,38 +32103,30 @@ name,address,notes
 ?b_0024fe60@@YAXXZ,0x0024FE60,gen-thunk body
 ?b_0024fe70@@YAXXZ,0x0024FE70,gen-thunk body
 ?b_0024feb0@@YAXXZ,0x0024FEB0,gen-thunk body
-?b_0024fec0@@YAXXZ,0x0024FEC0,Open-BFME7 additive: retail call target used by the landed row at 0x00042D75 (thunk drift repair)
 ?b_0024fee0@@YAXXZ,0x0024FEE0,gen-thunk body
 ?b_0024fef0@@YAXXZ,0x0024FEF0,gen-thunk body
 ?b_0024ff00@@YAXXZ,0x0024FF00,gen-thunk body
-?b_0024ff90@@YAXXZ,0x0024FF90,Open-BFME7 additive: retail call target used by the landed row at 0x0000B10E (thunk drift repair)
 ?b_0024ffc0@@YAXXZ,0x0024FFC0,gen-thunk body
 ?b_00250000@@YAXXZ,0x00250000,gen-thunk body
 ?b_00250070@@YAXXZ,0x00250070,gen-thunk body
 ?b_002500b0@@YAXXZ,0x002500B0,gen-thunk body
-?b_002500c0@@YAXXZ,0x002500C0,Open-BFME7 additive: retail call target used by the landed row at 0x0001FF69 (thunk drift repair)
 ?b_002500e0@@YAXXZ,0x002500E0,gen-thunk body
 ?b_002500f0@@YAXXZ,0x002500F0,gen-thunk body
 ?b_00250100@@YAXXZ,0x00250100,gen-thunk body
-?b_00250190@@YAXXZ,0x00250190,Open-BFME7 additive: retail call target used by the landed row at 0x0002ACE8 (thunk drift repair)
 ?b_002501c0@@YAXXZ,0x002501C0,gen-thunk body
 ?b_00250210@@YAXXZ,0x00250210,gen-thunk body
 ?b_00250250@@YAXXZ,0x00250250,gen-thunk body
 ?b_00250260@@YAXXZ,0x00250260,gen-thunk body
 ?b_002502a0@@YAXXZ,0x002502A0,gen-thunk body
-?b_002502b0@@YAXXZ,0x002502B0,Open-BFME7 additive: retail call target used by the landed row at 0x0000A7BD (thunk drift repair)
 ?b_002502d0@@YAXXZ,0x002502D0,gen-thunk body
 ?b_002502e0@@YAXXZ,0x002502E0,gen-thunk body
 ?b_002502f0@@YAXXZ,0x002502F0,gen-thunk body
-?b_00250380@@YAXXZ,0x00250380,Open-BFME7 additive: retail call target used by the landed row at 0x00004827 (thunk drift repair)
 ?b_002503b0@@YAXXZ,0x002503B0,gen-thunk body
 ?b_00250420@@YAXXZ,0x00250420,gen-thunk body
 ?b_00250460@@YAXXZ,0x00250460,gen-thunk body
 ?b_002504a0@@YAXXZ,0x002504A0,gen-thunk body
-?b_002504b0@@YAXXZ,0x002504B0,Open-BFME7 additive: retail call target used by the landed row at 0x0003DE10 (thunk drift repair)
 ?b_002504d0@@YAXXZ,0x002504D0,gen-thunk body
 ?b_002504e0@@YAXXZ,0x002504E0,gen-thunk body
-?b_00250570@@YAXXZ,0x00250570,Open-BFME7 additive: retail call target used by the landed row at 0x0003F657 (thunk drift repair)
 ?b_002505a0@@YAXXZ,0x002505A0,gen-thunk body
 ?b_00250600@@YAXXZ,0x00250600,gen-thunk body
 ?b_00250640@@YAXXZ,0x00250640,gen-thunk body
@@ -32433,12 +32276,9 @@ name,address,notes
 ?b_00253680@@YAXXZ,0x00253680,gen-thunk body
 ?b_002539f0@@YAXXZ,0x002539F0,gen-thunk body
 ?b_00253bf0@@YAXXZ,0x00253BF0,gen-thunk body
-?b_00253c00@@YAXXZ,0x00253C00,Open-BFME7 additive: retail call target used by the landed row at 0x00008F80 (thunk drift repair)
 ?b_00253c20@@YAXXZ,0x00253C20,gen-thunk body
-?b_00253c30@@YAXXZ,0x00253C30,Open-BFME7 additive: retail call target used by the landed row at 0x0002D9A7 (thunk drift repair)
 ?b_00253c80@@YAXXZ,0x00253C80,gen-thunk body
 ?b_00253c90@@YAXXZ,0x00253C90,gen-thunk body
-?b_00253cb0@@YAXXZ,0x00253CB0,Open-BFME7 additive: retail call target used by the landed row at 0x0000F911 (thunk drift repair)
 ?b_00253ce0@@YAXXZ,0x00253CE0,gen-thunk body
 ?b_00253d20@@YAXXZ,0x00253D20,gen-thunk body
 ?b_00253d30@@YAXXZ,0x00253D30,gen-thunk body
@@ -32556,7 +32396,6 @@ name,address,notes
 ?b_002561d0@@YAXXZ,0x002561D0,gen-thunk body
 ?b_00256200@@YAXXZ,0x00256200,gen-thunk body
 ?b_00256240@@YAXXZ,0x00256240,gen-thunk body
-?b_002562c0@@YAXXZ,0x002562C0,Open-BFME7 additive: retail call target used by the landed row at 0x00039667 (thunk drift repair)
 ?b_002562e0@@YAXXZ,0x002562E0,gen-thunk body
 ?b_002562f0@@YAXXZ,0x002562F0,gen-thunk body
 ?b_00256360@@YAXXZ,0x00256360,gen-thunk body
@@ -32583,11 +32422,9 @@ name,address,notes
 ?b_00256c80@@YAXXZ,0x00256C80,gen-thunk body
 ?b_00256c90@@YAXXZ,0x00256C90,gen-thunk body
 ?b_00256cd0@@YAXXZ,0x00256CD0,gen-thunk body
-?b_00256d20@@YAXXZ,0x00256D20,Open-BFME7 additive: retail call target used by the landed row at 0x0003A7A1 (thunk drift repair)
 ?b_00256d40@@YAXXZ,0x00256D40,gen-thunk body
 ?b_00256d50@@YAXXZ,0x00256D50,gen-thunk body
 ?b_00256d70@@YAXXZ,0x00256D70,gen-thunk body
-?b_00256db0@@YAXXZ,0x00256DB0,Open-BFME7 additive: retail call target used by the landed row at 0x0001DC41 (thunk drift repair)
 ?b_00256dd0@@YAXXZ,0x00256DD0,gen-thunk body
 ?b_00256de0@@YAXXZ,0x00256DE0,gen-thunk body
 ?b_00256e20@@YAXXZ,0x00256E20,gen-thunk body
@@ -32616,7 +32453,6 @@ name,address,notes
 ?b_002571f0@@YAXXZ,0x002571F0,gen-thunk body
 ?b_002572a0@@YAXXZ,0x002572A0,gen-thunk body
 ?b_00257390@@YAXXZ,0x00257390,gen-thunk body
-?b_00257500@@YAXXZ,0x00257500,Open-BFME7 additive: retail call target used by the landed row at 0x000222B9 (thunk drift repair)
 ?b_00257520@@YAXXZ,0x00257520,gen-thunk body
 ?b_00257530@@YAXXZ,0x00257530,gen-thunk body
 ?b_00257570@@YAXXZ,0x00257570,gen-thunk body
@@ -32654,7 +32490,6 @@ name,address,notes
 ?b_002582d0@@YAXXZ,0x002582D0,gen-thunk body
 ?b_002582e0@@YAXXZ,0x002582E0,gen-thunk body
 ?b_002582f0@@YAXXZ,0x002582F0,gen-thunk body
-?b_00258300@@YAXXZ,0x00258300,Open-BFME7 additive: retail call target used by the landed row at 0x00010370 (thunk drift repair)
 ?b_00258320@@YAXXZ,0x00258320,gen-thunk body
 ?b_00258330@@YAXXZ,0x00258330,gen-thunk body
 ?b_00258340@@YAXXZ,0x00258340,gen-thunk body
@@ -32673,7 +32508,6 @@ name,address,notes
 ?b_002584b0@@YAXXZ,0x002584B0,gen-thunk body
 ?b_002584c0@@YAXXZ,0x002584C0,gen-thunk body
 ?b_00258550@@YAXXZ,0x00258550,gen-thunk body
-?b_00258560@@YAXXZ,0x00258560,Open-BFME7 additive: retail call target used by the landed row at 0x000356A7 (thunk drift repair)
 ?b_00258590@@YAXXZ,0x00258590,gen-thunk body
 ?b_00258600@@YAXXZ,0x00258600,gen-thunk body
 ?b_00258640@@YAXXZ,0x00258640,gen-thunk body
@@ -32701,11 +32535,9 @@ name,address,notes
 ?b_00258fe0@@YAXXZ,0x00258FE0,gen-thunk body
 ?b_00259010@@YAXXZ,0x00259010,gen-thunk body
 ?b_00259050@@YAXXZ,0x00259050,gen-thunk body
-?b_00259060@@YAXXZ,0x00259060,Open-BFME7 additive: retail call target used by the landed row at 0x00007379 (thunk drift repair)
 ?b_00259080@@YAXXZ,0x00259080,gen-thunk body
 ?b_00259090@@YAXXZ,0x00259090,gen-thunk body
 ?b_00259120@@YAXXZ,0x00259120,gen-thunk body
-?b_00259130@@YAXXZ,0x00259130,Open-BFME7 additive: retail call target used by the landed row at 0x00009D54 (thunk drift repair)
 ?b_00259160@@YAXXZ,0x00259160,gen-thunk body
 ?b_002591d0@@YAXXZ,0x002591D0,gen-thunk body
 ?b_00259210@@YAXXZ,0x00259210,gen-thunk body
@@ -32719,14 +32551,12 @@ name,address,notes
 ?b_002596c0@@YAXXZ,0x002596C0,gen-thunk body
 ?b_002596f0@@YAXXZ,0x002596F0,gen-thunk body
 ?b_00259730@@YAXXZ,0x00259730,gen-thunk body
-?b_00259740@@YAXXZ,0x00259740,Open-BFME7 additive: retail call target used by the landed row at 0x0000BD52 (thunk drift repair)
 ?b_00259760@@YAXXZ,0x00259760,gen-thunk body
 ?b_00259770@@YAXXZ,0x00259770,gen-thunk body
 ?b_00259780@@YAXXZ,0x00259780,gen-thunk body
 ?b_002597c0@@YAXXZ,0x002597C0,gen-thunk body
 ?b_002597d0@@YAXXZ,0x002597D0,gen-thunk body
 ?b_00259860@@YAXXZ,0x00259860,gen-thunk body
-?b_00259870@@YAXXZ,0x00259870,Open-BFME7 additive: retail call target used by the landed row at 0x000086D9 (thunk drift repair)
 ?b_002598a0@@YAXXZ,0x002598A0,gen-thunk body
 ?b_002598d0@@YAXXZ,0x002598D0,gen-thunk body
 ?b_00259900@@YAXXZ,0x00259900,gen-thunk body
@@ -32735,11 +32565,9 @@ name,address,notes
 ?b_00259b50@@YAXXZ,0x00259B50,gen-thunk body
 ?b_00259b80@@YAXXZ,0x00259B80,gen-thunk body
 ?b_00259bc0@@YAXXZ,0x00259BC0,gen-thunk body
-?b_00259bd0@@YAXXZ,0x00259BD0,Open-BFME7 additive: retail call target used by the landed row at 0x00029A28 (thunk drift repair)
 ?b_00259bf0@@YAXXZ,0x00259BF0,gen-thunk body
 ?b_00259c00@@YAXXZ,0x00259C00,gen-thunk body
 ?b_00259c90@@YAXXZ,0x00259C90,gen-thunk body
-?b_00259ca0@@YAXXZ,0x00259CA0,Open-BFME7 additive: retail call target used by the landed row at 0x0001F8D4 (thunk drift repair)
 ?b_00259cd0@@YAXXZ,0x00259CD0,gen-thunk body
 ?b_00259d90@@YAXXZ,0x00259D90,gen-thunk body
 ?b_00259dd0@@YAXXZ,0x00259DD0,gen-thunk body
@@ -32751,10 +32579,8 @@ name,address,notes
 ?b_00259f20@@YAXXZ,0x00259F20,gen-thunk body
 ?b_00259f50@@YAXXZ,0x00259F50,gen-thunk body
 ?b_00259f90@@YAXXZ,0x00259F90,gen-thunk body
-?b_00259fa0@@YAXXZ,0x00259FA0,Open-BFME7 additive: retail call target used by the landed row at 0x00022F8E (thunk drift repair)
 ?b_00259fc0@@YAXXZ,0x00259FC0,gen-thunk body
 ?b_00259fd0@@YAXXZ,0x00259FD0,gen-thunk body
-?b_0025a060@@YAXXZ,0x0025A060,Open-BFME7 additive: retail call target used by the landed row at 0x0000CE19 (thunk drift repair)
 ?b_0025a090@@YAXXZ,0x0025A090,gen-thunk body
 ?b_0025a0d0@@YAXXZ,0x0025A0D0,gen-thunk body
 ?b_0025a0e0@@YAXXZ,0x0025A0E0,gen-thunk body
@@ -32801,11 +32627,9 @@ name,address,notes
 ?b_0025a790@@YAXXZ,0x0025A790,gen-thunk body
 ?b_0025a7c0@@YAXXZ,0x0025A7C0,gen-thunk body
 ?b_0025a800@@YAXXZ,0x0025A800,gen-thunk body
-?b_0025a810@@YAXXZ,0x0025A810,Open-BFME7 additive: retail call target used by the landed row at 0x000313D6 (thunk drift repair)
 ?b_0025a830@@YAXXZ,0x0025A830,gen-thunk body
 ?b_0025a840@@YAXXZ,0x0025A840,gen-thunk body
 ?b_0025a8d0@@YAXXZ,0x0025A8D0,gen-thunk body
-?b_0025a8e0@@YAXXZ,0x0025A8E0,Open-BFME7 additive: retail call target used by the landed row at 0x00038104 (thunk drift repair)
 ?b_0025a910@@YAXXZ,0x0025A910,gen-thunk body
 ?b_0025a930@@YAXXZ,0x0025A930,gen-thunk body
 ?b_0025a990@@YAXXZ,0x0025A990,gen-thunk body
@@ -32817,18 +32641,15 @@ name,address,notes
 ?b_0025acc0@@YAXXZ,0x0025ACC0,gen-thunk body
 ?b_0025acf0@@YAXXZ,0x0025ACF0,gen-thunk body
 ?b_0025ad40@@YAXXZ,0x0025AD40,gen-thunk body
-?b_0025ad50@@YAXXZ,0x0025AD50,Open-BFME7 additive: retail call target used by the landed row at 0x00031548 (thunk drift repair)
 ?b_0025ad80@@YAXXZ,0x0025AD80,gen-thunk body
 ?b_0025ad90@@YAXXZ,0x0025AD90,gen-thunk body
 ?b_0025ae20@@YAXXZ,0x0025AE20,gen-thunk body
 ?b_0025ae30@@YAXXZ,0x0025AE30,gen-thunk body
 ?b_0025ae60@@YAXXZ,0x0025AE60,gen-thunk body
-?b_0025ae70@@YAXXZ,0x0025AE70,Open-BFME7 additive: retail call target used by the landed row at 0x0001CD9B (thunk drift repair)
 ?b_0025aea0@@YAXXZ,0x0025AEA0,gen-thunk body
 ?b_0025aee0@@YAXXZ,0x0025AEE0,gen-thunk body
 ?b_0025b2b0@@YAXXZ,0x0025B2B0,gen-thunk body
 ?b_0025b2f0@@YAXXZ,0x0025B2F0,gen-thunk body
-?b_0025b300@@YAXXZ,0x0025B300,Open-BFME7 additive: retail call target used by the landed row at 0x000253C9 (thunk drift repair)
 ?b_0025b320@@YAXXZ,0x0025B320,gen-thunk body
 ?b_0025b330@@YAXXZ,0x0025B330,gen-thunk body
 ?b_0025b340@@YAXXZ,0x0025B340,gen-thunk body
@@ -32858,7 +32679,6 @@ name,address,notes
 ?b_0025b500@@YAXXZ,0x0025B500,gen-thunk body
 ?b_0025b510@@YAXXZ,0x0025B510,gen-thunk body
 ?b_0025b5a0@@YAXXZ,0x0025B5A0,gen-thunk body
-?b_0025b5b0@@YAXXZ,0x0025B5B0,Open-BFME7 additive: retail call target used by the landed row at 0x00004598 (thunk drift repair)
 ?b_0025b5e0@@YAXXZ,0x0025B5E0,gen-thunk body
 ?b_0025b620@@YAXXZ,0x0025B620,gen-thunk body
 ?b_0025b630@@YAXXZ,0x0025B630,gen-thunk body
@@ -32924,12 +32744,10 @@ name,address,notes
 ?b_0025cf10@@YAXXZ,0x0025CF10,gen-thunk body
 ?b_0025cf40@@YAXXZ,0x0025CF40,gen-thunk body
 ?b_0025cf90@@YAXXZ,0x0025CF90,gen-thunk body
-?b_0025cfa0@@YAXXZ,0x0025CFA0,Open-BFME7 additive: retail call target used by the landed row at 0x00039BCB (thunk drift repair)
 ?b_0025cfd0@@YAXXZ,0x0025CFD0,gen-thunk body
 ?b_0025cfe0@@YAXXZ,0x0025CFE0,gen-thunk body
 ?b_0025d070@@YAXXZ,0x0025D070,gen-thunk body
 ?b_0025d0a0@@YAXXZ,0x0025D0A0,gen-thunk body
-?b_0025d0b0@@YAXXZ,0x0025D0B0,Open-BFME7 additive: retail call target used by the landed row at 0x0001C003 (thunk drift repair)
 ?b_0025d0e0@@YAXXZ,0x0025D0E0,gen-thunk body
 ?b_0025d130@@YAXXZ,0x0025D130,gen-thunk body
 ?b_0025d170@@YAXXZ,0x0025D170,gen-thunk body
@@ -32939,11 +32757,9 @@ name,address,notes
 ?b_0025d560@@YAXXZ,0x0025D560,gen-thunk body
 ?b_0025d590@@YAXXZ,0x0025D590,gen-thunk body
 ?b_0025d5d0@@YAXXZ,0x0025D5D0,gen-thunk body
-?b_0025d5e0@@YAXXZ,0x0025D5E0,Open-BFME7 additive: retail call target used by the landed row at 0x0001AC99 (thunk drift repair)
 ?b_0025d600@@YAXXZ,0x0025D600,gen-thunk body
 ?b_0025d610@@YAXXZ,0x0025D610,gen-thunk body
 ?b_0025d6a0@@YAXXZ,0x0025D6A0,gen-thunk body
-?b_0025d6b0@@YAXXZ,0x0025D6B0,Open-BFME7 additive: retail call target used by the landed row at 0x0001CF3F (thunk drift repair)
 ?b_0025d6e0@@YAXXZ,0x0025D6E0,gen-thunk body
 ?b_0025d7a0@@YAXXZ,0x0025D7A0,gen-thunk body
 ?b_0025d7e0@@YAXXZ,0x0025D7E0,gen-thunk body
@@ -32958,7 +32774,6 @@ name,address,notes
 ?b_0025d970@@YAXXZ,0x0025D970,gen-thunk body
 ?b_0025d9a0@@YAXXZ,0x0025D9A0,gen-thunk body
 ?b_0025da00@@YAXXZ,0x0025DA00,gen-thunk body
-?b_0025da10@@YAXXZ,0x0025DA10,Open-BFME7 additive: retail call target used by the landed row at 0x000157E4 (thunk drift repair)
 ?b_0025da40@@YAXXZ,0x0025DA40,gen-thunk body
 ?b_0025dac0@@YAXXZ,0x0025DAC0,gen-thunk body
 ?b_0025dad0@@YAXXZ,0x0025DAD0,gen-thunk body
@@ -32968,7 +32783,6 @@ name,address,notes
 ?b_0025db10@@YAXXZ,0x0025DB10,gen-thunk body
 ?b_0025dba0@@YAXXZ,0x0025DBA0,gen-thunk body
 ?b_0025dbb0@@YAXXZ,0x0025DBB0,gen-thunk body
-?b_0025dbe0@@YAXXZ,0x0025DBE0,Open-BFME7 additive: retail call target used by the landed row at 0x0002A7A7 (thunk drift repair)
 ?b_0025dc10@@YAXXZ,0x0025DC10,gen-thunk body
 ?b_0025dc20@@YAXXZ,0x0025DC20,gen-thunk body
 ?b_0025dc50@@YAXXZ,0x0025DC50,gen-thunk body
@@ -33013,10 +32827,8 @@ name,address,notes
 ?b_0025f0b0@@YAXXZ,0x0025F0B0,gen-thunk body
 ?b_0025f0e0@@YAXXZ,0x0025F0E0,gen-thunk body
 ?b_0025f120@@YAXXZ,0x0025F120,gen-thunk body
-?b_0025f130@@YAXXZ,0x0025F130,Open-BFME7 additive: retail call target used by the landed row at 0x00023669 (thunk drift repair)
 ?b_0025f150@@YAXXZ,0x0025F150,gen-thunk body
 ?b_0025f160@@YAXXZ,0x0025F160,gen-thunk body
-?b_0025f1f0@@YAXXZ,0x0025F1F0,Open-BFME7 additive: retail call target used by the landed row at 0x00010E51 (thunk drift repair)
 ?b_0025f220@@YAXXZ,0x0025F220,gen-thunk body
 ?b_0025f260@@YAXXZ,0x0025F260,gen-thunk body
 ?b_0025f290@@YAXXZ,0x0025F290,gen-thunk body
@@ -33025,11 +32837,9 @@ name,address,notes
 ?b_0025f6c0@@YAXXZ,0x0025F6C0,gen-thunk body
 ?b_0025f8a0@@YAXXZ,0x0025F8A0,gen-thunk body
 ?b_0025f8f0@@YAXXZ,0x0025F8F0,gen-thunk body
-?b_0025f900@@YAXXZ,0x0025F900,Open-BFME7 additive: retail call target used by the landed row at 0x0002A9CD (thunk drift repair)
 ?b_0025f930@@YAXXZ,0x0025F930,gen-thunk body
 ?b_0025f940@@YAXXZ,0x0025F940,gen-thunk body
 ?b_0025f9d0@@YAXXZ,0x0025F9D0,gen-thunk body
-?b_0025f9e0@@YAXXZ,0x0025F9E0,Open-BFME7 additive: retail call target used by the landed row at 0x00024CF8 (thunk drift repair)
 ?b_0025fa10@@YAXXZ,0x0025FA10,gen-thunk body
 ?b_0025fa60@@YAXXZ,0x0025FA60,gen-thunk body
 ?b_0025fa80@@YAXXZ,0x0025FA80,gen-thunk body
@@ -33156,7 +32966,6 @@ name,address,notes
 ?b_002628c0@@YAXXZ,0x002628C0,gen-thunk body
 ?b_002628e0@@YAXXZ,0x002628E0,gen-thunk body
 ?b_00262920@@YAXXZ,0x00262920,gen-thunk body
-?b_00262930@@YAXXZ,0x00262930,Open-BFME7 additive: retail call target used by the landed row at 0x00022ABB (thunk drift repair)
 ?b_00262950@@YAXXZ,0x00262950,gen-thunk body
 ?b_00262960@@YAXXZ,0x00262960,gen-thunk body
 ?b_00262970@@YAXXZ,0x00262970,gen-thunk body
@@ -33175,7 +32984,6 @@ name,address,notes
 ?b_00262ae0@@YAXXZ,0x00262AE0,gen-thunk body
 ?b_00262af0@@YAXXZ,0x00262AF0,gen-thunk body
 ?b_00262b80@@YAXXZ,0x00262B80,gen-thunk body
-?b_00262b90@@YAXXZ,0x00262B90,Open-BFME7 additive: retail call target used by the landed row at 0x000037D3 (thunk drift repair)
 ?b_00262bc0@@YAXXZ,0x00262BC0,gen-thunk body
 ?b_00262c30@@YAXXZ,0x00262C30,gen-thunk body
 ?b_00262c70@@YAXXZ,0x00262C70,gen-thunk body
@@ -33203,13 +33011,11 @@ name,address,notes
 ?b_002639a0@@YAXXZ,0x002639A0,gen-thunk body
 ?b_002639d0@@YAXXZ,0x002639D0,gen-thunk body
 ?b_00263a10@@YAXXZ,0x00263A10,gen-thunk body
-?b_00263a20@@YAXXZ,0x00263A20,Open-BFME7 additive: retail call target used by the landed row at 0x0003DE15 (thunk drift repair)
 ?b_00263a40@@YAXXZ,0x00263A40,gen-thunk body
 ?b_00263a50@@YAXXZ,0x00263A50,gen-thunk body
 ?b_00263a60@@YAXXZ,0x00263A60,gen-thunk body
 ?b_00263ab0@@YAXXZ,0x00263AB0,gen-thunk body
 ?b_00263b40@@YAXXZ,0x00263B40,gen-thunk body
-?b_00263b50@@YAXXZ,0x00263B50,Open-BFME7 additive: retail call target used by the landed row at 0x0000BD89 (thunk drift repair)
 ?b_00263b80@@YAXXZ,0x00263B80,gen-thunk body
 ?b_00263ba0@@YAXXZ,0x00263BA0,gen-thunk body
 ?b_00263be0@@YAXXZ,0x00263BE0,gen-thunk body
@@ -33218,13 +33024,11 @@ name,address,notes
 ?b_00263ca0@@YAXXZ,0x00263CA0,gen-thunk body
 ?b_00263f50@@YAXXZ,0x00263F50,gen-thunk body
 ?b_00263f90@@YAXXZ,0x00263F90,gen-thunk body
-?b_00263fa0@@YAXXZ,0x00263FA0,Open-BFME7 additive: retail call target used by the landed row at 0x000231B9 (thunk drift repair)
 ?b_00263fc0@@YAXXZ,0x00263FC0,gen-thunk body
 ?b_00263fd0@@YAXXZ,0x00263FD0,gen-thunk body
 ?b_00263fe0@@YAXXZ,0x00263FE0,gen-thunk body
 ?b_00263ff0@@YAXXZ,0x00263FF0,gen-thunk body
 ?b_00264080@@YAXXZ,0x00264080,gen-thunk body
-?b_00264090@@YAXXZ,0x00264090,Open-BFME7 additive: retail call target used by the landed row at 0x00031174 (thunk drift repair)
 ?b_002640c0@@YAXXZ,0x002640C0,gen-thunk body
 ?b_00264100@@YAXXZ,0x00264100,gen-thunk body
 ?b_00264210@@YAXXZ,0x00264210,gen-thunk body
@@ -33247,12 +33051,10 @@ name,address,notes
 ?b_002647c0@@YAXXZ,0x002647C0,gen-thunk body
 ?b_002647f0@@YAXXZ,0x002647F0,gen-thunk body
 ?b_00264830@@YAXXZ,0x00264830,gen-thunk body
-?b_00264840@@YAXXZ,0x00264840,Open-BFME7 additive: retail call target used by the landed row at 0x000228F9 (thunk drift repair)
 ?b_00264860@@YAXXZ,0x00264860,gen-thunk body
 ?b_00264870@@YAXXZ,0x00264870,gen-thunk body
 ?b_00264880@@YAXXZ,0x00264880,gen-thunk body
 ?b_00264890@@YAXXZ,0x00264890,gen-thunk body
-?b_00264920@@YAXXZ,0x00264920,Open-BFME7 additive: retail call target used by the landed row at 0x00037DDF (thunk drift repair)
 ?b_00264950@@YAXXZ,0x00264950,gen-thunk body
 ?b_00264990@@YAXXZ,0x00264990,gen-thunk body
 ?b_002649b0@@YAXXZ,0x002649B0,gen-thunk body
@@ -33284,8 +33086,6 @@ name,address,notes
 ?b_00265880@@YAXXZ,0x00265880,gen-thunk body
 ?b_002658b0@@YAXXZ,0x002658B0,gen-thunk body
 ?b_002658f0@@YAXXZ,0x002658F0,gen-thunk body
-?b_00265900@@YAXXZ,0x00265900,Open-BFME7 additive: retail call target used by the landed row at 0x00003F94 (thunk drift repair)
-?b_00265930@@YAXXZ,0x00265930,Open-BFME7 additive: retail call target used by the landed row at 0x00028961 (thunk drift repair)
 ?b_00265950@@YAXXZ,0x00265950,gen-thunk body
 ?b_00265960@@YAXXZ,0x00265960,gen-thunk body
 ?b_002659f0@@YAXXZ,0x002659F0,gen-thunk body
@@ -33451,12 +33251,10 @@ name,address,notes
 ?b_0026b020@@YAXXZ,0x0026B020,gen-thunk body
 ?b_0026b030@@YAXXZ,0x0026B030,gen-thunk body
 ?b_0026b070@@YAXXZ,0x0026B070,gen-thunk body
-?b_0026b080@@YAXXZ,0x0026B080,Open-BFME7 additive: retail call target used by the landed row at 0x00016450 (thunk drift repair)
 ?b_0026b0a0@@YAXXZ,0x0026B0A0,gen-thunk body
 ?b_0026b0b0@@YAXXZ,0x0026B0B0,gen-thunk body
 ?b_0026b0c0@@YAXXZ,0x0026B0C0,gen-thunk body
 ?b_0026b0d0@@YAXXZ,0x0026B0D0,gen-thunk body
-?b_0026b160@@YAXXZ,0x0026B160,Open-BFME7 additive: retail call target used by the landed row at 0x0001519A (thunk drift repair)
 ?b_0026b190@@YAXXZ,0x0026B190,gen-thunk body
 ?b_0026b1d0@@YAXXZ,0x0026B1D0,gen-thunk body
 ?b_0026b1f0@@YAXXZ,0x0026B1F0,gen-thunk body
@@ -33465,12 +33263,10 @@ name,address,notes
 ?b_0026b310@@YAXXZ,0x0026B310,gen-thunk body
 ?b_0026b340@@YAXXZ,0x0026B340,gen-thunk body
 ?b_0026b390@@YAXXZ,0x0026B390,gen-thunk body
-?b_0026b3a0@@YAXXZ,0x0026B3A0,Open-BFME7 additive: retail call target used by the landed row at 0x00046E57 (thunk drift repair)
 ?b_0026b3c0@@YAXXZ,0x0026B3C0,gen-thunk body
 ?b_0026b3f0@@YAXXZ,0x0026B3F0,gen-thunk body
 ?b_0026b400@@YAXXZ,0x0026B400,gen-thunk body
 ?b_0026b490@@YAXXZ,0x0026B490,gen-thunk body
-?b_0026b4a0@@YAXXZ,0x0026B4A0,Open-BFME7 additive: retail call target used by the landed row at 0x0002CEBC (thunk drift repair)
 ?b_0026b4d0@@YAXXZ,0x0026B4D0,gen-thunk body
 ?b_0026b570@@YAXXZ,0x0026B570,gen-thunk body
 ?b_0026b5b0@@YAXXZ,0x0026B5B0,gen-thunk body
@@ -33479,11 +33275,9 @@ name,address,notes
 ?b_0026b620@@YAXXZ,0x0026B620,gen-thunk body
 ?b_0026b650@@YAXXZ,0x0026B650,gen-thunk body
 ?b_0026b690@@YAXXZ,0x0026B690,gen-thunk body
-?b_0026b6a0@@YAXXZ,0x0026B6A0,Open-BFME7 additive: retail call target used by the landed row at 0x00020202 (thunk drift repair)
 ?b_0026b6c0@@YAXXZ,0x0026B6C0,gen-thunk body
 ?b_0026b6d0@@YAXXZ,0x0026B6D0,gen-thunk body
 ?b_0026b760@@YAXXZ,0x0026B760,gen-thunk body
-?b_0026b770@@YAXXZ,0x0026B770,Open-BFME7 additive: retail call target used by the landed row at 0x0000A493 (thunk drift repair)
 ?b_0026b7a0@@YAXXZ,0x0026B7A0,gen-thunk body
 ?b_0026b7e0@@YAXXZ,0x0026B7E0,gen-thunk body
 ?b_0026b820@@YAXXZ,0x0026B820,gen-thunk body
@@ -33497,7 +33291,6 @@ name,address,notes
 ?b_0026bfb0@@YAXXZ,0x0026BFB0,gen-thunk body
 ?b_0026bfd0@@YAXXZ,0x0026BFD0,gen-thunk body
 ?b_0026c020@@YAXXZ,0x0026C020,gen-thunk body
-?b_0026c030@@YAXXZ,0x0026C030,Open-BFME7 additive: retail call target used by the landed row at 0x0003610B (thunk drift repair)
 ?b_0026c060@@YAXXZ,0x0026C060,gen-thunk body
 ?b_0026c070@@YAXXZ,0x0026C070,gen-thunk body
 ?b_0026c080@@YAXXZ,0x0026C080,gen-thunk body
@@ -33507,7 +33300,6 @@ name,address,notes
 ?b_0026c190@@YAXXZ,0x0026C190,gen-thunk body
 ?b_0026c1a0@@YAXXZ,0x0026C1A0,gen-thunk body
 ?b_0026c1d0@@YAXXZ,0x0026C1D0,gen-thunk body
-?b_0026c1e0@@YAXXZ,0x0026C1E0,Open-BFME7 additive: retail call target used by the landed row at 0x00008BF7 (thunk drift repair)
 ?b_0026c210@@YAXXZ,0x0026C210,gen-thunk body
 ?b_0026c260@@YAXXZ,0x0026C260,gen-thunk body
 ?b_0026c320@@YAXXZ,0x0026C320,gen-thunk body
@@ -33537,8 +33329,6 @@ name,address,notes
 ?b_0026cc50@@YAXXZ,0x0026CC50,gen-thunk body
 ?b_0026cc80@@YAXXZ,0x0026CC80,gen-thunk body
 ?b_0026ccc0@@YAXXZ,0x0026CCC0,gen-thunk body
-?b_0026ccd0@@YAXXZ,0x0026CCD0,Open-BFME7 additive: retail call target used by the landed row at 0x0002F9F5 (thunk drift repair)
-?b_0026cd00@@YAXXZ,0x0026CD00,Open-BFME7 additive: retail call target used by the landed row at 0x00041ADD (thunk drift repair)
 ?b_0026cd20@@YAXXZ,0x0026CD20,gen-thunk body
 ?b_0026cd30@@YAXXZ,0x0026CD30,gen-thunk body
 ?b_0026cd40@@YAXXZ,0x0026CD40,gen-thunk body
@@ -33571,13 +33361,11 @@ name,address,notes
 ?b_0026dc20@@YAXXZ,0x0026DC20,gen-thunk body
 ?b_0026dc50@@YAXXZ,0x0026DC50,gen-thunk body
 ?b_0026dca0@@YAXXZ,0x0026DCA0,gen-thunk body
-?b_0026dcb0@@YAXXZ,0x0026DCB0,Open-BFME7 additive: retail call target used by the landed row at 0x000094A8 (thunk drift repair)
 ?b_0026dce0@@YAXXZ,0x0026DCE0,gen-thunk body
 ?b_0026dcf0@@YAXXZ,0x0026DCF0,gen-thunk body
 ?b_0026dd80@@YAXXZ,0x0026DD80,gen-thunk body
 ?b_0026dd90@@YAXXZ,0x0026DD90,gen-thunk body
 ?b_0026ddc0@@YAXXZ,0x0026DDC0,gen-thunk body
-?b_0026ddd0@@YAXXZ,0x0026DDD0,Open-BFME7 additive: retail call target used by the landed row at 0x000298A2 (thunk drift repair)
 ?b_0026de00@@YAXXZ,0x0026DE00,gen-thunk body
 ?b_0026de30@@YAXXZ,0x0026DE30,gen-thunk body
 ?b_0026de90@@YAXXZ,0x0026DE90,gen-thunk body
@@ -33587,13 +33375,11 @@ name,address,notes
 ?b_0026df80@@YAXXZ,0x0026DF80,gen-thunk body
 ?b_0026dfb0@@YAXXZ,0x0026DFB0,gen-thunk body
 ?b_0026e000@@YAXXZ,0x0026E000,gen-thunk body
-?b_0026e010@@YAXXZ,0x0026E010,Open-BFME7 additive: retail call target used by the landed row at 0x00003BD4 (thunk drift repair)
 ?b_0026e040@@YAXXZ,0x0026E040,gen-thunk body
 ?b_0026e050@@YAXXZ,0x0026E050,gen-thunk body
 ?b_0026e0e0@@YAXXZ,0x0026E0E0,gen-thunk body
 ?b_0026e0f0@@YAXXZ,0x0026E0F0,gen-thunk body
 ?b_0026e120@@YAXXZ,0x0026E120,gen-thunk body
-?b_0026e130@@YAXXZ,0x0026E130,Open-BFME7 additive: retail call target used by the landed row at 0x0003170F (thunk drift repair)
 ?b_0026e160@@YAXXZ,0x0026E160,gen-thunk body
 ?b_0026e1c0@@YAXXZ,0x0026E1C0,gen-thunk body
 ?b_0026e1f0@@YAXXZ,0x0026E1F0,gen-thunk body
@@ -33951,7 +33737,6 @@ name,address,notes
 ?b_0027fd70@@YAXXZ,0x0027FD70,gen-thunk body
 ?b_0027fed0@@YAXXZ,0x0027FED0,gen-thunk body
 ?b_0027ff60@@YAXXZ,0x0027FF60,gen-thunk body
-?b_0027ff70@@YAXXZ,0x0027FF70,Open-BFME7 additive: retail call target used by the landed row at 0x0002F621 (thunk drift repair)
 ?b_0027ffa0@@YAXXZ,0x0027FFA0,gen-thunk body
 ?b_0027ffb0@@YAXXZ,0x0027FFB0,gen-thunk body
 ?b_0027ffc0@@YAXXZ,0x0027FFC0,gen-thunk body
@@ -33966,7 +33751,6 @@ name,address,notes
 ?b_002801e0@@YAXXZ,0x002801E0,gen-thunk body
 ?b_002801f0@@YAXXZ,0x002801F0,gen-thunk body
 ?b_00280210@@YAXXZ,0x00280210,gen-thunk body
-?b_002802a0@@YAXXZ,0x002802A0,Open-BFME7 additive: retail call target used by the landed row at 0x00018FDE (thunk drift repair)
 ?b_002802d0@@YAXXZ,0x002802D0,gen-thunk body
 ?b_002802f0@@YAXXZ,0x002802F0,gen-thunk body
 ?b_00280350@@YAXXZ,0x00280350,gen-thunk body
@@ -34007,7 +33791,6 @@ name,address,notes
 ?b_00281870@@YAXXZ,0x00281870,gen-thunk body
 ?b_00281890@@YAXXZ,0x00281890,gen-thunk body
 ?b_002818a0@@YAXXZ,0x002818A0,gen-thunk body
-?b_002818b0@@YAXXZ,0x002818B0,Open-BFME7 additive: retail call target used by the landed row at 0x000448A0 (thunk drift repair)
 ?b_002818e0@@YAXXZ,0x002818E0,gen-thunk body
 ?b_002818f0@@YAXXZ,0x002818F0,gen-thunk body
 ?b_00281900@@YAXXZ,0x00281900,gen-thunk body
@@ -34027,7 +33810,6 @@ name,address,notes
 ?b_00281b90@@YAXXZ,0x00281B90,gen-thunk body
 ?b_00281ba0@@YAXXZ,0x00281BA0,gen-thunk body
 ?b_00281bc0@@YAXXZ,0x00281BC0,gen-thunk body
-?b_00281c50@@YAXXZ,0x00281C50,Open-BFME7 additive: retail call target used by the landed row at 0x0001E830 (thunk drift repair)
 ?b_00281c80@@YAXXZ,0x00281C80,gen-thunk body
 ?b_00281c90@@YAXXZ,0x00281C90,gen-thunk body
 ?b_00281ca0@@YAXXZ,0x00281CA0,gen-thunk body
@@ -34210,7 +33992,6 @@ name,address,notes
 ?b_00286ad0@@YAXXZ,0x00286AD0,gen-thunk body
 ?b_00286c40@@YAXXZ,0x00286C40,gen-thunk body
 ?b_00286db0@@YAXXZ,0x00286DB0,gen-thunk body
-?b_00286dc0@@YAXXZ,0x00286DC0,Open-BFME7 additive: retail call target used by the landed row at 0x000142A4 (thunk drift repair)
 ?b_00286df0@@YAXXZ,0x00286DF0,gen-thunk body
 ?b_00286e00@@YAXXZ,0x00286E00,gen-thunk body
 ?b_00286e10@@YAXXZ,0x00286E10,gen-thunk body
@@ -34224,7 +34005,6 @@ name,address,notes
 ?b_00287040@@YAXXZ,0x00287040,gen-thunk body
 ?b_00287050@@YAXXZ,0x00287050,gen-thunk body
 ?b_00287070@@YAXXZ,0x00287070,gen-thunk body
-?b_00287100@@YAXXZ,0x00287100,Open-BFME7 additive: retail call target used by the landed row at 0x0002E89D (thunk drift repair)
 ?b_00287130@@YAXXZ,0x00287130,gen-thunk body
 ?b_002871f0@@YAXXZ,0x002871F0,gen-thunk body
 ?b_00287290@@YAXXZ,0x00287290,gen-thunk body
@@ -34355,7 +34135,6 @@ name,address,notes
 ?b_0028b440@@YAXXZ,0x0028B440,gen-thunk body
 ?b_0028b490@@YAXXZ,0x0028B490,gen-thunk body
 ?b_0028b540@@YAXXZ,0x0028B540,gen-thunk body
-?b_0028b600@@YAXXZ,0x0028B600,Open-BFME7 additive: retail call target used by the landed row at 0x0003409F (thunk drift repair)
 ?b_0028b630@@YAXXZ,0x0028B630,gen-thunk body
 ?b_0028b640@@YAXXZ,0x0028B640,gen-thunk body
 ?b_0028b650@@YAXXZ,0x0028B650,gen-thunk body
@@ -34367,7 +34146,6 @@ name,address,notes
 ?b_0028b720@@YAXXZ,0x0028B720,gen-thunk body
 ?b_0028b730@@YAXXZ,0x0028B730,gen-thunk body
 ?b_0028b750@@YAXXZ,0x0028B750,gen-thunk body
-?b_0028b7e0@@YAXXZ,0x0028B7E0,Open-BFME7 additive: retail call target used by the landed row at 0x000260AD (thunk drift repair)
 ?b_0028b810@@YAXXZ,0x0028B810,gen-thunk body
 ?b_0028b8a0@@YAXXZ,0x0028B8A0,gen-thunk body
 ?b_0028b910@@YAXXZ,0x0028B910,gen-thunk body
@@ -34393,7 +34171,6 @@ name,address,notes
 ?b_0028bff0@@YAXXZ,0x0028BFF0,gen-thunk body
 ?b_0028c050@@YAXXZ,0x0028C050,gen-thunk body
 ?b_0028c220@@YAXXZ,0x0028C220,gen-thunk body
-?b_0028c230@@YAXXZ,0x0028C230,Open-BFME7 additive: retail call target used by the landed row at 0x000241EF (thunk drift repair)
 ?b_0028c260@@YAXXZ,0x0028C260,gen-thunk body
 ?b_0028c270@@YAXXZ,0x0028C270,gen-thunk body
 ?b_0028c280@@YAXXZ,0x0028C280,gen-thunk body
@@ -34403,7 +34180,6 @@ name,address,notes
 ?b_0028c2d0@@YAXXZ,0x0028C2D0,gen-thunk body
 ?b_0028c340@@YAXXZ,0x0028C340,gen-thunk body
 ?b_0028c350@@YAXXZ,0x0028C350,gen-thunk body
-?b_0028c3e0@@YAXXZ,0x0028C3E0,Open-BFME7 additive: retail call target used by the landed row at 0x0002350B (thunk drift repair)
 ?b_0028c450@@YAXXZ,0x0028C450,gen-thunk body
 ?b_0028c480@@YAXXZ,0x0028C480,gen-thunk body
 ?b_0028c490@@YAXXZ,0x0028C490,gen-thunk body
@@ -34802,7 +34578,6 @@ name,address,notes
 ?b_00296200@@YAXXZ,0x00296200,gen-thunk body
 ?b_00296210@@YAXXZ,0x00296210,gen-thunk body
 ?b_00296230@@YAXXZ,0x00296230,gen-thunk body
-?b_00296250@@YAXXZ,0x00296250,Open-BFME7 additive: retail call target used by the landed row at 0x0001767A (thunk drift repair)
 ?b_00296280@@YAXXZ,0x00296280,gen-thunk body
 ?b_002962c0@@YAXXZ,0x002962C0,gen-thunk body
 ?b_00296300@@YAXXZ,0x00296300,gen-thunk body
@@ -34843,7 +34618,6 @@ name,address,notes
 ?b_00296c80@@YAXXZ,0x00296C80,gen-thunk body
 ?b_00296d40@@YAXXZ,0x00296D40,gen-thunk body
 ?b_00296d50@@YAXXZ,0x00296D50,gen-thunk body
-?b_00296de0@@YAXXZ,0x00296DE0,Open-BFME7 additive: retail call target used by the landed row at 0x0002DBD2 (thunk drift repair)
 ?b_00296e10@@YAXXZ,0x00296E10,gen-thunk body
 ?b_00296e60@@YAXXZ,0x00296E60,gen-thunk body
 ?b_00296ed0@@YAXXZ,0x00296ED0,gen-thunk body
@@ -34861,7 +34635,6 @@ name,address,notes
 ?b_00297440@@YAXXZ,0x00297440,gen-thunk body
 ?b_00297470@@YAXXZ,0x00297470,gen-thunk body
 ?b_002974c0@@YAXXZ,0x002974C0,gen-thunk body
-?b_002974d0@@YAXXZ,0x002974D0,Open-BFME7 additive: retail call target used by the landed row at 0x0000D125 (thunk drift repair)
 ?b_00297500@@YAXXZ,0x00297500,gen-thunk body
 ?b_00297510@@YAXXZ,0x00297510,gen-thunk body
 ?b_00297530@@YAXXZ,0x00297530,gen-thunk body
@@ -34874,14 +34647,12 @@ name,address,notes
 ?b_00297730@@YAXXZ,0x00297730,gen-thunk body
 ?b_00297740@@YAXXZ,0x00297740,gen-thunk body
 ?b_00297760@@YAXXZ,0x00297760,gen-thunk body
-?b_002977f0@@YAXXZ,0x002977F0,Open-BFME7 additive: retail call target used by the landed row at 0x000106C2 (thunk drift repair)
 ?b_00297820@@YAXXZ,0x00297820,gen-thunk body
 ?b_00297890@@YAXXZ,0x00297890,gen-thunk body
 ?b_002978a0@@YAXXZ,0x002978A0,gen-thunk body
 ?b_00297930@@YAXXZ,0x00297930,gen-thunk body
 ?b_00297d30@@YAXXZ,0x00297D30,gen-thunk body
 ?b_00297d60@@YAXXZ,0x00297D60,gen-thunk body
-?b_00297de0@@YAXXZ,0x00297DE0,Open-BFME7 additive: retail call target used by the landed row at 0x0002C6F1 (thunk drift repair)
 ?b_00297e00@@YAXXZ,0x00297E00,gen-thunk body
 ?b_00297e50@@YAXXZ,0x00297E50,gen-thunk body
 ?b_00297e60@@YAXXZ,0x00297E60,gen-thunk body
@@ -34890,29 +34661,21 @@ name,address,notes
 ?b_00297eb0@@YAXXZ,0x00297EB0,gen-thunk body
 ?b_00297f10@@YAXXZ,0x00297F10,gen-thunk body
 ?b_00297f70@@YAXXZ,0x00297F70,gen-thunk body
-?b_00297fd0@@YAXXZ,0x00297FD0,Open-BFME7 additive: retail call target used by the landed row at 0x00027C46 (thunk drift repair)
-?b_00298000@@YAXXZ,0x00298000,Open-BFME7 additive: retail call target used by the landed row at 0x0003F053 (thunk drift repair)
 ?b_00298010@@YAXXZ,0x00298010,gen-thunk body
 ?b_002980a0@@YAXXZ,0x002980A0,gen-thunk body
 ?b_00298200@@YAXXZ,0x00298200,gen-thunk body
 ?b_00298210@@YAXXZ,0x00298210,gen-thunk body
-?b_002982a0@@YAXXZ,0x002982A0,Open-BFME7 additive: retail call target used by the landed row at 0x00028CFE (thunk drift repair)
 ?b_002982d0@@YAXXZ,0x002982D0,gen-thunk body
 ?b_00298320@@YAXXZ,0x00298320,gen-thunk body
 ?b_00298370@@YAXXZ,0x00298370,gen-thunk body
-?b_00298380@@YAXXZ,0x00298380,Open-BFME7 additive: retail call target used by the landed row at 0x0001DE1C (thunk drift repair)
 ?b_002983b0@@YAXXZ,0x002983B0,gen-thunk body
 ?b_002983d0@@YAXXZ,0x002983D0,gen-thunk body
 ?b_002983e0@@YAXXZ,0x002983E0,gen-thunk body
 ?b_00298470@@YAXXZ,0x00298470,gen-thunk body
-?b_00298480@@YAXXZ,0x00298480,Open-BFME7 additive: retail call target used by the landed row at 0x0002005E (thunk drift repair)
-?b_002984b0@@YAXXZ,0x002984B0,Open-BFME7 additive: retail call target used by the landed row at 0x00028EB6 (thunk drift repair)
-?b_002984c0@@YAXXZ,0x002984C0,Open-BFME7 additive: retail call target used by the landed row at 0x0002E244 (thunk drift repair)
 ?b_002984f0@@YAXXZ,0x002984F0,gen-thunk body
 ?b_00298530@@YAXXZ,0x00298530,gen-thunk body
 ?b_002985d0@@YAXXZ,0x002985D0,gen-thunk body
 ?b_00298680@@YAXXZ,0x00298680,gen-thunk body
-?b_00298870@@YAXXZ,0x00298870,Open-BFME7 additive: retail call target used by the landed row at 0x000137C8 (thunk drift repair)
 ?b_00298890@@YAXXZ,0x00298890,gen-thunk body
 ?b_002988f0@@YAXXZ,0x002988F0,gen-thunk body
 ?b_00298900@@YAXXZ,0x00298900,gen-thunk body
@@ -34922,14 +34685,11 @@ name,address,notes
 ?b_00298960@@YAXXZ,0x00298960,gen-thunk body
 ?b_002989d0@@YAXXZ,0x002989D0,gen-thunk body
 ?b_002989e0@@YAXXZ,0x002989E0,gen-thunk body
-?b_00298a70@@YAXXZ,0x00298A70,Open-BFME7 additive: retail call target used by the landed row at 0x00006370 (thunk drift repair)
 ?b_00298aa0@@YAXXZ,0x00298AA0,gen-thunk body
 ?b_00298ae0@@YAXXZ,0x00298AE0,gen-thunk body
 ?b_00298b40@@YAXXZ,0x00298B40,gen-thunk body
 ?b_00298b70@@YAXXZ,0x00298B70,gen-thunk body
-?b_00298b80@@YAXXZ,0x00298B80,Open-BFME7 additive: retail call target used by the landed row at 0x00047AE6 (thunk drift repair)
 ?b_00298bb0@@YAXXZ,0x00298BB0,gen-thunk body
-?b_00298ce0@@YAXXZ,0x00298CE0,Open-BFME7 additive: retail call target used by the landed row at 0x00034AB3 (thunk drift repair)
 ?b_00298d10@@YAXXZ,0x00298D10,gen-thunk body
 ?b_00298d20@@YAXXZ,0x00298D20,gen-thunk body
 ?b_00298d30@@YAXXZ,0x00298D30,gen-thunk body
@@ -34939,7 +34699,6 @@ name,address,notes
 ?b_00298ee0@@YAXXZ,0x00298EE0,gen-thunk body
 ?b_00298ef0@@YAXXZ,0x00298EF0,gen-thunk body
 ?b_00298f10@@YAXXZ,0x00298F10,gen-thunk body
-?b_00298fa0@@YAXXZ,0x00298FA0,Open-BFME7 additive: retail call target used by the landed row at 0x0000B131 (thunk drift repair)
 ?b_00298fd0@@YAXXZ,0x00298FD0,gen-thunk body
 ?b_00299050@@YAXXZ,0x00299050,gen-thunk body
 ?b_00299080@@YAXXZ,0x00299080,gen-thunk body
@@ -35257,7 +35016,6 @@ name,address,notes
 ?b_002a30d0@@YAXXZ,0x002A30D0,gen-thunk body
 ?b_002a32d0@@YAXXZ,0x002A32D0,gen-thunk body
 ?b_002a3520@@YAXXZ,0x002A3520,gen-thunk body
-?b_002a3540@@YAXXZ,0x002A3540,Open-BFME7 additive: retail call target used by the landed row at 0x00046BE6 (thunk drift repair)
 ?b_002a3570@@YAXXZ,0x002A3570,gen-thunk body
 ?b_002a3600@@YAXXZ,0x002A3600,gen-thunk body
 ?b_002a3610@@YAXXZ,0x002A3610,gen-thunk body
@@ -35266,7 +35024,6 @@ name,address,notes
 ?b_002a3720@@YAXXZ,0x002A3720,gen-thunk body
 ?b_002a3730@@YAXXZ,0x002A3730,gen-thunk body
 ?b_002a3750@@YAXXZ,0x002A3750,gen-thunk body
-?b_002a37e0@@YAXXZ,0x002A37E0,Open-BFME7 additive: retail call target used by the landed row at 0x00021C06 (thunk drift repair)
 ?b_002a3810@@YAXXZ,0x002A3810,gen-thunk body
 ?b_002a3840@@YAXXZ,0x002A3840,gen-thunk body
 ?b_002a38a0@@YAXXZ,0x002A38A0,gen-thunk body
@@ -35276,7 +35033,6 @@ name,address,notes
 ?b_002a3b40@@YAXXZ,0x002A3B40,gen-thunk body
 ?b_002a4190@@YAXXZ,0x002A4190,gen-thunk body
 ?b_002a41c0@@YAXXZ,0x002A41C0,gen-thunk body
-?b_002a41d0@@YAXXZ,0x002A41D0,Open-BFME7 additive: retail call target used by the landed row at 0x000393DD (thunk drift repair)
 ?b_002a4200@@YAXXZ,0x002A4200,gen-thunk body
 ?b_002a4210@@YAXXZ,0x002A4210,gen-thunk body
 ?b_002a4220@@YAXXZ,0x002A4220,gen-thunk body
@@ -35286,7 +35042,6 @@ name,address,notes
 ?b_002a42f0@@YAXXZ,0x002A42F0,gen-thunk body
 ?b_002a4300@@YAXXZ,0x002A4300,gen-thunk body
 ?b_002a4320@@YAXXZ,0x002A4320,gen-thunk body
-?b_002a43b0@@YAXXZ,0x002A43B0,Open-BFME7 additive: retail call target used by the landed row at 0x0001506E (thunk drift repair)
 ?b_002a43e0@@YAXXZ,0x002A43E0,gen-thunk body
 ?b_002a43f0@@YAXXZ,0x002A43F0,gen-thunk body
 ?b_002a44a0@@YAXXZ,0x002A44A0,gen-thunk body
@@ -35419,14 +35174,12 @@ name,address,notes
 ?b_002ad380@@YAXXZ,0x002AD380,gen-thunk body
 ?b_002ad670@@YAXXZ,0x002AD670,gen-thunk body
 ?b_002adfb0@@YAXXZ,0x002ADFB0,gen-thunk body
-?b_002ae130@@YAXXZ,0x002AE130,Open-BFME7 additive: retail call target used by the landed row at 0x00021FBC (thunk drift repair)
 ?b_002ae1c0@@YAXXZ,0x002AE1C0,gen-thunk body
 ?b_002ae1d0@@YAXXZ,0x002AE1D0,gen-thunk body
 ?b_002ae1f0@@YAXXZ,0x002AE1F0,gen-thunk body
 ?b_002ae2e0@@YAXXZ,0x002AE2E0,gen-thunk body
 ?b_002ae2f0@@YAXXZ,0x002AE2F0,gen-thunk body
 ?b_002ae310@@YAXXZ,0x002AE310,gen-thunk body
-?b_002ae3a0@@YAXXZ,0x002AE3A0,Open-BFME7 additive: retail call target used by the landed row at 0x0001388B (thunk drift repair)
 ?b_002ae3d0@@YAXXZ,0x002AE3D0,gen-thunk body
 ?b_002ae520@@YAXXZ,0x002AE520,gen-thunk body
 ?b_002ae5e0@@YAXXZ,0x002AE5E0,gen-thunk body
@@ -35437,7 +35190,6 @@ name,address,notes
 ?b_002ae8e0@@YAXXZ,0x002AE8E0,gen-thunk body
 ?b_002ae950@@YAXXZ,0x002AE950,gen-thunk body
 ?b_002aef50@@YAXXZ,0x002AEF50,gen-thunk body
-?b_002aef80@@YAXXZ,0x002AEF80,Open-BFME7 additive: retail call target used by the landed row at 0x0001F523 (thunk drift repair)
 ?b_002af010@@YAXXZ,0x002AF010,gen-thunk body
 ?b_002af020@@YAXXZ,0x002AF020,gen-thunk body
 ?b_002af0b0@@YAXXZ,0x002AF0B0,gen-thunk body
@@ -35454,7 +35206,6 @@ name,address,notes
 ?b_002af2e0@@YAXXZ,0x002AF2E0,gen-thunk body
 ?b_002af2f0@@YAXXZ,0x002AF2F0,gen-thunk body
 ?b_002af310@@YAXXZ,0x002AF310,gen-thunk body
-?b_002af3a0@@YAXXZ,0x002AF3A0,Open-BFME7 additive: retail call target used by the landed row at 0x0002DE2A (thunk drift repair)
 ?b_002af3d0@@YAXXZ,0x002AF3D0,gen-thunk body
 ?b_002af5b0@@YAXXZ,0x002AF5B0,gen-thunk body
 ?b_002af680@@YAXXZ,0x002AF680,gen-thunk body
@@ -35487,7 +35238,6 @@ name,address,notes
 ?b_002b0ea0@@YAXXZ,0x002B0EA0,gen-thunk body
 ?b_002b0f30@@YAXXZ,0x002B0F30,gen-thunk body
 ?b_002b0f50@@YAXXZ,0x002B0F50,gen-thunk body
-?b_002b0f60@@YAXXZ,0x002B0F60,Open-BFME7 additive: retail call target used by the landed row at 0x00049BCF (thunk drift repair)
 ?b_002b0f90@@YAXXZ,0x002B0F90,gen-thunk body
 ?b_002b0fa0@@YAXXZ,0x002B0FA0,gen-thunk body
 ?b_002b0fb0@@YAXXZ,0x002B0FB0,gen-thunk body
@@ -35502,7 +35252,6 @@ name,address,notes
 ?b_002b1150@@YAXXZ,0x002B1150,gen-thunk body
 ?b_002b1160@@YAXXZ,0x002B1160,gen-thunk body
 ?b_002b1180@@YAXXZ,0x002B1180,gen-thunk body
-?b_002b1210@@YAXXZ,0x002B1210,Open-BFME7 additive: retail call target used by the landed row at 0x0000CCCF (thunk drift repair)
 ?b_002b12c0@@YAXXZ,0x002B12C0,gen-thunk body
 ?b_002b1390@@YAXXZ,0x002B1390,gen-thunk body
 ?b_002b13a0@@YAXXZ,0x002B13A0,gen-thunk body
@@ -36384,96 +36133,64 @@ name,address,notes
 ?b_002cd490@@YAXXZ,0x002CD490,gen-thunk body
 ?b_002cd4b0@@YAXXZ,0x002CD4B0,gen-thunk body
 ?b_002cd700@@YAXXZ,0x002CD700,gen-thunk body
-?b_002cda00@@YAXXZ,0x002CDA00,Open-BFME7 additive: retail call target used by the landed row at 0x0001C008 (thunk drift repair)
 ?b_002cda30@@YAXXZ,0x002CDA30,gen-thunk body
 ?b_002cda90@@YAXXZ,0x002CDA90,gen-thunk body
 ?b_002cdaa0@@YAXXZ,0x002CDAA0,gen-thunk body
 ?b_002cdac0@@YAXXZ,0x002CDAC0,gen-thunk body
 ?b_002cdad0@@YAXXZ,0x002CDAD0,gen-thunk body
-?b_002cdae0@@YAXXZ,0x002CDAE0,Open-BFME7 additive: retail call target used by the landed row at 0x0004324D (thunk drift repair)
 ?b_002cdb10@@YAXXZ,0x002CDB10,gen-thunk body
 ?b_002cdb20@@YAXXZ,0x002CDB20,gen-thunk body
 ?b_002cdbb0@@YAXXZ,0x002CDBB0,gen-thunk body
-?b_002cdbc0@@YAXXZ,0x002CDBC0,Open-BFME7 additive: retail call target used by the landed row at 0x0000EF61 (thunk drift repair)
 ?b_002cdbf0@@YAXXZ,0x002CDBF0,gen-thunk body
 ?b_002cdc40@@YAXXZ,0x002CDC40,gen-thunk body
 ?b_002cdc70@@YAXXZ,0x002CDC70,gen-thunk body
 ?b_002cdcf0@@YAXXZ,0x002CDCF0,gen-thunk body
-?b_002cdd60@@YAXXZ,0x002CDD60,Open-BFME7 additive: retail call target used by the landed row at 0x000234A2 (thunk drift repair)
-?b_002cdd90@@YAXXZ,0x002CDD90,Open-BFME7 additive: retail call target used by the landed row at 0x0001A3B6 (thunk drift repair)
 ?b_002cddf0@@YAXXZ,0x002CDDF0,gen-thunk body
 ?b_002cdf00@@YAXXZ,0x002CDF00,gen-thunk body
 ?b_002cdf70@@YAXXZ,0x002CDF70,gen-thunk body
 ?b_002ce1b0@@YAXXZ,0x002CE1B0,gen-thunk body
-?b_002ce290@@YAXXZ,0x002CE290,Open-BFME7 additive: retail call target used by the landed row at 0x00014326 (thunk drift repair)
 ?b_002ce2c0@@YAXXZ,0x002CE2C0,gen-thunk body
-?b_002ce2d0@@YAXXZ,0x002CE2D0,Open-BFME7 additive: retail call target used by the landed row at 0x00007FD6 (thunk drift repair)
 ?b_002ce310@@YAXXZ,0x002CE310,gen-thunk body
-?b_002ce320@@YAXXZ,0x002CE320,Open-BFME7 additive: retail call target used by the landed row at 0x0000178A (thunk drift repair)
-?b_002ce340@@YAXXZ,0x002CE340,Open-BFME7 additive: retail call target used by the landed row at 0x0001FA3C (thunk drift repair)
 ?b_002ce360@@YAXXZ,0x002CE360,gen-thunk body
-?b_002ce3a0@@YAXXZ,0x002CE3A0,Open-BFME7 additive: retail call target used by the landed row at 0x0003AF53 (thunk drift repair)
-?b_002ce440@@YAXXZ,0x002CE440,Open-BFME7 additive: retail call target used by the landed row at 0x0001D7C3 (thunk drift repair)
 ?b_002ce450@@YAXXZ,0x002CE450,gen-thunk body
 ?b_002ce4e0@@YAXXZ,0x002CE4E0,gen-thunk body
 ?b_002ce4f0@@YAXXZ,0x002CE4F0,gen-thunk body
-?b_002ce580@@YAXXZ,0x002CE580,Open-BFME7 additive: retail call target used by the landed row at 0x00032015 (thunk drift repair)
-?b_002ce5b0@@YAXXZ,0x002CE5B0,Open-BFME7 additive: retail call target used by the landed row at 0x00009B47 (thunk drift repair)
-?b_002ce760@@YAXXZ,0x002CE760,Open-BFME7 additive: retail call target used by the landed row at 0x0001999D (thunk drift repair)
-?b_002ce780@@YAXXZ,0x002CE780,Open-BFME7 additive: retail call target used by the landed row at 0x0000AEFC (thunk drift repair)
-?b_002ce7b0@@YAXXZ,0x002CE7B0,Open-BFME7 additive: retail call target used by the landed row at 0x0001771F (thunk drift repair)
 ?b_002ce7c0@@YAXXZ,0x002CE7C0,gen-thunk body
 ?b_002ce7e0@@YAXXZ,0x002CE7E0,gen-thunk body
 ?b_002ce800@@YAXXZ,0x002CE800,gen-thunk body
 ?b_002ce900@@YAXXZ,0x002CE900,gen-thunk body
 ?b_002cea90@@YAXXZ,0x002CEA90,gen-thunk body
 ?b_002cecc0@@YAXXZ,0x002CECC0,gen-thunk body
-?b_002cecf0@@YAXXZ,0x002CECF0,Open-BFME7 additive: retail call target used by the landed row at 0x00030521 (thunk drift repair)
 ?b_002ced80@@YAXXZ,0x002CED80,gen-thunk body
 ?b_002ced90@@YAXXZ,0x002CED90,gen-thunk body
 ?b_002cedb0@@YAXXZ,0x002CEDB0,gen-thunk body
-?b_002cedc0@@YAXXZ,0x002CEDC0,Open-BFME7 additive: retail call target used by the landed row at 0x00038BC2 (thunk drift repair)
 ?b_002cedf0@@YAXXZ,0x002CEDF0,gen-thunk body
 ?b_002cee00@@YAXXZ,0x002CEE00,gen-thunk body
 ?b_002cee90@@YAXXZ,0x002CEE90,gen-thunk body
-?b_002ceea0@@YAXXZ,0x002CEEA0,Open-BFME7 additive: retail call target used by the landed row at 0x0000A4ED (thunk drift repair)
 ?b_002ceed0@@YAXXZ,0x002CEED0,gen-thunk body
 ?b_002cef40@@YAXXZ,0x002CEF40,gen-thunk body
-?b_002cef60@@YAXXZ,0x002CEF60,Open-BFME7 additive: retail call target used by the landed row at 0x0002746C (thunk drift repair)
-?b_002cef90@@YAXXZ,0x002CEF90,Open-BFME7 additive: retail call target used by the landed row at 0x0003CFB5 (thunk drift repair)
 ?b_002cefa0@@YAXXZ,0x002CEFA0,gen-thunk body
-?b_002cf0c0@@YAXXZ,0x002CF0C0,Open-BFME7 additive: retail call target used by the landed row at 0x0000CBFD (thunk drift repair)
 ?b_002cf0f0@@YAXXZ,0x002CF0F0,gen-thunk body
 ?b_002cf140@@YAXXZ,0x002CF140,gen-thunk body
 ?b_002cf150@@YAXXZ,0x002CF150,gen-thunk body
-?b_002cf170@@YAXXZ,0x002CF170,Open-BFME7 additive: retail call target used by the landed row at 0x000016E5 (thunk drift repair)
 ?b_002cf1a0@@YAXXZ,0x002CF1A0,gen-thunk body
 ?b_002cf1e0@@YAXXZ,0x002CF1E0,gen-thunk body
 ?b_002cf1f0@@YAXXZ,0x002CF1F0,gen-thunk body
 ?b_002cf280@@YAXXZ,0x002CF280,gen-thunk body
-?b_002cf290@@YAXXZ,0x002CF290,Open-BFME7 additive: retail call target used by the landed row at 0x00001DBB (thunk drift repair)
 ?b_002cf2c0@@YAXXZ,0x002CF2C0,gen-thunk body
 ?b_002cf5a0@@YAXXZ,0x002CF5A0,gen-thunk body
-?b_002cf5d0@@YAXXZ,0x002CF5D0,Open-BFME7 additive: retail call target used by the landed row at 0x00009F2A (thunk drift repair)
-?b_002cf600@@YAXXZ,0x002CF600,Open-BFME7 additive: retail call target used by the landed row at 0x0002EE56 (thunk drift repair)
 ?b_002cf610@@YAXXZ,0x002CF610,gen-thunk body
-?b_002cf680@@YAXXZ,0x002CF680,Open-BFME7 additive: retail call target used by the landed row at 0x0001AAE6 (thunk drift repair)
-?b_002cf6b0@@YAXXZ,0x002CF6B0,Open-BFME7 additive: retail call target used by the landed row at 0x0003F896 (thunk drift repair)
 ?b_002cf6e0@@YAXXZ,0x002CF6E0,gen-thunk body
 ?b_002cf6f0@@YAXXZ,0x002CF6F0,gen-thunk body
 ?b_002cf710@@YAXXZ,0x002CF710,gen-thunk body
 ?b_002cf760@@YAXXZ,0x002CF760,gen-thunk body
 ?b_002cf7f0@@YAXXZ,0x002CF7F0,gen-thunk body
-?b_002cf860@@YAXXZ,0x002CF860,Open-BFME7 additive: retail call target used by the landed row at 0x00006FFF (thunk drift repair)
 ?b_002cf890@@YAXXZ,0x002CF890,gen-thunk body
 ?b_002cf8c0@@YAXXZ,0x002CF8C0,gen-thunk body
 ?b_002cfa50@@YAXXZ,0x002CFA50,gen-thunk body
 ?b_002cfac0@@YAXXZ,0x002CFAC0,gen-thunk body
 ?b_002cfb00@@YAXXZ,0x002CFB00,gen-thunk body
-?b_002cfb30@@YAXXZ,0x002CFB30,Open-BFME7 additive: retail call target used by the landed row at 0x0003C7F4 (thunk drift repair)
-?b_002cfb60@@YAXXZ,0x002CFB60,Open-BFME7 additive: retail call target used by the landed row at 0x00012157 (thunk drift repair)
 ?b_002cfb70@@YAXXZ,0x002CFB70,gen-thunk body
-?b_002cfc30@@YAXXZ,0x002CFC30,Open-BFME7 additive: retail call target used by the landed row at 0x000172BF (thunk drift repair)
 ?b_002cfc60@@YAXXZ,0x002CFC60,gen-thunk body
 ?b_002cfc70@@YAXXZ,0x002CFC70,gen-thunk body
 ?b_002cfc80@@YAXXZ,0x002CFC80,gen-thunk body
@@ -36487,7 +36204,6 @@ name,address,notes
 ?b_002cfe20@@YAXXZ,0x002CFE20,gen-thunk body
 ?b_002cfe40@@YAXXZ,0x002CFE40,gen-thunk body
 ?b_002cfe50@@YAXXZ,0x002CFE50,gen-thunk body
-?b_002cfee0@@YAXXZ,0x002CFEE0,Open-BFME7 additive: retail call target used by the landed row at 0x0003518E (thunk drift repair)
 ?b_002cff10@@YAXXZ,0x002CFF10,gen-thunk body
 ?b_002cffd0@@YAXXZ,0x002CFFD0,gen-thunk body
 ?b_002d0030@@YAXXZ,0x002D0030,gen-thunk body
@@ -72584,7 +72300,6 @@ name,address,notes
 ?b_008589cb@@YAXXZ,0x008589CB,gen-thunk body
 ?b_00860620@@YAXXZ,0x00860620,gen-thunk body
 ?b_00860690@@YAXXZ,0x00860690,gen-thunk body
-?b_008631f0@@YAXXZ,0x008631F0,Open-BFME7 additive: retail call target used by the landed row at 0x00857A60 (thunk drift repair)
 ?b_00864f00@@YAXXZ,0x00864F00,gen-thunk body
 ?b_00865760@@YAXXZ,0x00865760,gen-thunk body
 ?b_008657c0@@YAXXZ,0x008657C0,gen-thunk body
@@ -73096,7 +72811,6 @@ name,address,notes
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
-?bfmeApplyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,Open-BFME7 additive: retail call target used by the landed row at 0x00429D40 (thunk drift repair)
 ?bfmeApplyVKP@BfmeBlockVKP@@QAEXHH@Z,0x0000AF06,pin
 ?bfmeApplyVMQ@@YAHPADH@Z,0x007EE720,pin
 ?bfmeApplyVTU@BfmeOwnVTU@@QAEXH@Z,0x009CC020,pin
@@ -73500,7 +73214,6 @@ name,address,notes
 ?bfmeCheckC80F0@Object@@QAE_NXZ,0x0004039A,callee pin for ControlBar objectSelectPredicate 0x004A6570 thunk to FUN_005c80f0
 ?bfmeCheckCPC@BfmeThingCPC@@QAE_NH@Z,0x0003251F,pin
 ?bfmeCheckStrVHR@@YAPBDPAUBfmeLuaVHR@@HPAI@Z,0x0099A840,pin
-?bfmeCheckVHJ@@YADXZ,0x008896D0,Open-BFME7 additive: retail call target used by the landed row at 0x002058F0 (thunk drift repair)
 ?bfmeChk1064@BfmeQ1064@@QAEDXZ,0x0001E533,pin
 ?bfmeChk1079@BfmeM1079@@QAEDXZ,0x000279CB,pin
 ?bfmeChk1083@BfmeB1083@@QAEDXZ,0x00022C96,pin
@@ -73643,7 +73356,6 @@ name,address,notes
 ?bfmeConv1066@@YAPAVBfmeX1066@@PAVBfmeH1066@@@Z,0x00010901,pin
 ?bfmeConv1087@BfmeN1087@@QAEHH@Z,0x000483B5,pin
 ?bfmeConv1101@BfmeC1101@@QAEHPAD@Z,0x0003ADD7,pin
-?bfmeConv1181@BfmeP1181@@QAEXPAXPAUBfmePair1181@@@Z,0x000171E8,Open-BFME7 additive: retail call target used by the landed row at 0x003DB160 (thunk drift repair)
 ?bfmeConv982B@BfmeY982@@QAEPAV1@XZ,0x0000DE9F,pin
 ?bfmeConv998@BfmeC998@@QAEHH@Z,0x00927230,pin
 ?bfmeConvertUVB@@YAHPADPAPAX@Z,0x00807AB0,pin
@@ -74044,7 +73756,6 @@ name,address,notes
 ?bfmeFind913E@BfmeGlob913E@@QAEPAUBfmeObj913E@@PAX@Z,0x0001F253,pin
 ?bfmeFind914C@BfmeSrc914C@@QAEHPAX@Z,0x00022D4F,pin
 ?bfmeFind923G@@YGPAUBfmeObj923G@@PAX@Z,0x0002BF0D,pin
-?bfmeFind923G@@YGPAURva003C9470Object@@PAX@Z,0x0002BF0D,Open-BFME7 additive: retail call target used by the landed row at 0x003C9470 (thunk drift repair)
 ?bfmeFind926C@BfmeKey926C@@QAEPAUBfmeObj926C@@XZ,0x00020824,pin
 ?bfmeFind926C@BfmeKey926C@@QAEPAVPlayer@@XZ,0x00020824,address-derived controlling-player lookup ILT thunk
 ?bfmeFind940D@BfmeSrc940D@@QAEPAVBfmeRes940D@@XZ,0x0000F498,pin
@@ -74513,7 +74224,6 @@ name,address,notes
 ?bfmeGetArrVGR@BfmeMeshVGR@@QAEPAUBfmeTexBufVGR@@HH_N@Z,0x0092BE50,pin
 ?bfmeGetBUZA@BfmeSubBUZA@@QBE?AUBfmeHandleUZA@@HH@Z,0x0092C9D0,pin
 ?bfmeGetBonus@BfmeVisionBonusSource@@QAE_NHPAM@Z,0x000282D6,Open-BFME5 TU-local Object.cpp ABI view of the AttributeModifierPoolUpdate additive bonus method
-?bfmeGetBonus@Object@@QBE_NHPAM@Z,0x0000BECE,Open-BFME7 additive: retail call target used by the landed row at 0x001E2730 (thunk drift repair)
 ?bfmeGetBonusSource@BfmeVisionBonusHolder@@QBEPAVBfmeVisionBonusSource@@XZ,0x000202ED,TU-local Object.cpp ABI view of Object::findAttributeModifierPoolUpdate
 ?bfmeGetBoxAFB@BfmeThingAFB@@QAEPAUBfmeBoxAFB@@XZ,0x000202ED,pin
 ?bfmeGetCCH@BfmeSubCCH@@QAEPAUBfmeResultCCH@@XZ,0x00046538,pin
@@ -74880,8 +74590,6 @@ name,address,notes
 ?bfmeLoadSJA@@YAXPAX0PAD@Z,0x0000150A,pin
 ?bfmeLocalUserMapsReady@@YA_NXZ,0x0003C565,ILT thunk to the local-user-maps probe (0x00109EB0) that gates getUserMapDir
 ?bfmeLocaleCtor@BfmeLocaleShim@@SAXXZ,0x00832120,BfmeThreeHundredFiftyOne TU-local ABI shim for _STL::locale default constructor
-?bfmeLockVHM@@YAXXZ,0x00903090,Open-BFME7 additive: retail call target used by the landed row at 0x006E7C60 (thunk drift repair)
-?bfmeLockVJR@@YAXXZ,0x00903090,Open-BFME7 additive: retail call target used by the landed row at 0x00723AC0 (thunk drift repair)
 ?bfmeLog1013@BfmeLog1013@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1021@BfmeLog1021@@QAEXHPADHHHHHH@Z,0x00015235,pin
 ?bfmeLog1051@BfmeLog1051@@QAEXHPADH0HHHH@Z,0x00015235,pin
@@ -75693,7 +75401,6 @@ name,address,notes
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep3VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0000BB0E,pin
-?bfmeStep3_250@@YAXPAX@Z,0x00862820,Open-BFME7 additive: retail call target used by the landed row at 0x00857250 (thunk drift repair)
 ?bfmeStep4VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x00045DAE,pin
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep5VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x000236A5,pin
@@ -76132,7 +75839,6 @@ name,address,notes
 ?bfmeWriteSWA@@YAXPAXHH0@Z,0x0088A640,pin
 ?bfmeWriteSXA@@YAXPAXZZ,0x0088A640,pin
 ?bfmeWriteUQB@BfmeChunkUQB@@QAEIPAXI@Z,0x009E18A0,pin
-?bfmeXfer246FC@@YAXPAVXfer@@PAH@Z,0x00012576,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
 ?bfmeZDeltaToCenter@BfmeBoundaryGeometry3D@@QBEMXZ,0x0087DBF0,GeometryInfo-compatible vertical center offset
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
@@ -76477,8 +76183,6 @@ name,address,notes
 ?clearLeaveRequestTime@BFMEConnectionManager@@QAEXXZ,0x00662E70,zeroes +0x12110 (the leave-request stamp); sole caller 0x00682B55 in 0x00682A90 when the router sees its own PLAYERLEAVE execute; ILT 0x000316DD
 ?clearLocalStagingState@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x0001118F,ILT to 0x005392B0 used by CustomMatch leaveStaging 0x00539750
 ?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BDA@@@@Z,0x0000B95B,Object clearModelConditionFlags ILT used by WeaponSet::setWeaponLock / releaseWeaponLock (USING_A/B/C)
-?clearModelConditionState@Object@@QAEXH@Z,0x00031F7A,Open-BFME7 additive: retail call target used by the landed row at 0x00227B60 (thunk drift repair)
-?clearModelConditionState@Object@@QAEXW4ModelConditionFlagType@@@Z,0x00031F7A,Open-BFME7 additive: retail call target used by the landed row at 0x0017F1E0 (thunk drift repair)
 ?clearOwned@Rva003C1A50@@QAEXXZ,0x000214E0,ILT to clear body 0x003C0EF0; callee of 0x003C1A50
 ?clearPopupMessageData@InGameUI@@QAEXXZ,0x0000F5F6,ILT fronting the 125-byte body at 0x0043B890; from InGamePopupMessageSystem
 ?clearSingleton@Rva003C1A50@@QAEXXZ,0x00024875,ILT to clear body 0x003C0DB0; callee of 0x003C1A50
@@ -76745,14 +76449,9 @@ name,address,notes
 ?createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z,0x0002D3D0,"FullF7E70155B reviewed: nullproto returnnull, singleton reuse fromproto274, otherwise alloc110 ctor withproto andincrementedfactoryID1C; sets31/32"
 ?createVictoryConditions@@YAPAVVictoryConditionsInterface@@XZ,0x0035F810,ZH createVictoryConditions: new(0xC4) then ??0VictoryConditions 0x0035F430 via ILT 0x0004ADC2 at 0x0035F844; called by GameEngine::init 0x0007A0A6 whose result feeds initSubsystem<VictoryConditionsInterface> with &TheVictoryConditions 0x012F079C pushed at 0x0007A0BC
 ?create_node@AnimateWindowListCreateNodeShim@_STL@@QAEPAU?$_List_node@PAVAnimateWindow@@@2@ABQAVAnimateWindow@@@Z,0x0045DAE0,incremental-link thunk target through a TU-local forwarding shim
-?current@Rva004A8F10CurrentOwner@@QAEHXZ,0x00035C92,Open-BFME7 additive: retail call target used by the landed row at 0x004A8F10 (thunk drift repair)
 ?currentCommandPoints@LivingWorldPlayerArmy@@QBEHXZ,0x00033AC8,LivingWorldPlayerArmy loadPostProcess retail call at 0x00365833 uses the ILT thunk to the 0x003619C0 command-point calculation body
 ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0053A280,GameList tooltip callback pushed by Apt OnlineCustomMatch onInitGadget 0x0053A710 via winSetTooltipFunc
-?d_003c9470@@YAXXZ,0x00033EBA,Open-BFME7 additive: retail call target used by the landed row at 0x003C9530 (thunk drift repair)
-?d_00732960@@YAXXZ,0x00018403,Open-BFME7 additive: retail call target used by the landed row at 0x00732B00 (thunk drift repair)
-?d_00749830@@YAXXZ,0x0003F7C4,Open-BFME7 additive: retail call target used by the landed row at 0x00728800 (thunk drift repair)
 ?d_00794790@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794790,caller-proven BFME special push-button image path
-?d_0083e8f0@@YAXXZ,0x0083E8F0,Open-BFME7 additive: retail call target used by the landed row at 0x005376D0 (thunk drift repair)
 ?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
 ?d_00881770@@YAXHHHUSomeStruct@@@Z,0x00881770,pin
 ?d_008859d0@Rva00886A20Class@@QAEXPBDPAD@Z,0x008859D0,pin
@@ -76770,7 +76469,6 @@ name,address,notes
 ?decrement@Rva00894D90Accessor@@SAIPAH@Z,0x00894D90,pin near-twin refcount decrement reuses Rva00894D90DecrementPointer body
 ?defaultHandler@BfmeMsgHandler@@QAEHHPAX0@Z,0x00010AF0,pin
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
-?deleteAllFonts@FontLibrary@@IAEXXZ,0x00033D9D,Open-BFME7 additive: retail call target used by the landed row at 0x00168710 (thunk drift repair)
 ?deleteAllFonts@FontLibraryDeleteAllFontsShim@@QAEXXZ,0x00722190,FontLibrary incremental-link thunk target through a TU-local forwarding shim
 ?deleteBuildTooltipLayout@ControlBar@@QAEXXZ,0x00027336,Open-BFME5 correction: this ILT is called with ecx = TheControlBar at 0x012F33F8 in doDisableInput and jumps to 0x004C1450. Player::addScience independently fixes 0x012F33F8 as TheControlBar by inlining markUIDirty as a byte store at +0x24. It was pinned as LookAtTranslator::resetModes
 ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z,0x000419FC,REL32 pin from Radar::removeObject body
@@ -76817,7 +76515,6 @@ name,address,notes
 ?destroy@W3DAnimationInfoDestructorShim@@QAEXXZ,0x00610080,W3DAnimationInfo dtor incremental-link thunk target through a TU-local forwarding shim
 ?destroy@WindowVideoDestructorShim@@QAEXXZ,0x004981A0,WindowVideo destructor incremental-link thunk target through a TU-local forwarding shim
 ?destroyBody@Rva89A110DeletingDestructorThunk@@QAEXXZ,0x0089A140,Open-BFME5 destructor-body call pin
-?destroyBody@Rva89A110DeletingDestructorThunk@@QAEXXZ,0x0089A2B0,Open-BFME7 additive: retail call target used by the landed row at 0x0089A280 (thunk drift repair)
 ?destroyGroup@AI@@QAEXPAVAIGroup@@@Z,0x0014BC40,ZH AI::destroyGroup: unlinks the group node from the list at AI+0x10 (node dealloc 0xc) then group->deleteInstance (vslot 0 with 1); ecx = TheAI 0x012EF214 in the dispatcher prologue (ZH currentlySelectedGroup pattern with createGroup ILT 0x0003B570 already pinned) and in the MSG_CLEAR_GAME_DATA arm at 0x00397780 via ILT 0x00015F69
 ?destroyNodeValue@UnicodeString@@QAEXXZ,0x0003B304,UnicodeString destructor thunk reached by the 0x0009F3E0 list removal
 ?destroyObject@GameLogic@@QAEXPAVObject@@@Z,0x0001D0DE,ILT thunk; real body 0x78B0C0
@@ -77088,7 +76785,6 @@ name,address,notes
 ?erase@?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000106FE,forgetLogin depth Open-BFME4+Grok
 ?erase@?$map@VAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000488BA,forgetLogin depth Open-BFME4+Grok
 ?erase@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEPAUICoord2D@@PAU3@0@Z,0x0000890E,ICF alias: this thunk fronts 0x00451E10 which the ledger already names the vector<INILine> erase; both elements are eight bytes so the two folded
-?erase@?$vector@UPayload@DeliverPayloadNugget@@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@QAEPAUPayload@DeliverPayloadNugget@@PAU34@0@Z,0x0003FEAE,Open-BFME7 additive: retail call target used by the landed row at 0x00375190 (thunk drift repair)
 ?erase@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@PAU34@0@Z,0x0001E632
 ?erase@?$vector@UQ3SortElem4@@V?$allocator@UQ3SortElem4@@@_STL@@@_STL@@QAEPAUQ3SortElem4@@PAU3@0@Z,0x00024C17
 ?erase@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEPAVAsciiString@@PAV3@0@Z,0x00065960,SubsystemLegend.cpp TU copy of vector<AsciiString>::erase(first last)
@@ -77454,7 +77150,6 @@ name,address,notes
 ?format_va@AsciiString@@QAEXPBDPAD@Z,0x00888060,pinharvest x1 (body)
 ?format_va@UnicodeString@@QAEXPBGPAD@Z,0x00888060,pinharvest x1 (body)
 ?forward4125F0@Drawable@@QAEXH_N@Z,0x00039BAD,Reviewed18B 4125F0 forwards Drawable3BC to34B 409850 signed slot1..5 and bool action passed to74B409790
-?forward@Rva00065A40@@QAEXXZ,0x0002DF01,Open-BFME7 additive: retail call target used by the landed row at 0x0006E7A0 (thunk drift repair)
 ?forward@Rva00265A00ScavengerDispatch@@QAEXH@Z,0x00041BCD,address-derived forwarding target read from retail RVA 0x00265A00
 ?forward@Rva007E32A0State@@QAE_NHHHPAHH@Z,0x0003F80F,assigned body call target for Rva007E32A0State
 ?forwardDrawableEvent@BfmeDrawableEventManager@@QAEXW4DrawableID@@PBXEE@Z,0x00030878,Open-BFME5 ILT target proven by the one-shot drawable event forwarder at 0x00751970
@@ -79019,7 +78714,6 @@ name,address,notes
 ?getCRC@GameLogicBFMEShim@@QAEIH@Z,0x0000B532,ctor call target proven by the retail BFME desync-record constructor at 0x000652C0; FUN_00783150 is the CRC implementation
 ?getCampaignDifficulty@OptionPreferences@@QAEHXZ,0x00032B5A
 ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z,0x00045D90,retail AIEnterState::update call target
-?getCell@PathfindLayer@@QAEPAVPathfindCell@@HH@Z,0x00009A89,Open-BFME7 additive: retail call target used by the landed row at 0x003D4F00 (thunk drift repair)
 ?getCell@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@HH@Z,0x00020671
 ?getCenter@AIGroup@@QAE_NPAUCoord3D@@@Z,0x00009C2D,AIGroup::getCenter ILT from recompute 0x00154B80; body dump 0x00151E50
 ?getCenter@PolygonTrigger@@QAEXPAUCoord3D@@@Z,0x00007AD6,Polygon trigger center copy called by AIGuardMachine::getGuardScanPos
@@ -79232,7 +78926,6 @@ name,address,notes
 ?getNthName@ModuleInfo@@QBE?AVBFMERetailAsciiString@@H@Z,0x0000EB56,"Full13B2F097B validates signedindex and20B count, AsciiString copy ofnugget0 orsharedempty intohiddenreturnbuffer,ret8"
 ?getNthPlayer@PlayerList@@QAEPAVPlayer@@H@Z,0x00044F30,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
 ?getNthPlayerTemplate@PlayerTemplateStore@@QAEPBVPlayerTemplate@@H@Z,0x00037BD2,ILT thunk to the indexed PlayerTemplate lookup
-?getNthPlayerTemplate@PlayerTemplateStore@@QBEPBUPlayerTemplate@@H@Z,0x00037BD2,Open-BFME7 additive: retail call target used by the landed row at 0x0009E6E0 (thunk drift repair)
 ?getNumChunks@NetWrapperCommandMsg@@QAEIXZ,0x00018BEC,ILT thunk; real body 0xA73F20 (mov eax,[ecx+0x30];ret)
 ?getNumPlayers@Network@@UAEHXZ,0x00681B60,vtable 0x0111A968 slot 37 (+0x94) via ILT 0x000393E2; if (m_conMgr) tail-jumps getNumPlayers@ConnectionManager 0x00663770 else -1 as ZH; callers 0x0006BDCC 0x0038B64F 0x00383752
 ?getNumRemoteIPs@LANPreferences@@QAEHXZ,0x0003E464,PopulateRemoteIPComboBox direct-call ILT thunk to getNumRemoteIPs
@@ -79250,7 +78943,6 @@ name,address,notes
 ?getOverallWorstLossStreak@SkirmishBattleHonors@@QBEHXZ,0x0009CFC0,getInt("OverallWorstLossStreak" at VA 0x01080584; 0) via the pinned getInt ILT 0x000443B9; 33 B
 ?getPacketRouterSlot@ConnectionManager@@QAEIXZ,0x000374B1,DisconnectManager status update packet-router gate through ILT to the existing 0x00662DE0 body
 ?getPair@Gen0060CBB0@@AAEPAUGen0060CBB0Pair@@XZ,0x0001DCB4,ILT to 0x0060CA40 identified by the exact Gen0060CBB0 handle caller
-?getPair@Rva003C9470Object@@QAEPAURva003C9470ObjectPair@@PAU2@@Z,0x00034982,Open-BFME7 additive: retail call target used by the landed row at 0x003C9470 (thunk drift repair)
 ?getPart@Rva0018B8B0Arg@@QAEPAUBfmePartCDF@@XZ,0x00017436,retail getter thunk for Rva0018B8B0Holder::apply
 ?getPathLabel1@Waypoint@@QBE?AVAsciiString@@XZ,0x00041BB4,Open-BFME5 exact ILT to body 0x001A6F60; BFME Waypoint m_pathLabel1 getter
 ?getPathLabel2@Waypoint@@QBE?AVAsciiString@@XZ,0x00028925,Open-BFME5 exact ILT to body 0x001A6F90; BFME Waypoint m_pathLabel2 getter
@@ -79400,17 +79092,9 @@ name,address,notes
 ?getWorstLossStreak@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009CDD0,by-value side prefix + "WorstLostStreak" at VA 0x01080528 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getWorstLossStreak
 ?getWrappedCommandID@NetWrapperCommandMsg@@QAEGXZ,0x000057C7,ILT thunk; real body 0xA73F60
 ?get_allocator@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObject@@@2@XZ,0x0001D534,pinharvest x1 (thunk)
-?get_allocator@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObject@@@2@XZ,0x00020301,Open-BFME7 additive: retail call target used by the landed row at 0x00135A10 (thunk drift repair)
-?get_allocator@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObject@@@2@XZ,0x00027DA4,Open-BFME7 additive: retail call target used by the landed row at 0x0039D5D0 (thunk drift repair)
-?get_allocator@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObject@@@2@XZ,0x00039789,Open-BFME7 additive: retail call target used by the landed row at 0x00135AB0 (thunk drift repair)
-?get_allocator@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObject@@@2@XZ,0x0003CF51,Open-BFME7 additive: retail call target used by the landed row at 0x001F9520 (thunk drift repair)
-?get_allocator@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObjectCreationNugget@@@2@XZ,0x0002CE4E,Open-BFME7 additive: retail call target used by the landed row at 0x003D3A00 (thunk drift repair)
 ?get_allocator@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QBE?AV?$allocator@PAVObjectCreationNugget@@@2@XZ,0x00042E06,resweep callee back-solved
 ?get_allocator@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QBE?AV?$allocator@PAX@2@XZ,0x00009C28,ILT the same resize calls at 0x00786920
 ?get_allocator@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QBE?AV?$allocator@PBVLocomotorTemplate@@@2@XZ,0x0001D534,pinharvest x1 (thunk)
-?get_allocator@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QBE?AV?$allocator@PBVLocomotorTemplate@@@2@XZ,0x00020301,Open-BFME7 additive: retail call target used by the landed row at 0x00135A10 (thunk drift repair)
-?get_allocator@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QBE?AV?$allocator@PBVLocomotorTemplate@@@2@XZ,0x00039789,Open-BFME7 additive: retail call target used by the landed row at 0x00136930 (thunk drift repair)
-?get_allocator@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QBE?AV?$allocator@PBVLocomotorTemplate@@@2@XZ,0x00042E06,Open-BFME7 additive: retail call target used by the landed row at 0x001D7720 (thunk drift repair)
 ?get_allocator@?$vector@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003A8BE0@@@2@XZ,0x00035A4E,allocator accessor call target from retail 0x003AB280
 ?get_allocator@?$vector@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003AB860Elem@@@2@XZ,0x00047C3A,allocator accessor call target from retail 0x003AB860
 ?get_allocator@?$vector@URva003A8DF0Record@@V?$allocator@URva003A8DF0Record@@@_STL@@@_STL@@QBE?AV?$allocator@URva003A8DF0Record@@@2@XZ,0x000221E7,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003A8DF0 calls; autopin
@@ -79983,7 +79667,6 @@ name,address,notes
 ?handle@Gen00848AC0@@QAEXXZ,0x00848AC0,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen00850920@@QAEXPBXH@Z,0x00850920,callee of the 102 17-byte table-register forwarders (MidTableRegisterForwarders.cpp); thiscall two-arg appender; ret 8
 ?handle@Gen00853580@@QAEXXZ,0x00853580,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
-?handle@Gen008811D0@@QAEXXZ,0x008811D0,Open-BFME7 additive: retail call target used by the landed row at 0x00880E00 (thunk drift repair)
 ?handle@Gen00887940@@QAEXXZ,0x00887940,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen00887C90@@QAEXXZ,0x00887C90,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen008881D0@@QAEXXZ,0x008881D0,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
@@ -80739,7 +80422,6 @@ name,address,notes
 ?internalSetState@StateMachine@@QAE?AW4StateReturnType@@I@Z,0x000294E7,ILT fronting 0x000A1360; from State::friend_checkForSleepTransitions
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
 ?interpolate@BfmeStateDF@@QAEXPAUGen0060CBB0Pair@@00M@Z,0x0003B430,Living World eye tower interpolation ILT called by exact beginState at 0x0060CC00
-?intersect_obbox_brute_force@MeshGeometryClass@@AAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,Open-BFME7 additive: retail call target used by the landed row at 0x00927920 (thunk drift repair)
 ?intersect_obbox_brute_force@MeshGeometryClass@@IAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,MeshGeometryClass protected brute-force OBBox arm reached by the tail jump at 0x0092793D; object symbol confirms protected access
 ?intersectsVisibleBounds@W3DVolumetricShadow@@QBE_NABVAABoxClass@@@Z,0x00034789,render helper ILT
 ?invert@?$DeathModelFlags@$09@@QBEXPAV1@@Z,0x000252B6,SlowDeathBehavior DeathFlags inverse mask ILT
@@ -80860,7 +80542,6 @@ name,address,notes
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
 ?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
-?isSet@Rva004A8F10Gate@@QAE_NXZ,0x000330DC,Open-BFME7 additive: retail call target used by the landed row at 0x004A8F10 (thunk drift repair)
 ?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
 ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
@@ -80982,7 +80663,6 @@ name,address,notes
 ?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
 ?loadPostProcess@Script@@UAEXXZ,0x00006EB5,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?loadPostProcess@UpdateModule@@MAEXXZ,0x00015E0B,DockUpdate retail base-call ILT chains through 0x002B2070 and 0x0004049E to the no-op UpdateModule body at 0x001EF410
-?loadPostProcess@UpdateModule@@MAEXXZ,0x0002D600,Open-BFME7 additive: retail call target used by the landed row at 0x0036BAE0 (thunk drift repair)
 ?loadProfile@LadderPreferences@@QAE_NH@Z,0x000AE0A0,ZH LadderDefs.cpp LadderPreferences::loadProfile: clears the PreferenceMap (+4; ILT 0x00049E13) and m_ladders (+0x14; ILT 0x00033000); formats "LoTRB4MEOnline\Ladders%d.ini" with the profile id; vslot+8 load; parses name:address:port:date values into m_ladders through operator[] 0x000ACC40; ILT 0x00016C98; callers PopulateCustomLadderComboBox 0x004D65F3 and the QM ladder panel 0x00508E2D
 ?loadProgressComplete@Network@@UAEXXZ,0x00681A80,vtable 0x0111A968 slot 29 (+0x74) via ILT 0x00001A5F; if (m_conMgr) tail-jumps sendLoadCompleteCommand@BFMEConnectionManager 0x00664A60 (stamps NetCommandType 0x10 LOADCOMPLETE at 0x00664A9B) = ZH loadProgressComplete; called from GameLogic::startNewGame 0x003958CC immediately before liteupdate as in ZH GameLogic.cpp:2169-2170
 ?loadRoadsHelper0@W3DRoadBuffer@@QAEXXZ,0x000336F9,W3DRoadBuffer loadRoads guarded helper shim
@@ -81467,7 +81147,6 @@ name,address,notes
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
 ?query1A6320@TerrainLogic@@QAEPAUBfme1A6320Record@@PAVBfmeE5B30Object@@PAUCoord3D@@M@Z,0x0001DFED,Reviewed 1A6320 query plus full 1A4A00 enumeration and 1A3280 callback; returns selected 48-byte record whose first member is Coord3D
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
-?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,Open-BFME7 additive: retail call target used by the landed row at 0x001B9C10 (thunk drift repair)
 ?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered
 ?queryCached@BfmeSub1CC_EC3@@QAEMPAVObject@@@Z,0x0001FF19,"Reviewed25B1B9590 cached float at58 and deadline5C, expired path1B7E90 reads Object200/204"
@@ -81547,7 +81226,6 @@ name,address,notes
 ?registerPalantirCallback@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x00026328,Open-BFME5 pin: registerPalantirCallback callee for Rva00465200GameWindow::showPalantirScreen (sibling of the BFMERetailAsciiString-typed pin already at this address)
 ?registerPalantirCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VPalantirCallbackHolder@@@Z,0x00026328,address-derived radar callback registry callee used by AptPalantir
 ?registerPalantirPlayerSide@WindowManager@@QAEXABVBFMERetailAsciiString@@HVPalantirPlayerSideHolder@@@Z,0x0003A0BC,address-derived player-side callback registry callee used by AptPalantir
-?registerParser@DataChunkInput@@QAEPAVUserParser@@ABVAsciiString@@0P6A_NAAV3@PAX2@Z2@Z,0x00015BD1,Open-BFME7 additive: retail call target used by the landed row at 0x000872C0 (thunk drift repair)
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@0P6A_NAAV1@PAUDataChunkInfo@@PAX@Z3@Z,0x00015BD1,Open-BFME5 DataChunkInput parser registration ILT
 ?registerParser@DataChunkInput@@QAEXABVAsciiString@@PAUDataChunkInfo@@P6A_NAAV1@1PAX@ZH@Z,0x00015BD1,DataChunkInput::registerParser via ILT thunk
 ?registerUpdate@Rva004A66AOwner@@QAEXPAVGen00296F90@@@Z,0x0004A66A,pin
@@ -81685,7 +81363,6 @@ name,address,notes
 ?reset@NetCommandList@@QAEXXZ,0x0000B9CE,ILT thunk retail call sites use; real body 0x6731A0
 ?reset@Network@@UAEXXZ,0x00681910,vtable 0x0111A968 slot 4 (+0x10 = SubsystemInterface::reset position) via ILT 0x0003CF1A; body is mov eax [ecx] / jmp [eax+4] = this->init() = ZH Network::reset(){init();}; ICF class ?dup_00681910 so the pin is address-specific
 ?reset@PathfindCell@@QAEXXZ,0x0002C106,Open-BFME5 ILT thunk to body 0x003F6EC0; BFME PathfindCell reset helper
-?reset@Rva00369860State@@QAEXH@Z,0x00021A76,Open-BFME7 additive: retail call target used by the landed row at 0x0036B5E0 (thunk drift repair)
 ?reset@Rva0048EE10Child@@QAEXXZ,0x00009CF0,ILT to address-derived child reset at 0x0048EC50
 ?reset@Rva0060FFC0Optional@@QAEXXZ,0x00046B19,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?reset@Rva006A78C0Vector@@QAEXH@Z,0x006A78C0,address-derived vector reset helper used by Rva006AC0F0Owner::resetVector
@@ -81944,7 +81621,6 @@ name,address,notes
 ?send@ConnectionManagerSendFrameDataShim@@QAEXII@Z,0x00664D20,ConnectionManager sendFrameDataToPlayer incremental-link thunk target through a TU-local forwarding shim
 ?send@NATSendMangledPortShim@@QAEXGPAVGameSlot@@@Z,0x006718A0,NAT sendMangledPortNumberToTarget incremental-link thunk target through a TU-local forwarding shim
 ?send@Rva00493EA0Controller@@QAEXPAURva00493EA0Payload@@I@Z,0x00020C5C,Rva00493EA0 controller send thunk
-?send@Rva004A8F10Sink@@QAEHPAX_N1@Z,0x00044409,Open-BFME7 additive: retail call target used by the landed row at 0x004A8F10 (thunk drift repair)
 ?send@Rva00592D60Window@@QAEXHH@Z,0x00020C5C,address-derived window message thunk called by the 0x00592D60 update
 ?send@TransportDoSendShim@@QAE_NXZ,0x006834B0,Transport doSend incremental-link thunk target through a TU-local forwarding shim
 ?sendChat@BFMEConnectionManager@@QAEXVUnicodeString@@H@Z,0x006675E0,Open-BFME5 Network::sendChat call target recovered from the vtable-slot body and its two-argument ret 8 call shape
@@ -82244,7 +81920,6 @@ name,address,notes
 ?setWakeFrame@GBB_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeWorkerAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
-?setWakeFrame@ObjectWeaponStatusHelperBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,Open-BFME7 additive: retail call target used by the landed row at 0x001C1340 (thunk drift repair)
 ?setWakeFrame@PassiveAreaEffectUpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@UpdateModule@@IAEXPAVObject@@I@Z,0x000157DA,RadiusDecalUpdate protected retail callee
 ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,StructureCollapse wake-frame ILT thunk
@@ -82307,7 +81982,6 @@ name,address,notes
 ?step1@BfmeSub30_7F0@@QAEXXZ,0x0002D308,pin
 ?step1@BfmeSubVfn1A6@@QAEXXZ,0x0002D308,pin
 ?step2@BfmeSub30_7F0@@QAEXPAX@Z,0x00016E55,pin
-?step@BfmeFinishDispatcherAGA@@QAEXPAVObject@@_N@Z,0x00014F51,Open-BFME7 additive: retail call target used by the landed row at 0x00227B60 (thunk drift repair)
 ?step@BfmeFinishDispatcherAGA@@QAEXPAX0@Z,0x00014F51,BFME finish-list dispatch layout alias; retail call uses this at object offset -0x20
 ?step@Gen0035F050@@QAEHXZ,0x00049AE4,poll loop callee returns int so test eax eax
 ?step@Gen0035F050@@QAE_NXZ,0x00049AE4,poll loop callee via ILT thunk to FUN_0075ee70
@@ -82660,7 +82334,6 @@ name,address,notes
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
 ?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
 ?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper
-?xfer@PathfindLayer@@QAEXPAVXfer@@@Z,0x00026AE4,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
 ?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z,0x0003AF53,primary vftable ILT to 0x002CE3A0
 ?xfer@Script@@UAEXPAVXfer@@@Z,0x0001044C,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?xfer@UpdateModule@@MAEXPAVXfer@@@Z,0x000044C1,UpdateModule xfer ILT called by BridgeBehavior::xfer
@@ -82675,12 +82348,9 @@ name,address,notes
 ?xferObjectID0010C3C0@@YAXPAVXfer@@PAI@Z,0x0000C9B4,"Previously reviewed10C3C025B helper: ObjectID literal,width4,virtual90; correctedunsignedObjectID pointer"
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) ??? pinned, ideally matched in game_client_random_variable.cpp
 ?xferRandomVariable_4570F@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,FX particle system render-object random-variable xfer thunk
-?xferRva003D6CB0@@YAAAVXfer@@AAV1@AAY0CAA@H@Z,0x000163E7,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
-?xferRva003D6D40@@YAAAVXfer@@AAV1@AAY0EA@M@Z,0x0000CF4A,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
 ?xferSaveData@GameState@@AAEXPAVXfer@@W4SnapshotType@@@Z,0x0010FBD0,GameState save-data walker (CHUNK_GameState/Campaign/LivingWorldLogic/Palantir/Audio); thunk 0x36674
 ?xferTerrainState@BfmeTerrainStateXfer@@QAEXPAVXfer@@@Z,0x00043ED7,alias of the protected TerrainLogic spelling pinned below; TerrainLogic.cpp reaches the tail call through a view class because the reference TerrainLogic.h does not declare it
 ?xferTerrainState@TerrainLogic@@IAEXPAVXfer@@@Z,0x00043ED7,TerrainLogic::xfer tail call ILT reaching the body at 0x001AD370
-@_RTC_CheckStackVars@8,0x009F7525,Open-BFME7 additive: retail call target used by the landed row at 0x00805620 (thunk drift repair)
 @__security_check_cookie@4,0x009F74F4,V2 lane: MSVC 7.1 /GS cookie check helper called in ecx by every /GS epilogue
 AODHordeContainFieldParse,0x004334F6,AODHordeContain FieldParse
 AnimalAIUpdateFieldParse,0x00436E30,AnimalAIUpdate FieldParse
@@ -82774,7 +82444,6 @@ _EntEnragedInitialValueData,0x00CBE788,Open-BFME5 EntEnragedUpdate initializatio
 _FreeGame,0x009D2B70,Official gstats.c FreeGame identity; GameSpyStagingRoom reset releases its statsgame pointer at +0x464
 _FreeKeyList,0x00867A60,vendored=gamespy-2004
 _FreePopularValues,0x008679D0,vendored=gamespy-2004
-_GOADecryptByte,0x00873650,Open-BFME7 additive: retail call target used by the landed row at 0x00873740 (thunk drift repair)
 _GSISocketSelect,0x00854530,Open-BFME5 shared GameSpy socket-select target called by ciSocketThinkRecv
 _GdipAlloc@4,0x009F6C28,gdiplus.dll import stub (direct REL32 call site; see U3GdiplusGraphicsMembers.cpp)
 _GdipBitmapLockBits@20,0x009F6BFE,gdiplus.dll import stub (direct REL32 call site; see T3GdiplusImageMembers.cpp)
@@ -83656,7 +83325,6 @@ _ciUserLeftChannel,0x008721A0,authentic ciPartHandler caller passes chat nick an
 _ciWasJoinCallbackCalled,0x00871EF0,gamespy-chat: checks if join callback called
 _cleanup,0x00881EB0,address-derived cleanup call recovered from 0x0093C440
 _closesocket@4,0x0081BE02,vendored=gamespy-2004
-_codelineinfo,0x0099EF83,Open-BFME7 additive: retail call target used by the landed row at 0x0099EF70 (thunk drift repair)
 _codepushbool,0x0099EF70,retail _simpleexp calls the paired lcode.c codepushbool definition at two direct REL32 sites
 _collecttable,0x00999D50,vendored=lua-4.0.1
 _connect@12,0x0081BE0E,vendored=gamespy-2004
@@ -83760,7 +83428,6 @@ _getpeername@12,0x0081BE7A,Y4 lane: sibling of _getsockname@4 0x0081BE5C; Socket
 _getsockname@12,0x0081BE5C,vendored=gamespy-2004
 _getsockopt@20,0x0081BE56,vendored=gamespy-2004
 _ggetm,0x00822030,static ggetm copy emitted into refdecode.cpp; pinned by REF_size @0x8220D0
-_ggetm,0x00822D90,Open-BFME7 additive: retail call target used by the landed row at 0x00822E70 (thunk drift repair)
 _ghiAppendCharToBuffer,0x0087D980,GameSpy ghttp buffer append char retail callee
 _ghiAppendDataToBuffer,0x0087D830,vendored=gamespy-2004
 _ghiCallCompletedCallback,0x0087B5B0,decode_calls pin for _ghiProcessConnection callee
@@ -83884,7 +83551,6 @@ _luaK_prefix,0x0099FAE0,decode_calls pin for _subexpr callee
 _luaK_storevar,0x0099F410,vendored=lua-4.0.1
 _luaK_testgo,0x0099F5C0,vendored=lua-4.0.1;additive pin for luaK_goiftrue call resolution
 _luaK_tostack,0x0099F760,vendored=lua-4.0.1
-_luaM_growaux,0x6A9E59DF,Open-BFME7 additive: retail call target used by the landed row at 0x0099EF70 (thunk drift repair)
 _luaO_equalObj,0x00996F60,vendored=lua-4.0.1
 _luaV_execute,0x00997C80,vendored=lua-4.0.1
 _luaV_lessthan,0x009978E0,vendored=lua-4.0.1
@@ -84318,3 +83984,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?clear@Rva0019BE80TeamRec@@QAEXXZ,0x0002DF65,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
+?append@Rva0019BE80TeamRec@@QAEHPBVDict@@@Z,0x00045DC7,"Root reviewed complete source, full COFF extent, exact relocations and no emitted vtable. Root traced2DF65 to full1991F0/115 clear, resetting fields through1A. Traced45DC7 to full19BA40/331 append: ECX record, one Dict pointer, ret4, returns EBX index in EAX. Corrected append return type from void to int and pin spelling, removed generated fallback pragmas. Two records at630/64C each1C; Dict temporary releases after real append."
