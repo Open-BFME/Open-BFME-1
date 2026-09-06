@@ -94,3 +94,4 @@ spelling is the original EA source. Failed neighboring hypotheses remain banked.
 | Find which one pin/model unlocks the most dump bodies | `python3 tools/dump_families.py [--show N]` |
 | Whose function is this (vtable in the prologue) | `python3 tools/vtable_lookup.py <vtable VA>` |
 | Compile, retail-diff, name the wall | `python3 tools/probe.py <cpp> "<symbol>" 0x<RVA>` |
+| Per-site inline-ctor load order | Same `__forceinline` ctor inlined at N macro sites; retail loads the buffer pointer first at early sites but the terminator byte first at late sites (`mov cl,[m_NullChar]` before `mov edx,[esp+N]`), ours pointer-first everywhere (1 byte off: AL short form). | Add a tag-overloaded ctor variant reading the byte through `*(volatile char *)&m_NullChar` and use a second macro for the late sites only; the volatile read forces byte-first at those sites and leaves the others alone. Landed 0x00717E90 setShroudTex (2072 B) with the last 3 of 8 sites switched. |

@@ -263,6 +263,8 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBV?$StringBase@G@@URva0054EF10Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBV?$StringBase@G@@URva0054EF10Value@@@0@ABU10@@Z,0x00034617,Open-BFME5 the value _Construct the tree _M_insert at 0x0054EF10 reaches
 ??$_Construct@U?$pair@$$CBV?$StringBase@G@@URva0068FAF0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBV?$StringBase@G@@URva0068FAF0Value@@@0@ABU10@@Z,0x0000B3ED,Open-BFME5 the value _Construct the tree _M_insert at 0x0068FAF0 reaches
 ??$_Construct@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@0@ABU10@@Z,0x00035B0C,retail ICF thunk used by 0x006AB4A0
+??$_Construct@U?$pair@$$CBVAsciiString@@PAURva00424D30Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAURva00424D30Value@@@0@ABU10@@Z,0x00031AE3,ILT thunk called at +0xc5 of hashtable insert_unique_noresize 0x00424D30 (pair copy-construct)
+??$_Construct@U?$pair@$$CBVAsciiString@@PAURva005C9A20Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAURva005C9A20Value@@@0@ABU10@@Z,0x000203C4,ILT thunk called at +0xc5 of hashtable insert_unique_noresize 0x005C9A20 (pair copy-construct)
 ??$_Construct@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@UCoord3D@@@0@ABU10@@Z,0x0000D71F,ILT called by _M_copy at 0x000BFF71 to build the pair in the freshly allocated 0x20-byte node
 ??$_Construct@U?$pair@$$CBVAsciiString@@URva0007D900Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@URva0007D900Value@@@0@ABU10@@Z,0x0002487A,Open-BFME5 the value _Construct the tree _M_insert at 0x0007D900 reaches
 ??$_Construct@U?$pair@$$CBVAsciiString@@URva00093670Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@URva00093670Value@@@0@ABU10@@Z,0x0002F3CE,Open-BFME5 the value _Construct the tree _M_insert at 0x00093670 reaches
@@ -4163,6 +4165,7 @@ name,address,notes
 ??1Gen_00491580@@UAE@XZ,0x00492370,Open-BFME5 slot 0 of the table 0x010F9B94
 ??1Gen_00491880@@UAE@XZ,0x004923A0,Open-BFME5 slot 0 of the table 0x010F9BBC
 ??1Gen_0051b720Base@@QAE@XZ,0x0004634E,ILT thunk to body 0x00490470
+??1Gen_008AC620@@UAE@XZ,0x008AC620,pin near-twin base dtor reuses Gen_008AC620 body
 ??1Gen_dtor_00023989b@@QAE@XZ,0x00023989,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call, distinct from the mis-shaped UAE pin already at this address)
 ??1Gen_dtor_0002a8bab@@QAE@XZ,0x0002A8BA,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call) for the 0x00777EE0 sibling erase
 ??1Gen_dtor_0005fa60@@UAE@XZ,0x00031160,gen-dtor class destructor
@@ -8509,6 +8512,7 @@ name,address,notes
 ??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
+??1Rva00256890PrimaryBase@@UAE@XZ,0x0002514E,pin near-twin primary base chain reuses Gen_dtor_001c0e70 body
 ??1Rva002E32A0AsciiString@@QAE@XZ,0x00887940,AsciiString destructor alias (releaseBuffer) called by 0x002E32A0
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
@@ -8519,6 +8523,9 @@ name,address,notes
 ??1Rva003BB590Tree@@QAE@XZ,0x32fd3,Reviewed ILT to2360C0 complete124B set tree cleanup; member at8
 ??1Rva004029F0@@QAE@XZ,0x00040138,Open-BFME5 ILT thunk to body 0x004029F0; ?freeBlocks@PathfindZoneManager@@AAEXXZ at 0x00403760 hands it to the eh vector destructor iterator as the element destructor of the 0x228-byte array at +0x23624; address-derived name
 ??1Rva004262F0Elem@@QAE@XZ,0x00002BC6,address-derived non-virtual dtor for vector::erase at 0x004262F0 (direct call shape not the UAE scalar-deleting family)
+??1Rva0042B5D0MemberA@@QAE@XZ,0x0002238B,pin near-twin member dtor reuses Gen_uwm_0002238b body
+??1Rva0042B5D0MemberC@@QAE@XZ,0x0002CD31,pin near-twin member dtor reuses Gen_uwm_0002cd31 body
+??1Rva0042B5D0Str@@QAE@XZ,0x00887940,pin near-twin AsciiString member reuses releaseBuffer body
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
@@ -10849,6 +10856,8 @@ name,address,notes
 ?_M_allocate_buffers@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NPAGH@Z,0x008420B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,resweep callee back-solved
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004B308,retail ICF thunk used by 0x006AB4A0
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAURva00424D30Value@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAURva00424D30Value@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAURva00424D30Value@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001E4E3,ILT thunk called at +0x18 of hashtable insert_unique_noresize 0x00424D30 (bucket index)
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAURva005C9A20Value@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAURva005C9A20Value@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAURva005C9A20Value@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00044ADF,ILT thunk called at +0x18 of hashtable insert_unique_noresize 0x005C9A20 (bucket index)
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,direct-hashtable spelling of the ParticleSystemTemplate bucket helper; same demangled instantiation as the existing @5 pin
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0001F843,rel32 pin for exact-ambiguous landing
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVRva000D64A0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVRva000D64A0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva000D64A0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x000160DB,bucket-key helper called by the hash erase twin at 0x000D64A0
@@ -76147,6 +76156,7 @@ name,address,notes
 ?decompress@AdaptiveDeltaMotionChannelClass@@AAEXKPAM@Z,0x00977DB0,AdaptiveDeltaMotionChannelClass getframe retail two-argument decompress
 ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z,0x00826920,LZH-Light decompressor member body entry; retail body begins after the 12-byte alignment pad before 0x00826920
 ?decompressData@CompressionManager@@SAHPBXHPAXH@Z,0x0081E890,CachedFileInputStream open retail decompression call
+?decrement@Rva00894D90Accessor@@SAIPAH@Z,0x00894D90,pin near-twin refcount decrement reuses Rva00894D90DecrementPointer body
 ?defaultHandler@BfmeMsgHandler@@QAEHHPAX0@Z,0x00010AF0,pin
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
 ?deleteAllFonts@FontLibraryDeleteAllFontsShim@@QAEXXZ,0x00722190,FontLibrary incremental-link thunk target through a TU-local forwarding shim
@@ -81287,6 +81297,7 @@ name,address,notes
 ?set@Rva002EA550Str@@QAEXABV1@@Z,0x00887C90,Open-BFME5 string set used by 20-byte copy_backward at 0x002EA550
 ?set@Rva002EECE0@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
 ?set@Rva002EED00@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
+?set@Rva003AEC50Str@@QAEXABV1@@Z,0x00887C90,pin near-twin of Rva0036D9E0CopyRange string set
 ?set@Rva0052DD50AsciiString@@QAEXPBDH@Z,0x00887D20
 ?set@Rva00802040Buf@@QAEXPAX@Z,0x007F7F50,FESL Buf set; pin for 0x802040
 ?set@Rva00802810Element@@QAEXPBVRva007F4EF0Lobby@@PAVRva007F7980Browser@@@Z,0x00802810,V2 lane: 64-byte browser lobby element fill from a lobby record

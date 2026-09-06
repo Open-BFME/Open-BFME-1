@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c5b92921302c3b2fecf5ec0c89e1c4e9213778e80bb7c24172917df3c244318a",
+  "symbol": "??0Rva0034C5E0@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ??0Rva0034C5E0@@QAE@XZ\n// partial score=0.6 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME5: near-twin of ??0DelayedLuaEventList (0x000EDBB0); constructor installs\n// vtable 0x010E7D00 (name getter neighbour at 0x0034C660 identifies AttackPriorityInfo),\n// default-constructs a string-shaped member at +4, sets a flag at +8 to 1 and a\n// count/id at +0xc to 0.\n\nclass BfmeStrCVE\n{\npublic:\n\tBfmeStrCVE() { m_data = 0; }\n\t~BfmeStrCVE() { bfmeInitCVE(); }\n\tvoid bfmeInitCVE();\n\tvoid *m_data;\n};\n\nclass Rva0034C5E0\n{\npublic:\n\tvirtual void bfmeSlot00();\n\n\tRva0034C5E0();\n\nprivate:\n\tBfmeStrCVE m_str;\n\tint m_flag;\n\tint m_zero;\n};\n\n// ?d_0034c5e0@@YAXXZ\nRva0034C5E0::Rva0034C5E0()\n{\n\tm_flag = 1;\n\tm_zero = 0;\n\tm_str.bfmeInitCVE();\n}\n"
+}

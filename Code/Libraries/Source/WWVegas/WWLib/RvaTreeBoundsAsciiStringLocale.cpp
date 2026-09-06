@@ -15,10 +15,13 @@
 // unwind frame (needed only because the two copy constructors can throw).
 // Plain pass-by-value C++ reproduces this without any manual ABI trick.
 //
-// 0x004F18C0 is the same shape with one extra branch (237B vs 144B) -- twice
-// as many call sites to 0x00887B60/0x0000B4B0 per the brief -- consistent
-// with an extra special case (e.g. a not-found/empty-tree guard) ahead of the
-// same descent; not attempted in this pass.
+// 0x004F18C0 is the tree's find(), not a bare _M_lower_bound: the same
+// descent, then STLport's stock _M_find() tail (vendor/stlport/stl/_tree.h) --
+// compare candidate against the header (not found -> return header) and, if
+// present, one more BfmeStringLocaleLess call with the operands swapped
+// (key < candidate) to confirm equality before returning the candidate.
+// That is exactly why it doubles the call-site count of 0x00631C70 (2x
+// construct+compare instead of 1x) for 237B vs 144B.
 
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
@@ -54,4 +57,31 @@ typedef _STL::_Rb_tree<AsciiString, Rva00632450Value, Rva00632450KeyOfValue,
 Bool BfmeTreeBoundsAnchor00632450( const Rva00632450Tree &tree, const AsciiString &key )
 {
 	return tree.lower_bound( key ) != tree.upper_bound( key );
+}
+
+// ---- 0x004F18C0: find() -- lower_bound descent plus the equality tail. ----
+
+struct Rva004F1FD0Value
+{
+	AsciiString m_key;
+	int m_pad1;
+	int m_pad2;
+};
+
+struct Rva004F1FD0KeyOfValue
+{
+	const AsciiString &operator()( const Rva004F1FD0Value &x ) const { return x.m_key; }
+};
+
+typedef _STL::_Rb_tree<AsciiString, Rva004F1FD0Value, Rva004F1FD0KeyOfValue,
+	BfmeStringLocaleLess, _STL::allocator<Rva004F1FD0Value> > Rva004F1FD0Tree;
+
+// find() is public; the _M_find it calls is not, so reaching it through the
+// public method is what emits it.
+const Rva004F1FD0Value *BfmeTreeFindAnchor004F1FD0( const Rva004F1FD0Tree &tree, const AsciiString &key )
+{
+	Rva004F1FD0Tree::const_iterator it = tree.find( key );
+	if ( it == tree.end() )
+		return 0;
+	return &( *it );
 }
