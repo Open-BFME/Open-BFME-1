@@ -52,3 +52,22 @@ void Rva000BD9F0IndexVectorParse(INI *ini, void *, void *store,
 		values->push_back(value);
 	}
 }
+
+void Rva000BDAF0IndexVectorParse(INI *ini, void *, void *store,
+	const void *userData)
+{
+	DAVector *values = (DAVector *)store;
+	values->clear();
+	for (const char *token = ini->getNextTokenOrNull(); token != 0;
+		token = ini->getNextTokenOrNull())
+	{
+		if (_strcmpi(token, "None") == 0)
+		{
+			values->clear();
+			return;
+		}
+		Gen_t_000bd2f0_m4pod value = {
+			INI::scanIndexList(token, (const char *const *)userData)};
+		values->push_back(value);
+	}
+}
