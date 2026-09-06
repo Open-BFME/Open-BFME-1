@@ -84038,3 +84038,6 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeSendZB@@YAXPAX00VBfmeTagZB@@@Z,0x0002E0B9,pin
+??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
+?bfmeRunZC@BfmeOwnZC@@QAEXVBfmeRoomZC@@PAX@Z,0x0000D97C,pin
+??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin

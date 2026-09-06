@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8432c1510313e82a27f6f3f356063ca5cfc7df3cafc6465218003b4051b2a18d",
+  "symbol": "?bfmeCallZC@BfmeOwnZC@@QAEXABVBfmeRoomZC@@PAX@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.83,
+  "source": "// ?bfmeCallZC@BfmeOwnZC@@QAEXABVBfmeRoomZC@@PAX@Z (identity unknown)\n// partial score=0.83 date=2026-09-06\n// 30/36 at exact size. Everything matches except a two-instruction swap at\n// +0x0d: retail emits the esp marker BEFORE `mov ecx,esp` (the copy ctor's\n// this), MSVC after. Tried /G7 /Ob1 /Ot /Gy /Os, an explicit this-> on the\n// call, no destructor (size mismatch, the marker disappears) and an inline\n// empty destructor. All give the identical two-line swap.\n// Copy ctor is the string_base alias pinned DIRECTLY at 0x00887B60.\nclass BfmeRoomZC\n{\npublic:\n\tBfmeRoomZC(const BfmeRoomZC &other);\n\t~BfmeRoomZC();\n\n\tint m_bfmeHandleZC;\n};\n\nclass BfmeOwnZC\n{\npublic:\n\tvoid bfmeCallZC(const BfmeRoomZC &name, void *extra);\n\tvoid bfmeRunZC(BfmeRoomZC name, void *extra);\n};\n\nvoid BfmeOwnZC::bfmeCallZC(const BfmeRoomZC &name, void *extra)\n{\n\tbfmeRunZC(name, extra);\n}\n"
+}
