@@ -1,5 +1,5 @@
-// ?parseRoomVector@Rva0061AD20@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.3 date=2026-09-06
+// ?parseQuotedStringVector@Rva0061AD20@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.5 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME7: INI field parser at 0x0061AD20 (188 B): loops
