@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3303dec56e6c56bb119d39cf8e3fa4086f74661a4dc1a3761904d09d2546f4ca",
+  "symbol": "?u1FormatPair_005C8210@@YAPAVINI@@PAV1@PAVU1Pair@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?u1FormatPair_005C8210@@YAPAVINI@@PAV1@PAVU1Pair@@@Z\n// partial score=0.95 date=2026-09-06\n// MSVC 7.1 emits the same field loads and formatter calls, but uses a 66-byte\n// volatile-register layout instead of retail's saved EDI layout.\n\nclass INI\n{\npublic:\n\tvoid u4Finish( int radix );\n};\n\nclass U1Pair\n{\npublic:\n\tchar m_pad[ 4 ];\n\tfloat m_x;\n\tfloat m_y;\n};\n\nINI *__cdecl u4FormatFloat( INI *ini, double value );\n\nINI *u1FormatPair_005C8210( INI *ini, U1Pair *pair )\n{\n\tU1Pair *other = pair;\n\tconst float *values = &other->m_x;\n\tfloat second = values[ 1 ];\n\tINI *next = u4FormatFloat( ini, values[ 0 ] );\n\tnext->u4Finish( 32 );\n\treturn u4FormatFloat( next, second );\n}\n"
+}
