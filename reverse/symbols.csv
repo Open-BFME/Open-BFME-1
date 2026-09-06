@@ -2378,6 +2378,7 @@ name,address,notes
 ??0DownloadManager@@QAE@XZ,0x0001958D,ILT thunk used by call site
 ??0DozerAIUpdateModuleData@@QAE@XZ,0x0002BFF8
 ??0DrawModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 W3DRopeDraw constructor base-call pin
+??0Drawable@@QAE@PBVThingTemplate@@W4DrawableStatus@@H@Z,0x00418DA0,retail three-argument Drawable constructor body at 0x00418DA0
 ??0DrawableModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,SwayClientUpdate base ctor from retail call site
 ??0DynamicDecalFXNugget@@QAE@XZ,0x00428FA0,constructor run on the 0xF8-byte allocation in DynamicDecalFXNugget::parse at 0x0042BF50; the INI keyword table at 0x00CF2130 names that parse callback DynamicDecal
 ??0DynamicGeometryInfoUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338
@@ -8508,7 +8509,9 @@ name,address,notes
 ??1PeerRequest@@QAE@XZ,0x00016BD5,ILT of PeerRequest dtor used by 0x0053AB90
 ??1PendingSurfaceStruct@Render2DSentenceClass@@QAE@XZ,0x00001F96,hit-decoded x7 (thunk)
 ??1PingRequest@@QAE@XZ,0x00027C00,pinharvest x1 (thunk)
+??1PingRequest@@QAE@XZ,0x00049E2C,Open-BFME7 second ILT thunk of the PingRequest destructor called by the deque destroy_aux at 0x0065FF10 (additive beside 0x00027C00)
 ??1PingResponse@@QAE@XZ,0x00027C00,pinharvest x1 (thunk)
+??1PingResponse@@QAE@XZ,0x00049E2C,Open-BFME7 second ILT thunk of the PingResponse destructor called by the deque destroy_aux at 0x0065FF10 (additive beside 0x00027C00)
 ??1Pipe@@UAE@XZ,0x009E78C0
 ??1PlayerHealSpecialPower@@MAE@XZ,0x0003DE15,destructor ILT to 0x00263A20
 ??1PlayerInfo@@QAE@XZ,0x00036AF7,GameSpyInfo updatePlayerInfo BFME PlayerInfo destructor thunk
@@ -73343,6 +73346,7 @@ name,address,notes
 ?bfmeConstruct_007690F0@@YAXPAUBfmeCopy_007690F0@@PBU1@@Z,0x0002B7AB,Open-BFME5 the element copy constructor the allocate-and-copy-range body at 0x007690F0 calls per pass
 ?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0000DE6D,BFME ActionManager structure-attack visitor callback; helper 0x000C5870 passes its incremental-link thunk to ContainModuleInterface::iterateContained
 ?bfmeContains6DF1F0@BfmePolygon6DF1F0@@QBEDABUBfmeCoord6DF1F0@@@Z,0x0000A7DB,address-derived polygon predicate thunk called by the 0x006DF1F0 retail body
+?bfmeContainsGB@BfmeListGB@@QAEDPAVBfmeItemGB@@@Z,0x00044161,pin
 ?bfmeConv1058@@YAHHH@Z,0x0003B971,pin
 ?bfmeConv1060@BfmeQ1060@@QAEHH@Z,0x0003ADD7,pin
 ?bfmeConv1065@@YAPAVBfmeX1065@@PAVBfmeH1065@@@Z,0x00010901,pin
@@ -74514,6 +74518,7 @@ name,address,notes
 ?bfmeInsert@BfmeJ1017@@QAEXI@Z,0x008A0700,callee of the 0x008A07A0 and 0x008A0770 send wrappers
 ?bfmeInsert@Gen009D76F0@@QAEPAUBfmeHashPair@@PBU2@@Z,0x009D7AF0,hashtable insert callee of operator[]
 ?bfmeInsertERF@BfmeContainerERF@@QAEXPAVBfmeMeshVecERF@@H@Z,0x00948820,pin
+?bfmeInsertGB@BfmeSubGB@@QAEXPAVBfmeItemGB@@H@Z,0x0000B627,pin
 ?bfmeInsertOverflow@BfmeVecAE@@QAEXPAHPBHPA_NHH@Z,0x0000A240,Open-BFME5 the ICF thunk (to 0x0040A240) the append at 0x0049C4B0 takes when the vector is full
 ?bfmeInsertQI@BfmeThingQI@@QAEPADPADE@Z,0x0082FE50,pin
 ?bfmeInsertV14@BfmeStrV14@@QAEXPADID@Z,0x0082FBB0,Open-BFME5 insert n chars thunk for 0x00830030
@@ -75080,6 +75085,7 @@ name,address,notes
 ?bfmeResetVJO@BfmeCVJO@@QAEXPAVBfmeXVJO@@@Z,0x008014F0,pin
 ?bfmeResize@Gen009D7B80@@AAEXI@Z,0x009D7BC0,hashtable resize callee of Gen009D7B80 insert
 ?bfmeResolve1281@BfmeSlotDispatcher1281@@QAEXHHPAPAXPA_N@Z,0x008BC3E0,address-derived resolver callee; argument shape decoded from the 0x008BCCC0 retail call site
+?bfmeResolveGA@BfmeItemGA@@QAEPAVBfmeThingGA@@XZ,0x00003B52,pin
 ?bfmeResolveMeleeTarget@Object@@QAEPAV1@H@Z,0x0000FAA6,TU-specific name for the melee target resolution helper used by AIAttackMeleeHordeWaitState
 ?bfmeResolveZones@@YAXHHPAG00@Z,0x0002B648,Open-BFME5 ILT thunk to exact body 0x00403C90; BFME zone-equivalence list merger
 ?bfmeRestart@Gen_0018BC70@@AAEXXZ,0x0003F1FC,Open-BFME5 the ICF thunk (to 0x0043F1FC) the compaction at 0x0018BC70 calls when its flag is set
