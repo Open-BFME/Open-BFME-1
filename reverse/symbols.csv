@@ -253,6 +253,7 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBIURva009EDBE0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBIURva009EDBE0Value@@@0@ABU10@@Z,0x009ED790,Open-BFME5 the value _Construct the tree _M_insert at 0x009EDBE0 reaches
 ??$_Construct@U?$pair@$$CBIW4Relationship@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBIW4Relationship@@@0@ABU10@@Z,0x009ED790,direct callee of the unsigned-keyed relationship hashtable insert at 0x009EE9FA
 ??$_Construct@U?$pair@$$CBJVLadderPref@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBJVLadderPref@@@0@ABU10@@Z,0x0002367D,Open-BFME5 ILT the Long-to-LadderPref _Rb_tree _M_insert at 0x000AAD50 constructs the node value through
+??$_Construct@U?$pair@$$CBU?$pair@HH@_STL@@H@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBU?$pair@HH@_STL@@H@0@ABU10@@Z,0x00926750,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00928590 calls; autopin
 ??$_Construct@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@0@ABU10@@Z,0x0004AA25,Open-BFME7 ILT thunk the TeamFactory tree _M_insert at 0x000EED60 calls for the node value copy
 ??$_Construct@U?$pair@$$CBURva0019BC70Key@@URva00198190Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBURva0019BC70Key@@URva00198190Value@@@0@ABU10@@Z,0x00017FD0,Open-BFME near-twin Construct pin for _M_insert at 0x00198190
 ??$_Construct@U?$pair@$$CBURva0019BC70Key@@URva0033F4B0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBURva0019BC70Key@@URva0033F4B0Value@@@0@ABU10@@Z,0x00011397,Open-BFME near-twin Construct pin for _M_insert at 0x0033F4B0
@@ -417,6 +418,7 @@ name,address,notes
 ??$_Construct@URva00342BF0Element@@U1@@_STL@@YAXPAURva00342BF0Element@@ABU1@@Z,0x00030EF4,Open-BFME5 the element _Construct the list push_back at 0x00342BF0 calls
 ??$_Construct@URva00342C30Element@@U1@@_STL@@YAXPAURva00342C30Element@@ABU1@@Z,0x00048F68,Open-BFME5 the element _Construct the list push_back at 0x00342C30 calls
 ??$_Construct@URva00347900Element@_STL@@@_STL@@YAXPAURva00347900Element@0@ABU10@@Z,0x00033CCB,Open-BFME5 the element _Construct the vector insert at 0x00347900 calls
+??$_Construct@URva0034DEB0Elem@@U1@@_STL@@YAXPAURva0034DEB0Elem@@ABU1@@Z,0x00048F68,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0034DEB0 calls; autopin
 ??$_Construct@URva0035AFC0Element@_STL@@@_STL@@YAXPAURva0035AFC0Element@0@ABU10@@Z,0x00036C2D,Open-BFME5 the element _Construct the vector insert at 0x0035AFC0 calls
 ??$_Construct@URva0035B130Element@_STL@@@_STL@@YAXPAURva0035B130Element@0@ABU10@@Z,0x0002DE52,Open-BFME5 the element _Construct the vector insert at 0x0035B130 calls
 ??$_Construct@URva003751A0Element@_STL@@@_STL@@YAXPAURva003751A0Element@0@ABU10@@Z,0x0004093F,Open-BFME5 the element _Construct the vector insert at 0x003751A0 calls
@@ -2941,7 +2943,6 @@ name,address,notes
 ??0PreorderCreate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002070C,link thunk to the PreorderCreate constructor; named from the ModuleFactory registration that pairs "PreorderCreate" with factory 0x0011E700
 ??0ProcessAnimateWindowSpiral@@QAE@XZ,0x00495590,ILT 0x43815->body; AnimateWindowManager ctor callee
 ??0ProductionPrerequisite@@QAE@ABV0@@Z,0x00031B06,ProductionPrerequisite copy constructor via ILT thunk
-?addUnitPrereq@ProductionPrerequisite@@QAEXVAsciiString@@_N@Z,0x0001DD63,BFME Object prerequisite parser addUnitPrereq ILT
 ??0ProductionUpdateModuleData@@QAE@XZ,0x0000E9F8,pinharvest x1 (thunk)
 ??0ProjectileStreamUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E902,pinharvest x1 (thunk)
 ??0ProneUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x000425DC,module ctor (friend_newModuleInstance retail call target)
@@ -3090,6 +3091,8 @@ name,address,notes
 ??0Rva005FED10@@QAE@PAXPAVV3HostRva005E82A0@@@Z,0x005FED10,base constructor forwarded to by the new-plus-inline-ctor factory family (V3NewInlineCtorFactories.cpp); target read from the REL32 at its call site; address-derived name; identity not recovered
 ??0Rva005FFAC0@@QAE@PAXPAVV3HostRva005E76E0@@@Z,0x005FFAC0,base constructor forwarded to by the new-plus-inline-ctor factory family (V3NewInlineCtorFactories.cpp); target read from the REL32 at its call site; address-derived name; identity not recovered
 ??0Rva006008D0@@QAE@PAXPAVV3HostRva005E7AD0@@@Z,0x006008D0,base constructor forwarded to by the new-plus-inline-ctor factory family (V3NewInlineCtorFactories.cpp); target read from the REL32 at its call site; address-derived name; identity not recovered
+??0Rva00608FE0Element@@QAE@ABU0@@Z,0x00042339,Open-BFME5 ILT for the SoundUpgrade record copy constructor used by the SoundUpgrade field parser
+??0Rva00608FE0Element@@QAE@XZ,0x0002A48C,Open-BFME5 ILT for the SoundUpgrade record default constructor used by the SoundUpgrade field parser
 ??0Rva0060FD30Base@@QAE@ABV0@@Z,0x0000FA3D,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x0060FD30
 ??0Rva00630D00UStr@@QAE@ABV0@@Z,0x00888530,Open-BFME5 fresh thiscall copy ctor for 0x00630D00 unicode-string member
 ??0Rva00647720String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -8600,6 +8603,7 @@ name,address,notes
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
 ??1Rva0049B890Elem@@QAE@XZ,0x000351D4,ILT thunk to the vector<Gen0049B890> destructor 0x0049B890 called twelve times by 0x0049C020
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
+??1Rva00608FE0Element@@QAE@XZ,0x00034158,Open-BFME5 ILT for the SoundUpgrade record destructor used by the SoundUpgrade field parser
 ??1Rva006ABC60TrailingMember@@QAE@XZ,0x00009BB0,retail helper destructor thunk used by 0x006ABC60
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
 ??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
@@ -11930,6 +11934,7 @@ name,address,notes
 ?_M_insert@?$hashtable@U?$pair@QBVThingTemplate@@_N@_STL@@PBVThingTemplate@@U?$hash@PBVThingTemplate@@@2@U?$_Select1st@U?$pair@QBVThingTemplate@@_N@_STL@@@2@U?$equal_to@PBVThingTemplate@@@2@V?$allocator@U?$pair@QBVThingTemplate@@_N@_STL@@@2@@_STL@@QAEAAU?$pair@QBVThingTemplate@@_N@2@ABU32@@Z,0x00010488,BFME SelectionXlat ThingTemplate pointer-to-Bool hash-map insertion ILT
 ?_M_insert_aux@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEPAGPAGG@Z,0x0083E4D0,gen-tgrid shared callee
 ?_M_insert_aux@?$vector@_NV?$allocator@_N@_STL@@@_STL@@IAEXU?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@2@_N@Z,0x0002CB5B
+?_M_insert_overflow@?$sound_upgrade_vector@URva00608FE0Element@@@_STL@@QAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000E656,Open-BFME5 ILT for the 528-byte SoundUpgrade vector growth call
 ?_M_insert_overflow@?$vector@EV?$allocator@E@_STL@@@_STL@@IAEXPAEABEABU__true_type@2@I_N@Z,0x0002F20C
 ?_M_insert_overflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x0000791E,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
@@ -12711,6 +12716,7 @@ name,address,notes
 ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z,0x0000D828,pinharvest x4 (thunk)
 ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00037263,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addToBuildList@SidesInfo@@QAEXPAVBuildListInfo@@H@Z,0x0000DD9B
+?addUnitPrereq@ProductionPrerequisite@@QAEXVAsciiString@@_N@Z,0x0001DD63,BFME Object prerequisite parser addUnitPrereq ILT
 ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z,0x00040327
 ?addVelocity@WaterRenderObjClass@@QAEXMMMM@Z,0x0079F5F0,thunk-resolved body (via 0x4ae8f)
 ?addWaypointLink@TerrainLogic@@IAEXHH@Z,0x00038B77
@@ -80750,6 +80756,7 @@ name,address,notes
 ?parse@QuadDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00043BF8,Open-BFME5 pin
 ?parse@RenderObjectDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00037713,Open-BFME5 RenderObjectDrawTemplate retail parser
 ?parse@RenderObjectUpdateTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00002E3C,Open-BFME5 pin
+?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z,0x00044210,Open-BFME5 ILT for the SoundUpgrade INI record parser
 ?parse@Rva007FF700Date@@QAEHPBD@Z,0x007FF530,Rva007FF700Date date parser from the FESL blob cursor call sites
 ?parse@Rva00800780Addr@@QAEXPBDH@Z,0x007E86D0,jabba demangler connect-reply Addr parse alias of Rva007E8760Addr::parse
 ?parse@SphereEmissionVolumeTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00034847,Open-BFME5 SphereEmissionVolumeTemplate retail parser
@@ -81232,6 +81239,7 @@ name,address,notes
 ?resize@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEXI@Z,0x0000309E,ILT the Int-keyed relationship hashtable insert calls first at 0x0078714C
 ?resize@?$hashtable@U?$pair@$$CBIH@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIH@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIH@_STL@@@2@@_STL@@AAEXI@Z,0x00040CF0,Open-BFME5 ILT the unsigned-key hashtable _M_insert at 0x00389A20 calls first
 ?resize@?$hashtable@U?$pair@$$CBIPAX@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIPAX@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIPAX@_STL@@@2@@_STL@@AAEXI@Z,0x0000E4D0,Open-BFME5 ILT the unsigned-to-pointer hashtable _M_insert at 0x00431070 calls first
+?resize@?$hashtable@U?$pair@$$CBU?$pair@HH@_STL@@H@_STL@@U?$pair@HH@2@URva00928590Hash@@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@H@_STL@@@2@URva00928590Eq@@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@H@_STL@@@2@@_STL@@QAEXI@Z,0x00927DE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00928590 calls; autopin
 ?resize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAEXI@Z,0x00030684,ParticleSystemManager::newTemplate hashtable resize thunk
 ?resize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@QAEXI@Z,0x00135ED0,ThingFactory hash map resize body
 ?resize@?$hashtable@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@P6APAVTransition@@XZ@_STL@@@2@@_STL@@AAEXI@Z,0x0000266C,Open-BFME5 ILT the NameKeyType-to-Transition-factory hashtable _M_insert at 0x0048B2C0 calls first
@@ -83745,8 +83753,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0Rva00608FE0Element@@QAE@ABU0@@Z,0x00042339,Open-BFME5 ILT for the SoundUpgrade record copy constructor used by the SoundUpgrade field parser
-??0Rva00608FE0Element@@QAE@XZ,0x0002A48C,Open-BFME5 ILT for the SoundUpgrade record default constructor used by the SoundUpgrade field parser
-??1Rva00608FE0Element@@QAE@XZ,0x00034158,Open-BFME5 ILT for the SoundUpgrade record destructor used by the SoundUpgrade field parser
-?_M_insert_overflow@?$sound_upgrade_vector@URva00608FE0Element@@@_STL@@QAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000E656,Open-BFME5 ILT for the 528-byte SoundUpgrade vector growth call
-?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z,0x00044210,Open-BFME5 ILT for the SoundUpgrade INI record parser
