@@ -405,3 +405,31 @@ int ciUserHash(const void *elem, int numBuckets)
 
 	return (hash % numBuckets);
 }
+
+typedef struct ciChatUser
+{
+	char name[128];
+	char user[24];
+	char address[64];
+	CHATBool gotUserAndAddress;
+	int mode;
+} ciChatUser;
+
+void ciUserLeftChannel(CHAT chat, const char *user, const char *channel)
+{
+	ciChatChannel chatChannel;
+	ciChatUser chatUser;
+	ciChatChannel *channelData;
+	ciConnection *connection = (ciConnection *)chat;
+
+	strncpy(chatChannel.name, channel, MAX_CHANNEL);
+	chatChannel.name[MAX_CHANNEL - 1] = '\0';
+	channelData = (ciChatChannel *)TableLookup(connection->channelTable,
+		&chatChannel);
+	if(channelData == NULL)
+		return;
+
+	strncpy(chatUser.name, user, 128);
+	chatUser.name[127] = '\0';
+	TableRemove(channelData->users, &chatUser);
+}
