@@ -1553,3 +1553,82 @@ void ciErrBadChanMaskHandler(CHAT chat, const ciServerMessage *message)
         ciFinishFilter(chat, filter, &params);
     }
 }
+
+enum { CHATBadChannelName=1 };
+void ciErrNoSuchChannelHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch matches[2];
+	ciServerMessageFilter * filter;
+	char * channel;
+
+#ifdef FEEDBACK_HANDLERS
+	OutputDebugString("ciErrNoSuchChannel called\n");
+#endif
+
+	assert(message->numParams == 3);
+	if(message->numParams != 3)
+		return; //ERRCON
+
+	// Get the channel.
+	///////////////////
+	channel = message->params[1];
+
+	// Setup the filter matches.
+	////////////////////////////
+	memset(&matches, 0, sizeof(ciFilterMatch));
+	matches[0].type = TYPE_JOIN;
+	matches[0].name = channel;
+	matches[1].type = TYPE_CMODE;
+	matches[1].name = channel;
+
+	// Look for a matching filter.
+	//////////////////////////////
+	filter = ciFindFilter(chat, 2, matches);
+	if(filter)
+	{
+		// Join?
+		////////
+		if(filter->type == TYPE_JOIN)
+		{
+			ciCallbackEnterChannelParams params;
+			params.success = CHATFalse;
+			params.result = CHATBadChannelName;
+			params.channel = channel;
+
+			FINISH_FILTER;
+
+			return;
+		}
+
+		// Channel mode?
+		////////////////
+		if(filter->type == TYPE_CMODE)
+		{
+			ciCallbackGetChannelModeParams params;
+			params.success = CHATFalse;
+			params.channel = channel;
+			params.mode = NULL;
+
+			FINISH_FILTER;
+
+			return;
+		}
+	}
+
+	// GetKey?
+	//////////
+	filter = ciFindGetKeyFilter(chat, channel);
+	if(filter)
+	{
+		ciCallbackGetGlobalKeysParams params;
+		params.success = CHATFalse;
+		params.user = NULL;
+		params.num = 0;
+		params.keys = NULL;
+		params.values = NULL;
+
+		FINISH_FILTER;
+
+		return;
+	}
+}
