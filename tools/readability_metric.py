@@ -76,9 +76,19 @@ CACHE_VERSION = 1
 # whole 60 MB of sources in one buffer.
 BLOB_CHUNK = 512
 
+# The \b after the hex is why the two CamelCase lines exist. `Rva001EFF60`
+# ends on a boundary and counts; `Rva0026C320Owner` -- the far commoner shape,
+# and the one the file names use -- does not, so 4,278 address-derived rows were
+# scoring as semantic names and Ident read 2.65 pp better than the tree was. The
+# suffix must start with an ASCII capital, spelled (?-i:[A-Z]) because re.I
+# would otherwise let any letter close the hex run; that is also why Gen needs
+# six hex digits before a capital where Rva needs four. `GenCab...` is three hex
+# digits followed by a capital, and Gen is a real word stem.
 PLACEHOLDER = re.compile(
     r'(?:\b(?:d|dup|sub|uw|eh|tg|fun|nullsub|loc|j)_[0-9A-Fa-f]{4,8}\b'
     r'|\bRva[0-9A-Fa-f]{6,8}\b|\bgen[0-9A-Fa-f]{6,8}\b|\bGen_?[0-9A-Fa-f]{3,8}\b'
+    r'|\bRva[0-9A-Fa-f]{4,8}(?-i:[A-Z])'
+    r'|\bGen_?[0-9A-Fa-f]{6,8}(?-i:[A-Z])'
     r'|\bBfme(?:Conv|Thing|Owner|Tiny|Seed|Virtual)\w*\b'
     r'|\b\w*(?:Thunk|Shim|Stub|Trampoline)\b)', re.I)
 PAD_MEMBER = re.compile(

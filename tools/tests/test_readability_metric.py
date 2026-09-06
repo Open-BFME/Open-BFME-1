@@ -395,3 +395,26 @@ def test_scanning_stays_linear_in_file_size(tmp_path):
     start = time.monotonic()
     assert metric.scan(text)["named_members"] == 0
     assert time.monotonic() - start < 1.0
+
+
+def test_an_address_derived_name_counts_however_it_ends(tmp_path):
+    """PLACEHOLDER's `\\b` after the hex run meant an address-derived name counted
+    only when nothing followed the digits. `Rva001EFF60` did; `Rva0026C320Owner`
+    -- the shape the file names actually use -- did not, so 4,278 rows of
+    reverse/functions.csv were scored as semantic names and Ident read 2.65 pp
+    higher than the tree deserved. That is the wrong direction for a scoreboard
+    to be wrong in: it hid the single largest rename lane from the axis meant to
+    measure it.
+
+    The capital is load bearing. re.I is on for the whole pattern, so an
+    unqualified [A-Z] would accept any letter and `GenCab` -- three hex digits
+    and a letter -- would score a real word as a placeholder. Hence (?-i:[A-Z]),
+    and six hex digits before a capital for Gen where Rva needs four.
+    """
+    for name in ("Rva0026C320Owner", "?Get_Fade@Rva0095B260Anim@@QAEMHM@Z",
+                 "?rva00061150Set@@YAHXZ", "Gen0060CBB0Pair", "Rva001EFF60"):
+        assert metric.PLACEHOLDER.search(name), name
+
+    for name in ("GenCabbageStore", "Generals", "RvaSomething", "MoveToState",
+                 "AttackNugget", "GameLogic"):
+        assert not metric.PLACEHOLDER.search(name), name
