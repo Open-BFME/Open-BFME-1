@@ -75478,6 +75478,7 @@ name,address,notes
 ?clear30AC@BaseHeightMapResetBuffer@@QAEXXZ,0x000336F9,BaseHeightMap reset call for BFME buffer at this+0x30AC
 ?clear30B0@BaseHeightMapResetBuffer@@QAEXXZ,0x00003E59,BaseHeightMap reset call for BFME buffer at this+0x30B0
 ?clear30B4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003697B,BaseHeightMap reset call for BFME buffer at this+0x30B4
+?clearCurrentVictim@BfmeAIUpdateVictimThunk@@QAEXPBVObject@@@Z,0x0004AB4C,unique ILT view for AIIdleState::doInitIdleState; the retail call targets the setCurrentVictim ILT rather than its resolved body
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
 ?clear@?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXXZ,0x0002FB8A,ILT thunk to already-matched body 0x000CD120; TunnelTracker::onTunnelDestroyed m_containList.clear() call
 ?clear@?$_List_base@UBfmeFontEntry@@V?$allocator@UBfmeFontEntry@@@_STL@@@_STL@@QAEXXZ,0x0001A8AC,GlobalLanguage local-font list clear through retail incremental-link thunk
