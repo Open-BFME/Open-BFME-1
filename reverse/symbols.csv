@@ -83947,3 +83947,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeHelperFW@@YAXPAVBfmeXferFW@@PAVBfmeSubFW@@@Z,0x00008BE3,pin
 ?bfmeApplyFW@BfmeSubFW@@QAEXPAX0@Z,0x00024C17,pin
+?bfmeFindFX@BfmeFinderFX@@QAEPAVBfmeThingFX@@PAH@Z,0x00009C41,pin
+?bfmeReadyFX@BfmeInnerFX@@QAEDXZ,0x00028F74,pin
