@@ -1,151 +1,74 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??1BuildListInfo@@MAE@XZ: Code/GameEngine/Source/GameLogic/Map/SidesList.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class __declspec(novtable) BuildListInfo
+template <typename T>
+class StringBase
 {
+public:
+    ~StringBase()
+    {
+        releaseBuffer();
+    }
+
+    void *m_data;
+
+private:
+    void releaseBuffer();
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+    ~BFMERetailAsciiString() {}
+};
+
+class BfmeBase
+{
+public:
+    virtual ~BfmeBase() {}
+    virtual void crc(void *) = 0;
+    virtual void xfer(void *) = 0;
+    virtual void loadPostProcess() = 0;
+};
+
+class BuildListInfo : public BfmeBase
+{
+public:
+    void deleteInstance()
+    {
+        delete this;
+    }
+
+    BuildListInfo *getNext() const
+    {
+        return m_nextBuildList;
+    }
+
+    void setNextBuildList(BuildListInfo *next)
+    {
+        m_nextBuildList = next;
+    }
+
+    BFMERetailAsciiString m_buildingName;
+    BFMERetailAsciiString m_templateName;
+    unsigned char m_padding[0x20];
+    BuildListInfo *m_nextBuildList;
+    BFMERetailAsciiString m_script;
+
 protected:
     virtual ~BuildListInfo();
 };
 
 // ??1BuildListInfo@@MAE@XZ
-__declspec(naked) BuildListInfo::~BuildListInfo()
+BuildListInfo::~BuildListInfo()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x49
-        __emit 0x6f
-        __emit 0x00
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x04
-        __emit 0xc0
-        __emit 0x09
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x2c
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x18
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x79
-        __emit 0x2c
-        __emit 0xc7
-        __emit 0x41
-        __emit 0x2c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xff
-        __emit 0x10
-        __emit 0x85
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x75
-        __emit 0xea
-        __emit 0x5f
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x30
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xc9
-        __emit 0x35
-        __emit 0x6f
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xbc
-        __emit 0x35
-        __emit 0x6f
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xaf
-        __emit 0x35
-        __emit 0x6f
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x44
-        __emit 0x37
-        __emit 0x07
-        __emit 0x01
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
+    register BuildListInfo *next;
+    if (m_nextBuildList) {
+        register BuildListInfo *cur = m_nextBuildList;
+        while (cur) {
+            next = cur->getNext();
+            cur->setNextBuildList(0);
+            cur->deleteInstance();
+            cur = next;
+        }
     }
 }
