@@ -80512,7 +80512,7 @@ name,address,notes
 ?onExit@AIInternalMoveToStateOnExitShim@@QAEXW4StateExitType@@@Z,0x00172D80,AIInternalMoveToState::onExit incremental-link thunk target through a TU-local forwarding shim
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
 ?onExit@Rva002985D0Update@@AAEX_N0@Z,0x0000F975,Open-BFME5 near-twin sibling of SpecialAbilityUpdate::onExit; reuses the pinned ILT at 0x0000F975
-?onExit@Rva002BDF10Base@@UAEXW4StateExitType@@@Z,0x00008990,address-derived GiantBird-family base exit thunk used by 0x002BDF10
+?onExit@AIFollowPathState@@UAEXW4StateExitType@@@Z,0x00008990,AIFollowPathState base exit thunk; base vftable 0x00C9A9F0 slot 6 is ?update@AIFollowPathState@@
 ?onExit@SpecialAbilityUpdate@@AAEX_N0@Z,0x0000F975,SpecialAbilityUpdate destructor cleanup call target
 ?onLevelStart@Drawable@@QAEXXZ,0x00015B81,Open-BFME5 ILT thunk to body 0x00412500; GameLogic start-new-game sequence and the exact Drawable module broadcast establish onLevelStart semantics
 ?onLimitPassed@Gen0060BE20@@AAEXXZ,0x0000F880,limit tail-call ILT used by exact Living World eye tower gate at 0x0060BE20
@@ -80884,7 +80884,7 @@ name,address,notes
 ?releaseOwnedState@Rva007A1230ArrayOwner@@AAEXXZ,0x000490A3,address-derived cleanup ILT forwarding to 0x0079E4C0 from the destructor at 0x007A1230
 ?releaseRef@W3DRadarResetTextureRef@@QAEXXZ,0x009EB7A0,W3DRadar reset texture release ABI shim
 ?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
-?releaseResources@Gen0045A970_00723FB0@@QAEXXZ,0x000491C5,assigned 0x00723FB0 snow reacquire cleanup call resolves through the matched release thunk
+?ReleaseResources@W3DSnowManager@@QAEXXZ,0x000491C5,ILT thunk for the ReleaseResources() call that opens W3DSnowManager::ReAcquireResources at 0x00723FB0 (upstream W3DSnow.cpp:79)
 ?releaseToPool@PathfindCellInfo@@QAEXPAX@Z,0x000203D8,BFME PathfindCell auxiliary-info pool release thunk used by reset and destructor
 ?releaseTrack@TerrainTracksRenderObjClassSystem@@AAEXPAVTerrainTracksRenderObjClass@@@Z,0x000357E7,Open-BFME5 ILT; ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ at 0x0072EDF0 releases each unbound track through it
 ?releaseTrack@WaterTracksRenderSystem@@IAEXPAVWaterTracksObj@@@Z,0x0000E250

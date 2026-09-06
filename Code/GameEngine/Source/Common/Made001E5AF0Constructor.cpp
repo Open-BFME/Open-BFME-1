@@ -1,14 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: Made001E5AF0 constructor, retail 0x002DED90, 97 bytes. The class
-// is declared in Q4MakeNotifyLink.cpp as a 0x68-byte derived of GenBase002DF2B0.
+// is declared in WeaponNuggetParse.cpp as a 0x68-byte derived of GenBase002DF2B0.
 // Base ctor runs, derived vtable 0x010CF270 is installed, the 12-byte member at
 // +0x58 is zeroed and handed to a thiscall with its two pointer fields, then
 // the word at +0x64 is cleared.
 
 typedef int Int;
 
-class Q4Owner001E5A20;
+class WeaponTemplate;
 
 class GenBase002DF2B0
 {
@@ -18,7 +18,7 @@ public:
 	virtual void slot();
 
 	char m_gap04[0x34 - 4];
-	Q4Owner001E5A20 *m_owner;
+	WeaponTemplate *m_owner;
 	char m_gap38[0x54 - 0x38];
 	char m_flag;
 	char m_tail55[3];

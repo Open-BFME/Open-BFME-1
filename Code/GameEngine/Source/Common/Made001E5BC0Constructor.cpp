@@ -2,7 +2,7 @@
 
 // Open-BFME5: Made001E5BC0's constructor, retail 0x002DE130, 36 bytes. The body
 // carried only a machine byte-dump row; reverse/reloc_names.csv holds the name
-// with identity=real, and Q4MakeNotifyLink.cpp is where the class it belongs to
+// with identity=real, and WeaponNuggetParse.cpp is where the class it belongs to
 // is declared -- one of the objects the 157-byte make-notify-and-link family
 // allocates.
 //
@@ -17,7 +17,7 @@
 typedef int Int;
 typedef float Real;
 
-class Q4Owner001E5A20;
+class WeaponTemplate;
 
 class GenBase002DF2B0
 {
@@ -26,7 +26,7 @@ public:
 	virtual void slot();
 
 	char m_gap04[0x34 - 4];
-	Q4Owner001E5A20 *m_owner;
+	WeaponTemplate *m_owner;
 	char m_gap38[0x54 - 0x38];
 	char m_flag;
 	char m_tail55[3];
