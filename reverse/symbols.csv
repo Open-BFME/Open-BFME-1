@@ -3522,6 +3522,8 @@ name,address,notes
 ??1?$DynamicVectorClass@VProxyClass@@@@UAE@XZ,0x00936E40,0x00937040 wrapper call; 0x74-byte ProxyClass element teardown and adjacent Render2DClass ctor batches member prove derived vector identity
 ??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,0x0090B5F0,0x0090BB40 deleting destructor directly calls the authentic render-device vector destructor
 ??1?$DynamicVectorClass@VVector4@@@@UAE@XZ,0x0094EA80,0x0094E2B0 constructor stores table 0x00D3D098 whose exact Clear ID and equality slots identify the Vector4 specialization; 0x0094F0C0 calls this body
+??1?$MultiListClass@VDX8PolygonRendererClass@@@@UAE@XZ,0x00946000,second retail copy of the polygon-renderer MultiListClass dtor called by the DX8TextureCategoryClass dtor 0x00946540 (the other copy is the row at 0x006D17A0)
+??1?$RefCountPtr@VTextureClass@@@@QAE@XZ,0x00030652,ILT thunk: RefCountPtr<TextureClass> destructor passed to the CRT vector dtor iterator by the DX8TextureCategoryClass dtor 0x00946540
 ??1?$ShareBufferClass@PAVTextureClass@@@@UAE@XZ,0x0092B6A0,TexBuffer constructor at 0x0092BA60 and tail destructor at 0x0092BAC0 prove its ShareBuffer<TextureClass*> base; 0x0092BA20 wrapper calls target
 ??1?$ShareBufferClass@PAVVertexMaterialClass@@@@UAE@XZ,0x00929E80,MatBuffer constructor and destructor vtables prove its ShareBuffer<VertexMaterialClass*> base; 0x0092A140 wrapper calls target
 ??1?$ShareBufferClass@VShaderClass@@@@UAE@XZ,0x0092B920,0x0092B900 deleting wrapper calls target; adjacent matched 0x0092B940 constructor is ShareBuffer<ShaderClass> from Get_Shader_Array
