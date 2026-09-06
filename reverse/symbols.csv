@@ -83966,9 +83966,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeCloseFY@BfmeSlotFY@@QAEXH@Z,0x00013633,pin
-?bfmeFinishFY@BfmeExtraFY@@QAEXXZ,0x00015D3E,pin
-?bfmeAdvance@Rva0026C7C0Owner@@QAE_NXZ,0x002A6E60,"Root reviewed full source, exact symbol extent, all resolved relocations and no emitted vtable. Root disassembled complete2A6E60/336 helper: ECX owner, same+4/+8/+28/+30 layout, no stack arguments, explicit AL false/true on every return. Distinct address-derived member pin accurately represents bool ABI. Compiler unsigned-to-float conversion emits actual2^32 fixup; interpolation writes result+B0. No invented class identity."
 ?bfmeResolveGA@BfmeItemGA@@QAEPAVBfmeThingGA@@XZ,0x00003B52,pin
 ?bfmeContainsGB@BfmeListGB@@QAEDPAVBfmeItemGB@@@Z,0x00044161,pin
 ?bfmeInsertGB@BfmeSubGB@@QAEXPAVBfmeItemGB@@H@Z,0x0000B627,pin
