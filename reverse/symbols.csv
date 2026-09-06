@@ -82281,7 +82281,7 @@ _XMP_Fetch_Prime_Table,0x009E8130
 _XMP_Is_Small_Prime,0x009E8CA0
 __CIacos,0x009F7256
 __CIasin,0x009F7D86
-__CIfmod,0x009F6FB2,hit-decoded x2 (body)
+__CIfmod,0x009F70CC,MSVCR71 _CIfmod import thunk; verified FF25 through IAT VA 0x01359240
 __CIpow,0x009F6FB2
 __CxxThrowException@8,0x009F6D00,MSVC retail exception throw helper; verified import thunk to _CxxThrowException
 __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
