@@ -8670,6 +8670,11 @@ name,address,notes
 ??1Rva0049B890Elem@@QAE@XZ,0x000351D4,ILT thunk to the vector<Gen0049B890> destructor 0x0049B890 called twelve times by 0x0049C020
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
 ??1Rva00608FE0Element@@QAE@XZ,0x00034158,Open-BFME5 ILT for the SoundUpgrade record destructor used by the SoundUpgrade field parser
+??1Rva006418E0RequestDeque@@QAE@XZ,0x00002CED,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??1Rva00641A30ResponseDeque@@QAE@XZ,0x0000869D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??1Rva0064C290Tree@@QAE@XZ,0x0002FB2B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??1Rva00660470Deque@@QAE@XZ,0x000423E8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??1Rva00660610Deque@@QAE@XZ,0x0003D249,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??1Rva006ABC60TrailingMember@@QAE@XZ,0x00009BB0,retail helper destructor thunk used by 0x006ABC60
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
 ??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
@@ -9440,6 +9445,7 @@ name,address,notes
 ??_7FreeLifeBody@@6BBodyModuleInterface@@@,0x010A8470,secondary vtable at this+0x0C
 ??_7FreeLifeBody@@6BModuleInterface@@@,0x010A83A0,secondary vtable at this+0x10
 ??_7GameFont@@6B@,0x010F7628,vtable installed by FontLibrary font builder
+??_7GameResultsInterface@@6B@,0x01119318,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7GateProxyBehaviorModuleDataVtbl@@6B@,0x0108A2A0,GateProxyBehavior ModuleData vtbl
 ??_7Gen007E9B10@@6B@,0x00D29758,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007E9B10
 ??_7Gen007F1BF0@@6B@,0x00D2A5F8,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007F1BF0
@@ -9547,6 +9553,9 @@ name,address,notes
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
 ??_7Rva0049C020Owner@@6B@,0x010FB5DC,vftable of the BfmeBaseVUH-derived 26-member record whose destructor is 0x0049C020
+??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??_7Rva006BCE40@@6B@,0x0111D024,address-derived vtable written by RVA 0x006BCE40 (BfmeBaseVUQ destructor family)
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
@@ -10742,6 +10751,7 @@ name,address,notes
 ?Rva009B4680Normalize@@YAHPAURva009B4680State@@@Z,0x009B4680,address-derived name; 93-byte call-free binary arithmetic decoder normalization step
 ?Rva009F8878Notify@@YGXPAX0@Z,0x009F8878,address-derived stdcall notification target called by 0x0048CDD0
 ?Rva012ED238Global@@3PAXA,0x012ED238,address-derived global used by 0x0048CDD0 notification pair
+?Rva01336E50Str@@3URva002E5FF0Str@@A,0x01336E50,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E5FF0 calls; autopin
 ?Rva01336E50Str@@3VRva0036CA00Str@@A,0x01336E50,Open-BFME5 global Rva0036CA00Str immediate used by 0x00385180/0x003855C0 reset
 ?Rva01358E54@@YGXPAX@Z,0x00F58E54,pin
 ?Rva01358EA8@@YGXPAX@Z,0x00F58EA8,pin
@@ -72764,6 +72774,7 @@ name,address,notes
 ?bfmeAddAI@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
 ?bfmeAddAJ@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
 ?bfmeAddANB@BfmeSinkANB@@QAEXPAVBfmeThingANB@@PAX@Z,0x008520A0,pin
+?bfmeAddAV@BfmeSinkAV@@QAEXPAX@Z,0x0002B7E2,pin
 ?bfmeAddBFC@BfmeSinkBFC@@QAEXPAUBfmeSubBFC@@@Z,0x0001D606,pin
 ?bfmeAddCFE@BfmeSubCFE@@QAEXPAXH@Z,0x0003D735,pin
 ?bfmeAddCQE@BfmeSubCQE@@QAEXPAVBfmeArgCQE@@@Z,0x00005C22,pin
@@ -73339,6 +73350,7 @@ name,address,notes
 ?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
+?bfmeClearVHX@Rva006609D0@@AAEXXZ,0x00047686,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ?bfmeClearVJZ@BfmeColorVJZ@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSV@BfmeStrVSV@@QAEXXZ,0x00887940,pin
 ?bfmeClearVSW@BfmeStrVSW@@QAEXXZ,0x00887940,pin
@@ -75082,6 +75094,7 @@ name,address,notes
 ?bfmeRecordTransform@Object@@QAEXI@Z,0x0002BB43,ILT 0x0002BB43 -> 0x001C0BE0 Drawable::bfmeRecordTransform ICF; fire-at Object this
 ?bfmeRecordVHJ@@YAXH@Z,0x008896A0,pin
 ?bfmeRefreshAS@BfmeResolverAS@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the name resolve at 0x002DAE80 runs first
+?bfmeRefreshAW@BfmeOwnAW@@QAEXXZ,0x00047B6D,pin
 ?bfmeRefreshBN@BfmeResolverBN@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the two-name resolve at 0x002DE300 runs first
 ?bfmeRefreshCompletedUpgrades@Rva0038AD90Object@@QAEXXZ,0x0001B9A5,ILT thunk called by the BFME GameLogic object indicator conversion
 ?bfmeRefreshFormation@BfmeHordeContainOwner@@QAEXXZ,0x0001798B,Open-BFME5 retail ILT called by delayed HordeContain refresh
@@ -75116,6 +75129,7 @@ name,address,notes
 ?bfmeRelease@BfmeSharedBlock@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared-block release the refcounted assignments at 0x005D1E50 and its siblings call
 ?bfmeRelease@BfmeTagged@@QAEXXZ,0x009EB7A0,Open-BFME5 the shared release the tag-checked assignments call
 ?bfmeReleaseATXA@@YGXPAX@Z,0x00AFD504,pin
+?bfmeReleaseAU@UnicodeString@@QAEXXZ,0x00887940,pin
 ?bfmeReleaseBTXA@@YGXPAX@Z,0x00AFD510,pin
 ?bfmeReleaseNVSQ@BfmeStrNVSQ@@AAEXXZ,0x00887940,pin
 ?bfmeReleaseNVSR@BfmeStrNVSR@@AAEXXZ,0x00887940,pin
@@ -83522,6 +83536,7 @@ _g_bfmeD8F0Source,0x010BDCC0,Open-BFME5 source path passed by 0x0028D8F0 random 
 _g_bfmeDone1182,0x00F4D058,pin
 _g_bfmeDualDispatchSource,0x010BD158,Open-BFME5 source path passed by 0x0028B910 random selections
 _g_bfmeEmpty1191,0x00C7388B,pin
+_g_bfmeEmptyAscii,0x0107388B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E5FF0 calls; autopin
 _g_bfmeEv1179,0x00F3F540,pin
 _g_bfmeFmt1191,0x00F593C0,pin
 _g_bfmeFmtA1191,0x00C91074,pin
@@ -84151,6 +84166,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeReleaseAU@UnicodeString@@QAEXXZ,0x00887940,pin
-?bfmeAddAV@BfmeSinkAV@@QAEXPAX@Z,0x0002B7E2,pin
-?bfmeRefreshAW@BfmeOwnAW@@QAEXXZ,0x00047B6D,pin
