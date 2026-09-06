@@ -9227,13 +9227,11 @@ name,address,notes
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x011075E0,basic_ifstream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
-??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0110FCAC,basic_ofstream<char> vftable stored by the FX particle system ctor 0x005CC3F0
-??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,STLport static library basic_ofstream<char> vftable
 ??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
@@ -9444,11 +9442,9 @@ name,address,notes
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
-??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE3C,vbtable of the FX particle system TU basic_ofstream<char> instantiation (ctor 0x005CC3F0)
-??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
 ??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
