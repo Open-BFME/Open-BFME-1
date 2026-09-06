@@ -9454,6 +9454,7 @@ name,address,notes
 ??_8?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC9C,STLport static library basic_ifstream<unsigned short> vbtable (ctors 0x0084CAB0 0x0084CBC0)
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
+??_8?$basic_istream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112F390,STLport static library basic_istream<unsigned short> vbtable (ctor 0x008438F0)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
 ??_8?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC5C,STLport static library basic_ofstream<unsigned short> vbtable (ctor 0x0084BF70)
 ??_8?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,alias of the STLport library basic_ofstream<char> vbtable for the aliased (name mode) ctor 0x0084B980

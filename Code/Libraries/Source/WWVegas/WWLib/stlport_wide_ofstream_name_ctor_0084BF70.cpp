@@ -148,4 +148,6 @@ template basic_ofstream<unsigned short, char_traits<unsigned short> >::basic_ofs
 template basic_ofstream<unsigned short, char_traits<unsigned short> >::basic_ofstream(int, int);
 template basic_ifstream<unsigned short, char_traits<unsigned short> >::basic_ifstream(const char *, int);
 template basic_ifstream<unsigned short, char_traits<unsigned short> >::basic_ifstream(int, int);
+template basic_istream<unsigned short, char_traits<unsigned short> >::basic_istream(basic_streambuf<unsigned short, char_traits<unsigned short> > *);
+template basic_ostream<unsigned short, char_traits<unsigned short> >::basic_ostream(basic_streambuf<unsigned short, char_traits<unsigned short> > *);
 }
