@@ -84142,29 +84142,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?Rva0082E540NodeAllocate@@YAPAXI@Z,0x0082E540,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000BF470 calls; autopin
-?Rva000B73B0CopyConstruct@@YAXPAUCoord3D@@ABU1@@Z,0x0003FDA5,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000BF470 calls; autopin
-?Rva001E21F0CopyConstruct@@YAXPAUCoord2D@@ABU1@@Z,0x00046AF1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BADA0 calls; autopin
-?_M_insert_overflow@Rva003BADA0Vector@@AAEXPAUCoord2D@@ABU2@ABURva000BF470FalseType@@I_N@Z,0x0001CB9D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BADA0 calls; autopin
-?bfmeAddKey@LargeGroupAudioKeyMap@@QAEXABVAsciiString@@@Z,0x000133D1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003D4920 calls; autopin
-?Rva004255F0FieldParseTable@@3QBUFieldParse@@B,0x010F1B34,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x004255F0 calls; autopin
-?insert_unique@Rva004255F0Map@@QAE?AURva004255F0InsertResult@@ABURva004255F0Record@@@Z,0x0002A6B2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x004255F0 calls; autopin
-??1Rva004255F0Record@@QAE@XZ,0x0004010B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x004255F0 calls; autopin
-??0Rva00064390@@QAE@XZ,0x0001F7D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
-?Rva00064680FieldParseTable@@3QBUFieldParse@@B,0x010753D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
-?Rva00064680NegativeScale@@3MB,0x01075354,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
-??_C@_0DF@IABNOJPE@ControlPoint?3?3ParseINIBlock?3?3Inv@,0x0107538C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
-??0Rva002DC6D0Filter@@QAE@XZ,0x0003747A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
-?_M_insert_overflow@?$vector@URva002DC6D0Entry@@V?$allocator@URva002DC6D0Entry@@@_STL@@@_STL@@IAEXPAURva002DC6D0Entry@@ABU3@ABU__false_type@2@I_N@Z,0x000031CF,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
-??1Rva002DC6D0Filter@@QAE@XZ,0x0001A401,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
-?aiBfmeCommand2F@AICommandInterface@@QAEXPAVObject@@H@Z,0x0003D73F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E9EA0 calls; autopin
-?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VRva00250BA0Name@@@Z,0x0000D3FA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00250BA0 calls; autopin
-?Rva002098B0PhaseNames@@3QBQBDB,0x012AE110,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002098B0 calls; autopin
-?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VRva002098B0Name@@@Z,0x0000D3FA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002098B0 calls; autopin
-?_M_insert_overflow@?$vector@PBVWeaponTemplate@@V?$allocator@PBVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPBVWeaponTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x0002E65E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002098B0 calls; autopin
-?TheAudioClientUpdate@@3PAXA,0x012ED668,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6650 calls; autopin
-?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VRva002E6650Name@@@Z,0x0000D3FA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6650 calls; autopin
-?createAndFireTempWeapon@WeaponStore@@QAEXPBVWeaponTemplate@@PBVObject@@PBUCoord3D@@@Z,0x00035E5E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6650 calls; autopin
-??0Rva002542F0String@@QAE@PBD@Z,0x00888BC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
-??0Rva002542F0String@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
-?releaseBuffer@Rva002542F0String@@AAEXXZ,0x00887940,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
