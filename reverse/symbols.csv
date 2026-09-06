@@ -3238,6 +3238,9 @@ name,address,notes
 ??0SlavedUpdateModuleData@@QAE@XZ,0x0003AE86,pinharvest x1 (thunk)
 ??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,matched factory constructor thunk -> 0x00207B60
 ??0SlowDeathBehaviorModuleData@@QAE@XZ,0x000186FB,pinharvest x1 (thunk)
+??0Gen_uwm_0000513c@@QAE@XZ,0x000379E8,SlowDeathBehaviorModuleData fourth vector constructor target from retail call
+??0InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00029BFE,SlowDeathBehaviorModuleData fourth vector allocator constructor target from retail call
+??_7SlowDeathBehaviorModuleData@@6B@,0x010A6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
 ??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
 ??0Snapshot@@QAE@XZ,0x00044030,ILT thunk; real body 0x627200

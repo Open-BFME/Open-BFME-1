@@ -1,415 +1,180 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0SlowDeathBehaviorModuleData@@QAE@XZ: Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ for the retail SlowDeathBehaviorModuleData layout.
 
-class SlowDeathBehaviorModuleData { public: SlowDeathBehaviorModuleData(); };
-// ??0SlowDeathBehaviorModuleData@@QAE@XZ
-__declspec(naked) SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
+typedef void (*SlowArrayCellFn)(void *);
+
+// MSVC 7.1 otherwise adds a null check and misses the retail exception-state
+// byte before the RadiusDecalTemplate placement constructor.
+__forceinline void *operator new(unsigned int, void *address)
 {
+	__assume(address != 0);
 	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xa4
-		__emit 0xc0
-		__emit 0x00
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x08
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x08
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x14
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x50
-		__emit 0x67
-		__emit 0x0a
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xc2
-		__emit 0xdd
-		__emit 0xdf
-		__emit 0xff
-		__emit 0x68
-		__emit 0x77
-		__emit 0x74
-		__emit 0x41
-		__emit 0x00
-		__emit 0x68
-		__emit 0x5c
-		__emit 0x47
-		__emit 0x43
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x8d
-		__emit 0x46
-		__emit 0x58
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xab
-		__emit 0xda
-		__emit 0x7e
-		__emit 0x00
-		__emit 0x68
-		__emit 0x3b
-		__emit 0x2d
-		__emit 0x42
-		__emit 0x00
-		__emit 0x68
-		__emit 0xb1
-		__emit 0x7d
-		__emit 0x44
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x88
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x8c
-		__emit 0xda
-		__emit 0x7e
-		__emit 0x00
-		__emit 0x68
-		__emit 0x3c
-		__emit 0x51
-		__emit 0x40
-		__emit 0x00
-		__emit 0x68
-		__emit 0xe8
-		__emit 0x79
-		__emit 0x43
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x8d
-		__emit 0x96
-		__emit 0xb8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x52
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x02
-		__emit 0xe8
-		__emit 0x6d
-		__emit 0xda
-		__emit 0x7e
-		__emit 0x00
-		__emit 0x68
-		__emit 0x91
-		__emit 0x73
-		__emit 0x41
-		__emit 0x00
-		__emit 0x68
-		__emit 0xfe
-		__emit 0x9b
-		__emit 0x42
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x8d
-		__emit 0x86
-		__emit 0xe8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x03
-		__emit 0xe8
-		__emit 0x4e
-		__emit 0xda
-		__emit 0x7e
-		__emit 0x00
-		__emit 0x33
-		__emit 0xc9
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x28
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x2c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x30
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x34
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x38
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x40
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x44
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x48
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x8e
-		__emit 0x4c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x89
-		__emit 0x96
-		__emit 0x50
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x96
-		__emit 0x54
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x96
-		__emit 0x58
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x60
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x64
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x68
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x6c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x67
-		__emit 0x07
-		__emit 0xe2
-		__emit 0xff
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x34
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x38
-		__emit 0x0a
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x3c
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x40
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x44
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x4c
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x50
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x48
-		__emit 0x00
-		__emit 0x00
-		__emit 0x20
-		__emit 0xc1
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x54
-		__emit 0x88
-		__emit 0x9e
-		__emit 0xa4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x18
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x1c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x20
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x24
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x88
-		__emit 0x9e
-		__emit 0xa5
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0xa6
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x9e
-		__emit 0x5c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc7
-		__emit 0x86
-		__emit 0x9c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x06
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xa0
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xde
-		__emit 0xca
-		__emit 0xfa
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc3
+		mov byte ptr [esp+14h], 5
 	}
+	return address;
+}
+
+extern void __stdcall rva00906340VecCtor(
+	void *ptr, unsigned stride, int count, SlowArrayCellFn ctor,
+	SlowArrayCellFn dtor);
+extern void j_00017391(void *);
+extern void j_00029bfe(void *);
+
+class __declspec(novtable) ModuleData
+{
+public:
+	ModuleData() {}
+	virtual void moduleDataAnchor();
+	~ModuleData();
+
+	unsigned int m_field04;
+};
+
+class InstantDeathDieMuxData
+{
+public:
+	InstantDeathDieMuxData();
+
+private:
+	unsigned char m_storage[0x2c];
+};
+
+class RadiusDecalTemplate
+{
+public:
+	RadiusDecalTemplate();
+	~RadiusDecalTemplate();
+
+private:
+	unsigned char m_storage[0x30];
+};
+
+class TailGuard
+{
+public:
+	// This destructor emits the retail +0x124 store and keeps MSVC's delayed
+	// exception-frame restore after that store.
+	__forceinline ~TailGuard()
+	{
+		__asm {
+			mov [esi+124h], ebx
+		}
+	}
+};
+
+class StructureCollapseOCLVector
+{
+public:
+	StructureCollapseOCLVector();
+	~StructureCollapseOCLVector();
+
+private:
+	unsigned char m_storage[0xc];
+};
+
+class StructureCollapseFXVector
+{
+public:
+	StructureCollapseFXVector();
+	~StructureCollapseFXVector();
+
+private:
+	unsigned char m_storage[0xc];
+};
+
+class Gen_uwm_0000513c
+{
+public:
+	Gen_uwm_0000513c();
+	~Gen_uwm_0000513c();
+
+private:
+	unsigned char m_storage[0xc];
+};
+
+class SlowDeathBehaviorModuleData : public ModuleData
+{
+public:
+	SlowDeathBehaviorModuleData();
+
+	InstantDeathDieMuxData m_dieMuxData;
+	volatile float m_sinkRate;
+	volatile int m_probabilityModifier;
+	volatile float m_modifierBonusPerOverkillPercent;
+	volatile unsigned int m_sinkDelay;
+	volatile unsigned int m_sinkDelayVariance;
+	volatile float m_destructionAltitude;
+	volatile unsigned int m_destructionDelay;
+	volatile unsigned int m_destructionDelayVariance;
+	volatile unsigned int m_field54;
+	StructureCollapseOCLVector m_fx[4];
+	StructureCollapseFXVector m_ocls[4];
+	Gen_uwm_0000513c m_weapons[4];
+	unsigned char m_extraVectors[0x30];
+	volatile float m_flingForce;
+	volatile float m_flingForceVariance;
+	volatile float m_flingPitch;
+	volatile float m_flingPitchVariance;
+	unsigned int m_zero128[10];
+	unsigned int m_zero150[3];
+	volatile unsigned char m_maskOfLoadedEffects;
+	unsigned char m_pad15d[3];
+	volatile unsigned int m_zero160[3];
+	unsigned char m_radius[0x30];
+	volatile unsigned int m_field19c;
+	volatile unsigned int m_field1a0;
+	volatile unsigned char m_flags[3];
+};
+
+__forceinline void writeSlowFloat(volatile float *address, float value)
+{
+	*address = value;
+}
+
+SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
+{
+	register SlowDeathBehaviorModuleData *self = this;
+	rva00906340VecCtor(self->m_extraVectors, 0xc, 4, j_00029bfe, j_00017391);
+	__asm {
+		xor ecx, ecx
+		mov [esi+128h], ecx
+		mov [esi+12ch], ecx
+		mov [esi+130h], ecx
+		mov [esi+134h], ecx
+		mov [esi+138h], ecx
+		mov [esi+13ch], ecx
+		mov [esi+140h], ecx
+		mov [esi+144h], ecx
+		mov [esi+148h], ecx
+		mov [esi+14ch], ecx
+		xor edx, edx
+		mov [esi+150h], edx
+		mov [esi+154h], edx
+		mov [esi+158h], edx
+	}
+	self->m_zero160[0] = 0;
+	self->m_zero160[1] = 0;
+	self->m_zero160[2] = 0;
+	new (self->m_radius) RadiusDecalTemplate;
+	writeSlowFloat(&self->m_sinkRate, 0.0f);
+	self->m_probabilityModifier = 10;
+	writeSlowFloat(&self->m_modifierBonusPerOverkillPercent, 0.0f);
+	self->m_sinkDelay = 0;
+	self->m_sinkDelayVariance = 0;
+	self->m_destructionDelay = 0;
+	self->m_destructionDelayVariance = 0;
+	writeSlowFloat(&self->m_destructionAltitude, -10.0f);
+	self->m_field54 = 0;
+	self->m_flags[0] = 0;
+	writeSlowFloat(&self->m_flingForce, 0.0f);
+	writeSlowFloat(&self->m_flingForceVariance, 0.0f);
+	writeSlowFloat(&self->m_flingPitch, 0.0f);
+	{
+		TailGuard guard;
+	}
+	self->m_flags[1] = 0;
+	self->m_flags[2] = 0;
+	self->m_maskOfLoadedEffects = 0;
+	self->m_field19c = 6;
+	self->m_field1a0 = 0xfacade00;
 }
