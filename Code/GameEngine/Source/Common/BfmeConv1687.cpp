@@ -40,3 +40,26 @@ void BfmeSecondFA::bfmeGoFA(void *target)
 	BfmeHolderFA *holder = *(BfmeHolderFA **)(base - 0x20);
 	((BfmePrimaryFA *)(base - 4))->bfmeInvokeFA(holder->m_bfmeValueFA, 0, 0, target, 0);
 }
+
+class BfmeSecondFB
+{
+public:
+	void bfmeGoFB(void *first, void *second);
+
+	unsigned char m_bfmeHeadFB[8];
+	int m_bfmeLimitFB;
+};
+
+void BfmeSecondFB::bfmeGoFB(void *first, void *second)
+{
+	if (m_bfmeLimitFB > 0)
+		return;
+
+	char *base = (char *)this;
+
+	if ((*(BfmeStateFA **)(base - 0x1c))->m_bfmeBusyFA != 0)
+		return;
+
+	BfmeHolderFA *holder = *(BfmeHolderFA **)(base - 0x20);
+	((BfmePrimaryFA *)(base - 4))->bfmeInvokeFA(holder->m_bfmeValueFA, (int)first, 0, second, 0);
+}
