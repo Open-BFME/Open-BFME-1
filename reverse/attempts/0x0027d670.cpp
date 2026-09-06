@@ -1,5 +1,7 @@
+// ?d_0027d670@@YAXXZ
+// partial score=0.87 date=2026-09-06
 // ?privateIdle@AIUpdateInterface@@MAEXW4CommandSourceType@@@Z
-// partial score=0.8 date=2026-09-04
+// BFME AIUpdateInterface::privateIdle reconstruction.
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x0027D670: AIUpdateInterface::privateIdle.  BFME keeps the
@@ -148,13 +150,13 @@ public:
 	virtual void setState( StateID state ) = 0;
 };
 
-class BFMEObjectLookup
+class GameLogic
 {
 public:
 	Object *findObjectByID( ObjectID id );
 };
 
-extern BFMEObjectLookup *TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 struct BFMEAIObjectField
 {
@@ -239,7 +241,7 @@ void AIUpdateInterface::privateIdle( CommandSourceType cmdSource )
 	if (object->getWeaponSetFlags().test(8))
 		return;
 
-	ContainModuleInterface *contain = object->getContain();
+	ContainModuleInterface *contain = getObject()->getContain();
 	Bool idleContained = false;
 	if (contain)
 	{
@@ -274,16 +276,18 @@ void AIUpdateInterface::privateIdle( CommandSourceType cmdSource )
 	getStateMachine()->clear();
 	getStateMachine()->setState(BFME_AI_IDLE);
 
-	if (m_object->m_status[1] & 0x10000000)
+	Object *flagsObject;
+	flagsObject = m_object;
+	if (flagsObject->m_status[1] & 0x10000000)
 	{
-		m_object->m_status[1] &= 0xEFFFFFFF;
-		m_object->notifyModelConditionChanged();
+		flagsObject->m_status[1] &= 0xEFFFFFFF;
+		flagsObject->notifyModelConditionChanged();
 	}
-	if (m_object->m_status[4] & 0x40000)
+	if (flagsObject->m_status[4] & 0x40000)
 	{
-		m_object->m_status[4] &= 0xFFFBFFFF;
-		m_object->notifyModelConditionChanged();
+		flagsObject->m_status[4] &= 0xFFFBFFFF;
+		flagsObject->notifyModelConditionChanged();
 	}
-	m_object->adjustModelConditionForWeaponStatus();
+	flagsObject->adjustModelConditionForWeaponStatus();
 	setLastCommandSource(cmdSource);
 }
