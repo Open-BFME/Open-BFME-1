@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "164fdbf92cf775cc050d8297bc2611d6d2451182c1293099f8cca92e97ed837e",
+  "symbol": "??0Rva00754F70Owner@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ??0Rva00754F70Owner@@QAE@XZ\n// partial score=0.79 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline\n// stlport\n// Open-BFME7: default constructor zero-initializing nine int members and one\n// embedded STLport list<12-byte record>, retail 0x00754F70, 102 bytes.  The\n// list's 20-byte sentinel node (8 overhead + 12 value) self-links (next =\n// prev = the node itself) through __node_alloc::_M_allocate.  The element is\n// only known to be twelve trivially copyable bytes, so it carries an\n// address-derived tag; owning class is unidentified.\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <list>\n#include \"StringInline.h\"\n\nstruct Rva00754F70Elem\n{\n\tint m_a;\n\tint m_b;\n\tint m_c;\n};\n\ntypedef _STL::list<Rva00754F70Elem, _STL::allocator<Rva00754F70Elem> > Rva00754F70List;\n\nclass Rva00754F70Owner\n{\npublic:\n\tRva00754F70Owner();\nprivate:\n\tAsciiString m_f0;\n\tint m_f4;\n\tint m_f8;\n\tRva00754F70List m_list;\n\tint m_f10;\n\tint m_f14;\n\tint m_f18;\n\tint m_f1c;\n\tint m_f20;\n\tint m_f24;\n};\n\nRva00754F70Owner::Rva00754F70Owner() :\n\tm_f0(),\n\tm_f4( 0 ),\n\tm_f8( 0 )\n{\n\tm_f10 = 0;\n\tm_f14 = 0;\n\tm_f18 = 0;\n\tm_f1c = 0;\n\tm_f20 = 0;\n\tm_f24 = 0;\n}\n"
+}
