@@ -1865,3 +1865,46 @@ void ciRplEndGetKeyHandler(CHAT chat, const ciServerMessage * message)
 		FINISH_FILTER;
 	}
 }
+
+void ciRplEndGetCKeyHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	const char * cookie;
+	const char * channel;
+
+	assert(message->numParams == 4);
+	if(message->numParams != 4)
+		return; //ERRCON
+
+	channel = message->params[1];
+	cookie = message->params[2];
+
+	// Setup the filter match.
+	//////////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETCKEY;
+	match.name = cookie;
+
+	// Find the filter.
+	///////////////////
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter)
+	{
+		GETCKEYData * data;
+		ciCallbackGetChannelKeysParams params;
+
+		data = (GETCKEYData *)filter->data;
+
+		// Setup the callback parameters.
+		/////////////////////////////////
+		params.success = CHATTrue;
+		params.channel = (char *)channel;
+		params.user = NULL;
+		params.num = data->num;
+		params.keys = data->keys;
+		params.values = NULL;
+
+		FINISH_FILTER;
+	}
+}
