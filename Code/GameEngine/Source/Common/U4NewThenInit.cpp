@@ -41,10 +41,19 @@
 // 0x0060CD80, an EH-state store around the constructed object -- 62 and 50
 // bytes of difference.  Retail has neither, hence this file's `/EHs-c-`.
 //
-// IDENTITY IS NOT RECOVERED.  Both constructors are pinned by the addresses
-// their REL32s resolve to; the FieldParse table and the global are DIR32
-// operands copied from retail; `char m_body[]` carries only the size
-// `operator new` was asked for.
+// WHICH INI KEY REACHES 0x0060CD80 IS READ OUT OF THE EXE.  The
+// LivingWorldMapInfo block (parsed by 0x0060D6B0) has a 71-entry FieldParse
+// table at 0x01116000, and its `EyeTower` entry points here; the .rdata address
+// this body pushes is that key's own four-field sub-table -- PupilAnimObject,
+// PupilBeamAnimObject, EyeDecalAnimObject, EyeDecalBeamAnimObject
+// (docs/ini_schema.md). Hence the name: this is the `EyeTower = ` handler, and
+// the global it parks the parsed block in at +0x28C is the map-info singleton.
+//
+// THE REST IS NOT RECOVERED.  0x005EA530 has no INI reach and keeps its
+// address-derived name, as do both constructors (pinned by the addresses their
+// REL32s resolve to), the FieldParse table and the global (DIR32 operands
+// copied from retail); `char m_body[]` carries only the size `operator new`
+// was asked for.
 
 class U4Made005EA530;
 class U4Maker005EA530
@@ -90,7 +99,7 @@ struct U4Store0060CD80
 extern U4Store0060CD80 *g_u4Store0060CD80;
 extern const FieldParse g_u4FieldParse0060CD80[];
 
-void u4Parse0060CD80( INI *ini )
+void parseEyeTower( INI *ini )
 {
 	U4Thing0060CD80 *thing = new U4Thing0060CD80;
 	ini->initFromINI( thing, g_u4FieldParse0060CD80 );
