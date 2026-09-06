@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c52e09bd1a61d5febb7c5c799b40b83da54c3ba8ad7511e6a700a9319e97deb9",
+  "symbol": "?d_004c1510@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_004c1510@@YAXXZ\n// partial score=0.75 date=2026-09-06\n// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\nclass Rva004C1510RefCounted\n{\npublic:\n\tvirtual void release(int deletingFlag);\n};\n\nclass Rva004C1510Ref\n{\npublic:\n\tRva004C1510Ref &operator=(Rva004C1510RefCounted *value);\n\n\tRva004C1510RefCounted *m_value;\n};\n\nclass Rva004C1510ReleaseGuard\n{\npublic:\n\tRva004C1510ReleaseGuard(Rva004C1510RefCounted *value) : m_value(value) {}\n\t~Rva004C1510ReleaseGuard()\n\t{\n\t\tif (m_value != 0)\n\t\t\tm_value->release(1);\n\t}\n\n\tRva004C1510RefCounted *m_value;\n};\n\nRva004C1510Ref &Rva004C1510Ref::operator=(Rva004C1510RefCounted *value)\n{\n\t{\n\t\tRva004C1510ReleaseGuard guard(m_value);\n\t}\n\tm_value = value;\n\treturn *this;\n}\n"
+}
