@@ -211,7 +211,7 @@ Logical regions:
 | `GameLogic::processDestroyList` | `0x0038AE90` / 438 | private `__thiscall void()` | PARTIAL | Parent; banked score 0.90 |
 | Behavior-module virtual slot `+0x20` | no body identified | returns its `UpdateModule` interface | SEMANTICALLY_SOLVED | Module-to-update conversion closed |
 | `Pathfinder::removeObjectFromPathfindMap` | `0x003D5810` / 17 | direct `__thiscall void(Object*)` | EXACT | Pathfinding unlink closed |
-| `Object::removeFromList` BFME variant | `0x001BECF0` / 105 | direct `__thiscall void(Object **head, Object **tail)` | DUMP | Strong donor and caller evidence; best clean leaf |
+| `Object::removeFromList` BFME variant | `0x001BECF0` / 105 | direct `__thiscall void(Object **tail, Object **head)` (the two pointer roles are fixed by the retail stack stores) | EXACT | Intrusive-list unlink closed |
 | ObjectID/Object* hashtable `erase` | `0x00387640` / 146 | direct `__thiscall size_type(const ObjectID&)` | DUMP | Identity proven; clean STL leaf |
 | Object scalar deleting destructor | vtable slot `+0x1C` | called with delete flag 1 | SEMANTICALLY_SOLVED | Destruction semantics closed |
 | STLport node deallocator | runtime | direct, frees 12-byte pending-list nodes | EXACT | Container cleanup closed |
