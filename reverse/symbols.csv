@@ -2990,6 +2990,7 @@ name,address,notes
 ??0Rva0009F820String@@QAE@ABV0@@Z,0x00006320,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva000A19E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0014F280StateBase@@QAE@PAXVAsciiString@@@Z,0x00032182,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
+??0Rva0016D9C0Machine@@QAE@PAVObject@@@Z,0x0000715D,ILT thunk: machine ctor called by the xfer twin 0x0016D9C0 (sibling of AIGuardRetaliateMachine)
 ??0Rva0019A1D0Member@@QAE@H@Z,0x00018129,ILT thunk to 0x00196D90 member ctor
 ??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
 ??0Rva002C1260StateMachine@@QAE@PAXVAsciiString@@@Z,0x00022F5C,address-derived GiantBird state machine constructor call
@@ -8475,6 +8476,7 @@ name,address,notes
 ??1RadiusDecal@@QAE@XZ,0x00458340,RadiusDecal destructor body at 0x00458340; callee of assigned RadiusDecalUpdate destructor
 ??1RailedTransportDockUpdate@@MAE@XZ,0x00007FD6,destructor ILT to 0x002CE2D0
 ??1RailedTransportDockUpdateModuleData@@UAE@XZ,0x0001771F,destructor ILT to 0x002CE7B0
+??1RandomSoundSelectorMap@@QAE@XZ,0x00035B34,pinned to the thunk 0x00035B34 (thunks_025.cpp) the 0x0012BDD0 destructor calls
 ??1RandomTextureMapperClass@@UAE@XZ,0x00969330,constructor 0x00965C00 installs vtable 0x0113E53C whose first slot is deleting wrapper 0x00969310; that wrapper directly calls this scalar body
 ??1RecorderClass@@QAE@XZ,0x0001F55F,Full retail reviewed: 9BDF0 replay header/version/INI comparison bool with by-value string destruction ret4; 99070 recorder dtor file close/member/base cleanup
 ??1RegistryClass@@QAE@XZ,0x009DC280,pinharvest x4 (body)
@@ -8546,6 +8548,7 @@ name,address,notes
 ??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
+??1Rva0024E8E0OpenContainLike@@UAE@XZ,0x00037A24,shape-identical to but not the same instance as the landed ??1OpenContain@@UAE@XZ (0x002262E0) -- this address is the existing still-a-dump pin Gen_dtor_0021e310, called by SlaughterHordeContainBase (0x0024E8E0); fresh class name so the real OpenContain pin is left untouched
 ??1Rva00256890PrimaryBase@@UAE@XZ,0x0002514E,pin near-twin primary base chain reuses Gen_dtor_001c0e70 body
 ??1Rva002E32A0AsciiString@@QAE@XZ,0x00887940,AsciiString destructor alias (releaseBuffer) called by 0x002E32A0
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
@@ -8562,6 +8565,7 @@ name,address,notes
 ??1Rva0042B5D0Str@@QAE@XZ,0x00887940,pin near-twin AsciiString member reuses releaseBuffer body
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
+??1Rva00490470@@UAE@XZ,0x0004634E,ILT thunk to the window-owner destructor body 0x00490470 (tail-jumped from ~Rva00490A30 0x00490AC0)
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
@@ -9405,6 +9409,7 @@ name,address,notes
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+??_7Rva0034E2E0@@6B@,0x010E7D00,address-derived vtable written by RVA 0x0034E2E0 (BfmeBaseVUQ destructor family)
 ??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
 ??_7Rva00490350Base@@6B@,0x010F9AD8,address-derived base vtable at retail 0x00490350
@@ -10161,9 +10166,11 @@ name,address,notes
 ?Gen009F3050@@YAXPAVRva009F3CE0Elem@@00PAX@Z,0x009F3050,S3 final-insertion-sort split family callee (address-derived name)
 ?Gen009F30B0@@YAXPAVRva009F3D30Elem@@00PAX@Z,0x009F30B0,S3 final-insertion-sort split family callee (address-derived name)
 ?Gen009F3280@@YAPAUQ3SortElem8@@PAU1@0U1@UQ3SortCompare@@@Z,0x009F3280,callee address read from Gen009F3DC0 retail REL32; address-derived
+?Gen009F3300@@YAPAUQ3SortElem8@@PAU1@0U1@UQ3SortCompare@@@Z,0x009F3300,callee address read from Gen009F3EA0 retail REL32; address-derived
 ?Gen009F3A80@@YAXPAVRva009F3CE0Elem@@0PAX@Z,0x009F3A80,S3 final-insertion-sort split family callee (address-derived name)
 ?Gen009F3AC0@@YAXPAVRva009F3D30Elem@@0PAX@Z,0x009F3AC0,S3 final-insertion-sort split family callee (address-derived name)
 ?Gen009F3B00@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3B00,depth-zero partial-sort callee of Gen009F3DC0; address-derived from retail REL32
+?Gen009F3B80@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3B80,depth-zero partial-sort callee of Gen009F3EA0; address-derived from retail REL32
 ?Gen009F3CE0@@YAXPAUQ3SortElem8@@0UQ3SortCompare@@@Z,0x009F3CE0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen009F3D30@@YAXPAUQ3SortElem8@@0UQ3SortCompare@@@Z,0x009F3D30,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen009F3DC0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3DC0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
@@ -75629,6 +75636,7 @@ name,address,notes
 ?bfmeVisit@BfmeVisitorBF@@QAEXPAVBfmeItemBF@@@Z,0x0002B7E2,ILT thunk called for each compacted entry
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
 ?bfmeVtable000A1B30@@3PAHA,0x01073744,BfmeBaseVUQ vtable restored by the 0x000A1B30 destructor (twin of 0x007873C0)
+?bfmeVtable0012BDD0@@3PAHA,0x01073744,BfmeBaseVUQ vtable restored by the 0x0012BDD0 RandomSoundSelectorClientBehaviorModuleData destructor (non-virtual manual store technique)
 ?bfmeVtable007873C0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007873C0 destructor
 ?bfmeVtable007883D0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007883D0 destructor
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
@@ -80981,6 +80989,7 @@ name,address,notes
 ?releaseBuffer@?$NATProbeStringBase@D@@IAEXXZ,0x00887940,NAT sendAProbe string release body
 ?releaseBuffer@AsciiString@@AAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@BFMERetailAsciiString and ??1AsciiString; BFMERetailAsciiString is this tree's stand-in name for the same class
 ?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
+?releaseBuffer@AsciiString@@QAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@AsciiString@@AAEXXZ; Rva0034E2E0Destructor.cpp made the member public
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
 ?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin

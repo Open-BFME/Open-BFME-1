@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9c735c0431536d3958bc0be09b09863d06c65caea9294e89e215087fff45feee",
+  "symbol": "?d_004945e0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_004945e0@@YAXXZ\n// partial score=0.99 date=2026-09-06\n// cl: /DNDEBUG /MD\n// Address-derived subsystem constructor at retail 0x004945E0.\n\nstruct Rva004945E0Base\n{\n\tRva004945E0Base();\n\n\tvoid *m_vtable;\n\tchar m_pad04[4];\n\tvolatile int m_08;\n\tvolatile int m_0c;\n\tvolatile int m_10;\n\tvolatile int m_14;\n\tvolatile int m_18;\n\tvolatile int m_1c;\n\tvolatile unsigned char m_flags;\n\tchar m_pad21[3];\n\tvolatile int m_24;\n\tvolatile int m_28;\n\tvolatile int m_2c;\n\tvolatile int m_30;\n\tvolatile int m_34;\n};\n\nextern void *Rva004945E0Vtable[];\n\nclass Rva004945E0Subsystem\n{\npublic:\n\tRva004945E0Subsystem( int value );\n\nprivate:\n\tRva004945E0Base m_base;\n};\n\nRva004945E0Subsystem::Rva004945E0Subsystem( int value )\n{\n\tunsigned char flags = m_base.m_flags;\n\tint zero = 0;\n\tflags &= 0xf8;\n\tm_base.m_flags = flags;\n\tm_base.m_08 = zero;\n\tm_base.m_1c = zero;\n\tm_base.m_28 = zero;\n\tm_base.m_2c = zero;\n\tm_base.m_34 = zero;\n\tm_base.m_0c = zero;\n\tm_base.m_10 = zero;\n\tm_base.m_14 = zero;\n\tm_base.m_18 = zero;\n\tm_base.m_vtable = Rva004945E0Vtable;\n\tm_base.m_24 = -1;\n\tm_base.m_30 = value;\n}\n"
+}
