@@ -84114,3 +84114,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?parseLadder@@YAPAVLadderInfo@@VAsciiString@@@Z,0x0062AD50,checkLadder direct call at 0x0062BCDC and the file-local parser in GameNetwork/GameSpy/LadderDefs.cpp
 ?push_back@?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@QAEXABQAVLadderInfo@@@Z,0x0002C5E8,checkLadder inserts into LadderList::m_localLadders at 0x0062BD96
 ?size@?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QBEIXZ,0x0000D2BF,checkLadder tests the validMaps list at LadderInfo offset 0x1C
+?bfmeFindAN@GameLogic@@QAEPAVBfmeObjAN@@H@Z,0x0001F253,pin
+?g_bfmeFileAO@@3PADA,0x00CAA908,pin
