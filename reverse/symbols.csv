@@ -83820,3 +83820,4 @@ __imp__bfmeCheckEQH,0x00F59510,pin
 _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?bfmeInnerEQK@@YAXHPAUBfmeVec3EQK@@0U1@HH@Z,0x00034AB8,pin
 ?bfmeInnerEQM@@YAXHPAUBfmeVec3EQK@@0U1@HH@Z,0x0000DF5D,pin
+?updateFades@ScriptEngine@@IAEXXZ,0x0000F8DF,BFME ScriptEngine fade update body called via ILT
