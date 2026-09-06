@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2018292c7991dc44de6f377aeeeccb2baa1b5f542ababd0d8527af9b598a9f98",
+  "symbol": "?d_00970990@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?d_00970990@@YAXXZ\n// partial score=0.7 date=2026-09-06\n// 145/141 with the destructor DECLARED (unresolved REL32 from the unwind funclet);\n// 69/141 with it defined inline empty, which removes the SEH frame.\n// Pins: handle ctor 0x00970940, find 0x009EBCE0, release 0x009EB7A0.\nclass BfmeProtoERK\n{\npublic:\n\tvoid bfmeReleaseERK(void);\n};\n\nvoid *__cdecl bfmeFindERK(BfmeProtoERK **slot, BfmeProtoERK *proto);\n\nclass BfmeHandleERK\n{\npublic:\n\tBfmeHandleERK(void) : m_bfmePtrERK(0) {}\n\tBfmeHandleERK(void *proto);\n\t~BfmeHandleERK(void);\n\n\tvoid *m_bfmePtrERK;\n};\n\nBfmeHandleERK __cdecl bfmeLookupERK(BfmeProtoERK *proto)\n{\n\tif (proto != 0)\n\t{\n\t\tvoid *found = bfmeFindERK(&proto, proto);\n\t\tBfmeHandleERK handle(found);\n\t\tif (proto != 0)\n\t\t\tproto->bfmeReleaseERK();\n\t\treturn handle;\n\t}\n\treturn BfmeHandleERK();\n}\n"
+}
