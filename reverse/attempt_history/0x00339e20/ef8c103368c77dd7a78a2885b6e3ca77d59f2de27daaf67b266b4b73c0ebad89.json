@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ef8c103368c77dd7a78a2885b6e3ca77d59f2de27daaf67b266b4b73c0ebad89",
+  "symbol": "??1BfmeOwnVTZ@@UAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ??1BfmeOwnVTZ@@UAE@XZ\n// partial score=0.55 date=2026-09-05\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME5: near-twin of the 0x00339DA0 BfmeOwnVTY constructor's vtable (0x010E7688) family;\n// virtual destructor at retail 0x00339E20 reassigns the owned string via the pointer member\n// then clears the local string member.\n\nclass BfmeStrVTZ\n{\npublic:\n\t~BfmeStrVTZ() { bfmeClearVTZ(); }\n\tvoid bfmeAssignVTZ(const BfmeStrVTZ &other);\n\tvoid bfmeClearVTZ();\n\tunsigned short *m_bfme00;\n};\n\nclass BfmeOwnVTZ\n{\npublic:\n\tvirtual void bfmeSlot0VTZ();\n\tvirtual ~BfmeOwnVTZ();\n\tBfmeStrVTZ m_bfme04;\n\tBfmeStrVTZ *m_bfme08;\n};\n\n// ?d_00339e20@@YAXXZ\nBfmeOwnVTZ::~BfmeOwnVTZ()\n{\n\tBfmeOwnVTZ *self = this;\n\tself->m_bfme08->bfmeAssignVTZ(self->m_bfme04);\n\tself->m_bfme04.bfmeClearVTZ();\n}\n"
+}
