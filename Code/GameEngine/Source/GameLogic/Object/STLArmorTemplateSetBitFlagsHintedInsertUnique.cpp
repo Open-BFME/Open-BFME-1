@@ -57,3 +57,14 @@ typedef _STL::_Rb_tree<const WeaponSetFlags, ArmorTemplateSetPair,
 template ArmorTemplateSetTree::iterator
 ArmorTemplateSetTree::insert_unique( ArmorTemplateSetTree::iterator,
 	const ArmorTemplateSetPair & );
+
+// The un-hinted insert_unique and the find of the same tree (dumps beside the
+// hinted insert: 0x00140F90/0x00141150 and 0x00141220/0x001412A0).
+template _STL::pair<ArmorTemplateSetTree::iterator, bool> ArmorTemplateSetTree::insert_unique( const ArmorTemplateSetPair & );
+const ArmorTemplateSetPair *bfmeFindAnchorArmorTemplateSetTree( const ArmorTemplateSetTree &tree, const WeaponSetFlags &key )
+{
+	ArmorTemplateSetTree::const_iterator it = tree.find( key );
+	if ( it == tree.end() )
+		return 0;
+	return &( *it );
+}
