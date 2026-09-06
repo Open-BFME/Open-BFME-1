@@ -60638,6 +60638,7 @@ name,address,notes
 ?b_00610cf0@@YAXXZ,0x00610CF0,gen-thunk body
 ?b_00610d20@@YAXXZ,0x00610D20,gen-thunk body
 ?b_00610d50@@YAXXZ,0x00610D50,gen-thunk body
+?j_0003b1e2@BfmeLivingWorldManager@@QAEXXZ,0x0003B1E2,LivingWorldManager cleanup helper thunk to 0x00610D60
 ?b_00610d60@@YAXXZ,0x00610D60,gen-thunk body
 ?b_00611220@@YAXXZ,0x00611220,gen-thunk body
 ?b_00611240@@YAXXZ,0x00611240,gen-thunk body
