@@ -28,12 +28,12 @@ unsigned bfmeCurrentCU();struct Cu{unsigned f[8];};
 void bfmeHighlightDrawQuad(unsigned);
 void bfmeHighlightApply(unsigned,void*,unsigned,Texture*,IDirect3DSurface8*,Texture*,IDirect3DSurface8*);
 void bfmeDrawFilterUV(int,int,Coord2D*);
-class Rva007D8580{
+class ScreenHilightFilter{
 public:
  virtual int init();virtual int shutdown();virtual bool preRender(bool&,int&);virtual bool postRender(int,unsigned,bool&,Coord2D*);virtual bool setup(int);virtual int set(int);virtual void reset();
  unsigned pixelShader,vertexShader,size,index;bool valid;char pad[3];unsigned snap[3];Texture*texture[2];IDirect3DSurface8*surface[2];
 };
-bool Rva007D8580::postRender(int mode,unsigned unused,bool&extra,Coord2D*uv){
+bool ScreenHilightFilter::postRender(int mode,unsigned unused,bool&extra,Coord2D*uv){
  HighlightRendering=false;
  if(valid){DX8Wrapper::Set_Render_Target(0,true);reset();extra=true;valid=false;return true;}
  if(!set(mode))return false;

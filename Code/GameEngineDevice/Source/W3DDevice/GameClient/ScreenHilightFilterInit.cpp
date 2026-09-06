@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x007D6BF0: vtable 0x01128B88 slot 0 via 0x0044831A.
 // Highlight filter identity: hilightfilter.vso and hilightfilter.pso.
-// Original class name unknown; matched constructor Rva007D8580 installs this table.
+// ScreenHilightFilter is descriptive: the retail class name is unknown, but this
+// init loads shaders\hilightfilter.vso and shaders\hilightfilter.pso and nothing
+// else does, and the matched constructor at 0x007D8580 installs this vtable.
 // The prior 460-byte dump truncates the error epilogue; final ret is at RVA 0x007D6DC2.
 struct Surface;
 struct Texture;
@@ -26,7 +28,7 @@ void bfmeCopyCuSnap(void*,void*);
 class BfmeVertexShaderLoader {public: static long LoadAndCreateD3DShader(const char*,unsigned long*);};
 class BfmeShaderLoader {public: static long LoadAndCreateD3DShader(const char*,unsigned long*);};
 struct Cu {unsigned f[8];};
-class Rva007D8580 {
+class ScreenHilightFilter {
 public:
  virtual int init(); virtual int shutdown();
  unsigned long pixelShader,vertexShader;
@@ -35,7 +37,7 @@ public:
  Texture *texture[2];
  Surface *surface[2];
 };
-int Rva007D8580::init(){
+int ScreenHilightFilter::init(){
  if(bfmeCheck986B()<3)return 0;
  if(!HighlightVertexSupport||!HighlightPixelSupport)return 0;
  if(BfmeVertexShaderLoader::LoadAndCreateD3DShader("shaders\\hilightfilter.vso",&vertexShader)<0){shutdown();return 0;}

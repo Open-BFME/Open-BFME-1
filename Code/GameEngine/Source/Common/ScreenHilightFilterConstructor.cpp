@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0
 
-class Rva007D8580
+class ScreenHilightFilter
 {
 	void *m_vptr;
 	int m_04;
@@ -17,10 +17,10 @@ class Rva007D8580
 	int m_30;
 
 public:
-	Rva007D8580();
+	ScreenHilightFilter();
 };
 
-Rva007D8580::Rva007D8580()
+ScreenHilightFilter::ScreenHilightFilter()
 {
 	m_vptr = (void *)0x01128B88;
 	m_04 = 0;

@@ -19,14 +19,14 @@ struct Settings{char p[0xdbd];bool active;};
 extern Settings *HighlightSettings;
 unsigned bfmeCurrentCU();void bfmeCopyCuSnap(void*,void*);
 struct Cu {unsigned f[8];};
-class Rva007D8580 {
+class ScreenHilightFilter {
 public:
  virtual bool preRender(bool&,int&);
  unsigned pixelShader,vertexShader,size,index;
  bool valid;char pad14[3];unsigned pad18[5];
  IDirect3DSurface8 *surface[2];
 };
-bool Rva007D8580::preRender(bool &skip,int &mode){
+bool ScreenHilightFilter::preRender(bool &skip,int &mode){
  skip=false;
  if(HighlightRefresh){
   unsigned snap[6];snap[0]=2;

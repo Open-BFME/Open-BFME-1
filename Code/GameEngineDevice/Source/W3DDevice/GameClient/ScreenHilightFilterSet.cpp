@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x007D7610, filter vtable 0x01128B88 slot 5.
-// The matched Rva007D8580 constructor installs this vtable; original class name unknown.
+// The matched ScreenHilightFilter constructor installs this vtable; original class name unknown.
 class StringClass {
  char *m_Buffer;
  static char *m_EmptyString; static char m_NullChar;
@@ -44,8 +44,8 @@ public:
  }
 };
 enum FilterModes {FM_NULL_MODE};
-class Rva007D8580 { protected: virtual int set(FilterModes); };
-int Rva007D8580::set(FilterModes mode) {
+class ScreenHilightFilter { protected: virtual int set(FilterModes); };
+int ScreenHilightFilter::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
  if(vmat)++vmat->refs;
