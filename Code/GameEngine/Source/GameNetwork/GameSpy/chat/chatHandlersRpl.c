@@ -1056,3 +1056,82 @@ void ciRplListStartHandler(CHAT chat, const ciServerMessage * message)
 
 	(void)message;
 }
+
+typedef struct ciNickConnection
+{
+    int connected;
+    CHATBool connecting;
+    unsigned char pad08[0x510 - 0x08];
+    char uniquenick[1];
+} ciNickConnection;
+enum { CHAT_INVALID_UNIQUENICK = 4 };
+void ciNickError(CHAT chat, int type, const char *nick, int numSuggestedNicks, char **suggestedNicks);
+
+void ciErrRegisterNickFailedHandler(CHAT chat,
+    const ciServerMessage *message)
+{
+    int num;
+    char *nicks;
+    char *nick;
+    char **nickArray;
+    int i;
+    ciNickConnection *connection = (ciNickConnection *)chat;
+
+    assert(message->numParams == 4);
+    if (message->numParams != 4)
+        return;
+
+    num = atoi(message->params[1]);
+    nicks = message->params[2];
+
+    if (!connection->connecting)
+        return;
+
+    nickArray = (char **)malloc(sizeof(char *) * num);
+    if (!nickArray)
+        return;
+
+    nick = strtok(nicks, "\\");
+    for (i = 0; (i < num) && nick; i++)
+    {
+        nickArray[i] = goastrdup(nick);
+        if (!nickArray[i])
+            break;
+        nick = strtok(NULL, "\\");
+    }
+
+    num = i;
+    ciNickError(chat, CHAT_INVALID_UNIQUENICK,
+        connection->uniquenick, num, nickArray);
+
+    for (i = 0; i < num; i++)
+        free(nickArray[i]);
+    free(nickArray);
+}
+
+void ciRplCDKeyHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    int result;
+    char *msg;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    result = atoi(message->params[1]);
+    msg = message->params[2];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_CDKEY;
+
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter)
+    {
+        ciCallbackAuthenticateCDKeyParams params;
+        params.result = result;
+        params.message = msg;
+        ciFinishFilter(chat, filter, &params);
+    }
+}
