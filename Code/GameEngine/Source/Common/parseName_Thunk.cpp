@@ -2,21 +2,23 @@
 // Lift the parseName window-file parser to clean C++.
 //
 // The same skeleton as parseInputCallback -- scan to the opening quote, step
-// past it, find the next quote with strstr on the one-character needle, store
-// the result with an explicit guarded length -- with two differences.
+// past it, extract the quoted field with strtok and the quote delimiter, and
+// store the result with an explicit guarded length -- with two differences.
 //
 // It writes to the AsciiString member at instData+0x18C rather than to a global,
 // and it null-checks the name-key generator before using it where
 // parseInputCallback does not. The resulting key goes to instData+0x04.
 //
-// The generator call at ILT 0x0003ADD7 is the same one parseInputCallback and
+// strtok is the retail MSVCR71 import at IAT 0x013594D8 and terminates the
+// token in the caller-owned line buffer. The generator call at ILT 0x0003ADD7
+// is the same one parseInputCallback and
 // Player::getProductionCostChangePercent reach, still unidentified beyond its
 // address.
 
 typedef int Int;
 typedef bool Bool;
 
-extern "C" __declspec(dllimport) char *__cdecl strstr(const char *haystack, const char *needle);
+extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim);
 extern "C" unsigned int __cdecl strlen(const char *s);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
@@ -62,13 +64,13 @@ Bool parseName(char *token, WinInstanceData *instData, char *line, void *userDat
 	}
 	++p;
 
-	char *close = strstr(p, "\"");
+	char *fieldText = strtok(p, "\"");
 
 	// Named before the length is measured: retail loads instData and computes
 	// the member address ahead of the null branch, which folding the access into
 	// the set() call defers past it.
 	AsciiString *name = &instData->m_name;
-	name->set(close, close ? (Int)strlen(close) : 0);
+	name->set(fieldText, fieldText ? (Int)strlen(fieldText) : 0);
 
 	if (TheNameKeyGeneratorShim)
 	{
