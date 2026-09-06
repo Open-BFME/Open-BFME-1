@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "896e84377866b9b692d81cfe31007fd95bdf49f922646cfc12f97071365d989a",
+  "symbol": "?d_00415aa0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.83,
+  "source": "// ?d_00415aa0@@YAXXZ\n// partial score=0.83 date=2026-09-06\n// 38/46 at exact size. Both arms are byte-correct in isolation, including the\n// self-store `mov [esp+4],edx` that precedes the tail jmp into\n// ?set@UnicodeString@@QAEXABV1@@Z and the `add ecx,0x2d8` receiver adjust in\n// each. The residue is arm ORDER: retail puts the releaseBuffer arm inline\n// and jumps forward to the set arm, MSVC always emits the tail-jmp arm first.\n// Tried if/else both polarities and early-return forms of each; all three\n// give the identical eight-line diff, so this is the known\n// MSVC-orders-arms-itself class.\n// releaseBuffer is private (AAE) on BFMERetailAsciiString, so it needs its own\n// public pin name at 0x00887940 rather than the retail symbol.\nclass BfmeStrDataAU\n{\npublic:\n\tunsigned char m_bfmeHeadAU[4];\n\tshort m_bfmeLenAU;\n};\n\nclass UnicodeString\n{\npublic:\n\tvoid set(const UnicodeString &other);\n\tvoid bfmeReleaseAU(void);\n\n\tBfmeStrDataAU *m_bfmeDataAU;\n};\n\nclass BfmeOwnAU\n{\npublic:\n\tvoid bfmeAssignAU(const UnicodeString &value);\n\n\tunsigned char m_bfmeHeadAU[0x2d8];\n\tUnicodeString m_bfmeTextAU;\n};\n\nvoid BfmeOwnAU::bfmeAssignAU(const UnicodeString &value)\n{\n\tif (value.m_bfmeDataAU == 0 || value.m_bfmeDataAU->m_bfmeLenAU == 0)\n\t\tm_bfmeTextAU.bfmeReleaseAU();\n\telse\n\t\tm_bfmeTextAU.set(value);\n}\n"
+}
