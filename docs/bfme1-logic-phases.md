@@ -121,8 +121,10 @@ The following order is instruction-level fact:
    present, ScriptEngine is force-unfrozen at `0x0038DAA3`. Without it, the
    function sets `GameClient+0xC4 = 0` and returns at `0x0038DAC2`.
 4. After the common entry bookkeeping, a frame-2-only object block runs at
-   `0x0038DB83..0x0038DC06` under several global predicates. The exact purpose
-   of its two object-interface callees remains unresolved.
+   `0x0038DB83..0x0038DC06` under several global predicates. It walks
+   `TheBfmeGameLogic->m_objList`, reads each object's AI update interface at
+   `Object+0x204`, calls its path-destruction predicate at RVA `0x00278830`,
+   and, when true, calls `destroyPath()` at RVA `0x0026F080`.
 5. `Pathfinder::processPathfindQueue()` is called on `TheAI->m_pathfinder`
    (`TheAI+0x0C`) at `0x0038DC0E`, followed by `setFPMode`. Its ILT is RVA
    `0x000313A9`; the 716-byte body is RVA `0x003DC190` (VA `0x007DC190`).
@@ -181,15 +183,29 @@ suppresses that path (`0x0038DC7E..0x0038DCAE`). A debug frame window rooted at
 global `0x012A6F38` can force the path and uses writable-global-data offset
 `+0xCB4` (`0x0038DCAE..0x0038DCE8`).
 
-The CRC is calculated by the `getCRC` callee with body RVA `0x00383150`. Retail
-then appends message type `0x449` and arguments in this order: CRC, current
-simulation frame, a Recorder playback boolean, and a final false/debug flag
-(`0x0038DD84..0x0038DDDE`). Under debug flags it calls the mapped
-`bfme_processLogicCRC` body at RVA `0x0038B430` before continuing. This all
-happens before Recorder update, command consumption, sleepy updates, deferred
-destruction, the phase-1 object tail, and the frame increment. A repeated
-phase 1 can therefore calculate and enqueue another CRC against the state at
-that invocation; it is not a harmless network-only poll.
+The CRC is calculated by the `getCRC` callee with body RVA `0x00383150` through
+ILT RVA `0x0000B532`. The call site passes one 32-bit word: zero on the normal
+path, or a copied AsciiString buffer pointer on the diagnostic path. The older
+`?getCRC@GameLogic@@QAEIHVAsciiString@@@Z` pin therefore does not describe this
+call site's effective ABI and must not be copied blindly into the parent TU.
+
+The diagnostic path formats the current frame with `"%d"` into a one-word
+AsciiString, copies its buffer through the factory at RVA `0x009CB5F0`, and
+passes the copy to `getCRC`. The normal path temporarily sets byte
+`0x012ED4E6`, calls `getCRC(0)`, and clears the byte. Byte `0x012ED4E5` selects
+the diagnostic path; either byte being set also selects the later detailed CRC
+handler. The local player index comes from
+`(*(ThePlayerList+0x0C))+0x24`.
+
+Retail then appends message type `0x449` and arguments in this order: CRC,
+current simulation frame, whether `Recorder::getMode()` equals one, and either
+false or a call to `bfme_processLogicCRC` at RVA `0x0038B430`. The detailed
+handler receives CRC, player index, frame, message, false, and the copied
+string-buffer word (`0x0038DD84..0x0038DDF5`). This all happens before Recorder
+update, command consumption, sleepy updates, deferred destruction, the phase-1
+object tail, and the frame increment. A repeated phase 1 can therefore
+calculate and enqueue another CRC against the state at that invocation; it is
+not a harmless network-only poll.
 
 ## Sleepy-update partition
 
@@ -291,37 +307,46 @@ the phase argument, and has unresolved calls. It is a semantic donor, not a
 valid BFME partial, so it has not been banked under the primary RVA. There is
 no build/link or runtime verification for a BFME phase-update replacement.
 
-A subsequent dedicated `GameLogic::update(int)` experiment modeled the proven
-BFME offsets, early returns, phase dispatcher, four sleepy vectors, deferred
-vector, phase-5 subsystem batch, copy-protection gate, and phase-1 object tail.
-Inlining the sleepy loop once (after selecting its vector range) produced
-1,765 bytes and 522 decoded instructions versus retail's 2,129 bytes and 637
-instructions. Its mnemonic-sequence similarity was 0.604, 60 relocation sites
-no longer aligned with corresponding retail operands, and the first structural
-divergence remained in the prologue/register allocation. This is a useful
-negative result, not a near miss: the source was not banked. The missing retail
-CRC/debug-string construction and the exact STLport heap mutation are still too
-large to tune after the entry layout has drifted.
+A later dedicated `GameLogic::update(int)` experiment now models the proven
+BFME offsets, all early returns, the independent phase-1 conditionals, phases
+2 through 6, the four sleepy vectors, the reverse sentinel sweep, deferred
+vector insertion, the phase-5 subsystem batch, CRC/debug-string construction,
+copy-protection gate, and both phase-1 object walks. The latest probe produces
+2,200 bytes and 656 decoded instructions versus retail's 2,129 bytes and 637
+instructions. Its mnemonic-sequence similarity remains about 0.63, 93 object
+relocations no longer align with the corresponding retail operands, and the
+first structural divergence is still the prologue: the experiment allocates
+`0x3C` local bytes and keeps `this` in `esi`, while retail allocates `0x2C` and
+keeps `this` in `ebp`. This is still not a near miss, so the source remains
+under ignored `build/` scratch and has not been banked.
 
 Use these bounded jobs for subsequent Codex runs. Each job should update this
 document with proven names and addresses; only the final job should edit the
 primary implementation TU.
 
-1. **Singleton identities closed.** `0x012F060C` is `TheLuaScriptEngine`,
-   `0x012ED63C` is `TheStatsCollector`, and `0x012ED83C` is
-   `TheBuildAssistant`. Their constructor tags, matched callees, and vtable
-   slots are recorded above.
-2. **Declare the BFME ABI and TU-local layout.** In
-   `Code/GameEngine/Source/GameLogic/System/GameLogicPhaseUpdate.cpp`, model
-   verified offsets with padding: `+0x3C`, `+0x40`, `+0x6B`, `+0xA0`, `+0xA8`,
-   vectors `+0xC4..+0xFC`, current update `+0x100`, mode `+0x10C`, gate
-   `+0x11D`, phase `+0x168`, member `+0x170`, and depth `+0x1A0`. Give the
-   method one integer phase argument and preserve the unusual self-range reset.
-3. **Build in slices.** First match entry, early returns, and epilogue; then
-   phases 3–6; then phase 2; finally phase 1. After each meaningful shape run
-   `tools/probe.py` or `tools/explain_mismatch.py` with RVA `0x0038DA10` and
-   size `2129`. Do not add a ledger row until the entire body matches.
-4. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
+1. **Match the entry frame first.** Work only in an ignored scratch TU until
+   the prologue changes from `sub esp,0x3C; ... mov esi,ecx` to retail's
+   `sub esp,0x2C; ... mov ebp,ecx`. The named depth temporary has already been
+   removed. Check the `DepthLatch`, one-word AsciiString lifetime, and local
+   definition order; one extra four-byte live local is enough to force MSVC to
+   round this frame up by 16 bytes.
+2. **Match the pending-range reset and early exits.** Retail loads end into
+   `eax`, compares it with itself, retains the dormant `BfmeMemMove` path, then
+   assigns begin to end. Keep the phase-1 freeze return and command-only return
+   interleaved exactly as the retail CFG places them.
+3. **Tune the CRC one-word ABI.** Preserve `getCRC(0)` on the normal path and
+   the single buffer-factory call on the formatted path. The target deep path
+   uses one local AsciiString at `[esp+0x14]`, keeps the copied buffer in `ebx`,
+   the CRC in `edi`, and the message in `esi`; avoid a C++ by-value declaration
+   that inserts a second copy constructor.
+4. **Tune the sleepy loop only after offsets align.** The phase switch and
+   vector ranges are recovered. Compare the forward due-entry loop, the
+   phase-greater-than-three reverse sweep, and STLport's five-argument vector
+   overflow call independently. Do not rewrite the swap-and-pop as erase.
+5. **Probe every source-shape change.** Run `tools/probe.py` with symbol
+   `?update@GameLogic@@UAEXH@Z`, RVA `0x0038DA10`, and size `2129`. Do not add a
+   ledger row until the entire body matches.
+6. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
    and the AGENTS.md `partial --stash --score` workflow only when the dedicated
    phase-aware body is close enough to help the next worker. Do not bank the
    1,010-byte parameterless donor and do not use naked/emit code.
