@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1e2a74e651d8300d89d08ad4e77c7290876510c1799938ddd099d58ecba6c61f",
+  "symbol": "?Rva000697B0ScanTangentAngle@@YAMPBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?Rva000697B0ScanTangentAngle@@YAMPBD@Z\n// partial score=0.95 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME7: the function-curve tangent scanner at 0x000697B0 (136 B): the\n// token is read through INI::scanReal as an angle in degrees which must lie\n// in (-89.9 89.9) (INIException(3 ...) either side with the two messages at\n// VA 0x010759B0 and 0x01075958) and the tangent of the angle in radians is\n// returned (the degree-to-radian constant at VA 0x01075954 then the inline\n// fptan).  Address-derived name.\n\n#include <math.h>\n#pragma intrinsic( tan )\n\ntypedef int Int;\ntypedef float Real;\n\nclass INIException\n{\npublic:\n\tINIException( Int code, const char *msg, ... );\n\tINIException( const INIException &other );\n\nprivate:\n\tInt m_code;\n\tconst char *m_msg;\n};\n\nclass INI\n{\npublic:\n\tstatic Real scanReal( const char *token );\n};\n\nextern const Real Rva000697B0MaxAngle;\nextern const Real Rva000697B0MinAngle;\nextern const Real Rva000697B0DegreesToRadians;\n\n// ?Rva000697B0ScanTangentAngle@@YAMPBD@Z\nReal Rva000697B0ScanTangentAngle( const char *token )\n{\n\tReal angle = INI::scanReal( token );\n\tif( angle > Rva000697B0MaxAngle )\n\t\tthrow INIException( 3, \"Function curve tangent angle value must be less than 89.9 degrees\" );\n\tif( angle < Rva000697B0MinAngle )\n\t\tthrow INIException( 3, \"Function curve tangent angle value must be greater than -89.9 degrees\" );\n\treturn (Real)tan( Rva000697B0DegreesToRadians * angle );\n}\n"
+}
