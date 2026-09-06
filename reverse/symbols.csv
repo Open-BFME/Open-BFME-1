@@ -73441,6 +73441,7 @@ name,address,notes
 ?bfmeDoBLD@BfmeSinkBLD@@QAEXPAXH@Z,0x00043E4B,pin
 ?bfmeDoBLF@@YAXPAUBfmeSubBLF@@PAXH@Z,0x009F70BA,pin
 ?bfmeDoBMC@BfmeSubBMC@@QAEXPAUBfmePartBMC@@0@Z,0x00008E68,pin
+?bfmeCheckBMC@BfmeSubBMC492@@QAEEPAUBfmePartBMC492@@0@Z,0x00008E68,Rva001DD890 bool owner-dispatch helper
 ?bfmeDoBMF@BfmeSinkBMF@@QAEXHH@Z,0x0002054F,pin
 ?bfmeDoBNA@@YGHPAX@Z,0x000294E7,pin
 ?bfmeDoBNC@BfmeSubBNC@@QAEXPAX0@Z,0x00040412,pin
