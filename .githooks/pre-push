@@ -82,9 +82,19 @@ for path in sorted(set(touched) & claimed):
 PY
     )
 
+    # A reverse/symbols.csv pin DELETION reddens rows in files the range never
+    # touches: it removes a REL32 candidate, and every claimed row whose retail
+    # bytes call that address now resolves to a different ICF copy of the name.
+    # Neither list above can see it -- both are keyed on functions.csv -- which
+    # is how d27ae4b7b pushed 1,599 deletions behind a two-file byte-verify.
+    pin_delta=()
+    if ! git diff --quiet "$base" "$local_sha" -- reverse/symbols.csv; then
+        mapfile -t pin_delta < <(python3 tools/delta_sources.py --range "$base" "$local_sha" --pins)
+    fi
+
     verify=()
     declare -A seen=()
-    for s in "${delta[@]}" "${edited[@]}"; do
+    for s in "${delta[@]}" "${edited[@]}" "${pin_delta[@]}"; do
         [ -z "$s" ] && continue
         [ -n "${seen[$s]:-}" ] && continue
         seen["$s"]=1

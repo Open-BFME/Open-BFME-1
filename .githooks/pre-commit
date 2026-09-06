@@ -44,6 +44,7 @@ python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above
 
 staged_sources=()
 ledger_changed=0
+pins_changed=0
 wide_change=0
 baseline_changed=0
 attempts_changed=0
@@ -51,7 +52,11 @@ while IFS= read -r path; do
     case "$path" in
         Code/*.cpp) staged_sources+=("$path") ;;
         reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
-        reverse/functions.csv|reverse/symbols.csv) ledger_changed=1 ;;
+        # symbols.csv gets its own flag as well as ledger_changed: a PIN
+        # DELETION is byte-verified by a different query than a ledger row is,
+        # and only this file can trigger it.
+        reverse/symbols.csv) ledger_changed=1; pins_changed=1 ;;
+        reverse/functions.csv) ledger_changed=1 ;;
         # A stash-only commit changes no ledger and no source, so without this
         # it takes the early exit below and check_csv never validates the very
         # file it just added. It stays out of the byte-verify set: a banked
@@ -152,6 +157,19 @@ for path in "${staged_sources[@]}"; do verify_set["$path"]=1; done
 while IFS= read -r path; do
     [ -n "$path" ] && verify_set["$path"]=1
 done < <(python3 tools/delta_sources.py --staged)
+
+# 3b) A reverse/symbols.csv pin DELETION changes no functions.csv row, so the
+#     delta above is blind to it -- yet it re-points the REL32 resolver at a
+#     different ICF copy of the name and reddens rows in files this commit never
+#     touched. d27ae4b7b deleted 1,599 pins, byte-verified the two files it
+#     converted, and left 612 rows red. This asks the complementary question:
+#     which claimed rows call an address the deletion just made unreachable.
+#     Costs nothing unless symbols.csv is staged, and ~1s when it is.
+if [ "$pins_changed" -ne 0 ]; then
+    while IFS= read -r path; do
+        [ -n "$path" ] && verify_set["$path"]=1
+    done < <(python3 tools/delta_sources.py --staged --pins)
+fi
 
 # Parked reconstruction drafts (whitelisted zero-matched-row sources) have
 # nothing to byte-verify; build.py errors on a filter that matches no rows.

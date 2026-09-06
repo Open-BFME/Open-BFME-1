@@ -37,6 +37,16 @@ if ! python3 tools/conversion_gate.py "$base" HEAD; then
 fi
 
 mapfile -t delta < <(python3 tools/delta_sources.py --range "$base" HEAD)
+
+# The third gate with the same blind spot the hooks had: a reverse/symbols.csv
+# PIN DELETION changes no functions.csv row, so the delta above is empty for it
+# while claimed rows across the tree lose their REL32 candidate and go red.
+# d27ae4b7b reached master with 1,599 deletions and a two-file byte-verify.
+if ! git diff --quiet "$base" HEAD -- reverse/symbols.csv; then
+    mapfile -t pin_delta < <(python3 tools/delta_sources.py --range "$base" HEAD --pins)
+    mapfile -t delta < <(printf '%s\n' "${delta[@]}" "${pin_delta[@]}" | sed '/^$/d' | sort -u)
+fi
+
 if [ "${#delta[@]}" -ne 0 ] && [ -n "${delta[0]}" ]; then
     echo "byte-verifying ${#delta[@]} source(s) changed by PR #$pr..."
     if ! BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${delta[@]}"; then
