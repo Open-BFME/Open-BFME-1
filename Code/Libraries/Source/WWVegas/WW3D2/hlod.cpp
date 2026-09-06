@@ -3742,6 +3742,11 @@ void HLodClass::Add_Lod_Model(int lod, RenderObjClass * robj, int boneindex)
 	newnode.BoneIndex = boneindex;
 	newnode.Model->Set_Container(this);
 	newnode.Model->Set_Transform(HTree->Get_Transform(boneindex));
+	// BFME: the node carries a Vector3 offset that a plain Add_Lod_Model leaves at zero
+	// (retail 0x0097C770 zeroes the three words, last first, before the Is_In_Scene test).
+	newnode.Offset.Z = 0.0f;
+	newnode.Offset.Y = 0.0f;
+	newnode.Offset.X = 0.0f;
 
 	if (Is_In_Scene() && lod == CurLod) {
 		newnode.Model->Notify_Added(Scene);

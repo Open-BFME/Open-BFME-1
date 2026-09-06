@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0e8fe339702dd073f3012271d40f6f224c85e10c60ffb03f66139ecc4efa701b",
+  "symbol": "?Rva_00575900@@YAXPAUS4SortElem12_00575900@@0US4Cmp_00575900@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?Rva_00575900@@YAXPAUS4SortElem12_00575900@@0US4Cmp_00575900@@@Z\n// partial score=0.55 date=2026-09-06\n// cl: /O2\n\n// STLport sort driver over 12-byte records, retail 0x00575900, 91 bytes.\n// Fuzzy twin of Rva002E1F10 (S4SortDriver002E1F10.cpp, ratio 0.895): same\n// magic-multiply element-count divide and depth-limit loop, but the comp\n// functor value is reloaded from the stack for each recursive call instead\n// of being kept live in a callee-saved register across both calls (same\n// unresolved register-allocation delta as 0x00533650, see reverse/attempts/0x00533650.cpp).\n\nstruct S4SortElem12_00575900\n{\n\tint m_a, m_b, m_c;\n};\n\nstruct S4Cmp_00575900\n{\n\tvoid *m_state;\n\tbool operator()(S4SortElem12_00575900, S4SortElem12_00575900) const;\n};\n\nvoid Gen_00575900_IntrosortLoop(S4SortElem12_00575900 *first, S4SortElem12_00575900 *last,\n\tS4SortElem12_00575900 *, int depth, S4Cmp_00575900 comp);\nvoid Gen_00575900_FinalInsertionSort(S4SortElem12_00575900 *first, S4SortElem12_00575900 *last,\n\tS4Cmp_00575900 comp);\n\nvoid Rva_00575900(S4SortElem12_00575900 *first, S4SortElem12_00575900 *last, S4Cmp_00575900 comp)\n{\n\tif (first != last)\n\t{\n\t\tint n = last - first;\n\t\tint k;\n\t\tfor (k = 0; n != 1; n >>= 1)\n\t\t\t++k;\n\t\tGen_00575900_IntrosortLoop(first, last, (S4SortElem12_00575900 *)0, k * 2, comp);\n\t\tGen_00575900_FinalInsertionSort(first, last, comp);\n\t}\n}\n"
+}
