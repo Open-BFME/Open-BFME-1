@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6bfecf6fe71e894e18505c536adecc2714a10019a8c934906878575b6cfa5103",
+  "symbol": "?d_005870d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_005870d0@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// 79/79 bytes; ONE transposition: retail emits xor ecx,ecx after the [eax+0xc]\n// store and the a5 load, MSVC emits it before both. No pins needed.\nstruct BfmeRecordEQP\n{\n\tBfmeRecordEQP(int owner, int kind, int source, int target,\n\t\tint amount, int stamp, int extra);\n\n\tint m_bfmeOwnerEQP;\n\tint m_bfmeKindEQP;\n\tint m_bfmeSourceEQP;\n\tint m_bfmeTargetEQP;\n\tint m_bfmeNextEQP;\n\tint m_bfmePrevEQP;\n\tint m_bfmeHeadEQP;\n\tint m_bfmeTailEQP;\n\tint m_bfmeAmountEQP;\n\tchar m_bfmeActiveEQP;\n\tint m_bfmeCountEQP;\n\tint m_bfmeIndexEQP;\n\tint m_bfmeStateEQP;\n\tint m_bfmeStampEQP;\n\tint m_bfmeExtraEQP;\n};\n\nBfmeRecordEQP::BfmeRecordEQP(int owner, int kind, int source, int target,\n\tint amount, int stamp, int extra)\n\t: m_bfmeOwnerEQP(owner), m_bfmeKindEQP(kind), m_bfmeSourceEQP(source),\n\t  m_bfmeTargetEQP(target), m_bfmeNextEQP(0), m_bfmePrevEQP(0),\n\t  m_bfmeHeadEQP(0), m_bfmeTailEQP(0), m_bfmeAmountEQP(amount),\n\t  m_bfmeActiveEQP(0), m_bfmeCountEQP(0), m_bfmeIndexEQP(0),\n\t  m_bfmeStateEQP(0), m_bfmeStampEQP(stamp), m_bfmeExtraEQP(extra)\n{\n}\n"
+}
