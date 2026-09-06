@@ -4089,6 +4089,7 @@ name,address,notes
 ??1FreeLifeBody@@UAE@XZ,0x00017EA4,destructor ILT to 0x002132B0
 ??1FreezingRainSpecialPower@@MAE@XZ,0x0001AC99,destructor ILT to 0x0025D5E0
 ??1GGS_Member@@QAE@XZ,0x00887940,Open-BFME5 pin
+??1GameFileClass@@UAE@XZ,0x00001776,same address as the existing Gen_dtor_006f6380 pin -- the 0x006F6AB0/0x006F6BA0 W3D file-open helpers construct a real GameFileClass local and destroy it at this call site, so this is very likely GameFileClass's own virtual destructor; added additively, existing pin left untouched
 ??1GameFont@@MAE@XZ,0x00047064,destructor ILT to 0x004734B0 used by the retail scalar deleting wrapper
 ??1GameMessageList@@UAE@XZ,0x0000E421
 ??1GameResultsCounter@@QAE@XZ,0x009DB350,Open-BFME5 GameResultsQueue counter destructor
@@ -75250,8 +75251,8 @@ name,address,notes
 ?bfmeStepYD@BfmeThingYD@@QAEXXZ,0x00048D6A,pin
 ?bfmeStop1003@BfmeStop1003@@QAEXXZ,0x00020C84,pin
 ?bfmeStop1006@BfmeStop1006@@QAEXXZ,0x00006AAA,pin
-?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeStop1013@BfmeUnit1013@@QAEXD@Z,0x0004A1FB,pin;compiler char-parameter alias for the same body
+?bfmeStop1013@BfmeUnit1013@@QAEXH@Z,0x0004A1FB,pin
 ?bfmeStop1019@BfmeA1019@@QAEXH@Z,0x00044A53,pin
 ?bfmeStop1027@BfmeX1027@@QAEXXZ,0x0001F212,pin
 ?bfmeStop1038F@BfmeAObj1038@@QAEXXZ,0x008A0B00,pin
