@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0fba428c09c626086acce4bdb046307ef6915f3756f1ca9b82ca0ae8344200f7",
+  "symbol": "?bfmeGoFS@BfmeOwnerFS@@QAEXXZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeGoFS@BfmeOwnerFS@@QAEXXZ (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 45/46; retail loads the global with 8b 15 into edx and takes the local address\n// in eax, MSVC uses the a1 short form into eax and the address in edx.\n// Pins: ?bfmeSendFS@... 0x00046150, ?g_bfmeGlobalFS@... 0x00EF1028\nstruct BfmeTripleFS\n{\n\tint m_bfmeAFS;\n\tint m_bfmeBFS;\n\tint m_bfmeCFS;\n};\n\nclass BfmeSinkFS\n{\npublic:\n\tvoid bfmeSendFS(BfmeTripleFS *value);\n};\n\nclass BfmeGlobalFS\n{\npublic:\n\tunsigned char m_bfmeHeadFS[0x28];\n\tBfmeSinkFS *m_bfmeSinkFS;\n};\n\nextern BfmeGlobalFS *g_bfmeGlobalFS;\n\nclass BfmeOwnerFS\n{\npublic:\n\tvoid bfmeGoFS(void);\n\n\tunsigned char m_bfmeHeadFS[0xc];\n\tint m_bfmeFirstFS;\n\tint m_bfmeSecondFS;\n};\n\nvoid BfmeOwnerFS::bfmeGoFS(void)\n{\n\tBfmeTripleFS value;\n\n\tvalue.m_bfmeAFS = m_bfmeFirstFS;\n\tvalue.m_bfmeBFS = m_bfmeSecondFS;\n\tvalue.m_bfmeCFS = 0;\n\n\tg_bfmeGlobalFS->m_bfmeSinkFS->bfmeSendFS(&value);\n}\n"
+}
