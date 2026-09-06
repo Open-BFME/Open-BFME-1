@@ -76187,8 +76187,10 @@ name,address,notes
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z,0x0001D7C8
 ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z,0x00024591,Open-BFME5 ILT; called by ?getAttackRange@Weapon@@QBEMPBVObject@@@Z at 0x001E2B50 with the source object a zero flag word and the default-constructed bonus block
+?computeFirst@Rva000E92B0Owner@@AAEHXZ,0x0000D67A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000E92B0 calls; autopin
 ?computeQuickPath@AIUpdateInterface@@QAE_NPBUCoord3D@@@Z,0x00029375,requestPath retail call target thunk
 ?computeRelativeCost@@YAMPAVObject@@0PAM@Z,0x000E5AD0,ResourceGatheringManager helper matched at the recovered warehouse-scan call target
+?computeSecond@Rva000E92B0Owner@@AAEHXZ,0x0001FD02,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000E92B0 calls; autopin
 ?concat@AsciiString@@QAEXPBD@Z,0x00006DB6,hit-decoded x2 (thunk)
 ?concat@AsciiString@@QAEXPBDH@Z,0x00887D60,TeamInQueue disband call pin
 ?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
