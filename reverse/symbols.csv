@@ -76464,6 +76464,7 @@ name,address,notes
 ?doCommandButtonAtObject@Object@@QAEXPBVCommandButton@@PAV1@W4CommandSourceType@@_N@Z,0x00033AA0,Open-BFME5 ILT thunk to body 0x001D1D10; the four-argument BFME form ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z at 0x00150F90 calls with a false fourth
 ?doCommandButtonAtPosition@Object@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@_N@Z,0x00026EF4,Open-BFME5 ILT thunk to body 0x001D1FA0; the four-argument BFME form ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z at 0x00150F40 calls with a false fourth - the body pops 0x10
 ?doDamageLine@StructureToppleUpdate@@IAEXPAVObject@@PBVWeaponTemplate@@MMMM@Z,0x00049BAC,retail doDamageLine ILT named by applyCrushingDamage
+?doToppleStartFX@StructureToppleUpdate@@IAEXPAVObject@@PBVDamageInfo@@@Z,0x000475F0,retail beginStructureTopple FX helper ILT
 ?doDisableInput@ScriptActions@@IAEXXZ,0x00039595,defeat action retail ILT
 ?doFXObj@EvaEventFXNugget@@UBEXPBVObject@@0@Z,0x00428880,EvaEvent FX virtual dispatch identified by owner ally enemy fields at +0xB4/+0xB8/+0xBC and the EvaEvent vtable slot
 ?doFXObj@FXList@@QBEXPBVObject@@0@Z,0x00022BBA,incremental-link thunk to the 163-byte FXList object-effect body called by UpgradeMuxData::performUpgradeFX
