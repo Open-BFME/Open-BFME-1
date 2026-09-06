@@ -72230,6 +72230,7 @@ name,address,notes
 ?bfmeAccept@BfmeSubAccept_00016B85@@QAEXPAVBfmeSeedTarget@@@Z,0x00016B85,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_0001DE5D@@QAEXPAVBfmeSeedTarget@@@Z,0x0001DE5D,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_00029DAC@@QAEXPAVBfmeSeedTarget@@@Z,0x00029DAC,Open-BFME5 ILT a seeder sub-object accepts through
+?bfmeAccept@BfmeSubAccept_00029DAC_NT@@QAEXPAVBfmeSeedTarget_NT@@@Z,0x00029DAC,near-twin pin sharing the seed-pair bfmeAccept ILT (see Code/GameEngine/Source/Common/S3SeedPairsForms.cpp)
 ?bfmeAccept@BfmeSubAccept_0002C41C@@QAEXPAVBfmeSeedTarget@@@Z,0x0002C41C,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_00031A07@@QAEXPAVBfmeSeedTarget@@@Z,0x00031A07,Open-BFME5 ILT a seeder sub-object accepts through
 ?bfmeAccept@BfmeSubAccept_000328EE@@QAEXPAVBfmeSeedTarget@@@Z,0x000328EE,Open-BFME5 ILT a seeder sub-object accepts through
@@ -72356,8 +72357,10 @@ name,address,notes
 ?bfmeAccept@Gen_002CFFD0@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002CFFD0 accepts through
 ?bfmeAccept@Gen_002D0550@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002D0550 accepts through
 ?bfmeAccept@Gen_002D2580@@AAEXPAVBfmeSeedTarget@@@Z,0x000044C1,Open-BFME5 ILT the seeder at 0x002D2580 accepts through
+?bfmeAccept@Gen_002D35A0@@AAEXPAVBfmeSeedTarget_NT@@@Z,0x000044C1,near-twin pin sharing the seed-pair bfmeAccept ILT (see Code/GameEngine/Source/Common/S3SeedPairsForms.cpp)
 ?bfmeAccept@Gen_002D4710@@AAEXPAVBfmeSeedTarget@@@Z,0x000183FE,Open-BFME5 ILT the version block at 0x002D4710 accepts through
 ?bfmeAccept@Gen_002D5740@@AAEXPAVBfmeSeedTarget@@@Z,0x000183FE,Open-BFME5 ILT the seeder at 0x002D5740 accepts through
+?bfmeAccept@Gen_002D6ED0@@AAEXPAVBfmeSeedTarget_NT@@@Z,0x000044C1,near-twin pin sharing the seed-pair bfmeAccept ILT (see Code/GameEngine/Source/Common/S3SeedPairsForms.cpp)
 ?bfmeAccept@Gen_002D84E0@@AAEXPAVBfmeSeedTarget@@@Z,0x000183FE,Open-BFME5 ILT the seeder at 0x002D84E0 accepts through
 ?bfmeAccept@Gen_002D9BD0@@AAEXPAVBfmeSeedTarget@@@Z,0x000160B3,Open-BFME5 ILT the version block at 0x002D9BD0 accepts through
 ?bfmeAccept@Gen_00603240@@AAEXPAVBfmeSeedTarget@@@Z,0x0003D2A8,Open-BFME5 ILT the seeder at 0x00603240 accepts through
@@ -80823,6 +80826,7 @@ name,address,notes
 ?releaseCodecBuffer@@YAXPAPAX@Z,0x009A6EC0,codec buffer owner release
 ?releaseCodecCallback@@YAXPAPAX@Z,0x009A5E60,codec callback owner release
 ?releaseCodecMembers@@YAXPAUCodecState@@@Z,0x009A4A60,codec state nested-member release
+?releaseContents@Rva009A2030OwnedRecord@@AAEXXZ,0x009A1F90,this-relative helper the 0x009A2030 destructor calls before freeing its pair vector
 ?releaseD3DCursorTextures@W3DMouse@@AAE_NW4MouseCursor@Mouse@@@Z,0x000484C8,retail W3DMouse::setCursor DX8 release call; ILT targets body 0x00700530 whose loop releases the 21 surface/texture slots
 ?releaseData@Dict@@AAEXXZ,0x00014475
 ?releaseDependentResources@BfmeShaderShutdown@@SAXXZ,0x0001BB30,first phase called by W3DShaderManager shutdown at 0x00717DA2
