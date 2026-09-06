@@ -117,6 +117,16 @@ public:
 	virtual void lock( void );								// slot 15
 	virtual void unlock( void );							// slot 16
 
+	void deleteOnClose( void )
+	{
+		m_deleteOnClose = true;
+	}
+
+	void deleteInstance( void )
+	{
+		delete this;
+	}
+
 protected:
 	void *m_nameStr;		// +0x04  AsciiString, untouched here
 	int m_access;			// +0x08
@@ -137,9 +147,22 @@ public:
 	virtual int seek( int pos, seekMode mode );
 	virtual void nextLine( char *buf, int bufSize );
 	virtual char *readEntireAndClose( void );
+	virtual File *convertToRAMFile( void );
 
 protected:
 	int m_handle;			// +0x14, -1 when closed
+};
+
+class RAMFile : public File
+{
+public:
+	RAMFile();
+	virtual bool open( File *file );
+
+protected:
+	char *m_data;
+	int m_pos;
+	int m_size;
 };
 
 // The running count of open local files, retail 0x0134D064. Bumped once per
@@ -174,6 +197,32 @@ LocalFile::~LocalFile()
 void LocalFile::close( void )
 {
 	File::close();
+}
+
+// ?convertToRAMFile@LocalFile@@UAEPAVFile@@XZ
+File *LocalFile::convertToRAMFile( void )
+{
+	RAMFile *ramFile = new RAMFile;
+	if( ramFile->open( this ) )
+	{
+		if( m_deleteOnClose )
+		{
+			ramFile->deleteOnClose();
+			close();
+		}
+		else
+		{
+			close();
+			deleteInstance();
+		}
+		return ramFile;
+	}
+	else
+	{
+		ramFile->close();
+		ramFile->deleteInstance();
+		return this;
+	}
 }
 
 // ?read@LocalFile@@UAEHPAXH@Z
