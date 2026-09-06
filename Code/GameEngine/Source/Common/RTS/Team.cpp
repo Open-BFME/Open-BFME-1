@@ -154,6 +154,21 @@ struct BfmeTeamOverrideFields
 	BfmeTeamRelationMapView *m_teamRelations;
 };
 
+// The player relation map follows the team relation map in the BFME Team
+// object.  Keep the +0xf0 view local: the shared Team header has the Zero Hour
+// ABI, while the retail player-relation setter uses this BFME layout.
+struct BfmeTeamPlayerRelationMapView
+{
+	void *m_baseVtbl;
+	PlayerRelationMapType m_map;
+};
+
+struct BfmeTeamPlayerOverrideFields
+{
+	unsigned char m_unmodelled_000[ 0xf0 ];
+	BfmeTeamPlayerRelationMapView *m_playerRelations;
+};
+
 static BfmeTeamRelationMapView *bfmeTeamRelations( const Team *that )
 {
 	return *(BfmeTeamRelationMapView **)((const char *)that + 0xec);
@@ -2071,13 +2086,23 @@ Bool Team::removeOverrideTeamRelationship( TeamID teamID )
 }
 
 // ------------------------------------------------------------------------
-// ?setOverridePlayerRelationship@Team@@QAEXHW4Relationship@@@Z present-unmatched
 void Team::setOverridePlayerRelationship( Int playerIndex, Relationship r )
 {
 	if (playerIndex != PLAYER_INDEX_INVALID)
 	{
+		BfmeTeamPlayerOverrideFields *bfme = (BfmeTeamPlayerOverrideFields *)this;
 		// note that this creates the entry if it doesn't exist.
-		m_playerRelations->m_map[playerIndex] = r;
+		bfme->m_playerRelations->m_map[playerIndex] = r;
+
+		for (BfmeDlinkIterator<BfmeObjectDlinkObject> iter = ((const BfmeTeamMemberListView *)this)->iterate(); !iter.done(); iter.advance())
+		{
+			BfmeTeamMemberObjectView *obj = (BfmeTeamMemberObjectView *)(Object *)iter.cur();
+			if (obj->isEffectivelyDead() || obj->isDestroyed())
+				continue;
+
+			if (obj->getContain())
+				((BfmeContainedTeamObject *)obj)->updateTeam( this );
+		}
 	}
 }
 
