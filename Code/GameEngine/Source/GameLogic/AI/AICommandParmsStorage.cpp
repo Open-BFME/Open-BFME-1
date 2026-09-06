@@ -1,11 +1,17 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// readable body of ?store@AICommandParmsStorage@@QAEXABUAICommandParms@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // readable body of ?reconstitute@AICommandParmsStorage@@QBEXAAUAICommandParms@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
-// Open-BFME: AICommandParmsStorage::reconstitute, retail 0x00180710, 205 bytes.
 //
-// BFME stores both team-name keys in the saved command block.  The storage
-// damage object starts four bytes later than the live command's object, while
-// both use the retail DamageInfo input/output sub-layout.
+// Open-BFME: the two halves of AICommandParmsStorage, retail
+// ::store at 0x001805B0 (270 bytes) and ::reconstitute at 0x00180710 (205 bytes).
+// They are inverses of one another over the same field list, so the storage
+// layout, the live AICommandParms layout and the DamageInfo sub-layout are
+// declared once here instead of once per body.
+//
+// BFME keeps the team prototype name and owner name in adjacent storage
+// strings rather than a team pointer, and its DamageInfo input begins four
+// bytes later in storage than in the live command parameters.
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
@@ -21,18 +27,65 @@ struct Coord3D
 	Real z;
 };
 
-class Object;
-class Team;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString
+{
+public:
+	static AsciiString TheEmptyString;
+
+	void set(const AsciiString &source);
+	void clear();
+
+private:
+	void *m_buffer;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object
+{
+private:
+	unsigned char m_pad00[0x74];
+	Int m_id;
+
+public:
+	Int getID() const { return m_id; }
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+class TeamPrototype
+{
+private:
+	unsigned char m_pad00[0x10];
+
+public:
+	AsciiString m_name;
+	AsciiString m_owner;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+class Team
+{
+private:
+	unsigned char m_pad00[4];
+
+public:
+	TeamPrototype *m_proto;
+
+	const AsciiString &getName() const
+	{
+		return m_proto == 0 ? AsciiString::TheEmptyString : m_proto->m_name;
+	}
+
+	const AsciiString &getOwnerName() const
+	{
+		return m_proto == 0 ? AsciiString::TheEmptyString : m_proto->m_owner;
+	}
+};
+
 class Waypoint;
 class PolygonTrigger;
 class CommandButton;
 class Path;
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	void *m_buffer;
-};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
@@ -118,8 +171,43 @@ private:
 	Path *m_path;
 
 public:
+	void store(const AICommandParms &parms);
 	void reconstitute(AICommandParms &parms) const;
 };
+
+// ?store@AICommandParmsStorage@@QAEXABUAICommandParms@@@Z
+void AICommandParmsStorage::store(const AICommandParms &parms)
+{
+	m_cmd = parms.m_cmd;
+	m_cmdSource = parms.m_cmdSource;
+	m_pos = parms.m_pos;
+	m_obj = parms.m_obj ? parms.m_obj->getID() : 0;
+	m_otherObj = parms.m_otherObj ? parms.m_otherObj->getID() : 0;
+
+	if (parms.m_team)
+	{
+		m_teamName.set(parms.m_team->getName());
+		m_teamOwner.set(parms.m_team->getOwnerName());
+	}
+	else
+	{
+		m_teamName.clear();
+		m_teamOwner.clear();
+	}
+
+	const DamageInfoInput *damageInput = &parms.m_damage.m_in;
+	register const _STL::vector<Coord3D> *coords = &parms.m_coords;
+	m_coords = *coords;
+	m_waypoint = parms.m_waypoint;
+	m_polygon = parms.m_polygon;
+	m_intValue = parms.m_intValue;
+	m_damage.m_in = *damageInput;
+	m_damage.m_out.m_actualDamageDealt = parms.m_damage.m_out.m_actualDamageDealt;
+	m_damage.m_out.m_actualDamageClipped = parms.m_damage.m_out.m_actualDamageClipped;
+	m_damage.m_out.m_noEffect = parms.m_damage.m_out.m_noEffect;
+	m_commandButton = parms.m_commandButton;
+	m_path = parms.m_path;
+}
 
 // ?reconstitute@AICommandParmsStorage@@QBEXAAUAICommandParms@@@Z
 void AICommandParmsStorage::reconstitute(AICommandParms &parms) const
