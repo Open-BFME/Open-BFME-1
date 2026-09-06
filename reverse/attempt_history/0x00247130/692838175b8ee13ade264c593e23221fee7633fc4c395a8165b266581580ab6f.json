@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "692838175b8ee13ade264c593e23221fee7633fc4c395a8165b266581580ab6f",
+  "symbol": "?bfmeMakeAF@@YGXPAX@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?bfmeMakeAF@@YGXPAX@Z (identity unknown)\n// partial score=0.94 date=2026-09-06\n// 40/47 at exact size. Retracts the earlier \"attempted\" row: the in-place\n// construction IS reachable with the three-part recipe (real default ctor,\n// INLINE copy ctor, destructor declared but not defined), and that reproduces\n// the frame slot, the esp marker, the xor placed before the sub, the byte\n// store of 1 at +0x10 and all seven stores in source order.\n// The ONLY residue is the zero register: retail `xor edx,edx` and stores\n// through edx, MSVC `xor ecx,ecx` and stores through ecx (7 modrm bytes).\n// Ruled out here: a thiscall caller, a cdecl callee, and the flags\n// /Gr /Gz /GB /G6 /G5 /Oa /Ow. Same wall as 0x000BE410 and 0x000DEE90.\nclass BfmeCfgAF\n{\npublic:\n\tBfmeCfgAF()\n\t{\n\t\tm_bfmeAAF = 0;\n\t\tm_bfmeFlagAF = 1;\n\t\tm_bfmeEAF = 0;\n\t\tm_bfmeFAF = 0;\n\t\tm_bfmeBAF = 0;\n\t\tm_bfmeCAF = 0;\n\t\tm_bfmeDAF = 0;\n\t}\n\tBfmeCfgAF(const BfmeCfgAF &other) throw()\n\t{\n\t\tm_bfmeAAF = other.m_bfmeAAF;\n\t\tm_bfmeBAF = other.m_bfmeBAF;\n\t\tm_bfmeCAF = other.m_bfmeCAF;\n\t\tm_bfmeDAF = other.m_bfmeDAF;\n\t\tm_bfmeFlagAF = other.m_bfmeFlagAF;\n\t\tm_bfmeEAF = other.m_bfmeEAF;\n\t\tm_bfmeFAF = other.m_bfmeFAF;\n\t}\n\t~BfmeCfgAF();\n\n\tint m_bfmeAAF;\n\tint m_bfmeBAF;\n\tint m_bfmeCAF;\n\tint m_bfmeDAF;\n\tchar m_bfmeFlagAF;\n\tint m_bfmeEAF;\n\tint m_bfmeFAF;\n};\n\nvoid __stdcall bfmeSendAF(void *owner, BfmeCfgAF cfg);\n\nvoid __stdcall bfmeMakeAF(void *owner)\n{\n\tbfmeSendAF(owner, BfmeCfgAF());\n}\n"
+}
