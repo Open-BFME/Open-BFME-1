@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD -Ireference/shims/gamespy
+// cl: /ICode/GameEngine/Source/GameNetwork/GameSpy/ghttp /DNDEBUG /DWIN32 /MD -Ireference/shims/gamespy
 /* GameSpy SDK, 2004 vintage -- upstream C source PLUS a reconstruction of
    EA's own edits to THIS file, inferred from retail's bytes.  Not pristine:
    see PROVENANCE.txt, "What differs from upstream", which lists every such
@@ -191,8 +191,8 @@ void ghiLog(char * buffer, int len)
 }
 #endif
 
-// Does a select on a socket.
-// Returns False on error.
+// Does a select on a socket. BFME returns the raw select result, including
+// SOCKET_ERROR, despite the legacy GHTTPBool return typedef.
 /////////////////////////////
 GHTTPBool ghiSocketSelect
 (
@@ -206,11 +206,11 @@ GHTTPBool ghiSocketSelect
 	fd_set writeSet;
 	fd_set readSet;
 	fd_set exceptSet;
-	fd_set * writefds;
-	fd_set * readfds;
-	fd_set * exceptfds;
+	fd_set * readfds = NULL;
+	fd_set * writefds = NULL;
+	fd_set * exceptfds = NULL;
 	int rcode;
-	struct timeval timeout;
+	struct timeval timeout = { 0, 0 };
 
 	assert(socket != INVALID_SOCKET);
 
@@ -222,19 +222,11 @@ GHTTPBool ghiSocketSelect
 		FD_SET(socket, &readSet);
 		readfds = &readSet;
 	}
-	else
-	{
-		readfds = NULL;
-	}
 	if(writeFlag != NULL)
 	{
 		FD_ZERO(&writeSet);
 		FD_SET(socket, &writeSet);
 		writefds = &writeSet;
-	}
-	else
-	{
-		writefds = NULL;
 	}
 	if(exceptFlag != NULL)
 	{
@@ -242,19 +234,14 @@ GHTTPBool ghiSocketSelect
 		FD_SET(socket, &exceptSet);
 		exceptfds = &exceptSet;
 	}
-	else
-	{
-		exceptfds = NULL;
-	}
 
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 0;
+
 
 	// Get the write info.
 	//////////////////////
 	rcode = select(FD_SETSIZE, readfds, writefds, exceptfds, &timeout);
 	if(rcode == SOCKET_ERROR)
-		return GHTTPFalse;
+		return rcode;
 
 	// Check results.
 	/////////////////
@@ -280,7 +267,7 @@ GHTTPBool ghiSocketSelect
 			*exceptFlag = GHTTPFalse;
 	}
 
-	return GHTTPTrue;
+	return rcode;
 #else
     if( exceptFlag )
     {
