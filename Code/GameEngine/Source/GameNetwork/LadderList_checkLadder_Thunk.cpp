@@ -1,397 +1,144 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump LadderList::checkLadder to C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+// Open-BFME5: readable body of LadderList::checkLadder.
 
-class AsciiString {};
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
+#define BFME_STLP_NODE_ALLOC
+#include <list>
+#include <string.h>
+
+extern const char g_bfmeEmptyAscii[];
+
+template <class T>
+class StringBase
+{
+protected:
+	void *m_data;
+
+public:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase &source);
+};
+
+class AsciiString : public StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	~AsciiString();
+
+	const char *str() const
+	{
+		return m_data != 0 ? reinterpret_cast<const char *>(m_data) + 8 : g_bfmeEmptyAscii;
+	}
+
+	bool isEmpty() const
+	{
+		return m_data == 0 || *reinterpret_cast<const unsigned short *>(reinterpret_cast<const char *>(m_data) + 4) == 0;
+	}
+
+	void concat(const char *source, int length);
+
+	void concat(const char *source)
+	{
+		concat(source, static_cast<int>(strlen(source)));
+	}
+
+};
+
+class File
+{
+public:
+	enum { READ = 1, TEXT = 0x20 };
+	virtual ~File() {}
+	virtual void open() = 0;
+	virtual void close() = 0;
+	virtual int read(void *, int) = 0;
+	bool eof();
+};
+
+class FileSystem
+{
+public:
+	File *openFile(const char *filename, int access);
+};
+
+extern FileSystem *TheFileSystem;
+
+class LadderInfo
+{
+public:
+	~LadderInfo();
+
+	char m_pad0[0x1a];
+	bool validQM;
+	bool validCustom;
+	std::list<AsciiString> validMaps;
+	std::list<AsciiString> validFactions;
+	AsciiString cryptedPassword;
+	AsciiString address;
+	unsigned short port;
+	AsciiString homepageURL;
+	bool submitReplay;
+	int index;
+};
+
+typedef std::list<LadderInfo *> LadderInfoList;
+
 class LadderList
 {
 private:
-void checkLadder(AsciiString, int);
+	void checkLadder(AsciiString, int);
+	LadderInfoList m_localLadders;
 };
 
+LadderInfo *parseLadder(AsciiString);
+
 // ?checkLadder@LadderList@@AAEXVAsciiString@@H@Z
-__declspec(naked) void LadderList::checkLadder(AsciiString, int)
+void LadderList::checkLadder(AsciiString fname, int index)
 {
-__asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x93
-        __emit 0x02
-        __emit 0x04
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0x08
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0x24
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x89
-        __emit 0x9c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x48
-        __emit 0xcb
-        __emit 0x34
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x21
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xb4
-        __emit 0xcb
-        __emit 0x39
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xf3
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xd9
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x77
-        __emit 0xfa
-        __emit 0x39
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x49
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x68
-        __emit 0xff
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x04
-        __emit 0x14
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x88
-        __emit 0x9c
-        __emit 0x24
-        __emit 0x13
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x01
-        __emit 0x8a
-        __emit 0x08
-        __emit 0x40
-        __emit 0x3a
-        __emit 0xcb
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xc2
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xe8
-        __emit 0x55
-        __emit 0xc0
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x2e
-        __emit 0xfa
-        __emit 0x39
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0xba
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x50
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x76
-        __emit 0x66
-        __emit 0x39
-        __emit 0x58
-        __emit 0x04
-        __emit 0x74
-        __emit 0x70
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x24
-        __emit 0xbe
-        __emit 0x25
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x0f
-        __emit 0xf0
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xf3
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x10
-        __emit 0x74
-        __emit 0x4d
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x28
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x18
-        __emit 0x66
-        __emit 0x39
-        __emit 0x58
-        __emit 0x04
-        __emit 0x74
-        __emit 0x12
-        __emit 0x66
-        __emit 0x39
-        __emit 0x5e
-        __emit 0x2c
-        __emit 0x74
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0x56
-        __emit 0x15
-        __emit 0x9e
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x12
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x51
-        __emit 0x8c
-        __emit 0x9e
-        __emit 0xff
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x36
-        __emit 0x61
-        __emit 0x25
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0x28
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x46
-        __emit 0x38
-        __emit 0x51
-        __emit 0x88
-        __emit 0x5e
-        __emit 0x1a
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x88
-        __emit 0x5e
-        __emit 0x1b
-        __emit 0xe8
-        __emit 0x4d
-        __emit 0x08
-        __emit 0xa0
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x88
-        __emit 0x9c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x95
-        __emit 0xbb
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x7e
-        __emit 0xbb
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x14
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
-}
+	File *fp = TheFileSystem->openFile(fname.str(), File::READ | File::TEXT);
+	char buf[1024];
+	AsciiString rawData;
+	if (fp)
+	{
+		int len;
+		while (!fp->eof())
+		{
+			len = fp->read(buf, 1023);
+			buf[len] = 0;
+			buf[1023] = 0;
+			rawData.concat(buf);
+		}
+		fp->close();
+		fp = 0;
+	}
+
+	if (rawData.isEmpty())
+		return;
+
+	LadderInfo *li = parseLadder(rawData);
+	if (!li)
+		return;
+
+	if (li->address.isEmpty())
+	{
+		delete li;
+		return;
+	}
+
+	if (!li->port)
+	{
+		delete li;
+		return;
+	}
+
+	if (li->validMaps.size() == 0)
+	{
+		delete li;
+		return;
+	}
+
+	li->index = index;
+	li->validQM = false;
+	li->validCustom = false;
+	m_localLadders.push_back(li);
 }
