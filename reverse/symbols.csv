@@ -75010,6 +75010,7 @@ name,address,notes
 ?bfmeSetB1004@BfmeObj1004@@QAEXH@Z,0x00030887,pin
 ?bfmeSetBME@BfmeSubBME@@QAEXPAX@Z,0x00888BC0,pin
 ?bfmeSetBPC@BfmeThingBPC@@QAEXH@Z,0x0001E402,pin
+?setStatusBit@RailedTransportStatusBitShim@@QAEXH_N@Z,0x00032DEE,Railed transport action status-bit ABI shim to retail Object::setStatusBit thunk
 ?bfmeSetBPD@BfmeSubBPD@@QAEXPAX@Z,0x00887B60,pin
 ?bfmeSetBRC@BfmeSubBRC@@QAEXPAX@Z,0x0002F333,pin
 ?bfmeSetBSF@BfmeSubBSF@@QAEXPAX@Z,0x00887B60,pin

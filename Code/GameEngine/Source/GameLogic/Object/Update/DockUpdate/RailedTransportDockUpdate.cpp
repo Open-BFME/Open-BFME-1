@@ -48,6 +48,12 @@
 // TYPES //////////////////////////////////////////////////////////////////////////////////////////
 enum { UNLOAD_ALL = -1 };
 
+class RailedTransportStatusBitShim
+{
+public:
+	void setStatusBit( Int bit, Bool set );
+};
+
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
@@ -131,10 +137,9 @@ UpdateSleepTime RailedTransportDockUpdate::update( void )
 // ------------------------------------------------------------------------------------------------
 /** The dock action callback, return FALSE when done docking */
 // ------------------------------------------------------------------------------------------------
-// ?action@RailedTransportDockUpdate@@UAE_NPAVObject@@0@Z present-unmatched
 Bool RailedTransportDockUpdate::action( Object *docker, Object *drone )
 {
-	Object *us = getObject();
+	Object *us = *(Object **)((char *)this + 0x08);
 
 	// sanity
 	if( docker == NULL )
@@ -143,6 +148,15 @@ Bool RailedTransportDockUpdate::action( Object *docker, Object *drone )
 	// set this object as docking with us if not already done so
 	if( m_dockingObjectID != docker->getID() )
 	{
+		m_dockingObjectID = docker->getID();
+
+		// don't let the user interact with this object anymore
+		TheGameLogic->deselectObject(docker, PLAYERMASK_ALL, TRUE);
+		((RailedTransportStatusBitShim *)docker)->setStatusBit( 3, TRUE );
+
+		// hold the object so physics doesn't mess with it anymore
+		docker->setDisabled( DISABLED_HELD );
+
 		//
 		// given the amount of time we want it to take to "pull" the object inside, figure out
 		// how much distance it should traverse towards our center every frame
@@ -156,30 +170,17 @@ Bool RailedTransportDockUpdate::action( Object *docker, Object *drone )
 
 		// how far do we have to go
 		Real mag = v.length();
-		const RailedTransportDockUpdateModuleData *modData = getRailedTransportDockUpdateModuleData();
+		const RailedTransportDockUpdateModuleData *modData =
+			*(const RailedTransportDockUpdateModuleData **)((char *)this + 0x04);
 
-		//Are we close enough to even be able to get sucked in?
-		if( mag <= modData->m_toleranceDistance )
-		{
-			m_dockingObjectID = docker->getID();
+		// now that we know how far we must go, now much distance should we travel every frame
+		m_pullInsideDistancePerFrame = mag / modData->m_pullInsideDurationInFrames;
 
-			// don't let the user interact with this object anymore
-			TheGameLogic->deselectObject(docker, PLAYERMASK_ALL, TRUE);
-			docker->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_UNSELECTABLE ) );
-
-			// hold the object so physics doesn't mess with it anymore
-			docker->setDisabled( DISABLED_HELD );
-
-
-			// now that we know how far we must go, now much distance should we travel every frame
-			m_pullInsideDistancePerFrame = mag / modData->m_pullInsideDurationInFrames;
-
-			// orient docker so its facing toward the transport
-			Coord2D angleVector;
-			angleVector.x = dockPos->x - dockerPos->x;
-			angleVector.y = dockPos->y - dockerPos->y;
-			docker->setOrientation( angleVector.toAngle() );
-		}
+		// orient docker so its facing toward the transport
+		Coord2D angleVector;
+		angleVector.x = dockPos->x - dockerPos->x;
+		angleVector.y = dockPos->y - dockerPos->y;
+		docker->setOrientation( angleVector.toAngle() );
 		
 	}  // end if	
 
