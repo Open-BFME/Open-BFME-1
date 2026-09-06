@@ -10815,7 +10815,6 @@ name,address,notes
 ?TheDeployStyleAIUpdatePool@?1??getClassMemoryPool@DeployStyleAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF024C,pool-glue cascade static (back-solved)
 ?TheDestroyDiePool@?1??getClassMemoryPool@DestroyDie@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC0C,pool-glue cascade static (back-solved)
 ?TheDisconnectMenu@@3PAVDisconnectMenu@@A,0x012F4964,DisconnectMenu* global null-checked at the top of ConnectionManager::processDisconnectChat
-?TheDisplay@@3PAVDisplay@@A,0x00EF1270,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0059D870 calls; autopin
 ?TheDisplay@@3PAVDisplay@@A,0x012F1270,Display* global
 ?TheDozerAIUpdatePool@?1??getClassMemoryPool@DozerAIUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0254,pool-glue cascade static (back-solved)
 ?TheDynamicShroudClearingRangeUpdatePool@?1??getClassMemoryPool@DynamicShroudClearingRangeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFF20,pool-glue cascade static (back-solved)
