@@ -8527,6 +8527,7 @@ name,address,notes
 ??1Rva0042B5D0MemberC@@QAE@XZ,0x0002CD31,pin near-twin member dtor reuses Gen_uwm_0002cd31 body
 ??1Rva0042B5D0Str@@QAE@XZ,0x00887940,pin near-twin AsciiString member reuses releaseBuffer body
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
+??1CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by CameraMarkerList::clear
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor

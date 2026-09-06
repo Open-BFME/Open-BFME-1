@@ -3,6 +3,14 @@
 // BFME's ScriptActions::doMoveCameraTo calls this lookup when resolving its
 // named camera marker.  The one caller supplies an AsciiString and the body
 // walks the marker list at +0x80, comparing each node's name case-sensitively.
+//
+// CameraMarkerList and CameraMarker are descriptive, not recovered EA names --
+// what is proven is the role.  The matched caller is
+// ?doMoveCameraTo@ScriptActions@@IAEXABVAsciiString@@MMMM@Z at 0x002F24F0, and
+// this is not the waypoint lookup it uses upstream: BFME still has
+// ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z, matched at
+// 0x001AA900, so the camera resolves its target through a second, separate
+// named list that lives on the client side.
 
 typedef int Int;
 
@@ -45,43 +53,46 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 	return left.compare(right) == 0;
 }
 
-struct Rva0045C9E0CameraMarker
+struct CameraMarker
 {
-	~Rva0045C9E0CameraMarker();
+	~CameraMarker();
 
-	Rva0045C9E0CameraMarker *m_next;
+	CameraMarker *m_next;
 	AsciiString m_name;
 };
 
-Rva0045C9E0CameraMarker::~Rva0045C9E0CameraMarker()
+// ??1CameraMarker@@QAE@XZ present-unmatched -- the node destructor is real (its
+// ILT is pinned at 0x00028984 and clear() calls it), but no row here claims its
+// bytes; the definition stays because removing it changes clear()'s inlining.
+CameraMarker::~CameraMarker()
 {
 }
 
-class Rva0045C9E0CameraMarkerList
+class CameraMarkerList
 {
 public:
 	void clear();
-	Rva0045C9E0CameraMarker *find(const AsciiString &name) const;
+	CameraMarker *find(const AsciiString &name) const;
 
 private:
 	char m_unknown[0x80];
-	Rva0045C9E0CameraMarker *m_markers;
+	CameraMarker *m_markers;
 };
 
-void Rva0045C9E0CameraMarkerList::clear()
+void CameraMarkerList::clear()
 {
 	while (m_markers)
 	{
-		Rva0045C9E0CameraMarker *marker = m_markers;
+		CameraMarker *marker = m_markers;
 		m_markers = marker->m_next;
 		delete marker;
 	}
 }
 
-Rva0045C9E0CameraMarker *Rva0045C9E0CameraMarkerList::find(
+CameraMarker *CameraMarkerList::find(
 	const AsciiString &name) const
 {
-	Rva0045C9E0CameraMarker *marker = m_markers;
+	CameraMarker *marker = m_markers;
 	while (marker)
 	{
 		if (marker->m_name == name)
