@@ -78430,6 +78430,7 @@ name,address,notes
 ?getSpecialPowerType@SpecialAbilityUpdate@@QBE?AW4SpecialPowerType@@XZ,0x00042956,Special ability power type
 ?getState@Rva0024D4E0Owner@@QAEPAURva0024D4E0State@@XZ,0x00021017,RVA-derived ILT call target used by the positive-state clamp at 0x0024D4E0
 ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z,0x000245A0,harvested from parseStaticGameLODDefinition (thunk)
+?getStdGuardRange@AIGuardRetaliateMachine@@SAMPBVObject@@@Z,0x00008DA5,BFME ILT for the guard retaliation range helper
 ?getStatus@Weapon@@QBE?AW4WeaponStatus@@XZ,0x0000978C,Open-BFME5 ILT; called by ?isOutOfAmmo@WeaponSet@@QBE_NXZ at 0x001EAE70
 ?getStatusString@DownloadManager@@QAE?AVUnicodeString@@XZ,0x0001AEEC
 ?getStr@Rva00803620Getter@@QAEDPAXPADH@Z,0x007E8A80,FESL attr getStr alias of bfmeGoUPB; pin for 0x803620
