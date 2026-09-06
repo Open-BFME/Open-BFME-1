@@ -76802,7 +76802,10 @@ name,address,notes
 ?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
 ?friend_getFinalOverride@LocomotorOverridable@@QAEPAV1@XZ,0x000022BB,ILT thunk to the locomotor override-chain walker at 0x00087A80; a distinct body from the SpecialPowerTemplate walker at 0x00097880
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,0x00048C61
+??0ThingTemplate@@QAE@XZ,0x00009192,ThingFactory::newOverride calls the ThingTemplate constructor through retail ILT
+??4ThingTemplate@@QAEAAV0@ABV0@@Z,0x000136AB,ThingFactory::newOverride calls the ThingTemplate copy assignment through retail ILT
 ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ,0x00048C61,doTeamUseCommandButtonOnNamed BFME override-chain ILT
+?setCopiedFromDefault@ThingTemplate@@QAEXXZ,0x0004609C,ThingFactory::newOverride calls the copied-from-default helper through retail ILT
 ?friend_getTurretTarget@BFMETurretTargetAccessor@@QBE?AW4TurretTargetType@@AAPAVObject@@AAUCoord3D@@@Z,0x0002C746,layout shim for BFME's source-backed two-argument TurretAI target accessor; ILT jumps to 0x0018C7D0
 ?friend_lookupScience@ScienceStore@@QBE?AW4ScienceType@@PBD@Z,0x00017503,pinharvest x1 (thunk)
 ?friend_setDamageToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x00024E0B,ILT thunk -> 0x601b50 (parseTransitionToFX callee)
