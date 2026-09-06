@@ -1,294 +1,171 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// stlport
+// Retail 0x001AADA0. Pick the first visible bridge intersection.
 
-class Vector3;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
+
+class Vector3
+{
+public:
+	float X;
+	float Y;
+	float Z;
+};
+
+class Drawable;
+class Object;
+typedef int ObjectID;
+
+class Bridge
+{
+public:
+	bool pickBridge(const Vector3 &, const Vector3 &, Vector3 *);
+
+	void *m_vtable;
+	Bridge *m_next;
+	char m_pad08[0x58];
+	ObjectID m_bridgeObjectID;
+};
+
+typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
+	_STL::equal_to<ObjectID> > ObjectPtrHash;
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(ObjectID id)
+	{
+		if (id == 0)
+			return 0;
+		ObjectPtrHash::iterator it = m_objHash.find(id);
+		if (it == m_objHash.end())
+			return 0;
+		return (*it).second;
+	}
+
+private:
+	char m_pad00[0xb0];
+	ObjectPtrHash m_objHash;
+};
+
+class Object
+{
+public:
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void v3();
+	virtual void v4();
+	virtual void v5();
+	virtual void v6();
+	virtual void v7();
+	virtual void v8();
+	virtual void v9();
+	virtual Drawable *getDrawable();
+};
+
+extern GameLogic *TheGameLogic;
+
+class Pathfinder
+{
+public:
+	bool bfmePickBridge(const Vector3 &, const Vector3 &, Vector3 *);
+};
+
+class AI
+{
+public:
+	Pathfinder *pathfinder()
+	{
+		return *(Pathfinder **)((char *)this + 0xc);
+	}
+};
+
+extern AI *TheAI;
+
+#pragma comment(linker, "/alternatename:?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z=?d_003d8c40@@YAXXZ")
+
 class TerrainLogic
 {
 public:
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void v3();
+	virtual void v4();
+	virtual void v5();
+	virtual void v6();
+	virtual void v7();
+	virtual void v8();
+	virtual void v9();
+	virtual void v10();
+	virtual void v11();
+	virtual void v12();
+	virtual void v13();
+	virtual void v14();
+	virtual void v15();
+	virtual void v16();
+	virtual void v17();
+	virtual void v18();
+	virtual void v19();
+	virtual void v20();
+	virtual void v21();
+	virtual void v22();
+	virtual void v23();
+	virtual void v24();
+	virtual void v25();
+	virtual void v26();
+	virtual void v27();
+	virtual void v28();
+	virtual void v29();
+	virtual void v30();
+	virtual void v31();
+	virtual void v32();
+	virtual void v33();
+	virtual void v34();
+	virtual void v35();
+	virtual void v36();
+	virtual Bridge *getFirstBridge();
 	virtual bool pickBridge(const Vector3 &, const Vector3 &, Vector3 *);
 };
 
-// ?pickBridge@TerrainLogic@@UAE_NABVVector3@@0PAV2@@Z
-__declspec(naked) bool TerrainLogic::pickBridge(const Vector3 &, const Vector3 &, Vector3 *)
+bool TerrainLogic::pickBridge(const Vector3 &from, const Vector3 &to,
+	Vector3 *pos)
 {
-	__asm {
-        __emit 0x83
-        __emit 0xec
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x53
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x57
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xff
-        __emit 0x90
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x85
-        __emit 0xff
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xcb
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x55
-        __emit 0x56
-        __emit 0xeb
-        __emit 0x07
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x30
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x51
-        __emit 0x52
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0xa4
-        __emit 0xf1
-        __emit 0xe9
-        __emit 0xff
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x61
-        __emit 0x8b
-        __emit 0x77
-        __emit 0x60
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x3a
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x98
-        __emit 0x08
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x81
-        __emit 0xb4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xa9
-        __emit 0xb8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x2b
-        __emit 0xe8
-        __emit 0x33
-        __emit 0xd2
-        __emit 0xc1
-        __emit 0xfd
-        __emit 0x02
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0xf7
-        __emit 0xf5
-        __emit 0x8b
-        __emit 0x89
-        __emit 0xb4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x14
-        __emit 0x91
-        __emit 0x85
-        __emit 0xd2
-        __emit 0x74
-        __emit 0x10
-        __emit 0xeb
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x39
-        __emit 0x72
-        __emit 0x04
-        __emit 0x74
-        __emit 0x59
-        __emit 0x8b
-        __emit 0x12
-        __emit 0x85
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf5
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x85
-        __emit 0xdb
-        __emit 0x75
-        __emit 0x1a
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x7f
-        __emit 0x04
-        __emit 0x85
-        __emit 0xff
-        __emit 0x0f
-        __emit 0x85
-        __emit 0x7a
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x85
-        __emit 0xdb
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x74
-        __emit 0x34
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x18
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x85
-        __emit 0xd2
-        __emit 0x74
-        __emit 0xa9
-        __emit 0x8b
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0xa2
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x52
-        __emit 0x28
-        __emit 0xeb
-        __emit 0x9d
-        __emit 0xa1
-        __emit 0x14
-        __emit 0xf2
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x28
-        __emit 0x52
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x28
-        __emit 0x50
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xf5
-        __emit 0x40
-        __emit 0xe7
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x18
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
+	Drawable *curDraw = 0;
+	Vector3 curPos;
+	curPos.X = 0;
+	curPos.Y = 0;
+	curPos.Z = 0;
+
+	Bridge *pBridge = getFirstBridge();
+	while (pBridge) {
+		Vector3 thisPos;
+		bool thisDraw = pBridge->pickBridge(from, to, &thisPos);
+		if (thisDraw) {
+			Object *bridgeObject = TheGameLogic->findObjectByID(
+				pBridge->m_bridgeObjectID);
+			Drawable *draw;
+			if (bridgeObject) {
+				draw = bridgeObject->getDrawable();
+			} else {
+				draw = 0;
+			}
+			if (!curDraw) {
+				curDraw = draw;
+				curPos = thisPos;
+			}
+		}
+		pBridge = pBridge->m_next;
 	}
+	if (curDraw) {
+		pos->X = curPos.X;
+		pos->Y = curPos.Y;
+		pos->Z = curPos.Z;
+		return true;
+	}
+	Pathfinder *pathfinder = TheAI->pathfinder();
+	return pathfinder->bfmePickBridge(from, to, pos);
 }

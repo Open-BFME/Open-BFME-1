@@ -44063,6 +44063,7 @@ name,address,notes
 ?b_003d8940@@YAXXZ,0x003D8940,gen-thunk body
 ?b_003d8bc0@@YAXXZ,0x003D8BC0,gen-thunk body
 ?b_003d8c40@@YAXXZ,0x003D8C40,gen-thunk body
+?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z,0x003D8C40,call-site signature recovered from TerrainLogic::pickBridge fallback; body remains the address-derived Pathfinder helper
 ?b_003d93a0@@YAXXZ,0x003D93A0,gen-thunk body
 ?b_003d9430@@YAXXZ,0x003D9430,gen-thunk body
 ?b_003d94a0@@YAXXZ,0x003D94A0,gen-thunk body
