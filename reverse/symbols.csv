@@ -10241,6 +10241,7 @@ name,address,notes
 ?Put_To@Pipe@@UAEXPAV1@@Z,0x009E7900
 ?Q1Selector0000286A@@YGPAXH@Z,0x0000286A,address-derived stdcall callee of the ordinal-selector family; target read from the REL32 at all eight of its call sites
 ?Q1Wrapped007FEA00@@YAXXZ,0x007FEA00,address-derived callee of the frame-checked wrapper family; target read from the REL32 at all seven of its call sites
+?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x0004554D,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x00106480,ZH QuotedPrintable.cpp:167 line for line: decodes _XX hex escapes into the static buffer 0x012EEC18 and returns an AsciiString; by-value argument released at exit; callers GameSpyLoginPreferences::load 0x000822A0 and getPreferredMap@CustomMatchPreferences 0x000AC746; ILT 0x0004554D
 ?Random_Float@WWMath@@SAMXZ,0x008D8E00
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,0x009E6910
@@ -78387,6 +78388,7 @@ name,address,notes
 ?getDataLength@NetWrapperCommandMsg@@QAEIXZ,0x0003D839
 ?getDataOffset@NetWrapperCommandMsg@@QAEIXZ,0x00027048
 ?getDecayFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x00049553,AudioEventRTS portion filename switch case 2 names the decay filename accessor
+?getDefaultMap@@YA?AVAsciiString@@_N@Z,0x0000A1E1,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?getDifficultyListHead@ScriptActionsDifficultyListManager@@QAEPAVScriptActionsDifficultyListNode@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses list-head call; ILT thunk for body 0x00383090
 ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ,0x00019C72
 ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ,0x00007E6E
@@ -80163,6 +80165,7 @@ name,address,notes
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
 ?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
 ?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z,0x0000583A,callee pin from SiegeEngineContain isValidContainerFor at 0x0022BF30
+?isValidMap@@YA_NVAsciiString@@_N@Z,0x0000AFE7,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?isValidToUseOn@CommandButton@@QBE_NPBVObject@@0PBUCoord3D@@W4CommandSourceType@@@Z,0x00005C4A,doTeamUseCommandButtonOnNamed BFME CommandButton ILT
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,ILT thunk to TurretAI::isWeaponSlotOnTurret at 0x0018C7A0
 ?isWithinTargetPitch@Weapon@@QBE_NPBVObject@@0@Z,0x00005533,Open-BFME5 ILT thunk fronting body 0x001E2C50
@@ -81622,6 +81625,7 @@ name,address,notes
 ?transition@Rva00266EB0SiegeDeployBase@@QAEXH@Z,0x000298C0,address-derived thiscall transition target read from retail RVA 0x00266EB0
 ?trigger@BfmeObjEB2@@QAEXHH@Z,0x00014506,pin
 ?trigger@BfmeObjF62@@QAEXHH@Z,0x00014506,pin
+?trim@AsciiString@@QAEXXZ,0x00888CA0,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
 ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
 ?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
