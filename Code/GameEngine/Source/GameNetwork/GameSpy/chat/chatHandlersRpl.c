@@ -1632,3 +1632,196 @@ void ciErrNoSuchChannelHandler(CHAT chat, const ciServerMessage * message)
 		return;
 	}
 }
+
+/* GameSpy Chat SDK 2007 timeout handling, without post-retail UDP relay filter. */
+enum { CHATEnterTimedOut = 7 };
+static void ciFilterTimedout(CHAT chat, ciServerMessageFilter * filter)
+{
+	assert(filter);
+	ASSERT_TYPE(filter->type);
+
+	// Check the type.
+	//////////////////
+	if(filter->type == TYPE_LIST)
+	{
+		ciCallbackEnumChannelsAllParams params;
+		params.success = 0;
+		params.numChannels = 0;
+		params.channels = NULL;
+		params.topics = NULL;
+		params.numUsers = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_JOIN)
+	{
+		ciCallbackEnterChannelParams params;
+		params.success = 0;
+		params.result = CHATEnterTimedOut;
+		params.channel = filter->name;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_TOPIC)
+	{
+		ciCallbackGetChannelTopicParams params;
+		params.success = 0;
+		params.channel = filter->name;
+		params.topic = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_NAMES)
+	{
+		ciCallbackEnumUsersParams params;
+		params.success = 0;
+		params.channel = filter->name;
+		params.numUsers = 0;
+		params.users = NULL;
+		params.modes = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_WHOIS)
+	{
+		ciCallbackGetUserInfoParams params;
+		params.success = 0;
+		params.nick = filter->name;
+		params.user = NULL;
+		params.name = NULL;
+		params.address = NULL;
+		params.numChannels = 0;
+		params.channels = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_WHO)
+	{
+		ciCallbackGetBasicUserInfoParams params;
+		params.success = 0;
+		params.nick = filter->name;
+		params.user = NULL;
+		params.address = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_CWHO)
+	{
+		ciCallbackGetChannelBasicUserInfoParams params;
+		params.success = 0;
+		params.channel = filter->name;
+		params.nick = NULL;
+		params.user = NULL;
+		params.address = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_CMODE)
+	{
+		ciCallbackGetChannelModeParams params;
+		params.success = 0;
+		params.channel = filter->name;
+		params.mode = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_UMODE)
+	{
+		ciCallbackGetUserModeParams params;
+		params.success = 0;
+		params.channel = filter->name2;
+		params.user = filter->name;
+		params.mode = 0;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_BAN)
+	{
+		ciFinishFilter(chat, filter, NULL);
+	}
+	else if(filter->type == TYPE_GETBAN)
+	{
+		ciCallbackEnumChannelBansParams params;
+		params.channel = filter->name;
+		params.numBans = 0;
+		params.bans = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_NICK)
+	{
+		ciCallbackChangeNickParams params;
+		params.success = 0;
+		params.oldNick = filter->name;
+		params.newNick = filter->name2;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_GETKEY)
+	{
+		ciCallbackGetGlobalKeysParams params;
+		params.success = 0;
+		params.user = NULL;
+		params.num = 0;
+		params.keys = NULL;
+		params.values = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_GETCKEY)
+	{
+		ciCallbackGetChannelKeysParams params;
+		params.success = 0;
+		params.channel = NULL;
+		params.user = NULL;
+		params.num = 0;
+		params.keys = NULL;
+		params.values = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_GETCHANKEY)
+	{
+		ciCallbackGetChannelKeysParams params;
+		params.success = 0;
+		params.channel = NULL;
+		params.user = NULL;
+		params.num = 0;
+		params.keys = NULL;
+		params.values = NULL;
+
+		FINISH_FILTER;
+	}
+	else if(filter->type == TYPE_UNQUIET)
+	{
+		ciRemoveFilter(chat, filter);
+	}
+	else if(filter->type == TYPE_CDKEY)
+	{
+		ciCallbackAuthenticateCDKeyParams params;
+		params.result = 0;
+		params.message = "Timed out";
+
+		FINISH_FILTER;
+	}
+	else
+	{
+		assert(0);
+	}
+}
+
+
+void ciFilterThink(CHAT chat) {
+ ciServerMessageFilter *filter,*pnext;
+ unsigned int now;
+ ciConnection *connection=(ciConnection *)chat;
+ now=current_time();
+ for(filter=connection->filterList;filter;filter=pnext) {
+  pnext=filter->pnext;
+  if(now>filter->timeout)ciFilterTimedout(chat,filter);
+ }
+}
+void ciFilterCleanup(CHAT chat) {
+ ciConnection *connection=(ciConnection *)chat;
+ while(connection->filterList)ciFilterTimedout(chat,connection->filterList);
+}
