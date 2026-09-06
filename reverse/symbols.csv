@@ -302,8 +302,6 @@ name,address,notes
 ??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x0000E3BD,pinharvest x1 (thunk)
 ??$_Construct@UFactionVictoryParameters@@U1@@_STL@@YAXPAUFactionVictoryParameters@@ABU1@@Z,0x0000CED2,ILT target 0x001DE970 copies the AsciiString and five scalar fields of the 0x18-byte FactionVictoryParameters used by VictorySystem::init
 ??$_Construct@UGen_p16pod@@U1@@_STL@@YAXPAUGen_p16pod@@ABU1@@Z,0x009267A0,Open-BFME near-twin Construct pin for _M_insert at 0x00927C30 reusing the Gen_p16pod tag from tgrid_000.cpp
-?_M_lower_bound@?$_Rb_tree@UGen_p12pod@@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Select1st@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@U?$less@UGen_p12pod@@@3@V?$allocator@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBUGen_p12pod@@H@_STL@@@2@ABUGen_p12pod@@@Z,0x00927680,retail lower-bound callee of the Gen_p12pod map index at 0x00928690
-?insert_unique@?$_Rb_tree@UGen_p12pod@@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Select1st@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@U?$less@UGen_p12pod@@@3@V?$allocator@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_p12pod@@H@_STL@@@2@@2@U32@ABU?$pair@$$CBUGen_p12pod@@H@2@@Z,0x009282C0,retail insertion callee of the Gen_p12pod map index at 0x00928690
 ??$_Construct@UGen_t_000638c0_p4cd@@U1@@_STL@@YAXPAUGen_t_000638c0_p4cd@@ABU1@@Z,0x000620B0,gen-tgrid payload member
 ??$_Construct@UGen_t_00096350_p8cd@@U1@@_STL@@YAXPAUGen_t_00096350_p8cd@@ABU1@@Z,0x000952A0,gen-tgrid payload member
 ??$_Construct@UGen_t_000a8780_p8cd@@U1@@_STL@@YAXPAUGen_t_000a8780_p8cd@@ABU1@@Z,0x000A7980,gen-tgrid payload member
@@ -2210,6 +2208,9 @@ name,address,notes
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
 ??0BfmeRoomQR@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeRoomZE@@QAE@ABV0@@Z,0x000416AF,pin
 ??0BfmeRva449E0Value@@QAE@XZ,0x0000DCD3,retail default constructor thunk for Rva002449E0 map value
 ??0BfmeRva44E60Record@@QAE@XZ,0x00033D39,assigned body helper for Rva00244E60
 ??0BfmeS1059@@QAE@XZ,0x00018A07,pin
@@ -12332,6 +12333,7 @@ name,address,notes
 ?_M_list@?$_Stl_prime@_N@_STL@@2QBIB,0x00C75870,STLport's prime table; the relationship hashtable resize pushes its bounds 0x01075870 and 0x010758E0 at 0x007868E4
 ?_M_lower_bound@?$_Rb_tree@$$CBV?$BitFlags@$0BB@@@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@2@ABV?$BitFlags@$0BB@@@@Z,0x00005A60,resweep callee back-solved
 ?_M_lower_bound@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@ABU?$pair@HH@2@@Z,0x0001A5F5,link thunk; the address the body at 0x000F3A20 encodes
+?_M_lower_bound@?$_Rb_tree@UGen_p12pod@@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Select1st@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@U?$less@UGen_p12pod@@@3@V?$allocator@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBUGen_p12pod@@H@_STL@@@2@ABUGen_p12pod@@@Z,0x00927680,retail lower-bound callee of the Gen_p12pod map index at 0x00928690
 ?_M_lower_bound@?$_Rb_tree@UGen_t_000633c0_m12cd@@U1@U?$_Identity@UGen_t_000633c0_m12cd@@@_STL@@U?$less@UGen_t_000633c0_m12cd@@@3@V?$allocator@UGen_t_000633c0_m12cd@@@3@@_STL@@ABEPAU?$_Rb_tree_node@UGen_t_000633c0_m12cd@@@2@ABUGen_t_000633c0_m12cd@@@Z,0x00062FC0,family-emit payload member
 ?_M_lower_bound@?$_Rb_tree@UGen_t_000638a0_m12cd@@U1@U?$_Identity@UGen_t_000638a0_m12cd@@@_STL@@U?$less@UGen_t_000638a0_m12cd@@@3@V?$allocator@UGen_t_000638a0_m12cd@@@3@@_STL@@ABEPAU?$_Rb_tree_node@UGen_t_000638a0_m12cd@@@2@ABUGen_t_000638a0_m12cd@@@Z,0x00062FC0,family-emit payload member
 ?_M_lower_bound@?$_Rb_tree@UGen_t_000777b0_m12cd@@U1@U?$_Identity@UGen_t_000777b0_m12cd@@@_STL@@U?$less@UGen_t_000777b0_m12cd@@@3@V?$allocator@UGen_t_000777b0_m12cd@@@3@@_STL@@ABEPAU?$_Rb_tree_node@UGen_t_000777b0_m12cd@@@2@ABUGen_t_000777b0_m12cd@@@Z,0x000773E0,family-emit payload member
@@ -75189,6 +75191,7 @@ name,address,notes
 ?bfmeRunVJA@BfmeMsgVJA@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVJC@BfmeMsgVJC@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVJF@BfmeMsgVJF@@QAEXXZ,0x007E8AC0,pin
+?bfmeRunZC@BfmeOwnZC@@QAEXVBfmeRoomZC@@PAX@Z,0x0000D97C,pin
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondBK@BfmeTargetBK@@QAEXVAsciiStringBK@@@Z,0x00003B66,Open-BFME5 the second forward the setter at 0x00731800 makes
@@ -75235,6 +75238,8 @@ name,address,notes
 ?bfmeSendVJI@BfmeThingVJI@@QAEXPAVBfmeMsgVJI@@@Z,0x008038F0,pin
 ?bfmeSendX1017@BfmeJ1017@@QAEXHH@Z,0x008A07A0,pin
 ?bfmeSendY1017@BfmeJ1017@@QAEXHHH@Z,0x008A0770,pin
+?bfmeSendZB@@YAXPAX00VBfmeTagZB@@@Z,0x0002E0B9,pin
+?bfmeSendZE@BfmeA1087@@QAEXPAVBfmeBZE@@VBfmeRoomZE@@M@Z,0x0001C2BA,pin
 ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z,0x00925D10,pin
 ?bfmeSet1018@BfmeSink1018@@QAEXHH@Z,0x0003EEBE,pin
 ?bfmeSet1020@BfmeJ1020@@QAEXH_N@Z,0x00027237,pin
@@ -80355,6 +80360,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@_STL@@_N@2@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x009A41E0,SelectionXlat callers target the shared 0x009A41E0 body (retail-folded COMDAT); definition lives under the PBV1-Identity name
 ?insert_unique@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@U32@ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@@Z,0x000135E8,link thunk; the address the body at 0x000F3A20 encodes
 ?insert_unique@?$_Rb_tree@UBfmeRva449E0Key@@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@U?$less@UBfmeRva449E0Key@@@3@V?$allocator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@2@@Z,0x0003A260,retail insert_unique thunk for Rva002449E0 map insertion
+?insert_unique@?$_Rb_tree@UGen_p12pod@@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Select1st@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@U?$less@UGen_p12pod@@@3@V?$allocator@U?$pair@$$CBUGen_p12pod@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUGen_p12pod@@H@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUGen_p12pod@@H@_STL@@@2@@2@U32@ABU?$pair@$$CBUGen_p12pod@@H@2@@Z,0x009282C0,retail insertion callee of the Gen_p12pod map index at 0x00928690
 ?insert_unique@?$_Rb_tree@UGen_t_00093990_mc4@@U1@U?$_Identity@UGen_t_00093990_mc4@@@_STL@@U?$less@UGen_t_00093990_mc4@@@3@V?$allocator@UGen_t_00093990_mc4@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@UGen_t_00093990_mc4@@U?$_Nonconst_traits@UGen_t_00093990_mc4@@@_STL@@@_STL@@_N@2@ABUGen_t_00093990_mc4@@@Z,0x00093760,family-emit payload member
 ?insert_unique@?$_Rb_tree@UOpen2Key6148F0@@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@U?$_Select1st@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@3@UOpen2Less6148F0@@V?$allocator@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@_STL@@@2@@2@U32@ABU?$pair@$$CBUOpen2Key6148F0@@UOpen2Mapped6148F0@@@2@@Z,0x21623145,Open2 0x6148f0 map twin callee
 ?insert_unique@?$_Rb_tree@URva00063870Key@@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@3@U?$less@URva00063870Key@@@3@V?$allocator@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva00063870Key@@URva00063870Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBURva00063870Key@@URva00063870Value@@@2@@Z,0x0000A529,Open-BFME5 ILT for the tree insert_unique the map insert at 0x00063870 forwards to
@@ -81345,6 +81351,7 @@ name,address,notes
 ?removeEntry@ProductionUpdate@@AAEXPAVProductionEntry@@@Z,0x0002F3C4,ProductionUpdate destructor queue-drain call target
 ?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
 ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x00015D02,AIMoveAndTightenState::onEnter retail REL32 call target
+?removeModuleInfo@ThingTemplate@@IAE_NABVAsciiString@@AAV2@@Z,0x00141870,ThingTemplate parseRemoveModule caller identity
 ?removeMovieBanner@BannerUI@@QAEXH@Z,0x00033F50,BannerUI movie-operation cleanup call through the ILT to body 0x00582960; the selected id at 0x012B8188 is its sole argument
 ?removeNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x00022610,ILT thunk; real body 0x74D440
 ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z,0x00046F42,addNamedTimer retail call site; ILT thunk to body 0x0044A1B0
@@ -84037,10 +84044,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeSendZB@@YAXPAX00VBfmeTagZB@@@Z,0x0002E0B9,pin
-??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
-?bfmeRunZC@BfmeOwnZC@@QAEXVBfmeRoomZC@@PAX@Z,0x0000D97C,pin
-??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin
-?removeModuleInfo@ThingTemplate@@IAE_NABVAsciiString@@AAV2@@Z,0x00141870,ThingTemplate parseRemoveModule caller identity
-??0BfmeRoomZE@@QAE@ABV0@@Z,0x000416AF,pin
-?bfmeSendZE@BfmeA1087@@QAEXPAVBfmeBZE@@VBfmeRoomZE@@M@Z,0x0001C2BA,pin
