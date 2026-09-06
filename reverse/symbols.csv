@@ -53184,6 +53184,7 @@ name,address,notes
 ?b_00537610@@YAXXZ,0x00537610,gen-thunk body
 ?b_00537620@@YAXXZ,0x00537620,gen-thunk body
 ?b_00537630@@YAXXZ,0x00537630,gen-thunk body
+?getloc@ios_base@_STL@@QBE?AVlocale@2@XZ,0x00038E47,STLport basic_ostream numeric helper callee reached by the 0x005F0120 body
 ?b_00537660@@YAXXZ,0x00537660,gen-thunk body
 ?b_00537670@@YAXXZ,0x00537670,gen-thunk body
 ?b_00537680@@YAXXZ,0x00537680,gen-thunk body
