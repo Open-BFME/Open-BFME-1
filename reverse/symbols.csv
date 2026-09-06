@@ -477,6 +477,7 @@ name,address,notes
 ??$_Construct@UVideo@@U1@@_STL@@YAXPAUVideo@@ABU1@@Z,0x00030549,rel32 pin for exact-ambiguous landing
 ??$_Construct@UWeaponBarrelInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU12@@Z,0x0003B7E6,ILT thunk used by call site
 ??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
+??$_Construct@UupgradePairWide@@U1@@_STL@@YAXPAUupgradePairWide@@ABU1@@Z,0x000390B3,pin near-twin _Construct<upgradePairWide> instantiation onto the matched thunk at 0x0064C412 target
 ??$_Construct@VAsciiString@@V1@@_STL@@YAXPAVAsciiString@@ABV1@@Z,0x00007554,Open-BFME5 ILT; called by ?addObjectType@ObjectTypes@@QAEXABVAsciiString@@@Z at 0x001DC520
 ??$_Construct@VGameResultsResponse@@V1@@_STL@@YAXPAVGameResultsResponse@@ABV1@@Z,0x0000DCE7
 ??$_Construct@VLivingWorldArmy@@V1@@_STL@@YAXPAVLivingWorldArmy@@ABV1@@Z,0x00003193,replenish retail call at 0x003655B1 invokes the LivingWorldArmy element-copy ILT thunk
@@ -3329,6 +3330,7 @@ name,address,notes
 ??0TerrainLogicBase@@QAE@XZ,0x0004629F,Open-BFME5 the incremental-link thunk TerrainLogic encodes for that base
 ??0TexBufferClass@@QAE@HPBD@Z,0x0092BA60
 ??0TextureVectorBaseCtorShim@@QAE@HPBV?$RefCountPtr@VTextureClass@@@@@Z,0x0092FBA0,Open-BFME5 texture vector base constructor object symbol;candidate identity is the reloc-named TextureVectorBaseCtorShim construct
+??0ThingTemplate@@QAE@XZ,0x00009192,ThingFactory::newOverride calls the ThingTemplate constructor through retail ILT
 ??0ThreadClass@@QAE@PBD@Z,0x009DB4E0,BFME ThreadClass constructor called by Watchdog and initializing vptr/name/running/handle/priority through +0x4C
 ??0ThreadClass@@QAE@PBDP6AHHPAU_EXCEPTION_POINTERS@@@Z@Z,0x008B2EF0,pin for LoaderThreadClass ctor callee
 ??0TightenPathStruct@@QAE@PAVPathfinder@@PAVObject@@PBVLocomotorSet@@W4PathfindLayerEnum@@PBUCoord3D@@@Z,0x0002D7F9,tightenPath info init (thunk->0x003E1720)
@@ -9041,6 +9043,7 @@ name,address,notes
 ??4StringClass@@QAEABV0@ABV0@@Z,0x00007A63,site-decoded x1 (thunk)
 ??4TRoadSegInfo@@QAEAAU0@ABU0@@Z,0x000015EB
 ??4TextureVectorBaseCtorShim@@QAEAAV0@ABV0@@Z,0x0092F810,MaterialInfo copy ctor930E00 passes Textures base at +0x20;existing VectorClass assignment body with virtual element resize/copy
+??4ThingTemplate@@QAEAAV0@ABV0@@Z,0x000136AB,ThingFactory::newOverride calls the ThingTemplate copy assignment through retail ILT
 ??4TintEnvelope@@QAEAAV0@ABV0@@Z,0x00019187,pinharvest x1 (thunk)
 ??4U1Tail_005CD380@@QAEAAV0@ABV0@@Z,0x005CBEE0,member operator= tail of 0x005CD380; address-derived name
 ??4U1Tail_005CDCD0@@QAEAAV0@ABV0@@Z,0x005CD820,member operator= tail of 0x005CDCD0; address-derived name
@@ -9695,8 +9698,8 @@ name,address,notes
 ?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z,0x00013471,address-scoped spelling for the element comparison ILT called by retail 0x005757E0
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
 ?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
-?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
+?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeParticleSystemXferHandle@@YAXAAVXfer@@PAX@Z,0x00008CA1,BFME particle-system handle serialization helper called by ParticleSystem DoXfer
 ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z,0x00034815,BFME particle-system matrix serialization helper called by ParticleSystem DoXfer
 ?BfmeProductionPrerequisiteConstruct@_STL@@YAXPAXABVProductionPrerequisite@@@Z,0x000027A2,Open-BFME5 ILT for the ProductionPrerequisite copy-construct at 0x003ABAD0 as _M_allocate_and_copy calls it
@@ -76804,10 +76807,7 @@ name,address,notes
 ?friend_getFinalOverride@BfmeOverridableChain@@QBEPBV1@XZ,0x00048C61,alias of ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ pinned at the same ILT; declared-only view so the call survives where the vendored header's inline would unroll another link
 ?friend_getFinalOverride@LocomotorOverridable@@QAEPAV1@XZ,0x000022BB,ILT thunk to the locomotor override-chain walker at 0x00087A80; a distinct body from the SpecialPowerTemplate walker at 0x00097880
 ?friend_getFinalOverride@Overridable@@QAEPAV1@XZ,0x00048C61
-??0ThingTemplate@@QAE@XZ,0x00009192,ThingFactory::newOverride calls the ThingTemplate constructor through retail ILT
-??4ThingTemplate@@QAEAAV0@ABV0@@Z,0x000136AB,ThingFactory::newOverride calls the ThingTemplate copy assignment through retail ILT
 ?friend_getFinalOverride@Overridable@@QBEPBV1@XZ,0x00048C61,doTeamUseCommandButtonOnNamed BFME override-chain ILT
-?setCopiedFromDefault@ThingTemplate@@QAEXXZ,0x0004609C,ThingFactory::newOverride calls the copied-from-default helper through retail ILT
 ?friend_getTurretTarget@BFMETurretTargetAccessor@@QBE?AW4TurretTargetType@@AAPAVObject@@AAUCoord3D@@@Z,0x0002C746,layout shim for BFME's source-backed two-argument TurretAI target accessor; ILT jumps to 0x0018C7D0
 ?friend_lookupScience@ScienceStore@@QBE?AW4ScienceType@@PBD@Z,0x00017503,pinharvest x1 (thunk)
 ?friend_setDamageToFXString@TerrainRoadType@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x00024E0B,ILT thunk -> 0x601b50 (parseTransitionToFX callee)
@@ -80477,6 +80477,7 @@ name,address,notes
 ?overflow@BfmeVec50@@QAEXPAUBfmeElem50@@ABU2@ABUBfmeFalse50@@I_N@Z,0x0087FCD0,Open-BFME5 insert-overflow callee of 0x0087FF50
 ?overflow@Rva0060C120@@QAEXXZ,0x000377E0,Open2 0x0060C120 tail callee (ILT -> 0x0060C030)
 ?packShroudPixel@@YAIE@Z,0x00006C2B,ILT jmp to 0x0071A410 shroud-level pixel packer used by fillShroudSurface
+?packStatKey@PeerThreadClass@@AAE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@PBD0@Z,0x00006190,ILT thunk called by lookupStatForPlayer 0x00647DD0 (ZH PeerThread.cpp packStatKey)
 ?parent@@3PAVGameWindow@@A,0x012F415C,ScoreScreen.cpp file-static parent GameWindow pointer
 ?parse@?$DeathModelFlags@$09@@QAEXPAVINI@@PAVAsciiString@@@Z,0x00033433,SlowDeathBehavior DeathFlags model parser ILT
 ?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00287BC0,BoneFXUpdateModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
@@ -81269,6 +81270,7 @@ name,address,notes
 ?setControlBarScheme@ControlBarSchemeManager@@QAEXVAsciiString@@@Z,0x004AD880,body from setControlBarSchemeByName call @0x4A00AF via ILT 0xA196
 ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z,0x000378EE,REL32 pin: retail calls this through the incremental-link thunk at 0x378EE which jumps to 0x4ADE40
 ?setControlCommand@ControlBar@@AAEXPAVGameWindow@@PBVCommandButton@@@Z,0x00015DA7,incremental-link thunk read out of the call displacement in populateOCLTimer
+?setCopiedFromDefault@ThingTemplate@@QAEXXZ,0x0004609C,ThingFactory::newOverride calls the copied-from-default helper through retail ILT
 ?setCurrentlySelectedAIGroup@Player@@QAEXPAVAIGroup@@@Z,0x00005DD0,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?setCursor@Mouse@@UAEXH@Z,0x0004A1EC,W3DMouse destructor integer view of the cursor-enum virtual base call
 ?setCursor@Mouse@@UAEXW4MouseCursor@1@@Z,0x0000E520
