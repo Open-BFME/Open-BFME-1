@@ -1,5 +1,43 @@
 // cl: /DNDEBUG /MD /EHsc
+// readable body of ??0W3DTerrainVisual@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp
+// readable body of ?getWaterGridHeight@W3DTerrainVisual@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp
 // readable body of ?setRawMapHeight@W3DTerrainVisual@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp
+//
+// The constructor (retail 0x007304E0) and the two overrides that use what it
+// sets up: getWaterGridHeight (0x00730B60) and setRawMapHeight (0x00730BD0).
+// Three files carried three copies of a class 0x20 bytes long, and only the
+// constructor's copy said where the 0x10 bytes ahead of the members come from --
+// the other two spelled them `unsigned char m_basePadding[0x0C]` after a lone
+// virtual, which is the same 0x10 bytes and says nothing about them. One
+// declaration, with the bases the constructor proves and the member types the
+// two overrides prove.
+//
+// Identity of the constructor is settled by the base call through the
+// incremental-link thunk to 0x00602C70 (already pinned as
+// ??0W3DTerrainVisualBase), by the member offsets +0x10/+0x14/+0x18 and the
+// Bool at +0x1C, and by the global zeroed at 0x01306D7C (TheWaterRenderObj).
+//
+// The three bodies get their own TU rather than joining W3DTerrainVisual.cpp
+// because BFME's W3DTerrainVisual is 0x20 bytes -- the size check in
+// W3DGameClient.cpp asserts that -- while Zero Hour's header adds ten
+// AsciiString skybox names whose constructors would put an EH frame on the
+// constructor. Zero Hour's TerrainVisual derives from Snapshot AND
+// SubsystemInterface, which is where the two vftable stores at +0x00 and +0x04
+// come from, so the base stand-in reproduces that pair of polymorphic bases at
+// retail offsets.
+//
+// STATEMENT ORDER IS THE WHOLE CONSTRUCTOR. It was closed before on "retail
+// writes both vftable pointers AFTER the four cleared fields and MSVC writes
+// them first". MSVC 7.1 does not pin the vftable stores to the top of the
+// constructor: it sinks them to just before the first store that leaves the
+// object. Member stores through `this` that precede that statement in SOURCE
+// ORDER float above the vftable stores; everything after it stays below. Zero
+// Hour's constructor assigns TheWaterRenderObj third, which splits the member
+// group around the vftable pair; retail assigns it last, so the whole member
+// group comes first. No novtable, no volatile, no inlined intermediate base --
+// just moving one statement to the end.
+
+typedef bool Bool;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
@@ -7,6 +45,16 @@ struct ICoord2D
 	int x;
 	int y;
 };
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
+class WaterRenderObjClass
+{
+public:
+	Bool worldToGridSpace(float worldX, float worldY, float &gridX, float &gridY);
+	void getGridVertexHeight(int x, int y, float *height);
+};
+
+extern WaterRenderObjClass *TheWaterRenderObj;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap
@@ -87,19 +135,61 @@ public:
 
 #undef BFME_VIRTUAL_SLOT
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainVisual.h
-class W3DTerrainVisual
+class W3DTerrainVisualSnapshot { public: virtual void crc(); virtual void xfer(); };
+class W3DTerrainVisualSubsystem { public: virtual void init(); virtual void reset(); };
+
+class W3DTerrainVisualBase : public W3DTerrainVisualSnapshot, public W3DTerrainVisualSubsystem
 {
 public:
+	W3DTerrainVisualBase();
+	virtual void load();
+private:
+	char m_baseFields[8];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTerrainVisual.h
+class W3DTerrainVisual : public W3DTerrainVisualBase
+{
+public:
+	W3DTerrainVisual();
+	virtual void getTerrainColorAt();
+	virtual Bool getWaterGridHeight(float worldX, float worldY, float *height);
 	virtual void setRawMapHeight(const ICoord2D *gridPos, int height);
 
 private:
-	unsigned char m_basePadding[0x0C];
-	BaseHeightMapRenderObjClass *m_terrainRenderObject;
-	void *m_waterRenderObject;
-	WorldHeightMap *m_logicHeightMap;
+	BaseHeightMapRenderObjClass *m_terrainRenderObject;   // +0x10
+	WaterRenderObjClass *m_waterRenderObject;             // +0x14
+	WorldHeightMap *m_logicHeightMap;                     // +0x18
+	Bool m_isWaterGridRenderingEnabled;                   // +0x1C
 };
 
+// ??0W3DTerrainVisual@@QAE@XZ
+W3DTerrainVisual::W3DTerrainVisual()
+{
+	m_terrainRenderObject = 0;
+	m_waterRenderObject = 0;
+	m_logicHeightMap = 0;
+	m_isWaterGridRenderingEnabled = 0;
+	TheWaterRenderObj = 0;
+}
+
+// ?getWaterGridHeight@W3DTerrainVisual@@UAE_NMMPAM@Z
+Bool W3DTerrainVisual::getWaterGridHeight(float worldX, float worldY, float *height)
+{
+	float gridX;
+	float gridY;
+	if (m_isWaterGridRenderingEnabled) {
+		WaterRenderObjClass *water = m_waterRenderObject;
+		if (water && water->worldToGridSpace(worldX, worldY, gridX, gridY)) {
+			water->getGridVertexHeight(static_cast<int>(gridX),
+				static_cast<int>(gridY), height);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+// ?setRawMapHeight@W3DTerrainVisual@@UAEXPBUICoord2D@@H@Z
 void W3DTerrainVisual::setRawMapHeight(const ICoord2D *gridPos, int height)
 {
 	if (m_logicHeightMap) {
