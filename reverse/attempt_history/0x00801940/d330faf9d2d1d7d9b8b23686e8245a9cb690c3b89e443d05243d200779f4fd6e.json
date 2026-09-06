@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d330faf9d2d1d7d9b8b23686e8245a9cb690c3b89e443d05243d200779f4fd6e",
+  "symbol": "?d_00801940@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_00801940@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// 82/82 bytes, instruction order identical; residue is scratch-register choice only.\n// Pins needed: ?bfmeFindEQO@@YGHPAUBfmeMapEQO@@PBD@Z,0x007F76F0 and\n//              ?bfmeAppendEQO@BfmeSlotEQO@@QAEXPBD@Z,0x008002C0\nstruct BfmeSlotEQO\n{\n\tvoid bfmeAppendEQO(const char *text);\n\tunsigned char m_bfmeSlotDataEQO[8];\n};\n\nstruct BfmeMapEQO\n{\n\tunsigned char m_bfmeMapDataEQO[8];\n};\n\nstruct BfmeOwnerEQO\n{\n\tBfmeMapEQO *bfmeFirstMapEQO(void) { return &m_bfmeFirstMapEQO; }\n\tBfmeMapEQO *bfmeSecondMapEQO(void) { return &m_bfmeSecondMapEQO; }\n\tunsigned char m_bfmeHeadEQO[0x2a8];\n\tBfmeMapEQO m_bfmeFirstMapEQO;\n\tBfmeMapEQO m_bfmeSecondMapEQO;\n};\n\nint __stdcall bfmeFindEQO(BfmeMapEQO *map, const char *key);\n\nstruct BfmeTableEQO\n{\n\tint bfmeLookupEQO(const char *key, const char *text);\n\tunsigned char m_bfmeHeadEQO[4];\n\tBfmeOwnerEQO *m_bfmeOwnerEQO;\n\tunsigned char m_bfmeMidEQO[8];\n\tBfmeSlotEQO *m_bfmeSlotsEQO;\n\tint m_bfmeCountEQO;\n};\n\nint BfmeTableEQO::bfmeLookupEQO(const char *key, const char *text)\n{\n\tint index = bfmeFindEQO(m_bfmeOwnerEQO->bfmeFirstMapEQO(), key);\n\tif (index == -1)\n\t\treturn -106;\n\tBfmeSlotEQO *slot;\n\tif (index >= m_bfmeCountEQO)\n\t\tslot = 0;\n\telse\n\t\tslot = &m_bfmeSlotsEQO[index];\n\tslot->bfmeAppendEQO(text);\n\treturn 0;\n}\n"
+}

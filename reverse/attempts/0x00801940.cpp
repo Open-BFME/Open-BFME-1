@@ -1,55 +1,50 @@
-// ?lookupAndStore@Rva00801940LookupStore@@QAEHPAX0@Z
-// partial score=0.96 date=2026-09-04
-// ?lookupAndStore@Rva00801940LookupStore@@QAEHPAX0@Z
-// partial score=0.96 date=2026-09-01
-int __stdcall bfmeLookRH(void *table, void *key);
-
-class BfmeSub1251
+// ?bfmeLookupEQO@BfmeTableEQO@@QAEHPBD0@Z (identity unknown)
+// partial score=0.9 date=2026-09-06
+// 82/82 bytes, instruction order identical; residue is scratch-register choice only.
+// Pins needed: ?bfmeFindEQO@@YGHPAUBfmeMapEQO@@PBD@Z,0x007F76F0 and
+//              ?bfmeAppendEQO@BfmeSlotEQO@@QAEXPBD@Z,0x008002C0
+struct BfmeSlotEQO
 {
-public:
-	void bfmeSet1251(void *value);
-
-private:
-	char m_storage[8];
+	void bfmeAppendEQO(const char *text);
+	unsigned char m_bfmeSlotDataEQO[8];
 };
 
-struct Rva00801940Owner
+struct BfmeMapEQO
 {
-	char m_pad00[0x2A8];
-	int m_table[1];
+	unsigned char m_bfmeMapDataEQO[8];
 };
 
-class Rva00801940LookupStore
+struct BfmeOwnerEQO
 {
-public:
-	int lookupAndStore(void *key, void *value);
-
-private:
-	char m_pad00[4];
-	Rva00801940Owner *m_owner;
-	char m_pad08[8];
-	BfmeSub1251 *m_entries;
-	int m_count;
+	BfmeMapEQO *bfmeFirstMapEQO(void) { return &m_bfmeFirstMapEQO; }
+	BfmeMapEQO *bfmeSecondMapEQO(void) { return &m_bfmeSecondMapEQO; }
+	unsigned char m_bfmeHeadEQO[0x2a8];
+	BfmeMapEQO m_bfmeFirstMapEQO;
+	BfmeMapEQO m_bfmeSecondMapEQO;
 };
 
-int Rva00801940LookupStore::lookupAndStore(void *key, void *value)
+int __stdcall bfmeFindEQO(BfmeMapEQO *map, const char *key);
+
+struct BfmeTableEQO
 {
-	int index = bfmeLookRH(m_owner->m_table, key);
+	int bfmeLookupEQO(const char *key, const char *text);
+	unsigned char m_bfmeHeadEQO[4];
+	BfmeOwnerEQO *m_bfmeOwnerEQO;
+	unsigned char m_bfmeMidEQO[8];
+	BfmeSlotEQO *m_bfmeSlotsEQO;
+	int m_bfmeCountEQO;
+};
+
+int BfmeTableEQO::bfmeLookupEQO(const char *key, const char *text)
+{
+	int index = bfmeFindEQO(m_bfmeOwnerEQO->bfmeFirstMapEQO(), key);
 	if (index == -1)
 		return -106;
-
-	if (index >= m_count)
-	{
-		BfmeSub1251 *entry = 0;
-		void *storedValue = value;
-		entry->bfmeSet1251(storedValue);
-		return 0;
-	}
+	BfmeSlotEQO *slot;
+	if (index >= m_bfmeCountEQO)
+		slot = 0;
 	else
-	{
-		BfmeSub1251 *entry = m_entries;
-		void *storedValue = value;
-		entry[index].bfmeSet1251(storedValue);
-		return 0;
-	}
+		slot = &m_bfmeSlotsEQO[index];
+	slot->bfmeAppendEQO(text);
+	return 0;
 }
