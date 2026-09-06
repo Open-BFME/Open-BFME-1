@@ -83562,13 +83562,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
-??_GRva006F92D0@@UAEPAXI@Z,0x006F92A0,address-derived scalar deleting destructor for the unnamed W3D resource
-??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
-?run@Rva006F92D0@@QAEXXZ,0x006F75F0,address-derived run slot from vtable 0x01120360
-?get@Rva006F92D0@@QAEPADXZ,0x006F9290,address-derived return-address slot from vtable 0x01120360
-?render@Rva006F92D0@@QAEXXZ,0x006F9CD0,address-derived render slot from vtable 0x01120360
-?init@Rva006F92D0@@QAEXXZ,0x000129EF,address-derived resource initializer thunk
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
 ??$__default_constructed@VDetailedArchivedDirectoryInfo@@@_STL@@YA?AVDetailedArchivedDirectoryInfo@@PAV1@@Z,0x009D0790,DetailedArchivedDirectoryInfo map subscript default value constructor
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
