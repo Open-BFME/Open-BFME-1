@@ -39461,6 +39461,7 @@ name,address,notes
 ?b_0035c3a0@@YAXXZ,0x0035C3A0,gen-thunk body
 ?b_0035c3d0@@YAXXZ,0x0035C3D0,gen-thunk body
 ?b_0035c400@@YAXXZ,0x0035C400,gen-thunk body
+?findOrCreateIndex@Rva00359330StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000333C5,address-derived table index insertion helper used by 0x0035CC50
 ?b_0035c620@@YAXXZ,0x0035C620,gen-thunk body
 ?b_0035c840@@YAXXZ,0x0035C840,gen-thunk body
 ?b_0035c870@@YAXXZ,0x0035C870,gen-thunk body
