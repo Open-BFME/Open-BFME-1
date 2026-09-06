@@ -285,6 +285,36 @@ def padding_snap(rva):
     return rva, f"no int3 boundary within {SNAP_WINDOW}B — candidate is function-interior"
 
 
+def prefer_call_derived_identities(candidates, identity_rows, matched_sources):
+    """Withhold drift guesses that conflict with a live caller's identity.
+
+    Snapping proves a boundary, not its name. Keep every address the real-name
+    call index supports (including aliases), and leave unidentified names alone.
+    The named tier remains the route to the supported address; this does not
+    retarget a body or treat an additive symbols.csv pin as proof.
+    """
+    identities = {}
+    for row in identity_rows:
+        if ("identity=real" not in row.get("notes", "").split(";")
+                or row.get("source") not in matched_sources):
+            continue
+        rva = to_int(row["target_rva"], 16, "reloc_names.csv target_rva")
+        identities.setdefault(row["name"], set()).add(rva)
+    kept, conflicts = [], []
+    for candidate in candidates:
+        addresses = identities.get(candidate["function"], set())
+        rva = int(candidate["candidate_rva"], 16)
+        if addresses and rva not in addresses:
+            conflicts.append({
+                "function": candidate["function"],
+                "candidate_rva": candidate["candidate_rva"],
+                "call_derived_rvas": [f"0x{x:08X}" for x in sorted(addresses)],
+            })
+        else:
+            kept.append(candidate)
+    return kept, conflicts
+
+
 def structural_candidates(claimed, claimed_names, claimed_ranges, big=False):
     """The manual-RE tier: drifted functions whose source exists but whose code
     shape differs (class structural / register-swap). Workflow: docs/structural.md."""
@@ -633,11 +663,16 @@ def collapse_and_validate(candidates, validator=None):
 def validator_note(meta):
     """One line for what the boundary validator removed, or None if it ran on
     nothing. Never silent: a queue that shrank by three quarters has to say so."""
-    if not meta["addresses"]:
+    conflicts = len(meta.get("identity_conflicts", []))
+    identity_note = (f"; {conflicts} drift name/address conflict(s) withheld "
+                     "in favor of call-derived identities (--tier named)"
+                     if conflicts else "")
+    if not meta["addresses"] and not conflicts:
         return None
     return (f"boundary validator: {meta['served']} of {meta['addresses']} structural "
             f"address(es) survive ({meta['rejected']} are not a function boundary), "
-            f"carrying {meta['names']} name(s) ({meta['refuted']} refuted by arity)")
+            f"carrying {meta['names']} name(s) ({meta['refuted']} refuted by arity)"
+            f"{identity_note}")
 
 
 def parse_shard(value):
@@ -1063,7 +1098,6 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
 
 
 def main():
-    import build
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--limit", type=int, default=10,
@@ -1085,6 +1119,7 @@ def main():
     args = ap.parse_args()
 
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
+    import build
     drifts = (drift_quick_wins()
               if args.tier not in ("named", "structural", "ghidra") else [])
     # Every tier below asks "is this address still open work?", and a gen-dump
@@ -1092,11 +1127,14 @@ def main():
     # lives in build.load_claim_rows and nowhere else -- deriving it here a
     # second time is how the queue went blind across the whole dump pass.
     claimed, claimed_names, claimed_ranges = set(), set(), []
+    matched_sources = set()
     for row in build.load_claim_rows(counting_dumps=False, matched_only=False):
         if row["target_rva"]:
             start = int(row["target_rva"], 16)
             claimed.add(start)
             claimed_names.add(row["name"])
+            if row.get("status") == "matched":
+                matched_sources.add(row["source"])
             if row.get("target_size"):
                 claimed_ranges.append((start, start + int(row["target_size"])))
     structural = (structural_candidates(claimed, claimed_names, claimed_ranges,
@@ -1130,9 +1168,16 @@ def main():
         suppressed = (dropped_named + dropped_drift + dropped_structural
                       + dropped_ghidra + dropped_anchored)
 
+    identity_conflicts = []
+    if structural:
+        _, identity_rows = read_csv(RELOC_NAMES, "./build.sh")
+        structural, identity_conflicts = prefer_call_derived_identities(
+            structural, identity_rows, matched_sources)
+
     # After the log filter, so one dead name cannot retire a whole address, and
     # before sharding, so every worker sees the same collapsed queue.
     structural, structural_meta = collapse_and_validate(structural)
+    structural_meta["identity_conflicts"] = identity_conflicts
 
     named = apply_shard(named, args.shard)
     drifts = apply_shard(drifts, args.shard)

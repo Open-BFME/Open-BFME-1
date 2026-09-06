@@ -492,7 +492,7 @@ def test_corrupt_ledger():
         (temp / "reverse" / "zh_sweep").mkdir(parents=True)
         (temp / "src" / "zh").mkdir(parents=True)
         for name in ("next_work.py", "check_csv.py", "re_log.py", "yield_model.py",
-                     "boundary_validator.py", "audit_ret_arity.py"):
+                     "boundary_validator.py", "audit_ret_arity.py", "ledger_io.py"):
             (temp / "tools" / name).write_bytes((ROOT / "tools" / name).read_bytes())
         (temp / "src" / "zh" / "stub.cpp").write_text("// stub\n")
         row = "?Foo@@QAEXXZ,,0x00400000,16,src/zh/stub.cpp,matched,\r\n"
@@ -508,6 +508,56 @@ def test_corrupt_ledger():
         assert "dedup_csv" in output and "LEDGER CORRUPT" in output, output
         assert "selected work" not in output, output
     print("PASS corrupt ledger: exit 2 before selection")
+
+
+def test_call_identity_overrules_a_different_valid_boundary():
+    import next_work
+    name = "?RenderStreak@StreakRendererClass@@QAEXXZ"
+    wrong = {"function": name, "candidate_rva": "0x00975100"}
+    right = {"function": name, "candidate_rva": "0x0095CE80"}
+    rows = [{"name": name, "target_rva": "0x0095CE80",
+             "source": "Code/StreakLineRender.cpp",
+             "notes": "reloc-derived;call-sites=1;identity=real"}]
+    kept, conflicts = next_work.prefer_call_derived_identities(
+        [wrong, right], rows, {"Code/StreakLineRender.cpp"})
+    assert kept == [right]
+    assert conflicts == [{"function": name, "candidate_rva": "0x00975100",
+                          "call_derived_rvas": ["0x0095CE80"]}]
+
+
+@pytest.mark.parametrize("notes,live", [
+    ("reloc-derived;identity=generated", True),
+    ("reloc-derived;identity=real", False),
+    ("reloc-derived;identity=real-but-unproven", True),
+])
+def test_call_identity_requires_real_name_and_live_caller(notes, live):
+    import next_work
+    candidate = {"function": "?method@@YAXXZ", "candidate_rva": "0x2000"}
+    rows = [{"name": candidate["function"], "target_rva": "0x1000",
+             "source": "Code/caller.cpp", "notes": notes}]
+    assert next_work.prefer_call_derived_identities(
+        [candidate], rows, {"Code/caller.cpp"} if live else set()) == ([candidate], [])
+
+
+def test_call_identity_preserves_all_supported_addresses_and_unknown_names():
+    import next_work
+    candidates = [{"function": "?method@@YAXXZ", "candidate_rva": address}
+                  for address in ["0x1000", "0x2000"]]
+    candidates.append({"function": "?unknown@@YAXXZ", "candidate_rva": "0x3000"})
+    rows = [{"name": "?method@@YAXXZ", "target_rva": address,
+             "source": "Code/caller.cpp", "notes": "identity=real"}
+            for address in ["0x1000", "0x2000"]]
+    assert next_work.prefer_call_derived_identities(
+        candidates, rows, {"Code/caller.cpp"}) == (candidates, [])
+
+
+def test_identity_conflicts_are_explained_when_the_queue_becomes_empty():
+    import next_work
+    note = next_work.validator_note({"addresses": 0, "served": 0,
+                                    "rejected": 0, "names": 0, "refuted": 0,
+                                    "identity_conflicts": [{}]})
+    assert "1 drift name/address conflict(s) withheld" in note
+    assert "--tier named" in note
 
 
 def main():
