@@ -982,14 +982,6 @@ public ?d_0075c000@@YAXXZ
     db 00h
 ?d_0075c000@@YAXXZ ENDP
 
-; ghidra: bounds-high  retail @ 0x0075C210 size 36
-public ?d_0075c210@@YAXXZ
-?d_0075c210@@YAXXZ PROC
-    db 8Bh, 0C1h, 8Bh, 48h, 34h, 85h, 0C9h, 74h, 1Ah, 8Bh, 80h, 2Ch, 02h, 00h, 00h, 85h
-    db 0C0h, 74h, 10h, 8Bh, 91h, 9Ch, 00h, 00h, 00h, 85h, 0D2h, 75h, 06h, 50h, 0E8h, 5Dh
-    db 3Ah, 1Ch, 00h, 0C3h
-?d_0075c210@@YAXXZ ENDP
-
 ; ghidra: bounds-high  retail @ 0x0075C2B0 size 80
 public ?d_0075c2b0@@YAXXZ
 ?d_0075c2b0@@YAXXZ PROC

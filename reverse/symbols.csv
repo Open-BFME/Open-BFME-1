@@ -83876,3 +83876,4 @@ _g_rva0130E9B0,0x0130E9B0,"Root read retail125-byte body: GetModuleHandleA(NULL)
 ?drawImage@Display@@QAEXPBVImage@@MMMMHH@Z,0x0000A114,"Root traced ILT0000A114 to0040D900/70B: virtual begin slotB0, seven-argument draw slotD4, end slotDC, RET1C. Caller explicitly converts four integer coordinates to real; image and color/mode arguments match source reference draw. Both relocations strictly resolved; no vtable emitted."
 ?bfmeDeallocEU@@YAXPAXI@Z,0x0082E5F0,pin
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
+?bfmeSetReferenceEW@BfmeTargetEW@@QAEXPAVBfmeRefEW@@@Z,0x0091FC90,pin
