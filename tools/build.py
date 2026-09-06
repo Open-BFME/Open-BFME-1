@@ -234,6 +234,86 @@ def exe_image():
     return data, pe_sections(data)
 
 
+DIR32_IMPORT_EXPECTATIONS = {
+    "__imp___strnicmp": "_strnicmp",
+    "__imp__itoa": "_itoa",
+}
+DIR32_IMPORT_DLL = "msvcr71.dll"
+
+
+@functools.lru_cache(maxsize=4)
+def _cached_import_guard_image(path_text, mtime_ns, size):
+    """Read the retail import table once per baseline file identity."""
+    del mtime_ns, size  # part of the cache key; the file is read by the parser
+    from import_pin_guard import PEImage
+
+    return PEImage.from_path(Path(path_text))
+
+
+def import_guard_image():
+    """Return the parsed retail PE used by the scoped CRT DIR32 guard."""
+    stat = EXE.stat()
+    return _cached_import_guard_image(str(EXE), stat.st_mtime_ns, stat.st_size)
+
+
+def verify_guarded_dir32_imports(row, target, compiled, relocs):
+    """Prove selected COFF CRT references name their retail import slots.
+
+    ``compile_function`` historically copied every retail DIR32 operand into
+    the resolved bytes.  That is correct for rebasing, but it also hides a
+    source that calls the wrong CRT twin: the COFF symbol says which import the
+    source requested while the retail operand supplies only the linked value.
+    For the two known-confusable names, subtract the pre-link COFF addend and
+    resolve the resulting VA through the baseline PE import directory before
+    any masking or rebasing is allowed.
+    """
+    guarded = [
+        (offset, symbol)
+        for offset, rtype, symbol in relocs
+        if rtype == 0x0006 and symbol in DIR32_IMPORT_EXPECTATIONS
+        # A COMDAT section can carry a later function's relocations after the
+        # row's extent.  compile_function's resolver skips those sites too;
+        # they are not references made by this body and must not trip its
+        # identity check.  Keep negative offsets so malformed in-body data is
+        # rejected below rather than silently discarded.
+        and offset < len(target)
+    ]
+    if not guarded:
+        return
+
+    image = import_guard_image()
+    for offset, symbol in guarded:
+        if offset < 0 or offset + 4 > len(target) or offset + 4 > len(compiled):
+            raise SystemExit(
+                f"{row['name']} ({row['source']}): guarded DIR32 import "
+                f"{symbol} at offset +{offset} does not fit the compiled/retail body"
+            )
+        retail_operand = struct.unpack_from("<I", target, offset)[0]
+        coff_addend = struct.unpack_from("<I", compiled, offset)[0]
+        import_va = (retail_operand - coff_addend) & 0xFFFFFFFF
+        if import_va < image.image_base:
+            actual = "below image base"
+            import_rva = None
+            imported = None
+        else:
+            import_rva = import_va - image.image_base
+            imported = image.imports.get(import_rva)
+            actual = (
+                f"{imported.dll}!{imported.name or '#' + str(imported.ordinal)}"
+                if imported is not None else "not an import-table slot"
+            )
+        expected = f"{DIR32_IMPORT_DLL}!{DIR32_IMPORT_EXPECTATIONS[symbol]}"
+        if (imported is None or imported.dll.lower() != DIR32_IMPORT_DLL
+                or imported.name != DIR32_IMPORT_EXPECTATIONS[symbol]):
+            rva_text = "<none>" if import_rva is None else f"0x{import_rva:08X}"
+            raise SystemExit(
+                f"{row['name']} ({row['source']}): guarded DIR32 import {symbol} "
+                f"at offset +{offset} resolves to {actual} at IAT RVA {rva_text}; "
+                f"expected {expected} (retail operand 0x{retail_operand:08X} minus "
+                f"COFF addend 0x{coff_addend:08X})"
+            )
+
+
 def read_target_bytes(rva, size):
     data, sections = exe_image()
     offset = rva_to_file_offset(sections, rva)
@@ -1126,6 +1206,7 @@ def compile_function(row, symbol_map, output):
         compiled, relocs, note = read_funclet(row, object_symbol, output, target)
     else:
         compiled, relocs = read_object_symbol_bytes(output, object_symbol, target_size)
+    verify_guarded_dir32_imports(row, target, compiled, relocs)
 
     # A lib member is pre-link code: every relocation site still holds an addend
     # rather than the address the linker wrote, and its callees are
