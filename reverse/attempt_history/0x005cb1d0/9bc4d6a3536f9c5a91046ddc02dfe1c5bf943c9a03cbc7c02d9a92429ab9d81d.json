@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9bc4d6a3536f9c5a91046ddc02dfe1c5bf943c9a03cbc7c02d9a92429ab9d81d",
+  "symbol": "?d_005cb1d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_005cb1d0@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// 57/60 at exact size. Everything matches except +0x26: retail emits\n//   lea eax,[ebx+4] ; push eax\n// where MSVC emits\n//   add ebx,4 ; push ebx\n// i.e. retail keeps the (dead) reference parameter in ebx and MSVC clobbers\n// it. Tried: helper taking const& / taking a pointer with explicit &, a\n// second-base upcast (BfmeSubHW as base at +4), a user-declared operator=,\n// a named reference local hoisted to the top (that one moves the prologue\n// instead), the assignment before the pointer store, and a pointer local for\n// `other`. All produce the identical 3-byte residue -- this is the\n// argument-shuttle register-allocation class, already logged unreachable.\n// The helper is the thunk at 0x0000FF29 -> 0x005C93C0 (still unclaimed).\nclass BfmeSrcHW\n{\npublic:\n\tvirtual void bfmeReleaseHW(int flag);\n\tvirtual BfmeSrcHW *bfmeCloneHW(void);\n};\n\nclass BfmeSubHW\n{\npublic:\n\tBfmeSubHW &operator=(const BfmeSubHW &other);\t// pin ??4BfmeSubHW@@QAEAAV0@ABV0@@Z,0x0000FF29\n\n\tint m_bfmeSubDataHW;\n};\n\nclass BfmeHolderHW\n{\npublic:\n\tBfmeHolderHW &bfmeCopyHW(const BfmeHolderHW &other);\n\n\tBfmeSrcHW *m_bfmePtrHW;\n\tBfmeSubHW m_bfmeSubHW;\n};\n\nBfmeHolderHW &BfmeHolderHW::bfmeCopyHW(const BfmeHolderHW &other)\n{\n\tBfmeSrcHW *copy = other.m_bfmePtrHW ? other.m_bfmePtrHW->bfmeCloneHW() : 0;\n\n\tif (m_bfmePtrHW)\n\t\tm_bfmePtrHW->bfmeReleaseHW(1);\n\n\tm_bfmePtrHW = copy;\n\tm_bfmeSubHW = other.m_bfmeSubHW;\n\n\treturn *this;\n}\n"
+}

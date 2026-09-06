@@ -84011,3 +84011,5 @@ _bfmeRva0036CFD0Callback,0x0002DC95,"Root disassembled full query36FF70/524 and 
 _ciApplyChangesToMode,0x0086CDF0,"Root traced commandMODE table identity and complete276B handler. Shared authentic ciApplyChangesToMode has125 executable bytes,3-byte compiler alignment and13-entry52B in-text jump table: total180B to86CEA3 inclusive, followed byCC padding untilnextfunction86CEB0. Entire180B independently matched, including every table relocation/local destination and atoi import. Previous125B dump under-covered its table; no adjacent claim overlaps180B. All17 complete source symbols retain exact bytes and resolved relocations. No artificial anchor, register-ABI placeholder or synthetic helper."
 ?invoke@Rva00893030Manager@@QAEXVRva00893030Ref@@PAX11@Z,0x00895C50,retail 0x00893030 calls the four-argument thiscall manager body at 0x00895C50
 ?g_rva00893030Manager@@3PAVRva00893030Manager@@A,0x013377D4,retail 0x00893030 loads the manager pointer from 0x013377D4
+?bfmeRunKD@BfmeTgtKD@@QAEDPAXVBfmeArgKD@@0@Z,0x0003FE77,pin
+?bfmeRunKE@BfmeTgtKE@@QAEDPAXVBfmeArgKE@@0@Z,0x0003C795,pin
