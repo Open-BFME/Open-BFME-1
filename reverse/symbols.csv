@@ -1332,7 +1332,6 @@ name,address,notes
 ??0?$SimpleParameterClass@M$00@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$SimpleParameterClass@M$0N@@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
-??0?$StringBase@D@@AAE@ABV0@@Z,0x00888400,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0054FA30 calls; autopin
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
 ??0?$StringBase@D@@IAE@ABV0@@Z,0x00887B60,protected StringBase char copy ctor
 ??0?$StringBase@D@@QAE@ABV0@@Z,0x00887B60,public narrow StringBase copy used by notification dispatch
@@ -3819,7 +3818,6 @@ name,address,notes
 ??1ArchivedFileInfo@@QAE@XZ,0x009CC600,archive directory entry dtor
 ??1ArrowStormUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1AsciiString@@QAE@XZ,0x00887940,pinharvest x4 (body)
-??1AsciiString@@QAE@XZ,0x008881D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0009F630 calls; autopin
 ??1AsciiStringVX@@QAE@XZ,0x00887940,pin
 ??1AsciiStringVZ@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWF@@QAE@XZ,0x00887940,pin
@@ -76119,7 +76117,6 @@ name,address,notes
 ?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
 ?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
-?compare@AsciiString@@QBEHABV1@@Z,0x000226EC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0054FA30 calls; autopin
 ?compare@AsciiString@@QBEHPBD@Z,0x0004B01A,ILT of StringBase<char>::compare(const char*) used by CustomMatch handleSlashCommands 0x00539E60
 ?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z,0x000220C5,AsciiString::compare via ILT thunk
 ?compare@GameSortStructCallOperatorShim@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x0053EDD0,GameSortStruct operator() incremental-link thunk target through a TU-local forwarding shim
