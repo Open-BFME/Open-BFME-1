@@ -1990,7 +1990,6 @@ name,address,notes
 ??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,Open-BFME7 ILT thunk of the out-of-line AsciiString copy (0x0005EE50) that the PlayerInfoMap hinted insert_unique at 0x00634650 calls after MSVC stops inlining the forwarder
-??0AsciiString@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0013B2F0 calls; autopin
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
@@ -10785,7 +10784,6 @@ name,address,notes
 ?TheBfmeAttributePool@@3UBfmeAttributePool@@A,0x012F1000,Open-BFME5 global attribute-entry pool read by ??1AttributeHandleStandIn@@QAE@XZ at 0x0039D550; start at +0x00 and finish at +0x04 with 0x88-byte entries whose use count is the last dword
 ?TheBfmeComA@@3PAUBfmeComUnknown@@A,0x01306F20,GenAlpha::h00024D2A COM pointer A
 ?TheBfmeComB@@3PAUBfmeComUnknown@@A,0x01306F1C,GenAlpha::h00024D2A COM pointer B
-?TheBfmeCrateNameDefault@@3VAsciiString@@A,0x00F36E50,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0013B2F0 calls; autopin
 ?TheBfmeCrateNameDefault@@3VAsciiString@@A,0x01336E50,Open-BFME5 global AsciiString ??0UnitCrateCollideModuleData@@QAE@XZ at 0x002F1B10 assigns into its member at +0x0C; address-derived name
 ?TheBfmeGameLogic@@3PAVGameLogic@@A,0x012F0898,GameLogic global from Team::getTeamTargetObject
 ?TheBfmeImeManager@@3PAVBfmeImeManager@@A,0x012F3344,IME manager notified by OnlineLogin destructor
