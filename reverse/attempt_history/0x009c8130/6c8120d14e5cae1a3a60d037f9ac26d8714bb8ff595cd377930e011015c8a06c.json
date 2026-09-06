@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6c8120d14e5cae1a3a60d037f9ac26d8714bb8ff595cd377930e011015c8a06c",
+  "symbol": "?d_009c8130@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_009c8130@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// VP6 4x4 sampled block variance at retail RVA 0x009C8130.\n\nint Rva009C8130Vp6BlockVariance(unsigned char *src, int stride)\n{\n\tint y = 0;\n\tunsigned char *p = src;\n\tunsigned int squareSum = 0;\n\tunsigned int sum = 0;\n\n\twhile (y < 8) {\n\t\tsum += p[0] + p[2] + p[4] + p[6];\n\t\tsquareSum += p[0] * p[0] + p[2] * p[2]\n\t\t\t+ p[4] * p[4] + p[6] * p[6];\n\t\tp += 2 * stride;\n\t\ty += 2;\n\t}\n\n\treturn (16 * squareSum - sum * sum) >> 8;\n}\n"
+}
