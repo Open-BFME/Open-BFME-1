@@ -60,7 +60,7 @@
 #include <math.h>
 extern "C" size_t __cdecl strlen(const char *);
 extern "C" void * __cdecl memset(void *, int, size_t);
-extern "C" __declspec(dllimport) int __cdecl strncmp(const char *, const char *, int);
+extern "C" __declspec(dllimport) int __cdecl strncmp(const char *, const char *, unsigned int);
 #include "nmglobal.h"
 #include "nbench1.h"
 #include "wordcat.h"
