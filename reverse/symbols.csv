@@ -81905,6 +81905,7 @@ name,address,notes
 ?setVector@BfmeStreakObject@@QAEXPBUBfmeStreakVector@@@Z,0x00955BC0,retail callee pin for W3DStreakDraw constructor
 ?setVisibility@BfmeMouse_setVisibility@@QAEX_N@Z,0x00016A68,ILT thunk Mouse setVisibility
 ?setVisibility@Mouse@@QAEX_N@Z,0x00016A68,ScriptActions disable-input and enable-input paths identify the Mouse visibility setter ILT
+?setVideoBuffer@GameWindowInstanceData@@QAEXXZ,0x0002E073,retail BFME WindowVideo init callee; ABI-shaped no-argument instance-data setter
 ?setVoteFrame@NetDisconnectVoteCommandMsg@@QAEXI@Z,0x000436C1,ILT thunk; real body 0xA73D50
 ?setWakeFrame@ALU_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@GBB_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
@@ -82244,6 +82245,7 @@ name,address,notes
 ?winGetHiliteTextBorderColor@GameWindow@@QAEHXZ,0x00019961,retail callee decoded from assigned push-button text color helper
 ?winGetHiliteTextColor@GameWindow@@QAEHXZ,0x0000A128,retail callee decoded from assigned push-button text color helper
 ?winGetInstanceData@GameWindow@@QAEPAUGameWindowInstanceData@@XZ,0x00034991,small scale transition instance data ILT
+?winGetInstanceData@GameWindow@@QAEPAVGameWindowInstanceData@@H@Z,0x00034991,retail BFME WindowVideo init callee; ABI-shaped handle argument
 ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ,0x00034991
 ?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ,0x000402F5
 ?winGetNext@GameWindow@@QAEPAV1@XZ,0x0000D2B0
