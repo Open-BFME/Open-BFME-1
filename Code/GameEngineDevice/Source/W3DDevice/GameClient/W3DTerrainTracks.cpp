@@ -451,17 +451,20 @@ void TerrainTracksRenderObjClass::Render(RenderInfoClass & rinfo)
 /**Find distance between the "trackfx" bones of the model.  This tells us the correct
    width for the trackmarks.
 */
-static Real computeTrackSpacing(RenderObjClass *renderObj)
+static Real computeTrackSpacing(RenderObjClass *renderObj, const Char *leftBone, const Char *rightBone)
 {
 	Real trackSpacing = DEFAULT_TRACK_SPACING;
 	Int leftTrack;
 	Int rightTrack;
 
-	if ((leftTrack=renderObj->Get_Bone_Index( "TREADFX01" )) != 0 && (rightTrack=renderObj->Get_Bone_Index( "TREADFX02" )) != 0)
+	rightTrack=renderObj->Get_Bone_Index( leftBone );
+	leftTrack=renderObj->Get_Bone_Index( rightBone );
+
+	if (rightTrack != 0 && leftTrack != 0)
 	{	//both bones found, determine distance between them.
 		Vector3 leftPos,rightPos;
-		leftPos=renderObj->Get_Bone_Transform( leftTrack ).Get_Translation();
-		rightPos=renderObj->Get_Bone_Transform( rightTrack ).Get_Translation();
+		leftPos=renderObj->Get_Bone_Transform( rightTrack ).Get_Translation();
+		rightPos=renderObj->Get_Bone_Transform( leftTrack ).Get_Translation();
 		rightPos -= leftPos;	//get distance between centers of tracks
 		trackSpacing = rightPos.Length() + DEFAULT_TRACK_WIDTH;	//add width of each track
 		///@todo: It's assumed that all tank treads have the same width.
@@ -507,7 +510,7 @@ TerrainTracksRenderObjClass *TerrainTracksRenderObjClassSystem::bindTrack( Rende
 			m_usedModules->m_prevSystem = mod;
 		m_usedModules = mod;
 
-		mod->init(computeTrackSpacing(renderObject),length,texturename);
+		mod->init(computeTrackSpacing(renderObject, "TREADFX01", "TREADFX02"),length,texturename);
 		mod->m_bound=true;
 		m_TerrainTracksScene->Add_Render_Object( mod);
 	}  // end if
