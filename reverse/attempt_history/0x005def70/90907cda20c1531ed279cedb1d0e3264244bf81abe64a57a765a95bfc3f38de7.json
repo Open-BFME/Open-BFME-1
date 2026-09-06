@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "90907cda20c1531ed279cedb1d0e3264244bf81abe64a57a765a95bfc3f38de7",
+  "symbol": "?d_005def70@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_005def70@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// 108/104 with the per-file /EHs-c- directive; 142 without it (MSVC wraps the\n// guarded construction in an SEH frame that retail does not have).\n// Head of a 17-body family at 0x005DEF70 0x005DF120 0x005DF480 0x005DF510\n// 0x005E0820 0x005E08B0 0x005E0A70 0x005E0CB0 0x005E0E60 0x005E1010 0x005E11C0\n// 0x005E14F0 0x005E1690 0x005E1830 0x005E19B0 0x005E1B50 and 0x005DF2D0.\n// cl: /EHs-c-\nextern \"C\" void *bfmeVtFN[];\n\nclass BfmeStaticFN;\n\nextern void **g_bfmeSrcAFN;\nextern void ***g_bfmeSrcBFN;\nextern BfmeStaticFN *g_bfmeHeadFN;\n\nclass BfmeStaticFN\n{\npublic:\n\tBfmeStaticFN(void)\n\t{\n\t\tm_bfmeBFN = **g_bfmeSrcBFN;\n\t\tm_bfmeAFN = *g_bfmeSrcAFN;\n\t\tm_bfmeNextFN = g_bfmeHeadFN;\n\t\tg_bfmeHeadFN = this;\n\t\tm_bfmeVtFN = bfmeVtFN;\n\t}\n\t~BfmeStaticFN(void);\n\n\tvoid *m_bfmeVtFN;\n\tvoid *m_bfmeAFN;\n\tvoid *m_bfmeBFN;\n\tBfmeStaticFN *m_bfmeNextFN;\n};\n\nBfmeStaticFN *bfmeGetFN(void)\n{\n\tstatic BfmeStaticFN s_bfmeInstanceFN;\n\treturn &s_bfmeInstanceFN;\n}\n"
+}
