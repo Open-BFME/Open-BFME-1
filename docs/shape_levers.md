@@ -85,6 +85,19 @@ spelling is the original EA source. Failed neighboring hypotheses remain banked.
   complete bodies passed the normal relocation-aware byte gate and have a
   matched highlight-filter caller. Neither needs new symbol pins or inline asm.
 
+## Verify the deleting-destructor ABI before chasing frame layout
+
+`Campaign::newMission` (RVA `0x005BC7C0`, 343 bytes) was banked as a
+stack-layout near miss. The old shim emitted 337 bytes. Modeling the retail
+null check and virtual deleting-destructor call (`push 1; call [edx]`) made
+the complete body exact; explicit virtual destruction emitted flag zero.
+Mission's retail vtable at VA `0x0110F658` leads through `0x0044534A` to
+`0x009BBDF0`, whose flag-one path calls global delete at `0x00C81EB0`.
+The Generals reference's get-pool / destroy / freeBlock implementation is
+therefore not the lifetime model for this BFME caller. The accepted source
+uses a TU-local lifetime view and emits no vtable. For another family, trace
+its actual vtable and free path first; this is not a global pool-shim change.
+
 ## Fleet tools (all read-only except add_match/re_log)
 
 | Need | Tool |
