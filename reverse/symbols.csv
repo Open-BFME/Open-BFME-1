@@ -3134,6 +3134,7 @@ name,address,notes
 ??0Rva008030C0Elem@@QAE@XZ,0x00802FC0,FESL Rva00803080 pool-init element default ctor; ??_L target of 0x008030C0
 ??0Rva00891540DebugIOCon@@QAE@XZ,0x00891320,address-derived factory callee proven by 0x00891540
 ??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
+??0Rva0096E1B0Elem@@QAE@XZ,0x000427EE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0096E1B0 calls; autopin
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
 ??0Rva0097ADF0Node@@QAE@XZ,0x00979690,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097ADF0 calls; autopin
 ??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
@@ -9397,6 +9398,7 @@ name,address,notes
 ??_7Gen0082AF40@@6B@,0x00D2E918,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF40
 ??_7Gen0082AF60@@6B@,0x00D2E924,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF60
 ??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
+??_7Gen_001260D0ModuleDataVtbl@@6B@,0x00C8E998,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001260D0 calls; autopin
 ??_7Gen_0057ECF0@@6B@,0x00C806B0,Open-BFME5 vftable installed by the copy constructor at 0x0057ECF0
 ??_7Gen_00587D40@@6B@,0x00D0BA30,Gen_00587D40 vtable
 ??_7HealCrateCollide@@6B@,0x010AA598,secondary vtable at this+0x10
@@ -9747,6 +9749,7 @@ name,address,notes
 ??_GWeaponChangeSpecialPowerModule@@MAEPAXI@Z,0x000320DD,primary class vtable slot zero ILT to 0x0026CCD0
 ??_GWeaponSetSpecialAbilityUpdate@@MAEPAXI@Z,0x000298A2,primary class vtable slot zero ILT to 0x0026DDD0
 ??_GWoundArrowUpdate@@MAEPAXI@Z,0x0003170F,primary class vtable slot zero ILT to 0x0026E130
+??_H@YGXPAXIHP6EPAX0@Z@Z,0x0000AE5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0096E1B0 calls; autopin
 ??_L@YGXPAXIHP6EX0@Z1@Z,0x009F6EE4
 ??_M@YGXPAXIHP6EX0@Z@Z,0x009F6D76,Open-BFME5 the eh vector destructor iterator the array-owning destructors call
 ??_U@YAPAXI@Z,0x00881F30
@@ -75802,6 +75805,7 @@ name,address,notes
 ?buildFieldParse@Gen0003B7F0@@SAXAAVWideMulti@@@Z,0x0003B7F0,base-class buildFieldParse reached via incremental-link thunk; address-derived name
 ?buildFieldParse@Gen0003BD86@@SAXAAVWideMulti@@@Z,0x0003BD86,base-class buildFieldParse reached via incremental-link thunk; address-derived name
 ?buildFieldParse@Gen0004B650@@SAXAAVWideMulti@@@Z,0x0004B650,base-class buildFieldParse reached via incremental-link thunk; address-derived name
+?buildFieldParse@Gen_001260D0@@SAXAAVMultiIniFieldParse@@@Z,0x000336BD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001260D0 calls; autopin
 ?buildFieldParse@MonsterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001C008,unique ILT to 0x002CDA00
 ?buildFieldParse@RailedTransportDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00014326,unique ILT to 0x002CE290
 ?buildFieldParse@RepairDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00030521,unique ILT to 0x002CECF0
@@ -76183,6 +76187,7 @@ name,address,notes
 ?construct@DeployStyleAIUpdateModuleDataBaseShim@@QAEXXZ,0x00048A3B,DeployStyleAIUpdate base
 ?construct@EvaSideSoundsConstructShim@_STL@@SAXPAUEvaSideSounds@@ABU3@@Z,0x003685C0,_STL _Construct EvaSideSounds incremental-link thunk target through a TU-local forwarding shim
 ?construct@GateProxyBehaviorModuleDataBaseShim@@QAEXXZ,0x0001659F,GateProxyBehavior ModuleData base
+?construct@Gen_001260D0ModuleDataBaseShim@@QAEXXZ,0x000441CA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001260D0 calls; autopin
 ?construct@HemisphericalEmissionVelocityModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x000178A0,HemisphericalEmissionVelocityModule constructor thunk used through a TU-local layout shim
 ?construct@HemisphericalEmissionVelocityTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0002DB50,HemisphericalEmissionVelocityModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@HemisphericalEmissionVelocityTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x0001BF86,HemisphericalEmissionVelocityModuleTemplate constructor thunk used through a TU-local layout shim
