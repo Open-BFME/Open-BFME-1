@@ -2135,6 +2135,8 @@ name,address,notes
 ??0BfmeBase1140A@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140B@@QAE@XZ,0x0001B522,pin
 ??0BfmeBaseBB@@QAE@XZ,0x0001B522,pin
+??0BfmeBaseBC@@QAE@XZ,0x0001B522,pin
+??0BfmeBaseBE@@QAE@XZ,0x0001B522,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBigVSZ@@QAE@ABV0@@Z,0x00047B27,pin
@@ -9707,9 +9709,11 @@ name,address,notes
 ??_C@_0CE@MMFOENO@AnimatedParticleSysBoneClientUpd@,0x00C8F7CC,pool-glue cascade static (back-solved)
 ??_C@_0CG@HNFICCF@RemoveModule?5?$CFs?5was?5not?5found?5fo@,0x010940F8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001431D0 calls; autopin
 ??_C@_0CK@IOLAIFDE@Expected?5oldMode?5to?5be?5MODULEPAR@,0x010940B0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001431D0 calls; autopin
+??_C@_0CO@JGNAOOGP@ParseIconObjectBlock?3?3Invalid?5da@,0x01115D6C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
 ??_C@_0DC@ONEIEGHO@F?3?$AIfmeCodegameengineSourceGameLo@,0x0109769C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0016DF90 calls; autopin
 ??_C@_0DF@IABNOJPE@ControlPoint?3?3ParseINIBlock?3?3Inv@,0x0107538C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
 ??_C@_0DI@KDAAEBDM@ReplaceModule?5?$CFs?5was?5not?5found?5f@,0x01094128,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00143320 calls; autopin
+??_C@_0DO@NADNCPBE@Unknown?5command?5?8?$CFs?8?5found?5in?5co@,0x010FB7C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
 ??_C@_0L@BJCDJCGK@UpgradeDie?$AA@,0x00C90838,pool-glue cascade static (back-solved)
 ??_C@_0L@BJHONFCE@DestroyDie?$AA@,0x00C908C0,pool-glue cascade static (back-solved)
 ??_C@_0L@OBFJOAEI@MODE?5?$CFs?5?$CLb?$AA@,0x00D311D8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
@@ -10662,6 +10666,7 @@ name,address,notes
 ?Rva0051DCE0Second@@YAXXZ,0x0001285A,ILT to 0x00579440 for 13B two-call wrap at 0x0051DCE0
 ?Rva0056C1C0Consume@@YAXPAXVBfmeUnicodeString@@@Z,0x0000C874,address-scoped Unicode value consumer called by the 0x0056C1C0 state-owner method
 ?Rva00605F00@@YGPAIPAI@Z,0x00605F00
+?Rva0060B710FieldParseTable@@3QBUFieldParse@@B,0x01115CC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
 ?Rva0061C060@LivingWorldSound@@QAEXXZ,0x00002C2A,LivingWorldSound copy constructor post-process helper thunk
 ?Rva00739900Forward@@YAXPAXM@Z,0x000246A4,Open-BFME5 ILT thunk used by the 0x006FCBD0 clamped float forwarder
 ?Rva00739B30@@YAXPAVRva00609560Item@@H@Z,0x00739B30
@@ -12109,6 +12114,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0003B075,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001E8670 calls; autopin
 ?_M_insert_overflow@?$vector@IV?$allocator@I@_STL@@@_STL@@IAEXPAIABIABU__true_type@2@I_N@Z,0x0001CBFC,Audio handle vector growth ILT called by 0x006145C0
 ?_M_insert_overflow@?$vector@MV?$allocator@M@_STL@@@_STL@@IAEXPAMABMABU__true_type@2@I_N@Z,0x000264D1,Open-BFME5 ILT thunk to 0x000D32E0 - the overflow arm of _M_fill_insert at 0x00459D90. That body already carries a generated four-byte-POD _M_insert_overflow identity (Gen_t_000d6300_m4pod) which agrees the element is four bytes wide
+?_M_insert_overflow@?$vector@PAURva0060B710IconObject@@V?$allocator@PAURva0060B710IconObject@@@_STL@@@_STL@@IAEXPAPAURva0060B710IconObject@@ABQAU3@ABU__true_type@2@I_N@Z,0x00032ECF,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
 ?_M_insert_overflow@?$vector@PAVBfmeArmyIcon@@V?$allocator@PAVBfmeArmyIcon@@@_STL@@@_STL@@IAEXPAPAVBfmeArmyIcon@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001E051,retail findArmyIcon overflow call directly identifies vector<BfmeArmyIcon*> overflow helper
 ?_M_insert_overflow@?$vector@PAVBfmeLivingWorldAnimObject@@V?$allocator@PAVBfmeLivingWorldAnimObject@@@_STL@@@_STL@@IAEXPAPAVBfmeLivingWorldAnimObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000094D5,STL vector overflow helper ILT decoded from findAnimObject retail callsite
 ?_M_insert_overflow@?$vector@PAVChainVictim005C92F0@@V?$allocator@PAVChainVictim005C92F0@@@_STL@@@_STL@@IAEXPAPAVChainVictim005C92F0@@ABQAV3@ABU__true_type@2@I_N@Z,0x00016AE5,Sub005C92F0 copy constructor retail call invokes the vector insert-overflow ILT thunk
@@ -78956,6 +78962,7 @@ name,address,notes
 ?getFileListInDirectory@ArchiveFile@@QBEXABVAsciiString@@00AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z,0x009D0820,positional and NOT yet confirmed by a byte match: only call between the three AsciiString ctors and their three releaseBuffers in loadIntoDirectoryTree
 ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z,0x0001D8C2,incremental-link thunk called by doesSaveGameExist
 ?getFileTransferProgress@ConnectionManager@@QAEHHVAsciiString@@@Z,0x00038113,ILT thunk to 0x00669A00; the address Network::getFileTransferProgress at 0x00682640 encodes
+?getFilename@INI@@QBE?AVAsciiString@@XZ,0x0002F04F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
 ?getFilename@Image@@QBE?AVAsciiString@@XZ,0x00520640,exact BFME Image filename getter body; 0x000336AE is its incremental-link thunk
 ?getFilename@WindowLayout@@QAE?AVAsciiString@@XZ,0x00019D53,BFME WindowLayout +0x04 accessor: Shell::findScreenByFilename retail callsite passes WindowLayout receiver and hidden AsciiString return; ILT 0x00019D53 targets exact 32B StringBase<char> copy-accessor body at 0x004EA450
 ?getFilter@ShroudTexture@@QAEPAVShroudFilter@@XZ,0x0090DD50,BFME W3DShroud texture filter accessor used by ReAcquireResources
@@ -79017,6 +79024,7 @@ name,address,notes
 ?getLayer@Object@@QBEHXZ,0x0003A391,ILT thunk to the object layer accessor at 0x001BEC20
 ?getLayer@Pathfinder@@QAEHPBUCoord3D@@@Z,0x0001A95B,Open-BFME5 ILT Pathfinder cell-layer lookup used by AIUpdate layersCompatible
 ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z,0x0001C675,tightenPath 2-arg BFME getLayer (thunk->0x001A7C20)
+?getLineNum@INI@@QBEHXZ,0x00850810,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
 ?getListInScoreScreen@Player@@QBE_NXZ,0x000C9700,returns the byte at Player+0x29c (ZH order m_observer +0x296; m_isPreorder +0x297; Real m_skillPointsModifier +0x298; m_listInScoreScreen +0x29c); the only caller is the score screen 0x004E8519 which matches ZH ScoreScreen.cpp:2185 (isInSinglePlayerGame == FALSE || getListInScoreScreen == TRUE); setter twin 0x000C96F0 stores the byte; ILT 0x00046704
 ?getListboxBottomEntry@@YAHPAU_ListboxData@@@Z,0x004B6BA0
 ?getListboxBottomEntry@@YIHPAU_ListboxData@@@Z,0x004B6BA0,__fastcall spelling of the same body as the YA pin; call site 0x004B8586 is mov ecx,eax + call with no stack cleanup
@@ -84185,5 +84193,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BfmeBaseBC@@QAE@XZ,0x0001B522,pin
-??0BfmeBaseBE@@QAE@XZ,0x0001B522,pin
