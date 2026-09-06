@@ -374,6 +374,7 @@ name,address,notes
 ??$_Construct@URva00064A30Value@@U1@@_STL@@YAXPAURva00064A30Value@@ABU1@@Z,0x0000EF6B,Open-BFME5 the value _Construct the tree _M_insert at 0x00064A30 reaches
 ??$_Construct@URva00080220Element@@U1@@_STL@@YAXPAURva00080220Element@@ABU1@@Z,0x00007554,Open-BFME5 the element _Construct the list push_back at 0x00080220 calls
 ??$_Construct@URva0009F200Element@@U1@@_STL@@YAXPAURva0009F200Element@@ABU1@@Z,0x00026503,Open-BFME5 the element _Construct the list insert at 0x0009F200 calls
+??$_Construct@URva0009F290Payload@@U1@@_STL@@YAXPAURva0009F290Payload@@ABU1@@Z,0x00026503,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0009F290 calls; autopin
 ??$_Construct@URva0009F3A0Element@@U1@@_STL@@YAXPAURva0009F3A0Element@@ABU1@@Z,0x00026503,Open-BFME5 the element _Construct the list push_back at 0x0009F3A0 calls
 ??$_Construct@URva000A8500Element@_STL@@@_STL@@YAXPAURva000A8500Element@0@ABU10@@Z,0x00044675,Open-BFME5 the element _Construct the vector insert at 0x000A8500 calls
 ??$_Construct@URva000B19F0Element@_STL@@@_STL@@YAXPAURva000B19F0Element@0@ABU10@@Z,0x00039F86,Open-BFME5 the element _Construct the vector insert at 0x000B19F0 calls
@@ -440,6 +441,7 @@ name,address,notes
 ??$_Construct@URva003B23D0Element@_STL@@@_STL@@YAXPAURva003B23D0Element@0@ABU10@@Z,0x000027A2,Open-BFME5 the element _Construct the vector insert at 0x003B23D0 calls
 ??$_Construct@URva003BB340Element@_STL@@@_STL@@YAXPAURva003BB340Element@0@ABU10@@Z,0x0003385C,Open-BFME5 the element _Construct the vector insert at 0x003BB340 calls
 ??$_Construct@URva003BFEF0Element@@U1@@_STL@@YAXPAURva003BFEF0Element@@ABU1@@Z,0x000365CA,Open-BFME5 the element _Construct the list insert at 0x003BFEF0 calls
+??$_Construct@URva003C0000Payload@@U1@@_STL@@YAXPAURva003C0000Payload@@ABU1@@Z,0x000365CA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003C0000 calls; autopin
 ??$_Construct@URva003C07C0Element@@U1@@_STL@@YAXPAURva003C07C0Element@@ABU1@@Z,0x000365CA,Open-BFME5 the element _Construct the list push_back at 0x003C07C0 calls
 ??$_Construct@URva00424380Value@@U1@@_STL@@YAXPAURva00424380Value@@ABU1@@Z,0x00031AE3,twin callee for retail 0x00424380 (_M_copy_from byte-twin of 0x000D6800)
 ??$_Construct@URva00430E90Element@@U1@@_STL@@YAXPAURva00430E90Element@@ABU1@@Z,0x000404E4,Open-BFME5 the element _Construct the list insert at 0x00430E90 calls
@@ -607,6 +609,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBURva003B20C0Element@_STL@@@?$vector@URva003B20C0Element@_STL@@V?$allocator@URva003B20C0Element@_STL@@@2@@_STL@@IAEPAURva003B20C0Element@1@IPBU21@0@Z,0x0000AF7E,"Retail: lea eax,[eax+eax*8]; shl eax,2 (count*36), allocate, then loop call 0x00032BF0 (_Construct already pinned for Rva003B20C0Element) and add esi,0x24. Same construct helper and stride as uninitialized_copy. Already matched as vector<Rva003B6020Element>::_M_allocate_and_copy; ICF-identical 36-byte construct walk. Pin names this type's member-template, which is the caller specialization, not a different width."
 ??$_M_allocate_and_copy@PBUS4Poly000BC2E0@@@?$vector@US4Poly000BC2E0@@V?$allocator@US4Poly000BC2E0@@@_STL@@@_STL@@IAEPAUS4Poly000BC2E0@@IPBU2@0@Z,0x00011A31,0x004A2370 call +0x0059 ILT enters matched 112-byte allocate-and-copy body 0x0049F580
 ??$_M_allocate_and_copy@PBUS4Poly00136170@@@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEPAUS4Poly00136170@@IPBU2@0@Z,0x0000AC27,0x00138D70 call +0x0059 ILT enters matched 0x00138C40 allocate-and-copy body
+??$_M_allocate_and_copy@PBUWeaponBarrelInfo@@@?$vector@UWeaponBarrelInfo@@V?$allocator@UWeaponBarrelInfo@@@_STL@@@_STL@@IAEPAUWeaponBarrelInfo@@IPBU2@0@Z,0x007653C0,Open-BFME7 retail REL32 target the Resize/operator= body at 0x0076ACD0 calls for the reallocate-and-copy path; width-60 instance of the generic allocate helper (Bfme5CopyRangeOutOfLine.cpp)
 ??$_M_allocate_and_copy@PBVOpen2Elem138090@@@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEPAVOpen2Elem138090@@IPBV2@0@Z,0x00045174,Open2 0x138090 vector twin callee
 ??$_M_allocate_and_copy@PBVOpen2Elem3B5860@@@?$vector@VOpen2Elem3B5860@@V?$allocator@VOpen2Elem3B5860@@@_STL@@@_STL@@IAEPAVOpen2Elem3B5860@@IPBV2@0@Z,0x0002E221,Open2 0x3b5860 vector twin callee
 ??$_M_allocate_and_copy@PBVOpen2Elem3B59D0@@@?$vector@VOpen2Elem3B59D0@@V?$allocator@VOpen2Elem3B59D0@@@_STL@@@_STL@@IAEPAVOpen2Elem3B59D0@@IPBV2@0@Z,0x0000A78B,Open2 0x3b59d0 vector twin callee
@@ -829,6 +832,7 @@ name,address,notes
 ??$__copy@PBURva003B20C0Element@_STL@@PAU12@H@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000835A,"Retail uses the same 0x38E38E39 sar-3 /36 magic, then a counted loop that assigns while skipping +0: UnicodeString::set at +4 (0x00887C90), thiscall at +8 through ILT 0x00007A63, dwords +0x14/+0x18/+0x1C, bytes +0x20/+0x21/+0x22, add 0x24. Skipping +0 is compiler-generated operator= leaving the vptr alone. The gen-tgrid name __copy_backward of a 128-byte POD on 0x003B5EA0 is a candidate, not this body. Pinning __copy of the virtual 36-byte element is the specialization that matches the bytes."
 ??$__copy@PBUS4Poly000BC2E0@@PAU1@H@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000FC40,0x004A2370 calls +0x00b1 and +0x00e4 ILT enters matched 112-byte copy body 0x0049D5D0
 ??$__copy@PBUS4Poly00136170@@PAU1@H@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B136,0x00138D70 calls +0x00b1 and +0x00e4 ILT enters matched width-92 copy body 0x00138800
+??$__copy@PBUWeaponBarrelInfo@@PAU1@H@_STL@@YAPAUWeaponBarrelInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0075EB00,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls twice (overwrite copy and tail uninitialized copy); matched __copy<WeaponBarrelInfo> in W3DModelDraw.cpp
 ??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
 ??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
 ??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
@@ -1185,6 +1189,7 @@ name,address,notes
 ??$__uninitialized_copy@PBURva003B20C0Element@_STL@@PAU12@@_STL@@YAPAURva003B20C0Element@0@PBU10@0PAU10@ABU__false_type@0@@Z,0x00026DD2,"Retail: while first!=last call 0x00032BF0 (_Construct for this type), add esi,0x24 and edi,0x24. Matched as rva003AB940CopyWalk stride-36. __false_type uninitialized_copy is the non-POD path, which a virtual destructor requires. Same _Construct as allocate_and_copy."
 ??$__uninitialized_copy@PBUS4Poly000BC2E0@@PAU1@@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001FCF3,0x004A2370 call +0x0119 ILT enters matched stride-112 copy walk 0x0049E6D0
 ??$__uninitialized_copy@PBUS4Poly00136170@@PAU1@@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00013CBE,0x00138D70 call +0x0119 ILT enters matched width-92 copy walk body 0x00138B20
+??$__uninitialized_copy@PBUWeaponBarrelInfo@@PAU1@@_STL@@YAPAUWeaponBarrelInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x007615A0,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls; width-60 generic Elem60 copy walk (ElementStrideWalks.cpp)
 ??$__uninitialized_copy@PBVOpen2Elem138090@@PAV1@@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABU__false_type@0@@Z,0x000370AB,Open2 0x138090 vector twin callee
 ??$__uninitialized_copy@PBVOpen2Elem3B5860@@PAV1@@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABU__false_type@0@@Z,0x0002ECCB,Open2 0x3b5860 vector twin callee
 ??$__uninitialized_copy@PBVOpen2Elem3B59D0@@PAV1@@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABU__false_type@0@@Z,0x00031F34,Open2 0x3b59d0 vector twin callee
@@ -3771,6 +3776,7 @@ name,address,notes
 ??1?$pair@$$CBVAsciiString@@URva0046C540Mapped@@@_STL@@QAE@XZ,0x00047B40,operator[] retail temporary-pair destructor ILT; jumps to 0x004683C0
 ??1?$pair@$$CBVAsciiString@@V1@@_STL@@QAE@XZ,0x0002517B
 ??1?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@QAE@XZ,0x0001DC05,InGameUI superweapon map pair destructor thunk
+??1?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@XZ,0x009CEFB0,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls to destroy its temporary pair; matched PeerDefs.cpp
 ??1?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@QAE@XZ,0x0007CB30,releases the AsciiString at +4 then at +0; the per-node dtor of the PreferenceMap _M_erase 0x0007D250 (ILT 0x00031EF3); ledger row is a Gen_t placeholder
 ??1?$pair@$$CBVAsciiString@@VBannerType@@@_STL@@QAE@XZ,0x00011487,BannerType hash_map value-pair destruction ILT proven by operator subscript cleanup
 ??1?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@QAE@XZ,0x00012D78
@@ -11130,6 +11136,7 @@ name,address,notes
 ?_M_clear@?$vector@US4Poly000BC2E0@@V?$allocator@US4Poly000BC2E0@@@_STL@@@_STL@@IAEXXZ,0x0002DFF1,0x004A2370 call +0x0062 ILT enters matched polymorphic vector destructor 0x000BC2E0
 ?_M_clear@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEXXZ,0x00008A7B,0x00138D70 call +0x0062 ILT enters matched vector<S4Poly00136170> destructor body 0x00136170
 ?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
+?_M_clear@?$vector@UWeaponBarrelInfo@@V?$allocator@UWeaponBarrelInfo@@@_STL@@@_STL@@IAEXXZ,0x0076AAC0,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls to release the old storage before reallocating; width-60 vector teardown (Q3VectorStorageRelease.cpp)
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
 ?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
 ?_M_clear@?$vector@VOpen2Elem138090@@V?$allocator@VOpen2Elem138090@@@_STL@@@_STL@@IAEXXZ,0x00039707,Open2 0x138090 vector twin callee
@@ -12384,6 +12391,7 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V1@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V1@@_STL@@@2@ABVAsciiString@@@Z,0x0002D029,UserPreferences retail lower-bound thunk candidate
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009C9CE0,pin
+?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFC80,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls; matched RvaTreeBoundsAsciiString.cpp
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x00003585,ILT thunk to the tree lower-bound walk at 0x0033F2E0; the map spelling whose mapped type is a four-byte enumeration
@@ -43551,8 +43559,6 @@ name,address,notes
 ?b_003c8160@@YAXXZ,0x003C8160,gen-thunk body
 ?b_003c8300@@YAXXZ,0x003C8300,gen-thunk body
 ?b_003c8340@@YAXXZ,0x003C8340,gen-thunk body
-?release@Rva003C8340@@QAEXPAVRva003C8340Item@@H@Z,0x003F413,address-derived release helper called by Rva003C8340::set
-?prepare@Rva003C8340@@QAEXPAVRva003C8340Item@@@Z,0x003C7D20,address-derived no-op helper called by Rva003C8340::set
 ?b_003c83e0@@YAXXZ,0x003C83E0,gen-thunk body
 ?b_003c84c0@@YAXXZ,0x003C84C0,gen-thunk body
 ?b_003c84e0@@YAXXZ,0x003C84E0,gen-thunk body
@@ -80202,6 +80208,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@@Z,0x000472C1,WOLLogin tree unique insert thunk
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@2@@Z,0x009C9D80,pin
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@@Z,0x009C9D80,pin
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@2@@Z,0x009CFFE0,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls; matched RvaTreeInsertUniqueHint.cpp
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@2@@Z,0x009CFD20,DetailedArchivedDirectoryInfo map subscript tree insertion
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@URva000633E0Less@@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@2@@Z,0x00039B85,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000633E0 calls; autopin
 ?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@VHotKey@@@2@@Z,0x00039A54,HotKey tree unique insert thunk
@@ -80887,6 +80894,7 @@ name,address,notes
 ?prepare@Rva0025EB40State@@QAEXXZ,0x002A9420,address-derived base call from the 53-byte model-condition update body
 ?prepare@Rva002BC470StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC470 state action
 ?prepare@Rva002BC4E0StateAction@@QAEXPAX0@Z,0x000284B1,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
+?prepare@Rva003C8340@@QAEXPAVRva003C8340Item@@@Z,0x003C7D20,address-derived no-op helper called by Rva003C8340::set
 ?prepare@Rva0060FFC0Owner@@QAEXXZ,0x00028F92,RVA-derived ILT callee of the UI reset at 0x0060FFC0
 ?prepare@Rva00751EC0Owner@@AAEXPAVRva00751EC0Target@@@Z,0x00011CBB,Open-BFME5 ILT thunk to the 0x00776AC0 target preparation body
 ?prepare@Rva007EAD30Owner@@QAEXXZ,0x007EAA70,prepare helper for 0x007EAD30 send
@@ -81056,6 +81064,7 @@ name,address,notes
 ?release@Mem00887940@@QAEXXZ,0x00887940,StringBase releaseBuffer body called from destructor BODIES at 0x003B8450 and 0x003B8710; same address as the destructor it folds with
 ?release@Rva0005C6B0Holder@@QAEXXZ,0x0005C6B0,out-of-line release of the small-buffer conversion holder; reached from 0x0005E1E0 via ILT 0x0002F0AE
 ?release@Rva00199180Held@@QAEXXZ,0x000384E7,address-derived held release called by 0x00199180
+?release@Rva003C8340@@QAEXPAVRva003C8340Item@@H@Z,0x003F413,address-derived release helper called by Rva003C8340::set
 ?release@Rva0048C200String@@QAEXXZ,0x00887940,StringBase compatible release body
 ?release@Rva006ABFD0File@@QAEXXZ,0x000311BF,ILT thunk to 0x00691080 called from 0x006ABFD0
 ?release@Rva007D6AB0SubPtr@@QAEXXZ,0x009EB7A0,retail callee decoded from assigned filter destructor at 0x007D6AB0
@@ -82641,6 +82650,7 @@ __imp__SHGetPathFromIDListA@8,0x01359168,Open-BFME retail SHELL32 SHGetPathFromI
 __imp__SHGetSpecialFolderLocation@12,0x0135916C,Open-BFME retail SHELL32 SHGetSpecialFolderLocation import pointer
 __imp__SetCursor@4,0x00F5906C,Win32 SetCursor import used by Win32Mouse::setCursor
 __imp__WaitForSingleObject@8,0x00F58F64,retail KERNEL32 import pointer
+__imp___stricmp,0x0135933C,Open-BFME7 CRT stricmp import slot called by AsciiComparator at 0x00631350
 __imp___strnicmp,0x00F59348,MSVCR71 _strnicmp IAT slot; retail import identity verified
 __imp__bfme006EE640Memmove,0x0135945C,retail memmove IAT slot used by the exact STLport vector erase at 0x006EE640
 __imp__bfmeCloseDWE@4,0x00F590C8,pin

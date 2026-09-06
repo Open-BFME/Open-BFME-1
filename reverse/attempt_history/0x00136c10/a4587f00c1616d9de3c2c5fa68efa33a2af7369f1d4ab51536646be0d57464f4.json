@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a4587f00c1616d9de3c2c5fa68efa33a2af7369f1d4ab51536646be0d57464f4",
+  "symbol": "?d_00136c10@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?d_00136c10@@YAXXZ\n// partial score=0.55 date=2026-09-06\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n\n// Open-BFME7: STLport vector<T>::operator= for the 0xEC (236-byte) element\n// family, retail 0x00136C10, 258 bytes. Fuzzy twin of\n// Rva003B6A40VectorAssign.cpp's vector<Rva003AC170Element>::operator=\n// (271 B, element width 0xDC): same shape, element width 0xEC.\n//\n// The per-element copy call resolves to the already-matched, width-0xEC\n// generic copier declared in Bfme5AllocateAndCopy.cpp\n// (?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,\n// retail 0x00133F50, reached here through ILT 0x0002C14C) -- that helper\n// takes (first, last, result, counter), the exception-safe\n// uninitialized-copy shape, so this TU is built with ordinary (non\n// -D_STLP_NO_EXCEPTIONS) STLport rather than the fuzzy twin's /D_STLP_NO_EXCEPTIONS.\n\n#include <vector>\n\nstruct Elem236\n{\n\tchar m_body[0xEC];\n\tElem236();\n\tElem236(const Elem236 &other);\n\t~Elem236();\n\tElem236 &operator=(const Elem236 &other);\n};\n\ntemplate class _STL::vector<Elem236>;\n"
+}
