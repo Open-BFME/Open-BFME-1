@@ -83945,12 +83945,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeFirstFU@BfmeSubFU@@QAEXPAX@Z,0x0001F753,pin
-?bfmeSecondFU@BfmeSubFU@@QAEXPAX@Z,0x00019A6A,pin
-?bfmeThirdFU@BfmeSubFU@@QAEXPAX@Z,0x00040A52,pin
-?g_bfmeAudioFU@@3PAVBfmeAudioFU@@A,0x00EED668,pin
-?bfmeResetFV@BfmePrimaryFV@@QAEXXZ,0x000076E9,pin
-?bfmeAdvanceFV@BfmePrimaryFV@@QAEXH@Z,0x0003BDD6,pin
-?g_bfmeGameLogicFV@@3PAVBfmeLogicFV@@A,0x00EF0898,pin
 ?bfmeHelperFW@@YAXPAVBfmeXferFW@@PAVBfmeSubFW@@@Z,0x00008BE3,pin
 ?bfmeApplyFW@BfmeSubFW@@QAEXPAX0@Z,0x00024C17,pin
