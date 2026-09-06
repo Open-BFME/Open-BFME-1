@@ -9245,8 +9245,10 @@ name,address,notes
 ??A?$map@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@_STL@@@_STL@@QAEAAPBVArmorTemplateSet@@ABV?$BitFlags@$0L@@@@Z,0x00036C0A,pinharvest x1 (thunk)
 ??A?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEAAEABG@Z,0x00043437,processFileAnnounce calls the ILT for the file recipient mask map operator[] at 0x006694D0
 ??A?$map@GHU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAEAAHABG@Z,0x000302F1,processFileAnnounce calls the ILT for the file progress map operator[] at 0x00669560
+??AEmotionShortMap@@QAEAAHABG@Z,0x00028D0D,Emotion::xfer second map operator[] ILT
 ??A?$map@GVAsciiString@@U?$less@G@_STL@@V?$allocator@U?$pair@$$CBGVAsciiString@@@_STL@@@3@@_STL@@QAEAAVAsciiString@@ABG@Z,0x00018C0F,processFileAnnounce calls the ILT for the matched FileCommandMap operator[] at 0x00669B50
 ??A?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x00018818,call-site operator[] for Gen_002281B0::bfmeUpdate; ILT 0x00018818 -> 0x00227110
+??AEmotionMap@@QAEAAHABH@Z,0x000033AA,Emotion::xfer first map operator[] ILT
 ??A?$map@HIU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAEAAIABH@Z,0x0003DD2A,incremental-link thunk retail uses from PSPlayerStats::incorporate
 ??A?$map@HPAUBFMELadderHttpRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBFMELadderHttpRecord@@@_STL@@@3@@_STL@@QAEAAPAUBFMELadderHttpRecord@@ABH@Z,0x0000C3B0,"Lead independently traced45B callback65BCC0 (64-bit length, int return),115B signed-int map654E90 (returns mapped pointer slot+14), and request caller ABI"
 ??A?$map@HPAUBfmeLadderCountRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBfmeLadderCountRecord@@@_STL@@@3@@_STL@@QAEAAPAUBfmeLadderCountRecord@@ABH@Z,0x0000C3B0,Lead independently traced115B654E90 signed-int key map returning node+14 mapped pointer; same rank-request helper
