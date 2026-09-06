@@ -1,0 +1,41 @@
+name: Daily BFME progress
+
+on:
+  schedule:
+    - cron: '17 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: readme-progress
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate bar and notify the test Discord
+        env:
+          DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
+        run: python tools/readme_progress.py --discord
+      - name: Commit updated bar
+        run: |
+          git add docs/progress.svg docs/discord-progress.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "docs: update README progress bar"
+          git pull --rebase origin master
+          git push origin HEAD:master

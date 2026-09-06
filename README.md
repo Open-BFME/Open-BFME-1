@@ -10,15 +10,20 @@ Goal: Source code that rebuilds BFME 1's executable byte-for-byte, and game mode
 * If you take a part of the BFME binary, recreate the exact source code that would make that part of the binary, then compile the source code and inject it into the binary, you get the same binary
 * Doing this piece by piece will eventually give you a full, open source recreation of BFME, and enable some (insane) mods
 
+[![BFME 1 rebuild progress](docs/progress.svg)](tools/progress.py)
+
 ## Status
 
-**46.29% of the game rebuilds from what we hold** — C++ we wrote, library source, generators,
+The bar above tracks how much of the game rebuilds from what we hold — C++ we wrote, library source, generators,
 libs we link. The rest is byte-true dumps of retail: a boundary, not source. Converting them
 is the work.
 
+Updated once daily from `master`, using `tools/progress.py`.
+This is ledger-derived coverage; a clean `build.sh` run is the byte-match proof.
+
 ## Roadmap
 
-* [ ] BFME 1 Source Code (46.29%)
+* [ ] BFME 1 Source Code (see the live progress bar above)
 * [x] Network delay fix
 * [ ] Memory fix
 * [ ] Better crash logs

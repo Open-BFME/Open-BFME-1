@@ -368,8 +368,10 @@ def test_readme_headline_is_a_recovered_figure():
                 if "REBUILDS FROM WHAT WE HOLD" in l)
     rebuilds = float(line.split("(")[1].split("%")[0])
 
-    status = (ROOT / "README.md").read_text(encoding="utf-8").split("## Status", 1)[1]
-    headline = float(re.search(r"(\d+\.\d+)%", status).group(1))
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert readme.index("docs/progress.svg") < readme.index("## Status")
+    svg = (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
+    headline = float(re.search(r"(\d+\.\d+)%", svg).group(1))
     assert headline <= rebuilds + 0.005, (
         f"README headlines {headline}% where progress.py says {rebuilds}%. "
         f"The README may lag reality; it may never flatter it")
@@ -397,6 +399,7 @@ def test_readme_never_overstates_coverage():
     rebuilds = float(line.split("(")[1].split("%")[0])
 
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme += (ROOT / "docs/progress.svg").read_text(encoding="utf-8")
     quoted = sorted(float(v) for v in re.findall(r"(\d+\.\d+)%", readme))
     assert quoted, "README quotes no coverage figure at all"
     for value in quoted:
