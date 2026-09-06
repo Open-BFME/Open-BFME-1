@@ -2121,6 +2121,7 @@ name,address,notes
 ??0BfmeDX8VertexBuffer@@QAE@IGW4UsageType@0@I@Z,0x0091F2F0,view-class alias of ??0DX8VertexBufferClass@@QAE@IGW4UsageType@0@I@Z; W3DVolumetricShadow.cpp allocates the retail 0x20-byte size through a standalone view because the vendored class is four bytes shorter
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
 ??0BfmeDelayedLuaEventList@@QAE@XZ,0x00019CF9,local constructor identity adapter to DelayedLuaEventList thunk
+??0BfmeElemBX@@QAE@XZ,0x00017BD9,ILT thunk: BfmeOwnVVB element (AsciiString-sized) default ctor used by the vector constructor iterator in 0x001903F0/0x00190340
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr2_1043@@QAE@XZ,0x000180D9,pin
@@ -3896,7 +3897,7 @@ name,address,notes
 ??1BfmeDtorMemberM@@QAE@XZ,0x0000E5D9,Open-BFME5 the member destructor the plain chain destructor at 0x00093CC0 calls twice
 ??1BfmeElemBU@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00099000 runs
 ??1BfmeElemBV@@QAE@XZ,0x008A20B0,Open-BFME5 the element destructor the vector delete at 0x008A2ED0 runs
-??1BfmeElemBX@@QAE@XZ,0x0000D828,Open-BFME5 the element destructor the array teardown at 0x001F6D40 runs
+??1BfmeElemBX@@QAE@XZ,0x0000D828,ILT thunk: BfmeOwnVVB element destructor (the ??1BFMERetailAsciiString thunk) used by the vector constructor iterator in 0x001903F0/0x00190340
 ??1BfmeElemBY@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array teardown at 0x0092A3D0 runs
 ??1BfmeElemBZ@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00075D70 runs
 ??1BfmeElemCB@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00619BB0 runs
@@ -79879,6 +79880,7 @@ name,address,notes
 ?init@?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@IAEXPAV?$basic_streambuf@GV?$char_traits@G@_STL@@@2@@Z,0x0083F9B0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Streams.cpp
 ?init@AudioEventRTS@@QAEXABVAsciiString@@W4ObjectID@@@Z,0x000B2CC0,GiantBirdSlowDeathBehavior audio member initializer
 ?init@BFMEPathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z,0x003FB950,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
+?init@BfmeOwnVVB@@AAEXPAX@Z,0x000026C1,ILT thunk: BfmeOwnVVB post-construction init called by both constructors
 ?init@CustomAsciiStringShim@@QAEXPBD@Z,0x00888BC0,CustomMatchPreferences getter key constructor shim
 ?init@FrameData@@QAEXXZ,0x0003BB6F,ILT thunk retail's call sites encode; double hop via 0x00670220 to the body at 0x00670170, which build_call_thunks only follows one level of
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
