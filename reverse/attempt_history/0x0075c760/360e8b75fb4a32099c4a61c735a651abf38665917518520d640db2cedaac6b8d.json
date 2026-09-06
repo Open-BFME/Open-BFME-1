@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "360e8b75fb4a32099c4a61c735a651abf38665917518520d640db2cedaac6b8d",
+  "symbol": "?d_0075c760@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_0075c760@@YAXXZ\n// partial score=0.97 date=2026-09-06\n// 63/63 exact size; retail reloads the stored float BEFORE cleaning the argument\n// stack, MSVC cleans first and reloads at the adjusted offset.\n// Pins: __imp__bfmeMathGI 0x00F59394, ?g_bfmeScaleGI@@3MB 0x00D23690 (200.0f),\n//       ?bfmeApplyGI@BfmePrimaryGI@@QAEXM@Z 0x0003F215\ntypedef float Real;\n\nextern \"C\" __declspec(dllimport) double __cdecl bfmeMathGI(double value);\n\nextern const Real g_bfmeScaleGI;\n\nclass BfmePrimaryGI\n{\npublic:\n\tvoid bfmeApplyGI(Real value);\n};\n\nclass BfmeSecondGI\n{\npublic:\n\tvoid bfmeSetGI(unsigned int amount);\n};\n\nvoid BfmeSecondGI::bfmeSetGI(unsigned int amount)\n{\n\tReal result = (Real)bfmeMathGI((Real)amount * g_bfmeScaleGI);\n\n\t((BfmePrimaryGI *)((char *)this - 0xc))->bfmeApplyGI(result);\n}\n"
+}
