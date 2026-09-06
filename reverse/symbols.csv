@@ -12594,6 +12594,7 @@ name,address,notes
 ?add@U1Sink@@QAEXPBD@Z,0x005C49D0,sink append target of the four inserter rows; address-derived name
 ?add@WideMulti@@QAEXPBUWideFieldParse@@I@Z,0x00850920,call-site callee of Rva0022A450::buildFieldParse
 ?add@WideMulti@@QAEXPBVWideFieldParse@@I@Z,0x00850920,MultiIniFieldParse::add-shaped bounded pair-of-arrays appender; address-derived name
+?appendSequentialScript@ScriptEngine@@QAEXPAVBfme5CtorA0@@@Z,0x0000146A,ABI alias for the SequentialScript append call through its incremental-link thunk
 ?add@WindowManager@@QAEXPAXPBDH0HHHH@Z,0x00015235,AptPalantir OnInitialized action sink
 ?add@WindowManager@@QAEXPAXPBDH1HHHH@Z,0x00015235,CallChild action-sink used by applyStagingRoomRefresh join-button Enable/Disable
 ?addAIGroupToCurrentSelection@Player@@QAEXPAVAIGroup@@@Z,0x000325D8,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
