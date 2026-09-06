@@ -84110,3 +84110,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeCloseAJ@BfmeOwnAJ@@QAEXH@Z,0x0003D811,pin
 ?bfmeStopAK@@YAXPAXHH@Z,0x000439C3,pin
 ?bfmeStartAK@@YAHPAX@Z,0x0002CAAC,pin
+?setKeyFromName@EventFlagEntry@@QAEXPBD@Z,0x002DFA00,shared 25-byte name-key store body used by Rva002E2970Host::initEventKeys
