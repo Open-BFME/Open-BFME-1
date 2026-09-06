@@ -83928,3 +83928,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeSetFP@BfmeSubFP@@QAEXPBD0@Z,0x0002B297,pin
 ?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
+?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin

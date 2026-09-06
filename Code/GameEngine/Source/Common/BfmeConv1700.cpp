@@ -39,3 +39,30 @@ void BfmeThingFQ::bfmeStepFQ(BfmeStateFQ *state, int arg)
 	state->m_bfmeIndexFQ = index;
 	state->m_bfmeValueFQ = m_bfmeEntriesFQ[index].m_bfmeShortFQ;
 }
+
+class BfmeTableFR
+{
+public:
+	int bfmeAdvanceFR(int index, int arg);
+
+	unsigned char m_bfmeDataFR[4];
+};
+
+class BfmeThingFR
+{
+public:
+	void bfmeStepFR(BfmeStateFQ *state, int arg);
+
+	unsigned char m_bfmeHeadFR[0xc];
+	BfmeTableFR m_bfmeTableFR;
+	unsigned char m_bfmeMidFR[8];
+	BfmeEntryFQ *m_bfmeEntriesFR;
+};
+
+void BfmeThingFR::bfmeStepFR(BfmeStateFQ *state, int arg)
+{
+	int current = state->m_bfmeIndexFQ;
+	int index = m_bfmeTableFR.bfmeAdvanceFR(current, arg);
+	state->m_bfmeIndexFQ = index;
+	state->m_bfmeValueFQ = m_bfmeEntriesFR[index].m_bfmeShortFQ;
+}
