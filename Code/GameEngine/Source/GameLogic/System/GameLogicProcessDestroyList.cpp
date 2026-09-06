@@ -1,10 +1,16 @@
-// ?processDestroyList@GameLogic@@AAEXXZ
-// partial score=0.9 date=2026-09-04
-// cl: /DNDEBUG /DWIN32 /MD /O2 /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
-// BFME 1.03 GameLogic::processDestroyList at RVA 0x0038AE90.
-// The retail body uses four phase heaps and one inactive-update vector.  These
-// TU-local layouts keep the BFME offsets without changing the Zero Hour header.
+//
+// Byte-exact reconstruction of ?processDestroyList@GameLogic@@AAEXXZ:
+// retail 0x0038AE90, 438 bytes.  Called through ILT 0x00015028 from the
+// GameLogic clear routine at 0x0038D056 and from phase 5 of
+// GameLogic::update at 0x0038E144.  The Zero Hour donor of the same name
+// walks one sleepy vector; BFME walks the behavior-module array at
+// Object+0x1F0, repairs one of five sleepy vectors (+0xC4 stride 12 for
+// phases 0-3, +0xF4 for negative phase), removes the object from the AI
+// pathfinding map, unlinks it from the object list at +0xA8/+0xAC, erases
+// it from the ObjectID hash at +0xB0, deletes it, then clears the
+// pending-destruction list at +0x104.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -122,43 +128,49 @@ void GameLogic::processDestroyList(void)
 		 iterator != m_objectsToDestroy.end(); ++iterator)
 	{
 		Object *currentObject = *iterator;
-		for (BehaviorModule **behavior = currentObject->m_behaviorModules;
-			 *behavior; ++behavior)
+		BehaviorModule **behavior = currentObject->m_behaviorModules;
+		BehaviorModule *candidate = *behavior;
+		while (candidate != NULL)
 		{
-			UpdateModule *update = (UpdateModule *)((*behavior)->getUpdate());
-			if (update)
+			UpdateModuleInterface *updateInterface = candidate->getUpdate();
+			if (updateInterface != NULL)
 			{
-				if (update && update->friend_getIndexInLogic() != -1)
+				UpdateModule *update = (UpdateModule *)updateInterface;
+				if (update != NULL)
 				{
 					int index = update->friend_getIndexInLogic();
 					int phase = update->friend_getPhaseInLogic();
-					update->friend_setPhaseInLogic(-1);
-					update->friend_setIndexInLogic(-1);
+					if (index != -1)
+					{
+						update->friend_setPhaseInLogic(-1);
+						update->friend_setIndexInLogic(-1);
 
-					if (phase < 0)
-					{
-						int final = m_inactiveUpdates.size() - 1;
-						if (index < final)
+						if (phase < 0)
 						{
-							m_inactiveUpdates[index] = m_inactiveUpdates[final];
-							m_inactiveUpdates[index]->friend_setPhaseInLogic(-1);
-							m_inactiveUpdates[index]->friend_setIndexInLogic(index);
+							if (index < (int)m_inactiveUpdates.size() - 1)
+							{
+								m_inactiveUpdates[index] = m_inactiveUpdates.back();
+								UpdateModule *moved = m_inactiveUpdates[index];
+								moved->friend_setPhaseInLogic(-1);
+								moved->friend_setIndexInLogic(index);
+							}
+							m_inactiveUpdates.pop_back();
 						}
-						m_inactiveUpdates.pop_back();
-					}
-					else
-					{
-						int final = m_phaseUpdates[phase].size() - 1;
-						if (index < final)
+						else
 						{
-							m_phaseUpdates[phase][index] = m_phaseUpdates[phase][final];
-							m_phaseUpdates[phase][index]->friend_setPhaseInLogic(phase);
-							m_phaseUpdates[phase][index]->friend_setIndexInLogic(index);
+							if (index < (int)m_phaseUpdates[phase].size() - 1)
+							{
+								m_phaseUpdates[phase][index] = m_phaseUpdates[phase].back();
+								UpdateModule *moved = m_phaseUpdates[phase][index];
+								moved->friend_setPhaseInLogic(phase);
+								moved->friend_setIndexInLogic(index);
+							}
+							m_phaseUpdates[phase].pop_back();
 						}
-						m_phaseUpdates[phase].pop_back();
 					}
 				}
 			}
+			candidate = *++behavior;
 		}
 
 		TheAI->m_pathfinder->removeObjectFromPathfindMap(currentObject);
