@@ -10401,6 +10401,7 @@ name,address,notes
 ?JoinDirectConnectGame@@YAXXZ,0x000208E7,ILT from NetworkDirectConnectSystem join arm
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HE@@@B,0x012ED8B8,empty KindOfMaskType; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0HO@@@B,0x012ED8B8,empty KindOfMask; Team::hasAnyBuildings BitFlags at 0x000F4A70 pushes it as mustBeClear
+?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,0x012ED8B8,empty BFME 192-bit KindOfMask used by Player::countObjects
 ?LANbuttonPushed@@3_NA,0x012F3D4A,LAN overlay shared flag; NetworkDirectConnectSystem back-button set
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
@@ -74717,6 +74718,7 @@ name,address,notes
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEGPAVParameter@@@Z,0x000230B5,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
 ?bfmeNext1087@BfmeP1087@@QAEHH@Z,0x000230B5,pin
+?countObjects@Player@@QAEHV?$BitFlags@$0MA@@@0@Z,0x0001FF1E,Player faction-building count helper called by evaluatePlayerHasNOrFewerFactionBuildings
 ?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1089@BfmeP1089@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1090@BfmeP1090@@QAEHH@Z,0x000230B5,pin
