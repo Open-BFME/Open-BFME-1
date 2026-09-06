@@ -1,5 +1,3 @@
-// ?getUserName@SkirmishPreferences@@QAE?AVUnicodeString@@XZ
-// partial score=0.55 date=2026-09-05
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // SkirmishPreferences::getUserName at retail RVA 0x0009FA60 (263B).
@@ -8,7 +6,20 @@
 // reverse/symbols.csv: the preference key is renamed "UserName" ->
 // "CurrentUserName", and both fallback paths (key missing, decoded value
 // trims to empty) return UnicodeString::TheEmptyString directly instead of
-// falling back to IPEnumeration::getMachineName().
+// falling back to IPEnumeration::getMachineName(). Levers (docs/shape_levers.md):
+// find() is throw() so the key temporary needs no EH state; the key is a
+// temporary destroyed right after the lookup; isEmpty is the inline two-part test
+// (null data pointer or zero 16-bit length at +4) that retail compares against
+// the zero it keeps in ebx.
+
+template <typename T> struct StringInlineData
+{
+	unsigned short m_refCount;
+	unsigned short m_reserved;
+	unsigned short m_length;	// +4: the word retail tests in isEmpty
+	unsigned short m_pad;
+	T m_text[1];
+};
 
 template <typename T> class StringBase
 {
@@ -23,10 +34,10 @@ private:
 
 	void set(const StringBase<T> &other);
 	void trim();
-	bool isEmpty() const;
+	bool isEmpty() const { return m_data == 0 || m_data->m_length == 0; }
 	void releaseBuffer();
 
-	void *m_data;
+	StringInlineData<T> *m_data;
 };
 
 class AsciiString : private StringBase<char>
@@ -67,7 +78,7 @@ struct PreferenceNode
 class PreferenceMap
 {
 public:
-	PreferenceNode *find(const AsciiString &) const;
+	PreferenceNode *find(const AsciiString &) const throw();
 	PreferenceNode *end() const { return m_end; }
 
 private:
@@ -89,9 +100,7 @@ public:
 UnicodeString SkirmishPreferences::getUserName(void)
 {
 	UnicodeString ret;
-	PreferenceNode *it;
-	AsciiString key("CurrentUserName");
-	it = find(key);
+	PreferenceNode *it = find("CurrentUserName");
 
 	if (it == end())
 		return UnicodeString::TheEmptyString;

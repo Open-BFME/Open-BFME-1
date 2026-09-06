@@ -1282,6 +1282,7 @@ name,address,notes
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
 ??0?$StringBase@D@@IAE@ABV0@@Z,0x00887B60,protected StringBase char copy ctor
 ??0?$StringBase@D@@QAE@ABV0@@Z,0x00887B60,public narrow StringBase copy used by notification dispatch
+??0?$StringBase@G@@AAE@ABV0@@Z,0x00888400,callee of SkirmishPreferences::getUserName 0x0009FA60
 ??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME5 StringInline private wide copy ctor used by 0x0040F0B0 member construct
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,StringBase<unsigned short> const wchar ctor used by populateSideInfo L%d temps
 ??0?$StringBase@G@@QAE@ABV0@@Z,0x00888400,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -10243,6 +10244,7 @@ name,address,notes
 ?Q1Wrapped007FEA00@@YAXXZ,0x007FEA00,address-derived callee of the frame-checked wrapper family; target read from the REL32 at all seven of its call sites
 ?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x0004554D,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x00106480,ZH QuotedPrintable.cpp:167 line for line: decodes _XX hex escapes into the static buffer 0x012EEC18 and returns an AsciiString; by-value argument released at exit; callers GameSpyLoginPreferences::load 0x000822A0 and getPreferredMap@CustomMatchPreferences 0x000AC746; ILT 0x0004554D
+?QuotedPrintableToUnicodeString@@YA?AVUnicodeString@@VAsciiString@@@Z,0x0000F704,callee of SkirmishPreferences::getUserName 0x0009FA60
 ?Random_Float@WWMath@@SAMXZ,0x008D8E00
 ?Raw_Seek@RawFileClass@@IAEHHH@Z,0x009E6910
 ?ReAcquireResources@Gen_01306DF0@@QAE_NXZ,0x00026D1E,link thunk to 0x007AE890; the third manager, whose global 0x01306DF0 and body are both still anonymous
@@ -81218,6 +81220,7 @@ name,address,notes
 ?sendVoteCommand@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0002EE79,ILT thunk to DisconnectManager::sendVoteCommand
 ?set@?$HeaderTemplateStringBase@D@@AAEXABV1@@Z,0x00887C90,Open-BFME5 HeaderTemplateManager init relocation
 ?set@?$StringBase@D@@AAEXABV1@@Z,0x00887C90,BFME AIAttackState locked weapon name assignment
+?set@?$StringBase@G@@AAEXABV1@@Z,0x00888530,callee of SkirmishPreferences::getUserName 0x0009FA60
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x00019BCD,pinharvest x1 (thunk)
 ?set@AsciiString@@AAEXABV1@@Z,0x00887C90,Open-BFME5 private AsciiString copy-set body
 ?set@AsciiString@@QAEXABV1@@Z,0x00887C90,same body the ledger claims as ?set@?$StringBase@D@@QAEXABV1@@Z; operator= inlines to a call to it
@@ -81625,6 +81628,7 @@ name,address,notes
 ?transition@Rva00266EB0SiegeDeployBase@@QAEXH@Z,0x000298C0,address-derived thiscall transition target read from retail RVA 0x00266EB0
 ?trigger@BfmeObjEB2@@QAEXHH@Z,0x00014506,pin
 ?trigger@BfmeObjF62@@QAEXHH@Z,0x00014506,pin
+?trim@?$StringBase@G@@AAEXXZ,0x00888ED0,callee of SkirmishPreferences::getUserName 0x0009FA60
 ?trim@AsciiString@@QAEXXZ,0x00888CA0,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
 ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
