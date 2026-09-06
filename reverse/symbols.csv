@@ -22079,6 +22079,7 @@ name,address,notes
 ?b_00128c50@@YAXXZ,0x00128C50,gen-thunk body
 ?b_00128da0@@YAXXZ,0x00128DA0,gen-thunk body
 ?b_00128e30@@YAXXZ,0x00128E30,gen-thunk body
+?_M_erase@?$_Rb_tree@HU?$pair@$$CBHVModuleTemplate@ModuleFactory@@@_STL@@U?$_Select1st@U?$pair@$$CBHVModuleTemplate@ModuleFactory@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHVModuleTemplate@ModuleFactory@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBHVModuleTemplate@ModuleFactory@@@_STL@@@2@@Z,0x00037ECF,ModuleFactory constructor cleanup ILT
 ?b_00128f50@@YAXXZ,0x00128F50,gen-thunk body
 ?b_00128f60@@YAXXZ,0x00128F60,gen-thunk body
 ?b_00128f70@@YAXXZ,0x00128F70,gen-thunk body
