@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8b911668b0f605fd0be3ca203ce5770143e6e9ab5e0e6d604c2a9acc4e99a0e7",
+  "symbol": "?bfmeResetGC@BfmeOwnerGC@@QAEXPAX@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeResetGC@BfmeOwnerGC@@QAEXPAX@Z (identity unknown)\n// partial score=0.97 date=2026-09-06\n// 59/59 exact size; only the inline-memset setup order differs - retail emits\n// lea edi (dest) then ecx (count) then eax (fill), MSVC emits ecx, eax, lea edi.\n// Pin: ?bfmeCountGC@BfmeSubGC@@QAEIPAX@Z,0x00041AEC\nextern \"C\" void *__cdecl memset(void *dest, int value, unsigned int count);\n#pragma intrinsic(memset)\n\nclass BfmeSubGC\n{\npublic:\n\tunsigned int bfmeCountGC(void *key);\n\n\tunsigned char m_bfmeSubDataGC[4];\n};\n\nclass BfmeOwnerGC\n{\npublic:\n\tvoid bfmeResetGC(void *key);\n\n\tunsigned char m_bfmeHeadGC[0x9c];\n\tunsigned int m_bfmeScaleGC;\n\tBfmeSubGC m_bfmeSubGC;\n\tunsigned char m_bfmeMidGC[0xe4];\n\tunsigned char m_bfmeFlagsGC[48];\n};\n\nvoid BfmeOwnerGC::bfmeResetGC(void *key)\n{\n\tif (m_bfmeSubGC.bfmeCountGC(key) <= 0)\n\t\treturn;\n\n\tif (m_bfmeScaleGC == 0x3f800000)\n\t\treturn;\n\n\tmemset(m_bfmeFlagsGC, 2, 48);\n}\n"
+}
