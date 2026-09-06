@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "40c96bf05f77b2f30bf9b655c5daa36a5b2ab160551fbd5c2bc5a8d209a5b438",
+  "symbol": "?bfmeGoGH@BfmeSecondGH@@QAEXXZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeGoGH@BfmeSecondGH@@QAEXXZ (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 60/60 exact size; retail loads the owner before the inner pointer, MSVC the\n// reverse, and the three register names follow from that one choice.\n// Pins: check 0x0001E0AB, send 0x0004A12E, logic global 0x00EF0898\nclass BfmeLogicGH\n{\npublic:\n\tchar bfmeCheckGH(void);\n};\n\nextern BfmeLogicGH *g_bfmeGameLogicGH;\n\nvoid __stdcall bfmeSendGH(int delta, int first, int second);\n\nclass BfmeInnerGH\n{\npublic:\n\tunsigned char m_bfmeHeadGH[0x28];\n\tint m_bfmeStartGH;\n};\n\nclass BfmeStateGH\n{\npublic:\n\tunsigned char m_bfmeHeadGH[0x210];\n\tBfmeInnerGH *m_bfmeInnerGH;\n};\n\nclass BfmeOwnerGH\n{\npublic:\n\tunsigned char m_bfmeHeadGH[8];\n\tint m_bfmeTimeGH;\n\tchar m_bfmeFlagGH;\n};\n\nclass BfmeSecondGH\n{\npublic:\n\tvoid bfmeGoGH(void);\n};\n\nvoid BfmeSecondGH::bfmeGoGH(void)\n{\n\tchar *base = (char *)this;\n\n\tif ((*(BfmeOwnerGH **)(base - 0xc))->m_bfmeFlagGH != 0\n\t\t&& g_bfmeGameLogicGH->bfmeCheckGH() == 0)\n\t\treturn;\n\n\tBfmeStateGH *state = *(BfmeStateGH **)(base - 8);\n\tBfmeOwnerGH *owner = *(BfmeOwnerGH **)(base - 0xc);\n\tBfmeInnerGH *inner = state->m_bfmeInnerGH;\n\tint now = owner->m_bfmeTimeGH;\n\tint start = inner->m_bfmeStartGH;\n\n\tbfmeSendGH(now - start, 0, 0);\n}\n"
+}
