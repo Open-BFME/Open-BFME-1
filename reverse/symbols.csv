@@ -2673,6 +2673,7 @@ name,address,notes
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
 ??0GiantBirdGuardReturnState@@QAE@PAX@Z,0x0001C292,GiantBirdGuardReturnState constructor ILT identified by adjacent exact literal name getter and allocation size
 ??0GiveUpgradeUpdateModuleDataBase@@QAE@XZ,0x0003F503,GiveUpgradeUpdateModuleData ctor base
+??0Glo012F4B98Type@@QAE@XZ,0x0002E7CB,pin ctor of address-derived Glo012F4B98Type reached via ILT thunk 0002E7CB (target FUN_00b9d9f0 / retail 0x006FD9F0) from factory Rva006FC330
 ??0GlobalData@@QAE@XZ,0x00001807,ILT; ctor call site in GlobalData::newOverride 0x00085BA0
 ??0GloriousChargeSpecialAbilityUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 GloriousCharge base constructor thunk pin
 ??0GrabPassengerSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,GrabPassengerSpecialPowerModuleData base ctor
