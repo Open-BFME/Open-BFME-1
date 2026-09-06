@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "98e936e6af61388cd5a18d2e84ce801f1feb6a5572aedfcb70463ddc0d0b8ded",
+  "symbol": "?d_0069ae40@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_0069ae40@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// 86/90 bytes; missing only the redundant test eax,eax / je that MSVC propagates away.\n// Pin needed: ?BfmeShareThirdEQQ@@3MB,0x00D1BB98  (float 33.333332)\ntypedef float Real;\n\nextern const Real BfmeShareThirdEQQ;\n\nstruct BfmeOwnerEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[0x41];\n\tchar m_bfmeReadyEQQ;\n\tchar m_bfmeDoneEQQ;\n};\n\nstruct BfmeBodyEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[0x54];\n\tReal m_bfmeHealthEQQ;\n};\n\nstruct BfmeUnitEQQ\n{\n\tunsigned char m_bfmeHeadEQQ[4];\n\tBfmeBodyEQQ *m_bfmeBodyEQQ;\n\tunsigned char m_bfmeMidEQQ[4];\n\tBfmeOwnerEQQ *volatile m_bfmeOwnerEQQ;\n\tunsigned char m_bfmeTailEQQ[2];\n\tchar m_bfmeFlagAEQQ;\n\tchar m_bfmeFlagBEQQ;\n\tchar m_bfmeFlagCEQQ;\n};\n\nchar __stdcall bfmeCheckEQQ(BfmeUnitEQQ *unit)\n{\n\tif (!unit->m_bfmeFlagAEQQ && !unit->m_bfmeFlagBEQQ && !unit->m_bfmeFlagCEQQ)\n\t{\n\t\tBfmeBodyEQQ *body = unit->m_bfmeBodyEQQ;\n\t\tif (body == 0 || body->m_bfmeHealthEQQ < BfmeShareThirdEQQ)\n\t\t{\n\t\t\tBfmeOwnerEQQ *owner = unit->m_bfmeOwnerEQQ;\n\t\t\tif (owner == 0)\n\t\t\t\treturn 1;\n\t\t\tif (owner != 0 && owner->m_bfmeReadyEQQ)\n\t\t\t\treturn 1;\n\t\t\tBfmeOwnerEQQ *other = unit->m_bfmeOwnerEQQ;\n\t\t\tif (other == 0)\n\t\t\t\treturn 1;\n\t\t\tif (other != 0 && other->m_bfmeDoneEQQ)\n\t\t\t\treturn 1;\n\t\t}\n\t}\n\treturn 0;\n}\n"
+}

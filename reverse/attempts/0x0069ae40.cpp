@@ -1,58 +1,54 @@
-// ?Rva0069AE40_check@@YG_NPAURva0069AE40Arg@@@Z
-// partial score=0.85 date=2026-09-04
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Free stdcall predicate on audio-event-like object.
+// ?bfmeCheckEQQ@@YGDPAUBfmeUnitEQQ@@@Z (identity unknown)
+// partial score=0.85 date=2026-09-06
+// 86/90 bytes; missing only the redundant test eax,eax / je that MSVC propagates away.
+// Pin needed: ?BfmeShareThirdEQQ@@3MB,0x00D1BB98  (float 33.333332)
+typedef float Real;
 
-struct Rva0069AE40Inner
+extern const Real BfmeShareThirdEQQ;
+
+struct BfmeOwnerEQQ
 {
-	char m_pad[0x54];
-	float m_value;
+	unsigned char m_bfmeHeadEQQ[0x41];
+	char m_bfmeReadyEQQ;
+	char m_bfmeDoneEQQ;
 };
 
-struct Rva0069AE40Node
+struct BfmeBodyEQQ
 {
-	char m_pad[0x41];
-	unsigned char m_flag41;
-	unsigned char m_flag42;
+	unsigned char m_bfmeHeadEQQ[0x54];
+	Real m_bfmeHealthEQQ;
 };
 
-struct Rva0069AE40Arg
+struct BfmeUnitEQQ
 {
-	char m_pad0[4];
-	Rva0069AE40Inner *m_inner;
-	char m_pad1[4];
-	Rva0069AE40Node *m_node;
-	char m_pad2[2];
-	unsigned char m_flag12;
-	unsigned char m_flag13;
-	unsigned char m_flag14;
+	unsigned char m_bfmeHeadEQQ[4];
+	BfmeBodyEQQ *m_bfmeBodyEQQ;
+	unsigned char m_bfmeMidEQQ[4];
+	BfmeOwnerEQQ *volatile m_bfmeOwnerEQQ;
+	unsigned char m_bfmeTailEQQ[2];
+	char m_bfmeFlagAEQQ;
+	char m_bfmeFlagBEQQ;
+	char m_bfmeFlagCEQQ;
 };
 
-#define Rva0069AE40Threshold (*(const float *)0x0111BB98)
-
-bool __stdcall Rva0069AE40_check(Rva0069AE40Arg *arg)
+char __stdcall bfmeCheckEQQ(BfmeUnitEQQ *unit)
 {
-	if (!arg->m_flag12 && !arg->m_flag13 && !arg->m_flag14)
+	if (!unit->m_bfmeFlagAEQQ && !unit->m_bfmeFlagBEQQ && !unit->m_bfmeFlagCEQQ)
 	{
-		Rva0069AE40Inner *inner = arg->m_inner;
-		if (inner)
+		BfmeBodyEQQ *body = unit->m_bfmeBodyEQQ;
+		if (body == 0 || body->m_bfmeHealthEQQ < BfmeShareThirdEQQ)
 		{
-			float v = inner->m_value;
-			float t = Rva0069AE40Threshold;
-			if (v >= t)
-				return false;
+			BfmeOwnerEQQ *owner = unit->m_bfmeOwnerEQQ;
+			if (owner == 0)
+				return 1;
+			if (owner != 0 && owner->m_bfmeReadyEQQ)
+				return 1;
+			BfmeOwnerEQQ *other = unit->m_bfmeOwnerEQQ;
+			if (other == 0)
+				return 1;
+			if (other != 0 && other->m_bfmeDoneEQQ)
+				return 1;
 		}
-		Rva0069AE40Node *node = arg->m_node;
-		if (!node)
-			return true;
-		if (node != 0 && node->m_flag41)
-			return true;
-		node = arg->m_node;
-		if (!node)
-			return true;
-		if (node->m_flag42)
-			return true;
-		return false;
 	}
-	return false;
+	return 0;
 }
