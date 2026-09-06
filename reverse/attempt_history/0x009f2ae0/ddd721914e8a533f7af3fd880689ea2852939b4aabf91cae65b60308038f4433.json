@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ddd721914e8a533f7af3fd880689ea2852939b4aabf91cae65b60308038f4433",
+  "symbol": "?d_009f2ae0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_009f2ae0@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// 36/46; retail spends a 6-byte loop-align nop, a push/pop esi and mov eax,ecx.\nclass BfmeChainFE\n{\npublic:\n\tvoid bfmeAppendFE(BfmeChainFE *node);\n\n\tunsigned char m_bfmeHeadFE[4];\n\tBfmeChainFE *m_bfmeNextFE;\n};\n\nvoid BfmeChainFE::bfmeAppendFE(BfmeChainFE *node)\n{\n\tBfmeChainFE *next = m_bfmeNextFE;\n\tif (next != 0)\n\t{\n\t\tBfmeChainFE *cur;\n\t\tdo\n\t\t{\n\t\t\tcur = next;\n\t\t\tnext = cur->m_bfmeNextFE;\n\t\t}\n\t\twhile (next != 0);\n\n\t\tcur->m_bfmeNextFE = node;\n\t\treturn;\n\t}\n\n\tm_bfmeNextFE = node;\n}\n"
+}

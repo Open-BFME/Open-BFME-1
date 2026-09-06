@@ -1,41 +1,31 @@
-// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z
-// partial score=0.99 date=2026-09-04
-// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z present-unmatched
-// cl: /O2 /Ob2
-
-class PartitionFilter;
-
-struct PartitionFilterLinkView
-{
-	void *vtable;
-	PartitionFilter *m_next;
-};
-
-class PartitionFilter
+// ?bfmeAppendFE@BfmeChainFE@@QAEXPAV1@@Z (identity unknown)
+// partial score=0.85 date=2026-09-06
+// 36/46; retail spends a 6-byte loop-align nop, a push/pop esi and mov eax,ecx.
+class BfmeChainFE
 {
 public:
-	virtual bool allow(void *object) = 0;
-	PartitionFilter *link(PartitionFilter *next);
-	PartitionFilter *m_next;
+	void bfmeAppendFE(BfmeChainFE *node);
+
+	unsigned char m_bfmeHeadFE[4];
+	BfmeChainFE *m_bfmeNextFE;
 };
 
-PartitionFilter *PartitionFilter::link(PartitionFilter *next)
+void BfmeChainFE::bfmeAppendFE(BfmeChainFE *node)
 {
-	PartitionFilterLinkView *cursor = 0;
-	PartitionFilter *candidate = m_next;
-	if (candidate != 0)
+	BfmeChainFE *next = m_bfmeNextFE;
+	if (next != 0)
 	{
+		BfmeChainFE *cur;
 		do
 		{
-			cursor = (PartitionFilterLinkView *)(unsigned int)candidate;
-			candidate = cursor->*(&PartitionFilterLinkView::m_next);
+			cur = next;
+			next = cur->m_bfmeNextFE;
 		}
-		while (candidate != 0);
-		cursor->m_next = next;
+		while (next != 0);
+
+		cur->m_bfmeNextFE = node;
+		return;
 	}
-	else
-	{
-		m_next = next;
-	}
-	return this;
+
+	m_bfmeNextFE = node;
 }

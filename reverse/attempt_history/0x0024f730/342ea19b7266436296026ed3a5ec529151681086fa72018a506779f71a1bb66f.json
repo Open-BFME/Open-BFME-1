@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "342ea19b7266436296026ed3a5ec529151681086fa72018a506779f71a1bb66f",
+  "symbol": "?bfmeGoFF@BfmeOwnerFF@@QAEXXZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeGoFF@BfmeOwnerFF@@QAEXXZ (identity unknown)\n// partial score=0.9 date=2026-09-06\n// 31/33; the only excess is retail parking this in eax (mov eax,ecx).\n// Pin: ?bfmeSendFF@@YGXHHH@Z,0x0004A12E\nvoid __stdcall bfmeSendFF(int delta, int first, int second);\n\nclass BfmeInnerFF\n{\npublic:\n\tunsigned char m_bfmeHeadFF[0x28];\n\tint m_bfmeStartFF;\n};\n\nclass BfmeStateFF\n{\npublic:\n\tunsigned char m_bfmeHeadFF[0x210];\n\tBfmeInnerFF *m_bfmeInnerFF;\n};\n\nclass BfmeThingFF\n{\npublic:\n\tunsigned char m_bfmeHeadFF[8];\n\tint m_bfmeTimeFF;\n};\n\nclass BfmeOwnerFF\n{\npublic:\n\tvoid bfmeGoFF(void);\n\n\tunsigned char m_bfmeHeadFF[4];\n\tBfmeThingFF *m_bfmeThingFF;\n\tBfmeStateFF *m_bfmeStateFF;\n};\n\nvoid BfmeOwnerFF::bfmeGoFF(void)\n{\n\tBfmeStateFF *state = m_bfmeStateFF;\n\tBfmeThingFF *thing = m_bfmeThingFF;\n\tBfmeInnerFF *inner = state->m_bfmeInnerFF;\n\tint now = thing->m_bfmeTimeFF;\n\tint start = inner->m_bfmeStartFF;\n\tbfmeSendFF(now - start, 0, 0);\n}\n"
+}
