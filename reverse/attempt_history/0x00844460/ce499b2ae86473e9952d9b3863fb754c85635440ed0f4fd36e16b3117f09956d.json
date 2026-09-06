@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ce499b2ae86473e9952d9b3863fb754c85635440ed0f4fd36e16b3117f09956d",
+  "symbol": "?bfmeMakeES@@YGPAVBfmeCtorES@@PAV1@PAX1@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeMakeES@@YGPAVBfmeCtorES@@PAV1@PAX1@Z (identity unknown)\n// partial score=0.9 date=2026-09-06\n// 91/87. Placement new + placement delete recover the SEH frame and the whole\n// shape; the only excess is MSVC null-checking the placement pointer (4 bytes).\n// EH unwind map (FuncInfo 0x00E44CE8, maxState 1): the single funclet does\n//   mov ecx,[ebp+4]; jmp 0x00032D85\n// so the object destroyed on unwind is *arg1 and the class destructor is at\n// 0x00032D85 -- that is what proves this is placement construction into the\n// first stack argument rather than a thiscall constructor.\ninline void *__cdecl operator new(unsigned int size, void *place) { return place; }\ninline void __cdecl operator delete(void *block, void *place) {}\n\nclass BfmeCtorES\n{\npublic:\n\tBfmeCtorES(void *first, void *second, void **out)\n\t{\n\t\tm_bfmeAES = 0;\n\t\tm_bfmeBES = 0;\n\t\tm_bfmeCES = 0;\n\t\tbfmeStartES(first, second, out);\n\t}\n\t~BfmeCtorES(void);\n\n\tvoid bfmeStartES(void *first, void *second, void **out);\n\n\tint m_bfmeAES;\n\tint m_bfmeBES;\n\tint m_bfmeCES;\n};\n\nBfmeCtorES * __stdcall bfmeMakeES(BfmeCtorES *self, void *first, void *second)\n{\n\treturn new (self) BfmeCtorES(first, second, (void **)&self);\n}\n"
+}
