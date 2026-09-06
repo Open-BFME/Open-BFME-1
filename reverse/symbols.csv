@@ -83883,3 +83883,7 @@ _g_rva0130E988LoadLibraryA,0x0130E988,late-bound kernel32 LoadLibraryA pointer u
 ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ,0x0018A240,"Root verified ILT00021D23 ->0018A240/437B; body reads owner team/template attackCommonTarget flag then stores target ID to machine+50 and scans player tunnel tracker+22C, matching AITNGuardMachine::lookForInnerTarget. Corrected caller to STLport and independently verified its complete local findBestTunnel134B plus274-byte caller."
 ?setLifetimeRange@DeletionUpdate@@QAEXII@Z,0x0028C6E0,callee of DamageFieldNugget::doNugget
 ?bfmeHashFI@@YAIPAX0@Z,0x00007518,pin
+_numServerMessageTypes,0x00EC8AE0,Retail dispatcher reads count at VA012C8AE0 =54; adjacent54-entry command table VA012C8930 matches GameSpy chatHandlers.c command order (2004 has no 2007 UDP-relay entry).
+_serverMessageTypes,0x00EC8930,Retail dispatcher reads 8-byte command/handler records at VA012C8930; all54 strings and code pointers audited. PRIVMSG->0086CEB0 NOTICE->0086D020 UTM->0086D0F0 ATM->0086D1C0 independently identify table.
+_ciProcessServerMessage,0x00860110,"Complete85-byte static helper independently matches. GameSpy source command dispatch loop, strcmp import,54-entry table, hidden message in EDI induced from real same-TU parameters."
+_ciThink,0x008601F0,Complete143-byte static helper independently matches with source CHAT and ID parameters. Same-TU optimizer selects chat ESI; real nested dispatcher85B and caller108B all independently matched; no implicit-register declaration.
