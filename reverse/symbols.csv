@@ -10132,7 +10132,9 @@ name,address,notes
 ?Gen009F3AC0@@YAXPAVRva009F3D30Elem@@0PAX@Z,0x009F3AC0,S3 final-insertion-sort split family callee (address-derived name)
 ?Gen009F3CE0@@YAXPAUQ3SortElem8@@0UQ3SortCompare@@@Z,0x009F3CE0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen009F3D30@@YAXPAUQ3SortElem8@@0UQ3SortCompare@@@Z,0x009F3D30,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
+?Gen009F3280@@YAPAUQ3SortElem8@@PAU1@0U1@UQ3SortCompare@@@Z,0x009F3280,callee address read from Gen009F3DC0 retail REL32; address-derived
 ?Gen009F3DC0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3DC0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
+?Gen009F3B00@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3B00,depth-zero partial-sort callee of Gen009F3DC0; address-derived from retail REL32
 ?Gen009F3EA0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3EA0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?GenAdjust00260D80@@YAXPAUGen8ByteElement@@HHU1@P6A_NABU1@2@Z@Z,0x00260D80,address-derived REL32 callee of a heap-pop helper reached through the ILT thunk at 0x000075D6; cdecl with six pushed dwords
 ?GenAdjust004379B0@@YAXPAUGen8ByteElement@@HHU1@P6A_NABU1@2@Z@Z,0x004379B0,address-derived REL32 callee of a heap-pop helper reached through the ILT thunk at 0x00028501; cdecl with six pushed dwords

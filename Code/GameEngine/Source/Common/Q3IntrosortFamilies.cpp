@@ -74,6 +74,8 @@ struct Q3SortElem4
 	Q3SortItem003CDC60 *m_item;
 };
 
+struct Q3SortElem8;
+
 struct Q3SortCompare
 {
 	void *m_state;
@@ -89,9 +91,15 @@ struct Q3SortCompare
 		char b_tie = b.m_item->m_tie;
 		return b_tie < a_tie;
 	}
+	bool operator()( const Q3SortElem8 &left, const Q3SortElem8 &right ) const;
 };
-struct Q3SortElem8  { int m_a, m_b; };
+struct Q3SortElem8  { int m_a; float m_b; };
 struct Q3SortElem16 { int m_a, m_b, m_c, m_d; };
+
+bool Q3SortCompare::operator()( const Q3SortElem8 &left, const Q3SortElem8 &right ) const
+{
+	return left.m_b < right.m_b;
+}
 
 #define BFME_FINAL_INSERTION( NAME, INSERT, UNGUARDED )                        \
 	void INSERT( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp );  \
@@ -189,3 +197,45 @@ BFME_SORT_DRIVER( Rva003D1880, Q3SortElem4,  Gen003D15A0, Gen003CFA00 )
 BFME_SORT_DRIVER( Rva00438980, Q3SortElem8,  Gen004388C0, Gen00438270 )
 BFME_SORT_DRIVER( Rva00484020, Q3SortElem4,  Gen00483F70, Gen00483DA0 )
 BFME_SORT_DRIVER( Rva00575980, Q3SortElem16, Gen00575450, Gen00574E70 )
+
+Q3SortElem8 *Gen009F3280( Q3SortElem8 *first, Q3SortElem8 *last,
+	Q3SortElem8 value, Q3SortCompare comp );
+void Gen009F3B00( Q3SortElem8 *first, Q3SortElem8 *last,
+	Q3SortElem8 *middle, int zero, Q3SortCompare comp );
+
+static __forceinline const Q3SortElem8 *Gen009F3DC0Median( const Q3SortElem8 *a,
+	const Q3SortElem8 *b, const Q3SortElem8 *c, Q3SortCompare comp )
+{
+	if( comp( *a, *b ) )
+	{
+		if( comp( *b, *c ) )
+			return b;
+		if( comp( *a, *c ) )
+			return c;
+		return a;
+	}
+	if( comp( *a, *c ) )
+		return a;
+	if( comp( *b, *c ) )
+		return c;
+	return b;
+}
+
+void Gen009F3DC0( Q3SortElem8 *first, Q3SortElem8 *last,
+	Q3SortElem8 *, int depthLimit, Q3SortCompare comp )
+{
+	while( last - first > 16 )
+	{
+		if( depthLimit == 0 )
+		{
+			Gen009F3B00( first, last, last, 0, comp );
+			return;
+		}
+		--depthLimit;
+		Q3SortElem8 *cut = Gen009F3280( first, last,
+			*Gen009F3DC0Median( first, first + ( last - first ) / 2,
+				last - 1, comp ), comp );
+		Gen009F3DC0( cut, last, (Q3SortElem8 *)0, depthLimit, comp );
+		last = cut;
+	}
+}
