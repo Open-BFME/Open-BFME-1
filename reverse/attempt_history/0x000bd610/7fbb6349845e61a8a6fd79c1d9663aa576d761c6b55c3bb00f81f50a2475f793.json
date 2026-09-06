@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7fbb6349845e61a8a6fd79c1d9663aa576d761c6b55c3bb00f81f50a2475f793",
+  "symbol": "?d_000bd610@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_000bd610@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// 28/34 at exact size and exact structure: a one-byte local whose address is\n// passed (the `lea edx,[esp+0xb]` into the push-ecx frame slot), the member\n// passed twice, and the result stored back over it.\n// Residue: retail emits `push 0` (the last argument) BEFORE `mov esi,ecx` and\n// the two member loads, and holds them in ecx/eax where MSVC uses edx/eax and\n// pushes the zero after the loads. Scratch-register and push-scheduling class.\nvoid * __cdecl bfmeRunBN(void *first, void *second, void *third, char *status, int flag);\n\nclass BfmeOwnBN\n{\npublic:\n\tvoid bfmeStepBN(void);\n\n\tunsigned char m_bfmeHeadBN[8];\n\tvoid *m_bfmeSrcBN;\n\tvoid *m_bfmeCurBN;\n};\n\nvoid BfmeOwnBN::bfmeStepBN(void)\n{\n\tchar status;\n\n\tm_bfmeCurBN = bfmeRunBN(m_bfmeCurBN, m_bfmeCurBN, m_bfmeSrcBN, &status, 0);\n}\n"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "35c0489052f29d832812d2180957f64c57799d4462699a7eb35147a56d834275",
+  "symbol": "?bfmeNextBO@BfmeOwnBO@@QAEHXZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?bfmeNextBO@BfmeOwnBO@@QAEHXZ (identity unknown)\n// partial score=0.8 date=2026-09-06\n// 38 bytes in retail, 40 from MSVC. Structure is certain: grow when the index\n// has reached the limit, then return base + stride * index and post-increment\n// the index.\n// Residue: retail keeps the index in ecx and uses `inc ecx` (1 byte) before\n// storing it, loading the base into edx BEFORE the multiply. MSVC computes\n// `lea edx,[ecx+1]` (3 bytes) and defers the base load into ecx. Tried named\n// locals for all three members in retail's load order, pre-increment folded\n// into the store, and both operand orders of the add. All give the same\n// two-byte-larger body.\nclass BfmeOwnBO\n{\npublic:\n\tint bfmeNextBO(void);\n\tvoid bfmeGrowBO(void);\n\n\tunsigned char m_bfmeHeadBO[4];\n\tint m_bfmeStrideBO;\n\tint m_bfmeLimitBO;\n\tint m_bfmeBaseBO;\n\tunsigned char m_bfmePadBO[4];\n\tint m_bfmeIndexBO;\n};\n\nint BfmeOwnBO::bfmeNextBO(void)\n{\n\tif (m_bfmeIndexBO >= m_bfmeLimitBO)\n\t\tbfmeGrowBO();\n\n\tint index = m_bfmeIndexBO;\n\tint stride = m_bfmeStrideBO;\n\tint origin = m_bfmeBaseBO;\n\tint value = stride * index;\n\n\tvalue += origin;\n\t++index;\n\tm_bfmeIndexBO = index;\n\n\treturn value;\n}\n"
+}
