@@ -24719,3 +24719,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_000fa570@@YAXXZ,0x000FA570,"gen-dump placeholder superseded by the real identity of these bytes: ??0Rva000FA610@@QAE@XZ, byte-verified from Code/GameEngine/Source/GameClient/GUI/ControlBar/Rva000FA610GetPortrait.cpp over the same 123-byte range. The Code/gen_asm/d_000f2fb0.asm dump reproduces those bytes but carries no identity."
 ?d_000ea5a0@@YAXXZ,0x000EA5A0,gen-dump placeholder superseded by ScoreKeeper addObjectBuilt amount body
 ?d_000ea730@@YAXXZ,0x000EA730,gen-dump placeholder superseded by ScoreKeeper removeObjectBuilt clean C++ body
+?d_002d6510@@YAXXZ,0x002D6510,legacy generated-asm claim retracted in its own commit before landing the byte-exact C++ identity at the same 46-byte range
