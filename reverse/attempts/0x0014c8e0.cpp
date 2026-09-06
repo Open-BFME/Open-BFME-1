@@ -1,41 +1,37 @@
-// ?parseTemplateNameIntList@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.35 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-
-// Open-BFME7: INI field parser at 0x0014C8E0 (196 B): resolves a
-// ThingTemplate via the already-matched INI::parseThingTemplate (0x000BAD60),
-// reads an Int with INI::parseInt, copies the template's UnicodeString field
-// at +0x20 into the entry when that field is non-empty (buffer non-null and
-// its length word non-zero) and pushes the finished (name Int) entry onto
-// the instance's list at +0x14 -- the same eight-byte element and
-// _Construct pin (0x0014C4C0) as the landed sibling list<Rva0014C4C0Element>
-// family (Rva0014C5A0ListInsert.cpp). Names are address-derived; the
-// ThingTemplate field offset is read directly off the body, not named.
+// ?parseTemplateNameCountListEntry@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.95 date=2026-09-06
+// cl: /DNDEBUG /MD /EHsc
+// Open-BFME7: INI field parser at 0x0014C8E0 (196 B): INI::parseThingTemplate
+// and INI::parseInt scan a template pointer and a count into locals then an
+// (AsciiString name Int count) entry (count value-initialised) is filled and
+// pushed only when the template exists and its name at +0x20 is not empty
+// (the inline isNotEmpty reads the length word four bytes into the string
+// data) onto the list the store argument's first pointer
+// designates (STLport exceptions off: node from the static allocator the
+// element copied by the out-of-line pair _Construct body at 0x0014BBC0).
+// Address-derived names.
 
 typedef int Int;
 
-class INI;
-
-class ThingTemplate
+struct Rva0014C8E0StringData
 {
-public:
-	char m_pad[ 0x20 ];
-	struct
-	{
-		char *m_data;
-	} m_nameField;			// +0x20
+	unsigned short m_refCount;
+	unsigned short m_numCharsAllocated;
+	unsigned short m_length;
+	unsigned short m_pad;
 };
 
-class UnicodeString
+class Rva0014C8E0String
 {
 public:
-	UnicodeString() : m_data( 0 ) {}
-	~UnicodeString();
-
-	void set( const UnicodeString &other );
+	Rva0014C8E0String() : m_data( 0 ) {}
+	~Rva0014C8E0String() { releaseBuffer(); }
+	void set( const Rva0014C8E0String &other );
+	bool isNotEmpty( void ) const { return m_data != 0 && m_data->m_length != 0; }
 
 private:
-	unsigned short *m_data;
+	void releaseBuffer( void );
+	Rva0014C8E0StringData *m_data;
 };
 
 class INI
@@ -45,130 +41,73 @@ public:
 	static void parseInt( INI *ini, void *instance, void *store, const void *userData );
 };
 
-namespace _STL
+struct Rva0014C8E0Template
 {
-
-void *__cdecl vectorLargeAllocate(unsigned int bytes);
-void *__cdecl vectorSmallAllocate(unsigned int bytes);
-
-inline void *BfmeNodeAllocate(unsigned int bytes)
-{
-	if (bytes > 128)
-		return vectorLargeAllocate(bytes);
-	return vectorSmallAllocate(bytes);
-}
-
-template <class T1, class T2>
-void __cdecl _Construct(T1 *destination, const T2 &value);
-
-template <class T>
-class allocator
-{
+	char m_unreconstructed[ 0x20 ];
+	Rva0014C8E0String m_name;
 };
 
-template <class T>
-struct _Nonconst_traits
+struct Rva0014C8E0Entry
 {
+	Rva0014C8E0Entry() : m_count( 0 ) {}
+
+	Rva0014C8E0String m_name;
+	Int m_count;
 };
 
-struct _List_node_base
+void *__cdecl Rva0082E540NodeAllocate( unsigned int bytes );
+void __cdecl Rva0014BBC0Construct( Rva0014C8E0Entry *where, const Rva0014C8E0Entry &value );
+
+struct Rva0014C8E0ListNode
 {
-	_List_node_base *_M_next;
-	_List_node_base *_M_prev;
+	Rva0014C8E0ListNode *m_next;
+	Rva0014C8E0ListNode *m_prev;
+	Rva0014C8E0Entry m_data;
 };
 
-template <class T>
-struct _List_node : public _List_node_base
-{
-	T _M_data;
-};
-
-template <class T, class Traits>
-struct _List_iterator
-{
-	_List_iterator(_List_node_base *node) : _M_node(node) {}
-
-	_List_node_base *_M_node;
-};
-
-template <class T, class Alloc>
-class _List_base
+class Rva0014C8E0List
 {
 public:
-	typedef _List_node<T> _Node;
-
-	_Node *_M_node;
-};
-
-template <class T, class Alloc>
-class list : public _List_base<T, Alloc>
-{
-public:
-	typedef _List_node<T> _Node;
-	typedef _List_iterator<T, _Nonconst_traits<T> > iterator;
-
-	iterator insert( iterator position, const T &value )
+	void push_back( const Rva0014C8E0Entry &value )
 	{
-		_Node *node = _M_create_node( value );
-		_List_node_base *at = position._M_node;
-		_List_node_base *before = at->_M_prev;
-		node->_M_next = at;
-		node->_M_prev = before;
-		before->_M_next = node;
-		at->_M_prev = node;
-		return iterator( node );
-	}
-
-	void push_back( const T &value )
-	{
-		insert( iterator( this->_M_node ), value );
+		Rva0014C8E0ListNode *position = m_node;
+		Rva0014C8E0ListNode *node = (Rva0014C8E0ListNode *)Rva0082E540NodeAllocate( sizeof( Rva0014C8E0ListNode ) );
+		Rva0014BBC0Construct( &node->m_data, value );
+		Rva0014C8E0ListNode *previous = position->m_prev;
+		node->m_next = position;
+		node->m_prev = previous;
+		previous->m_next = node;
+		position->m_prev = node;
 	}
 
 private:
-	_Node *_M_create_node( const T &value )
-	{
-		_Node *node = (_Node *)BfmeNodeAllocate( sizeof( _Node ) );
-		_Construct( &node->_M_data, value );
-		return node;
-	}
+	Rva0014C8E0ListNode *m_node;
 };
 
-}
-
-struct Rva0014C4C0Element
+struct Rva0014C8E0Owner
 {
-	UnicodeString m_name;
-	Int m_value;
-};
-
-class Rva0014C8E0Store
-{
-public:
-	char m_bfmeHead[ 0x14 ];
-	_STL::list<Rva0014C4C0Element, _STL::allocator<Rva0014C4C0Element> > m_bfmeItems;
+	Rva0014C8E0List *m_entries;
 };
 
 class Rva0014C8E0
 {
 public:
-	static void parseTemplateNameIntList( INI *ini, void *instance, void *, const void *userData );
+	static void parseTemplateNameCountListEntry( INI *ini, void *instance, void *store, const void *userData );
 };
 
-// ?parseTemplateNameIntList@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-void Rva0014C8E0::parseTemplateNameIntList( INI *ini, void *instance, void *, const void *userData )
+// ?parseTemplateNameCountListEntry@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
+void Rva0014C8E0::parseTemplateNameCountListEntry( INI *ini, void *, void *store, const void * )
 {
-	const ThingTemplate *tmplate = 0;
-	INI::parseThingTemplate( ini, 0, &tmplate, 0 );
-
-	Rva0014C4C0Element entry;
-	entry.m_value = 0;
-	INI::parseInt( ini, 0, &entry.m_value, 0 );
-
-	if( tmplate && tmplate->m_nameField.m_data && *(short *)( tmplate->m_nameField.m_data + 4 ) != 0 )
+	const Rva0014C8E0Template *thingTemplate;
+	Int count;
+	INI::parseThingTemplate( ini, 0, &thingTemplate, 0 );
+	INI::parseInt( ini, 0, &count, 0 );
+	Rva0014C8E0Entry entry;
+	if( thingTemplate && thingTemplate->m_name.isNotEmpty() )
 	{
-		entry.m_name.set( *(const UnicodeString *)&tmplate->m_nameField );
+		entry.m_name.set( thingTemplate->m_name );
+		Rva0014C8E0List *entries = ((Rva0014C8E0Owner *)store)->m_entries;
+		entry.m_count = count;
+		entries->push_back( entry );
 	}
-
-	Rva0014C8E0Store *self = (Rva0014C8E0Store *)instance;
-	self->m_bfmeItems.push_back( entry );
 }

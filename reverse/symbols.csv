@@ -9319,9 +9319,6 @@ name,address,notes
 ??RBfmeInsertCompareD@@QAE_NPAX0@Z,0x0002952D,Open-BFME5 ILT the linear insert at 0x00753460 compares through
 ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z,0x00015F19,score-entry median and sort helpers call the comparator through retail ILT
 ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z,0x00570420,thiscall ret 8 functor operator()(a b) used by the STL sort/heap helpers of the AptScoreScreen (0x005724D0 0x00575450 ... 20 call sites): orders by TheVictoryConditions->hasAchievedVictory(entry+4 player) then getRelationship against entry player +0x230 team == ALLIES then isPlayerDead 0x000C9D00 then the +0x0C +0x08 ints and (*entry)+0x18
-?BfmeScoreEntryPartition005724D0@@YAPAUBfmeScoreEntry@@PAU1@0U1@UBfmeScoreEntryLess@@@Z,0x0002A595,Gen00575450 partition helper ILT
-?BfmeScoreEntryPartialSort00574410@@YAXPAUBfmeScoreEntry@@00HUBfmeScoreEntryLess@@@Z,0x00037B5F,Gen00575450 depth fallback helper ILT
-?BfmeScoreEntryIntrosortSelf00575450@@YAXPAUBfmeScoreEntry@@00HUBfmeScoreEntryLess@@@Z,0x000152C1,Gen00575450 recursive self call ILT
 ??RBfmeStringLocaleLess@@QBE_NVAsciiString@@0@Z,0x0000B4B0,Open-BFME5 lower_bound comparator thunk for AsciiString-keyed locale-compare set at 0x00631C70/0x004F18C0; target 0x00631350 still a dump
 ??RBfmeTreeCompare@@QBE_NPBX0@Z,0x0000A9A2,Open-BFME5 ILT the red-black tree find at 0x00141220 compares through
 ??RGameSortStruct@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x000317D7
@@ -10008,6 +10005,9 @@ name,address,notes
 ?BfmeRva009F56C0Copy@_STL@@YAPAURva009F56C0Element@@PAU2@00ABU__false_type@1@@Z,0x009F4580,Open-BFME5 the 24-byte-element _STL::__uninitialized_copy this body calls directly
 ?BfmeRva009F56C0FillN@_STL@@YAPAURva009F56C0Element@@PAU2@IABU2@ABU__false_type@1@@Z,0x009F45D0,Open-BFME5 the 24-byte-element _STL::__uninitialized_fill_n this body calls directly
 ?BfmeSavedClientFrame@@3HA,0x012ED508,saved GameClient frame used by GameEngine::_bfme_updateClientSubsystems and the execute pacing gate
+?BfmeScoreEntryIntrosortSelf00575450@@YAXPAUBfmeScoreEntry@@00HUBfmeScoreEntryLess@@@Z,0x000152C1,Gen00575450 recursive self call ILT
+?BfmeScoreEntryPartialSort00574410@@YAXPAUBfmeScoreEntry@@00HUBfmeScoreEntryLess@@@Z,0x00037B5F,Gen00575450 depth fallback helper ILT
+?BfmeScoreEntryPartition005724D0@@YAPAUBfmeScoreEntry@@PAU1@0U1@UBfmeScoreEntryLess@@@Z,0x0002A595,Gen00575450 partition helper ILT
 ?BfmeSegInfoUninitializedCopy@_STL@@YAPAUSegInfo@W3DRopeDraw@@PBU23@0PAU23@ABU__false_type@1@@Z,0x00017765,Open-BFME5 ILT for the shared 16-byte-element _STL::__uninitialized_copy at 0x00759FB0
 ?BfmeSegInfoUninitializedFillN@_STL@@YAPAUSegInfo@W3DRopeDraw@@PAU23@IABU23@ABU__false_type@1@@Z,0x00042334,Open-BFME5 ILT for _STL::__uninitialized_fill_n on W3DRopeDraw SegInfo at 0x0075A000
 ?BfmeShadowScale@@3MB,0x0109BF3C,update shadow state scale constant
@@ -10357,6 +10357,7 @@ name,address,notes
 ?GetGameClientRandomValue@@YAHHHPADH@Z,0x00027AAC,ILT thunk; real body 0x96D70
 ?GetGameCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z,0x00676A00,GetBufferSizeNeededForCommand's jump table at 0x0067F378 tail-jumps here for command type 4 (GAMECOMMAND) exactly as its other six call-arms reach the already-ledgered Get*CommandSize helpers; the body opens with constructGameMessage and a GameMessageParser which is what the reference's GetGameCommandSize does
 ?GetGameLogicRandomValue@@YAHHHPADH@Z,0x00001BAE,SupplyWarehouse action random-position twitch calls the retail ILT before the existing 0x00096CF0 body
+?GetGameLogicRandomValue@@YAHHHPBDH@Z,0x00001BAE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6170 calls; autopin
 ?GetGameLogicRandomValueReal@@YAMMMPADH@Z,0x0002CCA5
 ?GetName@User@@QAE?AVAsciiString@@XZ,0x0000CA95,call-site callee candidate for Glo012F1024Item::j_00019eca; the returned four-byte string object and hidden return buffer match the 0x003A72F0 body
 ?GetStringFromRegistry@@YA_NVAsciiString@@0AAV1@@Z,0x00109640,registry string read body via thunk 0x249B
@@ -10623,12 +10624,14 @@ name,address,notes
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva000940F0Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000940F0 calls; autopin
 ?Rva00094010Register@@YAXPAVINI@@ABVAsciiString@@PAVRva00094470Definition@@@Z,0x00023344,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00094470 calls; autopin
 ?Rva0009F3E0Deallocate@@YAXPAXI@Z,0x0082E5F0,STLport small-node deallocator reached by the 0x0009F3E0 list removal
+?Rva000A87C0CopyConstruct@@YAXPAURva000A8820Entry@@ABU1@@Z,0x00044675,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000A8820 calls; autopin
 ?Rva000B73B0CopyConstruct@@YAXPAUCoord3D@@ABU1@@Z,0x0003FDA5,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000BF470 calls; autopin
 ?Rva000C41C0_isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z,0x000C3F80,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C41C0 calls; autopin
 ?Rva0014C090FieldParseTable@@3QBUFieldParse@@B,0x0109596C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C090 calls; autopin
 ?Rva00194810@@YA?AURva0019B780Key@@ABVAsciiString@@@Z,0x00194810,support pin for pair-return key splitter used by 0x0019B780
 ?Rva001E21F0CopyConstruct@@YAXPAUCoord2D@@ABU1@@Z,0x00046AF1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BADA0 calls; autopin
 ?Rva002098B0PhaseNames@@3QBQBDB,0x012AE110,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002098B0 calls; autopin
+?Rva0025CD50CopyConstruct@@YAXPAURva0025CDB0Entry@@ABU1@@Z,0x0001B99B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0025CDB0 calls; autopin
 ?Rva002EBEF0Intro@@YAXPAUS4SortElem20@@00HUS4Cmp002EB8E0@@@Z,0x00047343,address-derived STLport introsort callee for 0x002EBEF0
 ?Rva004255F0FieldParseTable@@3QBUFieldParse@@B,0x010F1B34,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x004255F0 calls; autopin
 ?Rva0048BD60FieldTable@@3QBEB,0x010F97D0,Rva0048BD60 field parse table
@@ -12375,6 +12378,8 @@ name,address,notes
 ?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z,0x00010B8B,retail REL32 pin for DockUpdate reserveApproachPosition
 ?_M_insert_overflow@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@IAEXPAW4ParticleSystemID@@ABW43@ABU__false_type@2@I_N@Z,0x0003E63F,Reviewed full retail callee: 5BDE00 coordinate stores CC/DC/EC and clears1A4; 288AF0 four-byte vector overflow with count/atend andret20
 ?_M_insert_overflow@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@IAEXPAW4ScienceType@@ABW43@ABU__false_type@2@I_N@Z,0x00023588
+?_M_insert_overflow@Rva000A8820Vector@@AAEXPAURva000A8820Entry@@ABU2@ABURva0025CDB0FalseType@@I_N@Z,0x0002059F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000A8820 calls; autopin
+?_M_insert_overflow@Rva0025CDB0Vector@@AAEXPAURva0025CDB0Entry@@ABU2@ABURva0025CDB0FalseType@@I_N@Z,0x0003CDB7,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0025CDB0 calls; autopin
 ?_M_insert_overflow@Rva003BADA0Vector@@AAEXPAUCoord2D@@ABU2@ABURva000BF470FalseType@@I_N@Z,0x0001CB9D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BADA0 calls; autopin
 ?_M_list@?$_Stl_prime@_N@_STL@@2QBIB,0x00C75870,STLport's prime table; the relationship hashtable resize pushes its bounds 0x01075870 and 0x010758E0 at 0x007868E4
 ?_M_lower_bound@?$_Rb_tree@$$CBV?$BitFlags@$0BB@@@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VWeaponTemplateSet@@V?$BitFlags@$0BB@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBV?$BitFlags@$0BB@@@PBVWeaponTemplateSet@@@_STL@@@2@ABV?$BitFlags@$0BB@@@@Z,0x00005A60,resweep callee back-solved
@@ -73813,6 +73818,7 @@ name,address,notes
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
+?bfmeFind1011@GameLogic@@QAEPAVObject@@H@Z,0x0001F253,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6170 calls; autopin
 ?bfmeFind1011B@BfmeB1011@@QAEPAUBfmeSlot1011@@PAX@Z,0x000288B7,pin
 ?bfmeFind1014@BfmeStore1014@@QAEPAUBfmeRec1014@@H@Z,0x0001F253,pin
 ?bfmeFind1024@BfmeM1024@@QAEPAVBfmeV1024@@H@Z,0x0001D606,pin
@@ -75281,6 +75287,7 @@ name,address,notes
 ?bfmeSendAMB@BfmeSinkAMB@@QAEXPAX0@Z,0x000160D1,pin
 ?bfmeSendAPB@@YGXPADPAX@Z,0x009F6D00,pin
 ?bfmeSendAQA@BfmeTwoAQA@@QAEXPAX@Z,0x0002FAC2,pin
+?bfmeSendAT@@YAXPAX0@Z,0x00042848,pin
 ?bfmeSendATB@@YAXH@Z,0x000277E1,pin
 ?bfmeSendAXB@BfmeThingAXB@@QAEXPAVBfmeSrcAXB@@PAUBfmeFlagsAXB@@@Z,0x0001C030,pin
 ?bfmeSendAZB@@YAXHPAX0@Z,0x00018962,pin
@@ -81398,6 +81405,7 @@ name,address,notes
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
 ?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
+?releaseBuffer@RetailLayoutString@@AAEXXZ,0x00887940,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0025CDB0 calls; autopin
 ?releaseBuffer@Rva002542F0String@@AAEXXZ,0x00887940,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,retail body called by the GS message-box UnicodeString temporaries
 ?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
@@ -84144,4 +84152,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeSendAT@@YAXPAX0@Z,0x00042848,pin

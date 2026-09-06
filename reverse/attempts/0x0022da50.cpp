@@ -1,164 +1,96 @@
-// ?parseNameIntList@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.4 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-
-// Open-BFME7: INI field parser at 0x0022DA50 (223 B): reads a name token,
-// then an optional value token (getNextTokenOrNull) scanned as an Int
-// (default 1 when the value token is absent), sets a RetailLayoutString
-// name from the name token (inline strlen guarded against a null token)
-// and inserts the finished (name value) entry at the tail of the
-// instance's list at +0x174 -- the same eight-byte element, node layout
-// and _Construct pin (0x0022D610's own _Construct at 0x000402C8) as the
-// landed sibling list<Rva0022D610Element> in RvaListInsert8.cpp. Names
-// are address-derived.
+// ?parseNameCountListEntry@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.9 date=2026-09-06
+// cl: /DNDEBUG /MD /EHsc
+// Open-BFME7: INI field parser at 0x0022DA50 (223 B): a name token and an
+// optional count (INI::scanInt or 1 when the line ends: the Bfme5IniNamedValue
+// shape) become an (AsciiString name Int count) entry pushed onto the
+// list<entry> member at instance+0x174 (STLport exceptions off: node from the
+// static allocator the element copied by the out-of-line body at 0x0022D610).
+// Address-derived names.
 
 typedef int Int;
 
-extern "C" __declspec(dllimport) unsigned int __stdcall strlen(const char *s);
-
-class INI
-{
-public:
-	const char *getNextToken(const char *seps = 0);
-	const char *getNextTokenOrNull(const char *seps = 0);
-	static Int scanInt(const char *token);
-};
+extern "C" unsigned int __cdecl strlen( const char *s );
+#pragma intrinsic( strlen )
 
 class RetailLayoutString
 {
 public:
-	RetailLayoutString()
-	{
-		m_data = 0;
-	}
-
-	~RetailLayoutString();
-
-	void set(const char *text, int length);
+	RetailLayoutString() : m_data( 0 ) {}
+	~RetailLayoutString() { releaseBuffer(); }
+	void set( const char *s, int n );
 
 private:
-	char *m_data;
+	void releaseBuffer( void );
+	void *m_data;
 };
 
-namespace _STL
-{
-
-void *__cdecl vectorLargeAllocate(unsigned int bytes);
-void *__cdecl vectorSmallAllocate(unsigned int bytes);
-
-inline void *BfmeNodeAllocate(unsigned int bytes)
-{
-	if (bytes > 128)
-		return vectorLargeAllocate(bytes);
-	return vectorSmallAllocate(bytes);
-}
-
-template <class T1, class T2>
-void __cdecl _Construct(T1 *destination, const T2 &value);
-
-template <class T>
-class allocator
-{
-};
-
-template <class T>
-struct _Nonconst_traits
-{
-};
-
-struct _List_node_base
-{
-	_List_node_base *_M_next;
-	_List_node_base *_M_prev;
-};
-
-template <class T>
-struct _List_node : public _List_node_base
-{
-	T _M_data;
-};
-
-template <class T, class Traits>
-struct _List_iterator
-{
-	_List_iterator(_List_node_base *node) : _M_node(node) {}
-
-	_List_node_base *_M_node;
-};
-
-template <class T, class Alloc>
-class _List_base
+class INI
 {
 public:
-	typedef _List_node<T> _Node;
-
-	_Node *_M_node;
+	const char *getNextToken( const char *seps = 0 );
+	const char *getNextTokenOrNull( const char *seps = 0 );
+	static Int scanInt( const char *token );
 };
 
-template <class T, class Alloc>
-class list : public _List_base<T, Alloc>
+struct Rva0022DA50Entry
 {
-public:
-	typedef _List_node<T> _Node;
-	typedef _List_iterator<T, _Nonconst_traits<T> > iterator;
+	Rva0022DA50Entry() : m_count( 0 ) {}
 
-	iterator insert( iterator position, const T &value )
-	{
-		_Node *node = _M_create_node( value );
-		_List_node_base *at = position._M_node;
-		_List_node_base *before = at->_M_prev;
-		node->_M_next = at;
-		node->_M_prev = before;
-		before->_M_next = node;
-		at->_M_prev = node;
-		return iterator( node );
-	}
-
-	void push_back( const T &value )
-	{
-		insert( iterator( this->_M_node ), value );
-	}
-
-private:
-	_Node *_M_create_node( const T &value )
-	{
-		_Node *node = (_Node *)BfmeNodeAllocate( sizeof( _Node ) );
-		_Construct( &node->_M_data, value );
-		return node;
-	}
-};
-
-}
-
-struct Rva0022D610Element
-{
 	RetailLayoutString m_name;
-	Int m_value;
+	Int m_count;
 };
 
-class Rva0022DA50Store
+void *__cdecl Rva0082E540NodeAllocate( unsigned int bytes );
+void __cdecl Rva0022D610Construct( Rva0022DA50Entry *where, const Rva0022DA50Entry &value );
+
+struct Rva0022DA50ListNode
+{
+	Rva0022DA50ListNode *m_next;
+	Rva0022DA50ListNode *m_prev;
+	Rva0022DA50Entry m_data;
+};
+
+class Rva0022DA50List
 {
 public:
-	char m_bfmeHead[ 0x174 ];
-	_STL::list<Rva0022D610Element, _STL::allocator<Rva0022D610Element> > m_bfmeItems;
+	void push_back( const Rva0022DA50Entry &value )
+	{
+		Rva0022DA50ListNode *position = m_node;
+		Rva0022DA50ListNode *node = (Rva0022DA50ListNode *)Rva0082E540NodeAllocate( sizeof( Rva0022DA50ListNode ) );
+		Rva0022D610Construct( &node->m_data, value );
+		Rva0022DA50ListNode *previous = position->m_prev;
+		node->m_next = position;
+		node->m_prev = previous;
+		previous->m_next = node;
+		position->m_prev = node;
+	}
+
+private:
+	Rva0022DA50ListNode *m_node;
+};
+
+struct Rva0022DA50Owner
+{
+	char m_unreconstructed[ 0x174 ];
+	Rva0022DA50List m_entries;
 };
 
 class Rva0022DA50
 {
 public:
-	static void parseNameIntList( INI *ini, void *instance, void *, const void * );
+	static void parseNameCountListEntry( INI *ini, void *instance, void *store, const void *userData );
 };
 
-// ?parseNameIntList@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
-void Rva0022DA50::parseNameIntList( INI *ini, void *instance, void *, const void * )
+// ?parseNameCountListEntry@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
+void Rva0022DA50::parseNameCountListEntry( INI *ini, void *instance, void *, const void * )
 {
 	const char *name = ini->getNextToken();
-	const char *valueToken = ini->getNextTokenOrNull();
-
-	Rva0022D610Element entry;
-	entry.m_value = valueToken ? INI::scanInt( valueToken ) : 1;
+	const char *num = ini->getNextTokenOrNull();
+	Int count = num ? INI::scanInt( num ) : 1;
+	Rva0022DA50Entry entry;
 	entry.m_name.set( name, name ? (int)strlen( name ) : 0 );
-
-	Rva0022DA50Store *self = (Rva0022DA50Store *)instance;
-	self->m_bfmeItems.push_back( entry );
+	Rva0022DA50List &entries = ((Rva0022DA50Owner *)instance)->m_entries;
+	entry.m_count = count;
+	entries.push_back( entry );
 }
