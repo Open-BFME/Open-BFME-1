@@ -105,6 +105,7 @@ name,address,notes
 ?$S51@?1??getClassMemoryPool@FireWeaponWhenDamagedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF7C8,pool-glue cascade static (back-solved)
 ?$S52@?1??getClassMemoryPool@FireWeaponWhenDeadBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF7D0,pool-glue cascade static (back-solved)
 ?92c0@@YAXXZ,0x005992C0,gen-thunk body
+??$?MDV?$char_traits@D@_STL@@V?$allocator@D@1@@_STL@@YA_NABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@0@Z,0x00015898,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0064C4C0 calls; autopin
 ??$BfmeElementConstruct@UGen_t_001fa830_p12cd@@@_STL@@YAXPAUGen_t_001fa830_p12cd@@ABU1@@Z,0x00002086,Open-BFME5 target of the element construct call in 0x001FA5B0
 ??$BfmeElementConstruct@UGen_t_002e19c0_p12cd@@@_STL@@YAXPAUGen_t_002e19c0_p12cd@@ABU1@@Z,0x0003B8F4,Open-BFME5 target of the element construct call in 0x002E1820
 ??$BfmeElementConstruct@UGen_t_002e20c0_p12cd@@@_STL@@YAXPAUGen_t_002e20c0_p12cd@@ABU1@@Z,0x0001AE06,Open-BFME5 target of the element construct call in 0x002E1DA0
@@ -11961,6 +11962,7 @@ name,address,notes
 ?_M_insert@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@0@Z,0x0001E128,"Reviewed ILT1E128 to EED60 full188B; 28B tree node and signed pair<int,int> key, same TeamFactory matched find specialization"
 ?_M_insert@?$_Rb_tree@UGen_t_00093990_mc4@@U1@U?$_Identity@UGen_t_00093990_mc4@@@_STL@@U?$less@UGen_t_00093990_mc4@@@3@V?$allocator@UGen_t_00093990_mc4@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@UGen_t_00093990_mc4@@U?$_Nonconst_traits@UGen_t_00093990_mc4@@@_STL@@@2@PAU_Rb_tree_node_base@2@0ABUGen_t_00093990_mc4@@0@Z,0x00093670,family-emit payload member
 ?_M_insert@?$_Rb_tree@URva0019BC70Key@@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Select1st@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@U?$less@URva0019BC70Key@@@3@V?$allocator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBURva0019BC70Key@@URva0019BC70Value@@@2@0@Z,0x00014C31,retail call target for the Rva0019BC70Tree node insertion helper
+?_M_insert@?$_Rb_tree@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@2@U?$_Select1st@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@U?$less@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@U?$_Nonconst_traits@U?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@H@2@0@Z,0x000086A2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0064C4C0 calls; autopin
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@UCoord3D@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@UCoord3D@@@2@0@Z,0x000086A2
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@2@0@Z,0x000086A2,Open-BFME5 ICF pin for InGameUI SuperweaponInfo _M_insert
 ?_M_insert@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@2@0@Z,0x00026283,WOLLogin tree insert thunk
@@ -72686,6 +72688,7 @@ name,address,notes
 ?bfmeAdjustHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z,0x009CD1E0,address-derived adjust-heap callee of bfmePopHeapVOU; target read from the REL32 at its call site
 ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z,0x00001915,Open-BFME5 ILT thunk to 0x003DB160; Pathfinder 2-Coord3D adjust used by isClearGoalFiringLineOfSightTerrain Object overload
 ?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
+?bfmeAdvance@Rva0026C7C0Owner@@QAE_NXZ,0x002A6E60,"Root reviewed full source, exact symbol extent, all resolved relocations and no emitted vtable. Root disassembled complete2A6E60/336 helper: ECX owner, same+4/+8/+28/+30 layout, no stack arguments, explicit AL false/true on every return. Distinct address-derived member pin accurately represents bool ABI. Compiler unsigned-to-float conversion emits actual2^32 fixup; interpolation writes result+B0. No invented class identity."
 ?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
 ?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin
 ?bfmeAdvanceFV@BfmePrimaryFV@@QAEXH@Z,0x0003BDD6,pin
@@ -73275,6 +73278,7 @@ name,address,notes
 ?bfmeClose1281@BfmeE1281@@QAEXXZ,0x00028EC0,pin
 ?bfmeClose@GameWindow@@QAEX_N@Z,0x00027F2A,Gen_00588D10 close-window thunk
 ?bfmeClose@Gen009D1A40@@QAEXXZ,0x009CB880,address-derived close target from the tail REL32 jump at retail 0x009D1A5D
+?bfmeCloseFY@BfmeSlotFY@@QAEXH@Z,0x00013633,pin
 ?bfmeCloseUDC@BfmeSrcUDC@@QAEXXZ,0x009EB7A0,pin
 ?bfmeCloseVHT@BfmeChunkVHT@@QAEXXZ,0x009E13E0,pin
 ?bfmeCloseVHX@BfmeHandleVHX@@QAEXXZ,0x009DB5A0,pin
@@ -73839,6 +73843,7 @@ name,address,notes
 ?bfmeFinishBP1008@BfmeP1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishBQ1008@BfmeQ1008@@QAEXPAX@Z,0x00002EAA,pin
 ?bfmeFinishCell@Gen_006A6AF0@@AAEXHHPAX0@Z,0x00001762,address-derived four-argument cell finalizer used by Gen_006A6AF0::bfmeFinish
+?bfmeFinishFY@BfmeExtraFY@@QAEXXZ,0x00015D3E,pin
 ?bfmeFinishRV@@YAXH@Z,0x00024848,DF8A0 cdecl finish ILT
 ?bfmeFinishTurnArc@Path@@QAEXPAVPathNode@@00M@Z,0x00021BF2,Path helper ILT to FUN_007febb0 at 0x003FEBB0; called from Path::bfmeBuildTurnArc 0x003FFB50
 ?bfmeFinishYC@BfmeThingYC@@QAEXPAX@Z,0x00019D17,pin
@@ -74719,7 +74724,6 @@ name,address,notes
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEGPAVParameter@@@Z,0x000230B5,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
 ?bfmeNext1087@BfmeP1087@@QAEHH@Z,0x000230B5,pin
-?countObjects@Player@@QAEHV?$BitFlags@$0MA@@@0@Z,0x0001FF1E,Player faction-building count helper called by evaluatePlayerHasNOrFewerFactionBuildings
 ?bfmeNext1088@BfmeP1088@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1089@BfmeP1089@@QAEHH@Z,0x000230B5,pin
 ?bfmeNext1090@BfmeP1090@@QAEHH@Z,0x000230B5,pin
@@ -76396,6 +76400,7 @@ name,address,notes
 ?countIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
 ?countInverseIntersection@?$BitFlags@$0BB@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
 ?countInverseIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
+?countObjects@Player@@QAEHV?$BitFlags@$0MA@@@0@Z,0x0001FF1E,Player faction-building count helper called by evaluatePlayerHasNOrFewerFactionBuildings
 ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00048D79,retail target of ProductionPrerequisite::calcNumPrereqUnitsOwned call; Player class not yet converted for this method
 ?countObjectsByThingTemplate@Team@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00010181,Open-BFME5 ILT thunk; ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z at 0x000F4030 hands all five arguments to it once per team on the instance list
 ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x0001424A,Open-BFME5 ILT thunk to body 0x000F4030; ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z at 0x000CDD50 forwards all five arguments to it once per team prototype
