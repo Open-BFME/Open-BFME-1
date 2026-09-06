@@ -4118,38 +4118,6 @@ void GameState::addPostProcessSnapshot( Snapshot *snapshot )
 }  // end addPostProcessSnapshot
 
 // ------------------------------------------------------------------------------------------------
-/** Post process entry point after all game data has been xferd from disk */
-// ------------------------------------------------------------------------------------------------
-// ?gameStatePostProcessLoad@GameState@@AAEXXZ present-unmatched
-void GameState::gameStatePostProcessLoad( void )
-{
-
-	// post process each snapshot that registered with us
-	SnapshotListIterator it;
-	Snapshot *snapshot;
-	for( it = m_snapshotPostProcessList.begin(); it != m_snapshotPostProcessList.end(); /*emtpy*/ )
-	{
-
-		// get snapshot
-		snapshot = *it;
-
-		// increment iterator
-		++it;
-
-		// do processing
-		snapshot->loadPostProcess();
-
-	}  // end for
-
-	// clear the snapshot post process list as we are now done with it
-	m_snapshotPostProcessList.clear();
-
-	// evil... must ensure this is updated prior to the script engine running the first time.
-	ThePartitionManager->update();
-
-}  // end loadPostProcess
-
-// ------------------------------------------------------------------------------------------------
 /** Xfer method for the game state itself 
 	* Version Info:
 	* 1: Initial version 
