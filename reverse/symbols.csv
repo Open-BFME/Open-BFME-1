@@ -79168,6 +79168,7 @@ name,address,notes
 ?groupDoCommandButton@AIGroup@@QAEXPBVCommandButton@@W4CommandSourceType@@@Z,0x0003337A,ILT to 0x00150F00; callee of doTeamUseCommandButtonAbility 0x002F4A20
 ?groupDoCommandButtonAtObject@AIGroup@@QAEXPBVCommandButton@@PAVObject@@W4CommandSourceType@@@Z,0x0001C0D0,doTeamUseCommandButtonOnNamed BFME AIGroup ILT
 ?groupDoCommandButtonAtPosition@AIGroup@@QAEXPBVCommandButton@@PBUCoord3D@@W4CommandSourceType@@@Z,0x000478B1,doTeamUseCommandButtonAbilityAtWaypoint BFME AIGroup ILT
+?groupDoCommandButtonUsingWaypoints@AIGroup@@QAEXPBVCommandButton@@PBVWaypoint@@W4CommandSourceType@@@Z,0x0001C0D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002F4AB0 calls; autopin
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x0003756A,ScriptActions::doTeamGarrisonSpecificBuilding retail call target; exact ZH operation and AIGroup receiver
 ?groupEvacuate@AIGroup@@QAEXW4CommandSourceType@@@Z,0x000461C3,ILT to 0x00156690; callee of doTeamExitAll 0x002F2B70
 ?groupFollowWaypointPath@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z,0x00155890,normal waypoint-path member walk; callee aiFollowWaypointPath ILT 0x00031179
