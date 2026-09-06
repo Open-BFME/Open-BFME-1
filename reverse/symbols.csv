@@ -501,6 +501,7 @@ name,address,notes
 ??$_Construct@VPlayerTemplate@@V1@@_STL@@YAXPAVPlayerTemplate@@ABV1@@Z,0x00024321,Open-BFME5 PlayerTemplate construction ILT
 ??$_Construct@VProductionPrerequisite@@V1@@_STL@@YAXPAVProductionPrerequisite@@ABV1@@Z,0x0003AA26,resweep callee back-solved
 ??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x00033AAA,ILT thunk used by call site
+??$_Destroy@PAUEvaMessageInfo@@@_STL@@YAXPAUEvaMessageInfo@@0@Z,0x0003AA8A,0x004263D0 call +0x00bb ILT enters matched 28-byte member walk body 0x004261F0
 ??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
 ??$_Destroy@PAUGen_t_000b0c00_p8cd@@@_STL@@YAXPAUGen_t_000b0c00_p8cd@@0@Z,0x000B0960,gen-tgrid payload member
 ??$_Destroy@PAUGen_t_000e8340_p12cd@@@_STL@@YAXPAUGen_t_000e8340_p12cd@@0@Z,0x000BD5E0,gen-tgrid payload member
@@ -565,6 +566,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00046925,ILT thunk -> 0x00170350 (vector<void*>::operator= ICF copy at 0x00170CD0)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x00047717,ILT thunk -> 0x001353E0 (vector<void*>::operator= ICF copy at 0x00135B10)
 ??$_M_allocate_and_copy@PBQAX@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEPAPAXIPBQAX0@Z,0x000488E7,ILT thunk -> 0x0039D4E0 (vector<void*>::operator= ICF copy at 0x0039D630)
+??$_M_allocate_and_copy@PBUEvaMessageInfo@@@?$vector@UEvaMessageInfo@@V?$allocator@UEvaMessageInfo@@@_STL@@@_STL@@IAEPAUEvaMessageInfo@@IPBU2@0@Z,0x00034649,0x004263D0 call +0x0059 ILT enters matched Eva 28-byte allocate-and-copy body 0x00426140
 ??$_M_allocate_and_copy@PBUGen00762250@@@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEPAUGen00762250@@IPBU2@0@Z,0x0002DB4B,0x00770830 call +0x0059 ILT enters matched allocate-and-copy body 0x007690F0
 ??$_M_allocate_and_copy@PBUGen_t_00095d30_p8pod@@@?$vector@UGen_t_00095d30_p8pod@@V?$allocator@UGen_t_00095d30_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_00095d30_p8pod@@IPBU2@0@Z,0x00095760,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGen_t_000a7cb0_p4pod@@@?$vector@UGen_t_000a7cb0_p4pod@@V?$allocator@UGen_t_000a7cb0_p4pod@@@_STL@@@_STL@@IAEPAUGen_t_000a7cb0_p4pod@@IPBU2@0@Z,0x000A7820,gen-tgrid payload member
@@ -788,6 +790,7 @@ name,address,notes
 ??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
 ??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
+??$__copy@PBUEvaMessageInfo@@PAU1@H@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00003F6C,0x004263D0 calls +0x00b1 and +0x00e4 ILT enters matched 28-byte copy body 0x00425A60
 ??$__copy@PBUGen00762250@@PAU1@H@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008341,0x00770830 calls +0x00b1 and +0x00e4 ILT enters matched width-56 copy body 0x0075EAA0
 ??$__copy@PBUGen_t_000b0c00_p8cd@@PAU1@H@_STL@@YAPAUGen_t_000b0c00_p8cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000B0290,gen-tgrid payload member
 ??$__copy@PBUGen_t_000e8340_p12cd@@PAU1@H@_STL@@YAPAUGen_t_000e8340_p12cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000E7BC0,gen-tgrid payload member
@@ -1113,6 +1116,7 @@ name,address,notes
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
 ??$__uninitialized_copy@PAURunwayInfo@FlightDeckBehavior@@PAU12@@_STL@@YAPAURunwayInfo@FlightDeckBehavior@@PAU12@00ABU__false_type@0@@Z,0x00038C80,Open-BFME5 the range copy the RunwayInfo vector _M_insert_overflow at 0x0039EC70 calls
 ??$__uninitialized_copy@PAURva00244A80Element@@PAU1@@_STL@@YAPAURva00244A80Element@@PAU1@00ABU__false_type@0@@Z,0x0002D11E,Open-BFME5 0x002403E0 range copy ILT
+??$__uninitialized_copy@PBUEvaMessageInfo@@PAU1@@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0004684E,0x004263D0 call +0x0119 ILT enters matched 28-byte copy walk body 0x00426020
 ??$__uninitialized_copy@PBUGen00762250@@PAU1@@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00027E35,0x00770830 call +0x0119 ILT enters matched width-56 copy walk body 0x00768BF0
 ??$__uninitialized_copy@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095720,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75F0,gen-tgrid payload member
@@ -9424,6 +9428,7 @@ name,address,notes
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
+??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
 ??_C@_0BA@CLLFEOBD@CreateObjectDie?$AA@,0x00C90868,pool-glue cascade static (back-solved)
@@ -10928,6 +10933,7 @@ name,address,notes
 ?_M_clear@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXXZ,0x0002A914,Open-BFME5 ILT for the vector<pair<ICoord2D Coord3D>> teardown reached from _M_insert_overflow
 ?_M_clear@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@IAEXXZ,0x0002F4D2,Open-BFME5 ILT for the vector<pair<ObjectID ObjectID>> teardown reached from _M_insert_overflow
 ?_M_clear@?$vector@UAnimSet@GenericObjectCreationNugget@@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@IAEXXZ,0x00018B97,ILT the AnimSet vector overflow calls at 0x00755D96 to clear the old buffer
+?_M_clear@?$vector@UEvaMessageInfo@@V?$allocator@UEvaMessageInfo@@@_STL@@@_STL@@IAEXXZ,0x00009E8A,0x004263D0 call +0x0062 ILT enters matched 28-byte vector destructor body 0x00426350
 ?_M_clear@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXXZ,0x000DE970,ICF-folded with the gen-tgrid vec_p16cd instantiation at the same address; resolved via direct disassembly at _M_insert_overflow<EvaSideSounds>
 ?_M_clear@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEXXZ,0x00011A8B,0x00770830 call +0x0062 ILT enters matched vector<Gen00762250> destructor body 0x00770650
 ?_M_clear@?$vector@UGen_t_00065800_p4cd@@V?$allocator@UGen_t_00065800_p4cd@@@_STL@@@_STL@@IAEXXZ,0x000630B0,gen-tgrid payload member
