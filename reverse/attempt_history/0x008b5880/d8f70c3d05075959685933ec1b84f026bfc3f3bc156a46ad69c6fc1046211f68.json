@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d8f70c3d05075959685933ec1b84f026bfc3f3bc156a46ad69c6fc1046211f68",
+  "symbol": "??0BfmeOwnBH@@QAE@PAVBfmeHostBH@@@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ??0BfmeOwnBH@@QAE@PAVBfmeHostBH@@@Z (identity unknown)\n// partial score=0.82 date=2026-09-06\n// 40/48 at exact size. The base constructor with its two arguments, the store\n// set and the three-step chain through the parameter are all modelled.\n// Residue is the same wall as 0x008087D0: retail loads the parameter into ecx\n// BEFORE the zero constant is materialised and keeps it there across the\n// stores, while MSVC emits the zeros first and loads the parameter late into\n// eax. That also drags the chain registers one step out of line.\nextern int g_bfmeVftBH;\n\nclass BfmeInnerBH\n{\npublic:\n\tunsigned char m_bfmeHeadBH[4];\n\tint m_bfmeValueBH;\n};\n\nclass BfmeMidBH\n{\npublic:\n\tunsigned char m_bfmeHeadBH[0xc];\n\tBfmeInnerBH *m_bfmeInnerBH;\n};\n\nclass BfmeHostBH\n{\npublic:\n\tunsigned char m_bfmeHeadBH[0x50];\n\tBfmeMidBH *m_bfmeMidBH;\n};\n\nclass BfmeBaseBH\n{\npublic:\n\tBfmeBaseBH(int kind, int size);\n};\n\nclass BfmeOwnBH : public BfmeBaseBH\n{\npublic:\n\tBfmeOwnBH(BfmeHostBH *host);\n\n\tint *m_bfmeVfBH;\n\tunsigned char m_bfmeHeadBH[0x1c];\n\tint m_bfmeCBH;\n\tint m_bfmeABH;\n\tint m_bfmeBBH;\n};\n\nBfmeOwnBH::BfmeOwnBH(BfmeHostBH *host)\n\t: BfmeBaseBH(0x15, 8)\n{\n\tm_bfmeABH = 0;\n\tm_bfmeVfBH = &g_bfmeVftBH;\n\tm_bfmeBBH = 0;\n\tm_bfmeCBH = host->m_bfmeMidBH->m_bfmeInnerBH->m_bfmeValueBH;\n}\n"
+}

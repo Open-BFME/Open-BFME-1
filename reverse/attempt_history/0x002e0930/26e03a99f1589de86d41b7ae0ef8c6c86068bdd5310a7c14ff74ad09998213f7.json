@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "26e03a99f1589de86d41b7ae0ef8c6c86068bdd5310a7c14ff74ad09998213f7",
+  "symbol": "??0BfmeListBG@@QAE@PAX0@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ??0BfmeListBG@@QAE@PAX0@Z (identity unknown)\n// partial score=0.96 date=2026-09-06\n// 45/47. A circular-list constructor: two parameter stores, a null of the node\n// member, __new_alloc::allocate(0xc), the two self-links and the real node\n// store. Everything matches except that retail emits `push 0xc` AFTER both\n// parameter stores while MSVC hoists it above them. Marking both parameter\n// members volatile moves the push down by one store (three diffs to two);\n// nothing moves it past the second. Member initialiser lists, a separate zero\n// statement and volatile on the node member were also tried.\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int size);\n};\n\n}\n\nclass BfmeNodeBG\n{\npublic:\n\tBfmeNodeBG *m_bfmeNextBG;\n\tBfmeNodeBG *m_bfmePrevBG;\n\tvoid *m_bfmeValueBG;\n};\n\nclass BfmeListBG\n{\npublic:\n\tBfmeListBG(void *first, void *second);\n\n\tvoid *volatile m_bfmeFirstBG;\n\tvoid *m_bfmeSecondBG;\n\tBfmeNodeBG *m_bfmeNodeBG;\n};\n\nBfmeListBG::BfmeListBG(void *first, void *second)\n\t: m_bfmeFirstBG(first), m_bfmeSecondBG(second)\n{\n\tm_bfmeNodeBG = 0;\n\n\tBfmeNodeBG *node = (BfmeNodeBG *)_STL::__new_alloc::allocate(0xc);\n\n\tnode->m_bfmeNextBG = node;\n\tnode->m_bfmePrevBG = node;\n\tm_bfmeNodeBG = node;\n}\n"
+}
