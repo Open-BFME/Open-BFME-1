@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d19d9d36379a32365fb88f9e21d8ac862400fee540b584f562e5f32d320eb3c2",
+  "symbol": "??4U1Assign_005CB1D0@@QAEAAV0@ABV0@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ??4U1Assign_005CB1D0@@QAEAAV0@ABV0@@Z\n// partial score=0.95 date=2026-09-05\n// Attempt at 0x005CB1D0 (60 B), sibling of the U1_CLONE_ASSIGN family in\n// Code/GameEngine/Source/Common/U1CloneAssignOperators.cpp.  Byte-identical\n// to that family except the parameter's tail-subobject address is computed\n// with `lea eax,[ebx+4] / push eax` instead of `add ebx,4 / push ebx`.  This\n// TU tries an explicit operator= call spelling (rather than `m_tail =\n// rhs.m_tail;`) to see whether that changes which register the allocator\n// clobbers for the address computation.\n\nclass U1Clonable_B1D0\n{\npublic:\n\tvirtual ~U1Clonable_B1D0();\n\tvirtual U1Clonable_B1D0 *clone();\n};\n\nclass U1Tail_005CB1D0\n{\npublic:\n\tU1Tail_005CB1D0 &operator=( const U1Tail_005CB1D0 &rhs );\n};\n\nclass U1Assign_005CB1D0\n{\npublic:\n\tU1Assign_005CB1D0 &operator=( const U1Assign_005CB1D0 &rhs );\n\n\tU1Clonable_B1D0 *m_held;\n\tU1Tail_005CB1D0 m_tail;\n};\n\nU1Assign_005CB1D0 &U1Assign_005CB1D0::operator=( const U1Assign_005CB1D0 &rhs )\n{\n\tU1Clonable_B1D0 *source = rhs.m_held;\n\tU1Clonable_B1D0 *copy = source ? source->clone() : 0;\n\tdelete m_held;\n\tm_held = copy;\n\tconst U1Tail_005CB1D0 *tp = &rhs.m_tail;\n\tm_tail = *tp;\n\treturn *this;\n}\n"
+}

@@ -10261,6 +10261,7 @@ name,address,notes
 ?Release_Ref@Rva006D51B0TextureBase@@QAEXXZ,0x009EB7A0,texture reference release used by Rva006D51B0
 ?Release_Ref@TextureBaseClass@@QAEXXZ,0x009EB7A0,hider decl in texture.h; WORD refcount+flags release
 ?Release_Ref@TextureClass@@QAEXXZ,0x009EB7A0,BFME texture release: WORD refcount+flag bits at [this+4]; auto-delete via vtbl slot 8 when bit24 set ??? TextureClass does NOT derive RefCountClass
+?Release_Ref@TextureClass_732960@@QAEXXZ,0x009EB7A0,pin (near-twin of 0x00732960 freeTreeBuffers(); same target as TextureClass::Release_Ref)
 ?Remap_Mesh@MaterialRemapperClass@@QAEXPBVMeshMatDescClass@@PAV2@@Z,0x0092F2C0,callee of the byte-proven clone_materials 0x96DDC0; same stack temp as ecx and args are the two CurMatDesc slots at +0x9c
 ?Remove@?$DLNodeClass@VThumbnailManagerClass@@@@QAEXXZ,0x00041763,pinharvest x4 (thunk)
 ?RemoveAt@?$CSimpleArray@PAXV?$CSimpleArrayEqualHelper@PAX@ATL@@@ATL@@QAEHH@Z,0x009F6883,ATL 7.1 CSimpleArray<HINSTANCE>::RemoveAt called by CAtlBaseModule::RemoveResourceInstance
@@ -12015,6 +12016,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@V?$BitFlags@$0HF@@@V?$allocator@V?$BitFlags@$0HF@@@@_STL@@@_STL@@IAEXPAV?$BitFlags@$0HF@@@ABV3@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@IAEXPAVArmorTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x0000E868,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x000112C0,resweep callee back-solved
+?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x0003827B,additive pin: 0x00465200 vector<AsciiString>::push_back overflow path reuses the already-matched thunk at this address
 ?_M_insert_overflow@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldArmy@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,replenish retail call at 0x003655D3 invokes the vector<LivingWorldArmy> overflow-insert ILT thunk
 ?_M_insert_overflow@?$vector@VLivingWorldPlayerArmy@@V?$allocator@VLivingWorldPlayerArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldPlayerArmy@@ABV3@ABU__false_type@2@I_N@Z,0x000345B8,Open-BFME5 REL32 pin from addPlayerArmy; ILT thunk to 0x003665C0
 ?_M_insert_overflow@?$vector@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@IAEXPAVMoney@@ABV3@ABU__false_type@2@I_N@Z,0x0087FBE0,Open-BFME5 retail Money vector overflow pin
@@ -72538,6 +72540,7 @@ name,address,notes
 ?bfmeAskCOF@BfmeThingCOF@@QAE_NXZ,0x00011F77,pin
 ?bfmeAskCPC@@YG_NPAUBfmeThingCPC@@@Z,0x00025EF5,pin
 ?bfmeAskCSA@BfmeSubCSA@@QAE_NXZ,0x00017607,pin
+?bfmeAskCSA@BfmeSubCSA_2BC5D0@@QAE_NXZ,0x00017607,pin (near-twin of 0x002BC5D0 run(); same target as BfmeSubCSA::bfmeAskCSA)
 ?bfmeAskCSD@BfmeSubCSD@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSE@BfmeSubCSE@@QAE_NXZ,0x00017607,pin
 ?bfmeAskCSF@BfmeSubCSF@@QAE_NXZ,0x00017607,pin
@@ -72690,6 +72693,7 @@ name,address,notes
 ?bfmeBigVLW@@YAPAXI@Z,0x00037C54,pin
 ?bfmeBind1282@BfmeQ1282@@QAEXPAX@Z,0x000361CE,pin
 ?bfmeBindOnlineHomeMessageGadget@@YAXPAVGameWindow@@H@Z,0x0004970B,OnlineHome message gadget binding helper
+?bfmeBindRva004650F0@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x0000F31C,address-derived pin: 0x004650F0 sibling WindowManager forward target still an unclaimed dump
 ?bfmeBitsURD@@YIIH@Z,0x0090C400,pin
 ?bfmeBlendTileEmit@@YAXPAD0HH@Z,0x00747940,Open-BFME5 the 180-byte cdecl emitter the blendTileData at 0x0074A240 finishes with
 ?bfmeBlendTileFits@@YG_NGHPADH@Z,0x000274A8,Open-BFME5 ILT the blendTileData at 0x0074A240 tests through
@@ -76672,6 +76676,7 @@ name,address,notes
 ?finish@Rva0025CAA0Primary@@QAEXPAVRva0025CAA0Subject@@@Z,0x0003E757,address-derived finalisation call from the 73-byte Elven Wood body
 ?finish@Rva0025D7E0Primary@@QAEXPAVRva0025D7E0Subject@@@Z,0x00018A34,address-derived completion target read from retail RVA 0x0025D7E0
 ?finish@Rva002BC470StateAction@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC470 state action
+?finish@Rva002BC470StateAction_2BC5D0@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC5D0 state action (near-twin pin)
 ?finish@Rva002BC4E0StateAction@@QAEXPAX@Z,0x0003F42C,address-scoped helper thunk called by the assigned 0x002BC4E0 state action
 ?finish@Rva003677B0Entry@@QAEXPAX_N@Z,0x0003FE09,REL32 target read from the retail call at RVA 0x003677E3; ILT thunk to RVA 0x00367010
 ?finish@Rva003BEED0@@QAEXXZ,0x003BEC30,niladic member tail-jumped by the two-call forwarder at 0x003BEED0; address-derived name
@@ -81294,6 +81299,7 @@ name,address,notes
 ?setGamePaused@BfmeGameLogicPause@@QAEX_NH0@Z,0x00006F50,BFME three-argument GameLogic::setGamePaused; ILT thunk to body 0x00383490
 ?setGoalObject@Rva00170460GoalHelper@@QAEXPBVObject@@@Z,0x00027B42,Rva00170460State clear restores its goal object through the retail ILT
 ?setGoalObject@StateMachine@@QAEXPBVObject@@@Z,0x00035A1C,StateMachine goal-object setter ILT; caller 0x002737B0 sets the attack victim and body 0x001705A0 updates the safetied pointer
+?setGoalObject@StateMachine_2BC5D0@@QAEXPBX@Z,0x00035A1C,StateMachine goal-object setter ILT near-twin pin (const void* param spelling for 0x002BC5D0 run())
 ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,Open-BFME5 ILT; called by ?onExit@AIMoveAndEvacuateState@@UAEXW4StateExitType@@@Z at 0x0017A340
 ?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z,0x00036192,BFME AIStateMachine::setGoalWaypoint ILT decoded from the four privateFollowWaypointPath call sites; body is matched at 0x0026EDC0
 ?setGridChangeAttenuationFactors@WaterRenderObjClass@@QAEXMMMM@Z,0x000088F0,pinharvest x1 (thunk)
