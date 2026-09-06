@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: the WIDE (unsigned short) basic_ofstream(const char*, int, long)
-// constructor of the STLport static library at 0x0084BF70 (261 B): the wide
+// constructor of the STLport static library at 0x0084BF70 (261 B) and its
+// siblings 0x0084BD60 (name, mode), 0x0084BE70 (fd, mode), 0x0084CAB0 and
+// 0x0084CBC0 (wide ifstream name / fd): the wide
 // filebuf is 0x8c bytes so the virtual base sits at +0x90.
 // STLport 4.5 narrow file-stream constructors taking a file name:
 // basic_ifstream<char>(int fd, int), (const char*, int [, long]) and basic_ofstream<char>(...)
@@ -120,6 +122,12 @@ private:
 template <class CharT, class Traits>
 class basic_ofstream : public basic_ostream<CharT, Traits> {
 public:
+  basic_ofstream(int fd, int mode)
+      : basic_ios<CharT, Traits>(), basic_ostream<CharT, Traits>(0), buf_() {
+    this->init(&buf_);
+    if (!buf_.open(fd, mode | ios_base::out))
+      this->setstate(ios_base::failbit);
+  }
   basic_ofstream(const char *name, int mode)
       : basic_ios<CharT, Traits>(), basic_ostream<CharT, Traits>(0), buf_() {
     this->init(&buf_);
@@ -136,4 +144,8 @@ private:
   basic_filebuf<CharT, Traits> buf_;
 };
 template basic_ofstream<unsigned short, char_traits<unsigned short> >::basic_ofstream(const char *, int, long);
+template basic_ofstream<unsigned short, char_traits<unsigned short> >::basic_ofstream(const char *, int);
+template basic_ofstream<unsigned short, char_traits<unsigned short> >::basic_ofstream(int, int);
+template basic_ifstream<unsigned short, char_traits<unsigned short> >::basic_ifstream(const char *, int);
+template basic_ifstream<unsigned short, char_traits<unsigned short> >::basic_ifstream(int, int);
 }

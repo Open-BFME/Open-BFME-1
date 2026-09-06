@@ -9228,10 +9228,12 @@ name,address,notes
 ??_7?$ShareBufferClass@PAVVertexMaterialClass@@@@6B@,0x0113C300,ShareBufferClass<VertexMaterialClass*> vftable stored by the inlined base destructor in 0x0092A220
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
+??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC40,STLport static library basic_ifstream<unsigned short> vftable
 ??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
+??_7?$basic_istream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112F2FC,basic_istream<unsigned short> vftable (the g_bfme918VftC stand-in)
 ??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,STLport static library basic_ofstream<char> vftable
 ??_7?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC48,STLport static library basic_ofstream<unsigned short> vftable
 ??_7?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,alias of the STLport library basic_ofstream<char> vftable for the aliased (name mode) ctor 0x0084B980
@@ -9449,6 +9451,7 @@ name,address,notes
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
+??_8?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC9C,STLport static library basic_ifstream<unsigned short> vbtable (ctors 0x0084CAB0 0x0084CBC0)
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
