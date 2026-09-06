@@ -670,3 +670,130 @@ void ciRplWhoisChannelsHandler(CHAT chat, const ciServerMessage *message)
         }
     }
 }
+
+#define FINISH_FILTER ciFinishFilter(chat, filter, &params)
+#define CHATTrue 1
+
+void ciRplEndOfWhoisHandler(CHAT chat, const ciServerMessage * message)
+{
+	char * nick;
+	ciServerMessageFilter * filter;
+	ciFilterMatch match;
+
+#ifdef FEEDBACK_HANDLERS
+	OutputDebugString("ciRplEndOfWhoisHandler called\n");
+#endif
+
+	assert(message->numParams == 3);
+	if(message->numParams != 3)
+		return; //ERRCON
+
+	// Get the nick.
+	////////////////
+	nick = message->params[1];
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_WHOIS;
+	match.name = nick;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		WHOISData * data = (WHOISData *)filter->data;
+		ciCallbackGetUserInfoParams params;
+		params.success = (CHATBool)(data->user != NULL);  //PANTS|08.21.00 - false if nothing found
+		params.nick = nick;
+		params.user = data->user;
+		params.name = data->name;
+		params.address = data->address;
+		params.numChannels = data->numChannels;
+		params.channels = data->channels;
+
+		FINISH_FILTER;
+	}
+}
+
+void ciRplBanListHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	char * channel;
+	char * ban;
+
+#ifdef FEEDBACK_HANDLERS
+	OutputDebugString("ciRplBanListHandler called\n");
+#endif
+
+	assert(message->numParams >= 3);
+	if(message->numParams < 3)
+		return; //ERRCON
+
+	channel = message->params[1];
+	ban = message->params[2];
+
+	// Look for a filter.
+	/////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETBAN;
+	match.name = channel;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		int len;
+		void * tempPtr;
+		GETBANData * data = (GETBANData *)filter->data;
+		assert(data != NULL);
+		assert(data->numBans >= 0);
+
+		// Increase the ban list.
+		/////////////////////////
+		tempPtr = realloc(data->bans, sizeof(char *) * (data->numBans + 1));
+		if(tempPtr == NULL)
+			return; //ERRCON
+		data->bans = (char **)tempPtr;
+
+		// Add the new ban.
+		///////////////////
+		len = (int)(strlen(ban) + 1);
+		tempPtr = malloc((unsigned int)len);
+		if(tempPtr == NULL)
+			return; //ERRCON
+		memcpy(tempPtr, ban, (unsigned int)len);
+		data->bans[data->numBans] = (char *)tempPtr;
+		data->numBans++;
+	}
+}
+
+void ciRplEndOfBanListHandler(CHAT chat, const ciServerMessage * message)
+{
+	char * channel;
+	ciServerMessageFilter * filter;
+	ciFilterMatch match;
+
+#ifdef FEEDBACK_HANDLERS
+	OutputDebugString("ciRplEndOfBanListHandler called\n");
+#endif
+
+	assert(message->numParams == 3);
+	if(message->numParams != 3)
+		return; //ERRCON
+
+	channel = message->params[1];
+
+	// Look for a filter.
+	/////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETBAN;
+	match.name = channel;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		GETBANData * data = (GETBANData *)filter->data;
+		ciCallbackEnumChannelBansParams params;
+		params.success = CHATTrue;
+		params.channel = channel;
+		params.numBans = data->numBans;
+		params.bans = data->bans;
+
+		FINISH_FILTER;
+	}
+}
