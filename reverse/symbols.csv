@@ -82282,7 +82282,7 @@ __CIacos,0x009F7256
 __CIasin,0x009F7D86
 __CIfmod,0x009F6FB2,hit-decoded x2 (body)
 __CIpow,0x009F6FB2
-__CxxThrowException@8,0x00850600,CRT throw helper
+__CxxThrowException@8,0x009F6D00,MSVC retail exception throw helper; verified import thunk to _CxxThrowException
 __Locale_strcmp,0x0084EAB0,STLport 4.5.3 _Locale_strcmp; CompareStringA with optional ConvertToCP
 __Locale_tolower,0x0084E980,STLport 4.5.3 _Locale_tolower; LCMAP_LOWERCASE|LINGUISTIC_CASING
 __Locale_toupper,0x0084E850,STLport 4.5.3 _Locale_toupper; LCMAP_UPPERCASE|LINGUISTIC_CASING
