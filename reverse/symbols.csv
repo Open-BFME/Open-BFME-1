@@ -76903,6 +76903,9 @@ name,address,notes
 ?findObject@GameLogic@@QAEPAVRva0025DF30Object@@H@Z,0x0001F253,address-derived object lookup target read from retail RVA 0x0025DF30
 ?findObjectByID@BFMEObjectLookup@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,alias of the GameLogic enum spelling pinned below; AIUpdate.cpp reaches the lookup through a view class because the reference GameLogic.h inlines it
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0001F253,ILT thunk to GameLogic::findObjectByID
+?findTeamByID@TeamFactory@@QAEPAVTeam@@I@Z,0x000EF060,Team lookup called by AIGuardMachine::getGuardScanPos
+?getPosition@Team@@QAEXPAUCoord3D@@@Z,0x000241FE,Team position copy called by AIGuardMachine::getGuardScanPos
+?getCenter@PolygonTrigger@@QAEXPAUCoord3D@@@Z,0x00007AD6,Polygon trigger center copy called by AIGuardMachine::getGuardScanPos
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
 ?findObjectCreationList@ObjectCreationListStore@@QBEPBVObjectCreationList@@VAsciiString@@@Z,0x0000D3FA,call displacement in InstantDeathBehavior parseOCL @0x00201770 (incremental-link thunk); BFME takes the name by value
 ?findOrInsert@AptScreenRefMap@@QAEPAVRva0050F840FunctorHolder@@ABVAsciiString@@@Z,0x00461A00,find-or-insert of the named functor-holder slot used by _bfme_setAptScreenRef; body is the gen-dump at 0x00461A00
