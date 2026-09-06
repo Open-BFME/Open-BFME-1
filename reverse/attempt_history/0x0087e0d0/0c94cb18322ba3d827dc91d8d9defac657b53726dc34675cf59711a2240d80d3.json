@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0c94cb18322ba3d827dc91d8d9defac657b53726dc34675cf59711a2240d80d3",
+  "symbol": "?d_0087e0d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?d_0087e0d0@@YAXXZ\n// partial score=0.96 date=2026-09-06\n// ?bfmeCalcBWF@BfmeCalcBWF@@QAE_NPAUBfmeRetBWF@@M0@Z\n// Retail 0x0087E0D0. Copies a three-float result and applies the owner's\n// two-axis sine and cosine transform when its scale is nonzero.\n\nextern \"C\" double __cdecl sin( double angle );\nextern \"C\" double __cdecl cos( double angle );\nextern const float BfmeZeroRange;\n\nstruct BfmeRetBWF\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nclass BfmeCalcBWF\n{\npublic:\n\tbool bfmeCalcBWF( BfmeRetBWF *one, float angle, BfmeRetBWF *two );\n\nprivate:\n\tchar m_unmodelled[ 8 ];\n\tfloat m_x;\n\tfloat m_y;\n};\n\n// ?bfmeCalcBWF@BfmeCalcBWF@@QAE_NPAVBfmeRetBWF@@M0@Z\nbool BfmeCalcBWF::bfmeCalcBWF(\n\tBfmeRetBWF *one, float angle, BfmeRetBWF *two )\n{\n\t*two = *one;\n\tif ( m_x == BfmeZeroRange\n\t\t&& m_y == BfmeZeroRange )\n\t\treturn false;\n\n\tfloat sine = (float)sin( angle );\n\tfloat cosine = (float)cos( angle );\n\ttwo->x += cosine * m_x + sine * m_y;\n\ttwo->y += sine * m_x + cosine * m_y;\n\treturn true;\n}\n"
+}
