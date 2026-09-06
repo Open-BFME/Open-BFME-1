@@ -12762,6 +12762,7 @@ name,address,notes
 ?applySecondaryGame@SkirmishScreenState@@QAEXXZ,0x00017E7C,validates and applies the secondary Skirmish game record
 ?applySingle@Gen00587600@@QAEXH@Z,0x000489D2,Open-BFME5 fresh ILT alias for the single-argument sibling at 0x0051A820
 ?applyStagingRoomRefresh@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x00022999,ILT of CustomMatch staging-list refresh callee used by 0x00544DD0
+?applyStaticLODLevel@GameLODManager@@IAEXW4StaticGameLODLevel@@@Z,0x00036A11,ILT callee of GameLODManager::setStaticLODLevel at 0x0007EDF0
 ?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
 ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97

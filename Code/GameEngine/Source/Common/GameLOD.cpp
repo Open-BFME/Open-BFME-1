@@ -485,20 +485,73 @@ StaticGameLODLevel GameLODManager::findStaticLODLevel(void)
 }
 
 /**Set all game systems to match the desired LOD level.*/
-// ?setStaticLODLevel@GameLODManager@@QAE_NW4StaticGameLODLevel@@@Z present-unmatched
+struct BfmeGameLODManagerState
+{
+	UnsignedByte m_pad[0x16c0];
+	Int m_currentStaticLOD;
+	volatile Int m_pendingStaticLOD;
+};
+
+struct BfmeGameLODGlobalData
+{
+	UnsignedByte m_pad59[0x59];
+	Bool m_enableStaticLOD;
+	UnsignedByte m_pad5a[0xbb4 - 0x5a];
+	Bool m_shellMapOn;
+	Bool m_shellMapOffByCommandArgument;
+};
+
+class Shell
+{
+public:
+	void showShellMap(Bool useShellMap);
+};
+
+extern Shell *TheShell;
+
+// ?setStaticLODLevel@GameLODManager@@QAE_NW4StaticGameLODLevel@@@Z
 Bool GameLODManager::setStaticLODLevel(StaticGameLODLevel level)
 {
-	if (!TheGlobalData->m_enableStaticLOD)
-	{	m_currentStaticLOD = STATIC_GAME_LOD_CUSTOM; 
+	BfmeGameLODManagerState *state = reinterpret_cast<BfmeGameLODManagerState *>(this);
+
+	if (!reinterpret_cast<BfmeGameLODGlobalData *>(TheWritableGlobalData)->m_enableStaticLOD)
+	{
+		state->m_currentStaticLOD = 5;
 		return FALSE;
 	}
 
-	if (level == STATIC_GAME_LOD_UNKNOWN || (level != STATIC_GAME_LOD_CUSTOM && m_currentStaticLOD == level))
-		return FALSE;	//level is already applied.  Custom levels are always applied since random options could change.
+	if (level == STATIC_GAME_LOD_UNKNOWN || (level != 5 && state->m_currentStaticLOD == level))
+		return FALSE;
+
+	if (level != 5)
+	{
+		if (state->m_currentStaticLOD == level)
+			return FALSE;
+		state->m_pendingStaticLOD = level;
+	}
 
 	applyStaticLODLevel(level);
-	m_currentStaticLOD = level;
+	Int pendingStaticLOD = state->m_pendingStaticLOD;
+	state->m_currentStaticLOD = level;
 
+	if (pendingStaticLOD <= 1)
+	{
+		BfmeGameLODGlobalData *global = reinterpret_cast<BfmeGameLODGlobalData *>(TheWritableGlobalData);
+		if (global)
+			global->m_shellMapOn = FALSE;
+	}
+	else
+	{
+		BfmeGameLODGlobalData *global = reinterpret_cast<BfmeGameLODGlobalData *>(TheWritableGlobalData);
+		if (global->m_shellMapOffByCommandArgument)
+			goto return_true;
+		global->m_shellMapOn = TRUE;
+	}
+
+	if (TheShell)
+		TheShell->showShellMap(TRUE);
+
+	return_true:
 	return TRUE;
 }
 
