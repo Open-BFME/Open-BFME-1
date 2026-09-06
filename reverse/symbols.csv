@@ -3820,6 +3820,7 @@ name,address,notes
 ??1?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@XZ,0x000658A0,SubsystemLegend.cpp TU copy of vector<AsciiString> dtor (unfolded; GameAudio.cpp has its own at 0x006FA6xx)
 ??1?$vector@VBFMERetailAsciiString@@V?$allocator@VBFMERetailAsciiString@@@_STL@@@_STL@@QAE@XZ,0x000658A0,vector<AsciiString> dtor; the address is claimed as ??1PlayerUpgradeSpecialPowerModuleData which ICF folded onto it
 ??1?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAE@XZ,0x00009AB1,LivingWorldPlayerArmy destructor retail call at 0x00362B68 invokes the vector<LivingWorldArmy> destructor ILT thunk
+??1?$vector@VOpen2Elem7716A0@@V?$allocator@VOpen2Elem7716A0@@@_STL@@@_STL@@QAE@XZ,0x000134AD,destructor for the 12-byte vector member at +0x54 in Gen_t_00776240_p128pod
 ??1?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAE@XZ,0x0001481C,pinharvest x1 (thunk)
 ??1AABTreeBuilderClass@@QAE@XZ,0x0096BE90,Open-BFME5 retail builder destructor callee of MeshGeometryClass::Generate_Culling_Tree
 ??1AABTreeLinkClass@@UAE@XZ,0x0001E394,pinharvest x1 (thunk)
@@ -4235,6 +4236,11 @@ name,address,notes
 ??1Gen00762250@@QAE@XZ,0x00762250,element destructor called by the no-exceptions vector<T> destructor family (R4VectorDtorWideElems.cpp); address-derived name; identity not recovered
 ??1Gen007701C0@@QAE@XZ,0x007701C0,element destructor called by the 98-byte no-exceptions vector<T> destructor family (Q4VectorDtorPlain.cpp); address-derived name; identity not recovered
 ??1Gen00774D40@@QAE@XZ,0x00774D40,element destructor called by the no-exceptions vector<T> destructor family (R4VectorDtorWideElems.cpp); address-derived name; identity not recovered
+??1Gen00776240Field2C@@QAE@XZ,0x00026A9E,destructor for the 0x1C-byte member at +0x2C in Gen_t_00776240_p128pod
+??1Gen00776240Field60@@QAE@XZ,0x0003FFD0,destructor for the 12-byte vector member at +0x60 in Gen_t_00776240_p128pod
+??1Gen00776240Field70@@QAE@XZ,0x000411A5,destructor for the 12-byte tree member at +0x70 in Gen_t_00776240_p128pod
+??1Gen00776240Field7C@@QAE@XZ,0x000455E8,element destructor callback for the four 12-byte members at +0x7C in Gen_t_00776240_p128pod
+??1Gen00776240FieldB0@@QAE@XZ,0x00026AB2,destructor for the 12-byte member at +0xB0 in Gen_t_00776240_p128pod
 ??1Gen0078D1C0Registry@@UAE@XZ,0x009409F0,retail member destructor call decoded from the exact 0x0078D040 body
 ??1Gen007EB140@@UAE@XZ,0x007EA6F0,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007EB140 calls
 ??1Gen007F4D00@@UAE@XZ,0x007F4D20,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007F4D00 calls
@@ -9245,10 +9251,8 @@ name,address,notes
 ??A?$map@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@_STL@@@_STL@@QAEAAPBVArmorTemplateSet@@ABV?$BitFlags@$0L@@@@Z,0x00036C0A,pinharvest x1 (thunk)
 ??A?$map@GEU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAEAAEABG@Z,0x00043437,processFileAnnounce calls the ILT for the file recipient mask map operator[] at 0x006694D0
 ??A?$map@GHU?$less@G@_STL@@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAEAAHABG@Z,0x000302F1,processFileAnnounce calls the ILT for the file progress map operator[] at 0x00669560
-??AEmotionShortMap@@QAEAAHABG@Z,0x00028D0D,Emotion::xfer second map operator[] ILT
 ??A?$map@GVAsciiString@@U?$less@G@_STL@@V?$allocator@U?$pair@$$CBGVAsciiString@@@_STL@@@3@@_STL@@QAEAAVAsciiString@@ABG@Z,0x00018C0F,processFileAnnounce calls the ILT for the matched FileCommandMap operator[] at 0x00669B50
 ??A?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEAAHABH@Z,0x00018818,call-site operator[] for Gen_002281B0::bfmeUpdate; ILT 0x00018818 -> 0x00227110
-??AEmotionMap@@QAEAAHABH@Z,0x000033AA,Emotion::xfer first map operator[] ILT
 ??A?$map@HIU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAEAAIABH@Z,0x0003DD2A,incremental-link thunk retail uses from PSPlayerStats::incorporate
 ??A?$map@HPAUBFMELadderHttpRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBFMELadderHttpRecord@@@_STL@@@3@@_STL@@QAEAAPAUBFMELadderHttpRecord@@ABH@Z,0x0000C3B0,"Lead independently traced45B callback65BCC0 (64-bit length, int return),115B signed-int map654E90 (returns mapped pointer slot+14), and request caller ABI"
 ??A?$map@HPAUBfmeLadderCountRecord@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAUBfmeLadderCountRecord@@@_STL@@@3@@_STL@@QAEAAPAUBfmeLadderCountRecord@@ABH@Z,0x0000C3B0,Lead independently traced115B654E90 signed-int key map returning node+14 mapped pointer; same rank-request helper
@@ -9270,6 +9274,8 @@ name,address,notes
 ??A?$map@W4NameKeyType@@MU?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAEAAMABW4NameKeyType@@@Z,0x000E24D0,PlayerTemplate cost-change local map operator owner
 ??A?$map@W4NameKeyType@@VObjectCreationList@@U?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@4@@_STL@@QAEAAVObjectCreationList@@ABW4NameKeyType@@@Z,0x00049968
 ??A?$map@W4NameKeyType@@W4VeterancyLevel@@U?$less@W4NameKeyType@@@_STL@@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@4@@_STL@@QAEAAW4VeterancyLevel@@ABW4NameKeyType@@@Z,0x00019F33,Open-BFME5 production-veterancy map operator thunk
+??AEmotionMap@@QAEAAHABH@Z,0x000033AA,Emotion::xfer first map operator[] ILT
+??AEmotionShortMap@@QAEAAHABG@Z,0x00028D0D,Emotion::xfer second map operator[] ILT
 ??ALANPreferences@@QAEAAVAsciiString@@ABV1@@Z,0x0003E6DA,LANPreferences map[] used as prefs[UserName] in NetworkDirectConnectSystem
 ??AModuleTemplateMap@ModuleFactory@@QAEAAVModuleTemplate@1@ABH@Z,0x0002047D,ModuleFactory::ModuleTemplateMap::operator[] thunk (body 0x001296E0)
 ??APassMap@@QAEAAVAsciiString@@ABV1@@Z,0x0003E6DA,GameSpyLoginPreferences password map operator[] ILT
@@ -10925,7 +10931,6 @@ name,address,notes
 ?ThePropagandaTowerBehaviorPool@?1??getClassMemoryPool@PropagandaTowerBehavior@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEF834,pool-glue cascade static (back-solved)
 ?TheQueueProductionExitUpdatePool@?1??getClassMemoryPool@QueueProductionExitUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF04FC,pool-glue cascade static (back-solved)
 ?TheRadar@@3PAVRadar@@A,0x012EF0E4,Radar* global; identified by engine-init constructor-tag string "TheRadar" at RVA 0x0761dc pushed immediately before ctor call that stores to this address (WinMain-style subsystem construction block at 0x47a08b-0x47a09a, alongside TheRecorder@0x12ed62c and TheVictoryConditions@0x12f079c constructed the same way)
-?refreshObjectColor@Radar@@QAEXPAX@Z,0x00011383,Radar helper call resolves through the existing j_00011383 ILT used by bfmeHelper760 at retail 0x002ED760
 ?TheRadarClientUpdate@@3PAVRadarSubsystem@@A,0x012EF0E4,Radar pointer used by GameEngine::_bfme_updateClientSubsystems
 ?TheRadarUpdatePool@?1??getClassMemoryPool@RadarUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0018,pool-glue cascade static (back-solved)
 ?TheRadarUpgradePool@?1??getClassMemoryPool@RadarUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF05B8,pool-glue cascade static (back-solved)
@@ -75171,6 +75176,8 @@ name,address,notes
 ?bfmeRunReadyAction@BfmeObjectAI@@QAEXXZ,0x0000E35E,Open-BFME5 AI action ILT used by 0x003D55C0
 ?bfmeRunTFD@BfmeHolderTFD@@QAEXXZ,0x009DB4D0,pin
 ?bfmeRunTGD@@YAXHH@Z,0x0000630C,pin
+?bfmeRunUB@BfmeTgtUB@@QAEXPAXVBfmeVecUB@@0000000@Z,0x0002B2C4,pin
+?bfmeRunUC@BfmeTgtUC@@QAEXPAXVBfmeVecUC@@0000000@Z,0x00047898,pin
 ?bfmeRunVIR@BfmeMsgVIR@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVIT@BfmeMsgVIT@@QAEXXZ,0x007E8AC0,pin
 ?bfmeRunVIW@BfmeMsgVIW@@QAEXXZ,0x007E8AC0,pin
@@ -79072,6 +79079,7 @@ name,address,notes
 ?getSurfaceLevel@W3DRadarResetTexture@@QAE?AVW3DRadarResetSurface@@XZ,0x0090E670,W3DRadar reset BFME value-surface accessor
 ?getTaintLevelByte006e@BfmeTaintManager@@QAEEHH@Z,0x00880E50,W3DDisplay BFME taint-level byte target read from retail REL32
 ?getTeamAsAIGroup@Team@@QAEXPAVAIGroup@@@Z,0x00022EC1,doTeamAttackNamed BFME Team::getTeamAsAIGroup thunk
+?getTemplateName@BuildListInfo@@QBE?AVAsciiString@@XZ,0x00049EFE,"Root full32B narrow-string getter proof at161DC0; matched caller36E650 identifies BuildListInfo templateName+8, hiddenreturnbuffer and887B60 copy"
 ?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
 ?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
 ?getTerrainColorAt@WorldHeightMap@@QAEXMMPAURGBColor@@@Z,0x007477E0,thunk-resolved body (via 0x197ae)
@@ -81244,6 +81252,7 @@ name,address,notes
 ?refreshEntries003BEC30@Rva003C1A50@@QAEXXZ,0x0000A754,"Reviewed3BEC30167B loops owner+C vector flagged1D entries, resolves name and refreshes member; not a clear operation"
 ?refreshGameSlot@SkirmishScreenState@@QAEXH@Z,0x00018C1E,Skirmish pending-update dispatcher call
 ?refreshGameSlots@SkirmishScreenState@@QAEXXZ,0x00024267,Skirmish pending-update dispatcher call
+?refreshObjectColor@Radar@@QAEXPAX@Z,0x00011383,Radar helper call resolves through the existing j_00011383 ILT used by bfmeHelper760 at retail 0x002ED760
 ?refreshPair@@YGXHH@Z,0x00019E6B,pin stdcall 6x2 refresh helper ILT->0x00699180
 ?refreshPair@Rva00699180Owner@@QAEXHH@Z,0x00019E6B,Reviewed thiscall volume helper ILT to 00699180; complete 450B body independently exact
 ?refreshPlayerControls@SkirmishScreenState@@QAEXH@Z,0x0002D38A,called when a slot crosses the human AI boundary
@@ -84023,12 +84032,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??1Gen00776240Field2C@@QAE@XZ,0x00026A9E,destructor for the 0x1C-byte member at +0x2C in Gen_t_00776240_p128pod
-??1?$vector@VOpen2Elem7716A0@@V?$allocator@VOpen2Elem7716A0@@@_STL@@@_STL@@QAE@XZ,0x000134AD,destructor for the 12-byte vector member at +0x54 in Gen_t_00776240_p128pod
-??1Gen00776240Field60@@QAE@XZ,0x0003FFD0,destructor for the 12-byte vector member at +0x60 in Gen_t_00776240_p128pod
-??1Gen00776240Field70@@QAE@XZ,0x000411A5,destructor for the 12-byte tree member at +0x70 in Gen_t_00776240_p128pod
-??1Gen00776240Field7C@@QAE@XZ,0x000455E8,element destructor callback for the four 12-byte members at +0x7C in Gen_t_00776240_p128pod
-??1Gen00776240FieldB0@@QAE@XZ,0x00026AB2,destructor for the 12-byte member at +0xB0 in Gen_t_00776240_p128pod
-?getTemplateName@BuildListInfo@@QBE?AVAsciiString@@XZ,0x00049EFE,"Root full32B narrow-string getter proof at161DC0; matched caller36E650 identifies BuildListInfo templateName+8, hiddenreturnbuffer and887B60 copy"
-?bfmeRunUB@BfmeTgtUB@@QAEXPAXVBfmeVecUB@@0000000@Z,0x0002B2C4,pin
-?bfmeRunUC@BfmeTgtUC@@QAEXPAXVBfmeVecUC@@0000000@Z,0x00047898,pin
