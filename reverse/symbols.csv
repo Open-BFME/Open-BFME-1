@@ -43543,6 +43543,8 @@ name,address,notes
 ?b_003c8160@@YAXXZ,0x003C8160,gen-thunk body
 ?b_003c8300@@YAXXZ,0x003C8300,gen-thunk body
 ?b_003c8340@@YAXXZ,0x003C8340,gen-thunk body
+?release@Rva003C8340@@QAEXPAVRva003C8340Item@@H@Z,0x003F413,address-derived release helper called by Rva003C8340::set
+?prepare@Rva003C8340@@QAEXPAVRva003C8340Item@@@Z,0x003C7D20,address-derived no-op helper called by Rva003C8340::set
 ?b_003c83e0@@YAXXZ,0x003C83E0,gen-thunk body
 ?b_003c84c0@@YAXXZ,0x003C84C0,gen-thunk body
 ?b_003c84e0@@YAXXZ,0x003C84E0,gen-thunk body
