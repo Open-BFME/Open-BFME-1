@@ -10242,6 +10242,7 @@ name,address,notes
 ?Gen00261AE0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x00261AE0,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen002DFFD0@@YAXPAX0000@Z,0x002DFFD0,five-argument __cdecl callee of the 31-byte four-argument forwarder family (Q2TrailingZeroForwarders.cpp); target read from the forwarder call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
 ?Gen002E07A0@@YAXPAUS4SortElem12@@HHU1@US4Cmp002E0CD0@@@Z,0x0002C0CA,ILT thunk to 0x002E07A0 __adjust_heap; callee of gen002E0CD0
+??$__push_heap@PAUS4SortElem12@@HU1@US4Cmp002E0CD0@@@_STL@@YAXPAUS4SortElem12@@HHU1@US4Cmp002E0CD0@@@Z,0x00015893,ILT to 0x002E0250 __push_heap; callee of 0x002E07A0 __adjust_heap
 ?Gen002E1690@@YAXPAUS4SortElem12@@0US4Cmp002E1690@@@Z,0x0000896D,ILT thunk to 0x002E1690 __final_insertion_sort; callee of Rva002E1F10
 ?Gen002E1B60@@YAXPAUS4SortElem12@@00HUS4Cmp002E1690@@@Z,0x00031BDD,ILT thunk to 0x002E1B60 __introsort_loop; callee of Rva002E1F10
 ?Gen002E7EE0@@YAXPAX0000@Z,0x002E7EE0,five-argument __cdecl callee of the 31-byte four-argument forwarder family (Q2TrailingZeroForwarders.cpp); target read from the forwarder call site REL32 through its incremental-link thunk; address-derived name; identity not recovered
