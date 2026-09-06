@@ -83942,3 +83942,6 @@ _ciFinishFilter,0x0086BBF0,"Root compared complete upstream filter match/removal
 ?bfmeSecondFU@BfmeSubFU@@QAEXPAX@Z,0x00019A6A,pin
 ?bfmeThirdFU@BfmeSubFU@@QAEXPAX@Z,0x00040A52,pin
 ?g_bfmeAudioFU@@3PAVBfmeAudioFU@@A,0x00EED668,pin
+?bfmeResetFV@BfmePrimaryFV@@QAEXXZ,0x000076E9,pin
+?bfmeAdvanceFV@BfmePrimaryFV@@QAEXH@Z,0x0003BDD6,pin
+?g_bfmeGameLogicFV@@3PAVBfmeLogicFV@@A,0x00EF0898,pin
