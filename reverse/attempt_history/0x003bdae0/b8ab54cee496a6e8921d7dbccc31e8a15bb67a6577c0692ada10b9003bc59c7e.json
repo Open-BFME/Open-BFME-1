@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b8ab54cee496a6e8921d7dbccc31e8a15bb67a6577c0692ada10b9003bc59c7e",
+  "symbol": "?find@Rva003BDAE0@@QAEPAVGen003BDAE0Node@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?find@Rva003BDAE0@@QAEPAVGen003BDAE0Node@@H@Z\n// partial score=0.85 date=2026-09-03\n// cl: /DNDEBUG /MD /O2\n// Open-BFME5: first pointer in the +0x38/+0x3C vector whose payload dword at\n// +8 equals the argument. Retail 0x003BDAE0, 73 bytes. this stays in ecx;\n// end then begin; unsigned <=0 empty check; index in eax, cursor in edx.\n\nclass Gen003BDAE0Node\n{\npublic:\n\tint m_at00;\n\tint m_at04;\n\tint m_at08;\n};\n\nclass Rva003BDAE0\n{\npublic:\n\tGen003BDAE0Node *find(int key);\n\nprivate:\n\tchar m_pad00[0x38];\n\tGen003BDAE0Node **m_at38;\n\tGen003BDAE0Node **m_at3C;\n};\n\n// ?find@Rva003BDAE0@@QAEPAVGen003BDAE0Node@@H@Z\nGen003BDAE0Node *Rva003BDAE0::find(int key)\n{\n\tGen003BDAE0Node **end = m_at3C;\n\tGen003BDAE0Node **begin = m_at38;\n\tunsigned n = (unsigned)(end - begin);\n\tunsigned i = 0;\n\tif (n <= 0)\n\t\treturn 0;\n\tint k = key;\n\tGen003BDAE0Node **base = begin;\n\tGen003BDAE0Node **cursor = begin;\n\tfor (;;)\n\t{\n\t\tGen003BDAE0Node *node = *cursor;\n\t\tif (node->m_at08 == k)\n\t\t\treturn base[i];\n\t\t++i;\n\t\t++cursor;\n\t\tif (i >= (unsigned)(m_at3C - m_at38))\n\t\t\treturn 0;\n\t}\n}\n"
+}

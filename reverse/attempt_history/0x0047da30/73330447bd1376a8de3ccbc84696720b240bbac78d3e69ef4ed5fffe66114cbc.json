@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "73330447bd1376a8de3ccbc84696720b240bbac78d3e69ef4ed5fffe66114cbc",
+  "symbol": "?s4ph0047da30@@YAXPAHHHHP6A_NHH@Z@Z",
+  "score_kind": "author-estimate",
+  "score": 0.3,
+  "source": "// ?s4ph0047da30@@YAXPAHHHHP6A_NHH@Z@Z\n// partial score=0.3 date=2026-09-05\n// cl: -GX-\n// stlport\n//\n// FUZZY-TWIN of Code/GameEngine/Source/Common/S4StlSortHelpers.cpp's\n// S4_PUSH_HEAP(003408C0) family (see that file's header comment for the full\n// derivation of the __push_heap<int> shape). The only byte difference here:\n// the comparator is invoked with `call dword ptr [esp+0x2C]` -- a plain\n// cdecl function pointer -- rather than the `lea ecx,[esp+0x2C]`\n// thiscall-on-functor-in-place call the S4Cmp family uses. Same five\n// arguments, same divide-by-two hole/parent shape, same __cdecl callee\n// (add esp,8 caller cleanup) matching a bool(__cdecl*)(int,int).\n\ntypedef bool (__cdecl *S4CmpFnPtr0047DA30)(int, int);\n\nnamespace _STL\n{\n\ntemplate <class RandomAccessIterator, class Distance, class Tp, class Compare>\nvoid __push_heap(RandomAccessIterator first, Distance holeIndex,\n\tDistance topIndex, Tp val, Compare comp)\n{\n\tDistance parent = (holeIndex - 1) / 2;\n\twhile (holeIndex > topIndex && comp(*(first + parent), val))\n\t{\n\t\t*(first + holeIndex) = *(first + parent);\n\t\tholeIndex = parent;\n\t\tparent = (holeIndex - 1) / 2;\n\t}\n\t*(first + holeIndex) = val;\n}\n\ntemplate void __push_heap<int *, int, int, S4CmpFnPtr0047DA30>(\n\tint *, int, int, int, S4CmpFnPtr0047DA30);\n\n}\n\nvoid s4ph0047da30(int *first, int hole, int top, int value,\n\tS4CmpFnPtr0047DA30 comp)\n{\n\t_STL::__push_heap(first, hole, top, value, comp);\n}\n"
+}

@@ -27,23 +27,19 @@ private:
 // ?find@Rva003BDAE0@@QAEPAVGen003BDAE0Node@@H@Z
 Gen003BDAE0Node *Rva003BDAE0::find(int key)
 {
-	Gen003BDAE0Node **end = m_at3C;
-	Gen003BDAE0Node **begin = m_at38;
-	unsigned n = (unsigned)(end - begin);
+	unsigned n = (unsigned)(m_at3C - m_at38);
 	unsigned i = 0;
-	if (n <= 0)
-		return 0;
-	int k = key;
-	Gen003BDAE0Node **base = begin;
-	Gen003BDAE0Node **cursor = begin;
-	for (;;)
+	if (n > 0)
 	{
-		Gen003BDAE0Node *node = *cursor;
-		if (node->m_at08 == k)
-			return base[i];
-		++i;
-		++cursor;
-		if (i >= (unsigned)(m_at3C - m_at38))
-			return 0;
+		Gen003BDAE0Node **cursor = m_at38;
+		do
+		{
+			Gen003BDAE0Node *node = *cursor;
+			if (node->m_at08 == key)
+				return m_at38[i];
+			++cursor;
+			++i;
+		} while (i < (unsigned)(m_at3C - m_at38));
 	}
+	return 0;
 }
