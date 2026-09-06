@@ -26,3 +26,28 @@ Real BfmeRangeEQI::bfmeRatioEQI(void)
 		return (Real)m_bfmeNumEQI / (Real)m_bfmeDenEQI;
 	return BfmeZeroRange;
 }
+
+class BfmeSpanEQJ
+{
+public:
+	virtual void bfmeSlot0EQJ(void);
+	virtual void bfmeSlot1EQJ(void);
+	virtual void bfmeSlot2EQJ(void);
+	virtual void bfmeSlot3EQJ(void);
+	virtual void bfmeSlot4EQJ(void);
+	virtual void bfmeSlot5EQJ(void);
+	virtual char bfmeReadyEQJ(void);
+	Real bfmeRatioEQJ(void);
+
+	char m_bfmeHeadEQJ[0xc];
+	unsigned int m_bfmeNumEQJ;
+	char m_bfmeMidEQJ[4];
+	unsigned int m_bfmeDenEQJ;
+};
+
+Real BfmeSpanEQJ::bfmeRatioEQJ(void)
+{
+	if (bfmeReadyEQJ())
+		return (Real)m_bfmeNumEQJ / (Real)m_bfmeDenEQJ;
+	return BfmeZeroRange;
+}
