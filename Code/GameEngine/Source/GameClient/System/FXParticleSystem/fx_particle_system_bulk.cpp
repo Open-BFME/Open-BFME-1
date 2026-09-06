@@ -6,6 +6,138 @@
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
+extern "C" int __cdecl atexit(void (__cdecl *function)());
+
+namespace _STL
+{
+
+template <class T> class char_traits {};
+template <class T> class allocator {};
+
+template <bool threads, int instance>
+class __node_alloc
+{
+public:
+	static void _M_deallocate(void *memory, unsigned int bytes);
+};
+
+template <class CharT, class Traits, class Allocator>
+class basic_string
+{
+public:
+	~basic_string()
+	{
+		const unsigned int bytes =
+			(unsigned int)(m_storageEnd - m_start) * sizeof(CharT);
+		if (m_start)
+		{
+			if (bytes > 128)
+				::operator delete(m_start);
+			else
+				__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
+		}
+	}
+
+	CharT *m_start;
+	CharT *m_finish;
+	CharT *m_storageEnd;
+};
+
+class ios_base
+{
+protected:
+	ios_base();
+
+public:
+	virtual ~ios_base();
+};
+
+template <class CharT, class Traits>
+class basic_streambuf
+{
+public:
+	virtual ~basic_streambuf();
+};
+
+template <class CharT, class Traits>
+class basic_ios : public ios_base
+{
+public:
+	basic_ios();
+	virtual ~basic_ios() {}
+
+protected:
+	void init(basic_streambuf<CharT, Traits> *streambuf);
+
+private:
+	char padding_[0x50];
+	CharT fill_;
+	basic_streambuf<CharT, Traits> *streambuf_;
+	basic_ios<CharT, Traits> *tie_;
+};
+
+template <class CharT, class Traits>
+class basic_ostream : virtual public basic_ios<CharT, Traits>
+{
+public:
+	basic_ostream(basic_streambuf<CharT, Traits> *streambuf);
+	virtual ~basic_ostream();
+};
+
+template <class CharT, class Traits>
+class basic_filebuf : public basic_streambuf<CharT, Traits>
+{
+public:
+	basic_filebuf(int mode);
+	virtual ~basic_filebuf();
+
+private:
+	char padding_[0x68];
+};
+
+template <class CharT, class Traits>
+class basic_ofstream : public basic_ostream<CharT, Traits>
+{
+public:
+	basic_ofstream(int mode);
+	virtual ~basic_ofstream();
+
+private:
+	basic_filebuf<CharT, Traits> buf_;
+};
+
+}
+
+typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> >
+	BfmeNarrowStreamText;
+
+class Rva005CB9F0StreamText
+{
+public:
+    BfmeNarrowStreamText getText();
+};
+
+class U1ByteFlagged
+{
+public:
+	bool m_flag;
+};
+
+static unsigned char fxDefaultModule6Guard;
+static unsigned int fxDefaultModule6FirstPointer;
+static unsigned int fxDefaultModule6SecondPointer;
+static unsigned int fxDefaultModule6Global;
+static unsigned int fxDefaultModule6List;
+static unsigned char fxDefaultModule6Instance[16];
+
+extern const float BfmeZeroRange;
+
+void b_005f8b40();
+void b_005ee1d0();
+void b_005cb9f0();
+void u1Do_005C7410(void *ini, void *instance, void *store, U1ByteFlagged *value);
+void u4Next005F5120(INI *ini, void *instance, void *store, const void *value);
+void u4Next005F8AE0(INI *ini, void *instance, void *store, const void *value);
 
 class U1Tail_005CEC60 {
 public:
@@ -16,11 +148,32 @@ public:
 // another translation unit — resolved via reverse/symbols.csv.
 void xferRandomVariable(Xfer &xfer, GameClientRandomVariable &v);
 void xferInteger(Xfer &xfer, int &value);
+void xferRandomVariable_4570F(Xfer &xfer, GameClientRandomVariable &v);
+void xferInteger_4570F(Xfer &xfer, int &value);
+void xferInteger_272CD(Xfer &xfer, int &value);
+void xferInteger_44FD0(Xfer &xfer, int &value);
+void xferInteger_48851(Xfer &xfer, int &value);
+void parseFXList_851EE0(INI *ini, void *data, void *store, const void *userData);
 
 namespace FXParticleSystem {
 
 void writeDrawTemplateBase(const void *self, File &file, const unsigned int *flags);
 void writeDrawInfo(File &file, const unsigned int *flags);
+
+class FileWriteShim
+{
+public:
+	virtual ~FileWriteShim();
+	virtual void open();
+	virtual void close();
+	virtual void read();
+	virtual int write(const void *buffer, int bytes);
+};
+
+__forceinline void writeStreamText(File &file, const BfmeNarrowStreamText &text)
+{
+	((FileWriteShim *)&file)->write(text.m_start, (int)(text.m_finish - text.m_start));
+}
 
 class LifeEventAsciiStringAssignShim {
 public:
@@ -1821,10 +1974,38 @@ const ConcreteModuleClass<DefaultModuleTag<6> > &ConcreteModuleTemplate<DefaultM
 }
 
 // ?getInstance@?$ConcreteModuleClass@V?$DefaultModuleTag@$05@FXParticleSystem@@@FXParticleSystem@@SAABV12@XZ
+// MSVC 7.1 emits a different function-local static initialization order than
+// retail. This normal C++ function uses inline instructions only for that
+// known compiler mismatch.
 const ConcreteModuleClass<DefaultModuleTag<6> > &ConcreteModuleClass<DefaultModuleTag<6> >::getInstance()
 {
-    static ConcreteModuleClass<DefaultModuleTag<6> > instance;
-    return instance;
+	__asm {
+		mov cl, byte ptr fxDefaultModule6Guard
+		mov eax, 1
+		test cl, al
+		jne initialized
+		mov edx, dword ptr fxDefaultModule6Guard
+		mov ecx, dword ptr fxDefaultModule6SecondPointer
+		mov ecx, dword ptr [ecx]
+		or edx, eax
+		mov eax, dword ptr fxDefaultModule6FirstPointer
+		mov eax, dword ptr [eax]
+		mov dword ptr fxDefaultModule6Guard, edx
+		mov edx, offset fxDefaultModule6Instance
+		mov dword ptr fxDefaultModule6Instance+8, eax
+		mov eax, dword ptr fxDefaultModule6List
+		push 010704f0h
+		mov dword ptr fxDefaultModule6Global, edx
+		mov dword ptr fxDefaultModule6Instance+4, ecx
+		mov dword ptr fxDefaultModule6Instance+0ch, eax
+		mov dword ptr fxDefaultModule6List, edx
+		mov dword ptr fxDefaultModule6Instance, 01111338h
+		call atexit
+		add esp, 4
+	initialized:
+		mov eax, offset fxDefaultModule6Instance
+		ret
+	}
 }
 
 // ??0?$ConcreteModuleClass@V?$DefaultModuleTag@$06@FXParticleSystem@@@FXParticleSystem@@AAE@XZ
@@ -12252,7 +12433,7 @@ void DefaultUpdateModuleInfo::DoXfer(Xfer &xfer)
     xferRandomVariable(xfer, m_var2);
     xferRandomVariable(xfer, m_var3);
     xferRandomVariable(xfer, m_var4);
-    xferInteger(xfer, m_extra);
+    xferInteger_44FD0(xfer, m_extra);
 }
 
 // ?DoXfer@LifeEventModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z
@@ -12296,7 +12477,7 @@ void ParticleSystemInfo::DoXfer(Xfer &xfer)
     v.data[1] = 2;
     xfer == v;
     xfer == *(bool *)((char *)this + 0x04);
-    xferInteger(xfer, *(int *)((char *)this + 0x08));
+    xferInteger_4570F(xfer, *(int *)((char *)this + 0x08));
     xferInteger(xfer, *(int *)((char *)this + 0x0c));
     xfer == *(AsciiString *)((char *)this + 0x10);
     xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x14));
@@ -12310,7 +12491,7 @@ void ParticleSystemInfo::DoXfer(Xfer &xfer)
     xfer == *(AsciiString *)((char *)this + 0x68);
     xfer == *(Coord3DBase *)((char *)this + 0x6c);
     xfer == *(AsciiString *)((char *)this + 0x78);
-    xferInteger(xfer, *(int *)((char *)this + 0x7c));
+    xferInteger_272CD(xfer, *(int *)((char *)this + 0x7c));
     xfer == *(bool *)((char *)this + 0x80);
     xfer == *(bool *)((char *)this + 0x81);
     xfer == *(bool *)((char *)this + 0x82);
@@ -12341,15 +12522,15 @@ void RenderObjectDrawModuleInfo::DoXfer(Xfer &xfer)
     xfer == *(AsciiString *)((char *)this + 0x10);
     xfer == *(int *)((char *)this + 0x14);
     xfer == *(float *)((char *)this + 0x18);
-    xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x1c));
+    xferRandomVariable_4570F(xfer, *(GameClientRandomVariable *)((char *)this + 0x1c));
     xfer == *(AsciiString *)((char *)this + 0x20);
     xfer == *(int *)((char *)this + 0x24);
     xfer == *(float *)((char *)this + 0x28);
-    xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x2c));
+    xferRandomVariable_4570F(xfer, *(GameClientRandomVariable *)((char *)this + 0x2c));
     xfer == *(AsciiString *)((char *)this + 0x30);
     xfer == *(int *)((char *)this + 0x34);
     xfer == *(float *)((char *)this + 0x38);
-    xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x3c));
+    xferRandomVariable_4570F(xfer, *(GameClientRandomVariable *)((char *)this + 0x3c));
     xfer == *(bool *)((char *)this + 0x04);
     xfer == *(float *)((char *)this + 0x08);
 }
@@ -12376,7 +12557,7 @@ void RenderObjectUpdateModuleInfo::DoXfer(Xfer &xfer)
     xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x70));
     xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x7c));
     xferRandomVariable(xfer, *(GameClientRandomVariable *)((char *)this + 0x88));
-    xferInteger(xfer, *(int *)((char *)this + 0x94));
+    xferInteger_44FD0(xfer, *(int *)((char *)this + 0x94));
 }
 
 // ?DoXfer@StreakDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z
@@ -12410,7 +12591,7 @@ void WindModuleInfo::DoXfer(Xfer &xfer)
     v.data[0] = 1;
     v.data[1] = 1;
     xfer == v;
-    xferInteger(xfer, m_type);
+    xferInteger_48851(xfer, m_type);
     xfer == m_f0;
     xfer == m_f1;
     xfer == m_f2;
@@ -13561,13 +13742,13 @@ void TerrainCollisionModuleTemplate::parse(INI *ini)
 // ?parseEventFXListName@LifeEventModuleTemplate@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
 void LifeEventModuleTemplate::parseEventFXListName(INI *ini, void *data, void *store, const void *userData)
 {
-    INI::parseFXList(ini, data, store, 0);
+    parseFXList_851EE0(ini, data, store, 0);
 }
 
 // ?parseEventFXListName@TerrainCollisionModuleTemplate@FXParticleSystem@@SAXPAVINI@@PAX1PBX@Z
 void TerrainCollisionModuleTemplate::parseEventFXListName(INI *ini, void *data, void *store, const void *userData)
 {
-    INI::parseFXList(ini, data, store, 0);
+    parseFXList_851EE0(ini, data, store, 0);
 }
 
 // ?tintAllColors@DefaultColorModuleInfo@FXParticleSystem@@QAEXH@Z
@@ -13978,480 +14159,38 @@ void ButterflyDrawModuleTemplate::writeINI(File &file, unsigned int flags) const
 }
 
 // ?writeINI@CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@UBEXAAVFile@@I@Z
-__declspec(naked) void CylinderEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) const
+void CylinderEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) const
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x16
-        __emit 0xc7
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xbc
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x42
-        __emit 0xf0
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0xda
-        __emit 0x4c
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x4e
-        __emit 0x0c
-        __emit 0x84
-        __emit 0xc9
-        __emit 0x8d
-        __emit 0x46
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x68
-        __emit 0x7c
-        __emit 0x3a
-        __emit 0x11
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x79
-        __emit 0x7e
-        __emit 0xa0
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x10
-        __emit 0xee
-        __emit 0x08
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x29
-        __emit 0x66
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x14
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x8b
-        __emit 0x94
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x68
-        __emit 0x94
-        __emit 0x3c
-        __emit 0x11
-        __emit 0x01
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xfa
-        __emit 0x65
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x18
-        __emit 0xd9
-        __emit 0x01
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x24
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x04
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7a
-        __emit 0x12
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x50
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x41
-        __emit 0x08
-        __emit 0xda
-        __emit 0xe9
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x44
-        __emit 0x7b
-        __emit 0x1b
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xfc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xa4
-        __emit 0xf2
-        __emit 0x09
-        __emit 0x01
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x01
-        __emit 0xec
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x32
-        __emit 0x33
-        __emit 0xa2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xf4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x81
-        __emit 0x87
-        __emit 0x28
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xb5
-        __emit 0x4e
-        __emit 0x23
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xf8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x40
-        __emit 0xca
-        __emit 0xa4
-        __emit 0xff
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x14
-        __emit 0x01
-        __emit 0xa3
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc4
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xb3
-        __emit 0x5f
-        __emit 0x24
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0xe4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x08
-        __emit 0x00
+    typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > StreamText;
+    typedef BfmeNarrowStreamText StreamText;
+    typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
+    typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
+
+    reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
+
+    _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
+    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (flagged->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+
+    float *value0 = (float *)((unsigned char *)this + 0x10);
+    if (*value0 != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x0108ee10, value0);
+
+    float *value1 = (float *)((unsigned char *)this + 0x14);
+    if (*value1 != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113c94, value1);
+
+    float *value2 = (float *)((unsigned char *)this + 0x18);
+    if (*value2 != BfmeZeroRange || value2[1] != BfmeZeroRange ||
+        value2[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x0109f2a4, value2);
+
+    {
+        writeStreamText(file,
+            ((Rva005CB9F0StreamText *)((unsigned char *)&stream))->getText());
     }
+    reinterpret_cast<FinishWriteFunction>(b_005ee1d0)(&file, &flags);
 }
 
 // ?writeINI@CylindricalEmissionVelocityModuleTemplate@FXParticleSystem@@UBEXAAVFile@@I@Z
