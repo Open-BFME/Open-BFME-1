@@ -237,6 +237,14 @@ def exe_image():
 DIR32_IMPORT_EXPECTATIONS = {
     "__imp___strnicmp": "_strnicmp",
     "__imp__itoa": "_itoa",
+    "__imp__ceil": "ceil",
+    "__imp__floor": "floor",
+    "__imp__memmove": "memmove",
+    "__imp___memicmp": "_memicmp",
+    "__imp__strstr": "strstr",
+    "__imp__strtok": "strtok",
+    "__imp__fopen": "fopen",
+    "__imp___wfopen": "_wfopen",
 }
 DIR32_IMPORT_DLL = "msvcr71.dll"
 
@@ -263,7 +271,7 @@ def verify_guarded_dir32_imports(row, target, compiled, relocs):
     the resolved bytes.  That is correct for rebasing, but it also hides a
     source that calls the wrong CRT twin: the COFF symbol says which import the
     source requested while the retail operand supplies only the linked value.
-    For the two known-confusable names, subtract the pre-link COFF addend and
+    For the audited known-confusable names, subtract the pre-link COFF addend and
     resolve the resulting VA through the baseline PE import directory before
     any masking or rebasing is allowed.
     """

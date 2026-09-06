@@ -1,7 +1,7 @@
 """The build gate must not hide a wrong CRT import behind DIR32 rebasing.
 
 ``compile_function`` copies retail DIR32 operands so a linker address can be
-reproduced.  For the two CRT symbols that have known twins, the COFF symbol
+reproduced.  For the audited CRT symbols that have known twins, the COFF symbol
 and the retail PE import table must agree before that copy is accepted.
 """
 
@@ -160,3 +160,34 @@ def test_the_retail_import_parser_is_cached_for_one_baseline_identity(
         build._cached_import_guard_image.cache_clear()
 
     assert calls == [exe]
+
+
+@pytest.mark.parametrize("symbol, actual, expected", [
+    ("__imp__ceil", "floor", "ceil"),
+    ("__imp__floor", "ceil", "floor"),
+    ("__imp__memmove", "_memicmp", "memmove"),
+    ("__imp___memicmp", "memmove", "_memicmp"),
+    ("__imp__strstr", "strtok", "strstr"),
+    ("__imp__strtok", "strstr", "strtok"),
+    ("__imp__fopen", "_wfopen", "fopen"),
+    ("__imp___wfopen", "fopen", "_wfopen"),
+])
+def test_audited_same_shape_import_twins_are_rejected(monkeypatch, symbol, actual, expected):
+    with pytest.raises(SystemExit, match="expected msvcr71.dll!" + expected):
+        _compile(monkeypatch, symbol, actual)
+
+
+@pytest.mark.parametrize("symbol, actual", [
+    ("__imp__ceil", "ceil"),
+    ("__imp__floor", "floor"),
+    ("__imp__memmove", "memmove"),
+    ("__imp___memicmp", "_memicmp"),
+    ("__imp__strstr", "strstr"),
+    ("__imp__strtok", "strtok"),
+    ("__imp__fopen", "fopen"),
+    ("__imp___wfopen", "_wfopen"),
+])
+def test_audited_correct_imports_keep_matching(monkeypatch, symbol, actual):
+    patch = _compile(monkeypatch, symbol, actual)
+    assert patch["bytes"] == patch["target"]
+    assert patch["unresolved"] == []
