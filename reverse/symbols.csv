@@ -80700,6 +80700,7 @@ name,address,notes
 ?lookup@Rva0019C520Member@@QAEHPAVAsciiString@@H@Z,0x0003562F,ILT thunk to 0x0019B780 lookup on member at +0x630
 ?lookup@Rva00265A00Owner@@QAEPAVRva00265A00Result@@H@Z,0x00020824,address-derived lookup target read from retail RVA 0x00265A00
 ?lookup@Rva0035D800Table@@QAEHH@Z,0x0001D2F5,Open-BFME5 pin: lookup callee for Rva0035D800::makeNode (thunks_032.cpp target; sibling of Gen0035D740Table::lookup at 0x0035D740)
+?lookup@Rva0035D880Table@@QAEHHH@Z,0x00047492,lookup callee for Rva0035D880::makeNode; two-argument ILT to retail body 0x0035D1E0
 ?lookup@Rva007FA2C0@@QAEPAURva007F96C0Rec@@PAX@Z,0x007F9530,FESL transactor TXN record lookup called from 0x007F96C0
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
 ?lookupByField@BfmeMgr2B0@@QAEPAUBfmeNode2B0@@PAX@Z,0x0003A751,pin
