@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "999f52caba920526ee6042b3cc97c1b71c4d9486b1feac17d7b1480d334ca342",
+  "symbol": "?Rva0042F0D0StoreLabel@@YG_NVAsciiStringXK@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?Rva0042F0D0StoreLabel@@YG_NVAsciiStringXK@@@Z\n// partial score=0.85 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc /O2 /Ob2\n//\n// Fuzzy twin (ratio 0.893) of Gen_00602DB0::bfmeStoreXK (0x00602DB0, 127B,\n// BfmeLabelStoreXK.cpp). Same buffer/length guard shape and the same\n// double-release-on-both-arms epilogue duplication, but this target: (1) has\n// no second \"unused\" parameter (ret 4, not ret 8 -- a single by-value string\n// argument passed by hidden pointer); (2) never calls set()/bfmeSetXK on the\n// true arm, it just releases the buffer and returns true; and (3) has no\n// \"mov [esp+8], 0\" EH-state pre-store because with no throwing set() call on\n// the true arm the destructor cleanup state is unambiguous.\n\nstruct BfmeBufferXK\n{\n\tint m_bfmeRef;\t\t\t\t\t\t// +0x00\n\tshort m_bfmeLength;\t\t\t\t\t// +0x04\n};\n\nclass AsciiStringXK\n{\npublic:\n\tAsciiStringXK(const AsciiStringXK &other);\n\t~AsciiStringXK(void);\n\nprotected:\n\tBfmeBufferXK *m_bfmeData;\t\t\t\t// +0x00\n};\n\nclass BfmeStrXK0042F0D0 : private AsciiStringXK\n{\npublic:\n\tconst BfmeBufferXK *bfmeBufferXK(void) const\n\t{\n\t\treturn m_bfmeData;\n\t}\n};\n\n// address-derived name (real owner/name unproven)\nbool __stdcall Rva0042F0D0StoreLabel(AsciiStringXK value)\n{\n\tconst BfmeBufferXK *buffer = ((BfmeStrXK0042F0D0 *)&value)->bfmeBufferXK();\n\n\tif (buffer && buffer->m_bfmeLength)\n\t\treturn true;\n\n\treturn false;\n}\n"
+}

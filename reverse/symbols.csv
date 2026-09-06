@@ -72794,6 +72794,7 @@ name,address,notes
 ?bfmeApplyCVD@BfmeThingCVD@@QAEXXZ,0x00022999,pin
 ?bfmeApplyCircle@Gen_008812D0@@QAEXHHHH_N@Z,0x00881B90,Open-BFME5 semantic identity for the exact TaintManager grid circle-update wrapper already claimed under an address-derived class
 ?bfmeApplyERD@@YAXPAUBfmeObjectERD@@M@Z,0x000246A4,pin
+?bfmeApplyFW@BfmeSubFW@@QAEXPAX0@Z,0x00024C17,pin
 ?bfmeApplyFloatPair@@YAXHMM@Z,0x000152DF,Open-BFME5 float-pair update called by 0x005891E0
 ?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
@@ -74367,6 +74368,7 @@ name,address,notes
 ?bfmeHelper990410@@YAXPAXN@Z,0x00990410,pin
 ?bfmeHelper996070@@YAXPAX00PBD@Z,0x00996070,pin
 ?bfmeHelperB20@@YAXPAX0@Z,0x002EFB20,pin
+?bfmeHelperFW@@YAXPAVBfmeXferFW@@PAVBfmeSubFW@@@Z,0x00008BE3,pin
 ?bfmeHide1183@BfmeW1183@@QAEXI@Z,0x0003F3E1,pin
 ?bfmeHighlightApply@@YAXIPAXIPAUTexture@@PAUIDirect3DSurface8@@12@Z,0x0003F242,retail highlight postRender0x007D7040 direct call at0x007D72DA
 ?bfmeHighlightDrawQuad@@YAXI@Z,0x00018BB0,retail highlight postRender0x007D7040 direct call at0x007D72A3
