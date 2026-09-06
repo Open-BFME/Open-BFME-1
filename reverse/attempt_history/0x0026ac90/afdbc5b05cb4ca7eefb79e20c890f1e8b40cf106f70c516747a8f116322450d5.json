@@ -1,8 +1,0 @@
-{
-  "schema": 1,
-  "sha256": "afdbc5b05cb4ca7eefb79e20c890f1e8b40cf106f70c516747a8f116322450d5",
-  "symbol": "?bfmeGetFO@BfmeSecondFO@@QAEHXZ (identity unknown)",
-  "score_kind": "author-estimate",
-  "score": 0.9,
-  "source": "// ?bfmeGetFO@BfmeSecondFO@@QAEHXZ (identity unknown)\n// partial score=0.9 date=2026-09-06\n// 36/33; MSVC spills the entry pointer to esi (push/pop) where retail keeps\n// holder in ecx and entry in eax with no callee-saved register.\n// Pin: ?bfmeTouchFO@BfmeInnerFO@@QAEXXZ,0x00048C61\nclass BfmeInnerFO\n{\npublic:\n\tvoid bfmeTouchFO(void);\n};\n\nclass BfmeNodeFO\n{\npublic:\n\tunsigned char m_bfmeHeadFO[4];\n\tBfmeNodeFO *m_bfmeNextFO;\n\tunsigned char m_bfmeMidFO[0x14];\n\tint m_bfmeValueFO;\n};\n\nclass BfmePrimaryFO\n{\npublic:\n\tunsigned char m_bfmeHeadFO[8];\n\tBfmeNodeFO *m_bfmeHolderFO;\n};\n\nclass BfmeSecondFO\n{\npublic:\n\tint bfmeGetFO(void);\n};\n\nint BfmeSecondFO::bfmeGetFO(void)\n{\n\tchar *base = (char *)this;\n\tBfmePrimaryFO *owner = *(BfmePrimaryFO **)(base - 0x20);\n\tBfmeNodeFO *holder = owner->m_bfmeHolderFO;\n\n\tBfmeNodeFO *entry = holder->m_bfmeNextFO;\n\tif (entry != 0)\n\t{\n\t\tBfmeInnerFO *inner = (BfmeInnerFO *)entry->m_bfmeNextFO;\n\t\tif (inner != 0)\n\t\t\tinner->bfmeTouchFO();\n\n\t\treturn entry->m_bfmeValueFO;\n\t}\n\n\treturn holder->m_bfmeValueFO;\n}\n"
-}
