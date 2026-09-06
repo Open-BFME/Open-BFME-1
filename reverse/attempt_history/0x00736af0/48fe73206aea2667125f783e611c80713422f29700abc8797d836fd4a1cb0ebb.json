@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "48fe73206aea2667125f783e611c80713422f29700abc8797d836fd4a1cb0ebb",
+  "symbol": "?findAndInvoke@Gen00736AF0Owner@@QAE_NHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?findAndInvoke@Gen00736AF0Owner@@QAE_NHH@Z\n// partial score=0.86 date=2026-09-02\n// Address-derived reconstruction of the fixed-array find-and-invoke at 0x00736AF0.\n// stlport\n\nclass Gen00736AF0Item\n{\npublic:\n\tint m_fieldA;\t\t\t// 0x00\n\tchar m_pad04[0x70 - 0x04];\n\tint m_fieldC;\t\t\t// 0x70\n\tchar m_pad74[0x7C - 0x74];\n\tint m_fieldB;\t\t\t// 0x7C\n\tchar m_pad80[0xE8 - 0x80];\n};\n\nclass Gen00736AF0Owner\n{\npublic:\n\tbool findAndInvoke(int fieldAValue, int value);\n\tvoid invokeAt(int index, int value);\n\nprivate:\n\tchar m_pad00[0x208];\n\tGen00736AF0Item m_items[1];\n\tchar m_padAfterItems[0x2A7CB0 - 0x208 - sizeof(Gen00736AF0Item)];\n\tint m_itemCount;\t\t// 0x2A7CB0\n};\n\nbool Gen00736AF0Owner::findAndInvoke(int fieldAValue, int value)\n{\n\tif (fieldAValue == 0)\n\t\treturn false;\n\n\tint count = m_itemCount;\n\tfor (int index = 0; index < count; ++index)\n\t{\n\t\tGen00736AF0Item *item = m_items + index;\n\t\tif (item->m_fieldA != fieldAValue)\n\t\t\tcontinue;\n\t\tif (item->m_fieldB != 0)\n\t\t\tcontinue;\n\t\tif (item->m_fieldC != 0)\n\t\t\tcontinue;\n\n\t\tinvokeAt(index, value);\n\t\treturn true;\n\t}\n\treturn false;\n}\n"
+}

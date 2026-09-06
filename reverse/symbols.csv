@@ -3049,6 +3049,7 @@ name,address,notes
 ??0Rva006477E0String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva00647920String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z,0x0090CF90,base texture constructor called by Rva006D51B0
+??0Rva006D5280TextureBase@@QAE@IIIIII@Z,0x0090CF90,pin near-twin reuses base texture constructor body
 ??0Rva006E1700Base@@QAE@XZ,0x0002ACD4,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E1700
 ??0Rva006E6C10Base@@QAE@XZ,0x00032F1F,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E6C10
 ??0Rva006FB500Base@@QAE@XZ,0x00020004,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006FB500
@@ -9625,6 +9626,7 @@ name,address,notes
 ?Add_Line@Render2DClass@@QAEXABVVector2@@0MKK@Z,0x000409E4,BFME W3DDisplay two-color drawLine callee; ILT to the retail Add_Line body at 0x006E7750
 ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
 ?Add_Quad@Render2DClass@@QAEXABVRectClass@@0KKKK@Z,0x0004183A,retail ILT thunk to the six-argument quad body at 0x006E7210
+?Add_Record_Texture@@YAXABV?$RefCountPtr@VTextureClass@@@@@Z,0x00937CC0,statistics.cpp file-static Add_Record_Texture (argument in esi); called from Record_Texture 0x00937D60; body still 3 bytes off (EH state placement)
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
 ?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z,0x008FD4C0
 ?Alloc@FastAllocatorGeneral@@QAEPAXI@Z,0x00AFEE40,decoded from Allocate_Memory call site
@@ -10158,6 +10160,7 @@ name,address,notes
 ?Get_Texture@MeshMatDescClass@@QBE?AVBfmeHandleCX@@HHH@Z,0x00929A20,Remap_Mesh92F2C0 direct call;existing matched MeshMatDesc getter/setter body proves owning Texture handle ABI
 ?Get_Texture@MeshMatDescClass@@QBEPAVTextureClass@@HHH@Z,0x0002F8E2,pinharvest x1 (thunk)
 ?Get_Texture@ParticleBufferClass@@QBE?AVTextureHandleClass@1@XZ,0x00988F60,sret holder-returning getter
+?Get_Texture_Memory_Usage@?$RefCountPtr@VTextureClass@@@@QBEIXZ,0x0090E0E0,BFME texture handle query called from Debug_Statistics::Record_Texture 0x00937D60 (this = the 4-byte handle)
 ?Get_UV_Array_By_Index@MeshMatDescClass@@QAEPAVVector2@@H_N@Z,0x0001D179
 ?Get_User_Text@MeshGeometryClass@@QAEPBDXZ,0x00924C30,pinharvest x1 (body)
 ?Get_Vector@TimeCodedMotionChannelClass@@QAEXMPAM@Z,0x009781A0
@@ -10200,6 +10203,8 @@ name,address,notes
 ?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ,0x00903C50,End_Render depth Open-BFME4+Grok
 ?IsCommandSynchronized@@YA_NW4NetCommandType@@@Z,0x00001FB9,caller-typed Bool declaration through the ILT thunk for the Int body at 0x00682E50
 ?Is_Bone_Captured@HTreeClass@@QBE_NH@Z,0x00952A40
+?Is_Lightmap@?$RefCountPtr@VTextureClass@@@@QBE_NXZ,0x0090C620,BFME texture handle query called from Debug_Statistics::Record_Texture 0x00937D60 (this = the 4-byte handle)
+?Is_Procedural@?$RefCountPtr@VTextureClass@@@@QBE_NXZ,0x0090C630,BFME texture handle query called from Debug_Statistics::Record_Texture 0x00937D60 (this = the 4-byte handle)
 ?Is_Running@MouseThreadClass@@QAE_NXZ,0x009DB590,W3DMouse redraw-mode polling-thread running check
 ?Is_Running@ThreadClass@@QAE_NXZ,0x009DB590
 ?JoinDirectConnectGame@@YAXXZ,0x000208E7,ILT from NetworkDirectConnectSystem join arm
@@ -10304,6 +10309,7 @@ name,address,notes
 ?Release_Ref@BfmeTexRel1137@@QAEXXZ,0x009EB7A0,pin BfmeA1137 release helper texture reference release
 ?Release_Ref@CountedAsset@@QAEXXZ,0x009EB7A0,address-derived counted asset release callee at 0x009EBEC0
 ?Release_Ref@Rva006D51B0TextureBase@@QAEXXZ,0x009EB7A0,texture reference release used by Rva006D51B0
+?Release_Ref@Rva006D5280TextureBase@@QAEXXZ,0x009EB7A0,pin near-twin reuses texture reference release body
 ?Release_Ref@TextureBaseClass@@QAEXXZ,0x009EB7A0,hider decl in texture.h; WORD refcount+flags release
 ?Release_Ref@TextureClass@@QAEXXZ,0x009EB7A0,BFME texture release: WORD refcount+flag bits at [this+4]; auto-delete via vtbl slot 8 when bit24 set ??? TextureClass does NOT derive RefCountClass
 ?Release_Ref@TextureClass_732960@@QAEXXZ,0x009EB7A0,pin (near-twin of 0x00732960 freeTreeBuffers(); same target as TextureClass::Release_Ref)

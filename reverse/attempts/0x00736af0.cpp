@@ -1,7 +1,21 @@
 // ?findAndInvoke@Gen00736AF0Owner@@QAE_NHH@Z
-// partial score=0.86 date=2026-09-02
+// partial score=0.91 date=2026-09-06
+// cl: /DNDEBUG /MD /EHsc
+//
 // Address-derived reconstruction of the fixed-array find-and-invoke at 0x00736AF0.
-// stlport
+// Near-twin of Rva00720BB0LookupDispatch (same owning tree-record table shape).
+// Field offsets/types confirmed exact: m_fieldB (item+0x7C) is UNSIGNED (retail
+// compares it with `cmp mem,0; ja`, not `test;jne`) and the loop cursor is a
+// char* anchored on &item->m_fieldB (retail's `lea eax,[ecx+0x284]` == this+0x208
+// (m_items) + 0x7C), incremented by sizeof(Item)=0xE8 per iteration -- not an
+// index-based m_items[index] recompute, which anchors the LEA on the wrong field
+// (m_fieldC) instead. Residual 8/89 non-reloc bytes: retail computes the
+// `test esi,esi; jle` empty-count guard BEFORE the `lea eax,[ecx+0x284]` cursor
+// init; every guard/order variant tried (separate `if(count<=0)return false`,
+// ternary-guarded init, do-while, comma-order swap) either reproduces this exact
+// swap or regresses to a second prologue/epilogue (ebx pushed late, +13 bytes).
+// Needs a lever for sinking a loop-invariant pointer init below its own shared
+// entry guard without MSVC 7.1 duplicating the ebx/esi save.
 
 class Gen00736AF0Item
 {
@@ -10,7 +24,7 @@ public:
 	char m_pad04[0x70 - 0x04];
 	int m_fieldC;			// 0x70
 	char m_pad74[0x7C - 0x74];
-	int m_fieldB;			// 0x7C
+	unsigned int m_fieldB;	// 0x7C
 	char m_pad80[0xE8 - 0x80];
 };
 
@@ -33,18 +47,19 @@ bool Gen00736AF0Owner::findAndInvoke(int fieldAValue, int value)
 		return false;
 
 	int count = m_itemCount;
-	for (int index = 0; index < count; ++index)
+	int index;
+	char *pB;
+	for (index = 0, pB = (char *)m_items + 0x7C; index < count; ++index, pB += sizeof(Gen00736AF0Item))
 	{
-		Gen00736AF0Item *item = m_items + index;
-		if (item->m_fieldA != fieldAValue)
+		if (*(int *)(pB - 0x7C) != fieldAValue)
 			continue;
-		if (item->m_fieldB != 0)
+		if (*(unsigned int *)pB > 0)
 			continue;
-		if (item->m_fieldC != 0)
-			continue;
-
-		invokeAt(index, value);
-		return true;
+		if (*(int *)(pB - 0xC) == 0)
+		{
+			invokeAt(index, value);
+			return true;
+		}
 	}
 	return false;
 }
