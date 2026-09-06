@@ -24724,3 +24724,6 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_00144100@@YAXXZ,0x00144100,gen-dump placeholder retracted: range owned by real C++ ?addItem@Rva00144100Holder@@QAEXPAVRva00144100Item@@@Z landed by the fleet
 ?d_00144000@@YAXXZ,0x00144000,gen-dump placeholder retracted: range owned by real C++ ?findBestInfoSlow@WeaponFindBestInfoSlowShim@@QBEPBVWeaponTemplateSet@@ABV?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@ABV?$BitFlags@$0BB@@@@Z landed by the fleet
 ?d_0049a430@@YAXXZ,0x0049A430,gen-dump placeholder retracted: range owned by real C++ ??0Gen_0049A4B0@@QAE@PAX@Z landed by the fleet
+?d_00144100@@YAXXZ,0x00144100,"Superseded gen-dump duplicated by upstream fleet harvest920db93b9; root independently reran focused byte gates for replacement sources (1/1,4/4,2/2), retaining real53/101/195-byte bodies."
+?d_00144000@@YAXXZ,0x00144000,"Superseded gen-dump duplicated by upstream fleet harvest920db93b9; root independently reran focused byte gates for replacement sources (1/1,4/4,2/2), retaining real53/101/195-byte bodies."
+?d_0049a430@@YAXXZ,0x0049A430,"Superseded gen-dump duplicated by upstream fleet harvest920db93b9; root independently reran focused byte gates for replacement sources (1/1,4/4,2/2), retaining real53/101/195-byte bodies."
