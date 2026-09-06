@@ -27555,6 +27555,7 @@ name,address,notes
 ?b_001d21f0@@YAXXZ,0x001D21F0,gen-thunk body
 ?b_001d22c0@@YAXXZ,0x001D22C0,gen-thunk body
 ?b_001d2580@@YAXXZ,0x001D2580,gen-thunk body
+?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z,0x0000B816,ILT alias for the cached-float helper used by the 0x00323B70 condition
 ?b_001d25c0@@YAXXZ,0x001D25C0,gen-thunk body
 ?b_001d25f0@@YAXXZ,0x001D25F0,gen-thunk body
 ?b_001d27a0@@YAXXZ,0x001D27A0,gen-thunk body
