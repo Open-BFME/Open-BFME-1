@@ -8911,8 +8911,6 @@ name,address,notes
 ??1U2Vb0084B480@@UAE@XZ,0x0084B480,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B6C0 and the ??_G at 0x0084B7C0; unnamed dump elsewhere
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591
-??1UnicodeString@@QAE@XZ,0x00887940,pin: shares the AsciiString-family releaseBuffer thunk (Gen_006CBA30_UpdateTexture.cpp)
-??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWN@@QAE@XZ,0x008881D0,pin
