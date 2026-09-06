@@ -355,3 +355,43 @@ def test_a_handful_of_changed_files_scans_quietly(tmp_path):
     done = cli(root, "--staged")
     assert done.returncode == 0, done.stderr
     assert done.stderr == ""
+
+
+def test_a_member_declaration_is_counted_on_its_own_line_only(tmp_path):
+    """NAMED_MEMBER's character class used to contain \\s, which matches a newline,
+    so the pattern ran from one line across every line below it hunting for an
+    `m_`. Two defects fell out of that, and only this test sees either:
+
+      * it counted members the intervening lines had already disqualified -- the
+        real case was a blank line, then `private:`, then a member whose trailing
+        comment said "pad", which the negative lookahead exists to reject;
+      * it made the scan quadratic in file size. One 42 KB source cost 2.3 s, a
+        full 12,860-source run never finished inside any timeout anyone gave it,
+        and build/readability/ therefore stayed empty -- so every --staged run
+        paid a cold scan and the per-commit trailer the plan is built on was
+        unusable.
+    """
+    disqualified = "\nprivate:\n\tchar             m_head[ 0x08 ];\t\t// +0x04 pad\n"
+    assert metric.scan(disqualified)["named_members"] == 0
+
+    plain = "\nprivate:\n\tchar m_raw[ 0x14 ];\n"
+    assert metric.scan(plain)["named_members"] == 1
+
+    across_lines = "SomeType\n\tm_member;\n"
+    assert metric.scan(across_lines)["named_members"] == 0
+
+
+def test_scanning_stays_linear_in_file_size(tmp_path):
+    """The guard for the half of the defect above that is not a wrong number. The
+    shape that blew up is many lines whose every character is inside the class
+    and which never reach an `m_`, so the star ran to end-of-file and backtracked
+    from each of them in turn. The `// readable body of ...` markers this tree is
+    full of are exactly that shape. Measured on this fixture: 3.72 s before,
+    0.008 s after, and 3x the lines cost the old pattern 10.7x the time."""
+    import time
+
+    text = ("readable body of ZZ1AssaultTransportAIUpdate ZZ Code GameEngine "
+            "Source path\n") * 900
+    start = time.monotonic()
+    assert metric.scan(text)["named_members"] == 0
+    assert time.monotonic() - start < 1.0

@@ -84,9 +84,15 @@ PLACEHOLDER = re.compile(
 PAD_MEMBER = re.compile(
     r'\b(?:char|BYTE|unsigned char)\s+\w*(?:pad|unk|unknown|reserved|filler)\w*\s*\[',
     re.I)
+# Horizontal whitespace only. \s matches a newline, so the class used to run
+# from one line across every line below it hunting for an `m_`, which both
+# counted members the intervening lines had already disqualified and made the
+# scan quadratic in file size -- one 42 KB source cost 2.3 s and a full run never
+# finished, which is why build/readability/ was always empty. `[X]*[ \t]` is the
+# same language as `[X]*[ \t]+` when [ \t] is inside X, so only the newline goes.
 NAMED_MEMBER = re.compile(
-    r'^\s*(?!.*\b(?:pad|unk|reserved|filler))[A-Za-z_][\w:<>*&\s]*\s+m_\w+\s*'
-    r'(?:\[[^\]]*\])?\s*;', re.M)
+    r'^[ \t]*(?!.*\b(?:pad|unk|reserved|filler))[A-Za-z_][\w:<>*& \t]*[ \t]m_\w+[ \t]*'
+    r'(?:\[[^\]]*\])?[ \t]*;', re.M)
 VIRTUAL_SLOT = re.compile(r'virtual\b[^;{()]*?(\w+)\s*\(')
 ANON_SLOT = re.compile(r'(?:v|pad|slot|vf|unk)\d{1,3}')
 TU_CLASS_BODY = re.compile(r'^[ \t]*(?:class|struct)\s+\w+\s*(?::[^;{]*)?\{', re.M)
