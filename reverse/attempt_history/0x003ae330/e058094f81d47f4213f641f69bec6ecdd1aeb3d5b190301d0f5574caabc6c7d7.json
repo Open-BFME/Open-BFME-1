@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e058094f81d47f4213f641f69bec6ecdd1aeb3d5b190301d0f5574caabc6c7d7",
+  "symbol": "?run@Glo012F1024Item@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?run@Glo012F1024Item@@QAEXXZ\n// partial score=0.95 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Address-derived short campaign-item dispatch at retail 0x003AE330.\n\nclass Glo012F1028Type\n{\npublic:\n\tvoid j_00008c0b(void);\n};\n\nextern Glo012F1028Type *Glo012F1028;\n\nclass Glo012F1024Item\n{\npublic:\n\tbool j_0000ca59(void);\n\tvoid j_0002a969(void);\n\tvoid j_00021f26(void);\n\t__declspec(noreturn) void j_0002eeec(void);\n\tvoid run(void);\n};\n\n// ?run@Glo012F1024Item@@QAEXXZ\nvoid Glo012F1024Item::run(void)\n{\n\tif (j_0000ca59())\n\t{\n\t\tGlo012F1028->j_00008c0b();\n\t\tj_0002a969();\n\t\tj_00021f26();\n\t\tj_0002eeec();\n\t}\n}\n"
+}
