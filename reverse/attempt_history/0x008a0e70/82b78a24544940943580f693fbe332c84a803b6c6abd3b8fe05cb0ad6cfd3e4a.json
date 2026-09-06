@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "82b78a24544940943580f693fbe332c84a803b6c6abd3b8fe05cb0ad6cfd3e4a",
+  "symbol": "?d_008a0e70@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_008a0e70@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// 43/45. Everything matches through the six-byte alignment nop, including the\n// register assignment once the locals are declared count / index / slot in\n// that order (declaring the slot pointer before the index swaps edi and esi).\n// Residue: retail loads the slot into eax, tests eax, then copies it to ecx\n// for the virtual call; MSVC loads straight into ecx and saves the two-byte\n// `mov ecx,eax`. Tried the item as a loop-local, as a function-scope local,\n// as a copy through a second local, and guarding on *slot with the local\n// taken inside the if. All four give the identical body.\nclass BfmeItemAX\n{\npublic:\n\tvirtual void bfmeSlot00AX(void);\n\tvirtual void bfmeNotifyAX(void);\n};\n\nclass BfmeOwnAX\n{\npublic:\n\tvoid bfmeSweepAX(void);\n\n\tint m_bfmeCountAX;\n\tBfmeItemAX *m_bfmeItemsAX[0x40];\n};\n\nvoid BfmeOwnAX::bfmeSweepAX(void)\n{\n\tint remaining = m_bfmeCountAX;\n\tint index = 0;\n\tBfmeItemAX **slot = m_bfmeItemsAX;\n\n\tfor (; index < 0x40; ++index, ++slot)\n\t{\n\t\tBfmeItemAX *item = *slot;\n\n\t\tif (item)\n\t\t{\n\t\t\titem->bfmeNotifyAX();\n\n\t\t\tif (--remaining == 0)\n\t\t\t\tbreak;\n\t\t}\n\t}\n}\n"
+}
