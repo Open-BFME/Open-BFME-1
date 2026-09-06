@@ -797,3 +797,117 @@ void ciRplEndOfBanListHandler(CHAT chat, const ciServerMessage * message)
 		FINISH_FILTER;
 	}
 }
+
+#define ciAddCallback(chat,type,callback,params,param,ID,channel) ciAddCallback_(chat,type,callback,params,param,ID,channel,sizeof(*(params)))
+void ciRplListHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+
+#ifdef FEEDBACK_HANDLERS
+	OutputDebugString("ciRplListHandler called\n");
+#endif
+
+	assert(message->numParams == 4);
+	if(message->numParams != 4)
+		return; //ERRCON
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_LIST;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		if(filter->callback != NULL)
+		{
+			ciCallbackEnumChannelsEachParams params;
+			int index;
+			char * channel;
+			int numUsers;
+			char * topic;
+			int len;
+			void * tempPtr;
+			LISTData * data = (LISTData *)filter->data;
+
+			assert(data != NULL);
+			//assert(data->gotStart);
+
+			// Get the channel.
+			///////////////////
+			len = (int)(strlen(message->params[1]) + 1);
+			channel = (char *)malloc((unsigned int)len);
+			if(channel == NULL)
+				return; //ERRCON
+			memcpy(channel, message->params[1], (unsigned int)len);
+
+			// Get the num users.
+			/////////////////////
+			numUsers = atoi(message->params[2]);
+
+			// Get the topic.
+			/////////////////
+			len = (int)(strlen(message->params[3]) + 1);
+			topic = (char *)malloc((unsigned int)len);
+			if(topic == NULL)
+			{
+				free(channel);
+				return; //ERRCON
+			}
+			memcpy(topic, message->params[3], (unsigned int)len);
+
+			// Get the index.
+			/////////////////
+			index = data->numChannels;
+
+			// Add the callback.
+			////////////////////
+			params.success = CHATTrue;
+			params.index = index;
+			params.channel = channel;
+			params.topic = topic;
+			params.numUsers = numUsers;
+			ciAddCallback(chat, CALLBACK_ENUM_CHANNELS_EACH, filter->callback, &params, filter->param, filter->ID, NULL);
+
+			//TODO:only store this stuff if there's an "all" callback
+
+			// Add the channel.
+			///////////////////
+			tempPtr = realloc(data->channels, sizeof(char *) * (data->numChannels + 1));
+			if(tempPtr == NULL)
+			{
+				free(channel);
+				free(topic);
+				return; //ERRCON
+			}
+			data->channels = (char **)tempPtr;
+			data->channels[index] = channel;
+
+			// Add the numUsers.
+			////////////////////
+			tempPtr = realloc(data->numUsers, sizeof(int) * (data->numChannels + 1));
+			if(tempPtr == NULL)
+			{
+				free(channel);
+				free(topic);
+				return; //ERRCON
+			}
+			data->numUsers = (int *)tempPtr;
+			data->numUsers[index] = numUsers;
+
+			// Add the topic.
+			/////////////////
+			tempPtr = realloc(data->topics, sizeof(char *) * (data->numChannels + 1));
+			if(tempPtr == NULL)
+			{
+				free(channel);
+				free(topic);
+				return; //ERRCON
+			}
+			data->topics = (char **)tempPtr;
+			data->topics[index] = topic;
+
+			// One more channel.
+			////////////////////
+			data->numChannels++;
+		}
+	}
+}
