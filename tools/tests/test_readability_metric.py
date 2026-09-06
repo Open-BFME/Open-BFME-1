@@ -1,4 +1,4 @@
-"""The six readability axes, the per-blob cache, and the --staged commit trailer.
+"""The seven readability axes, the per-blob cache, and the --staged commit trailer.
 
 The tree here is small enough to count by hand, and every expected number below
 is written as the arithmetic that produced it rather than as a magic constant, so
@@ -132,7 +132,8 @@ TYPES = 100.0 * (1 - 2 / 4)     # 2 char pad[N] against 2 m_ fields
 IFACE = 100.0 * (1 - 1 / 2)     # v12 of {Draw, v12} is an anonymous slot
 LOCAL = 100.0 * (1 - 1 / 2)     # gamma.cpp holds 1 of the 2 files' only function
 SSOT = 100.0 * (1 - 1 / 3)      # 1 TU-local class body against 2 .cpp files
-EXPECTED = (BODY, IDENT, TYPES, IFACE, LOCAL, SSOT)
+SRCIDENT = 100.0                # neither .cpp invents an address-derived token
+EXPECTED = (BODY, IDENT, TYPES, IFACE, LOCAL, SSOT, SRCIDENT)
 
 SPLIT_TYPES = 100.0 * (1 - 1 / 5)   # 1 char pad[N] against 4 m_ fields
 TRAILER = "readability: Types 50.0 -> 80.0 (+30.00 pp), files +0\n"
@@ -171,7 +172,7 @@ def blob_of(root, path):
 
 
 def measure(root):
-    """The six whole-tree axes, leaving the cache on disk as a real run would."""
+    """The seven whole-tree axes, leaving the cache on disk as a real run would."""
     cache = metric.Cache(root)
     areas, _tracked = metric.measure_worktree(root, cache)
     cache.save()
@@ -183,7 +184,7 @@ def cli(root, *args):
                            "--root", str(root), *args], capture_output=True, text=True)
 
 
-def test_six_axes_over_a_hand_computed_tree(tmp_path):
+def test_every_axis_over_a_hand_computed_tree(tmp_path):
     assert measure(world(tmp_path)) == pytest.approx(EXPECTED)
 
 
@@ -418,3 +419,116 @@ def test_an_address_derived_name_counts_however_it_ends(tmp_path):
     for name in ("GenCabbageStore", "Generals", "RvaSomething", "MoveToState",
                  "AttackNugget", "GameLogic"):
         assert not metric.PLACEHOLDER.search(name), name
+
+
+def test_a_mangling_prefix_does_not_hide_an_address(tmp_path):
+    """`??0`, `??1`, `??_G`, `??$` and the type tags `@U`/`@PAV`/`$$CBU` all END in
+    a word character, so `\\b` never fires in front of the class name that follows
+    and `??0Rva006D51B0@@QAE@II@Z` -- a constructor of an address-named class --
+    scored as a real name. 2,982 rows of reverse/functions.csv, Ident 20.72 ->
+    18.82. Third defect of this family: the two before it were the wrong RIGHT
+    edge of the hex run, and both were also worth pp in the wrong direction.
+
+    tools/rename_addressed_sources.py has carried a comment about this exact case
+    since it shipped, and its own refusal test names it -- the blind spot was
+    documented in one tool while the other kept scoring through it.
+    """
+    for name in ("??0Rva006D51B0@@QAE@II@Z", "??1BfmeOwnerBU@@QAE@XZ",
+                 "??_GGen_004902A0@@UAEPAXI@Z", "??4Gen_005D1E50@@QAEAAV0@ABV0@@Z",
+                 "??$_Construct@URva001954D0@@U1@@_STL@@YAXPAURva001954D0@@ABU1@@Z",
+                 "?erase@?$vector@URva004262F0Elem@@@_STL@@QAEPAU2@@Z"):
+        assert metric.PLACEHOLDER.search(name), name
+
+    # The left edge only gains positions that mangling glue creates; an ordinary
+    # word boundary still governs everything else, so the old refusals hold.
+    for name in ("GenCabbageStore", "Generals", "RvaSomething", "MoveToState",
+                 "?setPosition@Drawable@@QAEXABVCoord3D@@@Z"):
+        assert not metric.PLACEHOLDER.search(name), name
+
+
+def test_a_pattern_change_is_invisible_without_a_cache_version_bump(tmp_path):
+    """The cache stores scan()/scan_ledger() OUTPUT under the blob hash, and a
+    blob hash cannot see a change to the code that read it. So an entry written by
+    an older version must be discarded wholesale rather than served: without that,
+    every fix to a pattern here lands, moves nothing on any tree that has ever run
+    the tool, and reads as a fix that did not work."""
+    root = world(tmp_path)
+    assert measure(root) == pytest.approx(EXPECTED)
+    counts = root / "build" / "readability" / "counts.json"
+
+    stored = json.loads(counts.read_text())
+    assert stored["version"] == metric.CACHE_VERSION
+    # Absurd counters for every file, under the CURRENT version: they are served,
+    # which is what proves the next assertion is about the version and not luck.
+    poisoned = {sha: dict.fromkeys(entry, 999) for sha, entry in stored["files"].items()}
+    counts.write_text(json.dumps({"version": metric.CACHE_VERSION,
+                                  "files": poisoned, "ledgers": stored["ledgers"]}))
+    assert measure(root) != pytest.approx(EXPECTED)
+
+    counts.write_text(json.dumps({"version": metric.CACHE_VERSION - 1,
+                                  "files": poisoned, "ledgers": stored["ledgers"]}))
+    assert measure(root) == pytest.approx(EXPECTED)
+
+
+def test_an_anonymous_slot_is_recognised_by_shape_not_by_vocabulary(tmp_path):
+    """ANON_SLOT was a closed list, `(?:v|pad|slot|vf|unk)\\d{1,3}`, matched with
+    .fullmatch -- so `v37` was anonymous and `vslot37` was a name. Renaming every
+    anonymous slot that way is a sed that changes nothing a reader can see and was
+    worth Iface +30.46 pp.
+
+    The list was also already wrong without anyone gaming it: `bfmeSlot0`,
+    `unused04`, `reserved113`, `s0` and 40 slots already spelled `vslotNN` are
+    14,188 slot occurrences in this tree that it did not count, Iface 69.54 ->
+    48.55. A stem plus a bare index carries nothing the index does not.
+    """
+    for name in ("v37", "vslot37", "unused04", "bfmeSlot0", "reserved113", "s0",
+                 "_pad68", "dslot42", "vfn12"):
+        assert metric.ANON_SLOT.fullmatch(name), name
+    for name in ("Draw", "getPlayerCount", "update", "Set_Transform", "v", "isIdle"):
+        assert not metric.ANON_SLOT.fullmatch(name), name
+
+
+def test_renaming_an_anonymous_slot_family_does_not_move_iface(tmp_path):
+    """The gaming edit, staged end to end: the axis must not move."""
+    root = world(tmp_path)
+    before = measure(root)
+    (root / AREA / "alpha.h").write_text(ALPHA_H.replace("void v12()", "void vslot12()"))
+    assert measure(root) == pytest.approx(before)
+
+
+def test_a_pad_member_is_not_also_counted_as_a_named_field(tmp_path):
+    """NAMED_MEMBER's lookahead needs a word boundary before `pad`, which `m_pad`
+    does not give it, so `unsigned char m_pad[0x38];` matched BOTH patterns and was
+    counted in both terms of the Types ratio -- 6,609 of this tree's 10,522 pad
+    members, Types 81.28 -> 78.78."""
+    counts = metric.scan("struct S {\n\tunsigned char m_pad[0x38];\n\tint m_health;\n};\n")
+    assert (counts["pad_members"], counts["named_members"]) == (1, 1)
+
+    # ...and the field that only LOOKS like the vocabulary is still a named field:
+    # widening the lookahead instead would have thrown `m_chunkSize` away for the
+    # `unk` inside `chunk`.
+    counts = metric.scan("struct S {\n\tint m_chunkSize;\n};\n")
+    assert (counts["pad_members"], counts["named_members"]) == (0, 1)
+
+
+def test_srcident_counts_bodies_that_invent_an_address_derived_name(tmp_path):
+    """The axis the other six could not see. Between 71d0effcb (22 Aug) and this
+    tree Ident rose 14.92 -> 18.82 while SrcIdent fell 80.36 -> 63.06: renaming a
+    ledger row moves Ident, and writing `Rva0026C320Owner` into a body moves
+    neither Ident nor anything else the audit measured. Both figures come out of
+    `--at <rev>`, so neither is a number anyone has to take on trust.
+
+    Headers are excluded for the same reason they are excluded from SSoT: an
+    address-derived name in a header is one declaration, not a body written around
+    it. So the axis is per .cpp/.c, and one occurrence dirties the file."""
+    root = world(tmp_path)
+    assert measure(root)[6] == pytest.approx(100.0)
+
+    (root / AREA / "gamma.cpp").write_text(
+        GAMMA_CPP.replace("void Alpha::Reset()",
+                          "static Rva0026C320Owner *owner;\n\nvoid Alpha::Reset()"))
+    assert measure(root)[6] == pytest.approx(50.0)   # 1 of the 2 .cpp is dirty
+
+    # A header carrying the same token does not move it.
+    (root / AREA / "alpha.h").write_text(ALPHA_H + "struct Rva0071C0E0Thing;\n")
+    assert measure(root)[6] == pytest.approx(50.0)
