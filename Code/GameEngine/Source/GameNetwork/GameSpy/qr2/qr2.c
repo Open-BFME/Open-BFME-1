@@ -1,4 +1,4 @@
-// cl: /MD -Ireference/shims/gamespy
+// cl: /ICode/GameEngine/Source/GameNetwork/GameSpy/qr2 /MD -Ireference/shims/gamespy
 /* GameSpy SDK, 2004 vintage -- upstream C source PLUS a reconstruction of
    EA's own edits to THIS file, inferred from retail's bytes.  Not pristine:
    see PROVENANCE.txt, "What differs from upstream", which lists every such
@@ -155,7 +155,7 @@ void qr2_buffer_addW(qr2_buffer_t outbuf, const unsigned short *value);
 
 /* qr2_init: Initializes the sockets, etc. Returns an error value
 if an error occured, or 0 otherwise */
-// qr2_init_socketA present-unmatched
+// Retail RVA 0x00856290: complete 629-byte socket initialization.
 qr2_error_t qr2_init_socketA(/*[out]*/qr2_t *qrec, SOCKET s, int boundport, const char *gamename, const char *secret_key,
 					 int ispublic, int natnegotiate,
 					 qr2_serverkeycallback_t server_key_callback,
@@ -219,6 +219,9 @@ qr2_error_t qr2_init_socketA(/*[out]*/qr2_t *qrec, SOCKET s, int boundport, cons
 		if(!override)
 			sprintf(hostname, "%s.master.gamespy.com", gamename);
 		ret = get_sockaddrin(override?qr2_hostname:hostname, MASTER_PORT, &(cr->hbaddr), NULL);
+		/* Retail retains this conversion on successful public-host resolution. */
+		if (ret)
+			inet_ntoa(cr->hbaddr.sin_addr);
 	}
 	else //don't need to look up
 		ret = 1;
