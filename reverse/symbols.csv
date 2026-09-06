@@ -84100,3 +84100,7 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeReadyAG@@3PAXA,0x00EF4B44,pin
 ?bfmeRunAG@BfmeMgr19E@@QAEXXZ,0x000290D2,pin
+?bfmeNotifyAH@BfmeOwnAH@@QAEXXZ,0x0001F181,pin
+?g_bfmeEscAI@@3PADA,0x00D063E4,pin
+?bfmeAddAI@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
+?bfmeCloseAI@BfmeOwnAI@@QAEXH@Z,0x00011E14,pin
