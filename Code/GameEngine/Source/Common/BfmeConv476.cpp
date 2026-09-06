@@ -1,6 +1,6 @@
 struct BfmeSubBJE
 {
-	void bfmeDoBJE(void *what);
+	bool bfmeDoBJE(void *what);
 	unsigned char m_bfmeHead[0x10];
 };
 
