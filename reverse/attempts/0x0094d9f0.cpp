@@ -1,45 +1,40 @@
-// ?d_0094d9f0@@YAXXZ
-// partial score=0.9 date=2026-09-04
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Structural recovery for the handle-output body at retail 0x0094D9F0.
-
-void d_0094d450(void);
-
-#pragma optimize("y", on)
-
-struct Rva0094D9F0Thing
-{
-	int head;
-	unsigned short refs;
-};
-
-class Rva0094D9F0Handle
+// ?bfmeFetchBI@BfmeOwnBI@@QAEXPAPAVBfmeRefBI@@@Z (identity unknown)
+// partial score=0.87 date=2026-09-06
+// 40/46 at exact size and exact structure, including the dead zeroed frame
+// slot (a volatile local, per dead-zeroed-local-is-volatile), the dirty-flag
+// guard, the out-parameter store and the 16-bit refcount increment.
+// Residue: retail holds the fetched pointer in ecx and the out parameter in
+// eax; MSVC swaps them. Tried both declaration orders for the two locals and
+// the fully inlined form (51 bytes, worse). Systematic scratch-register flip.
+class BfmeRefBI
 {
 public:
-	Rva0094D9F0Thing * volatile value;
+	unsigned char m_bfmeHeadBI[4];
+	unsigned short m_bfmeCountBI;
 };
 
-static void copy_ref(Rva0094D9F0Thing *source, Rva0094D9F0Handle *destination)
-{
-	destination->value = source;
-	if (source != 0)
-		++source->refs;
-}
-class Rva0094D9F0
+class BfmeOwnBI
 {
 public:
-	void assign(Rva0094D9F0Handle *destination);
+	void bfmeFetchBI(BfmeRefBI **out);
+	void bfmeSyncBI(void);
 
-private:
-	unsigned char m_prefix[0x18];
-	Rva0094D9F0Handle m_handle;
-	unsigned char m_refresh;
+	unsigned char m_bfmeHeadBI[0x18];
+	BfmeRefBI *m_bfmeRefBI;
+	char m_bfmeDirtyBI;
 };
 
-void Rva0094D9F0::assign(Rva0094D9F0Handle *destination)
+void BfmeOwnBI::bfmeFetchBI(BfmeRefBI **out)
 {
-	volatile unsigned state = 0;
-	if (m_refresh != 0)
-		d_0094d450();
-	copy_ref(m_handle.value, destination);
+	volatile int guard = 0;
+
+	if (m_bfmeDirtyBI)
+		bfmeSyncBI();
+
+	BfmeRefBI *ref = m_bfmeRefBI;
+
+	*out = ref;
+
+	if (ref)
+		++ref->m_bfmeCountBI;
 }

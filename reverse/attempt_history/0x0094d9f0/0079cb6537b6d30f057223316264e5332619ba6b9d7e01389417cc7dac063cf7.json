@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0079cb6537b6d30f057223316264e5332619ba6b9d7e01389417cc7dac063cf7",
+  "symbol": "?d_0094d9f0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.87,
+  "source": "// ?d_0094d9f0@@YAXXZ\n// partial score=0.87 date=2026-09-06\n// 40/46 at exact size and exact structure, including the dead zeroed frame\n// slot (a volatile local, per dead-zeroed-local-is-volatile), the dirty-flag\n// guard, the out-parameter store and the 16-bit refcount increment.\n// Residue: retail holds the fetched pointer in ecx and the out parameter in\n// eax; MSVC swaps them. Tried both declaration orders for the two locals and\n// the fully inlined form (51 bytes, worse). Systematic scratch-register flip.\nclass BfmeRefBI\n{\npublic:\n\tunsigned char m_bfmeHeadBI[4];\n\tunsigned short m_bfmeCountBI;\n};\n\nclass BfmeOwnBI\n{\npublic:\n\tvoid bfmeFetchBI(BfmeRefBI **out);\n\tvoid bfmeSyncBI(void);\n\n\tunsigned char m_bfmeHeadBI[0x18];\n\tBfmeRefBI *m_bfmeRefBI;\n\tchar m_bfmeDirtyBI;\n};\n\nvoid BfmeOwnBI::bfmeFetchBI(BfmeRefBI **out)\n{\n\tvolatile int guard = 0;\n\n\tif (m_bfmeDirtyBI)\n\t\tbfmeSyncBI();\n\n\tBfmeRefBI *ref = m_bfmeRefBI;\n\n\t*out = ref;\n\n\tif (ref)\n\t\t++ref->m_bfmeCountBI;\n}\n"
+}
