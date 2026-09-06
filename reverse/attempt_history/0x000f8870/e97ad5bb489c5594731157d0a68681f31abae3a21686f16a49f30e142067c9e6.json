@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e97ad5bb489c5594731157d0a68681f31abae3a21686f16a49f30e142067c9e6",
+  "symbol": "?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z (identity unknown)\n// partial score=0.9 date=2026-09-06\n// 67/63. Loop, unlink, deallocate and size decrement all match; MSVC duplicates\n// the pop esi / ret 8 epilogue for the loop-exhausted path where retail shares one.\n// Pin: ?bfmeDeallocEV@@YAXPAXI@Z,0x0082E5F0 (STL node deallocate).\nvoid __cdecl bfmeDeallocEV(void *block, unsigned int size);\n\nclass BfmeNodeEV\n{\npublic:\n\tBfmeNodeEV *m_bfmeNextEV;\n\tBfmeNodeEV *m_bfmePrevEV;\n\tvoid *m_bfmeValueEV;\n};\n\nclass BfmeListEV\n{\npublic:\n\tvoid bfmeRemoveEV(void *value, int unused);\n\n\tstatic BfmeNodeEV *bfmeFindEV(BfmeNodeEV *sentinel, void *value)\n\t{\n\t\tfor (BfmeNodeEV *n = sentinel->m_bfmeNextEV; n != sentinel; n = n->m_bfmeNextEV)\n\t\t\tif (n->m_bfmeValueEV == value)\n\t\t\t\treturn n;\n\t\treturn sentinel;\n\t}\n\n\tunsigned char m_bfmeHeadEV[8];\n\tBfmeNodeEV *m_bfmeNodeEV;\n\tunsigned char m_bfmeMidEV[4];\n\tint m_bfmeSizeEV;\n};\n\nvoid BfmeListEV::bfmeRemoveEV(void *value, int unused)\n{\n\tBfmeNodeEV *sentinel = m_bfmeNodeEV;\n\tBfmeNodeEV *node = bfmeFindEV(sentinel, value);\n\n\tif (node != sentinel)\n\t{\n\t\tBfmeNodeEV *next = node->m_bfmeNextEV;\n\t\tBfmeNodeEV *prev = node->m_bfmePrevEV;\n\t\tprev->m_bfmeNextEV = next;\n\t\tnext->m_bfmePrevEV = prev;\n\t\tbfmeDeallocEV(node, 12);\n\t\t--m_bfmeSizeEV;\n\t}\n}\n"
+}

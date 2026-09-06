@@ -1,53 +1,49 @@
-// ?removeValue@BfmeTunnelList@@QAEXPAX0@Z
-// partial score=0.94 date=2026-09-02
-// cl: /DNDEBUG /MD /EHsc
+// ?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z (identity unknown)
+// partial score=0.9 date=2026-09-06
+// 67/63. Loop, unlink, deallocate and size decrement all match; MSVC duplicates
+// the pop esi / ret 8 epilogue for the loop-exhausted path where retail shares one.
+// Pin: ?bfmeDeallocEV@@YAXPAXI@Z,0x0082E5F0 (STL node deallocate).
+void __cdecl bfmeDeallocEV(void *block, unsigned int size);
 
-// Circular-list value removal used by the TunnelTracker cluster.  The second
-// parameter belongs to the caller-facing ABI but is not used by this body.
-
-extern void __cdecl bfmeDeallocate( void *memory, unsigned int bytes );
-
-struct BfmeTunnelListNode
-{
-	BfmeTunnelListNode *next;
-	BfmeTunnelListNode *previous;
-	void *value;
-};
-
-class BfmeTunnelList
+class BfmeNodeEV
 {
 public:
-	void removeValue( void *value, void *unused );
-
-private:
-	unsigned char m_unmodelled_000[ 8 ];
-	BfmeTunnelListNode *m_head;
-	unsigned int m_unmodelled_00c;
-	unsigned int m_count;
+	BfmeNodeEV *m_bfmeNextEV;
+	BfmeNodeEV *m_bfmePrevEV;
+	void *m_bfmeValueEV;
 };
 
-void BfmeTunnelList::removeValue( void *value, void *unused )
+class BfmeListEV
 {
-	BfmeTunnelListNode *head = m_head;
-	BfmeTunnelListNode *node = head->next;
+public:
+	void bfmeRemoveEV(void *value, int unused);
 
-	if( node != head )
+	static BfmeNodeEV *bfmeFindEV(BfmeNodeEV *sentinel, void *value)
 	{
-		do
-		{
-			if( node->value == value )
-				break;
-			node = node->next;
-		} while( node != head );
+		for (BfmeNodeEV *n = sentinel->m_bfmeNextEV; n != sentinel; n = n->m_bfmeNextEV)
+			if (n->m_bfmeValueEV == value)
+				return n;
+		return sentinel;
 	}
 
-	if( node != head )
+	unsigned char m_bfmeHeadEV[8];
+	BfmeNodeEV *m_bfmeNodeEV;
+	unsigned char m_bfmeMidEV[4];
+	int m_bfmeSizeEV;
+};
+
+void BfmeListEV::bfmeRemoveEV(void *value, int unused)
+{
+	BfmeNodeEV *sentinel = m_bfmeNodeEV;
+	BfmeNodeEV *node = bfmeFindEV(sentinel, value);
+
+	if (node != sentinel)
 	{
-		BfmeTunnelListNode *next = node->next;
-		BfmeTunnelListNode *previous = node->previous;
-		previous->next = next;
-		next->previous = previous;
-		bfmeDeallocate( node, sizeof( BfmeTunnelListNode ) );
-		--m_count;
+		BfmeNodeEV *next = node->m_bfmeNextEV;
+		BfmeNodeEV *prev = node->m_bfmePrevEV;
+		prev->m_bfmeNextEV = next;
+		next->m_bfmePrevEV = prev;
+		bfmeDeallocEV(node, 12);
+		--m_bfmeSizeEV;
 	}
 }
