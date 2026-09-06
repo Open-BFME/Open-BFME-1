@@ -83965,3 +83965,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeResolveGA@BfmeItemGA@@QAEPAVBfmeThingGA@@XZ,0x00003B52,pin
 ?bfmeContainsGB@BfmeListGB@@QAEDPAVBfmeItemGB@@@Z,0x00044161,pin
 ?bfmeInsertGB@BfmeSubGB@@QAEXPAVBfmeItemGB@@H@Z,0x0000B627,pin
+??0Drawable@@QAE@PBVThingTemplate@@W4DrawableStatus@@H@Z,0x00418DA0,retail three-argument Drawable constructor body at 0x00418DA0
