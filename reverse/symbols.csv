@@ -84306,3 +84306,9 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeCalcBT@BfmeSrcBT@@QAEMPAX@Z,0x00043CED,pin
+?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ,0x00020824,local call adapter for VeterancyCrateCollide validation
+?go@BfmeThing932D@@QAEDXZ,0x0001FDE3,local call adapter for VeterancyCrateCollide validation
+?isSignificantlyAboveTerrain@BfmeObjectCall@@QBE_NXZ,0x00019FF1,local call adapter for VeterancyCrateCollide validation
+?isTrainable@BfmeExperienceTrackerCall@@QBE_NXZ,0x0002A239,local call adapter for VeterancyCrateCollide validation
+?isUsingAirborneLocomotor@BfmeObjectCall@@QBE_NXZ,0x0000A001,local call adapter for VeterancyCrateCollide validation
+?isValidToExecute@BfmeCrateCollideCall@@QBE_NPBVObject@@@Z,0x00025EF5,local call adapter for VeterancyCrateCollide validation
