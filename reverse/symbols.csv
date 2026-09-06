@@ -3087,6 +3087,7 @@ name,address,notes
 ??0Rva007A12C0CachedVolume@@QAE@PAX0@Z,0x0002687D,address-derived cached-volume constructor ILT forwarding to assigned body 0x007A0DF0
 ??0Rva007B12F0Base@@QAE@XZ,0x0000AF38,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x007B12F0
 ??0Rva007E8810Message@@QAE@XZ,0x007E8810,FESL message ctor used by 0x007FA170 nonblock timeout
+??0BfmeMsgVJH@@QAE@XZ,0x007E8810,FESL message ctor alias used by the 0x00809520 TADG loop
 ??0Rva007F9B80@@QAE@PAX@Z,0x007F9B80,ctor of 0x6B8 FESL service object taking owner
 ??0Rva007FBC30GameKey@@QAE@PAVRva007E8810Message@@@Z,0x007FBC30,V2 lane: FESL Aries LID/GID base constructor; base of the three derived record ctors in V2FeslAriesRecords.cpp
 ??0Rva007FF700FeslString@@QAE@XZ,0x007FF700,address-derived default constructor for two FESL string members in the 0x007F0CB0 blob record
@@ -77465,6 +77466,8 @@ name,address,notes
 ?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
 ?g_bfmeKeyDVHD@@3HA,0x00D2B588,pin
 ?g_bfmeKeyVHE@@3HA,0x00D2C144,pin
+?g_bfmeLidKey@@3PADA,0x00D2B52C,FESL LID key used by the 0x00809520 GLST summary
+?g_bfmeNumGamesKey@@3PADA,0x00D2B4D0,FESL NUM-GAMES key used by the 0x00809520 GLST summary
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
 ?g_bfmeLens1228@@3PAEA,0x00ED5DFC,pin
 ?g_bfmeLens1229@@3PAEA,0x00ED5378,pin
