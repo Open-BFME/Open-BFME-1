@@ -8547,6 +8547,7 @@ name,address,notes
 ??1Rva000486C1MultiBase@@UAE@XZ,0x000486C1,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva000491E3TailBase@@UAE@XZ,0x000491E3,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0004B227TailBase@@UAE@XZ,0x0004B227,base destructor address decoded from the retail REL32 tail jump; name is address-derived
+??1Rva000658A0Elem@@QAE@XZ,0x00026AB2,ILT thunk to the PlayerUpgradeSpecialPowerModuleData destructor 0x000658A0 called by 0x0049C020
 ??1Rva00078460Elem@@QAE@XZ,0x0001F951,Open-BFME5 ILT the 0x00078460 implicit dtor hands to ??_M as the element destructor
 ??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
@@ -8572,6 +8573,7 @@ name,address,notes
 ??1Rva00491DB0Base@@UAE@XZ,0x0004634E,Rva00491DB0 linked base destructor thunk
 ??1Rva00491DB0String@@QAE@XZ,0x00887940,Rva00491DB0 AsciiString-compatible member destructor
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
+??1Rva0049B890Elem@@QAE@XZ,0x000351D4,ILT thunk to the vector<Gen0049B890> destructor 0x0049B890 called twelve times by 0x0049C020
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
 ??1Rva006ABC60TrailingMember@@QAE@XZ,0x00009BB0,retail helper destructor thunk used by 0x006ABC60
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
@@ -9421,6 +9423,7 @@ name,address,notes
 ??_7Rva00490A30@@6B@,0x010F9B44,vftable of the table-owning sibling in the Rva00490350 linked-object family (constructor 0x00490A30)
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
+??_7Rva0049C020Owner@@6B@,0x010FB5DC,vftable of the BfmeBaseVUH-derived 26-member record whose destructor is 0x0049C020
 ??_7Rva006BCE40@@6B@,0x0111D024,address-derived vtable written by RVA 0x006BCE40 (BfmeBaseVUQ destructor family)
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
@@ -10885,6 +10888,7 @@ name,address,notes
 ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z,0x009056F0,callee pin used by Rva00727050TaintBuf init
 ?W3DGadgetPushButtonImageDrawOne@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00795140,caller-proven from W3DGadgetPushButtonImageDraw dispatch
 ?W3DGadgetPushButtonImageDrawThree@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794120,caller-proven from W3DGadgetPushButtonImageDraw dispatch
+?W3DLogicalScreenToPixelScreen@@YAXMMPAH0HH@Z,0x000277B9,BFME W3DView worldToScreen helper ILT
 ?W3DRadarResetLock@@YAXXZ,0x00903090,W3DRadar reset direct-call device lock
 ?W3DRadarResetUnlock@@YAXXZ,0x00905B10,W3DRadar reset direct-call device unlock
 ?WouldMapTransfer@@YA_NPAVGameInfo@@@Z,0x000393FB,BFME GameInfo overload called by WOLGameSetupMenu
@@ -83681,4 +83685,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?W3DLogicalScreenToPixelScreen@@YAXMMPAH0HH@Z,0x000277B9,BFME W3DView worldToScreen helper ILT
