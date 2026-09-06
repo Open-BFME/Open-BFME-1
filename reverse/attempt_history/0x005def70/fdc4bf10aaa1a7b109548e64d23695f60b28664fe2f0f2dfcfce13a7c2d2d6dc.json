@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fdc4bf10aaa1a7b109548e64d23695f60b28664fe2f0f2dfcfce13a7c2d2d6dc",
+  "symbol": "?getInstance@?$ConcreteModuleClass@...@FXParticleSystem@@SAABV12@XZ (template instantiation)",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?getInstance@?$ConcreteModuleClass@...@FXParticleSystem@@SAABV12@XZ (template instantiation)\n// partial score=0.98 date=2026-09-06\n// EXACT-MATCH recipe: this standalone model compiles to 104/104 byte-identical code.\n// The real conversion belongs inside the template in\n// Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp\n// and yields all seventeen instantiations at once.\n// This standalone model compiles to 104/104 byte-identical code; the real\n// conversion is to write this body inside the template in\n// Code/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp\n// which yields all seventeen instantiations at once.\n// cl: /EHs-c-\nextern \"C\" void *bfmeVtFN[];\nclass BfmeStaticFN;\nextern void **g_bfmeSrcAFN;\nextern void **g_bfmeSrcBFN;\nextern BfmeStaticFN *g_bfmeHeadFN;\nclass BfmeStaticFN\n{\npublic:\n\tBfmeStaticFN(void)\n\t{\n\t\tvoid *b = *g_bfmeSrcBFN;\n\t\tvoid *a = *g_bfmeSrcAFN;\n\t\tm_bfmeBFN = b;\n\t\tm_bfmeAFN = a;\n\t\tm_bfmeNextFN = g_bfmeHeadFN;\n\t\tg_bfmeHeadFN = this;\n\t\tm_bfmeVtFN = bfmeVtFN;\n\t}\n\t~BfmeStaticFN(void);\n\tvoid *m_bfmeVtFN;\n\tvoid *m_bfmeAFN;\n\tvoid *m_bfmeBFN;\n\tBfmeStaticFN *m_bfmeNextFN;\n};\nBfmeStaticFN *bfmeGetFN(void)\n{\n\tstatic BfmeStaticFN s_bfmeInstanceFN;\n\treturn &s_bfmeInstanceFN;\n}\n"
+}
