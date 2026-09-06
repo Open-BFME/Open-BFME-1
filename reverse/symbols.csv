@@ -2151,6 +2151,7 @@ name,address,notes
 ??0BfmeMsg803BF0@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803BF0
 ??0BfmeMsg803C90@@QAE@PADH@Z,0x007E8850,FESL msg ctor for 0x00803C90
 ??0BfmeMsgVJH@@QAE@PADH@Z,0x007E8850,pin
+??0BfmeMsgVJH@@QAE@XZ,0x007E8810,FESL message ctor alias used by the 0x00809520 TADG loop
 ??0BfmeMsgVJI@@QAE@PADH@Z,0x007E8850,pin
 ??0BfmeNamedSlot@@QAE@ABVAsciiString@@H@Z,0x00025306,Open-BFME5 ILT thunk; ??0BloodthirstyUpdateModuleData@@QAE@XZ at 0x00286EC0 constructs its two 0x70-byte members at +0x10 and +0x80 through it with the global AsciiString and a zero; address-derived name
 ??0BfmeNestedBE@@QAE@HIH@Z,0x00892DA0,address-derived nested constructor called by BfmeThingBE at 0x008BE3B0
@@ -3087,7 +3088,6 @@ name,address,notes
 ??0Rva007A12C0CachedVolume@@QAE@PAX0@Z,0x0002687D,address-derived cached-volume constructor ILT forwarding to assigned body 0x007A0DF0
 ??0Rva007B12F0Base@@QAE@XZ,0x0000AF38,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x007B12F0
 ??0Rva007E8810Message@@QAE@XZ,0x007E8810,FESL message ctor used by 0x007FA170 nonblock timeout
-??0BfmeMsgVJH@@QAE@XZ,0x007E8810,FESL message ctor alias used by the 0x00809520 TADG loop
 ??0Rva007F9B80@@QAE@PAX@Z,0x007F9B80,ctor of 0x6B8 FESL service object taking owner
 ??0Rva007FBC30GameKey@@QAE@PAVRva007E8810Message@@@Z,0x007FBC30,V2 lane: FESL Aries LID/GID base constructor; base of the three derived record ctors in V2FeslAriesRecords.cpp
 ??0Rva007FF700FeslString@@QAE@XZ,0x007FF700,address-derived default constructor for two FESL string members in the 0x007F0CB0 blob record
@@ -9228,6 +9228,7 @@ name,address,notes
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x011075E0,basic_ifstream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
+??_7?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,alias of the STLport library basic_ifstream<char> vftable for the aliased (name mode) ctor 0x0084C300
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
@@ -9444,6 +9445,7 @@ name,address,notes
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
+??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE3C,vbtable of the FX particle system TU basic_ofstream<char> instantiation (ctor 0x005CC3F0)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
@@ -12315,6 +12317,8 @@ name,address,notes
 ?_M_open@_Filebuf_base@_STL@@QAE_NPBDH@Z,0x0084A144,STLport filename open overload shares the byte-verified descriptor open tail at +4
 ?_M_output_error@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAEHXZ,0x008433A0,STLport 4.5.3 narrow basic_filebuf overflow callee; matched body at 0x008433A0
 ?_M_page_size@_Filebuf_base@_STL@@1IA,0x012C7ED0,Open-BFME5 shared page-size static the _Filebuf_base constructor at 0x00849F40 fills from GetSystemInfo; DIR32 sites are masked by the byte gate so this records which global it is
+?_M_pop_back_aux@Rva006A04E0AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
+?_M_pop_back_aux@Rva006A3A00AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
 ?_M_push_back_aux_v@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXABH@Z,0x006472C0,gen-tgrid shared callee
 ?_M_push_back_aux_v@?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXABQAVMapObject@@@Z,0x00008553,pinharvest x4 (thunk)
 ?_M_push_back_aux_v@?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXABQAVPartitionCell@@@Z,0x00008553,pinharvest x4 (thunk)
@@ -77470,11 +77474,10 @@ name,address,notes
 ?g_bfmeKeyCVHD@@3HA,0x00D2B490,pin
 ?g_bfmeKeyDVHD@@3HA,0x00D2B588,pin
 ?g_bfmeKeyVHE@@3HA,0x00D2C144,pin
-?g_bfmeLidKey@@3PADA,0x00D2B52C,FESL LID key used by the 0x00809520 GLST summary
-?g_bfmeNumGamesKey@@3PADA,0x00D2B4D0,FESL NUM-GAMES key used by the 0x00809520 GLST summary
 ?g_bfmeLeft1221@@3HA,0x00ED5DC8,pin
 ?g_bfmeLens1228@@3PAEA,0x00ED5DFC,pin
 ?g_bfmeLens1229@@3PAEA,0x00ED5378,pin
+?g_bfmeLidKey@@3PADA,0x00D2B52C,FESL LID key used by the 0x00809520 GLST summary
 ?g_bfmeLimit952@@3MA,0x00C977E8,pin
 ?g_bfmeLimitRN@@3PAUBfmeLimitRN@@A,0x00EF0898,pin
 ?g_bfmeLimitRS@@3PAUBfmeLimitRS@@A,0x00EF0898,pin
@@ -77568,6 +77571,7 @@ name,address,notes
 ?g_bfmeNameURC@@3PADA,0x00D2ACA4,pin
 ?g_bfmeNext1221@@3PAIA,0x00F391A4,pin
 ?g_bfmeNowVNH@@3P6AHXZA,0x00F59544,pin
+?g_bfmeNumGamesKey@@3PADA,0x00D2B4D0,FESL NUM-GAMES key used by the 0x00809520 GLST summary
 ?g_bfmeNumLobbies803BF0@@3PADA,0x00D2B4E8,NUM-LOBBIES string for 0x00803BF0
 ?g_bfmeNumRegions803B60@@3PADA,0x00D2B4B8,NUM-REGIONS string for 0x00803B60
 ?g_bfmeObj1006@@3PAUBfmeObj1006@@A,0x00EF4C38,pin
@@ -83639,5 +83643,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?_M_pop_back_aux@Rva006A04E0AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
-?_M_pop_back_aux@Rva006A3A00AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
