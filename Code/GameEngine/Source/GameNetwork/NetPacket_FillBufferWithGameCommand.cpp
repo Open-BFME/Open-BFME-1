@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?FillBufferWithGameCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z:
-// Code/GameEngine/Source/GameNetwork/NetPacket.cpp
+// readable body of ?FillBufferWithGameCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 //
 // NetPacket::FillBufferWithGameCommand, 0x00676D00, 543 bytes.
 //

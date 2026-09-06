@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?getAsciiVersion@Version@@QAE?AVAsciiString@@XZ:
-// Code/GameEngine/Source/Common/version.cpp
+// readable body of ?getAsciiVersion@Version@@QAE?AVAsciiString@@XZ: Code/GameEngine/Source/Common/version.cpp
 //
 // Retail 0x000AEC40, 144 bytes. NDEBUG ZH body: format("%d.%d", m_major, m_minor)
 // into a local AsciiString and return it by value (hidden sret, ret 4).

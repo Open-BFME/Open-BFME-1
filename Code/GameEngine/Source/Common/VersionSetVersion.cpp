@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?setVersion@Version@@QAEXHHHHVAsciiString@@000@Z:
-// Code/GameEngine/Source/Common/version.cpp
+// readable body of ?setVersion@Version@@QAEXHHHHVAsciiString@@000@Z: Code/GameEngine/Source/Common/version.cpp
 //
 // Retail 0x000AEB50, 188 bytes. Four int stores then four StringBase::set
 // assigns (user, location, time, date) and dtors of the by-value strings.

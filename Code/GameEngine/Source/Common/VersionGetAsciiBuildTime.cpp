@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?getAsciiBuildTime@Version@@QAE?AVAsciiString@@XZ:
-// Code/GameEngine/Source/Common/version.cpp
+// readable body of ?getAsciiBuildTime@Version@@QAE?AVAsciiString@@XZ: Code/GameEngine/Source/Common/version.cpp
 //
 // Retail 0x000AEFA0, 171 bytes. ZH body: format("%s %s", m_buildDate.str(),
 // m_buildTime.str()) into a local and return by value.

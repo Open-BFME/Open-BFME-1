@@ -1,7 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of
-// ?initAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@@Z:
-// Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
+// readable body of ?initAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 //
 // Retail 0x00496920, 226 bytes. Bottom travel (restPos.y + Display width)
 // with zero velocity and endTime = now + delay + m_maxDuration.

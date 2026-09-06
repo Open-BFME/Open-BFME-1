@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
-// readable body of ?getPing@Pinger@@UAEHVAsciiString@@@Z:
-// Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp
+// readable body of ?getPing@Pinger@@UAEHVAsciiString@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp
 //
 // Pinger::getPing, 0x0065FD70, 307 bytes.
 //

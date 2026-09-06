@@ -1,7 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
-// readable body of ?getPingString@Pinger@@UAE?AVAsciiString@@H@Z:
-// Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp
+// readable body of ?getPingString@Pinger@@UAE?AVAsciiString@@H@Z: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp
 // ZH Pinger::getPingString: lock the ping-map mutex, hex-encode each
 // clamped ping as "%2.2X", concatenate, return by value.
 

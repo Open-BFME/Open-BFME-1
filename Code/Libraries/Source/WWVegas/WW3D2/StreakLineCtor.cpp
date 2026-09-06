@@ -1,7 +1,6 @@
 // ??0StreakLineClass@@QAE@XZ
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
-// readable body of ??0StreakLineClass@@QAE@XZ:
-// Code/Libraries/Source/WWVegas/WW3D2/streak.cpp
+// readable body of ??0StreakLineClass@@QAE@XZ: Code/Libraries/Source/WWVegas/WW3D2/streak.cpp
 //
 // Retail 0x0091A730, 207 bytes. Named by the S4 ctor-then-publish caller as
 // S4Made0091A730 (416-byte allocation). Identity is StreakLineClass: base
