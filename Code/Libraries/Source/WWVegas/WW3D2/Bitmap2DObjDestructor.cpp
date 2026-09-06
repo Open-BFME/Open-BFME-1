@@ -90,6 +90,7 @@ class Bitmap2DObjClass : public RenderObjClass
 public:
 	Bitmap2DObjClass();
 	Bitmap2DObjClass(const Bitmap2DObjClass &);
+	void Add_Point(const Vector3 &, float);
 	virtual RenderObjClass *Clone() const;
 
 private:
@@ -110,6 +111,12 @@ Bitmap2DObjClass::Bitmap2DObjClass(const Bitmap2DObjClass &source)
 	  m_widths(source.m_widths),
 	  m_vgx(source.m_vgx)
 {}
+
+void Bitmap2DObjClass::Add_Point(const Vector3 &point, float width)
+{
+	m_vertices.Add(point);
+	m_widths.Add(width);
+}
 
 void Force_Bitmap2DObj_Destructor(Bitmap2DObjClass *bitmap)
 {
