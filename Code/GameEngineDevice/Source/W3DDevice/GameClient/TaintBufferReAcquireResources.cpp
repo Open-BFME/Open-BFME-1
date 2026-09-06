@@ -1,5 +1,16 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00726DC0: reacquire the taint overlay render texture.
+//
+// TaintBuffer is a descriptive name, not a recovered EA one.  What the exe
+// proves is the subject: the GlobalData FieldParse table at 0x00C77018 maps the
+// INI keys TaintOn to +0xCF5, TaintAlpha to +0xCA0 and TaintColor to +0xC88
+// (reverse/field_names.csv), every body in this family gates on TheWritableGlobalData
+// ->m_taintOn, TaintBuffer::init drives TheTaintManager -- the literal at 0x79060 --
+// and the shaders it feeds are shaders\terraintaint.pso and terraintaint2.pso.
+// The object itself is the render-side cell buffer for that overlay: a cell grid
+// sized from WorldHeightMap, a destination texture it reacquires, and a dirty-cell
+// set, which is the same shape W3DShroud has for the shroud.  No __FILE__ literal
+// reaches this code run, so the retail class name is still unknown.
 
 typedef unsigned char Bool;
 
@@ -55,7 +66,7 @@ public:
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
-class Rva00726DC0TaintBuf
+class TaintBuffer
 {
 public:
 	Bool ReAcquireResources(void);
@@ -69,7 +80,7 @@ private:
 	unsigned char m_clearDstTexture;
 };
 
-Bool Rva00726DC0TaintBuf::ReAcquireResources(void)
+Bool TaintBuffer::ReAcquireResources(void)
 {
 	if (!m_dstTextureWidth)
 		return 1;

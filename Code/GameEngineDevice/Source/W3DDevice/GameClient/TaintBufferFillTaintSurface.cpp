@@ -1,5 +1,16 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00726F70: fill a locked surface with the requested taint color.
+//
+// TaintBuffer is a descriptive name, not a recovered EA one.  What the exe
+// proves is the subject: the GlobalData FieldParse table at 0x00C77018 maps the
+// INI keys TaintOn to +0xCF5, TaintAlpha to +0xCA0 and TaintColor to +0xC88
+// (reverse/field_names.csv), every body in this family gates on TheWritableGlobalData
+// ->m_taintOn, TaintBuffer::init drives TheTaintManager -- the literal at 0x79060 --
+// and the shaders it feeds are shaders\terraintaint.pso and terraintaint2.pso.
+// The object itself is the render-side cell buffer for that overlay: a cell grid
+// sized from WorldHeightMap, a destination texture it reacquires, and a dirty-cell
+// set, which is the same shape W3DShroud has for the shroud.  No __FILE__ literal
+// reaches this code run, so the retail class name is still unknown.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
@@ -19,10 +30,10 @@ public:
 	void Unlock(void);
 };
 
-class Rva00726F70SurfaceFill
+class TaintBuffer
 {
 public:
-	void fill(unsigned char alpha, SurfaceClass *surface);
+	void fillTaintSurface(unsigned char alpha, SurfaceClass *surface);
 
 private:
 	unsigned char m_pad00[0x20];
@@ -30,8 +41,8 @@ private:
 	int m_height;
 };
 
-// ?fill@Rva00726F70SurfaceFill@@QAEXEPAVSurfaceClass@@@Z
-void Rva00726F70SurfaceFill::fill(unsigned char alpha, SurfaceClass *surface)
+// ?fillTaintSurface@TaintBuffer@@QAEXEPAVSurfaceClass@@@Z
+void TaintBuffer::fillTaintSurface(unsigned char alpha, SurfaceClass *surface)
 {
 	GlobalData *g = TheWritableGlobalData;
 	if (!g)

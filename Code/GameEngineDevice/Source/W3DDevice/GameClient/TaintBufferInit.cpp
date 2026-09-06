@@ -1,5 +1,16 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00727050: initialize the BFME taint/shroud cell buffers.
+//
+// TaintBuffer is a descriptive name, not a recovered EA one.  What the exe
+// proves is the subject: the GlobalData FieldParse table at 0x00C77018 maps the
+// INI keys TaintOn to +0xCF5, TaintAlpha to +0xCA0 and TaintColor to +0xC88
+// (reverse/field_names.csv), every body in this family gates on TheWritableGlobalData
+// ->m_taintOn, TaintBuffer::init drives TheTaintManager -- the literal at 0x79060 --
+// and the shaders it feeds are shaders\terraintaint.pso and terraintaint2.pso.
+// The object itself is the render-side cell buffer for that overlay: a cell grid
+// sized from WorldHeightMap, a destination texture it reacquires, and a dirty-cell
+// set, which is the same shape W3DShroud has for the shroud.  No __FILE__ literal
+// reaches this code run, so the retail class name is still unknown.
 
 #include <string.h>
 
@@ -78,21 +89,21 @@ public:
 void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
-class Rva00727050TaintFillThunk
+class TaintBufferFillThunk
 {
 public:
 	void fill(unsigned char alpha);
 };
 
-#pragma comment(linker, "/alternatename:?fill@Rva00727050TaintFillThunk@@QAEXE@Z=?j_0002cfe3@@YAXXZ")
+#pragma comment(linker, "/alternatename:?fill@TaintBufferFillThunk@@QAEXE@Z=?j_0002cfe3@@YAXXZ")
 
-class Rva00727050TaintReAcquireThunk
+class TaintBufferReAcquireThunk
 {
 public:
 	void reacquire(void);
 };
 
-#pragma comment(linker, "/alternatename:?reacquire@Rva00727050TaintReAcquireThunk@@QAEXXZ=?j_000357d3@@YAXXZ")
+#pragma comment(linker, "/alternatename:?reacquire@TaintBufferReAcquireThunk@@QAEXXZ=?j_000357d3@@YAXXZ")
 
 class BfmeTaintManager
 {
@@ -104,7 +115,7 @@ extern BfmeTaintManager *TheTaintManager;
 
 #pragma comment(linker, "/alternatename:?resetGrid@BfmeTaintManager@@QAEXXZ=?m@Gen_00880e30@@QAEXXZ")
 
-class Rva00727050TaintBuf
+class TaintBuffer
 {
 public:
 	void init(WorldHeightMap *map, Real worldCellSizeX, Real worldCellSizeY);
@@ -125,8 +136,8 @@ private:
 	unsigned char *m_3c;
 };
 
-// ?init@Rva00727050TaintBuf@@QAEXPAVWorldHeightMap@@MM@Z
-void Rva00727050TaintBuf::init(WorldHeightMap *map, Real worldCellSizeX,
+// ?init@TaintBuffer@@QAEXPAVWorldHeightMap@@MM@Z
+void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 	Real worldCellSizeY)
 {
 	int dstTextureWidth = 0;
@@ -155,8 +166,7 @@ void Rva00727050TaintBuf::init(WorldHeightMap *map, Real worldCellSizeX,
 		dstTextureWidth += 2;
 		dstTextureHeight += 2;
 		W3DRadarResetLock();
-		TextureLoader::Validate_Texture_Size(
-			(unsigned &)dstTextureWidth, (unsigned &)dstTextureHeight);
+		TextureLoader::Validate_Texture_Size((unsigned &)dstTextureWidth, (unsigned &)dstTextureHeight);
 		W3DRadarResetUnlock();
 	}
 
@@ -172,7 +182,7 @@ void Rva00727050TaintBuf::init(WorldHeightMap *map, Real worldCellSizeX,
 	}
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn)
-		reinterpret_cast<Rva00727050TaintFillThunk *>(this)->fill(
+		reinterpret_cast<TaintBufferFillThunk *>(this)->fill(
 			TheWritableGlobalData->m_taintAlpha);
 
 	if (dstTextureWidth != m_dstTextureWidth ||
@@ -194,7 +204,7 @@ void Rva00727050TaintBuf::init(WorldHeightMap *map, Real worldCellSizeX,
 		{
 			m_dstTextureWidth = dstTextureWidth;
 			m_dstTextureHeight = dstTextureHeight;
-			reinterpret_cast<Rva00727050TaintReAcquireThunk *>(this)->reacquire();
+			reinterpret_cast<TaintBufferReAcquireThunk *>(this)->reacquire();
 		}
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn &&
