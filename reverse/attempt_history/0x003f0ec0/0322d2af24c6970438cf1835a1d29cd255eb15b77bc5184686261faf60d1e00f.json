@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0322d2af24c6970438cf1835a1d29cd255eb15b77bc5184686261faf60d1e00f",
+  "symbol": "?d_003f0ec0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_003f0ec0@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// exact size 43/43; residue is the argument-shuttle register choice only.\n// Pin needed: ?bfmeInnerEQC@@YGHHHHHHH@Z,0x0001FA14,pin\nstruct BfmeSrcEQC\n{\n\tunsigned char m_bfmeHeadEQC[0x10];\n\tint m_bfmeKindEQC;\n};\n\nint __stdcall bfmeInnerEQC(int a, int kind, int b, int c, int d, int e, int f);\n\nint __stdcall bfmeFwdEQC(int a, BfmeSrcEQC *src, int b, int c, int d, int e)\n{\n\tint kind = src->m_bfmeKindEQC;\n\treturn bfmeInnerEQC(a, kind, b, c, d, e, 0);\n}\n"
+}
