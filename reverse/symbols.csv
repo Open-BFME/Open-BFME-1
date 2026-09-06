@@ -419,6 +419,7 @@ name,address,notes
 ??$_Construct@URva0038EAD0Element@@U1@@_STL@@YAXPAURva0038EAD0Element@@ABU1@@Z,0x000057E5,Open-BFME5 the element _Construct the list push_back at 0x0038EAD0 calls
 ??$_Construct@URva0038ED80Value@@U1@@_STL@@YAXPAURva0038ED80Value@@ABU1@@Z,0x00001FFF,Open-BFME5 the value _Construct the hashtable _M_insert at 0x0038ED80 calls
 ??$_Construct@URva0038EE10Value@@U1@@_STL@@YAXPAURva0038EE10Value@@ABU1@@Z,0x00023051,Open-BFME5 the value _Construct the hashtable _M_insert at 0x0038EE10 calls
+??$_Construct@URva003A35A0Element@@U1@@_STL@@YAXPAURva003A35A0Element@@ABU1@@Z,0x000072F2,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert _Construct call target (same ILT thunk as BfmeElementConstruct)
 ??$_Construct@URva003A5500Element@_STL@@@_STL@@YAXPAURva003A5500Element@0@ABU10@@Z,0x00037574,Open-BFME5 the element _Construct the vector insert at 0x003A5500 calls
 ??$_Construct@URva003B0060Element@_STL@@@_STL@@YAXPAURva003B0060Element@0@ABU10@@Z,0x00033FF0,Open-BFME5 the element _Construct the vector insert at 0x003B0060 calls
 ??$_Construct@URva003B0760Element@_STL@@@_STL@@YAXPAURva003B0760Element@0@ABU10@@Z,0x0003D843,Open-BFME5 the element _Construct the vector insert at 0x003B0760 calls
@@ -938,6 +939,7 @@ name,address,notes
 ??$__copy_backward@PAUGen_t_007762a0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_007762a0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00774970,gen-tgrid payload member
 ??$__copy_backward@PAUGeometryShape@@PAU1@H@_STL@@YAPAUGeometryShape@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCF70,GeometryInfo shape-vector insertion path at retail 0x004FF8F0; 0x24-byte element and StringBase assignment identify the instantiation
 ??$__copy_backward@PAURva00244A80Element@@PAU1@H@_STL@@YAPAURva00244A80Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00047758,Open-BFME5 0x002403E0 backward copy ILT
+??$__copy_backward@PAURva003A35A0Element@@PAU1@H@_STL@@YAPAURva003A35A0Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003CE52,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert __copy_backward call target
 ??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
 ??$__copy_backward_ptrs@PAUGen_t_003c1800_p2pod@@PAU1@@_STL@@YAPAUGen_t_003c1800_p2pod@@PAU1@00ABU__false_type@0@@Z,0x0000E7E1,"Independent full retail helper review: 2-byte copy/backward/fill/placement-fill and existing 3C16A0 overflow; RVA-derived POD type, no guessed game owner"
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
@@ -2961,6 +2963,7 @@ name,address,notes
 ??0Rva003525E0Pair@@QAE@ABV0@@Z,0x00024C12,Open-BFME5 fresh thiscall copy ctor at ILT of SEH 0x003525E0
 ??0Rva00364980HeapElement@@QAE@ABU0@@Z,0x0001FE6F,REL32 copy-constructor target from 0x003649A2
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
+??0Rva003A35A0Element@@QAE@ABU0@@Z,0x0001F573,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert copy-ctor call target
 ??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
 ??0Rva003B9AD0Inner@@QAE@ABV0@@Z,0x00018782,8-byte member copy ctor called by 0x003B9AD0; retail call goes through this incremental-link thunk to 0x003B8F80
 ??0Rva003BB540Element@@QAE@ABU0@@Z,0x48923,"Reviewed ILT to3B9AD0 existing87B copy; string, dword, tree copy"
@@ -8504,6 +8507,7 @@ name,address,notes
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
 ??1Rva0036BBA0BehaviorModule@@UAE@XZ,0x00047C53,REL32 seven-byte base destructor target from CastleMemberBehavior 0x0036BC0A
+??1Rva003A35A0Element@@QAE@XZ,0x00036241,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert dtor call target (same ILT thunk as Gen_dtor_002bcca0)
 ??1Rva003A9860@@QAE@XZ,0x00037A4C,Open-BFME5 ILT thunk to body 0x003A9860; ??1LivingWorldCampaign@@QAE@XZ at 0x003AA7F0 destroys its member at +0x0C through it; address-derived name
 ??1Rva003B6680@@UAE@XZ,0x0000817A,Deleting wrapper3ABEF0 calls ILT817A -> primary dtor3B16B0
 ??1Rva003BB590Tree@@QAE@XZ,0x32fd3,Reviewed ILT to2360C0 complete124B set tree cleanup; member at8
@@ -9038,6 +9042,7 @@ name,address,notes
 ??4Rva00365070Blk@@QAEAAV0@ABV0@@Z,0x00002B44
 ??4Rva0036CA00Str@@QAEAAV0@ABV0@@Z,0x00887C90,Open-BFME5 assign of the 0x00887C90 string member used by skip-vptr operator=
 ??4Rva0039C830Mid@@QAEAAV0@ABV0@@Z,0x000163BA,Open-BFME5 assign of the mid at +0x14 used by 0x0039C830
+??4Rva003A35A0Element@@QAEAAU0@ABU0@@Z,0x00024BA9,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert assign call target (same ILT thunk as bfmeAssign@BfmeCopyElementD)
 ??4Rva003B6C40Mid@@QAEAAV0@ABV0@@Z,0x0002BABC,Open-BFME5 assign of the 12-byte mid member used by 0x003B6C40
 ??4Rva005672C0Map@@QAEAAV0@ABV0@@Z,0x00013403
 ??4Rva005673A0Vec@@QAEAAV0@ABV0@@Z,0x0002099B
@@ -79790,6 +79795,7 @@ name,address,notes
 ?initialize@?$DeathModelFlags@$09@@QAEXHHHHHH@Z,0x0000DB0C,SlowDeathBehavior DeathFlags model mask initializer ILT
 ?initialize@BitVectorInitializeShim@_STL@@QAEXI@Z,0x00526BC0,_STL bit vector _M_initialize incremental-link thunk target through a TU-local forwarding shim
 ?initialize@DeathStatusFlags@@QAEXHHHHHH@Z,0x00034CE8,SlowDeathBehavior DeathFlags status mask initializer ILT
+?initialize@Rva00016FAE@@QAEXXZ,0x00016FAE,Rva000FA610 constructor member call resolves through the retail ILT thunk
 ?initialize@Rva002BC260Global@@QAEXPAX00000@Z,0x0000A795,address-derived six-argument goal initializer used by 0x002BC260
 ?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
 ?initialize@Rva14BAD0List@@QAEPAU1@PADH@Z,0x00021C42,Open-BFME5 RVA 14BAD0 list head initializer thunk pin
@@ -83507,4 +83513,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?initialize@Rva00016FAE@@QAEXXZ,0x00016FAE,Rva000FA610 constructor member call resolves through the retail ILT thunk

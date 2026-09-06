@@ -1,5 +1,5 @@
 // ?setHumanImpassableArea@ScriptEngine@@QAEXABVAsciiString@@_N@Z
-// partial score=0.95 date=2026-09-01
+// partial score=0.96 date=2026-09-05
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii /Ireference/shims/asciistring_downloadmanager /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -104,7 +104,11 @@ public:
 
 };
 
-extern BfmeOtherDPB *bfmeGoDPB(BfmeOtherDPB *other, void *value, char *src);
+// Returns the record BY VALUE: retail pushes the result slot as the first of three
+// arguments, keeps eax (= &result) afterwards, and only then starts the EH state
+// for it -- a default-constructed local passed by pointer would be tracked before
+// the call.
+extern BfmeOtherDPB bfmeGoDPB(const AsciiString &name, const bool &blocked);
 
 class ScriptEngine
 {
@@ -123,10 +127,9 @@ void ScriptEngine::setHumanImpassableArea(const AsciiString &name, bool blocked)
 	if (found != m_humanImpassableAreas.header()) {
 		*(char *)((char *)found + 0x14) = blocked;
 	} else {
-		BfmeOtherDPB other;
-		BfmeOtherDPB *entry = bfmeGoDPB(&other, (void *)&name, (char *)&blocked);
-		Rva0033F870Pair value(*(AsciiString *)&entry->m_bfmeHead,
-			*(Rva0033F870Value *)&entry->m_bfmeVal);
+		BfmeOtherDPB other = bfmeGoDPB(name, blocked);
+		Rva0033F870Pair value(*(AsciiString *)&other.m_bfmeHead,
+			*(Rva0033F870Value *)&other.m_bfmeVal);
 		m_humanImpassableAreas.insert(value);
 	}
 }
