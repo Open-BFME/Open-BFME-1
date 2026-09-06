@@ -2207,6 +2207,7 @@ name,address,notes
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
+??0BfmeRoomQR@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRva449E0Value@@QAE@XZ,0x0000DCD3,retail default constructor thunk for Rva002449E0 map value
 ??0BfmeRva44E60Record@@QAE@XZ,0x00033D39,assigned body helper for Rva00244E60
 ??0BfmeS1059@@QAE@XZ,0x00018A07,pin
@@ -73566,6 +73567,7 @@ name,address,notes
 ?bfmeDoPO@BfmeThingPO@@QAEXPAH@Z,0x0082F580,pin
 ?bfmeDoPQ@@YAXPAD000@Z,0x00005934,pin
 ?bfmeDoPW@@YAXPAD000@Z,0x00005934,pin
+?bfmeDoQR@@YAXPAUBfmeElemQR@@U1@PAX@Z,0x00002405,pin
 ?bfmeDoRY@BfmeItemRY@@QAEXPAX0@Z,0x0002852E,pin
 ?bfmeDoSevenRL@@YAXPAX0000PAPAXH@Z,0x00019C45,pin
 ?bfmeDoSixRC@@YAXPAX0000H@Z,0x00028358,pin
@@ -76341,6 +76343,7 @@ name,address,notes
 ?construct@Rva0012A170ModuleData@@QAEPAV1@XZ,0x00012233,address-derived spelling for the module-data constructor thunk called by the 0x0012A170 factory
 ?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
 ?construct@Rva005E5E60CtorShim@@QAEXAAURva005E5E60Sys@@PBX@Z,0x000151FE,Open-BFME5 near-twin of LightningDrawModuleCtorShim::construct; forwards to ILT thunk at 0x000151FE
+?construct@Rva006BAEE0CtorShim@@QAEXXZ,0x000396FD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BAEE0 calls; autopin
 ?construct@ShaderVectorBaseCtorShim@@QAEXHH@Z,0x009305D0,Open-BFME5 shader vector retail base constructor
 ?construct@SphereEmissionVolumeModuleCtorShim@FXParticleSystem@@QAEXAAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@@PBX@Z,0x0004018D,SphereEmissionVolumeModule constructor thunk used through a TU-local layout shim
 ?construct@SphereEmissionVolumeTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0001598D,SphereEmissionVolumeModuleTemplate copy constructor thunk used through a TU-local layout shim
@@ -84018,5 +84021,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeDoQR@@YAXPAUBfmeElemQR@@U1@PAX@Z,0x00002405,pin
-??0BfmeRoomQR@@QAE@ABV0@@Z,0x00887B60,pin
