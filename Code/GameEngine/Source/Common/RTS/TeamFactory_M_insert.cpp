@@ -12,6 +12,9 @@
 // out-of-line _Construct with no try/catch around it.  MSVC 7.1 only inlines
 // _M_create_node when it carries no EH region, which is what
 // _STLP_NO_EXCEPTIONS gives (the vendor <map> is otherwise untouched).
+//
+// 0x000EF750 (684 bytes) is the hinted insert_unique of the same tree, which
+// inlines the plain insert_unique three times and the same _M_create_node.
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
@@ -30,3 +33,6 @@ typedef _STL::_Rb_tree<BfmeTeamPrototypeKey,
 template BfmeTeamPrototypeTree::iterator
 BfmeTeamPrototypeTree::_M_insert(_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
 	const BfmeTeamPrototypePair &, _STL::_Rb_tree_node_base *);
+
+template BfmeTeamPrototypeTree::iterator
+BfmeTeamPrototypeTree::insert_unique(BfmeTeamPrototypeTree::iterator, const BfmeTeamPrototypePair &);

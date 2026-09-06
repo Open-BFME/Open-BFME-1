@@ -55,6 +55,7 @@
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+#define _STLP_NO_EXCEPTIONS 1	// Open-BFME7: this TU was built with STLport exceptions off (STLport helpers inline as in retail)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/Player.h"
@@ -3792,7 +3793,6 @@ void ControlBarScheme::addAnimation( ControlBarSchemeAnimation *schemeAnim )
 //
 // Add an image to the proper layer list
 //-----------------------------------------------------------------------------
-// ?addImage@ControlBarScheme@@QAEXPAVControlBarSchemeImage@@@Z present-unmatched
 void ControlBarScheme::addImage( ControlBarSchemeImage *schemeImage )
 {
 	if( !schemeImage )

@@ -6,6 +6,7 @@
 // retail inlined _M_create_node here, which MSVC 7.1 only does when the helper
 // has no try/catch -- _STLP_NO_EXCEPTIONS.  The EH frame that remains guards
 // the two by-value UnicodeString copies the comparator takes.
+//
 #define _STLP_NO_EXCEPTIONS 1
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE
@@ -20,3 +21,4 @@ typedef _STL::_Rb_tree<UnicodeString, _STL::pair<const UnicodeString, Bool>,
 template BfmeLangMapTree::iterator
 BfmeLangMapTree::_M_insert(_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
 	const _STL::pair<const UnicodeString, Bool> &, _STL::_Rb_tree_node_base *);
+

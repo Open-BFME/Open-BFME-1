@@ -50,6 +50,7 @@
 //-----------------------------------------------------------------------------
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+#define _STLP_NO_EXCEPTIONS 1	// Open-BFME7: this TU was built with STLport exceptions off (STLport helpers inline as in retail)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
@@ -138,7 +139,6 @@ ResizerWindow *ControlBarResizer::findResizerWindow( AsciiString name )
 	return NULL;
 }
 
-// ?newResizerWindow@ControlBarResizer@@QAEPAVResizerWindow@@VAsciiString@@@Z present-unmatched
 ResizerWindow *ControlBarResizer::newResizerWindow( AsciiString name )
 {
 	GameWindow *win = NULL;
