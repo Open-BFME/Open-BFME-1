@@ -1383,3 +1383,64 @@ void ciRplChannelModeIsHandler(CHAT chat, const ciServerMessage * message)
 	////////////////////
 	free(changes);
 }
+
+enum
+{
+    CHATFalse = 0,
+    CHATChannelIsFull = 2,
+    CHATTooManyChannels = 6
+};
+
+void ciErrTooManyChannelsHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATTooManyChannels;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
+
+void ciErrChannelIsFullHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATChannelIsFull;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
