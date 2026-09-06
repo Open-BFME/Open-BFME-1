@@ -2008,3 +2008,377 @@ void ciRplGetKeyHandler(CHAT chat, const ciServerMessage * message)
 		free(values);
 	}
 }
+
+void ciRplGetCKeyHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	const char * nick;
+	const char * cookie;
+	char * flags;
+	const char * channel;
+	int num;
+
+	assert(message->numParams == 5);
+	if(message->numParams != 5)
+		return; //ERRCON
+
+	channel = message->params[1];
+	nick = message->params[2];
+	cookie = message->params[3];
+	flags = message->params[4];
+
+	if(strcmp(cookie, "BCAST") == 0)
+	{
+		chatChannelCallbacks * callbacks;
+		ciCallbackBroadcastKeyChangedParams params;
+		char * key;
+		char * value;
+		int temp;
+
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if(callbacks && callbacks->broadcastKeyChanged)
+		{
+			memset(&params, 0, sizeof(ciCallbackBroadcastKeyChangedParams));
+			params.channel = (char *)channel;
+			params.user = (char *)nick;
+
+			while(*flags)
+			{
+				key = strstr(flags, "b_");
+				flags = key;
+				while(*flags && (*flags != '\\'))
+					flags++;
+				if(!*flags)
+					break;
+				*flags++ = '\0';
+				value = flags;
+				while(*flags && (*flags != '\\'))
+					flags++;
+				temp = *flags;
+				*flags = '\0';
+
+				params.key = key;
+				params.value = value;
+				ciAddCallback(chat, CALLBACK_BROADCAST_KEY_CHANGED,
+					(void*)callbacks->broadcastKeyChanged, &params,
+					callbacks->param, 0, channel);
+
+				*flags = (char)temp;
+			}
+		}
+
+		return;
+	}
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETCKEY;
+	match.name = cookie;
+
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter)
+	{
+		GETCKEYData * data;
+		ciCallbackGetChannelKeysParams params;
+		char ** values;
+		char * key;
+		char * value;
+		int i;
+		int len;
+		char ** tempPtr;
+
+		data = (GETCKEYData *)filter->data;
+		num = data->num;
+
+		values = (char **)malloc(sizeof(char *) * num);
+		if(!values)
+			return;
+
+		for(i = 0 ; i < num ; i++)
+		{
+			value = ciParseValue(flags, &len);
+			values[i] = value;
+			if(value)
+				flags += len;
+		}
+
+		if(data->allBroadcastKeys)
+		{
+			while((key = ciParseValue(flags, &len)) != NULL)
+			{
+				flags += len;
+				value = ciParseValue(flags, &len);
+				if(value)
+				{
+					flags += len;
+
+					tempPtr = (char **)realloc(data->keys,
+						sizeof(char *) * (num + 1));
+					if(tempPtr)
+					{
+						data->keys = tempPtr;
+						tempPtr = (char **)realloc(values,
+							sizeof(char *) * (num + 1));
+						if(tempPtr)
+						{
+							values = tempPtr;
+							data->keys[num] = key;
+							values[num] = value;
+							num++;
+						}
+						else
+						{
+							free(key);
+							free(value);
+						}
+					}
+					else
+					{
+						free(key);
+						free(value);
+					}
+				}
+				else
+				{
+					free(key);
+					break;
+				}
+			}
+
+			data->num = num;
+		}
+
+		params.success = CHATTrue;
+		params.channel = (char *)channel;
+		params.user = (char *)nick;
+		params.num = num;
+		params.keys = data->keys;
+		params.values = values;
+
+		if(!data->channel)
+		{
+			FINISH_FILTER;
+		}
+		else
+		{
+			ciAddCallback(chat, CALLBACK_GET_CHANNEL_KEYS, filter->callback,
+				&params, filter->param, filter->ID, NULL);
+		}
+
+		for(i = 0 ; i < num ; i++)
+			free(values[i]);
+		free(values);
+	}
+}
+
+void ciRplGetChanKeyHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	const char * cookie;
+	char * flags;
+	const char * channel;
+	int num;
+
+	assert(message->numParams == 4);
+	if(message->numParams != 4)
+		return; //ERRCON
+
+	channel = message->params[1];
+	cookie = message->params[2];
+	flags = message->params[3];
+
+	if(strcmp(cookie, "BCAST") == 0)
+	{
+		chatChannelCallbacks * callbacks;
+		ciCallbackBroadcastKeyChangedParams params;
+		char * key;
+		char * value;
+		int temp;
+
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if(callbacks && callbacks->broadcastKeyChanged)
+		{
+			memset(&params, 0, sizeof(ciCallbackBroadcastKeyChangedParams));
+			params.channel = (char *)channel;
+			params.user = NULL;
+
+			while(*flags)
+			{
+				key = strstr(flags, "b_");
+				flags = key;
+				while(*flags && (*flags != '\\'))
+					flags++;
+				if(!*flags)
+					break;
+				*flags++ = '\0';
+				value = flags;
+				while(*flags && (*flags != '\\'))
+					flags++;
+				temp = *flags;
+				*flags = '\0';
+
+				params.key = key;
+				params.value = value;
+				ciAddCallback(chat, CALLBACK_BROADCAST_KEY_CHANGED,
+					(void*)callbacks->broadcastKeyChanged, &params,
+					callbacks->param, 0, channel);
+
+				*flags = (char)temp;
+			}
+		}
+
+		return;
+	}
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETCHANKEY;
+	match.name = cookie;
+
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter)
+	{
+		GETCHANKEYData * data;
+		ciCallbackGetChannelKeysParams params;
+		char ** values;
+		char ** keys = NULL;
+		char * key;
+		char * value;
+		int i;
+		int len;
+		char ** tempPtr;
+
+		data = (GETCHANKEYData *)filter->data;
+		num = data->num;
+
+		if(num)
+		{
+			values = (char **)malloc(sizeof(char *) * num);
+			if(!values)
+				return;
+
+			for(i = 0 ; i < num ; i++)
+			{
+				value = ciParseValue(flags, &len);
+				values[i] = value;
+				if(value)
+					flags += len;
+			}
+
+			if(data->allBroadcastKeys)
+			{
+				while((key = ciParseValue(flags, &len)) != NULL)
+				{
+					flags += len;
+					value = ciParseValue(flags, &len);
+					if(value)
+					{
+						flags += len;
+
+						tempPtr = (char **)realloc(data->keys,
+							sizeof(char *) * (num + 1));
+						if(tempPtr)
+						{
+							data->keys = tempPtr;
+							tempPtr = (char **)realloc(values,
+								sizeof(char *) * (num + 1));
+							if(tempPtr)
+							{
+								values = tempPtr;
+								data->keys[num] = key;
+								values[num] = value;
+								num++;
+							}
+							else
+							{
+								free(key);
+								free(value);
+							}
+						}
+						else
+						{
+							free(key);
+							free(value);
+						}
+					}
+					else
+					{
+						free(key);
+						break;
+					}
+				}
+
+				data->num = num;
+			}
+		}
+		else
+		{
+			char ** keysTemp;
+			char ** valuesTemp;
+
+			keys = NULL;
+			values = NULL;
+			num = 0;
+			while(1)
+			{
+				key = ciParseValue(flags, &len);
+				if(!key)
+					break;
+				flags += len;
+				value = ciParseValue(flags, &len);
+				if(!value)
+				{
+					free(key);
+					break;
+				}
+				flags += len;
+
+				keysTemp = (char **)realloc(keys,
+					sizeof(char *) * (num + 1));
+				valuesTemp = (char **)realloc(values,
+					sizeof(char *) * (num + 1));
+				if(!keysTemp || !valuesTemp)
+				{
+					free(key);
+					free(value);
+					while(num--)
+					{
+						free(keys[num]);
+						free(values[num]);
+					}
+					if(keysTemp)
+						free(keysTemp);
+					else
+						free(keys);
+					if(valuesTemp)
+						free(valuesTemp);
+					else
+						free(values);
+				}
+
+				keys = keysTemp;
+				keys[num] = key;
+				values = valuesTemp;
+				values[num] = value;
+
+				num++;
+			}
+
+			data->num = num;
+			data->keys = keys;
+		}
+
+		params.success = CHATTrue;
+		params.channel = (char *)channel;
+		params.user = NULL;
+		params.num = num;
+		params.keys = data->keys;
+		params.values = values;
+
+		FINISH_FILTER;
+
+		for(i = 0 ; i < num ; i++)
+			free(values[i]);
+		free(values);
+	}
+}
