@@ -232,27 +232,6 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1W3DLaserDraw@@ present-unmatched
-W3DLaserDraw::~W3DLaserDraw( void )
-{
-	const W3DLaserDrawModuleData *data = getW3DLaserDrawModuleData();
-
-	for( int i = 0; i < data->m_numBeams * data->m_segments; i++ )
-	{
-
-		// remove line from scene
-		W3DDisplay::m_3DScene->Remove_Render_Object( m_line3D[ i ] );
-
-		// delete line
-		REF_PTR_RELEASE( m_line3D[ i ] );
-
-	}  // end for i
-
-	delete [] m_line3D;
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 Real W3DLaserDraw::getLaserTemplateWidth() const
 {
 	const W3DLaserDrawModuleData *data = getW3DLaserDrawModuleData();
