@@ -253,6 +253,7 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBIURva009EDBE0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBIURva009EDBE0Value@@@0@ABU10@@Z,0x009ED790,Open-BFME5 the value _Construct the tree _M_insert at 0x009EDBE0 reaches
 ??$_Construct@U?$pair@$$CBIW4Relationship@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBIW4Relationship@@@0@ABU10@@Z,0x009ED790,direct callee of the unsigned-keyed relationship hashtable insert at 0x009EE9FA
 ??$_Construct@U?$pair@$$CBJVLadderPref@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBJVLadderPref@@@0@ABU10@@Z,0x0002367D,Open-BFME5 ILT the Long-to-LadderPref _Rb_tree _M_insert at 0x000AAD50 constructs the node value through
+??$_Construct@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@0@ABU10@@Z,0x0004AA25,Open-BFME7 ILT thunk the TeamFactory tree _M_insert at 0x000EED60 calls for the node value copy
 ??$_Construct@U?$pair@$$CBURva0019BC70Key@@URva00198190Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBURva0019BC70Key@@URva00198190Value@@@0@ABU10@@Z,0x00017FD0,Open-BFME near-twin Construct pin for _M_insert at 0x00198190
 ??$_Construct@U?$pair@$$CBURva0019BC70Key@@URva0033F4B0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBURva0019BC70Key@@URva0033F4B0Value@@@0@ABU10@@Z,0x00011397,Open-BFME near-twin Construct pin for _M_insert at 0x0033F4B0
 ??$_Construct@U?$pair@$$CBURva0019BC70Key@@URva0033F5A0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBURva0019BC70Key@@URva0033F5A0Value@@@0@ABU10@@Z,0x00001A69,Open-BFME near-twin Construct pin for _M_insert at 0x0033F5A0
@@ -1905,6 +1906,7 @@ name,address,notes
 ??0?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@QAE@ABVAsciiString@@ABUAptTextRecord@@@Z,0x00009A20,AptTextRecord operator[] temporary-pair constructor ILT; jumps to 0x00467890
 ??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x0001005F,pinharvest x1 (thunk)
 ??0?$pair@$$CBVAsciiString@@VBannerType@@@_STL@@QAE@ABVAsciiString@@ABVBannerType@@@Z,0x0003A3D2,BannerType hash_map value-pair construction ILT proven by the 20-byte temporary layout
+??0?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@QAE@ABU01@@Z,0x000427A8,Open-BFME7 ILT thunk the PlayerInfoMap _M_insert at 0x00633C70 calls for the node pair copy
 ??0?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABQAXABV?$allocator@PAX@1@@Z,0x0002039C,ILT the same resize calls at 0x00786930 to build the new bucket vector
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
@@ -8909,6 +8911,7 @@ name,address,notes
 ??1U2Vb0084B480@@UAE@XZ,0x0084B480,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B6C0 and the ??_G at 0x0084B7C0; unnamed dump elsewhere
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591
+??1UnicodeString@@QAE@XZ,0x00887940,pin: shares the AsciiString-family releaseBuffer thunk (Gen_006CBA30_UpdateTexture.cpp)
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
@@ -9202,6 +9205,7 @@ name,address,notes
 ??R?$less@UU4Item00605320@@@_STL@@QBE_NABUU4Item00605320@@0@Z,0x00605320,STLport comparator member for 00605900 tree
 ??R?$less@V?$StringBase@G@@@_STL@@QBE_NABV?$StringBase@G@@0@Z,0x000036F7,ILT thunk to the wide-string tree comparator at 0x0054ED50
 ??R?$less@VAsciiString@@@_STL@@QBE_NABVAsciiString@@0@Z,0x00043D42,Open-BFME5 the callee the hinted insert_unique reaches
+??RAsciiComparator@@QBE_NVAsciiString@@0@Z,0x0000B4B0,Open-BFME7 ILT thunk the PlayerInfoMap _M_insert at 0x00633C70 calls for its by-value comparator
 ??RBfmeCompAO@@QAE_NHH@Z,0x00024055,Open-BFME5 the ICF thunk (to 0x00424055) the linear insert at 0x00453020 compares through
 ??RBfmeCompAP@@QAE_NHH@Z,0x00039CB1,Open-BFME5 the ICF thunk (to 0x00439CB1) the linear insert at 0x00453110 compares through
 ??RBfmeCompAQ@@QAE_NHH@Z,0x00024B81,Open-BFME5 the ICF thunk (to 0x00424B81) the linear insert at 0x00342C70 compares through
@@ -27565,7 +27569,6 @@ name,address,notes
 ?b_001d21f0@@YAXXZ,0x001D21F0,gen-thunk body
 ?b_001d22c0@@YAXXZ,0x001D22C0,gen-thunk body
 ?b_001d2580@@YAXXZ,0x001D2580,gen-thunk body
-?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z,0x0000B816,ILT alias for the cached-float helper used by the 0x00323B70 condition
 ?b_001d25c0@@YAXXZ,0x001D25C0,gen-thunk body
 ?b_001d25f0@@YAXXZ,0x001D25F0,gen-thunk body
 ?b_001d27a0@@YAXXZ,0x001D27A0,gen-thunk body
@@ -74144,6 +74147,7 @@ name,address,notes
 ?bfmeGoD820@BfmeHelpD820@@QAEXPAVObject@@PBUCoord3D@@H@Z,0x00002B49,ILT to FUN_005bb090 used by 0x0026D820
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
 ?bfmeGoDPB@@YA?AVBfmeOtherDPB@@ABVAsciiString@@AB_N@Z,0x00023A33,ILT thunk called by ScriptEngine::setHumanImpassableArea 0x003476F0 (record helper returning by value)
+?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z,0x0000B816,ILT alias for the cached-float helper used by the 0x00323B70 condition
 ?bfmeGoHI@BfmeThingHI@@QAEXHHH@Z,0x000378F8,ILT to BfmeThingHI::bfmeGoHI body at 0x00609800; called by Rva003BDC50
 ?bfmeGoVJH@BfmeOwner803BF0@@QAEXH@Z,0x00803970,bfmeGoVJH alias for 0x00803BF0 caller
 ?bfmeGoVM0@BfmeStrVM0@@QAEXH@Z,0x0000BEE7,pin
