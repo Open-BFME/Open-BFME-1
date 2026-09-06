@@ -75267,6 +75267,7 @@ name,address,notes
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
 ?bfmeStart1098@BfmeD1098@@QAEHHHH@Z,0x00044C60,pin
 ?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
+?bfmeStart@BfmeVecMember@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the vector member starter used by Gen_0049A4B0
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
