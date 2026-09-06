@@ -1908,3 +1908,103 @@ void ciRplEndGetCKeyHandler(CHAT chat, const ciServerMessage * message)
 		FINISH_FILTER;
 	}
 }
+
+static char *ciParseValue(const char *flags, int *len)
+{
+	int i;
+	char *str;
+
+	assert(flags);
+	assert(len);
+
+	if(!flags || (flags[0] != '\\'))
+		return NULL;
+
+	flags++;
+
+	for(i = 0 ; flags[i] && (flags[i] != '\\') ; i++) { };
+
+	str = (char *)malloc((unsigned int)i + 1);
+	if(!str)
+		return NULL;
+
+	memcpy(str, flags, (unsigned int)i);
+	str[i] = '\0';
+
+	*len = (i + 1);
+	return str;
+}
+
+void ciRplGetKeyHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	const char * nick;
+	const char * cookie;
+	const char * flags;
+	int num;
+
+	assert(message->numParams == 4);
+	if(message->numParams != 4)
+		return; //ERRCON
+
+	nick = message->params[1];
+	cookie = message->params[2];
+	flags = message->params[3];
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETKEY;
+	match.name = cookie;
+
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter)
+	{
+		GETKEYData * data;
+		ciCallbackGetGlobalKeysParams params;
+		char ** values;
+		char * str;
+		int i;
+		int len;
+
+		data = (GETKEYData *)filter->data;
+		num = data->num;
+
+		values = (char **)malloc(sizeof(char *) * num);
+		if(!values)
+			return;
+
+		for(i = 0 ; i < num ; i++)
+		{
+			str = ciParseValue(flags, &len);
+			if(str)
+			{
+				values[i] = str;
+				flags += len;
+			}
+			else
+			{
+				values[i] = goastrdup("");
+			}
+		}
+
+		params.success = CHATTrue;
+		params.user = (char *)nick;
+		params.num = num;
+		params.keys = data->keys;
+		params.values = values;
+
+		if(!data->channel)
+		{
+			FINISH_FILTER;
+		}
+		else
+		{
+			ciAddCallback(chat, CALLBACK_GET_GLOBAL_KEYS, filter->callback,
+				&params, filter->param, filter->ID, NULL);
+		}
+
+		for(i = 0 ; i < num ; i++)
+			free(values[i]);
+		free(values);
+	}
+}
