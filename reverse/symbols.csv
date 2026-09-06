@@ -1990,7 +1990,6 @@ name,address,notes
 ??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,Open-BFME7 ILT thunk of the out-of-line AsciiString copy (0x0005EE50) that the PlayerInfoMap hinted insert_unique at 0x00634650 calls after MSVC stops inlining the forwarder
-??0AsciiString@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009D0C50 calls; autopin
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
