@@ -1000,6 +1000,7 @@ name,address,notes
 ??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAHH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x008392A0,STLport __get_integer<char,int> helper called by __get_decimal_integer at 0x008391D0
 ??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@I@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAIH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x0083B1A0,STLport __get_integer<narrow iterator, unsigned int> called by the __get_decimal_integer twin (tools/twin_scan.py)
 ??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@J@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAJH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x00837840,STLport __get_integer<narrow iterator, long> called by the __get_decimal_integer twin (tools/twin_scan.py)
+??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@K@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAKH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x008396D0,pin unclaimed __get_integer<unsigned long> instantiation for near-twin get_decimal_integer at 0x00839600
 ??$__insertion_sort@PAUS4SortElem12@@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp002E1690@@@Z,0x002E1170,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__insertion_sort@PAUS4SortElem12@@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00531FA0@@@Z,0x00531720,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__insertion_sort@PAUS4SortElem12@@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00532740@@@Z,0x00532080,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -9695,6 +9696,7 @@ name,address,notes
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
 ?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
+?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
 ?BfmeParticleSystemXferHandle@@YAXAAVXfer@@PAX@Z,0x00008CA1,BFME particle-system handle serialization helper called by ParticleSystem DoXfer
 ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z,0x00034815,BFME particle-system matrix serialization helper called by ParticleSystem DoXfer
 ?BfmeProductionPrerequisiteConstruct@_STL@@YAXPAXABVProductionPrerequisite@@@Z,0x000027A2,Open-BFME5 ILT for the ProductionPrerequisite copy-construct at 0x003ABAD0 as _M_allocate_and_copy calls it
@@ -44064,7 +44066,6 @@ name,address,notes
 ?b_003d8940@@YAXXZ,0x003D8940,gen-thunk body
 ?b_003d8bc0@@YAXXZ,0x003D8BC0,gen-thunk body
 ?b_003d8c40@@YAXXZ,0x003D8C40,gen-thunk body
-?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z,0x003D8C40,call-site signature recovered from TerrainLogic::pickBridge fallback; body remains the address-derived Pathfinder helper
 ?b_003d93a0@@YAXXZ,0x003D93A0,gen-thunk body
 ?b_003d9430@@YAXXZ,0x003D9430,gen-thunk body
 ?b_003d94a0@@YAXXZ,0x003D94A0,gen-thunk body
@@ -74583,6 +74584,7 @@ name,address,notes
 ?bfmeParseA450@@YAXXZ,0x00CACBE0,parse proc for Rva0022A450 runtime FieldParse
 ?bfmePartition@@YAPAVGen00363820Elem@@PAXPAV1@00H@Z,0x0004700A,five-arg partition called by Gen00363820::handle
 ?bfmePause1027@BfmeX1027@@QAEXH@Z,0x00007513,pin
+?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z,0x003D8C40,call-site signature recovered from TerrainLogic::pickBridge fallback; body remains the address-derived Pathfinder helper
 ?bfmePop1236@BfmeA1236@@QAEXXZ,0x008D2CC0,pin
 ?bfmePopHeap00531A40@@YAXPAUS4SortElem12@@00U1@PAXPAH@Z,0x00020A27,address-derived pop-heap callee of gen00531D80; target read from the REL32 at its call site
 ?bfmePopHeapVOU@@YAXPAUBfmeElemVOU@@00U1@PAXPAH@Z,0x009CD560,address-derived pop-heap callee of bfmeStepVOU; target read from the REL32 at its call site
