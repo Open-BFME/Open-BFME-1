@@ -3990,6 +3990,7 @@ name,address,notes
 ??1BfmeVecElem_000FAFF0@@QAE@XZ,0x0002C3BD,Open-BFME5 the element destructor the vector destroy at 0x000FAFF0 runs over its live range
 ??1BfmeVecElem_000FEAF0@@QAE@XZ,0x000312B9,Open-BFME5 the element destructor the vector destroy at 0x000FEAF0 runs over its live range
 ??1BfmeWaypointNameString@@AAE@XZ,0x00887940,alias of the AsciiString destructor pinned at the same address; the camera look-toward TU names the by-value return of Waypoint::getName separately so it does not emit the AsciiString destructor name the ledger resolves to a different thunk
+??1BfmeWaypointNameString@@QAE@XZ,0x00887940,same StringBase releaseBuffer body already pinned as ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ and ??1AsciiString -- BfmeWaypointNameString is this TU's stand-in for the getName() return type (matches the sibling TerrainLogicGetWaypointByName.cpp pin)
 ??1BfmeWideVY@@QAE@XZ,0x008881D0,pin
 ??1Bitmap2DObjClass@@UAE@XZ,0x00956260,0x00956240 deleting wrapper directly calls this body; the exact Clone caller identifies the adjacent 0x00956140 copy constructor and establishes Bitmap2DObj ownership
 ??1BoxDynamicVBAccessClass@@QAE@XZ,0x0091D9E0,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
@@ -9408,6 +9409,7 @@ name,address,notes
 ??_7Rva00490350Base@@6B@,0x010F9AD8,address-derived base vtable at retail 0x00490350
 ??_7Rva00490350Derived@@6B@,0x010F9AE4,address-derived derived vtable at retail 0x00490350
 ??_7Rva00490470@@6B@,0x010F9AF0,vftable of the window-owning sibling in the Rva00490350 linked-object family (destructor 0x00490470)
+??_7Rva00490A30@@6B@,0x010F9B44,vftable of the table-owning sibling in the Rva00490350 linked-object family (constructor 0x00490A30)
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
 ??_7Rva006BCE40@@6B@,0x0111D024,address-derived vtable written by RVA 0x006BCE40 (BfmeBaseVUQ destructor family)
