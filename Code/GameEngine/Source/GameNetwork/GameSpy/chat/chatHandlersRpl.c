@@ -1310,3 +1310,76 @@ void ciModeHandler(CHAT chat, const ciServerMessage *message)
     ciSetChannelMode(chat, channel, &channelMode);
     free(changes);
 }
+
+void ciRplChannelModeIsHandler(CHAT chat, const ciServerMessage * message)
+{
+	char * channel;
+	char * modes;
+	ciModeChange * changes;
+	CHATChannelMode mode;
+	CHATChannelMode dummyMode;
+	ciServerMessageFilter * filter;
+	ciFilterMatch match;
+
+
+
+	assert(message->numParams >=3);
+	if(message->numParams < 3)
+		return; //ERRCON
+
+	channel = message->params[1];
+	modes = message->params[2];
+
+	// Parse the mode.
+	//////////////////
+	changes = ciParseMode(modes, message->params + 3, message->numParams - 3);
+	if(changes == NULL)
+		return; //ERRCON
+
+	// Fill the mode struct.
+	////////////////////////
+	memset(&mode, 0, sizeof(CHATChannelMode));
+	ciApplyChangesToMode(&mode, changes);
+
+	// Check if we have this channel's mode.
+	////////////////////////////////////////
+	if(!ciGetChannelMode(chat, channel, &dummyMode))
+	{
+		chatChannelCallbacks * callbacks;
+
+		// Set the mode.
+		////////////////
+		ciSetChannelMode(chat, channel, &mode);
+
+		// Mode changed callback?
+		/////////////////////////
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if((callbacks != NULL) && (callbacks->channelModeChanged != NULL))
+		{
+			ciCallbackChannelModeChangedParams params;
+			params.channel = channel;
+			params.mode = &mode;
+			ciAddCallback(chat, CALLBACK_CHANNEL_MODE_CHANGED, (void*)callbacks->channelModeChanged, &params, callbacks->param, 0, channel);
+		}
+	}
+
+	// Were we waiting for this?
+	////////////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_CMODE;
+	match.name = channel;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		ciCallbackGetChannelModeParams params;
+		params.success = CHATTrue;
+		params.channel = channel;
+		params.mode = &mode;
+
+		FINISH_FILTER;
+	}
+
+	// gsifree the changes.
+	////////////////////
+	free(changes);
+}
