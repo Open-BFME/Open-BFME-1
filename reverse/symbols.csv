@@ -72687,6 +72687,7 @@ name,address,notes
 ?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
 ?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
 ?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin
+?bfmeAdvanceFV@BfmePrimaryFV@@QAEXH@Z,0x0003BDD6,pin
 ?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
@@ -73847,6 +73848,7 @@ name,address,notes
 ?bfmeFirstAKB@BfmeThingAKB@@QAE_NPAH@Z,0x00006EF1,pin
 ?bfmeFirstBK@BfmeTargetBK@@QAEXVAsciiStringBK@@H@Z,0x00003CE2,Open-BFME5 the first forward the setter at 0x00731800 makes
 ?bfmeFirstEUA@BfmeGlobAEUA@@QAEHHH@Z,0x0004B290,pin
+?bfmeFirstFU@BfmeSubFU@@QAEXPAX@Z,0x0001F753,pin
 ?bfmeFirstRK@BfmeThingRK@@QAEXXZ,0x00020B80,pin
 ?bfmeFix1035@@YAXPAPADPADPAVBfmeG1035@@@Z,0x009DBB90,pin
 ?bfmeFlagCWB@@3IA,0x00EF1034,pin
@@ -75057,6 +75059,7 @@ name,address,notes
 ?bfmeResetBY@BfmeHolderBY@@QAEXHHH@Z,0x00929310,Open-BFME5 the reset the destructor at 0x0092A3D0 runs first
 ?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
 ?bfmeResetC@BfmeActivationPartC@@QAEXXZ,0x009D77A0,activation handshake member at 0x009D8460 resets its third subobject
+?bfmeResetFV@BfmePrimaryFV@@QAEXXZ,0x000076E9,pin
 ?bfmeResetIndexed38@@YAXHH@Z,0x0001ED1C,Open-BFME5 indexed-state reset helper body at 0x00564080
 ?bfmeResetIndexed44@@YAXHH@Z,0x00012AC1,Open-BFME5 indexed-state reset helper body at 0x00565450
 ?bfmeResetIndexed48@@YAXH@Z,0x00047CC1,Open-BFME5 indexed-state reset helper body at 0x00564180
@@ -75133,6 +75136,7 @@ name,address,notes
 ?bfmeSay1025@BfmeP1025@@QAEDPAD@Z,0x009EEBB0,pin
 ?bfmeSearchQW@@YAPADPAD0E@Z,0x0082DF70,pin
 ?bfmeSecondBK@BfmeTargetBK@@QAEXVAsciiStringBK@@@Z,0x00003B66,Open-BFME5 the second forward the setter at 0x00731800 makes
+?bfmeSecondFU@BfmeSubFU@@QAEXPAX@Z,0x00019A6A,pin
 ?bfmeSecondRK@BfmeThingRK@@QAEXXZ,0x00026044,pin
 ?bfmeSel1027@BfmeW1027@@QAEXH@Z,0x00002383,pin
 ?bfmeSelect6BE90@BfmeRecordHook6BE90@@QAEXPAUBfmeRecord6BE90@@HH@Z,0x000418E9,Open-BFME5 address-derived adjusted-this record selection call from 0x0076BE90
@@ -75586,6 +75590,7 @@ name,address,notes
 ?bfmeTheTwoCHF@@3PAVBfmeTwoCHF@@A,0x00EF1028,pin
 ?bfmeThenBXF@BfmeThingBXF@@QAEXH@Z,0x0004067E,pin
 ?bfmeThenCLC@BfmeThingCLC@@QAEXPAX@Z,0x00029311,pin
+?bfmeThirdFU@BfmeSubFU@@QAEXPAX@Z,0x00040A52,pin
 ?bfmeThreeBUD@BfmeOwnerBUD@@QAEXXZ,0x00041AD8,pin
 ?bfmeThreeBZF@BfmeGlobalBZF@@QAEXH@Z,0x00029357,pin
 ?bfmeThreeCBB@BfmeThingCBB@@QAEXPAX@Z,0x0002D38A,pin
@@ -77365,6 +77370,7 @@ name,address,notes
 ?g_bfmeArr1243@@3PAPAVBfmeE1243@@A,0x00F38750,pin
 ?g_bfmeAsciiStringFormat@@3QBDB,0x0114450C,address-derived AsciiString format string from retail 0x009D9A5C
 ?g_bfmeAskB993@@3PAVBfmeAskB993@@A,0x00EF4B98,pin
+?g_bfmeAudioFU@@3PAVBfmeAudioFU@@A,0x00EED668,pin
 ?g_bfmeAux1006@@3PAUBfmeAux1006@@A,0x00EF4B58,pin
 ?g_bfmeAux985@@3PAUBfmeAux985@@A,0x00EF4B58,pin
 ?g_bfmeB1019@@3PAVBfmeB1019@@A,0x00EED668,pin
@@ -77595,6 +77601,7 @@ name,address,notes
 ?g_bfmeG1085@@3DA,0x00EF4AFD,pin
 ?g_bfmeG1102@@3PAVBfmeG1102@@A,0x00EF7730,pin
 ?g_bfmeGVIY@@3PAXA,0x00F0A60C,pin
+?g_bfmeGameLogicFV@@3PAVBfmeLogicFV@@A,0x00EF0898,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
 ?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlo012F15F8@@3PAVBfmeOverride1137@@A,0x012F15F8,Open-BFME5 Overridable singleton walked by BfmeA1137::copyFromOverride
