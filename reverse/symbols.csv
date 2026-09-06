@@ -83611,3 +83611,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$__uninitialized_copy@PBUS4Poly000BC2E0@@PAU1@@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001FCF3,0x004A2370 call +0x0119 ILT enters matched stride-112 copy walk 0x0049E6D0
 ?registerUpdate@Rva004A66AOwner@@QAEXPAVGen00296F90@@@Z,0x0004A66A,pin
 ?setWakeFrame@UpdateModule@@QAEXPAVObject@@H@Z,0x000157DA,pin
+??4BfmeRva004262F0Map@@QAEAAV0@ABV0@@Z,0x000083E1,28-byte copy 0x004259E0 tree-backed member assignment at offset16; ILT enters424AC0
