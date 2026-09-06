@@ -8537,6 +8537,7 @@ name,address,notes
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
 ??1Rva006ABC60TrailingMember@@QAE@XZ,0x00009BB0,retail helper destructor thunk used by 0x006ABC60
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
+??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
 ??1Rva007A1230Cell@@QAE@XZ,0x00430652,address-derived four-byte cell destructor ILT used by both six-element arrays at 0x007A1230
 ??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
@@ -9361,6 +9362,7 @@ name,address,notes
 ??_7Rva00490350Derived@@6B@,0x010F9AE4,address-derived derived vtable at retail 0x00490350
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
+??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
 ??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
 ??_7Rva007A1230ArrayOwner@@6B@,0x01127EB4,address-derived one-slot vtable installed by the destructor at 0x007A1230
@@ -9578,6 +9580,7 @@ name,address,notes
 ??_GRubbleRiseUpdate@@MAEPAXI@Z,0x00021C06,primary class vftable slot zero ILT to 0x002A37E0
 ??_GRunOffMapBehavior@@MAEPAXI@Z,0x00001366,primary class vtable slot zero ILT to 0x00205170
 ??_GRva003B6680@@UAEPAXI@Z,0x0000993F,"Full30B deleting wrapper exact, tableCEC850 contains40993F; COFF E weak alias resolves this G body"
+??_GRva006F92D0@@UAEPAXI@Z,0x006F92A0,address-derived scalar deleting destructor for the unnamed W3D resource
 ??_GSalvageCrateCollide@@MAEPAXI@Z,0x0003C90C,primary class vtable slot zero ILT to 0x00218190
 ??_GScavengerSpecialPower@@MAEPAXI@Z,0x00003F94,primary class vtable slot zero ILT to 0x00265900
 ??_GShroudCrateCollide@@MAEPAXI@Z,0x00021BB6,primary class vtable slot zero ILT to 0x00218800
@@ -78345,6 +78348,7 @@ name,address,notes
 ?get@ObjectDefectionHelperPoolShim@@SAPAVMemoryPool@@XZ,0x006731A0,Open-BFME5 ObjectDefectionHelper pool implementation target
 ?get@ObjectGetRelationshipShim@@QBE?AW4Relationship@@PBVObject@@@Z,0x001C7950,Object getRelationship incremental-link thunk target through a TU-local forwarding shim
 ?get@Rva003D4C50@@QAE_NXZ,0x00024FAA,byte-return alias of the matched guarded bitfield getter body at 0x003D4C50; the obstacle callback at 0x003DEBB0 tests only al so the return has to be byte-typed
+?get@Rva006F92D0@@QAEPADXZ,0x006F9290,address-derived return-address slot from vtable 0x01120360
 ?get@WW3DGetRenderTargetResolutionShim@@SAXAAH00AA_N@Z,0x00906990,WW3D incremental-link static thunk target through a TU-local forwarding shim
 ?getADynamicLight@RTS3DSceneLightPulseShim@@QAEPAVW3DDynamicLightPulseShim@@XZ,0x0003442D,ILT call target used by W3DDisplay light pulse
 ?getAIDifficulty@AIPlayer@@QBE?AW4GameDifficulty@@XZ,0x00160EC0,Player difficulty tail target; named AIPlayer getter compiles to this four-byte BFME field access
@@ -79800,6 +79804,7 @@ name,address,notes
 ?init@Player@@QAEXPBVPlayerTemplate@@@Z,0x00020AEA,
 ?init@Rva006AEE00@@AAEXXZ,0x0004744C,ILT thunk to 0x006AECE0 called from 0x006AEE00
 ?init@Rva006D6050@@QAEXHHHHHH@Z,0x0090DBC0,6-arg initializer called by Rva006D6050 ctor
+?init@Rva006F92D0@@QAEXXZ,0x000129EF,address-derived resource initializer thunk
 ?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
 ?init@SmudgeManager@@UAEXXZ,0x0003D0BE,W3DSmudgeManager init base call ILT
 ?init@SpawnPointInitializeBonePositionsShim@@QAEXXZ,0x002D18F0,SpawnPointProductionExitUpdate initializeBonePositions incremental-link thunk target through a TU-local forwarding shim
@@ -80952,6 +80957,7 @@ name,address,notes
 ?removeTreesForConstruction@W3DTreeBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x000318FE,incremental thunk used by BaseHeightMap construction clearing
 ?render@BaseHeightMapRenderTreesShim@@QAEXPAVCameraClass@@@Z,0x006CD990,BaseHeightMapRenderObjClass renderTrees incremental-link thunk target through a TU-local forwarding shim
 ?render@BfmeShadowBufferEntry@@QAEXPAXG0PAG@Z,0x0003D253,render buffer entry helper ILT
+?render@Rva006F92D0@@QAEXXZ,0x006F9CD0,address-derived render slot from vtable 0x01120360
 ?renderBuffer@BfmeVolumetricShadowBufferOwner@@QAEXXZ,0x000465C9,render buffer helper ILT
 ?renderBuffer@W3DVolumetricShadow@@QAEXXZ,0x000465C9,render helper ILT
 ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z,0x00040809,REL32 pin for WaterRenderObjClass::updateRenderTargetTextures
@@ -81131,6 +81137,7 @@ name,address,notes
 ?run@Rva002BC260GoalOwner@@QAEXPAX000@Z,0x0000795A,address-derived Giant Bird goal sink call
 ?run@Rva00591560Resource@@QAEXXZ,0x00011900,address-derived resource action thunk called by the 0x00591560 callback
 ?run@Rva00694570@@QAEXXZ,0x000279A8,Open-BFME5 ILT thunk b_00694570
+?run@Rva006F92D0@@QAEXXZ,0x006F75F0,address-derived run slot from vtable 0x01120360
 ?run@Rva007EB6C0Cleanup@@QAEXXZ,0x007EB6C0,__thiscall callee address decoded from the retail REL32 call site; name is address-derived
 ?run@Rva007FA650Cleanup@@QAEXXZ,0x007FA650,__thiscall callee address decoded from the retail REL32 call site; name is address-derived
 ?run@Rva009EDD30Cleanup@@QAEXXZ,0x009EDD30,__thiscall callee address decoded from the retail REL32 call site; name is address-derived
