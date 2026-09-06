@@ -9227,10 +9227,12 @@ name,address,notes
 ??_7?$DynamicVectorClass@UResolutionDescClass@@@@6B@,0x00D3A0E4,RenderDeviceDescClass::ResArray destructor direct vtable DIR32
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x011075E0,basic_ifstream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
+??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0110FCAC,basic_ofstream<char> vftable stored by the FX particle system ctor 0x005CC3F0
+??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,STLport static library basic_ofstream<char> vftable
 ??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
@@ -9441,8 +9443,10 @@ name,address,notes
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
+??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,STLport static library basic_ifstream<char> vbtable (name/fd constructors 0x0084C300 0x0084C410 0x0084C520)
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE3C,vbtable of the FX particle system TU basic_ofstream<char> instantiation (ctor 0x005CC3F0)
+??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
 ??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
@@ -12372,7 +12376,7 @@ name,address,notes
 ?_M_switch_to_input_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843680,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_switch_to_output_mode@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ,0x008433C0,STLport 4.5.3 narrow basic_filebuf overflow callee; matched body at 0x008433C0
 ?_M_switch_to_output_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843590,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
-?_M_throw_failure@ios_base@_STL@@IAEXXZ,0x0083E8F0,FX particle ostream put setstate failure callee
+?_M_throw_failure@ios_base@_STL@@IAEXXZ,0x0083E8F0,ios_base::_M_throw_failure (the row named ?process@@YAXXZ) called from the inlined _M_check_exception_mask in the file stream constructors
 ?_M_underflow_aux@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAEGXZ,0x008436E0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_unmap@_Filebuf_base@_STL@@QAEXPAXJ@Z,0x0084A3C0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_unshift@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ,0x00841CC0,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
@@ -81170,6 +81174,7 @@ name,address,notes
 ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A
 ?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
+?revealVariant@Rva008F77E0ShroudImpl@@QAEXHHHHHI@Z,0x008FA070,still-unmatched dump sibling of processShroudRevealCircle008F9A70/008F9B10; called with 6 args (cellX cellY cellRadius extra1 extra2 playerMask) from 0x008F77E0
 ?reverse@GameWindowTransitionsHandler@@QAEXVAsciiString@@@Z,0x0048AEC0,WOLLoginMenuShutdown transition helper
 ?reverseAnimateWindow@BfmeAnimateWindowManager@@QAEXXZ,0x00027B65,Open-BFME5 ILT reached by ControlBar::animateSpecialPowerShortcut; NOT an alias of an existing pin -- this address was previously unpinned, taken from the donor and byte-proved by the rel32 in that call
 ?rotateCameraOneFrame@W3DView@@AAEXXZ,0x00743860,address-derived BFME W3DView camera helper
