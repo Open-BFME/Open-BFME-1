@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d67b0077a512afe03458b2ebdfc884e65e9b1443fdcdb46d34ae0cebdf60834c",
+  "symbol": "?bfmeLookupERK@@YA?AVBfmeHandleERK@@V1@@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeLookupERK@@YA?AVBfmeHandleERK@@V1@@Z (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 141/141, every instruction matches except WHERE the unwind state is raised to 1:\n// retail does it just before the handle ctor, MSVC does it at function entry.\n// Destructor recovered from the EH unwind map: 0x00970860 (emitted as ?dup_00970860).\n// Pins: ctor 0x00970940, find 0x009EBCE0, release 0x009EB7A0.\nclass BfmeProtoERK\n{\npublic:\n\tvoid bfmeReleaseERK(void);\n};\n\nclass BfmeHandleERK\n{\npublic:\n\tBfmeHandleERK(void) : m_bfmePtrERK(0) {}\n\tBfmeHandleERK(void *proto);\n\t~BfmeHandleERK(void)\n\t{\n\t\tif (m_bfmePtrERK != 0)\n\t\t\tm_bfmePtrERK->bfmeReleaseERK();\n\t}\n\n\tBfmeProtoERK *m_bfmePtrERK;\n};\n\nvoid *__cdecl bfmeFindERK(BfmeHandleERK *slot, BfmeProtoERK *proto);\n\nBfmeHandleERK __cdecl bfmeLookupERK(BfmeHandleERK proto)\n{\n\tif (proto.m_bfmePtrERK == 0)\n\t\treturn BfmeHandleERK();\n\n\tvoid *found = bfmeFindERK(&proto, proto.m_bfmePtrERK);\n\treturn BfmeHandleERK(found);\n}\n"
+}

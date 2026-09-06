@@ -1,35 +1,36 @@
-// ?bfmeLookupERK@@YA?AVBfmeHandleERK@@PAVBfmeProtoERK@@@Z (identity unknown)
-// partial score=0.7 date=2026-09-06
-// 145/141 with the destructor DECLARED (unresolved REL32 from the unwind funclet);
-// 69/141 with it defined inline empty, which removes the SEH frame.
-// Pins: handle ctor 0x00970940, find 0x009EBCE0, release 0x009EB7A0.
+// ?bfmeLookupERK@@YA?AVBfmeHandleERK@@V1@@Z (identity unknown)
+// partial score=0.95 date=2026-09-06
+// 141/141, every instruction matches except WHERE the unwind state is raised to 1:
+// retail does it just before the handle ctor, MSVC does it at function entry.
+// Destructor recovered from the EH unwind map: 0x00970860 (emitted as ?dup_00970860).
+// Pins: ctor 0x00970940, find 0x009EBCE0, release 0x009EB7A0.
 class BfmeProtoERK
 {
 public:
 	void bfmeReleaseERK(void);
 };
 
-void *__cdecl bfmeFindERK(BfmeProtoERK **slot, BfmeProtoERK *proto);
-
 class BfmeHandleERK
 {
 public:
 	BfmeHandleERK(void) : m_bfmePtrERK(0) {}
 	BfmeHandleERK(void *proto);
-	~BfmeHandleERK(void);
+	~BfmeHandleERK(void)
+	{
+		if (m_bfmePtrERK != 0)
+			m_bfmePtrERK->bfmeReleaseERK();
+	}
 
-	void *m_bfmePtrERK;
+	BfmeProtoERK *m_bfmePtrERK;
 };
 
-BfmeHandleERK __cdecl bfmeLookupERK(BfmeProtoERK *proto)
+void *__cdecl bfmeFindERK(BfmeHandleERK *slot, BfmeProtoERK *proto);
+
+BfmeHandleERK __cdecl bfmeLookupERK(BfmeHandleERK proto)
 {
-	if (proto != 0)
-	{
-		void *found = bfmeFindERK(&proto, proto);
-		BfmeHandleERK handle(found);
-		if (proto != 0)
-			proto->bfmeReleaseERK();
-		return handle;
-	}
-	return BfmeHandleERK();
+	if (proto.m_bfmePtrERK == 0)
+		return BfmeHandleERK();
+
+	void *found = bfmeFindERK(&proto, proto.m_bfmePtrERK);
+	return BfmeHandleERK(found);
 }
