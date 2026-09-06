@@ -83617,3 +83617,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?registerUpdate@Rva004A66AOwner@@QAEXPAVGen00296F90@@@Z,0x0004A66A,pin
 ?setWakeFrame@UpdateModule@@QAEXPAVObject@@H@Z,0x000157DA,pin
 ??4BfmeRva004262F0Map@@QAEAAV0@ABV0@@Z,0x000083E1,28-byte copy 0x004259E0 tree-backed member assignment at offset16; ILT enters424AC0
+??4EvaMessageTail@@QAEAAV0@ABV0@@Z,0x000083E1,Eva 28-byte copy 0x00425A60 nontrivial member assignment at offset16
