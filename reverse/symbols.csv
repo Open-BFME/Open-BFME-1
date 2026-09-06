@@ -73786,6 +73786,7 @@ name,address,notes
 ?bfmeFindFBD@BfmeGlobFBD@@QAEPAUBfmeObjFBD@@PAX@Z,0x0001F253,pin
 ?bfmeFindFFG@BfmeMidFFG@@QAEPAUBfmeResFFG@@PAUBfmeSubFFG@@@Z,0x0003B890,pin
 ?bfmeFindFGE@BfmeGlobFGE@@QAEPAVBfmeResFGE@@PAX@Z,0x0004AD0E,pin
+?bfmeFindFX@BfmeFinderFX@@QAEPAVBfmeThingFX@@PAH@Z,0x00009C41,pin
 ?bfmeFindInRange@@YAPAXPAX0HPBH@Z,0x000434E6,pin 0x00582540 find_if helper ILT target
 ?bfmeFindItemE63@@YAPAUBfmeItemE63@@H@Z,0x0000E6E7,pin
 ?bfmeFindLC@BfmeKeyLC@@QAEPAUBfmeNodeLC@@XZ,0x00046538,pin
@@ -74969,6 +74970,7 @@ name,address,notes
 ?bfmeReady1001@BfmeUnit1001@@QAEDXZ,0x000331C7,pin
 ?bfmeReady986C@BfmeC986@@QAEDXZ,0x000104B0,pin
 ?bfmeReady@BfmeReadyGate@@QAE_NXZ,0x0002E8ED,Open-BFME5 readiness predicate ILT used by 0x003D55C0
+?bfmeReadyFX@BfmeInnerFX@@QAEDXZ,0x00028F74,pin
 ?bfmeRebuild@BFMERopeDrawableGetPositionShim@@AAEXH@Z,0x00034C3E,Open-BFME5 ILT the rope getPosition at 0x0041D090 rebuilds through
 ?bfmeRebuildZones@BfmePathfindZoneManager@@QAEXPAXPAUBfmePathfindLayer44@@PAUBfmePathfindExtent@@@Z,0x00020A13,Open-BFME5 zone rebuild ILT thunk used by 0x003D5790
 ?bfmeRecordTransform@Object@@QAEXI@Z,0x0002BB43,ILT 0x0002BB43 -> 0x001C0BE0 Drawable::bfmeRecordTransform ICF; fire-at Object this
@@ -75235,6 +75237,7 @@ name,address,notes
 ?bfmeSetColorsUGB@BfmeStreakUGB@@QAEXIPAX@Z,0x0091A420,pin
 ?bfmeSetConditionState@Object@@QAEXH@Z,0x0001E402,Open-BFME5 condition-state setter called by 0x0028D8F0
 ?bfmeSetControlEnabled@@YAXPAVGameWindow@@_N@Z,0x0002E875,OnlineLogin dependent control enabled state helper called by text setter
+?bfmeSetCurrentExperience@ExperienceTracker@@QAEXM@Z,0x00034D29,"Root traced ILT00034D29->001B2060 full10B mov eax,[esp+4];mov [ecx+C],eax;ret4. Matched ExperienceTracker ctor/xfer place Real currentExperience at+C; caller fild/fstp proves float ABI. Address-derived behavioral helper name; no original method-name claim."
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
 ?bfmeSetFP@BfmeSubFP@@QAEXPBD0@Z,0x0002B297,pin
 ?bfmeSetGoalPosition@BfmeSub30_7F0@@QAEXPBUCoord3D@@@Z,0x0000314D,address-derived sink goal setter used by 0x002BCE00
@@ -81099,8 +81102,11 @@ name,address,notes
 ?push_back_aux@DequePushBackAuxVThunkShim@_STL@@QAEXPBX@Z,0x00369710,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePushBackAuxValueThunksShim@_STL@@QAEXPBX@Z,0x006420E0,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?putObjectAtGarrisonPoint@GarrisonContain@@IAEXPAVObject@@W4ObjectID@@HH@Z,0x00028CEA,GarrisonContain place point ILT
+?q3AdjustHeap009F3400@@YAXPAUS4SortElem8_009F3400@@HHHHH@Z,0x009F3110,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009F3B00 calls; autopin
 ?q3AdjustHeap@@YAXPAUQ3SortElem8@@HHHHH@Z,0x009F3190,callee of Gen009F3B80
+?q3MakeHeap009F3400@@YAXPAUS4SortElem8_009F3400@@0H0PAH@Z,0x009F3400,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009F3B00 calls; autopin
 ?q3MakeHeap@@YAXPAUQ3SortElem8@@0H0PAH@Z,0x009F34B0,callee of Gen009F3B80
+?q3SortHeap009F3400@@YAXPAUS4SortElem8_009F3400@@0H@Z,0x009F3930,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009F3B00 calls; autopin
 ?q3SortHeap@@YAXPAUQ3SortElem8@@0H@Z,0x009F3990,callee of Gen009F3B80
 ?q4BaseFields002DEEB0@@YAPBUFieldParse@@XZ,0x002DEEB0,niladic getter (mov eax<table>/ret) whose result is the first MultiIniFieldParse::add argument in all ten members of the 96-byte INI multi-field parse family (Q4IniMultiFieldParse.cpp); address-derived name
 ?q4Notify001E5A20@@YAXPAXPAVMade001E5A20@@HH@Z,0x002DA6F0,four-argument __cdecl callee of the 157-byte make-notify-and-link family (Q4MakeNotifyLink.cpp); address-derived name; identity not recovered
@@ -81492,6 +81498,9 @@ name,address,notes
 ?rva000b2cc0@@YGXPAXH@Z,0x00025306,Open-BFME5 ILT stdcall of push0+data wrapper
 ?rva00107A50MakeColor@@YAIPAX@Z,0x00024CA8,RVA-derived player color conversion helper called by Radar color refresh at 0x00107A50
 ?rva001B3510@Rva001CD990FiringTracker@@QAEXPBVWeapon@@HPBXE@Z,0x00035D0A,Root traced ILT00035D0A to001B3510; complete805-byte firing tracker body ends RET10 at001B3832. Existing firing tracker family plus this caller proves four stack arguments. Address-derived member symbol avoids overclaiming target semantics. Removed unused mismangled alternatename directive.
+?rva001EFB20@BezierProjectileBehavior@@QAEXPAVObject@@@Z,0x001EFB20,"Root reviewed complete source, exact full symbol extent and all resolved relocations; no emitted vtable. Root traced ILT3107->1EFB20/356B (Object pointer, this+44/+48 path, ret4), ILT5358->1F1B90/260B (boolean low byte tested, increments primary+78, ret4), ILT12E8B->1F1620/449B (primary owner+8 and ret4). Secondary this is primary+20; packet counter+58 equals primary+78. Removed generated-symbol fallback pragmas; no original semantic helper names asserted."
+?rva001F1620@BezierProjectileBehavior@@QAEX_N@Z,0x001F1620,"Root reviewed complete source, exact full symbol extent and all resolved relocations; no emitted vtable. Root traced ILT3107->1EFB20/356B (Object pointer, this+44/+48 path, ret4), ILT5358->1F1B90/260B (boolean low byte tested, increments primary+78, ret4), ILT12E8B->1F1620/449B (primary owner+8 and ret4). Secondary this is primary+20; packet counter+58 equals primary+78. Removed generated-symbol fallback pragmas; no original semantic helper names asserted."
+?rva001F1B90@BezierProjectileBehavior@@QAEX_N@Z,0x001F1B90,"Root reviewed complete source, exact full symbol extent and all resolved relocations; no emitted vtable. Root traced ILT3107->1EFB20/356B (Object pointer, this+44/+48 path, ret4), ILT5358->1F1B90/260B (boolean low byte tested, increments primary+78, ret4), ILT12E8B->1F1620/449B (primary owner+8 and ret4). Secondary this is primary+20; packet counter+58 equals primary+78. Removed generated-symbol fallback pragmas; no original semantic helper names asserted."
 ?rva0024CD10Message@@YAHHHHH@Z,0x00001BAE,assigned-body helper for Rva0024CD10
 ?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
 ?rva002EB010Helper@@YAXPAURva002EB010Elem@@0HPAX@Z,0x00041D17,Open-BFME5 helper called by 20-byte shrink loop at 0x002EB010
