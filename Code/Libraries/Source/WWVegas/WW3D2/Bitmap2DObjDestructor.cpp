@@ -91,6 +91,7 @@ public:
 	Bitmap2DObjClass();
 	Bitmap2DObjClass(const Bitmap2DObjClass &);
 	void Add_Point(const Vector3 &, float);
+	void Delete_Point(unsigned int);
 	virtual RenderObjClass *Clone() const;
 
 private:
@@ -116,6 +117,14 @@ void Bitmap2DObjClass::Add_Point(const Vector3 &point, float width)
 {
 	m_vertices.Add(point);
 	m_widths.Add(width);
+}
+
+void Bitmap2DObjClass::Delete_Point(unsigned int point_idx)
+{
+	if (point_idx < (unsigned int)m_vertices.Count()) {
+		m_vertices.Delete((int)point_idx);
+		m_widths.Delete((int)point_idx);
+	}
 }
 
 void Force_Bitmap2DObj_Destructor(Bitmap2DObjClass *bitmap)
