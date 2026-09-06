@@ -1,0 +1,38 @@
+target_rva,target_size,zh_source,alternates,confidence,ghidra_name,anchor
+0x0041D290,4756,Drawable.cpp,0,high,FUN_0081d290,StructureHeal
+0x0051F3A0,3411,GameText.cpp,0,high,FUN_0091f3a0,AptMainMenu::MultiplayerButtonPressed
+0x0088EC50,2713,debug_cmd.cpp,0,high,FUN_00c8ec50,"list (g|l|d|a|c) [ <pattern> ]  Shows some or all items of a specific type.  The following items are supported: - g: command groups - l: log groups (only those encountered yet) - d: log groups with descriptions (only those that have descriptions) - a: asserts (only those hit yet) - c: crashes (only those failed yet)  If a pattern is specified only items matching that pattern are shown. A pattern can contain any character, letter, or a wildcard '*'.  Please note that assert and crash items have their line number appended to the current file name, e.g. debug.cpp(13). "
+0x0064EFD0,2250,PeerThread.cpp,0,high,FUN_00a4efd0,\NumPlayers\%d
+0x004CDF20,1709,LanGameOptionsMenu.cpp,0,high,FUN_008cdf20,Menus/LanMapSelectMenu.wnd
+0x00190700,1432,W3DWater.cpp,0,high,FUN_00590700,WaterSurfaceBubbles.tga
+0x004042C0,1205,AIPathfind.cpp,0,high,FUN_008042c0,Ran out of pathfind zones.  SERIOUS ERROR! jba.
+0x0007EEB0,1063,GameLOD.cpp,0,high,FUN_0047eeb0,BenchProfile = %s %d %f %f %f
+0x00937900,951,statistics.cpp,0,high,FUN_00d37900,Set_DX8_Texture count: %d actual changes: %d  id      refs changes  size      name -------------------------------------- 
+0x00371650,947,AIPlayer.cpp,0,high,FUN_00771650, - Building completed.
+0x004B6190,858,GadgetListBox.cpp,0,high,FUN_008b6190,GUIComboBoxClick
+0x006715C0,569,NAT.cpp,0,high,FUN_00a715c0,CONNFAILED%d
+0x0010FBD0,550,GameState.cpp,0,high,FUN_0050fbd0,CHUNK_LivingWorldLogic
+0x00558A30,332,WOLQuickMatchMenu.cpp,0,high,FUN_00958a30,GUI:TimeInMilliseconds
+0x0062E8F0,286,MainMenuUtils.cpp,0,high,FUN_00a2e8f0,PatchAccessTest.txt
+0x005AA450,7882,CommandXlat.cpp,3,medium,FUN_009aa450,VoiceCaptureBuildingCompleteGroup2
+0x004E5DF0,7004,NetworkDirectConnect.cpp,2,medium,FUN_008e5df0,ScoreScreen.wnd:StaticTextBuildingsDestroyed%d
+0x004DBE80,4126,PopupPlayerInfo.cpp,1,medium,FUN_008dbe80,StaticTextPlayerStatisticsLabel
+0x00392D00,2342,ControlBar.cpp,4,medium,FUN_00792d00,FactionObserver
+0x0056F1F0,2280,PopupReplay.cpp,2,medium,FUN_0096f1f0,GUI:NewSaveReplayFile
+0x004CC980,2223,GameSpyGameInfo.cpp,3,medium,FUN_008cc980,GUI:AllPlayersMustSelectStartPosition
+0x005409A0,2221,GameSpy.cpp,7,medium,FUN_009409a0,DisableButtonPlayGame
+0x004CBBB0,2178,LanGameOptionsMenu.cpp,1,medium,FUN_008cbbb0,LanGameOptionsMenu.wnd:ButtonMapStartPosition%d
+0x004DD2B0,2086,PopupPlayerInfo.cpp,1,medium,FUN_008dd2b0,GUI:PSCannotConnect
+0x005307B0,2068,WOLGameSetupMenu.cpp,1,medium,FUN_009307b0,TOOLTIP:ProfiledPlayer
+0x00908680,1944,IPEnumeration.cpp,3,medium,FUN_00d08680,%d.%d.%d.%d
+0x004C3800,1194,Diplomacy.cpp,1,medium,FUN_008c3800,GUI:PlayerObserverGone
+0x00377060,1006,GameLogic.cpp,2,medium,FUN_00777060,CAMP: Frame %d: Castle %s(%d) Packed(aka:DIE) called by %s
+0x00689F00,989,ChallengeGenerals.cpp,6,medium,FUN_00a89f00,PlayerTemplate
+0x00625AF0,947,Chat.cpp,3,medium,FUN_00a25af0,GUIMessageReceived
+0x00164C10,883,AIPlayer.cpp,9,medium,FUN_00564c10,SupplyWarehouseDockUpdate
+0x0055A240,843,ScoreScreen.cpp,2,medium,FUN_0095a240,ScoreScreen.wnd:ListboxChatWindowScoreScreen
+0x00443F60,794,CommandXlat.cpp,2,medium,FUN_00843f60,GUI:MaxSelectionSize
+0x0053DFC0,769,WOLGameSetupMenu.cpp,1,medium,FUN_0093dfc0,GUI:JoinFailedBadPassword
+0x006247B0,756,GUIUtil.cpp,1,medium,FUN_00a247b0,GUI:Observer
+0x00649790,659,GameSpy.cpp,2,medium,FUN_00a49790,peerchat.gamespy.com
+0x0059B980,238,ControlBar.cpp,4,medium,FUN_0099b980,ControlBar.wnd:ButtonGeneral

@@ -9756,6 +9756,7 @@ name,address,notes
 ??_C@_0DF@IABNOJPE@ControlPoint?3?3ParseINIBlock?3?3Inv@,0x0107538C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00064680 calls; autopin
 ??_C@_0DH@BBNHFHPD@ParseRegionReinforcementBlock?3?3I@,0x010ED658,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
 ??_C@_0DI@KDAAEBDM@ReplaceModule?5?$CFs?5was?5not?5found?5f@,0x01094128,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00143320 calls; autopin
+??_C@_0DK@MIJFPIGG@invalid?5GameLODLevel?5token?5?$CFs?5?9?9@,0x01076BCC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0007BCF0 calls; autopin
 ??_C@_0DO@NADNCPBE@Unknown?5command?5?8?$CFs?8?5found?5in?5co@,0x010FB7C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
 ??_C@_0L@BJCDJCGK@UpgradeDie?$AA@,0x00C90838,pool-glue cascade static (back-solved)
 ??_C@_0L@BJHONFCE@DestroyDie?$AA@,0x00C908C0,pool-glue cascade static (back-solved)
@@ -73215,6 +73216,7 @@ name,address,notes
 ?bfmeBuildString1284@BfmeStringWriter1284@@QAEXPAVBfmeString1284@@H@Z,0x008B8E70,address-derived string builder; receiver and output-string shape decoded from the 0x008B9460 retail call site
 ?bfmeBumpURB@BfmeThingURB@@QAEXXZ,0x009EB940,pin
 ?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
+?bfmeCalcBT@BfmeSrcBT@@QAEMPAX@Z,0x00043CED,pin
 ?bfmeCalcBWF@BfmeCalcBWF@@QAEXPAVBfmeRetBWF@@H0@Z,0x0087E0D0,pin
 ?bfmeCalcBXA@@YAHHI@Z,0x00023254,pin
 ?bfmeCalcBXB@@YAHHI@Z,0x0003F7CE,pin
@@ -79012,6 +79014,7 @@ name,address,notes
 ?getConstSlot@GameInfo@@QBEPBVGameSlot@@H@Z,0x000170BC,Target 0x0050FE50 calls the incremental-link thunk for the matched GameInfo::getConstSlot body
 ?getContainCount@BfmeNamedContain@@QBEHXZ,0x000347E3,Contain count getter; ILT used by evaluateNamedHasFreeContainerSlots 0x00323CD0
 ?getContainCount@TunnelTracker@@QAEIH@Z,0x00036165,Open-BFME5 ILT; BFME gives it an argument the reference does not have and ?canSwitchIndexToIndex@CaveSystem@@QAE_NHH@Z at 0x003782D0 passes zero at both call sites
+?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ,0x00020824,local call adapter for VeterancyCrateCollide validation
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
 ?getControllingPlayer@Rva00107A50Object@@QAEPAVRva00107A50Player@@XZ,0x00020824,RVA-derived controlling-player getter called by Radar color refresh at 0x00107A50
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
@@ -79383,6 +79386,7 @@ name,address,notes
 ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
 ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
 ?go@BfmeBoxAFB@@QAEXPAX0@Z,0x00007A45,thiscall pair send used by BfmeThingAFB::bfmeGoAFB fallback
+?go@BfmeThing932D@@QAEDXZ,0x0001FDE3,local call adapter for VeterancyCrateCollide validation
 ?go@Glo012F706CType@@QAEXXZ,0x0001F7DF,ILT to bfmeGoBLE 0x00610050; callee of 0x003C1A50
 ?go@Rva0090C2F0Inner@@QAEXHHHHHHH@Z,0x0090C2F0,Open-BFME5 sibling dump callee for 0x0090E2A0
 ?goProne@ProneUpdate@@QAEXPBVDamageInfo@@@Z,0x00015456,ILT fronting the 76-byte body at 0x002A0120; from AIUpdateInterface::privateGoProne
@@ -80823,6 +80827,7 @@ name,address,notes
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
 ?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
+?isSignificantlyAboveTerrain@BfmeObjectCall@@QBE_NXZ,0x00019FF1,local call adapter for VeterancyCrateCollide validation
 ?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
 ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ,0x00019FF1,pristine EA setGoalPositionClipped call and retail AI/Drawable callers identify Thing terrain-height helper ILT
 ?isSlotLocalAlly@@YA_NPBVGameSlot@@@Z,0x0061ED20
@@ -80832,16 +80837,19 @@ name,address,notes
 ?isThreadHosting@@3HA,0x012F73D8,isThreadHosting int used as /host format arg by CustomMatch handleSlashCommands
 ?isTimeFast@ScriptEngine@@QAE_NXZ,0x0000A8A8,ILT for the ScriptEngine fast-mode query at 0x00336FB0
 ?isTimeFrozenDebug@ScriptEngine@@QAE_NXZ,0x0003F23D,ILT for the logic-frame debug freeze gate body at 0x00336F20
+?isTrainable@BfmeExperienceTrackerCall@@QBE_NXZ,0x0002A239,local call adapter for VeterancyCrateCollide validation
 ?isTryingToAimAtTarget@TurretAI@@QBE_NPBVObject@@@Z,0x000079D7,ILT thunk to TurretAI::isTryingToAimAtTarget at 0x0018D080
 ?isTurretInNaturalPosition@AIUpdateInterface@@QBE_NW4WhichTurretType@@@Z,0x00043F45,REL32 pin from BattlePlanUpdate::isTurretInNaturalPosition body
 ?isTurretInNaturalPosition@TurretAI@@QBE_NXZ,0x0003E469,ILT thunk to 0x18C8E0; pinned from AIUpdateInterface::isTurretInNaturalPosition @0x26EA60
 ?isUsed@BFMEPathfindLayer@@QAE_NXZ,0x003FBB90,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h declares the opposite sense, isUnused
 ?isUsed@PathfindLayer@@QAE_NXZ,0x0003D4E2,Open-BFME5 ILT; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 goes on when it returns true - the opposite sense to the reference isUnused so the name is behaviour-derived
 ?isUser@LANGameSlot@@QAE_NVUnicodeString@@@Z,0x0068E8D0,byte-scan placement of the LANGameSlot user compare
+?isUsingAirborneLocomotor@BfmeObjectCall@@QBE_NXZ,0x0000A001,local call adapter for VeterancyCrateCollide validation
 ?isUsingAirborneLocomotor@Object@@QBE_NXZ,0x0000A001,ILT thunk to 0x001C1770
 ?isValid@ObjectFilter@@QBE_NXZ,0x000413B2,RefundDie::onDie matched caller identifies the BuildingRequired filter validity predicate ILT
 ?isValidContainerFor@TransportContain@@UBE_NPBVObject@@_N@Z,0x0000583A,callee pin from SiegeEngineContain isValidContainerFor at 0x0022BF30
 ?isValidMap@@YA_NVAsciiString@@_N@Z,0x0000AFE7,callee of SkirmishPreferences::getPreferredMap 0x0009E470
+?isValidToExecute@BfmeCrateCollideCall@@QBE_NPBVObject@@@Z,0x00025EF5,local call adapter for VeterancyCrateCollide validation
 ?isValidToUseOn@CommandButton@@QBE_NPBVObject@@0PBUCoord3D@@W4CommandSourceType@@@Z,0x00005C4A,doTeamUseCommandButtonOnNamed BFME CommandButton ILT
 ?isWeaponSlotOnTurret@TurretAI@@QBE_NW4WeaponSlotType@@@Z,0x00039D24,ILT thunk to TurretAI::isWeaponSlotOnTurret at 0x0018C7A0
 ?isWithinTargetPitch@Weapon@@QBE_NPBVObject@@0@Z,0x00005533,Open-BFME5 ILT thunk fronting body 0x001E2C50
@@ -84305,109 +84313,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeCalcBT@BfmeSrcBT@@QAEMPAX@Z,0x00043CED,pin
-?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ,0x00020824,local call adapter for VeterancyCrateCollide validation
-?go@BfmeThing932D@@QAEDXZ,0x0001FDE3,local call adapter for VeterancyCrateCollide validation
-?isSignificantlyAboveTerrain@BfmeObjectCall@@QBE_NXZ,0x00019FF1,local call adapter for VeterancyCrateCollide validation
-?isTrainable@BfmeExperienceTrackerCall@@QBE_NXZ,0x0002A239,local call adapter for VeterancyCrateCollide validation
-?isUsingAirborneLocomotor@BfmeObjectCall@@QBE_NXZ,0x0000A001,local call adapter for VeterancyCrateCollide validation
-?isValidToExecute@BfmeCrateCollideCall@@QBE_NPBVObject@@@Z,0x00025EF5,local call adapter for VeterancyCrateCollide validation
-?getFilename@INI@@QBE?AVAsciiString@@XZ,0x0002F04F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
-?getLineNum@INI@@QBEHXZ,0x00850810,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
-??_C@_0DO@NADNCPBE@Unknown?5command?5?8?$CFs?8?5found?5in?5co@,0x010FB7C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0049C7C0 calls; autopin
-??_C@_0CO@JGNAOOGP@ParseIconObjectBlock?3?3Invalid?5da@,0x01115D6C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
-?Rva0060B710FieldParseTable@@3QBUFieldParse@@B,0x01115CC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
-?_M_insert_overflow@?$vector@PAURva0060B710IconObject@@V?$allocator@PAURva0060B710IconObject@@@_STL@@@_STL@@IAEXPAPAURva0060B710IconObject@@ABQAU3@ABU__true_type@2@I_N@Z,0x00032ECF,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0060B710 calls; autopin
-?Rva0090C610Invoke@@YGXPAX@Z,0x0090C610,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-?Rva006D4690Apply@@YAXPAX@Z,0x00038389,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-?Set_DX8_Texture_Stage_State_Body@DX8Wrapper@@SAXIKI@Z,0x000261E3,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-?Rva01340534Device@@3PAURva006D4FF0Device@@A,0x01340534,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-?Rva01340594DX8Calls@@3IA,0x01340594,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-?Rva01340568StageChanges@@3IA,0x01340568,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
-??_7S4Owner@@6B@,0x010F7114,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-?s4drain00464B60@S4Owner@@AAEXXZ,0x0003D8C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-?s4drain00464C10@S4Owner@@AAEXXZ,0x0001E894,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-?s4drain00464CC0@S4Owner@@AAEXXZ,0x00029005,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-?s4drain00464D70@S4Owner@@AAEXXZ,0x0004AA66,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00464E20 calls; autopin
-?Rva01340534Device@@3PAURva006C9270Device@@A,0x01340534,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
-?TheWritableGlobalData@@3PAURva006C9270GlobalData@@A,0x012ED5C8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
-?Rva0133F478Textures@@3PAPAURva006C9270Texture@@A,0x0133F478,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
-?Rva01340560TextureChanges@@3IA,0x01340560,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
-??_7BfmeThingBHG@@6BGameWindow@@@,0x011061C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-??_7BfmeThingBHG@@6BGen_dtor_004654c0Base@@@,0x011061C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-?reset@Rva00690B40Owner@@QAEXXZ,0x0003B6A1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-?releaseBuffer@BFMERetailAsciiString@@QAEXXZ,0x00887940,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-??1Rva00690B40Owner@@QAE@XZ,0x00013B56,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-?Rva01340510Device@@3PAXA,0x01340510,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva00906E70ComputeCaps@DX8Wrapper@@KAXPAX@Z,0x00906E70,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva012D6D98FilterMode@@3W4TextureFilterMode@@A,0x012D6D98,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@@@Z,0x00920D10,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva00944C40Empty@DX8MeshRendererClass@@QAEXXZ,0x00944C40,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva00917280Init@@YAXXZ,0x00917280,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva0090F760Init@@YAXXZ,0x0090F760,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva0091DA30Init@@YAXXZ,0x0091DA30,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
-?Rva00209130StatusNames@@3QBQBDB,0x012A6670,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
-??_C@_02KEGNLNML@?0?5?$AA@,0x0109DF5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
-??_C@_01EEMJAFIK@?6?$AA@,0x01080294,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00209130 calls; autopin
-?g_rva012F49B4@@3PAURva012F49B4Thing@@A,0x012F49B4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0051D4A0 calls; autopin
-?Rva003B7780FieldParseTable@@3QBUFieldParse@@B,0x010ECDC8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
-?addAudioEvent@Rva003B7780Owner@@QAEXPAVRva003B7740@@@Z,0x00015DD4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
-??_C@_0CO@MLONBKDB@ParseAudioEventBlock?3?3Invalid?5da@,0x010ECD8C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7780 calls; autopin
-??1MutexClass@@QAE@XZ,0x009DB350,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0010BC80 calls; autopin
-??1ThreadClass@@UAE@XZ,0x009DB530,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0010BC80 calls; autopin
-??_7Rva003B7650Record@@6B@,0x010EC764,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
-?Rva003B7650FieldParseTable@@3QBUFieldParse@@B,0x010ECD18,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
-?addMoveCamera@Rva003B7650Owner@@QAEXPAVRva003B7650Record@@@Z,0x00001564,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
-??_C@_0CO@BDJPGECA@ParseMoveCameraBlock?3?3Invalid?5da@,0x010ECCDC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7650 calls; autopin
-??_7Rva000B0DF0@@6B@,0x010818CC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
-??1Gen00018E5DMember@@QAE@XZ,0x00018E5D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
-??_7BfmeBaseASCa@@6B@,0x010817AC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
-??0Rva003B7DC0Record@@QAE@XZ,0x0003D361,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
-?Rva003B7DC0RecordFieldParseTable@@3QBUFieldParse@@B,0x010ECEC8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
-?append@Rva003B7DC0Owner@@QAEXPAVRva003B7DC0Record@@@Z,0x0002375E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
-??1Rva003B7DC0Record@@QAE@XZ,0x00045E26,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
-??_C@_0CK@KMEDCNIN@ParseForceBattle?3?3Invalid?5data?5p@,0x010ECE94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
-??0Rva003B8500Record@@QAE@XZ,0x00033942,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8500 calls; autopin
-?Rva003B8500RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED258,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8500 calls; autopin
-?append@Rva003B8500Owner@@QAEXPAVRva003B8500Record@@@Z,0x00016CF2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8500 calls; autopin
-??1Rva003B8500Record@@QAE@XZ,0x00013228,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8500 calls; autopin
-??_C@_0CN@CBOMGKEP@ParseMergeArmyBlock?3?3Invalid?5dat@,0x010ED21C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8500 calls; autopin
-??0Rva003BABE0Record@@QAE@XZ,0x00043653,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
-?Rva003BABE0RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED6A0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
-?append@Rva003BABE0Owner@@QAEXPAVRva003BABE0Record@@@Z,0x0003F972,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
-??1Rva003BABE0Record@@QAE@XZ,0x0003210A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
-??_C@_0DH@BBNHFHPD@ParseRegionReinforcementBlock?3?3I@,0x010ED658,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BABE0 calls; autopin
-??0Rva003B8190Record@@QAE@XZ,0x00044823,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
-?Rva003B8190RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED108,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
-?append@Rva003B8190Owner@@QAEXPAVRva003B8190Record@@@Z,0x00003ADA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
-??1Rva003B8190Record@@QAE@XZ,0x00023AFB,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
-??_C@_0CO@NCGEPLDK@ParseArmyMoveToBlock?3?3Invalid?5da@,0x010ECFB4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
-??0Rva003BAA70Record@@QAE@XZ,0x0002D3A8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAA70 calls; autopin
-?Rva003BAA70RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED540,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAA70 calls; autopin
-?append@Rva003BAA70Owner@@QAEXPAVRva003BAA70Record@@@Z,0x00020E64,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAA70 calls; autopin
-??1Rva003BAA70Record@@QAE@XZ,0x00044BB1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAA70 calls; autopin
-??0Rva003BAE20Record@@QAE@XZ,0x00033488,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAE20 calls; autopin
-?Rva003BAE20RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED784,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAE20 calls; autopin
-?append@Rva003BAE20Owner@@QAEXPAVRva003BAE20Record@@@Z,0x0004A354,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAE20 calls; autopin
-??1Rva003BAE20Record@@QAE@XZ,0x000195FB,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAE20 calls; autopin
-??_C@_0DA@PEOEACIH@ParseEyeTowerPointData?3?3Invalid?5@,0x010ED748,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BAE20 calls; autopin
-??1ThreadClass@@QAE@XZ,0x009DB530,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0063CF10 calls; autopin
-??_7Rva003B7BA0Record@@6B@,0x010EC76C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
-?Rva003B7BA0RecordFieldParseTable@@3QBUFieldParse@@B,0x010ECE14,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
-?append@Rva003B7BA0Owner@@QAEXPAVRva003B7BA0Record@@@Z,0x0003847E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
-??_C@_0CL@DBKGJBJE@ParseEnableRegion?3?3Invalid?5data?5@,0x010E8FB0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7BA0 calls; autopin
-??_7Rva003B8610Record@@6B@,0x010EC784,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
-?Rva003B8610RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED300,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
-?append@Rva003B8610Owner@@QAEXPAVRva003B8610Record@@@Z,0x00043167,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
-??_C@_0CN@DIIOJJIK@ParseWorldTextBlock?3?3Invalid?5dat@,0x010ED2C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8610 calls; autopin
-??_7Rva003B7F90Record@@6B@,0x010EC774,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
-?Rva003B7F90RecordFieldParseTable@@3QBUFieldParse@@B,0x010ECFF0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
-?append@Rva003B7F90Owner@@QAEXPAVRva003B7F90Record@@@Z,0x0001D1D3,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
-??1Rva003B7F90Record@@UAE@XZ,0x00006253,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7F90 calls; autopin
-?Rva003B8770RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED3B8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8770 calls; autopin
-?append@Rva003B8770Owner@@QAEXPAURva003B8770Record@@@Z,0x0000FFB5,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8770 calls; autopin
-??1Rva003B8770Record@@QAE@XZ,0x00034AE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8770 calls; autopin
-??_C@_0CP@EJGGHMHG@ParseAnimObjectUpdate?3?3Invalid?5d@,0x010ED380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8770 calls; autopin
-?Rva003B88F0RecordFieldParseTable@@3QBUFieldParse@@B,0x010ED420,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B88F0 calls; autopin
-?append@Rva003B88F0Owner@@QAEXPAURva003B88F0Record@@@Z,0x000280BA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B88F0 calls; autopin
-??1Rva003B88F0Record@@QAE@XZ,0x0004AE49,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B88F0 calls; autopin
