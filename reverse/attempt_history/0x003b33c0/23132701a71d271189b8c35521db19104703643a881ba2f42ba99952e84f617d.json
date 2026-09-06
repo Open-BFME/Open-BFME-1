@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "23132701a71d271189b8c35521db19104703643a881ba2f42ba99952e84f617d",
+  "symbol": "_Rva003B33C0CopyRange",
+  "score_kind": "author-estimate",
+  "score": 0.78,
+  "source": "// _Rva003B33C0CopyRange\n// partial score=0.78 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Address-derived 32-byte record copy range at retail 0x003B33C0.\n\nclass UnicodeString\n{\npublic:\n\tvoid set(const UnicodeString &other);\n\nprivate:\n\tvoid *m_data;\n};\n\nstruct Rva003B33C0Element\n{\n\tint m_prefix;\n\tUnicodeString m_name;\n\tint m_value08;\n\tint m_value0c;\n\tunsigned char m_flag10;\n\tunsigned char m_padding11[3];\n\tUnicodeString m_name14;\n\tUnicodeString m_name18;\n\tint m_value1c;\n};\n\nextern \"C\" Rva003B33C0Element *__cdecl Rva003B33C0CopyRange(\n\tconst Rva003B33C0Element *first,\n\tconst Rva003B33C0Element *last,\n\tRva003B33C0Element *result)\n{\n\tint count = (int)(last - first);\n\tif (count > 0)\n\t{\n\t\tRva003B33C0Element *end = result + count;\n\t\twhile (count > 0)\n\t\t{\n\t\t\tresult->m_name.set(first->m_name);\n\t\t\tresult->m_value08 = first->m_value08;\n\t\t\tresult->m_value0c = first->m_value0c;\n\t\t\tresult->m_flag10 = first->m_flag10;\n\t\t\tresult->m_name14.set(first->m_name14);\n\t\t\tresult->m_name18.set(first->m_name18);\n\t\t\tresult->m_value1c = first->m_value1c;\n\t\t\t++first;\n\t\t\t++result;\n\t\t\t--count;\n\t\t}\n\t\treturn end;\n\t}\n\treturn result;\n}\n"
+}
