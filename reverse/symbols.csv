@@ -12522,6 +12522,7 @@ name,address,notes
 ?applyOwner@Rva003BF540@@QAEXPAVGen003BD7D0Node@@@Z,0x00025798,Reviewed ILT to3BF190 full444B receives node from same-owner find and handles null
 ?applyPacket@Rva0015A190Owner@@QAEXPAURva0015A190Packet@@H@Z,0x00048C43,ILT to 0x00159AD0 from applyOrFallback 0x0015A190
 ?applyPendingModelConditionFlags@Drawable@@AAEX_N@Z,0x0002D439,exact clearAndSetModelConditionFlags caller applies the staged masks before draw-module queries
+?apply@DrawableApplyPendingThunk@@QAEX_N@Z,0x0002D439,unique ILT view for Object selection notification; linker alternate name targets the generated thunk
 ?applyPointer@BfmeLwcmFindResult@@QAEXPAPAX@Z,0x00026EA9,Open-BFME5 ILT to 0x003A95D0; callee of 0x003B8260
 ?applyRva1C7370@Object@@QAEXABVModelConditionFlags@@_N@Z,0x000307E7,Open-BFME6 RVA 162CD0 flag-apply helper call pin
 ?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00025162,address-derived second target updater called by retail 0x002D9510
@@ -74313,6 +74314,7 @@ name,address,notes
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x0003A03F,Open-BFME5 the notification PathfindLayer::setDestroyed at 0x003FCEC0 makes when the bridge at +0x38 is null
 ?bfmeNotifyVIM@BfmeThingVIM@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVKP@BfmeNotifyVKP@@QAEXPAVBfmeBlockVKP@@HH@Z,0x0001343F,pin
+?notify@BfmeNotifyThunk@@QAEXPAVBfmeBlockVKP@@HH@Z,0x0001343F,unique ILT view for Object selection notification; linker alternate name targets the generated thunk
 ?bfmeNotifyVLL@BfmeCtlVLL@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVLN@BfmeCtlVLN@@QAEXXZ,0x0083E8F0,pin
 ?bfmeNotifyVSI@BfmeOwnVSI@@QAEXHH@Z,0x000157DA,pin
@@ -78144,6 +78146,7 @@ name,address,notes
 ?getControllingPlayer@Object@@QBEPAVPlayer@@XZ,0x00020824
 ?getControllingPlayer@Rva00107A50Object@@QAEPAVRva00107A50Player@@XZ,0x00020824,RVA-derived controlling-player getter called by Radar color refresh at 0x00107A50
 ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ,0x0002369B
+?bfmeGetControllingPlayer@BfmeTeam@@QBEPAVPlayer@@XZ,0x0002369B,alias for the BFME Object selection notification's Team controlling-player ILT
 ?getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ,0x0000F2DB,TeamInQueue disband call pin
 ?getCount@BfmeRva9140Member@@QAEHXZ,0x00020824,assigned body helper for Rva00249140
 ?getCount@BfmeRvaA760CountOwner@@QAEHXZ,0x00020824,assigned body helper for Rva0024A760
