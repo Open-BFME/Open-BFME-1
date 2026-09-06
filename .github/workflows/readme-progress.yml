@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '17 16 * * *'
   workflow_dispatch:
+    inputs:
+      refresh_message:
+        description: Refresh the existing Discord message layout without a new post
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -27,7 +32,13 @@ jobs:
       - name: Generate bar and notify the test Discord
         env:
           DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
-        run: python tools/readme_progress.py --discord
+          REFRESH_MESSAGE: ${{ inputs.refresh_message }}
+        run: |
+          if [ "$REFRESH_MESSAGE" = "true" ]; then
+            python tools/readme_progress.py --refresh-discord
+          else
+            python tools/readme_progress.py --discord
+          fi
       - name: Commit updated bar
         run: |
           git add docs/progress.svg docs/discord-progress.json

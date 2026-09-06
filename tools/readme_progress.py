@@ -32,22 +32,21 @@ def render(rebuilt, total):
 
 def announcement(current, previous):
     percentage = progress.percent(current["rebuilt"], current["total"])
-    filled = round(percentage / 5)
-    change = "First daily progress update"
+    filled = round(percentage / 10)
+    change = ""
     if previous:
         delta = percentage - progress.percent(previous["rebuilt"], previous["total"])
-        change = f"{delta:+.2f} percentage points since the last update"
+        change = f"\n{delta:+.2f} percentage points since the last update"
     return {
         "allowed_mentions": {"parse": []},
         "embeds": [{
-            "title": "BFME 1 · Daily rebuild progress",
+            "title": "BFME 1 · Rebuild progress",
             "url": "https://github.com/Open-BFME/Open-BFME-1",
             "color": 0x3FB950,
-            "description": f"**{percentage:.2f}%** rebuilds from what we hold\n"
-                           + "🟩" * filled + "⬛" * (20 - filled)
-                           + f"\n\n{change}\n"
+            "description": f"**{percentage:.2f}%**\n\n"
+                           + "🟩" * filled + "⬛" * (10 - filled)
+                           + f"\n{change}\n"
                            + f"{current['rebuilt']:,} / {current['total']:,} code bytes",
-            "footer": {"text": "Includes source, generators and linked libraries. Excludes retail byte dumps. Ledger-derived."},
         }],
     }
 
@@ -78,7 +77,26 @@ def notify(current):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--discord", action="store_true", help="post changed progress at most once per UTC day")
+    parser.add_argument("--refresh-discord", action="store_true", help="refresh the existing message layout without posting again")
     args = parser.parse_args()
+    if args.refresh_discord:
+        state = json.loads((progress.ROOT / "docs/discord-progress.json").read_text(encoding="utf-8"))
+        webhook = os.environ["DISCORD_PROGRESS_WEBHOOK"].strip()
+        if not webhook.startswith("https://discord.com/api/webhooks/"):
+            raise SystemExit("Invalid webhook URL")
+        for url, payload in (
+            (webhook, {"name": "BFME 1 Progress"}),
+            (webhook + "/messages/" + state["message_id"], announcement(state, None)),
+        ):
+            request = Request(url, data=json.dumps(payload).encode("utf-8"),
+                              headers={"Content-Type": "application/json", "User-Agent": "OpenBFME-Progress/1.0"}, method="PATCH")
+            try:
+                with urlopen(request, timeout=30) as response:
+                    response.read()
+            except (HTTPError, URLError):
+                raise SystemExit("Discord layout refresh failed") from None
+        print("Discord: existing message layout refreshed")
+        return
     matched = progress.matched_at(None)
     start, size = progress.retail_text()
     naked = progress.naked_cpp_rows_at(matched, None)
