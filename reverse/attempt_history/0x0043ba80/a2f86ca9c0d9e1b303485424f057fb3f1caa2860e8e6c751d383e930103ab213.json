@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a2f86ca9c0d9e1b303485424f057fb3f1caa2860e8e6c751d383e930103ab213",
+  "symbol": "?d_0043ba80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_0043ba80@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// 61/67; structure and every branch match. Retail keeps TWO separate return-true\n// blocks of different widths (mov al,1 early, mov eax,1 late); MSVC merges them.\n// Pins needed: ?g_bfmeGlobalDataERA@@3PAUBfmeGlobalDataERA@@A,0x00EED5C8\n//              ?g_bfmeModeERA@@3PAUBfmeModeERA@@A,0x00EF1028\n//              ?g_bfmeLogicERA@@3PAUBfmeLogicERA@@A,0x00EF0898\nstruct BfmeGlobalDataERA\n{\n\tunsigned char m_bfmeHeadERA[0xe54];\n\tchar m_bfmeEnabledERA;\n};\n\nstruct BfmeModeERA\n{\n\tunsigned char m_bfmeHeadERA[0x2c];\n\tchar m_bfmeActiveERA;\n\tchar m_bfmeLockedERA;\n};\n\nstruct BfmeLogicERA\n{\n\tunsigned char m_bfmeHeadERA[0x3c];\n\tunsigned int m_bfmeFrameERA;\n};\n\nextern BfmeGlobalDataERA *g_bfmeGlobalDataERA;\nextern BfmeModeERA *g_bfmeModeERA;\nextern BfmeLogicERA *g_bfmeLogicERA;\n\nstruct BfmeHostERA\n{\n\tbool bfmeCheckERA(void);\n\tunsigned char m_bfmeHeadERA[0x814];\n\tunsigned int m_bfmeLimitERA;\n};\n\nbool BfmeHostERA::bfmeCheckERA(void)\n{\n\tif (!g_bfmeGlobalDataERA->m_bfmeEnabledERA)\n\t\treturn true;\n\tBfmeModeERA *mode = g_bfmeModeERA;\n\tif ((mode != 0 && mode->m_bfmeActiveERA && mode->m_bfmeLockedERA)\n\t\t|| g_bfmeLogicERA->m_bfmeFrameERA >= m_bfmeLimitERA)\n\t\treturn false;\n\treturn true;\n}\n"
+}
