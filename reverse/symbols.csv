@@ -2940,6 +2940,7 @@ name,address,notes
 ??0PreorderCreate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002070C,link thunk to the PreorderCreate constructor; named from the ModuleFactory registration that pairs "PreorderCreate" with factory 0x0011E700
 ??0ProcessAnimateWindowSpiral@@QAE@XZ,0x00495590,ILT 0x43815->body; AnimateWindowManager ctor callee
 ??0ProductionPrerequisite@@QAE@ABV0@@Z,0x00031B06,ProductionPrerequisite copy constructor via ILT thunk
+?addUnitPrereq@ProductionPrerequisite@@QAEXVAsciiString@@_N@Z,0x0001DD63,BFME Object prerequisite parser addUnitPrereq ILT
 ??0ProductionUpdateModuleData@@QAE@XZ,0x0000E9F8,pinharvest x1 (thunk)
 ??0ProjectileStreamUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001E902,pinharvest x1 (thunk)
 ??0ProneUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x000425DC,module ctor (friend_newModuleInstance retail call target)
