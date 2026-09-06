@@ -121,7 +121,44 @@ void Rva008143A0( struct Rva00814700Comm *comm, void *value )
 	comm->m_flags |= 2;
 }
 
-void Rva0081B830( void *transport );
+__declspec(dllimport) void __stdcall Rva01358F30WorkerYield( int interval );
+__declspec(dllimport) int __stdcall Rva01358EDC( void *handle, unsigned int mask );
+__declspec(dllimport) int __stdcall Rva01358EB0( void *handle, unsigned int flags );
+__declspec(dllimport) int __stdcall Rva01358CCC( void *handle );
+
+struct Rva0081B830Transport
+{
+	char m_head[ 0x7c ];
+	void *m_handle;
+	char m_gap80[ 0x4c ];
+	int m_state;
+};
+
+int Rva0081B830( struct Rva0081B830Transport *comm )
+{
+	if ( comm->m_state == 1 )
+		return 0;
+
+	if ( comm->m_state == 4 )
+	{
+		comm->m_state = 6;
+		while ( comm->m_state == 6 )
+			Rva01358F30WorkerYield( 0 );
+	}
+	comm->m_state = 8;
+	while ( comm->m_state != 1 )
+		Rva01358F30WorkerYield( 0 );
+
+	if ( comm->m_handle != (void *)-1 )
+	{
+		Rva01358EDC( comm->m_handle, 2 );
+		Rva01358EB0( comm->m_handle, 0x0f );
+		Rva01358CCC( comm->m_handle );
+		comm->m_handle = (void *)-1;
+	}
+
+	return 0;
+}
 
 void Rva00813E30( struct Rva00814700Comm *comm )
 {
