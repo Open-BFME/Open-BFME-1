@@ -84030,3 +84030,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1Gen00776240Field7C@@QAE@XZ,0x000455E8,element destructor callback for the four 12-byte members at +0x7C in Gen_t_00776240_p128pod
 ??1Gen00776240FieldB0@@QAE@XZ,0x00026AB2,destructor for the 12-byte member at +0xB0 in Gen_t_00776240_p128pod
 ?getTemplateName@BuildListInfo@@QBE?AVAsciiString@@XZ,0x00049EFE,"Root full32B narrow-string getter proof at161DC0; matched caller36E650 identifies BuildListInfo templateName+8, hiddenreturnbuffer and887B60 copy"
+?bfmeRunUB@BfmeTgtUB@@QAEXPAXVBfmeVecUB@@0000000@Z,0x0002B2C4,pin
+?bfmeRunUC@BfmeTgtUC@@QAEXPAXVBfmeVecUC@@0000000@Z,0x00047898,pin
