@@ -7,6 +7,7 @@
 //        esi = [ecx+0x0C], edi = [ecx+0x10]            <- END READ ONCE
 //        ebx = the argument, then per element: mov ecx,[esi] / push ebx / call
 //        Three bodies, three different callees, otherwise identical.
+
 //
 //   B  0x003CFC60  0x003D2410                          36 bytes, ret 0
 //        esi = [ecx+0x18], end RE-READ from [edi+0x1C] every iteration
@@ -16,16 +17,20 @@
 //        esi = [ecx+0x08], end re-read from [edi+0x0C]; stride 0x3C, so the
 //        elements are OBJECTS, not pointers, and ecx is the element address
 //        itself.  Two pointer arguments are pushed in reverse order.
+
 //
 //   D  0x003CDE60                                      43 bytes, ret 0
 //        same 0x3C-stride object walk, no arguments, and each iteration stores
 //        zero to the element's dword at +0x30 AFTER the call.
+
 //
 //   E  0x003D2EE0                                      38 bytes, ret 0
 //        end read once from [ebx+0x10]; after the loop, `mov byte [ebx+0x34],0`
+
 //
 //   F  0x003D0EE0                                      95 bytes, ret 0
 //        a shape-B walk nested inside an outer walk, described where it sits
+
 //
 // WHAT THE BYTES DECIDE, AND WHAT THEY DO NOT.
 //
@@ -35,16 +40,19 @@
 // against the member, and shapes A and E, which compare against a register
 // loaded once, hoisted the end into a local first.  That is why this file
 // spells the two forms differently rather than picking one and hoping.
+
 //
 // The trailing stores are source order for the same reason: `mov [esi+0x30],0`
 // in D sits after the call, and `mov byte [ebx+0x34],0` in E sits after the
 // loop, and no MSVC 7.1 pass moves a store across a call.
 //
+
 // STRIDE IS THE ELEMENT SIZE.  `add esi,4` walks an array of pointers and the
 // call takes `[esi]` in ecx; `add esi,0x3C` walks an array of 0x3C-byte objects
 // and the call takes esi itself.  Only the offsets that appear are declared: the
 // padding ahead of each member places it and asserts nothing else about the
 // layout.
+
 //
 // THE CALLEES STAY DECLARATIONS.  Retail encodes a `call` at every one of these
 // sites, so in retail the callee was NOT visible to the compiler here; defining
@@ -53,11 +61,94 @@
 // such name is pinned in reverse/symbols.csv at that thunk -- the same
 // convention the 981 Gen<RVA> pins already in that file use.
 //
-// IDENTITY IS NOT RECOVERED.  No caller names any of these, none of them touches
-// a string, and every callee thunk stands for a body no ledger row names.  Every
-// class, member and callee name here is derived from an address.
 
-class Y1ForEachArg;
+// IDENTITY REMAINS OPEN FOR THE OTHER GEN TYPES.  The Gen000135B1 body below is
+// named by Rva003CD260 and uses the BFME seed slots at vtable offsets 0x78,
+// 0x88 and 0x8C.
+
+class Y1ForEachArg
+{
+public:
+	virtual void bfmeSlot0(void);
+	virtual void bfmeSlot1(void);
+	virtual void bfmeSlot2(void);
+	virtual void bfmeSlot3(void);
+	virtual void bfmeSlot4(void);
+	virtual void bfmeSlot5(void);
+	virtual void bfmeSlot6(void);
+	virtual void bfmeSlot7(void);
+	virtual void bfmeSlot8(void);
+	virtual void bfmeSlot9(void);
+	virtual void bfmeSlot10(void);
+	virtual void bfmeSlot11(void);
+	virtual void bfmeSlot12(void);
+	virtual void bfmeSlot13(void);
+	virtual void bfmeSlot14(void);
+	virtual void bfmeSlot15(void);
+	virtual void bfmeSlot16(void);
+	virtual void bfmeSlot17(void);
+	virtual void bfmeSlot18(void);
+	virtual void bfmeSlot19(void);
+	virtual void bfmeSlot20(void);
+	virtual void bfmeSlot21(void);
+	virtual void bfmeSlot22(void);
+	virtual void bfmeSlot23(void);
+	virtual void bfmeSlot24(void);
+	virtual void bfmeSlot25(void);
+	virtual void bfmeSlot26(void);
+	virtual void bfmeSlot27(void);
+	virtual void bfmeSlot28(void);
+	virtual void bfmeSlot29(void);
+	virtual void bfmeTakeAt78(void *item);
+	virtual void bfmeSlot31(void);
+	virtual void bfmeSlot32(void);
+	virtual void bfmeSlot33(void);
+	virtual void bfmeTakeAt88(void *item);
+	virtual void bfmeTakeAt8C(void *item);
+};
+
+class BfmeSeedTarget;
+
+class AsciiString;
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS(const AsciiString &name, int extra);
+	virtual ~AudioEventRTS();
+	char m_bfmeStorage[ 0x6C ];
+};
+
+class BfmeSubAccept_0002C41C
+{
+public:
+	void bfmeAccept(BfmeSeedTarget *target);
+};
+
+extern AsciiString TheBfmeCrateNameDefault;
+extern "C" unsigned char bfmeVftBTB[];
+
+class BfmeThingBaseBTB
+{
+public:
+	BfmeThingBaseBTB()
+	{
+		m_bfmeVft = bfmeVftBTB;
+	}
+
+	void *m_bfmeVft;
+};
+
+class BfmeThingBTB : public BfmeThingBaseBTB
+{
+public:
+	BfmeThingBTB(const AsciiString &name, int extra) :
+		m_bfmeAudio(name, extra)
+	{
+	}
+
+	AudioEventRTS m_bfmeAudio;
+};
 
 // ---------------------------------------------------------------- shape A ---
 #define Y1_FOREACH_PTR_GUARDED_ARG( NAME, ELEM )                              \
@@ -117,10 +208,41 @@ Y1_FOREACH_PTR_RELOAD( Rva003D2410, Gen00025603 )
 class Gen000135B1
 {
 public:
-	char m_pad[ 0x3C ];
+	char m_pad0[ 0x0C ];
+	void *m_bfmeItem;
+	char m_pad1[ 0x20 ];
+	char m_bfmeField0[ 4 ];
+	char m_bfmeField1[ 4 ];
+	char m_bfmeField2;
+	char m_bfmeField3[ 1 ];
+	char m_bfmeTail[ 2 ];
 
 	void call( Y1ForEachArg *first, Y1ForEachArg *second );
 };
+
+void Gen000135B1::call( Y1ForEachArg *first, Y1ForEachArg *second )
+{
+	volatile unsigned char accepted = m_bfmeItem != 0;
+	first->bfmeTakeAt8C( (void *)&accepted );
+
+	if ( accepted )
+	{
+		if ( !m_bfmeItem )
+		{
+			BfmeThingBTB *item = new BfmeThingBTB( TheBfmeCrateNameDefault, 0 );
+			m_bfmeItem = item;
+		}
+	}
+
+	if ( accepted )
+		reinterpret_cast<BfmeSubAccept_0002C41C *>( (char *)m_bfmeItem + 4 )->bfmeAccept(
+			reinterpret_cast<BfmeSeedTarget *>( first ) );
+
+	first->bfmeTakeAt78( &m_bfmeField0 );
+	first->bfmeTakeAt78( &m_bfmeField1 );
+	first->bfmeTakeAt88( &m_bfmeField2 );
+	first->bfmeTakeAt88( &m_bfmeField3 );
+}
 
 class Rva003CD260
 {
@@ -203,6 +325,7 @@ void Rva003D2EE0::run()
 // is RE-READ -- the inner loop is shape B, inlined.  Its callee is the same
 // 0x0000D84B the shape-B body at 0x003CFC60 calls, which is why the element
 // type is reused here rather than minted again.
+
 //
 // The two outer loads are in source order: retail reads +0x0C before +0x10, and
 // writing the end into a local ahead of the iterator reverses them.  Hence the
