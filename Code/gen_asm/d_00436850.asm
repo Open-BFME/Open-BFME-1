@@ -2,24 +2,6 @@
 .model flat
 _TEXT SEGMENT
 
-; ghidra: bounds-high  retail @ 0x00436850 size 49
-public ?d_00436850@@YAXXZ
-?d_00436850@@YAXXZ PROC
-    db 8Bh, 44h, 24h, 04h, 8Bh, 00h, 8Bh, 00h, 85h, 0C0h, 74h, 05h, 83h, 0C0h, 08h, 0EBh
-    db 05h, 0B8h, 8Bh, 38h, 07h, 01h, 8Bh, 4Ch, 24h, 08h, 51h, 50h, 0FFh, 15h, 3Ch, 93h
-    db 35h, 01h, 33h, 0D2h, 83h, 0C4h, 08h, 85h, 0C0h, 0Fh, 9Ch, 0C2h, 8Ah, 0C2h, 0C2h, 08h
-    db 00h
-?d_00436850@@YAXXZ ENDP
-
-; ghidra: bounds-high  retail @ 0x00436890 size 49
-public ?d_00436890@@YAXXZ
-?d_00436890@@YAXXZ PROC
-    db 8Bh, 44h, 24h, 08h, 8Bh, 00h, 8Bh, 00h, 85h, 0C0h, 74h, 05h, 83h, 0C0h, 08h, 0EBh
-    db 05h, 0B8h, 8Bh, 38h, 07h, 01h, 8Bh, 4Ch, 24h, 04h, 50h, 51h, 0FFh, 15h, 3Ch, 93h
-    db 35h, 01h, 33h, 0D2h, 83h, 0C4h, 08h, 85h, 0C0h, 0Fh, 9Ch, 0C2h, 8Ah, 0C2h, 0C2h, 08h
-    db 00h
-?d_00436890@@YAXXZ ENDP
-
 ; ghidra: bounds-high  retail @ 0x004368D0 size 16
 public ?d_004368d0@@YAXXZ
 ?d_004368d0@@YAXXZ PROC
