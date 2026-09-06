@@ -1814,6 +1814,7 @@ name,address,notes
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00001DA7,pinharvest x1 (thunk)
 ??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
 ??0?$_Vector_base@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003AB860Elem@@@1@@Z,0x000430EF,vector base constructor call target from retail 0x003AB860 (twin of 0x003AB280)
+??0?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAE@H@Z,0x0002B409,ILT thunk called by the FX particle system basic_ofstream(int mode) ctor 0x005CC3F0 with (mode|out)
 ??0?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@QAE@PBDH@Z,0x0004A958,ILT thunk (to 0x0093C660) called by the LobbyUtils.cpp basic_ifstream(const char*,int) ctor 0x0053FB00 with (name, mode|in)
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@ABV01@@Z,0x0001CB11
 ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@XZ,0x0004048A,map<unsigned int std::string>::operator[] default-value construction through the retail ILT
@@ -9219,6 +9220,8 @@ name,address,notes
 ??_7?$basic_ios@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBC4,retail narrow basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
+??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0110FCAC,basic_ofstream<char> vftable stored by the FX particle system ctor 0x005CC3F0
+??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
 ??_7?$codecvt@DDH@_STL@@6B@,0x00D2EA8C,retail STLport 4.5.3 narrow codecvt vtable identified by its virtual method signatures
@@ -9429,6 +9432,8 @@ name,address,notes
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
 ??_8?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107640,vbtable of the LobbyUtils.cpp basic_ifstream<char> instantiation (ctor 0x0053FB00)
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
+??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE3C,vbtable of the FX particle system TU basic_ofstream<char> instantiation (ctor 0x005CC3F0)
+??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
 ??_C@_09OMFJEEND@FXListDie?$AA@,0x00C908B4,pool-glue cascade static (back-solved)
 ??_C@_0BA@CLLFEOBD@CreateObjectDie?$AA@,0x00C90868,pool-glue cascade static (back-solved)
@@ -81000,6 +81005,7 @@ name,address,notes
 ?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
 ?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
+?replace@Rva005929E0@@QAEXABVUnicodeString@@000@Z,0x00046713,ILT used by ControlBar tooltip repopulation
 ?replaceModelConditionFlags@Object@@QAEXABVModelConditionFlags@@_N@Z,0x00023277,Open-BFME5 ILT thunk to Object model-condition replacement body 0x001C4830 proven by the GarrisonContain caller
 ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@II@Z,0x0041CCD0,Open-BFME5 the Drawable member Object::notifyModelConditionChanged pushes its condition flags at +0x110 into; unnamed in the image
 ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@_NI@Z,0x0001343F,Open-BFME5 ILT thunk to matched Drawable replacement body 0x0041CCD0 with BFME Bool parameter spelling
