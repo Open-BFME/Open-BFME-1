@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6ea080cc06cad8b923cfcb03c33c84cb76926c8d71302c7b3bbe3d3392aad97d",
+  "symbol": "?bfmeAddFG@BfmeAccumFG@@QAEXH@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?bfmeAddFG@BfmeAccumFG@@QAEXH@Z (identity unknown)\n// partial score=0.85 date=2026-09-06\n// 44/39. Retail tail-jumps to the member callee with ecx already holding the sink\n// and the flag written into the caller own argument slot; MSVC spills the sink to\n// esi, which forces a restore and therefore a real call.\n// Twin at 0x000C7E60 differs only in the member offsets and the compare direction.\n// Pin: ?bfmeNotifyFG@BfmeSinkFG@@QAEXH@Z,0x0004326B\nclass BfmeSinkFG\n{\npublic:\n\tvoid bfmeNotifyFG(int flag);\n};\n\nclass BfmeAccumFG\n{\npublic:\n\tvoid bfmeAddFG(int amount);\n\n\tunsigned char m_bfmeHeadFG[4];\n\tint m_bfmeTotalFG;\n\tint m_bfmeLimitFG;\n\tBfmeSinkFG *m_bfmeSinkFG;\n};\n\nvoid BfmeAccumFG::bfmeAddFG(int amount)\n{\n\tint total = m_bfmeTotalFG + amount;\n\tm_bfmeTotalFG = total;\n\n\tBfmeSinkFG *sink = m_bfmeSinkFG;\n\tif (sink != 0)\n\t\treturn sink->bfmeNotifyFG(total < m_bfmeLimitFG);\n}\n"
+}
