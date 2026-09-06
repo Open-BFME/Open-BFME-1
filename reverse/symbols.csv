@@ -9467,6 +9467,10 @@ name,address,notes
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
+??_7Rva001FC330MultiTailDtor@@6BRva00047C53MultiBase@@@,0x00CA40C4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
+??_7Rva001FC330MultiTailDtor@@6BRva1FC330IfaceA@@@,0x00CA4108,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
+??_7Rva001FC330MultiTailDtor@@6BRva1FC330Middle@@@,0x00CA40F8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
+??_7Rva001FC330MultiTailDtor@@6BRva1FC330TrivialHead@@@,0x00CA41CC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7Rva0034E2E0@@6B@,0x010E7D00,address-derived vtable written by RVA 0x0034E2E0 (BfmeBaseVUQ destructor family)
 ??_7Rva003B7740@@6B@,0x010EC768,address-derived vtable for Rva003B7740 Release dtor 0x003B7740
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
@@ -9493,6 +9497,9 @@ name,address,notes
 ??_7Rva0090E570Thing@@6B@,0x0113A6B0,address-derived vftable written by the 0x0090E570 constructor (byte-twin of 0x0090E470); class identity not recovered
 ??_7Rva0097BB40HLod@@6BMultiListObjectClass@@@,0x00D3EBE4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7Rva0097BB40HLod@@6BRefCountClass@@@,0x00D3EBE8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
+??_7Rva1FC330DeepBase@@6BRva00047C53MultiBase@@@,0x00C9CB5C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
+??_7Rva1FC330DeepBase@@6BRva1FC330IfaceA@@@,0x00C9CA98,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
+??_7Rva1FC330Middle@@6B@,0x00C9CBAC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001FC330 calls; autopin
 ??_7SalvageCrateCollide@@6B@,0x010AA7E8,secondary vtable at this+0x10
 ??_7SalvageCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA808,secondary vtable at this+0x0C
 ??_7SalvageCrateCollide@@6BObjectModule@@@,0x010AA8CC,primary vtable installed by the named constructor and destructor
@@ -11992,6 +11999,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVLivingWorldAnimObject@@V?$allocator@PAVLivingWorldAnimObject@@@_STL@@@_STL@@IAEXPAPAVLivingWorldAnimObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000094D5,LivingWorldAnimObject vector helper ILT decoded from exact findAnimObject body
 ?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x000486BC,ILT thunk used by call site
 ?_M_insert_overflow@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002B6E8
+?_M_insert_overflow@?$vector@PAVRva00144100Item@@V?$allocator@PAVRva00144100Item@@@_STL@@@_STL@@IAEXPAPAVRva00144100Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00004F8E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00144100 calls; autopin
 ?_M_insert_overflow@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@IAEXPAPAVScienceInfo@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003076F,harvested from friend_parseScienceDefinition (thunk)
 ?_M_insert_overflow@?$vector@PAVSubtitleEntry@@V?$allocator@PAVSubtitleEntry@@@_STL@@@_STL@@IAEXPAPAVSubtitleEntry@@ABQAV3@ABU__true_type@2@I_N@Z,0x0081DAD0,SubtitleManager addSubtitle vector overflow path; exact STLport pointer specialization
 ?_M_insert_overflow@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@IAEXPAPAVTunnelTracker@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001212A,REL32 pin from CaveSystem::registerNewCave @0x378970
@@ -75275,8 +75283,8 @@ name,address,notes
 ?bfmeSpecialOk@Weapon@@QBE_NPBVObject@@0@Z,0x00032123,ILT used by WeaponSet::chooseBestWeaponForTarget
 ?bfmeStart1021@BfmeF1021@@QAEXH@Z,0x0000EEA8,pin
 ?bfmeStart1098@BfmeD1098@@QAEHHHH@Z,0x00044C60,pin
-?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@BfmeVecMember@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the vector member starter used by Gen_0049A4B0
+?bfmeStart@Gen_0049A330@@QAEXPAX0PAPAX@Z,0x00014100,Open-BFME5 the starter the SEH constructor at 0x0049A330 calls
 ?bfmeStart@Gen_00654F20@@QAEXPAX0PAPAX@Z,0x0002648B,Open-BFME5 the starter the SEH constructor at 0x00654F20 calls
 ?bfmeStart@Gen_00844340@@QAEXPAX0PAPAX@Z,0x0002A531,Open-BFME5 the starter the SEH constructor at 0x00844340 calls
 ?bfmeStart@Gen_008443A0@@QAEXPAX0PAPAX@Z,0x00042BB8,Open-BFME5 the starter the SEH constructor at 0x008443A0 calls
@@ -77011,6 +77019,7 @@ name,address,notes
 ?first@Rva0051DCE0@@QAEXXZ,0x00005F88,ILT to 0x0051D590 for 13B two-call wrap at 0x0051DCE0
 ?firstNamed@U4Scan@@QBE_NPAXPBVU4Filter@@@Z,0x00606D60,U4 lane: third scan entry forwarded to by the proxy at 0x00606E20; address-derived name
 ?fiveArg@TerrainLogicP48@@QAEXHHPAHHH@Z,0x001A51F0,thiscall body of the 0x001A64F0 adapter
+?fiveArg@TerrainLogicP48B@@QAEXHHPAEHH@Z,0x00002C39,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001A6520 calls; autopin
 ?flattenZones@@YAXPAG0H@Z,0x004027B0,Open-BFME5 static zone-table flatten helper used by PathfindZoneManager at 0x00402E90
 ?flush@?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@QAEAAV12@XZ,0x00030B11,FX particle ostream put sentry unitbuf flush ILT
 ?flush@Open27110F0Flusher@@QAEXXZ,0x0003139A,Open2 0x007110F0 flush (ILT)
@@ -77330,6 +77339,7 @@ name,address,notes
 ?g_bfmeBMG@@3HA,0x00EB9660,pin
 ?g_bfmeBVIW@@3PAXA,0x00F0A600,pin
 ?g_bfmeBadE15@@3UBfmeShapeE15@@A,0x00ED4CE8,Open-BFME5 sentinel for 0x0087E150
+?g_bfmeBaseDS003BCBB0@@3PAVBfmeBaseDS003BCBB0@@A,0x00EED5C8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BCBB0 calls; autopin
 ?g_bfmeBegKA@@3PAPAVBfmeItemKA@@A,0x00EF146C,pin
 ?g_bfmeBuf1023@@3PADA,0x00EF3CC4,pin
 ?g_bfmeBufDWG@@3PAXA,0x00F378D0,pin
@@ -77924,6 +77934,7 @@ name,address,notes
 ?g_bfmeStrB993B@@3PADA,0x00C80FC0,pin
 ?g_bfmeStrStrVMZ@@3P6APADPBD0@ZA,0x00F594D0,pin
 ?g_bfmeSubB3@@3NA,0x00C7C640,Open-BFME5 double sub for 0x0040B300
+?g_bfmeSwitchDR@@3PAVBfmeSwitchDR@@A,0x00EF1024,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003BCBB0 calls; autopin
 ?g_bfmeT0DYB@@3HA,0x00EED8A0,pin
 ?g_bfmeT1019@@3PAUBfmeT1019@@A,0x00EF1024,pin
 ?g_bfmeT1057@@3PAVBfmeT1057@@A,0x00EF1464,pin
