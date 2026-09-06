@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ee3b4b545ae778cc8a9b943b745de7f116950396a13db2295038fc8fe02d3ecf",
+  "symbol": "?bfmeGoFL@BfmeFinderFL@@QAEXPAX0@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeGoFL@BfmeFinderFL@@QAEXPAX0@Z (identity unknown)\n// partial score=0.97 date=2026-09-06\n// 30/30, exact size; two instructions differ only in which register carries the\n// intermediate node: retail mov ecx,[eax] / mov ecx,[ecx+8], MSVC mov eax,[eax] /\n// mov ecx,[eax+8]. Pin: ?bfmeLookupFL@BfmeItemFL@@QAEPAVBfmeResultFL@@XZ 0x0000B3E3\nclass BfmeResultFL\n{\npublic:\n\tvirtual void bfmeApplyFL(void *first, void *second);\n};\n\nclass BfmeItemFL\n{\npublic:\n\tBfmeResultFL *bfmeLookupFL(void);\n};\n\nclass BfmeNodeFL\n{\npublic:\n\tBfmeNodeFL *volatile m_bfmeNextFL;\n\tunsigned char m_bfmeMidFL[4];\n\tBfmeItemFL *m_bfmeItemFL;\n};\n\nclass BfmeFinderFL\n{\npublic:\n\tvoid bfmeGoFL(void *first, void *second);\n\n\tunsigned char m_bfmeHeadFL[4];\n\tBfmeNodeFL *m_bfmeListFL;\n};\n\nvoid BfmeFinderFL::bfmeGoFL(void *first, void *second)\n{\n\tBfmeNodeFL *list = m_bfmeListFL;\n\tif (list->m_bfmeNextFL == list)\n\t\treturn;\n\n\tBfmeResultFL *result = list->m_bfmeNextFL->m_bfmeItemFL->bfmeLookupFL();\n\tif (result == 0)\n\t\treturn;\n\n\tresult->bfmeApplyFL(first, second);\n}\n"
+}
