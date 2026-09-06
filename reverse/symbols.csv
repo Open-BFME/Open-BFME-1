@@ -9027,6 +9027,7 @@ name,address,notes
 ??4RenderObjClass@@QAEAAV0@ABV0@@Z,0x0091F790
 ??4Rva000A8490Mid10@@QAEAAV0@ABV0@@Z,0x0002114D,Open-BFME5 assign of the 12-byte mid at +0x10 used by 0x000A8490
 ??4Rva000A8490Mid24@@QAEAAV0@ABV0@@Z,0x000303B4,Open-BFME5 assign of the mid at +0x24 used by 0x000A8490
+??4Rva000FA3F0@@QAEAAV0@ABV0@@Z,0x0001802F,near-twin pin: 0x000FA0E0 CopyRange operator= call target (ILT thunk j_0001802f)
 ??4Rva002E9E70Mid@@QAEAAV0@ABV0@@Z,0x00033640,Open-BFME5 assign of the mid member used by 0x002E17F0
 ??4Rva002EA550Mid@@QAEAAV0@ABV0@@Z,0x00033640,Open-BFME5 mid assign used by 20-byte copy_backward at 0x002EA550
 ??4Rva00364980HeapElement@@QAEAAU0@ABU0@@Z,0x000470F0,REL32 wide heap element assignment target from 0x00363CF2
@@ -9703,8 +9704,8 @@ name,address,notes
 ?BfmeLess0052E880@S4SortElem12@@QBE_NABU1@@Z,0x0002B210,address-scoped spelling for the record comparison ILT called by retail 0x0052FE90
 ?BfmeLess00574AA0@S4SortElem8@@QBE_NABU1@@Z,0x00013471,address-scoped spelling for the element comparison ILT called by retail 0x005757E0
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
-?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeNodeValueConstruct000BF790@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
+?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeParticleSystemXferHandle@@YAXAAVXfer@@PAX@Z,0x00008CA1,BFME particle-system handle serialization helper called by ParticleSystem DoXfer
 ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z,0x00034815,BFME particle-system matrix serialization helper called by ParticleSystem DoXfer
