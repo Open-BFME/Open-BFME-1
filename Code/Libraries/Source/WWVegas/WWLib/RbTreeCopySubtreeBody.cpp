@@ -54,7 +54,7 @@ class allocator
 {
 };
 
-void __cdecl BfmeNodeValueConstruct(void *destination, const void *value);
+void __cdecl BfmeNodeValueConstruct00761A60(void *destination, const void *value);
 
 template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
 class _Rb_tree
@@ -66,7 +66,7 @@ private:
 	{
 		_Rb_tree_node<Value> *clone =
 			(_Rb_tree_node<Value> *)nodeAllocate(sizeof(_Rb_tree_node<Value>));
-		BfmeNodeValueConstruct(clone->_M_value_field, x->_M_value_field);
+		BfmeNodeValueConstruct00761A60(clone->_M_value_field, x->_M_value_field);
 		clone->_M_color = x->_M_color;
 		clone->_M_left = 0;
 		clone->_M_right = 0;
