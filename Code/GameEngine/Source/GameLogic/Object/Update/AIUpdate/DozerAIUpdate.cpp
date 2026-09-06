@@ -3980,7 +3980,7 @@ void DozerAIUpdate::privateRepair( Object *obj, CommandSourceType cmdSource )
 // ------------------------------------------------------------------------------------------------
 /** Resume construction on a building */
 // ------------------------------------------------------------------------------------------------
-// ?privateResumeConstruction@DozerAIUpdate@@MAEXPAVObject@@W4CommandSourceType@@@Z
+// ?privateResumeConstruction@DozerAIUpdate@@MAEXPAVObject@@W4CommandSourceType@@@Z present-unmatched
 void DozerAIUpdate::privateResumeConstruction( Object *obj, CommandSourceType cmdSource )
 {
 
@@ -3988,14 +3988,12 @@ void DozerAIUpdate::privateResumeConstruction( Object *obj, CommandSourceType cm
 	if( obj == NULL )
 		return;
 
-	// Same BFME layout as privateRepair(): m_object at module+0x08, and the
-	// DozerAIInterface base at this+0x340 (newTask is slot 12 of that base).
-	Object *dozer = *(Object **)((char *)this + 0x08);
-	if( TheActionManager->canResumeConstructionOf( dozer, obj, cmdSource ) == FALSE )
+	// make sure we can resume construction on this
+	if( TheActionManager->canResumeConstructionOf( getObject(), obj, cmdSource ) == FALSE )
 		return;
 
 	// start the new task for construction
-	((DozerAIInterface *)((char *)this + 0x340))->newTask( DOZER_TASK_BUILD, obj );
+	newTask( DOZER_TASK_BUILD, obj );
 
 }  // end privateResumeConstruction
 
