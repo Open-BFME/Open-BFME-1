@@ -191,7 +191,7 @@ NAT::~NAT() {
 // if we are negotiating still, call the connection update
 // check to see if this connection is done for us, or if it has failed.
 enum { MS_TO_WAIT_FOR_STATS = 5000 };
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NATUpdateThunk.cpp
+// The former NATUpdateThunk claim was a GameSpy chat filter timeout; NAT::update remains unmatched.
 // ?update@NAT@@ present-unmatched
 NATStateType NAT::update() {
 	static UnsignedInt s_startStatWaitTime = 0;
