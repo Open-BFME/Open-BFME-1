@@ -1,5 +1,4 @@
 // ?newMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z
-// partial score=0.85 date=2026-09-05
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // readable body of ?newMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z:
@@ -64,15 +63,25 @@ private:
 	BfmeAsciiStringData *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
-class MemoryPoolObject
+// BFME retail lifetime view, not the Generals pool implementation.
+// Mission vtable VA 0x0110F658 slot zero jumps through 0x0044534A
+// to the scalar deleting destructor at 0x009BBDF0. Its flag bit 1
+// calls operator delete at 0x00C81EB0 after the object destructor.
+// No vtable is emitted by this TU; the retail constructor installs it.
+class MissionLifetimeView
 {
+protected:
+	virtual ~MissionLifetimeView() {}
 public:
-	virtual void deleteInstance();
+	void deleteInstance()
+	{
+		if (this)
+			delete this;
+	}
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/CampaignManager.h
-class Mission : public MemoryPoolObject
+class Mission : public MissionLifetimeView
 {
 public:
 	Mission();
@@ -116,7 +125,8 @@ Mission *Campaign::newMission( AsciiString name )
 		if(mission->m_name.compare(name) == 0)
 		{
 			m_missions.erase( it );
-			mission->deleteInstance();
+			if (mission)
+				mission->deleteInstance();
 			break;
 		}
 		else
