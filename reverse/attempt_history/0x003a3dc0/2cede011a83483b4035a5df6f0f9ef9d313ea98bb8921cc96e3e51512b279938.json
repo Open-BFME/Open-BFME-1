@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2cede011a83483b4035a5df6f0f9ef9d313ea98bb8921cc96e3e51512b279938",
+  "symbol": "?bfmeGoFK@BfmeOwnerFK@@QAEXPAX@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeGoFK@BfmeOwnerFK@@QAEXPAX@Z (identity unknown)\n// partial score=0.95 date=2026-09-06\n// 47/48; retail widens the byte member with xor ecx,ecx + mov cl (5 bytes),\n// MSVC uses movzx ecx,byte ptr (4). Everything else matches.\n// Pins: find 0x00009615, apply 0x0003D893, global 0x00EF706C.\nclass BfmeThingFK\n{\npublic:\n\tvoid bfmeApplyFK(void *first, void *second, void *third, int flag);\n};\n\nclass BfmeGameFK\n{\npublic:\n\tBfmeThingFK *bfmeFindFK(void *key);\n};\n\nextern BfmeGameFK *g_bfmeGameFK;\n\nclass BfmeOwnerFK\n{\npublic:\n\tvoid bfmeGoFK(void *key);\n\n\tunsigned char m_bfmeHeadFK[4];\n\tunsigned char m_bfmeAFK[8];\n\tunsigned char m_bfmeBFK[0x11];\n\tunsigned char m_bfmeFlagFK;\n\tunsigned char m_bfmeMidFK[0x2a];\n\tunsigned char m_bfmeCFK[4];\n};\n\nvoid BfmeOwnerFK::bfmeGoFK(void *key)\n{\n\tBfmeThingFK *thing = g_bfmeGameFK->bfmeFindFK(key);\n\tthing->bfmeApplyFK(m_bfmeAFK, m_bfmeBFK, m_bfmeCFK, m_bfmeFlagFK);\n}\n"
+}
