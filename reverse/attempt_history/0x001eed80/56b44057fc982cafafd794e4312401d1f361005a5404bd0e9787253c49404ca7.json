@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "56b44057fc982cafafd794e4312401d1f361005a5404bd0e9787253c49404ca7",
+  "symbol": "?checkForAutoHeal@@YAXPAVObject@@PAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?checkForAutoHeal@@YAXPAVObject@@PAX@Z\n// partial score=0.8 date=2026-09-06\n// Retail uses a private call convention. It passes the object in ebx and the\n// helper in eax. Inline assembly preserves the call, but MSVC saves esi before\n// the retail ebx load, so this body remains a near miss.\n\nextern void d_001ee670();\n\nnamespace _STL\n{\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int);\n};\n}\n\nstatic void checkForAutoHeal(void *, void *)\n{\n\t__asm\n\t{\n\t\tmov ebx, [esp + 8]\n\t\tmov esi, [esp + 0x10]\n\t\tmov eax, esi\n\t\tcall d_001ee670\n\t\ttest al, al\n\t\tjz checkForAutoHeal_done\n\t\tmov eax, [esi + 0x1c]\n\t\tmov esi, [eax]\n\t\tpush 0x0c\n\t\tcall _STL::__new_alloc::allocate\n\t\tlea ecx, [eax + 8]\n\t\tadd esp, 4\n\t\ttest ecx, ecx\n\t\tjz checkForAutoHeal_done\n\t\tmov [ecx], ebx\n\t\tmov ecx, [esi + 4]\n\t\tmov [eax], esi\n\t\tmov [eax + 4], ecx\n\t\tmov [ecx], eax\n\t\tmov [esi + 4], eax\n\t\tmov eax, 1\n\tcheckForAutoHeal_done:\n\t}\n}\n"
+}
