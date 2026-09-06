@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "91b66db6c9cb2a24b5a0844b5c517dd39b34ed2a1f08a413d457a825781a39f1",
+  "symbol": "?d_0068d5a0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?d_0068d5a0@@YAXXZ\n// partial score=0.98 date=2026-09-06\n// 49/50. 0x0068D620 is a byte-identical second copy, so this stash serves\n// both. Everything matches: the push-ecx frame slot, the stdcall function\n// pointer at 0x00F5972C, the optional limit guard with its two unsigned\n// compares (dst and dst+1), the word store and the two-byte advance.\n// Residue is ONE byte: retail reads the spilled result as a word\n// (`66 8b 0c 24`, mov cx,[esp]) where MSVC reads the full dword\n// (`8b 0c 24`). Getting the spill at all needs `volatile int`; without it\n// MSVC keeps the value in edx and the body is 45 bytes. Tried for the narrow\n// read: a plain int with *(unsigned short*)&, a union of int and unsigned\n// short, a volatile union, a volatile-short-pointer cast, and a two-short\n// struct returned by value from the pointer (all four optimise back into a\n// register, 45 bytes).\nextern int (__stdcall *g_bfmeConvBA)(int value);\t// pin ?g_bfmeConvBA@@3P6GHH@ZA,0x00F5972C\n\nunsigned short * __cdecl bfmeEmitBA(unsigned short *dst, int value, unsigned short *limit)\n{\n\tvolatile int converted = g_bfmeConvBA(value);\n\n\tif (limit != 0)\n\t{\n\t\tif (dst > limit)\n\t\t\treturn dst;\n\n\t\tif (dst + 1 > limit)\n\t\t\treturn dst;\n\t}\n\n\t*dst = (unsigned short)converted;\n\n\treturn dst + 1;\n}\n"
+}
