@@ -10906,6 +10906,7 @@ name,address,notes
 ?_M_clear@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXXZ,0x00015168,ILT thunk used by call site
 ?_M_clear@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEXXZ,0x000481E9,the ILT its own vector overflow at 0x0077AF9A calls; the body is at 0x00771D00
 ?_M_clear@?$vector@UP5Elem000BD360@@V?$allocator@UP5Elem000BD360@@@_STL@@@_STL@@IAEXXZ,0x0002DFF1,ILT thunk reached by the 0x000BCA50 vector overflow body
+?_M_clear@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@IAEXXZ,0x000315E3,near-twin pin: 0x003D1710 vector<ParkingPlaceInfo> _M_clear call target (ILT thunk j_000315e3)
 ?_M_clear@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEXXZ,0x0000903E,pinharvest x1 (thunk)
 ?_M_clear@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ,0x0001BEFA,resweep callee back-solved
 ?_M_clear@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXXZ,0x00004AB1,Open-BFME5 ILT the RunwayInfo vector _M_insert_overflow at 0x0039EC70 cleans up through
@@ -75013,6 +75014,7 @@ name,address,notes
 ?bfmeSizeVNQ@BfmeItemVNQ@@QAEHXZ,0x009212E0,pin
 ?bfmeSkip1092@BfmeE1092@@QAEDPAVBfmeR1092@@@Z,0x00003B1B,pin
 ?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ,0x009D8C30,Gen009D8C30 helper identity from read and skip body
+?bfmeSkipVF@@YAHPBEH@Z,0x008979C0,near-twin sibling of bfmeSkipVC/VD/VE/VG/VH; callee of Rva00897FD0 perfect-hash lookup; itself still an unconverted dump
 ?bfmeSkyBoxPosition0079F360@WaterRenderObjClass@@ABE?AUVector3@@XZ,0x00010F14,address-derived WaterRenderObjClass skybox-position ILT forwarding to matched body 0x0079F360
 ?bfmeSkyBoxZRotation0079F3E0@WaterRenderObjClass@@ABEMXZ,0x00016EA5,private-access spelling of matched WaterRenderObjClass skybox Z-rotation accessor through its retail ILT
 ?bfmeSlashOrDefaultName@@YA?AVAsciiString@@ABV1@0@Z,0x00044E3B,Open-BFME5 ILT to slash-or-default AsciiString helper body 0x001945D0
