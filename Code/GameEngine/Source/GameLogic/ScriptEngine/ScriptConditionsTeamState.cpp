@@ -1,6 +1,15 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?evaluateTeamCreated@ScriptConditions@@IAE_NPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
-// Clean C++ reconstruction of ScriptConditions::evaluateTeamCreated.
+// readable body of ?evaluateIsDestroyed@ScriptConditions@@IAE_NPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+
+// The two ScriptConditions conditions that ask about a team's own lifecycle
+// rather than where it is: has it been created yet, and has it been destroyed.
+// Both look the team up by name and read a flag, so they share every model
+// here -- and each carried a private copy of all of it, with a Team that
+// stopped at whichever flag its own body read.
+//
+// Declared once, the two flags sit in one layout: m_created at +0x32 and
+// m_ready at +0xFC.
 
 typedef bool Bool;
 
@@ -8,11 +17,16 @@ typedef bool Bool;
 class Team
 {
 public:
+	Bool hasAnyObjects(Bool includeDead);
+
 	Bool isCreated(void) { return m_created; }
+	Bool isReady(void) { return m_ready; }
 
 private:
 	unsigned char m_pad[0x32];
-	Bool m_created;
+	Bool m_created;						// this+0x32
+	unsigned char m_pad33[0xFC - 0x33];
+	Bool m_ready;						// this+0xFC
 };
 
 template <class T> class StringBase
@@ -81,6 +95,7 @@ class ScriptConditions
 {
 protected:
 	Bool evaluateTeamCreated(Parameter *);
+	Bool evaluateIsDestroyed(Parameter *);
 };
 
 // ?evaluateTeamCreated@ScriptConditions@@IAE_NPAVParameter@@@Z
@@ -91,4 +106,17 @@ Bool ScriptConditions::evaluateTeamCreated(Parameter *pTeamParm)
 		return pTeam->isCreated();
 	}
 	return ( false );
+}
+
+// ?evaluateIsDestroyed@ScriptConditions@@IAE_NPAVParameter@@@Z
+Bool ScriptConditions::evaluateIsDestroyed(Parameter *pTeamParm)
+{
+	Team *theTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (theTeam) {
+		if (!theTeam->isReady()) {
+			return false;
+		}
+		return (!theTeam->hasAnyObjects(false));
+	}
+	return false;
 }
