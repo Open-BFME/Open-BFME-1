@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7a64c32acce20697657b8fb5c0e316bf7c23205b8c98022b4a5dc7b8b05ef498",
+  "symbol": "?erase@BfmeVec60@@QAEXPAUBfmeElem60@@0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?erase@BfmeVec60@@QAEXPAUBfmeElem60@@0@Z\n// partial score=0.55 date=2026-09-05\n// cl: /O2 /Ob0 /G6\n//\n// Open-BFME5: BfmeVec60::erase(first,last) at retail 0x0087FB90, 77 bytes.\n// Near-twin of the PA-style vector<T>::erase(first,last) family on\n// d_003ad560.asm (see PAVectorEraseRangeFamily003AF.cpp): identical shape\n// except the per-element teardown is a direct (non-virtual) call to\n// BFMERetailAsciiString::releaseBuffer() instead of a vtable dispatch,\n// because BfmeElem60 has no virtual destructor.\n\nclass BFMERetailAsciiString\n{\npublic:\n\t__forceinline ~BFMERetailAsciiString()\n\t{\n\t\treleaseBuffer();\n\t}\n\nprivate:\n\tvoid releaseBuffer();\n\tchar *m_data;\n};\n\nstruct BfmeElem60\n{\n\tint m_00;\n\tint m_04;\n\tint m_08;\n\tint m_0C;\n\tint m_10;\n\tint m_14;\n\tint m_18;\n\tBFMERetailAsciiString m_1C;\n\tchar m_20;\n\tchar m_pad[3];\n};\n\nclass BfmeVec60\n{\npublic:\n\tvoid erase(BfmeElem60 *first, BfmeElem60 *last);\n\n\tBfmeElem60 *_M_start;\n\tBfmeElem60 *_M_finish;\n\tBfmeElem60 *_M_end_of_storage;\n};\n\nstruct BfmeElemA2;\n\nextern BfmeElemA2 *bfmeCopyA2(BfmeElemA2 *first, BfmeElemA2 *last, BfmeElemA2 *dest);\n\nvoid BfmeVec60::erase(BfmeElem60 *first, BfmeElem60 *last)\n{\n\tBfmeElem60 *newFinish = reinterpret_cast<BfmeElem60 *>(\n\t\tbfmeCopyA2(reinterpret_cast<BfmeElemA2 *>(last),\n\t\t\treinterpret_cast<BfmeElemA2 *>(_M_finish),\n\t\t\treinterpret_cast<BfmeElemA2 *>(first)));\n\n\tfor (BfmeElem60 *p = newFinish; p != _M_finish; ++p)\n\t\tp->~BfmeElem60();\n\n\t_M_finish = newFinish;\n}\n"
+}

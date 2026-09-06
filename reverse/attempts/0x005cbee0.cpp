@@ -8,7 +8,10 @@
 // (U1Tail_005CD380, pinned in reverse/symbols.csv at this same address as
 // ??4U1Tail_005CD380@@QAEAAV0@ABV0@@Z and again as
 // ??4Y3AssignTail_005CBEE0@@QAEAAV0@ABV0@@Z), and its call site uses `lea`
-// to form the pointer to the source tail instead of `add`.
+// to form the pointer to the source tail instead of `add`: materializing the
+// tail-source address before the clone/delete pairs (instead of deriving it
+// from the parameter register at the tail line) keeps the parameter pointer
+// alive in its own register through the whole body.
 #include "fx_particle_system.h"
 
 class U1Tail_005CD380 {
@@ -45,8 +48,7 @@ Y3AssignTail_005CBEE0 &Y3AssignTail_005CBEE0::operator=(const Y3AssignTail_005CB
     Clonable *copySecond = sourceSecond ? sourceSecond->clone() : 0;
     delete m_second;
     m_second = copySecond;
-    const unsigned char *source = (const unsigned char *)&that;
-    ((U1Tail_005CD380 *)(m_tail))->assign(source + 8);
+    ((U1Tail_005CD380 *)(m_tail))->assign(that.m_tail);
     return *this;
 }
 
