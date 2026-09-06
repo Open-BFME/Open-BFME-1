@@ -41,16 +41,29 @@ bool StringBaseSkipHost::nextToken(StringBaseSkipHost *tok, const char *seps)
 	return end > start;
 }
 
+// retail 0x00887720 (54 bytes): same shape as skipNonSeps -- the first
+// separator is read into its own local, copied into the walking character,
+// and the do/while leaves through a goto on a match so the loop re-enters at
+// the compare and the miss exit falls into the return.
 static char *skipSeps(char *p, const char *seps)
 {
-	while (*p)
+	char c = *p;
+	while (c)
 	{
+		char first = *seps;
 		const char *s = seps;
-		while (*s && *s != *p)
-			++s;
-		if (!*s)
+		if (!first)
 			return p;
-		++p;
+		char sc = first;
+		do
+		{
+			if (sc == c)
+				goto advance;
+			sc = *++s;
+		} while (sc);
+		return p;
+advance:
+		c = *++p;
 	}
 	return p;
 }

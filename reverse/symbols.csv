@@ -1983,6 +1983,7 @@ name,address,notes
 ??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,Open-BFME7 ILT thunk of the out-of-line AsciiString copy (0x0005EE50) that the PlayerInfoMap hinted insert_unique at 0x00634650 calls after MSVC stops inlining the forwarder
+??0AsciiString@@QAE@ABV0@@Z,0x00887B60,StringBase<char> copy body the inlined AsciiString copy forwarder folds to (pinharvest x4); additive beside the 0x000416AF thunk pin -- the resolver tries every candidate per call site
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
@@ -8589,6 +8590,7 @@ name,address,notes
 ??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
+??1Rva0020F8E0_DeepBase@@UAE@XZ,0x00047C53,Open-BFME7 retail REL32 target the destructor at 0x0020F8E0 chains to; same shared ILT target as ??1PB_DeepBase@@UAE@XZ / ??1BFU_DeepBase@@UAE@XZ
 ??1Rva0024E8E0OpenContainLike@@UAE@XZ,0x00037A24,shape-identical to but not the same instance as the landed ??1OpenContain@@UAE@XZ (0x002262E0) -- this address is the existing still-a-dump pin Gen_dtor_0021e310, called by SlaughterHordeContainBase (0x0024E8E0); fresh class name so the real OpenContain pin is left untouched
 ??1Rva00256890PrimaryBase@@UAE@XZ,0x0002514E,pin near-twin primary base chain reuses Gen_dtor_001c0e70 body
 ??1Rva002E32A0AsciiString@@QAE@XZ,0x00887940,AsciiString destructor alias (releaseBuffer) called by 0x002E32A0
