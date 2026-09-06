@@ -25,10 +25,10 @@ public:
 
 typedef void (__cdecl *BfmeSkipCallback)(void *snapshot, void *ctx, int extra);
 
-class Gen009D8B60
+class BlockStreamReader
 {
 public:
-	void bfmeSkipBadBlock(void *snapshot, int size);
+	void skipBadBlock(void *snapshot, int size);
 
 private:
 	unsigned char m_pad0[8];
@@ -40,7 +40,7 @@ private:
 	int m_extra;
 };
 
-void Gen009D8B60::bfmeSkipBadBlock(void *snapshot, int size)
+void BlockStreamReader::skipBadBlock(void *snapshot, int size)
 {
 	if (m_stream->skip(size, 0) != size)
 	{
