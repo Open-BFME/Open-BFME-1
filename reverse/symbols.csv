@@ -83527,3 +83527,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeClipSegment6DF730@BfmePolygon6DF1F0@@QBEDPBUBfmeCoord6DF1F0@@0PAU2@H@Z,0x0000C9AA,"address-derived four-argument clip called by the 0x006DF730 retail body on the +0x1C pointer; the thunk targets 0x0018FBF0, in the same block as the two pinned predicates (0x0018F8A0, 0x0018FA20) and the pinned centre-point getter (0x0018F790) reached through the same field"
