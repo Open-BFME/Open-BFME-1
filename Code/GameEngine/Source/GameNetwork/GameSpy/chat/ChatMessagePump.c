@@ -69,3 +69,27 @@ void chatGetUserInfoA(CHAT chat,const char *nick,void *callback,void *param,int 
   }while(ciCheckForID(chat,ID));
  }
 }
+
+int ciAddGETBANFilter(CHAT,const char*,void*,void*);
+void chatEnumChannelBansA(CHAT chat, const char *channel, void *callback,
+	void *param, int blocking)
+{
+	ciConnection *connection = (ciConnection *)chat;
+	int ID;
+
+	if (!chat || !connection->connected)
+		return;
+
+	ciSocketSendf(&connection->socketOpaque, "MODE %s +b", channel);
+	ID = ciAddGETBANFilter(chat, channel, callback, param);
+
+	if (blocking)
+	{
+		do
+		{
+			ciThink(chat, ID);
+			msleep(10);
+		}
+		while (ciCheckForID(chat, ID));
+	}
+}
