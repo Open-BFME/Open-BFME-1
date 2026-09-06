@@ -86,6 +86,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build  # noqa: E402  (after the path insert that makes it importable)
+import import_pin_guard  # noqa: E402
 import progress  # noqa: E402
 
 ROOT = build.ROOT
@@ -742,6 +743,30 @@ def check(violations, path=BASELINE):
     return new, stale
 
 
+def verify_import_pins(exe=None, symbols=None):
+    """Gate the guarded CRT pins against the retail PE import directory.
+
+    This is intentionally a second, orthogonal check to the one-name/many-
+    addresses consistency invariant above.  The latter can accept a single
+    wrong pin; this check identifies the import reached by each compiler thunk.
+    """
+    try:
+        image = import_pin_guard.PEImage.from_path(exe or build.EXE)
+        pins = import_pin_guard.load_guarded_pins(symbols or build.SYMBOLS)
+        results = import_pin_guard.check_pins(image, pins)
+    except (OSError, ValueError) as exc:
+        print(f"CRT import pins: FAIL unable to inspect baseline: {exc}")
+        raise SystemExit(1)
+
+    failures = [result for result in results if not result.ok]
+    if failures:
+        print(f"CRT import pins: FAIL {len(failures)} of {len(results)} guarded pins")
+        for result in failures:
+            print(f"    {import_pin_guard._format_result(result)}")
+        raise SystemExit(1)
+    print(f"CRT import pins: OK ({len(results)} guarded pins)")
+
+
 def verify(path=BASELINE):
     """The gate entry point. Prints its own verdict; raises SystemExit on failure."""
     violations, stats = Scanner().scan()
@@ -763,6 +788,7 @@ def verify(path=BASELINE):
         raise SystemExit(1)
     print(f"Pin consistency: OK ({stats['multi_pinned']} multi-pinned symbols of "
           f"{stats['names']}; {len(violations)} baselined, 0 new, 0 stale)")
+    verify_import_pins()
 
 
 def main(argv=None):

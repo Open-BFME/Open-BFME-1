@@ -127,17 +127,17 @@ def test_the_walk_stops_at_a_body_the_ledger_has_proven(scanner):
 
 
 def test_the_gamewindow_colour_setters_are_reported(scanner):
-    """The live defect ba1dbf6f8 logged, caught by mechanism instead of prose.
+    """The historical ba1dbf6f8 wrong/right pair stays stable as a fixture.
 
-    0x00014867 is pinned as four different GameWindow colour setters at once.
-    Whichever one is right, three are wrong, and the sixteen rows that sit one
-    body early are downstream of that. A guard that reports zero here is not
-    measuring identity.
+    The live pin list is intentionally drained over time, so this regression
+    must carry the two addresses that exposed the defect instead of depending
+    on whichever backlog rows remain today.  The identity was claimed at
+    0x00478FE0 while the real colour setter body was 0x00479010; both extents
+    and their divergent bytes are still present in the matched ledger.
     """
-    pins = pin_consistency.load_pins()
     name = "?winSetEnabledColor@GameWindow@@QAEHHH@Z"
-    assert 0x00014867 in pins[name]
-    violation = scanner.inspect(name, pins[name])
+    pins = [0x00478FE0, 0x00479010]
+    violation = scanner.inspect(name, pins)
     assert violation is not None
     assert violation["kind"] in ("divergent-bodies", "size-disagreement")
     assert len(violation["bodies"]) > 1
