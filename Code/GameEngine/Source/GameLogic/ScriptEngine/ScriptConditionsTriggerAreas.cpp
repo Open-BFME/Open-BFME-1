@@ -2,36 +2,44 @@
 // readable body of ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // readable body of ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // readable body of ?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateTeamEnteredAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateTeamEnteredAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateTeamExitedAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateTeamExitedAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateNamedExitedArea@ScriptConditions@@IAE_NPAVParameter@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+// readable body of ?evaluateSkirmishNamedAreaExists@ScriptConditions@@IAE_NPAVParameter@@0@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 
-// The ScriptConditions trigger-area conditions:
+// Every ScriptConditions condition that asks where something is relative to a
+// trigger area:
 //
-//   0x00324AC0  evaluateTeamInsideAreaEntirely   213 bytes
-//   0x00324670  evaluateTeamInsideAreaPartially  239 bytes
-//   0x003247A0  evaluateNamedInsideArea          248 bytes
+//   0x00324670  evaluateTeamInsideAreaPartially   someInsideSomeOutside || allInside
+//   0x003247A0  evaluateNamedInsideArea           pointInTrigger on the object
+//   0x00324AC0  evaluateTeamInsideAreaEntirely    allInside
+//   0x00324E40  evaluateTeamEnteredAreaEntirely   didAllEnter       0x000F5580
+//   0x00324ED0  evaluateTeamEnteredAreaPartially  didPartialEnter   0x000F56D0
+//   0x00324F60  evaluateTeamExitedAreaEntirely    didAllExit        0x000F58B0
+//   0x00324FF0  evaluateTeamExitedAreaPartially   didPartialExit    0x000F57C0
+//   evaluateNamedExitedArea                       didExit
+//   evaluateSkirmishNamedAreaExists               the lookup alone
 //
-// They share this translation unit because they share every model in it, down
-// to the two ScriptEngine vtable slots and the delegating AsciiString.
+// All nine look the area up the same way and differ only in what they ask of
+// it, so they share every model here. They sat in four files that each carried
+// a private copy of Parameter, AsciiString, StringBase and the ScriptEngine
+// vtable, and those copies had already drifted: two spelled Parameter as a
+// 0x10-byte run to the string, hiding the Int at +0x08 that the other two
+// read, and each file cut the vtable off after the last slot it happened to
+// need (17, 22 or 26).
 //
-// Both are the reference's bodies -- the first is the TeamInside condition
-// despite its name -- with the one BFME change their sibling
-// ScriptConditions_evaluateTeamCanPathToWaypoint.cpp already carries:
+// The Team callees are the Team.cpp cluster in that file's order, ending at
+// allInside (0x000F5A30) and someInsideSomeOutside (0x000F5CE0). BFME's
 // getTeamNamed takes a second Bool the reference does not have.
 //
-// The two ScriptEngine slots are read off the call sites rather than guessed:
-// getTeamNamed is vtable+0x44 (slot 17), which the sibling already pins, and
-// getQualifiedTriggerAreaByName is vtable+0x58 (slot 22).
-//
 // Parameter::getString returns a const reference and getInt the Int at +0x08;
-// both are inlined here, so the two by-value AsciiString arguments are built
-// in the outgoing argument slots by StringBase<char>'s copy constructor. That
-// is why AsciiString is the delegating slice the sibling uses -- a copy
-// constructor that visibly forwards to StringBase<char> is what puts the
-// __$SEHRec$ store ahead of `mov ecx, esp`.
-//
-// Two callees are pinned rather than owned, both calls these bodies make on
-// the team they looked up: ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z at
-// 0x000F5A30 and ?someInsideSomeOutside@Team@@QBE_NPAVPolygonTrigger@@I@Z at
-// 0x000F5CE0, which the partial condition tries first and falls back from.
+// both are inlined here, so the by-value AsciiString arguments are built in
+// the outgoing argument slots by StringBase<char>'s copy constructor. That is
+// why AsciiString is a delegating slice: a copy constructor that visibly
+// forwards to StringBase<char> is what puts the __$SEHRec$ store ahead of
+// `mov ecx, esp`.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -64,6 +72,7 @@ class Object
 {
 public:
 	const Coord3D *getPosition(void) const { return &m_position; }
+	Bool didExit(const PolygonTrigger *pTrigger) const;
 
 private:
 	unsigned char m_bfmeHead[0x38];
@@ -114,6 +123,10 @@ class Team
 public:
 	Bool allInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;			// retail 0x000F5A30
 	Bool someInsideSomeOutside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;	// retail 0x000F5CE0
+	Bool didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
+	Bool didPartialEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
+	Bool didPartialExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
+	Bool didAllExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
@@ -158,6 +171,12 @@ protected:
 	Bool evaluateTeamInsideAreaEntirely(Parameter *, Parameter *, Parameter *);
 	Bool evaluateTeamInsideAreaPartially(Parameter *, Parameter *, Parameter *);
 	Bool evaluateNamedInsideArea(Parameter *, Parameter *);
+	Bool evaluateTeamEnteredAreaEntirely(Parameter *, Parameter *, Parameter *);
+	Bool evaluateTeamEnteredAreaPartially(Parameter *, Parameter *, Parameter *);
+	Bool evaluateTeamExitedAreaEntirely(Parameter *, Parameter *, Parameter *);
+	Bool evaluateTeamExitedAreaPartially(Parameter *, Parameter *, Parameter *);
+	Bool evaluateNamedExitedArea(Parameter *, Parameter *);
+	Bool evaluateSkirmishNamedAreaExists(Parameter *, Parameter *);
 };
 
 // ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z
@@ -210,4 +229,96 @@ Bool ScriptConditions::evaluateNamedInsideArea(Parameter *pUnitParm, Parameter *
 		return pTrig->pointInTrigger(iCoord);
 	}
 	return false; // Non existent team isn't in trigger area. :)
+}
+
+// ?evaluateTeamEnteredAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z
+Bool ScriptConditions::evaluateTeamEnteredAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
+{
+	Team *pTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (!pTeam) {
+		return false;
+	}
+
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+
+	if (pTrig) {
+		return pTeam->didAllEnter(pTrig, (UnsignedInt)pTypeParm->getInt());
+	}
+
+	return false;
+}
+
+// ?evaluateTeamEnteredAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z
+Bool ScriptConditions::evaluateTeamEnteredAreaPartially(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
+{
+	Team *pTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (!pTeam) {
+		return false;
+	}
+
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+
+	if (pTrig) {
+		return pTeam->didPartialEnter(pTrig, (UnsignedInt)pTypeParm->getInt());
+	}
+
+	return false;
+}
+
+// ?evaluateTeamExitedAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z
+Bool ScriptConditions::evaluateTeamExitedAreaEntirely(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
+{
+	Team *pTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (!pTeam) {
+		return false;
+	}
+
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+
+	if (!pTrig) {
+		return false;
+	}
+
+	return (pTeam->didAllExit(pTrig, (UnsignedInt)pTypeParm->getInt()));
+}
+
+// ?evaluateTeamExitedAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z
+Bool ScriptConditions::evaluateTeamExitedAreaPartially(Parameter *pTeamParm, Parameter *pTriggerParm, Parameter *pTypeParm)
+{
+	Team *pTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (!pTeam) {
+		return false;
+	}
+
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+
+	if (!pTrig) {
+		return false;
+	}
+
+	return (pTeam->didPartialExit(pTrig, (UnsignedInt)pTypeParm->getInt()));
+}
+
+// ?evaluateNamedExitedArea@ScriptConditions@@IAE_NPAVParameter@@0@Z
+Bool ScriptConditions::evaluateNamedExitedArea(Parameter *pUnitParm, Parameter *pTriggerParm)
+{
+	Object *pUnit = TheScriptEngine->getUnitNamed(*(const AsciiString *)pUnitParm);
+	if (!pUnit) {
+		return false;
+	}
+
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+
+	if (!pTrig) {
+		return false;
+	}
+
+	return (pUnit->didExit(pTrig));
+}
+
+// ?evaluateSkirmishNamedAreaExists@ScriptConditions@@IAE_NPAVParameter@@0@Z
+Bool ScriptConditions::evaluateSkirmishNamedAreaExists(Parameter *, Parameter *pTriggerParm)
+{
+	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(pTriggerParm->getString());
+	return (pTrig != 0);
 }
