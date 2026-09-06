@@ -84237,3 +84237,7 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?find@Rva00137E80Map@@QAEPAURva001366A0Node@@ABVAsciiString@@@Z,0x1460a,Retail ThingFactory lookup helper at proven call site
+?newTemplate@BfmeThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x1056e,Retail ThingFactory lookup helper at proven call site
+?erase@Rva00137E80Map@@QAEIABVAsciiString@@@Z,0x417c7,Retail ThingFactory lookup helper at proven call site
+??ARva00137E80Map@@QAEAAPAVThingTemplate@@ABVAsciiString@@@Z,0x27147,Retail ThingFactory lookup helper at proven call site
