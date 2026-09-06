@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9ff91c840a83a9b4919f18f0c50788dee0f8636d0d20044ea7edf1f09874f71e",
+  "symbol": "?d_009a4c20@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_009a4c20@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME5 conversion of the codec state allocator at retail 0x009A4C20.\n\nextern \"C\" void * __cdecl memset(void *, int, unsigned int);\n#pragma intrinsic(memset)\n\nclass Bucket\n{\npublic:\n\t enum BucketMagicEnum { Bucket_GLUE_NOT_IMPLEMENTED = 0 };\n\t static void *__cdecl operator new(unsigned int bytes, BucketMagicEnum tag);\n};\n\nextern void __cdecl d_009a4b10(void);\nvoid __cdecl freeCodecMemory(void *memory);\nextern \"C\" void * __cdecl memcpy(void *, const void *, unsigned int);\n#pragma intrinsic(memcpy)\n\n// ?Rva009A4C20Create@@YAPAXXZ\nvoid *__cdecl Rva009A4C20Create(void)\n{\n\tunsigned int initial[14] = { 0, 0, 0, 0, 8, 8, 0, 0, 0, 0, 0, 0, 0, 0 };\n\tvoid *state = Bucket::operator new(0x4954, Bucket::Bucket_GLUE_NOT_IMPLEMENTED);\n\n\tif (state == 0)\n\t\treturn 0;\n\n\tmemset(state, 0, 0x4954);\n\tmemcpy((unsigned char *)state + 0x1b0, initial, sizeof(initial));\n\n\tif (((int (__cdecl *)(void *))d_009a4b10)(state) == 0)\n\t{\n\t\tfreeCodecMemory(state);\n\t\treturn 0;\n\t}\n\n\t*(unsigned int *)((unsigned char *)state + 0x1a8) = 0x46;\n\t*(void **)((unsigned char *)state + 0x294) = (void *)0x01356b60;\n\tmemset((unsigned char *)state + 0x3a0, 0, 0x14);\n\t*(unsigned short *)((unsigned char *)state + 0x3b4) = 0;\n\tmemset((unsigned char *)state + 0x3b6, 0, 0x18c);\n\treturn state;\n}\n"
+}
