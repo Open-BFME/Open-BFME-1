@@ -9773,6 +9773,7 @@ name,address,notes
 ?Add_Record_Texture@@YAXABV?$RefCountPtr@VTextureClass@@@@@Z,0x00937CC0,statistics.cpp file-static Add_Record_Texture (argument in esi); called from Record_Texture 0x00937D60; body still 3 bytes off (EH state placement)
 ?Add_To_Collection@CullSystemClass@@IAEXPAVCullableClass@@@Z,0x008E21D0
 ?Add_To_Static_Sort_List@WW3D@@SAXPAVRenderObjClass@@I@Z,0x008FD4C0
+?ArrayDeleteHelperBodyThunk@@YAXXZ,0x009F6D76,pin for ArrayDeleteHelperBodyThunk object-symbol
 ?Alloc@FastAllocatorGeneral@@QAEPAXI@Z,0x00AFEE40,decoded from Allocate_Memory call site
 ?Allocate_DX8_Dynamic_Buffer@DynamicIBAccessClass@@QAEXXZ,0x0091D560
 ?Allocate_Object_Memory@?$ObjectPoolClass@VCameraShakerClass@CameraShakeSystemClass@@$0BAA@@@QAEPAVCameraShakerClass@CameraShakeSystemClass@@XZ,0x00002603,pinharvest x1 (thunk)
@@ -76366,6 +76367,7 @@ name,address,notes
 ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0053A280,GameList tooltip callback pushed by Apt OnlineCustomMatch onInitGadget 0x0053A710 via winSetTooltipFunc
 ?d_00794790@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794790,caller-proven BFME special push-button image path
 ?d_008790b0@@YAJJ@Z,0x008790B0,nbench randnum remap; same body as ?d_008790b0@@YAHH@Z (int32 is long)
+?d_008f7ec0@@YAXXZ,0x008F7EC0,pin for BfmeThingCDE destructor cleanup helper
 ?d_00881770@@YAXHHHUSomeStruct@@@Z,0x00881770,pin
 ?d_008859d0@Rva00886A20Class@@QAEXPBDPAD@Z,0x008859D0,pin
 ?d_009aa4f0@@YAXXZ,0x009AA4F0,address-derived callee of the codec dispatch body at 0x009AA8F0; target read from the REL32 at its call site; unclaimed in the ledger
