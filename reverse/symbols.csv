@@ -2207,6 +2207,8 @@ name,address,notes
 ??0BfmeRMiddle@@QAE@PAX0@Z,0x00041CBD,Open-BFME5 the base the multi-vftable constructors at 0x005F2D20 and 0x005F6530 forward to
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
+??0BfmeRoomAB@@QAE@ABV0@@Z,0x00887B60,pin
+??0BfmeRoomAC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomQR@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin
@@ -73802,6 +73804,7 @@ name,address,notes
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
 ?bfmeFind@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,MapCache::findMap tree lookup ILT
 ?bfmeFindA1001@BfmeLook1001@@QAEPAVBfmeX1001@@H@Z,0x0001F253,pin
+?bfmeFindAB@BfmeOwnAB@@QAEPAVBfmeNodeAB@@PAXVBfmeRoomAB@@@Z,0x0002CB97,pin
 ?bfmeFindAKB@BfmeSubAKB@@QAEPAVBfmeFoundAKB@@H@Z,0x0001B185,pin
 ?bfmeFindAS@BfmeRegistryAS@@QAEPAXVAsciiStringAS@@@Z,0x0000D3FA,Open-BFME5 the registry lookup the name resolve at 0x002DAE80 stores
 ?bfmeFindAWB@BfmeKeyAWB@@QAEPAUBfmeNodeAWB@@XZ,0x00046538,pin
@@ -75147,6 +75150,7 @@ name,address,notes
 ?bfmeRun@BfmeSecondaryTarget@@QAEXPAVObject@@HH@Z,0x000160D1,Open-BFME5 optional secondary dispatch called by 0x0028B910
 ?bfmeRun@BfmeThing8030@@QAEXPAVBfmeEffectState8030@@PAUBfmeEffectRecord8030@@HH@Z,0x00002A59,Open-BFME5 masked effect dispatch called by 0x00288030
 ?bfmeRun@Glo012F1028Item@@QAEXXZ,0x00006348,Open-BFME5 ILT thunk to body 0x00619900; ?bfmeNotify@Glo012F1028Sub@@QAEXXZ at 0x003CAD20 calls it on each item between the two calls it makes on itself; address-derived name
+?bfmeRunAD@Gen_00609320@@QAEXPAXVBfmePairAD@@HHH@Z,0x00021CEC,pin
 ?bfmeRunBBA@BfmeEndBBA@@QAEXXZ,0x00046538,pin
 ?bfmeRunBDC@BfmeInnerBDC@@QAEXXZ,0x0003436A,pin
 ?bfmeRunBEA@BfmeSubBEA@@QAEXXZ,0x0003DAA5,pin
@@ -84044,7 +84048,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BfmeRoomAB@@QAE@ABV0@@Z,0x00887B60,pin
-?bfmeFindAB@BfmeOwnAB@@QAEPAVBfmeNodeAB@@PAXVBfmeRoomAB@@@Z,0x0002CB97,pin
-??0BfmeRoomAC@@QAE@ABV0@@Z,0x00887B60,pin
-?bfmeRunAD@Gen_00609320@@QAEXPAXVBfmePairAD@@HHH@Z,0x00021CEC,pin
