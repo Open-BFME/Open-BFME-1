@@ -10570,6 +10570,8 @@ name,address,notes
 ?Rva00807CF0@@YAHPAXH0@Z,0x00807CF0,Y2 lane: address-derived; the callback 0x00807BA0 installs on its raw socket
 ?Rva00808220@@YAHPAURva00807BA0Ping@@IPBDHH@Z,0x00808220,Y2 lane: address-derived; the five-argument body the wrappers at 0x008081F0 and 0x008085A0 both forward to
 ?Rva00809010Find@@YGPAURva00809500Sink@@PAURva00809500Entry@@@Z,0x00809010,U2 lane: stdcall lookup called by the 27-byte wrapper at 0x00809500
+?find@Rva00809010Finder@@QAEPAURva00809500Sink@@PAURva00809500Entry@@@Z,0x00809010,lookup call keeps the LanTheaterEmulator receiver in ecx
+?ji_009f70ba@@YAPADPADPBDI@Z,0x009F70BA,typed direct import thunk used by the LanTheaterEmulator address update
 ?Rva0080B000Create@@YAPAXXZ,0x0080B000,Y2 lane: address-derived; the no-argument constructor 0x00806910 stores at +0x00 of its record, paired with the teardown at 0x0080B070
 ?Rva0080B070Destroy@@YAXPAX@Z,0x0080B070,Y2 lane: address-derived; the one-argument teardown 0x00806580 and its two siblings call on the pointer at +0x00 of their record
 ?Rva0080B150@@YAHPAX0H@Z,0x0080B150,Y2 lane: address-derived; 0x00806910 hands it the object from 0x0080B000 with a 0x10-byte sockaddr and treats a negative result as fatal
