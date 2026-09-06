@@ -83609,3 +83609,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$__copy@PBUS4Poly000BC2E0@@PAU1@H@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000FC40,0x004A2370 calls +0x00b1 and +0x00e4 ILT enters matched 112-byte copy body 0x0049D5D0
 ??$_Destroy@PAUS4Poly000BC2E0@@@_STL@@YAXPAUS4Poly000BC2E0@@0@Z,0x00046F56,0x004A2370 call +0x00bb ILT enters matched virtual stride-112 walk 0x000BB860
 ??$__uninitialized_copy@PBUS4Poly000BC2E0@@PAU1@@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0001FCF3,0x004A2370 call +0x0119 ILT enters matched stride-112 copy walk 0x0049E6D0
+?registerUpdate@Rva004A66AOwner@@QAEXPAVGen00296F90@@@Z,0x0004A66A,pin
+?setWakeFrame@UpdateModule@@QAEXPAVObject@@H@Z,0x000157DA,pin
