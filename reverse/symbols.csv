@@ -79063,7 +79063,6 @@ name,address,notes
 ?handle@Gen00848AC0@@QAEXXZ,0x00848AC0,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen00850920@@QAEXPBXH@Z,0x00850920,callee of the 102 17-byte table-register forwarders (MidTableRegisterForwarders.cpp); thiscall two-arg appender; ret 8
 ?handle@Gen00853580@@QAEXXZ,0x00853580,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
-?handle@Gen008811D0@@QAEXXZ,0x008811D0,address-derived callee of the load-ecx pointer tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen00887940@@QAEXXZ,0x00887940,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen00887C90@@QAEXXZ,0x00887C90,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen008881D0@@QAEXXZ,0x008881D0,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
