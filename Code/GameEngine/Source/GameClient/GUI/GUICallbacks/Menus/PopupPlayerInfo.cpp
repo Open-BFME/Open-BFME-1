@@ -131,32 +131,7 @@ static const char *rankNames[] = {
 };
 
 
-static const Image* lookupRankImage(AsciiString side, Int rank)
-{
-	if (side.isEmpty())
-		return TheMappedImageCollection->findImageByName("NewPlayer");
-
-	if (rank < 0 || rank >= MAX_RANKS)
-		return NULL;
-
-	// dirty hack rather than try to get artists to follow a naming convention
-	if (side == "USA")
-		side = "_USA";
-	else if (side == "China")
-		side = "_China";
-	else if (side == "GLA")
-		side = "_GLA";
-	else if (side == "Random")
-		side = "Elite";
-
-	AsciiString fullImageName;
-	fullImageName.format("Rank_%s%s", rankNames[rank], side.str());
-	if(strcmp(fullImageName.str(),"Rank_PrivateElite") == 0)
-		fullImageName = "Rank";//_Private_Elite";
-	const Image *img = TheMappedImageCollection->findImageByName(fullImageName);
-	DEBUG_ASSERTCRASH( img, ("Could not load rank image: %s", fullImageName.str()));
-	return img;
-}
+const Image* lookupRankImageForPopup(AsciiString side, Int rank);
 
 
 static Int getTotalDisconnectsFromFile(Int playerID)
@@ -1016,7 +991,7 @@ void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 		if (rankPoints == 0 || pPlayerTemplate == NULL)
 			win->winSetEnabledImage(0, TheMappedImageCollection->findImageByName("NewPlayer"));
 		else
-			win->winSetEnabledImage(0, lookupRankImage(pPlayerTemplate->getBaseSide(), currentRank));
+			win->winSetEnabledImage(0, lookupRankImageForPopup(pPlayerTemplate->getBaseSide(), currentRank));
 //x		win->setTooltipText(rankStr);  //ex: Corporal
 	}
 
