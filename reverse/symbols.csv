@@ -2111,6 +2111,7 @@ name,address,notes
 ??0BfmeDX8VertexBuffer@@QAE@IGW4UsageType@0@I@Z,0x0091F2F0,view-class alias of ??0DX8VertexBufferClass@@QAE@IGW4UsageType@0@I@Z; W3DVolumetricShadow.cpp allocates the retail 0x20-byte size through a standalone view because the vendored class is four bytes shorter
 ??0BfmeDelayedLuaEvent@@QAE@XZ,0x0003A1C5,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element constructor; DIR32 sites are masked by the byte gate so this records the address
 ??0BfmeDelayedLuaEventList@@QAE@XZ,0x00019CF9,local constructor identity adapter to DelayedLuaEventList thunk
+??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr2_1043@@QAE@XZ,0x000180D9,pin
 ??0BfmeHelperYS@@QAE@XZ,0x00013921,Open-BFME5 the helper constructor the attach at 0x00755E70 runs once
@@ -73479,6 +73480,7 @@ name,address,notes
 ?bfmeFallback1281@BfmeSlotDispatcher1281@@QAEXPAXHH@Z,0x008BC710,address-derived fallback callee; argument shape decoded from the 0x008BCCC0 retail call site
 ?bfmeFallback961@BfmeHost961@@QAEXHH@Z,0x0001C46D,pin
 ?bfmeFallback977C@@YADXZ,0x00892210,pin
+?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,retail fatal helper alias used by MessageBox callback throw path at 0x00522470 and 0x005224C0
 ?bfmeFatal1043@@YGXPAVBfmeErr1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFb1148@BfmeS1148@@QAEDXZ,0x00020437,pin
@@ -80965,6 +80967,7 @@ name,address,notes
 ?removeOverrideTeamRelationship@BfmeTeamInstanceLink@@QAEXI@Z,0x0001A48D,Open-BFME5 view-class spelling of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; called through the view so the in-TU definition cannot inline when retail inlines the TeamPrototype walk into TeamFactory::teamAboutToBeDeleted
 ?removeOverrideTeamRelationship@Team@@QAEXI@Z,0x0001A48D,Open-BFME5 ILT thunk to body 0x000F2530; ?teamAboutToBeDeleted@TeamPrototype@@QAEXPAVTeam@@@Z at 0x000F4090 calls it on every team with the departing team id or zero
 ?removeOverrideTeamRelationship@Team@@QAE_NI@Z,0x0001A48D,Open-BFME5 vendored-header spelling (Bool return) of the ILT already pinned as ?removeOverrideTeamRelationship@Team@@QAEXI@Z; retail returns void and the call site discards it either way
+?removeParentObject@W3DGhostObject@@IAEXXZ,0x006BC750,BFME W3DGhostObject helper called by setLocalPlayerIndex
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003F233,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?removePos@Pathfinder@@QAEXPAVObject@@@Z,0x0001D9DA,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C before the layer store
 ?removeProp@W3DPropBuffer@@QAEXH@Z,0x00018F84
@@ -81124,6 +81127,7 @@ name,address,notes
 ?resolveOwnerPosition@AudioEventRTS@@QAEXPAUCoord3D@@PA_N@Z,0x00029AE1,AudioEventRTS owner-position resolve ILT to 0x000B4020 used by the ObjectID constructor
 ?restore@Rva0051D690Shell@@QAEXXZ,0x0002359C,ILT TheShell restore used by 0x0051D690
 ?restoreGlobalDataFields@RecorderClass@@QAEXXZ,0x0000BD1B,BFME-only RecorderClass entry ReplayMenuShutdown opens with; ILT thunk to body 0x00097360
+?restoreParentObject@W3DGhostObject@@IAEXXZ,0x006BC7B0,BFME W3DGhostObject helper called by setLocalPlayerIndex
 ?revalidateOccupiers@SpawnPointProductionExitUpdate@@AAEXXZ,0x0002374A
 ?revealMapForPlayer@PartitionManagerImpl008F8D60@@QAEXH@Z,0x008F8D60,BFME PartitionManager implementation delegate target from the public wrapper at 0x008F73D0
 ?revealMapForPlayerPermanently@PartitionManager@@QAEXH@Z,0x008F73E0,REL32 pin from ScriptActions::doBorderSwitch @0x2EFC50
@@ -81237,6 +81241,7 @@ name,address,notes
 ?s_bfmeA@?1??bfmeGo1133@BfmeObj1133@@QBEHXZ@4VBfmeBits1133@@A,0x00EF0718,pin
 ?s_bfmeB@?1??bfmeGo1133@BfmeObj1133@@QBEHXZ@4VBfmeBits1133@@A,0x00EF06FC,pin
 ?saveReplay@@YAXVUnicodeString@@@Z,0x004DE8E0,PopupReplaySystem callee from decode_calls
+?sbumpc@?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@QAEHXZ,0x00833FF0,wide basic_streambuf::sbumpc as spelled (int return) by the hand-modelled STLport in TimeGetWideMatch00836F50.cpp; same body as the G-return pin
 ?scale@Rva006AE150Argument@@QAEMXZ,0x00038C21,address-derived scaled-value factor helper used by Rva006AE150Owner::compute
 ?scanClosestTarget@AutoFindHealingUpdate@@QAEPAVObject@@XZ,0x00036787,packet 002817b0 pin
 ?scanIndexList@INI@@SAHPBDPBQBD@Z,0x008509E0
@@ -83583,7 +83588,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
-?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,retail fatal helper alias used by MessageBox callback throw path at 0x00522470 and 0x005224C0
-?removeParentObject@W3DGhostObject@@IAEXXZ,0x006BC750,BFME W3DGhostObject helper called by setLocalPlayerIndex
-?restoreParentObject@W3DGhostObject@@IAEXXZ,0x006BC7B0,BFME W3DGhostObject helper called by setLocalPlayerIndex
