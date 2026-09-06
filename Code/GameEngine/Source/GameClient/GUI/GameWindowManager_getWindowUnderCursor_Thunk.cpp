@@ -1,395 +1,101 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
 
-class GameWindow;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
-class GameWindowManager
-{
-public:
-	virtual GameWindow * getWindowUnderCursor(int, int, bool);
-};
+#include "PreRTS.h"
+#include "Common/Debug.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GameWindow.h"
 
 // ?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z
-__declspec(naked) GameWindow * GameWindowManager::getWindowUnderCursor(int, int, bool)
+GameWindow *GameWindowManager::getWindowUnderCursor( Int x, Int y, Bool ignoreEnabled )
 {
-	__asm {
-        __emit 0x55
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x18
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x1a
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x52
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xfd
-        __emit 0x6d
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x5d
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x24
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x1a
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x52
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xdc
-        __emit 0x6d
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x5d
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x20
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x23
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x52
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xb2
-        __emit 0x6d
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x5d
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x14
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x74
-        __emit 0x45
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x08
-        __emit 0xa8
-        __emit 0x20
-        __emit 0x74
-        __emit 0x20
-        __emit 0xa8
-        __emit 0x10
-        __emit 0x75
-        __emit 0x1c
-        __emit 0x3b
-        __emit 0x79
-        __emit 0x14
-        __emit 0x7c
-        __emit 0x17
-        __emit 0x3b
-        __emit 0x79
-        __emit 0x1c
-        __emit 0x7f
-        __emit 0x12
-        __emit 0x3b
-        __emit 0x71
-        __emit 0x18
-        __emit 0x7c
-        __emit 0x0d
-        __emit 0x3b
-        __emit 0x71
-        __emit 0x20
-        __emit 0x7f
-        __emit 0x08
-        __emit 0xa8
-        __emit 0x08
-        __emit 0x75
-        __emit 0x10
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x75
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x89
-        __emit 0xf8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x75
-        __emit 0xcf
-        __emit 0xeb
-        __emit 0x12
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x53
-        __emit 0x56
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x5b
-        __emit 0x6d
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x85
-        __emit 0x96
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x3d
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x08
-        __emit 0xa8
-        __emit 0x70
-        __emit 0x75
-        __emit 0x1c
-        __emit 0x3b
-        __emit 0x79
-        __emit 0x14
-        __emit 0x7c
-        __emit 0x17
-        __emit 0x3b
-        __emit 0x79
-        __emit 0x1c
-        __emit 0x7f
-        __emit 0x12
-        __emit 0x3b
-        __emit 0x71
-        __emit 0x18
-        __emit 0x7c
-        __emit 0x0d
-        __emit 0x3b
-        __emit 0x71
-        __emit 0x20
-        __emit 0x7f
-        __emit 0x08
-        __emit 0xa8
-        __emit 0x08
-        __emit 0x75
-        __emit 0x10
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x75
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x89
-        __emit 0xf8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x75
-        __emit 0xd3
-        __emit 0xeb
-        __emit 0x0e
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x53
-        __emit 0x56
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x13
-        __emit 0x6d
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x52
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x08
-        __emit 0xf6
-        __emit 0xc1
-        __emit 0x40
-        __emit 0x74
-        __emit 0x22
-        __emit 0xf6
-        __emit 0xc1
-        __emit 0x10
-        __emit 0x75
-        __emit 0x1d
-        __emit 0x3b
-        __emit 0x78
-        __emit 0x14
-        __emit 0x7c
-        __emit 0x18
-        __emit 0x3b
-        __emit 0x78
-        __emit 0x1c
-        __emit 0x7f
-        __emit 0x13
-        __emit 0x3b
-        __emit 0x70
-        __emit 0x18
-        __emit 0x7c
-        __emit 0x0e
-        __emit 0x3b
-        __emit 0x70
-        __emit 0x20
-        __emit 0x7f
-        __emit 0x09
-        __emit 0xf6
-        __emit 0xc1
-        __emit 0x08
-        __emit 0x75
-        __emit 0x15
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x75
-        __emit 0x11
-        __emit 0x8b
-        __emit 0x80
-        __emit 0xf8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xcc
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x5d
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x53
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0xe8
-        __emit 0xc1
-        __emit 0x6c
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x13
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x08
-        __emit 0xf6
-        __emit 0xc5
-        __emit 0x02
-        __emit 0x75
-        __emit 0x09
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x07
-        __emit 0xf6
-        __emit 0xc1
-        __emit 0x08
-        __emit 0x75
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x5d
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x00
+	if( m_mouseCaptor )
+	{
+		return m_mouseCaptor->winPointInChild( x, y, ignoreEnabled );
 	}
+
+	if( m_grabWindow )
+	{
+		return m_grabWindow->winPointInChild( x, y, ignoreEnabled );
+	}
+
+	GameWindow *window = NULL;
+	if( m_modalHead && m_modalHead->window )
+	{
+		return m_modalHead->window->winPointInChild( x, y, ignoreEnabled );
+	}
+	else
+	{
+		for( window = m_windowList; window; window = window->m_next )
+		{
+			if( BitTest( window->m_status, WIN_STATUS_ABOVE ) &&
+					!BitTest( window->m_status, WIN_STATUS_HIDDEN ) &&
+					x >= window->m_region.lo.x &&
+					x <= window->m_region.hi.x &&
+					y >= window->m_region.lo.y &&
+					y <= window->m_region.hi.y )
+			{
+				if( BitTest( window->m_status, WIN_STATUS_ENABLED ) || ignoreEnabled )
+				{
+					window = window->winPointInChild( x, y, ignoreEnabled );
+					break;
+				}
+			}
+		}
+
+		if( window == NULL )
+		{
+			for( window = m_windowList; window; window = window->m_next )
+			{
+				if( !BitTest( window->m_status, WIN_STATUS_ABOVE |
+																				 WIN_STATUS_BELOW |
+																				 WIN_STATUS_HIDDEN ) &&
+						x >= window->m_region.lo.x &&
+						x <= window->m_region.hi.x &&
+						y >= window->m_region.lo.y &&
+						y <= window->m_region.hi.y )
+				{
+					if( BitTest( window->m_status, WIN_STATUS_ENABLED ) || ignoreEnabled )
+					{
+						window = window->winPointInChild( x, y, ignoreEnabled );
+						break;
+					}
+				}
+			}
+		}
+
+		if( window == NULL )
+		{
+			for( window = m_windowList; window; window = window->m_next )
+			{
+				if( BitTest( window->m_status, WIN_STATUS_BELOW ) &&
+						!BitTest( window->m_status, WIN_STATUS_HIDDEN ) &&
+						x >= window->m_region.lo.x &&
+						x <= window->m_region.hi.x &&
+						y >= window->m_region.lo.y &&
+						y <= window->m_region.hi.y )
+				{
+					if( BitTest( window->m_status, WIN_STATUS_ENABLED ) || ignoreEnabled )
+					{
+						window = window->winPointInChild( x, y, ignoreEnabled );
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	if( window )
+	{
+		if( BitTest( window->m_status, WIN_STATUS_NO_INPUT ) )
+		{
+			window = NULL;
+		}
+		else if( ignoreEnabled && !( BitTest( window->m_status, WIN_STATUS_ENABLED ) ) )
+		{
+			window = NULL;
+		}
+	}
+
+	return window;
 }
