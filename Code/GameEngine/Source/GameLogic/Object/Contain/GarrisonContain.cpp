@@ -57,6 +57,27 @@
 #include "GameClient/InGameUI.h"
 #include "GameClient/View.h"
 
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
+
+template<int NUMBITS>
+class BfmeBitFlags
+{
+public:
+	Bool test(Int idx) const { return m_bits.test(idx); }
+	void set(Int idx) { m_bits.set(idx); }
+
+private:
+	_STL::bitset<NUMBITS> m_bits;
+};
+
+typedef BfmeBitFlags<288> BfmeModelConditionFlags;
+
+enum BfmeModelConditionFlagType
+{
+	BFME_MODELCONDITION_GARRISONED = 10
+};
+
 // BFME's body-module vtable puts getDamageState at slot 8; the ZH header lands
 // it at 11, so the call comes out [edx+0x2c] instead of [edx+0x20].
 class BFMERetailBodyVTable
@@ -72,6 +93,102 @@ public:
 	virtual void slot7() = 0;
 	virtual BodyDamageType getDamageState(void) const = 0;
 };
+
+extern void j_0002191d();
+
+class BfmeGarrisonContainVTable
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0; virtual void slot0C() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void slot1C() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0; virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual const Player *getApparentControllingPlayer(const Player *) const = 0;
+	virtual void slot40() = 0; virtual void slot44() = 0; virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void slot50() = 0; virtual void slot54() = 0; virtual void slot58() = 0; virtual void slot5C() = 0;
+	virtual void slot60() = 0; virtual void slot64() = 0; virtual void slot68() = 0; virtual void slot6C() = 0;
+	virtual void slot70() = 0; virtual void slot74() = 0; virtual void slot78() = 0; virtual void slot7C() = 0;
+	virtual void slot80() = 0; virtual void slot84() = 0; virtual void slot88() = 0; virtual void slot8C() = 0;
+	virtual void slot90() = 0; virtual void slot94() = 0; virtual void slot98() = 0; virtual void slot9C() = 0;
+	virtual void slotA0() = 0; virtual void slotA4() = 0; virtual void slotA8() = 0; virtual void slotAC() = 0;
+	virtual void slotB0() = 0; virtual void slotB4() = 0; virtual void slotB8() = 0; virtual void slotBC() = 0;
+	virtual void slotC0() = 0; virtual void slotC4() = 0; virtual void slotC8() = 0; virtual void slotCC() = 0;
+	virtual void slotD0() = 0; virtual void slotD4() = 0; virtual void slotD8() = 0; virtual void slotDC() = 0;
+	virtual void slotE0() = 0; virtual void slotE4() = 0; virtual void slotE8() = 0; virtual void slotEC() = 0;
+	virtual void slotF0() = 0; virtual void slotF4() = 0; virtual void slotF8() = 0; virtual void slotFC() = 0;
+	virtual UnsignedInt getContainCount(Bool countRiders) const = 0;
+	virtual void slot104() = 0; virtual void slot108() = 0; virtual void slot10C() = 0;
+	virtual UnsignedInt getStealthUnitsContained() const = 0;
+};
+
+class BfmeObjectModelCondition;
+
+class BfmeGarrisonContain : public BfmeGarrisonContainVTable
+{
+public:
+	virtual void recalcApparentControllingPlayer();
+	BfmeObjectModelCondition *getObject()
+	{
+		return reinterpret_cast<BfmeObjectModelCondition *>(
+			*reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 0x18));
+	}
+	BfmeObjectModelCondition &getObjectReference()
+	{
+		return *getObject();
+	}
+};
+
+class BfmeGarrisonContainLoadAccess : public GarrisonContain
+{
+public:
+	static void load(GarrisonContain *contain)
+	{
+		static_cast<BfmeGarrisonContainLoadAccess *>(contain)->loadGarrisonPoints();
+	}
+};
+
+class BfmeObjectVTable
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0; virtual void slot0C() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void slot1C() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0;
+	virtual Drawable *getDrawable() = 0;
+	virtual void slot2C() = 0; virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual void slot3C() = 0; virtual void slot40() = 0; virtual void slot44() = 0; virtual void slot48() = 0;
+	virtual void slot4C() = 0;
+	virtual void setTeam(Team *) = 0;
+};
+
+class BfmePlayerDefaultTeam
+{
+public:
+	Team *getDefaultTeam()
+	{
+		return *reinterpret_cast<Team **>(reinterpret_cast<char *>(this) + 0x230);
+	}
+};
+
+class BfmeObjectModelCondition
+{
+public:
+	void setModelConditionState(BfmeModelConditionFlagType bit)
+	{
+		if (!m_conditionFlags.test(bit))
+		{
+			m_conditionFlags.set(bit);
+			notifyModelConditionChanged();
+		}
+	}
+
+	void notifyModelConditionChanged();
+
+private:
+	char m_pad000[0x110];
+	BfmeModelConditionFlags m_conditionFlags;
+};
+
+#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@BfmeObjectModelCondition@@QAEXXZ=?j_0002191d@@YAXXZ")
 
 #ifdef _INTERNAL
 //#pragma optimize("", off)
@@ -1269,102 +1386,103 @@ const Player* GarrisonContain::getApparentControllingPlayer( const Player* obser
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?recalcApparentControllingPlayer@GarrisonContain@@UAEXXZ present-unmatched
-void GarrisonContain::recalcApparentControllingPlayer( void )
+#pragma comment(linker, "/alternatename:?recalcApparentControllingPlayer@GarrisonContain@@UAEXXZ=?recalcApparentControllingPlayer@BfmeGarrisonContain@@UAEXXZ")
+// ?recalcApparentControllingPlayer@BfmeGarrisonContain@@UAEXXZ absent-from-retail
+void BfmeGarrisonContain::recalcApparentControllingPlayer( void )
 {
-	//Record original team first time through.
-	if( m_originalTeam == NULL )
+	BfmeGarrisonContain *self = this;
+	Team **originalTeam = reinterpret_cast<Team **>(reinterpret_cast<char *>(self) + 0xb4);
+	if (*originalTeam == NULL)
 	{
-		m_originalTeam = getObject()->getTeam();
+		Object *object = *reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18);
+		*originalTeam = *reinterpret_cast<Team **>(reinterpret_cast<char *>(object) + 0x23c);
 	}
 
-	// (hokey trick: if our team is null, nuke originalTeam -- this
-	// usually means we are being called during game-teardown and
-	// the teams are no longer valid...)
-	if (getObject()->getTeam() == NULL)
-		m_originalTeam = NULL;
-	// Check to see if we have any units contained in our object
-	if( getContainCount() > 0 )
 	{
-		ContainedItemsList::const_iterator it = getContainList().begin();
-		Object *rider = *it;
+		Object *object = *reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18);
+		if (*reinterpret_cast<Team **>(reinterpret_cast<char *>(object) + 0x23c) == NULL)
+			*originalTeam = NULL;
+	}
 
-		// Check to see if all the contained units are stealthy.  Need to set this flag before the capture,
-		// since the Radar refresh in setTeam will want to use it to decide our color.
-		Bool detected = rider->getStatusBits().test( OBJECT_STATUS_DETECTED );
-		m_hideGarrisonedStateFromNonallies = ( !detected && ( getStealthUnitsContained() == getContainCount() ) );
-		
-		Player* controller = rider->getControllingPlayer();
-		Team *team = controller ? controller->getDefaultTeam() : NULL;
-		if( team )
+	BfmeGarrisonContainVTable *contain = reinterpret_cast<BfmeGarrisonContainVTable *>(self);
+	if (contain->getContainCount(FALSE) > 0)
+	{
+		Object *rider = *reinterpret_cast<Object **>(
+			*reinterpret_cast<char **>(*reinterpret_cast<char **>(reinterpret_cast<char *>(self) + 0x18)) + 8);
+		if (rider != NULL)
 		{
-			getObject()->setTeam( team );
+			Int hide;
+			if ((*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(rider) + 0x90) & 0x20000) == 0)
+			{
+				if (contain->getStealthUnitsContained() != contain->getContainCount(FALSE))
+					goto notAllStealth;
+				hide = TRUE;
+				goto hideReady;
+				notAllStealth:
+				hide = FALSE;
+				hideReady: ;
+			}
+			else
+				hide = FALSE;
+			*reinterpret_cast<UnsignedByte *>(reinterpret_cast<char *>(self) + 0x995) = hide;
+
+			Player *controller = rider->getControllingPlayer();
+			Team *team = controller ? reinterpret_cast<BfmePlayerDefaultTeam *>(controller)->getDefaultTeam() : NULL;
+			if (team == NULL)
+				goto noGarrisonTeamToSet;
+			reinterpret_cast<BfmeObjectVTable *>(
+				*reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18))->setTeam(team);
+		noGarrisonTeamToSet: ;
 		}
 	}
 	else
 	{
-		//Nothing in object, so set team to original team.
-		getObject()->setTeam( m_originalTeam );
-		m_hideGarrisonedStateFromNonallies = false;
+		reinterpret_cast<BfmeObjectVTable *>(
+			*reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18))->setTeam(*originalTeam);
+		*reinterpret_cast<Bool *>(reinterpret_cast<char *>(self) + 0x995) = FALSE;
 	}
 
-	//Only allow the garrison state to be set if the client team knows that it is garrisoned.
-	Drawable *draw = getObject()->getDrawable();
-	if( draw )
+	Drawable *draw = reinterpret_cast<BfmeObjectVTable *>(
+		*reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18))->getDrawable();
+	if (draw == NULL)
+		return;
+
+	if (contain->getContainCount(FALSE) > 0)
 	{
 		Bool setModelGarrisoned = FALSE;
-
-
-		if ( getContainCount() > 0 )
+		Object *occupant = *reinterpret_cast<Object **>(
+			*reinterpret_cast<char **>(*reinterpret_cast<char **>(reinterpret_cast<char *>(self) + 0x18)) + 8);
+		if (occupant != NULL)
 		{
-			ContainedItemsList::const_iterator it = getContainList().begin();
-			Object *occupant = *it;
-			Bool detected = occupant->getStatusBits().test( OBJECT_STATUS_DETECTED );
-
-			if( detected || (getApparentControllingPlayer(ThePlayerList->getLocalPlayer()) == getObject()->getControllingPlayer()) )
-			{
+			if ((*reinterpret_cast<UnsignedInt *>(reinterpret_cast<char *>(occupant) + 0x90) & 0x20000) != 0)
 				setModelGarrisoned = TRUE;
-			}
-
-		}
-
-
-		if ( setModelGarrisoned )
-			draw->setModelConditionState( MODELCONDITION_GARRISONED );
-		else
-			draw->clearModelConditionState( MODELCONDITION_GARRISONED );
-
-
-		// Handle the team color that is rendered
-		const Player* controller = getApparentControllingPlayer(ThePlayerList->getLocalPlayer());
-		if (controller)
-		{
-			if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
-				draw->setIndicatorColor( controller->getPlayerNightColor() );
 			else
-				draw->setIndicatorColor( controller->getPlayerColor() );
+			{
+				Player *localPlayer = *reinterpret_cast<Player **>(reinterpret_cast<char *>(ThePlayerList) + 0xc);
+				Object *object = *reinterpret_cast<Object **>(reinterpret_cast<char *>(self) - 0x18);
+				if (contain->getApparentControllingPlayer(localPlayer) == object->getControllingPlayer())
+					setModelGarrisoned = TRUE;
+			}
 		}
-
-		// now that we have an object inside us, we need to get all the garrison point positions
-		// if we don't already have them.
-		if( getContainCount() > 0 )
-    {
-      if ( isEnclosingContainerFor( 0 ) )
-      {
-        if ( m_garrisonPointsInitialized == FALSE )
-		    {
-			    loadGarrisonPoints();
-		    }
-      }
-      else // must need station points instead
-      {
-        if ( m_stationGarrisonPointsInitialized == FALSE )
-        {
-          loadStationGarrisonPoints();
-        }
-      }
-    }
+		if (setModelGarrisoned)
+		{
+			self->getObjectReference().setModelConditionState(BFME_MODELCONDITION_GARRISONED);
+		}
 	}
+
+	Player *localPlayer = *reinterpret_cast<Player **>(reinterpret_cast<char *>(ThePlayerList) + 0xc);
+	const Player *controller = contain->getApparentControllingPlayer(localPlayer);
+	if (controller != NULL)
+	{
+		if (*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(TheGlobalData) + 0x218) == TIME_OF_DAY_NIGHT)
+			draw->setIndicatorColor(*reinterpret_cast<const UnsignedInt *>(reinterpret_cast<const char *>(controller) + 0x1c8));
+		else
+			draw->setIndicatorColor(*reinterpret_cast<const UnsignedInt *>(reinterpret_cast<const char *>(controller) + 0x1c4));
+	}
+
+	if (contain->getContainCount(FALSE) > 0 &&
+		*reinterpret_cast<Bool *>(reinterpret_cast<char *>(self) + 0x994) == FALSE)
+		BfmeGarrisonContainLoadAccess::load(reinterpret_cast<GarrisonContain *>(reinterpret_cast<char *>(self) - 0x20));
 }
 
 // ------------------------------------------------------------------------------------------------

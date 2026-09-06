@@ -80209,6 +80209,7 @@ name,address,notes
 ?notify@T_007ea120@@QAEXPAX@Z,0x007EA0A0,FESL notify used by hub teardown
 ?notifyAll@Y3NotifyTail_005C5A50@@QAEXPAX@Z,0x005C5A50,Y4 lane: restored pin a concurrent whole-file rewrite of reverse/symbols.csv dropped; address is the one the Y3 lane encodes in its own address-derived name and the byte gate confirms it
 ?notifyModelConditionChanged@AIUpdateInterface@@QAEXXZ,0x0002191D,address-derived GiantBird AI condition notifier used by 0x002BDF10
+?notifyModelConditionChanged@BfmeObjectModelCondition@@QAEXXZ,0x0002191D,BFME garrison model-condition notifier aliases Object::notifyModelConditionChanged
 ?notifyModelConditionChanged@Object@@QAEXXZ,0x0002191D,Object model-condition notify ILT (body 0x1BE1C0); inlined clearModelConditionState(PANICKING) sites
 ?notifyNotReady@BfmeRvaB7E0Manager@@QAEXPAX@Z,0x009F2670,assigned-body helper for Rva00247E80
 ?notifyOfObjectCreationOrDestruction@ScriptEngine@@QAEXXZ,0x0003B15B,Open-BFME5 retail script notification thunk
