@@ -112,6 +112,14 @@ char *goastrdup(const char *source);
 int ciGetNextID(CHAT chat);
 chatChannelCallbacks *ciGetChannelCallbacks(CHAT chat, const char *channel);
 
+static int ciNextIDInline(CHAT chat) {
+ ciConnection *connection=(ciConnection *)chat;
+ int rcode=connection->nextID;
+ if(connection->nextID==0x7fffffff)connection->nextID=1;
+ else connection->nextID++;
+ return rcode;
+}
+
 static __declspec(noinline) int ciAddFilter(CHAT chat, int type, const char *name,
 	const char *name2, void *callback, void *callback2, void *param, void *data)
 {
@@ -129,9 +137,9 @@ static __declspec(noinline) int ciAddFilter(CHAT chat, int type, const char *nam
 	filter->callback2 = callback2;
 	filter->param = param;
 	filter->data = data;
-	filter->name = name ? goastrdup(name) : 0;
-	filter->name2 = name2 ? goastrdup(name2) : 0;
-	filter->ID = ciGetNextID(chat);
+	if(name) filter->name=goastrdup(name); else filter->name=0;
+	if(name2) filter->name2=goastrdup(name2); else filter->name2=0;
+	filter->ID = ciNextIDInline(chat);
 
 	if (connection->filterList == 0)
 		connection->filterList = filter;
