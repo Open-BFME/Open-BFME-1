@@ -911,3 +911,148 @@ void ciRplListHandler(CHAT chat, const ciServerMessage * message)
 		}
 	}
 }
+
+typedef struct chatChannelCallbacks
+{
+	void *channelMessage;
+	void *kicked;
+	void *userJoined;
+	void *userParted;
+	void *userChangedNick;
+	void *topicChanged;
+	void *channelModeChanged;
+	void *userModeChanged;
+	void *userListUpdated;
+	void *newUserList;
+	void *broadcastKeyChanged;
+	void *param;
+} chatChannelCallbacks;
+
+void ciSetChannelTopic(CHAT chat, const char *channel, const char *topic);
+chatChannelCallbacks *ciGetChannelCallbacks(CHAT chat, const char *channel);
+
+void ciRplTopicHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	char * topic;
+	char * channel;
+
+
+
+	assert(message->numParams == 3);
+	if(message->numParams != 3)
+		return; //ERRCON
+
+	channel = message->params[1];
+	topic = message->params[2];
+
+	// Set the channel's topic.
+	///////////////////////////
+	ciSetChannelTopic(chat, channel, topic);
+
+	// Setup a filter match.
+	////////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_TOPIC;
+	match.name = channel;
+
+	// Find the filter.
+	///////////////////
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		ciCallbackGetChannelTopicParams params;
+		params.success = CHATTrue;
+		params.channel = channel;
+		params.topic = topic;
+
+		FINISH_FILTER;
+	}
+	else
+	{
+		// No filter, probably checking the topic on join.
+		//////////////////////////////////////////////////
+		chatChannelCallbacks * callbacks;
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if((callbacks != NULL) && (callbacks->topicChanged != NULL))
+		{
+			ciCallbackTopicChangedParams params;
+			params.channel = channel;
+			params.topic = topic;
+			ciAddCallback(chat, CALLBACK_TOPIC_CHANGED, (void*)callbacks->topicChanged, &params, callbacks->param, 0, channel);
+		}
+	}
+}
+
+void ciRplNoTopicHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	char * channel;
+
+
+
+	assert(message->numParams >= 2);
+	if(message->numParams < 2)
+		return; //ERRCON
+
+	// Get the channel.
+	///////////////////
+	channel = message->params[1];
+
+	// Setup the filter match.
+	//////////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_TOPIC;
+	match.name = channel;
+
+	// Find the filter.
+	///////////////////
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		ciCallbackGetChannelTopicParams params;
+		params.success = CHATTrue;
+		params.channel = channel;
+		params.topic = "";
+
+		FINISH_FILTER;
+	}
+	else
+	{
+		// No filter, probably checking the topic on join.
+		//////////////////////////////////////////////////
+		chatChannelCallbacks * callbacks;
+		callbacks = ciGetChannelCallbacks(chat, channel);
+		if((callbacks != NULL) && (callbacks->topicChanged != NULL))
+		{
+			ciCallbackTopicChangedParams params;
+			params.channel = channel;
+			params.topic = "";
+			ciAddCallback(chat, CALLBACK_TOPIC_CHANGED, (void*)callbacks->topicChanged, &params, callbacks->param, 0, channel);
+		}
+	}
+}
+
+void ciRplListStartHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+
+
+
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_LIST;
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter != NULL)
+	{
+		LISTData * data = (LISTData *)filter->data;
+		assert(data != NULL);
+		//assert(!data->gotStart);
+
+		data->gotStart = CHATTrue;
+	}
+
+	(void)message;
+}
