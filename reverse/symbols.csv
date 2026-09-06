@@ -83488,3 +83488,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??R?$less@UU4Item00605320@@@_STL@@QBE_NABUU4Item00605320@@0@Z,0x00605320,STLport comparator member for 00605900 tree
+??$_Construct@U?$pair@$$CBUU4Item00605320@@UGen_t_00605630_p12cd@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBUU4Item00605320@@UGen_t_00605630_p12cd@@@0@ABU10@@Z,0x00605630,STLport pair construct for 00605900 tree
