@@ -633,6 +633,8 @@ name,address,notes
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@V?$list@PAVSuperweaponInfo@@V?$allocator@PAVSuperweaponInfo@@@_STL@@@_STL@@@_STL@@@1@ABVAsciiString@@@Z,0x0000DCFB,same ILT as ?find@SuperweaponMap@@QAEPAUSuperweaponMapNode@@ABVAsciiString@@@Z above; InGameUI.cpp instantiates the real map so the lookup mangles as _M_find. ILT jumps to 0x00448FE0 the ledger's STLport _M_find over an AsciiString key
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x009C9AA0,directory-tree lookup ArchiveFileSystem::doesFileExist calls at 0x009CA1D8
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x009CF9A0,ArchiveFile::addFile map lookup uses the matched STLport AsciiString tree find body
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@ABVAsciiString@@@Z,0x00038DDE,HotKeyManager::addHotKey map find call target
+??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@ABVAsciiString@@@Z,0x00038DDE,HotKeyManager::addHotKey const map find call target
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00003071
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@ABEPAU?$_Rb_tree_node@VAsciiString@@@1@ABVAsciiString@@@Z,0x00039103,Win32LocalFileSystem slot 5 FilenameList find callee
 ??$_M_find@VAsciiString@@@?$hashtable@U?$pair@$$CBVAsciiString@@E@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@E@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@E@_STL@@@2@@_STL@@ABEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@E@_STL@@@1@ABVAsciiString@@@Z,0x000043FE,Open-BFME5 pin: hashtable find callee for Rva000F7310 byte-valued AsciiString hash_map operator[]
@@ -2132,6 +2134,7 @@ name,address,notes
 ??0BfmeBase1137C@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140A@@QAE@XZ,0x0001B522,pin
 ??0BfmeBase1140B@@QAE@XZ,0x0001B522,pin
+??0BfmeBaseBB@@QAE@XZ,0x0001B522,pin
 ??0BfmeBaseJC@@QAE@PAX@Z,0x0090E3D0,pin
 ??0BfmeBaseP0@@QAE@PAX0@Z,0x000170E4,Open-BFME5 the two-argument first base the triple-base constructors at 0x00200AE0 and siblings forward to
 ??0BfmeBigVSZ@@QAE@ABV0@@Z,0x00047B27,pin
@@ -2716,6 +2719,7 @@ name,address,notes
 ??0Gen_t_009cf180_p12cd@@QAE@ABU0@@Z,0x009CEBF0,gen-tgrid payload member
 ??0Gen_t_009d0e60_k4@@QAE@ABU0@@Z,0x00887B60,gen-tgrid payload member
 ??0Gen_t_009d0e60_p12cd@@QAE@ABU0@@Z,0x009D0DB0,gen-tgrid payload member
+??0Gen_uwm_0000513c@@QAE@XZ,0x000379E8,SlowDeathBehaviorModuleData fourth vector constructor target from retail call
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
 ??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062
 ??0GenericObjectCreationNugget@@QAE@XZ,0x00006DB1,Open-BFME5 parseDebris retail constructor thunk
@@ -2767,6 +2771,7 @@ name,address,notes
 ??0InactiveBodyBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InactiveBody ctor base call
 ??0InstantDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0InstantDeathBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InstantDeathBehavior ctor base call
+??0InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00029BFE,SlowDeathBehaviorModuleData fourth vector allocator constructor target from retail call
 ??0InstantDeathDieMuxData@@QAE@XZ,0x000071E4,Open-BFME5 TU-local retail call target for InstantDeathBehaviorModuleData ctor
 ??0JetAIUpdateModuleData@@QAE@XZ,0x000028AB,derived-ICF
 ??0KeepObjectDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
@@ -3238,9 +3243,6 @@ name,address,notes
 ??0SlavedUpdateModuleData@@QAE@XZ,0x0003AE86,pinharvest x1 (thunk)
 ??0SlowDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,matched factory constructor thunk -> 0x00207B60
 ??0SlowDeathBehaviorModuleData@@QAE@XZ,0x000186FB,pinharvest x1 (thunk)
-??0Gen_uwm_0000513c@@QAE@XZ,0x000379E8,SlowDeathBehaviorModuleData fourth vector constructor target from retail call
-??0InstantDeathBehaviorModuleDataAllocator@@QAE@XZ,0x00029BFE,SlowDeathBehaviorModuleData fourth vector allocator constructor target from retail call
-??_7SlowDeathBehaviorModuleData@@6B@,0x010A6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
 ??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
 ??0Snapshot@@QAE@XZ,0x00044030,ILT thunk; real body 0x627200
@@ -9585,6 +9587,7 @@ name,address,notes
 ??_7ShroudCrateCollide@@6BBehaviorModuleInterface@@@,0x010AA9A8,secondary vtable at this+0x0C
 ??_7ShroudCrateCollide@@6BObjectModule@@@,0x010AAA6C,primary vtable installed by the named constructor and destructor
 ??_7SimpleSceneIterator@@6B@,0x00D3CF34,retail table begins with deleting destructor 0x00943CC0 followed by exact First Next Is_Done and Current_Item slots; 0x00943CA0 constructor stores this table
+??_7SlowDeathBehaviorModuleData@@6B@,0x010A6750,SlowDeathBehaviorModuleData vtable stored by retail constructor
 ??_7SortingIndexBufferClass@@6B@,0x0113BD20,SortingIndexBufferClass vftable stored by its destructor 0x0091D300
 ??_7SpecialAbilityUpdateModuleData@@6B@,0x010C2D58,SpecialAbilityUpdateModuleData retail vtable stored by ctor at 0x002A5AA0
 ??_7StatusBitsUpgradeModuleData@@6B@,0x00C8F4F0,vptr stored by the factory at 0x0012B650 whose field-parse pointer resolves to ?buildFieldParse@StatusBitsUpgradeModuleData
@@ -12560,8 +12563,6 @@ name,address,notes
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFC80,Open-BFME7 retail REL32 target the map<AsciiString ArchivedFileInfo>::operator[] body at 0x009D0C50 calls; matched RvaTreeBoundsAsciiString.cpp
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@ABVAsciiString@@@Z,0x005B2E30,HotKey map operator[] lower_bound target
-??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@ABVAsciiString@@@Z,0x00038DDE,HotKeyManager::addHotKey map find call target
-??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@QBEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@1@ABVAsciiString@@@Z,0x00038DDE,HotKeyManager::addHotKey const map find call target
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VMapMetaData@@@_STL@@@2@ABVAsciiString@@@Z,0x00007D06,pinharvest x1 (thunk)
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva0033F960Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x00003585,ILT thunk to the tree lower-bound walk at 0x0033F2E0; the map spelling whose mapped type is a four-byte enumeration
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@W4Rva003B9B40Mapped@@@_STL@@@2@ABVAsciiString@@@Z,0x0002BF9E,ILT thunk to the tree lower-bound walk at 0x003B9A10; the map spelling whose mapped type is a four-byte enumeration
@@ -84184,4 +84185,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??0BfmeBaseBB@@QAE@XZ,0x0001B522,pin

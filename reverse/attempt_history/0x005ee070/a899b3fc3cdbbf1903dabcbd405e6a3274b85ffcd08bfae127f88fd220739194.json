@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a899b3fc3cdbbf1903dabcbd405e6a3274b85ffcd08bfae127f88fd220739194",
+  "symbol": "?Rva005EE070WriteIndentedLine@@YAXPBDPAVFile@@PAI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?Rva005EE070WriteIndentedLine@@YAXPBDPAVFile@@PAI@Z\n// partial score=0.6 date=2026-09-06\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\r\n// stlport\r\n// Open-BFME7: the FX particle INI writer's line emitter at 0x005EE070\r\n// (279 B): an ostringstream on the stack receives one space per indent level\r\n// then the text and a newline; the string is written to the file through its\r\n// fourth virtual slot (data size); the indent grows by two.  STLport\r\n// exceptions off: the string result's inline destructor and the stream\r\n// destructor chain come from the vendor headers.  Address-derived names.\r\n\r\n#include <sstream>\r\n\r\ntypedef int Int;\r\n\r\nclass File\r\n{\r\npublic:\r\n\tvirtual void slot0( void );\r\n\tvirtual void slot1( void );\r\n\tvirtual void slot2( void );\r\n\tvirtual void slot3( void );\r\n\tvirtual Int write( const void *data, Int size );\r\n};\r\n\r\n// ?Rva005EE070WriteIndentedLine@@YAXPBDPAVFile@@PAI@Z\r\nvoid Rva005EE070WriteIndentedLine( const char *text, File *file, unsigned int *indent )\r\n{\r\n\t_STL::ostringstream os;\r\n\tfor( unsigned int i = *indent; i > 0; --i )\r\n\t\tos << ' ';\r\n\tos << text << '\\n';\r\n\t{\r\n\t\t_STL::string line = os.str();\r\n\t\tfile->write( line.data(), line.size() );\r\n\t}\r\n\t*indent += 2;\r\n}\r\n"
+}

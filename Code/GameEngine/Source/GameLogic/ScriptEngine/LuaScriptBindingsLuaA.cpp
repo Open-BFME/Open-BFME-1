@@ -246,3 +246,50 @@ int Rva002E5F40ObjectDescribe( lua_State *state )
 	lua_pushstring( state, result.m_data ? (const char *)result.m_data + 8 : g_bfmeEmptyAscii );
 	return 1;
 }
+
+unsigned Rva00990210Lookup( lua_State *range, int index );
+
+class Rva002E6B70Object : public Object
+{
+public:
+	void j_0001e33f( bool flag );
+};
+
+// ?Rva002E6B70ObjectSetFlag@@YAHPAUlua_State@@@Z
+int Rva002E6B70ObjectSetFlag( lua_State *state )
+{
+	if( lua_gettop( state ) < 2 )
+		return 0;
+	unsigned id = Rva00990030Lookup( state, 1 );
+	if( !id && lua_type( state, 1 ) != 1 )
+		return 0;
+	Rva002E6B70Object *object = (Rva002E6B70Object *)TheGameLogic->bfmeFind1011( id );
+	if( !object )
+		return 0;
+	bool flag = Rva00990210Lookup( state, 2 ) != 0;
+	object->j_0001e33f( flag );
+	return 1;
+}
+
+class Rva002E6A00Object : public Object
+{
+public:
+	void j_0001ed6c( bool flag );
+};
+
+// ?Rva002E6A00ObjectSetFlagB@@YAHPAUlua_State@@@Z
+int Rva002E6A00ObjectSetFlagB( lua_State *state )
+{
+	if( lua_gettop( state ) < 2 )
+		return 0;
+	unsigned id = Rva00990030Lookup( state, 1 );
+	if( !id && lua_type( state, 1 ) != 1 )
+		return 0;
+	Rva002E6A00Object *object = (Rva002E6A00Object *)TheGameLogic->bfmeFind1011( id );
+	if( !object )
+		return 0;
+	bool flag = Rva00990210Lookup( state, 2 ) != 0;
+	object->j_0001ed6c( flag );
+	return 1;
+}
+
