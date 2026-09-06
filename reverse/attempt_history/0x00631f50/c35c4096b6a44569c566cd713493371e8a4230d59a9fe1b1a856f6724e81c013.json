@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c35c4096b6a44569c566cd713493371e8a4230d59a9fe1b1a856f6724e81c013",
+  "symbol": "?d_00631f50@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_00631f50@@YAXXZ\n// partial score=0.95 date=2026-09-06\n// 58/58 exact size; esi and edi are transposed throughout.\n// Pin: ?bfmeIncrementFZ@@YAPAUBfmeNodeFZ@@PAU1@@Z,0x0082B870 (_Rb_global::_M_increment)\nstruct BfmeNodeFZ\n{\n\tunsigned char m_bfmeHeadFZ[8];\n\tBfmeNodeFZ *m_bfmeFirstFZ;\n\tunsigned char m_bfmeMidFZ[8];\n\tint m_bfmeValueFZ;\n\tunsigned char m_bfmeTailFZ[0x10];\n\tvolatile int m_bfmeKeyFZ;\n};\n\nBfmeNodeFZ *__cdecl bfmeIncrementFZ(BfmeNodeFZ *node);\n\nclass BfmeMapFZ\n{\npublic:\n\tint *bfmeFindFZ(int key);\n\n\tunsigned char m_bfmeHeadFZ[0x4c];\n\tBfmeNodeFZ *m_bfmeTreeFZ;\n};\n\nint *BfmeMapFZ::bfmeFindFZ(int key)\n{\n\tBfmeNodeFZ *node = m_bfmeTreeFZ->m_bfmeFirstFZ;\n\n\twhile (node != m_bfmeTreeFZ)\n\t{\n\t\tint nodeKey = node->m_bfmeKeyFZ;\n\t\tint *value = &node->m_bfmeValueFZ;\n\n\t\tif (nodeKey == key)\n\t\t\treturn value;\n\n\t\tnode = bfmeIncrementFZ(node);\n\t}\n\n\treturn 0;\n}\n"
+}
