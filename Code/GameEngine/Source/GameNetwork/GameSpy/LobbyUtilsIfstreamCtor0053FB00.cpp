@@ -77,5 +77,8 @@ private:
 };
 
 template basic_ifstream<char, char_traits<char> >::basic_ifstream(const char *, int);
+// The basic_istream<char>(basic_streambuf*) constructor the same TU emitted
+// at 0x0053FA20 (144 B; the ledger had carved it at +0x21).
+template basic_istream<char, char_traits<char> >::basic_istream(basic_streambuf<char, char_traits<char> > *);
 
 }
