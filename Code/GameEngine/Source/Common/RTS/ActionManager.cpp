@@ -118,6 +118,15 @@ public:
 	virtual CollideModuleInterface *getCollide() = 0;
 };
 
+class BFMECarBombCollideModuleInterface
+{
+public:
+	virtual void slot0() = 0;
+	virtual Bool wouldLikeToCollideWith(const Object *other) const = 0;
+	virtual void slot2() = 0;
+	virtual Bool isCarBombCrateCollide() const = 0;
+};
+
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 static Bool isObjectShroudedForAction(const Object *source, const Object *target, CommandSourceType commandSource)
@@ -857,7 +866,6 @@ CanAttackResult ActionManager::getCanAttackObject( const Object *obj, const Obje
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?canConvertObjectToCarBomb@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z present-unmatched
 Bool ActionManager::canConvertObjectToCarBomb( const Object *obj, const Object *objectToConvert, CommandSourceType commandSource ) 
 {
 
@@ -867,7 +875,7 @@ Bool ActionManager::canConvertObjectToCarBomb( const Object *obj, const Object *
 		return FALSE;
 	}
 
-	if( objectToConvert->isEffectivelyDead() )
+	if (*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(objectToConvert) + 0x344) & 1)
 	{
 		return FALSE;
 	}
@@ -877,9 +885,11 @@ Bool ActionManager::canConvertObjectToCarBomb( const Object *obj, const Object *
 		return FALSE;
 
 	// first, see if we'd like to collide with 'other'
-	for (BehaviorModule** m = obj->getBehaviorModules(); *m; ++m)
+	BehaviorModule **m = *reinterpret_cast<BehaviorModule ***>(reinterpret_cast<char *>(const_cast<Object *>(obj)) + 0x1f0);
+	for (; *m; ++m)
 	{
-		CollideModuleInterface* collide = (*m)->getCollide();
+		BFMEActionBehaviorModule *module = reinterpret_cast<BFMEActionBehaviorModule *>(reinterpret_cast<char *>(*m) + 0x0c);
+		BFMECarBombCollideModuleInterface *collide = reinterpret_cast<BFMECarBombCollideModuleInterface *>(module->getCollide());
 		if (!collide)
 			continue;
 
