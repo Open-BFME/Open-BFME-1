@@ -7,6 +7,11 @@
 // findTemplate(name) + getSelectedPortraitImage. Address-derived owner;
 // image names do not identify the class.
 
+#include <string.h>
+
+void j_00016fae();
+#pragma comment(linker, "/alternatename:?initialize@Rva00016FAE@@QAEXXZ=?j_00016fae@@YAXXZ")
+
 // Buffer internals are owned by the existing StringBase implementation.
 template <typename T> struct StringInlineData;
 
@@ -68,6 +73,39 @@ public:
 	ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+class Rva00016FAE
+{
+public:
+	__declspec(noinline) void initialize();
+};
+
+__declspec(noinline) void Rva00016FAE::initialize()
+{
+	j_00016fae();
+}
+
+class ZeroPrefix
+{
+public:
+	ZeroPrefix() : image(0), value08(0) {}
+	const Image *image;
+	int value08;
+};
+
+class OneBlock
+{
+public:
+	OneBlock() : value0c(1), value10(1) {}
+	int value0c;
+	int value10;
+};
+
+class ZeroBlock
+{
+public:
+	int values[6];
+};
+
 #define TheGameLogic (*(GameLogicPortraitShim **)0x012F0898)
 #define TheScienceStore (*(ScienceStore **)0x012ED7AC)
 #define TheMappedImageCollection (*(MappedImageCollection **)0x012F6924)
@@ -76,12 +114,20 @@ public:
 class Rva000FA610
 {
 public:
+	Rva000FA610();
 	const Image *getPortrait(Player *player);
 
 	AsciiString m_name;
-	const Image *m_image;
-	unsigned char m_mid[0x38 - 8];
+	ZeroPrefix m_prefix;
+	OneBlock m_one;
+	ZeroBlock m_zero;
+	int m_value2c;
+	int m_value30;
+	int m_value34;
 	unsigned char m_flag;
+	int m_value3c;
+	int m_value40;
+	Rva00016FAE m_value44;
 };
 
 class Player
@@ -90,11 +136,25 @@ public:
 	bool hasScience(ScienceType science) const;
 };
 
+// ??0Rva000FA610@@QAE@XZ
+Rva000FA610::Rva000FA610()
+	: m_name(), m_prefix(), m_one()
+{
+	memset(&m_zero, 0, sizeof(m_zero));
+	m_value30 = -1;
+	m_value2c = 0;
+	m_value34 = 0;
+	m_flag = 0;
+	m_value3c = 0;
+	m_value40 = -1;
+	m_value44.initialize();
+}
+
 // ?getPortrait@Rva000FA610@@QAEPBVImage@@PAVPlayer@@@Z
 const Image *Rva000FA610::getPortrait(Player *player)
 {
 	if (m_flag)
-		return m_image;
+		return m_prefix.image;
 
 	if (TheGameLogic->isInMultiplayerOrSkirmishGame())
 	{
