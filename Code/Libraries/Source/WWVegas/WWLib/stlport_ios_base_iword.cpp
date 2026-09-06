@@ -22,6 +22,7 @@ class ios_base
 {
 public:
 	long &iword(int index);
+	void *&pword(int index);
 
 private:
 	char m_vtable[4];
@@ -57,6 +58,23 @@ long &ios_base::iword(int index)
 	if (m_iostate & m_exception_mask)
 		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
 	return *(long *)0x0130BD24;
+}
+
+void *&ios_base::pword(int index)
+{
+	GrowPair<void *> grown;
+	grow_array(&grown, m_pwords, m_num_pwords, index);
+	if (grown.first)
+	{
+		m_pwords = grown.first;
+		m_num_pwords = grown.second;
+		return m_pwords[index];
+	}
+
+	m_iostate |= 1;
+	if (m_iostate & m_exception_mask)
+		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
+	return *(void **)0x0130BD28;
 }
 
 }
