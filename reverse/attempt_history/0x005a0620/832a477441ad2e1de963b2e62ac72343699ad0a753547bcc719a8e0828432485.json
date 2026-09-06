@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "832a477441ad2e1de963b2e62ac72343699ad0a753547bcc719a8e0828432485",
+  "symbol": "??0BfmeOwnBF@@QAE@XZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ??0BfmeOwnBF@@QAE@XZ (identity unknown)\n// partial score=0.88 date=2026-09-06\n// 50/57 at exact size. Fourth member of the 0x0001B522 constructor family\n// (0x0059DD90, 0x0059FAE0 and 0x0059D960 all landed with the rule \"head\n// pointer and the non-zero constant first, zero run after\").\n// This one inverts it: retail stores the head pointer FIRST, then two zeros,\n// and only then materialises `mov ecx,0x1e` -- i.e. the constant appears\n// LATER than MSVC wants it. Tried the 0x1e store at all six positions among\n// the five zero stores; MSVC always hoists both constants above the whole run\n// and defers the head-pointer immediate to the end. Everything from the first\n// 0x1e store onward is byte-exact.\nextern int g_s5Head005A06A0;\n\nclass BfmeBaseBF\n{\npublic:\n\tBfmeBaseBF(void);\n};\n\nclass BfmeOwnBF : public BfmeBaseBF\n{\npublic:\n\tBfmeOwnBF(void);\n\n\tint *m_bfmeVfBF;\n\tint m_bfmeABF;\n\tunsigned char m_bfmePadBF;\n\tchar m_bfmeFlagBF;\n\tunsigned char m_bfmePad2BF[2];\n\tint m_bfmeCBF;\n\tint m_bfmeDBF;\n\tint m_bfmeEBF;\n\tunsigned char m_bfmeMidBF[0x10];\n\tint m_bfmeFBF;\n\tint m_bfmeGBF;\n\tint m_bfmeHBF;\n\tint m_bfmeIBF;\n};\n\nBfmeOwnBF::BfmeOwnBF(void)\n{\n\tm_bfmeVfBF = &g_s5Head005A06A0;\n\tm_bfmeGBF = 0;\n\tm_bfmeHBF = 0;\n\tm_bfmeEBF = 0x1e;\n\tm_bfmeDBF = 0;\n\tm_bfmeCBF = 0;\n\tm_bfmeIBF = 0;\n\tm_bfmeABF = 0x1e;\n\tm_bfmeFBF = -1;\n\tm_bfmeFlagBF = 1;\n}\n"
+}
