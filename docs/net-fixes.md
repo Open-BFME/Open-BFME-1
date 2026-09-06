@@ -20,8 +20,18 @@ and the abandonment horizon are both 2000 ms (`m_retryTime` = 2000;
 `NetworkRunAheadSlack` = 10 frames × 200 ms). There is no receiver-side resend
 request in the engine, so the sender's timer is the only recovery that exists.
 Setting the timer to 400 ms gives five attempts inside the same horizon instead
-of one. `Connection::init`'s `mov dword ptr [edx+0x1C], 2000` → `400`, at file
-offset `0x006623DE`. No code cave, no detour.
+of one. The store is `mov dword ptr [edx+0x1C], 2000` in **`Connection::Connection`,
+RVA `0x006623A0`** — `m_retryTime` at `this+0x1C`; the imm32 sits three bytes into
+the instruction, at `0x006623DE`, which is what `tools/modbuild.py` pokes. No code
+cave, no detour.
+
+Earlier revisions of this page and of `mods/features/033-retrytime/README.md`
+called the owner `Connection::init`, borrowing the name from Zero Hour. BFME has
+no `Connection::init`: it folds what ZH does in `init()` into the constructor,
+which takes no arguments, calls nothing and returns `this`. The body is real C++
+at `Code/GameEngine/Source/GameNetwork/Connection.cpp`; until it was converted the
+repo served it only as the byte dump `?d_006623a0@@YAXXZ`, which is why grepping
+for either name used to come up empty.
 
 **Also: it makes the numbers predictable.** Retail's worst stall varies 83%
 between identical runs; the fix varies 0.1% (805 vs 806). For competitive play

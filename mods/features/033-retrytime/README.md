@@ -1,7 +1,13 @@
 # 033-retrytime — frame-gap p99: 1769 ms → 420 ms
 
-`Connection::init` sets `m_retryTime = 2000`. Rewritten to `RETRY_MS` (400) at
-RVA `0x006623DE`. No cave, no detour — one imm32.
+`Connection::Connection` (RVA `0x006623A0`) seeds `m_retryTime` — `this+0x1C` —
+to 2000. Rewritten to `RETRY_MS` (400) at RVA `0x006623DE`, the imm32 three bytes
+into that store. No cave, no detour — one imm32.
+
+Not `Connection::init`, which is what this file and `docs/net-fixes.md` used to
+say: that name is Zero Hour's. BFME folds ZH's `init()` work into the
+constructor, so grepping for `init` finds nothing. The body is C++ at
+`Code/GameEngine/Source/GameNetwork/Connection.cpp`.
 
 **SHIPPED** in `mods/dist` as of 2026-08-29. See `docs/net-fixes.md` for
 results; this file records the mechanism and the limits.

@@ -84,7 +84,8 @@ TARGET_APTOPTIONS_UPDATE = 0x0055DC00
 TARGET_FRAMEDRIVER = 0x0006BAE0   # the per-iteration frame driver, vtable slot +0x7C
 TARGET_LOOPBODY    = 0x0006BC2B   # GameEngine::execute's once-per-iteration call
 
-# Connection::init's `mov dword ptr [edx+0x1C], 2000` -- m_retryTime, the wall
+# Connection::Connection's (RVA 0x006623A0, not the `init` this used to name --
+# that is Zero Hour's) `mov dword ptr [edx+0x1C], 2000` -- m_retryTime, the wall
 # time an unacked command waits before it is put in a packet again. The imm32
 # starts three bytes into the instruction at RVA 0x006623DB.
 TARGET_RETRYTIME = 0x006623DE
