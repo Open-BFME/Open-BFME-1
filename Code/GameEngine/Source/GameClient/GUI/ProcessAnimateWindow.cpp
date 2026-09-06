@@ -1349,40 +1349,7 @@ ProcessAnimateWindowSlideFromRightFast::ProcessAnimateWindowSlideFromRightFast( 
 ProcessAnimateWindowSlideFromRightFast::~ProcessAnimateWindowSlideFromRightFast( void ) { }
 
 //-----------------------------------------------------------------------------
-// ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAEXPAVAnimateWindow@@I@Z present-unmatched
-void ProcessAnimateWindowSlideFromRightFast::initReverseAnimateWindow( AnimateWindow *animWin, UnsignedInt maxDelay )
-{
-	if(!animWin)
-	{
-		DEBUG_ASSERTCRASH( animWin, ("animWin was passed into initAnimateWindow as a NULL Pointer... bad bad bad!"));
-		return;
-	}
-	if(animWin->getDelay() > 0)
-		animWin->setStartTime(timeGetTime() + (maxDelay - animWin->getDelay()));
-	Coord2D vel = animWin->getVel();
-	vel.x *= -1;
-	vel.y *= -1;
-	animWin->setVel( vel );	
-	animWin->setFinished( FALSE );
-	GameWindow * win = animWin->getGameWindow();
-	ICoord2D pos, tempPos;
-	win->winGetPosition(&pos.x, &pos.y);
-	tempPos = animWin->getCurPos();
-	tempPos.y = pos.y;
-	animWin->setCurPos(tempPos);
 
-	tempPos = animWin->getEndPos();
-	tempPos.y = pos.y;
-	animWin->setEndPos(tempPos);
-
-	tempPos = animWin->getStartPos();
-	tempPos.y = pos.y;
-	animWin->setStartPos(tempPos);
-
-
-
-
-}
 
 //-----------------------------------------------------------------------------
 // ?initAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAEXPAVAnimateWindow@@@Z present-unmatched
