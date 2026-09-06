@@ -510,44 +510,6 @@ void W3DGhostObject::freeAllSnapShots(void)
 }
 
 // ------------------------------------------------------------------------------------------------
-/** Player has unfogged the object so he no longer needs the snapshot*/
-// ------------------------------------------------------------------------------------------------
-// ?freeSnapShot@W3DGhostObject@@UAEXH@Z present-unmatched
-void W3DGhostObject::freeSnapShot(int playerIndex)
-{
-#ifndef DEBUG_FOG_MEMORY
-	if (playerIndex != TheGhostObjectManager->getLocalPlayerIndex())
-		return;	//we only snapshot things for the local player
-#endif
-
-	if (m_parentSnapshots[playerIndex])
-	{	//if we have a snapshot for this object, remove it from
-		//scene and put back the original object if it still exists.
-		if (playerIndex == TheGhostObjectManager->getLocalPlayerIndex())
-		{
-			//Adding and removing render objects to the scene is expensive
-			//so only do it for the real player watching the screen.  There is
-			//also no point in displaying the other player's objects to
-			//the current player.
-			removeFromScene(playerIndex);
-
-			//Restore actual objects assuming they are still alive.
-			if (m_parentObject)
-				restoreParentObject();
-		}
-
-		W3DRenderObjectSnapshot *snap=m_parentSnapshots[playerIndex];
-		W3DRenderObjectSnapshot *nextSnap;
-		while (snap)
-		{	nextSnap = snap->m_next;
-			delete snap;
-			snap = nextSnap;
-		}
-		m_parentSnapshots[playerIndex]=NULL;
-	}
-}
-
-// ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?updateParentObject@W3DGhostObject@@UAEXPAVObject@@PAVPartitionData@@@Z present-unmatched
 void W3DGhostObject::updateParentObject(Object *object, PartitionData *mod)
