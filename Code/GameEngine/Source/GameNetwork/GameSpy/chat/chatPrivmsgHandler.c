@@ -1,4 +1,6 @@
 // GameSpy Chat SDK -- chatHandlers.c, 2007 release.
+// Retail command dispatch table proves UTM -> 0086D0F0 and ATM -> 0086D1C0.
+// The former NOTICE/UTM labels were shifted; callback types remain 3/4.
 
 typedef void *CHAT;
 typedef int CHATBool;
@@ -7,8 +9,9 @@ enum
 {
 	CHAT_MESSAGE,
 	CHAT_ACTION,
-	CHAT_NOTICE = 3,
-	CHAT_UTM = 4
+	CHAT_NOTICE = 2,
+	CHAT_UTM = 3,
+	CHAT_ATM = 4
 };
 
 enum
@@ -177,49 +180,6 @@ void ciPrivmsgHandler(CHAT chat, const ciServerMessage *message)
 	}
 }
 
-void ciNoticeHandler(CHAT chat, const ciServerMessage *message)
-{
-	char *target;
-	char *msg;
-	ciConnection *connection = (ciConnection *)chat;
-
-	if (message->numParams != 2)
-		return;
-
-	target = message->params[0];
-	msg = message->params[1];
-
-	if (strcasecmp(target, connection->nick) == 0)
-	{
-		if (connection->globalCallbacks.privateMessage != 0)
-		{
-			ciCallbackPrivateMessageParams params;
-			params.user = message->nick ? message->nick : 0;
-			params.message = msg;
-			params.type = CHAT_NOTICE;
-			ciAddCallback_(chat, CALLBACK_PRIVATE_MESSAGE,
-				connection->globalCallbacks.privateMessage, &params,
-				connection->globalCallbacks.param, 0, 0, sizeof(params));
-		}
-	}
-	else
-	{
-		chatChannelCallbacks *callbacks =
-			ciGetChannelCallbacks(chat, target);
-		if (callbacks != 0 && callbacks->channelMessage != 0)
-		{
-			ciCallbackChannelMessageParams params;
-			params.channel = target;
-			params.user = message->nick ? message->nick : 0;
-			params.message = msg;
-			params.type = CHAT_NOTICE;
-			ciAddCallback_(chat, CALLBACK_CHANNEL_MESSAGE,
-				callbacks->channelMessage, &params, callbacks->param,
-				0, target, sizeof(params));
-		}
-	}
-}
-
 void ciUTMHandler(CHAT chat, const ciServerMessage *message)
 {
 	char *target;
@@ -256,6 +216,49 @@ void ciUTMHandler(CHAT chat, const ciServerMessage *message)
 			params.user = message->nick ? message->nick : 0;
 			params.message = msg;
 			params.type = CHAT_UTM;
+			ciAddCallback_(chat, CALLBACK_CHANNEL_MESSAGE,
+				callbacks->channelMessage, &params, callbacks->param,
+				0, target, sizeof(params));
+		}
+	}
+}
+
+void ciATMHandler(CHAT chat, const ciServerMessage *message)
+{
+	char *target;
+	char *msg;
+	ciConnection *connection = (ciConnection *)chat;
+
+	if (message->numParams != 2)
+		return;
+
+	target = message->params[0];
+	msg = message->params[1];
+
+	if (strcasecmp(target, connection->nick) == 0)
+	{
+		if (connection->globalCallbacks.privateMessage != 0)
+		{
+			ciCallbackPrivateMessageParams params;
+			params.user = message->nick ? message->nick : 0;
+			params.message = msg;
+			params.type = CHAT_ATM;
+			ciAddCallback_(chat, CALLBACK_PRIVATE_MESSAGE,
+				connection->globalCallbacks.privateMessage, &params,
+				connection->globalCallbacks.param, 0, 0, sizeof(params));
+		}
+	}
+	else
+	{
+		chatChannelCallbacks *callbacks =
+			ciGetChannelCallbacks(chat, target);
+		if (callbacks != 0 && callbacks->channelMessage != 0)
+		{
+			ciCallbackChannelMessageParams params;
+			params.channel = target;
+			params.user = message->nick ? message->nick : 0;
+			params.message = msg;
+			params.type = CHAT_ATM;
 			ciAddCallback_(chat, CALLBACK_CHANNEL_MESSAGE,
 				callbacks->channelMessage, &params, callbacks->param,
 				0, target, sizeof(params));
