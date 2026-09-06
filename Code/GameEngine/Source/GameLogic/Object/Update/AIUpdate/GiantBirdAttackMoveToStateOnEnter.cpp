@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD
 
 typedef int Int;
+typedef bool Bool;
 
 enum StateReturnType
 {
@@ -9,6 +10,7 @@ enum StateReturnType
 };
 
 class StateMachine;
+class GiantBirdState;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
@@ -136,7 +138,7 @@ public:
 	virtual void unused1dc() = 0;
 	virtual void unused1e0() = 0;
 	virtual void unused1e4() = 0;
-	virtual void unused1e8() = 0;
+	virtual void setLocomotorGoalNone() = 0;
 	virtual void unused1ec() = 0;
 	virtual void unused1f0() = 0;
 	virtual void unused1f4() = 0;
@@ -149,12 +151,16 @@ public:
 class Object
 {
 public:
-	unsigned char m_unreconstructed00[0x204];
+	unsigned char m_unreconstructed00[0x114];
+	unsigned int m_conditionFlags114;
+	unsigned int m_conditionFlags118;
+	unsigned int m_conditionFlags11c;
+	unsigned int m_conditionFlags120;
+	unsigned char m_unreconstructed124[0xe0];
 	AIUpdateInterface *m_aiUpdate;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
-class StateMachine
+class GiantBirdState
 {
 public:
 	virtual void unused00() = 0;
@@ -162,19 +168,47 @@ public:
 	virtual void unused08() = 0;
 	virtual void unused0c() = 0;
 	virtual void unused10() = 0;
+	virtual void unused14() = 0;
+	virtual void unused18() = 0;
+	virtual Bool isIdle() = 0;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
+class StateMachine
+{
+public:
+	Bool isInIdleState() const
+	{
+		return m_currentState ? m_currentState->isIdle() : true;
+	}
+
+	virtual void unused00() = 0;
+	virtual void unused04() = 0;
+	virtual void unused08() = 0;
+	virtual void unused0c() = 0;
+	virtual void updateStateMachine() = 0;
 	virtual void start() = 0;
 	virtual void unused18() = 0;
 	virtual void unused1c() = 0;
-	virtual void reset(Int id) = 0;
+	virtual void setState(Int id) = 0;
+	virtual void unused24() = 0;
+	virtual void unused28() = 0;
+	virtual void unused2c() = 0;
+	virtual void unused30() = 0;
+	virtual void unused34() = 0;
+	virtual void setGoalObject(Object *object) = 0;
 
 	unsigned char m_unreconstructed04[0x0c];
 	Object *m_owner;
+	unsigned char m_unreconstructed14[0x08];
+	GiantBirdState *m_currentState;
 };
 
 class GiantBirdNormalFlightState
 {
 public:
 	virtual StateReturnType onEnter();
+	virtual StateReturnType update();
 
 	Int m_id;
 	Int m_successStateID;
@@ -187,6 +221,7 @@ class GiantBirdAttackMoveToState : public GiantBirdNormalFlightState
 {
 public:
 	virtual StateReturnType onEnter();
+	virtual StateReturnType update();
 
 private:
 	Int m_unreconstructed20;
@@ -200,8 +235,108 @@ StateReturnType GiantBirdAttackMoveToState::onEnter()
 {
 	AIUpdateInterface *ai = m_machine->m_owner->m_aiUpdate;
 	m_attackMachine->start();
-	m_attackMachine->reset(0);
+	m_attackMachine->setState(0);
 	m_goalHandle = ai->makeAttackMoveGoal();
 	m_retryCount = 5;
 	return GiantBirdNormalFlightState::onEnter();
+}
+
+class GameLogic
+{
+public:
+	unsigned int getFrame() const { return m_frame; }
+
+private:
+	unsigned char m_unreconstructed00[0x3c];
+	unsigned int m_frame;
+};
+
+extern GameLogic *TheGameLogic;
+extern void j_00003f58();
+extern void j_00006ece();
+extern void j_00012486();
+extern void j_0002191d();
+extern void j_000265a8();
+extern void j_0003d609();
+
+StateReturnType GiantBirdAttackMoveToState::update()
+{
+	Object *owner = m_machine->m_owner;
+	AIUpdateInterface *ai = owner->m_aiUpdate;
+	Bool forceRetargetThisFrame = false;
+	Bool shouldRepathThisFrame = false;
+
+	if (!m_attackMachine->isInIdleState())
+	{
+		ai->setLocomotorGoalNone();
+		if (owner->m_conditionFlags114 & 0x10000000)
+		{
+			owner->m_conditionFlags114 &= 0xEFFFFFFF;
+			typedef void (Object::*NotifyCall)();
+			union { void *asVoid; NotifyCall asMember; } notifyCast;
+			notifyCast.asVoid = (void *)j_0002191d;
+			((Object *)owner->*notifyCast.asMember)();
+		}
+		if (owner->m_conditionFlags120 & 0x00040000)
+		{
+			owner->m_conditionFlags120 &= 0xFFFBFFFF;
+			typedef void (Object::*NotifyCall)();
+			union { void *asVoid; NotifyCall asMember; } notifyCast;
+			notifyCast.asVoid = (void *)j_0002191d;
+			((Object *)owner->*notifyCast.asMember)();
+		}
+		m_attackMachine->updateStateMachine();
+		if (!m_attackMachine)
+			return STATE_FAILURE;
+		if (!m_attackMachine->isInIdleState())
+			return STATE_FAILURE;
+		forceRetargetThisFrame = true;
+		shouldRepathThisFrame = true;
+		*(Int *)((char *)ai + 0x48) = m_goalHandle;
+	}
+
+	if (m_attackMachine->isInIdleState())
+	{
+		typedef Object *(AIUpdateInterface::*FindCrateCall)();
+		union { void *asVoid; FindCrateCall asMember; } findCrateCast;
+		findCrateCast.asVoid = (void *)j_000265a8;
+		Object *crate = (ai->*findCrateCast.asMember)();
+		if (crate)
+		{
+			m_attackMachine->setGoalObject(crate);
+			m_attackMachine->setState(0x27);
+			return STATE_FAILURE;
+		}
+
+		unsigned int frame = TheGameLogic->getFrame();
+		typedef void (AIUpdateInterface::*SetMoodFrameCall)(unsigned int);
+		union { void *asVoid; SetMoodFrameCall asMember; } setMoodFrameCast;
+		setMoodFrameCast.asVoid = (void *)j_00006ece;
+		(ai->*setMoodFrameCast.asMember)(frame);
+
+		typedef Object *(AIUpdateInterface::*GetMoodTargetCall)(Bool, Bool);
+		union { void *asVoid; GetMoodTargetCall asMember; } getMoodTargetCast;
+		getMoodTargetCast.asVoid = (void *)j_00003f58;
+		Object *target = (ai->*getMoodTargetCast.asMember)(!forceRetargetThisFrame, false);
+		if (target)
+		{
+			typedef void (AIUpdateInterface::*EndMoveCall)();
+			union { void *asVoid; EndMoveCall asMember; } endMoveCast;
+			endMoveCast.asVoid = (void *)j_00012486;
+			(ai->*endMoveCast.asMember)();
+			m_attackMachine->setGoalObject(target);
+			m_attackMachine->setState(0x0a);
+			*(Int *)((char *)ai + 0x48) = 2;
+			*((Bool *)((char *)ai + 0x335)) = true;
+			return STATE_FAILURE;
+		}
+	}
+
+	if (shouldRepathThisFrame)
+		GiantBirdNormalFlightState::onEnter();
+
+	typedef StateReturnType (GiantBirdNormalFlightState::*BaseUpdateCall)();
+	union { void *asVoid; BaseUpdateCall asMember; } baseUpdateCast;
+	baseUpdateCast.asVoid = (void *)j_0003d609;
+	return (this->*baseUpdateCast.asMember)();
 }
