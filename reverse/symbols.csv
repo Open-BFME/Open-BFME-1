@@ -83834,3 +83834,5 @@ _g_bfmeBufferEQH,0x00EF4CB8,pin
 ?g_bfmeWindowManagerERC@@3PAVBfmeWindowManagerERC@@A,0x00EF1B40,pin
 ?BfmeSubdualCapERD@@3MB,0x00C75334,pin
 ?bfmeApplyERD@@YAXPAUBfmeObjectERD@@M@Z,0x000246A4,pin
+?bfmeIsStructureERE@BfmeObjectERE@@QAEDXZ,0x0004039A,pin
+?bfmeIsNonFactionERE@BfmeObjectERE@@QAEDXZ,0x0003BD3B,pin
