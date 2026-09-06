@@ -1958,27 +1958,26 @@ Int Team::getTargetableCount() const
 }
 
 // ------------------------------------------------------------------------
-// ?getRelationship@Team@@QBE?AW4Relationship@@PBV1@@Z present-unmatched
 Relationship Team::getRelationship(const Team *that) const
 {
 	// do we have an override for that particular team? if so, return it.
-	if (!m_teamRelations->m_map.empty() && that != NULL)
+	if (!bfmeTeamRelations( this )->m_map.empty() && that != NULL)
 	{
-		TeamRelationMapType::const_iterator it = m_teamRelations->m_map.find(that->getID());
-		if (it != m_teamRelations->m_map.end())
+		TeamRelationMapType::const_iterator it = bfmeTeamRelations( this )->m_map.find(bfmeTeamID( that ));
+		if (it != bfmeTeamRelations( this )->m_map.end())
 		{
 			return (*it).second;
 		}
 	}
 
 	// hummm... well, do we have an override for that team's player?
-	if (!m_playerRelations->m_map.empty() && that != NULL)
+	if (!((BfmeTeamPlayerOverrideFields *)this)->m_playerRelations->m_map.empty() && that != NULL)
 	{
-		Player* thatPlayer = that->getControllingPlayer();
+		Player* thatPlayer = ((BfmeUpdateStateTeam *)that)->getControllingPlayer();
 		if (thatPlayer != NULL)
 		{
-			PlayerRelationMapType::const_iterator it = m_playerRelations->m_map.find(thatPlayer->getPlayerIndex());
-			if (it != m_playerRelations->m_map.end())
+			PlayerRelationMapType::const_iterator it = ((BfmeTeamPlayerOverrideFields *)this)->m_playerRelations->m_map.find(thatPlayer->getPlayerIndex());
+			if (it != ((BfmeTeamPlayerOverrideFields *)this)->m_playerRelations->m_map.end())
 			{
 				return (*it).second;
 			}
