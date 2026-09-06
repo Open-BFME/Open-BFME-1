@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "378b0bce68bccd71127589697e1c47d21d752c9d6d15e9c10e3279fe4a0be282",
+  "symbol": "?d_00233ec0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_00233ec0@@YAXXZ\n// partial score=0.85 date=2026-09-06\n// Open-BFME5 conversions.\n\nstruct BfmeSub233EC0\n{\n\tunsigned char m_bfmeHead[4];\n};\n\nstruct BfmeHeld233EC0\n{\n\tunsigned char m_bfmeHead[0x248];\n\tBfmeSub233EC0 m_bfmeSub;\n};\n\nclass BfmeGlob233EC0\n{\npublic:\n\tvoid *bfmeLook233EC0(int s);\n};\n\nextern BfmeGlob233EC0 *g_bfmeObj233EC0;\n\nclass BfmeThing233EC0\n{\npublic:\n\tvoid bfmeGo233EC0();\n};\n\nvoid BfmeThing233EC0::bfmeGo233EC0()\n{\n\tBfmeGlob233EC0 *g = g_bfmeObj233EC0;\n\tint s = (int)&(*(BfmeHeld233EC0 **)((char *)this - 0xe0))->m_bfmeSub;\n\tg->bfmeLook233EC0(s);\n}\n"
+}
