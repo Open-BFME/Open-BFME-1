@@ -2208,7 +2208,6 @@ name,address,notes
 ??0BfmeRecWL@@QAE@ABV0@@Z,0x00015398,Open-BFME5 copy ctor ILT used by 0x0074C8E0 array return
 ??0BfmeRecorderStore@@QAE@XZ,0x00016D47,Open-BFME5 ILT thunk to body 0x00098EA0; ??0RecorderClass@@QAE@XZ at 0x000993E0 constructs the member at +0x20 through it; address-derived name
 ??0BfmeRoomAB@@QAE@ABV0@@Z,0x00887B60,pin
-??0BfmeRoomAC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomQR@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
 ??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin
@@ -84145,3 +84144,4 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?bfmeSendAT@@YAXPAX0@Z,0x00042848,pin

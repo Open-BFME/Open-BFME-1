@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "684149e4012e3e1d51202977650b43e6c2b7e40068244653cf8b44452c6765c5",
+  "symbol": "?bfmeGateAS@@YGHPAVBfmeThingAS@@HPAX1@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?bfmeGateAS@@YGHPAVBfmeThingAS@@HPAX1@Z (identity unknown)\n// partial score=0.92 date=2026-09-06\n// 45/49 at exact size. 0x0047CA30 is a byte-identical twin apart from the\n// call target (thunk 0x00003148 instead of 0x0003D07D), so this stash serves\n// both. Control shape is exact: the null guard and the `kind != 2 && (flags &\n// 0x800)` guard share one `xor eax,eax` block that sits BEFORE the call block,\n// which is what writing them as two separate early returns produces.\n// Residue: retail loads the last two arguments through ONE register, pushing\n// between the loads (`mov edx,[esp+0x10]` / `push edx` / `mov edx,[esp+0x10]`\n// / `push edx` -- same displacement, different esp), while MSVC preloads both\n// into ecx and edx first. Tried named locals for both arguments and int\n// instead of void* parameter types; both give the identical three-line diff.\nclass BfmeThingAS\n{\npublic:\n\tunsigned char m_bfmeHeadAS[8];\n\tint m_bfmeFlagsAS;\n};\n\nint __stdcall bfmeRunAS(int kind, void *first, void *second);\t// pin at thunk 0x0003D07D\n\nint __stdcall bfmeGateAS(BfmeThingAS *thing, int kind, void *first, void *second)\n{\n\tif (thing == 0)\n\t\treturn 0;\n\n\tif (kind != 2 && (thing->m_bfmeFlagsAS & 0x800) != 0)\n\t\treturn 0;\n\n\treturn bfmeRunAS(kind, first, second);\n}\n"
+}
