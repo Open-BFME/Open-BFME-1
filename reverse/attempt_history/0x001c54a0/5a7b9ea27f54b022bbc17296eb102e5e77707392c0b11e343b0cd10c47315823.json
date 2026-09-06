@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5a7b9ea27f54b022bbc17296eb102e5e77707392c0b11e343b0cd10c47315823",
+  "symbol": "??0ObjectSMCHelper@@QAE@PAVThing@@PBVModuleData@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ??0ObjectSMCHelper@@QAE@PAVThing@@PBVModuleData@@@Z\r\n// partial score=0.88 date=2026-08-28\r\n// cl: /DNDEBUG /MD /EHsc\r\nclass Thing;\r\nclass ModuleData;\r\n\r\nclass ObjectHelper\r\n{\r\npublic:\r\n\tObjectHelper(Thing *, const ModuleData *);\r\n\t~ObjectHelper();\r\nprivate:\r\n\tunsigned char m_bfmeBase[0x20];\r\n};\r\n\r\nstruct ObjectSMCListNode\r\n{\r\n\tObjectSMCListNode *m_next;\r\n\tObjectSMCListNode *m_prev;\r\n\tunsigned int m_value0;\r\n\tunsigned int m_value1;\r\n};\r\n\r\nclass ObjectSMCHelper : public ObjectHelper\r\n{\r\npublic:\r\n\tObjectSMCHelper(Thing *thing, const ModuleData *moduleData);\r\nprivate:\r\n\tObjectSMCListNode *m_list;\r\n};\r\n\r\nObjectSMCHelper::ObjectSMCHelper(Thing *thing, const ModuleData *moduleData)\r\n\t: ObjectHelper(thing, moduleData)\r\n{\r\n\t*reinterpret_cast<void *volatile *>(this) = reinterpret_cast<void *>(0x0109ebbc);\r\n\t*reinterpret_cast<void *volatile *>(reinterpret_cast<char *>(this) + 0x0c) = reinterpret_cast<void *>(0x0109eaf8);\r\n\t*reinterpret_cast<void *volatile *>(reinterpret_cast<char *>(this) + 0x10) = reinterpret_cast<void *>(0x0109eaec);\r\n\tObjectSMCListNode *empty = 0;\r\n\tm_list = empty;\r\n\r\n\tObjectSMCListNode *node = new ObjectSMCListNode;\r\n\tnode->m_next = node;\r\n\tnode->m_prev = node;\r\n\tm_list = node;\r\n}\r\n"
+}

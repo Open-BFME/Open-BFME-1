@@ -3134,6 +3134,7 @@ name,address,notes
 ??0Rva00891540DebugIOCon@@QAE@XZ,0x00891320,address-derived factory callee proven by 0x00891540
 ??0Rva0089C860State@@QAE@H@Z,0x0089C860,alias of landed ?initialize@Rva0089C860State@@QAEPAV1@H@Z; same thiscall int body used as the +8 subobject constructor
 ??0Rva00971CE0AggregatePrototype@@QAE@PBDHH@Z,0x00971CE0,address-qualified ABI view of the 36-byte AGGR catalog prototype constructed by Register_Aggregate_Prototype
+??0Rva0097ADF0Node@@QAE@XZ,0x00979690,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097ADF0 calls; autopin
 ??0Rva009A45A0CollisionData@@QAE@XZ,0x009A45A0,address-derived constructor for CollisionManager's 0xC070-byte owned implementation
 ??0Rva009F69B1Subobject@@QAE@XZ,0x0002C8E0,subobject constructor called by the retail constructor at 0x009F69B1
 ??0Rva4048AString@@QAE@XZ,0x0004048A,Open-BFME6 string default ctor ILT called by 0x00844520
@@ -3449,6 +3450,7 @@ name,address,notes
 ??0UpgradeMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0UpgradeSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,UpgradeSoundSelectorClientBehavior ctor for friend_new
 ??0UpgradeTemplate@@QAE@XZ,0x0001D39A,UpgradeCenter newUpgrade retail constructor thunk
+??0Vector2@@QAE@XZ,0x000427EE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009136F0 calls; autopin
 ??0Vector3@@QAE@XZ,0x0004677C,Open-BFME5 ShareBuffer Vector3 default constructor thunk
 ??0Vector3HollowSphereRandomizer@@QAE@M@Z,0x00B02350
 ??0Vector3SolidSphereRandomizer@@QAE@M@Z,0x00B02250
