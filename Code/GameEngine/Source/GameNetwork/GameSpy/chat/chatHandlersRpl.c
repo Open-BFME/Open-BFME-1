@@ -1825,3 +1825,43 @@ void ciFilterCleanup(CHAT chat) {
  ciConnection *connection=(ciConnection *)chat;
  while(connection->filterList)ciFilterTimedout(chat,connection->filterList);
 }
+
+void ciRplEndGetKeyHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch match;
+	ciServerMessageFilter * filter;
+	const char * cookie;
+
+	assert(message->numParams == 4);
+	if(message->numParams != 4)
+		return; //ERRCON
+
+	cookie = message->params[2];
+
+	// Setup the filter match.
+	//////////////////////////
+	memset(&match, 0, sizeof(ciFilterMatch));
+	match.type = TYPE_GETKEY;
+	match.name = cookie;
+
+	// Find the filter.
+	///////////////////
+	filter = ciFindFilter(chat, 1, &match);
+	if(filter)
+	{
+		ciCallbackGetGlobalKeysParams params;
+		GETKEYData * data;
+
+		data = (GETKEYData *)filter->data;
+
+		// Setup the callback parameters.
+		/////////////////////////////////
+		params.success = CHATTrue;
+		params.user = NULL;
+		params.num = data->num;
+		params.keys = data->keys;
+		params.values = NULL;
+
+		FINISH_FILTER;
+	}
+}
