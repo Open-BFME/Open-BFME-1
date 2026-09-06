@@ -61,6 +61,36 @@ rebasing test would not. No name pattern is consulted anywhere -- a `??$`
 template and a hand-written function are judged by the same rule, and a folded
 (ICF) body reached from two pins is one body and trivially consistent.
 
+ROUTING IS NOT IDENTITY (`route=` rows)
+---------------------------------------
+The invariant above is false for one real case, and denying it made a true fact
+unlandable. symbols.csv conflates two claims: "symbol X LIVES at A" and "a call
+to X may legitimately ENCODE A". `__CxxThrowException@8` lives at 0x00850600 (a
+103-byte static CRT copy this repo has byte-matched) AND at 0x009F6D00 (the
+six-byte MSVCR71 import thunk); 128 retail call sites in 82 matched rows encode
+the second. Pinning it is what those callers need, and one-name-one-body then
+reports a size disagreement -- correctly, by its own rule, about two addresses
+that are both true. The gate was demanding the deletion of a fact.
+
+So a row whose notes carry `route=<target>` is a ROUTING pin: it asserts only
+that calls encode this address, never that the function lives there, and it is
+exempt from one-name-one-body. Nothing else is exempt.
+
+Exempting on an author's say-so would make `route=` a laundering channel for
+every identity this guard exists to catch, so admissibility is MACHINE-CHECKED
+against the retail image (route_verdict) and a refusal is a hard failure:
+
+  (a) an `FF 25` import thunk whose IAT slot the PE import directory binds to a
+      DLL export of this same name, and which functions.csv already carries as a
+      matched gen-import row naming that same target; or
+  (b) an `E9` jump stub whose target body carries a matched, identity-naming
+      functions.csv row for this very symbol.
+
+Both re-derive the answer from the image and compare it to the note, so the note
+cannot be wrong and stay. Everything else is refused, including the two nearest
+misses: `??3@YAXPAX@Z` at 0x009F6C3A (that slot imports MSVCR71 `free`) and
+`??2@YAPAXI@Z` at 0x0082E540 (not a thunk at all -- it is __new_alloc::allocate).
+
 BASELINE, NOT WHITELIST
 -----------------------
 First run found a backlog of known-bad pins. reverse/pin_consistency_baseline.csv
@@ -79,7 +109,9 @@ import argparse
 import bisect
 import collections
 import csv
+import functools
 import io
+import re
 import struct
 import sys
 from pathlib import Path
@@ -161,6 +193,197 @@ def load_pins(path=None):
             if address not in pins[row["name"]]:
                 pins[row["name"]].append(address)
     return pins
+
+
+# --------------------------------------------------------------------------
+# route= pins -- an address calls ENCODE, not an address the function lives at.
+# See "ROUTING IS NOT IDENTITY" above for why this class has to exist.
+# --------------------------------------------------------------------------
+
+ROUTE_RE = re.compile(r"(?:^|;)\s*route=([^;]+)")
+GEN_IMPORT_TARGET_RE = re.compile(r"(?:^|;)target=([^;]+)")
+
+
+def load_routes(path=None):
+    """(name, address) -> the route target its `route=` note claims.
+
+    build.load_symbol_map reads these rows exactly as it reads any other pin --
+    one more REL32 candidate, notes unread -- so the note changes nothing about
+    what the resolver does. It changes only what this guard is entitled to
+    conclude from two addresses sharing a name.
+    """
+    routes = {}
+    with (path or build.SYMBOLS).open("r", encoding="utf-8", newline="") as handle:
+        for row in csv.DictReader(handle):
+            found = ROUTE_RE.search(row.get("notes") or "")
+            if not found:
+                continue
+            key, claim = (row["name"], int(row["address"], 16)), found.group(1).strip()
+            # Two route= rows for one (name, address) is union-merge debris or a
+            # hand-edit; silently keeping the last one would let a refuted claim
+            # be overwritten by an admissible twin and vanish from the report.
+            if routes.get(key, claim) != claim:
+                raise SystemExit(
+                    f"pin_consistency: {key[0]} 0x{key[1]:08X} carries two different "
+                    f"route= claims ({routes[key]!r} and {claim!r}); one address routes "
+                    "to one place, so one of these rows is wrong")
+            routes[key] = claim
+    return routes
+
+
+def _cstring(data, offset):
+    return data[offset:data.index(b"\0", offset)].decode("ascii", errors="replace")
+
+
+@functools.lru_cache(maxsize=1)
+def import_table():
+    """IAT slot VA -> (dll, exported name), read from the PE import directory.
+
+    Ground truth for what an `FF 25` thunk routes to. Ghidra's name for the
+    thunk and the ledger's `target=` note both descend from this table; reading
+    it directly means admissibility never rests on a name somebody typed.
+    """
+    data, sections = build.exe_image()
+    optional = struct.unpack_from("<I", data, 0x3C)[0] + 24
+    magic = struct.unpack_from("<H", data, optional)[0]
+    if magic != 0x10B:
+        raise SystemExit(f"pin_consistency: {build.EXE.name} is not PE32 (magic "
+                         f"0x{magic:X}); the import reader only understands PE32")
+    image_base = struct.unpack_from("<I", data, optional + 28)[0]
+    descriptor = build.rva_to_file_offset(
+        sections, struct.unpack_from("<I", data, optional + 96 + 8)[0])
+    slots = {}
+    while True:
+        lookup, _stamp, _fwd, dll_rva, first = struct.unpack_from("<IIIII", data, descriptor)
+        if not dll_rva and not first:
+            return slots
+        dll = _cstring(data, build.rva_to_file_offset(sections, dll_rva))
+        # Names come from the LOOKUP table and slot VAs from the address table,
+        # walked in step. No fallback to the address table when the lookup is
+        # absent: in a bound image those entries are resolved addresses, and
+        # reading them as name RVAs would invent export names for real slots.
+        if not lookup:
+            raise SystemExit(f"pin_consistency: {dll} has no import lookup table, so its "
+                             "export names cannot be read; a route= pin cannot be judged "
+                             "against this import descriptor")
+        entry = build.rva_to_file_offset(sections, lookup)
+        slot = first
+        while True:
+            value = struct.unpack_from("<I", data, entry)[0]
+            if not value:
+                break
+            slots[image_base + slot] = (dll, f"#{value & 0xFFFF}" if value & 0x80000000
+                                        else _cstring(data, build.rva_to_file_offset(
+                                            sections, value) + 2))
+            entry += 4
+            slot += 4
+        descriptor += 20
+
+
+@functools.lru_cache(maxsize=1)
+def gen_import_targets():
+    """RVA -> the function a matched gen-import row says its thunk targets."""
+    targets = {}
+    for row in build.load_all_function_rows():
+        notes = row.get("notes") or ""
+        if row["status"] != "matched" or not notes.startswith("gen-import;"):
+            continue
+        found = GEN_IMPORT_TARGET_RE.search(notes)
+        if found:
+            targets[int(row["target_rva"], 16)] = found.group(1)
+    return targets
+
+
+def undecorated_forms(name):
+    """The import-table spellings a linker may satisfy this object symbol with.
+
+    A C symbol reaches an import table undecorated: the compiler calls the CRT
+    throw helper `__CxxThrowException@8` and MSVCR71 exports it as
+    `_CxxThrowException` -- one leading underscore and one stdcall `@8` apart,
+    which is exactly what an import library reconciles. A C++ mangled name
+    (leading `?`) is exported verbatim and is compared as written: stripping a
+    trailing `@<n>` off one would invent an equivalence, and inventing
+    equivalences is how a route= note would become a laundering channel.
+    """
+    forms = {name}
+    if not name.startswith("?"):
+        stem = re.sub(r"@\d+$", "", name)
+        forms.add(stem)
+        if stem[:1] in ("_", "@"):
+            forms.add(stem[1:])
+    return forms
+
+
+def route_verdict(scanner, name, address, claim):
+    """None when this `route=` row is admissible, else the reason it is refused.
+
+    ADMISSIBLE IS NARROW ON PURPOSE, and it is decided here rather than by the
+    author, because `route=` buys an exemption from one-name-one-body and an
+    exemption anyone can write is not a check. Both arms recompute the route
+    from the retail image and then require the note to say the same thing, so a
+    row cannot carry a claim the image does not support.
+    """
+    if not scanner.image.in_text(address):
+        return f"0x{address:08X} is outside .text, so it is not a call target at all"
+    head = build.read_target_bytes(address, 6)
+    if len(head) < 6:
+        return f"0x{address:08X}: fewer than six bytes remain in the image at that address"
+    if head[:2] == b"\xff\x25":
+        slot = struct.unpack_from("<I", head, 2)[0]
+        entry = import_table().get(slot)
+        if entry is None:
+            return (f"0x{address:08X} reads IAT slot 0x{slot:08X}, which the PE import "
+                    "directory does not describe")
+        dll, exported = entry
+        forms = undecorated_forms(name)
+        if exported not in forms:
+            return (f"0x{address:08X} imports {dll}!{exported}, which is not {name} "
+                    f"(spellings accepted for it: {', '.join(sorted(forms))})")
+        ledger_target = gen_import_targets().get(address)
+        if ledger_target is None:
+            return (f"0x{address:08X} has no matched gen-import row in functions.csv, so "
+                    "the ledger does not carry this address as an import thunk")
+        if ledger_target not in forms:
+            return (f"0x{address:08X}: the ledger's gen-import row targets {ledger_target}, "
+                    f"not {name}")
+        expected = f"{dll}!{exported}"
+        return None if claim == expected else \
+            f"note says route={claim}; the image says route={expected}"
+    if head[:1] == b"\xe9":
+        body, _chain = scanner.image.resolve(address)
+        if body == address:
+            return (f"0x{address:08X} begins E9 but resolves no further; a proven body "
+                    "longer than a jump stub is a function, not a route")
+        if name not in scanner.identities.get(body, ()):
+            owned = sorted(scanner.identities.get(body, ())) or ["nothing"]
+            return (f"0x{address:08X} jumps to 0x{body:08X}, which the ledger names "
+                    f"{', '.join(owned)} -- not {name}")
+        expected = f"0x{body:08X}"
+        return None if claim == expected else \
+            f"note says route={claim}; the image says route={expected}"
+    return (f"0x{address:08X} begins {head[:2].hex()} -- neither an `FF 25` import thunk "
+            "nor an `E9` jump stub, so it is a function body and a pin on it is an "
+            "identity claim, not a route")
+
+
+def verify_routes(scanner, routes):
+    """Re-derive every `route=` row from the image. Any refusal fails the gate."""
+    refused = []
+    for (name, address), claim in sorted(routes.items()):
+        why = route_verdict(scanner, name, address, claim)
+        if why:
+            refused.append((name, address, claim, why))
+    if refused:
+        print(f"Route pins: FAIL {len(refused)} inadmissible route= row(s) in "
+              f"{shown(build.SYMBOLS)}")
+        for name, address, claim, why in refused[:12]:
+            print(f"    {name} 0x{address:08X} (route={claim})")
+            print(f"        {why}")
+        print("    route= exempts a row from one-name-one-body, so it is accepted only "
+              "for an import thunk or a jump stub the retail image itself proves. Fix "
+              "the note, or delete the row — do not widen the rule.")
+        raise SystemExit(1)
+    return len(routes)
 
 
 def names_identity(row):
@@ -460,16 +683,22 @@ class Scanner:
     def scan(self, pins_path=None):
         violations = []
         pins = load_pins(pins_path)
+        # Admissibility first: a route= row that the image refuses must fail
+        # LOUDLY, never quietly buy the exemption it is asking for.
+        routes = load_routes(pins_path)
+        verify_routes(self, routes)
         multi = 0
         for name in sorted(pins):
-            if len(pins[name]) < 2:
+            addresses = [a for a in pins[name] if (name, a) not in routes]
+            if len(addresses) < 2:
                 continue
             multi += 1
-            found = self.inspect(name, pins[name])
+            found = self.inspect(name, addresses)
             if found:
                 violations.append(found)
         violations.sort(key=lambda v: (v["kind"], v["symbol"]))
-        return violations, {"names": len(pins), "multi_pinned": multi}
+        return violations, {"names": len(pins), "multi_pinned": multi,
+                            "routes": len(routes)}
 
 
 def candidate_lists():
@@ -482,13 +711,16 @@ def candidate_lists():
     list the invariant never sees. That is the same hazard, one source over.
     """
     lists = collections.defaultdict(list)
+    routes = load_routes()
     for row in build.load_all_function_rows():
         rva = int(row["target_rva"], 16)
         if rva not in lists[row["name"]]:
             lists[row["name"]].append(rva)
     for name, addresses in load_pins().items():
         for address in addresses:
-            if address not in lists[name]:
+            # A route is a candidate to the resolver and never an identity, so
+            # it is out of this report for the same reason it is out of scan().
+            if address not in lists[name] and (name, address) not in routes:
                 lists[name].append(address)
     return lists
 
@@ -762,7 +994,8 @@ def verify(path=BASELINE):
             print(f"    {row['symbol']} [{row['bodies']}]")
         raise SystemExit(1)
     print(f"Pin consistency: OK ({stats['multi_pinned']} multi-pinned symbols of "
-          f"{stats['names']}; {len(violations)} baselined, 0 new, 0 stale)")
+          f"{stats['names']}; {len(violations)} baselined, 0 new, 0 stale; "
+          f"{stats['routes']} route= row(s) re-derived from the image)")
 
 
 def main(argv=None):
@@ -781,6 +1014,8 @@ def main(argv=None):
     parser.add_argument("--candidates", action="store_true",
                         help="apply the invariant to the resolver's REAL candidate list "
                              "(functions.csv rows + symbols.csv pins), not the pins alone")
+    parser.add_argument("--routes", action="store_true",
+                        help="report every route= row and re-derive it from the retail image")
     parser.add_argument("--clear-cut", action="store_true",
                         help="candidates a byte-verified ledger row settles — each still needs caller confirmation")
     args = parser.parse_args(argv)
@@ -789,18 +1024,32 @@ def main(argv=None):
         assert_shrink_only(args.assert_shrink_only, args.at)
         return 0
 
+    if args.routes:
+        scanner = Scanner()
+        routes = load_routes()
+        for (name, address), claim in sorted(routes.items()):
+            why = route_verdict(scanner, name, address, claim)
+            print(f"{name} 0x{address:08X} route={claim}: " + (why or "admissible"))
+        print(f"{verify_routes(scanner, routes)} route= row(s), all admissible")
+        return 0
+
     if args.symbol:
         scanner = Scanner()
         pins = load_pins().get(args.symbol)
         if not pins:
             raise SystemExit(f"pin_consistency: {args.symbol} has no reverse/symbols.csv pin")
+        routes = load_routes()
         print(f"{args.symbol}: " + " ".join(f"0x{p:08X}" for p in pins))
         for pin in pins:
             body, chain = scanner.image.resolve(pin)
             size, provenance = scanner.extent(body)
+            claim = routes.get((args.symbol, pin))
             print("    " + " -> ".join(f"0x{x:08X}" for x in chain) +
-                  f"  extent={size} ({provenance})  owned-by={scanner.owners(body) or ['unclaimed']}")
-        found = scanner.inspect(args.symbol, pins)
+                  f"  extent={size} ({provenance})  owned-by={scanner.owners(body) or ['unclaimed']}"
+                  + ("" if claim is None else
+                     f"  ROUTE={claim} ({route_verdict(scanner, args.symbol, pin, claim) or 'admissible'})"))
+        identity = [p for p in pins if (args.symbol, p) not in routes]
+        found = scanner.inspect(args.symbol, identity)
         print("    verdict: " + (f"{found['kind']}: {found['evidence']}" if found
                                  else "consistent"))
         return 0
@@ -842,7 +1091,7 @@ def main(argv=None):
 
     counts = collections.Counter(v["kind"] for v in violations)
     print(f"{stats['multi_pinned']} multi-pinned symbols of {stats['names']}; "
-          f"{len(violations)} inconsistent")
+          f"{len(violations)} inconsistent; {stats['routes']} route= row(s)")
     for kind, count in counts.most_common():
         print(f"    {kind}: {count}")
     for violation in violations:

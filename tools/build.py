@@ -883,6 +883,11 @@ def load_symbol_map():
     # link thunks build_call_thunks does not auto-discover. It is ADDITIVE: each
     # pinned address becomes one more candidate, so a matched name and a hand-pinned
     # thunk for the same name coexist and each call site picks whichever it encodes.
+    # Notes are not read here, deliberately: a `route=` row (an address calls
+    # ENCODE rather than one the function lives at — see pin_consistency.py,
+    # "ROUTING IS NOT IDENTITY") is one more candidate and nothing else. The note
+    # changes only what pin_consistency may conclude from two addresses sharing a
+    # name; it never changes what this resolver does or what the bytes must be.
     thunks = build_call_thunks()
     symbol_map = {}
     for row in load_all_function_rows():

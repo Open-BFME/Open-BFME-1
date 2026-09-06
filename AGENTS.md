@@ -112,6 +112,10 @@ record `blocked`.
   pin and `--check` after. `reverse/pin_consistency_baseline.csv` is the
   known-bad backlog and may only shrink — never add a line to get green. See
   `docs/lessons.md`, "A `pinharvest` row is a candidate, not an address".
+  Pinning an address calls ENCODE but the function does not LIVE at (an import
+  thunk, a jump stub) needs a `route=<target>` note: `--routes` re-derives every
+  one from the retail image and refuses anything else, so it exempts that row
+  from one-name-one-body without exempting an identity.
   Near-miss (0.9+) bodies: run `tools/probe.py` (compile + retail diff + symptom/lever) and check `docs/shape_levers.md` before banking.
 - **Quoting a `GlobalData` constant as behaviour?** The compiled `imm32` is not
   what the game runs on. 378 GlobalData fields are INI-parseable, and a value

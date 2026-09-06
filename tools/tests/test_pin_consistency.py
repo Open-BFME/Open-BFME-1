@@ -299,3 +299,111 @@ def test_the_guard_reads_only_half_the_resolvers_candidate_list():
     wider = [name for name, addresses in lists.items()
              if len(addresses) > 1 and len(pins.get(name, ())) < 2]
     assert wider, "expected names the pin-only view cannot compare"
+
+
+# `__CxxThrowException@8` genuinely lives at BOTH addresses: a 103-byte static
+# CRT copy this repo has byte-matched, and the six-byte MSVCR71 import thunk that
+# 128 retail call sites encode. THROW_ROUTE is the second.
+THROW_NAME = "__CxxThrowException@8"
+THROW_BODY, THROW_ROUTE = 0x00850600, 0x009F6D00
+THROW_CLAIM = "MSVCR71.dll!_CxxThrowException"
+# The two nearest misses, both of which must be REFUSED: 0x009F6C3A is an import
+# thunk for a DIFFERENT export (MSVCR71 free), 0x0082E540 is not a thunk at all
+# (it is __new_alloc::allocate, a 162-byte body).
+FREE_THUNK, ALLOCATE_BODY = 0x009F6C3A, 0x0082E540
+
+
+def _routes_file(tmp_path, rows):
+    path = tmp_path / "symbols.csv"
+    path.write_text("name,address,notes\n"
+                    + "".join(f"{n},0x{a:08X},{note}\n" for n, a, note in rows),
+                    encoding="utf-8")
+    return path
+
+
+def test_a_true_routing_fact_is_unlandable_without_the_route_class(tmp_path, scanner):
+    """The reason this class exists. Both addresses are true and byte-verified,
+    so one-name-one-body reports a size disagreement -- correctly, by its own
+    rule -- and the only way to land the pin would be to GROW the baseline,
+    which is the one move the guard exists to prevent."""
+    plain = _routes_file(tmp_path, [(THROW_NAME, THROW_BODY, "the CRT copy"),
+                                    (THROW_NAME, THROW_ROUTE, "the import thunk")])
+    violations, stats = scanner.scan(plain)
+    assert [(v["symbol"], v["kind"]) for v in violations] == \
+        [(THROW_NAME, "size-disagreement")]
+    assert stats["routes"] == 0
+
+    routed = _routes_file(tmp_path, [(THROW_NAME, THROW_BODY, "the CRT copy"),
+                                     (THROW_NAME, THROW_ROUTE, f"route={THROW_CLAIM}")])
+    violations, stats = scanner.scan(routed)
+    assert violations == [] and stats["routes"] == 1
+
+
+def test_route_admissibility_is_derived_from_the_image_not_asserted(scanner):
+    """A route= note buys an exemption, so it may never be taken on trust. The
+    claim is recomputed from the PE import directory and has to agree."""
+    assert pin_consistency.route_verdict(
+        scanner, THROW_NAME, THROW_ROUTE, THROW_CLAIM) is None
+    wrong = pin_consistency.route_verdict(
+        scanner, THROW_NAME, THROW_ROUTE, "MSVCR71.dll!malloc")
+    assert "the image says route=" + THROW_CLAIM in wrong
+
+
+def test_route_refuses_an_import_thunk_for_a_different_export(scanner):
+    """ORPHAN_BASELINE in its purest form: `??3@YAXPAX@Z` at 0x009F6C3A would fix
+    call sites, and that slot imports `free`. Wanting the pin is not evidence."""
+    why = pin_consistency.route_verdict(
+        scanner, "??3@YAXPAX@Z", FREE_THUNK, "MSVCR71.dll!free")
+    assert "imports MSVCR71.dll!free" in why and "is not ??3@YAXPAX@Z" in why
+
+
+def test_route_refuses_an_address_that_is_a_function_body(scanner):
+    """`??2@YAPAXI@Z` at 0x0082E540 is __new_alloc::allocate. A pin on a body is
+    an identity claim however the note is worded, so route= cannot cover it."""
+    why = pin_consistency.route_verdict(
+        scanner, "??2@YAPAXI@Z", ALLOCATE_BODY, f"0x{ALLOCATE_BODY:08X}")
+    assert "neither an `FF 25` import thunk nor an `E9` jump stub" in why
+
+
+def test_route_refuses_a_jump_stub_landing_on_somebody_else(scanner):
+    """The E9 arm is answered by the ledger's identity rows, not by the note."""
+    body, stubs = None, None
+    for candidate, thunks in build.build_call_thunks().items():
+        names = scanner.identities.get(candidate, ())
+        if len(names) == 1 and any(scanner.extent(t)[0] in (None, 5) for t in thunks):
+            body, stubs = candidate, thunks
+            break
+    assert body is not None, "expected an E9 stub in front of a named body"
+    stub = next(t for t in stubs if scanner.extent(t)[0] in (None, 5))
+    owner = next(iter(scanner.identities[body]))
+    assert pin_consistency.route_verdict(
+        scanner, owner, stub, f"0x{body:08X}") is None
+    why = pin_consistency.route_verdict(scanner, "?impostor@@YAXXZ", stub,
+                                        f"0x{body:08X}")
+    assert f"which the ledger names {owner}" in why
+
+
+def test_a_refused_route_fails_the_gate_rather_than_being_ignored(tmp_path, scanner):
+    """An exemption that degrades to silence is worse than no exemption."""
+    bad = _routes_file(tmp_path, [("??3@YAXPAX@Z", FREE_THUNK, "route=MSVCR71.dll!free")])
+    with pytest.raises(SystemExit) as excinfo:
+        scanner.scan(bad)
+    assert excinfo.value.code == 1
+
+
+def test_c_decoration_is_reconciled_but_never_invented():
+    """An import library reconciles `__CxxThrowException@8` with the export
+    `_CxxThrowException`. A C++ mangled name is exported verbatim, so stripping a
+    trailing @<n> off one would invent an equivalence and launder an identity."""
+    assert "_CxxThrowException" in pin_consistency.undecorated_forms(THROW_NAME)
+    assert pin_consistency.undecorated_forms("??3@YAXPAX@Z") == {"??3@YAXPAX@Z"}
+
+
+def test_two_route_claims_for_one_address_are_refused(tmp_path):
+    """Last-one-wins would let an admissible twin hide a refuted claim."""
+    clashing = _routes_file(tmp_path, [
+        (THROW_NAME, THROW_ROUTE, f"route={THROW_CLAIM}"),
+        (THROW_NAME, THROW_ROUTE, "route=MSVCR71.dll!malloc")])
+    with pytest.raises(SystemExit) as excinfo:
+        pin_consistency.load_routes(clashing)
+    assert "two different route= claims" in str(excinfo.value)
