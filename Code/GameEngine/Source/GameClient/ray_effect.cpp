@@ -70,14 +70,6 @@ RayEffectData *RayEffectSystem::findEntry( const Drawable *draw )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?RayEffectSystem::RayEffectSystem present-unmatched
-RayEffectSystem::RayEffectSystem( void )
-{
-
-	init();
-
-}  // end RayEffectSystem
-
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ?RayEffectSystem::~RayEffectSystem present-unmatched
