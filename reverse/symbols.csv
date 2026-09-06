@@ -9017,6 +9017,7 @@ name,address,notes
 ??RBfmeInsertCompareC@@QAE_NPAX0@Z,0x00039CB1,Open-BFME5 ILT the linear insert at 0x00452970 compares through
 ??RBfmeInsertCompareD@@QAE_NPAX0@Z,0x0002952D,Open-BFME5 ILT the linear insert at 0x00753460 compares through
 ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z,0x00570420,thiscall ret 8 functor operator()(a b) used by the STL sort/heap helpers of the AptScoreScreen (0x005724D0 0x00575450 ... 20 call sites): orders by TheVictoryConditions->hasAchievedVictory(entry+4 player) then getRelationship against entry player +0x230 team == ALLIES then isPlayerDead 0x000C9D00 then the +0x0C +0x08 ints and (*entry)+0x18
+??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z,0x00015F19,score-entry median and sort helpers call the comparator through retail ILT
 ??RBfmeTreeCompare@@QBE_NPBX0@Z,0x0000A9A2,Open-BFME5 ILT the red-black tree find at 0x00141220 compares through
 ??RGameSortStruct@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x000317D7
 ??RGameSortStruct@@QBE_NPAVGameSpyStagingRoom@@0@Z,0x000317D7,ILT the staging-room tree insert calls at 0x0053F80B on its comparator subobject at this+8
