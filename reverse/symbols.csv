@@ -10525,6 +10525,7 @@ name,address,notes
 ?ReturnToGame@AptPlayerStatus@@QAEXPBD@Z,0x0003244D,Objectives/PlayerStatus constructor 0x0052C660 binds this ILT under both ReturnToGame registration strings
 ?Rva00066A40Construct@@YAXPAXPBX@Z,0x00066A40,plain two-pointer spelling of the STLport _Construct<pair<const NameKeyType DamageFX>> the ledger already names at this address (U3_node_allocators.cpp)
 ?Rva0009F3E0Deallocate@@YAXPAXI@Z,0x0082E5F0,STLport small-node deallocator reached by the 0x0009F3E0 list removal
+?Rva000C41C0_isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z,0x000C3F80,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C41C0 calls; autopin
 ?Rva00194810@@YA?AURva0019B780Key@@ABVAsciiString@@@Z,0x00194810,support pin for pair-return key splitter used by 0x0019B780
 ?Rva002EBEF0Intro@@YAXPAUS4SortElem20@@00HUS4Cmp002EB8E0@@@Z,0x00047343,address-derived STLport introsort callee for 0x002EBEF0
 ?Rva0048BD60FieldTable@@3QBEB,0x010F97D0,Rva0048BD60 field parse table
@@ -77091,6 +77092,7 @@ name,address,notes
 ?g_0107C64C@@3MC,0x0107C64C,Retail axis-scale 1/255 float constant; raw bytes 8180803b independently checked
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
+?g_Rva00462DE0_table@@3VRva00462DE0Table@@A,0x00EF19B8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00462DE0 calls; autopin
 ?g_Rva005127A0InGameChat@@3PAVRva005127A0InGameChat@@A,0x012F4988,address-derived InGameChat global used by the guarded 0x005127A0 forwarder
 ?g_Rva00740BC0BaseVft@@3PAPAXA,0x010C7450,base vftable the 0x00740BC0 destructor restores after its arrays
 ?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
@@ -80479,6 +80481,7 @@ name,address,notes
 ?j_000250d6@Glo012F1024Item@@QAEXXZ,0x000250D6,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_0002a969@Glo012F1024Item@@QAEXXZ,0x0002A969,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
+?j_0002e5a5@@YAXXZ,0x00042F78,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00462DE0 calls; autopin
 ?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_000359db@@YAXXZ,0x000359DB
