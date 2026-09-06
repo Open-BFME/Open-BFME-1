@@ -104,6 +104,16 @@ def mangle_method(class_name: str, method_name: str) -> str:
 
 
 def find_defined_functions(text: str):
+    """The (class, method, annotation) triples defined in `text`, deduplicated."""
+    return {(cls, method, note) for _line, cls, method, note in iter_definitions(text)}
+
+
+def iter_definitions(text: str):
+    """Yield (1-based line, class, method, annotation) per definition, in file order.
+
+    find_defined_functions() collapses this to a set; tools/pin_status.py needs the
+    line numbers and the overloads a set would merge.
+    """
     # Match definitions like:
     #   ReturnType ClassName::methodName(
     #   Namespace::ClassName::methodName(
@@ -115,7 +125,6 @@ def find_defined_functions(text: str):
     )
     namespace_pattern = re.compile(r"\bnamespace\s+(\w+)\s*\{")
 
-    results = set()
     symbol_comment = None
     # Stack of (namespace_name, brace_depth_at_open). Anonymous namespaces use "".
     namespace_stack = []
@@ -130,7 +139,8 @@ def find_defined_functions(text: str):
     # body is then read as ordinary code. Fourteen such files made this checker
     # report a class called NAME and fail a commit. Normalise first: the parse
     # below cares about lines, not about how they were terminated.
-    for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+    for lineno, line in enumerate(
+            text.replace("\r\n", "\n").replace("\r", "\n").split("\n"), 1):
         stripped = line.strip()
         # A function definition written inside a #define body is not a
         # definition -- it is macro text, and the identifiers in it are
@@ -209,9 +219,8 @@ def find_defined_functions(text: str):
                 # Filter out anonymous namespace entries.
                 ns_parts = [ns for ns, _ in namespace_stack if ns]
                 class_name = "::".join(ns_parts + [class_name])
-            results.add((class_name, method_name, symbol_comment))
+            yield lineno, class_name, method_name, symbol_comment
             symbol_comment = None
-    return results
 
 
 def main():
