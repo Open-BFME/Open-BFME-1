@@ -48,14 +48,11 @@ extern float g_bfmeMissingFloat;
 float Gen_001418F0::bfmeFindFloat(const void *key)
 {
 	BfmeLookupIterator found;
-	if (m_bfmeTree.m_bfmeSize != 0)
-		goto present;
-missing:
-	return g_bfmeMissingFloat;
-present:
+	if (m_bfmeTree.m_bfmeSize == 0)
+		return g_bfmeMissingFloat;
 	m_bfmeTree.bfmeFind(found, key);
 	if (found.m_bfmeNode == m_bfmeTree.m_bfmeHeader)
-		goto missing;
+		return g_bfmeMissingFloat;
 	return found.m_bfmeNode->m_bfmeValue;
 }
 

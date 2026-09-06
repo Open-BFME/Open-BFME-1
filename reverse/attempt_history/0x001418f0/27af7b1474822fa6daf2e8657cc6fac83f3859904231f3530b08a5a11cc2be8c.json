@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "27af7b1474822fa6daf2e8657cc6fac83f3859904231f3530b08a5a11cc2be8c",
+  "symbol": "?bfmeFindFloat@Gen_001418F0@@QAEMPBX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeFindFloat@Gen_001418F0@@QAEMPBX@Z\n// partial score=0.9 date=2026-09-06\n// cl: /DNDEBUG /MD /GX- /O2 /Ob2\n// Small map-value lookup wrappers used by the AI construction path.\n\nstruct BfmeLookupNode\n{\n\tchar m_bfmePad[0x14];\n\tfloat m_bfmeValue;\n};\n\nstruct BfmeLookupIterator\n{\n\tBfmeLookupNode *m_bfmeNode;\n};\n\nclass BfmeLookupTree\n{\npublic:\n\tvoid bfmeFind(BfmeLookupIterator &out, const void *const &key);\n\n\tBfmeLookupNode *m_bfmeHeader;\n\tunsigned int m_bfmeSize;\n};\n\nclass Gen_001418F0\n{\npublic:\n\tfloat bfmeFindFloat(const void *key);\n\nprivate:\n\tchar m_bfmePad[0x340];\n\tBfmeLookupTree m_bfmeTree;\n};\n\nclass Gen_00141940\n{\npublic:\n\tfloat *bfmeFindFloat(const void *key);\n\nprivate:\n\tchar m_bfmePad[0x34c];\n\tBfmeLookupTree m_bfmeTree;\n};\n\nextern float g_bfmeMissingFloat;\n\nfloat Gen_001418F0::bfmeFindFloat(const void *key)\n{\n\tBfmeLookupIterator found;\n\tif (m_bfmeTree.m_bfmeSize == 0)\n\t\treturn g_bfmeMissingFloat;\n\tm_bfmeTree.bfmeFind(found, key);\n\tif (found.m_bfmeNode == m_bfmeTree.m_bfmeHeader)\n\t\treturn g_bfmeMissingFloat;\n\treturn found.m_bfmeNode->m_bfmeValue;\n}\n\nfloat *Gen_00141940::bfmeFindFloat(const void *key)\n{\n\tBfmeLookupIterator found;\n\tif (m_bfmeTree.m_bfmeSize != 0)\n\t\tgoto present;\nmissing:\n\treturn 0;\npresent:\n\tm_bfmeTree.bfmeFind(found, key);\n\tif (found.m_bfmeNode == m_bfmeTree.m_bfmeHeader)\n\t\tgoto missing;\n\treturn &found.m_bfmeNode->m_bfmeValue;\n}\n"
+}
