@@ -84047,3 +84047,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0BfmeRoomAB@@QAE@ABV0@@Z,0x00887B60,pin
 ?bfmeFindAB@BfmeOwnAB@@QAEPAVBfmeNodeAB@@PAXVBfmeRoomAB@@@Z,0x0002CB97,pin
 ??0BfmeRoomAC@@QAE@ABV0@@Z,0x00887B60,pin
+?bfmeRunAD@Gen_00609320@@QAEXPAXVBfmePairAD@@HHH@Z,0x00021CEC,pin
