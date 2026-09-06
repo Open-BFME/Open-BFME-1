@@ -1,8 +1,17 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// Retail 0x00724240.  This is the BFME-layout snow settings refresh: call
-// SnowManager's update hook, compare the active texture with the final
-// WeatherSetting override, and replace the texture handle when it changed.
+// Retail 0x00724240 -- W3DSnowManager::updateIniSettings, the BFME-layout snow
+// settings refresh.  reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/
+// GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp:145 is the same
+// three steps in the same order: chain up to SnowManager::updateIniSettings
+// (here the link thunk j_00038c49), then, if a snow texture is loaded, compare
+// its name with TheWeatherSetting's final override and re-fetch it when they
+// differ.  m_snowTexture sits at +0x6c, next to the +0x68 index buffer that
+// W3DSnowManagerReAcquireResources.cpp fills.
+//
+// updateIniSettings is virtual upstream, but the shim keeps it non-virtual: one
+// virtual here would emit a ??_7W3DSnowManager@@6B@ COMDAT whose single slot
+// disagrees with the one W3DSnowManagerUpdate.cpp emits.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -80,7 +89,7 @@ static inline void BFMEAssignSnowTexture(
 
 extern "C" __declspec(dllimport) int __cdecl stricmp(const char *, const char *);
 
-class Gen00724240SnowManager
+class W3DSnowManager
 {
 public:
 	void updateIniSettings(void);
@@ -90,7 +99,7 @@ public:
 	TextureClass *m_snowTexture;
 };
 
-void Gen00724240SnowManager::updateIniSettings(void)
+void W3DSnowManager::updateIniSettings(void)
 {
 	j_00038c49();
 
