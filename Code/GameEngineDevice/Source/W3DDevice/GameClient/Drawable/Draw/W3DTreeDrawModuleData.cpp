@@ -1,11 +1,31 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ??0W3DTreeDrawModuleData@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
+// readable body of ??1W3DTreeDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
+//
+// Constructor and destructor of one class, so they need one declaration of it.
+// Field names come from retail's own INI field table joined to upstream's parse
+// table on the key: retail supplies every offset, upstream only the word. The
+// offsets were derived from this class's declaration sequence and type sizes,
+// never read out of the old placeholder names.
+//
+// The destructor stores the derived vtable early, destroys the four Buffer
+// members at +0x08/+0x0c/+0x28/+0x48, then stores the base vtable. Those four
+// offsets are what the named layout below has to reproduce, and it does: the
+// destructor's own copy of this class described the runs between them as
+// m_gap1[0x18] and m_gap2[0x1c], which are exactly the six and eight named
+// fields that sit there.
 
+// Buffer is retail's string buffer: reverse/symbols.csv pins
+// ?clear@Buffer@@QAEXXZ to the body at 0x00887940, and that is the body the
+// destructor below calls for each of the four members. Spelling the destructor
+// inline as clear() is what emits that call -- the harvested
+// ??1Buffer@@QAE@XZ pin names the shared ILT thunk at 0x0001A401 instead, which
+// is not what this destructor calls.
 class Buffer
 {
 public:
 	Buffer() : m_data(0) {}
-	~Buffer();
+	~Buffer() { clear(); }
 	void clear();
 
 private:
@@ -57,6 +77,7 @@ private:
 	float m_bfmeForty;
 };
 
+// ??0W3DTreeDrawModuleData@@QAE@XZ
 W3DTreeDrawModuleData::W3DTreeDrawModuleData() :
 	m_framesToMoveOutward(1),
 	m_framesToMoveInward(1),
@@ -80,4 +101,9 @@ W3DTreeDrawModuleData::W3DTreeDrawModuleData() :
 	m_bfmeFive = 5;
 	m_bfmeHundredFive = 105;
 	m_bfmeForty = 40.0f;
+}
+
+// ??1W3DTreeDrawModuleData@@UAE@XZ
+W3DTreeDrawModuleData::~W3DTreeDrawModuleData()
+{
 }
