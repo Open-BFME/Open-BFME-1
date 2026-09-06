@@ -6,6 +6,7 @@ class Rva00699180Owner
 {
 public:
 	void refreshPair(int a, int b);
+	void refreshAll();
 	void setVolumes(float volume, unsigned char flags);
 
 	char m_pad0[4];
@@ -86,6 +87,15 @@ void Rva00699180Owner::refreshPair(int a, int b)
 	{
 		if (slot[i] != old[i])
 			*((unsigned char *)this + 0x188 + (b + a * 2) * 4 + i) = 2;
+	}
+}
+
+void Rva00699180Owner::refreshAll()
+{
+	for (int i = 0; i < 6; ++i)
+	{
+		for (int j = 0; j < 2; ++j)
+			refreshPair(i, j);
 	}
 }
 
