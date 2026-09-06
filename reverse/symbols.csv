@@ -72684,6 +72684,8 @@ name,address,notes
 ?bfmeAdjustHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z,0x009CD1E0,address-derived adjust-heap callee of bfmePopHeapVOU; target read from the REL32 at its call site
 ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z,0x00001915,Open-BFME5 ILT thunk to 0x003DB160; Pathfinder 2-Coord3D adjust used by isClearGoalFiringLineOfSightTerrain Object overload
 ?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
+?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
+?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin
 ?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
 ?bfmeAfterEOC@BfmeThingEOC@@QAEXXZ,0x000106AE,pin
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
@@ -75225,6 +75227,7 @@ name,address,notes
 ?bfmeSetConditionState@Object@@QAEXH@Z,0x0001E402,Open-BFME5 condition-state setter called by 0x0028D8F0
 ?bfmeSetControlEnabled@@YAXPAVGameWindow@@_N@Z,0x0002E875,OnlineLogin dependent control enabled state helper called by text setter
 ?bfmeSetDYF@BfmeGlobDYF@@QAEX_N@Z,0x0003D578,pin
+?bfmeSetFP@BfmeSubFP@@QAEXPBD0@Z,0x0002B297,pin
 ?bfmeSetGoalPosition@BfmeSub30_7F0@@QAEXPBUCoord3D@@@Z,0x0000314D,address-derived sink goal setter used by 0x002BCE00
 ?bfmeSetGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z,0x0000314D,TU ABI alias for authentic StateMachine::setGoalPosition ILT used by retail setGoalPositionClipped
 ?bfmeSetIndicatorOn@Drawable@@AAEX_N@Z,0x00018CF5,Open-BFME5 ILT thunk to body 0x004115A0; ?setIndicatorColor@Drawable@@QAEXI@Z at 0x004186E0 calls it on this from both of its arms with a true or a false; address-derived name
@@ -83931,6 +83934,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeSetFP@BfmeSubFP@@QAEXPBD0@Z,0x0002B297,pin
-?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
-?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin
