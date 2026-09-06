@@ -74947,6 +74947,7 @@ name,address,notes
 ?bfmeStopATC@BfmeOneATC@@QAEXH@Z,0x0000BD7F,pin
 ?bfmeStopAZB@@YAXH@Z,0x0001CE04,pin
 ?bfmeStopAZC@@YAXH@Z,0x0003DB77,pin
+?bfmeStopAZC@BfmeModeAZC@@QAEXH@Z,0x0003DB77,FreezingRain helper calls the mode singleton through its thiscall stop method
 ?bfmeStopAll1158@BfmeOwner1158@@QAEXPAVBfmeArg1158@@@Z,0x0001DA8E,ILT thunk to body 0x00414960
 ?bfmeStopBEH@BfmeThingBEH@@QAEXXZ,0x000193CB,pin
 ?bfmeStopMovie@Display@@QAEXXZ,0x0001992F,Open-BFME5 ILT thunk to body 0x0040EFF0; ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 calls it on TheDisplay with no arguments; address-derived name
