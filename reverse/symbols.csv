@@ -83622,6 +83622,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?setWakeFrame@UpdateModule@@QAEXPAVObject@@H@Z,0x000157DA,pin
 ??1BFMENetworkQueueItem@@QAE@XZ,0x0001658B,BFMENetworkQueueItem temporary destructor called by the dispatcher deque growth helper
 ?_M_reallocate_map@?$deque@VBFMENetworkQueueItem@@V?$allocator@VBFMENetworkQueueItem@@@_STL@@@_STL@@IAEXI_N@Z,0x00003A58,BFMENetworkQueueItem deque growth reserves the map through the retail ILT
+?_M_reallocate_map@?$deque@VBFMENetworkQueueItem1@@V?$allocator@VBFMENetworkQueueItem1@@@_STL@@@_STL@@IAEXI_N@Z,0x00005065,BFMENetworkQueueItem1 deque growth reserves the map through the retail ILT
 ??4BfmeRva004262F0Map@@QAEAAV0@ABV0@@Z,0x000083E1,28-byte copy 0x004259E0 tree-backed member assignment at offset16; ILT enters424AC0
 ??4EvaMessageTail@@QAEAAV0@ABV0@@Z,0x000083E1,Eva 28-byte copy 0x00425A60 nontrivial member assignment at offset16
 ?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009C9CE0,pin

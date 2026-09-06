@@ -16,6 +16,26 @@ private:
 	char m_body[0x210];
 };
 
+class PSPlayerStats
+{
+public:
+	~PSPlayerStats();
+
+private:
+	char m_body[0x1e8];
+};
+
+class BFMENetworkQueueItem1
+{
+public:
+	BFMENetworkQueueItem1(const BFMENetworkQueueItem1 &other);
+
+private:
+	int m_type;
+	PSPlayerStats m_stats;
+	char m_body[4];
+};
+
 namespace _STL
 {
 template <class T>
@@ -94,4 +114,6 @@ void deque<T, Allocator>::_M_push_back_aux_v(const T &value)
 
 template void deque<BFMENetworkQueueItem, allocator<BFMENetworkQueueItem> >::_M_push_back_aux_v(
 	const BFMENetworkQueueItem &);
+template void deque<BFMENetworkQueueItem1, allocator<BFMENetworkQueueItem1> >::_M_push_back_aux_v(
+	const BFMENetworkQueueItem1 &);
 }
