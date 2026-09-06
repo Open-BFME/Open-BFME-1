@@ -2434,3 +2434,57 @@ void ciRplEndOfWhoHandler(CHAT chat, const ciServerMessage * message)
 		return;
 	}
 }
+
+/* The command-table NICK body is in the same 2007 Chat handlers TU as the
+   RPL bodies above.  Keep the connection slice local: only the nick buffer
+   is read or written here, at its proven retail offset. */
+typedef struct ciNickHandlerConnection
+{
+	unsigned char beforeNick[0x36c];
+	char nick[64];
+} ciNickHandlerConnection;
+
+__declspec(dllimport) int __cdecl _stricmp(const char *, const char *);
+__declspec(dllimport) char *__cdecl strncpy(char *, const char *, unsigned int);
+void ciUserChangedNick(CHAT chat, const char *oldNick, const char *newNick);
+
+
+void ciNickHandler(CHAT chat, const ciServerMessage *message)
+{
+	char *oldNick;
+	char *newNick;
+	ciNickHandlerConnection *connection = (ciNickHandlerConnection *)chat;
+
+	if (message->numParams != 1)
+		return;
+
+	oldNick = message->nick;
+	newNick = message->params[0];
+
+	if (_stricmp(oldNick, connection->nick) == 0)
+	{
+		ciServerMessageFilter *filter;
+		ciFilterMatch match;
+
+		strncpy(connection->nick, newNick, 64);
+		connection->nick[63] = '\0';
+
+		memset(&match, 0, sizeof(ciFilterMatch));
+		match.type = TYPE_NICK;
+		match.name = oldNick;
+		match.name2 = newNick;
+
+		filter = ciFindFilter(chat, 1, &match);
+		if (filter)
+		{
+			ciCallbackChangeNickParams params;
+			params.success = CHATTrue;
+			params.oldNick = oldNick;
+			params.newNick = newNick;
+
+			FINISH_FILTER;
+		}
+	}
+
+	ciUserChangedNick(chat, oldNick, newNick);
+}
