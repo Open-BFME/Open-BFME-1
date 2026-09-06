@@ -93,3 +93,27 @@ void chatEnumChannelBansA(CHAT chat, const char *channel, void *callback,
 		while (ciCheckForID(chat, ID));
 	}
 }
+
+int ciAddCWHOFilter(CHAT,const char*,void*,void*);
+void chatGetChannelBasicUserInfoA(CHAT chat, const char *channel,
+	void *callback, void *param, int blocking)
+{
+	ciConnection *connection = (ciConnection *)chat;
+	int ID;
+
+	if (!chat || !connection->connected)
+		return;
+
+	ciSocketSendf(&connection->socketOpaque, "WHO %s", channel);
+	ID = ciAddCWHOFilter(chat, channel, callback, param);
+
+	if (blocking)
+	{
+		do
+		{
+			ciThink(chat, ID);
+			msleep(10);
+		}
+		while (ciCheckForID(chat, ID));
+	}
+}
