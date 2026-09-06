@@ -1444,3 +1444,112 @@ void ciErrChannelIsFullHandler(CHAT chat, const ciServerMessage *message)
         ciFinishFilter(chat, filter, &params);
     }
 }
+
+enum { CHATInviteOnlyChannel=3, CHATBannedFromChannel=4, CHATBadChannelPassword=5, CHATBadChannelMask=8 };
+void ciErrInviteOnlyChanHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATInviteOnlyChannel;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
+
+void ciErrBannedFromChanHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATBannedFromChannel;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
+
+void ciErrBadChannelKeyHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATBadChannelPassword;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
+
+void ciErrBadChanMaskHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciFilterMatch match;
+    ciServerMessageFilter *filter;
+    char *channel;
+
+    assert(message->numParams == 3);
+    if (message->numParams != 3)
+        return;
+
+    channel = message->params[1];
+
+    memset(&match, 0, sizeof(ciFilterMatch));
+    match.type = TYPE_JOIN;
+    match.name = channel;
+    filter = ciFindFilter(chat, 1, &match);
+    if (filter != NULL)
+    {
+        ciCallbackEnterChannelParams params;
+        params.success = CHATFalse;
+        params.result = CHATBadChannelMask;
+        params.channel = channel;
+
+        ciFinishFilter(chat, filter, &params);
+    }
+}
