@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c17dcffe26ac1081c5a31ec25c9308c8e1b1fb543fab01a2e1b5d8837a255b48",
+  "symbol": "?d_0091db30@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_0091db30@@YAXXZ\n// partial score=0.75 date=2026-09-05\n// cl: /DNDEBUG /MD\n\n// Address-derived recovery for the BFME body at 0x0091DB30.  Retail resets\n// the sorting renderer's dynamic-vertex-array bookkeeping when told to: a\n// 16-bit array offset at 0x013467E4, seven consecutive dword slots from\n// 0x01346794 to 0x013467AC (vertex-buffer pointer/offset bookkeeping), and a\n// trailing 16-bit slot at 0x013467B0.  Called from\n// ?Flush@SortingRendererClass@@SAXXZ and one more dump (d_008fa4b0.asm).\n\nextern short g_Va013467E4;\nextern int g_Va01346794;\nextern int g_Va01346798;\nextern int g_Va0134679C;\nextern int g_Va013467A0;\nextern int g_Va013467A4;\nextern int g_Va013467A8;\nextern int g_Va013467AC;\nextern short g_Va013467B0;\n\nvoid Rva0091DB30ResetSortingVertexArray(bool resetIt)\n{\n\tg_Va013467E4 = 0;\n\n\tif (resetIt)\n\t{\n\t\tg_Va01346794 = 0;\n\t\tg_Va01346798 = 0;\n\t\tg_Va0134679C = 0;\n\t\tg_Va013467A0 = 0;\n\t\tg_Va013467A4 = 0;\n\t\tg_Va013467A8 = 0;\n\t\tg_Va013467AC = 0;\n\t\tg_Va013467B0 = 0;\n\t}\n}\n"
+}

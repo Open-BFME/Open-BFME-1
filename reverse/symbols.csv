@@ -73818,6 +73818,7 @@ name,address,notes
 ?bfmeFreeELD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeEXB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeEYG@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeLarge000A1B30@@YAXPAX@Z,0x00881EB0,operator delete alias for the 0x000A1B30 destructor
 ?bfmeFreeLarge007873C0@@YAXPAX@Z,0x00881EB0,retail large-block deallocator for the assigned 0x007873C0 destructor
 ?bfmeFreeLarge007883D0@@YAXPAX@Z,0x00881EB0,retail large-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeNodeVOA@@YAXPAXI@Z,0x0082E5F0,pin
@@ -73828,6 +73829,7 @@ name,address,notes
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
 ?bfmeFreeSizedVF@@YAXPAXI@Z,0x007F0170,pin
 ?bfmeFreeSizedXC@@YAXPAXI@Z,0x0082E5F0,pin
+?bfmeFreeSmall000A1B30@@YAXPAXI@Z,0x0082E5F0,__node_alloc _M_deallocate alias for the 0x000A1B30 destructor
 ?bfmeFreeSmall007873C0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007873C0 destructor
 ?bfmeFreeSmall007883D0@@YAXPAXI@Z,0x0082E5F0,retail small-block deallocator for the assigned 0x007883D0 destructor
 ?bfmeFreeSmallCFA@@YAXPADI@Z,0x0082E5F0,pin
@@ -75488,6 +75490,7 @@ name,address,notes
 ?bfmeVisit@BfmeInnerIterable@@QAEHP6AXPAVObject@@PAX@Z1@Z,0x000EDAB0,address-derived inner-list visitor callee of BfmeIterableObject::bfmeIterate; retail reaches it through the low-RVA thunk at 0x0002DC1D
 ?bfmeVisit@BfmeVisitorBF@@QAEXPAVBfmeItemBF@@@Z,0x0002B7E2,ILT thunk called for each compacted entry
 ?bfmeVisit@Gen_0038D000@@AAEXPAVBfmeNodeR@@@Z,0x0001D0DE,Open-BFME5 the ICF thunk (to 0x0038B0C0) the clear at 0x0038D000 calls on this per node
+?bfmeVtable000A1B30@@3PAHA,0x01073744,BfmeBaseVUQ vtable restored by the 0x000A1B30 destructor (twin of 0x007873C0)
 ?bfmeVtable007873C0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007873C0 destructor
 ?bfmeVtable007883D0@@3PAHA,0x01126A98,retail base table installed by the assigned 0x007883D0 destructor
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
@@ -76663,6 +76666,7 @@ name,address,notes
 ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@0@Z,0x000EFE10,call displacement in initTeam @0x000F8195
 ?findTemplate@BFMEThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,INI retail ThingFactory facade
 ?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z,0x00028560,BFME one-arg ThingFactory findTemplate; ScriptActions doAddCommandBarButton facade
+?findTemplate@Rva003392B0TemplateStore@@QAEPAXABVAsciiString@@@Z,0x00015267,lookup thunk called through TheParticleSystemManager by 0x003392B0
 ?findTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z,0x00028560,SpawnBehavior retail findTemplate ILT
 ?findTerrain@TerrainTypeCollection@@QAEPAVTerrainType@@VAsciiString@@@Z,0x0000DBD9,first of the find-then-create pair in the Terrain block parser; the second call on the same receiver is the already-matched newTerrain and ZH declares findTerrain immediately above it with the same signature
 ?findUpdateModule@Object@@QAEPAVOCLUpdate@@W4NameKeyType@@@Z,0x0002AE23,Open-BFME5 ILT; ?updateContextOCLTimer@ControlBar@@AAEXXZ at 0x004AA980 looks the OCLUpdate module up through it
