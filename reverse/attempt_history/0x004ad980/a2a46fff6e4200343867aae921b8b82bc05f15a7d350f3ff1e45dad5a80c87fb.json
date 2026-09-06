@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a2a46fff6e4200343867aae921b8b82bc05f15a7d350f3ff1e45dad5a80c87fb",
+  "symbol": "?bfmeGoEQD@BfmeHostEQD@@QAEXHH@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeGoEQD@BfmeHostEQD@@QAEXHH@Z (identity unknown)\n// partial score=0.95 date=2026-09-06\n// exact size 45/45; ONE byte differs: the unwind esp-marker slot.\n// retail 89 64 24 14 ([esp+0x14], param-1 home slot); MSVC 89 64 24 18 ([esp+0x18], param-2 slot).\n// Pin needed: ?bfmeInnerEQD@BfmeTargetEQD@@QAEXUBfmePairEQD@@HH@Z,0x0004461B,pin\nstruct BfmePairEQD\n{\n\tBfmePairEQD(const BfmePairEQD &other) throw();\n\t~BfmePairEQD() throw();\n\tint m_bfmeFirstEQD;\n\tint m_bfmeSecondEQD;\n};\n\ninline BfmePairEQD::BfmePairEQD(const BfmePairEQD &other) throw()\n\t: m_bfmeFirstEQD(other.m_bfmeFirstEQD), m_bfmeSecondEQD(other.m_bfmeSecondEQD)\n{\n}\n\ninline BfmePairEQD::~BfmePairEQD() throw()\n{\n}\n\nstruct BfmeTargetEQD\n{\n\tvoid bfmeInnerEQD(BfmePairEQD pair, int a, int b);\n};\n\nstruct BfmeHostEQD\n{\n\tvoid bfmeGoEQD(int a, int b);\n\tBfmeTargetEQD *m_bfmeTargetEQD;\n\tBfmePairEQD m_bfmePairEQD;\n};\n\nvoid BfmeHostEQD::bfmeGoEQD(int a, int b)\n{\n\tif (m_bfmeTargetEQD != 0)\n\t\tm_bfmeTargetEQD->bfmeInnerEQD(m_bfmePairEQD, a, b);\n}\n"
+}
