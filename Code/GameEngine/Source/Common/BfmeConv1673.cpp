@@ -12,3 +12,9 @@ void __cdecl bfmeCallEQK(int host, BfmeVec3EQK *tail, int unused, int extra)
 	BfmeVec3EQK *point = tail - 1;
 	bfmeInnerEQK(host, point, point, *point, extra, 0);
 }
+
+void __cdecl bfmeCallEQL(int host, BfmeVec3EQK *tail, int extra)
+{
+	BfmeVec3EQK *point = tail - 1;
+	bfmeInnerEQK(host, point, point, *point, extra, 0);
+}
