@@ -31,7 +31,12 @@ struct BfmeStateVKU
 
 void __cdecl bfmeCallVKU(void *a, int b, BfmeStateVKU *c, int d);
 
-void __cdecl bfmeGoVKU(void *a, int unused, BfmeStateVKU *b)
+// The INI `EmotionNugget` block reaches this address, 0x0037A9A0, from both
+// its `ModelConditions` and its `ModelConditionsClear` keys (docs/ini_schema.md
+// -- the FieldParse entry supplies the store, which is why one callback serves
+// two keys). It runs the flag-list parse and then mirrors the parsed set into
+// the second set 0x28 bytes on.
+void __cdecl parseEmotionNuggetModelConditions(void *a, int unused, BfmeStateVKU *b)
 {
 	bfmeCallVKU(a, 0, b, 0);
 	b->m_bfme28 = b->m_bfme00;
