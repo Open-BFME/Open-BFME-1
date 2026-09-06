@@ -1159,6 +1159,10 @@ def compile_function(row, symbol_map, output):
         resolved = bytearray(compiled[:target_size])
         unresolved = []
         covered = bytearray(target_size)
+        # What the REL32 arm decided, per site, for the failure printer only:
+        # (offset, symbol, candidate list, emitted address). Nothing reads it
+        # on the green path, and nothing here may consult it.
+        sites = []
         for offset, rtype, sym_name in relocs:
             if offset >= target_size:
                 continue  # reloc belongs to a later function sharing the COMDAT section
@@ -1186,23 +1190,27 @@ def compile_function(row, symbol_map, output):
                 if sym_name in symbol_map:
                     next_address = target_rva + offset + 4
                     candidates = symbol_map[sym_name]
-                    displacement = struct.pack("<i", candidates[0] - next_address)
+                    emitted = candidates[0]
+                    displacement = struct.pack("<i", emitted - next_address)
                     for target_address in candidates[1:]:
                         if target[offset : offset + 4] == displacement:
                             break
+                        emitted = target_address
                         displacement = struct.pack("<i", target_address - next_address)
                     resolved[offset : offset + 4] = displacement
+                    sites.append((offset, sym_name, candidates, emitted))
                 else:
                     unresolved.append(sym_name)
 
-        return resolved, unresolved, covered
+        return resolved, unresolved, covered, sites
 
-    resolved, unresolved, covered = resolve(lib_member)
+    resolved, unresolved, covered, sites = resolve(lib_member)
     masked = lib_member
     if gen_alias and not lib_member and bytes(resolved) != target:
-        alt_resolved, alt_unresolved, alt_covered = resolve(True)
+        alt_resolved, alt_unresolved, alt_covered, alt_sites = resolve(True)
         if bytes(alt_resolved) == target:
             resolved, unresolved, covered = alt_resolved, alt_unresolved, alt_covered
+            sites = alt_sites
             masked = True
 
     return {
@@ -1216,6 +1224,7 @@ def compile_function(row, symbol_map, output):
         "masked": masked,
         "concrete": target_size - sum(covered),
         "note": note,
+        "rel32": sites,
     }
 
 
@@ -1379,6 +1388,84 @@ def write_reloc_names(patches):
     return selected
 
 
+_LEDGER_BY_ADDRESS = None
+# Per row: enough sites to see the pattern, not a wall of them. A 3,000-byte
+# body that lost its callee pins differs at every call it makes.
+REL32_REPORT_LIMIT = 12
+
+
+def ledger_names_by_address():
+    """Every address the ledger names -> [(name, notes)].
+
+    Built on the first ask and only ever asked by the failure printer below, so
+    a green gate never pays for this scan of functions.csv plus symbols.csv.
+    """
+    global _LEDGER_BY_ADDRESS
+    if _LEDGER_BY_ADDRESS is None:
+        index = {}
+        for row in load_all_function_rows():
+            index.setdefault(int(row["target_rva"], 16), []).append(
+                (row["name"], (row.get("notes") or "").strip()))
+        if SYMBOLS.exists():
+            with SYMBOLS.open("r", encoding="utf-8", newline="") as handle:
+                for row in csv.DictReader(handle):
+                    index.setdefault(int(row["address"], 16), []).append(
+                        (row["name"], (row.get("notes") or "").strip()))
+        _LEDGER_BY_ADDRESS = index
+    return _LEDGER_BY_ADDRESS
+
+
+def ledger_description(address):
+    entries = ledger_names_by_address().get(address)
+    if not entries:
+        return "unnamed"
+    shown = []
+    for name, notes in entries[:2]:
+        if notes:
+            notes = notes[:60] + "..." if len(notes) > 60 else notes
+            shown.append(f"{name}, {notes}")
+        else:
+            shown.append(name)
+    if len(entries) > 2:
+        shown.append(f"+{len(entries) - 2} more")
+    return "; ".join(shown)
+
+
+def explain_rel32(patch):
+    """Say what each differing REL32 site called and what we emitted instead.
+
+    Two hex dumps prove a displacement differs; they name neither the call, its
+    callee, nor why that candidate won, so every red rel32 row cost a manual
+    decode. All of it is already in the patch or one ledger lookup away.
+    """
+    target, compiled, target_rva = patch["target"], patch["bytes"], patch["target_rva"]
+    data, sections = exe_image()
+    text = next(section for section in sections if section["name"] == ".text")
+    low, high = text["rva"], text["rva"] + text["size"]
+    differing = 0
+    for offset, sym_name, candidates, emitted in patch["rel32"]:
+        if offset + 4 > len(target) or offset + 4 > len(compiled):
+            continue
+        if compiled[offset : offset + 4] == target[offset : offset + 4]:
+            continue
+        differing += 1
+        if differing > REL32_REPORT_LIMIT:
+            continue
+        called = target_rva + offset + 4 + struct.unpack_from("<i", target, offset)[0]
+        body = follow_thunk(data, sections, called, low, high) if low <= called < high else called
+        where = f"0x{called:08X}"
+        if body != called:
+            where += f" -> body 0x{body:08X}"
+        listed = ", ".join(f"0x{candidate:08X}" for candidate in candidates[:8])
+        if len(candidates) > 8:
+            listed += f", +{len(candidates) - 8} more"
+        print(f"    +0x{offset:x} {sym_name}: retail calls {where} "
+              f"(ledger: {ledger_description(body)}); "
+              f"candidates [{listed}]; emitted 0x{emitted:08X}")
+    if differing > REL32_REPORT_LIMIT:
+        print(f"    ... and {differing - REL32_REPORT_LIMIT} more differing REL32 site(s)")
+
+
 def verify_functions(only=None):
     rows = load_function_rows()
     if only:
@@ -1494,6 +1581,8 @@ def verify_functions(only=None):
             print(f"    unresolved call(s): {calls} (add to reverse/symbols.csv)")
         print(f"    target:   {format_bytes(target)}")
         print(f"    compiled: {format_bytes(compiled)}")
+        if patch["rel32"]:
+            explain_rel32(patch)
 
     if renumbered:
         # Green, but on a pin the ledger got wrong: say so every time, or the

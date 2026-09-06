@@ -112,3 +112,29 @@ def test_a_rel32_ending_exactly_on_the_rows_end_still_resolves(tmp_path):
     assert len(patch["bytes"]) == FITS, "the body is exactly the row's extent"
     assert patch["bytes"] == patch["target"], "the displacement resolved to retail's"
     assert patch["unresolved"] == []
+
+
+def test_a_differing_rel32_site_says_what_retail_called(tmp_path, capsys, monkeypatch):
+    """The other half of "naming neither the extent nor this site".
+
+    A site that fits but resolves to the wrong copy of the callee -- the ICF
+    case the candidate list exists for -- used to print only the two hex dumps,
+    so reading it meant decoding the displacement, following the thunk and
+    grepping the ledger by hand, once per red row.
+    """
+    obj = write_object(tmp_path / "differs.obj")
+    twin = CALLEE_RVA + 0x40  # a second fold of the same name: not what retail encodes
+
+    patch = build.compile_function(make_row(FITS), {CALLEE: [twin]}, obj)
+    assert patch["bytes"] != patch["target"], "the wrong fold is a byte mismatch"
+
+    monkeypatch.setattr(build, "ledger_names_by_address",
+                        lambda: {CALLEE_RVA: [("?theCallee@Store@@QBEXXZ", "matched")]})
+    build.explain_rel32(patch)
+    line = capsys.readouterr().out
+
+    assert f"+0x{SITE:x}" in line, "the offset of the differing site"
+    assert CALLEE in line, "the relocation's symbol"
+    assert f"0x{CALLEE_RVA:08X}" in line, "the address retail actually calls"
+    assert "matched" in line, "what the ledger calls that address"
+    assert f"0x{twin:08X}" in line, "the candidate emitted instead"
