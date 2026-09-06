@@ -83588,3 +83588,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??$_M_allocate_and_copy@PBUEvaMessageInfo@@@?$vector@UEvaMessageInfo@@V?$allocator@UEvaMessageInfo@@@_STL@@@_STL@@IAEPAUEvaMessageInfo@@IPBU2@0@Z,0x00034649,0x004263D0 call +0x0059 ILT enters matched Eva 28-byte allocate-and-copy body 0x00426140
+?_M_clear@?$vector@UEvaMessageInfo@@V?$allocator@UEvaMessageInfo@@@_STL@@@_STL@@IAEXXZ,0x00009E8A,0x004263D0 call +0x0062 ILT enters matched 28-byte vector destructor body 0x00426350
+??$__copy@PBUEvaMessageInfo@@PAU1@H@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00003F6C,0x004263D0 calls +0x00b1 and +0x00e4 ILT enters matched 28-byte copy body 0x00425A60
+??$_Destroy@PAUEvaMessageInfo@@@_STL@@YAXPAUEvaMessageInfo@@0@Z,0x0003AA8A,0x004263D0 call +0x00bb ILT enters matched 28-byte member walk body 0x004261F0
+??$__uninitialized_copy@PBUEvaMessageInfo@@PAU1@@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0004684E,0x004263D0 call +0x0119 ILT enters matched 28-byte copy walk body 0x00426020
