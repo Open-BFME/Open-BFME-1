@@ -61,6 +61,21 @@ class BezierSegment
 		void splitSegmentAtT(Real tValue, BezierSegment &outSeg1, BezierSegment &outSeg2) const;
 };
 
+// BFME has a second copy of the scalar constructor in this translation unit's
+// constructor family.  The canonical ZH spelling is already claimed at a
+// different retail address, so keep this independently evidenced body under
+// an address-derived class name while preserving the proven layout.
+class Rva000B6D50BezierSegment
+{
+		Coord3D m_controlPoints[4];
+
+	public:
+		Rva000B6D50BezierSegment(Real x0, Real y0, Real z0,
+											 Real x1, Real y1, Real z1,
+											 Real x2, Real y2, Real z2,
+											 Real x3, Real y3, Real z3);
+};
+
 // The difference vectors retail spills are NOT contiguous on the stack, so the
 // locals are a plain aggregate whose fields the optimiser scalarises -- not the
 // ctor/dtor-bearing element type m_controlPoints is made of.
@@ -87,6 +102,28 @@ BezierSegment::BezierSegment(Coord3D cp[4])
 	m_controlPoints[1] = cp[1];
 	m_controlPoints[2] = cp[2];
 	m_controlPoints[3] = cp[3];
+}
+
+Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real x0, Real y0, Real z0,
+																					 Real x1, Real y1, Real z1,
+																					 Real x2, Real y2, Real z2,
+																					 Real x3, Real y3, Real z3)
+{
+		m_controlPoints[0].x = x0;
+		m_controlPoints[0].y = y0;
+		m_controlPoints[0].z = z0;
+
+		m_controlPoints[1].x = x1;
+		m_controlPoints[1].y = y1;
+		m_controlPoints[1].z = z1;
+
+		m_controlPoints[2].x = x2;
+		m_controlPoints[2].y = y2;
+		m_controlPoints[2].z = z2;
+
+		m_controlPoints[3].x = x3;
+		m_controlPoints[3].y = y3;
+		m_controlPoints[3].z = z3;
 }
 
 //-------------------------------------------------------------------------------------------------
