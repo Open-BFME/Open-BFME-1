@@ -40702,6 +40702,7 @@ name,address,notes
 ?b_0037eaf0@@YAXXZ,0x0037EAF0,gen-thunk body
 ?b_0037eb40@@YAXXZ,0x0037EB40,gen-thunk body
 ?b_0037ebb0@@YAXXZ,0x0037EBB0,gen-thunk body
+?begin@?$hashtable@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@@2@XZ,0x0037EBB0,ExperienceLevelSystem map begin
 ?b_0037ec20@@YAXXZ,0x0037EC20,gen-thunk body
 ?b_0037ec80@@YAXXZ,0x0037EC80,gen-thunk body
 ?b_0037ecd0@@YAXXZ,0x0037ECD0,gen-thunk body
@@ -83561,3 +83562,220 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?get@Rva006F92D0@@QAEPADXZ,0x006F9290,address-derived return-address slot from vtable 0x01120360
 ?render@Rva006F92D0@@QAEXXZ,0x006F9CD0,address-derived render slot from vtable 0x01120360
 ?init@Rva006F92D0@@QAEXXZ,0x000129EF,address-derived resource initializer thunk
+??0StringBaseNarrowAH@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAH@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAH@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAH@@QAAXVAsciiStringAH@@ZZ,0x00888FF0,pin
+??0StringBaseNarrowAI@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAI@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAI@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAI@@QAAXVAsciiStringAI@@ZZ,0x00888FF0,pin
+?bfmeLookupAI@BfmeTableAI@@QAE?AVAsciiStringAI@@V2@@Z,0x00047992,Open-BFME5 the table lookup the numbered key at 0x00573580 forwards to
+??0StringBaseNarrowAJ@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAJ@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAJ@@QAAXVAsciiStringAJ@@ZZ,0x00888FF0,pin
+?bfmeSetAJ@BfmeRoomAJ@@QAEXPBD0@Z,0x0002B297,Open-BFME5 the room key set the start-game announcement at 0x00649DB0 makes
+??0StringBaseNarrowAK@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAK@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAK@@QAAXVAsciiStringAK@@ZZ,0x00888FF0,pin
+?bfmeResetAK@@YAXXZ,0x00007B03,Open-BFME5 the reset the drive scan at 0x006BA720 runs first
+__imp__GetDriveTypeA@4,0x01358D8C,Open-BFME5 retail KERNEL32 GetDriveTypeA import pointer
+??0StringBaseWideAL@@IAE@PBG@Z,0x00888DE0,pin
+??0StringBaseWideAL@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideAL@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringAL@@QAAXV1@ZZ,0x00889190,pin
+g_bfmeTextAL,0x012F147C,Open-BFME5 the text table the version text at 0x000AED00 fetches its format from
+??0StringBaseWideAM@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideAM@@IAE@XZ,0x008881D0,pin
+?format@UnicodeStringAM@@QAAXV1@ZZ,0x00889190,pin
+g_bfmeTextAM,0x012F147C,Open-BFME5 the text table the time-played text at 0x0009C4B0 fetches its format from
+?TheStatsCollector@@3PAVStatsCollector@@A,0x00ED63C,Global VA 0x012ED63C is the receiver for exact StatsCollector update 0x000A2E60 writeFileEnd 0x000A2900 collectMsgStats 0x000A21F0 startScrollTime 0x000A22B0 and endScrollTime 0x000A22D0 bodies; matched Money methods use counters +4/+8
+??0StringBaseNarrowAN@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAN@@IAE@XZ,0x00887940,pin
+?format@StringBaseNarrowAN@@QAAXVAsciiStringAN@@ZZ,0x00888FF0,pin
+?bfmeAssembleAN@@YAXHPADPBDHHHHHH@Z,0x00893410,Open-BFME5 the nine-argument assembler the level-path builder at 0x004675F0 calls
+g_bfmeBufferAN,0x012F19F0,Open-BFME5 the shared buffer the level-path builder at 0x004675F0 fills
+?TheBuildAssistant@@3PAVBuildAssistant@@A,0x00ED83C,GameEngine::init at 0x00079B36 pushes TheBuildAssistant then global VA 0x012ED83C and calls matched initSubsystem<BuildAssistant> 0x00074390; constructor 0x0037CC20 installs vtable 0x010EA8D4 whose update slot +0x14 reaches 0x0037CAC0
+??0StringBaseWideAP@@IAE@PBG@Z,0x00888DE0,pin
+??0StringBaseWideAP@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideAP@@IAE@XZ,0x008881D0,pin
+?bfmeConcatAP@StringBaseWideAP@@QAEXPBGH@Z,0x00888600,pin
+?format@UnicodeStringAP@@QAAXV1@ZZ,0x00889190,pin
+?bfmeBaseNameAP@BfmeEntryAP@@QAE?AVUnicodeStringAP@@XZ,0x00042807,Open-BFME5 the base name the display name at 0x00451240 starts from
+?TheCollisionManager@@3PAVCollisionManager@@A,0x00ED5C4,GameEngine::init 0x0038A2F1 constructs exact CollisionManager 0x009A25B0 stores global VA 0x012ED5C4 and assigns literal TheCollisionManager; GameLogic phase 2 calls vtable 0x01141680 slot +0x14
+?update@Rva009A45A0CollisionData@@QAEXXZ,0x009A4A30,CollisionManager vtable update wrapper 0x009A2560 loads owned data at +0x0C and tail-jumps here; exact 41-byte body brackets three collision-processing calls with busy byte +0xC06D
+??0StringBaseNarrowAR@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAR@@IAE@XZ,0x00887940,pin
+g_bfmeWindowManagerAR,0x012F1B40,Open-BFME5 the window manager the replay-control load at 0x0043E3E0 asks
+g_bfmeReplayControlAR,0x012F1490,Open-BFME5 the window the replay-control load at 0x0043E3E0 stores
+??0StringBaseNarrowAS@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAS@@IAE@XZ,0x00887940,pin
+?bfmeRefreshAS@BfmeResolverAS@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the name resolve at 0x002DAE80 runs first
+?bfmeFindAS@BfmeRegistryAS@@QAEPAXVAsciiStringAS@@@Z,0x0000D3FA,Open-BFME5 the registry lookup the name resolve at 0x002DAE80 stores
+g_bfmeRegistryAS,0x012EF738,Open-BFME5 the registry the name resolve at 0x002DAE80 asks
+??0StringBaseNarrowAT@@IAE@PBD@Z,0x00888BC0,pin
+??1StringBaseNarrowAT@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAT@BfmeMoveToStateAT@@QAEXPAXVAsciiStringAT@@@Z,0x00032182,Open-BFME5 the base initialiser the AIMoveToState constructor at 0x00185700 calls
+_bfmeVftableAT,0x0069B370,Open-BFME5 the AIMoveToState vftable the constructor at 0x00185700 installs
+?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A,0x00EED4FC,GameEngine::init constructs the 16-byte vptr-plus-AsciiString-range object at 0x00079316 and stores VA 0x012ED4FC; logger 0x00065C80 appends strings and getCRC caller transfers them under literal CRCParameterCheck
+?erase@CRCParameterList@@QAEXPAVAsciiString@@0@Z,0x00024C17,CRCParameterCheck clear at 0x00065A40 passes its begin/end pointers to this exact ILT target; body 0x00065960 destroys each AsciiString and moves finish to begin
+??0StringBaseNarrowAU@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAU@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAU@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAU@BfmeStateAU@@QAEXPAXVAsciiStringAU@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0015D000 calls
+_bfmeVftableAU,0x00696348,Open-BFME5 the vftable the state constructor at 0x0015D000 installs
+??0StringBaseNarrowAV@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAV@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAV@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAV@BfmeStateAV@@QAEXPAXVAsciiStringAV@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x00171680 calls
+_bfmeVftableAV,0x00698188,Open-BFME5 the vftable the state constructor at 0x00171680 installs
+??0StringBaseNarrowAW@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAW@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAW@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAW@BfmeStateAW@@QAEXPAXVAsciiStringAW@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0018AE00 calls
+_bfmeVftableAW,0x0069B748,Open-BFME5 the vftable the state constructor at 0x0018AE00 installs
+?processPathfindQueue@Pathfinder@@QAEXXZ,0x000313A9,GameLogic phase call at 0x0038DC0E supplies TheAI+0x0C (Pathfinder); ILT targets 716-byte RVA 0x003DC190 whose zone refresh terrain bounds 512-slot request queue object lookup and doPathfind loop match AIPathfind.cpp
+??0StringBaseNarrowAX@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAX@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAX@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAX@BfmeStateAX@@QAEXPAXVAsciiStringAX@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x001804B0 calls
+_bfmeVftableAX,0x0069AE00,Open-BFME5 the vftable the state constructor at 0x001804B0 installs
+??0StringBaseNarrowAY@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAY@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAY@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAY@BfmeStateAY@@QAEXPAXVAsciiStringAY@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x0018AD00 calls
+_bfmeVftableAY,0x0069B650,Open-BFME5 the vftable the state constructor at 0x0018AD00 installs
+_bfmeGuardTableAY,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AD00 points at
+??0StringBaseNarrowAZ@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowAZ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowAZ@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitAZ@BfmeStateAZ@@QAEXPAXVAsciiStringAZ@@@Z,0x000035B2,Open-BFME5 the base initialiser the state constructor at 0x0018AE90 calls
+_bfmeVftableAZ,0x0069B7A0,Open-BFME5 the vftable the state constructor at 0x0018AE90 installs
+_bfmeGuardTableAZ,0x0069B558,Open-BFME5 the guard table the state constructor at 0x0018AE90 points at
+??0StringBaseNarrowBB@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBB@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBB@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBB@BfmeStateBB@@QAEXPAXVAsciiStringBB@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0017F7F0 calls
+_bfmeVftableBB,0x0069A6C0,Open-BFME5 the vftable the state constructor at 0x0017F7F0 installs
+??0StringBaseNarrowBA@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBA@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBA@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBA@BfmeStateBA@@QAEXPAXVAsciiStringBA@@@Z,0x00032182,Open-BFME5 the base initialiser the state constructor at 0x0017FA10 calls
+_bfmeVftableBA,0x0069A7B0,Open-BFME5 the vftable the state constructor at 0x0017FA10 installs
+??0StringBaseNarrowBC@@IAE@PBD@Z,0x00888BC0,pin
+??0StringBaseNarrowBC@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBC@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBC@BfmeStateBC@@QAEXPAXVAsciiStringBC@@@Z,0x00032182,Open-BFME5 the base initialiser the named state constructor at 0x0017F3F0 calls
+_bfmeVftableBC,0x0069A2F0,Open-BFME5 the vftable the named state constructor at 0x0017F3F0 installs
+?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper
+??0StringBaseWideBE@@IAE@ABV0@@Z,0x00888400,pin
+??1StringBaseWideBE@@IAE@XZ,0x008881D0,pin
+?bfmeSendBE@@YAXHVUnicodeStringBE@@@Z,0x00022237,Open-BFME5 the sender the queued-text send at 0x0054D320 calls
+?doDamageLine@StructureToppleUpdate@@IAEXPAVObject@@PBVWeaponTemplate@@MMMM@Z,0x00049BAC,retail doDamageLine ILT named by applyCrushingDamage
+?bfmeClearBF@AsciiStringBF@@QAEXXZ,0x00887940,pin
+?bfmeFindBF@BfmeRegistryBF@@QAEPAXABVAsciiStringBF@@@Z,0x0001D606,Open-BFME5 the lookup the handle resolve at 0x0013EE70 caches
+g_bfmeRegistryBF,0x012F6924,Open-BFME5 the registry the handle resolve at 0x0013EE70 needs
+??0StringBaseNarrowBG@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBG@@IAE@XZ,0x00887940,pin
+?bfmeBaseInitBG@BfmeNamedBG@@QAEXVAsciiStringBG@@@Z,0x0001BD5B,Open-BFME5 the base initialiser the named constructor at 0x0060AAE0 calls
+_bfmeVftableBG,0x00715C60,Open-BFME5 the vftable the named constructor at 0x0060AAE0 installs
+??0StringBaseNarrowBH@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBH@@IAE@XZ,0x00887940,pin
+?bfmeFindBH@BfmeRegistryBH@@QAEPAXVAsciiStringBH@@@Z,0x00020F04,Open-BFME5 the registry lookup the named apply at 0x002F83D0 makes
+?bfmeApplyBH@BfmeApplierBH@@QAEXPAX0PAVBfmeSubBH@@@Z,0x000033B4,Open-BFME5 the apply the named lookup at 0x002F83D0 forwards to
+g_bfmeRegistryBH,0x012ED80C,Open-BFME5 the registry the named apply at 0x002F83D0 asks
+??0StringBaseNarrowBI@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBI@@IAE@XZ,0x00887940,pin
+?bfmeLookupBI@@YGPAVBfmeThingBI@@H@Z,0x00005024,Open-BFME5 the key lookup the name-for-key at 0x007696B0 makes
+?bfmeNameBI@BfmeThingBI@@QAE?AVAsciiStringBI@@XZ,0x00012A7B,Open-BFME5 the name the key lookup at 0x007696B0 returns
+?g_bfmeDefaultBI@@3VAsciiStringBI@@A,0x00F36E50,Open-BFME5 the default name the key lookup at 0x007696B0 falls back to
+??0StringBaseNarrowBK@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBK@@IAE@XZ,0x00887940,pin
+?bfmeFirstBK@BfmeTargetBK@@QAEXVAsciiStringBK@@H@Z,0x00003CE2,Open-BFME5 the first forward the setter at 0x00731800 makes
+?bfmeSecondBK@BfmeTargetBK@@QAEXVAsciiStringBK@@@Z,0x00003B66,Open-BFME5 the second forward the setter at 0x00731800 makes
+??0StringBaseNarrowBL@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBL@@IAE@XZ,0x00887940,pin
+?bfmeSubmitBL@BfmeSinkBL@@QAEXVAsciiStringBL@@HPAVBfmeBlobBL@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B370 makes
+g_bfmeSinkBL,0x012F148C,Open-BFME5 the sink the report send at 0x0042B370 submits to
+??0StringBaseNarrowBM@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBM@@IAE@XZ,0x00887940,pin
+?bfmeSubmitBM@BfmeSinkBM@@QAEXVAsciiStringBM@@HPAVBfmeBlobBM@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B3D0 makes
+g_bfmeSinkBM,0x012F148C,Open-BFME5 the sink the report send at 0x0042B3D0 submits to
+??0StringBaseNarrowBN@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBN@@IAE@XZ,0x00887940,pin
+?bfmeRefreshBN@BfmeResolverBN@@QAEXXZ,0x000165B8,Open-BFME5 the refresh the two-name resolve at 0x002DE300 runs first
+?bfmeFindBN@BfmeRegistryBN@@QAEPAXVAsciiStringBN@@@Z,0x0000D3FA,Open-BFME5 the first registry lookup the resolve at 0x002DE300 makes
+?bfmeLookupBN@BfmeOtherBN@@QAEPAXABVAsciiStringBN@@@Z,0x00028560,Open-BFME5 the second lookup the resolve at 0x002DE300 makes
+g_bfmeRegistryBN,0x012EF738,Open-BFME5 the registry the two-name resolve at 0x002DE300 asks first
+g_bfmeOtherBN,0x012EF1D8,Open-BFME5 the second registry the resolve at 0x002DE300 asks
+??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
+??0Gen_003A8BE0@@QAE@ABU0@@Z,0x00041CE0,three-string element copy constructor thunk called by retail 0x003AB280
+?get_allocator@?$vector@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003A8BE0@@@2@XZ,0x00035A4E,allocator accessor call target from retail 0x003AB280
+?callJ3775e@@YAPAXPBD@Z,0x0003775E,local cdecl adapter to Lua event lookup thunk
+??0BfmeDelayedLuaEventList@@QAE@XZ,0x00019CF9,local constructor identity adapter to DelayedLuaEventList thunk
+??1BfmeDelayedLuaEventList@@QAE@XZ,0x00013156,local destructor identity adapter to DelayedLuaEventList thunk
+?invoke@BfmeCallJ167@@QAEXPAUBfmeListAllocator@@@Z,0x0001677F,local thiscall adapter to member ID list constructor thunk
+?invoke@BfmeCallJ3A1FC@@QBEPAUBfmeEntryBB@@H@Z,0x0003A1FC,local const thiscall adapter to the final table lookup thunk
+?invoke@BfmeCallJE68@@QAEXXZ,0x0000E68D,local thiscall adapter to member ID list destructor
+?setFromLua@BfmeDelayedLuaEvent@@QAEXPAUlua_State@@H@Z,0x000436D5,local thiscall adapter to Lua event value setter thunk
+?invoke@BfmeCallJ63@@QAEPAXPAX@Z,0x0000634D,local thiscall adapter to drawable event lookup thunk
+?invoke@BfmeCallJ3D@@QAEXPAXHPAUBfmeDelayedLuaEventList@@@Z,0x0003D4E7,local thiscall adapter to member event dispatch thunk
+??0StringBaseNarrowBQ@@IAE@ABV0@@Z,0x00887B60,pin
+??1StringBaseNarrowBQ@@IAE@XZ,0x00887940,pin
+??1StringBaseNarrowBU@@IAE@XZ,0x00887940,pin
+??1BfmeElemBU@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00099000 runs
+??1BfmeElemBV@@QAE@XZ,0x008A20B0,Open-BFME5 the element destructor the vector delete at 0x008A2ED0 runs
+__imp_??3BfmeElemBV@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x008A2ED0 calls
+__imp_??_VBfmeElemBV@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x008A2ED0 calls
+?bfmeCheckBW@@YAHPAX@Z,0x00894D90,Open-BFME5 the check the element destructor at 0x00892CD0 makes
+?bfmeFreeBW@@YAXPAX@Z,0x00895320,Open-BFME5 the release the element destructor at 0x00892CD0 makes
+__imp_??3BfmeElemBW@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x00892CD0 calls
+__imp_??_VBfmeElemBW@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x00892CD0 calls
+??1BfmeElemBX@@QAE@XZ,0x0000D828,Open-BFME5 the element destructor the array teardown at 0x001F6D40 runs
+??1BfmeMemberBX@@QAE@XZ,0x00026AB2,Open-BFME5 the member destructor the teardown at 0x001F6D40 runs first
+_bfmeVftableBX,0x00673744,Open-BFME5 the vftable the inline base destructor at 0x001F6D40 restores
+??1BfmeElemBY@@QAE@XZ,0x00030652,Open-BFME5 the element destructor the array teardown at 0x0092A3D0 runs
+?bfmeResetBY@BfmeHolderBY@@QAEXHHH@Z,0x00929310,Open-BFME5 the reset the destructor at 0x0092A3D0 runs first
+??1StringBaseNarrowBZ@@IAE@XZ,0x00887940,pin
+??1BfmeElemBZ@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00075D70 runs
+_bfmeVftableBZ,0x00673744,Open-BFME5 the vftable the second base restores at 0x00075D70
+??1StringBaseNarrowCB@@IAE@XZ,0x00887940,pin
+??1BfmeElemCB@@QAE@XZ,0x0000B988,Open-BFME5 the element destructor the array teardown at 0x00619BB0 runs
+_bfmeVftableCB,0x00673744,Open-BFME5 the vftable the second base restores at 0x00619BB0
+??1BfmeElemCC@@QAE@XZ,0x000145BF,Open-BFME5 the element destructor the array teardown at 0x0073A4E0 runs
+?bfmeCleanupCC@BfmeOwnerCC@@QAEXXZ,0x00047FB4,Open-BFME5 the cleanup the destructor at 0x0073A4E0 runs first
+?bfmeForgetCC@BfmeRegistryCC@@QAEXPAX@Z,0x0002CAB1,Open-BFME5 the deregistration the destructor at 0x0073A4E0 makes
+g_bfmeRegistryCC,0x012F1270,Open-BFME5 the registry the destructor at 0x0073A4E0 notifies
+_bfmeVftableCC,0x0072165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
+_bfmeBaseVftableCC,0x0072162C,Open-BFME5 the base vftable the inline base destructor at 0x0073A4E0 restores
+??_7BfmeOwnerCC@@6B@,0x0072165C,Open-BFME5 the derived vftable the destructor at 0x0073A4E0 installs
+??_7BfmeBaseCC@@6B@,0x0072162C,Open-BFME5 the base vftable the base destructor at 0x0073A4E0 restores
+??$make_pair@VAsciiString@@PAVParticleSystemTemplate@@@_STL@@YA?AU?$pair@VAsciiString@@PAVParticleSystemTemplate@@@0@ABVAsciiString@@ABQAVParticleSystemTemplate@@@Z,0x00032D80,ParticleSystemManager::newTemplate make_pair thunk
+??0ParticleSystemTemplate@@QAE@ABVAsciiString@@@Z,0x0002677E,ParticleSystemManager::newTemplate ParticleSystemTemplate constructor thunk
+?insert_unique_noresize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@2@@Z,0x00028E11,ParticleSystemManager::newTemplate hashtable insertion thunk
+?resize@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAEXI@Z,0x00030684,ParticleSystemManager::newTemplate hashtable resize thunk
+?Rva0061C060@LivingWorldSound@@QAEXXZ,0x00002C2A,LivingWorldSound copy constructor post-process helper thunk
+?testForNone@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00039E91,UpgradeMux::wouldUpgrade conflict-mask helper thunk
+?testForAll@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00031F8E,UpgradeMux::wouldUpgrade activation-mask helper thunk
+?testForAny@?$BitFlags@$0MA@@@QBE_NABV1@@Z,0x00002D29,UpgradeMux::wouldUpgrade activation-mask any-helper thunk
+?_M_initialize_map@?$_Deque_base@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@IAEXI@Z,0x0003584B,GameSpyPeerMessageQueue constructor at 0x0064D650 initializes the PeerRequest deque
+?_M_initialize_map@?$_Deque_base@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@IAEXI@Z,0x000324E8,GameSpyPeerMessageQueue constructor at 0x0064D650 initializes the PeerResponse deque
+?clear@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEXXZ,0x000188EA,ILT called by Player::removePlayerRelationship 0x000D4160; jmps to the PlayerRelationMap clear body at 0x000CF510
+?erase@?$hashtable@U?$pair@$$CBHW4Relationship@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@_STL@@QAEXABU?$_Ht_iterator@U?$pair@$$CBHW4Relationship@@@_STL@@U?$_Const_traits@U?$pair@$$CBHW4Relationship@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHW4Relationship@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHW4Relationship@@@_STL@@@2@@2@@Z,0x0002EE0B,ILT called by Player::removePlayerRelationship 0x000D4160; jmps to the PlayerRelationMap erase body at 0x000D0BC0
+??1DrawableModule@@MAE@XZ,0x0002B8C8,W3DLaserDraw destructor base-chain call
+?parse@?$DeathModelFlags@$09@@QAEXPAVINI@@PAVAsciiString@@@Z,0x00033433,SlowDeathBehavior DeathFlags model parser ILT
+?parse@DeathStatusFlags@@QAEXVAsciiString@@@Z,0x0001B04F,SlowDeathBehavior DeathFlags status parser ILT
+?initialize@DeathStatusFlags@@QAEXHHHHHH@Z,0x00034CE8,SlowDeathBehavior DeathFlags status mask initializer ILT
+?initialize@?$DeathModelFlags@$09@@QAEXHHHHHH@Z,0x0000DB0C,SlowDeathBehavior DeathFlags model mask initializer ILT
+?invert@?$DeathModelFlags@$09@@QBEXPAV1@@Z,0x000252B6,SlowDeathBehavior DeathFlags inverse mask ILT
+?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z,0x0002B7F6,address-derived pending-level apply callee reached from ExperienceLevelSystem::update; ILT target 0x0037F280 and exact three-argument call shape prove the thunk only
+??0Rva006D51B0TextureBase@@QAE@IIIIII@Z,0x0090CF90,base texture constructor called by Rva006D51B0
+?Release_Ref@Rva006D51B0TextureBase@@QAEXXZ,0x009EB7A0,texture reference release used by Rva006D51B0
+?update@Rva005CCA10Particle@@QAE_NXZ,0x00018F43,outlined particle update call through the incremental-link thunk to retail body 0x005CC6C0
+??0LightEnvironmentClass@@QAE@XZ,0x0094AAF0,constructor used by SimpleSceneClass::Customized_Render's static light environment
+?Add_Light@LightEnvironmentClass@@QAEXABVLightClass@@@Z,0x0094B8A0,light collection method called by SimpleSceneClass::Customized_Render
+?Reset@LightEnvironmentClass@@QAEXABVVector3@@0@Z,0x0094AC70,light environment reset method called by SimpleSceneClass::Customized_Render
+?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
+??$__default_constructed@VDetailedArchivedDirectoryInfo@@@_STL@@YA?AVDetailedArchivedDirectoryInfo@@PAV1@@Z,0x009D0790,DetailedArchivedDirectoryInfo map subscript default value constructor
+?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@2@@Z,0x009CFD20,DetailedArchivedDirectoryInfo map subscript tree insertion
