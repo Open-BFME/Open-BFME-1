@@ -1,7 +1,18 @@
 // cl: /O2 /DNDEBUG /MD
-// readable body of ?updateSway@W3DTreeBuffer@@IAEXABUBreezeInfo@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
-// BFME W3DTreeBuffer::updateSway.  The retail tree records use a 0xa4-byte
-// stride and the BFME buffer keeps the sway arrays at the offsets below.
+// readable body of ?updateSway@W3DShrubBuffer@@IAEXABUBreezeInfo@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBuffer.cpp
+//
+// Retail 0x0071C0E0.  The three GetGameClientRandomValue* calls below pass the
+// literal at 0x01120D60 as their __FILE__ argument, and reverse/string_xrefs.tsv
+// binds that literal to
+//   F:\bfme\Code\gameenginedevice\Source\W3DDevice\GameClient\W3DShrubBuffer.cpp
+// which names this function's translation unit outright.  So the owner is
+// W3DShrubBuffer, the near-clone of W3DTreeBuffer, and not W3DTreeBuffer itself:
+// that file's own literal binds to 0x00732500 and 0x00736B60, the run where
+// allocateTreeBuffers and removeTree already sit.  The line numbers the three
+// calls pass -- 0xF9, 0xFD, 0x102 -- are lines 249, 253 and 258 of it.
+//
+// The retail shrub records use a 0xa4-byte stride and the buffer keeps the sway
+// arrays at the offsets below.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -26,26 +37,27 @@ extern Real bfmeSinVNB(Real);
 extern Int GetGameClientRandomValue(Int, Int, char *, Int);
 extern Real GetGameClientRandomValueReal(Real, Real, char *, Int);
 
-struct BfmeTree
+struct BfmeShrub
 {
 	char m_pad00[0x7c];
 	Int m_swayType;
 	char m_pad80[0x24];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
-class W3DTreeBuffer
+// upstream layout of the tree-buffer twin this class clones:
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
+class W3DShrubBuffer
 {
 protected:
 	void updateSway(const BreezeInfo& info);
 
 private:
 	char m_pad00[0x1548];
-	BfmeTree m_trees[12000];
-	Int m_numTrees;
+	BfmeShrub m_shrubs[12000];
+	Int m_numShrubs;
 };
 
-void W3DTreeBuffer::updateSway(const BreezeInfo& info)
+void W3DShrubBuffer::updateSway(const BreezeInfo& info)
 {
 	Int i = 0;
 	char *sway = (char *)this + 0x1e33e8;
@@ -65,8 +77,8 @@ void W3DTreeBuffer::updateSway(const BreezeInfo& info)
 	Real delta = info.m_randomness * *(Real *)0x0107533c;
 	register Int j = 0;
 	if (*(Int *)((char *)this + 0x1e1cc8) > 0) {
-		for (; j < m_numTrees; j++) {
-			m_trees[j].m_swayType = 1 + GetGameClientRandomValue(
+		for (; j < m_numShrubs; j++) {
+			m_shrubs[j].m_swayType = 1 + GetGameClientRandomValue(
 				0, 9, (char *)0x01120d60, 0xf9);
 		}
 	}
