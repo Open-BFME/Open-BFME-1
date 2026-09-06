@@ -27,6 +27,14 @@ Do **not** switch this to `GameLogic::setGamePaused` (`0x00783490`). It writes
 the same byte and then disables input and forces the arrow cursor — the opposite
 of what a replay wants.
 
+That setter takes **three** arguments in BFME — `(Bool paused, Int mode, Bool
+affectMouse)`, the middle one a dword tested against 1 and 2 — not Zero Hour's
+`(Bool paused, Bool pauseMusic)`. The 300-byte retail body is byte-verified in
+`Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BfmeGameLogicPause_setGamePaused.cpp`,
+where the class is spelled `BfmeGameLogicPause` as a TU-local call view. The
+two-argument `GameLogic::setGamePaused` in `GameLogic.cpp` is Zero Hour's and
+is not what retail runs.
+
 Bit 1 rather than the value 1: all 28 `isGamePaused` call sites do `test al,al`
 and none compares against 1, so any non-zero reads as paused and a bit stays
 composable with another writer. Two known limits, both acceptable here:

@@ -1,6 +1,16 @@
 // cl: /DNDEBUG /MD /GX-
 // BFME GameLogic::setGamePaused(bool paused, int pauseMode, bool affectMouse)
 // retail 0x00383490 size 300. ZH twin is 2-arg; BFME grew a middle Int.
+//
+// `BfmeGameLogicPause` is a TU-local call view, NOT a retail class: this body's
+// ecx is TheGameLogic (0x012F0898) and it stores to GameLogic+0x11C, the byte
+// mods/features/039-replayctl documents as the pause flag, so the retail class
+// is GameLogic. The consequence is a grep trap -- `?setGamePaused@GameLogic@@`
+// matches no ledger row, so a modder searching for it lands on
+// GameLogic.cpp:7322, whose two-argument (Bool, Bool) body is Zero Hour's and
+// is NOT what retail runs. That body is marked present-unmatched and has no
+// byte evidence; this 300-byte one does. The middle argument here is a dword
+// mode tested against 1 and 2, not ZH's Bool pauseMusic.
 
 class BfmeInGameUI_setInputEnabled
 {
