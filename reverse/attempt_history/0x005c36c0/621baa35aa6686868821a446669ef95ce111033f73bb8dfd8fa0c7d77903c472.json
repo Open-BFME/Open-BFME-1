@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "621baa35aa6686868821a446669ef95ce111033f73bb8dfd8fa0c7d77903c472",
+  "symbol": "?d_005c36c0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_005c36c0@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// 88/91; the gap is retail mov eax,ecx plus the fld scheduling around it.\n// Pins: ?bfmeCalcFH@@YG?AUBfmeVec3FH@@PAXM00@Z 0x0002F4AA,\n//       ?g_bfmeGlobalFH@@3PAVBfmeGlobalFH@@A 0x00EED5C8.\n// Sibling at 0x005C3630 (104B) has the same shape with the guard member at +0x1c0.\ntypedef float Real;\n\nextern const Real g_bfmeK1239;\nextern const Real g_bfmeK1253;\n\nstruct BfmeVec3FH\n{\n\tBfmeVec3FH(Real x, Real y, Real z)\n\t\t: m_bfmeXFH(x), m_bfmeYFH(y), m_bfmeZFH(z) {}\n\n\tReal m_bfmeXFH;\n\tReal m_bfmeYFH;\n\tReal m_bfmeZFH;\n};\n\nclass BfmeGlobalFH\n{\npublic:\n\tunsigned char m_bfmeHeadFH[0xab4];\n\tReal m_bfmeScaleFH;\n};\n\nextern BfmeGlobalFH *g_bfmeGlobalFH;\n\nclass BfmeThingFH;\n\nBfmeVec3FH __stdcall bfmeCalcFH(void *owner, Real scale, void *first, void *second);\n\nclass BfmeOwnerFH\n{\npublic:\n\tBfmeVec3FH bfmeComputeFH(void *first, void *second);\n\n\tunsigned char m_bfmeHeadFH[0x180];\n\tvoid *m_bfmeOtherFH;\n\tunsigned char m_bfmeMidFH[0x40];\n\tBfmeThingFH *m_bfmeThingFH;\n};\n\nBfmeVec3FH BfmeOwnerFH::bfmeComputeFH(void *first, void *second)\n{\n\tif (m_bfmeThingFH != 0)\n\t\treturn bfmeCalcFH(m_bfmeOtherFH,\n\t\t\t(g_bfmeGlobalFH->m_bfmeScaleFH + g_bfmeK1239) * g_bfmeK1253,\n\t\t\tfirst, second);\n\n\treturn BfmeVec3FH(0, 0, 0);\n}\n"
+}
