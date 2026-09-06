@@ -83303,7 +83303,6 @@ _ciAddBANFilter,0x0086C710,gamespy-chat: ban filter registered by chatBanUserA i
 _ciAddCDKEYFilter,0x0086CB80,GameSpy Chat CD-key response filter constructor
 _ciAddCallback_,0x00870350,gamespy-chat: 8-arg deferred-callback enqueue; 0x00861DA0 calls it with type 25 (CALLBACK_NICK_ERROR) and sizeof-params 16
 _ciAddFilter,0x0086C3A0,GameSpy Chat chatHandlers.c static filter constructor; authentic source order and _ciAddJOINFilter call target prove ownership
-_ciAddFilterRva00861470,0x0086C680,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00861470 calls; autopin
 _ciAddGETCHANKEYFilter,0x0086CA10,gamespy-chat: 7-arg filter registered by chatGetChannelKeys at 0x00861C60 on the whole-room branch
 _ciAddGETCKEYFilter,0x0086C8F0,gamespy-chat: 8-arg filter registered by chatGetChannelKeys at 0x00861C60 on the per-user branch
 _ciAddGETKEYFilter,0x0086C7E0,gamespy-chat: 7-arg filter registered by chatGetGlobalKeys at 0x00861940
