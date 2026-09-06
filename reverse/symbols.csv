@@ -54853,6 +54853,7 @@ name,address,notes
 ?b_0057d0a0@@YAXXZ,0x0057D0A0,gen-thunk body
 ?b_0057d0c0@@YAXXZ,0x0057D0C0,gen-thunk body
 ?b_0057d110@@YAXXZ,0x0057D110,gen-thunk body
+?_bfme_updateProfileDisplay@BfmeAptScreenSkirmish@@QAEXXZ,0x0057A470,BFME Skirmish profile display updater called by AptSkirmish::InitGadgets
 ?b_0057d2d0@@YAXXZ,0x0057D2D0,gen-thunk body
 ?b_0057d350@@YAXXZ,0x0057D350,gen-thunk body
 ?b_0057d600@@YAXXZ,0x0057D600,gen-thunk body
