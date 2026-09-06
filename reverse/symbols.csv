@@ -83737,3 +83737,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??0Rva00608FE0Element@@QAE@ABU0@@Z,0x00042339,Open-BFME5 ILT for the SoundUpgrade record copy constructor used by the SoundUpgrade field parser
+??0Rva00608FE0Element@@QAE@XZ,0x0002A48C,Open-BFME5 ILT for the SoundUpgrade record default constructor used by the SoundUpgrade field parser
+??1Rva00608FE0Element@@QAE@XZ,0x00034158,Open-BFME5 ILT for the SoundUpgrade record destructor used by the SoundUpgrade field parser
+?_M_insert_overflow@?$sound_upgrade_vector@URva00608FE0Element@@@_STL@@QAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000E656,Open-BFME5 ILT for the 528-byte SoundUpgrade vector growth call
+?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z,0x00044210,Open-BFME5 ILT for the SoundUpgrade INI record parser
