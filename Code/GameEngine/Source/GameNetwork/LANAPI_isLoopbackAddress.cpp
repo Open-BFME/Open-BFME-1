@@ -14,7 +14,7 @@ struct BfmeNetAddress
 	unsigned short m_port;
 };
 
-class Rva00685640LANAPI
+class LANAPI
 {
 public:
 	virtual void _bfme_slot00(void) = 0;
@@ -75,7 +75,7 @@ public:
 	virtual BfmeNetAddress *_bfme_localAddress(void) = 0; // slot 55, +0xDC
 };
 
-Bool Rva00685640LANAPI::isLoopbackAddress(void)
+Bool LANAPI::isLoopbackAddress(void)
 {
 	return _bfme_localAddress()->m_ip == 0x7F000001u;
 }
