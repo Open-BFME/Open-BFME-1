@@ -2991,6 +2991,7 @@ name,address,notes
 ??0Rva0009F820String@@QAE@ABV0@@Z,0x00006320,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva000A19E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva0014F280StateBase@@QAE@PAXVAsciiString@@@Z,0x00032182,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
+??0Rva0016CF40Machine@@QAE@PAVObject@@@Z,0x0003FE4F,ILT thunk: machine ctor called by the xfer twin 0x0016CF40 (sibling of AIDockMachine); real ctor at 0x0015FE90 still an unconverted dump
 ??0Rva0016D9C0Machine@@QAE@PAVObject@@@Z,0x0000715D,ILT thunk: machine ctor called by the xfer twin 0x0016D9C0 (sibling of AIGuardRetaliateMachine)
 ??0Rva0019A1D0Member@@QAE@H@Z,0x00018129,ILT thunk to 0x00196D90 member ctor
 ??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
@@ -8567,6 +8568,8 @@ name,address,notes
 ??1Rva0042B5D0MemberA@@QAE@XZ,0x0002238B,pin near-twin member dtor reuses Gen_uwm_0002238b body
 ??1Rva0042B5D0MemberC@@QAE@XZ,0x0002CD31,pin near-twin member dtor reuses Gen_uwm_0002cd31 body
 ??1Rva0042B5D0Str@@QAE@XZ,0x00887940,pin near-twin AsciiString member reuses releaseBuffer body
+??1Rva00459D50Member@@QAE@XZ,0x0001A933,ILT thunk to the tgrid member destructor 0x00459D50 called by 0x007461B0
+??1Rva0045C1B0Base@@UAE@XZ,0x0003732B,ILT thunk to the primary base destructor 0x0045C1B0 called at the end of 0x007461B0
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
 ??1Rva0048C200String@@QAE@XZ,0x00887940,StringBase compatible destructor body
 ??1Rva00490470@@UAE@XZ,0x0004634E,ILT thunk to the window-owner destructor body 0x00490470 (tail-jumped from ~Rva00490A30 0x00490AC0)
@@ -8579,6 +8582,7 @@ name,address,notes
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
 ??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
+??1Rva00740BC0Member@@QAE@XZ,0x000063DE,ILT thunk to the Rva00740BC0 two-array destructor called by 0x007461B0
 ??1Rva007A1230Cell@@QAE@XZ,0x00430652,address-derived four-byte cell destructor ILT used by both six-element arrays at 0x007A1230
 ??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
 ??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
@@ -9428,6 +9432,11 @@ name,address,notes
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
 ??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
+??_7Rva00745B10Owner@@6B@,0x011217A0,primary vftable of the 0x2450-byte owner (ctor 0x00745B10 dtor 0x007461B0)
+??_7Rva00745B10Owner@@6BRva007461B0BaseS@@@,0x01121790,second-base vftable of the owner (subobject at +0xb4)
+??_7Rva00745B10Owner@@6BSubsystemInterface@@@,0x01121764,SubsystemInterface vftable of the owner (subobject at +0xfc)
+??_7Rva007461B0BaseS@@6B@,0x011216B0,vftable of the second base restored by its inline destructor in 0x007461B0
+??_7Rva007461B0Path@@6B@,0x010C7E28,vftable of the Rva00740AE0Base-derived path objects embedded at +0x22f4/+0x2358 of the owner
 ??_7Rva007A1230ArrayOwner@@6B@,0x01127EB4,address-derived one-slot vtable installed by the destructor at 0x007A1230
 ??_7Rva00885AF0Class@@6B@,0x00D32ECC,pin
 ??_7Rva00886F60Class@@6B@,0x00D32FFC,pin
