@@ -1135,3 +1135,178 @@ void ciRplCDKeyHandler(CHAT chat, const ciServerMessage *message)
         ciFinishFilter(chat, filter, &params);
     }
 }
+
+
+
+
+enum
+{
+    MODE_END,
+    MODE_BAN,
+    MODE_INVITE_ONLY,
+    MODE_LIMIT,
+    MODE_PRIVATE,
+    MODE_SECRET,
+    MODE_KEY,
+    MODE_MODERATED,
+    MODE_NO_EXTERNAL_MESSAGES,
+    MODE_ONLY_OPS_CHANGE_TOPIC,
+    MODE_OP,
+    MODE_VOICE,
+    MODE_USERS_HIDDEN,
+    MODE_RECEIVE_WALLOPS,
+    MODE_OPS_OBEY_CHANNEL_LIMIT
+};
+
+typedef struct ciModeChange
+{
+    int mode;
+    CHATBool enable;
+    char *param;
+} ciModeChange;
+
+
+enum { CHAT_VOICE=1, CHAT_OP=2 };
+ciModeChange *ciParseMode(char *mode, char **params, int numParams);
+CHATBool ciInChannel(CHAT chat, const char *channel);
+void ciSetChannelPassword(CHAT chat, const char *channel,
+    const char *password);
+void ciUserChangedMode(CHAT chat, const char *user, const char *channel,
+    int mode, CHATBool enable);
+CHATBool ciGetChannelMode(CHAT chat, const char *channel,
+    CHATChannelMode *mode);
+void ciSetChannelMode(CHAT chat, const char *channel, CHATChannelMode *mode);
+static void ciApplyChangesToMode(CHATChannelMode *mode,
+    ciModeChange *changes)
+{
+    ciModeChange *change;
+
+    for (change = changes; change->mode != MODE_END; change++)
+    {
+        switch (change->mode)
+        {
+        case MODE_BAN:
+            break;
+        case MODE_INVITE_ONLY:
+            mode->InviteOnly = change->enable;
+            break;
+        case MODE_LIMIT:
+            if (change->enable && change->param)
+                mode->Limit = atoi(change->param);
+            else
+                mode->Limit = 0;
+            break;
+        case MODE_PRIVATE:
+            mode->Private = change->enable;
+            break;
+        case MODE_SECRET:
+            mode->Secret = change->enable;
+            break;
+        case MODE_KEY:
+            break;
+        case MODE_MODERATED:
+            mode->Moderated = change->enable;
+            break;
+        case MODE_NO_EXTERNAL_MESSAGES:
+            mode->NoExternalMessages = change->enable;
+            break;
+        case MODE_ONLY_OPS_CHANGE_TOPIC:
+            mode->OnlyOpsChangeTopic = change->enable;
+            break;
+        case MODE_OP:
+            break;
+        case MODE_VOICE:
+            break;
+        case MODE_USERS_HIDDEN:
+            break;
+        case MODE_RECEIVE_WALLOPS:
+            break;
+        case MODE_OPS_OBEY_CHANNEL_LIMIT:
+            mode->OpsObeyChannelLimit = change->enable;
+            break;
+        default:
+            assert(0);
+        }
+    }
+}
+
+void ciModeHandler(CHAT chat, const ciServerMessage *message)
+{
+    ciModeChange *changes;
+    ciModeChange *change;
+    CHATChannelMode channelMode;
+    char *channel;
+    char *mode;
+
+    assert(message->numParams >= 2);
+    if (message->numParams < 2)
+        return;
+
+    channel = message->params[0];
+    mode = message->params[1];
+
+    if (!ciInChannel(chat, channel))
+        return;
+
+    changes = ciParseMode(mode, message->params + 2,
+        message->numParams - 2);
+    if (changes == NULL)
+        return;
+
+    for (change = changes; change->mode != MODE_END; change++)
+    {
+        switch (change->mode)
+        {
+        case MODE_BAN:
+            break;
+        case MODE_INVITE_ONLY:
+            break;
+        case MODE_LIMIT:
+            break;
+        case MODE_PRIVATE:
+            break;
+        case MODE_SECRET:
+            break;
+        case MODE_KEY:
+            if (change->enable)
+                ciSetChannelPassword(chat, channel, change->param);
+            else
+                ciSetChannelPassword(chat, channel, NULL);
+            break;
+        case MODE_MODERATED:
+            break;
+        case MODE_NO_EXTERNAL_MESSAGES:
+            break;
+        case MODE_ONLY_OPS_CHANGE_TOPIC:
+            break;
+        case MODE_USERS_HIDDEN:
+            break;
+        case MODE_RECEIVE_WALLOPS:
+            break;
+        case MODE_OP:
+            if (change->param)
+                ciUserChangedMode(chat, change->param, channel,
+                    CHAT_OP, change->enable);
+            break;
+        case MODE_VOICE:
+            if (change->param)
+                ciUserChangedMode(chat, change->param, channel,
+                    CHAT_VOICE, change->enable);
+            break;
+        case MODE_OPS_OBEY_CHANNEL_LIMIT:
+            break;
+        default:
+            assert(0);
+        }
+    }
+
+    if (!ciGetChannelMode(chat, channel, &channelMode))
+    {
+        free(changes);
+        return;
+    }
+
+    ciApplyChangesToMode(&channelMode, changes);
+    ciSetChannelMode(chat, channel, &channelMode);
+    free(changes);
+}
