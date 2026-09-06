@@ -25,20 +25,6 @@ extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;
 extern Int TheW3DFrameLengthInMsec;
 
-class W3DView;
-
-class Gen0073C970Owner
-{
-	friend class W3DView;
-	void updateOneFrame(void);
-};
-
-class Gen0073CA40Owner
-{
-	friend class W3DView;
-	void updateOneFrame(void);
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
@@ -69,6 +55,10 @@ public:
 private:
 	void zoomCameraOneFrame(void);
 	void pitchCameraOneFrame(void);
+	// Two more one-frame easers with no upstream twin; each is guarded by the
+	// flag named after it and blends one Real field, +0x70 and +0x30.
+	void cameraUpdateOneFrame(void);
+	void cameraUpdateAlternateOneFrame(void);
 	void rotateCameraOneFrame(void);
 	void lerpCameraOneFrame(void);
 	void moveAlongWaypointPath(Int milliseconds);
@@ -118,11 +108,11 @@ Bool W3DView::updateCameraMovements(void)
 		didUpdate = true;
 	}
 	if (m_doingCameraUpdate) {
-		((Gen0073C970Owner *)this)->updateOneFrame();
+		cameraUpdateOneFrame();
 		didUpdate = true;
 	}
 	if (m_doingCameraUpdateAlternate) {
-		((Gen0073CA40Owner *)this)->updateOneFrame();
+		cameraUpdateAlternateOneFrame();
 		didUpdate = true;
 	}
 	if (m_doingRotateCamera) {
