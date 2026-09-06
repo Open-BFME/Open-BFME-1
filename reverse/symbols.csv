@@ -83581,3 +83581,14 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
 ?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,retail fatal helper alias used by MessageBox callback throw path at 0x00522470 and 0x005224C0
+?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
+??$__default_constructed@VDetailedArchivedDirectoryInfo@@@_STL@@YA?AVDetailedArchivedDirectoryInfo@@PAV1@@Z,0x009D0790,DetailedArchivedDirectoryInfo map subscript default value constructor
+?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@ABVAsciiString@@@Z,0x009CFBE0,DetailedArchivedDirectoryInfo map subscript tree lookup
+?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@2@@Z,0x009CFD20,DetailedArchivedDirectoryInfo map subscript tree insertion
+??$_M_allocate_and_copy@PBUGen00762250@@@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEPAUGen00762250@@IPBU2@0@Z,0x0002DB4B,0x00770830 call +0x0059 ILT enters matched allocate-and-copy body 0x007690F0
+?_M_clear@?$vector@UGen00762250@@V?$allocator@UGen00762250@@@_STL@@@_STL@@IAEXXZ,0x00011A8B,0x00770830 call +0x0062 ILT enters matched vector<Gen00762250> destructor body 0x00770650
+??$__copy@PBUGen00762250@@PAU1@H@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008341,0x00770830 calls +0x00b1 and +0x00e4 ILT enters matched width-56 copy body 0x0075EAA0
+??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
+??$__uninitialized_copy@PBUGen00762250@@PAU1@@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00027E35,0x00770830 call +0x0119 ILT enters matched width-56 copy walk body 0x00768BF0
+?removeParentObject@W3DGhostObject@@IAEXXZ,0x006BC750,BFME W3DGhostObject helper called by setLocalPlayerIndex
+?restoreParentObject@W3DGhostObject@@IAEXXZ,0x006BC7B0,BFME W3DGhostObject helper called by setLocalPlayerIndex
