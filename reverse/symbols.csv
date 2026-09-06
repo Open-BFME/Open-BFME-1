@@ -84169,3 +84169,17 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeAddAY@BfmeSinkAY@@QAEXPAHH@Z,0x00037A56,pin
 ?bfmeForwardAZ@BfmeOwnAZ@@QAEXPAX@Z,0x00005C22,pin
 ?bfmeNotifyAZ@BfmeHostAZ@@QAEXXZ,0x0002191D,pin
+?bfmeReleaseAU@UnicodeString@@QAEXXZ,0x00887940,pin
+?bfmeAddAV@BfmeSinkAV@@QAEXPAX@Z,0x0002B7E2,pin
+?Rva01336E50Str@@3URva002E5FF0Str@@A,0x01336E50,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E5FF0 calls; autopin
+_g_bfmeEmptyAscii,0x0107388B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E5FF0 calls; autopin
+??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+?bfmeClearVHX@Rva006609D0@@AAEXXZ,0x00047686,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??1Rva0064C290Tree@@QAE@XZ,0x0002FB2B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??1Rva00660610Deque@@QAE@XZ,0x0003D249,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??1Rva00660470Deque@@QAE@XZ,0x000423E8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
+??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??1Rva00641A30ResponseDeque@@QAE@XZ,0x0000869D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??1Rva006418E0RequestDeque@@QAE@XZ,0x00002CED,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
+??_7GameResultsInterface@@6B@,0x01119318,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
