@@ -294,18 +294,12 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@0@ABU10@@Z,0x000366E2,Open-BFME5 the value _Construct the tree _M_insert at 0x00765220 reaches
 ??$_Construct@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@U12@@_STL@@YAXPAU?$pair@QBVGameWindow@@PAVWindowVideo@@@0@ABU10@@Z,0x0001FCFD,Open-BFME5 ILT the GameWindow-to-WindowVideo hashtable _M_insert at 0x007871D0 copy-constructs the node value through
 ??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x0001BE23,pinharvest x1 (thunk)
-??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x0002A400,Open-BFME7 additive: retail call target used by the landed row at 0x002EBAA0 (thunk drift repair)
-??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x0002DE52,Open-BFME7 additive: retail call target used by the landed row at 0x0035BA70 (thunk drift repair)
-??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x00036C2D,Open-BFME7 additive: retail call target used by the landed row at 0x0035BA20 (thunk drift repair)
-??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x00037574,Open-BFME7 additive: retail call target used by the landed row at 0x003A5860 (thunk drift repair)
-??$_Construct@U?$pair@UICoord2D@@UCoord3D@@@_STL@@U12@@_STL@@YAXPAU?$pair@UICoord2D@@UCoord3D@@@0@ABU10@@Z,0x0003D843,Open-BFME7 additive: retail call target used by the landed row at 0x003B1190 (thunk drift repair)
 ??$_Construct@U?$pair@W4ObjectID@@I@_STL@@U12@@_STL@@YAXPAU?$pair@W4ObjectID@@I@0@ABU10@@Z,0x00039F18,retail REL32 pin for ScriptActions ObjectID pair vector push_back
 ??$_Construct@U?$pair@W4ObjectID@@W41@@_STL@@U12@@_STL@@YAXPAU?$pair@W4ObjectID@@W41@@0@ABU10@@Z,0x0001FA1E,rel32 pin for exact-ambiguous landing
 ??$_Construct@UAnimSet@GenericObjectCreationNugget@@U12@@_STL@@YAXPAUAnimSet@GenericObjectCreationNugget@@ABU12@@Z,0x0000DDAF,resweep callee back-solved
 ??$_Construct@UBfmeRva44E60Record@@U1@@_STL@@YAXPAUBfmeRva44E60Record@@ABU1@@Z,0x0001476D,assigned body helper for Rva00244E60
 ??$_Construct@UCoord3D@@U1@@_STL@@YAXPAUCoord3D@@ABU1@@Z,0x0003FDA5,retail REL32 pin for DockUpdate reserveApproachPosition
 ??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x0000E3BD,pinharvest x1 (thunk)
-??$_Construct@UEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@ABU1@@Z,0x0001B275,Open-BFME7 additive: retail call target used by the landed row at 0x000DED70 (thunk drift repair)
 ??$_Construct@UFactionVictoryParameters@@U1@@_STL@@YAXPAUFactionVictoryParameters@@ABU1@@Z,0x0000CED2,ILT target 0x001DE970 copies the AsciiString and five scalar fields of the 0x18-byte FactionVictoryParameters used by VictorySystem::init
 ??$_Construct@UGen_p16pod@@U1@@_STL@@YAXPAUGen_p16pod@@ABU1@@Z,0x009267A0,Open-BFME near-twin Construct pin for _M_insert at 0x00927C30 reusing the Gen_p16pod tag from tgrid_000.cpp
 ??$_Construct@UGen_t_000638c0_p4cd@@U1@@_STL@@YAXPAUGen_t_000638c0_p4cd@@ABU1@@Z,0x000620B0,gen-tgrid payload member
@@ -368,19 +362,15 @@ name,address,notes
 ??$_Construct@UGen_t_00776240_p128pod@@U1@@_STL@@YAXPAUGen_t_00776240_p128pod@@ABU1@@Z,0x000375CE,callee of vector insert at 0x0077CC60; same STLport construct body as the pinned 0x000375CE helper
 ??$_Construct@UGen_t_008fb570_p8pod@@U1@@_STL@@YAXPAUGen_t_008fb570_p8pod@@ABU1@@Z,0x008F9C70,RVA 0x008FB570 exact auxiliary call target
 ??$_Construct@UGen_t_008fbc70_p8cd@@U1@@_STL@@YAXPAUGen_t_008fbc70_p8cd@@ABU1@@Z,0x008F9C70,gen-tgrid payload member
-??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,0x00033FF0,Open-BFME7 additive: retail call target used by the landed row at 0x003AA480 (thunk drift repair)
 ??$_Construct@UHideShowSubObjInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU12@@Z,0x0004A818,rel32 pin for exact-ambiguous landing
 ??$_Construct@UHorzLine@@U1@@_STL@@YAXPAUHorzLine@@ABU1@@Z,0x0002E91A,ILT the HorzLine vector overflow calls at 0x00069127 to build the inserted element
 ??$_Construct@UModelConditionInfo@@U1@@_STL@@YAXPAUModelConditionInfo@@ABU1@@Z,0x000375CE,Open-BFME5 ModelConditionInfo construction thunk
 ??$_Construct@UNoFlyZone@@U1@@_STL@@YAXPAUNoFlyZone@@ABU1@@Z,0x0002713D,Open-BFME5 ILT to the out-of-line STLport _Construct at 0x00148920 (ledgered as tg_00148920); ?addNoFlyZone@AerialPathfinder@@QAEXPAVPolygonTrigger@@M@Z at 0x00148C10 copies its zone into the fresh list node through it
 ??$_Construct@UNugget@ModuleInfo@@U12@@_STL@@YAXPAUNugget@ModuleInfo@@ABU12@@Z,0x00006FD2,resweep callee back-solved
-??$_Construct@UNugget@ModuleInfo@@U12@@_STL@@YAXPAUNugget@ModuleInfo@@ABU12@@Z,0x00016626,Open-BFME7 additive: retail call target used by the landed row at 0x0076B010 (thunk drift repair)
 ??$_Construct@UParkingPlaceInfo@ParkingPlaceBehavior@@U12@@_STL@@YAXPAUParkingPlaceInfo@ParkingPlaceBehavior@@ABU12@@Z,0x0003E4BE,Open-BFME5 ParkingPlaceInfo construction ILT
 ??$_Construct@UParticleSysBoneInfo@@U1@@_STL@@YAXPAUParticleSysBoneInfo@@ABU1@@Z,0x00039F18,retail REL32 pin for W3DModelDraw particle-system-bone vector push_back
-??$_Construct@UParticleSysBoneInfo@@U1@@_STL@@YAXPAUParticleSysBoneInfo@@ABU1@@Z,0x00044675,Open-BFME7 additive: retail call target used by the landed row at 0x000A7AA0 (thunk drift repair)
 ??$_Construct@UPayload@DeliverPayloadNugget@@U12@@_STL@@YAXPAUPayload@DeliverPayloadNugget@@ABU12@@Z,0x0003A3EB,parsePayload fast-path call proves the name-first Payload instantiation
 ??$_Construct@UPrereqUnitRec@ProductionPrerequisite@@U12@@_STL@@YAXPAUPrereqUnitRec@ProductionPrerequisite@@ABU12@@Z,0x00028957,rel32 pin for exact-ambiguous landing
-??$_Construct@UPrereqUnitRec@ProductionPrerequisite@@U12@@_STL@@YAXPAUPrereqUnitRec@ProductionPrerequisite@@ABU12@@Z,0x0003C1A0,Open-BFME7 additive: retail call target used by the landed row at 0x003AB7A0 (thunk drift repair)
 ??$_Construct@URunwayInfo@FlightDeckBehavior@@U12@@_STL@@YAXPAURunwayInfo@FlightDeckBehavior@@ABU12@@Z,0x00008049,
 ??$_Construct@URva00064A30Value@@U1@@_STL@@YAXPAURva00064A30Value@@ABU1@@Z,0x0000EF6B,Open-BFME5 the value _Construct the tree _M_insert at 0x00064A30 reaches
 ??$_Construct@URva00080220Element@@U1@@_STL@@YAXPAURva00080220Element@@ABU1@@Z,0x00007554,Open-BFME5 the element _Construct the list push_back at 0x00080220 calls
@@ -503,7 +493,6 @@ name,address,notes
 ??$_Construct@URva0077AEA0Element@_STL@@@_STL@@YAXPAURva0077AEA0Element@0@ABU10@@Z,0x00006FD2,Open-BFME5 the element _Construct the vector insert at 0x0077AEA0 calls
 ??$_Construct@UVideo@@U1@@_STL@@YAXPAUVideo@@ABU1@@Z,0x00030549,rel32 pin for exact-ambiguous landing
 ??$_Construct@UWeaponBarrelInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU12@@Z,0x0003B7E6,ILT thunk used by call site
-??$_Construct@UWeaponBarrelInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU12@@Z,0x0003E4BE,Open-BFME7 additive: retail call target used by the landed row at 0x003D2880 (thunk drift repair)
 ??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
 ??$_Construct@UupgradePairWide@@U1@@_STL@@YAXPAUupgradePairWide@@ABU1@@Z,0x000390B3,pin near-twin _Construct<upgradePairWide> instantiation onto the matched thunk at 0x0064C412 target
 ??$_Construct@VAsciiString@@V1@@_STL@@YAXPAVAsciiString@@ABV1@@Z,0x00007554,Open-BFME5 ILT; called by ?addObjectType@ObjectTypes@@QAEXABVAsciiString@@@Z at 0x001DC520
@@ -516,9 +505,7 @@ name,address,notes
 ??$_Construct@VPingRequest@@V1@@_STL@@YAXPAVPingRequest@@ABV1@@Z,0x00049828
 ??$_Construct@VPingResponse@@V1@@_STL@@YAXPAVPingResponse@@ABV1@@Z,0x0003C9E8
 ??$_Construct@VPlayerTemplate@@V1@@_STL@@YAXPAVPlayerTemplate@@ABV1@@Z,0x00024321,Open-BFME5 PlayerTemplate construction ILT
-??$_Construct@VProductionPrerequisite@@V1@@_STL@@YAXPAVProductionPrerequisite@@ABV1@@Z,0x000027A2,Open-BFME7 additive: retail call target used by the landed row at 0x003ABB40 (thunk drift repair)
 ??$_Construct@VProductionPrerequisite@@V1@@_STL@@YAXPAVProductionPrerequisite@@ABV1@@Z,0x0003AA26,resweep callee back-solved
-??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x0000927D,Open-BFME7 additive: retail call target used by the landed row at 0x003AA640 (thunk drift repair)
 ??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x00033AAA,ILT thunk used by call site
 ??$_Destroy@PAUEvaMessageInfo@@@_STL@@YAXPAUEvaMessageInfo@@0@Z,0x0003AA8A,0x004263D0 call +0x00bb ILT enters matched 28-byte member walk body 0x004261F0
 ??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
@@ -800,14 +787,11 @@ name,address,notes
 ??$__copy@PAUHorzLine@@PAU1@H@_STL@@YAPAUHorzLine@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B91E
 ??$__copy@PAUNamedReveal@@PAU1@H@_STL@@YAPAUNamedReveal@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0004A1E7,Open-BFME5 ILT; the tail shift of ?removeNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z at 0x0034D440
 ??$__copy@PAUNugget@ModuleInfo@@PAU12@H@_STL@@YAPAUNugget@ModuleInfo@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00006F37,site-decoded x1 (thunk)
-??$__copy@PAUNugget@ModuleInfo@@PAU12@H@_STL@@YAPAUNugget@ModuleInfo@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000EE03,Open-BFME7 additive: retail call target used by the landed row at 0x00141770 (thunk drift repair)
 ??$__copy@PAUNugget@Rva001417F0ModuleInfo@@PAU12@H@_STL@@YAPAUNugget@Rva001417F0ModuleInfo@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000EE03,Open-BFME5 pin: templated __copy helper instantiated for Rva001417F0ModuleInfo::clearModuleInfo erase-in-place shift at 0x001417F0 (thunks_006.cpp target)
 ??$__copy@PAUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,pinharvest x1 (thunk)
-??$__copy@PAUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00021DEB,Open-BFME7 additive: retail call target used by the landed row at 0x0012A830 (thunk drift repair)
 ??$__copy@PAUPayload@DeliverPayloadNugget@@PAU12@H@_STL@@YAPAUPayload@DeliverPayloadNugget@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000097CD,rel32 pin for exact-ambiguous landing
 ??$__copy@PAUPrereqUnitRec@ProductionPrerequisite@@PAU12@H@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00027598,retail target of vector<PrereqUnitRec>::erase call to __copy over pointer-to-PrereqUnitRec
 ??$__copy@PAUQuantityModifier@@PAU1@H@_STL@@YAPAUQuantityModifier@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,pinharvest x1 (thunk)
-??$__copy@PAUQuantityModifier@@PAU1@H@_STL@@YAPAUQuantityModifier@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00021DEB,Open-BFME7 additive: retail call target used by the landed row at 0x0012A830 (thunk drift repair)
 ??$__copy@PAURva004262F0Elem@@PAU1@H@_STL@@YAPAURva004262F0Elem@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B888,address-derived __copy<Rva004262F0Elem*> shift helper for vector::erase at 0x004262F0
 ??$__copy@PAUVideo@@PAU1@H@_STL@@YAPAUVideo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC
 ??$__copy@PAV?$BitFlags@$0HB@@@PAV1@H@_STL@@YAPAV?$BitFlags@$0HB@@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024BE5,BFME PathfindZoneManager pending-cell vector clear ILT
@@ -844,7 +828,6 @@ name,address,notes
 ??$__copy@PBUHideShowSubObjInfo@ModelConditionInfo@@PAU12@H@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003DB1D,ILT thunk used by call site
 ??$__copy@PBUNugget@ModuleInfo@@PAU12@H@_STL@@YAPAUNugget@ModuleInfo@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003B688,resweep callee back-solved
 ??$__copy@PBUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00030F26,hit-decoded x2 (thunk)
-??$__copy@PBUParticleSysBoneInfo@@PAU1@H@_STL@@YAPAUParticleSysBoneInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003DB1D,Open-BFME7 additive: retail call target used by the landed row at 0x003B3C00 (thunk drift repair)
 ??$__copy@PBUPrereqUnitRec@ProductionPrerequisite@@PAU12@H@_STL@@YAPAUPrereqUnitRec@ProductionPrerequisite@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008391,resweep callee back-solved
 ??$__copy@PBURva00138F00Element@@PAU1@H@_STL@@YAPAURva00138F00Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00138BA0,address-derived Rva00138F00Element __copy helper for the vector operator= at 0x00138F00 (folds with the __uninitialized_copy instantiation)
 ??$__copy@PBURva00365070Element@@PAU1@H@_STL@@YAPAURva00365070Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0002F914,ILT reached by the 0x00365070 vector assignment
@@ -1050,7 +1033,6 @@ name,address,notes
 ??$__find@PBVAsciiString@@V1@@_STL@@YAPBVAsciiString@@PBV1@0ABV1@ABUrandom_access_iterator_tag@0@@Z,0x0004B29A,Open-BFME5 ILT; called by ?isInSet@ObjectTypes@@QBE_NABVAsciiString@@@Z at 0x001DC2D0
 ??$__find@U?$_List_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x0004093A,derived-ICF
 ??$__find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x00027BAB,pinharvest x1 (thunk)
-??$__find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x0002D66E,Open-BFME7 additive: retail call target used by the landed row at 0x00080590 (thunk drift repair)
 ??$__find@U?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@_STL@@H@_STL@@YA?AU?$_Rb_tree_iterator@HU?$_Const_traits@H@_STL@@@0@U10@0ABHABUinput_iterator_tag@0@@Z,0x0004093A
 ??$__find_if@PADU?$_Eq_char_bound@V?$char_traits@D@_STL@@@_STL@@@_STL@@YAPADPAD0U?$_Eq_char_bound@V?$char_traits@D@_STL@@@0@ABUrandom_access_iterator_tag@0@@Z,0x0000C379,REL32 call via ILT thunk
 ??$__find_if@PAUBannerMovieEntry@@VBannerMovieEntryMatches@@@_STL@@YAPAUBannerMovieEntry@@PAU1@0VBannerMovieEntryMatches@@ABUrandom_access_iterator_tag@0@@Z,0x00581CE0,BannerUI 28-byte entry search; predicate compares the id at entry+4
@@ -1269,18 +1251,12 @@ name,address,notes
 ??$sort_heap@PAUS4SortElem12@@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@@Z,0x00035BC0,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ??$sort_heap@PAUS4SortElem8@@US4Cmp00575AA0@@@_STL@@YAXPAUS4SortElem8@@0US4Cmp00575AA0@@@Z,0x00577460,STLport score-row sort_heap callee reached by the partial-sort body at 0x00577690
 ??$swap@V?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAHHV?$allocator@H@_STL@@@0@0@Z,0x00066BC0,gen-tgrid shared callee
-??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x00023C36,Open-BFME7 additive: retail call target used by the landed row at 0x00194A00 (thunk drift repair)
-??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x0004041C,Open-BFME7 additive: retail call target used by the landed row at 0x001949C0 (thunk drift repair)
-??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x00048720,Open-BFME7 additive: retail call target used by the landed row at 0x000DE000 (thunk drift repair)
-??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x0004918E,Open-BFME7 additive: retail call target used by the landed row at 0x000DE0A0 (thunk drift repair)
 ??$swap@V?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAPAXPAXV?$allocator@PAX@_STL@@@0@0@Z,0x00069970,zhstl per-site callee copy (body proven byte-equal)
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_0058f0e0_m12cd@@@_STL@@@2@@0@0@Z,0x0058CCE0,family-emit payload member
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_005c6500_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_005c6500_m12cd@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_005c6500_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_005c6500_m12cd@@@_STL@@@2@@0@0@Z,0x005C4D00,family-emit payload member
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_005f0290_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_005f0290_m12cd@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@UGen_t_005f0290_m12cd@@@_STL@@U12@V?$allocator@U?$_List_node@UGen_t_005f0290_m12cd@@@_STL@@@2@@0@0@Z,0x005F0120,family-emit payload member
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@@2@@0@0@Z,0x00021927,pinharvest x1 (thunk)
-??$swap@V?$_STLP_alloc_proxy@PAU?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@U12@V?$allocator@U?$_List_node@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@_STL@@@2@@0@0@Z,0x000475AF,Open-BFME7 additive: retail call target used by the landed row at 0x0037E660 (thunk drift repair)
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@0@0@Z,0x00013BB0,pinharvest x4 (thunk)
-??$swap@V?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@_STL@@@2@@0@0@Z,0x00028056,Open-BFME7 additive: retail call target used by the landed row at 0x000BF020 (thunk drift repair)
 ??$swap@V?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGUGen_t_000bf180_m12pod@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGUGen_t_000bf180_m12pod@@@_STL@@@_STL@@@2@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAU?$_Rb_tree_node@U?$pair@$$CBGUGen_t_000bf180_m12pod@@@_STL@@@_STL@@U12@V?$allocator@U?$_Rb_tree_node@U?$pair@$$CBGUGen_t_000bf180_m12pod@@@_STL@@@_STL@@@2@@0@0@Z,0x000BEEF0,family-emit payload member
 ??$swap@V?$_STLP_alloc_proxy@PAUGen_t_00272aa0_p12cd@@U1@V?$allocator@UGen_t_00272aa0_p12cd@@@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAUGen_t_00272aa0_p12cd@@U1@V?$allocator@UGen_t_00272aa0_p12cd@@@_STL@@@0@0@Z,0x00271D00,gen-tgrid payload member
 ??$swap@V?$_STLP_alloc_proxy@PAUGen_t_00354a70_m4pod@@U1@V?$allocator@UGen_t_00354a70_m4pod@@@_STL@@@_STL@@@_STL@@YAXAAV?$_STLP_alloc_proxy@PAUGen_t_00354a70_m4pod@@U1@V?$allocator@UGen_t_00354a70_m4pod@@@_STL@@@0@0@Z,0x00351EA0,family-emit payload member
@@ -1366,12 +1342,10 @@ name,address,notes
 ??0?$SimpleParameterClass@M$00@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$SimpleParameterClass@M$0N@@@QAE@PAXPBD@Z,0x00002874,pinharvest x3 (thunk)
 ??0?$StringBase@D@@AAE@ABV0@@Z,0x00887B60,ScriptActions doPlayerSetOverrideRelationToTeam AsciiString temporary copy
-??0?$StringBase@D@@AAE@ABV0@@Z,0x00888400,Open-BFME7 additive: retail call target used by the landed row at 0x0054FA30 (thunk drift repair)
 ??0?$StringBase@D@@AAE@PBD@Z,0x00888BC0,StringBase<char> const char ctor used by populateSideInfo format temps
 ??0?$StringBase@D@@IAE@ABV0@@Z,0x00887B60,protected StringBase char copy ctor
 ??0?$StringBase@D@@QAE@ABV0@@Z,0x00887B60,public narrow StringBase copy used by notification dispatch
 ??0?$StringBase@G@@AAE@ABV0@@Z,0x00888400,callee of SkirmishPreferences::getUserName 0x0009FA60
-??0?$StringBase@G@@AAE@ABV0@@Z,0x00888530,Open-BFME7 additive: retail call target used by the landed row at 0x0040F0B0 (thunk drift repair)
 ??0?$StringBase@G@@AAE@PBG@Z,0x00888DE0,StringBase<unsigned short> const wchar ctor used by populateSideInfo L%d temps
 ??0?$StringBase@G@@QAE@ABV0@@Z,0x00888400,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0?$VectorClass@UAcceleratorTracker@@@@QAE@HPBUAcceleratorTracker@@@Z,0x000187AF,pinharvest x1 (thunk)
@@ -1386,8 +1360,6 @@ name,address,notes
 ??0?$VectorClass@VKeyClass@Curve3DClass@@@@QAE@HPBVKeyClass@Curve3DClass@@@Z,0x000187AF,Open-BFME7 additive: retail call target used by the landed row at 0x0013B6A0 (thunk drift repair)
 ??0?$VectorClass@VProxyClass@@@@QAE@HPBVProxyClass@@@Z,0x00933D30,matched Render2DClass constructor call target
 ??0?$VectorClass@VRenderDeviceDescClass@@@@QAE@HPBVRenderDeviceDescClass@@@Z,0x000187AF,pinharvest x1 (thunk)
-??0?$VectorClass@VResolutionDescClass@@@@QAE@HPBVResolutionDescClass@@@Z,0x000187AF,Open-BFME7 additive: retail call target used by the landed row at 0x0013B6A0 (thunk drift repair)
-??0?$VectorClass@VResolutionDescClass@@@@QAE@HPBVResolutionDescClass@@@Z,0x009080A0,Open-BFME7 additive: retail call target used by the landed row at 0x0090B4E0 (thunk drift repair)
 ??0?$VectorClass@VShaderClass@@@@QAE@HPBVShaderClass@@@Z,0x000187AF,pinharvest x1 (thunk)
 ??0?$VectorClass@VVector2@@@@QAE@HPBVVector2@@@Z,0x000187AF,site-decoded x1 (thunk)
 ??0?$VectorClass@VVector4@@@@QAE@HPBVVector4@@@Z,0x00906240,call-target pin: row deleted (ZH drift: element-ctor ptr), callers verify against this rva
@@ -1934,16 +1906,9 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@U_Slist_node_base@_STL@@U?$_Slist_node@H@2@V?$allocator@U?$_Slist_node@H@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Slist_node@H@_STL@@@1@U_Slist_node_base@1@@Z,0x007122F0,gen-tgrid shared callee
 ??0?$_Vector_base@HV?$allocator@H@_STL@@@_STL@@QAE@IABV?$allocator@H@1@@Z,0x00066A90,gen-tgrid shared callee
 ??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x00001DA7,pinharvest x1 (thunk)
-??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x00020EA0,Open-BFME7 additive: retail call target used by the landed row at 0x00135AB0 (thunk drift repair)
-??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x000212D3,Open-BFME7 additive: retail call target used by the landed row at 0x001F9520 (thunk drift repair)
-??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x0002D178,Open-BFME7 additive: retail call target used by the landed row at 0x0039D5D0 (thunk drift repair)
-??0?$_Vector_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObject@@@1@@Z,0x0004485F,Open-BFME7 additive: retail call target used by the landed row at 0x003628F0 (thunk drift repair)
-??0?$_Vector_base@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObjectCreationNugget@@@1@@Z,0x0000799B,Open-BFME7 additive: retail call target used by the landed row at 0x003D3A00 (thunk drift repair)
 ??0?$_Vector_base@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@IABV?$allocator@PAVObjectCreationNugget@@@1@@Z,0x0001D949,resweep callee back-solved
 ??0?$_Vector_base@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABV?$allocator@PAX@1@@Z,0x000212D3
 ??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00001DA7,pinharvest x1 (thunk)
-??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x00020EA0,Open-BFME7 additive: retail call target used by the landed row at 0x00136930 (thunk drift repair)
-??0?$_Vector_base@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAE@IABV?$allocator@PBVLocomotorTemplate@@@1@@Z,0x0003F418,Open-BFME7 additive: retail call target used by the landed row at 0x001D7720 (thunk drift repair)
 ??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
 ??0?$_Vector_base@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003AB860Elem@@@1@@Z,0x000430EF,vector base constructor call target from retail 0x003AB860 (twin of 0x003AB280)
 ??0?$_Vector_base@URva003A8DF0Record@@V?$allocator@URva003A8DF0Record@@@_STL@@@_STL@@QAE@IABV?$allocator@URva003A8DF0Record@@@1@@Z,0x0003E00E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003A8DF0 calls; autopin
@@ -1956,15 +1921,10 @@ name,address,notes
 ??0?$list@PAVBfmeRva493A0Object@@V?$allocator@PAVBfmeRva493A0Object@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000385F5,assigned list copy constructor call target for Rva002493A0
 ??0?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVDrawable@@@1@@Z,0x000263D2,BFME attack-voice local DrawableList constructor
 ??0?$list@PAVFXNugget@@V?$allocator@PAVFXNugget@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0002F333,pinharvest x1 (thunk)
-??0?$list@PAVFXNugget@@V?$allocator@PAVFXNugget@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00047B27,Open-BFME7 additive: retail call target used by the landed row at 0x00133BB0 (thunk drift repair)
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00011ADB,pinharvest x1 (thunk)
-??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x00505D10 (thunk drift repair)
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00048667,Open-BFME7 additive: retail call target used by the landed row at 0x00C6B2C0 (thunk drift repair)
 ??0?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPeerResponse@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPeerResponse@@@1@@Z,0x00048667,Open-BFME7 additive: retail call target used by the landed row at 0x00C6B2C0 (thunk drift repair)
 ??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$list@VQueuedDownload@@V?$allocator@VQueuedDownload@@@_STL@@@_STL@@QAE@ABV?$allocator@VQueuedDownload@@@1@@Z,0x00048667,Open-BFME7 additive: retail call target used by the landed row at 0x00C6B2C0 (thunk drift repair)
 ??0?$pair@$$CBHVMultiplayerColorDefinition@@@_STL@@QAE@ABHABVMultiplayerColorDefinition@@@Z,0x00048FEA,MultiplayerColor map operator pair-constructor ILT
 ??0?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@QAE@ABUBfmeRva449E0Key@@ABUBfmeRva449E0Value@@@Z,0x00020FB8,retail pair constructor thunk for Rva002449E0 map insertion
 ??0?$pair@$$CBUGen_t_0007cd50_k4@@UGen_t_0007cd50_p12cd@@@_STL@@QAE@ABU01@@Z,0x0007CCC0,gen-tgrid payload member
@@ -2039,17 +1999,14 @@ name,address,notes
 ??0?$pair@$$CBUGen_t_009cf3c0_k4@@UGen_t_009cf3c0_p12cd@@@_STL@@QAE@ABU01@@Z,0x009CF180,gen-tgrid payload member
 ??0?$pair@$$CBVAsciiString@@UAptTextRecord@@@_STL@@QAE@ABVAsciiString@@ABUAptTextRecord@@@Z,0x00009A20,AptTextRecord operator[] temporary-pair constructor ILT; jumps to 0x00467890
 ??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x0001005F,pinharvest x1 (thunk)
-??0?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@QAE@ABU01@@Z,0x000451D3,Open-BFME7 additive: retail call target used by the landed row at 0x001A6D80 (thunk drift repair)
 ??0?$pair@$$CBVAsciiString@@VBannerType@@@_STL@@QAE@ABVAsciiString@@ABVBannerType@@@Z,0x0003A3D2,BannerType hash_map value-pair construction ILT proven by the 20-byte temporary layout
 ??0?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@QAE@ABU01@@Z,0x000427A8,Open-BFME7 ILT thunk the PlayerInfoMap _M_insert at 0x00633C70 calls for the node pair copy
 ??0?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABQAXABV?$allocator@PAX@1@@Z,0x0002039C,ILT the same resize calls at 0x00786930 to build the new bucket vector
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
 ??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z,0x00048667,Open-BFME7 additive: retail call target used by the landed row at 0x00C6B2C0 (thunk drift repair)
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000D2E70,SubsystemLegend.cpp TU copy of vector<AsciiString> copy ctor
 ??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
-??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00048667,Open-BFME7 additive: retail call target used by the landed row at 0x00C6B2C0 (thunk drift repair)
 ??0?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0000DC0B,LivingWorldPlayerArmy copy constructor retail call at 0x0036527A invokes the vector<LivingWorldArmy> copy-constructor ILT thunk
 ??0?@V?@@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x0002D06A,DefaultModuleTag clone copy-ctor pin
 ??0?@V?@@FXParticleSystem@@3QBDB@2@3QBDBVSphericalEmissionVelocityModule@2@VSphericalEmissionVelocityModuleTemplate@2@V?@@2@V?@@2@@FXParticleSystem@@@FXParticleSystem@@QAE@ABV01@@Z,0x00020DD3,SphericalEmissionVelocity clone copy-ctor pin
@@ -2066,7 +2023,6 @@ name,address,notes
 ??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z,0x0003E8D3,ILT to AIGuardRetaliateMachine ctor 0x0015F240; retail onEnter@AIGuardRetaliateState call
 ??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x0014F280,base ctor of 13 retail State subclasses; the reference declares exactly those classes deriving from AIInternalMoveToState and its ctor takes (StateMachine* AsciiString) by value which matches the copy-then-pass at this address
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
-??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0003FB61,Open-BFME7 additive: retail call target used by the landed row at 0x0005D9A0 (thunk drift repair)
 ??0AIPlayer@@QAE@PAVPlayer@@@Z,0x0002D731,Player setPlayerType constructs the 0x78-byte base AI through this retail ILT
 ??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z,0x00004ADE,Player setPlayerType constructs the 0xA0-byte skirmish AI through this retail ILT
 ??0AITNGuardMachine@@QAE@PAVObject@@@Z,0x0000715D,ILT to AITNGuardMachine ctor 0x0018AFB0; retail onEnter@AITunnelNetworkGuardState call
@@ -2080,7 +2036,6 @@ name,address,notes
 ??0ActiveBodyModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)
 ??0ActiveShroudUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004709B
 ??0ActiveShroudUpgradeModuleData@@QAE@XZ,0x00010C80,pinharvest x1 (thunk)
-??0ActiveShroudUpgradeModuleData@@QAE@XZ,0x00023DCB,Open-BFME7 additive: retail call target used by the landed row at 0x001153E0 (thunk drift repair)
 ??0AdaptiveDeltaMotionChannelClass@@QAE@XZ,0x00978340
 ??0AnimSet@GenericObjectCreationNugget@@QAE@ABU01@@Z,0x001D6B80,BFME2 three-string AnimSet copy constructor used by parseAnimSet
 ??0AnimalAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,AnimalAIUpdate ctor base call
@@ -2089,19 +2044,16 @@ name,address,notes
 ??0AnimateWindow@@QAE@XZ,0x0002DD44,ILT thunk -> 0x45CEE0; retail call sites use the thunk
 ??0AnimatedParticleSysBoneClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000727A,link thunk to the AnimatedParticleSysBoneClientUpdate constructor; named from the ModuleFactory registration that pairs "AnimatedParticleSysBoneClientUpdate" with factory 0x00121A70
 ??0AnimationSteeringUpdateModuleData@@QAE@XZ,0x0001FABE,pinharvest x1 (thunk)
-??0AnimationSteeringUpdateModuleData@@QAE@XZ,0x0001FEB0,Open-BFME7 additive: retail call target used by the landed row at 0x00114B50 (thunk drift repair)
 ??0AppendLockClass@IndexBufferClass@@QAE@PAV1@II@Z,0x0091CF70,retail AppendLockClass index constructor target used by constructVolumeVB
 ??0AppendLockClass@VertexBufferClass@@QAE@PAV1@IIH@Z,0x0091DE90,DX8VertexBufferClass Copy direct call target
 ??0ArchiveFile@@QAE@XZ,0x009D10B0
 ??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
-??0ArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009D0DB0,Open-BFME7 additive: retail call target used by the landed row at 0x009D0EC0 (thunk drift repair)
 ??0ArchivedDirectoryInfo@@QAE@XZ,0x009CA460,the only non-allocator call in ArchiveFileSystem::ArchiveFileSystem at 0x009CAA34; m_rootDirectory is the only member needing a constructor
 ??0ArchivedFileInfo@@QAE@XZ,0x009CC650,archive directory entry ctor
 ??0ArmorUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003582D,module ctor (friend_newModuleInstance retail call target)
 ??0ArrowStormUpdateModuleDataBase@@QAE@XZ,0x0003F503,ArrowStormUpdateModuleData ctor base
 ??0AsciiString@@AAE@PBD@Z,0x00888BC0,probe: plain-class variant of the StringBase<char> const char* constructor
 ??0AsciiString@@QAE@ABV0@@Z,0x000416AF,Open-BFME7 ILT thunk of the out-of-line AsciiString copy (0x0005EE50) that the PlayerInfoMap hinted insert_unique at 0x00634650 calls after MSVC stops inlining the forwarder
-??0AsciiString@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x000B3BF0 (thunk drift repair)
 ??0AsciiString@@QAE@PBD@Z,0x00888BC0,pinharvest x4 (body)
 ??0AsciiStringVX@@QAE@ABV0@@Z,0x00887B60,pin
 ??0AsciiStringVZ@@QAE@ABV0@@Z,0x00887B60,pin
@@ -2192,7 +2144,6 @@ name,address,notes
 ??0BaseY005E7940@@QAE@PAVOwnerY005E7940@@@Z,0x006009B0,ctor of the base subobject constructed inline by the 102-byte adjusted-owner new family (Q4NewInlineCtorAdjusted.cpp); address-derived name; identity not recovered
 ??0BattlePlanUpdateModuleData@@QAE@XZ,0x0003025B
 ??0BeaconClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0BeaconClientUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0BeaconClientUpdateModuleData@@QAE@XZ,0x000286C3,module-glue cascade callee (from retail call site)
 ??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME7 additive: retail call target used by the landed row at 0x0036CEA0 (thunk drift repair)
 ??0BezierSegment@@QAE@XZ,0x00043A9A
@@ -2380,7 +2331,6 @@ name,address,notes
 ??0BridgeTowerBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BridgeTowerBehavior ctor base call
 ??0BroadcastStealthUpdateModuleData@@QAE@XZ,0x1e907,BroadcastStealth friend_newModuleData ctor
 ??0BuddyInfo@@QAE@ABV0@@Z,0x0000C815,pinharvest x1 (thunk)
-??0BuddyInfo@@QAE@ABV0@@Z,0x00048329,Open-BFME7 additive: retail call target used by the landed row at 0x000A9D50 (thunk drift repair)
 ??0BuffNuggetFXNugget@@QAE@XZ,0x0042D2B0,constructor run on the 0xF4-byte allocation in BuffNuggetFXNugget::parse at 0x0042D680; the INI keyword table at 0x00CF2130 names that parse callback BuffNugget
 ??0Buffer@@QAE@J@Z,0x009E1DA0
 ??0Buffer@@QAE@PAXJ@Z,0x009E1CE0,Buffer::Buffer(void*, long)
@@ -2405,7 +2355,6 @@ name,address,notes
 ??0CleanupAreaPowerModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
 ??0CleanupHazardUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004C9B,pinharvest x1 (thunk)
 ??0CleanupHazardUpdateModuleData@@QAE@XZ,0x000118E7,pinharvest x1 (thunk)
-??0CleanupHazardUpdateModuleData@@QAE@XZ,0x000261CA,Open-BFME7 additive: retail call target used by the landed row at 0x001171F0 (thunk drift repair)
 ??0ClearanceTestingSlowDeathBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,ClearanceTestingSlowDeathBehavior ctor base (ICF74 shared)
 ??0ClientUpdateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,Open-BFME5 SwayClientUpdate base ctor pin
 ??0CloudBreakSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,0x000383C0,link thunk to the CloudBreakSpecialPower constructor; named from the ModuleFactory registration that pairs "CloudBreakSpecialPower" with factory 0x001205F0
@@ -2425,24 +2374,19 @@ name,address,notes
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0ConvertToHijackedVehicleCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0CostModifierUpgradeModuleData@@QAE@XZ,0x0000B997,pinharvest x1 (thunk)
-??0CostModifierUpgradeModuleData@@QAE@XZ,0x00025D47,Open-BFME7 additive: retail call target used by the landed row at 0x0011DB70 (thunk drift repair)
 ??0CountermeasuresBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006780,pinharvest x1 (thunk)
 ??0CountermeasuresBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,CountermeasuresBehavior ctor base (ICF74 shared)
 ??0CountermeasuresBehaviorModuleData@@QAE@XZ,0x0003025B,derived-ICF
-??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026CAB,Open-BFME7 additive: retail call target used by the landed row at 0x0024FC20 (thunk drift repair)
 ??0CrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00217660,BFME CrateCollide ctor body; ILT 0x0002AC43 used by legacy crate constructors
 ??0CrateCollideModuleData@@QAE@XZ,0x000441CA,Open-BFME5 UnitCrateCollide base constructor pin
 ??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0CreateCrateDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0CreateCrateDieModuleData@@QAE@XZ,0x0000497B,pinharvest x1 (thunk)
 ??0CreateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00026CAB,constructor ILT called by seven named derived constructors
 ??0CreateModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x0024F450,Open-BFME5 base constructor every *Create module ctor forwards to
 ??0CreateObjectDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0CreateObjectDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0CreateObjectDieModuleData@@QAE@XZ,0x00010B2C,derived-ICF
 ??0CriticalSectionClass@@QAE@XZ,0x009DB420
 ??0CrushDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0CrushDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0CullNodeStruct@AABTreeBuilderClass@@QAE@XZ,0x0096B500
 ??0CullSystemClass@@QAE@XZ,0x008E2140
 ??0CursorParticleSystemFXNugget@@QAE@XZ,0x0042B280,constructor run on the 0xEC-byte allocation in CursorParticleSystemFXNugget::parse at 0x0042CCA0; the INI keyword table at 0x00CF2130 names that parse callback CursorParticleSystem
@@ -2458,7 +2402,6 @@ name,address,notes
 ??0DX8IndexBufferClass@@QAE@IW4UsageType@0@@Z,0x0091D0A0,BFME DynamicIB uint-width call-site ABI alias for the unsigned-short constructor
 ??0DamDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0DamDieModuleData@@QAE@XZ,0x000015FA,pinharvest x1 (thunk)
-??0DamDieModuleData@@QAE@XZ,0x0004A426,Open-BFME7 additive: retail call target used by the landed row at 0x00114D70 (thunk drift repair)
 ??0DamageInfo@@QAE@XZ,0x0002C9D5,Open-BFME5 the thunk Object kill constructs its DamageInfo through; Zero Hour names the same constructor
 ??0DamageInfoInput@@QAE@XZ,0x0002C3A9,DamageInfo constructor retail call ILT reaches the input constructor body at 0x000ED2D0
 ??0DarknessSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DarknessSpecialPowerModuleData base ctor
@@ -2479,14 +2422,12 @@ name,address,notes
 ??0DeployStyleAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,DeployStyleAIUpdate ctor base call
 ??0DeployStyleAIUpdateMember@@QAE@XZ,0x0001A9B0,DeployStyleAIUpdate member ctor at this+0x340
 ??0DestroyDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0DestroyDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0DestroyModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D9A7,constructor ILT to 0x00253C30
 ??0DetachableRiderBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002F3AB,link thunk to the DetachableRiderBody constructor; named from the ModuleFactory registration that pairs "DetachableRiderBody" with factory 0x0011FA50
 ??0DetachableRiderUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0004773F,link thunk to the DetachableRiderUpdate constructor; named from the ModuleFactory registration that pairs "DetachableRiderUpdate" with factory 0x0011CAF0
 ??0DetailedArchivedDirectoryInfo@@QAE@ABV0@@Z,0x009CA8F0,pinharvest x1 (body)
 ??0DevastateSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,DevastateSpecialPowerModuleData base ctor
 ??0DieModuleData@@QAE@XZ,0x000015FA,pinharvest x1 (thunk)
-??0DieModuleData@@QAE@XZ,0x0004A426,Open-BFME7 additive: retail call target used by the landed row at 0x00114D70 (thunk drift repair)
 ??0DieMuxData@@QAE@XZ,0x000057B8,pinharvest x1 (thunk)
 ??0DirectInputKeyboard@@QAE@XZ,0x000120D0,DirectInputKeyboard ctor thunk; createKeyboard@W3DGameClient factory REL32
 ??0Display@@QAE@XZ,0x000110FE,ILT to Display ctor body 0x005CBF60
@@ -2505,12 +2446,9 @@ name,address,notes
 ??0DynamicDecalFXNugget@@QAE@XZ,0x00428FA0,constructor run on the 0xF8-byte allocation in DynamicDecalFXNugget::parse at 0x0042BF50; the INI keyword table at 0x00CF2130 names that parse callback DynamicDecal
 ??0DynamicGeometryInfoUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048338
 ??0DynamicGeometryInfoUpdateModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0DynamicGeometryInfoUpdateModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
-??0EMPUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,Open-BFME7 additive: retail call target used by the landed row at 0x00114200 (thunk drift repair)
 ??0EjectPilotDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0EjectPilotDieModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0EjectPilotDieModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0ElvenWoodSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,ElvenWood SpecialPower base (shared 0x15c44)
 ??0Emotion@@QAE@PAVObject@@PAVEmotionTrackerUpdateEntry@@@Z,0x0002DD08,EmotionSystem::createEmotion allocates 0x34-byte Emotion and calls this Object-first constructor through its ILT; body at 0x0037BF60
 ??0EmotionNugget@@QAE@XZ,0x0001193C,derived from the REL32 displacement at 0x0037B8A0
@@ -2535,7 +2473,6 @@ name,address,notes
 ??0FeslEchoMessage@@QAE@PADH@Z,0x007E8850,FESL message buffer constructor
 ??0FileSystem@@QAE@XZ,0x00022CA5
 ??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
-??0FireOCLAfterWeaponCooldownUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,Open-BFME7 additive: retail call target used by the landed row at 0x00114200 (thunk drift repair)
 ??0FireOCLAfterWeaponCooldownUpdateModuleData@@QAE@XZ,0x0000B997,pinharvest x1 (thunk)
 ??0FireSpreadUpdateModuleData@@QAE@XZ,0x000104B5,module-glue cascade callee (from retail call site)
 ??0FireWeaponCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
@@ -2550,7 +2487,6 @@ name,address,notes
 ??0FirewallHelperClass@@QAE@XZ,0x00003AD5
 ??0FlammableUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00011ACC,Ghidra-owned constructor thunk
 ??0FlammableUpdateModuleData@@QAE@XZ,0x0000497B,pinharvest x1 (thunk)
-??0FlammableUpdateModuleData@@QAE@XZ,0x0004A250,Open-BFME7 additive: retail call target used by the landed row at 0x001146F0 (thunk drift repair)
 ??0FlightDeckBehaviorModuleData@@QAE@XZ,0x0000CC3E
 ??0FloatUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x01DF84,module ctor (friend_newModuleInstance retail call target)
 ??0FloatUpdateModuleData@@QAE@XZ,0x0004601A,module-glue cascade callee (from retail call site)
@@ -2567,7 +2503,6 @@ name,address,notes
 ??0GameResultsRequest@@QAE@ABV0@@Z,0x0004355E
 ??0GameSlot@@QAE@ABV0@@Z,0x0006E600,the base-class copy constructor LANGameSlot's own copy constructor (0x00686D50) calls on (this src) at offset 0 before storing LANGameSlot's vtable; the base is GameSlot in the layout LANGameSlot_operator.cpp and LANGameSlot_dtor.cpp both pin
 ??0GameSpyGroupRoom@@QAE@ABV0@@Z,0x0000C815,pinharvest x1 (thunk)
-??0GameSpyGroupRoom@@QAE@ABV0@@Z,0x00048329,Open-BFME7 additive: retail call target used by the landed row at 0x000A9D50 (thunk drift repair)
 ??0GameSpyPSMessageQueue@@QAE@XZ,0x000216C0
 ??0GameSpyPeerMessageQueue@@QAE@XZ,0x0000A1B9,REL32 pin from createNewMessageQueue @0x64E620 (thunk to 0x64D650)
 ??0GameSpyPeerMessageQueueInterface@@QAE@XZ,0x0000A1B9,createNewMessageQueue ctor call; ILT thunk for body 0x0064D650
@@ -2841,7 +2776,6 @@ name,address,notes
 ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z,0x00100580,BFME GeometryInfo five-argument constructor called by W3DPropBuffer construction removal
 ??0GeometryUpgradeBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C315,GeometryUpgrade ctor base call
 ??0GhostObjectManager@@QAE@XZ,0x00008652
-??0GhostObjectManager@@QAE@XZ,0x0002BA49,Open-BFME7 additive: retail call target used by the landed row at 0x006BAE20 (thunk drift repair)
 ??0GiantBirdAIUpdateModuleDataBase@@QAE@XZ,0x00048A3B,GiantBirdAIUpdateModuleData base ctor (same ILT as the ICF-folded Firestorm body)
 ??0GiantBirdGuardReturnState@@QAE@PAX@Z,0x0001C292,GiantBirdGuardReturnState constructor ILT identified by adjacent exact literal name getter and allocation size
 ??0GiveUpgradeUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME7 additive: retail call target used by the landed row at 0x0025D9A0 (thunk drift repair)
@@ -2870,7 +2804,6 @@ name,address,notes
 ??0HighlanderBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001BE3C,link thunk to the HighlanderBody constructor; named from the ModuleFactory registration that pairs "HighlanderBody" with factory 0x0011F4B0
 ??0HijackerUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003A382,module ctor (friend_newModuleInstance retail call target)
 ??0HiveStructureBodyModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0HiveStructureBodyModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0HordeAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,HordeAIUpdate ctor base call
 ??0HordeGarrisonContainModuleData@@QAE@XZ,0x0000DF7B,HordeGarrisonContain ModuleData ctor
 ??0HordeGarrisonContainModuleDataBase@@QAE@XZ,0x0003D055,Open-BFME5 the incremental-link thunk that constructor encodes
@@ -2889,7 +2822,6 @@ name,address,notes
 ??0InactiveBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
 ??0InactiveBodyBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InactiveBody ctor base call
 ??0InstantDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0InstantDeathBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0InstantDeathBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,InstantDeathBehavior ctor base call
 ??0InstantDeathDieMuxData@@QAE@XZ,0x000071E4,Open-BFME5 TU-local retail call target for InstantDeathBehaviorModuleData ctor
 ??0JetAIUpdateModuleData@@QAE@XZ,0x000028AB,derived-ICF
@@ -2952,18 +2884,14 @@ name,address,notes
 ??0MeshModelClass@@QAE@ABV0@@Z,0x0094EC20,Open-BFME5 retail MeshModelClass copy constructor pin
 ??0MessageStream@@QAE@XZ,0x000132B4,pinharvest x2 (thunk)
 ??0MinefieldBehaviorModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0MinefieldBehaviorModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0MissileAIUpdateModuleData@@QAE@XZ,0x00025EBE
 ??0MissileAIUpdateModuleDataBase@@QAE@XZ,0x0003C556,MissileAIUpdateModuleData base ctor
 ??0MissileLauncherBuildingUpdateModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0MissingAnimClass@@QAE@PBD@Z,0x00034559,callers use this thunk (like findMemoryPool 0x3ADD7); real body drift candidate 0x9723BF
 ??0MissingGeomClass@@QAE@PBD@Z,0x00034559,pinharvest x1 (thunk)
-??0MissingGeomClass@@QAE@PBD@Z,0x00042C3A,Open-BFME7 additive: retail call target used by the landed row at 0x007B1190 (thunk drift repair)
 ??0MissingTextureClass@@QAE@PBD@Z,0x00042C3A,pinharvest x1 (thunk)
 ??0MobMemberSlavedUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A379,pinharvest x1 (thunk)
 ??0ModelConditionInfo@@QAE@ABU0@@Z,0x000087C4,site-decoded x1 (thunk)
-??0ModelConditionInfo@@QAE@ABU0@@Z,0x0000B537,Open-BFME7 additive: retail call target used by the landed row at 0x002E1140 (thunk drift repair)
-??0ModelConditionInfo@@QAE@ABU0@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x000E5170 (thunk drift repair)
 ??0ModelConditionSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002874,ModelConditionSoundSelectorClientBehavior ctor for friend_new
 ??0ModelConditionSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,ModelCondition SpecialAbilityUpdate base
 ??0ModelConditionUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x00025810,module ctor (friend_newModuleInstance retail call target)
@@ -2975,8 +2903,6 @@ name,address,notes
 ??0ModuleDataBase_SiegeDeployHordeSpecialPowerModuleData@@QAE@XZ,0x00023FE7,Open-BFME5 SiegeDeployHordeSpecialPowerModuleData base pin
 ??0ModuleDataBase_StopSpecialPowerModuleData@@QAE@XZ,0x00015C44,Open-BFME5 StopSpecialPowerModuleData base pin
 ??0Money@@QAE@ABV0@@Z,0x00013476,Open-BFME5 retail Money copy constructor pin
-??0Money@@QAE@ABV0@@Z,0x00018ACA,Open-BFME7 additive: retail call target used by the landed row at 0x00610930 (thunk drift repair)
-??0Money@@QAE@ABV0@@Z,0x000451D3,Open-BFME7 additive: retail call target used by the landed row at 0x001A6D80 (thunk drift repair)
 ??0MoneyCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003E48C,module ctor (friend_newModuleInstance retail call target)
 ??0MonsterDockDataMember@@QAE@XZ,0x0003747A,Open-BFME5 MonsterDock member constructor pin
 ??0Mouse@@QAE@XZ,0x0004A8BD
@@ -2984,8 +2910,6 @@ name,address,notes
 ??0MouseThreadRunGuard@@QAE@PAX_N@Z,0x009DB3B0,W3DMouse polling loop run-guard constructor
 ??0MoveOntoWallStateMachine@@QAE@PAVObject@@VAsciiString@@@Z,0x001819F0,BFME constructor called by AIMoveOntoWallState::onEnter at 0x00181D20
 ??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x0002EDDE,ILT to the real MultiplayerColorDefinition copy constructor at 0x0008E470
-??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x00048329,Open-BFME7 additive: retail call target used by the landed row at 0x000A9D50 (thunk drift repair)
-??0MultiplayerColorDefinition@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x003A8B40 (thunk drift repair)
 ??0MultiplayerColorDefinition@@QAE@XZ,0x00013C37,MultiplayerSettings retail ctor ILT reaches the 109-byte color-definition constructor at 0x0008E2C0
 ??0MultiplayerSettings@@QAE@XZ,0x0002B0BC,harvested from parseMultiplayerSettingsDefinition (thunk)
 ??0NamedReveal@@QAE@ABU0@@Z,0x00040930,Open-BFME5 ILT; the in-place copy of ?createNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@0M0@Z at 0x0034EF80 when push_back has room
@@ -3069,14 +2993,11 @@ name,address,notes
 ??0OrthoEmissionVelocityModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x00021CB0,OrthoEmissionVelocity copy ctor pin
 ??0OverchargeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0OverchargeBehaviorModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
-??0OverchargeBehaviorModuleData@@QAE@XZ,0x0002EA73,Open-BFME7 additive: retail call target used by the landed row at 0x001170D0 (thunk drift repair)
 ??0PB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,Open-BFME5 pin
 ??0PLEMT_Base@FXParticleSystem@@QAE@XZ,0x0004B024,Open-BFME5 pin
 ??0PPB_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,ParkingPlaceBehavior constructor calls the shared ObjectModule constructor ILT
 ??0PSPlayerStats@@QAE@ABV0@@Z,0x0001C783,REL32 pin: callers reach the body at 0x6577D0 through this thunk
-??0PSPlayerStats@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x001E2640 (thunk drift repair)
 ??0PSPlayerStats@@QAE@XZ,0x0003599A,pinharvest x1 (thunk)
-??0PSPlayerStats@@QAE@XZ,0x0004048A,Open-BFME7 additive: retail call target used by the landed row at 0x00769D70 (thunk drift repair)
 ??0PSRequest@@QAE@XZ,0x0065AB40,ZH PersistentStorageThread.h PSRequest layout: requestType(+0)=0 then ??0PSPlayerStats ILT 0x0003599A on the player member; five std::string ctors ILT 0x0004048A (cdkey nick password email results); reset@PSPlayerStats ILT 0x00010825; addDiscon +0x1f8 and addDesync +0x1f9 = 0; lastHouse +0x1fc = -1; callers score screen 0x004E6F21/0x004E7003/0x004E760D and 0x000A5D40; ILT 0x0002E38E
 ??0ParkingPlaceBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000CDD8,pinharvest x1 (thunk)
 ??0ParticleBufferClass@@QAE@ABV0@@Z,0x00989A20
@@ -3094,7 +3015,6 @@ name,address,notes
 ??0PhysicsBehaviorModuleData@@QAE@XZ,0x00007FF4,pinharvest x1 (thunk)
 ??0PickAndPlayInfo@@QAE@XZ,0x0000F164,BFME PickAndPlayInfo constructor; target call follows local DrawableList construction and precedes field population in three adjacent voice response helpers
 ??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x000118E7,pinharvest x1 (thunk)
-??0PilotFindVehicleUpdateModuleData@@QAE@XZ,0x000261CA,Open-BFME7 additive: retail call target used by the landed row at 0x001171F0 (thunk drift repair)
 ??0Pinger@@QAE@XZ,0x00029C12,pinharvest x1 (thunk)
 ??0PivotClass@@QAE@ABU0@@Z,0x00972D70,derived from HTreeClass::Alter_Avatar_HTree
 ??0PlayerTemplate@@QAE@ABV0@@Z,0x0001449D
@@ -3107,7 +3027,6 @@ name,address,notes
 ??0PoisonedBehaviorModuleData@@QAE@XZ,0x0002EA73,module-glue cascade callee (from retail call site)
 ??0PopupMessageData@@QAE@XZ,0x00046FC4,constructor ILT to 0x0043F460; matched InGameUI::popupMessage independently inlines the same construction
 ??0PowerPlantUpdateModuleData@@QAE@XZ,0x0001FABE,pinharvest x1 (thunk)
-??0PowerPlantUpdateModuleData@@QAE@XZ,0x0001FEB0,Open-BFME7 additive: retail call target used by the landed row at 0x00114B50 (thunk drift repair)
 ??0PreorderCreate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002070C,link thunk to the PreorderCreate constructor; named from the ModuleFactory registration that pairs "PreorderCreate" with factory 0x0011E700
 ??0ProcessAnimateWindowSpiral@@QAE@XZ,0x00495590,ILT 0x43815->body; AnimateWindowManager ctor callee
 ??0ProductionPrerequisite@@QAE@ABV0@@Z,0x00031B06,ProductionPrerequisite copy constructor via ILT thunk
@@ -3120,7 +3039,6 @@ name,address,notes
 ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@ABV01@@Z,0x0002218D,QuadDrawModuleTemplate clone copy-ctor pin
 ??0QueueProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0QueuedDownload@@QAE@ABV0@@Z,0x0001005F,pinharvest x1 (thunk)
-??0QueuedDownload@@QAE@ABV0@@Z,0x000451D3,Open-BFME7 additive: retail call target used by the landed row at 0x001A6D80 (thunk drift repair)
 ??0QuickMatchPreferences@@QAE@XZ,0x0002E802
 ??0QuitMenuHolder@@QAE@UFunctorBinding@@@Z,0x00015870,0x0056A2F0 assigned callback-holder constructor ILT
 ??0RAMFile@@QAE@XZ,0x009E6990,pinharvest x1 (body)
@@ -3139,9 +3057,7 @@ name,address,notes
 ??0RadiusDecalTemplate@@QAE@XZ,0x00029C71,Open-BFME5 DynamicShroud decal member constructor pin
 ??0RadiusDecalUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0RailedTransportAIUpdateModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0RailedTransportAIUpdateModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0RailedTransportDockUpdateModuleData@@QAE@XZ,0x0001999D,RailedTransportDockUpdateModuleData constructor ILT to 0x002CE760
-??0RailedTransportDockUpdateModuleData@@QAE@XZ,0x0002C9D0,Open-BFME7 additive: retail call target used by the landed row at 0x00118AA0 (thunk drift repair)
 ??0RainOfFireUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000A0E2,retail ModuleFactory cp081 constructor thunk
 ??0RandomSoundSelectorClientBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002C1E7,link thunk to the RandomSoundSelectorClientBehavior constructor; named from the ModuleFactory registration that pairs "RandomSoundSelectorClientBehavior" with factory 0x00122040
 ??0RandomSoundSelectorClientBehaviorModuleData@@QAE@XZ,0x0001F528,module-data constructor called by RandomSoundSelectorClientBehavior::friend_newModuleData at 0x0012BE60
@@ -3149,10 +3065,8 @@ name,address,notes
 ??0RayEffectFXNugget@@QAE@XZ,0x00428BC0,constructor run on the 0xD0-byte allocation in RayEffectFXNugget::parse at 0x0042BD10; the INI keyword table at 0x00CF2130 names that parse callback RayEffect
 ??0RebuildHoleBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0RebuildHoleBehaviorModuleData@@QAE@XZ,0x000118E7,pinharvest x1 (thunk)
-??0RebuildHoleBehaviorModuleData@@QAE@XZ,0x000261CA,Open-BFME7 additive: retail call target used by the landed row at 0x001171F0 (thunk drift repair)
 ??0RebuildHoleExposeDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0RebuildHoleExposeDieModuleData@@QAE@XZ,0x00022B15,pinharvest x1 (thunk)
-??0RebuildHoleExposeDieModuleData@@QAE@XZ,0x0002AE6E,Open-BFME7 additive: retail call target used by the landed row at 0x001145D0 (thunk drift repair)
 ??0RecorderClass@@QAE@XZ,0x00033F9B,Open-BFME5 retail recorder constructor pin
 ??0ReflectDamage@@QAE@PAVThing@@PBVModuleData@@@Z,0x00035B7F,link thunk to the ReflectDamage constructor; named from the ModuleFactory registration that pairs "ReflectDamage" with factory 0x0011E900
 ??0ReflectDamageModuleData@@QAE@XZ,0x0003E4A5,module-data constructor called by ReflectDamage::friend_newModuleData at 0x0011E980
@@ -3375,8 +3289,6 @@ name,address,notes
 ??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0SmudgeManager@@QAE@XZ,0x000354E5,W3DSmudgeManager constructor base call ILT
 ??0Snapshot@@QAE@XZ,0x00044030,ILT thunk; real body 0x627200
-??0Snapshot@@QAE@XZ,0x007E86B0,Open-BFME7 additive: retail call target used by the landed row at 0x00808880 (thunk drift repair)
-??0Snapshot@@QAE@XZ,0x009A1A30,Open-BFME7 additive: retail call target used by the landed row at 0x0045A8F0 (thunk drift repair)
 ??0SortingIndexBufferClass@@QAE@G@Z,0x0091D270,constructor callee of Allocate_Sorting_Dynamic_Buffer at 0x0091D6B0
 ??0SortingVertexBufferClass@@QAE@G@Z,0x0091DFD0,object-symbol of matched ?d_0091dfd0@@YAXXZ; BoxDynamicVBAccess sorting allocate callee
 ??0SpawnBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034711,pinharvest x1 (thunk)
@@ -3403,7 +3315,6 @@ name,address,notes
 ??0SpyVisionUpdateModuleData@@QAE@XZ,0x00035E22,pinharvest x1 (thunk)
 ??0SpyVisionUpgradeMux@@QAE@XZ,0x0003D24E,SpyVisionUpdate UpgradeMux constructor ILT
 ??0SquishCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0SquishCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002DED4,Open-BFME7 additive: retail call target used by the landed row at 0x0011E2D0 (thunk drift repair)
 ??0SquishCollideModuleData@@QAE@XZ,0x00045737,SquishCollide ModuleData ctor
 ??0State@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x000A19E0,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (DozerPrimaryIdleState/DozerPrimaryGoingHomeState sub-ctor calls, both overwrite [obj]=derived vtable right after); call site encodes thunk 0x35B2 (thunk_FUN_004a19e0) -- pinned to the real body
 ??0StateMachine@@QAE@PAVObject@@VAsciiString@@@Z,0x000A1BD0,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870+0x3C (base-class-init call, immediately followed by [esi]=derived vtable store); call site encodes thunk 0xF123 (thunk_FUN_004a1bd0) -- pinned to the real body
@@ -3571,7 +3482,6 @@ name,address,notes
 ??0TaintSpecialPowerModuleData@@QAE@XZ,0x00021012,module-data constructor called by TaintSpecialPower::friend_newModuleData at 0x00120780
 ??0TeamPrototype@@QAE@PAVTeamFactory@@ABVAsciiString@@1PAVPlayer@@_NPAVDict@@H@Z,0x000F3E40,call displacement in initTeam @0x000F8213
 ??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
-??0TechBuildingBehaviorModuleData@@QAE@XZ,0x0002EA73,Open-BFME7 additive: retail call target used by the landed row at 0x001170D0 (thunk drift repair)
 ??0TensileFormationUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013750,pinharvest x1 (thunk)
 ??0TensileFormationUpdateModuleData@@QAE@XZ,0x000028AB
 ??0TerrainLogic@@QAE@XZ,0x00011C75,createTerrainLogic REL32 pin (thunk); body 0x6BE070 inits [esi+0xC] and [esi+0x18FC], sizeof 0x1904
@@ -3589,7 +3499,6 @@ name,address,notes
 ??0ToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006780,pinharvest x1 (thunk)
 ??0ToppleUpdateModuleData@@QAE@XZ,0x00010B2C,derived-ICF
 ??0TransitionDamageFX@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002450,pinharvest x1 (thunk)
-??0TransitionDamageFX@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002B166,Open-BFME7 additive: retail call target used by the landed row at 0x001157D0 (thunk drift repair)
 ??0TransitionDamageFXShapeMemberBase005FEA50@@QAE@XZ,0x0003EA9A,WindModuleInfo constructor ILT callee of the 0x005FEA50 constructor
 ??0TransitionDamageFXShapePrimary005FEA50@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A9F5,retail ILT callee of the 0x005FEA50 constructor
 ??0TransportAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000292A3,TransportAIUpdate ctor base
@@ -3607,9 +3516,7 @@ name,address,notes
 ??0U4Thing0060CD80@@QAE@XZ,0x0060CCC0,U4 lane: default constructor run on the 0x74 block allocated at 0x0060CD80; address-derived name
 ??0UDP@@QAE@XZ,0x0001FFFA
 ??0UndeadBodyModuleData@@QAE@XZ,0x000015FA,pinharvest x1 (thunk)
-??0UndeadBodyModuleData@@QAE@XZ,0x0004A426,Open-BFME7 additive: retail call target used by the landed row at 0x00114D70 (thunk drift repair)
 ??0UnicodeString@@QAE@ABV0@@Z,0x00887B60,site-decoded x3 (body)
-??0UnicodeString@@QAE@ABV0@@Z,0x00888400,Open-BFME7 additive: retail call target used by the landed row at 0x0009EF50 (thunk drift repair)
 ??0UnicodeString@@QAE@PBG@Z,0x00888DE0,Open-BFME5 GameTextManager failed-message constructor callee
 ??0UnicodeStringWK@@QAE@ABV0@@Z,0x00888400,pin
 ??0UnicodeStringWL@@QAE@ABV0@@Z,0x00888400,pin
@@ -3634,7 +3541,6 @@ name,address,notes
 ??0VertexMaterialClass@@QAE@XZ,0x00921820,packet 00921eba callee pin
 ??0VeterancyCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0003C37B,module ctor (friend_newModuleInstance retail call target)
 ??0VeterancyGainCreateModuleData@@QAE@XZ,0x0000FA5B,pinharvest x1 (thunk)
-??0VeterancyGainCreateModuleData@@QAE@XZ,0x0002EA73,Open-BFME7 additive: retail call target used by the landed row at 0x001170D0 (thunk drift repair)
 ??0VictoryConditions@@QAE@XZ,0x0035F430,SubsystemInterface ctor then m_victoryConditions@+0x08=0 (VictoryConditionsInterface ctor inlined) vtable 0x010E8D90 at 0x0035F45D; BFME-only +0x0C end-screen-shown byte and +0x10 shown-time cleared; tail calls reset 0x0035F1E0 via ILT 0x0003CE0C (ZH ctor = reset())
 ??0VictorySystem@@QAE@XZ,0x001E0160,called by GameEngine::init 0x0007A1C3 right before initSubsystem<VictorySystem> with &TheVictorySystem 0x012EF734 (0x0007A1E5); SubsystemInterface ctor; vtable 0x0109FD8C at 0x001E0194 and Snapshot sub-object vtable 0x0109FD78 at +0x08; zeroes +0x0C..+0x1C +0x24[16] +0x64[16] +0xA4[16] +0xE4..+0xFC; +0x20=1.0f; FactionVictoryParameters vector +0xEC/+0xF0/+0xF4 via the 0x18-byte __copy 0x001DE760
 ??0W3DAnimationInfo@@QAE@ABV0@@Z,0x0003F170,REL32 pin for W3DAnimationInfo copy helper
@@ -3667,10 +3573,8 @@ name,address,notes
 ??0W3DProjectedShadowManager@@QAE@XZ,0x000246BD,retail ILT called by the exact W3DShadowManager constructor at 0x007B7900
 ??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002B67,pinharvest x1 (thunk)
 ??0W3DProjectileStreamDrawModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)
-??0W3DProjectileStreamDrawModuleData@@QAE@XZ,0x0002C9D0,Open-BFME7 additive: retail call target used by the landed row at 0x00118AA0 (thunk drift repair)
 ??0W3DPropDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039770,link thunk to the W3DPropDraw constructor; named from the draw-module registration that pairs "W3DPropDraw" with factory 0x006BF8B0
 ??0W3DPropDrawModuleData@@QAE@XZ,0x0001FABE,pinharvest x1 (thunk)
-??0W3DPropDrawModuleData@@QAE@XZ,0x0001FEB0,Open-BFME7 additive: retail call target used by the landed row at 0x00114B50 (thunk drift repair)
 ??0W3DQuadrupedDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000B339,link thunk to the W3DQuadrupedDraw constructor; named from the draw-module registration that pairs "W3DQuadrupedDraw" with factory 0x006BF260
 ??0W3DQuadrupedDrawModuleDataBase@@QAE@XZ,0x0000289C,Open-BFME5 W3DQuadruped module data base constructor pin
 ??0W3DQuadrupedElement@@QAE@XZ,0x00017BD9,Open-BFME5 W3DQuadruped array element constructor pin
@@ -3690,18 +3594,15 @@ name,address,notes
 ??0W3DSupplyDrawModuleData@@QAE@XZ,0x0001235A,pinharvest x1 (thunk)
 ??0W3DSupplyDrawModuleDataBase@@QAE@XZ,0x0000289C,Open-BFME5 the incremental-link thunk that constructor encodes
 ??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006C85,pinharvest x1 (thunk)
-??0W3DTankDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000CC2F,Open-BFME7 additive: retail call target used by the landed row at 0x006BF580 (thunk drift repair)
 ??0W3DTankDrawModuleData@@QAE@XZ,0x00018322,pinharvest x1 (thunk)
 ??0W3DTankDrawModuleDataBase@@QAE@XZ,0x0000289C,Open-BFME5 address-derived base whose constructor W3DTankDrawModuleData reaches through the incremental-link thunk at 0x0000289C
 ??0W3DTerrainBackground@@QAE@XZ,0x0004149D,FlatHeightMap 0xC4-element m_tiles vector constructor ILT
 ??0W3DTerrainVisual@@QAE@XZ,0x00024DC0
 ??0W3DTerrainVisualBase@@QAE@XZ,0x0001693C,Open-BFME5 the incremental-link thunk that constructor encodes
 ??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00004D36,pinharvest x1 (thunk)
-??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,Open-BFME7 additive: retail call target used by the landed row at 0x00114200 (thunk drift repair)
 ??0W3DTreeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034C25,link thunk to the W3DTreeDraw constructor; named from the draw-module registration that pairs "W3DTreeDraw" with factory 0x006BF690
 ??0W3DTruckDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036AED,link thunk to the W3DTruckDraw constructor; named from the draw-module registration that pairs "W3DTruckDraw" with factory 0x006BF470
 ??0W3DTruckDrawModuleData@@QAE@XZ,0x0000CC3E,pinharvest x1 (thunk)
-??0W3DTruckDrawModuleData@@QAE@XZ,0x0003616F,Open-BFME7 additive: retail call target used by the landed row at 0x006BF4F0 (thunk drift repair)
 ??0W3DVideoBuffer@@QAE@H@Z,0x0002B733,"W3DVideoBuffer constructor ILT; actual body calls VideoBuffer base, installs vtable 0x112165c, initializes fields through +0x4a; allocation 0x4c verified"
 ??0W3DVolumetricShadow@@QAE@XZ,0x00034171,addShadow constructor call via retail ILT
 ??0WOLLoginNickList@@QAE@ABV0@@Z,0x0003FA67,WOLLogin pair list-layout copy thunk;target=0x00443D60
@@ -3709,7 +3610,6 @@ name,address,notes
 ??0Watchdog@@QAE@HHH@Z,0x0010B9C0,GameEngine::init passes timeout 300 and warning values 10/10 through the 0x0010BBF0 allocation factory
 ??0Weapon@@QAE@PBVWeaponTemplate@@W4WeaponSlotType@@@Z,0x00002B03,Open-BFME5 Weapon ctor pin
 ??0WeaponBonusUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008878,pinharvest x1 (thunk)
-??0WeaponBonusUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034EDC,Open-BFME7 additive: retail call target used by the landed row at 0x006BFAD0 (thunk drift repair)
 ??0WeaponBonusUpdateModuleData@@QAE@XZ,0x0003CA01,pinharvest x1 (thunk)
 ??0WeaponBonusUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z,0x000375B5,module ctor (friend_newModuleInstance retail call target)
 ??0WeaponFireSpecialAbilityUpdateModuleDataBase@@QAE@XZ,0x0003F503,WeaponFireSpecialAbilityUpdateModuleData ctor base
@@ -3973,8 +3873,6 @@ name,address,notes
 ??1?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@QAE@XZ,0x00012D78
 ??1?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@QAE@XZ,0x00041B91
 ??1?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@QAE@XZ,0x00009525,pinharvest x1 (thunk)
-??1?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@QAE@XZ,0x0001AF5F,Open-BFME7 additive: retail call target used by the landed row at 0x00129270 (thunk drift repair)
-??1?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@QAE@XZ,0x0002517B,Open-BFME7 additive: retail call target used by the landed row at 0x00078C70 (thunk drift repair)
 ??1?$set@PAVGameSpyStagingRoom@@U?$less@PAVGameSpyStagingRoom@@@_STL@@V?$allocator@PAVGameSpyStagingRoom@@@3@@_STL@@QAE@XZ,0x0001F514
 ??1?$vector@U?$pair@HVAsciiString@@@_STL@@V?$allocator@U?$pair@HVAsciiString@@@_STL@@@2@@_STL@@QAE@XZ,0x00574BC0,destructor of the 8-byte {Int colour AsciiString side} row vector at BfmeAptScreenScoreScreen+0x264: releases the AsciiString at +4 of every element then frees the buffer (node alloc under 0x80 else operator delete); the element type is pinned by its readers ScoreScreen:PlayerColor:%d 0x00571DF0 (prints [i*8]) ScoreScreen:PlayerFaction:%d 0x00571E50 (copies [i*8+4].str()) NumOfPlayers 0x005731E0 (count = (end-begin)/8) and its writer the row adder 0x00576C20 (push_back 0x005758B0 of {MultiplayerColor rgb of getApparentColor player->+0x28 side}); ILT 0x00045E8F; caller the screen dtor 0x0057514E plus EH funclets uw_00c35968 uw_00c35c08
 ??1?$vector@UEvaCheckInfoRecord@@V?$allocator@UEvaCheckInfoRecord@@@_STL@@@_STL@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfoRecord> destructor at 0x00426220; the same body EvaCheckInfoVec's own dtor inlines into
@@ -4004,7 +3902,6 @@ name,address,notes
 ??1ArchivedFileInfo@@QAE@XZ,0x009CC600,archive directory entry dtor
 ??1ArrowStormUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
 ??1AsciiString@@QAE@XZ,0x00887940,pinharvest x4 (body)
-??1AsciiString@@QAE@XZ,0x008881D0,Open-BFME7 additive: retail call target used by the landed row at 0x0009F630 (thunk drift repair)
 ??1AsciiStringVX@@QAE@XZ,0x00887940,pin
 ??1AsciiStringVZ@@QAE@XZ,0x00887940,pin
 ??1AsciiStringWF@@QAE@XZ,0x00887940,pin
@@ -4040,8 +3937,6 @@ name,address,notes
 ??1AttributeModifierStandIn@@QAE@XZ,0x00129C80,Open-BFME5 nested attribute-modifier struct dtor from AttributeModifierAuraUpdateModuleData dtor call site
 ??1AudioEventRTS@@QAE@XZ,0x00026F35,Open-BFME5 ILT to the destructor body at 0x000B31F0; the radar sound locals in Player::disableRadar and Player::enableRadar are released through it
 ??1AudioEventRTS@@UAE@XZ,0x0002671F
-??1AudioEventRTS@@UAE@XZ,0x00026F35,Open-BFME7 additive: retail call target used by the landed row at 0x001D8220 (thunk drift repair)
-??1AudioEventRTS@@UAE@XZ,0x009409F0,Open-BFME7 additive: retail call target used by the landed row at 0x0078CFB0 (thunk drift repair)
 ??1AutoPickUpUpdate@@MAE@XZ,0x000448A0,destructor ILT to 0x002818B0
 ??1AutoPickUpUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1AutoPickUpUpdateModuleDataMemberB@@QAE@XZ,0x00045016,Open-BFME5 pin
@@ -4233,8 +4128,6 @@ name,address,notes
 ??1BuddyMessage@@QAE@XZ,0x00021445
 ??1BuffNuggetFXNuggetMember@@QAE@XZ,0x00026AB2,12-byte tail destructor ILT used by BuffNuggetFXNugget ctor EH
 ??1Buffer@@QAE@XZ,0x0001A401,pinharvest x1 (thunk)
-??1Buffer@@QAE@XZ,0x00887940,Open-BFME7 additive: retail call target used by the landed row at 0x00257650 (thunk drift repair)
-??1Buffer@@QAE@XZ,0x009E1E60,Open-BFME7 additive: retail call target used by the landed row at 0x009E2070 (thunk drift repair)
 ??1BufferStraw@@UAE@XZ,0x00921790
 ??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose first slot is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
 ??1CDManagerInterface@@UAE@XZ,0x00101BA0,CDManagerInterface dtor body (called by ??_G @ 0x101BB0)
@@ -4271,10 +4164,6 @@ name,address,notes
 ??1DX8TextureCategoryClass@@UAE@XZ,0x00946540,constructor 0x00946460 and destructor both store table 0x00D3D020; 0x00947D10 wrapper directly calls this body
 ??1DarknessSpecialPower@@MAE@XZ,0x00029A28,destructor ILT to 0x00259BD0
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x00889620,pinharvest x1 (body)
-??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088A6E0,Open-BFME7 additive: retail call target used by the landed row at 0x0088A6B0 (thunk drift repair)
-??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088FAA0,Open-BFME7 additive: retail call target used by the landed row at 0x0088FA70 (thunk drift repair)
-??1DebugCmdInterfaceDebug@@UAE@XZ,0x0088FB30,Open-BFME7 additive: retail call target used by the landed row at 0x0088FE80 (thunk drift repair)
-??1DebugCmdInterfaceDebug@@UAE@XZ,0x00890780,Open-BFME7 additive: retail call target used by the landed row at 0x00890E30 (thunk drift repair)
 ??1DebugIOCon@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugIOFlat@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugIONet@@UAE@XZ,0x00889620,pinharvest x1 (body)
@@ -4308,15 +4197,10 @@ name,address,notes
 ??1EmotionTrackerUpdateName@@QAE@XZ,0x0001A401,Open-BFME5 retail emotion-tracker string destructor thunk
 ??1EnragedBehaviorModuleDataMember@@QAE@XZ,0x00026AB2,EnragedBehaviorModuleData dtor member +0x8
 ??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
-??1Entry@?$HashTemplateClass@VStringClass@@H@@QAE@XZ,0x000259EB,Open-BFME7 additive: retail call target used by the landed row at 0x0005E420 (thunk drift repair)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAV?$DynamicVectorClass@PAVDefinitionClass@@@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
-??1Entry@?$HashTemplateClass@VStringClass@@PAV?$DynamicVectorClass@PAVDefinitionClass@@@@@@QAE@XZ,0x000259EB,Open-BFME7 additive: retail call target used by the landed row at 0x0005E420 (thunk drift repair)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVHTreeClass@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
-??1Entry@?$HashTemplateClass@VStringClass@@PAVHTreeClass@@@@QAE@XZ,0x000259EB,Open-BFME7 additive: retail call target used by the landed row at 0x0005E420 (thunk drift repair)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
-??1Entry@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAE@XZ,0x000259EB,Open-BFME7 additive: retail call target used by the landed row at 0x0005E420 (thunk drift repair)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
-??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x000259EB,Open-BFME7 additive: retail call target used by the landed row at 0x0005E420 (thunk drift repair)
 ??1EnumeratedIP@@QAE@XZ,0x00028FB0,ILT called by IPEnumeration destructor at 0x00625040
 ??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose first slot is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
 ??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
@@ -8657,8 +8541,6 @@ name,address,notes
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1NodeMotionStruct@@QAE@XZ,0x0002F03B,pinharvest x1 (thunk)
 ??1Nugget@ModuleInfo@@QAE@XZ,0x000165B3,site-decoded x1 (thunk)
-??1Nugget@ModuleInfo@@QAE@XZ,0x0002F487,Open-BFME7 additive: retail call target used by the landed row at 0x00771D00 (thunk drift repair)
-??1Nugget@ModuleInfo@@QAE@XZ,0x0003B589,Open-BFME7 additive: retail call target used by the landed row at 0x00141770 (thunk drift repair)
 ??1Nugget@Rva001417F0ModuleInfo@@QAE@XZ,0x0003B589,Open-BFME5 pin: Nugget destructor called directly from Rva001417F0ModuleInfo::clearModuleInfo at 0x001417F0 (already pinned virtual UAE at this address is a mis-shaped guess; this call site is a direct non-virtual dtor call)
 ??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
 ??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
@@ -8712,7 +8594,6 @@ name,address,notes
 ??1PorcupineFormationBodyModule@@UAE@XZ,0x0003B494,destructor ILT to 0x002141C0
 ??1PreorderCreate@@MAE@XZ,0x00042D75,destructor ILT to 0x0024FEC0
 ??1PrereqUnitRec@ProductionPrerequisite@@QAE@XZ,0x000195FB,retail target of _Destroy<PrereqUnitRec> call; PrereqUnitRec dtor not yet in ledger
-??1PrereqUnitRec@ProductionPrerequisite@@QAE@XZ,0x0002F99B,Open-BFME7 additive: retail call target used by the landed row at 0x000E5450 (thunk drift repair)
 ??1ProductionPrerequisite@@QAE@XZ,0x0003B8FE,parsePrerequisiteScience TU-local weak destructor instance
 ??1ProductionSpeedBonusModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 base pin
 ??1ProductionSpeedBonusModuleDataMember@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -8736,7 +8617,6 @@ name,address,notes
 ??1RecorderClass@@QAE@XZ,0x0001F55F,Full retail reviewed: 9BDF0 replay header/version/INI comparison bool with by-value string destruction ret4; 99070 recorder dtor file close/member/base cleanup
 ??1RegistryClass@@QAE@XZ,0x009DC280,pinharvest x4 (body)
 ??1Render2DSentenceClass@@QAE@XZ,0x00887940,per-TU copy called by W3DGameWindow dtor
-??1Render2DSentenceClass@@QAE@XZ,0x009409F0,Open-BFME7 additive: retail call target used by the landed row at 0x006F4C50 (thunk drift repair)
 ??1RenderDeviceDescClass@@QAE@XZ,0x009077B0
 ??1RenderObjClass@@UAE@XZ,0x0091FC10,base dtor; derived from ~ParticleBufferClass call site
 ??1RepairDockUpdate@@MAE@XZ,0x00038BC2,destructor ILT to 0x002CEDC0
@@ -8751,7 +8631,6 @@ name,address,notes
 ??1RiderChangeContainModuleDataMemberE@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1RiderChangeContainModuleDataMemberF@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1RoadType@@QAE@XZ,0x00012968,pinharvest x1 (thunk)
-??1RoadType@@QAE@XZ,0x00018FCF,Open-BFME7 additive: retail call target used by the landed row at 0x0005E880 (thunk drift repair)
 ??1RopeInfo@ChinookCombatDropState@@QAE@XZ,0x0003D041,Open-BFME5 ILT fronts unclaimed 8-byte body 0x00191910; called by the _Destroy range loop over that element type
 ??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose first slot is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
 ??1RousingSpeechUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 pin
@@ -8973,7 +8852,6 @@ name,address,notes
 ??1ST_MemberObj@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SalvageCrateCollide@@MAE@XZ,0x00006578,destructor ILT to 0x00218090
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x00029555,pinharvest x1 (thunk)
-??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,Open-BFME7 additive: retail call target used by the landed row at 0x00168710 (thunk drift repair)
 ??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose first slot is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
 ??1ScavengerSpecialPower@@MAE@XZ,0x00028961,destructor ILT to 0x00265930
 ??1ScienceVecStandIn@@QAE@XZ,0x00016B58,ScienceInfo ScienceVec destructor ILT
@@ -8998,7 +8876,6 @@ name,address,notes
 ??1SmartBombTargetHomingUpdate@@MAE@XZ,0x000142A4,destructor ILT to 0x00286DC0
 ??1SmudgeManager@@UAE@XZ,0x00029555,W3DSmudgeManager destructor base call ILT
 ??1Snapshot@@QAE@XZ,0x00887940,DamageInfo destructor subobject calls (packet 000c3410) -- additive pin alongside existing 0x009A1A40 row
-??1Snapshot@@QAE@XZ,0x009A1A40,Open-BFME7 additive: retail call target used by the landed row at 0x001B0DB0 (thunk drift repair)
 ??1SortingIndexBufferClass@@UAE@XZ,0x0091D300,0x0091D930 deleting destructor directly calls this class destructor
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200
 ??1SpawnBehaviorModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -9128,7 +9005,6 @@ name,address,notes
 ??1Sub005CDF80@@QAE@XZ,0x005CDF80,second-base destructor called by the 89-byte multiple-inheritance destructors in BigChainBaseDtors.cpp
 ??1SubObjectArrayClass@HLodDefClass@@QAE@XZ,0x00978A10,HLodDefClass destructor calls the SubObjectArray destructor body folded with its matched Reset implementation
 ??1SubsystemInterface@@UAE@XZ,0x00029555,pinharvest x2 (thunk)
-??1SubsystemInterface@@UAE@XZ,0x0003692B,Open-BFME7 additive: retail call target used by the landed row at 0x00168710 (thunk drift repair)
 ??1SubtitleEntry@@MAE@XZ,0x0081D7B0,destructor body called by the retail scalar deleting wrapper
 ??1SubtitleEntryUnicodeBase@@QAE@XZ,0x008881D0,SubtitleEntry TU-local UnicodeString destructor alias
 ??1SupplyCenterCreate@@MAE@XZ,0x0000A7BD,destructor ILT to 0x002502B0
@@ -9155,7 +9031,6 @@ name,address,notes
 ??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1TextureRef@@QAE@XZ,0x00975010,BfmeThingVGX texture-reference destructor call target
 ??1TimeCodedMorphKeysClass@@QAE@XZ,0x00029BEA,pinharvest x1 (thunk)
-??1TimeCodedMorphKeysClass@@QAE@XZ,0x0002BFF3,Open-BFME7 additive: retail call target used by the landed row at 0x005D5ED0 (thunk drift repair)
 ??1ToggleHiddenSpecialAbilityUpdate@@MAE@XZ,0x0003610B,destructor ILT to 0x0026C030
 ??1TooltipUpgradeModuleDataBase@@UAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1TooltipUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
@@ -9169,7 +9044,6 @@ name,address,notes
 ??1U2Vb0084B480@@UAE@XZ,0x0084B480,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B6C0 and the ??_G at 0x0084B7C0; unnamed dump elsewhere
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591
-??1UnicodeString@@QAE@XZ,0x00887940,Open-BFME7 additive: retail call target used by the landed row at 0x006CBA30 (thunk drift repair)
 ??1UnicodeString@@QAE@XZ,0x008881D0,freeMessageResources depth Open-BFME4+Grok
 ??1UnicodeStringWK@@QAE@XZ,0x008881D0,pin
 ??1UnicodeStringWL@@QAE@XZ,0x008881D0,pin
@@ -9194,7 +9068,6 @@ name,address,notes
 ??1VictoryParameterVector@@QAE@XZ,0x00032DD5,VictorySystem destructor member at +0xEC; ILT targets the 0x001DFD90 vector destructor
 ??1Video@@QAE@XZ,0x0001642D
 ??1W3DAnimationInfo@@QAE@XZ,0x00020018,ILT thunk used by call site
-??1W3DAnimationInfo@@QAE@XZ,0x00034AE0,Open-BFME7 additive: retail call target used by the landed row at 0x003B0E90 (thunk drift repair)
 ??1W3DDisplayStringBase@@UAE@XZ,0x0000D823,Open-BFME5 pin
 ??1W3DDisplayStringMemberB@@QAE@XZ,0x009409F0,Open-BFME5 pin
 ??1W3DLaserDrawModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
@@ -9244,16 +9117,9 @@ name,address,notes
 ??1file_auto_ptr@@QAE@XZ,0x009DD560
 ??1ios_base@_STL@@UAE@XZ,0x0083F730,STLport 4.5.3 ios_base destructor; both typed basic_ios destructors tail-call this shared base body
 ??1locale@_STL@@QAE@XZ,0x00832170,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
-??2@YAPAXI@Z,0x0082E540,Open-BFME7 additive: retail call target used by the landed row at 0x00379F80 (thunk drift repair)
 ??2@YAPAXI@Z,0x00881F30,operator new body
-??2@YAPAXI@Z,0x00881F70,Open-BFME7 additive: retail call target used by the landed row at 0x007A1410 (thunk drift repair)
-??2@YAPAXI@Z,0x009A5920,Open-BFME7 additive: retail call target used by the landed row at 0x009A5970 (thunk drift repair)
-??2@YAPAXI@Z,0x009F6C34,Open-BFME7 additive: retail call target used by the landed row at 0x007EFFE0 (thunk drift repair)
-??2@YAPAXI@Z,0x009F6FAC,Open-BFME7 additive: retail call target used by the landed row at 0x008921B0 (thunk drift repair)
 ??2Upgrade@@SAPAXI@Z,0x00881F30,Player::addUpgrade retail class allocator call
 ??3@YAXPAX@Z,0x00881EB0
-??3@YAXPAX@Z,0x00881EF0,Open-BFME7 additive: retail call target used by the landed row at 0x000FDB40 (thunk drift repair)
-??3@YAXPAX@Z,0x009F6C3A,Open-BFME7 additive: retail call target used by the landed row at 0x007EFFF0 (thunk drift repair)
 ??3@YAXPAXPAUGen_uwt_0002aaa9@@@Z,0x0002AAA9,gen-uw-pin dtor target read from the retail funclet bytes
 ??3@YAXPAXPAUGen_uwt_00033d3e@@@Z,0x00033D3E,gen-uw-pin dtor target read from the retail funclet bytes
 ??3Gen007E9B10@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
@@ -9298,14 +9164,9 @@ name,address,notes
 ??3Gen_uws960_008979b0@@SAXPAXI@Z,0x008979B0,gen-uw-pin dtor target read from the retail funclet bytes
 ??3Rva00803080Request@@SAXPAXI@Z,0x007F0190,FESL Rva00803080Request sized delete alias of Gen007F0190
 ??4?$PrimitiveAnimationChannelClass@M@@QAEABV0@ABV0@@Z,0x000026AD,pinharvest x2 (thunk)
-??4?$PrimitiveAnimationChannelClass@M@@QAEABV0@ABV0@@Z,0x0001642D,Open-BFME7 additive: retail call target used by the landed row at 0x00BF6F4C (thunk drift repair)
 ??4?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@QAEABV0@ABV0@@Z,0x0001F90B,pinharvest x1 (thunk)
-??4?$PrimitiveAnimationChannelClass@UAlphaVectorStruct@@@@QAEABV0@ABV0@@Z,0x00021468,Open-BFME7 additive: retail call target used by the landed row at 0x00563900 (thunk drift repair)
 ??4?$PrimitiveAnimationChannelClass@VVector2@@@@QAEABV0@ABV0@@Z,0x0000D828,pinharvest x3 (thunk)
-??4?$PrimitiveAnimationChannelClass@VVector2@@@@QAEABV0@ABV0@@Z,0x00035F85,Open-BFME7 additive: retail call target used by the landed row at 0x005638D0 (thunk drift repair)
 ??4?$PrimitiveAnimationChannelClass@VVector3@@@@QAEABV0@ABV0@@Z,0x000026AD,pinharvest x2 (thunk)
-??4?$PrimitiveAnimationChannelClass@VVector3@@@@QAEABV0@ABV0@@Z,0x00018DC2,Open-BFME7 additive: retail call target used by the landed row at 0x00C22659 (thunk drift repair)
-??4?$PrimitiveAnimationChannelClass@VVector3@@@@QAEABV0@ABV0@@Z,0x0001DB6F,Open-BFME7 additive: retail call target used by the landed row at 0x00BF6F06 (thunk drift repair)
 ??4?$VectorClass@H@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
 ??4?$VectorClass@PAVRender2DClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
 ??4?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
@@ -9313,7 +9174,6 @@ name,address,notes
 ??4?$VectorClass@VKeyClass@Curve3DClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
 ??4?$VectorClass@VModelNodeClass@HLodClass@@@@QAEAAV0@ABV0@@Z,0x0097ACA0
 ??4?$VectorClass@VProxyClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
-??4?$VectorClass@VProxyClass@@@@QAEAAV0@ABV0@@Z,0x0093CEA0,Open-BFME7 additive: retail call target used by the landed row at 0x0093DA50 (thunk drift repair)
 ??4?$VectorClass@VResolutionDescClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
 ??4?$VectorClass@VStringClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
 ??4?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@QAEAAV0@ABV0@@Z,0x00905C80,pinharvest x1 (body)
@@ -9322,7 +9182,6 @@ name,address,notes
 ??4?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z,0x0002DC9F
 ??4?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x0002E00F,Open-BFME5 ILT thunk to body 0x00152530; the STLport vector assignment ?aiFollowExitProductionPath@AICommandInterface@@... at 0x00165C30 uses to copy the caller path into AICommandParms m_coords
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70
-??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00026C6A,Open-BFME7 additive: retail call target used by the landed row at 0x003B5F40 (thunk drift repair)
 ??4AsciiString@@QAEAAV0@ABV0@@Z,0x00887C90,folded with UnicodeString::set per-TU copy
 ??4AudioEventRTS@@QAEAAV0@ABV0@@Z,0x0001F753,pinharvest x1 (thunk)
 ??4BFMENetworkQueueItem1@@QAEAAV0@ABV0@@Z,0x00658340,Open-BFME5 the copy-assignment operator the copyFromQueueNode thunk actually reaches
@@ -9406,8 +9265,6 @@ name,address,notes
 ??4StreakRendererClass@@QAEAAV0@ABV0@@Z,0x0095C860,read out of StreakLineClass::operator= call displacement; body is gen-dump d_0095c860
 ??4StringClass@@QAEAAV0@PBD@Z,0x000202E3,retail ILT callee decoded from assigned BFME FontChars initializer
 ??4StringClass@@QAEABV0@ABV0@@Z,0x00007A63,site-decoded x1 (thunk)
-??4StringClass@@QAEABV0@ABV0@@Z,0x00887B60,Open-BFME7 additive: retail call target used by the landed row at 0x000FCF30 (thunk drift repair)
-??4StringClass@@QAEABV0@ABV0@@Z,0x00887C90,Open-BFME7 additive: retail call target used by the landed row at 0x000DE460 (thunk drift repair)
 ??4TRoadSegInfo@@QAEAAU0@ABU0@@Z,0x000015EB
 ??4TextureVectorBaseCtorShim@@QAEAAV0@ABV0@@Z,0x0092F810,MaterialInfo copy ctor930E00 passes Textures base at +0x20;existing VectorClass assignment body with virtual element resize/copy
 ??4ThingTemplate@@QAEAAV0@ABV0@@Z,0x000136AB,ThingFactory::newOverride calls the ThingTemplate copy assignment through retail ILT
@@ -9903,9 +9760,7 @@ name,address,notes
 ??_C@_19DICJPJO@?$AAT?$AAE?$AAS?$AAT?$AA?$AA@,0x00D035F0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0050CA80 calls; autopin
 ??_EProxyArrayClass@@UAEPAXI@Z,0x0097C9B0,pinharvest (call-site decode from ??_EProxyArrayClass@@WBA@AEPAXI@Z adjustor thunk at 0x97B7B0; body already matched as gen-dtor ??_GGen_dtor_0097c9b0)
 ??_ERTS2DScene@@UAEPAXI@Z,0x0000B9DD,pinharvest x1 (thunk)
-??_ERTS2DScene@@UAEPAXI@Z,0x00015DC0,Open-BFME7 additive: retail call target used by the landed row at 0x006BCA93 (thunk drift repair)
 ??_ERTS3DScene@@UAEPAXI@Z,0x0000B9DD,pinharvest x1 (thunk)
-??_ERTS3DScene@@UAEPAXI@Z,0x00015DC0,Open-BFME7 additive: retail call target used by the landed row at 0x006BCA93 (thunk drift repair)
 ??_ETexProjectClass@@UAEPAXI@Z,0x00007D88,pinharvest x1 (thunk)
 ??_GAttributeModifierAuraUpdate@@MAEPAXI@Z,0x00018FDE,primary class vtable slot zero ILT to 0x002802A0
 ??_GAutoPickUpUpdate@@MAEPAXI@Z,0x00030783,primary class vftable slot zero ILT to 0x00281C50
@@ -10142,7 +9997,6 @@ name,address,notes
 ?BfmeLinearTargetConstruct@_STL@@YAXPAULinearTarget@@ABU2@@Z,0x0001A5EB,ILT to 12-byte LinearTarget _Construct 0x001E3BD0; WeaponTemplate::parseLinearTarget
 ?BfmeNodeValueConstruct000BF790@_STL@@YAXPAXPBX@Z,0x00007554,additive pin: 0x000BF790 4-byte-key _Rb_tree::_M_copy node-value construct shares the common small-value construct thunk
 ?BfmeNodeValueConstruct00761A60@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
-?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x00007554,Open-BFME7 additive: retail call target used by the landed row at 0x000BF790 (thunk drift repair)
 ?BfmeNodeValueConstruct@_STL@@YAXPAXPBX@Z,0x000366E2,Open-BFME5 ILT for the _STL::_Construct that clones a 0x38-byte _Rb_tree node value at 0x00761A60
 ?BfmeParticleSystemXferHandle@@YAXAAVXfer@@PAX@Z,0x00008CA1,BFME particle-system handle serialization helper called by ParticleSystem DoXfer
 ?BfmeParticleSystemXferMatrix@@YAXAAVXfer@@PAX@Z,0x00034815,BFME particle-system matrix serialization helper called by ParticleSystem DoXfer
@@ -10204,7 +10058,6 @@ name,address,notes
 ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z,0x00942430
 ?Build_Textures@Render2DSentenceClass@@AAEXXZ,0x0093DD60
 ?CRC_Memory@@YAKPBEKK@Z,0x0000A984,FirewallHelper getManglerResponse CRC helper thunk; body 0x00465250
-?CRC_Memory@@YAKPBEKK@Z,0x009E19C0,Open-BFME7 additive: retail call target used by the landed row at 0x0092A560 (thunk drift repair)
 ?Cast_AABox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVAABoxCollisionTestClass@@@Z,0x0096AEE0
 ?Cast_OBBox_Recursive@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,0x0096B100,derived-ICF
 ?Cast_OBBox_To_Polys@AABTreeClass@@AAE_NPAUCullNodeStruct@1@AAVOBBoxCollisionTestClass@@@Z,0x0096AEE0,derived-ICF
@@ -10214,12 +10067,9 @@ name,address,notes
 ?Check_Is_Transform_Identity@@YI_NABVMatrix3D@@@Z,0x0091FF40,register-convention alias of the static inline Check_Is_Transform_Identity; same body as the cdecl-mangled row
 ?Clear@?$VectorClass@M@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@U_ArcInfoStruct@VehicleCurveClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
-?Clear@?$VectorClass@U_ArcInfoStruct@VehicleCurveClass@@@@UAEXXZ,0x0000DBA7,Open-BFME7 additive: retail call target used by the landed row at 0x00415D20 (thunk drift repair)
 ?Clear@?$VectorClass@VTCBClass@TCBSpline3DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline1DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
-?Clear@?$VectorClass@VTangentsClass@HermiteSpline1DClass@@@@UAEXXZ,0x0000DBA7,Open-BFME7 additive: retail call target used by the landed row at 0x00415D20 (thunk drift repair)
 ?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
-?Clear@?$VectorClass@VTangentsClass@HermiteSpline3DClass@@@@UAEXXZ,0x0000DBA7,Open-BFME7 additive: retail call target used by the landed row at 0x00415D20 (thunk drift repair)
 ?Clear@DX8Wrapper@@SAX_N00ABVVector3@@MMI@Z,0x00904250,BFME 7-arg Clear color/z/stencil split from ZH 6-arg
 ?Clear_Pending_Delete_Lists@Rva00949D00Renderer@@QAEXXZ,0x00945ED0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ?Close@CFile@D3DXCore@@QAEJXZ,0x00A3C834,Open-BFME7 additive: retail call target used by the landed row at 0x00A3C875 (thunk drift repair)
@@ -10313,7 +10163,6 @@ name,address,notes
 ?FreeMemory@@YAXPAXPAH@Z,0x008794C0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877C70 calls; autopin
 ?Free_All_Geoms@W3DShadowGeometryManager@@QAEXXZ,0x00002365,site-decoded x2 (thunk)
 ?Free_Definitions@DefinitionMgrClass@@SAXXZ,0x000309CC,pinharvest x1 (thunk)
-?Free_Definitions@DefinitionMgrClass@@SAXXZ,0x00033D9D,Open-BFME7 additive: retail call target used by the landed row at 0x00168710 (thunk drift repair)
 ?Free_Object_Memory@?$ObjectPoolClass@VAABTreeLinkClass@@$0BAA@@@QAEXPAVAABTreeLinkClass@@@Z,0x00011103,pinharvest x2 (thunk)
 ?Free_Object_Memory@?$ObjectPoolClass@VAABTreeNodeClass@@$0BAA@@@QAEXPAVAABTreeNodeClass@@@Z,0x00011103,pinharvest x1 (thunk)
 ?Free_Object_Memory@?$ObjectPoolClass@VCameraShakerClass@CameraShakeSystemClass@@$0BAA@@@QAEXPAVCameraShakerClass@CameraShakeSystemClass@@@Z,0x00011103,pinharvest x2 (thunk)
@@ -10528,7 +10377,6 @@ name,address,notes
 ?GenKey0012A7918@@3VGenKey@@A,0x00EA7918,address-derived lazy key global used by BfmeStringPresenceOwner
 ?GenPartition00261010@@YAPAUQ3SortElem8@@PAU1@0U1@P6A_NABU1@2@Z@Z,0x00261010,address-derived partition callee of the pinned eight-byte introsort body
 ?GenerateNextCommandID@@YAGXZ,0x00030558,ILT thunk; real body 0xA82D10
-?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ,0x00924C30,Open-BFME7 additive: retail call target used by the landed row at 0x0092C310 (thunk drift repair)
 ?Generate_Culling_Tree@MeshGeometryClass@@IAEXXZ,0x00925060,Load_W3D call-site and body layout identify the BFME implementation
 ?GenericObjectCreationNuggetCommonFields@@3QBUFieldParse@@B,0x0109F320,Open-BFME5 parseDebris retail common field table
 ?GenericObjectCreationNuggetDebrisFields@@3QBUFieldParse@@B,0x0109FA78,Open-BFME5 parseDebris retail debris field table
@@ -10792,8 +10640,6 @@ name,address,notes
 ?Resize@?$SimpleVecClass@VVector2@@@@UAE_NH@Z,0x00031593,hit-decoded x4 (thunk)
 ?Resize@?$SimpleVecClass@VVector3@@@@UAE_NH@Z,0x00031593,hit-decoded x13 (thunk)
 ?Resize@?$SimpleVecClass@VVector3i16@@@@UAE_NH@Z,0x00031593,pinharvest x3 (thunk)
-?Resize@?$SimpleVecClass@VVector3i16@@@@UAE_NH@Z,0x00038ECE,Open-BFME7 additive: retail call target used by the landed row at 0x007A0220 (thunk drift repair)
-?Resize@?$SimpleVecClass@VVector3i16@@@@UAE_NH@Z,0x00919BC0,Open-BFME7 additive: retail call target used by the landed row at 0x00919D20 (thunk drift repair)
 ?Resize@?$SimpleVecClass@VVector4@@@@UAE_NH@Z,0x00031593,Open-BFME7 additive: retail call target used by the landed row at 0x0078CA10 (thunk drift repair)
 ?Resize@?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE_NHPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x0093E4D0,pinharvest (call-site decode from ?Resize@?$DynamicVectorClass@U_ENUM_VALUE@EnumParameterClass@@@@ at 0x93E700; body not source-owned)
 ?ResolveIP@@YAIVAsciiString@@@Z,0x0003DC08,ILT thunk to 0x00682EF0; the address LANAPI::SetLocalIP(AsciiString) at 0x00686C10 encodes
@@ -10933,7 +10779,6 @@ name,address,notes
 ?Set_Arrays@PointGroupClass@@QAEXPAV?$ShareBufferClass@VVector3@@@@PAV?$ShareBufferClass@VVector4@@@@PAV?$ShareBufferClass@I@@PAV?$ShareBufferClass@M@@PAV?$ShareBufferClass@E@@4HMMMM@Z,0x009126B0,derived from Render_Particles call sites
 ?Set_DX8_Render_State@DX8Wrapper@@SAXKI@Z,0x0001321E
 ?Set_DX8_Texture_Stage_State@DX8Wrapper@@SAXIKI@Z,0x000261E3
-?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905990,Open-BFME7 additive: retail call target used by the landed row at 0x009081D0 (thunk drift repair)
 ?Set_DX8_ZBias@DX8Wrapper@@SAXH@Z,0x00905AB0,int-to-float thunk onto 0x905990 body
 ?Set_DX8_ZBias@DX8Wrapper@@SAXM@Z,0x00905990,REL32 pin from DX8Wrapper::Set_Default_Global_Render_States @0x9081D0
 ?Set_Device_Resolution@WW3D@@SA_NHHHH_N@Z,0x008FD1C0,Retail wrapper calls DX8Wrapper then test al/setne al/ret; bool return independently verified; corrects prior enum-return assumption
@@ -11885,7 +11730,6 @@ name,address,notes
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VArchivedFileInfo@@@_STL@@@2@@Z,0x009CF380,typed ArchivedFileInfo map erase called by retail clear at 0x009D1087
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@@2@U?$less@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@@2@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VAsciiString@@@_STL@@@2@@Z,0x0007D250,node size 0x18 = 0x10 header + pair of two AsciiStrings; per-node dtor ILT 0x00031EF3 -> 0x0007CB30 releases the AsciiStrings at +4 and +0; called on the UserPreferences PreferenceMap (+4) by LadderPreferences::loadProfile at 0x000AE0D6 via ILT 0x00049E13; ICF-shared by every map<AsciiString;AsciiString>; ledger row is the tgrid placeholder
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@2@@Z,0x0000D4E0,pinharvest x1 (thunk)
-?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VAudioEventRTS@@@_STL@@@2@@Z,0x0000E363,Open-BFME7 additive: retail call target used by the landed row at 0x00145FC0 (thunk drift repair)
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VDetailedArchivedDirectoryInfo@@@_STL@@@2@@Z,0x009D0D70,typed DetailedArchivedDirectoryInfo map erase called by retail clear at 0x009D105E
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VHotKey@@@_STL@@@2@@Z,0x00020E37
 ?_M_erase@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@UAsciiComparator@@V?$allocator@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@2@@Z,0x00035F12
@@ -11893,10 +11737,8 @@ name,address,notes
 ?_M_erase@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@Z,0x00008B34
 ?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@Z,0x00049E13,rel32 pin for exact-ambiguous landing
 ?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@Z,0x0000E363,pinharvest x1 (thunk)
-?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@Z,0x0001D999,Open-BFME7 additive: retail call target used by the landed row at 0x00078DF0 (thunk drift repair)
 ?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@Z,0x00042FDC
 ?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@Z,0x0000E363,pinharvest x2 (thunk)
-?_M_erase@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@AAEXPAU?$_Rb_tree_node@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@Z,0x0001D9C1,Open-BFME7 additive: retail call target used by the landed row at 0x00655230 (thunk drift repair)
 ?_M_exit_putback_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAEXXZ,0x00842650,STLport wchar filebuf helper read from retail seek initializer call
 ?_M_fill_insert@?$list@UGen_t_0009f4d0_m12cd@@V?$allocator@UGen_t_0009f4d0_m12cd@@@_STL@@@_STL@@QAEXU?$_List_iterator@UGen_t_0009f4d0_m12cd@@U?$_Nonconst_traits@UGen_t_0009f4d0_m12cd@@@_STL@@@2@IABUGen_t_0009f4d0_m12cd@@@Z,0x0009F290,family-emit payload member
 ?_M_fill_insert@?$list@UGen_t_003c0c40_m12cd@@V?$allocator@UGen_t_003c0c40_m12cd@@@_STL@@@_STL@@QAEXU?$_List_iterator@UGen_t_003c0c40_m12cd@@U?$_Nonconst_traits@UGen_t_003c0c40_m12cd@@@_STL@@@2@IABUGen_t_003c0c40_m12cd@@@Z,0x003C0000,family-emit payload member
@@ -12103,7 +11945,6 @@ name,address,notes
 ?_M_insert@?$_Rb_tree@HHU?$_Identity@H@_STL@@U?$less@H@2@V?$allocator@H@2@@_STL@@AAE?AU?$_Rb_tree_iterator@HU?$_Nonconst_traits@H@_STL@@@2@PAU_Rb_tree_node_base@2@0ABH0@Z,0x0002AC98,link thunk; the address ?insert_unique at 0x00235A30 encodes
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHE@_STL@@U?$_Select1st@U?$pair@$$CBHE@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHE@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHE@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHE@2@0@Z,0x003DBDC0,family-emit shared callee
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHI@2@0@Z,0x00032934,Open-BFME5 ICF pin for GameLogicDispatch
-?_M_insert@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHI@2@0@Z,0x0004A52F,Open-BFME7 additive: retail call target used by the landed row at 0x00768A00 (thunk drift repair)
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@0@Z,0x004A52F
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHUGen_t_0008ec00_p12cd@@@2@0@Z,0x0008E9C0,gen-tgrid payload member
 ?_M_insert@?$_Rb_tree@HU?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@@_STL@@AAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@@2@PAU_Rb_tree_node_base@2@0ABU?$pair@$$CBHUGen_t_000a4c90_p12cd@@@2@0@Z,0x000A3D70,gen-tgrid payload member
@@ -12262,7 +12103,6 @@ name,address,notes
 ?_M_insert_overflow@?$sound_upgrade_vector@URva00608FE0Element@@@_STL@@QAEXPAURva00608FE0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000E656,Open-BFME5 ILT for the 528-byte SoundUpgrade vector growth call
 ?_M_insert_overflow@?$vector@EV?$allocator@E@_STL@@@_STL@@IAEXPAEABEABU__true_type@2@I_N@Z,0x0002F20C
 ?_M_insert_overflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x0000791E,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x0004802C,Open-BFME7 additive: retail call target used by the landed row at 0x0093FC10 (thunk drift repair)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x000028C4,Open-BFME7 additive: retail call target used by the landed row at 0x003CFE10 (thunk drift repair)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001CBFC,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@HV?$allocator@H@_STL@@@_STL@@IAEXPAHABHABU__true_type@2@I_N@Z,0x0001F4FB,Open-BFME7 additive: retail call target used by the landed row at 0x00067740 (thunk drift repair)
@@ -12299,25 +12139,16 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@IAEXPAPBVThingTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x0000C5F4,zh_sweep packet 001dc59e callee pin
 ?_M_insert_overflow@?$vector@U?$pair@PAVSubsystemInterface@@PAX@_STL@@V?$allocator@U?$pair@PAVSubsystemInterface@@PAX@_STL@@@2@@_STL@@IAEXPAU?$pair@PAVSubsystemInterface@@PAX@2@ABU32@ABU__false_type@2@I_N@Z,0x009A1E50,vector<pair<SubsystemInterface* void*>> growth path called by SubsystemInterfaceList::initSubsystem
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00009052,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x0000CDEC,Open-BFME7 additive: retail call target used by the landed row at 0x0035BA70 (thunk drift repair)
-?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x000150D7,Open-BFME7 additive: retail call target used by the landed row at 0x00144EA0 (thunk drift repair)
-?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00018421,Open-BFME7 additive: retail call target used by the landed row at 0x003B1190 (thunk drift repair)
-?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x0001B0AE,Open-BFME7 additive: retail call target used by the landed row at 0x003A5860 (thunk drift repair)
-?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x000396AD,Open-BFME7 additive: retail call target used by the landed row at 0x0035BA20 (thunk drift repair)
 ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@IAEXPAU?$pair@W4ObjectID@@I@2@ABU32@ABU__false_type@2@I_N@Z,0x00004F93,retail REL32 pin for ScriptActions ObjectID pair vector push_back
 ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@IAEXPAU?$pair@W4ObjectID@@W41@@2@ABU32@ABU__false_type@2@I_N@Z,0x00022AF7,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@UAnimSet@GenericObjectCreationNugget@@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@IAEXPAUAnimSet@GenericObjectCreationNugget@@ABU34@ABU__false_type@2@I_N@Z,0x00008A58,Open-BFME7 additive: retail call target used by the landed row at 0x001DABF0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UAnimSet@GenericObjectCreationNugget@@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@IAEXPAUAnimSet@GenericObjectCreationNugget@@ABU34@ABU__false_type@2@I_N@Z,0x0000DB2F,resweep callee back-solved
 ?_M_insert_overflow@?$vector@UBannerMovieEntry@@V?$allocator@UBannerMovieEntry@@@_STL@@@_STL@@IAEXPAUBannerMovieEntry@@ABU3@ABU__false_type@2@I_N@Z,0x00026DC3,BannerUI movie-entry vector push_back overflow ILT to the exact 28-byte element body at 0x00583330
 ?_M_insert_overflow@?$vector@UBfmeRva44E60Record@@V?$allocator@UBfmeRva44E60Record@@@_STL@@@_STL@@IAEXPAUBfmeRva44E60Record@@ABU3@ABU__false_type@2@I_N@Z,0x0001DE3A,assigned body helper for Rva00244E60
 ?_M_insert_overflow@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@QAEXPAUCoord2D@@ABU3@ABU__false_type@2@I_N@Z,0x0001CB9D,ILT to vector 8-byte _M_insert_overflow 0x001E9020; WeaponTemplate::parseScatterTarget
 ?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x000070CC,retail REL32 pin for DockUpdate reserveApproachPosition
-?_M_insert_overflow@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2,Open-BFME7 additive: retail call target used by the landed row at 0x00069200 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UDetonatorInfo@MinefieldBehavior@@V?$allocator@UDetonatorInfo@MinefieldBehavior@@@_STL@@@_STL@@IAEXPAUDetonatorInfo@MinefieldBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@IAEXPAUEvaCheck@@ABU3@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@IAEXPAUEvaCheck@@ABU3@ABU__false_type@2@I_N@Z,0x0000FCAE,Open-BFME7 additive: retail call target used by the landed row at 0x00574CD0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x0000C4A0,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x00020C98,Open-BFME7 additive: retail call target used by the landed row at 0x000DED70 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@IAEXPAUFactionVictoryParameters@@ABU3@ABU__false_type@2@I_N@Z,0x0000303A,ILT target 0x001DFFF0 is the 0x18-byte nontrivial STLport vector grow path called by VictorySystem::init
 ?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z,0x0000A47A,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UGen_t_000638c0_p4cd@@V?$allocator@UGen_t_000638c0_p4cd@@@_STL@@@_STL@@IAEXPAUGen_t_000638c0_p4cd@@ABU3@ABU__false_type@2@I_N@Z,0x00063700,gen-tgrid payload member
@@ -12541,24 +12372,17 @@ name,address,notes
 ?_M_insert_overflow@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@IAEXPAURva0077CC10Element@@ABU3@ABU__false_type@2@I_N@Z,0x00043270,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva0081D280Element@@V?$allocator@URva0081D280Element@@@_STL@@@_STL@@IAEXPAURva0081D280Element@@ABU3@ABU__false_type@2@I_N@Z,0x0081D160,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@IAEXPAUSegInfo@W3DRopeDraw@@ABU34@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@IAEXPAUSegInfo@W3DRopeDraw@@ABU34@ABU__false_type@2@I_N@Z,0x0000FCAE,Open-BFME7 additive: retail call target used by the landed row at 0x00574CD0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UStationPointData@GarrisonContain@@V?$allocator@UStationPointData@GarrisonContain@@@_STL@@@_STL@@IAEXPAUStationPointData@GarrisonContain@@ABU34@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
 ?_M_insert_overflow@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@IAEXPAUTransitionInfo@State@@ABU34@ABU__false_type@2@I_N@Z,0x0000E868,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@IAEXPAUTransitionInfo@State@@ABU34@ABU__false_type@2@I_N@Z,0x00017FB2,Open-BFME7 additive: retail call target used by the landed row at 0x00069200 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@CashHackSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z,0x0000EF11
 ?_M_insert_overflow@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@OCLSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z,0x0003913F
 ?_M_insert_overflow@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXPAUVideo@@ABU3@ABU__false_type@2@I_N@Z,0x000359B3,rel32 pin for exact-ambiguous landing
-?_M_insert_overflow@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x000382BC,Open-BFME7 additive: retail call target used by the landed row at 0x003D2880 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x0003D7B2,ILT thunk used by call site
 ?_M_insert_overflow@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUWeaponRecoilInfo@W3DModelDraw@@ABU34@ABU__false_type@2@I_N@Z,0x0000E868,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUWeaponRecoilInfo@W3DModelDraw@@ABU34@ABU__false_type@2@I_N@Z,0x00017FB2,Open-BFME7 additive: retail call target used by the landed row at 0x00069200 (thunk drift repair)
 ?_M_insert_overflow@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@IAEXPAUtConnInfoStruct@@ABU3@ABU__false_type@2@I_N@Z,0x0004ABF6
 ?_M_insert_overflow@?$vector@V?$BitFlags@$0HF@@@V?$allocator@V?$BitFlags@$0HF@@@@_STL@@@_STL@@IAEXPAV?$BitFlags@$0HF@@@ABV3@ABU__false_type@2@I_N@Z,0x0000AE93,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@V?$BitFlags@$0HF@@@V?$allocator@V?$BitFlags@$0HF@@@@_STL@@@_STL@@IAEXPAV?$BitFlags@$0HF@@@ABV3@ABU__false_type@2@I_N@Z,0x0000FCAE,Open-BFME7 additive: retail call target used by the landed row at 0x00574CD0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@IAEXPAVArmorTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x0000E868,pinharvest x1 (thunk)
-?_M_insert_overflow@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@IAEXPAVArmorTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x00017FB2,Open-BFME7 additive: retail call target used by the landed row at 0x00069200 (thunk drift repair)
 ?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x000112C0,resweep callee back-solved
-?_M_insert_overflow@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@ABV3@ABU__false_type@2@I_N@Z,0x0003827B,Open-BFME7 additive: retail call target used by the landed row at 0x008541E0 (thunk drift repair)
 ?_M_insert_overflow@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldArmy@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,replenish retail call at 0x003655D3 invokes the vector<LivingWorldArmy> overflow-insert ILT thunk
 ?_M_insert_overflow@?$vector@VLivingWorldPlayerArmy@@V?$allocator@VLivingWorldPlayerArmy@@@_STL@@@_STL@@IAEXPAVLivingWorldPlayerArmy@@ABV3@ABU__false_type@2@I_N@Z,0x000345B8,Open-BFME5 REL32 pin from addPlayerArmy; ILT thunk to 0x003665C0
 ?_M_insert_overflow@?$vector@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@IAEXPAVMoney@@ABV3@ABU__false_type@2@I_N@Z,0x0087FBE0,Open-BFME5 retail Money vector overflow pin
@@ -12754,11 +12578,8 @@ name,address,notes
 ?_M_pop_back_aux@Rva006A3A00AudioDeque@@QAEXXZ,0x0001309D,Address-derived thiscall deque helper through retail ILT to 0x0069E810; independently reviewed 86B buffer-retirement body
 ?_M_push_back_aux_v@?$deque@HV?$allocator@H@_STL@@@_STL@@IAEXABH@Z,0x006472C0,gen-tgrid shared callee
 ?_M_push_back_aux_v@?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXABQAVMapObject@@@Z,0x00008553,pinharvest x4 (thunk)
-?_M_push_back_aux_v@?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXABQAVMapObject@@@Z,0x0002FF1D,Open-BFME7 additive: retail call target used by the landed row at 0x00089D60 (thunk drift repair)
 ?_M_push_back_aux_v@?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXABQAVPartitionCell@@@Z,0x00008553,pinharvest x4 (thunk)
-?_M_push_back_aux_v@?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXABQAVPartitionCell@@@Z,0x0002FF1D,Open-BFME7 additive: retail call target used by the landed row at 0x00089D60 (thunk drift repair)
 ?_M_push_back_aux_v@?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXABQAVSightingInfo@@@Z,0x00008553,pinharvest x4 (thunk)
-?_M_push_back_aux_v@?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXABQAVSightingInfo@@@Z,0x0002FF1D,Open-BFME7 additive: retail call target used by the landed row at 0x00089D60 (thunk drift repair)
 ?_M_push_back_aux_v@?$deque@UGen_t_00595870_p12cd@@V?$allocator@UGen_t_00595870_p12cd@@@_STL@@@_STL@@IAEXABUGen_t_00595870_p12cd@@@Z,0x00594220,gen-tgrid payload member
 ?_M_push_back_aux_v@?$deque@UGen_t_008fbc70_p8cd@@V?$allocator@UGen_t_008fbc70_p8cd@@@_STL@@@_STL@@IAEXABUGen_t_008fbc70_p8cd@@@Z,0x008FB570,gen-tgrid payload member
 ?_M_push_back_aux_v@?$deque@VBFMENetworkQueueItem1@@V?$allocator@VBFMENetworkQueueItem1@@@_STL@@@_STL@@IAEXABVBFMENetworkQueueItem1@@@Z,0x0001B018,BFMENetwork callback deque growth-helper ILT
@@ -12814,12 +12635,8 @@ name,address,notes
 ?_M_release_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082AD50,node_alloc deallocate lock release; mov [ecx],0 ret spinlock release
 ?_M_seek_return@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE?AV?$fpos@H@2@JH@Z,0x00841B90,STLport char filebuf helper read from retail seekpos call
 ?_M_seek_return@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE?AV?$fpos@H@2@JH@Z,0x00842560,STLport wchar filebuf helper read from retail seekpos call
-?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@XZ,0x00043B8F,Open-BFME7 additive: retail call target used by the landed row at 0x00461F10 (thunk drift repair)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@XZ,0x00460DA0,zhstl per-site callee copy (body proven byte-equal)
-?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x0000722F,Open-BFME7 additive: retail call target used by the landed row at 0x00498CF0 (thunk drift repair)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x00013BF6,site-decoded x1 (thunk)
-?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x0004167D,Open-BFME7 additive: retail call target used by the landed row at 0x0037F920 (thunk drift repair)
-?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x00047EB0,Open-BFME7 additive: retail call target used by the landed row at 0x00612BF0 (thunk drift repair)
 ?_M_switch_to_input_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843680,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
 ?_M_switch_to_output_mode@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE_NXZ,0x008433C0,STLport 4.5.3 narrow basic_filebuf overflow callee; matched body at 0x008433C0
 ?_M_switch_to_output_mode@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE_NXZ,0x00843590,STLport 4.5.3 library-internal callee; address read from the retail REL32 displacement in Code/stlport/X4Filebuf.cpp
@@ -13164,7 +12981,6 @@ name,address,notes
 ?alt@Gen_00417cb0@@QAEXXZ,0x00411BE0,Open-BFME5 address-derived name; call target of 0x00417CB0 via ILT 0x0003D13B; identity not asserted
 ?amIObserver@VictoryConditions@@UAE_NXZ,0x0035F4A0,vtable 0x010E8D90 slot 16 (+0x40) via ILT 0x00028A74; returns m_isObserver +0xBE; called by doLocalDefeat 0x002F1F10 exactly where ZH calls TheVictoryConditions->amIObserver
 ?anyIntersectionWith@?$BitFlags@$0HE@@@QBE_NABV1@@Z,0x00003873,pinharvest x1 (thunk)
-?anyIntersectionWith@?$BitFlags@$0HE@@@QBE_NABV1@@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
 ?anyMatching@Rva003BF540@@QAE_NH@Z,0x0000B63B,ILT to anyMatching@Rva003BDEC0 0x003BDEC0; callee of test@Rva003BF540 @ 0x003BEAF0
 ?anyReady@Rva003BF540@@QBE_NXZ,0x0000EA7F,ILT to anyReady@Rva003BD830Owner 0x003BD830; callee of test@Rva003BF540 @ 0x003BEAF0
 ?append@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x000A4F80,STLport basic_string<char>::append(const char* first; const char* last): capacity check; node-alloc (<=0x80) or new; memmove old then new range; called by the ledgered append(const char*) 0x00647990 at 0x006479B2 and by assign(first;last) 0x000A5810 at 0x000A589A; ILT 0x00036DE0
@@ -13177,8 +12993,6 @@ name,address,notes
 ?appendBooleanArgument@GameMessage@@QAEX_N@Z,0x000032AB,GameMessage::appendBooleanArgument thunk
 ?appendDrawableIDArgument@GameMessage@@QAEXI@Z,0x000154BF,GameMessage::appendDrawableIDArgument thunk
 ?appendIntegerArgument@GameMessage@@QAEXH@Z,0x00001370,GameMessage::appendIntegerArgument thunk
-?appendIntegerArgument@GameMessage@@QAEXH@Z,0x1059DA02,Open-BFME7 additive: retail call target used by the landed row at 0x005A33D0 (thunk drift repair)
-?appendIntegerArgument@GameMessage@@QAEXH@Z,0x8959DA0E,Open-BFME7 additive: retail call target used by the landed row at 0x005A33D0 (thunk drift repair)
 ?appendLocationArgument@GameMessage@@QAEXABUCoord3D@@@Z,0x00037AD8,GameMessage::appendLocationArgument thunk
 ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0003833E,retail Path::appendNode ILT thunk (body 0x0016A4B0)
 ?appendObjectIDArgument@GameMessage@@QAEXI@Z,0x0002BCEC,GameMessage::appendObjectIDArgument thunk
@@ -74058,7 +73872,6 @@ name,address,notes
 ?bfmeDropAUC@BfmeThingAUC@@QAEXPAX@Z,0x00015BE5,pin
 ?bfmeDropAUD@BfmeListAUD@@QAEXPAX@Z,0x00016ED2,pin
 ?bfmeDropAVA@BfmeListAVA00443DF0@@QAEXPAX@Z,0x00016176,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00449880 calls; autopin
-?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x00016176,Open-BFME7 additive: retail call target used by the landed row at 0x00449880 (thunk drift repair)
 ?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x0004A91C,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
@@ -76384,7 +76197,6 @@ name,address,notes
 ?buildFieldParse@SupplyWarehouseDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001AAE6,unique ILT to 0x002CF680
 ?buildSegments@W3DRopeDraw@@AAEXXZ,0x0002354C,retail W3DRopeDraw vtable-bound doDrawModule call
 ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z,0x0002248F,pinharvest x1 (thunk)
-?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z,0x00041506,Open-BFME7 additive: retail call target used by the landed row at 0x0024EA60 (thunk drift repair)
 ?buttonBackID@@3HA,0x012F3EA0,NetworkDirectConnect.wnd:ButtonBack name key; System compare
 ?buttonHostID@@3HA,0x012F3EA4,NetworkDirectConnect.wnd:ButtonHost name key; System compare
 ?buttonJoinID@@3HA,0x012F3EA8,NetworkDirectConnect.wnd:ButtonJoin name key; System compare
@@ -76471,17 +76283,6 @@ name,address,notes
 ?classify@Rva005329Classify@@QAEXPAVRva005329C0Obj@@H@Z,0x00047807,ILT for 15B classify wrappers at 0x005329C0/E0
 ?classify@Rva005329Classify@@QAEXPAXH@Z,0x00047807,ILT for 15B classify wrappers at 0x005329C0/E0
 ?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x00004EE9,hit-decoded x3 (thunk)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002054F,Open-BFME7 additive: retail call target used by the landed row at 0x002ED660 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002237C,Open-BFME7 additive: retail call target used by the landed row at 0x00754DF0 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002BF2B,Open-BFME7 additive: retail call target used by the landed row at 0x001D27D0 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002C566,Open-BFME7 additive: retail call target used by the landed row at 0x001D5D90 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x000307E7,Open-BFME7 additive: retail call target used by the landed row at 0x00229F90 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0003921B,Open-BFME7 additive: retail call target used by the landed row at 0x002ED640 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0003CAA1,Open-BFME7 additive: retail call target used by the landed row at 0x00459FE0 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x00047807,Open-BFME7 additive: retail call target used by the landed row at 0x00532980 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x00047D2A,Open-BFME7 additive: retail call target used by the landed row at 0x0051F380 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004ADE0,Open-BFME7 additive: retail call target used by the landed row at 0x002CD490 (thunk drift repair)
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0004AEFD,Open-BFME7 additive: retail call target used by the landed row at 0x001DC500 (thunk drift repair)
 ?cleanUpReplayFile@RecorderClass@@QAEXXZ,0x0003CC9A,Recorder cleanup invoked by the GameEngine::execute catch-all path
 ?cleanUpSlotPointers@GameSpyStagingRoom@@QAEXXZ,0x00022507,addStagingRoom call target (incremental-link thunk)
 ?cleanup@BuffEntryTail@@QAEXXZ,0x00015479,BuffEntry embedded iterator clear ILT
@@ -76631,7 +76432,6 @@ name,address,notes
 ?clear@DetailedArchivedDirectoryInfo@@QAEXXZ,0x009D1040,retail clear body called by ArchiveFile constructor at 0x009D10B0; direct target and map/string cleanup semantics
 ?clear@Dict@@QAEXXZ,0x00033F46
 ?clear@DrawableIconInfo@@QAEXXZ,0x00015479,pinharvest x1 (thunk)
-?clear@DrawableIconInfo@@QAEXXZ,0x00037565,Open-BFME7 additive: retail call target used by the landed row at 0x001DDFD0 (thunk drift repair)
 ?clear@FXList@@QAEXXZ,0x00044297,derived-ICF
 ?clear@GameWindowHashtableClearShim@_STL@@QAEXXZ,0x004984F0,_STL hashtable clear GameWindowVideo dual incremental-link thunk target through a TU-local forwarding shim
 ?clear@Gen003BFC20Owner@@QAEXXZ,0x00040016,ILT to clear body 0x003CAD90; callee of 0x003BFC20
@@ -76703,9 +76503,7 @@ name,address,notes
 ?comboBoxLadderName@@3PAVGameWindow@@A,0x012F3F28,PopupHostGame.wnd:ComboBoxLadderName static used by createGame
 ?commonInit@AudioEventRTS@@QAEXXZ,0x0002E68B,AudioEventRTS shared field-init ILT to 0x000B24C0 used by the ObjectID constructor
 ?compare@?$StringBase@D@@QBEHABV1@@Z,0x000220C5,StringBase char compare thunk used by archive map lookup
-?compare@?$StringBase@D@@QBEHABV1@@Z,0x00027471,Open-BFME7 additive: retail call target used by the landed row at 0x00093E60 (thunk drift repair)
 ?compare@AsciiString@@QBEHABV1@@Z,0x000220C5,HotKey retail StringBase compare thunk
-?compare@AsciiString@@QBEHABV1@@Z,0x000226EC,Open-BFME7 additive: retail call target used by the landed row at 0x0054FA30 (thunk drift repair)
 ?compare@AsciiString@@QBEHPBD@Z,0x0004B01A,ILT of StringBase<char>::compare(const char*) used by CustomMatch handleSlashCommands 0x00539E60
 ?compare@AsciiStringCompareShim@@QBEHABVAsciiString@@@Z,0x000220C5,AsciiString::compare via ILT thunk
 ?compare@GameSortStructCallOperatorShim@@QAE_NPAVGameSpyStagingRoom@@0@Z,0x0053EDD0,GameSortStruct operator() incremental-link thunk target through a TU-local forwarding shim
@@ -76909,11 +76707,8 @@ name,address,notes
 ?countBuildings@Team@@QAEHXZ,0x00015294,Open-BFME5 the thunk TeamPrototype countBuildings calls once per team; Zero Hour names the same call
 ?countBuildings@TeamPrototype@@QAEHXZ,0x00022ACF
 ?countIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
-?countIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
 ?countInverseIntersection@?$BitFlags@$0BB@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
-?countInverseIntersection@?$BitFlags@$0BB@@@QBEHABV1@@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
 ?countInverseIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
-?countInverseIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
 ?countObjects@Player@@QAEHV?$BitFlags@$0MA@@@0@Z,0x0001FF1E,Player faction-building count helper called by evaluatePlayerHasNOrFewerFactionBuildings
 ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00048D79,retail target of ProductionPrerequisite::calcNumPrereqUnitsOwned call; Player class not yet converted for this method
 ?countObjectsByThingTemplate@Team@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00010181,Open-BFME5 ILT thunk; ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z at 0x000F4030 hands all five arguments to it once per team on the instance list
@@ -77032,7 +76827,6 @@ name,address,notes
 ?destroyPlacementIcons@InGameUI@@QAEXXZ,0x0001EC3B,Open-BFME5 InGameUI::placeBuildAvailable calls the destroyPlacementIcons ILT immediately before returning from its null-build arm; body 0x0043AF00
 ?destroyQuitMenu@@YAXXZ,0x000285BF,PopupSaveLoad in-game quit menu close through retail ILT
 ?detach@NetCommandMsg@@QAEXXZ,0x000200A4,additive; ILT thunk for body 0xA73610
-?detach@NetCommandMsg@@QAEXXZ,0x009EB7A0,Open-BFME7 additive: retail call target used by the landed row at 0x007851D0 (thunk drift repair)
 ?detailAlphaShader@@3VShaderClass@@A,0x012BA78C,W3DBibBuffer renderBibs TU-local shader object
 ?detect@BfmeChipsetDetector@@SAXXZ,0x0002DEDE,chipset detection thunk called by W3DShaderManager testMinimumRequirements at 0x00717889
 ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ,0x000205F4
@@ -77098,7 +76892,6 @@ name,address,notes
 ?downloadNextQueuedFile@DownloadManager@@QAEJXZ,0x00038F00,ILT thunk used by call site
 ?downloadNextQueuedFile@DownloadManagerDownloadNextQueuedFileShim@@QAEJXZ,0x00627370,DownloadManager::downloadNextQueuedFile incremental-link thunk target through a TU-local forwarding shim
 ?draw@Drawable@@QAEXPAVView@@@Z,0x00003873,pinharvest x1 (thunk)
-?draw@Drawable@@QAEXPAVView@@@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
 ?draw@ShellMenuScheme@@QAEXXZ,0x00026D64,pinharvest x1 (thunk)
 ?drawAmmo@Drawable@@AAEXXZ,0x00022782,BFME drawIconUI member ILT
 ?drawAndRelease@W3DVolumetricShadowManager@@QAEXH@Z,0x00045B83,render helper ILT
@@ -77671,9 +77464,6 @@ name,address,notes
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
-?freeBlock@MemoryPool@@QAEXPAX@Z,0x00041D49,Open-BFME7 additive: retail call target used by the landed row at 0x00142140 (thunk drift repair)
-?freeBlock@MemoryPool@@QAEXPAX@Z,0x000497D3,Open-BFME7 additive: retail call target used by the landed row at 0x00132AB0 (thunk drift repair)
-?freeBlock@MemoryPool@@QAEXPAX@Z,0x00AFE7D0,Open-BFME7 additive: retail call target used by the landed row at 0x00AFFA30 (thunk drift repair)
 ?freeBlocks@PathfindZoneManager@@AAEXXZ,0x00026E72,Open-BFME5 ILT thunk to body 0x00403760; allocateBlocks calls the BFME-layout cleanup before rebuilding the block matrix
 ?freeBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x00003E59,W3DBridgeBuffer::freeBridgeBuffers via ILT thunk
 ?freeBytes@AsciiString@@AAEXXZ,0x00887940,caller-derived (4 matched callers agree, body)
@@ -77685,13 +77475,11 @@ name,address,notes
 ?freeMapResources@W3DStatusCircle@@QAEHXZ,0x00014BC3,derived-ICF
 ?freeScorchBuffers@BaseHeightMapRenderObjClass@@AAEXXZ,0x00040728,incremental thunk called by freeMapResources
 ?freeSockets@NameKeyGenerator@@AAEXXZ,0x000226E7,pinharvest x4 (thunk)
-?freeSockets@NameKeyGenerator@@AAEXXZ,0x00033D9D,Open-BFME7 additive: retail call target used by the landed row at 0x00168710 (thunk drift repair)
 ?freeSockets@Rva0008FE00Owner@@AAEXXZ,0x000226E7,Open-BFME5 near-twin sibling of NameKeyGenerator::freeSockets; reuses the same pinned 0x226E7 callee
 ?freeStaticStrings@GameWindowManager@@UAEXXZ,0x00040B7E,GameWindowManager dtor call target (incremental-link thunk)
 ?freeTerrainBuffers@W3DTerrainBackground@@IAEXXZ,0x00044AA3,link thunk; called by allocateTerrainBuffers at 0x00728770
 ?freeTerrainTracksResources@TerrainTracksRenderObjClass@@QAEHXZ,0x00014BC3,derived-ICF
 ?freeZones@ZoneBlock@@IAEXXZ,0x00012968,pinharvest x1 (thunk)
-?freeZones@ZoneBlock@@IAEXXZ,0x00018FCF,Open-BFME7 additive: retail call target used by the landed row at 0x0005E880 (thunk drift repair)
 ?friend_addToList@CommandSet@@QAEXPAPAV1@@Z,0x00037DDA,ControlBar newCommandSet retail list-link call ILT
 ?friend_adjustPowerForPlayer@Object@@QAEX_N@Z,0x00021297,Open-BFME5 retail object power adjustment thunk
 ?friend_applyDifficultyBonusesForObject@BfmeDifficultyBonusPlayer@@QAEXPAVObject@@_N@Z,0x0002278C,alias of the Player spelling pinned below; Object.cpp reaches the applier through a view class because the reference Player.h declares it const
@@ -80680,7 +80468,6 @@ name,address,notes
 ?initFromINI@BfmeIni@@QAEXPAXPBX@Z,0x008520A0,Rva0048BD60 INI parse helper
 ?initFromINI@INI@@QAEXPAXPBUFieldParse@@@Z,0x008520A0
 ?initFromINI@INI@@QAEXPAXPBX@Z,0x008520A0,INI::initFromINI(void*, const void*) body
-?initFromINI@INI@@QAEXPAXPBX@Z,0x00852130,Open-BFME7 additive: retail call target used by the landed row at 0x00114C60 (thunk drift repair)
 ?initFromINIMulti@INI@@QAEXPAXABVMultiIniFieldParse@@@Z,0x00851910,called by INI::initFromINI at 0x008520A0
 ?initFromINIMultiProc@INI@@QAEXPAXP6AXAAVMultiIniFieldParse@@@Z@Z,0x00852130
 ?initFromMesh@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z,0x0004A2F5,Load_Geom direct call target; identity from W3DShadowGeometry method declaration and retail ILT
@@ -80761,9 +80548,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@$$CBV?$BitFlags@$0L@@@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Select1st@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@UMapHelper@?$SparseMatchFinder@VArmorTemplateSet@@V?$BitFlags@$0L@@@@@V?$allocator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBV?$BitFlags@$0L@@@PBVArmorTemplateSet@@@2@@Z,0x00043950,callee of the hinted insert_unique at 0x001426A0 (SparseMatchFinder MatchMap; ILT thunk retail calls)
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@2@U32@ABU?$pair@$$CBGE@2@@Z,0x0000DE77
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGE@_STL@@U?$_Select1st@U?$pair@$$CBGE@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGE@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGE@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGE@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGE@2@@Z,0x0093FE40
-?insert_unique@?$_Rb_tree@GU?$pair@$$CBGH@_STL@@U?$_Select1st@U?$pair@$$CBGH@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGH@_STL@@@2@@2@U32@ABU?$pair@$$CBGH@2@@Z,0x0002A568,Open-BFME7 additive: retail call target used by the landed row at 0x00669560 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGH@_STL@@U?$_Select1st@U?$pair@$$CBGH@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGH@_STL@@@2@@2@U32@ABU?$pair@$$CBGH@2@@Z,0x0037BC70,zhstl per-site callee copy (body proven byte-equal)
-?insert_unique@?$_Rb_tree@GU?$pair@$$CBGH@_STL@@U?$_Select1st@U?$pair@$$CBGH@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBGH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGH@_STL@@@2@@2@U32@ABU?$pair@$$CBGH@2@@Z,0x009401F0,Open-BFME7 additive: retail call target used by the landed row at 0x00940B40 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGH@_STL@@U?$_Select1st@U?$pair@$$CBGH@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGH@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGH@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGH@2@@Z,0x0037B6E0,family-emit shared callee
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@U?$_Select1st@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGUGen_t_00668150_m12pod@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGUGen_t_00668150_m12pod@@@2@@Z,0x00667C80,family-emit payload member
 ?insert_unique@?$_Rb_tree@GU?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@U?$_Select1st@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@U?$less@G@2@V?$allocator@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBGUGen_t_00668440_m12pod@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBGUGen_t_00668440_m12pod@@@2@@Z,0x00667E20,family-emit payload member
@@ -80773,14 +80558,8 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@U32@ABU?$pair@$$CBHI@2@@Z,0x000079EB,rel32 pin for exact-ambiguous landing
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z,0x0003E090,Open-BFME5 ICF pin for GameLogicDispatch
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000254B9,Open-BFME7 additive: retail call target used by the landed row at 0x001B9A60 (thunk drift repair)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x000296BD,Open-BFME7 additive: retail call target used by the landed row at 0x000A56D0 (thunk drift repair)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x0002C318,Open-BFME7 additive: retail call target used by the landed row at 0x002271D0 (thunk drift repair)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x00038703,Open-BFME7 additive: retail call target used by the landed row at 0x000E2460 (thunk drift repair)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAU_SBServer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAU_SBServer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAU_SBServer@@@2@@Z,0x0003E05E,Open-BFME7 additive: retail call target used by the landed row at 0x00225CC0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVGameSpyStagingRoom@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAVGameSpyStagingRoom@@@2@@Z,0x000290B4,ILT thunk; real body 0xA33010
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAVPlayer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVPlayer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAVPlayer@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
-?insert_unique@?$_Rb_tree@HU?$pair@$$CBHPAVPlayer@@@_STL@@U?$_Select1st@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAVPlayer@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAVPlayer@@@_STL@@@2@@2@U32@ABU?$pair@$$CBHPAVPlayer@@@2@@Z,0x000296BD,Open-BFME7 additive: retail call target used by the landed row at 0x000A56D0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_000648f0_p24pod@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_000648f0_p24pod@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000648f0_p24pod@@@_STL@@@2@@_STL@@QAE?AU?$pair@UGen003BBA40Iterator@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_000648f0_p24pod@@@2@@Z,0x00026274,Gen003BBA40Member insert_unique callee; value payload is the 28-byte transfer record
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_0008ec00_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_0008ec00_p12cd@@@2@@Z,0x0008EAA0,gen-tgrid payload member
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@U?$_Select1st@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_000a4c90_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_000a4c90_p12cd@@@2@@Z,0x000A3F30,gen-tgrid payload member
@@ -80842,12 +80621,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@PAURva0076A8A0Target@@PAU1@U?$_Identity@PAURva0076A8A0Target@@@_STL@@U?$less@PAURva0076A8A0Target@@@3@V?$allocator@PAURva0076A8A0Target@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAURva0076A8A0Target@@U?$_Nonconst_traits@PAURva0076A8A0Target@@@_STL@@@_STL@@_N@2@ABQAURva0076A8A0Target@@@Z,0x00021562,Open-BFME5 the tree insert_unique the set insert at 0x0076A8A0 forwards to
 ?insert_unique@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@_STL@@_N@2@ABQAVGameWindow@@@Z,0x00625940,Open-BFME5 set<GameWindow*> insert_unique; the call at 0x00626073 through link thunk 0x0001F0C3 resolves here
 ?insert_unique@?$_Rb_tree@PAXPAXU?$_Identity@PAX@_STL@@U?$less@PAX@2@V?$allocator@PAX@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAXU?$_Nonconst_traits@PAX@_STL@@@_STL@@_N@2@ABQAX@Z,0x000E9850,gen-tgrid shared callee
-?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x00007842,Open-BFME7 additive: retail call target used by the landed row at 0x000EA510 (thunk drift repair)
-?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x0003E103,Open-BFME7 additive: retail call target used by the landed row at 0x003E7DD0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x0003E22A,ILT thunk used by call site
-?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x00041B3C,Open-BFME7 additive: retail call target used by the landed row at 0x005874C0 (thunk drift repair)
-?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x000440BC,Open-BFME7 additive: retail call target used by the landed row at 0x004019F0 (thunk drift repair)
-?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@2@U32@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x00046038,Open-BFME7 additive: retail call target used by the landed row at 0x001AC9D0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@_STL@@_N@2@ABU?$pair@QBVThingTemplate@@H@2@@Z,0x009A41E0,SelectionXlat callers target the shared 0x009A41E0 body (retail-folded COMDAT); definition lives under the PBV1-Identity name
 ?insert_unique@?$_Rb_tree@U?$pair@HH@_STL@@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@U?$_Select1st@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@U?$less@U?$pair@HH@_STL@@@2@V?$allocator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@_STL@@@2@@2@U32@ABU?$pair@$$CBU?$pair@HH@_STL@@PAVTeamPrototype@@@2@@Z,0x000135E8,link thunk; the address the body at 0x000F3A20 encodes
 ?insert_unique@?$_Rb_tree@UBfmeRva449E0Key@@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Select1st@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@U?$less@UBfmeRva449E0Key@@@3@V?$allocator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@_STL@@@2@@2@U32@ABU?$pair@$$CBUBfmeRva449E0Key@@UBfmeRva449E0Value@@@2@@Z,0x0003A260,retail insert_unique thunk for Rva002449E0 map insertion
@@ -80929,22 +80703,13 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@2@U32@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00015E1F,LanguageFilter map operator[] callee (ILT thunk -> body 0x0044DE70)
 ?insert_unique@?$_Rb_tree@VUnicodeString@@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Select1st@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@UUnicodeStringLessThan@@V?$allocator@U?$pair@$$CBVUnicodeString@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBVUnicodeString@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVUnicodeString@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBVUnicodeString@@_N@2@@Z,0x00013EC1,LanguageFilter structural recursive callee
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030512,resweep callee back-solved
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@M@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@M@2@@Z,0x00030E13,Open-BFME7 additive: retail call target used by the landed row at 0x000E24D0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@2@@Z,0x000082F6,resweep callee back-solved
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@PAVTeamPrototype@@@2@@Z,0x000296BD,BFME TeamFactory prototype-map operator call at 0x000A56D0
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z,0x00024ADC
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@2@@Z,0x0003E090,Open-BFME5 pin
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x0000ED2C,Open-BFME7 additive: retail call target used by the landed row at 0x00226FA0 (thunk drift repair)
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000186D3,Open-BFME7 additive: retail call target used by the landed row at 0x004E5D60 (thunk drift repair)
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000254B9,Open-BFME7 additive: retail call target used by the landed row at 0x001BAE30 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x000290B4,rel32 pin for exact-ambiguous landing
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x0002C318,Open-BFME7 additive: retail call target used by the landed row at 0x00228410 (thunk drift repair)
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x00038703,Open-BFME7 additive: retail call target used by the landed row at 0x000E2560 (thunk drift repair)
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x0003E05E,Open-BFME7 additive: retail call target used by the landed row at 0x00227110 (thunk drift repair)
-?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x00040F6B,Open-BFME7 additive: retail call target used by the landed row at 0x00401A80 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x0003E090,Open-BFME5 pin
 ?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x0000ED2C,pinharvest x1 (thunk)
-?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x000296BD,Open-BFME7 additive: retail call target used by the landed row at 0x000A56D0 (thunk drift repair)
 ?insert_unique@?$_Rb_tree@W4Open2Key6148F0@@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@U?$_Select1st@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@3@U?$less@W4Open2Key6148F0@@@3@V?$allocator@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@2@@2@U32@ABU?$pair@$$CBW4Open2Key6148F0@@I@2@@Z,0x00046A47,Open2 0x6148f0 map twin callee
 ?insert_unique_noresize@?$hashtable@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_0008fdd0_p12cd@@@2@@Z,0x0008FAB0,gen-tgrid payload member
 ?insert_unique_noresize@?$hashtable@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0008fed0_p12cd@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHUGen_t_0008fed0_p12cd@@@2@@Z,0x0008FAB0,gen-tgrid payload member
@@ -80973,7 +80738,6 @@ name,address,notes
 ?internalCreateEvent@Radar@@IAEXPBUCoord3D@@W4RadarEventType@@MPBURGBAColorInt@@2@Z,0x000280D8,Open-BFME5 Radar::createEvent internalCreateEvent ILT decoded from 0x00108140
 ?internalSetState@StateMachine@@QAE?AW4StateReturnType@@I@Z,0x000294E7,ILT fronting 0x000A1360; from State::friend_checkForSleepTransitions
 ?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
-?internal_classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x00047D2A,Open-BFME7 additive: retail call target used by the landed row at 0x0051F380 (thunk drift repair)
 ?interpolate@BfmeStateDF@@QAEXPAUGen0060CBB0Pair@@00M@Z,0x0003B430,Living World eye tower interpolation ILT called by exact beginState at 0x0060CC00
 ?intersect_obbox_brute_force@MeshGeometryClass@@AAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,Open-BFME7 additive: retail call target used by the landed row at 0x00927920 (thunk drift repair)
 ?intersect_obbox_brute_force@MeshGeometryClass@@IAE_NAAVOBBoxIntersectionTestClass@@@Z,0x00926BE0,MeshGeometryClass protected brute-force OBBox arm reached by the tail jump at 0x0092793D; object symbol confirms protected access
@@ -81318,7 +81082,6 @@ name,address,notes
 ?makeDirty@BfmeDirtyablePartitionData@@QAEXXZ,0x008F7B30,alias of the no-argument PartitionData::makeDirty; Object.cpp reaches it through a view class because the reference PartitionManager.h declares Zero Hour's makeDirty(Bool)
 ?makeDirty@PartitionData@@QAEXXZ,0x008F7B30,BFME PartitionData::makeDirty() takes no argument; pinned from setScriptStatus 0x1D01D0
 ?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00015479,pinharvest x1 (thunk)
-?makeEmpty@SimpleObjectIterator@@QAEXXZ,0x00037565,Open-BFME7 additive: retail call target used by the landed row at 0x001DDFD0 (thunk drift repair)
 ?makeEmpty@SimpleObjectIteratorMakeEmptyShim@@QAEXXZ,0x0040AD80,SimpleObjectIterator incremental-link thunk target through a TU-local forwarding shim
 ?makeInto@Rva006AAC20@@AAEXPAURva006AAC20Result@@PAX@Z,0x00005A42,ILT thunk to 0x006A0730 called from 0x006AAC20
 ?makeSortedTmp@HuffStat@@IAEHPAUHuffStatTmpStruct@@@Z,0x00825E80
@@ -81505,7 +81268,6 @@ name,address,notes
 ?parseDurationReal@INI@@SAXPAV1@PAX1PBX@Z,0x0003D9B0
 ?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z,0x000324DE
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00004B47,INI::parseFXList thunk
-?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00851EE0,Open-BFME7 additive: retail call target used by the landed row at 0x5fc2f0 (thunk drift repair)
 ?parseFXList_851EE0@@YAXPAVINI@@PAX1PBX@Z,0x00851EE0,FX particle system event parser thunk target
 ?parseFXLocInfo@@YAXPAVINI@@PAXPAUBoneLocInfo@@@Z,0x00287B10,BoneFX TU-local location parser confirmed by its caller and bone token/error paths
 ?parseFontDesc@GlobalLanguageParseFontDescShim@@SAXPAVINI@@PAX1PBX@Z,0x00439150,GlobalLanguage incremental-link static thunk target through a TU-local forwarding shim
@@ -81561,7 +81323,6 @@ name,address,notes
 ?perform@Gen00761E10@@QAEXXZ,0x00761E10,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?perform@Gen0088C550@@QAEXXZ,0x0088C550,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?perform@Gen00903090@@QAEXXZ,0x00903090,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
-?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002E320,Open-BFME7 additive: retail call target used by the landed row at 0x001F8950 (thunk drift repair)
 ?performUpgradeFX@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002EB4F,pinharvest x1 (thunk)
 ?pick@BridgeAreaEffectsRandomPositionShim@@QAEXPAVTerrainRoadType@@PBVBridgeInfo@@PAUCoord3D@@@Z,0x000406FB,BridgeBehavior doAreaEffects retail call at 0x001F249D forwards through the incremental thunk to getRandomSurfacePosition
 ?pickAndPlayUnitVoiceResponse@@YAXPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@W4Type@GameMessage@@PAVPickAndPlayInfo@@@Z,0x000196C8,BFME voice dispatcher; adjacent helpers pass the local DrawableList message IDs 0x7E7 or 0x7E8 and PickAndPlayInfo
@@ -81774,7 +81535,6 @@ name,address,notes
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
 ?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0002F8DD,pinharvest x1 (thunk)
-?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0003A21A,Open-BFME7 additive: retail call target used by the landed row at 0x006C4280 (thunk drift repair)
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
 ?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
@@ -81816,8 +81576,6 @@ name,address,notes
 ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ,0x00887940
 ?releaseBuffer@BfmeSelectFriendsUnicodeBase@@AAEXXZ,0x008881D0,TU-scoped BFME UnicodeString release body
 ?releaseBuffer@CreateObjectDieOCLName@@QAEXXZ,0x00887940,Open-BFME5 CreateObjectDie OCL string release pin
-?releaseBuffer@UnicodeString@@IAEXXZ,0x0000D828,Open-BFME7 additive: retail call target used by the landed row at 0x00062EA0 (thunk drift repair)
-?releaseBuffer@UnicodeString@@IAEXXZ,0x00887940,Open-BFME7 additive: retail call target used by the landed row at 0x0042F160 (thunk drift repair)
 ?releaseBuffer@UnicodeString@@IAEXXZ,0x008881D0,retail body called by the GS message-box UnicodeString temporaries
 ?releaseBuffer@ZHUnicodeString@@IAEXXZ,0x008881D0,SelectionTranslator selectFriends UnicodeString release body
 ?releaseCell@Pathfinder@@QAEXPAVPathfindCell@@H@Z,0x003F8820,BFME refresh-list cell invalidation helper; address-derived ABI spelling
@@ -81858,7 +81616,6 @@ name,address,notes
 ?removeEntry@ProductionUpdate@@AAEXPAVProductionEntry@@@Z,0x0002F3C4,ProductionUpdate destructor queue-drain call target
 ?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
 ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x00015D02,AIMoveAndTightenState::onEnter retail REL32 call target
-?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x00041506,Open-BFME7 additive: retail call target used by the landed row at 0x0024EA60 (thunk drift repair)
 ?removeMovieBanner@BannerUI@@QAEXH@Z,0x00033F50,BannerUI movie-operation cleanup call through the ILT to body 0x00582960; the selected id at 0x012B8188 is its sole argument
 ?removeNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x00022610,ILT thunk; real body 0x74D440
 ?removeNamedTimer@InGameUI@@QAEXABVAsciiString@@@Z,0x00046F42,addNamedTimer retail call site; ILT thunk to body 0x0044A1B0
@@ -81874,7 +81631,6 @@ name,address,notes
 ?removeParentObject@W3DGhostObject@@IAEXXZ,0x006BC750,BFME W3DGhostObject helper called by setLocalPlayerIndex
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003F233,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?removePos@Pathfinder@@QAEXPAVObject@@@Z,0x0001D9DA,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C before the layer store
-?removePos@Pathfinder@@QAEXPAVObject@@@Z,0x0002F8DD,Open-BFME7 additive: retail call target used by the landed row at 0x0024EA60 (thunk drift repair)
 ?removeProp@W3DPropBuffer@@QAEXH@Z,0x00018F84
 ?removePropsForConstruction@W3DPropBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0001B054,removeTreesAndPropsForConstruction tail-call target (incremental-link thunk; body 0x7039E0 sits in the W3DPropBuffer.cpp region)
 ?removeTeam@TeamsInfoRec@@QAEXH@Z,0x0000D828,pinharvest x3 (thunk)
@@ -81883,8 +81639,6 @@ name,address,notes
 ?removeTerrainBibHighlighting@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
 ?removeTree@W3DTreeBuffer@@QAEXW4DrawableID@@@Z,0x0003AC60
 ?removeTreesAndPropsForConstruction@BaseHeightMapRenderObjClass@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0001A492,pinharvest x1 (thunk)
-?removeTreesAndPropsForConstruction@BaseHeightMapRenderObjClass@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x00023439,Open-BFME7 additive: retail call target used by the landed row at 0x00730D30 (thunk drift repair)
-?removeTreesAndPropsForConstruction@BaseHeightMapRenderObjClass@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0002A833,Open-BFME7 additive: retail call target used by the landed row at 0x00730D50 (thunk drift repair)
 ?removeTreesForConstruction@W3DTreeBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x000318FE,incremental thunk used by BaseHeightMap construction clearing
 ?render@BaseHeightMapRenderTreesShim@@QAEXPAVCameraClass@@@Z,0x006CD990,BaseHeightMapRenderObjClass renderTrees incremental-link thunk target through a TU-local forwarding shim
 ?render@BfmeShadowBufferEntry@@QAEXPAXG0PAG@Z,0x0003D253,render buffer entry helper ILT
@@ -81929,7 +81683,6 @@ name,address,notes
 ?reset@GameSpyInfo@@UAEXXZ,0x00005966,REL32 pin from the GameSpyInfo constructor @0x636D90
 ?reset@LANAPI@@UAEXXZ,0x000068AC,ILT thunk to 0x00688430; the devirtualized first call in ~LANAPI at 0x00688680
 ?reset@NetCommandList@@QAEXXZ,0x0000B9CE,ILT thunk retail call sites use; real body 0x6731A0
-?reset@NetCommandList@@QAEXXZ,0x00037565,Open-BFME7 additive: retail call target used by the landed row at 0x001DDFD0 (thunk drift repair)
 ?reset@Network@@UAEXXZ,0x00681910,vtable 0x0111A968 slot 4 (+0x10 = SubsystemInterface::reset position) via ILT 0x0003CF1A; body is mov eax [ecx] / jmp [eax+4] = this->init() = ZH Network::reset(){init();}; ICF class ?dup_00681910 so the pin is address-specific
 ?reset@PathfindCell@@QAEXXZ,0x0002C106,Open-BFME5 ILT thunk to body 0x003F6EC0; BFME PathfindCell reset helper
 ?reset@Rva00369860State@@QAEXH@Z,0x00021A76,Open-BFME7 additive: retail call target used by the landed row at 0x0036B5E0 (thunk drift repair)
@@ -82279,8 +82032,6 @@ name,address,notes
 ?set@TerrainRoadTypeSetRepairedToFXStringShim@@QAEXW4BodyDamageType@@HVAsciiString@@@Z,0x00601CC0,TerrainRoadType friend_setRepairedToFXString incremental-link thunk target through a TU-local forwarding shim
 ?set@ThingTemplateSubobjectShim@@QAEXH@Z,0x0004AC69,ThingTemplate setCopiedFromDefault subobject flag helper shim
 ?set@UnicodeString@@QAEXABV1@@Z,0x00887C90,additive; per-TU copy (static 0x01336E2C)
-?set@UnicodeString@@QAEXABV1@@Z,0x00888530,Open-BFME7 additive: retail call target used by the landed row at 0x000682E0 (thunk drift repair)
-?set@UnicodeString@@QAEXABV1@@Z,0x008891F0,Open-BFME7 additive: retail call target used by the landed row at 0x00685420 (thunk drift repair)
 ?setActionType@ScriptAction@@QAEXW4ScriptActionType@1@@Z,0x00038A46,ILT for ScriptAction::setActionType called by the type-taking constructor
 ?setAnimData@BFMEAnimateWindowLayout@@QAEXUICoord2D@@000UBFMECoord2D@@II@Z,0x003D5B9,BFME Coord2D ABI layout call to AnimateWindow::setAnimData
 ?setAptPalantirAlertVisible@@YAXH_N@Z,0x0001136A,AptPalantir alert visibility action thunk
@@ -82324,7 +82075,6 @@ name,address,notes
 ?setDisconnectSlot@NetDisconnectPlayerCommandMsg@@QAEXE@Z,0x00008C74,ILT thunk; real body 0xA73C80
 ?setDragSelecting@BfmeSelectionTranslator@@QAEXXZ,0x000306DE,derived from the REL32 displacement at 0x00478F60
 ?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x00888B80,pinharvest x1 (body)
-?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x00888DA0,Open-BFME7 additive: retail call target used by the landed row at 0x00434610 (thunk drift repair)
 ?setEffectivelyDead@Object@@QAEX_N@Z,0x00030887,ILT thunk -> body 0x001C7E60 (matched); AIUpdateInterface::markAsDead call site
 ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z,0x00001A3C,Open-BFME5 ILT thunk to body 0x004149E0 in the Drawable range; ?groupSetEmoticon@AIGroup@@QAEXABVAsciiString@@H@Z at 0x001514C0 calls it on every member drawable
 ?setError@Rva007E8810Message@@QAEXH@Z,0x007E88C0,V2 lane: FESL message store error code; same body as ?m@Gen_007e88c0@@QAEXH@Z
@@ -82453,7 +82203,6 @@ name,address,notes
 ?setShroudLevel30B8@BaseHeightMapResetShroud@@QAEXHHE_N@Z,0x000029F5,W3DDisplay primary shroud update target read from retail REL32
 ?setShroudLevel30BC@BaseHeightMapResetShroud@@QAEXHHE_N@Z,0x0003D1DB,W3DDisplay 0x006EA700 direct +0x30BC shroud update target read from retail REL32
 ?setSize@Shadow@@QAEXMM@Z,0x0002133C,pinharvest x1 (thunk)
-?setSize@Shadow@@QAEXMM@Z,0x00040412,Open-BFME7 additive: retail call target used by the landed row at 0x002DF500 (thunk drift repair)
 ?setSize@ShadowSetSizeShim@@QAEXMM@Z,0x001E4250,Shadow::setSize incremental-link thunk target through a TU-local forwarding shim
 ?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0
 ?setSkyBoxScale@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F,SkyboxSettings reader direct call through the retail ILT to 0x0079F1E0
@@ -82480,7 +82229,6 @@ name,address,notes
 ?setTooltipText@WinInstanceData@@QAEXVUnicodeString@@@Z,0x00040B92,incremental-link thunk fronting the unclaimed body 0x00499CC0
 ?setTotalDataLength@NetWrapperCommandMsg@@QAEXI@Z,0x0003EC52,ILT thunk; real body 0xA73F50
 ?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x00023D49
-?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x000361CE,Open-BFME7 additive: retail call target used by the landed row at 0x00132CE0 (thunk drift repair)
 ?setTransformMatrix@ThingSetTransformMatrixShim@@QAEXPBVMatrix3D@@@Z,0x001C16A0,Thing::setTransformMatrix incremental-link thunk target through a TU-local forwarding shim
 ?setTurretEnabled@AIUpdateInterface@@QAEXW4WhichTurretType@@_N@Z,0x0002ABBC,BattlePlanUpdate::enableTurret retail REL32 target
 ?setTurretTargetObject@Rva001764E0AIUpdate@@QAEXW4WhichTurretType@@PAVObject@@_N@Z,0x0001A0E1,AIAttackPursueTargetState update turret target call
@@ -82624,7 +82372,6 @@ name,address,notes
 ?testOne@Rva002DF100@@QAEEPAX@Z,0x0000BAEB,Open-BFME5 ILT to the one-argument worker called by 0x002DF100
 ?testOwner@Rva0016AE80Owner@@AAE_NXZ,0x00029C3F,Open-BFME5 owner fallback predicate tail-called by the 0x0016AE80 child predicate
 ?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x00019BCD,pinharvest x1 (thunk)
-?testSetAndClear@?$BitFlags@$0HE@@@QBE_NABV1@0@Z,0x0003A8D7,Open-BFME7 additive: retail call target used by the landed row at 0x00774060 (thunk drift repair)
 ?testStatus@BFMEActionObject@@QBE_NH@Z,0x000016A4,BFME Object status helper ILT decoded from ActionManager::canGetHealedAt
 ?testStatus@BFMESelectionObjectStatus@@QBE_NH@Z,0x000016A4,TU-scoped BFME selection status view; CanSelectDrawable retail ILT
 ?testStatus@Object@@QBE_NH@Z,0x000016A4,Object status ILT used by BezierProjectileBehavior::handle; same body as testStatus@BFMEActionObject
@@ -82860,30 +82607,17 @@ name,address,notes
 ?winPrevTab@GameWindow@@QAEHXZ,0x00010550
 ?winSetDisabledBorderColor@GameWindow@@QAEHHH@Z,0x0003178C,ILT/thunk used by GadgetComboBoxSetColors
 ?winSetDisabledColor@GameWindow@@QAEHHH@Z,0x00014867,site-decoded x2 (thunk)
-?winSetDisabledColor@GameWindow@@QAEHHH@Z,0x0001EAEC,Open-BFME7 additive: retail call target used by the landed row at 0x004B3590 (thunk drift repair)
-?winSetDisabledColor@GameWindow@@QAEHHH@Z,0x000262B0,Open-BFME7 additive: retail call target used by the landed row at 0x0047B700 (thunk drift repair)
 ?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z,0x0000B406,site-decoded x23 (thunk)
-?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z,0x000262B0,Open-BFME7 additive: retail call target used by the landed row at 0x0047B060 (thunk drift repair)
-?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z,0x00035E09,Open-BFME7 additive: retail call target used by the landed row at 0x0047A360 (thunk drift repair)
-?winSetDisabledImage@GameWindow@@QAEHHPBVImage@@@Z,0x0003E36F,Open-BFME7 additive: retail call target used by the landed row at 0x0047B0A0 (thunk drift repair)
 ?winSetDisabledTextColors@GameWindow@@QAEXHH@Z,0x0001B694
 ?winSetEnabledBorderColor@GameWindow@@QAEHHH@Z,0x00014867,ILT/thunk used by GadgetComboBoxSetColors
 ?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x00014867,site-decoded x2 (thunk)
-?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x0001EAEC,Open-BFME7 additive: retail call target used by the landed row at 0x0047A940 (thunk drift repair)
-?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x000262B0,Open-BFME7 additive: retail call target used by the landed row at 0x004B3590 (thunk drift repair)
-?winSetEnabledColor@GameWindow@@QAEHHH@Z,0x00035E09,Open-BFME7 additive: retail call target used by the landed row at 0x0047A8C0 (thunk drift repair)
 ?winSetEnabledImage@GameWindow@@QAEHHPBVImage@@@Z,0x00035E09
 ?winSetEnabledImage@GameWindow@@QAEXHPBVImage@@@Z,0x00035E09,small scale transition enabled image ILT
 ?winSetEnabledTextColors@GameWindow@@QAEXHH@Z,0x00017459
 ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z,0x0004047B
 ?winSetHiliteBorderColor@GameWindow@@QAEHHH@Z,0x000047D2,ILT/thunk used by GadgetComboBoxSetColors
-?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x0000B406,Open-BFME7 additive: retail call target used by the landed row at 0x0047A500 (thunk drift repair)
 ?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x00014867,site-decoded x2 (thunk)
-?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x000248B1,Open-BFME7 additive: retail call target used by the landed row at 0x004B3590 (thunk drift repair)
-?winSetHiliteColor@GameWindow@@QAEHHH@Z,0x000262B0,Open-BFME7 additive: retail call target used by the landed row at 0x0047B700 (thunk drift repair)
 ?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z,0x0000B406,caller-derived (36 matched callers agree, e9 thunk)
-?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z,0x000262B0,Open-BFME7 additive: retail call target used by the landed row at 0x0047A7C0 (thunk drift repair)
-?winSetHiliteImage@GameWindow@@QAEHHPBVImage@@@Z,0x0003E36F,Open-BFME7 additive: retail call target used by the landed row at 0x0047A3E0 (thunk drift repair)
 ?winSetHiliteTextColors@GameWindow@@QAEXHH@Z,0x000268B9
 ?winSetIMECompositeTextColors@GameWindow@@QAEXHH@Z,0x00014C13
 ?winSetInputFunc@GameWindow@@QAEHP6A?AW4WindowMsgHandledType@@PAV1@III@Z@Z,0x00027BF1,ILT thunk used by GadgetListBoxRemoveMultiSelect
@@ -82934,17 +82668,12 @@ name,address,notes
 ?xferBase2298B0@BfmeBase002298B0@@AAEXPAVXfer@@@Z,0x000489DC,"Decoded489DC JMP2298B0 and reviewed complete snapshot routine through ret at229E22; typed Xfer receiver argument, not old22CD40 label"
 ?xferBlob_0010CC40@@YAXPAVXfer@@PAX@Z,0x00035814,"Address-qualified cdecl field transfer; retail 0x000F9CF0 calls ILT to 0x0010CC40; target takes Xfer then field pointer on stack, versioned virtual xfer calls, bare ret"
 ?xferInteger@@YAXAAVXfer@@AAH@Z,0x0002153A,ParticleSystemInfo::DoXfer raw ParticleType enum helper call target
-?xferInteger@@YAXAAVXfer@@AAH@Z,0x000272CD,Open-BFME7 additive: retail call target used by the landed row at 0x5c3230 (thunk drift repair)
-?xferInteger@@YAXAAVXfer@@AAH@Z,0x00044FD0,Open-BFME7 additive: retail call target used by the landed row at 0x5ff840 (thunk drift repair)
-?xferInteger@@YAXAAVXfer@@AAH@Z,0x0004570F,Open-BFME7 additive: retail call target used by the landed row at 0x5c3230 (thunk drift repair)
-?xferInteger@@YAXAAVXfer@@AAH@Z,0x00048851,Open-BFME7 additive: retail call target used by the landed row at 0x5fe750 (thunk drift repair)
 ?xferInteger_272CD@@YAXAAVXfer@@AAH@Z,0x000272CD,FX particle system ParticleSystemInfo tail integer xfer thunk
 ?xferInteger_44FD0@@YAXAAVXfer@@AAH@Z,0x00044FD0,FX particle system update integer xfer thunk
 ?xferInteger_4570F@@YAXAAVXfer@@AAH@Z,0x0004570F,FX particle system ParticleSystemInfo integer xfer thunk
 ?xferInteger_48851@@YAXAAVXfer@@AAH@Z,0x00048851,FX particle system wind integer xfer thunk
 ?xferObjectID0010C3C0@@YAXPAVXfer@@PAI@Z,0x0000C9B4,"Previously reviewed10C3C025B helper: ObjectID literal,width4,virtual90; correctedunsignedObjectID pointer"
 ?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0003EE32,H1 GameClientRandomVariable xfer helper (thunk; body 0x0010C4D0) ??? pinned, ideally matched in game_client_random_variable.cpp
-?xferRandomVariable@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,Open-BFME7 additive: retail call target used by the landed row at 0x5f6670 (thunk drift repair)
 ?xferRandomVariable_4570F@@YAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0004570F,FX particle system render-object random-variable xfer thunk
 ?xferRva003D6CB0@@YAAAVXfer@@AAV1@AAY0CAA@H@Z,0x000163E7,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
 ?xferRva003D6D40@@YAAAVXfer@@AAV1@AAY0EA@M@Z,0x0000CF4A,Open-BFME7 additive: retail call target used by the landed row at 0x003E38F0 (thunk drift repair)
