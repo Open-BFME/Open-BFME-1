@@ -76901,6 +76901,7 @@ name,address,notes
 ?findMemoryPool@MemoryPoolFactory@@QAEPAVMemoryPool@@PBD@Z,0x0003ADD7,pool-glue cascade callee (from retail call site)
 ?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z,0x0002AE23
 ?findModule@Object@@QBEPAVModule@@W4NameKeyType@@@Z,0x0002AE23,TU-scoped public ABI spelling for the protected retail Object::findModule call
+?findModule@Object@@QBEPAVModule@@H@Z,0x0002AE23,callee of DamageFieldNugget::doNugget
 ?findMultiplayerColorDefinitionByName@MultiplayerSettings@@QAEPAVMultiplayerColorDefinition@@VAsciiString@@@Z,0x0003F436,harvested from parseMultiplayerColorDefinition (thunk)
 ?findMyDrone@AIDockProcessDockState@@QAEPAVObject@@XZ,0x00044EDB,link thunk; called by AIDockProcessDockState::update at 0x0014FCE0
 ?findNameIndex@Rva00359330StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000329FC,retail call target from the 0x00359330 string-record release body
@@ -83879,3 +83880,4 @@ _g_rva0130E9B0,0x0130E9B0,"Root read retail125-byte body: GetModuleHandleA(NULL)
 ?bfmeSetReferenceEW@BfmeTargetEW@@QAEXPAVBfmeRefEW@@@Z,0x0091FC90,pin
 ?rva001B3510@Rva001CD990FiringTracker@@QAEXPBVWeapon@@HPBXE@Z,0x00035D0A,Root traced ILT00035D0A to001B3510; complete805-byte firing tracker body ends RET10 at001B3832. Existing firing tracker family plus this caller proves four stack arguments. Address-derived member symbol avoids overclaiming target semantics. Removed unused mismangled alternatename directive.
 ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ,0x0018A240,"Root verified ILT00021D23 ->0018A240/437B; body reads owner team/template attackCommonTarget flag then stores target ID to machine+50 and scans player tunnel tracker+22C, matching AITNGuardMachine::lookForInnerTarget. Corrected caller to STLport and independently verified its complete local findBestTunnel134B plus274-byte caller."
+?setLifetimeRange@DeletionUpdate@@QAEXII@Z,0x0028C6E0,callee of DamageFieldNugget::doNugget
