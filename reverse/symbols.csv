@@ -84243,7 +84243,3 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??ARva00137E80Map@@QAEAAPAVThingTemplate@@ABVAsciiString@@@Z,0x27147,Retail ThingFactory lookup helper at proven call site
 ?bfmeAxisOf@@YAHPBVBfmePointNC@@@Z,0x00013570,the axis-specific lookup calls the byte-verified classifier through its retail thunk
 ?armyNameFromIndex@BfmeFirstWalkOnArmy@@QAEXIPAVAsciiString@@@Z,0x00038915,the axis-specific lookup calls the proven army-name body through its retail thunk
-?bfmeSendZB@@YAXPAX00VBfmeTagZB@@@Z,0x0002E0B9,pin
-??0BfmeRoomZC@@QAE@ABV0@@Z,0x00887B60,pin
-?bfmeRunZC@BfmeOwnZC@@QAEXVBfmeRoomZC@@PAX@Z,0x0000D97C,pin
-??0BfmeRoomZD@@QAE@ABV0@@Z,0x00887B60,pin
