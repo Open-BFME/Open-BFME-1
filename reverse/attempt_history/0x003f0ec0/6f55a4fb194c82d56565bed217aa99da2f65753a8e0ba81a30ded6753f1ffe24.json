@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6f55a4fb194c82d56565bed217aa99da2f65753a8e0ba81a30ded6753f1ffe24",
+  "symbol": "?d_003f0ec0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_003f0ec0@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// 43/43 in size, structure exact: six parameters forwarded plus a dereference\n// of the second and a trailing zero, seven arguments in all.\n// Residue is the argument-shuttle pattern already logged at 0x0047C9F0:\n// retail loads each stack parameter into edx one at a time, pushing between\n// the loads (same displacement, different esp), while MSVC preloads three of\n// them into eax, ecx and edx first. 0x003F0F00 is the adjacent twin.\nclass BfmeSrcBK\n{\npublic:\n\tunsigned char m_bfmeHeadBK[0x10];\n\tvoid *m_bfmeValueBK;\n};\n\nvoid __stdcall bfmeRunBK(void *first, void *value, void *third, void *fourth,\n\tvoid *fifth, void *sixth, void *seventh);\n\nvoid __stdcall bfmeFwdBK(void *first, BfmeSrcBK *source, void *third, void *fourth,\n\tvoid *fifth, void *sixth)\n{\n\tbfmeRunBK(first, source->m_bfmeValueBK, third, fourth, fifth, sixth, 0);\n}\n"
+}

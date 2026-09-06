@@ -84210,3 +84210,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?classifyMapCell@Pathfinder@@SAXHHPAVPathfindCell@@@Z,0x003F7630,Pathfinder map classifier called by classifyMap at 0x003F9140
 ?setType@PathfindCell@@QAEXW4CellType@1@@Z,0x003F68B0,PathfindCell type setter called by classifyMap at 0x003F9140
+?bfmeSetWakeBJ@BfmeWakeBJ@@QAEXPAXH@Z,0x000157DA,pin
+?bfmeRunBK@@YGXPAX000000@Z,0x0001FA14,pin
+?bfmeRunBL@@YAXPAXH0@Z,0x0002126F,pin
