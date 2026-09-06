@@ -84107,3 +84107,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeFmtAJ@@3PADA,0x00D090FC,pin
 ?bfmeAddAJ@BfmeMgr19E@@QAEXPAXPADH11111@Z,0x00015235,pin
 ?bfmeCloseAJ@BfmeOwnAJ@@QAEXH@Z,0x0003D811,pin
+?bfmeStopAK@@YAXPAXHH@Z,0x000439C3,pin
+?bfmeStartAK@@YAHPAX@Z,0x0002CAAC,pin
