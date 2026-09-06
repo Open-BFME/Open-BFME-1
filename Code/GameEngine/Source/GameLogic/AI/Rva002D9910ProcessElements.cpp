@@ -12,7 +12,7 @@ public:
     virtual void *getValue();
     virtual void slot1C();
     virtual void slot20();
-    virtual void slot24();
+    virtual void slot24(void *value);
     virtual void apply(int value);
 };
 
@@ -54,12 +54,25 @@ private:
 
 public:
     void *m_compare;
+    unsigned char m_flag;
 };
 
 class Rva002D9910
 {
 public:
     void process();
+};
+
+class Rva002D9890
+{
+public:
+    void process();
+};
+
+struct Rva002D9890Global
+{
+    char m_pad00[0x3C];
+    void *m_value;
 };
 
 void Rva002D9910::process()
@@ -73,6 +86,25 @@ void Rva002D9910::process()
             Rva002D9910State *state = *(Rva002D9910State **)((char *)this - 0x0C);
             if (result->getValue() == state->m_compare)
                 result->apply(1);
+        }
+    }
+}
+
+void Rva002D9890::process()
+{
+    Rva002D9910Owner *owner = *(Rva002D9910Owner **)((char *)this - 8);
+    for (Rva002D9910Element **it = owner->m_elements; *it != 0; ++it)
+    {
+        Rva002D9910Result *result = (*it)->m_nested.getResult();
+        if (result != 0)
+        {
+            Rva002D9910State *state = *(Rva002D9910State **)((char *)this - 0x0C);
+            if (result->getValue() == state->m_compare)
+            {
+                result->apply(0);
+                if (!(*(Rva002D9910State **)((char *)this - 0x0C))->m_flag)
+                    result->slot24((*(Rva002D9890Global **)0x012F0898)->m_value);
+            }
         }
     }
 }
