@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "12c1835181b30051fb3611ac493199e4ddfa65a5782008a97e5d42585030a507",
+  "symbol": "?d_008087d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?d_008087d0@@YAXXZ\n// partial score=0.8 date=2026-09-06\n// 33/41 at exact size. Constructor over an empty base with the base ctor at\n// 0x007E86B0 and the head pointer g_bfmeVft994C at 0x011296B0.\n// Residue: retail loads the parameter into ecx BEFORE the zero run, so ecx\n// and eax are both live across it, and stores it last; MSVC emits the zeros\n// first and only then loads the parameter into eax. Tried six store\n// permutations and a named local for the parameter declared at the top; the\n// load never moves ahead of the zeros. Contrast 0x0059DD90 and 0x0059FAE0,\n// where putting a CONSTANT store before the zero run does hoist it -- a\n// parameter load does not respond the same way.\nextern char g_bfmeVft994C[];\n\nclass BfmeBaseBD\n{\npublic:\n\tBfmeBaseBD(void);\n};\n\nclass BfmeOwnBD : public BfmeBaseBD\n{\npublic:\n\tBfmeOwnBD(void *owner);\n\n\tchar *m_bfmeVfBD;\n\tint m_bfmeABD;\n\tint m_bfmeBBD;\n\tint m_bfmeCBD;\n\tvoid *m_bfmeOwnerBD;\n\tint m_bfmeDBD;\n};\n\nBfmeOwnBD::BfmeOwnBD(void *owner)\n{\n\tm_bfmeBBD = 0;\n\tm_bfmeCBD = 0;\n\tm_bfmeABD = 0;\n\tm_bfmeDBD = 0;\n\tm_bfmeVfBD = g_bfmeVft994C;\n\tm_bfmeOwnerBD = owner;\n}\n"
+}
