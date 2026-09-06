@@ -217,6 +217,15 @@ struct GlobalDataLayout
 } while (0)
 
 // ?execute@GameEngine@@UAEXXZ present-unmatched
+// TWO BODIES DEFINE THIS SYMBOL AND NEITHER IS MATCHED.  This is the
+// BFME-shaped reconstruction of retail 0x0006BBE0 (959 bytes); Common/
+// GameEngine.cpp still carries Zero Hour's.  Byte-proven here: only the two
+// EH funclets uw_0006BC3E and uw_0006BCB9, so the exception structure is
+// right and the body is not.  reverse/re_attempts.log banks a FURTHER
+// ALONG version at reverse/attempts/0x0006bbe0.cpp (score 0.9969, four stack
+// displacements short) which also re-identifies the 0x012EF18C subsystem
+// below from StatsCollector to Watchdog -- take that file, not this one, as
+// the starting point, and treat the StatsCollector naming here as contested.
 void GameEngine::execute(void)
 {
 	if (InitialFrameTime == 0)

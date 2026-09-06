@@ -1,6 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+// PIN STATUS 2026-09-06 -- python3 tools/pin_status.py Code/GameEngine/Source/Common/GameEngine.cpp
+// 4 of 12 definitions here carry a byte-verified `matched`
+// reverse/functions.csv row naming this source; 4 more are matched only
+// from a split-out TU; 4 carry no ledger row at all.  Those 4 are unverified
+// Zero Hour reference bodies and are not known to match BFME.  2 free functions
+// are counted but not classified.  Check a body before porting behaviour off it.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -769,6 +775,12 @@ extern HWND ApplicationHWnd;
  * The "main loop" of the game engine. It will not return until the game exits. 
  */
 // ?execute@GameEngine@@UAEXXZ present-unmatched
+// TWO BODIES DEFINE THIS SYMBOL AND NEITHER IS MATCHED.  This one is Zero
+// Hour's; Common/GameEngine_execute.cpp holds a BFME-shaped reconstruction of
+// the same symbol.  Retail is RVA 0x0006BBE0, 959 bytes, and the only byte
+// evidence either body has belongs to that other TU: its two EH funclets
+// uw_0006BC3E and uw_0006BCB9 are `matched` rows naming it.  Nothing here is
+// verified against BFME -- read GameEngine_execute.cpp instead.
 void GameEngine::execute( void )
 {
 	
