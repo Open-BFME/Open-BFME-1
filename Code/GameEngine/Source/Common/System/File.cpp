@@ -526,6 +526,17 @@ MemoryReadFile::MemoryReadFile( char *data, Int size )
 	setName( "<MemoryReadFile>" );
 }
 
+// ?createMemoryReadFile@@YAPAVFile@@PADH@Z
+File *createMemoryReadFile( char *data, Int size )
+{
+	if( data == NULL && size != 0 )
+	{
+		return NULL;
+	}
+
+	return new MemoryReadFile( data, size );
+}
+
 // ?open@MemoryReadFile@@UAE_NPBDH@Z
 Bool MemoryReadFile::open( const char * /*filename*/, Int /*access*/ )
 {
