@@ -83597,8 +83597,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$__copy@PBUEvaMessageInfo@@PAU1@H@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00003F6C,0x004263D0 calls +0x00b1 and +0x00e4 ILT enters matched 28-byte copy body 0x00425A60
 ??$_Destroy@PAUEvaMessageInfo@@@_STL@@YAXPAUEvaMessageInfo@@0@Z,0x0003AA8A,0x004263D0 call +0x00bb ILT enters matched 28-byte member walk body 0x004261F0
 ??$__uninitialized_copy@PBUEvaMessageInfo@@PAU1@@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0004684E,0x004263D0 call +0x0119 ILT enters matched 28-byte copy walk body 0x00426020
-??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
-?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,retail fatal helper alias used by MessageBox callback throw path at 0x00522470 and 0x005224C0
-?removeParentObject@W3DGhostObject@@IAEXXZ,0x006BC750,BFME W3DGhostObject helper called by setLocalPlayerIndex
-?restoreParentObject@W3DGhostObject@@IAEXXZ,0x006BC7B0,BFME W3DGhostObject helper called by setLocalPlayerIndex
 ?replace@Rva005929E0@@QAEXABVUnicodeString@@000@Z,0x00046713,ILT used by ControlBar tooltip repopulation
