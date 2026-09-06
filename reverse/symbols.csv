@@ -73471,6 +73471,7 @@ name,address,notes
 ?bfmeDoBNE@BfmeOuterBNE@@QAEXXZ,0x0004908F,pin
 ?bfmeDoBNH@@YAXPAVBfmeThingBNH@@PAXHH@Z,0x0090E910,pin
 ?bfmeDoBOE@BfmeSinkBOE@@QAEXPAX0@Z,0x00020E3C,pin
+?bfmeDoBPB@BfmeSubBPB0064C6C0@@QAEXPAX00@Z,0x00018A9D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0064C6C0 calls; autopin
 ?bfmeDoBPB@BfmeSubBPB@@QAEXPAX00@Z,0x000160D1,pin
 ?bfmeDoBPC@@YGXPAVBfmeThingBPC@@PAX@Z,0x000476F9,pin
 ?bfmeDoBPF@@YAXPAXPAUBfmeSubBPF@@0@Z,0x00022AB6,pin
@@ -73547,6 +73548,7 @@ name,address,notes
 ?bfmeDropARB@BfmeGotARB@@QAEXH@Z,0x00043C8E,pin
 ?bfmeDropAUC@BfmeThingAUC@@QAEXPAX@Z,0x00015BE5,pin
 ?bfmeDropAUD@BfmeListAUD@@QAEXPAX@Z,0x00016ED2,pin
+?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x00016176,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00449880 calls; autopin
 ?bfmeDropAVA@BfmeListAVA@@QAEXPAX@Z,0x0004A91C,pin
 ?bfmeDropB@@YAXPAX@Z,0x008961C0,Open-BFME5 the drop the cleanups at 0x008925F0 0x00892CA0 and 0x00893990 call
 ?bfmeDropBAB@BfmeOwnerBAB@@QAEXPAX@Z,0x007F9590,pin
