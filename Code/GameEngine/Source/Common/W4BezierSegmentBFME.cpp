@@ -74,6 +74,7 @@ class Rva000B6D50BezierSegment
 											 Real x1, Real y1, Real z1,
 											 Real x2, Real y2, Real z2,
 											 Real x3, Real y3, Real z3);
+		Rva000B6D50BezierSegment(Real cp[12]);
 };
 
 // The difference vectors retail spills are NOT contiguous on the stack, so the
@@ -124,6 +125,25 @@ Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real x0, Real y0, Real z0,
 		m_controlPoints[3].x = x3;
 		m_controlPoints[3].y = y3;
 		m_controlPoints[3].z = z3;
+}
+
+Rva000B6D50BezierSegment::Rva000B6D50BezierSegment(Real cp[12])
+{
+		m_controlPoints[0].x = cp[0];
+		m_controlPoints[0].y = cp[1];
+		m_controlPoints[0].z = cp[2];
+
+		m_controlPoints[1].x = cp[3];
+		m_controlPoints[1].y = cp[4];
+		m_controlPoints[1].z = cp[5];
+
+		m_controlPoints[2].x = cp[6];
+		m_controlPoints[2].y = cp[7];
+		m_controlPoints[2].z = cp[8];
+
+		m_controlPoints[3].x = cp[9];
+		m_controlPoints[3].y = cp[10];
+		m_controlPoints[3].z = cp[11];
 }
 
 //-------------------------------------------------------------------------------------------------
