@@ -258,3 +258,52 @@ match after its leaves: it is already fully decomposed and banked at 0.90. The
 AI predicate is smaller but blocked only by register allocation and does not
 benefit from more dependency recovery. The next larger parent by dependency
 readiness is the Drawable callback, whose two direct callees are already exact.
+
+## Phase-2 transform and collision cone
+
+Phase 2 is a separate branch of the dispatcher. It first updates the partition
+manager, then dispatches `CollisionManager::update`, and finally walks the object
+list at `GameLogic+0xA8`. Each object whose frame stamp at `+0x168` differs from
+the current frame `GameLogic+0x3C` receives `Object::bfmeRecordTransform(frame)`.
+The object-list walk follows the `+0x88` link and does not increment the frame.
+
+| Component | RVA / size | Caller relationship and signature | Status | Parent value |
+| --- | --- | --- | --- | --- |
+| `PartitionManager::update` | body address not yet pinned | virtual slot `+0x14` from `ThePartitionManager` | UNKNOWN | Large phase-2 parent |
+| `CollisionManager::update` | `0x009A2560` / 8 | virtual slot `+0x14`, forwards through `+0x0C` | EXACT | Collision dispatch closed |
+| `Rva009A45A0CollisionData::update` | `0x009A4A30` / 41 | tail body; three collision passes bracketed by busy byte `+0xC06D` | EXACT | Collision implementation closed |
+| `Object::bfmeRecordTransform` (Drawable body) | `0x001C0BE0` / 217 | Object ILT `0x0002BB43` calls the Drawable-compatible body with frame | EXACT | Transform history closed |
+| `Object::bfmeReactToTransformChange` | `0x001BE700` / 65 | adjacent Object vtable helper for transform changes | EXACT | Shroud/collision/contain notifications closed |
+| `PartitionManager` collision/contact helpers | several exact bodies in `PartitionManager.cpp` | reached through the manager update body, not directly by the dispatcher | EXACT / UNKNOWN ownership | Useful only after the manager entry is pinned |
+
+The remaining phase-2 uncertainty is the retail `PartitionManager::update`
+identity and its vtable slot body. The collision wrapper/data pair and the
+transform helper are already clean, independently verified leaves.
+
+## Phases 3–6 sleepy entries and update modules
+
+After phase-2 work, the dispatcher uses a two-pass sleepy-vector algorithm. It
+selects entries whose `nextCallFrame` is due, calls each update-module virtual
+slot `+0x14`, and interprets the returned sleep state. Removal uses the same
+swap-and-pop/index-repair machinery as `processDestroyList`. Phase 5 additionally
+updates the object-creation list, the victory conditions subsystem, the
+experience-level system, and the embedded LivingWorld entry range.
+
+| Component | RVA / size | Caller relationship and signature | Status | Parent value |
+| --- | --- | --- | --- | --- |
+| `GameLogic::popSleepyUpdate` | `0x0038C1E0` / 2,876 | phase 3–6 direct call; `__thiscall void()` | DUMP | Main sleepy parent |
+| update-module virtual slot `+0x14` | no single body | invoked for each normal/sleepy module; returns the update sleep enum | SEMANTICALLY_SOLVED | Core module dispatch |
+| `GameLogic::processDestroyList` | `0x0038AE90` / 438 | phase 3–6 tail and phase-1 destruction path | PARTIAL | Removal dependency |
+| `GameLogic::bfmeClear` | `0x0038A6F0` / 92 | phase-5 direct cleanup helper | EXACT | Phase-5 cleanup closed |
+| `Rva00367810Entries::update` | `0x00367810` / 164 | phase-5 embedded entry at `GameLogic+0x170` | EXACT | LivingWorld phase-5 arm closed |
+| `ScriptEngine::bfme_updateLogicDebugFrame` | `0x00339B10` / 102 | phase-1 debug frame support | EXACT | Debug update leaf closed |
+| `ScriptEngine::isTimeFrozenDebug` | `0x00336F20` / 36 | phase-1 debug freeze predicate | EXACT | Debug gate closed |
+| `ScriptEngine::forceUnfreezeTime` | `0x00337040` / 28 | phase-1 debug recovery call | EXACT | Debug recovery closed |
+| `AIUpdateInterface::destroyPath` | `0x0026F080` / 70 | phase-1 object path cleanup before sleepy work | EXACT | Object path leaf closed |
+| module disabled-mask/priority/index accessors | virtual or inline | fields at module `+0x18/+0x1C`, phase vectors at `+0xC4` stride 12 | SEMANTICALLY_SOLVED | Needed for exact allocator shape |
+
+The parent body also calls several subsystem virtual updates at slot `+0x14`
+(`TheAI`-owned pathfinder, shroud/taint/object-creation/victory/experience
+systems). Those slots are semantically identified by their singleton and phase
+position; their concrete implementations are outside this cone unless the
+sleepy parent needs their code generation.
