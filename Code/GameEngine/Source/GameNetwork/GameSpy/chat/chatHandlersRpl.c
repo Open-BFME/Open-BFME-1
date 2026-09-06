@@ -2382,3 +2382,55 @@ void ciRplGetChanKeyHandler(CHAT chat, const ciServerMessage * message)
 		free(values);
 	}
 }
+
+void ciRplEndOfWhoHandler(CHAT chat, const ciServerMessage * message)
+{
+	ciFilterMatch matches[2];
+	ciServerMessageFilter * filter;
+	char * name;
+
+	assert(message->numParams == 3);
+	if(message->numParams != 3)
+		return; //ERRCON
+
+	name = message->params[1];
+
+	memset(matches, 0, sizeof(matches));
+	matches[0].type = TYPE_WHO;
+	matches[0].name = name;
+	matches[1].type = TYPE_CWHO;
+	matches[1].name = name;
+
+	filter = ciFindFilter(chat, 2, matches);
+	if(!filter)
+		return;
+
+	if(filter->type == TYPE_WHO)
+	{
+		ciCallbackGetBasicUserInfoParams params;
+
+		params.success = CHATFalse;
+		params.nick = name;
+		params.user = NULL;
+		params.address = NULL;
+
+		FINISH_FILTER;
+
+		return;
+	}
+
+	if(filter->type == TYPE_CWHO)
+	{
+		ciCallbackGetChannelBasicUserInfoParams params;
+
+		params.success = CHATTrue;
+		params.channel = name;
+		params.nick = NULL;
+		params.user = NULL;
+		params.address = NULL;
+
+		FINISH_FILTER;
+
+		return;
+	}
+}
