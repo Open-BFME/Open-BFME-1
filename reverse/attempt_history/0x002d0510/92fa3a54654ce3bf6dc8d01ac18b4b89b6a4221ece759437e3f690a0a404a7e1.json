@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "92fa3a54654ce3bf6dc8d01ac18b4b89b6a4221ece759437e3f690a0a404a7e1",
+  "symbol": "?d_002d0510@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?d_002d0510@@YAXXZ\n// partial score=0.8 date=2026-09-06\n// 41/41 bytes; every diff traces to MSVC materialising 0 in edx (xor edx,edx).\nstruct BfmeCounterEQG\n{\n\tint bfmeStepEQG(void);\n\tunsigned char m_bfmeHeadEQG[0x14];\n\tvolatile int m_bfmeTicksEQG;\n\tunsigned char m_bfmeMidEQG[0x14];\n\tvolatile unsigned int m_bfmeBusyEQG;\n};\n\nint BfmeCounterEQG::bfmeStepEQG(void)\n{\n\tif (m_bfmeBusyEQG > 0)\n\t{\n\t\tm_bfmeTicksEQG = 0;\n\t\treturn 1;\n\t}\n\tbool empty = (m_bfmeTicksEQG == 0);\n\tif (empty)\n\t{\n\t\tm_bfmeTicksEQG = 0;\n\t\treturn 1;\n\t}\n\t--m_bfmeTicksEQG;\n\treturn 1;\n}\n"
+}
