@@ -10639,6 +10639,7 @@ name,address,notes
 ?Rva01336E50Str@@3VRva0036CA00Str@@A,0x01336E50,Open-BFME5 global Rva0036CA00Str immediate used by 0x00385180/0x003855C0 reset
 ?Rva01358E54@@YGXPAX@Z,0x00F58E54,pin
 ?Rva01358EA8@@YGXPAX@Z,0x00F58EA8,pin
+?RecvReply@Cftp@@QAEJPBDHPAH@Z,0x00885570,WWDownload FTP.CPP Cftp::RecvReply callee of LogoffFromServer
 ?Rva01358ECC@@YGXPAX@Z,0x00F58ECC,pin
 ?Scale@MeshGeometryClass@@QAEXABVVector3@@@Z,0x00925610
 ?Scale@SegLineRendererClass@@QAEXM@Z,0x0095FF30
