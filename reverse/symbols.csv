@@ -78695,8 +78695,8 @@ name,address,notes
 ?getSurfaceLevel@W3DRadarResetTexture@@QAE?AVW3DRadarResetSurface@@XZ,0x0090E670,W3DRadar reset BFME value-surface accessor
 ?getTaintLevelByte006e@BfmeTaintManager@@QAEEHH@Z,0x00880E50,W3DDisplay BFME taint-level byte target read from retail REL32
 ?getTeamAsAIGroup@Team@@QAEXPAVAIGroup@@@Z,0x00022EC1,doTeamAttackNamed BFME Team::getTeamAsAIGroup thunk
-?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
-?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
+?getTerrainTexture@WorldHeightMap@@QAE?AVTerrainTextureRef@@XZ,0x00040953,WorldHeightMap::getTerrainTexture ILT; both lazy getters at 0x0074D210 and 0x0074D270 generate through it
+?getTerrainTexture@WorldHeightMap@@QAEXPAVTerrainTextureRef@@@Z,0x00040953,WorldHeightMap::getTerrainTexture ILT, sret spelling of the same thunk
 ?getTerrainColorAt@WorldHeightMap@@QAEXMMPAURGBColor@@@Z,0x007477E0,thunk-resolved body (via 0x197ae)
 ?getText@INILineBuffer@@QBEPBDH@Z,0x009CBC60,the INI line array accessor readLine copies from
 ?getText@NetChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00025338,ILT thunk; the by-value UnicodeString getter NetPacket::isRoomForChatMessage calls, beside the ledgered NetDisconnectChatCommandMsg twin
