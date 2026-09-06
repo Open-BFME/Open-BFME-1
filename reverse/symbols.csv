@@ -82413,6 +82413,7 @@ name,address,notes
 ?winSetNextInLayout@GameWindow@@QAEHPAV1@@Z,0x00035CF6
 ?winSetNextInLayout@GameWindow@@QAEXPAV1@@Z,0x00035CF6,pinharvest x3 (thunk)
 ?winSetPosition@GameWindow@@QAEHHH@Z,0x0001949D
+?winSetOwner@GameWindow@@QAEHPAV1@@Z,0x00047230,retail owner setter reached through the checkbox factory's incremental-link call
 ?winSetPrevInLayout@GameWindow@@QAEHPAV1@@Z,0x00015FB4
 ?winSetPrevInLayout@GameWindow@@QAEXPAV1@@Z,0x00015FB4,pinharvest x4 (thunk)
 ?winSetSize@GameWindow@@QAEHHH@Z,0x000482AC
