@@ -13,6 +13,8 @@ public:
     Cftp();
     virtual ~Cftp();
 
+    int AsyncGetHostByName( char *szName, struct sockaddr_in &address );
+
 private:
     int m_iCommandSocket;
     int m_iDataSocket;
@@ -38,6 +40,22 @@ private:
 
     void ZeroStuff();
 };
+
+struct sockaddr_in
+{
+    unsigned short sin_family;
+    unsigned short sin_port;
+    unsigned long sin_addr;
+    unsigned char sin_zero[ 8 ];
+};
+
+static sockaddr_in gThreadAddress;
+static int gThreadFlag;
+static unsigned long gThreadId;
+static int gThreadState;
+
+extern "C" __declspec(dllimport) void *__stdcall CreateThread(
+    void *, unsigned long, void *, void *, unsigned long, unsigned long *);
 
 enum
 {
@@ -70,4 +88,31 @@ void Cftp::ZeroStuff()
     m_findStart = 0;
     memset(&m_CommandSockAddr, 0, sizeof(m_CommandSockAddr));
     memset(&m_DataSockAddr, 0, sizeof(m_DataSockAddr));
+}
+
+int Cftp::AsyncGetHostByName( char *szName, struct sockaddr_in &address )
+{
+    if ( gThreadState == 0 )
+    {
+        gThreadFlag = 0;
+        memset( &gThreadAddress, 0, sizeof( gThreadAddress ) );
+
+        if ( CreateThread( NULL, 0, (void *)0x00C85430, szName, 0,
+                &gThreadId ) == NULL )
+        {
+            return 0x80040001;
+        }
+        gThreadState = 1;
+    }
+    if ( gThreadState == 1 )
+    {
+        if ( gThreadFlag )
+        {
+            address = gThreadAddress;
+            address.sin_family = 2;
+            gThreadState = 0;
+            return 0;
+        }
+    }
+    return 0x80040002;
 }
