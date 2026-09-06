@@ -1,87 +1,70 @@
-// ?d_006f9a30@@YAXXZ
-// partial score=0.84 date=2026-09-02
-// cl: /DNDEBUG /MD /EHsc
-
-// Retail 0x006F9A30. TheGameClient (0x012F1464) virtual slot +0x2C, then a
-// by-value AsciiString argument the callee destroys, then a byte at +0x95.
-
-template <typename T> struct Rva006F9A30StringData
-{
-	int m_refCount;
-	int m_length;
-	T m_text[1];
-};
-
-template <typename T> class Rva006F9A30StringBase
-{
-	friend class Rva006F9A30String;
-
-private:
-	Rva006F9A30StringBase();
-	Rva006F9A30StringBase(const Rva006F9A30StringBase<T> &other);
-	~Rva006F9A30StringBase();
-
-	Rva006F9A30StringData<T> *m_data;
-};
-
-class Rva006F9A30String : private Rva006F9A30StringBase<char>
+// ?bfmeMarkAB@BfmeOwnAB@@QAEXPAXABVBfmeRoomAB@@@Z (identity unknown)
+// partial score=0.86 date=2026-09-06
+// 65/76 at exact size and exact structure (a four-term && chain sharing one
+// exit, then a byte store through the result). Two residues:
+//   - esi/edi are swapped: retail puts `this` in edi and the first parameter
+//     in esi, MSVC the other way round. Tried hoisting the parameter into a
+//     local declared before everything, and splitting the first guard into an
+//     early return so the parameter local is declared later. No effect.
+//   - +0x28: retail emits the esp marker BEFORE `mov ecx,esp`, MSVC after --
+//     the same swap that blocks 0x0034C710.
+// The room copy ctor is the string_base alias pinned at 0x00887B60.
+class BfmeRoomAB
 {
 public:
-	Rva006F9A30String(const Rva006F9A30String &other) : Rva006F9A30StringBase<char>(other) {}
-	~Rva006F9A30String() {}
+	BfmeRoomAB(const BfmeRoomAB &other);
+	~BfmeRoomAB();
+
+	int m_bfmeHandleAB;
 };
 
-class Rva006F9A30Client
+class ClientRoot4120
 {
 public:
-	virtual void pad00();
-	virtual void pad04();
-	virtual void pad08();
-	virtual void pad0C();
-	virtual void pad10();
-	virtual void pad14();
-	virtual void pad18();
-	virtual void pad1C();
-	virtual void pad20();
-	virtual void pad24();
-	virtual void pad28();
-	virtual void *findById(unsigned int id);
+	virtual void bfmeCrSlot00AB(void);
+	virtual void bfmeCrSlot01AB(void);
+	virtual void bfmeCrSlot02AB(void);
+	virtual void bfmeCrSlot03AB(void);
+	virtual void bfmeCrSlot04AB(void);
+	virtual void bfmeCrSlot05AB(void);
+	virtual void bfmeCrSlot06AB(void);
+	virtual void bfmeCrSlot07AB(void);
+	virtual void bfmeCrSlot08AB(void);
+	virtual void bfmeCrSlot09AB(void);
+	virtual void bfmeCrSlot10AB(void);
+	virtual int bfmeCheckAB(void *first);
 };
 
-extern Rva006F9A30Client *TheRva006F9A30Client;		// 0x012F1464
+extern ClientRoot4120 *TheGameClient;
 
-class Rva006F9A30Result
+class BfmeNodeAB
 {
 public:
-	unsigned char m_pad[0x95];
-	unsigned char m_flag;
+	unsigned char m_bfmeHeadAB[0x95];
+	char m_bfmeMarkAB;
 };
 
-class Rva006F9A30Host
+class BfmeOwnAB
 {
 public:
-	void apply(unsigned int id, const Rva006F9A30String &name);
-	Rva006F9A30Result *make(unsigned int id, Rva006F9A30String name);
+	void bfmeMarkAB(void *first, const BfmeRoomAB &room);
+	BfmeNodeAB *bfmeFindAB(void *first, BfmeRoomAB room);
 
-private:
-	unsigned char m_pad[0x28];
-	unsigned char m_enabled;
+	unsigned char m_bfmeHeadAB[0x28];
+	char m_bfmeFlagAB;
 };
 
-// ?apply@Rva006F9A30Host@@QAEXIABVRva006F9A30String@@@Z
-void Rva006F9A30Host::apply(unsigned int id, const Rva006F9A30String &name)
+void BfmeOwnAB::bfmeMarkAB(void *first, const BfmeRoomAB &room)
 {
-	register unsigned int localId;
-	register Rva006F9A30Host *self = this;
-	Rva006F9A30Client *client = TheRva006F9A30Client;
-	if (client)
-	{
-		localId = id;
-		if (client->findById(localId) && self->m_enabled)
-		{
-			Rva006F9A30Result *result = self->make(localId, name);
-			if (result)
-				result->m_flag = 1;
-		}
-	}
+	ClientRoot4120 *client = TheGameClient;
+
+	if (client == 0)
+		return;
+
+	void *target = first;
+	BfmeNodeAB *node;
+
+	if (client->bfmeCheckAB(target) && m_bfmeFlagAB
+		&& (node = bfmeFindAB(target, room)) != 0)
+		node->m_bfmeMarkAB = 1;
 }
