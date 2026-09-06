@@ -1,39 +1,39 @@
-// ?bfmeLookupFJ@BfmeTableFJ@@QAEPAXPBD@Z (identity unknown)
-// partial score=0.95 date=2026-09-06
-// 43/44; sole residue is add eax,0x2b8 where retail uses lea edx,[ecx+0x2b8].
-// Pin: ?bfmeFindFJ@@YGHPAUBfmeMapFJ@@PBD@Z,0x007F76F0
-struct BfmeMapFJ
-{
-	unsigned char m_bfmeMapDataFJ[8];
-};
-
-int __stdcall bfmeFindFJ(BfmeMapFJ *map, const char *key);
-
-class BfmeOwnerFJ
-{
-public:
-	unsigned char m_bfmeHeadFJ[0x2b8];
-	BfmeMapFJ m_bfmeMapFJ;
-};
-
-class BfmeTableFJ
+// ?bfmeAtAP@BfmeOwnAP@@QAEPAXH@Z (identity unknown)
+// partial score=0.9 date=2026-09-06
+// 40/44 at exact size and exact structure. Two scratch-register flips, both
+// in the same direction (retail prefers edx where MSVC prefers ecx):
+//   +0x0b  retail `lea edx,[ecx+0x2b8]` / `push edx`, MSVC `add ecx,0x2b8` /
+//          `push ecx` (ecx is dead either way);
+//   +0x22  retail `mov ecx,[esi+0x28]` for the array base, MSVC `mov edx`.
+// Tried a named local for the table pointer (17 diffs, worse), a named local
+// for the item array, and a named int* for the argument. This is the
+// systematic ecx/edx flip.
+class BfmeTableAP
 {
 public:
-	void *bfmeLookupFJ(const char *key);
-
-	unsigned char m_bfmeHeadFJ[4];
-	BfmeOwnerFJ *m_bfmeOwnerFJ;
-	unsigned char m_bfmeMidFJ[0x20];
-	void **m_bfmeSlotsFJ;
+	unsigned char m_bfmeHeadAP[0x2b8];
+	int m_bfmeSlotAP;
 };
 
-void *BfmeTableFJ::bfmeLookupFJ(const char *key)
+int __stdcall bfmeLookupAP(int *table, int key);
+
+class BfmeOwnAP
 {
-	BfmeMapFJ *map = &m_bfmeOwnerFJ->m_bfmeMapFJ;
-	const char *name = key;
-	int index = bfmeFindFJ(map, name);
+public:
+	void *bfmeAtAP(int key);
+
+	unsigned char m_bfmeHeadAP[4];
+	BfmeTableAP *m_bfmeTableAP;
+	unsigned char m_bfmeMidAP[0x20];
+	void **m_bfmeItemsAP;
+};
+
+void *BfmeOwnAP::bfmeAtAP(int key)
+{
+	int index = bfmeLookupAP(&m_bfmeTableAP->m_bfmeSlotAP, key);
+
 	if (index == -1)
 		return 0;
 
-	return m_bfmeSlotsFJ[index];
+	return m_bfmeItemsAP[index];
 }

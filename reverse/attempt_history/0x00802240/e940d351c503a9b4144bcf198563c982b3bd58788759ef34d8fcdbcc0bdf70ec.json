@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e940d351c503a9b4144bcf198563c982b3bd58788759ef34d8fcdbcc0bdf70ec",
+  "symbol": "?d_00802240@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_00802240@@YAXXZ\n// partial score=0.9 date=2026-09-06\n// 40/44 at exact size and exact structure. Two scratch-register flips, both\n// in the same direction (retail prefers edx where MSVC prefers ecx):\n//   +0x0b  retail `lea edx,[ecx+0x2b8]` / `push edx`, MSVC `add ecx,0x2b8` /\n//          `push ecx` (ecx is dead either way);\n//   +0x22  retail `mov ecx,[esi+0x28]` for the array base, MSVC `mov edx`.\n// Tried a named local for the table pointer (17 diffs, worse), a named local\n// for the item array, and a named int* for the argument. This is the\n// systematic ecx/edx flip.\nclass BfmeTableAP\n{\npublic:\n\tunsigned char m_bfmeHeadAP[0x2b8];\n\tint m_bfmeSlotAP;\n};\n\nint __stdcall bfmeLookupAP(int *table, int key);\n\nclass BfmeOwnAP\n{\npublic:\n\tvoid *bfmeAtAP(int key);\n\n\tunsigned char m_bfmeHeadAP[4];\n\tBfmeTableAP *m_bfmeTableAP;\n\tunsigned char m_bfmeMidAP[0x20];\n\tvoid **m_bfmeItemsAP;\n};\n\nvoid *BfmeOwnAP::bfmeAtAP(int key)\n{\n\tint index = bfmeLookupAP(&m_bfmeTableAP->m_bfmeSlotAP, key);\n\n\tif (index == -1)\n\t\treturn 0;\n\n\treturn m_bfmeItemsAP[index];\n}\n"
+}
