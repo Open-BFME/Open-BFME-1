@@ -9233,8 +9233,10 @@ name,address,notes
 ??_7?$basic_ios@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EBCC,retail wide basic_ios vtable installed by the typed streambuf constructor
 ??_7?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F2F4,basic_istream<char> vftable stored by the LobbyUtils.cpp basic_ifstream ctor 0x0053FB00
 ??_7?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,STLport static library basic_ofstream<char> vftable
+??_7?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC48,STLport static library basic_ofstream<unsigned short> vftable
 ??_7?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC30,alias of the STLport library basic_ofstream<char> vftable for the aliased (name mode) ctor 0x0084B980
 ??_7?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112F304,basic_ostream<char> vftable (same table the g_bfme918VftA stand-in names) stored by 0x005CC230 and 0x005CC3F0
+??_7?$basic_ostream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112F30C,basic_ostream<unsigned short> vftable (the g_bfme918VftB stand-in)
 ??_7?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@6B@,0x00D2EBD4,retail narrow basic_streambuf vtable installed by its constructor and destructor
 ??_7?$basic_streambuf@GV?$char_traits@G@_STL@@@_STL@@6B@,0x00D2EC10,retail wide basic_streambuf vtable installed by its constructor and destructor
 ??_7?$codecvt@DDH@_STL@@6B@,0x00D2EA8C,retail STLport 4.5.3 narrow codecvt vtable identified by its virtual method signatures
@@ -9450,6 +9452,7 @@ name,address,notes
 ??_8?$basic_ifstream_lib0084C300@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC84,alias of the STLport library basic_ifstream<char> vbtable for the aliased (name mode) ctor 0x0084C300
 ??_8?$basic_istream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x01107634,vbtable of the LobbyUtils.cpp basic_istream<char> instantiation (ctor 0x0053FA20)
 ??_8?$basic_ofstream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,STLport static library basic_ofstream<char> vbtable (name constructors 0x0084B980 0x0084BB90)
+??_8?$basic_ofstream@GV?$char_traits@G@_STL@@@_STL@@7B@,0x0112FC5C,STLport static library basic_ofstream<unsigned short> vbtable (ctor 0x0084BF70)
 ??_8?$basic_ofstream_lib0084B980@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0112FC54,alias of the STLport library basic_ofstream<char> vbtable for the aliased (name mode) ctor 0x0084B980
 ??_8?$basic_ostream@DV?$char_traits@D@_STL@@@_STL@@7B@,0x0110FE30,vbtable of the FX particle system TU basic_ostream<char> instantiation (ctor 0x005CC230)
 ??_C@_08MBMCFODG@CrushDie?$AA@,0x00C908A8,pool-glue cascade static (back-solved)
