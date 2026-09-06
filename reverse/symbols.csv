@@ -9407,8 +9407,10 @@ name,address,notes
 ??_7Rva00410F10Allocation@@6B@,0x010F11C4,address-derived vtable written by RVA 00410F10
 ??_7Rva00490350Base@@6B@,0x010F9AD8,address-derived base vtable at retail 0x00490350
 ??_7Rva00490350Derived@@6B@,0x010F9AE4,address-derived derived vtable at retail 0x00490350
+??_7Rva00490470@@6B@,0x010F9AF0,vftable of the window-owning sibling in the Rva00490350 linked-object family (destructor 0x00490470)
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
+??_7Rva006BCE40@@6B@,0x0111D024,address-derived vtable written by RVA 0x006BCE40 (BfmeBaseVUQ destructor family)
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
 ??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
