@@ -4047,12 +4047,17 @@ name,address,notes
 ??1GameFont@@MAE@XZ,0x00047064,destructor ILT to 0x004734B0 used by the retail scalar deleting wrapper
 ??1GameMessageList@@UAE@XZ,0x0000E421
 ??1GameResultsCounter@@QAE@XZ,0x009DB350,Open-BFME5 GameResultsQueue counter destructor
+??1GameResultsCounterWide@@QAE@XZ,0x009DB350,near-twin pin of ??1GameResultsCounter@@QAE@XZ for GameResultsQueueDestructorWide.cpp
 ??1GameResultsMutex@@QAE@XZ,0x009DB350,Open-BFME5 GameResultsQueue mutex destructor
+??1GameResultsMutexWide@@QAE@XZ,0x009DB350,near-twin pin of ??1GameResultsMutex@@QAE@XZ for GameResultsQueueDestructorWide.cpp
 ??1GameResultsRequest@@QAE@XZ,0x00049288
 ??1GameResultsRequestQueue@@QAE@XZ,0x00031462,Open-BFME5 GameResultsQueue request queue destructor ILT
+??1GameResultsRequestQueueWide@@QAE@XZ,0x00014DD0,near-twin pin of ??1GameResultsRequestQueue for GameResultsQueueDestructorWide.cpp (points at the ILT thunk, matching retail call target)
 ??1GameResultsResponse@@QAE@XZ,0x00024352
 ??1GameResultsResponseQueue@@QAE@XZ,0x0003D889,Open-BFME5 GameResultsQueue response queue destructor ILT
+??1GameResultsResponseQueueWide@@QAE@XZ,0x00049684,near-twin pin of ??1GameResultsResponseQueue for GameResultsQueueDestructorWide.cpp (points at the ILT thunk, matching retail call target)
 ??1GameResultsThreadAux@@QAE@XZ,0x009DB400,Open-BFME5 GameResultsQueue auxiliary destructor
+??1GameResultsThreadAuxWide@@QAE@XZ,0x009DB400,near-twin pin of ??1GameResultsThreadAux@@QAE@XZ for GameResultsQueueDestructorWide.cpp
 ??1GameSlot@@QAE@XZ,0x0000B988,Open-BFME5 pin
 ??1GameSpyMiscPreferences@@UAE@XZ,0x000AAFC0,stores vtable 0x01081048 then ~UserPreferences ILT 0x0003F25B; that vtable is installed by the ctor at 0x000AB960 which loads "LoTRB4MEOnline\GSMiscPref%d.ini" (VA 0x010810E4); sits right after the ledgered ??1QuickMatchPreferences 0x000AAFA0 and ??1CustomMatchPreferences 0x000AAFB0; ILT 0x000141A0
 ??1GameTextInterface@@UAE@XZ,0x0000E908
@@ -8492,6 +8497,7 @@ name,address,notes
 ??1Rva0008FE00AuxMap@@QAE@XZ,0x00032B19,Open-BFME5 near-twin aux-map destroy; reuses the pinned thunk at 0x00032B19
 ??1Rva00199180Tail@@QAE@XZ,0x000023D8,address-derived tail member dtor called by 0x00199180
 ??1Rva001D6D80Elem@@QAE@XZ,0x00887940,StringBase char dtor used as the two string members of Rva001D6D80
+??1Rva002E32A0AsciiString@@QAE@XZ,0x00887940,AsciiString destructor alias (releaseBuffer) called by 0x002E32A0
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
 ??1Rva0036BBA0BehaviorModule@@UAE@XZ,0x00047C53,REL32 seven-byte base destructor target from CastleMemberBehavior 0x0036BC0A
@@ -76734,6 +76740,7 @@ name,address,notes
 ?format@BFMERetailAsciiString@@QAAXV1@ZZ,0x00888FF0,BannerUI one-dword retail AsciiString format alias
 ?format@HeaderTemplateString@@QAAXV1@ZZ,0x00888FF0,Open-BFME5 HeaderTemplateManager init relocation
 ?format@NATProbeString@@QAAXV1@ZZ,0x00888FF0,NAT sendAProbe string formatter body
+?format@Rva002E32A0AsciiString@@QAAXV1@ZZ,0x00888FF0,AsciiString::format alias called by 0x002E32A0
 ?format@StringBaseNarrowAA@@QAAXVAsciiStringAA@@ZZ,0x00888FF0,pin
 ?format@StringBaseNarrowAB@@QAAXVAsciiStringAB@@ZZ,0x00888FF0,pin
 ?format@StringBaseNarrowAH@@QAAXVAsciiStringAH@@ZZ,0x00888FF0,pin
@@ -81487,6 +81494,7 @@ name,address,notes
 ?showScreen@DisconnectMenu@@QAEXXZ,0x0050E9A0,ZH DisconnectMenu::showScreen twin: HideDiplomacy 0x0052ADE0 / HideInGameChat 0x00512670 / 0x00598F30 (ZH HideQuitMenu position; ledger name hidePurchaseScience is suspect) / HideSaveLoadMenu 0x005696D0 then UI singleton 0x012F148C slot +0x150(1) then TheWindowManager 0x012F1B40 slot +0x6C (winCreateLayout position) with literal DisconnectScreen.apt 0x01087A9C stored to 0x012F4960 and layout slot 0(0); this-less like hideScreen; sole caller DisconnectManager::turnOnScreen 0x0066BFE4; ILT 0x00020144
 ?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
 ?shutdown@GameResultsThread@@QAEXXZ,0x009DB5A0,Open-BFME5 GameResultsQueue worker shutdown
+?shutdown@GameResultsThreadWide@@QAEXXZ,0x009DB5A0,near-twin pin of shutdown@GameResultsThread for GameResultsQueueDestructorWide.cpp
 ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ,0x0002C6E7
 ?shutdown@TerrainTracksShutdownShim@@QAEXXZ,0x0072EDF0,TerrainTracksRenderObjClassSystem::shutdown incremental-link thunk target through a TU-local forwarding shim
 ?shutdown@WaterTracksRenderSystem@@QAEXXZ,0x000319CB

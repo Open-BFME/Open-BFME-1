@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "785580a2bb4cd1d9ba82a98047cb263744c7ae16ebf6ab729cf02db7481d1776",
+  "symbol": "?d_00569150@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_00569150@@YAXXZ\n// partial score=0.85 date=2026-09-05\n// cl: /DNDEBUG /MD /EHsc\n\n// Address-derived near-twin of HideSaveLoadMenu() @\n// Code/GameEngine/Source/GameClient/GUI/GUICallbacks/HideSaveLoadMenu.cpp\n// (retail 0x005696D0). Same shape, except this one stores a caller-supplied\n// value into m_25c instead of hard-coding 0.\n\nclass WindowManager_569150\n{\npublic:\n\tvoid hideQuitMenu(void);\n};\n\nstruct SaveLoadMenu_569150\n{\n\tunsigned char m_head[0x254];\n\tbool m_hidden;\n\tunsigned char m_gap255[0x25C - 0x255];\n\tint m_25c;\n};\n\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nstruct InGameUI_569150\n{\n\tunsigned char m_head[0x50];\n\tbool m_menuHidden;\n};\n\nvoid Rva00569150HideSaveLoadMenuWithValue(int value)\n{\n\tSaveLoadMenu_569150 *menu = *(SaveLoadMenu_569150 **)0x012F4B40;\n\n\tif (!menu)\n\t\treturn;\n\n\tif (menu->m_hidden)\n\t\treturn;\n\n\tmenu->m_hidden = true;\n\t_ReadWriteBarrier();\n\n\tint v = value;\n\t_ReadWriteBarrier();\n\tSaveLoadMenu_569150 *menu2 = *(SaveLoadMenu_569150 **)0x012F4B40;\n\tmenu2->m_25c = v;\n\t(*(InGameUI_569150 **)0x012F4B58)->m_menuHidden = true;\n\n\t(*(WindowManager_569150 **)0x012F19E8)->hideQuitMenu();\n}\n"
+}
