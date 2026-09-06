@@ -24728,3 +24728,4 @@ uw_0045bea0,0x0045BEA0,"mis-anchored, and NOT a funclet: 0x0045BEA0 is d9 41 68 
 ?d_00144000@@YAXXZ,0x00144000,"Superseded gen-dump duplicated by upstream fleet harvest920db93b9; root independently reran focused byte gates for replacement sources (1/1,4/4,2/2), retaining real53/101/195-byte bodies."
 ?d_0049a430@@YAXXZ,0x0049A430,"Superseded gen-dump duplicated by upstream fleet harvest920db93b9; root independently reran focused byte gates for replacement sources (1/1,4/4,2/2), retaining real53/101/195-byte bodies."
 ?d_008b8fa0@@YAXXZ,0x008B8FA0,gen-dump placeholder retracted: range owned by real C++ ?rva008B8FA0@@YG_NPAVBfmeN1242@@PAPBDPAVBfmeE1242@@@Z landed by the fleet
+?d_008b8fa0@@YAXXZ,0x008B8FA0,Superseded by byte-verified parsed indexed-value insertion at the same117B extent; duplicate placeholder resurrected during concurrent merge.
