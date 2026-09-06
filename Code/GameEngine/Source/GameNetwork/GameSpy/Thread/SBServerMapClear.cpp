@@ -1,9 +1,14 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-// Retail 0x006ABC00. The bytes are an STLport _Rb_tree::clear() of a map at
-// +0x1B8. This is NOT PeerThreadClass::clearServers -- that name was
-// retracted because addServerToMap puts m_stagingServers at +0x20C and the
-// PeerThread.cpp compiland does not contain this address.
+// Retail 0x006ABC00. The bytes are an STLport _Rb_tree::clear() of the
+// int -> _SBServer* map at +0x1B8, so the class is named for the one member
+// the body proves it owns and the method keeps the name of what it does.
+//
+// This is NOT PeerThreadClass::clearServers -- that name was recorded and then
+// retracted (reverse/re_attempts.log), because addServerToMap puts
+// m_stagingServers at +0x20C and the PeerThread.cpp compiland does not contain
+// this address. The file used to carry the retracted name; nothing in the
+// image names the real owner, so the name here describes the body only.
 
 namespace _STL
 {
@@ -57,25 +62,25 @@ private:
 }
 
 struct _SBServer;
-typedef _STL::pair<const int, _SBServer *> BfmeServerPair;
+typedef _STL::pair<const int, _SBServer *> SBServerPair;
 
 typedef _STL::_Rb_tree<int,
-	BfmeServerPair,
-	_STL::_Select1st<BfmeServerPair>,
+	SBServerPair,
+	_STL::_Select1st<SBServerPair>,
 	_STL::less<int>,
-	_STL::allocator<BfmeServerPair> > StagingServerTree;
+	_STL::allocator<SBServerPair> > SBServerMapTree;
 
-class Gen_006abc00
+class SBServerMapOwner
 {
 public:
 	void clear( void );
 
 private:
 	char m_head[0x1B8];
-	StagingServerTree m_map;			// @0x1B8
+	SBServerMapTree m_map;			// @0x1B8
 };
 
-void Gen_006abc00::clear( void )
+void SBServerMapOwner::clear( void )
 {
 	m_map.clear();
 }
