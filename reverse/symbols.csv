@@ -75168,7 +75168,6 @@ name,address,notes
 ?bfmeResetA@BfmeActivationPartA@@QAEXXZ,0x0001EF4C,activation handshake member at 0x009D8460 resets its first subobject
 ?bfmeResetAK@@YAXXZ,0x00007B03,Open-BFME5 the reset the drive scan at 0x006BA720 runs first
 ?bfmeResetB@BfmeActivationPartB@@QAEXXZ,0x009D8230,activation handshake member at 0x009D8460 resets its second subobject
-?bfmeResetBY@BfmeHolderBY@@QAEXHHH@Z,0x00929310,Open-BFME5 the reset the destructor at 0x0092A3D0 runs first
 ?bfmeResetC0600@Rva006C0600Registry@@QAEXXZ,0x00036278,Open-BFME5 address-derived reset call from the 0x006C0600 registry initializer
 ?bfmeResetC@BfmeActivationPartC@@QAEXXZ,0x009D77A0,activation handshake member at 0x009D8460 resets its third subobject
 ?bfmeResetFV@BfmePrimaryFV@@QAEXXZ,0x000076E9,pin
