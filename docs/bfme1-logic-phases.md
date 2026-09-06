@@ -58,6 +58,12 @@ Every return path decrements it (`0x0038DACF`, `0x0038DB25`, or
 `0x0038E244`). This is proven counter behavior. Calling it a frame counter
 would be wrong.
 
+A source-shape probe also rules out a named local copy of this depth. Keeping
+the value in a local made MSVC preserve it in a nonvolatile register, retained
+an extra copy of `this`, and raised the local allocation from retail's `0x2C`
+to `0x3C`. The retail instruction sequence loads the field into `eax`, tests
+it, optionally resets FP mode, reloads the field, and increments it directly.
+
 Only phase 1 enters the freeze test at `0x0038DA57`. After that gate, every
 admitted phase resets the end of the deferred-owned-entry vector: the retail
 self-range copy at `0x0038DAAE..0x0038DAFC` reduces to
@@ -86,6 +92,20 @@ block at `0x0038DE89..0x0038DECF`. Phases 3–6 select sleepy queues at
 post-simulation subsystem batch at `0x0038E116..0x0038E17F`. Every normal phase
 passes the copy-protection check, but only phase 1 passes the final object walk
 and simulation-frame increment.
+
+These blocks are separate source conditionals, not one phase-1 `if` followed by
+an `else if` chain. Retail retests the phase before CRC, before the optional
+StatsCollector update, before Recorder and command-list consumption, and again
+before phase 2. Modeling one large phase-1 branch removes those repeated tests
+and changes the control-flow layout. The direct calls in this region also use
+`thiscall`: the ScriptEngine debug/freeze helpers, Pathfinder queue processor,
+CRCParameterCheck clear, StatsCollector update, GameLogic command dispatcher,
+and the Object status/transform helpers are not cdecl shims or virtual calls.
+
+The phase-2 object loop compares `Object+0x168` with the current frame at
+`GameLogic+0x3C`. A mismatch calls the direct thiscall
+`Object::bfmeRecordTransform(frame)` through ILT RVA `0x0002BB43`, passing that
+current frame as its sole stack argument.
 
 ## Phase 5 pending-object destruction
 
@@ -130,7 +150,8 @@ The following order is instruction-level fact:
    `0x000313A9`; the 716-byte body is RVA `0x003DC190` (VA `0x007DC190`).
    The body recalculates zones when needed, refreshes logical terrain bounds,
    and services queued object path requests until the per-frame cell budget is
-   consumed.
+   consumed. Both calls precede the next phase-1 test; the pathfinder and FP
+   reset therefore run for every admitted phase.
 6. ScriptEngine, LuaScriptEngine (`0x012F060C`), TerrainLogic, and optional VictorySystem update
    at `0x0038DC1C..0x0038DC4D`. VictorySystem's update is independently mapped
    to body RVA `0x001DFBA0`. The LuaScriptEngine identity is direct: the
@@ -156,7 +177,11 @@ The following order is instruction-level fact:
    `+0x10` (`0x0038DE2A..0x0038DE50`). Commands are therefore consumed and
    cleared during phase 1, before phases 2–6.
 10. The object list at `GameLogic+0xA8` receives interface work at
-    `0x0038DE53..0x0038DE83`.
+    `0x0038DE53..0x0038DE83`. For each object, retail first calls virtual slot
+    `+0x28` as a null test, then, only when non-null, pushes zero, calls slot
+    `+0x28` a second time, and invokes the returned interface's direct callback
+    at RVA `0x0041B200`. This establishes `getDrawable()->callback(0)` and its
+    evaluation order; caching the first getter result changes the call stream.
 11. After the later shared drain and copy-protection check, phase 1 walks the
     object list again at `0x0038E1C3..0x0038E212`. It conditionally calls three
     helpers based on object `+0x1A4`, bit `0x200` at `+0x98`, and bit `0x10` at
@@ -183,11 +208,13 @@ suppresses that path (`0x0038DC7E..0x0038DCAE`). A debug frame window rooted at
 global `0x012A6F38` can force the path and uses writable-global-data offset
 `+0xCB4` (`0x0038DCAE..0x0038DCE8`).
 
-The CRC is calculated by the `getCRC` callee with body RVA `0x00383150` through
-ILT RVA `0x0000B532`. The call site passes one 32-bit word: zero on the normal
-path, or a copied AsciiString buffer pointer on the diagnostic path. The older
-`?getCRC@GameLogic@@QAEIHVAsciiString@@@Z` pin therefore does not describe this
-call site's effective ABI and must not be copied blindly into the parent TU.
+The CRC is calculated by `GameLogic::getCRC(AsciiString)` at body RVA
+`0x00383150` through ILT RVA `0x0000B532`. Its argument is BFME's one-word
+AsciiString passed by value, and the body returns with `ret 4`. The call site
+therefore pushes exactly one 32-bit word: a null AsciiString buffer on the
+normal path, or a copied buffer on the diagnostic path. The older decorated
+pin that includes an additional integer parameter is stale ABI evidence and
+must not be copied into the parent TU.
 
 The diagnostic path formats the current frame with `"%d"` into a one-word
 AsciiString, copies its buffer through the factory at RVA `0x009CB5F0`, and
@@ -229,6 +256,15 @@ Phase 3 stops at half of vector 0. Phase 4 starts at half of the then-current
 vector 0. Because the vector can be mutated while it is processed, reproducing
 the exact index and removal order matters; a range-for rewrite would not be
 behaviorally equivalent without proof.
+
+The retail implementation uses two passes. The forward pass processes due
+entries and writes their next wake frame but does not erase sentinel entries.
+For phases greater than three, a separate reverse pass finds wake values at or
+above `0x3FFFFFFF`, swap-pops those entries from the active vector, repairs the
+moved entry's phase and index, sets the removed entry's phase to `-1`, and
+appends it to `GameLogic+0xF4`. Removing sentinel entries during the forward
+pass is behaviorally different because it changes the remaining iteration
+indices.
 
 ## Pause, loading, and game mode
 
@@ -320,36 +356,22 @@ first structural divergence is still the prologue: the experiment allocates
 keeps `this` in `ebp`. This is still not a near miss, so the source remains
 under ignored `build/` scratch and has not been banked.
 
-Use these bounded jobs for subsequent Codex runs. Each job should update this
-document with proven names and addresses; only the final job should edit the
-primary implementation TU.
+Full-body tuning is suspended. Continue by recovering independently
+committable leaves in the parent dependency cone, reassessing after each exact
+body:
 
-1. **Match the entry frame first.** Work only in an ignored scratch TU until
-   the prologue changes from `sub esp,0x3C; ... mov esi,ecx` to retail's
-   `sub esp,0x2C; ... mov ebp,ecx`. The named depth temporary has already been
-   removed. Check the `DepthLatch`, one-word AsciiString lifetime, and local
-   definition order; one extra four-byte live local is enough to force MSVC to
-   round this frame up by 16 bytes.
-2. **Match the pending-range reset and early exits.** Retail loads end into
-   `eax`, compares it with itself, retains the dormant `BfmeMemMove` path, then
-   assigns begin to end. Keep the phase-1 freeze return and command-only return
-   interleaved exactly as the retail CFG places them.
-3. **Tune the CRC one-word ABI.** Preserve `getCRC(0)` on the normal path and
-   the single buffer-factory call on the formatted path. The target deep path
-   uses one local AsciiString at `[esp+0x14]`, keeps the copied buffer in `ebx`,
-   the CRC in `edi`, and the message in `esi`; avoid a C++ by-value declaration
-   that inserts a second copy constructor.
-4. **Tune the sleepy loop only after offsets align.** The phase switch and
-   vector ranges are recovered. Compare the forward due-entry loop, the
-   phase-greater-than-three reverse sweep, and STLport's five-argument vector
-   overflow call independently. Do not rewrite the swap-and-pop as erase.
-5. **Probe every source-shape change.** Run `tools/probe.py` with symbol
-   `?update@GameLogic@@UAEXH@Z`, RVA `0x0038DA10`, and size `2129`. Do not add a
-   ledger row until the entire body matches.
-6. **Bank only a real near miss.** If progress stalls, use `tools/re_log.py`
-   and the AGENTS.md `partial --stash --score` workflow only when the dedicated
-   phase-aware body is close enough to help the next worker. Do not bank the
-   1,010-byte parameterless donor and do not use naked/emit code.
+1. CRC/debug helpers and one-word AsciiString operations.
+2. Command-list helpers and the command dispatcher.
+3. The earlier phase-1 Drawable callback and its smaller dependencies.
+4. Phase-2 transform, collision, and object helpers.
+5. Sleepy-update module predicates, wake scheduling, and removal helpers.
+6. Banked near-matches whose parent call sites now establish their identity or
+   ABI.
+
+Large callees such as the Drawable callback, CRC handler, and
+VictoryConditions update should be treated as parents of their own smaller
+dependency cones. Do not resume byte-level work on the 2,129-byte body until
+the obvious exact leaves have been exhausted.
 
 Semantic recovery here is strong enough to state what each phase schedules and
 where the authoritative frame advances. Byte-exact reconstruction remains
