@@ -2106,22 +2106,22 @@ void Team::setOverridePlayerRelationship( Int playerIndex, Relationship r )
 }
 
 // ------------------------------------------------------------------------
-// ?removeOverridePlayerRelationship@Team@@QAE_NH@Z present-unmatched
 Bool Team::removeOverridePlayerRelationship( Int playerIndex )
 {
-	if (!m_playerRelations->m_map.empty())
+	BfmeTeamPlayerOverrideFields *bfme = (BfmeTeamPlayerOverrideFields *)this;
+	if (!bfme->m_playerRelations->m_map.empty())
 	{
 		if (playerIndex == PLAYER_INDEX_INVALID)
 		{
-			m_playerRelations->m_map.clear();
+			bfme->m_playerRelations->m_map.clear();
 			return true;
 		}
 		else
 		{
-			PlayerRelationMapType::iterator it = m_playerRelations->m_map.find(playerIndex);
-			if (it != m_playerRelations->m_map.end())
+			PlayerRelationMapType::iterator it = bfme->m_playerRelations->m_map.find(playerIndex);
+			if (it != bfme->m_playerRelations->m_map.end())
 			{
-				m_playerRelations->m_map.erase(it);
+				bfme->m_playerRelations->m_map.erase(it);
 				return true;
 			}
 		}
