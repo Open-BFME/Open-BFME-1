@@ -83856,3 +83856,5 @@ _bfmeBaseVftableCC,0x0072162C,Open-BFME5 the base vftable the inline base destru
 ?Add_Light@LightEnvironmentClass@@QAEXABVLightClass@@@Z,0x0094B8A0,light collection method called by SimpleSceneClass::Customized_Render
 ?Reset@LightEnvironmentClass@@QAEXABVVector3@@0@Z,0x0094AC70,light environment reset method called by SimpleSceneClass::Customized_Render
 ?initialize@Rva00016FAE@@QAEXXZ,0x00016FAE,Rva000FA610 constructor member call resolves through the retail ILT thunk
+??1BFMENetworkQueueItem@@QAE@XZ,0x0001658B,BFMENetworkQueueItem temporary destructor called by the dispatcher deque growth helper
+?_M_reallocate_map@?$deque@VBFMENetworkQueueItem@@V?$allocator@VBFMENetworkQueueItem@@@_STL@@@_STL@@IAEXI_N@Z,0x00003A58,BFMENetworkQueueItem deque growth reserves the map through the retail ILT
