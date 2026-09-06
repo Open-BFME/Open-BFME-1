@@ -84015,3 +84015,4 @@ _ciApplyChangesToMode,0x0086CDF0,"Root traced commandMODE table identity and com
 ?bfmeRunKE@BfmeTgtKE@@QAEDPAXVBfmeArgKE@@0@Z,0x0003C795,pin
 ?bfmeRunLA@BfmeTgtLA@@QAEXVBfmeArgLA@@PAX1@Z,0x0004461B,pin
 ?bfmeRunLB@BfmeTgtLB@@QAEXVBfmeArgLB@@PAX1@Z,0x00010B72,pin
+?dispatch@Rva001FD120Dispatch@@QAEXPAVObject@@I@Z,0x00028AE2,"Root reviewed ILT28AE2 ->1FCE70/55 guarded AI victim dispatch; thiscall Object pointer and unused second32-bit argument, ret8"
