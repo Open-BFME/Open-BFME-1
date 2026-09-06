@@ -76813,6 +76813,9 @@ name,address,notes
 ?find@DataChunkTableOfContentsFindMappingShim@@QAEPAVMapping@@ABVAsciiString@@@Z,0x00103CA0,DataChunkTableOfContents findMapping incremental-link thunk target through a TU-local forwarding shim
 ?find@FontCharDataMap@@QAEPAUFontCharDataMapNode@@PAG@Z,0x0093DCE0,FontCharsClass character-data map lookup body
 ?find@GameLogicFindControlBarOverrideShim@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00391B30,GameLogic findControlBarOverride incremental-link thunk target through a TU-local forwarding shim
+?find@GameLogicFindControlBarOverrideILT@@QBE_NABVAsciiString@@HAAPBVCommandButton@@@Z,0x00002509,GameLogic findControlBarOverride incremental-link thunk used by the callback walk
+?dispatch@BfmeCommandButtonDispatchILT@@QAEXPAX0@Z,0x00017A12,Command button callback dispatch incremental-link thunk used by the callback walk
+?resolve@BfmeCommandButtonResolveILT@@QAEPAVBfmeCommandButtonDispatchILT@@XZ,0x000205CC,Command button callback resolver incremental-link thunk used by the callback walk
 ?find@Gen003C8A50@@QAEPAVGen003C8A50Result@@PBD@Z,0x003C8A50,owner lookup called by the guarded-lookup flag readers in V4GuardedLookupFieldReads.cpp; address-derived name
 ?find@HashMap008FF850@@QAE?AUHashIter008FF850@@ABH@Z,0x008FF560,STLport tree find ICF target of map unsigned-key peek wrapper 0x008FF850
 ?find@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,isValidMap lookup thunk

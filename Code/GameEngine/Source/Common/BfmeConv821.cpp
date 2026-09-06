@@ -75,10 +75,51 @@ void BfmeThingCEE::doCall(void *a, char *b)
 		vfn6(a, b + 0x38);
 }
 
+class AsciiString
+{
+	char m_data[4];
+};
+
+class CommandButton
+{
+public:
+	char m_pad[0x10];
+	int m_state;
+};
+
+class BfmeCommandButtonDispatchILT
+{
+public:
+	void dispatch(void *b, void *c);
+};
+
+class BfmeCommandButtonResolveILT
+{
+public:
+	BfmeCommandButtonDispatchILT *resolve();
+};
+
+class GameLogic
+{
+};
+
+class GameLogicFindControlBarOverrideILT
+{
+public:
+	bool find(const AsciiString &name, int slot, const CommandButton *&button) const;
+};
+
+extern GameLogic *TheBfmeGameLogic;
+
 class BfmeObj412
 {
 public:
 	void call(void *b, void *c);
+
+private:
+	char m_pad[0xc];
+	AsciiString m_name;
+	const CommandButton *m_button[20];
 };
 
 class BfmeMgr412
@@ -88,6 +129,33 @@ public:
 };
 
 extern BfmeMgr412 *g_mgr12F33F8;
+
+void BfmeObj412::call(void *b, void *c)
+{
+	for (int i = 0; i < 20; ++i)
+	{
+		const CommandButton *button;
+		if (!TheBfmeGameLogic || !((const GameLogicFindControlBarOverrideILT *)TheBfmeGameLogic)->find(m_name, i, button))
+			button = m_button[i];
+		if (button)
+		{
+			switch (button->m_state)
+			{
+			case 1:
+			case 3:
+			{
+				BfmeCommandButtonDispatchILT *target =
+					((BfmeCommandButtonResolveILT *)button)->resolve();
+				if (target)
+					target->dispatch(b, c);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+	}
+}
 
 void __cdecl bfmeHelper412(char *a, void *b, void *c)
 {
