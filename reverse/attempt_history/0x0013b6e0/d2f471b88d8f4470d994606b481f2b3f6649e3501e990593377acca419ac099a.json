@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d2f471b88d8f4470d994606b481f2b3f6649e3501e990593377acca419ac099a",
+  "symbol": "?bfmeFindAOB@BfmeThingAOB@@QAEHPAPBE@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeFindAOB@BfmeThingAOB@@QAEHPAPBE@Z\n// partial score=0.98 date=2026-09-05\n// cl: /O2 /DNDEBUG /MD\n\nextern \"C\" __declspec( dllimport ) int __cdecl _mbscmp(\n\tconst unsigned char *left, const unsigned char *right );\n\nclass BfmeThingAOB\n{\npublic:\n\tint bfmeFindAOB( const unsigned char **name );\nprivate:\n\tvoid *m_vtable;\n\tconst unsigned char **m_names;\n\tchar m_unmodelled[ 8 ];\n\tint m_count;\n};\n\n// ?bfmeFindAOB@BfmeThingAOB@@QAEHPAPBE@Z\nint BfmeThingAOB::bfmeFindAOB( const unsigned char **name )\n{\n\tfor( int i = 0; i < m_count; ++i )\n\t{\n\t\tif( _mbscmp( m_names[ i ], *name ) == 0 )\n\t\t\treturn i;\n\t}\n\treturn -1;\n}\n"
+}
