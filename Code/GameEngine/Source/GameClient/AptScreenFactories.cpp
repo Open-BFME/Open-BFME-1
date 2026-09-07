@@ -756,6 +756,12 @@ void * __stdcall createAptScreenObjectives( void *context )
 }
 
 // ScoreScreen.apt, retail 0x00104FC0, object 0x334 bytes.
+struct BfmeScoreScreenPlayerRow
+{
+	int color;
+	AsciiString faction;
+};
+
 class BfmeAptScreenScoreScreen
 {
 public:
@@ -763,10 +769,13 @@ public:
 	void bfmeProvide( const char *selector, void *value, bool setting );
 	void bfmeProvideObjectiveChecked( const char *selector, void *value, bool setting );
 	void heroVetUpgrade( int index, char *output, bool setting );
+	void _bfme_getPlayerFaction( int index, char *output, bool setting );
 	void _bfme_setPlayerTable( int row, int field, const UnicodeString &text );
 
 private:
-	char m_unmodelled[ 0x2E8 ];
+	char m_unmodelled_prefix[ 0x264 ];
+	_STL::vector<BfmeScoreScreenPlayerRow> m_playerTable;
+	char m_unmodelled_middle[ 0x78 ];
 	_STL::vector<bool> m_heroVetUpgrades;
 	char m_unmodelled_tail[ 0x38 ];
 };
@@ -816,6 +825,19 @@ void BfmeAptScreenScoreScreen::heroVetUpgrade(
 		if( index >= 0 && (unsigned int)index < m_heroVetUpgrades.size() && index < 12 )
 			sprintf( output, g_aptPalantirNumberFormat,
 				m_heroVetUpgrades[ index ] != false );
+	}
+}
+
+// ?_bfme_getPlayerFaction@BfmeAptScreenScoreScreen@@QAEXHPAD_N@Z
+void BfmeAptScreenScoreScreen::_bfme_getPlayerFaction(
+	int index, char *output, bool setting )
+{
+	if( !setting )
+	{
+		*output = 0;
+		if( !m_playerTable.empty() &&
+			(unsigned int)index < m_playerTable.size() )
+			strcpy( output, m_playerTable[ index ].faction.str() );
 	}
 }
 
