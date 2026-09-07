@@ -1,4 +1,11 @@
 name,target_rva,reason
+?d_00564080@@YAXXZ,0x00564080,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_005640d0@@YAXXZ,0x005640D0,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_00564130@@YAXXZ,0x00564130,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_00564180@@YAXXZ,0x00564180,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_005651f0@@YAXXZ,0x005651F0,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_00569150@@YAXXZ,0x00569150,gen-dump placeholder superseded by the verified real C++ identity at the same range
+?d_005691d0@@YAXXZ,0x005691D0,gen-dump placeholder superseded by the verified real C++ identity at the same range
 ??0Rva007D8880@@QAE@XZ,0x007D8880,mis-anchored constructor row retired: retail stores the proven ScreenMotionBlurFilter vtable 0x01128BD0; vtable slots 0/1/2/3/4/5/6 resolve to this class's methods; the old Rva name had no class evidence; exact real C++ constructor now owns the 38-byte range; campaign=luna36h-20260907;lane=shaders
 ?dup_007d8870@@YAXXZ,0x007D8870,gen-alias placeholder retired because ScreenMotionBlurFilter::shutdown owns vtable slot 1 at the same exact matched 6-byte body; parseNoLogOrCrash remains represented by its other ICF aliases; campaign=luna36h-20260907;lane=shaders
 ??1Mission@@MAE@XZ,0x00BF4EB5,"False 200-byte destructor claim aggregates unwind handlers: entries at BF4EB5 and BF4EC3 reload ecx from caller frame ebp-10134 then tail-jump to AsciiString destruction; BF4ED4 is a separate array unwind handler. Mission ctor005BB9B0 installs vtable0110F658 whose deleting destructor005BBDF0 calls named real Mission destructor005BBA80 via ILT00001668. Real Mission lifetime C++ is already recovered in Mission_ctor_Thunk.cpp; original fragment remains in Git history."
