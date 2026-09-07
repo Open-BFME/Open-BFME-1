@@ -86040,3 +86040,5 @@ _BfmeSpinSleep,0x0082BE10,STLport nanosecond backoff helper; final call operand 
 ??1?$_Rb_tree@W4ScienceType@@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Select1st@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@U?$less@W4ScienceType@@@3@V?$allocator@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@@_STL@@QAE@XZ,0x000E74C0,E8040 destroys its temporary STLport map through the verified ILT 0x0001D462; E74C0 is the matching retail tree destructor body; campaign=luna36h-20260907;lane=expand36;model=gpt-5.6-luna-max
 ??1MeshMatDescClass@@QAE@XZ,0x0092A3D0,MeshModelClass destructor and assignment directly call this body for DefMatDesc and AlternateMatDesc; body calls exact MeshMatDescClass Reset 0x00929310
 ?call_002234A0@Rva0021B200ListOwner@@QAEXP6AXPAX0@Z0I@Z,0x002234A0,neutral body pin for 0x0021B200 continuation; retail ILT=0x0003D0D7 resolves to this body; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-luna
+_j_0003b75a,0x0003B75A,COFF C-linkage alias for the existing incremental-link thunk
+_j_0003b971,0x0003B971,COFF C-linkage alias for the existing incremental-link thunk
