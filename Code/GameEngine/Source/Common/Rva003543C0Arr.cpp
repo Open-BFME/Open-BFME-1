@@ -230,3 +230,27 @@ bool Rva00355950Arr::matches(const Rva003558C0Key *key)
 {
 	return m_items[key->m_index].m_0e == key->m_value;
 }
+
+struct Rva003558F0Elem
+{
+	char m_pad[0x0C];
+	unsigned char m_0c;
+	char m_pad0d;
+	short m_0e;
+	char m_tail[4];
+};
+
+class Rva003558F0Arr
+{
+public:
+	bool matches(const Rva003558C0Key *key);
+
+	char m_pad[0x18];
+	Rva003558F0Elem *m_items;
+};
+
+bool Rva003558F0Arr::matches(const Rva003558C0Key *key)
+{
+	return m_items[key->m_index].m_0e != key->m_value ||
+		m_items[key->m_index].m_0c != 0;
+}
