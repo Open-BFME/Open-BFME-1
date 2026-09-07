@@ -148,8 +148,8 @@ public:
 	void								Get_Deformed_Vertices(Vector3 *dst_vert, Vector3 *dst_norm);
 	void								Get_Deformed_Vertices(Vector3 *dst_vert);
 
-	void								Set_Lighting_Environment(LightEnvironmentClass * light_env) { if (light_env) {m_localLightEnv=*light_env;LightEnvironment = &m_localLightEnv;} else {LightEnvironment = NULL;} }
-	LightEnvironmentClass *		Get_Lighting_Environment(void) { return LightEnvironment; }
+	void								Set_Lighting_Environment(LightEnvironmentClass * light_env) { if (light_env) {m_localLightEnv=*light_env;} else {m_localLightEnv.Reset(Vector3(0,0,0),Vector3(0,0,0));} }
+	LightEnvironmentClass *		Get_Lighting_Environment(void) { return m_localLightEnv.Get_Light_Count() ? &m_localLightEnv : NULL; }
 	inline float	Get_Alpha_Override(void) { return m_alphaOverride;}
 
 	void								Set_Next_Visible_Skin(MeshClass * next_visible) { NextVisibleSkin = next_visible; }
@@ -184,8 +184,16 @@ protected:
 	MeshModelClass *				Model;
 	DecalMeshClass *				DecalMesh;
 
-	LightEnvironmentClass *		LightEnvironment;		// cached pointer to the light environment for this mesh
 	LightEnvironmentClass     m_localLightEnv;	//added for 'Generals'
+	// BFME: retail's real LightEnvironmentClass is 4 bytes larger than this port's
+	// declaration (proven by the `this+4` pattern in LightEnvironmentClass::
+	// Add_Fill_Light/Calculate_Fill_Light in lightenvironment.cpp -- some field this
+	// header doesn't carry lives in those missing 4 bytes). m_localLightEnv itself
+	// still starts at the same address retail's embedded object does, so this trailing
+	// pad just reserves the extra space so every MeshClass field declared after it
+	// lands at retail's real offset, without touching LightEnvironmentClass's own
+	// declaration (it's shared by many other files).
+	unsigned char             m_localLightEnvPad[4];
 	float					m_alphaOverride;	//added for 'Generals' to allow variable alpha on meshes.
 	float					m_materialPassEmissiveOverride;	//added for 'Generals' to allow variable emissive on additional passes.
 	float					m_materialPassAlphaOverride;	//added for 'Generals' to allow variable alpha on additional render passes.
@@ -194,6 +202,11 @@ protected:
 
 	unsigned							MeshDebugId;
 	bool								IsDisabledByDebugger;
+	// BFME: retail's copy ctor explicitly zero-initializes one more 4-byte field here
+	// (mov dword ptr [this+0x314],0) that isn't in this port's declaration. Purpose
+	// unidentified -- reserved as a plain zeroed field until something recovers its
+	// real name/type.
+	unsigned int					m_bfmeUnknown0x314;
 
 	friend class MeshBuilderClass;
 };

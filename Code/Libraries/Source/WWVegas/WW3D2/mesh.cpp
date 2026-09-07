@@ -166,11 +166,11 @@ static DynamicVectorClass<Vector3>	_TempVertexBuffer;
 MeshClass::MeshClass(void) :
 	Model(NULL),
 	DecalMesh(NULL),
-	LightEnvironment(NULL),
 	BaseVertexOffset(0),
 	NextVisibleSkin(NULL),
 	IsDisabledByDebugger(false),
 	MeshDebugId(MeshDebugIdCount++),
+	m_bfmeUnknown0x314(0),
 	m_alphaOverride(1.0f),
 	m_materialPassAlphaOverride(1.0f),
 	m_materialPassEmissiveOverride(1.0f)
@@ -196,11 +196,11 @@ MeshClass::MeshClass(const MeshClass & that) :
 	RenderObjClass(that),
 	Model(NULL),
 	DecalMesh(NULL),
-	LightEnvironment(NULL),
 	BaseVertexOffset(that.BaseVertexOffset),
 	NextVisibleSkin(NULL),
 	IsDisabledByDebugger(false),
 	MeshDebugId(MeshDebugIdCount++),
+	m_bfmeUnknown0x314(0),
 	m_alphaOverride(1.0f),
 	m_materialPassAlphaOverride(1.0f),
 	m_materialPassEmissiveOverride(1.0f)
@@ -233,7 +233,7 @@ MeshClass & MeshClass::operator = (const MeshClass & that)
 
 		// just dont copy the decals or light environment
 		REF_PTR_RELEASE(DecalMesh);
-		LightEnvironment = NULL;
+		m_localLightEnv.Reset(Vector3(0,0,0),Vector3(0,0,0));
 	}
 	return * this;
 }
@@ -252,7 +252,7 @@ MeshClass & MeshClass::operator = (const MeshClass & that)
  *   1/6/98     GTH : Created.                                                                 *
  *=============================================================================================*/
 // ?MeshClass::~MeshClass present-unmatched
-MeshClass::~MeshClass(void) 
+MeshClass::~MeshClass(void)
 {
 	Free();
 }
