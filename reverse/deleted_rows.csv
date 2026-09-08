@@ -25120,6 +25120,7 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ??_GGen_dtor_0010bd60@@UAEPAXI@Z,0x0010BD60,Generic generator placeholder superseded by authentic Watchdog scalar-deleting destructor proven by constructor 0x0010B9C0 vtable 0x01088E34 and matched destructor 0x0010BC80
 ??_GGen_dtor_000f7760@@UAEPAXI@Z,0x000F7760,Generic generator placeholder superseded by authentic TeamFactory scalar-deleting destructor proven by constructor 0x000F2250 primary vtable 0x01085F1C and matched destructor 0x000F74C0
 ??_GGen_dtor_000dfca0@@UAEPAXI@Z,0x000DFCA0,Generic generator placeholder superseded by authentic PlayerList scalar-deleting destructor proven by constructor 0x000DFBD0 vtable 0x0108417C and matched destructor 0x000DF9A0
+??_GGen_dtor_000f3c20@@UAEPAXI@Z,0x000F3C20,Generic generator placeholder superseded by authentic TeamRelationMap scalar-deleting destructor proven by constructor 0x000F76E0 vtable 0x01085EE0 and matched destructor 0x000F21C0
 ?d_0061c060@@YAXXZ,0x0061C060,Generic dump placeholder superseded by authentic LivingWorldSound reactivation helper proven by copy and assignment callers plus AudioEventRTS construction and AudioManager slot 0x44
 ?bfmeGo1019B@@YAXH@Z,0x007F0000,Repair existing DirtySock allocator/shutdown/state identity and ABI; same verified bytes; replaced by ?Rva007F0000Alloc@@YAPAXH@Z
 ?bfmeGoTAA@@YAXH@Z,0x0081B9B0,Repair existing DirtySock allocator/shutdown/state identity and ABI; same verified bytes; replaced by _Rva0081B9B0
