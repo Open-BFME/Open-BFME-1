@@ -10529,7 +10529,7 @@ name,address,notes
 ?ChangeBuffer@EAStringC@@AAEXIIIW4CBPushZero@1@I@Z,0x0089E570,EA Apt 2.00.00 string buffer helper
 ?Change_Polygon_Renderer_Material@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@PAVVertexMaterialClass@@1I@Z,0x00948220,MeshModel material replacement94F450 call94F4F7; GeneralsMD category material migration body with typed list and old/new material pointers plus unsigned pass
 ?Change_Polygon_Renderer_Texture@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@ABVBfmeHandleCX@@1II@Z,0x00947E50,Mesh replacement94F300 call94F40B; original renderer-category migration body and typed list plus two handle refs; unsigned pass/stage from GeneralsMD declaration
-?Check@Rva0093C4A0Target@@QAE_NPAX00@Z,0x0093C4A0,address-derived three-argument callee pin from the 0x0093C870 retail wrapper
+?Check@Rva0093C4A0Target@@QAE_NPBGPAGH@Z,0x0093C4A0,Address-qualified glyph check; full171-byte body calls GDI SelectObject and GetGlyphIndicesW; signed count and three UTF16 missing-glyph exceptions independently decoded
 ?Check_Is_Transform_Identity@@YI_NABVMatrix3D@@@Z,0x0091FF40,register-convention alias of the static inline Check_Is_Transform_Identity; same body as the cdecl-mangled row
 ?Clear@?$VectorClass@M@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)
 ?Clear@?$VectorClass@U_ArcInfoStruct@VehicleCurveClass@@@@UAEXXZ,0x0000B9CE,pinharvest x1 (thunk)

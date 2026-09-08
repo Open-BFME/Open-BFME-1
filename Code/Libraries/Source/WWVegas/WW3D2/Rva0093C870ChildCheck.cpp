@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// The GDI callee at RVA 0x0093C4A0 consumes UTF-16 text, WORD glyph
+// output and a signed count; both calls below preserve that exact ABI.
 
 class Rva0093C4A0Target
 {
 public:
-    bool Check(void *first, void *second, void *third);
+    bool Check(const unsigned short *text, unsigned short *glyphs, int count);
 
     void *m_gap00;
     void *m_gap04;
@@ -13,7 +15,7 @@ public:
 class Rva0093C870Owner
 {
 public:
-    Rva0093C4A0Target *Check(void *first, void *second, void *third);
+    Rva0093C4A0Target *Check(const unsigned short *text, unsigned short *glyphs, int count);
 
 private:
     char m_gap00[0x4c];
@@ -21,13 +23,13 @@ private:
 };
 
 Rva0093C4A0Target *Rva0093C870Owner::Check(
-    void *first, void *second, void *third)
+    const unsigned short *text, unsigned short *glyphs, int count)
 {
-    if (!m_target->Check(first, second, third))
+    if (!m_target->Check(text, glyphs, count))
     {
         if (m_target->m_child != 0)
         {
-            m_target->m_child->Check(first, second, third);
+            m_target->m_child->Check(text, glyphs, count);
             return m_target->m_child;
         }
     }
