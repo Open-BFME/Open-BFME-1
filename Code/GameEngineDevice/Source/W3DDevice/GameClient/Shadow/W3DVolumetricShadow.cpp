@@ -3592,9 +3592,30 @@ void W3DVolumetricShadow::addSilhouetteEdge(Int meshIndex, PolyNeighbor *visible
 // must be added in such an order that we create silhouette edges in a
 // counter clockwise order.
 // ============================================================================
-// ?addNeighborlessEdges@W3DVolumetricShadow@@IAEXHPAUPolyNeighbor@@@Z present-unmatched
 void W3DVolumetricShadow::addNeighborlessEdges(Int meshIndex, PolyNeighbor *us )
 {
+	struct BFMEShadowGeometryMeshData
+	{
+		char m_beforePolygons[0xc];
+		const TriIndex *m_polygons;
+	};
+	struct BFMEShadowGeometryMeshView
+	{
+		BFMEShadowGeometryMeshData *m_mesh;
+		char m_afterMesh[0x1c];
+		UnsignedShort *m_parentVerts;
+		char m_afterParentVerts[0x10];
+	};
+	struct BFMEShadowGeometryView
+	{
+		char m_beforeMeshList[0x14];
+		BFMEShadowGeometryMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+	struct BFMEVolumetricShadowView
+	{
+		char m_beforeGeometry[0x6c];
+		BFMEShadowGeometryView *m_geometry;
+	};
 	Short vertexIndexList[ 3 ];
 	Int i, j;
 	Short edgeStart, edgeEnd;
@@ -3603,10 +3624,15 @@ void W3DVolumetricShadow::addNeighborlessEdges(Int meshIndex, PolyNeighbor *us )
 	// sanity
 	assert( us );
 
-	W3DShadowGeometryMesh *geomMesh = m_geometry->getMesh(meshIndex);
+	BFMEVolumetricShadowView *shadow = (BFMEVolumetricShadowView *)this;
+	BFMEShadowGeometryView *geometry = shadow->m_geometry;
+	BFMEShadowGeometryMeshView *geomMesh = &geometry->m_meshList[meshIndex];
 
 	// get the vertex index list from the geometry
-	geomMesh->GetPolygonIndex( us->myIndex, vertexIndexList );
+	const TriIndex *polyi = &geomMesh->m_mesh->m_polygons[us->myIndex];
+	vertexIndexList[0] = geomMesh->m_parentVerts[polyi->I];
+	vertexIndexList[1] = geomMesh->m_parentVerts[polyi->J];
+	vertexIndexList[2] = geomMesh->m_parentVerts[polyi->K];
 
 	//
 	// go through each edge, if these indices to NOT appear TOGETHER in
