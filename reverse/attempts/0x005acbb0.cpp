@@ -228,8 +228,9 @@ GameMessage::Type CommandTranslator::issueMoveToLocationCommand(const Coord3D *p
 		if (msgType == GameMessage::MSG_DO_ATTACK_OBJECT)
 		{
 			obj = (Object *)((char *)obj + 0x38);
-			Coord3D *objectPosition = (Coord3D *)obj;
-			info.m_position = *objectPosition;
+			info.m_position.x = ((Coord3D *)obj)->x;
+			info.m_position.y = ((Coord3D *)obj)->y;
+			info.m_position.z = ((Coord3D *)obj)->z;
 		}
 		else
 			info.m_position = *destination;
