@@ -1,7 +1,39 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Ireference/shims/stringinline
 // stlport
 
 #include <string>
+
+template <typename T> struct StringInlineData
+{
+	int m_refCount;
+	int m_length;
+	T m_text[1];
+};
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+	friend class UnicodeString;
+
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other );
+	~StringBase();
+
+	StringInlineData<T> *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString( const char *text ) : StringBase<char>( text ) {}
+	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
+	~AsciiString() {}
+	void format( AsciiString format, ... );
+	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
+};
 
 typedef void *PEER;
 typedef int Int;
@@ -19,22 +51,12 @@ public:
 	Int lookupStatForPlayer(RoomType, const char *, const char *);
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	AsciiString(const char *);
-	~AsciiString() { releaseBuffer(); }
-	void format(AsciiString, ...);
-	const char *str() const { return m_text ? m_text + 8 : ""; }
+extern "C" int peerGetPlayerInfoNoWaitA(PEER, const char *, UnsignedInt *, Int *);
+extern "C" int peerGetPlayerFlagsA(PEER, const char *, RoomType, Int *);
 
-private:
-	void releaseBuffer();
-	char *m_text;
-};
-
-extern void peerGetPlayerInfoNoWait(PEER, const char *, UnsignedInt *, Int *);
-extern void peerGetPlayerFlags(PEER, const char *, RoomType, Int *);
+#define BFME_RANK1V1_KEY ((const char *)0x011193E0)
+#define BFME_RANK2V2_KEY ((const char *)0x011193D4)
+#define BFME_LAST_LADDER_KEY ((const char *)0x01119568)
 
 class PeerResponse
 {
@@ -97,7 +119,7 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
-static void getPlayerInfo(PeerThreadClass *thread,
+__declspec(noinline) static void getPlayerInfo(PeerThreadClass *thread,
 	PEER peer, const char *nick, Int &id, UnsignedInt &ip, std::string &locale,
 	Int &wins, Int &losses, Int &rankPoints, Int &side, Int &preorder,
 	RoomType roomType, Int &flags, Int &rank1v1, Int &rank2v2,
@@ -105,7 +127,7 @@ static void getPlayerInfo(PeerThreadClass *thread,
 {
 	if (!thread || !nick)
 		return;
-	peerGetPlayerInfoNoWait(peer, nick, &ip, &id);
+	peerGetPlayerInfoNoWaitA(peer, nick, &ip, &id);
 	Int localeIndex = thread->lookupStatForPlayer(roomType, nick, "b_locale");
 	AsciiString tmp;
 	tmp.format("%d", localeIndex);
@@ -115,11 +137,11 @@ static void getPlayerInfo(PeerThreadClass *thread,
 	rankPoints = thread->lookupStatForPlayer(roomType, nick, "b_points");
 	side = thread->lookupStatForPlayer(roomType, nick, "b_side");
 	preorder = thread->lookupStatForPlayer(roomType, nick, "b_pre");
-	rank1v1 = thread->lookupStatForPlayer(roomType, nick, "b_rank1v1");
-	rank2v2 = thread->lookupStatForPlayer(roomType, nick, "b_rank2v2");
-	lastLadder = thread->lookupStatForPlayer(roomType, nick, "b_lastLadder");
 	flags = 0;
-	peerGetPlayerFlags(peer, nick, roomType, &flags);
+	rank1v1 = thread->lookupStatForPlayer(roomType, nick, BFME_RANK1V1_KEY);
+	rank2v2 = thread->lookupStatForPlayer(roomType, nick, BFME_RANK2V2_KEY);
+	lastLadder = thread->lookupStatForPlayer(roomType, nick, BFME_LAST_LADDER_KEY);
+	peerGetPlayerFlagsA(peer, nick, roomType, &flags);
 }
 
 #pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")

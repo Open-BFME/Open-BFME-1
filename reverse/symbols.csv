@@ -82708,6 +82708,7 @@ g_Rva012DAC04,0x012DAC04,targetIds.%d format string used by addTargetIds at 0x00
 ?lookup@TerrainCollisionEventFXLookupShim@FXParticleSystem@@QBEPBVFXList@@PBD@Z,0x0001669E,TerrainCollisionModuleInfo event FX lookup thunk used through a TU-local layout shim
 ?lookupByField@BfmeMgr2B0@@QAEPAUBfmeNode2B0@@PAX@Z,0x0003A751,pin
 ?lookupStatForPlayer@PeerThreadClass@@QAEHW4RoomType@@PBD1@Z,0x00647DD0,ZH PeerThread.cpp:371 line for line: packStatKey(nick;key) into a std::string via 0x00647CD0; roomType 1 (GroupRoom) searches the map at this+0x94 roomType 2 (StagingRoom) the map at this+0xa0 (_M_find ILT 0x0002E159); returns node+0x1c or 0; nine calls from getPlayerInfo 0x0064AA70 via ILT 0x0003733A
+?lookupStatForPlayer@PeerThreadClass@@QAEHW4RoomType@@PBD1@Z,0x0003733A,route=0x00647DD0; getPlayerInfo 0x0064AA70 calls the existing lookupStatForPlayer body through this retail ILT
 ?lower_bound@AsciiStringTreeLowerBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x00633900,incremental-link thunk target through a TU-local forwarding shim
 ?lubksb@@YAXQAY0GF@NHQAHQAN@Z,0x00876BB0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00876D90 calls; autopin
 ?ludcmp@@YAHQAY0GF@NHQAHPAH@Z,0x008765A0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00876D90 calls; autopin
