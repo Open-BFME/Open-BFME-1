@@ -16332,3 +16332,8 @@ d_0087ee60	0x0087EE60	301	partial	The retail caller at 0x0087F160 and the recove
 ?d_00690b70@@YAXXZ	0x00690B70	245	blocked	Anonymous network/APT body in served dump with no named caller, source owner, or built emitter; clean identity would be invented; t=9m model=gpt-5.6-sol
 ?d_00693b00@@YAXXZ	0x00693B00	115	blocked	Anonymous network/APT body in served dump with no named caller, source owner, or built emitter; clean identity would be invented; t=9m model=gpt-5.6-sol
 ?d_00693b90@@YAXXZ	0x00693B90	525	blocked	Anonymous network/APT body in served dump with no named caller, source owner, or built emitter; clean identity would be invented; t=9m model=gpt-5.6-sol
+?d_0068cf00@@YAXXZ	0x0068CF00	818	blocked	Anonymous LANAPI receive/update helper reached from LANAPI::update but with no retained standalone source owner or exact clean C++ reconstruction; t=10m model=gpt-5.6-sol
+?d_0068e090@@YAXXZ	0x0068E090	1037	blocked	writeLANGameInfo identity is proven by reloc_names.csv and LANAPISendPath.cpp declaration, but the 1037-byte SEH/serialization body remains unreconstructed; no byte-exact clean source claim; t=10m model=gpt-5.6-sol
+?d_00690b70@@YAXXZ	0x00690B70	245	blocked	Anonymous LAN/APT helper with no named caller, source owner, or built emitter; clean identity would be invented; t=10m model=gpt-5.6-sol
+?d_00693b00@@YAXXZ	0x00693B00	115	blocked	Anonymous LAN/APT helper with no named caller, source owner, or built emitter; clean identity would be invented; t=10m model=gpt-5.6-sol
+?d_00693b90@@YAXXZ	0x00693B90	525	blocked	Anonymous LAN/APT helper with no named caller, source owner, or built emitter; clean identity would be invented; t=10m model=gpt-5.6-sol
