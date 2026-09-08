@@ -25128,3 +25128,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ?bfmeFindXF@BfmeOwnerXF@@QAEXXZ,0x000D4490,wrong void return replaced by Object pointer return proven by GameLogic::findObjectByID at9A510 and named callers consuming EAX
 ??_EZoneBlock@@QAEPAXI@Z,0x0005E880,incorrect duplicate ZoneBlock identity; actual body calls COM surface Release through18FCF not ZoneBlock freeZones; existing RoadType row already covers this range
 ?removeUnitFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z,0x0024EA60,wrong Pathfinder identity and callee routes; replaced by address-derived Rva0024EA60 dispatch with actual2F8DD and41506 calls
+??0VideoPlayer@@QAE@XZ,0x000EB9D0,False constructor identity: canonical SpecialPowerStore constructor at this RVA installs vftable 0x01085CC4 whose slot zero reaches the SpecialPowerStore deleting destructor; VideoPlayer source supplies unrelated ICF bodies only
