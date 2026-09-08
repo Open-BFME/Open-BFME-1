@@ -5,25 +5,66 @@
 // stlport
 // FILE: KeyboardOptionsMenu.cpp //////////////////////////////////////////////
 //
-// No port of Zero Hour's KeyboardOptionsMenu.cpp existed under Code/. This is a
-// partial one: the Input callback the .data callback table names at 0x004C9290.
-// The body is Zero Hour's unchanged - it is the same escape-key handler five
-// other menus in this directory carry - and the shims are the standard menu set.
+// Port of the Zero Hour KeyboardOptionsMenu.cpp initializer and input callback.
+// The initializer is the retail KeyboardOptionsMenu.wnd control setup; the
+// input body is the unchanged escape-key handler shared by the sibling menus.
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "PreRTS.h"
 
+#include "../../../../../../reference/shims/displaystring/GameClient/DisplayString.h"
+
 #include "Common/NameKeyGenerator.h"
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/Gadget.h"
+#include "GameClient/GadgetComboBox.h"
 #include "GameClient/GadgetListBox.h"
+#include "GameClient/GameText.h"
 #include "GameClient/KeyDefs.h"
 #include "GameClient/MetaEvent.h"
 #include "GameClient/WindowLayout.h"
 
+static NameKeyType buttonBackID = NAMEKEY_INVALID;
+static GameWindow *buttonBack = NULL;
+
+static NameKeyType parentKeyboardOptionsMenuID = NAMEKEY_INVALID;
+static GameWindow *parentKeyboardOptionsMenu = NULL;
+
+static NameKeyType comboBoxCategoryListID = NAMEKEY_INVALID;
+static GameWindow *comboBoxCategoryList = NULL;
+
+static NameKeyType listBoxCommandListID = NAMEKEY_INVALID;
 static GameWindow *listBoxCommandList = NULL;
+
+static NameKeyType staticTextDescriptionID = NAMEKEY_INVALID;
+static GameWindow *staticTextDescription = NULL;
+
+static NameKeyType staticTextCurrentHotkeyID = NAMEKEY_INVALID;
+static GameWindow *staticTextCurrentHotkey = NULL;
+
+static NameKeyType buttonResetAllID = NAMEKEY_INVALID;
+static GameWindow *buttonResetAll = NULL;
+
+static NameKeyType textEntryAssignHotkeyID = NAMEKEY_INVALID;
+static GameWindow *textEntryAssignHotkey = NULL;
+
+static NameKeyType buttonAssignID = NAMEKEY_INVALID;
+static GameWindow *buttonAssign = NULL;
+
+UnicodeString alt;
+UnicodeString ctrl;
+UnicodeString shift;
+
+// The retail initializer calls these already-published ILT entry points.  The
+// callback is installed through the ILT as a GameWinInputFunc, so its machine
+// ABI is taken from GameWindow rather than guessed from the thunk's neutral
+// generated declaration.
+extern void j_00004f7a();
+extern void j_000189c6();
+
+void fillCommandListBox( MappableKeyCategories cat );
 
 struct BfmeMetaMapRec
 {
@@ -39,6 +80,80 @@ struct BfmeMetaMap
 	unsigned char padding[8];
 	BfmeMetaMapRec *first;
 };
+
+struct BfmeKeyboardEntryData
+{
+	DisplayString *text;
+	DisplayString *sText;
+	DisplayString *constructText;
+	Bool secretText;
+	Bool numericalOnly;
+	Bool alphaNumericalOnly;
+	Bool aSCIIOnly;
+	Short maxTextLen;
+	Bool receivedUnichar;
+	Bool drawTextFromStart;
+	GameWindow *constructList;
+	void *bfmeEntryPad;
+	UnsignedShort charPos;
+	UnsignedShort conCharPos;
+};
+
+class BfmeVirtualHideLayout
+{
+public:
+	virtual void slot0() = 0;
+	virtual void slot4() = 0;
+	virtual void slot8() = 0;
+	virtual void slotC() = 0;
+	virtual void hide( Bool immediate ) = 0;
+};
+
+void KeyboardOptionsMenuInit( WindowLayout *layout, void *userData )
+{
+	parentKeyboardOptionsMenuID = TheNameKeyGenerator->nameToKey("KeyboardOptionsMenu.wnd:ParentKeyboardOptionsMenu");
+	parentKeyboardOptionsMenu = TheWindowManager->winGetWindowFromId( NULL, parentKeyboardOptionsMenuID );
+
+	buttonBackID = TheNameKeyGenerator->nameToKey( AsciiString("KeyboardOptionsMenu.wnd:ButtonBack") );
+	buttonBack = TheWindowManager->winGetWindowFromId( parentKeyboardOptionsMenu, buttonBackID );
+
+	comboBoxCategoryListID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:ComboBoxCategoryList" );
+	comboBoxCategoryList = TheWindowManager->winGetWindowFromId( NULL, comboBoxCategoryListID );
+
+	listBoxCommandListID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:ListBoxCommandList" );
+	listBoxCommandList = TheWindowManager->winGetWindowFromId( NULL, listBoxCommandListID );
+
+	staticTextDescriptionID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:StaticTextDescription" );
+	staticTextDescription = TheWindowManager->winGetWindowFromId( NULL, staticTextDescriptionID );
+
+	staticTextCurrentHotkeyID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:StaticTextCurrentHotkey" );
+	staticTextCurrentHotkey = TheWindowManager->winGetWindowFromId( NULL, staticTextCurrentHotkeyID );
+
+	buttonResetAllID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:ButtonResetAll" );
+	buttonResetAll = TheWindowManager->winGetWindowFromId( NULL, buttonResetAllID );
+
+	textEntryAssignHotkeyID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:TextEntryAssignHotkey" );
+	textEntryAssignHotkey = TheWindowManager->winGetWindowFromId( NULL, textEntryAssignHotkeyID );
+
+	buttonAssignID = TheNameKeyGenerator->nameToKey( "KeyboardOptionsMenu.wnd:ButtonAssign" );
+	buttonAssign = TheWindowManager->winGetWindowFromId( NULL, buttonAssignID );
+
+	textEntryAssignHotkey->winSetInputFunc( (GameWinInputFunc)j_000189c6 );
+	j_00004f7a();
+	fillCommandListBox( CATEGORY_CONTROL );
+	textEntryAssignHotkey->winEnable( false );
+
+	BfmeKeyboardEntryData *e = (BfmeKeyboardEntryData *)textEntryAssignHotkey->winGetUserData();
+	e->text->setText( UnicodeString::TheEmptyString );
+	e->charPos = e->text->getTextLength();
+
+	alt = TheGameText->fetch( "KEYBOARD:Alt+" );
+	ctrl = TheGameText->fetch( "KEYBOARD:Ctrl+" );
+	shift = TheGameText->fetch( "KEYBOARD:Shift+" );
+
+	((BfmeVirtualHideLayout *)layout)->hide( FALSE );
+	TheWindowManager->winSetFocus( parentKeyboardOptionsMenu );
+}
 
 void fillCommandListBox( MappableKeyCategories cat )
 {
