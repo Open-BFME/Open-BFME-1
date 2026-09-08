@@ -1,4 +1,4 @@
-// ??1Rva008A61F0@@UAE@XZ
+// ??1Rva008A6410HeaderedDeleting@@UAE@XZ
 // partial score=0.85 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: retail 0x008A61F0 (163 B). Same Q4Base00D35D68 destructor
@@ -33,14 +33,17 @@ public:
 
 extern void ( __cdecl **Rva01337A30ReleaseTable )( void * );
 
-struct Rva008A61F0RefCount
+struct Rva008A6410RefCount
 {
 	unsigned short m_count;
 };
 
-static void Rva008A61F0ReleaseRef( Rva008A61F0RefCount *ref )
+static void Rva008A6410ReleaseRef( Rva008A6410RefCount *ref )
 {
-	unsigned short count = --ref->m_count;
+	--ref->m_count;
+	unsigned short count = ref->m_count;
+	if( count != 0 )
+		return;
 	if( count == 0 )
 		Rva01337A30ReleaseTable[ 1 ]( ref );
 }
@@ -49,13 +52,13 @@ static void Rva008A61F0ReleaseRef( Rva008A61F0RefCount *ref )
 // 0x1136058; owns the subobject-at-+8 and the flag, and its user body is the
 // same notify(0,0)/flag=0 pair every Q4_TABLE_DTOR sibling in
 // Q4VptrPairDtors.cpp uses.
-class Rva008A61F0Mid : public Q4Base00D35D68
+class Rva008A6410Middle : public Q4Base00D35D68
 {
 public:
 	virtual void v3();
 	virtual void v4();
 	virtual void v5();
-	__forceinline virtual ~Rva008A61F0Mid()
+	__forceinline virtual ~Rva008A6410Middle()
 	{
 		notify( 0, 0 );
 		m_flag = 0;
@@ -67,20 +70,20 @@ public:
 	int m_flag;					// +0x18
 };
 
-class Rva008A61F0 : public Rva008A61F0Mid
+class Rva008A6410HeaderedDeleting : public Rva008A6410Middle
 {
 public:
-	virtual ~Rva008A61F0();
+	virtual ~Rva008A6410HeaderedDeleting();
 
 private:
 	char m_gap2[ 0x20 - 0x1C ];
-	Rva008A61F0RefCount *m_ref20;			// +0x20
-	Rva008A61F0RefCount *m_ref24;			// +0x24
+	Rva008A6410RefCount *m_ref20;			// +0x20
+	Rva008A6410RefCount *m_ref24;			// +0x24
 };
 
 // ??1Rva008A61F0@@UAE@XZ
-Rva008A61F0::~Rva008A61F0()
+Rva008A6410HeaderedDeleting::~Rva008A6410HeaderedDeleting()
 {
-	Rva008A61F0ReleaseRef( m_ref24 );
-	Rva008A61F0ReleaseRef( m_ref20 );
+	Rva008A6410ReleaseRef( m_ref24 );
+	Rva008A6410ReleaseRef( m_ref20 );
 }

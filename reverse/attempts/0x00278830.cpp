@@ -1,4 +1,4 @@
-// ?bfmeLinkedMoveQuery@AIUpdateInterface@@QBE_NXZ
+// ?bfmeBlocksFormationRefresh@AIUpdateInterface@@QAE_NXZ
 // partial score=0.85 date=2026-09-02
 // cl: /DNDEBUG /MD
 //
@@ -59,7 +59,7 @@ public:
 	BFME_AI_SLOT(92) BFME_AI_SLOT(93) BFME_AI_SLOT(94) BFME_AI_SLOT(95)
 	virtual Bool isIdle() const;
 
-	Bool bfmeLinkedMoveQuery() const;
+	Bool bfmeBlocksFormationRefresh();
 
 private:
 	unsigned char m_unmodelled_04[4];
@@ -70,10 +70,10 @@ private:
 	unsigned char m_flag324;
 };
 
-Bool AIUpdateInterface::bfmeLinkedMoveQuery() const
+Bool AIUpdateInterface::bfmeBlocksFormationRefresh()
 {
-	AIUpdateInterface *next;
-	AIUpdateInterface *ai = (AIUpdateInterface *)this;
+	AIUpdateInterface *ai = this;
+	register AIUpdateInterface *next;
 	Object *linked = ai->m_object->m_linked;
 	if (linked)
 	{
