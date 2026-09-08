@@ -839,6 +839,71 @@ void DX8RigidFVFCategoryContainer::Log(bool only_visible)
 //
 // ----------------------------------------------------------------------------
 
+// RVA 0x00947D80: drains the +C8/+CC owning queue and returns whether a task was rendered.
+// Retail uses MeshClass::BaseVertexOffset at +0x304 in this call site; the
+// current shared header's inline accessor describes a different BFME layout.
+struct Rva00947D80MeshLayout
+{
+    unsigned char prefix[0x304];
+    int BaseVertexOffset;
+};
+
+// Address-qualified queue view: raw 0x947D80 uses head +0xC8, tail +0xCC,
+// and the refcounted index buffer at +0xD8. The historical owner name is not
+// asserted by this recovery source.
+struct Rva00947D80QueueLayout
+{
+    unsigned char prefix[0xc8];
+    MatPassTaskClass *visible_matpass_head;
+    MatPassTaskClass *visible_matpass_tail;
+    unsigned char between_tail_and_buffer[8];
+    IndexBufferClass *index_buffer;
+};
+
+class Rva00947D80MaterialQueue
+{
+public:
+    bool Render_Procedural_Material_Passes_Rva00947D80(void);
+};
+
+bool Rva00947D80MaterialQueue::Render_Procedural_Material_Passes_Rva00947D80(void)
+{
+    Rva00947D80QueueLayout *layout = reinterpret_cast<Rva00947D80QueueLayout *>(this);
+    MatPassTaskClass *mpr = layout->visible_matpass_head;
+    MatPassTaskClass *last_mpr = NULL;
+    bool renderTasksRemaining = false;
+    bool taskWasDeleted = false;
+
+    while (mpr != NULL) {
+        MeshClass *mesh = mpr->Peek_Mesh();
+
+        if (reinterpret_cast<Rva00947D80MeshLayout *>(mesh)->BaseVertexOffset == VERTEX_BUFFER_OVERFLOW) {
+            last_mpr = mpr;
+            mpr = mpr->Get_Next_Visible();
+            renderTasksRemaining = true;
+            continue;
+        }
+
+        IndexBufferClass *pass_index_buffer = layout->index_buffer;
+        MaterialPassClass *material_pass = mpr->Peek_Material_Pass();
+        mpr->Peek_Mesh()->Render_Material_Pass(material_pass, pass_index_buffer);
+        MatPassTaskClass *next_mpr = mpr->Get_Next_Visible();
+
+        taskWasDeleted = true;
+        if (last_mpr == NULL) {
+            layout->visible_matpass_head = next_mpr;
+        } else {
+            last_mpr->Set_Next_Visible(next_mpr);
+        }
+
+        delete mpr;
+        mpr = next_mpr;
+    }
+
+    layout->visible_matpass_tail = renderTasksRemaining ? last_mpr : NULL;
+    return taskWasDeleted;
+}
+
 // ?Render@DX8RigidFVFCategoryContainer@@UAEXXZ present-unmatched
 void DX8RigidFVFCategoryContainer::Render(void)
 {
