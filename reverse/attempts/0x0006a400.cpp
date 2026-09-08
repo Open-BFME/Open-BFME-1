@@ -45,9 +45,9 @@ public:
 float U4Curve006095D0::evaluateSpline( float t ) const
 {
 	U4CurveKey006095D0 *end = m_keys.end;
-	U4CurveKey006095D0 *next = m_current + 1;
 	U4CurveKey006095D0 *current =
 		*reinterpret_cast<U4CurveKey006095D0 * volatile *>(&m_current);
+	U4CurveKey006095D0 *next = m_current + 1;
 	if ( current == end || t < current->time || next == end ||
 		t >= next->time )
 	{
