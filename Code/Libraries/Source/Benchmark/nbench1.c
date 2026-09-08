@@ -65,6 +65,8 @@ extern "C" __declspec(dllimport) int __cdecl strncmp(const char *, const char *,
 #include "nbench1.h"
 #include "wordcat.h"
 
+extern const char g_Rva0107301CEmptyString[];
+
 extern void ji_008793a0();
 extern void ji_00879190();
 extern int Rva008793B0(int);
@@ -115,7 +117,7 @@ numsortstruct=&global_numsortstruct;
 /*
 ** Set the error context string.
 */
-errorcontext="CPU:Numeric Sort";
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 /*
 ** See if we need to do self adjustment code.
@@ -157,9 +159,7 @@ if(numsortstruct->adjust==0)
 
 		FreeMemory((farvoid *)arraybase,&systemerror);
 		if(numsortstruct->numarrays++>NUMNUMARRAYS)
-		{       printf("CPU:NSORT -- NUMNUMARRAYS hit.\n");
 			ErrorExit();
-		}
 	}
 }
 else
