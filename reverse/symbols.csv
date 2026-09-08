@@ -86443,3 +86443,6 @@ _g_bfmeStateDF,0x012F7048,Actual C COFF spelling of the state singleton loaded b
 ?bfmeCheckABI@BfmeThingCDE@@QAE_NXZ,0x008F7A10,Open-BFME5 retained check the 0x008F8D00 release consults before deleting
 ?Render_Procedural_Material_Passes_Rva009467F0@Rva009467F0MaterialQueue@@QAE_NXZ,0x009467F0,Address-qualified bool queue declaration; full163 at9467F0 returnsAL taskWasDeleted; parent949EA0 ignores result; no adapter body
 ?Render@DX8TextureCategoryClass@@QAEXXZ,0x00948BD0,Render949EA0 exactdirectcallee; full4397 ends949CFD; owningtexturecategorytasks and complete14stateEH audited; no helpercoverage claimed
+_bfmeVfAXZ,0x00D3E878,vftable pin
+_bfmeVfBXZ,0x00D3E870,secondary vftable pin
+_bfmeNullNameXZ,0x00C80374,NULL name global
