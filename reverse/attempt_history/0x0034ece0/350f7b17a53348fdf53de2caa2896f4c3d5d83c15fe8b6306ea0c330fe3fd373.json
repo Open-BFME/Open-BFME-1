@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "350f7b17a53348fdf53de2caa2896f4c3d5d83c15fe8b6306ea0c330fe3fd373",
+  "symbol": "?setPriority@AttackPriorityInfo@@QAEXPBVThingTemplate@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?setPriority@AttackPriorityInfo@@QAEXPBVThingTemplate@@H@Z\n// partial score=0.9 date=2026-09-08\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\ntypedef int Int;\n\nclass Overridable\n{\npublic:\n\tOverridable *getFinalOverride();\n\n\tvoid *m_vtable;\n\tOverridable *m_nextOverride;\n};\n\nclass ThingTemplate : public Overridable\n{\n};\n\nclass AttackPriorityMap\n{\npublic:\n\tAttackPriorityMap();\n\tInt &operator[](const ThingTemplate *const &thing);\n\nprivate:\n\tchar m_padding[0x0c];\n};\n\nclass AttackPriorityInfo\n{\npublic:\n\tvoid setPriority(const ThingTemplate *thing, Int priority);\n\nprivate:\n\tchar m_prefix[0x0c];\n\tAttackPriorityMap *m_priorityMap;\n};\n\nvoid AttackPriorityInfo::setPriority(const ThingTemplate *thing, Int priority)\n{\n\tif (thing == 0)\n\t\treturn;\n\tif (m_priorityMap == 0)\n\t\tm_priorityMap = new AttackPriorityMap;\n\tif (((ThingTemplate *)thing)->m_nextOverride != 0)\n\t\tthing = (const ThingTemplate *)\n\t\t\t((ThingTemplate *)thing)->m_nextOverride->getFinalOverride();\n\t(*m_priorityMap)[thing] = priority;\n}\n"
+}
