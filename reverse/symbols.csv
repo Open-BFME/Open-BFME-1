@@ -86429,3 +86429,4 @@ __imp__GetClientRect@8,0x0135901C,Open-BFME5 USER32 GetClientRect import the 0x0
 ?g_bfmeGameCW@@3PAVBfmeGameCW@@A,0x012F706C,Actual C++ COFF spelling of the singleton loaded by reviewed 0x00618740; pointer owner view BfmeGameCW
 _g_bfmeStateDF,0x012F7048,Actual C COFF spelling of the state singleton loaded by reviewed 0x00618740; vslot20 point output
 ?bfmeApplyABG@BfmeK1094@@QAEXPAX0@Z,0x00006DE8,Open-BFME5 ILT apply the 0x00151560 walk calls on the first matching item
+?bfmeCheckABI@BfmeThingCDE@@QAE_NXZ,0x008F7A10,Open-BFME5 retained check the 0x008F8D00 release consults before deleting
