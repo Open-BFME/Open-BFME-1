@@ -52,6 +52,8 @@
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 #include <stdlib.h>
 
+#include "../../../../../../../reference/shims/w3ddisplaystring/GameClient/DisplayString.h"
+
 // USER INCLUDES //////////////////////////////////////////////////////////////
 #include "GameClient/GameWindowGlobal.h"
 #include "GameClient/GameWindowManager.h"
@@ -68,6 +70,51 @@
 // PUBLIC DATA ////////////////////////////////////////////////////////////////
 
 // PRIVATE PROTOTYPES /////////////////////////////////////////////////////////
+
+class BfmeListDisplayString
+{
+public:
+	virtual void unused00();
+	virtual void unused01();
+	virtual void unused02();
+	virtual Int getTextLength();
+	virtual void unused04();
+	virtual void unused05();
+	virtual void setFont(GameFont *font);
+	virtual GameFont *getFont();
+	virtual void unused08();
+	virtual void unused09();
+	virtual void setTextColor(Color color, Color border);
+	virtual void unused11();
+	virtual void unused12();
+	virtual void unused13();
+	virtual void draw(Int x, Int y, Int color, Int border);
+};
+
+struct BfmeListboxData
+{
+	unsigned char m_unreconstructed_000[0x24];
+	GameWindow *slider;
+};
+
+inline const Image *bfmeListEnabledImage(GameWindow *window)
+{
+	return *(const Image **)((const char *)window + 0x48);
+}
+
+inline const Image *bfmeListDisabledImage(GameWindow *window)
+{
+	return *(const Image **)((const char *)window + 0xb4);
+}
+
+inline const Image *bfmeListHiliteImage(GameWindow *window)
+{
+	return *(const Image **)((const char *)window + 0x120);
+}
+
+// Keep the existing inline helper rows emitted while this body reads BFME's shifted data.
+static const Image *(*s_bfmeKeepListDisabledImage)(GameWindow *) = GadgetListBoxGetDisabledImage;
+static const Image *(*s_bfmeKeepListHiliteImage)(GameWindow *) = GadgetListBoxGetHiliteImage;
 
 ///////////////////////////////////////////////////////////////////////////////
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
@@ -593,10 +640,10 @@ void W3DGadgetListBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 {
 	Int width, height, x, y;
 	const Image *image;
-	ListboxData *list = (ListboxData *)window->winGetUserData();
+	BfmeListboxData *list = (BfmeListboxData *)window->winGetUserData();
 	ICoord2D size;
 	Color titleColor, titleBorder;
-	DisplayString *title = instData->getTextDisplayString();
+	BfmeListDisplayString *title = (BfmeListDisplayString *)instData->getTextDisplayString();
 
 	// get window position and size
 	window->winGetScreenPosition( &x, &y );
@@ -619,19 +666,19 @@ void W3DGadgetListBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 	// get the image
 	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
 	{
-		image				= GadgetListBoxGetDisabledImage( window );
+		image				= bfmeListDisabledImage( window );
 		titleColor	= window->winGetDisabledTextColor();
 		titleBorder = window->winGetDisabledTextBorderColor();
 	}
 	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
 	{
-		image				= GadgetListBoxGetHiliteImage( window );
+		image				= bfmeListHiliteImage( window );
 		titleColor	= window->winGetHiliteTextColor();
 		titleBorder = window->winGetHiliteTextBorderColor();
 	}
 	else
 	{
-		image				= GadgetListBoxGetEnabledImage( window );
+		image				= bfmeListEnabledImage( window );
 		titleColor	= window->winGetEnabledTextColor();
 		titleBorder = window->winGetEnabledTextBorderColor();
 	}
@@ -660,7 +707,8 @@ void W3DGadgetListBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 			title->setFont( window->winGetFont() );
 
 		// draw the text
-		title->draw( x + 1, y, titleColor, titleBorder );
+		title->setTextColor( titleColor, titleBorder );
+		title->draw( x + 1, y, 1, 1 );
 
 		y += TheWindowManager->winFontHeight( instData->getFont() );
 		height -= TheWindowManager->winFontHeight( instData->getFont() ) + 1;
@@ -673,4 +721,3 @@ void W3DGadgetListBoxImageDraw( GameWindow *window, WinInstanceData *instData )
 	
 
 }  // end W3DGadgetListBoxImageDraw
-

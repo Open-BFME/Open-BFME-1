@@ -78318,6 +78318,7 @@ g_Rva012DAC04,0x012DAC04,targetIds.%d format string used by addTargetIds at 0x00
 ?drawBombed@Drawable@@AAEXXZ,0x0002F6E9,BFME drawIconUI member ILT
 ?drawCaption@Drawable@@AAEXXZ,0x00022A11,BFME drawIconUI member ILT
 ?drawCheckBoxText@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x0078FDE0,read out of W3DGadgetCheckBoxDraw call displacement; body is gen-dump d_0078fde0
+?drawListBoxText@@YAXPAVGameWindow@@PAVWinInstanceData@@HHHH_N@Z,0x00792350,Retail offset +0x01f1 calls FUN_00b92350. The source helper has the same name and argument shape.
 ?drawConstructPercent@Drawable@@AAEXXZ,0x00034130,BFME drawIconUI member ILT
 ?drawDemoralized@Drawable@@AAEXXZ,0x00012E2C,BFME drawIconUI member ILT
 ?drawDisabled@Drawable@@AAEXXZ,0x00038AAA,BFME drawIconUI member ILT
