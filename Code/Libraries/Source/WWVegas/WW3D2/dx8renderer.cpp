@@ -904,34 +904,31 @@ bool Rva00947D80MaterialQueue::Render_Procedural_Material_Passes_Rva00947D80(voi
     return taskWasDeleted;
 }
 
-// ?Render@DX8RigidFVFCategoryContainer@@UAEXXZ present-unmatched
+// This queue also returns whether it rendered a task. The caller ignores
+// that result; this declaration records the observed Boolean ABI.
+class Rva009467F0MaterialQueue
+{
+public:
+    bool Render_Procedural_Material_Passes_Rva009467F0(void);
+};
+
 void DX8RigidFVFCategoryContainer::Render(void)
 {
-	if (!Anything_To_Render()) return;
-	AnythingToRender=false;
+    if (!Anything_To_Render()) return;
+    AnythingToRender = false;
 
-	DX8Wrapper::Set_Vertex_Buffer(vertex_buffer);
+    DX8Wrapper::Set_Vertex_Buffer(vertex_buffer);
+    DX8Wrapper::Set_Index_Buffer(unknown_D8, 0);
 
-	DX8Wrapper::Set_Index_Buffer(index_buffer,0);
-
-	SNAPSHOT_SAY(("DX8RigidFVFCategoryContainer::Render()\n"));
-	// The Z-biasing was causing more problems than they solved.
-	// Disabling it for now HY.
-	//int zbias=0;
-	//DX8Wrapper::Set_DX8_ZBias(zbias);
-	for (unsigned p=0;p<passes;++p) {
-		SNAPSHOT_SAY(("Pass: %d\n",p));
-		while (DX8TextureCategoryClass * tex = visible_texture_category_list[p].Remove_Head()) {
-			tex->Render();
-		}
-		//zbias++;
-		//if (zbias>15) zbias=15;
-		//DX8Wrapper::Set_DX8_ZBias(zbias);
-	}
-
-	Render_Procedural_Material_Passes();
-
-	//DX8Wrapper::Set_DX8_ZBias(0);
+    reinterpret_cast<Rva009467F0MaterialQueue *>(this)->
+        Render_Procedural_Material_Passes_Rva009467F0();
+    for (unsigned p = 0; p < passes; ++p) {
+        while (DX8TextureCategoryClass *tex = visible_texture_category_list[p].Remove_Head()) {
+            tex->Render();
+        }
+    }
+    reinterpret_cast<Rva00947D80MaterialQueue *>(this)->
+        Render_Procedural_Material_Passes_Rva00947D80();
 }
 
 // ----------------------------------------------------------------------------
