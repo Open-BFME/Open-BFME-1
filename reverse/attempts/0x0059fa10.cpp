@@ -5,7 +5,7 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class BfmeRenderDevice1293
+class Display
 {
 public:
 	virtual void reserved00();
@@ -67,7 +67,7 @@ public:
 	virtual void bfmeEnd1293();
 };
 
-extern BfmeRenderDevice1293 *g_bfmeRenderDevice1293;
+extern Display * const TheDisplay;
 extern float g_bfmeAlphaScale1293;
 
 class BfmeOverlay1293
@@ -103,7 +103,7 @@ void BfmeOverlay1293::bfmeDraw1293()
 	float top = (float)m_top1c;
 	float left = (float)m_left18;
 	_ReadWriteBarrier();
-	BfmeRenderDevice1293 *device = g_bfmeRenderDevice1293;
+	register Display *device = TheDisplay;
 	device->bfmeBegin1293();
 	device->bfmeDrawQuad1293(left, top, right, bottom, color);
 	device->bfmeEnd1293();
