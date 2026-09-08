@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e46bc5dbbb4cba56653ef048c0331155514fb7b55e98b0535a5cedbf07e3b026",
+  "symbol": "?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z\n// partial score=0.9 date=2026-09-09\nstruct BfmeCellABL\n{\n\tunsigned char m_bfmeBodyABL[0x3c];\n};\n\nstruct BfmeInfoABL\n{\n\tunsigned char m_bfmeHeadABL[0xc];\n\tfloat m_bfme0CABL;\n};\n\nclass BfmeGridABL\n{\npublic:\n\tBfmeCellABL *bfmeAtABL(float x, float y);\n\n\tfloat m_bfme00ABL;\n\tfloat m_bfme04ABL;\n\tBfmeCellABL *m_bfme08ABL;\n\tBfmeCellABL *m_bfme0CABL;\n\tunsigned char m_bfmeGapABL[4];\n\tBfmeInfoABL *m_bfme14ABL;\n\tint m_bfme18ABL;\n};\n\nBfmeCellABL *BfmeGridABL::bfmeAtABL(float x, float y)\n{\n\tfloat fx = x - m_bfme00ABL;\n\tfloat cs = m_bfme14ABL->m_bfme0CABL;\n\tfloat fy = y - m_bfme04ABL;\n\n\tint col = (int)(fx / cs);\n\n\tif (col < 0)\n\t\treturn 0;\n\n\tint w = m_bfme18ABL;\n\n\tif (col >= w)\n\t\treturn 0;\n\n\tint idx = (int)(fy / cs) * w + col;\n\n\tif (idx < 0)\n\t\treturn 0;\n\n\tif ((unsigned int)idx >= (unsigned int)(m_bfme0CABL - m_bfme08ABL))\n\t\treturn 0;\n\n\treturn m_bfme08ABL + idx;\n}\n"
+}
