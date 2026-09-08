@@ -377,26 +377,6 @@ Particle::Particle( ParticleSystem *system, const ParticleInfo *info )
 // ------------------------------------------------------------------------------------------------
 /** Destructor */
 // ------------------------------------------------------------------------------------------------
-// ??1Particle@@MAE@XZ present-unmatched
-Particle::~Particle()
-{
-	// tell the particle system that this particle is gone
-	m_system->removeParticle( this );
-
-	// if this particle was controlling another particle system, destroy that system
-	if (m_systemUnderControl)
-	{
-		m_systemUnderControl->detachControlParticle( this );
-		m_systemUnderControl->destroy();
-	}
-	m_systemUnderControl = NULL;
-
-	// remove from the global list
-	TheParticleSystemManager->removeParticle(this);
-
-	//DEBUG_ASSERTLOG(!(totalParticleCount % 100 == 0), ( "TotalParticleCount = %d\n", m_totalParticleCount ));
-}
-
 // ------------------------------------------------------------------------------------------------
 /** Add the given acceleration */
 // ------------------------------------------------------------------------------------------------
