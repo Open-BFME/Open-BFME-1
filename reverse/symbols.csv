@@ -827,6 +827,9 @@ name,address,notes
 ??$__copy@PAVAsciiString@@PAV1@H@_STL@@YAPAVAsciiString@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00042EA6
 ??$__copy@PAVLivingWorldPlayerArmy@@PAV1@H@_STL@@YAPAVLivingWorldPlayerArmy@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00002DD3,REL32 vector range-copy target from 0x003668FB
 ??$__copy@PAVOpen2Elem2EB190@@PAV1@H@_STL@@YAPAVOpen2Elem2EB190@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000AA92,Open2 0x2eb190 vector twin callee
+??$__copy@PAUBfmeElemKN@@PAU1@H@_STL@@YAPAUBfmeElemKN@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B492,LuaScriptEngine::reset vector copy route to the retail BFME element-width helper
+??$__copy@PAUWeaponTemplateSet@@PAU1@H@_STL@@YAPAUWeaponTemplateSet@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002E5F0,LuaScriptEngine::reset vector copy route to the retail 0x54-byte element helper
+?erase@?$vector@VOpen2Elem2EB190@@V?$allocator@VOpen2Elem2EB190@@@_STL@@@_STL@@QAEPAV3@PAV3@0@Z,0x00039644,LuaScriptEngine::reset vector erase route to the retail Open2 element helper
 ??$__copy@PAVOpen2Elem39EB70@@PAV1@H@_STL@@YAPAVOpen2Elem39EB70@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00040255,Open2 0x39eb70 vector erase twin callee
 ??$__copy@PAVOpen2Elem3A3280@@PAV1@H@_STL@@YAPAVOpen2Elem3A3280@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00013FE3,Open2 0x3a3280 vector erase twin callee
 ??$__copy@PAVOpen2Elem7716A0@@PAV1@H@_STL@@YAPAVOpen2Elem7716A0@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00038CD5,Open2 0x7716a0 vector twin callee
