@@ -13750,6 +13750,8 @@ g_Rva012DAC04,0x012DAC04,targetIds.%d format string used by addTargetIds at 0x00
 ?appendPixelArgument@GameMessage@@QAEXABUICoord2D@@@Z,0x0002EA41,GameMessage::appendPixelArgument thunk
 ?appendPixelRegionArgument@GameMessage@@QAEXABUIRegion2D@@@Z,0x00011DCE,GameMessage::appendPixelRegionArgument thunk
 ?appendRealArgument@GameMessage@@QAEXM@Z,0x00002608,GameMessage::appendRealArgument thunk
+??4Bfme5CtorA0@@QAEAAV0@ABV0@@Z,0x000110B8,Open-BFME5 assignment callee in ScriptEngine::appendSequentialScript; target thunk reaches the matched 0x00336C90 field copy
+?_M_insert_overflow@?$vector@PAVBfme5CtorA0@@V?$allocator@PAVBfme5CtorA0@@@_STL@@@_STL@@IAEXPAPAVBfme5CtorA0@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003DB8B,Open-BFME5 vector overflow callee in ScriptEngine::appendSequentialScript; target thunk reaches the matched 0x0033EF00 body
 ?appendSequentialScript@ScriptEngine@@QAEXPAVBfme5CtorA0@@@Z,0x0000146A,ABI alias for the SequentialScript append call through its incremental-link thunk
 ?appendTeamIDArgument@GameMessage@@QAEXI@Z,0x0000C522,GameMessage::appendTeamIDArgument thunk
 ?appendTimestampArgument@GameMessage@@QAEXI@Z,0x0000D558,GameMessage::appendTimestampArgument thunk
