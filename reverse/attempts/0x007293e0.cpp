@@ -1,12 +1,9 @@
 // ?advanceLeft@Rva007293E0Terrain@@QAE_NAAUICoord2D@@HHHH@Z
-// partial score=0.55 date=2026-09-04
+// partial score=0.9 date=2026-09-08
 // cl: /DNDEBUG /MD
-// Retail 0x007293E0: advance the left edge through a terrain tile.
 
 typedef bool Bool;
 
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct ICoord2D
 {
 	int x;
@@ -27,7 +24,6 @@ class Rva00729300BitPlane
 public:
 	Bool test(int x, int y) const;
 
-public:
 	unsigned char m_pad00[0x08];
 	int m_width;
 	int m_height;
@@ -68,10 +64,10 @@ private:
 	Rva00729300BitPlane *m_map;
 };
 
-// ?advanceLeft@Rva007293E0Terrain@@QAE_NAAUICoord2D@@HHHH@Z
 Bool Rva007293E0Terrain::advanceLeft(ICoord2D &left, int xOffset,
-    int yOffset, int width, int height)
+	int yOffset, int width, int height)
 {
+	ICoord2D *leftPtr = &left;
 	int maxY = yOffset;
 	Rva00729300BitPlane *map = m_map;
 	int mapHeight = map->m_height;
@@ -83,33 +79,29 @@ Bool Rva007293E0Terrain::advanceLeft(ICoord2D &left, int xOffset,
 	limitX--;
 	limitY--;
 	maxY += height;
-	if (left.y < maxY)
+	while (leftPtr->y < maxY)
 	{
-		do
-		{
-			if (left.y >= limitY)
-				break;
-			left.y++;
-			if (m_map->test(left.x + m_xOrigin,
-				left.y + m_yOrigin))
-				return 1;
-		}
-		while (left.y < maxY);
+		if (leftPtr->y >= limitY)
+			break;
+		++leftPtr->y;
+		if (m_map->test(leftPtr->x + m_xOrigin,
+			leftPtr->y + m_yOrigin))
+			return 1;
 	}
 	int maxX = xOffset + width - 1;
-	if (left.x < maxX)
+	if (leftPtr->x < maxX)
 	{
 		limitX--;
 		do
 		{
-			if (left.x >= limitX)
+			if (leftPtr->x >= limitX)
 				break;
-			left.x++;
-			if (m_map->test(left.x + m_xOrigin,
-				left.y + m_yOrigin))
+			++leftPtr->x;
+			if (m_map->test(leftPtr->x + m_xOrigin,
+				leftPtr->y + m_yOrigin))
 				return 1;
 		}
-		while (left.x < maxX);
+		while (leftPtr->x < maxX);
 	}
 	return 0;
 }
