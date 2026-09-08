@@ -5569,6 +5569,7 @@ name,address,notes
 ??1Gen_dtor_003d2190@@UAE@XZ,0x0000D0B7,gen-dtor class destructor
 ??1Gen_dtor_003d2f10@@UAE@XZ,0x00019B19,gen-dtor class destructor
 ??1Gen_dtor_003d3640@@UAE@XZ,0x0001AAE1,gen-dtor class destructor
+??1?$pair@$$CBVAsciiString@@URva003D3F90Value@@@_STL@@QAE@XZ,0x0001AAE1,Open-BFME5 key-record pair destructor called by bfmeClearMembers at 0x003D4080
 ??1Gen_dtor_003de910@@UAE@XZ,0x0001D46C,gen-dtor class destructor
 ??1Gen_dtor_00409420@@UAE@XZ,0x0000CA8B,gen-dtor class destructor
 ??1Gen_dtor_0040b080@@UAE@XZ,0x00024EB0,gen-dtor class destructor
