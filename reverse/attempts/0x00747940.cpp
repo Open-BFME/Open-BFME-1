@@ -1,5 +1,6 @@
 // ?bfmeBlendTileEmit@@YAXPAD0HH@Z
 // partial score=0.78 date=2026-08-30
+// cl: /Oy-
 // Retail 0x0074A240, 91 bytes: the real body behind the blendTileData thunk.
 //
 // The first call widens the word at +0x00 of the info block with xor eax,eax
@@ -72,39 +73,36 @@ void BFMERetailWorldHeightMapBlendTileDataShim::blendTileData(TBlendTileInfo *in
 
 void bfmeBlendTileEmit(char *buffer, char *scratch, int offset, int count)
 {
-	int remaining;
 	if (count > 0)
 	{
-		remaining = count;
+		int remaining = count;
 		do
 		{
-			register BfmeBlendPixel color;
-			register BfmeBlendPixel blended;
-			color.whole = *(unsigned long *)buffer;
+			unsigned long color = *(unsigned long *)buffer;
 			unsigned long alpha = *(unsigned char *)offset;
 			unsigned long inverse = 0xff - alpha;
 			offset += 4;
-			blended.whole = *(unsigned long *)scratch;
+			unsigned long blended = *(unsigned long *)scratch;
 
-			unsigned char value = (unsigned char)((color.low * alpha
-				+ blended.low * inverse) >> 8);
-			blended.low = value;
-			blended.whole = _rotr(blended.whole, 8);
-			color.whole = _rotr(color.whole, 8);
+			unsigned long value = ((unsigned char)color * alpha
+				+ (unsigned char)blended * inverse) >> 8;
+			blended = (blended & 0xffffff00) | value;
+			blended = _rotr(blended, 8);
+			color = _rotr(color, 8);
 
-			value = (unsigned char)((color.low * alpha
-				+ blended.low * inverse) >> 8);
-			blended.low = value;
-			blended.whole = _rotr(blended.whole, 8);
-			color.whole = _rotr(color.whole, 8);
+			value = ((unsigned char)color * alpha
+				+ (unsigned char)blended * inverse) >> 8;
+			blended = (blended & 0xffffff00) | value;
+			blended = _rotr(blended, 8);
+			color = _rotr(color, 8);
 
-			value = (unsigned char)((color.low * alpha
-				+ blended.low * inverse) >> 8);
-			blended.low = value;
-			blended.whole = _rotr(blended.whole, 16);
-			color.whole = _rotr(color.whole, 16);
+			value = ((unsigned char)color * alpha
+				+ (unsigned char)blended * inverse) >> 8;
+			blended = (blended & 0xffffff00) | value;
+			blended = _rotr(blended, 16);
+			color = _rotr(color, 16);
 
-			*(unsigned long *)scratch = blended.whole;
+			*(unsigned long *)scratch = blended;
 			scratch += 4;
 			buffer += 4;
 			--remaining;
