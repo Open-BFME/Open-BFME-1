@@ -1,270 +1,52 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Canonical GameSpy login preference obfuscator, retail 0x0007FBF0.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+typedef int Int;
+
+extern "C" char *__cdecl strcpy(char *, const char *);
+void *__cdecl operator new[](unsigned int);
+void __cdecl operator delete[](void *);
+
+template <typename T> class StringBase
 {
+	friend class AsciiString;
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase &other);
+	~StringBase();
+	struct Data { Int refs; unsigned short length, capacity; T text[1]; };
+	Data *m_data;
 };
 
-AsciiString obfuscate(AsciiString);
-
-// ?obfuscate@@YA?AVAsciiString@@V1@@Z
-__declspec(naked) AsciiString obfuscate(AsciiString)
+class AsciiString : private StringBase<char>
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x59
-		__emit 0x46
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x04
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x06
-		__emit 0x0f
-		__emit 0xb7
-		__emit 0x40
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x55
-		__emit 0x56
-		__emit 0x40
-		__emit 0x57
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x3e
-		__emit 0x23
-		__emit 0x80
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x8d
-		__emit 0x48
-		__emit 0x08
-		__emit 0x75
-		__emit 0x05
-		__emit 0xb9
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xd7
-		__emit 0x8d
-		__emit 0xa4
-		__emit 0x24
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8a
-		__emit 0x01
-		__emit 0x41
-		__emit 0x88
-		__emit 0x02
-		__emit 0x42
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0xf6
-		__emit 0x80
-		__emit 0x3f
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x2d
-		__emit 0xe4
-		__emit 0x74
-		__emit 0x2a
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0x8b
-		__emit 0xf5
-		__emit 0x74
-		__emit 0x25
-		__emit 0x8d
-		__emit 0xa4
-		__emit 0x24
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x80
-		__emit 0x3e
-		__emit 0x00
-		__emit 0x75
-		__emit 0x02
-		__emit 0x8b
-		__emit 0xf5
-		__emit 0x8a
-		__emit 0x11
-		__emit 0x8a
-		__emit 0x06
-		__emit 0x3a
-		__emit 0xd0
-		__emit 0x74
-		__emit 0x08
-		__emit 0x32
-		__emit 0xc2
-		__emit 0x88
-		__emit 0x01
-		__emit 0x46
-		__emit 0x41
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x41
-		__emit 0x46
-		__emit 0x80
-		__emit 0x39
-		__emit 0x00
-		__emit 0x75
-		__emit 0xe2
-		__emit 0x57
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xe8
-		__emit 0x28
-		__emit 0x8f
-		__emit 0x80
-		__emit 0x00
-		__emit 0x57
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x02
-		__emit 0xe8
-		__emit 0x4d
-		__emit 0x22
-		__emit 0x80
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x28
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xaa
-		__emit 0x7e
-		__emit 0x80
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x74
-		__emit 0x7c
-		__emit 0x80
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x66
-		__emit 0x7c
-		__emit 0x80
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x5f
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x14
-		__emit 0xc3
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+	Int getLength() const { return m_data ? m_data->length : 0; }
+	const char *str() const { return m_data ? m_data->text : ""; }
+};
+
+AsciiString obfuscate(AsciiString in)
+{
+	char *buf = (char *)operator new[](in.getLength() + 1);
+	strcpy(buf, in.str());
+	static const char *xorKey = "1337Munkee";
+	char *c = buf;
+	const char *c2 = xorKey;
+	while (*c)
+	{
+		if (!*c2)
+			c2 = xorKey;
+		if (*c != *c2)
+			*c = *c++ ^ *c2++;
+		else
+			c++, c2++;
 	}
+	AsciiString out = buf;
+	operator delete[](buf);
+	return out;
 }
