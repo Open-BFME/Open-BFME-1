@@ -1,4 +1,5 @@
 // Partial ordinary-C++ reconstruction of the cleanup body at retail RVA
+// partial score=0.91 date=2026-09-07
 // 0x0005EC20.  The owner/layout is shared with Rva0005C110Surface in
 // Code/gen_small/U3GdiplusTokenHolder.cpp.  Best probe: 134 bytes, with the
 // release/count/token tail exact; the remaining differences are prologue/vptr
