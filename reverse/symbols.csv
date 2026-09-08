@@ -4742,7 +4742,7 @@ name,address,notes
 ??1ResourceGatheringManager@@UAE@XZ,0x000386BD,ILT to the matched ResourceGatheringManager destructor at RVA 0x000E6140
 ??1Gen_dtor_000e9fe0@@UAE@XZ,0x0002CD7C,gen-dtor class destructor
 ??1Gen_dtor_000eb8b0@@UAE@XZ,0x00018FCA,gen-dtor class destructor
-??1Gen_dtor_000ec1b0@@UAE@XZ,0x0001A6B8,gen-dtor class destructor
+??1SpecialPowerStore@@UAE@XZ,0x0001A6B8,ILT to the matched SpecialPowerStore destructor at RVA 0x000EBD30
 ??1Gen_dtor_000ed500@@UAE@XZ,0x00004C87,gen-dtor class destructor
 ??1Gen_dtor_000ed530@@UAE@XZ,0x00017A71,gen-dtor class destructor
 ??1Gen_dtor_000edca0@@UAE@XZ,0x00013156,gen-dtor class destructor
