@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "42f540c67fece2f0a2a837b47920c3453c0923944f40a625a4d63d3c7b49c58c",
+  "symbol": "?bfmeUpdateYF@BfmeHostYF@@QAEXUBfmeHandleYF@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeUpdateYF@BfmeHostYF@@QAEXUBfmeHandleYF@@@Z\n// partial score=0.95 date=2026-09-09\nclass BfmeObjYF\n{\npublic:\n\tunsigned char m_bfmeHeadYF[0x10];\n\tint m_bfme10YF;\n\tunsigned char m_bfmeMidYF[0x24 - 0x14];\n\tint m_bfme24YF;\n\tint m_bfme28YF;\n\tunsigned char m_bfmeMid2YF[0x30 - 0x2c];\n\tint m_bfme30YF;\n\tunsigned char m_bfmeMid3YF[0x3c - 0x34];\n\tint m_bfme3CYF;\n};\n\nstruct BfmeHandleYF\n{\n\t__forceinline BfmeHandleYF(const BfmeHandleYF &o) { m_bfmePtrYF = o.m_bfmePtrYF; }\n\n\tBfmeObjYF *m_bfmePtrYF;\n};\n\nint bfmeCalcYF(int a, int b, int *p, int *q);\nvoid bfmeApplyYF(int a, int b);\n\nclass BfmeHostYF\n{\npublic:\n\tvoid bfmeUpdateYF(BfmeHandleYF h);\n\tvoid bfmeNoteYF(BfmeHandleYF h);\n};\n\nvoid BfmeHostYF::bfmeUpdateYF(BfmeHandleYF h)\n{\n\tBfmeObjYF *o = h.m_bfmePtrYF;\n\n\tbfmeNoteYF(h);\n\n\tint n = o->m_bfme28YF;\n\tint v = 0;\n\n\tif (bfmeCalcYF(o->m_bfme24YF, n, &v, &v) != n)\n\t{\n\t\tif (o->m_bfme3CYF != 2)\n\t\t{\n\t\t\tbfmeApplyYF(o->m_bfme10YF, 2);\n\t\t\to->m_bfme3CYF = 2;\n\t\t}\n\n\t\to->m_bfme30YF = 2;\n\t}\n}\n"
+}
