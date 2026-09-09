@@ -1,5 +1,5 @@
-// ?bfmeApplyERN@@YGDPAX0@Z (identity unknown)
-// partial score=0.85 date=2026-09-07
+// ?bfmeApplyERN@@YGDPAX0@Z
+// partial score=0.9 date=2026-09-09
 // 233/230. Fourth member of the nameToKey family at 0x0032xxxx: global
 // vslot 26 lookup, CastleBehavior function-local static, module find, then a
 // stack handle whose destructor releases a ref-counted object.
@@ -112,8 +112,15 @@ char __stdcall bfmeApplyERN(void *first, void *handle)
 		return 0;
 
 	BfmeHandleERN owner;
+	BfmeObjERN *ptr = owner.m_bfmePtrERN;
 
-	bfmeSendERN(first, owner.m_bfmePtrERN);
+	bfmeSendERN(first, ptr);
 
-	return mod->bfmeTestERN(owner.m_bfmePtrERN) != 0;
+	char result = mod->bfmeTestERN(ptr) != 0;
+
+	if (ptr != 0)
+		ptr->bfmeReleaseERN(1);
+	owner.m_bfmePtrERN = 0;
+
+	return result;
 }
