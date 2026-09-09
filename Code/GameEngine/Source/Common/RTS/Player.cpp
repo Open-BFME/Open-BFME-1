@@ -2809,10 +2809,61 @@ void sellBuildings( Object *obj, void *userData )
 }
 
 //=============================================================================
-// ?sellEverythingUnderTheSun@Player@@QAEXXZ present-unmatched
+class BfmeBuildAssistantSellInterface
+{
+public:
+    virtual void unusedSlot00();
+    virtual void unusedSlot01();
+    virtual void unusedSlot02();
+    virtual void unusedSlot03();
+    virtual void unusedSlot04();
+    virtual void unusedSlot05();
+    virtual void unusedSlot06();
+    virtual void unusedSlot07();
+    virtual void unusedSlot08();
+    virtual void unusedSlot09();
+    virtual void unusedSlot10();
+    virtual void unusedSlot11();
+    virtual void unusedSlot12();
+    virtual void unusedSlot13();
+    virtual void unusedSlot14();
+    virtual void unusedSlot15();
+    virtual void unusedSlot16();
+    virtual void unusedSlot17();
+    virtual void sellObject(Object *obj);
+};
+
 void Player::sellEverythingUnderTheSun()
 {
-  iterateObjects( sellBuildings, NULL );
+    struct BfmePlayerTeamListField
+    {
+        unsigned char m_unmodelled_000[0x288];
+        BfmePlayerTeamListNode *m_head;
+    };
+    for (BfmePlayerTeamListNode *it =
+            ((BfmePlayerTeamListField *)this)->m_head->m_next;
+            it != ((BfmePlayerTeamListField *)this)->m_head; it = it->m_next)
+    {
+        BfmePlayerTeamInstanceIterator teams(
+            it->m_prototype->m_teamInstanceList);
+        for (; !teams.done(); teams.advance())
+        {
+            BfmePlayerTeamView *team = teams.cur();
+            if (!team)
+                continue;
+            BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> objects(
+                team->m_head,
+                BfmePlayerObjectDlinkBase::dlink_next_TeamMemberList);
+            for (; !objects.done(); objects.advance())
+            {
+                BfmePlayerObjectDlinkObject *object = objects.cur();
+                if (!object)
+                    continue;
+                reinterpret_cast<BfmeBuildAssistantSellInterface *>(TheBuildAssistant)->sellObject(
+                    (Object *)object);
+            }
+        }
+    }
 }
 
 
