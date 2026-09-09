@@ -32,3 +32,10 @@ template _STL::pair<const AsciiString,
  _STL::list<AsciiString, _STL::allocator<AsciiString> > >::pair(
  const _STL::pair<const AsciiString,
  _STL::list<AsciiString, _STL::allocator<AsciiString> > > &);
+
+// Full placement construction at RVA 0x00080E00.
+template void _STL::_Construct<AsciiStringListPair, AsciiStringListPair>(
+ AsciiStringListPair *, const AsciiStringListPair &);
+
+// Full list-base destruction at RVA 0x000803E0.
+template _STL::_List_base<AsciiString, _STL::allocator<AsciiString> >::~_List_base();

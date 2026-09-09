@@ -78,3 +78,10 @@ typedef _STL::hashtable<AsciiStringFloatPair, AsciiString, rts::hash<AsciiString
 // from this resize-only TU.  Retail's complete interval is [0xD38F0,0xD3A92),
 // including the final ret 4 at 0xD3A8F.
 template void AsciiStringFloatResizeTable::resize(unsigned int);
+
+// Scratch-only D14F0 source accounting.  The float hash-table insertion at
+// 0x000D6770 calls ILT 0x0002E7C1 -> 0x000D14F0, the ordinary construction of
+// this table's eight-byte pair<const AsciiString,float>.  Reuse the pair type
+// already defined above; do not add another AsciiString or pair facade.
+template void _STL::_Construct<AsciiStringFloatPair, AsciiStringFloatPair>(
+	AsciiStringFloatPair *, const AsciiStringFloatPair &);
