@@ -22,7 +22,14 @@ struct Rva0081BD40Comm
 	 * a zero in that last slot instead. */
 	void ( __cdecl *m_recvProc )( struct Rva0081BD40Comm *comm,
 		const void *payload, int length, unsigned int tick );  /* +0x3C */
-	char m_head2[ 0x8C ];
+	char m_head2a[ 0x3C ];
+	void *m_handle;                 /* +0x7C */
+	char m_head2b[ 0x28 ];
+	char m_streamOverlapped[ 0x10 ]; /* +0xA8 */
+	void *m_event;                  /* +0xB8 */
+	char m_head2d[ 0x08 ];
+	unsigned int m_streamWritten;   /* +0xC4 */
+	char m_head2c[ 0x04 ];
 	/* A STATE.  0x0081B790 and 0x0081B910 both require it to be 1 before
 	 * doing anything, and both convert a 5 into their own result -- 3 and 2
 	 * respectively.  Nothing converted so far shows what sets it to 5. */
@@ -50,7 +57,13 @@ struct Rva0081BD40Comm
 	 * and then increments it, so it is the counter the acknowledgement
 	 * handler's comparisons are against. */
 	unsigned int m_sendSequence;    /* +0x104 */
-	char m_gap[ 0x1818 ];
+	char m_gap[ 0x0804 ];
+	unsigned char m_streamBuffers[ 2 ][ 0x800 ]; /* +0x90C */
+	int m_streamCapacity;          /* +0x190C */
+	int m_streamLength;            /* +0x1910 */
+	int m_streamSlot;              /* +0x1914 */
+	unsigned int m_streamTick;     /* +0x1918 */
+	char m_streamGap[ 0x04 ];      /* +0x191C */
 	/* A CRITICAL SECTION, and its SIZE is the evidence: the two bodies that
 	 * take it pass +0x1920 to a pair of one-argument stdcall imports, and the
 	 * busy flag below starts exactly 0x18 bytes later -- which is sizeof
@@ -71,6 +84,14 @@ struct Rva0081BD40Comm
  * than a wait.  The name is address-derived: an IAT call site is a DIR32 and
  * the gate fills it from retail, so nothing here asserts which API it is. */
 __declspec(dllimport) void __stdcall Rva01358F30Wait( int interval );
+__declspec(dllimport) unsigned int __stdcall Rva01358E0CTick( void );
+__declspec(dllimport) int __stdcall Rva01358EDC( void *handle,
+	unsigned int mask );
+__declspec(dllimport) unsigned int __stdcall Rva01358F64Wait( void *handle,
+	unsigned int timeout );
+__declspec(dllimport) int __stdcall Rva01358F70Write( void *handle,
+	const void *buffer, unsigned int length, unsigned int *written,
+	void *overlapped );
 
 /* A QUEUED RECORD.  Length at +0x00, tick at +0x04, payload at +0x10 -- the
  * same header the third transport uses, and again with no header byte inside
@@ -324,7 +345,56 @@ void Rva0081AA20( struct Rva0081BD40Comm *comm,
 }
 
 int Rva0081A3B0( struct Rva0081BD40Comm *comm,
-	struct Rva0081AA20SendRecord *record );
+	struct Rva0081AA20SendRecord *record )
+{
+	int iLength;
+	unsigned short uHash;
+	unsigned char *packet;
+
+	if ( record != 0 )
+	{
+		iLength = record->m_length + 8;
+		if ( comm->m_streamCapacity - comm->m_streamLength
+			< iLength + 8 )
+			return -1;
+
+		packet = comm->m_streamBuffers[ comm->m_streamSlot ]
+			+ comm->m_streamLength;
+		packet[ 0 ] = 'G';
+		packet[ 1 ] = 'S';
+		packet[ 2 ] = (unsigned char)record->m_length;
+		packet[ 3 ] = (unsigned char)( record->m_length ^ 0xFF );
+		memcpy( packet + 4, (char *)record + 8, iLength );
+
+		uHash = Rva0081A360( packet + 4, iLength );
+		packet[ iLength + 4 ] = (unsigned char)uHash;
+		packet[ iLength + 5 ] = (unsigned char)( uHash >> 8 );
+		packet[ iLength + 6 ] = 0x0D;
+		packet[ iLength + 7 ] = 0x0A;
+
+		if ( comm->m_streamLength == 0 )
+			Rva01358EDC( comm->m_handle, 2 );
+
+		comm->m_streamLength = iLength + comm->m_streamLength + 8;
+		comm->m_streamTick = Rva01358E0CTick();
+	}
+
+	if ( comm->m_streamLength == 0 )
+		return 0;
+
+	if ( Rva01358F64Wait( comm->m_event, 0 ) == 0x102 )
+		return 0;
+
+	Rva01358F70Write( comm->m_handle,
+		comm->m_streamBuffers[ comm->m_streamSlot ],
+		comm->m_streamLength, &comm->m_streamWritten,
+		comm->m_streamOverlapped );
+
+	comm->m_streamSlot = comm->m_streamSlot ^ 1;
+	comm->m_streamLength = 0;
+
+	return 0;
+}
 
 void Rva0081A810( struct Rva0081BD40Comm *comm )
 {
@@ -492,8 +562,6 @@ void Rva0081AB40( struct Rva0081BD40Comm *comm,
 	comm->m_depth = comm->m_depth - 1;
 	comm->m_flags = comm->m_flags | 1;
 }
-
-__declspec(dllimport) unsigned int __stdcall Rva01358E0CTick( void );
 
 /* 0x0081BA60 IS THE PUBLIC SEND: queue one payload and try to push it out.
  *
