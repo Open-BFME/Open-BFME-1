@@ -1,6 +1,5 @@
 // ?onDamage@ReflectDamage@@UAEXPAUBFMEDamageInfo@@@Z
-// partial score=0.9 date=2026-09-08
-// BFME's ReflectDamage callback at retail RVA 0x002518B0.
+// ReflectDamage's callback at retail RVA 0x002518B0.
 
 typedef int Int;
 typedef float Real;
@@ -96,16 +95,16 @@ void ReflectDamage::onDamage(BFMEDamageInfo *damageInfo)
 		damageInfo->in.m_sourceObject))
 	{
 		BFMEDamageInfo reflected;
-		reflected.in.m_amount =
+		Real amount =
 			moduleData->m_reflectDamagePercentage * damageInfo->in.m_amount;
-		if (reflected.in.m_amount < moduleData->m_reflectDamageMinimum)
-			reflected.in.m_amount = moduleData->m_reflectDamageMinimum;
 		reflected.in.m_unreconstructed_14 = 2;
 		reflected.in.m_deathType = DEATH_CRUSHED;
 		reflected.in.m_damageType = DAMAGE_DEPLOY;
-		reflected.in.m_sourceObject =
-			*(volatile Int *)((char *)*(Object *volatile *)
-				((char *)this - 0x08) + 0x74);
+		reflected.in.m_sourceObject = *(volatile Int *)
+			((char *)*(Object *volatile *)((char *)this - 0x08) + 0x74);
+		if (!(amount > moduleData->m_reflectDamageMinimum))
+			amount = moduleData->m_reflectDamageMinimum;
+		reflected.in.m_amount = amount;
 		source->attemptDamage(&reflected);
 	}
 }
