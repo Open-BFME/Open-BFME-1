@@ -138,16 +138,14 @@ unsigned char Rva002DF120::test(void *first, void *second)
 	if ((*(unsigned char *)((char *)other + 0x343) & 0x10) == 0)
 	{
 		int relationship = found->getRelationship(other);
-		if (relationship != (Relationship)2)
-		{
-			int required = relationship != (Relationship)0 ? 8 : 4;
-			if ((flags & required) == 0)
-				return 0;
-		}
-		goto accept;
+		int required = relationship;
+		if (required != (Relationship)2)
+			required = required != (Relationship)0 ? 8 : 4;
+		if ((flags & required) == 0)
+			return 0;
 	}
 
 	accept:
 	return ((Rva002DF120MatchContext *)first)->m_filter.accepts(other,
-		((const BfmeObjectCall *)found)->getControllingPlayer());
+		((const BfmeObjectCall *)found)->getControllingPlayer()) != 0;
 }
