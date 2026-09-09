@@ -52,6 +52,14 @@ extern "C"
 {
 	void *memset( void *destination, int value, unsigned int count );
 	char *strcpy( char *destination, const char *source );
+	int __cdecl strcmp( const char *left, const char *right );
+	unsigned int __cdecl strlen( const char *text );
+	__declspec( dllimport ) int __cdecl wsprintfA( char *output,
+		const char *format, ... );
+	__declspec( dllimport ) void *__stdcall CreateFileA(
+		const char *name, unsigned int desiredAccess, unsigned int shareMode,
+		void *security, unsigned int creation, unsigned int flags,
+		void *templateHandle );
 
 	void Rva0081ACD0( void *comm );
 	int Rva0081B790( void *comm, void *argument );
@@ -74,9 +82,9 @@ extern "C"
 		void *security, int manualReset, int initialState, const char *name );
 }
 
-// The existing generated row supplies the COFF spelling; retail uses this typed
-// five-argument cdecl table callback and returns a status in EAX.
-extern void d_0081ae20( void );
+// Retail installs this typed five-argument cdecl callback in operation-table
+// slot 2 and returns a status in EAX.  Its upstream spelling is unavailable,
+// so the address-derived name is retained.
 typedef int ( __cdecl *Rva0081AE20Proc )( void *comm, const char *name,
 	char *output, int outputSize, int flags );
 extern void Rva0081B000( void );
@@ -91,6 +99,53 @@ extern void d_00819920( void );
 typedef unsigned long ( __stdcall *Rva00819920ThreadProc )( void *parameter );
 extern void *Rva007F0000Alloc( int size );
 
+extern "C" int Rva0081AE20( void *comm, const char *name, char *output,
+	int outputSize, int separator )
+{
+	int i;
+	void *handle;
+	const char *ports[ 5 ] = { "COM1", "COM2", "COM3", "COM4", 0 };
+	char *originalOutput;
+
+	originalOutput = output;
+	output[ 0 ] = '*';
+	output[ 1 ] = 0;
+	output[ 2 ] = 0;
+
+	if ( name == 0 || *name == 0 )
+		return -1;
+
+	if ( outputSize < 0x40
+		|| (unsigned int)outputSize < strlen( name ) + 2 )
+		return -6;
+
+	if ( strcmp( name, "localhost" ) != 0 )
+	{
+		wsprintfA( output, "%s%c", name, 0 );
+		return 1;
+	}
+
+	for ( i = 0; ports[ i ] != 0; i++ )
+	{
+		handle = CreateFileA( ports[ i ], 0xc0000000, 0, 0, 3,
+			0x40000080, 0 );
+
+		if ( handle == (void *)-1 )
+			continue;
+
+		CloseHandle( handle );
+
+		if ( output != originalOutput )
+			*output++ = (char)separator;
+
+		output += wsprintfA( output, "%s", ports[ i ] );
+	}
+
+	*output++ = 0;
+	*output++ = 0;
+	return 1;
+}
+
 extern "C" void *Rva00819630( int first, int second, int third )
 {
 	unsigned long pid;
@@ -104,7 +159,7 @@ extern "C" void *Rva00819630( int first, int second, int third )
 	memset( comm, 0, 0x1944 );
 	comm->m_ops[ 0 ] = (void *)Rva00819630;
 	comm->m_ops[ 1 ] = (void *)Rva0081ACD0;
-	comm->m_ops[ 2 ] = (void *)(Rva0081AE20Proc)d_0081ae20;
+	comm->m_ops[ 2 ] = (void *)(Rva0081AE20Proc)Rva0081AE20;
 	comm->m_ops[ 3 ] = (void *)Rva0081B000;
 	comm->m_ops[ 4 ] = (void *)Rva0081B790;
 	comm->m_ops[ 5 ] = (void *)Rva0081B830;
