@@ -30,6 +30,9 @@
 #include "lualib.h"
 
 
+__declspec(dllimport) void *bfmeFopenVIF (const char *name, const char *mode);
+
+
 #ifndef OLD_ANSI
 #include <errno.h>
 #include <locale.h>
@@ -155,7 +158,7 @@ static void setfilebyname (lua_State *L, IOCtrl *ctrl, FILE *f,
 
 static int setreturn (lua_State *L, IOCtrl *ctrl, FILE *f, int inout) {
   if (f == NULL)
-    return pushresult(L, 0);
+    return pushresult_close(L, 0);
   else {
     setfile(L, ctrl, f, inout);
     lua_pushusertag(L, f, ctrl->iotag);
@@ -195,13 +198,13 @@ static int io_open (lua_State *L) {
   IOCtrl *ctrl = (IOCtrl *)lua_touserdata(L, -1);
   FILE *f;
   lua_pop(L, 1);  /* remove upvalue */
-  f = fopen(luaL_check_string(L, 1), luaL_check_string(L, 2));
+  f = (FILE *)bfmeFopenVIF(luaL_check_string(L, 1), luaL_check_string(L, 2));
   if (f) {
     lua_pushusertag(L, f, ctrl->iotag);
     return 1;
   }
   else
-    return pushresult(L, 0);
+    return pushresult_close(L, 0);
 }
 
 
@@ -218,7 +221,8 @@ static int io_fromto (lua_State *L, int inout, const char *mode) {
     current = (FILE *)lua_touserdata(L, 1);
   else {
     const char *s = luaL_check_string(L, 1);
-    current = (*s == '|') ? popen(s+1, mode) : fopen(s, mode);
+    current = (*s == '|') ? popen(s+1, mode) :
+              (FILE *)bfmeFopenVIF(s, mode);
   }
   return setreturn(L, ctrl, current, inout);
 }
