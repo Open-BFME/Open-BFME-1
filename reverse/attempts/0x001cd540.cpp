@@ -1,10 +1,13 @@
-// ?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z
-// partial score=0.68 date=2026-09-08
-// cl: /DNDEBUG /MD /EHsc
+// ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@H@Z
+// partial score=0.9 date=2026-09-09
+// ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@H@Z
+// BFME Object status propagation helper, retail 0x001CD540 (294 bytes).
+// Address-derived name: identity is not recovered, only the shape. setStatus
+// cousin of the model-condition twin at 0x001CD420 and the vision-spied/
+// unspied pair at 0x001CE830/0x001CE940, guarded by a per-object status flag
+// and always applying the status to this object at the end.
 // stlport
-// Open-BFME: Object status propagation helper, retail 0x001CD540.
 
-#define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 
 #include <list>
@@ -20,12 +23,6 @@ public:
 };
 
 typedef BitFlags<86> ObjectStatusMaskType;
-
-class ModelConditionFlags
-{
-public:
-	unsigned int m_bits[3];
-};
 
 class Overridable
 {
@@ -95,46 +92,46 @@ class Object
 {
 public:
 	void setStatus(const ObjectStatusMaskType &flags, Bool set);
-	void unidentified_0002181E(const ModelConditionFlags &flags, Int set);
-};
+	void rva001CD540(const ObjectStatusMaskType &flags, Int set);
 
-class ObjectLayout
-{
-public:
-	void *m_vtable;
-	ThingTemplate *m_template;
-	unsigned char m_pad08[0x1fc - 8];
-	ContainModuleInterface *m_contain;
+	void *m_vtable;								// +0x000
+	ThingTemplate *m_template;					// +0x004
+	unsigned char m_pad008[0x1fc - 8];
+	ContainModuleInterface *m_contain;			// +0x1fc
 	unsigned char m_pad200[0x214 - 0x200];
-	Object *m_containedBy;
+	Object *m_containedBy;						// +0x214
 	unsigned char m_pad218[0x369 - 0x218];
-	unsigned char m_flag369;
+	unsigned char m_flag369;						// +0x369
 };
 
-// ?unidentified_0002181E@Object@@QAEXABVModelConditionFlags@@H@Z
-void Object::unidentified_0002181E(const ModelConditionFlags &flags, Int set)
+void Object::rva001CD540(const ObjectStatusMaskType &flags, Int set)
 {
-	ObjectLayout *self = reinterpret_cast<ObjectLayout *>(this);
-
-	if (self->m_flag369 == 0)
+	if (m_flag369 == 0)
 	{
-		ThingTemplate *thingTemplate = self->m_template;
+		ThingTemplate *thingTemplate = m_template;
 		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
 		{
-			thingTemplate = const_cast<ThingTemplate *>(reinterpret_cast<const ThingTemplate *>(
-				thingTemplate->m_nextOverride->getFinalOverride()));
+			thingTemplate = const_cast<ThingTemplate *>(
+				reinterpret_cast<const ThingTemplate *>(thingTemplate->m_nextOverride->getFinalOverride()));
 		}
 
-		Object *target = this;
-		if ((thingTemplate->m_flags & 0x00100000) == 0)
+		Object *target;
+		if (thingTemplate->m_flags & 0x1000)
 		{
-			target = self->m_containedBy;
-			if (target == 0 || !reinterpret_cast<const Thing *>(target)->isKindOf((KindOfType)0x6c))
+			target = this;
+		}
+		else
+		{
+			Object *container = m_containedBy;
+			if (container == 0 || !reinterpret_cast<const Thing *>(container)->isKindOf((KindOfType)0x6c))
 				return;
+			target = container;
 		}
 
-		ObjectLayout *targetLayout = reinterpret_cast<ObjectLayout *>(target);
-		ContainModuleInterface *contain = targetLayout->m_contain;
+		if (target == 0)
+			return;
+
+		ContainModuleInterface *contain = target->m_contain;
 		if (contain == 0)
 			return;
 
@@ -142,16 +139,16 @@ void Object::unidentified_0002181E(const ModelConditionFlags &flags, Int set)
 		if (horde == 0)
 			return;
 
-		ObjectList objects = *horde->getContainedItemsList();
-		for (ObjectList::iterator it = objects.begin(); it != objects.end(); ++it)
+		ObjectList items = *horde->getContainedItemsList();
+		for (ObjectList::iterator it = items.begin(); it != items.end(); ++it)
 		{
-			(*it)->setStatus(*reinterpret_cast<const ObjectStatusMaskType *>(&flags), set != 0);
+			(*it)->setStatus(flags, set != 0);
 		}
 
-		target->setStatus(*reinterpret_cast<const ObjectStatusMaskType *>(&flags), set != 0);
+		target->setStatus(flags, set != 0);
 	}
 
-	setStatus(*reinterpret_cast<const ObjectStatusMaskType *>(&flags), set != 0);
+	setStatus(flags, set != 0);
 }
 
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
