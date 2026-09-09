@@ -1,5 +1,5 @@
 // ??0S4ModuleData0012A070@@QAE@XZ
-// partial score=0.7 date=2026-09-01
+// partial score=0.8 date=2026-09-09
 // Five bodies -- three of 110 bytes and two of 107 -- of SAGE's module-data
 // factory, the one shape that reaches `INI::initFromINIMultiProc`:
 //
@@ -75,11 +75,29 @@ struct RespawnPolicy
 	unsigned int values[ 6 ];
 };
 
+typedef RespawnPolicy KindOfMask;
+
+class InfantryMask
+{
+public:
+	InfantryMask( unsigned int first )
+	{
+		values[ 0 ] = first;
+		values[ 1 ] = 0;
+		values[ 2 ] = 0;
+		values[ 3 ] = 0;
+		values[ 4 ] = 0;
+		values[ 5 ] = 0;
+	}
+
+	unsigned int values[ 6 ];
+};
+
 class HordeContainMember4A
 {
 public:
 	~HordeContainMember4A();
-	void setPolicies( RespawnPolicy first, RespawnPolicy second );
+	void setPolicies( RespawnPolicy first, InfantryMask second );
 
 private:
 	unsigned int m_value;
@@ -87,20 +105,21 @@ private:
 
 extern RespawnPolicy g_defaultRespawnPolicy;
 
-class ModuleDataBase_HordeContainModuleData
+class __declspec(novtable) OpenContainModuleData
 {
 public:
-	ModuleDataBase_HordeContainModuleData();
-	virtual ~ModuleDataBase_HordeContainModuleData();
+	OpenContainModuleData();
+	virtual ~OpenContainModuleData();
+	HordeContainMember4A m_allowInsideKindOf;
 
 private:
-	unsigned char m_base[ 356 ];
+	unsigned char m_base[ 0x110 ];
+	unsigned char m_tail[ 0x50 ];
 };
 
-static const RespawnPolicy k_s4RespawnPolicy =
-	{ 0x100, 0, 0, 0, 0, 0 };
+extern "C" char S4ModuleData0012A070_vtbl;
 
-class S4ModuleData0012A070 : public ModuleDataBase_HordeContainModuleData
+class __declspec(novtable) S4ModuleData0012A070 : public OpenContainModuleData
 {
 public:
 	S4ModuleData0012A070();
@@ -110,25 +129,9 @@ public:
 };
 
 S4ModuleData0012A070::S4ModuleData0012A070()
-	: ModuleDataBase_HordeContainModuleData()
+	: OpenContainModuleData()
 {
+	*reinterpret_cast< char *volatile * >( this ) = &S4ModuleData0012A070_vtbl;
 	m_fraction = 1.0f;
-	HordeContainMember4A *policy =
-		reinterpret_cast< HordeContainMember4A * >(
-			reinterpret_cast< unsigned char * >( this ) + 0x114 );
-	policy->setPolicies( k_s4RespawnPolicy, g_defaultRespawnPolicy );
+	m_allowInsideKindOf.setPolicies( g_defaultRespawnPolicy, InfantryMask( 0x100 ) );
 }
-
-S4ModuleData0012A070 *s4newModuleData0012A070( INI *ini )
-{
-	S4ModuleData0012A070 *data = new S4ModuleData0012A070;
-	if ( ini )
-		ini->initFromINIMultiProc( data,
-			S4ModuleData0012A070::buildFieldParse );
-	return data;
-}
-
-S4_NEW_MODULE_DATA( 00116640, 107 )
-S4_NEW_MODULE_DATA( 00116D80, 107 )
-S4_NEW_MODULE_DATA( 00116E90, 9 )
-S4_NEW_MODULE_DATA( 006BF930, 3 )

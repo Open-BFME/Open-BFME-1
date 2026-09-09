@@ -97,8 +97,10 @@ class ThingTemplate
 public:
 	AudioEventInfoRef bfmeGetAudioEventInfoForSelector( Int selector ) const;
 
+
 private:
 	__declspec( nothrow ) AudioEventRTS *bfmeLookupSound( Int index ) const;
+
 };
 
 AudioEventInfoRef ThingTemplate::bfmeGetAudioEventInfoForSelector( Int selector ) const
