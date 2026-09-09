@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "84090c5374726d2bc6976b6536e74710771a513652e3192f4f860b16c391ae68",
+  "symbol": "?value@Rva001C9310@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?value@Rva001C9310@@QAEHXZ\n// partial score=0.9 date=2026-09-09\n// ?value@Rva001C9310@@QAEHXZ\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-\n\nclass Overridable\n{\npublic:\n\tconst Overridable *getFinalOverride( void ) const;\n\tvoid *m_head;\n\tOverridable *m_nextOverride;\n};\n\nclass Rva001C9310Thing : public Overridable\n{\npublic:\n\tchar m_gap_d0[ 0xD0 - 8 ];\n\tunsigned m_flags_d0;\n\tchar m_gap_448[ 0x448 - 0xD4 ];\n\tint m_value_448;\n};\n\nclass Rva001C9310Scale\n{\npublic:\n\tchar m_gap[ 0x28 ];\n\tint m_scale;\n};\n\nclass Rva001C9310\n{\npublic:\n\tint value();\n\n\tvoid *m_vptr;\n\tRva001C9310Thing *m_template;\n\tchar m_gap[ 0x210 - 8 ];\n\tRva001C9310Scale *m_scaleSrc;\n};\n\nint Rva001C9310::value()\n{\n\tRva001C9310Thing *thing = m_template;\n\tif ( thing )\n\t{\n\t\tif ( thing->m_nextOverride )\n\t\t\tthing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();\n\t}\n\tregister int v = thing->m_value_448;\n\n\tregister Rva001C9310 *owner = this;\n\tthing = owner->m_template;\n\tif ( thing )\n\t{\n\t\tif ( thing->m_nextOverride )\n\t\t\tthing = (Rva001C9310Thing *)thing->m_nextOverride->getFinalOverride();\n\t}\n\tif ( thing->m_flags_d0 & 0x2000000 )\n\t\treturn owner->m_scaleSrc->m_scale * v;\n\treturn v;\n}\n"
+}
