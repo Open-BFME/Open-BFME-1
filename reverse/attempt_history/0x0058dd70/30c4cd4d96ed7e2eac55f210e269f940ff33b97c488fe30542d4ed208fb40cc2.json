@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "30c4cd4d96ed7e2eac55f210e269f940ff33b97c488fe30542d4ed208fb40cc2",
+  "symbol": "?d_0058dd70@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_0058dd70@@YAXXZ\n// partial score=0.97 date=2026-09-09\nvoid __cdecl operator delete(void *p);\n\nclass BfmeThingJQ\n{\npublic:\n\tvoid bfmeResetJQ();\n\n\tint m_bfme00JQ;\n\tint m_bfme04JQ;\n\tvolatile char m_bfme08JQ;\n\tunsigned char m_bfmePadJQ[3];\n\tvolatile int m_bfme0cJQ;\n\tvolatile int m_bfme10JQ;\n\tvolatile int m_bfme14JQ;\n\tvolatile int m_bfme18JQ;\n\tint m_bfme1cJQ;\n\tvoid *m_bfme20JQ;\n\tvoid *m_bfme24JQ;\n};\n\nvoid BfmeThingJQ::bfmeResetJQ()\n{\n\tm_bfme08JQ = 0;\n\tm_bfme0cJQ = -2;\n\tm_bfme10JQ = -2;\n\tm_bfme14JQ = -2;\n\tm_bfme18JQ = 0;\n\n\tvoid *p = *(void *volatile *)&m_bfme20JQ;\n\n\tif (p != 0)\n\t\toperator delete(p);\n\n\t*(void *volatile *)&m_bfme20JQ = 0;\n\n\tvoid *q = *(void *volatile *)&m_bfme24JQ;\n\n\toperator delete(q);\n\n\t*(void *volatile *)&m_bfme24JQ = 0;\n\tm_bfme00JQ = 0;\n\tm_bfme04JQ = 0;\n\tm_bfme1cJQ = 0;\n}\n"
+}

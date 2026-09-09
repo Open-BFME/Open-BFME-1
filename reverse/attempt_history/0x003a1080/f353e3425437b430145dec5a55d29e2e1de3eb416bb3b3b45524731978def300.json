@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f353e3425437b430145dec5a55d29e2e1de3eb416bb3b3b45524731978def300",
+  "symbol": "?d_003a1080@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_003a1080@@YAXXZ\n// partial score=0.97 date=2026-09-09\nclass BfmeSubJG\n{\npublic:\n\tvoid bfmeStartJG(int a, int b, float c);\n\n\tunsigned char m_bfmeGapJG[8];\n};\n\nclass BfmeThingJG\n{\npublic:\n\tvoid bfmeSetupJG(int p1, int p2, int p3, int p4, int p5, bool p6);\n\n\tunsigned char m_bfmeHeadJG[4];\n\tint m_bfme04JG;\n\tint m_bfme08JG;\n\tint m_bfme0cJG;\n\tBfmeSubJG m_bfmeSubJG;\n\tint m_bfme18JG;\n\tint m_bfme1cJG;\n\tint m_bfme20JG;\n\tchar m_bfme24JG;\n\tunsigned char m_bfmePad0JG[3];\n\tint m_bfme28JG;\n\tunsigned char m_bfmeGap1JG[0xc];\n\tint m_bfme38JG;\n\tint m_bfme3cJG;\n\tint m_bfme40JG;\n\tchar m_bfme44JG;\n\tchar m_bfme45JG;\n\tchar m_bfme46JG;\n\tunsigned char m_bfmePad1JG[1];\n\tint m_bfme48JG;\n\tint m_bfme4cJG;\n\tint m_bfme50JG;\n};\n\nvoid BfmeThingJG::bfmeSetupJG(int p1, int p2, int p3, int p4, int p5, bool p6)\n{\n\tint n = p2;\n\n\tif (n <= 1)\n\t\tn = 1;\n\n\tm_bfme04JG = n;\n\tm_bfme08JG = 0;\n\tm_bfme18JG = 0;\n\tm_bfme1cJG = 0;\n\tm_bfme20JG = 0;\n\tm_bfme28JG = 1;\n\n\tm_bfmeSubJG.bfmeStartJG(p3, p4, (float)p2);\n\n\tm_bfme0cJG = p5;\n\n\tif (p6)\n\t\tm_bfme38JG = 0;\n\n\tm_bfme3cJG = 0;\n\tm_bfme40JG = 0;\n\tm_bfme45JG = 0;\n\tm_bfme46JG = (p5 != 0);\n\tm_bfme48JG = 0;\n\tm_bfme4cJG = 0;\n\tm_bfme50JG = 0;\n\tm_bfme24JG = 1;\n}\n"
+}

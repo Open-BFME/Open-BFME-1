@@ -227,8 +227,7 @@ private:
 
 void W3DVolumetricShadow::RenderVolume(int meshIndex, int lightIndex)
 {
-	W3DVolumetricShadow *shadow = this;
-	RvaRenderObj *robj = shadow->m_robj;
+	RvaRenderObj *robj = m_robj;
 	if (robj)
 	{
 		if (robj->Get_User_Data())
@@ -239,25 +238,26 @@ void W3DVolumetricShadow::RenderVolume(int meshIndex, int lightIndex)
 		}
 	}
 
-	RvaHlod *hlod = (RvaHlod *)shadow->m_robj;
+	RvaHlod *hlod = (RvaHlod *)m_robj;
 	RvaRenderObj *mesh = 0;
-	RvaShadowGeometry *geometry = shadow->m_geometry;
-	int meshRobjIndex = geometry->getMesh(meshIndex)->m_meshRobjIndex;
+	RvaShadowGeometry *geometry = m_geometry;
+	RvaShadowGeometryMesh *meshInfo = geometry->getMesh(meshIndex);
+	int meshRobjIndex = meshInfo->m_meshRobjIndex;
+	const Matrix3D *meshXform = 0;
 	if (meshRobjIndex >= 0)
 		mesh = hlod->Peek_Lod_Model(0, meshRobjIndex);
-	else
-		mesh = shadow->m_robj;
+		else
+			mesh = m_robj;
 
 	if (mesh)
 	{
-		RvaShadowGeometryMesh *meshInfo = geometry->getMesh(meshIndex);
-		const Matrix3D *meshXform = &mesh->Get_Transform();
+		meshXform = &mesh->Get_Transform();
 		if (*(unsigned char *)((char *)meshInfo + 0x30) && !mesh->Class_ID())
 			meshXform = (const Matrix3D *)0x012D6848;
 
-		if (*(unsigned char *)((char *)shadow->m_shadowVolume[meshIndex] + 0x18) & 1)
-			shadow->RenderDynamicMeshVolume(meshIndex, lightIndex, meshXform);
+		if (*(unsigned char *)((char *)m_shadowVolume[meshIndex] + 0x18) & 1)
+			RenderDynamicMeshVolume(meshIndex, lightIndex, meshXform);
 		else
-			shadow->RenderMeshVolume(meshIndex, lightIndex, meshXform);
+			RenderMeshVolume(meshIndex, lightIndex, meshXform);
 	}
 }

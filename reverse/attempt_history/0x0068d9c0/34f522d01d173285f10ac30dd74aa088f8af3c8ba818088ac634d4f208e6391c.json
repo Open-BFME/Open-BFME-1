@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "34f522d01d173285f10ac30dd74aa088f8af3c8ba818088ac634d4f208e6391c",
+  "symbol": "?d_0068d9c0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_0068d9c0@@YAXXZ\n// partial score=0.95 date=2026-09-09\n// ?rva68d9c0@@YAPADPAD00@Z\n// partial score=0.95 date=2026-09-02\n// The three byte-identical 33-byte bodies at 0x0068D990, 0x0068D9C0 and\n// 0x0068D9F0 -- the reading counterpart of BoundedByteCursorWrites.cpp.\n//\n// Same three-pointer cdecl shape and the same unsigned limit guard; the store\n// is reversed so one byte is copied out of the cursor instead of into it.\n\n#define BFME_BOUNDED_BYTE_READ( NAME )                                        \\\n\tchar *NAME( char *cursor, char *out, char *limit )                        \\\n\t{                                                                         \\\n\t\tif ( limit != 0 && ( cursor > limit || cursor + 1 > limit ) )         \\\n\t\t{                                                                     \\\n\t\t\treturn cursor;                                                    \\\n\t\t}                                                                     \\\n                                                                              \\\n\t\t*out = *cursor;                                                       \\\n                                                                              \\\n\t\treturn cursor + 1;                                                    \\\n\t}\n\nBFME_BOUNDED_BYTE_READ( rva68d990 )\nBFME_BOUNDED_BYTE_READ( rva68d9c0 )\nBFME_BOUNDED_BYTE_READ( rva68d9f0 )\n"
+}

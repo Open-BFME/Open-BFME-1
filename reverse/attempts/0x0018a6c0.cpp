@@ -18,7 +18,7 @@ class GameLogic
 public:
     Object *findObjectByID( int id );
 
-    unsigned int getFrame() const volatile
+	unsigned int getFrame() const
     {
         return *(const unsigned int *)((const unsigned char *)this + 0x3c);
     }
@@ -147,11 +147,9 @@ StateReturnType AITNGuardOuterState::onEnter()
     if (nemesis == 0)
         return STATE_SUCCESS;
 
-    AI *ai = TheAIParseDefinitionAI;
-    AIData *aiData = ai->getAiData();
-    unsigned int gameFrame = logic->getFrame();
-    m_exitConditions.m_attackGiveUpFrame =
-        gameFrame + aiData->m_guardChaseUnitFrames;
+	m_exitConditions.m_attackGiveUpFrame =
+		logic->getFrame() +
+		TheAIParseDefinitionAI->getAiData()->m_guardChaseUnitFrames;
     m_attackState = new BfmeAIAttackState(
         (StateMachine *)m_machine, false, true, false, &m_exitConditions );
     m_attackState->getMachine()->setGoalObject(nemesis);

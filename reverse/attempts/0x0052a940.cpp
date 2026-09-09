@@ -2,30 +2,32 @@
 // partial score=0.9 date=2026-09-08
 // cl: /O2 /DNDEBUG /MD /EHsc
 
+template <typename T> struct StringInlineData
+{
+	int m_refCount;
+	int m_length;
+	T m_text[1];
+};
+
 template <typename T> class StringBase
 {
-	friend class AsciiString;
+friend class AsciiString;
 
 private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
 	StringBase(const StringBase<T> &other);
 	~StringBase();
 
-	void *m_data;
+	StringInlineData<T> *m_data;
 };
 
-class AsciiString
+class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString(const char *text);
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString();
-
-private:
-	void *m_data;
+	AsciiString( const char *text ) : StringBase<char>( text ) {}
+	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
+	~AsciiString() {}
 };
 
 class UserPreferences
