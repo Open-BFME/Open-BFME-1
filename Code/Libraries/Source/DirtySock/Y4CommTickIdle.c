@@ -416,8 +416,24 @@ struct Rva00813E50Comm
 
 char *strchr( const char *text, int value );
 char *strcpy( char *dest, const char *source );
+int strcmp( const char *left, const char *right );
+int _strcmpi( const char *left, const char *right );
+unsigned int strlen( const char *text );
+void *memset( void *dest, int value, unsigned int size );
+__declspec(dllimport) int __cdecl wsprintfA( char *dest, const char *format, ... );
 void __stdcall Rva00813100( int port, int kind, struct Rva00813E50Comm *comm,
 	int size, int a, int b );
+
+struct Rva008136C0ExtensionId
+{
+	int m_words[ 4 ];
+};
+
+int __stdcall Rva0081BDBA( int lineApplication, int deviceId,
+	int apiLowVersion, int apiHighVersion, int *apiVersion,
+	struct Rva008136C0ExtensionId *extensionId );
+int __stdcall Rva0081BDD2( int lineApplication, int deviceId,
+	int apiVersion, int extensionVersion, void *capabilities );
 
 int Rva00813E50( struct Rva00813E50Comm *comm, char *text )
 {
@@ -440,8 +456,73 @@ int Rva00813E50( struct Rva00813E50Comm *comm, char *text )
 	return 0;
 }
 
-void Rva00813A50( struct Rva00813E50Comm *comm, const char *text,
-	char *output, int size, int flags );
+int Rva00813A50( struct Rva00813E50Comm *comm, const char *text,
+	char *output, int size, char flags )
+{
+	char *name;
+	int iDevice;
+	int iResult;
+	int apiVersion;
+	struct Rva008136C0ExtensionId extensionId;
+	char capabilities[ 0x400 ];
+	char *initialOutput;
+
+	initialOutput = output;
+	output[ 0 ] = '*';
+	output[ 1 ] = 0;
+	output[ 2 ] = 0;
+	if ( text == 0 || text[ 0 ] == 0 )
+		return -1;
+
+	if ( size < 0x40
+		|| (unsigned int)size < (unsigned int)( strlen( text ) + 2 ) )
+		return -6;
+
+	for ( iDevice = 0;
+		(unsigned int)iDevice < *(unsigned int *)( (char *)comm + 0x80 );
+		iDevice++ )
+	{
+		iResult = Rva0081BDBA( *(int *)( (char *)comm + 0x84 ), iDevice,
+			0x10004, 0x20002, &apiVersion, &extensionId );
+		if ( iResult != 0 )
+			continue;
+
+		memset( capabilities, 0, 0x400 );
+		*(int *)capabilities = 0x400;
+		iResult = Rva0081BDD2( *(int *)( (char *)comm + 0x84 ), iDevice,
+			apiVersion, 0, capabilities );
+		if ( *(int *)( capabilities + 0x7C ) == 0 )
+			continue;
+
+		name = capabilities + *(int *)( capabilities + 0x24 );
+		if ( strcmp( text, "localhost" ) == 0 )
+		{
+			if ( (unsigned int)( strlen( name ) + 2 )
+				> (unsigned int)size )
+				return -6;
+			if ( output != initialOutput )
+			{
+				output[ 0 ] = flags;
+				output++;
+				size--;
+			}
+			strcpy( output, name );
+			output += strlen( name );
+			size -= strlen( name );
+		}
+		else if ( _strcmpi( text, name ) == 0 )
+		{
+			wsprintfA( output, "%d%c", iDevice, 0 );
+			return 1;
+		}
+	}
+
+	output[ 0 ] = 0;
+	output++;
+	output[ 0 ] = 0;
+	output++;
+	return 1;
+}
 
 int Rva00813D00( struct Rva00813E50Comm *comm, char *text )
 {
@@ -1040,14 +1121,6 @@ int Rva008137C0( int line )
 	return iReturn;
 }
 
-struct Rva008136C0ExtensionId
-{
-	int m_words[ 4 ];
-};
-
-int __stdcall Rva0081BDBA( int lineApplication, int deviceId,
-	int apiLowVersion, int apiHighVersion, int *apiVersion,
-	struct Rva008136C0ExtensionId *extensionId );
 int __stdcall Rva0081BDB4( int lineApplication, int deviceId, void *line,
 	int apiVersion, int extensionVersion, int callbackInstance,
 	int privileges, int mediaModes, void *callParameters );
