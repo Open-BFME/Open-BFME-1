@@ -77726,6 +77726,7 @@ __strcmpi,0x009F6FA0,MSVCR71 _strcmpi import thunk; identity confirmed by IAT sl
 ?callee@Rva008A06F0Inner@@AAEXH@Z,0x008BDD70,Open-BFME5 thiscall callee of add-ecx-0x24 wrapper
 ?campaignReviewSetAptScreenRef@@YAXABVAsciiString@@VCampaignReviewRefHolder@@@Z,0x0003DF14,CampaignReview InitGadgets registration
 ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@PBVThingTemplate@@_N@Z,0x0001CEA9,ProductionUpdate queueUpgrade affordability thunk
+?canDoSpecialPower@ActionManager@@QAE_NPBVObject@@PBVSpecialPowerTemplate@@W4CommandSourceType@@I_N@Z,0x00016649,ILT to the matched body at 0x000C47F0
 ?canAffordUpgrade@UpgradeCenter@@QBE_NPAVPlayer@@PBVUpgradeTemplate@@_N2@Z,0x0001CEA9,Open-BFME5 ILT thunk to the body matched at 0x0010AF70; BFME gives it a FOURTH argument - ?queueUpgrade@AIGroup@@QAEXPBVUpgradeTemplate@@_N@Z at 0x00151170 passes its own extra flag third with the reference FALSE still last
 ?canEnterObject@BFMEActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4CanEnterType@@PA_N@Z,0x0002D588,retail five-argument ActionManager ABI thunk (body 0x000C5440)
 ?canFireWeaponAtObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@W4WeaponSlotType@@@Z,0x0000378D,Open-BFME5 retail ILT thunk to body 0x000C4280; direct call from InGameUI weapon eligibility

@@ -178,6 +178,8 @@ public:
 // PUBLIC /////////////////////////////////////////////////////////////////////////////////////////
 ControlBar *TheControlBar = NULL;
 
+void (Coord3D::*g_controlBarCoord3DSet)( const Coord3D * ) = &Coord3D::set;
+
 const Image* ControlBar::m_rankVeteranIcon	= NULL;
 const Image* ControlBar::m_rankEliteIcon		= NULL;
 const Image* ControlBar::m_rankHeroicIcon		= NULL;
@@ -440,17 +442,53 @@ Bool CommandButton::isValidObjectTarget(const Object* sourceObj, const Object* t
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isValidToUseOn@CommandButton@@QBE_NPBVObject@@0PBUCoord3D@@W4CommandSourceType@@@Z present-unmatched
+class BfmeCommandButtonProductionEntry
+{
+public:
+	char m_unmodelled00[4];
+	Int m_type;
+	char m_unmodelled08[4];
+	const UpgradeTemplate *m_upgrade;
+};
+
+class BfmeCommandButtonProductionUpdate
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot05(void) = 0;
+	virtual void slot06(void) = 0;
+	virtual void slot07(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot09(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot11(void) = 0;
+	virtual void slot12(void) = 0;
+	virtual void slot13(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot15(void) = 0;
+	virtual void slot16(void) = 0;
+	virtual void slot17(void) = 0;
+	virtual BfmeCommandButtonProductionEntry *firstProduction(void) = 0;
+	virtual BfmeCommandButtonProductionEntry *nextProduction(
+		const BfmeCommandButtonProductionEntry *) = 0;
+};
+
+
 Bool CommandButton::isValidToUseOn(const Object *sourceObj, const Object *targetObj, const Coord3D *targetLocation, CommandSourceType commandSource) const
 {
-	if (m_upgradeTemplate) {
+	if (m_upgradeTemplate && m_command != (GUICommandType)0x16) {
 		// @todo: Make a const version of pui. We're not altering the production queue, so this const-cast
 		// is okay.
-		ProductionUpdateInterface *pui = const_cast<Object*>(sourceObj)->getProductionUpdateInterface();
+		BfmeCommandButtonProductionUpdate *pui = reinterpret_cast<BfmeCommandButtonProductionUpdate *>(
+			const_cast<Object*>(sourceObj)->getProductionUpdateInterface());
 		if (pui) {
-			const ProductionEntry *pe = pui->firstProduction();
+			BfmeCommandButtonProductionEntry *pe = pui->firstProduction();
 			while (pe) {
-				if (pe->getProductionUpgrade() != NULL) 
+				if (pe->m_type == 2 && pe->m_upgrade != NULL)
 					return false;
 				pe = pui->nextProduction(pe);
 			}
@@ -465,33 +503,27 @@ Bool CommandButton::isValidToUseOn(const Object *sourceObj, const Object *target
 		return false;
 	}
 
-	Coord3D pos;
-	if( targetLocation )
-	{
-		pos.set( targetLocation );
-	}
-
 	if( BitTest( m_options, NEED_TARGET_POS ) && !targetLocation ) 
 	{
-		if( targetObj )
-		{
-			pos.set( targetObj->getPosition() );
-		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 	
 	if( BitTest( m_options, COMMAND_OPTION_NEED_OBJECT_TARGET ) ) 
 	{
-		return TheActionManager->canDoSpecialPowerAtObject( sourceObj, targetObj, commandSource, m_specialPower, m_options, false );
+		if (m_specialPower)
+			return TheActionManager->canDoSpecialPowerAtObject( sourceObj, targetObj, commandSource, m_specialPower, m_options, false );
+
+		return TheActionManager->canFireWeaponAtObject( sourceObj, targetObj, commandSource,
+			*reinterpret_cast<const WeaponSlotType *>(reinterpret_cast<const char *>(this) + 0x6c) );
 	}
 
-	if( BitTest( m_options, NEED_TARGET_POS ) ) 
+	if( BitTest( m_options, NEED_TARGET_POS ) )
 	{
-		return TheActionManager->canDoSpecialPowerAtLocation( sourceObj, &pos, commandSource, m_specialPower, NULL, m_options, false );
+		return TheActionManager->canDoSpecialPowerAtLocation( sourceObj, targetLocation, commandSource, m_specialPower, NULL, m_options, false );
 	}
+
+	if (m_command == (GUICommandType)0x16)
+		return isReady( sourceObj );
 
 	return TheActionManager->canDoSpecialPower( sourceObj, m_specialPower, commandSource, m_options, false );
 }
