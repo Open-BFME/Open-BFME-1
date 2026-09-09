@@ -1,5 +1,7 @@
 // cl: /O2 /MD
-// STLport 4.5.3 signed __int64 _M_do_get_integer<char> at retail 0x00832DB0.
+// STLport 4.5.3 signed integer _M_do_get_integer<char> specializations.
+// The __int64 body is at retail 0x00832DB0; the signed-long body is at
+// 0x008339B0 and calls the exact parser at 0x00833AB0.
 // RTTI/vtable evidence: this body is the slot-2 implementation reached by
 // num_get<char, istreambuf_iterator<char> >::do_get.  The retail helper uses
 // __alldiv and stores an eight-byte value, fixing the _STLP_LONG_LONG facet.
@@ -157,4 +159,9 @@ namespace _STL
 	_M_do_get_integer<NarrowIterator, __int64, char>(
 		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
 		__int64 &, char *);
+
+	template istreambuf_iterator<char, char_traits<char> >
+	_M_do_get_integer<NarrowIterator, long, char>(
+		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
+		long &, char *);
 }
