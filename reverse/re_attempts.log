@@ -19776,3 +19776,9 @@ queueDozer	0x001657E0	490	blocked	BFME three-argument findFactory(tTemplate,true
 ?d_008b2df0@@YAXXZ	0x008B2DF0	97	blocked	served file drained: retained destructor partial has unresolved base/subobject teardown shape; t=4min model=gpt-5.6
 ?d_008b65e0@@YAXXZ	0x008B65E0	207	blocked	served file drained: retained bounds apply partial has unresolved calendar branch/codegen shape; t=4min model=gpt-5.6
 ?d_008b8e10@@YAXXZ	0x008B8E10	53	blocked	served file drained: generated alias has no named caller or emitted owner and clean parameter reconstruction does not match retail flow; t=6min model=gpt-5.6
+?d_001c9310@@YAXXZ	0x001C9310	80	blocked	served file drained: value-like clean reconstruction is a 0.9 near-match but VC7 allocates the live this/value pair in the opposite registers; generated alias has no independent identity hit; t=8min model=gpt-5.6
+?d_001cdbe0@@YAXXZ	0x001CDBE0	56	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_001cf980@@YAXXZ	0x001CF980	82	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_001c9980@@YAXXZ	0x001C9980	109	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_001c8b20@@YAXXZ	0x001C8B20	152	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_001ca9c0@@YAXXZ	0x001CA9C0	150	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
