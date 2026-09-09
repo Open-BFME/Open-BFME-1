@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2a6008de96081f3d6d3b75fe35d2f54d037b932edbf3662a7958a61510707aab",
+  "symbol": "?d_002df2b0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_002df2b0@@YAXXZ\n// partial score=0.85 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n\n// Open-BFME5: GenBase002DF2B0 constructor, retail 0x002DF2B0, 138 bytes.\n// Zeros the 19 dwords from +4 through +0x4C, constructs the 4-byte string\n// member at +0x50, and clears the flag at +0x54.\n\nclass RS_Member\n{\npublic:\n\tRS_Member();\n\t~RS_Member();\n\nprivate:\n\tvoid *m_data;\n};\n\nclass Guard4\n{\npublic:\n\tGuard4() { m = 0; }\n\t~Guard4();\n\tint m;\n};\n\nclass GenBase002DF2B0\n{\npublic:\n\tGenBase002DF2B0();\n\tvirtual void slot();\n\nprivate:\n\tGuard4 m_04;\n\tint m_08, m_0c, m_10, m_14, m_18;\n\tint m_1c, m_20, m_24, m_28, m_2c, m_30;\n\tint m_34, m_38, m_3c, m_40, m_44, m_48, m_4c;\n\tRS_Member m_50;\n\tchar m_54;\n};\n\n// ??0GenBase002DF2B0@@QAE@XZ\nGenBase002DF2B0::GenBase002DF2B0()\n\t: m_08(0), m_0c(0), m_10(0), m_14(0), m_18(0)\n\t, m_1c(0), m_20(0), m_24(0), m_28(0), m_2c(0), m_30(0)\n\t, m_34(0), m_38(0), m_3c(0), m_40(0), m_44(0), m_48(0), m_4c(0)\n{\n\tm_54 = 0;\n}\n"
+}

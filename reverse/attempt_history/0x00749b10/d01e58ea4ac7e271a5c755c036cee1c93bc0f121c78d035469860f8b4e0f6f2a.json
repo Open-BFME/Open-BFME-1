@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d01e58ea4ac7e271a5c755c036cee1c93bc0f121c78d035469860f8b4e0f6f2a",
+  "symbol": "?d_00749b10@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?d_00749b10@@YAXXZ\n// partial score=0.94 date=2026-09-09\nclass BfmeBitmapAAP\n{\npublic:\n\tvoid bfmeSetBitAAP(int x, int y, bool on);\n\n\tunsigned char m_bfmeHeadAAP[8];\n\tint m_bfmeWidthAAP;\n\tint m_bfmeHeightAAP;\n\tunsigned char m_bfmeGapAAP[0x34 - 0x10];\n\tint m_bfmeStrideAAP;\n\tunsigned char m_bfmeGapBAAP[0x68 - 0x38];\n\tunsigned char *m_bfmeBeginAAP;\n\tunsigned char *m_bfmeEndAAP;\n};\n\nvoid BfmeBitmapAAP::bfmeSetBitAAP(int x, int y, bool on)\n{\n\tif (x < 0 || y < 0 || y >= m_bfmeHeightAAP || x >= m_bfmeWidthAAP)\n\t\treturn;\n\n\tint idx = m_bfmeStrideAAP * y + (x >> 3);\n\n\tif ((unsigned int)idx >= (unsigned int)(m_bfmeEndAAP - m_bfmeBeginAAP))\n\t\treturn;\n\n\tunsigned char *p = *(unsigned char *volatile *)&m_bfmeBeginAAP + idx;\n\tunsigned char mask = (unsigned char)(1 << (x & 7));\n\n\t*p = on ? (unsigned char)(*p | mask) : (unsigned char)(*p & ~mask);\n}\n"
+}
