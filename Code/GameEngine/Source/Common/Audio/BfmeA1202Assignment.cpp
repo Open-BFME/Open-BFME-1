@@ -47,14 +47,25 @@ struct Gen_t_000b0560_p8pod
 	int a[2];
 };
 
-class BfmeA1202
+class BfmeA1202Base
 {
 	public:
+		BfmeA1202Base() : m_zero(0) {}
+		BfmeA1202Base(const BfmeA1202Base &) : m_zero(0) {}
+		virtual ~BfmeA1202Base() {}
+
+	private:
+		int m_zero;
+};
+
+class BfmeA1202 : public BfmeA1202Base
+{
+	public:
+		BfmeA1202(const BfmeA1202 &other);
 		virtual ~BfmeA1202();
 		BfmeA1202 &operator=(const BfmeA1202 &other);
 
 	private:
-		char m_prefix[4];
 		AsciiString m_name;
 		AsciiString m_filename;
 		int m_word10;
@@ -84,6 +95,39 @@ class BfmeA1202
 		int m_word88;
 		_STL::vector<Gen_t_000b0560_p8pod> m_vector8c;
 };
+
+BfmeA1202::BfmeA1202(const BfmeA1202 &other)
+	: BfmeA1202Base(other),
+	  m_name(other.m_name),
+	  m_filename(other.m_filename),
+	  m_word10(other.m_word10),
+	  m_word14(other.m_word14),
+	  m_word18(other.m_word18),
+	  m_word1c(other.m_word1c),
+	  m_word20(other.m_word20),
+	  m_word24(other.m_word24),
+	  m_word28(other.m_word28),
+	  m_word2c(other.m_word2c),
+	  m_word30(other.m_word30),
+	  m_word34(other.m_word34),
+	  m_word38(other.m_word38),
+	  m_word3c(other.m_word3c),
+	  m_vector40(other.m_vector40),
+	  m_word4c(other.m_word4c),
+	  m_vector50(other.m_vector50),
+	  m_word5c(other.m_word5c),
+	  m_vector60(other.m_vector60),
+	  m_word6c(other.m_word6c),
+	  m_word70(other.m_word70),
+	  m_word74(other.m_word74),
+	  m_word78(other.m_word78),
+	  m_word7c(other.m_word7c),
+	  m_word80(other.m_word80),
+	  m_word84(other.m_word84),
+	  m_word88(other.m_word88),
+	  m_vector8c(other.m_vector8c)
+{
+}
 
 BfmeA1202 &BfmeA1202::operator=(const BfmeA1202 &other)
 {

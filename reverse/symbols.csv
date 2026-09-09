@@ -2079,6 +2079,8 @@ name,address,notes
 ??0?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@QAE@ABU01@@Z,0x000427A8,Open-BFME7 ILT thunk the PlayerInfoMap _M_insert at 0x00633C70 calls for the node pair copy
 ??0?$pair@$$CBVAsciiString@@VRva0045EF90Object@@@_STL@@QAE@ABVAsciiString@@ABVRva0045EF90Object@@@Z,0x00041BD7,operator[] call at 0x00461C7B reaches the matched 0x0045F410 pair constructor through this ILT
 ??0?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABQAXABV?$allocator@PAX@1@@Z,0x0002039C,ILT the same resize calls at 0x00786930 to build the new bucket vector
+??0?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0001911E,copy constructor call from BfmeA1202 copy constructor at 0x000B5B10; retail ILT target for the 0x000B0560 element vector
+??0?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00028D58,copy constructor call from BfmeA1202 copy constructor at 0x000B5B10; retail ILT target for the 0x000B0C00 element vector
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
 ??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z,0x00048667,repointed from the 0x00008DCD pinharvest guess: MapUtil.cpp _$E30 encodes 0x00048667 which jumps to the 15-byte zero-three-slots body at 0x0039D5B0 byte-equal to the ledgered vector<ICoord2D> ctor at 0x001A93A0; 0x00008DCD jumps to the 32-byte list sentinel allocation at 0x004C4500
