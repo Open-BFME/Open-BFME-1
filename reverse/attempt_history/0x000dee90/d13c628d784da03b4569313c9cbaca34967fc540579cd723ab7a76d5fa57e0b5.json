@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d13c628d784da03b4569313c9cbaca34967fc540579cd723ab7a76d5fa57e0b5",
+  "symbol": "?bfmeMakeAE@@YGXPAX@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?bfmeMakeAE@@YGXPAX@Z (identity unknown)\r\n// partial score=0.92 date=2026-09-06\r\n// 33/37 at exact size. Same family as 0x000BE410 (see that stash for the full\r\n// combination map). The three-part recipe -- real default ctor, INLINE copy\r\n// ctor, destructor declared but not defined -- gives the frame slot, the\r\n// in-place construction and the esp marker exactly.\r\n// Store order is confirmed to be source order: writing the ctor bodies in\r\n// reverse reverses the four stores. Putting the members in a base class\r\n// changes nothing. The only residue is the zero register: retail\r\n// `xor edx,edx`, MSVC `xor ecx,ecx`.\r\nclass BfmeQuadAE\r\n{\r\npublic:\r\n\tBfmeQuadAE() { m_bfmeAAE = 0; m_bfmeBAE = 0; m_bfmeCAE = 0; m_bfmeDAE = 0; }\r\n\tBfmeQuadAE(const BfmeQuadAE &other) throw()\r\n\t{\r\n\t\tm_bfmeAAE = other.m_bfmeAAE;\r\n\t\tm_bfmeBAE = other.m_bfmeBAE;\r\n\t\tm_bfmeCAE = other.m_bfmeCAE;\r\n\t\tm_bfmeDAE = other.m_bfmeDAE;\r\n\t}\r\n\t~BfmeQuadAE();\r\n\r\n\tint m_bfmeAAE;\r\n\tint m_bfmeBAE;\r\n\tint m_bfmeCAE;\r\n\tint m_bfmeDAE;\r\n};\r\n\r\nvoid __stdcall bfmeSendAE(void *owner, BfmeQuadAE quad);\t// pin at thunk 0x0000FBAF\r\n\r\nvoid __stdcall bfmeMakeAE(void *owner)\r\n{\r\n\tbfmeSendAE(owner, BfmeQuadAE());\r\n}\r\n"
+}
