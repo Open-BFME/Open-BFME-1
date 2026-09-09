@@ -1,6 +1,6 @@
 // ??0WaterRenderObjClass@@QAE@XZ
-// partial score=0.65 date=2026-09-09
-// cl: /O2 /G7 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// partial score=0.97 date=2026-09-09
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME5: WaterRenderObjClass::WaterRenderObjClass(void) at retail
@@ -136,8 +136,7 @@ private:
 	void *m_handle;
 };
 
-#include <wchar.h>
-#include "../../../../../../reference/shims/stringbaseunicode/Common/UnicodeString.h"
+#include <string.h>
 #include <list>
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ascii_string.h
@@ -154,11 +153,41 @@ private:
 	void *m_data;
 };
 
+// Minimal TU-local UnicodeString: the ctor/dtor bodies are trivial enough to
+// ICF-fold with the already-matched BFMERetailAsciiString ctor/dtor (0x00017BD9
+// / 0x0000D828), and set() is declared-only so the linker resolves the call to
+// the already-landed ?set@UnicodeString@@QAEXABV1@@Z body (0x00887C90,
+// Code/Libraries/Source/WWVegas/WWLib/string_base.cpp) instead of emitting a
+// fresh StringBase<wchar_t>::set instantiation from the shared shim header
+// (which folds to a DIFFERENT retail address, 0x00888530).
+class UnicodeString
+{
+public:
+	UnicodeString(void) { m_text = 0; }
+	~UnicodeString(void);
+
+	void set(const UnicodeString &that);
+
+private:
+	void *m_text;
+};
+
 // Retail 0x01336E50 -- already pinned under two other type tags
 // (Rva0036CA00Str / Rva002E5FF0Str) by other converted bodies; this file
 // reuses the same address as a real UnicodeString, matching the ?set@UnicodeString@@
 // call retail makes with it as the argument.
 extern UnicodeString Rva01336E50Str;
+
+// m_at2ac's element type just needs to be a 4-byte node payload with a
+// TRIVIAL (implicit) destructor -- retail's inlined list::clear() at the tail
+// of this ctor deallocates each node WITHOUT a separate element-destructor
+// call, which only happens when _STL::_Destroy's type-trait dispatch sees a
+// trivial dtor. A real UnicodeString/AsciiString element (non-trivial dtor)
+// would force an extra call that retail does not make.
+struct ListSlot4
+{
+	void *dummy;
+};
 
 // Sub-object grouping to pin the store-scheduling boundary between a run of
 // zero dwords and the following distinct float constant (see docs/lessons.md
@@ -192,17 +221,12 @@ struct Boxed
 	T value;
 };
 
-struct ZeroSix29c
+struct ZeroSix29cPair128
 {
-	ZeroSix29c(void) : d284(0), d288(0), d28c(0), d290(0), d294(0), d298(0), f29c(10.0f) { }
+	ZeroSix29cPair128(void) : d284(0), d288(0), d28c(0), d290(0), d294(0), d298(0), f29c(10.0f), a2a0(128), a2a4(128) { }
 	unsigned long d284, d288, d28c, d290, d294, d298;
 	float f29c;
-};
-
-struct Pair128
-{
-	Pair128(int v) : a(v), b(v) { }
-	int a, b;
+	int a2a0, a2a4;
 };
 
 class WaterRenderObjClass : public BfmeBaseVUQ, public RenderObjClass
@@ -269,10 +293,9 @@ public:
 	Boxed<unsigned long>		m_278;				// +0x278
 	Boxed<float>				m_27c;				// +0x27c
 	Boxed<float>				m_280;				// +0x280
-	ZeroSix29c					m_284Block;			// +0x284 .. +0x2a0
-	Pair128						m_2a0Pair;			// +0x2a0 .. +0x2a8
+	ZeroSix29cPair128			m_284Block;			// +0x284 .. +0x2a8
 	BfmeHandleCX				m_2a8Handle;		// +0x2a8
-	_STL::list<UnicodeString>	m_at2ac;			// +0x2ac
+	_STL::list<ListSlot4>		m_at2ac;			// +0x2ac
 	WaterComRef *				m_waterTexture0;	// +0x2b0
 	WaterComRef *				m_waterTexture1;	// +0x2b4
 	WaterComRef *				m_waterTexture2;	// +0x2b8
@@ -303,7 +326,6 @@ WaterRenderObjClass::WaterRenderObjClass(void) :
 	m_12c(0),
 	m_bumpTexture0(0), m_bumpTexture1(0), m_bumpTexture2(0),
 	m_13c(0), m_140(0),
-	m_zeroBlock1(),
 	m_244(0), m_248(0),
 	m_reflectionHandle(),
 	m_250Block(),
@@ -313,7 +335,6 @@ WaterRenderObjClass::WaterRenderObjClass(void) :
 	m_270(0), m_274(0), m_278(0),
 	m_27c(1280.0f), m_280(1280.0f),
 	m_284Block(),
-	m_2a0Pair(128),
 	m_2a8Handle(),
 	m_at2ac(),
 	m_waterTexture0(0), m_waterTexture1(0), m_waterTexture2(0),
@@ -323,8 +344,17 @@ WaterRenderObjClass::WaterRenderObjClass(void) :
 	m_400(2),
 	m_zeroBlock2()
 {
-	for (int i = 0; i < 5; i++)
-		m_names[i].set(Rva01336E50Str);
+	memset(m_settings, 0, sizeof(m_settings));
+	memset(&m_zeroBlock1[0], 0, 0x80);
+	memset(&m_zeroBlock1[0x80], 0, 0x80);
+
+	UnicodeString *namePtr = m_names;
+	int nameCount = 5;
+	while (nameCount--)
+	{
+		namePtr->set(Rva01336E50Str);
+		++namePtr;
+	}
 
 	m_at2ac.clear();
 }
