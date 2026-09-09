@@ -86585,3 +86585,9 @@ _bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by
 ?TheBfmeSkirmishOptionsSlot@@3PAVBfmeAptScreenSkirmish@@A,0x012F4B3C,Skirmish game-options screen singleton pointer cleared by destructor 0x005668C0
 ??1CRCParameterCheck@@UAE@XZ,0x00041BC3,ILT thunk to the exact CRCParameterCheck destructor at 0x000659E0
 ??_7CRCParameterCheck@@6B@,0x01075520,vtable installed by the exact CRCParameterCheck constructor at 0x000659C0; slot zero reaches deleting destructor through ILT 0x0001038E
+??0EvaSideSounds@@QAE@ABU0@@Z,0x00033D93,EvaSideSounds copy constructor ILT used by adjacent vector fill-insert 0x000DEBE0
+??1EvaSideSounds@@QAE@XZ,0x00022390,EvaSideSounds destructor ILT used by adjacent vector fill-insert 0x000DEBE0
+??$__copy_backward@PAUEvaSideSounds@@PAU1@H@_STL@@YAPAUEvaSideSounds@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00016C61,EvaSideSounds vector fill-insert helper ILT proven by exact call position
+??$__uninitialized_copy@PAUEvaSideSounds@@PAU1@@_STL@@YAPAUEvaSideSounds@@PAU1@00ABU__false_type@0@@Z,0x0000AC63,EvaSideSounds vector fill-insert helper ILT proven by exact call position
+??$fill@PAUEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@0ABU1@@Z,0x0000E9B7,EvaSideSounds vector fill-insert helper ILT proven by exact call position
+??$uninitialized_fill_n@PAUEvaSideSounds@@IU1@@_STL@@YAPAUEvaSideSounds@@PAU1@IABU1@@Z,0x00039D15,EvaSideSounds vector fill-insert helper ILT proven by exact call position
