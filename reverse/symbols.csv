@@ -80102,6 +80102,7 @@ name,address,notes
 ?g_feslUserIdKey@@3PADA,0x00D2B558,FESL UGID field key
 ?g_global12EF1D8@@3PAXA,0x00EEF1D8,pin
 ?g_global@@3PAXA,0x013592F0,address-derived global pointer recovered from 0x0083E8F0
+?d_0083e8f0@@YAXXZ,0x0083E8F0,address-derived tail callee used by Rva005376D0
 ?g_lanConnection@@3PAXA,0x00EF3C1C,active LAN endpoint connection
 ?g_lanEndpointBuffer@@3PADA,0x00EF3CC4,LAN endpoint publication buffer
 ?g_largeGroupSourceFile@@3DB,0x010BFBF8,LargeGroupBonus source-file literal
@@ -84183,6 +84184,7 @@ name,address,notes
 ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z,0x00043FFE,ILT thunk to 0x18D120; pinned from AIUpdateInterface::setTurretTargetObject @0x26E930
 ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z,0x000468F8,ILT thunk at 0x468F8 jumping to the body at 0x18D260 in the TurretAI cluster; call sites reference the thunk
 ?setType@PathfindCell@@QAEXW4CellType@1@@Z,0x003F68B0,PathfindCell type setter called by classifyMap at 0x003F9140
+?d_003f9140@@YAXXZ,0x003F9140,address-derived tail callee used by Rva003D5780
 ?setUserName@LanLobbyUserNamePrefs@@QAEXVUnicodeString@@@Z,0x00031575,ILT thunk to body 0x000870F0
 ?setVector@BfmeStreakObject@@QAEXPBUBfmeStreakVector@@@Z,0x00955BC0,retail callee pin for W3DStreakDraw constructor
 ?setVideoBuffer@GameWindowInstanceData@@QAEXXZ,0x0002E073,retail BFME WindowVideo init callee; ABI-shaped no-argument instance-data setter

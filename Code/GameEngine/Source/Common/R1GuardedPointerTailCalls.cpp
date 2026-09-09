@@ -79,6 +79,19 @@
 			m_receiver->handle();                                         \
 	}
 
+#define BFME_GUARDED_MEMBER_DTOR_HEAD( NAME, CALLEE )                    \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		~NAME();                                                           \
+		CALLEE *m_receiver;                                                \
+	};                                                                    \
+	NAME::~NAME()                                                         \
+	{                                                                     \
+		if( m_receiver )                                                   \
+			m_receiver->handle();                                            \
+	}
+
 // Callees the ledger already names.
 class PartitionData { public: void makeDirty(); };
 class ControlBarScheme { public: void update(); };
@@ -108,7 +121,7 @@ BFME_GUARDED_MEMBER_CALL( Rva003BCA20, Gen003C7570, 0x28 )
 BFME_GUARDED_MEMBER_CALL( Rva0060D5E0, Gen0060CF20, 0x28c )
 BFME_GUARDED_MEMBER_CALL( Rva0060D620, Gen0060CBB0, 0x28c )
 BFME_GUARDED_MEMBER_CALL( Rva006819B0, Gen00663230, 8 )
-BFME_GUARDED_MEMBER_CALL_HEAD( Rva00691030, Gen006BA220 )
+BFME_GUARDED_MEMBER_DTOR_HEAD( Rva00690FF0Handle, Gen006BA220 )
 BFME_GUARDED_MEMBER_CALL_HEAD( Rva00691130, Gen006BA220 )
 BFME_GUARDED_MEMBER_CALL( Rva006C8BE0, Gen006DEB70, 0x30b4 )
 
