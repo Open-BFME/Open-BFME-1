@@ -297,6 +297,7 @@ public:
 class StateMachine
 {
 public:
+	Object *getGoalObject();
 	virtual void slot00();
 	virtual void slot04();
 	virtual void slot08();
@@ -375,6 +376,7 @@ protected:
 	virtual void bfmePrivateCommand1E(const Coord3D *pos, CommandSourceType cmdSource);
 	virtual void bfmePrivateCommand37(const Coord3D *pos, CommandSourceType cmdSource);
 	virtual void bfmePrivateCommand1B(void *first, CommandSourceType cmdSource);
+	void bfmePrivateCommand31(Object *obj, CommandSourceType cmdSource);
 	virtual void privateAttackMoveToPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
 	virtual void privateHunt(CommandSourceType cmdSource);
 	virtual void privateFaceObject(Object *obj, CommandSourceType cmdSource);
@@ -387,6 +389,7 @@ protected:
 
 	void playMoveVoiceResponse(const Coord3D *position);
 	void playAttackVoiceResponse(const Coord3D *position);
+	void setCurrentVictim(const Object *victim);
 
 	unsigned char m_unmodelled_04[4];
 	Object *m_object;
@@ -681,6 +684,28 @@ void AIUpdateInterface::bfmePrivateCommand1B(void *first, CommandSourceType cmdS
 	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)cmdSource);
 	m_lastCommandSource = cmdSource;
 	m_stateMachine->setState(BFME_AI_STATE_1B);
+}
+
+// Retail 0x002788B0. A contained unit cannot accept this object-order state.
+void AIUpdateInterface::bfmePrivateCommand31(Object *obj, CommandSourceType cmdSource)
+{
+	if (m_isAiDead)
+		return;
+	if (!m_object->isMobile())
+		return;
+	if (m_object->m_containedBy)
+		return;
+
+	Object *oldGoal = m_stateMachine->getGoalObject();
+	Object *target = obj;
+	m_stateMachine->clear();
+	m_stateMachine->setGoalObject(target);
+	m_lastCommandSource = cmdSource;
+	setCurrentVictim(oldGoal);
+	m_stateMachine->setState((StateID)0x31);
+
+	if (!cmdSource || cmdSource == CMD_FROM_AI)
+		playMoveVoiceResponse((const Coord3D *)((const char *)target + 0x38));
 }
 
 // Retail 0x00279050. m_isAiDead, isMobile, weapon-set bit 8,
