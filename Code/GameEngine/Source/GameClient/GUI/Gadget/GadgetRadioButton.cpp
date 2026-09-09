@@ -118,6 +118,69 @@ static void unselectOtherRadioOfGroup( Int group, Int screen,
 
 }  // end unselectOtherRadioOfGroup
 
+//-------------------------------------------------------------------------------------------------
+// BFME's radio input keeps only TAB for focus navigation and uses the keyboard
+// shift flag to choose the direction.  The manager owns these callbacks at
+// vtable slots 0x94 and 0x98 in the retail layout.
+//-------------------------------------------------------------------------------------------------
+class BfmeVirtualTabWindowManager
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void slot00C() = 0;
+	virtual void slot010() = 0;
+	virtual void slot014() = 0;
+	virtual void slot018() = 0;
+	virtual void slot01C() = 0;
+	virtual void slot020() = 0;
+	virtual void slot024() = 0;
+	virtual void slot028() = 0;
+	virtual void slot02C() = 0;
+	virtual void slot030() = 0;
+	virtual void slot034() = 0;
+	virtual void slot038() = 0;
+	virtual void slot03C() = 0;
+	virtual void slot040() = 0;
+	virtual void slot044() = 0;
+	virtual void slot048() = 0;
+	virtual void slot04C() = 0;
+	virtual void slot050() = 0;
+	virtual void slot054() = 0;
+	virtual void slot058() = 0;
+	virtual void slot05C() = 0;
+	virtual void slot060() = 0;
+	virtual void slot064() = 0;
+	virtual void slot068() = 0;
+	virtual void slot06C() = 0;
+	virtual void slot070() = 0;
+	virtual void slot074() = 0;
+	virtual void slot078() = 0;
+	virtual void slot07C() = 0;
+	virtual void slot080() = 0;
+	virtual void slot084() = 0;
+	virtual void slot088() = 0;
+	virtual void slot08C() = 0;
+	virtual void slot090() = 0;
+	virtual void winNextTab( GameWindow *window ) = 0;   // slot 0x94
+	virtual void winPrevTab( GameWindow *window ) = 0;   // slot 0x98
+};
+
+class BfmeKeyboardModifiers
+{
+public:
+	char m_pad[8];
+	unsigned char m_flagsAt8;
+};
+
+extern BfmeKeyboardModifiers *TheBfmeKeyboardModifiers;
+
+static Bool bfmeShiftHeld( void )
+{
+	return BitTest( TheBfmeKeyboardModifiers->m_flagsAt8, 0x10 );
+}
+
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 
 // GadgetRadioButtonInput =====================================================
@@ -233,6 +296,8 @@ WindowMsgHandledType GadgetRadioButtonInput( GameWindow *window, UnsignedInt msg
 				// --------------------------------------------------------------------
 				case KEY_ENTER:
 				case KEY_SPACE:
+				{
+
 					if( BitTest( mData2, KEY_STATE_DOWN ) )
 					{
 
@@ -241,19 +306,19 @@ WindowMsgHandledType GadgetRadioButtonInput( GameWindow *window, UnsignedInt msg
 							RadioButtonData *radioData = (RadioButtonData *)window->winGetUserData();
 
 							TheWindowManager->winSendSystemMsg( window->winGetOwner(), 
-																									GBM_SELECTED,
-																									(WindowMsgData)window, 
-																									mData1 );
+																																	GBM_SELECTED,
+																																					(WindowMsgData)window,
+																																					mData1 );
 
-							//
-							// unselect any windows in the system (including children) that
-							// are radio buttons with this same group and screen ID
-							//
-							if( radioData->group != 0 )
-								unselectOtherRadioOfGroup(radioData->group, radioData->screen, window );
+								//
+								// unselect any windows in the system (including children) that
+								// are radio buttons with this same group and screen ID
+								//
+								if( radioData->group != 0 )
+									unselectOtherRadioOfGroup(radioData->group, radioData->screen, window );
 
-							// this button is now selected
-							BitSet( instData->m_state, WIN_STATE_SELECTED );
+								// this button is now selected
+								BitSet( instData->m_state, WIN_STATE_SELECTED );
 
 						}  // end if, not selected
 
@@ -261,28 +326,22 @@ WindowMsgHandledType GadgetRadioButtonInput( GameWindow *window, UnsignedInt msg
 
 					break;
 
+				}  // end enter/space
+
 				// --------------------------------------------------------------------
-				case KEY_DOWN:
-				case KEY_RIGHT:
 				case KEY_TAB:
 				{
 
 					if( BitTest( mData2, KEY_STATE_DOWN ) )
-						window->winNextTab();
+					{
+						if( bfmeShiftHeld() )
+							((BfmeVirtualTabWindowManager *)TheWindowManager)->winPrevTab(window);
+						else
+							((BfmeVirtualTabWindowManager *)TheWindowManager)->winNextTab(window);
+					}
 					break;
 
-				}  // end down, right, or tab
-
-				// --------------------------------------------------------------------
-				case KEY_UP:
-				case KEY_LEFT:
-				{
-
-					if( BitTest( mData2, KEY_STATE_DOWN ) )
-						window->winPrevTab();
-					break;
-
-				}  // end up, left
+				}  // end tab
 
 				// --------------------------------------------------------------------
 				default:
@@ -449,4 +508,3 @@ void GadgetRadioSetSelection( GameWindow *g, Bool sendMsg )
 	TheWindowManager->winSendSystemMsg( g, GBM_SET_SELECTION, (WindowMsgData)&sendMsg, 0 );
 
 }  // end GadgetRadioSetText
-
