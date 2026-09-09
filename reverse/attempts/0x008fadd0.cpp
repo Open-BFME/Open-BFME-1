@@ -1,55 +1,39 @@
 // ?processPending@ShroudManagerImpl008FBA40@@AAEX_N@Z
-// partial score=0.96 date=2026-09-04
-// ?d_008fadd0@@YAXXZ
-// partial score=0.96 date=2026-08-28
-// cl: /DNDEBUG /EHsc
+// partial score=0.97 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc
 // stlport
+//
+// ShroudManagerImpl008FBA40's private pending-queue drain (declared in
+// Code/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp, called
+// from drainPending() as processPending(true) and from configure() as
+// processPending(false)). drainAll==true uses unknown38 (the current tick)
+// as the due-date threshold; drainAll==false forces the whole queue through
+// by using 0xffffffff as the threshold. Logic, control flow and the two
+// callees (processShroudRevealCircle008F9B10 at 0x008F9B10, direct E8;
+// __stlp_deallocate_small at 0x0082E5F0, direct E8) are all byte-verified
+// correct: probe.py shows only register-encoding drift after the first
+// diff, no missing/extra logic.
+//
+// Only remaining diff (156 B compiled vs 155 B target): retail keeps the
+// front-of-deque pointer in ECX through the whole per-entry check/call
+// block (loads playerMask into EAX, radius into EDX off that ECX base),
+// letting `and eax, 0xffff` use the 5-byte EAX-immediate short form.
+// Every source shape tried here (named pointer local, reference local,
+// register hint, inline chained ->access with no local, locals extracted
+// before/after the branch, reordering field loads) makes MSVC 7.1 put the
+// front pointer in EAX instead, so the mask ends up in ECX/EDX and needs
+// the 6-byte ModRM form (81 e1 ff ff 00 00), which is the whole +1 byte.
+// Next attempt: try forcing ECX via an artificial `__asm mov ecx, ...`-free
+// method-call boundary (e.g. routing the per-entry work through a
+// non-inlined `static` helper taking the pointer as its only argument,
+// so __fastcall/__thiscall register-arg convention picks ECX for it), or
+// grep other already-matched STLport deque pop_front bodies in this repo
+// for the shape that produced ECX there.
 
-#include <deque>
+typedef unsigned int UnsignedInt;
+typedef int Int;
 
-typedef float Real;
-
-void *operator new[](unsigned int bytes);
-void operator delete[](void *pointer);
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
-
-struct Region3D
-{
-	__forceinline Region3D() {}
-
-	__forceinline Region3D(const Region3D &other)
-	{
-		lo.x = other.lo.x;
-		lo.y = other.lo.y;
-		lo.z = other.lo.z;
-		hi.x = other.hi.x;
-		hi.y = other.hi.y;
-		hi.z = other.hi.z;
-	}
-
-	__forceinline ~Region3D() {}
-
-	Real width() const { return hi.x - lo.x; }
-	Real height() const { return hi.y - lo.y; }
-
-	Coord3D lo;
-	Coord3D hi;
-};
-
-struct ShroudManagerImpl008FBA40PendingRecord
+struct Gen_t_008fb350_p12pod
 {
 	unsigned int timestamp;
 	int x;
@@ -58,308 +42,70 @@ struct ShroudManagerImpl008FBA40PendingRecord
 	int playerMask;
 };
 
-class ShroudManagerImpl008FBA40Element;
-
-struct ShroudManagerImpl008FBA40CellObject
+struct RecordsDequeIterator
 {
-	char padding00[0x24];
-	int playerState[16];
+	Gen_t_008fb350_p12pod *cur;
+	Gen_t_008fb350_p12pod *first;
+	Gen_t_008fb350_p12pod *last;
+	Gen_t_008fb350_p12pod **node;
 };
 
-class ShroudManagerImpl008FBA40Node
+struct RecordsDequeLayout
 {
-public:
-	~ShroudManagerImpl008FBA40Node();
-
-private:
-	int unknown00;
-	ShroudManagerImpl008FBA40CellObject *object;
-	int unknown08;
-	ShroudManagerImpl008FBA40Node *next;
-	friend class ShroudManagerImpl008FBA40Element;
+	RecordsDequeIterator start;
+	RecordsDequeIterator finish;
 };
 
 class ShroudManagerImpl008FBA40;
 
-bool processShroudRevealCircle008F9B10(int x, int y, int radius,
-	ShroudManagerImpl008FBA40 *manager, int playerMask);
+bool processShroudRevealCircle008F9B10(Int cellX, Int cellY, Int cellRadius,
+	ShroudManagerImpl008FBA40 *manager, Int playerMask);
+void __stlp_deallocate_small(void *ptr, unsigned int n);
 
-class PartitionData
+// Field layout excerpt: unknown38 at +0x38, records (a
+// _STL::deque<Gen_t_008fb350_p12pod, _STL::allocator<...> >) at +0x3C.
+class ShroudManagerImpl008FBA40StubLayout
 {
 public:
-	void unlink();
-
-private:
-	void updateCellsTouched();
-	friend class ShroudManagerImpl008FBA40;
-};
-
-struct ShroudManagerImpl008FBA40PlayerState
-{
-	unsigned short status;
-	unsigned short counters[2];
-};
-
-__forceinline int shroudStatusFromCount(unsigned short status)
-{
-	return status == 0xffff ? 2 : status == 0;
-}
-
-typedef void (__cdecl *ShroudManagerImpl008FBA40RefreshCallback)(
-	int x, int y, int status);
-
-class ShroudManagerImpl008FBA40Element
-{
-public:
-	ShroudManagerImpl008FBA40Element();
-	~ShroudManagerImpl008FBA40Element();
-	void adjustPlayerCounter008FC1F0(int playerIndex, int counterIndex,
-		int amount);
-	void updatePlayerCells008FC300(ShroudManagerImpl008FBA40 *manager,
-		int playerIndex);
-	void updatePlayerCells008FC3B0(ShroudManagerImpl008FBA40 *manager,
-		int playerIndex);
-	void updatePlayerCells008FC450(ShroudManagerImpl008FBA40 *manager,
-		int playerIndex);
-
-private:
-	ShroudManagerImpl008FBA40Node *cellNodes;
-	ShroudManagerImpl008FBA40PlayerState playerStates[16];
-	int unknown64;
-};
-
-class ShroudManagerImpl008FBA40
-{
-public:
-	ShroudManagerImpl008FBA40();
-	~ShroudManagerImpl008FBA40();
-	void drainPending();
-	void updatePlayerCells008FB010(int playerIndex);
-	void updatePlayerCells008FB060(int playerIndex);
-	void reset();
-	void setRegion(const Region3D *region, Real cellSize);
-	void configure(Region3D region, Real cellSize);
-
-private:
-	int mode;
-	Region3D region;
-	Real defaultCellSize;
-	Real inverseCellSize;
-	unsigned int width;
-	unsigned int height;
-	ShroudManagerImpl008FBA40Element *elements;
-	ShroudManagerImpl008FBA40Node *nodes;
-	PartitionData *pendingPartitionData;
-	int unknown38;
-	_STL::deque<ShroudManagerImpl008FBA40PendingRecord,
-		_STL::allocator<ShroudManagerImpl008FBA40PendingRecord> > records;
-	int unknown64;
-	bool enabled;
-	char padding69[3];
-	ShroudManagerImpl008FBA40RefreshCallback refreshCallback;
-
 	void processPending(bool drainAll);
-	friend class ShroudManagerImpl008FBA40Element;
+
+private:
+	char padding00[0x38];
+	int unknown38;
+	RecordsDequeLayout records;
 };
 
-ShroudManagerImpl008FBA40::ShroudManagerImpl008FBA40()
-	: mode(2),
-	  defaultCellSize(1.0f),
-	  width(0),
-	  height(0),
-	  elements(0),
-	  nodes(0),
-	  pendingPartitionData(0),
-	  unknown38(0),
-	  records(),
-	  unknown64(-1),
-	  enabled(true),
-	  refreshCallback(0)
+void ShroudManagerImpl008FBA40StubLayout::processPending(bool drainAll)
 {
-	region.lo.zero();
-	region.hi.zero();
-	configure(region, 1.0f);
-}
+	RecordsDequeLayout *layout = &records;
 
-ShroudManagerImpl008FBA40::~ShroudManagerImpl008FBA40()
-{
-	while (nodes)
-		delete nodes;
+	unsigned int threshold = drainAll ? (unsigned int)unknown38 : 0xffffffffu;
 
-	delete[] elements;
-}
-
-void ShroudManagerImpl008FBA40::drainPending()
-{
-	++unknown38;
-	while (pendingPartitionData)
+	while (layout->finish.cur != layout->start.cur)
 	{
-		PartitionData *partitionData = pendingPartitionData;
-		partitionData->unlink();
-		partitionData->updateCellsTouched();
-	}
+		if (layout->start.cur->timestamp >= threshold)
+			break;
 
-	processPending(true);
-}
-
-void ShroudManagerImpl008FBA40::updatePlayerCells008FB010(int playerIndex)
-{
-	if (playerIndex >= 0 && playerIndex < 16)
-	{
-		processPending(false);
-
-		ShroudManagerImpl008FBA40Element *end =
-			elements + width * height;
-		for (ShroudManagerImpl008FBA40Element *element = elements;
-			element != end; ++element)
+		if (layout->start.cur->playerMask != 0 && layout->start.cur->radius >= 0)
 		{
-			element->updatePlayerCells008FC3B0(this, playerIndex);
-		}
-	}
-}
-
-void ShroudManagerImpl008FBA40::updatePlayerCells008FB060(int playerIndex)
-{
-	if (playerIndex >= 0 && playerIndex < 16)
-	{
-		processPending(false);
-
-		ShroudManagerImpl008FBA40Element *end =
-			elements + width * height;
-		for (ShroudManagerImpl008FBA40Element *element = elements;
-			element != end; ++element)
-		{
-			element->updatePlayerCells008FC450(this, playerIndex);
-		}
-	}
-}
-
-void ShroudManagerImpl008FBA40::reset()
-{
-	Region3D emptyRegion;
-	emptyRegion.lo.zero();
-	emptyRegion.hi.zero();
-	setRegion(&emptyRegion, 0.0f);
-
-	delete[] elements;
-	elements = new ShroudManagerImpl008FBA40Element[1];
-}
-
-void ShroudManagerImpl008FBA40::setRegion(const Region3D *newRegion, Real cellSize)
-{
-	if (cellSize <= 0.0f)
-		cellSize = defaultCellSize;
-
-	if (!(newRegion->width() < 0.0f)
-		&& !(newRegion->height() < 0.0f))
-	{
-		configure(*newRegion, cellSize);
-	}
-}
-
-void ShroudManagerImpl008FBA40Element::adjustPlayerCounter008FC1F0(
-	int playerIndex, int counterIndex, int amount)
-{
-	unsigned short *counter =
-		&playerStates[playerIndex].counters[counterIndex];
-	amount += *counter;
-	if (amount < 0)
-		amount = 0;
-	else if (amount > 0xffff)
-		amount = 0xffff;
-	*counter = (unsigned short)amount;
-}
-
-void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC450(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
-{
-	ShroudManagerImpl008FBA40PlayerState &playerState =
-		playerStates[playerIndex];
-	if (playerState.status == 0)
-	{
-		playerState.status = 0xffff;
-		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
-			node; node = node->next)
-		{
-			node->object->playerState[playerIndex] = 0;
+			processShroudRevealCircle008F9B10(layout->start.cur->x,
+				layout->start.cur->y, layout->start.cur->radius,
+				reinterpret_cast<ShroudManagerImpl008FBA40 *>(this),
+				layout->start.cur->playerMask & 0xffff);
 		}
 
-		if (playerIndex == manager->unknown64)
+		if (layout->start.cur != layout->start.last - 1)
 		{
-			int index = this - manager->elements;
-			manager->refreshCallback(index % manager->width,
-				index / manager->width, 2);
+			++layout->start.cur;
 		}
-	}
-}
-
-void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC3B0(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
-{
-	ShroudManagerImpl008FBA40PlayerState &playerState =
-		playerStates[playerIndex];
-	int oldStatus = playerState.status == 0xffff
-		? 2 : playerState.status == 0;
-	--playerState.status;
-	int newStatus = playerState.status == 0xffff
-		? 2 : playerState.status == 0;
-	if (newStatus != oldStatus)
-	{
-		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
-			node; node = node->next)
+		else
 		{
-			node->object->playerState[playerIndex] = 0;
+			if (layout->start.first)
+				__stlp_deallocate_small(layout->start.first, sizeof(Gen_t_008fb350_p12pod) * 6);
+			++layout->start.node;
+			layout->start.first = *layout->start.node;
+			layout->start.last = layout->start.first + 6;
+			layout->start.cur = layout->start.first;
 		}
-
-		if (playerIndex == manager->unknown64)
-		{
-			int index = this - manager->elements;
-			manager->refreshCallback(index % manager->width,
-				index / manager->width, newStatus);
-		}
-	}
-}
-
-void ShroudManagerImpl008FBA40Element::updatePlayerCells008FC300(
-	ShroudManagerImpl008FBA40 *manager, int playerIndex)
-{
-	ShroudManagerImpl008FBA40PlayerState &playerState =
-		playerStates[playerIndex];
-	int oldStatus = shroudStatusFromCount(playerState.status);
-	++playerState.status;
-	if (playerState.status == 0)
-		playerState.status = 1;
-	int newStatus = shroudStatusFromCount(playerState.status);
-	if (newStatus != oldStatus)
-	{
-		for (ShroudManagerImpl008FBA40Node *node = cellNodes;
-			node; node = node->next)
-		{
-			node->object->playerState[playerIndex] = 0;
-		}
-
-		if (playerIndex == manager->unknown64)
-		{
-			int index = this - manager->elements;
-			manager->refreshCallback(index % manager->width,
-				index / manager->width, newStatus);
-		}
-	}
-}
-
-void ShroudManagerImpl008FBA40::processPending(bool considerTimestamp)
-{
-	unsigned int compareTime = considerTimestamp
-		? (unsigned int)unknown38 : 0xffffffff;
-	while (!records.empty()
-		&& records.front().timestamp < compareTime)
-	{
-		ShroudManagerImpl008FBA40PendingRecord &record = records.front();
-		if (record.playerMask != 0 && record.radius >= 0)
-		{
-			processShroudRevealCircle008F9B10(record.x, record.y,
-				record.radius, this, record.playerMask & 0xffff);
-		}
-		records.pop_front();
 	}
 }
