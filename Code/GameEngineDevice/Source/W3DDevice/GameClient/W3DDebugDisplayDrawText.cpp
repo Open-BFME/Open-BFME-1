@@ -1,21 +1,17 @@
+// cl: /DNDEBUG /MD /EHsc
 // W3DDebugDisplay::drawText, retail 0x006E6D30, 220 bytes.
-// partial score=0.99 date=2026-09-08
-// The reference W3DDebugDisplay.cpp supplies the method body. The receiver
-// offsets and DisplayString slots match the retail body at this address.
+// The receiver offsets and DisplayString slots match the retail body.
 
 typedef int Int;
 typedef int Color;
 typedef char Char;
 typedef unsigned short WideChar;
 
-#pragma intrinsic( _ReadWriteBarrier )
-extern "C" void _ReadWriteBarrier();
-
-class BFMERetailAsciiString;
+class AsciiString;
 
 template <typename T> class StringBase
 {
-friend class BFMERetailAsciiString;
+friend class AsciiString;
 friend class UnicodeString;
 
 private:
@@ -26,11 +22,11 @@ private:
 	void *m_data;
 };
 
-class BFMERetailAsciiString : private StringBase<Char>
+class AsciiString : private StringBase<Char>
 {
 public:
-	BFMERetailAsciiString( const Char *text ) : StringBase<Char>( text ) {}
-	~BFMERetailAsciiString() {}
+	AsciiString( const Char *text ) : StringBase<Char>( text ) {}
+	~AsciiString() {}
 };
 
 class UnicodeString : private StringBase<WideChar>
@@ -40,7 +36,7 @@ public:
 	UnicodeString( const UnicodeString &other )
 		: StringBase<WideChar>( other ) {}
 	~UnicodeString() {}
-	void translate( const BFMERetailAsciiString &text );
+	void translate( const AsciiString &text );
 };
 
 class DisplayString
@@ -101,9 +97,8 @@ void W3DDebugDisplay::drawText( Int x, Int y, Char *text )
 	Color textColor = -1;
 	Color dropColor = 0xff000000;
 	UnicodeString unicode;
-	_ReadWriteBarrier();
 	{
-		BFMERetailAsciiString ascii( text );
+		AsciiString ascii( text );
 		unicode.translate( ascii );
 	}
 	m_displayString->setText( unicode );
