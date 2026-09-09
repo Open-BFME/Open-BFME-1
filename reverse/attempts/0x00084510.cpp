@@ -1,5 +1,5 @@
 // ??0GlobalData@@QAE@XZ
-// partial score=0.18 date=2026-09-09
+// partial score=0.19 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #include <vector>
@@ -51,6 +51,43 @@
 //     0x008881D0); a locally-named stand-in avoids an ODR clash with the
 //     full UnicodeString class already defined in
 //     Code/GameEngine/Source/Common/System/UnicodeString.cpp.
+//
+// UPDATE (worker W6, wave 2): the assigned brief's "CRC tail" theory for the
+// 0x10138-byte __chkstk frame is WRONG -- checked directly against the full
+// call list of the retail body (every `call`/`call [..]` instruction from
+// +0x0 to +0x120c, 47 total): there is NO GetModuleFileName, NO File::open,
+// NO read loop and NO CRC object anywhere in this function. The only import
+// call is `call dword ptr [0x1359000]` at +0x0ffe, which reverse/imports.csv
+// identifies as USER32!GetDoubleClickTime (matches ZH's tail-of-ctor
+// `m_doubleClickTimeMS = GetDoubleClickTime();`, so the general "this is
+// ZH's ctor tail" mapping still holds -- just not the CRC part). The other
+// unresolved tail calls (0x1b76b, 0xa984, 0x2f923, 0x3f508) are all
+// already-matched `gen-thunk` placeholder rows (Code/gen_small/thunks_*.cpp)
+// -- 5-byte jump stubs to FUN_004aea50 / FUN_00465250 / etc, not identified
+// real callees yet.
+//
+// What the buffer actually IS is still unresolved, but its SIZE is now
+// pinned empirically: adding an unused (one volatile byte touched) local
+// `char[0x10134]` reproduces retail's exact `mov eax, 0x10138` / __chkstk
+// prologue (0x10134 local + 4 bytes compiler overhead = 0x10138) and pushes
+// the first diff from the missing-chkstk-call point to the next one (score
+// 2774 -> 2820 bytes, still far short of 4621). Per docs/shape_levers.md
+// "frame first": this only gets the PROLOGUE aligned; everything after it
+// still needs real content, at which point the buffer's shape may turn out
+// to matter (e.g. if it's really several arrays MSVC coalesced).
+//
+// New lead for the NEXT diff (right after the chkstk fix): retail's prologue
+// pushes ebx, ebp, esi, edi (4 callee-saved regs) but this draft's compiled
+// output only pushes esi/edi (no ebp) at that point -- ebp is never used
+// because this draft has no real loop. ZH's constructor has a genuine
+// `for (i = 0; i < MAX_WATER_GRID_SETTINGS; i++) { ...12 stores...
+// m_vertexWaterAvailableMaps[i].clear(); }` block; a loop with that much
+// per-iteration work is a strong candidate for the compiler hoisting the
+// induction variable into a 4th callee-saved register (ebp) across the many
+// calls inside the loop body (AsciiString::clear() per iteration). Writing
+// that loop as a REAL for-loop (not unrolled stores) instead of flat
+// m_pad_XXXX blocks is the next thing to try, once MAX_WATER_GRID_SETTINGS
+// and the array's BFME offset/stride are confirmed from the disassembly.
 //
 // NOT YET DONE (why this is a partial, not a landed body):
 //   - The ~230 plain scalar members between the destructible ones are
@@ -696,6 +733,13 @@ private:
 // ??0GlobalData@@QAE@XZ
 GlobalData::GlobalData()
 {
+	// Empirically-sized placeholder for retail's still-unidentified ~64KB
+	// local (see the header note above): this exact size reproduces retail's
+	// `mov eax, 0x10138` __chkstk prologue. The `volatile` touch is only to
+	// stop /O2 from eliminating the otherwise-unread array; it is NOT a
+	// claim about what retail's code actually does with the buffer.
+	char m_scratchTest[0x10134];
+	*(volatile char*)m_scratchTest = 0;
 	m_dd8 = 0;
 	m_ddc = 0;
 	m_de0 = 0;
