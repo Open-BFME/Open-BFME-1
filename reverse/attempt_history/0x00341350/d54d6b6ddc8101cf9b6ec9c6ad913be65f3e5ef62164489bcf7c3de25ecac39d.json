@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d54d6b6ddc8101cf9b6ec9c6ad913be65f3e5ef62164489bcf7c3de25ecac39d",
+  "symbol": "?bfmeFwdYA@@YGXPAX0D@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?bfmeFwdYA@@YGXPAX0D@Z\n// partial score=0.7 date=2026-09-09\nvoid bfmeTargetYA(void *a, char flag, int z);\n\nvoid __stdcall bfmeFwdYA(void *a1, void *a2, char a3)\n{\n\tbfmeTargetYA(a2, a3 != 0, 0);\n}\n"
+}
