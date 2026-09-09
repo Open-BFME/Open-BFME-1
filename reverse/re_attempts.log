@@ -18834,3 +18834,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_00485460@@YAXXZ	0x00485460	114	blocked	served file Code/gen_asm/d_00475b00.asm; generated helper has no built object emitter and no named source owner, so clean C++ identity would be invented
 ?d_004768f0@@YAXXZ	0x004768F0	130	blocked	served file Code/gen_asm/d_00475b00.asm; generated helper has no built object emitter and no named source owner, so clean C++ identity would be invented
 ?d_004764c0@@YAXXZ	0x004764C0	183	blocked	served file Code/gen_asm/d_00475b00.asm; generated helper has no built object emitter and no named source owner, so clean C++ identity would be invented
+?d_00485a30@@YAXXZ	0x00485A30	94	blocked	served file Code/gen_asm/d_00475b00.asm; GUI-manager helper has no built object emitter or named source owner, so the clean C++ identity is not recoverable from this anonymous generated body
