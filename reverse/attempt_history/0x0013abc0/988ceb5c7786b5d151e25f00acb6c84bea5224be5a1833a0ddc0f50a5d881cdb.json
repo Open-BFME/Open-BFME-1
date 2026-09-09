@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "988ceb5c7786b5d151e25f00acb6c84bea5224be5a1833a0ddc0f50a5d881cdb",
+  "symbol": "?bfmeEqualsXZ@BfmeTblXZ@@QAEDPAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeEqualsXZ@BfmeTblXZ@@QAEDPAV1@@Z\n// partial score=0.90 date=2026-09-09\nextern \"C\" int (__cdecl *_bfmeCmpXZ)(void *a, void *b);\n\nclass BfmeTblXZ\n{\npublic:\n\tchar bfmeEqualsXZ(BfmeTblXZ *o);\n\n\tunsigned char m_bfmeHeadXZ[4];\n\tvoid **m_bfme04XZ;\n\tint m_bfme08XZ;\n};\n\nchar BfmeTblXZ::bfmeEqualsXZ(BfmeTblXZ *o)\n{\n\tint n = m_bfme08XZ;\n\n\tif (n == o->m_bfme08XZ)\n\t{\n\t\tint i = 0;\n\n\t\tif (n > 0)\n\t\t{\n\t\t\tint (__cdecl *cmp)(void *, void *) = _bfmeCmpXZ;\n\n\t\t\tdo\n\t\t\t{\n\t\t\t\tif (cmp(m_bfme04XZ[i], o->m_bfme04XZ[i]) != 0)\n\t\t\t\t\treturn 0;\n\n\t\t\t\ti++;\n\t\t\t}\n\t\t\twhile (i < m_bfme08XZ);\n\t\t}\n\n\t\treturn 1;\n\t}\n\n\treturn 0;\n}\n"
+}

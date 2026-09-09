@@ -86487,3 +86487,5 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?rva001FE970@GettingBuiltBehavior@@QAEXXZ,0x001FE970,The j_0002ea14 thunk reaches the address-derived GettingBuiltBehavior cleanup helper at 0x001FE970.
 ?rva001FF060@GettingBuiltBehavior@@QAE_NXZ,0x001FF060,The j_00036449 thunk reaches the address-derived GettingBuiltBehavior status helper at 0x001FF060.
 ?rva001FF5C0@GettingBuiltBehavior@@QAEXXZ,0x001FF5C0,The j_00035ee0 thunk reaches the address-derived GettingBuiltBehavior completion helper at 0x001FF5C0.
+?bfmeTakeXZ@BfmePoolXZ@@QAEPAVBfmeRecXZ@@H@Z,0x00031A7F,pool take
+?bfmeFinishXZ@BfmeHostXZ@@QAEXPAX@Z,0x00002EF0,finish
