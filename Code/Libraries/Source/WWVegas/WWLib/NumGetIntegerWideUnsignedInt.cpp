@@ -1,5 +1,7 @@
 // cl: /O2 /MD
-// STLport 4.5.3 wide unsigned integer _M_do_get_integer specializations.
+// STLport 4.5.3 narrow and wide unsigned integer _M_do_get_integer
+// specializations. The narrow unsigned-long body is at 0x00833170 and calls
+// its digit parser at 0x00833270.
 // The unsigned-long body is at 0x00834610 and calls its digit parser at
 // 0x00834710. The unsigned-int body is at 0x008348D0 and calls its digit parser
 // at 0x008349D0. The unsigned-short body is at 0x00834B90 and calls the exact
@@ -119,6 +121,7 @@ namespace _STL
 
 	typedef istreambuf_iterator<unsigned short,
 		char_traits<unsigned short> > WideIterator;
+	typedef istreambuf_iterator<char, char_traits<char> > NarrowIterator;
 
 	template <class InputIter, class CharT>
 	int _M_get_base_or_zero(InputIter &, InputIter &, ios_base &,
@@ -167,6 +170,11 @@ namespace _STL
 	_M_do_get_integer<WideIterator, unsigned long, unsigned short>(
 		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
 		unsigned long &, unsigned short *);
+
+	template istreambuf_iterator<char, char_traits<char> >
+	_M_do_get_integer<NarrowIterator, unsigned long, char>(
+		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
+		unsigned long &, char *);
 
 	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
 	_M_do_get_integer<WideIterator, unsigned int, unsigned short>(

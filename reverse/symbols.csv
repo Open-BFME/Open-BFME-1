@@ -86624,3 +86624,4 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ??1Rva0077CDE0Opaque8@@QAE@XZ,0x00041745,destructor of the +0xf0 member of the 0x0077CDE0 class (state-17 unwind funclet target)
 ??0Rva0077CDE0ArrElem@@QAE@XZ,0x0002FB80,element constructor the EH vector constructor iterator runs over the 0x0077CDE0 array at +0x134
 ??1Rva0077CDE0ArrElem@@QAE@XZ,0x0000E746,element destructor paired with the 0x0077CDE0 array at +0x134
+??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@K@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAKH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x00833270,STLport 4.5.3 narrow unsigned-long parser; exact wrapper call and adjacent specialization family establish identity
