@@ -747,36 +747,40 @@ void DX8Caps::Check_Texture_Compression_Support(const D3DCAPS8& caps)
 	DXLOG(("Texture compression support: %s\r\n",SupportDXTC ? "Yes" : "No"));
 }
 
-// ?Check_Texture_Format_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z present-unmatched
+struct BFME_DX8Caps_CheckTextureFormatFields
+{
+	char pad[0x13e];
+	bool supportTextureFormat[105];
+	char padAfterFormats[0x2a0 - 0x1a7];
+	IDirect3D8 *direct3D;
+};
+
+static __forceinline D3DFORMAT BFME_WW3DFormat_To_D3DFormat(WW3DFormat format)
+{
+	if ((unsigned)format < 100) {
+		return (D3DFORMAT)format;
+	}
+	return (D3DFORMAT)(D3DFMT_DXT1 + (unsigned)format - 100);
+}
+
 void DX8Caps::Check_Texture_Format_Support(WW3DFormat display_format,const D3DCAPS8& caps)
 {
+	BFME_DX8Caps_CheckTextureFormatFields *retail =
+		(BFME_DX8Caps_CheckTextureFormatFields *)this;
 	if (display_format==WW3D_FORMAT_UNKNOWN) {
-		for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-			SupportTextureFormat[i]=false;
-		}
+		memset(retail->supportTextureFormat, 0, sizeof(retail->supportTextureFormat));
 		return;
 	}
-	D3DFORMAT d3d_display_format=WW3DFormat_To_D3DFormat(display_format);
-	for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-		if (i==WW3D_FORMAT_UNKNOWN) {
-			SupportTextureFormat[i]=false;
-		}
-		else {
-			WW3DFormat format=(WW3DFormat)i;
-			SupportTextureFormat[i]=SUCCEEDED(
-				Direct3D->CheckDeviceFormat(
-					caps.AdapterOrdinal,
-					caps.DeviceType,
-					d3d_display_format,
-					0,
-					D3DRTYPE_TEXTURE,
-					WW3DFormat_To_D3DFormat(format)));
-			if (SupportTextureFormat[i]) {
-				StringClass name(0,true);
-				Get_WW3D_Format_Name(format,name);
-				DXLOG(("Supports texture format: %s\r\n",name));
-			}
-		}
+	for (unsigned i=0;i<105;++i) {
+		D3DFORMAT format=BFME_WW3DFormat_To_D3DFormat((WW3DFormat)i);
+		retail->supportTextureFormat[i]=SUCCEEDED(
+			retail->direct3D->CheckDeviceFormat(
+				caps.AdapterOrdinal,
+				caps.DeviceType,
+				(D3DFORMAT)display_format,
+				0,
+				D3DRTYPE_TEXTURE,
+				format));
 	}
 }
 
