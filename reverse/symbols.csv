@@ -86651,3 +86651,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?setVideoBuffer@WinInstanceData@BfmeStopMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
 ?winGetInstanceData@GameWindow@BfmePauseMovie@@QAEPAVWinInstanceData@2@XZ,0x00034991,ILT thunk; alias of real ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ
 ?setVideoBuffer@WinInstanceData@BfmePauseMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
+?rva0001895d@Rva00615D50Object@@QAE?AUCoord3D@@XZ,0x0001895D,ILT to body 0x006186C0; the 0x00615D50 lookup calls it for the object world position
+?rva0004a444@Rva00615D50Object@@QAE_NPBUICoord2D@@@Z,0x0004A444,ILT to body 0x00618C90; the 0x00615D50 lookup calls it to test the object against a screen point
