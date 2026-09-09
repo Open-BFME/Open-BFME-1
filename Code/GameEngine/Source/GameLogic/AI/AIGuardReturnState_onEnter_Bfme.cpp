@@ -245,7 +245,7 @@ StateReturnType AIGuardReturnState::onEnter()
 			GetLengthEstimateCall asMember;
 		} getLengthEstimateCast;
 		getLengthEstimateCast.asVoid = (void *)j_00036aa2;
-		if ((delta.*getLengthEstimateCast.asMember)() < g_bfmeK1266C)
+		if (!((delta.*getLengthEstimateCast.asMember)() < g_bfmeK1266C))
 			goto doEnter;
 		}
 	goto returnSuccess;
