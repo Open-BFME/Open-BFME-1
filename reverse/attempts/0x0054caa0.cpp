@@ -1,7 +1,8 @@
 // ?bfmeOnlineLoginTextFilter@@YA_NAAVUnicodeString@@HHH@Z
-// partial score=0.9 date=2026-09-06
+// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
+#define _WCTYPE_INLINE_DEFINED
 #include <wctype.h>
 
 template <typename T> class StringBase
@@ -69,16 +70,21 @@ bool bfmeOnlineLoginTextFilter(UnicodeString &text, int maximumLength, int, int 
 	const StringBase<wchar_t>::Header *data = text.rawData();
 	if (data)
 	{
-		if (data->length > 0)
+		int length = data->length;
+		if (length > 0)
 		{
-			if (!iswdigit(data->data[data->length - 1]))
+			bool keep = data->length == 0 || iswdigit(data->data[length - 1]);
+			if (!keep)
 				text.removeLastChar();
 		}
 
-		if (text.getLength() > 0 && bfmeOnlineLoginIntegerInRange(text, 0, maximum))
-			return true;
+		if (text.getLength() > 0)
+		{
+			if (bfmeOnlineLoginIntegerInRange(text, 0, maximum))
+				return true;
 
-		text.removeLastChar();
+			text.removeLastChar();
+		}
 	}
 	return false;
 }
