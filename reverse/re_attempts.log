@@ -18278,3 +18278,10 @@ uw_00c61de0	0xc61de0	8	blocked	Ghidra Unwind@ compiler cleanup boundary in serve
 ?d_0041ebd0@@YAXXZ	0x0041EBD0	812	blocked	Generated draw body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
 ?d_0041fdf0@@YAXXZ	0x0041FDF0	688	blocked	Generated draw body reached only by address-derived Drawable icon path; no identity-safe built C++ emitter t=7 model=gpt-5
 ?d_00421520@@YAXXZ	0x00421520	617	blocked	Generated draw body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_00719090@@YAXXZ	0x00719090	1936	blocked	Generated graphics body reached only by address-derived ScreenHilightFilter render path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_00719cd0@@YAXXZ	0x00719CD0	534	blocked	Generated graphics body reached only by address-derived ScreenHilightFilter/render paths; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_0071a150@@YAXXZ	0x0071A150	563	blocked	Generated graphics body reached only by address-derived BaseHeightMapRenderObjClass path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_0071b840@@YAXXZ	0x0071B840	708	blocked	Generated graphics body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_0071bbc0@@YAXXZ	0x0071BBC0	572	blocked	Generated graphics body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_0071d280@@YAXXZ	0x0071D280	690	blocked	Generated graphics body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_0071d5e0@@YAXXZ	0x0071D5E0	809	blocked	Generated graphics body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
