@@ -28,11 +28,15 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
+typedef unsigned short DataChunkVersionType;
 
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0
 };
+
+extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
+#pragma intrinsic(memcmp)
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long milliseconds);
 
@@ -80,6 +84,10 @@ public:
 	StringBase(void) : m_data(0) {}
 	StringBase(const StringBase &other);
 	T *getBufferForRead(Int len);
+	// ?set@?$StringBase@D@@QAEXABV1@@Z aliases the retail
+	// ?set@UnicodeString@@QAEXABV1@@Z pin (see symbols.csv) -- both types
+	// share this StringBase<char> implementation.
+	void set(const StringBase &other);
 
 protected:
 	void *m_data;
@@ -96,10 +104,32 @@ public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 	~AsciiString();
 
+	AsciiString &operator=(const AsciiString &other)
+	{
+		set(other);
+		return *this;
+	}
+
 	const char *str() const
 	{
 		static const char empty = 0;
 		return m_data ? static_cast<const char *>(m_data) + 8 : &empty;
+	}
+
+	// parse()'s scope/label matches inline this compare (repe cmpsb) rather
+	// than calling out -- there is no separate call target for it in the
+	// retail body.
+	int compare(const AsciiString &that) const
+	{
+		int thatLen = that.m_data ? *reinterpret_cast<const UnsignedShort *>(static_cast<const char *>(that.m_data) + 4) : 0;
+		const char *thatData = that.m_data ? static_cast<const char *>(that.m_data) + 8 : "";
+		int thisLen = m_data ? *reinterpret_cast<const UnsignedShort *>(static_cast<const char *>(m_data) + 4) : 0;
+		const char *thisData = m_data ? static_cast<const char *>(m_data) + 8 : "";
+		int n = thisLen < thatLen ? thisLen : thatLen;
+		int c = memcmp(thisData, thatData, n);
+		if (c != 0)
+			return c;
+		return thisLen - thatLen;
 	}
 };
 
@@ -112,10 +142,15 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h
+// parse()'s inlined closeDataChunk() proves the next two slots: tell() at
+// +0x04, absoluteSeek() at +0x08. atEndOfFile() proves eof() at +0x0C.
 class ChunkInputStream
 {
 public:
 	virtual Int read(void *pData, Int numBytes);
+	virtual Int tell(void);
+	virtual void absoluteSeek(Int pos);
+	virtual Bool eof(void);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
@@ -133,11 +168,32 @@ public:
 	Int dataLeft;						// this+0x18
 };
 
+class DataChunkInput;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
+struct DataChunkInfo
+{
+	AsciiString label;
+	AsciiString parentLabel;
+	DataChunkVersionType version;
+	Int dataSize;
+};
+
+typedef Bool (*DataChunkParserPtr)(DataChunkInput &file, DataChunkInfo *info, void *userData);
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
+// DataChunkInput::registerParser (0x00103840) proves the extra intrusive
+// previous-link at +0x08 ahead of the parser field at +0x0C, which parse()'s
+// direct field call (call dword ptr [ecx+0x0C]) also requires.
 struct UserParser
 {
 	virtual ~UserParser();
-	UserParser *next;
+	UserParser *next;					// this+0x04
+	UserParser **previous;					// this+0x08
+	DataChunkParserPtr parser;				// this+0x0C
+	AsciiString label;					// this+0x10
+	AsciiString parentLabel;				// this+0x14
+	void *userData;						// this+0x18
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
@@ -152,6 +208,7 @@ class DataChunkTableOfContents
 {
 public:
 	AsciiString getName(UnsignedInt id);
+	Bool isOpenedForRead(void) { return m_headerOpened; }
 
 	~DataChunkTableOfContents()
 	{
@@ -198,11 +255,45 @@ protected:
 		return i;
 	}
 
+	// parse() has no separate call target for closeDataChunk -- MSVC inlines
+	// this whole body (the deleting destructor call at the end is the only
+	// call still visible), so it is modelled here rather than as its own row.
+	void closeDataChunk(void)
+	{
+		if (m_chunkStack == 0) {
+			return;
+		}
+
+		if (m_chunkStack->dataLeft > 0) {
+			m_file->absoluteSeek(m_file->tell() + m_chunkStack->dataLeft);
+			decrementDataLeft(m_chunkStack->dataLeft);
+		}
+
+		InputChunk *c = m_chunkStack;
+		m_chunkStack = m_chunkStack->next;
+		delete c;
+	}
+
 public:
 	~DataChunkInput();
 	void readArrayOfBytes(char *ptr, Int len);
 	AsciiString readAsciiString(void);
 	NameKeyType readNameKey(void);
+
+	AsciiString openDataChunk(DataChunkVersionType *ver);
+	// parse()'s call site has no separate call target for this either -- it
+	// is the same 12-byte body as the standalone matched row at 0x00102740,
+	// inlined here because the caller is visibly small too.
+	UnsignedInt getChunkDataSize(void)
+	{
+		if (m_chunkStack == 0) {
+			return 0;
+		}
+		return m_chunkStack->dataSize;
+	}
+	Bool atEndOfFile(void) { return m_file->eof(); }
+
+	Bool parse(void *userData);
 };
 
 // ??1DataChunkInput@@QAE@XZ
@@ -267,4 +358,73 @@ NameKeyType DataChunkInput::readNameKey(void)
 	AsciiString kname = m_contents.getName(keyAndType);
 	NameKeyType k = TheNameKeyGenerator->nameToKey(kname.str());
 	return k;
+}
+
+// ?parse@DataChunkInput@@QAE_NPAX@Z
+Bool DataChunkInput::parse(void *userData)
+{
+	AsciiString label;
+	AsciiString parentLabel;
+	DataChunkVersionType ver;
+	UserParser *parser;
+	Bool scopeOK;
+	DataChunkInfo info;
+
+	// If the header wasn't a chunk table of contents, we can't parse.
+	if (!m_contents.isOpenedForRead()) {
+		return false;
+	}
+
+	// if we are inside a data chunk right now, get its name
+	if (m_chunkStack)
+		parentLabel = m_contents.getName(m_chunkStack->id);
+
+	while (atEndOfFile() == false)
+	{
+		if (m_chunkStack) { // If we are parsing chunks in a chunk, check current length.
+			if (m_chunkStack->dataLeft < 4) {
+				break;
+			}
+		}
+		// open the chunk
+		label = openDataChunk(&ver);
+		if (atEndOfFile()) { // FILE * returns eof after you read past end of file, so check.
+			break;
+		}
+
+		// find a registered parser for this chunk
+		for (parser = m_parserList; parser; parser = parser->next)
+		{
+			// chunk labels must match
+			if (parser->label.compare(label) == 0)
+			{
+				// make sure parent name (scope) also matches
+				scopeOK = true;
+
+				if (parentLabel.compare(parser->parentLabel) != 0)
+					scopeOK = false;
+
+				if (scopeOK)
+				{
+					// fill out the chunk info and call the user parser
+					info.label = label;
+					info.parentLabel = parentLabel;
+					info.version = ver;
+					info.dataSize = getChunkDataSize();
+
+					// BFME: a parser registered with its own userData
+					// (registerParser's 4th argument) takes priority over
+					// parse()'s own userData argument.
+					if (parser->parser(*this, &info, parser->userData ? parser->userData : userData) == false)
+						return false;
+					break;
+				}
+			}
+		}
+
+		// close chunk (and skip to end if need be)
+		closeDataChunk();
+	}
+
+	return true;
 }
