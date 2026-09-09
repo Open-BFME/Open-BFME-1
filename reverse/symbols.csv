@@ -84115,7 +84115,6 @@ name,address,notes
 ?setDisconnectFrame@NetDisconnectPlayerCommandMsg@@QAEXI@Z,0x000473DE,ILT thunk; real body 0xA73C90
 ?setDisconnectSlot@NetDisconnectPlayerCommandMsg@@QAEXE@Z,0x00008C74,ILT thunk; real body 0xA73C80
 ?setDragSelecting@BfmeSelectionTranslator@@QAEXXZ,0x000306DE,derived from the REL32 displacement at 0x00478F60
-?setEaseTimes@ParabolicEase@@QAEXMM@Z,0x00888B80,pinharvest x1 (body)
 ?setEffectivelyDead@Object@@QAEX_N@Z,0x00030887,ILT thunk -> body 0x001C7E60 (matched); AIUpdateInterface::markAsDead call site
 ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z,0x00001A3C,Open-BFME5 ILT thunk to body 0x004149E0 in the Drawable range; ?groupSetEmoticon@AIGroup@@QAEXABVAsciiString@@H@Z at 0x001514C0 calls it on every member drawable
 ?setError@Rva007E8810Message@@QAEXH@Z,0x007E88C0,V2 lane: FESL message store error code; same body as ?m@Gen_007e88c0@@QAEXH@Z
