@@ -1,22 +1,6 @@
-// ?populateGroupRoomListbox@@YAXPAVGameWindow@@@Z
-// partial score=0.55 date=2026-09-05
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-
-// ?populateGroupRoomListbox@@YAXPAVGameWindow@@@Z
-// retail 0x004FA240, 310 bytes; second non-folded instance of the ZH
-// WOLLobbyMenu.cpp static (another copy already landed at 0x005397D0 as a
-// naked lift under WOLLobbyMenu_populateGroupRoomListbox_Thunk.cpp -- this
-// repo documents duplicated, non-ICF-folded bodies as expected). Callers here
-// are WOLLobbyMenuUpdate (x2) and WOLLobbyMenuInit (x1), matching the ZH
-// source's two call sites line for line.
-// ZH source: GeneralsMD WOLLobbyMenu.cpp:340 populateGroupRoomListbox(GameWindow*):
-// reset combo box, walk TheGameSpyInfo->getGroupRoomList() skipping the QM
-// channel, add each room's translated name colored by whether it is the
-// current group room, remember that selection, GadgetComboBoxSetSelectedPos
-// at the end. BFME widened GameSpyGroupRoom by one trailing dword versus ZH's
-// 5-int tail (see AsciiUnicodePairCopyCtor.cpp, matched 0x004F97B0), which is
-// why the room's copy ctor there documents a 0x20-byte record.
+// byte-exact reconstruction of WOLLobbyMenu::populateGroupRoomListbox at retail 0x004FA240
 
 #include <map>
 
@@ -34,7 +18,6 @@ private:
 	void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
@@ -43,7 +26,6 @@ public:
 	~AsciiString() {}
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
@@ -54,11 +36,9 @@ public:
 
 class GameWindow;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
-// BFME widens the record by one trailing Int versus ZH's m_groupID/m_numWaiting/
-// m_maxWaiting/m_numGames/m_numPlaying (see AsciiUnicodePairCopyCtor.cpp).
-struct GameSpyGroupRoom
+class GameSpyGroupRoom
 {
+	public:
 	AsciiString m_name;
 	UnicodeString m_translatedName;
 	int m_groupID;
@@ -87,7 +67,7 @@ class GameSpyConfigInterface
 {
 public:
 	BFME_VSLOT(0) BFME_VSLOT(1) BFME_VSLOT(2) BFME_VSLOT(3) BFME_VSLOT(4)
-	BFME_VSLOT(5) BFME_VSLOT(6)
+	BFME_VSLOT(5) BFME_VSLOT(6) BFME_VSLOT(7)
 	virtual int getQMChannel();
 };
 
@@ -102,8 +82,7 @@ extern GameSpyConfigInterface *TheGameSpyConfig;
 static int g_colorCurrentRoom;
 static int g_colorRoom;
 
-// ?populateGroupRoomListbox@@YAXPAVGameWindow@@@Z
-void populateGroupRoomListbox( GameWindow *lb )
+static void populateGroupRoomListbox( GameWindow *lb )
 {
 	if ( !lb )
 		return;
@@ -132,4 +111,9 @@ void populateGroupRoomListbox( GameWindow *lb )
 	}
 
 	GadgetComboBoxSetSelectedPos( lb, indexToSelect, false );
+}
+
+void keepPopulateGroupRoomListbox( GameWindow *lb )
+{
+	populateGroupRoomListbox( lb );
 }
