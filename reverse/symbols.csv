@@ -73774,6 +73774,7 @@ name,address,notes
 ?bfmeAdj1096@BfmeR1096@@QAEXH@Z,0x0000E881,pin
 ?bfmeAdjustESO@@YGXPAVBfmeHostESO@@PAVBfmeBaseESO@@1@Z,0x00028650,pin
 ?bfmeAdjustHeap00474330@@YAXPAURva004748F0Element@@HHU1@URva004748F0Compare@@@Z,0x00474330,STLport adjust_heap callee for the 16-byte pop_heap at 0x004748F0
+?bfmePushHeap00473D60@@YAXPAURva004748F0Element@@HHU1@URva004748F0Compare@@@Z,0x00049657,STLport push_heap thunk called by the 16-byte adjust_heap at 0x00474330
 ?bfmeAdjustHeap00531B20@@YAXPAUS4SortElem12Pod@@HHU1@PAX@Z,0x0001D0B6,address-derived adjust-heap callee of gen00531B20; target read from the REL32 at its call site
 ?bfmeAdjustHeap00531C50@@YAXPAUS4SortElem12@@HHU1@PAX@Z,0x0003EDA1,address-derived adjust-heap callee of gen00531C50; target read from the REL32 at its call site
 ?bfmeAdjustHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z,0x009CD1E0,address-derived adjust-heap callee of bfmePopHeapVOU; target read from the REL32 at its call site
