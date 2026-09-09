@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d2e6c48bd51425261185bbe1ec1c613bce10592b38314d58262abfac913f4e70",
+  "symbol": "?d_004791f0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?d_004791f0@@YAXXZ\n// partial score=1.0 date=2026-09-09\n// The 0x004791F0 and 0x00479210 bodies share the same +0x1dc forwarding\r\n// field and conditional virtual dispatch shape. The existing BFME identity\r\n// evidence names this return-byte method BfmeThingBI.\r\n\r\nclass BfmeThingBI\r\n{\r\npublic:\r\n\tvirtual unsigned char slot0(void) = 0;\r\n\tvirtual unsigned char dispatch(void) = 0;\r\n\r\n\tunsigned char bfmeAskBI(void);\r\n\r\nprivate:\r\n\tunsigned char m_pad4[0x1D8];\r\n\tBfmeThingBI *m_forwardTarget;\r\n};\r\n\r\nunsigned char BfmeThingBI::bfmeAskBI(void)\n{\n\tif (m_forwardTarget)\n\t\treturn m_forwardTarget->dispatch();\n\t// A no-argument thiscall target is ABI-compatible with this fastcall\n\t// spelling: the receiver is in ECX and there are no stack arguments.\n\ttypedef unsigned char (__fastcall *DispatchFunction)(BfmeThingBI *);\n\tDispatchFunction *vtable = *(DispatchFunction **)this;\n\treturn vtable[1](this);\n}\n"
+}
