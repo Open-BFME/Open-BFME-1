@@ -10364,6 +10364,7 @@ name,address,notes
 ?Add@?$SimpleDynVecClass@VVector3@@@@QAE_NABVVector3@@H@Z,0x00004EE9,SegmentedLineClass::Set_Points calls the retail SimpleDynVecClass<Vector3>::Add ILT
 ?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z,0x00889F20,upstream Debug::GetFrameEntry direct callee when the frame address is absent
 ?AddOutput@Debug@@AAEXPBDI@Z,0x0088A8F0
+?AddSubInternalFPF@@YAXEPAUInternalFPF@@00@Z,0x00879900,DoEmFloatIteration call-site alias to the retail emfloat add/subtract body
 ?Add_Engine_Ref@IndexBufferClass@@QBEXXZ,0x0091CD30,pinharvest x2 (body)
 ?Add_Engine_Ref@VertexBufferClass@@QBEXXZ,0x0091D9C0,pinharvest x1 (body)
 ?Add_Fill_Light@LightEnvironmentClass@@QAEXXZ,0x0094ACB0,retail callee for Calculate_Fill_Light
@@ -10636,6 +10637,7 @@ name,address,notes
 ?Determine_Tail_Diffuse@ParticleBufferClass@@IAE?AW4TailDiffuseTypeEnum@1@XZ,0x0098B750
 ?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879F60,SetupCPUEmFloatArrays call-site alias to the retail emfloat division body
 ?DoBitfieldIteration@@YAKPAK0J0@Z,0x00876F70,DoBitops retail calls resolve to the static bitfield iteration helper
+?DoEmFloatIteration@@YAKPAUInternalFPF@@00KK@Z,0x0087A3B0,DoEmFloat retail calls this emfloat iteration body; source emfloat.cpp provides the clean implementation
 ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ,0x00929AD0
 ?DoesCommandRequireACommandID@@YA_NW4NetCommandType@@@Z,0x00015B72
 ?Draw@DX8Wrapper@@CAXHGGGGH@Z,0x00906B40,Open-BFME5 the shared primitive-draw helper Draw_Triangles and Draw_Strip forward to; only the leading mode constant differs
@@ -11039,6 +11041,7 @@ name,address,notes
 ?MoveMemory@@YAXPAX0K@Z,0x00879190,nbench MoveMemory; retail is the memmove import thunk ?ji_00879190@@YAXXZ
 ?MultiByteToWideCharSingleLine@@YA?AV?$basic_string@GU?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@PBD@Z,0x00028C7C,incremental-link thunk used by both Buddy message and request callbacks
 ?Multiply@Matrix3D@@SAXABV1@0PAV1@@Z,0x008D80C0,rel32 pin for exact-ambiguous landing
+?MultiplyInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879C80,DoEmFloatIteration call-site alias to the retail emfloat multiply body
 ?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
 ?Notify_Added@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FBF0
 ?Notify_Removed@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FC00
@@ -13744,6 +13747,7 @@ name,address,notes
 ?allocate@Rva00914860PoolC@@QAE_NHH@Z,0x009131E0,Open-BFME5 pool C allocation used by the 0x00914860 sizing update
 ?allocate@ShadowPool@@QAE_NHH@Z,0x0003FC7E,BFME pool allocation used by volumetric shadow manager constructor statistics
 ?allocate@__new_alloc@_STL@@SAPAXI@Z,0x0082E540,stlport static-lib allocate (SEH body; not operator new @ 0x881F30)
+?allocateBibBuffers@W3DBibBuffer@@IAEXXZ,0x006D69D0,W3DBibBuffer ctor call via ILT 0x00024D66; releases old buffers and creates 0x142 vertex and index buffers using sizes at +4/+12
 ?allocateBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x0002EF2D,W3DBridgeBuffer::allocateBridgeBuffers via ILT thunk
 ?allocateControlBarSchemeListNode@@YAPAXI@Z,0x0082E540,ControlBarSchemeManager scheme-list sentinel allocator
 ?allocateFromW3DMemPool@@YAPAXPAXH@Z,0x00881F30,packet 00921eba callee pin
@@ -74988,6 +74992,7 @@ name,address,notes
 ?bfmeErase@BfmeDrawableLookupTable@@QAEXABI@Z,0x00043F31,Open-BFME5 ILT removeDrawableFromLookupTable at 0x00430B50 erases through
 ?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
+?bfmeEraseCA@BfmeMapCA@@QAEXPAUBfmeIterCA@@@Z,0x00016F36,map erase
 ?bfmeEraseEAY@BfmeListEAY@@QAEXPAVBfmeNodeEAY@@@Z,0x00035F12,pin erase for BfmeConv2014
 ?bfmeEraseERE@BfmeVecERE@@QAEXPAUBfmeItemERE@@0@Z,0x0002F86F,pin
 ?bfmeEraseERF@BfmeVecERF@@QAEXPAUBfmeItemERF@@0@Z,0x0002104E,pin
@@ -75127,6 +75132,7 @@ name,address,notes
 ?bfmeFindByIdERP@BfmeLogicERP@@QAEPAVBfmeThingERP@@H@Z,0x0001F253,pin
 ?bfmeFindByIdESK@BfmeLogicESK@@QAEPAVBfmeObjESK@@H@Z,0x0001F253,pin
 ?bfmeFindByIdESN@BfmeLogicESN@@QAEPAVBfmeObjESN@@H@Z,0x0001F253,pin
+?bfmeFindCA@BfmeMapCA@@QAEPAVBfmeNodeCA@@PBVBFMERetailAsciiString@@@Z,0x00031D68,map find
 ?bfmeFindCRA@BfmeTableCRA@@QAEPAUBfmeMidCRA@@PAX@Z,0x0001F253,pin
 ?bfmeFindCW@BfmeVecCW@@QAEHPAX@Z,0x000329FC,pin
 ?bfmeFindCX@BfmeVecCX@@QAEHPAX@Z,0x000072F7,pin
@@ -77170,6 +77176,7 @@ name,address,notes
 ?bfmeStopAll1158@BfmeOwner1158@@QAEXPAVBfmeArg1158@@@Z,0x0001DA8E,ILT thunk to body 0x00414960
 ?bfmeStopBEH@BfmeThingBEH@@QAEXXZ,0x000193CB,pin
 ?bfmeStopBU@BfmeThingBU@@QAEXH@Z,0x00008337
+?bfmeStopCA@BfmeThingCA@@QAEXH@Z,0x00036F7A,stop
 ?bfmeStopCL@BfmeGateCL@@QAEXXZ,0x00013A61
 ?bfmeStopCW@ParticleSystemManager@@QAEXABVBFMERetailAsciiString@@@Z,0x000234F2
 ?bfmeStopERU@BfmeThingERU@@QAEXXZ,0x0000E525,pin
@@ -81167,6 +81174,8 @@ name,address,notes
 ?getloc@ios_base@_STL@@QBE?AVlocale@2@XZ,0x00038E47,STLport basic_ostream numeric helper callee reached by the 0x005F0120 body
 ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
 ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
+?global_emfloatstruct@@3UEmFloatStruct@@A,0x01356560,DoEmFloat source accesses this retail EmFloatStruct global at 0x01356560
+?global_min_ticks@@3KA,0x013562B0,DoEmFloat source compares iteration ticks against this retail benchmark global
 ?go@BfmeBoxAFB@@QAEXPAX0@Z,0x00007A45,thiscall pair send used by BfmeThingAFB::bfmeGoAFB fallback
 ?go@BfmeThing932D@@QAEDXZ,0x0001FDE3,local call adapter for VeterancyCrateCollide validation
 ?go@Glo012F706CType@@QAEXXZ,0x0001F7DF,ILT to bfmeGoBLE 0x00610050; callee of 0x003C1A50
@@ -86546,31 +86555,3 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?g_rva003D2B80NegHalf@@3MB,0x00C95F9C,retail negative half constant used by the four-child element callback
-??0Rva003D2B80Child@@QAE@PAVRva003D2B80Source@@PAM@Z,0x000019D3,constructor call-through to the retail child constructor thunk
-??2Rva003D2B80Child@@SAPAXI@Z,0x00881F30,allocation call-through to the retail allocator body
-?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
-??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
-?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879F60,SetupCPUEmFloatArrays call-site alias to the retail emfloat division body
-?AddSubInternalFPF@@YAXEPAUInternalFPF@@00@Z,0x00879900,DoEmFloatIteration call-site alias to the retail emfloat add/subtract body
-?DoEmFloatIteration@@YAKPAUInternalFPF@@00KK@Z,0x0087A3B0,DoEmFloat retail calls this emfloat iteration body; source emfloat.cpp provides the clean implementation
-?MultiplyInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879C80,DoEmFloatIteration call-site alias to the retail emfloat multiply body
-?Int32ToInternalFPF@@YAXJPAUInternalFPF@@@Z,0x0087A290,SetupCPUEmFloatArrays call-site alias to the retail integer conversion body
-?global_emfloatstruct@@3UEmFloatStruct@@A,0x01356560,DoEmFloat source accesses this retail EmFloatStruct global at 0x01356560
-?global_min_ticks@@3KA,0x013562B0,DoEmFloat source compares iteration ticks against this retail benchmark global
-?randnum@@YAJJ@Z,0x008790B0,SetupCPUEmFloatArrays call-site alias to the retail nbench random reset body
-?randwc@@YAJJ@Z,0x00879100,SetupCPUEmFloatArrays call-site alias to the retail nbench random value body
-??0Rva00776240Vector2C@@QAE@ABU0@@Z,0x0003EDFB,Gen_t_00776240 copy member callee at +0x2C
-??0Rva00776240List50@@QAE@ABU0@@Z,0x000296E5,Gen_t_00776240 copy member callee at +0x50
-??0Rva00776240Vector54@@QAE@ABU0@@Z,0x00046141,Gen_t_00776240 copy member callee at +0x54
-??0Rva00776240Vector60@@QAE@ABU0@@Z,0x000027F2,Gen_t_00776240 copy member callee at +0x60
-??0Rva00776240Vector70@@QAE@ABU0@@Z,0x00014547,Gen_t_00776240 copy member callee at +0x70
-??4Rva00776240Field7C@@QAEAAU0@ABU0@@Z,0x0001C288,Gen_t_00776240 array assignment callee at +0x7C
-?set@BFMERetailAsciiString@@QAEXPBDH@Z,0x00887D20,set
-?bfmeSetZH@BfmeObjZH@@QAEXPBUBfmeVecZH@@PBVBFMERetailAsciiString@@@Z,0x008800D0,set vec
-?bfmeApplyZH@@YAXPAVBfmeObjZH@@@Z,0x0087EBB0,apply
-?TheMappedImageCollection@@3PAVImageCollection@@A,0x012F6924,canonical ImageCollection singleton; campaign=36h-20260908
-?bfmeFindCA@BfmeMapCA@@QAEPAVBfmeNodeCA@@PBVBFMERetailAsciiString@@@Z,0x00031D68,map find
-?bfmeStopCA@BfmeThingCA@@QAEXH@Z,0x00036F7A,stop
-?bfmeEraseCA@BfmeMapCA@@QAEXPAUBfmeIterCA@@@Z,0x00016F36,map erase
-?allocateBibBuffers@W3DBibBuffer@@IAEXXZ,0x006D69D0,W3DBibBuffer ctor call via ILT 0x00024D66; releases old buffers and creates 0x142 vertex and index buffers using sizes at +4/+12
