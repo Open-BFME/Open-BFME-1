@@ -63,7 +63,6 @@ public:
 		m_desired = desired;
 	}
 
-	virtual ~PartitionFilterWouldCollide() { }
 	virtual Bool allow(Object *obj)
 	{
 		return false;
@@ -147,9 +146,10 @@ void BuildAssistant::clearRemovableForConstruction(const ThingTemplate *whatToBu
 	{
 		PartitionFilterWouldCollide filter(*pos,
 			reinterpret_cast<const char *>(whatToBuild) + 0x60, angle, true);
+		register PartitionFilter *filterPtr = &filter;
 		ThePartitionManager->getClosestObjects(iter, pos,
 			*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(whatToBuild) + 0x74) * 1.1f,
-			FROM_BOUNDINGSPHERE_3D, &filter, NULL);
+			FROM_BOUNDINGSPHERE_3D, filterPtr, NULL);
 	}
 
 	Object *them;

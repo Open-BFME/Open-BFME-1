@@ -5,6 +5,39 @@
 // projection path. The remaining four bytes come from MSVC 7.1 x87 load and
 // FPU-stack cleanup choices in the adjusted health-box calculation.
 
+typedef int Int;
+typedef float Real;
+typedef bool Bool;
+
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+class Object;
+class Player;
+
+class BFMEDrawableAIChain
+{
+public:
+	unsigned char m_padding[0xfc];
+	Object *m_object;
+};
+
+class Drawable
+{
+public:
+	void drawIconUI();
+};
+
 class DrawableIconGameLogic
 {
 public:
