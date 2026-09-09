@@ -75017,6 +75017,8 @@ name,address,notes
 ?bfmeFatal1042@@YGXPAVBfmeErr1042@@PAD@Z,0x009F6D00,retail fatal helper alias used by MessageBox callback throw path at 0x00522470 and 0x005224C0
 ?bfmeFatal1043@@YGXPAVBfmeErr1043@@PAD@Z,0x009F6D00,pin
 ?bfmeFatal2_1043@@YGXPAVBfmeErr2_1043@@PAD@Z,0x009F6D00,pin
+?Gen00533760Final@@YAXPAXZZ,0x00031598,STLport final insertion helper called by Rva00533760
+?Gen00533760Intro@@YAXPAXZZ,0x00038D8E,STLport introsort helper called by Rva00533760
 ?bfmeFb1148@BfmeS1148@@QAEDXZ,0x00020437,pin
 ?bfmeFc1148@BfmeS1148@@QAEDXZ,0x0003B69C,pin
 ?bfmeFd1148@BfmeS1148@@QAEDXZ,0x00001BE5,pin
