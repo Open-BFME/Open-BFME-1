@@ -1,6 +1,8 @@
-// ?Rva00698730Remainder@@YGIPAPAURva00698730Node@@I@Z
-// partial score=0.85 date=2026-09-09
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// ?Rva00698730Remainder@@YGIPAPAURva00698730Node@@I@Z (identity unknown)
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 struct Rva00698730Node
 {
@@ -12,6 +14,9 @@ unsigned int __stdcall Rva00698730Remainder(Rva00698730Node **head, unsigned int
 {
     Rva00698730Node *node = *head;
     if (!node)
+    {
+        _ReadWriteBarrier();
         return (unsigned int)node % m;
+    }
     return node->m_key % m;
 }
