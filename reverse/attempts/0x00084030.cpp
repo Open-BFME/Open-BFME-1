@@ -44,6 +44,19 @@ private:
 	void *m_data;
 };
 
+// The m_arr9c[4] array's element dtor is called through the vector destructor
+// iterator (??_M), which needs the REAL ??1BFMERetailAsciiString@@QAE@XZ ILT
+// thunk address (0xD828), not releaseBuffer's own address -- so this element
+// spelling stays declare-only and is pinned to that thunk directly, instead
+// of sharing BFMERetailAsciiString's inline releaseBuffer() body.
+class GdAsciiStringElem
+{
+public:
+	~GdAsciiStringElem();
+private:
+	void *m_data;
+};
+
 // StringBase<unsigned short>::~StringBase() (private) is ICF-folded onto
 // releaseBuffer@StringBase<G> in retail (reverse/symbols.csv:
 // ??1?$StringBase@G@@AAE@XZ,0x008881D0), which is exactly what this member's
@@ -116,7 +129,7 @@ private:
 	unsigned char m_pad18[0x94 - 0x18];
 	BFMERetailAsciiString m_s94;								// +0x94
 	unsigned char m_pad98[0x9c - 0x98];
-	BFMERetailAsciiString m_arr9c[4];							// +0x9c (16 bytes)
+	GdAsciiStringElem m_arr9c[4];								// +0x9c (16 bytes)
 	unsigned char m_padAc[0x200 - 0xac];
 	BFMERetailAsciiString m_s200;								// +0x200
 	unsigned char m_pad204[0x20c - 0x204];
