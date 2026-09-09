@@ -1,5 +1,5 @@
 // ??0BfmeAptScreenInGameChat@@QAE@PAX@Z
-// partial score=0.87 date=2026-09-09
+// partial score=0.97 date=2026-09-09
 //
 // Land target: Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,
 // splice in place of the current BfmeAptScreenInGameChat stub (char
@@ -116,7 +116,55 @@
 //  compiled body is 920 bytes vs retail's 987 (67 short, improved from the
 //  0.91 stash's 77). The ebp/ebx register-color swap documented in the
 //  prior stash is still present and, per AGENTS.md, likely unreachable.
-
+//
+// THIS SESSION (t=40, sonnet): applied the FunctorHolder in-place-argument-
+// area recipe from the fleet brief to all three holder types (InGameChat
+// RefHolder/ShowHolder/ArgHolder) -- value ctor stays declaration-only
+// (retail calls each out-of-line at 0x00026E45/0x0000F84E/0x00039D38),
+// added an INLINE throw() copy ctor and a declared-but-undefined dtor to
+// each. That alone took the compiled body from the prior sessions best of
+// 920B all the way to 984B -- retail is 987, so this closed 64 of the
+// remaining 67 bytes and left only 3. Every registration block from
+// _bfme_setAptScreenRef onward through the final showAptScreenWithArg is
+// now BYTE-IDENTICAL to retail (confirmed instruction-by-instruction via
+// explain_mismatch, a constant 3-byte address offset is the only visible
+// difference all the way to the epilogue/ret). Confirms the assignment's
+// lever was exactly right and generalizes across all three bodies in this
+// lane (0x00557C00, 0x00563370, 0x005160E0).
+//
+// Spliced into Code/GameEngine/Source/GameClient/AptScreenFactories.cpp in
+// place of the BfmeAptScreenInGameChat stub (right before "// SpellStore
+// .apt"), reusing the file's existing FunctorTarget/FunctorBinding/
+// _bfme_AptGameWindow/BfmeAptFunctorMarker/AsciiString infra. Added 9 new
+// symbols.csv pins (2 vftables, 3 holder ctors, 3 shared-ILT registration
+// aliases, 1 bfmeBaseTC rename for InGameChatSlot); all verified free via
+// pin_consistency.py before adding, dropped again on parking. The two
+// pre-existing pins (g_Rva005127A0InGameChat, ??1InGameChatSlot) needed no
+// changes.
+//
+// REMAINING 3-byte gap is entirely inside the control-object setup (the
+// two InGameChatSlot sub-objects at +0x270/+0x280), NOT in any
+// registration block. This is the SAME unresolved shape the 0.87 stash
+// documented across four tried variants: retail sets the EH state marker
+// at [esp+0x30] INCREMENTALLY -- a register-fed 0 before the first
+// bfmeBaseTC() call, then an immediate byte 1 before the second -- while
+// this build's real-typed-member approach (variant 2 from the 0.87 stash,
+// the best shape found) still hoists the FINAL state value (2) into a
+// register (`mov ebx,2`) before either bfmeBaseTC() call runs, because an
+// implicitly-default-constructed member is "alive" (for EH purposes) from
+// function entry, not from the point bfmeBaseTC() is called. Tried this
+// session: /G6 /G7 /Og /Ot (no change, still 984B) -- do not re-sweep
+// flags, this is the same class of residue AGENTS.md and the prior
+// session both flag as likely unreachable. The four variants the 0.87
+// stash already tried (raw buffer + plain call, explicit ctor-call syntax
+// on a trivial or external ctor) all regressed back to 910B once the
+// holder fix is layered on, so variant 2 (real typed members, kept here)
+// stays the best base. Given the byte gap is now only 3 (vs 67 before),
+// a fifth variant is worth one more look before falling back to accepting
+// this as unreachable: a real typed member with a NON-trivial-looking
+// (not `{}`) user-provided default ctor on InGameChatSlot, which the 0.87
+// stash proposed but did not have time to try.
+//
 extern const void *BfmeAptScreenInGameChatVftable[];
 extern const void *BfmeAptScreenInGameChatSecondaryVftable[];
 extern "C" const void *_bfmeVftTC[];
@@ -139,6 +187,11 @@ class InGameChatRefHolder
 {
 public:
 	InGameChatRefHolder( FunctorBinding binding );
+	InGameChatRefHolder( const InGameChatRefHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~InGameChatRefHolder();
 
 private:
 	void *m_ptr;
@@ -148,6 +201,11 @@ class InGameChatShowHolder
 {
 public:
 	InGameChatShowHolder( FunctorBinding binding );
+	InGameChatShowHolder( const InGameChatShowHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~InGameChatShowHolder();
 
 private:
 	void *m_ptr;
@@ -157,6 +215,11 @@ class InGameChatArgHolder
 {
 public:
 	InGameChatArgHolder( FunctorBinding binding );
+	InGameChatArgHolder( const InGameChatArgHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~InGameChatArgHolder();
 
 private:
 	void *m_ptr;
