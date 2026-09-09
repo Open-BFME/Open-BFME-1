@@ -86591,3 +86591,8 @@ _bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by
 ??$__uninitialized_copy@PAUEvaSideSounds@@PAU1@@_STL@@YAPAUEvaSideSounds@@PAU1@00ABU__false_type@0@@Z,0x0000AC63,EvaSideSounds vector fill-insert helper ILT proven by exact call position
 ??$fill@PAUEvaSideSounds@@U1@@_STL@@YAXPAUEvaSideSounds@@0ABU1@@Z,0x0000E9B7,EvaSideSounds vector fill-insert helper ILT proven by exact call position
 ??$uninitialized_fill_n@PAUEvaSideSounds@@IU1@@_STL@@YAPAUEvaSideSounds@@PAU1@IABU1@@Z,0x00039D15,EvaSideSounds vector fill-insert helper ILT proven by exact call position
+?ConnectToServer@Rva00884Ftp@@QAEJPBD@Z,0x00885B50,CDownload::PumpMessages Cftp::ConnectToServer callee
+?LoginToServer@Rva00884Ftp@@QAEJPBD0@Z,0x00885D90,CDownload::PumpMessages Cftp::LoginToServer callee
+?FindFile@Rva00884Ftp@@QAEJPBDPAH@Z,0x00886020,CDownload::PumpMessages Cftp::FindFile callee
+?FileRecoveryPosition@Rva00884Ftp@@QAEJPBD0@Z,0x00886A20,CDownload::PumpMessages Cftp::FileRecoveryPosition callee
+?GetNextFileBlock@Rva00884Ftp@@QAEJPBDPAH@Z,0x00886520,CDownload::PumpMessages Cftp::GetNextFileBlock callee
