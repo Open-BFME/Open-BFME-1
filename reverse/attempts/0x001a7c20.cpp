@@ -1,10 +1,9 @@
 // ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z
-// partial score=0.82 date=2026-09-01
+// partial score=0.9 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-//
-// BFME adds this Object-aware overload after the Zero Hour source branch.  The
-// TerrainLogic vtable slice below preserves the two retail virtual slots used
-// here: getGroundHeight at +0x18 and getFirstBridge at +0x94.
+// TerrainLogic::getLayerForDestination(Object *, Coord3D const *), retail 0x001A7C20.
+// The object-aware overload is identified by its matched callers and the
+// TerrainLogic vtable slice used by the bridge walk.
 
 #include <math.h>
 
@@ -18,6 +17,8 @@ enum PathfindLayerEnum
 
 struct Coord3D
 {
+	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
+
 	Real x;
 	Real y;
 	Real z;
@@ -31,7 +32,7 @@ public:
 	bool isPointOnBridge(const Coord3D *position);
 	Real getBridgeHeight(const Coord3D *position, Coord3D *normal);
 
-	Bridge *getNext() const { return m_next; }
+	Bridge *getNext() { return m_next; }
 	PathfindLayerEnum getLayer() const { return m_layer; }
 
 private:
@@ -83,8 +84,8 @@ public:
 	virtual void slot36();
 	virtual Bridge *getFirstBridge();
 
-	PathfindLayerEnum getLayerForDestination(
-		Object *object, const Coord3D *position);
+	PathfindLayerEnum getLayerForDestination(Object *object,
+		const Coord3D *position);
 };
 
 class Bfme5BridgeList
@@ -101,26 +102,23 @@ public:
 
 class AI
 {
-private:
+public:
 	unsigned char m_pad0[0x0C];
 	Pathfinder *m_pathfinder;
-
-public:
-	Pathfinder *pathfinder() { return m_pathfinder; }
 };
 
-extern "C" AI *volatile _TheAIParseDefinitionAI;
+extern AI *TheAI;
 
-// ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z
-PathfindLayerEnum TerrainLogic::getLayerForDestination(
-	Object *object, const Coord3D *position)
+PathfindLayerEnum TerrainLogic::getLayerForDestination(Object *object,
+	const Coord3D *position)
 {
 	Bridge *bridge = getFirstBridge();
 	PathfindLayerEnum bestLayer = LAYER_GROUND;
 	Real bestDistance = (Real)fabs(position->z -
 		getGroundHeight(position->x, position->y, 0));
 
-	while (bridge)
+	for (; bridge != 0;
+		bridge = *(Bridge **)((unsigned char *)bridge + 4))
 	{
 		if (bridge->isPointOnBridge(position))
 		{
@@ -132,20 +130,19 @@ PathfindLayerEnum TerrainLogic::getLayerForDestination(
 				bestDistance = delta;
 			}
 		}
-		bridge = bridge->getNext();
 	}
 
 	if (bestLayer == LAYER_GROUND)
 	{
 		AI *ai;
 
-		if (_TheAIParseDefinitionAI->pathfinder()->bfmeAnyBridgeAt(position))
+		if (TheAI->m_pathfinder->bfmeAnyBridgeAt(position))
 			return (PathfindLayerEnum)16;
 
-		ai = _TheAIParseDefinitionAI;
-		if (ai && ai->pathfinder())
-			return (PathfindLayerEnum)_TheAIParseDefinitionAI->pathfinder()->
-				bfmeLayerForPosition(object, *position);
+		ai = TheAI;
+		if (ai && ai->m_pathfinder)
+			return (PathfindLayerEnum)TheAI->m_pathfinder->
+				bfmeLayerForPosition(object, Coord3D(*position));
 	}
 
 	return bestLayer;
