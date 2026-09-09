@@ -1,5 +1,18 @@
 // ?bfmeSetHQ@BfmeXfHQ@@QAEXPAVMatrix3D@@@Z
-// partial score=0.95 date=2026-09-08
+// partial score=0.98 date=2026-09-09
+// Naming &m_bfmeMatrixHQ in a local (selfMat) and reading/writing through it
+// for BOTH matrix-copy loops fixed 19 of 25 diff lines (retail keeps one
+// base register live across both loops; without the named pointer MSVC only
+// keeps it for a few elements then falls back to esi-relative addressing).
+// Remaining 6 diff lines are pure scheduling residue: (1) the rot/pos first
+// two reads come out swapped vs retail no matter which order they're
+// declared/assigned in -- every reordering tried (rot first, pos.X first,
+// rot mid-pos) either leaves this pair swapped or makes it worse elsewhere;
+// (2) the m_bfmeMHQ[7]/[11] extraction interleaves as read,read,store,store
+// here vs retail's store,read,store,read -- reordering the three extraction
+// statements changes which physical stack offset each field lands at (offset
+// follows ASSIGNMENT order, not declaration order -- confirmed by a direct
+// test), so it is not just a scheduling knob.
 class Matrix3D
 {
 public:
@@ -46,31 +59,33 @@ void BfmeXfHQ::bfmeSetHQ(Matrix3D *m)
 	pos.m_bfmeYHQ = m_bfmePosHQ.m_bfmeYHQ;
 	pos.m_bfmeZHQ = m_bfmePosHQ.m_bfmeZHQ;
 
-	old.m_bfmeMHQ[0] = m_bfmeMatrixHQ.m_bfmeMHQ[0];
-	old.m_bfmeMHQ[1] = m_bfmeMatrixHQ.m_bfmeMHQ[1];
-	old.m_bfmeMHQ[2] = m_bfmeMatrixHQ.m_bfmeMHQ[2];
-	old.m_bfmeMHQ[3] = m_bfmeMatrixHQ.m_bfmeMHQ[3];
-	old.m_bfmeMHQ[4] = m_bfmeMatrixHQ.m_bfmeMHQ[4];
-	old.m_bfmeMHQ[5] = m_bfmeMatrixHQ.m_bfmeMHQ[5];
-	old.m_bfmeMHQ[6] = m_bfmeMatrixHQ.m_bfmeMHQ[6];
-	old.m_bfmeMHQ[7] = m_bfmeMatrixHQ.m_bfmeMHQ[7];
-	old.m_bfmeMHQ[8] = m_bfmeMatrixHQ.m_bfmeMHQ[8];
-	old.m_bfmeMHQ[9] = m_bfmeMatrixHQ.m_bfmeMHQ[9];
-	old.m_bfmeMHQ[10] = m_bfmeMatrixHQ.m_bfmeMHQ[10];
-	old.m_bfmeMHQ[11] = m_bfmeMatrixHQ.m_bfmeMHQ[11];
+	Matrix3D *selfMat = &m_bfmeMatrixHQ;
 
-	m_bfmeMatrixHQ.m_bfmeMHQ[0] = m->m_bfmeMHQ[0];
-	m_bfmeMatrixHQ.m_bfmeMHQ[1] = m->m_bfmeMHQ[1];
-	m_bfmeMatrixHQ.m_bfmeMHQ[2] = m->m_bfmeMHQ[2];
-	m_bfmeMatrixHQ.m_bfmeMHQ[3] = m->m_bfmeMHQ[3];
-	m_bfmeMatrixHQ.m_bfmeMHQ[4] = m->m_bfmeMHQ[4];
-	m_bfmeMatrixHQ.m_bfmeMHQ[5] = m->m_bfmeMHQ[5];
-	m_bfmeMatrixHQ.m_bfmeMHQ[6] = m->m_bfmeMHQ[6];
-	m_bfmeMatrixHQ.m_bfmeMHQ[7] = m->m_bfmeMHQ[7];
-	m_bfmeMatrixHQ.m_bfmeMHQ[8] = m->m_bfmeMHQ[8];
-	m_bfmeMatrixHQ.m_bfmeMHQ[9] = m->m_bfmeMHQ[9];
-	m_bfmeMatrixHQ.m_bfmeMHQ[10] = m->m_bfmeMHQ[10];
-	m_bfmeMatrixHQ.m_bfmeMHQ[11] = m->m_bfmeMHQ[11];
+	old.m_bfmeMHQ[0] = selfMat->m_bfmeMHQ[0];
+	old.m_bfmeMHQ[1] = selfMat->m_bfmeMHQ[1];
+	old.m_bfmeMHQ[2] = selfMat->m_bfmeMHQ[2];
+	old.m_bfmeMHQ[3] = selfMat->m_bfmeMHQ[3];
+	old.m_bfmeMHQ[4] = selfMat->m_bfmeMHQ[4];
+	old.m_bfmeMHQ[5] = selfMat->m_bfmeMHQ[5];
+	old.m_bfmeMHQ[6] = selfMat->m_bfmeMHQ[6];
+	old.m_bfmeMHQ[7] = selfMat->m_bfmeMHQ[7];
+	old.m_bfmeMHQ[8] = selfMat->m_bfmeMHQ[8];
+	old.m_bfmeMHQ[9] = selfMat->m_bfmeMHQ[9];
+	old.m_bfmeMHQ[10] = selfMat->m_bfmeMHQ[10];
+	old.m_bfmeMHQ[11] = selfMat->m_bfmeMHQ[11];
+
+	selfMat->m_bfmeMHQ[0] = m->m_bfmeMHQ[0];
+	selfMat->m_bfmeMHQ[1] = m->m_bfmeMHQ[1];
+	selfMat->m_bfmeMHQ[2] = m->m_bfmeMHQ[2];
+	selfMat->m_bfmeMHQ[3] = m->m_bfmeMHQ[3];
+	selfMat->m_bfmeMHQ[4] = m->m_bfmeMHQ[4];
+	selfMat->m_bfmeMHQ[5] = m->m_bfmeMHQ[5];
+	selfMat->m_bfmeMHQ[6] = m->m_bfmeMHQ[6];
+	selfMat->m_bfmeMHQ[7] = m->m_bfmeMHQ[7];
+	selfMat->m_bfmeMHQ[8] = m->m_bfmeMHQ[8];
+	selfMat->m_bfmeMHQ[9] = m->m_bfmeMHQ[9];
+	selfMat->m_bfmeMHQ[10] = m->m_bfmeMHQ[10];
+	selfMat->m_bfmeMHQ[11] = m->m_bfmeMHQ[11];
 
 	m_bfmePosHQ.m_bfmeXHQ = m_bfmeMatrixHQ.m_bfmeMHQ[3];
 	m_bfmePosHQ.m_bfmeYHQ = m_bfmeMatrixHQ.m_bfmeMHQ[7];
