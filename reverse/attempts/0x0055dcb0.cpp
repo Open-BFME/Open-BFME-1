@@ -1,5 +1,5 @@
 // ?update@BfmeAptScreenOptions@@QAEXXZ
-// partial score=0.60 date=2026-09-09
+// partial score=0.55 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 //
 // BfmeAptScreenOptions destructor, retail 0x0055E320 (255 bytes).
@@ -96,18 +96,18 @@ struct Rva005A00B0AudioClient
 	virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3(); virtual void s4(); virtual void s5(); virtual void s6(); virtual void s7();
 	virtual void s8(); virtual void s9(); virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15();
 	virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19();
-	virtual void s20( int value ) volatile;
+	virtual void s20( int value );
 	virtual void s21(); virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25(); virtual void s26(); virtual void s27();
 	virtual void s28(); virtual void s29(); virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33(); virtual void s34(); virtual void s35();
 	virtual void s36(); virtual void s37(); virtual void s38(); virtual void s39(); virtual void s40(); virtual void s41(); virtual void s42(); virtual void s43();
 	virtual void s44(); virtual void s45(); virtual void s46(); virtual void s47();
-	virtual void s48( float volume ) volatile;
-	virtual void s49( float volume ) volatile;
-	virtual void s50( float volume ) volatile;
-	virtual void s51( float volume ) volatile;
-	virtual void s52( float volume ) volatile;
+	virtual void s48( float volume );
+	virtual void s49( float volume );
+	virtual void s50( float volume );
+	virtual void s51( float volume );
+	virtual void s52( float volume );
 };
-extern volatile Rva005A00B0AudioClient * volatile TheAudioClientUpdate;
+extern Rva005A00B0AudioClient * volatile TheAudioClientUpdate;
 
 struct Rva00579160Manager
 {
@@ -212,18 +212,19 @@ void BfmeAptScreenOptions::update()
 			return;
 		}
 
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 5 ], m_options.getAnisotropicTextureFiltering() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 6 ], m_options.getTerrainLighting() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 7 ], m_options.get3DShadows() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 8 ], m_options.get2DShadows() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 9 ], m_options.getSmoothWaterBorder() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 10 ], m_options.getShowProps() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 11 ], !m_options.getExtraAnimationsDisabled() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 12 ], m_options.getUseHeatEffects() );
-		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 13 ], !m_options.getDynamicLODEnabled() );
+		OptionPreferences *options = &m_options;
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 5 ], options->getAnisotropicTextureFiltering() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 6 ], options->getTerrainLighting() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 7 ], options->get3DShadows() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 8 ], options->get2DShadows() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 9 ], options->getSmoothWaterBorder() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 10 ], options->getShowProps() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 11 ], !options->getExtraAnimationsDisabled() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 12 ], options->getUseHeatEffects() );
+		GadgetCheckBoxSetChecked( (GameWindow *)m_fields2A8[ 13 ], !options->getDynamicLODEnabled() );
 
-		GadgetSliderSetPosition( (GameWindow *)m_fields2A8[ 21 ], m_options.getTextureReduction() );
-		GadgetSliderSetPosition( (GameWindow *)m_fields2A8[ 22 ], m_options.getParticleCap() );
+		GadgetSliderSetPosition( (GameWindow *)m_fields2A8[ 21 ], options->getTextureReduction() );
+		GadgetSliderSetPosition( (GameWindow *)m_fields2A8[ 22 ], options->getParticleCap() );
 
 		m_field258 = 2;
 		return;
@@ -231,11 +232,26 @@ void BfmeAptScreenOptions::update()
 
 	TheDisplay->setGamma( TheWritableGlobalData->m_displayGamma, 0.0f, 1.0f, false );
 
-	TheAudioClientUpdate->s50( (float)(int)m_options.getMusicVolume() * g_01076C24 );
-	TheAudioClientUpdate->s48( (float)(int)m_options.getSoundVolume() * g_01076C24 );
-	TheAudioClientUpdate->s49( (float)(int)m_options.getSpeechVolume() * g_01076C24 );
-	TheAudioClientUpdate->s52( (float)(int)m_options.getAmbientVolume() * g_01076C24 );
-	TheAudioClientUpdate->s51( (float)(int)m_options.getMovieVolume() * g_01076C24 );
+	{
+		Rva005A00B0AudioClient *audio1 = TheAudioClientUpdate;
+		audio1->s50( (float)(int)m_options.getMusicVolume() * g_01076C24 );
+	}
+	{
+		Rva005A00B0AudioClient *audio2 = TheAudioClientUpdate;
+		audio2->s48( (float)(int)m_options.getSoundVolume() * g_01076C24 );
+	}
+	{
+		Rva005A00B0AudioClient *audio3 = TheAudioClientUpdate;
+		audio3->s49( (float)(int)m_options.getSpeechVolume() * g_01076C24 );
+	}
+	{
+		Rva005A00B0AudioClient *audio4 = TheAudioClientUpdate;
+		audio4->s52( (float)(int)m_options.getAmbientVolume() * g_01076C24 );
+	}
+	{
+		Rva005A00B0AudioClient *audio5 = TheAudioClientUpdate;
+		audio5->s51( (float)(int)m_options.getMovieVolume() * g_01076C24 );
+	}
 
 	if( g_quitMenuLayout )
 		Rva00579160TheManager->notify();
