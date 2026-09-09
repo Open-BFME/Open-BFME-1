@@ -86535,3 +86535,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Int32ToInternalFPF@@YAXJPAUInternalFPF@@@Z,0x0087A290,SetupCPUEmFloatArrays call-site alias to the retail integer conversion body
 ?randnum@@YAJJ@Z,0x008790B0,SetupCPUEmFloatArrays call-site alias to the retail nbench random reset body
 ?randwc@@YAJJ@Z,0x00879100,SetupCPUEmFloatArrays call-site alias to the retail nbench random value body
+??0Rva00776240Vector2C@@QAE@ABU0@@Z,0x0003EDFB,Gen_t_00776240 copy member callee at +0x2C
+??0Rva00776240List50@@QAE@ABU0@@Z,0x000296E5,Gen_t_00776240 copy member callee at +0x50
+??0Rva00776240Vector54@@QAE@ABU0@@Z,0x00046141,Gen_t_00776240 copy member callee at +0x54
+??0Rva00776240Vector60@@QAE@ABU0@@Z,0x000027F2,Gen_t_00776240 copy member callee at +0x60
+??0Rva00776240Vector70@@QAE@ABU0@@Z,0x00014547,Gen_t_00776240 copy member callee at +0x70
+??4Rva00776240Field7C@@QAEAAU0@ABU0@@Z,0x0001C288,Gen_t_00776240 array assignment callee at +0x7C
