@@ -40,8 +40,8 @@ ptrdiff_t __cdecl __insert_grouping(unsigned short *first, unsigned short *last,
 	}
 
 	first += basechars;
-	unsigned short *cur_group = last;
 	string::size_type n = 0;
+	unsigned short *cur_group = last;
 	int groupsize = 0;
 
 	while (true) {
