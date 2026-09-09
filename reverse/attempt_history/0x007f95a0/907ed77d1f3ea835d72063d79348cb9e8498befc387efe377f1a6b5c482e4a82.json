@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "907ed77d1f3ea835d72063d79348cb9e8498befc387efe377f1a6b5c482e4a82",
+  "symbol": "?d_007f95a0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?d_007f95a0@@YAXXZ\n// partial score=0.93 date=2026-09-09\n// cl: /O2 /Ob0\r\n// Converted from Code/gen_asm/d_007f2a50.asm (?d_007f95a0@@YAXXZ).\r\n// Rva007E9B70Get vslot 2 (now) plus extra, stored at dest+0x14; shrink m_18.\r\n\r\nstruct Rva007E9B70Obj\r\n{\r\n\tvirtual void v0();\r\n\tvirtual void v1();\r\n\tvirtual unsigned now();\r\n};\r\n\r\nRva007E9B70Obj *Rva007E9B70Get();\r\n\r\nclass Rva007F95A0Dest\r\n{\r\npublic:\r\n\tunsigned m_00;\r\n\tunsigned m_04;\r\n\tunsigned m_08;\r\n\tunsigned m_0C;\r\n\tunsigned m_10;\r\n\tunsigned m_14;\r\n};\r\n\r\nclass Rva007F95A0Host\r\n{\r\npublic:\r\n\tvoid apply(Rva007F95A0Dest *dest, unsigned extra);\r\n\r\n\tunsigned m_00;\r\n\tunsigned m_04;\r\n\tunsigned m_08;\r\n\tunsigned m_0C;\r\n\tunsigned m_10;\r\n\tunsigned m_14;\r\n\tunsigned m_18;\r\n};\r\n\r\nvoid Rva007F95A0Host::apply(Rva007F95A0Dest *dest, unsigned extra)\r\n{\r\n\tunsigned n = Rva007E9B70Get()->now();\r\n\tunsigned e = extra;\r\n\tRva007F95A0Dest *d = dest;\r\n\tn = e + n;\r\n\td->m_14 = n;\r\n\tunsigned cap = m_18;\r\n\tif (cap != 0 && n < cap)\r\n\t\tm_18 = n;\r\n}\r\n"
+}

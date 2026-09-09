@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "823c4fcd3d9ac70462ab1a2371d9a9ebc06049414a8d7bc9aad11c0d16ad41e8",
+  "symbol": "?d_0016c2b0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?d_0016c2b0@@YAXXZ\r\n// partial score=0.93 date=2026-09-02\r\n// ?d_0016c2b0@@YAXXZ (0x0016C2B0, 29 bytes)\r\n// ghidra: FUN_0056c2b0\r\n// score: 0.93 (27/29 bytes, extra mov eax, ecx before virtual call)\r\n\r\nclass TargetInterface\r\n{\r\npublic:\r\n\tvirtual void slot0() = 0;\r\n\tvirtual void slot1() = 0;\r\n\tvirtual void slot2() = 0;\r\n\tvirtual void slot3() = 0;\r\n\tvirtual void slot4() = 0;\r\n\tvirtual void slot5() = 0;\r\n\tvirtual void slot6() = 0;\r\n\tvirtual bool slot7() = 0; // vtable+0x1c\r\n};\r\n\r\nstruct SubClass\r\n{\r\n\tunsigned char pad[0x1c];\r\n\tTargetInterface *m_inner;\r\n};\r\n\r\nclass OuterClass\r\n{\r\npublic:\r\n\tbool isNotReady() const;\r\n\r\n\tunsigned char pad[0x60];\r\n\tSubClass *m_sub;\r\n};\r\n\r\nbool OuterClass::isNotReady() const\r\n{\r\n\tSubClass *s = m_sub;\r\n\tif (s && s->m_inner && !s->m_inner->slot7())\r\n\t\treturn true;\r\n\treturn false;\r\n}\r\n"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c763197c9c2eefbec825690e349d07848253883db41fe330319db5efc124f33a",
+  "symbol": "??1Gen_uwm_008a0dc0@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ??1Gen_uwm_008a0dc0@@QAE@XZ\n// partial score=0.93 date=2026-09-09\n// Open-BFME: 512-slot refcounted pointer table destructor, retail 0x008A0DC0.\r\n\r\nclass BfmeRef008A0DC0\r\n{\r\npublic:\r\n\tvirtual void addRef();\r\n\tvirtual void release();\r\n};\r\n\r\nclass Gen_uwm_008a0dc0\r\n{\r\npublic:\r\n\t~Gen_uwm_008a0dc0();\r\n\r\n\tint m_count;\r\n\tBfmeRef008A0DC0 *m_slots[512];\r\n};\r\n\r\nGen_uwm_008a0dc0::~Gen_uwm_008a0dc0()\r\n{\r\n\tint remaining = m_count;\r\n\tint i = 0;\r\n\tBfmeRef008A0DC0 **slot = m_slots;\r\n\tfor (; i < 512; ++i, ++slot)\r\n\t{\r\n\t\tif (*slot != 0)\r\n\t\t{\r\n\t\t\t(*slot)->release();\r\n\t\t\tif (--remaining == 0)\r\n\t\t\t\tbreak;\r\n\t\t}\r\n\t}\r\n}\r\n"
+}

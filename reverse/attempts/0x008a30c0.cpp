@@ -1,5 +1,5 @@
 // ?bfmeStep1211C@BfmeG1211@@QAEXXZ
-// partial score=0.88 date=2026-09-02
+// partial score=0.89 date=2026-09-09
 // Open-BFME: BfmeG1211::bfmeStep1211C, retail 0x008A30C0.
 // Drain the Apt value stack: pop each entry, and either clear the high-ref
 // flag or invoke vslot +8.
@@ -27,11 +27,8 @@ public:
 void BfmeG1211::bfmeStep1211C()
 {
 	BfmeG1211 *self = this;
-	int n;
-	if (self->m_count == 0)
-		return;
-	n = self->m_count;
-	for (;;)
+	int n = self->m_count;
+	while (n != 0)
 	{
 		do
 		{
@@ -42,8 +39,6 @@ void BfmeG1211::bfmeStep1211C()
 			else
 				v->recycle();
 		} while (--n);
-		if (self->m_count == 0)
-			return;
 		n = self->m_count;
 	}
 }
