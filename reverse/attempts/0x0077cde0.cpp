@@ -1,5 +1,5 @@
 // ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.95 date=2026-09-09
+// partial score=0.97 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -308,17 +308,17 @@ Rva0077CDE0::Rva0077CDE0()
 	Rva0077CC10Element temp;
 	temp.m_layout.set("<DefaultEmptyIdleAnimationState>", 0x20);
 
-	Rva0077CC10Element *finish = m_vec3.m_finish;
-	Rva0077CC10Element *endOfStorage = m_vec3.m_endOfStorage;
-	if (finish != endOfStorage)
+	Rva0077CDE0Vec3 *vec = &m_vec3;
+	if (vec->m_finish != vec->m_endOfStorage)
 	{
+		Rva0077CC10Element *finish = vec->m_finish;
 		new (finish) Rva0077CC10Element(temp);
-		m_vec3.m_finish = finish + 1;
+		vec->m_finish++;
 	}
 	else
 	{
 		struct FalseTag { unsigned int m_unused[2]; } tag;
-		m_vec3.InsertOverflow(finish, temp,
+		vec->InsertOverflow(vec->m_finish, temp,
 			reinterpret_cast<const void *>(&tag), 1, true);
 	}
 
