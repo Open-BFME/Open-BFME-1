@@ -1,7 +1,5 @@
 // ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.88 date=2026-09-09
-// cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
-// stlport
+// partial score=0.91 date=2026-09-09
 //
 // Constructor at retail 0x0077CDE0 (697 B).  21-state EH unwind map
 // (FuncInfo 0x0123FE1C).  Own vtable install=0x1124230 (masked DIR32).
@@ -24,6 +22,8 @@
 // true here; the in-place-construct arm is dead code MSVC still emits).
 
 #include <string>
+
+extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
 class BfmeBase0077CDE0
 {
@@ -176,6 +176,14 @@ private:
 	unsigned char m_data[0x14];
 };
 
+class Rva0077CDE0Block28
+{
+public:
+	Rva0077CDE0Block28() { memset(this, 0, 0x28); }
+private:
+	unsigned int m_a[10];
+};
+
 class Rva0077CDE0 : public BfmeBase0077CDE0
 {
 public:
@@ -206,7 +214,7 @@ private:
 	S4Elem007746E0 m_s4;                                  ///< +0x84
 	unsigned char m_bb0;                                  ///< +0xb0
 	unsigned char m_padb1, m_padb2, m_padb3;
-	unsigned int m_arr10[10];                             ///< +0xb4
+	Rva0077CDE0Block28 m_block10;                        ///< +0xb4
 	unsigned char m_bdc;                                  ///< +0xdc
 	unsigned char m_paddd, m_padde, m_paddf;
 	BFMERetailAsciiString m_str6;                         ///< +0xe0
@@ -225,9 +233,6 @@ Rva0077CDE0::Rva0077CDE0()
 	, m_bb0(0)
 	, m_bdc(0)
 {
-	for (int i = 0; i < 10; ++i)
-		m_arr10[i] = 0;
-
 	m_f50 = 0.0f;
 	m_f54 = 2.0f;
 	m_f58 = 3.0f;
