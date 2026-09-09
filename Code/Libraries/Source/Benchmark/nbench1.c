@@ -1890,23 +1890,11 @@ return;
 ** The array given by arraybase is loaded with positive random
 ** numbers.  Elements in the array are capped at 5,000,000.
 */
-static void LoadAssign(farlong arraybase[][ASSIGNCOLS])
+extern void fillRandom008747F0(int *arr);
+
+__forceinline static void LoadAssign(farlong arraybase[][ASSIGNCOLS])
 {
-ushort i,j;
-
-/*
-** Reset random number generator so things repeat.
-*/
-/* randnum(13L); */
-randnum((int32)13);
-
-for(i=0;i<ASSIGNROWS;i++)
-  for(j=0;j<ASSIGNROWS;j++){
-    /* arraybase[i][j]=abs_randwc(5000000L);*/
-    arraybase[i][j]=abs_randwc((int32)5000000);
-  }
-
-return;
+fillRandom008747F0(reinterpret_cast<int *>(&arraybase[0][0]));
 }
 
 /*****************
