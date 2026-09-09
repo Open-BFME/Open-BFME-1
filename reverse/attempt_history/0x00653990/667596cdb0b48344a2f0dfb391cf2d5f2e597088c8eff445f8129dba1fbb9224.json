@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "667596cdb0b48344a2f0dfb391cf2d5f2e597088c8eff445f8129dba1fbb9224",
+  "symbol": "?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIDI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?find@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QBEIDI@Z\n// partial score=0.82 date=2026-09-09\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n\n// Open-BFME5: STLport basic_string<char>::find(char, size_type), retail\n// 0x00653990, 69 bytes.\n//\n// BfmeThingSUA::bfmeOneSUA calls this body through the retail import thunk at\n// 0x0002A9E6. The retail body enters the search only when position is valid.\n// The later conditional return preserves both npos epilogues.\n\n#include <string>\n\nnamespace _STL\n{\ntemplate <>\nbasic_string<char, char_traits<char>, allocator<char> >::size_type\nbasic_string<char, char_traits<char>, allocator<char> >::find(char value,\n\tsize_type position) const\n{\n\tif (position >= size())\n\t\treturn npos;\n\telse\n\t{\n\t\tconst const_pointer result =\n\t\t\t_STLP_STD::find_if((const char *)this->_M_start + position,\n\t\t\t\t(const char *)this->_M_finish,\n\t\t\t\t_Eq_char_bound<char_traits<char> >(value));\n\t\treturn result != this->_M_finish ? result - this->_M_start : npos;\n\t}\n}\n}\n"
+}
