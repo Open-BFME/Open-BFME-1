@@ -18775,3 +18775,7 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_0092d720@@YAXXZ	0x0092D720	441	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved after the whole d_00927c30.asm audit
 ?d_00929be0@@YAXXZ	0x00929BE0	349	blocked	t=6min model=gpt-5 identity-proven MeshMatDescClass::Compute_Ram_Size; clean source remains a 330-byte near miss with accumulator register and material-array reload divergence
 ?d_0039fba0@@YAXXZ	0x0039FBA0	421	blocked	t=6min model=gpt-5 identity-proven RespawnPolicyMember::setPolicies; all semantics and size match but MSVC unrolls the twelve OR stores in a different register schedule
+?d_005313b0@@YAXXZ	0x005313B0	627	blocked	t=4min model=gpt-5 caller 0x00531F10 is only a generated helper; no built emitter or trustworthy clean owner exists
+?d_005331e0@@YAXXZ	0x005331E0	513	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved
+?d_00536530@@YAXXZ	0x00536530	665	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved
+?d_0052e5b0@@YAXXZ	0x0052E5B0	165	blocked	t=4min model=gpt-5 unresolved UI virtual-call body; no named caller, string, vtable label, or clean owner supports a real C++ conversion
