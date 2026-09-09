@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f5b964fef084538c9cb2b208b00e146c9b966ac97755bc9cfd9a75f4af42364d",
+  "symbol": "?bfmeToggleLK@@YGXPAVBfmeHolderLK@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmeToggleLK@@YGXPAVBfmeHolderLK@@@Z\n// partial score=0.93 date=2026-09-09\n// 56/60 bytes; structure and content exact. Residue is block ordering: retail\n// places the any-flag-set call first (+0x22, ecx) via an inverted last test\n// (je), all-clear second (+0x2f, edx). Every C shape that MSVC folds to one\n// call site (plain if/else, De Morgan guard, goto-merged) re-canonicalizes to\n// all-clear-first, the opposite of retail. An if/elseif/else duplicating the\n// any-set call gets the right order/content at +0x22 but leaves it unmerged\n// (73B, two call sites). /O1 changes the whole shape (byte cmp, no tail jmp).\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nextern \"C\" __declspec(dllimport) void __stdcall bfmeApiOnLK(void *handle);\nextern \"C\" __declspec(dllimport) void __stdcall bfmeApiOffLK(void *handle);\n\nclass BfmeThingLK\n{\npublic:\n\tunsigned char m_bfmeHeadLK[8];\n\tvoid *m_bfmeHandleLK;\n\tunsigned char m_bfmeGapLK[0x2d];\n\tchar m_bfmeALK;\n\tchar m_bfmeBLK;\n\tchar m_bfmeCLK;\n\tchar m_bfmeDLK;\n};\n\nclass BfmeHolderLK\n{\npublic:\n\tBfmeThingLK *m_bfmeThingLK;\n};\n\nvoid __stdcall bfmeToggleLK(BfmeHolderLK *holder)\n{\n\tBfmeThingLK *thing = holder->m_bfmeThingLK;\n\tif (thing->m_bfmeALK || thing->m_bfmeBLK || thing->m_bfmeCLK || thing->m_bfmeDLK)\n\t\tbfmeApiOnLK(thing->m_bfmeHandleLK);\n\telse\n\t\tbfmeApiOffLK(thing->m_bfmeHandleLK);\n}\n"
+}

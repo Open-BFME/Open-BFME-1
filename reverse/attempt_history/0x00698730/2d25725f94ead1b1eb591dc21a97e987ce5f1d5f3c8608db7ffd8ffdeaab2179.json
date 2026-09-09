@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2d25725f94ead1b1eb591dc21a97e987ce5f1d5f3c8608db7ffd8ffdeaab2179",
+  "symbol": "?Rva00698730Remainder@@YGIPAPAURva00698730Node@@I@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?Rva00698730Remainder@@YGIPAPAURva00698730Node@@I@Z\n// partial score=0.85 date=2026-09-09\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nstruct Rva00698730Node\n{\n    char m_pad[8];\n    unsigned int m_key;\n};\n\nunsigned int __stdcall Rva00698730Remainder(Rva00698730Node **head, unsigned int m)\n{\n    Rva00698730Node *node = *head;\n    if (!node)\n        return (unsigned int)node % m;\n    return node->m_key % m;\n}\n"
+}

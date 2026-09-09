@@ -1,6 +1,7 @@
 // ?RequestGameLeave@LANAPI@@QAEXXZ
-// partial score=0.6 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.65 date=2026-09-09
+// ?RequestGameLeave@LANAPI@@QAEXXZ
+// cl: /DNDEBUG /MD /EHs-c-
 
 // LANAPI::RequestGameLeave, retail 0x00687CE0, 341 bytes.
 //
@@ -12,6 +13,12 @@
 // than a direct sendMessage(), and OnPlayerLeave gained an explicit
 // UnsignedInt ip parameter (the departing game's stored address) ahead of the
 // UnicodeString name, matching OnNameChange's two-parameter shape at +0xA4.
+//
+// The name copy follows RequestAccept's idiom exactly (LANAPISendPath.cpp):
+// str() is spelled out as game ? game->getName().str() : L"" inside the
+// wcsncpy call itself, so the getName() temporary's construction is
+// conditional across the whole expression and /EHs-c- gives the compiler's
+// own guarded-destructor flag (retail's ebx) instead of an explicit one.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -19,10 +26,7 @@ typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
-extern "C" unsigned short *__cdecl wcsncpy(unsigned short *, const unsigned short *, unsigned int);
-#pragma intrinsic(wcsncpy)
-
-extern const unsigned short g_bfmeEmptyUnicode[];
+extern "C" __declspec(dllimport) unsigned short *__cdecl wcsncpy(unsigned short *, const unsigned short *, unsigned int);
 
 struct UnicodeStringData
 {
@@ -30,13 +34,22 @@ struct UnicodeStringData
 	UnsignedShort m_numCharsAllocated;
 	UnsignedShort m_len;
 	UnsignedShort m_pad;
+	unsigned short m_stringdata[1];
 };
 
 class UnicodeString
 {
 public:
-	~UnicodeString();							// ?releaseBuffer@?$StringBase@G@@AAEXXZ
-	const unsigned short *str() const { return m_data ? (const unsigned short *)(m_data + 1) : g_bfmeEmptyUnicode; }
+	~UnicodeString() { releaseBuffer(); }
+
+	const unsigned short *str(void) const
+	{
+		return m_data ? m_data->m_stringdata : L"";
+	}
+
+protected:
+	void releaseBuffer(void);					// ?releaseBuffer@?$StringBase@G@@AAEXXZ
+
 private:
 	UnicodeStringData *m_data;
 };
@@ -167,8 +180,7 @@ void LANAPI::RequestGameLeave(void)
 	fillInLANMessage(&msg);
 
 	game = m_currentGame;
-	const unsigned short *name = game ? game->getName().str() : g_bfmeEmptyUnicode;
-	wcsncpy((unsigned short *)((char *)&msg + 0x26), name, 0x10);
+	wcsncpy((unsigned short *)((char *)&msg + 0x26), game ? game->getName().str() : L"", 0x10);
 	*((unsigned short *)((char *)&msg + 0x46)) = 0;
 
 	queuePacket(&msg, 0);

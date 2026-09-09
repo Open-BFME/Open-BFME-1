@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2760cca884ac07a46f2197909e0ef407a1f0be4309dc30d6c46dad15bd1c6f22",
+  "symbol": "?d_0068d620@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?d_0068d620@@YAXXZ\n// partial score=0.98 date=2026-09-09\n// Exact shape found. The union keeps the conversion result in a\r\n// volatile dword while the non-volatile word member produces retail's narrow\r\n// read. The body matches both 0x0068D5A0 and its byte-identical twin at\r\n// 0x0068D620.\r\nextern int (__stdcall *g_bfmeConvBA)(int value);\t// pin ?g_bfmeConvBA@@3P6GHH@ZA,0x00F5972C\r\n\r\nunion ConvertedValue\r\n{\r\n\tvolatile unsigned int storage;\r\n\tunsigned short narrow;\r\n};\r\n\r\nunsigned short * __cdecl bfmeEmitBA(unsigned short *dst, int value, unsigned short *limit)\r\n{\r\n\tConvertedValue converted;\r\n\tconverted.storage = (unsigned int)g_bfmeConvBA(value);\r\n\r\n\tif (limit != 0)\r\n\t{\r\n\t\tif (dst > limit)\r\n\t\t\treturn dst;\r\n\r\n\t\tif (dst + 1 > limit)\r\n\t\t\treturn dst;\r\n\t}\r\n\r\n\t*dst = converted.narrow;\r\n\r\n\treturn dst + 1;\r\n}\r\n"
+}
