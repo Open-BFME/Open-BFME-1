@@ -92,6 +92,26 @@ const Int USE_EXP_VALUE_FOR_SKILL_VALUE = -999;
 
 AudioEventRTS ThingTemplate::s_audioEventNoSound;
 
+// Retail parsePerUnitSounds clears the AudioEventRTS map through a scalar
+// destructor ILT (0x00026F35 -> 0x000B31F0).  This TU's reference AudioEventRTS
+// is 0x64 bytes, but BFME's map value is 0x70 bytes: MiscAudioConstructor's
+// repeated embedded values are vptr + 0x6c.  Keep the real PerUnitSoundMap for
+// insertion; this TU-local, layout-only view is used solely for the retail
+// clear shape, following the proven BfmePlayerAudioEvent/MiscAudio pattern.
+// The UAE spelling resolves through the pre-existing 77B pin at 0x000CFA40;
+// the virtual declaration itself is not evidence that it emits that body.
+class BfmePerUnitSoundAudioEvent
+{
+public:
+	~BfmePerUnitSoundAudioEvent();
+
+private:
+	void *m_vptr;
+	UnsignedByte m_body[0x70 - sizeof(void *)];
+};
+
+typedef std::map<AsciiString, BfmePerUnitSoundAudioEvent> BfmePerUnitSoundMap;
+
 /* 
 	NOTE NOTE NOTE -- s_objectFieldParseTable and s_objectReskinFieldParseTable must be updated in tandem!
 
@@ -605,7 +625,7 @@ static void parseArbitrarySoundsIntoMap( INI* ini, void *instance, void* /* stor
 void ThingTemplate::parsePerUnitSounds( INI* ini, void *instance, void *store, const void *userData )
 {
 	PerUnitSoundMap *mapSounds = (PerUnitSoundMap*)store;
-	mapSounds->clear();
+	((BfmePerUnitSoundMap *)store)->clear();
 
 	static const FieldParse myFieldParse[] = 
 	{
