@@ -298,7 +298,6 @@ Bool W3DPropBuffer::updatePropPosition(Int id, const Coord3D &location, Real ang
 //=============================================================================
 /** Removes a prop.  */
 //=============================================================================
-// ?removeProp@W3DPropBuffer@@QAEXH@Z present-unmatched
 void W3DPropBuffer::removeProp(Int id)
 {
 	Int i;
@@ -306,7 +305,10 @@ void W3DPropBuffer::removeProp(Int id)
 		if (m_props[i].id == id) {
 			m_props[i].location.set(0,0,0);
 			m_props[i].propType = -1;
-			REF_PTR_RELEASE(m_props[i].m_robj);
+			if (m_props[i].m_robj) {
+				m_props[i].m_robj->Release_Ref();
+				m_props[i].m_robj = NULL;
+			}
 			// Translate the bounding sphere of the model.
 			m_props[i].bounds.Center = Vector3(0,0,0);
 			m_props[i].bounds.Radius = 1;
