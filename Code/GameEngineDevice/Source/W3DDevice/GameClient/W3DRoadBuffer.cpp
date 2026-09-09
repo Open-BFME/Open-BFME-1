@@ -1806,8 +1806,14 @@ void W3DRoadBuffer::updateCountsAndFlags()
 /** Inserts a Tee intersection. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/W3DRoadBufferInsertTeeThunk.cpp
-// ?insertTee@W3DRoadBuffer@@IAEXVVector2@@HM@Z present-unmatched
-void W3DRoadBuffer::insertTee(Vector2 loc, Int index1, Real scale)
+// ?insert@W3DRoadBufferInsertTeeShim@@QAEXVVector2@@HM@Z byte-exact (retail 0x0070BC00, 2625 bytes)
+class W3DRoadBufferInsertTeeShim : public W3DRoadBuffer
+{
+public:
+	void insert(Vector2 loc, Int index1, Real scale);
+};
+
+void W3DRoadBufferInsertTeeShim::insert(Vector2 loc, Int index1, Real scale)
 {
 	// BFME added a guard vs ZH: refuses to insert before init (proven by
 	// target byte read of this+0xc, m_initialized's proven offset).
@@ -1817,17 +1823,8 @@ void W3DRoadBuffer::insertTee(Vector2 loc, Int index1, Real scale)
 		return;
 	}
 
-	// pr1-3 point to the points on the segments that form the tee.
-	// They are the points on the segments that are != loc.
-	TRoadPt *pr1=NULL;
-	TRoadPt *pr2=NULL;
-	TRoadPt *pr3=NULL;
-
-	// pc1-3 point to the center points of the segments.  These are the 
-	// points that are at loc.
-	TRoadPt *pc1=NULL;
-	TRoadPt *pc2=NULL;
-	TRoadPt *pc3=NULL;
+	TRoadPt *pr1=NULL, *pr2=NULL, *pr3=NULL;
+	TRoadPt *pc1=NULL, *pc2=NULL, *pc3=NULL;
 
 	if (m_roads[index1].m_pt1.loc == loc) {
 		pr1 = &m_roads[index1].m_pt2;
@@ -1842,167 +1839,106 @@ void W3DRoadBuffer::insertTee(Vector2 loc, Int index1, Real scale)
 	for (i = index1+1; i<m_numRoads; i++) {
 		if (m_roads[i].m_pt1.loc == loc) {
 			m_roads[i].m_pt1.count = -2;
-			if (pr2==NULL) {
-				pr2 = &m_roads[i].m_pt2;
-				pc2 = &m_roads[i].m_pt1;
-				index2 = i;
-			} else {
-				pr3 = &m_roads[i].m_pt2;
-				pc3 = &m_roads[i].m_pt1;
-				index3 = i;
-			}
+			if (pr2==NULL) { pr2 = &m_roads[i].m_pt2; pc2 = &m_roads[i].m_pt1; index2 = i; }
+			else { pr3 = &m_roads[i].m_pt2; pc3 = &m_roads[i].m_pt1; index3 = i; }
 		}
 		if (m_roads[i].m_pt2.loc == loc) {
 			m_roads[i].m_pt2.count = -2;
-			if (pr2==NULL) {
-				pr2 = &m_roads[i].m_pt1;
-				pc2 = &m_roads[i].m_pt2;
-				index2 = i;
-			} else {
-				pr3 = &m_roads[i].m_pt1;
-				pc3 = &m_roads[i].m_pt2;
-				index3 = i;
-			}
+			if (pr2==NULL) { pr2 = &m_roads[i].m_pt1; pc2 = &m_roads[i].m_pt2; index2 = i; }
+			else { pr3 = &m_roads[i].m_pt1; pc3 = &m_roads[i].m_pt2; index3 = i; }
 		}
 	}
-	if (pr2 == NULL || pr3 == NULL) {
-		return;
-	}
+	if (pr2 == NULL || pr3 == NULL) return;
 
-	Vector2 v1 = pr1->loc - loc;
-	v1.Normalize();
-	Vector2 v2 = pr2->loc - loc;
-	v2.Normalize();
-	Vector2 v3 = pr3->loc - loc;
-	v3.Normalize();
+	Vector2 v1 = pr1->loc - loc; v1.Normalize();
+	Vector2 v2 = pr2->loc - loc; v2.Normalize();
+	Vector2 v3 = pr3->loc - loc; v3.Normalize();
 	Real dot12 = v1.Dot_Product(v1, v2);
 	Real dot13 = v1.Dot_Product(v1, v3);
 	Real dot32 = v1.Dot_Product(v3, v2);
-	// The greatest negative dot product is the pair that is heading most opposite each other.
-	Bool do12 = false;
-	Bool do13 = false;
-	Bool do32 = false;
+
+	// Order matters for the immediate-store shape retail uses -- see header note.
+	Bool do12, do13, do32;
+	*(volatile Bool *)&do12 = false;
+	*(volatile Bool *)&do13 = false;
+	*(volatile Bool *)&do32 = false;
 
 	if (dot12<dot13) {
-		if (dot12<dot32) {
-			do12 = true;
-		} else {
-			do32 = true;
-		}
+		if (dot12<dot32) { *(volatile Bool *)&do12 = true; } else { do32 = true; }
 	} else {
-		if (dot13<dot32) {
-			do13 = true;
-		} else {
-			do32 = true;
-		}
+		if (dot13<dot32) { do13 = true; } else { do32 = true; }
 	}
 
 	Vector2 upVector;
 	Vector2 decider;
-	if (do12) {
-		upVector = v2-v1;
-		decider = v3;
-	}
-	if (do13) {
-		upVector = v3-v1;
-		decider = v2;
-	}
-	if (do32) {
-		upVector = v2-v3;
-		decider = v1;
-	}
+	if (do12) { upVector = v2-v1; decider = v3; }
+	if (do13) { upVector = v3-v1; decider = v2; }
+	if (do32) { upVector = v2-v3; decider = v1; }
 	upVector.Normalize();
 
-
-	// Check to see if the Tee side is slanted.
 	const Real cos60 = 0.5f;
 	Real dot = fabs(Vector2::Dot_Product(upVector, decider));
 	if (dot > cos60) {
-		// The arm of the tee is slanted, so do a slant tee.
-		Real angle = (PI/2); // 90 degrees.
+		Real angle = (PI/2);
 		Real xpdct = Vector3::Cross_Product_Z(Vector3(upVector.X,upVector.Y,0), Vector3(decider.X, decider.Y,0));
-		Bool mirror = false;
-		if (xpdct<0) {
-			angle = -angle;
-			mirror = true;
-		}
+		Bool mirror = false;   // retail: register bl, zeroed just before first use -- see note 2 above.
+		if (xpdct<0) { angle = -angle; mirror = true; }
 		upVector.Normalize();
-		upVector *= 0.5*scale; // we are offseting one half road width.
+		upVector *= 0.5*scale;
 		Vector2 teeVector(upVector);
 		teeVector.Rotate(angle);
 
-		Bool flip;
-		if (do12) {
-			flip = xpSign(teeVector, v3) == 1;
-			offsetH(pc1, pc2, pc3, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture);
-		}
-		if (do13) {
-			flip = xpSign(teeVector, v2) == 1;
-			offsetH(pc1, pc3, pc2, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture);
-		}
-		if (do32) {
-			flip = xpSign(teeVector, v1) == 1;
-			offsetH(pc3, pc2, pc1, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture);
+		Bool flip = false;
+		if (do12) { flip = xpSign(teeVector, v3) == 1; offsetH(pc1, pc2, pc3, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture); }
+		if (do13) { flip = xpSign(teeVector, v2) == 1; offsetH(pc1, pc3, pc2, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture); }
+		if (do32) { flip = xpSign(teeVector, v1) == 1; offsetH(pc3, pc2, pc1, loc, upVector, teeVector, flip, mirror, m_roads[index1].m_widthInTexture); }
 
-		}
-
-		pc1->last = true;
-		pc1->count = 0;
-		pc2->last = true;
-		pc2->count = 0;
-		pc3->last = true;
-		pc3->count = 0;
+		pc1->last = true; pc1->count = 0;
+		pc2->last = true; pc2->count = 0;
+		pc3->last = true; pc3->count = 0;
 
 		CHECK_SEGMENTS;
 		m_roads[m_numRoads].m_pt1.loc.Set(loc);
 		m_roads[m_numRoads].m_pt2.loc.Set(loc+teeVector);
-		m_roads[m_numRoads].m_pt1.last = true; // if not, that one will clear flag in prior loop.
-		m_roads[m_numRoads].m_pt2.last = true; // if not, that one will clear flag in prior loop.
-		m_roads[m_numRoads].m_scale = m_roads[index1].m_scale; 
+		m_roads[m_numRoads].m_pt1.last = true;
+		m_roads[m_numRoads].m_pt2.last = true;
+		m_roads[m_numRoads].m_scale = m_roads[index1].m_scale;
 		m_roads[m_numRoads].m_widthInTexture = m_roads[index1].m_widthInTexture;
-		m_roads[m_numRoads].m_pt1.count = -3; 
-		m_roads[m_numRoads].m_type = flip?THREE_WAY_H_FLIP:THREE_WAY_H; 
+		m_roads[m_numRoads].m_pt1.count = -3;
+		m_roads[m_numRoads].m_type = flip?THREE_WAY_H_FLIP:THREE_WAY_H;
 		m_roads[m_numRoads].m_uniqueID = m_roads[index1].m_uniqueID;
 		m_numRoads++;
 	} else {
-		// Do a not slanted tee.
-		Real angle = (PI/2); // 90 degrees.
+		Real angle = (PI/2);
 		Real xpdct = Vector3::Cross_Product_Z(Vector3(upVector.X,upVector.Y,0), Vector3(decider.X, decider.Y,0));
 		if (xpdct<0) angle = -angle;
 		upVector.Normalize();
-		upVector *= 0.5*scale; // we are offseting one half road width.
+		upVector *= 0.5*scale;
 		Vector2 teeVector(upVector);
 		teeVector.Rotate(angle);
 
-		if (do12) {
-			offset3Way(pc1, pc2, pc3, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
-		}
-		if (do13) {
-			offset3Way(pc1, pc3, pc2, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
-		}
-		if (do32) {
-			offset3Way(pc3, pc2, pc1, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
-		}
-		pc1->last = true;
-		pc1->count = 0;
-		pc2->last = true;
-		pc2->count = 0;
-		pc3->last = true;
-		pc3->count = 0;
+		if (do12) offset3Way(pc1, pc2, pc3, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
+		if (do13) offset3Way(pc1, pc3, pc2, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
+		if (do32) offset3Way(pc3, pc2, pc1, loc, upVector, teeVector, m_roads[index1].m_widthInTexture);
+
+		pc1->last = true; pc1->count = 0;
+		pc2->last = true; pc2->count = 0;
+		pc3->last = true; pc3->count = 0;
 
 		CHECK_SEGMENTS;
 		m_roads[m_numRoads].m_pt1.loc.Set(loc);
 		m_roads[m_numRoads].m_pt2.loc.Set(loc+teeVector);
-		m_roads[m_numRoads].m_pt1.last = true; // if not, that one will clear flag in prior loop.
-		m_roads[m_numRoads].m_pt2.last = true; // if not, that one will clear flag in prior loop.
-		m_roads[m_numRoads].m_scale = m_roads[index1].m_scale; 
+		m_roads[m_numRoads].m_pt1.last = true;
+		m_roads[m_numRoads].m_pt2.last = true;
+		m_roads[m_numRoads].m_scale = m_roads[index1].m_scale;
 		m_roads[m_numRoads].m_widthInTexture = m_roads[index1].m_widthInTexture;
-		m_roads[m_numRoads].m_pt1.count = -3; 
-		m_roads[m_numRoads].m_type = TEE; 
+		m_roads[m_numRoads].m_pt1.count = -3;
+		m_roads[m_numRoads].m_type = TEE;
 		m_roads[m_numRoads].m_uniqueID = m_roads[index1].m_uniqueID;
 		m_numRoads++;
 	}
 }
+
 
 //=============================================================================
 // W3DRoadBuffer::insertY
