@@ -86455,61 +86455,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?bfmeWalkZC@BfmeOverZC@@QAEPAV1@XZ,0x000022BB,BfmeHostZC::bfmeHeightZC override walk callee from retail 0x0076CDD0
-?bfmeGeomZC@BfmeObjZC@@QAEPAVGeometryInfo@@XZ,0x000293E8,BfmeHostZC::bfmeHeightZC GeometryInfo accessor from retail 0x0076CDD0
-?bfmePosZC@BfmeObjZC@@QAEPAUCoord3D@@XZ,0x0003EE55,BfmeHostZC::bfmeHeightZC position accessor from retail 0x0076CDD0
-?g_bfmeArgAAV@@3HA,0x012B6BB4,Open-BFME5 value the 0x004D1B00 shutdown forwards
-?g_bfmeFlagAAV@@3EA,0x012B6BB0,Open-BFME5 flag the 0x004D1B00 shutdown tests first
-?g_bfmePtrAAV@@3PAXA,0x012F3E70,Open-BFME5 pointer the 0x004D1B00 shutdown tests second
-?g_bfmeDoneAAV@@3EA,0x012F3E6C,Open-BFME5 completion flag the 0x004D1B00 shutdown sets
-?bfmeStopAAV@Rva00367E30Logic@@QAEXHH@Z,0x0001C46D,Open-BFME5 ILT logic stop the 0x004D1B00 shutdown calls
-?bfmeResetAAV@ScriptEngine@@QAEXH@Z,0x000126BB,Open-BFME5 ILT script reset the 0x004D1B00 shutdown calls
-?bfmeClearAAV@@YAXH@Z,0x0002CFA7,Open-BFME5 ILT cdecl clear the 0x004D1B00 shutdown calls
-?bfmeAppendAAV@BfmeMsgAAV@@QAEXH@Z,0x00001370,Open-BFME5 ILT message append the 0x004D1B00 shutdown calls three times
-?bfmeShowAAV@Shell40D9@@QAEXXZ,0x00006AAA,Open-BFME5 ILT shell show the 0x004D1B00 shutdown calls
-?bfmeGoAAV@Shell40D9@@QAEX_N@Z,0x000428ED,Open-BFME5 ILT shell go the 0x004D1B00 shutdown calls
-?bfmeAltAAV@@YAXXZ,0x004D18B0,Open-BFME5 direct alternate path the 0x004D1B00 shutdown calls
-?bfmeTickAAW@BfmeHostAAW@@QAEXXZ,0x0004ACC8,Open-BFME5 ILT pre-step the 0x006FD3C0 update calls first
-?bfmeReadyAAW@Rva005A00B0Transition@@QAE_NXZ,0x00042E6F,Open-BFME5 ILT transition ready check the 0x006FD3C0 update calls
-?g_bfmeDeltaAAW@@3MB,0x012F8230,Open-BFME5 frame delta the 0x006FD3C0 update adds and subtracts
-?bfmeCheckAAX@Glo012F1028Type@@QAE_NH@Z,0x00001078,Open-BFME5 ILT eligibility check the 0x006140C0 dispatch calls
-?bfmeApplyAAX@Glo012F1028Type@@QAEXH@Z,0x0003F7F1,Open-BFME5 ILT apply the 0x006140C0 dispatch calls after the cursor change
-?bfmeTailAAX@Glo012F1028Type@@QAEXH@Z,0x000206A8,Open-BFME5 ILT index handler the 0x006140C0 dispatch calls
-??8Gen_t_0039e9d0_p128pod@@QBE_NABV0@@Z,0x000063F7,Gen00043699 attribute equality call in the attribute interner
-?_Construct@_STL@@YAXPAURunwayInfo@FlightDeckBehavior@@ABU23@@Z,0x00008049,attribute interner copy construction thunk
-?_M_insert_overflow@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@QAEXPAURunwayInfo@FlightDeckBehavior@@ABU34@ABV__false_type@2@I_N@Z,0x00025C89,attribute interner overflow thunk
-?bfmeStep1AAY@BfmeHostAAY@@QAEXXZ,0x0001E312,Open-BFME5 ILT first teardown step of the 0x00617DB0 shutdown
-?bfmeStep2AAY@BfmeHostAAY@@QAEXXZ,0x0003D9AB,Open-BFME5 ILT second teardown step of the 0x00617DB0 shutdown
-?bfmeStep3AAY@BfmeHostAAY@@QAEXXZ,0x00030BF2,Open-BFME5 ILT third teardown step of the 0x00617DB0 shutdown
-?bfmeStep4AAY@BfmeHostAAY@@QAEXXZ,0x000105F5,Open-BFME5 ILT fourth teardown step of the 0x00617DB0 shutdown
-?bfmeCloseAAY@BfmeSubAAY@@QAEXXZ,0x0001D17E,Open-BFME5 ILT sub-object close the 0x00617DB0 shutdown calls when present
-?bfmeStep5AAY@BfmeHostAAY@@QAEXXZ,0x00010299,Open-BFME5 ILT fifth teardown step of the 0x00617DB0 shutdown
-?bfmeStep6AAY@BfmeHostAAY@@QAEXXZ,0x00010438,Open-BFME5 ILT sixth teardown step of the 0x00617DB0 shutdown
-?bfmeResetAAY@Rva00367E30Logic@@QAEXXZ,0x0003B417,Open-BFME5 ILT logic reset the 0x00617DB0 shutdown calls when present
-?bfmeRangeABA@BfmeListABA@@QAEXPAUBfmeIterABA@@0@Z,0x0001C017,Open-BFME5 ILT list range the 0x00224440 progress query calls
-?getShroudStatusForPlayer@ShroudManagerImpl008FBA40@@QBE?AW4CellShroudStatus@@HHH@Z,0x008F94E0,cell status helper called by the four-corner prop shroud query at 0x008F95A0
-?OnProgressUpdate@DownloadManagerProgressView@@QAEJHHHH@Z,0x00626980,DownloadMenu TU-local view of the matched five-byte base progress callback body
-?bfmeRangeABB@BfmeSubABB@@QAEXPAUBfmeIterABB@@0@Z,0x0004833D,Open-BFME5 ILT range fill the 0x000A1310 accessor calls
-?bfmeDiagABB@@YGPAUBfmeNodeABB@@PAUBfmeIterABB@@PBX@Z,0x009F6D00,Open-BFME5 checked-iterator diagnostic the 0x000A1310 accessor calls when the range is empty
-?g_bfmeDescABB@@3PBXB,0x011E0004,Open-BFME5 descriptor the 0x000A1310 accessor passes to the diagnostic
-?reset@Transport@@QAEXXZ,0x0003A48B,route=0x00683450; fullLANAPISetLocalIP199 actualretailcall through verifiedILT to matchedcanonicalbody; campaign=astra36h-20260908
-?init@Transport@@QAE_NPBUTransportAddress@@@Z,0x0001B103,route=0x00684200; fullLANAPISetLocalIP199 actualretailcall through verifiedILT to matchedcanonicalbody; campaign=astra36h-20260908
-?AllowBroadcasts@UDP@@QAEH_N@Z,0x00004F6B,route=0x006848C0; fullLANAPISetLocalIP199 actualretailcall through verifiedILT to matchedcanonicalbody; campaign=astra36h-20260908
-??0Rva005FEA50Base@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@1@PBX@Z,0x00031138,Verified ILT to 0x005FEA50; Wind271 base constructor with TrackingPtr reference and template pointer; full98-byte body and factory ABI audited
-??1Rva005FEA50Base@FXParticleSystem@@UAE@XZ,0x00012A67,Verified ILT to 0x005DEB40; Wind271 complete EH base cleanup; full83-byte destructor tail-unlinks tracking subobject
-?g_bfmeBaseTableABF@@3QBUFieldParse@@B,0x010898A0,Open-BFME5 base field-parse table the 0x001245F0 builder adds first
-?g_bfmeTableABF@@3PAUFieldParse@@A,0x012AC188,Open-BFME5 field-parse table the 0x001245F0 builder patches and adds
-?g_bfmeGuardByteABF@@3EA,0x012EF1C4,Open-BFME5 one-time guard byte the 0x001245F0 builder tests
-?g_bfmeGuardDwordABF@@3IA,0x012EF1C4,Open-BFME5 same guard as a dword the 0x001245F0 builder sets
-?g_bfmeGameCW@@3PAVBfmeGameCW@@A,0x012F706C,Actual C++ COFF spelling of the singleton loaded by reviewed 0x00618740; pointer owner view BfmeGameCW
-_g_bfmeStateDF,0x012F7048,Actual C COFF spelling of the state singleton loaded by reviewed 0x00618740; vslot20 point output
-?bfmeApplyABG@BfmeK1094@@QAEXPAX0@Z,0x00006DE8,Open-BFME5 ILT apply the 0x00151560 walk calls on the first matching item
-?bfmeCheckABI@BfmeThingCDE@@QAE_NXZ,0x008F7A10,Open-BFME5 retained check the 0x008F8D00 release consults before deleting
-?Render_Procedural_Material_Passes_Rva009467F0@Rva009467F0MaterialQueue@@QAE_NXZ,0x009467F0,Address-qualified bool queue declaration; full163 at9467F0 returnsAL taskWasDeleted; parent949EA0 ignores result; no adapter body
-?Render@DX8TextureCategoryClass@@QAEXXZ,0x00948BD0,Render949EA0 exactdirectcallee; full4397 ends949CFD; owningtexturecategorytasks and complete14stateEH audited; no helpercoverage claimed
-_bfmeVfAXZ,0x00D3E878,vftable pin
-_bfmeVfBXZ,0x00D3E870,secondary vftable pin
-_bfmeNullNameXZ,0x00C80374,NULL name global
 ?bfmeTestQP@@YADPAX0@Z,0x00014196,thunk to 0x005A74A0
 ?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
 ??0ProductionPrerequisiteRetailCopy@@QAE@ABV0@@Z,0x00038550,ProductionPrerequisite construct shim callee at retail body 0x00783D50
