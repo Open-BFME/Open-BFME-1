@@ -1,8 +1,5 @@
 // ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
-// partial score=0.95 date=2026-09-08
-// ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
-// cl: /DNDEBUG /MD /EHsc
-
+// partial score=0.951 date=2026-09-09
 class AudioEventRTS;
 class AsciiString;
 
@@ -59,11 +56,13 @@ private:
 	BfmePerUnitSoundEntry **m_perUnitSounds;
 };
 
-// ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 const AudioEventRTS *ThingTemplate::getPerUnitSound(const AsciiString &name) const
 {
 	const AsciiString *soundName = &name;
-	__asm { }
+	_ReadWriteBarrier();
 	BfmePerUnitSoundEntry **entry = m_perUnitSounds;
 	if (entry != 0)
 	{
