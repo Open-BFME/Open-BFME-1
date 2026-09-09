@@ -33,9 +33,19 @@ public:
 	UnsignedShort getXIndex(void) const { return m_info->m_pos.x; }
 	UnsignedShort getYIndex(void) const { return m_info->m_pos.y; }
 	UnsignedInt getCostSoFar(void) const { return m_info->m_costSoFar; }
-	PathfindCell *getParentCell(void) const
+	__forceinline PathfindCell *getParentCell(void) const
 	{
-		return m_info ? m_info->m_pathParent ? m_info->m_pathParent->m_cell : 0 : 0;
+		PathfindCell *cell;
+		if (m_info)
+		{
+			if (m_info->m_pathParent)
+				cell = m_info->m_pathParent->m_cell;
+			else
+				cell = 0;
+		}
+		else
+			cell = 0;
+		return cell;
 	}
 	bool getPinched(void) const { return ((m_bits >> 18) & 1) != 0; }
 
@@ -71,16 +81,17 @@ UnsignedInt PathfindCell::costSoFar(PathfindCell *parent)
 		if (dir.x != prevDir.x || dir.y != prevDir.y)
 		{
 			int dot = dir.x * prevDir.x + dir.y * prevDir.y;
-			if (dot > 0)
-				numTurns = 4;
-			else
-			{
-				numTurns = 8;
-				if (dot < 0)
-					numTurns = 16;
-			}
+			if (dot <= 0)
+				goto noPositiveDot;
+			numTurns = 4;
+			return *(&numTurns) + cost;
+
+		noPositiveDot:
+			numTurns = 8;
+			if (dot < 0)
+				numTurns = 16;
 		}
 	}
 
-	return cost + numTurns;
+	return *(&numTurns) + cost;
 }
