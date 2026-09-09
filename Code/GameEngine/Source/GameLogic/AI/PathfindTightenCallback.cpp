@@ -17,8 +17,8 @@ class Pathfinder
 public:
 	Bool checkForAdjust(Object *obj, const LocomotorSet &set, Bool human,
 		Int x, Int y, Int layer, Int radius, Bool center, Coord3D *dest,
-		const Coord3D *groupDest, const Coord3D *originalDest,
-		PathfindCell **fromSlot, Bool onlyIfLayer);
+		const Coord3D *groupDest, Real originalZ,
+		PathfindCell **fromSlot, Int onlyIfLayer);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -61,7 +61,7 @@ Int TightenPathCallbackInfo::cellCallback(PathfindCell *from,
 
 	if (!m_pathfinder->checkForAdjust(m_obj, *m_locomotorSet, 1,
 		to_x, to_y, to->getLayer(), m_radius, m_center, &m_scratch,
-		0, 0, &from, 0))
+		0, 0.0f, &from, 0))
 		return 0;
 
 	if (from != 0)

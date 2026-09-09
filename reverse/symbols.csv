@@ -77754,7 +77754,7 @@ __strcmpi,0x009F6FA0,MSVCR71 _strcmpi import thunk; identity confirmed by IAT sl
 ?check@Rva0051D690Shell@@QAE_NXZ,0x0002000E,ILT TheShell predicate used by 0x0051D690
 ?checkBoxAllowObservers@@3PAVGameWindow@@A,0x012F3F1C,PopupHostGame.wnd:CheckBoxAllowObservers static used by createGame
 ?checkDestination@Pathfinder@@QAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z,0x00027C96,ILT to the matched checkDestination body at 0x003DD7A0; reached from the adjust cascade at 0x003DEAB0
-?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@3PAPAVPathfindCell@@E@Z,0x003F0F40,BFME 13-arg checkForAdjust body used by TightenPathCallbackInfo
+?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z,0x003F0F40,BFME 13-arg checkForAdjust; arg11 originalZ is float (fld at +0xC9 and +0x39B); arg13 onlyIfLayer is int (dword load at +0x2F1); TightenPathCallbackInfo caller verified
 ?checkForAdjust@Pathfinder@@QAE_NPAVObject@@PBVLocomotorSet@@_NHHHPAUCoord3D@@2@Z,0x00018BE7,ILT to the 8-arg BFME checkForAdjust body at 0x003D6210; ZH iRadius/center/groupDest params are gone; called twice by the adjust cascade at 0x003DEAB0
 ?checkForTarget@Pathfinder@@QAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z,0x0004864E,ILT to 0x003ECF90; callee of Rva003EEB50::run
 ?checkSpecial@AIGroup@@QAE_NPBUCoord3D@@H@Z,0x0002D565,ILT to 0x00154F00 from tryGroupSpecial 0x001599A0
