@@ -138,7 +138,8 @@ What this evidence does NOT decide
 1. Two bodies REFUSE to match, and this release is not BFME's for them.
    LZHLCompressor::compress compiles to 1,741 bytes (1,747 from `main`);
    retail's body at 0x00825680 is 1,724. LZHLDecompressor::decompress compiles
-   to 852; retail's run at 0x00826914 is 844 real bytes. Both stay as
+   to 852; retail's callable body at 0x00826920 is 824 bytes (the 844-byte
+   unclaimed run begins in its preceding alignment pad). Both stay as
    `Code/gen_asm` dumps. The differences are small and one-directional — EA's
    copy is SHORTER in both — which reads like a local EA edit to the two
    biggest functions rather than a different vintage, but nothing here

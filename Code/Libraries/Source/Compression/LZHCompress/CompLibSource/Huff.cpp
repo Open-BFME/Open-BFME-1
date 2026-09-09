@@ -408,7 +408,8 @@ inline int LZHLDecompressor::_get( const BYTE*& src, const BYTE* srcEnd, int n )
 
 // ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z present-unmatched -- see
 // ../PROVENANCE.txt: upstream compiles 852 bytes at both published revisions;
-// retail's unclaimed run at 0x00826914 is 844. EA's divergence.
+// retail's callable body at 0x00826920 is 824 bytes.  The 844-byte unclaimed
+// run starts in the preceding alignment pad. EA's divergence.
 BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, size_t* srcSz )
     {
     BYTE* startDst = dst;
