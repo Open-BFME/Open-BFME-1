@@ -86608,3 +86608,4 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?notify@Rva000C7E30Sink@@QAEX_N@Z,0x0004326B,pin notify thunk; address-derived twin of BfmeConv2112 sink at same RVA
 ?Rva0001E6A5Helper@@YAPAXPAX00PADH@Z,0x0001E6A5,pin to matched thunk j_0001e6a5 with real argument types
 ??1ScoreRowVector@@QAE@XZ,0x00045E8F,BfmeAptScreenScoreScreen+0x264 vector<Gen00574BC0> row member; real body already landed at 0x00574BC0 (Q4VectorDtorMemberOffset.cpp) but this callsite reaches it through the incremental-link thunk
+??$__get_integer@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@K@_STL@@YA_NAAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0HAAKH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x00834710,STLport 4.5.3 wide unsigned-long parser; exact wrapper call and adjacent specialization family establish identity
