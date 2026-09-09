@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "770b26901e2f205e3fb5672482205572a581770bff9dc06800392c56f71824a5",
+  "symbol": "?bfmeResetYU@BfmeHostYU@@QAEXABVUnicodeString@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?bfmeResetYU@BfmeHostYU@@QAEXABVUnicodeString@@@Z\r\n// partial score=0.94 date=2026-09-08\r\n// pins needed (CRLF):\r\n//   ?bfmeCommonInitYU@BfmeHostYU@@QAEXXZ,0x0002E68B\r\n//   __imp_?bfmeDecYU@@YGHPAX@Z,0x01358E54\r\nclass UnicodeString\r\n{\r\npublic:\r\n\tvoid set(const UnicodeString &o);\r\n\r\n\tvoid *m_bfmeDataYU;\r\n};\r\n\r\n__declspec(dllimport) int __stdcall bfmeDecYU(void *p);\r\n\r\nclass BfmeThingYU\r\n{\r\npublic:\r\n\tvirtual void bfmeDestroyYU(int flag) = 0;\r\n\r\n\tint m_bfme04YU;\r\n};\r\n\r\nclass BfmeHostYU\r\n{\r\npublic:\r\n\tvoid bfmeResetYU(const UnicodeString &s);\r\n\tvoid bfmeCommonInitYU();\r\n\r\n\tunsigned char m_bfmeHeadYU[8];\r\n\tBfmeThingYU *m_bfme08YU;\r\n\tunsigned char m_bfmeGapYU[8];\r\n\tUnicodeString m_bfme14YU;\r\n};\r\n\r\nvoid BfmeHostYU::bfmeResetYU(const UnicodeString &s)\r\n{\r\n\tbfmeCommonInitYU();\r\n\tm_bfme14YU.set(s);\r\n\r\n\tBfmeThingYU *t = m_bfme08YU;\r\n\r\n\tif (t != 0)\r\n\t{\r\n\t\tif (bfmeDecYU(&t->m_bfme04YU) <= 0 && t != 0)\r\n\t\t\tt->bfmeDestroyYU(1);\r\n\r\n\t\tm_bfme08YU = 0;\r\n\t}\r\n}\r\n"
+}

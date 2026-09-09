@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "22b5bae94db007b398ce1046f1d003ae23e9a16d9e524c09b950e664ce410467",
+  "symbol": "?advance@Rva002D0510Behavior@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?advance@Rva002D0510Behavior@@QAEHXZ\n// partial score=0.86 date=2026-09-09\n// experiment v1: single combined guard `busy > 0 || isEmpty()`, where\n// isEmpty() is an inline bool accessor -- trying to reproduce retail's\n// sete/test/je idiom for the inner ammo==0 check via an inlined bool return.\n// cl: /DNDEBUG /MD /EHsc\n\nclass Rva002D0510Behavior\n{\npublic:\n\tint advance();\n\nprivate:\n\tbool isAmmoEmpty() const { return m_ammo == 0; }\n\n\tunsigned char m_pad00[0x14];\n\tint m_ammo;\n\tunsigned char m_pad18[0x2C - 0x14 - 4];\n\tunsigned int m_reloadTimer;\n};\n\nint Rva002D0510Behavior::advance()\n{\n\tif (m_reloadTimer > 0 || isAmmoEmpty())\n\t{\n\t\tm_ammo = 0;\n\t\treturn 1;\n\t}\n\n\t--m_ammo;\n\treturn 1;\n}\n"
+}
