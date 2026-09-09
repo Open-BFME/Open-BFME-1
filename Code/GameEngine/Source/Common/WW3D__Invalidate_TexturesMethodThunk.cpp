@@ -1,190 +1,100 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?_Invalidate_Textures@WW3D@@: Code/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+
+// BFME's body does not walk the ZH Texture_Hash directly.  It selects the
+// texture asset stream, repeatedly obtains a counted AssetReference, and
+// invalidates each returned texture through the virtual slot at +0x30.
+// Rva009EBBC0 and Rva009EBDC0 are the already matched registry helpers at
+// 0x009EBBC0 and 0x009EBDC0.  The small declarations below preserve the
+// WW3D2 counted-texture ABI without importing the drifted ZH container types.
+
+class TextureClass
+{
+public:
+	void Add_Ref()
+	{
+		++*(unsigned short *)((char *)this + 4);
+	}
+
+	void Release_Ref();
+
+	virtual void VTableSlot00();
+	virtual void VTableSlot01();
+	virtual void VTableSlot02();
+	virtual void VTableSlot03();
+	virtual void VTableSlot04();
+	virtual void VTableSlot05();
+	virtual void VTableSlot06();
+	virtual void VTableSlot07();
+	virtual void VTableSlot08();
+	virtual void VTableSlot09();
+	virtual void VTableSlot10();
+	virtual void VTableSlot11();
+	virtual void Invalidate();
+};
+
+class DummyPtrType;
+
+class AssetReference
+{
+public:
+	AssetReference() : m_object(0) {}
+
+	AssetReference(const AssetReference &that) : m_object(that.m_object)
+	{
+		if (m_object)
+			m_object->Add_Ref();
+	}
+
+	~AssetReference()
+	{
+		if (m_object)
+			m_object->Release_Ref();
+	}
+
+	AssetReference &operator=(const AssetReference &that)
+	{
+		if (that.m_object)
+			that.m_object->Add_Ref();
+		if (m_object)
+			m_object->Release_Ref();
+		m_object = that.m_object;
+		return *this;
+	}
+
+	operator const DummyPtrType *() const
+	{
+		return (DummyPtrType *)m_object;
+	}
+
+	TextureClass *operator->() const
+	{
+		return m_object;
+	}
+
+	TextureClass *m_object;
+};
+
+void Rva009EBBC0(int asset_type);
+AssetReference Rva009EBDC0();
 
 class __declspec(novtable) WW3D
 {
 public:
-    static void _Invalidate_Textures();
+	static void _Invalidate_Textures();
 };
 
 // ?_Invalidate_Textures@WW3D@@SAXXZ
-__declspec(naked) void WW3D::_Invalidate_Textures()
+void WW3D::_Invalidate_Textures()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x70
-        __emit 0xab
-        __emit 0x05
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x68
-        __emit 0x58
-        __emit 0x45
-        __emit 0x54
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x0d
-        __emit 0xe4
-        __emit 0x0e
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x04
-        __emit 0x53
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x18
-        __emit 0x57
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xf4
-        __emit 0xe5
-        __emit 0x0e
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x8b
-        __emit 0x07
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x01
-        __emit 0x74
-        __emit 0x04
-        __emit 0x66
-        __emit 0xff
-        __emit 0x40
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x07
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xb5
-        __emit 0xdf
-        __emit 0x0e
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x37
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x0f
-        __emit 0x95
-        __emit 0xc3
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x00
-        __emit 0x74
-        __emit 0x05
-        __emit 0xe8
-        __emit 0x98
-        __emit 0xdf
-        __emit 0x0e
-        __emit 0x00
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0xb2
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x52
-        __emit 0x30
-        __emit 0xeb
-        __emit 0xa9
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x5f
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x5b
-        __emit 0x74
-        __emit 0x07
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x72
-        __emit 0xdf
-        __emit 0x0e
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-    }
+	Rva009EBBC0(0x544558);
+	AssetReference texture;
+	bool has_texture;
+	for (;;)
+	{
+		has_texture = (texture = Rva009EBDC0()) != 0;
+		if (has_texture && texture)
+			texture->Invalidate();
+		if (!has_texture)
+			break;
+	}
 }
