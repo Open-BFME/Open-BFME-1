@@ -17080,3 +17080,9 @@ _Rva0080FD30	0x0080FD30	146	partial	t=18m model=gpt-5.6. The direct caller at 0x
 ?d_00477d45@@YAXXZ	0x00477D45	8	blocked	Unnamed 8-byte body returns true; no named caller, identity, or built C++ emitter; no clean conversion found t=6 model=gpt-5
 ?d_00477d4d@@YAXXZ	0x00477D4D	8	blocked	Unnamed 8-byte body returns false; no named caller, identity, or built C++ emitter; no clean conversion found t=6 model=gpt-5
 ?dispatchFactory@Rva0078F910Owner@@QAEXPAURva0078F950Record@@@Z	0x0047FCF0	738	blocked	Address-derived Rva0078F910Owner factory dispatcher; source has only a declaration and no built emitter, so identity/layout cannot be completed cleanly t=10 model=gpt-5
+?d_002b0250@@YAXXZ	0x002B0250	964	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_002b1610@@YAXXZ	0x002B1610	1157	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_002b26c0@@YAXXZ	0x002B26C0	756	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_002b5800@@YAXXZ	0x002B5800	941	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_002b7c80@@YAXXZ	0x002B7C80	561	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_002ba390@@YAXXZ	0x002BA390	1159	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
