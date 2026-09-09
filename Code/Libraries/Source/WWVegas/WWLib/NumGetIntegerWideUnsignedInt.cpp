@@ -4,7 +4,8 @@
 // its digit parser at 0x00833270. The narrow unsigned-int body is at
 // 0x00833430 and calls its digit parser at 0x00833530. The narrow
 // unsigned-short body is at 0x008336F0 and calls its exact parser at
-// 0x008337F0.
+// 0x008337F0. The wide unsigned-64 body is at 0x00833C80 and calls the exact
+// parser at 0x00834010.
 // The unsigned-long body is at 0x00834610 and calls its digit parser at
 // 0x00834710. The unsigned-int body is at 0x008348D0 and calls its digit parser
 // at 0x008349D0. The unsigned-short body is at 0x00834B90 and calls the exact
@@ -188,6 +189,11 @@ namespace _STL
 	_M_do_get_integer<NarrowIterator, unsigned short, char>(
 		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
 		unsigned short &, char *);
+
+	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
+	_M_do_get_integer<WideIterator, unsigned __int64, unsigned short>(
+		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
+		unsigned __int64 &, unsigned short *);
 
 	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
 	_M_do_get_integer<WideIterator, unsigned int, unsigned short>(
