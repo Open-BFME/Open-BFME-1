@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-#include <stdlib.h>
+extern "C" int __cdecl abs( int n );
+#pragma intrinsic(abs)
 //
 // Retail 0x003EE2B0: BFME attack-query candidate test.  The query walks from
 // a cell coordinate to an offset candidate, resolves the candidate's effective
@@ -54,11 +55,9 @@ class PathfindLayer
 {
 public:
 	PathfindCell *getCell(Int x, Int y);
-	// The name of the pad below says +4, but nothing occupied +0, so the layer
-	// was 0x40 bytes and m_zoneManager landed at +0xC5C instead of retail's
-	// +0xC9C -- 16 layers x the missing dword.
-	Int m_field00;
-	unsigned char m_pad04[0x40];
+
+private:
+	unsigned char m_unreconstructed[0x44];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -72,7 +71,7 @@ public:
 class BfmeAttackQuery
 {
 public:
-	void fillCellAlongLine(const ICoord2D *from, const ICoord2D *to,
+	Int fillCellAlongLine(const ICoord2D *from, const ICoord2D *to,
 		Int layer, BfmeCellResult *result);
 	Bool validMovement(Int layer, Int fromZone, zoneStorageType toZone,
 		const void *extra);
@@ -84,105 +83,114 @@ public:
 private:
 	unsigned char m_pad000[0x10];
 	PathfindCell **m_map;
-	Int m_extentLoX;
-	Int m_extentLoY;
-	Int m_extentHiX;
-	Int m_extentHiY;
-	unsigned char m_pad024[0x838];
+	struct
+	{
+		ICoord2D lo;
+		ICoord2D hi;
+	} m_extent;
+	unsigned char m_beforeLayers[0x85c - 0x24];
 	PathfindLayer m_layers[16];
 	PathfindZoneManager m_zoneManager;
+
+	__forceinline PathfindCell *getCell(Int layer, Int x, Int y)
+	{
+		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
+			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		{
+			if (layer > 1 && layer <= 15)
+			{
+				PathfindCell *cell = m_layers[layer].getCell(x, y);
+				if (cell)
+					return cell;
+			}
+			return &m_map[x][y];
+		}
+		return 0;
+	}
 };
 
-// ?fillCellAlongLine@BfmeAttackQuery@@QAEXPBUICoord2D@@0HPAUBfmeCellResult@@@Z present-unmatched
-// (the matched checkCandidate calls it, so retail has a body; address unlocated)
-void BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
+// Retail body 0x003D6DC0; the checkCandidate caller reaches it through ILT
+// 0x00042E01.  The body returns true when the line finds a cell whose owner
+// differs from result->m_field04 and records that cell in result.
+Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
 	const ICoord2D *to, Int layer, BfmeCellResult *result)
 {
-	Int delta_x = abs(to->x - from->x);
-	Int delta_y = abs(to->y - from->y);
-	Int x = from->x;
-	Int y = from->y;
+	const ICoord2D *from_ptr = from;
+	const ICoord2D *to_ptr = to;
+	Int to_x = to_ptr->x;
+	Int x = from_ptr->x;
+	Int delta_x = abs(to_x - x);
+	Int y = from_ptr->y;
+	Int to_y = to_ptr->y;
+	Int delta_y = abs(to_y - y);
 
-	Int xinc1, xinc2;
-	if (to->x >= from->x)
-	{
-		xinc1 = 1;
-		xinc2 = 1;
-	}
-	else
-	{
-		xinc1 = -1;
-		xinc2 = -1;
-	}
-
-	Int yinc1, yinc2;
-	if (to->y >= from->y)
-	{
-		yinc1 = 1;
-		yinc2 = 1;
-	}
-	else
-	{
-		yinc1 = -1;
-		yinc2 = -1;
-	}
-
-	Int den, num, numadd, numpixels;
+	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
+	Int yinc2, num;
 	if (delta_x >= delta_y)
 	{
-		xinc1 = 0;
+		numpixels = delta_x + 1;
+		num = 2 * delta_y - delta_x;
+		numadd = delta_y << 1;
+		den = 2 * (delta_y - delta_x);
+		xinc2 = 1;
 		yinc2 = 0;
-		den = delta_x;
-		num = delta_x / 2;
-		numadd = delta_y;
-		numpixels = delta_x;
+		yinc1 = 1;
+		xinc1 = 1;
 	}
 	else
 	{
+		numpixels = delta_y + 1;
+		num = 2 * delta_x - delta_y;
+		numadd = delta_x << 1;
+		den = 2 * (delta_x - delta_y);
+		yinc2 = 1;
 		xinc2 = 0;
-		yinc1 = 0;
-		den = delta_y;
-		num = delta_y / 2;
-		numadd = delta_x;
-		numpixels = delta_y;
+		yinc1 = 1;
+		xinc1 = 1;
 	}
 
-	for (Int curpixel = 0; curpixel <= numpixels; curpixel++)
+	if (from->x > to_x)
 	{
-		PathfindCell *cell;
-		if (layer > 1 && layer <= 15)
-		{
-			cell = m_layers[layer].getCell(x, y);
-			if (cell != 0)
-				goto examine;
-		}
-		cell = m_map[x] + y;
+		xinc2 = -xinc2;
+		xinc1 = -1;
+	}
+	if (from->y > to_y)
+	{
+		yinc2 = -yinc2;
+		yinc1 = -1;
+	}
+
+	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
+	{
+		PathfindCell *cell = getCell(layer, x, y);
 		if (cell == 0)
-			return;
+			return false;
 
-	examine:
+		BfmeCellInfo *info = cell->m_info;
+		Int owner = info != 0 ? info->m_field20 : 0;
+		if (owner != result->m_field04)
 		{
-			BfmeCellInfo *info = cell->m_info;
-			Int owner = info != 0 ? info->m_field20 : 0;
-			if (owner != result->m_field04)
-			{
-				result->m_field08 = cell->m_zone;
-				result->m_field0c = x;
-				result->m_field10 = y;
-				return;
-			}
+			result->m_field08 = cell->m_zone;
+			result->m_field0c = x;
+			result->m_field10 = y;
+			return true;
 		}
 
-		num += numadd;
-		if (num >= den)
+		if (num < 0)
 		{
-			num -= den;
+			num += numadd;
+			x += xinc2;
+			y += yinc2;
+		}
+		else
+		{
+			num += den;
 			x += xinc1;
 			y += yinc1;
 		}
-		x += xinc2;
-		y += yinc2;
 	}
+
+	return false;
 }
 
 Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int dx, Int dy,
