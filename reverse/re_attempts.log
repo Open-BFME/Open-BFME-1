@@ -17096,3 +17096,7 @@ _Rva0080FD30	0x0080FD30	146	partial	t=18m model=gpt-5.6. The direct caller at 0x
 ?d_006b5a80@@YAXXZ	0x006B5A80	1480	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
 ?d_006b61c0@@YAXXZ	0x006B61C0	558	blocked	Generated body reached by address-derived bfmeGo935A; no unique identity or built C++ emitter t=8 model=gpt-5
 ?d_006b7e70@@YAXXZ	0x006B7E70	748	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
+?d_00694230@@YAXXZ	0x00694230	654	blocked	Generated body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_00694570@@YAXXZ	0x00694570	315	blocked	Generated body reached only by address-derived rva00694700 wrapper; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_0069a2e0@@YAXXZ	0x0069A2E0	775	blocked	Generated body reached only by address-derived Rva006B6910 setter; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_0069f5d0@@YAXXZ	0x0069F5D0	295	blocked	Generated body reached only by address-derived process/bfmeGo/bfmeFinish callers; no unique identity or built C++ emitter t=7 model=gpt-5
