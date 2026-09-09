@@ -1,0 +1,398 @@
+// ?update@RadiusDecal@@QAEXXZ
+// partial score=0.9 date=2026-09-08
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// RadiusDecal.cpp ///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+#define DEFINE_SHADOW_NAMES
+
+#include "Common/Player.h"
+#include "Common/PlayerList.h"
+#include "Common/Xfer.h"
+#include "GameClient/GameClient.h"
+#include "GameClient/RadiusDecal.h"
+#include "GameClient/Shadow.h"
+#include "GameLogic/GameLogic.h"
+
+#ifdef _INTERNAL
+// for occasional debugging...
+//#pragma optimize("", off)
+//#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
+#endif
+
+// ------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp
+// ??0RadiusDecalTemplate@@ present-unmatched
+RadiusDecalTemplate::RadiusDecalTemplate() : 
+	m_shadowType(SHADOW_ALPHA_DECAL), 
+	m_minOpacity(1.0f),
+	m_maxOpacity(1.0f),
+	m_opacityThrobTime(LOGICFRAMES_PER_SECOND),
+	m_color(0),
+	m_onlyVisibleToOwningPlayer(true),
+	m_name(AsciiString::TheEmptyString)  // Added By Sadullah Nader for Init purposes
+{
+}
+
+// ------------------------------------------------------------------------------------------------
+// ?createRadiusDecal@RadiusDecalTemplate@@ present-unmatched
+void RadiusDecalTemplate::createRadiusDecal(const Coord3D& pos, Real radius, const Player* owningPlayer, RadiusDecal& result) const
+{
+	result.clear();
+	
+	if (owningPlayer == NULL)
+	{
+		DEBUG_CRASH(("You MUST specify a non-NULL owningPlayer to createRadiusDecal. (srj)\n"));
+		return;
+	}
+
+	if (m_name.isEmpty() || radius <= 0.0f)
+		return;
+
+	// it is now considered nonEmpty, regardless of the state of m_decal, etc
+	result.m_empty = false;
+
+	if (!m_onlyVisibleToOwningPlayer ||
+			owningPlayer->getPlayerIndex() == ThePlayerList->getLocalPlayer()->getPlayerIndex())
+	{
+		Shadow::ShadowTypeInfo decalInfo;
+		decalInfo.allowUpdates = FALSE;										// shadow texture will never update
+		decalInfo.allowWorldAlign = TRUE;									// shadow image will wrap around world objects
+		decalInfo.m_type = m_shadowType;
+		strcpy(decalInfo.m_ShadowName, m_name.str());		// name of your texture
+		decalInfo.m_sizeX = radius*2;									// world space dimensions
+		decalInfo.m_sizeY = radius*2;									// world space dimensions
+
+		result.m_decal = TheProjectedShadowManager->addDecal(&decalInfo);
+		if (result.m_decal)
+		{
+			result.m_decal->setAngle(0.0f);
+			result.m_decal->setColor(m_color == 0 ? owningPlayer->getPlayerColor() : m_color);
+			result.m_decal->setPosition(pos.x, pos.y, pos.z);	
+			result.m_template = this;
+		}
+		else
+		{
+			DEBUG_CRASH(("Unable to add decal %s\n",decalInfo.m_ShadowName));
+		}
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+// ?xferRadiusDecalTemplate@RadiusDecalTemplate@@ present-unmatched
+void RadiusDecalTemplate::xferRadiusDecalTemplate( Xfer *xfer )
+{
+  // version
+  XferVersion currentVersion = 1;
+  XferVersion version = currentVersion;
+  xfer->xferVersion( &version, currentVersion );
+
+	xfer->xferAsciiString(&m_name);	
+	xfer->xferUser(&m_shadowType, sizeof(m_shadowType));	
+	xfer->xferReal(&m_minOpacity);
+  xfer->xferReal(&m_maxOpacity);
+	xfer->xferUnsignedInt(&m_opacityThrobTime);
+	xfer->xferColor(&m_color);
+	xfer->xferBool(&m_onlyVisibleToOwningPlayer);
+}
+
+// ------------------------------------------------------------------------------------------------
+/*static*/ void RadiusDecalTemplate::parseRadiusDecalTemplate(INI* ini, void *instance, void * store, const void* /*userData*/)
+{
+	static const FieldParse dataFieldParse[] = 
+	{
+		{ "Texture",										INI::parseAsciiString,				NULL,							offsetof( RadiusDecalTemplate, m_name ) },
+		{ "Style",											INI::parseBitString32,				TheShadowNames,		offsetof( RadiusDecalTemplate, m_shadowType ) },
+		{ "OpacityMin",									INI::parsePercentToReal,			NULL,							offsetof( RadiusDecalTemplate, m_minOpacity ) },
+		{ "OpacityMax",									INI::parsePercentToReal,			NULL,							offsetof( RadiusDecalTemplate, m_maxOpacity) },
+		{ "OpacityThrobTime",						INI::parseDurationUnsignedInt,NULL,							offsetof( RadiusDecalTemplate, m_opacityThrobTime ) },
+		{ "Color",											INI::parseColorInt,						NULL,							offsetof( RadiusDecalTemplate, m_color ) },
+		{ "OnlyVisibleToOwningPlayer",	INI::parseBool,								NULL,							offsetof( RadiusDecalTemplate, m_onlyVisibleToOwningPlayer ) },
+		{ 0, 0, 0, 0 }
+	};
+
+	ini->initFromINI(store, dataFieldParse);
+}
+
+// ------------------------------------------------------------------------------------------------
+// BFME's RadiusDecal carries one dword more than the reference class, at
+// +0x0C, and reaches the decal's position as a Coord3D field at +0x08 of the
+// object behind +0x04 rather than through a setter. The shadow releases itself
+// through its own vtable slot +0x08.
+class BfmeRadiusDecalShadow
+{
+public:
+	virtual void _bfme_pad_00( void ) = 0;
+	virtual void _bfme_pad_04( void ) = 0;
+	virtual void release( void ) = 0;				///< vtable +0x08
+};
+
+struct BfmeRadiusDecalShadowPos
+{
+	UnsignedByte pad[8];
+	Coord3D position;								///< retail shadow+0x08
+};
+
+struct BfmeRadiusDecalShadowFields
+{
+	UnsignedByte pad00[0x20];
+	Real value20;
+	UnsignedByte pad24[0x10];
+	UnsignedInt value34;
+};
+
+struct BfmeRadiusDecalLayout
+{
+	Int decalTemplate;								///< retail this+0x00
+	BfmeRadiusDecalShadow *shadow;					///< retail this+0x04
+	Bool empty;										///< retail this+0x08
+	Real bfmeExtra;									///< retail this+0x0C; the reference class stops before it
+};
+
+struct BfmeRadiusDecalTemplateLayout
+{
+	UnsignedByte pad00[0x0C];
+	Real minOpacity;
+	Real maxOpacity;
+	Real opacityThrobTime;
+	UnsignedByte pad18[0x10];
+	UnsignedInt templateValue28;
+	Real templateValue2C;
+};
+
+struct BfmeRadiusDecalWritableGlobalData
+{
+	UnsignedByte pad00[0x60];
+	volatile UnsignedByte flag60;
+};
+
+class BfmeRadiusDecalLookAtTranslator
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual Int slot01(void) = 0;
+};
+
+struct BfmeRadiusDecalGameLogicLayout
+{
+	UnsignedByte pad00[0x3C];
+	Int frame;
+	UnsignedByte pad40[0x52];
+	volatile UnsignedByte drawIconUI;
+};
+
+#define BFME_RADIUS_DECAL_GAME_LOGIC (*(BfmeRadiusDecalGameLogicLayout **)0x012F0898)
+#define BFME_RADIUS_DECAL_GAME_CLIENT (*(GameClient **)0x012F1464)
+#define BFME_RADIUS_DECAL_ZERO (*(const Real *)0x01075350)
+#define BFME_RADIUS_DECAL_UINT32_SCALE (*(const Real *)0x01075358)
+#define BFME_RADIUS_DECAL_ONE (*(const Real *)0x01075334)
+#define BFME_RADIUS_DECAL_HALF (*(const Real *)0x0107533C)
+#define BFME_RADIUS_DECAL_TWO_PI (*(const Real *)0x01087B10)
+#define BFME_RADIUS_DECAL_SCALE (*(const Real *)0x01084068)
+#define BFME_RADIUS_DECAL_THROB_SCALE (*(const Real *)0x010F638C)
+#define BFME_RADIUS_DECAL_FIRST_FACTOR (*(const Real *)0x012B5628)
+#define BFME_RADIUS_DECAL_SECOND_FACTOR (*(const Real *)0x010F6394)
+#define BFME_RADIUS_DECAL_POSITION_SCALE (*(const Real *)0x0108882C)
+#define BFME_RADIUS_DECAL_WRITABLE_DATA (*(BfmeRadiusDecalWritableGlobalData **)0x012ED5C8)
+#define BFME_RADIUS_DECAL_LOOK_AT_TRANSLATOR (*(BfmeRadiusDecalLookAtTranslator **)0x012F4C84)
+
+extern "C" __declspec(dllimport) double bfmeMathVE(double);
+extern Real bfmeSinVNB(Real);
+
+RadiusDecal::RadiusDecal() : 
+	m_template(NULL), 
+	m_decal(NULL),
+	m_empty(true)
+{
+	((BfmeRadiusDecalLayout *)this)->bfmeExtra = 0;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ??0RadiusDecal@@QAE@ABV0@@Z present-unmatched
+RadiusDecal::RadiusDecal(const RadiusDecal& that) : 
+	m_template(NULL), 
+	m_decal(NULL),
+	m_empty(true)
+{
+	DEBUG_CRASH(("not fully implemented"));
+}
+
+// ------------------------------------------------------------------------------------------------
+// ??4RadiusDecal@@ present-unmatched
+RadiusDecal& RadiusDecal::operator=(const RadiusDecal& that)
+{
+	if (this != &that)
+	{
+		m_template = NULL;
+		if (m_decal)
+			m_decal->release();
+		m_decal = NULL;
+		m_empty = true;
+		DEBUG_CRASH(("not fully implemented"));
+	}
+	return *this;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ?xferRadiusDecal@RadiusDecal@@ present-unmatched
+void RadiusDecal::xferRadiusDecal( Xfer *xfer )
+{
+	/// @todo implement me
+	if (xfer->getXferMode() == XFER_LOAD)
+	{
+		clear();
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+void RadiusDecal::clear()
+{
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	self->decalTemplate = 0;
+	if (self->shadow)
+	{
+		self->shadow->release();
+	}
+	self->shadow = NULL;
+	self->empty = true;
+}
+
+// ------------------------------------------------------------------------------------------------
+// Thirty-four bytes identical to clear() above, which the linker did not fold.
+// Spelled out rather than as a call to clear(), because a call is what retail
+// does not have.
+RadiusDecal::~RadiusDecal()
+{
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	self->decalTemplate = 0;
+	if (self->shadow)
+	{
+		self->shadow->release();
+	}
+	self->shadow = NULL;
+	self->empty = true;
+}
+
+// ------------------------------------------------------------------------------------------------
+// ?update@RadiusDecal@@ present-unmatched
+void RadiusDecal::update()
+{
+	if (m_bfmeExtra == BFME_RADIUS_DECAL_ZERO)
+	{
+		UnsignedInt frame = BFME_RADIUS_DECAL_GAME_LOGIC->frame;
+		m_bfmeExtra = frame;
+	}
+
+	if (m_decal == NULL)
+		return;
+
+	if (m_template == NULL)
+		return;
+
+	UnsignedInt frame = BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+	Real throbTime = (Real)bfmeMathVE(
+		((const BfmeRadiusDecalTemplateLayout *)m_template)->opacityThrobTime * BFME_RADIUS_DECAL_THROB_SCALE);
+	UnsignedInt cycle;
+	__asm fld throbTime
+	__asm fistp cycle
+	UnsignedInt divisorValue = cycle;
+	UnsignedInt minimum = 1;
+	UnsignedInt *divisor = &divisorValue;
+	if (1 >= divisorValue)
+		divisor = &minimum;
+	UnsignedInt phase = frame % *divisor;
+	Real percent = bfmeSinVNB((Real)phase * BFME_RADIUS_DECAL_TWO_PI / (Real)*divisor);
+	percent += BFME_RADIUS_DECAL_ONE;
+
+	Int opacity = 0;
+	if (BFME_RADIUS_DECAL_GAME_LOGIC->drawIconUI)
+	{
+		percent *= BFME_RADIUS_DECAL_HALF;
+		Real value = (((const BfmeRadiusDecalTemplateLayout *)m_template)->maxOpacity
+			- ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity) * percent;
+		value += ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity;
+		opacity = (Int)(value * BFME_RADIUS_DECAL_SCALE);
+	}
+
+	BfmeRadiusDecalShadowFields *shadowFields = (BfmeRadiusDecalShadowFields *)m_decal;
+	Bool specialShadow = shadowFields->value34 == 0x1000;
+	if (specialShadow
+		&& ((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue28 <= 0
+		&& BFME_RADIUS_DECAL_WRITABLE_DATA->flag60
+		&& BFME_RADIUS_DECAL_LOOK_AT_TRANSLATOR->slot01())
+	{
+		opacity = 0;
+	}
+
+	m_decal->setOpacity(opacity);
+	if (((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue2C != BFME_RADIUS_DECAL_ZERO)
+	{
+		Real scale = BFME_RADIUS_DECAL_FIRST_FACTOR * BFME_RADIUS_DECAL_SECOND_FACTOR;
+		scale *= ((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue2C;
+		scale *= BFME_RADIUS_DECAL_POSITION_SCALE;
+		Int clientFrame = BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+		Real frameAsReal = (Real)clientFrame;
+		if (clientFrame < 0)
+			frameAsReal += BFME_RADIUS_DECAL_UINT32_SCALE;
+		((BfmeRadiusDecalShadowFields *)m_decal)->value20 = frameAsReal * scale;
+	}
+
+	m_bfmeExtra = (Real)BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+}
+
+
+
+void RadiusDecal::setOpacity( Real o )
+{
+	if (m_decal)
+	{
+		// BFME truncates rather than rounds here: retail is fld / fmul 255.0f /
+		// __ftol2, which is a plain cast, not REAL_TO_INT.
+		m_decal->setOpacity((Int)(o * 255.0f));
+	}
+}
+
+// ------------------------------------------------------------------------------------------------
+void RadiusDecal::setPosition(const Coord3D& pos)
+{
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+
+	// BFME stores the world-space centre straight into the decal's own Coord3D
+	// at +0x08; the reference calls a three-float setter that retail has not.
+	if (self->shadow)
+	{
+		((BfmeRadiusDecalShadowPos *)self->shadow)->position = pos;
+	}
+}
