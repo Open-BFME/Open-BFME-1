@@ -309,10 +309,10 @@ RadiusDecal::~RadiusDecal()
 // ?update@RadiusDecal@@ present-unmatched
 void RadiusDecal::update()
 {
-	if (m_bfmeExtra == BFME_RADIUS_DECAL_ZERO)
+	if (((BfmeRadiusDecalLayout *)this)->bfmeExtra == BFME_RADIUS_DECAL_ZERO)
 	{
 		UnsignedInt frame = BFME_RADIUS_DECAL_GAME_LOGIC->frame;
-		m_bfmeExtra = frame;
+		((BfmeRadiusDecalLayout *)this)->bfmeExtra = frame;
 	}
 
 	if (m_decal == NULL)
@@ -330,20 +330,24 @@ void RadiusDecal::update()
 	UnsignedInt divisorValue = cycle;
 	UnsignedInt minimum = 1;
 	UnsignedInt *divisor = &divisorValue;
-	if (1 >= divisorValue)
+	if (1 >= cycle)
 		divisor = &minimum;
 	UnsignedInt phase = frame % *divisor;
-	Real percent = bfmeSinVNB((Real)phase * BFME_RADIUS_DECAL_TWO_PI / (Real)*divisor);
-	percent += BFME_RADIUS_DECAL_ONE;
+	Real percent = bfmeSinVNB((Real)phase * BFME_RADIUS_DECAL_TWO_PI / (Real)*divisor)
+		+ BFME_RADIUS_DECAL_ONE;
 
-	Int opacity = 0;
+	Int opacity;
 	if (BFME_RADIUS_DECAL_GAME_LOGIC->drawIconUI)
 	{
-		percent *= BFME_RADIUS_DECAL_HALF;
-		Real value = (((const BfmeRadiusDecalTemplateLayout *)m_template)->maxOpacity
-			- ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity) * percent;
-		value += ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity;
-		opacity = (Int)(value * BFME_RADIUS_DECAL_SCALE);
+		Real halfPercent = percent * BFME_RADIUS_DECAL_HALF;
+		opacity = (Int)(((((const BfmeRadiusDecalTemplateLayout *)m_template)->maxOpacity
+			- ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity) * halfPercent
+			+ ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity)
+			* BFME_RADIUS_DECAL_SCALE);
+	}
+	else
+	{
+		opacity = 0;
 	}
 
 	BfmeRadiusDecalShadowFields *shadowFields = (BfmeRadiusDecalShadowFields *)m_decal;
@@ -369,7 +373,7 @@ void RadiusDecal::update()
 		((BfmeRadiusDecalShadowFields *)m_decal)->value20 = frameAsReal * scale;
 	}
 
-	m_bfmeExtra = (Real)BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+	((BfmeRadiusDecalLayout *)this)->bfmeExtra = (Real)BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
 }
 
 
