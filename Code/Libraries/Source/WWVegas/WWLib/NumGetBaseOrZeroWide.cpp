@@ -8,7 +8,8 @@
 // uses the non-owning iostream path: the ctype facet is obtained from the
 // temporary locale returned by ios_base::getloc(), and that locale is released
 // immediately after _M_use_facet returns.  BFME's wchar_t ABI is an unsigned
-// short, and the iterator's Traits::int_type is the same unsigned short.
+// short, and the iterator's Traits::int_type is the same unsigned short.  The
+// narrow instantiation at 0x00832970 uses the corresponding narrow ctype ABI.
 
 namespace _STL
 {
@@ -80,11 +81,40 @@ namespace _STL
 			CharT *) const;
 	};
 
+	// STLport's narrow ctype has four virtual range/conversion slots before
+	// do_widen; the wide ctype above has eight.  Keeping this ABI-local view is
+	// what makes the narrow parser dispatch at vtable offset +0x14.
+	template <>
+	class ctype<char> : public locale::facet
+	{
+	public:
+		const char *widen(const char *low, const char *high,
+			char *to) const
+		{
+			return do_widen(low, high, to);
+		}
+
+	protected:
+		virtual char do_toupper(char) const;
+		virtual char do_tolower(char) const;
+		virtual const char *do_toupper(char *, const char *) const;
+		virtual const char *do_tolower(char *, const char *) const;
+		virtual const char *do_widen(const char *, const char *,
+			char *) const;
+	};
+
 	template <class CharT>
 	const ctype<CharT> &use_ctype_facet(const locale &loc)
 	{
 		return *(const ctype<CharT> *)loc._M_use_facet(
 			*(const locale::id *)0x012C7450);
+	}
+
+	template <>
+	const ctype<char> &use_ctype_facet<char>(const locale &loc)
+	{
+		return *(const ctype<char> *)loc._M_use_facet(
+			*(const locale::id *)0x012C7430);
 	}
 
 	class ios_base
@@ -118,6 +148,14 @@ namespace _STL
 		unsigned short sbumpc();
 	};
 
+	template <class Traits>
+	class basic_streambuf<char, Traits>
+	{
+	public:
+		// The narrow Traits::int_type is int in this retail build.
+		int sbumpc();
+	};
+
 	template <class CharT, class Traits>
 	class istreambuf_iterator
 	{
@@ -135,9 +173,8 @@ namespace _STL
 			return _M_eof == other._M_eof;
 		}
 
-	private:
-		void _M_getc() const;
 	public:
+		void _M_getc() const;
 
 		char_type operator*() const
 		{
@@ -167,6 +204,7 @@ namespace _STL
 
 	typedef istreambuf_iterator<unsigned short,
 		char_traits<unsigned short> > WideIterator;
+	typedef istreambuf_iterator<char, char_traits<char> > NarrowIterator;
 
 	// The vendor's __narrow_atoms is the five-byte table beginning at this
 	// independently read retail VA ("+x0123456789abcdef...").
@@ -244,4 +282,7 @@ namespace _STL
 
 	template int _M_get_base_or_zero<WideIterator, unsigned short>(
 		WideIterator &, WideIterator &, ios_base &, unsigned short *);
+
+	template int _M_get_base_or_zero<NarrowIterator, char>(
+		NarrowIterator &, NarrowIterator &, ios_base &, char *);
 }
