@@ -1,305 +1,98 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// Open-BFME: readable reconstruction of the retail window-definition FONT
+// callback.  The callback is registered by gameWindowFieldList in the
+// reference GameWindowManagerScript.cpp and uses the BFME font-library ABI.
 
-class WinInstanceData;
-bool __cdecl parseFont(char *, WinInstanceData *, char *, void *);
+#include <string.h>
+
+typedef int Int;
+typedef float Real;
+typedef bool Bool;
+
+#define NULL 0
+
+extern "C" __declspec(dllimport) int __cdecl sscanf(const char *, const char *, ...);
+extern "C" __declspec(dllimport) char *__cdecl strtok(char *, const char *);
+
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase(const T *text);
+	void releaseBuffer();
+
+	void *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString() { releaseBuffer(); }
+	operator AsciiString *(void) { return this; }
+};
+
+class GameFont;
+
+class FontLibrary
+{
+public:
+	GameFont *getFont(AsciiString *name, Real pointSize, Bool bold);
+};
+
+extern FontLibrary *TheFontLibrary;
+
+class WinInstanceData
+{
+public:
+	unsigned char m_unreconstructed_00[0x184];
+	GameFont *m_font;
+};
+
+static Int scanInt(const char *source, Int &val)
+{
+	Int ret = sscanf(source, "%d", &val);
+	return ret;
+}
 
 // ?parseFont@@YA_NPADPAVWinInstanceData@@0PAX@Z
-__declspec(naked) bool __cdecl parseFont(char *, WinInstanceData *, char *, void *)
+Bool __cdecl parseFont(char *, WinInstanceData *instData, char *buffer, void *)
 {
-	__asm {
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0x0c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x35
-        __emit 0xd8
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xbc
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x57
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8a
-        __emit 0x0f
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x80
-        __emit 0xf9
-        __emit 0x22
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x48
-        __emit 0x01
-        __emit 0x40
-        __emit 0x80
-        __emit 0xf9
-        __emit 0x22
-        __emit 0x75
-        __emit 0xf7
-        __emit 0x40
-        __emit 0x68
-        __emit 0x94
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x50
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x08
-        __emit 0x40
-        __emit 0x88
-        __emit 0x0a
-        __emit 0x42
-        __emit 0x84
-        __emit 0xc9
-        __emit 0x75
-        __emit 0xf6
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8b
-        __emit 0x3d
-        __emit 0x94
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0x68
-        __emit 0xb4
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0xff
-        __emit 0xd7
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x68
-        __emit 0x9c
-        __emit 0x94
-        __emit 0x0f
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x38
-        __emit 0x52
-        __emit 0x68
-        __emit 0xb4
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0xff
-        __emit 0xd7
-        __emit 0xa1
-        __emit 0x38
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x38
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x62
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xa8
-        __emit 0x2f
-        __emit 0x40
-        __emit 0x00
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xff
-        __emit 0x0f
-        __emit 0x95
-        __emit 0xc1
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x38
-        __emit 0x1b
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x7e
-        __emit 0x4f
-        __emit 0xb8
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xe5
-        __emit 0x1c
-        __emit 0x40
-        __emit 0x00
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0x28
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0xb0
-        __emit 0x84
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x18
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc3
+	char *c, *ptr;
+	char *seps = " ,\n\r\t";
+	char *stringSeps = ":,\n\r\t\"";
+	char fontName[256];
+	Int fontSize;
+	Int fontBold;
+
+	// "NAME"
+	c = strtok(buffer, seps);
+	ptr = buffer;
+	while (*ptr != '"')
+		ptr++;
+	ptr++;
+	c = strtok(ptr, stringSeps);
+	strcpy(fontName, c);
+
+	// "SIZE"
+	c = strtok(NULL, seps);
+	c = strtok(NULL, seps);
+	scanInt(c, fontSize);
+
+	// "BOLD"
+	c = strtok(NULL, seps);
+	c = strtok(NULL, seps);
+	scanInt(c, fontBold);
+
+	if (TheFontLibrary)
+	{
+		GameFont *font;
+		font = TheFontLibrary->getFont(AsciiString(fontName), fontSize, fontBold);
+		if (font)
+			instData->m_font = font;
 	}
+
+	return true;
 }

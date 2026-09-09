@@ -80862,6 +80862,7 @@ name,address,notes
 ?getFirstItemIn_TeamMemberList@Team@@QBEPAVObject@@XZ,0x0003FD41,Team::getFirstItemIn_TeamMemberList resolves to the retail 5-byte ILT at 0x0003FD41, whose body is the proven +0x0C team-member-head getter used by evaluateTeamCanPathToWaypoint
 ?getFirstObject@GameLogic@@QAEPAVObject@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses call target (incremental-link thunk)
 ?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,ILT thunk to FontLibrary::getFont from HeaderTemplateManager::populateGameFonts
+?getFont@FontLibrary@@QAEPAVGameFont@@PAVAsciiString@@M_N@Z,0x0000ABC3,Open-BFME5 bool-ABI alias of the proven FontLibrary getFont ILT
 ?getFont@FontLibraryBFMERetail@@QAEPAVGameFont@@PAVAsciiString@@ME@Z,0x0000ABC3,Open-BFME5 BFME retail FontLibrary ABI alias
 ?getForegroundMarkerPos@ControlBar@@QAEXPAH0@Z,0x0002C147,Caller-backed W3DCommandBarForegroundDraw at0079CD60; root decoded ILT and checked reference implementation
 ?getFormationMovementSpeed@AIUpdateInterface@@QAEMPAVObject@@@Z,0x000230AB,BFME AI locomotor-controller speed calculation thunk used by getCurLocomotorSpeed
