@@ -19643,3 +19643,26 @@ _Rva0080ADE0	0x0080ADE0	542	partial	matched callers 0x0080B050,0x0080B070,0x0080
 ?d_00454090@@YAXXZ	0x00454090	292	blocked	identity unresolved: no built emitter; caller 0x00454200 is named advance@Rva00454200Cursor but does not establish this body owner; no safe identity; t=5min model=gpt-5.6
 ?d_00459640@@YAXXZ	0x00459640	273	blocked	identity unresolved: no built emitter and no named caller; virtual-call helper has no source owner established; t=4min model=gpt-5.6
 ?d_004462d0@@YAXXZ	0x004462D0	350	blocked	identity unresolved: no built emitter and no named caller; virtual-call helper has no source owner established; t=4min model=gpt-5.6
+?d_0024b7c0@@YAXXZ	0x0024B7C0	26	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0023fa50@@YAXXZ	0x0023FA50	33	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00248c60@@YAXXZ	0x00248C60	124	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0023d130@@YAXXZ	0x0023D130	92	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0024eca0@@YAXXZ	0x0024ECA0	126	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00237cd0@@YAXXZ	0x00237CD0	121	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0023d850@@YAXXZ	0x0023D850	147	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00238ae0@@YAXXZ	0x00238AE0	175	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0023a100@@YAXXZ	0x0023A100	167	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0024a840@@YAXXZ	0x0024A840	147	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00237bd0@@YAXXZ	0x00237BD0	193	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_002496e0@@YAXXZ	0x002496E0	248	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00242b90@@YAXXZ	0x00242B90	194	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_0023c200@@YAXXZ	0x0023C200	208	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_002434d0@@YAXXZ	0x002434D0	226	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00236e10@@YAXXZ	0x00236E10	253	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00251530@@YAXXZ	0x00251530	256	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00240b10@@YAXXZ	0x00240B10	247	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00237070@@YAXXZ	0x00237070	269	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_002388f0@@YAXXZ	0x002388F0	286	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00237950@@YAXXZ	0x00237950	265	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00239950@@YAXXZ	0x00239950	324	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
+?d_00254cf0@@YAXXZ	0x00254CF0	486	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established after detector audit; t=3min model=gpt-5.6
