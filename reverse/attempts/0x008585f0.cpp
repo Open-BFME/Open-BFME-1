@@ -59,12 +59,12 @@ void peerChangeNickA(PEER peer, const char *newNick, void *callback,
 	}
 }
 
-void peerAuthenticateCDKeyA(PEER peer, const char *cdkey, void *callback,
+void peerAuthenticateCDKeyA(register PEER peer, const char *cdkey, void *callback,
 	void *param, int blocking)
 {
 	int success = 1;
-	register piConnection *connection = (piConnection *)peer;
-	int opID = piGetNextID(connection);
+	register int opID = piGetNextID(peer);
+	piConnection *connection = (piConnection *)peer;
 
 	if (!piNewAuthenticateCDKeyOperation(connection, cdkey, callback, param, opID))
 		success = 0;
@@ -83,7 +83,8 @@ void peerAuthenticateCDKeyA(PEER peer, const char *cdkey, void *callback,
 		while (!piIsOperationFinished(connection, opID) ||
 			!piIsCallbackFinished(connection, opID));
 
-		if (connection->shutdown && connection->callbackDepth == 0)
+		if (((piConnection *)connection)->shutdown &&
+			((piConnection *)connection)->callbackDepth == 0)
 			peerShutdown(connection);
 	}
 }

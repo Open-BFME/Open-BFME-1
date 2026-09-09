@@ -15,10 +15,18 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef unsigned int AudioHandle;
 
-enum SpecialPowerType { };
+enum SpecialPowerType
+{
+	SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES = 0x15,
+	SPECIAL_TIMED_CHARGES = 0x1a,
+	SPECIAL_BOOBY_TRAP = 0x1d
+};
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 template<int NUMBITS>
 class BitFlags
@@ -110,11 +118,14 @@ public:
 class SpecialPowerTemplate : public Overridable
 {
 public:
-	SpecialPowerType getSpecialPowerType() const { return m_specialPowerType; }
+	SpecialPowerType getSpecialPowerType() const
+	{
+		return (SpecialPowerType)m_specialPowerType;
+	}
 
 	public:
 	unsigned char m_unmodelled_08[0x0c];
-	volatile SpecialPowerType m_specialPowerType;
+	SpecialPowerType m_specialPowerType;
 };
 
 static __forceinline int readSpecialPowerType(
@@ -167,11 +178,11 @@ void SpecialAbilityUpdate::endPreparation()
 				overrideTemplate->m_nextOverride->friend_getFinalOverride();
 		specialPowerTemplate = (const SpecialPowerTemplate *)overrideTemplate;
 	}
-	switch (specialPowerTemplate->m_specialPowerType)
+	switch (specialPowerTemplate->getSpecialPowerType())
 	{
-	case (SpecialPowerType)0x15:
-	case (SpecialPowerType)0x1a:
-	case (SpecialPowerType)0x1d:
+	case SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES:
+	case SPECIAL_TIMED_CHARGES:
+	case SPECIAL_BOOBY_TRAP:
 		((SpecialAbilityCleanupCall)j_000434c3)(this);
 		break;
 	}
