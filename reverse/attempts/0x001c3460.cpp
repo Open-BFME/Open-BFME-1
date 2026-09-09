@@ -1,5 +1,5 @@
 // ?bfmeGetYA@BfmeHostYA@@QAEMXZ
-// partial score=0.94 date=2026-09-08
+// partial score=0.99 date=2026-09-09
 // pin needed: ?bfmeApplyYA@LocomotorOverridable@@QAEHPAVPlayer@@H@Z,0x0004B01F
 class Player;
 
@@ -24,13 +24,18 @@ extern float g_bfmeDefaultBU;
 
 static __forceinline LocomotorOverridable *bfmeFinalYA(LocomotorOverridable *p)
 {
+	LocomotorOverridable *overrideObject;
 	if (p == 0)
-		return 0;
-
-	if (p->m_bfme04YA == 0)
-		return p;
-
-	return p->m_bfme04YA->friend_getFinalOverride();
+	{
+		overrideObject = 0;
+	}
+	else
+	{
+		overrideObject = p->m_bfme04YA;
+		if (overrideObject != 0)
+			overrideObject = overrideObject->friend_getFinalOverride();
+	}
+	return overrideObject;
 }
 
 class BfmeHostYA

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e8e9a401c6c53ec703fc2f0a030479b5fed99373b7523a2c536932aaa268f03a",
+  "symbol": "?bfmeGetYA@BfmeHostYA@@QAEMXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?bfmeGetYA@BfmeHostYA@@QAEMXZ\n// partial score=0.99 date=2026-09-09\n// pin needed: ?bfmeApplyYA@LocomotorOverridable@@QAEHPAVPlayer@@H@Z,0x0004B01F\nclass Player;\n\nclass LocomotorOverridable\n{\npublic:\n\tLocomotorOverridable *friend_getFinalOverride();\n\tint bfmeApplyYA(Player *pl, int mode);\n\n\tunsigned char m_bfmeHeadYA[4];\n\tLocomotorOverridable *m_bfme04YA;\n};\n\nclass Team\n{\npublic:\n\tPlayer *getControllingPlayer() const;\n};\n\nextern const float BfmeZeroRange;\nextern float g_bfmeDefaultBU;\n\nstatic __forceinline LocomotorOverridable *bfmeFinalYA(LocomotorOverridable *p)\n{\n\tLocomotorOverridable *overrideObject;\n\tif (p == 0)\n\t{\n\t\toverrideObject = 0;\n\t}\n\telse\n\t{\n\t\toverrideObject = p->m_bfme04YA;\n\t\tif (overrideObject != 0)\n\t\t\toverrideObject = overrideObject->friend_getFinalOverride();\n\t}\n\treturn overrideObject;\n}\n\nclass BfmeHostYA\n{\npublic:\n\tfloat bfmeGetYA();\n\n\tunsigned char m_bfmeHeadYA[4];\n\tLocomotorOverridable *m_bfme04YA;\n\tunsigned char m_bfmeMidYA[0x234];\n\tTeam *m_bfme23CYA;\n};\n\nfloat BfmeHostYA::bfmeGetYA()\n{\n\tTeam *team = m_bfme23CYA;\n\tPlayer *pl = 0;\n\n\tif (team != 0)\n\t\tpl = team->getControllingPlayer();\n\n\tif (pl == 0)\n\t\treturn BfmeZeroRange;\n\n\treturn g_bfmeDefaultBU / (float)bfmeFinalYA(m_bfme04YA)->bfmeApplyYA(pl, -1);\n}\n"
+}
