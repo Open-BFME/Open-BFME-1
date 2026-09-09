@@ -26,3 +26,9 @@ template _STL::pair<AsciiStringListTree::iterator, bool>
 template AsciiStringListTree::iterator AsciiStringListTree::_M_insert(
  _STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
  const AsciiStringListPair &, _STL::_Rb_tree_node_base *);
+
+// Full pair copy construction at RVA 0x00080AF0.
+template _STL::pair<const AsciiString,
+ _STL::list<AsciiString, _STL::allocator<AsciiString> > >::pair(
+ const _STL::pair<const AsciiString,
+ _STL::list<AsciiString, _STL::allocator<AsciiString> > > &);
