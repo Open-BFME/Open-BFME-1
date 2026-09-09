@@ -19782,3 +19782,5 @@ queueDozer	0x001657E0	490	blocked	BFME three-argument findFactory(tTemplate,true
 ?d_001c9980@@YAXXZ	0x001C9980	109	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
 ?d_001c8b20@@YAXXZ	0x001C8B20	152	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
 ?d_001ca9c0@@YAXXZ	0x001CA9C0	150	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_006e1be0@@YAXXZ	0x006E1BE0	88	blocked	served file drained: retained clean vector-dot bank is a 0.93 x87 shape with unresolved default-discard scheduling; generated alias has no named caller or emitted owner; t=9min model=gpt-5.6
+?d_006eb000@@YAXXZ	0x006EB000	54	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
