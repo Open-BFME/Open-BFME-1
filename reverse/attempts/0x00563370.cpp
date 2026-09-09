@@ -1,75 +1,114 @@
 // ??0BfmeAptScreenOptions@@QAE@PAX@Z
-// partial score=0.85 date=2026-09-09
+// partial score=0.9 date=2026-09-09
 //
-// Land target: Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,
-// which already has the shared _bfme_AptGameWindow / FunctorBinding /
-// AsciiString / UnicodeString / g_theWindowManager infra this needs (see
-// the landed BfmeAptScreenDisconnectScreen / CampaignReview / SpellStore
-// ctors in that file for the pattern). Only the block below is new; splice
-// it in where the current BfmeAptScreenOptions stub (char m_unmodelled[0x310])
-// sits, right after `class BfmeAptFunctorMarker {};`.
+// Land target: Code/GameEngine/Source/GameClient/AptScreenFactories.cpp.
+// Splice in right after createAptScreenDisconnectScreen()'s closing brace
+// (before "// SaveLoad.apt"); remove the early stub
+// `class BfmeAptScreenOptions { char m_unmodelled[0x310]; };` +
+// `createAptScreenOptions` near the top of the file (same pattern the
+// landed DisconnectScreen/CampaignReview/SpellStore/QuickMatchMenu bodies
+// already follow -- stub removed, real body placed near the shared
+// _bfme_AptGameWindow/FunctorBinding/AsciiString/UnicodeString infra it
+// needs). Requires the six new symbols.csv pins below (verified compile
+// clean this session; drop them again if you park without landing --
+// re-derive from `python3 tools/dis_retail.py 0x00563370 1073` if retail
+// moves):
+//   ?showAptScreen@OptionsRegistry@@QAEXABVAsciiString@@VOptionsShowHolder@@@Z 0x000338ED (shared ILT, same target as DisconnectScreen/CampaignReview/SpellStore/QuitMenu's showAptScreen)
+//   ?optionsSetAptScreenRef@@YAXABVAsciiString@@VOptionsInitHolder@@@Z 0x0003DF14 (shared ILT, same target as _bfme_setAptScreenRef/campaignReviewSetAptScreenRef)
+//   ??0OptionsShowHolder@@QAE@UFunctorBinding@@@Z 0x00031C41
+//   ??0OptionsInitHolder@@QAE@UFunctorBinding@@@Z 0x000323A3
+//   ?getUnicodeVersion@OptionsVersionView@@QAE?AVUnicodeString@@XZ 0x00030E63
+//   ?g_optionsVersion@@3PAVOptionsVersionView@@A 0x012ED644
+//   ?BfmeAptScreenOptionsVftable@@3PAPBXA 0x0110912C
+//   ?BfmeAptScreenOptionsSecondaryVftable@@3PAPBXA 0x01109128
+//   ?g_optionsScreenLayout@@3PAXA 0x012F4AD4 (SAME address as the existing
+//     g_quitMenuLayout pin -- confirmed by dis_retail.py resolving the
+//     `cmp dword ptr [0x12f4ad4],ebp` singleton check to that name; add a
+//     second name at the same address, do not rename the existing pin)
+// Already-existing pins reused, no action needed:
+//   ??0OptionPreferences@@QAE@XZ 0x0003713C  (line 3154 in symbols.csv)
+//   ??1OptionPreferences@@UAE@XZ 0x00001307  (line 8860 -- note the "U":
+//     PUBLIC VIRTUAL destructor, see below)
 //
-// Fixed vs the earlier 0.89 stash:
-//  - the earlier stash's `char m_options[0x14]` implicitly covered the
-//    4-byte gap between the OptionPreferences sub-object (0x260..0x270) and
-//    m_fields274 (0x274..). This version makes that explicit as
-//    m_optionsBuffer[0x10] (leave it 0x14 if you drop the padding member).
-//  - OptionPreferences is REALLY constructed via its pinned constructor
-//    (??0OptionPreferences@@QAE@XZ, 0x0003713C -- see reverse/symbols.csv),
-//    not an invented `.initialize()` method. `new (buf) OptionPreferences();`
-//    compiles a spurious `if (ptr) ctor();` null-check in this TU (no local
-//    `operator new(size_t,void*)` override available -- one is already
-//    declared via <list>/<vector> and re-declaring collides). Use MSVC's
-//    explicit-constructor-call syntax instead (already used elsewhere in
-//    this file for StringBase's copy ctor):
-//        ( (OptionPreferences *)m_optionsBuffer )->OptionPreferences::OptionPreferences();
-//    -- this reproduces retail's plain `call` with no check.
-//  - the m_fields274[4] quad (0x274..0x284) compiles as 4 direct
-//    `mov [esi+off],reg` stores if written as individual assignments;
-//    retail computes `lea edx,[esi+0x274]` once and stores through
-//    edx+0/4/8/0xc. `memset(m_fields274, 0, sizeof(m_fields274))` (inlined
-//    by /O2) reproduces that exact shape -- verified byte-identical for
-//    that quad. The remaining fields (m_fields284[5], m_fields2A8[24]) DO
-//    match retail's direct-addressing shape when written as individual
-//    assignments (no loop -- an explicit `for` costs a stray induction
-//    register/stack slot).
+// THIS SESSION'S FINDING (the structural piece the earlier 0.85/940B stash
+// was missing -- got it to 973B, still 100B short of 1073, but the EH
+// state COUNT now matches retail's 11 states exactly, confirmed via
+// build/ehmap.py on both this function and the already-landed sibling
+// BfmeAptScreenQuitMenuConstructor.cpp for comparison):
 //
-// STILL UNRESOLVED at t=45 (this session) + t=25 (prior gpt-5 session):
-//  Retail holds an explicit zero constant in ebp AND a separate flag/state
-//  byte in bl (visible as `mov bl,1` early, reused as the "already
-//  constructed" cleanup guard for the six AsciiString callback-name
-//  temporaries). This build's register allocator instead uses a single
-//  ebx for the zero constant, one fewer live callee-saved value, and the
-//  compiled body is 940 bytes vs retail's 1073 (still short after the
-//  padding/memset/ctor fixes above -- those recovered ~35 bytes and fixed
-//  the shape of the first quad but did not change the register choice or
-//  close the remaining size gap). AGENTS.md is explicit that register
-//  choice is generally not source-controllable; the size gap likely means
-//  the six registration blocks (registry->showAptScreen(name,
-//  OptionsShowHolder(FunctorBinding(callback,this))) x5 +
-//  optionsSetAptScreenRef(...) x1, then the trailing
-//  UnicodeString version = g_optionsVersion->getUnicodeVersion();
-//  AsciiString versionName("APT:VersionNum");
-//  g_theWindowManager->bfme_setAptText(versionName, version);
-//  tail) still don't reproduce retail's per-block EH state-tag byte
-//  sequence (2,3,4,5,6,7,8,9,0xa seen in the retail disassembly at
-//  esp+0x48/esp+0x38/esp+0x34) the way BfmeAptScreenDisconnectScreen's six
-//  blocks do; that tag sequence is worth re-deriving call-by-call against
-//  `python3 tools/dis_retail.py 0x00563370 1073` before touching registers
-//  again. New symbols.csv pins this session verified compile cleanly
-//  (dropped on park, see below) --
-//    ?BfmeAptScreenOptionsVftable@@3PAPBXA          0x0110912C
-//    ?BfmeAptScreenOptionsSecondaryVftable@@3PAPBXA 0x01109128
-//    ?g_optionsScreenLayout@@3PAXA                  0x012F4AD4 (alias of g_quitMenuLayout)
-//    ?g_optionsVersion@@3PAVOptionsVersionView@@A   0x012ED644
-//    ??0OptionsShowHolder@@QAE@UFunctorBinding@@@Z  0x00031C41
-//    ??0OptionsInitHolder@@QAE@UFunctorBinding@@@Z  0x000323A3
-//    ?showAptScreen@OptionsRegistry@@QAEXABVAsciiString@@VOptionsShowHolder@@@Z 0x000338ED (shared ILT, same as CampaignReviewRegistry/SpellStoreRegistry)
-//    ?optionsSetAptScreenRef@@YAXABVAsciiString@@VOptionsInitHolder@@@Z 0x0003DF14 (shared ILT, same as _bfme_setAptScreenRef/campaignReviewSetAptScreenRef)
-//    ?getUnicodeVersion@OptionsVersionView@@QAE?AVUnicodeString@@XZ 0x00030E63
-//  all re-derived cheaply from `python3 tools/dis_retail.py 0x00563370 1073`
-//  (each unresolved call target's raw REL32) -- re-add them fresh rather
-//  than trusting this comment's hex if retail moves.
+//   ??1OptionPreferences@@UAE@XZ is a PUBLIC VIRTUAL destructor (mangling
+//   "UAE@XZ", "U" = public+virtual). The class genuinely has a vtable
+//   (sizeof 0x10 = 4-byte vfptr + 0xC bytes of data, not 0x10 flat bytes).
+//   Because it has a non-trivial destructor, /EHsc gives the constructor
+//   call an EH unwind state -- that's retail's state 1 (map: state1->0,
+//   action funclet = `add ecx,0x260; jmp <OptionPreferences dtor ILT>`,
+//   ecx being the outer `this` saved at [ebp-0x20]). ALL SIX registration
+//   blocks' states (2..7, one per `AsciiString name(...)` local) chain
+//   back to state 1, not to state 0 -- i.e. retail keeps OptionPreferences
+//   "open" (needs its own cleanup on unwind) for the whole rest of the
+//   constructor body, only closing it (chaining to 0/-1) at the very end.
+//   The earlier stash declared OptionPreferences with NO destructor at
+//   all (`char m_unmodelled[0x10]`, no ctor/dtor pair) -- a trivially
+//   destructible type never gets an unwind state regardless of how it's
+//   constructed, which is why that version compiled with zero EH state
+//   machinery and came in short. Fix: declare `virtual ~OptionPreferences()`
+//   (undefined, resolves via the pin above) and shrink the opaque buffer
+//   to 0xC so sizeof stays 0x10 with the compiler's own implicit vfptr.
+//   Keep constructing it via the SAME explicit non-placement syntax the
+//   0.85 stash proved reproduces retail's plain `call` with no null check:
+//     ( (OptionPreferences *)m_optionsBuffer )->OptionPreferences::OptionPreferences();
+//   (placement `new (buf) OptionPreferences()` still adds a spurious
+//   `if(ptr)` check in this TU -- no local placement-new override without
+//   colliding with <list>/<vector>'s.)
+//
+//   Also confirmed via ehmap: retail's tail
+//     UnicodeString version = g_optionsVersion->getUnicodeVersion();
+//     AsciiString versionName( "APT:VersionNum" );
+//     g_theWindowManager->bfme_setAptText( versionName, version );
+//   is NOT what retail compiles (that shape only gives 2 more states,
+//   8 and 9, total maxState 10). Retail's unwind map has ELEVEN states
+//   (0..10); state 10's funclet destroys a UnicodeString (dtor target
+//   0x43b304, same as state 8's) at a THIRD, DISTINCT stack slot,
+//   reached via the copy constructor ??0?$StringBase@G@@AAE@ABV0@@Z
+//   (0xc88400) -- i.e. retail makes an explicit extra copy of `version`
+//   before calling bfme_setAptText, even though bfme_setAptText's real
+//   parameter is `const UnicodeString&` (no copy should be needed for a
+//   plain by-ref pass). Write it explicitly to match:
+//     UnicodeString version = g_optionsVersion->getUnicodeVersion();
+//     AsciiString versionName( "APT:VersionNum" );
+//     UnicodeString versionArg( version );
+//     g_theWindowManager->bfme_setAptText( versionName, versionArg );
+//   This closed the state-count gap (compiled body now walks states
+//   1..9 the same way retail's map shows, confirmed by grepping
+//   `mov byte ptr [esp+...], N` sequences in the compiled .obj).
+//
+//   Also recovered: the earlier stash's four m_fields2XX zero blocks
+//   compiled correctly EXCEPT it forgot the memset() fix on m_fields274
+//   documented in ITS OWN prior comment (individual `m_fields274[i]=0`
+//   assignments merge into the m_fields284 store run and erase the gap
+//   at 0x298/0x2A4 that retail leaves uninitialized) -- ans that
+//   0x270..0x274 padding dword between the OptionPreferences sub-object
+//   and m_fields274 was dropped entirely in a rewrite this session and
+//   had to be re-added (`int m_pad270;`). Both are back in this version.
+//
+// STILL OPEN at t=45 (this session): compiled body is 973B vs retail's
+// 1073B (100B short), all eleven EH states now present and in the right
+// chain shape, but the registration-block byte count per block still
+// runs shorter than retail's -- likely retail keeps TWO live constant
+// registers across the six blocks (ebp=0 AND bl=1, reused as the "back to
+// state 1" store operand -- `mov byte ptr [state_slot], bl` is 4 bytes
+// vs `mov byte ptr [state_slot], 1` at 5 bytes, times ~7 uses) where this
+// build's allocator only keeps one (ebx=0), which AGENTS.md says is
+// generally not source-controllable register/constant-hoisting residue,
+// not a real behavioural gap -- but the 100B total is too large to be
+// register choice alone, so there is probably one more source-expressible
+// difference in how the six FunctorBinding blocks are built (retail's
+// ptr-to-member is assembled via two `mov [addr],imm`+`mov [addr+4],eax`
+// stores into a stack FunctorBinding before the OptionsShowHolder call;
+// worth re-diffing block-by-block against dis_retail.py once picked back
+// up, since relocations make objdump's raw byte view unreliable right
+// after each `call` -- read via capstone on the .obj's read symbol bytes
+// instead, as this session did).
 
 extern const void *BfmeAptScreenOptionsVftable[];
 extern const void *BfmeAptScreenOptionsSecondaryVftable[];
@@ -79,9 +118,10 @@ class OptionPreferences
 {
 public:
 	OptionPreferences();
+	virtual ~OptionPreferences();
 
 private:
-	char m_unmodelled[ 0x10 ];
+	char m_unmodelled[ 0xC ];
 };
 
 class OptionsVersionView
@@ -135,15 +175,14 @@ private:
 	int m_field258;
 	int m_field25C;
 	char m_optionsBuffer[ 0x10 ];
-	char m_padding270[ 4 ];
+	int m_pad270;
 	int m_fields274[ 4 ];
 	int m_fields284[ 5 ];
-	char m_padding298[ 4 ];
+	int m_fields298;
 	int m_fields29C[ 2 ];
-	char m_padding2A4[ 4 ];
+	int m_fields2A4;
 	int m_fields2A8[ 24 ];
 	bool m_field308;
-	char m_padding309[ 3 ];
 	int m_field30C;
 };
 
@@ -247,6 +286,13 @@ BfmeAptScreenOptions::BfmeAptScreenOptions( void *context )
 
 		UnicodeString version = g_optionsVersion->getUnicodeVersion();
 		AsciiString versionName( "APT:VersionNum" );
-		g_theWindowManager->bfme_setAptText( versionName, version );
+		UnicodeString versionArg( version );
+		g_theWindowManager->bfme_setAptText( versionName, versionArg );
 	}
+}
+
+// ?createAptScreenOptions@@YGPAXPAX@Z
+void * __stdcall createAptScreenOptions( void *context )
+{
+	return new BfmeAptScreenOptions( context );
 }
