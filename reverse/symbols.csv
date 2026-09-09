@@ -86522,57 +86522,8 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-??$__copy_backward@PAURva00426C00Element@@PAU1@H@_STL@@YAPAURva00426C00Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00023475,retail 28-byte vector fill-insert backward-copy ILT at 0x00426AB6
-??$__uninitialized_copy@PAURva00426C00Element@@PAU1@@_STL@@YAPAURva00426C00Element@@PAU1@00ABU__false_type@0@@Z,0x0002EBB3,retail 28-byte vector fill-insert construction-copy ILT at 0x00426A9B
-??$fill@PAURva00426C00Element@@U1@@_STL@@YAXPAURva00426C00Element@@0ABU1@@Z,0x0000163B,retail 28-byte vector fill-insert assignment-fill ILT at 0x00426AC4
-??$uninitialized_fill_n@PAURva00426C00Element@@IU1@@_STL@@YAPAURva00426C00Element@@PAU1@IABU1@@Z,0x00015AE1,retail 28-byte vector fill-insert construction-fill ILT at 0x00426ADB
-??0Rva00426C00Tree@@QAE@ABV0@@Z,0x0001400B,retail 12-byte tree-member copy constructor ILT at 0x00426A52
-??1Rva00426C00Tree@@QAE@XZ,0x00011FDB,retail 12-byte tree-member destructor ILT at 0x00426B24
-?bfmeTestQP@@YADPAX0@Z,0x00014196,thunk to 0x005A74A0
-?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
-??0ProductionPrerequisiteRetailCopy@@QAE@ABV0@@Z,0x00038550,ProductionPrerequisite construct shim callee at retail body 0x00783D50
-??0?$_Vector_base@HV?$BfmeIntAllocator@H@@@_STL@@QAE@IABV?$BfmeIntAllocator@H@@@Z,0x00001DA7,ProductionPrerequisite copy constructor third vector base call
-??0?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00021855,ProductionPrerequisite copy constructor first vector call
-??0?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000012C1,ProductionPrerequisite copy constructor science vector call
-?get_allocator@?$vector@HV?$BfmeIntAllocator@H@@@_STL@@QBE?AV?$BfmeIntAllocator@H@@XZ,0x00020301,ProductionPrerequisite copy constructor third vector allocator call
-??0XferException@@QAA@HPBDZZ,0x009D6220,RTTI-proven eight-byte XferException variadic cdecl constructor; retail throw at 0x000D7010 constructs text pointer and tag directly
-??0XferException@@QAE@ABV0@@Z,0x00065C50,XferException copy constructor; CatchableType VA 0x011DFE34 copy ILT 0x0004A26E resolves here; full 25-byte owned-text copy
-??1XferException@@QAE@XZ,0x00065C70,XferException destructor; ThrowInfo VA 0x011DFE5C unwind ILT 0x00040804 resolves here; full 10-byte array-delete cleanup
-?Rva0010C5E0XferScience@@YAPAVXfer@@PAV1@PAW4ScienceType@@@Z,0x0010C5E0,Address-qualified cdecl Xfer pointer and ScienceType pointer transfer; full 258-byte body returns Xfer pointer on both exits; actual ScienceStore calls and complete string cleanup graph audited
-?reserve@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXI@Z,0x000D1420,ScienceType vector reserve reached through ILT 0x0003616A from full 0x000D7010 transfer; complete 167-byte four-byte element allocation and ownership audit
-_bfmeDynBufXZ,0x00F46754,dynamic vertex buffer array
-_bfmeDynFvfXZ,0x00D3BD28,dynamic FVF table
-_bfmeDynInUseXZ,0x00F46740,in-use flags
-_bfmeDynSizeXZ,0x00F467B4,size table
-_bfmeDynOffsetXZ,0x00F46794,offset table
-_bfmeDynElemXZ,0x00F467F0,dynamic element array
-?bfmeResetXZ@BfmeDynElemXZ@@QAEXIH@Z,0x00964150,element reset
-?g_D3DXFastTable@@3UD3DXFASTTABLE@@A,0x00EDBDF8,d3dx9-summer2003 d3dxmath.obj table; cpudetect DIR32 sites 0x1B and 0x4C prove retail VA 0x012DBDF8
-?rva001FE970@GettingBuiltBehavior@@QAEXXZ,0x001FE970,The j_0002ea14 thunk reaches the address-derived GettingBuiltBehavior cleanup helper at 0x001FE970.
-?rva001FF060@GettingBuiltBehavior@@QAE_NXZ,0x001FF060,The j_00036449 thunk reaches the address-derived GettingBuiltBehavior status helper at 0x001FF060.
-?rva001FF5C0@GettingBuiltBehavior@@QAEXXZ,0x001FF5C0,The j_00035ee0 thunk reaches the address-derived GettingBuiltBehavior completion helper at 0x001FF5C0.
-?bfmeTakeXZ@BfmePoolXZ@@QAEPAVBfmeRecXZ@@H@Z,0x00031A7F,pool take
-?bfmeFinishXZ@BfmeHostXZ@@QAEXPAX@Z,0x00002EF0,finish
-?bfmeFallbackZA@BfmeHostZA@@QAEXPAVBfmeCZA@@PAVBfmeAZA@@@Z,0x000329D4,fallback
-?bfmeApplyZA@BfmeHostZA@@QAEXPAVBfmeBZA@@H@Z,0x0001DF4D,apply
-?bfmeOtherZA@BfmeHostZA@@QAEXXZ,0x0000238D,other
-?bfmeGetPlayerZB@BfmeOwnerZB@@QAEPAVBfmePlayerZB@@XZ,0x00020824,get player
-?bfmeCanZB@BfmePlayerZB@@QAE_NPAVBfmeItemZB@@@Z,0x00020C8E,can
-?bfmeNotifyZB@BfmeSinkZB@@QAEXPAVBfmeNodeZB@@@Z,0x0002F3C4,notify
-?bfmeFinishZB@BfmePlayerZB@@QAEXPAVBfmeItemZB@@@Z,0x00003012,finish
-??$__destroy_aux@PAVThingRef@@@_STL@@YAXPAVThingRef@@0ABU__false_type@0@@Z,0x0069CE20,vendored=stlport-4.5.3; actual STLport 4.5.3 __destroy_aux<ThingRef*> specialization; retail callers encode existing ILT 0x000336C2
-?_M_lower_bound@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@2@ABVAsciiString@@@Z,0x0003FB7A,ArchiveFileMap operator[] lower_bound; retail ILT reaches 0x00062FC0; pointer specialization proven by ArchiveFileSystem callers
-?insert_unique@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@2@@2@U32@ABU?$pair@$$CBVAsciiString@@PAVArchiveFile@@@2@@Z,0x0000A529,ArchiveFileMap operator[] hinted insertion; retail ILT reaches 0x000633E0; pointer specialization proven by ArchiveFileSystem callers
-??$_Construct@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAVArchiveFile@@@0@ABU10@@Z,0x00005E4D,ArchiveFile pointer-tree _M_insert constructs its eight-byte pair; cdecl destination and source; retail ILT reaches 0x00062900
-?bfmeAppendXO@BfmeQueueXO@@QAEXHHHH@Z,0x008FBCB0,append
-?bfmeSendXO@BfmeQueueXO@@QAEXHHHHHH@Z,0x008FA070,send
-??$_Construct@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@0@ABU10@@Z,0x00080E00,AsciiString/list pair placement construction; full 66 bytes and complete cleanup graph independently verified from actual STLport instantiation; caller 0x000817C0 via ILT 0x00024046
-?D3DDevice@DX8Wrapper@@1PAUIDirect3DDevice8@@A,0x01340534,Canonical private DX8Wrapper static IDirect3DDevice8 pointer; actual dx8wrapper.h declaration and named render-device family plus W3DMouse draw COFF operand;campaign=36h-20260908-1018;batch=45
-?m_3DInterfaceScene@W3DDisplay@@2PAVRTS3DInterfaceScene@@A,0x012F8060,Canonical static RTS3DInterfaceScene pointer; W3DDisplay header and definition plus W3DMouse cursor add/remove/render routes;campaign=36h-20260908-1018;batch=45
-?ApplicationHWnd@@3PAXA,0x012ED238,Canonical non-STRICT HWND global from WinMain declaration and definition; W3DMouse ScreenToClient operand and Win32 window calls;campaign=36h-20260908-1018;batch=45
 ?g_rva003D2B80NegHalf@@3MB,0x00C95F9C,retail negative half constant used by the four-child element callback
 ??0Rva003D2B80Child@@QAE@PAVRva003D2B80Source@@PAM@Z,0x000019D3,constructor call-through to the retail child constructor thunk
 ??2Rva003D2B80Child@@SAPAXI@Z,0x00881F30,allocation call-through to the retail allocator body
 ?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
-__imp_?bfmeReleaseYE@@YGXPAX@Z,0x00F58ECC,release import
 ??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
