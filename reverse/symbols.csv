@@ -86629,3 +86629,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?winGetInstanceData@GameWindow@BfmeStopAllMovies@@QAEPAVWinInstanceData@2@XZ,0x00034991,retail BFME WindowVideo::setWindowState callee; no-argument instance-data getter
 ?setVideoBuffer@WinInstanceData@BfmePauseAllMovies@@QAEXH@Z,0x0002E073,retail BFME WindowVideo::setWindowState callee; ABI-shaped int-handle instance-data setter
 ?winGetInstanceData@GameWindow@BfmePauseAllMovies@@QAEPAVWinInstanceData@2@XZ,0x00034991,retail BFME WindowVideo::setWindowState callee; no-argument instance-data getter
+?setVideoBuffer@WinInstanceData@BfmeResumeAllMovies@@QAEXH@Z,0x0002E073,retail BFME WindowVideo::setWindowState callee; ABI-shaped int-handle instance-data setter
+?winGetInstanceData@GameWindow@BfmeResumeAllMovies@@QAEPAVWinInstanceData@2@XZ,0x00034991,retail BFME WindowVideo::setWindowState callee; no-argument instance-data getter
