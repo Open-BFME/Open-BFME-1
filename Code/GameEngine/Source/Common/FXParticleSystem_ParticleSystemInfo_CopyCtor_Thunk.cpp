@@ -1,431 +1,111 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// The vtable, field offsets, and three AsciiString copy calls match retail
+// constructor 0x0005EF60.
 
-namespace FXParticleSystem { class ParticleSystemInfo; }
-class FXParticleSystem::ParticleSystemInfo
+class AsciiString;
+
+class AsciiStringCopyCtorShim
 {
 public:
-ParticleSystemInfo(const ParticleSystemInfo &);
+	void construct(const AsciiString *source);
 };
 
-// ??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z
-__declspec(naked) FXParticleSystem::ParticleSystemInfo::ParticleSystemInfo(const FXParticleSystem::ParticleSystemInfo &)
+class AsciiString
 {
-__asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x7e
-        __emit 0x26
-        __emit 0xff
-        __emit 0x00
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x78
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8a
-        __emit 0x47
-        __emit 0x04
-        __emit 0x88
-        __emit 0x46
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x4f
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x57
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x10
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x56
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0xb2
-        __emit 0x8b
-        __emit 0x82
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4f
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x56
-        __emit 0x14
-        __emit 0x89
-        __emit 0x02
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x04
-        __emit 0x89
-        __emit 0x42
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x57
-        __emit 0x20
-        __emit 0x89
-        __emit 0x56
-        __emit 0x20
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x24
-        __emit 0x89
-        __emit 0x46
-        __emit 0x24
-        __emit 0x8d
-        __emit 0x4f
-        __emit 0x28
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x56
-        __emit 0x28
-        __emit 0x89
-        __emit 0x02
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x04
-        __emit 0x89
-        __emit 0x42
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x57
-        __emit 0x34
-        __emit 0x8b
-        __emit 0x0a
-        __emit 0x8d
-        __emit 0x46
-        __emit 0x34
-        __emit 0x89
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x40
-        __emit 0x89
-        __emit 0x46
-        __emit 0x40
-        __emit 0x8d
-        __emit 0x4f
-        __emit 0x44
-        __emit 0x8b
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x56
-        __emit 0x44
-        __emit 0x89
-        __emit 0x02
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x04
-        __emit 0x89
-        __emit 0x42
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x49
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x57
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x0a
-        __emit 0x8d
-        __emit 0x46
-        __emit 0x50
-        __emit 0x89
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x52
-        __emit 0x08
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x5c
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x5c
-        __emit 0x89
-        __emit 0x11
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x04
-        __emit 0x89
-        __emit 0x51
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x57
-        __emit 0x68
-        __emit 0x89
-        __emit 0x41
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x68
-        __emit 0x52
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x0b
-        __emit 0x8b
-        __emit 0x82
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x6c
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x02
-        __emit 0x89
-        __emit 0x46
-        __emit 0x6c
-        __emit 0x8b
-        __emit 0x4f
-        __emit 0x70
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x57
-        __emit 0x74
-        __emit 0x8d
-        __emit 0x47
-        __emit 0x78
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x78
-        __emit 0x89
-        __emit 0x56
-        __emit 0x74
-        __emit 0xe8
-        __emit 0xe8
-        __emit 0x8a
-        __emit 0x82
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4f
-        __emit 0x7c
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x7c
-        __emit 0x8a
-        __emit 0x97
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x96
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x87
-        __emit 0x81
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x86
-        __emit 0x81
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x8f
-        __emit 0x82
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x8e
-        __emit 0x82
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x97
-        __emit 0x83
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x96
-        __emit 0x83
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x87
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8f
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x8e
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x97
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x96
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x87
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8f
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x8e
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+public:
+	AsciiString(const AsciiString &source)
+	{
+		((AsciiStringCopyCtorShim *)this)->construct(&source);
+	}
+	~AsciiString();
+
+private:
+	char *m_data;
+};
+
+struct ThreeDwords
+{
+	unsigned int m_0;
+	unsigned int m_4;
+	unsigned int m_8;
+};
+
+class Snapshot
+{
+public:
+	virtual ~Snapshot();
+};
+
+namespace FXParticleSystem
+{
+
+class ParticleSystemInfo : public Snapshot
+{
+public:
+	ParticleSystemInfo(const ParticleSystemInfo &source);
+	virtual ~ParticleSystemInfo();
+
+private:
+	unsigned char m_byte4;
+	unsigned int m_dword8;
+	unsigned int m_dwordC;
+	AsciiString m_string10;
+	ThreeDwords m_block14;
+	unsigned int m_dword20;
+	unsigned int m_dword24;
+	ThreeDwords m_block28;
+	ThreeDwords m_block34;
+	unsigned int m_dword40;
+	ThreeDwords m_block44;
+	ThreeDwords m_block50;
+	ThreeDwords m_block5C;
+	AsciiString m_string68;
+	unsigned int m_dword6C;
+	unsigned int m_dword70;
+	unsigned int m_dword74;
+	AsciiString m_string78;
+	unsigned int m_dword7C;
+	unsigned char m_byte80;
+	unsigned char m_byte81;
+	unsigned char m_byte82;
+	unsigned char m_byte83;
+	unsigned int m_dword84;
+	unsigned int m_dword88;
+	unsigned int m_dword8C;
+	unsigned int m_dword90;
+	unsigned int m_dword94;
+};
+
+ParticleSystemInfo::ParticleSystemInfo(const ParticleSystemInfo &source)
+	: m_byte4(source.m_byte4)
+	, m_dword8(source.m_dword8)
+	, m_dwordC(source.m_dwordC)
+	, m_string10(source.m_string10)
+	, m_block14(source.m_block14)
+	, m_dword20(source.m_dword20)
+	, m_dword24(source.m_dword24)
+	, m_block28(source.m_block28)
+	, m_block34(source.m_block34)
+	, m_dword40(source.m_dword40)
+	, m_block44(source.m_block44)
+	, m_block50(source.m_block50)
+	, m_block5C(source.m_block5C)
+	, m_string68(source.m_string68)
+	, m_dword6C(source.m_dword6C)
+	, m_dword70(source.m_dword70)
+	, m_dword74(source.m_dword74)
+	, m_string78(source.m_string78)
+	, m_dword7C(source.m_dword7C)
+	, m_byte80(source.m_byte80)
+	, m_byte81(source.m_byte81)
+	, m_byte82(source.m_byte82)
+	, m_byte83(source.m_byte83)
+	, m_dword84(source.m_dword84)
+	, m_dword88(source.m_dword88)
+	, m_dword8C(source.m_dword8C)
+	, m_dword90(source.m_dword90)
+	, m_dword94(source.m_dword94)
+{
 }
+
 }
