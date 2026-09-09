@@ -1,5 +1,5 @@
-// ?Check@Rva0093C4A0Target@@QAE_NPAX00@Z
-// partial score=0.8 date=2026-09-08
+// ?Check@Rva0093C4A0Target@@QAE_NPBGPAGH@Z
+// partial score=0.9 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 #include <windows.h>
 
@@ -30,16 +30,15 @@ private:
 bool Rva0093C4A0Target::Check(
 	const unsigned short *first, unsigned short *second, int third)
 {
-	volatile bool result[8];
+	bool result[8];
 	int i;
-	int count = third;
+	register int count = third;
 	if (count != 0)
 	{
-		HGDIOBJ old_font;
 		HGDIOBJ font = m_font;
-		HDC dc = TheFontCharsGDIState->dc;
-		result[0] = false;
-		old_font = SelectObject(dc, font);
+		register HDC dc = TheFontCharsGDIState->dc;
+		result[0x14] = false;
+		HGDIOBJ old_font = SelectObject(dc, font);
 		GetGlyphIndicesW(TheFontCharsGDIState->dc, first, count, second, 1);
 
 		i = 0;
@@ -48,13 +47,13 @@ bool Rva0093C4A0Target::Check(
 			if (second[i] == 0xffff &&
 				first[i] != 0x000a && first[i] != 0x000d && first[i] != 0x0095)
 			{
-				result[0] = true;
+				result[0x14] = true;
 				break;
 			}
 		}
 
 		SelectObject(dc, old_font);
-		return !result[0];
+		return result[0x14] == false;
 	}
 
 	return false;
