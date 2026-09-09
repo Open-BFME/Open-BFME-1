@@ -18764,3 +18764,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_00c1a13b@@YAXXZ	0x00C1A13B	23	blocked	t=1min model=gpt-5.6-luna Ghidra labels this generated body Unwind@00C1A13B; it is an exception funclet with no standalone C++ owner and remains assigned to retired unwind tooling
 ?d_0018e660@@YAXXZ	0x0018E660	1196	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body is an unresolved PolygonTrigger-family routine with no safe standalone C++ owner
 ?d_0018fbf0@@YAXXZ	0x0018FBF0	951	blocked	t=4min model=gpt-5 caller 0x006DF730 is named Rva006DF550::bfmeClampToArea and the body is a generated PolygonTrigger clip helper, but no standalone clean C++ owner exists
+?d_006b5900@@YAXXZ	0x006B5900	304	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved after the whole d_006b0a60.asm audit
