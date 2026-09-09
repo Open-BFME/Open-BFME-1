@@ -1,81 +1,59 @@
 // ?parseOclEntry@Rva00251F70@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.93 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/ini_noinline /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// ================= BANKED ATTEMPT NOTE (2026-09-10) =================
-// This is the whole ported translation unit, not a standalone body. It is the
-// stash for the three INI field parsers 0x00251ED0 (fxlist), 0x00251F70 (ocl)
-// and 0x00252010 (psys) and for the shared helper at 0x00251CF0.
+// partial score=0.99 date=2026-09-10
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/asciistring_outofline /Ireference/shims/ini_noinline /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// ================= BANKED ATTEMPT NOTE (2026-09-10, second pass) =================
+// This is the whole ported translation unit. THE THREE PARSERS NOW COMPILE
+// BYTE-EXACT against retail (probe.py "EXACT modulo relocation slots"):
+//   0x00251ED0 parseFXList             118/118 exact
+//   0x00251F70 parseObjectCreationList 117/117 exact
+//   0x00252010 parseParticleSystem     117/117 exact
+//   0x00251CF0 parseFXLocInfo          371/374 NOT exact, first diff at +66
 //
-// WHAT THIS BANK ESTABLISHES, and it replaces the earlier standalone stash:
+// THE LEVER THAT SOLVED IT, and it was not the one the previous note predicted.
+// The private register convention MSVC 7.1 gives the file-static helper is not
+// chosen by parameter order and not by the call site. It is chosen by how much
+// register pressure the helper body carries. With the default AsciiString the
+// assignment locInfo->boneName = AsciiString(ini->getNextToken()) inlines the
+// whole string machinery (strlen loop, allocation, release) and the helper
+// compiles to 502 bytes; MSVC then has only one register to spare and passes
+// ini in edi with locInfo and instance both on the stack. Adding
+// /Ireference/shims/asciistring_outofline to the cl: line makes the string
+// ctor, operator= and dtor out-of-line calls exactly as retail has them, the
+// helper drops to 371 bytes, and MSVC hands out TWO register parameters:
+// ecx=locInfo and esi=ini with instance the single caller-cleaned stack
+// argument. That is retail's convention, and the first 66 bytes of the helper
+// then match byte for byte.
 //
-// 1. The helper at 0x00251CF0 is NOT a TransitionDamageFX constructor. The
-//    retail body throws INIException(3, "parseFXLocInfo: Bone name not
-//    followed by RandomBone specifier.") at 0x010B2470, so the function names
-//    itself: it is the file-static parseFXLocInfo of this TU. The ledger row
-//    ??0TransitionDamageFX@@ at 0x00251CF0 carries a wrong identity and the
-//    __emit lift at TransitionDamageFXCtorThunk.cpp has to go.
+// The second half of the fix is the parameter order after all. With the
+// out-of-line string shim in place, Zero Hour's own order
+// parseFXLocInfo(INI *ini, void *instance, FXLocInfo *locInfo) emits
+// lea ecx,[edi+4] before push ebx, which is retail's order; the reversed
+// order (locInfo, ini, instance) leaves those two instructions swapped and
+// four bytes differing. The previous note recorded parameter order as ruled
+// out, and that was true only in the inlined-string regime where the
+// convention had collapsed to one register. Both changes are needed together.
 //
-// 2. There is a real donor. Zero Hour's
-//    GeneralsMD/.../GameLogic/Object/Damage/TransitionDamageFX.cpp contains
-//    parseFXLocInfo and all three parsers, and the already-ported
-//    Code/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFX.cpp in
-//    this repository holds them as present-unmatched bodies. No new TU is
-//    needed. The retail string pool confirms the shape: "bone" 0x010B24CC,
-//    "randombone" 0x010B24BC, "loc" 0x010B246C, "'loc' or 'bone' expected"
-//    0x010B244C, "X"/"Y"/"Z" for the three sub-tokens.
+// WHAT REMAINS. Only the helper 0x00251CF0. It is 371 bytes against 374 and
+// diverges from +66, inside the bone branch: retail builds the AsciiString
+// temporary at [esp+0xc] and calls ctor / operator= / dtor in that order while
+// ours materialises the argument first. The likely levers are the temporary's
+// scope (docs/shape_levers.md, destructor-position row) and whether the shim
+// wanted is asciistring_copyctor_outofline or asciistringsetoutofline rather
+// than asciistring_outofline.
 //
-// 3. BFME differs from Zero Hour in exactly two ways here, both applied below.
-//    Every "throw INI_INVALID_DATA" is a "throw INIException(3, <message>)"
-//    against the literal at the address the retail body pushes, and the
-//    DEBUG_CRASH before the RandomBone throw is absent from retail.
-//
-// 4. The INI class layout is the one in reference/shims/ini_noinline, where
-//    m_seps sits at +0x414 and getSepsColon() therefore compiles to
-//    [ini+0x41C], which is what retail loads. reference/shims/ini_bfme is the
-//    WRONG shim for this TU: it puts m_sepsColon at +0x20. The unmodified
-//    Zero Hour header puts it at +0x2428. The cl: line below adds
-//    /Ireference/shims/ini_noinline and /Ireference/shims/iniexception ahead
-//    of /Ireference/shims/sweep, and the TU includes Common/INIException.h.
-//
-// RESULT. ?parseObjectCreationList@TransitionDamageFXModuleData@@ compiles to
-// 118 bytes against retail's 117, with the first 18 bytes byte-identical
-// (sub esp,8 / push ebx / mov ebx,[esp+0x14] / push esi / push edi) and the
-// whole tail in retail's instruction order including the INIException throw
-// path, the g_lookup stricmp import and the four-argument tail call. The
-// earlier standalone stash reached 114 bytes but did so with a hand-written
-// INI class and a hand-written parser body, so it could never grow the helper.
-//
-// THE REMAINING GAP is one instruction and one register swap:
-//   retail  lea ecx,[edi+4] ; push ebx ; call parseFXLocInfo ; ... add esp,4
-//   ours    lea eax,[esi+4] ; push eax ; push ebx ; call ... ; add esp,8
-// MSVC 7.1 does give the file-static helper a private register convention -
-// this bank REFUTES nothing about that theory and in fact confirms it, since
-// ini is passed in a callee-saved register with no stack slot. What it does
-// not yet reproduce is WHICH values go in registers: retail passes locInfo in
-// ecx and ini in esi with instance alone on the stack, while ours passes ini
-// in a register and both locInfo and instance on the stack. That also flips
-// the esi/edi roles in the caller prologue (retail esi=ini edi=store, ours
-// esi=store edi=ini), which is the same one decision seen twice.
-//
-// RULED OUT here, on top of the earlier list (__fastcall varargs on a member
-// and on a free function, ellipsis thiscall, __asm at the call site, local
-// definition order and hoisted separator variants):
-//   - reference/shims/ini_bfme as the INI layout for this TU (+0x20, wrong).
-//   - Reordering parseFXLocInfo's parameters to (locInfo, ini, instance) so
-//     that locInfo is the first argument. Byte-identical outcome at 118: the
-//     private convention's register choice does not follow parameter order.
-//
-// NEXT LEVER TO TRY, in this order: change parseFXLocInfo's own body so its
-// allocation puts locInfo in ecx - it currently keeps locInfo live across
-// every call, which is why the compiler spilled it. Candidates are making the
-// AsciiString temporary a named local in its own nested scope, and writing
-// locInfo->locType before the boneName assignment as retail does
-// (mov byte ptr [edi],0 lands AFTER releaseBuffer in retail).
-// Do NOT fake the call with a TU-local stub.
-//
-// The four bodies land together once the helper's convention lands, in one
-// tools/add_match_batch.py pass, and TransitionDamageFXCtorThunk.cpp must be
-// deleted in the same commit.
+// LANDING NOTE FOR THE NEXT AGENT. The three parsers are finished source; what
+// blocks landing them is naming, not bytes. reverse/functions.csv already
+// carries ?parseFXList@TransitionDamageFXModuleData@@SAXPAVINI@@PAX1PBX@Z at
+// 0x0000A5AB, ?parseObjectCreationList@... at 0x000041FB and
+// ?parseParticleSystem@... at 0x00020C43, all 5-byte incremental-link jump
+// thunks holding the real member names. Those rows need a route= note to the
+// real bodies, or the real bodies need address-derived names, before
+// add_match_batch.py will accept all four rows under one-name-one-body. Land
+// the three parsers together in ONE add_match_batch.py pass and delete
+// Code/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFXCtorThunk.cpp
+// in the same commit: its row ??0TransitionDamageFX@@ at 0x00251CF0 is an
+// __emit lift carrying a wrong identity (the body is parseFXLocInfo, which
+// names itself in its own throw string at 0x010B2470).
 // ===================================================================
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -171,7 +149,7 @@ TransitionDamageFXModuleData::TransitionDamageFXModuleData( void )
 //-------------------------------------------------------------------------------------------------
 /** Parse fx location info ... that is a named bone or a coord3d position */
 //-------------------------------------------------------------------------------------------------
-static void parseFXLocInfo( FXLocInfo *locInfo, INI *ini, void *instance )
+static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 {
 	const char *token = ini->getNextToken( ini->getSepsColon() );
 
@@ -232,7 +210,7 @@ void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance,
 	FXDamageFXListInfo *info = (FXDamageFXListInfo *)store;
 
 	// parse the location bone or location
-	parseFXLocInfo( &info->locInfo, ini, instance );
+	parseFXLocInfo( ini, instance, &info->locInfo );
 
 	// make sure we have an "FXList:" token
 	token = ini->getNextToken( ini->getSepsColon() );
@@ -262,7 +240,7 @@ void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *inst
 	FXDamageOCLInfo *info = (FXDamageOCLInfo *)store;
 
 	// parse the location bone or location
-	parseFXLocInfo( &info->locInfo, ini, instance );
+	parseFXLocInfo( ini, instance, &info->locInfo );
 
 	// make sure we have an "OCL:" token
 	token = ini->getNextToken( ini->getSepsColon() );
@@ -292,7 +270,7 @@ void TransitionDamageFXModuleData::parseParticleSystem( INI *ini, void *instance
 	FXDamageParticleSystemInfo *info = (FXDamageParticleSystemInfo *)store;
 
 	// parse the location bone or location
-	parseFXLocInfo( &info->locInfo, ini, instance );
+	parseFXLocInfo( ini, instance, &info->locInfo );
 
 	// make sure we have an "PSys:" token
 	token = ini->getNextToken( ini->getSepsColon() );
