@@ -1,5 +1,5 @@
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUViewAttackBlockedStruct@@@Z
-// partial score=0.93 date=2026-09-09
+// partial score=0.94 date=2026-09-09
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003E3190: the cell-space Bresenham line walk that
@@ -9,6 +9,34 @@
 // the per-cell test is a callback through the user-data pointer rather than
 // an inline flag test: userData->process(from, to, x, y), stopping the walk
 // as soon as it returns non-zero.
+//
+// NEEDS THIS PIN to resolve the process() call byte-exact (drop it when you
+// park without landing -- add_match only writes it once the body matches):
+//   ?process@ViewAttackBlockedStruct@@QAEHPAVPathfindCell@@0HH@Z,0x00042361,route=0x007DEBB0; retail iterateCellsAlongLine@Pathfinder@0x003E3190 callback call reaches this real target only through the ILT thunk already claimed by ?j_00042361@@YAXXZ
+// Without it explain_mismatch classifies the call as "unresolved REL32 call";
+// with it the call bytes match exactly and classification becomes
+// "instruction/register encoding mismatch" -- confirming the ONLY remaining
+// difference is the register allocator's choice of scratch stack slot for
+// den/numadd/from (retail 0x28/0x24/0x20, this TU 0x24/0x20/0x28, a pure
+// rotation -- 31-32 non-reloc diff lines depending on `to`'s scope).
+// Explored and ruled out this session (on top of the prior G5/G6/G7/Ot/Og/Oy-
+// sweep and declaration-order permutations already logged unreachable):
+//  - moving `from = to;` to right after the ret-check (matching where retail
+//    stores ebp into the from-slot, immediately before the num<0 test):
+//    regresses hard -- 150 diff lines, +3 compiled bytes, register churn
+//    starting at the FUNCTION PROLOGUE (ebx/ebp swap before the Bresenham
+//    setup even runs), i.e. this single statement move shifts the whole
+//    function's global register allocation, not just the loop tail.
+//  - hoisting `PathfindCell *to;` out of the loop (assigned each iteration
+//    instead of declared fresh): 31 diff lines (one fewer) but still
+//    nonzero and still the same 3-slot rotation; not a fix.
+//  - swapping the den/numadd declaration order within `Int numpixels, num,
+//    numadd, den;`: no change (32 lines).
+// "compiled symbol size: 478 bytes" vs target 475 is NOT a real overage --
+// it's the section's raw padding out to this thiscall's own `ret 0x10`
+// (3 bytes, c2 10 00) which sits outside the ledger's 475-byte window by
+// design (AGENTS.md: ghidra size can be short of the ret N); the actual
+// compared `patch['bytes']` is 475 bytes both sides.
 
 extern "C" int __cdecl abs( int n );
 #pragma intrinsic(abs)
