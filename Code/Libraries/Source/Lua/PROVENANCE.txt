@@ -66,8 +66,9 @@ change is marked at the point of change in the file itself as well as here.
     lstate.c     2   the luaH_new call site
     liolib.c         `setreturn` and `io_open` use retail's fixed generic error
                      tuple (`pushresult_close`) instead of the errno-based
-                     `pushresult`; `io_open` and `io_fromto` route regular file
-                     opens through the reconstructed `bfmeFopenVIF` import.
+                     `pushresult`; `io_open`, `io_fromto`, and `io_appendto`
+                     route regular file opens through the reconstructed
+                     `bfmeFopenVIF` import.
                      These are BFME-specific reconstruction claims, not claims
                      about upstream Lua source.
 

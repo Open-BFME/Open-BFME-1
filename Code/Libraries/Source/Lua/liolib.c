@@ -250,7 +250,9 @@ static int io_appendto (lua_State *L) {
   IOCtrl *ctrl = (IOCtrl *)lua_touserdata(L, -1);
   FILE *current;
   lua_pop(L, 1);  /* remove upvalue */
-  current = fopen(luaL_check_string(L, 1), "a");
+  /* BFME reconstruction: append mode uses the same custom file-open import
+     as io_open and regular io_fromto redirection. */
+  current = (FILE *)bfmeFopenVIF(luaL_check_string(L, 1), "a");
   return setreturn(L, ctrl, current, OUTFILE);
 }
 
