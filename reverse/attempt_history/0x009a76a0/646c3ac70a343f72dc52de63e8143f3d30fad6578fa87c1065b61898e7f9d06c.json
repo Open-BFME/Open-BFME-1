@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "646c3ac70a343f72dc52de63e8143f3d30fad6578fa87c1065b61898e7f9d06c",
+  "symbol": "?bfmeGo76A0@@YAXHPAHPAXHHH1@Z",
+  "score_kind": "author-estimate",
+  "score": 0.78,
+  "source": "// ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z\n// partial score=0.78 date=2026-09-03\n// Open-BFME5 conversion of the four-tap 32-bit filter helper.\n\nvoid __cdecl bfmeGo76A0(\n\tint sourceAddress,\n\tint *destination,\n\tvoid *sourcePitch,\n\tint sourceDelta,\n\tint rows,\n\tint columns,\n\tvoid *weights)\n{\n\tint rowCount = rows;\n\tint columnCount = columns;\n\tconst int *coefficient = (const int *)weights;\n\tif ((unsigned int)rowCount > 0)\n\t{\n\t\tint delta = sourceDelta;\n\t\tunsigned char *sourcePointer = (unsigned char *)sourceAddress;\n\n\t\tdo\n\t\t{\n\t\t\tint column = 0;\n\t\t\tunsigned char *previous = sourcePointer - delta;\n\t\t\tunsigned char *next = sourcePointer + delta;\n\t\t\tif ((unsigned int)columnCount > 0)\n\t\t\t{\n\t\t\t\tdo\n\t\t\t\t{\n\t\t\t\t\tint value = next[delta] * coefficient[3];\n\t\t\t\t\tvalue += sourcePointer[0] * coefficient[1];\n\t\t\t\t\tvalue += next[0] * coefficient[2];\n\t\t\t\t\tvalue += previous[0] * coefficient[0];\n\t\t\t\t\tvalue = (value + 0x40) >> 7;\n\t\t\t\t\tif (value < 0)\n\t\t\t\t\t\tvalue = 0;\n\t\t\t\t\telse if (value > 0xFF)\n\t\t\t\t\t\tvalue = 0xFF;\n\t\t\t\t\tdestination[column] = value;\n\t\t\t\t\t++sourcePointer;\n\t\t\t\t\t++next;\n\t\t\t\t\t++previous;\n\t\t\t\t\t++column;\n\t\t\t\t}\n\t\t\t\twhile ((unsigned int)column < (unsigned int)columnCount);\n\t\t\t}\n\n\t\t\tsourcePointer += (int)sourcePitch - columnCount;\n\t\t\tdestination += columnCount;\n\t\t}\n\t\twhile (--rowCount != 0);\n\t}\n}\n"
+}
