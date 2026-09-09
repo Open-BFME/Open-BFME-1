@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "072085ca1098a6b98c2e56a311a0f7225aa21a485c9c1f4d9d5139b95c84ba85",
+  "symbol": "?bfmeCheckEC@BfmeHostEC@@QAEHPAUBfmeNodeEC@@@Z",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?bfmeCheckEC@BfmeHostEC@@QAEHPAUBfmeNodeEC@@@Z\n// partial score=1.0 date=2026-09-09\nstruct BfmeNodeEC\n{\n\tunsigned char m_bfmeHeadEC[0x25c];\n\tvoid *m_bfme25CEC;\n\tvoid *m_bfme260EC;\n};\n\nclass BfmeHostEC\n{\npublic:\n\tint bfmeCheckEC(BfmeNodeEC *node);\n\n\tunsigned char m_bfmeHeadEC[0xc];\n\tBfmeNodeEC *m_bfme0CEC;\n};\n\nint BfmeHostEC::bfmeCheckEC(BfmeNodeEC *node)\n{\n\tif (m_bfme0CEC == node || node->m_bfme25CEC != 0 || node->m_bfme260EC != 0)\n\t\treturn 1;\n\n\treturn 0;\n}\n"
+}

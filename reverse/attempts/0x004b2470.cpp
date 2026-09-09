@@ -1,5 +1,5 @@
 // ?bfmeCloneZW@BfmeHostZW@@QBE?AVBfmeHandleZW@@XZ
-// partial score=0.74 date=2026-09-08
+// partial score=0.74 date=2026-09-09
 void *__cdecl operator new(unsigned int n);
 
 extern "C" void *g_bfmeMsgVftDN[];
@@ -7,7 +7,7 @@ extern "C" void *g_bfmeMsgVftDN[];
 class BfmeMsgZW
 {
 public:
-	BfmeMsgZW(int a, int b)
+	__forceinline BfmeMsgZW(int a, int b)
 	{
 		m_bfmeVftZW = g_bfmeMsgVftDN;
 		m_bfme04ZW = a;

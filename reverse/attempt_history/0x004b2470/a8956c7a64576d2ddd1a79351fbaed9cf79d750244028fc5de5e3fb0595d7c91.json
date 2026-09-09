@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a8956c7a64576d2ddd1a79351fbaed9cf79d750244028fc5de5e3fb0595d7c91",
+  "symbol": "?bfmeCloneZW@BfmeHostZW@@QBE?AVBfmeHandleZW@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.74,
+  "source": "// ?bfmeCloneZW@BfmeHostZW@@QBE?AVBfmeHandleZW@@XZ\n// partial score=0.74 date=2026-09-09\nvoid *__cdecl operator new(unsigned int n);\n\nextern \"C\" void *g_bfmeMsgVftDN[];\n\nclass BfmeMsgZW\n{\npublic:\n\t__forceinline BfmeMsgZW(int a, int b)\n\t{\n\t\tm_bfmeVftZW = g_bfmeMsgVftDN;\n\t\tm_bfme04ZW = a;\n\t\tm_bfme08ZW = b;\n\t}\n\n\tvoid *m_bfmeVftZW;\n\tint m_bfme04ZW;\n\tint m_bfme08ZW;\n};\n\nclass BfmeHandleZW\n{\npublic:\n\tBfmeHandleZW(BfmeMsgZW *p) : m_bfmePtrZW(p) {}\n\tBfmeHandleZW(const BfmeHandleZW &o) : m_bfmePtrZW(o.m_bfmePtrZW) {}\n\t~BfmeHandleZW();\n\n\tBfmeMsgZW *m_bfmePtrZW;\n};\n\nclass BfmeHostZW\n{\npublic:\n\tBfmeHandleZW bfmeCloneZW() const;\n\n\tint m_bfmeHeadZW;\n\tint m_bfme04ZW;\n\tint m_bfme08ZW;\n};\n\nBfmeHandleZW BfmeHostZW::bfmeCloneZW() const\n{\n\treturn BfmeHandleZW(new BfmeMsgZW(m_bfme04ZW, m_bfme08ZW));\n}\n"
+}
