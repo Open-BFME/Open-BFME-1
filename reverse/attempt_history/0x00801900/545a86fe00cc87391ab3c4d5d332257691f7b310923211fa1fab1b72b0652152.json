@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "545a86fe00cc87391ab3c4d5d332257691f7b310923211fa1fab1b72b0652152",
+  "symbol": "?get@Rva00801900Get@@QAEHPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?get@Rva00801900Get@@QAEHPAX@Z\n// partial score=0.94 date=2026-09-08\nstruct Rva00801900TableBase\n{\n\tint m_table[1];\n};\n\nint __stdcall bfmeLookRH(Rva00801900TableBase &table, void *key);\n\nstruct Rva00801900Owner\n{\n\tchar m_pad[0x2B0];\n\tRva00801900TableBase m_table;\n\n\tRva00801900TableBase *table() { return &m_table; }\n};\n\nstruct Rva00801900Entry\n{\n\tvolatile int m_value;\n\tint m_pad;\n};\n\nclass Rva00801900Get\n{\npublic:\n\tint get(void *key);\n\nprivate:\n\tchar m_pad00[4];\n\tRva00801900Owner *m_owner;\n\tchar m_pad08[0x10];\n\tvolatile Rva00801900Entry *m_entries;\n\tint m_count;\n};\n\nint Rva00801900Get::get(void *key)\n{\n\tint index = bfmeLookRH(*m_owner->table(), key);\n\tif (index == -1)\n\t\treturn 0;\n\tif (index >= m_count)\n\t{\n\t\tvolatile int *crash = 0;\n\t\treturn *crash;\n\t}\n\tvolatile Rva00801900Entry *entry = m_entries + index;\n\treturn entry->m_value;\n}\n"
+}

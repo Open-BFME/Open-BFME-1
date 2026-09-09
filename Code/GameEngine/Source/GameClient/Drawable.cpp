@@ -6170,33 +6170,84 @@ DrawableID Drawable::getID( void ) const
 
 }  // end get ID
 
-//-------------------------------------------------------------------------------------------------
-// ?friend_bindToObject@Drawable@@QAEXPAVObject@@@Z present-unmatched
+// BFME stores the object and draw-module list farther into Drawable than the
+// reference class.  The binding method reads these two fields directly.
+struct BfmeDrawableBindingFields
+{
+	UnsignedByte m_unreconstructed_000[0xFC];
+	Object *m_object;
+	UnsignedByte m_unreconstructed_100[0x50];
+	DrawModule **m_drawModules;
+};
+
+struct BfmeGameLogicIndicatorFields
+{
+	UnsignedByte m_unreconstructed_000[0x180];
+	UnsignedByte m_indicatorOverride;
+	UnsignedByte m_unreconstructed_181[3];
+	UnsignedInt m_indicatorColor;
+};
+
+class BfmeDrawableBoundModule
+{
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+
+public:
+	virtual void onDrawableBoundToObject() = 0;
+};
+
+class BfmeDrawableBoundVtable
+{
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+
+public:
+	virtual void drawableBoundToObject() = 0;
+};
+
+// ?friend_bindToObject@Drawable@@QAEXPAVObject@@@Z
 void Drawable::friend_bindToObject( Object *obj ) ///< bind this drawable to an object ID
-{ 
-	m_object = obj; 
-	if (getObject())
+{
+	BfmeDrawableBindingFields *self = (BfmeDrawableBindingFields *)this;
+	self->m_object = obj;
+	if (obj)
 	{
-		if (TheGlobalData->m_timeOfDay == TIME_OF_DAY_NIGHT)
-			setIndicatorColor(getObject()->getNightIndicatorColor());
-		else
-			setIndicatorColor(getObject()->getIndicatorColor());
-
-		if (getObject()->isKindOf(KINDOF_FS_FAKE))
+		const BfmeGameLogicIndicatorFields *logic =
+			*(const BfmeGameLogicIndicatorFields **)0x012F0898;
+		if (logic->m_indicatorOverride == 1)
 		{
-			Relationship rel=ThePlayerList->getLocalPlayer()->getRelationship(getObject()->getTeam());
-			if (rel == ALLIES || rel == NEUTRAL)
-				setTerrainDecal(TERRAIN_DECAL_SHADOW_TEXTURE);
-			else
-				setTerrainDecal(TERRAIN_DECAL_NONE);
+			setIndicatorColor(logic->m_indicatorColor);
 		}
-	}
+		else if (*(const Int *)((const char *)*(const void **)0x012ED5C8 + 0x218) == 4)
+		{
+			setIndicatorColor(obj->getNightIndicatorColor());
+		}
+		else
+		{
+			setIndicatorColor(obj->getIndicatorColor());
+		}
 
-	for (DrawModule** dm = getDrawModules(); *dm; ++dm)
-	{
-		(*dm)->onDrawableBoundToObject();
+		for (DrawModule **dm = self->m_drawModules; *dm; ++dm)
+			((BfmeDrawableBoundModule *)*dm)->onDrawableBoundToObject();
+		((BfmeDrawableBoundVtable *)this)->drawableBoundToObject();
 	}
-}					
+}
 //-------------------------------------------------------------------------------------------------
 	// when our Object changes teams, it calls us to let us know, so
 	// we can update our model, etc., if necessary. NOTE, we don't guarantee
