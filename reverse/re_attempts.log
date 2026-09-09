@@ -19757,3 +19757,5 @@ queueDozer	0x001657E0	490	blocked	BFME three-argument findFactory(tTemplate,true
 ?d_006b0c50@@YAXXZ	0x006B0C50	59	blocked	served file drained: source-backed fixed 48-byte fill remains non-exact only in the two setup-instruction order; t=3min model=gpt-5.6
 ?d_006ace30@@YAXXZ	0x006ACE30	74	blocked	served file drained: BfmeHostZR refresh identity and tree insert are established, but inline memset setup order remains non-exact; t=3min model=gpt-5.6
 ?d_006e1670@@YAXXZ	0x006E1670	108	blocked	served file drained: BfmeThingAZ tick identity and field semantics are established, but retail/MSVC saved-register order remains non-exact; t=3min model=gpt-5.6
+?d_0093c4a0@@YAXXZ	0x0093C4A0	171	blocked	served file drained: GDI glyph-check identity and clean semantics are established, but saved-handle and bool-tail register shape remains non-exact; t=3min model=gpt-5.6
+?d_00943f70@@YAXXZ	0x00943F70	124	blocked	served file drained: BfmeSceneVector clear identity and scene-node relink semantics are established, but clean C++ remains non-exact in register roles and loop layout; t=3min model=gpt-5.6
