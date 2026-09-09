@@ -927,30 +927,6 @@ public ?d_00565f30@@YAXXZ
     db 00h, 00h, 00h, 00h, 5Bh, 83h, 0C4h, 18h, 0C3h
 ?d_00565f30@@YAXXZ ENDP
 
-; ghidra: FUN_009668c0  retail @ 0x005668C0 size 300
-public ?d_005668c0@@YAXXZ
-?d_005668c0@@YAXXZ PROC
-    db 6Ah, 0FFh, 68h, 0DBh, 4Dh, 03h, 01h, 64h, 0A1h, 00h, 00h, 00h, 00h, 50h, 64h, 89h
-    db 25h, 00h, 00h, 00h, 00h, 83h, 0ECh, 08h, 53h, 56h, 8Bh, 0F1h, 89h, 74h, 24h, 0Ch
-    db 0C7h, 06h, 14h, 0A3h, 10h, 01h, 0A1h, 3Ch, 4Bh, 2Fh, 01h, 33h, 0DBh, 3Bh, 0C6h, 89h
-    db 5Ch, 24h, 18h, 0Fh, 85h, 0D2h, 00h, 00h, 00h, 39h, 1Dh, 0E8h, 19h, 2Fh, 01h, 0Fh
-    db 84h, 0C0h, 00h, 00h, 00h, 68h, 0E4h, 0A2h, 10h, 01h, 8Dh, 4Ch, 24h, 0Ch, 0E8h, 0ADh
-    db 22h, 32h, 00h, 8Bh, 0Dh, 0E8h, 19h, 2Fh, 01h, 8Dh, 44h, 24h, 08h, 50h, 0C6h, 44h
-    db 24h, 1Ch, 01h, 0E8h, 4Fh, 79h, 0ABh, 0FFh, 8Dh, 4Ch, 24h, 08h, 88h, 5Ch, 24h, 18h
-    db 0E8h, 0Bh, 10h, 32h, 00h, 68h, 0B8h, 0A2h, 10h, 01h, 8Dh, 4Ch, 24h, 0Ch, 0E8h, 7Dh
-    db 22h, 32h, 00h, 8Dh, 4Ch, 24h, 08h, 51h, 8Bh, 0Dh, 0E8h, 19h, 2Fh, 01h, 0C6h, 44h
-    db 24h, 1Ch, 02h, 0E8h, 1Fh, 79h, 0ABh, 0FFh, 8Dh, 4Ch, 24h, 08h, 88h, 5Ch, 24h, 18h
-    db 0E8h, 0DBh, 0Fh, 32h, 00h, 68h, 88h, 0A2h, 10h, 01h, 8Dh, 4Ch, 24h, 0Ch, 0E8h, 4Dh
-    db 22h, 32h, 00h, 8Bh, 0Dh, 0E8h, 19h, 2Fh, 01h, 8Dh, 54h, 24h, 08h, 52h, 0C6h, 44h
-    db 24h, 1Ch, 03h, 0E8h, 0EFh, 78h, 0ABh, 0FFh, 8Dh, 4Ch, 24h, 08h, 88h, 5Ch, 24h, 18h
-    db 0E8h, 0ABh, 0Fh, 32h, 00h, 68h, 58h, 0A2h, 10h, 01h, 8Dh, 4Ch, 24h, 0Ch, 0E8h, 1Dh
-    db 22h, 32h, 00h, 8Bh, 0Dh, 0E8h, 19h, 2Fh, 01h, 8Dh, 44h, 24h, 08h, 50h, 0C6h, 44h
-    db 24h, 1Ch, 04h, 0E8h, 0BFh, 78h, 0ABh, 0FFh, 8Dh, 4Ch, 24h, 08h, 88h, 5Ch, 24h, 18h
-    db 0E8h, 7Bh, 0Fh, 32h, 00h, 89h, 1Dh, 3Ch, 4Bh, 2Fh, 01h, 8Dh, 4Eh, 04h, 0C7h, 44h
-    db 24h, 18h, 0FFh, 0FFh, 0FFh, 0FFh, 0E8h, 0A7h, 01h, 0AEh, 0FFh, 8Bh, 4Ch, 24h, 10h, 5Eh
-    db 5Bh, 64h, 89h, 0Dh, 00h, 00h, 00h, 00h, 83h, 0C4h, 14h, 0C3h
-?d_005668c0@@YAXXZ ENDP
-
 ; ghidra: FUN_009673a0  retail @ 0x005673A0 size 127
 public ?d_005673a0@@YAXXZ
 ?d_005673a0@@YAXXZ PROC

@@ -86582,3 +86582,5 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+_bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by destructor 0x005668C0; slots gen-dtor 0x00566AE0/0x00566AA0 and functor thunk 0x00566A90, no recovered class identity so pinned as opaque data
+?TheBfmeSkirmishOptionsSlot@@3PAVBfmeAptScreenSkirmish@@A,0x012F4B3C,Skirmish game-options screen singleton pointer cleared by destructor 0x005668C0
