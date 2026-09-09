@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6009f036b7c6c8fcc0e567b6b17091f87b628772ccf012aa484cd89e81444770",
+  "symbol": "?chooseLocomotorSet@AIUpdateInterface@@UAE_NW4LocomotorSetType@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?chooseLocomotorSet@AIUpdateInterface@@UAE_NW4LocomotorSetType@@@Z\n// partial score=0.92 date=2026-09-09\nclass BfmeNodeGN\r\n{\r\npublic:\r\n\tBfmeNodeGN *bfmeGetGN();\r\n\tfloat bfmeComputeGN(int v);\r\n\r\n\tunsigned char m_bfmeHeadGN[4];\r\n\tBfmeNodeGN *m_bfmeSubGN;\r\n};\r\n\r\nclass BfmeOwnerGN\r\n{\r\npublic:\r\n\tunsigned char m_bfmeGapGN[4];\r\n\tBfmeNodeGN *volatile m_bfmeNodeGN;\r\n};\r\n\r\nclass BfmeSelfGN\r\n{\r\npublic:\r\n\tbool bfmeApplyGN(int v);\r\n\tbool bfmeCheckGN(int v);\r\n\tvoid bfmeBeginGN();\r\n\r\n\tunsigned char m_bfmeHeadGN[8];\r\n\tBfmeOwnerGN *m_bfmeOwnerGN;\r\n\tunsigned char m_bfmeGap2GN[0x1c4];\r\n\tint m_bfmeValueGN;\r\n\tfloat m_bfmeResultGN;\r\n\tunsigned char m_bfmeGap3GN[0x14f];\r\n\tchar m_bfmeFlagAGN;\r\n\tunsigned char m_bfmeGap4GN[0xf];\r\n\tchar m_bfmeFlagBGN;\r\n};\r\n\r\nstatic __forceinline BfmeNodeGN *bfmeDerefGN(BfmeNodeGN *p)\r\n{\r\n\tif (p->m_bfmeSubGN != 0)\r\n\t\treturn p->m_bfmeSubGN->bfmeGetGN();\r\n\r\n\treturn p;\r\n}\r\n\r\nbool BfmeSelfGN::bfmeApplyGN(int v)\r\n{\r\n\tif (v == 0 && m_bfmeFlagAGN != 0)\r\n\t\tv = 1;\r\n\r\n\tif (v == m_bfmeValueGN)\r\n\t\treturn true;\r\n\r\n\tif (m_bfmeFlagBGN == 0 && bfmeCheckGN(v))\r\n\t{\r\n\t\tbfmeBeginGN();\r\n\r\n\t\tBfmeNodeGN *n = m_bfmeOwnerGN->m_bfmeNodeGN;\r\n\t\tBfmeNodeGN *r = (n != 0) ? bfmeDerefGN(n) : 0;\r\n\r\n\t\tm_bfmeResultGN = r->bfmeComputeGN(m_bfmeValueGN);\r\n\r\n\t\treturn true;\r\n\t}\r\n\telse\r\n\t{\r\n\t\treturn false;\r\n\t}\r\n}\r\n"
+}
