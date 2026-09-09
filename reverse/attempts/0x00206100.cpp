@@ -1,5 +1,5 @@
 // ?bfmeGetNB@BfmeThingNB@@QAEXPAUBfmeVecNB@@H@Z
-// partial score=0.82 date=2026-09-07
+// partial score=0.84 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc-
 // Open-BFME converts the 61-byte BFME triple copy at retail 0x00206100.
 // The index selects a vector entry at +0x24 or the fallback record at +8.
@@ -56,12 +56,12 @@ private:
 // ?bfmeGetNB@BfmeThingNB@@QAEXPAUBfmeVecNB@@H@Z
 void BfmeThingNB::bfmeGetNB(BfmeVecNB *out, int index)
 {
+	BfmeVecNB *destination = out;
 	BfmeVecNB *source =
 		(index >= 0 && (unsigned int)index < (unsigned int)values.size())
 		? &values[index].tripleValue()
 		: &fallback->tripleValue();
-	int first = source->first;
-	out->first = first;
-	out->second = source->second;
-	out->third = source->third;
+	destination->first = source->first;
+	destination->second = source->second;
+	destination->third = source->third;
 }

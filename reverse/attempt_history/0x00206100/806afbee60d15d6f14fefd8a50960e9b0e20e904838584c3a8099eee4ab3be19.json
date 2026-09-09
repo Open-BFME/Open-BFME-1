@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "806afbee60d15d6f14fefd8a50960e9b0e20e904838584c3a8099eee4ab3be19",
+  "symbol": "?bfmeGetNB@BfmeThingNB@@QAEXPAUBfmeVecNB@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.84,
+  "source": "// ?bfmeGetNB@BfmeThingNB@@QAEXPAUBfmeVecNB@@H@Z\n// partial score=0.84 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc-\n// Open-BFME converts the 61-byte BFME triple copy at retail 0x00206100.\n// The index selects a vector entry at +0x24 or the fallback record at +8.\n\nstruct BfmeVecNB\n{\n\tint first;\n\tint second;\n\tint third;\n};\n\ntypedef BfmeVecNB BfmeTripleNB;\n\nclass BfmeEntryNB\n{\npublic:\n\tBfmeTripleNB &tripleValue() { return triple; }\n\n\tchar padding[0x14];\n\tBfmeTripleNB triple;\n};\n\nclass BfmeFallbackNB\n{\npublic:\n\tBfmeTripleNB &tripleValue() { return triple; }\n\n\tchar padding[0x38];\n\tBfmeTripleNB triple;\n};\n\nclass BfmeVectorNB\n{\npublic:\n\tint size() const { return end - begin; }\n\tBfmeEntryNB &operator[](int index) const { return *begin[index]; }\n\n\tBfmeEntryNB **begin;\n\tBfmeEntryNB **end;\n};\n\nclass BfmeThingNB\n{\npublic:\n\tvoid bfmeGetNB(BfmeVecNB *out, int index);\n\nprivate:\n\tchar padding0[8];\n\tBfmeFallbackNB *fallback;\n\tchar padding0c[0x18];\n\tBfmeVectorNB values;\n};\n\n// ?bfmeGetNB@BfmeThingNB@@QAEXPAUBfmeVecNB@@H@Z\nvoid BfmeThingNB::bfmeGetNB(BfmeVecNB *out, int index)\n{\n\tBfmeVecNB *destination = out;\n\tBfmeVecNB *source =\n\t\t(index >= 0 && (unsigned int)index < (unsigned int)values.size())\n\t\t? &values[index].tripleValue()\n\t\t: &fallback->tripleValue();\n\tdestination->first = source->first;\n\tdestination->second = source->second;\n\tdestination->third = source->third;\n}\n"
+}
