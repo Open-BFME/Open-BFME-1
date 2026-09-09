@@ -4653,7 +4653,7 @@ name,address,notes
 ??1Gen_008AC620@@UAE@XZ,0x008AC620,pin near-twin base dtor reuses Gen_008AC620 body
 ??1Gen_dtor_00023989b@@QAE@XZ,0x00023989,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call, distinct from the mis-shaped UAE pin already at this address)
 ??1Gen_dtor_0002a8bab@@QAE@XZ,0x0002A8BA,Open-BFME5 pin: 44-byte-stride vector<T>::erase element destructor (non-virtual, direct call) for the 0x00777EE0 sibling erase
-??1Gen_dtor_0005fa60@@UAE@XZ,0x00031160,gen-dtor class destructor
+??1Rva0005C110Surface@@UAE@XZ,0x00031160,ILT to the matched complete Rva0005C110Surface destructor at RVA 0x0005EC20
 ??1Gen_dtor_0005fe80@@UAE@XZ,0x00007CB1,gen-dtor class destructor
 ??1Gen_dtor_00062240@@UAE@XZ,0x0000D828,gen-dtor class destructor
 ??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,gen-dtor class destructor
