@@ -1,5 +1,5 @@
 // ?shouldFireWeapon@FireWeaponCollide@@UAE_NXZ
-// partial score=0.85 date=2026-09-09
+// partial score=0.88 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail-layout ABI shim for FireWeaponCollide::shouldFireWeapon.
 
@@ -53,6 +53,7 @@ private:
 bool FireWeaponCollide::shouldFireWeapon()
 {
 	FireWeaponCollideModuleData *d = m_moduleData;
+	FireWeaponCollide *volatile self = this;
 	unsigned int word0 = m_object->m_status[0];
 	unsigned int word1 = m_object->m_status[1];
 	unsigned int word2 = m_object->m_status[2];
@@ -63,10 +64,10 @@ bool FireWeaponCollide::shouldFireWeapon()
 		return false;
 
 	status.set(~word0, ~word1, (~word2) & 0x003fffff);
-	if (status.bfmeRequiredAnyZX(&d->m_requiredStatus))
+	if (status.bfmeAnyZX(&d->m_requiredStatus))
 		return false;
 
-	if (m_everFired && d->m_fireOnce)
+	if (self->m_everFired && d->m_fireOnce)
 		return false;
 
 	return true;
