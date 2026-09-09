@@ -25133,3 +25133,5 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ?d_003d2b80@@YAXXZ,0x003D2B80,Generated dump placeholder superseded by authentic Rva003D2E00ElementCall body proven by its refresh caller and exact byte range
 ??0VideoPlayer@@QAE@XZ,0x000EB9D0,False constructor identity: canonical SpecialPowerStore constructor at this RVA installs vftable 0x01085CC4 whose slot zero reaches the SpecialPowerStore deleting destructor; VideoPlayer source supplies unrelated ICF bodies only
 ??_GGen_dtor_000ec1b0@@UAEPAXI@Z,0x000EC1B0,Generic generator placeholder superseded by authentic SpecialPowerStore scalar-deleting destructor proven by constructor 0x000EB9D0 vtable 0x01085CC4 and matched destructor 0x000EBD30
+?d_001e48f0@@YAXXZ,0x001E48F0,Generator placeholder superseded by the verified Weapon::isSourceObjectWithGoalPositionWithinAttackRange body at the same retail range
+?d_001e4160@@YAXXZ,0x001E4160,Generator placeholder superseded by the verified Rva001E4160List::any body at the same retail range
