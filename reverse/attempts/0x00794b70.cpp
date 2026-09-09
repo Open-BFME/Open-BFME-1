@@ -118,9 +118,14 @@ void W3DGadgetPushButtonNumberDraw( GameWindow *window,
 	if( data == 0 || data->value < 1 )
 		return;
 
-	DrawLocals local;
-	window->winGetSize( &local.sizeX, &local.sizeY );
-	window->winGetScreenPosition( &local.originX, &local.originY );
+	ICoord2D origin;
+	ICoord2D size;
+	Int width;
+	Int height;
+	Color textColor;
+	Color dropColor;
+	window->winGetSize( &size.x, &size.y );
+	window->winGetScreenPosition( &origin.x, &origin.y );
 
 	DisplayString *text = data->displayString;
 	if( text == 0 )
@@ -130,15 +135,15 @@ void W3DGadgetPushButtonNumberDraw( GameWindow *window,
 	displayNumber.format( L"%d", data->value );
 	text->setText( displayNumber );
 
-	getButtonTextColors( window, instData, &local.textColor, &local.dropColor );
+	getButtonTextColors( window, instData, &textColor, &dropColor );
 
 	if( text->getFont() != window->winGetFont() )
 		text->setFont( window->winGetFont() );
 
-	text->getSize( &local.width, &local.height );
+	text->getSize( &width, &height );
 
-	register Int textX = local.sizeX * g_bfmeK1253 - local.width * g_bfmeK1253 + local.originX;
-	register Int textY = local.originY + local.sizeY - local.height;
-	text->setTextColor( local.textColor, local.dropColor );
+	register Int textX = size.x * g_bfmeK1253 - width * g_bfmeK1253 + origin.x;
+	register Int textY = origin.y + size.y - height;
+	text->setTextColor( textColor, dropColor );
 	text->draw( textX, textY, 1, 1 );
 }
