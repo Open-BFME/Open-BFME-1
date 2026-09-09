@@ -1,5 +1,6 @@
 // ?bfmeSetZN@BfmeHostZN@@QAEXI@Z
-// partial score=0.93 date=2026-09-08
+// partial score=0.95 date=2026-09-09
+// ?bfmeSetZN@BfmeHostZN@@QAEXI@Z
 class BfmeOwnerVNI
 {
 public:
@@ -19,11 +20,12 @@ void BfmeHostZN::bfmeSetZN(unsigned int bit)
 {
 	unsigned int i = bit >> 5;
 	unsigned int m = 1 << (bit & 0x1f);
-	unsigned int c = m_bfmeBitsZN[i];
+	unsigned int *w = &m_bfmeBitsZN[i];
+	unsigned int c = *w;
 
 	if (m & c)
 		return;
 
-	m_bfmeBitsZN[i] = c | m;
+	*w = c | m;
 	bfmeApply1VNI();
 }

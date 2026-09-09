@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6a347668bc9fe4b70c0cdca16f359918d808e6345515d2047d241bd6605574c8",
+  "symbol": "?bfmeClearZK@BfmeHostZK@@QAEXI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?bfmeClearZK@BfmeHostZK@@QAEXI@Z\n// partial score=0.96 date=2026-09-09\nclass BfmeOwnerVNI\r\n{\r\npublic:\r\n\tvoid bfmeApply1VNI();\r\n};\r\n\r\nclass BfmeHostZK : public BfmeOwnerVNI\r\n{\r\npublic:\r\n\tvoid bfmeClearZK(unsigned int bit);\r\n\r\n\tunsigned char m_bfmeHeadZK[0x110];\r\n\tunsigned int m_bfmeBitsZK[8];\r\n};\r\n\r\nvoid BfmeHostZK::bfmeClearZK(unsigned int bit)\r\n{\r\n\tunsigned int m = 1 << (bit & 0x1f);\r\n\tunsigned int *w = &m_bfmeBitsZK[bit >> 5];\r\n\r\n\tunsigned int c = *w;\r\n\r\n\tif (!(m & c))\r\n\t\treturn;\r\n\r\n\tc &= ~m;\r\n\t*w = c;\r\n\tbfmeApply1VNI();\r\n}\r\n"
+}

@@ -1,5 +1,5 @@
 // ?run@SelfR0015F420@@QAEHXZ
-// partial score=0.45 date=2026-09-05
+// partial score=0.5 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: address-derived recovery, retail 0x0015F420, 527 bytes.
 //
@@ -251,10 +251,9 @@ Int SelfR0015F420::run(void)
 
 	ContainerR0015F420 *contFinal = *reinterpret_cast<ContainerR0015F420 **>(self + 0x1C);
 
-	Coord0015F420 temp;
-	*reinterpret_cast<Int *>(&temp.x) = contFinal->m_field44;
-	*reinterpret_cast<Int *>(&temp.y) = contFinal->m_field48;
-	*reinterpret_cast<Int *>(&temp.z) = contFinal->m_field4C;
+	Real tempX, tempY, tempZ;
+	*reinterpret_cast<Int *>(&tempX) = contFinal->m_field44;
+	*reinterpret_cast<Int *>(&tempZ) = contFinal->m_field4C;
 
 	Real range = aiGetAdjustedVisionRangeForObjectR0015F420(obj, 3);
 
@@ -268,14 +267,16 @@ Int SelfR0015F420::run(void)
 			factor = factor + (factor >> 1);
 	}
 
-	temp.y = range;
+	tempY = range;
 
-	*reinterpret_cast<Coord0015F420 *>(self + 0x2C) = temp;
+	reinterpret_cast<Real *>(self + 0x2C)[0] = tempX;
+	reinterpret_cast<Real *>(self + 0x2C)[1] = tempY;
+	reinterpret_cast<Real *>(self + 0x2C)[2] = tempZ;
 
 	*reinterpret_cast<Int *>(self + 0x3C) = g_bfmeClockBK->m_field3C + factor;
 
 	Real extra = thunk8da5R0015F420(obj);
-	Real sum = extra + temp.x;
+	Real sum = extra + tempX;
 
 	*reinterpret_cast<Int *>(self + 0x28) = 7;
 	*reinterpret_cast<Real *>(self + 0x38) = sum * sum;

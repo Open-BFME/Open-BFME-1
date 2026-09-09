@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "569463e60610b0efa61428eb1236f38aa86e377053af86d89b7ef75ed08dd4ba",
+  "symbol": "?isLinked@Rva001606D0@@QAEPAVRva001606D0Node@@PAV2@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ?isLinked@Rva001606D0@@QAEPAVRva001606D0Node@@PAV2@@Z\n// partial score=0.89 date=2026-09-09\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2\n// Near-twin of ?remove@Rva00160740@@QAEXPAVRva00160740Node@@@Z\n// (Code/GameEngine/Source/GameLogic/AI/Rva00160740RemoveNode.cpp): same\n// intrusive doubly-linked-list layout, head field at +0x4, node next/prev\n// at +0x4/+0x8. Address-derived; identity not recovered beyond retail bytes.\n\nclass Rva001606D0Node\n{\npublic:\n    char m_pad00[4];\n    Rva001606D0Node *m_next;\n    Rva001606D0Node *m_prev;\n};\n\nclass Rva001606D0\n{\npublic:\n    Rva001606D0Node *isLinked(Rva001606D0Node *node);\n\nprivate:\n    char m_pad00[4];\n    Rva001606D0Node *m_head;\n};\n\nRva001606D0Node *Rva001606D0::isLinked(Rva001606D0Node *node)\n{\n    if (m_head == node)\n        goto found;\n    if (node->m_next != 0)\n        goto found;\n    if (node->m_prev != 0)\n        goto found;\n    return 0;\nfound:\n    return node;\n}\n"
+}
