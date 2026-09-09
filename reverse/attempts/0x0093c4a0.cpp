@@ -30,15 +30,17 @@ private:
 bool Rva0093C4A0Target::Check(
 	const unsigned short *first, unsigned short *second, int third)
 {
-	bool result[8];
+	bool missing;
 	int i;
 	register int count = third;
 	if (count != 0)
 	{
 		HGDIOBJ font = m_font;
 		register HDC dc = TheFontCharsGDIState->dc;
-		result[0x14] = false;
-		HGDIOBJ old_font = SelectObject(dc, font);
+		missing = false;
+		// Two handle slots preserve the retail 8-byte frame; only slot1 is used.
+		HGDIOBJ old_font[2];
+		old_font[1] = SelectObject(dc, font);
 		GetGlyphIndicesW(TheFontCharsGDIState->dc, first, count, second, 1);
 
 		i = 0;
@@ -47,13 +49,13 @@ bool Rva0093C4A0Target::Check(
 			if (second[i] == 0xffff &&
 				first[i] != 0x000a && first[i] != 0x000d && first[i] != 0x0095)
 			{
-				result[0x14] = true;
+				missing = true;
 				break;
 			}
 		}
 
-		SelectObject(dc, old_font);
-		return result[0x14] == false;
+		SelectObject(dc, old_font[1]);
+		return missing == false;
 	}
 
 	return false;

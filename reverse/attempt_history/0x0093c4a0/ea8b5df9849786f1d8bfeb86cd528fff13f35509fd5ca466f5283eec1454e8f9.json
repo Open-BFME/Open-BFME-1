@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ea8b5df9849786f1d8bfeb86cd528fff13f35509fd5ca466f5283eec1454e8f9",
+  "symbol": "?Check@Rva0093C4A0Target@@QAE_NPBGPAGH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?Check@Rva0093C4A0Target@@QAE_NPBGPAGH@Z\n// partial score=0.9 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n#include <windows.h>\n\nextern \"C\" __declspec(dllimport) DWORD WINAPI GetGlyphIndicesW(\n\tHDC dc, LPCWSTR text, int count, LPWORD glyphs, DWORD flags);\n\nstruct FontCharsGDIState\n{\n\tint refs;\n\tvoid *old_bitmap;\n\tvoid *bitmap;\n\tint unused;\n\tvoid *dc;\n};\n\n#define TheFontCharsGDIState (*(FontCharsGDIState **)0x0134AEAC)\n\nclass Rva0093C4A0Target\n{\npublic:\n\tbool Check(const unsigned short *first, unsigned short *second, int third);\n\nprivate:\n\tchar m_gap00[0x48];\n\tHFONT m_font;\n};\n\nbool Rva0093C4A0Target::Check(\n\tconst unsigned short *first, unsigned short *second, int third)\n{\n\tbool missing;\n\tint i;\n\tregister int count = third;\n\tif (count != 0)\n\t{\n\t\tHGDIOBJ font = m_font;\n\t\tregister HDC dc = TheFontCharsGDIState->dc;\n\t\tmissing = false;\n\t\t// Two handle slots preserve the retail 8-byte frame; only slot1 is used.\n\t\tHGDIOBJ old_font[2];\n\t\told_font[1] = SelectObject(dc, font);\n\t\tGetGlyphIndicesW(TheFontCharsGDIState->dc, first, count, second, 1);\n\n\t\ti = 0;\n\t\tfor (; i < count; ++i)\n\t\t{\n\t\t\tif (second[i] == 0xffff &&\n\t\t\t\tfirst[i] != 0x000a && first[i] != 0x000d && first[i] != 0x0095)\n\t\t\t{\n\t\t\t\tmissing = true;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\n\t\tSelectObject(dc, old_font[1]);\n\t\treturn missing == false;\n\t}\n\n\treturn false;\n}\n"
+}
