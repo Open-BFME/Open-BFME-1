@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e70aed7accd866be19cc82ae5ab97bded421c2de8967db6203ee7e4b238522f9",
+  "symbol": "?d_0073a9b0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_0073a9b0@@YAXXZ\n// partial score=0.75 date=2026-09-08\n\nstruct GlobalData\n{\n\tchar m_padding[0xe5c];\n\tfloat m_terrainSampleSize;\n};\n\nclass TerrainLogic\n{\npublic:\n\tvirtual void v0();\n\tvirtual void v1();\n\tvirtual void v2();\n\tvirtual void v3();\n\tvirtual void v4();\n\tvirtual void v5();\n\tvirtual float getGroundHeight(float x, float y, void *normal = 0) const;\n};\n\nextern GlobalData *TheWritableGlobalData;\nextern TerrainLogic *TheTerrainLogic;\n\n__forceinline static float maxHeight(float first, float second)\n{\n\treturn first > second ? first : second;\n}\n\nfloat getHeightAroundPos(float x, float y)\n{\n\tfloat terrainHeight = TheTerrainLogic->getGroundHeight(x, y);\n\tfloat terrainHeightMax = terrainHeight;\n\tterrainHeightMax = maxHeight(terrainHeightMax, TheTerrainLogic->getGroundHeight(\n\t\tx + TheWritableGlobalData->m_terrainSampleSize,\n\t\ty - TheWritableGlobalData->m_terrainSampleSize));\n\n\tterrainHeightMax = maxHeight(terrainHeightMax, TheTerrainLogic->getGroundHeight(\n\t\tx - TheWritableGlobalData->m_terrainSampleSize,\n\t\ty - TheWritableGlobalData->m_terrainSampleSize));\n\n\tterrainHeightMax = maxHeight(terrainHeightMax, TheTerrainLogic->getGroundHeight(\n\t\tx + TheWritableGlobalData->m_terrainSampleSize,\n\t\ty + TheWritableGlobalData->m_terrainSampleSize));\n\n\tterrainHeightMax = maxHeight(terrainHeightMax, TheTerrainLogic->getGroundHeight(\n\t\tx - TheWritableGlobalData->m_terrainSampleSize,\n\t\ty + TheWritableGlobalData->m_terrainSampleSize));\n\n\treturn terrainHeightMax;\n}\n"
+}
