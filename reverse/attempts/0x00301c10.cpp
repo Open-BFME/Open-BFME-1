@@ -246,11 +246,7 @@ void ScriptActions::doTeamGuard(const AsciiString &teamName)
 		if (!ai)
 			continue;
 
-		Coord3D position = {
-			object->m_position.x,
-			object->m_position.y,
-			object->m_position.z
-		};
+		Coord3D position(object->getPosition());
 		bfmeGuardPosition(&ai->m_command, &position);
 	}
 }
