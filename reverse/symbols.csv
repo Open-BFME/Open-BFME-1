@@ -86568,3 +86568,12 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1DataChunkInfo@@QAE@XZ,0x00103240,compiler-synthesized DataChunkInput::parse info dtor; releaseBuffer parentLabel then label; retail addr currently mis-claimed by a gen-tgrid STL pair placeholder
 ?bfmeResolveKZ@Rva0015A5B0Inner@@QAEPAVRva0015A5B0Thing@@XZ,0x000022BB,pin resolve thunk for Rva0015A5B0Sum override walk
 ?Rva01336E50Str@@3VUnicodeString@@A,0x01336E50,UnicodeString view of the global string the WaterRenderObjClass constructor copies into its five name slots (same address as ?Rva01336E50Str@@3URva002E5FF0Str@@A)
+?g_bfmeOnlineProfileImageA@@3PBDA,0x012B7B34,char* to OnlineProfile/componentImages/ImageA used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageB@@3PBDA,0x012B7B38,char* to OnlineProfile/componentImages/ImageB used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageC@@3PBDA,0x012B7B3C,char* to OnlineProfile/componentImages/ImageC used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageD@@3PBDA,0x012B7B40,char* to OnlineProfile/componentImages/ImageD used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageLevelIconA@@3PBDA,0x012B7B44,char* to OnlineProfile/componentImages/ImageLevelIconA used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageLevelIconB@@3PBDA,0x012B7B48,char* to OnlineProfile/componentImages/ImageLevelIconB used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageLevelIconC@@3PBDA,0x012B7B4C,char* to OnlineProfile/componentImages/ImageLevelIconC used by OnlineProfile dtor 0x00553EE0
+?g_bfmeOnlineProfileImageLevelIconD@@3PBDA,0x012B7B50,char* to OnlineProfile/componentImages/ImageLevelIconD used by OnlineProfile dtor 0x00553EE0
+?TheBfmeOnlineProfileSlot@@3PAVBfmeOnlineProfileScreen@@A,0x012F4AB4,OnlineProfile singleton pointer cleared by destructor 0x00553EE0
