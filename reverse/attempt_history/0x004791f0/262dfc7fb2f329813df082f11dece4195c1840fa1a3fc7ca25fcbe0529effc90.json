@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "262dfc7fb2f329813df082f11dece4195c1840fa1a3fc7ca25fcbe0529effc90",
+  "symbol": "?bfmeAskBI@BfmeThingBI@@QAEEXZ",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?bfmeAskBI@BfmeThingBI@@QAEEXZ\n// partial score=0.91 date=2026-09-08\n// The 0x004791F0 and 0x00479210 bodies share the same +0x1dc forwarding\n// field and conditional virtual dispatch shape. The existing BFME identity\n// evidence names this return-byte method BfmeThingBI.\n\nclass BfmeThingBI\n{\npublic:\n\tvirtual unsigned char slot0(void) = 0;\n\tvirtual unsigned char dispatch(void) = 0;\n\n\tunsigned char bfmeAskBI(void);\n\nprivate:\n\tunsigned char m_pad4[0x1D8];\n\tBfmeThingBI *m_forwardTarget;\n};\n\nunsigned char BfmeThingBI::bfmeAskBI(void)\n{\n\tif (m_forwardTarget)\n\t\treturn m_forwardTarget->dispatch();\n\treturn dispatch();\n}\n"
+}

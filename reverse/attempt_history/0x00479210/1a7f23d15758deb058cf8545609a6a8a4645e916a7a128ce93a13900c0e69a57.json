@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1a7f23d15758deb058cf8545609a6a8a4645e916a7a128ce93a13900c0e69a57",
+  "symbol": "?d_00479210@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?d_00479210@@YAXXZ\n// partial score=0.91 date=2026-08-31\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nclass Rva00479210Object\n{\npublic:\n\tvirtual void slot0(void) = 0;\n\tvirtual void slot4(void) = 0;\n\tvirtual void dispatch(void) = 0;\n\n\tvoid forward(void);\n\nprivate:\n\tunsigned char m_pad4[0x1D8];\n\tRva00479210Object *m_forwardTarget;\n};\n\nvoid Rva00479210Object::forward(void)\n{\n\tif (m_forwardTarget)\n\t\tm_forwardTarget->dispatch();\n\telse\n\t\tdispatch();\n}\n"
+}
