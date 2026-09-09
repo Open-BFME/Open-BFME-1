@@ -90,6 +90,13 @@ enum CommandSourceType
 	CMD_FROM_INTERNAL = 2
 };
 
+enum CanEnterType
+{
+	CHECK_CAPACITY = 0,
+	DONT_CHECK_CAPACITY = 1,
+	COMBATDROP_INTO = 2
+};
+
 enum KindOfType
 {
 	KINDOF_PROJECTILE = 0x19
@@ -253,6 +260,28 @@ public:
 	virtual void exitObject(Object *, CommandSourceType) = 0;
 };
 
+class HordeContainEnterInterface
+{
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0;
+	virtual void slot02() = 0; virtual void slot03() = 0;
+	virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0;
+	virtual void slot08() = 0; virtual void slot09() = 0;
+	virtual void slot10() = 0; virtual void slot11() = 0;
+	virtual void slot12() = 0; virtual void slot13() = 0;
+	virtual void slot14() = 0; virtual void slot15() = 0;
+	virtual void slot16() = 0; virtual void slot17() = 0;
+	virtual void slot18() = 0; virtual void slot19() = 0;
+	virtual void slot20() = 0; virtual void slot21() = 0;
+	virtual void slot22() = 0; virtual void slot23() = 0;
+	virtual void slot24() = 0; virtual void slot25() = 0;
+	virtual void slot26() = 0; virtual void slot27() = 0;
+	virtual void slot28() = 0; virtual void slot29() = 0;
+	virtual void slot30() = 0;
+	virtual void enterObject(Object *, CommandSourceType) = 0;
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
 class ContainModuleInterface
 {
@@ -272,6 +301,15 @@ public:
 	virtual void slot24() = 0; virtual void slot25() = 0;
 	virtual HordeContainInterface *getHordeContainInterface() = 0;
 };
+
+class BFMEActionManager
+{
+public:
+	Bool canEnterObject(const Object *, const Object *, CommandSourceType,
+		CanEnterType, Bool *);
+};
+
+extern BFMEActionManager *TheActionManager;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing
@@ -366,6 +404,7 @@ public:
 
 protected:
 	virtual void privateExitInstantly(Object *objectToExit, CommandSourceType cmdSource);
+	virtual void privateEnter(Object *obj, CommandSourceType cmdSource);
 	virtual void bfmePrivateCommand01(void *first, CommandSourceType cmdSource);
 	virtual void bfmePrivateCommand38(void *first, CommandSourceType cmdSource);
 	virtual void privateMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource);
@@ -442,6 +481,35 @@ protected:
 	unsigned char m_unmodelled_327[0x32B - 0x327];
 	unsigned char m_isAiDead;					// +0x32B
 };
+
+// Retail 0x00271690. The object enter command first gives horde containers a
+// direct enter callback, then uses the ordinary AI enter state.
+void AIUpdateInterface::privateEnter(Object *obj, CommandSourceType cmdSource)
+{
+	Object *me = m_object;
+	ContainModuleInterface *contain = me->m_contain;
+	if (contain)
+	{
+		HordeContainEnterInterface *horde = reinterpret_cast<HordeContainEnterInterface *>(
+			contain->getHordeContainInterface());
+		if (horde)
+		{
+			horde->enterObject(obj, cmdSource);
+			return;
+		}
+	}
+
+	if (!me->isMobile())
+		return;
+
+	if (TheActionManager->canEnterObject(me, obj, cmdSource, DONT_CHECK_CAPACITY, 0))
+	{
+		m_stateMachine->clear();
+		m_stateMachine->setGoalObject(obj);
+		m_lastCommandSource = cmdSource;
+		m_stateMachine->setState((StateID)0x0f);
+	}
+}
 
 // Retail 0x00271800. The preceding 0x00271760 body is privateDock. This one
 // asks the object's contain interface at +0x1FC for a BFME horde exit view and

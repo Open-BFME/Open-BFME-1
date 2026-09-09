@@ -5004,32 +5004,6 @@ void AIUpdateInterface::privateGetRepaired( Object *repairDepot, CommandSourceTy
 
 //----------------------------------------------------------------------------------------
 /**
- * Enter the given object
- */
-// ?privateEnter@AIUpdateInterface@@ present-unmatched
-void AIUpdateInterface::privateEnter( Object *obj, CommandSourceType cmdSource )
-{
-	Object *me = getObject();
-	if( me->isMobile() == FALSE )
-		return;
-
-	//Resetting the locomotor here was initially added for scripting purposes. It has been moved
-	//to the responsibility of the script to reset the locomotor before moving. This is needed because
-	//other systems (like the battle drone) change the locomotor based on what it's trying to do, and
-	//doesn't want to get reset when ordered to move.
-	//chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-
-	if( TheActionManager->canEnterObject( me, obj, cmdSource, DONT_CHECK_CAPACITY ) )
-	{
-		getStateMachine()->clear();
-		getStateMachine()->setGoalObject( obj );
-		setLastCommandSource( cmdSource );
-		getStateMachine()->setState( AI_ENTER );
-	}
-}
-
-//----------------------------------------------------------------------------------------
-/**
  * Dock with the given object
  */
 // ?privateDock@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z
