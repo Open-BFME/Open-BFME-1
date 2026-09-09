@@ -1,18 +1,12 @@
 // ??0BfmeOnlineProfileScreen@@QAE@PAX@Z
-// partial score=0.55 date=2026-09-09
+// partial score=0.95 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// BfmeOnlineProfileScreen destructor, retail 0x00553EE0, 702 bytes.
-// Mirrors createAptScreenOnlineProfile (AptScreenFactories.cpp, retail
-// 0x0055BBA0 / object ctor 0x00557C00, still gen_asm): the singleton lives at
-// 0x012F4AB4 (TheBfmeOnlineProfileSlot). If this instance is the live
-// singleton and g_theWindowManager (0x012F19E8) is set, it unregisters 8
-// image gadgets (through _bfme_removeNamedAptGadget, already pinned by
-// OnlineHomeDestructor.cpp) and 4 player-level-icon tooltips (through
-// removeAptObject) by name, then clears the singleton. The base class
-// destructor call (vfptr reset to ??_7BfmeAptGameWindow@@6B@ then
-// bfmeDestroy(), pinned 0x00021FC1, reaching ??1S4Owner@@UAE@XZ) runs
-// unconditionally, same shape as OnlineHomeDestructor.cpp / OnlineChatDestructor.cpp.
+// BfmeOnlineProfileScreen constructor, retail 0x00557C00, 1659 bytes,
+// ??0BfmeOnlineProfileScreen@@QAE@PAX@Z. The destructor
+// (??1BfmeOnlineProfileScreen@@UAE@XZ, retail 0x00553EE0) is already landed
+// in BfmeConv2200.cpp; this TU only declares it (no body) to keep the class
+// layout consistent, it must not be redefined here.
 
 template <typename T> class StringBase
 {
@@ -36,6 +30,23 @@ public:
 class BfmeAptGameWindow
 {
 public:
+	__forceinline BfmeAptGameWindow( void *context )
+	{
+		*(int *)( (char *)this + 0x04 ) = 0;
+		*(int *)( (char *)this + 0x08 ) = 0;
+		*(int *)( (char *)this + 0x0c ) = 0;
+		*(int *)( (char *)this + 0x10 ) = 0;
+		*(int *)( (char *)this + 0x14 ) = 0;
+		*(int *)( (char *)this + 0x18 ) = 0;
+		*(int *)( (char *)this + 0x1c ) = 0;
+		*(int *)( (char *)this + 0x20 ) = 0;
+		*(int *)( (char *)this + 0x24 ) = 0;
+		*(int *)( (char *)this + 0x28 ) = 0;
+		*(int *)( (char *)this + 0x2c ) = 0;
+		*(int *)( (char *)this + 0x30 ) = 0;
+		*(void **)( (char *)this + 0x34 ) = context;
+		*(int *)( (char *)this + 0x38 ) = 0;
+	}
 	virtual ~BfmeAptGameWindow()
 	{
 		bfmeDestroy();
@@ -47,8 +58,11 @@ private:
 };
 
 // FunctorBinding/holder plumbing shared by every registration call in the
-// constructor below - same idiom as BfmeAptScreenQuitMenuConstructor.cpp.
-class __multiple_inheritance FunctorTarget;
+// constructor below. Unlike BfmeAptScreenQuitMenuConstructor.cpp's
+// multiple-inheritance-derived screen, this callback method resolves to a
+// plain 4-byte address (retail stores only target+method, 8 bytes total,
+// no adjustor word), so FunctorTarget stays single inheritance here.
+class __single_inheritance FunctorTarget;
 typedef void (FunctorTarget::*FunctorMethod)( void );
 
 struct FunctorBinding
@@ -57,7 +71,6 @@ struct FunctorBinding
 		: m_target( target ), m_method( method ) {}
 
 	FunctorTarget *m_target;
-	unsigned int m_unmodelled;
 	FunctorMethod m_method;
 };
 
@@ -88,6 +101,11 @@ public:
 		if( m_ptr != 0 )
 			m_ptr->m_refCount++;
 	}
+	__forceinline Rva0050F8B0FunctorHolder( const Rva0050F8B0FunctorHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~Rva0050F8B0FunctorHolder();
 
 	Rva01108604FunctorWrapper *m_ptr;
 };
@@ -110,6 +128,11 @@ public:
 		if( m_ptr != 0 )
 			m_ptr->m_refCount++;
 	}
+	__forceinline Rva0050F920FunctorHolder( const Rva0050F920FunctorHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~Rva0050F920FunctorHolder();
 
 	Rva01108610FunctorWrapper *m_ptr;
 };
@@ -158,10 +181,8 @@ extern const char *g_bfmeOnlineProfileImageLevelIconB;
 extern const char *g_bfmeOnlineProfileImageLevelIconC;
 extern const char *g_bfmeOnlineProfileImageLevelIconD;
 
-class BfmeAptFunctorMarker {};
-
-class __multiple_inheritance BfmeOnlineProfileScreen
-	: public BfmeAptGameWindow, public BfmeAptFunctorMarker
+class BfmeOnlineProfileScreen
+	: public BfmeAptGameWindow
 {
 public:
 	BfmeOnlineProfileScreen( void *context );
@@ -178,66 +199,6 @@ private:
 	void _bfme_refreshCachedStats();
 };
 
-BfmeOnlineProfileScreen::~BfmeOnlineProfileScreen()
-{
-	if( TheBfmeOnlineProfileSlot == this )
-	{
-		if( g_theWindowManager )
-		{
-			{
-				AsciiString name( g_bfmeOnlineProfileImageA );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageB );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageC );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageD );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageLevelIconA );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageLevelIconB );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageLevelIconC );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( g_bfmeOnlineProfileImageLevelIconD );
-				g_theWindowManager->_bfme_removeNamedAptGadget( name );
-			}
-			{
-				AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconGondor" );
-				g_theWindowManager->removeAptObject( name );
-			}
-			{
-				AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconRohan" );
-				g_theWindowManager->removeAptObject( name );
-			}
-			{
-				AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconIsengard" );
-				g_theWindowManager->removeAptObject( name );
-			}
-			{
-				AsciiString name( "OnlineShell/OnlineProfile/tooltipPlayerLevelIconMordor" );
-				g_theWindowManager->removeAptObject( name );
-			}
-		}
-		TheBfmeOnlineProfileSlot = 0;
-	}
-}
-
-// BfmeOnlineProfileScreen constructor, retail 0x00557C00, 1659 bytes,
 // ??0BfmeOnlineProfileScreen@@QAE@PAX@Z. Registers what the destructor above
 // unregisters: 8 named apt gadgets (image + key, through BfmeA1024::bfmeGo1024A
 // already landed at 0x0046C790), 4 tooltip binds sharing one callback, and
@@ -245,22 +206,8 @@ BfmeOnlineProfileScreen::~BfmeOnlineProfileScreen()
 // then refreshes cached GameSpy player stats. Refuses a second instance the
 // same way createAptScreenOnlineProfile (AptScreenFactories.cpp) does.
 BfmeOnlineProfileScreen::BfmeOnlineProfileScreen( void *context )
+	: BfmeAptGameWindow( context )
 {
-	*(int *)( (char *)this + 0x04 ) = 0;
-	*(int *)( (char *)this + 0x08 ) = 0;
-	*(int *)( (char *)this + 0x0c ) = 0;
-	*(int *)( (char *)this + 0x10 ) = 0;
-	*(int *)( (char *)this + 0x14 ) = 0;
-	*(int *)( (char *)this + 0x18 ) = 0;
-	*(int *)( (char *)this + 0x1c ) = 0;
-	*(int *)( (char *)this + 0x20 ) = 0;
-	*(int *)( (char *)this + 0x24 ) = 0;
-	*(int *)( (char *)this + 0x28 ) = 0;
-	*(int *)( (char *)this + 0x2c ) = 0;
-	*(int *)( (char *)this + 0x30 ) = 0;
-	*(void **)( (char *)this + 0x34 ) = context;
-	*(int *)( (char *)this + 0x38 ) = 0;
-
 	if( TheBfmeOnlineProfileSlot == 0 )
 	{
 		TheBfmeOnlineProfileSlot = this;
