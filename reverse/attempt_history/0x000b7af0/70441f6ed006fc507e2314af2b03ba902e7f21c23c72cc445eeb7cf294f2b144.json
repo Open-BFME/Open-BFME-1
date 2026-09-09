@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "70441f6ed006fc507e2314af2b03ba902e7f21c23c72cc445eeb7cf294f2b144",
+  "symbol": "?_M_fill_insert@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXPAUCoord3D@@IABU3@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.4,
+  "source": "// ?_M_fill_insert@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXPAUCoord3D@@IABU3@@Z\n// partial score=0.4 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n// stlport\n//\n// STLport vector<Coord3D>::_M_fill_insert.  The sole retail caller is the\n// by-value Coord3D resize body immediately below this address (0x000B7C90),\n// and the 12-byte POD shape is independently fixed by the neighbouring\n// 0x0076D560 fill-insert instantiation.\n\nstruct Coord3D\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\n#include <vector>\n\ntemplate void _STL::vector<Coord3D, _STL::allocator<Coord3D> >::_M_fill_insert(\n\tCoord3D *, unsigned int, const Coord3D &);\n"
+}
