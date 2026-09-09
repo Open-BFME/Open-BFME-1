@@ -1472,28 +1472,108 @@ void Drawable::flashAsSelected( const RGBColor *color ) ///< drawable takes care
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?applyPhysicsXform@Drawable@@IAEXPAVMatrix3D@@@Z present-unmatched
+// The BFME Drawable/Object/GlobalData views used by this method are larger
+// than the ZH reference headers.  These accesses are all fixed by the retail
+// operands: Drawable+0xfc -> Object, Object+0x1a4 -> disabled mask byte,
+// Object+0x118 -> status word, and GlobalData+0xa80 -> show-client-physics.
+// The BFME client-frame query is not declared by the reference ScriptEngine
+// header, so this TU-local view keeps its proven raw member ABI.  The logic
+// debug query uses the canonical ScriptEngine declaration.
+// Existing retail ILT; keep the adapter neutral so no fictional view method
+// or alternatename symbol is emitted.
+class DrawablePhysicsScriptEngineCall
+{
+};
+extern void j_00003783(void);
+extern void j_00027318(void);
+typedef Bool (DrawablePhysicsScriptEngineCall::*DrawablePhysicsScriptBoolCall)(void);
+static __forceinline Bool drawablePhysicsClientFrozen(DrawablePhysicsScriptEngineCall *script)
+{
+	union
+	{
+		void (*asFunction)(void);
+		DrawablePhysicsScriptBoolCall asMember;
+	} thunk;
+	thunk.asFunction = j_00003783;
+	return (script->*thunk.asMember)();
+}
+static __forceinline Bool drawablePhysicsScriptFrozen(DrawablePhysicsScriptEngineCall *script)
+{
+	union
+	{
+		void (*asFunction)(void);
+		DrawablePhysicsScriptBoolCall asMember;
+	} thunk;
+	thunk.asFunction = j_00027318;
+	return (script->*thunk.asMember)();
+}
+
+// The retail slots are ordinary one-argument member calls (ECX is the view);
+// MSVC 7.1 does not accept __thiscall in a function-pointer typedef, so the
+// __fastcall spelling is used here because its first argument is likewise ECX.
+typedef Bool (__fastcall *DrawablePhysicsViewBoolCall)(void *);
+
+// The retail zero storage is the existing ?BfmeZeroRange@@3MB at VA
+// 0x01075350.  An address view is used here because spelling it as an
+// external variable changes MSVC 7.1's x87 grouping. The absolute operand
+// addresses that proven zero storage and has no COFF relocation.
+#define DRAWABLE_PHYSICS_ZERO (*(const Real *)0x01075350)
+
+static __forceinline void drawablePhysicsTranslateRow0(Real *row, Real z)
+{
+	row[3] += (float)(row[0] * DRAWABLE_PHYSICS_ZERO + row[1] * DRAWABLE_PHYSICS_ZERO + row[2] * z);
+}
+
+class DrawablePhysicsMatrixView : public Matrix3D
+{
+public:
+	__forceinline void translatePhysicsZ(Real z)
+	{
+		drawablePhysicsTranslateRow0(&Row[0][0], z);
+		Row[1].W += (float)((Row[1].X + Row[1].Y) * DRAWABLE_PHYSICS_ZERO + Row[1].Z * z);
+		Row[2].W += (float)((Row[2].X + Row[2].Y) * DRAWABLE_PHYSICS_ZERO + Row[2].Z * z);
+	}
+};
+
+#undef DRAWABLE_PHYSICS_ZERO
+
+// ?applyPhysicsXform@Drawable@@IAEXPAVMatrix3D@@@Z
 void Drawable::applyPhysicsXform(Matrix3D* mtx)
 {
-	const Object *obj = getObject();
+	const unsigned char *drawableBytes = reinterpret_cast<const unsigned char *>(this);
+	const unsigned char *obj = *reinterpret_cast<const unsigned char *const *>(drawableBytes + 0xfc);
 
-	if( !obj ||	obj->isDisabledByType( DISABLED_HELD ) || !TheGlobalData->m_showClientPhysics )
-	{
+	if (!obj)
 		return;
-	}
+	if ((obj[0x1a4] & 0x08) != 0 &&
+		(*reinterpret_cast<const UnsignedInt *>(obj + 0x118) & 0x00010000) == 0)
+		return;
+	if (reinterpret_cast<const unsigned char *>(TheGlobalData)[0xa80] == 0)
+		return;
 
- 	Bool frozen = TheTacticalView->isTimeFrozen() && !TheTacticalView->isCameraMovementFinished();
- 	frozen = frozen || TheScriptEngine->isTimeFrozenDebug() || TheScriptEngine->isTimeFrozenScript();
-	if (frozen)
+	if (reinterpret_cast<DrawablePhysicsViewBoolCall>(
+			(*reinterpret_cast<void ***>(TheTacticalView))[0xd4 / sizeof(void *)])(TheTacticalView) &&
+		!reinterpret_cast<DrawablePhysicsViewBoolCall>(
+				(*reinterpret_cast<void ***>(TheTacticalView))[0x74 / sizeof(void *)])(TheTacticalView))
 		return;
+
+	DrawablePhysicsScriptEngineCall *script =
+		reinterpret_cast<DrawablePhysicsScriptEngineCall *>(TheScriptEngine);
+	if (TheScriptEngine->isTimeFrozenDebug())
+		return;
+	if (drawablePhysicsClientFrozen(script))
+		return;
+	if (drawablePhysicsScriptFrozen(
+			reinterpret_cast<DrawablePhysicsScriptEngineCall *>(TheScriptEngine)))
+		return;
+
 	PhysicsXformInfo info;
 	if (calcPhysicsXform(info))
 	{
-		mtx->Translate(0.0f, 0.0f, info.m_totalZ);
-		mtx->Rotate_Y( info.m_totalPitch );
-		mtx->Rotate_X( -info.m_totalRoll );
-		mtx->Rotate_Z( info.m_totalYaw );
-
+		((DrawablePhysicsMatrixView *)mtx)->translatePhysicsZ(info.m_totalZ);
+		mtx->Rotate_Y(info.m_totalPitch);
+		mtx->Rotate_X(-info.m_totalRoll);
+		mtx->Rotate_Z(info.m_totalYaw);
 	}
 }
 

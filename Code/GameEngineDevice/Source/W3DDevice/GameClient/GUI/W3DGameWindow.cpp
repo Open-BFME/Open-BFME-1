@@ -48,6 +48,108 @@ protected:
 	Render2DSentenceClass m_textRenderer;					///< +0x268
 };
 
+
+// Retail 0x0078D810 initializes the border images in this window TU.
+// The enum order is the vendored Gadget.h order: right pieces precede top
+// pieces in the static pointer array, despite the lookup-call order below.
+typedef bool Bool;
+class Image;
+template <class T> class StringBase
+{
+private:
+	void *m_data;
+	StringBase(const T *text);
+	~StringBase();
+	friend class AsciiString;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString();
+};
+class ImageCollection
+{
+public:
+	const Image *findImageByName(const AsciiString &name);
+};
+extern ImageCollection *TheMappedImageCollection;
+
+enum BorderPiece
+{
+	BORDER_CORNER_UL,
+	BORDER_CORNER_UR,
+	BORDER_CORNER_LL,
+	BORDER_CORNER_LR,
+	BORDER_VERTICAL_LEFT,
+	BORDER_VERTICAL_LEFT_SHORT,
+	BORDER_VERTICAL_RIGHT,
+	BORDER_VERTICAL_RIGHT_SHORT,
+	BORDER_HORIZONTAL_TOP,
+	BORDER_HORIZONTAL_TOP_SHORT,
+	BORDER_HORIZONTAL_BOTTOM,
+	BORDER_HORIZONTAL_BOTTOM_SHORT,
+	NUM_BORDER_PIECES
+};
+
+static Bool bordersInit = false;
+static const Image *borderPieces[NUM_BORDER_PIECES] = { 0 };
+
+// ?initBorders@@YAXXZ
+void initBorders(void)
+{
+	{
+		AsciiString name("BorderCornerUL");
+		borderPieces[BORDER_CORNER_UL] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderCornerUR");
+		borderPieces[BORDER_CORNER_UR] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderCornerLL");
+		borderPieces[BORDER_CORNER_LL] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderCornerLR");
+		borderPieces[BORDER_CORNER_LR] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderLeft");
+		borderPieces[BORDER_VERTICAL_LEFT] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderLeftShort");
+		borderPieces[BORDER_VERTICAL_LEFT_SHORT] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderTop");
+		borderPieces[BORDER_HORIZONTAL_TOP] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderTopShort");
+		borderPieces[BORDER_HORIZONTAL_TOP_SHORT] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderRight");
+		borderPieces[BORDER_VERTICAL_RIGHT] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderRightShort");
+		borderPieces[BORDER_VERTICAL_RIGHT_SHORT] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderBottom");
+		borderPieces[BORDER_HORIZONTAL_BOTTOM] = TheMappedImageCollection->findImageByName(name);
+	}
+	{
+		AsciiString name("BorderBottomShort");
+		borderPieces[BORDER_HORIZONTAL_BOTTOM_SHORT] = TheMappedImageCollection->findImageByName(name);
+	}
+	bordersInit = true;
+}
+
 // W3DGameWindow::~W3DGameWindow ==============================================
 //=============================================================================
 // ??1W3DGameWindow@@MAE@XZ

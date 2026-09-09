@@ -86544,3 +86544,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?set@BFMERetailAsciiString@@QAEXPBDH@Z,0x00887D20,set
 ?bfmeSetZH@BfmeObjZH@@QAEXPBUBfmeVecZH@@PBVBFMERetailAsciiString@@@Z,0x008800D0,set vec
 ?bfmeApplyZH@@YAXPAVBfmeObjZH@@@Z,0x0087EBB0,apply
+?TheMappedImageCollection@@3PAVImageCollection@@A,0x012F6924,canonical ImageCollection singleton; campaign=36h-20260908
