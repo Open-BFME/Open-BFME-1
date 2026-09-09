@@ -70,18 +70,44 @@ struct ListboxDataBFME
 	short displayPos;					// +0x44
 };
 
-// The same record as an opaque type: the pin for the __fastcall helper below is
-// written against this spelling, so it stays.
-struct _ListboxData;
+// The helper's static/private call convention is selected by its real callers,
+// so keep the retail record spelling while opening only the fields it reads.
+struct _ListboxData
+{
+	char unused00[0x18];
+	ListEntryRowBFME *listData;
+	char unused1c[0x10];
+	short endPos;
+	char unused2e[0x0e];
+	short displayHeight;
+	char unused3e[6];
+	short displayPos;
+};
 typedef struct _ListboxData ListboxData;
 
 // 0x004B6BA0 opens with `movsx eax, word ptr [ecx+0x2c]`, and the call site is
 // `mov ecx, eax` / `call` with no push and no stack cleanup: the helper is
 // static in retail's GadgetListBox.cpp and MSVC 7.1 gave it a register
-// convention. __fastcall is the only spelling that reproduces that, so the pin
-// carries the __fastcall decoration (YI) of the same 0x004B6BA0 body the
-// existing ?getListboxBottomEntry@@YAHPAU_ListboxData@@@Z row already claims.
-int __fastcall getListboxBottomEntry(ListboxData *listData);
+// convention. A TU-local static definition lets the compiler select that
+// convention from the actual callers, as it does for getListboxTopEntry.
+static int getListboxBottomEntry(ListboxData *list)
+{
+	int entry;
+
+	for (entry = list->endPos - 1; ; entry--)
+	{
+		if (entry < 0)
+			return 0;
+		if (list->listData[entry].listHeight == list->displayPos + list->displayHeight)
+			return entry;
+		if (list->listData[entry].listHeight < list->displayPos + list->displayHeight)
+		{
+			if (entry != list->endPos - 1)
+				return entry + 1;
+			return entry;
+		}
+	}
+}
 
 // The BFME-only 2-argument overload at 0x004B7B20, distinct from the general
 // 3-argument one defined below.
