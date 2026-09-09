@@ -84980,7 +84980,7 @@ _Rva00813A50,0x00813A50,address-derived DirtySock address lookup helper called b
 _Rva008143F0,0x008143F0,address-derived DirtySock operation table entry stored by 0x008140D0
 _Rva00814520,0x00814520,address-derived DirtySock operation table entry stored by 0x008140D0
 _Rva00814540,0x00814540,address-derived DirtySock operation table entry stored by 0x008140D0
-_Rva00814770,0x00814770,Y4 lane: DirtySock comm pump taking a tick; the socket callback at 0x00814700 samples the clock once and passes it in
+_Rva00814770,0x00814770,Y4 lane: DirtySock comm pump; cdecl tick argument is unused and receive/send paths sample fresh ticks
 _Rva00814EA0,0x00814EA0,Y4 lane: DirtySock comm operation wrapped by 0x00814F70; negative returns are errors and non-negative ones counts
 _Rva00814FE0,0x00814FE0,address-derived DirtySock operation table entry stored by 0x008140D0
 _Rva008155F0,0x008155F0,address-derived DirtySock timeout handler called by 0x00815D40

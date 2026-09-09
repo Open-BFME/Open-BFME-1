@@ -15,7 +15,12 @@ unsigned int Rva007FEA00( void );
 
 struct Rva00814700Comm
 {
-	char m_head[ 0x48 ];
+	char m_head[ 0x38 ];
+	void ( *m_sendCallback )( struct Rva00814700Comm *, void *, int,
+		unsigned int );         /* +0x38 */
+	void ( *m_receiveCallback )( struct Rva00814700Comm *, void *, int,
+		unsigned int );       /* +0x3C */
+	char m_gap40[ 0x08 ];
 	void *m_socketAlias;             /* +0x48 */
 	char m_gap4C[ 0x2C ];
 	void *m_transport;               /* +0x78 */
@@ -44,13 +49,14 @@ struct Rva00814700Comm
 	void *m_allocB;                  /* +0xC8 */
 	char m_gapCC[ 0x04 ];
 	unsigned int m_timeoutTick;     /* +0xD0 */
-	char m_gapD4[ 0x04 ];
+	unsigned int m_receiveTick;      /* +0xD4 */
 	int m_status;                   /* +0xD8 */
 	char m_gapDC[ 0xBC ];
 	unsigned int m_workerId;          /* +0x198 */
 	char m_gap19C[ 0x4C ];
 	char m_lock[ 4 ];               /* +0x1E8 */
-	char m_gap1EC[ 0x24 ];
+	char m_gap1EC[ 0x20 ];
+	int m_callbackDepth;             /* +0x20C */
 	int m_flags;                    /* +0x210 */
 	void *m_value;                  /* +0x214 */
 	void ( *m_callback )( struct Rva00814700Comm *, void * ); /* +0x218 */
@@ -574,6 +580,162 @@ int Rva007FDE80( void *socket, int flags, int interval, void *ref,
 int Rva00814700( unsigned int socket, int flags,
 	struct Rva00814700Comm *ref );
 
+struct Rva00814770Record
+{
+	unsigned int m_tick;
+	short m_length;
+	char m_data[ 1 ];
+};
+
+struct Rva00814D60Comm;
+void Rva00814D60( struct Rva00814D60Comm *comm );
+void *Rva007FD7D0( void *socket, void *address, int *addressLength );
+int Rva007FD920( void *socket, const char *buffer, int length, int flags,
+	void *address, int addressLength );
+
+int Rva00814770( struct Rva00814700Comm *comm, unsigned int tick )
+{
+	int iResult;
+	int iTotal;
+	struct Rva00814770Record *record;
+	char *payload;
+	unsigned char address[ 16 ];
+	int addressLength;
+	void *newSocket;
+
+	iTotal = 0;
+	if ( comm->m_state == 2 )
+	{
+		if ( Rva007FDB60( comm->m_socket, 0x73746174, 0, 0 ) > 0 )
+		{
+			comm->m_state = 4;
+			Rva00814D60( (struct Rva00814D60Comm *)comm );
+		}
+	}
+
+	if ( comm->m_state == 3 )
+	{
+		addressLength = 0x10;
+		newSocket = 0;
+		newSocket = Rva007FD7D0( comm->m_socket, address, &addressLength );
+		if ( newSocket != 0 )
+		{
+			Rva007FD3F0( comm->m_socket );
+			Rva008142B0( comm, newSocket );
+			Rva007FDE80( comm->m_socket, 2, 100, comm, Rva00814700 );
+			comm->m_state = 4;
+			Rva00814D60( (struct Rva00814D60Comm *)comm );
+		}
+	}
+
+	while ( comm->m_state == 4 )
+	{
+		if ( ( comm->m_readOffset + comm->m_recordSize )
+			% comm->m_bufferSize == comm->m_writeOffset )
+			break;
+
+		record = (struct Rva00814770Record *)( (char *)comm->m_allocA
+			+ comm->m_readOffset );
+		payload = (char *)record + 4;
+		payload += comm->m_sequence;
+		iResult = 2;
+		if ( comm->m_sequence >= iResult )
+			iResult = record->m_length + iResult;
+		iResult -= comm->m_sequence;
+		iResult = Rva007FDA50( comm->m_socket, payload, iResult, 0, 0, 0 );
+		if ( iResult == 0 )
+			break;
+		if ( iResult < 0 )
+		{
+			comm->m_state = 5;
+			break;
+		}
+
+		comm->m_receiveTick = Rva007FEA00();
+		if ( comm->m_sequence == 0 )
+			record->m_tick = comm->m_receiveTick;
+		iTotal += iResult;
+		comm->m_sequence += iResult;
+		iResult = 2;
+		if ( comm->m_sequence < iResult )
+			continue;
+		iResult = record->m_length + iResult;
+		if ( comm->m_sequence < iResult )
+			continue;
+		comm->m_sequence = 0;
+		if ( record->m_length == 0 )
+			continue;
+		comm->m_callbackDepth++;
+		comm->m_readOffset = ( comm->m_readOffset
+			+ comm->m_recordSize ) % comm->m_bufferSize;
+		if ( comm->m_receiveCallback != 0 )
+			comm->m_receiveCallback( comm, record->m_data,
+				record->m_length, record->m_tick );
+		comm->m_callbackDepth--;
+		comm->m_flags |= 1;
+	}
+
+	if ( comm->m_state == 4 && comm->m_pending < 0
+		&& comm->m_countC == comm->m_lastTick
+		&& Rva007FEA00() > comm->m_timeoutTick + 0x32 )
+	{
+		record = (struct Rva00814770Record *)( (char *)comm->m_allocB
+			+ comm->m_countC );
+		record->m_tick = Rva007FEA00();
+		record->m_length = 0;
+		comm->m_countC = ( comm->m_countC + comm->m_countA )
+			% comm->m_countB;
+	}
+
+	while ( comm->m_state == 4 )
+	{
+		if ( comm->m_pending < 0 )
+		{
+			if ( comm->m_countC == comm->m_lastTick )
+				break;
+			comm->m_pending = 0;
+			if ( comm->m_sendCallback != 0 )
+			{
+				record = (struct Rva00814770Record *)( (char *)comm->m_allocB
+					+ comm->m_lastTick );
+				comm->m_sendCallback( comm, record->m_data,
+					record->m_length, 0 );
+			}
+		}
+
+		record = (struct Rva00814770Record *)( (char *)comm->m_allocB
+			+ comm->m_lastTick );
+		payload = (char *)record + 4;
+		payload += comm->m_pending;
+		iResult = 2;
+		iResult = record->m_length + iResult;
+		iResult -= comm->m_pending;
+		iResult = Rva007FD920( comm->m_socket, payload, iResult, 0, 0, 0 );
+		if ( iResult <= 0 )
+			break;
+		comm->m_timeoutTick = Rva007FEA00();
+		comm->m_pending += iResult;
+		if ( comm->m_pending == record->m_length + 2 )
+		{
+			comm->m_lastTick = ( (int)comm->m_lastTick + comm->m_countA )
+				% comm->m_countB;
+			comm->m_pending = -1;
+		}
+	}
+
+	if ( comm->m_callbackDepth == 0 && comm->m_flags != 0 )
+	{
+		comm->m_callbackDepth++;
+		if ( comm->m_value != 0 )
+			( (void ( * )( struct Rva00814700Comm *, int ))comm->m_value )(
+				comm, comm->m_flags );
+		comm->m_callbackDepth--;
+		comm->m_flags = 0;
+	}
+
+	return iTotal;
+}
+
 int Rva008151E0( struct Rva008151E0Comm *comm, const char *text )
 {
 	void *socket;
@@ -654,7 +816,7 @@ struct Rva00814D60Comm
 	void *m_socket;                  /* +0x7C */
 };
 
-void Rva007FDB60( void *socket, int selector, void *address, int size );
+int Rva007FDB60( void *socket, int selector, void *address, int size );
 int Rva007FE780( const char *format, ... );
 extern char Rva012C4A80[];
 
@@ -965,14 +1127,11 @@ struct Rva008140D0Comm *Rva008140D0( int payloadSize, int countA,
 	return comm;
 }
 
-void Rva00814770( struct Rva00814700Comm *comm, unsigned int tick );
-
 /* The socket callback.  Same shape as the ring transport's -- handle and event
- * flags ignored, only the ref used, lock TRIED rather than taken -- with one
- * addition: it READS THE CLOCK ITSELF and hands the tick to the pump, rather
- * than letting the pump read it.  So every record the pump processes in one
- * call is stamped with a single consistent time, which it could not be if the
- * pump sampled per record.
+ * flags ignored, only the ref used, lock TRIED rather than taken.  The callback
+ * samples the clock before calling the pump, but the pump's second ABI argument
+ * is unused: the pump samples fresh ticks at its receive and send sites, so a
+ * single callback does not impose one timestamp on every record it processes.
  */
 int Rva00814700( unsigned int socket, int flags, struct Rva00814700Comm *ref )
 {
