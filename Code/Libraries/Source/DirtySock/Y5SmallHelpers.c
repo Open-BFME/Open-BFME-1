@@ -79,9 +79,79 @@ void Rva0080F3D0(unsigned char *state, const void *first, int firstLength,
 	memcpy(state + 0x48C, second, secondLength);
 }
 
+int Rva0080FED0(unsigned short *result, int limbs,
+	const unsigned char *bytes, int byteCount);
+void Rva0080FB40(unsigned short *result, int count,
+	const unsigned short *bits, const unsigned short *addend,
+	const unsigned short *modulus);
+void Rva0080FFB0(const unsigned short *limbs, int limbCount,
+	unsigned char *bytes, int byteCount);
+
 void Rva0080F5A0(unsigned char *state, unsigned char *owner,
 	const unsigned char *first, int firstLength,
-	const unsigned char *second, int secondLength);
+	const unsigned char *second, int secondLength)
+{
+	int i;
+	int count;
+	unsigned int exponent;
+	unsigned short modulus[ 0x100 ];
+	unsigned short base[ 0x100 ];
+	unsigned short result[ 0x100 ];
+
+	count = Rva0080FED0(modulus, -1, first, firstLength);
+	Rva0080FED0(base, -1, owner, firstLength);
+
+	exponent = 0;
+	for ( i = 0; i < secondLength; i++ )
+		exponent = ( exponent << 8 ) | second[ i ];
+
+	if ( exponent == 3 )
+	{
+		Rva0080FB40(result, count, base, base, modulus);
+		Rva0080FB40(result, count, result, base, modulus);
+	}
+	else if ( exponent == 0x11 )
+	{
+		Rva0080FB40(result, count, base, base, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, base, modulus);
+	}
+	else if ( exponent == 0x10001 )
+	{
+		Rva0080FB40(result, count, base, base, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, result, modulus);
+		Rva0080FB40(result, count, result, base, modulus);
+	}
+	else
+	{
+		memset( result, 0, 0x200 );
+		result[ count - 1 ] = 1;
+		for ( ; exponent != 0; exponent >>= 1 )
+		{
+			if ( ( exponent & 1 ) != 0 )
+				Rva0080FB40(result, count, result, base, modulus);
+			Rva0080FB40(base, count, base, base, modulus);
+		}
+	}
+
+	Rva0080FFB0(result, count, state, firstLength);
+}
 
 void Rva0080F550(unsigned char *state)
 {
