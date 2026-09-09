@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "187324884a8bd4d5caee6713ca45c35724983846238f0fe44ab741ad1536d4ee",
+  "symbol": "?bfmeLessZQ@BfmeKeyZQ@@QBEDPBV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmeLessZQ@BfmeKeyZQ@@QBEDPBV1@@Z\n// partial score=0.93 date=2026-09-08\nclass AsciiString\n{\npublic:\n\tint compareNoCase(const AsciiString &other) const;\n\n\tvoid *m_data;\n};\n\nclass BfmeKeyZQ\n{\npublic:\n\tchar bfmeLessZQ(const BfmeKeyZQ *other) const;\n\n\tchar m_flag;\n\tunsigned char m_padding[3];\n\tAsciiString m_name;\n};\n\nchar BfmeKeyZQ::bfmeLessZQ(const BfmeKeyZQ *other) const\n{\n\tchar result = 0;\n\tif ((other->m_flag == 0) ^ (m_flag == 0))\n\t\treturn m_flag;\n\n\tint comparison = m_name.compareNoCase(other->m_name);\n\tresult = (char)(comparison < 0);\n\treturn result;\n}\n"
+}

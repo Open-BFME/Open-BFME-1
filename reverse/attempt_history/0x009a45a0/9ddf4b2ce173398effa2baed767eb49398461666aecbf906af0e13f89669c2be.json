@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9ddf4b2ce173398effa2baed767eb49398461666aecbf906af0e13f89669c2be",
+  "symbol": "??0Rva009A45A0CollisionData@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ??0Rva009A45A0CollisionData@@QAE@XZ\n// partial score=0.95 date=2026-09-08\n// cl: /DNDEBUG /MD /EHsc\n\nextern \"C\" void *__cdecl memset(void *destination, int value, unsigned int size);\n\nclass Rva009A45A0CollisionData\n{\npublic:\n\tRva009A45A0CollisionData();\n\n\tvolatile int m_field00;\n\tvolatile int m_field04;\n\tvolatile int m_field08;\n\tint m_field0c;\n\tint m_field10;\n\tint m_field14;\n\tint m_tableA1[0x2b7c];\n\tvolatile int m_fieldAe08;\n\tvolatile int m_fieldAe0c;\n\tint m_tableA2[0x494];\n\tint m_fieldC060;\n\tint m_fieldC064;\n\tint m_fieldC068;\n\tchar m_fieldC06c;\n\tchar m_fieldC06d;\n\tunsigned char m_paddingC06e[2];\n};\n\nRva009A45A0CollisionData::Rva009A45A0CollisionData()\n{\n\tm_field00 = 0;\n\tm_field04 = 0;\n\tm_field08 = 0;\n\tm_fieldAe08 = 0;\n\tm_fieldAe0c = 0;\n\n\t{\n\t\tint *a1 = m_tableA1;\n\t\tmemset(a1, 0, 0x2b7b * 4);\n\t\ta1[0x2b7b] = 0;\n\t}\n\tm_fieldC060 = 0;\n\tm_fieldC064 = 0;\n\n\t{\n\t\tint *a2 = m_tableA2;\n\t\tmemset(a2, 0, 0x493 * 4);\n\t\ta2[0x493] = 0;\n\t}\n\tm_fieldC06c = 0;\n\tm_fieldC06d = 0;\n\tm_fieldC068 = 3;\n\tm_field0c = 0;\n\tm_field10 = 0;\n\tm_field14 = 0;\n}\n"
+}

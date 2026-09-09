@@ -1,14 +1,12 @@
 // ?getWaterHeight@WaterRenderObjClass@@QAEMMM@Z
-// partial score=0.96 date=2026-09-03
-// cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// Clean BFME reconstruction of WaterRenderObjClass::getWaterHeight at 0x007A4B40.
+// partial score=0.97 date=2026-09-08
+// cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
 typedef float Real;
 typedef int Int;
 typedef bool Bool;
-typedef unsigned int UnsignedInt;
 
 __forceinline long bfme_fistp(Real value)
 {
@@ -34,23 +32,23 @@ struct BfmeWaterHeightPoint
 	Int z;
 };
 
-struct BfmeWaterHandle;
+class WaterHandle;
 
-class BfmePolygonTrigger
+class PolygonTrigger
 {
 public:
 	void *m_vtable;
-	BfmePolygonTrigger *m_next;
+	PolygonTrigger *m_next;
 	char m_beforePoints[8];
 	BfmeWaterHeightPoint *m_points;
 	Int m_numPoints;
 	char m_beforeWaterFlag[0x1a];
 	Bool m_isWaterArea;
 	char m_beforeHandle[9];
-	BfmeWaterHandle *m_waterHandle;
+	WaterHandle *m_waterHandle;
 
 	Bool pointInTrigger(ICoord3D &point) const;
-	const BfmeWaterHandle *getWaterHandle(void) const;
+	const WaterHandle *getWaterHandle(void) const;
 	const BfmeWaterHeightPoint *getPoint(Int index) const
 	{
 		if (index < 0)
@@ -61,9 +59,10 @@ public:
 	}
 };
 
-struct BfmeWaterHandle
+class WaterHandle
 {
-	BfmePolygonTrigger *m_polygon;
+	public:
+	PolygonTrigger *m_polygon;
 };
 
 struct BfmeWaterGridPoint2
@@ -103,10 +102,22 @@ struct BfmeWaterGridList
 
 struct BfmePolygonTriggerTable
 {
-	BfmePolygonTrigger *m_head;
+	PolygonTrigger *m_head;
 };
 
 extern "C" BfmePolygonTriggerTable *g_bfmePolygonTriggerTable;
+
+extern void j_00028fd3();
+
+static __forceinline Bool bfmeContainsPoint(
+	BfmeWaterGridPolygon *grid, const BfmeWaterGridPoint2 *point)
+{
+	typedef Bool (BfmeWaterGridPolygon::*ContainsPointCall)(
+		const BfmeWaterGridPoint2 *);
+	union { void (*raw)(void); ContainsPointCall member; } call;
+	call.raw = j_00028fd3;
+	return (grid->*call.member)(point);
+}
 
 class WaterRenderObjClass
 {
@@ -120,14 +131,14 @@ private:
 
 Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 {
-	const BfmeWaterHandle *waterHandle = 0;
+	const WaterHandle *waterHandle = 0;
 	Real waterZ = 0.0f;
 	ICoord3D iLoc;
 	iLoc.x = (Int)bfme_fistp((Real)floor((double)(x + 0.5f)));
 	iLoc.y = (Int)bfme_fistp((Real)floor((double)(y + 0.5f)));
 	iLoc.z = 0;
 
-	for (BfmePolygonTrigger *trigger = g_bfmePolygonTriggerTable->m_head;
+	for (PolygonTrigger *trigger = g_bfmePolygonTriggerTable->m_head;
 		trigger != 0; trigger = trigger->m_next) {
 		if (!trigger->m_isWaterArea)
 			continue;
@@ -141,11 +152,11 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 	}
 
 	if (waterHandle != 0) {
-		BfmePolygonTrigger *polygon = waterHandle->m_polygon;
+		PolygonTrigger *polygon = waterHandle->m_polygon;
 		Int pointIndex = 0;
 		if (polygon->m_numPoints <= 0)
 			pointIndex = polygon->m_numPoints - 1;
-	waterZ = (Real)polygon->m_points[pointIndex].z;
+		waterZ = (Real)polygon->m_points[pointIndex].z;
 	} else {
 		waterZ = 0.0f;
 	}
@@ -154,10 +165,11 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 	BfmeWaterGridNode *node;
 	BfmeWaterGridList *gridList;
 	Real gridX = x;
-	gridLocation.Y = y;
 	gridList = *(BfmeWaterGridList * volatile *)&m_waterGridList;
-	node = gridList->m_head;
+	Real gridY = y;
 	gridLocation.X = gridX;
+	gridLocation.Y = gridY;
+	node = gridList->m_head;
 	gridLocation.Z = 0.0f;
 	if (node != (BfmeWaterGridNode *)gridList) {
 		while ((node = node->m_next) != (BfmeWaterGridNode *)gridList) {
@@ -169,7 +181,7 @@ Real WaterRenderObjClass::getWaterHeight(Real x, Real y)
 	node = mainList->m_head;
 	while (node != (BfmeWaterGridNode *)mainList) {
 		grid = node->m_grid;
-		if (grid->containsPoint((const BfmeWaterGridPoint2 *)&gridLocation))
+		if (bfmeContainsPoint(grid, (const BfmeWaterGridPoint2 *)&gridLocation))
 			goto gridHit;
 		node = node->m_next;
 	}
