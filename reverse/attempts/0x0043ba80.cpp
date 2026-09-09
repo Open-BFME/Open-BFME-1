@@ -1,7 +1,9 @@
-// ?bfmeCheckERA@BfmeHostERA@@QAE_NXZ (identity unknown)
-// partial score=0.85 date=2026-09-06
-// 61/67; structure and every branch match. Retail keeps TWO separate return-true
-// blocks of different widths (mov al,1 early, mov eax,1 late); MSVC merges them.
+// ?bfmeCheckERA@BfmeHostERA@@QAE_NXZ
+// partial score=0.87 date=2026-09-09
+// 64/67; barriers at each true-return plus an inverted final compare reproduce
+// retail's branch layout and both jump targets exactly (jae to the shared false
+// tail). Residue is only the final true block's width: retail emits a full
+// mov eax,1 (5B) there, every spelling tried still narrows it to mov al,1 (2B).
 // Pins needed: ?g_bfmeGlobalDataERA@@3PAUBfmeGlobalDataERA@@A,0x00EED5C8
 //              ?g_bfmeModeERA@@3PAUBfmeModeERA@@A,0x00EF1028
 //              ?g_bfmeLogicERA@@3PAUBfmeLogicERA@@A,0x00EF0898
@@ -28,6 +30,11 @@ extern BfmeGlobalDataERA *g_bfmeGlobalDataERA;
 extern BfmeModeERA *g_bfmeModeERA;
 extern BfmeLogicERA *g_bfmeLogicERA;
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+
 struct BfmeHostERA
 {
 	bool bfmeCheckERA(void);
@@ -38,10 +45,18 @@ struct BfmeHostERA
 bool BfmeHostERA::bfmeCheckERA(void)
 {
 	if (!g_bfmeGlobalDataERA->m_bfmeEnabledERA)
+	{
+		_ReadWriteBarrier();
 		return true;
+	}
 	BfmeModeERA *mode = g_bfmeModeERA;
-	if ((mode != 0 && mode->m_bfmeActiveERA && mode->m_bfmeLockedERA)
-		|| g_bfmeLogicERA->m_bfmeFrameERA >= m_bfmeLimitERA)
-		return false;
-	return true;
+	if (mode != 0 && mode->m_bfmeActiveERA && mode->m_bfmeLockedERA)
+		goto fail;
+	if (g_bfmeLogicERA->m_bfmeFrameERA < m_bfmeLimitERA)
+	{
+		_WriteBarrier();
+		return true;
+	}
+fail:
+	return false;
 }
