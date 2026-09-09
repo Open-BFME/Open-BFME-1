@@ -1,38 +1,37 @@
-// ?d_007bae90@@YAXXZ
-// partial score=0.9 date=2026-09-07
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc-
 
-typedef unsigned char Bool;
+typedef bool Bool;
 typedef int Int;
 
 class Geometry
 {
 public:
-    Geometry();
-    void scalarDeletingDestructor(unsigned int flags);
-    Int Create(Int numVertices, Int numPolygons);
-    void *m_vertices;
+	Geometry()
+		: m_vertices(0),
+		  m_indices(0),
+		  m_numPolygons(0),
+		  m_numVertices(0),
+		  m_numActivePolygons(0),
+		  m_numActiveVertices(0),
+		  m_flags(0),
+		  m_visibleState(8)
+	{
+	}
+
+	Int Create(Int numVertices, Int numPolygons);
+	void scalarDeletingDestructor(unsigned int flags);
+	Int GetFlags() { return m_flags; }
+
+	void *m_vertices;
 	void *m_indices;
 	Int m_numPolygons;
 	Int m_numVertices;
 	Int m_numActivePolygons;
 	Int m_numActiveVertices;
 	Int m_flags;
-    char m_padding[0x28];
-    Int m_visibleState;
+	char m_padding[0x28];
+	Int m_visibleState;
 };
-
-Geometry::Geometry()
-	: m_vertices(0),
-	  m_indices(0),
-	  m_numPolygons(0),
-	  m_numVertices(0),
-	  m_numActivePolygons(0),
-	  m_numActiveVertices(0),
-	  m_flags(0),
-	  m_visibleState(8)
-{
-}
 
 class Rva007B12F0Base
 {
@@ -66,7 +65,7 @@ class W3DVolumetricShadow : public Rva007B12F0Base
 	short m_numSilhouetteIndices[160];
 	short m_maxSilhouetteEntries[160];
 
-public:
+protected:
 	Bool allocateShadowVolume(Int volumeIndex, Int meshIndex, Int flags);
 };
 
@@ -89,14 +88,13 @@ Bool W3DVolumetricShadow::allocateShadowVolume(Int volumeIndex, Int meshIndex, I
 	{
 		m_shadowVolumeCount[meshIndex]--;
 		return 0;
-      }
+	}
 
-      m_shadowVolume[volumeIndex][meshIndex] = shadowVolume;
-      numPolygons = m_maxSilhouetteEntries[meshIndex];
-      numVertices = numPolygons * 2;
-
-      shadowVolume->m_flags |= flags;
-      if (shadowVolume->m_flags & 1)
+	m_shadowVolume[volumeIndex][meshIndex] = shadowVolume;
+	numPolygons = m_maxSilhouetteEntries[meshIndex];
+	numVertices = m_maxSilhouetteEntries[meshIndex] * 2;
+	shadowVolume->m_flags |= flags;
+	if (shadowVolume->GetFlags() & 1)
 	{
 		if (!shadowVolume->Create(numVertices, numPolygons))
 		{
