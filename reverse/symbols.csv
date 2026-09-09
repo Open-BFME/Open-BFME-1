@@ -86646,3 +86646,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?Release_Ref@Rva006D6050TextureBase@@QAEXXZ,0x009EB7A0,ref-counted texture release used by Rva006D6050::init
 ?winGetInstanceData@GameWindow@BfmeResumeMovie@@QAEPAVWinInstanceData@2@XZ,0x00034991,ILT thunk; alias of real ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ
 ?setVideoBuffer@WinInstanceData@BfmeResumeMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
+?winGetInstanceData@GameWindow@BfmeStopMovie@@QAEPAVWinInstanceData@2@XZ,0x00034991,ILT thunk; alias of real ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ
+?setVideoBuffer@WinInstanceData@BfmeStopMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
