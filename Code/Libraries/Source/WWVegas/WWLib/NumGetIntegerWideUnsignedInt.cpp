@@ -1,7 +1,9 @@
 // cl: /O2 /MD
-// STLport 4.5.3 wide unsigned-int _M_do_get_integer at retail 0x008348D0.
-// The 47-byte num_get wrapper at 0x008348A0 calls this body, which uses the
-// wide base parser at 0x00833DE0 and the unsigned-int digit parser at 0x008349D0.
+// STLport 4.5.3 wide unsigned integer _M_do_get_integer specializations.
+// The unsigned-int body is at 0x008348D0 and calls its digit parser at
+// 0x008349D0. The unsigned-short body is at 0x00834B90 and calls the exact
+// parser at 0x00834C90. Their adjacent 47-byte num_get wrappers establish the
+// two specializations independently.
 
 namespace _STL
 {
@@ -164,4 +166,9 @@ namespace _STL
 	_M_do_get_integer<WideIterator, unsigned int, unsigned short>(
 		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
 		unsigned int &, unsigned short *);
+
+	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
+	_M_do_get_integer<WideIterator, unsigned short, unsigned short>(
+		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
+		unsigned short &, unsigned short *);
 }
