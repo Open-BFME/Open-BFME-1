@@ -1128,4 +1128,3 @@ Rva002A1E90Tree::iterator BfmeRbTreeInsertAnchor002A1C20(
 {
 	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
 }
-

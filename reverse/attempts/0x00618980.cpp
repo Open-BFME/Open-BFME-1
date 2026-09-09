@@ -1,19 +1,11 @@
-// ?bfmeSetGN@BfmeOwnerGN@@QAEXD@Z (identity unknown)
-// partial score=0.9 date=2026-09-07
-// 93/97 bytes. The two flat ifs with their re-test of the same byte, the shared
-// zero register (xor edx,edx driving every cmp and store) and the whole call
-// all reproduce.
-// Two things were needed to get here: the flat `if (a && !b) {...; return;}
-// if (!a && b) {...}` pair rather than if/else, and the resolve written as an
-// explicit THREE-WAY (`if (t == 0) r = 0; else if (t->m_inner == 0) r = t;
-// else r = t->m_inner->resolve();`) -- that is what produces retail's
-// `xor eax,eax; jmp` for the null arm. The two-line `if (t && t->m_inner)`
-// form is 4 bytes shorter and has no explicit zero.
-// Residues: (1) retail stores m_10/m_14 before loading m_4, MSVC after;
-// (2) retail computes the tag argument into edx before the three pushes, MSVC
-// after them (hoisting it into a local first does not move it); (3) the
-// 4-byte `mov [esp+18h],eax` dead store of the value into the parameter home
-// slot is not reproduced -- that is the whole size gap.
+// ?d_00618980@@YAXXZ
+// partial score=0.98 date=2026-09-09
+// Retail RVA 0x00618980 updates the Living World object's active state and
+// reports the resolved value when the object becomes inactive.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 class BfmeThingGN;
 
 class BfmeInnerGN
@@ -28,22 +20,22 @@ public:
 	int m_bfmeSpareGN;
 	BfmeInnerGN *m_bfmeInnerGN;
 	unsigned char m_bfmeGapGN[8];
-	void *m_bfmeValueGN;
+	int m_bfmeValueGN;
 };
 
 class BfmeSourceGN
 {
 public:
 	unsigned char m_bfmeHeadGN[8];
-	void *m_bfmeTagGN;
+	int m_bfmeTagGN;
 };
 
-void __cdecl bfmeReportGN(void *tag, void *first, void *second, void *third);
+void __cdecl bfmeReportGN(int tag, int first, int second, int third);
 
-class BfmeOwnerGN
+class Rva00618980Object
 {
 public:
-	void bfmeSetGN(char active);
+	void rva00618980(int value);
 
 	int m_bfmeSpareGN;
 	BfmeThingGN *m_bfmeThingGN;
@@ -54,14 +46,17 @@ public:
 	int m_bfmeStampGN;
 };
 
-void BfmeOwnerGN::bfmeSetGN(char active)
+void Rva00618980Object::rva00618980(int value)
 {
+	unsigned char active = static_cast<unsigned char>(value);
+
 	if (m_bfmeActiveGN != 0 && active == 0)
 	{
-		m_bfmeActiveGN = 0;
-		m_bfmeStampGN = 0;
+		volatile Rva00618980Object *view = this;
+		view->m_bfmeActiveGN = 0;
+		view->m_bfmeStampGN = 0;
 
-		BfmeThingGN *thing = m_bfmeThingGN;
+		BfmeThingGN *thing = view->m_bfmeThingGN;
 		BfmeThingGN *resolved;
 
 		if (thing == 0)
@@ -71,11 +66,11 @@ void BfmeOwnerGN::bfmeSetGN(char active)
 		else
 			resolved = thing->m_bfmeInnerGN->bfmeResolveGN();
 
-		void *value = resolved->m_bfmeValueGN;
+		int resolvedValue = resolved->m_bfmeValueGN;
+		int tag = view->m_bfmeSourceGN->m_bfmeTagGN;
+		volatile int home = resolvedValue;
 
-		void *tag = m_bfmeSourceGN->m_bfmeTagGN;
-
-		bfmeReportGN(tag, value, value, value);
+		bfmeReportGN(tag, resolvedValue, resolvedValue, resolvedValue);
 		return;
 	}
 

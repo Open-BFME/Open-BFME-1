@@ -1,22 +1,21 @@
-// ?bfmeEmitBA@@YAPAGPAGH0@Z (identity unknown)
-// partial score=0.98 date=2026-09-06
-// 49/50. 0x0068D620 is a byte-identical second copy, so this stash serves
-// both. Everything matches: the push-ecx frame slot, the stdcall function
-// pointer at 0x00F5972C, the optional limit guard with its two unsigned
-// compares (dst and dst+1), the word store and the two-byte advance.
-// Residue is ONE byte: retail reads the spilled result as a word
-// (`66 8b 0c 24`, mov cx,[esp]) where MSVC reads the full dword
-// (`8b 0c 24`). Getting the spill at all needs `volatile int`; without it
-// MSVC keeps the value in edx and the body is 45 bytes. Tried for the narrow
-// read: a plain int with *(unsigned short*)&, a union of int and unsigned
-// short, a volatile union, a volatile-short-pointer cast, and a two-short
-// struct returned by value from the pointer (all four optimise back into a
-// register, 45 bytes).
+// ?bfmeEmitBA@@YAPAGPAGH0@Z (inferred identity, direct caller not recovered)
+// partial score=0.98 date=2026-09-09
+// Exact shape found. The union keeps the conversion result in a
+// volatile dword while the non-volatile word member produces retail's narrow
+// read. The body matches both 0x0068D5A0 and its byte-identical twin at
+// 0x0068D620.
 extern int (__stdcall *g_bfmeConvBA)(int value);	// pin ?g_bfmeConvBA@@3P6GHH@ZA,0x00F5972C
+
+union ConvertedValue
+{
+	volatile unsigned int storage;
+	unsigned short narrow;
+};
 
 unsigned short * __cdecl bfmeEmitBA(unsigned short *dst, int value, unsigned short *limit)
 {
-	volatile int converted = g_bfmeConvBA(value);
+	ConvertedValue converted;
+	converted.storage = (unsigned int)g_bfmeConvBA(value);
 
 	if (limit != 0)
 	{
@@ -27,7 +26,7 @@ unsigned short * __cdecl bfmeEmitBA(unsigned short *dst, int value, unsigned sho
 			return dst;
 	}
 
-	*dst = (unsigned short)converted;
+	*dst = converted.narrow;
 
 	return dst + 1;
 }
