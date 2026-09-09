@@ -1,13 +1,52 @@
 // ?PumpMessages@CDownload@@QAEJXZ
 // partial score=0.45 date=2026-09-09
-// slot0/4 of CDownload vtable @0x01117B30. This is the exact TU state (Code/Libraries/Source/WWVegas/WWDownload/CDownloadDownloadFile.cpp lines ~99-318 as of this session), one increment ahead of the prior 0.5 stash. NEW FINDING this session: the prior worker's stated 'ONE root cause' (edi vs ebp zero-register hoisting) was only HALF the picture. Fix #1 (this stash): declaring m_TimeStarted and g_bfmeNowVNH's return as unsigned int (matching retail's unsigned magic-number division by 1000 at the timetaken computation -- retail emits 'mul ecx' after 'mov eax,0x10624dd3', unsigned reciprocal-multiply for /1000; our prior int-typed version emitted 'imul ecx', the signed form) ALSO fixes the edi/ebp register selection: bytes +0000..+0084 now match retail EXACTLY (verified via tools/probe.py, no diffs in that whole span, whereas the prior stash mismatched starting at +0008 push-order). This confirms the earlier register theory was a downstream SYMPTOM of the signed/unsigned mismatch, not an independent scheduling residue -- the type fix should be kept by whoever continues this body.
-// Fix #2 (NOT yet solved, new first diff after Fix #1, at +0085): once past the CONNECTING-state block, retail hoists 'Listener' (this+0x5c4) into ESI and reuses it as the vtable receiver for the OnError call ('mov esi,[esi+0x5c4]; mov edx,[esi]; push 2; mov ecx,esi; call [edx]'), i.e. it caches the reinterpret_cast<Listener> pointer in a register ACROSS the vtable load and the call. Our compile instead computes it straight into ECX inline each time and never revisits ESI. Tried naming a local 'Rva00884DownloadListener *listener = reinterpret_cast<...>(Listener);' scoped inside just the OnError-on-FTP_FAILED block: ZERO effect on codegen (MSVC still folds it back to the same ECX-direct form) -- same negative result the prior worker got for Cftp*/IDownload* locals, so this is not simply a naming problem; it likely needs the local hoisted OUTSIDE the inner if/else (i.e. one Listener* fetched once at the top of the CONNECTING block, reused by both the success and failure paths) to force MSVC to keep it live in a register across the branch. NOT tried yet: hoisting one shared local per per-state block (not per call site) for Listener AND for Ftp; this is the next lever to try before any G-flag sweep.
-// compiled 1047B vs target 1065B (18B short with fix #1 applied; was 1057B/8B short before). The larger raw gap is because fix #2's block is now the visible blocker across a much longer span (was previously masked because the guarded-import identity check couldn't even get past the pre-fix-#1 relocation-layout drift far enough to report it cleanly). t=45min model=sonnet (this session, continuing from the 0.5 stash) score=0.45 (numerically closer to 0 is a smaller size gap, but the earlier score of 0.5 predates this session's confirmation that the true first-diff mechanism is unsigned-vs-signed division, not raw register scheduling -- keep fix #1, hunt fix #2 next).
+// slot0/4 of CDownload vtable @0x01117B30. Continues the 0.45 stash (which itself fixed
+// signed/unsigned division to reach +0000..+0084 exact). This session: (1) added the
+// explicit `extern "C" __declspec(dllimport) int __cdecl _strnicmp(...)` declaration used
+// elsewhere in this codebase (parseModelConditionFlags.cpp, CftpRecvReply.cpp) -- without it
+// tools/explain_mismatch.py's guarded-DIR32-import check for __imp___strnicmp cannot even be
+// evaluated meaningfully (it fails on a garbage IAT-RVA lookup regardless, because the guard
+// reads retail bytes at the SAME FILE OFFSET as our compiled __imp___strnicmp relocation site,
+// and our function is still 18B short of retail well before that offset -- so the guard is a
+// symptom of the still-open +0x85 issue below, not a separate bug; fixing the declaration is
+// still correct hygiene and should be kept). (2) also made `timetaken` unsigned int (matching
+// m_TimeStarted's type from the prior fix; consistent with retail's unsigned division, and
+// does not change bytes yet since it's used downstream of the still-open blocker). NO byte
+// progress this session -- confirmed prior worker's +0085 finding is still exactly the wall:
+// retail hoists Listener (this+0x5c4) into ESI and reuses it as the OnError-call receiver
+// across the vtable deref+call ('mov esi,[esi+0x5c4]; mov edx,[esi]; push 2; mov ecx,esi;
+// call [edx]' -- 15 bytes), ours computes it straight into ECX and skips the extra
+// register-to-register copy ('mov ecx,[esi+0x5c4]; mov edx,[ecx]; push 2; call [edx]' --
+// 13 bytes, 2B shorter per occurrence, ~9 occurrences across the function = the 18B gap).
+// NEW NEGATIVE RESULTS this session (both regress, do not retry):
+//   (a) hoisting `Rva00884DownloadListener *listener = ...Listener;` unconditionally at the
+//       TOP of the function (before or after the `reenter` reentrancy guard, before the
+//       DOWNLOADSTATUS_GO block) breaks the ALREADY-EXACT +0000..+0084 prefix: MSVC adds a
+//       THIRD callee-saved register push (ebx) to the prologue -- even on the immediate
+//       `if (reenter != 0) return ...;` path that never touches Listener -- because MSVC's
+//       register allocation is a whole-function pass sensitive to every local's existence,
+//       not just its live range. Confirmed twice (before and after the guard-check line).
+//   (b) hoisting the SAME local scoped to just the CONNECTING block (declared right after
+//       `iResult = ...ConnectToServer(...)`, used by only the FTP_FAILED sub-branch) makes
+//       MSVC load Listener EAGERLY right after the call, before the `iResult == FTP_SUCCEEDED`
+//       branch test -- retail loads it lazily, only inside the failure branch. Wrong shape,
+//       and the register is STILL ecx-based, not esi. The prior worker's "scoped inside just
+//       the OnError block" attempt (also zero effect) plus this attempt now rule out every
+//       plain local-declaration placement tried so far for this single call site.
+// REMAINING IDEA (not tried): AGENTS.md explicitly warns this class of pure register-choice
+// residue (no operand/shape difference, only WHICH register + an extra mov) is often NOT
+// source-controllable at /O2. Before spending more time on locals, try the doc's G-flag sweep
+// (/G5 /G6 /G7 /Ot /Og /Oy-) once, or accept this as the residue floor for this body.
+// compiled 1047B vs target 1065B (18B short, unchanged from the 0.45 stash). t=40min
+// model=sonnet score=0.45
+
 // ?PumpMessages@CDownload@@QAEJXZ present-unmatched
 
 extern unsigned int(__cdecl *g_bfmeNowVNH)();
 
 extern "C" __declspec(dllimport) long __stdcall MulDiv(long, long, long);
+extern "C" __declspec(dllimport) int __cdecl _strnicmp(
+	const char *left, const char *right, unsigned int count);
 
 class Rva00884DownloadListener
 {
