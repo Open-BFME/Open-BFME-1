@@ -1,5 +1,5 @@
 // ??0BfmeAptScreenOptions@@QAE@PAX@Z
-// partial score=0.9 date=2026-09-09
+// partial score=0.93 date=2026-09-09
 //
 // Land target: Code/GameEngine/Source/GameClient/AptScreenFactories.cpp.
 // Splice in right after createAptScreenDisconnectScreen()'s closing brace
@@ -110,6 +110,49 @@
 // after each `call` -- read via capstone on the .obj's read symbol bytes
 // instead, as this session did).
 
+//
+// THIS SESSION (t=45, sonnet): applied the FunctorHolder in-place-argument-
+// area recipe from the fleet brief (real value ctor, INLINE throw() copy
+// ctor, DECLARED-BUT-UNDEFINED dtor on both OptionsShowHolder and
+// OptionsInitHolder -- the value ctor itself stays declaration-only, since
+// retail genuinely calls it out-of-line at 0x00031C41/0x000323A3, unlike
+// the fully-inlined OnlineProfileScreen family). This alone took the
+// compiled body from 973B to 1013B (100B short -> 60B short), confirming
+// the assignment's hint that the earlier 0.85/0.90 stashes were missing
+// the in-place construction shape, not just register residue.
+//
+// Spliced into Code/GameEngine/Source/GameClient/AptScreenFactories.cpp
+// (stub BfmeAptScreenOptions + createAptScreenOptions near the top removed;
+// real class+ctor inserted right after createAptScreenDisconnectScreen()'s
+// closing brace, per this stash's own original placement note) to reuse
+// the file's existing FunctorTarget/FunctorBinding/_bfme_AptGameWindow/
+// BfmeAptFunctorMarker/AsciiString/UnicodeString/WindowManager
+// infrastructure -- do NOT redeclare those locally, add to that file.
+// All nine new symbols.csv pins listed above this comment block were
+// verified free (pin_consistency.py) and added; drop them again if
+// parking without landing.
+//
+// STILL OPEN: compiled 1013B vs retail 1073B (60B short). Two remaining
+// symptoms, not yet disentangled:
+//   1. Retail keeps the zero-fill constant in EBP (`xor ebp,ebp` at +0x39c,
+//      ~35 `mov [esi+N],ebp` stores through the whole body) plus a SEPARATE
+//      zero in CL for m_field308 (`mov byte ptr[esi+0x308],cl`, from the
+//      xor ecx,ecx used to zero m_fields274). This build's allocator picks
+//      EBX for the same role throughout -- looks like the standard
+//      unreachable register-choice/argument-shuttle residue (see
+//      docs/lessons.md, argument-shuttle-register), do not re-sweep flags
+//      or hoist locals for this alone.
+//   2. Frame is `sub esp,0x24` here vs retail's `sub esp,0x1c` -- 8 bytes
+//      MORE than retail (opposite direction from the 0.85 stash's original
+//      940B-vs-1073B gap, which was frame-too-small). This 8-byte excess
+//      is a REAL structural difference (not just register choice) and is
+//      the more promising lead: something in this build reserves one more
+//      stack dword than retail across the whole function. Next session
+//      should bisect it by temporarily stripping the six registration
+//      blocks one at a time (or reverting just the OptionsInitHolder half,
+//      which is only used once) to see which one shifts the frame size,
+//      rather than re-deriving the whole body from scratch.
+//
 extern const void *BfmeAptScreenOptionsVftable[];
 extern const void *BfmeAptScreenOptionsSecondaryVftable[];
 extern void *g_optionsScreenLayout;   // 0x012F4AD4, same slot as g_quitMenuLayout
@@ -136,6 +179,11 @@ class OptionsShowHolder
 {
 public:
 	OptionsShowHolder( FunctorBinding binding );
+	OptionsShowHolder( const OptionsShowHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~OptionsShowHolder();
 
 private:
 	void *m_ptr;
@@ -145,6 +193,11 @@ class OptionsInitHolder
 {
 public:
 	OptionsInitHolder( FunctorBinding binding );
+	OptionsInitHolder( const OptionsInitHolder &other ) throw()
+	{
+		m_ptr = other.m_ptr;
+	}
+	~OptionsInitHolder();
 
 private:
 	void *m_ptr;
