@@ -25136,3 +25136,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ??_GGen_dtor_000eb8b0@@UAEPAXI@Z,0x000EB8B0,Generic generator placeholder superseded by authentic protected SpecialPowerTemplate scalar-deleting destructor proven by constructor 0x000EB4F0 vtable 0x01085CC0 and matched destructor 0x000EB5D0
 ?d_001e48f0@@YAXXZ,0x001E48F0,Generator placeholder superseded by the verified Weapon::isSourceObjectWithGoalPositionWithinAttackRange body at the same retail range
 ?d_001e4160@@YAXXZ,0x001E4160,Generator placeholder superseded by the verified Rva001E4160List::any body at the same retail range
+?d_0087e070@@YAXXZ,0x0087E070,Generated dump placeholder superseded by authentic GeometryInfo::getMaxHeightBelowPosition proven by the calcPitches caller and exact BFME shape-vector implementation
