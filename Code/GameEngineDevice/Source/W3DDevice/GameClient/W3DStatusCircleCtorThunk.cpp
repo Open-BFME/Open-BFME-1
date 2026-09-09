@@ -1,106 +1,114 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ??0W3DStatusCircle@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircle.cpp
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DStatusCircle.h
-class W3DStatusCircle
+// BFME constructor at RVA 0x00726000, 90 bytes. Narrow RenderObjClass
+// view follows RTS2DScene_Ctor_Thunk.cpp. Both vptrs are compiler-generated;
+// retail installs the primary table at VA 0x01121018 and secondary at 0x01121010.
+// The shader word is at DC; the two preceding floats initialize to -1.
+typedef bool Bool;
+class SceneClass;
+class Vector3
 {
 public:
-    W3DStatusCircle();
+	float m_x, m_y, m_z;
 };
 
-// ??0W3DStatusCircle@@QAE@XZ
-__declspec(naked) W3DStatusCircle::W3DStatusCircle()
+class Vector4
 {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0xe8
-        __emit 0xa8
-        __emit 0xa4
-        __emit 0x1f
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xb9
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0xbf
-        __emit 0x89
-        __emit 0x86
-        __emit 0xc8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xcc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xd8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x18
-        __emit 0x10
-        __emit 0x12
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x10
-        __emit 0x10
-        __emit 0x12
-        __emit 0x01
-        __emit 0x89
-        __emit 0x8e
-        __emit 0xd0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x8e
-        __emit 0xd4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x86
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x1b
-        __emit 0x44
-        __emit 0x10
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
+public:
+	float m_x, m_y, m_z, m_w;
+};
+
+class Matrix3D
+{
+public:
+	Vector4 m_row[3];
+};
+
+class SphereClass
+{
+public:
+	Vector3 m_center;
+	float m_radius;
+};
+
+class AABoxClass
+{
+public:
+	Vector3 m_center;
+	Vector3 m_extent;
+};
+
+class RefCountClass
+{
+public:
+	virtual void Delete_This();
+	int m_numRefs;
+};
+
+class MultiListObjectClass
+{
+public:
+	virtual ~MultiListObjectClass();
+	void *m_listNode;
+};
+
+class RenderHookClass;
+
+class RenderObjClass : public RefCountClass, public MultiListObjectClass
+{
+public:
+	enum { CLASSID_UNKNOWN = -1 };
+	RenderObjClass();
+	virtual ~RenderObjClass();
+	virtual int Class_ID() const;
+
+	unsigned long m_bits;
+	unsigned long m_unknown14;
+	Matrix3D m_transform;
+	float m_objectScale;
+	unsigned int m_objectColor;
+	SphereClass m_cachedBoundingSphere;
+	AABoxClass m_cachedBoundingBox;
+	float m_nativeScreenSize;
+	bool m_isTransformIdentity;
+	SceneClass *m_scene;
+	RenderObjClass *m_container;
+	void *m_userData;
+	float m_unknown8c;
+	unsigned long m_unknown90;
+	unsigned long m_unknown94;
+	float m_unknown98;
+	RenderHookClass *m_renderHook;
+	unsigned long m_unknownA0;
+	bool m_unknownA4;
+	unsigned char m_unknownA5[0x1f];
+	bool m_unknownC4;
+	unsigned char m_unknownC5[3];
+};
+
+
+class BfmeCircleShader {
+public:
+ BfmeCircleShader() : bits(0x0010441b) {}
+ unsigned int bits;
+};
+class W3DStatusCircle : public RenderObjClass {
+public:
+ W3DStatusCircle();
+ virtual ~W3DStatusCircle();
+ int fieldC8;
+ int fieldCC;
+ float fieldD0;
+ float fieldD4;
+ void *indexBuffer;
+ BfmeCircleShader shader;
+ void *material;
+ void *circleBuffer;
+ void *screenBuffer;
+};
+W3DStatusCircle::W3DStatusCircle()
+ : fieldC8(0), fieldCC(0), fieldD0(-1.0f), fieldD4(-1.0f), indexBuffer(0)
+{
+ material=0;
+ circleBuffer=0;
+ screenBuffer=0;
 }
