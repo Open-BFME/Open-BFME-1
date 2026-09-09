@@ -240,6 +240,21 @@ struct Rva003558F0Elem
 	char m_tail[4];
 };
 
+class Rva00355980Arr
+{
+public:
+	bool matches(const Rva003558C0Key *key);
+
+	char m_pad[0x38];
+	Rva003558F0Elem *m_items;
+};
+
+bool Rva00355980Arr::matches(const Rva003558C0Key *key)
+{
+	return m_items[key->m_index].m_0e != key->m_value ||
+		m_items[key->m_index].m_0c != 0;
+}
+
 class Rva003558F0Arr
 {
 public:
