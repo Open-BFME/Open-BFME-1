@@ -1,5 +1,5 @@
 // ??1BfmeGameLoadingScreen@@QAE@XZ
-// partial score=0.55 date=2026-09-09
+// partial score=0.62 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeGameLoadingScreen destructor, retail 0x0051B7E0, 546 bytes.
@@ -177,23 +177,18 @@ BfmeGameLoadingScreen::~BfmeGameLoadingScreen()
 
 	m_previewState.bfmeReset();
 
+	AsciiString colorName;
+	AsciiString clipName;
 	for( int index = 0; index < 8; ++index )
 	{
-		{
-			AsciiString name;
-			name.format( AsciiString( "GameLoading:PlayerColor:%d" ), index );
-			( reinterpret_cast<S4Holder0046DBB0 **>( 0x012f19e8 ) )[ 0 ]->take0046DD00( name );
-		}
-		{
-			AsciiString name;
-			name.format( AsciiString( "UIClip/Level/%d" ), index );
-			g_theWindowManager->_bfme_removeNamedAptGadget( name );
-		}
-		{
-			AsciiString name;
-			name.format( AsciiString( "UIClip/Fellowship/%d" ), index );
-			g_theWindowManager->_bfme_removeNamedAptGadget( name );
-		}
+		colorName.format( AsciiString( "GameLoading:PlayerColor:%d" ), index );
+		( reinterpret_cast<S4Holder0046DBB0 **>( 0x012f19e8 ) )[ 0 ]->take0046DD00( colorName );
+
+		clipName.format( AsciiString( "UIClip/Level/%d" ), index );
+		g_theWindowManager->_bfme_removeNamedAptGadget( clipName );
+
+		clipName.format( AsciiString( "UIClip/Fellowship/%d" ), index );
+		g_theWindowManager->_bfme_removeNamedAptGadget( clipName );
 	}
 
 	{
