@@ -1,64 +1,89 @@
-// ?d_004186e0@@YAXXZ
-// partial score=0.9 date=2026-09-08
-struct BfmeQueryD
+// ?setIndicatorColor@Drawable@@QAEXI@Z
+// partial score=0.98 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc
+// stlport
+// ?setIndicatorColor@Drawable@@QAEXI@Z
+// BFME Drawable layout and indicator gate recovered from the matched
+// Drawable::changedTeam caller at 0x00418830.  This TU intentionally carries
+// only the fields and ABI views used by this body.
+
+typedef unsigned int UnsignedInt;
+
+#include <bitset>
+#include <string.h>
+
+template <int NUMBITS>
+class BitFlags
 {
-	int m_bfmeAD;
-	int m_bfmeBD;
-	int m_bfmeCD;
-	int m_bfmeDD;
-	int m_bfmeED;
-	int m_bfmeFD;
+	public:
+	BitFlags()
+	{
+	}
+
+	void set(int index)
+	{
+		m_bits.set(index);
+	}
+
+	private:
+	std::bitset<NUMBITS> m_bits;
 };
 
-struct Rva00367E30Logic
-{
-	unsigned char m_bfmeHeadD[0x114];
-	char m_bfmeFlagD;
-};
+typedef BitFlags<180> KindOfMaskType;
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
-
-char __stdcall bfmeTestD(BfmeQueryD *query);
-
-class BfmeDrawableD
+class Thing
 {
 public:
-	void bfmeSetIndicatorD(unsigned int color);
-	void bfmeApplyD(bool flag);
-
-	unsigned char m_bfmeHeadD[0xfc];
-	void *m_bfmeThingD;
-	unsigned char m_bfmePadD[0x2c0];
-	unsigned int m_bfmeColorD;
+	bool isAnyKindOf(const KindOfMaskType &mask) const;
 };
 
-void BfmeDrawableD::bfmeSetIndicatorD(unsigned int color)
+struct BfmeGameLogicIndicator
 {
-	m_bfmeColorD = color;
+	unsigned char m_unreconstructed_000[0x114];
+	bool m_indicatorOverride;
+};
 
-	bool flag;
+extern BfmeGameLogicIndicator *TheBfmeGameLogic;
 
-	if (TheBfmeGameLogic->m_bfmeFlagD != 0)
+// The retail call is Thing::isAnyKindOf at 0x004250A; the BFME mask is six
+// dwords, unlike the narrower reference-ZH BitFlags type.
+
+class Drawable
+{
+public:
+	void setIndicatorColor(UnsignedInt color);
+	void bfmeSetIndicatorOn(bool flag);
+	Thing *getObject() const { return m_object; }
+
+	unsigned char m_unreconstructed_000[0xfc];
+	Thing *m_object;
+	unsigned char m_unreconstructed_100[0x2c0];
+	UnsignedInt m_indicatorColor;
+};
+
+void Drawable::setIndicatorColor(UnsignedInt color)
+{
+	bool indicatorOn;
+	Thing *object = getObject();
+	*((UnsignedInt *)((unsigned char *)this + 0x3c0)) = color;
+	if (*((unsigned char *)TheBfmeGameLogic + 0x114))
+		goto indicator_on;
+	if (object)
 	{
-		flag = true;
+		KindOfMaskType mask;
+		mask.set(119);
+		mask.set(179);
+		if (object->isAnyKindOf(mask))
+			goto indicator_on;
 	}
-	else if (m_bfmeThingD == 0)
-	{
-		flag = false;
-	}
-	else
-	{
-		BfmeQueryD query;
+	goto indicator_off;
 
-		query.m_bfmeAD = 0;
-		query.m_bfmeBD = 0;
-		query.m_bfmeCD = 0;
-		query.m_bfmeDD = 0x800000;
-		query.m_bfmeED = 0;
-		query.m_bfmeFD = 0x80000;
+indicator_on:
+	memset(&indicatorOn, 1, sizeof(indicatorOn));
+	bfmeSetIndicatorOn(indicatorOn);
+	return;
 
-		flag = bfmeTestD(&query) != 0;
-	}
-
-	bfmeApplyD(flag);
+indicator_off:
+	memset(&indicatorOn, 0, sizeof(indicatorOn));
+	bfmeSetIndicatorOn(indicatorOn);
 }
