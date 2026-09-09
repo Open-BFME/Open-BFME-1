@@ -300,15 +300,6 @@ typedef _STL::_Rb_tree<AsciiString, Rva009CF7A0Pair, _STL::_Select1st<Rva009CF7A
 template _STL::pair<Rva009CF7A0Tree::iterator, bool>
 Rva009CF7A0Tree::insert_unique( const Rva009CF7A0Pair & );
 
-typedef _STL::pair<const AsciiString, _STL::list<AsciiString, _STL::allocator<AsciiString> > > Rva000817C0Pair;
-
-typedef _STL::_Rb_tree<AsciiString, Rva000817C0Pair, _STL::_Select1st<Rva000817C0Pair>,
-	_STL::less<AsciiString>, _STL::allocator<Rva000817C0Pair> > Rva000817C0Tree;
-
-// retail 0x000818B0, inserting through the _M_insert at 0x000817C0
-template _STL::pair<Rva000817C0Tree::iterator, bool>
-Rva000817C0Tree::insert_unique( const Rva000817C0Pair & );
-
 // Eight bytes, the width the _M_insert at 0x005B2EF0 allocates for it.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKey
