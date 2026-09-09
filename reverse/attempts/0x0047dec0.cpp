@@ -1,12 +1,7 @@
-// ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAVGameFont@@_NPAURadioButtonData@@@Z
-// partial score=0.9 date=2026-09-06
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-
-// Open-BFME7: the RADIO BUTTON sibling of gogoGadgetCheckbox (retail
-// 0x0047DEC0 264 B): style bit 2 gates it and it takes a fourth argument --
-// the RadioButtonData (group and screen) copied into a fresh 8-byte block
-// handed to winSetUserData -- before the shared owner, look and label
-// sequence; the text goes to GadgetRadioSetText.
+// ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAURadioButtonData@@PAVGameFont@@_N@Z
+// partial score=0.94 date=2026-09-09
+// ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAURadioButtonData@@PAVGameFont@@_N@Z
+// BFME radio-button construction with the shared gadget setup sequence.
 
 class GameWindow;
 class GameFont;
@@ -145,26 +140,27 @@ public:
 	virtual void v69();
 	virtual UnicodeString winTextLabelToText(AsciiString);
 	virtual GameWindow *gogoGadgetCheckbox(GameWindow *, GameFont *, bool);
-	virtual GameWindow *gogoGadgetRadioButton(GameWindow *, GameFont *, bool, RadioButtonData *);
+	virtual GameWindow *gogoGadgetRadioButton(GameWindow *, RadioButtonData *, GameFont *, bool);
 };
 
 extern GameWindowManager *TheWindowManager;
 extern void GadgetRadioSetText(GameWindow *, UnicodeString);
 
-// The retail calls use the incremental-link thunks, not the folded bodies.
 #pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_0003a52b@@YAXXZ")
 #pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
 
 GameWindow *GameWindowManager::gogoGadgetRadioButton(GameWindow *parent,
-	GameFont *font, bool visual, RadioButtonData *data)
+	RadioButtonData *data, GameFont *font, bool visual)
 {
+	RadioButtonData *radioData;
+	GameWindow *radioButton;
 	if ((parent->instanceData->style & 2) == 0)
 		return 0;
-	GameWindow *radioButton = TheWindowManager->create(parent);
+	radioButton = TheWindowManager->create(parent);
 	if (radioButton == 0)
 		return 0;
-	RadioButtonData *radioData = new RadioButtonData;
+	radioData = new RadioButtonData;
 	*radioData = *data;
 	radioButton->winSetUserData(radioData);
 	radioButton->winSetOwner(parent->owner);
