@@ -1,5 +1,5 @@
 // ?bfmeDumpCG@@YGXPAVBfmeSinkCG@@@Z
-// partial score=0.70 date=2026-09-09
+// partial score=0.99 date=2026-09-09
 extern "C" char _bfmeEmptyCG[];
 
 struct BfmeKeyCG
@@ -20,7 +20,7 @@ public:
 	int bfmeIndexCG(void *p, int n);
 
 	unsigned char m_bfmeHeadCG[4];
-	BfmeNodeCG **volatile m_bfme04CG;
+	BfmeNodeCG **m_bfme04CG;
 	BfmeNodeCG **m_bfme08CG;
 };
 
@@ -69,7 +69,7 @@ void __stdcall bfmeDumpCG(BfmeSinkCG *sink)
 	unsigned int count;
 
 outerCG:
-	const char *s = n->m_bfme04CG == 0 ? _bfmeEmptyCG : n->m_bfme04CG->m_bfmeTextCG;
+	const char *s = n->m_bfme04CG != 0 ? n->m_bfme04CG->m_bfmeTextCG : _bfmeEmptyCG;
 
 	sink->bfmeEmitCG(s);
 
@@ -86,12 +86,15 @@ outerCG:
 
 	BfmeNodeCG *p = 0;
 
-	while (++i < count)
-	{
-		p = v->m_bfme04CG[i];
+scanCG:
+	++i;
 
-		if (p != 0)
-			break;
+	if (i < count)
+	{
+		p = (*(BfmeNodeCG **volatile *)&v->m_bfme04CG)[i];
+
+		if (p == 0)
+			goto scanCG;
 	}
 
 	n = p;
