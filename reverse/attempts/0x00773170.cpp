@@ -1,13 +1,17 @@
-// ?parseBuffNuggetBone@Rva00773170@@SAXPAVINI@@PAX1PBX@Z
+// ?parse@Rva00773170@@SAXPAVINI@@PAX1PBX@Z
 // partial score=0.9 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: the buff-nugget bone field parser at 0x00773170 (204 B): a
+// Open-BFME7: W3DModelDraw/ModelConditionInfo-family bone field parser at
+// 0x00773170 (204 B), immediately after the matched ModelConditionInfo
+// addPublicBone body in the same retail code cluster. It reads a
 // quoted bone token then an optional quoted mesh token; when the mesh token
 // is "ExtraMesh" (imported _stricmp) and the following Bool token scans true
 // the existing bone list at instance+0x28 is kept else it is cleared
 // (erase(begin end) out of line) and the bone name is pushed (the retail
 // vector<AsciiString> keeps push_back out of line: modelled as a shell).
-// Address-derived names.
+// The +0x28 vector<AsciiString>, shared push_back thunk, and "ExtraMesh"
+// grammar contradict the earlier BuffNuggetFXNugget attribution. The exact
+// private parser spelling remains unknown, so its owner stays RVA-scoped.
 
 extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *a, const char *b );
 
@@ -48,7 +52,7 @@ private:
 	AsciiString *m_endOfStorage;
 };
 
-struct Rva00773170Owner
+struct Rva00773170ModelConditionBoneStore
 {
 	char m_unreconstructed[ 0x28 ];
 	Rva00773170StringVector m_bones;
@@ -57,13 +61,14 @@ struct Rva00773170Owner
 class Rva00773170
 {
 public:
-	static void parseBuffNuggetBone( INI *ini, void *instance, void *store, const void *userData );
+	static void parse( INI *ini, void *instance, void *store, const void *userData );
 };
 
-// ?parseBuffNuggetBone@Rva00773170@@SAXPAVINI@@PAX1PBX@Z
-void Rva00773170::parseBuffNuggetBone( INI *ini, void *instance, void *, const void * )
+// ?parse@Rva00773170@@SAXPAVINI@@PAX1PBX@Z
+void Rva00773170::parse( INI *ini, void *instance, void *, const void * )
 {
-	Rva00773170Owner *self = (Rva00773170Owner *)instance;
+	Rva00773170ModelConditionBoneStore *self =
+		(Rva00773170ModelConditionBoneStore *)instance;
 	if( !self )
 		return;
 	const char *bone = ini->getNextTokenOrNull( ini->m_sepsQuote );
