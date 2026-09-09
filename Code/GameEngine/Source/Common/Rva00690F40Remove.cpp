@@ -1,8 +1,6 @@
-// address-derived name; owning class unidentified
-// partial score=0.35 date=2026-09-09
+// address-derived name; owning class unidentified.
 // C-style explicit-vtable object; printf format string at 0x0111B944 is
-// "Removing %S\n" (read from retail .rdata). First 0x1a bytes byte-exact;
-// remainder differs only in failure-block placement/tail-merging.
+// "Removing %S\n" (read from retail .rdata).
 extern "C" __declspec(dllimport) int __cdecl printf(const char *fmt, ...);
 
 struct Rva00690F40Iface;
@@ -29,7 +27,7 @@ struct Rva00690F40LocalVtbl
 class Rva00690F40Owner
 {
 public:
-	bool method();
+	bool remove();
 
 	char m_pad00[4];
 	unsigned short *m_name;
@@ -39,26 +37,29 @@ public:
 	Rva00690F40Iface *m_iface;
 };
 
-bool Rva00690F40Owner::method()
+bool Rva00690F40Owner::remove()
 {
 	Rva00690F40Iface *local = 0;
 	Rva00690F40Iface *iface = m_iface;
 	int hr = ((Rva00690F40IfaceVtbl *)iface->lpVtbl)->v50(iface, &local);
-	if (hr >= 0)
-		goto step2;
 
-fail:
-	if (local)
-		((Rva00690F40LocalVtbl *)local->lpVtbl)->release(local);
-	return false;
+	if (hr < 0)
+	{
+		if (local)
+			((Rva00690F40LocalVtbl *)local->lpVtbl)->release(local);
+		return false;
+	}
 
-step2:
 	printf("Removing %S\n", m_name);
 	{
 		Rva00690F40LocalVtbl *vtbl = (Rva00690F40LocalVtbl *)local->lpVtbl;
 		int hr2 = vtbl->v24(local, m_name);
 		if (hr2 < 0)
-			goto fail;
+		{
+			if (local)
+				((Rva00690F40LocalVtbl *)local->lpVtbl)->release(local);
+			return false;
+		}
 	}
 
 	if (local)
