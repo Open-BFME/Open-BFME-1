@@ -2266,7 +2266,7 @@ locideastruct=&global_ideastruct;
 /*
 ** Set error context
 */
-errorcontext="CPU:IDEA";
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 /*
 ** Re-init random-number generator.
@@ -2277,7 +2277,7 @@ randnum((int32)3);
 /*
 ** Build an encryption/decryption key
 */
-for (i=0;i<8;i++)
+for (i=0;i<(unsigned)8;i++)
         /* userkey[i]=(u16)(abs_randwc(60000L) & 0xFFFF); */
 	userkey[i]=(u16)(abs_randwc((int32)60000) & 0xFFFF);
 for(i=0;i<KEYLEN;i++)
