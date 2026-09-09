@@ -1,5 +1,5 @@
 // ?update@RadiusDecal@@QAEXXZ
-// partial score=0.9 date=2026-09-08
+// partial score=0.91 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -163,20 +163,20 @@ struct BfmeRadiusDecalShadowPos
 	Coord3D position;								///< retail shadow+0x08
 };
 
-struct BfmeRadiusDecalShadowFields
-{
-	UnsignedByte pad00[0x20];
-	Real value20;
-	UnsignedByte pad24[0x10];
-	UnsignedInt value34;
-};
-
 struct BfmeRadiusDecalLayout
 {
 	Int decalTemplate;								///< retail this+0x00
 	BfmeRadiusDecalShadow *shadow;					///< retail this+0x04
 	Bool empty;										///< retail this+0x08
 	Real bfmeExtra;									///< retail this+0x0C; the reference class stops before it
+};
+
+struct BfmeRadiusDecalShadowFields
+{
+	UnsignedByte pad00[0x20];
+	Real value20;
+	UnsignedByte pad24[0x10];
+	UnsignedInt value34;
 };
 
 struct BfmeRadiusDecalTemplateLayout
@@ -309,10 +309,11 @@ RadiusDecal::~RadiusDecal()
 // ?update@RadiusDecal@@ present-unmatched
 void RadiusDecal::update()
 {
-	if (((BfmeRadiusDecalLayout *)this)->bfmeExtra == BFME_RADIUS_DECAL_ZERO)
+	BfmeRadiusDecalLayout *self = (BfmeRadiusDecalLayout *)this;
+	if (self->bfmeExtra == BFME_RADIUS_DECAL_ZERO)
 	{
 		UnsignedInt frame = BFME_RADIUS_DECAL_GAME_LOGIC->frame;
-		((BfmeRadiusDecalLayout *)this)->bfmeExtra = frame;
+		self->bfmeExtra = frame;
 	}
 
 	if (m_decal == NULL)
@@ -323,25 +324,30 @@ void RadiusDecal::update()
 
 	UnsignedInt frame = BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
 	Real throbTime = (Real)bfmeMathVE(
-		((const BfmeRadiusDecalTemplateLayout *)m_template)->opacityThrobTime * BFME_RADIUS_DECAL_THROB_SCALE);
+		((const BfmeRadiusDecalTemplateLayout *)m_template)->opacityThrobTime
+			* BFME_RADIUS_DECAL_THROB_SCALE);
 	UnsignedInt cycle;
+	// Retail keeps this conversion in the x87 domain: a C++ cast emits
+	// __ftol2 here and shifts every following local.  The two instructions
+	// reproduce the compiler's proven fistp shape without lifting the body.
 	__asm fld throbTime
 	__asm fistp cycle
 	UnsignedInt divisorValue = cycle;
 	UnsignedInt minimum = 1;
-	UnsignedInt *divisor = &divisorValue;
-	if (1 >= cycle)
+	UnsignedInt *divisor;
+	if (divisorValue > 1)
+		divisor = &divisorValue;
+	else
 		divisor = &minimum;
 	UnsignedInt phase = frame % *divisor;
-	Real percent = bfmeSinVNB((Real)phase * BFME_RADIUS_DECAL_TWO_PI / (Real)*divisor)
-		+ BFME_RADIUS_DECAL_ONE;
-
+	Real percent = BFME_RADIUS_DECAL_HALF *
+		(bfmeSinVNB((Real)phase * BFME_RADIUS_DECAL_TWO_PI / (Real)*divisor)
+			+ BFME_RADIUS_DECAL_ONE);
 	Int opacity;
 	if (BFME_RADIUS_DECAL_GAME_LOGIC->drawIconUI)
 	{
-		Real halfPercent = percent * BFME_RADIUS_DECAL_HALF;
 		opacity = (Int)(((((const BfmeRadiusDecalTemplateLayout *)m_template)->maxOpacity
-			- ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity) * halfPercent
+			- ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity) * percent
 			+ ((const BfmeRadiusDecalTemplateLayout *)m_template)->minOpacity)
 			* BFME_RADIUS_DECAL_SCALE);
 	}
@@ -351,29 +357,36 @@ void RadiusDecal::update()
 	}
 
 	BfmeRadiusDecalShadowFields *shadowFields = (BfmeRadiusDecalShadowFields *)m_decal;
-	Bool specialShadow = shadowFields->value34 == 0x1000;
-	if (specialShadow
-		&& ((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue28 <= 0
-		&& BFME_RADIUS_DECAL_WRITABLE_DATA->flag60
-		&& BFME_RADIUS_DECAL_LOOK_AT_TRANSLATOR->slot01())
+	UnsignedInt shadowValue = shadowFields->value34;
+	UnsignedInt templateValue =
+		((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue28;
+	Bool specialShadow = shadowValue == 0x1000;
+	Bool skipShadowOpacity = specialShadow || templateValue > 0;
+	if (skipShadowOpacity == FALSE)
 	{
-		opacity = 0;
+		if (BFME_RADIUS_DECAL_WRITABLE_DATA->flag60
+			&& BFME_RADIUS_DECAL_LOOK_AT_TRANSLATOR->slot01())
+		{
+			opacity = 0;
+		}
 	}
 
 	m_decal->setOpacity(opacity);
 	if (((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue2C != BFME_RADIUS_DECAL_ZERO)
 	{
-		Real scale = BFME_RADIUS_DECAL_FIRST_FACTOR * BFME_RADIUS_DECAL_SECOND_FACTOR;
+		Int clientFrame;
+		Real scale = BFME_RADIUS_DECAL_FIRST_FACTOR;
+		scale *= BFME_RADIUS_DECAL_SECOND_FACTOR;
 		scale *= ((const BfmeRadiusDecalTemplateLayout *)m_template)->templateValue2C;
 		scale *= BFME_RADIUS_DECAL_POSITION_SCALE;
-		Int clientFrame = BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+		clientFrame = BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
 		Real frameAsReal = (Real)clientFrame;
 		if (clientFrame < 0)
 			frameAsReal += BFME_RADIUS_DECAL_UINT32_SCALE;
 		((BfmeRadiusDecalShadowFields *)m_decal)->value20 = frameAsReal * scale;
 	}
 
-	((BfmeRadiusDecalLayout *)this)->bfmeExtra = (Real)BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
+	self->bfmeExtra = (Real)BFME_RADIUS_DECAL_GAME_CLIENT->getFrame();
 }
 
 
