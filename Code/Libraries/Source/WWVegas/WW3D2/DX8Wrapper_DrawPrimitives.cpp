@@ -41,9 +41,13 @@ struct IDirect3DDevice8
 	DX8_DRAW_DUMMY(32) DX8_DRAW_DUMMY(33) DX8_DRAW_DUMMY(34) DX8_DRAW_DUMMY(35)
 	DX8_DRAW_DUMMY(36) DX8_DRAW_DUMMY(37) DX8_DRAW_DUMMY(38) DX8_DRAW_DUMMY(39)
 	DX8_DRAW_DUMMY(40) DX8_DRAW_DUMMY(41) DX8_DRAW_DUMMY(42) DX8_DRAW_DUMMY(43)
-	DX8_DRAW_DUMMY(44) DX8_DRAW_DUMMY(45) DX8_DRAW_DUMMY(46) DX8_DRAW_DUMMY(47)
-	DX8_DRAW_DUMMY(48) DX8_DRAW_DUMMY(49) DX8_DRAW_DUMMY(50) DX8_DRAW_DUMMY(51)
-	DX8_DRAW_DUMMY(52) DX8_DRAW_DUMMY(53) DX8_DRAW_DUMMY(54) DX8_DRAW_DUMMY(55)
+	virtual HRESULT __stdcall SetTransform(UnsignedInt, void *) = 0;
+	DX8_DRAW_DUMMY(45) DX8_DRAW_DUMMY(46) DX8_DRAW_DUMMY(47)
+	DX8_DRAW_DUMMY(48) DX8_DRAW_DUMMY(49) DX8_DRAW_DUMMY(50)
+	virtual HRESULT __stdcall SetLight(UnsignedInt, void *) = 0;
+	DX8_DRAW_DUMMY(52)
+	virtual HRESULT __stdcall LightEnable(UnsignedInt, UnsignedInt) = 0;
+	DX8_DRAW_DUMMY(54) DX8_DRAW_DUMMY(55)
 	DX8_DRAW_DUMMY(56) DX8_DRAW_DUMMY(57) DX8_DRAW_DUMMY(58) DX8_DRAW_DUMMY(59)
 	DX8_DRAW_DUMMY(60) DX8_DRAW_DUMMY(61) DX8_DRAW_DUMMY(62) DX8_DRAW_DUMMY(63)
 	DX8_DRAW_DUMMY(64) DX8_DRAW_DUMMY(65) DX8_DRAW_DUMMY(66) DX8_DRAW_DUMMY(67)
@@ -76,33 +80,81 @@ class Vector3
 
 class ShaderClass
 {
-public:
+	friend class DX8Wrapper;
+
 	UnsignedInt bits;
+	void Apply();
 };
 
 class VertexMaterialClass
 {
+	friend class DX8Wrapper;
+
+	void Apply() const;
+	static void Apply_Null();
+
 public:
 	void Get_Emissive(Vector3 *set) const;
 };
+
+class TextureClass;
+struct BfmeDynamicVBSlot;
+
+template<class T>
+class RefCountPtr
+{
+public:
+	void Apply(UnsignedInt stage);
+
+private:
+	T *Referent;
+};
+
+struct BfmeApplyCapsView
+{
+	char unused[0x278];
+	int max_textures;
+};
+
+struct BfmeApplyLight
+{
+	char bytes[0x68];
+};
+
+struct BfmeApplyMatrix
+{
+	char bytes[0x40];
+};
+
+class BfmeApplyVertexBufferView;
+class BfmeApplyIndexBufferView;
 
 // The getter is inline in the W3D vertex-buffer header. Its only field used by
 // this body is the measured WORD at +0x0c, so this TU-local view preserves the
 // real access without importing the whole DX8 header graph.
 class VertexBufferClass
 {
+	public:
 	char unused[0x0c];
 	UnsignedShort vertex_count;
+	char unused_to_fvf[0x06];
+	BfmeDynamicVBSlot *FVFInfo;
+	unsigned char explicit_size;
+	unsigned char padding[3];
 
-public:
 	UnsignedShort Get_Vertex_Count() const { return vertex_count; }
+	const BfmeDynamicVBSlot &FVF_Info() const { return *FVFInfo; }
 };
 
 struct RenderStateStruct
 {
 	ShaderClass shader;
 	VertexMaterialClass *material;
-	char unused[0x24c - 8];
+	RefCountPtr<TextureClass> Textures[8];
+	BfmeApplyLight Lights[4];
+	unsigned char LightEnable[4];
+	BfmeApplyMatrix world;
+	BfmeApplyMatrix view;
 	UnsignedInt vertex_buffer_types[2];
 	UnsignedInt index_buffer_type;
 	UnsignedShort vba_offset;
@@ -125,6 +177,26 @@ struct BfmeDynamicVBSlot
 
 	UnsignedInt Get_FVF() const { return fvf; }
 	UnsignedInt Get_FVF_Size() const { return fvf_size; }
+};
+
+// BFME's DX8 vertex object fields used by the render-state helper are at
+// +0x14 (FVF record), +0x18 (explicit-size marker), and +0x1c (D3D buffer).
+class BfmeApplyVertexBufferView : public VertexBufferClass
+{
+public:
+	void *VertexBuffer;
+	const BfmeDynamicVBSlot &FVF_Info() const { return *FVFInfo; }
+	void *Get_DX8_Vertex_Buffer() const { return VertexBuffer; }
+};
+
+// The dynamic index object exposes its D3D index buffer at +0x14 in the
+// matched DX8 index-buffer access bodies.
+class BfmeApplyIndexBufferView
+{
+	char unused[0x14];
+
+public:
+	void *IndexBuffer;
 };
 
 struct VertexFormatXYZNDUV2
@@ -252,6 +324,23 @@ extern unsigned number_of_DX8_calls;
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper
 {
+	enum ChangedStates
+	{
+		WORLD_CHANGED = 1 << 0,
+		VIEW_CHANGED = 1 << 1,
+		LIGHT0_CHANGED = 1 << 2,
+		LIGHT1_CHANGED = 1 << 3,
+		LIGHT2_CHANGED = 1 << 4,
+		LIGHT3_CHANGED = 1 << 5,
+		TEXTURE0_CHANGED = 1 << 6,
+		MATERIAL_CHANGED = 1 << 14,
+		SHADER_CHANGED = 1 << 15,
+		VERTEX_BUFFER_CHANGED = 1 << 16,
+		INDEX_BUFFER_CHANGED = 1 << 17,
+		WORLD_IDENTITY = 1 << 18,
+		VIEW_IDENTITY = 1 << 19
+	};
+
 	enum BufferType
 	{
 		BUFFER_TYPE_DX8,
@@ -264,10 +353,15 @@ class DX8Wrapper
 	static bool _EnableTriangleDraw;
 	static unsigned DrawPolygonLowBoundLimit;
 	static IDirect3DDevice8 *D3DDevice;
+	static BfmeApplyCapsView *CurrentCaps;
 	static RenderStateStruct render_state;
+	static unsigned render_state_changed;
+	static unsigned matrix_changes;
 	static unsigned vertex_buffer_changes;
 	static unsigned index_buffer_changes;
+	static unsigned light_changes;
 	static unsigned draw_calls;
+	static unsigned char CurrentDX8LightEnables[4];
 
 	static IDirect3DDevice8 *_Get_D3D_Device8() { return D3DDevice; }
 
@@ -293,6 +387,137 @@ private:
 		UnsignedShort vertex_count,
 		int indexed_draw);
 };
+
+// ?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ
+void DX8Wrapper::Apply_Render_State_Changes()
+{
+	if (!render_state_changed)
+		return;
+
+	if (render_state_changed & SHADER_CHANGED)
+		render_state.shader.Apply();
+
+	unsigned mask = TEXTURE0_CHANGED;
+	for (int index = 0; index < CurrentCaps->max_textures; ++index, mask <<= 1) {
+		if (render_state_changed & mask)
+			render_state.Textures[index].Apply(index);
+	}
+
+	if (render_state_changed & MATERIAL_CHANGED) {
+		VertexMaterialClass *material = render_state.material;
+		if (material)
+			material->Apply();
+		else
+			VertexMaterialClass::Apply_Null();
+	}
+
+	if (render_state_changed & (LIGHT0_CHANGED | LIGHT1_CHANGED |
+		LIGHT2_CHANGED | LIGHT3_CHANGED)) {
+		unsigned mask = LIGHT0_CHANGED;
+		unsigned index = 0;
+		unsigned count = 4;
+		BfmeApplyLight *light = render_state.Lights;
+		do {
+			if (render_state_changed & mask) {
+				if (render_state.LightEnable[index]) {
+					if (light) {
+						light_changes++;
+						D3DDevice->SetLight(index, light);
+						number_of_DX8_calls++;
+						D3DDevice->LightEnable(index, 1);
+						number_of_DX8_calls++;
+						CurrentDX8LightEnables[index] = 1;
+					}
+					else if (CurrentDX8LightEnables[index]) {
+						light_changes++;
+						CurrentDX8LightEnables[index] = 0;
+						D3DDevice->LightEnable(index, 0);
+						number_of_DX8_calls++;
+					}
+				}
+				else if (CurrentDX8LightEnables[index]) {
+					light_changes++;
+					CurrentDX8LightEnables[index] = 0;
+					D3DDevice->LightEnable(index, 0);
+					number_of_DX8_calls++;
+				}
+			}
+			++index;
+			light = reinterpret_cast<BfmeApplyLight *>(
+				reinterpret_cast<char *>(light) + sizeof(BfmeApplyLight));
+			mask <<= 1;
+		} while (--count);
+	}
+
+	if (render_state_changed & WORLD_CHANGED) {
+		matrix_changes++;
+		D3DDevice->SetTransform(0x100, &render_state.world);
+		number_of_DX8_calls++;
+	}
+	if (render_state_changed & VIEW_CHANGED) {
+		matrix_changes++;
+		D3DDevice->SetTransform(2, &render_state.view);
+		number_of_DX8_calls++;
+	}
+
+	if (render_state_changed & VERTEX_BUFFER_CHANGED) {
+		for (unsigned index = 0; index < 2; ++index) {
+			if (render_state.vertex_buffers[index]) {
+				switch (render_state.vertex_buffer_types[index]) {
+				case BUFFER_TYPE_DX8:
+				case BUFFER_TYPE_DYNAMIC_DX8: {
+					IDirect3DDevice8 *device = D3DDevice;
+					device->SetStreamSource(
+						index,
+						static_cast<BfmeApplyVertexBufferView *>(
+							render_state.vertex_buffers[index])->Get_DX8_Vertex_Buffer(),
+						0,
+						render_state.vertex_buffers[index]->FVF_Info().Get_FVF_Size());
+					number_of_DX8_calls++;
+					vertex_buffer_changes++;
+					if (!static_cast<BfmeApplyVertexBufferView *>(
+							render_state.vertex_buffers[index])->explicit_size) {
+						D3DDevice->SetFVF(
+							render_state.vertex_buffers[index]->FVF_Info().Get_FVF());
+						number_of_DX8_calls++;
+					}
+					break;
+				}
+				default:
+					break;
+				}
+			}
+			else {
+				D3DDevice->SetStreamSource(index, 0, 0, 0);
+				number_of_DX8_calls++;
+				vertex_buffer_changes++;
+			}
+		}
+	}
+
+	if (render_state_changed & INDEX_BUFFER_CHANGED) {
+		BfmeApplyIndexBufferView *index_buffer =
+			reinterpret_cast<BfmeApplyIndexBufferView *>(render_state.index_buffer);
+		if (index_buffer) {
+			switch (render_state.index_buffer_type) {
+			case BUFFER_TYPE_DX8:
+			case BUFFER_TYPE_DYNAMIC_DX8:
+				D3DDevice->SetIndices(index_buffer->IndexBuffer);
+				break;
+			default:
+				goto finish;
+			}
+		}
+		else {
+			D3DDevice->SetIndices(0);
+		}
+		number_of_DX8_calls++;
+		index_buffer_changes++;
+	}
+
+finish:
+	render_state_changed &= WORLD_IDENTITY | VIEW_IDENTITY;
+}
 
 // ?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z
 void DX8Wrapper::Draw_Sorting_IB_VB(

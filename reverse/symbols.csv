@@ -10401,6 +10401,8 @@ name,address,notes
 ?ApplicationHWnd@@3PAXA,0x012ED238,Canonical non-STRICT HWND global from WinMain declaration and definition; W3DMouse ScreenToClient operand and Win32 window calls;campaign=36h-20260908-1018;batch=45
 ?Apply@CameraClass@@QAEXXZ,0x00933190,retail WaterRenderObjClass::renderMirror caller at 0x007A2B00 CameraClass::Apply body verified
 ?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
+?Apply@ShaderClass@@AAEXXZ,0x00911020,DX8Wrapper render-state caller at 0x00904890 plus official W3D shader.cpp private-member marker prove ShaderClass::Apply
+?Apply@VertexMaterialClass@@ABEXXZ,0x00922240,DX8Wrapper render-state caller at 0x00904890 plus official W3D vertmaterial.cpp private-const marker prove VertexMaterialClass::Apply
 ?Apply_Default_State@DX8Wrapper@@SAXXZ,0x009095A0,BFME DX8MeshRendererClass::Flush tail; snapshot-inlined default-state body at historical 0x009095A0
 ?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ,0x00904890,DX8Wrapper::Draw call destination; exact cdecl object decoration for the retail render-state application helper
 ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,0x00904890
