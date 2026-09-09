@@ -29,8 +29,30 @@
 // Westwood Online screen setup/teardown
 // Author: Matthew D. Campbell, November 2001
 
+// This TU supplies the retail-sized AudioEventRTS declaration below.  Several
+// GUI headers include the Zero Hour AudioEventRTS header transitively, so keep
+// that smaller declaration out without changing the shared headers.
+#define _H_AUDIOEVENTRTS_
+
+class AsciiString;
+enum ObjectID;
+enum DrawableID;
+class AudioEventRTS
+{
+public:
+	AudioEventRTS();
+	AudioEventRTS( const AsciiString &eventName );
+	AudioEventRTS( const AsciiString &eventName, ObjectID extra );
+	AudioEventRTS( const AsciiString &eventName, DrawableID extra );
+	~AudioEventRTS();
+	AudioEventRTS( const AudioEventRTS &other );
+	AudioEventRTS &operator=( const AudioEventRTS &other );
+
+private:
+	unsigned char m_data[0x70];
+};
+
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
-#include "Common/AudioEventRTS.h"
 
 #include "GameClient/GadgetListBox.h"
 #include "GameClient/GameText.h"
@@ -43,11 +65,20 @@
 //#include "GameNetwork/GameSpy/PeerDefs.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
 
+class BFMERetailAsciiString;
+
 template <typename T> class StringBase
 {
+friend class BFMERetailAsciiString;
+
 private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
 	StringBase( const StringBase<T> &other );
+	~StringBase();
+
 	friend class UnicodeString;
+	void *m_data;
 };
 
 inline UnicodeString::UnicodeString( const UnicodeString &other )
@@ -76,6 +107,77 @@ public:
 	virtual void addWindow( void *window ) {}
 	virtual void removeWindow( void *window ) {}
 	virtual void destroyWindows( void ) {}
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	BFMERetailAsciiString( const BFMERetailAsciiString &other )
+		: StringBase<char>( other ) {}
+	~BFMERetailAsciiString() {}
+};
+
+class AudioManager;
+extern AudioManager *TheAudio;
+
+class BFMEOverlayAudioManagerView
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void slot28() = 0;
+	virtual void slot2c() = 0;
+	virtual void slot30() = 0;
+	virtual void slot34() = 0;
+	virtual void slot38() = 0;
+	virtual void slot3c() = 0;
+	virtual void slot40() = 0;
+	virtual void addAudioEvent( AudioEventRTS *event ) = 0;
+};
+
+// GameWindowManager::winCreateLayout is the retail virtual at +0x6c.  The
+// parameter is a BFME AsciiString by value, so a local view is needed to keep
+// the temporary's construction ABI without changing the shared header.
+class BFMEOverlayWindowManagerView
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void slot28() = 0;
+	virtual void slot2c() = 0;
+	virtual void slot30() = 0;
+	virtual void slot34() = 0;
+	virtual void slot38() = 0;
+	virtual void slot3c() = 0;
+	virtual void slot40() = 0;
+	virtual void slot44() = 0;
+	virtual void slot48() = 0;
+	virtual void slot4c() = 0;
+	virtual void slot50() = 0;
+	virtual void slot54() = 0;
+	virtual void slot58() = 0;
+	virtual void slot5c() = 0;
+	virtual void slot60() = 0;
+	virtual void slot64() = 0;
+	virtual void slot68() = 0;
+	virtual WindowLayout *winCreateLayout( BFMERetailAsciiString filename ) = 0;
 };
 
 // Message boxes -------------------------------------
@@ -258,24 +360,35 @@ void GameSpyOpenOverlay( GSOverlayType overlay )
 			}
 			return;
 		}
-		AudioEventRTS buttonClick("GUICommunicatorOpen");
+		AudioEventRTS buttonClick(
+			*(AsciiString *)&BFMERetailAsciiString("GUICommunicatorOpen"),
+			(ObjectID)2);
 
 		if( TheAudio )
 		{
-			TheAudio->addAudioEvent( &buttonClick );
+			((BFMEOverlayAudioManagerView *)TheAudio)->addAudioEvent(
+				&buttonClick);
 		}  // end if
 	}
 	if (overlayLayouts[overlay])
 	{
-		overlayLayouts[overlay]->hide( FALSE );
-		overlayLayouts[overlay]->bringForward();
+		((BFMEOverlayLayoutCloseView *)overlayLayouts[overlay])->hide(
+			FALSE );
+		((BFMEOverlayLayoutCloseView *)overlayLayouts[overlay])->bringForward();
 	}
 	else
 	{
-		overlayLayouts[overlay] = TheWindowManager->winCreateLayout( AsciiString( gsOverlays[overlay] ) );
-		overlayLayouts[overlay]->runInit();
-		overlayLayouts[overlay]->hide( FALSE );
-		overlayLayouts[overlay]->bringForward();
+		overlayLayouts[overlay] =
+			((BFMEOverlayWindowManagerView *)TheWindowManager)->winCreateLayout(
+				BFMERetailAsciiString( gsOverlays[overlay] ));
+		if (overlayLayouts[overlay]->getFirstWindow())
+			*(int *)((char *)overlayLayouts[overlay]->getFirstWindow() +
+				0x1f4) = 0;
+		((BFMEOverlayLayoutCloseView *)overlayLayouts[overlay])->runInit(
+			0 );
+		((BFMEOverlayLayoutCloseView *)overlayLayouts[overlay])->hide(
+			FALSE );
+		((BFMEOverlayLayoutCloseView *)overlayLayouts[overlay])->bringForward();
 	}
 }
 
