@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a38e5198247a74b52f92f927ab09849b105febabfffc7d0abd5ba2d35b332602",
+  "symbol": "?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.5,
+  "source": "// ?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z\n// partial score=0.5 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n\nclass GameLogicFrameSlice\n{\npublic:\n\tunsigned char m_unmodelled_000[0x3c];\n\tunsigned int m_frame;\n};\n\nextern GameLogicFrameSlice *TheGameLogic;\n\nclass Rva000F72D0FrameCachedValue\n{\npublic:\n\tfloat value(float range);\n\nprivate:\n\tvoid refresh(float range);\n\n\tunsigned char m_unmodelled_000[0xf4];\n\tfloat m_value;\n\tunsigned int m_frame;\n};\n\nfloat Rva000F72D0FrameCachedValue::value(float range)\n{\n\tif (m_frame < TheGameLogic->m_frame)\n\t\trefresh(range);\n\treturn m_value;\n}\n"
+}

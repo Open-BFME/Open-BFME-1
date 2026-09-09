@@ -1,15 +1,22 @@
 // ?d_005fca70@@YAXXZ
-// partial score=0.5 date=2026-09-06
+// partial score=0.94 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-
-namespace FXParticleSystem {
+//
+// Focused reconstruction of the 187-byte constructor at RVA 0x005FCA70.
+// The only identity evidence is the adjusted-owner factory at 0x005E6290,
+// whose named constructor call reaches this body through its retail thunk.
+// The BaseY name remains address-derived; the class names below describe the
+// ABI layout being tested, not a recovered game type.
+//
+// Retail first constructs a two-vptr category base (+0/+4, with a byte at
+// +8) and a second polymorphic base at +0xc.  That second base owns the two
+// dwords at +0x10/+0x14.  The complete constructor then stamps all three
+// final vptrs and fills those fields from the adjusted owner at +0x1d,
+// +0x24, +0x28 and +0x34.
 
 class FXList;
 
-class BfmeVal1027 {
-public:
-	float bfmeVal1027() const;
-};
+namespace FXParticleSystem {
 
 class TerrainCollisionEventFXLookupShim {
 public:
@@ -23,74 +30,87 @@ struct DefaultModuleName {
 	static const char VALUE[1];
 };
 
-struct OwnerY005FCA70;
-
-// Retail layout: address-derived, same family as 0x005FD6A0 (see
-// reverse/re_attempts.log for that banked partial). BaseY005E6290 spans
-// outer+0x0..+0x18: its leading dword (+0x0, the eventual own-vtable slot)
-// is left untouched by the base ctor, which installs two interim
-// "CategoryModuleTemplate<8>"-family vtables at +0x4/+0xc and zeroes the
-// trailing two dwords; its declared-only destructor gives retail's SEH frame
-// and construction-state byte. The derived ctor then finalizes all three
-// vtable slots (+0, +4, +0xc), truncates a BfmeVal1027 member of the owner
-// at +0x28 to int via __ftol2 into +0x10 (unlike 0x005FD6A0's float store --
-// this sibling truncates), and copies the owner's lazily-cached
-// TerrainCollisionEventFX lookup (owner+0x34, keyed by the name pointer at
-// owner+0x24 with the same name->m_text ? name->m_text+8 :
-// DefaultModuleName<8>::VALUE idiom landed for LifeEventModuleInfo::
-// getEventFX / TerrainCollisionModuleInfo::getEventFX in
-// fx_particle_system_bulk.cpp) into +0x14, plus one owner byte (+0x1d ->
-// +0x8).
-class BaseY005E6290
-{
-public:
-	BaseY005E6290(OwnerY005FCA70 *owner);
-	~BaseY005E6290();
-
-private:
-	unsigned int m_vtbl0;      // +0x00, left uninitialized here
-	unsigned int m_vtbl1;      // +0x04
-	unsigned char m_flag1;     // +0x08
-	unsigned char m_pad[3];
-	unsigned int m_vtbl2;      // +0x0c
-	unsigned int m_zero1;      // +0x10
-	unsigned int m_zero2;      // +0x14
-};
-
-BaseY005E6290::BaseY005E6290(OwnerY005FCA70 *)
-	: m_vtbl1(0x0107375c), m_flag1(1), m_vtbl2(0x01112a4c),
-	  m_zero1(0), m_zero2(0)
-{
 }
 
-class Rva005FCA70 : public BaseY005E6290
-{
+class BfmeVal1027 {
 public:
-	Rva005FCA70(OwnerY005FCA70 *owner);
+	float bfmeVal1027() const;
 };
 
-Rva005FCA70::Rva005FCA70(OwnerY005FCA70 *owner)
-	: BaseY005E6290(owner)
+class OwnerY005E6290 {
+	public:
+	unsigned char m_pad00[0x1d];
+	unsigned char m_flag1d;
+	unsigned char m_pad1e[0x6];
+	const char *m_name;
+	BfmeVal1027 m_random;
+	unsigned char m_pad2c[0x8];
+	const FXList *m_cached;
+};
+
+class CategoryPrimaryY005E6290 {
+public:
+	virtual void primary();
+};
+
+class CategoryInfoY005E6290 {
+public:
+	__declspec(nothrow) CategoryInfoY005E6290() : m_flag(true) {}
+	virtual void unused();
+
+protected:
+	unsigned char m_flag;
+};
+
+class __declspec(novtable) CategoryBaseY005E6290
+	: public CategoryPrimaryY005E6290,
+	  public CategoryInfoY005E6290
 {
-	unsigned char *self = (unsigned char *)this;
-	unsigned char *ownerBytes = (unsigned char *)owner;
-	BfmeVal1027 *val = (BfmeVal1027 *)(ownerBytes + 0x28);
+public:
+	CategoryBaseY005E6290()
+		: CategoryPrimaryY005E6290(), CategoryInfoY005E6290() {}
+	__declspec(nothrow) virtual ~CategoryBaseY005E6290();
+};
 
-	*(unsigned int *)(self + 0) = 0x01112a3c;
-	*(unsigned int *)(self + 4) = 0x01112810;
-	*(unsigned int *)(self + 0xc) = 0x011127fc;
+class __declspec(novtable) CategoryTemplateY005E6290 : public CategoryBaseY005E6290
+{
+public:
+	CategoryTemplateY005E6290()
+		: CategoryBaseY005E6290() {}
+	__declspec(nothrow) virtual ~CategoryTemplateY005E6290();
+};
 
-	*(int *)(self + 0x10) = (int)val->bfmeVal1027();
+class OwnerFieldsY005E6290 {
+public:
+	OwnerFieldsY005E6290(OwnerY005E6290 *)
+		: m_value(0), m_eventFX(0) {}
+	virtual ~OwnerFieldsY005E6290();
 
-	const FXList **cached = (const FXList **)(ownerBytes + 0x34);
-	if (!*cached) {
-		const char *name = *(const char **)(ownerBytes + 0x24);
-		*cached = g_terrainCollisionEventFXListStore->lookup(
-			name ? name + 8 : DefaultModuleName<8>::VALUE);
+protected:
+	int m_value;
+	const FXList *m_eventFX;
+};
+
+class BaseY005E6290
+	: public CategoryTemplateY005E6290,
+	  public OwnerFieldsY005E6290
+{
+public:
+	BaseY005E6290(OwnerY005E6290 *owner);
+	virtual ~BaseY005E6290();
+};
+
+BaseY005E6290::BaseY005E6290(OwnerY005E6290 *owner)
+	: CategoryTemplateY005E6290(), OwnerFieldsY005E6290(owner)
+{
+	m_value = (int)owner->m_random.bfmeVal1027();
+
+	if (!owner->m_cached) {
+		const char *name = owner->m_name;
+		owner->m_cached = FXParticleSystem::g_terrainCollisionEventFXListStore->lookup(
+			name ? name + 8 : FXParticleSystem::DefaultModuleName<8>::VALUE);
 	}
 
-	*(unsigned int *)(self + 0x14) = (unsigned int)*cached;
-	*(unsigned char *)(self + 8) = *(ownerBytes + 0x1d);
-}
-
+	m_eventFX = owner->m_cached;
+	m_flag = owner->m_flag1d;
 }
