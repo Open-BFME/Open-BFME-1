@@ -1,11 +1,11 @@
 // ?getPlayerSuperweaponValue@AIPlayer@@SAHPAUCoord3D@@HM@Z
-// partial score=0.95 date=2026-09-06
+// partial score=0.98 date=2026-09-09
+// Retail 0x00164130/502: BFME's three-argument superweapon target value.
+// The player-team traversal, override lookup, kind flags, and retail calls
+// identify this as the BFME overload distinct from the four-argument ZH body.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
-// scratch conversion for ?getPlayerSuperweaponValue@AIPlayer@@KAHPAUCoord3D@@HM@Z
 
 #include <math.h>
-
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 
 typedef bool Bool;
 typedef int Int;
@@ -28,16 +28,18 @@ struct Coord2D
 
 class Player;
 
-class Overridable
+class BfmeOverridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	BfmeOverridable *friend_getFinalOverride();
 
 	void *m_vtable;
-	Overridable *m_nextOverride;
+	BfmeOverridable *m_nextOverride;
 };
 
-class ThingTemplate : public Overridable
+typedef BfmeOverridable Overridable;
+
+class ThingTemplate : public BfmeOverridable
 {
 public:
 	Int calcCostToBuild(const Player *player, Int playerIndex = -1) const;
@@ -60,7 +62,7 @@ public:
 		if (tmpl != 0)
 		{
 			if (tmpl->m_nextOverride != 0)
-				tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+				tmpl = (const ThingTemplate *)tmpl->m_nextOverride->friend_getFinalOverride();
 		}
 		return tmpl;
 	}
@@ -93,7 +95,7 @@ public:
 		if (tmpl == 0)
 			return 0;
 		if (tmpl->m_nextOverride != 0)
-			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->friend_getFinalOverride();
 		return tmpl;
 	}
 };
@@ -103,7 +105,6 @@ class BfmeObjectDlinkBase
 public:
 	Object *dlink_next_TeamMemberList(void) const;
 	TemplateOverride m_template;
-
 };
 
 class BfmeObjectDlinkPad
@@ -288,9 +289,8 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 	Player *pPlayer = ThePlayerList->getNthPlayer(playerNdx);
 	if (pPlayer == 0)
 		return 0;
-	const Player::PlayerTeamList *playerTeams = pPlayer->getPlayerTeams();
-	for (it = playerTeams->begin();
-		it != playerTeams->end();
+	for (it = pPlayer->getPlayerTeams()->begin();
+		it != pPlayer->getPlayerTeams()->end();
 		++it)
 	{
 		TeamPrototype *proto = *it;
@@ -316,18 +316,26 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 				Real dy = center->y - pos.y;
 				if (dx * dx + dy * dy < radSqr)
 				{
+					const ThingTemplate *templateForCost =
+						*(const ThingTemplate **)((const char *)pObj + 4);
 					Real dist = sqrt(dx * dx + dy * dy);
 					Real factor = 1.0f - (dist / (2 * radius));
-				const ThingTemplate *templateForCost =
-					*(const ThingTemplate **)((const char *)pObj + 4);
-				const ThingTemplate *finalTemplateForCost =
-					templateForCost != 0
-					? (templateForCost->m_nextOverride != 0
-						? (const ThingTemplate *)templateForCost->m_nextOverride->getFinalOverride()
-						: templateForCost)
-					: 0;
-				Real value = calcCostForTemplate(finalTemplateForCost, pPlayer);
-				if ((pObj->getTemplate()->m_kindOf & 0x20000) != 0)
+					const ThingTemplate *finalTemplateForCost;
+					if (templateForCost != 0)
+						goto haveTemplateForCost;
+					finalTemplateForCost = 0;
+					goto templateForCostDone;
+
+				haveTemplateForCost:
+					if (templateForCost->m_nextOverride != 0)
+						finalTemplateForCost = (const ThingTemplate *)
+							templateForCost->m_nextOverride->friend_getFinalOverride();
+					else
+						finalTemplateForCost = templateForCost;
+
+				templateForCostDone:
+					Real value = calcCostForTemplate(finalTemplateForCost, pPlayer);
+					if ((pObj->getTemplate()->m_kindOf & 0x20000) != 0)
 						value = value / 10;
 					if (value > 3000)
 						value = value / 10;
