@@ -1,5 +1,4 @@
 // ?bfmeApplyESP@@YAXPBD0@Z
-// partial score=0.74 date=2026-09-08
 
 struct BfmeHdrESP
 {
@@ -22,13 +21,11 @@ class BfmeStrVKI
 {
 public:
 	BfmeStrVKI(const char *text);
-
-	void bfmeSetVKI(const char *text);
-	BfmeStrVKI *operator&()
+	BfmeStrVKI(const BfmeStrVKI &other)
 	{
-		return this;
+		m_data = other.m_data;
+		++m_data->m_refCount;
 	}
-
 	~BfmeStrVKI()
 	{
 		BfmeHdrESP *data = m_data;
@@ -39,16 +36,29 @@ public:
 	BfmeHdrESP *m_data;
 };
 
+class Rva8CD130String : public BfmeStrVKI
+{
+public:
+	Rva8CD130String(const char *text) : BfmeStrVKI(text) {}
+	Rva8CD130String(const Rva8CD130String &other) : BfmeStrVKI(other) {}
+	~Rva8CD130String() {}
+	Rva8CD130String *operator&()
+	{
+		return this;
+	}
+};
+
 class Rva00896AF0Tracker
 {
 public:
-	void rva00896AF0(BfmeStrVKI *input, BfmeStrVKI text);
+	void rva00896AF0(Rva8CD130String *input, Rva8CD130String text);
 };
 
 extern Rva00896AF0Tracker *g_bfmeTracker4310;
 
 void bfmeApplyESP(const char *first, const char *second)
 {
+	Rva8CD130String secondText(second);
 	g_bfmeTracker4310->rva00896AF0(
-		&(g_bfmeFlagESP = 0, BfmeStrVKI(first)), BfmeStrVKI(second));
+		&(g_bfmeFlagESP = 0, Rva8CD130String(first)), secondText);
 }
