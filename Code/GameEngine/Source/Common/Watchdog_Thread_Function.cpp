@@ -1,5 +1,4 @@
 // ?Thread_Function@Watchdog@@UAEXXZ
-// partial score=0.98 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned int UnsignedInt;
@@ -74,7 +73,7 @@ private:
 	char m_threadClass[0x4c];
 	UnsignedInt m_parentThreadId;
 	long m_lastHeartbeat;
-	long m_timeout;
+	int m_timeout;
 	long m_previousWarning;
 	long m_warningInterval;
 	long m_warningDelay;
@@ -113,10 +112,13 @@ void Watchdog::Thread_Function()
 			}
 			else
 			{
-				if (lastHeartbeat != 0 && lastHeartbeat < now &&
-					now - lastHeartbeat > m_timeout)
+				if (lastHeartbeat != 0 && lastHeartbeat < now)
 				{
-					reportWatchdog();
+					long heartbeatDelta = now - lastHeartbeat;
+					if (heartbeatDelta > m_timeout)
+					{
+						reportWatchdog();
+					}
 				}
 				warningTime = now;
 			}
