@@ -43,6 +43,11 @@ public:
 		RM_POLYGON,
 		RM_DX8
 	};
+
+	enum MouseCursor
+	{
+		NONE
+	};
 	virtual ~Mouse();
 	virtual void slot01();
 	virtual void slot02();
@@ -141,6 +146,7 @@ public:
 	virtual void setRedrawMode(Mouse::RedrawMode mode);
 
 private:
+	bool releaseD3DCursorTextures(Mouse::MouseCursor cursor);
 	void freeD3DAssets();
 	void freeW3DAssets();
 	void initD3DAssets();
@@ -217,6 +223,28 @@ void W3DMouse::freeD3DAssets()
 			}
 		}
 	}
+}
+
+bool W3DMouse::releaseD3DCursorTextures(Mouse::MouseCursor cursor)
+{
+	D3DSurfaceInterface *noSurface = 0;
+	TextureClass *noTexture = 0;
+	if (cursor != NONE && g_w3dMouseCursorTextures[cursor][0] != 0)
+	{
+		for (int frame = 0; frame < 21; ++frame)
+		{
+			m_currentD3DSurface[frame] = noSurface;
+
+			TextureClass *texture = g_w3dMouseCursorTextures[cursor][frame];
+			if (texture)
+			{
+				texture->Release_Ref();
+				g_w3dMouseCursorTextures[cursor][frame] = noTexture;
+			}
+		}
+	}
+
+	return true;
 }
 
 W3DMouse::~W3DMouse()
