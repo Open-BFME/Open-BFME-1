@@ -1,5 +1,3 @@
-// ??1SoundKeyPair@@QAE@XZ
-// partial score=0.9 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
 // stlport
 
@@ -93,8 +91,9 @@ private:
 // ??1SoundKeyPair@@QAE@XZ
 SoundKeyPair::~SoundKeyPair()
 {
-	int groupCount = 4;
-	SoundKeyGroup **groupSlot = m_groups;
+	SoundKeyPair *self = this;
+	SoundKeyGroup **groupSlot = self->m_groups;
+	volatile int groupCount = 4;
 	do
 	{
 		SoundKeyGroup *group = *groupSlot;
@@ -112,8 +111,8 @@ SoundKeyPair::~SoundKeyPair()
 	}
 	while (--groupCount != 0);
 
-	groupCount = 4;
-	groupSlot = m_groups;
+	int remainingGroups = 4;
+	groupSlot = self->m_groups;
 	do
 	{
 		SoundKeyGroup *group = *groupSlot;
@@ -125,5 +124,5 @@ SoundKeyPair::~SoundKeyPair()
 		}
 		++groupSlot;
 	}
-	while (--groupCount != 0);
+	while (--remainingGroups != 0);
 }
