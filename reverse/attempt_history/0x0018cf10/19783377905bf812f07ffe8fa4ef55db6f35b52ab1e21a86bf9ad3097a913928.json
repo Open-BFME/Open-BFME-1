@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "19783377905bf812f07ffe8fa4ef55db6f35b52ab1e21a86bf9ad3097a913928",
+  "symbol": "?d_0018cf10@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?d_0018cf10@@YAXXZ\n// partial score=0.82 date=2026-09-09\n// ?bfmeGoBDA@Gen_0018CF10@@QAEXPAX@Z\nstruct BfmeSubBDA\n{\n\tchar m_bfmeBytes[1];\n};\n\nvoid __stdcall bfmeDoBDA(BfmeSubBDA *sub, void *item);\t// retail 0x0002CEEE\n\nclass Gen_0018CF10\n{\npublic:\n\tvoid bfmeGoBDA(void *item);\n\nprivate:\n\tchar m_bfmeHead[0x38];\n\tBfmeSubBDA m_bfmeSub;\n};\n\nvoid Gen_0018CF10::bfmeGoBDA(void *item)\n{\n\tbfmeDoBDA(&m_bfmeSub, item);\n}\n"
+}

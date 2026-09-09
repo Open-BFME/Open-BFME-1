@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "289feb24455be1073d2c82055645724bed27603f28d9ae168b907545989fe7ed",
+  "symbol": "?d_0018e410@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_0018e410@@YAXXZ\n// partial score=0.9 date=2026-09-09\n// ?bfmeReadyLT@BfmeOwnerLT@@QAEHXZ (identity unknown)\nclass BfmeValuesLT\n{\npublic:\n\tunsigned char m_bfmeHeadLT[8];\n\tfloat m_bfmeFirstLT;\n\tfloat m_bfmeSecondLT;\n};\n\nclass BfmeHolderLT\n{\npublic:\n\tchar bfmeCheckALT(float value, float ratio, int flag);\n\tchar bfmeCheckBLT(float value, float ratio);\n\n\tunsigned char m_bfmeHeadLT[8];\n\tBfmeValuesLT *m_bfmeValuesLT;\n};\n\nclass BfmeStageLT\n{\npublic:\n\tunsigned char m_bfmeHeadLT[0x44];\n\tBfmeHolderLT *m_bfmeHolderLT;\n};\n\nclass BfmeOwnerLT\n{\npublic:\n\tint bfmeReadyLT(void);\n\n\tunsigned char m_bfmeHeadLT[0x1c];\n\tBfmeStageLT *m_bfmeStageLT;\n};\n\nint BfmeOwnerLT::bfmeReadyLT(void)\n{\n\tBfmeHolderLT *holder = m_bfmeStageLT->m_bfmeHolderLT;\n\tvolatile float scratch;\n\n\tscratch = holder->m_bfmeValuesLT->m_bfmeFirstLT;\n\tchar first = holder->bfmeCheckALT(holder->m_bfmeValuesLT->m_bfmeFirstLT, 0.5f, 0);\n\n\tscratch = holder->m_bfmeValuesLT->m_bfmeSecondLT;\n\tchar second = holder->bfmeCheckBLT(holder->m_bfmeValuesLT->m_bfmeSecondLT, 0.5f);\n\n\tif (first && second)\n\t\treturn -1;\n\n\treturn 0;\n}\n"
+}

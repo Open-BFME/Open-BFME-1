@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "918b7eb6b27df58b6ca5b9754c67f3558fb5dc0c6b4a78456b5e455fc34f0ce1",
+  "symbol": "?d_0019aff0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_0019aff0@@YAXXZ\n// partial score=0.75 date=2026-09-09\n// ?bfmeGoRva0019AFF0@SidesInfo@@QAEPAV1@PAX@Z\nclass SidesInfo\n{\npublic:\n\tSidesInfo *bfmeGoRva0019AFF0(void *param);\n\t~SidesInfo();\n};\n\nclass Rva0019AFF0Temp\n{\npublic:\n\tRva0019AFF0Temp(void *param);\t// retail 0x0004A8A4 (shared body)\n\tvoid bfmeInit(void *other);\t// retail 0x0000EA48 (shared body)\n\nprivate:\n\tunsigned char m_pad[0x18];\n};\n\nSidesInfo *SidesInfo::bfmeGoRva0019AFF0(void *param)\n{\n\tRva0019AFF0Temp temp(param);\n\ttemp.bfmeInit(this);\n\treinterpret_cast<SidesInfo &>(temp).~SidesInfo();\n\treturn this;\n}\n"
+}
