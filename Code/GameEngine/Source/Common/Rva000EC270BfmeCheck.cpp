@@ -1,5 +1,5 @@
-// ?bfmeCheckEC@BfmeHostEC@@QAEHPAUBfmeNodeEC@@@Z
-// partial score=1.00 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+
 struct BfmeNodeEC
 {
 	unsigned char m_bfmeHeadEC[0x25c];
