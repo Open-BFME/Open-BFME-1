@@ -300,16 +300,6 @@ typedef _STL::_Rb_tree<AsciiString, Rva009CF7A0Pair, _STL::_Select1st<Rva009CF7A
 template _STL::pair<Rva009CF7A0Tree::iterator, bool>
 Rva009CF7A0Tree::insert_unique( const Rva009CF7A0Pair & );
 
-// The mapped type here is a plain bool, so no stand-in struct is needed.
-typedef _STL::pair<const AsciiString, bool> Rva00063140Pair;
-
-typedef _STL::_Rb_tree<AsciiString, Rva00063140Pair, _STL::_Select1st<Rva00063140Pair>,
-	_STL::less<AsciiString>, _STL::allocator<Rva00063140Pair> > Rva00063140Tree;
-
-// retail 0x00063230, inserting through the _M_insert at 0x00063140
-template _STL::pair<Rva00063140Tree::iterator, bool>
-Rva00063140Tree::insert_unique( const Rva00063140Pair & );
-
 typedef _STL::pair<const AsciiString, _STL::list<AsciiString, _STL::allocator<AsciiString> > > Rva000817C0Pair;
 
 typedef _STL::_Rb_tree<AsciiString, Rva000817C0Pair, _STL::_Select1st<Rva000817C0Pair>,
