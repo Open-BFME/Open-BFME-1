@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "aaf919a866d7b0301c153d456f5d45a4db4306dc53ccb52dcc3b23176e03a167",
+  "symbol": "?bfmeStepEQG@BfmeCounterEQG@@QAEHXZ (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?bfmeStepEQG@BfmeCounterEQG@@QAEHXZ (identity unknown)\r\n// partial score=0.8 date=2026-09-06\r\n// 41/41 bytes; every diff traces to MSVC materialising 0 in edx (xor edx,edx).\r\nstruct BfmeCounterEQG\r\n{\r\n\tint bfmeStepEQG(void);\r\n\tunsigned char m_bfmeHeadEQG[0x14];\r\n\tvolatile int m_bfmeTicksEQG;\r\n\tunsigned char m_bfmeMidEQG[0x14];\r\n\tvolatile unsigned int m_bfmeBusyEQG;\r\n};\r\n\r\nint BfmeCounterEQG::bfmeStepEQG(void)\r\n{\r\n\tif (m_bfmeBusyEQG > 0)\r\n\t{\r\n\t\tm_bfmeTicksEQG = 0;\r\n\t\treturn 1;\r\n\t}\r\n\tbool empty = (m_bfmeTicksEQG == 0);\r\n\tif (empty)\r\n\t{\r\n\t\tm_bfmeTicksEQG = 0;\r\n\t\treturn 1;\r\n\t}\r\n\t--m_bfmeTicksEQG;\r\n\treturn 1;\r\n}\r\n"
+}
