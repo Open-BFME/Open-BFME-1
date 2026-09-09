@@ -1,9 +1,8 @@
 // ?Mid@EAStringC@@QBE?AV1@H@Z
-// partial score=0.95 date=2026-09-07
-// ?Mid@EAStringC@@QBE?AV1@H@Z present-unmatched
+// partial score=0.98 date=2026-09-08
 // cl: /O2 /DNDEBUG /MD /EHsc
 
-struct BfmeStringPool1284
+struct BfmeStringPool3AF0
 {
 	void *m_unused;
 	void (__cdecl *free)(void *storage);
@@ -18,7 +17,7 @@ struct EAStringData
 };
 
 extern EAStringData g_emptyStringData;
-extern BfmeStringPool1284 *g_bfmeStringPool1284;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 template <typename T> class StringBase
 {
@@ -37,6 +36,7 @@ template <typename T> class StringBase
 		++m_data->m_refCount;
 	}
 
+	protected:
 	void releaseBuffer()
 	{
 		EAStringData *data = m_data;
@@ -91,7 +91,7 @@ EAStringC EAStringC::Mid(int start) const
 	if (size <= 0)
 		return EAStringC();
 
-	const EAStringC result(m_data);
+	EAStringC result(m_data);
 	result.ChangeBuffer(size, start, size, CB_PUSH_ZERO, size);
 	return result;
 }
