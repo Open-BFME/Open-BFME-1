@@ -25144,3 +25144,5 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ?d_0087e070@@YAXXZ,0x0087E070,Generated dump placeholder superseded by authentic GeometryInfo::getMaxHeightBelowPosition proven by the calcPitches caller and exact BFME shape-vector implementation
 ??_GGen_dtor_000844e0@@UAEPAXI@Z,0x000844E0,Generic destructor placeholder superseded by authentic GlobalData scalar-deleting destructor proven by constructor vtable and destructor call chain
 ??_GGlobalData@@UAEPAXI@Z,0x005BF290,False ICF alias retired because GlobalData vtable 0x0107C68C routes its deleting destructor to 0x000844E0; CategoryModuleTemplate remains the canonical owner at 0x005BF290
+??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,Generic destructor pin superseded by authentic CRCParameterCheck identity proven by constructor 0x000659C0 vtable 0x01075520 and matched clear logger and xfer bodies
+??_GGen_dtor_00065a10@@UAEPAXI@Z,0x00065A10,Generic generator placeholder superseded by authentic CRCParameterCheck scalar-deleting destructor proven by constructor 0x000659C0 vtable 0x01075520 and ILT 0x0001038E

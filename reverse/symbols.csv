@@ -4656,7 +4656,6 @@ name,address,notes
 ??1Rva0005C110Surface@@UAE@XZ,0x00031160,ILT to the matched complete Rva0005C110Surface destructor at RVA 0x0005EC20
 ??1Gen_dtor_0005fe80@@UAE@XZ,0x00007CB1,gen-dtor class destructor
 ??1Gen_dtor_00062240@@UAE@XZ,0x0000D828,gen-dtor class destructor
-??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,gen-dtor class destructor
 ??1DamageFXStore@@UAE@XZ,0x00014650,ILT to the matched DamageFXStore destructor at RVA 0x000678B0
 ??1Gen_dtor_0006b110@@UAE@XZ,0x0000E912,gen-dtor class destructor
 ??1Gen_dtor_0006b630@@UAE@XZ,0x009A2030,gen-dtor class destructor
@@ -86584,3 +86583,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 _bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by destructor 0x005668C0; slots gen-dtor 0x00566AE0/0x00566AA0 and functor thunk 0x00566A90, no recovered class identity so pinned as opaque data
 ?TheBfmeSkirmishOptionsSlot@@3PAVBfmeAptScreenSkirmish@@A,0x012F4B3C,Skirmish game-options screen singleton pointer cleared by destructor 0x005668C0
+??1CRCParameterCheck@@UAE@XZ,0x00041BC3,ILT thunk to the exact CRCParameterCheck destructor at 0x000659E0
+??_7CRCParameterCheck@@6B@,0x01075520,vtable installed by the exact CRCParameterCheck constructor at 0x000659C0; slot zero reaches deleting destructor through ILT 0x0001038E
