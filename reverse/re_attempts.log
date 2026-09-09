@@ -18315,3 +18315,7 @@ uw_00c61de0	0xc61de0	8	blocked	Ghidra Unwind@ compiler cleanup boundary in serve
 ?d_0075f210@@YAXXZ	0x0075F210	349	blocked	Generated WW3D body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
 ?d_0075f400@@YAXXZ	0x0075F400	823	blocked	Generated WW3D body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
 ?d_0075f810@@YAXXZ	0x0075F810	705	blocked	Generated WW3D body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_008d16a0@@YAXXZ	0x008D16A0	797	blocked	Generated state body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_008d2e20@@YAXXZ	0x008D2E20	544	blocked	Generated state body reached only by address-derived BfmeOwnerXS path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_008d3610@@YAXXZ	0x008D3610	547	blocked	Generated state body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+_bfmeHash1228	0x008D3C50	1504	blocked	Address-derived hash/lookup body reached by bfmeFind1228; pinned symbol has no identity-safe built C++ emitter t=7 model=gpt-5
