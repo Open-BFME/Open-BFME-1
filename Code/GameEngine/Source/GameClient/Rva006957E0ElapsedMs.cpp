@@ -1,9 +1,6 @@
-// address-derived name; owning class unidentified
-// partial score=0.9 date=2026-09-09
-// GameClient (TheGameClient, 0x012F1464) elapsed-ms-since-last-frame method,
-// guarded by this+0x604/this+0x631. 153/154 bytes exact; the sole diff is
-// jp vs jnp on the clamp-to-zero compare (fcomp+fnstsw), a branch-polarity
-// artifact that held across every rewrite of the comparison tried.
+// address-derived name; owning class unidentified.
+// Elapsed-ms-since-last-frame accessor on TheGameClient (0x012F1464),
+// guarded by this+0x604/this+0x631; a negative delta clamps to 0.
 class ClientRoot4120
 {
 public:
@@ -18,14 +15,13 @@ public:
 };
 
 extern ClientRoot4120 *TheGameClient;	///< 0x012F1464
-extern volatile float g_bfmeUint32Scale;	///< 0x01075358
 extern float g_bfmeElapsedScale;		///< 0x0111BB98 (ms per frame)
-extern float g_bfmeElapsedMax;			///< 0x01075350 (sanity clamp threshold)
+extern float g_bfmeZeroDT;				///< 0x01075350, readonly zero float
 
 class Rva006957E0Owner
 {
 public:
-	float method();
+	float getElapsedMs();
 
 	char m_pad00[0x48];
 	unsigned int m_lastFrame;
@@ -35,7 +31,7 @@ public:
 	unsigned char m_guard2;
 };
 
-float Rva006957E0Owner::method()
+float Rva006957E0Owner::getElapsedMs()
 {
 	if (m_guard1 || m_guard2)
 	{
@@ -49,7 +45,7 @@ float Rva006957E0Owner::method()
 
 	unsigned int frame = TheGameClient->getFrame();
 	float delta = ((float)frame - (float)m_lastFrame) * g_bfmeElapsedScale;
-	delta = (delta < g_bfmeElapsedMax) ? delta : 0.0f;
+	delta = (delta < g_bfmeZeroDT) ? 0.0f : delta;
 
 	m_lastFrame = TheGameClient->getFrame();
 	return delta;
