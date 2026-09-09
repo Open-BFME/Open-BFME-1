@@ -1,6 +1,6 @@
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@HH@Z
+// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
 // partial score=0.98 date=2026-09-04
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@HH@Z
+// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
 // partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Open-BFME5: Weapon::preFireWeapon, retail 0x001E8970 size 403.
@@ -86,7 +86,8 @@ class Weapon;
 class WeaponTemplate
 {
 public:
-	void notifyPreFire(Weapon *weapon, const Object *source, int a, int b);
+	void notifyPreFire(Weapon *weapon, const Object *source,
+		const Object *victim, const Coord3D *position);
 
 	unsigned char m_pad000[0x58];
 	float m_weaponSpeed;
@@ -114,8 +115,10 @@ enum WeaponStatus
 class Weapon
 {
 public:
-	void preFireWeapon(const Object *source, int arg2, int arg3);
-	int getPreAttackDelay(const Object *source, int arg2, int arg3) const;
+	void preFireWeapon(const Object *source, const Object *victim,
+		const Coord3D *position);
+	int getPreAttackDelay(const Object *source, const Object *victim,
+		const Coord3D *position) const;
 
 protected:
 	void computeBonus(const Object *source, UnsignedInt extra, WeaponBonus &bonus) const;
@@ -137,8 +140,9 @@ private:
 	unsigned int m_preAttackJitter;
 };
 
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@HH@Z
-void Weapon::preFireWeapon(const Object *source, int arg2, int arg3)
+// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
+void Weapon::preFireWeapon(const Object *source, const Object *victim,
+	const Coord3D *position)
 {
 	int jitter = m_template->m_preAttackRandom;
 	if (jitter)
@@ -151,7 +155,7 @@ void Weapon::preFireWeapon(const Object *source, int arg2, int arg3)
 		jitter = 0;
 	m_preAttackJitter = jitter;
 
-	int delay = getPreAttackDelay(source, arg2, arg3);
+	int delay = getPreAttackDelay(source, victim, position);
 	if (delay <= 0)
 		return;
 
@@ -179,7 +183,7 @@ void Weapon::preFireWeapon(const Object *source, int arg2, int arg3)
 		m_leechWeaponRangeActive = TheGameLogic->getFrame() + leech + extra2;
 	}
 
-	tmpl->notifyPreFire(this, source, arg2, arg3);
+	tmpl->notifyPreFire(this, source, victim, position);
 
 	float speed = tmpl->m_weaponSpeed;
 	FXList *fx = tmpl->m_fireFX;
