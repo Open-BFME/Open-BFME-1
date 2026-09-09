@@ -1,8 +1,7 @@
 // ?setRepairModelConditionStates@SlavedUpdate@@QAEXW4ModelConditionFlagType@@@Z
-// partial score=0.9 date=2026-09-06
+// partial score=0.96 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// SlavedUpdate::setRepairModelConditionStates, retail 0x002A44E0.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
@@ -13,9 +12,9 @@ typedef unsigned int UnsignedInt;
 
 enum ModelConditionFlagType
 {
-	MODELCONDITION_RELOADING_C = 40,
-	MODELCONDITION_RELOADING_B = 42,
-	MODELCONDITION_BETWEEN_FIRING_SHOTS_C = 47,
+	MODELCONDITION_RELOADING_C = 56,
+	MODELCONDITION_RELOADING_B = 50,
+	MODELCONDITION_BETWEEN_FIRING_SHOTS_C = 55,
 	MODELCONDITION_BETWEEN_FIRING_SHOTS_B = 49,
 	MODELCONDITION_FIRING_C = 52,
 	MODELCONDITION_FIRING_B = 46,
@@ -27,15 +26,15 @@ template<int NUMBITS>
 class BitFlags
 {
 public:
-	__forceinline Bool test(Int bit) const { return m_bits.test(bit); }
-	__forceinline void set(Int bit) { m_bits.set(bit); }
-	__forceinline void reset(Int bit) { m_bits.reset(bit); }
+	Bool test(Int bit) const { return m_bits._Unchecked_test(bit); }
+	void set(Int bit) { m_bits._Unchecked_set(bit); }
+	void reset(Int bit) { m_bits._Unchecked_reset(bit); }
 
 private:
 	_STL::bitset<NUMBITS> m_bits;
 };
 
-typedef BitFlags<288> ModelConditionFlags;
+typedef BitFlags<320> ModelConditionFlags;
 
 class Object
 {
@@ -44,6 +43,21 @@ public:
 	unsigned char m_unmodelled_000[0x110];
 	ModelConditionFlags m_conditionFlags;
 };
+
+__forceinline void setRepairModelConditionState(ModelConditionFlagType flag, Object *obj)
+{
+	UnsignedInt bitIndex = (UnsignedInt)flag & 31;
+	UnsignedInt wordIndex = (UnsignedInt)flag >> 5;
+	UnsignedInt mask = 1;
+	mask <<= bitIndex;
+	UnsignedInt *word = (UnsignedInt *)&obj->m_conditionFlags;
+	word += wordIndex;
+	if (!(*word & mask))
+	{
+		*word |= mask;
+		obj->notifyModelConditionChanged();
+	}
+}
 
 class SlavedUpdate
 {
@@ -86,10 +100,9 @@ void SlavedUpdate::setRepairModelConditionStates(ModelConditionFlagType flag)
 		obj->m_conditionFlags.reset(MODELCONDITION_BETWEEN_FIRING_SHOTS_B);
 		obj->notifyModelConditionChanged();
 	}
-	volatile UnsignedInt *betweenFiringC = (volatile UnsignedInt *)&obj->m_conditionFlags + 1;
-	if (*betweenFiringC & 0x00008000u)
+	if (obj->m_conditionFlags.test(MODELCONDITION_BETWEEN_FIRING_SHOTS_C))
 	{
-		*betweenFiringC &= 0xffff7fffu;
+		obj->m_conditionFlags.reset(MODELCONDITION_BETWEEN_FIRING_SHOTS_C);
 		obj->notifyModelConditionChanged();
 	}
 	if (obj->m_conditionFlags.test(MODELCONDITION_RELOADING_B))
@@ -102,15 +115,5 @@ void SlavedUpdate::setRepairModelConditionStates(ModelConditionFlagType flag)
 		obj->m_conditionFlags.reset(MODELCONDITION_RELOADING_C);
 		obj->notifyModelConditionChanged();
 	}
-	UnsignedInt wordIndex = (UnsignedInt)flag >> 5;
-	UnsignedInt bitIndex = (UnsignedInt)flag & 31;
-	UnsignedInt mask = 1;
-	mask <<= bitIndex;
-	UnsignedInt *word = (UnsignedInt *)&obj->m_conditionFlags;
-	word += wordIndex;
-	if (!(*word & mask))
-	{
-		*word |= mask;
-		obj->notifyModelConditionChanged();
-	}
+	setRepairModelConditionState(flag, obj);
 }
