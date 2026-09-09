@@ -37139,6 +37139,7 @@ name,address,notes
 ?b_002cc750@@YAXXZ,0x002CC750,gen-thunk body
 ?b_002cc7f0@@YAXXZ,0x002CC7F0,gen-thunk body
 ?b_002cc960@@YAXXZ,0x002CC960,gen-thunk body
+?removeApproachPosition@DockUpdateStorage@@QAEXH@Z,0x00010C85,retail DockUpdate approach-vector cleanup helper called by DockUpdate::cancelDock
 ?b_002ccb10@@YAXXZ,0x002CCB10,gen-thunk body
 ?b_002ccba0@@YAXXZ,0x002CCBA0,gen-thunk body
 ?b_002ccbd0@@YAXXZ,0x002CCBD0,gen-thunk body
