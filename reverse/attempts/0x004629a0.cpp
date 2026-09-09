@@ -4,10 +4,10 @@
 // This body matches retail except for the register used for the hidden result
 // address before the call at 0x00462540.
 
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
 // stlport
 #include <hash_map>
-#include "../reference/shims/stringinline/StringInline.h"
+#include "StringInline.h"
 
 struct BfmeAptScreenHashValue
 {
