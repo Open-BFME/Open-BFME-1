@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/asciistring_outofline /Ireference/shims/ini_noinline /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -42,6 +42,7 @@
 #include "GameLogic/Object.h"
 #include "GameLogic/ObjectCreationList.h"
 #include "GameLogic/Module/TransitionDamageFX.h"
+#include "Common/INIException.h"
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -112,8 +113,7 @@ static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 		if( stricmp( token, "randombone" ) != 0 )
 		{
 
-			DEBUG_CRASH(( "parseFXLocInfo: Bone name not followed by RandomBone specifier\nPress IGNORE to see which INI file and line # is incorrect." ));
-			throw INI_INVALID_DATA;
+			throw INIException( 3, "parseFXLocInfo: Bone name not followed by RandomBone specifier." );
 
 		}  // end if
 
@@ -135,7 +135,7 @@ static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 	{
 
 		// error
-		throw INI_INVALID_DATA;
+		throw INIException( 3, "'loc' or 'bone' expected" );
 
 	}  // end else
 
@@ -146,7 +146,6 @@ static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 	* FXListSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> FXList:FXListName */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TransitionDamageFXModuleDataParseFXListThunk.cpp
-// ?parseFXList@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance, 
 																								void *store, const void *userData )
 {
@@ -162,7 +161,7 @@ void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance,
 	{
 
 		// error
-		throw INI_INVALID_DATA;
+		throw INIException( 3, "'fxlist' expected" );
 
 	}  // end if
 
@@ -176,7 +175,6 @@ void TransitionDamageFXModuleData::parseFXList( INI *ini, void *instance,
 	* OCLSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> OCL:OCLName */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/TransitionDamageFXModuleDataParseObjectCreationListThunk.cpp
-// ?parseObjectCreationList@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *instance, 
 																														void *store, const void *userData )
 {
@@ -192,7 +190,7 @@ void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *inst
 	{
 
 		// error
-		throw INI_INVALID_DATA;
+		throw INIException( 3, "'ocl' expected" );
 
 	}  // end if
 
@@ -206,7 +204,6 @@ void TransitionDamageFXModuleData::parseObjectCreationList( INI *ini, void *inst
 	* ParticleSlot = <<Bone:BoneName BoneRandom:<Yes|No>> | <Loc: X:x Y:y Z:z>> PSys:PSysName */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/FXModuleDataParseParticleSystemThunks.cpp
-// ?parseParticleSystem@TransitionDamageFXModuleData@@ present-unmatched
 void TransitionDamageFXModuleData::parseParticleSystem( INI *ini, void *instance, 
 																												void *store, const void *userData )
 {
@@ -222,7 +219,7 @@ void TransitionDamageFXModuleData::parseParticleSystem( INI *ini, void *instance
 	{
 
 		// error
-		throw INI_INVALID_DATA;
+		throw INIException( 3, "'psys' expected" );
 
 	}  // end if
 

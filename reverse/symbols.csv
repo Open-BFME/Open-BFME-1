@@ -4379,6 +4379,7 @@ name,address,notes
 ??1BfmeOneWB@@QAE@XZ,0x00471850,Open-BFME5 stand-in for the +0x30 sub-object destructor; only the unwind funclet references it
 ??1BfmeOnlineLoginMember3C@@QAE@XZ,0x0004426F,OnlineLogin member at offset 0x3C destructor
 ??1BfmeOtherX@@QAE@XZ,0x00024D8E,Open-BFME5 the last member destructor the multi-member vector destructor at 0x000A83D0 runs first
+??1BfmeOwnVUG@@QAE@XZ,0x0002F487,route=0x0013B8F0; retail ILT 0x0002F487 is an E9 jump stub to the matched BfmeOwnVUG dtor body
 ??1BfmeOwnedMember@@QAE@XZ,0x00887940,Open-BFME5 provisional destructor for the owned member the zeroing constructors unwind
 ??1BfmeOwnerBU@@QAE@XZ,0x00036345,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00099070 calls; autopin
 ??1BfmeParticleSystemHandle@@QAE@XZ,0x00013994,Open-BFME5 ILT; the value ?destroyParticleSystemByID@ParticleSystemManager@@QAEXW4ParticleSystemID@@@Z at 0x005C3C10 gets back from its lookup is released through it
@@ -8860,7 +8861,6 @@ name,address,notes
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1NodeMotionStruct@@QAE@XZ,0x0002F03B,pinharvest x1 (thunk)
 ??1Nugget@ModuleInfo@@QAE@XZ,0x000165B3,site-decoded x1 (thunk)
-??1BfmeOwnVUG@@QAE@XZ,0x0002F487,route=0x0013B8F0; retail ILT 0x0002F487 is an E9 jump stub to the matched BfmeOwnVUG dtor body
 ??1Nugget@Rva001417F0ModuleInfo@@QAE@XZ,0x0003B589,Open-BFME5 pin: Nugget destructor called directly from Rva001417F0ModuleInfo::clearModuleInfo at 0x001417F0 (already pinned virtual UAE at this address is a mis-shaped guess; this call site is a direct non-virtual dtor call)
 ??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
 ??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
@@ -9233,6 +9233,7 @@ name,address,notes
 ??1S4SortElem20@@QAE@XZ,0x0002AB2B,"Lead reviewed matched76B2E9E10 destructor; tail+8 then string+0,20B element"
 ??1ST_MemberObj@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1SalvageCrateCollide@@MAE@XZ,0x00006578,destructor ILT to 0x00218090
+??1SaveGameInfo@@QAE@XZ,0x0000AB78,BFME destructor call route: addGameToAvailableList +0xF3 targets ILT 0x0000AB78 -> body 0x0010D700; body releases verified SaveGameInfo fields at +0x2C,+0x24,+0x1C,+0x08,+0x04,+0x00
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x00029555, which is ??1SmudgeManager@@UAE@XZ's own body"
 ??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose first slot is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
 ??1ScavengerSpecialPower@@MAE@XZ,0x00028961,destructor ILT to 0x00265930
@@ -13751,6 +13752,7 @@ name,address,notes
 ?addToProductionQueue@ProductionUpdate@@IAEXPAVProductionEntry@@@Z,0x000450F7,ProductionUpdate queueUpgrade append thunk
 ?addUnitPrereq@ProductionPrerequisite@@QAEXVAsciiString@@_N@Z,0x0001DD63,BFME Object prerequisite parser addUnitPrereq ILT
 ?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z,0x00040327
+?addValidObjectsToGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021F5E0,GarrisonContain::update retail callee at +0x64; source definition and 0x21F5E0 boundary establish the helper identity
 ?addVelocity@WaterRenderObjClass@@QAEXMMMM@Z,0x0079F5F0,thunk-resolved body (via 0x4ae8f)
 ?addWaypointLink@TerrainLogic@@IAEXHH@Z,0x00038B77
 ?addWorldAnimation@InGameUI@@QAEXPAVAnim2DTemplate@@PBUCoord3D@@W4WorldAnimationOptions@@MM@Z,0x00443720,official InGameUI declaration and retail animation thunk target called by CrateCollide::onCollide at 0x00217730
@@ -81114,6 +81116,7 @@ name,address,notes
 ?getRoomKeysCallback@@YAXPAXHW4RoomType@@PBDHPAPAD30@Z,0x0064EA90,ZH PeerThread.cpp:2611 line for line: 8-arg peerGetRoomKeys callback (peer success roomType nick num keys values param); bails on null param/roomType/nick/success/keys/values; for i<num t->trackStatsForPlayer(nick roomType keys[i] values[i]) via ILT 0x00043568 -> 0x0064E7B0; then PeerResponse type 0xd (PLAYERINFO) with nick and getPlayerInfo 0x0064AA70 and addResponse +0x20 on 0x012F71C8; ILT 0x000066EA; Ghidra has no function here
 ?getRva0058B590Value@Player@@QBEJH@Z,0x0001D287,address-derived Player value thunk called by the 0x0058B590 wrapper
 ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ,0x0001F203,Open-BFME5 ILT thunk; ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z at 0x0010F120 takes the directory from it by value before concatenating the leaf
+?getSaveGameInfoFromFile@GameState@@QAE_NVAsciiString@@PAVSaveGameInfo@@@Z,0x00111980,BFME Bool ABI: addGameToAvailableList +0x4B calls ILT 0x000083D7 and tests AL; ILT resolves to reader body 0x00111980 while legacy QAEX row remains
 ?getScienceFromInternalName@ScienceStore@@QAE?AW4ScienceType@@ABVAsciiString@@@Z,0x0004B36C,ILT thunk to the ScienceStore name lookup; identity from Zero Hour ScriptActions.cpp doPlayerGrantScience
 ?getSciencePurchaseCost@ScienceStore@@QBEHW4ScienceType@@@Z,0x00002BFD
 ?getSelectedPortraitImage@Open2Template143730@@QBEPBVImage@@XZ,0x000166D0,Open2 0x00143730 portrait twin callee
@@ -82224,6 +82227,7 @@ name,address,notes
 ?haveAllConnectedPlayersReachedFrame@BFMEConnectionManager@@QAE_NI@Z,0x00662D50,walks +0x12060 latest-frame[8] with m_connections read as [eax-0x1205c]; FALSE if any connected slot's latest frame < arg; sole caller 0x00682BD7 in Network frame-tick body 0x00682A90 gating the router's own beginPlayerLeave on Network+0x38; ILT 0x0004A895
 ?healAllObjects@Player@@QAEXXZ,0x000CDCC0,pin -- HealCrateCollide::executeCrateBehavior ILT callee at 0x0002E276; real Player::healAllObjects() body present-unmatched in Player.cpp
 ?healObject@TunnelTracker@@SAXPAVObject@@PAX@Z,0x000387B2,ILT thunk to 0xF8640; pinned from TunnelTracker::healObjects @0xF8D10
+?healObjects@GarrisonContain@@IAEXXZ,0x0021E9C0,GarrisonContain::update retail callee at +0x72; source definition and 0x21E9C0 boundary establish the helper identity
 ?help@BfmeMapWU@@QAEEHFHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?help@BfmeMapWU@@QAEHEHHH@Z,0x00009FC5,Open-BFME5 map sample helper ILT used by 0x0074CF30
 ?helper@@YGXPAH@Z,0x007EA0A0,address-derived stdcall helper recovered from 0x007EA300
@@ -82994,6 +82998,7 @@ name,address,notes
 ?moveAlongWaypointPath@W3DView@@AAEXH@Z,0x0073CB10,address-derived BFME W3DView path helper
 ?moveAlongWaypointPath@W3DView@@AAEXH_N@Z,0x00741360,address-derived BFME W3DView path helper with mode
 ?moveMouse@Mouse@@IAEXHHH@Z,0x000141A5
+?moveObjectsWithMe@GarrisonContain@@IAEXXZ,0x0021E970,GarrisonContain::update retail callee at +0x8f; source definition and 0x21E970 boundary establish the helper identity
 ?moveRoadSegTo@W3DRoadBuffer@@IAEXHH@Z,0x0003283F,ILT thunk -> 0x70b040 (checkLinkBefore callee)
 ?move_wt_changes@@YAXXZ,0x00875DD0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877960 calls; autopin
 ?muxDataProcessUpgradeRemoval@UpgradeMuxData@@QBEXPAVObject@@@Z,0x0002E320,pinharvest x1 (thunk)
@@ -83200,6 +83205,7 @@ name,address,notes
 ?parseFXList@INI@@SAXPAV1@PAX1PBX@Z,0x00004B47,INI::parseFXList thunk
 ?parseFXList_851EE0@@YAXPAVINI@@PAX1PBX@Z,0x00851EE0,FX particle system event parser thunk target
 ?parseFXLocInfo@@YAXPAVINI@@PAXPAUBoneLocInfo@@@Z,0x00287B10,BoneFX TU-local location parser confirmed by its caller and bone token/error paths
+?parseFXLocInfo@@YAXPAVINI@@PAXPAUFXLocInfo@@@Z,0x00251CF0,TransitionDamageFX file-static helper; its bone/loc tokens and parseFXLocInfo exception text prove the identity
 ?parseFontDesc@GlobalLanguageParseFontDescShim@@SAXPAVINI@@PAX1PBX@Z,0x00439150,GlobalLanguage incremental-link static thunk target through a TU-local forwarding shim
 ?parseFromINI@BitFlags116ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00129810,BitFlags<116>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
 ?parseFromINI@BitFlags45ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00204E70,BitFlags<45>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
@@ -83611,6 +83617,7 @@ name,address,notes
 ?removeEntry@ProductionUpdate@@AAEXPAVProductionEntry@@@Z,0x0002F3C4,ProductionUpdate destructor queue-drain call target
 ?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
 ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x00015D02,AIMoveAndTightenState::onEnter retail REL32 call target
+?removeInvalidObjectsFromGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021EA10,GarrisonContain::update retail callee at +0x5d; source definition and 0x21EA10 boundary establish the helper identity
 ?removeLastChar@UnicodeString@@QAEXXZ,0x00888840,BFME UnicodeString trim helper called by HostDirectConnectGame
 ?removeModuleInfo@ThingTemplate@@IAE_NABVAsciiString@@AAV2@@Z,0x0000D04E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001431D0 calls; autopin
 ?removeModuleInfo@ThingTemplate@@IAE_NABVAsciiString@@AAV2@@Z,0x00141870,ThingTemplate parseRemoveModule caller identity
@@ -83856,7 +83863,9 @@ name,address,notes
 ?run@WideRunner@@QAEXPAVWideCall@@PBDHHHHHH@Z,0x00015235,incremental-link thunk to 0x004675F0; __thiscall with eight stack args (ret 0x20); address-derived name
 ?run@WinInstanceDataInitShim@@QAEXXZ,0x00499850,WinInstanceData init incremental-link thunk target through a TU-local forwarding shim
 ?run@XferRandomVariableShim@@SAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0010C4D0,xferRandomVariable incremental-link thunk target through a TU-local forwarding shim
+?rva0001895d@Rva00615D50Object@@QAE?AUCoord3D@@XZ,0x0001895D,ILT to body 0x006186C0; the 0x00615D50 lookup calls it for the object world position
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
+?rva0004a444@Rva00615D50Object@@QAE_NPBUICoord2D@@@Z,0x0004A444,ILT to body 0x00618C90; the 0x00615D50 lookup calls it to test the object against a screen point
 ?rva0008ac10@GameMessage@@QAEPAUBfmeSubENE@@PAX@Z,0x0008AC10,direct body pin: neutral opaque type-6 argument ABI with existing BfmeSubENE pointer return; retail ILT 0x00015C1C is E9 to this body; campaign=luna36h-20260907;lane=mesh
 ?rva00093f70@@YAXABVAsciiString@@@Z,0x00030508,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00092D70 calls; autopin
 ?rva000E7C20SciencePrereqMemo@ScienceStore@@ABE_NPBVPlayer@@W4ScienceType@@PAX@Z,0x000E7C20,retail E8040 and E7D30 call the verified recursive three-argument ScienceStore memo helper at 0x000E7C20 through its image ILT; original spelling unproven; campaign=luna36h-20260907;lane=expand36;model=gpt-5.6-luna-max
