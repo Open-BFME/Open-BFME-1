@@ -1,16 +1,8 @@
-// ?attemptDamage@PorcupineFormationBodyModule@@UAEXPAVDamageInfo@@@Z
-// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
-// PorcupineFormationBodyModule::attemptDamage at retail RVA 0x00214590.
-// The Porcupine vtable's BodyModuleInterface slot zero names this override.
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
-
-typedef unsigned char Bool;
 
 class DamageInfo;
-class PorcupineFormationBodyModule;
+
+typedef unsigned char Bool;
 
 class PorcupineDamageCheckResult
 {
@@ -87,21 +79,12 @@ public:
 	virtual void attemptDamage(DamageInfo *);
 };
 
-class ActiveBody : public BehaviorModule,
-	public BehaviorModuleInterface,
-	public BodyModuleInterface
-{
-public:
-	virtual ~ActiveBody();
-	virtual void attemptDamage(DamageInfo *);
-};
-
 class PorcupineFormationBodyModule : public BehaviorModule,
 	public BehaviorModuleInterface,
 	public BodyModuleInterface
 {
 public:
-	virtual void attemptDamage(DamageInfo *);
+	virtual void attemptDamage(DamageInfo *damageInfo);
 };
 
 class PorcupineDamageHelper
@@ -122,21 +105,27 @@ void PorcupineFormationBodyModule::attemptDamage(DamageInfo *damageInfo)
 		{
 			PorcupineDamageCheckResultSource *source = check->m_resultSource;
 			if (source != 0)
-			{
 				result = source->getResult();
-			}
 		}
 	}
 
-	if (result == 0 || !result->slot55())
-	{
-		BodyModuleInterface *base = (BodyModuleInterface *)((char *)this + 0x10);
-		base->BodyModuleInterface::attemptDamage(damageInfo);
-	}
-	else
+	if (result == 0)
+		goto fallback;
+	if (!result->slot55())
+		goto fallback;
 	{
 		PorcupineDamageHelper *helper = (PorcupineDamageHelper *)this;
 		helper->apply(damageInfo);
+		goto finish;
+	}
+fallback:
+	{
+		BodyModuleInterface *base = (BodyModuleInterface *)((char *)this + 0x10);
+		base->BodyModuleInterface::attemptDamage(damageInfo);
+		return;
+	}
+finish:
+	{
 		BodyModuleInterface *base = (BodyModuleInterface *)((char *)this + 0x10);
 		base->BodyModuleInterface::attemptDamage(damageInfo);
 	}
