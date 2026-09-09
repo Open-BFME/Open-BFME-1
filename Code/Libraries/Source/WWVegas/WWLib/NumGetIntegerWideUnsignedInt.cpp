@@ -190,6 +190,11 @@ namespace _STL
 		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
 		unsigned short &, char *);
 
+	template istreambuf_iterator<char, char_traits<char> >
+	_M_do_get_integer<NarrowIterator, unsigned __int64, char>(
+		NarrowIterator &, NarrowIterator &, ios_base &, ios_base::iostate &,
+		unsigned __int64 &, char *);
+
 	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
 	_M_do_get_integer<WideIterator, unsigned __int64, unsigned short>(
 		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
