@@ -3422,6 +3422,7 @@ name,address,notes
 ??0Rva899F00Base@@QAE@PBDH@Z,0x00899F00
 ??0Rva8CB820Payload@@QAE@HHHHHHHHHHHHH@Z,0x008AD100,address-derived secondary-base constructor called by 0x008CB820
 ??0S4Elem007746E0@@QAE@XZ,0x0000345E,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
+??0S4Elem007746E0@@QAE@ABV0@@Z,0x00039879,44-byte S4 copy call in the time-of-day parser resolves to the matched pair-copy thunk
 ??0S4Guarded0055BA20@@QAE@H@Z,0x005538A0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BAA0@@QAE@H@Z,0x005484E0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BB20@@QAE@H@Z,0x00536DC0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -13104,6 +13105,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@ABV3@ABU__false_type@2@I_N@Z,0x00037024,ILT thunk used by call site
 ?_M_insert_overflow@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@IAEXPAVWeaponTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x0001636F
 ?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z,0x00010B8B,retail REL32 pin for DockUpdate reserveApproachPosition
+?_M_insert_overflow@?$vector@VS4Elem007746E0@@V?$allocator@VS4Elem007746E0@@@_STL@@@_STL@@IAEXPAVS4Elem007746E0@@ABV3@ABU__false_type@2@I_N@Z,0x0002F05E,44-byte S4 vector overflow alias used by the time-of-day parser
 ?_M_insert_overflow@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@IAEXPAW4ParticleSystemID@@ABW43@ABU__false_type@2@I_N@Z,0x0003E63F,Reviewed full retail callee: 5BDE00 coordinate stores CC/DC/EC and clears1A4; 288AF0 four-byte vector overflow with count/atend andret20
 ?_M_insert_overflow@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@IAEXPAW4ScienceType@@ABW43@ABU__false_type@2@I_N@Z,0x00023588
 ?_M_insert_overflow@?$vector@W4TerrainClass@@V?$allocator@W4TerrainClass@@@_STL@@@_STL@@IAEXPAW4TerrainClass@@ABW43@ABU__false_type@2@I_N@Z,0x00033366,TerrainType constructor vector push_back call at 0x000A82F0. The ILT reaches the matched 0x000A7EB0 body.
