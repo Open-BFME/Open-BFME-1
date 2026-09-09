@@ -41,9 +41,9 @@ class W3DBridgeBuffer : public W3DBridgeBufferPrefix
 {
 public:
 	W3DBridgeBuffer();
+	void clearAllBridges(void);		///< ILT 0x00003E59 -> 0x006D7900
 
 private:
-	void freeBridgeBuffers(void);		///< ILT 0x00003E59
 	void allocateBridgeBuffers(void);	///< ILT 0x0002EF2D
 
 	W3DBridge m_bridges[200];		///< retail this+0x18 .. +0xD7B8
@@ -62,7 +62,7 @@ W3DBridgeBuffer::W3DBridgeBuffer()
 	m_curNumBridgeIndices = 0;
 	m_numBridges = 0;
 
-	freeBridgeBuffers();
+	clearAllBridges();
 	allocateBridgeBuffers();
 
 	m_initialized = true;

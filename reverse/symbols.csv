@@ -79037,7 +79037,7 @@ __strcmpi,0x009F6FA0,MSVCR71 _strcmpi import thunk; identity confirmed by IAT sl
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
 ?freeBlocks@PathfindZoneManager@@AAEXXZ,0x00026E72,Open-BFME5 ILT thunk to body 0x00403760; allocateBlocks calls the BFME-layout cleanup before rebuilding the block matrix
-?freeBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x00003E59,W3DBridgeBuffer::freeBridgeBuffers via ILT thunk
+?clearAllBridges@W3DBridgeBuffer@@QAEXXZ,0x00003E59,loadBridges at 0x006DA8A0 calls the bridge-array clear loop; route=0x006D7900
 ?freeBytes@AsciiString@@AAEXXZ,0x00887940,caller-derived (4 matched callers agree, body)
 ?freeCodecMemory@@YAXPAX@Z,0x009A5980,codec allocator free thunk
 ?freeDatabase@ThingFactory@@AAEXXZ,0x00003A26,ThingFactory freeDatabase real name; out-of-line loop and hashmap clear behind the 0x00137C90 dtor call

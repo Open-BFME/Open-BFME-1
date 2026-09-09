@@ -44,6 +44,7 @@ private:
 	MeshClass *m_rightMesh;
 	unsigned char m_unmodelled_0BC[0x104 - 0xBC];
 	bool m_visible;
+	unsigned char m_unmodelled_105[0x114 - 0x105];
 };
 
 void W3DBridge::clearBridge(void)
@@ -64,4 +65,26 @@ void W3DBridge::clearBridge(void)
 		m_rightMesh->Release_Ref();
 		m_rightMesh = 0;
 	}
+}
+
+// BFME's bridge array uses 0x114-byte elements. loadBridges at 0x006DA8A0
+// calls clearAllBridges through ILT 0x00003E59 -> 0x006D7900 (130 bytes).
+class W3DBridgeBuffer
+{
+public:
+	void clearAllBridges(void);
+
+private:
+	unsigned char m_unmodelled_000[0x14];
+	Int m_curNumBridgeIndices;
+	W3DBridge m_bridges[200];
+	Int m_numBridges;
+};
+
+void W3DBridgeBuffer::clearAllBridges(void)
+{
+	for (Int i = 0; i < m_numBridges; ++i)
+		m_bridges[i].clearBridge();
+	m_curNumBridgeIndices = 0;
+	m_numBridges = 0;
 }
