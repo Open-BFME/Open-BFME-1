@@ -133,4 +133,3 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 	}
 }
 
-
