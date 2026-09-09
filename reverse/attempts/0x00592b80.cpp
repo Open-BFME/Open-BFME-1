@@ -1,5 +1,5 @@
 // ?bfmeResetABO@BfmeHostABO@@QAEXXZ
-// partial score=0.99 date=2026-09-09
+// partial score=0.995 date=2026-09-09
 // ?bfmeResetABO@BfmeHostABO@@QAEXXZ
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" void _ReadWriteBarrier(void);
@@ -155,14 +155,17 @@ void BfmeHostABO::bfmeResetABO()
 	BfmePairABO tmp;
 	*(volatile int *)&tmp.m_bfmeAABO = 0;
 	*(volatile int *)&tmp.m_bfmeBABO = 0;
-
 	BfmePairABO *p = m_bfme4DCABO;
 	BfmePairABO *end = m_bfme4DCABO + 4;
 
-	while (p != end)
+	if (p != end)
 	{
-		*p = tmp;
-		++p;
+		BfmePairABO value = { 0, 0 };
+		do
+		{
+			*p = value;
+			++p;
+		} while (p != end);
 	}
 
 	m_bfme58ABO = (unsigned char)(m_bfme58ABO & 0x3f);
