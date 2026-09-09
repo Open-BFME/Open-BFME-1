@@ -60,6 +60,7 @@ void bfmeGoBZB(BfmeHolderBZB *h);
 void bfmeStepJW(void *q);
 void Rva009A8880Release(void *q);
 void releaseCodecState(CodecState **q);
+void freeCodecMemory(void *memory);
 
 int bfmeFreeCodecJW(CodecState **p)
 {
@@ -144,4 +145,75 @@ CodecState *bfmeAllocJX()
 	memset((char *)p + 0x3b6, 0, 0x63 * 4);
 
 	return p;
+}
+
+struct BfmeStepState
+{
+	void *m_00;
+	void *m_04;
+	unsigned char m_pad08[4];
+	void *m_0c;
+	void *m_10;
+	unsigned char m_pad14[0xF8];
+	void *m_10c;
+	void *m_110;
+	void *m_114;
+	void *m_118;
+	void *m_11c;
+	void *m_120;
+	unsigned char m_pad124[0x24];
+	void *m_148;
+	void *m_14c;
+	unsigned char m_pad150[0x59C];
+	void *m_6ec;
+	void *m_6f0;
+	void *m_6f4;
+	void *m_6f8;
+	void *m_6fc;
+	void *m_700;
+};
+
+void bfmeStepJW(void *q)
+{
+	BfmeStepState *state = (BfmeStepState *)q;
+
+	if (state->m_00 != 0)
+		freeCodecMemory(state->m_00);
+	state->m_00 = 0;
+	state->m_04 = 0;
+
+	if (state->m_14c != 0)
+		freeCodecMemory(state->m_14c);
+	state->m_14c = 0;
+	state->m_148 = 0;
+
+	if (state->m_118 != 0)
+		freeCodecMemory(state->m_118);
+	state->m_118 = 0;
+	state->m_10c = 0;
+
+	if (state->m_11c != 0)
+		freeCodecMemory(state->m_11c);
+	state->m_11c = 0;
+	state->m_110 = 0;
+
+	if (state->m_120 != 0)
+		freeCodecMemory(state->m_120);
+	state->m_120 = 0;
+	state->m_114 = 0;
+
+	if (state->m_6f8 != 0)
+		freeCodecMemory(state->m_6f8);
+	state->m_6f8 = 0;
+	state->m_6ec = 0;
+
+	if (state->m_700 != 0)
+		freeCodecMemory(state->m_700);
+	state->m_700 = 0;
+	state->m_6f4 = 0;
+
+	if (state->m_6fc != 0)
+		freeCodecMemory(state->m_6fc);
+	state->m_6fc = 0;
+	state->m_6f0 = 0;
 }
