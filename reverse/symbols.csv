@@ -86509,3 +86509,4 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ??$_Construct@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@PAVArchiveFile@@@0@ABU10@@Z,0x00005E4D,ArchiveFile pointer-tree _M_insert constructs its eight-byte pair; cdecl destination and source; retail ILT reaches 0x00062900
 ?bfmeAppendXO@BfmeQueueXO@@QAEXHHHH@Z,0x008FBCB0,append
 ?bfmeSendXO@BfmeQueueXO@@QAEXHHHHHH@Z,0x008FA070,send
+??$_Construct@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@0@ABU10@@Z,0x00080E00,AsciiString/list pair placement construction; full 66 bytes and complete cleanup graph independently verified from actual STLport instantiation; caller 0x000817C0 via ILT 0x00024046

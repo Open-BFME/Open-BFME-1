@@ -21,3 +21,8 @@ typedef _STL::_Rb_tree<AsciiString, AsciiStringListPair,
  _STL::allocator<AsciiStringListPair> > AsciiStringListTree;
 template _STL::pair<AsciiStringListTree::iterator, bool>
  AsciiStringListTree::insert_unique(const AsciiStringListPair &);
+
+// Full 183-byte private insertion at RVA 0x000817C0, including both allocation arms.
+template AsciiStringListTree::iterator AsciiStringListTree::_M_insert(
+ _STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
+ const AsciiStringListPair &, _STL::_Rb_tree_node_base *);
