@@ -17087,3 +17087,12 @@ _Rva0080FD30	0x0080FD30	146	partial	t=18m model=gpt-5.6. The direct caller at 0x
 ?d_002b7c80@@YAXXZ	0x002B7C80	561	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
 ?d_002ba390@@YAXXZ	0x002BA390	1159	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
 ?d_003db640@@YAXXZ	0x003DB640	226	blocked	The lineBlocked caller and constructor pin identify Rva003DB640Info at this address, but the clean constructor still differs in the prologue store schedule and owned-byte/query-field register order after the existing shape experiments. The banked real-identity attempts remain the best source evidence, so this placeholder row has no verified replacement. t=2min model=gpt-5.6
+??0Gen006B0E00@@QAE@XZ	0x006B0E00	1550	blocked	Address-derived generated constructor body; caller reaches it through a factory, but no identity-safe built C++ emitter exists t=8 model=gpt-5
+?d_006b1690@@YAXXZ	0x006B1690	695	blocked	Generated body reached only through address-derived Rva006B9320 processing; no unique identity or built C++ emitter t=8 model=gpt-5
+?d_006b1ce0@@YAXXZ	0x006B1CE0	301	blocked	Generated body reached only through address-derived Rva006B3F90 configuration; no unique identity or built C++ emitter t=8 model=gpt-5
+?d_006b2230@@YAXXZ	0x006B2230	535	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
+?clear006B44A0@Rva006B44A0Owner@@QAEXH@Z	0x006B24D0	1772	blocked	Address-derived generated body reached by Rva006B44A0Owner clear; no identity-safe built C++ emitter t=8 model=gpt-5
+?d_006b2d80@@YAXXZ	0x006B2D80	448	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
+?d_006b5a80@@YAXXZ	0x006B5A80	1480	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
+?d_006b61c0@@YAXXZ	0x006B61C0	558	blocked	Generated body reached by address-derived bfmeGo935A; no unique identity or built C++ emitter t=8 model=gpt-5
+?d_006b7e70@@YAXXZ	0x006B7E70	748	blocked	Generated body with no named caller, identity, or built C++ emitter t=8 model=gpt-5
