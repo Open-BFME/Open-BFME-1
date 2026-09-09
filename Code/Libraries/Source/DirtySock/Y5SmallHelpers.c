@@ -373,6 +373,56 @@ int Rva0080DA50(unsigned char *object, char *output, int length)
 	return result;
 }
 
+/* 0x0080C6F0 builds the next received packet from the framed input ring.
+ * Rva0080DA50 is the matched caller: it invokes this helper when the ring is
+ * drained and then consumes the returned packet pointer.  The backend fields
+ * are the same state words used by that reader and by the Y2 comm pump. */
+unsigned char *Rva0080C6F0(unsigned char *object)
+{
+	int length;
+	unsigned char context[ 0x54 ];
+	unsigned char header[ 4 ];
+	unsigned char digest[ 0x10 ];
+	unsigned char *state;
+	unsigned char *packet;
+
+	state = *(unsigned char **)(object + 0x120);
+	packet = state + 0x4018;
+	packet = packet + ( packet[ 0 ] <= 0x7F ? 3 : 2 );
+	length = (int)( state + 0x4018 + *(int *)(state + 0x4010) - packet );
+
+	if( *(int *)(state + 0x80A8) > 0 )
+	{
+		Rva0080F300( state + 0x86BC, packet, length );
+
+		header[ 0 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 24 );
+		header[ 1 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 16 );
+		header[ 2 ] = (unsigned char)( *(unsigned int *)(state + 0x8018) >> 8 );
+		header[ 3 ] = (unsigned char)*(unsigned int *)(state + 0x8018);
+
+		Rva00810020( context );
+		Rva00810060( context, state + 0x80AC,
+			*(int *)(state + 0x80A8) );
+		Rva00810060( context, packet + 0x10, length - 0x10 );
+		Rva00810060( context, header, 4 );
+		Rva00810FF0( context, (char *)digest, 0x10 );
+
+		if( memcmp( digest, packet, 0x10 ) != 0 )
+			packet = 0;
+		else
+		{
+			packet = packet + 0x10;
+			*(int *)(state + 0x4010) = length - 0x10;
+			*(int *)(state + 0x400C) = *(int *)(state + 0x4010);
+		}
+	}
+
+	*(unsigned int *)(state + 0x8018) =
+		*(unsigned int *)(state + 0x8018) + 1;
+
+	return packet;
+}
+
 char *strchr(const char *text, int character);
 char *strstr(const char *text, const char *find);
 void *Rva00812320(int entries);
