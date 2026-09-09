@@ -1,5 +1,5 @@
 // ?update@BfmeQuickMatchProgressBody@@QAEXXZ
-// partial score=0.93 date=2026-09-04
+// partial score=0.98 date=2026-09-09
 // ?update@BfmeQuickMatchProgressBody@@QAEXXZ
 // partial score=0.93 date=2026-09-02
 // cl: /DNDEBUG /MD
@@ -11,8 +11,11 @@
 class GameWindow;
 
 void GadgetProgressBarSetProgress(GameWindow *g, int progress);
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 extern int g_bfmeQuickMatchProgressDenom;
+extern const double g_bfmeQuickMatchStepScale;
 
 class BfmeQuickMatchProgressBody
 {
@@ -24,13 +27,13 @@ public:
 	unsigned char _pad220[4];
 	int m_step;
 	unsigned char _pad228[0x274 - 0x228];
-	GameWindow *m_bar;
+	GameWindow *volatile m_bar;
 };
 
 void BfmeQuickMatchProgressBody::update(void)
 {
 	int n = g_bfmeQuickMatchProgressDenom;
-	int progress;
+	register int progress;
 	if (n > 1)
 		progress = (int)((double)m_count * 50.0 / (double)(n - 1));
 	else
@@ -44,8 +47,9 @@ void BfmeQuickMatchProgressBody::update(void)
 	else
 	{
 		int shifted = m_step - 1;
-		int extra = (int)((double)shifted * 12.5);
-		progress = extra + progress;
+		int extra = (int)((double)shifted * g_bfmeQuickMatchStepScale);
+		progress += extra;
+		_ReadWriteBarrier();
 		GadgetProgressBarSetProgress(m_bar, progress);
 	}
 }
