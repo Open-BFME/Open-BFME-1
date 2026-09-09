@@ -18774,3 +18774,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_0021b960@@YAXXZ	0x0021B960	141	blocked	t=4min model=gpt-5 identity-proven bfmeGo1118A; size and instruction structure match, but EBP/EDI register allocation remains permuted across the body after flag sweeps
 ?d_0092d720@@YAXXZ	0x0092D720	441	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved after the whole d_00927c30.asm audit
 ?d_00929be0@@YAXXZ	0x00929BE0	349	blocked	t=6min model=gpt-5 identity-proven MeshMatDescClass::Compute_Ram_Size; clean source remains a 330-byte near miss with accumulator register and material-array reload divergence
+?d_0039fba0@@YAXXZ	0x0039FBA0	421	blocked	t=6min model=gpt-5 identity-proven RespawnPolicyMember::setPolicies; all semantics and size match but MSVC unrolls the twelve OR stores in a different register schedule
