@@ -1,4 +1,4 @@
-// ?update@AIHarvestPrepareSiteState@@UAE?AW4StateReturnType@@XZ
+// ?update@AIHarvestWorkSiteState@@UAE?AW4StateReturnType@@XZ
 // partial score=0.99 date=2026-09-07
 // cl: /DNDEBUG /MD /EHsc
 // stlport
@@ -224,7 +224,7 @@ public:
 	virtual StateReturnType slot05() = 0;
 };
 
-class AIHarvestPrepareSiteState : public Rva001601E0StateBase
+class AIHarvestWorkSiteState : public Rva001601E0StateBase
 {
 public:
 	virtual StateReturnType update();
@@ -235,9 +235,9 @@ public:
 	unsigned int m_frame;
 };
 
-StateReturnType AIHarvestPrepareSiteState::update()
+StateReturnType AIHarvestWorkSiteState::update()
 {
-	register AIHarvestPrepareSiteState *self = this;
+	register AIHarvestWorkSiteState *self = this;
 	Rva001601E0HarvestTarget *target =
 		self->m_machine->m_owner->m_ai->getHarvestTarget();
 	if (target != 0)
