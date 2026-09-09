@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b4c28c93c8927549e7ca7fa64569da12d84a5a6f766600d28b8f4da253b3f0a0",
+  "symbol": "?Check_Texture_Compression_Support@DX8Caps@@AAEXABU_D3DCAPS8@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?Check_Texture_Compression_Support@DX8Caps@@AAEXABU_D3DCAPS8@@@Z\n// partial score=0.82 date=2026-09-08\n// cl: /DNDEBUG /MD /EHsc\n// Banked near-miss for Check_Texture_Compression_Support @ 0x0091B930.\n// Size 98 exact. Format/+= tail matches Check_Bumpmap_Support. OR of the\n// five DXT bytes at +0x1A2 uses al/dl/cl instead of retail's ebx-preloaded\n// bl,al,dl,cl then memory OR of +0x1A4.\n\nclass StringClass\n{\npublic:\n\tvoid Format(const char *format, ...);\n\tStringClass &operator+=(const StringClass &that);\n};\n\nextern StringClass CapsWorkString;\n\nclass DX8Caps\n{\n\tvoid Check_Texture_Compression_Support(const void *caps);\n};\n\nstruct BFME_DX8Caps_CheckCompressionFields\n{\n\tchar pad[0x139];\n\tbool supportDXTC;\n\tchar padAfterDxtc[0x1a2 - 0x13a];\n\tbool supportTextureFormatDxt[5];\n\tchar padAfterFormats[0x2a4 - 0x1a7];\n\tStringClass capsLog;\n};\n\nvoid DX8Caps::Check_Texture_Compression_Support(const void *caps)\n{\n\tBFME_DX8Caps_CheckCompressionFields *retail = (BFME_DX8Caps_CheckCompressionFields *)this;\n\tretail->supportDXTC = retail->supportTextureFormatDxt[0] |\n\t\tretail->supportTextureFormatDxt[1] |\n\t\tretail->supportTextureFormatDxt[2] |\n\t\tretail->supportTextureFormatDxt[3] |\n\t\tretail->supportTextureFormatDxt[4];\n\tCapsWorkString.Format(\"Texture compression support: %s\\r\\n\", retail->supportDXTC ? \"Yes\" : \"No\");\n\tretail->capsLog += CapsWorkString;\n}\n"
+}
