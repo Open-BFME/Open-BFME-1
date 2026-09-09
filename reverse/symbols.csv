@@ -86468,3 +86468,10 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1XferException@@QAE@XZ,0x00065C70,XferException destructor; ThrowInfo VA 0x011DFE5C unwind ILT 0x00040804 resolves here; full 10-byte array-delete cleanup
 ?Rva0010C5E0XferScience@@YAPAVXfer@@PAV1@PAW4ScienceType@@@Z,0x0010C5E0,Address-qualified cdecl Xfer pointer and ScienceType pointer transfer; full 258-byte body returns Xfer pointer on both exits; actual ScienceStore calls and complete string cleanup graph audited
 ?reserve@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXI@Z,0x000D1420,ScienceType vector reserve reached through ILT 0x0003616A from full 0x000D7010 transfer; complete 167-byte four-byte element allocation and ownership audit
+_bfmeDynBufXZ,0x00F46754,dynamic vertex buffer array
+_bfmeDynFvfXZ,0x00D3BD28,dynamic FVF table
+_bfmeDynInUseXZ,0x00F46740,in-use flags
+_bfmeDynSizeXZ,0x00F467B4,size table
+_bfmeDynOffsetXZ,0x00F46794,offset table
+_bfmeDynElemXZ,0x00F467F0,dynamic element array
+?bfmeResetXZ@BfmeDynElemXZ@@QAEXIH@Z,0x00964150,element reset

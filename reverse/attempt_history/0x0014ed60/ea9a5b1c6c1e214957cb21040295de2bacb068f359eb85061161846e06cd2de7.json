@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ea9a5b1c6c1e214957cb21040295de2bacb068f359eb85061161846e06cd2de7",
+  "symbol": "?bfmeUpdateXX@BfmeMoveXX@@QAE?AW4StateReturnType@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?bfmeUpdateXX@BfmeMoveXX@@QAE?AW4StateReturnType@@XZ\n// partial score=0.75 date=2026-09-09\nenum StateReturnType { BFME_STATE_FAILXX = -2 };\n\nclass BfmeBXX;\nclass BfmeOwnerXX;\n\nclass BfmeBXX\n{\npublic:\n\tvirtual void bfmeV00XX();\n\tvirtual void bfmeV04XX();\n\tvirtual void bfmeV08XX();\n\tvirtual void bfmeV0CXX();\n\tvirtual void bfmeV10XX();\n\tvirtual void bfmeV14XX();\n\tvirtual void bfmeApplyXX(void *a, int *b);\n\tvirtual void bfmeV1CXX();\n\tvirtual void bfmeV20XX();\n\tvirtual void bfmeV24XX();\n\tvirtual void bfmeV28XX();\n\tvirtual void bfmeV2CXX();\n\tvirtual void bfmeV30XX();\n\tvirtual void bfmeV34XX();\n\tvirtual char bfmeTestXX();\n};\n\nclass BfmeOwnerXX\n{\npublic:\n\tBfmeBXX *bfmeGetBXX();\n};\n\nclass BfmeCtxXX\n{\npublic:\n\tBfmeOwnerXX *bfmeGetOwnerXX();\n\n\tunsigned char m_bfmeHeadXX[0x10];\n\tvoid *m_bfme10XX;\n};\n\nclass AIInternalMoveToState\n{\npublic:\n\tvirtual StateReturnType update();\n};\n\nclass BfmeMoveXX : public AIInternalMoveToState\n{\npublic:\n\tStateReturnType bfmeUpdateXX();\n\n\tunsigned char m_bfmeHeadXX[0x1c - 4];\n\tBfmeCtxXX *m_bfme1CXX;\n\tunsigned char m_bfmeMidXX[4];\n\tint m_bfme24XX;\n};\n\nStateReturnType BfmeMoveXX::bfmeUpdateXX()\n{\n\tBfmeOwnerXX *owner;\n\tBfmeBXX *b;\n\n\towner = m_bfme1CXX->bfmeGetOwnerXX();\n\n\tif (owner == 0 || (b = owner->bfmeGetBXX()) == 0 || !b->bfmeTestXX())\n\t\treturn BFME_STATE_FAILXX;\n\n\tb->bfmeApplyXX(m_bfme1CXX->m_bfme10XX, &m_bfme24XX);\n\n\treturn AIInternalMoveToState::update();\n}\n"
+}
