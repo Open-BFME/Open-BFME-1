@@ -42,6 +42,7 @@ extern "C" int Rva007FF790( char *address, const char *text );
 extern "C" int atoi( const char *text );
 void *Rva007FDFF0Connect( const char *host, int timeout );
 struct Rva00806580Record;
+struct Rva0080B1B0Comm;
 int   Rva00807370( Rva00806580Record *record, int selector, int flag,
 		char *buffer, int bufferSize );                     // 0x00807370
 int   Rva008076E0( Rva00806580Record *record, unsigned int *outA,
@@ -53,7 +54,7 @@ int   Rva0080E330( void *crypto, int length );              // 0x0080E330
 // packet path uses after a complete header has arrived.
 extern "C" void *Rva0080B0A0( void *comm, int unsupported, void *address,
 		int *addressLength );
-extern "C" void  Rva0080B4B0( void *comm );
+extern "C" void  Rva0080B4B0( Rva0080B1B0Comm *comm );
 extern "C" int   Rva0080D980( void *comm, const char *data, int length );
 extern "C" int   Rva0080DA50( void *comm, char *output, int length );
 extern "C" int   Rva0080DBF0( void *comm, int selector, void *buffer,
@@ -153,6 +154,353 @@ struct Rva0080B1B0Comm
 	char m_gap11C[ 4 ];          // +0x11C
 	void *m_backend;             // +0x120
 };
+
+/* The backend behind the Y2 comm object is the older DirtySock secure
+ * transport state.  These offsets are all direct retail accesses from the
+ * pump below; the names describe storage roles, not an upstream SDK type. */
+struct Rva0080B4B0Secure
+{
+	int m_sendBegin;                       // +0x0000
+	int m_sendEnd;                         // +0x0004
+	unsigned char m_sendData[ 0x4004 ];    // +0x0008
+	int m_recvBegin;                       // +0x400C
+	int m_recvSize;                        // +0x4010
+	int m_recvDone;                        // +0x4014
+	unsigned char m_recvData[ 0x4008 ];    // +0x4018
+	unsigned char m_certFlags[ 4 ];        // +0x8020
+	int m_certWordCount;                   // +0x8024
+	unsigned char m_certData[ 0x80 ];      // +0x8028
+	int m_field80A8;                       // +0x80A8
+	unsigned char m_field80AC[ 0x80 ];     // +0x80AC
+	int m_field812C;                       // +0x812C
+	unsigned char m_field8130[ 0x84 ];     // +0x8130
+	int m_sessionSize;                     // +0x81B4
+	unsigned char m_sessionData[ 0x18 ];   // +0x81B8
+	int m_challengeSize;                   // +0x81D0
+	unsigned char m_challengeData[ 0x3D8 ]; // +0x81D4
+	int m_cipherDataSize;                  // +0x85AC
+	unsigned char m_cipherData[ 0x84 ];    // +0x85B0
+	int m_verifyDataSize;                  // +0x8634
+	unsigned char m_verifyData[ 0x84 ];    // +0x8638
+	unsigned char m_cryptoState[ 0x102 ];  // +0x86BC
+	unsigned char m_rc4State[ 0x102 ];     // +0x87BE
+};
+
+typedef int ( *Rva0080B4B0Done )( void *object );
+typedef void ( *Rva0080B4B0Free )( void *object );
+
+extern "C" int Rva007FD920( void *socket, const void *data, int length,
+	int flags, const void *address, int addressLength );
+extern "C" int Rva007FDA50( void *socket, void *data, int length, int flags,
+	void *address, int *addressLength );
+extern "C" int Rva007FD5C0( void *socket, const void *address, int length );
+extern "C" int Rva007FDB60( void *socket, int selector, void *data,
+	int dataLength );
+extern "C" unsigned int Rva007FEA00( void );
+extern "C" void Rva007FE780( const char *format, ... );
+extern "C" int Rva0080C390( void *comm, const void *data, int length );
+extern "C" unsigned char *Rva0080C6F0( void *comm );
+extern "C" int Rva0080C960( void *comm, void *certificate,
+	const unsigned char *data, int length );
+extern "C" void Rva0080AD00( unsigned char *data, int length, void *state );
+extern "C" void Rva0080F200( void *state, const unsigned char *key,
+	int length, int rounds );
+extern "C" void Rva0080F3D0( void *state, const void *first, int firstLength,
+	const void *second, int secondLength );
+extern "C" void Rva0080F430( void *state, const void *data, int length );
+extern "C" void Rva0080F550( unsigned char *state );
+extern "C" void Rva00810020( void *context );
+extern "C" void Rva00810060( void *context, const unsigned char *data,
+	int length );
+extern "C" void Rva00810FF0( void *context, char *out, int outSize );
+extern "C" int memcmp( const void *first, const void *second,
+	unsigned int count );
+
+static const unsigned char g_Rva0080B4B0ClientPrefix[ 3 ] = { 1, 0, 0x80 };
+
+extern "C" void Rva0080B4B0( Rva0080B1B0Comm *comm )
+{
+	int result;
+	unsigned char head[ 0x400 ];
+	Rva0080B4B0Secure *secure;
+	unsigned int hostAddress;
+	unsigned char *handshake;
+	unsigned char *headEnd;
+	int parseResult;
+	unsigned char *data;
+	unsigned char *packet;
+	int packetSize;
+	int certSize;
+	int cipherSize;
+	int challengeSize;
+	unsigned char contextA[ 0x54 ];
+	unsigned char certificate[ 0x518 ];
+	unsigned char *state12Data;
+	unsigned char *state13Reply;
+	unsigned char contextB[ 0x54 ];
+	unsigned char *state14Data;
+	unsigned char *state15Reply;
+
+	secure = ( Rva0080B4B0Secure * )comm->m_backend;
+
+	if( comm->m_socket != 0 && comm->m_state >= 10 && comm->m_state <= 16 )
+	{
+		if( secure->m_sendBegin < secure->m_sendEnd )
+		{
+			result = Rva007FD920( comm->m_socket,
+				secure->m_sendData + secure->m_sendBegin,
+				secure->m_sendEnd - secure->m_sendBegin, 0, 0, 0 );
+			if( result > 0 )
+				secure->m_sendBegin += result;
+			if( secure->m_sendBegin == secure->m_sendEnd )
+				secure->m_sendBegin = secure->m_sendEnd = 0;
+		}
+
+		if( secure->m_recvSize < 4 )
+		{
+			result = Rva007FDA50( comm->m_socket,
+				secure->m_recvData + secure->m_recvSize,
+				4 - secure->m_recvSize, 0, 0, 0 );
+			if( result > 0 )
+			{
+				secure->m_recvSize += result;
+				secure->m_recvBegin = secure->m_recvSize;
+			}
+			if( result < 0 )
+				*( int * )comm->m_gap11C = 1;
+		}
+
+		if( secure->m_recvSize == 4 )
+		{
+			secure->m_recvSize = ( secure->m_recvData[ 0 ] << 8 ) |
+				secure->m_recvData[ 1 ];
+			if( secure->m_recvSize < 0x8000 )
+				secure->m_recvSize = ( secure->m_recvSize & 0x3FFF ) +
+					secure->m_recvData[ 2 ] + 3;
+			else
+				secure->m_recvSize = ( secure->m_recvSize & 0x7FFF ) + 2;
+		}
+
+		if( secure->m_recvBegin < secure->m_recvSize )
+		{
+			result = Rva007FDA50( comm->m_socket,
+				secure->m_recvData + secure->m_recvBegin,
+				secure->m_recvSize - secure->m_recvBegin, 0, 0, 0 );
+			if( result > 0 )
+				secure->m_recvBegin += result;
+			if( result < 0 )
+				*( int * )comm->m_gap11C = 1;
+		}
+	}
+
+	if( comm->m_state == 1 )
+	{
+		if( ( *( Rva0080B4B0Done * )( ( char * )comm->m_connection + 8 ) )(
+			comm->m_connection ) != 0 )
+		{
+			if( *( unsigned int * )( ( char * )comm->m_connection + 4 ) == 0 )
+				comm->m_state = 0x1001;
+			else
+			{
+				comm->m_state = 2;
+				hostAddress = *( unsigned int * )(
+				( char * )comm->m_connection + 4 );
+				comm->m_address.m_addressBytes[ 3 ] =
+					( unsigned char )hostAddress;
+				hostAddress >>= 8;
+				comm->m_address.m_addressBytes[ 2 ] =
+					( unsigned char )hostAddress;
+				hostAddress >>= 8;
+				comm->m_address.m_addressBytes[ 1 ] =
+					( unsigned char )hostAddress;
+				hostAddress >>= 8;
+				comm->m_address.m_addressBytes[ 0 ] =
+					( unsigned char )hostAddress;
+			}
+			( *( Rva0080B4B0Free * )( ( char * )comm->m_connection + 12 ) )(
+				comm->m_connection );
+			comm->m_connection = 0;
+		}
+	}
+
+	if( comm->m_state == 2 )
+	{
+		Rva007FD5C0( comm->m_socket, &comm->m_family, 16 );
+		comm->m_state = 3;
+	}
+
+	if( comm->m_state == 3 )
+	{
+		result = Rva007FDB60( comm->m_socket, 'stat', 0, 0 );
+		if( result > 0 )
+		{
+			comm->m_state = secure != 0 ? 10 : 20;
+			*( int * )comm->m_gap11C = 0;
+		}
+		if( result < 0 )
+		{
+			comm->m_state = 0x1002;
+			*( int * )comm->m_gap11C = 1;
+		}
+	}
+
+	if( comm->m_state == 10 )
+	{
+		handshake = head;
+		headEnd = handshake + 9;
+		memset( handshake, 0, 10 );
+		handshake[ 0 ] = 1;
+		handshake[ 1 ] = 0;
+		handshake[ 2 ] = 2;
+		handshake[ 3 ] = 0;
+		handshake[ 4 ] = 3;
+		memcpy( headEnd, g_Rva0080B4B0ClientPrefix, 3 );
+		headEnd += 3;
+		handshake[ 5 ] = 0;
+		handshake[ 6 ] = 0;
+		handshake[ 7 ] = ( unsigned char )( secure->m_sessionSize >> 8 );
+		handshake[ 8 ] = ( unsigned char )secure->m_sessionSize;
+		memcpy( headEnd, secure->m_sessionData, secure->m_sessionSize );
+		headEnd += secure->m_sessionSize;
+		Rva0080C390( comm, handshake, ( int )( headEnd - handshake ) );
+		comm->m_state = 11;
+	}
+
+	if( comm->m_state == 11 && secure->m_recvBegin == secure->m_recvSize
+		&& secure->m_recvSize > 4 )
+	{
+		packet = Rva0080C6F0( comm );
+		packetSize = secure->m_recvSize - ( int )( packet + 0xB - packet );
+		certSize = ( packet[ 5 ] << 8 ) | packet[ 6 ];
+		cipherSize = ( packet[ 7 ] << 8 ) | packet[ 8 ];
+		challengeSize = ( packet[ 9 ] << 8 ) | packet[ 10 ];
+
+		if( packet[ 0 ] != 4 )
+			Rva007FE780( "not server hello message\n" );
+		if( packet[ 2 ] != 1 )
+			Rva007FE780( "not x509 certificate\n" );
+		if( packet[ 3 ] != 0 || packet[ 4 ] != 2 )
+			Rva007FE780( "wrong server version\n" );
+		if( certSize < 16 || certSize > packetSize )
+			Rva007FE780( "certificate buffer overrun\n" );
+		if( cipherSize < 3 || ( unsigned int )cipherSize > 3
+			|| certSize + cipherSize > packetSize )
+			Rva007FE780( "returned bogus cipher information\n" );
+		if( challengeSize < 16 || challengeSize > 32
+			|| certSize + cipherSize + challengeSize > packetSize )
+			Rva007FE780( "invalid connection sequence size\n" );
+
+		data = packet + 0xB;
+		parseResult = Rva0080C960( comm, ( unsigned char * )secure + 0x81F4,
+			data, certSize );
+		if( parseResult < 0 )
+		{
+			Rva007FE780( "x509 certificate is invalid (error=%d) ", parseResult );
+			comm->m_state = 0x1003;
+		}
+		else
+		{
+			data += certSize;
+			memcpy( secure->m_certFlags, data, 3 );
+			data += cipherSize;
+			secure->m_challengeSize = challengeSize;
+			memcpy( secure->m_challengeData, data, challengeSize );
+			data += challengeSize;
+			comm->m_state = 12;
+			secure->m_recvSize = 0;
+			secure->m_recvBegin = 0;
+		}
+	}
+
+	if( comm->m_state == 12 )
+	{
+		state12Data = head;
+		secure->m_certWordCount = secure->m_certFlags[ 2 ] >> 3;
+		Rva0080AD00( secure->m_certData, secure->m_certWordCount,
+			secure->m_cryptoState );
+		Rva00810020( contextA );
+		Rva00810060( contextA, secure->m_certData,
+				secure->m_certWordCount );
+		Rva00810060( contextA, ( const unsigned char * )"0", -1 );
+		Rva00810060( contextA, secure->m_sessionData,
+				secure->m_sessionSize );
+		Rva00810060( contextA, secure->m_challengeData,
+				secure->m_challengeSize );
+		secure->m_field80A8 = 0x10;
+		Rva00810FF0( contextA,
+				( char * )secure->m_field80AC,
+				0x10 );
+				Rva0080F200( secure->m_cryptoState,
+				secure->m_field80AC, secure->m_field80A8, 1 );
+		Rva0080F3D0( certificate, secure->m_cipherData,
+			secure->m_cipherDataSize, secure->m_verifyData,
+			secure->m_verifyDataSize );
+		Rva0080F430( certificate, secure->m_certData,
+			secure->m_certWordCount );
+		Rva0080F550( certificate );
+		memset( state12Data, 0, 0xB );
+		state12Data[ 0 ] = 2;
+		state12Data[ 1 ] = secure->m_certFlags[ 0 ];
+		state12Data[ 2 ] = secure->m_certFlags[ 1 ];
+		state12Data[ 3 ] = secure->m_certFlags[ 2 ];
+		state12Data[ 6 ] = ( unsigned char )( secure->m_cipherDataSize >> 8 );
+		state12Data[ 7 ] = ( unsigned char )secure->m_cipherDataSize;
+		memcpy( state12Data + 0xA, certificate, secure->m_cipherDataSize );
+		Rva0080C390( comm, state12Data, secure->m_cipherDataSize + 0xA );
+		comm->m_state = 13;
+	}
+
+	if( comm->m_state == 13 && secure->m_recvBegin == secure->m_recvSize
+		&& secure->m_recvSize > 4 )
+	{
+		state13Reply = Rva0080C6F0( comm );
+		if( state13Reply == 0 || state13Reply[ 0 ] != 5 )
+			Rva007FE780( "server verify failed\n" );
+		else
+		{
+			if( memcmp( state13Reply + 1, secure->m_sessionData,
+				secure->m_sessionSize ) != 0 )
+				Rva007FE780( "challenge data mismatch\n" );
+		}
+		comm->m_state = 14;
+		secure->m_recvSize = 0;
+		secure->m_recvBegin = 0;
+	}
+
+	if( comm->m_state == 14 )
+	{
+		state14Data = head;
+		Rva00810020( contextB );
+		Rva00810060( contextB, secure->m_certData,
+				secure->m_certWordCount );
+		Rva00810060( contextB, ( const unsigned char * )"1", -1 );
+		Rva00810060( contextB, secure->m_sessionData,
+				secure->m_sessionSize );
+		Rva00810060( contextB, secure->m_challengeData,
+				secure->m_challengeSize );
+				secure->m_field812C = 0x10;
+		Rva00810FF0( contextB, ( char * )secure->m_field8130, 0x10 );
+		Rva0080F200( secure->m_rc4State, secure->m_field8130,
+				secure->m_field812C, 1 );
+		state14Data[ 0 ] = 3;
+		memcpy( state14Data + 1, secure->m_challengeData,
+			secure->m_challengeSize );
+		Rva0080C390( comm, state14Data, secure->m_challengeSize + 1 );
+		comm->m_state = 15;
+	}
+
+	if( comm->m_state == 15 && secure->m_recvBegin == secure->m_recvSize
+		&& secure->m_recvSize > 4 )
+	{
+		state15Reply = Rva0080C6F0( comm );
+		if( state15Reply[ 0 ] != 6 )
+			Rva007FE780( "did not get finish message\n" );
+		secure->m_recvSize = 0;
+		secure->m_recvBegin = 0;
+		comm->m_state = 16;
+	}
+
+}
 
 extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,
 	unsigned int addr, int port )
@@ -907,7 +1255,7 @@ void Rva00806B10( Rva00806580Record *record )
 		if( record->m_field00 == 0 )
 			return;
 
-		Rva0080B4B0( record->m_field00 );
+		Rva0080B4B0( ( Rva0080B1B0Comm * )record->m_field00 );
 
 		if( Rva0080DBF0( record->m_field00, 'stat', 0, 0 ) <= 0 )
 			return;
@@ -948,7 +1296,7 @@ void Rva00806B10( Rva00806580Record *record )
 	if( record->m_field00 == 0 )
 		return;
 
-	Rva0080B4B0( record->m_field00 );
+	Rva0080B4B0( ( Rva0080B1B0Comm * )record->m_field00 );
 
 	if( record->m_outBuffer != 0 && record->m_outSent != record->m_outUsed )
 	{
