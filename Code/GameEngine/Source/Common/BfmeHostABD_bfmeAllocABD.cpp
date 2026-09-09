@@ -1,5 +1,6 @@
 // ?bfmeAllocABD@BfmeHostABD@@QAEHPBDPAX11@Z
-// partial score=0.88 date=2026-09-08
+// cl: /DNDEBUG /MD /EHsc
+
 void *Rva00807920(const char *name, int cap);
 
 class Rva00803080;
@@ -10,16 +11,16 @@ public:
 	void add(Rva00803080 *entry);
 };
 
-class BfmeRegABD
+struct Rva007EB810Diag
 {
 public:
-	virtual void bfmeSlot0ABD();
-	virtual void bfmeSlot1ABD();
-	virtual void bfmeSlot2ABD();
-	virtual void bfmeRegisterABD(const char *a, const char *b, int c);
+	virtual void v0();
+	virtual void v1();
+	virtual void v2();
+	virtual void registerService(const char *a, const char *b, int c);
 };
 
-BfmeRegABD *bfmeRegistryABD(void);
+Rva007EB810Diag *Rva007EB810Get(void);
 
 extern const char g_bfmeNameABD[];
 extern const char g_bfmeKindABD[];
@@ -48,30 +49,30 @@ int BfmeHostABD::bfmeAllocABD(const char *name, void *a, void *b, void *c)
 {
 	if (m_bfme48ABD < 4)
 	{
-		int idx = -1;
+		int idx;
 
 		for (int i = 0; i < 4; ++i)
 		{
 			if (m_bfmeSlotsABD[i].m_bfme00ABD == 0)
 			{
 				idx = i;
-				break;
+				goto selected;
 			}
 		}
+		idx = -1;
 
+	selected:
 		if (idx == -1)
-			bfmeRegistryABD()->bfmeRegisterABD(g_bfmeNameABD, g_bfmeKindABD, 0x60);
+			Rva007EB810Get()->registerService(g_bfmeNameABD, g_bfmeKindABD, 0x60);
 
-		BfmeSlotABD *s = &m_bfmeSlotsABD[idx];
-
-		s->m_bfme00ABD = b;
-		s->m_bfme04ABD = c;
-		s->m_bfme08ABD = a;
-		s->m_bfme0CABD = Rva00807920(name, 0x2710);
+		m_bfmeSlotsABD[idx].m_bfme00ABD = b;
+		m_bfmeSlotsABD[idx].m_bfme04ABD = c;
+		m_bfmeSlotsABD[idx].m_bfme08ABD = a;
+		m_bfmeSlotsABD[idx].m_bfme0CABD = Rva00807920(name, 0x2710);
 
 		++m_bfme48ABD;
 
-		m_bfme4CABD->add(m_bfme04ABD);
+		m_bfme4CABD->add((Rva00803080 *)&m_bfme04ABD);
 
 		return 0;
 	}
