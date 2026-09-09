@@ -11673,7 +11673,7 @@ name,address,notes
 ?TheLookAtTranslator@@3PAVLookAtTranslator@@A,0x012F4C84,Open-BFME5 the object doDisableInput tail-calls resetModes on
 ?TheLuaScriptEngine@@3PAVLuaScriptEngine@@A,0x00EF060C,GameEngine::init at 0x00079F36 pushes TheLuaScriptEngine then global VA 0x012F060C and calls matched initSubsystem<LuaScriptEngine> 0x00074ED0; GameLogic phase 1 calls its virtual update slot +0x14 at 0x0038DC2F
 ?TheMapCache@@3PAVMapCache@@A,0x012F1594,GameClient MapCache global; absolute load in the map-metadata refresh at 0x00525F35 and source definition in MapUtil.cpp
-?TheMappedImageCollection@@3PAVImageCollection@@A,0x012F6924,canonical ImageCollection singleton; campaign=36h-20260908
+?TheMappedImageCollection@@3PAVImageCollection@@A,0x012F6924,canonical ImageCollection singleton; campaign=36h-20260908-1018
 ?TheMappedImageCollection@@3PAVMappedImageCollection@@A,0x012F6924,canonical BFME mapped-image singleton used by UpgradeTemplate cacheButtonImage
 ?TheMappedImageCollection@@3PAVMappedImageCollectionPortraitShim@@A,0x012F6924,BFME portrait selector mapped-image global
 ?TheMaxHealthUpgradePool@?1??getClassMemoryPool@MaxHealthUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0588,pool-glue cascade static (back-solved)
