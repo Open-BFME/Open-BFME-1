@@ -2519,7 +2519,6 @@ name,address,notes
 ??0ControlBarSchemeImage@@QAE@XZ,0x00028489,parseAnimatingPartImage callee ILT thunk to 0x4ACD00
 ??0ConvertToCarBombCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0ConvertToHijackedVehicleCrateCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
-??0CostModifierUpgradeModuleData@@QAE@XZ,0x00025D47,ModuleFactory ILT thunk to 0x002D5180; the byte-verified retail caller encodes it
 ??0CountermeasuresBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006780,pinharvest x1 (thunk)
 ??0CountermeasuresBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000447FB,CountermeasuresBehavior ctor base (ICF74 shared)
 ??0CountermeasuresBehaviorModuleData@@QAE@XZ,0x0003025B,derived-ICF
@@ -2927,7 +2926,7 @@ name,address,notes
 ??0Gen_t_009d0e60_p12cd@@QAE@ABU0@@Z,0x009D0DB0,gen-tgrid payload member
 ??0Gen_uwm_0000513c@@QAE@XZ,0x000379E8,SlowDeathBehaviorModuleData fourth vector constructor target from retail call
 ??0GenerateMinefieldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x00001CDA,pinharvest x1 (thunk)
-??0GenerateMinefieldBehaviorModuleData@@QAE@XZ,0x0002B062
+??0CostModifierUpgradeModuleData@@QAE@XZ,0x0002B062,CostModifierUpgrade factory ILT thunk to the exact constructor body; route=0x002D4B30
 ??0GenericObjectCreationNugget@@QAE@XZ,0x00006DB1,Open-BFME5 parseDebris retail constructor thunk
 ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z,0x00100580,BFME GeometryInfo five-argument constructor called by W3DPropBuffer construction removal
 ??0GeometryUpgradeBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000C315,GeometryUpgrade ctor base call
