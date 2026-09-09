@@ -1,13 +1,16 @@
-// ?d_001ce940@@YAXXZ
-// partial score=0.9 date=2026-09-06
+// ?rva001CE940@Rva001CE940Object@@QAEXH@Z
+// BFME Object vtable-adjacent containment helper, retail 0x001CE940 (209 bytes).
+// The real class/member name is not recovered. The address-derived owner is
+// intentional: the body is the vision-unspied twin of 0x001CE830, walking
+// m_contain's item-view list and forwarding a different notification.
 // stlport
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 
 #include <list>
 
 typedef int Int;
 typedef unsigned char Bool;
 
+class Object;
 class BfmeRva493A0Object;
 
 class BfmeObjectList : public _STL::list<BfmeRva493A0Object *>
@@ -25,21 +28,6 @@ public:
 	BfmeTemplate *m_finalOverride;
 	char m_pad08[0xcc];
 	unsigned int m_flags;
-};
-
-class BfmeContainListView;
-
-class BfmeContain
-{
-public:
-	virtual void v00() = 0; virtual void v01() = 0; virtual void v02() = 0; virtual void v03() = 0;
-	virtual void v04() = 0; virtual void v05() = 0; virtual void v06() = 0; virtual void v07() = 0;
-	virtual void v08() = 0; virtual void v09() = 0; virtual void v10() = 0; virtual void v11() = 0;
-	virtual void v12() = 0; virtual void v13() = 0; virtual void v14() = 0; virtual void v15() = 0;
-	virtual void v16() = 0; virtual void v17() = 0; virtual void v18() = 0; virtual void v19() = 0;
-	virtual void v20() = 0; virtual void v21() = 0; virtual void v22() = 0; virtual void v23() = 0;
-	virtual void v24() = 0; virtual void v25() = 0;
-	virtual BfmeContainListView *getContainedItemsView() = 0;
 };
 
 class BfmeContainListView
@@ -60,7 +48,20 @@ public:
 	virtual void v48() = 0; virtual void v49() = 0; virtual void v50() = 0; virtual void v51() = 0;
 	virtual void v52() = 0; virtual void v53() = 0; virtual void v54() = 0; virtual void v55() = 0;
 	virtual void v56() = 0; virtual void v57() = 0; virtual void v58() = 0;
-	virtual const _STL::list<BfmeRva493A0Object *> *getContainedItemsList(Int player) = 0;
+	virtual const _STL::list<BfmeRva493A0Object *> *getContainedItemsList() = 0;
+};
+
+class BfmeContain
+{
+public:
+	virtual void v00() = 0; virtual void v01() = 0; virtual void v02() = 0; virtual void v03() = 0;
+	virtual void v04() = 0; virtual void v05() = 0; virtual void v06() = 0; virtual void v07() = 0;
+	virtual void v08() = 0; virtual void v09() = 0; virtual void v10() = 0; virtual void v11() = 0;
+	virtual void v12() = 0; virtual void v13() = 0; virtual void v14() = 0; virtual void v15() = 0;
+	virtual void v16() = 0; virtual void v17() = 0; virtual void v18() = 0; virtual void v19() = 0;
+	virtual void v20() = 0; virtual void v21() = 0; virtual void v22() = 0; virtual void v23() = 0;
+	virtual void v24() = 0; virtual void v25() = 0;
+	virtual BfmeContainListView *getContainedItemsView() = 0;
 };
 
 class BfmeThingAIA
@@ -82,9 +83,8 @@ class Object
 {
 public:
 	virtual void unused() = 0;
-	void propagateVisionUnspied(Int player);
 
-private:
+protected:
 	BfmeTemplate *m_template;
 	char m_pad08[0x1f4];
 	BfmeContain *m_contain;
@@ -95,7 +95,13 @@ private:
 typedef BfmeTemplate *(__fastcall *BfmeOverrideCall)(BfmeTemplate *);
 typedef Bool (BfmeThingAIA::*BfmeKindOfCall)(Int);
 
-void Object::propagateVisionUnspied(Int player)
+class Rva001CE940Object : public Object
+{
+public:
+	void rva001CE940(Int player);
+};
+
+void Rva001CE940Object::rva001CE940(Int player)
 {
 	BfmeTemplate *objectTemplate = m_template;
 	if (objectTemplate != 0 && objectTemplate->m_finalOverride != 0)
@@ -104,20 +110,29 @@ void Object::propagateVisionUnspied(Int player)
 		objectTemplate = overrideCall(objectTemplate->m_finalOverride);
 	}
 
-	Object *containerObject = this;
-	if ((objectTemplate->m_flags & 0x1000) == 0)
+	Object *containerObject;
+	if (objectTemplate->m_flags & 0x1000)
 	{
-		containerObject = m_containedBy;
-		if (containerObject == 0)
+		containerObject = this;
+	}
+	else
+	{
+		Object *container = m_containedBy;
+		if (container == 0)
 			return;
 
 		union { void (*raw)(); BfmeKindOfCall member; } kindOf;
 		kindOf.raw = j_0003251f;
-		if (!(reinterpret_cast<BfmeThingAIA *>(containerObject)->*kindOf.member)(0x6c))
+		if (!(reinterpret_cast<BfmeThingAIA *>(container)->*kindOf.member)(0x6c))
 			return;
+
+		containerObject = container;
 	}
 
-	BfmeContain *contain = containerObject->m_contain;
+	if (containerObject == 0)
+		return;
+
+	BfmeContain *contain = ((Rva001CE940Object *)containerObject)->m_contain;
 	if (contain == 0)
 		return;
 
@@ -125,7 +140,7 @@ void Object::propagateVisionUnspied(Int player)
 	if (view == 0)
 		return;
 
-	const _STL::list<BfmeRva493A0Object *> *source = view->getContainedItemsList(player);
+	const _STL::list<BfmeRva493A0Object *> *source = view->getContainedItemsList();
 	BfmeObjectList items(*source);
 	for (BfmeObjectList::iterator it = items.begin(); it != items.end(); ++it)
 	{
