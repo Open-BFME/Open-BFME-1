@@ -1,4 +1,6 @@
-// BFME W3DView::cameraModFinalZoom, retail 0x0073C440.
+// BFME W3DView::cameraModFinalPitch, retail 0x0073C440 (171 bytes).
+// The W3DView vtable at 0x011217A0 maps slot 33 to this body. Its call through
+// vtable slot +0xF0 matches pitchCamera, while cameraModFinalZoom calls +0xE8.
 
 typedef float Real;
 typedef int Int;
@@ -51,9 +53,9 @@ public:
 	BFME_W3D_SLOT(51) BFME_W3D_SLOT(52) BFME_W3D_SLOT(53)
 	BFME_W3D_SLOT(54) BFME_W3D_SLOT(55) BFME_W3D_SLOT(56)
 	BFME_W3D_SLOT(57) BFME_W3D_SLOT(58) BFME_W3D_SLOT(59)
-	virtual void zoomCamera(Real finalZoom, Int milliseconds,
+	virtual void pitchCamera(Real finalPitch, Int milliseconds,
 		Real easeIn, Real easeOut);
-	virtual void cameraModFinalZoom(Real finalZoom, Real easeIn, Real easeOut);
+	virtual void cameraModFinalPitch(Real finalPitch, Real easeIn, Real easeOut);
 
 private:
 	char padding0004[0x1ac - 4];
@@ -69,17 +71,17 @@ private:
 
 #undef BFME_W3D_SLOT
 
-void W3DView::cameraModFinalZoom(Real finalZoom, Real easeIn, Real easeOut)
+void W3DView::cameraModFinalPitch(Real finalPitch, Real easeIn, Real easeOut)
 {
 	if (doingRotateCamera)
 	{
 		Real time = (rotateCamera.numFrames + rotateCamera.numHoldFrames -
 			rotateCamera.curFrame) * TheAnimationMsPerStep;
-		zoomCamera(finalZoom, time, time * easeIn, time * easeOut);
+		pitchCamera(finalPitch, time, time * easeIn, time * easeOut);
 	}
 	if (cameraMovementMode == 1)
 	{
 		Real time = totalTimeMilliseconds - elapsedTimeMilliseconds;
-		zoomCamera(finalZoom, time, time * easeIn, time * easeOut);
+		pitchCamera(finalPitch, time, time * easeIn, time * easeOut);
 	}
 }
