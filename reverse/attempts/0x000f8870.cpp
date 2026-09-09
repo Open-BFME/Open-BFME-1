@@ -1,7 +1,8 @@
 // ?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z (identity unknown)
-// partial score=0.9 date=2026-09-06
-// 67/63. Loop, unlink, deallocate and size decrement all match; MSVC duplicates
-// the pop esi / ret 8 epilogue for the loop-exhausted path where retail shares one.
+// partial score=0.95 date=2026-09-09
+// 64/63. Inline while-loop (no static helper) with the sentinel test as the
+// loop's own bottom check improved 67->64: retail shares one "cmp eax,ecx; je end"
+// between the found and not-found exits, ours still has that check duplicated once.
 // Pin: ?bfmeDeallocEV@@YAXPAXI@Z,0x0082E5F0 (STL node deallocate).
 void __cdecl bfmeDeallocEV(void *block, unsigned int size);
 
@@ -18,14 +19,6 @@ class BfmeListEV
 public:
 	void bfmeRemoveEV(void *value, int unused);
 
-	static BfmeNodeEV *bfmeFindEV(BfmeNodeEV *sentinel, void *value)
-	{
-		for (BfmeNodeEV *n = sentinel->m_bfmeNextEV; n != sentinel; n = n->m_bfmeNextEV)
-			if (n->m_bfmeValueEV == value)
-				return n;
-		return sentinel;
-	}
-
 	unsigned char m_bfmeHeadEV[8];
 	BfmeNodeEV *m_bfmeNodeEV;
 	unsigned char m_bfmeMidEV[4];
@@ -35,7 +28,17 @@ public:
 void BfmeListEV::bfmeRemoveEV(void *value, int unused)
 {
 	BfmeNodeEV *sentinel = m_bfmeNodeEV;
-	BfmeNodeEV *node = bfmeFindEV(sentinel, value);
+	BfmeNodeEV *node = sentinel->m_bfmeNextEV;
+
+	if (node != sentinel)
+	{
+		while (node->m_bfmeValueEV != value)
+		{
+			node = node->m_bfmeNextEV;
+			if (node == sentinel)
+				break;
+		}
+	}
 
 	if (node != sentinel)
 	{

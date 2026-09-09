@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "48f594143e69be2ca7d877fe43bbfafe30efc722da329170bef731720d8aa130",
+  "symbol": "?bfmePushYK@BfmeHostYK@@QAE_NPAVDrawable@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmePushYK@BfmeHostYK@@QAE_NPAVDrawable@@@Z\n// partial score=0.93 date=2026-09-09\n// pin needed: ?bfmeOverflowYK@BfmeVecYK@@QAEXPAHABHABUBfmeTagYK@@I_N@Z,0x00010B8B\r\nstruct BfmeTagYK\r\n{\r\n};\r\n\r\nclass Drawable\r\n{\r\npublic:\r\n\tunsigned char m_bfmeHeadYK[0x74];\r\n\tint m_bfme74YK;\r\n};\r\n\r\nclass BfmeVecYK\r\n{\r\npublic:\r\n\tvoid bfmeOverflowYK(int *pos, const int &x, const BfmeTagYK &tag, unsigned int n, bool atEnd);\r\n\r\n\tint *m_bfme00YK;\r\n\tint *m_bfme04YK;\r\n\tint *m_bfme08YK;\r\n};\r\n\r\nclass BfmeHostYK\r\n{\r\npublic:\r\n\tbool bfmePushYK(Drawable *d);\r\n\r\n\tunsigned char m_bfmeHeadYK[8];\r\n\tBfmeVecYK m_bfmeVecYK;\r\n};\r\n\r\nbool BfmeHostYK::bfmePushYK(Drawable *d)\r\n{\r\n\tint v = d->m_bfme74YK;\r\n\tint *fin = m_bfmeVecYK.m_bfme04YK;\r\n\tBfmeVecYK *vec = &m_bfmeVecYK;\r\n\r\n\tif (fin == vec->m_bfme08YK)\r\n\t{\r\n\t\tBfmeTagYK tag;\r\n\r\n\t\tvec->bfmeOverflowYK(fin, v, tag, 1, true);\r\n\t}\r\n\telse\r\n\t{\r\n\t\tif (fin != 0)\r\n\t\t\t*fin = v;\r\n\r\n\t\tvec->m_bfme04YK = fin + 1;\r\n\t}\r\n\r\n\treturn true;\r\n}\r\n"
+}

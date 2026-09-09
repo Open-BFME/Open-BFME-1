@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "62856b589a8a82c67a9d409c8c4780f9a4186947e7fbf209ff67c4b8d4ba7bc5",
+  "symbol": "?bfmeCheck1C8A0@@YG_NPAX0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?bfmeCheck1C8A0@@YG_NPAX0@Z\r\n// partial score=0.85 date=2026-09-03\r\n// cl: /DNDEBUG /MD /EHsc\r\n// Open-BFME6: 0x0021C8A0. Flag gate with tail call, 44 bytes: when both\r\n// arguments carry the 0x10 bit at +0x94 answer false, otherwise tail-jump\r\n// to the shared handler at 0x00221960 through the thunk at 0x0002B2D8\r\n// with the same two arguments.\r\n\r\nbool __stdcall bfmeHandler1C8A0(void *a1, void *a2);\r\n\r\n// ?bfmeCheck@Gen_0021C8A0@@YG_NPAX0@Z\r\nstruct BfmeFlags1C8A0\r\n{\r\n\tunsigned char m_low : 4;\r\n\tunsigned char m_flag : 1;\r\n\tunsigned char m_high : 3;\r\n};\r\n\r\nstruct BfmeObj1C8A0\r\n{\r\n\tchar m_pad[0x94];\r\n\tBfmeFlags1C8A0 m_flags;\r\n};\r\n\r\nbool __stdcall bfmeCheck1C8A0(void *a1, void *a2)\r\n{\r\n\tBfmeObj1C8A0 *x = (BfmeObj1C8A0 *)a1;\r\n\tBfmeObj1C8A0 *y = (BfmeObj1C8A0 *)a2;\r\n\r\n\tif (x->m_flags.m_flag &&\r\n\t    y->m_flags.m_flag)\r\n\t\treturn false;\r\n\treturn bfmeHandler1C8A0(x, y);\r\n}\r\n"
+}

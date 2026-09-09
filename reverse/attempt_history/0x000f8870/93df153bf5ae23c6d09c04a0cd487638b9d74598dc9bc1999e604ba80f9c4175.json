@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "93df153bf5ae23c6d09c04a0cd487638b9d74598dc9bc1999e604ba80f9c4175",
+  "symbol": "?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeRemoveEV@BfmeListEV@@QAEXPAXH@Z\n// partial score=0.95 date=2026-09-09\n// 64/63. Inline while-loop (no static helper) with the sentinel test as the\n// loop's own bottom check improved 67->64: retail shares one \"cmp eax,ecx; je end\"\n// between the found and not-found exits, ours still has that check duplicated once.\n// Pin: ?bfmeDeallocEV@@YAXPAXI@Z,0x0082E5F0 (STL node deallocate).\nvoid __cdecl bfmeDeallocEV(void *block, unsigned int size);\n\nclass BfmeNodeEV\n{\npublic:\n\tBfmeNodeEV *m_bfmeNextEV;\n\tBfmeNodeEV *m_bfmePrevEV;\n\tvoid *m_bfmeValueEV;\n};\n\nclass BfmeListEV\n{\npublic:\n\tvoid bfmeRemoveEV(void *value, int unused);\n\n\tunsigned char m_bfmeHeadEV[8];\n\tBfmeNodeEV *m_bfmeNodeEV;\n\tunsigned char m_bfmeMidEV[4];\n\tint m_bfmeSizeEV;\n};\n\nvoid BfmeListEV::bfmeRemoveEV(void *value, int unused)\n{\n\tBfmeNodeEV *sentinel = m_bfmeNodeEV;\n\tBfmeNodeEV *node = sentinel->m_bfmeNextEV;\n\n\tif (node != sentinel)\n\t{\n\t\twhile (node->m_bfmeValueEV != value)\n\t\t{\n\t\t\tnode = node->m_bfmeNextEV;\n\t\t\tif (node == sentinel)\n\t\t\t\tbreak;\n\t\t}\n\t}\n\n\tif (node != sentinel)\n\t{\n\t\tBfmeNodeEV *next = node->m_bfmeNextEV;\n\t\tBfmeNodeEV *prev = node->m_bfmePrevEV;\n\t\tprev->m_bfmeNextEV = next;\n\t\tnext->m_bfmePrevEV = prev;\n\t\tbfmeDeallocEV(node, 12);\n\t\t--m_bfmeSizeEV;\n\t}\n}\n"
+}

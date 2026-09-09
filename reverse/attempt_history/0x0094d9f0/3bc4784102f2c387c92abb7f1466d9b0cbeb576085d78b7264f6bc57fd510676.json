@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3bc4784102f2c387c92abb7f1466d9b0cbeb576085d78b7264f6bc57fd510676",
+  "symbol": "?d_0094d9f0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.87,
+  "source": "// ?d_0094d9f0@@YAXXZ\n// partial score=0.87 date=2026-09-09\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\r\n// Structural recovery for the handle-output body at retail 0x0094D9F0.\r\n\r\nvoid d_0094d450(void);\r\n\r\n#pragma optimize(\"y\", on)\r\n\r\nstruct Rva0094D9F0Thing\r\n{\r\n\tint head;\r\n\tunsigned short refs;\r\n};\r\n\r\nclass Rva0094D9F0Handle\r\n{\r\npublic:\r\n\tRva0094D9F0Thing * volatile value;\r\n};\r\n\r\nstatic void copy_ref(Rva0094D9F0Thing *source, Rva0094D9F0Handle *destination)\r\n{\r\n\tdestination->value = source;\r\n\tif (source != 0)\r\n\t\t++source->refs;\r\n}\r\nclass Rva0094D9F0\r\n{\r\npublic:\r\n\tvoid assign(Rva0094D9F0Handle *destination);\r\n\r\nprivate:\r\n\tunsigned char m_prefix[0x18];\r\n\tRva0094D9F0Handle m_handle;\r\n\tunsigned char m_refresh;\r\n};\r\n\r\nvoid Rva0094D9F0::assign(Rva0094D9F0Handle *destination)\r\n{\r\n\tvolatile unsigned state = 0;\r\n\tif (m_refresh != 0)\r\n\t\td_0094d450();\r\n\tcopy_ref(m_handle.value, destination);\r\n}\r\n"
+}
