@@ -4657,7 +4657,7 @@ name,address,notes
 ??1Gen_dtor_0005fe80@@UAE@XZ,0x00007CB1,gen-dtor class destructor
 ??1Gen_dtor_00062240@@UAE@XZ,0x0000D828,gen-dtor class destructor
 ??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,gen-dtor class destructor
-??1Gen_dtor_00067a30@@UAE@XZ,0x00014650,gen-dtor class destructor
+??1DamageFXStore@@UAE@XZ,0x00014650,ILT to the matched DamageFXStore destructor at RVA 0x000678B0
 ??1Gen_dtor_0006b110@@UAE@XZ,0x0000E912,gen-dtor class destructor
 ??1Gen_dtor_0006b630@@UAE@XZ,0x009A2030,gen-dtor class destructor
 ??1Gen_dtor_0006b660@@UAE@XZ,0x0003E3F6,gen-dtor class destructor

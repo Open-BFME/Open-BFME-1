@@ -1,4 +1,6 @@
 name,target_rva,reason
+??1Rva000678B0Body@@UAE@XZ,0x000678B0,Address-derived destructor identity superseded by DamageFXStore proven by constructor 0x00067C10 and vtable 0x010758F8
+??_GGen_dtor_00067a30@@UAEPAXI@Z,0x00067A30,Generic generator placeholder superseded by the authentic DamageFXStore scalar-deleting destructor proven by constructor 0x00067C10 and vtable 0x010758F8
 ??_GGen_dtor_0005fa60@@UAEPAXI@Z,0x0005FA60,Generic generator placeholder superseded by the authentic Rva0005C110Surface scalar-deleting destructor proven by vtable 0x01073740 and matched constructor 0x0005C110
 ??_GGen_dtor_0078f9d0@@UAEPAXI@Z,0x0078F9D0,Generic generator placeholder superseded by authentic TwiddlerClass scalar-deleting destructor proven by vtable 0x01126ED0 and matched constructor 0x0078F500
 ?d_00138290@@YAXXZ,0x00138290,gen-dump placeholder superseded by the byte-verified ProductionPrerequisite copy constructor at the same range
