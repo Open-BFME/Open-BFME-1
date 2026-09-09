@@ -86451,3 +86451,4 @@ _bfmeVfAXZ,0x00D3E878,vftable pin
 _bfmeVfBXZ,0x00D3E870,secondary vftable pin
 _bfmeNullNameXZ,0x00C80374,NULL name global
 ?bfmeTestQP@@YADPAX0@Z,0x00014196,thunk to 0x005A74A0
+?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
