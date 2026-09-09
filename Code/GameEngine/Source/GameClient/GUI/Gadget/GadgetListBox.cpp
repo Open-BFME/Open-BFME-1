@@ -693,6 +693,9 @@ static Int addEntry( UnicodeString *string, Int color, Int row, Int column, Game
 // GadgetListBoxInput =========================================================
 /** Handle input for list box */
 //=============================================================================
+// BFME retail owns this handler at 0x004B6190.  Its callable code and trailing
+// 11-entry switch table end at the INT3 boundary +0x428 (1064 bytes); the
+// retained Zero Hour handler below is structurally larger and remains unmatched.
 WindowMsgHandledType GadgetListBoxInput( GameWindow *window, UnsignedInt msg,
 												 WindowMsgData mData1, WindowMsgData mData2 )
 {
