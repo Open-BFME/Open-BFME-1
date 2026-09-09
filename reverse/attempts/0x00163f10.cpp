@@ -1,8 +1,10 @@
 // ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ
-// partial score=0.94 date=2026-09-03
+// partial score=0.95 date=2026-09-09
+// stlport
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 // readable body of ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
-// Open-BFME: AIPlayer::isSupplySourceAttacked, retail 0x00163F10, 421 bytes.
+// Open-BFME: AIPlayer::isSupplySourceAttacked, retail 0x00163F10, 428 bytes
+// (success tail ret at +0x1AB; the old 421-byte boundary truncated it).
 //
 // Named by the already-matched guardSupplyCenter call. Same Object DLINK PMF
 // {pfn=0x00401140, delta=-100, vbindex=0} as Team::hasAnyUnits. Each KindOf
@@ -12,6 +14,7 @@
 // list header pointer is at Player+0x288. getFrame inlines to TheGameLogic+0x3c.
 
 #include "ObjectDlinkPmf.h"
+#include <list>
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -121,7 +124,7 @@ static Overridable *bfmeFinalTemplate(Object *obj)
 class Team
 {
 public:
-	Team *_bfme_nextInInstanceList();
+	Team *_bfme_nextInInstanceList() const;
 
 	void *m_vptr;
 	void *m_proto;
@@ -134,65 +137,30 @@ public:
 	}
 };
 
-class BfmeTeamInstanceIterator
-{
-public:
-	BfmeTeamInstanceIterator(Team *head)
-		: m_cur(head)
-	{
-	}
-
-	bool done() const
-	{
-		return m_cur == 0;
-	}
-
-	Team *cur() const
-	{
-		return m_cur;
-	}
-
-	void advance()
-	{
-		if (m_cur)
-			m_cur = m_cur->_bfme_nextInInstanceList();
-	}
-
-private:
-	Team *m_cur;
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
 public:
-	BfmeTeamInstanceIterator iterate_TeamInstanceList()
+	DLINK_ITERATOR<Team> iterate_TeamInstanceList()
 	{
-		return BfmeTeamInstanceIterator(m_teamInstanceList);
+		return DLINK_ITERATOR<Team>(m_teamInstanceList, Team::_bfme_nextInInstanceList);
 	}
 
 	unsigned char m_unmodelled_000[0x274];
 	Team *m_teamInstanceList;					// +0x274
 };
 
-class BfmeTeamListNode
-{
-public:
-	BfmeTeamListNode *m_next;
-	BfmeTeamListNode *m_prev;
-	TeamPrototype *m_proto;
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
+	typedef std::list<TeamPrototype *> PlayerTeamList;
 	UnsignedInt getAttackedFrame() const { return m_attackedFrame; }
-	BfmeTeamListNode *getPlayerTeams() const { return m_playerTeams; }
+	const PlayerTeamList *getPlayerTeams() const { return &m_playerTeams; }
 
 private:
 	unsigned char m_head[0x288];
-	BfmeTeamListNode *m_playerTeams;			// +0x288
+	PlayerTeamList m_playerTeams;				// +0x288
 	unsigned char m_mid[0x2c0 - 0x28c];
 	UnsignedInt m_attackedFrame;				// +0x2c0
 };
@@ -225,7 +193,6 @@ private:
 	ObjectID m_attackedSupplyCenter;			// +0x70
 };
 
-// ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ
 Bool AIPlayer::isSupplySourceAttacked()
 {
 	const UnsignedInt SCAN_RATE = 10;
@@ -242,11 +209,11 @@ Bool AIPlayer::isSupplySourceAttacked()
 		return false;
 	m_supplySourceAttackCheckFrame = curFrame + SCAN_RATE;
 
-	BfmeTeamListNode *head = m_player->getPlayerTeams();
-	for (BfmeTeamListNode *it = head->m_next; it != m_player->getPlayerTeams(); it = it->m_next)
+	Player::PlayerTeamList::const_iterator it;
+	for (it = m_player->getPlayerTeams()->begin(); it != m_player->getPlayerTeams()->end(); ++it)
 	{
-		TeamPrototype *proto = it->m_proto;
-		for (BfmeTeamInstanceIterator iter = proto->iterate_TeamInstanceList(); !iter.done(); iter.advance())
+		TeamPrototype *proto = *it;
+		for (DLINK_ITERATOR<Team> iter = proto->iterate_TeamInstanceList(); !iter.done(); iter.advance())
 		{
 			Team *team = iter.cur();
 			if (!team)
