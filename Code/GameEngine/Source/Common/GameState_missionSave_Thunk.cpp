@@ -1,329 +1,148 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?missionSave@GameState@@QAE?AW4SaveCode@@XZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Real-C++ reconstruction of GameState::missionSave at 0x00110600.
 
-enum SaveCode { };
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameState.h
+typedef int Int;
+typedef bool Bool;
+typedef char Char;
+typedef unsigned short WideChar;
+
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+	friend class UnicodeString;
+
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<T> &other);
+	StringBase(const T *text);
+	~StringBase();
+
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+	UnicodeString() : StringBase<WideChar>() {}
+	UnicodeString(const UnicodeString &other) : StringBase<WideChar>(other) {}
+	~UnicodeString() {}
+
+	const WideChar *str() const
+	{
+		return m_data ? &m_data->data[0] : (const WideChar *)0x0107388C;
+	}
+
+	void format(UnicodeString format, ...);
+};
+
+// The retail interface has nine entries before the two fetch overloads.  The
+// two overloads are ordered AsciiString, const Char* in its BFME vtable.
+class GameTextInterface
+{
+public:
+	virtual void gameTextSlot0() = 0;
+	virtual void gameTextSlot1() = 0;
+	virtual void gameTextSlot2() = 0;
+	virtual void gameTextSlot3() = 0;
+	virtual void gameTextSlot4() = 0;
+	virtual void gameTextSlot5() = 0;
+	virtual void gameTextSlot6() = 0;
+	virtual void gameTextSlot7() = 0;
+	virtual void gameTextSlot8() = 0;
+	virtual UnicodeString fetch(const Char *label, Bool *exists = 0) = 0;
+	virtual UnicodeString fetch(AsciiString label, Bool *exists = 0) = 0;
+};
+
+class Campaign
+{
+	char m_base[0x0C];
+
+public:
+	AsciiString m_campaignNameLabel;
+};
+
+class CampaignManager
+{
+public:
+	Campaign *getCurrentCampaign();
+	Int getCurrentMissionNumber();
+};
+
+enum SaveFileType
+{
+	SAVE_FILE_TYPE_NORMAL,
+	SAVE_FILE_TYPE_MISSION
+};
+
+enum SnapshotType
+{
+	SNAPSHOT_SAVELOAD
+};
+
+enum SaveCode
+{
+	SC_INVALID = -1,
+	SC_OK
+};
+
 class GameState
 {
 public:
 	SaveCode missionSave();
 };
 
-// ?missionSave@GameState@@QAE?AW4SaveCode@@XZ
-__declspec(naked) SaveCode GameState::missionSave()
+// BFME's saveGame body consumes a fifth message-enable byte at [ebp+0x18]
+// even though its inherited ledger name stops at SnapshotType.  The call site
+// reaches the proven incremental-link thunk at 0x00020CD4.
+extern void j_00020cd4();
+// A pointer-to-member cast preserves the retail thiscall (ECX) without
+// adding fastcall's otherwise-unused EDX setup.  The thunk's five stack
+// parameters are the two string objects, the two enums, and the BFME message
+// flag consumed at [ebp+0x18].
+struct SaveGameCallTarget
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xf0
-		__emit 0xdb
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0xb0
-		__emit 0x4c
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x56
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xa6
-		__emit 0x3e
-		__emit 0xef
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0xb0
-		__emit 0x4c
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0xe8
-		__emit 0x70
-		__emit 0xcf
-		__emit 0xf0
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x7c
-		__emit 0x14
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x68
-		__emit 0x9c
-		__emit 0x93
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0x52
-		__emit 0x46
-		__emit 0xff
-		__emit 0x50
-		__emit 0x28
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x56
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x51
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x83
-		__emit 0xc7
-		__emit 0x0c
-		__emit 0x57
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x34
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xec
-		__emit 0x74
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x7c
-		__emit 0x14
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x52
-		__emit 0xff
-		__emit 0x50
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x02
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8c
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x50
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x55
-		__emit 0x7d
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x51
-		__emit 0xe8
-		__emit 0xdb
-		__emit 0x8a
-		__emit 0x77
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x0a
-		__emit 0x7b
-		__emit 0x77
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x52
-		__emit 0xe8
-		__emit 0x23
-		__emit 0x7d
-		__emit 0x77
-		__emit 0x00
-		__emit 0x51
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x68
-		__emit 0x1c
-		__emit 0x30
-		__emit 0x07
-		__emit 0x01
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x3c
-		__emit 0x03
-		__emit 0xe8
-		__emit 0xcd
-		__emit 0x84
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x90
-		__emit 0xf1
-		__emit 0x2e
-		__emit 0x01
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x38
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xd1
-		__emit 0x05
-		__emit 0xf1
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xbd
-		__emit 0x7a
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xac
-		__emit 0x7a
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x5f
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x20
-		__emit 0xc3
-	}
+	SaveCode saveGame(AsciiString filename, UnicodeString desc,
+		SaveFileType saveType, SnapshotType which, Bool showMessage);
+};
+typedef SaveCode (SaveGameCallTarget::*SaveGameCall)(AsciiString,
+	UnicodeString, SaveFileType, SnapshotType, Bool);
+
+extern CampaignManager *TheCampaignManager;
+extern GameTextInterface *TheGameText;
+extern GameState *TheGameState;
+
+// ?missionSave@GameState@@QAE?AW4SaveCode@@XZ
+SaveCode GameState::missionSave()
+{
+	Campaign *campaign = TheCampaignManager->getCurrentCampaign();
+	Int missionNumber = TheCampaignManager->getCurrentMissionNumber() + 1;
+	UnicodeString format = TheGameText->fetch("GUI:MissionSave");
+	UnicodeString desc;
+	desc.format(format, TheGameText->fetch(campaign->m_campaignNameLabel).str(), missionNumber);
+	union
+	{
+		void (*asFunction)();
+		SaveGameCall asMember;
+	} saveGameCast;
+	saveGameCast.asFunction = j_00020cd4;
+	return (reinterpret_cast<SaveGameCallTarget *>(TheGameState)->*saveGameCast.asMember)(
+		AsciiString(""), desc, SAVE_FILE_TYPE_MISSION, SNAPSHOT_SAVELOAD, true);
 }
