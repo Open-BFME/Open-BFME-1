@@ -2186,32 +2186,6 @@ Bool Weapon::computeApproachTarget(const Object *source, const Object *target, c
 //actually moving the object. This is used to help determine if a garrisoned unit not yet 
 //positioned can attack someone.
 //-------------------------------------------------------------------------------------------------
-// ?isSourceObjectWithGoalPositionWithinAttackRange@Weapon@@QBE_NPBVObject@@PBUCoord3D@@01@Z present-unmatched
-Bool Weapon::isSourceObjectWithGoalPositionWithinAttackRange( const Object *source, const Coord3D *goalPos, const Object *target, const Coord3D *targetPos ) const
-{
-	
-	Real distSqr;
-	if( target )
-		distSqr = ThePartitionManager->getGoalDistanceSquared( source, goalPos, target, ATTACK_RANGE_CALC_TYPE );
-	else if( targetPos )
-		distSqr = ThePartitionManager->getGoalDistanceSquared( source, goalPos, targetPos, ATTACK_RANGE_CALC_TYPE );
-	else
-		return false;
-
-	Real attackRangeSqr = sqr( getAttackRange( source ) );
-	Real minAttackRangeSqr = sqr(m_template->getMinimumAttackRange());
-#ifdef RATIONALIZE_ATTACK_RANGE
-	if (distSqr < minAttackRangeSqr)
-#else
-	if (distSqr < minAttackRangeSqr-0.5f)
-#endif
-	{
-		return false;
-	}
-	return (distSqr <= attackRangeSqr);
-}
-
-//-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_isWithinAttackRange.cpp
 // ?isWithinAttackRange@Weapon@@ present-unmatched
 Bool Weapon::isWithinAttackRange(const Object *source, const Coord3D* pos) const
