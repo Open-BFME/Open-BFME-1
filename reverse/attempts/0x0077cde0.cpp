@@ -1,5 +1,7 @@
 // ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.91 date=2026-09-09
+// partial score=0.93 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
+// stlport
 //
 // Constructor at retail 0x0077CDE0 (697 B).  21-state EH unwind map
 // (FuncInfo 0x0123FE1C).  Own vtable install=0x1124230 (masked DIR32).
@@ -20,6 +22,59 @@
 // label, and always pushed into the 0x24 STL-shaped vector via the overflow
 // path (the vector is freshly zeroed, so finish==end_of_storage is always
 // true here; the in-place-construct arm is dead code MSVC still emits).
+//
+// FIXED THIS ROUND (order defect, was: state-0 dword store scheduled before
+// [esi+8] instead of between [esi+0xc] and [esi+0x10]): wrap ONLY the LAST
+// raw scalar of the +0x8 opaque member (Opaque1) in a trivial one-field
+// struct (`struct Wrap { unsigned int m_c; }`), keeping the first two
+// fields (a,b) as plain ints.  General rule discovered here: MSVC's lazy
+// base-completion state store is emitted immediately before the LAST
+// class-typed (declared struct/class, even if trivial) member's
+// construction in a flat member-init list, regardless of how many plain
+// scalars precede it -- wrapping (a,b) together + c plain left the store at
+// the very start (no distinct "last class-typed member" boundary moved);
+// wrapping a plain + (b,c) together moved the store to right after a;
+// wrapping (a,b) plain + c alone in Wrap moved it to right after both a and
+// b, matching retail exactly.  Reusable lever for other "state-0 placement"
+// defects: identify retail's real split point among a multi-scalar first
+// member and wrap everything AFTER that point into a class type, leaving
+// everything up to and including the split point as plain scalars.
+//
+// REMAINING (unsolved) defect: retail goes straight from state 0xb (before
+// the S4Elem ctor call at +0x84) to state 0x11 (before the ??_L array
+// call), never emitting anything for the +0xe0..+0xf0 range beyond the
+// four string dtors' batched cleanup.  Ours emits ONE spurious extra
+// `mov byte ptr [esp+0xe4],0x10` between the m_str9 (+0xec) store and the
+// first m_opaque8 (+0xf0) store, 8 bytes MSVC does not put there in
+// retail, i.e. 695/697 (matches the 0.91 stash's size, this round only
+// fixed ordering, not size).  Ruled out this round (all zero effect on the
+// position/presence of the 0x10 store):
+//   - `throw()` on Rva0077CDE0Opaque8's ctor AND dtor (both together, and
+//     ctor alone) -- the dtor stayed empty inline either way, so this may
+//     simply confirm the empty dtor already gets no state, unrelated to
+//     the extra store.
+//   - Deleting Opaque8's user dtor entirely (implicit trivial dtor).
+//   - Pulling Opaque8's first three (zero-valued) dwords OUT of the class
+//     entirely into three plain `unsigned int` members directly on the
+//     outer Rva0077CDE0 class, declared right after m_str9 and before the
+//     (now-smaller) m_opaque8 -- the extra store's position and presence
+//     were BYTE-IDENTICAL to the baseline in every one of the above
+//     variants, which rules out Opaque8's own shape/type-boundary as the
+//     cause (contrast with the +0x8 Opaque1 fix above, which WAS shape-
+//     sensitive).  The extra store is an immediate-byte protective state
+//     set (`c6 84 24 .. 10`, same instruction family as the real
+//     `..,0x11` / `..,0x12` protective sets before real throwing calls
+//     elsewhere in this body), NOT the lazy register-fed state-0 store --
+//     so it looks like MSVC genuinely believes something between str9 and
+//     the ??_L call can throw, but no candidate in the current body
+//     (opaque8's ctor, the memset block, any of the three preceding
+//     dtors) which is provably-nothrow by hand-inspection reproduces or
+//     removes it under any tried restructuring.  Next agent: try declaring
+//     BFMERetailAsciiString's dtor throw() (touches all nine string uses,
+//     high risk of regressing the already-matching earlier states, not
+//     attempted this round given budget) or dump the compiled .obj's own
+//     unwind table to see what state 0x10's registered cleanup action
+//     actually targets -- that will name the object MSVC thinks needs it.
 
 #include <string>
 
@@ -50,10 +105,12 @@ public:
 class Rva0077CDE0Opaque1
 {
 public:
-	Rva0077CDE0Opaque1() : m_a(0), m_b(0), m_c(0) {}
+	struct Wrap { Wrap() : m_c(0) {} unsigned int m_c; };
+	Rva0077CDE0Opaque1() : m_a(0), m_b(0), m_cw() {}
 	~Rva0077CDE0Opaque1();                              ///< pinned 0x0002303D (unwind funclet target)
 private:
-	unsigned int m_a, m_b, m_c;
+	unsigned int m_a, m_b;
+	Wrap m_cw;
 };
 
 class Rva0077CDE0Opaque2
