@@ -116,8 +116,9 @@ Bool WindowLayoutInfo::load(AsciiString filename)
 		return false;
 
 	const unsigned short length = filename.m_data->m_length;
-	const char *begin = filename.m_data->m_text;
-	const char *end = begin + length;
+	register const char *begin = filename.m_data->m_text;
+	const char *end;
+	end = begin + length;
 	const char *extension = begin;
 	while (extension != end && *extension != '.')
 		++extension;

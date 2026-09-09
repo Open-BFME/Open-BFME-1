@@ -1,5 +1,5 @@
 // ?bfmeSetBitAAP@BfmeBitmapAAP@@QAEXHH_N@Z
-// partial score=0.92 date=2026-09-08
+// partial score=0.94 date=2026-09-08
 class BfmeBitmapAAP
 {
 public:
@@ -17,16 +17,7 @@ public:
 
 void BfmeBitmapAAP::bfmeSetBitAAP(int x, int y, bool on)
 {
-	if (x < 0)
-		return;
-
-	if (y < 0)
-		return;
-
-	if (y >= m_bfmeHeightAAP)
-		return;
-
-	if (x >= m_bfmeWidthAAP)
+	if (x < 0 || y < 0 || y >= m_bfmeHeightAAP || x >= m_bfmeWidthAAP)
 		return;
 
 	int idx = m_bfmeStrideAAP * y + (x >> 3);
@@ -34,12 +25,8 @@ void BfmeBitmapAAP::bfmeSetBitAAP(int x, int y, bool on)
 	if ((unsigned int)idx >= (unsigned int)(m_bfmeEndAAP - m_bfmeBeginAAP))
 		return;
 
-	unsigned char *p = m_bfmeBeginAAP + idx;
+	unsigned char *p = *(unsigned char *volatile *)&m_bfmeBeginAAP + idx;
 	unsigned char mask = (unsigned char)(1 << (x & 7));
-	unsigned char v = *p;
 
-	if (on)
-		*p = (unsigned char)(v | mask);
-	else
-		*p = (unsigned char)(v & ~mask);
+	*p = on ? (unsigned char)(*p | mask) : (unsigned char)(*p & ~mask);
 }

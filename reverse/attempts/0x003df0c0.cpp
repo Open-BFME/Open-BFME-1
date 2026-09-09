@@ -82,7 +82,7 @@ void Pathfinder::bfmeObjectCell( Object *obj, ICoord2D *cell )
         center.f = (Real)floor( 0.5f + obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
         BFME_FLOOR_TO_LONG_ASM;
     }
-    cell->x = bfmeReadVolatileInt( &radius.i );
+	cell->x = bfmeReadVolatileInt( &radius.i );
 
     Int cellY;
     if (centerInCell) {
@@ -94,6 +94,6 @@ void Pathfinder::bfmeObjectCell( Object *obj, ICoord2D *cell )
         __asm fld dword ptr [center]
         __asm fistp dword ptr [cellY]
     }
-    bfmeGetCellByIndicesTwin( (PathfindLayerEnum)(cell->y = cellY, obj->getLayer()),
-        cell->x, cellY );
+	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)obj->getLayer(),
+		cell->x, cellY );
 }
