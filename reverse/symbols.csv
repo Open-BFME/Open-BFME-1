@@ -86456,6 +86456,12 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+??$__copy_backward@PAURva00426C00Element@@PAU1@H@_STL@@YAPAURva00426C00Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00023475,retail 28-byte vector fill-insert backward-copy ILT at 0x00426AB6
+??$__uninitialized_copy@PAURva00426C00Element@@PAU1@@_STL@@YAPAURva00426C00Element@@PAU1@00ABU__false_type@0@@Z,0x0002EBB3,retail 28-byte vector fill-insert construction-copy ILT at 0x00426A9B
+??$fill@PAURva00426C00Element@@U1@@_STL@@YAXPAURva00426C00Element@@0ABU1@@Z,0x0000163B,retail 28-byte vector fill-insert assignment-fill ILT at 0x00426AC4
+??$uninitialized_fill_n@PAURva00426C00Element@@IU1@@_STL@@YAPAURva00426C00Element@@PAU1@IABU1@@Z,0x00015AE1,retail 28-byte vector fill-insert construction-fill ILT at 0x00426ADB
+??0Rva00426C00Tree@@QAE@ABV0@@Z,0x0001400B,retail 12-byte tree-member copy constructor ILT at 0x00426A52
+??1Rva00426C00Tree@@QAE@XZ,0x00011FDB,retail 12-byte tree-member destructor ILT at 0x00426B24
 ?bfmeTestQP@@YADPAX0@Z,0x00014196,thunk to 0x005A74A0
 ?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
 ??0ProductionPrerequisiteRetailCopy@@QAE@ABV0@@Z,0x00038550,ProductionPrerequisite construct shim callee at retail body 0x00783D50
