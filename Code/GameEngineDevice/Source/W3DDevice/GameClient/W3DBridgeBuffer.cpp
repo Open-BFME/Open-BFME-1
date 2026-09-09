@@ -3502,14 +3502,33 @@ void W3DBridgeBuffer::cull(CameraClass * camera)
 /** Loads the bridges into the vertex buffer for drawing. */
 //=============================================================================
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/W3DScene/W3DBridgeBufferLoadThunk.cpp
-// ?loadBridgesInVertexAndIndexBuffers@W3DBridgeBuffer@@IAEXPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z present-unmatched
-void W3DBridgeBuffer::loadBridgesInVertexAndIndexBuffers(RefRenderObjListIterator *pLightsIterator)
+extern void W3DRadarResetLock(void);
+extern char bfmeUnlock1179(void);
+
+class W3DBridgeBufferResetGuard
 {
-	if (!m_indexBridge || !m_vertexBridge || !m_initialized) {
+public:
+	W3DBridgeBufferResetGuard(void) { W3DRadarResetLock(); }
+	~W3DBridgeBufferResetGuard(void) { bfmeUnlock1179(); }
+};
+
+// The existing incremental-link thunk calls this reconstruction shim.
+// Deriving adds no fields and preserves the W3DBridgeBuffer layout while
+// allowing this body to access its protected members.
+class W3DBridgeBufferLoadBridgesShim : public W3DBridgeBuffer
+{
+public:
+	void loadBridgesInVertexAndIndexBuffers(RefRenderObjListIterator *pLightsIterator);
+};
+
+void W3DBridgeBufferLoadBridgesShim::loadBridgesInVertexAndIndexBuffers(RefRenderObjListIterator *pLightsIterator)
+{
+	if (!m_indexBridge || !m_vertexBridge || !m_initialized || m_numBridges == 0) {
 		return;
 	}
 	m_curNumBridgeVertices = 0;
 	m_curNumBridgeIndices = 0;
+	W3DBridgeBufferResetGuard resetGuard;
 	VertexFormatXYZNDUV1 *vb;
 	UnsignedShort *ib;
 	// Lock the buffers.
@@ -3524,14 +3543,9 @@ void W3DBridgeBuffer::loadBridgesInVertexAndIndexBuffers(RefRenderObjListIterato
 
 	Int curBridge;
 
-	try {
 	for (curBridge=0; curBridge<m_numBridges; curBridge++) {
 		m_bridges[curBridge].getIndicesNVertices(ib, vb, &m_curNumBridgeIndices, 
 			&m_curNumBridgeVertices, pLightsIterator);
-	}
-	IndexBufferExceptionFunc();
-	} catch(...) {
-		IndexBufferExceptionFunc();
 	}
 }
 
