@@ -3,6 +3,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob0 /Ireference/shims/sweep
 #include <windows.h>
 
+
 // Not declared by the sweep shim's windows.h.
 extern "C" __declspec(dllimport) UINT __stdcall SetDIBColorTable(HDC, UINT, UINT, const RGBQUAD *);
 

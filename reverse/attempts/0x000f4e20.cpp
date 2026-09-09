@@ -177,7 +177,7 @@ static __forceinline Bool teamIsIdleActive(const Team *team)
 	if (team->m_head == 0)
 		return true;
 
-	do
+	while (!iter.done())
 	{
 		object = iter.cur();
 		if ((*(const unsigned char *)((const char *)object + 0x90) & 4) != 0)
@@ -202,9 +202,9 @@ static __forceinline Bool teamIsIdleActive(const Team *team)
 		if (!horde->slot38())
 			return false;
 
-next:
+	next:
 		iter.advance();
-	} while (!iter.done());
+	}
 
 	return true;
 }

@@ -55,17 +55,19 @@ StateReturnType GiantBirdFollowWaypointPathState::onEnter()
 	if (!ai || (object->m_flags344 & 1) != 0)
 		goto failure;
 	if (!updateWaypointGoal())
-		goto success;
-	if (ai->m_flags424 != 0)
+		return STATE_SUCCESS;
+	switch (ai->m_flags424)
 	{
-		ai->m_flags3f0 |= 0x80;
-		return STATE_CONTINUE;
+	case 0:
+		goto failure;
+	default:
+		goto continue_path;
 	}
-	goto failure;
-
-success:
-	return STATE_SUCCESS;
 
 failure:
 	return STATE_FAILURE;
+
+continue_path:
+	ai->m_flags3f0 |= 0x80;
+	return STATE_CONTINUE;
 }
