@@ -1,7 +1,7 @@
 // ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z
-// partial score=0.82 date=2026-09-04
+// partial score=0.84 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// AIPlayer::findSupplyCenter — retail 0x00164C10 / 883B.
+// AIPlayer::findSupplyCenter — retail 0x00164C10 / 886B (ret4 at +0x373).
 // Reloc-named identity=real (call-sites=2); ILT 0x0001E0FB from
 // isSupplySourceSafe; string-anchored on "SupplyWarehouseDockUpdate".
 // ZH twin: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
@@ -34,6 +34,11 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
+
+	void zero()
+	{
+		x = y = z = 0.0f;
+	}
 };
 
 struct Region2D
@@ -131,7 +136,33 @@ public:
 
 struct KindOfMaskType
 {
+	enum BogusInitType
+	{
+		kInit = 0
+	};
+
 	unsigned int bits[6];
+
+	KindOfMaskType()
+	{
+		bits[0] = 0;
+		bits[1] = 0;
+		bits[2] = 0;
+		bits[3] = 0;
+		bits[4] = 0;
+		bits[5] = 0;
+	}
+
+	KindOfMaskType(BogusInitType, Int bit)
+	{
+		bits[0] = 0;
+		bits[1] = 0;
+		bits[2] = 0;
+		bits[3] = 0;
+		bits[4] = 0;
+		bits[5] = 0;
+		bits[bit >> 5] |= (1U << (bit & 31));
+	}
 };
 
 extern const KindOfMaskType KINDOFMASK_NONE;
@@ -147,16 +178,11 @@ public:
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	PartitionFilterAcceptByKindOf(unsigned cashGeneratorBit)
+	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
+		const KindOfMaskType &mustBeClear)
+		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear)
 	{
 		m_next = 0;
-		m_mustBeSet.bits[0] = 0;
-		m_mustBeSet.bits[1] = cashGeneratorBit;
-		m_mustBeSet.bits[2] = 0;
-		m_mustBeSet.bits[3] = 0;
-		m_mustBeSet.bits[4] = 0;
-		m_mustBeSet.bits[5] = 0;
-		m_mustBeClear = KINDOFMASK_NONE;
 	}
 
 	KindOfMaskType m_mustBeSet;
@@ -182,12 +208,7 @@ public:
 	PartitionFilterOnMap()
 	{
 		m_next = 0;
-		m_pad0 = 0;
-		m_pad1 = 0;
 	}
-
-	int m_pad0;
-	int m_pad1;
 };
 
 class PartitionManager
@@ -225,7 +246,8 @@ protected:
 	Object *findSupplyCenter(Int minimumCash);
 
 private:
-	unsigned char m_pad00[0x0C];
+	// The virtual table pointer occupies the first four bytes; retail m_player is +0x0C.
+	unsigned char m_pad00[0x08];
 	Player *m_player;
 	unsigned char m_pad10[0x34 - 0x10];
 	Coord3D m_baseCenter;
@@ -257,18 +279,17 @@ Bool Object::isKindOfSupplySource() const
 
 Object *AIPlayer::findSupplyCenter(Int minimumCash)
 {
-	AIPlayer *self = this;
-	void *vptr = *(void **)self;
-	int z = 0;
 	Object *bestSupplyWarehouse = 0;
 	Real bestDistSqr = 0;
+	AIPlayer *self = this;
+	int z = 0;
 	Real enemyX = 0;
 	Real enemyY = 0;
+	Object *obj;
+	Region2D bounds;
 	Player *enemy = self->getAiEnemy();
-	(void)vptr;
 	if (enemy != (Player *)z)
 	{
-		Region2D bounds;
 		getPlayerStructureBounds(&bounds, enemy->getPlayerIndex());
 		enemyY = (bounds.lo.y + bounds.hi.y) * 0.5f;
 		enemyX = (bounds.lo.x + bounds.hi.x) * 0.5f;
@@ -276,7 +297,7 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 
 	do
 	{
-		for (Object *obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject())
+		for (obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject())
 		{
 			if (!obj->isKindOfStructure())
 				continue;
@@ -303,10 +324,11 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 			center.z = pos->z;
 			Real radius = 200.0f + obj->getBoundingCircleRadius();
 
-			PartitionFilterAcceptByKindOf f1(4);
-			PartitionFilterPlayer f2(self->m_player, true);
 			PartitionFilterOnMap filterMapStatus;
-			PartitionFilter *filters = filterMapStatus.link(f2.link(&f1));
+			PartitionFilterPlayer f2(self->m_player, true);
+			PartitionFilterAcceptByKindOf f1(
+				KindOfMaskType(KindOfMaskType::kInit, 34), KINDOFMASK_NONE);
+			PartitionFilter *filters = f1.link(f2.link(&filterMapStatus));
 			Object *supplyCenter = ThePartitionManager->getClosestObject(&center, radius, 1, filters);
 			if (supplyCenter != (Object *)z)
 				continue;
