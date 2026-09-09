@@ -86567,3 +86567,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BfmeThingRefEQ@@QAE@XZ,0x000362FF,ThingRef destructor ILT thunk used by the unwind funclets of the 0x0060E8A0 cloud settings constructor
 ??1DataChunkInfo@@QAE@XZ,0x00103240,compiler-synthesized DataChunkInput::parse info dtor; releaseBuffer parentLabel then label; retail addr currently mis-claimed by a gen-tgrid STL pair placeholder
 ?bfmeResolveKZ@Rva0015A5B0Inner@@QAEPAVRva0015A5B0Thing@@XZ,0x000022BB,pin resolve thunk for Rva0015A5B0Sum override walk
+?Rva01336E50Str@@3VUnicodeString@@A,0x01336E50,UnicodeString view of the global string the WaterRenderObjClass constructor copies into its five name slots (same address as ?Rva01336E50Str@@3URva002E5FF0Str@@A)

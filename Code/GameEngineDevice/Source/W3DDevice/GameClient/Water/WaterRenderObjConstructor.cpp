@@ -1,5 +1,3 @@
-// ??0WaterRenderObjClass@@QAE@XZ
-// partial score=0.97 date=2026-09-09
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -153,6 +151,17 @@ private:
 	void *m_data;
 };
 
+// Inline forwarding wrapper: retail computes the receiver (lea ecx) BEFORE
+// pushing the literal for this non-final member call; a flat member with the
+// pinned constructor pushes first.  The wrapper's own inline constructor
+// forwards to the retail string and reproduces retail's order.
+class BfmeSkyStringWR : private BFMERetailAsciiString
+{
+public:
+	BfmeSkyStringWR(const char *s) : BFMERetailAsciiString(s) { }
+	~BfmeSkyStringWR(void) { }
+};
+
 // Minimal TU-local UnicodeString: the ctor/dtor bodies are trivial enough to
 // ICF-fold with the already-matched BFMERetailAsciiString ctor/dtor (0x00017BD9
 // / 0x0000D828), and set() is declared-only so the linker resolves the call to
@@ -303,7 +312,7 @@ public:
 	unsigned long				m_2c0;				// +0x2c0
 	unsigned char				m_2c4;				// +0x2c4
 	unsigned char				m_2c5;				// +0x2c5
-	BFMERetailAsciiString		m_sky;				// +0x2c8
+	BfmeSkyStringWR			m_sky;				// +0x2c8
 	UnicodeString				m_names[5];			// +0x2cc
 	Setting						m_settings[6];		// +0x2e0
 	int							m_400;				// +0x400
