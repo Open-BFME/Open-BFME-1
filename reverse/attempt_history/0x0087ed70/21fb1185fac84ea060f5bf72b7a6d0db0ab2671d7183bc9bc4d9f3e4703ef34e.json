@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "21fb1185fac84ea060f5bf72b7a6d0db0ab2671d7183bc9bc4d9f3e4703ef34e",
+  "symbol": "?getBoundingSphereRadius@GeometryShape@@QBEMXZ",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?getBoundingSphereRadius@GeometryShape@@QBEMXZ\n// partial score=0.92 date=2026-08-31\n// cl: /DNDEBUG /MD /EHsc\n\n#include <math.h>\n\ntypedef float Real;\n\ninline Real geometrySqr(Real value)\n{\n\treturn value * value;\n}\n\nenum GeometryType\n{\n\tGEOMETRY_SPHERE,\n\tGEOMETRY_CYLINDER,\n\tGEOMETRY_BOX\n};\n\nstruct Coord3D\n{\n\tReal x;\n\tReal y;\n\tReal z;\n};\n\nclass GeometryShape\n{\npublic:\n\tReal getBoundingSphereRadius() const;\n\nprivate:\n\tGeometryType m_type;\n\tReal m_height;\n\tReal m_majorRadius;\n\tReal m_minorRadius;\n\tCoord3D m_centerOffset;\n};\n\nReal GeometryShape::getBoundingSphereRadius() const\n{\n\tvolatile Real compilerZero = 0.0f;\n\tswitch (m_type)\n\t{\n\t\tcase GEOMETRY_CYLINDER:\n\t\t\treturn sqrt(\n\t\t\t\tgeometrySqr(sqrt(geometrySqr(m_centerOffset.x) +\n\t\t\t\t\tgeometrySqr(m_centerOffset.y)) + m_majorRadius) +\n\t\t\t\tgeometrySqr(fabs(m_centerOffset.z) + m_height * 0.5)) +\n\t\t\t\tsqrt(geometrySqr(m_centerOffset.x) +\n\t\t\t\t\tgeometrySqr(m_centerOffset.y) +\n\t\t\t\t\tgeometrySqr(m_centerOffset.z));\n\n\t\tcase GEOMETRY_SPHERE:\n\t\t\treturn sqrt(geometrySqr(m_centerOffset.x) +\n\t\t\t\tgeometrySqr(m_centerOffset.y) +\n\t\t\t\tgeometrySqr(m_centerOffset.z)) + m_majorRadius;\n\n\t\tdefault:\n\t\t\tif (m_type != GEOMETRY_BOX)\n\t\t\t\treturn compilerZero;\n\t}\n\n\treturn sqrt(\n\t\tgeometrySqr(fabs(m_centerOffset.x) + m_majorRadius) +\n\t\tgeometrySqr(fabs(m_centerOffset.y) + m_minorRadius) +\n\t\tgeometrySqr(fabs(m_centerOffset.z) + m_height * 0.5));\n}\n"
+}
