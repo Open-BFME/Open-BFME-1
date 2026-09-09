@@ -86452,3 +86452,8 @@ _bfmeVfBXZ,0x00D3E870,secondary vftable pin
 _bfmeNullNameXZ,0x00C80374,NULL name global
 ?bfmeTestQP@@YADPAX0@Z,0x00014196,thunk to 0x005A74A0
 ?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
+??0ProductionPrerequisiteRetailCopy@@QAE@ABV0@@Z,0x00038550,ProductionPrerequisite construct shim callee at retail body 0x00783D50
+??0?$_Vector_base@HV?$BfmeIntAllocator@H@@@_STL@@QAE@IABV?$BfmeIntAllocator@H@@@Z,0x00001DA7,ProductionPrerequisite copy constructor third vector base call
+??0?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00021855,ProductionPrerequisite copy constructor first vector call
+??0?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000012C1,ProductionPrerequisite copy constructor science vector call
+?get_allocator@?$vector@HV?$BfmeIntAllocator@H@@@_STL@@QBE?AV?$BfmeIntAllocator@H@@XZ,0x00020301,ProductionPrerequisite copy constructor third vector allocator call

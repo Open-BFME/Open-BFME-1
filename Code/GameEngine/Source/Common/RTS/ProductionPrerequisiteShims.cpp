@@ -33,6 +33,12 @@ public:
     ProductionPrerequisite(const ProductionPrerequisite &);
 };
 
+class ProductionPrerequisiteRetailCopy
+{
+public:
+    ProductionPrerequisiteRetailCopy(const ProductionPrerequisiteRetailCopy &);
+};
+
 namespace _STL
 {
 
@@ -52,7 +58,8 @@ public:
 void ProductionPrerequisiteConstructShim::construct(ProductionPrerequisite *p, const ProductionPrerequisite &v)
 {
     if (p)
-        new (p) ProductionPrerequisite(v);
+        new (p) ProductionPrerequisiteRetailCopy(
+            *(const ProductionPrerequisiteRetailCopy *)&v);
 }
 
 namespace
