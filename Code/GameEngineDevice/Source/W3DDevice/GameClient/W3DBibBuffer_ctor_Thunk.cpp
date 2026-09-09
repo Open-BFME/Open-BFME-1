@@ -1,347 +1,107 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0W3DBibBuffer@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBibBuffer.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
-
+// W3DBibBuffer constructor, retail RVA 0x006D73C0 (331 bytes).
+// Identity: TBBib.tga / TBRedBib.tga and the adjacent matched bib methods.
+// BFME replaces the ZH raw texture pointers with owning four-byte handles.
+// Handle ABI follows RoadTypeLoadTexture.cpp: 16-bit retain at +4,
+// Release_Ref at RVA 0x009EB7A0, and getFilter at RVA 0x0090DD50.
+// The allocation call goes through ILT RVA 0x00024D66 to 0x006D69D0.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DBibBuffer.h
-class W3DBibBuffer {
+
+class BFMEWaterTrackTexture
+{
 public:
-	W3DBibBuffer();
+	void Release_Ref();
 };
 
-// ??0W3DBibBuffer@@QAE@XZ
-__declspec(naked) W3DBibBuffer::W3DBibBuffer()
+class BFMEWaterTrackTextureHandle
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x06
-		__emit 0xaa
-		__emit 0x04
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x0c
-		__emit 0x53
-		__emit 0x55
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x57
-		__emit 0x8d
-		__emit 0x7e
-		__emit 0x10
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x1f
-		__emit 0x8d
-		__emit 0x6e
-		__emit 0x14
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x89
-		__emit 0x5d
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x01
-		__emit 0x88
-		__emit 0x9e
-		__emit 0xce
-		__emit 0x09
-		__emit 0x01
-		__emit 0x00
-		__emit 0x89
-		__emit 0x1e
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x08
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x18
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x1c
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xc8
-		__emit 0x09
-		__emit 0x01
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x86
-		__emit 0xcc
-		__emit 0x09
-		__emit 0x01
-		__emit 0x00
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x0c
-		__emit 0x80
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x04
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x3d
-		__emit 0xd9
-		__emit 0x94
-		__emit 0xff
-		__emit 0x53
-		__emit 0x53
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x68
-		__emit 0x8c
-		__emit 0xe0
-		__emit 0x11
-		__emit 0x01
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xd6
-		__emit 0x74
-		__emit 0x23
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x02
-		__emit 0x74
-		__emit 0x04
-		__emit 0x66
-		__emit 0xff
-		__emit 0x41
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x0f
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x09
-		__emit 0xe8
-		__emit 0x45
-		__emit 0x43
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x08
-		__emit 0x89
-		__emit 0x0f
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x01
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x2b
-		__emit 0x43
-		__emit 0x31
-		__emit 0x00
-		__emit 0x53
-		__emit 0x53
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x18
-		__emit 0x68
-		__emit 0x7c
-		__emit 0xe0
-		__emit 0x11
-		__emit 0x01
-		__emit 0x52
-		__emit 0xe8
-		__emit 0x8a
-		__emit 0x74
-		__emit 0x23
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x03
-		__emit 0x74
-		__emit 0x04
-		__emit 0x66
-		__emit 0xff
-		__emit 0x41
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x09
-		__emit 0xe8
-		__emit 0xf8
-		__emit 0x42
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x8b
-		__emit 0x00
-		__emit 0x89
-		__emit 0x45
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x01
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0xdd
-		__emit 0x42
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x86
-		__emit 0x68
-		__emit 0x23
-		__emit 0x00
-		__emit 0xbb
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0x89
-		__emit 0x58
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x77
-		__emit 0x68
-		__emit 0x23
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0x89
-		__emit 0x58
-		__emit 0x10
-		__emit 0xe8
-		__emit 0x6d
-		__emit 0x68
-		__emit 0x23
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0x89
-		__emit 0x58
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x63
-		__emit 0x68
-		__emit 0x23
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x89
-		__emit 0x58
-		__emit 0x10
-		__emit 0x5f
-		__emit 0x88
-		__emit 0x9e
-		__emit 0xce
-		__emit 0x09
-		__emit 0x01
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xc6
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x18
-		__emit 0xc3
+public:
+	BFMEWaterTrackTexture *m_texture;
+
+	~BFMEWaterTrackTextureHandle()
+	{
+		if (m_texture)
+			m_texture->Release_Ref();
 	}
+};
+
+BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *name, int mipCount, int format);
+
+class ShroudFilter
+{
+public:
+	char m_pad[12];
+	int m_uAddress;
+	int m_vAddress;
+};
+
+class ShroudTexture
+{
+public:
+	ShroudTexture() : m_texture(0) {}
+
+	~ShroudTexture()
+	{
+		if (m_texture)
+			m_texture->Release_Ref();
+	}
+
+	void operator=(const BFMEWaterTrackTextureHandle &other)
+	{
+		if (other.m_texture)
+			++*(unsigned short *)((char *)other.m_texture + 4);
+		if (m_texture)
+			m_texture->Release_Ref();
+		m_texture = other.m_texture;
+	}
+
+	ShroudFilter *getFilter();
+	BFMEWaterTrackTexture *m_texture;
+};
+
+class W3DBibBuffer
+{
+public:
+	W3DBibBuffer();
+
+protected:
+	void allocateBibBuffers();
+
+private:
+	void *m_vertexBib;
+	int m_vertexBibSize;
+	void *m_indexBib;
+	int m_indexBibSize;
+	ShroudTexture m_bibTexture;
+	ShroudTexture m_highlightBibTexture;
+	int m_curNumBibVertices;
+	int m_curNumBibIndices;
+	// Remaining counters and 1000 retail TBib records; not accessed here.
+	char m_bibsAndCounters[0x109c8 - 0x20];
+	int m_numBibs;
+	bool m_anythingChanged;
+	bool m_updateAllKeys;
+	bool m_initialized;
+};
+
+W3DBibBuffer::W3DBibBuffer()
+{
+	m_initialized = false;
+	m_vertexBib = 0;
+	m_indexBib = 0;
+	m_curNumBibVertices = 0;
+	m_curNumBibIndices = 0;
+	m_numBibs = 0;
+	m_anythingChanged = true;
+	m_indexBibSize = 384;
+	m_vertexBibSize = 256;
+	allocateBibBuffers();
+
+	m_bibTexture = BFMEGetWaterTrackTexture("TBBib.tga", 0, 0);
+	m_highlightBibTexture = BFMEGetWaterTrackTexture("TBRedBib.tga", 0, 0);
+	m_bibTexture.getFilter()->m_uAddress = 1;
+	m_bibTexture.getFilter()->m_vAddress = 1;
+	m_highlightBibTexture.getFilter()->m_uAddress = 1;
+	m_highlightBibTexture.getFilter()->m_vAddress = 1;
+	m_initialized = true;
 }

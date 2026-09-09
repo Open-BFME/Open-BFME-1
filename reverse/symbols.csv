@@ -86548,3 +86548,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?bfmeFindCA@BfmeMapCA@@QAEPAVBfmeNodeCA@@PBVBFMERetailAsciiString@@@Z,0x00031D68,map find
 ?bfmeStopCA@BfmeThingCA@@QAEXH@Z,0x00036F7A,stop
 ?bfmeEraseCA@BfmeMapCA@@QAEXPAUBfmeIterCA@@@Z,0x00016F36,map erase
+?allocateBibBuffers@W3DBibBuffer@@IAEXXZ,0x006D69D0,W3DBibBuffer ctor call via ILT 0x00024D66; releases old buffers and creates 0x142 vertex and index buffers using sizes at +4/+12
