@@ -1,0 +1,89 @@
+// Retail 0x003F6D20: PathfindCell cost accumulated from a parent cell.
+// The compact BFME cell layout differs from the reference game header.
+
+typedef unsigned int UnsignedInt;
+typedef unsigned short UnsignedShort;
+
+struct ICoord2D
+{
+	int x;
+	int y;
+};
+
+class PathfindCell;
+
+struct PathfindCellInfo
+{
+	ICoord2D m_pos;
+	PathfindCellInfo *m_pathParent;
+	char m_pad0c[4];
+	UnsignedShort m_totalCost;
+	UnsignedShort m_costSoFar;
+	char m_pad14[0x14];
+	PathfindCell *m_cell;
+};
+
+class PathfindCell
+{
+public:
+	UnsignedInt costSoFar(PathfindCell *parent);
+	UnsignedShort getXIndex(void) const { return m_info->m_pos.x; }
+	UnsignedShort getYIndex(void) const { return m_info->m_pos.y; }
+	UnsignedInt getCostSoFar(void) const { return m_info->m_costSoFar; }
+	__forceinline PathfindCell *getParentCell(void) const
+	{
+		PathfindCell *cell;
+		if (m_info)
+		{
+			if (m_info->m_pathParent)
+				cell = m_info->m_pathParent->m_cell;
+			else
+				cell = 0;
+		}
+		else
+			cell = 0;
+		return cell;
+	}
+	bool getPinched(void) const { return ((m_bits >> 18) & 1) != 0; }
+
+private:
+	PathfindCellInfo *m_info;
+	char m_pad04[8];
+	UnsignedInt m_bits;
+};
+
+UnsignedInt PathfindCell::costSoFar(PathfindCell *parent)
+{
+	if (parent == 0)
+		return 0;
+
+	ICoord2D prevDir;
+	int cost;
+	prevDir.x = parent->getXIndex() - m_info->m_pos.x;
+	prevDir.y = parent->getYIndex() - m_info->m_pos.y;
+	if (prevDir.x == 0 || prevDir.y == 0)
+		cost = parent->getCostSoFar() + 10;
+	else
+		cost = parent->getCostSoFar() + 14;
+
+	if (getPinched())
+		cost += 14;
+
+	int numTurns = 0;
+	for (PathfindCell *prevCell = parent->getParentCell(); prevCell; prevCell = 0)
+	{
+		ICoord2D dir;
+		dir.x = prevCell->getXIndex() - parent->getXIndex();
+		dir.y = prevCell->getYIndex() - parent->getYIndex();
+		if (dir.x != prevDir.x || dir.y != prevDir.y)
+		{
+			int dot = dir.x * prevDir.x + dir.y * prevDir.y;
+			if (dot > 0)
+				numTurns = 4;
+			else
+				numTurns = dot == 0 ? 8 : 16;
+		}
+	}
+
+	return numTurns + cost;
+}
