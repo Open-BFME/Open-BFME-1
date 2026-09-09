@@ -11,6 +11,23 @@ enum StateReturnType
 
 class StateMachine;
 class GiantBirdState;
+class Locomotor
+{
+public:
+	Int getPreferredHeight() const
+	{
+		return *(const Int *)((const char *)this + 0x44);
+	}
+};
+
+struct GoalHeight
+{
+	Int bits;
+	operator float() const
+	{
+		return *(const float *)&bits;
+	}
+};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface
@@ -143,8 +160,15 @@ public:
 	virtual void unused1f0() = 0;
 	virtual void unused1f4() = 0;
 	virtual void unused1f8() = 0;
-	virtual void unused1fc() = 0;
+	virtual Bool chooseLocomotorSet(Int set) = 0;
 	virtual Int makeAttackMoveGoal() = 0;
+
+	unsigned char m_unreconstructed004[0x1c8];
+	Locomotor *m_curLocomotor;
+	unsigned char m_unreconstructed1d0[0x424 - 0x1d0];
+	unsigned char m_continue424;
+	unsigned char m_unreconstructed425[0x478 - 0x425];
+	GoalHeight m_goalHeight478;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -158,6 +182,17 @@ public:
 	unsigned int m_conditionFlags120;
 	unsigned char m_unreconstructed124[0xe0];
 	AIUpdateInterface *m_aiUpdate;
+	unsigned char m_unreconstructed208[0x13c];
+	unsigned char m_flags344;
+
+	void notifyModelConditionChanged();
+};
+
+struct Coord3D
+{
+	float x;
+	float y;
+	float z;
 };
 
 class GiantBirdState
@@ -202,7 +237,37 @@ public:
 	Object *m_owner;
 	unsigned char m_unreconstructed14[0x08];
 	GiantBirdState *m_currentState;
+	unsigned char m_unreconstructed20[4];
+	Coord3D m_goalPosition;
 };
+
+class TerrainLogic
+{
+public:
+	virtual void unused00() = 0;
+	virtual void unused04() = 0;
+	virtual void unused08() = 0;
+	virtual void unused0c() = 0;
+	virtual void unused10() = 0;
+	virtual void unused14() = 0;
+	virtual float getGroundHeight(float x, float y, Coord3D *normal) const = 0;
+};
+
+extern TerrainLogic *TheTerrainLogic;
+
+class Rva002BC260GoalOwner
+{
+public:
+	void run(void *position, void *goalData, void *unused, void *source);
+};
+
+#pragma comment(linker, "/alternatename:?run@Rva002BC260GoalOwner@@QAEXPAX000@Z=?j_0000795a@@YAXXZ")
+
+#define g_Rva012F02D4 (*(int *)0x012F02D4)
+
+extern void j_0002191d();
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class GiantBirdNormalFlightState
 {
@@ -216,6 +281,45 @@ public:
 	void *m_transitions[3];
 	StateMachine *m_machine;
 };
+
+StateReturnType GiantBirdNormalFlightState::onEnter()
+{
+	StateMachine *machine = m_machine;
+	Object *owner = machine->m_owner;
+	if (owner->m_conditionFlags120 & 0x00020000)
+	{
+		owner->m_conditionFlags120 &= 0xFFFDFFFF;
+		typedef void (Object::*NotifyCall)();
+		union { void *asVoid; NotifyCall asMember; } notifyCast;
+		notifyCast.asVoid = (void *)j_0002191d;
+		(owner->*notifyCast.asMember)();
+	}
+
+	AIUpdateInterface *ai = owner->m_aiUpdate;
+	if (!ai)
+		return (StateReturnType)-2;
+	else
+	{
+		if (owner->m_flags344 & 1)
+			return (StateReturnType)-2;
+		ai->chooseLocomotorSet(0);
+		Locomotor *locomotor = ai->m_curLocomotor;
+		if (!locomotor)
+			return (StateReturnType)-2;
+		ai->m_goalHeight478.bits = locomotor->getPreferredHeight();
+
+		Coord3D *source = &m_machine->m_goalPosition;
+		Coord3D goal;
+		goal.x = source->x;
+		goal.y = source->y;
+		goal.z = source->z;
+		_ReadWriteBarrier();
+		float height = ai->m_goalHeight478;
+		goal.z = TheTerrainLogic->getGroundHeight(goal.x, goal.y, 0) + height;
+		((Rva002BC260GoalOwner *)ai)->run(&goal, &g_Rva012F02D4, 0, (void *)1);
+		return ai->m_continue424 ? (StateReturnType)0 : (StateReturnType)-2;
+	}
+}
 
 class GiantBirdAttackMoveToState : public GiantBirdNormalFlightState
 {
