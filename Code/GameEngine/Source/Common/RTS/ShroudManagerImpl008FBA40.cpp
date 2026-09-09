@@ -40,6 +40,16 @@ __forceinline Int shroudFloatToLong(Real value)
 	return result;
 }
 
+__forceinline Real shroudFloor(Real value)
+{
+	return (Real)floor((double)value);
+}
+
+__forceinline Real shroudCeil(Real value)
+{
+	return (Real)ceil((double)value);
+}
+
 void *operator new[](unsigned int bytes);
 void operator delete[](void *pointer);
 
@@ -84,7 +94,11 @@ struct Region3D
 
 struct Gen_t_008fb350_p12pod
 {
-	int value[3];
+	unsigned int timestamp;
+	int x;
+	int y;
+	int radius;
+	int playerMask;
 };
 
 class ShroudManagerImpl008FBA40;
@@ -116,6 +130,16 @@ struct ShroudManagerImpl008FBA40CellObject
 	int playerState[16];
 };
 
+class BfmeThingCDE
+{
+public:
+	void d_008f7ec0();
+	void d_008f7990();
+
+	char unknown00[0x10];
+	BfmeThingCDE *next;
+};
+
 class ShroudManagerImpl008FBA40Node
 {
 public:
@@ -136,6 +160,7 @@ class PartitionData
 {
 public:
 	void unlink();
+	void makeDirty();
 
 private:
 	void updateCellsTouched();
@@ -178,9 +203,17 @@ public:
 		int playerIndex);
 
 private:
+	__forceinline void copyPlayerStatesFrom(
+		const ShroudManagerImpl008FBA40Element &other)
+	{
+		for (int i = 0; i < 16; ++i)
+			playerStates[i] = other.playerStates[i];
+	}
+
 	ShroudManagerImpl008FBA40Node *cellNodes;
 	ShroudManagerImpl008FBA40PlayerState playerStates[16];
 	int unknown64;
+	friend class ShroudManagerImpl008FBA40;
 };
 
 class ShroudManagerImpl008FBA40
@@ -198,6 +231,7 @@ public:
 	void reset();
 	void setRegion(const Region3D *region, Real cellSize);
 	void configure(Region3D region, Real cellSize);
+	__declspec(noinline) void notify();
 	__declspec(noinline) void doShroudReveal(Int cellX, Int cellY,
 		Int cellRadius, UnsignedInt playerMask);
 	__declspec(noinline) void undoShroudReveal(Int cellX, Int cellY,
@@ -214,7 +248,8 @@ private:
 	ShroudManagerImpl008FBA40Node *nodes;
 	PartitionData *pendingPartitionData;
 	int unknown38;
-	_STL::deque<Gen_t_008fb350_p12pod, _STL::allocator<Gen_t_008fb350_p12pod> > records;
+	_STL::deque<Gen_t_008fb350_p12pod,
+		_STL::allocator<Gen_t_008fb350_p12pod> > records;
 	int unknown64;
 	bool enabled;
 	char padding69[3];
@@ -367,6 +402,83 @@ void ShroudManagerImpl008FBA40::setRegion(const Region3D *newRegion, Real cellSi
 		&& !(newRegion->height() < 0.0f))
 	{
 		configure(*newRegion, cellSize);
+	}
+}
+
+void ShroudManagerImpl008FBA40::configure(Region3D newRegion, Real cellSize)
+{
+	drainPending();
+
+	for (BfmeThingCDE *node = reinterpret_cast<BfmeThingCDE *>(nodes);
+		node != 0; node = node->next)
+	{
+		node->d_008f7ec0();
+		node->d_008f7990();
+		reinterpret_cast<PartitionData *>(node)->makeDirty();
+	}
+
+	processPending(false);
+
+	if (newRegion.width() < 1.0f)
+		newRegion.hi.x = newRegion.lo.x + 1.0f;
+	if (newRegion.height() < 1.0f)
+		newRegion.hi.y = newRegion.lo.y + 1.0f;
+
+	Real newInverseCellSize = 1.0f / cellSize;
+	int newWidth = shroudFloatToLong(shroudCeil(
+		newRegion.width() * newInverseCellSize));
+	if (newWidth < 1)
+		newWidth = 1;
+	int newHeight = shroudFloatToLong(shroudCeil(
+		newRegion.height() * newInverseCellSize));
+	if (newHeight < 1)
+		newHeight = 1;
+
+	ShroudManagerImpl008FBA40Element *newElements =
+		new ShroudManagerImpl008FBA40Element[newWidth * newHeight];
+	ShroudManagerImpl008FBA40Element *newElement = newElements;
+	for (unsigned int y = 0; y < (unsigned int)newHeight; ++y)
+	{
+		int oldY = shroudFloatToLong(shroudFloor(
+			((Real)y * cellSize + newRegion.lo.y - region.lo.y)
+				* inverseCellSize));
+		if (oldY >= 0 && oldY < (int)height)
+		{
+			for (unsigned int x = 0; x < (unsigned int)newWidth;
+				++x, ++newElement)
+			{
+				int oldX = shroudFloatToLong(shroudFloor(
+					((Real)x * cellSize + newRegion.lo.x - region.lo.x)
+						* inverseCellSize));
+				if (oldX >= 0 && oldX < (int)width)
+				{
+					newElement->copyPlayerStatesFrom(
+						elements[oldY * width + oldX]);
+				}
+			}
+		}
+		else
+		{
+			newElement += newWidth;
+		}
+	}
+
+	delete[] elements;
+	elements = newElements;
+	region = newRegion;
+	inverseCellSize = newInverseCellSize;
+	width = newWidth;
+	height = newHeight;
+	defaultCellSize = cellSize;
+
+	if (!nodes)
+	{
+		unknown38 = 0;
+	}
+	else
+	{
+		drainPending();
+		notify();
 	}
 }
 
