@@ -19787,3 +19787,8 @@ queueDozer	0x001657E0	490	blocked	BFME three-argument findFactory(tTemplate,true
 ?d_009a76a0@@YAXXZ	0x009A76A0	177	blocked	served file drained: bfmeGo76A0 identity is anchored by bfmeGo7820, but the clean filter bank remains a 0.92 register/stack near-match; t=8min model=gpt-5.6
 ?d_0090c950@@YAXXZ	0x0090C950	142	blocked	served file drained: caller/pin identify the raw texture-format helper, but the retained COM/EH clean reconstruction is a 0.95 three-instruction lifetime-order near-match; identity detectors add no hit; t=6min model=gpt-5.6
 ?d_009056f0@@YAXXZ	0x009056F0	81	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_0087f020@@YAXXZ	0x0087F020	109	blocked	served file drained: bfmeFillBE identity is supported by BfmeVecBE::overflow and the pin, but the source contract/register shape remains a 0.85 near-match; t=5min model=gpt-5.6
+?d_0087e0d0@@YAXXZ	0x0087E0D0	120	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_0087ed00@@YAXXZ	0x0087ED00	101	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_0087efa0@@YAXXZ	0x0087EFA0	120	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_0087f2f0@@YAXXZ	0x0087F2F0	480	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
