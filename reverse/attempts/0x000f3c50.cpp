@@ -1,5 +1,5 @@
 // ?xfer@TeamRelationMap@@MAEXPAVXfer@@@Z
-// partial score=0.9591 date=2026-09-06
+// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // TeamRelationMap::xfer, retail 0x000F3C50, 269 bytes.
@@ -126,21 +126,22 @@ void TeamRelationMap::xfer(Xfer *xfer)
     UnsignedShort teamRelationCount = m_map.size();
     xfer->xferUnsignedShort(&teamRelationCount);
 
-    TeamID teamID;
+    Relationship relationship;
     if (xfer->isSaving())
     {
         TeamRelationMapType::iterator teamRelationIt;
         for (teamRelationIt = m_map.begin(); teamRelationIt != m_map.end(); ++teamRelationIt)
         {
+            TeamID teamID;
             teamID = (*teamRelationIt).first;
             xfer->xferTeamID(&teamID);
-            Relationship relationship = (*teamRelationIt).second;
+            relationship = (*teamRelationIt).second;
             Rva0010BE40((MidVirtualSlot90Receiver *)xfer, &relationship);
         }
     }
     else
     {
-        Relationship relationship;
+        TeamID teamID;
         for (UnsignedShort i = 0; i < teamRelationCount; ++i)
         {
             xfer->xferTeamID(&teamID);

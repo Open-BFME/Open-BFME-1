@@ -88,13 +88,14 @@ Int LinePassableStruct::linePassableCallback( PathfindCell *from, PathfindCell *
 			return 1;
 		}
 	} else {
-		if (m_pathfinder->checkForMovement( m_obj, &m_info )) {
+		if (m_pathfinder->checkForMovement( m_obj, &m_info ))
 			goto movement_checked;
-		}
-		return 1;
+		else
+			return 1;
 	}
 
 movement_checked:
+
 	if (m_allyFixedCount) {
 		return 1;
 	}
