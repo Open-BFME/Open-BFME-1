@@ -281,17 +281,40 @@ static void removeSelection( ListboxData *list, Int i )
 
 static void adjustDisplay( GameWindow *window, Int adjustment, Bool updateSlider );
 
+// BFME's listbox record has an inserted four-byte slice before the child
+// pointers and a second inserted slice before displayHeight.  The ordinary ZH
+// ListboxData declaration therefore reads the slider at +0x20, while retail
+// reads it at +0x24.  Keep this ABI view local to the BFME-only overload.
+struct BFMEAdjustDisplayListboxData
+{
+	unsigned char m_prefix[0x11];
+	Bool updateScrollButtons;
+	unsigned char m_pad12[0x12];
+	GameWindow *slider;
+	Int totalHeight;
+	unsigned char m_pad2c[0x10];
+	Short displayHeight;
+	unsigned char m_pad3e[6];
+	Short displayPos;
+};
+
+class BfmeObjEBN;
+char bfmeGoEBNb(BfmeObjEBN *object);
+extern Real g_bfmeDefaultBU;
+void Rva004B7A10SetScrollButtonsHidden(GameWindow *window, Bool hide);
+
 // adjustDisplay (2-arg overload) =============================================
 // BFME retail gives computeTotalHeight's own always-zero-adjustment call site
 // a dedicated 2-arg entry point (RVA 0x4B7B20, proven from computeTotalHeight's
 // retail bytes: 2 stack dwords pushed + `add esp,8`) distinct from the general
 // 3-arg adjustDisplay@0x4B7CA0 addEntry calls (3 dwords + `add esp,0xc`) - a
-// genuine C++ overload, not a naming coincidence. Never itself byte-verified
-// (only the pin/call site at computeTotalHeight is); body is a passthrough.
+// genuine C++ overload, not a naming coincidence.  Its BFME record view and
+// child-size/post-slider branches are established by the retail body.
 //=============================================================================
 __declspec(noinline) void __cdecl adjustDisplay( GameWindow *window, Bool updateSlider )
 {
-	ListboxData *list = (ListboxData *)window->winGetUserData();
+	BFMEAdjustDisplayListboxData *list =
+		(BFMEAdjustDisplayListboxData *)window->winGetUserData();
 
 	if( list->slider != NULL )
 	{
@@ -301,19 +324,40 @@ __declspec(noinline) void __cdecl adjustDisplay( GameWindow *window, Bool update
 
 		sData = (SliderData *)list->slider->winGetUserData();
 		list->slider->winGetSize( &sliderSize.x, &sliderSize.y );
-		sData->maxVal = list->totalHeight - ( list->displayHeight - TOTAL_OUTLINE_HEIGHT ) + 1;
+		sData->minVal = 0;
+		sData->maxVal = list->totalHeight - list->displayHeight;
 		if( sData->maxVal < 0 )
 			sData->maxVal = 0;
 
 		child = list->slider->winGetChild();
 		child->winGetSize( &sliderChildSize.x, &sliderChildSize.y );
+		if( bfmeGoEBNb( (BfmeObjEBN *)child ) )
+		{
+			Real scale = (Real)list->displayHeight / list->totalHeight;
+			if( scale > g_bfmeDefaultBU )
+				scale = g_bfmeDefaultBU;
+
+			Int childHeight = (Int)((Real)sliderSize.y * scale);
+			if( childHeight < 10 )
+				childHeight = 10;
+			child->winSetSize( sliderChildSize.x, childHeight );
+		}
 		sData->numTicks = (float)((sliderSize.y - sliderChildSize.y) / (float)sData->maxVal);
 
 		if( updateSlider )
+		{
+			Int position = sData->maxVal - list->displayPos;
+			if( position < 0 )
+				position = 0;
 			TheWindowManager->winSendSystemMsg( list->slider,
-				GSM_SET_SLIDER,
-				(sData->maxVal - list->displayPos),
+				0x400D,
+				position,
 				0 );
+		}
+
+		if( list->updateScrollButtons )
+			Rva004B7A10SetScrollButtonsHidden( window,
+				list->totalHeight <= list->displayHeight );
 	}
 }
 
