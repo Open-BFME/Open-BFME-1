@@ -1,5 +1,5 @@
-// ?bfmeDrawHK@@YGXHHHHHH@Z
-// partial score=0.95 date=2026-09-08
+// cl: /DNDEBUG /MD /EHsc
+
 class Display
 {
 public:
@@ -67,7 +67,7 @@ void __stdcall bfmeDrawHK(int p1, int p2, int p3, int p4, int p5, int p6)
 {
 	Display *d = TheDisplay;
 
-	d->bfmeBeginHK();
+	TheDisplay->bfmeBeginHK();
 	d->bfmeRectHK((float)p3, (float)p4, (float)(p5 - p3), (float)(p6 - p4), p1);
 	d->bfmeEndHK();
 }
