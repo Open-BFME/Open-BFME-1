@@ -1,7 +1,7 @@
 // ?ConstructNetCommandMsgFromRawData@NetPacket@@SAPAVNetCommandRef@@PAEG@Z
-// partial score=0.86 date=2026-09-07
+// partial score=0.88 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// BANKED RECONSTRUCTION: instruction shape is not yet exact (946 vs 940 B).
+// BANKED RECONSTRUCTION: instruction shape is not yet exact (944 vs 940 B).
 // Real body RVA 0x0067EE40 ends at 0x0067F1EB inclusive. Ghidra's 937-byte
 // extent truncates the last add esp,0x24; ret epilogue (actual size 940).
 // NetCommandWrapperList::getReadyCommands calls the parser through ILT
@@ -14,12 +14,26 @@
 // Default type is ACKBOTH (0), not the reference's GAMECOMMAND (4). Unknown
 // command types and null reader results return null before metadata/ref creation.
 //
-// Current shaping wall: temporary payloadOffset avoids declaration-only reader
-// pointer-retention spilling every tag increment (981 B). It yields 946 B,
-// but MSVC puts cursor in EAX rather than retail ESI, so six tag comparisons
-// use CL rather than shorter AL forms. Header declaration-order, local tag,
-// enum type, ref destructor, /Ob1, and /G5-/G6 variants made no byte progress.
-// Assigning cursor before detach gives 944 B but swaps EBX/ESI and moves loads.
+// PROGRESS 2026-09-09: moving `offset = payloadOffset;` before `msg->detach();`
+// (instead of after) took this from 946 B to 944 B and fixed the historical
+// AL-vs-CL wall -- the tag-byte compares now correctly encode as 2-byte
+// `cmp al,imm8` forms in both retail and ours. Remaining wall is a pure
+// register-role permutation in the prologue: retail assigns ESI=offset,
+// EDI=data, EBP=commandType (all persistent across the whole function); ours
+// assigns EDI=offset, EBP=data, EBX=commandType -- a 3-cycle rotation of the
+// same three roles among esi/edi/ebp/ebx, plus one now-genuinely-unused `push
+// esi`. The 4 extra bytes are ModRM/SIB cost from using EBP as a base register
+// in [base+index] byte loads (mov al,[edi+ebp] needs a disp8 retail's
+// [esi+edi] form doesn't). Tried: reordering offset/commandType/ref
+// declarations to the top in various orders (no byte movement at all, same
+// 944 B and same first diff) on top of the detach reorder. Header
+// declaration-order, local tag, enum type, ref destructor, /Ob1, and /G5-/G6
+// variants (prior session) made no byte progress either. Next lever to try:
+// force EBP out of contention for the data pointer by giving `data` its own
+// named local used only inside the tag-dispatch loop (mirroring
+// while-form-picks-ebx / separate-loop-counter-shrink-wraps), or split
+// `offset`'s role so the loop-body cursor and the post-loop payloadOffset
+// are visibly different lifetimes.
 #include <string.h>
 #define NULL 0
 typedef unsigned char UnsignedByte;
@@ -251,10 +265,10 @@ NetCommandRef * NetPacket::ConstructNetCommandMsgFromRawData(UnsignedByte *data,
 
 			ref->setRelay(relay);
 
+			offset = payloadOffset;
 			msg->detach();
 			msg = NULL;
 
-			offset = payloadOffset;
 			notDone = FALSE;
 		}
 	}
