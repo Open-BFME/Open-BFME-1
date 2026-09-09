@@ -1,5 +1,5 @@
 // ?bfmeDumpCG@@YGXPAVBfmeSinkCG@@@Z
-// partial score=0.99 date=2026-09-09
+// partial score=0.999 date=2026-09-09
 extern "C" char _bfmeEmptyCG[];
 
 struct BfmeKeyCG
@@ -44,6 +44,9 @@ public:
 };
 
 extern ParticleSystemManager *TheParticleSystemManager;
+
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 
 class BfmeSinkCG
 {
@@ -98,6 +101,7 @@ scanCG:
 	}
 
 	n = p;
+	_ReadWriteBarrier();
 
 	if (n != 0)
 		goto outerCG;
