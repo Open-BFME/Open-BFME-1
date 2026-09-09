@@ -7,11 +7,11 @@
 // FunctorBinding, BfmeAptFunctorMarker, AsciiString, g_theWindowManager)
 // already lives earlier in that file.
 //
-// Object layout confirmed byte-for-byte (unchanged from the 0.91 prior
-// session): m_field258(int)/pad25C(4)/m_field260/264/268(int)/pad26C(4)/
+// Object layout confirmed byte-for-byte (unchanged since the 0.91 session):
+// m_field258(int)/pad25C(4)/m_field260/264/268(int)/pad26C(4)/
 // InGameChatSlot m_firstControl@0x270/InGameChatSlot m_secondControl@0x280/
 // 6 bool fields 0x290..0x295/pad(2)/m_field298/29C/2A0(int) = 0x2A4 total.
-// New pins needed (verified against retail this session; re-derive from
+// New pins needed (unchanged from the 0.97 session; re-derive from
 // `python3 tools/dis_retail.py 0x005160E0 987` if this drifts):
 //   ?BfmeAptScreenInGameChatVftable@@3PAPBXA          0x01105384
 //   ?BfmeAptScreenInGameChatSecondaryVftable@@3PAPBXA 0x01105380
@@ -33,137 +33,112 @@
 //   ?g_Rva005127A0InGameChat@@3PAVRva005127A0InGameChat@@A 0x012F4988 (singleton)
 //   _bfme_AptGameWindow::_bfme_showAptScreen (0x000338ED) /
 //   _bfme_showAptScreenWithArg (0x0000ACFE) / _bfme_setAptScreenRef (0x0003DF14)
+//   ??1InGameChatSlot@@QAE@XZ,0x0004598F (already pinned by a prior session --
+//     ILT of the 0x10-byte InGameChat slot destructor used at this+0x270/+0x280)
 //
-// THIS SESSION'S FINDING -- the destructor identity, and four dead ends
-// that narrow the search for whoever picks this up next:
+// THIS SESSION (t=40, sonnet) -- tried the fifth variant the 0.97 session
+// proposed but ran out of time for: give InGameChatSlot a REAL, NON-TRIVIAL,
+// user-provided default constructor that itself performs the work retail's
+// bfmeBaseTC() call site does:
 //
-//   The state1/state2 unwind funclets (`add ecx,0x270`/`0x280; jmp <dtor>`)
-//   resolve, after chasing THREE layers of incremental-link ILT (0xd5e9 ->
-//   0x5111e0 -> 0x4598f), to an address that a PRIOR session had ALREADY
-//   correctly identified and pinned:
-//     ??1InGameChatSlot@@QAE@XZ,0x0004598F,"ILT of the 0x10-byte InGameChat
-//     slot destructor used at this+0x270 and +0x280"
-//   -- i.e. the two control sub-objects DO need a real (non-virtual --
-//   "QAE@XZ", not "UAE@XZ") destructor in THIS class, even though the
-//   already-landed BfmeThingTC in BfmeThreeHundredFortyTwo.cpp (same vft/
-//   gap/what layout, same bfmeBaseTC() target 0x00021FFD, byte-verified)
-//   has NO destructor at all -- the two must be modelled as DIFFERENT C++
-//   classes in this TU (InGameChatSlot here, not BfmeThingTC) even though
-//   they're binary-identical, because ONE has a destructor pin and the
-//   other doesn't. Renamed the class to InGameChatSlot for that reason and
-//   declared `~InGameChatSlot();` (undefined, external, pinned).
+//   class InGameChatSlot
+//   {
+//   public:
+//       InGameChatSlot()
+//       {
+//           bfmeBaseTC();
+//           m_bfmeVft = (void *)_bfmeVftTC;
+//           m_bfmeWhat = (void *)4;
+//       }
+//       ~InGameChatSlot();          // declared only, pinned to 0x0004598F
+//       void bfmeBaseTC();
+//       void *m_bfmeVft;
+//       unsigned char m_bfmeGap[8];
+//       void *m_bfmeWhat;
+//   };
 //
-//   That alone was NOT enough to reproduce retail's unwind states, and
-//   four constructions of "how the object becomes alive" were tried this
-//   session, disassembling the compiled .obj with capstone each time
-//   (objdump on this macOS host mis-decodes right after unresolved
-//   relocations -- read the .obj symbol bytes via build.read_object_symbol_bytes
-//   and feed them straight to capstone instead, as this session did):
-//     1. raw buffer + plain `first->bfmeBaseTC()` call (no ctor at all,
-//        the ORIGINAL 0.91 stash's shape) + declaring `~InGameChatSlot()`
-//        on the class: compiled size UNCHANGED at 910B, zero new EH state
-//        instructions anywhere -- a plain method call on a reinterpreted
-//        raw buffer does not make MSVC think an object's lifetime began.
-//     2. real typed members (`InGameChatSlot m_firstControl;` instead of
-//        `char m_firstControl[0x10]`), keeping the plain bfmeBaseTC() call:
-//        910B -> 920B, and EH machinery DOES appear, but both controls'
-//        state is set to its FINAL value (2) in ONE instruction immediately
-//        after the base-class ctor call, before ANY field zeroing -- because
-//        real members are ALWAYS constructed (via their implicit default
-//        ctor, even a no-op one) before the enclosing constructor BODY
-//        starts, so both controls become "alive" simultaneously at the top
-//        instead of incrementally (0->1 after the first bfmeBaseTC() call,
-//        1->2 after the second, which is retail's actual shape -- confirmed
-//        by ehmap: state1's funclet destroys ONLY the first control, and
-//        state2's chains to state1, meaning retail keeps them as two
-//        SEPARATE incremental risk windows, not one combined one). This is
-//        the best byte count reached this session (920B) and is what's
-//        left in this stash, but the SHAPE is still wrong for the reason
-//        above -- it is progress, not a fix.
-//     3. raw buffer + EXPLICIT non-placement ctor-call syntax on a
-//        TRIVIAL inline-empty constructor (`InGameChatSlot() {}`, called
-//        via `first->InGameChatSlot::InGameChatSlot();`, mirroring the
-//        trick that worked for OptionPreferences at 0x00563370): compiled
-//        back down to 910B, IDENTICAL to variant 1 -- the compiler proves
-//        the empty ctor is trivial and elides the whole EH-tracked-lifetime
-//        marking, explicit-call syntax or not.
-//     4. raw buffer + explicit ctor-call syntax on an UNDEFINED/external
-//        constructor pinned to the SAME address as bfmeBaseTC (i.e.
-//        treating retail's single `call 0x21ffd` as the object's real
-//        constructor rather than a separately-named init method, removing
-//        the redundant bfmeBaseTC() call entirely): still 910B, and the
-//        disassembled .obj confirms the call survives (not eliminated) but
-//        STILL carries no EH state-set instruction around it. So even an
-//        opaque, unconstant-foldable external constructor call, reached via
-//        the ctor-call trick, does NOT reliably get lifetime tracking here
-//        -- meaning OptionPreferences' 0x00563370 win (state1 tracking a
-//        raw-buffer explicit ctor-call) needs re-verification too; this
-//        session did not have time to re-check that one after this finding.
+// with m_firstControl/m_secondControl kept as REAL typed members (not a raw
+// buffer -- confirmed again this session that a raw buffer + explicit
+// ctor-call syntax, variants 3/4 from the 0.87 stash, generates NO EH state
+// tracking at all regardless of how non-trivial the called ctor looks; only
+// a genuine typed member triggers the compiler's per-sub-object unwind
+// bookkeeping here).
 //
-//   Net effect: none of the four single-mechanism attempts reproduce
-//   retail's INCREMENTAL two-state shape. The likely fix is some
-//   combination not tried yet -- e.g. real typed members but with a
-//   user-provided (non-implicit) default constructor on InGameChatSlot
-//   that does something non-trivial-looking (not just `{}`) so the
-//   compiler can't prove simultaneous construction is safe to fold into
-//   one state transition; or accept variant 2's shape as what retail
-//   actually reduces to under some other flag and instead chase the
-//   remaining 67 bytes (987-920) as a REGISTER/CONSTANT-hoisting
-//   difference in the registration blocks the way 0x00563370 shows,
-//   which is a much shorter remaining gap than either prior session left.
+// RESULT: this DOES fix the shape bug the 0.97 stash flagged -- the compiled
+// object now sets the EH state marker at [esp+0x30] INCREMENTALLY, exactly
+// like retail: `mov dword ptr [esp+0x30], ebp` (ebp=0) immediately before the
+// FIRST bfmeBaseTC() call, then `mov byte ptr [esp+0x30], 1` immediately
+// before the SECOND call -- confirmed via a raw (unresolved-relocation)
+// capstone disassembly of the compiled .obj bytes so the 0/1 immediates are
+// not an artifact of the target-byte-copy the DIR32-relocation comparison
+// does (build.compile_function's resolve() copies retail's bytes over any
+// DIR32 relocation site in the "resolved" view explain_mismatch prints, so
+// only the RAW pre-resolve object bytes prove this -- read them with
+// build.read_object_symbol_bytes directly, not through explain_mismatch).
+// This is a genuine, verified improvement over the prior 0.97 session's
+// shape (which jumped straight to state=2 in one instruction).
 //
-// STILL UNRESOLVED at t=45 (this session, after the 0.91 prior session):
-//  compiled body is 920 bytes vs retail's 987 (67 short, improved from the
-//  0.91 stash's 77). The ebp/ebx register-color swap documented in the
-//  prior stash is still present and, per AGENTS.md, likely unreachable.
+// BUT total compiled size is STILL 984B vs retail's 987 (3 short) -- the
+// SAME number the 0.97 (wrong-shape) session reached, because a NEW, more
+// specific residue appears in its place: MSVC recognizes that both inlined
+// instantiations of InGameChatSlot's constructor write the SAME literal
+// constant (4) to m_bfmeWhat, and hoists it into a shared register (ebx) it
+// reuses across both stores instead of encoding two immediate stores:
+//   mine:   bb 04 00 00 00       mov ebx, 4        (5B, once)
+//           89 5f 0c             mov [edi+0xc], ebx (3B, first control)
+//           ...
+//           89 5f 0c             mov [edi+0xc], ebx (3B, second control)
+//                                 = 11B total for both stores
+//   retail: c7 43 0c 04 00 00 00 mov dword ptr [ebx+0xc], 4  (7B, first)
+//           c7 43 0c 04 00 00 00 mov dword ptr [ebx+0xc], 4  (7B, second)
+//                                 = 14B total, no register ever loaded
+// 14 - 11 = exactly the 3-byte gap. Retail's two `mov [x+0xc], 4` stores are
+// literal immediates both times; it never materializes the constant in a
+// register at all. This is the AGENTS.md "small-constant register-fed vs
+// immediate-literal" class of residue ("that difference is unreachable, log
+// it") -- confirmed unreachable THIS session via three targeted attempts,
+// all reverted, none left in this stash:
+//   1. `void * volatile m_bfmeWhat;` on just that one member -- no byte
+//      change at all (984B, identical diff position). Volatile pins STORES,
+//      not the compiler's choice of register-vs-immediate for the value
+//      being stored (see docs/lessons.md "Volatile pins stores, not
+//      constants").
+//   2. Moving the vft/what assignment OUT of InGameChatSlot's constructor
+//      into BfmeAptScreenInGameChat's body (after both members are already
+//      implicitly constructed, so both bfmeBaseTC() calls now run back to
+//      back before ANY vft/what store) -- this does NOT reproduce retail's
+//      per-member interleaving (call1/vft1/what1/call2/vft2/what2) and,
+//      worse, the compiler no longer hoists the constant at all once the
+//      two stores are separated from the (still-inlined) member ctors,
+//      regressing to 994B (7B OVER retail, not under) -- confirms the
+//      current all-inside-the-ctor placement is the better structure to
+//      keep even though it doesn't close the gap.
+//   3. `#pragma optimize( "g", off )` wrapped around just
+//      BfmeAptScreenInGameChat::BfmeAptScreenInGameChat (matched by
+//      `#pragma optimize( "", on )` after) to try to suppress just the CSE
+//      that drives the hoist -- MSVC 13.10 treats "g" off as also disabling
+//      inlining for that scope: InGameChatSlot's ctor and FunctorBinding's
+//      ctor both stopped inlining entirely, the function ballooned to
+//      1592B and left two unresolved REL32 calls
+//      (??0InGameChatSlot@@QAE@XZ, ??0FunctorBinding@@...). Far worse; not
+//      a viable lever here.
 //
-// THIS SESSION (t=40, sonnet): applied the FunctorHolder in-place-argument-
-// area recipe from the fleet brief to all three holder types (InGameChat
-// RefHolder/ShowHolder/ArgHolder) -- value ctor stays declaration-only
-// (retail calls each out-of-line at 0x00026E45/0x0000F84E/0x00039D38),
-// added an INLINE throw() copy ctor and a declared-but-undefined dtor to
-// each. That alone took the compiled body from the prior sessions best of
-// 920B all the way to 984B -- retail is 987, so this closed 64 of the
-// remaining 67 bytes and left only 3. Every registration block from
-// _bfme_setAptScreenRef onward through the final showAptScreenWithArg is
-// now BYTE-IDENTICAL to retail (confirmed instruction-by-instruction via
-// explain_mismatch, a constant 3-byte address offset is the only visible
-// difference all the way to the epilogue/ret). Confirms the assignment's
-// lever was exactly right and generalizes across all three bodies in this
-// lane (0x00557C00, 0x00563370, 0x005160E0).
-//
-// Spliced into Code/GameEngine/Source/GameClient/AptScreenFactories.cpp in
-// place of the BfmeAptScreenInGameChat stub (right before "// SpellStore
-// .apt"), reusing the file's existing FunctorTarget/FunctorBinding/
-// _bfme_AptGameWindow/BfmeAptFunctorMarker/AsciiString infra. Added 9 new
-// symbols.csv pins (2 vftables, 3 holder ctors, 3 shared-ILT registration
-// aliases, 1 bfmeBaseTC rename for InGameChatSlot); all verified free via
-// pin_consistency.py before adding, dropped again on parking. The two
-// pre-existing pins (g_Rva005127A0InGameChat, ??1InGameChatSlot) needed no
-// changes.
-//
-// REMAINING 3-byte gap is entirely inside the control-object setup (the
-// two InGameChatSlot sub-objects at +0x270/+0x280), NOT in any
-// registration block. This is the SAME unresolved shape the 0.87 stash
-// documented across four tried variants: retail sets the EH state marker
-// at [esp+0x30] INCREMENTALLY -- a register-fed 0 before the first
-// bfmeBaseTC() call, then an immediate byte 1 before the second -- while
-// this build's real-typed-member approach (variant 2 from the 0.87 stash,
-// the best shape found) still hoists the FINAL state value (2) into a
-// register (`mov ebx,2`) before either bfmeBaseTC() call runs, because an
-// implicitly-default-constructed member is "alive" (for EH purposes) from
-// function entry, not from the point bfmeBaseTC() is called. Tried this
-// session: /G6 /G7 /Og /Ot (no change, still 984B) -- do not re-sweep
-// flags, this is the same class of residue AGENTS.md and the prior
-// session both flag as likely unreachable. The four variants the 0.87
-// stash already tried (raw buffer + plain call, explicit ctor-call syntax
-// on a trivial or external ctor) all regressed back to 910B once the
-// holder fix is layered on, so variant 2 (real typed members, kept here)
-// stays the best base. Given the byte gap is now only 3 (vs 67 before),
-// a fifth variant is worth one more look before falling back to accepting
-// this as unreachable: a real typed member with a NON-trivial-looking
-// (not `{}`) user-provided default ctor on InGameChatSlot, which the 0.87
-// stash proposed but did not have time to try.
+// Net: this session traded one known-unreachable-class residue (wrong EH
+// state SHAPE, from the 0.97/variant-2 stash) for a different
+// known-unreachable-class residue (register-hoisted constant, matching the
+// AGENTS.md-documented pattern precisely) at the SAME total byte count
+// (984/987). The current source below is a strictly more correct MODEL of
+// retail's construction order (real incremental per-member EH lifetime,
+// matching ehmap's two separate funclets) even though it does not close the
+// remaining 3 bytes. Recommend whoever picks this up next does NOT re-try
+// the volatile/split-body/pragma-optimize levers (all confirmed dead ends
+// this session) and instead either (a) accepts the 3B gap as unreachable
+// register-choice residue per AGENTS.md and moves this to `blocked`/closes
+// the family, or (b) tries feeding the constant through two DIFFERENT
+// looking but value-4 expressions that might defeat MSVC's CSE pass
+// specifically (untried: e.g. computing one of the two via a volatile
+// intermediate int, or via inline asm for just that one store) -- low
+// confidence this changes a backend CSE decision, but not yet ruled out.
 //
 extern const void *BfmeAptScreenInGameChatVftable[];
 extern const void *BfmeAptScreenInGameChatSecondaryVftable[];
@@ -175,8 +150,15 @@ extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;   // 0x012F4988
 class InGameChatSlot
 {
 public:
-	void bfmeBaseTC();
+	InGameChatSlot()
+	{
+		bfmeBaseTC();
+		m_bfmeVft = (void *)_bfmeVftTC;
+		m_bfmeWhat = (void *)4;
+	}
 	~InGameChatSlot();
+
+	void bfmeBaseTC();
 
 	void *m_bfmeVft;
 	unsigned char m_bfmeGap[ 8 ];
@@ -283,14 +265,6 @@ BfmeAptScreenInGameChat::BfmeAptScreenInGameChat( void *context )
 	m_field260 = 0;
 	m_field264 = 0;
 	m_field268 = 0;
-	InGameChatSlot *first = &m_firstControl;
-	first->bfmeBaseTC();
-	first->m_bfmeVft = (void *)_bfmeVftTC;
-	first->m_bfmeWhat = (void *)4;
-	InGameChatSlot *second = &m_secondControl;
-	second->bfmeBaseTC();
-	second->m_bfmeVft = (void *)_bfmeVftTC;
-	second->m_bfmeWhat = (void *)4;
 	m_field290 = true;
 	m_field291 = false;
 	m_field292 = true;
