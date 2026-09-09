@@ -19785,3 +19785,5 @@ queueDozer	0x001657E0	490	blocked	BFME three-argument findFactory(tTemplate,true
 ?d_006e1be0@@YAXXZ	0x006E1BE0	88	blocked	served file drained: retained clean vector-dot bank is a 0.93 x87 shape with unresolved default-discard scheduling; generated alias has no named caller or emitted owner; t=9min model=gpt-5.6
 ?d_006eb000@@YAXXZ	0x006EB000	54	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
 ?d_009a76a0@@YAXXZ	0x009A76A0	177	blocked	served file drained: bfmeGo76A0 identity is anchored by bfmeGo7820, but the clean filter bank remains a 0.92 register/stack near-match; t=8min model=gpt-5.6
+?d_0090c950@@YAXXZ	0x0090C950	142	blocked	served file drained: caller/pin identify the raw texture-format helper, but the retained COM/EH clean reconstruction is a 0.95 three-instruction lifetime-order near-match; identity detectors add no hit; t=6min model=gpt-5.6
+?d_009056f0@@YAXXZ	0x009056F0	81	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
