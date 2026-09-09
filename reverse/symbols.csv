@@ -86577,3 +86577,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeOnlineProfileImageLevelIconC@@3PBDA,0x012B7B4C,char* to OnlineProfile/componentImages/ImageLevelIconC used by OnlineProfile dtor 0x00553EE0
 ?g_bfmeOnlineProfileImageLevelIconD@@3PBDA,0x012B7B50,char* to OnlineProfile/componentImages/ImageLevelIconD used by OnlineProfile dtor 0x00553EE0
 ?TheBfmeOnlineProfileSlot@@3PAVBfmeOnlineProfileScreen@@A,0x012F4AB4,OnlineProfile singleton pointer cleared by destructor 0x00553EE0
+??0BfmeBuffFxState@@QAE@PAVDrawable@@@Z,0x00045782,BFME Drawable buff-fx state ctor for rva00412530
+?bfmeForward@BfmeBuffFxState@@QAEXHPAXHPBURGBColor@@M@Z,0x0001FE38,BFME Drawable buff-fx state forward for rva00412530
