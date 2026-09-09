@@ -496,12 +496,127 @@ unsigned char *Rva0080C6F0(unsigned char *object)
 char *strchr(const char *text, int character);
 char *strstr(const char *text, const char *find);
 void *Rva00812320(int entries);
-void Rva008119A0(void *table, const char *name, const char *alias,
-	int value, const char *templates, int extra);
+int Rva00811CE0(const char *first, const char *second);
+int Rva007FD920(void *socket, const char *buffer, int length, int flags,
+	void *to, int toLength);
+int Rva007FE780(const char *format, ...);
+unsigned int Rva007FEA00(void);
+void Rva007FEBD0(void *lock);
+void Rva007FECB0(void *lock);
+extern unsigned char Rva012C4A34[];
+extern unsigned char Rva012C4A39[];
+extern unsigned char Rva012C4A3E[];
+extern char Rva012C49B4[];
+extern char Rva012C49D4[];
+extern char Rva012C49F4[];
+extern char Rva012C4A14[];
+
+struct Rva008119A0Entry
+{
+	unsigned char header[ 8 ];
+	char name[ 0x20 ];
+	char alias[ 0x20 ];
+	char detail[ 0xC0 ];
+	char templates[ 0x78 ];
+	unsigned int timestamp;
+	char gap184[ 0x1C ];
+	struct Rva008119A0Entry *next;
+};
+
+struct Rva008119A0Table
+{
+	char gap0[ 0x24 ];
+	struct Rva008119A0Entry *first;
+	char gap28[ 0x10 ];
+	void *socket;
+	char peer[ 0x10 ];
+};
+
+int Rva008119A0(struct Rva008119A0Table *table, const char *name,
+	const char *alias, const char *detail, const char *templates, int extra)
+{
+	struct Rva008119A0Entry *entry;
+	struct Rva008119A0Entry *newEntry;
+	int iResult;
+
+	iResult = 0;
+	if ( extra == 0 )
+		extra = 30;
+	if ( extra < 2 )
+		extra = 2;
+	if ( extra > 0xFA )
+		extra = 0xFA;
+
+	if ( name == 0 || *name == 0 || strlen( name ) > 0x1F )
+	{
+		Rva007FE780( Rva012C49B4 );
+		return -1;
+	}
+	if ( alias == 0 || *alias == 0 || strlen( alias ) > 0x1F )
+	{
+		Rva007FE780( Rva012C49D4 );
+		return -2;
+	}
+	if ( detail == 0 || strlen( detail ) > 0xBF )
+	{
+		Rva007FE780( Rva012C49F4 );
+		return -3;
+	}
+	if ( templates == 0 || strlen( templates ) > 0x77 )
+	{
+		Rva007FE780( Rva012C4A14 );
+		return -4;
+	}
+
+	entry = table->first;
+	for ( ; entry != 0; entry = entry->next )
+	{
+		if ( Rva00811CE0( name, entry->name ) == 0 )
+		{
+			if ( Rva00811CE0( alias, entry->alias ) == 0 )
+			{
+				if ( Rva00811CE0( templates, entry->templates ) != 0 )
+				{
+					strcpy( entry->templates, templates );
+					entry->timestamp = Rva007FEA00() - 1;
+				}
+				if ( Rva00811CE0( detail, entry->detail ) != 0 )
+				{
+					strcpy( entry->detail, detail );
+					entry->timestamp = Rva007FEA00() - 1;
+				}
+				return 0;
+			}
+		}
+	}
+
+	newEntry = (struct Rva008119A0Entry *)Rva007F0000( 0x1A4 );
+	newEntry->header[ 0 ] = Rva012C4A34[ 0 ];
+	newEntry->header[ 1 ] = Rva012C4A39[ 0 ];
+	newEntry->header[ 2 ] = Rva012C4A3E[ 0 ];
+	newEntry->header[ 3 ] = (unsigned char)extra;
+	newEntry->header[ 4 ] = (unsigned char)( newEntry->timestamp >> 24 );
+	newEntry->header[ 5 ] = (unsigned char)( newEntry->timestamp >> 16 );
+	newEntry->header[ 6 ] = (unsigned char)( newEntry->timestamp >> 8 );
+	newEntry->header[ 7 ] = (unsigned char)newEntry->timestamp;
+	strcpy( newEntry->name, name );
+	strcpy( newEntry->alias, alias );
+	strcpy( newEntry->templates, templates );
+	strcpy( newEntry->detail, detail );
+	Rva007FD920( table->socket, (const char *)newEntry, 0x180, 0,
+		table->peer, 0x10 );
+	newEntry->timestamp = Rva007FEA00() + 0xFA;
+
+	Rva007FEBD0( table );
+	newEntry->next = table->first;
+	table->first = newEntry;
+	Rva007FECB0( table );
+	return 0;
+}
 extern char *g_Rva012C47A4;
 
 void Rva0080EF50(unsigned char *object, const char *name, char *alias,
-	int value)
+	const char *detail)
 {
 	char *found;
 	char *dest;
@@ -528,6 +643,6 @@ void Rva0080EF50(unsigned char *object, const char *name, char *alias,
 		alias = defaultName;
 	}
 	strcpy((char *)object + 4, name);
-	Rva008119A0(*(void **)(object + 0x64), name, alias, value,
+	Rva008119A0(*(struct Rva008119A0Table **)(object + 0x64), name, alias, detail,
 		"TCP:~1:1024\tUDP:~1:1024", *(int *)(object + 0x8C));
 }

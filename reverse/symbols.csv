@@ -84998,6 +84998,13 @@ _Rva0080FDD0,0x0080FDD0,address-derived multi-precision subtraction helper calle
 _Rva00810120,0x00810120,Y4 lane: block transform for the digest whose update is 0x00810060. 3765 bytes, /Od /GZ, takes one context pointer cdecl and is called whenever the 64-byte block fills. Pinned so the update could land first; expected to be replaced by a converted row rather than to stay a pin.
 _Rva00811310,0x00811310,Y4 lane: SHA-1 block transform, the counterpart of the update at 0x008111D0. 891 bytes, /Od /GZ, takes (context, block) cdecl. Identified by all four SHA-1 round constants being present in the body and by the /GZ frame descriptor naming its message schedule W at 0x140 bytes, which is eighty words. Pinned so the update could land first; expected to be replaced by a converted row.
 _Rva008119A0,0x008119A0,address-derived DirtySock table insertion helper called by 0x0080EF50
+_Rva012C49B4,0x012C49B4,address-derived DirtySock table-helper validation diagnostic used by 0x008119A0
+_Rva012C49D4,0x012C49D4,address-derived DirtySock table-helper alias diagnostic used by 0x008119A0
+_Rva012C49F4,0x012C49F4,address-derived DirtySock table-helper detail diagnostic used by 0x008119A0
+_Rva012C4A14,0x012C4A14,address-derived DirtySock table-helper template diagnostic used by 0x008119A0
+_Rva012C4A34,0x012C4A34,address-derived DirtySock table-entry header byte used by 0x008119A0
+_Rva012C4A39,0x012C4A39,address-derived DirtySock table-entry header byte used by 0x008119A0
+_Rva012C4A3E,0x012C4A3E,address-derived DirtySock table-entry header byte used by 0x008119A0
 _Rva00812690,0x00812690,DirtySock socket callback helper called by Rva00812CD0 with socket, reason zero, and its owning object
 _Rva00812CD0,0x00812CD0,address-derived cleanup helper invoked for the owned field at offset 0x64 by 0x0080F0D0
 _Rva00813100@24,0x00813100,address-derived DirtySock connection setup helper called by 0x00813E50
