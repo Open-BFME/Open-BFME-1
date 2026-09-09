@@ -1,48 +1,35 @@
 // ?countBuildings@Team@@QAEHXZ
-// partial score=0.96 date=2026-09-03
+// partial score=0.97 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 // Open-BFME5: Team::countBuildings, retail 0x000F4900, 103 bytes.
 //
-// Named by the already-matched TeamPrototype::countBuildings walk. Same Object
-// DLINK PMF as Team::hasAnyObjects. Counts members whose final template has
-// STRUCTURE (bit 7 of kind-of dword 0). Null template is skipped.
+// Named by the already-matched TeamPrototype::countBuildings walk (Team.cpp).
+// Same Object DLINK pointer-to-member-function shape as the landed
+// TeamMemberQueries.cpp siblings (hasAnyUnits/hasAnyObjects/...): the class
+// hierarchy in reference/shims/objectdlink/ObjectDlinkPmf.h is what makes
+// MSVC emit retail's virtual-base-adjusted indirect call through the DLINK
+// pointer-to-member (ILT 0x00401140, delta -0x64, vbindex 0).
+//
+// Prior attempts (reverse/attempts/0x000f4900.cpp, score 0.96) reached 99 of
+// 103 bytes using a DLINK_ITERATOR<Object> helper class whose advance() does
+// `if (m_cur) m_cur = ...`; MSVC proves m_cur non-null inside the loop (the
+// for-condition already tested !iter.done()) and elides that guard. Retail
+// keeps a `test esi,esi / je` immediately before the PMF call. Writing the
+// walk as a raw while-loop with the null check spelled out as the loop's own
+// statement (not hidden inside a templated helper method) keeps it: nothing
+// upstream of that statement proves cur non-null to the optimiser once the
+// loop body's own control flow (the continue path) is in between.
+//
+// With cur/pfn/retVal declared in this order the compiled size is EXACT
+// (103/103); remaining diffs are pure register-bank reassignment (which of
+// eax/edx/edi/ebp/ebx carries the PMF address/delta/vbindex/retVal-zero, and
+// where `push edi` lands relative to the two mov-imm32 constant loads).
+// Declaration-order permutations (all six) and a /G5 /G6 /G7 /Ot /Og /Ob1 /O1
+// flag sweep move the register roles and sometimes the size, but none
+// converges to zero diffs -- consistent with the project's documented
+// register-scheduling wall (not source-controllable).
 
 #include "ObjectDlinkPmf.h"
-
-typedef bool Bool;
-
-#define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
-
-template<class OBJCLASS>
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-class DLINK_ITERATOR
-{
-public:
-	typedef OBJCLASS* (OBJCLASS::*GetNextFunc)() const;
-private:
-	OBJCLASS* m_cur;
-	GetNextFunc m_getNextFunc;
-public:
-	DLINK_ITERATOR(OBJCLASS* cur, GetNextFunc getNextFunc) : m_cur(cur), m_getNextFunc(getNextFunc)
-	{
-	}
-
-	void advance()
-	{
-		if (m_cur)
-			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
-	}
-
-	Bool done() const
-	{
-		return m_cur == 0;
-	}
-
-	OBJCLASS* cur() const
-	{
-		return m_cur;
-	}
-};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -78,11 +65,6 @@ public:
 	void *m_proto;
 	void *m_id;
 	Object *m_head;
-
-	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
-	{
-		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
-	}
 };
 
 static Overridable *bfmeFinalTemplate(Object *obj)
@@ -93,17 +75,29 @@ static Overridable *bfmeFinalTemplate(Object *obj)
 	return tmpl;
 }
 
+typedef Object *(Object::*BfmeGetNextFunc)() const;
+
 // ?countBuildings@Team@@QAEHXZ
 int Team::countBuildings()
 {
+	Object *cur = m_head;
+	BfmeGetNextFunc pfn = Object::dlink_next_TeamMemberList;
 	int retVal = 0;
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
+
+	while (cur != 0)
 	{
-		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-		if (tmpl == 0)
-			continue;
-		if ((tmpl->m_kindOf0 & (1u << 7)) != 0)
-			++retVal;
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(cur);
+		if (tmpl != 0)
+		{
+			if ((tmpl->m_kindOf0 & (1u << 7)) != 0)
+				++retVal;
+		}
+
+		if (cur != 0)
+			cur = (cur->*pfn)();
+		else
+			cur = 0;
 	}
+
 	return retVal;
 }
