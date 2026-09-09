@@ -1,223 +1,85 @@
 // ?Draw@DX8Wrapper@@CAXHGGGGH@Z
-// partial score=0.48 date=2026-09-02
-// cl: /DNDEBUG /MD /GR-
-// ?Draw@DX8Wrapper@@CAXHGGGGH@Z
-// Retail 0x00906B40 size 526. BFME Draw: low-bound cull, optional material
-// diffuse-black skip, Apply_Render_State_Changes, triangle-draw enable,
-// snapshot ValidateDevice, then DrawPrimitive (last arg 0) or indexed/sorting.
-
-class Vector3
-{
-public:
-	float X, Y, Z;
-};
-
-class VertexMaterialClass
-{
-public:
-	void Get_Diffuse(Vector3 *out);
-};
-
-class ShaderClass
-{
-	unsigned dummy;
-};
-
-class VertexBufferClass
-{
-public:
-	unsigned short Get_Vertex_Count(void);
-};
-
-class IDirect3DDevice8
-{
-public:
-	virtual void v00(void);
-	virtual void v01(void);
-	virtual void v02(void);
-	virtual void v03(void);
-	virtual void v04(void);
-	virtual void v05(void);
-	virtual void v06(void);
-	virtual void v07(void);
-	virtual void v08(void);
-	virtual void v09(void);
-	virtual void v10(void);
-	virtual void v11(void);
-	virtual void v12(void);
-	virtual void v13(void);
-	virtual void v14(void);
-	virtual void v15(void);
-	virtual void v16(void);
-	virtual void v17(void);
-	virtual void v18(void);
-	virtual void v19(void);
-	virtual void v20(void);
-	virtual void v21(void);
-	virtual void v22(void);
-	virtual void v23(void);
-	virtual void v24(void);
-	virtual void v25(void);
-	virtual void v26(void);
-	virtual void v27(void);
-	virtual void v28(void);
-	virtual void v29(void);
-	virtual void v30(void);
-	virtual void v31(void);
-	virtual void v32(void);
-	virtual void v33(void);
-	virtual void v34(void);
-	virtual void v35(void);
-	virtual void v36(void);
-	virtual void v37(void);
-	virtual void v38(void);
-	virtual void v39(void);
-	virtual void v40(void);
-	virtual void v41(void);
-	virtual void v42(void);
-	virtual void v43(void);
-	virtual void v44(void);
-	virtual void v45(void);
-	virtual void v46(void);
-	virtual void v47(void);
-	virtual void v48(void);
-	virtual void v49(void);
-	virtual void v50(void);
-	virtual void v51(void);
-	virtual void v52(void);
-	virtual void v53(void);
-	virtual void v54(void);
-	virtual void v55(void);
-	virtual void v56(void);
-	virtual void v57(void);
-	virtual void v58(void);
-	virtual void v59(void);
-	virtual void v60(void);
-	virtual void v61(void);
-	virtual void v62(void);
-	virtual void v63(void);
-	virtual void v64(void);
-	virtual void v65(void);
-	virtual void v66(void);
-	virtual void v67(void);
-	virtual void v68(void);
-	virtual void v69(void);
-	virtual void ValidateDevice(unsigned long *passes);
-	virtual void v71(void);
-	virtual void v72(void);
-	virtual void v73(void);
-	virtual void v74(void);
-	virtual void v75(void);
-	virtual void v76(void);
-	virtual void v77(void);
-	virtual void v78(void);
-	virtual void v79(void);
-	virtual void v80(void);
-	virtual void DrawPrimitive(unsigned type, unsigned start, unsigned count);
-	virtual void DrawIndexedPrimitive(unsigned type, unsigned minvert, unsigned numvert, unsigned start, unsigned count);
-};
-
-class Debug_Statistics
-{
-public:
-	static void Record_DX8_Polys_And_Vertices(int polys, int verts, const ShaderClass &shader);
-};
-
-void Draw_Sorting_IB_VB(int type, unsigned short start, unsigned short polys, unsigned short minvert, unsigned short verts);
-
-extern unsigned DrawPolygonLowBoundLimit;
-extern char g_materialSkipFlag;
-extern VertexMaterialClass *g_renderStateMaterial;
-extern float g_diffuseSkipLimit;
-extern char _EnableTriangleDraw;
-extern char g_snapshotActivated;
-extern IDirect3DDevice8 *g_d3dDevice;
-extern unsigned g_vertexBufferType;
-extern unsigned g_indexBufferType;
-extern VertexBufferClass *g_vertexBuffer;
-extern unsigned short g_indexBaseOffset;
-extern unsigned g_vbaOffset;
-extern unsigned short g_vbaCount;
-extern unsigned short g_ibaOffset;
-extern ShaderClass g_renderStateShader;
-extern unsigned g_renderStats;
-extern unsigned g_drawCalls;
-
-class DX8Wrapper
-{
-public:
-	static void Apply_Render_State_Changes(void);
-private:
-	static void Draw(int primitive_type, unsigned short start_index, unsigned short polygon_count, unsigned short min_vertex_index, unsigned short vertex_count, int apply_render_state);
-};
-
-void DX8Wrapper::Draw(int primitive_type, unsigned short start_index, unsigned short polygon_count, unsigned short min_vertex_index, unsigned short vertex_count, int apply_render_state)
-{
-	if (DrawPolygonLowBoundLimit && DrawPolygonLowBoundLimit >= polygon_count)
-		return;
-
-	if (g_materialSkipFlag) {
-		VertexMaterialClass *mat = g_renderStateMaterial;
-		if (!mat)
-			return;
-		float dx, dy, dz;
-		mat->Get_Diffuse((Vector3 *)&dx);
-		if (dx < g_diffuseSkipLimit && dy < g_diffuseSkipLimit && dz < g_diffuseSkipLimit)
-			return;
-	}
-
-	Apply_Render_State_Changes();
-
-	if (!_EnableTriangleDraw)
-		return;
-
-	if (g_snapshotActivated) {
-		unsigned long passes = 0;
-		g_d3dDevice->ValidateDevice(&passes);
-	}
-
-	unsigned vb_type = g_vertexBufferType;
-	if (vertex_count < 3) {
-		min_vertex_index = 0;
-		switch (vb_type) {
-		case 0:
-		case 1:
-			vertex_count = (unsigned short)(g_vertexBuffer->Get_Vertex_Count() - g_indexBaseOffset - g_vbaOffset);
-			break;
-		case 2:
-		case 3:
-			vertex_count = g_vbaCount;
-			break;
-		}
-	}
-
-	if (!apply_render_state) {
-		Debug_Statistics::Record_DX8_Polys_And_Vertices(polygon_count, vertex_count, g_renderStateShader);
-		g_renderStats++;
-		g_d3dDevice->DrawPrimitive(primitive_type, min_vertex_index, polygon_count);
-		g_drawCalls++;
-		return;
-	}
-
-	switch (vb_type) {
-	case 0:
-	case 2:
-		if (g_indexBufferType == 0 || g_indexBufferType == 2) {
-			Debug_Statistics::Record_DX8_Polys_And_Vertices(polygon_count, vertex_count, g_renderStateShader);
-			g_renderStats++;
-			g_d3dDevice->DrawIndexedPrimitive(
-				primitive_type,
-				min_vertex_index,
-				vertex_count,
-				start_index + g_ibaOffset,
-				polygon_count);
-			g_drawCalls++;
-		}
-		break;
-	case 1:
-	case 3:
-		if (g_indexBufferType == 1 || g_indexBufferType == 3)
-			Draw_Sorting_IB_VB(primitive_type, start_index, polygon_count, min_vertex_index, vertex_count);
-		break;
-	}
-}
+// partial score=0.72 date=2026-09-09
+// Retail 0x00906B40 size 526; last compile 540 bytes (14 over).
+//
+// This supersedes the earlier 0.48 stash: the earlier attempt invented free
+// globals and a fake VertexBufferClass/IDirect3DDevice8, which never had a
+// chance of byte-matching. dx8wrapper.cpp already carries a "present-unmatched"
+// Draw ported straight from Zero Hour (~line 2131) using the REAL DX8Wrapper
+// class/RenderStateStruct from dx8wrapper.h -- port onto THAT instead.
+//
+// Header change needed (dx8wrapper.h, DX8Wrapper private section):
+//   static void Draw(
+//       int primitive_type,              // was `unsigned` -- real row mangles H not I
+//       unsigned short start_index,
+//       unsigned short polygon_count,
+//       unsigned short min_vertex_index,
+//       unsigned short vertex_count,
+//       int apply_render_state=1);       // NEW 6th arg; BFME-only, ZH's Draw has 5.
+//   (Draw_Triangles x2 / Draw_Strip keep calling Draw with 5 args -- the
+//   default covers them, no other edits needed. This is a shared-header edit,
+//   full gate.)
+//
+// dx8wrapper.cpp Draw body changes vs the present-unmatched ZH text:
+//   1. New material low-diffuse skip block before Apply_Render_State_Changes():
+//        extern unsigned char g_Va0133F42C;      // no pin needed, DIR32 masked
+//        extern float g_bfmeScaleBK;               // already pinned 0x1075C70
+//        if (g_Va0133F42C) {
+//            VertexMaterialClass *mat = render_state.material;
+//            if (!mat) return;
+//            Vector3 emissive;
+//            mat->Get_Emissive(&emissive);           // NOT Get_Diffuse
+//            if (emissive.X<g_bfmeScaleBK && emissive.Y<g_bfmeScaleBK && emissive.Z<g_bfmeScaleBK) return;
+//        }
+//      g_Va0133F42C is the SAME global SmallLeafBodies2.cpp reads as
+//      Rva006D1C10GetFlag (0x0133F42C) -- reuse that extern, do not repin.
+//   2. Remove `#ifdef MESH_RENDER_SNAPSHOT_ENABLED`/`#endif` around the
+//      ValidateDevice block -- just wrap it in a bare `{ }`. WWDEBUG_SAY is a
+//      no-op macro in this build so the whole HRESULT switch compiles away;
+//      retail's single g_Va0133F451 (SnapshotActivated) test survives.
+//   3. Split the tail on the new apply_render_state param:
+//        if (!*(unsigned char *)&apply_render_state) {   // see note below
+//            DX8_RECORD_RENDER(polygon_count,vertex_count,render_state.shader);
+//            DX8_RECORD_DRAW_CALLS();
+//            DX8CALL(DrawPrimitive((D3DPRIMITIVETYPE)primitive_type,min_vertex_index,polygon_count));
+//            return;
+//        }
+//        switch (render_state.vertex_buffer_types[0]) { ...unchanged ZH switch... }
+//      `if (!apply_render_state)` alone (plain int test) compiles the param
+//      into a register (mov esi,[esp+N]; test esi,esi) and costs 14 bytes vs
+//      retail's bare `cmp byte ptr [esp+N],0`. Casting through
+//      `*(unsigned char*)&apply_render_state` gets MSVC to emit the same byte
+//      compare and closed that 14-byte gap outright -- keep this cast.
+//
+// Symbol pins needed (reverse/symbols.csv, additive, CRLF):
+//   ?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z,0x00904660,<note>
+//     (already-declared header member; retail's SORTING/DYNAMIC_SORTING arm
+//     calls RVA 0x00904660, currently gen_asm d_00904660/d_00904510.asm 550B)
+//   ?Record_DX8_Polys_And_Vertices@Debug_Statistics@@YAXHHABVShaderClass@@@Z,0x009373A0,<note>
+//     (matched row 0x009373A0 is pinned under d_009373a0 + an object-symbol
+//     note that has an extra "@1@" back-reference from statistics.cpp's
+//     NESTED forward-declared ShaderClass; dx8wrapper.cpp's ShaderClass is
+//     top-level so the compiler emits ...ABVShaderClass@@@Z WITHOUT the "1" --
+//     pin that exact string or the call stays unresolved.)
+//   Apply_Render_State_Changes@DX8Wrapper@@SAXXZ is ALREADY pinned to
+//   0x00904890 -- no action needed there.
+//
+// REMAINING BLOCKER (not closed, needs a fresh 40-min slot):
+//   compiled ValidateDevice lands at vtable+0x11C (slot 71); retail calls it
+//   at +0x118 (slot 70) -- one slot EARLY somewhere before it in
+//   reference/shims/d3d8_shim_validated.h. DrawPrimitive/DrawIndexedPrimitive
+//   land at +0x134/+0x138; retail wants +0x144/+0x148 -- a 4-SLOT gap that
+//   opens up between ValidateDevice and DrawPrimitive (retail has 11 slots
+//   between them incl. ValidateDevice, the shim only has 6: GetInfo +
+//   4 palette methods, the plain D3D8 SDK count). This mirrors the existing
+//   DevReserved37..43 hack applied around SetTransform/SetRenderState --BFME's
+//   real device vtable inserts ~5 MORE reserved slots somewhere between
+//   SetTextureStageState/ValidateDevice and DrawPrimitive that the shim does
+//   not yet model. That header is SHARED (d3d8_shim_validated.h, full gate) and
+//   used by ~15+ other DX8Wrapper .cpp files already matched on the SLOTS
+//   BEFORE this range -- inserting reserved slots here needs corroboration
+//   from another D3D8 method call in that exact range (e.g. GetInfo,
+//   SetPaletteEntries, or another Draw* body) before editing it blind.
+//   Once the shim is fixed this body should drop to at or near zero diffs;
+//   everything else (control flow, field layout, the two REL32 pins above)
+//   already matches through the whole function shape.
