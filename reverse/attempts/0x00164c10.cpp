@@ -1,5 +1,5 @@
 // ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z
-// partial score=0.84 date=2026-09-09
+// partial score=0.85 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // AIPlayer::findSupplyCenter — retail 0x00164C10 / 886B (ret4 at +0x373).
 // Reloc-named identity=real (call-sites=2); ILT 0x0001E0FB from
@@ -8,6 +8,35 @@
 // Layout from matched siblings: m_player@+0x0C (checkForSupplyCenter),
 // m_baseCenter@+0x34 (this body), Object pos@+0x38 / next@+0x88 /
 // radius@+0xBC / team@+0x23C (guardSupplyCenter). getAiEnemy is vslot 0x30.
+//
+// FIX 2026-09-09: Object::findUpdateModule was declared taking NameKeyType,
+// which mangles as ...@W4NameKeyType@@@Z and left the call as an unresolved
+// REL32 (explain_mismatch reported "unresolved: ...findUpdateModule..." and
+// the frame differed by exactly 4 bytes, 0x88 vs retail's 0x8c). The matched
+// pin at ILT 0x0002AE23 for this SupplyWarehouseDockUpdate instantiation is
+// actually ...findUpdateModule@Object@@QAEPAVSupplyWarehouseDockUpdate@@H@Z
+// (an int key, not the enum) -- retyping the declaration to `Int key`
+// resolves the call cleanly (no more unresolved-symbol warning), same 869 B.
+// Confirmed removing the `int z = 0;` shared-null local (comparing against
+// typed 0/NULL literals directly at each site) makes zero byte difference --
+// not the lever.
+//
+// Remaining wall (869 vs 886, first diff +0x17 / frame sub esp 0x88 vs 0x8c):
+// retail keeps TWO zero-valued registers live from the prologue (EDI for the
+// stack-slot zero-fills, EBX separately for the repeated NULL-pointer
+// comparisons against enemy/warehouseModule/supplyCenter/bestSupplyWarehouse)
+// even though nothing forces them apart yet at that point; ours collapses
+// both into EDI alone since dataflow sees them as the same live value this
+// early. This costs 4 bytes at the very first diff (frame size) and then
+// cascades: every subsequent register in the body is one off from retail's
+// (a permutation, not a single swap), producing many "!=" lines that are
+// mostly the same instruction shapes at different register numbers/ModRM
+// widths, not missing logic. Tried and ruled out this session: dropping the
+// shared `z` local for direct 0/NULL casts (no change). Untried: forcing 2
+// live zero registers by keeping bestSupplyWarehouse's init and the
+// enemy-null-check on visibly different types/statements before the first
+// use of TheGameLogic, or trying KindOfMaskType bit index sensitivity (this
+// stash already uses the corrected bit=34 per the second prior agent's note).
 
 typedef bool Bool;
 typedef int Int;
@@ -72,7 +101,7 @@ public:
 class Object
 {
 public:
-	class SupplyWarehouseDockUpdate *findUpdateModule(NameKeyType key);
+	class SupplyWarehouseDockUpdate *findUpdateModule(Int key);
 	const ThingTemplate *resolveTemplate() const;
 	Bool isKindOfStructure() const;
 	Bool isKindOfSupplySource() const;
