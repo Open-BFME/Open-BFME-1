@@ -86541,3 +86541,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0Rva00776240Vector60@@QAE@ABU0@@Z,0x000027F2,Gen_t_00776240 copy member callee at +0x60
 ??0Rva00776240Vector70@@QAE@ABU0@@Z,0x00014547,Gen_t_00776240 copy member callee at +0x70
 ??4Rva00776240Field7C@@QAEAAU0@ABU0@@Z,0x0001C288,Gen_t_00776240 array assignment callee at +0x7C
+?set@BFMERetailAsciiString@@QAEXPBDH@Z,0x00887D20,set
+?bfmeSetZH@BfmeObjZH@@QAEXPBUBfmeVecZH@@PBVBFMERetailAsciiString@@@Z,0x008800D0,set vec
+?bfmeApplyZH@@YAXPAVBfmeObjZH@@@Z,0x0087EBB0,apply
