@@ -1,12 +1,6 @@
 // ?bfmeRegionRenderC@@YAXPAXHH@Z
-// partial score=0.98 date=2026-09-06
+// partial score=0.995 date=2026-09-09
 // cl: /DNDEBUG /MD /EHs-c-
-// Drawable region-rendering callback at retail 0x00412C10.
-//
-// Drawable::bfmeRegionDispatch calls this callback through the retail ILT.
-// This is a local raw-bit view of two four-byte retail argument slots.
-// The first carries an offset pointer; the second is interpreted as float.
-// The original source-level argument types have not been recovered.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
@@ -28,9 +22,6 @@ struct Rva00412C10Offset
 
 #define BFME_REGION_DISPLAY_SLOT(n) virtual void slot##n();
 
-// BFME's Display adds three virtuals before the attributes and uses Real
-// coordinates for its 2D rectangle calls.  Slots 0xBC and 0xC0 are the
-// matched drawOpenRect and drawFillRect entries used by the retail body.
 class Display
 {
 public:
@@ -68,17 +59,13 @@ public:
 
 extern Display *TheDisplay;
 extern void j_0003b390();
-
-// The retail call is to the existing 5-byte ILT.  Keep its thunk symbol and
-// cast only the proven call ABI, so no new shared pin is needed.
 typedef void (__cdecl *Rva00411220ColorCall)( Int value, Color *colors );
 
-// ?bfmeRegionRenderC@@YAXPAXHH@Z
 void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 {
 	const Rva00412C10Offset *offset = (const Rva00412C10Offset *)(UnsignedInt)rawOffset;
 	Rva00412C10Region *region = (Rva00412C10Region *)(UnsignedInt)rawRegion;
-	Int regionLeft = region->left;
+	const Int regionLeft = region->left;
 	Color colors[3];
 	Real regionWidth = (Real)(region->right - regionLeft);
 	((Rva00411220ColorCall)j_0003b390)( rawValue, colors );
@@ -103,10 +90,8 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 		*(UnsignedInt *)0x012F13CC = 0xFF000000;
 	}
 
-	// Retail float pool values: 0x010828C4 is 6.0f, 0x01075340 is 4.0f,
-	// and 0x01088830 is 2.0f.
 	TheDisplay->drawOpenRect(
-		(Real)(offset->x + regionLeft - 3),
+		(Real)(regionLeft + offset->x - 3),
 		(Real)(region->top + offset->y - 3),
 		regionWidth + *(const Real *)0x010828C4,
 		9.0f, 1.0f, *(UnsignedInt *)0x012F13D4 );
@@ -123,7 +108,8 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 		regionWidth + *(const Real *)0x01088830,
 		5.0f, *(UnsignedInt *)0x012F13CC );
 
-	regionWidth = *(volatile Real *)&regionWidth * *(Real *)&rawValue;
+	const Real &rawValueReal = *(const Real *)&rawValue;
+	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
 	for( Int i = 0; i < 3; ++i )
 	{
 		TheDisplay->drawFillRect(
@@ -132,6 +118,3 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 			regionWidth, 1.0f, colors[i] );
 	}
 }
-
-
-
