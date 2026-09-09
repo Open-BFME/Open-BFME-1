@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bf05ec17a6632bdfdbd9934efbfd38d11068d2bfbc470708b2be87bc261e618c",
+  "symbol": "??1W3DDefaultDraw@@MAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ??1W3DDefaultDraw@@MAE@XZ\n// partial score=0.88 date=2026-09-09\nclass RenderObjClass\n{\npublic:\n\tvirtual void Delete_This();\n\tint m_refCount;\n};\n\nclass Shadow;\n\nclass W3DShadowManager\n{\npublic:\n\tvoid removeShadow(Shadow *shadow);\n};\n\nclass SceneClass\n{\npublic:\n\tvirtual void slot0();\n\tvirtual void slot1();\n\tvirtual void slot2();\n\tvirtual void Remove_Render_Object(RenderObjClass *renderObject);\n};\n\nextern W3DShadowManager *TheW3DShadowManager;\n\nclass W3DDisplay\n{\npublic:\n\tstatic SceneClass *m_3DScene;\n};\n\nclass Module\n{\npublic:\n\t~Module();\n};\n\nclass DrawModule : public Module\n{\npublic:\n\tvirtual ~DrawModule() { }\n\nprivate:\n\tchar m_padding[8];\n};\n\nclass W3DDefaultDraw : public DrawModule\n{\nprotected:\n\tvirtual ~W3DDefaultDraw();\n\nprivate:\n\tRenderObjClass *m_renderObject;\n\tShadow *m_shadow;\n};\n\nW3DDefaultDraw::~W3DDefaultDraw()\n{\n\tif (TheW3DShadowManager && m_shadow)\n\t{\n\t\tTheW3DShadowManager->removeShadow(m_shadow);\n\t\tm_shadow = 0;\n\t}\n\tif (m_renderObject)\n\t{\n\t\tW3DDisplay::m_3DScene->Remove_Render_Object(m_renderObject);\n\t\tif (m_renderObject)\n\t\t{\n\t\t\tif (--m_renderObject->m_refCount == 0)\n\t\t\t\tm_renderObject->Delete_This();\n\t\t}\n\t\tm_renderObject = 0;\n\t}\n}\n"
+}
