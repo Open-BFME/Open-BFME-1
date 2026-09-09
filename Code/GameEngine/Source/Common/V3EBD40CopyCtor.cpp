@@ -1,10 +1,8 @@
-// ??0Rva005EBD40@@QAE@ABV0@@Z
-// partial score=0.93 date=2026-09-06
 // cl: /EHs-c-
+// ??0Rva005EBD40@@QAE@ABV0@@Z
 //
-// The clone at 0x005EBCC0 forwards to this 0x8e4-byte derived copy
-// constructor.  Its two 90-element blocks contain three dwords each, and the
-// final eleven dwords follow the two blocks.
+// The clone factory at 0x005EBCC0 calls this constructor.  Retail copies two
+// 90-element arrays of three dwords, then copies the eleven dwords at +0x8B8.
 
 class V3Head14
 {
@@ -67,26 +65,26 @@ public:
 Rva005EBD40::Rva005EBD40( const Rva005EBD40 &o )
 	: Rva005EBD40Middle( o ), FXParticleSystem::LightningDrawModuleInfo( o )
 {
-	int *destination = (int *)m_first;
-	const int *source = &o.m_first[ 0 ].m_c;
+	Rva005EBD40Triple *destination = m_first;
+	const Rva005EBD40Triple *source = o.m_first;
 	for ( int i = 0; i < 90; ++i )
 	{
-		destination[ 0 ] = source[ -2 ];
-		destination[ 1 ] = source[ -1 ];
-		destination[ 2 ] = source[ 0 ];
-		destination += 3;
-		source += 3;
+		destination->m_a = source->m_a;
+		destination->m_b = source->m_b;
+		destination->m_c = source->m_c;
+		++destination;
+		++source;
 	}
 
-	destination = (int *)m_second;
-	source = &o.m_second[ 0 ].m_c;
+	destination = m_second;
+	source = o.m_second;
 	for ( int i = 0; i < 90; ++i )
 	{
-		destination[ 0 ] = source[ -2 ];
-		destination[ 1 ] = source[ -1 ];
-		destination[ 2 ] = source[ 0 ];
-		destination += 3;
-		source += 3;
+		destination->m_a = source->m_a;
+		destination->m_b = source->m_b;
+		destination->m_c = source->m_c;
+		++destination;
+		++source;
 	}
 
 	m_tail.m_a0 = o.m_tail.m_a0;
