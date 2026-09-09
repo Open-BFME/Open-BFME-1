@@ -112,6 +112,49 @@ static inline const char *bfmeFind( const AsciiString &s, char c )
 	return NULL;
 }
 
+// This TU needs the map clear thunk reached by the ArchiveFileSystem body at
+// 0x009CACF0. The generic V1 spelling is also used by unrelated ICF call sites
+// that intentionally encode through 0x0001D999, so do not retarget that shared
+// symbol globally. This view preserves the STLport tree header and map prefix;
+// its address-derived member spelling is pinned locally to body 0x0007D250,
+// whose retail incremental-link thunk is 0x00049E13.
+struct Rva00049E13TreeHeader
+{
+	unsigned char color;
+	unsigned char padding[3];
+	void *parent;
+	void *left;
+	void *right;
+};
+
+struct Rva00049E13FileMap
+{
+	Rva00049E13TreeHeader *header;
+	unsigned int nodeCount;
+
+private:
+	void _M_erase( void *root );
+
+public:
+	__forceinline void clear()
+	{
+		if (nodeCount != 0) {
+			_M_erase(header->parent);
+			header->left = header;
+			header->parent = 0;
+			header->right = header;
+			nodeCount = 0;
+		}
+	}
+};
+
+__forceinline void bfmeClearArchivedDirectory( ArchivedDirectoryInfo &directory )
+{
+	directory.m_directoryName.clear();
+	directory.m_directories.clear();
+	reinterpret_cast<Rva00049E13FileMap *>(&directory.m_files)->clear();
+}
+
 // ?doesFileExist@ArchiveFileSystem@@UBE_NPBD@Z
 // Vtable slot 8 of 0x01143A08, which FileSystem::doesFileExist reaches through
 // [eax+0x20]; that caller byte-matches retail, so the slot is a fact. The two
@@ -230,48 +273,35 @@ ArchiveFileSystem::~ArchiveFileSystem()
 	}
 }
 
-// ?loadIntoDirectoryTree@ArchiveFileSystem@@MAEXPBVArchiveFile@@ABVAsciiString@@_N@Z present-unmatched
-// Retail 0x009CACF0, 898 bytes -- vtable slot 10 of 0x01143A08. The slot is
-// settled by elimination: Zero Hour declares exactly three non-pure virtuals on
-// this class (openFile, doesFileExist, loadIntoDirectoryTree), the binary has
-// four real slots, and the extra one is BFME's wide openFile at slot 6. Slots 5
-// and 8 are the two already matched, in the same relative order, so 10 is this.
-// The object emits MAE (protected virtual), not UAE.
+// ?loadIntoDirectoryTree@ArchiveFileSystem@@MAEXPBVArchiveFile@@ABVAsciiString@@_N@Z
+// Retail 0x009CACF0, 898 bytes. The complete body ends at +0x37F with `ret 0xC`;
+// the old Ghidra extent of 895 bytes stops three bytes before that return.
 //
-// The callee names are NOT the blocker; all five now have addresses in
-// reverse/symbols.csv. Correcting an earlier note here: a wrong address in one
-// of those rows FAILS rather than masks. build.py computes the REL32
-// displacement from the symbol's address and compares it to retail, so a wrong
-// callee address makes the caller mismatch. That is the opposite of the DIR32
-// case, and it means these rows fail safe -- a wrong one blocks a match, it
-// cannot manufacture one. They are still positional guesses and marked as such
-// in symbols.csv; only _M_erase at 0x009CAAD0 has structural backing, being
-// recursive.
+// Identity is the protected virtual at slot 10 of vtable 0x01143A08. The
+// matched ArchiveFileSystem constructor installs that vtable, and its matched
+// narrow/wide openFile and doesFileExist bodies settle slots 5, 6, and 8. The
+// named source callers are ArchiveFileSystem::loadMods and the derived
+// Win32BIGFileSystem::loadBigFilesFromDirectory, whose ABI declarations both
+// dispatch slot 10. No direct matched ledger caller reaches this still-open
+// row, so the claim relies on the vtable/layout evidence and those named source
+// call sites rather than on a byte match alone.
 //
-// The real blocker is structural. With all five resolved the body is still the
-// wrong shape: retail reserves 0x24 of frame where this reserves 0x30, and the
-// two use different callee-saved registers throughout (retail carries the node
-// pointer in esi/ebp, this in edi/ebp). Both come out 898 bytes, which is
-// coincidence rather than progress.
-//
-// Measured since: retail reserves 0x24 of frame and saves THREE callee-saved
-// registers (ebx, ebp, esi); this reserves 0x30 and saves four. So the surplus
-// is roughly three dwords and one register of live state, not one. Dropping
-// path2 takes the frame to 0x2c and pushes the length to 900, so it is not the
-// whole answer and probably not any of it; dropping the infoInPath local changes
-// nothing at all. Something else here is holding more state than retail did.
-//
-// It is NOT that debugpath and path2 are absent, which is the first thing to
-// suspect given the DEBUG_LOG they feed is commented out. Retail has exactly
-// three concat calls, at 0x009CAF52, 0x009CAF67 and 0x009CAFDA, which is one
-// for each of this function's three -- two on debugpath and one on path2. Both
-// locals are real. The extra 0xC of frame is something else.
+// Retail evaluates the three temporary list arguments in reverse declaration
+// order. Keeping them scoped to the list call and declaring searchName first,
+// then originalDirectory and currentDirectory, reproduces the 0x24 frame,
+// callee-saved register use, stack addresses, and all 898 bytes with the actual
+// STLport node allocator and string ABI.
 void ArchiveFileSystem::loadIntoDirectoryTree(const ArchiveFile *archiveFile, const AsciiString& archiveFilename, Bool overwrite)
 {
 
 	FilenameList filenameList;
 
-	archiveFile->getFileListInDirectory(AsciiString(""), AsciiString(""), AsciiString("*"), filenameList, TRUE);
+	{
+		AsciiString searchName("*");
+		AsciiString originalDirectory("");
+		AsciiString currentDirectory("");
+		archiveFile->getFileListInDirectory(currentDirectory, originalDirectory, searchName, filenameList, TRUE);
+	}
 
 	FilenameListIter it = filenameList.begin();
 
@@ -291,7 +321,7 @@ void ArchiveFileSystem::loadIntoDirectoryTree(const ArchiveFile *archiveFile, co
 			ArchivedDirectoryInfoMap::iterator tempiter = dirInfo->m_directories.find(token);
 			if (tempiter == dirInfo->m_directories.end()) 
 			{
-				dirInfo->m_directories[token].clear();
+				bfmeClearArchivedDirectory(dirInfo->m_directories[token]);
 				dirInfo->m_directories[token].m_directoryName = token;
 			}
 
