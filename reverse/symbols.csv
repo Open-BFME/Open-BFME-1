@@ -86627,3 +86627,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ??$__get_integer@V?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@I@_STL@@YA_NAAV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@0@0HAAIH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x00833530,STLport 4.5.3 narrow unsigned-int parser; exact wrapper call and adjacent specialization family establish identity
 ?setVideoBuffer@WinInstanceData@BfmeStopAllMovies@@QAEXH@Z,0x0002E073,retail BFME WindowVideo::setWindowState callee; ABI-shaped int-handle instance-data setter
 ?winGetInstanceData@GameWindow@BfmeStopAllMovies@@QAEPAVWinInstanceData@2@XZ,0x00034991,retail BFME WindowVideo::setWindowState callee; no-argument instance-data getter
+?setVideoBuffer@WinInstanceData@BfmePauseAllMovies@@QAEXH@Z,0x0002E073,retail BFME WindowVideo::setWindowState callee; ABI-shaped int-handle instance-data setter
+?winGetInstanceData@GameWindow@BfmePauseAllMovies@@QAEPAVWinInstanceData@2@XZ,0x00034991,retail BFME WindowVideo::setWindowState callee; no-argument instance-data getter
