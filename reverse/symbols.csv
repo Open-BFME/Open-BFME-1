@@ -83077,6 +83077,7 @@ name,address,notes
 ?parseUserList@Network@@UAEXPBVGameInfo@@@Z,0x00681960,vtable 0x0111A968 slot 11 (+0x2C) via ILT 0x000069E7; if (m_conMgr) tail-jumps attachPlayersFromGameInfo@BFMEConnectionManager 0x00666610 (the ConnectionManager::parseUserList twin) with the GameInfo* ret 4; called by the game-start routines 0x00639A2B and 0x0068A61B after setLocalAddress/initTransport as in ZH
 ?parseWeaponBonusSet@WeaponBonusSet@@QAEXPAVINI@@@Z,0x00019BC8
 ?parseWeaponTemplate@INI@@SAXPAV1@PAX1PBX@Z,0x0000CBDF
+?peerAuthenticateCDKey@@YAXPAXPBDP6AX0H10@Z0H@Z,0x008585F0,GameSpy peerMain CD key wrapper target
 ?peerParseQuery@@YAHPAXPADHPAUsockaddr@@@Z,0x00857570
 ?perform@Gen002DF780@@QAEXXZ,0x002DF780,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
 ?perform@Gen00351260@@QAEXXZ,0x00351260,address-derived callee of the 12-byte this-returning forwarder family; target read from the REL32 at its call sites
