@@ -1,21 +1,10 @@
 // ?recompute@AIGroup@@QAEXXZ
-// partial score=0.97 date=2026-09-04
-// ?recompute@AIGroup@@QAEXXZ
-// partial score=0.97 date=2026-09-04
-// cl: /DNDEBUG /MD /EHsc
-
 // Open-BFME: AIGroup::recompute, retail 0x00154B80, 276 bytes.
 //
-// Zero Hour's body: getCenter, destroy the ground path, walk members for the
-// slowest unpenalized locomotor speed and the closest-to-center distance, then
-// clear m_dirty. BFME inlines isKindOf(KINDOF_IMMOBILE) through getFinalOverride
-// (ILT 0x000022BB), tests DISABLED_HELD at object+0x1A4, reads the body module
-// at +0x200 (getDamageState vslot +0x20) against TheWritableGlobalData+0xBD8,
-// and deletes the Path at +0x18 with its matched dtor plus scalar operator
-// delete, then zeros the extra path-state words through +0x30.
-//
-// Wall: after `push edi; call ??3` retail stores [esi+18..24]=0 THEN `add
-// esp,4`. Ours emits the add first. Size 276/276, 9 non-reloc bytes.
+// BFME extends the Zero Hour recompute walk with the ground-path state reset,
+// the immobile/held filters, and the body damage-state speed check.  The
+// scalar delete is explicitly non-throwing so the old MSVC caller cleanup can
+// be scheduled with the following path-state stores.
 
 struct Coord3D
 {
@@ -30,9 +19,7 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-
 	const Overridable *getFinalOverride(void) const;
-
 	Overridable *m_nextOverride;
 };
 
@@ -41,7 +28,8 @@ class ThingTemplate : public Overridable
 public:
 	bool isKindOf(KindOfType t) const
 	{
-		return (m_kindof[(unsigned int)t >> 5] & (1u << ((unsigned int)t & 31))) != 0;
+		return (m_kindof[(unsigned int)t >> 5] &
+			(1u << ((unsigned int)t & 31))) != 0;
 	}
 
 private:
@@ -49,12 +37,18 @@ private:
 	unsigned int m_kindof[3];
 };
 
-void __cdecl operator delete(void *);
+void __cdecl operator delete(void *) throw();
 
-class Path
+class __declspec(novtable) Path
+{
+protected:
+	virtual ~Path(void) throw();
+};
+
+class BFMEDeletablePath : public Path
 {
 public:
-	~Path();
+	void destroy(void) { Path::~Path(); }
 };
 
 class BodyModuleInterface
@@ -90,11 +84,7 @@ public:
 		return tmpl;
 	}
 
-	bool isKindOf(KindOfType t) const
-	{
-		return getTemplate()->isKindOf(t);
-	}
-
+	bool isKindOf(KindOfType t) const { return getTemplate()->isKindOf(t); }
 	float getPosX(void) const { return m_position.x; }
 	float getPosY(void) const { return m_position.y; }
 	AIUpdateInterface *getAIUpdateInterface(void) { return m_ai; }
@@ -138,6 +128,7 @@ class AIGroup
 public:
 	bool getCenter(Coord3D *center);
 	void recompute(void);
+	friend class PathDeleteArgument;
 
 private:
 	char m_bfmeHead[0x04];
@@ -155,6 +146,27 @@ private:
 	void *m_pathState30;
 };
 
+class PathDeleteArgument
+{
+public:
+	PathDeleteArgument(Path *path, AIGroup *group) : m_path(path), m_group(group) { }
+	operator void *(void) const { return m_path; }
+	// The conversion temporary is intentional.  MSVC destroys this by-value
+	// argument before popping operator delete's cdecl stack argument, placing
+	// these four reset stores before retail's `add esp, 4`.
+	~PathDeleteArgument()
+	{
+		m_group->m_groundPath = 0;
+		m_group->m_pathState1C = 0;
+		m_group->m_pathState20 = 0;
+		m_group->m_pathState24 = 0;
+	}
+
+private:
+	Path *m_path;
+	AIGroup *m_group;
+};
+
 void AIGroup::recompute(void)
 {
 	float closeDist = 999999999.9f;
@@ -165,12 +177,8 @@ void AIGroup::recompute(void)
 	if (m_groundPath)
 	{
 		Path *p = m_groundPath;
-		p->~Path();
-		operator delete(p);
-		m_groundPath = 0;
-		m_pathState1C = 0;
-		m_pathState20 = 0;
-		m_pathState24 = 0;
+		reinterpret_cast<BFMEDeletablePath *>(p)->destroy();
+		operator delete(PathDeleteArgument(p, this));
 		m_pathState28 = 10.0f;
 		m_pathState2C = 0;
 		m_pathState30 = 0;
@@ -179,8 +187,8 @@ void AIGroup::recompute(void)
 	m_speed = 9999999999.9f;
 
 	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
-			it = it->m_bfmeNext)
+		it != m_bfmeMembers;
+		it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
 
