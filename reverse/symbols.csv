@@ -86514,3 +86514,4 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?m_3DInterfaceScene@W3DDisplay@@2PAVRTS3DInterfaceScene@@A,0x012F8060,Canonical static RTS3DInterfaceScene pointer; W3DDisplay header and definition plus W3DMouse cursor add/remove/render routes;campaign=36h-20260908-1018;batch=45
 ?ApplicationHWnd@@3PAXA,0x012ED238,Canonical non-STRICT HWND global from WinMain declaration and definition; W3DMouse ScreenToClient operand and Win32 window calls;campaign=36h-20260908-1018;batch=45
 __imp_?bfmeReleaseYE@@YGXPAX@Z,0x00F58ECC,release import
+??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
