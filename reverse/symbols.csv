@@ -86546,6 +86546,30 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
+?g_rva003D2B80NegHalf@@3MB,0x00C95F9C,retail negative half constant used by the four-child element callback
+??0Rva003D2B80Child@@QAE@PAVRva003D2B80Source@@PAM@Z,0x000019D3,constructor call-through to the retail child constructor thunk
+??2Rva003D2B80Child@@SAPAXI@Z,0x00881F30,allocation call-through to the retail allocator body
+?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
+??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
+?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879F60,SetupCPUEmFloatArrays call-site alias to the retail emfloat division body
+?AddSubInternalFPF@@YAXEPAUInternalFPF@@00@Z,0x00879900,DoEmFloatIteration call-site alias to the retail emfloat add/subtract body
+?DoEmFloatIteration@@YAKPAUInternalFPF@@00KK@Z,0x0087A3B0,DoEmFloat retail calls this emfloat iteration body; source emfloat.cpp provides the clean implementation
+?MultiplyInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879C80,DoEmFloatIteration call-site alias to the retail emfloat multiply body
+?Int32ToInternalFPF@@YAXJPAUInternalFPF@@@Z,0x0087A290,SetupCPUEmFloatArrays call-site alias to the retail integer conversion body
+?global_emfloatstruct@@3UEmFloatStruct@@A,0x01356560,DoEmFloat source accesses this retail EmFloatStruct global at 0x01356560
+?global_min_ticks@@3KA,0x013562B0,DoEmFloat source compares iteration ticks against this retail benchmark global
+?randnum@@YAJJ@Z,0x008790B0,SetupCPUEmFloatArrays call-site alias to the retail nbench random reset body
+?randwc@@YAJJ@Z,0x00879100,SetupCPUEmFloatArrays call-site alias to the retail nbench random value body
+??0Rva00776240Vector2C@@QAE@ABU0@@Z,0x0003EDFB,Gen_t_00776240 copy member callee at +0x2C
+??0Rva00776240List50@@QAE@ABU0@@Z,0x000296E5,Gen_t_00776240 copy member callee at +0x50
+??0Rva00776240Vector54@@QAE@ABU0@@Z,0x00046141,Gen_t_00776240 copy member callee at +0x54
+??0Rva00776240Vector60@@QAE@ABU0@@Z,0x000027F2,Gen_t_00776240 copy member callee at +0x60
+??0Rva00776240Vector70@@QAE@ABU0@@Z,0x00014547,Gen_t_00776240 copy member callee at +0x70
+??4Rva00776240Field7C@@QAEAAU0@ABU0@@Z,0x0001C288,Gen_t_00776240 array assignment callee at +0x7C
+?set@BFMERetailAsciiString@@QAEXPBDH@Z,0x00887D20,set
+?bfmeSetZH@BfmeObjZH@@QAEXPBUBfmeVecZH@@PBVBFMERetailAsciiString@@@Z,0x008800D0,set vec
+?bfmeApplyZH@@YAXPAVBfmeObjZH@@@Z,0x0087EBB0,apply
+?TheMappedImageCollection@@3PAVImageCollection@@A,0x012F6924,canonical ImageCollection singleton; campaign=36h-20260908
 ?bfmeFindCA@BfmeMapCA@@QAEPAVBfmeNodeCA@@PBVBFMERetailAsciiString@@@Z,0x00031D68,map find
 ?bfmeStopCA@BfmeThingCA@@QAEXH@Z,0x00036F7A,stop
 ?bfmeEraseCA@BfmeMapCA@@QAEXPAUBfmeIterCA@@@Z,0x00016F36,map erase

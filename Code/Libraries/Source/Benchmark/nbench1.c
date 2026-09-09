@@ -1280,7 +1280,7 @@ locemfloatstruct=&global_emfloatstruct;
 /*
 ** Set the error context
 */
-errorcontext="CPU:Floating Emulation";
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 
 /*
@@ -1345,7 +1345,7 @@ if(locemfloatstruct->adjust==0)
 ** Verify that selft adjustment code worked.
 */
 if(locemfloatstruct->loops==0)
-{       printf("CPU:EMFPU -- CMPUEMFLOATLOOPMAX limit hit\n");
+{
 	FreeMemory((farvoid *)abase,&systemerror);
 	FreeMemory((farvoid *)bbase,&systemerror);
 	FreeMemory((farvoid *)cbase,&systemerror);
