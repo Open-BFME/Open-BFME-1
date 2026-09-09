@@ -86564,3 +86564,4 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$__copy@PAUBfmeElem60@@PAU1@H@_STL@@YAPAUBfmeElem60@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0087EA20,STLport range copy callee for BfmeVec60 erase at 0x0087FB90
+??1BfmeThingRefEQ@@QAE@XZ,0x000362FF,ThingRef destructor ILT thunk used by the unwind funclets of the 0x0060E8A0 cloud settings constructor
