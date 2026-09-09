@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -49,6 +49,7 @@
 //         Includes                                                      
 //-----------------------------------------------------------------------------
 #include "W3DDevice/GameClient/W3DPropBuffer.h"
+#include "string_base.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -212,25 +213,30 @@ Int W3DPropBuffer::addPropType(const AsciiString &modelName)
 /** Adds a prop.  Name is the W3D model name, supported models are
 ALPINE, DECIDUOUS and SHRUB. */
 //=============================================================================
-// ?addProp@W3DPropBuffer@@QAEXHUCoord3D@@MMABVAsciiString@@@Z present-unmatched
 void W3DPropBuffer::addProp(Int id, Coord3D location, Real angle,Real scale, const AsciiString &modelName)
 {
+	if (*reinterpret_cast<const UnsignedByte *>(
+		reinterpret_cast<const char *>(TheWritableGlobalData) + 0x18) == 0) {
+		return;
+	}
 	if (m_numProps >= MAX_PROPS) {
 		return;  
 	}
 	if (!m_initialized) {
 		return;  
 	}
+	const AsciiString *name = &modelName;
 	Int propType = -1;
 	Int i;
 	for (i=0; i<m_numPropTypes; i++) {
-		if (m_propTypes[i].m_robjName.compareNoCase(modelName)==0) {
+		if (reinterpret_cast<const StringBase<char> *>(&m_propTypes[i].m_robjName)->compareNoCase(
+			*reinterpret_cast<const StringBase<char> *>(name)) == 0) {
 			propType = i;
 			break;
 		}
 	}
 	if (propType<0) {
-		propType = addPropType(modelName);
+		propType = addPropType(*name);
 		if (propType<0) {
 			return;
 		}
@@ -251,8 +257,8 @@ void W3DPropBuffer::addProp(Int id, Coord3D location, Real angle,Real scale, con
 	// Translate the bounding sphere of the model.
 	m_props[m_numProps].bounds = m_propTypes[propType].m_bounds;
 	m_props[m_numProps].bounds.Center += Vector3(location.x, location.y, location.z);
-	// Initially set it invisible.  cull will update it's visiblity flag.
-	m_props[m_numProps].visible = false;
+	// Mark the new prop visible; cull updates this flag on later passes.
+	m_props[m_numProps].visible = true;
 
 	m_numProps++;
 }
