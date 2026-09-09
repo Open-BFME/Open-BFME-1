@@ -1,4 +1,4 @@
-// cl: /Od /GZ /MD /DNDEBUG
+// cl: /Od /GZ /GS /MD /DNDEBUG
 /* EA DirtySock -- allocation helpers for the comm layer, /Od with /GZ.  The
  * first of the 0x00800000..0x00820000 group to be converted; placement is by
  * address neighbourhood and by which allocator each body calls.
@@ -133,9 +133,93 @@ struct Rva0080D980Backend
 	int m_field04;
 };
 
-int Rva0080C390( struct Rva0080B000Comm *comm, const void *data, int length );
+void Rva00810020( void *context );
+void Rva00810060( void *context, const unsigned char *data, int length );
+void Rva00810FF0( void *context, char *out, int outSize );
+void Rva0080F300( void *state, unsigned char *data, int length );
 int Rva007FD920( void *socket, const void *data, int length, int flags,
 	const void *address, int addressLength );
+
+int Rva0080C390( struct Rva0080B000Comm *comm, const void *data, int length )
+{
+	int payloadLength;
+	int headerOffset;
+	int writeOffset;
+	int baseOffset;
+	int padding;
+	unsigned char context[ 0x54 ];
+	unsigned char header[ 4 ];
+	unsigned char *state;
+	int remainder;
+
+	state = (unsigned char *)comm->m_backend;
+	if ( length < 1 || length > 0x3E80 )
+		return -1;
+
+	writeOffset = 4;
+	headerOffset = writeOffset;
+	if ( *(int *)( state + 0x812C ) > 0 )
+		writeOffset += 0x10;
+	baseOffset = writeOffset;
+
+	memcpy( state + writeOffset + 8, data, length );
+	writeOffset += length;
+
+	if ( *(int *)( state + 0x81B0 ) > 0 )
+	{
+		remainder = ( *(int *)( state + 0x81B0 )
+			- ( length % *(int *)( state + 0x81B0 ) ) )
+			% *(int *)( state + 0x81B0 );
+	}
+	else
+		remainder = 0;
+	padding = remainder;
+
+	memset( state + writeOffset + 8, 0, padding );
+	writeOffset += padding;
+
+	if ( *(int *)( state + 0x812C ) > 0 )
+	{
+		header[ 0 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 24 ) & 0xff );
+		header[ 1 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 16 ) & 0xff );
+		header[ 2 ] = (unsigned char)( ( *(unsigned int *)( state + 0x4008 ) >> 8 ) & 0xff );
+		header[ 3 ] = (unsigned char)( *(unsigned int *)( state + 0x4008 ) & 0xff );
+
+		Rva00810020( context );
+		Rva00810060( context, state + 0x8130,
+			*(int *)( state + 0x812C ) );
+		Rva00810060( context, state + baseOffset + 8,
+			writeOffset - baseOffset );
+		Rva00810060( context, header, 4 );
+		Rva00810FF0( context, (char *)( state + headerOffset + 8 ), 0x10 );
+	}
+
+	payloadLength = writeOffset - headerOffset;
+	if ( *(int *)( state + 0x812C ) > 0 )
+	{
+		Rva0080F300( state + 0x87BE, state + headerOffset + 8,
+			payloadLength );
+	}
+	if ( padding > 0 )
+	{
+		headerOffset--;
+		state[ headerOffset + 8 ] = (unsigned char)( padding & 0xff );
+	}
+	headerOffset--;
+	state[ headerOffset + 8 ] = (unsigned char)( payloadLength & 0xff );
+	headerOffset--;
+	state[ headerOffset + 8 ] =
+		(unsigned char)( ( payloadLength >> 8 ) & 0xff );
+	if ( padding == 0 )
+	{
+		state[ headerOffset + 8 ] |= 0x80;
+	}
+
+	*(int *)state = headerOffset;
+	*(int *)( state + 4 ) = writeOffset;
+	*(unsigned int *)( state + 0x4008 ) += 1;
+	return 0;
+}
 
 int Rva0080D980( struct Rva0080B000Comm *comm, const char *data, int length )
 {
