@@ -255,14 +255,115 @@ struct Gen00809750
 // ??0Gen00809750@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
 Gen00809750::Gen00809750() {}
 
+class BfmeMsgVJH
+{
+public:
+	~BfmeMsgVJH();
+
+	char m_pad00[ 0x10 ];
+	void *m_field10;
+	void *m_field14;
+};
+
+class GenAlloc
+{
+public:
+	virtual void v0();
+	virtual void v1();
+	virtual void *allocate( unsigned int size, int flags );
+	virtual void release( void *block, int flags );
+};
+
+GenAlloc *Gen007EFFC0();
+extern "C" void Rva0080E4D0( void *object );
+
+class Gen0080ACD0Vtable
+{
+public:
+	virtual void v0();
+	virtual void v1( int value );
+};
+
+// Neutral identity: scalar deleting dtor ??_GGen0080ACD0@@UAEPAXI@Z at 0x0080ACD0 passes size 0x194.
+// Retail 0x0080A830 owns 16 x 0x20 child slots at +0x18 and a 0xB4 secondary at +0x58.
+// Its pinned callees are manager 0x007EFFC0, child dtor 0x007E86C0, sized delete 0x007F0170, and helper 0x0080E4D0.
 struct Gen0080ACD0
 {
 	Gen0080ACD0();
+	// Retail vtable VA 0x0112C830 places scalar dtor 0x0080ACD0 in slot 4.
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
 	virtual ~Gen0080ACD0();		// retail 0x0080A830
 	void operator delete( void *p, unsigned int n );
 
-	char m_bfmePad[ 0x194 - 4 ];
+	void *m_field04;
+	void *m_field08;
+	void *m_field0c;
+	Gen0080ACD0Vtable *m_field10;
+	void *m_field14;
+	struct BfmeMsgVJH *m_messages[ 16 ];
+	struct Gen00809750 *m_secondary;
+	int m_pad5c;
+	char m_pad60[ 4 ];
+	int m_pad64;
+	char m_pad68[ 0x100 ];
+	char m_flag168;
+	char m_pad169[ 3 ];
+	int m_field16c;
+	int m_field170;
+	char m_flag174;
+	char m_bfmePad[ 0x194 - 0x175 ];
 };
 
 // ??0Gen0080ACD0@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
 Gen0080ACD0::Gen0080ACD0() {}
+
+Gen0080ACD0::~Gen0080ACD0()
+{
+	BfmeMsgVJH **message = m_messages;
+	int remaining = 16;
+
+	while ( remaining != 0 )
+	{
+		BfmeMsgVJH *current = *message;
+		if ( current != 0 )
+		{
+			if ( current->m_field14 != 0 )
+				Gen007EFFC0()->release( current->m_field14, 0 );
+			current->m_field14 = 0;
+			current->m_field10 = 0;
+			current->BfmeMsgVJH::~BfmeMsgVJH();
+			Gen0080ACD0::operator delete( current, 0x20 );
+		}
+		++message;
+		--remaining;
+	}
+
+	Gen00809750 *secondary = m_secondary;
+	if ( secondary != 0 )
+	{
+		secondary->Gen00809750::~Gen00809750();
+		Gen0080ACD0::operator delete( secondary, 0xB4 );
+	}
+
+	m_field10->v1( 0 );
+	Rva0080E4D0( m_field0c );
+	m_field08 = 0;
+	m_field04 = 0;
+	m_field0c = 0;
+	m_field10 = 0;
+	m_field14 = 0;
+	m_secondary = 0;
+	m_pad5c = 0;
+	m_pad64 = 0;
+	m_flag168 = 0;
+	m_field16c = 0;
+	m_field170 = 0;
+
+	for ( int i = 0; i < 16; ++i )
+		m_messages[ i ] = 0;
+
+	m_flag174 = 0;
+}
