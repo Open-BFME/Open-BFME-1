@@ -1,12 +1,142 @@
 // ?clearRemovableForConstruction@BuildAssistant@@IAEXPBVThingTemplate@@PBUCoord3D@@M@Z
-// partial score=0.7 date=2026-08-29
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
-// stlport
+// partial score=0.8 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc
+// readable body of ?clearRemovableForConstruction@BuildAssistant@@: Code/GameEngine/Source/Common/System/BuildAssistant.cpp
 
-#include "PreRTS.h"
+// BuildAssistant::clearRemovableForConstruction, retail 0x000FF4D0 (438 bytes).
+//
+// BFME inlines the collision iterator query, the whole of
+// isRemovableForConstruction (its own out-of-line copy is matched at
+// 0x000FE5D0) and the iterator release into this one body, so the vendored
+// Zero Hour headers cannot be included: they carry a different Object layout.
+// The offsets used here are BFME's own.  ThingTemplate::m_kindof is an array
+// of three dwords at +0xc8, so KINDOF_SHRUBBERY is bit 6 of the first word,
+// KINDOF_CLEARED_BY_BUILD bit 18 of the second, KINDOF_ALWAYS_SELECTABLE bit
+// 25 of the second and KINDOF_INERT bit 24 of the third.  Object's
+// effectively-dead flag is the low bit of the status byte at +0x344.
 
-#include "Common/BuildAssistant.h"
+typedef bool Bool;
+typedef float Real;
+typedef int Int;
+typedef unsigned int UnsignedInt;
 
+#define NULL 0
+
+class SimpleObjectIterator;
+
+// STLport's node allocator owns every small buffer; the iterator's own vector
+// releases through it, and hands anything over 128 bytes to ::operator delete.
+namespace _STL
+{
+	template <bool __threads, int __inst>
+	class __node_alloc
+	{
+		static void _M_deallocate(void *__p, unsigned int __n);
+		friend class ::SimpleObjectIterator;
+	};
+}
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+
+	void *_vptr;
+	Overridable *m_nextOverride;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GeometryInfo.h
+class GeometryInfo
+{
+public:
+	Real getBoundingCircleRadius() const
+	{
+		return m_boundingCircleRadius;
+	}
+
+private:
+	unsigned char m_pad[0x14];
+	Real m_boundingCircleRadius;
+};
+
+enum KindOfMask
+{
+	KINDOF_SHRUBBERY_MASK = 0x00000040,
+	KINDOF_CLEARED_BY_BUILD_MASK = 0x00040000,
+	KINDOF_ALWAYS_SELECTABLE_MASK = 0x02000000,
+	KINDOF_INERT_MASK = 0x01000000
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+class ThingTemplate : public Overridable
+{
+public:
+	// The kind flags live in three words at +0xc8.  KINDOF_SHRUBBERY is index
+	// 6 of the first word, KINDOF_CLEARED_BY_BUILD index 18 and
+	// KINDOF_ALWAYS_SELECTABLE index 25 of the second, KINDOF_INERT index 24
+	// of the third.  Retail tests the word against the literal mask.
+	UnsignedInt getKindOfWord(Int word) const
+	{
+		return m_kindof[word];
+	}
+
+	const GeometryInfo *getTemplateGeometryInfo() const
+	{
+		return &m_geometryInfo;
+	}
+
+private:
+	unsigned char m_pad[0x58];
+	GeometryInfo m_geometryInfo;
+	unsigned char m_pad2[0x50];
+	UnsignedInt m_kindof[3];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
+{
+public:
+	const ThingTemplate *getTemplate() const
+	{
+		const ThingTemplate *tmpl = m_template;
+		if (tmpl != 0 && tmpl->m_nextOverride != 0)
+			tmpl = static_cast<const ThingTemplate *>(
+				tmpl->m_nextOverride->getFinalOverride());
+		return tmpl;
+	}
+
+private:
+	void *_vptr;
+	const ThingTemplate *m_template;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public Thing
+{
+public:
+	UnsignedInt getKindOfWord(Int word) const
+	{
+		return getTemplate()->getKindOfWord(word);
+	}
+
+	UnsignedInt getStatusBits() const
+	{
+		return *reinterpret_cast<const unsigned char *>(
+			reinterpret_cast<const char *>(this) + 0x344);
+	}
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SimpleObjectIterator.h
+// BFME walks a vector of eight-byte entries instead of Zero Hour's clump list.
 class SimpleObjectIterator
 {
 public:
@@ -17,18 +147,33 @@ public:
 
 	Object *next(void)
 	{
-		char *current = m_current;
-		char *end = m_end;
-		if (end == current)
+		if (m_current == m_end)
 			return NULL;
 
-		Object *obj = *reinterpret_cast<Object **>(current);
-		current += 8;
-		m_current = current;
+		char *cur = m_current;
+		Object *obj = *reinterpret_cast<Object **>(cur);
+		cur += 8;
+		m_current = cur;
 		return obj;
 	}
 
-	void deleteInstance(void);
+	void deleteInstance(void)
+	{
+		--m_refCount;
+		if (m_refCount == 0)
+		{
+			char *begin = m_begin;
+			if (begin != NULL)
+			{
+				Int bytes = ((m_capacity - begin) >> 3) << 3;
+				if (bytes > 0x80)
+					::operator delete(begin);
+				else
+					_STL::__node_alloc<true, 0>::_M_deallocate(begin, bytes);
+			}
+			::operator delete(this);
+		}
+	}
 
 private:
 	char *m_begin;
@@ -38,6 +183,25 @@ private:
 	Int m_refCount;
 };
 
+// Retail opens an unwind state for the iterator the instant the query returns,
+// before the filter it was given is destroyed, and releases it through the
+// same inlined deleteInstance at the end of the body.
+class MemoryPoolObjectHolder
+{
+public:
+	MemoryPoolObjectHolder(SimpleObjectIterator *iter) : m_mpo(iter) { }
+
+	__forceinline ~MemoryPoolObjectHolder()
+	{
+		if (m_mpo != NULL)
+			m_mpo->deleteInstance();
+	}
+
+private:
+	SimpleObjectIterator *m_mpo;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilter
 {
 public:
@@ -52,7 +216,7 @@ private:
 class PartitionFilterWouldCollide : public PartitionFilter
 {
 public:
-	PartitionFilterWouldCollide(const Coord3D &pos, const void *geometry,
+	PartitionFilterWouldCollide(const Coord3D &pos, const GeometryInfo *geometry,
 		Real angle, Bool desired)
 	{
 		m_position.x = pos.x;
@@ -70,9 +234,9 @@ public:
 
 private:
 	Coord3D m_position;
-	const void *m_geometry;
+	const GeometryInfo *m_geometry;
 	Real m_angle;
-	Byte m_desired;
+	Bool m_desired;
 };
 
 enum DistanceCalculationType
@@ -86,7 +250,7 @@ enum DistanceCalculationType
 class PartitionManager
 {
 public:
-	void getClosestObjects(SimpleObjectIterator *&iter, const Coord3D *pos,
+	void getClosestObjects(SimpleObjectIterator *&result, const Coord3D *pos,
 		Real maxDist, DistanceCalculationType dc, PartitionFilter *filter,
 		Object *ignore);
 };
@@ -100,81 +264,48 @@ public:
 extern PartitionManager *ThePartitionManager;
 extern GameLogic *TheGameLogic;
 
-extern void bfmeIteratorDelete(void *object);
-extern void bfmeIteratorFreeSmall(void *begin, Int bytes);
-
-class RetailOverridableCall
+// The Zero Hour spelling of the query, inlined into the one caller: the filter
+// belongs to this scope, so retail destroys it after the handle it fills is
+// already live.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BuildAssistant.h
+class BuildAssistant
 {
-public:
-	const Overridable *getFinalOverride(void) const;
+protected:
+	void clearRemovableForConstruction(const ThingTemplate *whatToBuild,
+		const Coord3D *pos, Real angle);
 };
-
-void SimpleObjectIterator::deleteInstance(void)
-{
-	if (--m_refCount == 0)
-	{
-		char *begin = m_begin;
-		if (begin)
-		{
-			Int bytes = (m_capacity - begin) >> 3;
-			bytes <<= 3;
-			if (bytes > 0x80)
-				bfmeIteratorDelete(begin);
-			else
-				bfmeIteratorFreeSmall(begin, bytes);
-		}
-		bfmeIteratorDelete(this);
-	}
-}
-
-static const unsigned char *finalTemplate(const Object *obj)
-{
-	const Overridable *tmpl = *reinterpret_cast<const Overridable *const *>(
-		reinterpret_cast<const char *>(obj) + 4);
-	const Overridable *next = tmpl ? *reinterpret_cast<const Overridable *const *>(
-		reinterpret_cast<const char *>(tmpl) + 4) : NULL;
-	if (next)
-		tmpl = reinterpret_cast<const RetailOverridableCall *>(next)->getFinalOverride();
-	return reinterpret_cast<const unsigned char *>(tmpl);
-}
 
 // ?clearRemovableForConstruction@BuildAssistant@@IAEXPBVThingTemplate@@PBUCoord3D@@M@Z
 void BuildAssistant::clearRemovableForConstruction(const ThingTemplate *whatToBuild,
 	const Coord3D *pos, Real angle)
 {
-	SimpleObjectIterator *iter;
+	SimpleObjectIterator *found;
 	{
 		PartitionFilterWouldCollide filter(*pos,
-			reinterpret_cast<const char *>(whatToBuild) + 0x60, angle, true);
-		register PartitionFilter *filterPtr = &filter;
-		ThePartitionManager->getClosestObjects(iter, pos,
-			*reinterpret_cast<const Real *>(reinterpret_cast<const char *>(whatToBuild) + 0x74) * 1.1f,
-			FROM_BOUNDINGSPHERE_3D, filterPtr, NULL);
+			whatToBuild->getTemplateGeometryInfo(), angle, true);
+		ThePartitionManager->getClosestObjects(found, pos,
+			whatToBuild->getTemplateGeometryInfo()->getBoundingCircleRadius() * 1.1f,
+			FROM_BOUNDINGSPHERE_3D, &filter, NULL);
 	}
-
 	Object *them;
-	while ((them = iter->next()) != NULL)
+	while ((them = found->next()) != NULL)
 	{
-		const unsigned char *tmpl = finalTemplate(them);
-		if ((*reinterpret_cast<const UnsignedInt *>(tmpl + 0xd0) & 0x01000000) != 0)
+		// UI feedback objects (always selectable) never get destroyed by
+		// construction, and neither does anything isRemovableForConstruction
+		// turns down.
+		if ((them->getKindOfWord(2) & KINDOF_INERT_MASK) != 0)
 			continue;
 
-		tmpl = finalTemplate(them);
-		if ((tmpl[0xc8] & 0x40) != 0)
-			goto destroy;
-
-		tmpl = finalTemplate(them);
-		if ((*reinterpret_cast<const UnsignedInt *>(tmpl + 0xcc) & 0x00040000) == 0
-			&& (*reinterpret_cast<const Byte *>(reinterpret_cast<const char *>(them) + 0x344) & 1) == 0)
+		if ((them->getKindOfWord(0) & KINDOF_SHRUBBERY_MASK) == 0
+			&& (them->getKindOfWord(1) & KINDOF_CLEARED_BY_BUILD_MASK) == 0
+			&& (them->getStatusBits() & 1) == 0)
 			continue;
 
-		tmpl = finalTemplate(them);
-		if ((*reinterpret_cast<const UnsignedInt *>(tmpl + 0xcc) & 0x02000000) != 0)
+		if ((them->getKindOfWord(1) & KINDOF_ALWAYS_SELECTABLE_MASK) != 0)
 			continue;
 
-	destroy:
 		TheGameLogic->destroyObject(them);
 	}
 
-	iter->deleteInstance();
+	found->deleteInstance();
 }
