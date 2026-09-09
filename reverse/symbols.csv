@@ -10403,6 +10403,7 @@ name,address,notes
 ?Apply@CameraClass@@QAEXXZ,0x00933190,retail WaterRenderObjClass::renderMirror caller at 0x007A2B00 CameraClass::Apply body verified
 ?Apply@ScaleTextureMapperClass@@UAEXH@Z,0x00966490,zh-sweep callee pin derived from retail REL32 displacement
 ?Apply_Default_State@DX8Wrapper@@SAXXZ,0x009095A0,BFME DX8MeshRendererClass::Flush tail; snapshot-inlined default-state body at historical 0x009095A0
+?Apply_Render_State_Changes@DX8Wrapper@@CAXXZ,0x00904890,DX8Wrapper::Draw call destination; exact cdecl object decoration for the retail render-state application helper
 ?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,0x00904890
 ?AptGetSwfVersion@@YAIXZ,0x00892370,EA Apt 2.00.00 SWF version getter called by the ActionScript BitAnd handler
 ?AptLivingWorldWindowIndex@@YAHHH@Z,0x000019F6,BFME APT Living World visibility helpers call the established two-int wrapper through this retail ILT
@@ -10646,6 +10647,7 @@ name,address,notes
 ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ,0x00929AD0
 ?DoesCommandRequireACommandID@@YA_NW4NetCommandType@@@Z,0x00015B72
 ?Draw@DX8Wrapper@@CAXHGGGGH@Z,0x00906B40,Open-BFME5 the shared primitive-draw helper Draw_Triangles and Draw_Strip forward to; only the leading mode constant differs
+?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z,0x00904660,WW3D2 dx8wrapper.cpp helper reached by the sorted-buffer branch of the named Draw body; target address is the exact retail call destination
 ?Draw_Sentence@Render2DSentenceClass@@QAEXHHHH@Z,0x0093EB50,Render2DSentenceClass four-argument draw call recovered from W3DGameWindow drawText
 ?Draw_Strip@DX8Wrapper@@SAXGGGG@Z,0x00906E40,
 ?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z,0x00906DF0,
@@ -11111,6 +11113,7 @@ name,address,notes
 ?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z,0x00039EBE,ILT thunk; real body 0x684630 (recvfrom; identity confirmed, register allocation still differs)
 ?Record_Texture_Begin@@YAXXZ,0x00937890,Debug_Statistics::Begin_Statistics retail texture-recording helper call
 ?Record_Texture_End@@YAXXZ,0x00937900,Debug_Statistics::End_Statistics retail REL32 helper target
+?Record_DX8_Polys_And_Vertices@Debug_Statistics@@YAXHHABVShaderClass@@@Z,0x009373A0,DX8Wrapper Draw calls the verified statistics.cpp body at this address; TU-local global ShaderClass has the same unsigned bits layout as its Debug_Statistics shader view
 ?RecvReply@Cftp@@QAEJPBDHPAH@Z,0x00885570,WWDownload FTP.CPP Cftp::RecvReply callee of LogoffFromServer
 ?RefreshGameListBox@@YAXPAVGameWindow@@_N@Z,0x0000FD1C
 ?Register_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z,0x00947810,retail call target from MeshModelClass Register_For_Rendering
