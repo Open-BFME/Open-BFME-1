@@ -1,5 +1,5 @@
 // ?bfmeSetHQ@BfmeXfHQ@@QAEXPAVMatrix3D@@@Z
-// partial score=0.98 date=2026-09-09
+// partial score=0.985 date=2026-09-09
 // Naming &m_bfmeMatrixHQ in a local (selfMat) and reading/writing through it
 // for BOTH matrix-copy loops fixed 19 of 25 diff lines (retail keeps one
 // base register live across both loops; without the named pointer MSVC only
@@ -51,11 +51,12 @@ public:
 
 void BfmeXfHQ::bfmeSetHQ(Matrix3D *m)
 {
-	float rot = m_bfme44HQ;
+	float rot;
 	BfmeTripleHQ pos;
 	Matrix3D old;
 
 	pos.m_bfmeXHQ = m_bfmePosHQ.m_bfmeXHQ;
+	rot = m_bfme44HQ;
 	pos.m_bfmeYHQ = m_bfmePosHQ.m_bfmeYHQ;
 	pos.m_bfmeZHQ = m_bfmePosHQ.m_bfmeZHQ;
 
@@ -87,9 +88,9 @@ void BfmeXfHQ::bfmeSetHQ(Matrix3D *m)
 	selfMat->m_bfmeMHQ[10] = m->m_bfmeMHQ[10];
 	selfMat->m_bfmeMHQ[11] = m->m_bfmeMHQ[11];
 
-	m_bfmePosHQ.m_bfmeXHQ = m_bfmeMatrixHQ.m_bfmeMHQ[3];
-	m_bfmePosHQ.m_bfmeYHQ = m_bfmeMatrixHQ.m_bfmeMHQ[7];
-	m_bfmePosHQ.m_bfmeZHQ = m_bfmeMatrixHQ.m_bfmeMHQ[11];
+	*(volatile float *)&m_bfmePosHQ.m_bfmeXHQ = *(volatile float *)&m_bfmeMatrixHQ.m_bfmeMHQ[3];
+	*(volatile float *)&m_bfmePosHQ.m_bfmeYHQ = *(volatile float *)&m_bfmeMatrixHQ.m_bfmeMHQ[7];
+	*(volatile float *)&m_bfmePosHQ.m_bfmeZHQ = *(volatile float *)&m_bfmeMatrixHQ.m_bfmeMHQ[11];
 	m_bfme44HQ = m_bfmeMatrixHQ.Get_Z_Rotation();
 	m_bfme5cHQ = 0;
 
