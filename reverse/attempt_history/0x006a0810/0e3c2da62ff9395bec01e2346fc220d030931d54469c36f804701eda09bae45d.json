@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0e3c2da62ff9395bec01e2346fc220d030931d54469c36f804701eda09bae45d",
+  "symbol": "?bfmeEraseAAR@BfmeTableAAR@@QAEXPAPAUBfmeNodeAAR@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?bfmeEraseAAR@BfmeTableAAR@@QAEXPAPAUBfmeNodeAAR@@@Z\n// partial score=0.8 date=2026-09-09\nnamespace _STL\n{\n\nclass __node_alloc\n{\npublic:\n\tstatic void _M_deallocate(void *p, unsigned int n);\n};\n\n}\n\nstruct BfmeKeyAAR\n{\n\tunsigned char m_bfmeHeadAAR[8];\n\tunsigned int m_bfmeHashAAR;\n};\n\nstruct BfmeNodeAAR\n{\n\tBfmeNodeAAR *m_bfmeNextAAR;\n\tBfmeKeyAAR *m_bfmeKeyAAR;\n};\n\nclass BfmeTableAAR\n{\npublic:\n\tvoid bfmeEraseAAR(BfmeNodeAAR **it);\n\n\tunsigned char m_bfmeHeadTAAR[4];\n\tBfmeNodeAAR **m_bfmeBucketsAAR;\n\tBfmeNodeAAR **m_bfmeEndAAR;\n\tunsigned char m_bfmeGapAAR[4];\n\tint m_bfmeSizeAAR;\n};\n\nvoid BfmeTableAAR::bfmeEraseAAR(BfmeNodeAAR **it)\n{\n\tBfmeNodeAAR *n = *it;\n\n\tif (n == 0)\n\t\treturn;\n\n\tBfmeKeyAAR *key = n->m_bfmeKeyAAR;\n\tunsigned int h = (unsigned int)key;\n\n\tif (key != 0)\n\t\th = key->m_bfmeHashAAR;\n\n\tregister BfmeNodeAAR **buckets = m_bfmeBucketsAAR;\n\tregister BfmeNodeAAR **end = m_bfmeEndAAR;\n\tunsigned int idx = h % (unsigned int)(end - buckets);\n\tBfmeNodeAAR **slot = buckets + idx;\n\tBfmeNodeAAR *cur = *slot;\n\n\tif (cur == n)\n\t{\n\t\t*slot = cur->m_bfmeNextAAR;\n\t\t_STL::__node_alloc::_M_deallocate(cur, 8);\n\t\t--m_bfmeSizeAAR;\n\t\treturn;\n\t}\n\n\twhile (cur != 0)\n\t{\n\t\tBfmeNodeAAR *nx = cur->m_bfmeNextAAR;\n\n\t\tif (nx == 0)\n\t\t\treturn;\n\n\t\tif (nx == n)\n\t\t{\n\t\t\tcur->m_bfmeNextAAR = nx->m_bfmeNextAAR;\n\t\t\t_STL::__node_alloc::_M_deallocate(nx, 8);\n\t\t\t--m_bfmeSizeAAR;\n\t\t\treturn;\n\t\t}\n\n\t\tcur = nx;\n\t}\n}\n"
+}

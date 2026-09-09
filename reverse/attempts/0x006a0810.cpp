@@ -42,13 +42,16 @@ void BfmeTableAAR::bfmeEraseAAR(BfmeNodeAAR **it)
 	if (n == 0)
 		return;
 
-	unsigned int h = 0;
+	BfmeKeyAAR *key = n->m_bfmeKeyAAR;
+	unsigned int h = (unsigned int)key;
 
-	if (n->m_bfmeKeyAAR != 0)
-		h = n->m_bfmeKeyAAR->m_bfmeHashAAR;
+	if (key != 0)
+		h = key->m_bfmeHashAAR;
 
-	unsigned int idx = h % (unsigned int)(m_bfmeEndAAR - m_bfmeBucketsAAR);
-	BfmeNodeAAR **slot = m_bfmeBucketsAAR + idx;
+	register BfmeNodeAAR **buckets = m_bfmeBucketsAAR;
+	register BfmeNodeAAR **end = m_bfmeEndAAR;
+	unsigned int idx = h % (unsigned int)(end - buckets);
+	BfmeNodeAAR **slot = buckets + idx;
 	BfmeNodeAAR *cur = *slot;
 
 	if (cur == n)
