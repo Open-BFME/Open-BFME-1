@@ -86510,3 +86510,6 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?bfmeAppendXO@BfmeQueueXO@@QAEXHHHH@Z,0x008FBCB0,append
 ?bfmeSendXO@BfmeQueueXO@@QAEXHHHHHH@Z,0x008FA070,send
 ??$_Construct@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@0@ABU10@@Z,0x00080E00,AsciiString/list pair placement construction; full 66 bytes and complete cleanup graph independently verified from actual STLport instantiation; caller 0x000817C0 via ILT 0x00024046
+?D3DDevice@DX8Wrapper@@1PAUIDirect3DDevice8@@A,0x01340534,Canonical private DX8Wrapper static IDirect3DDevice8 pointer; actual dx8wrapper.h declaration and named render-device family plus W3DMouse draw COFF operand;campaign=36h-20260908-1018;batch=45
+?m_3DInterfaceScene@W3DDisplay@@2PAVRTS3DInterfaceScene@@A,0x012F8060,Canonical static RTS3DInterfaceScene pointer; W3DDisplay header and definition plus W3DMouse cursor add/remove/render routes;campaign=36h-20260908-1018;batch=45
+?ApplicationHWnd@@3PAXA,0x012ED238,Canonical non-STRICT HWND global from WinMain declaration and definition; W3DMouse ScreenToClient operand and Win32 window calls;campaign=36h-20260908-1018;batch=45

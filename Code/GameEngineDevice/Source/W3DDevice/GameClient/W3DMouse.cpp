@@ -438,6 +438,112 @@ public:
 	virtual void setCursor( Int cursor ) = 0;
 };
 
+// The BFME Display layout moves the width/height pair to slots 0x2c/0x30
+// and getWindowed to slot 0x40.  Keep this draw-only view declaration local;
+// it emits no table and does not change the shared Display header.
+class BfmeMouseDisplayDraw
+{
+public:
+	virtual void slot00( void ) = 0;
+	virtual void slot04( void ) = 0;
+	virtual void slot08( void ) = 0;
+	virtual void slot0c( void ) = 0;
+	virtual void slot10( void ) = 0;
+	virtual void slot14( void ) = 0;
+	virtual void slot18( void ) = 0;
+	virtual void slot1c( void ) = 0;
+	virtual void slot20( void ) = 0;
+	virtual void slot24( void ) = 0;
+	virtual void slot28( void ) = 0;
+	virtual UnsignedInt getWidth( void ) = 0;
+	virtual UnsignedInt getHeight( void ) = 0;
+	virtual void slot34( void ) = 0;
+	virtual void slot38( void ) = 0;
+	virtual void slot3c( void ) = 0;
+	virtual Bool getWindowed( void ) = 0;
+};
+
+// RenderObjClass::Set_Transform is the 0x54 slot in the BFME cursor-model
+// layout.  This facade is used only for that proven call site.
+class BfmeMouseRenderTransform
+{
+public:
+	virtual void slot00( void ) = 0;
+	virtual void slot04( void ) = 0;
+	virtual void slot08( void ) = 0;
+	virtual void slot0c( void ) = 0;
+	virtual void slot10( void ) = 0;
+	virtual void slot14( void ) = 0;
+	virtual void slot18( void ) = 0;
+	virtual void slot1c( void ) = 0;
+	virtual void slot20( void ) = 0;
+	virtual void slot24( void ) = 0;
+	virtual void slot28( void ) = 0;
+	virtual void slot2c( void ) = 0;
+	virtual void slot30( void ) = 0;
+	virtual void slot34( void ) = 0;
+	virtual void slot38( void ) = 0;
+	virtual void slot3c( void ) = 0;
+	virtual void slot40( void ) = 0;
+	virtual void slot44( void ) = 0;
+	virtual void slot48( void ) = 0;
+	virtual void slot4c( void ) = 0;
+	virtual void slot50( void ) = 0;
+	virtual void Set_Transform( const Matrix3D &transform ) = 0;
+};
+
+// The retail draw entry reads the cursor point at this BFME layout offset;
+// the reference Mouse header's inherited Coord2D is eight bytes earlier.
+// This view is limited to draw and has no virtual members or emitted table.
+struct BfmeMouseDrawPoint
+{
+	Int first;
+	Int second;
+};
+
+struct BfmeMouseDrawLayout
+{
+	UnsignedByte pad[0x4d10];
+	BfmeMouseDrawPoint pos;
+};
+
+// These three BFME GlobalData reads are the retail tooltip gate.  Keep their
+// offsets neutral here rather than borrowing the shifted reference names.
+struct BfmeMouseTooltipGlobalData
+{
+	UnsignedByte padA88[0xa88];
+	Int fieldA88;
+	UnsignedByte padA8c[4];
+	Bool fieldA90;
+	UnsignedByte padA91[0xe54 - 0xa91];
+	Bool fieldE54;
+};
+
+// W3D's retail camera depth is read from the BFME camera layout at +0xf4;
+// the common declaration's accessor uses a different object view here.
+struct BfmeMouseCameraDepth
+{
+	UnsignedByte padF4[0xf4];
+	Real depth;
+};
+
+// Keep the inline CameraClass accessor COMDAT available to the existing
+// same-TU alias row at 0x006E2440; draw itself uses the proven BFME +0xf4
+// field and must not call the shifted reference accessor.
+typedef Real (CameraClass::*BfmeMouseCameraDepthAccessor)( void ) const;
+static volatile BfmeMouseCameraDepthAccessor BfmeMouseCameraDepthMethod =
+	&CameraClass::Get_Depth;
+
+// The generated thunk is the proven direct route to Display::drawImage's
+// float-coordinate implementation.  Its placeholder declaration is void(),
+// so the call site supplies the recovered ABI through a typed cast.
+extern void j_0000a114( void );
+extern void j_00023fa6( void );
+extern void j_00032e39( void );
+extern void j_000350bc( void );
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+
 void W3DMouse::init( void )
 {
 
@@ -586,15 +692,14 @@ void W3DMouse::setCursor( MouseCursor cursor )
 
 extern HWND ApplicationHWnd;
 
-// ?draw@W3DMouse@@ present-unmatched
 void W3DMouse::draw(void)
 {
 	CriticalSectionClass::LockClass m(mutex);
 
-	m_drawing = TRUE;
+	m_drawing = 1;
 
 	//make sure the correct cursor image is selected
-	setCursor(m_currentCursor);
+	((BfmeVirtualMouseSetCursor *)this)->setCursor(m_currentCursor);
 
 	if (m_currentRedrawMode == RM_DX8 && m_currentD3DCursor != NONE)
 	{
@@ -602,15 +707,15 @@ void W3DMouse::draw(void)
 		//to draw the mouse cursor.
 		LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
 		if (m_pDev)
-		{	m_pDev->ShowCursor(TRUE);	//Enable DX8 cursor
+		{	m_pDev->ShowCursor(1);	//Enable DX8 cursor
 
-			if (TheDisplay && !TheDisplay->getWindowed())
+			if (TheDisplay && !((BfmeMouseDisplayDraw *)TheDisplay)->getWindowed())
 			{	//if we're full-screen, need to manually move cursor image
 				POINT ptCursor;
 
 				GetCursorPos( &ptCursor );
 				ScreenToClient( ApplicationHWnd, &ptCursor );
-				m_pDev->SetCursorPosition( ptCursor.x, ptCursor.y, D3DCURSOR_IMMEDIATE_UPDATE);
+				m_pDev->SetCursorPosition( ptCursor.x, ptCursor.y, 1);
 			}
 			//Check if animated cursor and new frame
 			if (m_currentFrames > 1)
@@ -623,7 +728,8 @@ void W3DMouse::draw(void)
 				if ((Int)m_currentAnimFrame != m_currentD3DFrame)
 				{
 					m_currentD3DFrame=(Int)m_currentAnimFrame;
-					m_pDev->SetCursorProperties(m_currentHotSpot.x,m_currentHotSpot.y,m_currentD3DSurface[m_currentD3DFrame]->Peek_D3D_Surface());
+					IDirect3DSurface8 *surface = (IDirect3DSurface8 *)m_currentD3DSurface[m_currentD3DFrame];
+					m_pDev->SetCursorProperties(m_currentHotSpot.x,m_currentHotSpot.y,surface);
 				}
 			}
 		}
@@ -633,8 +739,19 @@ void W3DMouse::draw(void)
 		const Image *image=cursorImages[m_currentPolygonCursor];
 		if (image)
 		{
-			TheDisplay->drawImage(image,m_currMouse.pos.x-m_currentHotSpot.x,m_currMouse.pos.y-m_currentHotSpot.y,
-				m_currMouse.pos.x+image->getImageWidth()-m_currentHotSpot.x, m_currMouse.pos.y+image->getImageHeight()-m_currentHotSpot.y);
+			typedef void (Display::*BfmeDisplayDrawImage)(const Image *, Real, Real, Real, Real, Int, Int);
+			union
+			{
+				void (*function)(void);
+				BfmeDisplayDrawImage member;
+			} drawImageThunk;
+			drawImageThunk.function = j_0000a114;
+			(TheDisplay->*drawImageThunk.member)(
+				image,
+				((BfmeMouseDrawLayout *)this)->pos.first-m_currentHotSpot.x,
+				((BfmeMouseDrawLayout *)this)->pos.second-m_currentHotSpot.y,
+				((BfmeMouseDrawLayout *)this)->pos.first+image->getImageWidth()-m_currentHotSpot.x,
+				((BfmeMouseDrawLayout *)this)->pos.second+image->getImageHeight()-m_currentHotSpot.y, -1, 2);
 		}
 	}
 	else if (m_currentRedrawMode == RM_WINDOWS)
@@ -642,12 +759,20 @@ void W3DMouse::draw(void)
 	}
 	else if (m_currentRedrawMode == RM_W3D)
 	{
-		if ( W3DDisplay::m_3DInterfaceScene && m_camera && m_visible)
+		typedef bool (Win32Mouse::*BfmeCursorVisibility)(void);
+		union
+		{
+			void (*function)(void);
+			BfmeCursorVisibility member;
+		} cursorVisibilityThunk;
+		cursorVisibilityThunk.function = j_00023fa6;
+		if ( W3DDisplay::m_3DInterfaceScene && m_camera &&
+			(this->*cursorVisibilityThunk.member)())
 		{
 			if (cursorModels[m_currentW3DCursor])
 			{
-				Real xPercent = (1.0f - (TheDisplay->getWidth() - m_currMouse.pos.x) / (Real)TheDisplay->getWidth());
-				Real yPercent = ((TheDisplay->getHeight() - m_currMouse.pos.y) / (Real)TheDisplay->getHeight());
+				Real xPercent = (1.0f - (((BfmeMouseDisplayDraw *)TheDisplay)->getWidth() - ((BfmeMouseDrawLayout *)this)->pos.first) / (Real)((BfmeMouseDisplayDraw *)TheDisplay)->getWidth());
+				Real yPercent = ((((BfmeMouseDisplayDraw *)TheDisplay)->getHeight() - ((BfmeMouseDrawLayout *)this)->pos.second) / (Real)((BfmeMouseDisplayDraw *)TheDisplay)->getHeight());
 
 				Real x, y, z = -1.0f;
 
@@ -660,7 +785,7 @@ void W3DMouse::draw(void)
 				{
 					//W3D Screen coordinates are -1 to 1, so we need to do some conversion:
 					Real logX, logY;
-					PixelScreenToW3DLogicalScreen(m_currMouse.pos.x - 0, m_currMouse.pos.y - 0, &logX, &logY, TheDisplay->getWidth(), TheDisplay->getHeight());
+					PixelScreenToW3DLogicalScreen(((BfmeMouseDrawLayout *)this)->pos.first - 0, ((BfmeMouseDrawLayout *)this)->pos.second - 0, &logX, &logY, ((BfmeMouseDisplayDraw *)TheDisplay)->getWidth(), ((BfmeMouseDisplayDraw *)TheDisplay)->getHeight());
 
 					Vector3 rayStart;
 					Vector3 rayEnd;
@@ -668,7 +793,7 @@ void W3DMouse::draw(void)
 					m_camera->Un_Project(rayEnd,Vector2(logX,logY));	//get world space point
 					rayEnd -= rayStart;																//vector camera to world space point
 					rayEnd.Normalize();																//make unit vector
-					rayEnd *= m_camera->Get_Depth();									//adjust length to reach far clip plane
+					rayEnd *= ((BfmeMouseCameraDepth *)m_camera)->depth;									//adjust length to reach far clip plane
 					rayEnd += rayStart;																//get point on far clip plane along ray from camera.
 
 					x = Vector3::Find_X_At_Z(z, rayStart, rayEnd);
@@ -686,7 +811,7 @@ void W3DMouse::draw(void)
 					theta -= (Real)M_PI/2;
 					tm.Rotate_Z(theta);
 				}
-				cursorModels[m_currentW3DCursor]->Set_Transform(tm);
+				((BfmeMouseRenderTransform *)cursorModels[m_currentW3DCursor])->Set_Transform(tm);
 
 				WW3D::Render( W3DDisplay::m_3DInterfaceScene, m_camera );
 			}
@@ -695,13 +820,44 @@ void W3DMouse::draw(void)
 
 	//@todo: In DX8 mode the mouse is drawn in another thread which isn't allowed
 	//access to D3D so we can't do any drawing here.
-	// draw the cursor text
+	// draw the cursor text through the existing BFME ILT.  The generated
+	// thunk is the actual route used by this body, not a new identity pin.
 	if (!isThread)
-		drawCursorText();
+	{
+		typedef void (Mouse::*BfmeDrawCursorText)(void);
+		union
+		{
+			void (*function)(void);
+			BfmeDrawCursorText member;
+		} drawCursorTextThunk;
+		drawCursorTextThunk.function = j_00032e39;
+		(reinterpret_cast<Mouse *>(this)->*drawCursorTextThunk.member)();
+	}
 
-	// draw tooltip text
-	if (m_visible && !isThread)
-		drawTooltip();
+	// BFME's tooltip gate uses the three GlobalData flags and the Win32
+	// visibility predicate before taking the existing tooltip ILT.
+	BfmeMouseTooltipGlobalData *tooltipData =
+		(BfmeMouseTooltipGlobalData *)TheWritableGlobalData;
+	typedef bool (Win32Mouse::*BfmeCursorVisibility)(void);
+	union
+	{
+		void (*function)(void);
+		BfmeCursorVisibility member;
+	} tooltipVisibilityThunk;
+	tooltipVisibilityThunk.function = j_00023fa6;
+	Bool tooltipFlagE54 = tooltipData->fieldE54;
+	if ((tooltipData->fieldA90 || tooltipData->fieldA88 || tooltipFlagE54) &&
+		(reinterpret_cast<Win32Mouse *>(this)->*tooltipVisibilityThunk.member)() && !isThread)
+	{
+		typedef void (Mouse::*BfmeDrawTooltip)(void);
+		union
+		{
+			void (*function)(void);
+			BfmeDrawTooltip member;
+		} drawTooltipThunk;
+		drawTooltipThunk.function = j_000350bc;
+		(reinterpret_cast<Mouse *>(this)->*drawTooltipThunk.member)();
+	}
 
 	m_drawing = FALSE;
 }
