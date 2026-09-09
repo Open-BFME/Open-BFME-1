@@ -18779,3 +18779,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_005331e0@@YAXXZ	0x005331E0	513	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved
 ?d_00536530@@YAXXZ	0x00536530	665	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved
 ?d_0052e5b0@@YAXXZ	0x0052E5B0	165	blocked	t=4min model=gpt-5 unresolved UI virtual-call body; no named caller, string, vtable label, or clean owner supports a real C++ conversion
+?d_0090ae60@@YAXXZ	0x0090ae60	436	blocked	t=20m model=gpt-5.4 retail bytes continue through +0x1b9 with add esp 0x580 and ret, while the ledger row ends at +0x1b3
