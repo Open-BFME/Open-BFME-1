@@ -1,34 +1,13 @@
-// ?d_001aa780@@YAXXZ
-// partial score=0.98 date=2026-09-07
+// ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z
+// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: TerrainLogic::addBridgeToLogic, retail 0x001AA780.
+// Authentic one-pointer AsciiString and MemoryPoolObject inheritance compile
+// to 174/176 bytes. Retail reserves one extra zero word for the Bridge ctor;
+// its 0x001A98A0 body ends in ret 0x10 despite the three-argument declaration.
 
 #include <new>
-
-template <class T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &source);
-	~StringBase();
-};
-
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	~AsciiString();
-
-	private:
-	char *m_text;
-	int m_extra;
-};
+#include "../../../../../reference/shims/stringinline/StringInline.h"
 
 class BridgeInfo
 {
@@ -41,7 +20,13 @@ enum PathfindLayerEnum
 {
 };
 
-class Bridge
+class MemoryPoolObject
+{
+protected:
+	virtual ~MemoryPoolObject() { }
+};
+
+class Bridge : public MemoryPoolObject
 {
 public:
 	Bridge(BridgeInfo &info, Dict *props, AsciiString name);
@@ -57,7 +42,6 @@ public:
 	}
 
 private:
-	void *m_vtable;
 	Bridge *m_next;
 	char m_data[0x80];
 	PathfindLayerEnum m_layer;
