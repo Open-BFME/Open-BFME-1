@@ -25146,3 +25146,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ??_GGlobalData@@UAEPAXI@Z,0x005BF290,False ICF alias retired because GlobalData vtable 0x0107C68C routes its deleting destructor to 0x000844E0; CategoryModuleTemplate remains the canonical owner at 0x005BF290
 ??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,Generic destructor pin superseded by authentic CRCParameterCheck identity proven by constructor 0x000659C0 vtable 0x01075520 and matched clear logger and xfer bodies
 ??_GGen_dtor_00065a10@@UAEPAXI@Z,0x00065A10,Generic generator placeholder superseded by authentic CRCParameterCheck scalar-deleting destructor proven by constructor 0x000659C0 vtable 0x01075520 and ILT 0x0001038E
+?reset@GameState@@UAEXXZ,0x00110010,False identity: GameState reset is the matched 0x0010EEE0 body; 0x00110010 is findNextSaveFilename proven by saveGame caller and save filename xrefs
