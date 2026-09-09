@@ -34,6 +34,7 @@
 //						"Things"
 //
 //-----------------------------------------------------------------------------
+#define TEST_KINDOFMASK_ANY BFME_DONOR_TEST_KINDOFMASK_ANY
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/PerfTimer.h"
@@ -47,6 +48,38 @@
 #include "Common/Team.h"
 #include "Lib/Trig.h"
 #include "GameLogic/TerrainLogic.h"
+#undef TEST_KINDOFMASK_ANY
+
+// These callers encode distinct retail ILTs. The shared donor names also
+// describe other BFME bodies, so retain each observed call target locally.
+extern void j_000497d3();
+extern void j_000361ce();
+class BfmeThingCallTarget
+{
+public:
+	Bool intersects(const KindOfMaskType &) const;
+	void copyTransform(const Matrix3D *);
+};
+
+inline Bool TEST_KINDOFMASK_ANY(const KindOfMaskType &value, const KindOfMaskType &mask)
+{
+	union {
+		void (*function)();
+		Bool (BfmeThingCallTarget::*method)(const KindOfMaskType &) const;
+	} target;
+	target.function = j_000497d3;
+	return (reinterpret_cast<const BfmeThingCallTarget *>(&value)->*target.method)(mask);
+}
+
+static inline void bfmeCopyThingTransform(Thing *thing, const Matrix3D *matrix)
+{
+	union {
+		void (*function)();
+		void (BfmeThingCallTarget::*method)(const Matrix3D *);
+	} target;
+	target.function = j_000361ce;
+	(reinterpret_cast<BfmeThingCallTarget *>(thing)->*target.method)(matrix);
+}
 
 class BFMERetailThingVTable
 {
@@ -253,7 +286,7 @@ void Thing::setPosition( const Coord3D *pos )
 		Matrix3D mtx;
 		const Bool stickToGround = true;	// yes, set the "z" pos				
 		reinterpret_cast<BFMERetailTerrainLogicVTable *>(TheTerrainLogic)->alignOnTerrain(getOrientation(), *pos, stickToGround, mtx );
-		setTransformMatrix(&mtx);
+		bfmeCopyThingTransform(this, &mtx);
 	}
 	DEBUG_ASSERTCRASH(!(_isnan(getPosition()->x) || _isnan(getPosition()->y) || _isnan(getPosition()->z)), ("Drawable/Object position NAN! '%s'\n", m_template->getName().str() ));
 }
@@ -364,7 +397,7 @@ Bool Thing::isKindOfMulti(const KindOfMaskType& mustBeSet, const KindOfMaskType&
 Bool Thing::isAnyKindOf( const KindOfMaskType& anyKindOf ) const
 {
 	const ThingTemplate *thingTemplate = getTemplate();
-	return reinterpret_cast<const Thing_BFME_Retail_ThingTemplateKindOf *>(thingTemplate)->kindof.anyIntersectionWith(anyKindOf);
+	return TEST_KINDOFMASK_ANY(reinterpret_cast<const Thing_BFME_Retail_ThingTemplateKindOf *>(thingTemplate)->kindof, anyKindOf);
 }
 
 // ------------------------------------------------------------------------------------------------
