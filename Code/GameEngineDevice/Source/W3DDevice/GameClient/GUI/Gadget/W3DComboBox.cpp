@@ -101,9 +101,45 @@ inline const Image *bfmeComboHiliteImage(GameWindow *window)
 	return *(const Image **)((const char *)window + 0x120);
 }
 
+inline Color bfmeComboEnabledColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0x4c);
+}
+
+inline Color bfmeComboEnabledBorderColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0x50);
+}
+
+inline Color bfmeComboDisabledColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0xb8);
+}
+
+inline Color bfmeComboDisabledBorderColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0xbc);
+}
+
+inline Color bfmeComboHiliteColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0x124);
+}
+
+inline Color bfmeComboHiliteBorderColor(GameWindow *window)
+{
+	return *(const Color *)((const char *)window + 0x128);
+}
+
 // Keep the existing inline helper rows emitted while this body reads BFME's shifted data.
 static const Image *(*s_bfmeKeepComboDisabledImage)(GameWindow *) = GadgetComboBoxGetDisabledImage;
 static const Image *(*s_bfmeKeepComboHiliteImage)(GameWindow *) = GadgetComboBoxGetHiliteImage;
+static Color (*s_bfmeKeepComboEnabledColor)(GameWindow *) = GadgetComboBoxGetEnabledColor;
+static Color (*s_bfmeKeepComboEnabledBorderColor)(GameWindow *) = GadgetComboBoxGetEnabledBorderColor;
+static Color (*s_bfmeKeepComboDisabledColor)(GameWindow *) = GadgetComboBoxGetDisabledColor;
+static Color (*s_bfmeKeepComboDisabledBorderColor)(GameWindow *) = GadgetComboBoxGetDisabledBorderColor;
+static Color (*s_bfmeKeepComboHiliteColor)(GameWindow *) = GadgetComboBoxGetHiliteColor;
+static Color (*s_bfmeKeepComboHiliteBorderColor)(GameWindow *) = GadgetComboBoxGetHiliteBorderColor;
 
 // PRIVATE DATA ///////////////////////////////////////////////////////////////
 
@@ -129,7 +165,7 @@ void W3DGadgetComboBoxDraw( GameWindow *window, WinInstanceData *instData )
 	Color background, border, titleColor, titleBorder;
 //	ComboBoxData *combo = (ComboBoxData *)window->winGetUserData();
 	ICoord2D size;
-	DisplayString *title = instData->getTextDisplayString();
+	BfmeComboDisplayString *title = (BfmeComboDisplayString *)instData->getTextDisplayString();
 
 	// get window position and size
 	window->winGetScreenPosition( &x, &y );
@@ -145,22 +181,22 @@ void W3DGadgetComboBoxDraw( GameWindow *window, WinInstanceData *instData )
 	// get the right colors
 	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
 	{
-		background		= GadgetComboBoxGetDisabledColor( window );
-		border				= GadgetComboBoxGetDisabledBorderColor( window );
+		background		= bfmeComboDisabledColor( window );
+		border				= bfmeComboDisabledBorderColor( window );
 		titleColor		= window->winGetDisabledTextColor();
 		titleBorder		= window->winGetDisabledTextBorderColor();
 	}  // end if, disabled
 	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
 	{
-		background		= GadgetComboBoxGetHiliteColor( window );
-		border				= GadgetComboBoxGetHiliteBorderColor( window );
+		background		= bfmeComboHiliteColor( window );
+		border				= bfmeComboHiliteBorderColor( window );
 		titleColor		= window->winGetHiliteTextColor();
 		titleBorder		= window->winGetHiliteTextBorderColor();
 	}  // end else if, hilited
 	else
 	{
-		background		= GadgetComboBoxGetEnabledColor( window );
-		border				= GadgetComboBoxGetEnabledBorderColor( window );
+		background		= bfmeComboEnabledColor( window );
+		border				= bfmeComboEnabledBorderColor( window );
 		titleColor		= window->winGetEnabledTextColor();
 		titleBorder		= window->winGetEnabledTextBorderColor();
 	}  // end else, enabled
@@ -174,7 +210,8 @@ void W3DGadgetComboBoxDraw( GameWindow *window, WinInstanceData *instData )
 			title->setFont( window->winGetFont() );
 			
 		// draw the text
-		title->draw( x + 1, y, titleColor, titleBorder );		
+		title->setTextColor( titleColor, titleBorder );
+		title->draw( x + 1, y, 1, 1 );
 
 		y += fontHeight + 1;
 		height -= fontHeight + 1;
