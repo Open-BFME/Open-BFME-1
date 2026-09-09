@@ -1,12 +1,11 @@
-// ??0BfmeListBG@@QAE@PAX0@Z (identity unknown)
-// partial score=0.96 date=2026-09-06
-// 45/47. A circular-list constructor: two parameter stores, a null of the node
+// ??0BfmeListBG@@QAE@PAX0@Z
+// partial score=0.97 date=2026-09-09
+// 47/47. Circular-list constructor: two parameter stores, a null of the node
 // member, __new_alloc::allocate(0xc), the two self-links and the real node
-// store. Everything matches except that retail emits `push 0xc` AFTER both
-// parameter stores while MSVC hoists it above them. Marking both parameter
-// members volatile moves the push down by one store (three diffs to two);
-// nothing moves it past the second. Member initialiser lists, a separate zero
-// statement and volatile on the node member were also tried.
+// store. Marking BOTH parameter members volatile (not just the first) moves
+// retail's `push 0xc` past the first store, leaving one residue: retail
+// emits it after the second store too, ours still schedules it between the
+// two stores. Body-vs-init-list assignment order made no difference.
 namespace _STL
 {
 
@@ -32,7 +31,7 @@ public:
 	BfmeListBG(void *first, void *second);
 
 	void *volatile m_bfmeFirstBG;
-	void *m_bfmeSecondBG;
+	void *volatile m_bfmeSecondBG;
 	BfmeNodeBG *m_bfmeNodeBG;
 };
 
