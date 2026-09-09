@@ -18271,3 +18271,10 @@ uw_00c61d2e	0xc61d2e	14	blocked	Ghidra Unwind@ compiler cleanup boundary in serv
 uw_00c61d6b	0xc61d6b	11	blocked	Ghidra Unwind@ compiler cleanup boundary in served file; no recoverable parent identity or standalone C++ owner, so it cannot be converted safely t=5 model=gpt-5
 uw_00c61da8	0xc61da8	14	blocked	Ghidra Unwind@ compiler cleanup boundary in served file; no recoverable parent identity or standalone C++ owner, so it cannot be converted safely t=5 model=gpt-5
 uw_00c61de0	0xc61de0	8	blocked	Ghidra Unwind@ compiler cleanup boundary in served file; no recoverable parent identity or standalone C++ owner, so it cannot be converted safely t=5 model=gpt-5
+?d_00419a10@@YAXXZ	0x00419A10	747	blocked	Generated draw body reached only by address-derived destructor path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_00419f00@@YAXXZ	0x00419F00	647	blocked	Generated draw body reached only by address-derived Drawable setter path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_0041b200@@YAXXZ	0x0041B200	1368	blocked	Generated draw body reached through address-derived transform/position helpers; no unique identity or built C++ emitter t=7 model=gpt-5
+?d_0041bac0@@YAXXZ	0x0041BAC0	695	blocked	Generated draw body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_0041ebd0@@YAXXZ	0x0041EBD0	812	blocked	Generated draw body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
+?d_0041fdf0@@YAXXZ	0x0041FDF0	688	blocked	Generated draw body reached only by address-derived Drawable icon path; no identity-safe built C++ emitter t=7 model=gpt-5
+?d_00421520@@YAXXZ	0x00421520	617	blocked	Generated draw body with no named caller, identity, or built C++ emitter t=7 model=gpt-5
