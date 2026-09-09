@@ -1,14 +1,13 @@
-// ?isInvisible@Particle@@QAE_NXZ
-// partial score=0.88 date=2026-09-08
+// ?d_005c31a0@@YAXXZ
+// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME: Particle::isInvisible, retail 0x005C31A0 (91 bytes).
-// BFME delegates the particle-type-specific test to its modular particle
-// handlers; the Generals source supplies the method identity and default.
+// Retail 0x005C31A0 (91 bytes). This clean reconstruction matches all 91 body
+// bytes; the compiler emits the two switch tables immediately afterward.
+// The current BFME Particle::isInvisible source is shader/color based and does
+// not match this body, so the authentic method spelling remains unresolved.
+// The names below describe the recovered ABI layout only.
 
 typedef bool Bool;
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 enum ParticleType
 {
@@ -56,10 +55,16 @@ public:
 	virtual Bool isInvisible(ParticleType type);
 };
 
-class Particle
+static __forceinline Bool callParticleInvisible(ParticleVisibilityModule *module,
+	ParticleType type)
+{
+	return module->isInvisible(type);
+}
+
+class Rva005C31A0ParticleLike
 {
 public:
-	Bool isInvisible();
+	Bool evaluateVisibility();
 
 private:
 	unsigned char m_unmodelled_000[0x4C];
@@ -71,14 +76,12 @@ private:
 	ParticleVisibilityModule *m_specialModule;
 };
 
-Bool Particle::isInvisible()
+Bool Rva005C31A0ParticleLike::evaluateVisibility()
 {
 	if (m_renderObject)
 		return false;
 
-	ParticleSystem *system = m_system.operator->();
-	ParticleType type = system->m_particleType;
-	_ReadWriteBarrier();
+	ParticleType type = m_system.operator->()->m_particleType;
 	switch (type)
 	{
 		case PARTICLE:
@@ -86,14 +89,14 @@ Bool Particle::isInvisible()
 		case SMUDGE:
 		case TYPE6:
 			if (m_defaultModule)
-				return m_defaultModule->isInvisible(type);
+				return callParticleInvisible(m_defaultModule, type);
 			return false;
 
 		case STREAK:
 		case VOLUME_PARTICLE:
 		case TYPE7:
 			if (m_specialModule)
-				return m_specialModule->isInvisible(type);
+				return callParticleInvisible(m_specialModule, type);
 			return false;
 	}
 
