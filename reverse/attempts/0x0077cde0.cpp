@@ -1,5 +1,5 @@
 // ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.93 date=2026-09-09
+// partial score=0.95 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -193,35 +193,10 @@ public:
 class Rva0077CDE0Opaque8
 {
 public:
-	Rva0077CDE0Opaque8()
-		: m_p0(0), m_p4(0), m_p8(0)
-		, m_b0c(0), m_b0d(0), m_b0e(0), m_b0f(0)
-		, m_d10(0), m_d14(0)
-		, m_b18(0), m_b19(0), m_b1a(0), m_b1b(0), m_b1c(0)
-		, m_d28(0), m_d2c(0)
-		, m_f30(1.0f)
-		, m_d34(0)
-		, m_b38(0)
-		, m_d3c(0xFFFFFFFF)
-		, m_b41(0), m_b42(1), m_b43(0)
-	{}
-	~Rva0077CDE0Opaque8() {}
+	Rva0077CDE0Opaque8() : m_p0(0), m_p4(0), m_p8(0) {}
+	~Rva0077CDE0Opaque8();                               ///< pinned to the state-17 funclet target (see log)
 
 	unsigned int m_p0, m_p4, m_p8;
-	unsigned char m_b0c, m_b0d, m_b0e, m_b0f;
-	unsigned int m_d10, m_d14;
-	unsigned char m_b18, m_b19, m_b1a, m_b1b, m_b1c;
-	unsigned char m_b1d;
-	unsigned char m_pad1e, m_pad1f;
-	unsigned int m_d20, m_d24;
-	unsigned int m_d28, m_d2c;
-	float m_f30;
-	unsigned int m_d34;
-	unsigned char m_b38;
-	unsigned char m_pad39, m_pad3a, m_pad3b;
-	unsigned int m_d3c;
-	unsigned char m_b40;
-	unsigned char m_b41, m_b42, m_b43;
 };
 
 class Rva0077CDE0ArrElem
@@ -278,7 +253,21 @@ private:
 	BFMERetailAsciiString m_str7;                         ///< +0xe4
 	BFMERetailAsciiString m_str8;                         ///< +0xe8
 	BFMERetailAsciiString m_str9;                         ///< +0xec
-	Rva0077CDE0Opaque8 m_opaque8;                         ///< +0xf0
+	Rva0077CDE0Opaque8 m_opaque8;                         ///< +0xf0 (12 bytes)
+	unsigned char m_b0c, m_b0d, m_b0e, m_b0f;             ///< +0xfc
+	unsigned int m_d10, m_d14;                            ///< +0x100
+	unsigned char m_b18, m_b19, m_b1a, m_b1b, m_b1c;      ///< +0x108
+	unsigned char m_b1d;                                  ///< +0x10d
+	unsigned char m_pad1e, m_pad1f;
+	unsigned int m_d20, m_d24;                            ///< +0x110
+	unsigned int m_d28, m_d2c;                            ///< +0x118
+	float m_f30;                                          ///< +0x120
+	unsigned int m_d34;                                   ///< +0x124
+	unsigned char m_b38;                                  ///< +0x128
+	unsigned char m_pad39, m_pad3a, m_pad3b;
+	unsigned int m_d3c;                                   ///< +0x12c
+	unsigned char m_b40;                                  ///< +0x130
+	unsigned char m_b41, m_b42, m_b43;                    ///< +0x131
 	Rva0077CDE0ArrElem m_arr[2];                          ///< +0x134
 };
 
@@ -289,6 +278,13 @@ Rva0077CDE0::Rva0077CDE0()
 	, m_b68(0), m_b69(0), m_b6a(1), m_b6b(0)
 	, m_bb0(0)
 	, m_bdc(0)
+	, m_b0c(0), m_b0d(0), m_b0e(0), m_b0f(0)
+	, m_d28(0), m_d2c(0)
+	, m_f30(1.0f)
+	, m_d34(0)
+	, m_b38(0)
+	, m_d3c(0xFFFFFFFF)
+	, m_b41(0), m_b42(1), m_b43(0)
 {
 	m_f50 = 0.0f;
 	m_f54 = 2.0f;
@@ -296,8 +292,18 @@ Rva0077CDE0::Rva0077CDE0()
 	m_f5c = 0.4f;
 	m_f60 = 0.065f;
 
-	m_elem5.Set(m_elem5.m_a, m_elem5.m_b);
-	m_elem6.Set(m_elem6.m_a, m_elem6.m_b);
+	Rva0077CDE0Elem5 *elem5 = &m_elem5;
+	elem5->Set(elem5->m_a, elem5->m_b);
+	Rva0077CDE0Elem6 *elem6 = &m_elem6;
+	elem6->Set(elem6->m_a, elem6->m_b);
+
+	m_d10 = 0;
+	m_d14 = 0;
+	m_b18 = 0;
+	m_b19 = 0;
+	m_b1a = 0;
+	m_b1b = 0;
+	m_b1c = 0;
 
 	Rva0077CC10Element temp;
 	temp.m_layout.set("<DefaultEmptyIdleAnimationState>", 0x20);
@@ -316,8 +322,8 @@ Rva0077CDE0::Rva0077CDE0()
 			reinterpret_cast<const void *>(&tag), 1, true);
 	}
 
-	m_opaque8.m_b1d = 0;
-	m_opaque8.m_d24 = 0x60;
-	m_opaque8.m_d20 = 0x60;
-	m_opaque8.m_b40 = 0;
+	m_b1d = 0;
+	m_d24 = 0x60;
+	m_d20 = 0x60;
+	m_b40 = 0;
 }
