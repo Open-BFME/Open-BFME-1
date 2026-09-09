@@ -86484,3 +86484,6 @@ _bfmeDynOffsetXZ,0x00F46794,offset table
 _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?bfmeResetXZ@BfmeDynElemXZ@@QAEXIH@Z,0x00964150,element reset
 ?g_D3DXFastTable@@3UD3DXFASTTABLE@@A,0x00EDBDF8,d3dx9-summer2003 d3dxmath.obj table; cpudetect DIR32 sites 0x1B and 0x4C prove retail VA 0x012DBDF8
+?rva001FE970@GettingBuiltBehavior@@QAEXXZ,0x001FE970,The j_0002ea14 thunk reaches the address-derived GettingBuiltBehavior cleanup helper at 0x001FE970.
+?rva001FF060@GettingBuiltBehavior@@QAE_NXZ,0x001FF060,The j_00036449 thunk reaches the address-derived GettingBuiltBehavior status helper at 0x001FF060.
+?rva001FF5C0@GettingBuiltBehavior@@QAEXXZ,0x001FF5C0,The j_00035ee0 thunk reaches the address-derived GettingBuiltBehavior completion helper at 0x001FF5C0.
