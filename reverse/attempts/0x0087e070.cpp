@@ -1,45 +1,49 @@
-// ?d_0087e070@@YAXXZ
-// partial score=0.97 date=2026-09-08
+// ?bfmeBestA2@BfmeStoreA2@@QAEMXZ
+// partial score=0.95 date=2026-09-09
 extern const float BfmeZeroRange;
 
-class BfmeElemGI
+struct BfmeElemA2
 {
-public:
-	void *m_bfmePtrGI;
-	int m_bfmePadAGI;
-	float m_bfmeHeightGI;
-	unsigned char m_bfmePadBGI[0x14];
-	char m_bfmeFlagGI;
-	unsigned char m_bfmePadCGI[3];
+	int m_bfme00A2;
+	unsigned char m_bfmeGapA2[4];
+	float m_bfme08A2;
+	unsigned char m_bfmeMidA2[0x20 - 0xc];
+	unsigned char m_bfme20A2;
+	unsigned char m_bfmeTailA2[3];
 };
 
-__forceinline const float &bfmeMaxGI(const float &a, const float &b)
+__forceinline const float &bfmeMaxA2(const float &a, const float &b)
 {
 	return a > b ? a : b;
 }
 
-class GeometryInfoGI
+class BfmeStoreA2
 {
 public:
-	float bfmeMaxHeightGI() const;
+	float bfmeBestA2();
 
-	unsigned char m_bfmeHeadGI[0x2c];
-	BfmeElemGI *m_bfmeBeginGI;
-	BfmeElemGI *m_bfmeEndGI;
+	unsigned char m_bfmeHeadA2[0x2c];
+	BfmeElemA2 *m_bfme2CA2;
+	BfmeElemA2 *m_bfme30A2;
 };
 
-float GeometryInfoGI::bfmeMaxHeightGI() const
+float BfmeStoreA2::bfmeBestA2()
 {
 	float best = BfmeZeroRange;
 
-	for (BfmeElemGI *p = m_bfmeBeginGI; p != m_bfmeEndGI; p++)
-	{
-		if (p->m_bfmeFlagGI)
-		{
-			float v = p->m_bfmePtrGI != 0 ? BfmeZeroRange : p->m_bfmeHeightGI;
+	BfmeElemA2 *e = m_bfme2CA2;
+	BfmeElemA2 *end = m_bfme30A2;
 
-			best = bfmeMaxGI(v, best);
+	while (e != end)
+	{
+		if (e->m_bfme20A2)
+		{
+			float cand = e->m_bfme00A2 ? BfmeZeroRange : e->m_bfme08A2;
+
+			best = bfmeMaxA2(cand, best);
 		}
+
+		++e;
 	}
 
 	return best;

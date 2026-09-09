@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fe673abe8974c2b74b7600c1d1e8b01380469444eb244ae78307a8037ee6b6c5",
+  "symbol": "?bfmeBestA2@BfmeStoreA2@@QAEMXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeBestA2@BfmeStoreA2@@QAEMXZ\n// partial score=0.95 date=2026-09-09\nextern const float BfmeZeroRange;\n\nstruct BfmeElemA2\n{\n\tint m_bfme00A2;\n\tunsigned char m_bfmeGapA2[4];\n\tfloat m_bfme08A2;\n\tunsigned char m_bfmeMidA2[0x20 - 0xc];\n\tunsigned char m_bfme20A2;\n\tunsigned char m_bfmeTailA2[3];\n};\n\n__forceinline const float &bfmeMaxA2(const float &a, const float &b)\n{\n\treturn a > b ? a : b;\n}\n\nclass BfmeStoreA2\n{\npublic:\n\tfloat bfmeBestA2();\n\n\tunsigned char m_bfmeHeadA2[0x2c];\n\tBfmeElemA2 *m_bfme2CA2;\n\tBfmeElemA2 *m_bfme30A2;\n};\n\nfloat BfmeStoreA2::bfmeBestA2()\n{\n\tfloat best = BfmeZeroRange;\n\n\tBfmeElemA2 *e = m_bfme2CA2;\n\tBfmeElemA2 *end = m_bfme30A2;\n\n\twhile (e != end)\n\t{\n\t\tif (e->m_bfme20A2)\n\t\t{\n\t\t\tfloat cand = e->m_bfme00A2 ? BfmeZeroRange : e->m_bfme08A2;\n\n\t\t\tbest = bfmeMaxA2(cand, best);\n\t\t}\n\n\t\t++e;\n\t}\n\n\treturn best;\n}\n"
+}
