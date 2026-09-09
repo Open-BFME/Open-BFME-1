@@ -18773,3 +18773,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_0006f330@@YAXXZ	0x0006F330	216	blocked	t=3min model=gpt-5.6-luna SecuROM/GCC-obfuscated body uses 55 89 E5 and opaque marker bytes, unlike VC7.1 output; clean C++ cannot reproduce it and anti-lift policy forbids importing the dump
 ?d_0021b960@@YAXXZ	0x0021B960	141	blocked	t=4min model=gpt-5 identity-proven bfmeGo1118A; size and instruction structure match, but EBP/EDI register allocation remains permuted across the body after flag sweeps
 ?d_0092d720@@YAXXZ	0x0092D720	441	blocked	t=4min model=gpt-5 no named caller or built emitter; generated body identity unresolved after the whole d_00927c30.asm audit
+?d_00929be0@@YAXXZ	0x00929BE0	349	blocked	t=6min model=gpt-5 identity-proven MeshMatDescClass::Compute_Ram_Size; clean source remains a 330-byte near miss with accumulator register and material-array reload divergence
