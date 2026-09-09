@@ -76,6 +76,7 @@
 
 W3DVolumetricShadowManager	*TheW3DVolumetricShadowManager=NULL;
 extern const FrustumClass *shadowCameraFrustum;	//defined in W3DShadow.
+extern void __cdecl bfmeDrawFilterUV(int, int, Coord2D *);
 
 ///////////////////////////////////////////////////////////////////////////////
 // DEFINITIONS ////////////////////////////////////////////////////////////////
@@ -4692,7 +4693,6 @@ void W3DVolumetricShadow::resetSilhouette( Int meshIndex )
 // info and draw a big transparent rectangle over the screen for the final
 // shadow pass wherever there is data in the stencil buffer
 // ============================================================================
-// ?renderStencilShadows@W3DVolumetricShadowManager@@ present-unmatched
 void W3DVolumetricShadowManager::renderStencilShadows( void )
 {
 	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
@@ -4700,62 +4700,31 @@ void W3DVolumetricShadowManager::renderStencilShadows( void )
 	if (!m_pDev)
 		return;	//need device to render anything.
 
-	struct _TRANSLITVERTEX {
-	    D3DXVECTOR4 p;
-		DWORD color;   // diffuse color    
-	} v[4];
+	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
+	m_pDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+	m_pDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	m_pDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+	m_pDev->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL);
+	m_pDev->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 
-	Int xpos, ypos, width, height;
-
-	TheTacticalView->getOrigin(&xpos,&ypos);
-	width=TheTacticalView->getWidth();
-	height=TheTacticalView->getHeight();
-
-    v[0].p = D3DXVECTOR4( xpos+width, ypos+height, 0.0f, 1.0f );
-    v[1].p = D3DXVECTOR4( xpos+width, 0, 0.0f, 1.0f );
-    v[2].p = D3DXVECTOR4(  xpos, ypos+height, 0.0f, 1.0f );
-    v[3].p = D3DXVECTOR4(  xpos,  0, 0.0f, 1.0f );
-    v[0].color = TheW3DShadowManager->getShadowColor();
-    v[1].color = TheW3DShadowManager->getShadowColor();
-    v[2].color = TheW3DShadowManager->getShadowColor();
-    v[3].color = TheW3DShadowManager->getShadowColor();
-
-	//draw polygons like this is very inefficient but for only 2 triangles, it's
-	//not worth bothering with index/vertex buffers.
-	m_pDev->SetVertexShader(D3DFVF_XYZRHW | D3DFVF_DIFFUSE);
-
-	// Use alpha blending to draw the transparent shadow
-    m_pDev->SetRenderState( D3DRS_ALPHABLENDENABLE, TRUE );
-//  m_pDev->SetRenderState( D3DRS_SRCBLEND,  D3DBLEND_SRCALPHA );
-//  m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA );
-		m_pDev->SetRenderState( D3DRS_SRCBLEND,  D3DBLEND_DESTCOLOR);
-		m_pDev->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ZERO );
-
-
-	// Set stencil states
-    m_pDev->SetRenderState( D3DRS_ZENABLE,          TRUE );
-		m_pDev->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
-
-	// Only write where stencil val >= 1 (count indicates # of shadows that
-	// overlap that pixel)
-    m_pDev->SetRenderState( D3DRS_STENCILENABLE, TRUE );
-    m_pDev->SetRenderState( D3DRS_STENCILFUNC, D3DCMP_LESSEQUAL );	//reference value is less or equal to stencil
-    m_pDev->SetRenderState( D3DRS_STENCILPASS, D3DSTENCILOP_KEEP );
-	//Upper bits of stencil could be used for storing occluded models which are player colored.  So we mask out those
-	//pixels and only use the lower bits for shadow calculations.
-	m_pDev->SetRenderState( D3DRS_STENCILMASK,     ~TheW3DShadowManager->getStencilShadowMask());
-    m_pDev->SetRenderState( D3DRS_STENCILREF,      0x1 );
-
-
+	if (TheW3DShadowManager->getStencilShadowMask() == 0x80808080)
+		m_pDev->SetRenderState(D3DRS_STENCILMASK, 0x7f7f7f0f);
+	m_pDev->SetRenderState(D3DRS_STENCILREF, 1);
 	m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_FLAT);
 
 	if (DX8Wrapper::_Is_Triangle_Draw_Enabled())
-		m_pDev->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, sizeof(_TRANSLITVERTEX));
+	{
+		Coord2D uv;
+		uv.x = 1.0f;
+		uv.y = 1.0f;
+		bfmeDrawFilterUV(TheW3DShadowManager->getShadowColor(), 0, &uv);
+	}
 
 	m_pDev->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD);
-	m_pDev->SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE );
-	// turn off the stencil buffer
-	m_pDev->SetRenderState( D3DRS_STENCILENABLE, FALSE );
+	m_pDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	m_pDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 
 }  // end renderStencilShadows
 
