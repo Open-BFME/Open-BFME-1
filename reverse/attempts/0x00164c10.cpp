@@ -1,5 +1,5 @@
 // ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z
-// partial score=0.85 date=2026-09-09
+// partial score=0.90 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // AIPlayer::findSupplyCenter — retail 0x00164C10 / 886B (ret4 at +0x373).
 // Reloc-named identity=real (call-sites=2); ILT 0x0001E0FB from
@@ -9,34 +9,29 @@
 // m_baseCenter@+0x34 (this body), Object pos@+0x38 / next@+0x88 /
 // radius@+0xBC / team@+0x23C (guardSupplyCenter). getAiEnemy is vslot 0x30.
 //
-// FIX 2026-09-09: Object::findUpdateModule was declared taking NameKeyType,
-// which mangles as ...@W4NameKeyType@@@Z and left the call as an unresolved
-// REL32 (explain_mismatch reported "unresolved: ...findUpdateModule..." and
-// the frame differed by exactly 4 bytes, 0x88 vs retail's 0x8c). The matched
-// pin at ILT 0x0002AE23 for this SupplyWarehouseDockUpdate instantiation is
-// actually ...findUpdateModule@Object@@QAEPAVSupplyWarehouseDockUpdate@@H@Z
-// (an int key, not the enum) -- retyping the declaration to `Int key`
-// resolves the call cleanly (no more unresolved-symbol warning), same 869 B.
-// Confirmed removing the `int z = 0;` shared-null local (comparing against
-// typed 0/NULL literals directly at each site) makes zero byte difference --
-// not the lever.
-//
-// Remaining wall (869 vs 886, first diff +0x17 / frame sub esp 0x88 vs 0x8c):
-// retail keeps TWO zero-valued registers live from the prologue (EDI for the
-// stack-slot zero-fills, EBX separately for the repeated NULL-pointer
-// comparisons against enemy/warehouseModule/supplyCenter/bestSupplyWarehouse)
-// even though nothing forces them apart yet at that point; ours collapses
-// both into EDI alone since dataflow sees them as the same live value this
-// early. This costs 4 bytes at the very first diff (frame size) and then
-// cascades: every subsequent register in the body is one off from retail's
-// (a permutation, not a single swap), producing many "!=" lines that are
-// mostly the same instruction shapes at different register numbers/ModRM
-// widths, not missing logic. Tried and ruled out this session: dropping the
-// shared `z` local for direct 0/NULL casts (no change). Untried: forcing 2
-// live zero registers by keeping bestSupplyWarehouse's init and the
-// enemy-null-check on visibly different types/statements before the first
-// use of TheGameLogic, or trying KindOfMaskType bit index sensitivity (this
-// stash already uses the corrected bit=34 per the second prior agent's note).
+// PROGRESS 2026-09-09 (fleet W6): rebuilt the body shape against the REAL ZH
+// source (AIPlayer.cpp:2180) instead of the earlier hand-rolled stand-ins.
+// Dropped the shared `AIPlayer *self`/`int z` NULL-sentinel locals for plain
+// `this`-implicit member access and direct 0/NULL comparisons; switched the
+// warehouseModule check from an early `continue` to ZH's positive nested
+// `if (warehouseModule) { ... }`; replaced the separate enemyX/enemyY floats
+// with a single `Coord3D enemyCenter; enemyCenter.zero();` matching ZH's
+// enemyCenter local. This alone took the body from 869 B to 872 B (closer,
+// not exact) and changed the prologue shape: retail computes `this` into EBP
+// right after the callee-saved pushes (`mov ebp,ecx; mov eax,[ebp]` for the
+// getAiEnemy() vtable fetch) while ours now computes `this` into EBX instead
+// (`mov ebx,ecx; mov eax,[ebx]`) -- a single-register preference difference,
+// not a rotation among 3+ regs like the prior stash's analysis described.
+// Tried and ruled out this session: `register` on bestSupplyWarehouse/self/
+// obj (no movement, pre-rewrite); `volatile int z` to block zero-propagation
+// (regressed to 892 B); hoisting `const Coord3D *baseCenter = &m_baseCenter`
+// before the other locals per the pointer-local lever (zero movement, member
+// is read field-by-field but not copied into a struct so the lever doesn't
+// apply here). Remaining wall is purely which callee-saved register MSVC
+// picks for `this` (EBP vs EBX) -- next lever to try: an explicit local dummy
+// use of `m_player` or `m_baseCenter` BEFORE the `getAiEnemy()` virtual call,
+// to see if an earlier non-virtual member touch changes the allocator's EBP
+// preference (untried, needs a fresh session's budget).
 
 typedef bool Bool;
 typedef int Int;
@@ -310,82 +305,69 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 {
 	Object *bestSupplyWarehouse = 0;
 	Real bestDistSqr = 0;
-	AIPlayer *self = this;
-	int z = 0;
-	Real enemyX = 0;
-	Real enemyY = 0;
 	Object *obj;
+	Coord3D enemyCenter;
+	enemyCenter.zero();
 	Region2D bounds;
-	Player *enemy = self->getAiEnemy();
-	if (enemy != (Player *)z)
-	{
+	Player *enemy = getAiEnemy();
+	if (enemy) {
 		getPlayerStructureBounds(&bounds, enemy->getPlayerIndex());
-		enemyY = (bounds.lo.y + bounds.hi.y) * 0.5f;
-		enemyX = (bounds.lo.x + bounds.hi.x) * 0.5f;
+		enemyCenter.x = (bounds.lo.x + bounds.hi.x) * 0.5f;
+		enemyCenter.y = (bounds.lo.y + bounds.hi.y) * 0.5f;
 	}
 
-	do
-	{
+	do {
 		for (obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject())
 		{
-			if (!obj->isKindOfStructure())
-				continue;
-			if (!obj->isKindOfSupplySource())
-				continue;
-
+			if (!obj->isKindOfStructure()) continue;
+			if (!obj->isKindOfSupplySource()) continue;
 			static const NameKeyType key_warehouseUpdate =
 				TheNameKeyGenerator->nameToKey("SupplyWarehouseDockUpdate");
 			SupplyWarehouseDockUpdate *warehouseModule = obj->findUpdateModule(key_warehouseUpdate);
-			if (warehouseModule == (SupplyWarehouseDockUpdate *)z)
-				continue;
-
-			Int availableCash = warehouseModule->getBoxesStored() *
-				TheWritableGlobalData->m_baseValuePerSupplyBox;
-			if (availableCash < minimumCash)
-				continue;
-			if (self->m_player->getRelationship(obj->getTeam()) == ENEMIES)
-				continue;
-
-			const Coord3D *pos = obj->getPosition();
-			Coord3D center;
-			center.x = pos->x;
-			center.y = pos->y;
-			center.z = pos->z;
-			Real radius = 200.0f + obj->getBoundingCircleRadius();
-
-			PartitionFilterOnMap filterMapStatus;
-			PartitionFilterPlayer f2(self->m_player, true);
-			PartitionFilterAcceptByKindOf f1(
-				KindOfMaskType(KindOfMaskType::kInit, 34), KINDOFMASK_NONE);
-			PartitionFilter *filters = f1.link(f2.link(&filterMapStatus));
-			Object *supplyCenter = ThePartitionManager->getClosestObject(&center, radius, 1, filters);
-			if (supplyCenter != (Object *)z)
-				continue;
-
-			Real dx = obj->getPosition()->x - self->m_baseCenter.x;
-			Real dy = obj->getPosition()->y - self->m_baseCenter.y;
-			Real distSqr = dx * dx + dy * dy;
-			if (enemy != (Player *)z)
-			{
-				dx = obj->getPosition()->x - enemyX;
-				dy = obj->getPosition()->y - enemyY;
-				if (distSqr * 0.4 > (dx * dx + dy * dy) * 0.6f)
+			if (warehouseModule) {
+				Int availableCash = warehouseModule->getBoxesStored() * TheWritableGlobalData->m_baseValuePerSupplyBox;
+				if (availableCash < minimumCash) continue;
+				if (m_player->getRelationship(obj->getTeam()) == ENEMIES) {
 					continue;
-			}
+				}
 
-			if (bestSupplyWarehouse == (Object *)z)
-			{
-				bestSupplyWarehouse = obj;
-				bestDistSqr = distSqr;
-			}
-			else if (bestDistSqr > distSqr)
-			{
-				bestSupplyWarehouse = obj;
-				bestDistSqr = distSqr;
+				Coord3D center = *obj->getPosition();
+				Real radius = 200.0f + obj->getBoundingCircleRadius();
+
+				PartitionFilterAcceptByKindOf f1(
+					KindOfMaskType(KindOfMaskType::kInit, 34), KINDOFMASK_NONE);
+				PartitionFilterPlayer f2(m_player, true);
+				PartitionFilterOnMap filterMapStatus;
+
+				PartitionFilter *filters = f1.link(f2.link(&filterMapStatus));
+
+				Object *supplyCenter = ThePartitionManager->getClosestObject(&center, radius, 1, filters);
+				if (supplyCenter) {
+					continue;
+				}
+
+				Real dx, dy;
+				dx = obj->getPosition()->x - m_baseCenter.x;
+				dy = obj->getPosition()->y - m_baseCenter.y;
+				Real distSqr = dx * dx + dy * dy;
+				if (enemy) {
+					dx = obj->getPosition()->x - enemyCenter.x;
+					dy = obj->getPosition()->y - enemyCenter.y;
+					if (distSqr * 0.4 > (dx * dx + dy * dy) * 0.6f) {
+						continue;
+					}
+				}
+
+				if (bestSupplyWarehouse == 0) {
+					bestSupplyWarehouse = obj;
+					bestDistSqr = distSqr;
+				} else if (bestDistSqr > distSqr) {
+					bestSupplyWarehouse = obj;
+					bestDistSqr = distSqr;
+				}
 			}
 		}
-		if (bestSupplyWarehouse != (Object *)z)
-			break;
+		if (bestSupplyWarehouse) break;
 		minimumCash /= 2;
 	} while (minimumCash > 100);
 
