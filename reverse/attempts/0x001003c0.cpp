@@ -357,6 +357,13 @@ typedef ProductionUpdateInterface *
 typedef void (BfmeSellDrawableCall::*BfmeSellDrawableFunction)(UnsignedInt);
 typedef void (BfmeSellIdleCall::*BfmeSellIdleFunction)(CommandSourceType);
 
+struct BfmeSellListNode
+{
+	BfmeSellListNode *m_next;
+	BfmeSellListNode *m_previous;
+	ObjectSellInfo *m_data;
+};
+
 //-------------------------------------------------------------------------------------------------
 /** Update phase for the build assistant */
 //-------------------------------------------------------------------------------------------------
@@ -1698,7 +1705,6 @@ Bool BuildAssistant::moveObjectsForConstruction( const ThingTemplate *whatToBuil
 void BuildAssistant::sellObject( Object *obj )
 {
 	ObjectSellInfo *sellInfo = NULL;
-	ObjectSellListIterator it;
 
 	if (obj == NULL)
 		return;
@@ -1718,9 +1724,12 @@ void BuildAssistant::sellObject( Object *obj )
 			return;
 	}
 
-	for (it = m_sellList.begin(); it != m_sellList.end(); ++it)
+	BfmeSellListNode *sellListEnd =
+		*(BfmeSellListNode **)((unsigned char *)this + 0x10);
+	for (BfmeSellListNode *node = sellListEnd->m_next;
+		node != sellListEnd; node = node->m_next)
 	{
-		sellInfo = *it;
+		sellInfo = node->m_data;
 		if (sellInfo->m_id == *(ObjectID *)((unsigned char *)obj + 0x74))
 			break;
 		sellInfo = NULL;
