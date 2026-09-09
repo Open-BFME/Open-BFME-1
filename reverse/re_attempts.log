@@ -17172,3 +17172,5 @@ Gen_treeraw_00589f60	0x589f60	49	blocked	Generated STL/helper body in served fil
 Gen_hashraw_0058ae80	0x58ae80	49	blocked	Generated STL/helper body in served file with no real Code source owner or identity-safe emitter; no clean conversion found t=6 model=gpt-5
 ?d_0015a600@@YAXXZ	0x0015A600	308	blocked	Generated AI body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
 ?d_0015a790@@YAXXZ	0x0015A790	364	blocked	Generated AI body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?d_0010de20@@YAXXZ	0x0010DE20	435	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=6 model=gpt-5
+?d_0010dea0@@YAXXZ	0x0010DEA0	336	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=6 model=gpt-5
