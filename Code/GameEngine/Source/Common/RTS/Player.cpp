@@ -143,6 +143,46 @@ struct BFMEPlayerAIView
 
 } // namespace
 
+class GameLogicPortraitShim
+{
+public:
+	Bool isInMultiplayerOrSkirmishGame();
+};
+
+extern GameLogic *TheBfmeGameLogic;
+
+template <typename T>
+class StringBase
+{
+public:
+	StringBase() : m_data(0) {}
+	void set(const StringBase<T> &source);
+
+	friend class BfmePlayerAsciiString;
+
+private:
+	~StringBase();
+	void *m_data;
+};
+
+class BfmePlayerAsciiString : private StringBase<char>
+{
+public:
+	BfmePlayerAsciiString() : StringBase<char>() {}
+	~BfmePlayerAsciiString() {}
+	BfmePlayerAsciiString &operator=(const BfmePlayerAsciiString &source)
+	{
+		StringBase<char>::set((const StringBase<char> &)source);
+		return *this;
+	}
+};
+
+class BfmePlayerFinalHelper
+{
+public:
+	void call();
+};
+
 // ------------------------------------------------------------------------------------------------
 class ClosestKindOfData
 {
@@ -872,6 +912,63 @@ struct BfmePlayerMapFields
 	UnsignedByte m_unreconstructed_28[0x30 - 0x28];
 	BfmePlayerMapState m_bfmeMapState;			///< retail this+0x30
 };
+
+struct BfmePlayerLoadFields
+{
+	unsigned char m_unreconstructed_00[4];
+	PlayerTemplate *m_playerTemplate;
+	unsigned char m_unreconstructed_08[0x220 - 8];
+	AIPlayer *m_ai;
+	unsigned char m_unreconstructed_224[0x0c];
+	Team *m_defaultTeam;
+	unsigned char m_unreconstructed_234[0x63c - 0x234];
+	ObjectID m_startingObjectID;
+};
+
+class BfmePlayerCreateModuleInterface
+{
+public:
+	virtual void onCreate() = 0;
+	virtual void onBuildComplete() = 0;
+};
+
+class BfmePlayerBehaviorModuleInterface
+{
+public:
+	virtual BodyModuleInterface *getBody() = 0;
+	virtual CollideModuleInterface *getCollide() = 0;
+	virtual ContainModuleInterface *getContain() = 0;
+	virtual BfmePlayerCreateModuleInterface *getCreate() = 0;
+};
+
+class BfmePlayerGameInfo
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual Bool isSkirmish() = 0;
+	virtual Bool isMultiplayer() = 0;
+	virtual Bool isSandBox() = 0;
+};
+
+typedef BitFlags<86> BfmePlayerObjectStatusMaskType;
+
+typedef const ThingTemplate *(ThingFactory::*PlayerFindTemplateCall)(const BfmePlayerAsciiString &);
+typedef Object *(ThingFactory::*PlayerNewObjectCall)(
+	const ThingTemplate *, Team *, const volatile BfmePlayerObjectStatusMaskType &, void *);
+typedef void (BfmePlayerFinalHelper::*PlayerFinalCall)();
+
+extern void j_0000d305();
+extern void j_00028560();
+extern void j_0004494a();
 
 //=============================================================================
 // ?newMap@Player@@QAEXXZ
@@ -5297,8 +5394,79 @@ void Player::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@Player@@MAEXXZ present-unmatched
 void Player::loadPostProcess( void )
 {
+	BfmePlayerLoadFields *self = (BfmePlayerLoadFields *)this;
+	if (self->m_defaultTeam != NULL && self->m_playerTemplate != NULL)
+	{
+		BfmePlayerAsciiString startingObjectName;
+		if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
+			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x114);
+		else
+			startingObjectName = *(BfmePlayerAsciiString *)((char *)self->m_playerTemplate + 0x110);
+
+		union
+		{
+			void (*raw)();
+			PlayerFindTemplateCall member;
+		} findTemplateCall;
+		if (*(void **)&startingObjectName != NULL &&
+			*(unsigned short *)(*(char **)&startingObjectName + 4) != 0)
+		{
+			findTemplateCall.raw = j_00028560;
+			const ThingTemplate *thingTemplate =
+				(TheThingFactory->*findTemplateCall.member)(startingObjectName);
+			if (thingTemplate == NULL)
+				return;
+
+			BfmePlayerObjectStatusMaskType statusMask;
+			union
+			{
+				void (*raw)();
+				PlayerNewObjectCall member;
+			} newObjectCall;
+			newObjectCall.raw = j_0004494a;
+			Object *object = (TheThingFactory->*newObjectCall.member)(
+				thingTemplate, self->m_defaultTeam, statusMask, 0);
+			self->m_startingObjectID = object->getID();
+
+			BehaviorModule **modules = *(BehaviorModule ***)((char *)object + 0x1f0);
+			for (BehaviorModule **module = modules; *module; ++module)
+			{
+				BfmePlayerCreateModuleInterface *create =
+					((BfmePlayerBehaviorModuleInterface *)((char *)*module + 0x0c))->getCreate();
+				if (create != NULL)
+					create->onBuildComplete();
+			}
+		}
+	}
+
+	BfmePlayerMapFields *mapFields = (BfmePlayerMapFields *)this;
+	if (self->m_playerTemplate != NULL)
+		mapFields->m_bfmeMapState.bfmeNewMap(
+			mapFields->m_bfmeField24,
+			((BfmePlayerMapFlagSource *)self->m_playerTemplate)->m_bfmeFlag);
+	else
+		mapFields->m_bfmeMapState.bfmeNewMap(mapFields->m_bfmeField24, false);
+
+	BFMEAIPlayerVirtuals *ai = (BFMEAIPlayerVirtuals *)self->m_ai;
+	if (ai != NULL)
+		ai->slot18();
+
+	if ((TheGameInfo != NULL &&
+		 (((BfmePlayerGameInfo *)TheGameInfo)->isSkirmish() ||
+		  ((BfmePlayerGameInfo *)TheGameInfo)->isMultiplayer() ||
+		  ((BfmePlayerGameInfo *)TheGameInfo)->isSandBox())) ||
+		(TheBfmeGameLogic != NULL &&
+		 ((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame()))
+	{
+		union
+		{
+			void (*raw)();
+			PlayerFinalCall member;
+		} finalCall;
+		finalCall.raw = j_0000d305;
+		(((BfmePlayerFinalHelper *)this)->*finalCall.member)();
+	}
 
 }  // end loadPostProcess
