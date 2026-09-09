@@ -76,7 +76,6 @@ Rva007EFFC0Allocator *Rva007EFFC0Get();
 class Gen00809750
 {
 public:
-	virtual ~Gen00809750();
 	static void operator delete( void *block, unsigned int size );
 };
 
@@ -92,6 +91,8 @@ struct Rva008097D0Player
 
 struct Rva00808920LanGame
 {
+	~Rva00808920LanGame();
+
 	int m_state;
 	int m_maxPlayers;
 	Rva008097D0Player **m_players;
@@ -99,6 +100,26 @@ struct Rva00808920LanGame
 	char m_ugid[ 0x25 ];
 	char m_tail[ 3 ];
 };
+
+Rva00808920LanGame::~Rva00808920LanGame()
+{
+	int index;
+	Rva007E86B0Base *player;
+
+	for ( index = 0; index < m_maxPlayers; ++index )
+	{
+		player = (Rva007E86B0Base *)m_players[ index ];
+		if ( player != 0 )
+		{
+			player->Rva007E86B0Base::~Rva007E86B0Base();
+			Gen00809750::operator delete( player, 0x38 );
+		}
+		m_players[ index ] = 0;
+	}
+
+	Rva007EFFC0Get()->release( m_players, 0 );
+	m_players = 0;
+}
 
 static __forceinline Rva008097D0Player *Rva008097D0FindPlayer(
 	const Rva00808920LanGame *game, int playerId )
@@ -226,8 +247,8 @@ void BfmeSinkTCA::bfmeUseTCA( void *value )
 
 	if ( m_game != 0 )
 	{
-		Gen00809750 *game = (Gen00809750 *)m_game;
-		game->Gen00809750::~Gen00809750();
+		Rva00808920LanGame *game = m_game;
+		game->Rva00808920LanGame::~Rva00808920LanGame();
 		Gen00809750::operator delete( game, 0xB4 );
 	}
 	m_game = 0;
