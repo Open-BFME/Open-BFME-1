@@ -1,5 +1,9 @@
 // ?bfmeResetABO@BfmeHostABO@@QAEXXZ
-// partial score=0.90 date=2026-09-09
+// partial score=0.99 date=2026-09-09
+// ?bfmeResetABO@BfmeHostABO@@QAEXXZ
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
+
 struct BfmeCfgABO
 {
 	int m_bfme00ABO;
@@ -9,28 +13,49 @@ struct BfmeCfgABO
 	int m_bfme10ABO;
 	unsigned char m_bfme14ABO;
 	unsigned char m_bfme15ABO;
+	unsigned char m_bfmePaddingABO[2];
 };
 
-void bfmeApplyABO(void *a, unsigned char *b, BfmeCfgABO *cfg);
-
-class BfmeSubABO
+struct Gen_p24pod
 {
-public:
-	void bfmeResetABO();
+	int m_bfme00ABO;
+	int m_bfme04ABO;
+	int m_bfme08ABO;
+	int m_bfme0CABO;
+	int m_bfme10ABO;
+	unsigned char m_bfme14ABO;
+	unsigned char m_bfme15ABO;
+	unsigned char m_bfmePaddingABO[2];
 };
 
-class BfmeSub2ABO
+namespace _STL
+{
+	template <class Iterator, class Type>
+	void fill(Iterator first, Iterator last, const Type &value);
+}
+
+class AptPalantirStore
 {
 public:
-	void bfmeClearABO();
+	void clear();
 };
 
-class BfmeStrABO
+class Rva00592A10Thunk
 {
 public:
-	void bfmeReleaseABO();
+	void reset();
+};
 
-	void *m_bfmeDataABO;
+class BfmeHostABO;
+
+template <class Type>
+class StringBase
+{
+private:
+	friend class BfmeHostABO;
+	void releaseBuffer();
+
+	void *m_data;
 };
 
 struct BfmePairABO
@@ -62,7 +87,7 @@ public:
 	int m_bfme60ABO;
 	int m_bfme64ABO;
 	unsigned char m_bfmeH68[0x154 - 0x68];
-	BfmeSubABO m_bfme154ABO;
+	AptPalantirStore m_bfme154ABO;
 	unsigned char m_bfmeH155[0x2b8 - 0x155];
 	unsigned char m_bfme2B8ABO;
 	unsigned char m_bfmeH2B9[3];
@@ -71,30 +96,30 @@ public:
 	unsigned char m_bfmeH2C1[0x458 - 0x2c1];
 	unsigned char m_bfme458ABO;
 	unsigned char m_bfmeH459[0x468 - 0x459];
-	unsigned char m_bfme468ABO;
+	volatile unsigned char m_bfme468ABO;
 	unsigned char m_bfmeH469[3];
 	int m_bfme46CABO;
 	int m_bfme470ABO;
 	int m_bfme474ABO;
-	int m_bfme478ABO;
+	volatile int m_bfme478ABO;
 	unsigned char m_bfmeH47C[0x488 - 0x47c];
-	BfmeSub2ABO m_bfme488ABO;
+	Rva00592A10Thunk m_bfme488ABO;
 	unsigned char m_bfmeH489[0x4c8 - 0x489];
 	int m_bfme4C8ABO;
 	unsigned char m_bfmeH4CC[4];
 	int m_bfme4D0ABO;
 	unsigned char m_bfme4D4ABO;
 	unsigned char m_bfmeH4D5[3];
-	BfmeStrABO m_bfme4D8ABO;
+	StringBase<char> m_bfme4D8ABO;
 	BfmePairABO m_bfme4DCABO[4];
 };
 
 void BfmeHostABO::bfmeResetABO()
 {
 	m_bfme14ABO = 0;
-	m_bfme154ABO.bfmeResetABO();
+	m_bfme154ABO.clear();
 
-	BfmeCfgABO cfg;
+	Gen_p24pod cfg;
 
 	m_bfme458ABO = 0;
 	m_bfme2B8ABO = 0;
@@ -107,12 +132,13 @@ void BfmeHostABO::bfmeResetABO()
 	cfg.m_bfme14ABO = 0;
 	cfg.m_bfme15ABO = 0;
 
-	bfmeApplyABO(&m_bfme2C0ABO, &m_bfme458ABO, &cfg);
+	_STL::fill((Gen_p24pod *)&m_bfme2C0ABO, (Gen_p24pod *)&m_bfme458ABO, cfg);
+
+	m_bfme488ABO.reset();
 
 	m_bfme468ABO = 0;
 	m_bfme478ABO = 0;
-
-	m_bfme488ABO.bfmeClearABO();
+	_ReadWriteBarrier();
 
 	m_bfme46CABO = -2;
 	m_bfme470ABO = -2;
@@ -124,7 +150,7 @@ void BfmeHostABO::bfmeResetABO()
 	m_bfme4D4ABO = 0;
 	m_bfme4D0ABO = -1;
 
-	m_bfme4D8ABO.bfmeReleaseABO();
+	m_bfme4D8ABO.releaseBuffer();
 
 	BfmePairABO tmp;
 	*(volatile int *)&tmp.m_bfmeAABO = 0;

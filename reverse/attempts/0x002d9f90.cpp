@@ -47,8 +47,9 @@ void Rva002D9F90Behavior::clearConfiguredModelCondition()
 
 	const UnsignedInt condition = static_cast<UnsignedInt>(data->m_condition);
 	const UnsignedInt mask = 1u << (condition & 31);
-	if (!(owner->m_modelConditionFlags[condition >> 5] & mask))
-		return;
-	owner->m_modelConditionFlags[condition >> 5] &= ~mask;
-	owner->notifyModelConditionChanged();
+	if (owner->m_modelConditionFlags[condition >> 5] & mask)
+	{
+		owner->m_modelConditionFlags[condition >> 5] &= ~mask;
+		owner->notifyModelConditionChanged();
+	}
 }

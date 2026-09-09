@@ -25,6 +25,11 @@ public:
 
 extern BfmeAlloc12 *TheBfmeAlloc12;
 
+static __forceinline unsigned int addBfmeOffset(unsigned int offset, unsigned int base)
+{
+	return offset + base;
+}
+
 class BfmeVec12
 {
 public:
@@ -47,7 +52,8 @@ void BfmeVec12::fixup()
 	{
 		BfmeElem12 *e = (BfmeElem12 *)(off + (unsigned int)begin);
 		e->m_ptr = TheBfmeAlloc12->make(&e->m_sub);
-		((BfmeElem12 *)(off + (unsigned int)m_begin))->m_sub.construct();
+		BfmeSub12 *sub = (BfmeSub12 *)(addBfmeOffset(off, (unsigned int)m_begin) + 8);
+		sub->construct();
 		begin = m_begin;
 		last = m_end;
 		n = last - begin;
