@@ -1,5 +1,5 @@
 // ?parseKeyLabelList@Rva0043A3B0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.35 date=2026-09-06
+// partial score=0.55 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 
 // Open-BFME7: INI field parser at 0x0043A3B0 (203 B): reads a label via
@@ -17,7 +17,11 @@ class AsciiString
 {
 public:
 	AsciiString();
-	~AsciiString();
+	~AsciiString() { releaseBuffer(); }
+
+	private:
+	void *m_data;
+	void releaseBuffer();
 };
 
 class INI
@@ -137,8 +141,8 @@ private:
 class Rva0043A3B0Store
 {
 public:
-	char m_bfmeHead[ 0x214 ];
-	_STL::list<Rva00439370Pair, _STL::allocator<Rva00439370Pair> > m_bfmeItems;
+	char m_bfmeHead[ 0x134 ];
+	_STL::list<Rva00439370Pair, _STL::allocator<Rva00439370Pair> > *m_bfmeItems;
 };
 
 class Rva0043A3B0
@@ -152,10 +156,9 @@ void Rva0043A3B0::parseKeyLabelList( INI *ini, void *instance, void *, const voi
 {
 	AsciiString token = ini->getNextAsciiString();
 
-	Rva00439370Pair entry;
-	entry.m_key = 0;
+	Rva00439370Pair entry = { 0 };
 	entry.m_value.set( *(const UnicodeString *)&token );
 
 	Rva0043A3B0Store *self = (Rva0043A3B0Store *)instance;
-	self->m_bfmeItems.push_back( entry );
+	self->m_bfmeItems->push_back( entry );
 }
