@@ -86481,3 +86481,4 @@ _bfmeDynSizeXZ,0x00F467B4,size table
 _bfmeDynOffsetXZ,0x00F46794,offset table
 _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?bfmeResetXZ@BfmeDynElemXZ@@QAEXIH@Z,0x00964150,element reset
+?g_D3DXFastTable@@3UD3DXFASTTABLE@@A,0x00EDBDF8,d3dx9-summer2003 d3dxmath.obj table; cpudetect DIR32 sites 0x1B and 0x4C prove retail VA 0x012DBDF8
