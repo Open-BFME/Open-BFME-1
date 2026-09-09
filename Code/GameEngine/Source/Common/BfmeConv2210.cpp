@@ -1,5 +1,3 @@
-// ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.97 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -129,10 +127,8 @@ public:
 	Rva0077CC10Element(const Rva0077CC10Element &other); ///< pinned 0x00013FB1
 	~Rva0077CC10Element();                              ///< pinned 0x0004A1C4
 
-	unsigned int m_pad0;
-	unsigned int m_pad4;
 	RetailLayoutString m_layout;
-	unsigned char m_tail[188 - 4 - 4 - 1];
+	unsigned char m_tail[188 - 1];
 };
 
 class Rva0077CDE0Vec3
@@ -293,9 +289,13 @@ Rva0077CDE0::Rva0077CDE0()
 	m_f60 = 0.065f;
 
 	Rva0077CDE0Elem5 *elem5 = &m_elem5;
-	elem5->Set(elem5->m_a, elem5->m_b);
+	register unsigned int b5 = elem5->m_b;
+	register unsigned int a5 = elem5->m_a;
+	elem5->Set(a5, b5);
 	Rva0077CDE0Elem6 *elem6 = &m_elem6;
-	elem6->Set(elem6->m_a, elem6->m_b);
+	register unsigned int b6 = elem6->m_b;
+	register unsigned int a6 = elem6->m_a;
+	elem6->Set(a6, b6);
 
 	m_d10 = 0;
 	m_d14 = 0;
@@ -317,7 +317,7 @@ Rva0077CDE0::Rva0077CDE0()
 	}
 	else
 	{
-		struct FalseTag { unsigned int m_unused[2]; } tag;
+		unsigned char tag;
 		vec->InsertOverflow(vec->m_finish, temp,
 			reinterpret_cast<const void *>(&tag), 1, true);
 	}

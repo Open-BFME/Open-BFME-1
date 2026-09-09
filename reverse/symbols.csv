@@ -86609,3 +86609,18 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?Rva0001E6A5Helper@@YAPAXPAX00PADH@Z,0x0001E6A5,pin to matched thunk j_0001e6a5 with real argument types
 ??1ScoreRowVector@@QAE@XZ,0x00045E8F,BfmeAptScreenScoreScreen+0x264 vector<Gen00574BC0> row member; real body already landed at 0x00574BC0 (Q4VectorDtorMemberOffset.cpp) but this callsite reaches it through the incremental-link thunk
 ??$__get_integer@V?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@K@_STL@@YA_NAAV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@0@0HAAKH_NDABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@ABU__false_type@0@@Z,0x00834710,STLport 4.5.3 wide unsigned-long parser; exact wrapper call and adjacent specialization family establish identity
+??1Rva0077CDE0Opaque1@@QAE@XZ,0x0002303D,destructor of the +0x08 member of the 0x0077CDE0 constructor class (unwind funclet target)
+??1Rva0077CDE0Opaque2@@QAE@XZ,0x000395D1,destructor of the +0x18 member of the 0x0077CDE0 class (unwind funclet target)
+??0Rva0077CC10Element@@QAE@XZ,0x00043905,default constructor of the 188-byte vector element the 0x0077CDE0 constructor pushes back
+??0Rva0077CC10Element@@QAE@ABU0@@Z,0x00013FB1,copy constructor of the 188-byte vector element (placement copy in the 0x0077CDE0 push_back)
+??1Rva0077CC10Element@@QAE@XZ,0x0004A1C4,destructor of the 188-byte vector element (temporary in the 0x0077CDE0 constructor)
+??1Rva0077CDE0Vec3@@QAE@XZ,0x00003B6B,destructor of the +0x24 element vector of the 0x0077CDE0 class (unwind funclet target)
+?InsertOverflow@Rva0077CDE0Vec3@@QAEXPAURva0077CC10Element@@ABU2@PBXI_N@Z,0x00043270,vector overflow insert the 0x0077CDE0 constructor calls when push_back has no capacity
+??1Rva0077CDE0Opaque4@@QAE@XZ,0x00026AB2,destructor of the +0x30 member of the 0x0077CDE0 class (unwind funclet target)
+??1Rva0077CDE0Elem5@@QAE@XZ,0x0002C868,destructor of the +0x6c member of the 0x0077CDE0 class (unwind funclet target)
+?Set@Rva0077CDE0Elem5@@QAEXII@Z,0x000109F6,two-argument setter the 0x0077CDE0 constructor calls on its +0x6c member
+??1Rva0077CDE0Elem6@@QAE@XZ,0x00022C2D,destructor of the +0x78 member of the 0x0077CDE0 class (unwind funclet target)
+?Set@Rva0077CDE0Elem6@@QAEXII@Z,0x0001B234,two-argument setter the 0x0077CDE0 constructor calls on its +0x78 member
+??1Rva0077CDE0Opaque8@@QAE@XZ,0x00041745,destructor of the +0xf0 member of the 0x0077CDE0 class (state-17 unwind funclet target)
+??0Rva0077CDE0ArrElem@@QAE@XZ,0x0002FB80,element constructor the EH vector constructor iterator runs over the 0x0077CDE0 array at +0x134
+??1Rva0077CDE0ArrElem@@QAE@XZ,0x0000E746,element destructor paired with the 0x0077CDE0 array at +0x134
