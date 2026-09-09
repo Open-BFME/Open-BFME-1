@@ -18293,3 +18293,9 @@ uw_00c61de0	0xc61de0	8	blocked	Ghidra Unwind@ compiler cleanup boundary in serve
 ?d_0050b440@@YAXXZ	0x0050B440	942	blocked	Generated GUI helper with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
 ?d_00510b95@@YAXXZ	0x00510B95	11	blocked	Generated 11-byte virtual-call fragment with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
 ?d_003ccb70@@YAXXZ	0x003CCB70	400	blocked	t=2min model=gpt-5; existing Rva003CC890 audio ownership evidence covers this generated body; the prior reconstruction reaches 362 bytes versus retail 400 and leaves x87 clamp and register lifetime differences
+?d_009f4130@@YAXXZ	0x009F4130	669	blocked	Generated body with no named caller, identity, or built C++ emitter; no clean conversion found t=7 model=gpt-5
+?cleanup@Gen_dtor_009f2600@@QAEXXZ	0x009F4ED0	163	blocked	Address-derived destructor cleanup body; caller label identifies cleanup but no identity-safe built C++ emitter exists t=7 model=gpt-5
+?bfmeMakeWideResult@BfmeWideResultSource@@QAE?AUBfmeWideResult@@HHHHHH@Z	0x009F63D0	555	blocked	Address-derived wide-result helper body; callers identify the helper family but no built C++ emitter exists t=7 model=gpt-5
+?d_009f6dbe@@YAXXZ	0x009F6DBE	24	blocked	Generated runtime cleanup fragment with no standalone source owner or identity-safe emitter t=7 model=gpt-5
+?d_009f6f2e@@YAXXZ	0x009F6F2E	24	blocked	Generated runtime cleanup fragment with no standalone source owner or identity-safe emitter t=7 model=gpt-5
+?d_009f7084@@YAXXZ	0x009F7084	24	blocked	Generated runtime cleanup fragment with no standalone source owner or identity-safe emitter t=7 model=gpt-5
