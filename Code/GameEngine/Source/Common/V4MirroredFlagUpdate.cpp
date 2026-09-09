@@ -87,15 +87,65 @@ public:
 
 class Gen003BD8D0Built;
 
+struct Gen003A43C0Element
+{
+	char m_pad00[ 0xA4 ];
+	void *m_value;
+};
+
+struct Gen003A43C0Span
+{
+	Gen003A43C0Element *const *m_begin;
+	Gen003A43C0Element *const *m_end;
+	unsigned int size() const { return m_end - m_begin; }
+};
+
+// These two calls are the existing retail thunks reached by enter.  Their
+// surrounding class names are not recovered, so keep the call-site views
+// neutral while preserving the observed thiscall ABI and routes.
+class Gen003BD7D0Game;
+class Rva0060A900 { public: void run(); };
+struct Rva006122A0Item;
+class AsciiString;
+class Rva006122A0Mgr { public: Rva006122A0Item *find(const AsciiString &); };
+
+extern void j_00032010();
+extern void j_0004a1ab();
+
 class Gen003BD7D0Node
 {
 public:
 	char m_pad00[ 0x1E ];
 	bool m_at1E;
+	char m_pad1F[ 0x29 ];
+	Gen003A43C0Span m_items;
+	__forceinline void activate(void *target, int first, int second)
+ {
+  typedef void (Gen003BD7D0Node::*Call)(void *, int, int);
+  union { void (*function)(); Call member; } route;
+  route.function = j_00032010;
+  (this->*route.member)(target, first, second);
+ }
 	void leave();
 	void enter();
 	Gen003BD8D0Built * build( Gen003BD8D0Arg * a, int b, int c );
 };
+
+// Existing ILTs retain unresolved helper identity without introducing aliases.
+// 6160B0 forwards its incoming ECX to LivingWorldManager::rva00615cb0.
+extern void j_00032010();
+extern void j_0004a1ab();
+class Gen003BD7D0Game {
+public:
+ __forceinline void notify(void *value, int one)
+ {
+  typedef void (Gen003BD7D0Game::*Call)(void *, int);
+  union { void (*function)(); Call member; } route;
+  route.function = j_0004a1ab;
+  (this->*route.member)(value, one);
+ }
+};
+extern "C" char *g_bfmeGameCW;
 
 class Gen003BF540Owner
 {
@@ -133,6 +183,30 @@ void Rva003BF540::select( int id )
 	Gen003BD7D0Node *current = find( id );
 	if( current )
 		current->enter();
+}
+
+// ?enter@Gen003BD7D0Node@@QAEXXZ, retail 0x003A4A40 (112 bytes).
+// The two pointer members are the same [+0x48,+0x4C) span established by
+// Gen003BD7D0Node::match.  Retail first activates the global's +0x168 target,
+// notifies the global once for every +0xA4 entry, then looks up this+8 and
+// tail-dispatches the returned result.
+void Gen003BD7D0Node::enter()
+{
+	activate( g_bfmeGameCW + 0x168, 1, 3 );
+	unsigned int index = 0;
+	if( m_items.size() > 0 )
+	{
+		do
+		{
+			Gen003A43C0Element *entry = m_items.m_begin[ index ];
+			reinterpret_cast<Gen003BD7D0Game *>( g_bfmeGameCW )->notify( entry->m_value, 1 );
+			++index;
+		}
+		while( index < m_items.size() );
+	}
+	Rva006122A0Item *result = reinterpret_cast<Rva006122A0Mgr *>( g_bfmeGameCW )->find(
+		*reinterpret_cast<const AsciiString *>( reinterpret_cast<char *>( this ) + 8 ) );
+	reinterpret_cast<Rva0060A900 *>(result)->run();
 }
 
 // 0x003BD8D0 is a third member of the same class -- it reaches the same lookup at
