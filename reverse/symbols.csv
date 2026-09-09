@@ -86516,5 +86516,9 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?D3DDevice@DX8Wrapper@@1PAUIDirect3DDevice8@@A,0x01340534,Canonical private DX8Wrapper static IDirect3DDevice8 pointer; actual dx8wrapper.h declaration and named render-device family plus W3DMouse draw COFF operand;campaign=36h-20260908-1018;batch=45
 ?m_3DInterfaceScene@W3DDisplay@@2PAVRTS3DInterfaceScene@@A,0x012F8060,Canonical static RTS3DInterfaceScene pointer; W3DDisplay header and definition plus W3DMouse cursor add/remove/render routes;campaign=36h-20260908-1018;batch=45
 ?ApplicationHWnd@@3PAXA,0x012ED238,Canonical non-STRICT HWND global from WinMain declaration and definition; W3DMouse ScreenToClient operand and Win32 window calls;campaign=36h-20260908-1018;batch=45
+?g_rva003D2B80NegHalf@@3MB,0x00C95F9C,retail negative half constant used by the four-child element callback
+??0Rva003D2B80Child@@QAE@PAVRva003D2B80Source@@PAM@Z,0x000019D3,constructor call-through to the retail child constructor thunk
+??2Rva003D2B80Child@@SAPAXI@Z,0x00881F30,allocation call-through to the retail allocator body
+?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
 __imp_?bfmeReleaseYE@@YGXPAX@Z,0x00F58ECC,release import
 ??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
