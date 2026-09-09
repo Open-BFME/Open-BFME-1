@@ -138,6 +138,56 @@ public:
 	}
 };
 
+typedef _STL::list<Object *> BfmeGarrisonContainedItemsList;
+
+class BfmeGarrisonUpdateLayout
+{
+public:
+	// The override's C++ this view is the update-interface subobject.  Its
+	// compiler view is 0x14 bytes before the BFME module base, so this member
+	// reaches the retail list at [this+0x28].
+	char m_unmodelled_000[ 0x3C ];
+	BfmeGarrisonContainedItemsList m_containList; // TU view +0x3c; retail +0x28
+};
+
+class BfmeGarrisonContainInterfaceLayout
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0;
+	virtual void slot08() = 0; virtual void slot0C() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0;
+	virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0;
+	virtual void slot38() = 0; virtual void slot3C() = 0;
+	virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void slot50() = 0; virtual void slot54() = 0;
+	virtual void slot58() = 0; virtual void slot5C() = 0;
+	virtual void slot60() = 0; virtual void slot64() = 0;
+	virtual void slot68() = 0; virtual void slot6C() = 0;
+	virtual void slot70() = 0; virtual void slot74() = 0;
+	virtual void slot78() = 0; virtual void slot7C() = 0;
+	virtual void slot80() = 0; virtual void slot84() = 0;
+	virtual void slot88() = 0; virtual void slot8C() = 0;
+	virtual void removeFromContain( Object *, Bool ) = 0;
+};
+
+static Bool bfmeGarrisonObjectIsEffectivelyDead( const Object *object )
+{
+	// BFME places Object::m_privateStatus at +0x344; the shared ZH Object
+	// declaration places it elsewhere, so read the aligned byte in this view.
+	return (*reinterpret_cast<const unsigned char *>(
+		reinterpret_cast<const char *>( object ) + 0x344 ) & 1) != 0;
+}
+
+static void bfmeGarrisonSetSafeOcclusionFrame( Object *object, UnsignedInt frame )
+{
+	// This is Object::m_safeOcclusionFrame in the BFME object layout.
+	*reinterpret_cast<UnsignedInt *>( reinterpret_cast<char *>( object ) + 0x330 ) = frame;
+}
+
 class BfmeGarrisonContainLoadAccess : public GarrisonContain
 {
 public:
@@ -1068,7 +1118,10 @@ void GarrisonContain::updateEffects( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?update@GarrisonContain@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
+// ?update@GarrisonContain@@UAE?AW4UpdateSleepTime@@XZ
+// The matched constructor at 0x0021D820 installs update-interface vtable
+// VA 0x010AB740 at primary +0x10. Its slot 0 is ILT 0x0001B8C4, which
+// reaches this override at 0x0021F920; the primary vtable is 0x010AB818.
 UpdateSleepTime GarrisonContain::update( void )
 {
 	const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
@@ -1077,10 +1130,14 @@ UpdateSleepTime GarrisonContain::update( void )
 	UpdateSleepTime result;
 	result = OpenContain::update();
 
+	BfmeGarrisonUpdateLayout *self =
+		reinterpret_cast<BfmeGarrisonUpdateLayout *>( this );
+
 	// remove effectively dead objects from this garrison container
-	const ContainedItemsList& containList = getContainList();
+	const BfmeGarrisonContainedItemsList& containList = self->m_containList;
 	Object *contained;
-	for( ContainedItemsList::const_iterator it = containList.begin(); it != containList.end(); /*empty*/ )
+	for( BfmeGarrisonContainedItemsList::const_iterator it = containList.begin();
+		it != containList.end(); /*empty*/ )
 	{
 
 		// get object
@@ -1090,18 +1147,26 @@ UpdateSleepTime GarrisonContain::update( void )
 		++it;
 
 		// remove if dead
-		if( contained->isEffectivelyDead() )
+		if( bfmeGarrisonObjectIsEffectivelyDead( contained ) )
 		{
 			// remove from container
-			removeFromContain( contained );
+			reinterpret_cast<BfmeGarrisonContainInterfaceLayout *>(
+				reinterpret_cast<char *>( this ) + 0x24)->removeFromContain( contained, FALSE );
 
 			// set the safe occlusion frame to way way way in the future so we never see it during death
-			#define HUGE_FRAME_IN_FUTURE (LOGICFRAMES_PER_SECOND * 1000)
-			contained->setSafeOcclusionFrame( TheGameLogic->getFrame() + HUGE_FRAME_IN_FUTURE );
+			// Retail adds 5,000 frames to the current frame for safe occlusion.
+			#define HUGE_FRAME_IN_FUTURE 5000
+			bfmeGarrisonSetSafeOcclusionFrame( contained,
+				TheGameLogic->getFrame() + HUGE_FRAME_IN_FUTURE );
 
 		}  // end if
 
 	}  // end for, it
+
+	// The virtual override's compiler view is 0x14 bytes before the primary
+	// GarrisonContain module view; this produces the BFME primary receiver.
+	GarrisonContain *primary =
+		reinterpret_cast<GarrisonContain *>( reinterpret_cast<char *>( this ) + 0x04 );
 	
 // Lorenzen changed, 6/11/03, so that garrisoncontains that are not enclosing will keep units at their assigned stations,
 // rather than Bamphing them all over the building as they fire.
@@ -1113,13 +1178,17 @@ UpdateSleepTime GarrisonContain::update( void )
 //	// a garrison point
 //	//
 //	addValidObjectsToGarrisonPoints();
-  matchObjectsToGarrisonPoints();
+	primary->removeInvalidObjectsFromGarrisonPoints();
+	primary->addValidObjectsToGarrisonPoints();
+	primary->trackTargets();
 
-	healObjects();
+	primary->healObjects();
 
-	if (modData->m_mobileGarrison && (getObject()->isMobile() == TRUE) ) 
+	if (*reinterpret_cast<const unsigned char *>(
+			reinterpret_cast<const char *>( modData ) + 0x170 ) &&
+		(getObject()->isMobile() == TRUE) )
 	{
-		moveObjectsWithMe();
+		primary->moveObjectsWithMe();
 	}
 	else
 	{

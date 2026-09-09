@@ -86657,3 +86657,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?rva0004a444@Rva00615D50Object@@QAE_NPBUICoord2D@@@Z,0x0004A444,ILT to body 0x00618C90; the 0x00615D50 lookup calls it to test the object against a screen point
 ?getSaveGameInfoFromFile@GameState@@QAE_NVAsciiString@@PAVSaveGameInfo@@@Z,0x00111980,BFME Bool ABI: addGameToAvailableList +0x4B calls ILT 0x000083D7 and tests AL; ILT resolves to reader body 0x00111980 while legacy QAEX row remains
 ??1SaveGameInfo@@QAE@XZ,0x0000AB78,BFME destructor call route: addGameToAvailableList +0xF3 targets ILT 0x0000AB78 -> body 0x0010D700; body releases verified SaveGameInfo fields at +0x2C,+0x24,+0x1C,+0x08,+0x04,+0x00
+?removeInvalidObjectsFromGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021EA10,GarrisonContain::update retail callee at +0x5d; source definition and 0x21EA10 boundary establish the helper identity
+?addValidObjectsToGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021F5E0,GarrisonContain::update retail callee at +0x64; source definition and 0x21F5E0 boundary establish the helper identity
+?healObjects@GarrisonContain@@IAEXXZ,0x0021E9C0,GarrisonContain::update retail callee at +0x72; source definition and 0x21E9C0 boundary establish the helper identity
+?moveObjectsWithMe@GarrisonContain@@IAEXXZ,0x0021E970,GarrisonContain::update retail callee at +0x8f; source definition and 0x21E970 boundary establish the helper identity
