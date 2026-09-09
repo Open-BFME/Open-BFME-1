@@ -86596,3 +86596,10 @@ _bfmeSkirmishOptionsVft,0x0110A314,BfmeAptScreenSkirmish own vtable installed by
 ?FindFile@Rva00884Ftp@@QAEJPBDPAH@Z,0x00886020,CDownload::PumpMessages Cftp::FindFile callee
 ?FileRecoveryPosition@Rva00884Ftp@@QAEJPBD0@Z,0x00886A20,CDownload::PumpMessages Cftp::FileRecoveryPosition callee
 ?GetNextFileBlock@Rva00884Ftp@@QAEJPBDPAH@Z,0x00886520,CDownload::PumpMessages Cftp::GetNextFileBlock callee
+??1Gen_dtor_00065a10@@UAE@XZ,0x00041BC3,gen-dtor class destructor
+??1Gen_dtor_0006e220@@UAE@XZ,0x0001FF96,gen-dtor class destructor
+??1Gen_dtor_000844e0@@UAE@XZ,0x0000564B,gen-dtor class destructor
+__imp__Rva013596C4On@4,0x013596C4,pin
+__imp__Rva0135961COff@4,0x0135961C,pin
+?notify@Rva000C7E30Sink@@QAEX_N@Z,0x0004326B,pin notify thunk; address-derived twin of BfmeConv2112 sink at same RVA
+?Rva0001E6A5Helper@@YAPAXPAX00PADH@Z,0x0001E6A5,pin to matched thunk j_0001e6a5 with real argument types
