@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9238ec69242697b32e9ab5d94a930b5638a69b8049b57be72de861d85c932805",
+  "symbol": "?d_0018e480@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_0018e480@@YAXXZ\n// partial score=0.95 date=2026-09-09\n// Candidate twin of the banked 0x0018E410 readiness check. Retail adds this+0x24\n// to the first holder value before calling the pinned ALT predicate, then calls\n// the pinned BLT predicate with the second holder value and returns -1 only when\n// both predicates succeed.\nclass BfmeValuesLT\n{\npublic:\n\tunsigned char m_bfmeHeadLT[8];\n\tfloat m_bfmeFirstLT;\n\tfloat m_bfmeSecondLT;\n};\n\nclass BfmeHolderLT\n{\npublic:\n\tchar bfmeCheckALT(float value, float ratio, int flag);\n\tchar bfmeCheckBLT(float value, float ratio);\n\n\tunsigned char m_bfmeHeadLT[8];\n\tBfmeValuesLT *m_bfmeValuesLT;\n};\n\nclass BfmeStageLT\n{\npublic:\n\tunsigned char m_bfmeHeadLT[0x44];\n\tBfmeHolderLT *m_bfmeHolderLT;\n};\n\nclass BfmeOwnerLT\n{\npublic:\n\tint bfmeReadyAdjustedLT(void);\n\n\tunsigned char m_bfmeHeadLT[0x1c];\n\tBfmeStageLT *m_bfmeStageLT;\n\tint m_bfmePad20LT;\n\tfloat m_bfmeAdjustLT;\n};\n\nint BfmeOwnerLT::bfmeReadyAdjustedLT(void)\n{\n\tchar first = m_bfmeStageLT->m_bfmeHolderLT->bfmeCheckALT(\n\t\tm_bfmeStageLT->m_bfmeHolderLT->m_bfmeValuesLT->m_bfmeFirstLT + m_bfmeAdjustLT,\n\t\t0.5f,\n\t\t0);\n\tvolatile float scratch;\n\tBfmeValuesLT *values = m_bfmeStageLT->m_bfmeHolderLT->m_bfmeValuesLT;\n\tscratch = values->m_bfmeSecondLT;\n\tchar second = m_bfmeStageLT->m_bfmeHolderLT->bfmeCheckBLT(\n\t\tvalues->m_bfmeSecondLT,\n\t\t0.5f);\n\n\tif (first && second)\n\t\treturn -1;\n\treturn 0;\n}\n"
+}
