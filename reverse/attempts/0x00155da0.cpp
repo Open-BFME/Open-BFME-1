@@ -1,5 +1,5 @@
-// ?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z
-// partial score=0.72 date=2026-09-02
+// ?attack@AIGroupGroupAttackObjectPrivateShim@@QAEX_NPAVObject@@HW4CommandSourceType@@@Z
+// partial score=0.8 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -119,7 +119,10 @@ class AICommandInterface
 public:
     void aiAttackObject(Object *, Int, CommandSourceType);
     void aiForceAttackObject(Object *, Int, CommandSourceType);
-    void aiAttackObject(Object *, CommandSourceType);
+    void aiBfmeAttackObject(Object *, CommandSourceType);
+    void aiForceAttackObjectB(Object *, Int, CommandSourceType);
+    void aiAttackObjectB(Object *, Int, CommandSourceType);
+    void aiAttackObjectGarrison(Object *, Int, CommandSourceType);
 };
 
 class AIUpdatePrefix
@@ -172,11 +175,6 @@ public:
 extern ActionManager *TheActionManager;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
-class AIGroup
-{
-    void groupAttackObjectPrivate(bool, Object *, int, CommandSourceType);
-};
-
 class AIGroupGroupAttackObjectPrivateShim
 {
 public:
@@ -234,7 +232,7 @@ void AIGroupGroupAttackObjectPrivateShim::attack(bool forced, Object *victim,
                                 memberAI->aiForceAttackObject(victim, maxShotsToFire,
                                     cmdSource);
                             } else {
-                                memberAI->aiAttackObject(victim, maxShotsToFire,
+                                memberAI->aiAttackObjectGarrison(victim, maxShotsToFire,
                                     cmdSource);
                             }
                         }
@@ -254,17 +252,12 @@ void AIGroupGroupAttackObjectPrivateShim::attack(bool forced, Object *victim,
                     theUnit, victim, cmdSource, ATTACK_NEW_TARGET);
                 if (result == ATTACKRESULT_POSSIBLE ||
                     result == ATTACKRESULT_POSSIBLE_AFTER_MOVING)
-                    ai->aiAttackObject(victim, cmdSource);
+                    ai->aiBfmeAttackObject(victim, cmdSource);
             } else if (forced) {
-                ai->aiForceAttackObject(victim, maxShotsToFire, cmdSource);
+                ai->aiForceAttackObjectB(victim, maxShotsToFire, cmdSource);
             } else {
-                ai->aiAttackObject(victim, maxShotsToFire, cmdSource);
+                ai->aiAttackObjectB(victim, maxShotsToFire, cmdSource);
             }
         }
     }
-}
-
-void AIGroup::groupAttackObjectPrivate(bool forced, Object *target, int maxShots, CommandSourceType source)
-{
-    ((AIGroupGroupAttackObjectPrivateShim *)this)->attack(forced, target, maxShots, source);
 }
