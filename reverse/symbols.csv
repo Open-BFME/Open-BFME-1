@@ -86579,3 +86579,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?TheBfmeOnlineProfileSlot@@3PAVBfmeOnlineProfileScreen@@A,0x012F4AB4,OnlineProfile singleton pointer cleared by destructor 0x00553EE0
 ??0BfmeBuffFxState@@QAE@PAVDrawable@@@Z,0x00045782,BFME Drawable buff-fx state ctor for rva00412530
 ?bfmeForward@BfmeBuffFxState@@QAEXHPAXHPBURGBColor@@M@Z,0x0001FE38,BFME Drawable buff-fx state forward for rva00412530
+??0KindOfMask@@QAE@HHH@Z,0x0000198D,two-index BitFlags-style ctor the ILT at 0x0000198D reaches; used building the bits-119/179 mask in Drawable::bfmeApplyIndicatorColor at 0x00418200
