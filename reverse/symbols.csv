@@ -6336,7 +6336,7 @@ name,address,notes
 ??1Gen_dtor_0078add0@@UAE@XZ,0x0003402C,gen-dtor class destructor
 ??1Gen_dtor_0078c9d0@@UAE@XZ,0x0000F71D,gen-dtor class destructor
 ??1Gen_dtor_0078d2e0@@UAE@XZ,0x0000201D,gen-dtor class destructor
-??1Gen_dtor_0078f9d0@@UAE@XZ,0x000455B1,gen-dtor class destructor
+??1TwiddlerClass@@UAE@XZ,0x000455B1,authentic virtual destructor callee; vtable 0x01126ED0 and matched constructor 0x0078F500 prove identity
 ??1Gen_dtor_0078fab0@@UAE@XZ,0x00044D41,gen-dtor class destructor
 ??1Gen_dtor_0078fd70@@UAE@XZ,0x00043C20,gen-dtor class destructor
 ??1Gen_dtor_0078fda0@@UAE@XZ,0x00037907,gen-dtor class destructor

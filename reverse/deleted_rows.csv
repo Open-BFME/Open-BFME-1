@@ -1,4 +1,5 @@
 name,target_rva,reason
+??_GGen_dtor_0078f9d0@@UAEPAXI@Z,0x0078F9D0,Generic generator placeholder superseded by authentic TwiddlerClass scalar-deleting destructor proven by vtable 0x01126ED0 and matched constructor 0x0078F500
 ?d_00138290@@YAXXZ,0x00138290,gen-dump placeholder superseded by the byte-verified ProductionPrerequisite copy constructor at the same range
 ?bfmeGoDLA@BfmeThingDLA@@QAEPAXE@Z,0x0005F1A0,address-neutral reconstruction superseded by the ParticleSystemInfo vector-deleting destructor proven by vtable 0x01073878 and its named destructor callee
 ??0Display@@QAE@XZ,0x005CBF60,wrong class identity superseded by ParticleSystemManager constructor evidence from vtables 0x0110FDCC/0x0110FDB8 and the FXParticleSystemManager string
