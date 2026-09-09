@@ -34,6 +34,11 @@
    import rather than the CRT fopen entry point. */
 __declspec(dllimport) void *bfmeFopenVIF (const char *name, const char *mode);
 
+/* BFME reconstruction: numeric output uses retail's file-format import. */
+struct bfmeFileSF;
+__declspec(dllimport) int bfmeLogSF (const struct bfmeFileSF *stream,
+                                     const char *format, ...);
+
 
 #ifndef OLD_ANSI
 #include <errno.h>
@@ -484,7 +489,9 @@ static int io_write (lua_State *L) {
   for (; arg <=  lastarg; arg++) {
     if (lua_type(L, arg) == LUA_TNUMBER) {  /* LUA_NUMBER */
       /* optimization: could be done exactly as for strings */
-      status = status && fprintf(f, "%.16g", lua_tonumber(L, arg)) > 0;
+      /* BFME reconstruction: retail formats numeric output through bfmeLogSF. */
+      status = status && bfmeLogSF((const struct bfmeFileSF *)f, "%.16g",
+                                   lua_tonumber(L, arg)) > 0;
     }
     else {
       size_t l;
@@ -492,7 +499,8 @@ static int io_write (lua_State *L) {
       status = status && (fwrite(s, sizeof(char), l, f) == l);
     }
   }
-  pushresult(L, status);
+  /* BFME reconstruction: writes use the fixed generic error tuple. */
+  pushresult_close(L, status);
   return 1;
 }
 

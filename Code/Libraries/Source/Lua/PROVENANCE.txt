@@ -64,11 +64,12 @@ change is marked at the point of change in the file itself as well as here.
     lopcodes.h   2   OP_PUSHBOOL inserted after OP_POP
     lapi.c       2   the luaH_new call site
     lstate.c     2   the luaH_new call site
-    liolib.c         `setreturn` and `io_open` use retail's fixed generic error
-                     tuple (`pushresult_close`) instead of the errno-based
-                     `pushresult`; `io_open`, `io_fromto`, and `io_appendto`
-                     route regular file opens through the reconstructed
-                     `bfmeFopenVIF` import.
+    liolib.c         `setreturn`, `io_open`, and `io_write` use retail's fixed
+                     generic error tuple (`pushresult_close`) instead of the
+                     errno-based `pushresult`; numeric `io_write` output uses
+                     the reconstructed `bfmeLogSF` import; `io_open`,
+                     `io_fromto`, and `io_appendto` route regular file opens
+                     through the reconstructed `bfmeFopenVIF` import.
                      These are BFME-specific reconstruction claims, not claims
                      about upstream Lua source.
 
