@@ -1,5 +1,5 @@
 // ?bfmeFindFD@BfmeHostFD@@QAEHI@Z
-// partial score=0.92 date=2026-09-08
+// partial score=0.92 date=2026-09-09
 class BfmeNodeFD
 {
 public:
@@ -15,12 +15,13 @@ public:
 
 	unsigned char m_bfmeHeadFD[0x214];
 	BfmeNodeFD **volatile m_bfmeBeginFD;
-	BfmeNodeFD **m_bfmeEndFD;
+	BfmeNodeFD **volatile m_bfmeEndFD;
 };
 
 int BfmeHostFD::bfmeFindFD(unsigned int key)
 {
-	unsigned int n = (unsigned int)(m_bfmeEndFD - m_bfmeBeginFD);
+	BfmeNodeFD **b = m_bfmeBeginFD;
+	unsigned int n = (unsigned int)(m_bfmeEndFD - b);
 	BfmeNodeFD *p = m_bfmeBeginFD[key % n];
 
 	while (p != 0 && p->m_bfmeKeyFD != key)

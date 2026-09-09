@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9293bb78947cb1234e696c0f54f9e41c39490ddda2aca0793198448bc6340679",
+  "symbol": "?d_006123c0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?d_006123c0@@YAXXZ\n// partial score=0.92 date=2026-09-09\nclass BfmeNodeFD\r\n{\r\npublic:\r\n\tBfmeNodeFD *m_bfmeNextFD;\r\n\tunsigned int m_bfmeKeyFD;\r\n\tint m_bfmeValFD;\r\n};\r\n\r\nclass BfmeHostFD\r\n{\r\npublic:\r\n\tint bfmeFindFD(unsigned int key);\r\n\r\n\tunsigned char m_bfmeHeadFD[0x214];\r\n\tBfmeNodeFD **volatile m_bfmeBeginFD;\r\n\tBfmeNodeFD **volatile m_bfmeEndFD;\r\n};\r\n\r\nint BfmeHostFD::bfmeFindFD(unsigned int key)\r\n{\r\n\tBfmeNodeFD **b = m_bfmeBeginFD;\r\n\tunsigned int n = (unsigned int)(m_bfmeEndFD - b);\r\n\tBfmeNodeFD *p = m_bfmeBeginFD[key % n];\r\n\r\n\twhile (p != 0 && p->m_bfmeKeyFD != key)\r\n\t\tp = p->m_bfmeNextFD;\r\n\r\n\tif (p == 0)\r\n\t\treturn 0;\r\n\r\n\treturn p->m_bfmeValFD;\r\n}\r\n"
+}
