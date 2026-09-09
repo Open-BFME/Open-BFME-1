@@ -1,10 +1,30 @@
 // ?doFXObj@BuffNuggetFXNugget@@UBEXPBVObject@@0@Z
-// partial score=0.96 date=2026-09-07
+// partial score=0.94 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // BuffNuggetFXNugget object dispatch at retail 0x0042D460.
 // The BuffNugget vtable at 0x010F356C sends slot 2 through ILT 0x00033FB4
 // to this body. Object slot 10 supplies the Drawable, and the five
 // BfmeThingAIA questions select the six template strings from the parser.
+// Fixed vs the prior 0.96 stash: the "operator->()" call at +0x010f is
+// actually operator*() -- ??D?$OVERRIDE@VThingTemplate@@@@QBEPBVThingTemplate@@XZ
+// at 0x00097E70 (ControlBar.cpp), not ??C.../operator-> at 0x00132830
+// (Thing.cpp). rva00412530 and "rva00412530Complex" are the SAME callee
+// (0x00412530, thiscall, 5 args, 2nd arg is 0 for the complex path or the
+// found ThingTemplate* otherwise) -- declaring two separate extern methods
+// broke both call sites' relocations. One declaration + a
+// reverse/symbols.csv pin on ?rva00412530@Drawable@@QAEXHPAXHPBURGBColor@@M@Z
+// -> 0x00412530 gets the exact call bytes. With both fixes this reaches the
+// exact 435-byte size with ONLY register-choice diffs left (16 lines, all
+// lea/push register identity in the six-branch findTemplate selector plus
+// two ecx-vs-eax orderings ahead of the two rva00412530 calls) -- classified
+// register-save/allocation mismatch, matching docs/argument-shuttle-register:
+// tried named locals for the receiver in both declaration orders, hoisting
+// the selector into one shared local+call (regressed to 430B, do not
+// retry), and a /G7 sweep (regressed to 434B with a cmp/mov swap at
+// +0x38, do not retry). No source reshaping moved any of the 16 register
+// picks. Re-pin ?rva00412530@Drawable@@QAEXHPAXHPBURGBColor@@M@Z,0x00412530
+// on the next attempt (pin_consistency: consistent) before touching the
+// register-choice residue.
 
 typedef bool Bool;
 struct RGBColor
@@ -43,6 +63,7 @@ class OVERRIDE
 {
 public:
 	const T *operator->() const;
+	const T *operator*() const;
 
 	T *m_overridable;
 };
@@ -51,8 +72,6 @@ class Drawable
 {
 public:
 	void rva00412530(int buffType, void *templateObject, int count,
-		const RGBColor *color, float extrusion) throw();
-	void rva00412530Complex(int buffType, void *templateObject, int count,
 		const RGBColor *color, float extrusion) throw();
 	void forward4125F0(int slot, Bool immediately);
 };
@@ -132,9 +151,7 @@ void BuffNuggetFXNugget::doFXObj(const Object *primary, const Object *) const
 	{
 		if (m_buffLifeTime > 0)
 		{
-			Drawable *complexDrawable = drawable;
-			int complexBuffType = m_buffType;
-			complexDrawable->rva00412530Complex(complexBuffType, 0, m_buffLifeTime,
+			drawable->rva00412530(m_buffType, 0, m_buffLifeTime,
 				&m_color, m_extrusion);
 		}
 		else
@@ -169,7 +186,7 @@ void BuffNuggetFXNugget::doFXObj(const Object *primary, const Object *) const
 			AsciiString invalidThing("INVALID_THING");
 			int invalidThingAddress = (int)&invalidThing;
 			useMumakil = const_cast<ThingTemplate *>(
-				primary->m_template.operator->())->bfmeGo975D(
+				primary->m_template.operator*())->bfmeGo975D(
 					invalidThingAddress);
 		}
 		if (useMumakil)
@@ -182,9 +199,7 @@ void BuffNuggetFXNugget::doFXObj(const Object *primary, const Object *) const
 		goto cleanup;
 	if (m_buffLifeTime > 0)
 	{
-		Drawable *applyDrawable = drawable;
-		int applyBuffType = m_buffType;
-		applyDrawable->rva00412530(applyBuffType, (void *)found,
+		drawable->rva00412530(m_buffType, (void *)found,
 			m_buffLifeTime, &m_color, m_extrusion);
 		goto complete;
 	}
