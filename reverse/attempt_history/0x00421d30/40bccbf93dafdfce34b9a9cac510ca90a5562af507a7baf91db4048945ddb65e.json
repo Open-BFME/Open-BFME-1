@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "40bccbf93dafdfce34b9a9cac510ca90a5562af507a7baf91db4048945ddb65e",
+  "symbol": "??0BfmeSettingsZV@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ??0BfmeSettingsZV@@QAE@XZ\n// partial score=0.92 date=2026-09-09\nclass BfmeVec3ZV\n{\npublic:\n\tfloat m_bfmeXZV;\n\tfloat m_bfmeYZV;\n\tfloat m_bfmeZZV;\n};\n\nclass BfmeSettingsZV\n{\npublic:\n\tBfmeSettingsZV();\n\n\tfloat m_bfme00ZV;\n\tfloat m_bfme04ZV;\n\tfloat m_bfme08ZV;\n\tfloat m_bfme0CZV;\n\tfloat m_bfme10ZV;\n\tfloat m_bfme14ZV;\n\tfloat m_bfme18ZV;\n\tfloat m_bfme1CZV;\n\tfloat m_bfme20ZV;\n\tfloat m_bfme24ZV;\n\tBfmeVec3ZV m_bfme28ZV;\n\tBfmeVec3ZV m_bfme34ZV;\n\tBfmeVec3ZV m_bfme40ZV;\n\tfloat m_bfme4CZV;\n\tfloat m_bfme50ZV;\n\tfloat m_bfme54ZV;\n};\n\nBfmeSettingsZV::BfmeSettingsZV()\n{\n\tm_bfme34ZV.m_bfmeXZV = 0.5f;\n\tm_bfme34ZV.m_bfmeYZV = 0.5f;\n\tm_bfme34ZV.m_bfmeZZV = 0.5f;\n\n\tm_bfme40ZV = m_bfme34ZV;\n\tm_bfme28ZV = m_bfme34ZV;\n\n\tm_bfme00ZV = 4.0f;\n\tm_bfme04ZV = 0.7f;\n\tm_bfme08ZV = 1.0f;\n\tm_bfme0CZV = 1.0f;\n\tm_bfme10ZV = 1.0f;\n\tm_bfme14ZV = 1.0f;\n\tm_bfme18ZV = 1.0f;\n\tm_bfme1CZV = 1.0f;\n\tm_bfme24ZV = 1.0f;\n\tm_bfme20ZV = 1.0f;\n\tm_bfme4CZV = 1.0f;\n\tm_bfme50ZV = 1.0f;\n\tm_bfme54ZV = 5.0f;\n}\n"
+}
