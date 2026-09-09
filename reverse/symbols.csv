@@ -86527,3 +86527,7 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??2Rva003D2B80Child@@SAPAXI@Z,0x00881F30,allocation call-through to the retail allocator body
 ?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
 ??1BfmeObjectList@@QAE@XZ,0x0000E68D,team stand ground list destructor view uses the retail out-of-line list cleanup body
+?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z,0x00879F60,SetupCPUEmFloatArrays call-site alias to the retail emfloat division body
+?Int32ToInternalFPF@@YAXJPAUInternalFPF@@@Z,0x0087A290,SetupCPUEmFloatArrays call-site alias to the retail integer conversion body
+?randnum@@YAJJ@Z,0x008790B0,SetupCPUEmFloatArrays call-site alias to the retail nbench random reset body
+?randwc@@YAJJ@Z,0x00879100,SetupCPUEmFloatArrays call-site alias to the retail nbench random value body
