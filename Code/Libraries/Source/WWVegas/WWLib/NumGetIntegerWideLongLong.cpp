@@ -1,5 +1,7 @@
 // cl: /O2 /MD
-// STLport 4.5.3 signed __int64 _M_do_get_integer<wchar_t> at retail 0x00834250.
+// STLport 4.5.3 signed integer _M_do_get_integer<wchar_t> specializations.
+// The __int64 body is at retail 0x00834250; the signed-long body is at
+// 0x00834E50 and calls the exact parser at 0x00834F50.
 // BFME's wchar_t ABI is unsigned short.  RTTI/vtable evidence: this body is
 // the slot-2 implementation reached by the wide num_get facet.  The helper
 // uses __alldiv and the value destination is eight bytes wide.
@@ -154,4 +156,9 @@ namespace _STL
 	_M_do_get_integer<WideIterator, __int64, unsigned short>(
 		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
 		__int64 &, unsigned short *);
+
+	template istreambuf_iterator<unsigned short, char_traits<unsigned short> >
+	_M_do_get_integer<WideIterator, long, unsigned short>(
+		WideIterator &, WideIterator &, ios_base &, ios_base::iostate &,
+		long &, unsigned short *);
 }
