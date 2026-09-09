@@ -86661,3 +86661,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?addValidObjectsToGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021F5E0,GarrisonContain::update retail callee at +0x64; source definition and 0x21F5E0 boundary establish the helper identity
 ?healObjects@GarrisonContain@@IAEXXZ,0x0021E9C0,GarrisonContain::update retail callee at +0x72; source definition and 0x21E9C0 boundary establish the helper identity
 ?moveObjectsWithMe@GarrisonContain@@IAEXXZ,0x0021E970,GarrisonContain::update retail callee at +0x8f; source definition and 0x21E970 boundary establish the helper identity
+?getPreAttackDelay@Weapon@@QBEHPBVObject@@0PBUCoord3D@@@Z,0x00013818,three-pointer overload called by Weapon::preFireWeapon at 0x001E8970; retail ILT resolves to body 0x001E6F10
+?notifyPreFire@WeaponTemplate@@QAEXPAVWeapon@@PBVObject@@1PBUCoord3D@@@Z,0x00005704,four-pointer overload called by Weapon::preFireWeapon at 0x001E8970; retail ILT resolves to body 0x001E6310

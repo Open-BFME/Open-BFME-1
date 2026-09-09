@@ -1,15 +1,6 @@
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
-// partial score=0.98 date=2026-09-04
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
-// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD
-// Open-BFME5: Weapon::preFireWeapon, retail 0x001E8970 size 403.
-// Three-arg BFME pre-fire: GameLogicRandomValue(0, template+0x504) into this+0x58,
-// then getPreAttackDelay; on a positive delay set PRE_ATTACK, computeBonus, write
-// the pre-attack / last-fire / leech frames from template+0x50C and +0x500, run
-// the template pre-fire list, then the four-arg FXList::doFXPos on the source
-// drawable. Size-exact 403; six ModRM bytes remain (fx in ebx vs retail edi,
-// first getPosition in edi vs retail ebx). Register-rotation wall.
+// Weapon::preFireWeapon, retail 0x001E8970, identified by Object::preFireCurrentWeapon
+// and the three-pointer ABI in reverse/symbols.csv.
 
 typedef unsigned int UnsignedInt;
 
@@ -140,7 +131,6 @@ private:
 	unsigned int m_preAttackJitter;
 };
 
-// ?preFireWeapon@Weapon@@QAEXPBVObject@@0PBUCoord3D@@@Z
 void Weapon::preFireWeapon(const Object *source, const Object *victim,
 	const Coord3D *position)
 {
@@ -185,8 +175,8 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 
 	tmpl->notifyPreFire(this, source, victim, position);
 
-	float speed = tmpl->m_weaponSpeed;
 	FXList *fx = tmpl->m_fireFX;
+	float speed = tmpl->m_weaponSpeed;
 	const Coord3D *posA = source->getDrawable()->getPosition();
 	const Matrix3D *mtx = source->getDrawable()->getTransformMatrix();
 	const Coord3D *posB = source->getDrawable()->getPosition();
