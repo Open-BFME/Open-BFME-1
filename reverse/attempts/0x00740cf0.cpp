@@ -1,56 +1,10 @@
 // ?calcCameraConstraints@W3DView@@AAEXXZ
-// partial score=0.35 date=2026-09-08
-// Probe source for the BFME W3DView camera-constraint helper.
-typedef float Real;
-typedef int Int;
+// partial score=0.96 date=2026-09-09
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/Generals/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// ?calcCameraConstraints@W3DView@@AAEXXZ
 
-extern "C" double __cdecl sqrt(double);
-
-struct ICoord2D
-{
-	int x;
-	int y;
-};
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	Real length() const;
-};
-
-struct Region3D
-{
-	Coord3D lo;
-	Coord3D hi;
-};
-
-struct Region2D
-{
-	struct Point
-	{
-		Real x;
-		Real y;
-	};
-
-	Point lo;
-	Point hi;
-};
-
-class Vector3
-{
-public:
-	Vector3() {}
-
-	Real X;
-	Real Y;
-	Real Z;
-
-	static Real Find_X_At_Z(Real z, const Vector3 &p1, const Vector3 &p2);
-	static Real Find_Y_At_Z(Real z, const Vector3 &p1, const Vector3 &p2);
-};
+#include "Lib/BaseType.h"
+#include "vector3.h"
 
 class GlobalData
 {
@@ -70,7 +24,7 @@ public:
 	virtual void unused14() = 0;
 	virtual void unused18() = 0;
 	virtual void unused1C() = 0;
-	virtual void getExtent(Region3D *extent) = 0;
+	virtual void getExtent(Region3D *extent) const = 0;
 };
 
 class W3DView
@@ -108,57 +62,45 @@ private:
 	void getPickRay(const ICoord2D *screen, Vector3 *rayStart, Vector3 *rayEnd);
 };
 
-#define TheGlobalData (*(GlobalData **)0x012ED5C8)
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-
-Real Coord3D::length() const
-{
-	return (Real)sqrt(x * x + y * y + z * z);
-}
-
-Real Vector3::Find_X_At_Z(Real z, const Vector3 &p1, const Vector3 &p2)
-{
-	return p1.X + ((z - p1.Z) * ((p2.X - p1.X) / (p2.Z - p1.Z)));
-}
-
-Real Vector3::Find_Y_At_Z(Real z, const Vector3 &p1, const Vector3 &p2)
-{
-	return p1.Y + ((z - p1.Z) * ((p2.Y - p1.Y) / (p2.Z - p1.Z)));
-}
+extern GlobalData *TheGlobalData;
+extern TerrainLogic *TheTerrainLogic;
+extern const Real BfmeZeroRange;
+extern "C" __declspec(dllimport) int __cdecl _isnan(double value);
 
 void W3DView::calcCameraConstraints()
 {
 	if (TheTerrainLogic)
 	{
 		Region3D mapRegion;
-		TheTerrainLogic->getExtent( &mapRegion );
+		TheTerrainLogic->getExtent(&mapRegion);
 
-		Real maxEdgeZ = m_groundLevel;
-		Coord3D center, bottom;
+		const Real maxEdgeZ = m_groundLevel;
+		Coord3D center;
+		Coord2D bottom;
 		ICoord2D screen;
+		Vector3 rayStart, rayEnd;
 
 		screen.x = 0.5f * getWidth() + m_originX;
 		screen.y = 0.5f * getHeight() + m_originY;
+		getPickRay(&screen, &rayStart, &rayEnd);
 
-		Vector3 rayStart, rayEnd;
-
-		getPickRay( &screen, &rayStart, &rayEnd );
-
-		center.x = Vector3::Find_X_At_Z( maxEdgeZ, rayStart, rayEnd );
-		center.y = Vector3::Find_Y_At_Z( maxEdgeZ, rayStart, rayEnd );
-		center.z = maxEdgeZ;
+		center.x = Vector3::Find_X_At_Z(maxEdgeZ, rayStart, rayEnd);
+		center.y = Vector3::Find_Y_At_Z(maxEdgeZ, rayStart, rayEnd);
 
 		screen.y = m_originY + 0.95f * getHeight();
-		getPickRay( &screen, &rayStart, &rayEnd );
-		bottom.x = Vector3::Find_X_At_Z( maxEdgeZ, rayStart, rayEnd );
-		bottom.y = Vector3::Find_Y_At_Z( maxEdgeZ, rayStart, rayEnd );
-		bottom.z = maxEdgeZ;
+		getPickRay(&screen, &rayStart, &rayEnd);
+		bottom.x = Vector3::Find_X_At_Z(maxEdgeZ, rayStart, rayEnd);
+		bottom.y = Vector3::Find_Y_At_Z(maxEdgeZ, rayStart, rayEnd);
 		center.x -= bottom.x;
 		center.y -= bottom.y;
-
+		center.z = BfmeZeroRange;
 		Real offset = center.length();
+		if (_isnan(offset))
+			offset = BfmeZeroRange;
+		if (offset > mapRegion.hi.x * 0.25f)
+			offset = BfmeZeroRange;
 
-		if ( TheGlobalData->m_debugAI )
+		if (TheGlobalData->m_debugAI)
 			offset = -1000;
 
 		m_cameraConstraint.lo.x = mapRegion.lo.x + offset;
