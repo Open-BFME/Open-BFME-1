@@ -1,13 +1,14 @@
 // ?Rva0009FC90@Gen0009FC90Owner@@QAEXXZ
-// partial score=0.96 date=2026-09-07
+// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 //
-// Retail 0x0009FC90 is the UserNames-list serializer reached by the real
-// SkirmishPreferences write slot at 0x0009FEB0 (ILT 0x0002CB10).  The public
-// helper name is not recoverable from the callers, so the owner and method
-// below are deliberately address-derived.  The constructor at 0x0009F850
-// proves the list member at this+0x14 and its UnicodeString node payload.
+// Retail 0x0009FC90 writes the SkirmishPreferences UserNames list.  The
+// constructor at 0x0009F850 installs vtable 0x010806B0 and places this list at
+// this+0x14.  The insertion helper at 0x0009FDF0 reaches this body through
+// the 0x0002CB10 thunk, which proves the owner and the serializer contract.
+
+#define _STLP_NO_EXCEPTIONS 1
 
 typedef bool Bool;
 typedef unsigned short WideChar;
@@ -37,7 +38,6 @@ private:
 	StringBase(const T *text);
 	StringBase(const StringBase<T> &other);
 	~StringBase();
-
 	void set(const StringBase<T> &other);
 	void releaseBuffer(void);
 
@@ -56,6 +56,16 @@ public:
 		StringBase<char>::set(other);
 		return *this;
 	}
+
+};
+
+struct KeyStorage
+{
+	AsciiString key;
+	char padding[4];
+
+	KeyStorage(const char *text) : key(text) {}
+	~KeyStorage() {}
 };
 
 class UnicodeString : private StringBase<WideChar>
@@ -84,6 +94,7 @@ public:
 	{
 		StringBase<WideChar>::concat(text, length);
 	}
+
 };
 
 AsciiString UnicodeStringToQuotedPrintable(UnicodeString original);
@@ -153,6 +164,6 @@ void Gen0009FC90Owner::Rva0009FC90(void)
 		it = it->m_next;
 	}
 
-	AsciiString key("UserNames");
-	(*this)[key] = UnicodeStringToQuotedPrintable(names);
+	KeyStorage key("UserNames");
+	(*this)[key.key] = UnicodeStringToQuotedPrintable(names);
 }
