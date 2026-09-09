@@ -61,9 +61,9 @@ template Rva00448C60Mapped &Rva00448C60Map::operator[]( const AsciiString & );
 // This one's mapped type is a single byte -- retail stores the
 // default-constructed value with `mov BYTE PTR [esp+0x10], al` where its five
 // siblings store a dword -- so it is one byte wide and not a four-byte
-// enumeration.  It is spelled char rather than bool only because the bool
-// instantiation of this same operator is already a matched row at 0x00063960
-// and one name may name one address; the bytes cannot tell the two apart.
+// enumeration.  Retain the existing char ABI for this byte-valued map;
+// its historical char-versus-bool identity is not established here.
+// The separate pointer-valued ArchiveFileMap is at retail 0x00063960.
 typedef _STL::map<AsciiString, char, _STL::less<AsciiString>,
 	_STL::allocator<_STL::pair<const AsciiString, char> > > Rva0033F870Map;
 
