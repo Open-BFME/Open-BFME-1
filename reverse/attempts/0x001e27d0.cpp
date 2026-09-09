@@ -1,9 +1,12 @@
 // ?clear@Rva001E27D0Chain@@QAEXXZ
-// partial score=0.6 date=2026-09-02
+// partial score=0.85 date=2026-09-09
 // cl: /DNDEBUG /MD /EHs-c-
 // Walk [begin, end) of a pointer vector at +8/+0xC. Each slot holds a node
 // whose +4 link is non-null: clear the link, scalar-delete the node, and
 // replace the slot with the saved link. Then a counted empty loop over size.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class Rva001E27D0Node
 {
@@ -54,6 +57,6 @@ void Rva001E27D0Chain::clear(void)
 	{
 		unsigned int n = (unsigned int)(m_end - m_begin);
 		while (++i < n)
-			;
+			_ReadWriteBarrier();
 	}
 }
