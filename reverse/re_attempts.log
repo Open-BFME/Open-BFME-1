@@ -18728,3 +18728,10 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_001c6f10@@YAXXZ	0x001c6f10	346	blocked	Object vtable slot +0x50 jumps to retail 0x005c6f10 and constructor caller 0x001d29a0 names the setTeam call. Clean C++ matches 344 of 346 non-relocation bytes, with only retail mov eax,[esi+23c] versus ours mov ecx,[esi+23c] at +0x71 and the dependent register at +0x77 after direct fields, local, const, and barrier variants. t=24 minutes model=luna
 ?d_004ddd10@@YAXXZ	0x004DDD10	823	blocked	t=4min model=gpt-5 no named callers and no emitter for the synthetic row; identity remains unresolved after source-file audit
 ?d_002324a0@@YAXXZ	0x002324a0	77	blocked	Retail x87 helper at 0x002324a0 has no named direct caller. Its shared return path continues through 0x002324fa, while the served 77-byte row ends at 0x002324ec and adjacent rows begin at 0x002324ed and 0x002324f5. Existing bfmeInRangeME analysis reaches the same split boundary, so the owner and complete body remain unproven. t=3 minutes model=luna
+?d_004fc510@@YAXXZ	0x004FC510	550	blocked	t=4min model=gpt-5 caller 0x004FC7C0 names WOLLobbyMenuSystem; synthetic body has no built emitter and no clean source
+?d_004ff2e0@@YAXXZ	0x004FF2E0	1050	blocked	t=4min model=gpt-5 no named caller or built emitter; synthetic body identity unresolved
+?d_004ffb80@@YAXXZ	0x004FFB80	593	blocked	t=4min model=gpt-5 caller 0x00501B90 names WOLLoginMenuSystem; synthetic body has no built emitter and no clean source
+?d_00503fa0@@YAXXZ	0x00503FA0	1100	blocked	t=4min model=gpt-5 no named caller or built emitter; synthetic body identity unresolved
+?d_00506402@@YAXXZ	0x00506402	629	blocked	t=4min model=gpt-5 continuation of saveQuickMatchOptions after the 0x005063E0 split prologue; not an independently bounded body
+?d_005082d0@@YAXXZ	0x005082D0	726	blocked	t=4min model=gpt-5 caller 0x0050A470 names WOLQuickMatchMenuSystem; synthetic body has no built emitter and no clean source
+?d_00508c80@@YAXXZ	0x00508C80	1063	blocked	t=4min model=gpt-5 four named replay/ladder callers reach the body, but the queued range truncates the retail fs-restore epilogue and readable source diverges
