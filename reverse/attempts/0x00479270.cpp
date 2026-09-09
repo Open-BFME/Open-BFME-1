@@ -1,26 +1,37 @@
-// ?selectAndCall@Rva00479270Router@@QAEHXZ
-// partial score=0.91 date=2026-09-04
-// ?selectAndCall@Rva00479270Router@@QAEHXZ
-// partial score=0.91 date=2026-08-29
-class Rva00479270Router
+// ?invokeFallback@Rva00479270Delegate@@QAEEXZ
+// partial score=0.99 date=2026-09-09
+// cl: /DNDEBUG /MD /EHsc
+// Retail RVA 0x00479270, 22 bytes. The adjacent 0x00479250 detach body proves
+// the three-word {tag, delegate, owner} layout, but no named caller or vtable
+// currently proves the original class or method spelling.
+
+class Rva00479270Target
 {
 public:
-	virtual int slot0( void ) = 0;
-	virtual int slot1( void ) = 0;
-
-	int selectAndCall( void );
-
-private:
-	Rva00479270Router *m_primary;
-	Rva00479270Router *m_fallback;
+	virtual void slot0() = 0;
+	virtual unsigned char slot1() = 0;
 };
 
-int Rva00479270Router::selectAndCall( void )
+class Rva00479270Delegate
 {
-	if ( m_primary )
-	{
-		return m_primary->slot1();
-	}
+public:
+	unsigned char invokeFallback();
 
-	return m_fallback->slot1();
+private:
+	int m_tag;
+	Rva00479270Target *m_delegate;
+	Rva00479270Target *m_owner;
+};
+
+unsigned char Rva00479270Delegate::invokeFallback()
+{
+	if (m_delegate != 0)
+		return m_delegate->slot1();
+	else
+	{
+		typedef unsigned char (__fastcall *Slot1)(Rva00479270Target *);
+		Rva00479270Target *owner = m_owner;
+		Slot1 *vtable = *(Slot1 **)owner;
+		return vtable[1](owner);
+	}
 }

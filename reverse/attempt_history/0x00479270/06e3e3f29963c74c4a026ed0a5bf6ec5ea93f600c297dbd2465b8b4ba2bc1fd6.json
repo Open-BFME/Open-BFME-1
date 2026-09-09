@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "06e3e3f29963c74c4a026ed0a5bf6ec5ea93f600c297dbd2465b8b4ba2bc1fd6",
+  "symbol": "?invokeFallback@Rva00479270Delegate@@QAEEXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?invokeFallback@Rva00479270Delegate@@QAEEXZ\n// partial score=0.99 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n// Retail RVA 0x00479270, 22 bytes. The adjacent 0x00479250 detach body proves\n// the three-word {tag, delegate, owner} layout, but no named caller or vtable\n// currently proves the original class or method spelling.\n\nclass Rva00479270Target\n{\npublic:\n\tvirtual void slot0() = 0;\n\tvirtual unsigned char slot1() = 0;\n};\n\nclass Rva00479270Delegate\n{\npublic:\n\tunsigned char invokeFallback();\n\nprivate:\n\tint m_tag;\n\tRva00479270Target *m_delegate;\n\tRva00479270Target *m_owner;\n};\n\nunsigned char Rva00479270Delegate::invokeFallback()\n{\n\tif (m_delegate != 0)\n\t\treturn m_delegate->slot1();\n\telse\n\t{\n\t\ttypedef unsigned char (__fastcall *Slot1)(Rva00479270Target *);\n\t\tRva00479270Target *owner = m_owner;\n\t\tSlot1 *vtable = *(Slot1 **)owner;\n\t\treturn vtable[1](owner);\n\t}\n}\n"
+}
