@@ -1,5 +1,5 @@
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// partial score=0.95 date=2026-09-09
+// partial score=0.97 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
@@ -7,6 +7,27 @@
 // creates through GameLogic, then runs each behavior's create interface before
 // calling Object::initObject.  The retail string and thirteen named callers
 // identify this as ThingFactory::newObject.
+//
+// Fixed vs the prior 0.95 stash: the #pragma comment(linker,"/alternatename:
+// ...=?j_000168dd@@YAXXZ") on GameLogic::friend_createObject never took
+// effect in this build (the call stayed an unresolved self-relative e8
+// 00000000). Dropped it and pinned the mangled name directly in
+// reverse/symbols.csv instead: the thunk j_000168dd forwards to FUN_007830c0
+// = RVA 0x003830C0, which is ALREADY LANDED as the address-derived
+// ?createRva003830C0@@YGPAXPAX000@Z (Code/GameEngine/Source/GameClient/
+// Rva003830C0FourArgFactory.cpp, stdcall/4-void*, identity itself still
+// unconfirmed) -- pin_consistency reports the address consistent, multiple
+// names on one claimed address is expected. With that pin the call resolves
+// and the body reaches the exact 278-byte size with ONLY 7 lines of
+// register-choice residue left in the four-argument push sequence (extra/
+// team/statusBits shuffled through ecx/edx/eax, "this" load interleaved
+// between the first and second push) -- classified instruction/register
+// encoding mismatch, the same argument-shuttle-register class as
+// 0x0042D460. Tried: naming TheBfmeGameLogic in a local before the call
+// (regressed to 277B with an extra reload, do not retry). Re-add the
+// symbols.csv pin on ?friend_createObject@GameLogic@@QAEPAVObject@@
+// PBVThingTemplate@@ABV?$BitFlags@$0FG@@@PAVTeam@@I@Z -> 0x003830C0 before
+// touching the register residue on the next attempt.
 
 typedef unsigned int UnsignedInt;
 
@@ -112,8 +133,6 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 
 #define BFME_NEW_OBJECT_DEBUG (*(unsigned char *)0x012EF1DC)
 #define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-
-#pragma comment(linker, "/alternatename:?friend_createObject@GameLogic@@QAEPAVObject@@PBVThingTemplate@@ABV?$BitFlags@$0FG@@@PAVTeam@@I@Z=?j_000168dd@@YAXXZ")
 
 Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 	const ObjectStatusMaskType &statusBits, UnsignedInt extra)
