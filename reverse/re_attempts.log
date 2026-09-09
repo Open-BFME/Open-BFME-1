@@ -19822,3 +19822,6 @@ tg_00611a40	0x00611A40	124	attempted	two-branch STLport hashtable erase decoded 
 ?d_0075c760@@YAXXZ	0x0075C760	63	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
 ?d_0075bf30@@YAXXZ	0x0075BF30	73	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
 ?d_0076eda0@@YAXXZ	0x0076EDA0	456	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_003d59c0@@YAXXZ	0x003D59C0	39	blocked	served file drained: bounds-high helper has no named caller or emitted owner; retained 0.72 semantic bank has unresolved mov/branch codegen shape; t=4min model=gpt-5.6
+?d_003f0ec0@@YAXXZ	0x003F0EC0	43	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
+?d_00402390@@YAXXZ	0x00402390	90	blocked	served file drained: retained partial has unresolved source identity and compiler shape; t=2min model=gpt-5.6
