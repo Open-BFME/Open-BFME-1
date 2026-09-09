@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "540b843e0310bff0b7acdf671a5062e557337a4b88be7ab199732f2a39ee74e4",
+  "symbol": "?bfmeDot006e1be0@@YGMMMM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmeDot006e1be0@@YGMMMM@Z\r\n// partial score=0.93 date=2026-09-09\r\n// cl: /DNDEBUG /MD /EHsc\r\n\r\nstruct BfmeVec4_006e1be0\r\n{\r\n\tfloat x;\r\n\tfloat y;\r\n\tfloat z;\r\n\tfloat w;\r\n};\r\n\r\n#define g_bfmeDefault006e1be0 (*(float *)0x0111E238)\r\n#define g_bfmeObj006e1be0 (*(char * volatile *)0x012F8048)\r\n\r\nfloat __stdcall bfmeDot006e1be0(float x, float y, float z)\r\n{\r\n\tchar *object = g_bfmeObj006e1be0;\r\n\tfloat result = g_bfmeDefault006e1be0;\r\n\tif (object)\r\n\t{\r\n\t\tconst int offset = 0x84;\r\n\t\tBfmeVec4_006e1be0 row = *(BfmeVec4_006e1be0 *)(object + offset);\r\n\t\tresult = row.z * z;\r\n\t\tresult += row.y * y;\r\n\t\tresult += row.x * x;\r\n\t\tresult += row.w;\r\n\t}\r\n\treturn result;\r\n}\r\n"
+}
