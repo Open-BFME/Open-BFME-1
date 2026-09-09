@@ -105,7 +105,7 @@ public:
 	virtual void update() = 0;
 };
 
-typedef _STL::hash_map<int, void *> Rva006174D0Map;
+typedef _STL::hash_map<int, Rva006174D0Object *> Rva006174D0Map;
 
 struct Rva006174D0State
 {
@@ -120,7 +120,7 @@ public:
 
 private:
 	char m_pad00[0x210];
-	char m_objects[0x14];
+	Rva006174D0Map m_objects;
 	char m_pad224[0x64];
 	bool m_flag288;
 	char m_pad289[3];
@@ -156,11 +156,10 @@ void BfmeLivingWorldManager::update()
 	if (m_eyeTower)
 		m_eyeTower->updateState();
 
-	Rva006174D0Map *objects = (Rva006174D0Map *)m_objects;
-	for (Rva006174D0Map::iterator it = objects->begin();
-		it != objects->end(); ++it)
+	Rva006174D0Map::iterator it(m_objects.begin());
+	for (; it != m_objects.end(); ++it)
 	{
-		((Rva006174D0Object *)it->second)->update();
+		it->second->update();
 	}
 
 	if (!m_flag288 && TheState->m_field04 == 1
