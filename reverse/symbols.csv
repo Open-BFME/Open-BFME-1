@@ -4731,7 +4731,7 @@ name,address,notes
 ??1Gen_dtor_00078d60@@UAE@XZ,0x0002CEE9,gen-dtor class destructor
 ??1Gen_dtor_0007cc90@@UAE@XZ,0x00031EF3,gen-dtor class destructor
 ??1Gen_dtor_00080ac0@@UAE@XZ,0x00034496,gen-dtor class destructor
-??1Gen_dtor_000844e0@@UAE@XZ,0x0000564B,gen-dtor class destructor
+??1GlobalData@@UAE@XZ,0x0000564B,GlobalData destructor ILT called by authentic scalar-deleting destructor at 0x000844E0
 ??1Gen_dtor_00086410@@UAE@XZ,0x00040DB3,gen-dtor class destructor
 ??1Gen_dtor_00088ee0@@UAE@XZ,0x00017396,gen-dtor class destructor
 ??1Gen_dtor_00089010@@UAE@XZ,0x00038CFD,gen-dtor class destructor
