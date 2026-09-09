@@ -3381,6 +3381,7 @@ name,address,notes
 ??0Rva00608FE0Element@@QAE@ABU0@@Z,0x00042339,Open-BFME5 ILT for the SoundUpgrade record copy constructor used by the SoundUpgrade field parser
 ??0Rva00608FE0Element@@QAE@XZ,0x0002A48C,Open-BFME5 ILT for the SoundUpgrade record default constructor used by the SoundUpgrade field parser
 ??0Rva0060FD30Base@@QAE@ABV0@@Z,0x0000FA3D,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x0060FD30
+??0Rva0061AF80Region@@QAE@ABVAsciiString@@@Z,0x0061AF80,parser allocation and vtable 0x01117258 identify the 0xF4-byte LivingWorldRegion constructor
 ??0Rva00630D00UStr@@QAE@ABV0@@Z,0x00888530,Open-BFME5 fresh thiscall copy ctor for 0x00630D00 unicode-string member
 ??0Rva00647720String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva00647750String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
@@ -12866,6 +12867,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002B6E8
 ?_M_insert_overflow@?$vector@PAVObjectTypes@@V?$allocator@PAVObjectTypes@@@_STL@@@_STL@@IAEXPAPAVObjectTypes@@ABQAV3@ABU__true_type@2@I_N@Z,0x0000D6FC,ScriptEngine::doObjectTypeListMaintenance at retail 0x0034E370 uses the ObjectTypes pointer-vector overflow ILT
 ?_M_insert_overflow@?$vector@PAVRva00144100Item@@V?$allocator@PAVRva00144100Item@@@_STL@@@_STL@@IAEXPAPAVRva00144100Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00004F8E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00144100 calls; autopin
+?_M_insert_overflow@?$vector@PAVRva0061AF80Region@@V?$allocator@PAVRva0061AF80Region@@@_STL@@@_STL@@IAEXPAPAVRva0061AF80Region@@ABQAV3@ABU__true_type@2@I_N@Z,0x003C8F80,parser overflow call uses the existing four-byte STLport body at the retail ILT target
 ?_M_insert_overflow@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@IAEXPAPAVScienceInfo@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003076F,harvested from friend_parseScienceDefinition (thunk)
 ?_M_insert_overflow@?$vector@PAVSubtitleEntry@@V?$allocator@PAVSubtitleEntry@@@_STL@@@_STL@@IAEXPAPAVSubtitleEntry@@ABQAV3@ABU__true_type@2@I_N@Z,0x0081DAD0,SubtitleManager addSubtitle vector overflow path; exact STLport pointer specialization
 ?_M_insert_overflow@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@IAEXPAPAVTunnelTracker@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001212A,REL32 pin from CaveSystem::registerNewCave @0x378970
