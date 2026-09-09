@@ -86648,3 +86648,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?setVideoBuffer@WinInstanceData@BfmeResumeMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
 ?winGetInstanceData@GameWindow@BfmeStopMovie@@QAEPAVWinInstanceData@2@XZ,0x00034991,ILT thunk; alias of real ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ
 ?setVideoBuffer@WinInstanceData@BfmeStopMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
+?winGetInstanceData@GameWindow@BfmePauseMovie@@QAEPAVWinInstanceData@2@XZ,0x00034991,ILT thunk; alias of real ?winGetInstanceData@GameWindow@@QAEPAVWinInstanceData@@XZ
+?setVideoBuffer@WinInstanceData@BfmePauseMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
