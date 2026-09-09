@@ -2,10 +2,10 @@
 // partial score=0.95 date=2026-09-08
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
-class BfmeBigJU
+class Rva009A45A0CollisionData
 {
 public:
-	BfmeBigJU();
+	Rva009A45A0CollisionData();
 
 	volatile int m_bfme00JU;
 	volatile int m_bfme04JU;
@@ -25,7 +25,7 @@ public:
 	unsigned char m_bfmePadJU[2];
 };
 
-BfmeBigJU::BfmeBigJU()
+Rva009A45A0CollisionData::Rva009A45A0CollisionData()
 {
 	m_bfme00JU = 0;
 	m_bfme04JU = 0;

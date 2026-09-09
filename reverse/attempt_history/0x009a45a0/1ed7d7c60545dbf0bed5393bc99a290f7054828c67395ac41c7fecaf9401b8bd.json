@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1ed7d7c60545dbf0bed5393bc99a290f7054828c67395ac41c7fecaf9401b8bd",
+  "symbol": "??0BfmeBigJU@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ??0BfmeBigJU@@QAE@XZ\n// partial score=0.95 date=2026-09-08\nextern \"C\" void *__cdecl memset(void *d, int c, unsigned int n);\n\nclass Rva009A45A0CollisionData\n{\npublic:\n\tRva009A45A0CollisionData();\n\n\tvolatile int m_bfme00JU;\n\tvolatile int m_bfme04JU;\n\tvolatile int m_bfme08JU;\n\tint m_bfme0cJU;\n\tint m_bfme10JU;\n\tint m_bfme14JU;\n\tint m_bfmeA1JU[0x2b7c];\n\tvolatile int m_bfmeAe08JU;\n\tvolatile int m_bfmeAe0cJU;\n\tint m_bfmeA2JU[0x494];\n\tint m_bfmeC060JU;\n\tint m_bfmeC064JU;\n\tint m_bfmeC068JU;\n\tchar m_bfmeC06cJU;\n\tchar m_bfmeC06dJU;\n\tunsigned char m_bfmePadJU[2];\n};\n\nRva009A45A0CollisionData::Rva009A45A0CollisionData()\n{\n\tm_bfme00JU = 0;\n\tm_bfme04JU = 0;\n\tm_bfme08JU = 0;\n\tm_bfmeAe08JU = 0;\n\tm_bfmeAe0cJU = 0;\n\n\tint *a1 = m_bfmeA1JU;\n\n\tmemset(a1, 0, 0x2b7b * 4);\n\n\ta1[0x2b7b] = 0;\n\tm_bfmeC060JU = 0;\n\tm_bfmeC064JU = 0;\n\n\tint *a2 = m_bfmeA2JU;\n\n\tmemset(a2, 0, 0x493 * 4);\n\n\ta2[0x493] = 0;\n\tm_bfmeC06cJU = 0;\n\tm_bfmeC06dJU = 0;\n\tm_bfmeC068JU = 3;\n\tm_bfme0cJU = 0;\n\tm_bfme10JU = 0;\n\tm_bfme14JU = 0;\n}\n"
+}

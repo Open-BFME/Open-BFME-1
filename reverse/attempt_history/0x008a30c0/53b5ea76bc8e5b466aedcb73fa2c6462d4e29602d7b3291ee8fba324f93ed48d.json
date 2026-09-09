@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "53b5ea76bc8e5b466aedcb73fa2c6462d4e29602d7b3291ee8fba324f93ed48d",
+  "symbol": "?bfmeStep1211C@BfmeG1211@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ?bfmeStep1211C@BfmeG1211@@QAEXXZ\n// partial score=0.88 date=2026-09-09\n// Open-BFME: BfmeG1211::bfmeStep1211C, retail 0x008A30C0.\n// Drain the Apt value stack: pop each entry, and either clear the high-ref\n// flag or invoke vslot +8.\n\nclass BfmeVal1211\n{\npublic:\n\tvirtual void addRef();\n\tvirtual void release();\n\tvirtual void recycle();\n\n\tunsigned m_flags;\n};\n\nclass BfmeG1211\n{\npublic:\n\tvoid bfmeStep1211C();\n\n\tint m_unused;\n\tint m_count;\n\tBfmeVal1211 **m_stack;\n};\n\nvoid BfmeG1211::bfmeStep1211C()\n{\n\tBfmeG1211 *self = this;\n\tint n;\n\tif (self->m_count == 0)\n\t\treturn;\n\tn = self->m_count;\n\tfor (;;)\n\t{\n\t\tdo\n\t\t{\n\t\t\tBfmeVal1211 *v = self->m_stack[--self->m_count];\n\t\t\tunsigned flags = v->m_flags;\n\t\t\tif ((flags & 0x0FFF0000) > 0)\n\t\t\t\tv->m_flags = flags & 0xBFFFFFFF;\n\t\t\telse\n\t\t\t\tv->recycle();\n\t\t} while (--n);\n\t\tif (self->m_count == 0)\n\t\t\treturn;\n\t\tn = self->m_count;\n\t}\n}\n"
+}

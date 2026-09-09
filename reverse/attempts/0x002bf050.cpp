@@ -53,7 +53,7 @@ StateReturnType GiantBirdFollowWaypointPathState::onEnter()
 	Object *object = m_machine->m_owner;
 	AIUpdateInterface *ai = object->m_ai;
 	if (!ai || (object->m_flags344 & 1) != 0)
-		goto failure;
+		return STATE_FAILURE;
 	if (!updateWaypointGoal())
 		return STATE_SUCCESS;
 	switch (ai->m_flags424)

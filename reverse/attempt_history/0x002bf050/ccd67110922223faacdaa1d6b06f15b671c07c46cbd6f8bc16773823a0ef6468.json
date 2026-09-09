@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ccd67110922223faacdaa1d6b06f15b671c07c46cbd6f8bc16773823a0ef6468",
+  "symbol": "?onEnter@GiantBirdFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.84,
+  "source": "// ?onEnter@GiantBirdFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ\n// partial score=0.84 date=2026-09-09\n\nenum StateReturnType\n{\n\tSTATE_CONTINUE = 0,\n\tSTATE_SUCCESS = -1,\n\tSTATE_FAILURE = -2\n};\n\nclass AIUpdateInterface\n{\npublic:\n\tchar m_pad000[0x3f0];\n\tunsigned int m_flags3f0;\n\tchar m_pad3f4[0x30];\n\tunsigned char m_flags424;\n};\n\nclass Object\n{\npublic:\n\tchar m_pad000[0x204];\n\tAIUpdateInterface *m_ai;\n\tchar m_pad208[0x13c];\n\tunsigned char m_flags344;\n};\n\nclass StateMachine\n{\npublic:\n\tchar m_pad000[0x10];\n\tObject *m_owner;\n};\n\nclass GiantBirdFollowWaypointPathState\n{\npublic:\n\tvirtual StateReturnType onEnter();\n\tbool updateWaypointGoal();\n\n\tchar m_pad004[0x18];\n\tStateMachine *m_machine;\n\tchar m_pad020[4];\n\tint m_counter;\n};\n\n#pragma comment(linker, \"/alternatename:?updateWaypointGoal@GiantBirdFollowWaypointPathState@@QAE_NXZ=?j_00031b47@@YAXXZ\")\n\nStateReturnType GiantBirdFollowWaypointPathState::onEnter()\n{\n\tm_counter = 0;\n\tObject *object = m_machine->m_owner;\n\tAIUpdateInterface *ai = object->m_ai;\n\tif (!ai || (object->m_flags344 & 1) != 0)\n\t\tgoto failure;\n\tif (!updateWaypointGoal())\n\t\treturn STATE_SUCCESS;\n\tswitch (ai->m_flags424)\n\t{\n\tcase 0:\n\t\tgoto failure;\n\tdefault:\n\t\tgoto continue_path;\n\t}\n\nfailure:\n\treturn STATE_FAILURE;\n\ncontinue_path:\n\tai->m_flags3f0 |= 0x80;\n\treturn STATE_CONTINUE;\n}\n"
+}

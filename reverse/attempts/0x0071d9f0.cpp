@@ -8,6 +8,12 @@ void j_00015f7d(void);
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
+struct TopplingTypeView
+{
+	char m_pad00[0x4c];
+	int m_toppleFrames;
+};
+
 struct TopplingTreeView
 {
 	char m_pad00[0x40];
@@ -17,12 +23,6 @@ struct TopplingTreeView
 	int m_toppleState;
 	int m_pushAside;
 	char m_padA0[4];
-};
-
-struct TopplingTypeView
-{
-	char m_pad00[0x4c];
-	int m_toppleFrames;
 };
 
 class W3DTreeBuffer

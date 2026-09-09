@@ -267,8 +267,8 @@ void Drawable::drawIconUI( void )
 		const Coord3D *drawablePosition =
 			(reinterpret_cast<DrawableIconSelfCall *>( this )->*position.memberFunction)();
 		DrawableIconTacticalView *tacticalView = DRAWABLE_ICON_TACTICAL_VIEW;
-		Real &adjustedZ = locals.m_adjustedHealthBoxPosition.z;
-		adjustedZ -= (drawablePosition->z - adjustedZ) * DRAWABLE_ICON_VERTICAL_SCALE;
+	Real &adjustedZ = locals.m_adjustedHealthBoxPosition.z;
+	adjustedZ -= (drawablePosition->z - adjustedZ) * DRAWABLE_ICON_VERTICAL_SCALE;
 
 		if ( tacticalView->worldToScreen(
 			&locals.m_adjustedHealthBoxPosition, &locals.m_adjustedScreen ) )
