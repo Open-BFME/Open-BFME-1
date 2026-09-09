@@ -4661,7 +4661,7 @@ name,address,notes
 ??1Gen_dtor_0006b110@@UAE@XZ,0x0000E912,gen-dtor class destructor
 ??1Gen_dtor_0006b630@@UAE@XZ,0x009A2030,gen-dtor class destructor
 ??1Gen_dtor_0006b660@@UAE@XZ,0x0003E3F6,gen-dtor class destructor
-??1Gen_dtor_0006e220@@UAE@XZ,0x0001FF96,gen-dtor class destructor
+??1BfmeThingEOA@@UAE@XZ,0x0001FF96,ILT to BfmeThingEOA complete destructor tail thunk 0x0006B400 and matched base destructor 0x009D83D0
 ??1Gen_dtor_0006e3e0@@UAE@XZ,0x000495F8,gen-dtor class destructor
 ??1Gen_dtor_0006f630@@UAE@XZ,0x00002BDF,gen-dtor class destructor
 ??1Gen_dtor_0006f6f0@@UAE@XZ,0x0003B96C,gen-dtor class destructor
