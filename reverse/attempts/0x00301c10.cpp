@@ -1,5 +1,5 @@
 // ?doTeamGuard@ScriptActions@@IAEXABVAsciiString@@@Z
-// partial score=0.99 date=2026-09-08
+// partial score=0.995 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline
 // The TEAM_GUARD arm at executeAction 0x00303BF0 calls this body at retail
 // RVA 0x00301C10. It walks the team's Object list and issues one guard order
@@ -22,13 +22,18 @@ enum CommandSourceType
 	CMD_FROM_SCRIPT = 1
 };
 
+union CoordComponent
+{
+	float value;
+	unsigned int bits;
+};
+
 struct Coord3D
 {
-	float x;
-	float y;
-	float z;
+	CoordComponent x;
+	CoordComponent y;
+	CoordComponent z;
 	Coord3D(void) { }
-	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) { }
 };
 
 class BfmeStringArgBase
@@ -115,9 +120,9 @@ public:
 			(unsigned char *)this + 0x204);
 	}
 
-	const Coord3D &getPosition(void) const
+	const Coord3D *getPosition(void) const
 	{
-		return m_position;
+		return &m_position;
 	}
 
 	Bool hasStatus94Bit20(void) const
@@ -199,27 +204,6 @@ public:
 
 extern ScriptEngine *TheScriptEngine;
 
-class BfmeGuardCall
-{
-};
-
-extern void j_0000a033(void);
-
-static __forceinline void bfmeGuardPosition(AICommandInterface *commands,
-	const Coord3D *position)
-{
-	typedef void (BfmeGuardCall::*Function)(const Coord3D *, GuardMode,
-		CommandSourceType);
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} fn;
-	fn.raw = j_0000a033;
-	(reinterpret_cast<BfmeGuardCall *>(commands)->*fn.member)(position,
-		GUARDMODE_NORMAL, CMD_FROM_SCRIPT);
-}
-
 class ScriptActions
 {
 protected:
@@ -242,11 +226,21 @@ void ScriptActions::doTeamGuard(const AsciiString &teamName)
 		if (object->hasStatus90Bit04())
 			continue;
 
-		AIUpdateInterface *ai = object->getAIUpdateInterface();
+		Coord3D position;
+		unsigned int newY;
+		unsigned int newX;
+		unsigned int newZ;
+		AIUpdateInterface *const ai = object->getAIUpdateInterface();
 		if (!ai)
 			continue;
 
-		Coord3D position(object->getPosition());
-		bfmeGuardPosition(&ai->m_command, &position);
+		newX = object->getPosition()->x.bits;
+		newY = object->getPosition()->y.bits;
+		position.x.bits = newX;
+		newZ = object->getPosition()->z.bits;
+		position.y.bits = newY;
+		position.z.bits = newZ;
+		ai->m_command.aiGuardPosition(&position, GUARDMODE_NORMAL,
+			CMD_FROM_SCRIPT);
 	}
 }
