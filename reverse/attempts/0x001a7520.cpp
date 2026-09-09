@@ -1,8 +1,37 @@
 // ?getBridgeHeight@Bridge@@QAEMPBUCoord3D@@PAU2@@Z
-// partial score=0.62 date=2026-09-04
+// partial score=0.62 date=2026-09-09
 // cl: /DNDEBUG /MD /EHs-c-
 // Bridge::getBridgeHeight, retail 0x001A7520 size 664.
-// Identity: reloc-named real body behind ILT 0xB802; dump ?d_001a7520@@YAXXZ.
+//
+// ZH source: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
+// (Bridge::getBridgeHeight) -- the m_extra==0 "else" branch below is that ZH body near-verbatim.
+// BFME added the m_extra!=0 slope branch; the m_extra offset (+0x8c) is cross-validated against
+// the landed sibling Code/GameEngine/Source/GameLogic/Map/BridgeIsPointOnBridge.cpp, whose
+// BridgePointOnBridgeShim class collapses m_from/m_to/m_bridgeWidth into one infoPad[0x1C] but
+// otherwise shares this exact member layout through m_extra.
+//
+// Coord3D::normalize / PlaneClass::Set / PlaneClass::Compute_Intersection are declared WITHOUT
+// bodies (matching retail, which calls all three out of line through an ICF-folded j_ thunk --
+// confirmed in the disassembly at +0x112/+0x11b and the plane-path calls at +0x225/+0x266). The
+// real WWMath headers define these inline, which the compiler WOULD inline here and produce a
+// different, larger instruction stream (tried: regressed 652B -> 633B); the declare-only shim
+// keeps retail's real-call shape.
+//
+// Named float constants confirmed by reading the retail image directly (not literals -- retail
+// loads all three through memory operands, not FPU immediates): BfmeShadowScale (VA 0x0109BF3C)
+// = -1.0f, BfmeZeroRange (VA 0x01075350) = 0.0f, g_bfmeDefaultBU (VA 0x01075334) = 1.0f. All
+// three are already declared/pinned elsewhere in Code/ (grep BfmeShadowScale/BfmeZeroRange/
+// g_bfmeDefaultBU); reusing the same extern spelling here so the compiled body references the
+// same relocations retail does instead of materialising -1.0f/0.0f/1.0f as inline immediates.
+//
+// The slope branch reuses ONE packed scratch struct (Align34, matching retail's stack-slot
+// reuse: nFrom/gap/nTo/scratch/tmp share the SAME memory the plane-path below also reuses)
+// rather than separate named locals -- separate locals compiled 44B over target; the packed
+// struct is what gets retail's tighter stack frame (sub esp,0x34).
+
+extern const float BfmeShadowScale;
+extern const float BfmeZeroRange;
+extern const float g_bfmeDefaultBU;
 
 struct Coord3D
 {
@@ -83,27 +112,27 @@ float Bridge::getBridgeHeight(const Coord3D *pLoc, Coord3D *normal)
 		f.nTo.x = f.scratch.Y;
 		f.nFrom.x = -f.nFrom.x;
 		f.nTo.y = -f.scratch.X;
-		if (f.nFrom.x * alongX + f.nFrom.y * alongY < 0.0f)
+		if (f.nFrom.x * alongX + f.nFrom.y * alongY < BfmeZeroRange)
 		{
 			f.nFrom.z = -0.0f;
-			f.nFrom.x = f.nFrom.x * -1.0f;
-			f.nFrom.y = f.tmp * -1.0f;
+			f.nFrom.x = f.nFrom.x * BfmeShadowScale;
+			f.nFrom.y = f.tmp * BfmeShadowScale;
 		}
-		if (f.nTo.x * alongX + f.nTo.y * alongY > 0.0f)
+		if (f.nTo.x * alongX + f.nTo.y * alongY > BfmeZeroRange)
 		{
 			f.nTo.z = -0.0f;
-			f.nTo.x = f.scratch.Y * -1.0f;
-			f.nTo.y = f.nTo.y * -1.0f;
+			f.nTo.x = f.scratch.Y * BfmeShadowScale;
+			f.nTo.y = f.nTo.y * BfmeShadowScale;
 		}
 		f.nFrom.normalize();
 		f.nTo.normalize();
 		f.tmp = f.nFrom.x * (pLoc->x - m_from.x) + f.nFrom.y * (pLoc->y - m_from.y);
 		f.gap = f.nTo.x * (pLoc->x - toPtr->x) + f.nTo.y * (pLoc->y - toPtr->y);
-		f.scratch.X = 1.0f / (f.tmp + f.gap);
+		f.scratch.X = g_bfmeDefaultBU / (f.tmp + f.gap);
 		f.scratch.Y = f.scratch.X * f.tmp;
 		f.scratch.Z = f.scratch.X * f.gap;
-		f.tmp = (m_to.z + (m_from.z - m_to.z) * f.scratch.Z) * (1.0f - f.scratch.Z)
-			+ (m_from.z + (m_to.z - m_from.z) * f.scratch.Y) * (1.0f - f.scratch.Y);
+		f.tmp = (m_to.z + (m_from.z - m_to.z) * f.scratch.Z) * (g_bfmeDefaultBU - f.scratch.Z)
+			+ (m_from.z + (m_to.z - m_from.z) * f.scratch.Y) * (g_bfmeDefaultBU - f.scratch.Y);
 		if (normal)
 		{
 			normal->x = 0.0f;
