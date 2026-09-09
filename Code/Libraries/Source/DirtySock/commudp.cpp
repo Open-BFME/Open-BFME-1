@@ -11,8 +11,9 @@
 // lives under Code/Libraries/Source (Compression/EAC). Move it if better
 // evidence turns up; only the `source` column of these rows has to follow.
 //
-// The function names are NOT invented: each of these bodies logs its own name.
-// They are declared extern "C" because DirtySock is a C library.
+// The surviving log strings establish the named entry points; the address-
+// derived Rva helpers are retained by their retail RVAs and call graph. They
+// are declared extern "C" because DirtySock is a C library.
 //
 // The lockstep path does not run through here -- that is SAGE's own udp.cpp.
 

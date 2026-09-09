@@ -21,8 +21,13 @@
 void *Rva007F0000Alloc( int size );
 void Rva007F0030( void *object );
 int Rva007FE780( const char *format, ... );
+unsigned int Rva007FEA00( void );
 void *__cdecl memset( void *destination, int value, unsigned int count );
+void *__cdecl memcpy( void *destination, const void *source,
+	unsigned int count );
 char *__cdecl strcpy( char *destination, const char *source );
+
+extern unsigned int g_Rva012C4DF4;
 
 /* Lock construct and destruct; the acquire and release live in the socket
  * unit and are already named there. */
@@ -46,7 +51,8 @@ struct Rva00816BF0Comm
 {
 	/* +0x00..+0x34, and the first two are this file's own bodies. */
 	void *m_op[ 14 ];
-	char m_gap0[ 0x04 ];
+	void ( __cdecl *m_sendProc )( struct Rva00816BF0Comm *comm,
+		const void *payload, int length, unsigned int tick ); /* +0x38 */
 	/* THE RECEIVE CALLBACK, called by 0x008187E0 with the transport, the
 	 * payload, its length and its arrival tick.  Null means nobody is
 	 * listening and the record is still queued. */
@@ -858,7 +864,141 @@ struct Rva008186C0SendRecord
 	unsigned int m_sequence;        /* +0x08 */
 };
 
-void Rva00817640( struct Rva00816BF0Comm *comm );
+/* 0x00817640 is the address-derived send kick.  Its identity comes from the
+ * two retransmit callers and the complete body shape, not from a surviving
+ * diagnostic string. */
+void Rva00817640( struct Rva00816BF0Comm *comm )
+{
+	int iOffset;
+	int iCount;
+	int iBudget;
+	int iChunk;
+	struct Rva00816F60Message packet;
+	struct Rva00816F60Message *record;
+	unsigned int uNextCode;
+
+	iBudget = 0x800;
+	iChunk = 0x200;
+	iOffset = comm->m_sendReadOffset;
+
+	for ( ; iOffset != comm->m_sendAckOffset;
+		iOffset = ( iOffset + comm->m_sendRecordSize )
+			% comm->m_sendBufferSize )
+	{
+		record = (struct Rva00816F60Message *)( comm->m_sendBuffer
+			+ iOffset );
+		iBudget = iBudget - record->m_length;
+	}
+
+	if ( iBudget < 0x100
+		&& Rva007FEA00() - comm->m_tickA > 0xFA )
+	{
+		iBudget = 0x100;
+	}
+
+	while ( iBudget > 0 )
+	{
+		iChunk = 0x218;
+		if ( iChunk > iBudget )
+			iChunk = iBudget;
+
+		iCount = 0;
+		for ( ; iCount < 8 && iChunk > 0
+			&& comm->m_sendAckOffset != comm->m_sendWriteOffset;
+			++iCount )
+		{
+			record = (struct Rva00816F60Message *)( comm->m_sendBuffer
+				+ comm->m_sendAckOffset );
+			iChunk = iChunk - ( record->m_length + 1 );
+
+			if ( iCount > 0 && iChunk <= 0 )
+				break;
+
+			comm->m_sendAckOffset = ( comm->m_sendAckOffset
+				+ comm->m_sendRecordSize ) % comm->m_sendBufferSize;
+
+			if ( record->m_length > 0xFA )
+			{
+				++iCount;
+				break;
+			}
+		}
+
+		if ( iCount == 0 )
+			break;
+
+		iOffset = ( comm->m_sendAckOffset + comm->m_sendBufferSize
+			- comm->m_sendRecordSize ) % comm->m_sendBufferSize;
+		record = (struct Rva00816F60Message *)( comm->m_sendBuffer
+			+ iOffset );
+		memcpy( &packet, record, record->m_length + 0x10 );
+		--iCount;
+
+		for ( ; iCount > 0; --iCount )
+		{
+			iOffset = ( iOffset + comm->m_sendBufferSize
+				- comm->m_sendRecordSize ) % comm->m_sendBufferSize;
+			record = (struct Rva00816F60Message *)( comm->m_sendBuffer
+				+ iOffset );
+
+			if ( comm->m_sendProc != 0 )
+				comm->m_sendProc( comm, record->m_body,
+					record->m_length, 0 );
+
+			packet.m_code += 0x10000000;
+			memcpy( packet.m_body + packet.m_length, record->m_body,
+				record->m_length );
+			packet.m_length += record->m_length;
+			packet.m_body[ packet.m_length ] =
+				(unsigned char)record->m_length;
+			++packet.m_length;
+		}
+
+		while ( iOffset != comm->m_sendReadOffset
+			&& (unsigned int)packet.m_code <= g_Rva012C4DF4 )
+		{
+			iOffset = ( iOffset + comm->m_sendBufferSize
+				- comm->m_sendRecordSize ) % comm->m_sendBufferSize;
+			record = (struct Rva00816F60Message *)( comm->m_sendBuffer
+				+ iOffset );
+
+			if ( packet.m_length + record->m_length > 0x40 )
+				break;
+
+			if ( comm->m_sendProc != 0 )
+				comm->m_sendProc( comm, record->m_body,
+					record->m_length, 0 );
+
+			packet.m_code += 0x10000000;
+			memcpy( packet.m_body + packet.m_length, record->m_body,
+				record->m_length );
+			packet.m_length += record->m_length;
+			packet.m_body[ packet.m_length ] =
+				(unsigned char)record->m_length;
+			++packet.m_length;
+		}
+
+		if ( iOffset == comm->m_sendReadOffset )
+		{
+			g_Rva012C4DF4 = 0x20000000;
+		}
+		else
+		{
+			if ( g_Rva012C4DF4 < 0x80000000 )
+				uNextCode = g_Rva012C4DF4 << 1;
+			else
+				uNextCode = 0xF0000000;
+			g_Rva012C4DF4 = uNextCode;
+		}
+
+		comm->m_reportedSequence = comm->m_recvSequence;
+		packet.m_value = comm->m_reportedSequence - 1;
+		if ( Rva00817030( comm, &packet ) < 0 )
+			break;
+
+		iBudget = iBudget - packet.m_length;
+	}
+}
 
 /* 0x008186C0 IS THE ACKNOWLEDGEMENT HANDLER: it retires every queued send
  * whose sequence is at or below the one just acknowledged.
