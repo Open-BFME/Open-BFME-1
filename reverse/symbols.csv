@@ -86494,3 +86494,7 @@ _bfmeDynElemXZ,0x00F467F0,dynamic element array
 ?bfmeFallbackZA@BfmeHostZA@@QAEXPAVBfmeCZA@@PAVBfmeAZA@@@Z,0x000329D4,fallback
 ?bfmeApplyZA@BfmeHostZA@@QAEXPAVBfmeBZA@@H@Z,0x0001DF4D,apply
 ?bfmeOtherZA@BfmeHostZA@@QAEXXZ,0x0000238D,other
+?bfmeGetPlayerZB@BfmeOwnerZB@@QAEPAVBfmePlayerZB@@XZ,0x00020824,get player
+?bfmeCanZB@BfmePlayerZB@@QAE_NPAVBfmeItemZB@@@Z,0x00020C8E,can
+?bfmeNotifyZB@BfmeSinkZB@@QAEXPAVBfmeNodeZB@@@Z,0x0002F3C4,notify
+?bfmeFinishZB@BfmePlayerZB@@QAEXPAVBfmeItemZB@@@Z,0x00003012,finish
