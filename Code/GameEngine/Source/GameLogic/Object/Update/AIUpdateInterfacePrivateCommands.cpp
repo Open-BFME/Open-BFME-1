@@ -377,6 +377,7 @@ protected:
 	virtual void bfmePrivateCommand37(const Coord3D *pos, CommandSourceType cmdSource);
 	virtual void bfmePrivateCommand1B(void *first, CommandSourceType cmdSource);
 	void bfmePrivateCommand31(Object *obj, CommandSourceType cmdSource);
+	virtual void bfmePrivateCommand39(Object *victim, CommandSourceType cmdSource);
 	virtual void privateAttackMoveToPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
 	virtual void privateHunt(CommandSourceType cmdSource);
 	virtual void privateFaceObject(Object *obj, CommandSourceType cmdSource);
@@ -388,6 +389,7 @@ protected:
 	virtual void privateGuardRetaliate(Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
 
 	void playMoveVoiceResponse(const Coord3D *position);
+	void playAttackVoiceResponse(Object *victim);
 	void playAttackVoiceResponse(const Coord3D *position);
 	void setCurrentVictim(const Object *victim);
 
@@ -706,6 +708,29 @@ void AIUpdateInterface::bfmePrivateCommand31(Object *obj, CommandSourceType cmdS
 
 	if (!cmdSource || cmdSource == CMD_FROM_AI)
 		playMoveVoiceResponse((const Coord3D *)((const char *)target + 0x38));
+}
+
+// Retail 0x00273730. BFME command 0x39 orders a giant bird to force-attack
+// one object with one shot, then answers player and AI orders with attack voice.
+void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType cmdSource)
+{
+	if (!victim)
+		return;
+
+	m_stateMachine->clear();
+	m_stateMachine->setGoalObject(victim);
+	m_lastCommandSource = cmdSource;
+	m_stateMachine->setState((StateID)0x2e);
+
+	Weapon *weapon = m_object->getCurrentWeapon(0);
+	if (weapon)
+	{
+		weapon->m_maxShotCount = 1;
+		weapon->m_shotsFired = 0;
+	}
+
+	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
+		playAttackVoiceResponse(victim);
 }
 
 // Retail 0x00279050. m_isAiDead, isMobile, weapon-set bit 8,
