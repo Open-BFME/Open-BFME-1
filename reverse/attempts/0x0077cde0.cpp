@@ -1,5 +1,5 @@
 // ??0Rva0077CDE0@@QAE@XZ
-// partial score=0.82 date=2026-09-09
+// partial score=0.88 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -51,7 +51,7 @@ class Rva0077CDE0Opaque1
 {
 public:
 	Rva0077CDE0Opaque1() : m_a(0), m_b(0), m_c(0) {}
-	~Rva0077CDE0Opaque1() {}
+	~Rva0077CDE0Opaque1();                              ///< pinned 0x0002303D (unwind funclet target)
 private:
 	unsigned int m_a, m_b, m_c;
 };
@@ -60,7 +60,7 @@ class Rva0077CDE0Opaque2
 {
 public:
 	Rva0077CDE0Opaque2() : m_a(0), m_b(0), m_c(0) {}
-	~Rva0077CDE0Opaque2() {}
+	~Rva0077CDE0Opaque2();                              ///< pinned 0x000395D1 (unwind funclet target)
 private:
 	unsigned int m_a, m_b, m_c;
 };
@@ -82,7 +82,7 @@ class Rva0077CDE0Vec3
 {
 public:
 	Rva0077CDE0Vec3() : m_start(0), m_finish(0), m_endOfStorage(0) {}
-	~Rva0077CDE0Vec3() {}
+	~Rva0077CDE0Vec3();                              ///< pinned 0x00003B6B (unwind funclet target)
 
 	void InsertOverflow(Rva0077CC10Element *position,
 		const Rva0077CC10Element &value, const void *tag,
@@ -97,7 +97,7 @@ class Rva0077CDE0Opaque4
 {
 public:
 	Rva0077CDE0Opaque4() : m_a(0), m_b(0), m_c(0) {}
-	~Rva0077CDE0Opaque4() {}
+	~Rva0077CDE0Opaque4();                              ///< pinned 0x00026AB2 (unwind funclet target)
 private:
 	unsigned int m_a, m_b, m_c;
 };
@@ -106,7 +106,7 @@ class Rva0077CDE0Elem5
 {
 public:
 	Rva0077CDE0Elem5() : m_a(0), m_b(0), m_c(0) {}
-	~Rva0077CDE0Elem5() {}
+	~Rva0077CDE0Elem5();                              ///< pinned 0x0002C868 (unwind funclet target)
 	void Set(unsigned int a, unsigned int b);            ///< pinned 0x000109F6
 	unsigned int m_a, m_b, m_c;
 };
@@ -115,7 +115,7 @@ class Rva0077CDE0Elem6
 {
 public:
 	Rva0077CDE0Elem6() : m_a(0), m_b(0), m_c(0) {}
-	~Rva0077CDE0Elem6() {}
+	~Rva0077CDE0Elem6();                              ///< pinned 0x00022C2D (unwind funclet target)
 	void Set(unsigned int a, unsigned int b);            ///< pinned 0x0001B234
 	unsigned int m_a, m_b, m_c;
 };
@@ -220,7 +220,6 @@ private:
 // ??0Rva0077CDE0@@QAE@XZ
 Rva0077CDE0::Rva0077CDE0()
 	: m_neg1(-1)
-	, m_f50(0.0f), m_f54(2.0f), m_f58(3.0f), m_f5c(0.4f), m_f60(0.065f)
 	, m_i64(0)
 	, m_b68(0), m_b69(0), m_b6a(1), m_b6b(0)
 	, m_bb0(0)
@@ -228,6 +227,12 @@ Rva0077CDE0::Rva0077CDE0()
 {
 	for (int i = 0; i < 10; ++i)
 		m_arr10[i] = 0;
+
+	m_f50 = 0.0f;
+	m_f54 = 2.0f;
+	m_f58 = 3.0f;
+	m_f5c = 0.4f;
+	m_f60 = 0.065f;
 
 	m_elem5.Set(m_elem5.m_a, m_elem5.m_b);
 	m_elem6.Set(m_elem6.m_a, m_elem6.m_b);
