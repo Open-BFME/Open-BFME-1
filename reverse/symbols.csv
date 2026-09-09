@@ -76788,6 +76788,8 @@ name,address,notes
 ?bfmeSendESN@BfmeSinkESN@@QAEXPAUBfmeCmdESN@@H@Z,0x000307E7,pin
 ?bfmeSendEventA11@@YAXPAX00IH@Z,0x000023E2,pin
 ?bfmeSendEventA19@@YAXPAX00IH@Z,0x00049896,pin
+?bfmeCurveFind@@YAPAXPAX00IH@Z,0x00049896,typed return alias for the proven bfmeSendEventA19 lower-bound thunk
+?insert@Rva0006AA90Vector@@QAEPAXPAXPBX@Z,0x00040566,typed vector insert alias for the proven j_00040566 thunk
 ?bfmeSendJP@@YAXPAXPAHH@Z,0x00048D38,pin
 ?bfmeSendRC@BfmeOwnerRC@@QAEDPAVBfmeUnitRC@@PAVBfmeHolderRC@@PAX222@Z,0x00036EA3,pin
 ?bfmeSendRM@BfmeSinkRM@@QAEXPAXH@Z,0x00006613,pin
