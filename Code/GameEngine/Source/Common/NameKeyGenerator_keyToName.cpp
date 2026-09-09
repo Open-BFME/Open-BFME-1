@@ -69,7 +69,7 @@ public:
 	}
 	~AsciiString();
 
-	static AsciiString TheEmptyString;			// retail 0x00F36E50
+	static const AsciiString TheEmptyString;			// retail 0x00F36E50
 
 private:
 	char *m_text;
