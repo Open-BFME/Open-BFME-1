@@ -426,11 +426,11 @@ name,target_rva,target_size,source,notes
 ?_M_insert_overflow@?$vector@UGen_t_002e8eb0_m4pod@@V?$allocator@UGen_t_002e8eb0_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_002e8eb0_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x002E7940,282,Code/gen_small/fam_019.cpp,reloc-derived;call-sites=1;identity=generated
 ??0?$pair@$$CBUGen_t_002ea020_k4@@UGen_t_002ea020_p12cd@@@_STL@@QAE@ABU01@@Z,0x002E8FC0,87,Code/gen_small/tgrid_110.cpp,reloc-derived;call-sites=1;identity=generated
 ??$__copy_backward@PAUGen_t_002ea710_p128pod@@PAU1@H@_STL@@YAPAUGen_t_002ea710_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x002EA100,87,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
-?gen002EACD0@@YAXPAX00HH@Z,0x002EACD0,184,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
+??$__make_heap@PAUS4SortElem20@@US4Cmp002EB8E0@@U1@H@_STL@@YAXPAUS4SortElem20@@0US4Cmp002EB8E0@@0PAH@Z,0x002EACD0,184,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=STLport S4 family; canonical callee and existing target verified
 ?gen002EADF0@@YAXPAX0H0@Z,0x002EADF0,47,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
 ??$__linear_insert@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@0U1@US4Cmp002EB8E0@@@Z,0x002EAF10,197,Code/Libraries/Source/WWVegas/WWLib/stlport_insertion_sort_s4sortelem20.cpp,reloc-derived;call-sites=1;identity=real
 ?handle@Gen002EB190@@QAEXPAX0@Z,0x002EB190,76,Code/GameEngine/Source/Common/FieldForwarders.cpp,reloc-derived;call-sites=1;identity=generated
-?gen002EB330@@YAXPAX00H0@Z,0x002EB330,290,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated
+??$__partial_sort@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@000US4Cmp002EB8E0@@@Z,0x002EB330,290,Code/GameEngine/Source/Common/ConstantZeroForwarders.cpp,reloc-derived;call-sites=1;identity=STLport S4 family; canonical callee and existing target verified
 ??1Gen_dtor_002eb990@@UAE@XZ,0x002EB5C0,331,Code/gen_small/dtors_004.cpp,reloc-derived;call-sites=1;identity=generated
 ?doDisableInput@ScriptActions@@IAEXXZ,0x002EF010,99,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDefeat_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ??1ScriptActions@@UAE@XZ,0x002F1B80,108,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,reloc-derived;call-sites=1;identity=real

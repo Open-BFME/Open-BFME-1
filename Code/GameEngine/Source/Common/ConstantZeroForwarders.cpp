@@ -1,3 +1,4 @@
+// batch51 ASCII-family audit: no S4 object is instantiated in this forwarder TU.
 // Sixty-two __cdecl free functions that forward every one of their arguments to
 // one direct call and insert a constant zero at a fixed position.  Three
 // families, distinguished only by how many arguments they carry and where the
@@ -51,6 +52,26 @@
 		CALLEE( a, b, c, 0, d );                                             \
 	}
 
+
+// batch50 scratch declarations for the two STLport S4 callees.  The other
+// forwarder families retain their existing address-derived declarations.
+struct S4SortElem20;
+struct S4Cmp002EB8E0 { int m_bfmeSlot; };
+namespace _STL
+{
+template <class RandomAccessIterator, class Compare, class Tp, class Distance>
+void __make_heap(RandomAccessIterator, RandomAccessIterator, Compare, Tp *, Distance *);
+template <class RandomAccessIterator, class Tp, class Compare>
+void __partial_sort(RandomAccessIterator, RandomAccessIterator,
+    RandomAccessIterator, Tp *, Compare);
+}
+#define BFME_CANONICAL_MAKE_HEAP(a,b,c,z0,z1) \
+    _STL::__make_heap((S4SortElem20 *)(a), (S4SortElem20 *)(b), \
+        *(S4Cmp002EB8E0 *)&(c), (S4SortElem20 *)0, (int *)0)
+#define BFME_CANONICAL_PARTIAL_SORT(a,b,c,z0,d) \
+    _STL::__partial_sort((S4SortElem20 *)(a), (S4SortElem20 *)(b), \
+        (S4SortElem20 *)(c), (S4SortElem20 *)0, *(S4Cmp002EB8E0 *)&(d))
+
 BFME_ZERO_THIRD_CALLEE( 002E0730 )
 BFME_ZERO_THIRD_CALLEE( 002E0D70 )
 BFME_ZERO_THIRD_CALLEE( 002EA750 )
@@ -99,7 +120,6 @@ BFME_ZERO_THIRD_FORWARDER( rva008CC540ZeroThirdForwarder, gen008CBDF0 )
 
 BFME_ZERO_TAIL_CALLEE( 00261140 )
 BFME_ZERO_TAIL_CALLEE( 002E0CD0 )
-BFME_ZERO_TAIL_CALLEE( 002EACD0 )
 BFME_ZERO_TAIL_CALLEE( 00344A60 )
 BFME_ZERO_TAIL_CALLEE( 003648E0 )
 BFME_ZERO_TAIL_CALLEE( 003CE510 )
@@ -120,7 +140,7 @@ BFME_ZERO_TAIL_CALLEE( 00753DD0 )
 
 BFME_ZERO_TAIL_FORWARDER( rva00261310ZeroTailForwarder, gen00261140 )
 BFME_ZERO_TAIL_FORWARDER( rva002E10C0ZeroTailForwarder, gen002E0CD0 )
-BFME_ZERO_TAIL_FORWARDER( rva002EAE60ZeroTailForwarder, gen002EACD0 )
+BFME_ZERO_TAIL_FORWARDER( rva002EAE60ZeroTailForwarder, BFME_CANONICAL_MAKE_HEAP )
 BFME_ZERO_TAIL_FORWARDER( rva00347D30ZeroTailForwarder, gen00344A60 )
 BFME_ZERO_TAIL_FORWARDER( rva003654D0ZeroTailForwarder, gen003648E0 )
 BFME_ZERO_TAIL_FORWARDER( rva003CECE0ZeroTailForwarder, gen003CE510 )
@@ -141,7 +161,6 @@ BFME_ZERO_TAIL_FORWARDER( rva00754520ZeroTailForwarder, gen00753DD0 )
 
 BFME_ZERO_FOURTH_CALLEE( 00261920 )
 BFME_ZERO_FOURTH_CALLEE( 002E1710 )
-BFME_ZERO_FOURTH_CALLEE( 002EB330 )
 BFME_ZERO_FOURTH_CALLEE( 0034B8D0 )
 BFME_ZERO_FOURTH_CALLEE( 003667E0 )
 BFME_ZERO_FOURTH_CALLEE( 003D00E0 )
@@ -162,7 +181,7 @@ BFME_ZERO_FOURTH_CALLEE( 00754C60 )
 
 BFME_ZERO_FOURTH_FORWARDER( rva00261A80ZeroFourthForwarder, gen00261920 )
 BFME_ZERO_FOURTH_FORWARDER( rva002E1990ZeroFourthForwarder, gen002E1710 )
-BFME_ZERO_FOURTH_FORWARDER( rva002EB960ZeroFourthForwarder, gen002EB330 )
+BFME_ZERO_FOURTH_FORWARDER( rva002EB960ZeroFourthForwarder, BFME_CANONICAL_PARTIAL_SORT )
 BFME_ZERO_FOURTH_FORWARDER( rva0034BF90ZeroFourthForwarder, gen0034B8D0 )
 BFME_ZERO_FOURTH_FORWARDER( rva00366940ZeroFourthForwarder, gen003667E0 )
 BFME_ZERO_FOURTH_FORWARDER( rva003D1320ZeroFourthForwarder, gen003D00E0 )

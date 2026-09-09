@@ -1,24 +1,93 @@
-// ?gen002EADF0@@YAXPAX0H0@Z
-// cl: /O2 /Ob0
-// Lever: the by-value temp's EH saved-esp is parked in a DEAD incoming-argument
-// slot; retail used the 4th argument's, ours the 2nd's. Referencing b in each
-// expression (no local) keeps b's slot live past the temp, so the 4th is chosen
-// (docs/shape_levers.md, 'EH saved-esp in a parameter slot').
+// Retail 0x002EADF0 forwards to the S4 pop specialization. The 12-byte
+// tail facade and StringBase access match the existing canonical owners.
+// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 
-class Rva002E8FC0
+struct BfmeSortTailElement12;
+
+template <class T>
+class StringBase
 {
-public:
-	Rva002E8FC0(const Rva002E8FC0 &);
-	~Rva002E8FC0();
-
+    friend class AsciiString;
 private:
-	char m_bfmeBody[20];
+    struct Header
+    {
+        int m_bfmeRefCount;
+        unsigned short m_bfmeLength;
+        unsigned short m_bfmeCapacity;
+        T m_bfmeData[1];
+    };
+
+    Header *m_bfmeHeader;
+    StringBase(const StringBase<T> &other);
+    ~StringBase();
+
+public:
+    void set(const StringBase<T> &other);
+    friend struct S4SortElem20;
 };
 
-void gen002EADF0Helper(void *a, Rva002E8FC0 *p, Rva002E8FC0 *q,
-	Rva002E8FC0 val, void *c, int zero);
+// Retail S4+0 is the AsciiString wrapper; its destructor is the existing
+// public-QAE AsciiString dtor at RVA 0x005EE90 (ILT 0x0000D828), distinct
+// from the private StringBase<char> dtor at RVA 0x005E490.
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString(const AsciiString &other)
+        : StringBase<char>(other) {}
+    ~AsciiString();
+    void set(const AsciiString &other)
+    {
+        StringBase<char>::set(other);
+    }
+    AsciiString &operator=(const AsciiString &other)
+    {
+        set(other);
+        return *this;
+    }
 
+};
+
+class BfmeSortElem20Tail
+{
+public:
+    BfmeSortElem20Tail(const BfmeSortElem20Tail &other);
+    ~BfmeSortElem20Tail();
+    void set(const BfmeSortElem20Tail &other);
+
+private:
+    BfmeSortTailElement12 *m_begin;
+    BfmeSortTailElement12 *m_end;
+    BfmeSortTailElement12 *m_capacity;
+};
+
+struct S4SortElem20
+{
+    AsciiString m_bfmeName;
+    char m_bfmeFlag;
+    BfmeSortElem20Tail m_bfmeTail;
+};
+
+struct S4Cmp002EB8E0
+{
+    int m_bfmeSlot;
+};
+
+namespace _STL
+{
+
+template <class RandomAccessIterator, class Tp, class Compare, class Distance>
+void __pop_heap(RandomAccessIterator first, RandomAccessIterator last,
+    RandomAccessIterator result, Tp value, Compare comp, Distance *distance);
+
+}
+
+// 0x002EADF0 is a separate 47-byte forwarding body. Its fourth argument
+// carries the comparator value in a pointer-sized slot; preserve that raw ABI
+// while naming the actual 0x002EABF0 callee as the S4 pop specialization.
 void gen002EADF0(void *a, void *b, int, void *c)
 {
-	gen002EADF0Helper(a, (Rva002E8FC0 *)b - 1, (Rva002E8FC0 *)b - 1, *((Rva002E8FC0 *)b - 1), c, 0);
+    _STL::__pop_heap<S4SortElem20 *, S4SortElem20, S4Cmp002EB8E0, int>(
+        (S4SortElem20 *)a, (S4SortElem20 *)b - 1,
+        (S4SortElem20 *)b - 1, *((S4SortElem20 *)b - 1),
+        *(S4Cmp002EB8E0 *)&c, (int *)0);
 }

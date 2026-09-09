@@ -80405,11 +80405,11 @@ name,address,notes
 ?gen002E1710@@YAXPAX00H0@Z,0x002E1710,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
 ?gen002EA020@@YAXPAUElem20@@PBU1@@Z,0x002EA020,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen002EA750@@YAXPAX0H0@Z,0x002EA750,address-derived callee of the 26-byte zero-third forwarder family; target read from the REL32 at its call sites
-?gen002EACD0@@YAXPAX00HH@Z,0x002EACD0,address-derived callee of the 28-byte zero-tail forwarder family; target read from the REL32 at its call sites
+??$__make_heap@PAUS4SortElem20@@US4Cmp002EB8E0@@U1@H@_STL@@YAXPAUS4SortElem20@@0US4Cmp002EB8E0@@0PAH@Z,0x002EACD0,Canonical S4 heap family; existing retail caller and body verified
 ?gen002EADF0@@YAXPAX0H0@Z,0x002EADF0,address-derived callee of the 26-byte zero-third forwarder family; target read from the REL32 at its call sites
-?gen002EADF0Helper@@YAXPAXPAUS4SortElem20@@1U1@0H@Z,0x00032BAF,"Lead traced 2EABF0: assigns first element to third pointer, adjusts heap with by-value20B pivot, destroys pivot; cdecl"
-?gen002EADF0Helper@@YAXPAXPAVRva002E8FC0@@1V1@0H@Z,0x002EABF0,helper called through ILT thunk 0x00032BAF from the by-value forwarder at 0x002EADF0; target read from the REL32 chain
-?gen002EB330@@YAXPAX00H0@Z,0x002EB330,address-derived callee of the 31-byte zero-fourth forwarder family; target read from the REL32 at its call sites
+??$__pop_heap@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@H@_STL@@YAXPAUS4SortElem20@@00U1@US4Cmp002EB8E0@@PAH@Z,0x00032BAF,Canonical S4 heap family; existing retail caller and body verified;route=0x002EABF0
+??$__pop_heap@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@H@_STL@@YAXPAUS4SortElem20@@00U1@US4Cmp002EB8E0@@PAH@Z,0x002EABF0,Canonical S4 heap family; existing retail caller and body verified
+??$__partial_sort@PAUS4SortElem20@@U1@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@000US4Cmp002EB8E0@@@Z,0x002EB330,Canonical S4 heap family; existing retail caller and body verified
 ?gen0033B900@@YAXPAUElem8@@PBU1@@Z,0x0033B900,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen0033B980@@YAXPAUElem16@@PBU1@@Z,0x0033B980,address-derived callee of the element-stride walk family; target read from the REL32 at its call sites
 ?gen0033BC30@@YAXPAX0@Z,0x0033BC30,address-derived callee of the 33-byte allocate-then-initialise family; target read from the REL32 at its call sites
@@ -83824,8 +83824,8 @@ name,address,notes
 ?rva001FF060@GettingBuiltBehavior@@QAE_NXZ,0x001FF060,The j_00036449 thunk reaches the address-derived GettingBuiltBehavior status helper at 0x001FF060.
 ?rva001FF5C0@GettingBuiltBehavior@@QAEXXZ,0x001FF5C0,The j_00035ee0 thunk reaches the address-derived GettingBuiltBehavior completion helper at 0x001FF5C0.
 ?rva0024CD10Message@@YAHHHHH@Z,0x00001BAE,assigned-body helper for Rva0024CD10
-?rva002EB010@@YAXPAUS4SortElem20@@0PAX@Z,0x00044B7A,Lead checked matched94B shrink loop over20B elements; cdecl3args
-?rva002EB010Helper@@YAXPAURva002EB010Elem@@0HPAX@Z,0x00041D17,Open-BFME5 helper called by 20-byte shrink loop at 0x002EB010
+??$sort_heap@PAUS4SortElem20@@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@0US4Cmp002EB8E0@@@Z,0x00044B7A,Canonical S4 heap family; existing retail caller and body verified;route=0x002EB010
+?gen002EADF0@@YAXPAX0H0@Z,0x00041D17,Canonical S4 heap family; existing retail caller and body verified;route=0x002EADF0
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
 ?rva00362360UnguardedLinearInsert@@YAXPAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@Z,0x000146FA,REL32 unguarded-linear-insert target from 0x00363BAA
 ?rva00362400PushHeap@@YAXPAURva00364980HeapElement@@HHU1@URva00364980HeapCompare@@@Z,0x0002DE8E,REL32 push-heap target from 0x00363D53
