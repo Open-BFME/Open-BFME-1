@@ -1,4 +1,5 @@
 // Four destructors over a vector member and its neighbours.
+
 //
 // All four run their members in reverse declaration order with the state word
 // counting down, and the vector's destructor is inline everywhere -- the
@@ -22,9 +23,24 @@ inline void bfmeRelease(void *block, unsigned int bytes)
 		bfmeDeallocate(block, bytes);
 }
 
+extern void * (__cdecl *bfmeMemCopy)(void *destination, const void *source,
+	unsigned int bytes);
+
+inline int *bfmeCtorCopyRange(int *destination, const int *first,
+	const int *last)
+{
+	if (first == last)
+		return destination;
+
+	int bytes = (const char *)last - (const char *)first;
+	return (int *)((char *)bfmeMemCopy(destination, first, bytes) + bytes);
+}
+
 class BfmeVecMemberV
 {
 public:
+	BfmeVecMemberV(void) : m_bfmeStart(0), m_bfmeFinish(0), m_bfmeEnd(0) {}
+
 	~BfmeVecMemberV(void)
 	{
 		int *start = m_bfmeStart;
@@ -33,7 +49,12 @@ public:
 			bfmeRelease(start, sizeof(int) * (m_bfmeEnd - start));
 	}
 
-private:
+	void clear(void)
+	{
+		m_bfmeFinish = bfmeCtorCopyRange(m_bfmeStart, m_bfmeFinish,
+			m_bfmeFinish);
+	}
+
 	int *m_bfmeStart;					// +0x00
 	int *m_bfmeFinish;					// +0x04
 	int *m_bfmeEnd;						// +0x08
@@ -98,13 +119,27 @@ Gen_0081DC90::~Gen_0081DC90(void)
 	bfmeFinish();
 }
 
+class Gen00046B00
+{
+public:
+	void handle(int a, int b);
+};
+
 class BfmeMidA
 {
 public:
+	BfmeMidA(void) : m_bfmeStart(0), m_bfmeFinish(0), m_bfmeEnd(0) {}
 	~BfmeMidA(void);					// retail 0x00035D8C
 
-private:
-	int m_bfmeField;
+	void erase(void)
+	{
+		Gen00046B00 &sub = *(Gen00046B00 *)this;
+		sub.handle((int)m_bfmeStart, (int)m_bfmeFinish);
+	}
+
+	int *m_bfmeStart;					// +0x00
+	int *m_bfmeFinish;					// +0x04
+	int *m_bfmeEnd;					// +0x08
 };
 
 class BfmeBaseR_003643C0
@@ -122,9 +157,57 @@ private:
 	BfmeTailV m_bfmeA;					// +0x04
 	int m_bfmePad[4];					// +0x08
 	BfmeMidA m_bfmeB;					// +0x18
-	int m_bfmeGap[2];					// +0x1C
 	BfmeVecMemberV m_bfmeVector;				// +0x24
 };
+
+// The constructor at 0x00366B90 initializes the same object whose destructor
+// is above. Its first member uses the retail AsciiString literal constructor,
+// and its two following members are vector headers. The owning class name is
+// not proven, so the constructor keeps its retail address-derived name.
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString(const char *text);
+	~BFMERetailAsciiString(void) { releaseBuffer(); }
+	void releaseBuffer(void);
+
+	void *m_data;
+};
+
+class BfmeCtorString : public BFMERetailAsciiString
+{
+public:
+	BfmeCtorString(const char *text) : BFMERetailAsciiString(text) {}
+};
+
+class Gen_00366B90 : public BfmeBaseR_003643C0
+{
+public:
+	Gen_00366B90(void);
+
+private:
+	BfmeCtorString m_bfmeA;					// +0x04
+	int m_bfmePad08;					// +0x08
+	int m_bfmePad0C;					// +0x0C
+	bool m_bfmeFlag;					// +0x10
+	int m_bfmeColour;					// +0x14
+	BfmeMidA m_bfmeB;					// +0x18
+	BfmeVecMemberV m_bfmeVector;				// +0x24
+};
+
+// ??0Gen_00366B90@@QAE@XZ
+Gen_00366B90::Gen_00366B90(void)
+	: m_bfmeA((const char *)0x0107301C)
+	, m_bfmeFlag(false)
+	, m_bfmeB()
+	, m_bfmeVector()
+{
+	m_bfmeColour = 0xFF000000;
+	m_bfmePad08 = 0;
+	m_bfmePad0C = 0;
+	m_bfmeB.erase();
+	m_bfmeVector.clear();
+}
 
 class BfmeMidB
 {
