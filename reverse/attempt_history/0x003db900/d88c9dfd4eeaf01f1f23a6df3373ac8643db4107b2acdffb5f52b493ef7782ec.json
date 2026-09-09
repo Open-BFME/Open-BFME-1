@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d88c9dfd4eeaf01f1f23a6df3373ac8643db4107b2acdffb5f52b493ef7782ec",
+  "symbol": "?bfmeCostZF@BfmeHostZF@@QAEHPAPAUBfmePtZF@@0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?bfmeCostZF@BfmeHostZF@@QAEHPAPAUBfmePtZF@@0@Z\n// partial score=0.60 date=2026-09-09\n#include <stdlib.h>\n\nstruct BfmePtZF\n{\n\tunsigned short m_bfme00ZF;\n\tunsigned short m_bfme02ZF;\n\tunsigned short m_bfme04ZF;\n};\n\nstruct BfmeNodeZF\n{\n\tint m_bfme00ZF;\n\tint m_bfme04ZF;\n\tint m_bfme08ZF;\n};\n\nclass BfmeHostZF\n{\npublic:\n\tint bfmeCostZF(BfmePtZF **a, BfmePtZF **b);\n\n\tunsigned char m_bfmeHeadZF[0x2470c];\n\tBfmeNodeZF *m_bfme2470CZF;\n\tBfmeNodeZF *m_bfme24710ZF;\n};\n\nint BfmeHostZF::bfmeCostZF(BfmePtZF **a, BfmePtZF **b)\n{\n\tBfmePtZF *p = *a;\n\n\tint x = p->m_bfme00ZF;\n\tint y = p->m_bfme04ZF;\n\n\tBfmeNodeZF *end = m_bfme24710ZF;\n\tBfmeNodeZF *beg = m_bfme2470CZF;\n\n\tint acc = 0;\n\n\twhile (end != beg)\n\t{\n\t\tend--;\n\n\t\tint dx = abs(x - end->m_bfme04ZF);\n\t\tint dy = abs(y - end->m_bfme08ZF);\n\n\t\tif (dx > dy)\n\t\t\tacc = (acc + 5 * dx + 2 * dy) * 2;\n\t\telse\n\t\t\tacc = (acc + 2 * dx + 5 * dy) * 2;\n\n\t\tx = end->m_bfme04ZF;\n\t\ty = end->m_bfme08ZF;\n\n\t\tacc += 0x578;\n\t}\n\n\tBfmePtZF *q = *b;\n\n\tint fx = abs(x - q->m_bfme00ZF);\n\tint fy = abs(y - q->m_bfme04ZF);\n\n\tif (fx > fy)\n\t\treturn acc + 10 * fx + 4 * fy;\n\n\treturn acc + 4 * fx + 10 * fy;\n}\n"
+}
