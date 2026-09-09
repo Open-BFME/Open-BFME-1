@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6a7eca87b8946ab4415334f878fcaa7504fa504c0d18d17b616f573374b182cf",
+  "symbol": "?bfmeAtZC@BfmeHostZC@@QAEXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?bfmeAtZC@BfmeHostZC@@QAEXH@Z\n// partial score=0.6 date=2026-09-09\nstruct BfmeAZC\n{\n\tunsigned char m_bfmePadZC[0x1c];\n};\n\nstruct BfmeBZC\n{\n\tvoid bfmeUseZC(BfmeAZC *a);\n\n\tunsigned char m_bfmePadZC[0x18];\n};\n\nclass BfmeHostZC\n{\npublic:\n\tvoid bfmeAtZC(int i);\n\n\tunsigned char m_bfmeHeadZC[0xc];\n\tBfmeAZC *m_bfme0CZC;\n\tBfmeAZC *m_bfme10ZC;\n\tunsigned char m_bfmeMidZC[0x4c - 0x14];\n\tBfmeBZC *m_bfme4CZC;\n\tBfmeBZC *m_bfme50ZC;\n};\n\nvoid BfmeHostZC::bfmeAtZC(int i)\n{\n\tif (i == -1)\n\t\treturn;\n\n\tif (i < 0)\n\t\treturn;\n\n\tif ((unsigned int)i >= (unsigned int)(m_bfme50ZC - m_bfme4CZC))\n\t\treturn;\n\n\tif (m_bfme10ZC - m_bfme0CZC != m_bfme50ZC - m_bfme4CZC)\n\t\treturn;\n\n\tm_bfme4CZC[i].bfmeUseZC(&m_bfme0CZC[i]);\n}\n"
+}
