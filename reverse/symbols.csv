@@ -4776,7 +4776,7 @@ name,address,notes
 ??1Gen_dtor_000dddf0@@UAE@XZ,0x0003C038,gen-dtor class destructor
 ??1Gen_dtor_000e4b80@@UAE@XZ,0x0002F99B,gen-dtor class destructor
 ??1Gen_dtor_000e9fe0@@UAE@XZ,0x0002CD7C,gen-dtor class destructor
-??1Gen_dtor_000eb8b0@@UAE@XZ,0x00018FCA,gen-dtor class destructor
+??1SpecialPowerTemplate@@MAE@XZ,0x00018FCA,ILT to the matched protected SpecialPowerTemplate destructor at RVA 0x000EB5D0
 ??1Gen_dtor_000ed500@@UAE@XZ,0x00004C87,gen-dtor class destructor
 ??1Gen_dtor_000ed530@@UAE@XZ,0x00017A71,gen-dtor class destructor
 ??1Gen_dtor_000edca0@@UAE@XZ,0x00013156,gen-dtor class destructor
