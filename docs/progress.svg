@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="880" height="132" viewBox="0 0 880 132" role="img" aria-labelledby="title desc">
-  <title id="title">BFME 1 rebuild progress: 60.24%</title>
-  <desc id="desc">5,844,630 of 9,702,173 code bytes rebuild from what we hold. Ledger-derived; not a fresh build verification.</desc>
+  <title id="title">BFME 1 rebuild progress: 60.62%</title>
+  <desc id="desc">5,881,494 of 9,702,173 code bytes rebuild from what we hold. Ledger-derived; not a fresh build verification.</desc>
   <rect x="1" y="1" width="878" height="130" rx="16" fill="#0d1117" stroke="#30363d"/>
   <g font-family="Segoe UI,Arial,sans-serif">
     <text x="28" y="37" fill="#c9d1d9" font-size="14" font-weight="600" letter-spacing="1.4">BFME 1 · REBUILD PROGRESS</text>
-    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">60.24%</text>
+    <text x="852" y="43" fill="#f0f6fc" font-size="30" font-weight="700" text-anchor="end">60.62%</text>
     <rect x="28" y="62" width="824" height="20" rx="10" fill="#21262d"/>
-    <rect x="28" y="62" width="496.3811" height="20" rx="10" fill="#3fb950"/>
-    <text x="28" y="111" fill="#c9d1d9" font-size="14">5,844,630 / 9,702,173 code bytes rebuild from what we hold</text>
+    <rect x="28" y="62" width="499.5119" height="20" rx="10" fill="#3fb950"/>
+    <text x="28" y="111" fill="#c9d1d9" font-size="14">5,881,494 / 9,702,173 code bytes rebuild from what we hold</text>
   </g>
 </svg>
