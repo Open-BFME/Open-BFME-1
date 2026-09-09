@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3e40d9e751940820c2c87814612c55c81798460b86e507e5e9800b572737da08",
+  "symbol": "?apply@Rva001F7080@@QAEXPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?apply@Rva001F7080@@QAEXPAX@Z\n// partial score=0.95 date=2026-09-09\n// Clean wrapper reproduces the full 23-byte body except VC7 allocates the\n// field and incoming argument in the opposite registers.  Retail loads the\n// field into EAX and the argument into EDX before calling the adjusted\n// BfmeGateAMB receiver; the compiler chooses EDX and EAX respectively.\n\nclass BfmeKeyAMB;\n\nclass BfmeGateAMB\n{\npublic:\n\tvoid bfmeAskAMB(void *value, const BfmeKeyAMB *key);\n};\n\nclass Rva001F7080\n{\npublic:\n\tvoid apply(void *argument);\n};\n\nvoid Rva001F7080::apply(void *argument)\n{\n\tunsigned value = *(unsigned *)((char *)this - 0x1c);\n\tBfmeGateAMB *gate = *(BfmeGateAMB **)((char *)this - 0x20);\n\tgate = (BfmeGateAMB *)((char *)gate + 8);\n\tgate->bfmeAskAMB((void *)value, (const BfmeKeyAMB *)argument);\n}\n"
+}

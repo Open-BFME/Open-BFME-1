@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "66b7a3798175cbabaa0a9a165e7cf4b07426f874bebdac205864f3caf61e95bf",
+  "symbol": "?Rva00606040@@YGXPAII@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?Rva00606040@@YGXPAII@Z\n// partial score=0.95 date=2026-09-09\n// cl: /O2 /Ob0\n// Converted from Code/gen_asm/d_005e97b0.asm (?d_00606040@@YAXXZ).\n// stdcall: helper(&v, v) then *out = *returned.\n\nunsigned *__stdcall Rva00605F00(unsigned *slot, unsigned value);\n\nvoid __stdcall Rva00606040(unsigned *out, unsigned value)\n{\n\t*out = *Rva00605F00(&value, value);\n}\n"
+}
