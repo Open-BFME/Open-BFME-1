@@ -1,6 +1,6 @@
-// ?bfmeResetABO@BfmeHostABO@@QAEXXZ
-// partial score=0.995 date=2026-09-09
-// ?bfmeResetABO@BfmeHostABO@@QAEXXZ
+// BFME-only no-argument GameClient vtable entry at retail 0x00592B80.
+// The address-derived spelling is intentional: the owning class and vtable
+// slot are proven, but no surviving source establishes the original name.
 #pragma intrinsic(_ReadWriteBarrier)
 extern "C" void _ReadWriteBarrier(void);
 
@@ -40,19 +40,19 @@ public:
 	void clear();
 };
 
-class Rva00592A10Thunk
+class Rva00592A10Owner
 {
 public:
 	void reset();
 };
 
-class BfmeHostABO;
+class GameClient;
 
 template <class Type>
 class StringBase
 {
 private:
-	friend class BfmeHostABO;
+	friend class GameClient;
 	void releaseBuffer();
 
 	void *m_data;
@@ -60,8 +60,8 @@ private:
 
 struct BfmePairABO
 {
-	int m_bfmeAABO;
-	int m_bfmeBABO;
+	float m_bfmeAABO;
+	float m_bfmeBABO;
 };
 
 struct BfmeOtherABO
@@ -70,10 +70,10 @@ struct BfmeOtherABO
 	int m_bfme1F4ABO;
 };
 
-class BfmeHostABO
+class GameClient
 {
 public:
-	void bfmeResetABO();
+	void bfmeReset00592B80();
 
 	unsigned char m_bfmeH00[0xc];
 	BfmeOtherABO *m_bfme0CABO;
@@ -103,7 +103,7 @@ public:
 	int m_bfme474ABO;
 	volatile int m_bfme478ABO;
 	unsigned char m_bfmeH47C[0x488 - 0x47c];
-	Rva00592A10Thunk m_bfme488ABO;
+	Rva00592A10Owner m_bfme488ABO;
 	unsigned char m_bfmeH489[0x4c8 - 0x489];
 	int m_bfme4C8ABO;
 	unsigned char m_bfmeH4CC[4];
@@ -114,7 +114,7 @@ public:
 	BfmePairABO m_bfme4DCABO[4];
 };
 
-void BfmeHostABO::bfmeResetABO()
+void GameClient::bfmeReset00592B80()
 {
 	m_bfme14ABO = 0;
 	m_bfme154ABO.clear();
@@ -152,15 +152,12 @@ void BfmeHostABO::bfmeResetABO()
 
 	m_bfme4D8ABO.releaseBuffer();
 
-	BfmePairABO tmp;
-	*(volatile int *)&tmp.m_bfmeAABO = 0;
-	*(volatile int *)&tmp.m_bfmeBABO = 0;
+	BfmePairABO value = { 0.0f, 0.0f };
 	BfmePairABO *p = m_bfme4DCABO;
 	BfmePairABO *end = m_bfme4DCABO + 4;
 
 	if (p != end)
 	{
-		BfmePairABO value = { 0, 0 };
 		do
 		{
 			*p = value;
