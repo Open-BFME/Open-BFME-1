@@ -36,6 +36,11 @@ unsigned int   Rva007FF9F0Swap32( unsigned int value );     // 0x007FF9F0
 void *Rva0080B000Create( void );                            // 0x0080B000
 int   Rva0080B150( void *object, void *addr, int addrLen );  // 0x0080B150
 int   Rva0080B460( void *object, int mode );                // 0x0080B460
+extern "C" int Rva0080ADE0( void *object, int releaseState );
+extern "C" void *Rva007FD2D0( int family, int type, int protocol );
+extern "C" int Rva007FF790( char *address, const char *text );
+extern "C" int atoi( const char *text );
+void *Rva007FDFF0Connect( const char *host, int timeout );
 struct Rva00806580Record;
 int   Rva00807370( Rva00806580Record *record, int selector, int flag,
 		char *buffer, int bufferSize );                     // 0x00807370
@@ -48,8 +53,6 @@ int   Rva0080E330( void *crypto, int length );              // 0x0080E330
 // packet path uses after a complete header has arrived.
 extern "C" void *Rva0080B0A0( void *comm, int unsupported, void *address,
 		int *addressLength );
-extern "C" int   Rva0080B1B0( void *comm, int secu, char *name,
-		unsigned int addr, unsigned int port );
 extern "C" void  Rva0080B4B0( void *comm );
 extern "C" int   Rva0080D980( void *comm, const char *data, int length );
 extern "C" int   Rva0080DA50( void *comm, char *output, int length );
@@ -127,6 +130,104 @@ struct Rva00806580Record
 	char  m_key[ 0x54 ];         // +0x90
 	int   m_fieldE4;             // +0xE4 -- 'cryp'; 0x90 + 0x54 lands exactly here
 };
+
+struct Rva0080B1B0Comm
+{
+	void *m_socket;              // +0x00
+	void *m_connection;          // +0x04
+	char m_name[ 0x100 ];        // +0x08
+	unsigned short m_family;     // +0x108
+	union
+	{
+		unsigned short m_portValue;
+		unsigned char m_portBytes[ 2 ];
+	} m_port;                     // +0x10A
+	union
+	{
+		unsigned int m_addressValue;
+		unsigned char m_addressBytes[ 4 ];
+	} m_address;                  // +0x10C
+	unsigned int m_field110;      // +0x110
+	unsigned int m_field114;      // +0x114
+	int m_state;                 // +0x118
+	char m_gap11C[ 4 ];          // +0x11C
+	void *m_backend;             // +0x120
+};
+
+extern "C" int Rva0080B1B0( Rva0080B1B0Comm *comm, int secu, char *name,
+	unsigned int addr, int port )
+{
+	unsigned int i;
+	int result;
+	unsigned int addressValue;
+
+	result = Rva0080ADE0( comm, secu );
+	if( result != 0 )
+		return result;
+
+	comm->m_socket = Rva007FD2D0( 2, 1, 0 );
+	if( comm->m_socket == 0 )
+		return -9;
+
+	comm->m_family = 2;
+	comm->m_port.m_portValue = 0;
+	comm->m_address.m_addressValue = 0;
+	comm->m_field110 = 0;
+	comm->m_field114 = 0;
+
+	if( name == 0 )
+		name = (char *)0x0130ACF8;
+
+	if( port <= 0 )
+		port = comm->m_backend != 0 ? 0x1BB : 0x50;
+
+	for( i = 0; name[ i ] != 0 && name[ i ] != ':' && i < 0xFF; i++ )
+	{
+		comm->m_name[ i ] = name[ i ];
+	}
+	comm->m_name[ i ] = 0;
+
+	Rva007FF790( (char *)&comm->m_family, comm->m_name );
+
+	if( !( ( ( ( (unsigned int)comm->m_address.m_addressBytes[ 0 ] << 8 ) |
+			comm->m_address.m_addressBytes[ 1 ] ) << 8 |
+			comm->m_address.m_addressBytes[ 2 ] ) << 8 |
+			comm->m_address.m_addressBytes[ 3 ] ) )
+	{
+		addressValue = addr;
+		comm->m_address.m_addressBytes[ 3 ] = (unsigned char)addressValue;
+		addressValue >>= 8;
+		comm->m_address.m_addressBytes[ 2 ] = (unsigned char)addressValue;
+		addressValue >>= 8;
+		comm->m_address.m_addressBytes[ 1 ] = (unsigned char)addressValue;
+		addressValue >>= 8;
+		comm->m_address.m_addressBytes[ 0 ] = (unsigned char)addressValue;
+	}
+
+	if( name[ i ] == ':' )
+	{
+		comm->m_port.m_portBytes[ 0 ] = (unsigned char)( atoi( &name[ i + 1 ] ) >> 8 );
+		comm->m_port.m_portBytes[ 1 ] = (unsigned char)atoi( &name[ i + 1 ] );
+	}
+	else
+	{
+		comm->m_port.m_portBytes[ 0 ] = (unsigned char)( port >> 8 );
+		comm->m_port.m_portBytes[ 1 ] = (unsigned char)port;
+	}
+
+	if( !( ( ( ( (unsigned int)comm->m_address.m_addressBytes[ 0 ] << 8 ) |
+			comm->m_address.m_addressBytes[ 1 ] ) << 8 |
+			comm->m_address.m_addressBytes[ 2 ] ) << 8 |
+			comm->m_address.m_addressBytes[ 3 ] ) )
+	{
+		comm->m_connection = Rva007FDFF0Connect( comm->m_name, 0x7530 );
+		comm->m_state = 1;
+	}
+	else
+		comm->m_state = 2;
+
+	return 0;
+}
 
 // 0x00806580 IS THE FULL TEARDOWN and the sleep in the middle is the whole
 // story: it tears the sub-object down, WAITS 50 MILLISECONDS, calls an import,
@@ -792,7 +893,7 @@ void Rva00806B10( Rva00806580Record *record )
 			if( record->m_field00 == 0 )
 				return;
 
-			if( Rva0080B1B0( record->m_field00,
+			if( Rva0080B1B0( (Rva0080B1B0Comm *)record->m_field00,
 					record->m_field8C != 0,
 					record->m_name,
 					Rva007FFAD0( record->m_addr ),
