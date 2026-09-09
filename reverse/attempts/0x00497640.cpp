@@ -1,5 +1,5 @@
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z
-// partial score=0.94 date=2026-09-06
+// partial score=0.96 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // Readable body of ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z.
 // Retail 0x00497640, 230 bytes.  This is the x-axis update used by the
@@ -25,6 +25,9 @@ struct Coord2D
 	Coord2D(void) {}
 	Coord2D(const Coord2D &that) : x(that.x), y(that.y) {}
 	~Coord2D(void) {}
+	Real length(void) const;
+	void normalize(void);
+	Real toAngle(void) const;
 };
 
 class GameWindow
@@ -36,7 +39,7 @@ public:
 class AnimateWindow
 {
 public:
-	virtual void unused(void) = 0;
+	virtual ~AnimateWindow(void);
 
 	UnsignedInt getStartTime(void) { return m_startTime; }
 	GameWindow *getGameWindow(void) { return m_gameWindow; }
@@ -58,7 +61,8 @@ private:
 	Coord2D m_vel;
 	UnsignedInt m_startTime;
 	UnsignedInt m_endTime;
-	unsigned char m_padding[5];
+	int m_animType;
+	Bool m_needsToFinish;
 	Bool m_finished;
 };
 
@@ -113,8 +117,8 @@ Bool ProcessAnimateWindowSlideFromRightFast::updateAnimateWindow(AnimateWindow *
 
 	if (curPos.x - endPos.x <= m_slowDownThreshold)
 		vel.x *= m_slowDownRatio;
-	if (vel.x < 1.0f)
-		vel.x = 1.0f;
+	if (vel.x >= BfmeShadowScale)
+		vel.x = BfmeShadowScale;
 	animWin->setVel(vel);
 	return false;
 }
