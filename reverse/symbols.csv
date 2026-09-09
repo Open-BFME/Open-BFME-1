@@ -86653,3 +86653,5 @@ __imp__Rva0135961COff@4,0x0135961C,pin
 ?setVideoBuffer@WinInstanceData@BfmePauseMovie@@QAEXH@Z,0x0002E073,ILT thunk; alias of real ?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z
 ?rva0001895d@Rva00615D50Object@@QAE?AUCoord3D@@XZ,0x0001895D,ILT to body 0x006186C0; the 0x00615D50 lookup calls it for the object world position
 ?rva0004a444@Rva00615D50Object@@QAE_NPBUICoord2D@@@Z,0x0004A444,ILT to body 0x00618C90; the 0x00615D50 lookup calls it to test the object against a screen point
+?getSaveGameInfoFromFile@GameState@@QAE_NVAsciiString@@PAVSaveGameInfo@@@Z,0x00111980,BFME Bool ABI: addGameToAvailableList +0x4B calls ILT 0x000083D7 and tests AL; ILT resolves to reader body 0x00111980 while legacy QAEX row remains
+??1SaveGameInfo@@QAE@XZ,0x0000AB78,BFME destructor call route: addGameToAvailableList +0xF3 targets ILT 0x0000AB78 -> body 0x0010D700; body releases verified SaveGameInfo fields at +0x2C,+0x24,+0x1C,+0x08,+0x04,+0x00

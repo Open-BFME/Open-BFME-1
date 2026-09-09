@@ -1,296 +1,180 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Real C++ reconstruction of the save-list callback at retail RVA 0x00111C40.
+//
+// The matched GameState::populateSaveGameListbox body at 0x001121A0 names this
+// callback through the reference iterateSaveFiles(addGameToAvailableList, ...)
+// registration.  The complete retail boundary is 0x118 bytes: ret at +0x117,
+// followed by the separately claimed Rva00111D58Get body.  The call through ILT
+// 0x000083D7 at +0x4B tests AL, so this TU preserves the observed BFME Bool ABI
+// even though the older ledger row for the reader still carries its stale QAEX
+// (void) decoration.
+//
+// SaveGameInfo follows the verified reference field order and the local
+// StringBase view used by the landed GameState save/load conversions.  The
+// assignment is routed through the already matched 0x0010CFF0 body because the
+// retail SaveGameInfo assignment symbol is still represented by that neutral
+// ABI view in this TU.
+// Its destructor is declaration-only so the compiler emits one true
+// `this`-carrying call to ??1SaveGameInfo@@QAE@XZ.  That symbol's pin is the
+// ILT 0x0000AB78 call target 0x0010D700; the target releases these same six
+// StringBase members.  It must not be modeled as a no-argument free call
+// followed by implicit member destruction.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+typedef unsigned short UnsignedShort;
+typedef bool Bool;
+
+template <typename T> struct BfmeStringData
 {
+	int refs;
+	UnsignedShort length;
+	UnsignedShort capacity;
+	T text[1];
 };
 
-void addGameToAvailableList(AsciiString, void *);
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+protected:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<T> &other);
+	~StringBase() { releaseBuffer(); }
+
+	private:
+	void set(const StringBase<T> &other);
+	BfmeStringData<T> *m_data;
+
+	void releaseBuffer();
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+
+	void set(const AsciiString &other)
+	{
+		StringBase<char>::set(other);
+	}
+};
+
+class UnicodeString : private StringBase<UnsignedShort>
+{
+public:
+	UnicodeString() : StringBase<UnsignedShort>() {}
+	UnicodeString(const UnicodeString &other)
+		: StringBase<UnsignedShort>(other) {}
+	~UnicodeString() {}
+};
+
+struct SaveDate
+{
+	UnsignedShort year;
+	UnsignedShort month;
+	UnsignedShort day;
+	UnsignedShort dayOfWeek;
+	UnsignedShort hour;
+	UnsignedShort minute;
+	UnsignedShort second;
+	UnsignedShort milliseconds;
+
+	Bool isNewerThan(SaveDate *other);
+};
+
+class Rva0010CFF0
+{
+public:
+	Rva0010CFF0 &operator=(const Rva0010CFF0 &other);
+};
+
+class SaveGameInfo
+{
+public:
+	SaveGameInfo() throw();
+	~SaveGameInfo();
+
+	AsciiString saveGameMapName;
+	AsciiString pristineMapName;
+	AsciiString mapLabel;
+	SaveDate date;
+	AsciiString campaignSide;
+	int missionNumber;
+	UnicodeString description;
+	int saveFileType;
+	AsciiString missionMapName;
+};
+
+struct AvailableGameInfo
+{
+	AsciiString filename;
+	SaveGameInfo saveGameInfo;
+	AvailableGameInfo *next;
+	AvailableGameInfo *prev;
+};
+
+class GameState
+{
+public:
+	Bool getSaveGameInfoFromFile(AsciiString filename,
+		SaveGameInfo *saveGameInfo);
+};
+
+#define TheGameState (*(GameState **)0x012EF190)
 
 // ?addGameToAvailableList@@YAXVAsciiString@@PAX@Z
-__declspec(naked) void addGameToAvailableList(AsciiString, void *)
+void addGameToAvailableList(AsciiString filename, void *userData)
 {
-	__asm {
-		__emit 0x55
-		__emit 0x8b
-		__emit 0xec
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x00
-		__emit 0xde
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x38
-		__emit 0x53
-		__emit 0x56
-		__emit 0x57
-		__emit 0x89
-		__emit 0x65
-		__emit 0xf0
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xbc
-		__emit 0x89
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0xe8
-		__emit 0xaa
-		__emit 0xd5
-		__emit 0xef
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x45
-		__emit 0xbc
-		__emit 0x50
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x55
-		__emit 0x08
-		__emit 0x89
-		__emit 0x65
-		__emit 0xec
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x52
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x02
-		__emit 0xe8
-		__emit 0xdb
-		__emit 0x5e
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x90
-		__emit 0xf1
-		__emit 0x2e
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x47
-		__emit 0x67
-		__emit 0xef
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x94
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x3c
-		__emit 0xe8
-		__emit 0x91
-		__emit 0x02
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8d
-		__emit 0x4f
-		__emit 0x04
-		__emit 0x89
-		__emit 0x1f
-		__emit 0xe8
-		__emit 0x66
-		__emit 0xd5
-		__emit 0xef
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x45
-		__emit 0xbc
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x4f
-		__emit 0x04
-		__emit 0x89
-		__emit 0x5f
-		__emit 0x38
-		__emit 0x89
-		__emit 0x5f
-		__emit 0x34
-		__emit 0xe8
-		__emit 0x8c
-		__emit 0x74
-		__emit 0xf1
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x08
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xbd
-		__emit 0x5f
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x30
-		__emit 0x3b
-		__emit 0xf3
-		__emit 0x75
-		__emit 0x04
-		__emit 0x89
-		__emit 0x38
-		__emit 0xeb
-		__emit 0x4c
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x74
-		__emit 0x42
-		__emit 0x8d
-		__emit 0x56
-		__emit 0x10
-		__emit 0x52
-		__emit 0x8d
-		__emit 0x4f
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xde
-		__emit 0xe8
-		__emit 0x74
-		__emit 0x70
-		__emit 0xf2
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x2b
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x38
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x11
-		__emit 0x89
-		__emit 0x78
-		__emit 0x34
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x38
-		__emit 0x89
-		__emit 0x4f
-		__emit 0x38
-		__emit 0x89
-		__emit 0x7e
-		__emit 0x38
-		__emit 0x89
-		__emit 0x77
-		__emit 0x34
-		__emit 0xeb
-		__emit 0x1e
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x0c
-		__emit 0x89
-		__emit 0x38
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x38
-		__emit 0x89
-		__emit 0x4f
-		__emit 0x38
-		__emit 0x89
-		__emit 0x7e
-		__emit 0x38
-		__emit 0x89
-		__emit 0x77
-		__emit 0x34
-		__emit 0xeb
-		__emit 0x0b
-		__emit 0x8b
-		__emit 0x76
-		__emit 0x34
-		__emit 0xeb
-		__emit 0xba
-		__emit 0x89
-		__emit 0x7b
-		__emit 0x34
-		__emit 0x89
-		__emit 0x5f
-		__emit 0x38
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xbc
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x40
-		__emit 0x8e
-		__emit 0xef
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xf9
-		__emit 0x5b
-		__emit 0x77
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xf4
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xe5
-		__emit 0x5d
-		__emit 0xc3
+	AvailableGameInfo **listHead = (AvailableGameInfo **)userData;
+
+	try
+	{
+		SaveGameInfo saveGameInfo;
+		if (TheGameState->getSaveGameInfoFromFile(filename, &saveGameInfo))
+		{
+			AvailableGameInfo *newInfo = new AvailableGameInfo;
+			newInfo->prev = 0;
+			newInfo->next = 0;
+			reinterpret_cast<Rva0010CFF0 *>(&newInfo->saveGameInfo)->operator=(
+				*reinterpret_cast<const Rva0010CFF0 *>(&saveGameInfo));
+			newInfo->filename.set(filename);
+
+			if (*listHead == 0)
+			{
+				*listHead = newInfo;
+			}
+			else
+			{
+				AvailableGameInfo *curr;
+				AvailableGameInfo *prev;
+				prev = 0;
+				for (curr = *listHead; curr != 0; curr = curr->next)
+				{
+					prev = curr;
+					if (newInfo->saveGameInfo.date.isNewerThan(
+						&curr->saveGameInfo.date))
+					{
+						if (curr->prev)
+							curr->prev->next = newInfo;
+						else
+							*listHead = newInfo;
+						newInfo->prev = curr->prev;
+						curr->prev = newInfo;
+						newInfo->next = curr;
+						break;
+					}
+				}
+
+				if (curr == 0)
+				{
+					prev->next = newInfo;
+					newInfo->prev = prev;
+				}
+			}
+		}
+	}
+	catch (...)
+	{
 	}
 }
