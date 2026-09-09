@@ -18466,3 +18466,4 @@ PopulateReplayFileListbox	0x004E1450	1774	blocked	C++ source is named by four ca
 ?d_006efc20@@YAXXZ	0x006EFC20	566	blocked	Whole served-file audit: generated destructor caller points at this body, but no recovered owning class/source identity; address-derived Gen_dtor_006f02d0 is insufficient for conversion. t=4 model=gpt-5
 ?d_006f1ac0@@YAXXZ	0x006F1AC0	1416	blocked	Whole served-file audit: no named caller, no source declaration, and no built emitter; x87-heavy generated body remains identity-unresolved. t=4 model=gpt-5
 ?d_006f21b0@@YAXXZ	0x006F21B0	1285	blocked	Whole served-file audit: no named caller, no source declaration, and no built emitter; generated render body cannot be safely named or converted. t=4 model=gpt-5
+?d_00593440@@YAXXZ	0x00593440	482	blocked	t=2m model=gpt-5.6. callers_of.py finds no named caller and the dump has no trusted owner declaration or source emitter. Clean C++ cannot claim an identity from the body alone.
