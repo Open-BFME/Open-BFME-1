@@ -75016,6 +75016,7 @@ __strcmpi,0x009F6FA0,MSVCR71 _strcmpi import thunk; identity confirmed by IAT sl
 ?bfmeExistsVNV@@YADPBD@Z,0x009EBB80,pin
 ?bfmeExpandEAN@BfmeLexEAN@@QAEDPAD@Z,0x0003CB14,pin expand for BfmeConv2008
 ?bfmeExperienceForNextLevel@ExperienceLevelSystem@@QAEHPAVObject@@PAH@Z,0x0000C284,ExperienceTracker multi-level gain calls the retail next-level experience query with a null output-level pointer
+?bfmeFinishJR@BfmeThingJR@@QAEHH@Z,0x000294E7,tail helper called by BfmeThingJR::bfmeStopJR at 0x000A1CF0
 ?bfmeF01148@BfmeS1148@@QAEHXZ,0x0002D41B,pin
 ?bfmeF1062A@BfmeA1062@@QAEXXZ,0x0003139A,pin
 ?bfmeF1062B@BfmeB1062@@QAEXXZ,0x000095E3,pin

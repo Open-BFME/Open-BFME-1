@@ -1,5 +1,3 @@
-// ?bfmeStopJR@BfmeThingJR@@QAEHXZ
-// partial score=0.99 date=2026-09-08
 class BfmeXJR
 {
 public:
@@ -41,13 +39,10 @@ int BfmeThingJR::bfmeStopJR()
 	if (m_bfme41JR == 0)
 		return -2;
 
-	int a;
 	BfmeXJR *x = m_bfme1cJR;
 
 	if (x != 0)
 		x->bfmeStopXJR(1);
-
-	a = m_bfme18JR;
 
 	m_bfme1cJR = 0;
 	m_bfme20JR = 0;
@@ -59,5 +54,5 @@ int BfmeThingJR::bfmeStopJR()
 	m_bfme38JR = 0;
 	m_bfme3cJR = 0;
 
-	return bfmeFinishJR(a);
+	return bfmeFinishJR(m_bfme18JR);
 }
