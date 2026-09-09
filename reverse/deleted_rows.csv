@@ -25148,3 +25148,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ??_GGen_dtor_00065a10@@UAEPAXI@Z,0x00065A10,Generic generator placeholder superseded by authentic CRCParameterCheck scalar-deleting destructor proven by constructor 0x000659C0 vtable 0x01075520 and ILT 0x0001038E
 ?reset@GameState@@UAEXXZ,0x00110010,False identity: GameState reset is the matched 0x0010EEE0 body; 0x00110010 is findNextSaveFilename proven by saveGame caller and save filename xrefs
 ??_GGen_dtor_0006f630@@UAEPAXI@Z,0x0006F630,Generic destructor placeholder superseded by authentic SubsystemSlot<SubsystemLegend> scalar-deleting destructor proven by constructor vtable and destructor call chain
+??_GGen_dtor_0006f6f0@@UAEPAXI@Z,0x0006F6F0,Generic destructor placeholder superseded by authentic SubsystemSlot<GlobalData> scalar-deleting destructor proven by constructor vtable and destructor call chain

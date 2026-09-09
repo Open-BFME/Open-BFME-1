@@ -4663,7 +4663,7 @@ name,address,notes
 ??1BfmeThingEOA@@UAE@XZ,0x0001FF96,ILT to BfmeThingEOA complete destructor tail thunk 0x0006B400 and matched base destructor 0x009D83D0
 ??1Gen_dtor_0006e3e0@@UAE@XZ,0x000495F8,gen-dtor class destructor
 ??1?$SubsystemSlot@VSubsystemLegend@@@@UAE@XZ,0x00002BDF,SubsystemSlot<SubsystemLegend> destructor ILT called by authentic scalar-deleting destructor at 0x0006F630
-??1Gen_dtor_0006f6f0@@UAE@XZ,0x0003B96C,gen-dtor class destructor
+??1?$SubsystemSlot@VGlobalData@@@@UAE@XZ,0x0003B96C,SubsystemSlot<GlobalData> destructor ILT called by authentic scalar-deleting destructor at 0x0006F6F0
 ??1Gen_dtor_0006f7b0@@UAE@XZ,0x000268AA,gen-dtor class destructor
 ??1Gen_dtor_0006f870@@UAE@XZ,0x0001C274,gen-dtor class destructor
 ??1Gen_dtor_0006f930@@UAE@XZ,0x000223BD,gen-dtor class destructor
@@ -77250,6 +77250,7 @@ name,address,notes
 ?bfmeTail928F@BfmeSub928F@@QAEXXZ,0x00007EA5,pin
 ?bfmeTail928G@BfmeThing928G@@QAEXXZ,0x000495F8,pin
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
+??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x01075D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
 ?bfmeTail930F@BfmeThing930F@@QAEXXZ,0x0091DD20,pin
 ?bfmeTail932E@BfmeThing932E@@QAEXXZ,0x000488F6,pin
 ?bfmeTail933B@BfmeTail933B@@QAEXXZ,0x0003436A,pin
