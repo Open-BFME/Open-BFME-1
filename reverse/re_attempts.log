@@ -19676,3 +19676,9 @@ _Rva0080ADE0	0x0080ADE0	542	partial	matched callers 0x0080B050,0x0080B070,0x0080
 ?d_006ba340@@YAXXZ	0x006BA340	202	blocked	identity unresolved: no built emitter; caller 0x00691670 is generated destructor ??_GGen_dtor_00691670 and does not establish an owning real symbol; t=4min model=gpt-5.6
 ?d_006bbd80@@YAXXZ	0x006BBD80	475	blocked	identity unresolved: no built emitter; caller 0x006BC280 is bfmePushGD@BfmeRingGD but does not prove this generated body ownership; t=5min model=gpt-5.6
 ?d_006b9aa0@@YAXXZ	0x006B9AA0	391	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established; t=3min model=gpt-5.6
+?d_006bba90@@YAXXZ	0x006BBA90	7	blocked	identity unresolved: no built emitter and no named caller; import-call thunk has no source owner established; t=3min model=gpt-5.6
+?d_006bc6e0@@YAXXZ	0x006BC6E0	48	blocked	identity unresolved: no built emitter; generated destructor caller does not prove an owning real symbol; t=4min model=gpt-5.6
+?d_006bd280@@YAXXZ	0x006BD280	203	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established; t=3min model=gpt-5.6
+?d_006ba340@@YAXXZ	0x006BA340	202	blocked	identity unresolved: no built emitter; generated destructor caller does not prove an owning real symbol; t=4min model=gpt-5.6
+?d_006bbd80@@YAXXZ	0x006BBD80	475	blocked	identity unresolved: no built emitter; named bfmePushGD caller does not prove this generated body ownership; t=5min model=gpt-5.6
+?d_006b9aa0@@YAXXZ	0x006B9AA0	391	blocked	identity unresolved: no built emitter and no named caller; generated body has no source owner established; t=3min model=gpt-5.6
