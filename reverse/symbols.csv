@@ -8841,6 +8841,7 @@ name,address,notes
 ??1NodeCompressedMotionStruct@@QAE@XZ,0x0002A08B,pinharvest x1 (thunk)
 ??1NodeMotionStruct@@QAE@XZ,0x0002F03B,pinharvest x1 (thunk)
 ??1Nugget@ModuleInfo@@QAE@XZ,0x000165B3,site-decoded x1 (thunk)
+??1BfmeOwnVUG@@QAE@XZ,0x0002F487,route=0x0013B8F0; retail ILT 0x0002F487 is an E9 jump stub to the matched BfmeOwnVUG dtor body
 ??1Nugget@Rva001417F0ModuleInfo@@QAE@XZ,0x0003B589,Open-BFME5 pin: Nugget destructor called directly from Rva001417F0ModuleInfo::clearModuleInfo at 0x001417F0 (already pinned virtual UAE at this address is a mis-shaped guess; this call site is a direct non-virtual dtor call)
 ??1OBBoxRenderObjClass@@UAE@XZ,0x00957BB0,exact 5-byte source body and 0x00957B90 deleting-destructor call prove identity
 ??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
