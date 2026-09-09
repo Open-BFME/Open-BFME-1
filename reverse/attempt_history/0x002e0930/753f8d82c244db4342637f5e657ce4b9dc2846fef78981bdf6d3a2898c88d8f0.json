@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "753f8d82c244db4342637f5e657ce4b9dc2846fef78981bdf6d3a2898c88d8f0",
+  "symbol": "??0BfmeListBG@@QAE@PAX0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ??0BfmeListBG@@QAE@PAX0@Z\n// partial score=0.97 date=2026-09-09\n// 47/47. Circular-list constructor: two parameter stores, a null of the node\n// member, __new_alloc::allocate(0xc), the two self-links and the real node\n// store. Marking BOTH parameter members volatile (not just the first) moves\n// retail's `push 0xc` past the first store, leaving one residue: retail\n// emits it after the second store too, ours still schedules it between the\n// two stores. Body-vs-init-list assignment order made no difference.\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int size);\n};\n\n}\n\nclass BfmeNodeBG\n{\npublic:\n\tBfmeNodeBG *m_bfmeNextBG;\n\tBfmeNodeBG *m_bfmePrevBG;\n\tvoid *m_bfmeValueBG;\n};\n\nclass BfmeListBG\n{\npublic:\n\tBfmeListBG(void *first, void *second);\n\n\tvoid *volatile m_bfmeFirstBG;\n\tvoid *volatile m_bfmeSecondBG;\n\tBfmeNodeBG *m_bfmeNodeBG;\n};\n\nBfmeListBG::BfmeListBG(void *first, void *second)\n\t: m_bfmeFirstBG(first), m_bfmeSecondBG(second)\n{\n\tm_bfmeNodeBG = 0;\n\n\tBfmeNodeBG *node = (BfmeNodeBG *)_STL::__new_alloc::allocate(0xc);\n\n\tnode->m_bfmeNextBG = node;\n\tnode->m_bfmePrevBG = node;\n\tm_bfmeNodeBG = node;\n}\n"
+}

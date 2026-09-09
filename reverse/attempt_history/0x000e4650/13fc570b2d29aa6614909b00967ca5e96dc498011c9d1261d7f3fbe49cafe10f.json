@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "13fc570b2d29aa6614909b00967ca5e96dc498011c9d1261d7f3fbe49cafe10f",
+  "symbol": "?fixup@BfmeVec12@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?fixup@BfmeVec12@@QAEXXZ\n// partial score=0.99 date=2026-09-09\n// ?fixup@BfmeVec12@@QAEXXZ\r\n// partial score=0.99 date=2026-09-02\r\n// cl: /O2\r\n\r\nstruct BfmeSub12\r\n{\r\n\tvoid construct();\r\n\tunsigned char m_bytes[4];\r\n};\r\n\r\nstruct BfmeElem12\r\n{\r\n\tvoid *m_ptr;\r\n\tunsigned char m_mid[4];\r\n\tBfmeSub12 m_sub;\r\n};\r\n\r\nclass BfmeAlloc12\r\n{\r\npublic:\r\n\tvoid *make(BfmeSub12 *sub);\r\n};\r\n\r\nextern BfmeAlloc12 *TheBfmeAlloc12;\r\n\r\nstatic __forceinline unsigned int addBfmeOffset(unsigned int offset, unsigned int base)\r\n{\r\n\treturn offset + base;\r\n}\r\n\r\nclass BfmeVec12\r\n{\r\npublic:\r\n\tvoid fixup();\r\n\r\n\tBfmeElem12 *m_begin;\r\n\tBfmeElem12 *m_end;\r\n};\r\n\r\nvoid BfmeVec12::fixup()\r\n{\r\n\tBfmeElem12 *begin = m_begin;\r\n\tBfmeElem12 *last = m_end;\r\n\tunsigned int n = last - begin;\r\n\tunsigned int i = 0;\r\n\tif (n == 0)\r\n\t\treturn;\r\n\tunsigned int off = 0;\r\n\tdo\r\n\t{\r\n\t\tBfmeElem12 *e = (BfmeElem12 *)(off + (unsigned int)begin);\r\n\t\te->m_ptr = TheBfmeAlloc12->make(&e->m_sub);\r\n\t\tBfmeSub12 *sub = (BfmeSub12 *)(addBfmeOffset(off, (unsigned int)m_begin) + 8);\r\n\t\tsub->construct();\r\n\t\tbegin = m_begin;\r\n\t\tlast = m_end;\r\n\t\tn = last - begin;\r\n\t\t++i;\r\n\t\toff += 12;\r\n\t} while (i < n);\r\n}\r\n"
+}
