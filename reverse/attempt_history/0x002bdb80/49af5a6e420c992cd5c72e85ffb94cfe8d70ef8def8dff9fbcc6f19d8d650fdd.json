@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "49af5a6e420c992cd5c72e85ffb94cfe8d70ef8def8dff9fbcc6f19d8d650fdd",
+  "symbol": "?onEnter@GiantBirdFollowPathState@@UAE?AW4StateReturnType@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.84,
+  "source": "// ?onEnter@GiantBirdFollowPathState@@UAE?AW4StateReturnType@@XZ\n// partial score=0.84 date=2026-09-09\n// cl: /DNDEBUG /MD\n\nenum StateReturnType\n{\n\tSTATE_CONTINUE = 0,\n\tSTATE_SUCCESS = -1,\n\tSTATE_FAILURE = -2\n};\n\nclass Object\n{\npublic:\n\tunsigned char m_beforeAI[0x204];\n\tclass GiantBirdAIUpdate *m_aiUpdate;\n\tunsigned char m_beforeFlags[0x344 - 0x208];\n\tunsigned char m_flags344;\n};\n\nclass StateMachine\n{\npublic:\n\tunsigned char m_beforeOwner[0x10];\n\tObject *m_owner;\n};\n\nclass GiantBirdAIUpdate\n{\npublic:\n\tunsigned char m_beforeFlags[0x3f0];\n\tunsigned int m_flags3f0;\n\tunsigned char m_beforeByte[0x424 - 0x3f4];\n\tunsigned char m_byte424;\n};\n\nclass GiantBirdFollowPathState\n{\npublic:\n\tvirtual StateReturnType onEnter();\n\tbool tryAdvance();\n\nprivate:\n\tint m_id;\n\tint m_successStateID;\n\tint m_failureStateID;\n\tvoid *m_transitions[3];\n\tStateMachine *m_machine;\n\tunsigned char m_gap20[0x5c - 0x20];\n\tint m_counter;\n};\n\nStateReturnType GiantBirdFollowPathState::onEnter()\n{\n\tm_counter = 0;\n\tObject *obj = m_machine->m_owner;\n\tGiantBirdAIUpdate *ai = obj->m_aiUpdate;\n\tif (!ai)\n\t\tgoto failure;\n\tif (obj->m_flags344 & 1)\n\t\tgoto failure;\n\tif (!tryAdvance())\n\t\treturn STATE_SUCCESS;\n\tif (ai->m_byte424)\n\t\tgoto markEnabled;\nfailure:\n\treturn STATE_FAILURE;\nmarkEnabled:\n\tai->m_flags3f0 |= 0x80;\n\treturn STATE_CONTINUE;\n}\n"
+}

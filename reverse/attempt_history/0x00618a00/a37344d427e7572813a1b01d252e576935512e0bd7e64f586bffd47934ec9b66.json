@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a37344d427e7572813a1b01d252e576935512e0bd7e64f586bffd47934ec9b66",
+  "symbol": "?bfmeUpdateHJ@BfmeStateHJ@@QAEXD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeUpdateHJ@BfmeStateHJ@@QAEXD@Z\n// partial score=0.97 date=2026-09-09\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nextern const float BfmeZeroRange;\n\nclass BfmeThingHJ\n{\npublic:\n\tBfmeThingHJ *bfmeGetHJ();\n\n\tunsigned char m_bfmeHeadHJ[4];\n\tBfmeThingHJ *m_bfmeSubHJ;\n\tunsigned char m_bfmeGapHJ[8];\n\tint m_bfmeValueHJ;\n};\n\nclass BfmeOwnerHJ\n{\npublic:\n\tunsigned char m_bfmeHeadHJ[8];\n\tint m_bfmeArgHJ;\n};\n\nvoid bfmeCallHJ(int a, int b, int c, int d);\n\nclass BfmeStateHJ\n{\npublic:\n\tvoid bfmeUpdateHJ(char on);\n\n\tunsigned char m_bfmeHeadHJ[4];\n\tBfmeThingHJ *m_bfme04HJ;\n\tunsigned char m_bfmeGap0HJ[4];\n\tBfmeOwnerHJ *m_bfme0cHJ;\n\tchar m_bfme10HJ;\n\tunsigned char m_bfmePadHJ[3];\n\tint m_bfme14HJ;\n\tfloat m_bfme18HJ;\n};\n\nstatic __forceinline BfmeThingHJ *bfmeDerefHJ(BfmeThingHJ *p)\n{\n\tif (p->m_bfmeSubHJ != 0)\n\t\treturn p->m_bfmeSubHJ->bfmeGetHJ();\n\n\treturn p;\n}\n\nvoid BfmeStateHJ::bfmeUpdateHJ(char on)\n{\n\tif (m_bfme18HJ != BfmeZeroRange && on == 0)\n\t{\n\t\tvolatile BfmeStateHJ *vv = this;\n\n\t\tvv->m_bfme18HJ = 0;\n\t\tvv->m_bfme14HJ = 0;\n\n\t\tBfmeThingHJ *p = vv->m_bfme04HJ;\n\t\tBfmeThingHJ *r;\n\n\t\tif (p == 0)\n\t\t\tr = 0;\n\t\telse\n\t\t\tr = bfmeDerefHJ(p);\n\n\t\tint v = r->m_bfmeValueHJ;\n\t\tint a = vv->m_bfme0cHJ->m_bfmeArgHJ;\n\t\tvolatile int home = v;\n\n\t\tbfmeCallHJ(a, v, v, v);\n\t}\n\telse if (m_bfme10HJ == 0 && on != 0)\n\t{\n\t\tm_bfme18HJ = 1.0f;\n\t\tm_bfme14HJ = 0;\n\t}\n}\n"
+}

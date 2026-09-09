@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "494dd85b4cbe5e77951d9b4c4917a7025e2125fa6f98574701bacf63c96e27a1",
+  "symbol": "?bfmeAskBI@BfmeThingBI@@QAEEXZ",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?bfmeAskBI@BfmeThingBI@@QAEEXZ\n// partial score=0.91 date=2026-09-09\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nclass BfmeThingBI\n{\npublic:\n\tvirtual unsigned char slot0(void) = 0;\n\tvirtual unsigned char dispatch(void) = 0;\n\n\tunsigned char bfmeAskBI(void);\n\nprivate:\n\tunsigned char m_pad4[0x1D8];\n\tBfmeThingBI *m_forwardTarget;\n};\n\nunsigned char BfmeThingBI::bfmeAskBI(void)\n{\n\tif (m_forwardTarget)\n\t\treturn m_forwardTarget->dispatch();\n\treturn dispatch();\n}\n"
+}
