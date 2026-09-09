@@ -33,11 +33,13 @@ static-CRT direct calls do not byte-match.
 
 What differs from upstream
 --------------------------
-Twelve of the 48 files differ in code. BFME's Lua is EA's own fork of 4.0.1 —
-it has a real boolean type where stock 4.0.1 has none — and the changes below
-are a RECONSTRUCTION of that fork inferred from retail's bytes, not a copy of
-EA's source, which has never been published. Every one of them is marked at
-the point of change in the file itself as well as here.
+The entries below record code changes reconstructed for this BFME tree. This is
+a deliberately scoped record, not a fresh audit of every flattened Lua file;
+an unlisted file must not be treated as independently re-audited here. BFME's
+Lua is EA's own fork of 4.0.1 — it has a real boolean type where stock 4.0.1
+has none — and the changes below are a RECONSTRUCTION inferred from retail's
+bytes, not a copy of EA's source, which has never been published. Every listed
+change is marked at the point of change in the file itself as well as here.
 
     lvm.c       58   the boolean tag itself: `not` yields a boolean, the four
                      conditional-jump opcodes test it, tostring/lessthan handle
@@ -62,13 +64,15 @@ the point of change in the file itself as well as here.
     lopcodes.h   2   OP_PUSHBOOL inserted after OP_POP
     lapi.c       2   the luaH_new call site
     lstate.c     2   the luaH_new call site
+    liolib.c         `setreturn` and `io_open` use retail's fixed generic error
+                     tuple (`pushresult_close`) instead of the errno-based
+                     `pushresult`; `io_open` and `io_fromto` route regular file
+                     opens through the reconstructed `bfmeFopenVIF` import.
+                     These are BFME-specific reconstruction claims, not claims
+                     about upstream Lua source.
 
-The other 36 files are byte-for-byte upstream apart from the header comment
-block at the top. Re-derive the split with:
-
-    curl -L -o lua-4.0.1.tar.gz https://www.lua.org/ftp/lua-4.0.1.tar.gz
-
-and diff each file from its `** $Id` line down.
+For any file not listed above, compare it with the pinned Lua artifact before
+describing it as pristine; no additional whole-tree audit is claimed here.
 
 The boolean tag has no name in this tree because it has none in the image:
 retail switches on the literal 6, and lotrbfme.exe exports no Lua symbols and

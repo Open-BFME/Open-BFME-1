@@ -4,9 +4,9 @@
    lotrbfme.exe behind GameLogic/ScriptEngine/LuaScriptEngine.cpp.
    ALTERED SOURCE VERSION: upstream plus a reconstruction of EA's own changes
    to the language (a boolean type tag, OP_PUSHBOOL, an extra luaH_new
-   argument).  PROVENANCE.txt lists every file that differs from upstream and
-   how; a file absent from that list is upstream byte-for-byte apart from this
-   header.  Saying so is a condition of the licence at lua.h:215, not a
+   argument).  PROVENANCE.txt documents known reconstructed changes; compare
+   the pinned upstream artifact before treating an unlisted file as pristine.
+   Marking altered source is a condition of the licence at lua.h:215, not a
    courtesy.
    Retail linked the DLL CRT, so libc calls are __imp__ indirect calls --
    /MD is what makes those call sites byte-exact. */
@@ -30,6 +30,8 @@
 #include "lualib.h"
 
 
+/* BFME reconstruction: retail's Lua open paths use this custom file-open
+   import rather than the CRT fopen entry point. */
 __declspec(dllimport) void *bfmeFopenVIF (const char *name, const char *mode);
 
 
@@ -158,6 +160,7 @@ static void setfilebyname (lua_State *L, IOCtrl *ctrl, FILE *f,
 
 static int setreturn (lua_State *L, IOCtrl *ctrl, FILE *f, int inout) {
   if (f == NULL)
+    /* BFME reconstruction: retail uses the fixed generic error tuple here. */
     return pushresult_close(L, 0);
   else {
     setfile(L, ctrl, f, inout);
@@ -198,12 +201,15 @@ static int io_open (lua_State *L) {
   IOCtrl *ctrl = (IOCtrl *)lua_touserdata(L, -1);
   FILE *f;
   lua_pop(L, 1);  /* remove upvalue */
+  /* BFME reconstruction: retail routes this binding through the custom
+     file-open import. */
   f = (FILE *)bfmeFopenVIF(luaL_check_string(L, 1), luaL_check_string(L, 2));
   if (f) {
     lua_pushusertag(L, f, ctrl->iotag);
     return 1;
   }
   else
+    /* BFME reconstruction: retail uses the fixed generic error tuple here. */
     return pushresult_close(L, 0);
 }
 
@@ -221,6 +227,8 @@ static int io_fromto (lua_State *L, int inout, const char *mode) {
     current = (FILE *)lua_touserdata(L, 1);
   else {
     const char *s = luaL_check_string(L, 1);
+    /* BFME reconstruction: regular redirection uses the same custom-open
+       import as io_open. */
     current = (*s == '|') ? popen(s+1, mode) :
               (FILE *)bfmeFopenVIF(s, mode);
   }
