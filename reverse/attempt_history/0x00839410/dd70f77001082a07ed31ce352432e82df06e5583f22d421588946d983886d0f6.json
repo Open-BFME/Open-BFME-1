@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dd70f77001082a07ed31ce352432e82df06e5583f22d421588946d983886d0f6",
+  "symbol": "?do_get@?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MBE?AV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@2@V32@0_NAAVios_base@2@AAHAAO@Z",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?do_get@?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MBE?AV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@2@V32@0_NAAVios_base@2@AAHAAO@Z\n// partial score=0.8 date=2026-09-09\n// cl: /O2 /Ob1 /EHsc /MD /D_STLP_USE_STATIC_LIB\n// stlport\n// STLport 4.5.3 money_get<wchar_t, istreambuf_iterator<wchar_t> > long-double\n// overload at retail 0x00839410 (280B).  The vendor _monetary.c body first\n// dispatches the string overload, then parses its mutable wide buffer through\n// __get_decimal_integer<unsigned short *, long double> at 0x00839600.\n#include <locale>\n\n#pragma inline_depth(1)\n\ntypedef _STL::istreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> >\n\tBfmeMoneyWideIterator;\n\ntemplate <>\nBfmeMoneyWideIterator\n_STL::money_get<wchar_t, BfmeMoneyWideIterator>::do_get(\n\tBfmeMoneyWideIterator first, BfmeMoneyWideIterator last, bool intl,\n\t_STL::ios_base &stream, _STL::ios_base::iostate &error,\n\tlong double &units) const\n{\n\tstring_type buffer;\n\tfirst = do_get(first, last, intl, stream, error, buffer);\n\n\tif (error == _STL::ios_base::goodbit ||\n\t\terror == _STL::ios_base::eofbit)\n\t{\n\t\tbuffer.push_back(0);\n\t\tstring_type::iterator begin = buffer.begin(), end = buffer.end();\n\t\t_STL::__get_decimal_integer(begin, end, units);\n\t}\n\n\tif (first.equal(last))\n\t\terror |= _STL::ios_base::eofbit;\n\treturn first;\n}\n"
+}
