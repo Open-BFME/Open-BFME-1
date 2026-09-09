@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8fc773bb70235030b3d71ad7c2a279db664b769bf7d3b1d4bcfbcf8c16aafc4e",
+  "symbol": "?walk@Rva008D20F0Node@@QAEPAU1@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?walk@Rva008D20F0Node@@QAEPAU1@XZ\n// partial score=0.95 date=2026-09-09\n// Address-derived: walk this->m_next while the packed +0x4 field's low 6 bits\n// read kind 0x12 or 0x13 and bit 15 of that field is clear; otherwise return\n// the current node.\nstruct Rva008D20F0Node\n{\n\tunsigned char m_pad0[4];\n\tunsigned int m_kind;\n\tunsigned char m_pad8[0x4C - 8];\n\tRva008D20F0Node *m_next;\n\n\tRva008D20F0Node *walk();\n};\n\nRva008D20F0Node *Rva008D20F0Node::walk()\n{\n\tRva008D20F0Node *node = this;\n\tfor ( ;; )\n\t{\n\t\tunsigned int tag = node->m_kind & 0x3f;\n\t\tif ( tag == 0x12 )\n\t\t{\n\t\t\tif ( !((unsigned char)(~(node->m_kind >> 15)) & 1) )\n\t\t\t\treturn node;\n\t\t}\n\t\tif ( tag == 0x13 )\n\t\t{\n\t\t\tif ( !((unsigned char)(~(node->m_kind >> 15)) & 1) )\n\t\t\t\treturn node;\n\t\t}\n\t\tnode = node->m_next;\n\t}\n}\n"
+}

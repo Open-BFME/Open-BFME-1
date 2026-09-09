@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1a7978a75e091acd26fd8a267c51bff2e00849954d0aa08dbf286f9f0c5990fb",
+  "symbol": "?releaseContents@Rva009A2030OwnedRecord@@AAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.3,
+  "source": "// ?releaseContents@Rva009A2030OwnedRecord@@AAEXXZ\n// partial score=0.3 date=2026-09-09\n// ?releaseContents@Rva009A2030OwnedRecord@@AAEXXZ\n// Address-derived: reverse-order release of a ref-counted (ptr,obj) array,\n// then a dead compaction pass whose element count is always zero because it\n// subtracts m_finish from itself, matching retail's shipped bytes exactly.\n\nstruct Rva009A2030Releasable\n{\n\tvirtual void Release( int ) = 0;\n};\n\nstruct Rva009A2030Elem\n{\n\tvoid *m_ptr;\n\tRva009A2030Releasable *m_obj;\n};\n\nclass Rva009A2030OwnedRecord\n{\nprivate:\n\tvoid releaseContents();\n\n\tRva009A2030Elem *m_start;        // +0x00\n\tRva009A2030Elem *m_finish;       // +0x04\n\tvoid *m_pad08;                   // +0x08\n\tRva009A2030Elem *m_endOfStorage; // +0x0C\n};\n\nvoid Rva009A2030OwnedRecord::releaseContents()\n{\n\tRva009A2030Elem *p = m_finish;\n\tif( p != m_start )\n\t{\n\t\tdo\n\t\t{\n\t\t\t--p;\n\t\t\tif( p->m_obj )\n\t\t\t\tp->m_obj->Release( 1 );\n\t\t\tp->m_ptr = 0;\n\t\t\tp->m_obj = 0;\n\t\t} while( p != m_start );\n\t}\n\n\tRva009A2030Elem *dst = m_start;\n\tRva009A2030Elem *src = m_finish;\n\tint n = ( int )( m_finish - m_finish );\n\tfor( int i = 0; i < n; ++i )\n\t\tdst[ i ] = src[ i ];\n\n\tm_endOfStorage = 0;\n\tm_finish = m_start;\n}\n"
+}
