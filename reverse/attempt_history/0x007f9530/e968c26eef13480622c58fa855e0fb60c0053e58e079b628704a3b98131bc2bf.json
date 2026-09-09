@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e968c26eef13480622c58fa855e0fb60c0053e58e079b628704a3b98131bc2bf",
+  "symbol": "?lookup@Rva007FA2C0@@QAEPAURva007F96C0Rec@@PAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?lookup@Rva007FA2C0@@QAEPAURva007F96C0Rec@@PAX@Z\n// partial score=0.9 date=2026-09-09\n// cl: /O2\n// The FESL transactor scans populated 0x18-byte records for a matching key.\n\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nstruct Rva007F9A40Key\n{\n\tconst char *a;\n\tconst char *b;\n\tint c;\n\tbool matches(const Rva007F9A40Key *other) const;\n};\n\nstruct Rva007F96C0Rec\n{\n\tchar present;\n\tchar pad[3];\n\tRva007F9A40Key key;\n\tint value10;\n\tint value14;\n};\n\nclass Rva007FA2C0\n{\npublic:\n\tRva007F96C0Rec *lookup(void *key);\n\nprivate:\n\tchar pad00[0x10];\n\tvolatile int count;\n\tchar pad14[0x394];\n\tRva007F96C0Rec records[0x20];\n};\n\nRva007F96C0Rec *Rva007FA2C0::lookup(void *key)\n{\n\tint i = 0;\n\tRva007F96C0Rec *record;\n\tif (key == 0)\n\t\tgoto fail;\n\trecord = records;\n\tfor (;;)\n\t{\n\t\t_ReadWriteBarrier();\n\t\tif (i >= count)\n\t\t\tgoto fail;\n\t\tif (record->present != 0 &&\n\t\t\t((Rva007F9A40Key *)key)->matches(&record->key))\n\t\t\treturn record;\n\t\t++i;\n\t\t++record;\n\t}\n\nfail:\n\treturn 0;\n}\n"
+}
