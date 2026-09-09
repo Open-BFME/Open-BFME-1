@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc- /Oy
 // readable body of ?Draw_Strip@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 
 // DX8Wrapper::Draw (0x00906B40), Draw_Triangles (0x00906DF0), and Draw_Strip
@@ -15,7 +15,9 @@ typedef long HRESULT;
 
 enum D3DPRIMITIVETYPE
 {
-	D3DPT_TRIANGLELIST = 4
+	D3DPT_TRIANGLELIST = 4,
+	D3DPT_TRIANGLESTRIP = 5,
+	D3DPT_TRIANGLEFAN = 6
 };
 
 // The BFME executable keeps the D3D8 type names but calls the device through
@@ -53,6 +55,16 @@ struct IDirect3DDevice8
 	virtual HRESULT __stdcall DrawPrimitive(D3DPRIMITIVETYPE, UnsignedInt, UnsignedInt) = 0;
 	virtual HRESULT __stdcall DrawIndexedPrimitive(
 		D3DPRIMITIVETYPE, UnsignedInt, UnsignedInt, UnsignedInt, UnsignedInt, UnsignedInt) = 0;
+	DX8_DRAW_DUMMY(83) DX8_DRAW_DUMMY(84) DX8_DRAW_DUMMY(85) DX8_DRAW_DUMMY(86)
+	DX8_DRAW_DUMMY(87) DX8_DRAW_DUMMY(88)
+	virtual HRESULT __stdcall SetFVF(UnsignedInt) = 0;
+	DX8_DRAW_DUMMY(90) DX8_DRAW_DUMMY(91) DX8_DRAW_DUMMY(92) DX8_DRAW_DUMMY(93)
+	DX8_DRAW_DUMMY(94) DX8_DRAW_DUMMY(95) DX8_DRAW_DUMMY(96) DX8_DRAW_DUMMY(97)
+	DX8_DRAW_DUMMY(98) DX8_DRAW_DUMMY(99)
+	virtual HRESULT __stdcall SetStreamSource(
+		UnsignedInt, void *, UnsignedInt, UnsignedInt) = 0;
+	DX8_DRAW_DUMMY(101) DX8_DRAW_DUMMY(102) DX8_DRAW_DUMMY(103)
+	virtual HRESULT __stdcall SetIndices(void *) = 0;
 };
 #undef DX8_DRAW_DUMMY
 
@@ -101,6 +113,120 @@ struct RenderStateStruct
 	UnsignedShort index_base_offset;
 };
 
+// The conversion uses the already matched BoxDynamicVBAccessClass and
+// DynamicIBAccessClass bodies.  Their declarations are TU-local in their
+// owning source files, so this source carries only the proven retail layouts
+// needed by this caller.  In particular, the Box FVF table is the BFME
+// 0x40-byte slot array used by its matched constructor; the stride is at +4.
+struct BfmeDynamicVBSlot
+{
+	UnsignedInt fvf;
+	UnsignedInt fvf_size;
+
+	UnsignedInt Get_FVF() const { return fvf; }
+	UnsignedInt Get_FVF_Size() const { return fvf_size; }
+};
+
+struct VertexFormatXYZNDUV2
+{
+	float x, y, z;
+	float nx, ny, nz;
+	UnsignedInt diffuse;
+	float u1, v1, u2, v2;
+};
+
+class BoxVertexBufferClass
+{
+	char unused[0x1c];
+	void *vertex_buffer;
+
+public:
+	void *Get_DX8_Vertex_Buffer() const { return vertex_buffer; }
+};
+
+class DX8Wrapper;
+
+class BfmeSortingVertexBufferClass
+{
+	char unused[0x1c];
+
+public:
+	struct VertexFormatXYZNDUV2 *vertex_buffer;
+};
+
+class BoxDynamicVBAccessClass
+{
+	friend class DX8Wrapper;
+
+	BfmeDynamicVBSlot *FVFInfo;
+	UnsignedInt Type;
+	UnsignedInt FVF;
+	UnsignedInt Start;
+	UnsignedShort VertexCount;
+	UnsignedShort VertexBufferOffset;
+	BoxVertexBufferClass *VertexBuffer;
+
+public:
+	BoxDynamicVBAccessClass(
+		UnsignedInt type, UnsignedInt fvf, UnsignedShort vertex_count, UnsignedInt start);
+	~BoxDynamicVBAccessClass();
+
+	const BfmeDynamicVBSlot &FVF_Info() const { return *FVFInfo; }
+
+	class WriteLockClass
+	{
+		BoxDynamicVBAccessClass *DynamicVBAccess;
+		struct VertexFormatXYZNDUV2 *Vertices;
+
+	public:
+		WriteLockClass(BoxDynamicVBAccessClass *vb_access);
+		~WriteLockClass();
+		struct VertexFormatXYZNDUV2 *Get_Formatted_Vertex_Array() { return Vertices; }
+	};
+};
+
+class BfmeDynamicIndexBufferClass
+{
+	char unused[0x14];
+	void *index_buffer;
+
+public:
+	void *Get_DX8_Index_Buffer() const { return index_buffer; }
+};
+
+class BfmeSortingIndexBufferClass
+{
+	char unused[0x14];
+
+public:
+	UnsignedShort *index_buffer;
+};
+
+class DynamicIBAccessClass
+{
+	friend class DX8Wrapper;
+
+	UnsignedInt Type;
+	UnsignedShort IndexCount;
+	UnsignedShort IndexBufferOffset;
+	BfmeDynamicIndexBufferClass *IndexBuffer;
+
+public:
+	DynamicIBAccessClass(UnsignedShort type, UnsignedShort index_count);
+	~DynamicIBAccessClass();
+
+	class WriteLockClass
+	{
+		DynamicIBAccessClass *DynamicIBAccess;
+		UnsignedShort *Indices;
+
+	public:
+		WriteLockClass(DynamicIBAccessClass *ib_access);
+		~WriteLockClass();
+		UnsignedShort *Get_Index_Array() { return Indices; }
+	};
+};
+
 namespace Debug_Statistics
 {
 	void Record_DX8_Polys_And_Vertices(
@@ -139,7 +265,11 @@ class DX8Wrapper
 	static unsigned DrawPolygonLowBoundLimit;
 	static IDirect3DDevice8 *D3DDevice;
 	static RenderStateStruct render_state;
+	static unsigned vertex_buffer_changes;
+	static unsigned index_buffer_changes;
 	static unsigned draw_calls;
+
+	static IDirect3DDevice8 *_Get_D3D_Device8() { return D3DDevice; }
 
 	static bool _Is_Triangle_Draw_Enabled() { return _EnableTriangleDraw; }
 	static void Apply_Render_State_Changes();
@@ -163,6 +293,93 @@ private:
 		UnsignedShort vertex_count,
 		int indexed_draw);
 };
+
+// ?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z
+void DX8Wrapper::Draw_Sorting_IB_VB(
+	unsigned primitive_type,
+	UnsignedShort start_index,
+	UnsignedShort polygon_count,
+	UnsignedShort min_vertex_index,
+	UnsignedShort vertex_count)
+{
+	// Sorting buffers are copied into the BFME dynamic DX8 buffers before the
+	// device draw.  The two access classes and their lock lifetimes are the
+	// matched retail bodies listed above; only their ABI views are local here.
+	BoxDynamicVBAccessClass dyn_vb_access(
+		BUFFER_TYPE_DYNAMIC_DX8, 5, vertex_count, 0);
+	{
+		BoxDynamicVBAccessClass::WriteLockClass lock(&dyn_vb_access);
+		VertexFormatXYZNDUV2 *src =
+			reinterpret_cast<BfmeSortingVertexBufferClass *>(render_state.vertex_buffers[0])->vertex_buffer;
+		VertexFormatXYZNDUV2 *dest = lock.Get_Formatted_Vertex_Array();
+		src += render_state.vba_offset + render_state.index_base_offset + min_vertex_index;
+		UnsignedInt size = dyn_vb_access.FVF_Info().Get_FVF_Size() * vertex_count / sizeof(UnsignedInt);
+		UnsignedInt *dest_u = reinterpret_cast<UnsignedInt *>(dest);
+		UnsignedInt *src_u = reinterpret_cast<UnsignedInt *>(src);
+
+		for (UnsignedInt i = 0; i < size; ++i) {
+			*dest_u++ = *src_u++;
+		}
+	}
+
+	_Get_D3D_Device8()->SetStreamSource(
+		0,
+		dyn_vb_access.VertexBuffer->Get_DX8_Vertex_Buffer(),
+		0,
+		dyn_vb_access.FVF_Info().Get_FVF_Size());
+	number_of_DX8_calls++;
+
+	UnsignedInt fvf = dyn_vb_access.FVF_Info().Get_FVF();
+	if (fvf != 0) {
+		_Get_D3D_Device8()->SetFVF(fvf);
+		number_of_DX8_calls++;
+	}
+	vertex_buffer_changes++;
+
+	UnsignedInt index_count = 0;
+	switch (primitive_type) {
+	case D3DPT_TRIANGLELIST:
+		index_count = polygon_count * 3;
+		break;
+	case D3DPT_TRIANGLESTRIP:
+		index_count = polygon_count + 2;
+		break;
+	case D3DPT_TRIANGLEFAN:
+		index_count = polygon_count + 2;
+		break;
+	default:
+		break;
+	}
+
+	DynamicIBAccessClass dyn_ib_access(BUFFER_TYPE_DYNAMIC_DX8, index_count);
+	{
+		DynamicIBAccessClass::WriteLockClass lock(&dyn_ib_access);
+		UnsignedShort *dest = lock.Get_Index_Array();
+		UnsignedShort *src =
+			reinterpret_cast<BfmeSortingIndexBufferClass *>(render_state.index_buffer)->index_buffer;
+		src += render_state.iba_offset + start_index;
+
+		for (UnsignedShort i = 0; i < index_count; ++i) {
+			UnsignedShort index = *src++;
+			index -= min_vertex_index;
+			*dest++ = index;
+		}
+	}
+
+	_Get_D3D_Device8()->SetIndices(dyn_ib_access.IndexBuffer->Get_DX8_Index_Buffer());
+	number_of_DX8_calls++;
+	index_buffer_changes++;
+	draw_calls++;
+	_Get_D3D_Device8()->DrawIndexedPrimitive(
+		D3DPT_TRIANGLELIST,
+		dyn_vb_access.VertexBufferOffset,
+		0,
+		vertex_count,
+		dyn_ib_access.IndexBufferOffset,
+		polygon_count);
+	number_of_DX8_calls++;
+	Debug_Statistics::Record_DX8_Polys_And_Vertices(polygon_count, vertex_count, render_state.shader);
+}
 
 // ?Draw@DX8Wrapper@@CAXHGGGGH@Z
 void DX8Wrapper::Draw(
