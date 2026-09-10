@@ -158,18 +158,19 @@ NetCommandList *NetPacket::getCommandList()
     UnsignedInt commandID = 0;
     Bool commandIDWasRead = false;
     NetCommandRef *lastCommand = NULL;
+    register UnsignedByte *data = m_packet;
     Int i = 0;
     while (i < m_packetLen) {
-        if (m_packet[i] == 'T') {
-            UnsignedByte value; memcpy(&value,m_packet+i+1,sizeof(UnsignedByte)); ++i; memcpy(&commandType,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
-        } else if (m_packet[i] == 'F') {
-            UnsignedInt value; memcpy(&value,m_packet+i+1,sizeof(UnsignedInt)); ++i; memcpy(&frame,&value,sizeof(UnsignedInt)); i += sizeof(UnsignedInt);
-        } else if (m_packet[i] == 'P') {
-            UnsignedByte value; memcpy(&value,m_packet+i+1,sizeof(UnsignedByte)); ++i; memcpy(&playerID,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
-        } else if (m_packet[i] == 'R') {
-            UnsignedByte value; memcpy(&value,m_packet+i+1,sizeof(UnsignedByte)); ++i; memcpy(&relay,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
-        } else if (m_packet[i] == 'C') {
-            UnsignedShort value; memcpy(&value,m_packet+i+1,sizeof(UnsignedShort)); ++i; memcpy(&commandID,&value,sizeof(UnsignedShort)); i += sizeof(UnsignedShort);
+        if (data[i] == 'T') {
+            UnsignedByte value; memcpy(&value,data+i+1,sizeof(UnsignedByte)); ++i; memcpy(&commandType,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
+        } else if (data[i] == 'F') {
+            UnsignedInt value; memcpy(&value,data+i+1,sizeof(UnsignedInt)); ++i; memcpy(&frame,&value,sizeof(UnsignedInt)); i += sizeof(UnsignedInt);
+        } else if (data[i] == 'P') {
+            UnsignedByte value; memcpy(&value,data+i+1,sizeof(UnsignedByte)); ++i; memcpy(&playerID,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
+        } else if (data[i] == 'R') {
+            UnsignedByte value; memcpy(&value,data+i+1,sizeof(UnsignedByte)); ++i; memcpy(&relay,&value,sizeof(UnsignedByte)); i += sizeof(UnsignedByte);
+        } else if (data[i] == 'C') {
+            UnsignedShort value; memcpy(&value,data+i+1,sizeof(UnsignedShort)); ++i; memcpy(&commandID,&value,sizeof(UnsignedShort)); i += sizeof(UnsignedShort);
             commandIDWasRead = true;
         } else if (data[i] == 'D') {
             ++i;
@@ -218,7 +219,7 @@ NetCommandList *NetPacket::getCommandList()
             if(lastCommand){delete lastCommand;lastCommand=NULL;}
             lastCommand = new NetCommandRef(msg);
             msg->detach();
-        } else if(m_packet[i]=='Z') {
+        } else if(data[i]=='Z') {
             ++i;
             if (!lastCommand)break;
             NetCommandMsg *msg=NULL;

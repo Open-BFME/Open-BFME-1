@@ -669,12 +669,13 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
+	int zero = 0;
 	  
 		switch(Flavor) {
 		case ANIM_FLAVOR_TIMECODED:
 		{
 			TimeCodedMotionChannelClass * qchan = NodeMotion[pividx].tc.Q;
-			if (qchan) {
+			if (qchan != (TimeCodedMotionChannelClass *)zero) {
 				Quaternion q;
 				uint32 tc0 = frame;
 				uint32 pidx;
@@ -728,21 +729,21 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 				::Build_Matrix3D(q,mtx);
 			}
 			else mtx.Make_Identity();
-			if (motion->tc.X) motion->tc.X->Get_Vector(frame, &(mtx[0][3]));
-			if (motion->tc.Y) motion->tc.Y->Get_Vector(frame, &(mtx[1][3]));
-			if (motion->tc.Z) motion->tc.Z->Get_Vector(frame, &(mtx[2][3]));
+			if (motion->tc.X != (TimeCodedMotionChannelClass *)zero) motion->tc.X->Get_Vector(frame, &(mtx[0][3]));
+			if (motion->tc.Y != (TimeCodedMotionChannelClass *)zero) motion->tc.Y->Get_Vector(frame, &(mtx[1][3]));
+			if (motion->tc.Z != (TimeCodedMotionChannelClass *)zero) motion->tc.Z->Get_Vector(frame, &(mtx[2][3]));
 			break;
 		}
 		case ANIM_FLAVOR_ADAPTIVE_DELTA:
 		{
-			if (NodeMotion[pividx].ad.Q) {
+			if (NodeMotion[pividx].ad.Q != (AdaptiveDeltaMotionChannelClass *)zero) {
 				::Build_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);
 			}
 			else mtx.Make_Identity();
 
-			if (motion->ad.X) motion->ad.X->Get_Vector(frame, &(mtx[0][3]));
-			if (motion->ad.Y) motion->ad.Y->Get_Vector(frame, &(mtx[1][3]));
-			if (motion->ad.Z) motion->ad.Z->Get_Vector(frame, &(mtx[2][3]));
+			if (motion->ad.X != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.X->Get_Vector(frame, &(mtx[0][3]));
+			if (motion->ad.Y != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.Y->Get_Vector(frame, &(mtx[1][3]));
+			if (motion->ad.Z != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.Z->Get_Vector(frame, &(mtx[2][3]));
 			break;
 		}
 		default:
