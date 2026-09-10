@@ -1,72 +1,99 @@
 // ?iterateSaveFiles@GameState@@AAEXP6AXVAsciiString@@PAX@Z1@Z
-// partial score=0.3 date=2026-09-05
-// ?iterateSaveFiles@GameState@@AAEXP6AXVAsciiString@@PAX@Z1@Z present-unmatched
+// partial score=0.3467 date=2026-09-10
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
+// Scratch-only ABI/layout experiment for GameState::iterateSaveFiles.
+
+#include <windows.h>
+
+typedef bool Bool;
+typedef char Char;
+typedef int Int;
+
+extern "C" unsigned int __cdecl strlen( const char *text );
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+	private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const StringBase<T> &source );
+	~StringBase();
+
+	struct Header
+	{
+		int refCount;
+		int length;
+		T data[ 1 ];
+	};
+
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString( const AsciiString &source ) : StringBase<char>( source ) {}
+	~AsciiString() {}
+
+	const char *str() const
+	{
+		return m_data ? (const char *)( m_data->data ) : "";
+	}
+
+	void set( const char *text, Int length );
+	void set( const char *text )
+	{
+		set( text, static_cast<Int>( strlen( text ) ) );
+	}
+};
+
+typedef void (*IterateSaveFileCallback)( AsciiString filename, void *userData );
+
+class GameState
+{
+public:
+	AsciiString getSaveDirectory( void ) const;
+
+	private:
+	void iterateSaveFiles( IterateSaveFileCallback callback, void *userData );
+};
+
+extern "C" int __cdecl stricmp( const char *left, const char *right );
+
 void GameState::iterateSaveFiles( IterateSaveFileCallback callback, void *userData )
 {
-
-	// sanity
-	if( callback == NULL )
+	if( !callback )
 		return;
 
-	// save the current directory
 	char currentDirectory[ _MAX_PATH ];
 	GetCurrentDirectory( _MAX_PATH, currentDirectory );
-
-	// switch into the save directory
 	SetCurrentDirectory( getSaveDirectory().str() );
 
-	// iterate all items in the directory
-	WIN32_FIND_DATA item;  // search item
-	HANDLE hFile = INVALID_HANDLE_VALUE;  // handle for search resources
-	Bool done = FALSE;
-	Bool first = TRUE;
-	while( done == FALSE )
+	WIN32_FIND_DATA item;
+	HANDLE hFile = FindFirstFile( "*", &item );
+	if( hFile == INVALID_HANDLE_VALUE )
+		return;
+	char *(__cdecl * const findDot)( const char *, int ) = strrchr;
+
+	while( TRUE )
 	{
-
-		// if our first time through we need to start the search
-		if( first )
-		{
-
-			// start search
-			hFile = FindFirstFile( "*", &item );
-			if( hFile == INVALID_HANDLE_VALUE )
-				return;
-
-			// we are no longer on our first item
-			first = FALSE;
-
-		}  // end if, first
-
-		// see if this is a file, and therefore a possible save file
 		if( !(item.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) )
 		{
-
-			// see if there is a ".sav" at end of this filename
-			Char *c = strrchr( item.cFileName, '.' );
-			if( c && stricmp( c, ".sav" ) == 0 )
+			Char *c = findDot( item.cFileName, '.' );
+			if( c && !stricmp( c, ".sav" ) )
 			{
-
-				// construction asciistring filename
 				AsciiString filename;
 				filename.set( item.cFileName );
-
-				// call the callback
 				callback( filename, userData );
+			}
+		}
 
-			}  // end if, a save file
-
-		}  // end if
-
-		// on to the next file
 		if( FindNextFile( hFile, &item ) == 0 )
-			done = TRUE;
+			break;
+	}
 
-	}  // end while
-
-	// close search resources
 	FindClose( hFile );
-
-	// restore the current directory
 	SetCurrentDirectory( currentDirectory );
-
-}  // end iterateSaveFiles
+}
