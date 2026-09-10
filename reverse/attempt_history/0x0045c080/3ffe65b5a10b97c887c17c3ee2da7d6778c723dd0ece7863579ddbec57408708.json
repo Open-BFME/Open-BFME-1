@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3ffe65b5a10b97c887c17c3ee2da7d6778c723dd0ece7863579ddbec57408708",
+  "symbol": "?d_0045c080@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_0045c080@@YAXXZ\n// partial score=0.85 date=2026-09-10\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib\n// stlport\n#include \"PreRTS.h\"\n\nextern const float BfmeZeroRange;   // 0x01075350\nextern const Real BfmeShadowScale;  // 0x0109BF3C\n\n// Unidentified retail leaf: clamps/scales a float and accumulates it into a\n// this-relative field at +0x98. No built emitter or named caller establishes\n// the owner, so this address-derived shim isolates the body for probing.\nclass Rva0045C080Owner\n{\npublic:\n\tchar m_pad[0x98];\n\tfloat m_field98;\n\tvoid bfmeAdd(Real value);\n};\n\nvoid Rva0045C080Owner::bfmeAdd(Real value)\n{\n\tif (value < BfmeZeroRange)\n\t\tvalue = value * BfmeShadowScale;\n\tm_field98 += value;\n}\n"
+}
