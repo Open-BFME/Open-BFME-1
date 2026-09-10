@@ -1,20 +1,16 @@
-// ?ID@?$VectorClass@VStringClass@@@@UAEHABVStringClass@@@Z
-// partial score=0.99 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 
-// Slot 4 of VectorClass<StringClass>'s vtable: the by-value/content search
-// overload, VectorClass<T>::ID(const T&) (find_index). Loops VectorMax
-// entries; the comparison resolves through StringClass's TCHAR* conversion
-// and Compare() to a direct _mbscmp call on the two 4-byte buffer pointers,
-// because StringClass has no vtable and a single member (m_Buffer).
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
+// VectorClass<StringClass>::ID(const StringClass &), the value-search vtable
+// slot at retail RVA 0x0013A670.  StringClass stores one character-buffer
+// pointer, so this specialization compares the pointed-to strings through
+// the CRT's _mbscmp import rather than comparing StringClass object pointers.
+// The VectorClass layout is the retail four-byte Vector/VectorMax/flags form.
 
 typedef char TCHAR;
 
 extern "C" __declspec( dllimport ) int __cdecl _mbscmp(
 	const unsigned char *left, const unsigned char *right );
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass
 {
 public:
@@ -41,7 +37,6 @@ public:
 	bool IsAllocated;
 };
 
-// ?ID@?$VectorClass@VStringClass@@@@UAEHABVStringClass@@@Z
 template <class T>
 int VectorClass<T>::ID(const T &object)
 {
