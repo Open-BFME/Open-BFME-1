@@ -81115,6 +81115,7 @@ name,address,notes
 ?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk
 ?getPosition@BFMESelectionDrawablePositionView@@QBEPBUCoord3D@@XZ,0x0004B12D,TU-scoped BFME Drawable position view; CanSelectDrawable retail ILT
 ?getPosition@Drawable@@QBEPBUCoord3D@@XZ,0x0004B12D,retail Drawable::getPosition ILT thunk to 0x0041D090
+?getScale@Drawable@@QBEMXZ,0x0003939C,route=0x00410E00; upstream W3DPropDraw reactToTransformChange call and body fld [ecx+0x1F8] prove Drawable scale getter
 ?getPosition@Gen0060C510Target@@QAEXPAUGen0060CBB0Coord3D@@@Z,0x0000F0FB,Living World eye tower position getter ILT from retail call target
 ?getPosition@Object@@QBE?AUCoord3D@@XZ,0x00007AD6,Thing/Object by-value position ILT thunk to 0x0018F790; privateFaceObject at 0x00279180 passes a hidden Coord3D dest
 ?getPosition@Team@@QAEXPAUCoord3D@@@Z,0x000241FE,Team position copy called by AIGuardMachine::getGuardScanPos
