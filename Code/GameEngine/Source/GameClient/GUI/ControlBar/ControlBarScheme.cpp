@@ -4000,8 +4000,7 @@ void ControlBarSchemeManager::parseAnimatingPartImage(INI *ini, void *instance, 
 //
 // Create a new control bar and return it.  Link it into our control bar list
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBarSchemeManager_newControlBarScheme_Thunk.cpp
-// ?newControlBarScheme@ControlBarSchemeManager@@QAEPAVControlBarScheme@@VAsciiString@@@Z present-unmatched
+// Verified retail body at 0x004AEB20 (267 bytes); INI parser is the named caller.
 ControlBarScheme *ControlBarSchemeManager::newControlBarScheme( AsciiString name )
 {
 	ControlBarScheme *cbScheme = 	findControlBarScheme(name);
