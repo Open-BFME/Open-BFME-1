@@ -81,7 +81,19 @@ struct BfmeCompVOU
 void bfmePushHeapVOU(BfmeElemVOU *first, int holeIndex, int topIndex,
 	BfmeElemVOU value, void *comp);
 
-#pragma comment(linker, "/alternatename:?bfmePushHeapVOU@@YAXPAUBfmeElemVOU@@HHU1@PAX@Z=?d_009ccf60@@YAXXZ")
+void bfmePushHeapVOU(BfmeElemVOU *first, int holeIndex, int topIndex,
+	BfmeElemVOU value, void *comp)
+{
+	BfmeCompVOU compare;
+	int parent = (holeIndex - 1) / 2;
+	while (holeIndex > topIndex && compare(*(first + parent), value))
+	{
+		*(first + holeIndex) = *(first + parent);
+		holeIndex = parent;
+		parent = (holeIndex - 1) / 2;
+	}
+	*(first + holeIndex) = value;
+}
 
 void bfmeAdjustHeapVOU(BfmeElemVOU *first, int holeIndex, int len,
 	BfmeElemVOU value, void *comp)
