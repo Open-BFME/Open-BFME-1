@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "encrypt.h"
+#include "Common/encrypt.h"
 
 #define MAX_CHARS 65
 static char Base_String[MAX_CHARS] =
@@ -42,7 +42,7 @@ static char Temp_Buffer [MAX_ENCRYPTED_STRING + 1];
 /* String is the original string to encrypt */
 /* Seed is the string to encrypt            */
 //char *encrypt(char  *String, char  *Seed)
-char *do_encrypt(char *String)
+const char *EncryptString(const char *String)
 {
 	/* We need a 56 bit key, so use two 32 bit values                 */
 	/* and we'll strip off the high order 8 bits                      */
@@ -93,4 +93,3 @@ void main(void)
 }
 
 #endif
-

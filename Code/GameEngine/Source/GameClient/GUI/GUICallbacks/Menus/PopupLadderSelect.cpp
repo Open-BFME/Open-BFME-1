@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/languagefilter /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -110,7 +110,7 @@ static NameKeyType badPasswordParentID = NAMEKEY_INVALID;
 static NameKeyType buttonBadPasswordOkID = NAMEKEY_INVALID;
 static GameWindow *badPasswordParent = NULL;
 
-static void updateLadderDetails( GameWindow *listboxLadderDetails, GameWindow *staticTextLadderName, Int ladderID );
+static void updateLadderDetails( Int ladderID, GameWindow *staticTextLadderName, GameWindow *listboxLadderDetails );
 
 void PopulateQMLadderComboBox( void );
 void PopulateCustomLadderComboBox( void );
@@ -143,7 +143,7 @@ static void populateLadderListBox( void )
 	selID = (Int)GadgetListBoxGetItemData(listboxLadderSelect, selIndex);
 	if (!selID)
 		return;
-	updateLadderDetails(listboxLadderDetails, staticTextLadderName, selID);
+	updateLadderDetails(selID, staticTextLadderName, listboxLadderDetails);
 }
 
 static void handleLadderSelection( Int ladderID )
@@ -346,6 +346,12 @@ static __forceinline const char *bfmePasswordString(const AsciiString &value)
 	return data ? data + 8 : (const char *)0x0107388B;
 }
 
+static __forceinline Bool bfmeUnicodeStringIsEmpty(const UnicodeString &value)
+{
+	const char *data = *(const char **)&value;
+	return !data || *(const WideChar *)(data + 4) == 0;
+}
+
 //-------------------------------------------------------------------------------------------------
 /** System callback */
 //-------------------------------------------------------------------------------------------------
@@ -459,7 +465,7 @@ WindowMsgHandledType PopupLadderSelectSystem( GameWindow *window, UnsignedInt ms
 			if (!selID)
 				break;
 
-            updateLadderDetails(listboxLadderDetails, staticTextLadderName, selID);
+            updateLadderDetails(selID, staticTextLadderName, listboxLadderDetails);
 			break;
 		}  // end GLM_DOUBLE_CLICKED
 
@@ -506,7 +512,7 @@ WindowMsgHandledType PopupLadderSelectSystem( GameWindow *window, UnsignedInt ms
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
-static void updateLadderDetails( GameWindow *listboxLadderDetails, GameWindow *staticTextLadderName, Int selID )
+static void updateLadderDetails( Int selID, GameWindow *staticTextLadderName, GameWindow *listboxLadderDetails )
 {
 	if (!staticTextLadderName || !listboxLadderDetails)
 		return;
@@ -527,7 +533,7 @@ static void updateLadderDetails( GameWindow *listboxLadderDetails, GameWindow *s
 	GadgetStaticTextSetText(staticTextLadderName, line);
 
 	// location
-	if (!info->location.isEmpty())
+	if (!bfmeUnicodeStringIsEmpty(info->location))
 		GadgetListBoxAddEntryText(listboxLadderDetails, info->location, captionColor, -1);
 
 	// homepage
@@ -535,7 +541,7 @@ static void updateLadderDetails( GameWindow *listboxLadderDetails, GameWindow *s
 	GadgetListBoxAddEntryText(listboxLadderDetails, line, captionColor, -1);
 
 	// description
-	if (!info->description.isEmpty())
+	if (!bfmeUnicodeStringIsEmpty(info->description))
 		GadgetListBoxAddEntryText(listboxLadderDetails, info->description, color, -1);
 
 	// requires password?
@@ -679,7 +685,7 @@ WindowMsgHandledType RCGameDetailsMenuSystem( GameWindow *window, UnsignedInt ms
 								NAMEKEY("PopupLadderDetails.wnd:StaticTextLadderName"));
 							GameWindow *lb = TheWindowManager->winGetWindowFromId(NULL,
 								NAMEKEY("PopupLadderDetails.wnd:ListBoxLadderDetails"));
-							updateLadderDetails(lb, st, selectedID);
+							updateLadderDetails(selectedID, st, lb);
 						}
 					}
 				}
