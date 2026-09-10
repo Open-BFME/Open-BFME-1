@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f1a306059f8141c04d0379bb8ec589d6eb6af2aa6965f222236258c96078c7f4",
+  "symbol": "?d_0020dad0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_0020dad0@@YAXXZ\n// partial score=0.75 date=2026-09-09\n// cl: /O2\n// Open-BFME: 43-byte flag select at retail 0x0020DAD0. Holder at this+8,\n// inner triple at holder+0x90. The 12-byte frame is a by-value triple whose\n// middle dword is CSE'd into the flag test, so only first and third are stored.\n// /O2 emits add-eax (5B) + mov-ecx,eax (2B) = 7B versus retail add-ecx (6B).\n\nstruct Rva0020DAD0Triple\n{\n\tint m_first;\n\tint m_flags;\n\tint m_third;\n\n\tint pick() const\n\t{\n\t\tRva0020DAD0Triple t = *this;\n\t\treturn (t.m_flags & 0x40) ? 0x1e : 0x14;\n\t}\n};\n\nstruct Rva0020DAD0Holder\n{\n\tchar m_pad[0x90];\n\tRva0020DAD0Triple m_inner;\n};\n\nclass Rva0020DAD0Thing\n{\npublic:\n\tint choose() const;\n\nprivate:\n\tchar m_pad[8];\n\tRva0020DAD0Holder *m_holder;\n};\n\nint Rva0020DAD0Thing::choose() const\n{\n\treturn m_holder->m_inner.pick();\n}\n"
+}
