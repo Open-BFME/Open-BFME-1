@@ -8717,6 +8717,7 @@ name,address,notes
 ??1GiantBirdSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1GiveUpgradeUpdate@@MAE@XZ,0x000157E4,destructor ILT to 0x0025DA10
 ??1GlobalData@@UAE@XZ,0x0000564B,GlobalData destructor ILT called by authentic scalar-deleting destructor at 0x000844E0
+??1GloriousChargeUpdateModuleData@@UAE@XZ,0x00048C11,route=0x002A5CC0; constructor vtable 0x010B5428 slot zero reaches scalar deleting destructor 0x0025E850 which calls this derived-destructor chain
 ??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
 ??1GrantStealthBehaviorModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
 ??1GrantStealthBehaviorModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
