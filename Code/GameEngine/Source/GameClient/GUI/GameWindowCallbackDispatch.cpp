@@ -40,3 +40,32 @@ WindowMsgHandledType Rva00479210GameWindow::dispatch( UnsignedInt msg,
 
 	return slot08( msg, mData1, mData2 );
 }
+
+// Honest address-derived identity: GameWindowManager's named input-message
+// caller at 0x0047CA30 reaches this ILT, and its raw 22-byte target proves only
+// the forwarding layout and virtual slot.  The class owner remains unresolved.
+class Rva004791F0GameWindow
+{
+public:
+	virtual WindowMsgHandledType slot00( UnsignedInt msg,
+		WindowMsgData mData1, WindowMsgData mData2 ) = 0;
+	virtual WindowMsgHandledType slot04( UnsignedInt msg,
+		WindowMsgData mData1, WindowMsgData mData2 ) = 0;
+
+	WindowMsgHandledType dispatch( UnsignedInt msg,
+		WindowMsgData mData1, WindowMsgData mData2 );
+
+private:
+	char m_pad0[ 0x1D8 ];
+	Rva004791F0GameWindow *m_forwardTarget;
+};
+
+// ?dispatch@Rva004791F0GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z 0x004791F0
+WindowMsgHandledType Rva004791F0GameWindow::dispatch( UnsignedInt msg,
+	WindowMsgData mData1, WindowMsgData mData2 )
+{
+	if( m_forwardTarget )
+		return m_forwardTarget->slot04( msg, mData1, mData2 );
+
+	return slot04( msg, mData1, mData2 );
+}
