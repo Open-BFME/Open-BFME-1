@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0b831e0e975a37315b8f89eef0b2e7606259cf10610292e4218e35ec4ada620f",
+  "symbol": "?d_00749a90@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_00749a90@@YAXXZ\n// partial score=0.85 date=2026-09-09\nclass BfmeMaskEUB\n{\npublic:\n\tvoid bfmeSetBitEUB(int x, int y, char set);\n\n\tunsigned char m_bfmeHeadEUB[8];\n\tint m_bfmeWEUB;\n\tint m_bfmeHEUB;\n\tunsigned char m_bfmePadAEUB[0x24];\n\tint m_bfmePitchEUB;\n\tunsigned char *m_bfmeBeginEUB;\n\tunsigned char *m_bfmeEndEUB;\n};\n\nvoid BfmeMaskEUB::bfmeSetBitEUB(int x, int y, char set)\n{\n\tif (x < 0 || y < 0 || y >= m_bfmeHEUB || x >= m_bfmeWEUB)\n\t\treturn;\n\n\tint offset = m_bfmePitchEUB * y + (x >> 3);\n\n\tif ((unsigned int)offset >= (unsigned int)(m_bfmeEndEUB - m_bfmeBeginEUB))\n\t\treturn;\n\n\tunsigned char *p = *(unsigned char *volatile *)&m_bfmeBeginEUB + offset;\n\tunsigned char mask = (unsigned char)(1 << (x & 7));\n\n\tif (set)\n\t\t*p |= mask;\n\telse\n\t\t*p &= ~mask;\n}\n"
+}
