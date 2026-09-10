@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6893e1e0152bda2e2572cdf8f3303e2be7bba1d3138b120fe4b5fdbd8c7c4b3b",
+  "symbol": "?init@LanguageFilter@@UAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?init@LanguageFilter@@UAEXXZ\n// partial score=0.55 date=2026-09-10\n// ?init@LanguageFilter@@UAEXXZ\n// Complete semantic source attempt for retail 0x0044E7A0 (310 bytes).\n\n#include \"PreRTS.h\"\n#include \"GameClient/LanguageFilter.h\"\n#include \"Common/FileSystem.h\"\n#include \"Common/File.h\"\n\nvoid LanguageFilter::init()\n{\n\tm_wordList.clear();\n\n\tFile *file1 = TheFileSystem->openFile(BadWordFileName, File::READ | File::BINARY);\n\tif (file1 == NULL) {\n\t\treturn;\n\t}\n\n\twchar_t word[128];\n\twhile (readWord(file1, word)) {\n\t\tInt wordLen = wcslen(word);\n\t\tif (wordLen == 0) {\n\t\t\tcontinue;\n\t\t}\n\t\tfor (Int i = 0; i < wordLen; ++i) {\n\t\t\tword[i] = word[i] ^ LANGUAGE_XOR_KEY;\n\t\t}\n\t\tUnicodeString uniword(word);\n\t\tunHaxor(uniword);\n\t\tm_wordList[uniword] = true;\n\t}\n\n\tfile1->close();\n\tfile1 = NULL;\n}\n"
+}
