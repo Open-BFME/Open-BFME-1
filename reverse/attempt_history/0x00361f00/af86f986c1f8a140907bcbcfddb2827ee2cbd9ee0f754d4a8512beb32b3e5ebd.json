@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "af86f986c1f8a140907bcbcfddb2827ee2cbd9ee0f754d4a8512beb32b3e5ebd",
+  "symbol": "?bfmeThreeDVB@BfmeSubDVB@@QAE?AVBfmeStrAVTV@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeThreeDVB@BfmeSubDVB@@QAE?AVBfmeStrAVTV@@H@Z\n// partial score=0.98 date=2026-09-10\nclass BfmeStrAVTV\n{\npublic:\n\tBfmeStrAVTV(const BfmeStrAVTV &other);\n\t~BfmeStrAVTV();\n\n\tchar *m_bfme00;\n};\n\nextern BfmeStrAVTV Rva01336E50Str;\n\nclass BfmeElementDVB\n{\npublic:\n\tBfmeStrAVTV getName() const;\n\n\tunsigned char m_bfmeBody[0x58];\n};\n\nclass BfmeSubDVB\n{\npublic:\n\tvoid bfmeOneDVB(void *a, void *b);\n\tvoid bfmeTwoDVB(void *a, void *b);\n\tvoid bfmeThreeDVB(void *a, void *b);\n\tBfmeStrAVTV bfmeThreeDVB(int index);\n\n\tunsigned char m_bfmeHead[0x18];\n\tBfmeElementDVB *m_bfmeBegin;\n\tBfmeElementDVB *m_bfmeEnd;\n};\n\nBfmeStrAVTV BfmeSubDVB::bfmeThreeDVB(int index)\n{\n\tif (index >= 0 && (unsigned int)index <\n\t\t(unsigned int)(m_bfmeEnd - m_bfmeBegin))\n\t{\n\t\treturn (*(BfmeElementDVB *volatile *)&m_bfmeBegin)[index].getName();\n\t}\n\n\treturn Rva01336E50Str;\n}\n\nstruct BfmeThingDVB\n{\n\tvoid *bfmeGoDVBa(void *a, void *b);\n\tvoid *bfmeGoDVBb(void *a, void *b);\n\tvoid *bfmeGoDVBc(void *a, void *b);\n\tunsigned char m_bfmeHead[0x170];\n\tBfmeSubDVB m_bfmeSub;\n};\n\nvoid *BfmeThingDVB::bfmeGoDVBa(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeOneDVB(a, b);\n\treturn a;\n}\n\nvoid *BfmeThingDVB::bfmeGoDVBb(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeTwoDVB(a, b);\n\treturn a;\n}\n\nvoid *BfmeThingDVB::bfmeGoDVBc(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeThreeDVB(a, b);\n\treturn a;\n}\n"
+}

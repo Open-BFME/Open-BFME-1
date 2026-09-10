@@ -1,40 +1,74 @@
-// ?d_00361f00@@YAXXZ
-// partial score=0.97 date=2026-09-10
-// ?d_00361f00@@YAXXZ
-// Partial clean reconstruction for the 0x00361F00 triplet member.
-class BfmeStrFM
+// ?bfmeThreeDVB@BfmeSubDVB@@QAE?AVBfmeStrAVTV@@H@Z
+// partial score=0.98 date=2026-09-10
+class BfmeStrAVTV
 {
 public:
-	BfmeStrFM(const BfmeStrFM &other);
-	~BfmeStrFM();
+	BfmeStrAVTV(const BfmeStrAVTV &other);
+	~BfmeStrAVTV();
 
-	unsigned char m_bfmeHeadFM[4];
+	char *m_bfme00;
 };
 
-extern BfmeStrFM Rva01336E50Str;
+extern BfmeStrAVTV Rva01336E50Str;
 
-class BfmeElemFM
+class BfmeElementDVB
 {
 public:
-	BfmeStrFM bfmeNameFM() const;
+	BfmeStrAVTV getName() const;
 
-	unsigned char m_bfmeHeadFM[0x58];
+	unsigned char m_bfmeBody[0x58];
 };
 
-class BfmeHostFM
+class BfmeSubDVB
 {
 public:
-	BfmeStrFM bfmeAtFM(int i) const;
+	void bfmeOneDVB(void *a, void *b);
+	void bfmeTwoDVB(void *a, void *b);
+	void bfmeThreeDVB(void *a, void *b);
+	BfmeStrAVTV bfmeThreeDVB(int index);
 
-	unsigned char m_bfmeHeadFM[0x18];
-	BfmeElemFM *m_bfmeBeginFM;
-	BfmeElemFM *m_bfmeEndFM;
+	unsigned char m_bfmeHead[0x18];
+	BfmeElementDVB *m_bfmeBegin;
+	BfmeElementDVB *m_bfmeEnd;
 };
 
-BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
+BfmeStrAVTV BfmeSubDVB::bfmeThreeDVB(int index)
 {
-	if (i >= 0 && (unsigned int)i < (unsigned int)(m_bfmeEndFM - m_bfmeBeginFM))
-		return (*(BfmeElemFM *volatile *)&m_bfmeBeginFM)[i].bfmeNameFM();
+	if (index >= 0 && (unsigned int)index <
+		(unsigned int)(m_bfmeEnd - m_bfmeBegin))
+	{
+		return (*(BfmeElementDVB *volatile *)&m_bfmeBegin)[index].getName();
+	}
 
 	return Rva01336E50Str;
+}
+
+struct BfmeThingDVB
+{
+	void *bfmeGoDVBa(void *a, void *b);
+	void *bfmeGoDVBb(void *a, void *b);
+	void *bfmeGoDVBc(void *a, void *b);
+	unsigned char m_bfmeHead[0x170];
+	BfmeSubDVB m_bfmeSub;
+};
+
+void *BfmeThingDVB::bfmeGoDVBa(void *a, void *b)
+{
+	volatile int tmp = 0;
+	m_bfmeSub.bfmeOneDVB(a, b);
+	return a;
+}
+
+void *BfmeThingDVB::bfmeGoDVBb(void *a, void *b)
+{
+	volatile int tmp = 0;
+	m_bfmeSub.bfmeTwoDVB(a, b);
+	return a;
+}
+
+void *BfmeThingDVB::bfmeGoDVBc(void *a, void *b)
+{
+	volatile int tmp = 0;
+	m_bfmeSub.bfmeThreeDVB(a, b);
+	return a;
 }
