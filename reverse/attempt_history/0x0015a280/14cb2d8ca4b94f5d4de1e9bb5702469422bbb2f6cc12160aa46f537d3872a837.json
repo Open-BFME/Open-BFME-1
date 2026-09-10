@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "14cb2d8ca4b94f5d4de1e9bb5702469422bbb2f6cc12160aa46f537d3872a837",
+  "symbol": "?d_0015a280@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_0015a280@@YAXXZ\n// partial score=0.99 date=2026-09-10\n// ?bfmeAddMA@BfmeThingMA@@QAEXPAVBfmeItemMA@@@Z\n// cl: /DNDEBUG /MD /GX- /O2 /Ob2\n\nclass BfmeThingMA;\n\nclass BfmeItemMA\n{\npublic:\n\tunsigned char m_pad000[0x31C];\n\tBfmeThingMA *m_owner;\n};\n\nclass BfmeThingMA\n{\npublic:\n\tvoid bfmeAddMA(BfmeItemMA *item);\n\nprivate:\n\tunsigned char m_pad000[0x120];\n\tint m_itemCount;\n\tBfmeItemMA *m_items[36];\n\tunsigned char m_pad1B4[4];\n\tbool m_itemsCurrent;\n};\n\nvoid BfmeThingMA::bfmeAddMA(BfmeItemMA *item)\n{\n\titem->m_owner = 0;\n\tif (m_itemCount < 36)\n\t{\n\t\tm_items[m_itemCount] = item;\n\t\t++m_itemCount;\n\t}\n\tm_itemsCurrent = false;\n}\n"
+}
