@@ -1,17 +1,19 @@
-// ?d_005f7820@@YAXXZ
-// partial score=0.985 date=2026-09-09
+// ??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@1@PBX@Z
+// partial score=0.99 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 
-// RenderObjectDrawModule constructs the two-vtable module base and copies the
-// draw settings held by the module template.  The caller at 0x005E59C0 is the
-// DefaultParticleModule<5> forwarding constructor; its source argument is the
-// template object, not another RenderObjectDrawModule.
+// RenderObjectDrawModule is reached by the named DefaultParticleModule<5>
+// forwarding constructor at 0x005E59C0 and by the RenderObjectDraw concrete
+// module factory at 0x005E89C0.  The retail body is 267 bytes at 0x005F7820.
+// The primary base constructor route is the established 0x00041CBD thunk;
+// the three final vftable stores identify this as the RenderObjectDraw module
+// base rather than an address-only forwarding class.
 
 template <typename Character>
 class StringBase
 {
 public:
-	void set( const StringBase &other );
+	void set(const StringBase &other);
 
 	void *m_data;
 };
@@ -33,7 +35,7 @@ public:
 class BfmeRMiddle : public BfmeR0, public BfmeR1
 {
 public:
-	BfmeRMiddle( void *first, void *second );
+	BfmeRMiddle(void *first, void *second);
 };
 
 namespace FXParticleSystem
@@ -94,40 +96,40 @@ class RenderObjectDrawModule
 	: public ::BfmeRMiddle, public RenderObjectDrawModuleInfo
 {
 public:
-	RenderObjectDrawModule(
-		TrackingPtr<ParticleSystem> &system, const void *source );
+	RenderObjectDrawModule(TrackingPtr<ParticleSystem> &system,
+		const void *source);
 
 	unsigned int m_field58;
 };
 
 RenderObjectDrawModule::RenderObjectDrawModule(
-	TrackingPtr<ParticleSystem> &system, const void *source )
-	: ::BfmeRMiddle( &system, const_cast<void *>( source ) ),
+	TrackingPtr<ParticleSystem> &system, const void *source)
+	: ::BfmeRMiddle(&system, const_cast<void *>(source)),
 	  RenderObjectDrawModuleInfo()
 {
-	const unsigned char *bytes = static_cast<const unsigned char *>( source );
+	const unsigned char *bytes = static_cast<const unsigned char *>(source);
 	const ::StringBase<char> *name0 =
-		reinterpret_cast<const ::StringBase<char> *>( bytes + 0x18 );
+		reinterpret_cast<const ::StringBase<char> *>(bytes + 0x18);
 	const ::StringBase<char> *name1 =
-		reinterpret_cast<const ::StringBase<char> *>( bytes + 0x28 );
+		reinterpret_cast<const ::StringBase<char> *>(bytes + 0x28);
 	const ::StringBase<char> *name2 =
-		reinterpret_cast<const ::StringBase<char> *>( bytes + 0x38 );
+		reinterpret_cast<const ::StringBase<char> *>(bytes + 0x38);
 
 	m_flag = bytes[0x14];
-	m_name0.set( *name0 );
-	m_value00 = *reinterpret_cast<const unsigned int *>( bytes + 0x1c );
-	m_value01 = *reinterpret_cast<const unsigned int *>( bytes + 0x20 );
-	m_value02 = *reinterpret_cast<const unsigned int *>( bytes + 0x24 );
-	m_name1.set( *name1 );
-	m_value10 = *reinterpret_cast<const unsigned int *>( bytes + 0x2c );
-	m_value11 = *reinterpret_cast<const unsigned int *>( bytes + 0x30 );
-	m_value12 = *reinterpret_cast<const unsigned int *>( bytes + 0x34 );
-	m_name2.set( *name2 );
-	m_value20 = *reinterpret_cast<const unsigned int *>( bytes + 0x3c );
-	m_value21 = *reinterpret_cast<const unsigned int *>( bytes + 0x40 );
-	m_value22 = *reinterpret_cast<const unsigned int *>( bytes + 0x44 );
+	m_name0.set(*name0);
+	m_value00 = *reinterpret_cast<const unsigned int *>(bytes + 0x1c);
+	m_value01 = *reinterpret_cast<const unsigned int *>(bytes + 0x20);
+	m_value02 = *reinterpret_cast<const unsigned int *>(bytes + 0x24);
+	m_name1.set(*name1);
+	m_value10 = *reinterpret_cast<const unsigned int *>(bytes + 0x2c);
+	m_value11 = *reinterpret_cast<const unsigned int *>(bytes + 0x30);
+	m_value12 = *reinterpret_cast<const unsigned int *>(bytes + 0x34);
+	m_name2.set(*name2);
+	m_value20 = *reinterpret_cast<const unsigned int *>(bytes + 0x3c);
+	m_value21 = *reinterpret_cast<const unsigned int *>(bytes + 0x40);
+	m_value22 = *reinterpret_cast<const unsigned int *>(bytes + 0x44);
 	m_enabled = bytes[0x0c];
-	m_type = *reinterpret_cast<const unsigned int *>( bytes + 0x10 );
+	m_type = *reinterpret_cast<const unsigned int *>(bytes + 0x10);
 	m_field58 = 8;
 }
 
