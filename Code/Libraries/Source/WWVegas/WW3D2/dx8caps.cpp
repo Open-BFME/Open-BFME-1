@@ -1166,11 +1166,11 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 		retail->supportTextureFormat[100] = false;
 		_ReadWriteBarrier();
 		bool supportDxt4 = retail->supportTextureFormat[103];
-		SupportDXTC=
-			supportDxt5|
-			supportDxt4|
-			supportDxt3|
-			supportDxt2;
+		bool supportDxtc = supportDxt5;
+		supportDxtc |= supportDxt4;
+		supportDxtc |= supportDxt3;
+		supportDxtc |= supportDxt2;
+		SupportDXTC = supportDxtc;
 	}
 
 	if (VendorId==VENDOR_MATROX) {
@@ -1191,7 +1191,8 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on Rage Pro\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			char *renderToTexture = retail->supportRenderToTextureFormat;
+			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
 		}
 
 		// Rage 128 Pro GL is used in ATI Rage Fury Maxx
@@ -1203,7 +1204,8 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on ATI Rage 128 Pro GL\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			char *renderToTexture = retail->supportRenderToTextureFormat;
+			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
 
 		}
 
@@ -1231,7 +1233,8 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			DeviceId==DEVICE_ATI_MOBILITY_R7500 ||
 			DeviceId==DEVICE_ATI_R7500) {
 			DXLOG(("Disabling render-to-texture on Radeon\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			char *renderToTexture = retail->supportRenderToTextureFormat;
+			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
 		}
 
 		// CAT-lab reported that selecting anisotorpic filtering on Radeon VE causes a lock up after a while
@@ -1258,7 +1261,8 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 
 		if (DeviceId==DEVICE_3DFX_VOODOO_3) {
 			DXLOG(("Disabling render-to-texture on Voodoo3\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			char *renderToTexture = retail->supportRenderToTextureFormat;
+			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
 		}
 	}
 
