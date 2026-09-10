@@ -81,7 +81,7 @@ extern void __cdecl Rva009A9920(unsigned char *, int, unsigned int);
 extern void __cdecl Rva009A9960(void *, int, unsigned int);
 extern void __cdecl Rva009A9550(void);
 extern void __cdecl Rva009A9660(void);
-extern void __cdecl Rva009A9720(void);
+extern void __cdecl Rva009A9720(unsigned char *, int, unsigned int);
 extern void __cdecl Rva009A91D0(void);
 extern void __cdecl Rva009A92D0(void);
 extern void __cdecl Rva009A9370(void);

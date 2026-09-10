@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0a952aa44ab556ef856f71e8870de38949a80082d0b832ab018e7359ae42e98e",
+  "symbol": "?Rva009A9370@@YAXPAEHI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?Rva009A9370@@YAXPAEHI@Z\n// partial score=0.6 date=2026-09-10\n// Generic scalar counterpart of bfmeInterpRowsMmx in dispatch slot 6.\n// The matched installer caller and MMX sibling establish the three-argument\n// cdecl ABI: in-place byte buffer, row stride, and byte width.\n\n// ?Rva009A9370@@YAXPAEHI@Z\nvoid __cdecl Rva009A9370(unsigned char *source, int stride, unsigned int bytes)\n{\n\tunsigned char *cursor = source;\n\tunsigned char *row3 = cursor + stride * 2;\n\trow3 += stride;\n\n\twhile (bytes > 0)\n\t{\n\t\tunsigned int second = cursor[stride];\n\t\tunsigned int first = cursor[0];\n\t\tcursor[stride] = (unsigned char)((first * 51 + second * 205 + 128) >> 8);\n\n\t\tunsigned int third = cursor[stride * 2];\n\t\tunsigned int fourth = row3[0];\n\t\tcursor[stride * 2] = (unsigned char)((second * 102 + third * 154 + 128) >> 8);\n\t\trow3[0] = (unsigned char)((third * 154 + fourth * 102 + 128) >> 8);\n\t\trow3[stride] = (unsigned char)fourth;\n\n\t\t++cursor;\n\t\t++row3;\n\t\t--bytes;\n\t}\n}\n"
+}

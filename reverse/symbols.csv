@@ -86733,7 +86733,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva009AE6A0@@YAXXZ,0x009AE6A0,codec dispatch slot21 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9550@@YAXXZ,0x009A9550,codec dispatch slot20 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9660@@YAXXZ,0x009A9660,codec dispatch slot18 filler (generic tier); no ghidra boundary or identity yet
-?Rva009A9720@@YAXXZ,0x009A9720,codec dispatch slot12 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A91D0@@YAXXZ,0x009A91D0,codec dispatch outlier slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A92D0@@YAXXZ,0x009A92D0,codec dispatch slot7 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9370@@YAXXZ,0x009A9370,codec dispatch slot6 filler (generic tier); no ghidra boundary or identity yet
