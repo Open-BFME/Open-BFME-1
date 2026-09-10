@@ -2,29 +2,38 @@
 //
 // Open-BFME5: the 16-byte STLport __introsort_loop called by the matched
 // Rva00477960 driver.  The retail body inlines median-of-three over the first
-// integer, copies the trailing GameSpyGroupRoom handle, then calls the partition,
-// recursive-loop, and partial-sort thunks recorded below.
+// integer, copies the trailing StringBase<char> handle, then calls the partition,
+// recursive loop and typed partial-sort helper below.
+// Parent raw tracing: ILT1492A -> iter-swap473BC0/170B (two pointers),
+// ILT34F95 -> partition4747F0/133B, ILTAEBB -> this217B loop,
+// ILT32501 -> partial-sort4768F0/130B. Its fourth argument is the
+// STLport value-type pointer, not a depth integer (_algo.c __partial_sort).
+// noinline keeps the separate retail partition call; copies/releases use
+// actual StringBase<char> constructors and releaseBuffer, not dummy owners.
 
-class GameSpyGroupRoom
+template <class T>
+class StringBase
 {
 public:
-	GameSpyGroupRoom(const GameSpyGroupRoom &other);
-	~GameSpyGroupRoom() {}
+	StringBase(const StringBase<T> &other);
 
 private:
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
 	void *m_data;
+
+	friend struct Q3SortElem16;
 };
 
 struct Q3SortElem16
 {
-	Q3SortElem16(const Q3SortElem16 &other) : m_a(other.m_a),
-		m_b(other.m_b), m_c(other.m_c), m_d(other.m_d) {}
-
 	int m_a;
 	int m_b;
 	int m_c;
-	GameSpyGroupRoom m_d;
+	StringBase<char> m_d;
 };
+
+typedef char Q3ElementIs16[(sizeof(Q3SortElem16) == 16) ? 1 : -1];
 
 struct Q3SortCompare
 {
@@ -37,16 +46,13 @@ struct Q3SortCompare
 	}
 };
 
-Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortElem16 *,
+__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16, Q3SortCompare);
-void Q3IntrosortLoop004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
-	int, Q3SortCompare);
-void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
-	int, Q3SortCompare);
 
-#pragma comment(linker, "/alternatename:?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z=?j_00034f95@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Q3IntrosortLoop004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z=?j_0000aebb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z=?j_00032501@@YAXXZ")
+void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
+	Q3SortElem16 *, Q3SortCompare);
+
+void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
 
 static __forceinline const Q3SortElem16 *Q3SortElem16Median(
 	const Q3SortElem16 *a, const Q3SortElem16 *b,
@@ -67,6 +73,24 @@ static __forceinline const Q3SortElem16 *Q3SortElem16Median(
 	return b;
 }
 
+// ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z
+__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *first,
+	Q3SortElem16 *last, Q3SortElem16 value, Q3SortCompare comp)
+{
+	for (;;)
+	{
+		while (comp(*first, value))
+			++first;
+		--last;
+		while (comp(value, *last))
+			--last;
+		if (!(first < last))
+			return first;
+		Q3IterSwap00473BC0(first, last);
+		++first;
+	}
+}
+
 // ?Gen004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z
 void Gen004775D0(Q3SortElem16 *first, Q3SortElem16 *last,
 	Q3SortElem16 *, int depthLimit, const Q3SortCompare comp)
@@ -83,7 +107,7 @@ void Gen004775D0(Q3SortElem16 *first, Q3SortElem16 *last,
 		Q3SortElem16 *cut = Q3Partition004775D0(first, last,
 			*Q3SortElem16Median(first, first + (last - first) / 2,
 				last - 1, comp), comp);
-		Q3IntrosortLoop004775D0(cut, last,
+		Gen004775D0(cut, last,
 			(Q3SortElem16 *)0, depthLimit, comp);
 		last = cut;
 	}

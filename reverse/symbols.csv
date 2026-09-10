@@ -11142,8 +11142,6 @@ name,address,notes
 ?Put_To@Pipe@@UAEXPAV1@@Z,0x009E7900
 ?Q1Selector0000286A@@YGPAXH@Z,0x0000286A,address-derived stdcall callee of the ordinal-selector family; target read from the REL32 at all eight of its call sites
 ?Q1Wrapped007FEA00@@YAXXZ,0x007FEA00,address-derived callee of the frame-checked wrapper family; target read from the REL32 at all seven of its call sites
-?Q3IntrosortLoop004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z,0x0000AEBB,typed call alias for the recursive ILT used by Gen004775D0
-?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z,0x00032501,typed call alias for the partial-sort ILT used by Gen004775D0
 ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z,0x00034F95,typed call alias for the partition ILT used by Gen004775D0
 ?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x0004554D,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?QuotedPrintableToAsciiString@@YA?AVAsciiString@@V1@@Z,0x00106480,ZH QuotedPrintable.cpp:167 line for line: decodes _XX hex escapes into the static buffer 0x012EEC18 and returns an AsciiString; by-value argument released at exit; callers GameSpyLoginPreferences::load 0x000822A0 and getPreferredMap@CustomMatchPreferences 0x000AC746; ILT 0x0004554D
@@ -86883,3 +86881,5 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ??1Rva00387FB0IntVector@@QAE@XZ,0x00387FB0,Open-BFME5 address-qualified typed three-pointer int-vector base destructor; complete 45B body uses +0x00 and +0x08 and dispatches scalar/deallocate at 0x80; target ILT 0x000392AC
 ??1Rva00386080AsciiStringElement@@QAE@XZ,0x00386080,Open-BFME5 address-qualified typed array-element destructor; complete 8B body adds 0x18 to ecx and tail-jumps to matched BFMERetailAsciiString::releaseBuffer; target ILT 0x0002A8E2
 ?clear@Rva00389AB0ObjectList@@QAEXXZ,0x00389AB0,Open-BFME5 address-qualified typed object-list clear member; complete 58B body calls the node-value cleanup at +0x08 and deallocates 0x10-byte nodes; target uses ILT 0x000496E8
+?Q3IterSwap00473BC0@@YAXPAUQ3SortElem16@@0@Z,0x00473BC0,Parent raw full170B iter_swap; two 16B-element pointers; three dwords and StringBase<char> copy887B60 set887C90 release887940; viaILT1492A
+?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z,0x004768F0,Parent raw full130B partial_sort; five cdecl arguments with fourth value-type pointer as STLport _algo.c; viaILT32501
