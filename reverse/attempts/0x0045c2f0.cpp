@@ -1,223 +1,106 @@
 // ?getScreenCornerWorldPointsAtZ@View@@UAEXPAUCoord3D@@000M@Z
-// partial score=0.95 date=2026-09-09
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
-// stlport
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-////////////////////////////////////////////////////////////////////////////////
-//																																						//
-//  (c) 2001-2003 Electronic Arts Inc.																				//
-//																																						//
-////////////////////////////////////////////////////////////////////////////////
-
-// View.cpp ///////////////////////////////////////////////////////////////////
-// A "view", or window, into the World
-// Author: Michael S. Booth, February 2001
-
-#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
-
-#include "Common/GameEngine.h"
-#include "Common/Xfer.h"
-#include "GameClient/View.h"
-#include "GameClient/Drawable.h"
-
-UnsignedInt View::m_idNext = 1;
-
-// the tactical view singleton
-View *TheTacticalView = NULL;
-
-
-// ??0View@@QAE@XZ present-unmatched
-View::View( void )
+// partial score=0.99 date=2026-09-10
+// BFME's View class inserts extra virtuals relative to the ZH layout this TU
+// compiles View against: 2 slots before setWidth (matches the Display.cpp
+// BFMERetailTacticalViewVTable shim) and 70 more between getOrigin and
+// screenToWorldAtZ, independently confirmed by the matched W3DView override at
+// 0x00741610 sitting in vtable slot 90 (+0x168). Route these four calls through
+// the retail slot shape instead of the ZH-declared one.
+class BFMEViewCornerVTable
 {
-	//Added By Sadullah Nader
-	//Initialization(s) inserted
-	m_currentHeightAboveGround = 0.0f;
-	m_defaultAngle = 0.0f;
-	m_defaultPitchAngle = 0.0f;
-	m_heightAboveGround = 0.0f;
-	m_lockDist = 0.0f;
-	m_maxHeightAboveGround = 0.0f;
-	m_maxZoom = 0.0f;
-	m_minHeightAboveGround = 0.0f;
-	m_minZoom = 0.0f;
-	m_next = NULL;
-	m_okToAdjustHeight = TRUE;
-	m_originX = 0;
-	m_originY = 0;
-	m_snapImmediate = FALSE;
-	m_terrainHeightUnderCamera = 0.0f;
-	m_zoom = 0.0f;
-	//
-	m_pos.x = 0;
-	m_pos.y = 0;
-	m_width = 0;
-	m_height = 0;
-	m_angle = 0.0f;
-	m_pitchAngle = 0.0f;
-	m_cameraLock = INVALID_ID;
-	m_cameraLockDrawable = NULL;
-	m_zoomLimited = TRUE;
-
-	// create unique view ID
-	m_id = m_idNext++;
-
-	// default field of view
-	m_FOV = 50.0f * PI/180.0f;
-	
-	m_mouseLocked = FALSE;
-	
-	m_guardBandBias.x = 0.0f;
-	m_guardBandBias.y = 0.0f;
-}
-
-// ??1View@@UAE@XZ present-unmatched
-View::~View()
-{
-}
-
-// ?init@View@@UAEXXZ present-unmatched
-void View::init( void )
-{
-	m_width = DEFAULT_VIEW_WIDTH;
-	m_height = DEFAULT_VIEW_HEIGHT;
-	m_originX = DEFAULT_VIEW_ORIGIN_X;
-	m_originY = DEFAULT_VIEW_ORIGIN_Y;
-	m_pos.x = 0;
-	m_pos.y = 0;
-	m_angle = 0.0f;
-	m_cameraLock = INVALID_ID;
-	m_cameraLockDrawable = NULL;
-	m_zoomLimited = TRUE;
-	
-	m_maxZoom = 1.3f;
-	m_minZoom = 0.2f;
-	m_zoom = m_maxZoom;
-	m_maxHeightAboveGround = TheGlobalData->m_maxCameraHeight;
-	m_minHeightAboveGround = TheGlobalData->m_minCameraHeight;
-	m_okToAdjustHeight = FALSE;
-
-	m_defaultAngle = 0.0f;
-	m_defaultPitchAngle = 0.0f;
-}
-
-void View::reset( void )
-{
-	// Only fixing the reported bug.  Who knows what side effects resetting the rest could have.
-	m_zoomLimited = TRUE;
-}
-
-/**
- * Prepend this view to the given list, return the new list.
- */
-View *View::prependViewToList( View *list )
-{
-	m_next = list;
-	return this;
-}
-
-// ?zoomIn@View@@UAEXXZ present-unmatched
-void View::zoomIn( void )
-{
-	setHeightAboveGround(getHeightAboveGround() - 10.0f);
-}
-
-// ?zoomOut@View@@UAEXXZ present-unmatched
-void View::zoomOut( void )
-{
-	setHeightAboveGround(getHeightAboveGround() + 10.0f);
-}
-
-/**
- * Center the view on the given coordinate.
- */
-// ?lookAt@View@@UAEXPBUCoord3D@@@Z present-unmatched
-void View::lookAt( const Coord3D *o ) 
-{ 
-
-	/// @todo this needs to be changed to be 3D, this is still old 2D stuff
-	Coord3D pos = *getPosition();
-	pos.x = o->x - m_width * 0.5f; 
-	pos.y = o->y - m_height * 0.5f; 
-	setPosition(&pos);
-}
-
-/**
- * Shift the view by the given delta.
- */
-// ?scrollBy@View@@UAEXPAUCoord2D@@@Z present-unmatched
-void View::scrollBy( Coord2D *delta ) 
-{ 
-	// update view's world position
-	m_pos.x += delta->x;
-	m_pos.y += delta->y;
-}
-
-/**
- * Rotate the view around the up axis by the given angle.
- */
-void View::setAngle( Real angle )
-{
-	m_angle = angle; 
-}
-
-/**
- * Rotate the view around the horizontal (X) axis to the given angle.
- */
-void View::setPitch( Real angle )
-{
-	m_pitchAngle = angle;
-
-	Real limit = PI/5.0f;
-
-	if (m_pitchAngle < -limit)
-		m_pitchAngle = -limit;
-	else if (m_pitchAngle > limit)
-		m_pitchAngle = limit;
-}
-
-/**
- * Set the view angle back to default
- */
-// ?setAngleAndPitchToDefault@View@@UAEXXZ present-unmatched
-void View::setAngleAndPitchToDefault( void )
-{ 
-	m_angle = m_defaultAngle;
-	m_pitchAngle = m_defaultPitchAngle;
-}
-
-/**
- * set the view's current location from to the view location object
- */
-// ?setLocation@View@@UAEXPBVViewLocation@@@Z present-unmatched
-void View::setLocation( const ViewLocation *location )
-{
-	if ( location->m_valid )
-	{
-		setPosition(&location->m_pos);
-		setAngle(location->m_angle);
-		setPitch(location->m_pitch);
-		setZoom(location->m_zoom);
-		forceRedraw();
-	}
-
-}
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void setWidth( Int width ) = 0;             // +0x38
+	virtual Int getWidth() = 0;                          // +0x3c
+	virtual void setHeight( Int height ) = 0;            // +0x40
+	virtual Int getHeight() = 0;                         // +0x44
+	virtual void setOrigin( Int x, Int y ) = 0;          // +0x48
+	virtual void getOrigin( Int *x, Int *y ) = 0;        // +0x4c
+	virtual void gap20() = 0;
+	virtual void gap21() = 0;
+	virtual void gap22() = 0;
+	virtual void gap23() = 0;
+	virtual void gap24() = 0;
+	virtual void gap25() = 0;
+	virtual void gap26() = 0;
+	virtual void gap27() = 0;
+	virtual void gap28() = 0;
+	virtual void gap29() = 0;
+	virtual void gap30() = 0;
+	virtual void gap31() = 0;
+	virtual void gap32() = 0;
+	virtual void gap33() = 0;
+	virtual void gap34() = 0;
+	virtual void gap35() = 0;
+	virtual void gap36() = 0;
+	virtual void gap37() = 0;
+	virtual void gap38() = 0;
+	virtual void gap39() = 0;
+	virtual void gap40() = 0;
+	virtual void gap41() = 0;
+	virtual void gap42() = 0;
+	virtual void gap43() = 0;
+	virtual void gap44() = 0;
+	virtual void gap45() = 0;
+	virtual void gap46() = 0;
+	virtual void gap47() = 0;
+	virtual void gap48() = 0;
+	virtual void gap49() = 0;
+	virtual void gap50() = 0;
+	virtual void gap51() = 0;
+	virtual void gap52() = 0;
+	virtual void gap53() = 0;
+	virtual void gap54() = 0;
+	virtual void gap55() = 0;
+	virtual void gap56() = 0;
+	virtual void gap57() = 0;
+	virtual void gap58() = 0;
+	virtual void gap59() = 0;
+	virtual void gap60() = 0;
+	virtual void gap61() = 0;
+	virtual void gap62() = 0;
+	virtual void gap63() = 0;
+	virtual void gap64() = 0;
+	virtual void gap65() = 0;
+	virtual void gap66() = 0;
+	virtual void gap67() = 0;
+	virtual void gap68() = 0;
+	virtual void gap69() = 0;
+	virtual void gap70() = 0;
+	virtual void gap71() = 0;
+	virtual void gap72() = 0;
+	virtual void gap73() = 0;
+	virtual void gap74() = 0;
+	virtual void gap75() = 0;
+	virtual void gap76() = 0;
+	virtual void gap77() = 0;
+	virtual void gap78() = 0;
+	virtual void gap79() = 0;
+	virtual void gap80() = 0;
+	virtual void gap81() = 0;
+	virtual void gap82() = 0;
+	virtual void gap83() = 0;
+	virtual void gap84() = 0;
+	virtual void gap85() = 0;
+	virtual void gap86() = 0;
+	virtual void gap87() = 0;
+	virtual void gap88() = 0;
+	virtual void gap89() = 0;
+	virtual void screenToWorldAtZ( const ICoord2D *screen, Coord3D *world, Real z ) = 0; // +0x168
+};
 
 //-------------------------------------------------------------------------------------------------
 /** project the 4 corners of this view into the world and return each point as a parameter,
@@ -230,15 +113,15 @@ void View::getScreenCornerWorldPointsAtZ( Coord3D *topLeft, Coord3D *topRight,
 {
 	ICoord2D screenTopLeft, screenTopRight, screenBottomLeft, screenBottomRight;
 	ICoord2D origin;
-	Int viewWidth = getWidth();
-	Int viewHeight = getHeight();
+	Int viewWidth = reinterpret_cast<BFMEViewCornerVTable *>( this )->getWidth();
+	Int viewHeight = reinterpret_cast<BFMEViewCornerVTable *>( this )->getHeight();
 
 	// sanity
 	if( topLeft == NULL || topRight == NULL || bottomLeft == NULL || bottomRight == NULL )
 		return;
 
 	// setup the screen coords for the 4 corners of the viewable display
-	getOrigin( &origin.x, &origin.y );
+	reinterpret_cast<BFMEViewCornerVTable *>( this )->getOrigin( &origin.x, &origin.y );
 	screenTopLeft.x     = origin.x;								// upper left
 	screenTopLeft.y     = origin.y;								// upper left
 	screenTopRight.x    = origin.x + viewWidth;		// upper right
@@ -249,36 +132,9 @@ void View::getScreenCornerWorldPointsAtZ( Coord3D *topLeft, Coord3D *topRight,
 	screenBottomRight.y = origin.y + viewHeight;	// lower left
 
 	// project
-	screenToWorldAtZ( &screenTopLeft, topLeft, z );
-	screenToWorldAtZ( &screenTopRight, topRight, z );
-	screenToWorldAtZ( &screenBottomLeft, bottomLeft, z );
-	screenToWorldAtZ( &screenBottomRight, bottomRight, z );
+	reinterpret_cast<BFMEViewCornerVTable *>( this )->screenToWorldAtZ( &screenTopLeft, topLeft, z );
+	reinterpret_cast<BFMEViewCornerVTable *>( this )->screenToWorldAtZ( &screenTopRight, topRight, z );
+	reinterpret_cast<BFMEViewCornerVTable *>( this )->screenToWorldAtZ( &screenBottomLeft, bottomLeft, z );
+	reinterpret_cast<BFMEViewCornerVTable *>( this )->screenToWorldAtZ( &screenBottomRight, bottomRight, z );
 
 }  // end getScreenCornerWorldPointsAtZ
-
-// ------------------------------------------------------------------------------------------------
-/** Xfer method for a view */
-// ------------------------------------------------------------------------------------------------
-// ?xfer@View@@MAEXPAVXfer@@@Z present-unmatched
-void View::xfer( Xfer *xfer )
-{
-
-	// version
-	XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
-
-	// camera angle
-	Real angle = getAngle();
-	xfer->xferReal( &angle );
-	setAngle( angle );
-
-	// view position
-	Coord3D viewPos;
-	getPosition( &viewPos );
-	xfer->xferReal( &viewPos.x );
-	xfer->xferReal( &viewPos.y );
-	xfer->xferReal( &viewPos.z );
-	lookAt( &viewPos );
-
-}  // end xfer
