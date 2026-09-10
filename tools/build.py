@@ -1245,7 +1245,257 @@ def read_funclet(row, object_symbol, output, target):
         "does either, so this is the body that label names now")
 
 
-def compile_function(row, symbol_map, output):
+def _boundary_request():
+    """Read add_match's one-shot new-claim request, if present.
+
+    This is deliberately not a normal build option.  Without all three fields
+    there is no request, while a partially inherited request is an error rather
+    than a reason to silently skip a safety check.
+    """
+    names = {
+        key: os.environ.get(variable)
+        for key, variable in (
+            ("name", "ADDMATCH_BOUNDARY_NAME"),
+            ("rva", "ADDMATCH_BOUNDARY_RVA"),
+            ("source", "ADDMATCH_BOUNDARY_SOURCE"),
+        )
+    }
+    present = [key for key, value in names.items() if value is not None]
+    if not present:
+        return None
+    missing = sorted(key for key, value in names.items() if value is None)
+    if missing:
+        raise SystemExit(
+            "add_match boundary request is incomplete; missing " + ", ".join(missing))
+    try:
+        rva = int(names["rva"], 16)
+    except ValueError:
+        raise SystemExit(
+            f"add_match boundary request has invalid RVA {names['rva']!r}")
+    return names["name"], rva, names["source"]
+
+
+def _branch_target(instruction):
+    """Return a direct branch target, or ``None`` for indirect/non-branches."""
+    from capstone import CS_GRP_JUMP, CS_OP_IMM
+
+    if not instruction.group(CS_GRP_JUMP) or not instruction.operands:
+        return None
+    operand = instruction.operands[0]
+    return operand.imm if operand.type == CS_OP_IMM else None
+
+
+def _has_rel32_relocation(instruction, relocs):
+    """Whether a direct ``jmp`` is an unresolved external tail call."""
+    return instruction.mnemonic == "jmp" and any(
+        offset == instruction.address + 1 and rtype == REL32
+        for offset, rtype, _symbol in relocs
+    )
+
+
+def _is_return(instruction):
+    return instruction.mnemonic in {"ret", "retf", "iret", "iretd"}
+
+
+def _is_epilogue_step(instruction):
+    """Recognize only stack restoration before a return.
+
+    This is intentionally narrower than "the last instruction looks like
+    code".  A direct branch into this sequence is useful evidence that the
+    bytes belong to the claimed function; arbitrary bytes after a COFF symbol
+    are not.
+    """
+    from capstone import CS_OP_REG
+
+    if instruction.mnemonic in {"pop", "leave"}:
+        return True
+    if len(instruction.operands) < 2:
+        return False
+    first = instruction.operands[0]
+    if first.type != CS_OP_REG:
+        return False
+    return instruction.reg_name(first.reg) == "esp" and instruction.mnemonic in {
+        "add", "lea", "mov"
+    }
+
+
+def _decode_epilogue(compiled, start):
+    """Return a short pop/stack-restore/ret suffix starting at ``start``.
+
+    A suffix that merely disassembles is not enough: the first instruction
+    must be an epilogue step (or a return), and every instruction before the
+    return must restore the stack.  This avoids treating a following symbol or
+    arbitrary section data as a missing function tail.
+    """
+    if start < 0 or start >= len(compiled):
+        return None
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError as exc:
+        raise SystemExit(
+            "new C++ claim boundary check needs the capstone package") from exc
+
+    decoder = Cs(CS_ARCH_X86, CS_MODE_32)
+    decoder.detail = True
+    cursor = start
+    steps = []
+    # A normal x86 epilogue is short.  Limiting this proof keeps a long
+    # following function from being classified by an accidental prefix.
+    window = compiled[start : min(len(compiled), start + 32)]
+    for instruction in decoder.disasm(window, start):
+        if instruction.address != cursor:
+            return None
+        cursor = instruction.address + instruction.size
+        if _is_return(instruction):
+            return steps + [instruction]
+        if not _is_epilogue_step(instruction):
+            return None
+        steps.append(instruction)
+        if len(steps) >= 8:
+            return None
+    return None
+
+
+def _conditional_branch(instruction):
+    """Return whether an instruction has a conditional direct branch edge."""
+    target = _branch_target(instruction)
+    return target is not None and instruction.mnemonic not in {"jmp"}
+
+
+def _branch_into_omitted_epilogue(instructions, compiled, claimed_size, relocs):
+    """Find an in-body direct edge into a proven omitted epilogue."""
+    for instruction in instructions:
+        target = _branch_target(instruction)
+        if target is None or not (claimed_size <= target < len(compiled)):
+            continue
+        if _has_rel32_relocation(instruction, relocs):
+            # The zero pre-link displacement of an external tail call is not a
+            # local edge into this object's suffix.
+            continue
+        epilogue = _decode_epilogue(compiled, target)
+        if epilogue is not None:
+            return instruction, target, epilogue
+    return None
+
+
+def _fallthrough_into_omitted_epilogue(instructions, compiled, claimed_size):
+    """Prove a conditional branch's not-taken edge falls into the suffix."""
+    if not instructions:
+        return None
+    last = instructions[-1]
+    if last.address + last.size != claimed_size or not _conditional_branch(last):
+        return None
+    target = _branch_target(last)
+    if target is None or not (0 <= target < claimed_size):
+        return None
+    epilogue = _decode_epilogue(compiled, claimed_size)
+    if epilogue is not None:
+        return last, claimed_size, epilogue
+    return None
+
+
+def _linear_boundary_decode(compiled, claimed_size):
+    """Decode enough of the prefix to prove a split instruction when possible.
+
+    The result is ``(instructions, issue, uncertain)``.  An indirect dispatch,
+    trap, padding, or decode gap makes the byte stream ambiguous: inline switch
+    tables and neighboring symbols are legitimate reasons not to make a claim.
+    Only a concrete instruction crossing the requested boundary is rejected.
+    """
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError as exc:
+        raise SystemExit(
+            "new C++ claim boundary check needs the capstone package") from exc
+
+    decoder = Cs(CS_ARCH_X86, CS_MODE_32)
+    decoder.detail = True
+    window = compiled[: min(len(compiled), claimed_size + 15)]
+    instructions = []
+    cursor = 0
+    uncertain = False
+    for instruction in decoder.disasm(window, 0):
+        if instruction.address != cursor:
+            uncertain = True
+            break
+        end = instruction.address + instruction.size
+        if instruction.address < claimed_size and end > claimed_size:
+            issue = (f"claim of {claimed_size} bytes cuts instruction "
+                     f"at +0x{instruction.address:X}..+0x{end:X} "
+                     f"({instruction.mnemonic} {instruction.op_str})")
+            return instructions, issue, uncertain
+        if end > claimed_size:
+            break
+        instructions.append(instruction)
+        cursor = end
+        if cursor == claimed_size:
+            break
+
+        # After these instructions the following bytes may be data or another
+        # block/function.  Keep the instructions already proved (including a
+        # direct edge into the omitted suffix), but do not decode arbitrary
+        # table bytes as if they were a straight-line function body.
+        if instruction.mnemonic in {
+                "ret", "retf", "iret", "iretd", "ud2", "int3", "jmp"}:
+            uncertain = True
+            break
+    return instructions, None, uncertain
+
+
+def claimed_boundary_issue(compiled, claimed_size, relocs=()):
+    """Return only conservative, locally demonstrable boundary evidence.
+
+    COFF sections can contain a following function, inline dispatch data, or
+    filler, so neither raw-size equality nor a universal "last instruction is
+    ret" convention is valid.  Calls may be noreturn and ``ud2`` is a valid
+    trap.  This check rejects a split instruction when linear code is
+    unambiguous, or an in-body direct/conditional edge into a recognized
+    omitted stack-restore/return epilogue.  If the bytes could instead be an
+    inline table or another symbol, it deliberately reports no issue. Other
+    extents still require manual boundary evidence alongside byte matching.
+    """
+    if claimed_size <= 0:
+        return f"claimed size {claimed_size} is not positive"
+    if claimed_size > len(compiled):
+        return (f"claim needs {claimed_size} bytes but the compiled object has only "
+                f"{len(compiled)}; its boundary cannot be verified")
+
+    instructions, issue, _uncertain = _linear_boundary_decode(compiled, claimed_size)
+    if issue is not None:
+        return issue
+
+    evidence = _branch_into_omitted_epilogue(
+        instructions, compiled, claimed_size, relocs)
+    if evidence is None:
+        evidence = _fallthrough_into_omitted_epilogue(
+            instructions, compiled, claimed_size)
+    if evidence is None:
+        return None
+
+    branch, target, epilogue = evidence
+    suffix = ", ".join(
+        f"{instruction.mnemonic} {instruction.op_str}".strip()
+        for instruction in epilogue
+    )
+    if (target == claimed_size and branch.address + branch.size == claimed_size
+            and branch.mnemonic != "jmp"):
+        edge = "falls through"
+    else:
+        edge = (f"branches from +0x{branch.address:X} "
+                f"({branch.mnemonic} {branch.op_str})")
+    return (f"claim of {claimed_size} bytes {edge} into omitted executable "
+            f"epilogue at +0x{target:X} ({suffix})")
+
+
+def verify_claimed_boundary(row, patch):
+    """Fail only one newly-added C++ row with concrete truncation evidence."""
+    issue = claimed_boundary_issue(
+        patch["compiled"], len(patch["target"]), patch.get("relocs", ()))
+    if issue:
+        raise SystemExit(f"{row['name']} ({row['source']}): {issue}")
+
+
+def compile_function(row, symbol_map, output, *, retain_compiled=False):
     target_rva = int(row["target_rva"], 16)
     target_size = int(row["target_size"])
     target = read_target_bytes(target_rva, target_size)
@@ -1343,7 +1593,7 @@ def compile_function(row, symbol_map, output):
             sites = alt_sites
             masked = True
 
-    return {
+    result = {
         "name": row["name"],
         "target_rva": target_rva,
         "target": target,
@@ -1356,6 +1606,12 @@ def compile_function(row, symbol_map, output):
         "note": note,
         "rel32": sites,
     }
+    if retain_compiled:
+        # Most rows use a section tail that can be much larger than the row.
+        # Keep it only for add_match's one requested new claim, not every patch
+        # in a full gate.
+        result["compiled"] = compiled
+    return result
 
 
 REL32 = 0x0014
@@ -1627,6 +1883,7 @@ def verify_functions(only=None):
             raise SystemExit("no functions match: " + ", ".join(only))
     total = len(rows)
     symbol_map = load_symbol_map()
+    boundary_request = _boundary_request()
 
     sources = []
     seen = set()
@@ -1709,9 +1966,23 @@ def verify_functions(only=None):
     failures = 0
     patches = []
     renumbered = []
+    boundary_seen = False
     for row in rows:
+        boundary_row = bool(
+            boundary_request
+            and row["name"] == boundary_request[0]
+            and int(row["target_rva"], 16) == boundary_request[1]
+            and row["source"] == boundary_request[2]
+        )
+        boundary_seen |= boundary_row
         try:
-            patch = compile_function(row, symbol_map, row_object(row))
+            patch = compile_function(
+                row, symbol_map, row_object(row), retain_compiled=boundary_row)
+            target = patch["target"]
+            compiled = patch["bytes"]
+            thin = patch["masked"] and patch["concrete"] < MIN_LIB_CONCRETE
+            if boundary_row and compiled == target and not thin:
+                verify_claimed_boundary(row, patch)
         except (ValueError, SystemExit) as unreadable:
             # A row whose body cannot even be READ is red -- it never passed and
             # still does not -- but until now the first one aborted the whole run
@@ -1722,10 +1993,6 @@ def verify_functions(only=None):
             print(f"  FAIL {row['name']} ({row['source']})")
             print(f"    {unreadable}")
             continue
-        target = patch["target"]
-        compiled = patch["bytes"]
-
-        thin = patch["masked"] and patch["concrete"] < MIN_LIB_CONCRETE
         if compiled == target and not thin:
             patches.append(patch)
             if patch["note"]:
@@ -1747,6 +2014,12 @@ def verify_functions(only=None):
         print(f"    compiled: {format_bytes(compiled)}")
         if patch["rel32"]:
             explain_rel32(patch)
+
+    if boundary_request and not boundary_seen:
+        name, rva, source = boundary_request
+        raise SystemExit(
+            f"add_match boundary request for {name} at 0x{rva:08X} in {source} "
+            "did not select a matched row")
 
     if renumbered:
         # Green, but on a pin the ledger got wrong: say so every time, or the

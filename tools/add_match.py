@@ -24,6 +24,7 @@ new claim does not byte-verify.
 import argparse
 import csv
 import io
+import os
 import re
 import subprocess
 import sys
@@ -35,6 +36,12 @@ from portable_lock import lock
 DEFAULT_ROOT = Path(__file__).resolve().parents[1]
 
 MARKER_RE = re.compile(r"^\s*//\s*(\S+)\s+present-unmatched\b")
+COMPILED_SOURCE_SUFFIXES = {".c", ".cc", ".cpp", ".cxx"}
+BOUNDARY_ENV = {
+    "name": "ADDMATCH_BOUNDARY_NAME",
+    "rva": "ADDMATCH_BOUNDARY_RVA",
+    "source": "ADDMATCH_BOUNDARY_SOURCE",
+}
 
 
 def fail(*lines):
@@ -118,6 +125,27 @@ def lookup_export_rva(root, name):
             if row["kind"] == "code" and row["name"] == name:
                 return row["rva"]
     return ""
+
+
+def verification_environment(source_path, source_rel, name, rva):
+    """Pass one new compiled-source claim to build.py's boundary guard.
+
+    The normal build has to keep accepting the existing ledger, including rows
+    whose historical extent was never checked this way.  add_match is the
+    narrow point at which a row is new, so the request is carried in a
+    short-lived child environment rather than becoming a global build rule.
+    Assembly and archive rows are intentionally left without a request: their
+    bytes are an explicit non-C++ representation, not a compiler epilogue that
+    this guard can judge.
+    """
+    environment = os.environ.copy()
+    for variable in BOUNDARY_ENV.values():
+        environment.pop(variable, None)
+    if source_path.suffix.lower() in COMPILED_SOURCE_SUFFIXES:
+        environment[BOUNDARY_ENV["name"]] = name
+        environment[BOUNDARY_ENV["rva"]] = f"0x{rva:08X}"
+        environment[BOUNDARY_ENV["source"]] = source_rel
+    return environment
 
 
 def remove_stash(rva, root):
@@ -323,8 +351,9 @@ def main():
         verify_cmd = [str(build_sh), source_rel]
         verify_label = f"./build.sh {source_rel}"
     print(f"add_match: verifying: {verify_label}")
+    verify_env = verification_environment(source_path, source_rel, name, rva)
     try:
-        result = subprocess.run(verify_cmd, cwd=root)
+        result = subprocess.run(verify_cmd, cwd=root, env=verify_env)
     except BaseException:
         ledger_io.atomic_write_bytes(functions_csv, raw)
         source_path.write_bytes(saved_source)
