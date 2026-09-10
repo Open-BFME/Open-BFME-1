@@ -83674,6 +83674,7 @@ name,address,notes
 ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z,0x0003F233,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?removePos@Pathfinder@@QAEXPAVObject@@@Z,0x0001D9DA,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C before the layer store
 ?removeProp@W3DPropBuffer@@QAEXH@Z,0x00018F84
+?removeShadow@W3DShadowManager@@QAEXPAVShadow@@@Z,0x0003AC38,retail ILT called by W3DDefaultDraw destructor at 0x007510D0 and named by W3DShadow.cpp
 ?removePropsForConstruction@W3DPropBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0001B054,removeTreesAndPropsForConstruction tail-call target (incremental-link thunk; body 0x7039E0 sits in the W3DPropBuffer.cpp region)
 ?removeTeam@TeamsInfoRec@@QAEXH@Z,0x0000D828,pinharvest x3 (thunk)
 ?removeTeamRelationship@Player@@QAE_NPBVTeam@@@Z,0x000D4200,body Player::removeTeamRelationship; m_teamRelations at Player+0x290 (next to m_playerTeamPrototypes at +0x288); empty-check then NULL->clear else find(that->getID())/erase; pinned by ?teamAboutToBeDeleted@PlayerList@@QAEXPAVTeam@@@Z at 0x000DF360 via ILT 0x00012F1C
