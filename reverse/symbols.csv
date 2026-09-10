@@ -86703,22 +86703,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?move@Rva001B9D00Mover@@QAEXPAXHHH@Z,0x0002CC3C,ILT thunk to the 972B body at 0x001B9D00; appearance-switch mover reached from 0x001BC820
-?move@Rva001BB530Mover@@QAEXPAXHHH@Z,0x00019F06,ILT thunk to the body at 0x001BB530; appearance-switch mover reached from 0x001BC820
-?move@Rva001BC560Mover@@QAEXPAXHHH@Z,0x00020914,ILT thunk to the 210B body at 0x001BC560; appearance-switch mover reached from 0x001BC820
-?move@Rva001BB0D0Mover@@QAEXPAXHHH@Z,0x00032A29,ILT thunk to the 890B body at 0x001BB0D0; appearance-switch mover reached from 0x001BC820
-?behavior@Rva001BA1C0Handler@@QAEXPAXPAX@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; post-move behaviour handler reached from 0x001BC820
-?test@Rva00270360Query@@QAE_NXZ,0x00023795,ILT thunk to the 212B body at 0x00270360; AI predicate reached from 0x001BC820
-?maintain@Rva001B9A90Branch@@QAEXPAVObject@@@Z,0x00002211,ILT thunk to the 36B body at 0x001B9A90; appearance-switch maintain branch reached from 0x001BCB10
-?maintain@Rva001B9AC0Branch@@QAEXPAVObject@@@Z,0x000285B0,ILT thunk to the 36B body at 0x001B9AC0; appearance-switch maintain branch reached from 0x001BCB10
-?maintain@Rva001B9AF0Branch@@QAEXPAVObject@@@Z,0x0001FF6E,ILT thunk to the 36B body at 0x001B9AF0; appearance-switch maintain branch reached from 0x001BCB10
-?maintain@Rva001B9B20Branch@@QAEXPAVObject@@@Z,0x0001C891,ILT thunk to the 36B body at 0x001B9B20; appearance-switch maintain branch reached from 0x001BCB10
-?behavior@Rva001BA1C0Handler@@QAE_NPAXPBUCoord3D@@@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; returns whether constant calling is required
-?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ,0x00005F83,ILT thunk; OnlineLogin country-list populate called from _bfme_onInitGadget 0x00551DD0
-??0?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameWindow@@@1@@Z,0x00033393,ILT thunk; STLport list<GameWindow*> ctor used by OnlineLogin tab-list build 0x00551DD0
-?push_front@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x00038514,ILT thunk; STLport list<GameWindow*>::push_front (OnlineLogin tab list 0x00551DD0)
-?push_back@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x000452A0,ILT thunk; STLport list<GameWindow*>::push_back (OnlineLogin tab list 0x00551DD0)
-_Rva008118C0,0x008118C0,Address-derived cdecl alias; Y5 configuration passes ignored table argument to existing empty helper; parent decoded call80E7F3 and ret8118C4
 ?crushPolicy@Object@@QBE_NPAV1@W4CrushSquishTestType@@@Z,0x000420AA,route=0x001CC790; retail 0x00176250 pursue updateInternal reaches the matched crush policy through this ILT thunk
 ?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z,0x000402D2,route=0x001BFF70; retail 0x00174A20 reaches the matched damage-source query through this ILT thunk
 ?set@Rva0026F110@@QAEXXZ,0x00012486,route=0x0026F110; retail 0x00174A20 reaches the matched AI setter through this ILT thunk
