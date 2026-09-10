@@ -1,10 +1,7 @@
-// ?d_00510fa0@@YAXXZ
-// partial score=0.84 date=2026-09-10
-// Address-derived APT GuiFX initializer, retail 0x00510FA0 (354 bytes).
-// The retail strings identify the GuiFX.apt setup and its OnInitialized and
-// ToolTipText callback registrations.  No original source spelling is claimed
-// for this body; the generated d_00510fa0 name remains its honest identity.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+//
+// GuiFX.apt window load plus its OnInitialized and ToolTipText callback
+// registrations.  Retail strings identify the window and both callbacks.
 
 #include "../../../../reference/shims/stringinline/StringInline.h"
 
@@ -12,8 +9,10 @@ class BFMERetailAsciiString
 {
 public:
 	BFMERetailAsciiString( const char *text );
-	~BFMERetailAsciiString();
+	~BFMERetailAsciiString() { releaseBuffer(); }
 
+private:
+	void releaseBuffer();
 	void *m_data;
 };
 
@@ -107,15 +106,14 @@ extern AsciiString g_guiFxFile;
 extern unsigned char g_guiFxLoaded;
 extern void construct00510AC0();
 
-// ?d_00510fa0@@YAXXZ
-void d_00510fa0()
+void registerGuiFXCallbacks00510FA0()
 {
 	if( g_theWindowManager == 0 )
 		return;
 
 	g_guiFxLoaded = 0;
 	g_guiFxWindowHandle = g_theWindowManager->loadAptWindow(
-		g_guiFxFile, AsciiString( "GuiFX.apt" ), 1, 0, 11 );
+		"Apt\\", g_guiFxFile, 1, 0, 11 );
 
 	if( g_theWindowManager != 0 )
 	{
