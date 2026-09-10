@@ -29,3 +29,24 @@ bool T4Host002E4D20::equals( const T4Host002E4D20 &other ) const
 	}
 	return true;
 }
+
+// ---------------------------------------------------------------------------
+// 0x002E4D60 -- 10-element form
+// ---------------------------------------------------------------------------
+class T4Host002E4D60
+{
+public:
+	bool equals( const T4Host002E4D60 &other ) const;
+private:
+	Int m_val[ 10 ];
+};
+
+bool T4Host002E4D60::equals( const T4Host002E4D60 &other ) const
+{
+	for ( unsigned int i = 0; i < 10; i++ )
+	{
+		if ( m_val[ i ] != other.m_val[ i ] )
+			return false;
+	}
+	return true;
+}
