@@ -1,5 +1,3 @@
-// ?d_003d0c40@@YAXXZ
-// partial score=0.9 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 
@@ -15,15 +13,26 @@ class SoundKeyPair
 {
 public:
 	SoundKeyPair( LargeGroupAudioMap *owner );
-	bool hasSameKeyList( const SoundKeyPair *other ) const;
 
 private:
 	char m_unmodelled[ 0x3C ];
 };
 
-#pragma comment(linker, "/alternatename:??0SoundKeyPair@@QAE@PAVLargeGroupAudioMap@@@Z=?j_00044463@@YAXXZ")
-#pragma comment(linker, "/alternatename:?hasSameKeyList@SoundKeyPair@@QBE_NPBV1@@Z=?j_00028b37@@YAXXZ")
+// The comparison at RVA 0x00028B37 is the landed address-derived
+// Rva003D3250::equals (Y1IntRangeEquals.cpp): reinterpreting the SoundKeyPair
+// pointers reproduces retail's exact call, no invented member name needed.
+class Rva003D3250
+{
+public:
+	int *m_begin;
+	int *m_end;
 
+	bool equals( const Rva003D3250 *other ) const;
+};
+
+// upstream layout: LargeGroupAudioMapDestructor.cpp (BfmeBaseVUH vtable(0),
+// m_owner(4), m_isOverride(8) + pad = size 0xc; +8 padding, +4 AsciiString =
+// m_sound at 0x18, matching this function's `[instance + 0x18]` access.
 class LargeGroupAudioMapBase
 {
 protected:
@@ -35,19 +44,21 @@ class LargeGroupAudioMap : public LargeGroupAudioMapBase
 public:
 	static void __cdecl parseSound( INI *ini, void *instance, void *, const void * );
 
-	private:
+private:
 	std::vector<SoundKeyPair *> m_sounds;
 };
+
+extern void __declspec( noreturn ) __stdcall _CxxThrowException(
+	void *, void * ) throw();
 
 // ?parseSound@LargeGroupAudioMap@@SAXPAVINI@@PAX1PBX@Z
 void __cdecl LargeGroupAudioMap::parseSound(
 	INI *ini, void *instance, void *, const void * )
 {
 	SoundKeyPair *sound;
-	volatile LargeGroupAudioMap *map = static_cast<LargeGroupAudioMap *>( instance );
-	std::vector<SoundKeyPair *> &sounds =
-		((LargeGroupAudioMap *)map)->m_sounds;
-	sound = new SoundKeyPair( (LargeGroupAudioMap *)map );
+	LargeGroupAudioMap *map = static_cast<LargeGroupAudioMap *>( instance );
+	std::vector<SoundKeyPair *> &sounds = map->m_sounds;
+	sound = new SoundKeyPair( map );
 	sounds.push_back( sound );
 	ini->initFromINI( sound, (const FieldParse *)0x010EE088 );
 
@@ -57,11 +68,9 @@ void __cdecl LargeGroupAudioMap::parseSound(
 	{
 		if ( sound == *it )
 			continue;
-		if ( sound->hasSameKeyList( *it ) )
+		if ( ( (const Rva003D3250 *)sound )->equals( (const Rva003D3250 *)*it ) )
 		{
 			INIException error( 3, (const char *)0x010EE190 );
-			extern void __declspec( noreturn ) __stdcall _CxxThrowException(
-				void *, void * );
 			_CxxThrowException( &error, (void *)0x011DFC30 );
 		}
 	}
