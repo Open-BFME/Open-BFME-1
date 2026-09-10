@@ -195,8 +195,9 @@ Dict::DictPair* Dict::findPairByKey(NameKeyType key) const
 }
 
 // -----------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/DictEnsureUniqueThunk.cpp
-// ?ensureUnique@Dict@@ present-unmatched
+// Complete278B body at0x000683D0 ends0x000684E6 CC. The existing5B
+// DictEnsureUniqueThunk at0x0002BF21 tail-jumps here and remains separate.
+// Retail uses a6B header and8B pairs; allocation rounds to4 and calls calloc.
 Dict::DictPair *Dict::ensureUnique(int numPairsNeeded, Bool preserveData, DictPair *pairToTranslate)
 {
 	if (m_data &&
@@ -214,11 +215,11 @@ Dict::DictPair *Dict::ensureUnique(int numPairsNeeded, Bool preserveData, DictPa
 	if (numPairsNeeded > 0)
 	{
 		int minBytes = sizeof(Dict::DictPairData) + numPairsNeeded*sizeof(Dict::DictPair);
-		int actualBytes = TheDynamicMemoryAllocator->getActualAllocationSize(minBytes);
+		int actualBytes = ((minBytes + 3) / 4) * 4;
 		// note: be certain to alloc with zero; we'll take advantage of the fact that all-zero
 		// is a bit-pattern that happens to init all our pairs to legal values: 
 		// type BOOL, key INVALID, value FALSE.
-		newData = (Dict::DictPairData*)TheDynamicMemoryAllocator->allocateBytes(actualBytes, "Dict::ensureUnique");
+		newData = (Dict::DictPairData*)calloc(actualBytes, 1);
 		newData->m_refCount = 1;
 		newData->m_numPairsAllocated = (actualBytes - sizeof(Dict::DictPairData))/sizeof(Dict::DictPair);
 		newData->m_numPairsUsed = 0;
@@ -233,7 +234,7 @@ Dict::DictPair *Dict::ensureUnique(int numPairsNeeded, Bool preserveData, DictPa
 		}
 	}
 
-	Int delta;
+	Int delta = 0;
 	if (pairToTranslate && m_data)
 		delta = pairToTranslate - m_data->peek();
 
