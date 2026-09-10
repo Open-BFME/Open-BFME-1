@@ -86856,3 +86856,6 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?Rva0037C310@Rva0037C310Owner@@QAE_NHHPAVObject@@@Z,0x000466B4,address-derived name for the ILT thunk at 0x000466B4 which jumps to the 465-byte body at 0x0037C310; called by the emotion walk at 0x00290B90
 ?Rva00013642@Rva00291F20Base@@QAE_NXZ,0x00013642,address-derived name for the ILT thunk at 0x00013642 which jumps to the sibling dump body at 0x00291BD0
 ?Rva00030891@Rva00291F20Base@@QAE_NXZ,0x00030891,address-derived name for the ILT thunk at 0x00030891 which jumps to the sibling dump body at 0x00291CD0
+?go@Rva005265F0@@QAEXXZ,0x0000968D,ILT thunk to the 8-byte indexed forwarder body 0x005265F0 route=0x005265F0
+?getAddresses@IPEnumeration@@QAEPAVEnumeratedIP@@XZ,0x00001E1A,ILT thunk to the retail body 0x00624C80 route=0x00624C80
+?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z,0x00034EF0,ILT thunk to the retail body 0x0044DB90 route=0x0044DB90
