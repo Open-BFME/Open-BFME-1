@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "89acd04efea3c9d7c2cf1aacbd5ac6b762d7c788c28dfe69378dd39a125430b9",
+  "symbol": "?bfmeRefreshZR@BfmeHostZR@@QAEXABV?$StringBase@D@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?bfmeRefreshZR@BfmeHostZR@@QAEXABV?$StringBase@D@@@Z\n// partial score=0.96 date=2026-09-10\nextern \"C\" void *__cdecl memset(void *d, int c, unsigned int n);\n#pragma intrinsic(memset)\n\ntemplate <class T>\nclass StringBase\n{\npublic:\n\tvoid *m_bfmeStrZR;\n};\n\nclass Rva006AEE00Tree\n{\npublic:\n\tstruct InsertResult\n\t{\n\t\tvoid *m_bfmeNodeZR;\n\t\tchar m_bfmeOkZR;\n\t\tunsigned char m_bfmePadZR[3];\n\t};\n\n\tvoid insert_unique(InsertResult *out, const StringBase<char> &key);\n};\n\nclass BfmeHostZR\n{\npublic:\n\tvoid bfmeRefreshZR(const StringBase<char> &name);\n\n\tunsigned char m_bfmeHeadZR[0x9c];\n\tunsigned int m_bfme9CZR;\n\tRva006AEE00Tree m_bfmeA0ZR;\n\tunsigned char m_bfmeGapZR[0xe7];\n\tunsigned char m_bfme188ZR[48];\n};\n\nvoid BfmeHostZR::bfmeRefreshZR(const StringBase<char> &name)\n{\n\tRva006AEE00Tree::InsertResult r;\n\n\tm_bfmeA0ZR.insert_unique(&r, name);\n\n\tif (r.m_bfmeOkZR && m_bfme9CZR != 0x3f800000)\n\t\tmemset(m_bfme188ZR, 2, 48);\n}\n"
+}
