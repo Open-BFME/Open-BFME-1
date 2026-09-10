@@ -1,5 +1,5 @@
 // ??1W3DDisplay@@UAE@XZ
-// partial score=0.84 date=2026-09-10
+// partial score=0.85 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 
@@ -12,6 +12,27 @@
 // retail destructor proves the inherited debug pointer at +0x28, the two
 // four-entry light arrays at +0x144/+0x154, the native display at +0x180, and
 // the STL vector at +0x29C.  Those offsets are kept in this TU-local view.
+//
+// Fixed vs the 0.84 bank: caching CameraShakerSystem into a local (`shaker`)
+// before the null check, instead of re-reading the global for both the
+// dtor-thunk call and the operator-delete argument, gets retail's callee-
+// saved esi caching (ours=518B retail=566B, 278 diff bytes, first at +0x39;
+// was 514B/319 diffs/+0x26). Two separate, larger walls remain past that
+// point, confirmed by full side-by-side disassembly, not just register
+// order: (1) the two four-entry light arrays (m_myLight/m_secondaryLight)
+// use a completely different loop SHAPE in retail -- a pointer-walking loop
+// (mov esi,[eax+4]; add eax,4; dec esi) over the array's own storage rather
+// than an indexed access loop -- so this needs a genuine loop-structure
+// rewrite, not a register-order tweak; (2) the std::vector<int> tail
+// (m_textureCategories) destruction in retail has a size-gated branch
+// (cmp eax,0x80; jbe) between an inline small-buffer path and an out-of-line
+// deallocation call, plus what look like separate WW3D::Shutdown /
+// WWMath::Shutdown / file-system calls sequenced differently around it;
+// our current #include <vector> reconstruction has neither. Ruled out:
+// `#define _STLP_NO_EXCEPTIONS 1` before the include (byte-identical output
+// with and without it -- not the cause of the missing SEH-frame difference,
+// which turned out to already be present in both; the divergence is really
+// the light-loop shape and the vector tail, not exception model).
 
 class DebugDisplayInterface
 {
@@ -174,10 +195,11 @@ typedef char W3DDisplaySizeCheck[(sizeof(W3DDisplay) == 0x2A8) ? 1 : -1];
 // ??1W3DDisplay@@UAE@XZ
 W3DDisplay::~W3DDisplay(void)
 {
-	if (CameraShakerSystem != 0)
+	CameraShakeSystemClass *shaker = CameraShakerSystem;
+	if (shaker != 0)
 	{
 		j_0001b6a8();
-		::operator delete(CameraShakerSystem);
+		::operator delete(shaker);
 	}
 
 	UpdateSubsystem *updateSubsystem = FirstUpdateSubsystem;
