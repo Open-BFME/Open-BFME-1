@@ -8716,6 +8716,7 @@ name,address,notes
 ??1GlobalData@@UAE@XZ,0x0000564B,GlobalData destructor ILT called by authentic scalar-deleting destructor at 0x000844E0
 ??1GloriousChargeUpdateModuleData@@UAE@XZ,0x00048C11,route=0x002A5CC0; constructor vtable 0x010B5428 slot zero reaches scalar deleting destructor 0x0025E850 which calls this derived-destructor chain
 ??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
+??1GrabPassengerSpecialPowerModuleData@@UAE@XZ,0x00033C12,route=0x00258730; empty derived destructor folds to SpecialPowerModuleData; matched ctor vtable 0x010B5848 slot zero proves the class
 ??1GrantStealthBehaviorModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
 ??1GrantStealthBehaviorModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1GrantStealthBehaviorModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -61732,7 +61733,6 @@ name,address,notes
 ?b_00608090@@YAXXZ,0x00608090,gen-thunk body
 ?b_00608370@@YAXXZ,0x00608370,gen-thunk body
 ?b_006083a0@@YAXXZ,0x006083A0,gen-thunk body
-?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z,0x0000F187,ILT for the existing 0x00608090 upgrade-mask builder
 ?b_00608480@@YAXXZ,0x00608480,gen-thunk body
 ?b_00608530@@YAXXZ,0x00608530,gen-thunk body
 ?b_006085a0@@YAXXZ,0x006085A0,gen-thunk body
@@ -77751,6 +77751,7 @@ name,address,notes
 ?buildFieldParse@SpecialPowerModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00022584,ILT thunk read out of BaikonurLaunchPowerModuleData::buildFieldParse call displacement; real body 0x0077D380 (d_0077d380, gen-dump)
 ?buildFieldParse@SupplyCenterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0000CBFD,unique ILT to 0x002CF0C0
 ?buildFieldParse@SupplyWarehouseDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001AAE6,unique ILT to 0x002CF680
+?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z,0x0000F187,ILT for the existing 0x00608090 upgrade-mask builder
 ?buildProviderList@MilesAudioManager@@AAEXXZ,0x006960C0,MilesAudioManager provider-list helper reached through retail ILT 0x0003972F
 ?buildSegments@W3DRopeDraw@@AAEXXZ,0x0002354C,retail W3DRopeDraw vtable-bound doDrawModule call
 ?buildTerrainTexture@W3DRadar@@IAEXPAVTerrainLogic@@@Z,0x0002248F,pinharvest x1 (thunk)
