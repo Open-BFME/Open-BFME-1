@@ -86837,3 +86837,4 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?move@Rva001BC560Mover@@QAEXPAVObject@@PBUCoord3D@@MM@Z,0x001BC560,RVA-qualified typed call view; dispatcher 0x001BC820 and parent raw callee ABI verified; direct body 0x001BC560
 ?move@Rva001BBBC0Mover@@QAEXPAVObject@@PBUCoord3D@@MM@Z,0x001BBBC0,RVA-qualified typed call view; dispatcher 0x001BC820 and parent raw callee ABI verified; direct body 0x001BBBC0
 ?move@Rva001BC510Mover@@QAEXPAVObject@@PBUCoord3D@@MM@Z,0x001BC510,RVA-qualified typed call view; dispatcher 0x001BC820 and parent raw callee ABI verified; direct body 0x001BC510
+?rva0089F010@EAStringC@@QBE?AV1@H@Z,0x0089F010,RVA-qualified EAStringC-family substring helper; raw206B ends89F0DE; thiscall hidden result pointer plus count and ret8 independently verified; no original method-name claim
