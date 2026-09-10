@@ -123,7 +123,7 @@ public:
 	Rva00809500Sink *find( Rva00809500Entry *entry );
 };
 
-void Rva007F93E0( void *message, void *route, void *owner );
+void *Rva007F93E0( void *message, void *route, void *owner );
 char * __cdecl ji_009f70ba( char *dest, const char *src, unsigned count );
 
 class LanTheaterEmulator

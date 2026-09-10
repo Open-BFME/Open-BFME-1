@@ -11345,7 +11345,6 @@ name,address,notes
 ?Rva007F8D30@@YAXXZ,0x007F8D30,Y2 lane: address-derived; the no-argument teardown 0x007EB650 runs before the DirtySock module shutdown
 ?Rva007F8FB0@@YAIXZ,0x007F8FB0,cdecl immediate used as first service object field +0x24
 ?Rva007F91D0@@YAXPAURva00800E50Header@@PBD@Z,0x007F91D0,jabba demangler inbound dispatch log helper
-?Rva007F93E0@@YAXPAX00@Z,0x007F93E0,FESL cdecl triple from 0x007FA2C0
 ?Rva007FBC00@@YAIXZ,0x007FBC00,cdecl immediate used as service object field +0x24
 ?Rva007FD060@@YAIXZ,0x007FD060,cdecl immediate used as second service object field +0x24
 ?Rva007FD080@@YAXH@Z,0x007FD080,Y2 lane: C++ spelling of the DirtySock module create converted as _Rva007FD080 in Y4DirtySockSocket.c

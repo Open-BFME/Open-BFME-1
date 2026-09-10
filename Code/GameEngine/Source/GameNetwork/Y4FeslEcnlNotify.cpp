@@ -39,7 +39,7 @@ public:
 	void bfmeSendSKA( int category, int transactionId, int depth );
 };
 
-void Rva007F93E0( void *a, void *b, void *c );
+void *Rva007F93E0( void *a, void *b, void *c );
 
 class Rva00809BF0Owner
 {

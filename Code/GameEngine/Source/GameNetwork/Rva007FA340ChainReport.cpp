@@ -34,8 +34,8 @@ struct Rva007EB810Diag
 
 extern Rva007EB810Diag *Rva007EB810Get();
 
-extern void Rva007F93E0(void *, void *, void *);
-typedef void *(__cdecl *Rva007F93E0Ret)(void *, void *, void *);
+extern void *Rva007F93E0(void *, void *, void *);
+
 
 class Rva007FA340
 {
@@ -63,7 +63,7 @@ void Rva007FA340::process(void *item)
 	void *first = chain->first();
 
 	Rva007EB810Diag *diag = Rva007EB810Get();
-	diag->v4(((Rva007F93E0Ret)Rva007F93E0)(
+	diag->v4(Rva007F93E0(
 		first, (void *)0x0112bb94, m_handler),
 		(void *)0x0112bb98, (void *)0x0112ba50, (void *)0x2d6);
 	chain->popFront();

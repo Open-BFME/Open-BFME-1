@@ -81,7 +81,7 @@ struct Rva007EB810Diag
 };
 
 Rva007EB810Diag *Rva007EB810Get();
-void Rva007F93E0( void *message, void *route, void *owner );
+void *Rva007F93E0( void *message, void *route, void *owner );
 extern int g_bfmeKeyVHE;
 extern char g_bfmeLidKey[];
 

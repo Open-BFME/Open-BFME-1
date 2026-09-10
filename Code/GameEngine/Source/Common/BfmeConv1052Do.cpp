@@ -1,7 +1,7 @@
 // cl: /GS
 // BfmeH1052::bfmeDo1052 @ 0x00800BD0 (164B).
 
-void Rva007F93E0(void *a, void *b, void *c) throw();
+void *Rva007F93E0(void *a, void *b, void *c) throw();
 
 class BfmeMsg1052
 {

@@ -75,7 +75,7 @@ public:
 	void bfmeGoVJJ( BfmeMsgVJJ *out );
 };
 
-void Rva007F93E0( void *message, void *route, void *owner );
+void *Rva007F93E0( void *message, void *route, void *owner );
 
 class Rva00803620Sink
 {

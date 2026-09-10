@@ -17,7 +17,7 @@ public:
 	virtual bool v9(void *a);
 };
 
-void Rva007F93E0(void *a, void *b, void *svc);
+void *Rva007F93E0(void *a, void *b, void *svc);
 
 class Rva007FA2C0
 {
