@@ -9751,6 +9751,7 @@ name,address,notes
 ??A?$map@VAsciiString@@MU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@M@_STL@@@3@@_STL@@QAEAAMABVAsciiString@@@Z,0x000D97B0,PlayerTemplate time-change local map operator owner
 ??A?$map@VAsciiString@@PAVArchiveFile@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@PAVArchiveFile@@@_STL@@@4@@_STL@@QAEAAPAVArchiveFile@@ABVAsciiString@@@Z,0x00063960,ArchiveFileSystem::openFile reaches this pointer-map operator[] through ILT 0x00038B22; returned four-byte mapped reference is dereferenced as ArchiveFile*
 ??A?$map@VAsciiString@@PAVNamedTimerInfo@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@PAVNamedTimerInfo@@@_STL@@@4@@_STL@@QAEAAPAVNamedTimerInfo@@ABVAsciiString@@@Z,0x0004B49D,addNamedTimer retail call site; ILT thunk to body 0x0044A860
+??A?$map@VAsciiString@@PAVRva00093E60Item@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@PAVRva00093E60Item@@@_STL@@@4@@_STL@@QAEAAPAVRva00093E60Item@@ABVAsciiString@@@Z,0x00036CFA,route=0x00093E60; existing matched map operator[] body; retail ILT 0x00036CFA
 ??A?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEAAVAsciiString@@ABV2@@Z,0x0003E6DA,FirewallHelper flagNeedToRefresh site-decoded map operator[] thunk
 ??A?$map@VAsciiString@@VArchivedDirectoryInfo@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@VArchivedDirectoryInfo@@@_STL@@@4@@_STL@@QAEAAVArchivedDirectoryInfo@@ABVAsciiString@@@Z,0x009CAB10,positional and NOT yet confirmed by a byte match: reached three times matching loadIntoDirectoryTree three m_directories[token] subscripts
 ??A?$map@VAsciiString@@VPlayerInfo@@UAsciiComparator@@V?$allocator@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@std@@@std@@@std@@QAEAAVPlayerInfo@@ABVAsciiString@@@Z,0x000151E0,GameSpyInfo updatePlayerInfo PlayerInfoMap subscript thunk
@@ -76214,8 +76215,7 @@ name,address,notes
 ?bfmeMakeALA@@YAPAXPAX@Z,0x00024CA8,pin
 ?bfmeMakeASB@@YAPAXHH@Z,0x000283D5,pin
 ?bfmeMakeBCE@@YAPAXXZ,0x007F4D50,pin
-?bfmeMakeBFA@@YGPAPAXPAX@Z,0x00036CFA,pin
-?bfmeMakeBFA@@YGPAXPAX@Z,0x00036CFA,pin
+?bfmeGoBFA@BfmeThingBPA@@QAEXPAX00@Z,0x00001735,Open-BFME7 member ABI alias; route=0x00093F20; retail ILT 0x00001735
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBIF@BfmeSubBIF@@QAEPAXPAX@Z,0x000100A0,pin
 ?bfmeMakeBLC@BfmeSinkBLC@@QAEPAXPAX@Z,0x0003ADD7,pin
