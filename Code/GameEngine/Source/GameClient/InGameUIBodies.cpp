@@ -219,6 +219,15 @@ private:
 	void *m_data;
 };
 
+// Retail's 0x0043251f ILT is Thing::isKindOf.  Keep this TU-local facade
+// honest about the call shape while preserving the BFME ILT target.
+class BFMEActionThing
+{
+public:
+	Bool isKindOf(Int kind) const;
+};
+
+
 struct IRegion2D
 {
 	ICoord2D lo;
@@ -522,7 +531,7 @@ public:
 	virtual void slot3E(void);
 	virtual void slot3F(void);
 	virtual void slot40(void);
-	virtual void slot41(void);
+	virtual Drawable *getFirstSelectedDrawable(void);		// slot 65, vtable+0x104
 	virtual void slot42(void);
 	virtual void slot43(void);
 	virtual void slot44(void);
@@ -540,6 +549,7 @@ public:
 	virtual int selectMatchingAcrossRegion( IRegion2D *region );	// slot 90
 	virtual void buildRegion( const ICoord2D *anchor, const ICoord2D *dest,
 		IRegion2D *region );					// slot 91
+	virtual int selectMatchingAcrossMap( void );
 
 	// Virtual by their mangled names -- recreateControlBar is UAE and
 	// getIdleWorkerCount EAE -- but no body here calls either through the
@@ -803,6 +813,40 @@ int InGameUI::selectMatchingAcrossScreen( void )
 	else if (numSelected != 0)
 	{
 		UnicodeString message = TheGameText->fetch("GUI:SelectedAcrossScreen");
+		TheInGameUI->message(message);
+	}
+	return numSelected;
+}
+
+// ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
+// Retail 0x00448700, 339 bytes.  The older 0x00448729/298-byte row began
+// after the shared SEH and BFME state-readiness prologue; the full retail
+// function includes those 41 bytes.
+int InGameUI::selectMatchingAcrossMap( void )
+{
+	BfmeStateDO *state = g_bfmeStateDO;
+	if (state != 0 && state->m_bfmeFirst != 0 && state->m_bfmeSecond != 0)
+		return 0;
+
+	Int numSelected = selectMatchingAcrossRegion( 0 );
+	if (numSelected == -1)
+	{
+		UnicodeString message = TheGameText->fetch("GUI:NothingSelected");
+		TheInGameUI->message(message);
+	}
+	else if (numSelected == 0)
+	{
+		Drawable *draw = TheInGameUI->getFirstSelectedDrawable();
+		if (draw == 0 || draw->m_object == 0 ||
+			!reinterpret_cast<const BFMEActionThing *>(draw->m_object)->isKindOf(7))
+		{
+			UnicodeString message = TheGameText->fetch("GUI:SelectedAcrossMap");
+			TheInGameUI->message(message);
+		}
+	}
+	else
+	{
+		UnicodeString message = TheGameText->fetch("GUI:SelectedAcrossMap");
 		TheInGameUI->message(message);
 	}
 	return numSelected;
