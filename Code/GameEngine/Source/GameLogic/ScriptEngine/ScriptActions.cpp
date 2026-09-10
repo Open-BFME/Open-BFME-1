@@ -1929,7 +1929,7 @@ void ScriptActions::doRotateCameraTowardWaypoint(const AsciiString& waypointName
 //-------------------------------------------------------------------------------------------------
 /** doMoveAlongWaypointPath */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doMoveCameraAlongWaypointPath_Thunk.cpp
+// Retail address unproven: the former 0x002F8FD0 dump is an object-creation body.
 // ?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z present-unmatched
 void ScriptActions::doMoveCameraAlongWaypointPath(const AsciiString& waypoint, Real sec, Real cameraStutterSec, Real easeIn, Real easeOut)
 {

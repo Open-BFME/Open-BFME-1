@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
-// Open-BFME5: lift MASM dump ScriptActions::doMoveCameraAlongWaypointPath to C++ thunk.
+// Existing 0x002F8FD0 byte dump; camera identity refuted by object-creation behaviour.
+// Historical compiler symbol retained only through the neutral ledger object-symbol mapping.
 
 class AsciiString;
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
