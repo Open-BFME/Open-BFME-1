@@ -79,6 +79,17 @@
 #include "Common/STLTypedefs.h"
 #include "Common/NameKeyGenerator.h"
 
+// BFME winSendSystemMsg calls the real helper479210 through ILT3D07D.
+// It checks an optional delegate at this+1DC then uses virtual slot8. This
+// address-derived member view models that ABI locally; it is not a new named
+// GameWindow identity claim.
+class Rva00479210GameWindow
+{
+public:
+	WindowMsgHandledType dispatch( UnsignedInt msg,
+		WindowMsgData mData1, WindowMsgData mData2 );
+};
+
 #define __GAME_WINDOW_TRANSITIONS_H_
 class Transition;
 
@@ -915,7 +926,6 @@ GameWindow *GameWindowManager::winGetWindowList( void )
 //-------------------------------------------------------------------------------------------------
 /** Send a system message to the specified window */
 //-------------------------------------------------------------------------------------------------
-// ?winSendSystemMsg@GameWindowManager@@UAE?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z present-unmatched
 WindowMsgHandledType GameWindowManager::winSendSystemMsg( GameWindow *window, 
 																					UnsignedInt msg,
 																					WindowMsgData mData1, 
@@ -928,7 +938,7 @@ WindowMsgHandledType GameWindowManager::winSendSystemMsg( GameWindow *window,
 	if( msg != GWM_DESTROY && BitTest( window->m_status, WIN_STATUS_DESTROYED ) )
 		return MSG_IGNORED;
 
-	return window->m_system( window, msg, mData1, mData2 );
+	return ((Rva00479210GameWindow *)window)->dispatch( msg, mData1, mData2 );
 
 }  // end winSendSystemMsg
 
