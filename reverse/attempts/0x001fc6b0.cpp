@@ -1,5 +1,5 @@
 // ?d_001fc6b0@@YAXXZ
-// partial score=0.9 date=2026-09-05
+// partial score=0.999 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 class AsciiString
@@ -16,11 +16,31 @@ enum ObjectID
 // BFME's AudioEventRTS object is 0x70 bytes at this call site.  This local
 // view keeps the constructor and scalar destructor ABI while preserving that
 // stack footprint.
+class AudioEventRTS
+{
+public:
+	~AudioEventRTS();
+};
+
+extern void j_00008e86();
+extern void j_00026f35();
+
 class BfmeAudioEventRTS
 {
 public:
-	BfmeAudioEventRTS(const AsciiString &name, ObjectID owner);
-	~BfmeAudioEventRTS();
+	BfmeAudioEventRTS(const AsciiString &name, ObjectID owner)
+	{
+		typedef void (BfmeAudioEventRTS::*ConstructCall)(const AsciiString &, ObjectID);
+		union { void *address; ConstructCall member; } call;
+		call.address = (void *)j_00008e86;
+		(this->*call.member)(name, owner);
+	}
+	~BfmeAudioEventRTS()
+	{
+		union { void *address; void (BfmeAudioEventRTS::*member)(); } call;
+		call.address = (void *)j_00026f35;
+		(this->*call.member)();
+	}
 	unsigned char m_raw[0x70];
 };
 
@@ -95,8 +115,8 @@ void GateOpenAndCloseBehavior::playSound()
 {
 	TheAudioClientUpdate->removeAudioEvent(m_audioHandle);
 	GateOpenAndCloseBehaviorModuleDataView *data = m_moduleData;
-	GateOpenAndCloseState state = m_state;
 	GateOpenAndCloseBehaviorObjectView *object = m_object;
+	GateOpenAndCloseState state = m_state;
 	switch (state)
 	{
 	case 0:
