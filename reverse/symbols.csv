@@ -5278,7 +5278,7 @@ name,address,notes
 ??1Gen_dtor_0025eb10@@UAE@XZ,0x0002CF75,gen-dtor class destructor
 ??1Gen_dtor_0025f290@@UAE@XZ,0x00033C12,gen-dtor class destructor
 ??1Gen_dtor_0025fb50@@UAE@XZ,0x00023948,gen-dtor class destructor
-??1Gen_dtor_0025fe70@@UAE@XZ,0x000450AC,gen-dtor class destructor
+??1LevelGrantSpecialPower@@MAE@XZ,0x000450AC,route=0x002AA910; primary vtable slot zero reaches scalar deleting destructor 0x0025FE70 whose call chain resolves to the matched SpecialAbilityUpdate base destructor
 ??1Gen_dtor_0025ffc0@@UAE@XZ,0x00034090,gen-dtor class destructor
 ??1Gen_dtor_00260b20@@UAE@XZ,0x0002147C,gen-dtor class destructor
 ??1Gen_dtor_00261280@@UAE@XZ,0x00016220,gen-dtor class destructor
