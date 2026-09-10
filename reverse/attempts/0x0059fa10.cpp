@@ -103,7 +103,7 @@ void BfmeOverlay1293::bfmeDraw1293()
 	float top = (float)m_top1c;
 	float left = (float)m_left18;
 	_ReadWriteBarrier();
-	register Display *device = TheDisplay;
+	Display *device = TheDisplay;
 	device->bfmeBegin1293();
 	device->bfmeDrawQuad1293(left, top, right, bottom, color);
 	device->bfmeEnd1293();
