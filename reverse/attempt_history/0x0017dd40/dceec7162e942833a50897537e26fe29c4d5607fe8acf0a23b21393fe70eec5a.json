@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dceec7162e942833a50897537e26fe29c4d5607fe8acf0a23b21393fe70eec5a",
+  "symbol": "?bfmeApplyYH@Rva0017DD40Owner@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeApplyYH@Rva0017DD40Owner@@QAEHXZ\n// partial score=0.97 date=2026-09-10\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n// BFME layout view for the anonymous 0x0017DD40 body.\n\n#define _STLP_NO_EXCEPTIONS 1\n#define _STLP_USE_STATIC_LIB 1\n#include <bitset>\n\ntemplate <int NUMBITS>\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h\nclass BitFlags\n{\npublic:\n\tenum _dummy_kInit { kInit };\n\n\tBitFlags(_dummy_kInit, int index)\n\t{\n\t\tm_bits.set(index);\n\t}\n\tBitFlags() {}\n\nprivate:\n\t_STL::bitset<NUMBITS> m_bits;\n};\n\ntypedef BitFlags<86> ObjectStatusMaskType;\n\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h\nclass Object\n{\npublic:\n\tvoid setStatus(const ObjectStatusMaskType &, bool);\n};\n\nclass Rva0017DD40GlobalBound\n{\npublic:\n\tchar m_pad[0x3C];\n\tint m_count;\n};\n\nextern Rva0017DD40GlobalBound *g_bfmeGameLogic1294;\n\nclass Rva0017DD40Holder\n{\npublic:\n\tchar m_pad[0x10];\n\tObject *m_object;\n};\n\nclass Rva0017DD40Owner\n{\npublic:\n\tint bfmeApplyYH();\n\nprivate:\n\tchar m_pad0[0x1C];\n\tRva0017DD40Holder *m_holder;\n\tchar m_pad1[0x24 - 0x1C - 4];\n\tint m_index;\n};\n\nint Rva0017DD40Owner::bfmeApplyYH()\n{\n\tif ((unsigned)m_index < (unsigned)g_bfmeGameLogic1294->m_count)\n\t\treturn -1;\n\n\tObject *target = m_holder->m_object;\n\ttarget->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 22), false);\n\treturn 0;\n}\n"
+}
