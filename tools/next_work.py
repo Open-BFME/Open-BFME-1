@@ -160,6 +160,7 @@ def resolve_drift_source(basename, function=None):
 
 _GHIDRA_STARTS = None
 _GHIDRA_SIZES = None
+_GHIDRA_NAMES = None
 
 
 def _ghidra_sizes():
@@ -177,6 +178,27 @@ def _ghidra_sizes():
                         pass
         _GHIDRA_SIZES = sizes
     return _GHIDRA_SIZES
+
+
+def _ghidra_names():
+    """{function start rva: Ghidra label}, cached.
+
+    The inventory distinguishes real function bodies from compiler-generated
+    unwind funclets. A drift alignment vote onto ``Unwind@...`` is never a
+    source function identity, even when the address and extent are exact.
+    """
+    global _GHIDRA_NAMES
+    if _GHIDRA_NAMES is None:
+        names = {}
+        if GHIDRA_FUNCTIONS.exists():
+            with GHIDRA_FUNCTIONS.open(newline="") as fh:
+                for row in csv.DictReader(fh):
+                    try:
+                        names[int(row["rva"], 16)] = row.get("name", "")
+                    except (ValueError, KeyError, TypeError):
+                        pass
+        _GHIDRA_NAMES = names
+    return _GHIDRA_NAMES
 
 
 def _ghidra_starts():
@@ -637,6 +659,7 @@ def structural_validator(rvas=()):
             sizes.setdefault(rva, size)
     validator = boundary_validator.BoundaryValidator(build.read_target_bytes, sizes)
     validator.dump_extents = dumps
+    validator.inventory_names = _ghidra_names()
     return validator
 
 
@@ -673,6 +696,12 @@ def collapse_and_validate(candidates, validator=None):
 
     kept, refuted, reasons = [], 0, {}
     for rva, group in groups.items():
+        inventory_name = getattr(validator, "inventory_names", {}).get(rva, "")
+        if inventory_name.startswith("Unwind@"):
+            reason = "C4 unwind-funclet"
+            reasons[reason] = reasons.get(reason, 0) + 1
+            refuted += len(group)
+            continue
         verdict = validator.validate([c["function"] for c in group], rva,
                                      group[0]["size"])
         refuted += len(verdict["refuted"])
