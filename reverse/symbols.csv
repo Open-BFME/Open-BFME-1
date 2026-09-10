@@ -12032,6 +12032,7 @@ name,address,notes
 ?_M_clear@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@IAEXXZ,0x000315E3,near-twin pin: 0x003D1710 vector<ParkingPlaceInfo> _M_clear call target (ILT thunk j_000315e3)
 ?_M_clear@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEXXZ,0x0000903E,pinharvest x1 (thunk)
 ?_M_clear@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ,0x0001BEFA,resweep callee back-solved
+?_M_clear_retail@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ,0x0003EBBC,retail ILT used by the 0x00584650 overflow body; resolves to shared 12-byte vector clear body 0x00583F70
 ?_M_clear@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXXZ,0x00004AB1,Open-BFME5 ILT the RunwayInfo vector _M_insert_overflow at 0x0039EC70 cleans up through
 ?_M_clear@?$vector@URva000A8500Element@_STL@@V?$allocator@URva000A8500Element@_STL@@@2@@_STL@@IAEXXZ,0x0000903E,Open-BFME5 the vector _M_clear the insert at 0x000A8500 calls
 ?_M_clear@?$vector@URva000B19F0Element@_STL@@V?$allocator@URva000B19F0Element@_STL@@@2@@_STL@@IAEXXZ,0x00010230,Open-BFME5 the vector _M_clear the insert at 0x000B19F0 calls
