@@ -90,6 +90,17 @@ public:
 		WindowMsgData mData1, WindowMsgData mData2 );
 };
 
+// The input twin calls real helper4791F0 through ILT3148. It checks an
+// optional delegate at this+1DC then uses virtual slot4. Keep this
+// address-derived ABI view separate so the pin cannot silently retarget the
+// system-message helper above.
+class Rva004791F0GameWindow
+{
+public:
+	WindowMsgHandledType dispatch( UnsignedInt msg,
+		WindowMsgData mData1, WindowMsgData mData2 );
+};
+
 #define __GAME_WINDOW_TRANSITIONS_H_
 class Transition;
 
@@ -945,7 +956,6 @@ WindowMsgHandledType GameWindowManager::winSendSystemMsg( GameWindow *window,
 //-------------------------------------------------------------------------------------------------
 /** Send a system message to the specified window */
 //-------------------------------------------------------------------------------------------------
-// ?winSendInputMsg@GameWindowManager@@UAE?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z present-unmatched
 WindowMsgHandledType GameWindowManager::winSendInputMsg( GameWindow *window, 
 																				 UnsignedInt msg,
 																				 WindowMsgData mData1, 
@@ -958,7 +968,7 @@ WindowMsgHandledType GameWindowManager::winSendInputMsg( GameWindow *window,
 	if( msg != GWM_DESTROY && BitTest( window->m_status, WIN_STATUS_DESTROYED ) )
 		return MSG_IGNORED;
 
-	return window->m_input( window, msg, mData1, mData2 );
+	return ((Rva004791F0GameWindow *)window)->dispatch( msg, mData1, mData2 );
 
 }  // end winSendInputMsg
 
