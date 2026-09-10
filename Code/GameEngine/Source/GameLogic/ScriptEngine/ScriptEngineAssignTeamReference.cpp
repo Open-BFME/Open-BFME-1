@@ -1,14 +1,16 @@
-// ?assignTeamReference@ScriptEngine@@QAEXABVAsciiString@@PAVTeam@@@Z
-// partial score=0.9 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME: ScriptEngine::assignTeamReference at retail 0x00345470.
+// ScriptActions::doSetTeamReference calls this body, and the existing
+// assignTeamReference ILT pin at 0x0001F82A jumps here.  The implementation is
+// the team-valued twin of the adjacent unit-reference map insertion.
 
 class AsciiString;
 
 template <class T> class StringBase
 {
 private:
-
 	friend class AsciiString;
+
 	struct Data
 	{
 		int refs;
@@ -53,7 +55,8 @@ struct ScriptReferenceBuiltRecord
 
 struct ScriptReferenceRecordBase
 {
-	__forceinline ScriptReferenceRecordBase(const ScriptReferenceBuiltRecord &record) :
+	__forceinline ScriptReferenceRecordBase(
+		const ScriptReferenceBuiltRecord &record) :
 		m_canonical(record.m_canonical), m_name(record.m_name),
 		m_nameData(record.m_nameData) {}
 
@@ -64,7 +67,8 @@ struct ScriptReferenceRecordBase
 
 struct ScriptReferenceRecord : ScriptReferenceRecordBase
 {
-	__forceinline ScriptReferenceRecord(const ScriptReferenceBuiltRecord &record) :
+	__forceinline ScriptReferenceRecord(
+		const ScriptReferenceBuiltRecord &record) :
 		ScriptReferenceRecordBase(record) {}
 };
 
@@ -107,12 +111,16 @@ void ScriptEngine::assignTeamReference(const AsciiString &name, Team *team)
 	{
 		void (*raw)();
 		InsertReference typed;
-	} insert_reference;
-	insert_reference.raw = j_00022be2;
+	} insertReference;
+	insertReference.raw = j_00022be2;
+
 	ScriptReferenceInsertResult result;
 	(((*(ScriptReferenceMap *)((char *)this + 0x16064)).*
-		insert_reference.typed)(&result,
+		insertReference.typed)(&result,
 			ScriptReferenceRecord(((MakeReferenceRecord)j_00001ccb)(
-				source, &name))));
-	result.m_node->m_value = team->m_reference;
+				source, 0))));
+
+	void *reference = team->m_reference;
+	ScriptReferenceNode *node = result.m_node;
+	node->m_value = reference;
 }
