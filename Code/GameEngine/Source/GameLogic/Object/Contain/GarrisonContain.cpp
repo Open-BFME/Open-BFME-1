@@ -199,17 +199,39 @@ public:
 
 class BfmeOutOfWeaponRangeObject;
 
+// Keep the placement call in a TU-local ABI view.  The route is the existing
+// BFME ILT for GarrisonContain::putObjectAtGarrisonPoint; this declaration
+// only prevents the optimizer from carrying the preceding helper's ECX view.
+class BfmeGarrisonPlacementCall
+{
+public:
+	void putObjectAtGarrisonPoint( Object *object, ObjectID targetID,
+		Int conditionIndex, Int pointIndex );
+};
+
+class BfmeGarrisonFindClosestCall
+{
+public:
+	Int findClosestFreeGarrisonPointIndex( Int conditionIndex,
+		const Coord3D *targetPos );
+};
+
 class BfmeOutOfWeaponRangeWeapon
 {
 public:
 	Bool isWithinAttackRange( const BfmeOutOfWeaponRangeObject *source,
 		const BfmeOutOfWeaponRangeObject *target, Int extra ) const;
+	Bool isWithinAttackRange( const BfmeOutOfWeaponRangeObject *source,
+		const Coord3D *targetPos, Int extra ) const;
 };
 
 // This method is the same BFME range helper used by the named AI state
 // callers.  Its argument pointers are opaque at this call site; no object is
 // dereferenced through this local type.
 #pragma comment(linker, "/alternatename:?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@0H@Z=?j_0002e85c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@PBUCoord3D@@H@Z=?j_0002e951@@YAXXZ")
+#pragma comment(linker, "/alternatename:?putObjectAtGarrisonPoint@BfmeGarrisonPlacementCall@@QAEXPAVObject@@W4ObjectID@@HH@Z=?j_00028cea@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findClosestFreeGarrisonPointIndex@BfmeGarrisonFindClosestCall@@QAEHHPBUCoord3D@@@Z=?j_0002130f@@YAXXZ")
 
 static Bool bfmeGarrisonObjectIsEffectivelyDead( const Object *object )
 {
@@ -607,7 +629,6 @@ Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weap
 //The AI is entering the aim state and would like to move the unit to the best position, perform
 //a range check, and if it succeeds, leave him there -- otherwise, remove him immediately.
 //-------------------------------------------------------------------------------------------------
-// ?attemptBestFirePointPosition@GarrisonContain@@MAE_NPAVObject@@PAVWeapon@@PBUCoord3D@@@Z present-unmatched
 Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weapon, const Coord3D *targetPos )
 {
 	//Sanity
@@ -615,32 +636,58 @@ Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weap
 	{
 		return FALSE;
 	}
-#if defined __DEBUG || defined _INTERNAL
-  const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
-  DEBUG_ASSERTCRASH(modData->m_isEnclosingContainer, ("calcBestGarrisonPosition... SHOULD NOT GET HERE, since this container is non-enclosing") );
-#endif
 
-	//If this object is already at a garrison point, remove him.
-	Int existingIndex = getObjectGarrisonPointIndex( source );
+	// The incoming secondary interface is adjusted back by 0x20 for this view.
+	const ObjectID sourceID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>( source ) + 0x74);
+	BfmeGarrisonFirePointInterface *firePoint =
+		reinterpret_cast<BfmeGarrisonFirePointInterface *>(
+			reinterpret_cast<char *>( this ));
+	GarrisonContain *primary = reinterpret_cast<GarrisonContain *>( firePoint );
+
+	// If this object is already at a garrison point, remove him.
+	Int existingIndex = firePoint->getObjectGarrisonPointIndex( sourceID );
 	if( existingIndex != GARRISON_INDEX_INVALID )
 	{
-		removeObjectFromGarrisonPoint( source, existingIndex );
+		primary->removeObjectFromGarrisonPoint( source, existingIndex );
 	}
 
-	putObjectAtBestGarrisonPoint( source, NULL, targetPos );
+	// Recheck after removal before selecting the point used for the range test.
+	const ObjectID secondSourceID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>( source ) + 0x74);
+	if( firePoint->getObjectGarrisonPointIndex( secondSourceID ) == GARRISON_INDEX_INVALID )
+	{
+		Int conditionIndex = primary->findConditionIndex();
+		BfmeGarrisonFindClosestCall *pointFinder =
+			reinterpret_cast<BfmeGarrisonFindClosestCall *>( firePoint );
+		Int placeIndex = pointFinder->findClosestFreeGarrisonPointIndex( conditionIndex, targetPos );
+		if( placeIndex != GARRISON_INDEX_INVALID )
+		{
+			BfmeGarrisonPlacementCall *placement =
+				reinterpret_cast<BfmeGarrisonPlacementCall *>( firePoint );
+			placement->putObjectAtGarrisonPoint( source, INVALID_ID, conditionIndex, placeIndex );
+		}
+	}
 
-	//Okay, now we have positioned the object in the best position for the targetPos.
-	//Now check if we are able to fire on our targetPos.
-	if( weapon->isWithinAttackRange( source, targetPos ) )
+	// Check the weapon's position overload through its existing BFME ILT route.
+	BfmeOutOfWeaponRangeWeapon *fireWeapon =
+		reinterpret_cast<BfmeOutOfWeaponRangeWeapon *>( weapon );
+	if( fireWeapon->isWithinAttackRange(
+		reinterpret_cast<const BfmeOutOfWeaponRangeObject *>( source ), targetPos, 0 ) )
 	{
 		return TRUE;
 	}
 
-	//Crap, we failed... so remove the object from the garrison point.
-	existingIndex = getObjectGarrisonPointIndex( source );
+	// The range test failed; remove the object from any selected point.
+	const ObjectID retrySourceID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>( source ) + 0x74);
+	BfmeGarrisonFirePointInterface *retryFirePoint =
+		reinterpret_cast<BfmeGarrisonFirePointInterface *>(
+			reinterpret_cast<char *>( this ));
+	existingIndex = retryFirePoint->getObjectGarrisonPointIndex( retrySourceID );
 	if( existingIndex != GARRISON_INDEX_INVALID )
 	{
-		removeObjectFromGarrisonPoint( source, existingIndex );
+		primary->removeObjectFromGarrisonPoint( source, existingIndex );
 	}
 	return FALSE;
 }
