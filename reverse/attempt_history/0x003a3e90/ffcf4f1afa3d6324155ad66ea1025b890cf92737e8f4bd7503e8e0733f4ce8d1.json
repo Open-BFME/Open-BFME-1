@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ffcf4f1afa3d6324155ad66ea1025b890cf92737e8f4bd7503e8e0733f4ce8d1",
+  "symbol": "?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@XZ\n// partial score=0.95 date=2026-09-10\n// Gen003BD7D0Node::build, retail 0x003A3E90 (46 bytes).\n//\n// Rva003BF540::act reaches this body after preparing the three stack values\n// consumed by the following owner call.  The retail body has no parameter\n// reads and ends in a plain ret, so its effective interface is a niladic\n// __thiscall member; the pushes at the call site belong to the next call.\n\nclass Gen003BD8D0Built\n{\n};\n\nclass BfmeJ1052\n{\npublic:\n\tGen003BD8D0Built *bfmeUse1052( int *value );\n};\n\nclass Glo012F1028Sub\n{\n};\n\nclass Glo012F1028Type\n{\npublic:\n\tchar m_pad00[ 0x28 ];\n\tBfmeJ1052 *m_bfmeSub;\n};\n\nextern Glo012F1028Type * volatile Glo012F1028;\n\nclass Gen003BD7D0Node\n{\npublic:\n\tchar m_pad00[ 0x0C ];\n\tint m_at0C;\n\tint m_at10;\n\n\tGen003BD8D0Built *build();\n};\n\nGen003BD8D0Built *Gen003BD7D0Node::build()\n{\n\tint value[ 3 ];\n\tvalue[ 0 ] = m_at0C;\n\tvalue[ 1 ] = m_at10;\n\tvalue[ 2 ] = 0;\n\treturn Glo012F1028->m_bfmeSub->bfmeUse1052( value );\n}\n"
+}

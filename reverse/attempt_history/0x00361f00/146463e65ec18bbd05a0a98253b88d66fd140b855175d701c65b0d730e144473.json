@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "146463e65ec18bbd05a0a98253b88d66fd140b855175d701c65b0d730e144473",
+  "symbol": "?bfmeThreeDVB@BfmeSubDVB@@QAE?AVAsciiString@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeThreeDVB@BfmeSubDVB@@QAE?AVAsciiString@@H@Z\n// partial score=0.97 date=2026-09-10\n#include \"../../../../reference/shims/stringinline/StringInline.h\"\n\nstruct Rva002E5FF0Str\n{\n\tvoid *m_data;\n};\n\nextern Rva002E5FF0Str Rva01336E50Str;\n\nclass Rva00361990\n{\npublic:\n\tAsciiString copyString();\n\n\tunsigned char m_bfmeBody[0x58];\n};\n\nclass BfmeSubDVB\n{\npublic:\n\tAsciiString bfmeThreeDVB(int index);\n\tvoid bfmeOneDVB(void *a, void *b);\n\tvoid bfmeTwoDVB(void *a, void *b);\n\tvoid bfmeThreeDVB(void *a, void *b);\n\n\tunsigned char m_bfmeHead[0x18];\n\tRva00361990 *m_bfmeBegin;\n\tRva00361990 *m_bfmeEnd;\n};\n\nAsciiString BfmeSubDVB::bfmeThreeDVB(int index)\n{\n\tif (index >= 0 &&\n\t\t(unsigned int)index < (unsigned int)(m_bfmeEnd - m_bfmeBegin))\n\t\treturn (*(Rva00361990 *volatile *)&m_bfmeBegin)[index].copyString();\n\n\treturn *(const AsciiString *)&Rva01336E50Str;\n}\n\nstruct BfmeThingDVB\n{\n\tvoid *bfmeGoDVBa(void *a, void *b);\n\tvoid *bfmeGoDVBb(void *a, void *b);\n\tvoid *bfmeGoDVBc(void *a, void *b);\n\tunsigned char m_bfmeHead[0x170];\n\tBfmeSubDVB m_bfmeSub;\n};\n\nvoid *BfmeThingDVB::bfmeGoDVBa(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeOneDVB(a, b);\n\treturn a;\n}\n\nvoid *BfmeThingDVB::bfmeGoDVBb(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeTwoDVB(a, b);\n\treturn a;\n}\n\nvoid *BfmeThingDVB::bfmeGoDVBc(void *a, void *b)\n{\n\tvolatile int tmp = 0;\n\tm_bfmeSub.bfmeThreeDVB(a, b);\n\treturn a;\n}\n"
+}
