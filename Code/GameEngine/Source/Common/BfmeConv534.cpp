@@ -19,6 +19,18 @@ public:
 	~BFMERetailAsciiString() { releaseBuffer(); }
 };
 
+class BfmeValueBUE
+{
+public:
+	__forceinline BfmeValueBUE() {}
+	__forceinline BfmeValueBUE(const BfmeValueBUE &other) :
+		m_value(other.m_value)
+	{
+	}
+
+	int m_value;
+};
+
 class BfmeInnerBUE
 {
 public:
@@ -36,7 +48,7 @@ public:
 	virtual void bfmeSpareBUE11();
 	virtual void bfmeSpareBUE12();
 	virtual void bfmeSpareBUE13();
-	virtual void bfmeSpareBUE14();
+	virtual BfmeValueBUE bfmeGetValueBUE();
 	virtual void bfmeSpareBUE15();
 	virtual void bfmeSpareBUE16();
 	virtual void bfmeSpareBUE17();
@@ -69,15 +81,25 @@ class BfmeThingBUE
 {
 public:
 	void bfmeGoBUE(void *what);
+	BfmeValueBUE bfmeGetValueBUE();
 	BFMERetailAsciiString bfmeGetBUE();
 	unsigned char m_bfmeHead[0xd0];
 	BfmeSubBUE *m_bfmeSub;
+	unsigned char m_bfmeGap[4];
+	BfmeValueBUE m_bfmeFallback;
 };
 
 void BfmeThingBUE::bfmeGoBUE(void *what)
 {
 	if (((BfmeOuterBUE *)((char *)this - 0x10))->bfmeAskBUE())
 		m_bfmeSub->m_bfmeInner.bfmeRunBUE(what);
+}
+
+BfmeValueBUE BfmeThingBUE::bfmeGetValueBUE()
+{
+	return ((BfmeOuterBUE *)((char *)this - 0x10))->bfmeAskBUE()
+		? m_bfmeSub->m_bfmeInner.bfmeGetValueBUE()
+		: m_bfmeFallback;
 }
 
 BFMERetailAsciiString BfmeThingBUE::bfmeGetBUE()
