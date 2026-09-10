@@ -1,314 +1,214 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Clean C++ reconstruction of TerrainLogic::loadMap.
+//
+// The retail entry consumes a filename, stream, tail flag, and query flag.
+// The decorated name records only the filename and query flag, so this TU
+// keeps the two additional observed stack words in an ABI helper.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-};
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
-class TerrainLogic
+typedef int Int;
+typedef bool Bool;
+typedef unsigned int UnsignedInt;
+typedef unsigned short UnsignedShort;
+
+class ChunkInputStream;
+
+template <typename T>
+class StringBase
 {
 public:
-	virtual bool loadMap(AsciiString, bool);
+	StringBase(void) : m_data(0) {}
+	StringBase(const StringBase &other);
+	void set(const StringBase &other);
+
+private:
+	friend class AsciiString;
+	StringBase(const T *text);
+
+protected:
+	void *m_data;
 };
 
-// ?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z
-__declspec(naked) bool TerrainLogic::loadMap(AsciiString, bool)
+class AsciiString : public StringBase<char>
 {
-	__asm {
-		__emit 0x55
-		__emit 0x8b
-		__emit 0xec
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x78
-		__emit 0x84
-		__emit 0x00
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x30
-		__emit 0x53
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xf9
-		__emit 0x89
-		__emit 0x65
-		__emit 0xf0
-		__emit 0x89
-		__emit 0x7d
-		__emit 0xec
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x08
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xbb
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x66
-		__emit 0x83
-		__emit 0x78
-		__emit 0x04
-		__emit 0x00
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xb0
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x45
-		__emit 0x08
-		__emit 0x8d
-		__emit 0x4f
-		__emit 0x40
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x61
-		__emit 0xba
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x8a
-		__emit 0x45
-		__emit 0x14
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x26
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0xdc
-		__emit 0xd5
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x31
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x74
-		__emit 0x1a
-		__emit 0x8b
-		__emit 0x56
-		__emit 0x44
-		__emit 0xc1
-		__emit 0xea
-		__emit 0x02
-		__emit 0xf6
-		__emit 0xc2
-		__emit 0x01
-		__emit 0x74
-		__emit 0x08
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xeb
-		__emit 0xa6
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x76
-		__emit 0x04
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x75
-		__emit 0xe6
-		__emit 0x8b
-		__emit 0x75
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x06
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x01
-		__emit 0xff
-		__emit 0x50
-		__emit 0x08
-		__emit 0x56
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0xe8
-		__emit 0xec
-		__emit 0x45
-		__emit 0xe6
-		__emit 0xff
-		__emit 0xb3
-		__emit 0x02
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0x88
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0xe8
-		__emit 0x19
-		__emit 0x67
-		__emit 0xe5
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x71
-		__emit 0x68
-		__emit 0xe0
-		__emit 0xc3
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x14
-		__emit 0xe8
-		__emit 0x2d
-		__emit 0xc9
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x68
-		__emit 0xe5
-		__emit 0x41
-		__emit 0x42
-		__emit 0x00
-		__emit 0x68
-		__emit 0x50
-		__emit 0x6e
-		__emit 0x33
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x14
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x03
-		__emit 0xe8
-		__emit 0x22
-		__emit 0x99
-		__emit 0xe6
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x14
-		__emit 0x88
-		__emit 0x5d
-		__emit 0xfc
-		__emit 0xe8
-		__emit 0x86
-		__emit 0xb6
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x57
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0xe8
-		__emit 0x37
-		__emit 0xc9
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x30
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xe6
-		__emit 0x9b
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x45
-		__emit 0xfc
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x5e
-		__emit 0xb6
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xf4
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xe5
-		__emit 0x5d
-		__emit 0xc2
-		__emit 0x10
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xc4
-		__emit 0xc6
-		__emit 0x45
-		__emit 0xfc
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xb6
-		__emit 0x9b
-		__emit 0xe7
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x0c
+public:
+	AsciiString(void) : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	AsciiString(const char *text);
+	~AsciiString();
+
+	Bool isEmpty(void) const
+	{
+		return m_data == 0 ||
+			*reinterpret_cast<const UnsignedShort *>(
+				reinterpret_cast<const char *>(m_data) + 4) == 0;
 	}
+
+	const char *str(void) const
+	{
+		static const char empty = 0;
+		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : &empty;
+	}
+
+	AsciiString &operator=(const AsciiString &other)
+	{
+		set(other);
+		return *this;
+	}
+
+	static AsciiString TheEmptyString;
+};
+
+class MapObject
+{
+public:
+	MapObject *getNext(void) const
+	{
+		return *reinterpret_cast<MapObject *const *>(
+			reinterpret_cast<const char *>(this) + 4);
+	}
+
+	Bool isWaypoint(void) const
+	{
+		const Int runtimeFlags = *reinterpret_cast<const Int *>(
+			reinterpret_cast<const char *>(this) + 0x44);
+		return ((static_cast<UnsignedInt>(runtimeFlags) >> 2) & 1) != 0;
+	}
+};
+
+static MapObject ***const TheMapObjectListPtr =
+	reinterpret_cast<MapObject ***>(0x012ED5DC);
+
+class ChunkInputStream
+{
+public:
+	virtual Int read(void *data, Int bytes);
+	virtual Int tell(void);
+	virtual void absoluteSeek(Int position);
+	virtual Bool eof(void);
+};
+
+class DataChunkInput;
+struct DataChunkInfo;
+typedef Bool (__cdecl *DataChunkParserPtr)(DataChunkInput &, DataChunkInfo *, void *);
+
+class UserParser;
+class DataChunkInput
+{
+public:
+	DataChunkInput(ChunkInputStream *stream);
+	~DataChunkInput(void);
+	Bool isValidFileType(void);
+	UserParser *registerParser(const AsciiString &label,
+		const AsciiString &parentLabel, DataChunkParserPtr parser,
+		void *userData = 0);
+	Bool parse(void *userData = 0);
+
+private:
+	char m_layout[0x28];
+};
+
+class TerrainLogic;
+extern void j_000241e5(void);
+extern void j_00026940(void);
+extern void j_0000299b(void);
+
+class TerrainVisual
+{
+public:
+	virtual void _slot00(void) = 0;
+	virtual void _slot04(void) = 0;
+	virtual void _slot08(void) = 0;
+	virtual void _slot0c(void) = 0;
+	virtual void _slot10(void) = 0;
+	virtual Bool load(AsciiString filename) = 0;
+};
+
+static TerrainVisual *const TheTerrainVisual =
+	reinterpret_cast<TerrainVisual *>(0x012F7014);
+
+class __declspec(novtable) TerrainLogic
+{
+public:
+	virtual void _slot00(void) = 0;
+	virtual void _slot04(void) = 0;
+	virtual void _slot08(void) = 0;
+	virtual void _slot0c(void) = 0;
+	virtual void _slot10(void) = 0;
+	virtual void _slot14(void) = 0;
+	virtual void _slot18(void) = 0;
+	virtual void _slot1c(void) = 0;
+	virtual void _slot20(void) = 0;
+	virtual void _slot24(void) = 0;
+	virtual void _slot28(void) = 0;
+	virtual void _slot2c(void) = 0;
+	virtual void _slot30(void) = 0;
+	virtual void _slot34(void) = 0;
+	virtual void _slot38(void) = 0;
+	virtual void _slot3c(void) = 0;
+	virtual void _slot40(void) = 0;
+	virtual AsciiString getSourceFilename(ChunkInputStream *stream);
+
+	Bool loadMapAbi(AsciiString filename, ChunkInputStream *stream,
+		Bool tailFlag, Bool query);
+
+private:
+	char m_prefix[0x3c];
+	AsciiString m_filenameString;
+};
+
+Bool TerrainLogic::loadMapAbi(AsciiString filename, ChunkInputStream *stream,
+	Bool tailFlag, Bool query)
+{
+	if (filename.isEmpty())
+		return false;
+
+	m_filenameString = filename;
+
+	if (query) {
+		MapObject *object = **TheMapObjectListPtr;
+		while (object != 0) {
+			if (object->isWaypoint()) {
+				typedef void (TerrainLogic::*AddWaypointCall)(MapObject *);
+				union
+				{
+					void (*generic)(void);
+					AddWaypointCall typed;
+				} addWaypoint;
+				addWaypoint.generic = j_00026940;
+				(this->*addWaypoint.typed)(object);
+			}
+			object = object->getNext();
+		}
+	}
+
+	try {
+		stream->absoluteSeek(0);
+		DataChunkInput file(stream);
+		typedef Bool (DataChunkInput::*IsValidFileTypeCall)(void);
+		union
+		{
+			void (*generic)(void);
+			IsValidFileTypeCall typed;
+		} isValidFileType;
+		isValidFileType.generic = j_0000299b;
+		if ((file.*isValidFileType.typed)()) {
+			{
+				AsciiString label("WaypointsList");
+				file.registerParser(label,
+					AsciiString::TheEmptyString,
+					reinterpret_cast<DataChunkParserPtr>(j_000241e5),
+					0);
+			}
+			if (!file.parse(this))
+				return false;
+		}
+	} catch (...) {
+	}
+
+	if (!tailFlag)
+		TheTerrainVisual->load(getSourceFilename(stream));
+
+	return true;
 }
+
+#pragma comment(linker, "/alternatename:?loadMap@TerrainLogic@@UAE_NVAsciiString@@_N@Z=?loadMapAbi@TerrainLogic@@QAE_NVAsciiString@@PAVChunkInputStream@@_N2@Z")
