@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6cc06121a6c3290894df8d772297d12be145dab7c98e4b96f45e41b9072e1956",
+  "symbol": "?d_0046ce60@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?d_0046ce60@@YAXXZ\n// partial score=0.96 date=2026-09-10\n// ?apply@BfmeLevelActionRegistry@@QAEXPBDPAX@Z\n// partial score=0.96 date=2026-09-04\n// cl: /DNDEBUG /DWIN32 /MD /EHsc\n\n#include <exception>\n\nclass AsciiString\n{\npublic:\n\tAsciiString(const char *text);\n\t~AsciiString();\n\nprivate:\n\tvoid *m_data;\n};\n\nclass BfmeErr1042 : public std::exception\n{\n};\nconst char *__cdecl bfmeSkipLevelPrefix(const char *path);\n\nclass BfmeLevelAction\n{\npublic:\n\tvirtual void unused();\n\tvirtual void apply(void *value, void *context, int enabled);\n};\n\nstruct BfmeLevelActionNode\n{\n\tvoid *m_next;\n\tvoid *m_nameData;\n\tBfmeLevelAction *m_action;\n\tvoid *m_value;\n};\n\nclass BfmeLevelActionMap\n{\npublic:\n\tBfmeLevelActionNode *find(const AsciiString &name) const;\n};\n\nclass BfmeLevelActionRegistry\n{\npublic:\n\tvoid apply(const char *name, void *context);\n\nprivate:\n\tunsigned char m_unmodelled000[0x1C];\n\tBfmeLevelActionMap m_actions;\n};\n\nvoid BfmeLevelActionRegistry::apply(const char *name, void *context)\n{\n\tBfmeLevelActionMap *volatile retainedActions;\n\tBfmeLevelActionNode *node;\n\t{\n\t\tAsciiString key(name);\n\t\tnode = m_actions.find(key);\n\t}\n\n\tif (node == 0)\n\t{\n\t\tAsciiString key(bfmeSkipLevelPrefix(name));\n\t\tnode = m_actions.find(key);\n\t\tretainedActions = &m_actions;\n\t}\n\n\tif (node != 0)\n\t{\n\t\tBfmeLevelAction *action = node->m_action;\n\t\tvoid *value = node->m_value;\n\t\tif (action == 0)\n\t\t\tthrow BfmeErr1042();\n\t\taction->apply(value, context, 1);\n\t}\n}\n"
+}
