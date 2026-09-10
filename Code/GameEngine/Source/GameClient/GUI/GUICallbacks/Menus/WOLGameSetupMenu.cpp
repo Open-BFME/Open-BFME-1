@@ -2,6 +2,7 @@
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+#include <string>
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -271,41 +272,8 @@ void slotListDebugLog(const char *fmt, ...)
 #define SLOTLIST_DEBUG_LOG(x) DEBUG_LOG(x)
 #endif
 
-void SendStatsToOtherPlayers(const GameInfo *game)
-{
-	PeerRequest req;
-	req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
-	req.UTM.isStagingRoom = TRUE;
-	req.id = "STATS/";
-	AsciiString fullStr;
-	PSPlayerStats fullStats = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
-	PSPlayerStats subStats;
-	subStats.id = fullStats.id;
-	subStats.wins = fullStats.wins;
-	subStats.losses = fullStats.losses;
-	subStats.discons = fullStats.discons;
-	subStats.desyncs = fullStats.desyncs;
-	subStats.games = fullStats.games;
-	subStats.locale = fullStats.locale;
-	subStats.gamesAsRandom = fullStats.gamesAsRandom;
-	GetAdditionalDisconnectsFromUserFile(&subStats);
-	fullStr.format("%d %s", TheGameSpyInfo->getLocalProfileID(), TheGameSpyPSMessageQueue->formatPlayerKVPairs( subStats ));
-	req.options = fullStr.str();
-
-	Int localIndex = game->getLocalSlotNum();
-	for (Int i=0; i<MAX_SLOTS; ++i)
-	{
-		const GameSlot *slot = game->getConstSlot(i);
-		if (slot->isHuman() && i != localIndex)
-		{
-			AsciiString hostName;
-			hostName.translate(slot->getName());
-			req.nick = hostName.str();
-			DEBUG_LOG(("SendStatsToOtherPlayers() - sending to '%s', data of\n\t'%s'\n", hostName.str(), req.options.c_str()));
-			TheGameSpyPeerMessageQueue->addRequest(req);
-		}
-	}
-}
+// Verified BFME implementation: GameNetwork/GameSpy/SendStatsToOtherPlayers.cpp
+extern void SendStatsToOtherPlayers(const GameInfo *game);
 
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
 static Bool isShuttingDown = false;
