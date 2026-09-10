@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "82789da8e5cd63f3f4086d20e965b32efa75868b17f64e90082128c7891d388e",
+  "symbol": "?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?Validate_Texture_Size@TextureLoader@@SAXAAI0@Z\n// partial score=0.9 date=2026-09-10\n// cl: /DNDEBUG /MD /EHsc\n// TextureLoader::Validate_Texture_Size(unsigned&, unsigned&)\n\nstruct D3DCapsPrefix\n{\n\tunsigned char reserved[0x58];\n\tunsigned int MaxTextureWidth;\n\tunsigned int MaxTextureHeight;\n};\n\nclass DX8Caps\n{\npublic:\n\tconst D3DCapsPrefix &Get_DX8_Caps() const { return Caps; }\n\nprivate:\n\tint MaxDisplayWidth;\n\tint MaxDisplayHeight;\n\tD3DCapsPrefix Caps;\n};\n\nclass DX8Wrapper\n{\npublic:\n\tstatic const DX8Caps *Get_Current_Caps() { return CurrentCaps; }\n\tstatic DX8Caps *CurrentCaps;\n};\n\nclass TextureLoader\n{\npublic:\n\tstatic void Validate_Texture_Size(unsigned &width, unsigned &height);\n};\n\nstatic unsigned Valid_Texture_Dimension(unsigned dimension, unsigned maximum)\n{\n\tunsigned result = 1;\n\twhile (result < dimension) {\n\t\tresult <<= 1;\n\t}\n\tif (result >= maximum) {\n\t\tresult = maximum;\n\t}\n\treturn result;\n}\n\nvoid TextureLoader::Validate_Texture_Size(unsigned &width, unsigned &height)\n{\n\tconst DX8Caps *currentCaps = DX8Wrapper::Get_Current_Caps();\n\tif (currentCaps == 0) {\n\t\treturn;\n\t}\n\tconst D3DCapsPrefix &caps = currentCaps->Get_DX8_Caps();\n\tunsigned validWidth = Valid_Texture_Dimension(width, caps.MaxTextureWidth);\n\tunsigned &heightOutput = height;\n\twidth = validWidth;\n\tunsigned maximumHeight = caps.MaxTextureHeight;\n\tunsigned inputHeight = heightOutput;\n\theightOutput = Valid_Texture_Dimension(inputHeight, maximumHeight);\n}\n"
+}
