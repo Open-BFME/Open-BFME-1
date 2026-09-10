@@ -1,5 +1,5 @@
 // ?setIndicatorColor@Drawable@@QAEXI@Z
-// partial score=0.98 date=2026-09-09
+// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 // ?setIndicatorColor@Drawable@@QAEXI@Z
@@ -63,22 +63,19 @@ public:
 
 void Drawable::setIndicatorColor(UnsignedInt color)
 {
-	bool indicatorOn;
 	Thing *object = getObject();
+	bool indicatorOn;
 	*((UnsignedInt *)((unsigned char *)this + 0x3c0)) = color;
-	if (*((unsigned char *)TheBfmeGameLogic + 0x114))
-		goto indicator_on;
-	if (object)
+	if (!*((unsigned char *)TheBfmeGameLogic + 0x114))
 	{
+		if (!object)
+			goto indicator_off;
 		KindOfMaskType mask;
 		mask.set(119);
 		mask.set(179);
-		if (object->isAnyKindOf(mask))
-			goto indicator_on;
+		if (!object->isAnyKindOf(mask))
+			goto indicator_off;
 	}
-	goto indicator_off;
-
-indicator_on:
 	memset(&indicatorOn, 1, sizeof(indicatorOn));
 	bfmeSetIndicatorOn(indicatorOn);
 	return;
