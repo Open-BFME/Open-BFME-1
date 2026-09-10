@@ -80906,6 +80906,7 @@ name,address,notes
 ?getFileID@NetFileProgressCommandMsg@@QAEGXZ,0x00012C15,ILT thunk; NetPacket::addFileProgressCommand at 0x0067A700 calls it where Zero Hour calls getFileID
 ?getFileInfo@FileSystem@@QBE_NABVAsciiString@@PAUFileInfo@@@Z,0x009C8C70,BFME shader loader direct FileSystem::getFileInfo call
 ?getFileListInDirectory@ArchiveFile@@QBEXABVAsciiString@@00AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z,0x009D0820,positional and NOT yet confirmed by a byte match: only call between the three AsciiString ctors and their three releaseBuffers in loadIntoDirectoryTree
+?getFileListInDirectory@FileSystem@@QBEXABVAsciiString@@0AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z,0x009C8BB0,LadderList::loadLocalLadders calls the BFME FileSystem file-list entry through the retail body shared with bfmeListAllEBC
 ?getFileName@MapMetaData@@QBE?AVUnicodeString@@XZ,0x00451350,MapMetaData file-name getter inferred from m_fileName at +0x50 and the UnicodeString translation body called by Q4Sort004566F0
 ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z,0x0001D8C2,incremental-link thunk called by doesSaveGameExist
 ?getFileTransferProgress@ConnectionManager@@QAEHHVAsciiString@@@Z,0x00038113,ILT thunk to 0x00669A00; the address Network::getFileTransferProgress at 0x00682640 encodes
@@ -81076,6 +81077,7 @@ name,address,notes
 ?getPathLabel2@Waypoint@@QBE?AVAsciiString@@XZ,0x00028925,Open-BFME5 exact ILT to body 0x001A6F90; BFME Waypoint m_pathLabel2 getter
 ?getPathLabel3@Waypoint@@QBE?AVAsciiString@@XZ,0x0002D14B,Open-BFME5 exact ILT to body 0x001A6FC0; BFME Waypoint m_pathLabel3 getter
 ?getPath_UserData@GlobalData@@QBE?AVAsciiString@@XZ,0x000106EA,GlobalData::getPath_UserData thunk
+?getPath_UserData@Rva006C9270GlobalData@@QBE?AVAsciiString@@XZ,0x000106EA,LadderList::loadLocalLadders uses the BFME GlobalData ILT at the retail path accessor call site
 ?getPath_UserData@ScreenshotGlobalData@@QBE?AVScreenshotAsciiString@@XZ,0x00036D9A,W3DDisplay screenshot path accessor thunk
 ?getPayload@Rva00677530CmdMsg@@QBEIXZ,0x00674250,ICF-folded trivial getter; address-derived name for the DisconnectFrameMessage twin
 ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x0000FD44,TurretAI startRotOrPitchSound retail call target

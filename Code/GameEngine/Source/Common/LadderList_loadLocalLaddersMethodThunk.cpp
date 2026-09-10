@@ -1,394 +1,105 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ivendor/stlport /Ireference/shims/stlp_nodealloc /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 
-class __declspec(novtable) LadderList
+#include <set>
+
+extern const char g_bfmeEmptyAscii[];
+
+template <typename T>
+class StringBase
 {
+	friend class AsciiString;
+
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &source);
+
+public:
+	void toLower();
+
 private:
-    void loadLocalLadders();
+	void releaseBuffer();
+	void *m_data;
 };
 
-// ?loadLocalLadders@LadderList@@AAEXXZ
-__declspec(naked) void LadderList::loadLocalLadders()
+class AsciiString : private StringBase<char>
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xd8
-        __emit 0x02
-        __emit 0x04
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x18
-        __emit 0x53
-        __emit 0x55
-        __emit 0x56
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xc8
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x34
-        __emit 0xe8
-        __emit 0x72
-        __emit 0x48
-        __emit 0x9e
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x01
-        __emit 0x74
-        __emit 0x05
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x08
-        __emit 0xeb
-        __emit 0x05
-        __emit 0xb8
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x50
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x58
-        __emit 0x81
-        __emit 0x11
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x21
-        __emit 0xcd
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x47
-        __emit 0xd1
-        __emit 0x25
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x30
-        __emit 0xe8
-        __emit 0x87
-        __emit 0xba
-        __emit 0x25
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x14
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x20
-        __emit 0xe8
-        __emit 0x7c
-        __emit 0x26
-        __emit 0x20
-        __emit 0x00
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x88
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x89
-        __emit 0x5a
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x89
-        __emit 0x40
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x40
-        __emit 0x0c
-        __emit 0x68
-        __emit 0x50
-        __emit 0x81
-        __emit 0x11
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x34
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xc7
-        __emit 0xcc
-        __emit 0x25
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x48
-        __emit 0xcb
-        __emit 0x34
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x20
-        __emit 0x52
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x40
-        __emit 0x03
-        __emit 0xe8
-        __emit 0x96
-        __emit 0xcc
-        __emit 0x39
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x02
-        __emit 0xe8
-        __emit 0x18
-        __emit 0xba
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x70
-        __emit 0x08
-        __emit 0x83
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0x74
-        __emit 0x54
-        __emit 0x8d
-        __emit 0x46
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xe8
-        __emit 0x1d
-        __emit 0xbc
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x04
-        __emit 0xe8
-        __emit 0x4f
-        __emit 0xbe
-        __emit 0x25
-        __emit 0x00
-        __emit 0x57
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x20
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xfd
-        __emit 0xbb
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0x92
-        __emit 0xcf
-        __emit 0x9f
-        __emit 0xff
-        __emit 0x56
-        __emit 0x4f
-        __emit 0xe8
-        __emit 0xff
-        __emit 0xf8
-        __emit 0x1f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xbc
-        __emit 0xb9
-        __emit 0x25
-        __emit 0x00
-        __emit 0x3b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x75
-        __emit 0xac
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x30
-        __emit 0xe8
-        __emit 0x44
-        __emit 0x65
-        __emit 0x9e
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x30
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x98
-        __emit 0xb9
-        __emit 0x25
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x24
-        __emit 0xc3
-    }
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	AsciiString(const AsciiString &source) : StringBase<char>(source) {}
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+	void __cdecl format(AsciiString format, ...);
+
+	void toLower()
+	{
+		((StringBase<char> *)this)->toLower();
+	}
+
+	const char *str() const
+	{
+		return m_data ? (const char *)m_data + 8 : g_bfmeEmptyAscii;
+	}
+};
+
+namespace rts
+{
+	template <typename T>
+	struct less_than_nocase
+	{
+		bool operator()(const T &, const T &) const;
+	};
+}
+
+typedef std::set<AsciiString, rts::less_than_nocase<AsciiString> > FilenameList;
+
+class Rva006C9270GlobalData
+{
+public:
+	AsciiString getPath_UserData() const;
+};
+
+extern Rva006C9270GlobalData *TheWritableGlobalData;
+
+class FileSystem
+{
+public:
+	void getFileListInDirectory(const AsciiString &, const AsciiString &, FilenameList &, bool) const;
+};
+
+extern FileSystem *TheFileSystem;
+
+class LadderList
+{
+private:
+	void loadLocalLadders();
+	void checkLadder(AsciiString, int);
+};
+
+#pragma comment(linker, "/alternatename:?getPath_UserData@Rva006C9270GlobalData@@QBE?AVAsciiString@@XZ=?j_000106ea@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getFileListInDirectory@FileSystem@@QBEXABVAsciiString@@0AAV?$set@VAsciiString@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@_STL@@@_STL@@_N@Z=?bfmeListAllEBC@@YGXABVBfmeStrEBC@@0PAXH@Z")
+#pragma comment(linker, "/alternatename:?checkLadder@LadderList@@AAEXVAsciiString@@H@Z=?j_00028efc@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@QAE@XZ=?j_000124db@@YAXXZ")
+
+// ?loadLocalLadders@LadderList@@AAEXXZ
+void LadderList::loadLocalLadders()
+{
+	AsciiString dirname;
+	dirname.format(AsciiString("%sLoTRB4MEOnline\\Ladders\\"), TheWritableGlobalData->getPath_UserData().str());
+
+	FilenameList filenameList;
+	TheFileSystem->getFileListInDirectory(dirname, AsciiString("*.ini"), filenameList, true);
+
+	int index = -1;
+	FilenameList::iterator it = filenameList.begin();
+	while (it != filenameList.end())
+	{
+		AsciiString filename = *it;
+		filename.toLower();
+		checkLadder(filename, index--);
+		++it;
+	}
 }
