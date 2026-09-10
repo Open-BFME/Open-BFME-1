@@ -47,9 +47,10 @@ public:
 	virtual GameFont *getFont(void);
 	virtual void setWordWrap(Int width);
 	virtual void setWordWrapCentered(Bool centered);
-	virtual void unused10();
+	virtual void setTextColor(Color color, Color dropColor);
 	virtual void unused11();
 	virtual void unused12();
+	virtual void unused13();
 	virtual void draw(Int x, Int y, Color color, Color dropColor);
 	virtual void getSize(Int *width, Int *height);
 };
@@ -65,8 +66,9 @@ public:
 private:
 	unsigned char m_unreconstructed_00[0x08];
 	UnsignedInt m_state;                                  // +0x08
-	UnsignedInt m_status;                                 // +0x0C
-	unsigned char m_unreconstructed_10[0x18C];
+	UnsignedInt m_style;                                  // +0x0C
+	UnsignedInt m_status;                                 // +0x10
+	unsigned char m_unreconstructed_14[0x188];
 
 	public:
 	DisplayString *m_text;                                 // +0x19C
@@ -99,13 +101,7 @@ public:
 	Color hiliteColor(Int index) const { return m_hiliteDrawData[index].color; }
 	Color hiliteBorderColor(Int index) const { return m_hiliteDrawData[index].borderColor; }
 
-	Color enabledTextColor(void);
-	Color enabledTextBorderColor(void);
-	Color disabledTextColor(void);
-	Color disabledTextBorderColor(void);
-	Color hiliteTextColor(void);
-	Color hiliteTextBorderColor(void);
-	GameFont *font(void);
+	GameFont *winGetFont(void);
 
 private:
 	unsigned char m_unreconstructed_00[0x48];
@@ -206,6 +202,12 @@ public:
 extern GameWindowManager *TheWindowManager;
 extern Display *TheDisplay;
 
+// This helper is the already matched BFME text-colour selector at RVA
+// 0x00793E50.  The retail drawButtonText body reaches it through the
+// 0x000089DB thunk; keeping the declaration here preserves that route.
+void getButtonTextColors(GameWindow *window, WinInstanceData *instData,
+	Color *textColor, Color *dropColor);
+
 inline void drawImage(Display *display, const Image *image,
 	Real startX, Real startY, Real endX, Real endY, Color color, Int mode)
 {
@@ -302,37 +304,16 @@ static void drawButtonText(GameWindow *window, WinInstanceData *instData)
 		WIN_STATUS_WRAP_CENTERED));
 	text->setWordWrap(size.x);
 
-	if (!BitTest(window->winGetStatus(), WIN_STATUS_ENABLED))
-	{
-		textColor = window->disabledTextColor();
-		dropColor = window->disabledTextBorderColor();
-	}
-	else if (BitTest(instData->getState(), WIN_STATE_HILITED))
-	{
-		textColor = window->hiliteTextColor();
-		dropColor = window->hiliteTextBorderColor();
-	}
-	else
-	{
-		textColor = window->enabledTextColor();
-		dropColor = window->enabledTextBorderColor();
-	}
+	getButtonTextColors(window, instData, &textColor, &dropColor);
 
-	if (text->getFont() != window->font())
-		text->setFont(window->font());
+	if (text->getFont() != window->winGetFont())
+		text->setFont(window->winGetFont());
 	text->getSize(&width, &height);
 
-	if (BitTest(window->winGetStatus(), 0x00080000))
-	{
-		textPos.x = origin.x + 2;
-		textPos.y = origin.y;
-	}
-	else
-	{
-		textPos.x = origin.x + (size.x / 2) - (width / 2);
-		textPos.y = origin.y + (size.y / 2) - (height / 2);
-	}
-	text->draw(textPos.x, textPos.y, textColor, dropColor);
+	textPos.x = origin.x + (size.x / 2) - (width / 2);
+	textPos.y = origin.y + (size.y / 2) - (height / 2);
+	text->setTextColor(textColor, dropColor);
+	text->draw(textPos.x, textPos.y, 1, 1);
 }
 
 // ?W3DGadgetPushButtonDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
