@@ -32,6 +32,13 @@
 // the load lets eax be reused for it and sinks the push too (82 bytes), and any
 // spelling that hoists the push hoists the load above the fld. Breaking that
 // coupling is the whole remaining problem.
+//
+// Also ruled out (shape_search, masked score unchanged at 0.530): naming the
+// colour/flag call arguments as locals in either order, casting them
+// explicitly, and taking the struct addresses through named pointer locals
+// instead of &ground/&lifted. The call site's spelling has no effect on the
+// prologue swap; the wall is purely in how MSVC schedules the eax/edx
+// materializations around the fld/fadd, not in how the call is written.
 extern const double g_liftK;
 
 struct Vec3ZT
