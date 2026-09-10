@@ -1,11 +1,9 @@
 // ?getHealthBoxPosition@Drawable@@QAEXPAUCoord3D@@@Z
-// partial score=0.82 date=2026-09-04
+// partial score=0.86 date=2026-09-10
+// ?getHealthBoxPosition@Drawable@@QAEXPAUCoord3D@@@Z
+// Retail BFME Drawable health-box anchor at 0x0041FCE0 (212 bytes).
+// The body is called by the Drawable health/construct indicator family.
 // cl: /DNDEBUG /MD /EHs-c-
-// BFME Drawable health-box anchor, retail 0x0041FCE0.
-//
-// The base Object implementation is deliberately not used here.  Retail
-// added this Drawable-side helper so the model draw interface can provide a
-// special anchor before the normal position/geometry fallback.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
@@ -23,19 +21,18 @@ class GeometryInfo
 public:
 	float getMaxHeightAbovePosition() const;
 
-	UnsignedByte m_bfmeData[ 0x34 ];
+	UnsignedByte m_bfmeData[0x34];
 };
 
 class ThingTemplate
 {
 public:
-	const ThingTemplate *getFinalOverride() const;
-
+	ThingTemplate *getFinalOverride();
 	void *m_vtable;
-	const ThingTemplate *m_nextOverride;
-	UnsignedByte m_pad008[ 0xcc ];
+	ThingTemplate *m_nextOverride;
+	UnsignedByte m_pad008[0xcc];
 	UnsignedInt m_flags;
-	UnsignedByte m_pad0d8[ 0x33c ];
+	UnsignedByte m_pad0d8[0x33c];
 	float m_healthBoxHeight;
 };
 
@@ -108,7 +105,7 @@ public:
 	BFME_HEALTH_BOX_SLOT(122) BFME_HEALTH_BOX_SLOT(123)
 	BFME_HEALTH_BOX_SLOT(124) BFME_HEALTH_BOX_SLOT(125)
 	BFME_HEALTH_BOX_SLOT(126) BFME_HEALTH_BOX_SLOT(127)
-	virtual Bool write( Coord3D *position );
+	virtual Bool write(Coord3D *position);
 };
 
 class BfmeHealthBoxDrawBridge
@@ -133,20 +130,25 @@ public:
 class BfmeHealthBoxObject
 {
 public:
-	UnsignedByte m_pad000[ 4 ];
+	UnsignedByte m_pad000[4];
 	ThingTemplate *m_template;
-	UnsignedByte m_pad008[ 0xa4 ];
+	UnsignedByte m_pad008[0xa4];
 	GeometryInfo m_geometry;
-	UnsignedByte m_pad0e0[ 0x11c ];
+	UnsignedByte m_pad0e0[0x11c];
 	BfmeHealthBoxDrawBridge *m_drawBridge;
 };
 
 class Thing
 {
-	public:
+public:
 	virtual void slot00();
 	ThingTemplate *m_template;
-	Coord3D *getPosition() const;
+};
+
+class BfmeObjZC
+{
+public:
+	Coord3D *bfmePosZC();
 };
 
 class Snapshot
@@ -159,44 +161,61 @@ class Snapshot
 class Drawable : public Thing, public Snapshot
 {
 public:
-	void getHealthBoxPosition( Coord3D *position );
+	void getHealthBoxPosition(Coord3D *position);
 
-	UnsignedByte m_pad00c[ 0xf0 ];
+	UnsignedByte m_pad00c[0xf0];
 	BfmeHealthBoxObject *m_object;
 };
 
-void Drawable::getHealthBoxPosition( Coord3D *position )
+void Drawable::getHealthBoxPosition(Coord3D *position)
 {
-	register const Drawable *draw = this;
-	BfmeHealthBoxObject *object = m_object;
-	if ( object == 0 )
+	const Drawable *draw = this;
+	register BfmeHealthBoxObject *object = m_object;
+	register Coord3D *out = position;
+	if (object == 0)
 		return;
 
 	const ThingTemplate *drawableTemplate = draw->m_template;
-	if ( drawableTemplate != 0 && drawableTemplate->m_nextOverride != 0 )
+	if (drawableTemplate != 0 && drawableTemplate->m_nextOverride != 0)
 		drawableTemplate = drawableTemplate->m_nextOverride->getFinalOverride();
 
 	UnsignedInt drawableFlags = drawableTemplate->m_flags;
-	if ( ((drawableFlags >> 8) & 0x10) != 0 &&
-		object->m_drawBridge != 0 )
+	if (((drawableFlags >> 8) & 0x10) != 0 && object->m_drawBridge != 0)
 	{
-		if ( object->m_drawBridge->getAnchor() != 0 &&
-			object->m_drawBridge->getAnchor()->write( position ) )
+		if (object->m_drawBridge->getAnchor() != 0 &&
+			object->m_drawBridge->getAnchor()->write(out))
 			return;
 	}
 
-	Coord3D *base = draw->getPosition();
-	position->x = base->x;
-	position->y = base->y;
-	position->z = base->z;
+	Coord3D *base = ((BfmeObjZC *)draw)->bfmePosZC();
+	out->x = base->x;
+	out->y = base->y;
+	out->z = base->z;
 
 	float healthBoxHeight;
-	const ThingTemplate *objectTemplate = object->m_template;
-	if ( objectTemplate == 0 || objectTemplate->m_nextOverride == 0 ||
-		objectTemplate->m_nextOverride->getFinalOverride() == 0 )
+	if (object->m_template == 0)
+		goto defaultHealthBoxHeight;
+	if (object->m_template->m_nextOverride == 0)
+		goto defaultHealthBoxHeight;
+	if (object->m_template->m_nextOverride->getFinalOverride() == 0)
+		goto defaultHealthBoxHeight;
+	goto resolvedHealthBoxHeight;
+
+defaultHealthBoxHeight:
 		healthBoxHeight = 10.0f;
-	else
-		healthBoxHeight = object->m_template->m_nextOverride->getFinalOverride()->m_healthBoxHeight;
-	position->z += object->m_geometry.getMaxHeightAbovePosition();
-	position->z += healthBoxHeight;
+	goto healthBoxHeightDone;
+
+resolvedHealthBoxHeight:
+	ThingTemplate *normalTemplate = object->m_template;
+	if (normalTemplate != 0)
+	{
+		ThingTemplate *nextOverride = normalTemplate->m_nextOverride;
+		if (nextOverride != 0)
+			normalTemplate = nextOverride->getFinalOverride();
+	}
+	healthBoxHeight = normalTemplate->m_healthBoxHeight;
+
+healthBoxHeightDone:
+	out->z += object->m_geometry.getMaxHeightAbovePosition();
+	out->z += healthBoxHeight;
 }
