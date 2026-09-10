@@ -82,6 +82,51 @@ def owner(addr):
     return r if addr < s + int(r['target_size'] or 0) else None
 
 
+def thunk_target(rva, hops=3):
+    """Follow a 5-byte `jmp rel32` incremental-link thunk to the body it lands on."""
+    t = _secs[0]; tlo = t['rva']; thi = tlo + t['size']
+    cur = rva; seen = None
+    for _ in range(hops):
+        off = build.rva_to_file_offset(_secs, cur)
+        if _exe[off] != 0xE9:
+            break
+        nxt = cur + 5 + int.from_bytes(_exe[off + 1:off + 5], 'little', signed=True)
+        if not (tlo <= nxt < thi):
+            break
+        seen = cur = nxt
+    return seen
+
+_layouts = None
+def layout_lines(rva, vt_entry, limit=10):
+    """BFME offsets witnessed for the body's class (reverse/bfme_layouts.json,
+    built by tools/layout_witness.py): the members that MOVED from ZH, highest
+    confidence first. The class comes from the vtable entry or the pinned name."""
+    global _layouts
+    if _layouts is None:
+        try:
+            rows = json.load(open(ROOT / 'reverse/bfme_layouts.json', encoding='utf-8'))
+        except OSError:
+            rows = []
+        _layouts = {}
+        for r in rows:
+            _layouts.setdefault(r['owner'] or r['fn_class'] or '?', []).append(r)
+    classes = []
+    if vt_entry and vt_entry.get('names'):
+        classes.append(vt_entry['names'][0][0])
+    for n, _ in _pins.get(rva, []):
+        m = re.match(r'\?[^@]*@((?:\?\$[^@]+@)?[A-Za-z_0-9]+)@', n)
+        if m and m.group(1) not in classes:
+            classes.append(m.group(1))
+    out = []
+    for cls in classes[:2]:
+        rows = [r for r in _layouts.get(cls, []) if r['bfme'] != r['zh'] and r['votes'] >= 1.5 and r['confidence'] >= 0.6]
+        if not rows:
+            continue
+        rows.sort(key=lambda r: (-r['confidence'], -r['votes']))
+        out.append(f"  BFME layout of {cls} (moved from ZH; tools/bfme_layout.py {cls} for all {len(_layouts[cls])} witnessed members):")
+        out.append("    " + ', '.join(f"{r['member']} zh+0x{r['zh']:X}->+0x{r['bfme']:X}" for r in rows[:limit]))
+    return out
+
 def name_of(rva):
     r = _rows.get(rva)
     real = [n for n, _ in _pins.get(rva, []) if not re.match(r'^\?(d_|b_|j_|dup_|gen)', n)]
@@ -122,7 +167,11 @@ def pack(rva, max_items=8):
     if callees:
         out.append("  callees (retail REL32 targets, in body order):")
         for tgt, sites in list(callees.items())[:max_items]:
-            out.append(f"    0x{tgt:08X} x{len(sites)}  -> {name_of(tgt)}")
+            line = f"    0x{tgt:08X} x{len(sites)}  -> {name_of(tgt)}"
+            real = thunk_target(tgt)
+            if real is not None:
+                line += f"  => jmp 0x{real:08X} {name_of(real)}"
+            out.append(line)
     callers = _calls.get(rva, [])
     if callers:
         named = collections.Counter()
@@ -139,6 +188,9 @@ def pack(rva, max_items=8):
         out.append(f"  vtable slot: member of vtable 0x{e['vt']:08X} ({cls}; {e['landed']} slots landed, {e['dump_n']} still dumps) -> python build/pick_class.py --vt 0x{e['vt']:08X} --dry for the slot table")
     if fields:
         out.append("  this-relative fields in the first 0x40 bytes: " + ', '.join(f"+0x{d:X}" for d, _ in sorted(fields.items())[:12]))
+    lay = layout_lines(rva, e)
+    if lay:
+        out.extend(lay)
     strs = _strings.get(rva, [])
     if strs:
         out.append("  strings: " + ' | '.join(s[:50] for s in strs[:5]))
