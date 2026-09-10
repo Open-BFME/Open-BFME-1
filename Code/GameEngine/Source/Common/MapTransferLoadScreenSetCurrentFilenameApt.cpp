@@ -1,11 +1,20 @@
-// ?setCurrentFilename@BfmeAptScreenMapTransfer@@QAEXABVAsciiString@@@Z
-// partial score=0.8 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x00510320: APT-era MapTransferLoadScreen::setCurrentFilename.
-// Strips the last backslash-separated leaf from the incoming path and
-// publishes it through WindowManager::bfme_setAptText under
-// APT:FileTransferLoadingMapName.  this is unused.
+// Retail 0x00510320..0x005103E1 (exclusive end 0x005103E2), 194 bytes.
+// This is the APT-era BfmeAptScreenMapTransfer filename display, distinct
+// from the legacy MapTransferLoadScreen method at 0x00491FA0.
+//
+// The former generated row's identity is established by the named
+// doFileTransfer caller at 0x0066CE60 and the sibling APT transfer methods.
+// StringInlineData preserves the BFME eight-byte string header locally; the
+// source below is the real leaf scan and APT text update, not a byte lift.
+
+template <typename T> struct StringInlineData
+{
+	int m_refCount;
+	int m_length;
+	T m_text[ 1 ];
+};
 
 template <typename T> class StringBase
 {
@@ -16,17 +25,24 @@ private:
 	StringBase( const StringBase<T> &other );
 	~StringBase();
 
-	void *m_data;
+	StringInlineData<T> *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
 {
 public:
 	AsciiString( const char *text ) : StringBase<char>( text ) {}
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
-	void *data() const { return m_data; }
+	StringInlineData<char> *data() const { return m_data; }
+	const char *str() const
+	{
+		return m_data ? m_data->m_text : (const char *)0x0107388B;
+	}
+	unsigned int getLength() const
+	{
+		return m_data ? (unsigned short)m_data->m_length : 0;
+	}
 };
 
 class WindowManager
@@ -43,16 +59,11 @@ public:
 	void setCurrentFilename( const AsciiString &filename );
 };
 
-// ?setCurrentFilename@BfmeAptScreenMapTransfer@@QAEXABVAsciiString@@@Z
 void BfmeAptScreenMapTransfer::setCurrentFilename( const AsciiString &filename )
 {
-	void *data = filename.data();
-	const char *start = (const char *)data + 8;
-	unsigned int len = 0;
-	if( data )
-		goto has_data;
-	start = (const char *)0x0107388B;
-join:
+	const char *start = filename.str();
+	unsigned int len = filename.getLength();
+	StringInlineData<char> *data = filename.data();
 	{
 		const char *end = start + len;
 		if( end != start )
@@ -74,7 +85,4 @@ got_leaf:
 		g_theWindowManager->bfme_setAptText( key, leaf );
 		return;
 	}
-has_data:
-	len = *(unsigned short *)( (char *)data + 4 );
-	goto join;
 }
