@@ -482,10 +482,39 @@ static void computeTotalHeight( GameWindow *window )
 /** Add Images to position and column. Row and Column are both based from starting
 		Position 0 */
 //=============================================================================
-static Int addImageEntry( const Image *image, Color color, Int row, Int column, GameWindow *window, Bool overwrite, Int width, Int height )
+struct BFMEAddImageEntryListboxData
+{
+	Short listLength;
+	Short columns;
+	UnsignedByte pad04[0x14];
+	ListEntryRow *listData;
+	UnsignedByte pad1c[0x10];
+	Short endPos;
+	Short insertPos;
+};
+
+class BFMEAddImageEntryDisplayStringManager
+{
+public:
+	virtual void pad00() = 0;
+	virtual void pad04() = 0;
+	virtual void pad08() = 0;
+	virtual void pad0c() = 0;
+	virtual void pad10() = 0;
+	virtual void pad14() = 0;
+	virtual void pad18() = 0;
+	virtual void pad1c() = 0;
+	virtual void pad20() = 0;
+	virtual void pad24() = 0;
+	virtual void freeDisplayString(DisplayString *string) = 0;
+};
+
+static Int addImageEntry( const Image *image, Color color, Int row, Int column, GameWindow *window, Int width, Int height )
 {
 //	WinInstanceData *instData = window->winGetInstanceData();
-	ListboxData *list = (ListboxData *)window->winGetUserData();
+	BFMEAddImageEntryListboxData *list = (BFMEAddImageEntryListboxData *)window->winGetUserData();
+	Int scaledWidth = *(Int *)((UnsignedByte *)TheGlobalData + 0x2C) * width / 1024;
+	Int scaledHeight = *(Int *)((UnsignedByte *)TheGlobalData + 0x30) * height / 768;
 
 	if( column >= list->columns  || row >= list->listLength )
 	{
@@ -514,15 +543,15 @@ static Int addImageEntry( const Image *image, Color color, Int row, Int column, 
 	// if we're copying over strings, then lets first deallocate them.
 	if(listRow->cell[column].cellType == LISTBOX_TEXT)
 	{
-		TheDisplayStringManager->freeDisplayString((DisplayString *)listRow->cell[column].data);
+		reinterpret_cast<BFMEAddImageEntryDisplayStringManager *>(TheDisplayStringManager)->freeDisplayString((DisplayString *)listRow->cell[column].data);
 
 	}
 	//add Image to selected row/cell
 	listRow->cell[column].cellType = LISTBOX_IMAGE;
 	listRow->cell[column].data = (void *)image;
 	listRow->cell[column].color = color;
-	listRow->cell[column].height = height;
-	listRow->cell[column].width = width;
+	listRow->cell[column].height = scaledHeight;
+	listRow->cell[column].width = scaledWidth;
 	
 	computeTotalHeight( window );
 
@@ -1366,7 +1395,7 @@ WindowMsgHandledType GadgetListBoxSystem( GameWindow *window, UnsignedInt msg,
 				}
 				else if ( addInfo->type == LISTBOX_IMAGE )
 				{
-					addedIndex = addImageEntry( (const Image *)addInfo->data, mData2, addInfo->row, addInfo->column, window, addInfo->overwrite,addInfo->width, addInfo->height );
+					addedIndex = addImageEntry( (const Image *)addInfo->data, mData2, addInfo->row, addInfo->column, window, addInfo->width, addInfo->height );
 				}
 				else
 					success = FALSE;
