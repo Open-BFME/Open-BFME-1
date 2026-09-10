@@ -14,11 +14,13 @@ class Rva008838F0Node
 {
 public:
 	Rva008838F0Node *m_next;
-	unsigned int m_pad04;
+	unsigned int m_type;
 	unsigned int m_key;
 	unsigned int m_pad0c[3];
 	unsigned int m_count;
 	void *m_values[1];
+	unsigned char m_pad20[0x9c - 0x20];
+	int m_freeCheckpoint;
 };
 
 class Rva008838F0Owner
@@ -26,6 +28,7 @@ class Rva008838F0Owner
 public:
 	Rva008838F0Owner(void *owner, void **table);
 	int lookup(unsigned int key, void **dest, unsigned int limit);
+	bool isValidBlock(int type, void *block);
 
 private:
 	void *m_owner;
@@ -83,4 +86,41 @@ int Rva008838F0Owner::lookup(unsigned int key, void **dest, unsigned int limit)
 	}
 
 	return 0;
+}
+
+bool Rva008838F0Owner::isValidBlock(int type, void *block)
+{
+	if (m_disabled)
+		return false;
+
+	if (m_lock != 0)
+		Rva01358D18Enter(m_lock);
+
+	Rva008838F0Node **link = &m_buckets[(unsigned int)block % 0x2b7b];
+	while (*link != 0 && (*link)->m_key != (unsigned int)block)
+		link = &(*link)->m_next;
+
+	Rva008838F0Node *node = *link;
+	if (node == 0)
+	{
+		if (m_lock != 0)
+			Rva01358E74Leave(m_lock);
+		return false;
+	}
+	if (node->m_freeCheckpoint >= 0)
+	{
+		if (m_lock != 0)
+			Rva01358E74Leave(m_lock);
+		return false;
+	}
+	if (type >= 0 && node->m_type != (unsigned int)type)
+	{
+		if (m_lock != 0)
+			Rva01358E74Leave(m_lock);
+		return false;
+	}
+
+	if (m_lock != 0)
+		Rva01358E74Leave(m_lock);
+	return true;
 }
