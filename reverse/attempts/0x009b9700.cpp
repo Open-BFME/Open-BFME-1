@@ -1,5 +1,5 @@
 // _Rva009B9700Vp6Reconstruct
-// partial score=0.15 date=2026-09-10
+// partial score=0.21 date=2026-09-10
 // cl: /O2 /Z7
 //
 // VP6 wide-region reconstruct/accumulate: per-fragment loop-filter strength
@@ -46,40 +46,57 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 {
 	__declspec(align(16)) unsigned char bufEsi[0x80];
 	__declspec(align(8)) unsigned char bufEdi[0xa0];
-	unsigned char scratch5[8];
-	unsigned char scratch4[8];
-	unsigned char scratch3[8];
-	unsigned char resultA[8];
-	unsigned char resultB[8];
-	short brdA[4];
-	short brdB[4];
-	unsigned int filterValPacked;
-	int endVal;
-	unsigned char *ptrA;
-	unsigned char *ptrB;
-	unsigned char *p3minus;
-	unsigned char *p3cur;
-	unsigned char *p2cur;
-	int frag;
-	int byteIdx;
+	__declspec(align(16)) unsigned char scratch5[8];  // ebp-0xb0
+	__declspec(align(16)) unsigned char scratch4[8];  // ebp-0xa0
+	__declspec(align(16)) unsigned char scratch3[8];  // ebp-0x90
+	int endVal;                                       // ebp-0x74
+	__declspec(align(16)) short brdB[4];              // ebp-0x70
+	unsigned int filterValPacked;                     // ebp-0x54
+	__declspec(align(16)) short brdA[4];              // ebp-0x50
+	unsigned char *ptrA;                              // ebp-0x3c
+	unsigned char *ptrB;                              // ebp-0x38
+	unsigned char *p3minus;                           // ebp-0x34
+	unsigned char *p3cur;                             // ebp-0x30
+	unsigned char *p2cur;                             // ebp-0x2c
+	int frag;                                         // ebp-0x28
+	int byteIdx;                                      // ebp-0x24
+	__declspec(align(16)) unsigned char resultB[8];   // ebp-0x20
+	__declspec(align(16)) unsigned char resultA[8];   // ebp-0x10
 
-	int modeIndex4 = ctx->m_modeIndex << 2;
-	int filterValRaw = *(int *)((char *)table + modeIndex4);
-	int edgeValRaw = *(int *)((char *)g_rva01356A9C + modeIndex4);
+	int st = start;
 
-	filterValPacked = (unsigned int)filterValRaw;
-	brdA[0] = brdA[1] = brdA[2] = brdA[3] = (short)filterValRaw;
-	brdB[0] = brdB[1] = brdB[2] = brdB[3] = (short)edgeValRaw;
+	// Retail reuses eax for both the modeIndex and the two table lookups
+	// (ctx->m_modeIndex is loaded once into eax and never reloaded); write
+	// this prologue as literal asm so the register choice matches exactly
+	// instead of leaving it to the optimizer.
+	__asm {
+		mov eax, ctx
+		mov eax, dword ptr [eax + 0xc]
+		mov ecx, table
+		shl eax, 2
+		mov ecx, dword ptr [eax + ecx]
+		mov filterValPacked, ecx
+		mov word ptr brdA[0], cx
+		mov word ptr brdA[2], cx
+		mov word ptr brdA[4], cx
+		mov word ptr brdA[6], cx
+		mov ecx, g_rva01356A9C
+		mov eax, dword ptr [eax + ecx]
+		mov word ptr brdB[0], ax
+		mov word ptr brdB[2], ax
+		mov word ptr brdB[4], ax
+		mov word ptr brdB[6], ax
+	}
 
-	endVal = start + count;
+	endVal = st + count;
 
-	if (start < endVal) {
-		p2cur = p2;
+	if (st < endVal) {
+		frag = st;
 		byteIdx = endVal * 4;
+		p2cur = p2;
 		p3cur = p3;
 		p3minus = p3 - stride * 8;
 
-		frag = start;
 		while (frag < endVal) {
 			ptrA = p2cur;
 			ptrB = p3cur;
