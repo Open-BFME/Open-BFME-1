@@ -86997,3 +86997,4 @@ _Rva009C4B70CpuFeatureProbe,0x009C4B70,Parent raw direct call at9B3A90+6; comple
 ?getFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x0000B7D5,AudioManager getAudioLengthMS calls this retail ILT
 ?GenInsert00260910@@YAXPAUGen8ByteElement00260910@@U1@P6A_NABU1@2@Z@Z,0x000391E9,route=0x00260910; matched unguarded eight-byte POD linear-insert body and retail thunk establish this call target
 ??1AIGuardMachine@@UAE@XZ,0x0015B9D0,GiantBirdGuardMachine ctor unwind handlerC13A00 calls ILT35D46 to this11B destructor; installs AIGuardMachine vtable1095FE0 then destroys StateMachine
+?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ,0x00001140,Typed DLINKbase getter identified byTeamF2770 PMF; route=0x000C8980
