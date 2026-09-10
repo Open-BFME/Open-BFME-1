@@ -1,8 +1,11 @@
 // ??0Rva007E3B40Vp6TailStream@@QAE@HH@Z
-// partial score=0.9 date=2026-09-04
+// partial score=0.91 date=2026-09-10
+// ??0Rva007E3B40Vp6TailStream@@QAE@HH@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x007E3B40. Constructor shape recovered from the Zero Hour
 // HelicopterSlowDeathBehavior constructor family.
+
+inline void *operator new(unsigned int, void *place) { return place; }
 
 class Gen_0081E480
 {
@@ -16,10 +19,15 @@ public:
 	int m_flags;
 };
 
-class Rva007E3430Ops
+// real, already-matched zeroing constructor (R2ZeroingConstructors.cpp)
+class Rva007E3430
 {
 public:
-	Rva007E3430Ops *zero(void);
+	int m_at00;
+	int m_at04;
+	int m_at08;
+	int m_at0C;
+	Rva007E3430();
 };
 
 class Rva007E3B40Vp6Prefix
@@ -39,8 +47,7 @@ public:
 	Rva007E3B40Vp6TailStream(int first, int second);
 
 private:
-	void setTail(void);
-	char m_parser[16];
+	unsigned char m_parser[16];
 	volatile int m_at2c;
 	volatile int m_at30;
 	volatile int m_at34;
@@ -57,8 +64,15 @@ private:
 	volatile int m_at60;
 };
 
-void Rva007E3B40Vp6TailStream::setTail(void)
+Rva007E3B40Vp6TailStream::Rva007E3B40Vp6TailStream(int first, int second)
+	: Rva007E3B40Vp6Prefix(first, second)
 {
+	Rva007E3430 *parserSlot = (Rva007E3430 *)m_parser;
+	__assume(parserSlot != 0);
+	m_base.m_vtable = (int *)0x01128DA8;
+	m_at14 = 0;
+	m_at18 = 0;
+	new (parserSlot) Rva007E3430();
 	m_at44 = 1;
 	m_at5c = 1;
 	m_at60 = 1;
@@ -73,14 +87,4 @@ void Rva007E3B40Vp6TailStream::setTail(void)
 	m_at50 = 0;
 	m_at54 = 0;
 	m_at58 = 0;
-}
-
-Rva007E3B40Vp6TailStream::Rva007E3B40Vp6TailStream(int first, int second)
-	: Rva007E3B40Vp6Prefix(first, second)
-{
-	m_base.m_vtable = (int *)0x01128DA8;
-	m_at14 = 0;
-	m_at18 = 0;
-	((Rva007E3430Ops *)m_parser)->zero();
-	setTail();
 }

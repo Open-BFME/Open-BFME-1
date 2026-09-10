@@ -1,8 +1,5 @@
 // ??1Rva007E3C20Vp6Stream@@UAE@XZ
-// partial score=0.93 date=2026-09-04
-// ??1Rva007E3C20Vp6Stream@@UAE@XZ present-unmatched
-// ?d_007e3c20@@YAXXZ
-// partial score=0.93 date=2026-09-03
+// partial score=0.94 date=2026-09-10
 // ??1Rva007E3C20Vp6Stream@@UAE@XZ [retail body 0x007E3C20]
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
@@ -16,10 +13,11 @@ public:
     int m_count; int m_first; int m_second; int m_flags;
 };
 
-class Rva007E3C20Parser
+// real, already-matched member dtor for the parser-shaped slot (Rva007E3450Destructor.cpp)
+class Rva007E3450
 {
 public:
-    ~Rva007E3C20Parser(void);
+    ~Rva007E3450(void);
 
 private:
     int m_word0;
@@ -35,7 +33,9 @@ public:
     virtual void release(int value);
 };
 
-class Rva007E3C20AudioClient
+// TheAudio -- real pinned global "?TheAudio@@3PAVAudioManager@@A" at 0x012ED668.
+// Only the slot we call (vslot 0x4c) needs a real signature; earlier slots are spares.
+class AudioManager
 {
 public:
     virtual void spare00(void); virtual void spare01(void);
@@ -50,9 +50,20 @@ public:
     virtual void spare12(void); virtual void release(int value);
 };
 
-extern Rva007E3C20AudioClient *g_rva007E3C20AudioClient;
-extern int __cdecl rva007E3C20Release(void **value);
+extern AudioManager *TheAudio;
+
+// real, already-matched codec-state release (BfmeConv2080.cpp)
+struct CodecState;
+int bfmeFreeCodecJW(CodecState **p);
+
 void operator delete[](void *value);
+
+// real, already-matched cleanup on the Gen_0081E480-shaped base member (BfmeThreeHundredFiftyFour.cpp)
+class BfmeThingUC
+{
+public:
+    void bfmeResetUC(void);
+};
 
 class Rva007E3C20Vp6Stream : public Gen_0081E480
 {
@@ -62,7 +73,7 @@ public:
 private:
     void *m_at14;
     void *m_at18;
-    Rva007E3C20Parser m_parser;
+    Rva007E3450 m_parser;
     Rva007E3C20Owner *m_at2c;
     int m_at30;
     int m_at34;
@@ -82,11 +93,11 @@ private:
 Rva007E3C20Vp6Stream::~Rva007E3C20Vp6Stream(void)
 {
     if (m_at14 != 0) {
-        rva007E3C20Release(&m_at14);
+        bfmeFreeCodecJW((CodecState **)&m_at14);
         m_at14 = 0;
     }
     if (m_at18 != 0) {
-        rva007E3C20Release(&m_at18);
+        bfmeFreeCodecJW((CodecState **)&m_at18);
         m_at18 = 0;
     }
     if (m_at2c != 0) {
@@ -102,7 +113,8 @@ Rva007E3C20Vp6Stream::~Rva007E3C20Vp6Stream(void)
     }
     m_at54 = 0;
     if (m_at5c != 1)
-        g_rva007E3C20AudioClient->release(m_at5c);
+        TheAudio->release(m_at5c);
     if (m_at60 != 1)
-        g_rva007E3C20AudioClient->release(m_at60);
+        TheAudio->release(m_at60);
+    ((BfmeThingUC *)this)->bfmeResetUC();
 }
