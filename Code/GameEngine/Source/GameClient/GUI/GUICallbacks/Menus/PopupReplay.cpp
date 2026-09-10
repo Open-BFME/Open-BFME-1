@@ -353,6 +353,38 @@ void reallySaveReplay(void)
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu system callback */
 //-------------------------------------------------------------------------------------------------
+// BFME's UnicodeString copy constructor and assignment helpers are inline
+// forwarders to StringBase<unsigned short> (retail 0x00888400/0x00888530).
+// Keeping these definitions immediately before this callback preserves the
+// retail EH temporary ordering. One unchanged funclet gets a new compiler label.
+template <typename BfmeWideChar>
+class StringBase
+{
+	friend class UnicodeString;
+
+private:
+	StringBase(const StringBase<BfmeWideChar> &src);
+
+public:
+	void set(const StringBase<BfmeWideChar> &src);
+
+private:
+	void *m_data;
+};
+
+inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
+{
+	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
+		*(const StringBase<unsigned short> *)&stringSrc);
+}
+
+inline void PopupReplaySetUnicodeString(UnicodeString &destination,
+	const UnicodeString &source)
+{
+	((StringBase<unsigned short> *)&destination)->set(
+		*(const StringBase<unsigned short> *)&source);
+}
+
 WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg, 
 																				 WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -388,7 +420,7 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 		}  // end input
 
 		// --------------------------------------------------------------------------------------------
-		case GLM_SELECTED:
+		case 0x4014: // BFME GLM_SELECTED
 		{
 			GameWindow *control = (GameWindow *)mData1;
 
@@ -405,7 +437,8 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 				if (rowSelected >= 0)
 				{
 					UnicodeString filename;
-					filename = GadgetListBoxGetText(listboxGames, rowSelected);
+					PopupReplaySetUnicodeString(filename,
+						GadgetListBoxGetText(listboxGames, rowSelected));
 					GameWindow *textEntryReplayName = TheWindowManager->winGetWindowFromId( window, textEntryReplayNameKey );
 					DEBUG_ASSERTCRASH( textEntryReplayName != NULL, ("PopupReplaySystem - Unable to find text entry\n") );
 					GadgetTextEntrySetText(textEntryReplayName, filename);
@@ -475,7 +508,7 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 			if( control )
 			{
 				UnicodeString filename;
-				filename.set( GadgetTextEntryGetText( control ) );
+				PopupReplaySetUnicodeString(filename, GadgetTextEntryGetText( control ));
 				control = TheWindowManager->winGetWindowFromId( parent, buttonSaveKey );
 				if( control )
 				{
@@ -499,3 +532,6 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 	return MSG_HANDLED;
 
 }
+
+typedef char PopupReplayUnicodeSize[sizeof(UnicodeString) == 4 ? 1 : -1];
+typedef char PopupReplayStringBaseSize[sizeof(StringBase<unsigned short>) == 4 ? 1 : -1];
