@@ -69,6 +69,30 @@ public:
 
 typedef _STL::basic_string<char, _STL::char_traits<char>, _STL::allocator<char> > RegistryString;
 
+bool getUnsignedIntFromRegistry( HKEY root, RegistryString path, RegistryString key, unsigned int &val )
+{
+	HKEY handle;
+	unsigned long buffer;
+	unsigned long size = sizeof(buffer);
+	unsigned long type;
+	int returnValue;
+
+	if ((returnValue = RegOpenKeyEx( root, path.c_str(), 0, KEY_READ, &handle )) == ERROR_SUCCESS)
+	{
+		returnValue = RegQueryValueEx( handle, key.c_str(), NULL, &type,
+		                              (unsigned char *)&buffer, &size );
+		RegCloseKey( handle );
+	}
+
+	if (returnValue == ERROR_SUCCESS)
+	{
+		val = buffer;
+		return true;
+	}
+
+	return false;
+}
+
 bool setStringInRegistry( HKEY root, RegistryString path, RegistryString key, RegistryString val )
 {
 	HKEY handle;
