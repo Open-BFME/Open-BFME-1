@@ -78519,6 +78519,7 @@ name,address,notes
 ?drawStaticTextText@@YAXPAVGameWindow@@HH@Z,0x00796BA0,file-static reached by the byte-proven call at 0x00796FAF
 ?drawStaticTextText@@YAXPAVGameWindow@@PAVWinInstanceData@@HH@Z,0x00796BA0,the 346-byte body immediately ahead of W3DGadgetStaticTextDraw in the same compiland
 ?drawThirdDebugDisplay@W3DDisplay@@QAEXXZ,0x006E8800,address-derived W3DDisplay callback fast-path helper reached by drawCurrentDebugDisplay
+?captureScreen@W3DDisplay@@IAEXPADI@Z,0x006EA890,callee pin for the W3DDisplay screenshot wrapper; captures the front buffer into the caller-owned image using the retail helper body
 ?drawTrees@W3DTreeBuffer@@QAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x00737B70,direct body proven by the original W3DTreeBuffer declaration and BFME field layout; renderTrees calls it through ILT 0x0002C9E4; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-sol-ultra
 ?drop1@BfmeMapEZC@@QAEXPAX@Z,0x00009AA2,D9FC0 map1 drop ILT
 ?drop2@BfmeMapEZC@@QAEXPAX@Z,0x0001F979,D9FC0 map2 drop ILT

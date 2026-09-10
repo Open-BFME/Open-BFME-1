@@ -73,7 +73,7 @@ static void drawFramerateBar(void);
 #include "W3DDevice/GameClient/W3DAssetManager.h"
 #include "GameClient/Display.h"
 #include "WW3D2/lightenvironment.h"
-#define protected protected: void saveScreenShot(char *image, UnsignedInt width, UnsignedInt height); protected
+#define protected protected: void saveScreenShot(char *image, UnsignedInt width, UnsignedInt height); void captureScreen(char *image, UnsignedInt rowBytes); protected
 #include "W3DDevice/GameClient/W3DDisplay.h"
 #undef protected
 #include "W3DDevice/GameClient/W3DGameClient.h"
@@ -3116,133 +3116,30 @@ void W3DDisplay::saveScreenShot(char *image, UnsignedInt width, UnsignedInt heig
 }
 
 ///Save Screen Capture to a file
-// ?takeScreenShot@W3DDisplay@@ present-unmatched
+#pragma comment(linker, "/alternatename:?captureScreen@W3DDisplay@@IAEXPADI@Z=?d_006ea890@@YAXXZ")
 void W3DDisplay::takeScreenShot(void)
 {
-	char leafname[256];
-	char pathname[1024];
-
-	static int frame_number = 1;
-
-	Bool done = false;
-	while (!done) {
-#ifdef CAPTURE_TO_TARGA
-		sprintf( leafname, "%s%.3d.tga", "sshot", frame_number++);
-#else
-		sprintf( leafname, "%s%.3d.bmp", "sshot", frame_number++);
-#endif
-		strcpy(pathname, TheGlobalData->getPath_UserData().str());
-		strcat(pathname, leafname);
-		if (_access( pathname, 0 ) == -1)
-			done = true;
-	}
-
-	// Lock front buffer and copy
-
-	IDirect3DSurface8 *fb;
-	fb=DX8Wrapper::_Get_DX8_Front_Buffer();
-	D3DSURFACE_DESC desc;
-	fb->GetDesc(&desc);
-
 	RECT bounds;
 	POINT point;
 
-	GetClientRect(ApplicationHWnd,&bounds);
-	point.x=bounds.left; point.y=bounds.top;
+	GetClientRect(ApplicationHWnd, &bounds);
+	point.x = bounds.left;
+	point.y = bounds.top;
 	ClientToScreen(ApplicationHWnd, &point);
-	bounds.left=point.x; bounds.top=point.y; 
-	point.x=bounds.right; point.y=bounds.bottom;
+	bounds.left = point.x;
+	bounds.top = point.y;
+	point.x = bounds.right;
+	point.y = bounds.bottom;
 	ClientToScreen(ApplicationHWnd, &point);
-	bounds.right=point.x; bounds.bottom=point.y;
- 
-	D3DLOCKED_RECT lrect;
+	bounds.right = point.x;
+	bounds.bottom = point.y;
 
-	DX8_ErrorCode(fb->LockRect(&lrect,&bounds,D3DLOCK_READONLY));
-
-	unsigned int x,y,index,index2,width,height;
-
-	width=bounds.right-bounds.left;
-	height=bounds.bottom-bounds.top;
-
-	char *image=NEW char[3*width*height];
-#ifdef CAPTURE_TO_TARGA
-	//bytes are mixed in targa files, not rgb order.
-	for (y=0; y<height; y++)
-	{
-		for (x=0; x<width; x++)
-		{
-			// index for image
-			index=3*(x+y*width);
-			// index for fb
-			index2=y*lrect.Pitch+4*x;
-
-			image[index]=*((char *) lrect.pBits + index2+2);
-			image[index+1]=*((char *) lrect.pBits + index2+1);
-			image[index+2]=*((char *) lrect.pBits + index2+0);
-		}
-	}
-
-	fb->Release();
-
-	Targa targ;
-	memset(&targ.Header,0,sizeof(targ.Header));
-	targ.Header.Width=width;
-	targ.Header.Height=height;
-	targ.Header.PixelDepth=24;
-	targ.Header.ImageType=TGA_TRUECOLOR;
-	targ.SetImage(image);
-	targ.YFlip();
-
-	targ.Save(pathname,TGAF_IMAGE,false);
-#else	//capturing to bmp file
-	//bmp is same byte order
-	for (y=0; y<height; y++)
-	{
-		for (x=0; x<width; x++)
-		{
-			// index for image
-			index=3*(x+y*width);
-			// index for fb
-			index2=y*lrect.Pitch+4*x;
-
-			image[index]=*((char *) lrect.pBits + index2+0);
-			image[index+1]=*((char *) lrect.pBits + index2+1);
-			image[index+2]=*((char *) lrect.pBits + index2+2);
-		}
-	}
-
-	fb->Release();
-
-	//Flip the image
-	char *ptr,*ptr1;
-	char  v,v1;
-
-	for (y = 0; y < (height >> 1); y++)
-	{
-		/* Compute address of lines to exchange. */
-		ptr = (image + ((width * y) * 3));
-		ptr1 = (image + ((width * (height - 1)) * 3));
-		ptr1 -= ((width * y) * 3);
-
-		/* Exchange all the pixels on this scan line. */
-		for (x = 0; x < (width * 3); x++)
-			{
-			v = *ptr;
-			v1 = *ptr1;
-			*ptr = v1;
-			*ptr1 = v;
-			ptr++;
-			ptr1++;
-			}
-	}
-	CreateBMPFile(pathname, image, width, height);
-#endif
-
+	UnsignedInt width = bounds.right - bounds.left;
+	UnsignedInt height = bounds.bottom - bounds.top;
+	char *image = NEW char[3 * width * height];
+	captureScreen(image, 3 * width);
+	saveScreenShot(image, width, height);
 	delete [] image;
-
-	UnicodeString ufileName;
-	ufileName.translate(leafname);
-	TheInGameUI->message(TheGameText->fetch("GUI:ScreenCapture"), ufileName.str());
 }
 
 /** Start/Stop campturing an AVI movie*/
