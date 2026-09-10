@@ -1,14 +1,13 @@
 // ?registerAptLivingWorldUICallbacks@@YAXXZ
-// partial score=0.8 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x0051AB40, 805 B, SEH frame. Registers the Living-World Apt
 // screen's callbacks with WindowManager, twin of the simpler
 // registerBannerAptCallbacks (BannerUIRegisterCallbacks.cpp) but with an
-// extra leading block that computes g_aptLivingWorldWindowIndex (0x012F49A8,
-// pinned elsewhere as g_bfmeV1064 and consumed by AptLivingWorldWindowIndex()
-// callers in BfmeConv424.cpp/Open2Twins001.cpp) via a WindowManager virtual
-// call at vtable+0x3c, then eight registerAptCallback(name, holder) calls for
+// extra leading block that computes g_aptLivingWorldWindowIndex (0x012F49A8) from a
+// five-argument WindowManager virtual (slot 0xF, two by-value strings built in the
+// argument area) fed to the bfmeMakeEYA thunk retail calls at ILT 0x0000FC4A; then
+// eight registerAptCallback(name, holder) calls for
 // the AptLivingWorldUI::On* callback family (string literals at
 // 0x01105c98-0x01105dec confirm the class/callback names).
 
@@ -16,13 +15,14 @@ template <class T> class StringBase
 {
 protected:
 	StringBase( const StringBase &other );
+	StringBase( const T *text );
 	T *m_data;
 };
 
 class BFMERetailAsciiString : public StringBase<char>
 {
 public:
-	BFMERetailAsciiString( const char *text );
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
 	BFMERetailAsciiString( const BFMERetailAsciiString &other ) : StringBase<char>( other ) {}
 	~BFMERetailAsciiString() { releaseBuffer(); }
 
@@ -49,7 +49,8 @@ public:
 	virtual void _pad06(); virtual void _pad07(); virtual void _pad08();
 	virtual void _pad09(); virtual void _pad10(); virtual void _pad11();
 	virtual void _pad12(); virtual void _pad13(); virtual void _pad14();
-	virtual int getAptAvailableWindowIndex();		// vtable slot 0xF (+0x3c)
+	virtual int resolveAptWindow( BFMERetailAsciiString prefix,
+		BFMERetailAsciiString name, int a, int b, int c );	// vtable slot 0xF (+0x3c)
 
 	void registerAptCallback( const BFMERetailAsciiString &name,
 		BannerAptCallbackHolder callback );
@@ -59,9 +60,9 @@ extern WindowManager *g_theWindowManager;
 extern bool g_aptLivingWorldGuardA;			// 0x0012F499D
 extern bool g_aptLivingWorldGuardB;			// 0x0012F499C
 extern BFMERetailAsciiString g_aptLivingWorldCachedName;	// 0x0012F49A0
-extern int g_aptLivingWorldWindowIndex;		// 0x0012F49A8 (g_bfmeV1064)
+extern void *g_aptLivingWorldWindowIndex;		// 0x0012F49A8 (g_bfmeV1064)
 
-int AptLivingWorldWindowIndex( int low, int high );
+void *bfmeMakeEYA( unsigned int low, unsigned int high );
 
 extern void __cdecl bfmeAptLivingWorldOnInitialized();
 extern void __cdecl bfmeAptLivingWorldOnRegionPopupOpen();
@@ -76,15 +77,11 @@ void registerAptLivingWorldUICallbacks()
 {
 	if( !g_aptLivingWorldGuardA && g_theWindowManager )
 	{
-		{
-			BFMERetailAsciiString name( g_aptLivingWorldCachedName );
-			BFMERetailAsciiString prefix( "Apt\\" );
-			g_aptLivingWorldGuardA = false;
-			g_aptLivingWorldGuardB = false;
-
-			int idx = g_theWindowManager->getAptAvailableWindowIndex();
-			g_aptLivingWorldWindowIndex = AptLivingWorldWindowIndex( idx, idx );
-		}
+		g_aptLivingWorldGuardA = false;
+		g_aptLivingWorldGuardB = false;
+		int idx = g_theWindowManager->resolveAptWindow( BFMERetailAsciiString( "Apt\\" ),
+			BFMERetailAsciiString( g_aptLivingWorldCachedName ), 0, 0, -1 );
+		g_aptLivingWorldWindowIndex = bfmeMakeEYA( idx, idx );
 
 		if( g_theWindowManager )
 		{

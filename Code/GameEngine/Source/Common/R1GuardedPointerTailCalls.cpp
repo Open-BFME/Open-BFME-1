@@ -172,7 +172,7 @@ void Rva00514D80() { if( g_Glo00EF4988 ) g_Glo00EF4988->h00514560(); }
 void d_003f9140();
 void d_0076cb10();
 void d_00609710();
-void d_0051ab40();
+void registerAptLivingWorldUICallbacks();
 void d_0083e8f0();
 
 class Rva003D5780 { public: void go(); char m_lead[ 0x10 ]; int m_flag; };
@@ -194,7 +194,7 @@ public:
 	void h0046B2B0( int value );
 };
 extern Glo00EF19E8 *g_Glo00EF19E8;
-void Rva00584E20() { if( g_Glo00EF19E8 ) d_0051ab40(); }
+void Rva00584E20() { if( g_Glo00EF19E8 ) registerAptLivingWorldUICallbacks(); }
 
 // ---------------------------------------------------------------- shape (f)
 // two members ANDed together, free callee

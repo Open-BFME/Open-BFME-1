@@ -86731,3 +86731,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??$_Construct@U?$pair@QAURva009A4130Target@@URva009A4130Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@QAURva009A4130Target@@URva009A4130Value@@@0@ABU10@@Z,0x009A3520,neutral 8-byte pair constructor; retail body is the existing 23-byte copy helper at 0x009A3520
 ?scan@Rva0035E8B0Tail@@QAEHXZ,0x0035E8B0,tail state reached through ILT 0x00047C7B from XmlNameSlotList::finish; address-derived parser state body
 ??$__write_decimal_backward@J@_STL@@YAPADPADJHABU__true_type@0@@Z,0x00835A20,STLport __write_decimal_backward long; direct callee of __write_integer_backward long at 0x00835940; vendor _num_put.c signature; helper row remains generated-only
+??0?$StringBase@D@@IAE@PBD@Z,0x00888BC0,protected narrow StringBase(const char*) forwarded by the inline BFMERetailAsciiString ctor in registerAptLivingWorldUICallbacks 0x0051AB40
