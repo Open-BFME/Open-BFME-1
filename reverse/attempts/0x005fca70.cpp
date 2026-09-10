@@ -13,6 +13,27 @@
 // dwords at +0x10/+0x14.  The complete constructor then stamps all three
 // final vptrs and fills those fields from the adjusted owner at +0x1d,
 // +0x24, +0x28 and +0x34.
+//
+// REMAINING WALL (8/187 non-reloc bytes, first at +27; one relocation site
+// out of 14 lands at a different offset than retail): the interim vtable
+// store at [esi+4]=CategoryInfoY005E6290's vtable and a `push edi; mov
+// [esp+8],esi` pair (a delayed callee-save of edi plus an EH-frame this-stash
+// slot) are two independent, commutable chunks. Retail emits the vtable
+// store first, then the push/mov pair, then completes CategoryInfoY005E6290's
+// own m_flag=true store; ours emits the push/mov pair first, then the vtable
+// store, then the same m_flag store. Every other byte in the body, including
+// both OwnerFieldsY005E6290 stores and both final-vtable stamps, already
+// matches.
+// Ruled out (14 shape_search trials, masked score pinned at 0.95722 for every
+// variant): writing CategoryInfoY005E6290's m_flag through a constructor-body
+// assignment instead of the member-initializer list; reversing the
+// CategoryPrimaryY005E6290/CategoryInfoY005E6290 base-initializer order;
+// dropping __declspec(nothrow) from CategoryBaseY005E6290's and
+// CategoryTemplateY005E6290's destructors; adding __declspec(nothrow) to
+// OwnerFieldsY005E6290's constructor. None shifted the push/mov pair relative
+// to the vtable store. This is the same base-ctor-EH-shape class of wall
+// documented for 0x005FD6A0, now narrowed to a single instruction-scheduling
+// decision rather than a whole-body register-allocation difference.
 
 class FXList;
 
