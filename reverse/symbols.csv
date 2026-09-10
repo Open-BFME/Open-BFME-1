@@ -86811,3 +86811,4 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?g_AITNGuardPickUpCrateStateVTable@@3HA,0x0109B748,Direct retail primary PickUpCrateState vtable VA written at this+0; declaration-only empty-base ABI view
 ?g_AITNGuardAttackAggressorStateVTable@@3HA,0x0109B7A0,Direct retail primary AttackAggressorState vtable VA written at this+0; distinct from the shared secondary table
 ?g_Rva0109B558StateSecondaryVTable@@3HA,0x0109B558,Direct retail shared secondary state table at VA 0x0109B558 written at this+0x24 by Inner/Outer/Attack; address-qualified identity distinct from primary Inner 0x0109B560
+??0?$pair@$$CBHUGen_t_001da900_p12cd@@@_STL@@QAE@ABHABUGen_t_001da900_p12cd@@@Z,0x001D7810,Parent direct92Bpair constructor key4B plus nonowningvector12B; two constrefs ret8 at1D7869 ends1D786CCC; OCLmap1DAF40 call1C0FD->1D7810; typedlayoutview no thunksiteidentity
