@@ -828,6 +828,24 @@ WW3DErrorType WW3D::Registry_Save_Render_Device( const char *sub_key, int device
 	}
 }
 
+// Retail RVA 0x008FD230 is a distinct seven-argument bool wrapper.  The
+// semantic WW3DErrorType overload above is not an identity-safe name for its
+// low-byte return, so retain the proven ABI as an address-qualified helper.
+class Rva008FD230RegistrySaveAccess : public DX8Wrapper
+{
+public:
+	using DX8Wrapper::Registry_Save_Render_Device;
+};
+
+bool rva008fd230RegistrySaveRenderDevice(const char *sub_key, int device, int width, int height, int depth, bool windowed, int texture_depth)
+{
+	bool success = Rva008FD230RegistrySaveAccess::Registry_Save_Render_Device(sub_key,device,width,height,depth,windowed,texture_depth);
+	if (success) {
+		return true;
+	}
+	return false;
+}
+
 
 /***********************************************************************************************
  * WW3D::Registry_Load_Render_Device -- Loads settings from Registry
