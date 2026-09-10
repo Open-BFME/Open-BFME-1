@@ -1,231 +1,63 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// stlport
+// TransportContainModuleData, retail 0x0021FC80, 216 bytes.
+// BFME stores an interned object-filter handle at +0x114, rather than
+// the Generals source's inline allow/deny masks. The setter takes two
+// six-word masks by value and releases/replaces that handle.
+#include <bitset>
+#include "StringInline.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportContain.h
-class TransportContainModuleData
+struct Rva0021FC80Mask
+{
+    std::bitset<192> bits;
+    Rva0021FC80Mask() {}
+    explicit Rva0021FC80Mask(unsigned int bit) { bits.set(bit); }
+};
+extern const Rva0021FC80Mask Rva012ED8B8NoneMask;
+
+struct Rva0039FF30Filter
+{
+    void setMasks(Rva0021FC80Mask, Rva0021FC80Mask);
+    unsigned int handle;
+};
+
+class OpenContainModuleData
+{
+public:
+    OpenContainModuleData();
+    virtual ~OpenContainModuleData();
+protected:
+    unsigned char m_beforeFilter[0x110];
+    Rva0039FF30Filter m_filter;
+    unsigned char m_beforeFlag168[0x50];
+};
+
+class TransportContainModuleData : public OpenContainModuleData
 {
 public:
     TransportContainModuleData();
+    virtual ~TransportContainModuleData();
+private:
+    bool m_flag168;
+    unsigned char m_padding169[3];
+    float m_scalar16c;
+    bool m_flag170;
+    bool m_flag171;
+    unsigned char m_padding172[2];
+    AsciiString m_initialPayloadName;
+    int m_initialPayloadCount;
 };
 
 // ??0TransportContainModuleData@@QAE@XZ
-__declspec(naked) TransportContainModuleData::TransportContainModuleData()
+TransportContainModuleData::TransportContainModuleData()
 {
-    __asm {
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0xa6;
-        __emit 0xcf;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x51;
-        __emit 0x53;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x57;
-        __emit 0x89;
-        __emit 0x74;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0xe8;
-        __emit 0x8c;
-        __emit 0x43;
-        __emit 0xe2;
-        __emit 0xff;
-        __emit 0x33;
-        __emit 0xdb;
-        __emit 0xc7;
-        __emit 0x06;
-        __emit 0xa0;
-        __emit 0xb8;
-        __emit 0x0a;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x5c;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0x74;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xb8;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x83;
-        __emit 0xec;
-        __emit 0x18;
-        __emit 0x8b;
-        __emit 0xd4;
-        __emit 0x89;
-        __emit 0x3a;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xbc;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x7a;
-        __emit 0x04;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xc0;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x7a;
-        __emit 0x08;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xc4;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x7a;
-        __emit 0x0c;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xc8;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x7a;
-        __emit 0x10;
-        __emit 0x8b;
-        __emit 0x3d;
-        __emit 0xcc;
-        __emit 0xd8;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0x33;
-        __emit 0xc0;
-        __emit 0x89;
-        __emit 0x7a;
-        __emit 0x14;
-        __emit 0x8b;
-        __emit 0xc8;
-        __emit 0x81;
-        __emit 0xc9;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xec;
-        __emit 0x18;
-        __emit 0x8b;
-        __emit 0xd4;
-        __emit 0x89;
-        __emit 0x0a;
-        __emit 0x89;
-        __emit 0x42;
-        __emit 0x04;
-        __emit 0x8b;
-        __emit 0xc8;
-        __emit 0x89;
-        __emit 0x4a;
-        __emit 0x08;
-        __emit 0x89;
-        __emit 0x4a;
-        __emit 0x0c;
-        __emit 0x89;
-        __emit 0x4a;
-        __emit 0x10;
-        __emit 0x8d;
-        __emit 0x8e;
-        __emit 0x14;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x48;
-        __emit 0x01;
-        __emit 0x89;
-        __emit 0x42;
-        __emit 0x14;
-        __emit 0xe8;
-        __emit 0x7b;
-        __emit 0x6c;
-        __emit 0xe2;
-        __emit 0xff;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x88;
-        __emit 0x9e;
-        __emit 0x70;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x9e;
-        __emit 0x68;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x88;
-        __emit 0x9e;
-        __emit 0x71;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x9e;
-        __emit 0x78;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5f;
-        __emit 0xc7;
-        __emit 0x86;
-        __emit 0x6c;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x80;
-        __emit 0x3f;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x5e;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0d;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5b;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x10;
-        __emit 0xc3;
-    }
+    m_filter.setMasks(Rva0021FC80Mask(8), Rva012ED8B8NoneMask);
+    m_flag170 = false;
+    m_flag168 = false;
+    m_flag171 = false;
+    m_initialPayloadCount = 0;
+    m_scalar16c = 1.0f;
 }
+typedef char VerifyMaskSize[sizeof(Rva0021FC80Mask) == 24 ? 1 : -1];
+typedef char VerifyBaseSize[sizeof(OpenContainModuleData) == 0x168 ? 1 : -1];
+typedef char VerifyObjectSize[sizeof(TransportContainModuleData) == 0x17c ? 1 : -1];
