@@ -94,17 +94,8 @@ ModelConditionUpgrade::~ModelConditionUpgrade( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?upgradeImplementation@ModelConditionUpgrade@@MAEXXZ present-unmatched
-void ModelConditionUpgrade::upgradeImplementation( )
-{
-	const ModelConditionUpgradeModuleData *data = getModelConditionUpgradeModuleData();
-
-	Object *me = getObject();	
-
-	if( data->m_conditionFlag != MODELCONDITION_INVALID )
-		me->setModelConditionState(data->m_conditionFlag);
-}
-
+// The byte-exact implementation lives in
+// ModelConditionUpgradeUpgradeImplementation.cpp.
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------
