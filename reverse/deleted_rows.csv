@@ -1,4 +1,5 @@
 name,target_rva,reason
+??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00369FD0,"wrong identity: BFME has no W3DProjectileStreamDraw module; retail installs AttributeModifierPoolUpdate vtables 0x010E92DC, 0x010E9218 and 0x010E9208, and module_registry.tsv maps factory 0x001194C0 to AttributeModifierPoolUpdate"
 ?Rva0010FDD4@@YAXXZ,0x0010FDD4,retired: 9-byte EH rethrow block is embedded at GameState::xferSaveData +0x204; the exact 559-byte GameState body now owns the contiguous extent and no independent caller or identity evidence exists
 ??_GGen_dtor_0006e220@@UAEPAXI@Z,0x0006E220,Generic generator placeholder superseded by authentic BfmeThingEOA scalar-deleting destructor proven by constructor 0x0006B190 vtable 0x01075B08 and complete-destructor route through 0x0006B400
 ??1Rva000678B0Body@@UAE@XZ,0x000678B0,Address-derived destructor identity superseded by DamageFXStore proven by constructor 0x00067C10 and vtable 0x010758F8
