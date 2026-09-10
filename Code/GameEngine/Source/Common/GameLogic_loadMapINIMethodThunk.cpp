@@ -1,778 +1,187 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/System/GameLogic.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseascii /ICode/Libraries/Source/WWVegas/WWLib
+// Retail implementation of ?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z.
+// The readable reference implementation is in GameLogic/System/GameLogic.cpp;
+// this facade supplies only the recovered ABI/layout needed by this retail TU.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#include "Common/AsciiString.h"
+
+#include <stdio.h>
+#include <string.h>
+
+typedef unsigned long DWORD;
+
+extern "C" __declspec(dllimport) void __stdcall Sleep(DWORD);
+
+class __declspec(novtable) GameEngine
+{
 public:
-    AsciiString();
-    AsciiString(AsciiString const &);
-    ~AsciiString();
+    virtual void slot00() = 0;
+    virtual void slot01() = 0;
+    virtual void slot02() = 0;
+    virtual void slot03() = 0;
+    virtual void slot04() = 0;
+    virtual void slot05() = 0;
+    virtual void slot06() = 0;
+    virtual void slot07() = 0;
+    virtual void slot08() = 0;
+    virtual void slot09() = 0;
+    virtual void slot10() = 0;
+    virtual void slot11() = 0;
+    virtual void slot12() = 0;
+    virtual void slot13() = 0;
+    virtual void slot14() = 0;
+    virtual void slot15() = 0;
+    virtual void serviceWindowsOS() = 0;
 };
 
-class __declspec(novtable) GameLogic
+extern GameEngine *TheGameEngine;
+
+static inline void loadMapINIYieldToOS()
+{
+    Sleep(0);
+    if (TheGameEngine)
+        TheGameEngine->serviceWindowsOS();
+}
+
+class MapCache;
+extern MapCache *TheMapCache;
+
+struct SaveGameInfo
+{
+    AsciiString saveGameMapName;
+    AsciiString pristineMapName;
+};
+
+class GameState
+{
+public:
+    bool isInSaveDirectory(const AsciiString &) const;
+
+    SaveGameInfo *getSaveGameInfo()
+    {
+        return &m_gameInfo;
+    }
+
+private:
+    char m_unrecovered[0x18];
+    SaveGameInfo m_gameInfo;
+};
+
+extern GameState *TheGameState;
+
+class FileSystem
+{
+public:
+    bool doesFileExist(const char *) const;
+};
+
+extern FileSystem *TheFileSystem;
+
+class Xfer;
+
+enum INILoadType
+{
+    INI_LOAD_INVALID = 0,
+    INI_LOAD_OVERWRITE = 1,
+    INI_LOAD_CREATE_OVERRIDES = 2
+};
+
+class INI
+{
+public:
+    INI();
+    ~INI();
+    void load(AsciiString, INILoadType, Xfer *);
+
+private:
+    char m_storage[0x848];
+};
+
+class __declspec(novtable) GameTextInterface
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot01() = 0;
+    virtual void slot02() = 0;
+    virtual void slot03() = 0;
+    virtual void slot04() = 0;
+    virtual void slot05() = 0;
+    virtual void slot06() = 0;
+    virtual void slot07() = 0;
+    virtual void slot08() = 0;
+    virtual void slot09() = 0;
+    virtual void slot10() = 0;
+    virtual void slot11() = 0;
+    virtual void initMapStringFile(const AsciiString &) = 0;
+};
+
+extern GameTextInterface *TheGameText;
+
+class GameLogic
 {
 public:
     void loadMapINI(AsciiString);
 };
 
-// ?loadMapINI@GameLogic@@QAEXVAsciiString@@@Z
-__declspec(naked) void GameLogic::loadMapINI(AsciiString)
+void GameLogic::loadMapINI(AsciiString mapName)
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x04
-        __emit 0xba
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xec
-        __emit 0x54
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x56
-        __emit 0x57
-        __emit 0xa1
-        __emit 0x94
-        __emit 0x15
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x84
-        __emit 0x8b
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xb9
-        __emit 0x41
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xf3
-        __emit 0xab
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0x70
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xb9
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x9b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x01
-        __emit 0x41
-        __emit 0x88
-        __emit 0x02
-        __emit 0x42
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xf6
-        __emit 0x8b
-        __emit 0x3d
-        __emit 0x30
-        __emit 0x8f
-        __emit 0x35
-        __emit 0x01
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd7
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x24
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x01
-        __emit 0xff
-        __emit 0x50
-        __emit 0x40
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x20
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x90
-        __emit 0xf1
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x52
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x6c
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xc3
-        __emit 0xd4
-        __emit 0xc9
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8a
-        __emit 0xd8
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x54
-        __emit 0x0e
-        __emit 0x50
-        __emit 0x00
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x22
-        __emit 0xa1
-        __emit 0x90
-        __emit 0xf1
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x1c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xb9
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8a
-        __emit 0x01
-        __emit 0x41
-        __emit 0x88
-        __emit 0x02
-        __emit 0x42
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xf6
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x01
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x08
-        __emit 0x40
-        __emit 0x84
-        __emit 0xc9
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xc2
-        __emit 0x83
-        __emit 0xf8
-        __emit 0x04
-        __emit 0x0f
-        __emit 0x8c
-        __emit 0xbf
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x04
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x3b
-        __emit 0xca
-        __emit 0x76
-        __emit 0x15
-        __emit 0x8b
-        __emit 0xff
-        __emit 0x8a
-        __emit 0x01
-        __emit 0x3c
-        __emit 0x5c
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x3c
-        __emit 0x2f
-        __emit 0x74
-        __emit 0x09
-        __emit 0x49
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x3b
-        __emit 0xc8
-        __emit 0x77
-        __emit 0xed
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x01
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd7
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x24
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x52
-        __emit 0x40
-        __emit 0x8b
-        __emit 0x35
-        __emit 0x8c
-        __emit 0x94
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xf0
-        __emit 0xae
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x51
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x48
-        __emit 0xcb
-        __emit 0x34
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x94
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x07
-        __emit 0x1b
-        __emit 0x64
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x4c
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x87
-        __emit 0xa6
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x02
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0x20
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x78
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0x1f
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x4b
-        __emit 0xce
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xf7
-        __emit 0xa6
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd7
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x24
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x52
-        __emit 0x40
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe0
-        __emit 0xae
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x51
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x48
-        __emit 0xcb
-        __emit 0x34
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x94
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x7a
-        __emit 0x1a
-        __emit 0x64
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x4c
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xfa
-        __emit 0xa5
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x02
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0x20
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x78
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x03
-        __emit 0xe8
-        __emit 0x6a
-        __emit 0x1f
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xbe
-        __emit 0xcd
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x6a
-        __emit 0xa6
-        __emit 0x4c
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xff
-        __emit 0xd7
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x24
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0x8b
-        __emit 0x11
-        __emit 0xff
-        __emit 0x52
-        __emit 0x40
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xd0
-        __emit 0xae
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x51
-        __emit 0xff
-        __emit 0xd6
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x48
-        __emit 0xcb
-        __emit 0x34
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x94
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x52
-        __emit 0xe8
-        __emit 0xed
-        __emit 0x19
-        __emit 0x64
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x3a
-        __emit 0x8d
-        __emit 0x84
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xe8
-        __emit 0xf8
-        __emit 0x1e
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x7c
-        __emit 0x14
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x6c
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x04
-        __emit 0xff
-        __emit 0x52
-        __emit 0x30
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x4f
-        __emit 0x0c
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x70
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x68
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x38
-        __emit 0x0c
-        __emit 0x50
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x8c
-        __emit 0x24
-        __emit 0x60
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x60
-        __emit 0x0a
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+    if (!TheMapCache)
+        return;
+
+    char filename[260];
+    char fullFledgeFilename[260];
+    memset(filename, 0, sizeof(filename));
+    strcpy(filename, mapName.str());
+
+    loadMapINIYieldToOS();
+    if (TheGameState->isInSaveDirectory(filename))
+        strcpy(filename, TheGameState->getSaveGameInfo()->pristineMapName.str());
+
+    int length = strlen(filename);
+    if (length < 4)
+        return;
+
+    char *extension = filename + length - 4;
+    while ((extension > filename) && (*extension != '\\') && (*extension != '/'))
+        --extension;
+    *extension = 0;
+
+    loadMapINIYieldToOS();
+    sprintf(fullFledgeFilename, "%s\\map.ini", filename);
+    if (TheFileSystem->doesFileExist(fullFledgeFilename))
+    {
+        INI ini;
+        ini.load(AsciiString(fullFledgeFilename), INI_LOAD_CREATE_OVERRIDES, 0);
     }
+
+    loadMapINIYieldToOS();
+    sprintf(fullFledgeFilename, "%s\\solo.ini", filename);
+    if (TheFileSystem->doesFileExist(fullFledgeFilename))
+    {
+        INI ini;
+        ini.load(AsciiString(fullFledgeFilename), INI_LOAD_CREATE_OVERRIDES, 0);
+    }
+
+    loadMapINIYieldToOS();
+    sprintf(fullFledgeFilename, "%s\\map.str", filename);
+    if (TheFileSystem->doesFileExist(fullFledgeFilename))
+        TheGameText->initMapStringFile(fullFledgeFilename);
 }
