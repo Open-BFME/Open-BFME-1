@@ -16,10 +16,16 @@ class StringBase
 {
 public:
 	StringBase(const StringBase<T> &other);
+	StringBase<T> &operator=(const StringBase<T> &other)
+	{
+		set(other);
+		return *this;
+	}
 
 private:
 	~StringBase() { releaseBuffer(); }
 	void releaseBuffer();
+	void set(const StringBase<T> &other);
 	void *m_data;
 
 	friend struct Q3SortElem16;
@@ -52,7 +58,7 @@ __declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortEle
 void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16 *, Q3SortCompare);
 
-void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
+__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
 
 static __forceinline const Q3SortElem16 *Q3SortElem16Median(
 	const Q3SortElem16 *a, const Q3SortElem16 *b,
@@ -111,4 +117,12 @@ void Gen004775D0(Q3SortElem16 *first, Q3SortElem16 *last,
 			(Q3SortElem16 *)0, depthLimit, comp);
 		last = cut;
 	}
+}
+
+// Retail 0x00473BC0/170: ordinary value swap with owning string copies.
+__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *first, Q3SortElem16 *last)
+{
+	Q3SortElem16 temporary = *first;
+	*first = *last;
+	*last = temporary;
 }
