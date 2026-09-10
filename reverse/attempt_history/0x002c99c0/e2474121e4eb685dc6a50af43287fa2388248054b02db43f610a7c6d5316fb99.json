@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e2474121e4eb685dc6a50af43287fa2388248054b02db43f610a7c6d5316fb99",
+  "symbol": "?d_002c99c0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?d_002c99c0@@YAXXZ\n// partial score=0.98 date=2026-09-10\n// pins needed (CRLF):\n//   ?bfmeFindZD@Rva00367E30Logic@@QAEPAVDrawable@@PAX@Z,0x0001F253\n//   ?bfmeTeamOfZD@@YAPAVBfmeTeamZD@@PAVDrawable@@@Z,0x00042424\nclass Drawable\n{\npublic:\n\tbool isKindOf(int kind) const;\n};\n\nclass BfmeTeamZD\n{\npublic:\n\tvirtual void bfmeT0ZD() = 0;\n\tvirtual void *bfmeOwnerZD() = 0;\n};\n\nstruct Rva00367E30Logic\n{\n\tDrawable *bfmeFindZD(void *id);\n};\n\nextern Rva00367E30Logic *TheBfmeGameLogic;\n\nBfmeTeamZD *bfmeTeamOfZD(Drawable *d);\n\nclass BfmeHostZD\n{\npublic:\n\tbool bfmeSameZD(Drawable *other);\n\n\tvirtual void bfmeV0() = 0;\n\tvirtual void bfmeV1() = 0;\n\tvirtual void bfmeV2() = 0;\n\tvirtual void bfmeV3() = 0;\n\tvirtual void bfmeV4() = 0;\n\tvirtual void bfmeV5() = 0;\n\tvirtual void bfmeV6() = 0;\n\tvirtual void bfmeV7() = 0;\n\tvirtual void bfmeV8() = 0;\n\tvirtual int bfmeModeZD() = 0;\n\n\tunsigned char m_bfmeHeadZD[0x10];\n\tvoid *m_bfme14ZD;\n};\n\nbool BfmeHostZD::bfmeSameZD(Drawable *other)\n{\n\tif (other == 0)\n\t\treturn false;\n\telse if (bfmeModeZD() != 1)\n\t\treturn true;\n\n\tDrawable *o = TheBfmeGameLogic->bfmeFindZD(m_bfme14ZD);\n\n\tif (o == 0)\n\t\treturn true;\n\telse if (o == other)\n\t\treturn false;\n\telse if (!o->isKindOf(0x18))\n\t\treturn true;\n\telse if (!other->isKindOf(0x18))\n\t\treturn true;\n\n\tBfmeTeamZD *t1 = bfmeTeamOfZD(o);\n\tBfmeTeamZD *t2 = bfmeTeamOfZD(other);\n\n\tif (t1 == 0 || t2 == 0 || t1->bfmeOwnerZD() == t2->bfmeOwnerZD())\n\t\treturn false;\n\n\treturn true;\n}\n"
+}
