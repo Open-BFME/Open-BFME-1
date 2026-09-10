@@ -29,6 +29,15 @@ private:
 	void *m_data;
 
 	friend struct Q3SortElem16;
+	friend class AsciiString;
+};
+
+// The real inline AsciiString forwarding layer is needed by the retail
+// by-value copy schedule; its implicit destructor runs StringBase cleanup.
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 };
 
 struct Q3SortElem16
@@ -36,7 +45,7 @@ struct Q3SortElem16
 	int m_a;
 	int m_b;
 	int m_c;
-	StringBase<char> m_d;
+	AsciiString m_d;
 };
 
 typedef char Q3ElementIs16[(sizeof(Q3SortElem16) == 16) ? 1 : -1];
@@ -173,4 +182,30 @@ void Q3InsertionSort004761D0(Q3SortElem16 *first, Q3SortElem16 *last,
         return;
     for (Q3SortElem16 *current = first + 1; current != last; ++current)
         Q3LinearInsert004757B0(first, current, *current, comp);
+}
+
+// STLport random-access iterator tag inheritance (_iterator_base.h).
+struct Q3InputIteratorTag {};
+struct Q3ForwardIteratorTag : Q3InputIteratorTag {};
+struct Q3BidirectionalIteratorTag : Q3ForwardIteratorTag {};
+struct Q3IteratorCategory : Q3BidirectionalIteratorTag {};
+inline Q3IteratorCategory Q3IteratorCategoryOf(Q3SortElem16 *const &)
+{
+    return Q3IteratorCategory();
+}
+Q3SortElem16 *Q3CopyBackward00473440(Q3SortElem16 *, Q3SortElem16 *,
+    Q3SortElem16 *, const Q3IteratorCategory &, int *);
+void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
+
+// Full retail191B ends at ret0x0047586E (exclusive0x0047586F).
+void Q3LinearInsert004757B0(Q3SortElem16 *first, Q3SortElem16 *last,
+    Q3SortElem16 value, Q3SortCompare comp)
+{
+    if (comp(value, *first)) {
+        Q3CopyBackward00473440(first, last, last + 1,
+            Q3IteratorCategoryOf(first), (int *)0);
+        *first = value;
+    } else {
+        Q3UnguardedLinearInsert00473CA0(last, value, comp);
+    }
 }
