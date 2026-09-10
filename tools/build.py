@@ -1597,10 +1597,32 @@ def explain_rel32(patch):
         print(f"    ... and {differing - REL32_REPORT_LIMIT} more differing REL32 site(s)")
 
 
+@functools.lru_cache(maxsize=256)
+def complete_source_selector(selector):
+    """Recognize existing full source paths; basenames remain family searches."""
+    normalized = selector.replace("\\", "/")
+    if "/" not in normalized:
+        return None
+    path = ROOT / normalized
+    if not path.is_file():
+        return None
+    try:
+        return path.resolve().relative_to(ROOT.resolve()).as_posix()
+    except ValueError:
+        return None
+
+
+def selector_matches_row(selector, row):
+    source = complete_source_selector(selector)
+    if source is not None:
+        return source == row["source"]
+    return selector in row["source"] or selector in row["name"]
+
+
 def verify_functions(only=None):
     rows = load_function_rows()
     if only:
-        rows = [row for row in rows if any(sel in row["source"] or sel in row["name"] for sel in only)]
+        rows = [row for row in rows if any(selector_matches_row(sel, row) for sel in only)]
         if not rows:
             raise SystemExit("no functions match: " + ", ".join(only))
     total = len(rows)
@@ -2011,7 +2033,7 @@ def main(only=None):
         # DIR32) — three wrong-twin claims survived per-file verification and
         # reached master before the full gate caught them.
         rows = [row for row in load_function_rows()
-                if any(sel in row["source"] or sel in row["name"] for sel in only)]
+                if any(selector_matches_row(sel, row) for sel in only)]
         verify_string_refs(rows)
         return
     print("Full verification")

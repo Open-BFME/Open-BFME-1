@@ -133,7 +133,7 @@ public:
 
 void __cdecl BaseHeightMapScorchSetShader(const ShaderClass &shader);
 // Retail's x87 conversion proves this terrain path used the older float Z-bias ABI.
-class BFMEZBiasSetter
+class BFMEZBiasSetter : public DX8Wrapper
 {
 public:
 	static void set(Real bias);

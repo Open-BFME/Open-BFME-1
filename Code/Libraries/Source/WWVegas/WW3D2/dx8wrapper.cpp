@@ -423,6 +423,14 @@ void DX8Wrapper::Do_Onetime_Device_Dependent_Inits(void)
 }
 
 inline DWORD F2DW(float f) { return *((unsigned*)&f); }
+// BFME's float-ABI helper is defined in the uniquely named companion TU so
+// source selection cannot also pick the same-basename reference dx8wrapper.cpp.
+class BFMEZBiasSetter : public DX8Wrapper
+{
+public:
+	static void set(float bias);
+};
+
 void DX8Wrapper::Set_Default_Global_Render_States(void)
 {
 	DX8_THREAD_ASSERT();
@@ -435,7 +443,7 @@ void DX8Wrapper::Set_Default_Global_Render_States(void)
 	Set_DX8_Render_State(D3DRS_COLORVERTEX, TRUE);
 	// BFME calls the dedicated setter here: retail @0x9081A0 pushes a single
 	// argument and calls 0x905990, not the two-argument render-state helper.
-	Set_DX8_ZBias(0);
+	BFMEZBiasSetter::set(0.0f);
 	Set_DX8_Texture_Stage_State(1, D3DTSS_BUMPENVLSCALE, F2DW(1.0f));
 	Set_DX8_Texture_Stage_State(1, D3DTSS_BUMPENVLOFFSET, F2DW(0.0f));
 	Set_DX8_Texture_Stage_State(0, D3DTSS_BUMPENVMAT00,F2DW(1.0f));
