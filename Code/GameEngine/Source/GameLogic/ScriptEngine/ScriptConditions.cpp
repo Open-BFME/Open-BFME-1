@@ -88,8 +88,10 @@ public:
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/PolygonTrigger.h"
 #define evaluatePlayerHasComparisonValueExcessPower evaluateRva003231E0
+#define evaluateSkirmishSupplySourceSafe evaluateRva00323650
 #include "GameLogic/ScriptConditions.h"
 #undef evaluatePlayerHasComparisonValueExcessPower
+#undef evaluateSkirmishSupplySourceSafe
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Scripts.h"
 #include "GameLogic/VictoryConditions.h"
@@ -226,6 +228,24 @@ public:
 	unsigned char m_beforeProduction[0xA8];
 	Int m_production;
 	Int m_consumption;
+};
+
+// BFME's supply-source predicate reads these two Condition cache
+// fields directly and uses the game-logic frame at +0x3c.  The upstream
+// accessors select a different layout and do not produce the retail shape.
+class BfmeScriptConditionCache
+{
+public:
+	unsigned char m_beforeCustomData[0x44];
+	Int m_customData;
+	UnsignedInt m_customFrame;
+};
+
+class BfmeScriptConditionGameLogic
+{
+public:
+	unsigned char m_beforeFrame[0x3c];
+	Int m_frame;
 };
 
 class BfmeScriptConditionTerrainLogic
@@ -2848,26 +2868,32 @@ Bool ScriptConditions::evaluateSkirmishPlayerHasUnitsInArea(Condition *pConditio
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?evaluateSkirmishSupplySourceSafe@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@1@Z present-unmatched
-Bool ScriptConditions::evaluateSkirmishSupplySourceSafe(Condition *pCondition, Parameter *pSkirmishPlayerParm, Parameter *pMinSupplyAmount )
+/** evaluateRva00323650: original retail condition spelling is unproven. */
+Bool ScriptConditions::evaluateRva00323650(Condition *pCondition, Parameter *pSkirmishPlayerParm, Parameter *pMinSupplyAmount )
 {
-	// Trigger every 2*LOGICFRAMES_PER_SECOND. jba.
-	Bool anyChanges = (TheGameLogic->getFrame() > pCondition->getCustomFrame());
-	if (!anyChanges) {
-		if (pCondition->getCustomData()==-1) return false;
-		if (pCondition->getCustomData()==1) return true;
+	BfmeScriptConditionCache *cache =
+		reinterpret_cast<BfmeScriptConditionCache *>(pCondition);
+	UnsignedInt frame = reinterpret_cast<BfmeScriptConditionGameLogic *>(TheGameLogic)->m_frame;
+	if (frame <= cache->m_customFrame) {
+		if (cache->m_customData == -1) {
+			return false;
+		}
+		if (cache->m_customData == 1) {
+			return true;
+		}
 	}
-	pCondition->setCustomFrame(TheGameLogic->getFrame()+2*LOGICFRAMES_PER_SECOND);
-	Player *player = playerFromParam(pSkirmishPlayerParm);
-	if (!player) {
-		return FALSE;
+	cache->m_customFrame = frame + 5;
+	PlayerMaskType playerMask = g_bfmeP1087->bfmeNext1087(pSkirmishPlayerParm);
+	while (playerMask) {
+		Player *player = ThePlayerList->getEachPlayerFromMask(playerMask);
+		if (player && player->isSupplySourceSafe(
+			reinterpret_cast<BfmeScriptConditionIntParameter *>(pMinSupplyAmount)->m_int)) {
+			cache->m_customData = 1;
+			return true;
+		}
 	}
-	Bool isSafe = player->isSupplySourceSafe(pMinSupplyAmount->getInt());
-	pCondition->setCustomData(-1); // false.
-	if (isSafe) {
-		pCondition->setCustomData(1); // true.
-	}
-	return isSafe;
+	cache->m_customData = -1;
+	return false;
 }	
 
 //-------------------------------------------------------------------------------------------------
@@ -3269,7 +3295,7 @@ Bool ScriptConditions::evaluateCondition( Condition *pCondition )
 			return evaluateMusicHasCompleted(pCondition->getParameter(0), pCondition->getParameter(1));
 
 		case Condition::SUPPLY_SOURCE_SAFE:
-			return evaluateSkirmishSupplySourceSafe(pCondition, pCondition->getParameter(0), pCondition->getParameter(1));
+			return evaluateRva00323650(pCondition, pCondition->getParameter(0), pCondition->getParameter(1));
 		
 		case Condition::SUPPLY_SOURCE_ATTACKED:
 			return evaluateSkirmishSupplySourceAttacked(pCondition->getParameter(0));
