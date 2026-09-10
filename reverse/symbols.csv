@@ -13910,6 +13910,7 @@ name,address,notes
 ?apply@Rva00367E30Sink@@QAEXPAHH@Z,0x00037A56,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00367E30 calls; autopin
 ?apply@Rva003BF540@@QAEX_N@Z,0x003BD960,boolean applier called by the mirrored-flag update at 0x003BF540; address-derived name
 ?apply@Rva0069AFC0Block@@QAEXPAX0000@Z,0x000017BC,ILT to 5-arg channel apply used by Rva0069AFC0Owner::call
+?apply@Rva00766A70W3DScriptedModelDraw@@AAEXPAXHHHH@Z,0x00001CA8,Rva00766A70 W3DScriptedModelDraw transition helper forwards through the retail incremental-link thunk
 ?apply@Rva0069B440Block@@QAEXPAX0@Z,0x00047A64,ILT to channel apply used by Rva0069B440Owner::call
 ?apply@Rva00803620Sink@@QAEXPAXPAD001@Z,0x00808CB0,FESL browser sink apply 5-arg; pin for 0x803620
 ?apply@Rva00803730Sink@@QAEXPAX_N00@Z,0x00809C60,FESL browser sink apply; pin for 0x803730
