@@ -195,7 +195,7 @@ inline Q3IteratorCategory Q3IteratorCategoryOf(Q3SortElem16 *const &)
 }
 Q3SortElem16 *Q3CopyBackward00473440(Q3SortElem16 *, Q3SortElem16 *,
     Q3SortElem16 *, const Q3IteratorCategory &, int *);
-void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
+__declspec(noinline) void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
 
 // Full retail191B ends at ret0x0047586E (exclusive0x0047586F).
 void Q3LinearInsert004757B0(Q3SortElem16 *first, Q3SortElem16 *last,
@@ -208,4 +208,18 @@ void Q3LinearInsert004757B0(Q3SortElem16 *first, Q3SortElem16 *last,
     } else {
         Q3UnguardedLinearInsert00473CA0(last, value, comp);
     }
+}
+
+// Full retail152B through ret0x00473D37, exclusive0x00473D38.
+void Q3UnguardedLinearInsert00473CA0(Q3SortElem16 *last,
+    Q3SortElem16 value, Q3SortCompare comp)
+{
+    Q3SortElem16 *next = last;
+    --next;
+    while (comp(value, *next)) {
+        *last = *next;
+        last = next;
+        --next;
+    }
+    *last = value;
 }
