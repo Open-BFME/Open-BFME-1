@@ -431,6 +431,23 @@ public:
 	static void set(float bias);
 };
 
+// Retail's BFME device view places SetTexture at vtable slot 65 (0x104),
+// while the shared D3D8 shim exposes the later slot used by the reference
+// build.  Keep this ABI correction local to the reconstructed helper.
+struct BFMEInvalidateDevice8;
+struct BFMEInvalidateDevice8Vtbl
+{
+	void *reserved[65];
+	long (__stdcall *SetTexture)(BFMEInvalidateDevice8 *, unsigned, void *);
+};
+struct BFMEInvalidateDevice8
+{
+	BFMEInvalidateDevice8Vtbl *lpVtbl;
+};
+
+// Retail sets this byte while releasing the current render-state buffers.
+extern unsigned char g_rva007A2330Flag;
+
 void DX8Wrapper::Set_Default_Global_Render_States(void)
 {
 	DX8_THREAD_ASSERT();
@@ -466,12 +483,13 @@ bool DX8Wrapper::Validate_Device(void)
 	return (hRes == D3D_OK);
 }
 
-// ?Invalidate_Cached_Render_States@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Invalidate_Cached_Render_States(void)
 {
-	render_state_changed=0;
+	unsigned zero=0;
+	render_state_changed=zero;
+	texture_stage_state_changes=zero;
 
-	int a;
+	unsigned a;
 	for (a=0;a<sizeof(RenderStates)/sizeof(unsigned);++a) {
 		RenderStates[a]=0x12345678;
 	}
@@ -484,24 +502,47 @@ void DX8Wrapper::Invalidate_Cached_Render_States(void)
 		//Need to explicitly set texture to NULL, otherwise app will not be able to
 		//set it to null because of redundant state checker. MW
 		if (_Get_D3D_Device8())
-			_Get_D3D_Device8()->SetTexture(a,NULL);
+		{
+			BFMEInvalidateDevice8 *device = reinterpret_cast<BFMEInvalidateDevice8 *>(_Get_D3D_Device8());
+			device->lpVtbl->SetTexture(device,a,NULL);
+		}
 		if (Textures[a] != NULL) {
 			Textures[a]->Release();
 		}
 		Textures[a]=NULL;
 	}
 
-	ShaderClass::Invalidate();
+	g_rva007A2330Flag=1;
 
-	//Need to explicitly set render_state texture pointers to NULL. MW
-	Release_Render_State();
-
-	// (gth) clear the matrix shadows too
-	for (int i=0; i<D3DTS_WORLD+1; i++) {
-		DX8Transforms[i][0].Set(0,0,0,0);
-		DX8Transforms[i][1].Set(0,0,0,0);
-		DX8Transforms[i][2].Set(0,0,0,0);
-		DX8Transforms[i][3].Set(0,0,0,0);
+	//Need to explicitly set render_state pointers to NULL.  Retail keeps each
+	//clear inside its non-null branch, rather than unconditionally storing zero.
+	if (render_state.index_buffer) {
+		render_state.index_buffer->Release_Engine_Ref();
+	}
+	for (unsigned i=0;i<MAX_VERTEX_STREAMS;++i) {
+		if (render_state.vertex_buffers[i]) {
+			render_state.vertex_buffers[i]->Release_Engine_Ref();
+		}
+	}
+	for (unsigned i=0;i<MAX_VERTEX_STREAMS;++i) {
+		if (render_state.vertex_buffers[i]) {
+			render_state.vertex_buffers[i]->Release_Ref();
+			render_state.vertex_buffers[i]=NULL;
+		}
+	}
+	if (render_state.index_buffer) {
+		render_state.index_buffer->Release_Ref();
+		render_state.index_buffer=NULL;
+	}
+	if (render_state.material) {
+		render_state.material->Release_Ref();
+		render_state.material=NULL;
+	}
+	for (unsigned i=0;i<MAX_TEXTURE_STAGES;++i) {
+		if (render_state.Textures[i]) {
+			render_state.Textures[i]->Release_Ref();
+			render_state.Textures[i]=NULL;
+		}
 	}
 
 }
