@@ -1,14 +1,16 @@
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
-// partial score=0.35 date=2026-09-10
+// partial score=0.72 date=2026-09-10
+// cl: /O2 /arch:SSE2
+//
 // Open-BFME5: VP6 postprocessor band deblock -- horizontal pass (loop 1)
 // then vertical pass (loop 2) over one 8-pixel-wide fragment column strip.
-// Retail 0x009BEBB0, 3721 bytes. See reverse/re_attempts.log for the full
-// analysis (t=180min entry) -- exact frame size (sub esp,0x104) and exact
-// prologue shape now match; both SIMD islands are mechanically transcribed
-// byte-exact from retail (build/masmify.py); remaining gap is prologue
-// load-order/register-choice noise that MSVC's scheduler ignores source
-// order for, compounding to 414 bytes short over the whole body.
-// cl: /O2 /arch:SSE2
+// Retail 0x009BEBB0, 3721 bytes. Hand-vectorized SSE2/MMX kernel; each pass
+// is real C control flow (the fragment/qIndex loop, kept live in ebx) around
+// one literal __asm island transcribing retail's SIMD core byte-for-byte.
+// The islands reference the surrounding C locals BY NAME so MSVC treats the
+// slots as genuinely live -- with literal [esp+NNh] operands the optimizer
+// cannot see the locals are used and drops/reorders stores around them.
+// See reverse/re_attempts.log (0x009bebb0) for prior session analysis.
 
 struct Rva009BEBB0Vp6PostProc
 {
@@ -33,17 +35,17 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 	unsigned char *dstPtr;
 	unsigned int qIndex;
 	unsigned char *srcPtr;
-	__declspec(align(16)) unsigned char buf[240];
+	__declspec(align(16)) unsigned short qv[8];
+	__declspec(align(16)) unsigned short out[16];
 	unsigned int end;
+	__declspec(align(16)) unsigned short qsq[8];
+	__declspec(align(16)) unsigned short work[80];
 	unsigned int frag;
 
 #define CTX (*(Rva009BEBB0Vp6PostProc * volatile *)&ctx)
-#define qv    ((unsigned short *)(buf + 0))
-#define out   ((unsigned short *)(buf + 16))
-#define left  ((unsigned short *)(buf + 80))
-#define right ((unsigned short *)(buf + 224))
 
 	srcHome = src;
+	srcPtr = src;
 	frag = start;
 	dstPtr = dst;
 	end = start + count;
@@ -54,7 +56,15 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		unsigned int q = qTable[ CTX->m_fragmentQIndex[ qIndex ] ];
 		if (q > 3)
 		{
-			qv[0] = qv[1] = qv[2] = qv[3] = qv[4] = qv[5] = qv[6] = qv[7] = (unsigned short)q;
+			unsigned short qw = (unsigned short)q;
+			qv[0] = qw;
+			qv[1] = qw;
+			qv[2] = qw;
+			qv[3] = qw;
+			qv[4] = qw;
+			qv[5] = qw;
+			qv[6] = qw;
+			qv[7] = qw;
 
 			__asm
 			{
@@ -63,16 +73,16 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				push edx
 				push esi
 				push edi
-				movdqa xmm0, xmmword ptr [esp + 34h]
+				movdqa xmm0, xmmword ptr qv
 				movdqa xmm1, xmmword ptr kRva012D87C0Three
 				pmullw xmm1, xmm0
 				pmullw xmm1, xmm0
 				psrlw xmm1, 5
-				movdqa xmmword ptr [esp + 74h], xmm1
-				mov eax, dword ptr [esp + 30h]
+				movdqa xmmword ptr qsq, xmm1
+				mov eax, dword ptr srcPtr
 				xor edx, edx
-				mov esi, dword ptr [esp + 28h]
-				lea edi, [esp + 84h]
+				mov esi, dword ptr dstPtr
+				lea edi, work
 				mov ecx, dword ptr [ebp + 14h]
 				pxor xmm7, xmm7
 				sub edx, ecx
@@ -167,10 +177,10 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				pmullw xmm6, xmm4
 				psubw xmm1, xmm2
 				psubw xmm5, xmm6
-				movdqa xmm7, xmmword ptr [esp + 74h]
+				movdqa xmm7, xmmword ptr qsq
 				movdqa xmm2, xmm1
-				movdqa xmmword ptr [esp + 54h], xmm1
-				movdqa xmmword ptr [esp + 44h], xmm5
+				movdqa xmmword ptr [out+10h], xmm1
+				movdqa xmmword ptr [out], xmm5
 				movdqa xmm6, xmm5
 				psubw xmm1, xmm7
 				psubw xmm5, xmm7
@@ -187,7 +197,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				psubusw xmm7, xmm4
 				psubusw xmm4, xmm2
 				por xmm7, xmm4
-				psubw xmm7, xmmword ptr [esp + 34h]
+				psubw xmm7, xmmword ptr qv
 				psraw xmm7, 0Fh
 				pand xmm7, xmm6
 				movdqa xmm5, xmmword ptr [edi]
@@ -197,7 +207,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				psubusw xmm4, xmm6
 				psubusw xmm5, xmm3
 				por xmm4, xmm5
-				psubw xmm4, xmmword ptr [esp + 34h]
+				psubw xmm4, xmmword ptr qv
 				psraw xmm4, 0Fh
 				movdqa xmm1, xmm4
 				pand xmm4, xmm6
@@ -210,7 +220,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				psubusw xmm4, xmm6
 				psubusw xmm5, xmm3
 				por xmm4, xmm5
-				psubw xmm4, xmmword ptr [esp + 34h]
+				psubw xmm4, xmmword ptr qv
 				psraw xmm4, 0Fh
 				movdqa xmm2, xmm4
 				pand xmm4, xmm6
@@ -348,10 +358,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				pop eax
 			}
 
-			unsigned int sum1 = out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
-			CTX->m_fragmentVariances[frag] += sum1;
-			unsigned int sum2 = out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
-			CTX->m_fragmentVariances[end] += sum2;
+			CTX->m_fragmentVariances[frag] += out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+			CTX->m_fragmentVariances[qIndex] += out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
 		}
 		else
 		{
@@ -360,8 +368,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				push esi
 				push edi
 				push ecx
-				mov esi, dword ptr [esp + 28h]
-				mov edi, dword ptr [esp + 20h]
+				mov esi, dword ptr srcPtr
+				mov edi, dword ptr dstPtr
 				push edx
 				mov ecx, dword ptr [ebp + 14h]
 				xor edx, edx
@@ -395,10 +403,10 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 			}
 		}
 
-		++frag;
-		++qIndex;
 		srcPtr += 8;
 		dstPtr += 8;
+		++frag;
+		++qIndex;
 	}
 
 	// --- loop 2: vertical edge pass over the already-filtered destination ---
@@ -414,24 +422,34 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 			unsigned int q = qTable[ CTX->m_fragmentQIndex[ qIndex + 1 ] ];
 			if (q > 3)
 			{
-				left[0] = dstPtr[0 * (int)stride - 5];
-				right[0] = dstPtr[0 * (int)stride + 4];
-				left[1] = dstPtr[1 * (int)stride - 5];
-				right[1] = dstPtr[1 * (int)stride + 4];
-				left[2] = dstPtr[2 * (int)stride - 5];
-				right[2] = dstPtr[2 * (int)stride + 4];
-				left[3] = dstPtr[3 * (int)stride - 5];
-				right[3] = dstPtr[3 * (int)stride + 4];
-				left[4] = dstPtr[4 * (int)stride - 5];
-				right[4] = dstPtr[4 * (int)stride + 4];
-				left[5] = dstPtr[5 * (int)stride - 5];
-				right[5] = dstPtr[5 * (int)stride + 4];
-				left[6] = dstPtr[6 * (int)stride - 5];
-				right[6] = dstPtr[6 * (int)stride + 4];
-				left[7] = dstPtr[7 * (int)stride - 5];
-				right[7] = dstPtr[7 * (int)stride + 4];
+				work[0] = srcPtr[0 * (int)stride - 5];
+				work[72] = srcPtr[0 * (int)stride + 4];
+				work[1] = srcPtr[1 * (int)stride - 5];
+				work[73] = srcPtr[1 * (int)stride + 4];
+				work[2] = srcPtr[2 * (int)stride - 5];
+				work[74] = srcPtr[2 * (int)stride + 4];
+				work[3] = srcPtr[3 * (int)stride - 5];
+				work[75] = srcPtr[3 * (int)stride + 4];
+				work[4] = srcPtr[4 * (int)stride - 5];
+				work[76] = srcPtr[4 * (int)stride + 4];
+				work[5] = srcPtr[5 * (int)stride - 5];
+				work[77] = srcPtr[5 * (int)stride + 4];
+				work[6] = srcPtr[6 * (int)stride - 5];
+				work[78] = srcPtr[6 * (int)stride + 4];
+				work[7] = srcPtr[7 * (int)stride - 5];
+				work[79] = srcPtr[7 * (int)stride + 4];
 
-				qv[0] = qv[1] = qv[2] = qv[3] = qv[4] = qv[5] = qv[6] = qv[7] = (unsigned short)q;
+				{
+					unsigned short qw = (unsigned short)q;
+					qv[0] = qw;
+					qv[1] = qw;
+					qv[2] = qw;
+					qv[3] = qw;
+					qv[4] = qw;
+					qv[5] = qw;
+					qv[6] = qw;
+					qv[7] = qw;
+				}
 
 				__asm
 				{
@@ -440,18 +458,18 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		push edx
 		push esi
 		push edi
-		movdqa xmm0, xmmword ptr [esp + 34h]
+		movdqa xmm0, xmmword ptr qv
 		movdqa xmm1, xmmword ptr kRva012D87C0Three
 		pmullw xmm1, xmm0
 		pmullw xmm1, xmm0
 		psrlw xmm1, 5
-		movdqa xmmword ptr [esp + 74h], xmm1
-		mov eax, dword ptr [esp + 30h]
+		movdqa xmmword ptr qsq, xmm1
+		mov eax, dword ptr srcPtr
 		xor edx, edx
-		mov esi, dword ptr [esp + 28h]
+		mov esi, dword ptr dstPtr
 		sub eax, 4
 		sub esi, 4
-		lea edi, [esp + 84h]
+		lea edi, work
 		mov ecx, dword ptr [ebp + 14h]
 		sub edx, ecx
 		lea esi, [esi + ecx*2]
@@ -587,10 +605,10 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		pmullw xmm6, xmm4
 		psubw xmm1, xmm2
 		psubw xmm5, xmm6
-		movdqa xmm7, xmmword ptr [esp + 74h]
+		movdqa xmm7, xmmword ptr qsq
 		movdqa xmm2, xmm1
-		movdqa xmmword ptr [esp + 54h], xmm1
-		movdqa xmmword ptr [esp + 44h], xmm5
+		movdqa xmmword ptr [out+10h], xmm1
+		movdqa xmmword ptr [out], xmm5
 		movdqa xmm6, xmm5
 		psubw xmm1, xmm7
 		psubw xmm5, xmm7
@@ -607,7 +625,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		psubusw xmm7, xmm4
 		psubusw xmm4, xmm2
 		por xmm7, xmm4
-		psubw xmm7, xmmword ptr [esp + 34h]
+		psubw xmm7, xmmword ptr qv
 		psraw xmm7, 0Fh
 		pand xmm7, xmm6
 		movdqa xmm5, xmmword ptr [edi]
@@ -617,7 +635,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		psubusw xmm4, xmm6
 		psubusw xmm5, xmm3
 		por xmm4, xmm5
-		psubw xmm4, xmmword ptr [esp + 34h]
+		psubw xmm4, xmmword ptr qv
 		psraw xmm4, 0Fh
 		movdqa xmm1, xmm4
 		pand xmm4, xmm6
@@ -630,7 +648,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		psubusw xmm4, xmm6
 		psubusw xmm5, xmm3
 		por xmm4, xmm5
-		psubw xmm4, xmmword ptr [esp + 34h]
+		psubw xmm4, xmmword ptr qv
 		psraw xmm4, 0Fh
 		movdqa xmm2, xmm4
 		pand xmm4, xmm6
@@ -804,10 +822,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 		pop eax
 				}
 
-				unsigned int sum1 = out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
-				CTX->m_fragmentVariances[qIndex] += sum1;
-				unsigned int sum2 = out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
-				CTX->m_fragmentVariances[qIndex + 1] += sum2;
+				CTX->m_fragmentVariances[qIndex] += out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+				CTX->m_fragmentVariances[qIndex + 1] += out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
 			}
 
 			++qIndex;
