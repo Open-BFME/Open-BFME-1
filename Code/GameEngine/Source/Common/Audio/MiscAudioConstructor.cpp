@@ -2,7 +2,8 @@
 
 // Retail 0x00694E60 is MiscAudio::MiscAudio(), the constructor selected by
 // AudioManager::AudioManager() before it loads MiscAudio.ini.  The BFME
-// MiscAudio layout is the 32-entry table recorded in reverse/field_names.csv:
+// MiscAudio layout is the 32-entry retail INI table at RVA0x00C83310
+// recorded in reverse/field_names.csv (NoCanDo+3F0; CrateSalvage+930):
 // the first 26 entries retain the ZH fields and the final six are BFME audio
 // additions.  Each entry is an embedded 0x70-byte AudioEventRTS and is
 // initialized with the shared empty name and extra value zero.
@@ -28,8 +29,8 @@ private:
 	unsigned char m_bfmeData[0x6c];
 };
 
-// The retail call sites use the existing AudioEventRTS extra-argument ILT.
-#pragma comment(linker, "/alternatename:??0AudioEventRTS@@QAE@ABVAsciiString@@H@Z=?j_00025306@@YAXXZ")
+// The retail extra-argument calls use ILT0x00025306 to the already
+// matched full AudioEventRTS constructor at0x000B2CC0 (159 bytes).
 
 struct MiscAudio
 {
@@ -42,7 +43,6 @@ struct MiscAudio
 	AudioEventRTS m_defectorTimerDingSound;
 	AudioEventRTS m_allCheerSound;
 	AudioEventRTS m_battleCrySound;
-	AudioEventRTS m_guiClickSound;
 	AudioEventRTS m_noCanDoSound;
 	AudioEventRTS m_stealthDiscoveredSound;
 	AudioEventRTS m_stealthNeutralizedSound;
@@ -55,6 +55,7 @@ struct MiscAudio
 	AudioEventRTS m_splatterVehiclePilotsBrain;
 	AudioEventRTS m_crateHeal;
 	AudioEventRTS m_crateShroud;
+	AudioEventRTS m_crateSalvage;
 	AudioEventRTS m_crateFreeUnit;
 	AudioEventRTS m_crateMoney;
 	AudioEventRTS m_unitPromoted;
@@ -80,7 +81,6 @@ MiscAudio::MiscAudio()
 	, m_defectorTimerDingSound(AsciiString::TheEmptyString, 0)
 	, m_allCheerSound(AsciiString::TheEmptyString, 0)
 	, m_battleCrySound(AsciiString::TheEmptyString, 0)
-	, m_guiClickSound(AsciiString::TheEmptyString, 0)
 	, m_noCanDoSound(AsciiString::TheEmptyString, 0)
 	, m_stealthDiscoveredSound(AsciiString::TheEmptyString, 0)
 	, m_stealthNeutralizedSound(AsciiString::TheEmptyString, 0)
@@ -93,6 +93,7 @@ MiscAudio::MiscAudio()
 	, m_splatterVehiclePilotsBrain(AsciiString::TheEmptyString, 0)
 	, m_crateHeal(AsciiString::TheEmptyString, 0)
 	, m_crateShroud(AsciiString::TheEmptyString, 0)
+	, m_crateSalvage(AsciiString::TheEmptyString, 0)
 	, m_crateFreeUnit(AsciiString::TheEmptyString, 0)
 	, m_crateMoney(AsciiString::TheEmptyString, 0)
 	, m_unitPromoted(AsciiString::TheEmptyString, 0)
