@@ -1,0 +1,215 @@
+// cl: /DNDEBUG /MD /EHsc
+// Retail body [0x001FAFE0, 0x001FB069), 137 bytes.
+//
+// The EnragedBehavior constructor writes the secondary-interface vtable at
+// +0x10 (retail VA 0x010A3CC8).  Its slot zero is the real five-byte ILT
+// 0x00030D55, whose unconditional jump targets this body.  The jump has no
+// adjustment, so this body receives the +0x10 secondary view: its +0x10
+// state is the most-derived object's +0x20 word and its -0x08 pointer is the
+// Object pointer stored at the primary module's +0x08.  The body is kept RVA-scoped because the retail
+// public virtual-slot spelling is not recovered.
+//
+// The middle arm reuses the independently matched Object callees already used
+// by the sibling 0x001FAF60 body.  The sink call is intentionally slot 127;
+// no semantic virtual-slot name is asserted here.
+
+extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
+
+extern const float BfmeZeroRange;
+extern const float g_bfmeDefaultBU;
+extern double Gen01085F58;
+
+class ModelConditionFlags
+{
+public:
+	unsigned int m_bfmeBits[3];
+};
+
+class BfmeSink
+{
+public:
+#define RVA001FAFE0_SLOT(n) virtual void slot##n() = 0;
+	RVA001FAFE0_SLOT(0)
+	RVA001FAFE0_SLOT(1)
+	RVA001FAFE0_SLOT(2)
+	RVA001FAFE0_SLOT(3)
+	RVA001FAFE0_SLOT(4)
+	RVA001FAFE0_SLOT(5)
+	RVA001FAFE0_SLOT(6)
+	RVA001FAFE0_SLOT(7)
+	RVA001FAFE0_SLOT(8)
+	RVA001FAFE0_SLOT(9)
+	RVA001FAFE0_SLOT(10)
+	RVA001FAFE0_SLOT(11)
+	RVA001FAFE0_SLOT(12)
+	RVA001FAFE0_SLOT(13)
+	RVA001FAFE0_SLOT(14)
+	RVA001FAFE0_SLOT(15)
+	RVA001FAFE0_SLOT(16)
+	RVA001FAFE0_SLOT(17)
+	RVA001FAFE0_SLOT(18)
+	RVA001FAFE0_SLOT(19)
+	RVA001FAFE0_SLOT(20)
+	RVA001FAFE0_SLOT(21)
+	RVA001FAFE0_SLOT(22)
+	RVA001FAFE0_SLOT(23)
+	RVA001FAFE0_SLOT(24)
+	RVA001FAFE0_SLOT(25)
+	RVA001FAFE0_SLOT(26)
+	RVA001FAFE0_SLOT(27)
+	RVA001FAFE0_SLOT(28)
+	RVA001FAFE0_SLOT(29)
+	RVA001FAFE0_SLOT(30)
+	RVA001FAFE0_SLOT(31)
+	RVA001FAFE0_SLOT(32)
+	RVA001FAFE0_SLOT(33)
+	RVA001FAFE0_SLOT(34)
+	RVA001FAFE0_SLOT(35)
+	RVA001FAFE0_SLOT(36)
+	RVA001FAFE0_SLOT(37)
+	RVA001FAFE0_SLOT(38)
+	RVA001FAFE0_SLOT(39)
+	RVA001FAFE0_SLOT(40)
+	RVA001FAFE0_SLOT(41)
+	RVA001FAFE0_SLOT(42)
+	RVA001FAFE0_SLOT(43)
+	RVA001FAFE0_SLOT(44)
+	RVA001FAFE0_SLOT(45)
+	RVA001FAFE0_SLOT(46)
+	RVA001FAFE0_SLOT(47)
+	RVA001FAFE0_SLOT(48)
+	RVA001FAFE0_SLOT(49)
+	RVA001FAFE0_SLOT(50)
+	RVA001FAFE0_SLOT(51)
+	RVA001FAFE0_SLOT(52)
+	RVA001FAFE0_SLOT(53)
+	RVA001FAFE0_SLOT(54)
+	RVA001FAFE0_SLOT(55)
+	RVA001FAFE0_SLOT(56)
+	RVA001FAFE0_SLOT(57)
+	RVA001FAFE0_SLOT(58)
+	RVA001FAFE0_SLOT(59)
+	RVA001FAFE0_SLOT(60)
+	RVA001FAFE0_SLOT(61)
+	RVA001FAFE0_SLOT(62)
+	RVA001FAFE0_SLOT(63)
+	RVA001FAFE0_SLOT(64)
+	RVA001FAFE0_SLOT(65)
+	RVA001FAFE0_SLOT(66)
+	RVA001FAFE0_SLOT(67)
+	RVA001FAFE0_SLOT(68)
+	RVA001FAFE0_SLOT(69)
+	RVA001FAFE0_SLOT(70)
+	RVA001FAFE0_SLOT(71)
+	RVA001FAFE0_SLOT(72)
+	RVA001FAFE0_SLOT(73)
+	RVA001FAFE0_SLOT(74)
+	RVA001FAFE0_SLOT(75)
+	RVA001FAFE0_SLOT(76)
+	RVA001FAFE0_SLOT(77)
+	RVA001FAFE0_SLOT(78)
+	RVA001FAFE0_SLOT(79)
+	RVA001FAFE0_SLOT(80)
+	RVA001FAFE0_SLOT(81)
+	RVA001FAFE0_SLOT(82)
+	RVA001FAFE0_SLOT(83)
+	RVA001FAFE0_SLOT(84)
+	RVA001FAFE0_SLOT(85)
+	RVA001FAFE0_SLOT(86)
+	RVA001FAFE0_SLOT(87)
+	RVA001FAFE0_SLOT(88)
+	RVA001FAFE0_SLOT(89)
+	RVA001FAFE0_SLOT(90)
+	RVA001FAFE0_SLOT(91)
+	RVA001FAFE0_SLOT(92)
+	RVA001FAFE0_SLOT(93)
+	RVA001FAFE0_SLOT(94)
+	RVA001FAFE0_SLOT(95)
+	RVA001FAFE0_SLOT(96)
+	RVA001FAFE0_SLOT(97)
+	RVA001FAFE0_SLOT(98)
+	RVA001FAFE0_SLOT(99)
+	RVA001FAFE0_SLOT(100)
+	RVA001FAFE0_SLOT(101)
+	RVA001FAFE0_SLOT(102)
+	RVA001FAFE0_SLOT(103)
+	RVA001FAFE0_SLOT(104)
+	RVA001FAFE0_SLOT(105)
+	RVA001FAFE0_SLOT(106)
+	RVA001FAFE0_SLOT(107)
+	RVA001FAFE0_SLOT(108)
+	RVA001FAFE0_SLOT(109)
+	RVA001FAFE0_SLOT(110)
+	RVA001FAFE0_SLOT(111)
+	RVA001FAFE0_SLOT(112)
+	RVA001FAFE0_SLOT(113)
+	RVA001FAFE0_SLOT(114)
+	RVA001FAFE0_SLOT(115)
+	RVA001FAFE0_SLOT(116)
+	RVA001FAFE0_SLOT(117)
+	RVA001FAFE0_SLOT(118)
+	RVA001FAFE0_SLOT(119)
+	RVA001FAFE0_SLOT(120)
+	RVA001FAFE0_SLOT(121)
+	RVA001FAFE0_SLOT(122)
+	RVA001FAFE0_SLOT(123)
+	RVA001FAFE0_SLOT(124)
+	RVA001FAFE0_SLOT(125)
+	RVA001FAFE0_SLOT(126)
+	virtual void slot127(int) = 0;
+#undef RVA001FAFE0_SLOT
+};
+
+class Object
+{
+public:
+	void applyRva1C7370(const ModelConditionFlags &flags, bool on);
+
+	unsigned char m_bfmeHead[0x204];
+	BfmeSink *m_bfme204;
+};
+
+class BfmeObjE10
+{
+public:
+	void actionB(int value);
+};
+
+class Rva001FAFE0Secondary
+{
+public:
+	virtual unsigned int rva001FAFE0();
+
+private:
+	unsigned char m_unmodelled[0x0c];
+	float m_f20;
+};
+
+// ?rva001FAFE0@Rva001FAFE0Secondary@@UAEIXZ
+unsigned int Rva001FAFE0Secondary::rva001FAFE0()
+{
+	if (m_f20 > BfmeZeroRange)
+	{
+		m_f20 -= g_bfmeDefaultBU;
+		if (m_f20 <= Gen01085F58)
+		{
+			Object *object = *reinterpret_cast<Object **>(
+				reinterpret_cast<unsigned char *>(this) - 8);
+			m_f20 = 0;
+			ModelConditionFlags flags;
+			memset(flags.m_bfmeBits, 0, 12);
+			flags.m_bfmeBits[1] |= 0x200000;
+
+			object->applyRva1C7370(flags, false);
+			((BfmeObjE10 *)object)->actionB(0x16);
+
+			BfmeSink *sink = object->m_bfme204;
+			if (sink)
+				sink->slot127(0);
+
+			return 0x3fffffff;
+		}
+	}
+
+	return 5;
+}
