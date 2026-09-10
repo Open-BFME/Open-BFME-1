@@ -20,3 +20,8 @@ float BfmeGeometryInfo::boxMajorRadius(void) const
 	return m_majorRadius;
 }
 
+// ?boxMinorRadius@BfmeGeometryInfo@@QBEMXZ
+float BfmeGeometryInfo::boxMinorRadius(void) const
+{
+	return m_minorRadius;
+}
