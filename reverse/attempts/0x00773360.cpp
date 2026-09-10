@@ -1,5 +1,5 @@
 // ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.35 date=2026-09-09
+// partial score=0.38 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
 // stlport
 // BFME W3DScriptedModelDraw constructor, retail 0x00773360 (1185B).
@@ -22,6 +22,25 @@ typedef int ParticleSystemID;
 
 class Thing;
 class ModuleData;
+class Matrix3D;
+class RetailLayoutString
+{
+public:
+	RetailLayoutString();
+	~RetailLayoutString();
+	void set(const char *, int);
+	void releaseBuffer();
+
+	char *m_data;
+};
+
+class AsciiString
+{
+public:
+	void releaseBuffer();
+
+	char *m_data;
+};
 
 class DrawModule
 {
@@ -90,13 +109,10 @@ public:
 	int m_08;
 };
 
-class RetailLayoutString
+class InlineRetailLayoutString
 {
 public:
-	RetailLayoutString() : m_data(0) {}
-	~RetailLayoutString();
-	void set(const char *, int);
-	void releaseBuffer();
+	InlineRetailLayoutString() : m_data(0) {}
 
 	char *m_data;
 };
@@ -181,7 +197,7 @@ struct BfmeSlot
 class Drawable
 {
 public:
-	const float *getTransformMatrix() const;
+	const Matrix3D *getTransformMatrix() const;
 
 	unsigned char m_data[0xfc];
 	void *m_object;
@@ -231,7 +247,7 @@ public:
 	Bool m_hasTerrainDecal;
 	unsigned char m_pad31[3];
 	void *m_renderObject;
-	RetailLayoutString m_modelName;
+	InlineRetailLayoutString m_modelName;
 	void *m_shadow;
 	void *m_terrainDecal;
 	void *m_trackRenderObject;
@@ -252,7 +268,7 @@ public:
 	Bool m_field84;
 	int m_field88;
 	_STL::set<int> m_tree;
-	RetailLayoutString m_string98;
+	InlineRetailLayoutString m_string98;
 	int m_field9c;
 	int m_lodResult;
 	int m_lodResult2;
@@ -271,7 +287,7 @@ public:
 	RadiusDecalTemplate m_radiusDecalTemplate;
 	RadiusDecal m_radiusDecal2;
 	RadiusDecalTemplate m_radiusDecalTemplate2;
-	RetailLayoutString m_string200;
+	InlineRetailLayoutString m_string200;
 	RetailLayoutString m_strings[2];
 	int m_field20c;
 	Bool m_field210;
@@ -334,7 +350,7 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	, m_string200()
 	, m_strings()
 {
-	m_modelName.set("", 0);
+	reinterpret_cast<RetailLayoutString *>(&m_modelName)->set("", 0);
 	m_flag68 = 1;
 	m_ready = true;
 	m_ready2 = false;
@@ -367,9 +383,9 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	m_lodResult = 0;
 	m_lodResult2 = 0;
 	m_fielda8 = 5;
-	m_string200.releaseBuffer();
+	reinterpret_cast<AsciiString *>(&m_string200)->releaseBuffer();
 	for (int i = 0; i < 2; ++i)
-		m_strings[i].releaseBuffer();
+		reinterpret_cast<AsciiString *>(&m_strings[i])->releaseBuffer();
 	m_field20c = 0;
 	m_field22c = 0;
 	m_field210 = false;
@@ -410,7 +426,7 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 
 	if (drawable)
 	{
-		const float *matrix = drawable->getTransformMatrix();
+		const float *matrix = (const float *)drawable->getTransformMatrix();
 		m_matrix[0] = matrix[0];
 		m_matrix[1] = matrix[1];
 		m_matrix[2] = matrix[2];
