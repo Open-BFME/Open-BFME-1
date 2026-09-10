@@ -340,6 +340,12 @@ void ladderSelectedCallback(void)
 	GameSpyCloseOverlay( GSOVERLAY_LADDERSELECT );
 }
 
+static __forceinline const char *bfmePasswordString(const AsciiString &value)
+{
+	const char *data = *(const char **)&value;
+	return data ? data + 8 : (const char *)0x0107388B;
+}
+
 //-------------------------------------------------------------------------------------------------
 /** System callback */
 //-------------------------------------------------------------------------------------------------
@@ -417,10 +423,10 @@ WindowMsgHandledType PopupLadderSelectSystem( GameWindow *window, UnsignedInt ms
 				pass.translate(GadgetTextEntryGetText(textEntryPassword));
 				if ( pass.isNotEmpty() ) // password ok
 				{
-					AsciiString cryptPass = EncryptString(pass.str());
+					AsciiString cryptPass = EncryptString(bfmePasswordString(pass));
 					DEBUG_LOG(("pass is %s, crypted pass is %s, comparing to %s\n",
 						pass.str(), cryptPass.str(), li->cryptedPassword.str()));
-					if (cryptPass == li->cryptedPassword)
+					if (cryptPass.compare(li->cryptedPassword) == 0)
 						ladderSelectedCallback();
 					else
 						setPasswordMode(PASS_ERROR);
@@ -442,7 +448,7 @@ WindowMsgHandledType PopupLadderSelectSystem( GameWindow *window, UnsignedInt ms
 		}  // end input
 
     //---------------------------------------------------------------------------------------------
-		case GLM_SELECTED:
+		case 0x4014: // BFME GLM_SELECTED
 		{
 			Int selIndex, selID;
 			GadgetListBoxGetSelected(listboxLadderSelect, &selIndex);
@@ -453,12 +459,12 @@ WindowMsgHandledType PopupLadderSelectSystem( GameWindow *window, UnsignedInt ms
 			if (!selID)
 				break;
 
-			updateLadderDetails(listboxLadderDetails, staticTextLadderName, selID);
+            updateLadderDetails(listboxLadderDetails, staticTextLadderName, selID);
 			break;
 		}  // end GLM_DOUBLE_CLICKED
 
     //---------------------------------------------------------------------------------------------
-		case GLM_DOUBLE_CLICKED:
+		case 0x4015: // BFME GLM_DOUBLE_CLICKED
 		{
 			GameWindow *control = (GameWindow *)mData1;
 			Int controlID = control->winGetWindowId();
