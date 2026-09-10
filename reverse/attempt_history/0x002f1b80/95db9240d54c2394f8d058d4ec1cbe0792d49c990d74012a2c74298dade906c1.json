@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "95db9240d54c2394f8d058d4ec1cbe0792d49c990d74012a2c74298dade906c1",
+  "symbol": "?d_002f1b80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_002f1b80@@YAXXZ\n// partial score=0.99 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n// Open-BFME: ScriptActions::~ScriptActions, retail 0x002F1B80, 108 bytes.\n\ntypedef bool Bool;\n\nclass SubsystemInterface\n{\npublic:\n\tvirtual ~SubsystemInterface(void);\n};\n\nclass ScriptActionsInterface : public SubsystemInterface\n{\npublic:\n\tvirtual ~ScriptActionsInterface(void) {}\n};\n\nclass AsciiString\n{\npublic:\n\t~AsciiString(void) { releaseBuffer(); }\n\nprivate:\n\tvoid releaseBuffer(void);\n\tchar *m_data;\n};\n\nstruct BfmeTerrainLogic\n{\n\tunsigned char m_unmodelled_0000[0x18F4];\n\tunsigned char m_scriptWindowOpen;\n};\n\nextern BfmeTerrainLogic *TheTerrainLogic;\n\nclass ScriptActions : public ScriptActionsInterface\n{\npublic:\n\tvirtual ~ScriptActions(void);\n\nprivate:\n\tunsigned char m_unmodelled_004[4];\n\tvolatile unsigned char m_suppressNewWindows;\n\tunsigned char m_unmodelled_009[3];\n\tAsciiString m_unnamedUnit;\n};\n\nScriptActions::~ScriptActions(void)\n{\n\tunsigned int zero = 0;\n\tm_suppressNewWindows = (unsigned char)zero;\n\tBfmeTerrainLogic *terrain = TheTerrainLogic;\n\tif (terrain != 0)\n\t\tterrain->m_scriptWindowOpen = (unsigned char)zero;\n\tm_suppressNewWindows = (unsigned char)zero;\n}\n"
+}
