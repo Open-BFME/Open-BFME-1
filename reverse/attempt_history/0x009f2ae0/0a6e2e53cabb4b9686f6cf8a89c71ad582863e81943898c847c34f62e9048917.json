@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0a6e2e53cabb4b9686f6cf8a89c71ad582863e81943898c847c34f62e9048917",
+  "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\n// partial score=0.99 date=2026-09-10\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// Open-BFME5: clean BFME PartitionFilter chain append helper.\n\nclass Object;\n\nclass PartitionFilter\n{\npublic:\n\tvirtual bool allow(Object *object) = 0;\n\tPartitionFilter *link(PartitionFilter *next);\n\n\tPartitionFilter *m_next;\n};\n\n// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\nPartitionFilter *PartitionFilter::link(PartitionFilter *next)\n{\n\tvolatile PartitionFilter *cursor = 0;\n\tPartitionFilter *candidate = m_next;\n\tif (candidate != 0)\n\t{\n\t\tdo\n\t\t{\n\t\t\tcursor = candidate;\n\t\t\tcandidate = cursor->m_next;\n\t\t}\n\t\twhile (candidate != 0);\n\t\tconst_cast<PartitionFilter *>(cursor)->m_next = next;\n\t}\n\telse\n\t{\n\t\tm_next = next;\n\t}\n\treturn this;\n}\n"
+}

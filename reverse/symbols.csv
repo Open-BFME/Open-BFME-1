@@ -86974,3 +86974,5 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1PBI@Z,0x009AF0D0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
 ?copyPlane009AF0D0@@YAXPAURva009AF320Context@@IHIIPAE1PBI@Z,0x009AF0D0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
 ?Rva009ADAA0@@YAXPAURva009AF200Context@@PAE1IIHPBI@Z,0x009ADAA0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
+?Rva009B5530Prepare@@YAXPAURva009B5830State@@PAXH@Z,0x009B5530,typed cdecl declaration; incoming state coefficients block proven by fullcallee768B and caller9B5830
+?g_rva00ED7770Vp6ModeDispatch@@3PAHA,0x00ED7770,typed integer mode dispatch table indexed by state mode at9B5830

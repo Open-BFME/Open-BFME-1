@@ -1,7 +1,6 @@
-// _peerAuthenticateCDKeyA
-// partial score=0.97 date=2026-08-30
-// cl: /DNDEBUG /MD
-// Upstream: GameSpy Peer SDK peerMain.c, 2007 release.
+// _peerAuthenticateCDKey
+// partial score=0.98 date=2026-09-10
+// BFME GameSpy peerMainBlockingOperations.c full-TU candidate shape.
 
 typedef void *PEER;
 
@@ -16,50 +15,17 @@ typedef struct piConnection
 } piConnection;
 
 int piGetNextID(PEER peer);
-int piNewChangeNickOperation(PEER peer, const char *newNick,
-	void *callback, void *param, int opID);
-void piAddChangeNickCallback(PEER peer, int success, const char *oldNick,
-	const char *newNick, void *callback, void *param, int opID);
 int piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
 	void *callback, void *param, int opID);
 void piAddAuthenticateCDKeyCallback(PEER peer, int result,
 	const char *message, void *callback, void *param, int opID);
 void msleep(unsigned int milliseconds);
 void bfmePiThinkFromEsi(int opID);
-int piIsOperationFinished(PEER peer, int opID);
+int PeerOperationsComplete(PEER peer, int opID);
 int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
 
-void peerChangeNickA(PEER peer, const char *newNick, void *callback,
-	void *param, int blocking)
-{
-	piConnection *connection = (piConnection *)peer;
-	int success = 1;
-	int opID = piGetNextID(peer);
-
-	if (!piNewChangeNickOperation(peer, newNick, callback, param, opID))
-		success = 0;
-
-	if (!success)
-		piAddChangeNickCallback(peer, 0, connection->nick, newNick,
-			callback, param, opID);
-
-	if (blocking)
-	{
-		do
-		{
-			msleep(1);
-			bfmePiThinkFromEsi(opID);
-		}
-		while (!piIsOperationFinished(peer, opID) ||
-			!piIsCallbackFinished(peer, opID));
-
-		if (connection->shutdown && connection->callbackDepth == 0)
-			peerShutdown(peer);
-	}
-}
-
-void peerAuthenticateCDKeyA(register PEER peer, const char *cdkey, void *callback,
+void peerAuthenticateCDKey(register PEER peer, const char *cdkey, void *callback,
 	void *param, int blocking)
 {
 	int success = 1;
@@ -80,7 +46,7 @@ void peerAuthenticateCDKeyA(register PEER peer, const char *cdkey, void *callbac
 			msleep(1);
 			bfmePiThinkFromEsi(opID);
 		}
-		while (!piIsOperationFinished(connection, opID) ||
+		while (!PeerOperationsComplete(connection, opID) ||
 			!piIsCallbackFinished(connection, opID));
 
 		if (((piConnection *)connection)->shutdown &&
