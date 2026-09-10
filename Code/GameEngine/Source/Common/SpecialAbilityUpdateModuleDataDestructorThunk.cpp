@@ -1,240 +1,89 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of the SpecialAbilityUpdateModuleData
+// destructor. The four AudioEventRTS members sit at +0x08, +0x78, +0xE8 and
+// +0x158. The reference and four string members explain the remaining cleanup.
 
-class __declspec(novtable) SpecialAbilityUpdateModuleData
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
+
+class BFMERetailAsciiString
+{
+public:
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+
+	char *m_data;
+};
+
+class RefCountedThing
+{
+public:
+	virtual ~RefCountedThing();
+
+	void Release_Ref(void)
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0) {
+			delete this;
+		}
+	}
+
+	long m_refCount;
+};
+
+class ThingRef
+{
+public:
+	~ThingRef()
+	{
+		if (m_ptr) {
+			m_ptr->Release_Ref();
+		}
+	}
+
+private:
+	RefCountedThing *m_ptr;
+};
+
+class AudioEventRTS
+{
+public:
+	~AudioEventRTS();
+
+private:
+	unsigned char m_data[0x70];
+};
+
+class SpecialAbilityUpdateModuleDataBase
+{
+public:
+	virtual ~SpecialAbilityUpdateModuleDataBase() {}
+
+private:
+	unsigned int m_word04;
+};
+
+class SpecialAbilityUpdateModuleData : public SpecialAbilityUpdateModuleDataBase
 {
 public:
 	virtual ~SpecialAbilityUpdateModuleData();
+
+private:
+	AudioEventRTS m_packSound;
+	AudioEventRTS m_unpackSound;
+	AudioEventRTS m_prepSoundLoop;
+	AudioEventRTS m_triggerSound;
+	unsigned char m_gap0[0x0c];
+	ThingRef m_ref;
+	unsigned char m_gap1[0x08];
+	BFMERetailAsciiString m_string0;
+	BFMERetailAsciiString m_string1;
+	BFMERetailAsciiString m_string2;
+	unsigned char m_gap2[0x64];
+	BFMERetailAsciiString m_string3;
 };
 
 // ??1SpecialAbilityUpdateModuleData@@UAE@XZ
-__declspec(naked) SpecialAbilityUpdateModuleData::~SpecialAbilityUpdateModuleData()
+SpecialAbilityUpdateModuleData::~SpecialAbilityUpdateModuleData()
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x12
-		__emit 0x28
-		__emit 0x01
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x57
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x58
-		__emit 0x2d
-		__emit 0x0c
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x50
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x08
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x49
-		__emit 0x1c
-		__emit 0x5e
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0xe8
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x07
-		__emit 0xe8
-		__emit 0x39
-		__emit 0x1c
-		__emit 0x5e
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0xe4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x06
-		__emit 0xe8
-		__emit 0x29
-		__emit 0x1c
-		__emit 0x5e
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0xe0
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x19
-		__emit 0x1c
-		__emit 0x5e
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xd4
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xff
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x04
-		__emit 0x74
-		__emit 0x1a
-		__emit 0x8d
-		__emit 0x47
-		__emit 0x04
-		__emit 0x50
-		__emit 0xff
-		__emit 0x15
-		__emit 0x54
-		__emit 0x8e
-		__emit 0x35
-		__emit 0x01
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x7f
-		__emit 0x0c
-		__emit 0x85
-		__emit 0xff
-		__emit 0x74
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x17
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xff
-		__emit 0x12
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x58
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x03
-		__emit 0xe8
-		__emit 0xd5
-		__emit 0x11
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0xe8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x02
-		__emit 0xe8
-		__emit 0xc5
-		__emit 0x11
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x78
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xb8
-		__emit 0x11
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x08
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xab
-		__emit 0x11
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x44
-		__emit 0x37
-		__emit 0x07
-		__emit 0x01
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc3
-	}
 }
