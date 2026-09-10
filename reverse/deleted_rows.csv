@@ -25178,3 +25178,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ?m@Gen_004a3b60@@QAEHXZ,0x004A3B60,Wrong zero-result member ABI; retail4AECFF pushes Object for static cdecl overlay helper via38195; replaced with ControlBar helper
 ?selectMatchingAcrossMap@InGameUI@@UAEHXZ,0x00448729,Interior298B claim omitted41B sharedSEH/state guard; complete339B function starts448700 and ends448853
 ?selectMatchingAcrossMap@InGameUI@@UAEHXZ,0x00448700,Historical name unproven; actualslot89 not92; replacedwithRVAidentity afterrawvtable review
+?friend_newModuleData@GenerateMinefieldBehavior@@SAPAVModuleData@@PAVINI@@@Z,0x0011DA50,Refuted phantom GenerateMinefield name: retail ModuleFactory registration12F1B6 names CostModifierUpgrade and datafactory11DA50; factory11DA86 calls2B062->CostModifierUpgradeModuleData2D4B30. Separate canonical replacement follows in same reviewed publication batch.
