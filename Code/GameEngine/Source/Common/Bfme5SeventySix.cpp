@@ -68,7 +68,7 @@ public:
 	int m_bfmeValue;					// +0x04
 };
 
-// ??0BfmeCellFC@@ absent-from-retail
+// ??0BfmeCellFC@@QAE@XZ — retail881200,13B; array ctor callback in8815A0.
 BfmeCellFC::BfmeCellFC()
 	: m_bfmeKind(0x80), m_bfmeValue(0)
 {
