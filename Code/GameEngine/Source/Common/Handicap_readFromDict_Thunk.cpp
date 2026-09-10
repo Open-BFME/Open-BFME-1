@@ -1,379 +1,132 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class Dict;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Handicap.h
+extern "C" unsigned int __cdecl strlen(const char *text);
+#pragma intrinsic(strlen)
+
+typedef float Real;
+typedef bool Bool;
+
+enum NameKeyType {};
+
+template <typename T> class StringBase;
+class AsciiString;
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase() : m_data(0) {}
+
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	Header *m_data;
+
+public:
+	void set(const T *text, int length);
+	void concat(const T *text, int length);
+
+private:
+	void releaseBuffer();
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+	void clear()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+
+	void set(const char *text)
+	{
+		((StringBase<char> *)this)->set(text, text ? (int)strlen(text) : 0);
+	}
+
+	void concat(const char *text)
+	{
+		((StringBase<char> *)this)->concat(text, text ? (int)strlen(text) : 0);
+	}
+
+	const char *str() const
+	{
+		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+	}
+};
+
+class Dict
+{
+public:
+	Real getReal(NameKeyType key, Bool *exists) const;
+};
+
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
 class Handicap
 {
 public:
-	void readFromDict(Dict const *);
+	enum HandicapType
+	{
+		BUILDCOST,
+		BUILDTIME,
+		HANDICAP_TYPE_COUNT
+	};
+
+	void readFromDict(const Dict *d);
+
+private:
+	Real m_handicaps[2][2];
 };
 
 // ?readFromDict@Handicap@@QAEXPBVDict@@@Z
-__declspec(naked) void Handicap::readFromDict(Dict const *)
+void Handicap::readFromDict(const Dict *d)
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x48
-		__emit 0x95
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x24
-		__emit 0x55
-		__emit 0x56
-		__emit 0x57
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x98
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8c
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x80
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x74
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x33
-		__emit 0xf6
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x38
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8d
-		__emit 0x49
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x39
-		__emit 0x33
-		__emit 0xed
-		__emit 0xeb
-		__emit 0x06
-		__emit 0x8d
-		__emit 0x9b
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xe8
-		__emit 0xa7
-		__emit 0xf6
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x09
-		__emit 0x68
-		__emit 0x68
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x77
-		__emit 0xfa
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x85
-		__emit 0xff
-		__emit 0x74
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xc7
-		__emit 0x8d
-		__emit 0x50
-		__emit 0x01
-		__emit 0x8a
-		__emit 0x08
-		__emit 0x40
-		__emit 0x84
-		__emit 0xc9
-		__emit 0x75
-		__emit 0xf9
-		__emit 0x2b
-		__emit 0xc2
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x50
-		__emit 0x57
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x96
-		__emit 0xfa
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x68
-		__emit 0x64
-		__emit 0x3c
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x86
-		__emit 0xfa
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0xac
-		__emit 0x28
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xc1
-		__emit 0x8d
-		__emit 0x70
-		__emit 0x01
-		__emit 0x8a
-		__emit 0x10
-		__emit 0x40
-		__emit 0x84
-		__emit 0xd2
-		__emit 0x75
-		__emit 0xf9
-		__emit 0x2b
-		__emit 0xc6
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x50
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x5d
-		__emit 0xfa
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x00
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xb6
-		__emit 0x2a
-		__emit 0xf7
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x40
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x0f
-		__emit 0x52
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x82
-		__emit 0x01
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x8a
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8d
-		__emit 0x04
-		__emit 0x2e
-		__emit 0xd9
-		__emit 0x1c
-		__emit 0x81
-		__emit 0xeb
-		__emit 0x02
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x45
-		__emit 0x83
-		__emit 0xfd
-		__emit 0x02
-		__emit 0x0f
-		__emit 0x8c
-		__emit 0x40
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0x83
-		__emit 0xc6
-		__emit 0x02
-		__emit 0x83
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x83
-		__emit 0xfe
-		__emit 0x04
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0f
-		__emit 0x8c
-		__emit 0x15
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x38
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xc4
-		__emit 0xf5
-		__emit 0x7b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x30
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
+	const char *htNames[HANDICAP_TYPE_COUNT] =
+	{
+		"BUILDCOST",
+		"BUILDTIME",
+	};
+
+	const char *ttNames[2] =
+	{
+		"GENERIC",
+		"BUILDINGS",
+	};
+
+	AsciiString c;
+	for (int i = 0; i < HANDICAP_TYPE_COUNT; ++i)
+	{
+		for (int j = 0; j < 2; ++j)
+		{
+			c.clear();
+			c.set("HANDICAP_");
+			c.concat(htNames[i]);
+			c.concat("_");
+			c.concat(ttNames[j]);
+			NameKeyType k = TheNameKeyGenerator->nameToKey(c.str());
+			Bool exists;
+			Real r = d->getReal(k, &exists);
+			if (exists)
+				m_handicaps[i][j] = r;
+		}
 	}
 }
