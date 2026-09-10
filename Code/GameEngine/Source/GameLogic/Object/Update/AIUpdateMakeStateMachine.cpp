@@ -7,6 +7,9 @@
 // TransportAIUpdate at 0x002C71D0 and WanderAIUpdate at 0x002C7700.  Each is
 // one line -- allocate an AIStateMachine and hand it the module's Object and a
 // name -- and all three compile to the same 99 bytes but for the string.
+// SupplyTruckAIUpdate at 0x002C5DB0 has the same body shape and is defined in
+// SupplyTruckAIUpdate.cpp; this TU supplies only the proven ABI stand-in needed
+// to emit its real C++ method without retaining the naked thunk.
 //
 // Found by the literal each pushes: "AIUpdateInterfaceMachine",
 // "TransportAIUpdateMachine", "WanderAIUpdateMachine" each appear in exactly one
@@ -103,6 +106,13 @@ protected:
 	virtual AIStateMachine *makeStateMachine();
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SupplyTruckAIUpdate.h
+class SupplyTruckAIUpdate : public AIUpdateInterface
+{
+protected:
+	virtual AIStateMachine *makeStateMachine();
+};
+
 AIStateMachine *AIUpdateInterface::makeStateMachine()
 {
 	return new AIStateMachine( getObject(), "AIUpdateInterfaceMachine" );
@@ -121,4 +131,9 @@ AIStateMachine *WanderAIUpdate::makeStateMachine()
 AIStateMachine *AnimalAIUpdate::makeStateMachine()
 {
 	return new AIStateMachine( getObject(), "AnimalAIUpdateMachine" );
+}
+
+AIStateMachine *SupplyTruckAIUpdate::makeStateMachine()
+{
+	return new AIStateMachine( getObject(), "SupplyTruckAIUpdateMachine" );
 }
