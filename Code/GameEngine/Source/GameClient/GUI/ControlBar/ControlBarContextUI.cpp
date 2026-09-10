@@ -531,6 +531,7 @@ protected:
 	void updateContextUnderConstruction(void);
 	void updateContextStructureInventory(void);
 	static void populateButtonProc(Object *obj, void *userData);
+	static void populateInvDataCallback(Object *obj, void *userData);
 	void populateStructureInventory(Object *building, Bool refresh);
 	void evaluateContextUI(void);
 	void resetContainData(void);
@@ -594,6 +595,40 @@ void ControlBar::populateButtonProc(Object *obj, void *userData)
 	GadgetButtonDrawOverlayImage(info->inventoryButtons[info->buttonIndex], image);
 	info->inventoryButtons[info->buttonIndex]->winEnable(true);
 	info->buttonIndex++;
+}
+
+// ControlBar::populateInvDataCallback, retail 0x004A3C70, 128 bytes.
+// The transport iterator's retail thunk supplies the contained object first
+// and the iterator record second.  The body reads the record before saving
+// the object register, matching the callback ABI and retail stack shape.
+
+// ?populateInvDataCallback@ControlBar@@KAXPAVObject@@PAX@Z
+void ControlBar::populateInvDataCallback(Object *obj, void *userData)
+{
+	PopulateInvButtonData *data = (PopulateInvButtonData *)userData;
+
+	if (data->currIndex > data->maxIndex)
+		return;
+
+	GameWindow *control = data->controls[data->currIndex];
+	m_containData[data->currIndex].control = control;
+	m_containData[data->currIndex].objectID = obj->getID();
+	data->currIndex++;
+
+	const ThingTemplate *thingTemplate = obj->getTemplate();
+	if (thingTemplate && thingTemplate->m_nextOverride)
+	{
+		thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+	}
+
+	const Image *image = _bfme_getSelectedPortraitImage(
+		(const ThingTemplatePortraitShim *)thingTemplate,
+		(const ThingTemplatePortraitShim *)obj);
+	control->winSetEnabledImage(0, image);
+	control->winSetEnabledImage(5, 0);
+	control->winSetEnabledImage(6, 0);
+	GadgetButtonDrawOverlayImage(control, 0);
+	control->winEnable(true);
 }
 
 // Open-BFME: ControlBar::updateContextOCLTimer, retail 0x004AA980, 188 bytes.
