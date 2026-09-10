@@ -1,260 +1,129 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?setCurrentFilename@MapTransferLoadScreen@@: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
-// Open-BFME5: lift the retail setCurrentFilename MASM body into a C++ thunk.
+// MapTransferLoadScreen::setCurrentFilename(AsciiString), legacy GUI body.
+// Matches the readable LoadScreen method and MapTransfer vtable family;
+// no direct retail caller is asserted. The ret 4 at RVA 0x00492097 ends
+// the full 250-byte body, followed by int3 at 0x0049209A.
+// The retail object uses the BFME eight-byte string header and keeps the
+// filename text window at this+0xB0, rather than the ZH header's offset.
 
-extern "C" __declspec(naked) void bfme_MapTransferLoadScreenSetCurrentFilename_491FA0()
+typedef int Int;
+typedef unsigned short WideChar;
+
+class AsciiString;
+class UnicodeString;
+
+class BFMERetailAsciiString
 {
-    __asm {
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0xa8;
-        __emit 0x74;
-        __emit 0x02;
-        __emit 0x01;
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xec;
-        __emit 0x0c;
-        __emit 0x56;
-        __emit 0x8b;
-        __emit 0xf1;
-        __emit 0x8b;
-        __emit 0x86;
-        __emit 0xb0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xc0;
-        __emit 0xc7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x0f;
-        __emit 0x84;
-        __emit 0xa6;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x50;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0x0d;
-        __emit 0x90;
-        __emit 0xf1;
-        __emit 0x2e;
-        __emit 0x01;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x01;
-        __emit 0xe8;
-        __emit 0x85;
-        __emit 0x55;
-        __emit 0xbb;
-        __emit 0xff;
-        __emit 0x50;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x1c;
-        __emit 0x02;
-        __emit 0xe8;
-        __emit 0xee;
-        __emit 0x71;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x01;
-        __emit 0xe8;
-        __emit 0x30;
-        __emit 0x59;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x85;
-        __emit 0xc0;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xc0;
-        __emit 0x08;
-        __emit 0xeb;
-        __emit 0x05;
-        __emit 0xb8;
-        __emit 0x8c;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0x0d;
-        __emit 0x7c;
-        __emit 0x14;
-        __emit 0x2f;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0x11;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0xc4;
-        __emit 0x89;
-        __emit 0x64;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x6a;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x24;
-        __emit 0x9c;
-        __emit 0x0f;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x28;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0x51;
-        __emit 0xe8;
-        __emit 0x49;
-        __emit 0x71;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x08;
-        __emit 0x8d;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x89;
-        __emit 0x64;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x8b;
-        __emit 0xcc;
-        __emit 0x52;
-        __emit 0xe8;
-        __emit 0xa6;
-        __emit 0x63;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x86;
-        __emit 0xb0;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0xe8;
-        __emit 0x09;
-        __emit 0xa1;
-        __emit 0xb9;
-        __emit 0xff;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x08;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0xc6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0x59;
-        __emit 0x61;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0xc7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xe8;
-        __emit 0xb8;
-        __emit 0x58;
-        __emit 0x3f;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0d;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5e;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x18;
-        __emit 0xc2;
-        __emit 0x04;
-        __emit 0x00;
+    friend class AsciiString;
+
+private:
+    void releaseBuffer();
+};
+
+template <typename T>
+class StringBase
+{
+    friend class UnicodeString;
+
+protected:
+    StringBase() : m_data(0) {}
+    StringBase(const StringBase &other);
+    ~StringBase() {}
+
+    void *m_data;
+
+private:
+    void releaseBuffer();
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString() : StringBase<char>() {}
+    AsciiString(const AsciiString &other)
+        : StringBase<char>(*reinterpret_cast<const StringBase<char> *>(&other)) {}
+    ~AsciiString()
+    {
+        reinterpret_cast<BFMERetailAsciiString *>(this)->releaseBuffer();
+    }
+
+    const char *str() const
+    {
+        if (m_data)
+            return reinterpret_cast<const char *>(m_data) + 8;
+        return reinterpret_cast<const char *>(0x0107388B);
+    }
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+    UnicodeString() : StringBase<WideChar>() {}
+    UnicodeString(const UnicodeString &other)
+        : StringBase<WideChar>(*reinterpret_cast<const StringBase<WideChar> *>(&other)) {}
+    ~UnicodeString()
+    {
+        StringBase<WideChar>::releaseBuffer();
+    }
+
+    void translate(const AsciiString &);
+    void format(UnicodeString, ...);
+
+    const WideChar *str() const
+    {
+        if (m_data)
+            return reinterpret_cast<const WideChar *>(reinterpret_cast<const char *>(m_data) + 8);
+        return reinterpret_cast<const WideChar *>(0x0107388C);
+    }
+};
+
+class GameState
+{
+public:
+    AsciiString getMapLeafName(const AsciiString &) const;
+};
+
+class GameTextInterface
+{
+public:
+    virtual void slot00();
+    virtual void slot01();
+    virtual void slot02();
+    virtual void slot03();
+    virtual void slot04();
+    virtual void slot05();
+    virtual void slot06();
+    virtual void slot07();
+    virtual void slot08();
+    virtual void slot09();
+    virtual UnicodeString fetch(const char *, bool *exists = 0);
+};
+
+class GameWindow;
+
+extern GameState *TheGameState;
+extern GameTextInterface *TheGameText;
+extern void j_0002c16f();
+
+class MapTransferLoadScreen
+{
+public:
+    void setCurrentFilename(AsciiString filename);
+
+private:
+    char m_padding[0xB0];
+    GameWindow *m_fileNameText;
+};
+
+void MapTransferLoadScreen::setCurrentFilename(AsciiString filename)
+{
+    if (m_fileNameText)
+    {
+        UnicodeString txt;
+        txt.translate(TheGameState->getMapLeafName(filename));
+        txt.format(TheGameText->fetch("MapTransfer:CurrentFile"), txt.str());
+
+        typedef void (*TextFn)(GameWindow *, UnicodeString);
+        (reinterpret_cast<TextFn>(j_0002c16f))(m_fileNameText, txt);
     }
 }
-
