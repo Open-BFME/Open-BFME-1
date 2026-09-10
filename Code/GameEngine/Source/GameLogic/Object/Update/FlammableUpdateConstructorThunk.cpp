@@ -58,6 +58,19 @@ class FlammableUpdate : public UpdateModule, public DamageModuleInterface
 public:
     FlammableUpdate(Thing *, const ModuleData *);
 
+    // 0x00292FA0, 13 bytes: row-less unclaimed-boundary candidate. Tail-jmps
+    // into the already-landed ?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ
+    // (0x00292FAD) when m_flag40 is clear; returns UPDATE_SLEEP(1) when set.
+    // m_flag40 is BFME-only state (see the header comment above), so the
+    // semantic name below is descriptive, not recovered.
+    UpdateSleepTime bfmeCalcSleepTimeGate();
+
+protected:
+    // Declared only -- defined and byte-verified elsewhere in the build
+    // (FlammableUpdate.cpp, 0x00292FAD); calling it here resolves to that
+    // existing body.
+    UpdateSleepTime calcSleepTime();
+
 private:
     int m_status;
     unsigned int m_aflameEndFrame;
@@ -90,4 +103,12 @@ FlammableUpdate::FlammableUpdate(
     m_field48 = 0;
     m_flag4c = false;
     setWakeFrame(getObject(), UPDATE_SLEEP_FOREVER);
+}
+
+// ?bfmeCalcSleepTimeGate@FlammableUpdate@@QAE?AW4UpdateSleepTime@@XZ
+UpdateSleepTime FlammableUpdate::bfmeCalcSleepTimeGate()
+{
+    if ( m_flag40 )
+        return (UpdateSleepTime)1;
+    return calcSleepTime();
 }
