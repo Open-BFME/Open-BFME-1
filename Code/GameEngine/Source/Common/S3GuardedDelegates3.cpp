@@ -50,6 +50,50 @@ void bfmeStep2_00589680(void);					// ILT 0x000216D9
 void bfmeStep1_009A75E0(void);					// retail 0x009B3A00
 void bfmeStep2_009A75E0(void);					// retail 0x009B3B40
 
+struct FourWords { unsigned short a,b,c,d; };
+
+// Initializes the 16-bit codec spread table before the second-stage
+// installer.  These arrays are fixed retail data locations, represented as
+// externs so the normal relocation verifier can validate their operands.
+extern unsigned short Rva009B3A00Table[48];
+extern unsigned short Rva009B3A00Source[7];
+
+void bfmeStep1_009A75E0(void)
+{
+	unsigned short *table = Rva009B3A00Table;
+	unsigned short *clear = table + 16;
+	while (clear != table)
+	{
+		--clear;
+		*clear = 0;
+	}
+
+	unsigned short allBits = 0xffff;
+	table[15] = allBits;
+	table[10] = allBits;
+	table[5] = allBits;
+	table[0] = allBits;
+
+	int stride = 8;
+	FourWords *destination = (FourWords *)(table + 16);
+	int sourceIndex = 0;
+	do
+	{
+		unsigned short value = Rva009B3A00Source[sourceIndex];
+		destination->d = value;
+		destination->c = value;
+		destination->b = value;
+		destination->a = value;
+		destination = (FourWords *)((int)destination + stride);
+		++sourceIndex;
+	} while ((int)&destination->c <= (int)(table + 42));
+
+	table[47] = stride;
+	table[46] = stride;
+	table[45] = stride;
+	table[44] = stride;
+}
+
 // ?bfmeForward@Gen_001FB570@@QAEXXZ
 void Gen_001FB570::bfmeForward(void)
 {
