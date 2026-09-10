@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "35058e56d56416e71696d1292a42558d9f24f5189e78db945b830a449a018fe5",
+  "symbol": "?link@Rva0060FE50@@QAEXPAUBfmeIntrusiveNode60FE50@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?link@Rva0060FE50@@QAEXPAUBfmeIntrusiveNode60FE50@@@Z\n// partial score=0.95 date=2026-09-09\n// ?link@Rva0060FE50@@QAEXPAUBfmeIntrusiveNode60FE50@@@Z\n// partial score=0.95 date=2026-08-31\nstruct BfmeIntrusiveOwner60FE50;\n\nstruct BfmeIntrusiveNode60FE50\n{\n\tBfmeIntrusiveOwner60FE50 *m_owner;\n\tBfmeIntrusiveNode60FE50 *m_previous;\n\tBfmeIntrusiveNode60FE50 *m_next;\n};\n\nstruct BfmeIntrusiveOwner60FE50\n{\n\tchar m_head[ 0x98 ];\n\tBfmeIntrusiveNode60FE50 *m_first;\n\tBfmeIntrusiveNode60FE50 *m_last;\n};\n\nclass Rva0060FE50\n{\npublic:\n\tvoid link( BfmeIntrusiveNode60FE50 *node );\n\nprivate:\n\tchar m_head[ 0x14 ];\n\tBfmeIntrusiveOwner60FE50 *m_owner;\n};\n\nvoid Rva0060FE50::link( BfmeIntrusiveNode60FE50 *node )\n{\n\tBfmeIntrusiveOwner60FE50 *owner = m_owner;\n\tvolatile int empty = 0;\n\tnode->m_owner = owner;\n\n\tif ( owner != 0 )\n\t{\n\t\tBfmeIntrusiveNode60FE50 *previous = owner->m_last;\n\t\tnode->m_previous = previous;\n\t\tnode->m_next = 0;\n\t\towner->m_last = node;\n\n\t\tif ( node->m_previous != 0 )\n\t\t{\n\t\t\tnode->m_previous->m_next = node;\n\t\t\treturn;\n\t\t}\n\n\t\towner->m_first = node;\n\t\treturn;\n\t}\n\n\tnode->m_next = 0;\n\tnode->m_previous = 0;\n}\n"
+}

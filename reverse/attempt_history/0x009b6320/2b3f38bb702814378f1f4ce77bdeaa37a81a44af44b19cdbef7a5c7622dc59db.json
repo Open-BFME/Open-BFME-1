@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2b3f38bb702814378f1f4ce77bdeaa37a81a44af44b19cdbef7a5c7622dc59db",
+  "symbol": "?d_009b6320@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?d_009b6320@@YAXXZ\n// partial score=0.75 date=2026-09-09\n\nstruct Rva009B6320Node\n{\n\tunsigned m_first;\n\tunsigned m_second;\n\tunsigned m_unused;\n};\n\nvoid Rva009B6320DecodeTree(\n\tRva009B6320Node *nodes, int node, int *codes, unsigned char *lengths,\n\tint code, int depth)\n{\n\tregister int currentDepth = depth;\n\tregister int currentNode = node;\n\tregister int currentCode = code;\n\tregister Rva009B6320Node *currentNodes = nodes;\n\n\tfor (;;) {\n\t\tunsigned value = currentNodes[currentNode].m_first;\n\t\tif (value & 1) {\n\t\t\tunsigned symbol = (value >> 1) & 0x7f;\n\t\t\tcodes[symbol] = currentCode + currentCode;\n\t\t\tlengths[symbol] = (unsigned char)(currentDepth + 1);\n\t\t\treturn;\n\t\t}\n\n\t\tRva009B6320DecodeTree(\n\t\t\tcurrentNodes, (value >> 1) & 0x7f, codes, lengths,\n\t\t\tcurrentCode + currentCode, currentDepth + 1);\n\n\t\tvalue = currentNodes[currentNode].m_second;\n\t\tif (value & 1) {\n\t\t\tunsigned symbol = (value >> 1) & 0x7f;\n\t\t\tcodes[symbol] = currentCode + currentCode + 1;\n\t\t\tlengths[symbol] = (unsigned char)(currentDepth + 1);\n\t\t\treturn;\n\t\t}\n\n\t\t++currentDepth;\n\t\tcurrentCode = currentCode + currentCode + 1;\n\t\tcurrentNode = (value >> 1) & 0x7f;\n\t}\n}\n"
+}
