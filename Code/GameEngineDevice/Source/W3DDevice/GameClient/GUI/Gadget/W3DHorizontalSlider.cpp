@@ -70,6 +70,40 @@
 
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 
+// ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+class Rva00791730Display
+{
+public:
+	virtual void slot00( void ) = 0;
+	virtual void slot04( void ) = 0;
+	virtual void slot08( void ) = 0;
+	virtual void slot0c( void ) = 0;
+	virtual void slot10( void ) = 0;
+	virtual void slot14( void ) = 0;
+	virtual void slot18( void ) = 0;
+	virtual void slot1c( void ) = 0;
+	virtual void slot20( void ) = 0;
+	virtual void slot24( void ) = 0;
+	virtual void slot28( void ) = 0;
+	virtual UnsignedInt getWidth( void ) = 0;
+	virtual UnsignedInt getHeight( void ) = 0;
+};
+
+// ?W3DGadgetHorizontalSliderImageDrawB@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+class Rva00791730GameWindow
+{
+public:
+	const Image *getDisabledImage( Int index )
+	{
+		return *(const Image **)((unsigned char *)this + 0xB4 + index * 0xC);
+	}
+
+	const Image *getHiliteImage( Int index )
+	{
+		return *(const Image **)((unsigned char *)this + 0x120 + index * 0xC);
+	}
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -239,8 +273,13 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 
 	SliderData *s = (SliderData *)window->winGetUserData();
 	
-	Real xMulti = INT_TO_REAL(TheDisplay->getWidth()) / 800;
-	Real yMulti = INT_TO_REAL(TheDisplay->getHeight())/ 600;
+	Real xMulti = (Real)1.0;
+	Real yMulti = (Real)1.0;
+	if( (window->winGetStatus() & 0x08000000) == 0 )
+	{
+		xMulti = INT_TO_REAL(((Rva00791730Display *)TheDisplay)->getWidth()) / 800;
+		yMulti = INT_TO_REAL(((Rva00791730Display *)TheDisplay)->getHeight()) / 600;
+	}
 	// get image offset
 	xOffset = instData->m_imageOffset.x;
 	yOffset = instData->m_imageOffset.y;
@@ -256,7 +295,8 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 
 	if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
 	{
-		highlightSquare					= GadgetSliderGetHiliteImageLeft( window );
+		Rva00791730GameWindow *rvaWindow = (Rva00791730GameWindow *)window;
+		highlightSquare					= rvaWindow->getHiliteImage( 0 );
 		ICoord2D backgroundStart, backgroundEnd;
 		backgroundStart.x = origin.x - (highlightSquare->getImageWidth() * xMulti)/2;
 		backgroundStart.y = origin.y + (highlightSquare->getImageHeight() *yMulti)/3;
@@ -281,7 +321,8 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 		tooltip.concat(tmp);
 	}
 
-	fillSquare = GadgetSliderGetDisabledImageLeft( window );
+	Rva00791730GameWindow *rvaWindow = (Rva00791730GameWindow *)window;
+	fillSquare = rvaWindow->getDisabledImage( 0 );
 	start.x = origin.x;
 	start.y = origin.y;
 	end.y = start.y + fillSquare->getImageHeight() * yMulti;
@@ -300,7 +341,7 @@ void W3DGadgetHorizontalSliderImageDrawB( GameWindow *window,
 
 	}
 
-	blankSquare	= GadgetSliderGetDisabledImageRight( window );
+	blankSquare	= rvaWindow->getDisabledImage( 1 );
 	end.x	= start.x + blankSquare->getImageWidth()* xMulti;
 
 	while(end.x < origin.x + size.x )

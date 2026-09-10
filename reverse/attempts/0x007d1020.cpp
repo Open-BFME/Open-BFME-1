@@ -28,6 +28,8 @@ public:
 	float W;
 };
 
+
+
 class StringClass
 {
 	char *m_Buffer;
