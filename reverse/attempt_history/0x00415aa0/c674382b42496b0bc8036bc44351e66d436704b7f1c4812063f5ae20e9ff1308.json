@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c674382b42496b0bc8036bc44351e66d436704b7f1c4812063f5ae20e9ff1308",
+  "symbol": "?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.83,
+  "source": "// ?applySecond@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z\n// partial score=0.83 date=2026-09-09\n// The caller at 0x002D9510 names this address-derived second updater.\n// Its target body is 0x00415AA0..0x00415ACD (46 bytes).\n\nclass Rva002D9510StringData\n{\npublic:\n\tunsigned char m_head[4];\n\tshort m_length;\n};\n\nclass UnicodeString\n{\npublic:\n\tvoid set(const UnicodeString &other);\n\tvoid bfmeReleaseAU(void);\n\n\tRva002D9510StringData *m_data;\n};\n\nclass Rva002D9510Value\n{\npublic:\n\tRva002D9510StringData *m_data;\n};\n\nclass Rva002D9510Target\n{\npublic:\n\tvoid applySecond(Rva002D9510Value *value);\n\n\tunsigned char m_pad000[0x2d8];\n\tUnicodeString m_text;\n};\n\nvoid Rva002D9510Target::applySecond(Rva002D9510Value *value)\n{\n\tif (value->m_data == 0 || value->m_data->m_length == 0)\n\t\tm_text.bfmeReleaseAU();\n\telse\n\t\tm_text.set(*reinterpret_cast<const UnicodeString *>(value));\n}\n"
+}
