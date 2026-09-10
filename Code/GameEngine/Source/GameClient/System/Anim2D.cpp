@@ -491,36 +491,6 @@ UnsignedInt Anim2D::getCurrentFrameHeight( void ) const
 }  // end getCurrentFrameHeight
 
 // ------------------------------------------------------------------------------------------------
-/** Draw an Anim2D using the natural width and height of the image data */
-// ------------------------------------------------------------------------------------------------
-void Anim2D::draw( Int x, Int y )
-{
-
-	// get the current image
-	const Image *image = m_template->getFrame( m_currentFrame );
-
-	// sanity
-	DEBUG_ASSERTCRASH( image != NULL, ("Anim2D::draw - Image not found for frame '%d' on animation '%s'\n",
-										 m_currentFrame, m_template->getName().str()) );
-
-	// get the natural width and height of this image
-	const ICoord2D *imageSize = image->getImageSize();
-
-	// draw the image
-	Color color = GameMakeColor( 255, 255, 255, 255 * m_alpha );
-	TheDisplay->drawImage( image, x, y, x + imageSize->x, y + imageSize->y, color );
-
-	//
-	// see if it's time for us to go to the next frame in the sequence, we do not update
-	// frame numbers for animation instances that are registered with a system as the
-	// system will update them during its update phase
-	//
- 	if( m_collectionSystem == NULL && BitTest( m_status, ANIM_2D_STATUS_FROZEN ) == FALSE )
-		tryNextFrame();
-
-}  // end draw
-
-// ------------------------------------------------------------------------------------------------
 /** Drawing an Anim2D using a forced width and height */
 // ------------------------------------------------------------------------------------------------
 // ?draw@Anim2D@@QAEXHHHH@Z
