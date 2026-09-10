@@ -53,6 +53,8 @@ class CameraClass;
 #include "dx8renderer.h"
 #include "hashtemplate.h"
 
+extern unsigned char *BfmeCurrentCaps;
+
 
 /*
 ** Temporary Buffers
@@ -603,8 +605,81 @@ void GapFillerClass::Shrink_Buffers()
 //
 // ----------------------------------------------------------------------------
 
-// ?MeshModelClass::Init_For_NPatch_Rendering present-unmatched
+// Full668B at0x0094F660 ends0x0094F8FC CC. Matched
+// Register_For_Rendering calls it directly at0x0094F928. Retail gates on
+// caps+13B and flags+18 bit10000; counts24/28 and buffers2C/30 are BFME
+// fields. The three temporary hash tables are cleared before and after use.
 void MeshModelClass::Init_For_NPatch_Rendering()
 {
-	// BFME: DX8 path stubbed.
+	if (!BfmeCurrentCaps[0x13b]) return;
+	if (!Get_Flag(MeshGeometryClass::ALLOW_NPATCHES)) return;
+
+	struct BfmeMeshGeometryFields {
+		char pad[0x24];
+		unsigned polygon_count;
+		unsigned vertex_count;
+		ShareBufferClass<TriIndex>* poly;
+		ShareBufferClass<Vector3>* vertex;
+	};
+	BfmeMeshGeometryFields *fields = reinterpret_cast<BfmeMeshGeometryFields *>(this);
+	const Vector3* locations=fields->vertex->Get_Array();
+	unsigned vertex_count=fields->vertex_count;
+	const TriIndex* polygon_indices=fields->poly->Get_Array();
+	unsigned polygon_count=fields->polygon_count;
+
+	LocationHash.Remove_All();
+	DuplicateLocationHash.Remove_All();
+	SideHash.Remove_All();
+
+	for (unsigned i=0;i<vertex_count;++i) {
+		if (LocationHash.Exists(locations[i])) {
+			if (!DuplicateLocationHash.Exists(locations[i])) {
+				DuplicateLocationHash.Insert(locations[i],i);
+			}
+		}
+		else {
+			LocationHash.Insert(locations[i],i);
+		}
+	}
+
+	for (i=0;i<polygon_count;++i) {
+		bool duplicates[3];
+		duplicates[0]=DuplicateLocationHash.Exists(locations[polygon_indices[i][0]]);
+		duplicates[1]=DuplicateLocationHash.Exists(locations[polygon_indices[i][1]]);
+		duplicates[2]=DuplicateLocationHash.Exists(locations[polygon_indices[i][2]]);
+		if (duplicates[0] && duplicates[1]) {
+			TriangleSide tri(locations[polygon_indices[i][0]],locations[polygon_indices[i][1]]);
+			if (!SideHash.Exists(tri)) {
+				SideIndexInfo side_index;
+				side_index.vidx1=polygon_indices[i][0];
+				side_index.vidx2=polygon_indices[i][1];
+				side_index.polygon_index=i;
+				SideHash.Insert(tri,side_index);
+			}
+		}
+		if (duplicates[1] && duplicates[2]) {
+			TriangleSide tri(locations[polygon_indices[i][1]],locations[polygon_indices[i][2]]);
+			if (!SideHash.Exists(tri)) {
+				SideIndexInfo side_index;
+				side_index.vidx1=polygon_indices[i][1];
+				side_index.vidx2=polygon_indices[i][2];
+				side_index.polygon_index=i;
+				SideHash.Insert(tri,side_index);
+			}
+		}
+		if (duplicates[2] && duplicates[0]) {
+			TriangleSide tri(locations[polygon_indices[i][2]],locations[polygon_indices[i][0]]);
+			if (!SideHash.Exists(tri)) {
+				SideIndexInfo side_index;
+				side_index.vidx1=polygon_indices[i][2];
+				side_index.vidx2=polygon_indices[i][0];
+				side_index.polygon_index=i;
+				SideHash.Insert(tri,side_index);
+			}
+		}
+	}
+
+	LocationHash.Remove_All();
+	DuplicateLocationHash.Remove_All();
+	SideHash.Remove_All();
 }
