@@ -469,3 +469,42 @@ int ObjectDispatchEvent( lua_State *state )
 
 	return 0;
 }
+
+extern "C" void lua_pushnumber( lua_State *state, double value );
+
+#pragma intrinsic( _ReadWriteBarrier )
+extern "C" void _ReadWriteBarrier( void );
+
+class LuaScriptEngine;
+extern LuaScriptEngine *TheLuaScriptEngine;
+extern double g_bfmeSubB3;
+
+// ?Rva002E7690LuaValueLookup@@YAHPAUlua_State@@@Z
+int Rva002E7690LuaValueLookup( lua_State *state )
+{
+	void *field78 = *(void **)( (char *)TheLuaScriptEngine + 0x78 );
+	if( field78 )
+	{
+		unsigned *esiBase = *(unsigned **)( (char *)field78 + 0xc );
+		if( esiBase )
+		{
+			if( lua_gettop( state ) > 0 )
+			{
+				const char *name = lua_tostring( state, 1 );
+				int idx = bfmeLookup_001c62b0( (void *)name );
+				if( idx != -1 )
+				{
+					unsigned char bit = ( esiBase[ ( (unsigned)idx >> 5 ) + ( 0x250 / 4 ) ] & ( 1u << ( idx & 0x1f ) ) ) != 0;
+					_ReadWriteBarrier();
+					if( bit != 0 )
+					{
+						lua_pushnumber( state, g_bfmeSubB3 );
+						return 1;
+					}
+				}
+			}
+		}
+	}
+	lua_pushnil( state );
+	return 1;
+}
