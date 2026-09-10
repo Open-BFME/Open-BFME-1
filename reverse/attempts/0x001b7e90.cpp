@@ -1,12 +1,12 @@
 // ?query@Rva001B7E90Receiver@@QAEMPAVObject@@@Z
-// partial score=0.68 date=2026-09-10
+// partial score=0.72 date=2026-09-10
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
+// ?query@Rva001B7E90Receiver@@QAEMPAVObject@@@Z
 //
-// Retail RVA 0x001B7E90, 297 bytes.  The 0x001BC820 dispatcher and the
-// queryDivMin/queryCached siblings establish this as the locomotor-side
-// Object-to-Real query.  The BFME body reads the object's damage state,
-// locomotor scale, crew multiplier, and attribute modifier 7 before returning
-// the capped speed.
+// Retail 0x001B7E90 is the locomotor query used by the movement dispatcher.
+// The dispatcher and the queryDivMin/queryCached siblings establish the
+// thiscall receiver and Object* argument.  Keep the override walk external:
+// retail calls the shared Overridable::getFinalOverride thunk at each walk.
 
 typedef bool Bool;
 typedef float Real;
@@ -58,14 +58,7 @@ public:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const
-	{
-		if (this == 0)
-			return this;
-		if (m_nextOverride != 0)
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
+	const Overridable *getFinalOverride() const;
 
 	unsigned char m_pad000[4];
 	const Overridable *m_nextOverride;
@@ -117,11 +110,29 @@ Real Rva001B7E90Receiver::query(Object *object)
 
 	if (condition < penalty)
 	{
-		if (static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_speedUsesCondition != 0 &&
-			(object->m_status & 0x400000) != 0 && object->m_field1F5 != 0)
+		const LocomotorTemplate *conditionTemplate = m_template;
+		if (conditionTemplate != 0 && conditionTemplate->m_nextOverride != 0)
+			conditionTemplate = static_cast<const LocomotorTemplate *>(
+				conditionTemplate->m_nextOverride->getFinalOverride());
+		if ((conditionTemplate->m_speedUsesCondition != 0 &&
+			 (object->m_status & 0x400000) != 0) || object->m_field1F5 != 0)
 		{
-			speed = g_rva001B59ScaleConstant *
-				static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_speed;
+			const Overridable *speedTemplate = m_template;
+			if (speedTemplate == 0)
+			{
+				speed = g_rva001B59ScaleConstant *
+					static_cast<const LocomotorTemplate *>(speedTemplate)->m_speed;
+			}
+			else if (speedTemplate->m_nextOverride == 0)
+			{
+				speed = g_rva001B59ScaleConstantNormalAlias;
+			}
+			else
+			{
+				speedTemplate = speedTemplate->m_nextOverride->getFinalOverride();
+				speed = g_rva001B59ScaleConstant *
+					static_cast<const LocomotorTemplate *>(speedTemplate)->m_speed;
+			}
 		}
 		else
 		{
@@ -130,15 +141,23 @@ Real Rva001B7E90Receiver::query(Object *object)
 	}
 	else
 	{
+		const LocomotorTemplate *damagedTemplate = m_template;
+		if (damagedTemplate != 0 && damagedTemplate->m_nextOverride != 0)
+			damagedTemplate = static_cast<const LocomotorTemplate *>(
+				damagedTemplate->m_nextOverride->getFinalOverride());
 		speed = g_rva001B59ScaleConstantDamaged *
-			static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_damagedSpeedFactor;
+			damagedTemplate->m_damagedSpeedFactor;
 	}
 
 	speed *= scale;
 	if (speed > m_maxSpeed)
 		speed = m_maxSpeed;
 
-	if (static_cast<const LocomotorTemplate *>(m_template->getFinalOverride())->m_speedUsesCrew != 0)
+	const LocomotorTemplate *crewTemplate = m_template;
+	if (crewTemplate != 0 && crewTemplate->m_nextOverride != 0)
+		crewTemplate = static_cast<const LocomotorTemplate *>(
+			crewTemplate->m_nextOverride->getFinalOverride());
+	if (crewTemplate->m_speedUsesCrew != 0)
 		speed *= object->bfmeGetCrewSpeedMultiplier();
 
 	Real modifier = 0.0f;

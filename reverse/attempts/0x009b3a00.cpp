@@ -1,5 +1,5 @@
 // ?bfmeStep1_009A75E0@@YAXXZ
-// partial score=0.8 date=2026-09-09
+// partial score=0.98 date=2026-09-10
 // Six more one-liners: 0x001FB570, 0x001FBF60 and 0x00204450, then
 // 0x004647E0, 0x00589680 and 0x009A75E0.
 //
@@ -49,44 +49,55 @@ void bfmeStep1_004647E0(void);					// ILT 0x0002B314
 void bfmeStep2_004647E0(void);					// ILT 0x00039F1D
 void bfmeStep1_00589680(void);					// ILT 0x0003643A
 void bfmeStep2_00589680(void);					// ILT 0x000216D9
+void bfmeStep1_009A75E0(void);					// retail 0x009B3A00
+void bfmeStep2_009A75E0(void);					// retail 0x009B3B40
+
+// ?bfmeStep1_009A75E0@@YAXXZ
+// The runner at 0x009A75E0 calls this table initializer first.  Retail's
+// complete body is 140 bytes through ret at 0x009B3A8B; the older 131-byte
+// reloc-derived extent stopped before the full epilogue.  The four sentinel
+// rows and seven four-word copies are kept as explicit indexed stores so the
+// compiler retains the same absolute table/source addresses and loop shape.
 extern unsigned short Rva009B3A00Table[48];
 extern unsigned short Rva009B3A00Source[7];
 
+struct FourWords { unsigned short a,b,c,d; };
+
 void bfmeStep1_009A75E0(void)
 {
-	unsigned short *clear = Rva009B3A00Table + 16;
-	while (clear != Rva009B3A00Table)
+	unsigned short *table = Rva009B3A00Table;
+	unsigned short *clear = table + 16;
+	while (clear != table)
 	{
 		--clear;
 		*clear = 0;
 	}
 
 	unsigned short allBits = 0xffff;
-	Rva009B3A00Table[15] = allBits;
-	Rva009B3A00Table[10] = allBits;
-	Rva009B3A00Table[5] = allBits;
-	Rva009B3A00Table[0] = allBits;
+	table[15] = allBits;
+	table[10] = allBits;
+	table[5] = allBits;
+	table[0] = allBits;
 
-	unsigned short *destination = Rva009B3A00Table + 18;
+	int stride = 8;
+	FourWords *destination = (FourWords *)(table + 16);
 	unsigned short *source = Rva009B3A00Source;
-	while (destination <= Rva009B3A00Table + 42)
+	do
 	{
 		unsigned short value = *source;
-		destination[1] = value;
-		destination[0] = value;
-		destination[-1] = value;
-		destination[-2] = value;
-		destination += 4;
+		destination->d = value;
+		destination->c = value;
+		destination->b = value;
+		destination->a = value;
+		destination = (FourWords *)((int)destination + stride);
 		++source;
-	}
+	} while ((int)&destination->c <= (int)(table + 42));
 
-	unsigned short stride = 8;
-	Rva009B3A00Table[47] = stride;
-	Rva009B3A00Table[46] = stride;
-	Rva009B3A00Table[45] = stride;
-	Rva009B3A00Table[44] = stride;
+	table[47] = stride;
+	table[46] = stride;
+	table[45] = stride;
+	table[44] = stride;
 }
-void bfmeStep2_009A75E0(void);					// retail 0x009B3B40
 
 // ?bfmeForward@Gen_001FB570@@QAEXXZ
 void Gen_001FB570::bfmeForward(void)

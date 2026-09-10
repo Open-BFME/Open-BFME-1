@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "826f4ddcf50d4f29a099ec587a206030ac94cf7e7d68ed2e92ddcc419586c03c",
+  "symbol": "?Rva009A9660@@YAXPAEHI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ?Rva009A9660@@YAXPAEHI@Z\n// partial score=0.88 date=2026-09-10\n// Generic scalar codec helper for dispatch-table slot 18.\n// Retail 0x009A9660 updates four in-place rows for each byte.  The MMX\n// sibling bfmeInterpRows6Mmx fixes the buffer/stride/count cdecl ABI and the\n// row arrangement: the two middle outputs use the original second and third\n// rows, while the trailing output uses the third and fifth rows.\n\n// ?Rva009A9660@@YAXPAEHI@Z\nvoid __cdecl Rva009A9660(unsigned char *source, int stride, unsigned int bytes)\n{\n\tunsigned char *cursor = source;\n\twhile (bytes > 0)\n\t{\n\t\tunsigned char *row4 = cursor + stride * 4;\n\t\tunsigned char *row2 = cursor + stride * 2;\n\t\tunsigned int row1Value = cursor[stride];\n\t\tunsigned int row0Value = cursor[0];\n\t\tcursor[stride] = (unsigned char)((row0Value * 102 + row1Value * 154 + 128) >> 8);\n\n\t\tunsigned int row2Value = row2[0];\n\t\trow2[0] = (unsigned char)((row1Value * 205 + row2Value * 51 + 128) >> 8);\n\t\trow2[stride] = (unsigned char)((row1Value * 51 + row2Value * 205 + 128) >> 8);\n\n\t\tunsigned int row5Value = row4[stride];\n\t\trow4[0] = (unsigned char)((row2Value * 154 + row5Value * 102 + 128) >> 8);\n\n\t\t++cursor;\n\t\t++row2;\n\t\t++row4;\n\t\t--bytes;\n\t}\n}\n"
+}
