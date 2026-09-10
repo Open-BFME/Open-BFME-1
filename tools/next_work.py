@@ -184,8 +184,9 @@ def _ghidra_names():
     """{function start rva: Ghidra label}, cached.
 
     The inventory distinguishes real function bodies from compiler-generated
-    unwind funclets. A drift alignment vote onto ``Unwind@...`` is never a
-    source function identity, even when the address and extent are exact.
+    exception funclets. A drift alignment vote onto ``Unwind@...`` or
+    ``Catch@...`` is never a source function identity, even when the address
+    and extent are exact.
     """
     global _GHIDRA_NAMES
     if _GHIDRA_NAMES is None:
@@ -697,8 +698,8 @@ def collapse_and_validate(candidates, validator=None):
     kept, refuted, reasons = [], 0, {}
     for rva, group in groups.items():
         inventory_name = getattr(validator, "inventory_names", {}).get(rva, "")
-        if inventory_name.startswith("Unwind@"):
-            reason = "C4 unwind-funclet"
+        if inventory_name.startswith(("Unwind@", "Catch@")):
+            reason = "C4 exception-funclet"
             reasons[reason] = reasons.get(reason, 0) + 1
             refuted += len(group)
             continue

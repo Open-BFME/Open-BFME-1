@@ -103,14 +103,15 @@ def test_unknown_extent_is_labeled_unknown():
     assert "retail size unknown" in next_work.structural_size_label(candidate())
 
 
-def test_unwind_inventory_label_rejects_structural_alias():
+@pytest.mark.parametrize("label", ["Unwind@00401400", "Catch@00401400"])
+def test_exception_funclet_inventory_label_rejects_structural_alias(label):
     body = b"\x55\x8b\xec\xc3"
     validator = next_work.boundary_validator.BoundaryValidator(
         lambda rva, size: body[:size], {0x1400: len(body)})
-    validator.inventory_names = {0x1400: "Unwind@00401400"}
+    validator.inventory_names = {0x1400: label}
 
     items, meta = next_work.collapse_and_validate([candidate()], validator)
 
     assert items == []
     assert meta["refuted"] == 1
-    assert meta["reasons"] == {"C4 unwind-funclet": 1}
+    assert meta["reasons"] == {"C4 exception-funclet": 1}
