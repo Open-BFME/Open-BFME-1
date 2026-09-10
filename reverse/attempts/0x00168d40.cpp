@@ -1,8 +1,10 @@
 // ?rva00168D40@AIPlayer@@MAE_NPAVWorkOrder@@_NVAsciiString@@@Z
-// partial score=0.82 date=2026-09-10
+// partial score=0.85 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
-// Retail 0x00168D40: AIPlayer::startTraining, identified by the matching
-// production call sequence and the WorkOrder field accesses.
+// Retail 0x00168D40: twin of the naked-lifted AIPlayer::startTraining at
+// 0x00166EF0 (both call ProductionUpdateInterface slot+8 with constants
+// (-1, 0), then slot+0x1c with (thing, order, id) -- a 3-arg BFME-local
+// queueCreateUnit taking the WorkOrder* itself, not ZH's 2-arg form).
 
 class AsciiString
 {
@@ -28,17 +30,19 @@ public:
 	class ProductionUpdateInterface *callGetProductionUpdateInterface(void) const;
 };
 
+class WorkOrder;
+
 class ProductionUpdateInterface
 {
 public:
 	virtual void slot00(void) = 0;
 	virtual void slot04(void) = 0;
-	virtual int requestUniqueUnitID(void) = 0;
+	virtual int requestUniqueUnitID(int, int) = 0;
 	virtual void slot0c(void) = 0;
 	virtual void slot10(void) = 0;
 	virtual void slot14(void) = 0;
 	virtual void slot18(void) = 0;
-	virtual bool queueCreateUnit(const ThingTemplate *thing, int id) = 0;
+	virtual bool queueCreateUnit(const ThingTemplate *thing, WorkOrder *order, int id) = 0;
 };
 
 class WorkOrder
@@ -83,7 +87,7 @@ bool AIPlayer::rva00168D40(WorkOrder *order, bool busyOK, AsciiString teamName)
 	if (factory)
 	{
 		pu = factory->callGetProductionUpdateInterface();
-		if (pu && pu->queueCreateUnit(order->m_thing, pu->requestUniqueUnitID()))
+		if (pu && pu->queueCreateUnit(order->m_thing, order, pu->requestUniqueUnitID(-1, 0)))
 		{
 			order->m_factoryID = factory->getID();
 			GlobalData *globalData = *(GlobalData **)0x012ed5c8;
