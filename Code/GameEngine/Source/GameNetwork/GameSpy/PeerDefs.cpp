@@ -517,10 +517,8 @@ const AsciiString& GameSpyInfo::getConfig( void )
 // Queue RVA 0x0063777A was inside createNewGameSpyInfoInterface; true start is SEH @ 0x006377D0.
 
 // ?TearDownGameSpy@@YAXXZ
-// Body in PeerDefs_TearDownGameSpy.asm (exact 607B retail @ 0x00633390).
-// Ghidra ENTRY size 607 (queue 575 was short). ZH C++ blocked by GameSpyInfo
-// vtable slots (getLocalProfileID +0x70, getInternalIP +0x14c) and PSPlayerStats
-// frame size (sub esp 0x1e8 vs 0x1c0).
+// Real C++ body in PeerDefs_TearDownGameSpy.cpp (607B retail @0x00633390).
+// It preserves the BFME GameSpyInfo slots+70/+14C and 0x1C4-byte stats value.
 
 
 void GameSpyInfo::addToIgnoreList( AsciiString nick )
