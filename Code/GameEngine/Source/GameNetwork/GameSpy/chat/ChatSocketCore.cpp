@@ -144,9 +144,10 @@ static void ciBufferClipFront(ciBuffer *buffer, int length)
 	buffer->buffer[buffer->length] = '\0';
 }
 
-CHATBool ciSocketInit(ciSocket *socket, CILoginType loginType)
+CHATBool ciSocketInit(ciSocket *socket, const char *nick)
 {
-	(void)loginType;
+	// The retail caller passes its selected nickname; this SDK ignores it.
+	(void)nick;
 	memset(socket, 0, sizeof(*socket));
 	socket->sock = ~0U;
 	if (ciBufferInit(&socket->inputQueue)) {

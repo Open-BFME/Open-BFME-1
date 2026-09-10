@@ -1,12 +1,11 @@
-// ?d_0027d670@@YAXXZ
-// partial score=0.87 date=2026-09-06
-// ?privateIdle@AIUpdateInterface@@MAEXW4CommandSourceType@@@Z
-// BFME AIUpdateInterface::privateIdle reconstruction.
+// BFME 1.03 AIUpdateInterface::privateIdle (RVA 0x0027D670).
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x0027D670: AIUpdateInterface::privateIdle.  BFME keeps the
-// containment and AI pointers at Object+0x1fc/+0x204, and propagates an idle
-// command through non-horde passengers when the carrier has an attack/victim.
+// TU-local views preserve the retail object offsets and virtual slots. The
+// behavior follows the Generals AIUpdate implementation with BFME's rampage,
+// horde-containment and model-condition handling recovered from retail.
+// The visible recursive override walk is significant: MSVC can retain the
+// owning Object across this read-only helper, reproducing retail's registers.
 
 typedef bool Bool;
 typedef int Int;
@@ -15,12 +14,34 @@ typedef int ObjectID;
 
 enum CommandSourceType
 {
-	CMD_FROM_PLAYER = 0
+	CMD_FROM_PLAYER = 0,
+	CMD_FROM_SCRIPT,
+	CMD_FROM_AI,
+	CMD_FROM_DOZER,
+	CMD_DEFAULT_SWITCH_WEAPON
 };
 
-enum StateID
+typedef UnsignedInt StateID;
+enum { BFME_AI_IDLE = 0 };
+
+enum StateReturnType
 {
-	BFME_AI_IDLE = 0
+	STATE_CONTINUE = 0,
+	STATE_SUCCESS = -1,
+	STATE_FAILURE = -2
+};
+
+enum KindOfType { KINDOF_PROJECTILE = 25 };
+enum WeaponSetType { WEAPONSET_RAMPAGE = 8 };
+enum ModelConditionFlagType
+{
+	MODELCONDITION_MOVING = 60,
+	MODELCONDITION_BACKING_UP = 146
+};
+
+struct ModelConditionFlags
+{
+	UnsignedInt m_words[10];
 };
 
 class WeaponSetFlags
@@ -31,11 +52,19 @@ public:
 	UnsignedInt m_words[1];
 };
 
+// This view emits the same 26-byte chain walk already owned by
+// Overridable::getFinalOverride in INIWater.cpp (RVA 0x00087A80).
+// Its existing symbol pin reaches that body through ILT 0x000022BB.
 class BfmeOverridable
 {
 public:
 	virtual void slot00();
-	BfmeOverridable *friend_getFinalOverride();
+	const BfmeOverridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	BfmeOverridable *m_nextOverride;
 };
@@ -45,15 +74,30 @@ class ThingTemplate : public BfmeOverridable
 {
 public:
 	unsigned char m_unmodelled_08[0xC8 - 8];
-	UnsignedInt m_kindof[3];
+	UnsignedInt m_kindof[1]; // partial view: only the observed first word is modelled
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+// Override.h accessor shape; Thing.h stores this one-pointer wrapper.
+template<class T> class OVERRIDE
+{
+public:
+	__forceinline const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return static_cast<const T *>(m_overridable->getFinalOverride());
+	}
+	__forceinline operator const T *() const { return operator*(); }
+
+	const T *m_overridable;
+};
+
 class Thing
 {
 public:
 	virtual void slot00();
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
+	__forceinline const ThingTemplate *getTemplate() const { return m_template; }
 };
 
 class Object;
@@ -121,13 +165,23 @@ public:
 	const WeaponSetFlags &getWeaponSetFlags() const;
 	void notifyModelConditionChanged();
 	void adjustModelConditionForWeaponStatus();
+	void clearModelConditionState( ModelConditionFlagType flag )
+	{
+		const UnsignedInt mask = 1U << (flag & 31);
+		UnsignedInt &word = m_modelConditionFlags.m_words[flag >> 5];
+		if (word & mask)
+		{
+			word &= ~mask;
+			notifyModelConditionChanged();
+		}
+	}
 
 	ContainModuleInterface *getContain() const { return m_contain; }
 	AIUpdateInterface *getAI() const { return m_ai; }
 
 	unsigned char m_unmodelled_008[0x108];
-	UnsignedInt m_status[6];
-	unsigned char m_unmodelled_128[0xC8];
+	ModelConditionFlags m_modelConditionFlags; // Object + 0x110
+	unsigned char m_unmodelled_138[0xB8];
 	void *m_behaviors;
 	unsigned char m_unmodelled_1F4[8];
 	ContainModuleInterface *m_contain;
@@ -147,7 +201,7 @@ public:
 	virtual void clear() = 0;
 	virtual void slot18() = 0;
 	virtual void slot1C() = 0;
-	virtual void setState( StateID state ) = 0;
+	virtual StateReturnType setState( StateID state ) = 0;
 };
 
 class GameLogic
@@ -157,24 +211,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-
-struct BFMEAIObjectField
-{
-	unsigned char m_unmodelled_000[8];
-	Object *m_object;
-};
-
-struct BFMEObjectContainField
-{
-	unsigned char m_unmodelled_000[0x1FC];
-	ContainModuleInterface *m_contain;
-};
-
-static ContainModuleInterface *bfmeContainOf( const AIUpdateInterface *ai )
-{
-	const BFMEAIObjectField *fields = reinterpret_cast<const BFMEAIObjectField *>(ai);
-	return reinterpret_cast<const BFMEObjectContainField *>(fields->m_object)->m_contain;
-}
 
 #define BFME_AI_SLOT(N) virtual Int aiSlot##N() = 0
 
@@ -187,7 +223,10 @@ public:
 	BFME_AI_SLOT(08); BFME_AI_SLOT(09); BFME_AI_SLOT(10); BFME_AI_SLOT(11);
 	BFME_AI_SLOT(12); BFME_AI_SLOT(13); BFME_AI_SLOT(14); BFME_AI_SLOT(15);
 	BFME_AI_SLOT(16); BFME_AI_SLOT(17); BFME_AI_SLOT(18); BFME_AI_SLOT(19);
-	BFME_AI_SLOT(20); BFME_AI_SLOT(21); BFME_AI_SLOT(22); BFME_AI_SLOT(23);
+protected:
+	virtual void privateIdle( CommandSourceType cmdSource ); // slot 20
+public:
+	BFME_AI_SLOT(21); BFME_AI_SLOT(22); BFME_AI_SLOT(23);
 	BFME_AI_SLOT(24); BFME_AI_SLOT(25); BFME_AI_SLOT(26); BFME_AI_SLOT(27);
 	BFME_AI_SLOT(28); BFME_AI_SLOT(29); BFME_AI_SLOT(30); BFME_AI_SLOT(31);
 	BFME_AI_SLOT(32); BFME_AI_SLOT(33); BFME_AI_SLOT(34); BFME_AI_SLOT(35);
@@ -210,14 +249,9 @@ public:
 #undef BFME_AI_SLOT
 	virtual Bool isAttacking() const = 0;
 
-	protected:
-	virtual void privateIdle( CommandSourceType cmdSource );
-
-	public:
 	Object *getObject() const { return m_object; }
 	StateMachine *getStateMachine() const { return m_stateMachine; }
 	void setLastCommandSource( CommandSourceType source ) { m_lastCommandSource = source; }
-	ContainModuleInterface *getObjectContain() const { return m_object->getContain(); }
 
 	unsigned char m_unmodelled_04[4];
 	Object *m_object;
@@ -231,14 +265,10 @@ public:
 
 void AIUpdateInterface::privateIdle( CommandSourceType cmdSource )
 {
-	const Object *object = m_object;
-	ThingTemplate *tmpl = object->m_template;
-	if (tmpl && tmpl->m_nextOverride)
-		tmpl = (ThingTemplate *)tmpl->m_nextOverride->friend_getFinalOverride();
-	if (tmpl->m_kindof[0] & 0x2000000)
+	if (getObject()->getTemplate()->m_kindof[0] & (1U << KINDOF_PROJECTILE))
 		return;
 
-	if (object->getWeaponSetFlags().test(8))
+	if (getObject()->getWeaponSetFlags().test(WEAPONSET_RAMPAGE))
 		return;
 
 	ContainModuleInterface *contain = getObject()->getContain();
@@ -276,18 +306,8 @@ void AIUpdateInterface::privateIdle( CommandSourceType cmdSource )
 	getStateMachine()->clear();
 	getStateMachine()->setState(BFME_AI_IDLE);
 
-	Object *flagsObject;
-	flagsObject = m_object;
-	if (flagsObject->m_status[1] & 0x10000000)
-	{
-		flagsObject->m_status[1] &= 0xEFFFFFFF;
-		flagsObject->notifyModelConditionChanged();
-	}
-	if (flagsObject->m_status[4] & 0x40000)
-	{
-		flagsObject->m_status[4] &= 0xFFFBFFFF;
-		flagsObject->notifyModelConditionChanged();
-	}
-	flagsObject->adjustModelConditionForWeaponStatus();
+	getObject()->clearModelConditionState(MODELCONDITION_MOVING);
+	getObject()->clearModelConditionState(MODELCONDITION_BACKING_UP);
+	getObject()->adjustModelConditionForWeaponStatus();
 	setLastCommandSource(cmdSource);
 }
