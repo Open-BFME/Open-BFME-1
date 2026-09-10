@@ -86856,3 +86856,9 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?go@Rva005265F0@@QAEXXZ,0x0000968D,ILT thunk to the 8-byte indexed forwarder body 0x005265F0 route=0x005265F0
 ?getAddresses@IPEnumeration@@QAEPAVEnumeratedIP@@XZ,0x00001E1A,ILT thunk to the retail body 0x00624C80 route=0x00624C80
 ?filterLine@LanguageFilter@@QAEXAAVUnicodeString@@@Z,0x00034EF0,ILT thunk to the retail body 0x0044DB90 route=0x0044DB90
+?getBridgeModelNameDamaged@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x006015F0,Parent raw full-body review: getString field3C via ILT3FBFC; full32B hidden result and ret4; TerrainRoads newBridge and matching header field order prove identity
+?friend_setBridgeModelNameBroken@TerrainRoadType@@QAEXVAsciiString@@@Z,0x006018F0,Parent raw full-body review: setString field4C via ILT372CC; full75B byvalue copy/set887C90 release887940 ret4; TerrainRoads newBridge and matching header field order prove identity
+?getTextureDamaged@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x00601680,Parent raw full-body review: getString field40 via ILT21341; full32B hidden result and ret4; TerrainRoads newBridge and matching header field order prove identity
+?getTextureReallyDamaged@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x006016B0,Parent raw full-body review: getString field48 via ILT347D4; full32B hidden result and ret4; TerrainRoads newBridge and matching header field order prove identity
+?friend_setTextureReallyDamaged@TerrainRoadType@@QAEXVAsciiString@@@Z,0x006019B0,Parent raw full-body review: setString field48 via ILT256F3; full75B byvalue copy/set887C90 release887940 ret4; TerrainRoads newBridge and matching header field order prove identity
+?getTextureBroken@TerrainRoadType@@QAE?AVAsciiString@@XZ,0x006016E0,Parent raw full-body review: getString field50 via ILTDDB9; full32B hidden result and ret4; TerrainRoads newBridge and matching header field order prove identity

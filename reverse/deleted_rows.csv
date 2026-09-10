@@ -25185,3 +25185,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ??1PlayerUpgradeSpecialPowerModuleData@@UAE@XZ,0x000658A0,Wrong polymorphic module-data identity: actual149B standalone vector<AsciiString> destructor; SubsystemLegendEntry calls26AB2 at78245/78252/7825F; four-byte elements released by887940; typed replacement follows
 ?xfer@AIAttackSquadState@@MAEXPAVXfer@@@Z,0x00181C10,Wrong AIAttackSquadState identity: constructor171D50 writes1098540; slot3 ILT36A1B to181C10 and slot4 ILT1456F to matched AIMoveOntoWallState::onEnter. Real C++ xfer replacement follows.
 ?update@ControlBar@@,0x0049FC90,False semantic alias of setControlBarSchemeByPlayerTemplate naked body; actual typed ControlBar::update pin is 0x004A5950.
+?newBridge@TerrainRoadCollection@@QAEPAVTerrainRoadType@@XZ,0x00602830,False no-argument alias; full782B retail includes byvalue AsciiString cleanup and ret4 at602B3B.
