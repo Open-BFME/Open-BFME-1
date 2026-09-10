@@ -8735,6 +8735,7 @@ name,address,notes
 ??1HealCrateCollide@@MAE@XZ,0x000211E3,destructor ILT to 0x00217B20
 ??1HeroModeSpecialAbilityUpdate@@MAE@XZ,0x0002A9CD,destructor ILT to 0x0025F900
 ??1HeroModeSpecialAbilityUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base dtor pin
+??1HeroModeSpecialAbilityUpdateModuleData@@UAE@XZ,0x00023948,route=0x0025FB80; matched constructor vtable slot zero reaches scalar deleting wrapper 0x0025FB50 which calls this ILT to the matched destructor
 ??1HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ,0x0000466F,rel32 pin for exact-ambiguous landing
 ??1HighlanderBody@@UAE@XZ,0x000408F9,destructor ILT to 0x00213800
 ??1HijackerUpdateModuleDataBase@@UAE@XZ,0x009A1A40,Open-BFME5 base pin
