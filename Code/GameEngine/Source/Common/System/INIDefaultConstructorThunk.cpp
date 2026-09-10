@@ -1,177 +1,85 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??0INI@@: Code/GameEngine/Source/Common/INI/INI_stl.cpp
-// readable body of ??0INI@@QAE@XZ: Code/GameEngine/Source/Common/INI/ini_parsers.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ob1 /Ireference/shims/ini_inline /Ireference/shims/ini /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
-class INI {
-public:
-    INI();
-};
-__declspec(naked) INI::INI()
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//	(c) 2001-2003 Electronic Arts Inc.																//
+////////////////////////////////////////////////////////////////////////////////
+
+// Real C++ body recovered from the canonical donor:
+// Code/GameEngine/Source/Common/INI/ini_parsers.cpp
+// BFME's retail layout is proven by the constructor bytes: the read counters
+// are at +8/+C, ENDSCRIPT occupies +0x428, m_endOfFile is +0x42C, and the
+// BfmeThingTK subobject begins at +0x834. These are TU-local layout shims so
+// the shared INI header remains untouched.
+#include <new>
+#include "Common/AsciiString.h"
+
+class BfmeThingTK
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x2b
-        __emit 0x63
-        __emit 0x05
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x68
-        __emit 0xec
-        __emit 0x2e
-        __emit 0x08
-        __emit 0x01
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x1e
-        __emit 0xe8
-        __emit 0x61
-        __emit 0x79
-        __emit 0x03
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8e
-        __emit 0x34
-        __emit 0x08
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x89
-        __emit 0x5e
-        __emit 0x08
-        __emit 0x89
-        __emit 0x5e
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x14
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc8
-        __emit 0x04
-        __emit 0x13
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x18
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc0
-        __emit 0x04
-        __emit 0x13
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x1c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xb8
-        __emit 0x04
-        __emit 0x13
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x20
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xb4
-        __emit 0x04
-        __emit 0x13
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x24
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc8
-        __emit 0x39
-        __emit 0x0f
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x86
-        __emit 0x28
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xa8
-        __emit 0x04
-        __emit 0x13
-        __emit 0x01
-        __emit 0x88
-        __emit 0x9e
-        __emit 0x2c
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x0a
-        __emit 0xab
-        __emit 0x17
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x88
-        __emit 0x5e
-        __emit 0x10
-        __emit 0x88
-        __emit 0x9e
-        __emit 0x2d
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+public:
+	BfmeThingTK *bfmeInitTK();
+
+private:
+	void *m_bfmeVft;
+	void *m_bfmeOne;
+	void *m_bfmeTwo;
+	void *m_bfmeThree;
+	void *m_bfmeFour;
+};
+
+class INI
+{
+public:
+	INI();
+
+private:
+	void *m_file;
+	AsciiString m_filename;
+	unsigned m_readBufferNext;
+	unsigned m_readBufferUsed;
+	char m_buffer[1028];
+	const char *m_seps;
+	const char *m_sepsPercent;
+	const char *m_sepsColon;
+	const char *m_sepsQuote;
+	const char *m_blockEndToken;
+	const char *m_endScriptToken;
+	unsigned char m_endOfFile;
+	char m_curBlockStart[1028];
+	BfmeThingTK m_thing;
+};
+
+// ??0INI@@QAE@XZ
+INI::INI() : m_file(NULL), m_filename("None")
+{
+    m_readBufferNext = 0;
+    m_readBufferUsed = 0;
+	m_seps = " \n\r\t=";
+	m_sepsPercent = " \n\r\t=%%";
+	m_sepsColon = " \n\r\t=:";
+	m_sepsQuote = "\"\n=";
+	m_blockEndToken = "END";
+	m_endScriptToken = "ENDSCRIPT";
+	m_endOfFile = 0;
+	m_thing.bfmeInitTK();
+	m_buffer[0] = 0;
+    m_curBlockStart[0] = 0;
 }
