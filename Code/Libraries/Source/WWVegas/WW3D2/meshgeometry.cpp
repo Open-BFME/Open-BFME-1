@@ -1378,29 +1378,47 @@ void MeshGeometryClass::Compute_Vertex_Normals(Vector3 * vnorm)
  * HISTORY:                                                                                    *
  *   11/9/2000  gth : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshGeometryClass::Compute_Bounds present-unmatched
+struct MeshGeometryRetailBoundsView
+{
+	char pad_00[0x18];
+	int flags;
+	char pad_1c[0x0c];
+	int vertex_count;
+	char pad_2c[4];
+	ShareBufferClass<Vector3> *vertex;
+	char pad_34[0x34];
+	Vector3 bound_box_min;
+	Vector3 bound_box_max;
+	Vector3 bound_sphere_center;
+	float bound_sphere_radius;
+};
+
 void MeshGeometryClass::Compute_Bounds(Vector3 * verts)
 {
-	BoundBoxMin.Set(0,0,0);
-	BoundBoxMax.Set(0,0,0);
-	BoundSphereCenter.Set(0,0,0);
-	BoundSphereRadius = 0.0;
+	MeshGeometryRetailBoundsView * const geometry =
+		reinterpret_cast<MeshGeometryRetailBoundsView *>(this);
+	geometry->bound_box_min.Set(0,0,0);
+	geometry->bound_box_max.Set(0,0,0);
+	geometry->bound_sphere_center.Set(0,0,0);
+	geometry->bound_sphere_radius = 0.0;
 
-	if (VertexCount == 0) {
+	if (geometry->vertex_count == 0) {
 		return;
 	}
 
 	// find bounding box minimum and maximum
-	if (verts == NULL) {
-		verts = Vertex->Get_Array();
+	Vector3 *input_verts = verts;
+	if (input_verts == NULL) {
+		input_verts = geometry->vertex->Get_Array();
 	}
-	VectorProcessorClass::MinMax(verts,BoundBoxMin,BoundBoxMax,VertexCount);
+	VectorProcessorClass::MinMax(input_verts,geometry->bound_box_min,geometry->bound_box_max,
+		geometry->vertex_count);
 
 	// calculate the bounding sphere
-	BoundSphereCenter = (BoundBoxMin + BoundBoxMax)/2.0f;
-	BoundSphereRadius = (float)(BoundBoxMax-BoundSphereCenter).Length2();
-	BoundSphereRadius = ((float)sqrt(BoundSphereRadius))*1.00001f;
-	Set_Flag(DIRTY_BOUNDS,false);
+	geometry->bound_sphere_center = (geometry->bound_box_min + geometry->bound_box_max)/2.0f;
+	geometry->bound_sphere_radius = (float)(geometry->bound_box_max-geometry->bound_sphere_center).Length2();
+	geometry->bound_sphere_radius = ((float)sqrt(geometry->bound_sphere_radius))*1.00001f;
+	geometry->flags &= ~MeshGeometryClass::DIRTY_BOUNDS;
 }
 
 
