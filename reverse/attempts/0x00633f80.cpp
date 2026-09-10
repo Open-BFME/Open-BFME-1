@@ -1,6 +1,6 @@
 // ?playerLeftGroupRoom@GameSpyInfo@@UAEXVAsciiString@@@Z
 // partial score=0.99 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /G7
 // Open-BFME7: GameSpyInfo::playerLeftGroupRoom(AsciiString nick) at 0x00633F80
 // (168 B): m_playerInfoMap.erase(nick) with the map at this+0x4c. STLport's
 // erase_unique is inlined around an out-of-line find (iterator returned in
@@ -8,7 +8,7 @@
 // pair<const AsciiString, PlayerInfo> (PlayerInfo's out-of-line destructor,
 // then the key's releaseBuffer), free the 0x48-byte node, drop the count.
 // The by-value nick is released on the way out.
-#include "../../../../../reference/shims/stringinline/StringInline.h"
+#include "../../reference/shims/stringinline/StringInline.h"
 
 class PlayerInfo
 {
