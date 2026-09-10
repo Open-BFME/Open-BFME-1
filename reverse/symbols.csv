@@ -11065,7 +11065,11 @@ name,address,notes
 ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B,0x012ED8B8,empty BFME 192-bit KindOfMask used by Player::countObjects
 ?LANbuttonPushed@@3_NA,0x012F3D4A,LAN overlay shared flag; NetworkDirectConnectSystem back-button set
 ?LZHLCreateDecompressor@@YAPAXXZ,0x00823170,LZH-Light decompressor factory wrapper
+?LZHLCreateCompressor@@YAPAXXZ,0x00823110,LZH-Light compressor factory wrapper
+?LZHLCompress@@YAIPAX00I@Z,0x00823130,LZH-Light compressor wrapper
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
+?LZHLCompressorCalcMaxBuf@@YAII@Z,0x00823200,LZH-Light compressor buffer size wrapper
+?LZHLDestroyCompressor@@YAXPAX@Z,0x00823210,LZH-Light compressor destroy wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
 ?Lerp@Matrix3D@@SAXABV1@0MAAV1@@Z,0x008D8480,static Matrix3D::Lerp called by W3DView lerpCameraOneFrame at 0x00740600
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680

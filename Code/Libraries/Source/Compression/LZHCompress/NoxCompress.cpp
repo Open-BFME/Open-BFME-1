@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-c-
-// Recovered from the EA Generals reference.  The three LZH-Light wrapper
+// Recovered from the EA Generals reference.  The four LZH-Light wrapper
 // calls are pinned to the matching retail wrapper bodies in this executable.
 
 typedef int Int;
@@ -22,20 +22,40 @@ LZHL_DHANDLE LZHLCreateDecompressor();
 __declspec(noinline) int LZHLDecompress(LZHL_DHANDLE, UnsignedByte *, UnsignedInt *, const UnsignedByte *, UnsignedInt *);
 void LZHLDestroyDecompressor(LZHL_DHANDLE);
 
-extern "C" __declspec(dllimport) void * __cdecl fopen(const char *, const char *);
-extern "C" __declspec(dllimport) int __cdecl fseek(void *, long, int);
-extern "C" __declspec(dllimport) long __cdecl ftell(void *);
-extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *, unsigned int, unsigned int, void *);
-extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *, unsigned int, unsigned int, void *);
-extern "C" __declspec(dllimport) int __cdecl fclose(void *);
+struct FILE;
+
+extern "C" __declspec(dllimport) FILE * __cdecl fopen(const char *, const char *);
+extern "C" __declspec(dllimport) int __cdecl fseek(FILE *, long, int);
+extern "C" __declspec(dllimport) long __cdecl ftell(FILE *);
+extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *, unsigned int, unsigned int, FILE *);
+extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *, unsigned int, unsigned int, FILE *);
+extern "C" __declspec(dllimport) int __cdecl fclose(FILE *);
 extern "C" __declspec(dllimport) void * __cdecl malloc(unsigned int);
 extern "C" __declspec(dllimport) void __cdecl free(void *);
+
+typedef void *LZHL_CHANDLE;
+
+template <class T> const T &min(const T &a, const T &b)
+{
+	if (a < b) {
+		return a;
+	} else {
+		return b;
+	}
+}
+
+LZHL_CHANDLE LZHLCreateCompressor();
+unsigned int LZHLCompress(LZHL_CHANDLE, void *, void *, unsigned int);
+void LZHLDestroyCompressor(LZHL_CHANDLE);
+unsigned int LZHLCompressorCalcMaxBuf(unsigned);
+
+#define BLOCKSIZE 500000
 
 Bool DecompressFile(char *infile, char *outfile)
 {
 	UnsignedInt rawSize = 0, compressedSize = 0;
-	void *inFilePtr = 0;
-	void *outFilePtr = 0;
+	FILE *inFilePtr = 0;
+	FILE *outFilePtr = 0;
 	char *inBlock = 0;
 	char *outBlock = 0;
 	LZHL_DHANDLE decompress;
@@ -84,6 +104,64 @@ Bool DecompressFile(char *infile, char *outfile)
 		if (outFilePtr)
 		{
 			fwrite(outBlock, rawSize, 1, outFilePtr);
+			fclose(outFilePtr);
+		}
+		else
+			return false;
+
+		free(inBlock);
+		free(outBlock);
+		return true;
+	}
+
+	return false;
+}
+
+Bool CompressFile(char *infile, char *outfile)
+{
+	unsigned int rawSize = 0;
+	unsigned int compressedSize = 0, compressed = 0, i = 0;
+	FILE *inFilePtr = 0;
+	FILE *outFilePtr = 0;
+	char *inBlock = 0;
+	char *outBlock = 0;
+	LZHL_CHANDLE compressor;
+	unsigned int blocklen;
+
+	if ((infile == 0) || (outfile == 0))
+		return false;
+
+	inFilePtr = fopen(infile, (const char *)0x0107FF20);
+	if (inFilePtr)
+	{
+		fseek(inFilePtr, 0, 2);
+		rawSize = ftell(inFilePtr);
+		fseek(inFilePtr, 0, 0);
+
+		inBlock = (char *)malloc(rawSize);
+		outBlock = (char *)malloc(LZHLCompressorCalcMaxBuf(rawSize));
+
+		if ((inBlock == 0) || (outBlock == 0))
+			return false;
+
+		fread(inBlock, 1, rawSize, inFilePtr);
+		fclose(inFilePtr);
+
+		compressor = LZHLCreateCompressor();
+		for (i = 0; i < rawSize; i += BLOCKSIZE)
+		{
+			blocklen = min((unsigned int)BLOCKSIZE, rawSize - i);
+			compressed = LZHLCompress(compressor, outBlock + compressedSize, inBlock + i, blocklen);
+			compressedSize += compressed;
+		}
+
+		LZHLDestroyCompressor(compressor);
+
+		outFilePtr = fopen(outfile, (const char *)0x0107FF60);
+		if (outFilePtr)
+		{
+			fwrite(&rawSize, sizeof(unsigned int), 1, outFilePtr);
+			fwrite(outBlock, compressedSize, 1, outFilePtr);
 			fclose(outFilePtr);
 		}
 		else
