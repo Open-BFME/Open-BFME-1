@@ -1,5 +1,3 @@
-// ?_bfme_onInitGadget@BfmeAptScreenOnlineLogin@@QAEXPBDPAXPAVGameWindow@@@Z
-// partial score=0.97 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 //
@@ -189,11 +187,9 @@ void BfmeAptScreenOnlineLogin::_bfme_onInitGadget(
 		}
 
 		if (m_pendingButtonState == 1 && m_fieldMask == 0x10f)
-		{
 			m_pendingButtonState = 0;
-			void *window2 = m_context->m_window;
-			g_theWindowManager->add(window2, "CallChild", 1,
-				(void *)"EnableButtonDeleteNickname", 0, 0, 0, 0);
-		}
+		void *window2 = m_context->m_window;
+		g_theWindowManager->add(window2, "CallChild", 1,
+			(void *)"EnableButtonDeleteNickname", 0, 0, 0, 0);
 	}
 }
