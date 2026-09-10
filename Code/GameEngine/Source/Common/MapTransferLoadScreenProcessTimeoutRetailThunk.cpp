@@ -1,271 +1,103 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the retail MapTransferLoadScreen timeout MASM body into a C++ thunk.
+//
+// Retail 0x00510130..0x00510235 (exclusive end 0x00510236), ret 4.
+// FileTransfer::doFileTransfer at 0x0066CE60 calls the
+// BfmeAptScreenMapTransfer timeout body through the retail virtual-file
+// transfer path.  This source preserves that body's swprintf ABI and local
+// buffer extent without retaining the former naked byte dump.
 
-extern "C" __declspec(naked) void bfme_MapTransferLoadScreenProcessTimeoutRetail_510130()
+typedef char Bool;
+typedef unsigned short WideChar;
+
+template <typename T> class StringBase
 {
-    __asm {
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0x56;
-        __emit 0xed;
-        __emit 0x02;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x81;
-        __emit 0xec;
-        __emit 0x14;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xc9;
-        __emit 0x7d;
-        __emit 0x02;
-        __emit 0x33;
-        __emit 0xc9;
-        __emit 0xb8;
-        __emit 0x89;
-        __emit 0x88;
-        __emit 0x88;
-        __emit 0x88;
-        __emit 0xf7;
-        __emit 0xe9;
-        __emit 0x56;
-        __emit 0x03;
-        __emit 0xd1;
-        __emit 0xc1;
-        __emit 0xfa;
-        __emit 0x05;
-        __emit 0x8b;
-        __emit 0xf2;
-        __emit 0xc1;
-        __emit 0xee;
-        __emit 0x1f;
-        __emit 0x03;
-        __emit 0xf2;
-        __emit 0x8b;
-        __emit 0xc6;
-        __emit 0x6b;
-        __emit 0xc0;
-        __emit 0x3c;
-        __emit 0x57;
-        __emit 0x2b;
-        __emit 0xc8;
-        __emit 0x6a;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0xf9;
-        __emit 0x8b;
-        __emit 0x0d;
-        __emit 0x7c;
-        __emit 0x14;
-        __emit 0x2f;
-        __emit 0x01;
-        __emit 0x8b;
-        __emit 0x11;
-        __emit 0x68;
-        __emit 0x7c;
-        __emit 0x9b;
-        __emit 0x0f;
-        __emit 0x01;
-        __emit 0x8d;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x50;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x28;
-        __emit 0x8b;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xc0;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xc0;
-        __emit 0x08;
-        __emit 0xeb;
-        __emit 0x05;
-        __emit 0xb8;
-        __emit 0x8c;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x57;
-        __emit 0x56;
-        __emit 0x50;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x51;
-        __emit 0xff;
-        __emit 0x15;
-        __emit 0xe4;
-        __emit 0x94;
-        __emit 0x35;
-        __emit 0x01;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x10;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xe8;
-        __emit 0x1c;
-        __emit 0x80;
-        __emit 0x37;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x52;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0xe8;
-        __emit 0x1e;
-        __emit 0x8c;
-        __emit 0x37;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x24;
-        __emit 0x50;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xc7;
-        __emit 0x84;
-        __emit 0x24;
-        __emit 0x28;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0xe5;
-        __emit 0x89;
-        __emit 0x37;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0x0d;
-        __emit 0xe8;
-        __emit 0x19;
-        __emit 0x2f;
-        __emit 0x01;
-        __emit 0xc6;
-        __emit 0x84;
-        __emit 0x24;
-        __emit 0x2c;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x01;
-        __emit 0xe8;
-        __emit 0xd2;
-        __emit 0xbb;
-        __emit 0xaf;
-        __emit 0xff;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x0c;
-        __emit 0xc6;
-        __emit 0x84;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xe8;
-        __emit 0x37;
-        __emit 0x77;
-        __emit 0x37;
-        __emit 0x00;
-        __emit 0x8d;
-        __emit 0x4c;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0xc7;
-        __emit 0x84;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xe8;
-        __emit 0xb3;
-        __emit 0x7f;
-        __emit 0x37;
-        __emit 0x00;
-        __emit 0x8b;
-        __emit 0x8c;
-        __emit 0x24;
-        __emit 0x1c;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5f;
-        __emit 0x5e;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0d;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x81;
-        __emit 0xc4;
-        __emit 0x20;
-        __emit 0x02;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xc2;
-        __emit 0x04;
-        __emit 0x00;
-    }
-}
+	friend class AsciiString;
+	friend class UnicodeString;
 
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other );
+	~StringBase();
+
+	void *m_data;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString( const char *text ) : StringBase<char>( text ) {}
+	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
+	~AsciiString() {}
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+	UnicodeString() : StringBase<WideChar>() {}
+	UnicodeString( const WideChar *text ) : StringBase<WideChar>( text ) {}
+	UnicodeString( const UnicodeString &other )
+		: StringBase<WideChar>( other ) {}
+	~UnicodeString() {}
+
+	const WideChar *str() const
+	{
+		if( m_data )
+			return reinterpret_cast<const WideChar *>(
+				reinterpret_cast<const char *>( m_data ) + 8 );
+		return reinterpret_cast<const WideChar *>( 0x0107388C );
+	}
+};
+
+class GameTextInterface
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual UnicodeString fetch( const char *, Bool *exists = 0 );
+};
+
+class WindowManager
+{
+public:
+	void bfme_setAptText( const AsciiString &, const UnicodeString & );
+};
+
+extern "C" __declspec(dllimport) int __cdecl swprintf(
+	WideChar *, const WideChar *, ... );
+
+extern GameTextInterface *TheGameText;
+extern WindowManager *g_theWindowManager;
+
+class BfmeAptScreenMapTransfer
+{
+public:
+	void processTimeout( int secondsLeft );
+};
+
+// ?processTimeout@BfmeAptScreenMapTransfer@@QAEXH@Z
+void BfmeAptScreenMapTransfer::processTimeout( int secondsLeft )
+{
+	if( secondsLeft < 0 )
+		secondsLeft = 0;
+
+	int minutes = secondsLeft / 60;
+	int seconds = secondsLeft - minutes * 60;
+	WideChar buffer[ 0x104 ];
+	swprintf( buffer, TheGameText->fetch( "MapTransfer:Timeout" ).str(),
+		minutes, seconds );
+
+	UnicodeString text( buffer );
+	g_theWindowManager->bfme_setAptText(
+		AsciiString( "APT:FileTransferLoadingTime" ), text );
+}
