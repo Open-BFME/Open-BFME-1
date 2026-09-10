@@ -669,17 +669,16 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
-	int zero = 0;
 	  
 		switch(Flavor) {
 		case ANIM_FLAVOR_TIMECODED:
 		{
 			TimeCodedMotionChannelClass * qchan = NodeMotion[pividx].tc.Q;
-			if (qchan != (TimeCodedMotionChannelClass *)zero) {
+			if (qchan) {
 				Quaternion q;
-				uint32 tc0 = frame;
-				uint32 pidx;
 				uint32 * data = qchan->Data;
+				uint32 pidx;
+				uint32 tc0 = frame;
 				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
 					int rightIdx = (int)qchan->NumTimeCodes;
 					int leftIdx = 0;
@@ -709,13 +708,13 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 				uint32 p2idx;
 				if (pidx == ((qchan->NumTimeCodes - 1) * qchan->PacketSize)) {
 					const float32 * vec = (const float32 *)&data[pidx + 1];
-					q.Set(vec[0], vec[1], vec[2], vec[3]);
+					q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
 				} else {
 					p2idx = pidx + qchan->PacketSize;
 					uint32 time = data[p2idx];
 					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
 						const float32 * vec = (const float32 *)&data[pidx + 1];
-						q.Set(vec[0], vec[1], vec[2], vec[3]);
+						q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
 					} else {
 						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
@@ -729,21 +728,21 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 				::Build_Matrix3D(q,mtx);
 			}
 			else mtx.Make_Identity();
-			if (motion->tc.X != (TimeCodedMotionChannelClass *)zero) motion->tc.X->Get_Vector(frame, &(mtx[0][3]));
-			if (motion->tc.Y != (TimeCodedMotionChannelClass *)zero) motion->tc.Y->Get_Vector(frame, &(mtx[1][3]));
-			if (motion->tc.Z != (TimeCodedMotionChannelClass *)zero) motion->tc.Z->Get_Vector(frame, &(mtx[2][3]));
+			if (motion->tc.X) motion->tc.X->Get_Vector(frame, &(mtx[0][3]));
+			if (motion->tc.Y) motion->tc.Y->Get_Vector(frame, &(mtx[1][3]));
+			if (motion->tc.Z) motion->tc.Z->Get_Vector(frame, &(mtx[2][3]));
 			break;
 		}
 		case ANIM_FLAVOR_ADAPTIVE_DELTA:
 		{
-			if (NodeMotion[pividx].ad.Q != (AdaptiveDeltaMotionChannelClass *)zero) {
+			if (NodeMotion[pividx].ad.Q) {
 				::Build_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);
 			}
 			else mtx.Make_Identity();
 
-			if (motion->ad.X != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.X->Get_Vector(frame, &(mtx[0][3]));
-			if (motion->ad.Y != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.Y->Get_Vector(frame, &(mtx[1][3]));
-			if (motion->ad.Z != (AdaptiveDeltaMotionChannelClass *)zero) motion->ad.Z->Get_Vector(frame, &(mtx[2][3]));
+			if (motion->ad.X) motion->ad.X->Get_Vector(frame, &(mtx[0][3]));
+			if (motion->ad.Y) motion->ad.Y->Get_Vector(frame, &(mtx[1][3]));
+			if (motion->ad.Z) motion->ad.Z->Get_Vector(frame, &(mtx[2][3]));
 			break;
 		}
 		default:
