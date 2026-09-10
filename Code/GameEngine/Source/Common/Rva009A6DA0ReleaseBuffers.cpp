@@ -1,4 +1,9 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD
+// Codec subobject allocation family. Retail helpers use private ESI (cleanup)
+// and EAX (initializer) arguments; static C++ preserves those conventions.
+// Full bodies: 009A6DA0/67, 009A6DF0/206, 009A6F20/73.
+// The factory is called by matched bfmeInitCodecJX; free routes through
+// 009A5980 to matched 009A58E0. Integration entries below are not claimed.
 void bfmeTwoBZB(void *what);
 struct Rva009A6DA0Buffer {
  unsigned char pad[0x180];
@@ -35,3 +40,15 @@ static int Rva009A6DF0InitializeBuffers(Rva009A6DA0Buffer *self) {
 }
 // Absent-from-retail C++ integration entry for the private initializer.
 int InitializeCodecBufferPair(Rva009A6DA0Buffer *self) { return Rva009A6DF0InitializeBuffers(self); }
+
+struct BfmeSubJX : Rva009A6DA0Buffer { unsigned char rest[0x990-sizeof(Rva009A6DA0Buffer)]; };
+extern "C" void *__cdecl memset(void *p,int value,unsigned int n);
+void Rva009A6EC0Release(void **what);
+BfmeSubJX *bfmeMakeSubJX() {
+ BfmeSubJX *result=(BfmeSubJX*)Bucket::operator new(0x990,Bucket::Zero);
+ BfmeSubJX *self=result;
+ if(!result) return 0;
+ memset(result,0,0x990);
+ if(!Rva009A6DF0InitializeBuffers(result)) { Rva009A6EC0Release((void**)&self); result=self; }
+ return result;
+}
