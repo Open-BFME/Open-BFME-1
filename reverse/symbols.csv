@@ -79023,6 +79023,7 @@ name,address,notes
 ?finish@S4Sink004135C0@@QAEXXZ,0x0001A64F,ILT to 0x00413580 LargeGroupBonusUpdate notify sink closer
 ?finish@SidesInfoSegmentShim@@QAEXPAX0@Z,0x00024C17,SidesInfo clear tail helper shim
 ?finish@XmlNameSlotList@@QAEXXZ,0x0035EE70,pin for Rva002E2970 applyNameFlags
+?finish@XmlNameSlotList@@QAEHXZ,0x0035EE70,return statuses 0 2 and parser tail states prove int ABI for the recovered finish body
 ?finishConstruct@BFMENetworkQueue1@@QAEXPAX@Z,0x0002E91F,native BFME queue-1 constructor helper ILT
 ?finishConstruct@BFMENetworkQueue@@QAEXPAX@Z,0x000109D3,native BFME queue-0 constructor helper ILT
 ?finishInitialize@Rva007B44E0ShadowPair@@QAEXXZ,0x0037D3B0,callee recovered from retail REL32 at 0x007B456F
@@ -86733,3 +86734,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva009A9370@@YAXXZ,0x009A9370,codec dispatch slot6 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009B6BB0@@YAXXZ,0x009B6BB0,codec dispatch slot19 filler (generic tier); no ghidra boundary or identity yet
 ??$_Construct@U?$pair@QAURva009A4130Target@@URva009A4130Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@QAURva009A4130Target@@URva009A4130Value@@@0@ABU10@@Z,0x009A3520,neutral 8-byte pair constructor; retail body is the existing 23-byte copy helper at 0x009A3520
+?scan@Rva0035E8B0Tail@@QAEHXZ,0x0035E8B0,tail state reached through ILT 0x00047C7B from XmlNameSlotList::finish; address-derived parser state body
