@@ -97,12 +97,50 @@ void bfmeGoEGEa()
 	g_bfmeObj2EGE->bfmeVirt58EGE();
 }
 
+struct BfmeNodeEGF
+{
+	unsigned char m_bfmeHead[8];
+	BfmeNodeEGF *m_bfmeNext;
+	unsigned char m_bfmePad[0x14];
+	int m_bfmeFrame;
+};
+
 class BfmeSubEGF
 {
 public:
 	bool bfmeAskEGFa();
 	bool bfmeAskEGFb();
+
+	unsigned char m_bfmeHead[4];
+	BfmeNodeEGF *m_bfmeList;
+	unsigned char m_bfmePad[8];
+	void *m_bfmeOwner;
 };
+
+// Retail 0x0026E5A0: the EGF query walks at most 100 entries and reports
+// whether one has a frame other than the invalid sentinel.  The two leading
+// guards are the BFME subobject's list and owner fields at +0x04 and +0x10.
+bool BfmeSubEGF::bfmeAskEGFa()
+{
+	BfmeNodeEGF *node = m_bfmeList;
+	if (node == 0)
+		return false;
+	if (m_bfmeOwner == 0)
+		return false;
+
+	unsigned int i = 0;
+	int invalidFrame = 0x7fffffff;
+	do
+	{
+		if (i++ >= 100)
+			return false;
+		if (node->m_bfmeFrame != invalidFrame)
+			return true;
+		node = node->m_bfmeNext;
+	}
+	while (node != 0);
+	return false;
+}
 
 struct BfmeThingEGF
 {
