@@ -86840,3 +86840,7 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?rva0089F010@EAStringC@@QBE?AV1@H@Z,0x0089F010,RVA-qualified EAStringC-family substring helper; raw206B ends89F0DE; thiscall hidden result pointer plus count and ret8 independently verified; no original method-name claim
 ?rva002BDBF0@GiantBirdFollowPathState@@QAE_NXZ,0x002BDBF0,Address-qualified helper called by vtable-proven GiantBirdFollowPathState update; ILT24884 to312B body; state+1C owner and AL boolean return with ret at2BDD27 independently verified
 ?_M_throw_out_of_range@?$_String_base@DV?$allocator@D@_STL@@@_STL@@QBEXXZ,0x006434C0,Vendor _string.h declares range check on _String_base; caller82C490 passes receiver and no stack arguments via ILT132CD; retail target6434C0 is shared one-byte ret; no invented helper definition
+?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z,0x0082E5F0,Pathfinder reset node allocator alias
+?release@BfmePathfindList@@QAEXPAX@Z,0x000371F5,Pathfinder reset list release alias
+?reset@BfmePathfindLayerReset@@QAEXXZ,0x000379FC,Pathfinder reset layer alias
+?reset@BfmeZoneManagerReset@@QAEXXZ,0x0000742D,Pathfinder reset zone manager alias

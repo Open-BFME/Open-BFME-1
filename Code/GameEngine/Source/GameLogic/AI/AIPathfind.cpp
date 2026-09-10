@@ -3828,71 +3828,196 @@ Pathfinder::~Pathfinder( void )
 	PathfindCellInfo::releaseCellInfos();
 }
 
-// ?reset@Pathfinder@@QAEXXZ present-unmatched
+class PathfindCellInfoPool
+{
+public:
+	void reset(void);
+};
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+class BfmePathfindCell
+{
+public:
+	~BfmePathfindCell(void);
+	char m_pad[0x10];
+};
+
+#pragma comment(linker, "/alternatename:??1BfmePathfindCell@@QAE@XZ=?j_00036ab1@@YAXXZ")
+
+class BfmeChildZM
+{
+public:
+	void bfmeReleaseZM(void);
+};
+
+class BfmeSceneVectorElement
+{
+public:
+	static void __cdecl operator delete[](void *value);
+};
+
+class BfmeReleaseNode
+{
+public:
+	virtual void release(Int count) = 0;
+	BfmeReleaseNode * volatile m_next;
+};
+
+class BfmePathfindLayerReset
+{
+public:
+	void reset(void);
+	char m_pad[0x44];
+};
+
+#pragma comment(linker, "/alternatename:?reset@BfmePathfindLayerReset@@QAEXXZ=?j_000379fc@@YAXXZ")
+
+class BfmeZoneManagerReset
+{
+public:
+	void reset(void);
+};
+
+#pragma comment(linker, "/alternatename:?reset@BfmeZoneManagerReset@@QAEXXZ=?j_0000742d@@YAXXZ")
+
+template <bool threads, int instance>
+class BfmeNodeAllocator
+{
+public:
+	static void __cdecl deallocate(void *node, UnsignedInt bytes);
+};
+
+#pragma comment(linker, "/alternatename:?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+
+struct BfmePathfindListNode
+{
+	void *m_field00;
+	void *m_field04;
+	void *m_next;
+	void *m_value;
+};
+
+class BfmePathfindList
+{
+public:
+	BfmePathfindListNode *m_head;
+	void *m_nonEmpty;
+	void release(void *value);
+};
+
+#pragma comment(linker, "/alternatename:?release@BfmePathfindList@@QAEXPAX@Z=?j_000371f5@@YAXXZ")
+
+static __forceinline void clearPathfindField(volatile UnsignedInt *field)
+{
+	*field = 0;
+}
+
+// ?reset@Pathfinder@@QAEXXZ
 void Pathfinder::reset( void )
 {
-	frameToShowObstacles = 0;
-	DEBUG_LOG(("Pathfind cell is %d bytes, PathfindCellInfo is %d bytes\n", sizeof(PathfindCell), sizeof(PathfindCellInfo)));
+	UnsignedByte *base = reinterpret_cast<UnsignedByte *>(this);
+	volatile UnsignedInt *state = reinterpret_cast<volatile UnsignedInt *>(base);
+	Int *field;
 
-	if (m_blockOfMapCells) {
-		delete []m_blockOfMapCells;
-		m_blockOfMapCells = NULL;
+	base[8] = 0;
+	reinterpret_cast<PathfindCellInfoPool *>(this)->reset();
+
+	BfmePathfindCell *cells = *reinterpret_cast<BfmePathfindCell **>(base + 0xc);
+	if (cells != 0) {
+		delete [] cells;
 	}
-	if (m_map) {	 
-		delete [] m_map;
-		m_map = NULL;
+	void *mapStorage = *reinterpret_cast<void **>(base + 0x10);
+	*reinterpret_cast<void **>(base + 0xc) = 0;
+	BfmeSceneVectorElement::operator delete[](mapStorage);
+	state[4] = 0;
+
+	state[8] = 0;
+	state[7] = 0;
+	state[6] = 0;
+	state[5] = 0;
+	state[12] = 0;
+	state[11] = 0;
+	state[10] = 0;
+	clearPathfindField(state + 9);
+
+	UnsignedInt *slots = reinterpret_cast<UnsignedInt *>(base + 0x34);
+	for (Int count = 0; count < 0x200; ++count)
+		slots[count] = 0;
+	state[0x834 / 4] = 0x200;
+	state[0x838 / 4] = 0;
+	state[0x840 / 4] = 0;
+	state[0x844 / 4] = 0;
+	state[0x848 / 4] = 0;
+	state[0x84c / 4] = 0;
+	state[0x850 / 4] = 0;
+
+	BfmeChildZM *debugPath = reinterpret_cast<BfmeChildZM *>(state[0x854 / 4]);
+	if (debugPath != 0) {
+		debugPath->bfmeReleaseZM();
+		::operator delete(debugPath);
+	}
+	state[0x854 / 4] = 0;
+
+	BfmeReleaseNode *node = *reinterpret_cast<BfmeReleaseNode **>(base + 0x858);
+	if (node != 0) {
+		while (node != 0) {
+			BfmeReleaseNode *next = node->m_next;
+			node->m_next = 0;
+			_ReadWriteBarrier();
+			node->release(1);
+			node = next;
+		}
+	}
+	*reinterpret_cast<BfmeReleaseNode **>(base + 0x858) = 0;
+
+	BfmePathfindLayerReset *layers = reinterpret_cast<BfmePathfindLayerReset *>(base + 0x85c);
+	for (Int count = 0x10; count != 0; --count, ++layers)
+		layers->reset();
+
+	reinterpret_cast<BfmeZoneManagerReset *>(base + 0xc9c)->reset();
+
+	BfmePathfindList *list = reinterpret_cast<BfmePathfindList *>(base + 0x24700);
+	*reinterpret_cast<unsigned char *>(base + 0x243f4) = 0;
+	*reinterpret_cast<unsigned char *>(base + 0x243f5) = 0;
+	if (list->m_nonEmpty != 0) {
+		BfmePathfindListNode *current = reinterpret_cast<BfmePathfindListNode *>(list->m_head->m_field04);
+		while (current != 0) {
+			list->release(current->m_value);
+			BfmePathfindListNode *next = reinterpret_cast<BfmePathfindListNode *>(current->m_next);
+		BfmeNodeAllocator<true, 0>::deallocate(current, 0x14);
+			current = next;
+		}
+		list->m_head->m_next = list->m_head;
+		list->m_head->m_field04 = 0;
+		list->m_head->m_value = list->m_head;
+		list->m_nonEmpty = 0;
 	}
 
-	Int i;
-	for (i=0; i<=LAYER_LAST; i++) {
-		m_layers[i].reset();
+	*reinterpret_cast<UnsignedInt *>(base + 0x243f8) = 0;
+	BfmeReleaseNode **releaseSlots = reinterpret_cast<BfmeReleaseNode **>(base + 0x245fc);
+	for (Int i = 0x40; i != 0; --i, ++releaseSlots) {
+		node = *releaseSlots;
+		*reinterpret_cast<UnsignedInt *>(reinterpret_cast<UnsignedByte *>(releaseSlots) - 0x200) = 0;
+		while (node != 0) {
+			BfmeReleaseNode *next = node->m_next;
+			node->m_next = 0;
+			_ReadWriteBarrier();
+			node->release(1);
+			node = next;
+		}
+		*releaseSlots = 0;
 	}
 
-	// reset the pathfind grid
-	m_extent.lo.x=m_extent.lo.y=m_extent.hi.x=m_extent.hi.y=0;
-	m_logicalExtent.lo.x=m_logicalExtent.lo.y=m_logicalExtent.hi.x=m_logicalExtent.hi.y=0;
-	m_openList = NULL;
-	m_closedList = NULL;
-
-	m_ignoreObstacleID = INVALID_ID;
-	m_isTunneling = false;
-
-	m_moveAlliesDepth = 0;
-
-	// pathfind grid cells have not been classified yet
-	m_isMapReady = false;
-	m_cumulativeCellsAllocated = 0;
-
-	debugPathPos.x = 0.0f;
-	debugPathPos.y = 0.0f;
-	debugPathPos.z = 0.0f;
-
-	if (debugPath)
-		debugPath->deleteInstance();
-
-	debugPath = NULL;
-	m_frameToShowObstacles = 0;
-
-	for (m_queuePRHead=0; m_queuePRHead<PATHFIND_QUEUE_LEN; m_queuePRHead++) {
-		m_queuedPathfindRequests[m_queuePRHead] = INVALID_ID;
-	}
-	m_queuePRHead = 0;
-	m_queuePRTail = 0;
-
-	m_numWallPieces = 0;
-	for (i=0; i<MAX_WALL_PIECES; ++i)
-	{
-		m_wallPieces[i] = INVALID_ID;
-	}
-
-	if (TheAI && TheAI->getAiData()) {
-		m_wallHeight = TheAI->getAiData()->m_wallHeight;
-	}
-	else
-	{
-		m_wallHeight = 0.0f;
-	}
-	m_zoneManager.reset();
+	field = reinterpret_cast<Int *>(base + 0x24f18);
+	*field = 0;
+	for (; *field < 0x200; ++*field)
+		reinterpret_cast<UnsignedInt *>(base + 0x24718)[*field] = 0;
+	*reinterpret_cast<volatile Int *>(base + 0x24f18) = 0;
+	*reinterpret_cast<UnsignedInt *>(base + 0x24f1c) = 0;
+	*reinterpret_cast<unsigned char *>(base + 0x83c) = 0;
+	*reinterpret_cast<UnsignedInt *>(base + 0x246fc) = 0;
 }
 
 /** 
@@ -12805,6 +12930,7 @@ void Pathfinder::removePos( Object *obj)
 /** 
  * Removes a mobile unit from the pathfind grid.
  */
+// ?removeUnitFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removeUnitFromPathfindMap(  Object *obj )
 {
 	removePos(obj);
