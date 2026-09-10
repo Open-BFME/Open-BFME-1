@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "70107d7c72b26084119286687f8a6661f1718e1ab0c90d9abc6d1811b7a4d1ef",
+  "symbol": "?bfmeSet14F0@@YIXPAVGen_002214F0@@HPAUBfmeSub14F0@@H1@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?bfmeSet14F0@@YIXPAVGen_002214F0@@HPAUBfmeSub14F0@@H1@Z\r\n// partial score=0.7 date=2026-09-03\r\n// cl: /DNDEBUG /MD /EHsc\r\n// Open-BFME6: 0x002214F0. Triple field set, 62 bytes, no calls: store\r\n// max(arg2, 1) at this+0xA4, the +0x74 field of arg1 at this+0x9C, and\r\n// the +0x74 field of arg3 at this+0xA0. The second register argument is\r\n// unused; the callee pops its three stack arguments. The max is spelled\r\n// as a pointer select so the address materializes before the compare.\r\n\r\nstruct BfmeSub14F0\r\n{\r\n\tchar m_pad[0x74];\r\n\tint m_val;\r\n};\r\n\r\nclass Gen_002214F0\r\n{\r\npublic:\r\n\tchar m_pad[0x9C];\r\n\tint m_9c;\t\t\t\t// +0x9C\r\n\tint m_a0;\t\t\t\t// +0xA0\r\n\tint m_a4;\t\t\t\t// +0xA4\r\n};\r\n\r\n// ?bfmeSet14F0@@YIHPAXHPAUH@@Z\r\nvoid __fastcall bfmeSet14F0(Gen_002214F0 *o, int unused, BfmeSub14F0 *a1, volatile int a2, BfmeSub14F0 *a3)\r\n{\r\n\tint one = 1;\r\n\tconst volatile int *p = &a2;\r\n\r\n\tif (!(*p > 1))\r\n\t\tp = &one;\r\n\r\n\to->m_a4 = *p;\r\n\to->m_9c = a1->m_val;\r\n\to->m_a0 = a3->m_val;\r\n}\r\n"
+}

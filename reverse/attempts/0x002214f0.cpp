@@ -1,37 +1,30 @@
-// ?bfmeSet14F0@@YIXPAVGen_002214F0@@HPAUBfmeSub14F0@@H1@Z
-// partial score=0.7 date=2026-09-03
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME6: 0x002214F0. Triple field set, 62 bytes, no calls: store
-// max(arg2, 1) at this+0xA4, the +0x74 field of arg1 at this+0x9C, and
-// the +0x74 field of arg3 at this+0xA0. The second register argument is
-// unused; the callee pops its three stack arguments. The max is spelled
-// as a pointer select so the address materializes before the compare.
+// ?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z
+// partial score=0.79 date=2026-09-10
+// cl: /O2 /Ob0
 
-struct BfmeSub14F0
+struct Rva002214F0Source
 {
 	char m_pad[0x74];
-	int m_val;
+	int m_value;
 };
 
-class Gen_002214F0
+class Rva002214F0
 {
 public:
+	void set(Rva002214F0Source *a, int b, Rva002214F0Source *c);
+
+private:
 	char m_pad[0x9C];
-	int m_9c;				// +0x9C
-	int m_a0;				// +0xA0
-	int m_a4;				// +0xA4
+	int m_9C;
+	int m_A0;
+	int m_A4;
 };
 
-// ?bfmeSet14F0@@YIHPAXHPAUH@@Z
-void __fastcall bfmeSet14F0(Gen_002214F0 *o, int unused, BfmeSub14F0 *a1, volatile int a2, BfmeSub14F0 *a3)
+void Rva002214F0::set(Rva002214F0Source *a, int b, Rva002214F0Source *c)
 {
 	int one = 1;
-	const volatile int *p = &a2;
-
-	if (!(*p > 1))
-		p = &one;
-
-	o->m_a4 = *p;
-	o->m_9c = a1->m_val;
-	o->m_a0 = a3->m_val;
+	const int *maxp = (b > one) ? &b : &one;
+	m_A4 = *maxp;
+	m_9C = a->m_value;
+	m_A0 = c->m_value;
 }
