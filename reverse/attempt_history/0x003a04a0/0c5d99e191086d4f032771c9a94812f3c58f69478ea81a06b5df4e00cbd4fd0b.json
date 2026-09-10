@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0c5d99e191086d4f032771c9a94812f3c58f69478ea81a06b5df4e00cbd4fd0b",
+  "symbol": "?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z\n// partial score=0.97 date=2026-09-10\n// cl: /O2 /EHs-c-\n// Open-BFME: Rva2225E0Filter::accepts at retail 0x003A04A0.\n// The filtered-count callers and the existing ILT pin establish this private\n// predicate's Object/Player ABI; the source is kept in a dedicated TU so the\n// small override walk retains its retail frame.\n\ntypedef bool Bool;\n\nclass Player;\n\nclass BfmeOverridable\n{\npublic:\n\tBfmeOverridable *friend_getFinalOverride(void);\n\n\tchar m_bfmeHead[0x04];\n\tBfmeOverridable *m_bfmeNextOverride;\n};\n\nclass BfmeFilterObject\n{\npublic:\n\tBool bfmeQuery(Player *player);\n\n\tchar m_bfmeHead[0x04];\n\tBfmeOverridable *m_bfmeOverride;\n};\n\nclass Object : public BfmeFilterObject\n{\n};\n\nclass Rva2225E0Filter\n{\npublic:\n\tBool accepts(Object *object, Player *player);\n\nprivate:\n\tBool bfmeTest(BfmeOverridable *override, Bool queried);\n};\n\n// ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z\nBool Rva2225E0Filter::accepts(Object *object, Player *player)\n{\n\tif (!object)\n\t\treturn false;\n\n\tBfmeOverridable *override = object->m_bfmeOverride;\n\tBfmeOverridable *walked;\n\n\tif (override == 0)\n\t\twalked = 0;\n\telse if (override->m_bfmeNextOverride)\n\t\twalked = override->m_bfmeNextOverride->friend_getFinalOverride();\n\telse\n\t\twalked = override;\n\n\tRva2225E0Filter *filter = this;\n\treturn filter->bfmeTest(walked, object->bfmeQuery(player));\n}\n"
+}

@@ -1,21 +1,10 @@
 // ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
-// partial score=0.95 date=2026-08-24
-// cl: /DNDEBUG /MD /EHs-c-
-
-// Retail 0x003A04A0, 72 bytes. All three call sites already had names minted
-// for them in reverse/symbols.csv when the filtered count at 0x002225E0
-// landed, and the function's own name is pinned at ILT 0x0001DA34.
-//
-// The middle stretch is an override walk that MSVC unrolled one level. Reading
-// it as written: the pointer at +0x04 of the object is fetched, and if it is
-// null the walk yields null; otherwise its own +0x04 decides. When that is set
-// the walk recurses through the ILT, and when it is not the value in eax is
-// still the pointer we started from -- which is the walk returning this. That
-// leftover is why the else arm assigns the same pointer instead of reloading
-// it.
-//
-// The two results then go to the private test, arguments right to left: the
-// query result pushed first, the walked-to override second.
+// partial score=0.97 date=2026-09-10
+// cl: /O2 /EHs-c-
+// Open-BFME: Rva2225E0Filter::accepts at retail 0x003A04A0.
+// The filtered-count callers and the existing ILT pin establish this private
+// predicate's Object/Player ABI; the source is kept in a dedicated TU so the
+// small override walk retains its retail frame.
 
 typedef bool Bool;
 
@@ -24,19 +13,19 @@ class Player;
 class BfmeOverridable
 {
 public:
-	BfmeOverridable *friend_getFinalOverride(void);		// ILT 0x000022BB
+	BfmeOverridable *friend_getFinalOverride(void);
 
 	char m_bfmeHead[0x04];
-	BfmeOverridable *m_bfmeNextOverride;			// +0x04
+	BfmeOverridable *m_bfmeNextOverride;
 };
 
 class BfmeFilterObject
 {
 public:
-	Bool bfmeQuery(Player *player);				// ILT 0x00020824
+	Bool bfmeQuery(Player *player);
 
 	char m_bfmeHead[0x04];
-	BfmeOverridable *m_bfmeOverride;			// +0x04
+	BfmeOverridable *m_bfmeOverride;
 };
 
 class Object : public BfmeFilterObject
@@ -49,7 +38,7 @@ public:
 	Bool accepts(Object *object, Player *player);
 
 private:
-	Bool bfmeTest(BfmeOverridable *override, Bool queried);	// ILT 0x0001B437
+	Bool bfmeTest(BfmeOverridable *override, Bool queried);
 };
 
 // ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z
