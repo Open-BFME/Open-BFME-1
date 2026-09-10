@@ -86974,6 +86974,15 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?bfmeLookupXB@BfmeGameXB@@QAEPAVBfmeEntryXB@@PBVBFMERetailAsciiString@@@Z,0x00032C86,lookup call target for Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
+?GenKey0012A7988@@3VGenKey@@A,0x00EA7988,global object read by Rva001A0320Owner::fill at retail 0x0019FD00
+?ThePlayerAITypeSet@@3PAVPlayerAITypeSet@@A,0x00EED740,global pointer read by Rva001A0320Owner::fill at retail 0x0019FD00
+?find@PlayerAITypeSet@@QAEHPAVAsciiString@@@Z,0x0000336E,callee of Rva001A0320Owner::fill, lookup body at 0x000DE1B0
+??1Rva00197AE0Temporary@@QAE@XZ,0x000124DB,callee of Rva001A0320Owner::fill, temporary cleanup body at 0x00197AE0
+??1Rva0019A1D0Tree@@QAE@XZ,0x0001A910,tree member cleanup used by Rva001A0320Owner::fill
+??1Rva0019A1D0Member@@QAE@XZ,0x0002D6A5,vector member cleanup used by Rva001A0320Owner::fill
+??0Rva0019A1D0Owner@@QAE@XZ,0x00008792,tree owner constructor used by Rva001A0320Owner::fill
+?fillHelper@Rva001A0320Owner@@AAEXHPAVRva0019A7D0Vector@@PAXPAVRva00197AE0Temporary@@PAVScriptList@@PAVRva0019A1D0Owner@@@Z,0x00008634,callee of Rva001A0320Owner::fill, body at 0x0019F890
+?buildScriptData@Rva001A0320Owner@@AAEXPAURva001A0320Record@@PAVScriptList@@PAVRva0019A1D0Owner@@@Z,0x0003DC0D,callee of Rva001A0320Owner::fill, body at 0x0019D200
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00048284,caller-proven bucket helper for the AptScreenRef hash erase at 0x00461040; same retail 0x00048284 call target as matched 0x00461A00 map family
 ?run@Rva002BC260GoalOwner@@QAEXPAX00E@Z,0x002BC260,parent verified byte argument forwarded through goal setup to149470 sixth-argument byte read; actual body address
 ?query@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60Thing@@PAVRva002BCB60QueryObject@@MPAX@Z,0x00149010,parent raw ILT and complete selector call-site ABI verified; actual body target
