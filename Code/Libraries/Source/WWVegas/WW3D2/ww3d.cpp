@@ -852,6 +852,18 @@ WW3DErrorType WW3D::Registry_Load_Render_Device( const char * sub_key, bool resi
 	}
 }
 
+// Retail RVA 0x008FD270 has no named caller or data reference in the image.
+// Its only direct edge is to the matched bool DX8Wrapper loader at 0x0090B960;
+// keep this unresolved historical role as an address-qualified bool slice.
+bool rva008fd270RegistryLoadRenderDevice( const char * sub_key, bool resize_window )
+{
+	bool success = DX8Wrapper::Registry_Load_Render_Device(sub_key,resize_window);
+	if (success) {
+		return true;
+	}
+	return false;
+}
+
 // ?Registry_Load_Render_Device@WW3D@@ present-unmatched
 bool WW3D::Registry_Load_Render_Device( const char * sub_key, char *device, int device_len, int &width, int &height, int &depth, int &windowed, int &texture_depth)
 {
