@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "77c14ababf34296f26f232377d8cbbb2a0ec20ab9776fbd23dbb18fa1e0526b6",
+  "symbol": "??0Matrix4D@@QAE@ABVCoord3D@@M@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ??0Matrix4D@@QAE@ABVCoord3D@@M@Z\n// partial score=0.99 date=2026-09-10\n// cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep\n#include \"matrix4d.h\"\n\nMatrix4D::Matrix4D(const Coord3D &v, float angle)\n{\n    float sine;\n    float cosine;\n    __asm {\n        fld angle\n        fsincos\n        fstp cosine\n        fstp sine\n    }\n\n    values[0] = v.x * v.x + cosine * (1.0f - v.x * v.x);\n    values[1] = v.x * v.y * (1.0f - cosine) - v.z * sine;\n    values[2] = v.z * (v.x * (1.0f - cosine)) + v.y * sine;\n    values[3] = 0.0f;\n\n    values[4] = v.x * v.y * (1.0f - cosine) + v.z * sine;\n    values[5] = v.y * v.y + cosine * (1.0f - v.y * v.y);\n    values[6] = v.z * (v.y * (1.0f - cosine)) - v.x * sine;\n    values[7] = 0.0f;\n\n    values[8] = v.z * (v.x * (1.0f - cosine)) - v.y * sine;\n    values[9] = v.z * (v.y * (1.0f - cosine)) + v.x * sine;\n    values[10] = v.z * v.z + cosine * (1.0f - v.z * v.z);\n    values[11] = 0.0f;\n    values[12] = 0.0f;\n    values[13] = 0.0f;\n    values[14] = 0.0f;\n    values[15] = 1.0f;\n}\n"
+}

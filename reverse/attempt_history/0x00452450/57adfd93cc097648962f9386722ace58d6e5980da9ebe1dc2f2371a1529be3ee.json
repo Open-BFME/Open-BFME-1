@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "57adfd93cc097648962f9386722ace58d6e5980da9ebe1dc2f2371a1529be3ee",
+  "symbol": "?_M_fill_insert@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEXPAUICoord2D@@IABU3@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?_M_fill_insert@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEXPAUICoord2D@@IABU3@@Z\n// partial score=0.96 date=2026-09-10\n// cl: /DNDEBUG /MD /EHsc\n// stlport\n// Open-BFME: instantiate the authentic STLport vector fill-insert body.\n\n#define _STLP_NO_EXCEPTIONS 1\nvoid __cdecl operator delete[](void *) throw();\nvoid __cdecl operator delete(void *) throw();\n#include <vector>\n\nstruct ICoord2D\n{\n    int x;\n    int y;\n};\n\ntemplate void _STL::vector<ICoord2D, _STL::allocator<ICoord2D> >::_M_fill_insert(\n    ICoord2D *, unsigned int, const ICoord2D &);\n"
+}
