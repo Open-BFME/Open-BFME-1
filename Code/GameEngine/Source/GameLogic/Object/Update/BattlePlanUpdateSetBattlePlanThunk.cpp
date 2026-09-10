@@ -47,6 +47,8 @@ public:
 	void setVisionRange( Real newVisionRange );
 };
 
+#pragma comment(linker, "/alternatename:?setVisionRange@BfmeBattlePlanVisionSetter@@QAEXM@Z=?j_000228e0@@YAXXZ")
+
 // The retail Object keeps its BodyModuleInterface at +0x200.  The ordinary
 // Object header's convenience accessor is a different-layout inline (+0x194),
 // so keep this established BFME field view local to this TU.
