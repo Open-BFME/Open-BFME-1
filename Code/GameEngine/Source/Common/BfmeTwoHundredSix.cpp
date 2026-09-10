@@ -45,6 +45,8 @@ public:
 	virtual void bfmeDoHH(void) = 0;
 };
 
+extern "C" void *__cdecl memmove(void *destination, const void *source, unsigned int bytes);
+
 struct BfmeSlotHH
 {
 	BfmeItemHH *m_bfmeItem;			// 0x00
@@ -55,6 +57,7 @@ class BfmeThingHH
 {
 public:
 	void bfmeClearHH(void);
+	void bfmeRemoveHH(BfmeItemHH *item);
 
 private:
 	unsigned char m_bfmeHead[0x818];	// 0x000
@@ -68,6 +71,25 @@ void BfmeThingHH::bfmeClearHH(void)
 		m_bfmeSlots[i].m_bfmeItem->bfmeDoHH();
 
 	m_bfmeCount = 0;
+}
+
+void BfmeThingHH::bfmeRemoveHH(BfmeItemHH *item)
+{
+	int i = 0;
+	if (m_bfmeCount - 1 < 0)
+		return;
+
+	do
+	{
+		if (item == m_bfmeSlots[i].m_bfmeItem)
+		{
+			item->bfmeDoHH();
+			memmove(&m_bfmeSlots[i], &m_bfmeSlots[i + 1],
+				(m_bfmeCount - i) * sizeof(BfmeSlotHH));
+			--m_bfmeCount;
+		}
+		++i;
+	} while (i <= m_bfmeCount - 1);
 }
 
 struct BfmeTripleHI
@@ -171,4 +193,3 @@ BfmeThingHJ &BfmeThingHJ::bfmeTakeHJ(const BfmeThingHJ *from)
 
 	return *this;
 }
-
