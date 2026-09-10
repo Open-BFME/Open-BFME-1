@@ -86979,3 +86979,4 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?bfmeLookupXB@BfmeGameXB@@QAEPAVBfmeEntryXB@@PBVBFMERetailAsciiString@@@Z,0x00032C86,lookup call target for Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00048284,caller-proven bucket helper for the AptScreenRef hash erase at 0x00461040; same retail 0x00048284 call target as matched 0x00461A00 map family
