@@ -52,7 +52,7 @@ extern void __cdecl d_009c6cb0(void);
 extern void __cdecl d_009c6d30(void);
 extern void __cdecl d_009c74f0(void);
 extern void __cdecl d_009c7760(void);
-extern void __cdecl d_009c7cc0(void);
+extern void __cdecl rva009C7CC0(const void *, const void *, void *);
 
 // Slot fillers with neither a real identity nor a ghidra-boundary row yet;
 // address-derived names, pinned in reverse/symbols.csv.
@@ -92,7 +92,7 @@ void __cdecl bfmeInstallSpreadTable(void)
 	if (tierC)
 	{
 		BfmeSpreadFn low = (BfmeSpreadFn)&Rva009C80C0;
-		BfmeSpreadFn mid = (BfmeSpreadFn)&d_009c7cc0;
+		BfmeSpreadFn mid = (BfmeSpreadFn)&rva009C7CC0;
 		BfmeSpreadFn tail = (BfmeSpreadFn)&Rva009C77C0;
 
 		for (i = 0; i <= 0x100; i += 4) {

@@ -1,5 +1,4 @@
 // ?rva009C7CC0@@YAXPBX0PAX@Z
-// partial score=0.9 date=2026-09-10
 // cl: /DNDEBUG /MD /O2
 
 // Straight-line SSE2 leaf, no calls, no branches.  Elementwise-multiplies
@@ -17,9 +16,10 @@ void __cdecl rva009C7CC0(const void *p1, const void *p2, void *p3)
 {
 	__asm
 	{
-		mov eax, p1
-		mov ebx, p2
-		mov edx, p3
+		push ebx
+		mov eax, dword ptr [esp + 0Ch]
+		mov ebx, dword ptr [esp + 10h]
+		mov edx, dword ptr [esp + 14h]
 		lea ecx, kRva012D8F40
 		movdqa xmm0, xmmword ptr [eax]
 		movdqa xmm1, xmmword ptr [eax + 10h]
@@ -249,5 +249,6 @@ void __cdecl rva009C7CC0(const void *p1, const void *p2, void *p3)
 		movdqa xmmword ptr [edx + 50h], xmm5
 		movdqa xmmword ptr [edx + 70h], xmm7
 		movdqa xmmword ptr [edx], xmm0
+		pop ebx
 	}
 }
