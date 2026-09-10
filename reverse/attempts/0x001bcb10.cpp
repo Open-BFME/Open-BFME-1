@@ -1,8 +1,15 @@
 // ?locoUpdate_maintainCurrentPosition@Locomotor@@QAE_NPAVObject@@@Z
-// partial score=0.4 date=2026-09-10
+// partial score=0.43 date=2026-09-10
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
-// ?locoUpdate_maintainCurrentPosition@Locomotor@@QAE_NPAVObject@@@Z
-// Retail 0x001BCB10; the appearance switch reaches the matched wings branch at 0x001BC670.
+// Retail 0x001BCB10 is the BFME position-maintenance dispatcher.  Its
+// appearance branches and post-move handler are separate retail bodies; this
+// TU keeps their verified declarations local to the BFME layout.
+
+#include <string.h>
+
+#pragma intrinsic(memcpy)
+#pragma comment(linker, "/alternatename:?behavior@Rva001BA1C0Handler@@QAE_NPAVObject@@PBUCoord3D@@@Z=?j_0000febb@@YAXXZ")
+#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@BfmeObjectModelCondition@@QAEXXZ=?j_0002191d@@YAXXZ")
 
 typedef bool Bool;
 typedef float Real;
@@ -31,11 +38,9 @@ public:
 class Object : public Thing
 {
 public:
-	void notifyModelConditionChanged();
-
 	void *m_vtable;
 	int m_pad004;
-	int m_transform[12];
+	Matrix3D m_transform;
 	Coord3D m_position;
 	char m_pad044[0x114 - 0x44];
 	unsigned m_conditionA;
@@ -44,6 +49,12 @@ public:
 	unsigned m_conditionC;
 	char m_pad124[0x208 - 0x124];
 	void *m_physics;
+};
+
+class BfmeObjectModelCondition
+{
+public:
+	void notifyModelConditionChanged();
 };
 
 class Overridable
@@ -108,30 +119,31 @@ private:
 	int m_donutTimer;
 	unsigned m_flags;
 	char m_pad044[0x64 - 0x44];
-	int m_savedTransform[12];
+	Matrix3D m_savedTransform;
 	Bool m_wasMaintaining;
 };
 
 Bool Locomotor::locoUpdate_maintainCurrentPosition(Object *obj)
 {
-	Bool requiresConstantCalling = false;
+	register unsigned char requiresConstantCalling = 0;
 
 	if (obj == 0)
 		return requiresConstantCalling;
 
-	int *saved = m_savedTransform;
-	saved[0] = obj->m_transform[0];
-	saved[1] = obj->m_transform[1];
-	saved[2] = obj->m_transform[2];
-	saved[3] = obj->m_transform[3];
-	saved[4] = obj->m_transform[4];
-	saved[5] = obj->m_transform[5];
-	saved[6] = obj->m_transform[6];
-	saved[7] = obj->m_transform[7];
-	saved[8] = obj->m_transform[8];
-	saved[9] = obj->m_transform[9];
-	saved[10] = obj->m_transform[10];
-	saved[11] = obj->m_transform[11];
+	Matrix3D *saved = &m_savedTransform;
+	const Matrix3D *live = &obj->m_transform;
+	memcpy(&saved->m_cell[0], &live->m_cell[0], sizeof(Real));
+	memcpy(&saved->m_cell[1], &live->m_cell[1], sizeof(Real));
+	memcpy(&saved->m_cell[2], &live->m_cell[2], sizeof(Real));
+	memcpy(&saved->m_cell[3], &live->m_cell[3], sizeof(Real));
+	memcpy(&saved->m_cell[4], &live->m_cell[4], sizeof(Real));
+	memcpy(&saved->m_cell[5], &live->m_cell[5], sizeof(Real));
+	memcpy(&saved->m_cell[6], &live->m_cell[6], sizeof(Real));
+	memcpy(&saved->m_cell[7], &live->m_cell[7], sizeof(Real));
+	memcpy(&saved->m_cell[8], &live->m_cell[8], sizeof(Real));
+	memcpy(&saved->m_cell[9], &live->m_cell[9], sizeof(Real));
+	memcpy(&saved->m_cell[10], &live->m_cell[10], sizeof(Real));
+	memcpy(&saved->m_cell[11], &live->m_cell[11], sizeof(Real));
 
 	unsigned flags = m_flags;
 	if (((flags >> 2) & 1) == 0)
@@ -148,49 +160,49 @@ Bool Locomotor::locoUpdate_maintainCurrentPosition(Object *obj)
 		{
 			b &= ~0x20000000u;
 			obj->m_conditionB = b;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		b = obj->m_conditionB;
 		if (b & 0x40000000)
 		{
 			b &= ~0x40000000u;
 			obj->m_conditionB = b;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		if (obj->m_conditionC & 2)
 		{
 			unsigned c = obj->m_conditionC;
 			c &= ~2u;
 			obj->m_conditionC = c;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		if (obj->m_conditionC & 4)
 		{
 			unsigned c = obj->m_conditionC;
 			c &= ~4u;
 			obj->m_conditionC = c;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		b = obj->m_conditionB;
 		if (b & 0x80000000)
 		{
 			b &= ~0x80000000u;
 			obj->m_conditionB = b;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		if (obj->m_conditionC & 1)
 		{
 			unsigned c = obj->m_conditionC;
 			c &= ~1u;
 			obj->m_conditionC = c;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 		b = obj->m_conditionB;
 		if (b & 0x08000000)
 		{
 			b &= ~0x08000000u;
 			obj->m_conditionB = b;
-			obj->notifyModelConditionChanged();
+			((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 		}
 	}
 
@@ -246,7 +258,7 @@ Bool Locomotor::locoUpdate_maintainCurrentPosition(Object *obj)
 				{
 					a &= ~0x10000000u;
 					obj->m_conditionA = a;
-					obj->notifyModelConditionChanged();
+					((BfmeObjectModelCondition *)obj)->notifyModelConditionChanged();
 				}
 			}
 			requiresConstantCalling = true;
@@ -256,6 +268,6 @@ Bool Locomotor::locoUpdate_maintainCurrentPosition(Object *obj)
 	if (((Rva001BA1C0Handler *)this)->behavior(obj, &m_maintainPos))
 		requiresConstantCalling = true;
 
-	((Thing *)obj)->rva00132200((const Matrix3D *)saved);
+	((Thing *)obj)->rva00132200(saved);
 	return requiresConstantCalling;
 }
