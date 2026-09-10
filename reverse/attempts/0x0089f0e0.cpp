@@ -2,46 +2,75 @@
 // partial score=0.9 date=2026-09-07
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-struct BfmeAllocVKJ
+struct BfmeStringPool3AF0
 {
-	void *(__cdecl *allocate)(unsigned int);
-	void (__cdecl *free)(void *);
+	void *m_unused;
+	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
-class EAStringC
+struct EAStringData
 {
-	public:
-	class StringDataC
-	{
-	public:
-		unsigned short m_uRefCount;
-		unsigned short m_uSize;
-		unsigned short m_uMaxSize;
-		unsigned short m_uHash;
-	};
+	unsigned short m_refCount;
+	unsigned short m_size;
+	unsigned short m_maxSize;
+	unsigned short m_hash;
+};
 
-private:
-	StringDataC *m_pData;
+extern EAStringData g_emptyStringData;
 
-	public:
-	EAStringC();
-	EAStringC(const EAStringC &other) : m_pData(other.m_pData)
+
+template <typename T> class StringBase
+
+{
+	protected:
+	EAStringData *m_data;
+	StringBase() {}
+
+	private:
+	StringBase(const StringBase &other) : m_data(other.m_data)
 	{
-		++m_pData->m_uRefCount;
+		++m_data->m_refCount;
 	}
-	EAStringC(const StringDataC *data)
+
+	StringBase(EAStringData *data) : m_data(data)
 	{
-		++const_cast<StringDataC *>(data)->m_uRefCount;
-		m_pData = const_cast<StringDataC *>(data);
+		++m_data->m_refCount;
 	}
-	~EAStringC()
+
+	protected:
+	void releaseBuffer()
 	{
-		StringDataC *oldData = m_pData;
-		if (--oldData->m_uRefCount == 0)
-			g_bfmeAllocVKJ->free(oldData);
+		EAStringData *data = m_data;
+		if (--data->m_refCount == 0)
+			g_bfmeStringPool1284->free(data);
 	}
+
+	~StringBase() { releaseBuffer(); }
+
+	friend class EAStringC;
+};
+
+class EAStringC : private StringBase<char>
+{
+	typedef EAStringData StringDataC;
+
+	EAStringC() : StringBase<char>()
+	{
+		m_data = &g_emptyStringData;
+		++g_emptyStringData.m_refCount;
+	}
+
+	EAStringC(const EAStringC &other) : StringBase<char>(other) {}
+
+	EAStringC(EAStringData *data) : StringBase<char>()
+	{
+		++data->m_refCount;
+		m_data = data;
+	}
+
+	~EAStringC() {}
 
 	private:
 		enum CBPushZero
@@ -57,24 +86,16 @@ private:
 	EAStringC Right(int count) const;
 };
 
-extern EAStringC::StringDataC g_emptyStringData;
-
-EAStringC::EAStringC()
-	: m_pData(&g_emptyStringData)
-{
-	++g_emptyStringData.m_uRefCount;
-}
-
 EAStringC EAStringC::Right(int count) const
 {
 	if (count <= 0)
 		return EAStringC();
 
-	int remaining = (int)m_pData->m_uSize - count;
+	int remaining = m_data->m_size - count;
 	if (remaining <= 0)
 		return EAStringC(*this);
 
-	EAStringC result(m_pData);
+	EAStringC result(m_data);
 	result.ChangeBuffer(count, (unsigned int)remaining, count, CB_PUSH_ZERO,
 		count);
 	return result;
