@@ -211,7 +211,7 @@ void RadiusDecalTemplate::createRadiusDecal(
 		result.m_decal->setAngle(0.0f);
 		result.m_decal->setColor(
 			m_color == 0 ? (int)owningPlayer->getPlayerColor() : (int)m_color);
-		result.m_decal->m_position = pos;
+		result.m_decal->setPosition(pos);
 		if (radius > g_010F6388)
 			result.m_decal->m_unmodelled_64 = true;
 		result.m_template = this;
