@@ -9227,73 +9227,8 @@ AsciiString AIAttackAreaState::getName(  ) const
 }
 #endif
 
-//----------------------------------------------------------------------------------------------------------
-__declspec(naked) StateReturnType AIAttackAreaState::onEnter()
-{
-	__asm {
-		__emit 0x56;
-		__emit 0x8b;
-		__emit 0xf1;
-		__emit 0x8b;
-		__emit 0x4e;
-		__emit 0x1c;
-		__emit 0x8b;
-		__emit 0x01;
-		__emit 0x57;
-		__emit 0xff;
-		__emit 0x50;
-		__emit 0x24;
-		__emit 0x68;
-		__emit 0x9b;
-		__emit 0x36;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x68;
-		__emit 0x9c;
-		__emit 0x76;
-		__emit 0x09;
-		__emit 0x01;
-		__emit 0x89;
-		__emit 0x46;
-		__emit 0x24;
-		__emit 0x8b;
-		__emit 0x0d;
-		__emit 0x98;
-		__emit 0x08;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0x79;
-		__emit 0x3c;
-		__emit 0x6a;
-		__emit 0x05;
-		__emit 0x6a;
-		__emit 0x00;
-		__emit 0xe8;
-		__emit 0x33;
-		__emit 0x3d;
-		__emit 0xe9;
-		__emit 0xff;
-		__emit 0x8b;
-		__emit 0x4e;
-		__emit 0x24;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x10;
-		__emit 0x03;
-		__emit 0xc7;
-		__emit 0x89;
-		__emit 0x46;
-		__emit 0x28;
-		__emit 0x8b;
-		__emit 0x11;
-		__emit 0x5f;
-		__emit 0x5e;
-		__emit 0xff;
-		__emit 0x62;
-		__emit 0x1c;
-	}
-}
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIStateOnEnterBodies.cpp
+// ?onEnter@AIAttackAreaState@@UAE?AW4StateReturnType@@XZ present-unmatched
 
 //----------------------------------------------------------------------------------------------------------
 // ?onExit@AIAttackAreaState@@UAEXW4StateExitType@@@Z present-unmatched

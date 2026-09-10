@@ -255,6 +255,24 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+class AIAttackAreaState
+{
+public:
+	// Retail vtable 0x01098398 slot 4 reaches 0x0016DE50 via 0x00021008.
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual StateReturnType onEnter();
+
+	unsigned char m_stateFields04[0x18];
+	StateMachine *m_machine;
+	int m_stateFields20;
+	HuntSubMachine *m_attackMachine;
+	UnsignedInt m_nextEnemyScanTime;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AITunnelNetworkGuardState
 {
 public:
@@ -313,6 +331,20 @@ StateReturnType AIHuntState::onEnter()
 		0x3574);
 	m_nextEnemyScanTime = TheGameLogic->getFrame() + sleepTime;
 	return m_huntMachine->initDefaultState();
+}
+
+// ?onEnter@AIAttackAreaState@@UAE?AW4StateReturnType@@XZ
+StateReturnType AIAttackAreaState::onEnter()
+{
+	m_attackMachine = m_machine->createHuntMachine();
+	UnsignedInt now = TheGameLogic->getFrame();
+	UnsignedInt sleepTime = GetGameLogicRandomValue(
+		0,
+		5,
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",
+		0x369b);
+	m_nextEnemyScanTime = now + sleepTime;
+	return m_attackMachine->initDefaultState();
 }
 
 // ?onEnter@AITunnelNetworkGuardState@@UAE?AW4StateReturnType@@XZ
