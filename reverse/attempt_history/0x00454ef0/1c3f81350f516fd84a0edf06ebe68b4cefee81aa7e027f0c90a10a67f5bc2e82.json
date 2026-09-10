@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1c3f81350f516fd84a0edf06ebe68b4cefee81aa7e027f0c90a10a67f5bc2e82",
+  "symbol": "?update@WaypointMap@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.78,
+  "source": "// ?update@WaypointMap@@QAEXXZ\n// partial score=0.78 date=2026-09-10\n// Body from the owning MapUtil.cpp probe; retail is 366 bytes at\n// 0x00454EF0 and ends at the ret at 0x0045505D.\n//\n// New lever tried: keep the method in the owning TU so the internal\n// m_waypoints object is the real MapUtil object, while using the established\n// WaypointMap/STLport and AsciiString declarations.  This preserves the\n// canonical algorithm and its by-value temporary lifetime, but the compiler\n// still selects alternate unresolved callee candidates and omits the retail\n// ESP SEH frame.\n\n#include \"PreRTS.h\"\n#include \"GameClient/MapUtil.h\"\n#include \"Common/NameKeyGenerator.h\"\n#include \"Common/WellKnownKeys.h\"\n\nextern WaypointMap *m_waypoints;\n\nvoid WaypointMap::update( void )\n{\n\tif (!m_waypoints)\n\t{\n\t\tm_numStartSpots = 1;\n\t\treturn;\n\t}\n\n\tthis->clear();\n\n\tAsciiString startingCamName = TheNameKeyGenerator->keyToName(TheKey_InitialCameraPosition);\n\tWaypointMap::const_iterator it;\n\n\tit = m_waypoints->find(startingCamName);\n\tif (it != m_waypoints->end())\n\t{\n\t\t(*this)[startingCamName] = it->second;\n\t}\n\n\tm_numStartSpots = 0;\n\tfor (Int i = 0; i < MAX_SLOTS; ++i)\n\t{\n\t\tstartingCamName.format(\"Player_%d_Start\", i + 1);\n\t\tit = m_waypoints->find(startingCamName);\n\t\tif (it != m_waypoints->end())\n\t\t{\n\t\t\t(*this)[startingCamName] = it->second;\n\t\t\t++m_numStartSpots;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tbreak;\n\t\t}\n\t}\n\n\tm_numStartSpots = max(1, m_numStartSpots);\n}\n"
+}
