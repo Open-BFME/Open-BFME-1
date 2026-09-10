@@ -1,528 +1,165 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the exact retail saveReplay body to C++.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// Real 519-byte saveReplay, RVA 0x004DE8E0..0x004DEAE7.
+// PopupReplaySystem names the caller; StringBase owns copies and cleanup.
+// Shared state is defined once in PopupReplay.cpp (never TU-local copies).
+// stlport
+
+#include <string>
+#include <string.h>
+
+typedef bool Bool;
+
+class AsciiString;
+class UnicodeString;
+
+template <typename T> struct BfmeStringHeader
+{
+    int references;
+    unsigned short length;
+    unsigned short capacity;
+    T data[1];
+};
+
+template <typename T> class StringBase
+{
+    friend class AsciiString;
+    friend class UnicodeString;
+
+private:
+    StringBase() : m_data(0) {}
+    StringBase(const StringBase<T> &other);
+    ~StringBase();
+    void releaseBuffer();
+
+public:
+    void set(const StringBase<T> &source);
+    void concat(const T *text, int length);
+    int compare(const StringBase<T> &other) const throw();
+
+    void *m_data;
+};
+
+class UnicodeString : private StringBase<unsigned short>
+{
+public:
+    UnicodeString() : StringBase<unsigned short>() {}
+    UnicodeString(const UnicodeString &other)
+        : StringBase<unsigned short>(other)
+    {
+    }
+    ~UnicodeString() {}
+};
+
+inline bool operator==(const UnicodeString &left, const UnicodeString &right)
+{
+    return ((const StringBase<unsigned short> *)&left)->compare(
+        *(const StringBase<unsigned short> *)&right) == 0;
+}
+
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString() : StringBase<char>() {}
+    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+    ~AsciiString() {}
+
+    AsciiString &operator=(const AsciiString &other)
+    {
+        ((StringBase<char> *)this)->set(
+            *(const StringBase<char> *)&other);
+        return *this;
+    }
+
+    void translate(const UnicodeString &source);
+
+    void concat(const AsciiString &source)
+    {
+        BfmeStringHeader<char> *data =
+            (BfmeStringHeader<char> *)source.m_data;
+        int length = data ? data->length : 0;
+        const char *text = source.str();
+        ((StringBase<char> *)this)->concat(text, length);
+    }
+
+    const char *str() const
+    {
+        return m_data ? (const char *)m_data + 8 : "";
+    }
+};
+
+class GameTextInterface
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot01() = 0;
+    virtual void slot02() = 0;
+    virtual void slot03() = 0;
+    virtual void slot04() = 0;
+    virtual void slot05() = 0;
+    virtual void slot06() = 0;
+    virtual void slot07() = 0;
+    virtual void slot08() = 0;
+    virtual void slot09() = 0;
+    virtual UnicodeString fetch(const char *label, Bool *exists = 0);
+};
+
+class RecorderClass
+{
+public:
+    AsciiString getLastReplayFileName();
+    static AsciiString getReplayDir();
+    static AsciiString getReplayExtention();
+};
+
+class FileSystem
+{
+public:
+    Bool doesFileExist(const char *filename) const;
+};
+
+class GameWindow;
+typedef void (*GameWinMsgBoxFunc)(void);
+
+extern GameTextInterface *TheGameText;
+extern RecorderClass *TheRecorder;
+extern FileSystem *TheLocalFileSystem;
+namespace PopupReplayState
+{
+extern GameWindow *messageBoxWin;
+extern std::string replayPath;
+}
+using namespace PopupReplayState;
+extern void reallySaveReplay(void);
+extern GameWindow *MessageBoxYesNo(UnicodeString title, UnicodeString body,
+    GameWinMsgBoxFunc okCallback, GameWinMsgBoxFunc cancelCallback);
 
 // ?saveReplay@@YAXVUnicodeString@@@Z
-extern "C" __declspec(naked) void bfme_saveReplay_4DE8E0()
+void saveReplay(UnicodeString filename)
 {
-    __asm {
-        __emit 0x6A;
-        __emit 0xFF;
-        __emit 0x68;
-        __emit 0x70;
-        __emit 0xB1;
-        __emit 0x02;
-        __emit 0x01;
-        __emit 0x64;
-        __emit 0xA1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xEC;
-        __emit 0x14;
-        __emit 0x53;
-        __emit 0x56;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x0C;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x7C;
-        __emit 0x14;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0x01;
-        __emit 0x6A;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x48;
-        __emit 0x04;
-        __emit 0x08;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x52;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x30;
-        __emit 0x01;
-        __emit 0xFF;
-        __emit 0x50;
-        __emit 0x28;
-        __emit 0x50;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x30;
-        __emit 0xE8;
-        __emit 0xBC;
-        __emit 0x3D;
-        __emit 0xB4;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0xD8;
-        __emit 0xF7;
-        __emit 0xDB;
-        __emit 0x1A;
-        __emit 0xDB;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xFE;
-        __emit 0xC3;
-        __emit 0xE8;
-        __emit 0x8F;
-        __emit 0x98;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x84;
-        __emit 0xDB;
-        __emit 0x74;
-        __emit 0x2F;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x2C;
-        __emit 0xD6;
-        __emit 0x2E;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x71;
-        __emit 0xFA;
-        __emit 0xB3;
-        __emit 0xFF;
-        __emit 0x50;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x28;
-        __emit 0x02;
-        __emit 0xE8;
-        __emit 0x2C;
-        __emit 0x93;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0xCE;
-        __emit 0x8F;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0xEB;
-        __emit 0x0E;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x51;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xE8;
-        __emit 0xCE;
-        __emit 0xA6;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x52;
-        __emit 0xE8;
-        __emit 0xE8;
-        __emit 0x55;
-        __emit 0xB4;
-        __emit 0xFF;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x0C;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0xB3;
-        __emit 0x03;
-        __emit 0x88;
-        __emit 0x5C;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x74;
-        __emit 0x09;
-        __emit 0x0F;
-        __emit 0xB7;
-        __emit 0x48;
-        __emit 0x04;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x07;
-        __emit 0x33;
-        __emit 0xC9;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x51;
-        __emit 0x50;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xE8;
-        __emit 0xA8;
-        __emit 0x93;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x36;
-        __emit 0x3E;
-        __emit 0xB6;
-        __emit 0xFF;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x74;
-        __emit 0x06;
-        __emit 0x0F;
-        __emit 0xB7;
-        __emit 0x48;
-        __emit 0x04;
-        __emit 0xEB;
-        __emit 0x02;
-        __emit 0x33;
-        __emit 0xC9;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x51;
-        __emit 0x50;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0xE8;
-        __emit 0x6F;
-        __emit 0x93;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x88;
-        __emit 0x5C;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0xE8;
-        __emit 0x42;
-        __emit 0x8F;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x8D;
-        __emit 0x48;
-        __emit 0x08;
-        __emit 0x75;
-        __emit 0x05;
-        __emit 0xB9;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0xC1;
-        __emit 0x8D;
-        __emit 0x70;
-        __emit 0x01;
-        __emit 0x8A;
-        __emit 0x10;
-        __emit 0x40;
-        __emit 0x84;
-        __emit 0xD2;
-        __emit 0x75;
-        __emit 0xF9;
-        __emit 0x2B;
-        __emit 0xC6;
-        __emit 0x03;
-        __emit 0xC1;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0xB9;
-        __emit 0x6C;
-        __emit 0x40;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0x6D;
-        __emit 0xC8;
-        __emit 0xB4;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0xC7;
-        __emit 0x05;
-        __emit 0x68;
-        __emit 0x40;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x48;
-        __emit 0xCB;
-        __emit 0x34;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x4E;
-        __emit 0x9C;
-        __emit 0x4E;
-        __emit 0x00;
-        __emit 0x84;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x4E;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x7C;
-        __emit 0x14;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0x11;
-        __emit 0x6A;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x60;
-        __emit 0xE4;
-        __emit 0x8D;
-        __emit 0x00;
-        __emit 0x51;
-        __emit 0x8B;
-        __emit 0xC4;
-        __emit 0x89;
-        __emit 0x64;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x6A;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x94;
-        __emit 0x12;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0xFF;
-        __emit 0x52;
-        __emit 0x28;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x7C;
-        __emit 0x14;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0x11;
-        __emit 0x51;
-        __emit 0x8B;
-        __emit 0xC4;
-        __emit 0x89;
-        __emit 0x64;
-        __emit 0x24;
-        __emit 0x28;
-        __emit 0x6A;
-        __emit 0x00;
-        __emit 0x68;
-        __emit 0x74;
-        __emit 0x12;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x40;
-        __emit 0x05;
-        __emit 0xFF;
-        __emit 0x52;
-        __emit 0x28;
-        __emit 0x88;
-        __emit 0x5C;
-        __emit 0x24;
-        __emit 0x34;
-        __emit 0xE8;
-        __emit 0xCA;
-        __emit 0xF4;
-        __emit 0xB5;
-        __emit 0xFF;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x10;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xE8;
-        __emit 0xB7;
-        __emit 0xF9;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0x89;
-        __emit 0x8E;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x0C;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x00;
-        __emit 0xE8;
-        __emit 0x7B;
-        __emit 0x8E;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xE8;
-        __emit 0xFA;
-        __emit 0x96;
-        __emit 0x3A;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x1C;
-        __emit 0x5E;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0D;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5B;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x20;
-        __emit 0xC3;
+    AsciiString translated;
+    if (filename == TheGameText->fetch("GUI:LastReplay"))
+    {
+        translated = TheRecorder->getLastReplayFileName();
+    }
+    else
+    {
+        translated.translate(filename);
+    }
+
+    AsciiString fullPath = TheRecorder->getReplayDir();
+    fullPath.concat(translated);
+    fullPath.concat(TheRecorder->getReplayExtention());
+
+    const char *pathText = fullPath.str();
+    replayPath.assign(pathText, pathText + strlen(pathText));
+    messageBoxWin = 0;
+    if (TheLocalFileSystem->doesFileExist(fullPath.str()))
+    {
+        MessageBoxYesNo(TheGameText->fetch("GUI:OverwriteReplayTitle"),
+            TheGameText->fetch("GUI:OverwriteReplay"), reallySaveReplay, 0);
+    }
+    else
+    {
+        reallySaveReplay();
     }
 }

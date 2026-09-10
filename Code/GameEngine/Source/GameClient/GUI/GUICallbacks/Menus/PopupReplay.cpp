@@ -69,16 +69,27 @@
 #endif
 
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
-static NameKeyType buttonBackKey					= NAMEKEY_INVALID;
-static NameKeyType buttonSaveKey					= NAMEKEY_INVALID;
-static NameKeyType listboxGamesKey				= NAMEKEY_INVALID;
-static NameKeyType textEntryReplayNameKey = NAMEKEY_INVALID;
+// The four Replay TUs share these exact retail objects. Name keys occupy
+// VA 0x012F404C..58; windows/time/message box occupy 0x012F405C..68;
+// replayPath is the 12-byte STLport string at 0x012F406C. Namespace linkage
+// prevents collision with other menus' private variables named parent.
+namespace PopupReplayState
+{
+NameKeyType buttonBackKey					= NAMEKEY_INVALID;
+NameKeyType buttonSaveKey					= NAMEKEY_INVALID;
+NameKeyType listboxGamesKey				= NAMEKEY_INVALID;
+NameKeyType textEntryReplayNameKey = NAMEKEY_INVALID;
 
-static GameWindow *parent = NULL;
-static GameWindow *replaySavedParent = NULL;
+GameWindow *parent = NULL;
+GameWindow *replaySavedParent = NULL;
 
-static time_t s_fileSavePopupStartTime = 0;
+time_t s_fileSavePopupStartTime = 0;
 static const time_t s_fileSavePopupDuration = 1000;
+std::string replayPath;
+GameWindow *messageBoxWin = NULL;
+
+}
+using namespace PopupReplayState;
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 extern void PopulateReplayFileListbox(GameWindow *listbox);
@@ -125,51 +136,8 @@ static void closeSaveMenu( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Initialize the SaveLoad menu */
 //-------------------------------------------------------------------------------------------------
-void PopupReplayInit( WindowLayout *layout, void *userData )
-{
-
-  // get ids for our children controls
-	buttonBackKey					 = NAMEKEY( "PopupReplay.wnd:ButtonBack" );
-	buttonSaveKey					 = NAMEKEY( "PopupReplay.wnd:ButtonSave" );
-	listboxGamesKey				 = NAMEKEY( "PopupReplay.wnd:ListboxGames" );
-	textEntryReplayNameKey = NAMEKEY( "PopupReplay.wnd:TextEntryReplayName" );
-
-	//set keyboard focus to main parent and set modal
-	NameKeyType parentID = TheNameKeyGenerator->nameToKey("PopupReplay.wnd:PopupReplayMenu");
-	parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
-	TheWindowManager->winSetFocus( parent );
-
-	NameKeyType replaySavedParentID = TheNameKeyGenerator->nameToKey("PopupReplay.wnd:PopupReplaySaved");
-	replaySavedParent = TheWindowManager->winGetWindowFromId( NULL, replaySavedParentID);
-	if (replaySavedParent == NULL) {
-		DEBUG_CRASH(("replaySavedParent == NULL"));
-	}
-
-	ShowReplaySavedPopup(FALSE);
-
-	// enable the menu action buttons
-	GameWindow *buttonFrame = TheWindowManager->winGetWindowFromId( parent, NAMEKEY( "PopupReplay.wnd:MenuButtonFrame" ) );
-	buttonFrame->winEnable( TRUE );
-
-	// get the listbox that will have the save games in it
-	GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( NULL, listboxGamesKey );
-	DEBUG_ASSERTCRASH( listboxGames != NULL, ("PopupReplayInit - Unable to find games listbox\n") );
-
-	// populate the listbox with the save games on disk
-	PopulateReplayFileListbox(listboxGames);
-
-	GameWindow *textEntryReplayName = TheWindowManager->winGetWindowFromId( parent, textEntryReplayNameKey );
-	GadgetTextEntrySetText(textEntryReplayName, UnicodeString::TheEmptyString);
-	TheWindowManager->winSetFocus( textEntryReplayName );
-
-	//Disable the button immediately as the code above us starts off with an empty string.
-	GameWindow *control = TheWindowManager->winGetWindowFromId( parent, buttonSaveKey );
-	if( control )
-	{
-		control->winEnable( FALSE );
-	}
-
-}  // end SaveLoadMenuInit
+// Retail initialization is emitted by PopupReplayInit_Thunk.cpp.
+extern void PopupReplayInit(WindowLayout *, void *);
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu shutdown method */
@@ -250,105 +218,8 @@ WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt msg, Wind
 	return MSG_IGNORED;
 }
 
-static void reallySaveReplay(void);
-static std::string replayPath;
-
-// ------------------------------------------------------------------------------------------------
-/** Save the replay */
-// ------------------------------------------------------------------------------------------------
-static GameWindow *messageBoxWin = NULL;
-static void saveReplay( UnicodeString filename )
-{
-	AsciiString translated;
-	if (filename == TheGameText->fetch("GUI:LastReplay"))
-	{
-		translated = TheRecorder->getLastReplayFileName();
-	}
-	else
-	{
-		translated.translate(filename);
-	}
-
-	AsciiString fullPath = TheRecorder->getReplayDir();
-	fullPath.concat(translated);
-	fullPath.concat(TheRecorder->getReplayExtention());
-
-	replayPath = fullPath.str();
-	messageBoxWin = NULL;
-	if (TheLocalFileSystem->doesFileExist(fullPath.str()))
-	{
-		messageBoxWin = MessageBoxOkCancel(TheGameText->fetch("GUI:OverwriteReplayTitle"), TheGameText->fetch("GUI:OverwriteReplay"), reallySaveReplay, NULL);		
-	}
-	else
-	{
-		reallySaveReplay();
-	}
-}
-void reallySaveReplay(void)
-{
-	AsciiString filename = replayPath.c_str();
-
-	AsciiString oldFilename;
-	oldFilename = TheRecorder->getReplayDir();
-	oldFilename.concat(LastReplayFileName.c_str());
-	oldFilename.concat(TheRecorder->getReplayExtention());
-
-	if (oldFilename == filename)
-		return;
-
-	if (TheLocalFileSystem->doesFileExist(filename.str()))
-	{
-		if(DeleteFile(filename.str()) == 0)
-		{
-			wchar_t buffer[1024];
-			FormatMessageW ( FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buffer, sizeof(buffer), NULL);
-			UnicodeString errorStr;
-			errorStr.set(buffer);
-			errorStr.trim();
-			if(messageBoxWin)
-			{
-				TheWindowManager->winUnsetModal(messageBoxWin);
-				messageBoxWin = NULL;
-			}
-			MessageBoxOk(TheGameText->fetch("GUI:Error"),errorStr, NULL);
-
-			// get the listbox that will have the save games in it
-			GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( parent, listboxGamesKey );
-			DEBUG_ASSERTCRASH( listboxGames != NULL, ("reallySaveReplay - Unable to find games listbox\n") );
-
-			// populate the listbox with the save games on disk
-			PopulateReplayFileListbox(listboxGames);
-			return;
-		}
-	}
-
-	// copy the replay to the right place
-	if(CopyFile(oldFilename.str(),filename.str(), FALSE) == 0)
-	{
-		wchar_t buffer[1024];
-		FormatMessageW( FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buffer, sizeof(buffer), NULL);
-		UnicodeString errorStr;
-		errorStr.set(buffer);
-		errorStr.trim();
-		if(messageBoxWin)
-		{
-			TheWindowManager->winUnsetModal(messageBoxWin);
-			messageBoxWin = NULL;
-		}
-		MessageBoxOk(TheGameText->fetch("GUI:Error"),errorStr, NULL);
-		return;
-	}
-
-	// get the listbox that will have the save games in it
-	GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( parent, listboxGamesKey );
-	DEBUG_ASSERTCRASH( listboxGames != NULL, ("reallySaveReplay - Unable to find games listbox\n") );
-
-	// populate the listbox with the save games on disk
-	PopulateReplayFileListbox(listboxGames);
-
-	ShowReplaySavedPopup(TRUE);
-	s_fileSavePopupStartTime = timeGetTime();
-}
+extern void saveReplay( UnicodeString filename );
+extern void reallySaveReplay(void);
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu system callback */

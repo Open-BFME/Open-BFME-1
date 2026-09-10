@@ -92,12 +92,17 @@ extern GameWindowManager *TheWindowManager;
 extern void PopulateReplayFileListbox(GameWindow *listbox);
 extern void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
 
-static NameKeyType buttonBackKey = NAMEKEY_INVALID;
-static NameKeyType buttonSaveKey = NAMEKEY_INVALID;
-static NameKeyType listboxGamesKey = NAMEKEY_INVALID;
-static NameKeyType textEntryReplayNameKey = NAMEKEY_INVALID;
-static GameWindow *parent;
-static GameWindow *replaySavedParent;
+namespace PopupReplayState
+{
+extern NameKeyType buttonBackKey;
+extern NameKeyType buttonSaveKey;
+extern NameKeyType listboxGamesKey;
+extern NameKeyType textEntryReplayNameKey;
+extern GameWindow *parent;
+extern GameWindow *replaySavedParent;
+}
+using namespace PopupReplayState;
+
 
 void PopupReplayInit(WindowLayout *layout, void *userData)
 {
@@ -107,8 +112,16 @@ void PopupReplayInit(WindowLayout *layout, void *userData)
     textEntryReplayNameKey = TheNameKeyGenerator->nameToKey("PopupReplay.wnd:TextEntryReplayName");
 
     NameKeyType parentID = TheNameKeyGenerator->nameToKey("PopupReplay.wnd:PopupReplayMenu");
-    parent = TheWindowManager->winGetWindowFromId(0, parentID);
-    TheWindowManager->winSetFocus(parent);
+    GameWindow *newParent = TheWindowManager->winGetWindowFromId(0, parentID);
+    GameWindowManager *manager = TheWindowManager;
+    // Slot 44 is winSetFocus (retail 0x0047CA80): ECX is the receiver,
+    // one window argument is on the stack, and EDX is caller-saved. This
+    // register-ABI view supplies the already loaded vtable in EDX, preserving
+    // retail's vtable load before the shared parent store (VC7.1 scheduling).
+    typedef int (__fastcall *FocusCall)(GameWindowManager *, void *, GameWindow *);
+    FocusCall *table = *reinterpret_cast<FocusCall **>(manager);
+    parent = newParent;
+    table[44](manager, table, newParent);
 
     NameKeyType replaySavedParentID = TheNameKeyGenerator->nameToKey("PopupReplay.wnd:PopupReplaySaved");
     replaySavedParent = TheWindowManager->winGetWindowFromId(0, replaySavedParentID);
