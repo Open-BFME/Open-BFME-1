@@ -87,7 +87,9 @@ public:
 #include "GameLogic/ObjectTypes.h"
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/PolygonTrigger.h"
+#define evaluatePlayerHasComparisonValueExcessPower evaluateRva003231E0
 #include "GameLogic/ScriptConditions.h"
+#undef evaluatePlayerHasComparisonValueExcessPower
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Scripts.h"
 #include "GameLogic/VictoryConditions.h"
@@ -195,6 +197,35 @@ class BfmeScriptConditionParameter
 public:
 	unsigned char m_beforeString[0x10];
 	AsciiString m_string;
+};
+
+// The excess-power predicate calls the reviewed BFME player-mask thunk rather
+// than the Zero Hour ScriptEngine member used by the surrounding source.  Its
+// decorated ABI and global are already pinned at 0x000230B5/0x00EF076C.
+class BfmeP1087
+{
+public:
+	PlayerMaskType bfmeNext1087(Parameter *parameter);
+};
+
+extern BfmeP1087 *g_bfmeP1087;
+
+// BFME keeps Parameter::m_int at +0x08 and embeds the energy counters in the
+// player at +0xA8/+0xAC.  These views keep this predicate from selecting the
+// incompatible Zero Hour accessors declared by the common headers.
+class BfmeScriptConditionIntParameter
+{
+public:
+	unsigned char m_beforeInt[0x08];
+	Int m_int;
+};
+
+class BfmeScriptConditionEnergyPlayer
+{
+public:
+	unsigned char m_beforeProduction[0xA8];
+	Int m_production;
+	Int m_consumption;
 };
 
 class BfmeScriptConditionTerrainLogic
@@ -2097,25 +2128,31 @@ Bool ScriptConditions::evaluatePlayerHasComparisonPercentPower(Parameter *pPlaye
 	return false;
 }
 //-------------------------------------------------------------------------------------------------
-/** evaluatePlayerHasComparisonValueExcessPower */
+/** evaluateRva003231E0: original retail condition spelling is unproven. */
 //-------------------------------------------------------------------------------------------------
-// ?evaluatePlayerHasComparisonValueExcessPower@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
-Bool ScriptConditions::evaluatePlayerHasComparisonValueExcessPower(Parameter *pPlayerParm, Parameter *pComparisonParm, Parameter *pKWHParm)
+Bool ScriptConditions::evaluateRva003231E0(Parameter *pPlayerParm, Parameter *pComparisonParm, Parameter *pKWHParm)
 {
-	Player* pPlayer = playerFromParam(pPlayerParm);
-	if (!pPlayer) {
-		return false;
-	}
-	Int desiredKilowattExcess = pKWHParm->getInt();
-	Int actualKilowats = pPlayer->getEnergy()->getProduction() - pPlayer->getEnergy()->getConsumption();
-	switch (pComparisonParm->getInt())
-	{
-		case Parameter::LESS_THAN :			return (actualKilowats < desiredKilowattExcess); 
-		case Parameter::LESS_EQUAL :		return (actualKilowats <= desiredKilowattExcess);
-		case Parameter::EQUAL :					return (actualKilowats == desiredKilowattExcess); 
-		case Parameter::GREATER_EQUAL :	return (actualKilowats >= desiredKilowattExcess);
-		case Parameter::GREATER :				return (actualKilowats > desiredKilowattExcess);
-		case Parameter::NOT_EQUAL:			return (actualKilowats != desiredKilowattExcess);
+	Int desiredKilowattExcess = reinterpret_cast<BfmeScriptConditionIntParameter *>(pKWHParm)->m_int;
+	PlayerMaskType playerMask = g_bfmeP1087->bfmeNext1087(pPlayerParm);
+	Parameter *comparisonParameter = pComparisonParm;
+	while (playerMask) {
+		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
+		BfmeScriptConditionEnergyPlayer *energy =
+			reinterpret_cast<BfmeScriptConditionEnergyPlayer *>(pPlayer);
+		Int actualKilowats = energy->m_production - energy->m_consumption;
+		Bool comparison = false;
+		switch (reinterpret_cast<BfmeScriptConditionIntParameter *>(comparisonParameter)->m_int)
+		{
+			case Parameter::LESS_THAN: comparison = (actualKilowats < desiredKilowattExcess); break;
+			case Parameter::LESS_EQUAL: comparison = (actualKilowats <= desiredKilowattExcess); break;
+			case Parameter::EQUAL: comparison = (actualKilowats == desiredKilowattExcess); break;
+			case Parameter::GREATER_EQUAL: comparison = (actualKilowats >= desiredKilowattExcess); break;
+			case Parameter::GREATER: comparison = (actualKilowats > desiredKilowattExcess); break;
+			case Parameter::NOT_EQUAL: comparison = (actualKilowats != desiredKilowattExcess); break;
+		}
+		if (comparison) {
+			return true;
+		}
 	}
 	return false;
 }
@@ -3169,7 +3206,7 @@ Bool ScriptConditions::evaluateCondition( Condition *pCondition )
 			return evaluatePlayerHasComparisonPercentPower(pCondition->getParameter(0), pCondition->getParameter(1), pCondition->getParameter(2));
 			
 		case Condition::PLAYER_EXCESS_POWER_COMPARE_VALUE:
-			return evaluatePlayerHasComparisonValueExcessPower(pCondition->getParameter(0), pCondition->getParameter(1), pCondition->getParameter(2));
+			return evaluateRva003231E0(pCondition->getParameter(0), pCondition->getParameter(1), pCondition->getParameter(2));
 			
 		case Condition::SKIRMISH_SPECIAL_POWER_READY:
 			return evaluateSkirmishSpecialPowerIsReady(pCondition->getParameter(0), pCondition->getParameter(1));
