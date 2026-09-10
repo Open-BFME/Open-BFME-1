@@ -858,6 +858,7 @@ name,address,notes
 ??$__copy@PBUGen_t_003b5480_p48cd@@PAU1@H@_STL@@YAPAUGen_t_003b5480_p48cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x003B3360,gen-tgrid payload member
 ??$__copy@PBUGen_t_003b55d0_p32cd@@PAU1@H@_STL@@YAPAUGen_t_003b55d0_p32cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x003B33C0,gen-tgrid payload member
 ??$__copy@PBUGen_t_003b56f0_p12cd@@PAU1@H@_STL@@YAPAUGen_t_003b56f0_p12cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x003B3460,gen-tgrid payload member
+??$__copy_ptrs@PBUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PBU1@0PAU1@ABU__false_type@0@@Z,0x009F4B40,ICoord2D vector assignment helper at 0x009F5810; same 8-byte POD copy body as the existing ICF alias
 ??$__copy@PBUGen_t_003b5c60_p12cd@@PAU1@H@_STL@@YAPAUGen_t_003b5c60_p12cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x003B3880,gen-tgrid payload member
 ??$__copy@PBUGeometryShape@@PAU1@H@_STL@@YAPAUGeometryShape@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000381E0,GeometryShape vector assign callee
 ??$__copy@PBUHideShowSubObjInfo@ModelConditionInfo@@PAU12@H@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PBU12@0PAU12@ABUrandom_access_iterator_tag@0@PAH@Z,0x0003DB1D,ILT thunk used by call site
@@ -1206,6 +1207,7 @@ name,address,notes
 ??$__uninitialized_copy@PBUEvaMessageInfo@@PAU1@@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABU__false_type@0@@Z,0x0004684E,0x004263D0 call +0x0119 ILT enters matched 28-byte copy walk body 0x00426020
 ??$__uninitialized_copy@PBUGen00762250@@PAU1@@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00027E35,0x00770830 call +0x0119 ILT enters matched width-56 copy walk body 0x00768BF0
 ??$__uninitialized_copy@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095720,gen-tgrid payload member
+??$__uninitialized_copy@PBUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PBU1@0PAU1@ABU__false_type@0@@Z,0x009F4B80,ICoord2D vector assignment helper at 0x009F5810; same 8-byte POD copy body as the existing ICF alias
 ??$__uninitialized_copy@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75F0,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE80,gen-tgrid payload member
 ??$__uninitialized_copy@PBUGen_t_000b0c00_p8cd@@PAU1@@_STL@@YAPAUGen_t_000b0c00_p8cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000B0490,gen-tgrid payload member
