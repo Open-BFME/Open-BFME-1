@@ -13776,6 +13776,7 @@ name,address,notes
 ?adjustFontSize@GlobalLanguage@@QAEHH@Z,0x00004E67,this tree names the class GlobalLanguage where the ledger row at 0x00439000 spells it GlobalLanguageData; ILT 0x00004E67 is what InGameUI::addNamedTimer calls and it jumps straight to that body
 ?adjustFontSize@GlobalLanguageData@@QAEHH@Z,0x00004E67,ILT thunk to GlobalLanguageData::adjustFontSize; returns Int in BFME
 ?adjustModelConditionForWeaponStatus@Object@@QAEXXZ,0x000276D3,ILT thunk; real body 0x5CA0F0
+?adjustPower@Energy@@QAEXH_N@Z,0x00041A56,Object::onDisabledEdge retail call at 0x001C3639
 ?adjustStacking@W3DRoadBuffer@@IAEXHH@Z,0x0000448F,ILT thunk pin for insertCrossTypeJoins
 ?adjust_out_wts@@YAXXZ,0x00875A20,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877960 calls; autopin
 ?advance@Rva006ABFD0Event@@QAEXXZ,0x00046A33,ILT thunk to 0x000B4840 called from 0x006ABFD0

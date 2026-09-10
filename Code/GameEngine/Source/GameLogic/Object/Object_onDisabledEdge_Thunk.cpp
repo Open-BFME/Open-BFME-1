@@ -1,275 +1,144 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
+typedef bool Bool;
+enum NameKeyType
 {
-protected:
-	void onDisabledEdge(bool);
+	NameKeyTypeDummy = 0
 };
 
-// ?onDisabledEdge@Object@@IAEX_N@Z
-__declspec(naked) void Object::onDisabledEdge(bool)
+class Player;
+
+class Team
 {
-	__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x5e
-        __emit 0x8e
-        __emit 0x00
-        __emit 0x01
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x53
-        __emit 0x8a
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x55
-        __emit 0x56
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0x8b
-        __emit 0x8f
-        __emit 0x3c
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x7e
-        __emit 0xe8
-        __emit 0x1d
-        __emit 0x01
-        __emit 0xe6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xe8
-        __emit 0x85
-        __emit 0xed
-        __emit 0x0f
-        __emit 0x84
-        __emit 0x83
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x0d
-        __emit 0x68
-        __emit 0xf5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0xb8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc8
-        __emit 0x75
-        __emit 0x2b
-        __emit 0x09
-        __emit 0x05
-        __emit 0x68
-        __emit 0xf5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x00
-        __emit 0xd6
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x68
-        __emit 0x50
-        __emit 0xff
-        __emit 0x08
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x22
-        __emit 0x78
-        __emit 0xe7
-        __emit 0xff
-        __emit 0xa3
-        __emit 0x64
-        __emit 0xf5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xa1
-        __emit 0x64
-        __emit 0xf5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x54
-        __emit 0x78
-        __emit 0xe6
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x36
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x10
-        __emit 0xff
-        __emit 0x12
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x2a
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x74
-        __emit 0x16
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x8a
-        __emit 0x48
-        __emit 0x70
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0x25
-        __emit 0xfc
-        __emit 0xe3
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x14
-        __emit 0x33
-        __emit 0xed
-        __emit 0xeb
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x04
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8a
-        __emit 0x42
-        __emit 0x70
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0x43
-        __emit 0xe5
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x47
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0xe8
-        __emit 0x9d
-        __emit 0xec
-        __emit 0xe3
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x80
-        __emit 0x18
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x16
-        __emit 0x85
-        __emit 0xed
-        __emit 0x74
-        __emit 0x12
-        __emit 0x84
-        __emit 0xdb
-        __emit 0x0f
-        __emit 0x94
-        __emit 0xc1
-        __emit 0x51
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x18
-        __emit 0xe4
-        __emit 0xe7
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5d
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5b
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+public:
+	Player *getControllingPlayer() const;
+};
+
+class Energy
+{
+public:
+	void adjustPower(int amount, bool add);
+};
+
+class Player
+{
+public:
+	void removeRadar(bool disableProof);
+
+	unsigned char m_pad[0xa4];
+	Energy m_energy;
+};
+
+class Rva000CBFA0Player : public Player
+{
+public:
+	void addRadar(bool disableProof);
+};
+
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+};
+
+class ThingTemplate
+{
+public:
+	void *m_vtable;
+	Overridable *m_nextOverride;
+	unsigned char m_pad[0x410];
+	int m_energyProduction;
+};
+
+class Thing
+{
+public:
+	void *m_vtable;
+	Overridable *m_template;
+};
+
+class UpgradeInterface
+{
+public:
+	virtual bool isAlreadyUpgraded() const;
+};
+
+class RadarFields
+{
+public:
+	unsigned char m_pad[0x70];
+	bool m_disableProof;
+};
+
+class Module
+{
+public:
+	void *m_vtable;
+	RadarFields *m_owner;
+	unsigned char m_pad[8];
+	UpgradeInterface m_upgradeInterface;
+};
+
+class Object
+{
+public:
+	virtual void objectAnchor();
+
+protected:
+	void onDisabledEdge(bool becomingDisabled);
+
+public:
+	Module *findModule(NameKeyType key) const;
+
+	Thing *m_thing;
+	unsigned char m_pad[0x234];
+	Team *m_team;
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+void Object::onDisabledEdge(bool becomingDisabled)
+{
+	Player *controller;
+	Object *self = this;
+	Module *mod = 0;
+	controller = self->m_team ? self->m_team->getControllingPlayer() : 0;
+	if (controller)
+	{
+		static NameKeyType radar = TheNameKeyGenerator->nameToKey((const char *)0x0108ff50);
+		mod = self->findModule(radar);
+		if (mod)
+		{
+			if (mod->m_upgradeInterface.isAlreadyUpgraded())
+			{
+				if (becomingDisabled)
+					controller->removeRadar(mod->m_owner->m_disableProof);
+				else
+					((Rva000CBFA0Player *)controller)->addRadar(mod->m_owner->m_disableProof);
+			}
+		}
 	}
+
+	ThingTemplate *finalTemplate = (ThingTemplate *)self->m_thing;
+	if (finalTemplate)
+	{
+		Overridable *templateObject = ((Thing *)finalTemplate)->m_template;
+		if (templateObject)
+			finalTemplate = (ThingTemplate *)templateObject->getFinalOverride();
+	}
+	int power = finalTemplate->m_energyProduction;
+	if (power > 0 && controller)
+		controller->m_energy.adjustPower(power, !becomingDisabled);
 }
+
+#pragma comment(linker, "/alternatename:?getControllingPlayer@Team@@QBEPAVPlayer@@XZ=?j_0002369b@@YAXXZ")
+#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z=?j_0003add7@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z=?j_0002ae23@@YAXXZ")
+#pragma comment(linker, "/alternatename:?removeRadar@Player@@QAEX_N@Z=?j_0000321a@@YAXXZ")
+#pragma comment(linker, "/alternatename:?addRadar@Player@@QAEX_N@Z=?j_000179fe@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+#pragma comment(linker, "/alternatename:?adjustPower@Energy@@QAEXH_N@Z=?j_00041a56@@YAXXZ")
