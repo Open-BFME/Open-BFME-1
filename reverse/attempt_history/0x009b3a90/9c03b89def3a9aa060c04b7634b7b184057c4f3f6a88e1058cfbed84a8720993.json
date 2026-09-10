@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9c03b89def3a9aa060c04b7634b7b184057c4f3f6a88e1058cfbed84a8720993",
+  "symbol": "?bfmeQueryCpuTierFlags@@YAXPAH00@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeQueryCpuTierFlags@@YAXPAH00@Z\n// partial score=0.98 date=2026-09-10\n// Reads the shared per-subsystem CPU tier byte (subsystem 1 for the plain\n// codec path, subsystem 0xc once bfmeDetectCpuFeature confirms the wider\n// probe) and expands its 0..3 tier value into three cumulative capability\n// flags for the caller's SIMD dispatch-table installer.\n\nextern int __cdecl bfmeDetectCpuFeature(void);\n\nenum BfmeCpuTier\n{\n\tBFME_CPU_TIER_0 = 0,\n\tBFME_CPU_TIER_1 = 1,\n\tBFME_CPU_TIER_2 = 2,\n\tBFME_CPU_TIER_3 = 3\n};\n\nstatic const unsigned char g_bfmeCpuTierBySubsystem[16] =\n{\n\t0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3\n};\n\nvoid __cdecl bfmeQueryCpuTierFlags(register int *pTierA, int *pTierB, int *pTierC)\n{\n\tunsigned int subsystem = 1;\n\tif (bfmeDetectCpuFeature())\n\t\tsubsystem = 0xc;\n\tunsigned int tier = g_bfmeCpuTierBySubsystem[subsystem];\n\t__assume(tier <= 3);\n\tswitch ((BfmeCpuTier)tier)\n\t{\n\tcase 0:\n\t\t*pTierA = 0;\n\tsharedZeroTail:\n\t\t*pTierB = 0;\n\t\t*pTierC = 0;\n\t\tbreak;\n\tcase 1:\n\t\t*pTierA = 1;\n\t\tgoto sharedZeroTail;\n\tcase 2:\n\t\t*pTierA = 1;\n\t\t*pTierB = 1;\n\t\t*pTierC = 0;\n\t\tbreak;\n\tcase 3:\n\t\t*pTierA = 1;\n\t\t*pTierB = 1;\n\t\t*pTierC = 1;\n\t\tbreak;\n\t}\n}\n"
+}
