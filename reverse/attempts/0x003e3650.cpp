@@ -1,8 +1,18 @@
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E3650Struct@@@Z
-// partial score=0.94 date=2026-09-02
+// partial score=0.95 date=2026-09-10
 // cl: /DNDEBUG /MD
 //
-// Retail 0x003E3650: Pathfinder::iterateCellsAlongLine, cell-space overload.
+// Retail 0x003E3650: the cell-space Pathfinder::iterateCellsAlongLine
+// overload reached by the world-space forwarder at 0x003E7F20 (ILT
+// 0x0004940E).  This BFME body specializes the Bresenham walk for finding a
+// controlled object occupying a goal cell.  The user-data record is named for
+// the retail address because the forwarder does not expose its fields; the
+// body independently proves its two fields at +0 and +4.
+//
+// The local views below are deliberately TU-scoped.  The object returned by
+// GameLogic::findObjectByID is accessed at the offsets used by this retail
+// body (+4 team, +0x74 id, +0xd0 control flag); those offsets must not be
+// generalized to the wider Object declarations in other source files.
 
 extern "C" int __cdecl abs( int n );
 #pragma intrinsic(abs)
@@ -11,55 +21,65 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned int ObjectID;
 
-struct ICoord2D { Int x, y; };
-struct IRegion2D { ICoord2D lo, hi; };
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
 
-enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
+struct IRegion2D
+{
+	ICoord2D lo;
+	ICoord2D hi;
+};
 
-class BfmeX1011;
+enum PathfindLayerEnum
+{
+	PATHFIND_LAYER_GROUND = 0
+};
 
 class BfmeSubBIA
 {
 public:
-	int bfmeAskBIA();
+	Int ask();
 };
 
 class Team
 {
 public:
-	int m_field00;
+	Int m_unknown00;
 	BfmeSubBIA *m_sub;
 };
 
 class Object
 {
 public:
-	int m_field00;
+	Int m_unknown00;
 	Team *m_team;
-	char m_pad08[0x74 - 0x08];
+	char m_unknown08[0x74 - 0x08];
 	ObjectID m_id;
 };
 
 class Player
 {
 public:
-	char m_pad00[0xd0];
-	unsigned char m_fieldD0;
+	char m_unknown00[0xd0];
+	unsigned char m_controlFlags;
 };
 
-class BfmeLook1011
+class GameLogic
 {
 public:
-	BfmeX1011 *bfmeFind1011( int id );
+	Object *findObjectByID( Int id );
 };
 
-extern BfmeLook1011 *g_bfmeLook1011;
+extern GameLogic *TheGameLogic;
 
 class PathfindCellInfo
 {
 public:
-	char m_pad00[0x20];
-	Int m_field20;
+	char m_unknown00[0x20];
+	Int m_goalUnit;
 };
 
 class PathfindCell
@@ -68,17 +88,17 @@ public:
 	Int getRawType( void ) const { return m_packed & 0x7; }
 	Int getGoalUnit( void ) const;
 
-	PathfindCellInfo *m_info;		// +0x00
-	Int m_unused1;					// +0x04
-	Int m_unused2;					// +0x08
-	unsigned int m_packed;			// +0x0c
+	PathfindCellInfo *m_info;
+	Int m_unknown04;
+	Int m_unknown08;
+	unsigned int m_packed;
 };
 
 inline Int PathfindCell::getGoalUnit( void ) const
 {
 	PathfindCellInfo *info = m_info;
 	if (info != 0)
-		return info->m_field20;
+		return info->m_goalUnit;
 	return 0;
 }
 
@@ -88,13 +108,13 @@ public:
 	PathfindCell *getCell( Int x, Int y );
 
 private:
-	unsigned char m_body[0x44];		// stride 0x44
+	char m_unknown00[0x44];
 };
 
 struct Rva003E3650Struct
 {
-	Object *m_found;				// +0x00
-	ObjectID m_ignoreID;			// +0x04
+	Object *m_found;
+	ObjectID m_ignoreID;
 };
 
 class Pathfinder
@@ -105,11 +125,11 @@ public:
 	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
 
 private:
-	unsigned char m_prefix[0x10];		// +0x000 opaque
-	PathfindCell **m_map;				// +0x010
-	IRegion2D m_extent;					// +0x014
-	unsigned char m_mid[0x85c - 0x24];	// +0x024 opaque
-	PathfindLayer m_layers[16];			// +0x85c
+	unsigned char m_unknown00[0x10];
+	PathfindCell **m_map;
+	IRegion2D m_extent;
+	unsigned char m_unknown24[0x85c - 0x24];
+	PathfindLayer m_layers[16];
 };
 
 inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y )
@@ -128,9 +148,9 @@ inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y 
 	return 0;
 }
 
-static Player *controllingPlayer( Object *obj )
+static Player *getControllingPlayer( Object *object )
 {
-	Team *team = obj->m_team;
+	Team *team = object->m_team;
 
 	if (team == 0)
 		return 0;
@@ -138,11 +158,12 @@ static Player *controllingPlayer( Object *obj )
 	if (team->m_sub == 0)
 		return (Player *)team;
 
-	return (Player *)team->m_sub->bfmeAskBIA();
+	return (Player *)team->m_sub->ask();
 }
 
-Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
-	PathfindLayerEnum layer, Rva003E3650Struct *info )
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
+	const ICoord2D &end, PathfindLayerEnum layer,
+	Rva003E3650Struct *info )
 {
 	Int delta_x = abs( end.x - start.x );
 	Int delta_y = abs( end.y - start.y );
@@ -195,15 +216,15 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &en
 
 		if (cell->getRawType() == 4)
 		{
-			Object *obj = (Object *)g_bfmeLook1011->bfmeFind1011( cell->getGoalUnit() );
-			if (obj)
+			Object *object = TheGameLogic->findObjectByID( cell->getGoalUnit() );
+			if (object)
 			{
-				Player *player = controllingPlayer( obj );
-				if (player->m_fieldD0 & 2)
+				Player *player = getControllingPlayer( object );
+				if (player->m_controlFlags & 2)
 				{
-					if (obj->m_id != info->m_ignoreID)
+					if (object->m_id != info->m_ignoreID)
 					{
-						info->m_found = obj;
+						info->m_found = object;
 						return 1;
 					}
 				}
