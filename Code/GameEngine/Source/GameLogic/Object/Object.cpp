@@ -5600,7 +5600,8 @@ Real Object::getVisionRange() const
 //-------------------------------------------------------------------------------------------------
 void Object::setVisionRange( Real newVisionRange )
 {
-	m_visionRange = newVisionRange;
+	BfmeObjectVisionFields *self = reinterpret_cast<BfmeObjectVisionFields *>(this);
+	self->m_visionRange = newVisionRange;
 }
 
 //-------------------------------------------------------------------------------------------------
