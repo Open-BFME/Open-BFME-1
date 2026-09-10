@@ -1,344 +1,156 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??1RTS3DScene@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// Clean BFME layout for the RTS3DScene destructor at retail RVA 0x00713510.
+// stlport
 
-class __declspec(novtable) RTS3DScene
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
+
+struct SceneVectorElement
+{
+	int m_value;
+};
+
+template class _STL::vector<SceneVectorElement>;
+
+class RefCountClass
+{
+public:
+	virtual void Delete_This(void);
+
+	void Release_Ref(void)
+	{
+		if (--NumRefs == 0)
+			Delete_This();
+	}
+
+	int NumRefs;
+};
+
+class SimpleSceneClass
+{
+public:
+	virtual ~SimpleSceneClass();
+
+private:
+	unsigned char m_pad[0x104];
+};
+
+class SubsystemInterface
+{
+public:
+	virtual ~SubsystemInterface();
+
+private:
+	unsigned char m_name[4];
+};
+
+class BfmeRefSceneList
+{
+public:
+	virtual ~BfmeRefSceneList();
+
+private:
+	unsigned char m_nodes[0x14];
+};
+
+class Gen_uw_0094a880
+{
+public:
+	~Gen_uw_0094a880();
+
+private:
+	unsigned char m_data[0x228];
+};
+
+class RTS3DScene : public SimpleSceneClass, public SubsystemInterface
 {
 public:
 	virtual ~RTS3DScene();
+
+private:
+	BfmeRefSceneList m_dynamicLightList;
+	unsigned char m_header[4];
+	RefCountClass *m_globalLight[4];
+	RefCountClass *m_scratchLight;
+	unsigned char m_infantryAmbient[0xc];
+	RefCountClass *m_infantryLight[4];
+	int m_numGlobalLights;
+	Gen_uw_0094a880 m_defaultLightEnvironment;
+	Gen_uw_0094a880 m_foggedLightEnvironment;
+	Gen_uw_0094a880 m_ambientLightEnvironment;
+	unsigned char m_passFlag;
+	unsigned char m_passPad[3];
+	RefCountClass *m_shroudMaterialPass;
+	RefCountClass *m_maskMaterialPass;
+	RefCountClass *m_heatVisionMaterialPass;
+	RefCountClass *m_occludedMaterialPass[32];
+	int m_occludedObjectsCount;
+	int m_potentialOccludersCount;
+	void **m_translucentObjectsBuffer;
+	void *m_reserved;
+	void *m_potentialOccluders;
+	void *m_potentialOccludees;
+	void *m_nonOccludersOrOccludees;
+	int m_translucentObjectsCount;
+	int m_occludedObjectsCapacity;
+	int m_nonOccluderOrOccludeeCount;
+	_STL::vector<SceneVectorElement> m_sceneVector;
+	void *m_camera;
 };
 
-// ??1RTS3DScene@@UAE@XZ
-__declspec(naked) RTS3DScene::~RTS3DScene()
+RTS3DScene::~RTS3DScene()
 {
-	__asm {
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x69
-		__emit 0x21
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x5e
-		__emit 0x21
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x13
-		__emit 0x21
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x5e
-		__emit 0x21
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x00
-		__emit 0x21
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x4b
-		__emit 0x21
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xed
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x38
-		__emit 0x21
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xda
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x25
-		__emit 0x21
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xc7
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x12
-		__emit 0x21
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xb4
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x4c
-		__emit 0x08
-		__emit 0x3d
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xa1
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xd8
-		__emit 0xe9
-		__emit 0x39
-		__emit 0x08
-		__emit 0x3d
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x8e
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x83
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xdc
-		__emit 0xe9
-		__emit 0x1b
-		__emit 0x08
-		__emit 0x3d
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x70
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xe8
-		__emit 0xe9
-		__emit 0xbb
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x5d
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8d
-		__emit 0x4d
-		__emit 0xe0
-		__emit 0xe9
-		__emit 0xf5
-		__emit 0x07
-		__emit 0x3d
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x4a
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0xe8
-		__emit 0xe9
-		__emit 0x95
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x37
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x82
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x24
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x6f
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x11
-		__emit 0x20
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x5c
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x45
-		__emit 0x04
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xfe
-		__emit 0x1f
-		__emit 0xc2
-		__emit 0xff
-		__emit 0x59
-		__emit 0xc3
-		__emit 0x8b
-		__emit 0x4d
-		__emit 0x04
-		__emit 0xe9
-		__emit 0x49
-		__emit 0x20
-		__emit 0x3a
-		__emit 0xff
-		__emit 0xb8
-		__emit 0x9c
-		__emit 0xf3
-		__emit 0x24
-		__emit 0x01
-		__emit 0xe9
-		__emit 0x10
-		__emit 0x6f
-		__emit 0xd9
-		__emit 0xff
+	for (int i = 0; i < 4; ++i)
+	{
+		if (m_globalLight[i])
+		{
+			m_globalLight[i]->Release_Ref();
+			m_globalLight[i] = 0;
+		}
+		if (m_infantryLight[i])
+		{
+			m_infantryLight[i]->Release_Ref();
+			m_infantryLight[i] = 0;
+		}
+	}
+
+	if (m_scratchLight)
+	{
+		m_scratchLight->Release_Ref();
+		m_scratchLight = 0;
+	}
+
+	if (m_shroudMaterialPass)
+	{
+		m_shroudMaterialPass->Release_Ref();
+		m_shroudMaterialPass = 0;
+	}
+	if (m_maskMaterialPass)
+	{
+		m_maskMaterialPass->Release_Ref();
+		m_maskMaterialPass = 0;
+	}
+	if (m_heatVisionMaterialPass)
+	{
+		m_heatVisionMaterialPass->Release_Ref();
+		m_heatVisionMaterialPass = 0;
+	}
+
+	if (m_translucentObjectsBuffer)
+		delete [] m_translucentObjectsBuffer;
+	if (m_nonOccludersOrOccludees)
+		delete [] m_nonOccludersOrOccludees;
+	if (m_potentialOccludees)
+		delete [] m_potentialOccludees;
+	if (m_potentialOccluders)
+		delete [] m_potentialOccluders;
+
+	for (int i = 0; i < 32; ++i)
+	{
+		if (m_occludedMaterialPass[i])
+		{
+			m_occludedMaterialPass[i]->Release_Ref();
+			m_occludedMaterialPass[i] = 0;
+		}
 	}
 }
