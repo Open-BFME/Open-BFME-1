@@ -86817,3 +86817,5 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ??0?$BFMEFactoryModuleData@VCostModifierUpgradeModuleData@@$0II@@@QAE@XZ,0x002D4B30,Declaration-only BFME factory allocation facade for actual CostModifierUpgradeModuleData88B; named registry factory11DA50 calls2B062 to full123B constructor2D4B30; no new body claim
 ??_7OCLSpecialPowerModuleData@@6B@,0x010B6180,Parent raw ctor2631BB store and moduledatafactory120230 allocation230; vtable slot0 ILT339E2 to2637D0 deletingdtor then matched263800
 ?handle@Rva008091C0Owner@@QAEXPAVBfmeC994@@HPAD@Z,0x008091C0,Parent direct361B body ends809329CC ret0xc at809326; dispatcher supplies message signed GID and name string; address-qualified declaration-only three-argument thiscall helper
+?getPowerName@ManTheWallsSpecialPower@@UBE?AVAsciiString@@XZ,0x00268A60,ICF alias helper of SpecialPowerModule::getPowerName at 0x00268A60
+?getPowerName@ProductionSpeedBonus@@UBE?AVAsciiString@@XZ,0x00268A60,ICF alias helper of SpecialPowerModule::getPowerName at 0x00268A60

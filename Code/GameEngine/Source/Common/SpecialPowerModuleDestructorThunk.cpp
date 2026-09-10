@@ -1,247 +1,196 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/asciistring8outofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 
-class __declspec(novtable) SpecialPowerModule
+#include "Common/AsciiString.h"
+
+typedef int ObjectID;
+
+class ModuleData;
+class SpecialPowerTemplate;
+
+class Object
 {
-protected:
-    virtual ~SpecialPowerModule();
+public:
+    ObjectID getID() const { return m_id; }
+    class Player *getControllingPlayer() const;
+
+private:
+    char m_padding[0x74];
+    ObjectID m_id;
 };
 
-// ??1SpecialPowerModule@@MAE@XZ
-__declspec(naked) SpecialPowerModule::~SpecialPowerModule()
+class Player
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x20
-        __emit 0xfe
-        __emit 0x00
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x8d
-        __emit 0x7e
-        __emit 0x10
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x3c
-        __emit 0x7c
-        __emit 0x0b
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x78
-        __emit 0x7b
-        __emit 0x0b
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x07
-        __emit 0x00
-        __emit 0x7b
-        __emit 0x0b
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x41
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x0e
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x05
-        __emit 0xe8
-        __emit 0xda
-        __emit 0xfc
-        __emit 0xdd
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8a
-        __emit 0x89
-        __emit 0x14
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0xf9
-        __emit 0x01
-        __emit 0x75
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x88
-        __emit 0x78
-        __emit 0xdb
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x4b
-        __emit 0x53
-        __emit 0x55
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0xca
-        __emit 0xc6
-        __emit 0xd9
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x6e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x59
-        __emit 0x74
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x61
-        __emit 0x78
-        __emit 0xdb
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x6d
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x8c
-        __emit 0x14
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x55
-        __emit 0x53
-        __emit 0x57
-        __emit 0x50
-        __emit 0xff
-        __emit 0x92
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x57
-        __emit 0xe9
-        __emit 0x61
-        __emit 0x00
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x5c
-        __emit 0xcb
-        __emit 0x09
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x98
-        __emit 0xca
-        __emit 0x09
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x4c
-        __emit 0xec
-        __emit 0xdd
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
+public:
+    int getPlayerIndex() const { return m_playerIndex; }
+
+private:
+    char m_padding[0x24];
+    int m_playerIndex;
+};
+
+class Overridable
+{
+public:
+    virtual ~Overridable();
+    virtual void anchor();
+
+    Overridable *friend_getFinalOverride()
+    {
+        if (m_nextOverride)
+            return m_nextOverride->friend_getFinalOverride();
+        return this;
     }
+
+    const Overridable *friend_getFinalOverride() const
+    {
+        if (m_nextOverride)
+            return m_nextOverride->friend_getFinalOverride();
+        return this;
+    }
+
+protected:
+    Overridable *m_nextOverride;
+    Bool m_isOverride;
+    char m_padding[3];
+};
+
+class SpecialPowerTemplate : public Overridable
+{
+public:
+    AsciiString getName() const
+    {
+        const SpecialPowerTemplate *finalTemplate =
+            (const SpecialPowerTemplate *)friend_getFinalOverride();
+        return finalTemplate->m_name;
+    }
+
+    Bool hasPublicTimer() const
+    {
+        const SpecialPowerTemplate *finalTemplate = getFO();
+        return finalTemplate->m_publicTimer;
+    }
+
+private:
+    const SpecialPowerTemplate *getFO() const
+    {
+        return (const SpecialPowerTemplate *)friend_getFinalOverride();
+    }
+
+    AsciiString m_name;
+    char m_padding[0x104];
+    Bool m_publicTimer;
+};
+
+class SpecialPowerModuleData
+{
+private:
+    char m_padding[8];
+
+public:
+    const SpecialPowerTemplate *m_specialPowerTemplate;
+};
+
+class Module
+{
+public:
+    virtual ~Module();
+
+protected:
+    const SpecialPowerModuleData *m_moduleData;
+    Object *m_object;
+};
+
+class BehaviorModuleInterface
+{
+public:
+    virtual void behaviorModuleAnchor();
+};
+
+class BehaviorModule : public Module, public BehaviorModuleInterface
+{
+protected:
+    virtual ~BehaviorModule() {}
+
+public:
+    virtual void behaviorAnchor();
+};
+
+class SpecialPowerModuleInterface
+{
+public:
+    virtual AsciiString getPowerName() const = 0;
+};
+
+class InGameUI
+{
+public:
+    virtual void slot00();
+    virtual void slot01();
+    virtual void slot02();
+    virtual void slot03();
+    virtual void slot04();
+    virtual void slot05();
+    virtual void slot06();
+    virtual void slot07();
+    virtual void slot08();
+    virtual void slot09();
+    virtual void slot0a();
+    virtual void slot0b();
+    virtual void slot0c();
+    virtual void slot0d();
+    virtual void slot0e();
+    virtual void slot0f();
+    virtual void slot10();
+    virtual void slot11();
+    virtual void slot12();
+    virtual void slot13();
+    virtual void slot14();
+    virtual void slot15();
+    virtual void slot16();
+    virtual void slot17();
+    virtual void slot18();
+    virtual void slot19();
+    virtual void slot1a();
+    virtual void slot1b();
+    virtual void slot1c();
+    virtual void slot1d();
+    virtual void slot1e();
+    virtual void slot1f();
+    virtual void slot20();
+    virtual void slot21();
+    virtual Bool removeSuperweapon(int, const AsciiString &, ObjectID, const SpecialPowerTemplate *);
+};
+
+extern InGameUI *TheInGameUI;
+
+class SpecialPowerModule : public BehaviorModule,
+    public SpecialPowerModuleInterface
+{
+public:
+    AsciiString getPowerName() const
+    {
+        return getSpecialPowerModuleData()->m_specialPowerTemplate->getName();
+    }
+
+#ifdef SPECIAL_POWER_ALIAS
+public:
+#else
+protected:
+#endif
+    virtual ~SpecialPowerModule();
+
+private:
+    const SpecialPowerModuleData *getSpecialPowerModuleData() const { return m_moduleData; }
+    Object *getObject() const { return m_object; }
+};
+
+SpecialPowerModule::~SpecialPowerModule()
+{
+    if (getSpecialPowerModuleData()->m_specialPowerTemplate->hasPublicTimer() == 1 &&
+        getObject()->getControllingPlayer())
+        TheInGameUI->removeSuperweapon(
+            getObject()->getControllingPlayer()->getPlayerIndex(),
+            getPowerName(),
+            getObject()->getID(),
+            getSpecialPowerModuleData()->m_specialPowerTemplate);
 }
