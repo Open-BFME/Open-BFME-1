@@ -1451,16 +1451,6 @@ void MainMenuSmallScaleDownTransition::skip( void )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-// ??0TextTypeTransition@@QAE@XZ present-unmatched
-TextTypeTransition::TextTypeTransition ( void )
-{
-	m_frameLength = TEXTTYPETRANSITION_END;
-	m_win = NULL;
-	m_drawState = -1;
-	m_isForward = TRUE;
-	m_dStr = NULL;
-}
-
 // byte-exact reconstruction: Code/GameEngine/Source/Common/TextTypeTransitionDestructorThunk.cpp
 // ??1TextTypeTransition@@UAE@XZ present-unmatched
 // Neither this destructor nor CountUpTransition's can come home: class shape,
