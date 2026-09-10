@@ -1,19 +1,20 @@
 // ?setWeaponLock@WeaponSet@@QAE_NW4WeaponSlotType@@W4WeaponLockType@@@Z
-// partial score=0.9 date=2026-09-04
+// partial score=0.92 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: WeaponSet::setWeaponLock, retail 0x001EBA30 size 214.
-// Focused TU: WeaponSet.cpp keeps ZH WEAPONSLOT_COUNT==3 and no owner
-// lookup. BFME finds the owner via TheGameLogic, clears USING_WEAPON_A/B/C
-// (0x88/0x89/0x8A) through BitFlags<304>'s three-index ctor, then sets the
-// current-slot bit at Object+0x120 and notifies.
+// Open-BFME: WeaponSet::setWeaponLock, retail 0x001EBA30, 214 bytes.
+//
+// The BFME WeaponSet keeps four weapon pointers and the owning ObjectID at
+// +0x34.  The owner lookup, 304-bit clear mask, and condition-word update are
+// kept in this focused TU because the shared ZH WeaponSet header has a
+// different model-condition ABI.
 
 typedef int Int;
 typedef bool Bool;
+typedef unsigned int UnsignedInt;
 
 enum ObjectID
 {
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
+	INVALID_ID = 0
 };
 
 enum WeaponSlotType
@@ -30,19 +31,7 @@ enum WeaponLockType
 	LOCKED_PERMANENTLY = 2
 };
 
-class Weapon;
-class Object;
-class WeaponTemplateSet;
-
-class GameLogic
-{
-public:
-	Object *findObjectByID(ObjectID id);
-};
-
-extern GameLogic *TheGameLogic;
-
-template <size_t NUMBITS>
+template <int NUMBITS>
 class BitFlags
 {
 public:
@@ -54,19 +43,33 @@ public:
 	BitFlags(BogusInitType, Int idx1, Int idx2, Int idx3);
 
 private:
-	unsigned int m_bits[(NUMBITS + 31) / 32];
+	UnsignedInt m_bits[10];
 };
-
-typedef BitFlags<304> ModelConditionFlags;
 
 class Object
 {
 public:
-	void clearModelConditionFlags(const ModelConditionFlags &clr);
+	void clearModelConditionFlags(const BitFlags<304> &clear);
 	void notifyModelConditionChanged();
-
 	unsigned char m_pad_00[0x120];
-	unsigned int m_conditionWord4;
+	UnsignedInt m_conditionWord4;
+};
+
+extern void j_0002191d();
+typedef void (Object::*NotifyModelConditionChangedCall)();
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(ObjectID id);
+};
+
+#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+extern void j_0001f253();
+typedef Object *(GameLogic::*FindObjectByIDCall)(ObjectID);
+
+class Weapon
+{
 };
 
 class Snapshot
@@ -77,82 +80,103 @@ public:
 	virtual void loadPostProcess();
 };
 
+class WeaponTemplateSet
+{
+};
+
 class WeaponSet : public Snapshot
 {
 public:
 	Bool setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType);
 
-private:
+public:
 	const WeaponTemplateSet *m_curWeaponTemplateSet;
 	Weapon *m_weapons[4];
 	WeaponSlotType m_curWeapon;
 	WeaponLockType m_curWeaponLockedStatus;
-	unsigned int m_filledWeaponSlotMask;
+	UnsignedInt m_filledWeaponSlotMask;
 	Int m_totalAntiMask;
-	unsigned int m_totalDamageTypeMask;
+	UnsignedInt m_totalDamageTypeMask;
 	Bool m_hasPitchLimit;
 	Bool m_hasDamageWeapon;
 	unsigned char m_pad_2e[0x34 - 0x2e];
 	ObjectID m_objectId;
 };
 
-// ?setWeaponLock@WeaponSet@@QAE_NW4WeaponSlotType@@W4WeaponLockType@@@Z
 Bool WeaponSet::setWeaponLock(WeaponSlotType weaponSlot, WeaponLockType lockType)
 {
-	const Object *obj = TheGameLogic->findObjectByID(m_objectId);
+	ObjectID objectID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>(this) + 0x34);
+	union
+	{
+		void (*asVoid)();
+		FindObjectByIDCall asMember;
+	} findObjectCast;
+	findObjectCast.asVoid = j_0001f253;
+	Object *owner = (TheBfmeGameLogic->*findObjectCast.asMember)(objectID);
 
 	if (lockType != NOT_LOCKED)
 	{
-		weapon = m_weapons[weaponSlot];
-		if (weapon != 0)
+		Weapon *weapon = m_weapons[weaponSlot];
+		if (weapon != (Weapon *)0)
 		{
 			WeaponLockType permanent = LOCKED_PERMANENTLY;
 			if (lockType == permanent)
 			{
 				m_curWeaponLockedStatus = permanent;
-				m_curWeapon = weaponSlot;
 			}
-			else if (lockType == LOCKED_TEMPORARILY && m_curWeaponLockedStatus != permanent)
+			else if (lockType == LOCKED_TEMPORARILY &&
+				m_curWeaponLockedStatus != permanent)
 			{
 				m_curWeaponLockedStatus = LOCKED_TEMPORARILY;
 				m_curWeapon = weaponSlot;
 			}
 
-			if (obj)
-				const_cast<Object *>(obj)->clearModelConditionFlags(ModelConditionFlags(ModelConditionFlags::kInit, 0x88, 0x89, 0x8A));
+			if (owner != (Object *)0)
+			{
+				owner->clearModelConditionFlags(BitFlags<304>(
+					(BitFlags<304>::BogusInitType)0, 0x88, 0x89, 0x8A));
+			}
 
-			unsigned int mask;
+			UnsignedInt mask;
 			switch (m_curWeapon - PRIMARY_WEAPON)
 			{
-			case 2:
-				if (obj)
-				{
-					mask = 0x400;
-					goto applyMask;
-				}
-				break;
-			case 1:
-				if (obj)
-				{
-					mask = 0x200;
-					goto applyMask;
-				}
-				break;
 			case 0:
-				if (obj)
+				if (owner != (Object *)0)
 				{
 					mask = 0x100;
 					goto applyMask;
 				}
 				break;
+			case 1:
+				if (owner != (Object *)0)
+				{
+					mask = 0x200;
+					goto applyMask;
+				}
+				break;
+			case 2:
+				if (owner != (Object *)0)
+				{
+					mask = 0x400;
+					goto applyMask;
+				}
+				break;
 			}
 			return true;
+
 		applyMask:
-			unsigned int cur = obj->m_conditionWord4;
-			if ((cur & mask) == 0)
+			UnsignedInt current = owner->m_conditionWord4;
+			if ((current & mask) == 0)
 			{
-				const_cast<Object *>(obj)->m_conditionWord4 = cur | mask;
-				const_cast<Object *>(obj)->notifyModelConditionChanged();
+				owner->m_conditionWord4 = current | mask;
+				union
+				{
+					void (*asVoid)();
+					NotifyModelConditionChangedCall asMember;
+				} notifyCast;
+				notifyCast.asVoid = j_0002191d;
+				(owner->*notifyCast.asMember)();
 			}
 			return true;
 		}

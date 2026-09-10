@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0e90ebea668d6af309f23c67cd7cc9a1fc3f18dbfc878c82da49b1334c1efcd6",
+  "symbol": "?Rva009B50F0DecodeToken@@YAHPAEHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?Rva009B50F0DecodeToken@@YAHPAEHH@Z\n// partial score=0.95 date=2026-09-10\n// ?Rva009B50F0DecodeToken@@YAHPAEHH@Z\n// BFME VP6 token-tree decoder at retail RVA 0x009B50F0.\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nint Rva009B4600DecodeBool(void *state, int probability);\n\nint Rva009B50F0DecodeToken(unsigned char *ctx, int prev, int plane)\n{\n\tvoid *state = ctx + 0x150;\n\n\tif (Rva009B4600DecodeBool(state, ctx[0x77C + 10 * plane + prev]))\n\t\treturn prev;\n\n\tunsigned char *node = ctx + 0x7A4 + 9 * (10 * plane + prev);\n\n\tif (Rva009B4600DecodeBool(state, node[0]))\n\t{\n\t\tif (Rva009B4600DecodeBool(state, node[2]))\n\t\t{\n\t\t\tif (Rva009B4600DecodeBool(state, node[6]))\n\t\t\t\treturn Rva009B4600DecodeBool(state, node[8]) + 8;\n\t\t\treturn Rva009B4600DecodeBool(state, node[7]) + 5;\n\t\t}\n\t\tint result;\n\t\tif (Rva009B4600DecodeBool(state, node[5]))\n\t\t\treturn 7;\n\t\tresult = 1;\n\t\treturn result;\n\t}\n\n\tif (Rva009B4600DecodeBool(state, node[1]))\n\t\treturn Rva009B4600DecodeBool(state, node[4]) + 3;\n\treturn Rva009B4600DecodeBool(state, node[3]) * 2;\n}\n"
+}
