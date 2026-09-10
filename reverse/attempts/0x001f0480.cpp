@@ -1,12 +1,12 @@
-// ?projectileFireAtObjectOrPosition@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
-// partial score=0.5 date=2026-09-04
+// ?rva001F0480@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
+// partial score=0.82 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /GX- /D_STLP_USE_STATIC_LIB
 // stlport
-// BezierProjectileBehavior::projectileFireAtObjectOrPosition, retail
-// 0x001F0480 size 846. ZH twin is DumbProjectileBehavior::projectileFireAtObjectOrPosition.
-// Two-arg BFME form: victim + victimPos; speeds live on this+0x3C (WeaponTemplate
-// +0x58/+0x5C/+0x60/+0x64). setWakeFrame(obj, 1) then ModuleData guard. calcFlightPath
-// is ILT 0x00021BD9 -> 0x001EF5E0. Tail is drawable/shroud, not in ZH.
+
+// BezierProjectileBehavior primary-interface body at retail 0x001F0480.
+// The primary vtable and the two-argument thiscall ABI are proven by the
+// constructor, vtable slot, and the caller at 0x001F1CE0.  The semantic
+// method name remains address-derived pending lexical evidence.
 
 typedef float Real;
 typedef bool Bool;
@@ -95,9 +95,13 @@ public:
 class WeaponTemplate
 {
 public:
+	Real getWeaponSpeed() const { return m_weaponSpeed; }
+	Real getMinWeaponSpeed() const { return m_minWeaponSpeed; }
+	Bool isScaleWeaponSpeed() const { return m_scaleWeaponSpeed; }
 	Real getMinimumAttackRange() const;
 	Real getUnmodifiedAttackRange() const;
-	Coord3D *getAimPosition(Coord3D *out, const Object *proj, const Object *victim, Int flag);
+	Coord3D *getAimPosition(Coord3D *out, const Object *proj,
+		const Object *victim, Int flag);
 
 	char m_pad00[0x58];
 	Real m_weaponSpeed;
@@ -143,7 +147,8 @@ public:
 class PartitionManager
 {
 public:
-	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *pos) const;
+	CellShroudStatus getShroudStatusForPlayer(Int playerIndex,
+		const Coord3D *pos) const;
 };
 
 class GameEngine
@@ -181,11 +186,12 @@ extern TerrainLogic *TheTerrainLogic;
 extern PartitionManager *TheShroudManager;
 extern GameEngine *TheGameEngine;
 extern PlayerList *ThePlayerList;
+extern const Real BfmeZeroRange;
 
 class BezierProjectileBehavior : public UpdateModule
 {
 public:
-	void projectileFireAtObjectOrPosition(Object *victim, const Coord3D *victimPos);
+	void rva001F0480(Object *victim, const Coord3D *victimPos);
 	Bool calcFlightPath(Bool recalcNumSegments);
 
 	void *m_vtable;
@@ -203,33 +209,22 @@ public:
 	Int m_currentFlightPathStep;
 };
 
-// ?projectileFireAtObjectOrPosition@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
-void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim, const Coord3D *victimPos)
+// ?rva001F0480@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
+void BezierProjectileBehavior::rva001F0480(Object *victim,
+	const Coord3D *victimPos)
 {
-	WeaponTemplate *wt = m_weapon;
 	const BezierProjectileBehaviorModuleData *md = m_moduleData;
 	int zero = 0;
 	Object *obj = m_object;
-	const BezierProjectileBehaviorModuleData *savedMd = md;
 	Real weaponSpeed;
 	Real minWeaponSpeed;
+	weaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
+		m_weapon->getWeaponSpeed() : BfmeZeroRange;
+	minWeaponSpeed = (m_weapon != (WeaponTemplate *)zero) ?
+		m_weapon->getMinWeaponSpeed() : BfmeZeroRange;
 	Coord3D framePad;
 
-	framePad.x = (Real)zero;
-	framePad.y = (Real)zero;
-	framePad.z = (Real)zero;
-
-	if ((int)wt == zero)
-		weaponSpeed = 0.0f + 0.0f;
-	else
-		weaponSpeed = wt->m_weaponSpeed + 0.0f;
-	if ((int)wt == zero)
-		minWeaponSpeed = 0.0f + 0.0f;
-	else
-		minWeaponSpeed = wt->m_minWeaponSpeed + 0.0f;
-
 	setWakeFrame(obj, 1);
-	md = savedMd;
 
 	if (md == (const BezierProjectileBehaviorModuleData *)zero)
 		return;
@@ -237,47 +232,47 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim, 
 	Coord3D victimPosToUse;
 	if (victim != (Object *)zero)
 	{
-		Coord3D *aimed = wt->getAimPosition(&victimPosToUse, obj, victim, 1);
-		victimPosToUse.x = aimed->x;
-		victimPosToUse.y = aimed->y;
-		victimPosToUse.z = aimed->z;
+		Coord3D *aimed = m_weapon->getAimPosition(&framePad, obj, victim, 1);
+		victimPosToUse = *aimed;
 	}
 	else
 	{
-		victimPosToUse.x = victimPos->x;
-		victimPosToUse.y = victimPos->y;
-		victimPosToUse.z = victimPos->z;
+		victimPosToUse = *victimPos;
 	}
 
 	if (md->m_snapZToTerrain)
 	{
-		if (TheTerrainLogic->getLayerForDestination((Object *)zero, &victimPosToUse) == LAYER_GROUND)
-			victimPosToUse.z = TheTerrainLogic->getGroundHeight(victimPosToUse.x, victimPosToUse.y, zero);
+		if (TheTerrainLogic->getLayerForDestination((Object *)zero,
+			&victimPosToUse) == LAYER_GROUND)
+			victimPosToUse.z = TheTerrainLogic->getGroundHeight(
+				victimPosToUse.x, victimPosToUse.y, zero);
 	}
 
-	if (wt != (WeaponTemplate *)zero && wt->m_scaleWeaponSpeed)
+	if (m_weapon != (WeaponTemplate *)zero && m_weapon->isScaleWeaponSpeed())
 	{
-		Real lo = minWeaponSpeed;
-		Real hi = weaponSpeed;
+		Real lo = weaponSpeed;
+		Real hi = minWeaponSpeed;
 		if (hi < lo)
 			hi = lo;
 
-		Real minRange = wt->getMinimumAttackRange();
-		Real maxRange = wt->getUnmodifiedAttackRange();
+		Real minRange = m_weapon->getMinimumAttackRange();
+		Real maxRange = m_weapon->getUnmodifiedAttackRange();
 		Real dx = obj->m_position.x - victimPosToUse.x;
 		Real dy = obj->m_position.y - victimPosToUse.y;
 		Real distSq = dx * dx + dy * dy;
-		Real speed = ((distSq - minRange) / (maxRange - minRange)) * (hi - lo) + lo;
+		Real speed = ((distSq - minRange) / (maxRange - minRange)) *
+			(hi - lo) + lo;
 		m_flightPathSpeed = speed;
-		if (speed > wt->m_maxScaledSpeed)
-			m_flightPathSpeed = wt->m_maxScaledSpeed;
+		if (speed > m_weapon->m_maxScaledSpeed)
+			m_flightPathSpeed = m_weapon->m_maxScaledSpeed;
 	}
 	else
 	{
 		m_flightPathSpeed = weaponSpeed;
 	}
 
-	if (obj->m_orientExtra != (void *)zero && obj->isKindOf(KINDOF_0x61))
+	if (obj->m_orientExtra != (void *)zero &&
+		obj->isKindOf(KINDOF_0x61))
 	{
 		Real ang = ((const Matrix3D *)obj->m_mtx)->Get_Z_Rotation();
 		obj->setOrientation(ang);
@@ -309,16 +304,19 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim, 
 
 			Object *producer = TheGameLogic->findObjectByID(obj->m_producerID);
 			Bool producerShrouded = false;
-			if (producer != (Object *)zero && producer->getShroudedStatus(player) == OBJECTSHROUD_SHROUDED)
+			if (producer != (Object *)zero &&
+				producer->getShroudedStatus(player) == OBJECTSHROUD_SHROUDED)
 				producerShrouded = true;
 
-			Bool cellClear = TheShroudManager->getShroudStatusForPlayer(player, &m_flightPathEnd) == CELLSHROUD_CLEAR;
+			Bool cellClear = TheShroudManager->getShroudStatusForPlayer(
+				player, &m_flightPathEnd) == CELLSHROUD_CLEAR;
 
 			if (producerShrouded)
 			{
 				if (!cellClear)
 				{
-					Int frames = (Int)((Real)TheGameEngine->m_frameScale * (Real)m_flightPathSegments);
+					Int frames = (Int)((Real)TheGameEngine->m_frameScale *
+						(Real)m_flightPathSegments);
 					draw->bfmeDelayA(frames);
 				}
 				else if (md->m_pairA != zero || md->m_pairB != zero)
@@ -329,12 +327,14 @@ void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim, 
 					Real fa = (Real)md->m_pairA;
 					if (md->m_pairA < zero)
 						fa = fa + 4294967296.0f;
-					draw->bfmePair((Int)(fa * 0.03f), (Int)(fb * 0.03f));
+					draw->bfmePair((Int)(fa * 0.03f),
+						(Int)(fb * 0.03f));
 				}
 			}
 			else if (cellClear)
 			{
-				Int frames = (Int)((Real)TheGameEngine->m_frameScale * (Real)m_flightPathSegments);
+				Int frames = (Int)((Real)TheGameEngine->m_frameScale *
+					(Real)m_flightPathSegments);
 				draw->bfmeDelayB(frames);
 			}
 			else
