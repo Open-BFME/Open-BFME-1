@@ -3917,7 +3917,6 @@ void GameWindowManager::winPrevTab( GameWindow *window )
 	winSetLoneWindow(NULL);
 }
 
-// ?registerTabList@GameWindowManager@@UAEXV?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@@Z present-unmatched
 void GameWindowManager::registerTabList( GameWindowList tabList )
 {
 	m_tabList.clear();
