@@ -1,5 +1,4 @@
 // ?doTeamMoveToNearestObjectOfTypeOwnedByPlayer@ScriptActions@@IAEXABVAsciiString@@0PAVParameter@@@Z
-// partial score=0.93 date=2026-09-07
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
 // TEAM_MOVE_TO_NEAREST_OBJECT_OF_TYPE_OWNED_BY_PLAYER at retail RVA
 // 0x002F60A0 (519 bytes).
@@ -28,11 +27,6 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
-
-	Real length(void) const
-	{
-		return (Real)sqrt(x * x + y * y + z * z);
-	}
 
 };
 
@@ -147,13 +141,14 @@ struct Rva0015A190Packet
 {
 	void *m_first;
 	unsigned char m_flag;
-	union
-	{
-		void *m_objA;
-		Real m_scratchZ;
-	};
+	void *m_objA;
 	void *m_objB;
 };
+
+typedef char PacketSizeCheck[sizeof(Rva0015A190Packet) == 16 ? 1 : -1];
+typedef char CoordSizeCheck[sizeof(Coord3D) == 12 ? 1 : -1];
+typedef char PlayerFilterSizeCheck[sizeof(PartitionFilterPlayer) == 16 ? 1 : -1];
+typedef char ThingFilterSizeCheck[sizeof(PartitionFilterThing) == 16 ? 1 : -1];
 
 class Rva0015A190Owner
 {
@@ -167,37 +162,15 @@ extern PartitionManager *ThePartitionManager;
 extern PlayerList *ThePlayerList;
 extern AI *TheAI;
 
-class ScriptActions;
-
-// The object-type-list path calls the already matched helper through its
-// five-byte ILT, preserving the thunk used by retail rather than naming the
-// helper body directly.
-extern void j_000414d9(void);
-
-static __forceinline Object *bfmeFindClosestObject(ScriptActions *actions,
-	const Coord3D *position, ObjectTypes *objectTypes, Player *player)
-{
-	class BfmeFindClosestObjectCall
-	{
-	public:
-		Object *findClosestObject(const Coord3D *, ObjectTypes *, Player *);
-	};
-
-	typedef Object *(BfmeFindClosestObjectCall::*Function)(
-		const Coord3D *, ObjectTypes *, Player *);
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} fn;
-	fn.raw = j_000414d9;
-	return (reinterpret_cast<BfmeFindClosestObjectCall *>(actions)->*
-		fn.member)(position, objectTypes, player);
-}
-
 class ScriptActions
 {
 protected:
+	// The real helper is the matched ScriptActions member at 0x002F5D50.
+	// Keeping this declaration direct lets the resolver select retail's ILT
+	// encoding without a generated alias or function-pointer punning.
+	Object *findClosestObject(const Coord3D *position,
+		ObjectTypes *objectTypes, Player *player);
+
 	void doTeamMoveToNearestObjectOfTypeOwnedByPlayer(
 		const AsciiString &teamName, const AsciiString &objectType,
 		Parameter *playerParameter);
@@ -237,8 +210,7 @@ void ScriptActions::doTeamMoveToNearestObjectOfTypeOwnedByPlayer(
 		Object *object = 0;
 		if (objectTypes)
 		{
-			object = bfmeFindClosestObject(this, &teamPosition, objectTypes,
-				player);
+			object = findClosestObject(&teamPosition, objectTypes, player);
 		}
 		else
 		{
@@ -277,10 +249,12 @@ void ScriptActions::doTeamMoveToNearestObjectOfTypeOwnedByPlayer(
 		return;
 
 	team->getTeamAsAIGroup(group);
-	Rva0015A190Packet packet;
-	packet.m_first = (void *)bestObject->getPosition();
-	packet.m_flag = 0;
-	packet.m_objA = 0;
-	packet.m_objB = 0;
-	((Rva0015A190Owner *)group)->applyPacket(&packet, 1);
+	{
+		Rva0015A190Packet packet;
+		packet.m_first = (void *)bestObject->getPosition();
+		packet.m_flag = 0;
+		packet.m_objA = 0;
+		packet.m_objB = 0;
+		((Rva0015A190Owner *)group)->applyPacket(&packet, 1);
+	}
 }
