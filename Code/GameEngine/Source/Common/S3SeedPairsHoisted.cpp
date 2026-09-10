@@ -1,4 +1,8 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+// stlport
 
 // Open-BFME5: twelve more seeders, from two last grammar corrections.
 //
@@ -23,7 +27,7 @@ class BfmeSeedTarget
 public:
 	virtual void bfmeSlot0(void);
 	virtual void bfmeSlot1(void);
-	virtual void bfmeSlot2(void);
+	virtual bool bfmeSlot2(void);
 	virtual void bfmeSlot3(void);
 	virtual bool bfmeSkip(void);		// slot 4, vtable+0x10
 	virtual void bfmeSlot5(void);
@@ -32,7 +36,7 @@ public:
 	virtual void bfmeSlot8(void);
 	virtual void bfmeTakeAt24(void *item, int size);		// slot 9, vtable+0x24
 	virtual void bfmeSeed(BfmeSeedPair *pair);		// slot 10, vtable+0x28
-	virtual void bfmeSlot11(void);
+	virtual BfmeSeedTarget &bfmeTakeAt2C(const char *const &name);
 	virtual void bfmeSlot12(void);
 	virtual void bfmeSlot13(void);
 	virtual void bfmeSlot14(void);
@@ -96,10 +100,63 @@ public:
 
 __declspec(noinline) void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item);		// ILT 0x00001A50
 void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);		// ILT 0x0000C9B4
-void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
+BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
 void bfmeHandOver_00012C65(BfmeSeedTarget *target, void *item);		// ILT 0x00012C65
 void bfmeHandOver_000353C8(BfmeSeedTarget *target, void *item);		// ILT 0x000353C8
 void bfmeHandOver_00044FD0(BfmeSeedTarget *target, void *item);		// ILT 0x00044FD0
+
+class XferException
+{
+public:
+ XferException(int tag, const char *format, ...);
+ XferException(const XferException &);
+ ~XferException();
+private:
+ char *m_text;
+ int m_tag;
+};
+
+typedef _STL::list<void *> BfmeVoidList;
+
+// ?bfmeHandOver_0000FFE2@@YAPAVBfmeSeedTarget@@PAV1@PAX@Z		// 267 bytes
+__declspec(noinline) BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item)
+{
+	BfmeSeedPair pair;
+	pair.m_bfmeFirst = 1;
+	pair.m_bfmeSecond = 1;
+	target->bfmeSeed(&pair);
+
+	BfmeVoidList *list = (BfmeVoidList *)item;
+	unsigned int count = list->size();
+	target->bfmeTakeAt2C("std::list").bfmeTakeAt74(&count);
+
+	if (target->bfmeSlot2())
+	{
+		BfmeVoidList::iterator end = list->end();
+		BfmeVoidList::iterator node = list->begin();
+		while (node != end)
+		{
+			bfmeHandOver_0000C9B4(target, &*node);
+			++node;
+		}
+	}
+	else
+	{
+		if (!list->empty())
+		{
+			throw XferException(4, "List must be empty on load");
+		}
+
+		void *value;
+		while (count != 0)
+		{
+			--count;
+			bfmeHandOver_0000C9B4(target, &value);
+			list->push_back(value);
+		}
+	}
+	return target;
+}
 
 // ?bfmeHandOver_00001A50@@YAXPAVBfmeSeedTarget@@PAX@Z		39 bytes
 __declspec(noinline) void bfmeHandOver_00001A50(BfmeSeedTarget *target, void *item)
