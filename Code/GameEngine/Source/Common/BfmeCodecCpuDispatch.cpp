@@ -18,6 +18,7 @@ struct Rva009C2930Owner;
 extern void __cdecl bfmeFilterPairMmx(void *, void *, int, const void *);
 extern void __cdecl initPattern(Rva009C2930Owner *, unsigned int);
 extern void __cdecl bfmeExpandMmx(const void *, int, void *);
+extern void __cdecl Rva009A98E0(const void *, int, void *);
 extern void __cdecl bfmeExpand3to5Mmx(const void *, int, void *);
 extern void __cdecl bfmeExpand4to5Mmx(const void *, int, void *);
 extern void __cdecl bfmeAverageMmx(void *, int, int);
@@ -76,7 +77,6 @@ extern void __cdecl Rva009B10E0(void);
 extern void __cdecl Rva009ACF90(void);
 extern void __cdecl Rva009ADD80(void);
 extern void __cdecl Rva009AE6A0(void);
-extern void __cdecl Rva009A98E0(void);
 extern void __cdecl Rva009A9920(void);
 extern void __cdecl Rva009A9960(void *, int, unsigned int);
 extern void __cdecl Rva009A9550(void);
@@ -86,6 +86,38 @@ extern void __cdecl Rva009A91D0(void);
 extern void __cdecl Rva009A92D0(void);
 extern void __cdecl Rva009A9370(void);
 extern void __cdecl Rva009B6BB0(void);
+
+// Generic scalar counterpart of bfmeExpandMmx in dispatch slot 8.  The
+// caller's slot assignment and the MMX sibling establish the ABI: source,
+// positive source-byte count, destination. Retail emits the last source byte twice
+// so the pairwise interpolation loop never reads past the source extent.
+//
+// ?Rva009A98E0@@YAXPBXHPAX@Z
+void __cdecl Rva009A98E0(const void *source, int bytes, void *destination)
+{
+	unsigned char *dst = (unsigned char *)destination;
+	const unsigned char *src = (const unsigned char *)source;
+	int remaining = bytes - 1;
+
+	if (remaining != 0)
+	{
+		do
+		{
+			unsigned int first = src[0];
+			unsigned int second = src[1];
+			dst[0] = (unsigned char)first;
+			dst[1] = (unsigned char)((first + second + 1) >> 1);
+			++src;
+			dst += 2;
+			--remaining;
+		}
+		while (remaining != 0);
+	}
+
+	unsigned int last = src[0];
+	dst[0] = (unsigned char)last;
+	dst[1] = (unsigned char)last;
+}
 
 typedef void (__cdecl *BfmeDispatchFn)();
 
