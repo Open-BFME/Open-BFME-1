@@ -86732,3 +86732,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?Rva009A92D0@@YAXXZ,0x009A92D0,codec dispatch slot7 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A9370@@YAXXZ,0x009A9370,codec dispatch slot6 filler (generic tier); no ghidra boundary or identity yet
 ?Rva009B6BB0@@YAXXZ,0x009B6BB0,codec dispatch slot19 filler (generic tier); no ghidra boundary or identity yet
+??$_Construct@U?$pair@QAURva009A4130Target@@URva009A4130Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@QAURva009A4130Target@@URva009A4130Value@@@0@ABU10@@Z,0x009A3520,neutral 8-byte pair constructor; retail body is the existing 23-byte copy helper at 0x009A3520
