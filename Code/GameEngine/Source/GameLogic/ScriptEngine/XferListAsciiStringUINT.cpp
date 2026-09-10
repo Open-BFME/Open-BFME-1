@@ -1,5 +1,3 @@
-// ?xferListAsciiStringUINT@@YAPAVXfer@@PAV?$list@U?$pair@VAsciiString@@I@_STL@@V?$allocator@U?$pair@VAsciiString@@I@_STL@@@2@@_STL@@@Z
-// partial score=0.97 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: xferListAsciiStringUINT, retail 0x00344310.
@@ -17,6 +15,7 @@ struct XferVersion
 {
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
+	unsigned short m_padding;
 };
 
 class AsciiString
@@ -32,7 +31,12 @@ public:
 	{
 		((StringBase<char> *)this)->releaseBuffer();
 	}
-
+	AsciiString &operator=(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->StringBase<char>::operator=(
+			*(const StringBase<char> *)&that);
+		return *this;
+	}
 private:
 	char *m_data;
 };
@@ -90,12 +94,13 @@ typedef _STL::list<PairAsciiStringUINT> ListAsciiStringUINT;
 // ?xferListAsciiStringUINT@@YAPAVXfer@@PAV1@PAV?$list@U?$pair@VAsciiString@@I@_STL@@V?$allocator@U?$pair@VAsciiString@@I@_STL@@@2@@_STL@@@Z
 Xfer *xferListAsciiStringUINT(Xfer *xfer, ListAsciiStringUINT *list)
 {
+	unsigned int count;
 	XferVersion version;
 	version.m_version = 1;
 	version.m_currentVersion = 1;
 	xfer->xferVersion(&version);
 
-	unsigned int count = list->size();
+	count = list->size();
 	xfer->xferTypeName("std::list").xferUnsignedShort(&count);
 
 	if (xfer->isSaving())
