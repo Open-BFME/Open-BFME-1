@@ -28,3 +28,16 @@ void Rva009A4D00Init(void)
 	reinterpret_cast<Fn009A5AA0>(d_009a5aa0)(g_0134C6D8, g_0134C6D8, g_0134C6D8, 7);
 	bfmeRun_009A75E0();
 }
+
+// Retail RVA 0x009A6600: install the identity table and invert the zigzag permutation.
+extern int g_rva01142408[];
+extern int g_rva01142308[];
+struct Rva009A6600Context { unsigned char prefix[0x13c]; int *table; unsigned char cells[64]; };
+void Rva009A6600InitBlocks(void *self)
+{
+ Rva009A6600Context *ctx=(Rva009A6600Context *)self;
+ ctx->table=g_rva01142408;
+ for(int i=0;i<64;++i) ctx->cells[g_rva01142308[i]]=(unsigned char)i;
+}
+
+
