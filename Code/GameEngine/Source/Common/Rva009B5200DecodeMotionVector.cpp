@@ -1,16 +1,13 @@
 // ?Rva009B5200DecodeMotionVector@@YAXPAXPAFH@Z
-// partial score=0.99 date=2026-09-10
-// ?Rva009B5200DecodeMotionVector@@YAXPAXPAFH@Z
 // Retail RVA 0x009B5200, 539 bytes.  This is the VP6 motion-vector
 // component decoder paired with the matched arithmetic decoder at 0x009B4600.
 // The codec island and the typed callers of the adjacent block decoder prove
 // the state layout and this cdecl ABI; the name is deliberately address
 // qualified because no original source symbol is available.
 //
-// The long branch keeps the next probability byte in a local before combining
-// the preceding DecodeBool result.  That is the concrete VC7.1 scheduling
-// lever used for the prior 538-byte near-match: retail reads ctx[0x71e] before
-// the add of the 0x71d bit for each component.
+// The long branch loads the next probability before combining the previous
+// decoded bit. The Y output accumulates in its short destination; MSVC folds
+// the two assignments into retail's one add and one short store.
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern int Rva009B4600DecodeBool(void *coder, int prob);
@@ -99,7 +96,8 @@ void Rva009B5200DecodeMotionVector(void *ctxRaw, short *outMv, int mode)
 
 		if (comp)
 		{
-			outMv[1] = (short)(delta += predY);
+			outMv[1] = (short)predY;
+			outMv[1] += (short)delta;
 		}
 		else
 		{
