@@ -209,6 +209,26 @@ void Gen003BD7D0Node::enter()
 	reinterpret_cast<Rva0060A900 *>(result)->run();
 }
 
+// ?leave@Gen003BD7D0Node@@QAEXXZ, retail 0x003A4AD0 (91 bytes including
+// the loop-alignment NOP).  Rva003BF540::select calls this on the outgoing
+// lookup result through ILT 0x00020379.  It is the inverse of enter: clear
+// the global registration first, then notify it with flag zero for each item.
+void Gen003BD7D0Node::leave()
+{
+	activate( g_bfmeGameCW + 0x168, 0, 0 );
+	unsigned int index = 0;
+	if( m_items.size() > 0 )
+	{
+		do
+		{
+			Gen003A43C0Element *entry = m_items.m_begin[ index ];
+			reinterpret_cast<Gen003BD7D0Game *>( g_bfmeGameCW )->notify( entry->m_value, 0 );
+			++index;
+		}
+		while( index < m_items.size() );
+	}
+}
+
 // 0x003BD8D0 is a third member of the same class -- it reaches the same lookup at
 // 0x003BD7D0 with the same key member at +0x34.  Its shape is three exits, and
 // their ORDER is the finding: the `return true` sits inline between the two
