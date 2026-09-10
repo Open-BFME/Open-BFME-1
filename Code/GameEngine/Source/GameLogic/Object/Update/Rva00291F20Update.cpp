@@ -2,7 +2,15 @@
 // ?Rva00291F20@Rva00291F20Self@@QAEIXZ
 // Module update whose this is the interface subobject at base+0x10; base fields are read at negative offsets.
 
+class Player;
 class Object;
+
+struct Coord3D
+{
+	float x;
+	float y;
+	float z;
+};
 
 enum DisabledType { DISABLED_TYPE_ZERO };
 
@@ -153,6 +161,7 @@ public:
 class Object
 {
 public:
+	Player *getControllingPlayer() const;
 	void clearModelConditionState(int flag);
 	void setMode(int flag, int value);
 	void clearCondition(int flag);
@@ -201,12 +210,129 @@ public:
 	unsigned char m_pad00[0x0c];
 	unsigned int m_delay0c;
 	unsigned int m_delay10;
-	unsigned char m_pad14[0x0c];
+	float m_range14;
+	void *m_filter18;
+	void *m_filter1c;
 	unsigned int m_delay20;
 	void *m_fx24;
 	void *m_fx28;
 	void *m_fx2c;
 };
+
+// ABI views of retail filters. Vtables 010A5158/01085DC0/010BE58C
+// have deleting destructors that route to 00201F10/000EC7A0/00291880;
+// each restores the actual base vtable 01083B5C.
+class PartitionFilter
+{
+public:
+	PartitionFilter *link(PartitionFilter *next);
+
+	unsigned int m_vptr;
+	PartitionFilter *m_next;
+};
+
+class PartitionFilterA00291F20 : public PartitionFilter
+{
+public:
+	__forceinline PartitionFilterA00291F20(const void *field, Player *player, bool match)
+	{
+		m_next = 0;
+		*reinterpret_cast<unsigned int *>(this) = 0x010A5158;
+		m_field = field;
+		m_player = player;
+		m_match = match;
+	}
+
+	~PartitionFilterA00291F20()
+	{
+		m_vptr = 0x01083B5C;
+	}
+
+	const void *m_field;
+	Player *m_player;
+	bool m_match;
+};
+
+class Rva001DCBB0Filter : public PartitionFilter
+{
+public:
+	Rva001DCBB0Filter(Object *object, unsigned char match);
+
+	~Rva001DCBB0Filter()
+	{
+		m_vptr = 0x01083B5C;
+	}
+
+	Player *m_player;
+	unsigned char m_match;
+};
+
+class PartitionFilterB00291F20 : public PartitionFilter
+{
+public:
+	__forceinline PartitionFilterB00291F20(Object *object, int mode, bool match)
+	{
+		m_next = 0;
+		*reinterpret_cast<unsigned int *>(this) = 0x01085DC0;
+		m_object = object;
+		m_mode = mode;
+		m_match = match;
+	}
+
+	~PartitionFilterB00291F20()
+	{
+		m_vptr = 0x01083B5C;
+	}
+
+	Object *m_object;
+	int m_mode;
+	bool m_match;
+};
+
+class PartitionFilterBase00291F20
+{
+public:
+	__forceinline PartitionFilterBase00291F20()
+	{
+		m_next = 0;
+		m_vptr = 0x010BE58C;
+	}
+
+	~PartitionFilterBase00291F20()
+	{
+		m_vptr = 0x01083B5C;
+	}
+
+	volatile unsigned int m_vptr;
+	PartitionFilter * volatile m_next;
+};
+
+class PartitionFilterRoot00291F20
+{
+public:
+	__forceinline PartitionFilterRoot00291F20()
+	{
+		m_next = 0;
+		m_vptr = 0x01083B80;
+	}
+
+	~PartitionFilterRoot00291F20()
+	{
+		m_vptr = 0x01083B5C;
+	}
+
+	volatile unsigned int m_vptr;
+	PartitionFilter * volatile m_next;
+};
+
+class PartitionManager
+{
+public:
+	Object *getClosestObject(const Coord3D *position, float maxDistance,
+		int distanceCalculation, PartitionFilter *filters);
+};
+
+extern PartitionManager *ThePartitionManager;
 
 class Rva00291F20Base
 {
@@ -325,4 +451,19 @@ unsigned int Rva00291F20Self::Rva00291F20()
 		bfmeLinkRelation(md->m_fx28, obj, 0);
 
 	return 1;
+}
+
+bool Rva00291F20Base::Rva00013642()
+{
+	Object *object = m_object;
+	const Rva00291F20ModuleData *moduleData = m_moduleData;
+	Player *player = object->getControllingPlayer();
+	PartitionFilterA00291F20 playerFilter(&moduleData->m_filter18, player, true);
+	PartitionFilterB00291F20 relationshipFilter(object, 4, false);
+	PartitionFilterBase00291F20 baseFilter;
+	playerFilter.link(reinterpret_cast<PartitionFilter *>(&baseFilter));
+	playerFilter.link(&relationshipFilter);
+	return ThePartitionManager->getClosestObject(
+		reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(object) + 0x38),
+		moduleData->m_range14, 1, &playerFilter) != 0;
 }
