@@ -2008,6 +2008,7 @@ name,address,notes
 ??0?$list@PAVBfmeRva493A0Object@@V?$allocator@PAVBfmeRva493A0Object@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000385F5,assigned list copy constructor call target for Rva002493A0
 ??0?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVDrawable@@@1@@Z,0x000263D2,BFME attack-voice local DrawableList constructor
 ??0?$list@PAVFXNugget@@V?$allocator@PAVFXNugget@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0002F333,pinharvest x1 (thunk)
+??0?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameWindow@@@1@@Z,0x00033393,ILT thunk; STLport list<GameWindow*> ctor used by OnlineLogin tab-list build 0x00551DD0
 ??0?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000385F5,HordeContain::createPayload list copy constructor call at 0x0023C078
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00011ADB,pinharvest x1 (thunk)
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z,0x00008DCD,pinharvest x1 (thunk)
@@ -8716,6 +8717,7 @@ name,address,notes
 ??1GiantBirdSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1GiantBirdSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1GiveUpgradeUpdate@@MAE@XZ,0x000157E4,destructor ILT to 0x0025DA10
+??1GiveUpgradeUpdateModuleData@@UAE@XZ,0x000393A6,route=0x0025DE90; constructor vtable 0x010B53D0 slot zero reaches the deleting wrapper which calls this ILT
 ??1GlobalData@@UAE@XZ,0x0000564B,GlobalData destructor ILT called by authentic scalar-deleting destructor at 0x000844E0
 ??1GloriousChargeUpdateModuleData@@UAE@XZ,0x00048C11,route=0x002A5CC0; constructor vtable 0x010B5428 slot zero reaches scalar deleting destructor 0x0025E850 which calls this derived-destructor chain
 ??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
@@ -13584,6 +13586,7 @@ name,address,notes
 ?_bfme_onRollOutBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x0003C597,SpellStore OnRollOutBttnSpell callback target thunk
 ?_bfme_onRollOverBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00016513,SpellStore OnRollOverBttnSpell callback target thunk
 ?_bfme_playerSideType@BfmeAptScreenCampaignReview@@QAEXXZ,0x00042663,CampaignReview playerSideType callback target thunk
+?_bfme_populateCountryList@BfmeAptScreenOnlineLogin@@QAEXXZ,0x00005F83,ILT thunk; OnlineLogin country-list populate called from _bfme_onInitGadget 0x00551DD0
 ?_bfme_populateMultiPlayer@BfmeAptScreenScoreScreen@@QAEXH@Z,0x005770E0,no ZH twin: +0x25c = type (1 skirmish 2 LAN 3 internet 4 replay); reserve(8) then for 8 slots TheGameInfo(0x012F708C)->getSlot(i) isOccupied name(+0x2c) -> nameToKey -> ThePlayerList->findPlayerWithNameKey skipping isPlayerObserver -> entry {slot player score teamScore}; score = ScoreKeeper::calculateScore 0x000E8D90; teamScore += allies' scores (mutual getRelationship==2 at 0x0057720A/0x0057721F); std::sort (0x00575450 introsort 0x005742C0/0x00571AB0 insertion) then per row the team-break byte +0x270[i] (0x00577315) and the row adder 0x00576C20(player slot i) at 0x00577325; ILT 0x0001B626; sole caller the opener 0x00577604
 ?_bfme_populateSinglePlayer@BfmeAptScreenScoreScreen@@QAEXXZ,0x00575B70,no ZH twin (APT screen): +0x25c = 0; reads the local player's ScoreKeeper (Player+0x348: +0x3d4 units built +0x45c buildings built +0x46c +0x34c money...) against TheWritableGlobalData(0x012ED5C8)+0x1224..+0x1250 weights into the 7x3 battleStat table at +0x294 and total +0x278; objectives APT:objective%d from the script objectives list; hero veterancy bitset at +0x2e8 from SubMenus/HeroVeterancy/HeroSelection%d/icon/Image; APT:HeroPointsIncrement APT:UnitPointsIncrement APT:ScoreMapName LW:RegionBonusArmy LW:RegionLegendaryBonus LW:RegionBonusResource APT:ScoreRegionBonus%d Result/Infos/ScoreMap/Picture/Image SubMenus/TerritoryBonus/TerritoryMap/TerritoryMap/Picture/Image; ILT 0x0003D08C; sole caller the opener 0x005775FC (type 0)
 ?_bfme_recordPointsEarned@BfmeAcademyPointRecorder@@QAEXH@Z,0x0001B969,Open-BFME5 shape-only pin: the thunk Player addSciencePurchasePoints calls for points earned; thiscall on the subobject at player+0x348 with the delta
@@ -73684,6 +73687,8 @@ name,address,notes
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00032957,ILT of beginPlayerLeave used by RelayCommandsToCommandList 0x00682B64
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00667320,int-return alias of the matched QAEXPAX body; eax is PlayerLeaveCode (1=LOCAL)
 ?beginState@Gen0060CBB0@@AAEXXZ,0x00014862,ILT to 0x0060CC00 identified by the exact state update at 0x0060CC70
+?behavior@Rva001BA1C0Handler@@QAEXPAXPAX@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; post-move behaviour handler reached from 0x001BC820
+?behavior@Rva001BA1C0Handler@@QAE_NPAXPBUCoord3D@@@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; returns whether constant calling is required
 ?bfmeAEQT@BfmeSubEQT@@QAEDXZ,0x00028F74,pin
 ?bfmeAERW@BfmeSubERW@@QAEDXZ,0x000212D8,pin
 ?bfmeAETC@BfmeBaseETC@@QAEXPAX00@Z,0x00015BC2,pin
@@ -82992,6 +82997,10 @@ name,address,notes
 ?m_curFadeValue@ScreenCrossFadeFilterUpdateFadeLevelShim@@0MA,0x01307200,Open-BFME5 retail ScreenCrossFade static
 ?m_fadeDirection@ScreenCrossFadeFilterUpdateFadeLevelShim@@0HA,0x01307204,Open-BFME5 retail ScreenCrossFade static
 ?m_fadeFrames@ScreenCrossFadeFilterUpdateFadeLevelShim@@0HA,0x01307208,Open-BFME5 retail ScreenCrossFade static
+?maintain@Rva001B9A90Branch@@QAEXPAVObject@@@Z,0x00002211,ILT thunk to the 36B body at 0x001B9A90; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9AC0Branch@@QAEXPAVObject@@@Z,0x000285B0,ILT thunk to the 36B body at 0x001B9AC0; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9AF0Branch@@QAEXPAVObject@@@Z,0x0001FF6E,ILT thunk to the 36B body at 0x001B9AF0; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9B20Branch@@QAEXPAVObject@@@Z,0x0001C891,ILT thunk to the 36B body at 0x001B9B20; appearance-switch maintain branch reached from 0x001BCB10
 ?makeDecoratedNameKey@ModuleFactory@@KA?AW4NameKeyType@@ABVAsciiString@@W4ModuleType@@@Z,0x0004B439
 ?makeDecoratedNameKey@ModuleFactory@@KAHABVAsciiString@@H@Z,0x0004B439,ModuleFactory::makeDecoratedNameKey thunk (body 0x00126260)
 ?makeDecoratedNameKey@ModuleFactory@@SAHABVAsciiString@@W4ModuleType@@@Z,0x0004B439,ILT thunk to the module name decorator at 0x00126260
@@ -83014,6 +83023,10 @@ name,address,notes
 ?method@SubObject00739E70@@QAEXPAX@Z,0x00739E70,address-derived callee of 0x00739F70 forwarder
 ?methodA@Member0C00739C70@@QAEPAVTextureBaseClass@@HHHHH@Z,0x008FC710,pinharvest
 ?methodB@Member0C00739C70@@QAEPAVTextureBaseClass@@HH@Z,0x008FC660,pinharvest
+?move@Rva001B9D00Mover@@QAEXPAXHHH@Z,0x0002CC3C,ILT thunk to the 972B body at 0x001B9D00; appearance-switch mover reached from 0x001BC820
+?move@Rva001BB0D0Mover@@QAEXPAXHHH@Z,0x00032A29,ILT thunk to the 890B body at 0x001BB0D0; appearance-switch mover reached from 0x001BC820
+?move@Rva001BB530Mover@@QAEXPAXHHH@Z,0x00019F06,ILT thunk to the body at 0x001BB530; appearance-switch mover reached from 0x001BC820
+?move@Rva001BC560Mover@@QAEXPAXHHH@Z,0x00020914,ILT thunk to the 210B body at 0x001BC560; appearance-switch mover reached from 0x001BC820
 ?moveAlongWaypointPath@W3DView@@AAEXH@Z,0x0073CB10,address-derived BFME W3DView path helper
 ?moveAlongWaypointPath@W3DView@@AAEXH_N@Z,0x00741360,address-derived BFME W3DView path helper with mode
 ?moveMouse@Mouse@@IAEXHHH@Z,0x000141A5
@@ -83406,6 +83419,7 @@ name,address,notes
 ?push_back@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEXD@Z,0x0053AE60,matched STLport narrow string push_back dependency for assigned 0x0053BBC0 overflow
 ?push_back@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@QAEXG@Z,0x00839530,gen-tgrid shared callee
 ?push_back@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXABQAVDrawable@@@Z,0x0004A151,BFME attack-voice DrawableList insertion
+?push_back@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x000452A0,ILT thunk; STLport list<GameWindow*>::push_back (OnlineLogin tab list 0x00551DD0)
 ?push_back@?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@QAEXABQAVLadderInfo@@@Z,0x0002C5E8,checkLadder inserts into LadderList::m_localLadders at 0x0062BD96
 ?push_back@?$list@UEvacuationRecord@@V?$allocator@UEvacuationRecord@@@_STL@@@_STL@@QAEXABUEvacuationRecord@@@Z,0x0001FF41,EvacuateDamage onDamage STLport list insertion ILT
 ?push_back@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXABQAVObject@@@Z,0x00019E70,ILT thunk
@@ -83419,6 +83433,7 @@ name,address,notes
 ?push_back_aux@DequePingResponseThunkShim@_STL@@QAEXPBX@Z,0x00660880,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePushBackAuxVThunkShim@_STL@@QAEXPBX@Z,0x00369710,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
 ?push_back_aux@DequePushBackAuxValueThunksShim@_STL@@QAEXPBX@Z,0x006420E0,_STL deque _M_push_back_aux_v incremental-link thunk target through a TU-local forwarding shim
+?push_front@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x00038514,ILT thunk; STLport list<GameWindow*>::push_front (OnlineLogin tab list 0x00551DD0)
 ?putNode@PlayTimeList@@QAEXPAU_List_node_base@_STL@@I@Z,0x0000EBEC,FXList::bfmeIsBlocked list node release callee at retail ILT 0x0000EBEC
 ?putObjectAtGarrisonPoint@BfmeGarrisonPlacementCall@@QAEXPAVObject@@W4ObjectID@@HH@Z,0x00028CEA,TU-local ABI adapter for the verified GarrisonContain placement ILT; not a body identity
 ?putObjectAtGarrisonPoint@GarrisonContain@@IAEXPAVObject@@W4ObjectID@@HH@Z,0x00028CEA,GarrisonContain place point ILT
@@ -84511,6 +84526,7 @@ name,address,notes
 ?test@Gen00008E68@@QAE_NPAX0@Z,0x00008E68,second range predicate of the 0x003D08F0/0x003D09A0 pair reached via incremental-link thunk; address-derived name
 ?test@Gen0003C2E5@@QAE_NPAX0@Z,0x0003C2E5,first range predicate of the 0x003D08F0/0x003D09A0 pair reached via incremental-link thunk; address-derived name
 ?test@Glo012F7048Type@@QAE_NXZ,0x00609350,niladic predicate called on the global at 0x012F7048 by 0x003BED00; address-derived name
+?test@Rva00270360Query@@QAE_NXZ,0x00023795,ILT thunk to the 212B body at 0x00270360; AI predicate reached from 0x001BC820
 ?test@Rva002DF100@@QAEEPAX0@Z,0x0002DB69,ILT to 0x002DF100 thiscall uchar(void*,void*) for 23B setne wrappers
 ?test@Rva002DF120@@QAEEPAX0@Z,0x0001D813,ILT to 0x002DF120 thiscall uchar(void*,void*) for 23B setne wrappers
 ?test@Rva00383860@@QAE_NXZ,0x00382B50,niladic predicate called on the global at 0x012F0898 by 0x003BCC10; address-derived name
@@ -85083,6 +85099,7 @@ _Rva0080FD30,0x0080FD30,address-derived multi-precision addition helper called b
 _Rva0080FDD0,0x0080FDD0,address-derived multi-precision subtraction helper called by 0x0080FB40
 _Rva00810120,0x00810120,Y4 lane: block transform for the digest whose update is 0x00810060. 3765 bytes, /Od /GZ, takes one context pointer cdecl and is called whenever the 64-byte block fills. Pinned so the update could land first; expected to be replaced by a converted row rather than to stay a pin.
 _Rva00811310,0x00811310,Y4 lane: SHA-1 block transform, the counterpart of the update at 0x008111D0. 891 bytes, /Od /GZ, takes (context, block) cdecl. Identified by all four SHA-1 round constants being present in the body and by the /GZ frame descriptor naming its message schedule W at 0x140 bytes, which is eighty words. Pinned so the update could land first; expected to be replaced by a converted row.
+_Rva008118C0,0x008118C0,Address-derived cdecl alias; Y5 configuration passes ignored table argument to existing empty helper; parent decoded call80E7F3 and ret8118C4
 _Rva008119A0,0x008119A0,address-derived DirtySock table insertion helper called by 0x0080EF50
 _Rva00812690,0x00812690,DirtySock socket callback helper called by Rva00812CD0 with socket, reason zero, and its owning object
 _Rva00812CD0,0x00812CD0,address-derived cleanup helper invoked for the owned field at offset 0x64 by 0x0080F0D0
