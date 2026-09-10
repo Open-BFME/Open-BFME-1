@@ -86711,3 +86711,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BfmeMapTree000E9A40@@QAE@XZ,0x0003D61D,pin reuse of the ThingTemplate _Rb_tree destructor for the 0x000E9A40 lone map members
 ??1BfmeArrTree000E9A40@@QAE@XZ,0x0001CDCD,pin reuse of the incremental-link thunk the 0x000E9A40 array-of-maps destructor pushes as its element dtor
 ??1BfmeDtorMemberG000E9A40@@QAE@XZ,0x008881D0,pin reuse of StringBase<G> releaseBuffer for the 0x000E9A40 UnicodeString member
+??RGameTextStringCompare00437020@@QBE_NPBX0@Z,0x004367F0,TU-local stateless comparator ABI alias; raw caller materializes unused ECX and two stack arguments; ILT3285D routes to matched comparator ret8
