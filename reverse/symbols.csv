@@ -86788,3 +86788,4 @@ Vp6FilterConst8870,0x00ED8870,VP6 diag4 filter mm constant table +0x30
 Vp6FilterConst8880,0x00ED8880,VP6 diag4 filter mm constant table +0x40
 Vp6FilterConst8890,0x00ED8890,VP6 diag4 filter mm constant table +0x50
 Vp6FilterConst88A0,0x00ED88A0,VP6 diag4 filter mm constant table +0x60
+Vp6FilterConst88B0,0x00ED88B0,VP6 diag4 filter mm constant table +0x70
