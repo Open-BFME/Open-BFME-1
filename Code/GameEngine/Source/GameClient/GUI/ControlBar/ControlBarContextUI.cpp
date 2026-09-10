@@ -44,6 +44,8 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 class Object;
 class Image;
+class ThingTemplate;
+class ThingTemplatePortraitShim;
 class OpenContain;
 
 template <class Type>
@@ -81,8 +83,18 @@ class Overridable
 public:
 	virtual ~Overridable();
 	Overridable *friend_getFinalOverride();
+	const Overridable *getFinalOverride() const;
 	Overridable *m_nextOverride;
 };
+
+// Retail's inventory callback uses the matched BFME image selector with a
+// ThingTemplate view and the contained Object view as its two arguments.
+class ThingTemplate : public Overridable
+{
+};
+
+const Image *_bfme_getSelectedPortraitImage(const ThingTemplatePortraitShim *portraitTemplate,
+	const ThingTemplatePortraitShim *objectTemplate);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
 class CommandButton
@@ -119,6 +131,8 @@ public:
 	void bfmeClose(Bool hide);
 	UnsignedInt winSetStatus(UnsignedInt status);
 	UnsignedInt winClearStatus(UnsignedInt status);
+	Int winSetEnabledImage(Int index, const Image *image);
+	Int winEnable(Bool enable);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
@@ -213,6 +227,16 @@ class Object
 {
 public:
 	OCLUpdate *findUpdateModule(NameKeyType key);		// ILT 0x0002AE23
+
+	const ThingTemplate *getTemplate(void) const
+	{
+		return *(const ThingTemplate *const *)((const char *)this + 4);
+	}
+
+	UnsignedInt getID(void) const
+	{
+		return *(const UnsignedInt *)((const char *)this + 0x74);
+	}
 
 	Real getConstructionPercent(void) const
 	{
@@ -506,10 +530,12 @@ protected:
 	void updateOCLTimerTextDisplay(UnsignedInt secondsLeft, Real percentDone);
 	void updateContextUnderConstruction(void);
 	void updateContextStructureInventory(void);
+	static void populateButtonProc(Object *obj, void *userData);
 	void populateStructureInventory(Object *building, Bool refresh);
 	void evaluateContextUI(void);
 	void resetContainData(void);
 	void doTransportInventoryUI(Object *transport, const CommandSet *commandSet);
+	static const Image *calculateVeterancyOverlayForObject(const Object *obj);
 
 	char m_slice_pad[0x54];					// retail this+0x00 .. +0x53, untouched
 	GameWindow *m_bfmeContextParentOclTimer;		// this+0x54, m_contextParent[CP_OCL_TIMER]
@@ -528,6 +554,47 @@ protected:
 #pragma comment(linker, "/alternatename:?populateStructureInventory@ControlBar@@IAEXPAVObject@@_N@Z=?j_0001df4d@@YAXXZ")
 
 ContainEntry ControlBar::m_containData[MAX_COMMANDS_PER_SET];
+
+// Retail registers this callback from populateStructureInventory at
+// 0x004AEE00 through the 0x00049549 ILT.  The callback receives the contained
+// Object first and the four-field iterator record second; its static table is
+// the same 0x012F3448 table resetContainData/findContainedObject use.
+struct PopulateButtonInfo
+{
+	Object *source;
+	Int buttonIndex;
+	ControlBar *self;
+	GameWindow **inventoryButtons;
+};
+
+// ?populateButtonProc@ControlBar@@KAXPAVObject@@PAX@Z
+void ControlBar::populateButtonProc(Object *obj, void *userData)
+{
+	PopulateButtonInfo *info = (PopulateButtonInfo *)userData;
+
+	info->self->m_containData[info->buttonIndex].control =
+		info->inventoryButtons[info->buttonIndex];
+	info->self->m_containData[info->buttonIndex].objectID = obj->getID();
+
+	const ThingTemplate *thingTemplate = obj->getTemplate();
+	if (thingTemplate && thingTemplate->m_nextOverride)
+	{
+		thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+	}
+
+	const Image *image = _bfme_getSelectedPortraitImage(
+		(const ThingTemplatePortraitShim *)thingTemplate,
+		(const ThingTemplatePortraitShim *)obj);
+	GameWindow *control = info->inventoryButtons[info->buttonIndex];
+	control->winSetEnabledImage(0, image);
+	control->winSetEnabledImage(5, 0);
+	control->winSetEnabledImage(6, 0);
+
+	image = calculateVeterancyOverlayForObject(obj);
+	GadgetButtonDrawOverlayImage(info->inventoryButtons[info->buttonIndex], image);
+	info->inventoryButtons[info->buttonIndex]->winEnable(true);
+	info->buttonIndex++;
+}
 
 // Open-BFME: ControlBar::updateContextOCLTimer, retail 0x004AA980, 188 bytes.
 //
