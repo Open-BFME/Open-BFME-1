@@ -36896,6 +36896,7 @@ name,address,notes
 ?b_002c4300@@YAXXZ,0x002C4300,gen-thunk body
 ?b_002c4310@@YAXXZ,0x002C4310,gen-thunk body
 ?b_002c43a0@@YAXXZ,0x002C43A0,gen-thunk body
+?bfmeFixupThunk@@YADPAVMeshClass@@@Z,0x0002C43A,recursive BFME mesh shader fixer call through the generated thunk
 ?b_002c4450@@YAXXZ,0x002C4450,gen-thunk body
 ?b_002c4480@@YAXXZ,0x002C4480,gen-thunk body
 ?b_002c44b0@@YAXXZ,0x002C44B0,gen-thunk body
@@ -69523,6 +69524,7 @@ name,address,notes
 ?b_00739640@@YAXXZ,0x00739640,gen-thunk body
 ?b_00739670@@YAXXZ,0x00739670,gen-thunk body
 ?b_00739690@@YAXXZ,0x00739690,gen-thunk body
+?Set_Single_Shader@MeshMatDescClass@@QAEXVShaderClass@@H@Z,0x00928F30,BFME mesh shader material descriptor setter
 ?b_00739780@@YAXXZ,0x00739780,gen-thunk body
 ?b_007397b0@@YAXXZ,0x007397B0,gen-thunk body
 ?b_007397e0@@YAXXZ,0x007397E0,gen-thunk body
