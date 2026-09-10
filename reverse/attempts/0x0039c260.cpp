@@ -1,5 +1,5 @@
 // ?bfmeRunEUAe@BfmeSpecialPowerAllowanceStore@@QAEXPAVBfmePlayerSpecialPowerState@@PAX@Z
-// partial score=0.25 date=2026-09-05
+// partial score=0.82 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 // BfmeSpecialPowerAllowanceStore::bfmeRunEUAe, retail 0x0039C260, 287 bytes.
@@ -12,14 +12,14 @@ typedef unsigned short UnsignedShort;
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 		unsigned int count);
 extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
-		void *destination, const void *source, unsigned int bytes);
+	void *destination, const void *source, unsigned int bytes);
+extern const char Rva006A16B0Empty[];
 
 struct BfmeAsciiStringData
 {
-	UnsignedShort m_refCount;
-	UnsignedShort m_numCharsAllocated;
+	Int m_refCount;
 	UnsignedShort m_len;
-	UnsignedShort m_pad;
+	UnsignedShort m_capacity;
 };
 
 class BfmeAsciiString
@@ -28,7 +28,7 @@ public:
 	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
 	const char *str(void) const
 	{
-		return m_data ? (const char *)(m_data + 1) : "";
+		return m_data ? (const char *)(m_data + 1) : Rva006A16B0Empty;
 	}
 	Int compare(const BfmeAsciiString &other) const
 	{
@@ -42,7 +42,19 @@ public:
 			return result;
 		return thisLength - otherLength;
 	}
-
+	Int compare(const BfmeAsciiStringData *otherData) const
+	{
+		Int otherLength = otherData ? otherData->m_len : 0;
+		const char *otherText = otherData
+			? (const char *)(otherData + 1) : Rva006A16B0Empty;
+		Int thisLength = getLength();
+		const char *thisText = str();
+		Int shorter = thisLength < otherLength ? thisLength : otherLength;
+		Int result = memcmp(thisText, otherText, shorter);
+		if (result != 0)
+			return result;
+		return thisLength - otherLength;
+	}
 private:
 	BfmeAsciiStringData *m_data;
 };
@@ -66,6 +78,18 @@ public:
 	BfmeAsciiString m_name;
 };
 
+class BfmeAllowanceVector
+{
+public:
+	BfmeAllowanceEntry **begin(void) { return m_begin; }
+	BfmeAllowanceEntry **end(void) { return m_end; }
+	unsigned int size(void) { return (unsigned int)(m_end - m_begin); }
+
+private:
+	BfmeAllowanceEntry **m_begin;
+	BfmeAllowanceEntry **m_end;
+};
+
 class BfmePlayerSpecialPowerState
 {
 public:
@@ -81,28 +105,29 @@ public:
 
 private:
 	char m_head[8];
-	BfmeAllowanceEntry **m_begin;
-	BfmeAllowanceEntry **m_end;
+	BfmeAllowanceVector m_allowances;
 };
 
 // ?bfmeRunEUAe@BfmeSpecialPowerAllowanceStore@@QAEXPAVBfmePlayerSpecialPowerState@@PAX@Z
 void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 		BfmePlayerSpecialPowerState *state, void *context)
 {
-	unsigned int count = (unsigned int)(m_end - m_begin);
+	unsigned int index = 0;
+	unsigned int count = m_allowances.size();
 	if (count <= 0)
 		return;
 
-	const BfmeAsciiString *name = (const BfmeAsciiString *)context;
-	BfmeAllowanceEntry **cursor = m_begin;
-	unsigned int index = 0;
+	const BfmeAsciiStringData *nameData =
+		*(const BfmeAsciiStringData *const *)context;
+	BfmeAllowanceEntry **cursor = m_allowances.begin();
+	BfmeAllowanceEntry *entry;
 	while (index < count)
 	{
-		BfmeAllowanceEntry *entry = *cursor;
+		entry = *cursor;
 		if (entry->m_nextOverride)
 			entry = (BfmeAllowanceEntry *)entry->m_nextOverride->friend_getFinalOverride();
 
-		if (entry->m_name.compare(*name) == 0)
+		if (entry->m_name.compare(nameData) == 0)
 		{
 			Int *position = state->m_begin;
 			Int *end = state->m_end;
@@ -111,9 +136,9 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 				if (*position == (Int)index)
 				{
 					Int *nextPosition = position + 1;
-					if (end != nextPosition)
+					if (state->m_end != nextPosition)
 						BfmeMemMove(position, nextPosition,
-							(unsigned int)((char *)end - (char *)nextPosition));
+							(unsigned int)((char *)state->m_end - (char *)nextPosition));
 					state->m_end--;
 					return;
 				}
@@ -124,6 +149,6 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 
 		++index;
 		++cursor;
-		count = (unsigned int)(m_end - m_begin);
+		count = m_allowances.size();
 	}
 }
