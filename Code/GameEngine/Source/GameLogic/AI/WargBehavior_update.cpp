@@ -1,8 +1,13 @@
 // ?update@WargBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.96 date=2026-09-10
+// The BFME WargBehavior update returns a short wake interval while the
+// object's attack-status bit is set, and a longer interval otherwise.
+// Keep the status copy explicit: this is the retail layout at Object+0x90.
 // cl: /O2
 
-enum UpdateSleepTime { UPDATE_SLEEP_INVALID = 0 };
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_INVALID = 0
+};
 
 struct ObjectStatusBits
 {
@@ -34,5 +39,6 @@ private:
 
 UpdateSleepTime WargBehavior::update()
 {
-	return m_object->m_status.wargSleep();
+	Object *object = m_object;
+	return object->m_status.wargSleep();
 }
