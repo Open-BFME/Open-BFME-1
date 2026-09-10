@@ -1,4 +1,12 @@
+// cl: /O2
+
+#define _CRTIMP __declspec(dllimport)
+#include <string.h>
+#undef _CRTIMP
+
 extern char *g_bfme927Vft;
+
+extern void *Rva006F6AB0_OpenW3DFile(char const *filename);
 
 class BfmeThingGR
 {
@@ -47,6 +55,33 @@ public:
 	int m_bfmeD0GR;
 	int m_bfmeD1GR;
 };
+
+void BfmeThingGR::bfmeApplyGR(int v)
+{
+	char filename[260];
+	strcpy(filename, (char const *)v);
+	char *extension = strrchr(filename, '.');
+	if (extension) {
+		strcpy(extension, ".dds");
+		m_bfmeA1GR = (int)Rva006F6AB0_OpenW3DFile(filename);
+		if (!m_bfmeA1GR) {
+			strcpy(extension, ".tga");
+			m_bfmeA1GR = (int)Rva006F6AB0_OpenW3DFile(filename);
+			if (!m_bfmeA1GR) {
+				strcpy(extension, ".jpg");
+				m_bfmeA1GR = (int)Rva006F6AB0_OpenW3DFile(filename);
+				if (m_bfmeA1GR) {
+					strcpy(extension, ".png");
+					m_bfmeA4GR = (int)Rva006F6AB0_OpenW3DFile(filename);
+				}
+			}
+		}
+	}
+	if (m_bfmeA1GR)
+		*(unsigned char *)(m_bfmeA1GR + 0x0D) = 1;
+	if (m_bfmeA4GR)
+		*(unsigned char *)(m_bfmeA4GR + 0x0D) = 1;
+}
 
 class BfmeHostGR
 {
