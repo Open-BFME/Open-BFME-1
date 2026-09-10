@@ -86677,3 +86677,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?drawRemainingRectClock@Display@@QAEXMMMMMH@Z,0x0000467E,W3DGadgetPushButtonDraw +0x029D target call; reference W3DPushButton.cpp named inverse clock callback; existing ILT 0x0000467E routes to retail BFME clock body 0x00793CD0
 ?j_000327a4@@YAXPAVGameWindow@@PAVWinInstanceData@@PAUPushButtonData@@@Z,0x000327A4,W3DGadgetPushButtonDraw +0x02BA target call; local typed ABI declaration for existing incremental-link thunk; raw thunk routes to retail 0x00794B70 number-draw body
 ?drawOpenRect@Display@@QAEXMMMMMH@Z,0x0002965E,W3DGadgetPushButtonDraw +0x032A target call; reference W3DPushButton.cpp named border callback; existing ILT 0x0002965E routes to retail BFME body 0x00433690
+?get@BfmeScriptEngineFreezeExtra@@QBEEXZ,0x00027318,ILT stub for the already-landed Rva00336EF0ByteField body at 0x00336EF0; W3DTankDraw::doDrawModule caller routes through the incremental-link thunk
+?isTimeFrozenDebugIlt@BfmeScriptEngineDebugFreezeIlt@@QAE_NXZ,0x0003F23D,ILT stub for the real isTimeFrozenDebug@ScriptEngine body at 0x00336F20; W3DTankDraw::doDrawModule caller routes through the incremental-link thunk
+?isTimeFrozenScriptIlt@BfmeScriptEngineScriptFreezeIlt@@QAE_NXZ,0x00003783,ILT stub used by GameEngine::update and by W3DTankDraw::doDrawModule for the real ScriptEngine client-frame-frozen body at 0x00336F50
