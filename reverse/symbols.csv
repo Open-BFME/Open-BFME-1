@@ -86972,3 +86972,4 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?Get_Transform@HCompressedAnimClass@@UBEXAAVMatrix3D@@HM@Z,0x0095bcb0,vtable-slot ??_7HCompressedAnimClass@@6BRefCountClass@@@ slot 11 anchors=19
 ?QueryInterface@CD3DXSkinInfo@@UAGJABU_GUID@@PAPAX@Z,0x00a04ea7,vtable-slot ??_7CD3DXSkinInfo@@6B@ slot 0 anchors=24
 ?QueryInterface@CConstantTable@D3DXShader@@UAGJABU_GUID@@PAPAX@Z,0x00a56226,vtable-slot ??_7CConstantTable@D3DXShader@@6B@ slot 0 anchors=21
+??1ManTheWallsSpecialPower@@UAE@XZ,0x0002147C,route=0x00268F30; primary vtable scalar wrapper calls this ILT which forwards through 0x00260B50 and ILT 0x0002041E to matched destructor 0x00268F30
