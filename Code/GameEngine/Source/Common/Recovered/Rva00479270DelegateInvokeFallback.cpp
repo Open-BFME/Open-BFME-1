@@ -1,6 +1,5 @@
-// ?invokeFallback@Rva00479270Delegate@@QAEEXZ
-// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
+// ?invokeFallback@Rva00479270Delegate@@QAEEXZ
 // Retail RVA 0x00479270, 22 bytes. The adjacent 0x00479250 detach body proves
 // the three-word {tag, delegate, owner} layout, but no named caller or vtable
 // currently proves the original class or method spelling.
