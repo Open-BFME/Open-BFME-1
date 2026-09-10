@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4051e14e0b540de4a39e3970361bb5e7cd7829aae7ea72a634c2973b52640e83",
+  "symbol": "?bfmeParseXU@@YAXPAVINI@@PAX1PBX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?bfmeParseXU@@YAXPAVINI@@PAX1PBX@Z\n// partial score=0.96 date=2026-09-10\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int n);\n};\n\n}\n\n__declspec(dllimport) int __cdecl bfmeAtoiVHG(const char *s);\n\nclass INI\n{\npublic:\n\tconst char *getNextTokenOrNull(const char *seps);\n\n\tunsigned char m_bfmeHeadXU[0x414];\n\tconst char *m_bfme414XU;\n};\n\nstruct BfmeNodeXU\n{\n\tBfmeNodeXU *m_bfmeNextXU;\n\tBfmeNodeXU *m_bfmePrevXU;\n\tint m_bfmeValXU;\n};\n\nvoid bfmeParseXU(INI *ini, void *instance, void *store, const void *userData)\n{\n\tconst char *tok = ini->getNextTokenOrNull(ini->m_bfme414XU);\n\n\tif (tok == 0)\n\t\treturn;\n\n\tdo\n\t{\n\t\tint v = bfmeAtoiVHG(tok);\n\t\tBfmeNodeXU *head = *(BfmeNodeXU **)store;\n\t\tBfmeNodeXU *n = (BfmeNodeXU *)_STL::__new_alloc::allocate(12);\n\t\tint *q = &n->m_bfmeValXU;\n\n\t\tif (q != 0)\n\t\t\t*q = v;\n\n\t\tBfmeNodeXU *prev = head->m_bfmePrevXU;\n\n\t\tn->m_bfmePrevXU = prev;\n\t\tn->m_bfmeNextXU = head;\n\t\tprev->m_bfmeNextXU = n;\n\t\thead->m_bfmePrevXU = n;\n\n\t\ttok = ini->getNextTokenOrNull(ini->m_bfme414XU);\n\t}\n\twhile (tok);\n}\n"
+}
