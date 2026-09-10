@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4048094a1694d345b66161c24a1296b83465ab531f4fa18e25f21ed95db54165",
+  "symbol": "?d_002d9f30@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?d_002d9f30@@YAXXZ\r\n// partial score=0.96 date=2026-09-08\r\nclass BfmeTargetEVN\r\n{\r\npublic:\r\n\tvoid bfmeNotifyEVN();\r\n\r\n\tunsigned char m_bfmeHeadEVN[0x110];\r\n\tunsigned int m_bfmeBitsEVN[8];\r\n};\r\n\r\nclass BfmeItemEVN\r\n{\r\npublic:\r\n\tunsigned char m_bfmeHeadEVN[0x64];\r\n\tunsigned int m_bfmeIndexEVN;\r\n};\r\n\r\nclass BfmeHostEVN\r\n{\r\npublic:\r\n\tvoid bfmeMarkEVN();\r\n\r\n\tint m_bfmeHeadEVN;\r\n\tBfmeItemEVN *m_bfmeItemEVN;\r\n\tBfmeTargetEVN *m_bfmeTargetEVN;\r\n};\r\n\r\nvoid BfmeHostEVN::bfmeMarkEVN()\r\n{\r\n\tBfmeTargetEVN *target = m_bfmeTargetEVN;\r\n\tBfmeItemEVN *item = m_bfmeItemEVN;\r\n\r\n\tif (target == 0 || item == 0)\r\n\t\treturn;\r\n\r\n\tunsigned int index = item->m_bfmeIndexEVN;\r\n\r\n\tif (index == 0xffffffff)\r\n\t\treturn;\r\n\r\n\tunsigned int mask = 1 << (index & 0x1f);\r\n\tunsigned int *slot = &target->m_bfmeBitsEVN[index >> 5];\r\n\r\n\tif ((*slot & mask) != 0)\r\n\t\treturn;\r\n\r\n\t*slot = *slot | mask;\r\n\r\n\ttarget->bfmeNotifyEVN();\r\n}\r\n"
+}
