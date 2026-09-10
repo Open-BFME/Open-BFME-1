@@ -1,41 +1,38 @@
-// ?choose@Rva0020DAD0Thing@@QBEHXZ
-// partial score=0.95 date=2026-09-02
+// ?update@WargBehavior@@UAE?AW4UpdateSleepTime@@XZ
+// partial score=0.96 date=2026-09-10
 // cl: /O2
-// Open-BFME: 43-byte flag select at retail 0x0020DAD0. Holder at this+8,
-// inner triple at holder+0x90. The 12-byte frame is a by-value triple whose
-// middle dword is CSE'd into the flag test, so only first and third are stored.
-// /O2 emits add-eax (5B) + mov-ecx,eax (2B) = 7B versus retail add-ecx (6B).
 
-struct Rva0020DAD0Triple
+enum UpdateSleepTime { UPDATE_SLEEP_INVALID = 0 };
+
+struct ObjectStatusBits
 {
-	int m_first;
-	int m_flags;
-	int m_third;
+	unsigned int m_words[3];
 
-	int pick() const
+	UpdateSleepTime wargSleep() const
 	{
-		Rva0020DAD0Triple t = *this;
-		return (t.m_flags & 0x40) ? 0x1e : 0x14;
+		ObjectStatusBits status = *this;
+		return (UpdateSleepTime)((status.m_words[1] & 0x40) ? 30 : 20);
 	}
 };
 
-struct Rva0020DAD0Holder
+struct Object
 {
-	char m_pad[0x90];
-	Rva0020DAD0Triple m_inner;
+	unsigned char m_pad[0x90];
+	ObjectStatusBits m_status;
 };
 
-class Rva0020DAD0Thing
+class WargBehavior
 {
 public:
-	int choose() const;
+	virtual ~WargBehavior();
+	virtual UpdateSleepTime update();
 
 private:
-	char m_pad[8];
-	Rva0020DAD0Holder *m_holder;
+	unsigned int m_moduleData;
+	Object *m_object;
 };
 
-int Rva0020DAD0Thing::choose() const
+UpdateSleepTime WargBehavior::update()
 {
-	return m_holder->m_inner.pick();
+	return m_object->m_status.wargSleep();
 }

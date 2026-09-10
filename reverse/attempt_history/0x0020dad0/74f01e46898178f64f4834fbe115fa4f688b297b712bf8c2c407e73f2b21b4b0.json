@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "74f01e46898178f64f4834fbe115fa4f688b297b712bf8c2c407e73f2b21b4b0",
+  "symbol": "?update@WargBehavior@@UAE?AW4UpdateSleepTime@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?update@WargBehavior@@UAE?AW4UpdateSleepTime@@XZ\n// partial score=0.96 date=2026-09-10\n// cl: /O2\n\nenum UpdateSleepTime { UPDATE_SLEEP_INVALID = 0 };\n\nstruct ObjectStatusBits\n{\n\tunsigned int m_words[3];\n\n\tUpdateSleepTime wargSleep() const\n\t{\n\t\tObjectStatusBits status = *this;\n\t\treturn (UpdateSleepTime)((status.m_words[1] & 0x40) ? 30 : 20);\n\t}\n};\n\nstruct Object\n{\n\tunsigned char m_pad[0x90];\n\tObjectStatusBits m_status;\n};\n\nclass WargBehavior\n{\npublic:\n\tvirtual ~WargBehavior();\n\tvirtual UpdateSleepTime update();\n\nprivate:\n\tunsigned int m_moduleData;\n\tObject *m_object;\n};\n\nUpdateSleepTime WargBehavior::update()\n{\n\treturn m_object->m_status.wargSleep();\n}\n"
+}
