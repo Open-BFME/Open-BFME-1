@@ -86845,3 +86845,5 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?release@BfmePathfindList@@QAEXPAX@Z,0x000371F5,Pathfinder reset list release alias
 ?reset@BfmePathfindLayerReset@@QAEXXZ,0x000379FC,Pathfinder reset layer alias
 ?reset@BfmeZoneManagerReset@@QAEXXZ,0x0000742D,Pathfinder reset zone manager alias
+?apply@Rva004B19E0@@QAEXPAX@Z,0x00034B58,incremental-link thunk the ControlBar overlay sink at this+0x2f0 is reached through
+?_M_insert_overflow@?$vector@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@IAEXPAPAVGameWindow@@ABQAV3@ABU__true_type@2@I_N@Z,0x000056CD,ControlBar populateUnderConstruction overlay vector reaches the insert-overflow through this ILT thunk
