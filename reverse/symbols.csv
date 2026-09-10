@@ -86770,3 +86770,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?g_bfmeSlotD84@@3PAXA,0x00F56D84,codec spread-table blob cell (part of the g_bfmeTableJX-adjacent blob)
 ?g_bfmeSlotD88@@3PAXA,0x00F56D88,codec spread-table blob cell (part of the g_bfmeTableJX-adjacent blob)
 ?g_bfmeSlotD8C@@3PAXA,0x00F56D8C,codec spread-table blob cell (part of the g_bfmeTableJX-adjacent blob)
+?trackStatsForPlayer@PeerThreadClass@@QAEXW4RoomType@@PBD11@Z,0x0064E7B0,Parent full252B review; canonical PeerThread.cpp room switch Group1/Staging2 statistics maps94/A0 packStatKey and atoi; named roomKeyChangedCallback call0064E957 routes via ILT00043568 to0064E7B0
