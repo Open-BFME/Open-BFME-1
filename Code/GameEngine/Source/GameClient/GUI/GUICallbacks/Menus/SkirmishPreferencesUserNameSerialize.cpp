@@ -1,12 +1,9 @@
 // ?Rva0009FC90@Gen0009FC90Owner@@QAEXXZ
-// partial score=0.98 date=2026-09-09
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-// stlport
-//
-// Retail 0x0009FC90 writes the SkirmishPreferences UserNames list.  The
-// constructor at 0x0009F850 installs vtable 0x010806B0 and places this list at
-// this+0x14.  The insertion helper at 0x0009FDF0 reaches this body through
-// the 0x0002CB10 thunk, which proves the owner and the serializer contract.
+// ?Rva0009FC90@Gen0009FC90Owner@@QAEXXZ
+// BFME UserNames-list serializer.  The write helper at 0x0009FEB0 and the
+// insertion helper at 0x0009FDF0 both reach this body through the named
+// incremental-link thunk.  The constructor vtable 0x010806B0 fixes the
+// UserPreferences/list layout used here.
 
 #define _STLP_NO_EXCEPTIONS 1
 
@@ -49,23 +46,13 @@ class AsciiString : private StringBase<char>
 public:
 	AsciiString(const char *text) : StringBase<char>(text) {}
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
+	~AsciiString() {}
 
 	AsciiString &operator=(const AsciiString &other)
 	{
 		StringBase<char>::set(other);
 		return *this;
 	}
-
-};
-
-struct KeyStorage
-{
-	AsciiString key;
-	char padding[4];
-
-	KeyStorage(const char *text) : key(text) {}
-	~KeyStorage() {}
 };
 
 class UnicodeString : private StringBase<WideChar>
@@ -79,14 +66,14 @@ public:
 	int getLength(void) const
 	{
 		StringInlineData<WideChar> *data =
-			*(StringInlineData<WideChar> *const *)this;
+			m_data;
 		return data ? data->m_length : 0;
 	}
 
 	const WideChar *str(void) const
 	{
 		StringInlineData<WideChar> *data =
-			*(StringInlineData<WideChar> *const *)this;
+			m_data;
 		return data ? data->m_text : (const WideChar *)0x0107388C;
 	}
 
@@ -94,7 +81,6 @@ public:
 	{
 		StringBase<WideChar>::concat(text, length);
 	}
-
 };
 
 AsciiString UnicodeStringToQuotedPrintable(UnicodeString original);
@@ -149,7 +135,6 @@ private:
 	UserNameList m_userNames;
 };
 
-// ?Rva0009FC90@Gen0009FC90Owner@@QAEXXZ
 void Gen0009FC90Owner::Rva0009FC90(void)
 {
 	UserNameNode *it = m_userNames.m_end->m_next;
@@ -164,6 +149,5 @@ void Gen0009FC90Owner::Rva0009FC90(void)
 		it = it->m_next;
 	}
 
-	KeyStorage key("UserNames");
-	(*this)[key.key] = UnicodeStringToQuotedPrintable(names);
+	(*this)["UserNames"] = UnicodeStringToQuotedPrintable(names);
 }
