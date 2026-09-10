@@ -2671,7 +2671,6 @@ name,address,notes
 ??0GameSpyPeerMessageQueueInterface@@QAE@XZ,0x0000A1B9,createNewMessageQueue ctor call; ILT thunk for body 0x0064D650
 ??0GameSpyStagingRoom@@QAE@ABV0@@Z,0x0004A2C8,addStagingRoom call target (incremental-link thunk)
 ??0GameSpyStagingRoom@@QAE@XZ,0x000301B1,addStagingRoom call target (incremental-link thunk)
-??0GameWindowManager@@QAE@XZ,0x00041489,W3DGameWindowManager base constructor retail thunk
 ??0GameWindowTransitionsHandler@@QAE@XZ,0x000029A5,ILT thunk -> body 0x48BF40; retail GameWindowTransitionsHandler ctor called by GameWindowManager::init on TheTransitionHandler (0x012F3330)
 ??0GateOpenAndCloseBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000ACE0,GateOpenAndCloseBehavior ctor for friend_new
 ??0Gen00043699@@QAE@XZ,0x00008067,"136-byte attribute entry ctor: zeroes six vector fields, both 24-byte blocks, metadata offsets 0x78..0x84"
@@ -3750,8 +3749,6 @@ name,address,notes
 ??0TunnelTracker@@QAE@XZ,0x0001E777,REL32 pin from CaveSystem::registerNewCave @0x378970
 ??0TurretAIData@@QAE@XZ,0x0018C300,TurretAIData constructor: exact C++ reconstruction; parseTurret calls its incremental-link thunk at 0x0002F6C1
 ??0TurretState@@IAE@PAVTurretStateMachine@@VAsciiString@@@Z,0x0018D890,base ctor of the five retail TurretAI states; the reference declares TurretState with exactly those children and its ctor is protected taking TurretStateMachine* and AsciiString by value
-??0TwiddlerClass@@QAE@XZ,0x000063A2,pinharvest x1 (thunk)
-??0TwiddlerClassBase@@QAE@XZ,0x00483760,Open-BFME5 the base constructor TwiddlerClass forwards to; unnamed in the image
 ??0U1First_005E3300@@QAE@PAX0@Z,0x005DD290,two-argument base ctor called by 0x005E3300; address-derived name
 ??0U4Base00094900@@QAE@ABV0@@Z,0x00094900,U4 lane: base copy ctor called by the copy ctor at 0x0060D680; address-derived name
 ??0U4Base00113DA0@@QAE@PAXPBX@Z,0x00113DA0,U4 lane: base ctor called by the forwarding ctor at 0x00602E80; address-derived name; retail folds two names onto this address
@@ -3801,7 +3798,6 @@ name,address,notes
 ??0W3DFloorDrawBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x00039770,Open-BFME5 the incremental-link thunk W3DFloorDraw encodes for that base
 ??0W3DFloorDrawModuleData@@QAE@XZ,0x0003B0A7,module-data constructor called by W3DFloorDraw::friend_newModuleData at 0x006BFA40
 ??0W3DFloorDrawModuleDataBase@@QAE@XZ,0x0001E736,Open-BFME5 the incremental-link thunk that constructor encodes
-??0W3DGameWindowManager@@QAE@XZ,0x00021701
 ??0W3DHordeModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00008378,link thunk to the W3DHordeModelDraw constructor; named from the draw-module registration that pairs "W3DHordeModelDraw" with factory 0x006BFBE0
 ??0W3DHordeModelDrawModuleData@@QAE@XZ,0x00037187,module-data constructor called by W3DHordeModelDraw::friend_newModuleData at 0x006BFC60
 ??0W3DHordeModelDrawModuleDataBase@@QAE@XZ,0x0000289C,Open-BFME5 W3DHorde module data base constructor ILT shared with the proven module-data family
@@ -9447,7 +9443,6 @@ name,address,notes
 ??1TunnelContainModuleDataBase@@UAE@XZ,0x000179B8,Open-BFME5 pin
 ??1TunnelContainModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1TunnelContainModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
-??1TwiddlerClass@@UAE@XZ,0x000455B1,authentic virtual destructor callee; vtable 0x01126ED0 and matched constructor 0x0078F500 prove identity
 ??1U2Vb0084B480@@UAE@XZ,0x0084B480,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B6C0 and the ??_G at 0x0084B7C0; unnamed dump elsewhere
 ??1U2Vb0084B5F0@@UAE@XZ,0x0084B5F0,U2 lane: vbase-entered class dtor called by the ??_D at 0x0084B720 and the ??_G at 0x0084B880; unnamed dump elsewhere
 ??1UDP@@QAE@XZ,0x00006591

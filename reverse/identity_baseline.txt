@@ -29,7 +29,7 @@
 multi_name.family = 0
 multi_name.different = 0
 size_outlier.indicted = 1
-ctor_vtable.contradicted = 47
+ctor_vtable.contradicted = 46
 ctor_vtable.unreadable = 0
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 null_reloc.rows = 65

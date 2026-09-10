@@ -80,7 +80,6 @@ W3DGameWindowManager::W3DGameWindowManager( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??1W3DGameWindowManager@@ present-unmatched
 W3DGameWindowManager::~W3DGameWindowManager( void )
 {
 

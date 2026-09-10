@@ -4,7 +4,14 @@ name,target_rva,reason
 ??1Rva000678B0Body@@UAE@XZ,0x000678B0,Address-derived destructor identity superseded by DamageFXStore proven by constructor 0x00067C10 and vtable 0x010758F8
 ??_GGen_dtor_00067a30@@UAEPAXI@Z,0x00067A30,Generic generator placeholder superseded by the authentic DamageFXStore scalar-deleting destructor proven by constructor 0x00067C10 and vtable 0x010758F8
 ??_GGen_dtor_0005fa60@@UAEPAXI@Z,0x0005FA60,Generic generator placeholder superseded by the authentic Rva0005C110Surface scalar-deleting destructor proven by vtable 0x01073740 and matched constructor 0x0005C110
-??_GGen_dtor_0078f9d0@@UAEPAXI@Z,0x0078F9D0,Generic generator placeholder superseded by authentic TwiddlerClass scalar-deleting destructor proven by vtable 0x01126ED0 and matched constructor 0x0078F500
+??_GGen_dtor_0078f9d0@@UAEPAXI@Z,0x0078F9D0,Generic generator placeholder superseded by authentic W3DGameWindowManager scalar-deleting destructor proven by vtable 0x01126ED0 and matched constructor 0x0078F500
+??0TwiddlerClassBase@@QAE@XZ,0x00483760,"false class identity: retail 0x00483760 installs GameWindowManager vtable 0x010F8B60 and is rehomed to the proven GameWindowManager constructor"
+??0TwiddlerClass@@QAE@XZ,0x0078F500,"false class identity: retail 0x0078F500 calls GameWindowManager::GameWindowManager at 0x00483760 and installs the 73-slot W3DGameWindowManager vtable 0x01126ED0; rehomed to that constructor"
+??_GTwiddlerClass@@UAEPAXI@Z,0x0078F9D0,"false class identity: vtable 0x01126ED0 is W3DGameWindowManager and this scalar-deleting wrapper calls its 0x0078F5B0 tail destructor; rehomed to W3DGameWindowManager"
+??0W3DGameWindowManager@@QAE@XZ,0x006C05D0,"false class identity: retail 0x006C05D0 calls FunctionLexicon::FunctionLexicon at 0x00105300 and installs W3DFunctionLexicon vtable 0x0111D740; rehomed to W3DFunctionLexicon"
+?createWindowManager@W3DGameClient@@MAEPAVGameWindowManager@@XZ,0x006BA930,"false caller identity: retail 0x006BA930 allocates 0x38 and calls W3DFunctionLexicon at 0x006C05D0; rehomed to Win32GameEngine::createFunctionLexicon"
+?Create@?$SimpleDefinitionFactoryClass@VTwiddlerClass@@$0OAAA@$1?TwiddlerClassName@@3PADA@@UBEPAVDefinitionClass@@XZ,0x006FB600,"false caller identity: retail 0x006FB600 allocates 0x3C and calls W3DGameWindowManager at 0x0078F500; rehomed to W3DGameClient::createWindowManager"
+??1Rva0078F5B0TailDtor@@UAE@XZ,0x0078F5B0,"address-derived placeholder superseded by the proven W3DGameWindowManager destructor: vtable 0x01126ED0 then ILT 0x00028ECA to GameWindowManager::~GameWindowManager"
 ?d_00138290@@YAXXZ,0x00138290,gen-dump placeholder superseded by the byte-verified ProductionPrerequisite copy constructor at the same range
 ?bfmeGoDLA@BfmeThingDLA@@QAEPAXE@Z,0x0005F1A0,address-neutral reconstruction superseded by the ParticleSystemInfo vector-deleting destructor proven by vtable 0x01073878 and its named destructor callee
 ??0Display@@QAE@XZ,0x005CBF60,wrong class identity superseded by ParticleSystemManager constructor evidence from vtables 0x0110FDCC/0x0110FDB8 and the FXParticleSystemManager string
@@ -22133,7 +22140,7 @@ _AMDSSE_D3DXVec4TransformArray@24,0x00AA1140,"the wave named this address from a
 ?d_00478e70@@YAXXZ,0x00478E70,"gen-dump placeholder superseded by the real identity of these bytes: ?winSetInputFunc@GameWindow@@QAEHP6A?AW4WindowMsgHandledType@@PAV1@III@Z@Z, byte-verified 19/19."
 ?d_005091d0@@YAXXZ,0x005091D0,"gen-dump placeholder superseded by the real identity of these bytes: ?PopulateQMLadderComboBox@@YAXXZ, byte-verified 16/16."
 ?d_006bc0a0@@YAXXZ,0x006BC0A0,"gen-dump placeholder superseded by the real identity of these bytes: ?init@Win32Mouse@@UAEXXZ, byte-verified 17/17."
-?d_0078f500@@YAXXZ,0x0078F500,"gen-dump placeholder superseded by the real identity of these bytes: ??0TwiddlerClass@@QAE@XZ, byte-verified 18/18."
+?d_0078f500@@YAXXZ,0x0078F500,"gen-dump placeholder superseded by the real identity of these bytes: ??0W3DGameWindowManager@@QAE@XZ, byte-verified 18/18."
 ??0DeflectSpecialPowerModuleData@@QAE@XZ,0x00852130,"wrong body: 0x00852130 is INI::initFromINIMultiProc, seventy-nine bytes that clear two sixteen-entry tables. Seven module-data constructor names were aliased onto it; each has its own eighteen-byte body elsewhere."
 ??0HordeGarrisonContainModuleData@@QAE@XZ,0x00852130,"wrong body: 0x00852130 is INI::initFromINIMultiProc, seventy-nine bytes that clear two sixteen-entry tables. Seven module-data constructor names were aliased onto it; each has its own eighteen-byte body elsewhere."
 ??0ManTheWallsSpecialPowerModuleData@@QAE@XZ,0x00852130,"wrong body: 0x00852130 is INI::initFromINIMultiProc, seventy-nine bytes that clear two sixteen-entry tables. Seven module-data constructor names were aliased onto it; each has its own eighteen-byte body elsewhere."

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/gamewindowlist /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // readable body of ??0ScoreScaleUpTransition@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -33,6 +33,9 @@
 //						with to interact with the game windowing system.
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#define BFME_STLP_NODE_ALLOC 1
+#define _STLP_USE_STATIC_LIB 1
+#define _STLP_NO_EXCEPTIONS 1
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/Debug.h"
@@ -352,7 +355,18 @@ WindowMsgHandledType PassMessagesToParentSystem( GameWindow *window, UnsignedInt
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??0GameWindowManager@@QAE@XZ present-unmatched
+// Retail's GameWindowManager embeds an eight-byte tab-list view, so its tail
+// fields are four bytes later than the vendored STLport list view exposes in
+// this TU.  Keep the proven retail tail local rather than changing the shared
+// GameWindowManager header used by the other GUI bodies.
+struct BfmeGameWindowManagerRetailTail
+{
+	char m_prefix[0x30];
+	UnsignedInt m_tabListTail;
+	const Image *m_cursorBitmap;
+	UnsignedInt m_captureFlags;
+};
+
 GameWindowManager::GameWindowManager( void )
 {
 
@@ -368,8 +382,11 @@ GameWindowManager::GameWindowManager( void )
 	m_grabWindow = NULL;			// window that grabbed the last down event
 	m_loneWindow = NULL;		// Set if we just opened a combo box
 
-	m_cursorBitmap = NULL;
-	m_captureFlags = 0;
+	BfmeGameWindowManagerRetailTail *retail =
+		reinterpret_cast<BfmeGameWindowManagerRetailTail *>( this );
+	retail->m_tabListTail = 0;
+	retail->m_cursorBitmap = NULL;
+	retail->m_captureFlags = static_cast<UnsignedInt>( -1 );
 
 }  // end GameWindowManger
 
