@@ -1,10 +1,14 @@
 // ??1ios_base@_STL@@UAE@XZ
-// partial score=0.99 date=2026-09-08
 // cl: /O2 /Ob2 /EHsc /MD
 // STLport 4.5.3
+// The compiler barrier in basic_string's destructor emits no instruction. It
+// preserves the real second nontrivial member lifetime in the flattened
+// reconstruction, so VC7.1 assigns the same EH cleanup state as retail.
 
 extern "C" __declspec(dllimport) void __cdecl bfmeFree1035(void *p);
 void __cdecl operator delete(void *p);
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 namespace _STL
 {
@@ -86,6 +90,7 @@ public:
 	__forceinline ~basic_string()
 	{
 		_Destroy(this->_M_start, this->_M_finish + 1);
+		_ReadWriteBarrier();
 	}
 };
 
