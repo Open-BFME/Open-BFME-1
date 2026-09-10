@@ -9,20 +9,33 @@
 typedef bool Bool;
 typedef int Int;
 
-class BfmeSubBOB
+#pragma inline_recursion(on)
+#pragma inline_depth(1)
+
+class ExperienceLevelSystem;
+
+class Overridable
 {
 public:
-	BfmeSubBOB *bfmeFindBOB();
-	void *m_vtable;
-	BfmeSubBOB *m_nested;
+	virtual ~Overridable();
+	Overridable *friend_getFinalOverride(void)
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+protected:
+	friend class ExperienceLevelSystem;
+	Overridable *m_nextOverride;
+	Bool m_isOverride;
 };
 
 class ExperienceLevel
+	: public Overridable
 {
 public:
-	void *m_vtable;
-	BfmeSubBOB *m_redirect;
-	unsigned char m_unmodelled_008[8];
+	unsigned char m_unmodelled_00c[4];
 	Int m_requiredExperience;
 	unsigned char m_unmodelled_014[0xbd];
 	Bool m_singlePlayerOnly;
@@ -80,26 +93,25 @@ ExperienceLevel *ExperienceLevelSystem::rva003806D0(
 		{
 			ExperienceLevel *level = &node->m_value;
 			ExperienceLevel *selected = level;
-			if (level->m_redirect != 0)
+			if (level->m_nextOverride != 0)
 			{
-				if (level->m_redirect->m_nested != 0)
-					selected = (ExperienceLevel *)
-						level->m_redirect->m_nested->bfmeFindBOB();
+				selected = (ExperienceLevel *)
+					level->m_nextOverride->friend_getFinalOverride();
 			}
 
-			register Bool permitted;
-				if (TheBfmeGameLogic->isInMultiplayerOrSkirmishGame())
-					permitted = !selected->m_singlePlayerOnly;
-				else
-					permitted = !selected->m_multiPlayerOnly;
+			Bool permitted;
+			if (TheBfmeGameLogic->isInMultiplayerOrSkirmishGame())
+				permitted = !selected->m_singlePlayerOnly;
+			else
+				permitted = !selected->m_multiPlayerOnly;
 
-				if (permitted &&
-					selected->m_requiredExperience > currentRequiredExperience &&
-					selected->m_requiredExperience < nextRequiredExperience)
-				{
-					nextRequiredExperience = selected->m_requiredExperience;
-					next = selected;
-				}
+			if (permitted &&
+				selected->m_requiredExperience > currentRequiredExperience &&
+				selected->m_requiredExperience < nextRequiredExperience)
+			{
+				nextRequiredExperience = selected->m_requiredExperience;
+				next = selected;
+			}
 
 			node = node->m_next;
 		} while (node != levels->m_sentinel);

@@ -7,13 +7,21 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
+enum GuardMode
+{
+	GUARDMODE_NORMAL = 0
+};
+
+enum CommandSourceType
+{
+	CMD_FROM_SCRIPT = 1
+};
+
 struct Coord3D
 {
 	Real x;
 	Real y;
 	Real z;
-	Coord3D(void) { }
-	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) { }
 };
 
 class AsciiString
@@ -79,10 +87,25 @@ public:
 	unsigned char m_tail[0x40];
 	const Coord3D *getPosition(void) const
 	{
-		return reinterpret_cast<const Coord3D *>(
-			reinterpret_cast<const unsigned char *>(this) + 0x38);
+		return &m_position;
 	}
 };
+
+class ObjectPositionView
+{
+	unsigned char m_beforePosition[0x38];
+
+public:
+	Coord3D m_position;
+};
+
+__forceinline static void copyPosition(Coord3D *destination,
+	const Coord3D *source)
+{
+	destination->x = source->x;
+	destination->y = source->y;
+	destination->z = source->z;
+}
 
 template<class OBJCLASS>
 class DLINK_ITERATOR
@@ -113,7 +136,8 @@ public:
 class AICommandInterface
 {
 public:
-	void aiGuardPosition(const Coord3D *position, int guardMode, int commandSource);
+	void aiGuardPosition(const Coord3D *position, GuardMode guardMode,
+		CommandSourceType commandSource);
 };
 
 class AIUpdateInterface
@@ -192,8 +216,14 @@ void ScriptActions::doTeamGuardForFramecount(const AsciiString &teamName,
 		if (!ai)
 			continue;
 
-		Coord3D position = *object->getPosition();
-		ai->m_command.aiGuardPosition(&position, 0, 1);
+		Coord3D position;
+		const Coord3D *source = &object->m_position;
+		__assume(source != &position);
+		position.x = source->x;
+		position.y = source->y;
+		position.z = source->z;
+		ai->m_command.aiGuardPosition(&position, GUARDMODE_NORMAL,
+			CMD_FROM_SCRIPT);
 	}
 	if (seconds)
 		TheScriptEngine->setSequentialTimer(theTeam, framecount * 5);
