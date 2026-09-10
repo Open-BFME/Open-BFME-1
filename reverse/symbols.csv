@@ -83999,6 +83999,7 @@ name,address,notes
 ?scanLookupList@INI@@SAHPBDPBULookupListRec@@@Z,0x00850A70,pinharvest x4 (body)
 ?scanReal@INI@@SAMPBD@Z,0x008526E0
 ?scanUnsignedInt@INI@@SAIPBD@Z,0x00852680
+?scan_not@?$ctype@D@_STL@@QBEPBDW4mask@ctype_base@2@PBD1@Z,0x00840F00,STLport ctype<char>::scan_not alias for the verified body at 0x00840F00
 ?scoreRowFinalInsertionSort@@YAXPAUScoreRowSortValue@@00@Z,0x0000CF59,retail ILT for the eight-byte score-row final insertion helper
 ?scoreRowIntrosort@@YAXPAUScoreRowSortValue@@0HH0@Z,0x0000B451,retail ILT for the eight-byte score-row introsort helper
 ?searchListForRadarLocationMatch@Radar@@IAEPAVObject@@PAVRadarObject@@PAUICoord2D@@@Z,0x0000C6DA

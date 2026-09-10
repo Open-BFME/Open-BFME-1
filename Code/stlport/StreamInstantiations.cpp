@@ -1,9 +1,10 @@
-// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB
+// cl: /MD /D_STLP_USE_STATIC_LIB
 // stlport
 //
 // STLport 4.5.3 basic_istream/basic_ostream instantiations used by retail.
 // This proper source-tree owner replaces the retired generated inventory.
 
+#define _STLP_NO_EXCEPTIONS 1
 #include <istream>
 #include <ostream>
 
