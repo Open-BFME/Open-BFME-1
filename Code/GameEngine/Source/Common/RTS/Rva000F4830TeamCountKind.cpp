@@ -117,7 +117,7 @@ class ThingTemplate : public Overridable
 {
 public:
 	unsigned char m_unmodelled_008[ 0xc0 ];
-	UnsignedInt m_kindOf[ 5 ];
+	UnsignedInt m_kindOf[ 6 ]; // matched Team kind-mask ABI is BitFlags<192>.
 
 	Bool hasKind(UnsignedInt kind) const
 	{
@@ -150,3 +150,25 @@ private:
 	}
 };
 
+// The matched ScriptConditions::evaluateTeamCountCompare caller reaches this
+// body through ILT 0x0000A957 and supplies (kind, false, true).  The two Bool
+// parameters are exclusion flags in the retail stack order: [esp+0x1c] is
+// excludeFlag344 and [esp+0x20] is excludeFlag90.
+Int Rva000F4830::countKind(UnsignedInt kind, Bool excludeFlag344, Bool excludeFlag90)
+{
+	Int retVal = 0;
+	for (BfmeDlinkIterator<Object> iter = iterate_TeamMemberList();
+		!iter.done(); iter.advance())
+	{
+		BfmeObjectStatusView *object = (BfmeObjectStatusView *)iter.cur();
+		if (excludeFlag344 && (object->m_status344 & 1) != 0)
+			continue;
+		if (excludeFlag90 && (object->m_status90 & 4) != 0)
+			continue;
+
+		const ThingTemplate *tmpl = iter.cur()->getTemplate();
+		if (tmpl->hasKind(kind))
+			++retVal;
+	}
+	return retVal;
+}
