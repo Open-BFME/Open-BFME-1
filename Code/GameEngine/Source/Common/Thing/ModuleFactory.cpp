@@ -177,6 +177,7 @@ class BoneFXUpdateModuleData;
 class CashHackSpecialPowerModuleData;
 class ChinookAIUpdateModuleData;
 class CommandSetUpgradeModuleData;
+class CostModifierUpgradeModuleData;
 class CreateCrateDieModuleData;
 class CreateObjectDieModuleData;
 class CrushDieModuleData;
@@ -218,6 +219,9 @@ template <> struct BFMEFactoryInstanceSize<BoneFXUpdateModuleData> { enum { VALU
 template <> struct BFMEFactoryInstanceSize<CashHackSpecialPowerModuleData> { enum { VALUE = 0x220 }; };
 template <> struct BFMEFactoryInstanceSize<ChinookAIUpdateModuleData> { enum { VALUE = 0x16C }; };
 template <> struct BFMEFactoryInstanceSize<CommandSetUpgradeModuleData> { enum { VALUE = 0x74 }; };
+// Retail CostModifierUpgrade registry entry uses factory 0x0011DA50; its
+// allocation at 0x0011DA67 is 0x88 (the reference declaration is larger).
+template <> struct BFMEFactoryInstanceSize<CostModifierUpgradeModuleData> { enum { VALUE = 0x88 }; };
 template <> struct BFMEFactoryInstanceSize<CreateCrateDieModuleData> { enum { VALUE = 0x38 }; };
 template <> struct BFMEFactoryInstanceSize<CreateObjectDieModuleData> { enum { VALUE = 0x3C }; };
 template <> struct BFMEFactoryInstanceSize<CrushDieModuleData> { enum { VALUE = 0x204 }; };
@@ -265,6 +269,7 @@ BFME_FACTORY_DATA_CHOICE(BoneFXUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(CashHackSpecialPowerModuleData)
 BFME_FACTORY_DATA_CHOICE(ChinookAIUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(CommandSetUpgradeModuleData)
+BFME_FACTORY_DATA_CHOICE(CostModifierUpgradeModuleData)
 BFME_FACTORY_DATA_CHOICE(CreateCrateDieModuleData)
 BFME_FACTORY_DATA_CHOICE(CreateObjectDieModuleData)
 BFME_FACTORY_DATA_CHOICE(CrushDieModuleData)
