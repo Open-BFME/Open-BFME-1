@@ -161,3 +161,16 @@ void Q3PushHeap00473D60(Q3SortElem16 *first, int holeIndex,
     }
     first[holeIndex] = value;
 }
+
+__declspec(noinline) void Q3LinearInsert004757B0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16, Q3SortCompare);
+
+// Retail92B ends at ret0x0047622B; matched final split0x00476880
+// calls through ILT0x20D65. Linear insertion uses the same owning record.
+void Q3InsertionSort004761D0(Q3SortElem16 *first, Q3SortElem16 *last,
+    Q3SortCompare comp)
+{
+    if (first == last)
+        return;
+    for (Q3SortElem16 *current = first + 1; current != last; ++current)
+        Q3LinearInsert004757B0(first, current, *current, comp);
+}
