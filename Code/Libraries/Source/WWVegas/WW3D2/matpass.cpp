@@ -107,16 +107,10 @@ bool MaterialPassClass::EnablePerPolygonCulling = true;
  *   12/9/99    gth : Created.                                                                 *
  *   2/26/2001  gth : Changed to Install_Materials                                             *
  *=============================================================================================*/
-// ?Install_Materials@MaterialPassClass@@ present-unmatched
-void MaterialPassClass::Install_Materials(void) const
-{
-	DX8Wrapper::Set_Material(Peek_Material());
-	DX8Wrapper::Set_Shader(Peek_Shader());
-	for (int i=0;i<DX8Wrapper::Get_Current_Caps()->Get_Max_Textures_Per_Pass();++i) 
-	{
-		DX8Wrapper::Set_Texture(i,Peek_Texture(i));
-	}
-}
+// The BFME implementation is isolated in
+// MaterialPassClassInstallMaterials.cpp.  Its TU-local view preserves the
+// owning texture-handle ABI used by retail rather than the pointer-only
+// upstream declaration in this file.
 
 
 /***********************************************************************************************
