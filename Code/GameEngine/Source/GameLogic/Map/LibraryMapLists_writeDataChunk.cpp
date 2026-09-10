@@ -1,10 +1,15 @@
-// ?d_00192630@@YAXXZ
-// partial score=0.9 date=2026-09-07
-// cl: /DNDEBUG /MD /EHsc-
+// cl: /DNDEBUG /MD /EHsc
 // BFME writes the nested LibraryMapLists and LibraryMaps chunks from this record array.
 
 class AsciiString
 {
+public:
+	AsciiString(void) : m_data(0) {}
+	AsciiString(const AsciiString &source);
+	~AsciiString();
+
+private:
+	void *m_data;
 };
 
 class DataChunkOutput
@@ -18,48 +23,47 @@ public:
 
 struct LibraryMaps
 {
-	char unused[0xc];
-	AsciiString *first;
-	AsciiString *last;
-	AsciiString *capacity;
+	char m_pad[0xc];
+	AsciiString *m_first;
+	AsciiString *m_last;
+	AsciiString *m_capacity;
 };
 
 class LibraryMapLists
 {
 private:
-	char unused[0x28];
-	int count;
-	LibraryMaps lists[1];
+	char m_pad[0x28];
+	int m_count;
+	LibraryMaps m_lists[1];
 
 public:
 	void writeDataChunk(DataChunkOutput &output);
 };
 
+// ?writeDataChunk@LibraryMapLists@@QAEXAAVDataChunkOutput@@@Z
 void LibraryMapLists::writeDataChunk(DataChunkOutput &output)
 {
-	int index;
-	LibraryMaps *cursor;
-	LibraryMaps *list;
-	AsciiString *value;
 	output.openDataChunk("LibraryMapLists", 1);
-	int listCount = count;
-	index = 0;
+	int listCount = m_count;
+	int index = 0;
 	if (listCount > 0)
 	{
-		cursor = lists;
+		LibraryMaps *cursor = m_lists;
 		do
 		{
 			output.openDataChunk("LibraryMaps", 1);
-			if (index < 0 || index >= count)
+			LibraryMaps *list;
+			if (index < 0 || index >= m_count)
 				list = 0;
 			else
 				list = cursor;
-			output.writeInt(list->last - list->first);
-			for (value = list->first; value != list->last; ++value)
+			output.writeInt(list->m_last - list->m_first);
+			AsciiString *last = list->m_last;
+			for (AsciiString *value = list->m_first; value != last; ++value)
 				output.writeAsciiString(*value);
 			output.closeDataChunk();
-			++cursor;
 			++index;
+			++cursor;
 		} while (index < listCount);
 	}
 	output.closeDataChunk();
