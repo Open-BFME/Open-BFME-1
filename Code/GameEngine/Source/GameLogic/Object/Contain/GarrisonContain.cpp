@@ -174,6 +174,43 @@ public:
 	virtual void removeFromContain( Object *, Bool ) = 0;
 };
 
+// The fire-point virtuals receive the secondary contain interface at primary+0x20.
+// MSVC adjusts this back to the primary object before the local view is formed.
+// The recovered primary vtable consumes an ObjectID through slot 0x68.  Keep this view local: the shared ZH header exposes the
+// older Object* helper and would otherwise emit the wrong call shape here.
+class BfmeGarrisonFirePointInterface
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0;
+	virtual void slot08() = 0; virtual void slot0C() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0;
+	virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0;
+	virtual void slot38() = 0; virtual void slot3C() = 0;
+	virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void slot50() = 0; virtual void slot54() = 0;
+	virtual void slot58() = 0; virtual void slot5C() = 0;
+	virtual void slot60() = 0; virtual void slot64() = 0;
+	virtual Int getObjectGarrisonPointIndex( ObjectID objectID ) = 0;
+};
+
+class BfmeOutOfWeaponRangeObject;
+
+class BfmeOutOfWeaponRangeWeapon
+{
+public:
+	Bool isWithinAttackRange( const BfmeOutOfWeaponRangeObject *source,
+		const BfmeOutOfWeaponRangeObject *target, Int extra ) const;
+};
+
+// This method is the same BFME range helper used by the named AI state
+// callers.  Its argument pointers are opaque at this call site; no object is
+// dereferenced through this local type.
+#pragma comment(linker, "/alternatename:?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@0H@Z=?j_0002e85c@@YAXXZ")
+
 static Bool bfmeGarrisonObjectIsEffectivelyDead( const Object *object )
 {
 	// BFME places Object::m_privateStatus at +0x344; the shared ZH Object
@@ -506,7 +543,6 @@ Bool GarrisonContain::calcBestGarrisonPosition( Coord3D *sourcePos, const Coord3
 //The AI is entering the aim state and would like to move the unit to the best position, perform
 //a range check, and if it succeeds, leave him there -- otherwise, remove him immediately.
 //-------------------------------------------------------------------------------------------------
-// ?attemptBestFirePointPosition@GarrisonContain@@ present-unmatched
 Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weapon, Object *victim )
 {
 	//Sanity
@@ -519,27 +555,50 @@ Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weap
   const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
   DEBUG_ASSERTCRASH(modData->m_isEnclosingContainer, ("calcBestGarrisonPosition... SHOULD NOT GET HERE, since this container is non-enclosing") );
 #endif
+
+	// Materialize the first BFME ObjectID before recovering the receiver.  Keep
+	// this temporary short-lived so it does not change the parameter register
+	// assignment in the guard sequence.
+	const ObjectID sourceID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>( source ) + 0x74);
+
+	// AI enters this virtual through the secondary contain interface.  Recover
+	// the primary BFME receiver before using the ObjectID-based point lookup.
+	BfmeGarrisonFirePointInterface *firePoint =
+		reinterpret_cast<BfmeGarrisonFirePointInterface *>(
+			reinterpret_cast<char *>( this ));
+	GarrisonContain *primary = reinterpret_cast<GarrisonContain *>( firePoint );
+
 	//If this object is already at a garrison point, remove him.
-	Int existingIndex = getObjectGarrisonPointIndex( source );
+	Int existingIndex = firePoint->getObjectGarrisonPointIndex( sourceID );
 	if( existingIndex != GARRISON_INDEX_INVALID )
 	{
-		removeObjectFromGarrisonPoint( source, existingIndex );
+		primary->removeObjectFromGarrisonPoint( source, existingIndex );
 	}
 
-	putObjectAtBestGarrisonPoint( source, victim, NULL );
+	primary->putObjectAtBestGarrisonPoint( source, victim, NULL );
 
 	//Okay, now we have positioned the object in the best position for the victim.
 	//Now check if we are able to fire on our victim.
-	if( weapon->isWithinAttackRange( source, victim ) )
+	BfmeOutOfWeaponRangeWeapon *fireWeapon =
+		reinterpret_cast<BfmeOutOfWeaponRangeWeapon *>( weapon );
+	if( fireWeapon->isWithinAttackRange(
+		reinterpret_cast<const BfmeOutOfWeaponRangeObject *>( source ),
+		reinterpret_cast<const BfmeOutOfWeaponRangeObject *>( victim ), 0 ) )
 	{
 		return TRUE;
 	}
 
 	//Crap, we failed... so remove the object from the garrison point.
-	existingIndex = getObjectGarrisonPointIndex( source );
+	const ObjectID retrySourceID = *reinterpret_cast<const ObjectID *>(
+		reinterpret_cast<const char *>( source ) + 0x74);
+	BfmeGarrisonFirePointInterface *retryFirePoint =
+		reinterpret_cast<BfmeGarrisonFirePointInterface *>(
+			reinterpret_cast<char *>( this ));
+	existingIndex = retryFirePoint->getObjectGarrisonPointIndex( retrySourceID );
 	if( existingIndex != GARRISON_INDEX_INVALID )
 	{
-		removeObjectFromGarrisonPoint( source, existingIndex );
+		primary->removeObjectFromGarrisonPoint( source, existingIndex );
 	}
 	return FALSE;
 }
@@ -548,7 +607,7 @@ Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weap
 //The AI is entering the aim state and would like to move the unit to the best position, perform
 //a range check, and if it succeeds, leave him there -- otherwise, remove him immediately.
 //-------------------------------------------------------------------------------------------------
-// ?attemptBestFirePointPosition@GarrisonContain@@ present-unmatched
+// ?attemptBestFirePointPosition@GarrisonContain@@MAE_NPAVObject@@PAVWeapon@@PBUCoord3D@@@Z present-unmatched
 Bool GarrisonContain::attemptBestFirePointPosition( Object *source, Weapon *weapon, const Coord3D *targetPos )
 {
 	//Sanity
