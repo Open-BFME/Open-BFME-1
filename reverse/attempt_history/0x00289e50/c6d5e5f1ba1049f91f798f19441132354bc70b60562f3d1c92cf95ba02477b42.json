@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c6d5e5f1ba1049f91f798f19441132354bc70b60562f3d1c92cf95ba02477b42",
+  "symbol": "??1BroadcastStealthUpdate@@UAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.15,
+  "source": "// ??1BroadcastStealthUpdate@@UAE@XZ\n// partial score=0.15 date=2026-09-10\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n// Scratch clean-C++ reconstruction for retail 0x00289E50.\n#include <list>\n\nclass Thing;\nclass ModuleData;\nclass Object;\n\nclass ObjectModule\n{\npublic:\n\tObjectModule(Thing *, const ModuleData *);\n\tvirtual ~ObjectModule();\nprotected:\n\tconst ModuleData *m_moduleData;\n\tObject *m_object;\n};\n\nclass BehaviorModuleInterface\n{\npublic:\n\tvirtual void slot();\n};\n\nclass LargeGroupBonusIface2\n{\npublic:\n\tvirtual void slot();\n};\n\nclass BehaviorModule : public ObjectModule,\n\tpublic BehaviorModuleInterface, public LargeGroupBonusIface2\n{\npublic:\n\tBehaviorModule(Thing *thing, const ModuleData *data)\n\t\t: ObjectModule(thing, data), m_value14(0), m_value18(-1), m_value1c(-1) {}\n\tvirtual ~BehaviorModule();\n\tprivate:\n\tunsigned int m_value14;\n\tint m_value18;\n\tint m_value1c;\n};\n\nclass SpyVisionUpgradeMux\n{\npublic:\n\tvirtual void slot();\nprivate:\n\tbool m_upgradeExecuted;\n\tunsigned char m_pad[3];\n};\n\nclass BroadcastStealthUpdate : public BehaviorModule,\n\tpublic SpyVisionUpgradeMux\n{\npublic:\n\tvirtual ~BroadcastStealthUpdate();\nprivate:\n\t_STL::list<int> m_broadcastObjects;\n\tunsigned int m_broadcastObjectCount;\n\t_STL::list<int> m_pendingObjects;\n};\n\n// ??1BroadcastStealthUpdate@@UAE@XZ\nBroadcastStealthUpdate::~BroadcastStealthUpdate()\n{\n}\n"
+}

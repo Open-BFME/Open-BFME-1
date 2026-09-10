@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4e6a710a705e106b697451966967f8c28bc63d287f5cee11e5ebfcf679431858",
+  "symbol": "?Render@WW3D@@SA?AW4WW3DErrorType@@PAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.76,
+  "source": "// ?Render@WW3D@@SA?AW4WW3DErrorType@@PAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z\n// partial score=0.76 date=2026-09-10\n// Complete research bank for retail RVA 0x008FE3C0.  The production owner is\n// ww3d.cpp; this isolated copy exists only so re_log can retain one body.\nWW3DErrorType WW3D::Render(SceneClass *scene, CameraClass *cam, bool clear,\n                            bool clearz, const Vector3 &color)\n{\n\tif (!IsInitted) {\n\t\treturn (WW3D_ERROR_OK);\n\t}\n\n\tWWPROFILE(\"WW3D::Render\");\n\tWWMEMLOG(MEM_GAMEDATA);\n\tWWASSERT(IsInitted);\n\tWWASSERT(IsRendering);\n\tWWASSERT(scene);\n\tWWASSERT(cam);\n\n\tcam->On_Frame_Update();\n\tRenderInfoClass rinfo(*cam);\n\n\tcam->Apply();\n\n\tif (clear || clearz) {\n\t\tDX8Wrapper::Clear(clear, clearz, color);\n\t}\n\n\tswitch (scene->Get_Polygon_Mode()) {\n\tcase SceneClass::POINT:\n\t\tDX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE, D3DFILL_POINT);\n\t\tbreak;\n\tcase SceneClass::LINE:\n\t\tDX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE, D3DFILL_WIREFRAME);\n\t\tbreak;\n\tcase SceneClass::FILL:\n\t\tDX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE, D3DFILL_SOLID);\n\t\tbreak;\n\t}\n\n\tDX8Wrapper::Set_Ambient(scene->Get_Ambient_Light());\n\tTheDX8MeshRenderer.Set_Camera(&rinfo.Camera);\n\tscene->Render(rinfo);\n\tFlush(rinfo);\n\n\treturn WW3D_ERROR_OK;\n}\n"
+}

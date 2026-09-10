@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8b287b80d10b9c2051406d79c5d276607608509d5cf4bd63459834a8ff0f09a9",
+  "symbol": "?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.15,
+  "source": "// ?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z\n// partial score=0.15 date=2026-09-10\n// Exact canonical candidate body retained from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp.\n// ?doMoveCameraAlongWaypointPath@ScriptActions@@IAEXABVAsciiString@@MMMM@Z\nvoid ScriptActions::doMoveCameraAlongWaypointPath(const AsciiString& waypoint, Real sec, Real cameraStutterSec, Real easeIn, Real easeOut)\n{\n\tfor (Waypoint *way = TheTerrainLogic->getFirstWaypoint(); way; way = way->getNext()) {\n\t\tif (way->getName() == waypoint) {\n\t\t\tTheTacticalView->moveCameraAlongWaypointPath(way, sec*1000, cameraStutterSec*1000, true, easeIn*1000.0f, easeOut*1000.0f);\t\t\t\n\t\t\tbreak;\n\t\t}\n\t}\n}\n"
+}

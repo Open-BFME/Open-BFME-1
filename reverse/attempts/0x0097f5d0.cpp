@@ -1,6 +1,6 @@
 // ?Create_From_Definition@ParticleEmitterClass@@SAPAV1@ABVParticleEmitterDefClass@@@Z
-// partial score=0.26 date=2026-09-10
-// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
+// partial score=0.3 date=2026-09-10
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -214,12 +214,12 @@ public:
 class BFMEWaterTrackTextureHandle
 {
 public:
-	BFMEWaterTrackTexture *m_texture;
+	TextureClass *m_texture;
 
 	~BFMEWaterTrackTextureHandle(void)
 	{
 		if (m_texture)
-			m_texture->Release_Ref();
+			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
 	}
 };
 
@@ -227,32 +227,57 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
 static inline void BFMEAssignWaterTrackTexture(
-	BFMEWaterTrackTexture *&destination,
+	TextureClass **destination,
 	const BFMEWaterTrackTextureHandle &texture)
 {
 	if (texture.m_texture)
 		++*(unsigned short *)((char *)texture.m_texture + 4);
-	if (destination)
-		destination->Release_Ref();
-	destination = texture.m_texture;
+	if (*destination)
+		((BFMEWaterTrackTexture *)*destination)->Release_Ref();
+	*destination = texture.m_texture;
 }
+
+class BFMETextureRef
+{
+public:
+	BFMETextureRef(void) : m_texture(NULL) {}
+
+	~BFMETextureRef(void)
+	{
+		if (m_texture)
+			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+		m_texture = NULL;
+	}
+
+	BFMETextureRef &operator=(const BFMEWaterTrackTextureHandle &texture)
+	{
+		if (texture.m_texture)
+			++*(unsigned short *)((char *)texture.m_texture + 4);
+		if (m_texture)
+			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+		m_texture = texture.m_texture;
+		return *this;
+	}
+
+	TextureClass *get(void) const { return m_texture; }
+
+	TextureClass *m_texture;
+};
 
 
 ParticleEmitterClass *
 // ?ParticleEmitterClass::Create_From_Definition present-unmatched
 ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &definition)
 {
-	// Assume failure
-	ParticleEmitterClass *pemitter = NULL;
-
 	// Attempt to load the texture for this emitter
+	BFMETextureRef ptexture;
 	const char *ptexture_filename = definition.Get_Texture_Filename ();
-	BFMEWaterTrackTexture *ptexture = NULL;
 	if (ptexture_filename && ptexture_filename[0]) {
-		BFMEAssignWaterTrackTexture(
-			ptexture,
-			BFMEGetWaterTrackTexture((char *)ptexture_filename, 0, 0));
+		ptexture = BFMEGetWaterTrackTexture((char *)ptexture_filename, 0, 0);
 	}
+
+	// Assume failure
+	ParticleEmitterClass *pemitter;
 	
 	ShaderClass shader;
 	definition.Get_Shader (shader);
@@ -302,12 +327,12 @@ ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &def
 																blur_time_keys,
 																definition.Get_Acceleration (),
 																definition.Get_Lifetime (),
-		definition.Get_Future_Start_Time(),
-		(TextureClass *)ptexture,
-		shader, 
-		definition.Get_Max_Emissions (),
-		0,
-		false,
+																definition.Get_Future_Start_Time(),
+															ptexture.get(),
+																shader, 
+																definition.Get_Max_Emissions (),
+																0,
+																false,
 																definition.Get_Render_Mode (),
 																definition.Get_Frame_Mode (),
 																definition.Get_Line_Properties ()) );
@@ -329,11 +354,6 @@ ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &def
 	pemitter->Set_Name (definition.Get_Name ());
 
 	// release our reference to particle texture.
-	if (ptexture) {
-		REF_PTR_RELEASE(ptexture);
-		ptexture = 0;
-	}
-
 	// Return a pointer to the new emitter
 	return pemitter;
 }

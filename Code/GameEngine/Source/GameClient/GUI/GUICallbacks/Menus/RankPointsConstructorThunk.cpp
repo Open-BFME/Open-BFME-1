@@ -1,5 +1,5 @@
-// readable body of ??0RankPoints@@: Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo.cpp
-// Exact retail bytes for the RankPoints constructor row at 0x004D9DF0.
+// Unidentified retail body; the former RankPoints constructor attribution was false.
+// Preserve the existing 1394-byte dump at 0x004D9DF0; actual constructor is 0x004DAFA0.
 extern "C" __declspec(naked) void bfme_RankPoints_ctor_4D9DF0()
 {
 	__asm __emit 0x64
