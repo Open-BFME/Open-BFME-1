@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2936a50c79c3ce4222aa1253fa76d69e303807ee3f3d7aec073f1f94f961cdb1",
+  "symbol": "?Rva009B50F0DecodeToken@@YAHPAEHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.75,
+  "source": "// ?Rva009B50F0DecodeToken@@YAHPAEHH@Z\n// partial score=0.75 date=2026-09-10\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n\nint Rva009B4600DecodeBool(void *state, int probability);\n\nint Rva009B50F0DecodeToken(unsigned char *ctx, int prev, int plane)\n{\n\tint flag = 1;\n\tvoid *state = ctx + 0x150;\n\n\tif (Rva009B4600DecodeBool(state, ctx[0x77C + 10 * plane + prev]))\n\t\treturn prev;\n\n\tunsigned char *node = ctx + 0x7A4 + 9 * (10 * plane + prev);\n\n\tif (Rva009B4600DecodeBool(state, node[0])) {\n\t\tif (Rva009B4600DecodeBool(state, node[2])) {\n\t\t\tif (Rva009B4600DecodeBool(state, node[6]))\n\t\t\t\treturn Rva009B4600DecodeBool(state, node[8]) + 8;\n\t\t\treturn Rva009B4600DecodeBool(state, node[7]) + 5;\n\t\t}\n\t\tif (Rva009B4600DecodeBool(state, node[5]))\n\t\t\treturn 7;\n\t} else {\n\t\tif (Rva009B4600DecodeBool(state, node[1]))\n\t\t\treturn Rva009B4600DecodeBool(state, node[4]) + 3;\n\t\treturn Rva009B4600DecodeBool(state, node[3]) * 2;\n\t}\n\n\treturn flag;\n}\n"
+}
