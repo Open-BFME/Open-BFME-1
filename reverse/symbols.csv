@@ -86697,3 +86697,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameWindow@@@1@@Z,0x00033393,ILT thunk; STLport list<GameWindow*> ctor used by OnlineLogin tab-list build 0x00551DD0
 ?push_front@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x00038514,ILT thunk; STLport list<GameWindow*>::push_front (OnlineLogin tab list 0x00551DD0)
 ?push_back@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x000452A0,ILT thunk; STLport list<GameWindow*>::push_back (OnlineLogin tab list 0x00551DD0)
+_Rva008118C0,0x008118C0,Address-derived cdecl alias; Y5 configuration passes ignored table argument to existing empty helper; parent decoded call80E7F3 and ret8118C4

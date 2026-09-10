@@ -271,6 +271,126 @@ struct Rva0080E500Slot
 	int field8;
 };
 
+struct Rva0080E6C0Ops
+{
+	void *op0;
+	void (__cdecl *destroy)(void *object);
+	void *op2;
+	void *op3;
+	void (__cdecl *op4)(void *object, const char *value);
+	void *op5;
+	void (__cdecl *op6)(void *object, const char *value);
+};
+
+struct Rva0080E6C0Slot
+{
+	struct Rva0080E6C0Ops *transport;
+	int field4;
+	int field8;
+};
+
+void *Rva00816BF0(int maxPacket, int recvCount, int sendCount);
+void *Rva00815300(int maxPacket, int recvCount, int sendCount);
+void *Rva008140D0(int maxPacket, int recvCount, int sendCount);
+void *Rva00812DD0(int maxPacket, int recvCount, int sendCount);
+int Rva007FE780(const char *format, ...);
+void *Rva00812320(int entries);
+void Rva008118C0(void *table);
+int Rva008119A0(void *table, const char *name, const char *alias,
+	const char *detail, const char *templates, int extra);
+extern char Rva012C4890[];
+extern char Rva012C48B4[];
+extern char Rva012C48D0[];
+extern char Rva012C48E8[];
+extern char Rva0130ACF9[];
+
+int Rva0080E6C0(unsigned char *object, int flags, const char *value)
+{
+	int i;
+	int timeout;
+
+	if ((flags & 3) == 0 || (flags & 0xF00) == 0)
+	{
+		Rva007FE780(Rva012C4890);
+		return -1;
+	}
+	strcpy((char *)object + 0x24, value);
+	*(int *)(object + 0x6C) = (flags & 2) != 0;
+	*(int *)(object + 0x7C) = flags & ~3;
+	Rva007FE780(Rva012C48B4, flags, value);
+
+	for (i = 0; i < 4; i++)
+	{
+		if (((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport != 0)
+			((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport->destroy(
+				((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport);
+		((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport = 0;
+		((struct Rva0080E6C0Slot *)(object + 0x90))[i].field4 = 0;
+	}
+
+	if ((flags & 3) == 3)
+	{
+		if (*(void **)(object + 0x68) == 0)
+		{
+			*(void **)(object + 0x68) = Rva00812320(8);
+			Rva008118C0(*(void **)(object + 0x68));
+		}
+		Rva008119A0(*(void **)(object + 0x68), Rva012C48E8,
+			value, Rva0130ACF9, Rva012C48D0, 0);
+		return 0;
+	}
+
+	if ((flags & 0x100) != 0)
+	{
+		((struct Rva0080E6C0Slot *)(object + 0x90))->transport =
+			Rva00816BF0(*(int *)(object + 0x80), *(int *)(object + 0x88),
+				*(int *)(object + 0x84));
+		((struct Rva0080E6C0Slot *)(object + 0x90))->field8 = 0;
+	}
+	if ((flags & 0x400) != 0)
+	{
+		((struct Rva0080E6C0Slot *)(object + 0x9C))->transport =
+			Rva00815300(*(int *)(object + 0x80), *(int *)(object + 0x88),
+				*(int *)(object + 0x84));
+		((struct Rva0080E6C0Slot *)(object + 0x9C))->field8 = 0;
+	}
+	if ((flags & 0x200) != 0)
+	{
+		((struct Rva0080E6C0Slot *)(object + 0xA8))->transport =
+			Rva008140D0(*(int *)(object + 0x80), *(int *)(object + 0x88),
+				*(int *)(object + 0x84));
+		if (*(void **)(object + 0x90) == 0
+			&& *(void **)(object + 0x9C) == 0)
+			timeout = 0;
+		else
+			timeout = 0x1388;
+		*(int *)(object + 0xB0) = timeout;
+	}
+	if ((flags & 0x800) != 0)
+	{
+		((struct Rva0080E6C0Slot *)(object + 0xB4))->transport =
+			Rva00812DD0(*(int *)(object + 0x80), *(int *)(object + 0x88),
+				*(int *)(object + 0x84));
+		((struct Rva0080E6C0Slot *)(object + 0xB4))->field8 = 0;
+	}
+
+	for (i = 0; i < 4; i++)
+	{
+		if (((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport != 0)
+		{
+			if ((flags & 2) != 0)
+				((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport->op6(
+					((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport,
+					value);
+			else if ((flags & 1) != 0)
+				((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport->op4(
+					((struct Rva0080E6C0Slot *)(object + 0x90))[i].transport,
+					value);
+		}
+	}
+	return 0;
+}
+
 void Rva0080E500(unsigned char *object)
 {
 	int i;
