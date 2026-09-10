@@ -84,30 +84,6 @@ static Bool justEntered = FALSE;
 // ??0LANPreferences@@ is implemented by the exact retail thunk in
 // LANPreferencesCtorThunk.cpp.
 
-// ?getUserName@LANPreferences@@ present-unmatched
-UnicodeString LANPreferences::getUserName(void)
-{
-	UnicodeString ret;
-	LANPreferences::const_iterator it = find("UserName");
-	if (it == end())
-	{
-		IPEnumeration IPs;
-		ret.translate(IPs.getMachineName());
-		return ret;
-	}
-
-	ret = QuotedPrintableToUnicodeString(it->second);
-	ret.trim();
-	if (ret.isEmpty())
-	{
-		IPEnumeration IPs;
-		ret.translate(IPs.getMachineName());
-		return ret;
-	}
-	
-	return ret;
-}
-
 // ?getPreferredColor@LANPreferences@@ present-unmatched
 Int LANPreferences::getPreferredColor(void)
 {
