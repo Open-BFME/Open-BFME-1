@@ -75759,6 +75759,7 @@ name,address,notes
 ?bfmeGetPlayerZB@BfmeOwnerZB@@QAEPAVBfmePlayerZB@@XZ,0x00020824,get player
 ?bfmeGetPoolVLR@@YAPAVBfmePoolVLR@@XZ,0x007EFFC0,pin
 ?bfmeGetPoolVMP@@YAPAVBfmePoolVMP@@XZ,0x007EFFC0,pin
+?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z,0x000402D2,route=0x001BFF70; retail 0x00174A20 reaches the matched damage-source query through this ILT thunk
 ?bfmeGetRelationInterface@Object@@QBEPAVBfmeRelationInterface@@XZ,0x0000D3B9,Object relationship body calls this protected ILT for its BFME relation interface
 ?bfmeGetSA@BfmeThingSA@@QAEHPBDH@Z,0x007E8900,matched 0x008037A0 caller reads TID and PID through this method; complete 45B body returns the fallback or calls the matched signed-decimal parser 0x007EE720; replaces stale pointer-shaped declaration; campaign=luna36h-20260907;lane=netpacket_next;model=gpt-5.6-sol-ultra
 ?bfmeGetSB@BfmeThingSB@@QAEPAXPAX0@Z,0x007E8900,pin
@@ -77813,6 +77814,7 @@ name,address,notes
 ?cancelDock@DockUpdate@@QAEXPAVObject@@@Z,0x002CC960,retail DockUpdate body; vtable-backed call from MonsterDockUpdate::onExitReached
 ?canonicalFlagName@BFMEScriptEngineFlagLookup@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,TU-scoped ABI; sole findFlag caller proves AsciiString hidden return and this plus 0x17088 canonical-name lookup
 ?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
+?captureScreen@W3DDisplay@@IAEXPADI@Z,0x006EA890,callee pin for the W3DDisplay screenshot wrapper; captures the front buffer into the caller-owned image using the retail helper body
 ?cell@BfmeGridWM@@QAEXHH@Z,0x00023B14,Open-BFME5 grid cell thiscall used by 0x0074C890 nested walk
 ?changeBattlePlan@Player@@QAEXW4BattlePlanStatus@@HPAVBattlePlanBonuses@@@Z,0x000D8080,Open-BFME5 retail identity; exact clean C++ body
 ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,Bridge::updateDamageState calls the existing ILT thunk for both closed and open transitions
@@ -78338,6 +78340,7 @@ name,address,notes
 ?createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z,0x0002D3D0,"FullF7E70155B reviewed: nullproto returnnull, singleton reuse fromproto274, otherwise alloc110 ctor withproto andincrementedfactoryID1C; sets31/32"
 ?createVictoryConditions@@YAPAVVictoryConditionsInterface@@XZ,0x0035F810,ZH createVictoryConditions: new(0xC4) then ??0VictoryConditions 0x0035F430 via ILT 0x0004ADC2 at 0x0035F844; called by GameEngine::init 0x0007A0A6 whose result feeds initSubsystem<VictoryConditionsInterface> with &TheVictoryConditions 0x012F079C pushed at 0x0007A0BC
 ?create_node@AnimateWindowListCreateNodeShim@_STL@@QAEPAU?$_List_node@PAVAnimateWindow@@@2@ABQAVAnimateWindow@@@Z,0x0045DAE0,incremental-link thunk target through a TU-local forwarding shim
+?crushPolicy@Object@@QBE_NPAV1@W4CrushSquishTestType@@@Z,0x000420AA,route=0x001CC790; retail 0x00176250 pursue updateInternal reaches the matched crush policy through this ILT thunk
 ?currentCommandPoints@LivingWorldPlayerArmy@@QBEHXZ,0x00033AC8,LivingWorldPlayerArmy loadPostProcess retail call at 0x00365833 uses the ILT thunk to the 0x003619C0 command-point calculation body
 ?customMatchGameListTooltip@@YAXPAVGameWindow@@PAVWinInstanceData@@I@Z,0x0053A280,GameList tooltip callback pushed by Apt OnlineCustomMatch onInitGadget 0x0053A710 via winSetTooltipFunc
 ?d_003f9140@@YAXXZ,0x003F9140,address-derived tail callee used by Rva003D5780
@@ -78527,7 +78530,6 @@ name,address,notes
 ?drawStaticTextText@@YAXPAVGameWindow@@HH@Z,0x00796BA0,file-static reached by the byte-proven call at 0x00796FAF
 ?drawStaticTextText@@YAXPAVGameWindow@@PAVWinInstanceData@@HH@Z,0x00796BA0,the 346-byte body immediately ahead of W3DGadgetStaticTextDraw in the same compiland
 ?drawThirdDebugDisplay@W3DDisplay@@QAEXXZ,0x006E8800,address-derived W3DDisplay callback fast-path helper reached by drawCurrentDebugDisplay
-?captureScreen@W3DDisplay@@IAEXPADI@Z,0x006EA890,callee pin for the W3DDisplay screenshot wrapper; captures the front buffer into the caller-owned image using the retail helper body
 ?drawTrees@W3DTreeBuffer@@QAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x00737B70,direct body proven by the original W3DTreeBuffer declaration and BFME field layout; renderTrees calls it through ILT 0x0002C9E4; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-sol-ultra
 ?drop1@BfmeMapEZC@@QAEXPAX@Z,0x00009AA2,D9FC0 map1 drop ILT
 ?drop2@BfmeMapEZC@@QAEXPAX@Z,0x0001F979,D9FC0 map2 drop ILT
@@ -81225,6 +81227,7 @@ name,address,notes
 ?getUpgradeCostChange@Player@@QBEMXZ,0x000225BB,RVA-derived Player cost-change getter called by UpgradeTemplate calcCostToBuild at 0x0010A850
 ?getUser@BfmeGlobal_012f1024@@QAEPAVUser@@PAX@Z,0x00042523,call-site callee candidate for Glo012F1024Item::j_00019eca; the global at 0x012F1024 receives the vector entry address and returns the matched 0x003B39C0 object
 ?getUserMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000139E9
+?getUserName@LanLobbyUserNamePrefs@@QAE?AVUnicodeString@@XZ,0x000351C5,ILT thunk to body 0x00086540 which reads prefs key UserName at 0x0107C730 and translates it to UnicodeString; sibling of setUserName 0x000870F0 route=0x00086540
 ?getUserName@SkirmishPreferences@@QAE?AVUnicodeString@@XZ,0x0009FA60,ZH SkirmishPreferences::getUserName line for line with the key renamed "CurrentUserName": find ILT 0x0000AEAC on the map at +4; QuotedPrintableToUnicodeString ILT 0x0000F704; trim; empty -> TheEmptyString; ILT 0x00010898
 ?getValue@AttributeModifierDefinitionStore@@QBE_NHHPAM@Z,0x0001CE31,ILT to body 0x0036AFB0; additive and multiplicative AttributeModifierPoolUpdate accumulators query modifier index attribute and float output
 ?getVel@AnimateWindow@@QAE?AUCoord2D@@XZ,0x0000E548,ILT thunk -> 0x495610; retail call sites use the thunk
@@ -84147,6 +84150,7 @@ name,address,notes
 ?set@RetailLayoutString@@QAEXPBDH@Z,0x00887D20
 ?set@Rva0006AB10Curve@@QAEXMMHH@Z,0x0006AB10
 ?set@Rva0007F560@@QAEPAV1@_N@Z,0x0001492F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00092D70 calls; autopin
+?set@Rva0026F110@@QAEXXZ,0x00012486,route=0x0026F110; retail 0x00174A20 reaches the matched AI setter through this ILT thunk
 ?set@Rva002EA550Str@@QAEXABV1@@Z,0x00887C90,Open-BFME5 string set used by 20-byte copy_backward at 0x002EA550
 ?set@Rva002EECE0@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
 ?set@Rva002EED00@@QAEXH@Z,0x0003D069,Open-BFME5 ILT thiscall set of global wrapper
