@@ -1108,61 +1108,10 @@ void ScriptActions::changeObjectPanelFlagForSingleObject(Object *obj, const Asci
 //-------------------------------------------------------------------------------------------------
 /** doDebugMessage */
 //-------------------------------------------------------------------------------------------------
-__declspec(naked) void ScriptActions::doDebugMessage(const AsciiString&, Bool)
+// ?doDebugMessage@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
+void ScriptActions::doDebugMessage(const AsciiString& msg, Bool pause)
 {
-	__asm {
-		__emit 0x51;
-		__emit 0x8b;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x08;
-		__emit 0x6a;
-		__emit 0x00;
-		__emit 0x51;
-		__emit 0x89;
-		__emit 0x64;
-		__emit 0x24;
-		__emit 0x08;
-		__emit 0x8b;
-		__emit 0xcc;
-		__emit 0x50;
-		__emit 0xe8;
-		__emit 0x6c;
-		__emit 0x5a;
-		__emit 0x59;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0x0d;
-		__emit 0x6c;
-		__emit 0x07;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0x11;
-		__emit 0xff;
-		__emit 0x52;
-		__emit 0x44;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x74;
-		__emit 0x0c;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x51;
-		__emit 0x8b;
-		__emit 0xc8;
-		__emit 0xe8;
-		__emit 0x39;
-		__emit 0xb0;
-		__emit 0xd1;
-		__emit 0xff;
-		__emit 0x59;
-		__emit 0xc2;
-		__emit 0x08;
-		__emit 0x00;
-	}
+	TheScriptEngine->AppendDebugMessage(msg, pause);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -1221,10 +1170,10 @@ void ScriptActions::doEnableObjectSound(const AsciiString& objectName, Bool enab
 //-------------------------------------------------------------------------------------------------
 /** doDamageTeamMembers */
 //-------------------------------------------------------------------------------------------------
-// ?doDamageTeamMembers@ScriptActions@@IAEXABVAsciiString@@M@Z present-unmatched
 void ScriptActions::doDamageTeamMembers(const AsciiString& team, Real amount)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( team );
+	Team *theTeam =
+		((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed(team);
 	// The team is the team based on the name, and the calling team (if any) and the team that
 	// triggered the condition.  jba. :)
 	if (theTeam) {
