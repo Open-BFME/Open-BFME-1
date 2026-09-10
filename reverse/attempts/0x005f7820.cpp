@@ -1,5 +1,5 @@
 // ?d_005f7820@@YAXXZ
-// partial score=0.98 date=2026-09-09
+// partial score=0.985 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 // RenderObjectDrawModule constructs the two-vtable module base and copies the
@@ -20,6 +20,7 @@ class BfmeR0
 {
 public:
 	virtual void slot0();
+	virtual ~BfmeR0();
 	int m_pad[4];
 };
 
