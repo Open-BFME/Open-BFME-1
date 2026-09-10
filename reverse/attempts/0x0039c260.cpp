@@ -1,10 +1,10 @@
 // ?bfmeRunEUAe@BfmeSpecialPowerAllowanceStore@@QAEXPAVBfmePlayerSpecialPowerState@@PAX@Z
-// partial score=0.82 date=2026-09-09
+// partial score=0.9 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 
 // BfmeSpecialPowerAllowanceStore::bfmeRunEUAe, retail 0x0039C260, 287 bytes.
-// The callback finds the allowance entry named by its context and removes that
-// entry's index from the player's pending-index vector.
+// BfmeItemEUA calls this body at ILT 0x00045039 with its state and context.
+// The body finds the named allowance and removes its index from the state.
 
 typedef int Int;
 typedef unsigned short UnsignedShort;
@@ -12,8 +12,10 @@ typedef unsigned short UnsignedShort;
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 		unsigned int count);
 extern "C" __declspec(dllimport) void *__cdecl BfmeMemMove(
-	void *destination, const void *source, unsigned int bytes);
+		void *destination, const void *source, unsigned int bytes);
 extern const char Rva006A16B0Empty[];
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
 
 struct BfmeAsciiStringData
 {
@@ -55,24 +57,29 @@ public:
 			return result;
 		return thisLength - otherLength;
 	}
+	bool operator==(const BfmeAsciiStringData *otherData) const
+	{
+		return compare(otherData) == 0;
+	}
+
 private:
 	BfmeAsciiStringData *m_data;
 };
 
-class BfmeOverridable
+class Overridable
 {
 public:
-	BfmeOverridable *friend_getFinalOverride(void);
+	Overridable *friend_getFinalOverride(void);
 
 private:
 	char m_vftable[4];
 
 public:
-	BfmeOverridable *m_nextOverride;
+	Overridable *m_nextOverride;
 	char m_overrideFlag[4];
 };
 
-class BfmeAllowanceEntry : public BfmeOverridable
+class BfmeAllowanceEntry : public Overridable
 {
 public:
 	BfmeAsciiString m_name;
@@ -120,14 +127,13 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 	const BfmeAsciiStringData *nameData =
 		*(const BfmeAsciiStringData *const *)context;
 	BfmeAllowanceEntry **cursor = m_allowances.begin();
-	BfmeAllowanceEntry *entry;
 	while (index < count)
 	{
-		entry = *cursor;
+		BfmeAllowanceEntry *entry = *cursor;
 		if (entry->m_nextOverride)
 			entry = (BfmeAllowanceEntry *)entry->m_nextOverride->friend_getFinalOverride();
 
-		if (entry->m_name.compare(nameData) == 0)
+		if (entry->m_name == nameData)
 		{
 			Int *position = state->m_begin;
 			Int *end = state->m_end;
@@ -135,10 +141,13 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 			{
 				if (*position == (Int)index)
 				{
-					Int *nextPosition = position + 1;
-					if (state->m_end != nextPosition)
+					_ReadWriteBarrier();
+					if (state->m_end != position + 1)
+					{
+						Int *nextPosition = position + 1;
 						BfmeMemMove(position, nextPosition,
 							(unsigned int)((char *)state->m_end - (char *)nextPosition));
+					}
 					state->m_end--;
 					return;
 				}
@@ -147,8 +156,8 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 			return;
 		}
 
+		count = m_allowances.size();
 		++index;
 		++cursor;
-		count = m_allowances.size();
 	}
 }
