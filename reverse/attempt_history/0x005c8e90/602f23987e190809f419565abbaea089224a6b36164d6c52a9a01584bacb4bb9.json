@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "602f23987e190809f419565abbaea089224a6b36164d6c52a9a01584bacb4bb9",
+  "symbol": "?d_005c8e90@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_005c8e90@@YAXXZ\n// partial score=0.99 date=2026-09-10\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n#include <vector>\n\nclass FXParticleValueSupplier\n{\npublic:\n\tvirtual ~FXParticleValueSupplier();\n\tvirtual void unused();\n\tvirtual void *getValue(void *context) = 0;\n};\n\nclass FXParticleValueCollector\n{\npublic:\n\tvoid collect(std::vector<void *> &output, void *context);\n\nprivate:\n\tunsigned char m_pad[0xc0];\n\tstd::vector<FXParticleValueSupplier *> m_suppliers;\n};\n\nvoid FXParticleValueCollector::collect(\n\tstd::vector<void *> &output, void *context)\n{\n\tstd::vector<void *> values;\n\tvalues.reserve(m_suppliers.size());\n\tfor (std::vector<FXParticleValueSupplier *>::iterator it = m_suppliers.begin();\n\t\tit != m_suppliers.end(); ++it)\n\t{\n\t\tvalues.push_back((*it)->getValue(context));\n\t}\n\toutput.swap(values);\n}\n"
+}
