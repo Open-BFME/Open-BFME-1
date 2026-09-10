@@ -2,10 +2,24 @@
 
 class BfmeObj4310;
 
-class BfmeTracker4310
+class BfmeNodeVMU
 {
 public:
-	void bfmeDrop(BfmeObj4310 *obj);
+	void *m_bfmePayload;
+	BfmeNodeVMU *m_bfmeNext;
+};
+
+class BfmeListVMU
+{
+public:
+	void bfmeEraseVMU(BfmeNodeVMU **it);
+	BfmeNodeVMU *m_bfmeHead;
+};
+
+class BfmeTracker4310 : public BfmeListVMU
+{
+public:
+	__declspec(noinline) void bfmeDrop(BfmeObj4310 *obj);
 };
 
 class BfmeHolder4310
@@ -34,6 +48,22 @@ public:
 	int m_bfmeGap[22];					// +0x08
 	unsigned int m_bfmeState;				// +0x60
 };
+
+// ?bfmeDrop@BfmeTracker4310@@QAEXPAVBfmeObj4310@@@Z
+void BfmeTracker4310::bfmeDrop(BfmeObj4310 *obj)
+{
+	BfmeNodeVMU *node = m_bfmeHead;
+	while (node != 0)
+	{
+		if (*(BfmeObj4310 **)((char *)node->m_bfmePayload + 8) == obj)
+		{
+			BfmeNodeVMU *erase = node;
+			bfmeEraseVMU(&erase);
+			return;
+		}
+		node = node->m_bfmeNext;
+	}
+}
 
 // ?bfmeDrop@BfmeObj4310@@QAEXXZ
 void BfmeObj4310::bfmeDrop(void)
