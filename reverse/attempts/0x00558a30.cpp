@@ -1,75 +1,167 @@
-// ?bfmeRva00558A30@BfmeQuickMatchPopulateMaxPingBody@@QAE_NXZ
-// partial score=0.55 date=2026-09-06
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// stlport
-#define Matrix4x4 Matrix4  // BFME renamed it
+// ?rva00558A30Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ
+// partial score=0.7 date=2026-09-10
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Open-BFME: the OnlineQuickMatch APT vtable update slot at 0x0055B9A0.
 
-// FILE: WOLQuickMatchMenu_populateMaxPing.cpp ///////////////////////////////////////////
-// gap port rva=0x00558A30 size=332, zh_source=WOLQuickMatchMenu.cpp anchor="GUI:TimeInMilliseconds"
-// The retail body is an outlined fragment of the quickmatch ping-combo populate logic
-// (Zero Hour keeps this inline in WOLQuickMatchMenuInit(); BFME's compiler split it into
-// its own thiscall helper operating on a caller-owned blob: a QuickMatchPreferences at
-// +0x40 and the max-ping GameWindow* at +0x68 -- consistent with sizeof(QuickMatchPreferences)
-// landing the window pointer right after the embedded preferences object). No ZH mangled
-// name exists for this fragment (it is compiler-outlined), so it is landed here under an
-// address-derived name in the class's home directory per IDENTITY POLICY.
+typedef int Color;
 
-#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+template <typename T> class StringBase
+{
+	friend class UnicodeString;
 
-#include "GameClient/GameWindowManager.h"
-#include "GameClient/Gadget.h"
-#include "GameClient/GadgetComboBox.h"
-#include "GameClient/GameText.h"
-#include "GameNetwork/GameSpy/PeerDefs.h"
-#include "GameNetwork/GameSpy/GSConfig.h"
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const StringBase<T> &other );
+	~StringBase();
 
-static Int s_bfmeMaxPingEntries = 0;
+	void *m_data;
+};
 
-// BFME's QuickMatchPreferences (UserPreferences : std::map<AsciiString,AsciiString> plus
-// extra fields) compiles larger than the Zero Hour header describes; the retail body only
-// needs getMaxPing() through this object and puts the next field (m_maxPing) at +0x28 from
-// here, so pad to that true size instead of pulling in the real (smaller, ZH-shaped) class.
-class QuickMatchPreferences
+class UnicodeString : private StringBase<unsigned short>
 {
 public:
-	Int getMaxPing(void);
+	UnicodeString() : StringBase<unsigned short>() {}
+	UnicodeString( const UnicodeString &other )
+		: StringBase<unsigned short>( other ) {}
+	~UnicodeString() {}
+
+	void format( UnicodeString format, ... );
+};
+
+class GameTextInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual UnicodeString fetch( const char *label, bool *exists = 0 ) = 0;
+};
+
+class GameSpyConfigInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual int getPingTimeoutInMs() = 0;
+};
+
+class GameWindow {};
+
+class PopulateRemoteIPComboBoxEntry : public UnicodeString
+{
+public:
+	PopulateRemoteIPComboBoxEntry( const UnicodeString &source )
+		: UnicodeString( source ) {}
+};
+
+extern GameTextInterface *TheGameText;
+extern GameSpyConfigInterface *TheGameSpyConfig;
+extern int GameSpyColor[];
+extern int GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
+	GameWindow *comboBox, PopulateRemoteIPComboBoxEntry text, int color );
+
+extern void rva00558A30Reset( GameWindow *comboBox );
+extern void rva00558A30SetSelectedPos(
+	GameWindow *comboBox, int selected, bool dontHide );
+
+#pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z=?j_0002f338@@YAXXZ")
+
+class BfmeQuickMatchPreferencesView
+{
+public:
+	int getMaxPing();
+
 private:
-	unsigned char _bfme_pad28[0x28];
+	unsigned char m_unmodelled[ 0x28 ];
 };
 
-struct BfmeQuickMatchPopulateMaxPingBody
+#pragma comment(linker, "/alternatename:?getMaxPing@BfmeQuickMatchPreferencesView@@QAEHXZ=?j_00038a0f@@YAXXZ")
+
+struct BfmeQuickMatchObjectView
 {
-	unsigned char _bfme_pad40[0x40];
-	QuickMatchPreferences m_pref;
+	unsigned char m_beforePreferences[ 0x40 ];
+	BfmeQuickMatchPreferencesView m_preferences;
 	GameWindow *m_maxPing;
-
-	Bool bfmeRva00558A30(void);
 };
 
-Bool BfmeQuickMatchPopulateMaxPingBody::bfmeRva00558A30(void)
+static int s_bfmeMaxPingEntries = 0;
+
+class BfmeAptScreenOnlineQuickMatch
 {
-	if (!m_maxPing)
-		return FALSE;
+public:
+	void update();
+	bool rva005588E0Ready();
+	bool rva00558A30Ready();
+	bool rva00559E60Ready();
+	void _bfme_sendStartQuickMatchRequest();
 
-	Color c = GameSpyColor[GSCOLOR_DEFAULT];
-	UnicodeString s;
-	GadgetComboBoxReset(m_maxPing);
 
-	s_bfmeMaxPingEntries = (TheGameSpyConfig->getPingTimeoutInMs() - 1) / 100;
+private:
+	unsigned char m_unmodelled_000[ 0x54 ];
+	bool m_ready;
+	bool m_startRequested;
+};
+
+bool BfmeAptScreenOnlineQuickMatch::rva00558A30Ready()
+{
+	BfmeQuickMatchObjectView *view = (BfmeQuickMatchObjectView *)this;
+	if ( view->m_maxPing == 0 )
+		return false;
+
+	Color color = GameSpyColor[ 0 ];
+	UnicodeString text;
+	rva00558A30Reset( view->m_maxPing );
+
+	s_bfmeMaxPingEntries =
+		(TheGameSpyConfig->getPingTimeoutInMs() - 1) / 100;
 	s_bfmeMaxPingEntries++;
-	for (Int i = 1; i < s_bfmeMaxPingEntries; ++i)
+	if ( s_bfmeMaxPingEntries > 1 )
 	{
-		s.format(TheGameText->fetch("GUI:TimeInMilliseconds"), i * 100);
-		GadgetComboBoxAddEntry(m_maxPing, s, c);
+		int ping = 100;
+		register int remaining = s_bfmeMaxPingEntries - 1;
+		do
+		{
+			text.format(
+				TheGameText->fetch( "GUI:TimeInMilliseconds" ), ping );
+			GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
+				view->m_maxPing, text, color );
+			ping += 100;
+		} while ( --remaining != 0 );
 	}
-	GadgetComboBoxAddEntry(m_maxPing, TheGameText->fetch("GUI:ANY"), c);
 
-	Int i = m_pref.getMaxPing();
-	if (i < 0)
-		i = 0;
-	if (i >= s_bfmeMaxPingEntries)
-		i = s_bfmeMaxPingEntries - 1;
-	GadgetComboBoxSetSelectedPos(m_maxPing, i);
+	GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
+		view->m_maxPing, TheGameText->fetch( "GUI:ANY" ), color );
 
-	return TRUE;
+	int selected = view->m_preferences.getMaxPing();
+	if ( selected < 0 )
+		selected = 0;
+	if ( selected >= s_bfmeMaxPingEntries )
+		selected = s_bfmeMaxPingEntries - 1;
+	rva00558A30SetSelectedPos(
+		view->m_maxPing, selected, false );
+
+	return true;
+}
+
+void BfmeAptScreenOnlineQuickMatch::update()
+{
+	if ( !m_ready && rva005588E0Ready() && rva00558A30Ready()
+		&& rva00559E60Ready() )
+	{
+		m_ready = true;
+	}
+
+	if ( m_startRequested )
+	{
+		_bfme_sendStartQuickMatchRequest();
+		m_startRequested = false;
+	}
 }
