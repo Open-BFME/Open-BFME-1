@@ -1,6 +1,12 @@
 // ?d_0018fa20@@YAXXZ
-// partial score=0.88 date=2026-08-30
+// partial score=0.93 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /O2 /G6
+// NOT PolygonTrigger::pointInTrigger(ICoord3D&) -- that real, caller-proven
+// identity is a separate, still-unlanded address (0x0018F8A0, 307B). This is
+// a distinct PolygonTrigger method (this+0x10/+0x14/+0x1c/+0x30 match the
+// matched updateBounds sibling exactly) taking a Coord3D& (float) point;
+// its real name is not recovered. Method renamed to avoid an invented-identity
+// collision with the real pointInTrigger symbol.
 
 #include <algorithm>
 
@@ -37,7 +43,7 @@ struct IRegion2D
 class PolygonTrigger
 {
 public:
-	Bool pointInTrigger(Coord3D &point) const;
+	Bool containsPointF(Coord3D &point) const;
 
 protected:
 	void updateBounds() const;
@@ -52,7 +58,7 @@ private:
 	mutable Bool m_boundsNeedsUpdate;
 };
 
-Bool PolygonTrigger::pointInTrigger(Coord3D &point) const
+Bool PolygonTrigger::containsPointF(Coord3D &point) const
 {
 	if (m_boundsNeedsUpdate)
 		updateBounds();
@@ -71,10 +77,10 @@ Bool PolygonTrigger::pointInTrigger(Coord3D &point) const
 	for (i = 0; i < m_numPoints; ++i) {
 		ICoord3D pt1 = m_points[i];
 		ICoord3D pt2;
-		if (i == m_numPoints - 1)
-			pt2 = m_points[0];
+		if (i == 0)
+			pt2 = m_points[m_numPoints - 1];
 		else
-			pt2 = m_points[i + 1];
+			pt2 = m_points[i - 1];
 
 		if (pt1.y == pt2.y)
 			continue;
