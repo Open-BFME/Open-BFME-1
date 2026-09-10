@@ -1,10 +1,10 @@
 // ?bfmeStartYO@@YAXXZ
-// partial score=0.96 date=2026-09-08
-// pins needed (CRLF):
-//   _bfmeVftYO,0x00E75C0
-//   ?g_bfmeSinkYO@@3PAVBfmeSinkYO@@C,0x012F0778
-//   ?g_bfmeNodeYO@@3PAVBfmeNodeYO@@A,0x012F0754
+// partial score=1.0 date=2026-09-10
+// cl: /Oa
 extern "C" unsigned char bfmeVftYO[];
+
+class BfmeNodeYO;
+extern BfmeNodeYO *g_bfmeNodeYO;
 
 class BfmeNodeYO
 {
@@ -29,6 +29,7 @@ public:
 	virtual void bfmeAttachYO(void *p) = 0;
 	virtual void bfmeAdoptYO(BfmeNodeYO *n) = 0;
 	virtual void bfmeStartYO() = 0;
+
 };
 
 class ParticleSystemManager
@@ -38,8 +39,7 @@ public:
 	void *m_bfme84YO;
 };
 
-extern BfmeSinkYO *volatile g_bfmeSinkYO;
-extern BfmeNodeYO *g_bfmeNodeYO;
+extern BfmeSinkYO *g_bfmeSinkYO;
 extern ParticleSystemManager *TheParticleSystemManager;
 
 void bfmeStartYO()

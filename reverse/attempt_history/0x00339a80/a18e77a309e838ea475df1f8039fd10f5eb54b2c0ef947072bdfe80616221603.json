@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a18e77a309e838ea475df1f8039fd10f5eb54b2c0ef947072bdfe80616221603",
+  "symbol": "?bfmeStartYO@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?bfmeStartYO@@YAXXZ\n// partial score=1.0 date=2026-09-10\n// cl: /Oa\nextern \"C\" unsigned char bfmeVftYO[];\n\nclass BfmeNodeYO;\nextern BfmeNodeYO *g_bfmeNodeYO;\n\nclass BfmeNodeYO\n{\npublic:\n\tBfmeNodeYO()\n\t{\n\t\tm_bfmeVfYO = bfmeVftYO;\n\t\tm_bfme04YO = 0;\n\t\tm_bfme08YO = 0;\n\t}\n\n\tvoid *m_bfmeVfYO;\n\tint m_bfme04YO;\n\tchar m_bfme08YO;\n};\n\nclass BfmeSinkYO\n{\npublic:\n\tvirtual void bfmeV0YO() = 0;\n\tvirtual void bfmeV1YO() = 0;\n\tvirtual void bfmeAttachYO(void *p) = 0;\n\tvirtual void bfmeAdoptYO(BfmeNodeYO *n) = 0;\n\tvirtual void bfmeStartYO() = 0;\n\n};\n\nclass ParticleSystemManager\n{\npublic:\n\tunsigned char m_bfmeHeadYO[0x84];\n\tvoid *m_bfme84YO;\n};\n\nextern BfmeSinkYO *g_bfmeSinkYO;\nextern ParticleSystemManager *TheParticleSystemManager;\n\nvoid bfmeStartYO()\n{\n\tif (g_bfmeSinkYO == 0)\n\t\treturn;\n\n\tif (g_bfmeNodeYO == 0)\n\t{\n\t\tg_bfmeNodeYO = new BfmeNodeYO;\n\t\tg_bfmeSinkYO->bfmeAdoptYO(g_bfmeNodeYO);\n\t}\n\n\tg_bfmeSinkYO->bfmeAttachYO(TheParticleSystemManager->m_bfme84YO);\n\tg_bfmeSinkYO->bfmeStartYO();\n}\n"
+}
