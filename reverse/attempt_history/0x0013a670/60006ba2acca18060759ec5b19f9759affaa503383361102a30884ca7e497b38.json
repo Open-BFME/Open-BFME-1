@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "60006ba2acca18060759ec5b19f9759affaa503383361102a30884ca7e497b38",
+  "symbol": "?bfmeFindXZ@BfmeTblXZ@@QAEHPAPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeFindXZ@BfmeTblXZ@@QAEHPAPAX@Z\r\n// partial score=0.95 date=2026-09-09\r\nextern \"C\" int (__cdecl *_bfmeCmpXZ)(void *a, void *b);\r\n\r\nclass BfmeTblXZ\r\n{\r\npublic:\r\n\tint bfmeFindXZ(void **key);\r\n\r\n\tunsigned char m_bfmeHeadXZ[4];\r\n\tvoid **m_bfme04XZ;\r\n\tint m_bfme08XZ;\r\n\tunsigned char m_bfme0CXZ;\r\n};\r\n\r\nint BfmeTblXZ::bfmeFindXZ(void **key)\r\n{\r\n\tif (m_bfme0CXZ == 0)\r\n\t\treturn 0;\r\n\r\n\tint i = 0;\r\n\r\n\tif (m_bfme08XZ > 0)\r\n\t{\r\n\t\tint (__cdecl *cmp)(void *, void *) = _bfmeCmpXZ;\r\n\t\tvoid **k = key;\r\n\r\n\t\tdo\r\n\t\t{\r\n\t\t\tif (cmp(m_bfme04XZ[i], *k) == 0)\r\n\t\t\t\treturn i;\r\n\r\n\t\t\ti++;\r\n\t\t}\r\n\t\twhile (i < m_bfme08XZ);\r\n\t}\r\n\r\n\treturn -1;\r\n}\r\n"
+}

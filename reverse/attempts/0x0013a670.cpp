@@ -1,39 +1,59 @@
-// ?bfmeFindXZ@BfmeTblXZ@@QAEHPAPAX@Z
-// partial score=0.95 date=2026-09-09
-extern "C" int (__cdecl *_bfmeCmpXZ)(void *a, void *b);
+// ?ID@?$VectorClass@VStringClass@@@@UAEHABVStringClass@@@Z
+// partial score=0.99 date=2026-09-10
+// cl: /DNDEBUG /MD /EHsc
 
-class BfmeTblXZ
+// Slot 4 of VectorClass<StringClass>'s vtable: the by-value/content search
+// overload, VectorClass<T>::ID(const T&) (find_index). Loops VectorMax
+// entries; the comparison resolves through StringClass's TCHAR* conversion
+// and Compare() to a direct _mbscmp call on the two 4-byte buffer pointers,
+// because StringClass has no vtable and a single member (m_Buffer).
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
+
+typedef char TCHAR;
+
+extern "C" __declspec( dllimport ) int __cdecl _mbscmp(
+	const unsigned char *left, const unsigned char *right );
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
+class StringClass
 {
 public:
-	int bfmeFindXZ(void **key);
+	inline operator const unsigned char *(void) const { return (const unsigned char *)m_Buffer; }
 
-	unsigned char m_bfmeHeadXZ[4];
-	void **m_bfme04XZ;
-	int m_bfme08XZ;
-	unsigned char m_bfme0CXZ;
+private:
+	TCHAR *m_Buffer;
 };
 
-int BfmeTblXZ::bfmeFindXZ(void **key)
+template <class T>
+class VectorClass
 {
-	if (m_bfme0CXZ == 0)
+public:
+	virtual ~VectorClass(void);
+	virtual bool operator==(const VectorClass<T> &that) const;
+	virtual bool Resize(int newsize, const T *array = 0);
+	virtual void Clear(void);
+	virtual int ID(const T &object);
+	virtual int ID(const T *ptr);
+
+	T *Vector;
+	int VectorMax;
+	bool IsValid;
+	bool IsAllocated;
+};
+
+// ?ID@?$VectorClass@VStringClass@@@@UAEHABVStringClass@@@Z
+template <class T>
+int VectorClass<T>::ID(const T &object)
+{
+	if (!IsValid)
 		return 0;
 
-	int i = 0;
-
-	if (m_bfme08XZ > 0)
-	{
-		int (__cdecl *cmp)(void *, void *) = _bfmeCmpXZ;
-		void **k = key;
-
-		do
-		{
-			if (cmp(m_bfme04XZ[i], *k) == 0)
-				return i;
-
-			i++;
-		}
-		while (i < m_bfme08XZ);
+	for (int index = 0; index < VectorMax; index++) {
+		if (_mbscmp(Vector[index], object) == 0)
+			return index;
 	}
 
 	return -1;
 }
+
+template int VectorClass<StringClass>::ID(const StringClass &);
