@@ -5,6 +5,8 @@
 
 typedef bool Bool;
 
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+
 class ModuleData
 {
 public:
@@ -64,8 +66,48 @@ public:
 class Rva006083A0SoundUpgrade
 {
 public:
+	void buildMasks(unsigned int *first, unsigned int *second);
 	Bool matchesObject(void *object);
 };
+
+class BfmeK1114
+{
+public:
+	char bfmeChk1114(int index);
+};
+
+struct Rva006083A0MaskWords
+{
+	unsigned int values[6];
+	Rva006083A0MaskWords()
+	{
+		memset(this, 0, sizeof(*this));
+	}
+};
+
+// The two masks are populated by the existing 0x00608090 helper through its ILT.
+#pragma comment(linker, "/alternatename:?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z=?j_0000f187@@YAXXZ")
+
+// ?matchesObject@Rva006083A0SoundUpgrade@@QAE_NPAX@Z
+Bool Rva006083A0SoundUpgrade::matchesObject(void *object)
+{
+	Rva006083A0MaskWords first;
+	Rva006083A0MaskWords second;
+	buildMasks(first.values, second.values);
+
+	BfmeK1114 *upgrade = (BfmeK1114 *)object;
+	int i;
+	for (i = 0; i < 0xc0; ++i)
+	{
+		if ((first.values[(unsigned int)i >> 5] & (1u << (i & 0x1f))) &&
+			!upgrade->bfmeChk1114(i))
+			return false;
+		if ((second.values[(unsigned int)i >> 5] & (1u << (i & 0x1f))) &&
+			upgrade->bfmeChk1114(i))
+			return false;
+	}
+	return true;
+}
 
 // 0x006083A0 tests the record's upgrade mask against the attached object.
 #pragma comment(linker, "/alternatename:?matchesObject@Rva006083A0SoundUpgrade@@QAE_NPAX@Z=?j_000420b9@@YAXXZ")

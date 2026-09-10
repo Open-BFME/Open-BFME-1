@@ -61729,6 +61729,7 @@ name,address,notes
 ?b_00608090@@YAXXZ,0x00608090,gen-thunk body
 ?b_00608370@@YAXXZ,0x00608370,gen-thunk body
 ?b_006083a0@@YAXXZ,0x006083A0,gen-thunk body
+?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z,0x0000F187,ILT for the existing 0x00608090 upgrade-mask builder
 ?b_00608480@@YAXXZ,0x00608480,gen-thunk body
 ?b_00608530@@YAXXZ,0x00608530,gen-thunk body
 ?b_006085a0@@YAXXZ,0x006085A0,gen-thunk body
