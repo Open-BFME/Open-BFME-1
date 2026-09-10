@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dd728f25d7e0ec5fd132f129ffbb3f3037a49c3644afc513005965e0af420fac",
+  "symbol": "?d_00361f00@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_00361f00@@YAXXZ\n// partial score=0.97 date=2026-09-10\n// ?d_00361f00@@YAXXZ\n// Partial clean reconstruction for the 0x00361F00 triplet member.\nclass BfmeStrFM\n{\npublic:\n\tBfmeStrFM(const BfmeStrFM &other);\n\t~BfmeStrFM();\n\n\tunsigned char m_bfmeHeadFM[4];\n};\n\nextern BfmeStrFM Rva01336E50Str;\n\nclass BfmeElemFM\n{\npublic:\n\tBfmeStrFM bfmeNameFM() const;\n\n\tunsigned char m_bfmeHeadFM[0x58];\n};\n\nclass BfmeHostFM\n{\npublic:\n\tBfmeStrFM bfmeAtFM(int i) const;\n\n\tunsigned char m_bfmeHeadFM[0x18];\n\tBfmeElemFM *m_bfmeBeginFM;\n\tBfmeElemFM *m_bfmeEndFM;\n};\n\nBfmeStrFM BfmeHostFM::bfmeAtFM(int i) const\n{\n\tif (i >= 0 && (unsigned int)i < (unsigned int)(m_bfmeEndFM - m_bfmeBeginFM))\n\t\treturn (*(BfmeElemFM *volatile *)&m_bfmeBeginFM)[i].bfmeNameFM();\n\n\treturn Rva01336E50Str;\n}\n"
+}
