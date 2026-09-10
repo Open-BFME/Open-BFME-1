@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cd524374be9aa4fe0a9fd9dd22e5860205859bc1809add9d273a99ba0dd2082e",
+  "symbol": "?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?markAsStagingRoomHost@GameSpyInfo@@UAEXXZ\n// partial score=0.86 date=2026-09-09\nvoid GameSpyInfo::markAsStagingRoomHost(void)\n{\n\tclass BfmeStagingRoomResetView\n\t{\n\tpublic:\n\t\tvirtual void unused0() = 0;\n\t\tvirtual void unused1() = 0;\n\t\tvirtual void reset() = 0;\n\t};\n\n\tm_localStagingRoomID = 0;\n\tm_joinedStagingRoom = FALSE;\n\tm_isHosting = TRUE;\n\treinterpret_cast<BfmeStagingRoomResetView *>(&m_localStagingRoom)->reset();\n\tm_localStagingRoom.enterGame();\n\tm_localStagingRoom.setSeed(GetTickCount());\n\n\tGameSlot newSlot;\n\tUnicodeString uName;\n\tuName.translate(m_localName);\n\tGameSlotConnectInfo connectInfo = {\n\t\tFirewallHelperClass::FIREWALL_TYPE_UNKNOWN, 0\n\t};\n\tnewSlot.setState(SLOT_PLAYER, uName, &connectInfo);\n\n\tm_localStagingRoom.setLocalIP(m_externalIP);\n\t*reinterpret_cast<Int *>(reinterpret_cast<char *>(&m_localStagingRoom) + 0x38) = NETWORK_BASE_PORT_NUMBER;\n\tnewSlot.setIP(m_externalIP);\n\tnewSlot.setPort(NETWORK_BASE_PORT_NUMBER);\n\tm_localStagingRoom.setSlot(0, newSlot);\n\tm_localStagingRoom.setLocalName(m_localName);\n\n\tTheMapCache->updateCache();\n\tm_localStagingRoom.setMap(getDefaultMap(TRUE));\n\tm_localStagingRoom.adjustSlotsForMap();\n}\n"
+}
