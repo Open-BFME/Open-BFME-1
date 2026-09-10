@@ -75185,6 +75185,7 @@ name,address,notes
 ?bfmeFind@BfmeIndexedMap@@QAE?AVBfmeIndexedMapIterator@@ABH@Z,0x00034243,address-derived keyed map find thunk
 ?bfmeFind@GameLogicFrameSlice@@QAEPAVObject@@H@Z,0x0001F253,Open-BFME5 gated owner lookup called by 0x002875C0
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
+?bfmeFind@BfmeLookupTree@@QAEXAAUBfmeLookupIterator@@ABQBX@Z,0x00010442,AI construction tree lookup thunk reached by Gen_00141940 at 0x00141940
 ?bfmeFind@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,MapCache::findMap tree lookup ILT
 ?bfmeFindA1001@BfmeLook1001@@QAEPAVBfmeX1001@@H@Z,0x0001F253,pin
 ?bfmeFindAB@BfmeOwnAB@@QAEPAVBfmeNodeAB@@PAXVBfmeRoomAB@@@Z,0x0002CB97,pin
