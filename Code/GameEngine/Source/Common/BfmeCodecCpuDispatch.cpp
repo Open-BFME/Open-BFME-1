@@ -51,7 +51,8 @@ extern void __cdecl d_009bebb0(void);
 extern void __cdecl d_009bfa40(void);
 extern void __cdecl d_009b9700(void);
 extern void __cdecl d_009c1ed0(void);
-extern void __cdecl d_009c2170(void);
+struct Rva009C2170Ctx;
+extern void __cdecl bfmeDeblockEdgeByIndexMmx(Rva009C2170Ctx *, void *, int);
 extern void __cdecl bfmeFilterBlockByIndexMmx(int, void *, int);
 extern void __cdecl bfmeFilterBlockPairByIndexMmx(int, void *, int);
 extern void __cdecl bfmeFilterRowByIndex8Mmx(int, void *, int);
@@ -112,7 +113,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[13] = (BfmeDispatchFn)&d_009bfa40;
 		g_bfmeCodecDispatch.slot[21] = (BfmeDispatchFn)&d_009b9700;
 		g_bfmeCodecDispatch.slot[9] = (BfmeDispatchFn)&d_009c1ed0;
-		g_bfmeCodecDispatch.slot[25] = (BfmeDispatchFn)&d_009c2170;
+		g_bfmeCodecDispatch.slot[25] = (BfmeDispatchFn)&bfmeDeblockEdgeByIndexMmx;
 		g_bfmeCodecDispatch.slot[8] = (BfmeDispatchFn)&bfmeExpandMmx;
 		g_bfmeCodecDispatch.slot[20] = (BfmeDispatchFn)&bfmeExpand3to5Mmx;
 		g_bfmeCodecDispatchOutlier = (BfmeDispatchFn)&bfmeExpand4to5Mmx;
@@ -144,7 +145,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[13] = (BfmeDispatchFn)&d_009b8130;
 		g_bfmeCodecDispatch.slot[21] = (BfmeDispatchFn)&d_009b9700;
 		g_bfmeCodecDispatch.slot[9] = (BfmeDispatchFn)&d_009c1ed0;
-		g_bfmeCodecDispatch.slot[25] = (BfmeDispatchFn)&d_009c2170;
+		g_bfmeCodecDispatch.slot[25] = (BfmeDispatchFn)&bfmeDeblockEdgeByIndexMmx;
 		g_bfmeCodecDispatch.slot[8] = (BfmeDispatchFn)&bfmeExpandMmx;
 		g_bfmeCodecDispatch.slot[20] = (BfmeDispatchFn)&bfmeExpand3to5Mmx;
 		g_bfmeCodecDispatchOutlier = (BfmeDispatchFn)&bfmeExpand4to5Mmx;

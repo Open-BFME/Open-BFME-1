@@ -865,38 +865,6 @@ public ?d_009c1ed0@@YAXXZ
     db 0E5h, 5Dh, 0C3h
 ?d_009c1ed0@@YAXXZ ENDP
 
-; ghidra: FUN_00dc2170  retail @ 0x009C2170 size 424
-public ?d_009c2170@@YAXXZ
-?d_009c2170@@YAXXZ PROC
-    db 55h, 8Bh, 0ECh, 8Bh, 45h, 08h, 8Bh, 48h, 0Ch, 8Bh, 15h, 9Ch, 6Ah, 35h, 01h, 8Bh
-    db 04h, 8Ah, 56h, 89h, 45h, 08h, 8Bh, 45h, 08h, 33h, 0C9h, 8Bh, 55h, 10h, 8Bh, 75h
-    db 0Ch, 2Bh, 0CAh, 0Fh, 6Fh, 16h, 0Fh, 6Fh, 3Dh, 0A0h, 38h, 14h, 01h, 0Fh, 6Fh, 04h
-    db 4Eh, 0Fh, 7Fh, 0D6h, 0Fh, 6Fh, 2Ch, 0Eh, 0Fh, 7Fh, 0C4h, 0Fh, 6Fh, 0Dh, 60h, 38h
-    db 14h, 01h, 0Fh, 0F8h, 0C5h, 0Fh, 64h, 0C8h, 0Fh, 64h, 0C7h, 0Fh, 6Fh, 1Dh, 60h, 38h
-    db 14h, 01h, 0Fh, 0EBh, 0C1h, 0Fh, 7Fh, 0F9h, 0Fh, 6Fh, 3Ch, 16h, 0Fh, 0F8h, 0D7h, 0Fh
-    db 64h, 0DAh, 0Fh, 64h, 0D1h, 0Fh, 0EBh, 0D3h, 0Fh, 6Fh, 1Dh, 0B0h, 38h, 14h, 01h, 0Fh
-    db 0EBh, 0C2h, 0Fh, 0EFh, 0C9h, 0Fh, 7Fh, 0EAh, 0Fh, 7Fh, 0F3h, 0Fh, 60h, 0D1h, 0Fh, 60h
-    db 0D9h, 0Fh, 0F9h, 0DAh, 0Fh, 68h, 0E9h, 0Fh, 7Fh, 0DAh, 0Fh, 68h, 0F1h, 0Fh, 0FDh, 0DBh
-    db 0Fh, 0F9h, 0F5h, 0Fh, 0FDh, 0D3h, 0Fh, 7Fh, 0F5h, 0Fh, 7Fh, 0E3h, 0Fh, 0FDh, 0F6h, 0Fh
-    db 60h, 0D9h, 0Fh, 0FDh, 0EEh, 0Fh, 68h, 0E1h, 0Fh, 7Fh, 0FEh, 0Fh, 60h, 0F9h, 0Fh, 68h
-    db 0F1h, 0Fh, 0F9h, 0DFh, 0Fh, 60h, 0C8h, 0Fh, 0EFh, 0FFh, 0Fh, 71h, 0E1h, 08h, 0Fh, 68h
-    db 0F8h, 0Fh, 0F9h, 0E6h, 0Fh, 71h, 0E7h, 08h, 0Fh, 0DBh, 0D9h, 0Fh, 0DBh, 0E7h, 0Fh, 0FDh
-    db 0D3h, 0Fh, 0FDh, 0E5h, 0Fh, 0FDh, 15h, 70h, 38h, 14h, 01h, 0Fh, 0FDh, 25h, 70h, 38h
-    db 14h, 01h, 0Fh, 6Eh, 0C8h, 0Fh, 71h, 0E2h, 03h, 0Fh, 71h, 0E4h, 03h, 0Fh, 7Fh, 0D3h
-    db 0Fh, 61h, 0C9h, 0Fh, 7Fh, 0E5h, 0Fh, 62h, 0C9h, 0Fh, 71h, 0E2h, 0Fh, 0Fh, 7Fh, 0CEh
-    db 0Fh, 71h, 0E4h, 0Fh, 0Fh, 0EFh, 0DAh, 0Fh, 0E9h, 0DAh, 0Fh, 0EFh, 0ECh, 0Fh, 0E9h, 0ECh
-    db 0Fh, 0EBh, 15h, 80h, 38h, 14h, 01h, 0Fh, 0EBh, 25h, 80h, 38h, 14h, 01h, 0Fh, 7Fh
-    db 0CEh, 0Fh, 0D9h, 0CBh, 0Fh, 0D9h, 0DEh, 0Fh, 0EBh, 0D9h, 0Fh, 7Fh, 0F1h, 0Fh, 0D9h, 0CBh
-    db 0Fh, 7Fh, 0F3h, 0Fh, 0D5h, 0D1h, 0Fh, 0D9h, 0DDh, 0Fh, 0D9h, 0EEh, 0Fh, 0EBh, 0EBh, 0Fh
-    db 7Fh, 0F3h, 0Fh, 0D9h, 0DDh, 0Fh, 0D5h, 0E3h, 0Fh, 6Fh, 2Ch, 0Eh, 0Fh, 7Fh, 0D1h, 0Fh
-    db 6Fh, 3Dh, 0B0h, 38h, 14h, 01h, 0Fh, 63h, 0D4h, 0Fh, 6Fh, 36h, 0Fh, 0F8h, 0EFh, 0Fh
-    db 0F8h, 0F7h, 0Fh, 0ECh, 0EAh, 0Fh, 0E8h, 0F2h, 0Fh, 0FCh, 0EFh, 0Fh, 0FCh, 0F7h, 0Fh, 7Fh
-    db 2Ch, 0Eh, 0Fh, 71h, 0E1h, 01h, 0Fh, 71h, 0E4h, 01h, 0Fh, 7Fh, 36h, 0Fh, 6Fh, 14h
-    db 4Eh, 0Fh, 63h, 0CCh, 0Fh, 6Fh, 1Ch, 16h, 0Fh, 0DFh, 0C1h, 0Fh, 0F8h, 0D7h, 0Fh, 0F8h
-    db 0DFh, 0Fh, 0ECh, 0D0h, 0Fh, 0FCh, 0D7h, 0Fh, 7Fh, 14h, 4Eh, 0Fh, 0E8h, 0D8h, 0Fh, 0FCh
-    db 0DFh, 0Fh, 7Fh, 1Ch, 16h, 5Eh, 5Dh, 0C3h
-?d_009c2170@@YAXXZ ENDP
-
 ; ghidra: FUN_00dc2ba0  retail @ 0x009C2BA0 size 317
 public ?d_009c2ba0@@YAXXZ
 ?d_009c2ba0@@YAXXZ PROC
