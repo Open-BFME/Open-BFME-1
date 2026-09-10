@@ -46,6 +46,9 @@
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count);
 
+extern "C" unsigned int __cdecl strlen(const char *text);
+#pragma intrinsic(strlen)
+
 #define DEFINE_PARTICLE_SYSTEM_NAMES
 #include "GameClient/ParticleSys.h"
 
@@ -234,30 +237,63 @@ void INI::parseBenchProfile( INI* ini)
 
 /**Parse a description of all the LOD settings for a given detail level*/
 // ?parseLODPreset@INI@@SAXPAV1@@Z
-// Body in Code/masm_dumps/INI_parseLODPreset_7d2d0.asm (exact 325B retail @ 0x7D2D0).
-//
-// Decoded but not yet reproduced. The "LODPreset" block is one hardware profile
-// mapped onto a static LOD level, and BFME parses seven fields where Zero Hour
-// parses four -- in retail's own order, 0x14 before 0x10:
-//   0x00 cpu type   (parseIndexList against CPUNames)
-//   0x04 mhz        (parseInt)
-//   0x0c video type (parseIndexList against VideoNames)
-//   0x14, 0x10, 0x18, 0x1c (parseInt)
-//
-// GameLODManager::newLODPreset is inlined, so what survives is its cap test and
-// address arithmetic: the per-level counter is at +0x16F0 (four bytes per level),
-// preset rows start at +0x160 with 32 entries of 32 bytes, and the element index
-// is the incremented count. The `if (preset)` that follows is the helper's NULL
-// return, not dead code -- retail tests the pointer immediately after computing
-// it, using the flags from the add.
-//
-// Transcribing that gets to 204 of 325 bytes with the prologue exact, and the
-// remainder is register allocation: retail saves three callee-saved registers
-// and reloads TheGameLODManager at the null test, at the index lookup, and once
-// more before the arithmetic, holding it in a register only for the final run
-// which has no call in it. Caching it in a local reproduces the three-register
-// prologue but then removes that third reload; scoping the local to the run
-// reinstates the reload but drops back to a two-register prologue.
+
+void INI::parseLODPreset(INI *ini)
+{
+	struct RetailLODPresetInfo
+	{
+		char bytes[0x20];
+	};
+	struct RetailGameLODManager
+	{
+		char padding0[0x160];
+		RetailLODPresetInfo presets[5][32];
+		char padding1[0x190];
+		Int counts[5];
+
+		RetailLODPresetInfo *newLODPreset(Int index)
+		{
+			if (counts[index] < 0x20)
+			{
+				counts[index] = counts[index] + 1;
+				return &presets[index][counts[index]];
+			}
+			return NULL;
+		}
+	};
+
+	AsciiString name;
+	const char *const c = ini->getNextToken();
+
+	Int length;
+	if (c != NULL)
+	{
+		length = (Int)strlen(c);
+	}
+	else
+		length = 0;
+	((StringBase<char> *)&name)->set(c, length);
+
+	if (TheGameLODManager)
+	{
+		Int index = TheGameLODManager->getStaticGameLODIndex(name);
+		if (index != STATIC_GAME_LOD_UNKNOWN)
+		{
+			RetailLODPresetInfo *preset =
+				((RetailGameLODManager *)TheGameLODManager)->newLODPreset(index);
+			if (preset)
+			{
+				INI::parseIndexList(ini, NULL, preset, (const void *)0x012a7418);
+				INI::parseInt(ini, NULL, (char *)preset + 4, NULL);
+				INI::parseIndexList(ini, NULL, (char *)preset + 0x0c, (const void *)0x012a742c);
+				INI::parseInt(ini, NULL, (char *)preset + 0x14, NULL);
+				INI::parseInt(ini, NULL, (char *)preset + 0x10, NULL);
+				INI::parseInt(ini, NULL, (char *)preset + 0x18, NULL);
+				INI::parseInt(ini, NULL, (char *)preset + 0x1c, NULL);
+			}
+		}
+	}
+}
 
 // ??0GameLODManager@@QAE@XZ present-unmatched
 GameLODManager::GameLODManager(void)
