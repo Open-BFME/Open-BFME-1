@@ -3,6 +3,26 @@
 // cl: /O2 /Ob1 /DNDEBUG /MD /EHs-c-
 // Retail 0x005FC320, 105 bytes.  The owner is the small FX playback state
 // whose context supplies the position, start frame, and completion flag.
+//
+// REMAINING WALL (29/105 non-reloc bytes, first at +25): retail computes the
+// position pointer (lea ebx,[edi+0x1c]) into a fresh callee-saved register
+// right after the threshold check, recycling edi for the m_fx reload right
+// after; ours keeps context in one register the whole function and folds the
+// position pointer into it lazily (add ebx,0x1c) right before the doFXPos
+// call, using edi solely for m_fx. Both encodings cost the same 3 bytes for
+// the position calc, so the diff is purely which value gets which of the two
+// free callee-saved registers and when.
+// Ruled out (13 shape_search trials, masked score pinned at 0.7238 for every
+// non-degenerate variant): reordering the position/fx local declarations in
+// every combination; computing position immediately after context instead of
+// after the threshold guard; computing position via a reference instead of a
+// pointer; a volatile-qualified pointer (that one regressed to 113 bytes, an
+// extra stack slot, and a lower score); a `register` hint on the position
+// local; folding the fx/position locals out entirely into the if-condition
+// and call-argument expressions; splitting the whole tail into a nested
+// `if (m_fx) { ... }` block. None changed which physical register position
+// or fx received or when the lea/add executed. This looks like an MSVC 7.1
+// internal register-allocation choice not reachable from source shape alone.
 
 struct Coord3D
 {
