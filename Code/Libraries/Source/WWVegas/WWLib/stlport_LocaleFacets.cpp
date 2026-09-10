@@ -1,5 +1,27 @@
 // cl: /O2 /MD
-// STLport 4.5.3 numeric and monetary locale facets.
+// STLport 4.5.3 numeric, monetary and time locale facets.
+/*
+ * Copyright (c) 1999
+ * Silicon Graphics Computer Systems, Inc.
+ *
+ * Copyright (c) 1999
+ * Boris Fomitchev
+ *
+ * Modified for Open-BFME retail ABI and shared locale state.
+ *
+ * Written 2000
+ * Anton Lapach
+ *
+ * This material is provided "as is", with absolutely no warranty expressed
+ * or implied. Any use is at your own risk.
+ *
+ * Permission to use or copy this software for any purpose is hereby granted
+ * without fee, provided the above notices are retained on all copies.
+ * Permission to modify the code and to distribute modified code is granted,
+ * provided the above notices are retained, and a notice that the code was
+ * modified is included with the above copyright notice.
+ *
+ */
 // Resolver, Windows enumeration callback and all three facets share actual
 // file-static lookup state. Real facet callers keep private helper ABIs.
 
@@ -7,6 +29,7 @@ typedef unsigned long LCID;
 
 extern const char *g_Rva012C83A8;
 extern const char *g_Rva012C83A4;
+extern const char *g_Rva012C83AC;
 
 extern "C" {
 
@@ -15,6 +38,7 @@ __declspec(dllimport) void *__cdecl malloc(unsigned int size);
 __declspec(dllimport) void __cdecl free(void *memory);
 __declspec(dllimport) char *__cdecl strstr(const char *s, const char *needle);
 __declspec(dllimport) char *__cdecl strchr(const char *s, int ch);
+void _Locale_time_destroy(void *l);
 
 __declspec(dllimport) int __stdcall MultiByteToWideChar(
     unsigned int codePage, unsigned long flags, const char *source, int sourceCount,
@@ -401,6 +425,122 @@ void *_Locale_numeric_create(const char *name)
     ((Rva0084E030Buffer *)buf)->squash();
     obj->grouping = buf;
     return obj;
+}
+
+typedef struct
+{
+    LCID lcid;
+    char cp[6];
+    char *month[12];
+    char *abbrev_month[12];
+    char *dayofweek[7];
+    char *abbrev_dayofweek[7];
+} Locale_time_t;
+
+typedef char LocaleTimeSizeMustBeA4[sizeof(Locale_time_t) == 0xA4 ? 1 : -1];
+
+void *_Locale_time_create(const char *name)
+{
+    int size;
+    int month;
+    int dayofweek;
+    char cname[256];
+    Locale_time_t *ltime = (Locale_time_t *)malloc(0xa4);
+
+    if (ltime == 0)
+        return 0;
+
+    memset(ltime, 0, 0xa4);
+    cname[0] = 0;
+
+    if (name[0] == 'L' && name[1] == 'C' && name[2] == '_')
+    {
+        char *p = strstr(name, g_Rva012C83AC);
+        if (p != 0)
+        {
+            char *q = strchr(p, '=');
+            if (q != 0)
+            {
+                unsigned int matchLen;
+                ++q;
+                matchLen = strcspn(q, ";");
+                if (matchLen > 0x100)
+                    matchLen = 0x100;
+                strncpy(cname, q, matchLen);
+                cname[matchLen] = 0;
+            }
+        }
+    }
+    else
+    {
+        strncpy(cname, name, 0x100);
+    }
+
+    if (__GetLCIDFromName(cname, &ltime->lcid, ltime->cp) == -1)
+    {
+        free(ltime);
+        return 0;
+    }
+
+    for (month = 0x38; month <= 0x43; ++month)
+    {
+        size = GetLocaleInfoA(ltime->lcid, month, 0, 0);
+        ltime->month[month - 0x38] = (char *)malloc(size);
+        if (ltime->month[month - 0x38] == 0)
+        {
+            _Locale_time_destroy(ltime);
+            return 0;
+        }
+        GetLocaleInfoA(ltime->lcid, month,
+            ltime->month[month - 0x38], size);
+        __ConvertFromACP(ltime->month[month - 0x38], size, ltime->cp);
+    }
+
+    for (month = 0x44; month <= 0x4f; ++month)
+    {
+        size = GetLocaleInfoA(ltime->lcid, month, 0, 0);
+        ltime->abbrev_month[month - 0x44] = (char *)malloc(size);
+        if (ltime->abbrev_month[month - 0x44] == 0)
+        {
+            _Locale_time_destroy(ltime);
+            return 0;
+        }
+        GetLocaleInfoA(ltime->lcid, month,
+            ltime->abbrev_month[month - 0x44], size);
+        __ConvertFromACP(ltime->abbrev_month[month - 0x44], size, ltime->cp);
+    }
+
+    for (dayofweek = 0x2a; dayofweek <= 0x30; ++dayofweek)
+    {
+        int dayindex = (dayofweek != 0x30) ? dayofweek - 0x2a + 1 : 0;
+        size = GetLocaleInfoA(ltime->lcid, dayofweek, 0, 0);
+        ltime->dayofweek[dayindex] = (char *)malloc(size);
+        if (ltime->dayofweek[dayindex] == 0)
+        {
+            _Locale_time_destroy(ltime);
+            return 0;
+        }
+        GetLocaleInfoA(ltime->lcid, dayofweek,
+            ltime->dayofweek[dayindex], size);
+        __ConvertFromACP(ltime->dayofweek[dayindex], size, ltime->cp);
+    }
+
+    for (dayofweek = 0x31; dayofweek <= 0x37; ++dayofweek)
+    {
+        int dayindex = (dayofweek != 0x37) ? dayofweek - 0x31 + 1 : 0;
+        size = GetLocaleInfoA(ltime->lcid, dayofweek, 0, 0);
+        ltime->abbrev_dayofweek[dayindex] = (char *)malloc(size);
+        if (ltime->abbrev_dayofweek[dayindex] == 0)
+        {
+            _Locale_time_destroy(ltime);
+            return 0;
+        }
+        GetLocaleInfoA(ltime->lcid, dayofweek,
+            ltime->abbrev_dayofweek[dayindex], size);
+        __ConvertFromACP(ltime->abbrev_dayofweek[dayindex], size, ltime->cp);
+    }
+
+    return ltime;
 }
 
 typedef struct
