@@ -44,7 +44,7 @@ extern void __cdecl Rva009AFEC0FilterHoriz(int, unsigned char *, int);
 
 // Unconverted gen-dump callees that already carry a functions.csv row (the
 // row is the candidate; no new pin needed).
-extern void __cdecl d_009c2970(void);
+extern void __cdecl bfmeFilterBlockMmx(void *, void *, int, void *);
 extern void __cdecl d_009c2620(void);
 extern void __cdecl d_009c2320(void);
 extern void __cdecl d_009bebb0(void);
@@ -102,7 +102,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 	if (tierC)
 	{
 		spreadTable();
-		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&d_009c2970;
+		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&bfmeFilterBlockMmx;
 		g_bfmeCodecDispatch.slot[23] = (BfmeDispatchFn)&bfmeFilterPairMmx;
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
 		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
@@ -134,7 +134,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 	if (tierA)
 	{
 		spreadTable();
-		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&d_009c2970;
+		g_bfmeCodecDispatch.slot[15] = (BfmeDispatchFn)&bfmeFilterBlockMmx;
 		g_bfmeCodecDispatch.slot[23] = (BfmeDispatchFn)&bfmeFilterPairMmx;
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
 		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
