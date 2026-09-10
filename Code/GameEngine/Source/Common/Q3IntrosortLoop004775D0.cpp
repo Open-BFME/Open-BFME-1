@@ -147,3 +147,17 @@ void Q3MakeHeap004749F0(Q3SortElem16 *first, Q3SortElem16 *last,
         --parent;
     }
 }
+
+// STLport __push_heap; the matched adjust_heap body calls ILT0x49657
+// to this full207B body at0x00473D60, ending ret0x00473E2E.
+void Q3PushHeap00473D60(Q3SortElem16 *first, int holeIndex,
+    int topIndex, Q3SortElem16 value, Q3SortCompare comp)
+{
+    int parent = (holeIndex - 1) / 2;
+    while (holeIndex > topIndex && comp(first[parent], value)) {
+        first[holeIndex] = first[parent];
+        holeIndex = parent;
+        parent = (holeIndex - 1) / 2;
+    }
+    first[holeIndex] = value;
+}
