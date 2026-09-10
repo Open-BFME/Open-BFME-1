@@ -1,562 +1,323 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the retail GameState::getSaveGameInfoFromFile MASM body into a C++ thunk.
+// Real C++ reconstruction of GameState::getSaveGameInfoFromFile at retail
+// RVA 0x00111980.  The published addGameToAvailableList caller calls this
+// body through ILT 0x000083D7 and tests AL, proving the BFME Bool ABI.
+//
+// The BFME reader uses the same WORD-length StringBase/AsciiString lifetime
+// model as the landed save/load bodies.  Its file-header reader is the proven
+// Gen009D8CA0/readAt009D89E0 pair; the Xfer block helpers are direct calls,
+// while xferSnapshot and xferAsciiString retain their observed virtual slots.
 
-extern "C" __declspec(naked) void bfme_GameStateGetSaveGameInfoFromFile_111980()
+typedef bool Bool;
+typedef unsigned short UnsignedShort;
+
+template <typename T> struct BfmeStringData
 {
-    __asm {
-        __emit 0x55;
-        __emit 0x8b;
-        __emit 0xec;
-        __emit 0x6a;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0xd3;
-        __emit 0xdd;
-        __emit 0xff;
-        __emit 0x0;
-        __emit 0x64;
-        __emit 0xa1;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x81;
-        __emit 0xec;
-        __emit 0x94;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x53;
-        __emit 0x56;
-        __emit 0x57;
-        __emit 0x89;
-        __emit 0x65;
-        __emit 0xf0;
-        __emit 0x89;
-        __emit 0x4d;
-        __emit 0xe4;
-        __emit 0x8b;
-        __emit 0x45;
-        __emit 0x8;
-        __emit 0x33;
-        __emit 0xff;
-        __emit 0x32;
-        __emit 0xdb;
-        __emit 0x3b;
-        __emit 0xc7;
-        __emit 0x89;
-        __emit 0x7d;
-        __emit 0xfc;
-        __emit 0x74;
-        __emit 0x55;
-        __emit 0x66;
-        __emit 0x39;
-        __emit 0x78;
-        __emit 0x4;
-        __emit 0x74;
-        __emit 0x4f;
-        __emit 0x39;
-        __emit 0x7d;
-        __emit 0xc;
-        __emit 0x74;
-        __emit 0x4a;
-        __emit 0x8b;
-        __emit 0xd;
-        __emit 0x48;
-        __emit 0xcb;
-        __emit 0x34;
-        __emit 0x1;
-        __emit 0x83;
-        __emit 0xc0;
-        __emit 0x8;
-        __emit 0x6a;
-        __emit 0x41;
-        __emit 0x50;
-        __emit 0xe8;
-        __emit 0x8f;
-        __emit 0x6e;
-        __emit 0x8b;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0xf0;
-        __emit 0x3b;
-        __emit 0xf7;
-        __emit 0x74;
-        __emit 0x33;
-        __emit 0x57;
-        __emit 0x57;
-        __emit 0x57;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xe8;
-        __emit 0xbe;
-        __emit 0x72;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8d;
-        __emit 0x45;
-        __emit 0xe8;
-        __emit 0x50;
-        __emit 0x56;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x1;
-        __emit 0xe8;
-        __emit 0xed;
-        __emit 0x6f;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x84;
-        __emit 0xc0;
-        __emit 0x75;
-        __emit 0x37;
-        __emit 0x8b;
-        __emit 0x16;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x8;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x0;
-        __emit 0xe8;
-        __emit 0xf6;
-        __emit 0x72;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0x8;
-        __emit 0xc7;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xe8;
-        __emit 0x27;
-        __emit 0x5f;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0x32;
-        __emit 0xc0;
-        __emit 0x8b;
-        __emit 0x4d;
-        __emit 0xf4;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0xd;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x5f;
-        __emit 0x5e;
-        __emit 0x5b;
-        __emit 0x8b;
-        __emit 0xe5;
-        __emit 0x5d;
-        __emit 0xc2;
-        __emit 0x8;
-        __emit 0x0;
-        __emit 0x83;
-        __emit 0x7d;
-        __emit 0xe8;
-        __emit 0x1;
-        __emit 0x76;
-        __emit 0xc;
-        __emit 0x8b;
-        __emit 0x6;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xff;
-        __emit 0x50;
-        __emit 0x8;
-        __emit 0xeb;
-        __emit 0xc1;
-        __emit 0x8d;
-        __emit 0x49;
-        __emit 0x0;
-        __emit 0x84;
-        __emit 0xdb;
-        __emit 0xf;
-        __emit 0x85;
-        __emit 0x23;
-        __emit 0x1;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x89;
-        __emit 0x7d;
-        __emit 0xec;
-        __emit 0x8b;
-        __emit 0x55;
-        __emit 0xc4;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xec;
-        __emit 0x51;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x2;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x68;
-        __emit 0xa1;
-        __emit 0xb0;
-        __emit 0xbf;
-        __emit 0x2a;
-        __emit 0x1;
-        __emit 0x50;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xec;
-        __emit 0xe8;
-        __emit 0x7e;
-        __emit 0xeb;
-        __emit 0xf2;
-        __emit 0xff;
-        __emit 0x85;
-        __emit 0xc0;
-        __emit 0x75;
-        __emit 0xf;
-        __emit 0xb3;
-        __emit 0x1;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xec;
-        __emit 0x88;
-        __emit 0x5d;
-        __emit 0xfc;
-        __emit 0xe8;
-        __emit 0xc5;
-        __emit 0x5e;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0xeb;
-        __emit 0xc3;
-        __emit 0x57;
-        __emit 0x51;
-        __emit 0x8d;
-        __emit 0x55;
-        __emit 0xec;
-        __emit 0x89;
-        __emit 0x65;
-        __emit 0xc0;
-        __emit 0x8b;
-        __emit 0xcc;
-        __emit 0x52;
-        __emit 0xe8;
-        __emit 0xd3;
-        __emit 0x60;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0x4d;
-        __emit 0xe4;
-        __emit 0xe8;
-        __emit 0x10;
-        __emit 0x8c;
-        __emit 0xef;
-        __emit 0xff;
-        __emit 0x3b;
-        __emit 0xc7;
-        __emit 0x75;
-        __emit 0x1c;
-        __emit 0x57;
-        __emit 0x8d;
-        __emit 0x45;
-        __emit 0xb8;
-        __emit 0x57;
-        __emit 0x50;
-        __emit 0xe8;
-        __emit 0x7c;
-        __emit 0x47;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0xc;
-        __emit 0x68;
-        __emit 0x5c;
-        __emit 0xfe;
-        __emit 0x1d;
-        __emit 0x1;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xb8;
-        __emit 0x51;
-        __emit 0xe8;
-        __emit 0x4b;
-        __emit 0x52;
-        __emit 0x8e;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0x45;
-        __emit 0xec;
-        __emit 0x3b;
-        __emit 0xc7;
-        __emit 0x74;
-        __emit 0x5;
-        __emit 0x83;
-        __emit 0xc0;
-        __emit 0x8;
-        __emit 0xeb;
-        __emit 0x5;
-        __emit 0xb8;
-        __emit 0x8b;
-        __emit 0x38;
-        __emit 0x7;
-        __emit 0x1;
-        __emit 0x68;
-        __emit 0x40;
-        __emit 0x93;
-        __emit 0x8;
-        __emit 0x1;
-        __emit 0x50;
-        __emit 0xff;
-        __emit 0x15;
-        __emit 0x3c;
-        __emit 0x93;
-        __emit 0x35;
-        __emit 0x1;
-        __emit 0x83;
-        __emit 0xc4;
-        __emit 0x8;
-        __emit 0x85;
-        __emit 0xc0;
-        __emit 0x75;
-        __emit 0x74;
-        __emit 0x8d;
-        __emit 0x8d;
-        __emit 0x60;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xe8;
-        __emit 0xe6;
-        __emit 0x7;
-        __emit 0xef;
-        __emit 0xff;
-        __emit 0x68;
-        __emit 0x14;
-        __emit 0x6c;
-        __emit 0x7;
-        __emit 0x1;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x4;
-        __emit 0xe8;
-        __emit 0x1b;
-        __emit 0x72;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0x45;
-        __emit 0xc4;
-        __emit 0x8d;
-        __emit 0x95;
-        __emit 0x68;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xff;
-        __emit 0x50;
-        __emit 0x30;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xe8;
-        __emit 0xa3;
-        __emit 0x6f;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8d;
-        __emit 0x8d;
-        __emit 0x78;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x51;
-        __emit 0x8b;
-        __emit 0x4d;
-        __emit 0xc;
-        __emit 0xc7;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x3;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0xe8;
-        __emit 0x31;
-        __emit 0x76;
-        __emit 0xf1;
-        __emit 0xff;
-        __emit 0x8d;
-        __emit 0x8d;
-        __emit 0x60;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xb3;
-        __emit 0x1;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x2;
-        __emit 0xe8;
-        __emit 0xb3;
-        __emit 0x23;
-        __emit 0xf2;
-        __emit 0xff;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xec;
-        __emit 0x88;
-        __emit 0x5d;
-        __emit 0xfc;
-        __emit 0xe8;
-        __emit 0x1;
-        __emit 0x5e;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0xe9;
-        __emit 0xfc;
-        __emit 0xfe;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x6a;
-        __emit 0x0;
-        __emit 0x6a;
-        __emit 0x0;
-        __emit 0xe8;
-        __emit 0xb3;
-        __emit 0x51;
-        __emit 0x8e;
-        __emit 0x0;
-        __emit 0x68;
-        __emit 0x14;
-        __emit 0x6c;
-        __emit 0x7;
-        __emit 0x1;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xe8;
-        __emit 0xe6;
-        __emit 0x72;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xec;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x1;
-        __emit 0xe8;
-        __emit 0xda;
-        __emit 0x5d;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0xe9;
-        __emit 0xd5;
-        __emit 0xfe;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xe8;
-        __emit 0x2d;
-        __emit 0x6f;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0x16;
-        __emit 0x8b;
-        __emit 0xce;
-        __emit 0xff;
-        __emit 0x52;
-        __emit 0x8;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0xc4;
-        __emit 0xc6;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0x0;
-        __emit 0xe8;
-        __emit 0x7a;
-        __emit 0x71;
-        __emit 0x8c;
-        __emit 0x0;
-        __emit 0x8d;
-        __emit 0x4d;
-        __emit 0x8;
-        __emit 0xc7;
-        __emit 0x45;
-        __emit 0xfc;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xff;
-        __emit 0xe8;
-        __emit 0xab;
-        __emit 0x5d;
-        __emit 0x77;
-        __emit 0x0;
-        __emit 0x8b;
-        __emit 0x4d;
-        __emit 0xf4;
-        __emit 0x5f;
-        __emit 0x5e;
-        __emit 0xb0;
-        __emit 0x1;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0xd;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x0;
-        __emit 0x5b;
-        __emit 0x8b;
-        __emit 0xe5;
-        __emit 0x5d;
-        __emit 0xc2;
-        __emit 0x8;
-        __emit 0x0;
-    }
+	int m_refs;
+	UnsignedShort m_length;
+	UnsignedShort m_capacity;
+	T m_text[1];
+};
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+	friend class UnicodeString;
+
+protected:
+	StringBase() : m_data(0) {}
+	StringBase(const StringBase<T> &other);
+	~StringBase() { releaseBuffer(); }
+	BfmeStringData<T> *m_data;
+
+private:
+	void releaseBuffer();
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+
+	Bool isEmpty() const
+	{
+		return m_data == 0 || m_data->m_length == 0;
+	}
+
+	const char *str() const
+	{
+		return m_data ? m_data->m_text : (const char *)0x0107388B;
+	}
+
+	int compareNoCase(const char *text) const;
+};
+
+class UnicodeString : private StringBase<UnsignedShort>
+{
+public:
+	UnicodeString() : StringBase<UnsignedShort>() {}
+	UnicodeString(const UnicodeString &other)
+		: StringBase<UnsignedShort>(other) {}
+	~UnicodeString() {}
+};
+
+class SubsystemInterface
+{
+public:
+	virtual ~SubsystemInterface();
+	virtual void init();
+	virtual void reset();
+	virtual void update();
+
+private:
+	void *m_name;
+};
+
+class Xfer;
+
+class Snapshot
+{
+public:
+	virtual ~Snapshot();
+	virtual void crc(Xfer *xfer);
+	virtual void xfer(Xfer *xfer);
+	virtual void loadPostProcess();
+};
+
+enum SnapshotType
+{
+	SNAPSHOT_SAVELOAD,
+	SNAPSHOT_DEEPCRC_LOGICONLY,
+	SNAPSHOT_DEEPCRC,
+	SNAPSHOT_MAX
+};
+
+enum SaveCode
+{
+	SC_INVALID = -1,
+	SC_OK,
+	SC_NO_FILE_AVAILABLE,
+	SC_FILE_NOT_FOUND,
+	SC_UNABLE_TO_OPEN_FILE,
+	SC_INVALID_XFER,
+	SC_UNKNOWN_BLOCK,
+	SC_INVALID_DATA,
+	SC_ERROR
+};
+
+class SaveGameInfo
+{
+	public:
+	unsigned char m_data[0x30];
+};
+
+class File
+{
+public:
+	virtual ~File();
+	virtual Bool open(const char *, int);
+	virtual void close();
+};
+
+class FileSystem
+{
+public:
+	File *openFile(const char *filename, int access);
+};
+
+#define TheFileSystem (*(FileSystem **)0x0134CB48)
+
+// This is the BFME Xfer layout used by the neighboring landed body.  The
+// three block operations below are qualified direct calls in this reader;
+// only the two transfers shown in the retail body are dispatched virtually.
+class Xfer
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual Bool IsStoring();
+	virtual void slot03();
+	virtual void slot04();
+	virtual int beginBlock(const char *name);
+	virtual void endBlock();
+	virtual void skipBlock(const char *name);
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void xferSnapshot(Snapshot *snapshot);
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual void xferAsciiString(AsciiString *value);
+
+private:
+	unsigned char m_data[0x1c];
+};
+
+class Gen009D8CA0 : public Xfer
+{
+public:
+	Gen009D8CA0(int first, int second, int third);
+	~Gen009D8CA0();
+	Bool readAt009D89E0(File *file, void *output);
+};
+
+class Rva009D8AA0
+{
+public:
+	void apply();
+
+private:
+	unsigned char m_pad[0x14];
+	void *m_stream;
+};
+
+class GameState : public SubsystemInterface, public Snapshot
+{
+public:
+	GameState();
+	virtual ~GameState();
+
+	struct SnapshotBlock
+	{
+		Snapshot *snapshot;
+		AsciiString blockName;
+	};
+
+	private:
+	SnapshotBlock *findBlockInfoByToken(AsciiString token,
+		SnapshotType which);
+
+	public:
+	SaveGameInfo *getSaveGameInfo()
+	{
+		return reinterpret_cast<SaveGameInfo *>(m_gameInfo);
+	}
+	Bool getSaveGameInfoFromFile(AsciiString filename,
+		SaveGameInfo *saveGameInfo);
+
+private:
+	unsigned char m_snapshotLists[0x0c];
+	unsigned char m_gameInfo[0x30];
+	unsigned char m_tail[0x10];
+};
+
+// The assignment body is already matched at 0x0010CFF0.  This neutral ABI
+// view avoids inventing a second SaveGameInfo operation or destructor.
+class Rva0010CFF0
+{
+public:
+	Rva0010CFF0 &operator=(const Rva0010CFF0 &other);
+};
+
+struct BfmeFormattedText
+{
+	void *text;
+	int tag;
+};
+
+extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
+	BfmeFormattedText *result, int tag, const char *format, ...);
+extern int g_guardTargetTypeThrowInfo;
+extern void __declspec(noreturn) __stdcall _CxxThrowException(
+	void *object, void *throwInfo);
+extern "C" __declspec(dllimport) int __cdecl _stricmp(
+	const char *left, const char *right);
+
+static const char *SAVE_FILE_EOF = "SG_EOF";
+extern "C" unsigned char bfmeStrBEYC[];
+
+// ?getSaveGameInfoFromFile@GameState@@QAE_NVAsciiString@@PAVSaveGameInfo@@@Z
+Bool GameState::getSaveGameInfoFromFile(AsciiString filename,
+	SaveGameInfo *saveGameInfo)
+{
+	File *file;
+	unsigned int version;
+	Bool done = false;
+	SnapshotBlock *blockInfo;
+	BfmeFormattedText error;
+
+	if (filename.isEmpty() || saveGameInfo == 0)
+		return false;
+
+	const char *path = filename.str();
+	file = TheFileSystem->openFile(path, 0x41);
+	if (file == 0)
+		return false;
+
+	Gen009D8CA0 xferLoad(0, 0, 0);
+	if (!xferLoad.readAt009D89E0(file, &version))
+	{
+		file->close();
+		return false;
+	}
+
+	if (version > 1)
+	{
+		file->close();
+		return false;
+	}
+
+	while (done == false)
+	{
+		AsciiString token;
+
+		// Retail releases the token before testing the next EOF state.
+		static_cast<Xfer *>(&xferLoad)->xferAsciiString(&token);
+		if (token.compareNoCase(SAVE_FILE_EOF) == 0)
+			{
+				done = true;
+			}
+			else
+			{
+				blockInfo = findBlockInfoByToken(token, SNAPSHOT_SAVELOAD);
+				if (blockInfo == 0)
+				{
+					bfmeFormatText(&error, 0, 0);
+					_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+				}
+
+				if (_stricmp(token.str(), "CHUNK_GameState") == 0)
+				{
+					GameState tempGameState;
+					try
+					{
+						xferLoad.Xfer::beginBlock((const char *)bfmeStrBEYC);
+						static_cast<Xfer *>(&xferLoad)->xferSnapshot(
+							&tempGameState);
+						xferLoad.Xfer::endBlock();
+					}
+					catch (...)
+					{
+						throw;
+					}
+
+					reinterpret_cast<Rva0010CFF0 *>(saveGameInfo)->operator=(
+						*reinterpret_cast<const Rva0010CFF0 *>(
+							tempGameState.getSaveGameInfo()));
+					done = true;
+				}
+				else
+				{
+					xferLoad.Xfer::skipBlock((const char *)bfmeStrBEYC);
+				}
+		}
+	}
+
+	reinterpret_cast<Rva009D8AA0 *>(&xferLoad)->apply();
+	file->close();
+	return true;
 }

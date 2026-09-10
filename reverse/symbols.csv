@@ -86670,3 +86670,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?findClosestFreeGarrisonPointIndex@BfmeGarrisonFindClosestCall@@QAEHHPBUCoord3D@@@Z,0x0002130F,TU-local ABI adapter for the verified GarrisonContain closest-point ILT; not a body identity
 ?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@PBUCoord3D@@H@Z,0x0002E951,TU-local ABI adapter for the verified Weapon position range ILT; not a body identity
 ?putObjectAtGarrisonPoint@BfmeGarrisonPlacementCall@@QAEXPAVObject@@W4ObjectID@@HH@Z,0x00028CEA,TU-local ABI adapter for the verified GarrisonContain placement ILT; not a body identity
+??1Gen009D8CA0@@QAE@XZ,0x009D8D00,Gen009D8CA0 cleanup; deleting destructor9D9090 calls7-bytevtable reset9D8D00; reader111980 cleanup uses same target
