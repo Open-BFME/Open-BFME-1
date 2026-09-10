@@ -417,6 +417,147 @@ void Rva0080E500(unsigned char *object)
 	*(int *)(object + 0x7C) = 0;
 }
 
+struct Rva0080EA30Transport
+{
+	void *op0;
+	void (__cdecl *destroy)(void *object);
+	void *op2;
+	void *op3;
+	void *op4;
+	void *op5;
+	void *op6;
+	void *op7;
+	void *op8;
+	int (__cdecl *state)(void *object);
+	unsigned int (__cdecl *probe)(void *object);
+	char gap2C[ 0x1C ];
+	unsigned int field48;
+	char gap4C[ 0x20 ];
+	unsigned int field6C;
+	unsigned int field70;
+};
+
+struct Rva0080EA30Slot
+{
+	struct Rva0080EA30Transport *transport;
+	unsigned int field4;
+	unsigned int field8;
+};
+
+int Rva00812220(void *table, const char *keyA, const char *keyB,
+	unsigned int *pExtra, int defaultValue);
+extern char Rva012C48F0[];
+extern char Rva012C48F8[];
+extern char Rva012C4924[];
+extern char Rva012C4934[];
+extern char Rva012C4938[];
+
+void *Rva0080EA30(unsigned char *object)
+{
+	int i;
+	int selected;
+	unsigned int candidate;
+	char address[ 0x100 ];
+	unsigned int value;
+	unsigned int extra;
+	void *selectedTransport;
+
+	selected = -1;
+	candidate = 0;
+	if (*(void **)(object + 0x68) != 0)
+	{
+		for (i = 0; i < 4
+			&& ((struct Rva0080EA30Slot *)(object + 0x90))[i].transport == 0;
+			i++)
+		{
+		}
+		if (i == 4)
+		{
+			value = Rva00812220(*(void **)(object + 0x68),
+				Rva012C48F0, (char *)object + 0x24, &extra, 0);
+			if (value != 0)
+			{
+				Rva007FE780(Rva012C48F8, value, extra);
+				if ((unsigned int)value > (unsigned int)extra)
+				{
+					*(int *)(object + 0x70) = value;
+					*(int *)(object + 0x74) = extra;
+					sprintf(address, Rva012C4924,
+						(unsigned char)(value >> 24),
+						(unsigned char)(value >> 16),
+						(unsigned char)(value >> 8), (unsigned char)value,
+						(char *)object + 0x24);
+					Rva0080E6C0(object, *(int *)(object + 0x7C) | 2,
+						address);
+				}
+				else
+				{
+					*(int *)(object + 0x70) = extra;
+					*(int *)(object + 0x74) = value;
+					sprintf(address, Rva012C4934, (char *)object + 0x24);
+					Rva0080E6C0(object, *(int *)(object + 0x7C) | 1,
+						address);
+				}
+			}
+		}
+	}
+
+	for (i = 0; i < 4; i++)
+	{
+		if (((struct Rva0080EA30Slot *)(object + 0x90))[i].transport == 0)
+			continue;
+		if (candidate == 0)
+			candidate = ((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->probe(
+				((struct Rva0080EA30Slot *)(object + 0x90))[i].transport);
+		if (((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->state(
+			((struct Rva0080EA30Slot *)(object + 0x90))[i].transport) != 3)
+			continue;
+		if (((struct Rva0080EA30Slot *)(object + 0x90))[i].field4 == 0)
+			((struct Rva0080EA30Slot *)(object + 0x90))[i].field4 = candidate;
+		if (candidate < ((struct Rva0080EA30Slot *)(object + 0x90))[i].field4
+			+ ((struct Rva0080EA30Slot *)(object + 0x90))[i].field8)
+			continue;
+		selected = i;
+		*(unsigned int *)(object + 0x70) =
+			((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->field6C;
+		*(unsigned int *)(object + 0x74) =
+			((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->field70;
+		*(unsigned int *)(object + 0x78) =
+			((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->field48;
+		Rva007FE780(Rva012C4938);
+		break;
+	}
+
+	if (selected >= 0)
+	{
+		for (i = 0; i < 4; i++)
+		{
+			if (i != selected
+				&& ((struct Rva0080EA30Slot *)(object + 0x90))[i].transport != 0)
+			{
+				((struct Rva0080EA30Slot *)(object + 0x90))[i].transport->destroy(
+					((struct Rva0080EA30Slot *)(object + 0x90))[i].transport);
+				((struct Rva0080EA30Slot *)(object + 0x90))[i].transport = 0;
+			}
+		}
+		if (*(void **)(object + 0x64) != 0)
+		{
+			Rva00812CD0(*(void **)(object + 0x64));
+			*(void **)(object + 0x64) = 0;
+		}
+		if (*(void **)(object + 0x68) != 0)
+		{
+			Rva00812CD0(*(void **)(object + 0x68));
+			*(void **)(object + 0x68) = 0;
+		}
+	}
+	if (selected >= 0)
+		selectedTransport = ((struct Rva0080EA30Slot *)(object + 0x90))[selected].transport;
+	else
+		selectedTransport = 0;
+	return selectedTransport;
+}
+
 void Rva00810020(void *context);
 void Rva00810060(void *context, const unsigned char *data, int length);
 void Rva00810FF0(void *context, char *out, int outSize);
