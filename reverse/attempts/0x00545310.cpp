@@ -1,17 +1,14 @@
 // ??0BfmeAptScreenOnlineCustomMatch@@QAE@H@Z
-// partial score=0.15 date=2026-09-09
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
+// partial score=0.18 date=2026-09-10
 // BfmeAptScreenOnlineCustomMatch constructor, retail 0x00545310, 1935 bytes.
-// Named by vtable 0x01107484 (installed here) and dtor 0x00538CE0 /
-// OnlineCustomMatchDestructor.cpp, whose member layout (m_mid @0x40,
-// m_prefs @0x174, m_unusedName @0x1E4, m_primarySort @0x1E8,
-// m_secondarySort @0x1EC) matches this constructor's unwind-state offsets
-// exactly (states 0..4).
+//
+// The constructor is kept in its own translation unit so its multiple
+// inheritance layout and MSVC EH state table stay independent of the guarded
+// allocation wrappers in S4GuardedNewWithOneArg.cpp.
 
-#include "../../../../reference/shims/stringinline/StringInline.h"
+#include "../../../../../reference/shims/stringinline/StringInline.h"
 
-class BfmeAptGameWindow
+class __declspec( novtable ) BfmeAptGameWindow
 {
 public:
 	BfmeAptGameWindow( int a )
@@ -36,6 +33,7 @@ private:
 class BfmeAptScreenSecondary
 {
 public:
+	BfmeAptScreenSecondary() {}
 	virtual ~BfmeAptScreenSecondary() {}
 };
 
@@ -117,7 +115,7 @@ extern GameSpyStagingRoomFields *TheGameSpyGame;
 class BfmeAptScreenOnlineCustomMatch;
 extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 
-class __declspec( novtable ) __multiple_inheritance BfmeAptScreenOnlineCustomMatch
+class __multiple_inheritance BfmeAptScreenOnlineCustomMatch
 	: public BfmeAptGameWindow, public BfmeAptScreenSecondary
 {
 public:
@@ -167,9 +165,6 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 	, m_prefs()
 	, m_unusedName( "APT:NULL" )
 {
-	*(const void ***)( (char *)this ) = BfmeAptScreenOnlineCustomMatchVftable;
-	*(const void ***)( (char *)this + 0x3C ) = BfmeAptScreenOnlineCustomMatchSecondaryVftable;
-
 	m_primarySort = 8;
 	m_secondarySort = 4;
 
