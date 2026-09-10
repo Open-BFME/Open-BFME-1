@@ -1,113 +1,218 @@
-// ?friend_moveFormationToPos@AIGroup@@AAEXPBUCoord3D@@W4CommandSourceType@@@Z
-// partial score=0.25 date=2026-09-02
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// stlport
-// Partial reconstruction of BFME AIGroup::friend_moveFormationToPos.
-// The Zero Hour implementation is the nearest named source twin; BFME replaced
-// its small per-unit offset walk with the large formation planner at 0x0015AB50.
-#include "PreRTS.h"
+// ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z
+// partial score=0.3 date=2026-09-09
+// Research-only semantic attempt for the BFME AIGroup formation planner.
+// Retail boundary: 0x0015AB50, 2416 bytes.
 
-#include "Common/Player.h"
-#include "GameLogic/AI.h"
-#include "GameLogic/AIPathfind.h"
-#include "GameLogic/Module/AIUpdate.h"
-
-static const Int PATH_DIAMETER_IN_CELLS = 6;
-
-void AIGroup::friend_moveFormationToPos(const Coord3D *pos, CommandSourceType cmdSource)
+struct Coord3D
 {
-	Real dx, dy;
-	Coord3D center;
-	if (!getCenter(&center))
-		return;
+	float x;
+	float y;
+	float z;
+};
 
-	PathNode *startNode = NULL;
-	PathNode *endNode = NULL;
-	Coord3D endPoint = *pos;
-	if (m_groundPath)
+class Overridable
+{
+public:
+	virtual ~Overridable();
+	const Overridable *getFinalOverride(void) const;
+	Overridable *m_nextOverride;
+};
+
+class ThingTemplate : public Overridable
+{
+public:
+};
+
+class Object;
+
+enum CommandSourceType { BFME_COMMAND_SOURCE };
+
+class SimpleObjectIterator
+{
+public:
+	SimpleObjectIterator();
+	virtual ~SimpleObjectIterator();
+	virtual Object *first();
+	virtual Object *next();
+	void insert(Object *obj, float numeric);
+	void sort(int order);
+};
+
+class Object
+{
+public:
+	const ThingTemplate *getTemplate(void) const
 	{
-		Coord3D startPoint = *m_groundPath->getFirstNode()->getPosition();
-		Real farEnoughSqr = sqr(PATH_DIAMETER_IN_CELLS * PATHFIND_CELL_SIZE_F);
-		PathNode *node;
-		for (node = m_groundPath->getFirstNode(); node; node = node->getNextOptimized())
-		{
-			dx = node->getPosition()->x - startPoint.x;
-			dy = node->getPosition()->y - startPoint.y;
-			if (dx * dx + dy * dy > farEnoughSqr)
-			{
-				startNode = node;
-				break;
-			}
-		}
-		endPoint = *m_groundPath->getLastNode()->getPosition();
-		for (node = m_groundPath->getFirstNode(); node; node = node->getNextOptimized())
-		{
-			dx = node->getPosition()->x - endPoint.x;
-			dy = node->getPosition()->y - endPoint.y;
-			if (dx * dx + dy * dy > farEnoughSqr)
-				endNode = node;
-		}
-		PathNode *tmpNode = endNode;
-		while (tmpNode)
-		{
-			if (tmpNode == startNode)
-				endNode = NULL;
-			tmpNode = tmpNode->getNextOptimized();
-		}
-		if (startNode == NULL || endNode == NULL)
-		{
-			m_groundPath->deleteInstance();
-			m_groundPath = NULL;
-			startNode = NULL;
-			endNode = NULL;
-		}
+		const ThingTemplate *tmpl = m_template;
+		if (tmpl == 0)
+			return 0;
+		if (tmpl->m_nextOverride)
+			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+		return tmpl;
 	}
 
-	std::list<Object *>::iterator i;
-	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
+	float getPosX(void) const { return m_position.x; }
+	float getPosY(void) const { return m_position.y; }
+	void *getAI(void) { return m_ai; }
+
+	private:
+	virtual ~Object();
+	const ThingTemplate *m_template;
+	unsigned char m_unreconstructed_08[0x38 - 0x08];
+	Coord3D m_position;
+	unsigned char m_unreconstructed_44[0x204 - 0x44];
+	void *m_ai;
+};
+
+struct BfmeListNodeBase
+{
+	BfmeListNodeBase *m_bfmeNext;
+	BfmeListNodeBase *m_bfmePrev;
+};
+
+struct BfmeMemberNode : public BfmeListNodeBase
+{
+	Object *m_bfmeValue;
+};
+
+class AIGroup
+{
+public:
+	void prepFollow(CommandSourceType cmdSource, int unused);
+
+private:
+	char m_bfmeHead[4];
+	BfmeListNodeBase *m_bfmeMembers;
+};
+
+struct BfmeFormationRecord
+{
+	BfmeFormationRecord() : m_columns(0), m_memberCount(0), m_active(0) { }
+
+	int m_columns;
+	unsigned char m_unreconstructed_04[0x120 - 0x04];
+	int m_memberCount;
+	Object *m_members[37];
+	unsigned char m_active;
+	unsigned char m_unreconstructed_1b9[0x1bc - 0x1b9];
+};
+
+struct BfmeFormationTable
+{
+	unsigned char m_unreconstructed_00[0xb0];
+	int m_defaultColumns;
+};
+
+struct BfmeAIFormationState
+{
+	unsigned char m_unreconstructed_00[0x14];
+	BfmeFormationTable *m_formationTable;
+};
+
+extern BfmeAIFormationState *TheAI;
+
+struct BfmeFormationUnitAI
+{
+	unsigned char m_unreconstructed_00[0x1cc];
+	void *m_locomotor;
+};
+
+static int bfmeFormationFootprint(const Object *obj)
+{
+	const ThingTemplate *tmpl = obj->getTemplate();
+	if (tmpl == 0)
+		return 1;
+
+	const unsigned char *raw = (const unsigned char *)tmpl;
+	int width = *(const int *)(raw + 0x43c);
+	int depth = *(const int *)(raw + 0x440);
+	int footprint = width * depth;
+	return footprint < 1 ? 1 : footprint;
+}
+
+void AIGroup::prepFollow(CommandSourceType cmdSource, int unused)
+{
+	(void)cmdSource;
+	(void)unused;
+
+	SimpleObjectIterator *nearCenter = new SimpleObjectIterator;
+	SimpleObjectIterator *nearFormation = new SimpleObjectIterator;
+	BfmeFormationRecord records[12];
+
+	int columns = TheAI->m_formationTable->m_defaultColumns;
+	if (columns < 2)
+		columns = 2;
+	if (columns > 6)
+		columns = 6;
+	for (int i = 0; i < 12; ++i)
+		records[i].m_columns = columns;
+
+	const float centerX = *(const float *)((const unsigned char *)this + 0x28);
+	const float centerY = *(const float *)((const unsigned char *)this + 0x2c);
+	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
+		it != m_bfmeMembers;
+		it = it->m_bfmeNext)
 	{
-		if ((*i)->isDisabledByType(DISABLED_HELD))
+		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
+		if (obj == 0)
 			continue;
-		Object *theUnit = *i;
-		AIUpdateInterface *ai = theUnit->getAIUpdateInterface();
-		Bool isDifferentFormation = false;
-		Coord2D offset;
-		if (isDifferentFormation)
-		{
-			Coord3D unitPos = *theUnit->getPosition();
-			offset.x = unitPos.x - center.x;
-			offset.y = unitPos.y - center.y;
-			theUnit->setFormationOffset(offset);
-		}
-		theUnit->getFormationOffset(&offset);
-		if (startNode)
-		{
-			std::vector<Coord3D> path;
-			PathNode *node = startNode;
-			while (node)
-			{
-				Coord3D dest = *node->getPosition();
-				dest.x += offset.x;
-				dest.y += offset.y;
-				path.push_back(dest);
-				if (node == endNode)
-					break;
-				node = node->getNextOptimized();
-			}
-			Coord3D dest = endPoint;
-			dest.x += offset.x;
-			dest.y += offset.y;
-			TheAI->pathfinder()->adjustDestination(theUnit, ai->getLocomotorSet(), &dest, NULL);
-			TheAI->pathfinder()->updateGoal(theUnit, &dest, LAYER_GROUND);
-			path.push_back(dest);
-			ai->aiFollowPath(&path, NULL, cmdSource);
-		}
-		else
-		{
-			Coord3D dest = endPoint;
-			dest.x += offset.x;
-			dest.y += offset.y;
-			ai->aiMoveToPosition(&dest, cmdSource);
-		}
+
+		float dx = obj->getPosX() - centerX;
+		float dy = obj->getPosY() - centerY;
+		float distance = dx * dx + dy * dy;
+		nearCenter->insert(obj, distance);
+		nearFormation->insert(obj, distance);
+		*(unsigned int *)((unsigned char *)obj + 0x31c) = 0;
 	}
+
+	nearCenter->sort(1);
+	nearFormation->sort(1);
+
+	int recordCount = 0;
+	for (Object *obj = nearCenter->first(); obj; obj = nearCenter->next())
+	{
+		BfmeFormationUnitAI *unitAI =
+			(BfmeFormationUnitAI *)obj->getAI();
+		if (unitAI == 0 || unitAI->m_locomotor == 0)
+			continue;
+
+		int footprint = bfmeFormationFootprint(obj);
+		if (footprint > 1)
+			++recordCount;
+	}
+
+	int selectedRecords = (recordCount + columns - 1) / columns;
+	if (selectedRecords < 1)
+		selectedRecords = 1;
+	if (selectedRecords > 12)
+		selectedRecords = 12;
+
+	int recordIndex = 0;
+	for (Object *obj = nearFormation->first(); obj && recordIndex < selectedRecords;
+		obj = nearFormation->next())
+	{
+		BfmeFormationUnitAI *unitAI =
+			(BfmeFormationUnitAI *)obj->getAI();
+		if (unitAI == 0 || unitAI->m_locomotor == 0)
+			continue;
+
+		BfmeFormationRecord &record = records[recordIndex];
+		int slot = record.m_memberCount;
+		if (slot >= 0 && slot < 36)
+		{
+			record.m_members[slot] = obj;
+			++record.m_memberCount;
+			*(unsigned int *)((unsigned char *)obj + 0x31c) =
+				(unsigned int)recordIndex;
+			*(float *)((unsigned char *)obj + 0x320) =
+				(float)(slot % record.m_columns);
+			*(float *)((unsigned char *)obj + 0x324) =
+				(float)(slot / record.m_columns);
+		}
+		if (record.m_memberCount >= 36)
+			++recordIndex;
+	}
+
+	delete nearFormation;
+	delete nearCenter;
 }
