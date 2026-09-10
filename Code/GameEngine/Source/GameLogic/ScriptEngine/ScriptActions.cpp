@@ -3575,15 +3575,25 @@ void ScriptActions::doTeamKill(const AsciiString& teamName)
 //-------------------------------------------------------------------------------------------------
 /** doPlayerKill */
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerKill@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
+class BfmeScriptEngine_getPlayerMaskFromAsciiString {
+public:
+	PlayerMaskType getPlayerMaskFromAsciiString(const AsciiString& name, Bool* outFlag);
+};
+
 void ScriptActions::doPlayerKill(const AsciiString& playerName)
 {
-	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
-
-	if (!pPlayer) {
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask) {
 		return;
 	}
-	pPlayer->killPlayer();
+
+	do {
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player) {
+			player->killPlayer();
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -5335,10 +5345,6 @@ void ScriptActions::doTransferTeamToPlayer(const AsciiString& teamName, const As
 // BFME resolves player-name selectors (incl. multi-player masks like "<All Players>")
 // via a 2-arg non-virtual helper that returns PlayerMaskType, then walks players with
 // getEachPlayerFromMask. Money lives at Player+0x48 (ZH natural +0x34 + 0x14 insert).
-class BfmeScriptEngine_getPlayerMaskFromAsciiString {
-public:
-	PlayerMaskType getPlayerMaskFromAsciiString(const AsciiString& name, Bool* outFlag);
-};
 struct BfmePlayerMoney {
 	UnsignedByte _pad[0x48];
 	Money m_money;
