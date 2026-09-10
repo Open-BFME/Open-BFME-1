@@ -384,6 +384,110 @@ static void hideOptionsGadgets(Bool doIt)
 	}
 }
 
+struct BfmeQuickMatchStopBody
+{
+	unsigned char _bfme_pad000[0x264];
+	GameWindow *m_264;
+	unsigned char _bfme_pad268[0x28C - 0x268];
+	GameWindow *m_28c;
+	unsigned char _bfme_pad290[4];
+	GameWindow *m_294;
+	unsigned char _bfme_pad298[4];
+	GameWindow *m_29c;
+	unsigned char _bfme_pad2a0[4];
+	GameWindow *m_2a4;
+
+	void stop(void);
+};
+
+class BfmeQuickMatchStopPeerRequest : public PeerRequest
+{
+public:
+	BfmeQuickMatchStopPeerRequest() : PeerRequest() {}
+	~BfmeQuickMatchStopPeerRequest() {}
+
+	unsigned char m_bfmeTail[4];
+};
+
+class BfmeQuickMatchGameSpyInfo
+{
+public:
+	virtual void slot00(void);
+	virtual void slot01(void);
+	virtual void slot02(void);
+	virtual void slot03(void);
+	virtual void slot04(void);
+	virtual void slot05(void);
+	virtual void slot06(void);
+	virtual void slot07(void);
+	virtual void slot08(void);
+	virtual void slot09(void);
+	virtual void slot10(void);
+	virtual void slot11(void);
+	virtual void slot12(void);
+	virtual void slot13(void);
+	virtual void slot14(void);
+	virtual void slot15(void);
+	virtual void slot16(void);
+	virtual void slot17(void);
+	virtual void slot18(void);
+	virtual void slot19(void);
+	virtual void slot20(void);
+	virtual void slot21(void);
+	virtual void slot22(void);
+	virtual void slot23(void);
+	virtual void slot24(void);
+	virtual void slot25(void);
+	virtual void slot26(void);
+	virtual void slot27(void);
+	virtual void slot28(void);
+	virtual void slot29(void);
+	virtual void slot30(void);
+	virtual void slot31(void);
+	virtual void slot32(void);
+	virtual void slot33(void);
+	virtual void slot34(void);
+	virtual void slot35(void);
+	virtual void slot36(void);
+	virtual void slot37(void);
+	virtual void slot38(void);
+	virtual void slot39(void);
+	virtual void slot40(void);
+	virtual void slot41(void);
+	virtual void slot42(void);
+	virtual void slot43(void);
+	virtual void slot44(void);
+	virtual void slot45(void);
+	virtual void slot46(void);
+	virtual void slot47(void);
+	virtual void slot48(void);
+	virtual void slot49(void);
+	virtual void slot50(void);
+	virtual void slot51(void);
+	virtual void slot52(void);
+	virtual void slot53(void);
+	virtual void slot54(void);
+	virtual void slot55(void);
+	virtual void slot56(void);
+	virtual void slot57(void);
+	virtual void slot58(void);
+	virtual Int addText(UnicodeString message, Color color, GameWindow *window);
+};
+
+void BfmeQuickMatchStopBody::stop(void)
+{
+	BfmeQuickMatchStopPeerRequest req;
+	*(int *)&req = 0x12;
+	TheGameSpyPeerMessageQueue->addRequest(req);
+	m_28c->winHide(TRUE);
+	m_294->winHide(TRUE);
+	m_2a4->winHide(TRUE);
+	m_29c->winHide(TRUE);
+	((BfmeQuickMatchHideOptionsGadgetsBody *)this)->hide(FALSE);
+	m_264->winHide(FALSE);
+	((BfmeQuickMatchGameSpyInfo *)TheGameSpyInfo)->addText(TheGameText->fetch("GUI:QMAborted"), GameSpyColor[GSCOLOR_DEFAULT], m_294);
+}
+
 static void enableOptionsGadgets(Bool doIt)
 {
 #ifdef PERF_TEST
