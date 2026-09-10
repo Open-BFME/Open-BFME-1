@@ -8,19 +8,21 @@ typedef unsigned short zoneStorageType;
 static void __fastcall resolveZones(Int sourceZone, Int targetZone,
 	zoneStorageType *zoneEquivalency, Int sizeOfZones)
 {
-	sourceZone = zoneEquivalency[sourceZone];
-	targetZone = zoneEquivalency[targetZone];
-	zoneStorageType finalZone;
-	if (targetZone < sourceZone)
-		finalZone = targetZone;
-	else
-		finalZone = sourceZone;
-
-	for (Int i = 0; i < sizeOfZones; ++i)
+	if ((sourceZone = zoneEquivalency[sourceZone]) !=
+		(targetZone = zoneEquivalency[targetZone]))
 	{
-		zoneStorageType zone = zoneEquivalency[i];
-		if (zone == targetZone || zone == sourceZone)
-			zoneEquivalency[i] = finalZone;
+		zoneStorageType finalZone;
+		if (targetZone < sourceZone)
+			finalZone = targetZone;
+		else
+			finalZone = sourceZone;
+
+		for (Int i = 0; i < sizeOfZones; ++i)
+		{
+			zoneStorageType zone = zoneEquivalency[i];
+			if (zone == targetZone || zone == sourceZone)
+				zoneEquivalency[i] = finalZone;
+		}
 	}
 }
 
@@ -33,7 +35,7 @@ static void flattenZones(zoneStorageType *zoneArray,
 		Int zone1 = zoneArray[i];
 		Int zone2 = zoneHierarchical[zone1];
 		zone1 = zoneArray[zone2];
-		while (zone1 != zone2)
+		while (zone2 != zone1)
 		{
 			zone2 = zoneHierarchical[zone1];
 			zone1 = zoneArray[zone2];
