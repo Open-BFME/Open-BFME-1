@@ -126,3 +126,24 @@ __declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *first, Q3SortElem16 *
 	*first = *last;
 	*last = temporary;
 }
+
+// STLport __make_heap for the same owning 16-byte record.
+// Retail 0x004749F0/116 ends at ret 0x00474A63; the partial-sort
+// helper calls it through ILT 0x32646. Adjust_heap is the existing
+// 283-byte body at 0x00474330, reached here through ILT 0x18ABB.
+void Q3AdjustHeap00474330(Q3SortElem16 *, int, int, Q3SortElem16, Q3SortCompare);
+
+void Q3MakeHeap004749F0(Q3SortElem16 *first, Q3SortElem16 *last,
+    Q3SortCompare comp, Q3SortElem16 *, int *)
+{
+    if (last - first < 2)
+        return;
+    int length = last - first;
+    int parent = (length - 2) / 2;
+    for (;;) {
+        Q3AdjustHeap00474330(first, parent, length, *(first + parent), comp);
+        if (parent == 0)
+            return;
+        --parent;
+    }
+}
