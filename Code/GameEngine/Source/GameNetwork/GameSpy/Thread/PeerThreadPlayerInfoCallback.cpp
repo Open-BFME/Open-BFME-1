@@ -45,6 +45,7 @@ typedef unsigned int UnsignedInt;
 
 enum RoomType
 {
+	TitleRoom,
 	GroupRoom,
 	StagingRoom
 };
