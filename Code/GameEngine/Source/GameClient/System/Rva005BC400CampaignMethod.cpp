@@ -88,3 +88,8 @@ CampaignManager::CampaignManager()
 void CampaignManager::rva005BC4C0()
 {
 }
+
+const char *CampaignManager::rva005BC4D0()
+{
+	return "CampaignManager";
+}
