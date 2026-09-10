@@ -105,17 +105,6 @@ UnsignedInt DamageFX::getDamageFXThrottleTime(DamageType t, const Object* source
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doDamageFX@DamageFX@@ present-unmatched
-void DamageFX::doDamageFX(DamageType t, Real damageAmount, const Object* source, const Object* victim) const
-{ 
-	ConstFXListPtr fx = getDamageFXList(t, damageAmount, source);
-	// since the victim is receiving the damage, it's the "primary" object.
-	// the source is the "secondary" object -- unused by most fx, but could be
-	// useful in some cases.
-	FXList::doFXObj(fx, victim, source);
-}
-
-//-------------------------------------------------------------------------------------------------
 // ?getDamageFXList@DamageFX@@ present-unmatched
 ConstFXListPtr DamageFX::getDamageFXList(DamageType t, Real damageAmount, const Object* source) const
 { 
