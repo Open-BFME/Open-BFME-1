@@ -1,51 +1,58 @@
 // cl: /DNDEBUG /MD /EHsc
-//
-// Open-BFME5: BaseUpgradeModuleData-shaped destructor sibling at retail
-// 0x00287380, 96 bytes. Same EH-unwind shape (3 tracked members) and same
-// installed vtable slot as BaseUpgradeModuleDataDestructorThunk.cpp's
-// ~BaseUpgradeModuleData, but the trailing members are two AudioEventRTS
-// (ILT 0x00026F35, see Audio/AudioEventRTSDtor.cpp) plus a small non-trivial
-// member whose destructor is pinned as
-// ??1AttributeModifierAuraUpdateModuleDataMemberC@@QAE@XZ.
+// Open-BFME5: AttributeModifierAuraUpdateModuleData dtor.
+// Four staggered members @+0x08/+0x0c/+0x24/+0x28.
 
-class BaseUpgradeModuleDataPrimaryBase
+class AttributeModifierAuraUpdateModuleDataMemberA
 {
 public:
-	virtual ~BaseUpgradeModuleDataPrimaryBase() {}
-
+	~AttributeModifierAuraUpdateModuleDataMemberA();
 private:
-	unsigned int m_04;
+	unsigned char m_pad[4];
+};
+
+class AttributeModifierAuraUpdateModuleDataMemberB
+{
+public:
+	~AttributeModifierAuraUpdateModuleDataMemberB();
+private:
+	unsigned char m_pad[4];
 };
 
 class AttributeModifierAuraUpdateModuleDataMemberC
 {
 public:
 	~AttributeModifierAuraUpdateModuleDataMemberC();
-
 private:
-	unsigned int m_data[2];
+	unsigned char m_pad[4];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
-class AudioEventRTS
+class AttributeModifierAuraUpdateModuleDataMemberD
 {
 public:
-	virtual ~AudioEventRTS();
-
+	~AttributeModifierAuraUpdateModuleDataMemberD();
 private:
-	char m_pad[0x70 - 4];
+	unsigned char m_pad[4];
+};
+
+class AttributeModifierAuraUpdateModuleDataBase
+{
+public:
+	virtual ~AttributeModifierAuraUpdateModuleDataBase() {}
+private:
+	unsigned char m_pad[4];
 };
 
 class __declspec(novtable) AttributeModifierAuraUpdateModuleData
-	: public BaseUpgradeModuleDataPrimaryBase
+	: public AttributeModifierAuraUpdateModuleDataBase
 {
 public:
 	virtual ~AttributeModifierAuraUpdateModuleData();
-
 private:
-	AttributeModifierAuraUpdateModuleDataMemberC m_08;
-	AudioEventRTS m_10;
-	AudioEventRTS m_80;
+	AttributeModifierAuraUpdateModuleDataMemberA m_a;
+	AttributeModifierAuraUpdateModuleDataMemberB m_b;
+	unsigned char m_gap[0x14];
+	AttributeModifierAuraUpdateModuleDataMemberC m_c;
+	AttributeModifierAuraUpdateModuleDataMemberD m_d;
 };
 
 // ??1AttributeModifierAuraUpdateModuleData@@UAE@XZ
