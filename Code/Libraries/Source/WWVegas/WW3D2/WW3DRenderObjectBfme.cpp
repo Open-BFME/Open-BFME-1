@@ -6,6 +6,7 @@
 
 class CameraClass;
 class RenderInfoClass;
+class LightEnvironmentClass;
 
 class RenderObjClass
 {
@@ -57,6 +58,7 @@ class DX8Wrapper
 {
 public:
 	static void Set_DX8_Render_State(unsigned long state, unsigned value);
+	static void Set_Light_Environment(LightEnvironmentClass *light_env);
 };
 
 class DX8MeshRendererClass
@@ -87,9 +89,6 @@ public:
 	virtual void Render_And_Clear(RenderInfoClass &rinfo);
 };
 
-extern void d_00909300(void);
-typedef void (__cdecl *SetLightEnvironment)(void *light_environment);
-
 class WW3D
 {
 public:
@@ -110,7 +109,8 @@ bool WW3D::Render(RenderObjClass &obj, RenderInfoClass &rinfo)
 	rinfo.Camera->Apply();
 	DX8Wrapper::Set_DX8_Render_State(8, 3);
 	if (rinfo.light_environment != 0)
-		((SetLightEnvironment)d_00909300)(rinfo.light_environment);
+		DX8Wrapper::Set_Light_Environment(
+			reinterpret_cast<LightEnvironmentClass *>(rinfo.light_environment));
 
 	TheDX8MeshRenderer->Set_Camera(rinfo.Camera);
 	obj.Render(rinfo);

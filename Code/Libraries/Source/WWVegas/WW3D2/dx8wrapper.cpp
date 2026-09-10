@@ -90,6 +90,12 @@
 
 #include "shdlib.h"
 
+// Keep the already-claimed out-of-line accessor emitted after this body
+// switches to BFME layout views; this anchor is never read by game logic.
+typedef float (LightEnvironmentClass::*BfmePointRadiusAccessor)(int) const;
+static volatile BfmePointRadiusAccessor BfmePointRadiusAccessorAnchor =
+	&LightEnvironmentClass::getPointOrad;
+
 const int DEFAULT_RESOLUTION_WIDTH = 640;
 const int DEFAULT_RESOLUTION_HEIGHT = 480;
 const int DEFAULT_BIT_DEPTH = 32;
@@ -3224,23 +3230,54 @@ void DX8Wrapper::Set_Light(unsigned index,const LightClass &light)
 //! directional lights to produce the lighting.
 /*! 5/27/02 KJM Added shader light environment support
 */
-// ?Set_Light_Environment@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Set_Light_Environment(LightEnvironmentClass* light_env)
 {
 	// Shader light environment support															*
 //	if (Light_Environment && light_env && (*Light_Environment)==(*light_env)) return;
 
+	if (Light_Environment == light_env && light_env &&
+		reinterpret_cast<unsigned char *>(light_env)[0])
+		return;
+
 	Light_Environment=light_env;
 
-	if (light_env) 
+	if (light_env)
 	{
-		int light_count = light_env->Get_Light_Count();
-		unsigned int color=Convert_Color(light_env->Get_Equivalent_Ambient(),0.0f);
+		// BFME adds a leading byte/padding word before the ZH payload.  This
+		// TU-local view preserves the real LightEnvironmentClass pointer and
+		// the one DX8Wrapper::Light_Environment storage definition.
+		struct BfmeInputLight
+		{
+			Vector3 direction;
+			Vector3 ambient;
+			Vector3 diffuse;
+			bool diffuse_rejected;
+			bool point;
+			Vector3 center;
+			float inner_radius;
+			float outer_radius;
+			Vector3 point_ambient;
+			Vector3 point_diffuse;
+		};
+		struct BfmeLightEnvironmentView
+		{
+			unsigned char prefix;
+			unsigned char padding[3];
+			int light_count;
+			char object_center[12];
+			BfmeInputLight input_lights[4];
+			Vector3 output_ambient;
+		};
+		BfmeLightEnvironmentView *bfme_light_env = reinterpret_cast<BfmeLightEnvironmentView *>(light_env);
+		typedef char InputLightSizeCheck[sizeof(BfmeInputLight) == 84 ? 1 : -1];
+		LightEnvironmentClass *payload = reinterpret_cast<LightEnvironmentClass *>(reinterpret_cast<char *>(light_env) + 4);
+		int light_count = payload->Get_Light_Count();
+		unsigned int color=Convert_Color(bfme_light_env->output_ambient,0.0f);
 		if (RenderStates[D3DRS_AMBIENT]!=color)
 		{
 			Set_DX8_Render_State(D3DRS_AMBIENT,color);
 //buggy Radeon 9700 driver doesn't apply new ambient unless the material also changes.
-#if 1
+#if 0
 			render_state_changed|=MATERIAL_CHANGED;
 #endif
 		}
@@ -3251,8 +3288,8 @@ void DX8Wrapper::Set_Light_Environment(LightEnvironmentClass* light_env)
 			::ZeroMemory(&light, sizeof(D3DLIGHT8));
 			
 			light.Type=D3DLIGHT_DIRECTIONAL;
-			(Vector3&)light.Diffuse=light_env->Get_Light_Diffuse(l);
-			Vector3 dir=-light_env->Get_Light_Direction(l);
+			(Vector3&)light.Diffuse=bfme_light_env->input_lights[l].diffuse;
+			Vector3 dir=-bfme_light_env->input_lights[l].direction;
 			light.Direction=(const D3DVECTOR&)(dir);
 
 			// (gth) TODO: put specular into LightEnvironment?  Much work to be done on lights :-)'
@@ -3260,17 +3297,17 @@ void DX8Wrapper::Set_Light_Environment(LightEnvironmentClass* light_env)
 				light.Specular.r = light.Specular.g = light.Specular.b = 1.0f;
 			}
 
-			if (light_env->isPointLight(l)) {
+			if (bfme_light_env->input_lights[l].point) {
 				light.Type = D3DLIGHT_POINT;
-				(Vector3&)light.Diffuse=light_env->getPointDiffuse(l);
-				(Vector3&)light.Ambient=light_env->getPointAmbient(l);
-				light.Position = (const D3DVECTOR&)light_env->getPointCenter(l);
-				light.Range = light_env->getPointOrad(l);
+				(Vector3&)light.Diffuse=bfme_light_env->input_lights[l].point_diffuse;
+				(Vector3&)light.Ambient=bfme_light_env->input_lights[l].point_ambient;
+				light.Position = (const D3DVECTOR&)bfme_light_env->input_lights[l].center;
+				light.Range = bfme_light_env->input_lights[l].outer_radius;
 				
 				// Inverse linear light 1/(1+D)
 				double a,b;
-				b = light_env->getPointOrad(l);
-				a = light_env->getPointIrad(l);
+				b = bfme_light_env->input_lights[l].outer_radius;
+				a = bfme_light_env->input_lights[l].inner_radius;
 
 //(gth) CNC3 Generals code for the attenuation factors is causing the lights to over-brighten
 //I'm changing the Attenuation0 parameter to 1.0 to avoid this problem.				
