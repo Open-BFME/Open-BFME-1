@@ -84,3 +84,7 @@ CampaignManager::CampaignManager()
 	m_currentRankPoints = 0;
 	m_difficulty = 1;
 }
+
+void CampaignManager::rva005BC4C0()
+{
+}
