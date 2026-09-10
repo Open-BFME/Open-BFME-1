@@ -87,7 +87,13 @@
 
 
 #include "meshgeometry.h"
+// This BFME TU allocates AABTreeClass through plain operator new (0x00881F30).
+// Keep the surrounding allocator macros intact for other class declarations.
+#pragma push_macro("W3DMPO_GLUE")
+#undef W3DMPO_GLUE
+#define W3DMPO_GLUE(ARGCLASS)
 #include "aabtree.h"
+#pragma pop_macro("W3DMPO_GLUE")
 #include "chunkio.h"
 #include "aabox.h"
 #include "obbox.h"
@@ -2045,45 +2051,76 @@ WW3DErrorType MeshGeometryClass::read_aabtree(ChunkLoadClass &cload)
 // ?MeshGeometryClass::Scale present-unmatched
 void MeshGeometryClass::Scale(const Vector3 &sc)
 {
-	WWASSERT(Vertex);
-	Vector3 * vert = Vertex->Get_Array();
-	
-	for (int i=0;i<VertexCount; i++) {
-		vert[i].X *= sc.X;
-		vert[i].Y *= sc.Y;
-		vert[i].Z *= sc.Z;
-	}
-		
-	BoundBoxMin.Scale(sc);
-	BoundBoxMax.Scale(sc);
-	BoundSphereCenter.Scale(sc);
-	
-	float max;
-	max = (sc.X > sc.Y)	? sc.X	: sc.Y;
-	max = (max > sc.Z)	? max		: sc.Z;
-	BoundSphereRadius *= max;
+	// The BFME MeshGeometry payload is not the ZH header layout used by the
+	// surrounding source.  Keep this view local so all storage remains owned by
+	// MeshGeometryClass and the existing AABTree/ShareBuffer callees stay typed.
+	struct BfmeMeshGeometryScaleView
+	{
+		char padding_00[0x18];
+		unsigned int flags;
+		char padding_1c[0x0c];
+		int vertex_count;
+		char padding_2c[4];
+		ShareBufferClass<Vector3> *vertex;
+		ShareBufferClass<Vector3> *vertex_norm;
+		char padding_38[0x30];
+		Vector3 bound_box_min;
+		Vector3 bound_box_max;
+		Vector3 bound_sphere_center;
+		float bound_sphere_radius;
+		AABTreeClass *cull_tree;
+	};
 
-	// If scaling uniformly normals are OK:
-	if (sc.X != sc.Y || sc.Y != sc.Z) {
-		Set_Flag(DIRTY_VNORMALS,true);
+	typedef char ScaleViewSizeCheck[sizeof(BfmeMeshGeometryScaleView) == 0x94 ? 1 : -1];
+	// Volatile float accesses retain retail x87 load/store order during scaling.
+	BfmeMeshGeometryScaleView *view =
+		reinterpret_cast<BfmeMeshGeometryScaleView *>(this);
+	Vector3 *vert = view->vertex->Get_Array();
+	for (int i = 0; i < view->vertex_count; ++i) {
+		vert[i].X = reinterpret_cast<const volatile float *>(&sc.X)[0] * vert[i].X;
+		*reinterpret_cast<volatile float *>(&vert[i].Y) *= sc.Y;
+		*reinterpret_cast<volatile float *>(&vert[i].Z) *= sc.Z;
 	}
-	// pnormals are plane equations...
-	Set_Flag(DIRTY_PLANES,true);
 
-	// the cull tree is invalid, release it and make a new one
-	if (CullTree) {
-		// If the scale is uniform, we can scale the cull tree, which is a lot faster than creating a new one
-		if (fabs(sc[0]-sc[1])<WWMATH_EPSILON && fabs(sc[0]-sc[2])<WWMATH_EPSILON) {
-			// create a copy of the old culltree
-			AABTreeClass *temp = NEW_REF(AABTreeClass, ());
-			*temp = *CullTree;
-			temp->Set_Mesh(this);
-			REF_PTR_SET(CullTree, temp);
-			REF_PTR_RELEASE(temp);
-			CullTree->Scale(sc[0]);
+	if (view->vertex_norm) {
+		Vector3 *norm = view->vertex_norm->Get_Array();
+		for (int i = 0; i < view->vertex_count; ++i) {
+			norm[i].X = reinterpret_cast<const volatile float *>(&sc.X)[0] * norm[i].X;
+			*reinterpret_cast<volatile float *>(&norm[i].Y) *= sc.Y;
+			*reinterpret_cast<volatile float *>(&norm[i].Z) *= sc.Z;
 		}
-		else {
-			REF_PTR_RELEASE(CullTree);
+	}
+
+	view->bound_box_min.X = reinterpret_cast<const volatile float *>(&sc.X)[0] * view->bound_box_min.X;
+	*reinterpret_cast<volatile float *>(&view->bound_box_min.Y) *= sc.Y;
+	*reinterpret_cast<volatile float *>(&view->bound_box_min.Z) *= sc.Z;
+	*reinterpret_cast<volatile float *>(&view->bound_box_max.X) *= sc.X;
+	*reinterpret_cast<volatile float *>(&view->bound_box_max.Y) *= sc.Y;
+	*reinterpret_cast<volatile float *>(&view->bound_box_max.Z) *= sc.Z;
+	*reinterpret_cast<volatile float *>(&view->bound_sphere_center.X) *= sc.X;
+	*reinterpret_cast<volatile float *>(&view->bound_sphere_center.Y) *= sc.Y;
+	*reinterpret_cast<volatile float *>(&view->bound_sphere_center.Z) *= sc.Z;
+
+	float max = (sc.X > sc.Y) ? sc.X : sc.Y;
+	max = (max > sc.Z) ? max : sc.Z;
+	view->bound_sphere_radius *= max;
+
+	if (sc.X != sc.Y || sc.Y != sc.Z) {
+		view->flags |= DIRTY_VNORMALS;
+	}
+	view->flags |= DIRTY_PLANES;
+
+	if (view->cull_tree) {
+		if (fabs(sc[0] - sc[1]) < WWMATH_EPSILON &&
+			fabs(sc[0] - sc[2]) < WWMATH_EPSILON) {
+			AABTreeClass *temp = NEW_REF(AABTreeClass, ());
+			*temp = *view->cull_tree;
+			temp->Set_Mesh(this);
+			REF_PTR_SET(view->cull_tree, temp);
+			REF_PTR_RELEASE(temp);
+			view->cull_tree->Scale(sc[0]);
+		} else {
+			REF_PTR_RELEASE(view->cull_tree);
 			Generate_Culling_Tree();
 		}
 	}
