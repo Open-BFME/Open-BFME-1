@@ -130,6 +130,35 @@ __declspec(naked) void *DebugAllocMemory(unsigned)
 	}
 }
 
+class BfmeDebugReport
+{
+public:
+  virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+  virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+  virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2C();
+  virtual void slot30(); virtual void slot34();
+  virtual BfmeDebugReport *slot38(const char *message);
+  virtual void slot3C(); virtual void slot40(); virtual void slot44(); virtual void slot48();
+  virtual void slot4C(int value);
+};
+
+class BfmeDebugManager
+{
+public:
+  virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+  virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+  virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2C();
+  virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3C();
+  virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4C();
+  virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5C();
+  virtual void slot60(); virtual void slot64(); virtual void slot68();
+  virtual BfmeDebugReport *slot6C(int first, int second);
+};
+
+extern void _bfme_debugRecordCallsite(int kind);
+
+#define TheBfmeDebug (*(BfmeDebugManager **)0x01336E5C)
+
 void *DebugReAllocMemory(void *oldPtr, unsigned newSize)
 {
   // Windows doesn't like ReAlloc with NULL handle/ptr...
@@ -151,7 +180,13 @@ void *DebugReAllocMemory(void *oldPtr, unsigned newSize)
     // fixed memory blocks) - go with Alloc/Free instead
     h=GlobalAlloc(GMEM_FIXED,newSize);
     if (!h)
-      DCRASH_RELEASE("Debug mem realloc failed");
+    {
+      _bfme_debugRecordCallsite(1);
+      TheBfmeDebug->slot60();
+      BfmeDebugReport *report=TheBfmeDebug->slot6C(0,0);
+      report=report->slot38("Debug mem realloc failed");
+      report->slot4C(1);
+    }
     unsigned oldSize=GlobalSize((HGLOBAL)oldPtr);
     memcpy((void *)h,oldPtr,oldSize<newSize?oldSize:newSize);
     GlobalFree((HGLOBAL)oldPtr);
