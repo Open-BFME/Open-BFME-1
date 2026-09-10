@@ -837,40 +837,6 @@ void W3DRadar::interpolateColorForHeight( RGBColor *color,
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 //-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
-// ??0W3DRadar@@QAE@XZ present-unmatched
-W3DRadar::W3DRadar( void )
-{
-
-	m_terrainTextureFormat = WW3D_FORMAT_UNKNOWN;
-	m_terrainImage = NULL;
-	m_terrainTexture = NULL;
-
-	m_overlayTextureFormat = WW3D_FORMAT_UNKNOWN;
-	m_overlayImage = NULL;
-	m_overlayTexture = NULL;
-
-	m_shroudTextureFormat = WW3D_FORMAT_UNKNOWN;
-	m_shroudImage = NULL;
-	m_shroudTexture = NULL;
-
-	m_textureWidth = RADAR_CELL_WIDTH;
-	m_textureHeight = RADAR_CELL_HEIGHT;
-
-	m_reconstructViewBox = TRUE;
-	m_viewAngle = 0.0f;
-	m_viewZoom = 0.0f;
-	for( Int i = 0; i < 4; i++ )
-	{
-
-		m_viewBox[ i ].x = 0;
-		m_viewBox[ i ].y = 0;
-
-	}  // end for
-
-}  // end W3DRadar
-
-//-------------------------------------------------------------------------------------------------
 /** Radar initialization */
 //-------------------------------------------------------------------------------------------------
 // ?init@W3DRadar@@UAEXXZ present-unmatched
