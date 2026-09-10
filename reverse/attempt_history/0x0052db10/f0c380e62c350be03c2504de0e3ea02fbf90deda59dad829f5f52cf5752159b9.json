@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f0c380e62c350be03c2504de0e3ea02fbf90deda59dad829f5f52cf5752159b9",
+  "symbol": "?bfmeGetDM@@YADPAXHPAVStringBaseG@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeGetDM@@YADPAXHPAVStringBaseG@@@Z\n// partial score=0.97 date=2026-09-10\n// 135/136. The whole shape matches: a count call, the two-sided bound check,\n// an sret StringBase<G> returned by value into the dead argument slot and fed\n// straight to `set` (retail reuses the sret return in eax, so the\n// [[bind-temporary-to-const-ref]] lever is NOT wanted here), then the temp's\n// destructor and the char return.\n// The single byte is [[zero-materialisation-is-unstable]]: retail keeps 0 in\n// EBX (push ebx / xor ebx,ebx) and uses it for both `cmp ecx,ebx` and the\n// return-0 (`mov al,bl`); MSVC never allocates the register and uses immediates,\n// saving the push/pop but costing the match.\nclass StringBaseG\n{\npublic:\n\tvoid set(const StringBaseG &other);\n\n\t~StringBaseG() { releaseBuffer(); }\n\n\tvoid *m_bfmeBufDM;\n\nprivate:\n\tvoid releaseBuffer();\n};\n\nextern \"C\" int __cdecl bfmeCountDM(void *ctx);\nextern \"C\" StringBaseG __cdecl bfmeFetchDM(void *ctx, int index, int mode);\n\nchar __cdecl bfmeGetDM(void *ctx, int index, StringBaseG *out)\n{\n\tint count = bfmeCountDM(ctx);\n\n\tif (index < 0 || index >= count)\n\t\treturn 0;\n\n\tout->set(bfmeFetchDM(ctx, index, 2));\n\n\treturn 1;\n}\n"
+}
