@@ -87,29 +87,17 @@ ScienceStore::~ScienceStore()
 	m_sciences.clear();
 }
 
-//-----------------------------------------------------------------------------
-// ?reset@ScienceStore@@ present-unmatched
-void ScienceStore::reset()
+// Keep ScienceInfo's STLport erase instantiation in this TU. The retail image
+// carries the same COMDAT at several unrelated call sites; moving reset to its
+// BFME-layout TU must not drop those already-matched duplicate rows.
+__declspec(noinline) void scienceStoreRetainVectorErase(
+	std::vector<ScienceInfo *> &values,
+	std::vector<ScienceInfo *>::iterator position)
 {
-	// nope.
-	//m_sciences.clear();
-
-	// go through all sciences and delete any overrides
-	for (ScienceInfoVec::iterator it = m_sciences.begin(); it != m_sciences.end(); /*++it*/)
-	{
-		ScienceInfo* si = *it;
-		Overridable* temp = si->deleteOverrides();
-		if (!temp)
-		{
-			it = m_sciences.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
+	values.erase(position);
 }
 
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ScienceType ScienceStore::getScienceFromInternalName(const AsciiString& name) const
 {
@@ -407,4 +395,3 @@ void INI::parseScienceDefinition( INI* ini )
 {
 	ScienceStore::friend_parseScienceDefinition(ini);
 }
-
