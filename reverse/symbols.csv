@@ -86682,3 +86682,9 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isTimeFrozenDebugIlt@BfmeScriptEngineDebugFreezeIlt@@QAE_NXZ,0x0003F23D,ILT stub for the real isTimeFrozenDebug@ScriptEngine body at 0x00336F20; W3DTankDraw::doDrawModule caller routes through the incremental-link thunk
 ?isTimeFrozenScriptIlt@BfmeScriptEngineScriptFreezeIlt@@QAE_NXZ,0x00003783,ILT stub used by GameEngine::update and by W3DTankDraw::doDrawModule for the real ScriptEngine client-frame-frozen body at 0x00336F50
 ??$_M_find@VAsciiString@@@?$_Rb_tree@VAsciiString@@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@UAsciiComparator@@V?$allocator@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@1@ABVAsciiString@@@Z,0x00022930,GameSpyInfo::playerLeftGroupRoom find call +0x2a; ILT to matched STLport _M_find body 0x004F18C0; constructor vtable slot 17 and named player-left callbacks prove the PlayerInfoMap instantiation
+?move@Rva001B9D00Mover@@QAEXPAXHHH@Z,0x0002CC3C,ILT thunk to the 972B body at 0x001B9D00; appearance-switch mover reached from 0x001BC820
+?move@Rva001BB530Mover@@QAEXPAXHHH@Z,0x00019F06,ILT thunk to the body at 0x001BB530; appearance-switch mover reached from 0x001BC820
+?move@Rva001BC560Mover@@QAEXPAXHHH@Z,0x00020914,ILT thunk to the 210B body at 0x001BC560; appearance-switch mover reached from 0x001BC820
+?move@Rva001BB0D0Mover@@QAEXPAXHHH@Z,0x00032A29,ILT thunk to the 890B body at 0x001BB0D0; appearance-switch mover reached from 0x001BC820
+?behavior@Rva001BA1C0Handler@@QAEXPAXPAX@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; post-move behaviour handler reached from 0x001BC820
+?test@Rva00270360Query@@QAE_NXZ,0x00023795,ILT thunk to the 212B body at 0x00270360; AI predicate reached from 0x001BC820
