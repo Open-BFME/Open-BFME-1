@@ -86778,3 +86778,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??0Rva7F4CC0ConstructorThunk@@QAE@XZ,0x007F4CC0,Existing matched52B object-symbol constructor; caller7FA7B6; zero primary20B and secondary14 vtable11296B0 verified
 ?dispatch@Rva00479210GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x0003D07D,route=0x00479210; full22B real helper with optionaldelegate1DC and vslot8; caller47CA19
 ?dispatch@Rva004791F0GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x00003148,route=0x004791F0; full22B real helper with optionaldelegate1DC and vslot4; caller47CA59
+?checkForDrag@Mouse@@IAEXXZ,0x005A4370,Full109B matched helper; processMouseEvent5A46FC via3EB80; threebuttondrag predicates and ECX preserved; canonicalMouse body verified
