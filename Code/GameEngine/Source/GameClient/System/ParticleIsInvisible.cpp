@@ -1,11 +1,7 @@
-// ?d_005c31a0@@YAXXZ
-// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// Retail 0x005C31A0 (91 bytes). This clean reconstruction matches all 91 body
-// bytes; the compiler emits the two switch tables immediately afterward.
-// The current BFME Particle::isInvisible source is shader/color based and does
-// not match this body, so the authentic method spelling remains unresolved.
-// The names below describe the recovered ABI layout only.
+// ?isInvisible@Particle@@QAE_NXZ
+// Open-BFME: Particle::isInvisible, retail 0x005C31A0, 91 bytes.
+// The reference Particle declaration and the retail module dispatch identify this body.
 
 typedef bool Bool;
 
@@ -61,10 +57,10 @@ static __forceinline Bool callParticleInvisible(ParticleVisibilityModule *module
 	return module->isInvisible(type);
 }
 
-class Rva005C31A0ParticleLike
+class Particle
 {
 public:
-	Bool evaluateVisibility();
+	Bool isInvisible();
 
 private:
 	unsigned char m_unmodelled_000[0x4C];
@@ -76,7 +72,7 @@ private:
 	ParticleVisibilityModule *m_specialModule;
 };
 
-Bool Rva005C31A0ParticleLike::evaluateVisibility()
+Bool Particle::isInvisible()
 {
 	if (m_renderObject)
 		return false;
