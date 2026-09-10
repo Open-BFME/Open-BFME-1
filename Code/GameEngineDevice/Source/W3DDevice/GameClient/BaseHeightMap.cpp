@@ -3623,16 +3623,50 @@ duplicate:
 //=============================================================================
 /** Gets the static diffuse color value for a terrain vertex.*/
 //=============================================================================
-// ?getStaticDiffuse@BaseHeightMapRenderObjClass@@QAEHHH@Z present-unmatched
+struct BfmeStaticDiffuseGlobalData
+{
+	char m_padding0[0xA04];
+	Coord3D m_terrainLightPos[4];
+	char m_paddingA34[0xA58 - 0xA34];
+	Int m_numGlobalLights;
+};
+
+class BfmeStaticDiffuseWorldHeightMap
+{
+public:
+	inline Int getBorderSizeInline(void) const { return m_borderSize; }
+	Int getXExtent(void) { return m_width; }
+	Int getYExtent(void) { return m_height; }
+
+	inline unsigned short getHeight(Int xIndex, Int yIndex)
+	{
+		Int ndx = (yIndex*m_width)+xIndex;
+		if ((ndx>=0) && (ndx<m_dataSize) && m_data)
+			return(((unsigned short *)m_data)[ndx]);
+		else
+			return(0);
+	};
+
+private:
+	char m_padding0[0x08];
+	Int m_width;
+	Int m_height;
+	Int m_borderSize;
+	char m_padding14[0x0C];
+	Int m_dataSize;
+	UnsignedByte *m_data;
+};
+
 Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
-{	
+{ 	
+	#define BFME_STATIC_DIFFUSE_MAP ((BfmeStaticDiffuseWorldHeightMap *)m_map)
 
 	if (x<0) x = 0;
 	if (y<0) y = 0;
-	if (x >= m_map->getXExtent())
-		x=m_map->getXExtent()-1;
-	if (y >= m_map->getYExtent())
-		y=m_map->getYExtent()-1;
+	if (x >= BFME_STATIC_DIFFUSE_MAP->getXExtent())
+		x=BFME_STATIC_DIFFUSE_MAP->getXExtent()-1;
+	if (y >= BFME_STATIC_DIFFUSE_MAP->getYExtent())
+		y=BFME_STATIC_DIFFUSE_MAP->getYExtent()-1;
 
 	if (m_map == NULL) {
 		return(0);
@@ -3644,28 +3678,29 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 
 	vn0 = y-cellOffset;
 	vp1 = y+cellOffset;
-	if (vp1 >= m_map->getYExtent())
-		vp1=m_map->getYExtent()-1;
+	if (vp1 >= BFME_STATIC_DIFFUSE_MAP->getYExtent())
+		vp1=BFME_STATIC_DIFFUSE_MAP->getYExtent()-1;
 	if (vn0<0) vn0 = 0;
 	un0 = x-cellOffset;
 	up1 = x+cellOffset;
 	if (un0 < 0)
 		un0=0;
-	if (up1 >= m_map->getXExtent())
-		up1=m_map->getXExtent()-1;
+	if (up1 >= BFME_STATIC_DIFFUSE_MAP->getXExtent())
+		up1=BFME_STATIC_DIFFUSE_MAP->getXExtent()-1;
 
 	Vector3 lightRay[MAX_GLOBAL_LIGHTS];
 	const Coord3D *lightPos;
 
-	for (Int lightIndex=0; lightIndex < TheGlobalData->m_numGlobalLights; lightIndex++)
+	for (Int lightIndex=0; lightIndex <
+		((const BfmeStaticDiffuseGlobalData *)TheWritableGlobalData)->m_numGlobalLights; lightIndex++)
 	{
-		lightPos=&TheGlobalData->m_terrainLightPos[lightIndex];
+		lightPos=&((const BfmeStaticDiffuseGlobalData *)TheWritableGlobalData)->m_terrainLightPos[lightIndex];
 		lightRay[lightIndex].Set(-lightPos->x,-lightPos->y,	-lightPos->z);
 	}
 
 	//top-left sample
-	l2r.Set(2*MAP_XY_FACTOR,0,MAP_HEIGHT_SCALE*(m_map->getHeight(up1, y) - m_map->getHeight(un0, y)));
-	n2f.Set(0,2*MAP_XY_FACTOR,MAP_HEIGHT_SCALE*(m_map->getHeight(x, vp1) - m_map->getHeight(x, vn0)));
+	l2r.Set(2*MAP_XY_FACTOR,0,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(up1, y) - BFME_STATIC_DIFFUSE_MAP->getHeight(un0, y)));
+	n2f.Set(0,2*MAP_XY_FACTOR,MAP_HEIGHT_SCALE*(BFME_STATIC_DIFFUSE_MAP->getHeight(x, vp1) - BFME_STATIC_DIFFUSE_MAP->getHeight(x, vn0)));
 	
 	Vector3::Normalized_Cross_Product(l2r,n2f, &normalAtTexel);
 
@@ -3673,7 +3708,7 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 	vertex.x=ADJUST_FROM_INDEX_TO_REAL(x);
 	vertex.y=ADJUST_FROM_INDEX_TO_REAL(y);
 
-	vertex.z=  ((float)m_map->getHeight(x,y))*MAP_HEIGHT_SCALE;
+	vertex.z=  ((float)BFME_STATIC_DIFFUSE_MAP->getHeight(x,y))*MAP_HEIGHT_SCALE;
 	vertex.u1=0;
 	vertex.v1=0;
 	vertex.u2=1;
@@ -3691,6 +3726,7 @@ Int BaseHeightMapRenderObjClass::getStaticDiffuse(Int x, Int y)
 		doTheLight(&vertex, lightRay, &normalAtTexel, NULL, 1.0f);
 	}
 	return vertex.diffuse;
+	#undef BFME_STATIC_DIFFUSE_MAP
 }
 
 //=============================================================================

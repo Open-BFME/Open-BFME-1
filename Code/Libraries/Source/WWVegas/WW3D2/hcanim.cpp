@@ -666,6 +666,7 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
 // ?HCompressedAnimClass::Get_Transform present-unmatched
+
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
@@ -675,10 +676,10 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 		{
 			TimeCodedMotionChannelClass * qchan = NodeMotion[pividx].tc.Q;
 			if (qchan) {
-				Quaternion q;
 				uint32 * data = qchan->Data;
 				uint32 pidx;
 				uint32 tc0 = frame;
+				Quaternion q;
 				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
 					int rightIdx = (int)qchan->NumTimeCodes;
 					int leftIdx = 0;
@@ -708,13 +709,13 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 				uint32 p2idx;
 				if (pidx == ((qchan->NumTimeCodes - 1) * qchan->PacketSize)) {
 					const float32 * vec = (const float32 *)&data[pidx + 1];
-					q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
+					q.Set(vec[0], vec[1], vec[2], vec[3]);
 				} else {
 					p2idx = pidx + qchan->PacketSize;
 					uint32 time = data[p2idx];
 					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
 						const float32 * vec = (const float32 *)&data[pidx + 1];
-						q = Quaternion(vec[0], vec[1], vec[2], vec[3]);
+						q.Set(vec[0], vec[1], vec[2], vec[3]);
 					} else {
 						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
