@@ -46,7 +46,7 @@ extern void __cdecl Rva009AFEC0FilterHoriz(int, unsigned char *, int);
 // row is the candidate; no new pin needed).
 extern void __cdecl bfmeFilterBlockMmx(void *, void *, int, void *);
 extern void __cdecl d_009c2620(void);
-extern void __cdecl d_009c2320(void);
+extern "C" void __cdecl Rva009C2320Vp6FilterDiag4(void *, void *, void *, int, int, int *);
 extern void __cdecl d_009bebb0(void);
 extern void __cdecl d_009bfa40(void);
 extern void __cdecl d_009b9700(void);
@@ -108,7 +108,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
 		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
 		g_bfmeCodecDispatch.slot[16] = (BfmeDispatchFn)&d_009c2620;
-		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&d_009c2320;
+		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&Rva009C2320Vp6FilterDiag4;
 		g_bfmeCodecDispatch.slot[10] = (BfmeDispatchFn)&d_009bebb0;
 		g_bfmeCodecDispatch.slot[13] = (BfmeDispatchFn)&d_009bfa40;
 		g_bfmeCodecDispatch.slot[21] = (BfmeDispatchFn)&d_009b9700;

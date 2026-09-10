@@ -86780,3 +86780,11 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?dispatch@Rva00479210GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x0003D07D,route=0x00479210; full22B real helper with optionaldelegate1DC and vslot8; caller47CA19
 ?dispatch@Rva004791F0GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x00003148,route=0x004791F0; full22B real helper with optionaldelegate1DC and vslot4; caller47CA59
 ?checkForDrag@Mouse@@IAEXXZ,0x005A4370,Full109B matched helper; processMouseEvent5A46FC via3EB80; threebuttondrag predicates and ECX preserved; canonicalMouse body verified
+Vp6FilterEdgeTagTable,0x00ED8158,VP6 diag4 filter per-selector edge tag table
+Vp6FilterConst8840,0x00ED8840,VP6 diag4 filter xmm constant table +0x00
+Vp6FilterConst8850,0x00ED8850,VP6 diag4 filter xmm constant table +0x10
+Vp6FilterConst8860,0x00ED8860,VP6 diag4 filter mm constant table +0x20
+Vp6FilterConst8870,0x00ED8870,VP6 diag4 filter mm constant table +0x30
+Vp6FilterConst8880,0x00ED8880,VP6 diag4 filter mm constant table +0x40
+Vp6FilterConst8890,0x00ED8890,VP6 diag4 filter mm constant table +0x50
+Vp6FilterConst88A0,0x00ED88A0,VP6 diag4 filter mm constant table +0x60
