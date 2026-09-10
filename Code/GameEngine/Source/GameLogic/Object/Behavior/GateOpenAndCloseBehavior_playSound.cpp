@@ -1,5 +1,3 @@
-// ?d_001fc6b0@@YAXXZ
-// partial score=0.999 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 class AsciiString
@@ -13,7 +11,7 @@ enum ObjectID
 	OBJECT_ID_UNUSED = 0
 };
 
-// BFME's AudioEventRTS object is 0x70 bytes at this call site.  This local
+// BFME's AudioEventRTS object is 0x70 bytes at this call site. This local
 // view keeps the constructor and scalar destructor ABI while preserving that
 // stack footprint.
 class AudioEventRTS
@@ -109,8 +107,6 @@ private:
 	bool m_audioPlaying;
 };
 
-// The helper is called after a gate state change to replace the event for the
-// transition currently represented by m_state.
 void GateOpenAndCloseBehavior::playSound()
 {
 	TheAudioClientUpdate->removeAudioEvent(m_audioHandle);
