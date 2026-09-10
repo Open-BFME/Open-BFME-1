@@ -1,10 +1,12 @@
-// ?Compute_Ram_Size@MeshMatDescClass@@QAEHXZ
-// partial score=0.94 date=2026-09-08
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Open-BFME: MeshMatDescClass::Compute_Ram_Size at retail RVA 0x00929BE0.
+// MeshModelClass::Compute_Ram_Size at 0x0096C9B0 calls this body for both
+// material descriptions, which identifies the generated placeholder.
 
 class BfmeThingNH
 {
 public:
+	virtual void Release_Virtual(void) = 0;
+
 	int bfmeSizeNH(void);
 
 	void Add_Ref(void)
@@ -15,13 +17,11 @@ public:
 	void Release_Ref(void)
 	{
 		if (--m_refs == 0) {
-			void (**vtable)(BfmeThingNH *) = reinterpret_cast<void (**)(BfmeThingNH *)>(this);
-			vtable[0](this);
+			Release_Virtual();
 		}
 	}
 
-	private:
-	void *m_vtable;
+private:
 	int m_refs;
 };
 
@@ -29,15 +29,29 @@ template <class T>
 class BfmeBuffer
 {
 public:
-	T **Array(void) const
+	T **Get_Array(void)
 	{
-		return *reinterpret_cast<T ** const *>(reinterpret_cast<const char *>(this) + 8);
+		return m_array;
 	}
 
-	int Count(void) const
+	int Get_Count(void)
 	{
-		return *reinterpret_cast<const int *>(reinterpret_cast<const char *>(this) + 0x10);
+		return m_count;
 	}
+
+	T *Get_Element(int index)
+	{
+		if (Get_Array()[index] != 0) {
+			Get_Array()[index]->Add_Ref();
+		}
+		return Get_Array()[index];
+	}
+
+private:
+	char m_prefix[8];
+	T **m_array;
+	char m_gap[4];
+	int m_count;
 };
 
 class MeshMatDescClass
@@ -64,8 +78,8 @@ private:
 
 int MeshMatDescClass::Compute_Ram_Size(void)
 {
-	const char *object = reinterpret_cast<const char *>(this);
 	int size = 0xf4;
+	const char *object = reinterpret_cast<const char *>(this);
 
 #define ADD_SHARED_BUFFER_SIZE(offset, element_size) \
 	do { \
@@ -94,26 +108,27 @@ int MeshMatDescClass::Compute_Ram_Size(void)
 		}
 
 		if (m_texture_array[pass * 2] != 0) {
-			size += m_texture_array[pass * 2]->Count() * 4;
+			size += m_texture_array[pass * 2]->Get_Count() * 4;
 		}
 
 		if (m_texture_array[pass * 2 + 1] != 0) {
-			size += m_texture_array[pass * 2 + 1]->Count() * 4;
+			size += m_texture_array[pass * 2 + 1]->Get_Count() * 4;
 		}
 
 		if (m_material_array[pass] != 0) {
-			size += m_material_array[pass]->Count() * 4;
+			size += m_material_array[pass]->Get_Count() * 4;
 
-			for (int index = 0; index < m_material_array[pass]->Count(); ++index) {
-				BfmeThingNH *material = m_material_array[pass]->Array()[index];
-				if (material != 0) {
-					material->Add_Ref();
-				}
+			for (int index = 0; index < m_material_array[pass]->Get_Count(); ++index) {
+				BfmeThingNH *material = m_material_array[pass]->Get_Element(index);
 				if (material != 0) {
 					size += material->bfmeSizeNH();
 					material->Release_Ref();
 				}
 			}
+		}
+
+		if (m_shader_array[pass] != 0) {
+			size += m_shader_array[pass]->Get_Count() * 4;
 		}
 	}
 
