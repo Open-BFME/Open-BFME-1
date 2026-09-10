@@ -1,187 +1,90 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-class __declspec(novtable) INI
+////////////////////////////////////////////////////////////////////////////////
+//	(c) 2001-2003 Electronic Arts Inc.																//
+////////////////////////////////////////////////////////////////////////////////
+
+// Real C++ body recovered from the canonical donor:
+// reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameClient/System/CampaignManager.cpp
+// The donor is the named Campaign parser registered by the Campaign block.
+// Retail body: Code/masm_dumps/INI_parseCampaignDefinition_5BCF20.asm (172B).
+
+#include "PreRTS.h"
+#include "Common/INI.h"
+#include "GameClient/CampaignManager.h"
+
+// The retail callee at 0x005BCBF0 is generic in the ledger.  Its raw
+// prologue/epilogue and this caller prove the ABI, but not the historical
+// method spelling; keep the call's identity address-derived with a direct
+// body pin. Full340B ends5BCD44CC; takes a by-value4B AsciiString and ret4.
+// It removes any same-name entry before allocating and registering a new
+// 0x18-byte campaign. This is not a borrowed lookup.
+class Rva005BCBF0CampaignHelper
 {
 public:
-    static void parseCampaignDefinition(class INI *);
+	Campaign *rva005BCBF0(AsciiString name);
+};
+
+
+extern "C" unsigned int __cdecl strlen(const char *text);
+#pragma intrinsic(strlen)
+
+// CampaignManager's retail local uses the WWLib pointer-and-length setter;
+// keep this layout shim TU-local so the shared AsciiString header is untouched.
+class RetailLayoutString
+{
+public:
+	RetailLayoutString() : m_data(0) {}
+	~RetailLayoutString() { releaseBuffer(); }
+	void set(const char *text, int length);
+	const char *str() const;
+
+private:
+	void releaseBuffer();
+	void *m_data;
 };
 
 // ?parseCampaignDefinition@INI@@SAXPAV1@@Z
-__declspec(naked) void INI::parseCampaignDefinition(class INI *)
+void INI::parseCampaignDefinition(INI *ini)
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x97
-        __emit 0x03
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x56
-        __emit 0x57
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x20
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x19
-        __emit 0x3a
-        __emit 0x29
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xc8
-        __emit 0x8d
-        __emit 0x71
-        __emit 0x01
-        __emit 0x8a
-        __emit 0x11
-        __emit 0x41
-        __emit 0x84
-        __emit 0xd2
-        __emit 0x75
-        __emit 0xf9
-        __emit 0x2b
-        __emit 0xce
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x51
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xe8
-        __emit 0xa8
-        __emit 0xad
-        __emit 0x2c
-        __emit 0x00
-        __emit 0xa1
-        __emit 0xb0
-        __emit 0x4c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x29
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xce
-        __emit 0xab
-        __emit 0x2c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xb0
-        __emit 0x4c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x80
-        __emit 0x40
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x68
-        __emit 0x90
-        __emit 0xf5
-        __emit 0x10
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0xf6
-        __emit 0x50
-        __emit 0x29
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x85
-        __emit 0xa9
-        __emit 0x2c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5f
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-    }
+	RetailLayoutString name;
+	Campaign *campaign;
+
+	// read the name
+	const char *c = ini->getNextToken();
+	int length = c ? (int)strlen(c) : 0;
+	name.set(c, length);
+
+	// Parse only when the campaign manager exists.
+	DEBUG_ASSERTCRASH(TheCampaignManager, ("parseCampaignDefinition: Unable to Get TheCampaignManager\n"));
+	if (!TheCampaignManager)
+		return;
+
+	// The callee's semantic method name is not proven by its generic ledger row.
+	// Its thiscall/value-argument ABI is established by the raw body and caller.
+	campaign = ((Rva005BCBF0CampaignHelper *)TheCampaignManager)->rva005BCBF0(*(AsciiString *)&name);
+
+	// sanity
+	DEBUG_ASSERTCRASH(campaign, ("parseCampaignDefinition: Unable to allocate campaign '%s'\n", name.str()));
+
+	// parse the ini definition
+	ini->initFromINI(campaign, TheCampaignManager->getFieldParse());
 }
