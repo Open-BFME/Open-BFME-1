@@ -1,6 +1,7 @@
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
-// partial score=0.72 date=2026-09-10
-// cl: /O2 /arch:SSE2
+// partial score=0.85 date=2026-09-10
+// ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
+// cl: /O2
 //
 // Open-BFME5: VP6 postprocessor band deblock -- horizontal pass (loop 1)
 // then vertical pass (loop 2) over one 8-pixel-wide fragment column strip.
@@ -43,6 +44,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 	unsigned int frag;
 
 #define CTX (*(Rva009BEBB0Vp6PostProc * volatile *)&ctx)
+#define PV(x) (*(volatile unsigned int *)&x)
 
 	srcHome = src;
 	srcPtr = src;
@@ -411,10 +413,10 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 
 	// --- loop 2: vertical edge pass over the already-filtered destination ---
 	{
-		unsigned int rewind = 8 - stride * 8 - count * 8;
+		unsigned int rewind = 8 - PV(stride) * 8 - PV(count) * 8;
 		dstPtr = dstPtr + rewind;
 		srcPtr = dstPtr;
-		qIndex = start;
+		qIndex = PV(start);
 		end = end - 1;
 
 		while (qIndex < end)
@@ -823,7 +825,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 				}
 
 				CTX->m_fragmentVariances[qIndex] += out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
-				CTX->m_fragmentVariances[qIndex + 1] += out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
+				CTX->m_fragmentVariances[qIndex + 1] += out[6] + out[7] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
 			}
 
 			++qIndex;
