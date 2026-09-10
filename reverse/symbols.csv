@@ -10112,6 +10112,7 @@ name,address,notes
 ??_7WanderAIUpdateModuleDataVtbl@@6B@,0x0108A5A8,WanderAIUpdate vtbl
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
+??_7WeaponModeSpecialPowerUpdateModuleDataBase@@6B@,0x010B7D40,WeaponModeSpecialPowerUpdateModuleDataBase vtable installed by its clean constructor
 ??_7_bfme_AptGameWindow@@6BGameWindow@@@,0x010F711C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
 ??_7_bfme_AptGameWindow@@6BGen_dtor_004654c0Base@@@,0x010F7118,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
 ??_7failure@ios_base@_STL@@6B@,0x00D2EBA4,retail STLport ios_base::failure vtable with matching RTTI complete-object locator
