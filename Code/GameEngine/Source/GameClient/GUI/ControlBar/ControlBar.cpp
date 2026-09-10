@@ -2325,6 +2325,95 @@ void ControlBar::setPortraitByImage( const Image *image )
 // ?setPortraitByObject@ControlBar@@IAEXPAVObject@@@Z
 // Body in ControlBar_setPortraitByObject.asm (exact 739B retail).
 
+// ControlBar::populateBeacon, retail 0x004A3830, 416 bytes.  The callback is
+// the BEACON arm of switchToContext: its three function-local name keys and
+// the reference ControlBarBeacon.cpp body identify the method.  BFME keeps
+// the local-owner test and three-window visibility order.
+// BFME's Object exposes getDrawable at vtable+0x28 (slot 10): Object's retail
+// ctor at 0x001D29A0 stores vtable 0x0109EE58, and the independently matched
+// 0x001BE440 body reads the +0x80 m_drawable field.  This callback uses the
+// same proven local virtual view used by other BFME Object call sites.
+class BfmeBeaconObjectGetDrawable
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot05(void) = 0;
+	virtual void slot06(void) = 0;
+	virtual void slot07(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot09(void) = 0;
+	virtual Drawable *getDrawable(void) const = 0;
+};
+
+// The caption callsite targets the already-real 58-byte body at 0x00416BD0.
+// Its canonical Drawable spelling is still present-unmatched, so retain the
+// independently matched address-derived ABI view rather than adding a pin.
+// The raw body proves MSVC's hidden UnicodeString return storage at [esp+0xc]
+// and returns that storage pointer in eax (ret 4).
+class Rva00416BD0
+{
+public:
+	UnicodeString getName(void);
+};
+
+// The portrait-looking ILT at 0x0002262E is not the named
+// ControlBar::setPortraitByObject body: it jumps to the already matched 3-byte
+// Gen_0049cfe0::m(int) body at 0x0049CFE0, whose raw body is ret 4.  The old
+// AAE setPortraitByObject spelling therefore is not asserted here; call the
+// existing RVA owner with its independently established thiscall ABI.
+class Gen_0049cfe0
+{
+public:
+	void m(Int value);
+};
+
+void ControlBar::populateBeacon( Object *beacon )
+{
+
+	// Preserve the retail no-op member call and its one-argument ABI.
+	((Gen_0049cfe0 *)this)->m((Int)beacon);
+
+	static NameKeyType textID = NAMEKEY("ControlBar.wnd:EditBeaconText");
+	static NameKeyType staticTextID = NAMEKEY("ControlBar.wnd:StaticTextBeaconLabel");
+	static NameKeyType clearButtonID = NAMEKEY("ControlBar.wnd:ButtonClearBeaconText");
+
+	GameWindow *textEntryWin = TheWindowManager->winGetWindowFromId(NULL, textID);
+	GameWindow *staticTextWin = TheWindowManager->winGetWindowFromId(NULL, staticTextID);
+	GameWindow *buttonWin = TheWindowManager->winGetWindowFromId(NULL, clearButtonID);
+
+	if (beacon->isLocallyControlled())
+	{
+		if (textEntryWin)
+		{
+			textEntryWin->winHide(FALSE);
+			GadgetTextEntrySetText( textEntryWin,
+				((Rva00416BD0 *)((BfmeBeaconObjectGetDrawable *)beacon)->getDrawable())->getName() );
+			TheWindowManager->winSetFocus( textEntryWin );
+		}
+
+		if (staticTextWin)
+			staticTextWin->winHide(FALSE);
+
+		if (buttonWin)
+			buttonWin->winHide(FALSE);
+	}
+	else
+	{
+		if (textEntryWin)
+			textEntryWin->winHide(TRUE);
+
+		if (staticTextWin)
+			staticTextWin->winHide(TRUE);
+
+		if (buttonWin)
+			buttonWin->winHide(TRUE);
+	}
+}
+
 // ------------------------------------------------------------------------------------------------
 /** Show a rally point marker at the world location specified.  If no location is specified
 	* any marker that we might have visible is hidden */
