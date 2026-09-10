@@ -12,6 +12,26 @@
 // 0x000022BB). Team instance list head is TeamPrototype+0x274, advanced
 // through Team::_bfme_nextInInstanceList (ILT 0x00022A70). Player team-proto
 // list header pointer is at Player+0x288. getFrame inlines to TheGameLogic+0x3c.
+//
+// 2026-09-10 re-probe (t=25min model=sonnet-5): compiled 430B vs retail
+// 428B, ONE remaining divergence (not a register swap -- narrower than the
+// prior sessions' "EDI vs EAX team lifetime" framing). At the second
+// bfmeFinalTemplate() call inside the KindOf test chain, retail's compiled
+// call operand is `e8 .. call 0x22bb` (the canonical getFinalOverride ILT)
+// but OUR build's call operand resolves to 0x0060E09E, which is itself
+// JUST `jmp 0x4022bb` -- i.e. a second, functionally-identical duplicate
+// jump-thunk to the SAME ILT (confirmed via dis_retail.py 0x60E09E: single
+// jmp + int3 padding, no other named row claims it). This is a linker
+// ICF/thunk-selection artifact, not a source defect: the call is semantically
+// identical either way, but the byte encoding differs by which duplicate
+// stub got folded in. Tried: swapping between the several already-pinned
+// aliases for this ILT (?getFinalOverride@Overridable@@QBEPBV1@XZ vs the
+// @QAE non-const spelling) -- no effect on which stub gets selected.
+// Recommend: do NOT keep source-probing this one signature; if a future
+// session wants to crack it, the lever to try is changing which TU/symbol
+// reference ORDER first pulls in 0x22BB (e.g. reference another already-
+// landed 0x22BB caller earlier in the same TU) rather than anything in this
+// function's own body. Reverted cleanly, no source change kept.
 
 #include "ObjectDlinkPmf.h"
 #include <list>
