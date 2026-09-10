@@ -86732,3 +86732,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?scan@Rva0035E8B0Tail@@QAEHXZ,0x0035E8B0,tail state reached through ILT 0x00047C7B from XmlNameSlotList::finish; address-derived parser state body
 ??$__write_decimal_backward@J@_STL@@YAPADPADJHABU__true_type@0@@Z,0x00835A20,STLport __write_decimal_backward long; direct callee of __write_integer_backward long at 0x00835940; vendor _num_put.c signature; helper row remains generated-only
 ??0?$StringBase@D@@IAE@PBD@Z,0x00888BC0,protected narrow StringBase(const char*) forwarded by the inline BFMERetailAsciiString ctor in registerAptLivingWorldUICallbacks 0x0051AB40
+??$__uninitialized_copy@PAUCoord3D@@PAU1@@_STL@@YAPAUCoord3D@@PAU1@00ABU__false_type@0@@Z,0x000409A8,Coord3D vector fill-insert 0x000B7AF0 uses the retail ILT; body alias 0x000B77D0 independently carries this object-symbol
+??$uninitialized_fill_n@PAUCoord3D@@IU1@@_STL@@YAPAUCoord3D@@PAU1@IABU1@@Z,0x0001D192,Coord3D vector fill-insert 0x000B7AF0 uses the retail ILT; body alias 0x000B7810 independently carries the __uninitialized_fill_n object-symbol
