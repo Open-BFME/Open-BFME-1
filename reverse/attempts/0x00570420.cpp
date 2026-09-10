@@ -1,5 +1,5 @@
 // ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z
-// partial score=0.99 date=2026-09-08
+// partial score=0.995 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
 
 // Score-screen ordering and the two STLport insertion-sort layers which use it.
@@ -72,7 +72,7 @@ struct BfmeScoreEntryLess
 		{
 			unsigned char leftDead = right->m_player->isPlayerDead();
 			unsigned char rightDead = left->m_player->isPlayerDead();
-			if (rightDead ^ leftDead)
+			if (leftDead != rightDead)
 				return !left->m_player->isPlayerDead();
 			return left->m_primary > right->m_primary;
 		}
