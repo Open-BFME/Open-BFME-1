@@ -3959,7 +3959,7 @@ loclustruct=&global_lustruct;
 /*
 ** Set error context.
 */
-errorcontext="FPU:LU";
+errorcontext="";
 
 /*
 ** Our first step is to build a "solvable" problem.  This
@@ -4025,8 +4025,7 @@ if(loclustruct->adjust==0)
 	** Were we able to do it?
 	*/
 	if(loclustruct->numarrays==0)
-	{       printf("FPU:LU -- Array limit reached\n");
-		LUFreeMem(a,b,abase,bbase);
+	{       LUFreeMem(a,b,abase,bbase);
 		ErrorExit();
 	}
 }
