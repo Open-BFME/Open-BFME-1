@@ -25177,3 +25177,4 @@ dup_af1f0,0x000AF1F0,Rehomed to neutral address owner; does not belong to LANAPI
 ?Collide@CollisionMath@@SA_NABVLineSegClass@@ABVOBBoxClass@@PAUCastResultStruct@,0x008DAD70,truncated malformed alias retired: only the complete mangled CollisionMath LineSeg-to-OBBox overload is proven at the full 665-byte body; named callers are 0x008E24D0 and 0x00956B90; Code TU owns the complete name
 ?m@Gen_004a3b60@@QAEHXZ,0x004A3B60,Wrong zero-result member ABI; retail4AECFF pushes Object for static cdecl overlay helper via38195; replaced with ControlBar helper
 ?selectMatchingAcrossMap@InGameUI@@UAEHXZ,0x00448729,Interior298B claim omitted41B sharedSEH/state guard; complete339B function starts448700 and ends448853
+?selectMatchingAcrossMap@InGameUI@@UAEHXZ,0x00448700,Historical name unproven; actualslot89 not92; replacedwithRVAidentity afterrawvtable review

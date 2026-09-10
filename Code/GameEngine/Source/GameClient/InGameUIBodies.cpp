@@ -544,12 +544,11 @@ public:
 	virtual void slot4F(void); virtual void slot50(void); virtual void slot51(void);
 	virtual void slot52(void); virtual void slot53(void); virtual void slot54(void);
 	virtual void slot55(void); virtual void slot56(void); virtual void slot57(void);
-	virtual void slot58(void);
-	virtual int selectMatchingAcrossScreen( void );		// slot 89, vtable+0x164
+	virtual int selectMatchingAcrossScreen( void );		// slot 88, retail thunk13F6B->43EF70
+	virtual int rva00448700( void );		// slot 89, retail thunk2A5E5->448700
 	virtual int selectMatchingAcrossRegion( IRegion2D *region );	// slot 90
 	virtual void buildRegion( const ICoord2D *anchor, const ICoord2D *dest,
 		IRegion2D *region );					// slot 91
-	virtual int selectMatchingAcrossMap( void );
 
 	// Virtual by their mangled names -- recreateControlBar is UAE and
 	// getIdleWorkerCount EAE -- but no body here calls either through the
@@ -818,11 +817,13 @@ int InGameUI::selectMatchingAcrossScreen( void )
 	return numSelected;
 }
 
-// ?selectMatchingAcrossMap@InGameUI@@UAEHXZ
+// ?rva00448700@InGameUI@@UAEHXZ
+// InGameUI ctor44B834 installs table10F5B38; W3D ctor6FBE18 installs
+// table1120590. Both route slot89 here. Original method name is unproven.
 // Retail 0x00448700, 339 bytes.  The older 0x00448729/298-byte row began
 // after the shared SEH and BFME state-readiness prologue; the full retail
 // function includes those 41 bytes.
-int InGameUI::selectMatchingAcrossMap( void )
+int InGameUI::rva00448700( void )
 {
 	BfmeStateDO *state = g_bfmeStateDO;
 	if (state != 0 && state->m_bfmeFirst != 0 && state->m_bfmeSecond != 0)
