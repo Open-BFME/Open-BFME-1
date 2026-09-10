@@ -22,6 +22,21 @@ struct Coord3D
 
 extern float BfmeZeroRange;
 
+struct Rva0016F770Coord3D
+{
+	float x;
+	float y;
+	float z;
+};
+
+class Rva0016F770Path
+{
+public:
+	Rva0016F770Coord3D *getPoint(int index);
+};
+
+typedef Rva0016F770Coord3D GiantBirdWaypointCoord3D;
+
 class Rva002BCB60Owner
 {
 public:
@@ -35,6 +50,48 @@ public:
 	int m_goalMode478;
 	Coord3D m_goalPosition47c;
 };
+
+class GiantBirdAIUpdate
+{
+public:
+	unsigned char m_beforePath[0x30];
+	Rva0016F770Path *m_path;
+	unsigned char m_beforeLocomotor[0x198];
+	void *m_locomotor;
+	unsigned char m_beforeFlags[0x220];
+	unsigned int m_flags3f0;
+	unsigned char m_beforeGoalHeight[0x84];
+	float m_goalHeight478;
+	unsigned char m_beforePathReset[0x0c];
+	unsigned char m_pathReset488;
+
+	Rva0016F770Path *getPath()
+	{
+		return m_path;
+	}
+};
+
+class Rva002BC260GoalOwner
+{
+public:
+	void run(void *position, void *goalData, void *unused, unsigned char source);
+};
+
+class TerrainLogic
+{
+public:
+	virtual void unused00() = 0;
+	virtual void unused04() = 0;
+	virtual void unused08() = 0;
+	virtual void unused0c() = 0;
+	virtual void unused10() = 0;
+	virtual void unused14() = 0;
+	virtual float getGroundHeight(float x, float y, Rva0016F770Coord3D *normal) const = 0;
+};
+
+extern TerrainLogic *TheTerrainLogic;
+
+#define g_Rva012F02D4 (*(int *)0x012F02D4)
 
 class Thing
 {
@@ -69,11 +126,69 @@ public:
 
 	char m_gap04[0x18];
 	StateMachine *m_machine;
+	char m_gap20[4];
+	int m_counter;
 
-	bool updateWaypointGoal();
+	__declspec(noinline) bool updateWaypointGoal();
 };
 
-#pragma comment(linker, "/alternatename:?updateWaypointGoal@GiantBirdFollowWaypointPathState@@QAE_NXZ=?j_00031b47@@YAXXZ")
+bool GiantBirdFollowWaypointPathState::updateWaypointGoal()
+{
+	Object *owner = m_machine->m_owner;
+	if (owner == 0)
+		return false;
+
+	GiantBirdAIUpdate *ai = (GiantBirdAIUpdate *)owner->m_ai;
+	if (ai == 0)
+		return false;
+	if (ai->m_locomotor == 0)
+		return false;
+
+	int index = m_counter++;
+	GiantBirdWaypointCoord3D *current = ai->getPath()->getPoint(index);
+	if (current == 0)
+	{
+		if (ai->m_pathReset488 == 0)
+			return false;
+		m_counter = 1;
+		current = ai->getPath()->getPoint(0);
+		if (current == 0)
+			return false;
+	}
+
+	struct Goals
+	{
+		GiantBirdWaypointCoord3D goal;
+		GiantBirdWaypointCoord3D next;
+	} goals;
+	GiantBirdWaypointCoord3D *nextGoalPointer;
+	int nextIndex = m_counter;
+	GiantBirdWaypointCoord3D *next = ai->getPath()->getPoint(nextIndex);
+	nextGoalPointer = next;
+	if (nextGoalPointer != 0)
+	{
+		ai->m_flags3f0 |= 0x80;
+		goals.next = *nextGoalPointer;
+		nextGoalPointer = &goals.next;
+		float height = ai->m_goalHeight478;
+		goals.next.z = TheTerrainLogic->getGroundHeight(
+			goals.next.x, goals.next.y, 0) + height;
+	}
+	else
+	{
+		ai->m_flags3f0 &= 0xffffff7f;
+	}
+
+	goals.goal.x = current->x;
+	goals.goal.y = current->y;
+	goals.goal.z = current->z;
+	float height = ai->m_goalHeight478;
+	goals.goal.z = TheTerrainLogic->getGroundHeight(
+		goals.goal.x, goals.goal.y, 0) + height;
+	((Rva002BC260GoalOwner *)ai)->run(&goals.goal,
+		&g_Rva012F02D4, nextGoalPointer, nextGoalPointer == 0);
+	return true;
+}
 
 StateReturnType GiantBirdFollowWaypointPathState::update()
 {

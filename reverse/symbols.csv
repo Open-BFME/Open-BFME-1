@@ -84741,7 +84741,6 @@ name,address,notes
 ?updateTimedOperations@@YAIXZ,0x0007B990,single-caller timed-operation queue pump in GameEngine client update
 ?updateUpgradeModules@Object@@QAEXXZ,0x00027FCF,ILT thunk used by giveUpgrade call site
 ?updateVotes@DisconnectMenu@@QAEXHH@Z,0x00031DB8,ILT thunk to DisconnectMenu::updateVotes
-?updateWaypointGoal@GiantBirdFollowWaypointPathState@@QAE_NXZ,0x00031B47,GiantBirdFollowWaypointPathState goal helper alias to thunk 0x00031B47
 ?upgradeMuxXfer@UpgradeMux@@MAEXPAVXfer@@@Z,0x002D9B90,FireWeaponWhenDamagedBehavior::xfer at RVA 0x001FB270 calls this on its proven UpgradeMux secondary base at +0x20; the callee transfers Xfer::Version then m_upgradeExecuted at +0x04; corroborated by upstream UpgradeMux and the paired upgradeMuxLoadPostProcess body; campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
 ?upgradeSkill@AptPalantir@@QAEXXZ,0x00024EBF,AptPalantir OnBttnSkillUpgrade dispatcher
 ?upper_bound@AsciiStringTreeUpperBoundShim@_STL@@QBEPAU?$_Rb_tree_node@VAsciiString@@@2@ABVAsciiString@@@Z,0x000804D0,incremental-link thunk target through a TU-local forwarding shim
