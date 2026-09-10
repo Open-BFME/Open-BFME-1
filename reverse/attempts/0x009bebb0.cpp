@@ -1,159 +1,818 @@
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
-// partial score=0.13 date=2026-09-02
-// Semantic reconstruction of the VP6 postprocessor's call-free SIMD band
-// deblocker at retail 0x009BEBB0.  The original expands eight byte lanes into
-// aligned word vectors and performs both edge directions in one unrolled body.
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /arch:SSE2
-
-typedef unsigned char BfmeVp6Byte;
-typedef unsigned int BfmeVp6Uint;
+// partial score=0.35 date=2026-09-10
+// Open-BFME5: VP6 postprocessor band deblock -- horizontal pass (loop 1)
+// then vertical pass (loop 2) over one 8-pixel-wide fragment column strip.
+// Retail 0x009BEBB0, 3721 bytes. See reverse/re_attempts.log for the full
+// analysis (t=180min entry) -- exact frame size (sub esp,0x104) and exact
+// prologue shape now match; both SIMD islands are mechanically transcribed
+// byte-exact from retail (build/masmify.py); remaining gap is prologue
+// load-order/register-choice noise that MSVC's scheduler ignores source
+// order for, compounding to 414 bytes short over the whole body.
+// cl: /O2 /arch:SSE2
 
 struct Rva009BEBB0Vp6PostProc
 {
-	BfmeVp6Byte m_unknown00[ 0x24 ];
-	BfmeVp6Uint *m_fragmentQIndex;       // +0x24
-	BfmeVp6Uint *m_fragmentVariances;    // +0x28
+	unsigned char m_pad[0x24];
+	unsigned int *m_fragmentQIndex;    // +0x24
+	unsigned int *m_fragmentVariances; // +0x28
 };
 
-static __forceinline int rva009BEBB0Abs( int value )
-{
-	return value < 0 ? -value : value;
-}
+extern const unsigned short kRva012D87C0Three[8]; // retail 0x012D87C0 ({3} x8)
+extern const unsigned short kRva012D87D0Four[8];  // retail 0x012D87D0 ({4} x8)
 
-static __forceinline BfmeVp6Byte rva009BEBB0Clamp( int value )
-{
-	if( value < 0 )
-		return 0;
-	if( value > 255 )
-		return 255;
-	return (BfmeVp6Byte)value;
-}
-
-// Rebuild the eight centre samples of one ten-sample line.  Apart from doing
-// eight lanes together, this is the arithmetic exposed by the retail SIMD
-// stream: variance gates the low-pass path; a failed gate copies the centre
-// samples unchanged.
-static __forceinline BfmeVp6Uint rva009BEBB0FilterLine(
-	const BfmeVp6Byte *source,
-	int sourceStep,
-	BfmeVp6Byte *destination,
-	int destinationStep,
-	BfmeVp6Uint qStep,
-	unsigned short *samples )
-{
-	int i;
-	int sum1 = 0;
-	int sum2 = 0;
-	int square1 = 0;
-	int square2 = 0;
-
-	for( i = 0; i < 10; ++i )
-		samples[ i ] = source[ ( i - 5 ) * sourceStep ];
-
-	for( i = 1; i <= 4; ++i )
-	{
-		int value = (int)samples[ i ] - 128;
-		sum1 += value;
-		square1 += value * value;
-	}
-	for( i = 5; i <= 8; ++i )
-	{
-		int value = (int)samples[ i ] - 128;
-		sum2 += value;
-		square2 += value * value;
-	}
-
-	BfmeVp6Uint variance1 =
-		(BfmeVp6Uint)( square1 - ( sum1 >> 1 ) * ( ( sum1 + 1 ) >> 1 ) );
-	BfmeVp6Uint variance2 =
-		(BfmeVp6Uint)( square2 - ( sum2 >> 1 ) * ( ( sum2 + 1 ) >> 1 ) );
-	BfmeVp6Uint limit = ( 3 * qStep * qStep ) >> 5;
-
-	if( variance1 >= limit || variance2 >= limit ||
-		rva009BEBB0Abs( (int)samples[ 4 ] - (int)samples[ 5 ] ) >= (int)qStep )
-	{
-		for( i = 1; i <= 8; ++i )
-			destination[ ( i - 5 ) * destinationStep ] = (BfmeVp6Byte)samples[ i ];
-		return variance1 + variance2;
-	}
-
-	int left = rva009BEBB0Abs( (int)samples[ 0 ] - (int)samples[ 1 ] ) < (int)qStep
-		? samples[ 0 ] : samples[ 1 ];
-	int right = rva009BEBB0Abs( (int)samples[ 8 ] - (int)samples[ 9 ] ) < (int)qStep
-		? samples[ 9 ] : samples[ 8 ];
-	int window = left * 3 + samples[ 1 ] + samples[ 2 ] + samples[ 3 ] + samples[ 4 ] + 4;
-
-	for( i = 1; i <= 8; ++i )
-	{
-		int previous = i == 1 ? left : samples[ i - 1 ];
-		int next = i == 8 ? right : samples[ i + 1 ];
-		int value = ( ( window + samples[ i ] ) * 2 + previous - next ) >> 4;
-		destination[ ( i - 5 ) * destinationStep ] = rva009BEBB0Clamp( value );
-		window -= i < 4 ? left : samples[ i - 3 ];
-		window += i < 4 ? samples[ i + 4 ] : right;
-	}
-
-	return variance1 + variance2;
-}
-
-// ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIII@Z
 void __cdecl Rva009BEBB0Vp6DeblockBand(
-	Rva009BEBB0Vp6PostProc *postProc,
-	BfmeVp6Byte *source,
-	BfmeVp6Byte *destination,
-	BfmeVp6Uint pitch,
-	BfmeVp6Uint fragmentCount,
-	BfmeVp6Uint firstFragment,
-	BfmeVp6Uint *quantScale )
+	Rva009BEBB0Vp6PostProc *ctx,
+	unsigned char *src,
+	unsigned char *dst,
+	unsigned int stride,
+	unsigned int count,
+	unsigned int start,
+	unsigned int *qTable)
 {
-	// The retail frame is 0x104 bytes after 16-byte alignment.  These word
-	// lanes preserve its ten-sample staging contract while keeping this body
-	// portable C++ rather than an instruction lift.
-	__declspec(align(16)) unsigned short samples[ 56 ];
-	BfmeVp6Byte *sourcePtr = source;
-	BfmeVp6Uint fragment = firstFragment;
-	BfmeVp6Byte *destinationPtr = destination;
-	BfmeVp6Uint endFragment = firstFragment + fragmentCount;
+	volatile unsigned char *srcHome;
+	unsigned char *dstPtr;
+	unsigned int qIndex;
+	unsigned char *srcPtr;
+	__declspec(align(16)) unsigned char buf[240];
+	unsigned int end;
+	unsigned int frag;
 
-	while( fragment < endFragment )
+#define CTX (*(Rva009BEBB0Vp6PostProc * volatile *)&ctx)
+#define qv    ((unsigned short *)(buf + 0))
+#define out   ((unsigned short *)(buf + 16))
+#define left  ((unsigned short *)(buf + 80))
+#define right ((unsigned short *)(buf + 224))
+
+	srcHome = src;
+	frag = start;
+	dstPtr = dst;
+	end = start + count;
+	qIndex = end;
+
+	while (frag < end)
 	{
-		BfmeVp6Uint qStep = quantScale[ postProc->m_fragmentQIndex[ fragment ] ];
-		if( qStep > 3 )
+		unsigned int q = qTable[ CTX->m_fragmentQIndex[ qIndex ] ];
+		if (q > 3)
 		{
-			BfmeVp6Uint acrossVariance = 0;
-			BfmeVp6Uint downVariance = 0;
-			int i;
+			qv[0] = qv[1] = qv[2] = qv[3] = qv[4] = qv[5] = qv[6] = qv[7] = (unsigned short)q;
 
-			for( i = 0; i < 8; ++i )
-				acrossVariance += rva009BEBB0FilterLine(
-					sourcePtr + i, (int)pitch, destinationPtr + i, (int)pitch,
-					qStep, samples );
+			__asm
+			{
+				push eax
+				push ecx
+				push edx
+				push esi
+				push edi
+				movdqa xmm0, xmmword ptr [esp + 34h]
+				movdqa xmm1, xmmword ptr kRva012D87C0Three
+				pmullw xmm1, xmm0
+				pmullw xmm1, xmm0
+				psrlw xmm1, 5
+				movdqa xmmword ptr [esp + 74h], xmm1
+				mov eax, dword ptr [esp + 30h]
+				xor edx, edx
+				mov esi, dword ptr [esp + 28h]
+				lea edi, [esp + 84h]
+				mov ecx, dword ptr [ebp + 14h]
+				pxor xmm7, xmm7
+				sub edx, ecx
+				lea eax, [eax + edx*4]
+				lea esi, [esi + edx*2]
+				movq xmm0, qword ptr [eax + edx]
+				movq xmm1, qword ptr [eax]
+				punpcklbw xmm0, xmm7
+				punpcklbw xmm1, xmm7
+				movdqa xmmword ptr [edi], xmm0
+				movdqa xmmword ptr [edi + 10h], xmm1
+				movq xmm2, qword ptr [eax + ecx]
+				movq xmm3, qword ptr [eax + ecx*2]
+				punpcklbw xmm2, xmm7
+				punpcklbw xmm3, xmm7
+				movdqa xmmword ptr [edi + 20h], xmm2
+				movdqa xmmword ptr [edi + 30h], xmm3
+				lea eax, [eax + ecx*4]
+				movq xmm0, qword ptr [eax + edx]
+				movq xmm1, qword ptr [eax]
+				punpcklbw xmm0, xmm7
+				punpcklbw xmm1, xmm7
+				movdqa xmmword ptr [edi + 40h], xmm0
+				movdqa xmmword ptr [edi + 50h], xmm1
+				movq xmm2, qword ptr [eax + ecx]
+				movq xmm3, qword ptr [eax + ecx*2]
+				punpcklbw xmm2, xmm7
+				punpcklbw xmm3, xmm7
+				movdqa xmmword ptr [edi + 60h], xmm2
+				movdqa xmmword ptr [edi + 70h], xmm3
+				lea eax, [eax + ecx*4]
+				movq xmm0, qword ptr [eax + edx]
+				movq xmm1, qword ptr [eax]
+				punpcklbw xmm0, xmm7
+				punpcklbw xmm1, xmm7
+				movdqa xmmword ptr [edi + 80h], xmm0
+				movdqa xmmword ptr [edi + 90h], xmm1
+				pcmpeqw xmm3, xmm3
+				psllw xmm3, 0Fh
+				psrlw xmm3, 8
+				movdqa xmm2, xmmword ptr [edi + 10h]
+				movdqa xmm6, xmmword ptr [edi + 50h]
+				psubw xmm2, xmm3
+				psubw xmm6, xmm3
+				movdqa xmm0, xmm2
+				movdqa xmm4, xmm6
+				pmullw xmm2, xmm2
+				pmullw xmm6, xmm6
+				movdqa xmm1, xmm2
+				movdqa xmm5, xmm6
+				movdqa xmm2, xmmword ptr [edi + 20h]
+				movdqa xmm6, xmmword ptr [edi + 60h]
+				psubw xmm2, xmm3
+				psubw xmm6, xmm3
+				paddw xmm0, xmm2
+				paddw xmm4, xmm6
+				pmullw xmm2, xmm2
+				pmullw xmm6, xmm6
+				paddw xmm1, xmm2
+				paddw xmm5, xmm6
+				movdqa xmm2, xmmword ptr [edi + 30h]
+				movdqa xmm6, xmmword ptr [edi + 70h]
+				psubw xmm2, xmm3
+				psubw xmm6, xmm3
+				paddw xmm0, xmm2
+				paddw xmm4, xmm6
+				pmullw xmm2, xmm2
+				pmullw xmm6, xmm6
+				paddw xmm1, xmm2
+				paddw xmm5, xmm6
+				movdqa xmm2, xmmword ptr [edi + 40h]
+				movdqa xmm6, xmmword ptr [edi + 80h]
+				psubw xmm2, xmm3
+				psubw xmm6, xmm3
+				paddw xmm0, xmm2
+				paddw xmm4, xmm6
+				pmullw xmm2, xmm2
+				pmullw xmm6, xmm6
+				paddw xmm1, xmm2
+				paddw xmm5, xmm6
+				movdqa xmm7, xmm3
+				psrlw xmm7, 7
+				movdqa xmm2, xmm0
+				movdqa xmm6, xmm4
+				paddw xmm0, xmm7
+				paddw xmm4, xmm7
+				psraw xmm2, 1
+				psraw xmm6, 1
+				psraw xmm0, 1
+				psraw xmm4, 1
+				pmullw xmm2, xmm0
+				pmullw xmm6, xmm4
+				psubw xmm1, xmm2
+				psubw xmm5, xmm6
+				movdqa xmm7, xmmword ptr [esp + 74h]
+				movdqa xmm2, xmm1
+				movdqa xmmword ptr [esp + 54h], xmm1
+				movdqa xmmword ptr [esp + 44h], xmm5
+				movdqa xmm6, xmm5
+				psubw xmm1, xmm7
+				psubw xmm5, xmm7
+				psraw xmm2, 0Fh
+				psraw xmm6, 0Fh
+				psraw xmm1, 0Fh
+				psraw xmm5, 0Fh
+				movdqa xmm7, xmmword ptr [edi + 40h]
+				pandn xmm2, xmm1
+				pandn xmm6, xmm5
+				movdqa xmm4, xmmword ptr [edi + 50h]
+				pand xmm6, xmm2
+				movdqa xmm2, xmm7
+				psubusw xmm7, xmm4
+				psubusw xmm4, xmm2
+				por xmm7, xmm4
+				psubw xmm7, xmmword ptr [esp + 34h]
+				psraw xmm7, 0Fh
+				pand xmm7, xmm6
+				movdqa xmm5, xmmword ptr [edi]
+				movdqa xmm4, xmmword ptr [edi + 10h]
+				movdqa xmm3, xmm4
+				movdqa xmm6, xmm5
+				psubusw xmm4, xmm6
+				psubusw xmm5, xmm3
+				por xmm4, xmm5
+				psubw xmm4, xmmword ptr [esp + 34h]
+				psraw xmm4, 0Fh
+				movdqa xmm1, xmm4
+				pand xmm4, xmm6
+				pandn xmm1, xmm3
+				por xmm1, xmm4
+				movdqa xmm4, xmmword ptr [edi + 80h]
+				movdqa xmm5, xmmword ptr [edi + 90h]
+				movdqa xmm3, xmm4
+				movdqa xmm6, xmm5
+				psubusw xmm4, xmm6
+				psubusw xmm5, xmm3
+				por xmm4, xmm5
+				psubw xmm4, xmmword ptr [esp + 34h]
+				psraw xmm4, 0Fh
+				movdqa xmm2, xmm4
+				pand xmm4, xmm6
+				pandn xmm2, xmm3
+				por xmm2, xmm4
+				pxor xmm0, xmm0
+				movdqa xmm3, xmm1
+				paddw xmm3, xmm3
+				paddw xmm3, xmm1
+				movdqa xmm4, xmmword ptr [edi + 10h]
+				paddw xmm3, xmmword ptr [edi + 20h]
+				paddw xmm4, xmmword ptr [edi + 30h]
+				paddw xmm3, xmmword ptr [edi + 40h]
+				paddw xmm4, xmmword ptr kRva012D87D0Four
+				paddw xmm3, xmm4
+				movdqa xmm4, xmm3
+				movdqa xmm5, xmmword ptr [edi + 10h]
+				paddw xmm4, xmm5
+				psllw xmm4, 1
+				psubw xmm4, xmmword ptr [edi + 40h]
+				paddw xmm4, xmmword ptr [edi + 50h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + edx*2], xmm4
+				movdqa xmm5, xmmword ptr [edi + 20h]
+				psubw xmm3, xmm1
+				paddw xmm3, xmmword ptr [edi + 50h]
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				psubw xmm4, xmmword ptr [edi + 50h]
+				paddw xmm4, xmmword ptr [edi + 60h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + edx], xmm4
+				movdqa xmm5, xmmword ptr [edi + 30h]
+				psubw xmm3, xmm1
+				paddw xmm3, xmmword ptr [edi + 60h]
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				psubw xmm4, xmmword ptr [edi + 60h]
+				paddw xmm4, xmmword ptr [edi + 70h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi], xmm4
+				movdqa xmm5, xmmword ptr [edi + 40h]
+				psubw xmm3, xmm1
+				paddw xmm3, xmmword ptr [edi + 70h]
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				paddw xmm4, xmm1
+				psubw xmm4, xmmword ptr [edi + 10h]
+				psubw xmm4, xmmword ptr [edi + 70h]
+				paddw xmm4, xmmword ptr [edi + 80h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + ecx], xmm4
+				movdqa xmm5, xmmword ptr [edi + 50h]
+				psubw xmm3, xmmword ptr [edi + 10h]
+				paddw xmm3, xmmword ptr [edi + 80h]
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				paddw xmm4, xmmword ptr [edi + 10h]
+				psubw xmm4, xmmword ptr [edi + 20h]
+				psubw xmm4, xmmword ptr [edi + 80h]
+				paddw xmm4, xmm2
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				lea esi, [esi + ecx*4]
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + edx*2], xmm4
+				movdqa xmm5, xmmword ptr [edi + 60h]
+				psubw xmm3, xmmword ptr [edi + 20h]
+				paddw xmm3, xmm2
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				paddw xmm4, xmmword ptr [edi + 20h]
+				psubw xmm4, xmmword ptr [edi + 30h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + edx], xmm4
+				movdqa xmm5, xmmword ptr [edi + 70h]
+				psubw xmm3, xmmword ptr [edi + 30h]
+				paddw xmm3, xmm2
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				paddw xmm4, xmmword ptr [edi + 30h]
+				psubw xmm4, xmmword ptr [edi + 40h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi], xmm4
+				movdqa xmm5, xmmword ptr [edi + 80h]
+				psubw xmm3, xmmword ptr [edi + 40h]
+				paddw xmm3, xmm2
+				movdqa xmm4, xmm5
+				paddw xmm4, xmm3
+				paddw xmm4, xmm4
+				paddw xmm4, xmmword ptr [edi + 40h]
+				psubw xmm4, xmmword ptr [edi + 50h]
+				psraw xmm4, 4
+				psubw xmm4, xmm5
+				pand xmm4, xmm7
+				paddw xmm4, xmm5
+				packuswb xmm4, xmm0
+				movq qword ptr [esi + ecx], xmm4
+				pop edi
+				pop esi
+				pop edx
+				pop ecx
+				pop eax
+			}
 
-			for( i = -4; i < 4; ++i )
-				downVariance += rva009BEBB0FilterLine(
-					sourcePtr + i * (int)pitch, 1,
-					destinationPtr + i * (int)pitch, 1,
-					qStep, samples );
-
-			postProc->m_fragmentVariances[ fragment ] += acrossVariance;
-			postProc->m_fragmentVariances[ fragment + fragmentCount ] += acrossVariance;
-			postProc->m_fragmentVariances[ fragment ] += downVariance;
-			postProc->m_fragmentVariances[ fragment + 1 ] += downVariance;
+			unsigned int sum1 = out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+			CTX->m_fragmentVariances[frag] += sum1;
+			unsigned int sum2 = out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
+			CTX->m_fragmentVariances[end] += sum2;
 		}
 		else
 		{
-			int row;
-			for( row = -4; row < 4; ++row )
+			__asm
 			{
-				int column;
-				for( column = 0; column < 8; ++column )
-					destinationPtr[ row * (int)pitch + column ] =
-						sourcePtr[ row * (int)pitch + column ];
+				push esi
+				push edi
+				push ecx
+				mov esi, dword ptr [esp + 28h]
+				mov edi, dword ptr [esp + 20h]
+				push edx
+				mov ecx, dword ptr [ebp + 14h]
+				xor edx, edx
+				sub edx, ecx
+				lea esi, [esi + edx*4]
+				movq mm0, qword ptr [esi]
+				movq qword ptr [edi + edx*4], mm0
+				lea edi, [edi + edx*4]
+				movq mm1, qword ptr [esi + ecx]
+				movq qword ptr [edi + ecx], mm1
+				movq mm2, qword ptr [esi + ecx*2]
+				lea esi, [esi + ecx*4]
+				movq qword ptr [edi + ecx*2], mm2
+				lea edi, [edi + ecx*4]
+				movq mm3, qword ptr [esi + edx]
+				movq qword ptr [edi + edx], mm3
+				movq mm4, qword ptr [esi]
+				movq mm5, qword ptr [esi + ecx]
+				movq qword ptr [edi], mm4
+				movq mm6, qword ptr [esi + ecx*2]
+				lea esi, [esi + ecx*4]
+				movq qword ptr [edi + ecx], mm5
+				movq qword ptr [edi + ecx*2], mm6
+				movq mm7, qword ptr [esi + edx]
+				lea edi, [edi + ecx*4]
+				movq qword ptr [edi + edx], mm7
+				pop edx
+				pop ecx
+				pop edi
+				pop esi
 			}
 		}
 
-		++fragment;
-		sourcePtr += 8;
-		destinationPtr += 8;
+		++frag;
+		++qIndex;
+		srcPtr += 8;
+		dstPtr += 8;
+	}
+
+	// --- loop 2: vertical edge pass over the already-filtered destination ---
+	{
+		unsigned int rewind = 8 - stride * 8 - count * 8;
+		dstPtr = dstPtr + rewind;
+		srcPtr = dstPtr;
+		qIndex = start;
+		end = end - 1;
+
+		while (qIndex < end)
+		{
+			unsigned int q = qTable[ CTX->m_fragmentQIndex[ qIndex + 1 ] ];
+			if (q > 3)
+			{
+				left[0] = dstPtr[0 * (int)stride - 5];
+				right[0] = dstPtr[0 * (int)stride + 4];
+				left[1] = dstPtr[1 * (int)stride - 5];
+				right[1] = dstPtr[1 * (int)stride + 4];
+				left[2] = dstPtr[2 * (int)stride - 5];
+				right[2] = dstPtr[2 * (int)stride + 4];
+				left[3] = dstPtr[3 * (int)stride - 5];
+				right[3] = dstPtr[3 * (int)stride + 4];
+				left[4] = dstPtr[4 * (int)stride - 5];
+				right[4] = dstPtr[4 * (int)stride + 4];
+				left[5] = dstPtr[5 * (int)stride - 5];
+				right[5] = dstPtr[5 * (int)stride + 4];
+				left[6] = dstPtr[6 * (int)stride - 5];
+				right[6] = dstPtr[6 * (int)stride + 4];
+				left[7] = dstPtr[7 * (int)stride - 5];
+				right[7] = dstPtr[7 * (int)stride + 4];
+
+				qv[0] = qv[1] = qv[2] = qv[3] = qv[4] = qv[5] = qv[6] = qv[7] = (unsigned short)q;
+
+				__asm
+				{
+		push eax
+		push ecx
+		push edx
+		push esi
+		push edi
+		movdqa xmm0, xmmword ptr [esp + 34h]
+		movdqa xmm1, xmmword ptr kRva012D87C0Three
+		pmullw xmm1, xmm0
+		pmullw xmm1, xmm0
+		psrlw xmm1, 5
+		movdqa xmmword ptr [esp + 74h], xmm1
+		mov eax, dword ptr [esp + 30h]
+		xor edx, edx
+		mov esi, dword ptr [esp + 28h]
+		sub eax, 4
+		sub esi, 4
+		lea edi, [esp + 84h]
+		mov ecx, dword ptr [ebp + 14h]
+		sub edx, ecx
+		lea esi, [esi + ecx*2]
+		movq mm0, qword ptr [eax]
+		movq mm1, qword ptr [eax + ecx]
+		movq mm2, qword ptr [eax + ecx*2]
+		lea eax, [eax + ecx*4]
+		movq mm3, qword ptr [eax + edx]
+		movq mm4, mm0
+		punpcklbw mm0, mm1
+		punpckhbw mm4, mm1
+		movq mm5, mm2
+		punpcklbw mm2, mm3
+		punpckhbw mm5, mm3
+		movq mm1, mm0
+		punpcklwd mm0, mm2
+		punpckhwd mm1, mm2
+		movq mm2, mm4
+		punpckhwd mm4, mm5
+		punpcklwd mm2, mm5
+		pxor mm7, mm7
+		movq mm5, mm0
+		punpcklbw mm0, mm7
+		movq qword ptr [edi + 10h], mm0
+		punpckhbw mm5, mm7
+		movq mm0, mm1
+		movq qword ptr [edi + 20h], mm5
+		punpcklbw mm1, mm7
+		punpckhbw mm0, mm7
+		movq qword ptr [edi + 30h], mm1
+		movq mm3, mm2
+		movq mm5, mm4
+		movq qword ptr [edi + 40h], mm0
+		punpcklbw mm2, mm7
+		punpckhbw mm3, mm7
+		movq qword ptr [edi + 50h], mm2
+		punpcklbw mm4, mm7
+		punpckhbw mm5, mm7
+		movq qword ptr [edi + 60h], mm3
+		movq mm0, qword ptr [eax]
+		movq mm1, qword ptr [eax + ecx]
+		movq qword ptr [edi + 70h], mm4
+		movq mm2, qword ptr [eax + ecx*2]
+		lea eax, [eax + ecx*4]
+		movq qword ptr [edi + 80h], mm5
+		movq mm4, mm0
+		movq mm3, qword ptr [eax + edx]
+		punpcklbw mm0, mm1
+		punpckhbw mm4, mm1
+		movq mm5, mm2
+		punpcklbw mm2, mm3
+		punpckhbw mm5, mm3
+		movq mm1, mm0
+		punpcklwd mm0, mm2
+		punpckhwd mm1, mm2
+		movq mm2, mm4
+		punpckhwd mm4, mm5
+		punpcklwd mm2, mm5
+		movq mm5, mm0
+		punpcklbw mm0, mm7
+		movq qword ptr [edi + 18h], mm0
+		punpckhbw mm5, mm7
+		movq mm0, mm1
+		movq qword ptr [edi + 28h], mm5
+		punpcklbw mm1, mm7
+		punpckhbw mm0, mm7
+		movq qword ptr [edi + 38h], mm1
+		movq mm3, mm2
+		movq mm5, mm4
+		movq qword ptr [edi + 48h], mm0
+		punpcklbw mm2, mm7
+		punpckhbw mm3, mm7
+		movq qword ptr [edi + 58h], mm2
+		punpcklbw mm4, mm7
+		punpckhbw mm5, mm7
+		movq qword ptr [edi + 68h], mm3
+		movq qword ptr [edi + 78h], mm4
+		movq qword ptr [edi + 88h], mm5
+		pcmpeqw xmm3, xmm3
+		psllw xmm3, 0Fh
+		psrlw xmm3, 8
+		movdqa xmm2, xmmword ptr [edi + 10h]
+		movdqa xmm6, xmmword ptr [edi + 50h]
+		psubw xmm2, xmm3
+		psubw xmm6, xmm3
+		movdqa xmm0, xmm2
+		movdqa xmm4, xmm6
+		pmullw xmm2, xmm2
+		pmullw xmm6, xmm6
+		movdqa xmm1, xmm2
+		movdqa xmm5, xmm6
+		movdqa xmm2, xmmword ptr [edi + 20h]
+		movdqa xmm6, xmmword ptr [edi + 60h]
+		psubw xmm2, xmm3
+		psubw xmm6, xmm3
+		paddw xmm0, xmm2
+		paddw xmm4, xmm6
+		pmullw xmm2, xmm2
+		pmullw xmm6, xmm6
+		paddw xmm1, xmm2
+		paddw xmm5, xmm6
+		movdqa xmm2, xmmword ptr [edi + 30h]
+		movdqa xmm6, xmmword ptr [edi + 70h]
+		psubw xmm2, xmm3
+		psubw xmm6, xmm3
+		paddw xmm0, xmm2
+		paddw xmm4, xmm6
+		pmullw xmm2, xmm2
+		pmullw xmm6, xmm6
+		paddw xmm1, xmm2
+		paddw xmm5, xmm6
+		movdqa xmm2, xmmword ptr [edi + 40h]
+		movdqa xmm6, xmmword ptr [edi + 80h]
+		psubw xmm2, xmm3
+		psubw xmm6, xmm3
+		paddw xmm0, xmm2
+		paddw xmm4, xmm6
+		pmullw xmm2, xmm2
+		pmullw xmm6, xmm6
+		paddw xmm1, xmm2
+		paddw xmm5, xmm6
+		movdqa xmm7, xmm3
+		psrlw xmm7, 7
+		movdqa xmm2, xmm0
+		movdqa xmm6, xmm4
+		paddw xmm0, xmm7
+		paddw xmm4, xmm7
+		psraw xmm2, 1
+		psraw xmm6, 1
+		psraw xmm0, 1
+		psraw xmm4, 1
+		pmullw xmm2, xmm0
+		pmullw xmm6, xmm4
+		psubw xmm1, xmm2
+		psubw xmm5, xmm6
+		movdqa xmm7, xmmword ptr [esp + 74h]
+		movdqa xmm2, xmm1
+		movdqa xmmword ptr [esp + 54h], xmm1
+		movdqa xmmword ptr [esp + 44h], xmm5
+		movdqa xmm6, xmm5
+		psubw xmm1, xmm7
+		psubw xmm5, xmm7
+		psraw xmm2, 0Fh
+		psraw xmm6, 0Fh
+		psraw xmm1, 0Fh
+		psraw xmm5, 0Fh
+		movdqa xmm7, xmmword ptr [edi + 40h]
+		pandn xmm2, xmm1
+		pandn xmm6, xmm5
+		movdqa xmm4, xmmword ptr [edi + 50h]
+		pand xmm6, xmm2
+		movdqa xmm2, xmm7
+		psubusw xmm7, xmm4
+		psubusw xmm4, xmm2
+		por xmm7, xmm4
+		psubw xmm7, xmmword ptr [esp + 34h]
+		psraw xmm7, 0Fh
+		pand xmm7, xmm6
+		movdqa xmm5, xmmword ptr [edi]
+		movdqa xmm4, xmmword ptr [edi + 10h]
+		movdqa xmm3, xmm4
+		movdqa xmm6, xmm5
+		psubusw xmm4, xmm6
+		psubusw xmm5, xmm3
+		por xmm4, xmm5
+		psubw xmm4, xmmword ptr [esp + 34h]
+		psraw xmm4, 0Fh
+		movdqa xmm1, xmm4
+		pand xmm4, xmm6
+		pandn xmm1, xmm3
+		por xmm1, xmm4
+		movdqa xmm4, xmmword ptr [edi + 80h]
+		movdqa xmm5, xmmword ptr [edi + 90h]
+		movdqa xmm3, xmm4
+		movdqa xmm6, xmm5
+		psubusw xmm4, xmm6
+		psubusw xmm5, xmm3
+		por xmm4, xmm5
+		psubw xmm4, xmmword ptr [esp + 34h]
+		psraw xmm4, 0Fh
+		movdqa xmm2, xmm4
+		pand xmm4, xmm6
+		pandn xmm2, xmm3
+		por xmm2, xmm4
+		pxor xmm0, xmm0
+		movdqa xmm3, xmm1
+		paddw xmm3, xmm3
+		paddw xmm3, xmm1
+		movdqa xmm4, xmmword ptr [edi + 10h]
+		paddw xmm3, xmmword ptr [edi + 20h]
+		paddw xmm4, xmmword ptr [edi + 30h]
+		paddw xmm3, xmmword ptr [edi + 40h]
+		paddw xmm4, xmmword ptr kRva012D87D0Four
+		paddw xmm3, xmm4
+		movdqa xmm4, xmm3
+		movdqa xmm5, xmmword ptr [edi + 10h]
+		paddw xmm4, xmm5
+		psllw xmm4, 1
+		psubw xmm4, xmmword ptr [edi + 40h]
+		paddw xmm4, xmmword ptr [edi + 50h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm0, xmm4
+		movdqa xmm5, xmmword ptr [edi + 20h]
+		psubw xmm3, xmm1
+		paddw xmm3, xmmword ptr [edi + 50h]
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		psubw xmm4, xmmword ptr [edi + 50h]
+		paddw xmm4, xmmword ptr [edi + 60h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm1, xmm4
+		movdqa xmm5, xmmword ptr [edi + 30h]
+		psubw xmm3, xmm1
+		paddw xmm3, xmmword ptr [edi + 60h]
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		psubw xmm4, xmmword ptr [edi + 60h]
+		paddw xmm4, xmmword ptr [edi + 70h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm2, xmm4
+		movdqa xmm5, xmmword ptr [edi + 40h]
+		psubw xmm3, xmm1
+		paddw xmm3, xmmword ptr [edi + 70h]
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		paddw xmm4, xmm1
+		psubw xmm4, xmmword ptr [edi + 10h]
+		psubw xmm4, xmmword ptr [edi + 70h]
+		paddw xmm4, xmmword ptr [edi + 80h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm3, xmm4
+		movdqa xmm5, xmmword ptr [edi + 50h]
+		psubw xmm3, xmmword ptr [edi + 10h]
+		paddw xmm3, xmmword ptr [edi + 80h]
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		paddw xmm4, xmmword ptr [edi + 10h]
+		psubw xmm4, xmmword ptr [edi + 20h]
+		psubw xmm4, xmmword ptr [edi + 80h]
+		paddw xmm4, xmm2
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm4, xmm4
+		movdqa xmm5, xmmword ptr [edi + 60h]
+		psubw xmm3, xmmword ptr [edi + 20h]
+		paddw xmm3, xmm2
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		paddw xmm4, xmmword ptr [edi + 20h]
+		psubw xmm4, xmmword ptr [edi + 30h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm5, xmm4
+		movdqa xmm5, xmmword ptr [edi + 70h]
+		psubw xmm3, xmmword ptr [edi + 30h]
+		paddw xmm3, xmm2
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		paddw xmm4, xmmword ptr [edi + 30h]
+		psubw xmm4, xmmword ptr [edi + 40h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm6, xmm4
+		movdqa xmm5, xmmword ptr [edi + 80h]
+		psubw xmm3, xmmword ptr [edi + 40h]
+		paddw xmm3, xmm2
+		movdqa xmm4, xmm5
+		paddw xmm4, xmm3
+		paddw xmm4, xmm4
+		paddw xmm4, xmmword ptr [edi + 40h]
+		psubw xmm4, xmmword ptr [edi + 50h]
+		psraw xmm4, 4
+		psubw xmm4, xmm5
+		pand xmm4, xmm7
+		paddw xmm4, xmm5
+		packuswb xmm4, xmm0
+		movdq2q mm7, xmm4
+		movq2dq xmm0, mm0
+		movq2dq xmm1, mm1
+		movq2dq xmm2, mm2
+		movq2dq xmm3, mm3
+		punpcklbw xmm0, xmm1
+		punpcklbw xmm2, xmm3
+		movdqa xmm1, xmm0
+		punpcklwd xmm0, xmm2
+		punpckhwd xmm1, xmm2
+		movq2dq xmm4, mm4
+		movq2dq xmm5, mm5
+		movq2dq xmm6, mm6
+		movq2dq xmm7, mm7
+		punpcklbw xmm4, xmm5
+		punpcklbw xmm6, xmm7
+		movdqa xmm5, xmm4
+		punpcklwd xmm4, xmm6
+		punpckhwd xmm5, xmm6
+		movdqa xmm2, xmm0
+		punpckldq xmm0, xmm4
+		movq qword ptr [esi + edx*2], xmm0
+		psrldq xmm0, 8
+		punpckhdq xmm2, xmm4
+		movq qword ptr [esi + edx], xmm0
+		movdqa xmm3, xmm1
+		punpckldq xmm1, xmm5
+		movq qword ptr [esi], xmm2
+		psrldq xmm2, 8
+		punpckhdq xmm3, xmm5
+		movq qword ptr [esi + ecx], xmm2
+		lea esi, [esi + ecx*4]
+		movq qword ptr [esi + edx*2], xmm1
+		movq qword ptr [esi], xmm3
+		psrldq xmm1, 8
+		psrldq xmm3, 8
+		movq qword ptr [esi + edx], xmm1
+		movq qword ptr [esi + ecx], xmm3
+		pop edi
+		pop esi
+		pop edx
+		pop ecx
+		pop eax
+				}
+
+				unsigned int sum1 = out[14] + out[15] + out[13] + out[12] + out[11] + out[10] + out[9] + out[8];
+				CTX->m_fragmentVariances[qIndex] += sum1;
+				unsigned int sum2 = out[7] + out[6] + out[5] + out[4] + out[3] + out[2] + out[1] + out[0];
+				CTX->m_fragmentVariances[qIndex + 1] += sum2;
+			}
+
+			++qIndex;
+			dstPtr += 8;
+			srcPtr += 8;
+		}
 	}
 }
