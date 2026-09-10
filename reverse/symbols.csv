@@ -86796,3 +86796,4 @@ Vp6FilterConst8750,0x00ED8750,VP6 diag filter mm constant table row2 +0x30
 Vp6FilterConst8760,0x00ED8760,VP6 diag filter mm constant table row2 +0x40
 Vp6FilterConst8770,0x00ED8770,VP6 diag filter mm constant table row2 +0x50
 Vp6FilterConst8780,0x00ED8780,VP6 diag filter mm constant table row2 +0x60
+Vp6FilterConst8790,0x00ED8790,VP6 wide filter mm constant table row2 +0x70
