@@ -1070,6 +1070,7 @@ name,address,notes
 ??$__find@PAGG@_STL@@YAPAGPAG0ABGABUrandom_access_iterator_tag@0@@Z,0x0083C3A0,retail 0x0083C210 passes its wchar buffer range and decimal-point reference directly to this 119-byte unrolled STLport find instantiation;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
 ??$__find@PAHH@_STL@@YAPAHPAH0ABHABUrandom_access_iterator_tag@0@@Z,0x0000D89B,STLport int range find ILT called by exact vector remove at 0x006EE640
 ??$__find@PAPAVObject@@PAV1@@_STL@@YAPAPAVObject@@PAPAV1@0ABQAV1@ABUrandom_access_iterator_tag@0@@Z,0x0002DA8D,ILT thunk
+??$__find@PAPAVObjectTypes@@PAV1@@_STL@@YAPAPAVObjectTypes@@PAPAV1@0ABQAV1@ABUrandom_access_iterator_tag@0@@Z,0x0003AD82,route=0x00338B70; ScriptEngine::removeObjectTypes at 0x0033B0B0 calls this ILT and the routed ICF alias is byte-verified under this identity
 ??$__find@PAVAsciiString@@V1@@_STL@@YAPAVAsciiString@@PAV1@0ABV1@ABUrandom_access_iterator_tag@0@@Z,0x0004A534,Open-BFME5 ILT thunk to body 0x001DBC10; ?addPublicBone@ModelConditionInfo@@QBEXABVAsciiString@@@Z at 0x00772BF0 searches its public bone list through it
 ??$__find@PAW4ObjectID@@W41@@_STL@@YAPAW4ObjectID@@PAW41@0ABW41@ABUrandom_access_iterator_tag@0@@Z,0x0001BFC7,Open-BFME5 ILT; called by ?removeObject@Squad@@QAEXPAVObject@@@Z at 0x0018B620
 ??$__find@PBGG@_STL@@YAPBGPBG0ABGABUrandom_access_iterator_tag@0@@Z,0x00844DC0,STLport 4.5.3 num_get wchar digit-search helper
