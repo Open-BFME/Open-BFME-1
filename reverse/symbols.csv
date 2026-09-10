@@ -8715,6 +8715,7 @@ name,address,notes
 ??1GiveUpgradeUpdateModuleData@@UAE@XZ,0x000393A6,route=0x0025DE90; constructor vtable 0x010B53D0 slot zero reaches the deleting wrapper which calls this ILT
 ??1GlobalData@@UAE@XZ,0x0000564B,GlobalData destructor ILT called by authentic scalar-deleting destructor at 0x000844E0
 ??1GloriousChargeUpdateModuleData@@UAE@XZ,0x00048C11,route=0x002A5CC0; constructor vtable 0x010B5428 slot zero reaches scalar deleting destructor 0x0025E850 which calls this derived-destructor chain
+??1GloriousChargeUpdate@@UAE@XZ,0x0002CF75,route=0x0025EA40; constructor vtable and scalar deleting wrapper 0x0025EB10 call this ILT to the matched destructor body
 ??1GrabPassengerSpecialPower@@MAE@XZ,0x00023669,destructor ILT to 0x0025F130
 ??1GrabPassengerSpecialPowerModuleData@@UAE@XZ,0x00033C12,route=0x00258730; empty derived destructor folds to SpecialPowerModuleData; matched ctor vtable 0x010B5848 slot zero proves the class
 ??1GrantStealthBehaviorModuleDataBase@@UAE@XZ,0x0001A401,Open-BFME5 pin
