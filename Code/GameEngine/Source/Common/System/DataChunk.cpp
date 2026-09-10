@@ -951,9 +951,11 @@ NameKeyType DataChunkInput::readNameKey(void)
 		return k;
 }
 
-// ?readDict@DataChunkInput@@QAE?AVDict@@XZ present-unmatched
+// Full584B at0x001039C0 includes561B code plus3 alignment and5 DWORD
+// switch targets at0x00103BF4 through0x00103C08 exclusive; CC follows.
 Dict DataChunkInput::readDict() 
 { 
+	bfmeDataChunkYieldToOS();
 	UnsignedShort len;	
 	DEBUG_ASSERTCRASH(m_chunkStack->dataLeft>=sizeof(UnsignedShort), ("Read past end of chunk."));
 	m_file->read( &len, sizeof(UnsignedShort) );
@@ -969,7 +971,7 @@ Dict DataChunkInput::readDict()
 		keyAndType >>= 8;
 
 		AsciiString kname = m_contents.getName(keyAndType);
-		NameKeyType k = TheNameKeyGenerator->nameToKey(kname);
+		NameKeyType k = TheNameKeyGenerator->nameToKey(BFME_STR8(kname));
 
 		switch(t)
 		{
