@@ -55,7 +55,7 @@ extern void __cdecl d_009c2170(void);
 extern void __cdecl bfmeFilterBlockByIndexMmx(int, void *, int);
 extern void __cdecl bfmeFilterBlockPairByIndexMmx(int, void *, int);
 extern void __cdecl bfmeFilterRowByIndex8Mmx(int, void *, int);
-extern void __cdecl d_009c14a0(void);
+extern void __cdecl bfmeFilterRowByIndex12Mmx(int, void *, int);
 extern void __cdecl d_009bd470(void);
 extern void __cdecl d_009c0a30(void);
 extern void __cdecl d_009be180(void);
@@ -125,7 +125,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[22] = (BfmeDispatchFn)&bfmeFilterBlockByIndexMmx;
 		g_bfmeCodecDispatch.slot[5] = (BfmeDispatchFn)&bfmeFilterRowByIndex8Mmx;
 		g_bfmeCodecDispatch.slot[11] = (BfmeDispatchFn)&bfmeFilterBlockPairByIndexMmx;
-		g_bfmeCodecDispatch.slot[14] = (BfmeDispatchFn)&d_009c14a0;
+		g_bfmeCodecDispatch.slot[14] = (BfmeDispatchFn)&bfmeFilterRowByIndex12Mmx;
 		g_bfmeCodecDispatch.slot[3] = (BfmeDispatchFn)&bfmeBlurRowsSse;
 		g_bfmeCodecDispatch.slot[19] = (BfmeDispatchFn)&d_009bd470;
 		g_bfmeCodecDispatch.slot[0] = (BfmeDispatchFn)&d_009c0a30;
@@ -157,7 +157,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[22] = (BfmeDispatchFn)&bfmeFilterBlockByIndexMmx;
 		g_bfmeCodecDispatch.slot[5] = (BfmeDispatchFn)&bfmeFilterRowByIndex8Mmx;
 		g_bfmeCodecDispatch.slot[11] = (BfmeDispatchFn)&bfmeFilterBlockPairByIndexMmx;
-		g_bfmeCodecDispatch.slot[14] = (BfmeDispatchFn)&d_009c14a0;
+		g_bfmeCodecDispatch.slot[14] = (BfmeDispatchFn)&bfmeFilterRowByIndex12Mmx;
 		g_bfmeCodecDispatch.slot[3] = (BfmeDispatchFn)&bfmeBlurRowsMmx;
 		g_bfmeCodecDispatch.slot[19] = (BfmeDispatchFn)&Rva009BD570;
 		g_bfmeCodecDispatch.slot[0] = (BfmeDispatchFn)&Rva009BA790;
