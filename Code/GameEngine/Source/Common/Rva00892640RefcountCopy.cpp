@@ -88,6 +88,7 @@ Rva00892640Item *Rva00892730CopyItems(
     dest += count - 1;
     if (count)
     {
+        int i = count;
         do
         {
             Rva00892640Handle *incoming = last->handle;
@@ -101,9 +102,8 @@ Rva00892640Item *Rva00892730CopyItems(
             slot->extra = last->extra;
             last--;
             dest--;
-            --count;
         }
-        while (count);
+        while (--i);
     }
     return dest;
 }
