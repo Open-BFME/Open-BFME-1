@@ -1,5 +1,5 @@
-// ?d_00610d60@@YAXXZ
-// partial score=0.8 date=2026-09-10
+// ?rva00610d60@BfmeLivingWorldManager@@QAEXXZ
+// partial score=0.93 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 // Walks the manager's two target lists and gives every target that has no
 // particle system yet one built from the matching template name.
@@ -10,6 +10,10 @@ enum { FALSE = 0, TRUE = 1 };
 
 struct Coord3D
 {
+	Coord3D() {}
+	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
+	~Coord3D() {}
+
 	float x;
 	float y;
 	float z;
