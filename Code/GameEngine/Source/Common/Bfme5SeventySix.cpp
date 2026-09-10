@@ -74,7 +74,7 @@ BfmeCellFC::BfmeCellFC()
 {
 }
 
-// ??1BfmeCellFC@@ absent-from-retail
+// ??1BfmeCellFC@@QAE@XZ — retail881210,1B; array dtor callback in8815A0.
 BfmeCellFC::~BfmeCellFC()
 {
 }
