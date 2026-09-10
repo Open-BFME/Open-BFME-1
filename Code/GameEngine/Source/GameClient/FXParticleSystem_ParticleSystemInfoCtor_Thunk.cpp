@@ -1,5 +1,12 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME5: clean C++ reconstruction of the FX particle-info default ctor.
+//
+// The retail body installs vtable 0x01073878 and initializes the 0x98-byte
+// object through scalar stores.  Non-volatile TU-local views preserve the
+// compiler's literal-load scheduling; the two barriers preserve the retail
+// store groups without embedding retail instructions.
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 
 namespace FXParticleSystem { class ParticleSystemInfo; }
 class FXParticleSystem::ParticleSystemInfo
@@ -9,176 +16,55 @@ public:
 };
 
 // ??0ParticleSystemInfo@FXParticleSystem@@QAE@XZ
-__declspec(naked) FXParticleSystem::ParticleSystemInfo::ParticleSystemInfo()
+FXParticleSystem::ParticleSystemInfo::ParticleSystemInfo()
 {
-	__asm {
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x33
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x78
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x89
-        __emit 0x48
-        __emit 0x10
-        __emit 0x89
-        __emit 0x48
-        __emit 0x14
-        __emit 0x89
-        __emit 0x48
-        __emit 0x18
-        __emit 0x89
-        __emit 0x48
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x28
-        __emit 0x89
-        __emit 0x48
-        __emit 0x2c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x30
-        __emit 0x89
-        __emit 0x48
-        __emit 0x34
-        __emit 0x89
-        __emit 0x48
-        __emit 0x38
-        __emit 0x89
-        __emit 0x48
-        __emit 0x3c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x44
-        __emit 0x89
-        __emit 0x48
-        __emit 0x48
-        __emit 0x89
-        __emit 0x48
-        __emit 0x4c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x50
-        __emit 0x89
-        __emit 0x48
-        __emit 0x54
-        __emit 0x89
-        __emit 0x48
-        __emit 0x58
-        __emit 0x89
-        __emit 0x48
-        __emit 0x5c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x60
-        __emit 0x89
-        __emit 0x48
-        __emit 0x64
-        __emit 0x89
-        __emit 0x48
-        __emit 0x68
-        __emit 0x89
-        __emit 0x48
-        __emit 0x78
-        __emit 0xba
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x50
-        __emit 0x7c
-        __emit 0x89
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x50
-        __emit 0x08
-        __emit 0x88
-        __emit 0x88
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x88
-        __emit 0x81
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x88
-        __emit 0x82
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x88
-        __emit 0x83
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x48
-        __emit 0x04
-        __emit 0x89
-        __emit 0x48
-        __emit 0x6c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x70
-        __emit 0x89
-        __emit 0x48
-        __emit 0x74
-        __emit 0xba
-        __emit 0x00
-        __emit 0x00
-        __emit 0x80
-        __emit 0x3f
-        __emit 0x89
-        __emit 0x48
-        __emit 0x20
-        __emit 0x89
-        __emit 0x48
-        __emit 0x24
-        __emit 0x89
-        __emit 0x48
-        __emit 0x40
-        __emit 0x89
-        __emit 0x88
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x88
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x90
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x90
-        __emit 0x90
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x88
-        __emit 0x94
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc3
-	}
+	unsigned int *dwords = reinterpret_cast<unsigned int *>( this );
+	unsigned char *bytes = reinterpret_cast<unsigned char *>( this );
+	unsigned int zero = 0;
+
+	dwords[0] = 0x01073878;
+	dwords[4] = zero;
+	dwords[5] = zero;
+	dwords[6] = zero;
+	dwords[7] = zero;
+	dwords[10] = zero;
+	dwords[11] = zero;
+	dwords[12] = zero;
+	dwords[13] = zero;
+	dwords[14] = zero;
+	dwords[15] = zero;
+	dwords[17] = zero;
+	dwords[18] = zero;
+	dwords[19] = zero;
+	dwords[20] = zero;
+	dwords[21] = zero;
+	dwords[22] = zero;
+	dwords[23] = zero;
+	dwords[24] = zero;
+	dwords[25] = zero;
+	dwords[26] = zero;
+	dwords[30] = zero;
+	_ReadWriteBarrier();
+	dwords[31] = 1;
+	dwords[3] = 1;
+	dwords[2] = 1;
+
+	bytes[0x80] = 0;
+	bytes[0x81] = 0;
+	bytes[0x82] = 0;
+	bytes[0x83] = 0;
+	bytes[4] = 0;
+	dwords[27] = zero;
+	dwords[28] = zero;
+	dwords[29] = zero;
+	unsigned int unit = 0x3f800000;
+	_ReadWriteBarrier();
+	dwords[8] = zero;
+	dwords[9] = zero;
+	dwords[16] = zero;
+	dwords[33] = zero;
+	dwords[34] = zero;
+	dwords[35] = unit;
+	dwords[36] = unit;
+	dwords[37] = zero;
 }
