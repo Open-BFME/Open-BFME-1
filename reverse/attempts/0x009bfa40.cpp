@@ -1,22 +1,64 @@
 // _DeblockLoopFilteredBand_WMT
-// partial score=0.12 date=2026-09-02
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /arch:SSE2
-// Semantic reconstruction of the VP6 postprocessor's SSE2 band filter at
-// 0x009BFA40.  The retail routine performs the same operation eight pixels at
-// a time with aligned word vectors; this scalar form keeps the recovered ABI,
-// state layout, two passes, and variance accounting explicit for the next
-// shaping pass.
+// partial score=0.18 date=2026-09-10
+// _DeblockLoopFilteredBand_WMT
+// cl: /O2
+//
+// Open-BFME5: VP6 postprocessor "loop filtered band" deblock, retail
+// 0x009BFA40, 4068 bytes. Same ctx shape as the sibling Rva009BEBB0Vp6
+// DeblockBand (0x009BEBB0): m_fragmentQIndex pointer at +0x24,
+// m_fragmentVariances pointer at +0x28, PLUS one extra field m_tableIndex
+// (int) at +0xc feeding g_rva01356A9C[ctx->m_tableIndex] whose low word is
+// broadcast unconditionally into an 8-word buffer before the loop even tests
+// fragment<end -- confirmed from the entry bytes: eax=[ebp+8](ctx);
+// edx=[eax+0xc](m_tableIndex); eax=[0x1356a9c][edx] (g_rva01356A9C lookup);
+// then eight `mov word ptr [esp+N],ax` stores. See reverse/re_attempts.log
+// (0x009bfa40) for the byte-level recon this session builds on.
+//
+// STATUS this session: corrects the ctx field model (the 0.12 predecessor's
+// POSTPROC_INSTANCE_9BFA40 had m_tableIndex mis-typed as UINT8* and no
+// m_fragmentQIndex/m_fragmentVariances distinction) and confirms the entry
+// broadcast idiom compiles with the right instruction shape when qv is a
+// real align(16) array with volatile-cast stores (forces the aligned frame
+// AND keeps the dead broadcast live). Still a scalar reconstruction of the
+// filter body, NOT the masmified SIMD islands -- tools/probe.py against
+// retail: 2673/4068 non-reloc bytes differ, first real divergence at +0x6
+// (sub esp,0x144 vs our smaller frame; register roles differ, structurally
+// the retail loop is confirmed to carry TWO loop indices -- frag from
+// `start` and qIndex from `end` -- both incrementing together, matching the
+// sibling 0x009BEBB0's loop1 exactly, including the variance-target order
+// ctx->m_fragmentVariances[frag] / [qIndex]). Recon for the next session:
+// the q>3 SIMD island (+0xac..+0x704 relative to the function, ~1624 bytes)
+// is byte-for-byte parallel to 0x009BEBB0's loop1 kernel (same q-broadcast,
+// 8-row unpack into a work[80]-shaped buffer, same variance-threshold mask)
+// PLUS an extra correction step not present in the sibling: outputs 4 and 5
+// (the two samples straddling the actual block edge) get an additional
+// clip/blend pass using a {1}x8-word constant at retail 0x012D8820 (and the
+// existing kRva012D87D0Four {4}x8 at 0x012D87D0) before the shared 8-tap
+// filter runs -- reverse/attempts/history for this rva has the masmified
+// dump of that island via build/masmify.py (rewritten this session, still
+// present at build/masmify.py, gitignored). A second real-control-flow gate
+// `if (frag != start) { <~2202-byte vertical/edge island> }` follows the
+// horizontal pass every iteration (confirmed by two DISTINCT copies of the
+// pointer-bump tail in the retail bytes, one inside the skip branch, one
+// after the gated island -- rules out a shared-tail early-continue reading
+// as the same code, source likely uses an early `continue` after bumping
+// pointers when frag==start). That island reads already-filtered dst bytes
+// through a pointer initialised to `dst - stride*8` (kept in ebx across the
+// whole loop) at offsets ebx-5/ebx+4 -- not yet transcribed.
 
 typedef unsigned char UINT8;
 typedef unsigned int UINT32;
 
-struct POSTPROC_INSTANCE_9BFA40
+struct Rva009BFA40Ctx
 {
-	char unknown00[0x0c];
-	UINT8 *FragQIndex;                 // +0x0c
-	char unknown10[0x14];
-	UINT32 *FragmentVariances;         // +0x24
+	unsigned char m_pad0[0xC];
+	int m_tableIndex;                  // +0x0c
+	unsigned char m_pad1[0x24 - 0x10];
+	unsigned int *m_fragmentQIndex;    // +0x24
+	unsigned int *m_fragmentVariances; // +0x28
 };
+
+extern int *g_rva01356A9C;
 
 static __forceinline int bfmeAbs9BFA40(int value)
 {
@@ -87,44 +129,65 @@ static __forceinline UINT32 bfmeFilterLine9BFA40(const UINT8 *source, int step,
 }
 
 extern "C" void __cdecl DeblockLoopFilteredBand_WMT(
-	POSTPROC_INSTANCE_9BFA40 *pbi, UINT8 *source, UINT8 *destination,
-	UINT32 pitch, UINT32 fragmentsAcross, UINT32 startFragment,
-	UINT32 *quantScale)
+	Rva009BFA40Ctx *ctx, UINT8 *src, UINT8 *dst,
+	UINT32 stride, UINT32 count, UINT32 start,
+	UINT32 *qTable)
 {
-	UINT32 fragment = startFragment;
-	UINT32 end = startFragment + fragmentsAcross;
+	// Unconditional shared-table lookup + broadcast, independent of the
+	// per-fragment qStep test below -- matches the entry bytes exactly.
+	// A real align(16) array (not a volatile scalar) is what makes MSVC emit
+	// retail's "and esp,-16" aligned-frame prologue at all.
+	__declspec(align(16)) unsigned short qv[8];
+	unsigned short tableQ = (unsigned short)g_rva01356A9C[ctx->m_tableIndex];
+	*(volatile unsigned short *)&qv[0] = tableQ;
+	*(volatile unsigned short *)&qv[1] = tableQ;
+	*(volatile unsigned short *)&qv[2] = tableQ;
+	*(volatile unsigned short *)&qv[3] = tableQ;
+	*(volatile unsigned short *)&qv[4] = tableQ;
+	*(volatile unsigned short *)&qv[5] = tableQ;
+	*(volatile unsigned short *)&qv[6] = tableQ;
+	*(volatile unsigned short *)&qv[7] = tableQ;
 
-	while (fragment < end) {
-		UINT32 qStep = quantScale[pbi->FragQIndex[fragment + fragmentsAcross]];
-		if (qStep > 3) {
-			UINT32 horizontalVariance = 0;
-			UINT32 verticalVariance = 0;
-			int i;
+	UINT32 frag = start;
+	UINT32 end = count + start;
 
-			for (i = 0; i < 8; ++i)
-				horizontalVariance += bfmeFilterLine9BFA40(
-					source + i, (int)pitch, destination + i, (int)pitch, qStep);
+	if (frag < end)
+	{
+		UINT32 qIndex = end;
+		do
+		{
+			UINT32 qStep = qTable[ctx->m_fragmentQIndex[qIndex]];
+			if (qStep > 3) {
+				UINT32 horizontalVariance = 0;
+				UINT32 verticalVariance = 0;
+				int i;
 
-			for (i = -4; i < 4; ++i)
-				verticalVariance += bfmeFilterLine9BFA40(
-					source + i * (int)pitch, 1,
-					destination + i * (int)pitch, 1, qStep);
+				for (i = 0; i < 8; ++i)
+					horizontalVariance += bfmeFilterLine9BFA40(
+						src + i, (int)stride, dst + i, (int)stride, qStep);
 
-			pbi->FragmentVariances[fragment] += horizontalVariance;
-			pbi->FragmentVariances[fragment + fragmentsAcross] += horizontalVariance;
-			pbi->FragmentVariances[fragment] += verticalVariance;
-			pbi->FragmentVariances[fragment + 1] += verticalVariance;
-		} else {
-			int row;
-			for (row = -4; row < 4; ++row) {
-				int column;
-				for (column = 0; column < 8; ++column)
-					destination[row * (int)pitch + column] = source[row * (int)pitch + column];
+				for (i = -4; i < 4; ++i)
+					verticalVariance += bfmeFilterLine9BFA40(
+						src + i * (int)stride, 1,
+						dst + i * (int)stride, 1, qStep);
+
+				ctx->m_fragmentVariances[frag] += horizontalVariance;
+				ctx->m_fragmentVariances[qIndex] += horizontalVariance;
+				ctx->m_fragmentVariances[frag] += verticalVariance;
+				ctx->m_fragmentVariances[qIndex] += verticalVariance;
+			} else {
+				int row;
+				for (row = -4; row < 4; ++row) {
+					int column;
+					for (column = 0; column < 8; ++column)
+						dst[row * (int)stride + column] = src[row * (int)stride + column];
+				}
 			}
-		}
 
-		++fragment;
-		source += 8;
-		destination += 8;
+			src += 8;
+			dst += 8;
+			++frag;
+			++qIndex;
+		} while (frag < end);
 	}
 }
