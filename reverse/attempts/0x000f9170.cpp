@@ -25,6 +25,18 @@
 //   copy, `!(count >= limit)`, and a zero-then-set `if` (91 B).
 //   Return type `unsigned char` and `bool` both collapse back to the 82-byte
 //   folded `cmp reg,[mem]` form.
+//   Also ruled out on 2026-09-10: a volatile global pointer a volatile limit
+//   field and both together; _ReadWriteBarrier _ReadBarrier and _WriteBarrier
+//   between the limit load and the compare; a second local copy of the limit;
+//   binding the limit to a const int reference; and `*&` on the field. Every
+//   one of these still folds the limit into `cmp reg,[mem]`.
+//   Working theory for the next agent: retail evaluates the deeper operand
+//   first (Sethi-Ullman), which it can only do while the limit expression is
+//   still two loads deep. MSVC folds the RIGHT operand of `<` into the cmp,
+//   which flattens it to depth 0 and makes the count go first. So the lever to
+//   look for is one that keeps `count < limit` in the source while making the
+//   limit load unfoldable; writing `limit > count` gets the order but then the
+//   cmp operands and setcc are the mirror of retail's.
 class Rva000F9170Thing;
 
 class Rva000F9170Inner
