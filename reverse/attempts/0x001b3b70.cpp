@@ -55,9 +55,9 @@ public:
 	virtual void slot21(void);
 	virtual void slot22(void);
 	virtual void slot23(void);
-	virtual void slot24(void);
 	virtual void xferAt60(void *value);
-	virtual void slot26(void);
+	virtual void slot24(void);
+	virtual void slot25(void);
 	virtual void xferAt6C(void *value);
 };
 
