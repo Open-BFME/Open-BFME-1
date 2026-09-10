@@ -1,5 +1,5 @@
 // ?fill@BfmeShadowBufferEntry@@QAEXPAE@Z
-// partial score=0.85 date=2026-09-10
+// partial score=0.9 date=2026-09-10
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
 typedef float Real;
@@ -80,6 +80,6 @@ void BfmeShadowBufferEntry::fill(unsigned char *value)
 
 		Real dot = cx * lightDir->x + cy * lightDir->y + cz * lightDir->z;
 
-		*out = (unsigned char)(dot < BfmeZeroRange);
+		*out = (unsigned char)(BfmeZeroRange > dot);
 	}
 }
