@@ -1075,39 +1075,44 @@ bool MeshGeometryClass::intersect_obbox_brute_force(OBBoxIntersectionTestClass &
  * HISTORY:                                                                                    *
  *   3/1/2001  NH : Created.                                                                   *
  *=============================================================================================*/
-// ?MeshGeometryClass::cast_ray_brute_force present-unmatched
+struct MeshGeometryRetailRayView
+{
+	char pad_00[0x24];
+	int poly_count;
+	char pad_28[4];
+	ShareBufferClass<TriIndex> *poly;
+	ShareBufferClass<Vector3> *vertex;
+	char pad_34[0x2c];
+	ShareBufferClass<uint8> *poly_surface_type;
+};
+
 bool MeshGeometryClass::cast_ray_brute_force(RayCollisionTestClass & raytest)
 {
+	MeshGeometryRetailRayView * const geometry =
+		reinterpret_cast<MeshGeometryRetailRayView *>(this);
 	int srtri;
 	TriClass tri;
-	const Vector3 * loc = Get_Vertex_Array();
-	const TriIndex * polyverts = Get_Polygon_Array();
-#ifndef COMPUTE_NORMALS
-	const Vector4 * norms = Get_Plane_Array();
-#endif
+	const Vector3 * loc = geometry->vertex->Get_Array();
+	const TriIndex * polyverts = geometry->poly->Get_Array();
 
 	/*
 	** Loop over each polygon
 	*/
 	bool hit = false;
-	for (srtri=0; srtri < Get_Polygon_Count(); srtri++) {
+	for (srtri=0; srtri < geometry->poly_count; srtri++) {
 	
 		// TODO: find a better way to do this?
 		tri.V[0] = &(loc[ polyverts[srtri][0] ]);
 		tri.V[1] = &(loc[ polyverts[srtri][1] ]);
 		tri.V[2] = &(loc[ polyverts[srtri][2] ]);
 
-#ifdef COMPUTE_NORMALS					
 		static Vector3 _normal;
 		tri.N = &_normal;
 		tri.Compute_Normal();
-#else
-		tri.N = (Vector3 *)&(norms[srtri]);
-#endif
 		
 		if (CollisionMath::Collide(raytest.Ray, tri, raytest.Result)) {
 			hit = true;
-			raytest.Result->SurfaceType = Get_Poly_Surface_Type (srtri);
+			raytest.Result->SurfaceType = geometry->poly_surface_type->Get_Array()[srtri];
 		}
 	
 		if (raytest.Result->StartBad) return true;
