@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c3cfa1f6b8e155d92b5cc18491997635bd3c631f22eb3f1f07f9cda18d3ae2cf",
+  "symbol": "?bfmeEqualUW@@YAHPBVBfmeKeyUW@@0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeEqualUW@@YAHPBVBfmeKeyUW@@0@Z\n// partial score=0.97 date=2026-09-10\n// 50/50 bytes; the SHAPE is exact -- the remaining 8 lines differ only by a\r\n// whole-body ecx/edx swap (retail ecx where we use edx and vice versa).\r\n// Settled: the return type is int (both exits are 32-bit, mov eax,1 and\r\n// xor eax,eax), the kind test must be NESTED with one trailing `return 0` (an\r\n// early `return 0` inlines that block and lets MSVC fold the tail to\r\n// `setne al`, 46 bytes), and the first two arguments must be hoisted into\r\n// locals (`item`, then `data`) so retail's `mov edx,[eax+8]` happens before the\r\n// pushes instead of destroying eax between them.\r\n// Lone ecx/edx scratch flip -- toolchain, not source.\r\nclass BfmeItemUW\r\n{\r\npublic:\r\n\tunsigned char m_bfmeHeadUW[8];\r\n\tvoid *m_bfmeDataUW;\r\n};\r\n\r\nclass BfmeKeyUW\r\n{\r\npublic:\r\n\tBfmeItemUW *m_bfmeItemUW;\r\n\tint m_bfmeKindUW;\r\n};\r\n\r\nchar __cdecl bfmeSameUW(void *first, BfmeItemUW *second, void *third);\r\n\r\nint __cdecl bfmeEqualUW(const BfmeKeyUW *first, const BfmeKeyUW *second)\r\n{\r\n\tif (first->m_bfmeKindUW == second->m_bfmeKindUW)\r\n\t{\r\n\t\tBfmeItemUW *item = first->m_bfmeItemUW;\r\n\t\tvoid *data = item->m_bfmeDataUW;\r\n\r\n\t\tif (bfmeSameUW(data, item, second->m_bfmeItemUW->m_bfmeDataUW))\r\n\t\t\treturn 1;\r\n\t}\r\n\r\n\treturn 0;\r\n}\r\n"
+}
