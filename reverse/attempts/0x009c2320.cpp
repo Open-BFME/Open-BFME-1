@@ -32,15 +32,54 @@
 //   push ebp / mov ebp,esp / sub esp,<frame size>
 // ebx keeps the pre-align esp (params read via [ebx+8], [ebx+0xc], ... --
 // [ebx+8] itself is this function's unused first arg and is never read);
-// ebp addresses the aligned locals.  Two probe details remain OPEN (tried
-// /Zi /GS /EHsc /Gs /Ox, none reproduced them):
-//   1. retail's align pad is `sub esp,8` (8 bytes); the probe emits a
-//      single `push reg` (4 bytes) instead -- needs one more 4-byte local
-//      or a different local ordering to widen the pad.
-//   2. retail inserts `mov ebp,[ebx+4]; mov [esp+4],ebp` right after
-//      `push ebp` -- a return-address copy for stack-walking that the
-//      probe never emitted under any flag tried.  Likely tied to SOME
-//      compiler flag or local-count threshold not yet found.
+// ebp addresses the aligned locals.
+//
+// 2026-09-10 second session (t=110min, build/probe6/sweep*.cpp, not checked
+// in): isolated BOTH remaining prologue elements to their true triggers,
+// via a multi-function-per-TU harness (build.py compile_source +
+// read_object_symbol_bytes, no ledger writes) --
+//   - The ebx-anchor mechanism ITSELF (not just alignment) needs the __asm
+//     island to use EBP AS ITS OWN SCRATCH REGISTER (push/pop ebp inside
+//     the island, exactly like the esi/edi/ecx/edx/eax/ebx saves already
+//     confirmed from the retail dump).  align(16) locals + an island that
+//     only touches xmm/mm + eax/ecx/edx/ebx do NOT get the ebx-anchor at
+//     all (plain `push ebp; mov ebp,esp; and esp,-16; sub esp,N` instead,
+//     confirmed with the SAME 6-parameter signature as this function) --
+//     EBP must be freed up as scratch to force the compiler onto a
+//     separate EBX anchor for parameter access.  This alone reproduces
+//     `push ebx/mov ebx,esp/<pad>/and esp,-16/add esp,4/push ebp/
+//     mov ebp,esp` -- but pad is `push ecx` (4B) and ebp is loaded plainly
+//     (mov ebp,esp), no [ebx+4] copy.  (sweep4.cpp probeP12, sweep7.cpp
+//     probeP17 under /EHa: identical result either way.)
+//   - The 8-byte pad (`sub esp,8`) AND the `mov ebp,[ebx+4]; mov [esp+4],
+//     ebp` return-address copy are BOTH produced, byte-for-byte exact
+//     through `mov ebp,esp` (all 10 prologue instructions), by EITHER (a)
+//     a literal `__try { <asm island> } __except (K) { }` around the
+//     island (K constant, any value 0/1 -- sweep1.cpp probeP3, sweep5.cpp
+//     probeP13/P14), OR (b) /EHa PLUS a local C++ object whose destructor
+//     is real (not provably no-op/throw()) -- sweep8.cpp probeP18.  BOTH
+//     forms ALSO emit genuine SEH exception-registration code right after
+//     the prologue (`push -1; push 0[; push 0]; mov eax,fs:[0]; push eax;
+//     mov dword ptr fs:[0],esp`, ~20-30 more bytes) that retail's actual
+//     764 bytes do NOT contain anywhere (confirmed: zero 0x64 FS-prefix
+//     opcodes at real instruction boundaries in the full body, scanned via
+//     build.read_target_bytes + capstone).  Tried to defeat the
+//     registration emission: __except with an unreachable/constant filter
+//     (0 and 1, both kept it), /EHa vs /EHsc (no difference alone), a
+//     throwing ctor+dtor pair without /EHa or __try (no effect, plain
+//     `push ebp;mov ebp,esp`), extern "C" callees (nothrow, no effect per
+//     the existing lesson).  MSVC 7.1 appears to NEVER strip the runtime
+//     SEH registration once __try or /EHa-implicit-object-protection is
+//     lexically present, in every combination tried here.
+//   REMAINING GAP: no source shape found yet that gets the exact 8-byte
+//   pad + return-address copy WITHOUT also pulling in registration bytes
+//   retail lacks.  Possible next angles, untried: a local object whose
+//   dtor is protected under /EHa but whose corresponding scope entry gets
+//   folded/shared with an OUTER caller's frame (unlikely, this is a free
+//   function); a different MSVC-7.1-specific EH model flag beyond /EHsc
+//   and /EHa; or the retaddr-copy idiom has a THIRD, non-EH trigger this
+//   session's ~18 combinations did not hit.
+//
 // Once both reproduce, the compiler's OWN callee-saves for this body land
 // as: single `push ebx` (real save, ebx is clobbered later) immediately
 // after the C-level table lookups/stores, THEN `push esi; push edi`
