@@ -3119,7 +3119,6 @@ name,address,notes
 ??0Nugget@ModuleInfo@@QAE@ABU01@@Z,0x0004ABEC,retail ILT target of ModuleInfo Nugget copy-constructor call
 ??0OBBoxClass@@QAE@ABV0@@Z,0x00888400,Open-BFME5 OBBoxAPTContextStruct Box copy-ctor (ICF twin of 0x00931420)
 ??0OCLSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,0x000332D5,link thunk to the OCLSpecialPower constructor; named from the ModuleFactory registration that pairs "OCLSpecialPower" with factory 0x001201B0
-??0OCLSpecialPowerModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0OCLUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000EF5C,pinharvest x1 (thunk)
 ??0OCLUpdateModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)
 ??0OCU_GrandBase@@QAE@XZ,0x0003D24E,ObjectCreationUpgrade ctor grandbase call; ILT thunk for body 0x002D9B80
@@ -86816,3 +86815,4 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?_M_insert@?$hashtable@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@@_STL@@QAEAAU?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@2@ABU32@@Z,0x00382010,STLport ExperienceLevel map _M_insert body reached by operator[] through ILT 0x0001C6DE; raw 0x00382010 node insertion and 0x00382210 caller establish the typed specialization
 ?buildFieldParse@CostModifierUpgradeModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x002D4B00,Parent direct body identity from CostModifierUpgrade registry12F1B6 and factory11DA50 field-parser pointer VA437222 whose ILT37222 targets this body; existing RVA-qualified field parser is the same physical function
 ??0?$BFMEFactoryModuleData@VCostModifierUpgradeModuleData@@$0II@@@QAE@XZ,0x002D4B30,Declaration-only BFME factory allocation facade for actual CostModifierUpgradeModuleData88B; named registry factory11DA50 calls2B062 to full123B constructor2D4B30; no new body claim
+??_7OCLSpecialPowerModuleData@@6B@,0x010B6180,Parent raw ctor2631BB store and moduledatafactory120230 allocation230; vtable slot0 ILT339E2 to2637D0 deletingdtor then matched263800
