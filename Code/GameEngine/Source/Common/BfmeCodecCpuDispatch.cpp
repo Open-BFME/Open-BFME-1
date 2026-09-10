@@ -60,7 +60,7 @@ extern void __cdecl bfmeFilterRowByIndex12Mmx(int, void *, int);
 extern void __cdecl d_009bd470(void);
 extern void __cdecl d_009c0a30(void);
 extern void __cdecl d_009be180(void);
-extern void __cdecl d_009bd750(void);
+extern "C" void __cdecl Rva009BD750Vp6FilterWide(void *, void *, void *, int, int, int *);
 extern void __cdecl d_009b8130(void);
 extern void __cdecl d_009a5f50(void);
 
@@ -140,7 +140,7 @@ void __cdecl bfmeInstallCpuDispatchTable(void)
 		g_bfmeCodecDispatch.slot[2] = (BfmeDispatchFn)&initPattern;
 		g_bfmeCodecDispatch.slot[1] = (BfmeDispatchFn)&Rva009B6D40;
 		g_bfmeCodecDispatch.slot[16] = (BfmeDispatchFn)&d_009be180;
-		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&d_009bd750;
+		g_bfmeCodecDispatch.slot[24] = (BfmeDispatchFn)&Rva009BD750Vp6FilterWide;
 		g_bfmeCodecDispatch.slot[10] = (BfmeDispatchFn)&Rva009B6D80;
 		g_bfmeCodecDispatch.slot[13] = (BfmeDispatchFn)&d_009b8130;
 		g_bfmeCodecDispatch.slot[21] = (BfmeDispatchFn)&d_009b9700;
