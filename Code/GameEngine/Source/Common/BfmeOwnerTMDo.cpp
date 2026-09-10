@@ -1,14 +1,7 @@
-// ?bfmeDoTM@BfmeOwnerTM@@QAEXPAVBfmeMsgTM@@@Z (identity unknown)
-// partial score=0.96 date=2026-09-07
-// 111/111 bytes; 5 of 34 instructions differ, all from ONE choice: which
-// register the two arms of `target` merge into.
-//   retail  then: mov ecx,eax / jmp   else: mov ecx,esi   then push 59h
-//   ours    then: jmp            else: mov eax,esi        then push 59h, mov ecx,eax
-// Needed to get here: the global read into a local (it is used twice and lives
-// in edi across both calls) and an explicit if/ELSE for target -- initialising
-// `target = actor` up front and overwriting it in the if costs 2 bytes and
-// hoists `mov ecx,esi` above the flag test.
-// Tried: an extra local for the lookup result inside the then-arm (same 5).
+// The retail body at 0x002140B0 calls the pinned BfmeOwnerTM sibling
+// ?bfmeSendTM@BfmeOwnerTM@@QAEXPAVBfmeMsgTM@@@Z at 0x0003B372.
+// The object field chain and the matching thiscall ABI establish this owner.
+
 class BfmeThingTM;
 
 class BfmeInnerTM
@@ -71,18 +64,16 @@ void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 	if (thing && thing->m_bfmeInnerTM)
 		thing = thing->m_bfmeInnerTM->bfmeResolveTM();
 
-	BfmeActorTM *target;
-
 	if (thing->m_bfmeFlagsTM & 0x2000000)
 	{
-		target = logic->bfmeFindTM(actor->m_bfmeOwnerTM);
-
+		BfmeActorTM *target = logic->bfmeFindTM(actor->m_bfmeOwnerTM);
 		if (!target)
 			return;
+		if (!target->bfmeCanTM(0x59))
+			return;
 	}
-	else
-		target = actor;
+	else if (!actor->bfmeCanTM(0x59))
+		return;
 
-	if (target->bfmeCanTM(0x59))
-		bfmeSendTM(msg);
+	bfmeSendTM(msg);
 }
