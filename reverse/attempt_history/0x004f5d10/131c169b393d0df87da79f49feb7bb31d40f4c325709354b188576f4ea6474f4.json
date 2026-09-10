@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "131c169b393d0df87da79f49feb7bb31d40f4c325709354b188576f4ea6474f4",
+  "symbol": "?WOLGameSetupMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z",
+  "score_kind": "author-estimate",
+  "score": 0.38,
+  "source": "// ?WOLGameSetupMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z\n// partial score=0.38 date=2026-09-02\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/peerdefs /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main\n// stlport\n// Isolate the identified Zero Hour twin in a descriptive TU without changing\n// the canonical menu source or any sibling body.\n#include \"WOLGameSetupMenu.cpp\"\n"
+}
