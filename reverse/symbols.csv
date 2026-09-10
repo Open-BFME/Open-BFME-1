@@ -86884,3 +86884,7 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?Q3IterSwap00473BC0@@YAXPAUQ3SortElem16@@0@Z,0x00473BC0,Parent raw full170B iter_swap; two 16B-element pointers; three dwords and StringBase<char> copy887B60 set887C90 release887940; viaILT1492A
 ?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z,0x004768F0,Parent raw full130B partial_sort; five cdecl arguments with fourth value-type pointer as STLport _algo.c; viaILT32501
 ?push_back@?$list@PAVControlBarScheme@@V?$allocator@PAVControlBarScheme@@@_STL@@@_STL@@QAEXABQAVControlBarScheme@@@Z,0x004AE3F0,ICF-equivalent STLport list<ControlBarScheme*> push_back body already claimed at 0x004AE3F0; retail newControlBarScheme call encodes ILT 0x0000D0A3 to that body
+?get_allocator@Rva00776240Vector60@@QBE?AV?$allocator@URva00776240Vector60Element@@@_STL@@XZ,0x00017ED1,Rva00776240Vector60 copy constructor call at 0x0076D020
+??0?$_Vector_base@URva00776240Vector60Element@@V?$allocator@URva00776240Vector60Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva00776240Vector60Element@@@1@@Z,0x0002766A,Rva00776240Vector60 copy constructor base call at 0x0076D020
+?BfmeElementConstruct@_STL@@YAXPAXABURva00776240Vector60Element@@@Z,0x00016626,Rva00776240Vector60 copy constructor element call at 0x0076D020
+?BfmeElementConstruct@_STL@@YAXPAURva00776240Vector60Element@@ABU2@@Z,0x00016626,Rva00776240Vector60 copy constructor typed element call at 0x0076D020
