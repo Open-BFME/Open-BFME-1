@@ -1,27 +1,9 @@
 // ??0LargeGroupAudioMap@@QAE@VAsciiStringVZ@@@Z
 // partial score=0.55 date=2026-09-08
 // LargeGroupAudioMap constructor, retail 0x003CED50.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
-template <class T>
-class StringBase
-{
-public:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-private:
-	char *m_data;
-};
-
-class AsciiStringVZ : private StringBase<char>
-{
-public:
-	AsciiStringVZ() : StringBase<char>() {}
-	AsciiStringVZ(const AsciiStringVZ &other) : StringBase<char>(other) {}
-	~AsciiStringVZ() {}
-};
+#include "StringInline.h"
 
 class LargeGroupAudioMap
 {
@@ -32,7 +14,7 @@ public:
 	virtual void slot03();
 	virtual void slot04();
 
-	LargeGroupAudioMap(AsciiStringVZ name);
+	LargeGroupAudioMap(AsciiString name);
 	virtual ~LargeGroupAudioMap();
 
 private:
@@ -41,7 +23,7 @@ private:
 	unsigned char m_pad09[3];
 	float m_size;
 	float m_maximumAudioSpeed;
-	AsciiStringVZ m_soundName;
+	AsciiString m_soundName;
 	unsigned int m_sound[3];
 	unsigned int m_requiredModelConditions[10];
 	unsigned int m_excludedModelConditions[10];
@@ -55,15 +37,11 @@ private:
 	float m_cachedSpeed[4];
 };
 
-LargeGroupAudioMap::LargeGroupAudioMap(AsciiStringVZ name) :
+LargeGroupAudioMap::LargeGroupAudioMap(AsciiString name) :
 	m_soundName(name)
 {
 	m_owner = 0;
 	m_isOverride = 0;
-	m_size = 10000.0f;
-	m_maximumAudioSpeed =
-		*(const float *)0x012B48F0 * *(const float *)0x010977E0;
-
 	m_sound[0] = 0;
 	m_sound[1] = 0;
 	m_sound[2] = 0;
@@ -101,8 +79,11 @@ LargeGroupAudioMap::LargeGroupAudioMap(AsciiStringVZ name) :
 	m_cachedSpeed[1] = -1.0f;
 	m_cachedSpeed[2] = -1.0f;
 	m_cachedSpeed[3] = -1.0f;
-	m_startThreshold = 40000;
-	m_stopThreshold = 10;
+	m_startThreshold = 0x7fffffff;
+	m_stopThreshold = 0x7fffffff;
 	m_handOffModeDuration = 10;
 	m_ignoreStealthedUnits = 1;
+	m_maximumAudioSpeed =
+		*(const float *)0x012B48F0 * *(const float *)0x010977E0;
+	m_size = 10000.0f;
 }
