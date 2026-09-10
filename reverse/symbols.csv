@@ -86850,3 +86850,5 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?lookup@Rva002EEDA0ShroudManager@@QAEHPBUCoord3D@@HI@Z,0x008F7470,address-derived shroud-manager cell lookup; forwards through its +0xc member to the matched body at 0x008F7CD0
 ?getPlayersWithRelationship@Rva002EE330PlayerList@@QAEGHH_N@Z,0x00044C60,same 3-arg mask lookup as the PlayerList spelling already pinned here; typed onto the address-derived class the global at 0x012ED748 names
 ?Rva0037C310@Rva0037C310Owner@@QAE_NHHPAVObject@@@Z,0x000466B4,address-derived name for the ILT thunk at 0x000466B4 which jumps to the 465-byte body at 0x0037C310; called by the emotion walk at 0x00290B90
+?Rva00013642@Rva00291F20Base@@QAE_NXZ,0x00013642,address-derived name for the ILT thunk at 0x00013642 which jumps to the sibling dump body at 0x00291BD0
+?Rva00030891@Rva00291F20Base@@QAE_NXZ,0x00030891,address-derived name for the ILT thunk at 0x00030891 which jumps to the sibling dump body at 0x00291CD0
