@@ -1,5 +1,3 @@
-// ?d_00284700@@YAXXZ
-// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
@@ -39,8 +37,9 @@ public:
 	}
 };
 
-struct BannerCarrierObjectPayload
+class BannerCarrierObjectPayload
 {
+public:
 	BannerCarrierString m_templateName;
 	unsigned int m_fields[9];
 };
@@ -71,8 +70,9 @@ class BannerCarrierUpdateModuleData : public BannerCarrierUpdateModuleDataBase
 {
 public:
 	virtual ~BannerCarrierUpdateModuleData();
-	void findObjectName( BannerCarrierObjectPayload &result,
-		const BannerCarrierString *name );
+	BannerCarrierObjectPayload *rva00284700FindObjectName(
+		BannerCarrierObjectPayload *result,
+		const BannerCarrierString *name ) const;
 
 private:
 	std::vector<BannerCarrierObjectName *> m_objectNames;
@@ -85,20 +85,21 @@ private:
 	float m_scanHordeDistance;
 };
 
-// ?findObjectName@BannerCarrierUpdateModuleData@@QBEXPAVBannerCarrierObjectPayload@@PBVBannerCarrierString@@@Z
-void BannerCarrierUpdateModuleData::findObjectName(
-	BannerCarrierObjectPayload &result, const BannerCarrierString *name )
+BannerCarrierObjectPayload *
+BannerCarrierUpdateModuleData::rva00284700FindObjectName(
+	BannerCarrierObjectPayload *result, const BannerCarrierString *name ) const
 {
 	for (unsigned int i = 0; i < m_objectNames.size(); ++i)
 	{
 		if (m_objectNames[i]->m_name.compareNoCase( *name ) == 0)
 		{
-			BannerCarrierObjectPayload &output = result;
-			output = m_objectNames[i]->m_payload;
-			return;
+			BannerCarrierObjectPayload *output = result;
+			*output = m_objectNames[i]->m_payload;
+			return result;
 		}
 	}
 
-	memset( &result, 0, sizeof( result ) );
-	result.m_fields[4] |= 0x4000;
+	memset( result, 0, sizeof( *result ) );
+	result->m_fields[4] |= 0x4000;
+	return result;
 }
