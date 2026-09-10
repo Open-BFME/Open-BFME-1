@@ -101,7 +101,11 @@ static void parseFXLocInfo( INI *ini, void *instance, FXLocInfo *locInfo )
 	{
 
 		// save bone name and location type
-		locInfo->boneName = AsciiString( ini->getNextToken() );
+		{
+			AsciiString boneName( ini->getNextToken() );
+			AsciiString &dst = locInfo->boneName;
+			dst = boneName;
+		}
 		locInfo->locType = FX_DAMAGE_LOC_TYPE_BONE;
 
 		//
