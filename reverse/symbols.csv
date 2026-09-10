@@ -86701,3 +86701,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?push_back@?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@QAEXABQAVGameWindow@@@Z,0x000452A0,ILT thunk; STLport list<GameWindow*>::push_back (OnlineLogin tab list 0x00551DD0)
 _Rva008118C0,0x008118C0,Address-derived cdecl alias; Y5 configuration passes ignored table argument to existing empty helper; parent decoded call80E7F3 and ret8118C4
 ?crushPolicy@Object@@QBE_NPAV1@W4CrushSquishTestType@@@Z,0x000420AA,route=0x001CC790; retail 0x00176250 pursue updateInternal reaches the matched crush policy through this ILT thunk
+?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z,0x000402D2,route=0x001BFF70; retail 0x00174A20 reaches the matched damage-source query through this ILT thunk
+?set@Rva0026F110@@QAEXXZ,0x00012486,route=0x0026F110; retail 0x00174A20 reaches the matched AI setter through this ILT thunk
