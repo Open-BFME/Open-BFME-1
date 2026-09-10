@@ -8773,6 +8773,7 @@ name,address,notes
 ??1LaserUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1LaserUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1LayoutFilename@@QAE@XZ,0x00887940
+??1LevelGrantSpecialPowerModuleData@@UAE@XZ,0x00034090,route=0x0025FFF0; constructor vtable 0x010B5CD8 slot zero reaches scalar deleting destructor 0x0025FFC0 which calls the matched derived destructor
 ??1LevelGrantSpecialPowerModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 base pin
 ??1LifetimeUpdate@@MAE@XZ,0x0002C6F1,destructor ILT to 0x00297DE0
 ??1LifetimeUpdateModuleData@@UAE@XZ,0x0003F053,destructor ILT to 0x00298000
