@@ -216,6 +216,8 @@ class BfmeGroupAI
 public:
 	char m_bfmeHead[0x20];
 	AICommandInterface m_bfmeCommands;			// +0x20
+	unsigned char m_bfmeGap[0x1cc - 0x21];
+	void *m_curLocomotor;					// +0x1cc, AIUpdateInterface view
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -246,6 +248,7 @@ public:
 	ContainModuleInterface *getContain(void) { return m_contain; }
 
 	StealthUpdate *findUpdateModule(NameKeyType key);	// ILT 0x0002AE23
+	void leaveGroup();
 
 	virtual ~Object();
 	const ThingTemplate *m_template;			// +0x04
@@ -254,7 +257,7 @@ public:
 	unsigned char m_unreconstructed_44[0x90 - 0x44];
 	unsigned char m_status90;				// +0x90
 	unsigned char m_unreconstructed_91[0x1A4 - 0x91];
-	unsigned char m_disabledMask;				// +0x1A4
+	volatile unsigned char m_disabledMask;				// +0x1A4
 	unsigned char m_unreconstructed_1A5[0x1FC - 0x1A5];
 	ContainModuleInterface *m_contain;			// +0x1FC
 	unsigned char m_unreconstructed_200[0x204 - 0x200];
@@ -478,4 +481,68 @@ void AIGroup::groupStealthIdle()
 			ai->m_bfmeCommands.aiIdle(CMD_FROM_AI);
 		stealth->update002AD250();
 	}
+}
+
+// ?isReady@AIGroup@@QAEDXZ
+// The group-ready gate is reached by the matched
+// groupFollowWaypointPathAsTeam body through ILT 0x000104B0.  A member with
+// disabled bit 8, no AI or locomotor, or an immobile final override template
+// is removed when the group has more than one member.  A one-member group
+// containing one of those units is not ready; all other paths return true.
+char AIGroup::isReady()
+{
+	BfmeListNodeBase *head = m_bfmeMembers;
+	BfmeListNodeBase *it = head->m_bfmeNext;
+	if (it != head)
+	{
+		for (;;)
+		{
+		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
+		unsigned char disabled = obj->getDisabledMask();
+		char remove = 0;
+		if (disabled & 8)
+			remove = 1;
+		BfmeGroupAI *ai = obj->m_ai;
+		if (ai == 0 || ai->m_curLocomotor == 0)
+			remove = 1;
+		else
+		{
+			const ThingTemplate *tmpl = obj->m_template;
+			const ThingTemplate *finalTemplate = tmpl;
+			if (tmpl != 0 && tmpl->m_nextOverride != 0)
+				finalTemplate =
+					(const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
+			if (finalTemplate->isKindOf(KINDOF_IMMOBILE))
+				remove = true;
+		}
+
+		it = it->m_bfmeNext;
+		if (!remove)
+		{
+			if (it == head)
+				break;
+			continue;
+		}
+
+		BfmeListNodeBase *countIt = m_bfmeMembers->m_bfmeNext;
+		int count = 0;
+		if (countIt != m_bfmeMembers)
+		{
+			do
+			{
+				countIt = countIt->m_bfmeNext;
+				++count;
+			} while (countIt != m_bfmeMembers);
+		}
+		if (count == 1)
+			return 0;
+
+		obj->leaveGroup();
+		head = m_bfmeMembers;
+		it = head->m_bfmeNext;
+		if (it == head)
+			break;
+		}
+	}
+	return 1;
 }
