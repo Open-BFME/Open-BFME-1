@@ -12,11 +12,30 @@ struct Rva0048EE10Bounds
 	int highY;
 };
 
+class Rva0048E5C0Batch
+{
+public:
+	void update();
+};
+
 class Rva0048EE10Child
 {
 public:
-	void reset();
+	__declspec(noinline) void reset();
+
+	Rva0048E5C0Batch **m_begin;
+	Rva0048E5C0Batch **m_end;
 };
+
+__declspec(noinline) void Rva0048EE10Child::reset()
+{
+	Rva0048E5C0Batch **it = m_begin;
+	Rva0048E5C0Batch **end = m_end;
+	while( it != end ) {
+		(*it)->update();
+		++it;
+	}
+}
 
 class Rva0048EE10Display
 {
