@@ -1,21 +1,16 @@
-// ?d_00168d40@@YAXXZ
-// partial score=0.4 date=2026-09-05
+// ?rva00168D40@AIPlayer@@MAE_NPAVWorkOrder@@_NVAsciiString@@@Z
+// partial score=0.82 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: near-twin of AIPlayer::startTraining (twin 0x00166EF0,
-// AIPlayer_startTraining_Thunk.cpp / real source AIPlayer.cpp:1412). Same
-// callee set (findFactory, getProductionUpdateInterface, two virtual calls,
-// AsciiString ctor+concat+concat+concat, AppendDebugMessage, three
-// releaseBuffer dtors) -- the only observed diff is a 4-byte local/stack
-// slot shift, so this is the identical logic recompiled at a second call
-// site / duplicate override.
+// Retail 0x00168D40: AIPlayer::startTraining, identified by the matching
+// production call sequence and the WorkOrder field accesses.
 
 class AsciiString
 {
 public:
 	AsciiString(const char *text);
 	~AsciiString(void);
-	void concat(const AsciiString &other);
-	void concat(const char *text);
+	void appendString(const AsciiString &other);
+	void appendText(const char *text);
 
 private:
 	void *m_data;
@@ -26,20 +21,30 @@ class ThingTemplate;
 class Object
 {
 public:
-	int getID(void) const;
-	class ProductionUpdateInterface *getProductionUpdateInterface(void) const;
+	int getID(void) const
+	{
+		return *(const int *)((const char *)this + 0x74);
+	}
+	class ProductionUpdateInterface *callGetProductionUpdateInterface(void) const;
 };
 
 class ProductionUpdateInterface
 {
 public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
 	virtual int requestUniqueUnitID(void) = 0;
+	virtual void slot0c(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot18(void) = 0;
 	virtual bool queueCreateUnit(const ThingTemplate *thing, int id) = 0;
 };
 
 class WorkOrder
 {
 public:
+	char m_unknown_000[4];
 	const ThingTemplate *m_thing;
 	int m_factoryID;
 };
@@ -47,43 +52,49 @@ public:
 class ScriptEngine
 {
 public:
-	void AppendDebugMessage(const AsciiString &msg, bool);
+	void callAppendDebugMessage(const AsciiString &msg, bool);
 };
 
-extern ScriptEngine *TheScriptEngine;
+#define TheScriptEngine (*(ScriptEngine **)0x012f076c)
 
 struct GlobalData
 {
-	bool m_debugAI;
+	char m_unknown_000[0xa88];
+	int m_debugAI;
 };
 
-extern GlobalData *TheGlobalData;
-
-extern const AsciiString &bfmeThingTemplateName(const ThingTemplate *thing);
+#define TheGlobalData (*(GlobalData **)0x012ed5c8)
 
 class AIPlayer
 {
-public:
-	Object *findFactory(const ThingTemplate *thing, bool busyOK);
-	bool startTraining(WorkOrder *order, bool busyOK, AsciiString teamName);
+	public:
+	Object *callFindFactory(const ThingTemplate *thing, bool busyOK, int *factoryID);
+
+protected:
+	virtual bool rva00168D40(WorkOrder *order, bool busyOK, AsciiString teamName);
 };
 
-bool AIPlayer::startTraining(WorkOrder *order, bool busyOK, AsciiString teamName)
+bool AIPlayer::rva00168D40(WorkOrder *order, bool busyOK, AsciiString teamName)
 {
-	Object *factory = findFactory(order->m_thing, busyOK);
+	Object *factory;
+	int factoryID;
+	ProductionUpdateInterface *pu;
+	factory = callFindFactory(order->m_thing, busyOK, &factoryID);
 	if (factory)
 	{
-		ProductionUpdateInterface *pu = factory->getProductionUpdateInterface();
+		pu = factory->callGetProductionUpdateInterface();
 		if (pu && pu->queueCreateUnit(order->m_thing, pu->requestUniqueUnitID()))
 		{
 			order->m_factoryID = factory->getID();
-			if (TheGlobalData->m_debugAI)
+			GlobalData *globalData = *(GlobalData **)0x012ed5c8;
+			if (globalData->m_debugAI)
 			{
 				AsciiString teamStr = "Queuing ";
-				teamStr.concat(bfmeThingTemplateName(order->m_thing));
-				teamStr.concat(" for ");
-				teamStr.concat(teamName);
-				TheScriptEngine->AppendDebugMessage(teamStr, false);
+				teamStr.appendString(*(const AsciiString *)
+					((const char *)order->m_thing + 0x20));
+				teamStr.appendText(" for ");
+				teamStr.appendString(teamName);
+				TheScriptEngine->callAppendDebugMessage(teamStr, false);
 			}
 			return true;
 		}
