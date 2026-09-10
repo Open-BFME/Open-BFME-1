@@ -86688,3 +86688,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?move@Rva001BB0D0Mover@@QAEXPAXHHH@Z,0x00032A29,ILT thunk to the 890B body at 0x001BB0D0; appearance-switch mover reached from 0x001BC820
 ?behavior@Rva001BA1C0Handler@@QAEXPAXPAX@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; post-move behaviour handler reached from 0x001BC820
 ?test@Rva00270360Query@@QAE_NXZ,0x00023795,ILT thunk to the 212B body at 0x00270360; AI predicate reached from 0x001BC820
+?maintain@Rva001B9A90Branch@@QAEXPAVObject@@@Z,0x00002211,ILT thunk to the 36B body at 0x001B9A90; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9AC0Branch@@QAEXPAVObject@@@Z,0x000285B0,ILT thunk to the 36B body at 0x001B9AC0; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9AF0Branch@@QAEXPAVObject@@@Z,0x0001FF6E,ILT thunk to the 36B body at 0x001B9AF0; appearance-switch maintain branch reached from 0x001BCB10
+?maintain@Rva001B9B20Branch@@QAEXPAVObject@@@Z,0x0001C891,ILT thunk to the 36B body at 0x001B9B20; appearance-switch maintain branch reached from 0x001BCB10
+?behavior@Rva001BA1C0Handler@@QAE_NPAXPBUCoord3D@@@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; returns whether constant calling is required
