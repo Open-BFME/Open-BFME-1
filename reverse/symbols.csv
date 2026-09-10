@@ -2117,6 +2117,7 @@ name,address,notes
 ??0AIDockMachine@@QAE@PAVObject@@@Z,0x00014F15,ILT to AIDockMachine ctor 0x0014F7C0; retail onEnter@AIDockState call
 ??0AIGroup@@QAE@XZ,0x0002A031,Open-BFME5 ILT; ?createGroup@AI@@QAEPAVAIGroup@@XZ at 0x0014C630 runs it on the 0x40 bytes it allocates
 ??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z,0x0003E8D3,ILT to AIGuardRetaliateMachine ctor 0x0015F240; retail onEnter@AIGuardRetaliateState call
+??0AIGuardMachine@@QAE@PAVObject@@VAsciiString@@@Z,0x0015D1D0,GiantBirdGuardMachine ctor passes owner plus the in-place machine name; the callee body returns 8 and forwards both values to StateMachine
 ??0AIInternalMoveToState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x0014F280,base ctor of 13 retail State subclasses; the reference declares exactly those classes deriving from AIInternalMoveToState and its ctor takes (StateMachine* AsciiString) by value which matches the copy-then-pass at this address
 ??0AIInternalMoveToState@@QAE@PAXVAsciiString@@@Z,0x00032182,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0AIMoveToState@@QAE@PAVStateMachine@@@Z,0x0000C6E9,pinharvest x1 (thunk)
@@ -78372,6 +78373,7 @@ name,address,notes
 ?decrement@Rva00894D90Accessor@@SAIPAH@Z,0x00894D90,pin near-twin refcount decrement reuses Rva00894D90DecrementPointer body
 ?defaultHandler@BfmeMsgHandler@@QAEHHPAX0@Z,0x00010AF0,pin
 ?defineState@StateMachine@@IAEXIPAVState@@IIPBUStateConditionInfo@@@Z,0x000A2030,hand-decoded from DozerPrimaryStateMachine ctor @0x2B7870 (5 call sites, one per defineState() in the reference source, args match: stateID/state-ptr/successID/failureID/conditions-ptr); call site encodes thunk 0x3D1B3 (thunk_FUN_004a2030) -- pinned to the real body
+?setDefaultState@StateMachine@@IAEXI@Z,0x000A12B0,GiantBirdGuardMachine ctor final call passes state ID 0xB79B with ECX=this; body validates the map at +0x04 and stores the selected default ID at +0x18
 ?deleteAllFonts@FontLibraryDeleteAllFontsShim@@QAEXXZ,0x00722190,FontLibrary incremental-link thunk target through a TU-local forwarding shim
 ?deleteBuildTooltipLayout@ControlBar@@QAEXXZ,0x00027336,Open-BFME5 correction: this ILT is called with ecx = TheControlBar at 0x012F33F8 in doDisableInput and jumps to 0x004C1450. Player::addScience independently fixes 0x012F33F8 as TheControlBar by inlining markUIDirty as a byte store at +0x24. It was pinned as LookAtTranslator::resetModes
 ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z,0x000419FC,REL32 pin from Radar::removeObject body
@@ -86994,3 +86996,4 @@ _Rva009C4B70CpuFeatureProbe,0x009C4B70,Parent raw direct call at9B3A90+6; comple
 ?getFileLengthMS@AudioManager@@QBEMVAsciiString@@@Z,0x0004A363,AudioManager implementation directly calls the Miles override through this retail ILT
 ?getFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x0000B7D5,AudioManager getAudioLengthMS calls this retail ILT
 ?GenInsert00260910@@YAXPAUGen8ByteElement00260910@@U1@P6A_NABU1@2@Z@Z,0x000391E9,route=0x00260910; matched unguarded eight-byte POD linear-insert body and retail thunk establish this call target
+??1AIGuardMachine@@UAE@XZ,0x0015B9D0,GiantBirdGuardMachine ctor unwind handlerC13A00 calls ILT35D46 to this11B destructor; installs AIGuardMachine vtable1095FE0 then destroys StateMachine

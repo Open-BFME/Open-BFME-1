@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "47650459c7e6b124d50dd8dfa6b861e2fe9f2fad7e25a1016efd35a2262e3fa5",
+  "symbol": "?Rva009A92D0@@YAXPAEHI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?Rva009A92D0@@YAXPAEHI@Z\n// partial score=0.9 date=2026-09-10\n// Round 52 follow-up: preserved the full boundary and negative codegen evidence.\n// Complete clean reconstruction banked after a 157-byte near miss.  The\n// dispatch installer and bfmeInterpRows5Mmx establish the three-argument\n// cdecl ABI and the five-row interpolation family.  Retail is bounded by\n// [0x009A92D0, 0x009A936D): 157 bytes, with ret at +0x9C.  A probe of this\n// shape is 157/157 bytes with zero relocations but 74 non-relocation\n// differences; the first drift is the prologue's count/row3 register\n// allocation (retail EDX/EAX/ECX/ESI, respectively).  Guard/do-loop,\n// materialised-count, scoped-row3, register/volatile, and pointer-alias\n// variants were also tried; none closed that allocation/scheduling gap.\nvoid __cdecl Rva009A92D0(unsigned char *source, int stride, unsigned int bytes)\n{\n\tunsigned char *row3 = source + stride * 2;\n\trow3 += stride;\n\n\twhile (bytes > 0)\n\t{\n\t\tunsigned int second = source[stride];\n\t\tunsigned int first = source[0];\n\t\tsource[stride] = (unsigned char)((first * 51 + second * 205 + 128) >> 8);\n\n\t\tunsigned int third = source[stride * 2];\n\t\tunsigned int fourth = row3[0];\n\t\tsource[stride * 2] = (unsigned char)((second * 102 + third * 154 + 128) >> 8);\n\t\trow3[0] = (unsigned char)((third * 154 + fourth * 102 + 128) >> 8);\n\n\t\trow3[stride] = (unsigned char)((fourth * 205 + source[stride * 5] * 51 + 128) >> 8);\n\n\t\t++source;\n\t\t++row3;\n\t\t--bytes;\n\t}\n}\n"
+}
