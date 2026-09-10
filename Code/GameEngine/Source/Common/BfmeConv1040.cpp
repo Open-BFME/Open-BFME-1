@@ -39,10 +39,51 @@ struct BfmeS1040
 	char m_bfmePad[0x30];
 	void *m_bfmeCur;
 	void *m_bfmeTab[1];
+	unsigned char m_bfmePad2[0x101];
+	unsigned char m_bfmeData[0x3f];
+	unsigned short *m_bfmeDestA;
+	unsigned short *m_bfmeDestB;
 };
 
 extern void (__cdecl *g_bfmeHook1040)(BfmeS1040 *s);
-void bfmeApply1040(BfmeS1040 *s, int a);
+
+static const unsigned short *const g_bfmeApplyTableA =
+	(const unsigned short *)0x01141708;
+static const unsigned short *const g_bfmeApplyTableB =
+	(const unsigned short *)0x01141808;
+extern const unsigned short g_bfmeApplyTableC[]; // retail 0x01141D08
+extern const unsigned short g_bfmeApplyTableD[]; // retail 0x01141D88
+
+void bfmeApply1040(BfmeS1040 *s, int)
+{
+	unsigned char *p = s->m_bfmeData + 1;
+	int count = 0x15;
+
+	do
+	{
+		s->m_bfmeDestA[p[-1]] = g_bfmeApplyTableA[s->m_bfmeIdx * 2] << 2;
+		s->m_bfmeDestA[p[0]] = g_bfmeApplyTableA[s->m_bfmeIdx * 2] << 2;
+		s->m_bfmeDestA[p[1]] = g_bfmeApplyTableA[s->m_bfmeIdx * 2] << 2;
+		p += 3;
+	}
+	while (--count != 0);
+
+	s->m_bfmeDestA[0] = g_bfmeApplyTableC[s->m_bfmeIdx] << 2;
+
+	p = s->m_bfmeData + 1;
+	count = 0x15;
+
+	do
+	{
+		s->m_bfmeDestB[p[-1]] = g_bfmeApplyTableB[s->m_bfmeIdx * 2] << 2;
+		s->m_bfmeDestB[p[0]] = g_bfmeApplyTableB[s->m_bfmeIdx * 2] << 2;
+		s->m_bfmeDestB[p[1]] = g_bfmeApplyTableB[s->m_bfmeIdx * 2] << 2;
+		p += 3;
+	}
+	while (--count != 0);
+
+	s->m_bfmeDestB[0] = g_bfmeApplyTableD[s->m_bfmeIdx] << 2;
+}
 
 void bfmeGo1040B(BfmeS1040 *s, int a)
 {
