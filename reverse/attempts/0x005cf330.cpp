@@ -1,18 +1,16 @@
 // ??0Particle@@QAE@ABVBfmeParticleSystemHandle@@PBVParticleInfo@@@Z
-// partial score=0.4 date=2026-09-10
-// cl: /O2 /EHsc
-// Open-BFME: Particle constructor, retail 0x005CF330 (1044 bytes).
-//
-// Identity is established independently of the generated placeholder: the
-// named ParticleSystem::createParticle body at 0x005D0040 calls this through
-// ILT 0x0001485D, and the constructor installs Particle's vtable
-// 0x0110FE8C.  The handle ABI and the 0x4C handle member are shared with the
-// matched Particle destructor and ParticleSystem handle list bodies.
-//
-// The retail BFME ParticleInfo layout is kept opaque here.  Its fields used by
-// this constructor are documented offsets from the constructor's raw stores;
-// this avoids importing the different Generals ParticleInfo declaration into a
-// TU whose job is only this body.
+// partial score=0.55 date=2026-09-10
+// ??0Particle@@QAE@ABVBfmeParticleSystemHandle@@PBVParticleInfo@@@Z
+// New BFME reconstruction probe, retail RVA 0x005CF330 (1044 bytes).
+// The direct caller is ParticleSystem::createParticle at 0x005D0040 via ILT
+// 0x0001485D; Particle's vtable is 0x0110FE8C.  This TU uses the proven
+// BFME handle, asset lookup, render-scene and debug-manager ownership views.
+// stlport
+
+#define _STLP_USE_STATIC_LIB
+#define _STLP_NO_EXCEPTIONS 1
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include <set>
 
 typedef unsigned int UnsignedInt;
 typedef unsigned char Byte;
@@ -20,6 +18,84 @@ typedef unsigned char Byte;
 class ParticleSystem;
 class ParticleInfo;
 class Particle;
+
+struct Rva001408C0Target;
+typedef Rva001408C0Target *Rva001408C0Key;
+typedef _STL::set<Rva001408C0Key, _STL::less<Rva001408C0Key>,
+	_STL::allocator<Rva001408C0Key> > Rva001408C0Set;
+
+// Matched BFME asset lookup at retail 0x009EC0B0.
+extern void *bfmeGoEMEb(void *name);
+// This guarded forwarder is a matched body at retail 0x009EBAC0.
+extern void Rva009EBAC0(int value);
+
+template <typename T>
+class StringBase
+{
+public:
+	void removeLastChar();
+	~StringBase();
+	void *m_data;
+
+	const char *str() const
+	{
+		return m_data ? reinterpret_cast<const char *>(m_data) + 8 :
+			reinterpret_cast<const char *>(0x0107388B);
+	}
+};
+
+class RenderObjClass;
+class RTS3DScene
+{
+public:
+	virtual void slot00();
+	virtual void Add_Render_Object(RenderObjClass *object);
+};
+
+class W3DDisplay
+{
+public:
+	static RTS3DScene *m_3DScene;
+};
+
+class BfmeDebugReport
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0C(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C(); virtual void slot20();
+	virtual void slot24(); virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34(); virtual void addMessage(const char *);
+	virtual void slot3C(); virtual void slot40(); virtual void slot44();
+	virtual void slot48(); virtual void finish(UnsignedInt);
+};
+
+class Gen001336E5C
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0C(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C(); virtual void slot20();
+	virtual void slot24(); virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34(); virtual void slot38();
+	virtual void slot3C(); virtual void slot40(); virtual void slot44();
+	virtual void slot48(); virtual void slot4C(); virtual void slot50();
+	virtual void slot54(); virtual void slot58(); virtual void slot5C();
+	virtual void beginReport(); virtual void slot64(); virtual void slot68();
+	virtual BfmeDebugReport *startReport(void *, void *);
+};
+
+extern Gen001336E5C *TheGen001336E5C;
+
+// VC7.1 reserves __thiscall in free-function-pointer typedefs; __fastcall
+// gives the same ECX receiver for this vtable slot.
+typedef void (__fastcall *RenderObjectSlot190)(RenderObjClass *, UnsignedInt);
+
+static inline void call_render_slot_190(RenderObjClass *object)
+{
+	void **vtable = *reinterpret_cast<void ***>(object);
+	((RenderObjectSlot190)vtable[0x190 / 4])(object, 1);
+}
 
 template <typename T>
 static inline T &particle_field(void *object, UnsignedInt offset)
@@ -102,6 +178,10 @@ public:
 
 extern ClientRoot4120 *TheGameClient;
 
+extern bool _bfme_debugReportingEnabled();
+extern void _bfme_debugRecordCallsite(int kind);
+extern RenderObjClass *Create_Render_Obj(const char *name);
+
 // The five ParticleInfo fields below are polymorphic random-value objects in
 // the retail BFME ABI.  Only their slot +8 call is relied upon; no guessed
 // concrete callee name is introduced.
@@ -129,14 +209,9 @@ public:
 	virtual void slot03();
 	virtual void slot04();
 	virtual void unknownQuerySlot(void *result);
+	virtual UnsignedInt createRenderState();
 };
 
-struct ParticleConstructorScratch
-{
-	void *module_result;
-	UnsignedInt counter;
-	Byte payload[0x1C];
-};
 
 static inline void add_to_system_list(ParticleSystem *system, void *particle)
 {
@@ -163,6 +238,9 @@ static inline void add_to_system_list(ParticleSystem *system, void *particle)
 	particle_field<void *>(system, 0xA4) = particle;
 	particle_field<void *>(particle, 0x3C) = 0;
 	particle_field<Byte>(particle, 0x7A) = 1;
+	UnsignedInt id = particle_field<UnsignedInt>(system, 0x130);
+	particle_field<UnsignedInt>(system, 0x130) = id + 1;
+	particle_field<UnsignedInt>(particle, 0x58) = id;
 	++particle_field<UnsignedInt>(system, 0xA8);
 }
 
@@ -262,9 +340,10 @@ Particle::Particle(const BfmeParticleSystemHandle &system, const ParticleInfo *i
 		TheGameClient->unknownFrameSlot();
 	particle_field<UnsignedInt>(this, 0x58) = zero;
 
-	ParticleConstructorScratch scratch;
-	scratch.module_result = 0;
-	scratch.counter = 0;
+	StringBase<char> asset_name;
+	Rva001408C0Set asset_set;
+	void *module_result = 0;
+	UnsignedInt counter = 0;
 
 	particle_field<Byte>(this, 0x7A) = 0;
 	particle_field<Byte>(this, 0x79) = 0;
@@ -280,16 +359,51 @@ Particle::Particle(const BfmeParticleSystemHandle &system, const ParticleInfo *i
 	if (particle_field<UnsignedInt>(owner, 0x0C) == 2)
 	{
 		ParticleSystemModule *module = particle_field<ParticleSystemModule *>(owner, 0x1C8);
-		if (module != 0)
-			module->unknownQuerySlot(&scratch.module_result);
+		module->unknownQuerySlot(&asset_name);
 
-		if (scratch.module_result != 0 &&
+		module_result = asset_name.m_data;
+		if (module_result != 0 &&
 			*reinterpret_cast<const unsigned short *>(
-				reinterpret_cast<const Byte *>(scratch.module_result) + 4) != 0)
+				reinterpret_cast<const Byte *>(module_result) + 4) != 0)
 		{
-			scratch.counter = 4;
-			while (scratch.counter != 0)
-				--scratch.counter;
+			counter = 4;
+			while (counter != 0)
+			{
+				asset_name.removeLastChar();
+				--counter;
+			}
+
+			Rva001408C0Target *prototype =
+				reinterpret_cast<Rva001408C0Target *>(
+					bfmeGoEMEb(const_cast<char *>(asset_name.str())));
+			if (asset_set.insert(prototype).second)
+				Rva009EBAC0((int)&asset_name);
+
+			RenderObjClass *render =
+				reinterpret_cast<RenderObjClass *>(
+					Create_Render_Obj(asset_name.str()));
+			particle_field<void *>(this, 0x70) = render;
+			particle_field<UnsignedInt>(this, 0x74) =
+				module->createRenderState();
+
+			if (render != 0)
+			{
+				call_render_slot_190(render);
+				W3DDisplay::m_3DScene->Add_Render_Object(render);
+			}
+			else if (_bfme_debugReportingEnabled())
+			{
+				_bfme_debugRecordCallsite(1);
+				TheGen001336E5C->beginReport();
+				BfmeDebugReport *report =
+					TheGen001336E5C->startReport(0, 0);
+				report->addMessage(
+					"Particle system: could not create render object named '");
+				report->addMessage(asset_name.str());
+				report->addMessage(
+					"GameLODManager::getAudioLODIndex - Invalid LOD name '");
+				report->finish(2);
+			}
 		}
 	}
 
