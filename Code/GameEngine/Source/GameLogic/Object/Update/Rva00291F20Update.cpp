@@ -467,3 +467,18 @@ bool Rva00291F20Base::Rva00013642()
 		reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(object) + 0x38),
 		moduleData->m_range14, 1, &playerFilter) != 0;
 }
+
+bool Rva00291F20Base::Rva00030891()
+{
+	Object *object = m_object;
+	const Rva00291F20ModuleData *moduleData = m_moduleData;
+	Rva001DCBB0Filter playerFilter(object, 0);
+	Player *player = object->getControllingPlayer();
+	PartitionFilterA00291F20 affiliationFilter(&moduleData->m_filter1c, player, true);
+	PartitionFilterRoot00291F20 baseFilter;
+	playerFilter.link(&affiliationFilter);
+	playerFilter.link(reinterpret_cast<PartitionFilter *>(&baseFilter));
+	return ThePartitionManager->getClosestObject(
+		reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(object) + 0x38),
+		moduleData->m_range14, 1, &playerFilter) != 0;
+}

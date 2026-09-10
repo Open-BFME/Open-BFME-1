@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ebd01a99db2fe0b2ff79fbae2b6fd9acb1f0907390b7e5a5f48134aca4c680b0",
+  "symbol": "?d_00361e00@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_00361e00@@YAXXZ\n// partial score=0.97 date=2026-09-10\n// BFME BfmeHostXM indexed name accessor at retail RVA 0x00361E00.\n//\n// The 0x58-byte element stride and by-value return ABI are established by the\n// matched BfmeThingDVB::bfmeGoDVBa caller at 0x00387130.  The two callees are\n// declarations here because their retail bodies are existing ILT targets.\nclass BfmeNameXM\n{\npublic:\n\tBfmeNameXM(const BfmeNameXM &other);\n\t~BfmeNameXM();\n\n\tvoid *m_bfmeDataXM;\n};\n\nclass BfmeArmyXM\n{\npublic:\n\tBfmeNameXM bfmeGetXM();\n\n\tunsigned char m_bfmeBodyXM[0x58];\n};\n\nextern BfmeNameXM g_bfmeDefaultXM;\n\nclass BfmeHostXM\n{\npublic:\n\tBfmeNameXM bfmeAtXM(int index);\n\n\tunsigned char m_bfmeHeadXM[0x18];\n\tBfmeArmyXM *m_bfmeBeginXM;\n\tBfmeArmyXM *m_bfmeEndXM;\n};\n\nBfmeNameXM BfmeHostXM::bfmeAtXM(int index)\n{\n\tif (index >= 0 &&\n\t\t(unsigned int)index < (unsigned int)(m_bfmeEndXM - m_bfmeBeginXM))\n\t\treturn (*(BfmeArmyXM *volatile *)&m_bfmeBeginXM)[index].bfmeGetXM();\n\n\treturn g_bfmeDefaultXM;\n}\n"
+}
