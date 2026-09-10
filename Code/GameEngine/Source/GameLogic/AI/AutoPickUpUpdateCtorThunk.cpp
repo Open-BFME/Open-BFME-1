@@ -1,191 +1,93 @@
 // cl: /DNDEBUG /MD /EHsc
+// AutoPickUpUpdate constructor, retail RVA 0x00281AB0 (175 bytes).
+//
+// The retail body calls the shared ObjectModule constructor through ILT
+// 0x000170E4, inlines UpdateModule's three scalar initialisers, installs the
+// AutoPickUpUpdate interface, and then installs the four most-derived vtables.
+// The sole named caller is friend_newModuleInstance at 0x00119AB0.
 
-class Thing;
 class ModuleData;
 
-class AutoPickUpUpdate
+class Thing;
+
+// The retail AutoPickUp module-data field table at 0x00CBB9D0 names the
+// scalar at +0x08 "ScanDelayTime".  The module-data constructor independently
+// writes its first post-base scalar at that offset; retain the table RVA and
+// offset in the local name until the complete class header is recovered.
+struct AutoPickUpUpdateModuleData
 {
-public:
-    AutoPickUpUpdate(Thing*, const ModuleData*);
+	unsigned char m_moduleDataBase00[8];
+	unsigned int m_scanDelayTimeField_00CBB9D0_08;
 };
 
-__declspec(naked) AutoPickUpUpdate::AutoPickUpUpdate(Thing*, const ModuleData*)
+extern int GetGameLogicRandomValue(int, int, const char *, int);
+
+class PB_DeepBase
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 48h
-        _emit 0Ah
-        _emit 01h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 8Bh
-        _emit 44h
-        _emit 24h
-        _emit 18h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 18h
-        _emit 50h
-        _emit 51h
-        _emit 8Bh
-        _emit 0CEh
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 0Ch
-        _emit 0E8h
-        _emit 06h
-        _emit 56h
-        _emit 0D9h
-        _emit 0FFh
-        _emit 0C7h
-        _emit 46h
-        _emit 0Ch
-        _emit 0D0h
-        _emit 0C9h
-        _emit 09h
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 10h
-        _emit 0A0h
-        _emit 0CBh
-        _emit 09h
-        _emit 01h
-        _emit 83h
-        _emit 0C9h
-        _emit 0FFh
-        _emit 33h
-        _emit 0C0h
-        _emit 89h
-        _emit 46h
-        _emit 14h
-        _emit 89h
-        _emit 4Eh
-        _emit 18h
-        _emit 89h
-        _emit 4Eh
-        _emit 1Ch
-        _emit 0C7h
-        _emit 46h
-        _emit 20h
-        _emit 0FCh
-        _emit 0B3h
-        _emit 0Bh
-        _emit 01h
-        _emit 8Bh
-        _emit 4Eh
-        _emit 04h
-        _emit 68h
-        _emit 86h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C7h
-        _emit 06h
-        _emit 54h
-        _emit 0B5h
-        _emit 0Bh
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 0Ch
-        _emit 90h
-        _emit 0B4h
-        _emit 0Bh
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 10h
-        _emit 84h
-        _emit 0B4h
-        _emit 0Bh
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 20h
-        _emit 10h
-        _emit 0B4h
-        _emit 0Bh
-        _emit 01h
-        _emit 89h
-        _emit 46h
-        _emit 24h
-        _emit 88h
-        _emit 46h
-        _emit 28h
-        _emit 88h
-        _emit 46h
-        _emit 29h
-        _emit 8Bh
-        _emit 51h
-        _emit 08h
-        _emit 68h
-        _emit 28h
-        _emit 0B4h
-        _emit 0Bh
-        _emit 01h
-        _emit 52h
-        _emit 50h
-        _emit 89h
-        _emit 44h
-        _emit 24h
-        _emit 20h
-        _emit 0E8h
-        _emit 6Eh
-        _emit 00h
-        _emit 0D8h
-        _emit 0FFh
-        _emit 8Bh
-        _emit 4Eh
-        _emit 24h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 03h
-        _emit 0C8h
-        _emit 89h
-        _emit 4Eh
-        _emit 24h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 08h
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C2h
-        _emit 08h
-        _emit 00h
-    }
+public:
+	PB_DeepBase(Thing *, const ModuleData *);
+	virtual ~PB_DeepBase();
+
+protected:
+	const ModuleData *m_moduleData;
+	Thing *m_object;
+};
+
+class PB_Iface1
+{
+public:
+	virtual void slot();
+};
+
+class PB_Iface2
+{
+public:
+	virtual void slot();
+};
+
+class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
+{
+public:
+	UpdateModule(Thing *thing, const ModuleData *moduleData)
+		: PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+
+private:
+	unsigned int m_f14;
+	int m_f18;
+	int m_f1c;
+};
+
+class AutoPickUpUpdateIface
+{
+public:
+	virtual void slot();
+};
+
+class AutoPickUpUpdate : public UpdateModule, public AutoPickUpUpdateIface
+{
+public:
+	AutoPickUpUpdate(Thing *, const ModuleData *);
+
+private:
+	int m_updateDelay;
+	bool m_alwaysHeal;
+	bool m_neverHeal;
+};
+
+// ??0AutoPickUpUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
+AutoPickUpUpdate::AutoPickUpUpdate(Thing *thing, const ModuleData *moduleData)
+	: UpdateModule(thing, moduleData),
+	  m_updateDelay(0),
+	  m_alwaysHeal(false),
+	  m_neverHeal(false)
+{
+	const AutoPickUpUpdateModuleData *data =
+		reinterpret_cast<const AutoPickUpUpdateModuleData *>(m_moduleData);
+	m_updateDelay += GetGameLogicRandomValue(
+		0, data->m_scanDelayTimeField_00CBB9D0_08,
+		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\AutoPickUpUpdate.cpp",
+		0x86);
 }
+
+typedef char AutoPickUpObjectSizeCheck[sizeof(AutoPickUpUpdate) == 0x2c ? 1 : -1];
+typedef char AutoPickUpModuleBaseSizeCheck[sizeof(PB_DeepBase) == 0x0c ? 1 : -1];
