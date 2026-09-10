@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "291886b525916cef92a29a6228351f3b6543f8257e6dbfc509380c40d0f11515",
+  "symbol": "??0NameKeyGenerator@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ??0NameKeyGenerator@@QAE@XZ\n// partial score=0.82 date=2026-09-09\n// cl: /DNDEBUG /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /EHsc /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/shims/namekeygenerator /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib\n// stlport\n\n#define _STLP_NO_EXCEPTIONS 1\n#define __PLACEMENT_VEC_NEW_INLINE\n#include <hash_map>\n#include \"PreRTS.h\"\n\n// ??0NameKeyGenerator@@QAE@XZ\nNameKeyGenerator::NameKeyGenerator()\n{\n\tnew (&keyToBucketMap()) KeyToBucketMap(100);\n\tm_nextID = NAMEKEY_INVALID;\n\tmemset(m_sockets, 0, sizeof(m_sockets));\n}\n"
+}
