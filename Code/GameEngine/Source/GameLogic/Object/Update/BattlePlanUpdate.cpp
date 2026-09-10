@@ -1753,16 +1753,18 @@ Bool BattlePlanUpdate::isTurretInNaturalPosition()
 }
 
 //------------------------------------------------------------------------------------------------
-static void paralyzeTroop( Object *obj, void *userData )
+Int paralyzeTroop( Object *obj, void *userData )
 {
-	const BattlePlanUpdateModuleData *data = (BattlePlanUpdateModuleData*)userData;
-	if( obj->isAnyKindOf( data->m_validMemberKindOf ) )
+	const char *data = static_cast<const char *>( userData );
+	if( obj->isAnyKindOf( *reinterpret_cast<const KindOfMaskType *>( data + 0x54 ) ) )
 	{
-		if( !obj->isAnyKindOf( data->m_invalidMemberKindOf ) )
+		if( !obj->isAnyKindOf( *reinterpret_cast<const KindOfMaskType *>( data + 0x6c ) ) )
 		{
-			obj->setDisabledUntil( DISABLED_PARALYZED, TheGameLogic->getFrame() + data->m_battlePlanParalyzeFrames );
+			obj->setDisabledUntil( DISABLED_PARALYZED,
+				TheGameLogic->getFrame() + *reinterpret_cast<const UnsignedInt *>( data + 0x50 ) );
 		}
 	}
+	return true;
 }
 
 //------------------------------------------------------------------------------------------------
