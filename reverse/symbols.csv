@@ -73903,7 +73903,6 @@ name,address,notes
 ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z,0x00001915,Open-BFME5 ILT thunk to 0x003DB160; Pathfinder 2-Coord3D adjust used by isClearGoalFiringLineOfSightTerrain Object overload
 ?bfmeAdjustVRC@BfmeCellVRC@@QAEXHHH@Z,0x008FC1F0,pin
 ?bfmeAdvance@Rva0026C7C0Owner@@QAE_NXZ,0x002A6E60,"Root reviewed full source, exact symbol extent, all resolved relocations and no emitted vtable. Root disassembled complete2A6E60/336 helper: ECX owner, same+4/+8/+28/+30 layout, no stack arguments, explicit AL false/true on every return. Distinct address-derived member pin accurately represents bool ABI. Compiler unsigned-to-float conversion emits actual2^32 fixup; interpolation writes result+B0. No invented class identity."
-?bfmeAdvanceFQ@BfmeTableFQ@@QAEHHH@Z,0x000465B5,pin
 ?bfmeAdvanceFR@BfmeTableFR@@QAEHHH@Z,0x0000A817,pin
 ?bfmeAdvanceFV@BfmePrimaryFV@@QAEXH@Z,0x0003BDD6,pin
 ?bfmeAfter@Gen_0022F900@@QAEXPAVObject@@PAX@Z,0x00047EE7,call-site callee of Gen_0022F900::bfmeGain; ILT 0x00047EE7 -> 0x0023F1A0
