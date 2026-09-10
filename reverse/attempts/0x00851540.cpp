@@ -1,5 +1,5 @@
 // ?getNextQuotedAsciiString@INI@@QAE?AVAsciiString@@XZ
-// partial score=0.55 date=2026-09-10
+// partial score=0.65 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/ini /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 /*
@@ -37,8 +37,9 @@
 enum { INI_MAX_CHARS_PER_LINE = 1028 };
 
 // TU-local extension of reference/shims/stringinline/StringInline.h.  The
-// inline special members are the proven BFME by-value ABI; set() is declared
-// on the base solely because this canonical donor writes the returned string.
+// inline special members are the proven BFME by-value ABI; the two-argument
+// setter is declared on the base because retail computes the source length
+// inline before writing the returned string.
 template <typename T> struct StringInlineData
 {
 	int m_refCount;
@@ -51,7 +52,7 @@ template <typename T> class StringBase
 	friend class AsciiString;
 
 public:
-	void set(const T *text);
+	void set(const T *text, int len);
 
 private:
 	StringBase() : m_data(0) {}
@@ -118,7 +119,7 @@ AsciiString INI::getNextQuotedAsciiString()
 		if (token[0] != '\"')
 		{
 			// if token is simply "
-			result.set( token );	// Start following the "
+			((StringBase<char> *)&result)->set( token, strlen(token) );	// Start following the "
 		}
 		else
 		{
@@ -151,7 +152,7 @@ AsciiString INI::getNextQuotedAsciiString()
 						buff[buflen - 1] = '\0';
 				}
 			}
-			result.set(buff);
+			((StringBase<char> *)&result)->set(buff, strlen(buff));
 		}
 	}
 	return result;
