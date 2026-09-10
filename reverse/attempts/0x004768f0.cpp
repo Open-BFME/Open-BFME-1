@@ -1,0 +1,147 @@
+// ?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z
+// partial score=0.99 date=2026-09-10
+// cl: /DNDEBUG /MD /EHsc
+//
+// Open-BFME5: the 16-byte STLport __introsort_loop called by the matched
+// Rva00477960 driver.  The retail body inlines median-of-three over the first
+// integer, copies the trailing StringBase<char> handle, then calls the partition,
+// recursive loop and typed partial-sort helper below.
+// Parent raw tracing: ILT1492A -> iter-swap473BC0/170B (two pointers),
+// ILT34F95 -> partition4747F0/133B, ILTAEBB -> this217B loop,
+// ILT32501 -> partial-sort4768F0/130B. Its fourth argument is the
+// STLport value-type pointer, not a depth integer (_algo.c __partial_sort).
+// noinline keeps the separate retail partition call; copies/releases use
+// actual StringBase<char> constructors and releaseBuffer, not dummy owners.
+
+template <class T>
+class StringBase
+{
+public:
+	StringBase(const StringBase<T> &other);
+	StringBase<T> &operator=(const StringBase<T> &other)
+	{
+		set(other);
+		return *this;
+	}
+
+private:
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
+	void set(const StringBase<T> &other);
+	void *m_data;
+
+	friend struct Q3SortElem16;
+};
+
+struct Q3SortElem16
+{
+	int m_a;
+	int m_b;
+	int m_c;
+	StringBase<char> m_d;
+};
+
+typedef char Q3ElementIs16[(sizeof(Q3SortElem16) == 16) ? 1 : -1];
+
+struct Q3SortCompare
+{
+	void *m_state;
+
+	__forceinline bool operator()(const Q3SortElem16 &left,
+		const Q3SortElem16 &right) const
+	{
+		return left.m_a < right.m_a;
+	}
+};
+
+__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortElem16 *,
+	Q3SortElem16, Q3SortCompare);
+
+__declspec(noinline) void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
+	Q3SortElem16 *, Q3SortCompare);
+
+__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
+
+static __forceinline const Q3SortElem16 *Q3SortElem16Median(
+	const Q3SortElem16 *a, const Q3SortElem16 *b,
+	const Q3SortElem16 *c, const Q3SortCompare &comp)
+{
+	if (comp(*a, *b))
+	{
+		if (comp(*b, *c))
+			return b;
+		if (comp(*a, *c))
+			return c;
+		return a;
+	}
+	if (comp(*a, *c))
+		return a;
+	if (comp(*b, *c))
+		return c;
+	return b;
+}
+
+// ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z
+__declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *first,
+	Q3SortElem16 *last, Q3SortElem16 value, Q3SortCompare comp)
+{
+	for (;;)
+	{
+		while (comp(*first, value))
+			++first;
+		--last;
+		while (comp(value, *last))
+			--last;
+		if (!(first < last))
+			return first;
+		Q3IterSwap00473BC0(first, last);
+		++first;
+	}
+}
+
+// ?Gen004775D0@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z
+void Gen004775D0(Q3SortElem16 *first, Q3SortElem16 *last,
+	Q3SortElem16 *, int depthLimit, const Q3SortCompare comp)
+{
+	while ((last - first) > 16)
+	{
+		if (depthLimit == 0)
+		{
+			Q3PartialSort004775D0(first, last, last, 0, comp);
+			return;
+		}
+
+		--depthLimit;
+		Q3SortElem16 *cut = Q3Partition004775D0(first, last,
+			*Q3SortElem16Median(first, first + (last - first) / 2,
+				last - 1, comp), comp);
+		Gen004775D0(cut, last,
+			(Q3SortElem16 *)0, depthLimit, comp);
+		last = cut;
+	}
+}
+
+// Retail 0x00473BC0/170: ordinary value swap with owning string copies.
+__declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *first, Q3SortElem16 *last)
+{
+	Q3SortElem16 temporary = *first;
+	*first = *last;
+	*last = temporary;
+}
+
+// STLport _algo.c::__partial_sort. Heap helpers use the same 16-byte record.
+void Q3MakeHeap004749F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare,
+    Q3SortElem16 *, int *);
+void Q3PopHeap004748F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
+    Q3SortElem16, Q3SortCompare, int *);
+void Q3SortHeap00476250(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare);
+
+__declspec(noinline) void Q3PartialSort004775D0(Q3SortElem16 *first,
+    Q3SortElem16 *middle, Q3SortElem16 *last, Q3SortElem16 *, Q3SortCompare comp)
+{
+    Q3MakeHeap004749F0(first, middle, comp, (Q3SortElem16 *)0, (int *)0);
+    for (Q3SortElem16 *current = middle; current < last; ++current)
+        if (comp(*current, *first))
+            Q3PopHeap004748F0(first, middle, current, *current, comp, (int *)0);
+    Q3SortHeap00476250(first, middle, comp);
+}
