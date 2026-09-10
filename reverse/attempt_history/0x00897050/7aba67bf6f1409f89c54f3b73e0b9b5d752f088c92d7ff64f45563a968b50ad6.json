@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7aba67bf6f1409f89c54f3b73e0b9b5d752f088c92d7ff64f45563a968b50ad6",
+  "symbol": "?bfmeArenaReady@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeArenaReady@@YAXXZ\n// partial score=0.98 date=2026-09-10\n// ?bfmeArenaReady@@YAXXZ\n\nextern char *g_bfmeArenaCursor;\n\nstruct BfmeArenaVec4\n{\n\tBfmeArenaVec4(float valueX, float valueY, float valueZ, float valueW)\n\t\t: x(valueX), y(valueY), z(valueZ), w(valueW) {}\n\n\tfloat x;\n\tfloat y;\n\tfloat z;\n\tfloat w;\n};\n\nstruct BfmeArenaTransform\n{\n\tfloat m00;\n\tfloat m04;\n\tfloat m08;\n\tfloat m0c;\n\tfloat m10;\n\tfloat m14;\n\tfloat m18;\n\tfloat m1c;\n\tfloat m20;\n\tfloat m24;\n\tfloat m28;\n\tfloat m2c;\n\tfloat m30;\n\tfloat m34;\n\tfloat m38;\n\tfloat m3c;\n\tBfmeArenaVec4 m40;\n\tBfmeArenaVec4 m50;\n};\n\n__declspec(noinline) void __cdecl bfmeArenaReady(void)\n{\n\tBfmeArenaTransform *transform = reinterpret_cast<BfmeArenaTransform *>(g_bfmeArenaCursor);\n\tBfmeArenaVec4 one(1.0f, 1.0f, 1.0f, 1.0f);\n\tBfmeArenaVec4 zero(0.0f, 0.0f, 0.0f, 0.0f);\n\ttransform->m04 = 0;\n\ttransform->m08 = 0;\n\ttransform->m0c = 0;\n\ttransform->m10 = 0;\n\ttransform->m18 = 0;\n\ttransform->m1c = 0;\n\ttransform->m20 = 0;\n\ttransform->m24 = 0;\n\ttransform->m2c = 0;\n\ttransform->m30 = 0;\n\ttransform->m34 = 0;\n\ttransform->m38 = 0;\n\ttransform->m00 = 1.0f;\n\ttransform->m14 = 1.0f;\n\ttransform->m28 = 1.0f;\n\ttransform->m3c = 1.0f;\n\ttransform->m40 = one;\n\ttransform->m50 = zero;\n}\n"
+}

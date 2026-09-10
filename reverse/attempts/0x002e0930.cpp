@@ -1,11 +1,11 @@
-// ??0BfmeListBG@@QAE@PAX0@Z
-// partial score=0.97 date=2026-09-09
-// 47/47. Circular-list constructor: two parameter stores, a null of the node
-// member, __new_alloc::allocate(0xc), the two self-links and the real node
-// store. Marking BOTH parameter members volatile (not just the first) moves
-// retail's `push 0xc` past the first store, leaving one residue: retail
-// emits it after the second store too, ours still schedules it between the
-// two stores. Body-vs-init-list assignment order made no difference.
+// ?d_002e0930@@YAXXZ
+// partial score=0.99 date=2026-09-10
+// Exact 47-byte circular-list constructor. The compiler barrier preserves
+// retail's store, push, zero, allocate order, but no source caller or owner
+// proves the class name behind this placeholder.
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 namespace _STL
 {
 
@@ -36,8 +36,10 @@ public:
 };
 
 BfmeListBG::BfmeListBG(void *first, void *second)
-	: m_bfmeFirstBG(first), m_bfmeSecondBG(second)
 {
+	m_bfmeFirstBG = first;
+	m_bfmeSecondBG = second;
+	_ReadWriteBarrier();
 	m_bfmeNodeBG = 0;
 
 	BfmeNodeBG *node = (BfmeNodeBG *)_STL::__new_alloc::allocate(0xc);

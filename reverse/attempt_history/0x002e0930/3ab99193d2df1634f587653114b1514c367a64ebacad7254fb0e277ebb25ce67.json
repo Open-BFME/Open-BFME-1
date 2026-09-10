@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3ab99193d2df1634f587653114b1514c367a64ebacad7254fb0e277ebb25ce67",
+  "symbol": "?d_002e0930@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_002e0930@@YAXXZ\n// partial score=0.99 date=2026-09-10\n// Exact 47-byte circular-list constructor. The compiler barrier preserves\n// retail's store, push, zero, allocate order, but no source caller or owner\n// proves the class name behind this placeholder.\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nnamespace _STL\n{\n\nclass __new_alloc\n{\npublic:\n\tstatic void *allocate(unsigned int size);\n};\n\n}\n\nclass BfmeNodeBG\n{\npublic:\n\tBfmeNodeBG *m_bfmeNextBG;\n\tBfmeNodeBG *m_bfmePrevBG;\n\tvoid *m_bfmeValueBG;\n};\n\nclass BfmeListBG\n{\npublic:\n\tBfmeListBG(void *first, void *second);\n\n\tvoid *volatile m_bfmeFirstBG;\n\tvoid *volatile m_bfmeSecondBG;\n\tBfmeNodeBG *m_bfmeNodeBG;\n};\n\nBfmeListBG::BfmeListBG(void *first, void *second)\n{\n\tm_bfmeFirstBG = first;\n\tm_bfmeSecondBG = second;\n\t_ReadWriteBarrier();\n\tm_bfmeNodeBG = 0;\n\n\tBfmeNodeBG *node = (BfmeNodeBG *)_STL::__new_alloc::allocate(0xc);\n\n\tnode->m_bfmeNextBG = node;\n\tnode->m_bfmePrevBG = node;\n\tm_bfmeNodeBG = node;\n}\n"
+}
