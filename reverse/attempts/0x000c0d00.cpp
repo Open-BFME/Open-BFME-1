@@ -63,20 +63,18 @@ public:
 
 Coord3D &WaypointMap::rva000C0D00Index(const AsciiString &key)
 {
-	std::map<AsciiString, Coord3D> *self = this;
-	const AsciiString &lookupKey = key;
 	typedef void *(Rva000C0D00LowerCall::*LowerFunction)(const AsciiString &) const;
 	union { void (*raw)(); LowerFunction member; } lower;
 	lower.raw = j_00044d82;
 	iterator it(static_cast<_STL::_Rb_tree_node<value_type> *>(
-		(reinterpret_cast<Rva000C0D00LowerCall *>(self)->*lower.member)(lookupKey)));
-	if (it == self->end() || self->key_comp()(lookupKey, (*it).first))
+		(reinterpret_cast<Rva000C0D00LowerCall *>(this)->*lower.member)(key)));
+	if (it == end() || key_comp()(key, (*it).first))
 	{
 		Coord3D value;
 		typedef iterator (Rva000C0D00InsertCall::*InsertFunction)(iterator, const value_type &);
 		union { void (*raw)(); InsertFunction member; } insert;
 		insert.raw = j_00036f70;
-		it = (reinterpret_cast<Rva000C0D00InsertCall *>(self)->*insert.member)(it, value_type(lookupKey, value));
+		it = (reinterpret_cast<Rva000C0D00InsertCall *>(this)->*insert.member)(it, value_type(key, value));
 	}
 	return (*it).second;
 }
