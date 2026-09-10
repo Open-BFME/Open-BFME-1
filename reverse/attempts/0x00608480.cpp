@@ -1,16 +1,22 @@
-// ??1Gen00608480@@QAE@XZ
-// partial score=0.35 date=2026-09-06
+// ?d_00608480@@YAXXZ
+// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: the destructor at 0x00608480 (130 B) of a class holding two
-// AttributeModifierAuraUpdateModuleDataMemberB members at +0x30 and +0x3C, a
-// 109-slot raw pointer array of polymorphic elements at +0x48 (explicit body
-// loop deleting through vtable slot 0 and nulling the pointer) and a
-// RandomSoundSelectorMap at +0x1FC destructed explicitly first.  The body
-// explicitly destructs the map then loops the raw array; the two Attribute
-// members are real automatic members, so their reverse-order destruction
-// (AttrB then AttrA) is compiler generated after the body -- matching the
-// last two EH states.  Member types are opaque address-derived shells sized
-// from the offsets with out-of-line destructors.
+
+// Rva00608FE0Element destructor, retail 0x00608480 (130 bytes).  The element
+// is the 0x210-byte sound-upgrade record whose copy constructor and parser are
+// recovered in the neighboring translation units.
+
+struct Rva00606A80Item
+{
+	virtual void release( bool now );
+	char m_audio[ 0x70 ];
+};
+
+struct Rva00606A80Member
+{
+	Rva00606A80Member( const Rva00606A80Member &other );
+	Rva00606A80Item *m_items[ 0x6D ];
+};
 
 class AttributeModifierAuraUpdateModuleDataMemberB
 {
@@ -18,7 +24,7 @@ public:
 	~AttributeModifierAuraUpdateModuleDataMemberB();
 
 private:
-	char m_body[ 0xC ];
+	char m_body[ 0x0C ];
 };
 
 class RandomSoundSelectorMap
@@ -27,41 +33,38 @@ public:
 	~RandomSoundSelectorMap();
 
 private:
-	char m_body[ 4 ];
+	char m_body[ 0x0C ];
 };
 
-class S4Elem00608D40
+class Rva00608FE0Element
 {
 public:
-	virtual ~S4Elem00608D40();
-};
-
-class Gen00608480
-{
-public:
-	~Gen00608480();
+	~Rva00608FE0Element();
 
 private:
-	char m_unreconstructed00[ 0x30 ];
-	AttributeModifierAuraUpdateModuleDataMemberB m_attrA30;
-	AttributeModifierAuraUpdateModuleDataMemberB m_attrA3C;
-	S4Elem00608D40 *m_elems[ 109 ];
-	char m_map1FC[ 4 ];
+	char m_pod0[ 0x30 ];
+	AttributeModifierAuraUpdateModuleDataMemberB m_member30;
+	AttributeModifierAuraUpdateModuleDataMemberB m_member3C;
+	char m_member48[ 0x1B4 ];
+	char m_member1FC[ 0x0C ];
+	int m_field208;
+	unsigned char m_field20C;
+	char m_padding20D[ 3 ];
 };
 
-// ??1Gen00608480@@QAE@XZ
-Gen00608480::~Gen00608480()
+// ??1Rva00608FE0Element@@QAE@XZ
+Rva00608FE0Element::~Rva00608FE0Element()
 {
+	reinterpret_cast<RandomSoundSelectorMap *>( m_member1FC )->~RandomSoundSelectorMap();
+	Rva00606A80Item **items =
+		reinterpret_cast<Rva00606A80Item **>( reinterpret_cast<char *>( this ) + 0x48 );
+	for (int i = 0; i < 0x6D; ++i)
 	{
-		reinterpret_cast< RandomSoundSelectorMap * >( m_map1FC )->~RandomSoundSelectorMap();
-	}
-
-	for( unsigned int i = 0; i != 109; ++i )
-	{
-		if( m_elems[ i ] )
+		Rva00606A80Item *item = items[i];
+		if (item != 0)
 		{
-			delete m_elems[ i ];
-			m_elems[ i ] = 0;
+			item->release(true);
+			items[i] = 0;
 		}
 	}
 }
