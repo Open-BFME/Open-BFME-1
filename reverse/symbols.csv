@@ -75292,6 +75292,7 @@ name,address,notes
 ?bfmeFinish1013@BfmeB1013@@QAEXXZ,0x00011464,pin
 ?bfmeFinish1279@BfmeNode1279@@QAEXXZ,0x008C4310,address decoded from the 0x008BD400 finalizer call
 ?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@HHH@Z,0x0001C7EC,pin
+?bfmeFinish1282@BfmeA1282@@QAEXPAVBfmeQ1282@@PBUCoord3D@@MM@Z,0x001B8D30,actual callee body reads goal pointer and two float arguments; caller reaches via ILT0x0001C7EC; typed ABI for Locomotor 0x001BC560
 ?bfmeFinish925@BfmeReg925@@QAEXXZ,0x009A1A40,pin
 ?bfmeFinish961@BfmeGate961@@QAEXXZ,0x0002D169,pin
 ?bfmeFinish991@@YAXXZ,0x000114DC,pin

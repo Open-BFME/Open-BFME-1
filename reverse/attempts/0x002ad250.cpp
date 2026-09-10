@@ -1,31 +1,27 @@
-// ?refresh@Rva002AD250@@QAEXXZ
-// partial score=0.55 date=2026-09-04
+// ?update002AD250@StealthUpdate@@QAEXXZ
+// partial score=0.82 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 //
-// Retail 0x002AD250.  BFME keeps the state transition used by the stealth
-// update in a small non-virtual helper.  The module-data tail and the runtime
-// fields are deliberately laid out at their retail offsets.
+// StealthUpdate::update002AD250, retail RVA 0x002AD250 (238 bytes).
+// The ILT at 0x000272AF and the matched AIGroup::groupStealthIdle caller
+// establish this as a StealthUpdate member helper.  The neutral RVA-derived
+// method name is retained until a stronger retail symbol is recovered.
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 
-class GameLogic
+enum DisabledType
 {
-public:
-	UnsignedInt getFrame() const
-	{
-		return *(const UnsignedInt *)((const char *)this + 0x3C);
-	}
+	DisabledTypeStealth = 3
 };
-
-extern GameLogic *TheGameLogic;
 
 class Object
 {
 public:
 	void clearModelConditionState(int condition);
 	void notifyModelConditionChanged();
-	void setDisabledUntil(int type, UnsignedInt frame);
+	void setDisabledUntil(DisabledType type, UnsignedInt frame);
+
 	unsigned char m_pad00[0x12C];
 	UnsignedInt m_status;
 };
@@ -33,14 +29,23 @@ public:
 class BfmeItemRY
 {
 public:
-	void bfmeDoRY(void *one, void *two);
+	void bfmeDoRY(void *first, void *second);
 };
 
 class BfmeObjE10
 {
 public:
-	void actionA(int code);
+	void actionA(int action);
 };
+
+class GameLogic
+{
+public:
+	unsigned char m_pad00[0x3C];
+	UnsignedInt m_frame;
+};
+
+extern GameLogic *TheBfmeGameLogic;
 
 class StealthUpdateModuleData
 {
@@ -55,70 +60,80 @@ public:
 	UnsignedInt m_blackMarketCheckFrames;
 };
 
-class Rva002AD250Base
+class UpdateModule
 {
 public:
 	virtual void unused() = 0;
 
 protected:
-	StealthUpdateModuleData *m_moduleData;
+	const void *m_moduleData;
 	Object *m_object;
 	unsigned char m_pad0C[0x20 - 0x0C];
 };
 
-class Rva002AD250 : public Rva002AD250Base
+class StealthUpdate : public UpdateModule
 {
+protected:
+	const StealthUpdateModuleData *getStealthUpdateModuleData() const
+	{
+		return (const StealthUpdateModuleData *)m_moduleData;
+	}
+
+	Object *getObject()
+	{
+		return m_object;
+	}
+
 public:
-	void refresh();
+	void update002AD250();
 
 private:
 	UnsignedInt m_stealthAllowedFrame;
 	UnsignedInt m_detectionExpiresFrame;
 	UnsignedInt m_nextBlackMarketCheckFrame;
-	unsigned char m_pad2C[1];
+	Bool m_enabled;
 	Bool m_xferRestoreDisguise;
 };
 
-// ?refresh@Rva002AD250@@QAEXXZ
-void Rva002AD250::refresh()
+// ?update002AD250@StealthUpdate@@QAEXXZ
+void StealthUpdate::update002AD250()
 {
-	StealthUpdateModuleData *data = m_moduleData;
-	GameLogic *logic = TheGameLogic;
-	UnsignedInt now = logic->getFrame();
+	Object *object = getObject();
+	const StealthUpdateModuleData *data = getStealthUpdateModuleData();
+	UnsignedInt now = TheBfmeGameLogic->m_frame;
 
-	if (!data->m_enableState)
+	if (!data->m_enableState && !data->m_blackMarketCheckFrames)
+		return;
+	if (!m_xferRestoreDisguise)
 	{
-		if (!data->m_blackMarketCheckFrames)
+		if (now < m_nextBlackMarketCheckFrame)
 			return;
-		if (!m_xferRestoreDisguise)
+
+		m_stealthAllowedFrame = data->m_stealthDelay + now;
+		m_detectionExpiresFrame = 0;
+		object->clearModelConditionState(0x10);
+
+		if (object->m_status & 0x01000000)
 		{
-			if (now < m_nextBlackMarketCheckFrame)
-				return;
-
-			m_stealthAllowedFrame = data->m_stealthDelay;
-			m_detectionExpiresFrame = 0;
-			Object *object = m_object;
-	object->clearModelConditionState(0x10);
-	if (object->m_status & 0x01000000)
-	{
-		object->m_status &= 0xFEFFFFFF;
-		object->notifyModelConditionChanged();
-	}
-	if (!(object->m_status & 0x00040000))
-	{
-		object->m_status |= 0x00040000;
-		object->notifyModelConditionChanged();
-	}
-	((BfmeItemRY *)object)->bfmeDoRY((void *)0xF9, (void *)data->m_enableState);
-	object->setDisabledUntil(3, m_stealthAllowedFrame);
-	((BfmeObjE10 *)object)->actionA(0x1C);
-			m_xferRestoreDisguise = 1;
-			return;
+			object->m_status &= 0xFEFFFFFF;
+			object->notifyModelConditionChanged();
 		}
+		if (!(object->m_status & 0x00040000))
+		{
+			object->m_status |= 0x00040000;
+			object->notifyModelConditionChanged();
+		}
+
+		((BfmeItemRY *)object)->bfmeDoRY(
+			(void *)0xF9, (void *)data->m_enableState);
+		object->setDisabledUntil(DisabledTypeStealth, m_stealthAllowedFrame);
+		((BfmeObjE10 *)object)->actionA(0x1C);
+		m_xferRestoreDisguise = 1;
+		return;
 	}
 
 restore_state:
-	Object *object = m_object;
-	((BfmeItemRY *)object)->bfmeDoRY((void *)0xFA, (void *)data->m_disableState);
+	((BfmeItemRY *)object)->bfmeDoRY(
+		(void *)0xFA, (void *)data->m_disableState);
 	m_detectionExpiresFrame = data->m_detectionDelay + now;
 }

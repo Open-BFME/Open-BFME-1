@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d393132d351088ee66b918d9dc322f4b5683b998b152ba501eee1912f479fbdb",
+  "symbol": "?d_00235cd0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.78,
+  "source": "// ?d_00235cd0@@YAXXZ\n// partial score=0.78 date=2026-08-30\n// cl: /DNDEBUG /MD /EHsc\n\n#include <string.h>\n\ntypedef unsigned int UnsignedInt;\n\nstruct BfmeRecord16\n{\n\tUnsignedInt m_words[4];\n\n};\n\nstruct BfmeRecord20\n{\n\tUnsignedInt m_first;\n\tBfmeRecord16 m_rest;\n};\n\nvoid bfmeCopyOptional20(BfmeRecord20 *destination, const BfmeRecord20 *source)\n{\n\tif (destination != 0)\n\t{\n\t\tdestination->m_first = source->m_first;\n\t\tmemcpy(&destination->m_rest, &source->m_rest, sizeof(destination->m_rest));\n\t}\n}\n"
+}
