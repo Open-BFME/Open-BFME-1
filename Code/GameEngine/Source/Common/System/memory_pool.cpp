@@ -20,6 +20,18 @@ extern "C" void *(__cdecl *__gameMemAllocPtr)(unsigned int, int);
 extern "C" void (__cdecl *__gameMemFreePtr)(void *, int);
 extern unsigned int (__cdecl *g_poolBlockSize)(void *);
 
+#pragma intrinsic(memcpy)
+
+void memset32(void *ptr, int value, unsigned int bytesToFill)
+{
+	int *p = (int *)ptr;
+	for (; bytesToFill > 3; bytesToFill -= 4)
+		*p++ = value;
+
+	if (bytesToFill != 0)
+		memcpy(p, &value, bytesToFill);
+}
+
 
 static int g_refCount;
 
@@ -1454,4 +1466,3 @@ __declspec(naked) void MemoryPool::_VerifyIntegrity()
         __emit 0x47
     }
 }
-
