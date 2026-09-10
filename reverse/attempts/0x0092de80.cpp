@@ -217,7 +217,7 @@ void MeshClass::Replace_Texture(const BfmeHandleCX &oldTexture, const BfmeHandle
 	for (int index = 0; index < material->Texture_Count(); ++index)
 	{
 		BfmeHandleCX texture = material->Get_Texture(index);
-		bool matched = oldTexture.m_ptr == texture.m_ptr;
+		bool matched = texture.m_ptr == oldTexture.m_ptr;
 		if (texture.m_ptr != 0)
 			texture.m_ptr->Release_Ref();
 		if (matched)

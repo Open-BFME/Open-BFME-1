@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0762f0051e3caab2f3bec3a4f14f59193fc8b4676c93ea1a6f43c1bb30d3799d",
+  "symbol": "?d_001e27d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?d_001e27d0@@YAXXZ\n// partial score=0.85 date=2026-09-10\n// cl: /DNDEBUG /MD /EHs-c-\n// Walk [begin, end) of a pointer vector at +8/+0xC. Each slot holds a node\n// whose +4 link is non-null: clear the link, scalar-delete the node, and\n// replace the slot with the saved link. Then a counted empty loop over size.\n\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nclass Rva001E27D0Node\n{\npublic:\n\tvirtual ~Rva001E27D0Node();\n\tRva001E27D0Node *m_next;\n};\n\nRva001E27D0Node::~Rva001E27D0Node()\n{\n}\n\nclass Rva001E27D0Chain\n{\npublic:\n\tvoid clear(void);\n\nprivate:\n\tunsigned char m_unreconstructed_00[8];\n\tRva001E27D0Node **m_begin;\n\tRva001E27D0Node **m_end;\n};\n\nvoid Rva001E27D0Chain::clear(void)\n{\n\tRva001E27D0Node **end = m_end;\n\tRva001E27D0Node **it = m_begin;\n\tif (it != end)\n\t{\n\t\tdo\n\t\t{\n\t\t\tRva001E27D0Node *node = *it;\n\t\t\tRva001E27D0Node *next = node->m_next;\n\t\t\tif (next)\n\t\t\t{\n\t\t\t\tnode->m_next = 0;\n\t\t\t\tdelete node;\n\t\t\t\t*it = next;\n\t\t\t}\n\t\t\t++it;\n\t\t}\n\t\twhile (it != m_end);\n\t}\n\n\tunsigned int size = (unsigned int)(m_end - m_begin);\n\tunsigned int i = 0;\n\tif (size > 0)\n\t{\n\t\tunsigned int n = (unsigned int)(m_end - m_begin);\n\t\twhile (++i < n)\n\t\t\t_ReadWriteBarrier();\n\t}\n}\n"
+}

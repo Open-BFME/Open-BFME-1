@@ -59,6 +59,7 @@ public:
 	{
 		return m_data;
 	}
+
 };
 
 class FileSystem
@@ -81,7 +82,7 @@ protected:
 	void adjustForLocalization(AsciiString &strToAdjust);
 
 public:
-	AsciiString generateFilenamePrefix(AudioType audioTypeToPlay, bool localized);
+	AsciiString generateFilenamePrefix(AudioType audioTypeToPlay, Bool localized);
 
 	void *m_vftable;
 	int m_filenameToLoad;
@@ -104,8 +105,8 @@ void AudioEventRTS::adjustForLocalization(AsciiString &strToAdjust)
   {
     char seen = p[-1];
     if (seen == '\\')
-    {
-			AsciiString filename = p - 1;
+		{
+			AsciiString filename(p - 1);
 			const AudioType audioType = m_eventInfo->m_soundType;
 			strToAdjust = generateFilenamePrefix(audioType, true);
 			strToAdjust.concat(filename);
