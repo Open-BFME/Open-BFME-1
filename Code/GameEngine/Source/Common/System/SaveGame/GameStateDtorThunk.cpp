@@ -1,513 +1,139 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??1GameState@@UAE@XZ: Code/GameEngine/Source/Common/System/SaveGame/GameState.cpp
-// Open-BFME5: lift the exact retail GameState destructor body to C++.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/stringinline
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Real C++ reconstruction of ??1GameState@@UAE@XZ.
+// Full503B ends after ret at 0x00110FE6; CC padding starts0x00110FE7.
+// The +0x4c list has trivial two-pointer payloads: retail frees16B nodes
+// without string destructors. The +0x0c list array separately destroys
+// SnapshotBlock strings at node+0x0c before freeing16B nodes.
+//
+// The 0x00110DF0 boundary was originally represented by the dump-backed naked
+// thunk in this file.  The named deleting-destructor caller and the
+// getSaveGameInfoFromFile caller establish the GameState identity.  This
+// TU-local view is the same ABI/layout view used by the matched GameState
+// constructor, retaining the retail multiple-inheritance shape.
+
+#define __PLACEMENT_VEC_NEW_INLINE
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+#include "StringInline.h"
+
+typedef int Int;
+enum { SNAPSHOT_MAX = 3 };
+
+class SubsystemInterface
+{
+public:
+	SubsystemInterface();
+	virtual ~SubsystemInterface();
+	virtual void init() = 0;
+	virtual void reset() = 0;
+	virtual void update() = 0;
+
+private:
+	void *m_name;
+};
+
+class Snapshot
+{
+public:
+	Snapshot() {}
+	virtual ~Snapshot() {}
+	virtual void crc(void *xfer) = 0;
+	virtual void xfer(void *xfer) = 0;
+	virtual void loadPostProcess() = 0;
+};
+
+class SaveGameInfo
+{
+public:
+	SaveGameInfo() throw();
+	~SaveGameInfo();
+
+private:
+	unsigned char m_data[0x30];
+};
+
+struct AvailableGameInfo
+{
+	AsciiString filename;
+	SaveGameInfo saveGameInfo;
+	AvailableGameInfo *next;
+	AvailableGameInfo *prev;
+};
+
+class GameState : public SubsystemInterface, public Snapshot
+{
+public:
+	GameState();
+	virtual ~GameState();
+	virtual void init();
+	virtual void reset();
+	virtual void update();
+
+protected:
+	virtual void crc(void *xfer);
+	virtual void xfer(void *xfer);
+	virtual void loadPostProcess();
+
+private:
+	struct SnapshotBlock
+	{
+		Snapshot *snapshot;
+		AsciiString blockName;
+	};
+	struct BFMEBlock
+	{
+		void *first;
+		void *second;
+	};
+
+	void clearAvailableGames();
+
+	std::list<SnapshotBlock> m_snapshotBlockList[3];
+	SaveGameInfo m_gameInfo;
+	std::list<Snapshot *> m_snapshotPostProcessList;
+	std::list<BFMEBlock> m_bfmeSnapshotBlockList;
+	AvailableGameInfo *m_availableGames;
+	unsigned char m_isInLoadGame;
+};
+
+void GameState::clearAvailableGames()
+{
+	AvailableGameInfo *gameInfo;
+
+	while (m_availableGames)
+	{
+		gameInfo = m_availableGames->next;
+		delete m_availableGames;
+		m_availableGames = gameInfo;
+	}
+}
 
 // ??1GameState@@UAE@XZ
-extern "C" __declspec(naked) void bfme_GameStateDtor_110DF0()
+GameState::~GameState()
 {
-    __asm {
-        __emit 0x6A;
-        __emit 0xFF;
-        __emit 0x68;
-        __emit 0xDE;
-        __emit 0xDC;
-        __emit 0xFF;
-        __emit 0x00;
-        __emit 0x64;
-        __emit 0xA1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xEC;
-        __emit 0x0C;
-        __emit 0x53;
-        __emit 0x55;
-        __emit 0x56;
-        __emit 0x8B;
-        __emit 0xF1;
-        __emit 0x57;
-        __emit 0x89;
-        __emit 0x74;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0xC7;
-        __emit 0x06;
-        __emit 0xE0;
-        __emit 0x93;
-        __emit 0x08;
-        __emit 0x01;
-        __emit 0xC7;
-        __emit 0x46;
-        __emit 0x08;
-        __emit 0xCC;
-        __emit 0x93;
-        __emit 0x08;
-        __emit 0x01;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x05;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x6E;
-        __emit 0x0C;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x03;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x45;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x74;
-        __emit 0x23;
-        __emit 0xEB;
-        __emit 0x03;
-        __emit 0x8D;
-        __emit 0x49;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0xDF;
-        __emit 0x8B;
-        __emit 0x3F;
-        __emit 0x8D;
-        __emit 0x4B;
-        __emit 0x0C;
-        __emit 0xE8;
-        __emit 0xF4;
-        __emit 0x6A;
-        __emit 0x77;
-        __emit 0x00;
-        __emit 0x6A;
-        __emit 0x10;
-        __emit 0x53;
-        __emit 0xE8;
-        __emit 0x9C;
-        __emit 0xD7;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x45;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x75;
-        __emit 0xE2;
-        __emit 0x8B;
-        __emit 0x45;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x45;
-        __emit 0x00;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x83;
-        __emit 0xC5;
-        __emit 0x04;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x75;
-        __emit 0xBB;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x74;
-        __emit 0x16;
-        __emit 0x8B;
-        __emit 0xC7;
-        __emit 0x8B;
-        __emit 0x3F;
-        __emit 0x6A;
-        __emit 0x0C;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x64;
-        __emit 0xD7;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x75;
-        __emit 0xEA;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x74;
-        __emit 0x1C;
-        __emit 0x8D;
-        __emit 0x9B;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0xC7;
-        __emit 0x8B;
-        __emit 0x3F;
-        __emit 0x6A;
-        __emit 0x10;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x34;
-        __emit 0xD7;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x75;
-        __emit 0xEA;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x50;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x40;
-        __emit 0xB3;
-        __emit 0x06;
-        __emit 0x8D;
-        __emit 0x9B;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x7E;
-        __emit 0x50;
-        __emit 0x85;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0x6F;
-        __emit 0x34;
-        __emit 0x89;
-        __emit 0x7C;
-        __emit 0x24;
-        __emit 0x14;
-        __emit 0x74;
-        __emit 0x21;
-        __emit 0x8D;
-        __emit 0x4F;
-        __emit 0x04;
-        __emit 0x88;
-        __emit 0x5C;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0xE8;
-        __emit 0x7E;
-        __emit 0x9C;
-        __emit 0xEF;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0xCF;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x05;
-        __emit 0xE8;
-        __emit 0x3A;
-        __emit 0x6A;
-        __emit 0x77;
-        __emit 0x00;
-        __emit 0x57;
-        __emit 0xE8;
-        __emit 0xA4;
-        __emit 0x0F;
-        __emit 0x77;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0xC5;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x89;
-        __emit 0x6E;
-        __emit 0x50;
-        __emit 0x75;
-        __emit 0xC8;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x04;
-        __emit 0x74;
-        __emit 0x16;
-        __emit 0x8B;
-        __emit 0xC7;
-        __emit 0x8B;
-        __emit 0x3F;
-        __emit 0x6A;
-        __emit 0x10;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0xBE;
-        __emit 0xD6;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x75;
-        __emit 0xEA;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x4C;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x0B;
-        __emit 0x6A;
-        __emit 0x10;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x9A;
-        __emit 0xD6;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x03;
-        __emit 0x74;
-        __emit 0x16;
-        __emit 0x8B;
-        __emit 0xC7;
-        __emit 0x8B;
-        __emit 0x3F;
-        __emit 0x6A;
-        __emit 0x0C;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x7D;
-        __emit 0xD6;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x75;
-        __emit 0xEA;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x89;
-        __emit 0x40;
-        __emit 0x04;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x48;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x0B;
-        __emit 0x6A;
-        __emit 0x0C;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x59;
-        __emit 0xD6;
-        __emit 0x71;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x08;
-        __emit 0x8D;
-        __emit 0x4E;
-        __emit 0x18;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x02;
-        __emit 0xE8;
-        __emit 0xD1;
-        __emit 0x9B;
-        __emit 0xEF;
-        __emit 0xFF;
-        __emit 0x68;
-        __emit 0xEF;
-        __emit 0xE1;
-        __emit 0x42;
-        __emit 0x00;
-        __emit 0x6A;
-        __emit 0x03;
-        __emit 0x6A;
-        __emit 0x04;
-        __emit 0x8D;
-        __emit 0x46;
-        __emit 0x0C;
-        __emit 0x50;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x34;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0xB8;
-        __emit 0x5D;
-        __emit 0x8E;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0xCE;
-        __emit 0xC7;
-        __emit 0x46;
-        __emit 0x08;
-        __emit 0x44;
-        __emit 0x37;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xE8;
-        __emit 0x6C;
-        __emit 0x0A;
-        __emit 0x89;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x1C;
-        __emit 0x5F;
-        __emit 0x5E;
-        __emit 0x5D;
-        __emit 0x5B;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0D;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x18;
-        __emit 0xC3;
-    }
+	std::list<SnapshotBlock> *snapshotBlocks = m_snapshotBlockList;
+	for (Int i = 0; i < SNAPSHOT_MAX; ++i)
+		 snapshotBlocks[i].clear();
+
+	m_snapshotPostProcessList.clear();
+	m_bfmeSnapshotBlockList.clear();
+	clearAvailableGames();
 }
