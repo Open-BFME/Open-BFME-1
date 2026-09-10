@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "54bbcf17b1f832313e783392e48225165c57b5c7bc1c016d7053dca3ff4ef16a",
+  "symbol": "?Rva009A9370@@YAXPAEHI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?Rva009A9370@@YAXPAEHI@Z\n// partial score=0.9 date=2026-09-10\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// Generic scalar counterpart of the matched MMX four-row interpolator in\n// dispatch slot 6.  The installer and MMX sibling establish the cdecl ABI:\n// source rows, signed row stride, and unsigned byte count.\n// Retail boundary: 0x009A9370..0x009A93F1 (130 bytes); INT3 padding starts at\n// 0x009A93F2 and the next body starts at 0x009A9400.\n\n// ?Rva009A9370@@YAXPAEHI@Z\nvoid __cdecl Rva009A9370(unsigned char *source, int stride, unsigned int bytes)\n{\n\tunsigned char *cursor = source;\n\n\twhile (bytes > 0)\n\t{\n\t\tunsigned int second = cursor[stride];\n\t\tunsigned int first = cursor[0];\n\t\tunsigned int firstWeight = first * 51;\n\t\tunsigned int secondWeight = second * 205;\n\t\tcursor[stride] = (unsigned char)((firstWeight + secondWeight + 128) >> 8);\n\n\t\tunsigned int fourth;\n\t\tunsigned int third;\n\t\tthird = cursor[stride * 2];\n\t\tfourth = cursor[stride * 3];\n\t\tcursor[stride * 2] = (unsigned char)((second * 102 + third * 154 + 128) >> 8);\n\t\tcursor[stride * 3] = (unsigned char)((third * 154 + fourth * 102 + 128) >> 8);\n\t\tcursor[stride * 4] = (unsigned char)fourth;\n\n\t\t++cursor;\n\t\t--bytes;\n\t}\n}\n"
+}
