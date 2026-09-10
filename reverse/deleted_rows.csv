@@ -25200,3 +25200,4 @@ uw_00c2caa7,0x00C2CAA7,False parent and unanchored cleanup: FuncInfo E1CDA4 map 
 ??_GGen_dtor_00260b20@@UAEPAXI@Z,0x00260B20,gen-dtor placeholder retracted: ManTheWallsSpecialPower constructor vtable 0x010B5E6C slot zero reaches this scalar deleting destructor through ILT 0x0003E0A9
 ?dup_00410e00@@YAXXZ,0x00410E00,gen-alias placeholder retracted: upstream W3DPropDraw::reactToTransformChange calls Drawable::getScale through ILT 0x0003939C to this exact 7-byte body; the authentic accessor identity now owns the range
 ?Reset_Geometry@MeshGeometryClass@@QAEXHH@Z,0x009268C0,Incorrect two-argument ABI: full retail ret0xC and independently typed Load_W3D MeshModel Reset and base-destructor callers prove three arguments. Retired before verified replacement.
+?d_00261610@@YAXXZ,0x00261610,gen-dump placeholder retracted: matched insertion-sort caller and exact unguarded eight-byte POD sibling prove the clean STLport linear-insert reconstruction

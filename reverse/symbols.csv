@@ -86995,3 +86995,4 @@ _Rva009C4B70CpuFeatureProbe,0x009C4B70,Parent raw direct call at9B3A90+6; comple
 ?getDecayFilename@AudioEventRTS@@QBE?AVAsciiString@@XZ,0x00049553,AudioManager getAudioLengthMS const accessor spelling at the same proven ILT
 ?getFileLengthMS@AudioManager@@QBEMVAsciiString@@@Z,0x0004A363,AudioManager implementation directly calls the Miles override through this retail ILT
 ?getFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x0000B7D5,AudioManager getAudioLengthMS calls this retail ILT
+?GenInsert00260910@@YAXPAUGen8ByteElement00260910@@U1@P6A_NABU1@2@Z@Z,0x000391E9,route=0x00260910; matched unguarded eight-byte POD linear-insert body and retail thunk establish this call target
