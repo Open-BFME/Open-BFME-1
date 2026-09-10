@@ -86798,3 +86798,5 @@ Vp6FilterConst8770,0x00ED8770,VP6 diag filter mm constant table row2 +0x50
 Vp6FilterConst8780,0x00ED8780,VP6 diag filter mm constant table row2 +0x60
 Vp6FilterConst8790,0x00ED8790,VP6 wide filter mm constant table row2 +0x70
 ?rva005BCBF0@Rva005BCBF0CampaignHelper@@QAEPAVCampaign@@VAsciiString@@@Z,0x005BCBF0,Parent full340 rawbody through5BCD43; parser5BCF98via1101D passesManagerECX andbyvalue4BAsciiString; helperremovesexistingname thenallocates18Bcampaign andregisters12Blistnode; destroysargument ret4; honestRVAidentity nooriginalmethodclaim
+?rva00382210@ExperienceLevelSystem@@QAEXPAVExperienceLevel@@@Z,0x00382210,Parent full474B rawreview ret4 at3823E7; parser3825AEvia41B2D passesLevelD8 pointer withSystemECX; namesvector1C20 tosystem8 hash andE0nodes withD8copies; honestRVAhelperidentity
+??1ExperienceLevel@@UAE@XZ,0x00380C00,Parent full221B rawreview ret380CDC; constructor380AB0 andparser3825BFvia4113C establishsameD8record; Overridablevirtualdtor cleansstringsC787C vectors1C283444 andchain4; declarationonlyvirtualABI
