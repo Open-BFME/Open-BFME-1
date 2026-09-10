@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "adb29883f3e04897a19d8812ad323c67c901977fc65f55a3441b394117a81a0f",
+  "symbol": "?Rva009A92D0@@YAXPAEHI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?Rva009A92D0@@YAXPAEHI@Z\n// partial score=0.9 date=2026-09-10\n// Complete clean reconstruction banked after a 157-byte near miss.  The\n// dispatch installer and bfmeInterpRows5Mmx establish the three-argument\n// cdecl ABI and the five-row interpolation family.\nvoid __cdecl Rva009A92D0(unsigned char *source, int stride, unsigned int bytes)\n{\n\tunsigned char *row3 = source + stride * 2;\n\trow3 += stride;\n\n\twhile (bytes > 0)\n\t{\n\t\tunsigned int second = source[stride];\n\t\tunsigned int first = source[0];\n\t\tsource[stride] = (unsigned char)((first * 51 + second * 205 + 128) >> 8);\n\n\t\tunsigned int third = source[stride * 2];\n\t\tunsigned int fourth = row3[0];\n\t\tsource[stride * 2] = (unsigned char)((second * 102 + third * 154 + 128) >> 8);\n\t\trow3[0] = (unsigned char)((third * 154 + fourth * 102 + 128) >> 8);\n\n\t\trow3[stride] = (unsigned char)((fourth * 205 + source[stride * 5] * 51 + 128) >> 8);\n\n\t\t++source;\n\t\t++row3;\n\t\t--bytes;\n\t}\n}\n"
+}

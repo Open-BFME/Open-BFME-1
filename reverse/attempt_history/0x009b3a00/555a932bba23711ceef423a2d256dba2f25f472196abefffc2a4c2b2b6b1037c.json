@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "555a932bba23711ceef423a2d256dba2f25f472196abefffc2a4c2b2b6b1037c",
+  "symbol": "?bfmeStep1_009A75E0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?bfmeStep1_009A75E0@@YAXXZ\n// partial score=0.8 date=2026-09-10\n// ?bfmeStep1_009A75E0@@YAXXZ\n// Initializes the 16-bit codec spread table before the second-stage installer.\nvoid bfmeStep1_009A75E0(void)\n{\n\tunsigned short stride = 8;\n\tvolatile unsigned short *clear = (volatile unsigned short *)0x01356660;\n\n\tdo\n\t{\n\t\t--clear;\n\t\t*clear = 0;\n\t}\n\twhile (clear != (volatile unsigned short *)0x01356640);\n\n\t((volatile unsigned short *)0x01356640)[15] = 0xffff;\n\t((volatile unsigned short *)0x01356640)[10] = 0xffff;\n\t((volatile unsigned short *)0x01356640)[5] = 0xffff;\n\t((volatile unsigned short *)0x01356640)[0] = 0xffff;\n\n\tvolatile unsigned char *destination = (volatile unsigned char *)0x01356664;\n\tvolatile const unsigned short *source = (volatile const unsigned short *)0x012D88B8;\n\tdo\n\t{\n\t\tunsigned short value = *source;\n\t\t*(volatile unsigned short *)(destination + 2) = value;\n\t\t*(volatile unsigned short *)(destination + 0) = value;\n\t\t*(volatile unsigned short *)(destination - 2) = value;\n\t\t*(volatile unsigned short *)(destination - 4) = value;\n\t\tdestination += stride;\n\t\t++source;\n\t}\n\twhile ((unsigned long)destination <= 0x01356694);\n\n\t((volatile unsigned short *)0x01356640)[47] = stride;\n\t((volatile unsigned short *)0x01356640)[46] = stride;\n\t((volatile unsigned short *)0x01356640)[45] = stride;\n\t((volatile unsigned short *)0x01356640)[44] = stride;\n}\n"
+}
