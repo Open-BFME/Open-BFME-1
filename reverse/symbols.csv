@@ -20293,6 +20293,7 @@ name,address,notes
 ?b_000dd960@@YAXXZ,0x000DD960,gen-thunk body
 ?b_000dd970@@YAXXZ,0x000DD970,gen-thunk body
 ?b_000dd980@@YAXXZ,0x000DD980,gen-thunk body
+??0Rva000DFBD0PlayerStorage@@QAE@H@Z,0x00041943,PlayerList constructor's retail 0x6a4-byte storage allocation routes through this ILT
 ?b_000dddf0@@YAXXZ,0x000DDDF0,gen-thunk body
 ?b_000dde20@@YAXXZ,0x000DDE20,gen-thunk body
 ?b_000dde30@@YAXXZ,0x000DDE30,gen-thunk body

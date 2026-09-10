@@ -1,12 +1,10 @@
-// ??0PlayerList@@QAE@XZ
-// partial score=0.99 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ??0PlayerList@@: Code/GameEngine/Source/Common/RTS/PlayerList.cpp
-// BFME's PlayerList constructor uses two base subobjects and allocates the
-// fixed 32-player table.  Keep the BFME offsets local to this reconstruction;
-// the vendored PlayerList header describes the Zero Hour 16-player layout.
+// Open-BFME5: lift the retail PlayerList constructor to clean C++.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
+// Keep the base classes local to this reconstruction.  The shipped ZH headers
+// describe a different PlayerList layout (16 players rather than BFME's 32)
+// and would therefore move the constructor's stores and EH frame.
 class SubsystemInterface
 {
 public:
@@ -19,9 +17,6 @@ private:
 
 class Player;
 
-// Snapshot's default constructor is inlined in the retail PlayerList
-// constructor.  Its base table is visible briefly before the derived table
-// stores below, so keep that store as the real base-construction operation.
 class Snapshot
 {
 public:
@@ -35,11 +30,10 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-// The call at ILT 0x00041943 constructs the 0x6a4-byte player storage.  This
-// is an address-derived carrier only: it makes no claim that the unresolved
-// callee's public class identity is Player.  Its declared constructor lets
-// MSVC emit the retail new-with-constructor EH path and the pin below routes
-// that ABI call to the already observed ILT.
+// The retail constructor calls the player-storage constructor through the
+// incremental-link thunk at 0x00041943.  This carrier is deliberately local:
+// it records the observed allocation ABI without claiming an unresolved
+// public class identity for the 0x6a4-byte object.
 class Rva000DFBD0PlayerStorage
 {
 public:
@@ -54,7 +48,6 @@ extern void j_00030e90();
 
 #pragma comment(linker, "/alternatename:??0Rva000DFBD0PlayerStorage@@QAE@H@Z=?j_00041943@@YAXXZ")
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class __declspec(novtable) PlayerList : public SubsystemInterface, public Snapshot
 {
 public:
@@ -73,8 +66,7 @@ private:
 PlayerList::PlayerList()
 {
 	// Snapshot's base vtable is installed by its inlined constructor, then
-	// replaced by the derived PlayerList pair.  These are the two concrete
-	// retail tables at +8 and +0.
+	// replaced by the derived PlayerList pair at +8 and +0.
 	*(volatile void **)((char *)this + 0) = (void *)0x0108417c;
 	*(volatile void **)((char *)this + 8) = (void *)0x01084168;
 	m_local = 0;
