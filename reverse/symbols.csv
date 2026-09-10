@@ -86712,9 +86712,6 @@ g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
-?crushPolicy@Object@@QBE_NPAV1@W4CrushSquishTestType@@@Z,0x000420AA,route=0x001CC790; retail 0x00176250 pursue updateInternal reaches the matched crush policy through this ILT thunk
-?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z,0x000402D2,route=0x001BFF70; retail 0x00174A20 reaches the matched damage-source query through this ILT thunk
-?set@Rva0026F110@@QAEXXZ,0x00012486,route=0x0026F110; retail 0x00174A20 reaches the matched AI setter through this ILT thunk
 ?Rva008791E0Handles@@3URva008791E0Table@@A,0x013563A0,Open-BFME5 handle table base; vals[20] at +0 keys[20] at +0x50 count at +0xA0 as proven by the 0x008791E0 body absolute operands
 ??_7Rva000E9A40@@6B@,0x01084DF0,Open-BFME5 own vtable stored by the 0x000E9A40 destructor
 ??1BfmeMapTree000E9A40@@QAE@XZ,0x0003D61D,pin reuse of the ThingTemplate _Rb_tree destructor for the 0x000E9A40 lone map members
