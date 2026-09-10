@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8d9061ee3590b45f42678fac261adb37ba06b098ea480998ee8ae7f38b32fcfb",
+  "symbol": "?winRepaint@GameWindowManager@@UAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.56,
+  "source": "// ?winRepaint@GameWindowManager@@UAEXXZ\n// partial score=0.56 date=2026-09-10\n// Best semantic reconstruction of GameWindowManager::winRepaint.\n// Retail boundary: 0x0047CCE0..0x0047CDB7 (215 bytes), selected through\n// GameWindowManager vtable slot 36.  The failed compile showed that retail\n// also filters each window on [window+0x1F4] == [manager+0x38]; the current\n// source/header does not yet identify those fields, so this body preserves\n// the named source behavior without inventing their identities.\nvoid GameWindowManager::winRepaint( void )\n{\n\tGameWindow *window, *next;\n\n\tfor( window = m_windowTail; window; window = next )\n\t{\n\t\tnext = window->m_prev;\n\t\tif( BitTest( window->m_status, WIN_STATUS_BELOW ) )\n\t\t\tdrawWindow( window );\n\t}\n\n\tfor( window = m_windowTail; window; window = next )\n\t{\n\t\tnext = window->m_prev;\n\t\tif( BitTest( window->m_status, WIN_STATUS_ABOVE |\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t WIN_STATUS_BELOW ) == FALSE )\n\t\t\tdrawWindow( window );\n\t}\n\n\tfor( window = m_windowTail; window; window = next )\n\t{\n\t\tnext = window->m_prev;\n\t\tif( BitTest( window->m_status, WIN_STATUS_ABOVE ) )\n\t\t\tdrawWindow( window );\n\t}\n\n\tif( TheTransitionHandler )\n\t\tTheTransitionHandler->draw();\n}\n"
+}
