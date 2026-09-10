@@ -1,44 +1,25 @@
 // ?addWorldAnimation@InGameUI@@QAEXPAVAnim2DTemplate@@PBUCoord3D@@W4WorldAnimationOptions@@MM@Z
-// partial score=0.68 date=2026-09-03
-// cl: /DNDEBUG /MD /EHsc
-// InGameUI::addWorldAnimation — retail 0x00443720 (296B).
-// ZH walk: reject null template/pos or non-positive duration, NEW WorldAnimationData
-// (0x1C, inline-zeroed), new Anim2D(template, TheAnim2DCollection), fill fields,
-// push_front onto this+0x12C0.
-//
-// Wall: ours 294B. Retail EH is push -1 / push handler / mov eax,fs:[0];
-// ours is mov eax,fs:[0] / push -1 / push 0. Retail ebp=template, ebx=pos,
-// edi=0 CSE, esi=wad. Do not edit InGameUI.h (vtable shim breaks
-// disregardDrawable @ slot 0xC8).
+// partial score=0.7 date=2026-09-10
+// ?addWorldAnimation@InGameUI@@QAEXPAVAnim2DTemplate@@PBUCoord3D@@W4WorldAnimationOptions@@MM@Z
+// Full useful ABI attempt for retail 0x00443720..0x00443848 (296 bytes).
+// The live TU used the same local views and body below. Retail allocates the
+// 0x34-byte Anim2D block with global new, then calls the proven constructor
+// ILT; the list is the retail InGameUI member at this+0x12c0 and reaches its
+// proven ILT. These view classes do not claim retail identity.
+// Remaining mismatch: clean MSVC orders the EH frame differently, allocates
+// different callee-saved registers, and leaves the local aliases unresolved.
 
+typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-enum WorldAnimationOptions
-{
-	WORLD_ANIM_NO_OPTIONS = 0
-};
+enum WorldAnimationOptions { WORLD_ANIM_NO_OPTIONS = 0 };
+enum { LOGICFRAMES_PER_SECOND = 30 };
 
-enum
-{
-	LOGICFRAMES_PER_SECOND = 30
-};
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
-
+struct Coord3D { Real x; Real y; Real z; };
 class Anim2DTemplate;
 class Anim2DCollection;
-
-class Anim2D
-{
-public:
-	Anim2D(Anim2DTemplate *animTemplate, Anim2DCollection *collection);
-};
+class Anim2D;
 
 class WorldAnimationData
 {
@@ -50,38 +31,52 @@ public:
 	Real m_zRisePerSecond;
 };
 
-class WorldAnimationList
-{
-public:
-	void push_front(WorldAnimationData *const &wad);
-};
-
 class GameLogic
 {
 public:
 	UnsignedInt getFrame() { return m_frame; }
 
-	unsigned char m_pad[0x3C];
+private:
+	UnsignedByte m_pad[0x3C];
 	UnsignedInt m_frame;
 };
 
 extern Anim2DCollection *TheAnim2DCollection;
 extern GameLogic *TheGameLogic;
+extern void j_00015b09();
+extern void j_0002f2a7();
+
+class BfmeAnim2DAllocView
+{
+public:
+	BfmeAnim2DAllocView(Anim2DTemplate *, Anim2DCollection *);
+	~BfmeAnim2DAllocView();
+	UnsignedByte m_body[0x34];
+};
+
+class BfmeWorldAnimationListView
+{
+public:
+	void push_front(WorldAnimationData *const &);
+};
+
+#pragma comment(linker, "/alternatename:??0BfmeAnim2DAllocView@@QAE@PAVAnim2DTemplate@@PAVAnim2DCollection@@@Z=?j_00015b09@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1BfmeAnim2DAllocView@@QAE@XZ=??1Anim2D@@MAE@XZ")
+#pragma comment(linker, "/alternatename:?push_front@BfmeWorldAnimationListView@@QAEXABQAVWorldAnimationData@@@Z=?j_0002f2a7@@YAXXZ")
 
 class InGameUI
 {
 public:
-	void addWorldAnimation(Anim2DTemplate *animTemplate, const Coord3D *pos,
-		WorldAnimationOptions options, Real durationInSeconds, Real zRisePerSecond);
+	void addWorldAnimation(Anim2DTemplate *, const Coord3D *,
+		WorldAnimationOptions, Real, Real);
 
 private:
-	unsigned char m_pad[0x12C0];
-	WorldAnimationList m_worldAnimationList;
+	UnsignedByte m_pad[0x12C0];
 };
 
-// ?addWorldAnimation@InGameUI@@QAEXPAVAnim2DTemplate@@PBUCoord3D@@W4WorldAnimationOptions@@MM@Z
-void InGameUI::addWorldAnimation(Anim2DTemplate *animTemplate, const Coord3D *pos,
-	WorldAnimationOptions options, Real durationInSeconds, Real zRisePerSecond)
+void InGameUI::addWorldAnimation(Anim2DTemplate *animTemplate,
+	const Coord3D *pos, WorldAnimationOptions options,
+	Real durationInSeconds, Real zRisePerSecond)
 {
 	if (animTemplate == 0 || pos == 0 || durationInSeconds <= 0.0f)
 		return;
@@ -89,19 +84,17 @@ void InGameUI::addWorldAnimation(Anim2DTemplate *animTemplate, const Coord3D *po
 	WorldAnimationData *wad = new WorldAnimationData;
 	if (wad == 0)
 		return;
-	wad->m_anim = 0;
-	wad->m_worldPos.x = 0;
-	wad->m_worldPos.y = 0;
-	wad->m_worldPos.z = 0;
-	wad->m_expireFrame = 0;
-	wad->m_options = WORLD_ANIM_NO_OPTIONS;
-	wad->m_zRisePerSecond = 0;
 
-	Anim2D *anim = new Anim2D(animTemplate, TheAnim2DCollection);
+	BfmeAnim2DAllocView *animView = new BfmeAnim2DAllocView(
+		animTemplate, TheAnim2DCollection);
+	Anim2D *anim = reinterpret_cast<Anim2D *>(animView);
 	wad->m_anim = anim;
-	wad->m_expireFrame = TheGameLogic->getFrame() + (UnsignedInt)(durationInSeconds * (Real)LOGICFRAMES_PER_SECOND);
+	wad->m_expireFrame = TheGameLogic->getFrame()
+		+ (UnsignedInt)(durationInSeconds * (Real)LOGICFRAMES_PER_SECOND);
 	wad->m_options = options;
 	wad->m_worldPos = *pos;
 	wad->m_zRisePerSecond = zRisePerSecond;
-	m_worldAnimationList.push_front(wad);
+
+	reinterpret_cast<BfmeWorldAnimationListView *>(
+		reinterpret_cast<UnsignedByte *>(this) + 0x12c0)->push_front(wad);
 }
