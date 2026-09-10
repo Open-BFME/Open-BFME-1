@@ -99,6 +99,34 @@ enum {
 	REGROUP_SUCCESS_DISTANCE_SQUARED = 225
 };
 
+// The BFME object routes the player-stop setter through the secondary
+// subobject at this+0x340.  Its retail vtable places setForceBusyState at
+// slot 13 (+0x34), five slots after the Zero Hour interface declaration.  This
+// carrier models only that proven call site; it does not rename the other
+// unresolved secondary slots.
+#define SUPPLY_TRUCK_BUSY_SLOT(n) virtual void supplyTruckBusySlot##n() = 0;
+class SupplyTruckAIUpdateRetailBusyInterface
+{
+public:
+	SUPPLY_TRUCK_BUSY_SLOT(00)
+	SUPPLY_TRUCK_BUSY_SLOT(01)
+	SUPPLY_TRUCK_BUSY_SLOT(02)
+	SUPPLY_TRUCK_BUSY_SLOT(03)
+	SUPPLY_TRUCK_BUSY_SLOT(04)
+	SUPPLY_TRUCK_BUSY_SLOT(05)
+	SUPPLY_TRUCK_BUSY_SLOT(06)
+	SUPPLY_TRUCK_BUSY_SLOT(07)
+	SUPPLY_TRUCK_BUSY_SLOT(08)
+	SUPPLY_TRUCK_BUSY_SLOT(09)
+	SUPPLY_TRUCK_BUSY_SLOT(10)
+	SUPPLY_TRUCK_BUSY_SLOT(11)
+	SUPPLY_TRUCK_BUSY_SLOT(12)
+	virtual void setForceBusyState(Bool value) = 0;
+};
+#undef SUPPLY_TRUCK_BUSY_SLOT
+
+#pragma comment(linker, "/alternatename:?privateIdle@AIUpdateInterface@@MAEXW4CommandSourceType@@@Z=?j_0002270f@@YAXXZ")
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -241,52 +269,16 @@ Bool SupplyTruckAIUpdate::gainOneBox( Int remainingStock )
 }
 
 //----------------------------------------------------------------------------------------
-__declspec(naked) void SupplyTruckAIUpdate::privateIdle(CommandSourceType)
+// The reference SupplyTruck implementation keeps a player-issued idle command
+// from re-entering the automatic supply state, then delegates the common idle
+// handling to AIUpdateInterface.
+void SupplyTruckAIUpdate::privateIdle(CommandSourceType cmdSource)
 {
-	__asm {
-		_emit 056h
-		_emit 057h
-		_emit 08Bh
-		_emit 07Ch
-		_emit 024h
-		_emit 00Ch
-		_emit 085h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 0F1h
-		_emit 075h
-		_emit 011h
-		_emit 08Bh
-		_emit 086h
-		_emit 040h
-		_emit 003h
-		_emit 000h
-		_emit 000h
-		_emit 08Dh
-		_emit 08Eh
-		_emit 040h
-		_emit 003h
-		_emit 000h
-		_emit 000h
-		_emit 06Ah
-		_emit 001h
-		_emit 0FFh
-		_emit 050h
-		_emit 034h
-		_emit 057h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 00Ah
-		_emit 0CFh
-		_emit 0D5h
-		_emit 0FFh
-		_emit 05Fh
-		_emit 05Eh
-		_emit 0C2h
-		_emit 004h
-		_emit 000h
-	}
+	if( cmdSource == CMD_FROM_PLAYER )
+		reinterpret_cast<SupplyTruckAIUpdateRetailBusyInterface *>(
+			reinterpret_cast<unsigned char *>(this) + 0x340)->setForceBusyState(TRUE);
+
+	AIUpdateInterface::privateIdle(cmdSource);
 }
 
 //----------------------------------------------------------------------------------------
@@ -947,4 +939,3 @@ TheInGameUI->DEBUG_addFloatingText(tmp, owner->getPosition(), GameMakeColor(255,
 
 	return false;
 }
-
