@@ -85,7 +85,17 @@ extern void __cdecl Rva009A9720(void);
 extern void __cdecl Rva009A91D0(void);
 extern void __cdecl Rva009A92D0(void);
 extern void __cdecl Rva009A9370(void);
-extern void __cdecl Rva009B6BB0(void);
+struct Rva009B6BB0Context
+{
+	unsigned char m_pad00[0x78];
+	unsigned char *m_plane;
+	unsigned char m_pad7C[0x14];
+	int m_width;
+	int m_height;
+	int m_stride;
+};
+
+extern void __cdecl Rva009B6BB0(Rva009B6BB0Context *, int, int, int, int);
 
 // Generic scalar counterpart of bfmeExpandMmx in dispatch slot 8.  The
 // caller's slot assignment and the MMX sibling establish the ABI: source,
@@ -117,6 +127,34 @@ void __cdecl Rva009A98E0(const void *source, int bytes, void *destination)
 	unsigned int last = src[0];
 	dst[0] = (unsigned char)last;
 	dst[1] = (unsigned char)last;
+}
+
+void __cdecl Rva009B6BB0(Rva009B6BB0Context *context,
+	int lowerLimit, int upperLimit, int destinationOffset, int sourceOffset)
+{
+	register unsigned char *destination = context->m_plane + destinationOffset;
+	register int width = context->m_width << 3;
+	register const unsigned char *source = context->m_plane + sourceOffset;
+	int height = context->m_height << 3;
+	int stride = context->m_stride;
+	unsigned char table[256];
+
+	for (int i = 0; i < 256; ++i)
+	{
+		table[i] = (unsigned char)i;
+		if (i < lowerLimit)
+			table[i] = (unsigned char)lowerLimit;
+		if (i > 255 - upperLimit)
+			table[i] = (unsigned char)(255 - upperLimit);
+	}
+
+	for (int row = 0; row < height; ++row)
+	{
+		for (int column = 0; column < width; ++column)
+			destination[column] = table[source[column]];
+		destination += stride;
+		source += stride;
+	}
 }
 
 typedef void (__cdecl *BfmeDispatchFn)();
