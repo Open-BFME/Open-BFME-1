@@ -13898,7 +13898,7 @@ name,address,notes
 ?apply@Gen003C0350Lookup@@QAEXPAX@Z,0x0002E898,ILT to apply body 0x003A47C0; callee of 0x003C0350
 ?apply@Gen00587600@@QAEXHH@Z,0x00039FEF,S2 two-argument member called after atoi by the six entry points at 0x0051A7xx; ILT thunk to body 0x00587600
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
-?apply@PorcupineDamageHelper@@QAEXPAVDamageInfo@@@Z,0x0002B35A,ABI facade for the private Porcupine damage helper
+?apply@PorcupineDamageHelper@@QAEXPAVDamageInfo@@@Z,0x0002B35A,route=0x002144D0; ABI facade for the private Porcupine damage helper
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
 ?apply@Rva00202DF0Head@@QAEXPAVRva00202DF0Face@@H@Z,0x000157DA,address-derived callee of Rva00202DF0Part::seed; ILT to 0x002B2040
 ?apply@Rva0025CAA0ElvenWoodDispatch@@QAEXPAVRva0025CAA0Subject@@PAVRva0025CAA0Context@@@Z,0x000170DA,address-derived dispatch call from the 73-byte Elven Wood body
@@ -86828,3 +86828,4 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?erase@?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@QAE?AU?$_List_iterator@VExperienceLevel@@U?$_Nonconst_traits@VExperienceLevel@@@_STL@@@2@U32@0@Z,0x0037E680,Parent full65B shared virtual-dtor list erase: node8 polymorphic value invokes slot0 with0 then freesnode; actual listassign381ED5 callsILT41F74 to thisbody; ret12 hidden iterator result plus twoiterator args
 ?setMasks@Rva0039FF30Filter@@QAEXURva0021FC80Mask@@0@Z,0x0039FF30,TransportContain ctor21FC80 calls ILT4699D to full549B filter handle setter; two six-word masks by value; ret48 at3A0139; interned pool lifetime verified
 ?Rva012ED8B8NoneMask@@3URva0021FC80Mask@@B,0x00AED8B8,TransportContain ctor21FC80 reads six mask words VA12ED8B8..12ED8CC; same existing KINDOFMASK_NONE storage; typed192-bit view
+?withinDistance00214350@PorcupineDamageHelper@@QAEEMPBUCoord3D@@0@Z,0x00214350,142B Porcupine caller2144D0 sets ECX then callsILT2593C to67B predicate; callee ignoresECX readsXY fromtwoCoord3D pointers andret12 at214390
