@@ -1,6 +1,4 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD
-// Full retail [009A6DA0,009A6DE3); caller009A6DF0 carries self in ESI.
-// The two frees route through009A5980 to matched009A58E0.
 void bfmeTwoBZB(void *what);
 struct Rva009A6DA0Buffer {
  unsigned char pad[0x180];
@@ -14,3 +12,26 @@ static void Rva009A6DA0ReleaseBuffers(Rva009A6DA0Buffer *self) {
 }
 // Absent-from-retail integration entry; only the private helper is a candidate.
 void ReleaseCodecBufferPair(Rva009A6DA0Buffer *self) { Rva009A6DA0ReleaseBuffers(self); }
+
+class Bucket { public: enum BucketMagicEnum { Zero = 0 }; static void *operator new(unsigned int n, BucketMagicEnum m); };
+static int Rva009A6DF0InitializeBuffers(Rva009A6DA0Buffer *self) {
+ if(self->at188) bfmeTwoBZB(self->at188);
+ self->at188=0; self->at180=0;
+ if(self->at18C) bfmeTwoBZB(self->at18C);
+ self->at18C=0; self->at184=0;
+ self->at188=Bucket::operator new(160,Bucket::Zero);
+ if(!self->at188) {
+ if(self->at188) bfmeTwoBZB(self->at188);
+ self->at188=0; self->at180=0;
+ if(self->at18C) bfmeTwoBZB(self->at18C);
+ self->at18C=0; self->at184=0;
+ return 0;
+ }
+ self->at180=(void*)(((unsigned int)self->at188+31)&~31u);
+ self->at18C=Bucket::operator new(160,Bucket::Zero);
+ if(!self->at18C){Rva009A6DA0ReleaseBuffers(self);return 0;}
+ self->at184=(void*)(((unsigned int)self->at18C+31)&~31u);
+ return 1;
+}
+// Absent-from-retail C++ integration entry for the private initializer.
+int InitializeCodecBufferPair(Rva009A6DA0Buffer *self) { return Rva009A6DF0InitializeBuffers(self); }
