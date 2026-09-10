@@ -1,5 +1,5 @@
 // ?d_00362f30@@YAXXZ
-// partial score=0.45 date=2026-09-06
+// partial score=0.65 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 
 // Retail layout: reuses the exact BfmeOwnVUM field layout established by the
@@ -21,6 +21,26 @@ public:
 	void bfmeAssign(BfmeCopyElementC *source);
 };
 
+class BfmeStrNVUM
+{
+public:
+	~BfmeStrNVUM() { bfmeClearNVUM(); }
+	char *m_bfme00;
+
+private:
+	void bfmeClearNVUM();
+};
+
+class BfmeStrWVUM
+{
+public:
+	~BfmeStrWVUM() { bfmeClearWVUM(); }
+	unsigned short *m_bfme00;
+
+private:
+	void bfmeClearWVUM();
+};
+
 class BfmeOwnVUM
 {
 public:
@@ -33,24 +53,28 @@ public:
 	virtual void bfmeSlot4VUM();
 
 private:
-	char *m_bfme04;
+	BfmeStrNVUM m_bfme04;
 	char m_pad08[8];
 	int m_10, m_14, m_18, m_1c, m_20, m_24;
 	int m_28, m_2c, m_30;
 	char m_pad34[0x18];
-	char *m_bfme4c;
+	BfmeStrNVUM m_bfme4c;
 	int m_50, m_54, m_58, m_5c, m_60, m_64, m_68, m_6c, m_70;
-	unsigned short *m_bfme78;
+	BfmeStrWVUM m_bfme78;
 	int m_7c, m_80, m_84, m_88, m_8c, m_90;
 	int m_94, m_98, m_9c, m_a0, m_a4, m_a8;
-	char *m_bfmeac;
-	char *m_bfmeb0;
+	BfmeStrNVUM m_bfmeac;
+	BfmeStrNVUM m_bfmeb0;
 };
+
+BfmeOwnVUM::~BfmeOwnVUM()
+{
+}
 
 // ?d_00362f30@@YAXXZ
 BfmeOwnVUM::BfmeOwnVUM(BfmeCopyElementC *source)
 {
-	m_bfme04 = 0;
+	m_bfme04.m_bfme00 = 0;
 
 	m_10 = 0;
 	m_14 = 0;
@@ -63,7 +87,7 @@ BfmeOwnVUM::BfmeOwnVUM(BfmeCopyElementC *source)
 	m_2c = 0;
 	m_30 = 0;
 
-	m_bfme4c = 0;
+	m_bfme4c.m_bfme00 = 0;
 
 	m_50 = 0;
 	m_54 = 0;
@@ -75,7 +99,7 @@ BfmeOwnVUM::BfmeOwnVUM(BfmeCopyElementC *source)
 	m_6c = 0;
 	m_70 = 0;
 
-	m_bfme78 = 0;
+	m_bfme78.m_bfme00 = 0;
 
 	m_7c = 0;
 	m_80 = 0;
@@ -91,8 +115,8 @@ BfmeOwnVUM::BfmeOwnVUM(BfmeCopyElementC *source)
 	m_a4 = 0;
 	m_a8 = 0;
 
-	m_bfmeac = 0;
-	m_bfmeb0 = 0;
+	m_bfmeac.m_bfme00 = 0;
+	m_bfmeb0.m_bfme00 = 0;
 
 	((BfmeCopyElementC *)this)->bfmeAssign(source);
 }
