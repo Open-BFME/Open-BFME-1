@@ -86989,3 +86989,9 @@ rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 ?tryQuery@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60QueryObject@@MPAUCoord3D@@@Z,0x00148800,parent raw ILT and complete selector call-site ABI verified; actual body target
 ?checkHeight@Rva002BCB60Owner@@QAEEXZ,0x002BC310,parent raw ILT and complete selector call-site ABI verified; actual body target
 _Rva009C4B70CpuFeatureProbe,0x009C4B70,Parent raw direct call at9B3A90+6; complete160B SEH CPUID helper returns full EAX0or1 based on supported vendor and feature bit26; ordinary cdecl noargs
+?bfmeGenerateFilename@AudioEventRTS@@QAEXXZ,0x00046A33,address-local BFME filename-generation helper called by AudioManager getAudioLengthMS; distinct from the 400-byte canonical generator
+?generatePlayInfo@AudioEventRTS@@QAEXXZ,0x0003828A,AudioManager getAudioLengthMS calls this retail ILT
+?getAttackFilename@AudioEventRTS@@QBE?AVAsciiString@@XZ,0x00019BEB,AudioManager getAudioLengthMS const accessor spelling at the same proven ILT
+?getDecayFilename@AudioEventRTS@@QBE?AVAsciiString@@XZ,0x00049553,AudioManager getAudioLengthMS const accessor spelling at the same proven ILT
+?getFileLengthMS@AudioManager@@QBEMVAsciiString@@@Z,0x0004A363,AudioManager implementation directly calls the Miles override through this retail ILT
+?getFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x0000B7D5,AudioManager getAudioLengthMS calls this retail ILT
