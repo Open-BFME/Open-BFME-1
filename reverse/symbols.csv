@@ -86722,7 +86722,6 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ??1BfmeDtorMemberG000E9A40@@QAE@XZ,0x008881D0,pin reuse of StringBase<G> releaseBuffer for the 0x000E9A40 UnicodeString member
 ??RGameTextStringCompare00437020@@QBE_NPBX0@Z,0x004367F0,TU-local stateless comparator ABI alias; raw caller materializes unused ECX and two stack arguments; ILT3285D routes to matched comparator ret8
 ?bfmeQueryCpuTierFlags@@YAXPAH00@Z,0x009B3A90,CPU-tier flags called by matched codec installers; complete169B C++ original13-case switch regenerates140B code and29B private jump/selector tables
-?Rva009B6D40@@YAXXZ,0x009B6D40,codec dispatch slot1 filler (SSE and MMX tiers); no ghidra boundary or identity yet
 ?Rva009B6D80@@YAXXZ,0x009B6D80,codec dispatch slot10 filler (MMX tier only); no ghidra boundary or identity yet
 ?Rva009BD570@@YAXXZ,0x009BD570,codec dispatch slot19 filler (MMX tier only); no ghidra boundary or identity yet
 ?Rva009BA790@@YAXXZ,0x009BA790,codec dispatch slot0 filler (MMX tier only); no ghidra boundary or identity yet

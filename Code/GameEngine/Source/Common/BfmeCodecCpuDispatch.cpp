@@ -68,7 +68,8 @@ extern void __cdecl d_009a5f50(void);
 
 // Slot fillers with neither a real identity nor a ghidra-boundary row yet;
 // address-derived names, pinned in reverse/symbols.csv.
-extern void __cdecl Rva009B6D40(void);
+struct Rva009B6D40Context;
+extern int * __cdecl Rva009B6D40(Rva009B6D40Context *, int);
 extern void __cdecl Rva009B6D80(void);
 extern void __cdecl Rva009BD570(void);
 extern void __cdecl Rva009BA790(void);
