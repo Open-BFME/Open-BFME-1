@@ -23,6 +23,13 @@ struct BfmeSlotVPE
 	int m_14;
 };
 
+struct Rva007F96C0Rec;
+class Rva007FA2C0
+{
+public:
+	Rva007F96C0Rec *lookup(void *rawKey);
+};
+
 class BfmeMgrVPE
 {
 public:
@@ -44,15 +51,10 @@ bool Rva007F9A40Key::matches(const Rva007F9A40Key *other) const
 	return strcmp(b, other->b) == 0;
 }
 
-extern void d_007f9530();
-
 BfmeSlotVPE* BfmeMgrVPE::rva007F9A40GetOrCreateSlot(const Rva007F9A40Key* key, int a4, int a5)
 {
-	typedef BfmeSlotVPE* (BfmeMgrVPE::*FindFn)(const Rva007F9A40Key*);
-	union { void (*raw)(); FindFn member; } fn;
-	fn.raw = d_007f9530;
-
-	BfmeSlotVPE* slot = (this->*fn.member)(key);
+	BfmeSlotVPE* slot = (BfmeSlotVPE *)
+		((Rva007FA2C0 *)this)->lookup((void *)key);
 	if (!slot)
 		slot = bfmeAllocSlotVPE();
 
