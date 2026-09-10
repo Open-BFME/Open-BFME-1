@@ -83137,7 +83137,6 @@ name,address,notes
 ?objectLeavingInfluence@Energy@@QAEXPAVObject@@@Z,0x00029D20,Open-BFME5 retail Energy leaving-influence ILT
 ?objectTypesFromParam@ScriptConditions@@KAXPAVParameter@@PAVObjectTypes@@@Z,0x0003DF4B,Peer verified cdecl two-pointer parser at34F7B0; Parameter/ObjectTypes arguments and ret caller cleanup
 ?okToPlayRadarEdgeSound@Player@@QAE_NXZ,0x000141F0,Open-BFME5 ILT; the third condition of both radar edge tests in Player::disableRadar 0x000CC1C0 and Player::enableRadar 0x000CC2C0
-?onAccept@Rva007FA2C0@@QAEXPAX@Z,0x007F9FD0,FESL helper from 0x007FA2C0 accept path
 ?onBusy@Rva007FA2C0@@QAEXPAX@Z,0x007F99B0,FESL helper from 0x007FA2C0 busy path
 ?onConnectReply@Rva00800E50Owner@@QAEXPAVRva007E8810Message@@@Z,0x00800780,jabba demangler ECHO handler alias of landed 0x800780
 ?onContaining@BfmeRvaBBD0Owner@@QAEXPAVBfmeRvaBBD0Object@@@Z,0x000088FF,assigned-body helper for Rva0024BBD0

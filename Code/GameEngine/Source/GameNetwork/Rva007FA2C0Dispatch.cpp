@@ -23,7 +23,7 @@ class Rva007FA2C0
 {
 public:
 	void dispatch(void *a, void *b);
-	void onAccept(void *a);
+	int onAccept(void *a);
 	void onBusy(void *a);
 
 private:
