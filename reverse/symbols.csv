@@ -86980,3 +86980,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00048284,caller-proven bucket helper for the AptScreenRef hash erase at 0x00461040; same retail 0x00048284 call target as matched 0x00461A00 map family
 ?run@Rva002BC260GoalOwner@@QAEXPAX00E@Z,0x002BC260,parent verified byte argument forwarded through goal setup to149470 sixth-argument byte read; actual body address
+?query@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60Thing@@PAVRva002BCB60QueryObject@@MPAX@Z,0x00149010,parent raw ILT and complete selector call-site ABI verified; actual body target
+?tryQuery@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60QueryObject@@MPAUCoord3D@@@Z,0x00148800,parent raw ILT and complete selector call-site ABI verified; actual body target
+?checkHeight@Rva002BCB60Owner@@QAEEXZ,0x002BC310,parent raw ILT and complete selector call-site ABI verified; actual body target
