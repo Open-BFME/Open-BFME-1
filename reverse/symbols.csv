@@ -86847,3 +86847,6 @@ _Rva0018A0F0StatePredicate,0x0058A0F0,Direct retail body pin: 118-byte cdecl boo
 ?reset@BfmeZoneManagerReset@@QAEXXZ,0x0000742D,Pathfinder reset zone manager alias
 ?apply@Rva004B19E0@@QAEXPAX@Z,0x00034B58,incremental-link thunk the ControlBar overlay sink at this+0x2f0 is reached through
 ?_M_insert_overflow@?$vector@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@IAEXPAPAVGameWindow@@ABQAV3@ABU__true_type@2@I_N@Z,0x000056CD,ControlBar populateUnderConstruction overlay vector reaches the insert-overflow through this ILT thunk
+?lookup@Rva002EEDA0ShroudManager@@QAEHPBUCoord3D@@HI@Z,0x008F7470,address-derived shroud-manager cell lookup; forwards through its +0xc member to the matched body at 0x008F7CD0
+?getPlayersWithRelationship@Rva002EE330PlayerList@@QAEGHH_N@Z,0x00044C60,same 3-arg mask lookup as the PlayerList spelling already pinned here; typed onto the address-derived class the global at 0x012ED748 names
+?Rva0037C310@Rva0037C310Owner@@QAE_NHHPAVObject@@@Z,0x000466B4,address-derived name for the ILT thunk at 0x000466B4 which jumps to the 465-byte body at 0x0037C310; called by the emotion walk at 0x00290B90
