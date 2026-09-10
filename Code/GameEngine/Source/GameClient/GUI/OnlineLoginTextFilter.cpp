@@ -1,9 +1,9 @@
-// ?bfmeOnlineLoginTextFilter@@YA_NAAVUnicodeString@@HHH@Z
-// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// BFME OnlineLogin numeric text filter at retail 0x0054CAA0.
 
-#define _WCTYPE_INLINE_DEFINED
-#include <wctype.h>
+typedef unsigned short WideChar;
+typedef unsigned short wchar_t;
+extern "C" __declspec(dllimport) int __cdecl iswdigit(WideChar value);
 
 template <typename T> class StringBase
 {
@@ -17,7 +17,6 @@ public:
 		unsigned short capacity;
 		T data[1];
 	};
-
 
 private:
 	void *m_data;
@@ -39,25 +38,16 @@ public:
 class UnicodeString : private StringBase<wchar_t>
 {
 public:
-	int getLength() const
-	{
-		return StringBase<wchar_t>::getLength();
-	}
-
+	int getLength() const { return StringBase<wchar_t>::getLength(); }
 	wchar_t getCharAt(int index) const
 	{
 		return StringBase<wchar_t>::getCharAt(index);
 	}
-
 	const StringBase<wchar_t>::Header *rawData() const
 	{
 		return (const StringBase<wchar_t>::Header *)m_data;
 	}
-
-	void removeLastChar()
-	{
-		StringBase<wchar_t>::removeLastChar();
-	}
+	void removeLastChar() { StringBase<wchar_t>::removeLastChar(); }
 };
 
 bool bfmeOnlineLoginIntegerInRange(const UnicodeString &text, int minimum, int maximum);
@@ -73,7 +63,8 @@ bool bfmeOnlineLoginTextFilter(UnicodeString &text, int maximumLength, int, int 
 		int length = data->length;
 		if (length > 0)
 		{
-			bool keep = data->length == 0 || iswdigit(data->data[length - 1]);
+			unsigned short last = data->data[length - 1];
+			bool keep = data->length == 0 || iswdigit(last);
 			if (!keep)
 				text.removeLastChar();
 		}
