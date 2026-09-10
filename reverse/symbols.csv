@@ -86671,3 +86671,8 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 ?isWithinAttackRange@BfmeOutOfWeaponRangeWeapon@@QBE_NPBVBfmeOutOfWeaponRangeObject@@PBUCoord3D@@H@Z,0x0002E951,TU-local ABI adapter for the verified Weapon position range ILT; not a body identity
 ?putObjectAtGarrisonPoint@BfmeGarrisonPlacementCall@@QAEXPAVObject@@W4ObjectID@@HH@Z,0x00028CEA,TU-local ABI adapter for the verified GarrisonContain placement ILT; not a body identity
 ??1Gen009D8CA0@@QAE@XZ,0x009D8D00,Gen009D8CA0 cleanup; deleting destructor9D9090 calls7-bytevtable reset9D8D00; reader111980 cleanup uses same target
+?drawButtonText@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00793EE0,W3DGadgetPushButtonDraw +0x0125 target call; named static helper in current/reference W3DPushButton.cpp; target body 0x00793EE0 is the retail text helper
+?drawRectClock@Display@@QAEXMMMMMH@Z,0x00048E87,W3DGadgetPushButtonDraw +0x025F target call; reference W3DPushButton.cpp named Display clock callback; existing ILT 0x00048E87 routes to retail BFME clock body 0x00793C70
+?drawRemainingRectClock@Display@@QAEXMMMMMH@Z,0x0000467E,W3DGadgetPushButtonDraw +0x029D target call; reference W3DPushButton.cpp named inverse clock callback; existing ILT 0x0000467E routes to retail BFME clock body 0x00793CD0
+?j_000327a4@@YAXPAVGameWindow@@PAVWinInstanceData@@PAUPushButtonData@@@Z,0x000327A4,W3DGadgetPushButtonDraw +0x02BA target call; local typed ABI declaration for existing incremental-link thunk; raw thunk routes to retail 0x00794B70 number-draw body
+?drawOpenRect@Display@@QAEXMMMMMH@Z,0x0002965E,W3DGadgetPushButtonDraw +0x032A target call; reference W3DPushButton.cpp named border callback; existing ILT 0x0002965E routes to retail BFME body 0x00433690
