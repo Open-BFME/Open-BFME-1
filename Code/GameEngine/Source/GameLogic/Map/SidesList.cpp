@@ -2812,60 +2812,8 @@ __declspec(naked) Bool SidesList::validateAllyEnemyList(const AsciiString& tname
 #endif
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_addPlayerByTemplateMethodThunk.cpp
-// ?addPlayerByTemplate@SidesList@@QAEXVAsciiString@@@Z present-unmatched
-void SidesList::addPlayerByTemplate(AsciiString playerTemplateName)
-{
-	AsciiString playerName;
-	UnicodeString playerDisplayName;
-	Bool isHuman = false;
-
-	if (playerTemplateName.isEmpty())
-	{
-		playerName.set("");	// magic code for "neutral"
-		playerDisplayName = L"Neutral";
-		isHuman = false;
-	}
-	else
-	{
-		playerName.set("Plyr");
-		if (playerTemplateName.startsWith("Faction"))
-		{
-			playerName.concat(playerTemplateName.str() + 7);
-		}
-		else
-		{
-			playerName.concat(playerTemplateName);
-		}
-		playerDisplayName.translate(playerName);
-		isHuman = true;
-		// special-case "civilian"...
-		if (playerName == "PlyrCivilian")
-			isHuman = false;
-	}
-
-	Dict d;
-
-	d.clear();
-	d.setAsciiString(TheKey_playerName, playerName);	
-	d.setBool(TheKey_playerIsHuman, isHuman);
-	d.setUnicodeString(TheKey_playerDisplayName, playerDisplayName);
-	d.setAsciiString(TheKey_playerFaction, playerTemplateName);
-	d.setAsciiString(TheKey_playerAllies, AsciiString::TheEmptyString);
-	d.setAsciiString(TheKey_playerEnemies, AsciiString::TheEmptyString);
-
-	addSide(&d);
-
-	AsciiString playerTeamName;
-	playerTeamName.set("team");
-	playerTeamName.concat(playerName);
-
-	d.clear();
-	d.setAsciiString(TheKey_teamName, playerTeamName);
-	d.setAsciiString(TheKey_teamOwner, playerName);
-	d.setBool(TheKey_teamIsSingleton, true);
-	addTeam(&d);
-}
+// ?addPlayerByTemplate@SidesList@@QAEXVAsciiString@@@Z exact retail body is
+// emitted by SidesListAddPlayerByTemplate.cpp.
 
 // ?validateSides@SidesList@@QAE_NXZ matched 1810 bytes (Open-BFME5)
 __declspec(naked) Bool SidesList::validateSides()
