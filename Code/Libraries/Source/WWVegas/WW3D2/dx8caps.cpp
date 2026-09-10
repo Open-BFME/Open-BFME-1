@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -1101,38 +1103,74 @@ bool DX8Caps::Is_Valid_Display_Format(int width, int height, WW3DFormat format)
 //
 // ----------------------------------------------------------------------------
 
+struct BFME_DX8Caps_VendorFields
+{
+	int maxDisplayWidth;
+	int maxDisplayHeight;
+	char padBeforeDXTC[0x139 - 8];
+	bool supportDXTC;
+	bool unused13a;
+	bool supportNPatches;
+	char padBeforeTextureFormats[0x13e - 0x13c];
+	bool supportTextureFormat[105];
+	char supportRenderToTextureFormat[0x64];
+	char padBeforeAnisotropic[0x270 - 0x20b];
+	bool supportAnisotropicFiltering;
+	bool supportModAlphaAddClr;
+	char padBeforeCanDoMultiPass[0x275 - 0x272];
+	bool canDoMultiPass;
+	bool isFogAllowed;
+	char padBeforeMaxTextures[0x278 - 0x277];
+	int maxTexturesPerPass;
+	char padBeforeDeviceId[0x288 - 0x27c];
+	unsigned deviceId;
+	char padBeforeVendorId[0x298 - 0x28c];
+	DX8Caps::VendorIdType vendorId;
+	char padBeforeCapsLog[0x2a4 - 0x29c];
+	StringClass capsLog;
+};
+
+#define BFME_DX8CAPS_VENDOR_FIELDS BFME_DX8Caps_VendorFields *retail = (BFME_DX8Caps_VendorFields *)this;
+#define MaxDisplayWidth retail->maxDisplayWidth
+#define MaxDisplayHeight retail->maxDisplayHeight
+#define SupportDXTC retail->supportDXTC
+#define SupportNPatches retail->supportNPatches
+#define SupportRenderToTextureFormat retail->supportRenderToTextureFormat
+#define SupportAnisotropicFiltering retail->supportAnisotropicFiltering
+#define SupportModAlphaAddClr retail->supportModAlphaAddClr
+#define CanDoMultiPass retail->canDoMultiPass
+#define IsFogAllowed retail->isFogAllowed
+#define MaxTexturesPerPass retail->maxTexturesPerPass
+#define DeviceId retail->deviceId
+#define VendorId retail->vendorId
+#undef DXLOG
+#define DXLOG(n) CapsWorkString.Format n; retail->capsLog+=CapsWorkString;
+
 // ?Vendor_Specific_Hacks@DX8Caps@@AAEXABU_D3DADAPTER_IDENTIFIER8@@@Z present-unmatched
 void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 {
-	if (VendorId==VENDOR_NVIDIA) 
-  {
+	BFME_DX8CAPS_VENDOR_FIELDS
+	if (VendorId==VENDOR_NVIDIA)
+	{
 		if (SupportNPatches) {
 			DXLOG(("NVidia Driver reported N-Patch support, disabling.\r\n"));
 		}
-		if (SupportTextureFormat[WW3D_FORMAT_DXT1]) {
+		if (retail->supportTextureFormat[100]) {
 			DXLOG(("Disabling DXT1 support on NVidia hardware.\r\n"));
 		}
 
-		SupportNPatches = false;	// Driver incorrectly report N-Patch support
-		SupportTextureFormat[WW3D_FORMAT_DXT1] = false;			// DXT1 is broken on NVidia hardware
+		bool supportDxt5 = retail->supportTextureFormat[104];
+		bool supportDxt3 = retail->supportTextureFormat[102];
+		bool supportDxt2 = retail->supportTextureFormat[101];
+		SupportNPatches = false;
+		retail->supportTextureFormat[100] = false;
+		_ReadWriteBarrier();
+		bool supportDxt4 = retail->supportTextureFormat[103];
 		SupportDXTC=
-			SupportTextureFormat[WW3D_FORMAT_DXT1]|
-			SupportTextureFormat[WW3D_FORMAT_DXT2]|
-			SupportTextureFormat[WW3D_FORMAT_DXT3]|
-			SupportTextureFormat[WW3D_FORMAT_DXT4]|
-			SupportTextureFormat[WW3D_FORMAT_DXT5];
-
-
-    if (DeviceId == DEVICE_NVIDIA_GEFORCE2_MX ||
-        DeviceId == DEVICE_NVIDIA_GEFORCE2_MX_400 )
-    {
-		  DXLOG(("Maximum screen resolution limited to 1024 x 768 on NVidia GeForce2 mx/mx400 cards\r\n"));			
-		  MaxDisplayWidth=1024;
-		  MaxDisplayHeight=768;
-    }
-
-
-
+			supportDxt5|
+			supportDxt4|
+			supportDxt3|
+			supportDxt2;
 	}
 
 	if (VendorId==VENDOR_MATROX) {
@@ -1153,9 +1191,7 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on Rage Pro\r\n"));
-			for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-				SupportRenderToTextureFormat[i]=false;
-			}
+			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
 		}
 
 		// Rage 128 Pro GL is used in ATI Rage Fury Maxx
@@ -1167,9 +1203,7 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on ATI Rage 128 Pro GL\r\n"));
-			for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-				SupportRenderToTextureFormat[i]=false;
-			}
+			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
 
 		}
 
@@ -1197,9 +1231,7 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			DeviceId==DEVICE_ATI_MOBILITY_R7500 ||
 			DeviceId==DEVICE_ATI_R7500) {
 			DXLOG(("Disabling render-to-texture on Radeon\r\n"));
-			for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-				SupportRenderToTextureFormat[i]=false;
-			}
+			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
 		}
 
 		// CAT-lab reported that selecting anisotorpic filtering on Radeon VE causes a lock up after a while
@@ -1226,9 +1258,7 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 
 		if (DeviceId==DEVICE_3DFX_VOODOO_3) {
 			DXLOG(("Disabling render-to-texture on Voodoo3\r\n"));
-			for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-				SupportRenderToTextureFormat[i]=false;
-			}
+			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
 		}
 	}
 

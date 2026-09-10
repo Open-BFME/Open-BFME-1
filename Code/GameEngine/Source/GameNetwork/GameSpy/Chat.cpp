@@ -33,6 +33,10 @@
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+#include "../../../../../reference/shims/peerdefs/GameNetwork/GameSpy/PeerDefs.h"
+#include "../../../../../reference/shims/nat/GameNetwork/GameSpy/PeerThread.h"
+#include "../../../../../reference/shims/peerdefs/GameNetwork/GameSpy/PeerDefsImplementation.h"
+
 #include "Common/AudioEventRTS.h"
 #include "Common/INI.h"
 #include "GameClient/GameText.h"
@@ -125,11 +129,7 @@ Color GameSpyColor[GSCOLOR_MAX] =
 // ?sendChat@GameSpyInfo@@ present-unmatched
 Bool GameSpyInfo::sendChat( UnicodeString message, Bool isAction, GameWindow *playerListbox )
 {
-	static UnicodeString s_prevMsg = UnicodeString::TheEmptyString;  //stop spam before it happens
-
-	RoomType roomType = StagingRoom;
-	if (getCurrentGroupRoom())
-		roomType = GroupRoom;
+	getCurrentGroupRoom();
 
 	PeerRequest req;
 	req.text = message.str();
@@ -140,13 +140,9 @@ Bool GameSpyInfo::sendChat( UnicodeString message, Bool isAction, GameWindow *pl
 	{
 		if (!playerListbox)
 		{	// Public message
-			if( isAction  ||  message.compare(s_prevMsg) != 0 )  //don't send duplicate messages
-			{
-				req.message.isAction = isAction;
-				req.peerRequestType = PeerRequest::PEERREQUEST_MESSAGEROOM;
-				TheGameSpyPeerMessageQueue->addRequest(req);
-				s_prevMsg = message;
-			}
+			req.message.isAction = isAction;
+			req.peerRequestType = PeerRequest::PEERREQUEST_MESSAGEROOM;
+			TheGameSpyPeerMessageQueue->addRequest(req);
 			return false;
 		}
 
@@ -157,13 +153,9 @@ Bool GameSpyInfo::sendChat( UnicodeString message, Bool isAction, GameWindow *pl
 
 		if (selections[0] == -1)
 		{	// Public message
-			if( isAction  ||  message.compare(s_prevMsg) != 0 )  //don't send duplicate messages
-			{
-				req.message.isAction = isAction;
-				req.peerRequestType = PeerRequest::PEERREQUEST_MESSAGEROOM;
-				TheGameSpyPeerMessageQueue->addRequest(req);
-				s_prevMsg = message;
-			}
+			req.message.isAction = isAction;
+			req.peerRequestType = PeerRequest::PEERREQUEST_MESSAGEROOM;
+			TheGameSpyPeerMessageQueue->addRequest(req);
 			return false;
 		}
 		else
@@ -199,11 +191,9 @@ Bool GameSpyInfo::sendChat( UnicodeString message, Bool isAction, GameWindow *pl
 				req.peerRequestType = PeerRequest::PEERREQUEST_MESSAGEPLAYER;
 				TheGameSpyPeerMessageQueue->addRequest(req);
 			}
-			s_prevMsg = message;
 			return true;
 		}
 	}
-	s_prevMsg = message;
 	return false;
 }
 
