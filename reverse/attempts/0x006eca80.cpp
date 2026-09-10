@@ -1,6 +1,5 @@
 // ?drawRemainingRectClock@W3DDisplay@@UAEXMMMMMK@Z
-// partial score=0.84 date=2026-09-10
-// ?drawRemainingRectClock@W3DDisplay@@UAEXMMMMMK@Z
+// partial score=0.90 date=2026-09-11
 // Retail RVA 0x006ECA80; W3DDisplay vtable slot +0xCC (after the matched
 // drawRectClock slot +0xC8).  The 544-byte body is the BFME radial remaining
 // clock variant: it clamps the percentage, builds an ellipse fan, and sends
@@ -8,6 +7,24 @@
 //
 // The two-pi data reference is a separate retail literal at VA 0x0111E36C;
 // it is pinned under g_bfmeDisplayTwoPi rather than being recreated locally.
+//
+// Fixed vs the 0.84 bank: the count-multiply/pop shape (fusing the K1266B
+// multiply into the bfmeMathVE cast expression keeps the ternary maxHalf
+// value resident across the fraction multiply, matching retail's deferred
+// "fstp st(0)" discard) and the zero1/zero2/zero3 store order (declare them
+// zero3,zero2,zero1 so the compiler's argument-order materialization comes
+// out ascending like retail's). ours=550B vs retail=544B, 117 non-reloc
+// diff bytes, first divergence now at +0x107: retail speculatively loads
+// dword ptr [esp+0x30] (previous.X) between the centerX/centerY register
+// loads that precede the do-while loop and keeps that one FPU register
+// resident across the whole loop for one of the two vertex-sum adds inside
+// the loop body (loop body itself is otherwise byte-exact); nothing tried
+// here (temp-variable reordering of the X/Y sum expressions, zero-struct
+// declaration order) reproduces that speculative preload. Ruled out:
+// reordering the countValue statements alone (three-statement form always
+// pops fraction immediately, regardless of maxHalf/fraction operand order);
+// a single fused maxHalf*fraction*K1266B expression (wrong operand order,
+// loads K1266B via fld first, 550B with an extra fld+fmul).
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned long UnsignedInt;
@@ -92,19 +109,18 @@ void W3DDisplay::drawRemainingRectClock(float startX, float startY, float width,
 	float angleRange = g_bfmeDisplayTwoPi;
 	angleRange *= fraction;
 	float maxHalf = (halfWidth > halfHeight) ? halfWidth : halfHeight;
-	float countValue = fraction;
-	countValue *= maxHalf;
-	countValue *= g_bfmeK1266B;
-	float countAsFloat = (float)bfmeMathVE((double)countValue);
+	float countValue = maxHalf;
+	countValue *= fraction;
+	float countAsFloat = (float)bfmeMathVE((double)(countValue * g_bfmeK1266B));
 	int count = floatToLong(countAsFloat);
 	float angleStep = angleRange / (float)count;
 	float angle = 0.0f;
 
 	if (count > 0)
 	{
-		BfmeVector2 zero1(0.0f, 0.0f);
-		BfmeVector2 zero2(0.0f, 0.0f);
 		BfmeVector2 zero3(0.0f, 0.0f);
+		BfmeVector2 zero2(0.0f, 0.0f);
+		BfmeVector2 zero1(0.0f, 0.0f);
 		BfmeVector2 center(centerX, centerY);
 
 		int i = count;
