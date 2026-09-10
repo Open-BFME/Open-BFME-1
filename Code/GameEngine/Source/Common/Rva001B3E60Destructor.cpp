@@ -39,10 +39,35 @@ class Rva001B3E60SecondBase
 {
 };
 
+class GeometryInfo
+{
+public:
+	GeometryInfo();
+
+private:
+	unsigned char m_bytes[0x5C];
+};
+
 class ClearanceTestingSlowDeathBehaviorModuleDataMember
 {
 public:
 	~ClearanceTestingSlowDeathBehaviorModuleDataMember();
+};
+
+class Rva001B3E60State
+{
+public:
+	Rva001B3E60State()
+		: m_0C(0)
+		, m_1C(0)
+	{
+	}
+
+	unsigned int m_0C;
+	unsigned int m_10;
+	unsigned int m_14;
+	unsigned int m_18;
+	unsigned int m_1C;
 };
 
 class Rva001B3E60
@@ -50,6 +75,7 @@ class Rva001B3E60
 	, public Rva001B3E60SecondBase
 {
 public:
+	Rva001B3E60();
 	~Rva001B3E60();
 
 	virtual void vslot00() { }
@@ -59,12 +85,25 @@ public:
 	virtual void vslot10() { }
 
 private:
-	unsigned char m_pad0C[0x14];
-	ClearanceTestingSlowDeathBehaviorModuleDataMember m_member;
-	unsigned char m_tail[0x5C];
+	Rva001B3E60State m_state;
+	GeometryInfo m_member;
+	unsigned int m_7C;
 };
+
+// @??0Rva001B3E60@@QAE@XZ 0x001B3CF0
+Rva001B3E60::Rva001B3E60()
+	: m_state()
+	, m_member()
+	, m_7C(0)
+{
+	m_state.m_10 = 0;
+	m_state.m_14 = 0;
+	m_state.m_18 = 0;
+}
 
 // @??1Rva001B3E60@@UAE@XZ 0x001B3E60
 Rva001B3E60::~Rva001B3E60()
 {
+	reinterpret_cast<ClearanceTestingSlowDeathBehaviorModuleDataMember *>(
+		&m_member)->~ClearanceTestingSlowDeathBehaviorModuleDataMember();
 }
