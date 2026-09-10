@@ -78596,6 +78596,7 @@ name,address,notes
 ?dispatch@BfmeCommandButtonDispatchILT@@QAEXPAX0@Z,0x00017A12,Command button callback dispatch incremental-link thunk used by the callback walk
 ?dispatch@BfmeRvaBA00View@@QAEXPAVBfmeRvaBA00Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BA00
 ?dispatch@BfmeRvaBB60View@@QAEXPAVBfmeRvaBB60Object@@H@Z,0x0002CE44,assigned-body helper for Rva0024BB60
+?dispatch@BfmeTransitionMD@@QAE_NPAVAsciiString@@_N@Z,0x00048351,retail ILT target called by HotKeyTranslator::translateGameMessage; g_bfmeTransitionMD at 0x012F4C7C supplies the receiver
 ?dispatch@Rva001FD120Dispatch@@QAEXPAVObject@@I@Z,0x00028AE2,"Root reviewed ILT28AE2 ->1FCE70/55 guarded AI victim dispatch; thiscall Object pointer and unused second32-bit argument, ret8"
 ?dispatch@Rva004791F0GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x00003148,route=0x004791F0; full22B real helper with optionaldelegate1DC and vslot4; caller47CA59
 ?dispatch@Rva00479210GameWindow@@QAE?AW4WindowMsgHandledType@@III@Z,0x0003D07D,route=0x00479210; full22B real helper with optionaldelegate1DC and vslot8; caller47CA19
@@ -79331,6 +79332,7 @@ name,address,notes
 ?friend_xferObjectID@@YAXPAVXfer@@PAW4ObjectID@@@Z,0x0000C9B4,ObjectID xfer ILT called by BridgeBehavior::xfer
 ?g_00861ed0@@YAXHHHHHHHHHHHHHHHHHHHHH@Z,0x00861ED0,Open-BFME5 address-derived name; direct call target of 0x00862460; 21 dword args; identity not asserted
 ?g_01075954@@3MC,0x01075954,accessor-batch external float
+?g_01076C24@@3MA,0x01076C24,Retail 0.01f progress scale; non-volatile spelling for clean range arithmetic; same object as established volatile spelling
 ?g_01076C24@@3MC,0x01076C24,Retail axis-scale 0.01f constant; raw bytes 0ad7233c independently checked
 ?g_0107C64C@@3MC,0x0107C64C,Retail axis-scale 1/255 float constant; raw bytes 8180803b independently checked
 ?g_AITNGuardAttackAggressorStateVTable@@3HA,0x0109B7A0,Direct retail primary AttackAggressorState vtable VA written at this+0; distinct from the shared secondary table
@@ -87020,8 +87022,6 @@ g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
 g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
-?dispatch@BfmeTransitionMD@@QAE_NPAVAsciiString@@_N@Z,0x00048351,retail ILT target called by HotKeyTranslator::translateGameMessage; g_bfmeTransitionMD at 0x012F4C7C supplies the receiver
-?g_01076C24@@3MA,0x01076C24,Retail 0.01f progress scale; non-volatile spelling for clean range arithmetic; same object as established volatile spelling
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??$__uninitialized_copy@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0000F5CE,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x003F7A20 generic copy
 ??$__copy_backward_ptrs@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0004368A,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x00450190 generic copy
