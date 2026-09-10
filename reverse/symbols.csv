@@ -48740,6 +48740,7 @@ name,address,notes
 ?b_00455dc0@@YAXXZ,0x00455DC0,gen-thunk body
 ?b_00455e20@@YAXXZ,0x00455E20,gen-thunk body
 ?b_00455ec0@@YAXXZ,0x00455EC0,gen-thunk body
+?positionStartSpots@@YAXVAsciiString@@QAPAVGameWindow@@PAV2@_N@Z,0x0003D901,BFME map preview helper thunk used by the GameInfo wrapper
 ?b_00455f60@@YAXXZ,0x00455F60,gen-thunk body
 ?b_004564a0@@YAXXZ,0x004564A0,gen-thunk body
 ?b_00456570@@YAXXZ,0x00456570,gen-thunk body
