@@ -65,15 +65,54 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
+class Object;
+
+class BfmeDelayedLuaEvent
+{
+public:
+	BfmeDelayedLuaEvent();
+	~BfmeDelayedLuaEvent();
+	unsigned char m_data[0x18];
+};
+
+class BfmeDelayedLuaEventListBase
+{
+public:
+	virtual ~BfmeDelayedLuaEventListBase() {}
+};
+
+class __declspec(novtable) DelayedLuaEventList : public BfmeDelayedLuaEventListBase
+{
+public:
+	DelayedLuaEventList();
+	__forceinline ~DelayedLuaEventList() {}
+	BfmeDelayedLuaEvent m_events[3];
+};
+
+class BfmeOwnerBR
+{
+public:
+	void bfmeGo939B(int, Object *, DelayedLuaEventList *);
+};
+
+extern BfmeOwnerBR *g_bfmeOwnerBR;
+
 class AIUpdateInterface
 {
 public:
 	void setCompletedWaypoint(const Waypoint *waypoint);
+	void bfmeSetCompletedWaypoint(const Waypoint *waypoint);
 
 	Locomotor *getCurLocomotor() const
 	{
 		return *(Locomotor **)((UnsignedByte *)this + 0x1CC);
 	}
+
+private:
+	unsigned char m_pad_000[0x08];
+	Object *m_object;
+	unsigned char m_pad_00C[0x13C - 0x0C];
+	const Waypoint *m_completedWaypoint;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -129,6 +168,15 @@ public:
 };
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
+
+// ?bfmeSetCompletedWaypoint@AIUpdateInterface@@QAEXPBVWaypoint@@@Z
+void AIUpdateInterface::bfmeSetCompletedWaypoint(const Waypoint *waypoint)
+{
+	m_completedWaypoint = waypoint;
+	DelayedLuaEventList events;
+	Object *object = m_object;
+	g_bfmeOwnerBR->bfmeGo939B(2, object, &events);
+}
 
 // ?getNextWaypoint@AIFollowWaypointPathState@@IAEPBVWaypoint@@XZ
 const Waypoint *AIFollowWaypointPathState::getNextWaypoint()
