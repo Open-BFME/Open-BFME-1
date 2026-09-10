@@ -1,11 +1,48 @@
 // ?bfmeOneCGF@BfmeOwnerCGF@@QAEXPAX@Z
-// partial score=0.9 date=2026-09-10
+// partial score=0.9 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // Open-BFME5: BfmeOwnerCGF::bfmeOneCGF at retail 0x003A01E0.
 // The 0x0001D4B2 thunk and the bfmeGoCGF and Rva0039B2B0 callers identify this
 // method. It transfers the 136-byte attribute entry held by this object.
+//
+// probe.py: ours=410B retail=437B, 274 non-reloc diffs, first at +0x38 (the
+// first 0x38 bytes match retail exactly, including the xferVersion call).
+// Two confirmed fixes over the prior 0.9 stash (author gpt-5, ours=443B,
+// 285 diffs):
+//   - `temporary` must be raw storage (UnsignedByte[sizeof(Gen00043699)]),
+//     not an automatic Gen00043699 local. The prior stash declared both
+//     `Gen00043699 temporary(0);` and `Gen00043699 entry;` as normal locals,
+//     which auto-constructs/destructs BOTH and emits two separate EH-state
+//     transitions; retail's disassembly has exactly ONE constructor call
+//     (0xffc67e87, relative) before the first isSaving() branch, reused
+//     again at the placement-new site inside the branch, so `temporary`'s
+//     lifetime must start only at `new (temporaryStorage) Gen00043699` and
+//     end only at the explicit `~Gen00043699()` call, never through
+//     automatic construction.
+//   - `source` must be assigned lazily, in an explicit `else { source =
+//     &entry; }` of the `if (xfer->isSaving())`, not eagerly initialized
+//     before the branch. Retail's `lea edi,[esp+0x18]` (the `&entry`
+//     computation) sits physically AFTER the isSaving()-true block's code,
+//     immediately before an unconditional `jmp` from the true block skips
+//     over it -- the textbook "then-block; jmp past; else-block; merge"
+//     layout of `if (cond) {..} else { source = &entry; }`. Initializing
+//     `source = &entry` unconditionally up front (as the prior stash did)
+//     computes that address too early and drops the sourced skip-over jump.
+// Still unresolved: retail keeps `owner` (this) in ebp for the whole
+// function and reserves ebx purely for the late `index` variable in the
+// closing linear-search loop (confirmed by grepping every ebx/ebp use in
+// the full retail disassembly -- ebx is untouched between the version-byte
+// scratch write near the top and `xor ebx,ebx` at the loop). Every source
+// variant tried here (this one, `index` at function scope vs. loop scope,
+// `register` on/off) instead puts `owner` in ebx and burns ebp as a
+// scratch zero register for one of the EH-state-slot stores, where retail
+// uses a bare immediate (`mov dword ptr [esp+0x130], 0`) with no register
+// at all. That register-preference difference, and a related instruction-
+// width difference in the EH state stores (retail narrows a later store of
+// the same slot to a single byte; ours does not), are unresolved and drive
+// most of the remaining 274 diffs.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
@@ -130,21 +167,29 @@ void BfmeOwnerCGF::bfmeOneCGF(void *what)
 	register BfmeOwnerCGF *owner = this;
 	BfmeVersion version = { 1, 1 };
 	xfer->xferVersion(&version);
-	Gen00043699 temporary(0);
+	// Raw storage, not a Gen00043699 local: an automatic Gen00043699 object
+	// here would auto-construct/destruct and add its own EH unwind state,
+	// but retail's disassembly shows exactly one constructor call before the
+	// branch (entry's), so this stays uninitialized bytes until the
+	// placement new below runs.
+	__declspec(align(4)) UnsignedByte temporaryStorage[sizeof(Gen00043699)];
 	Gen00043699 entry;
-	register Gen00043699 *source = &entry;
-	register int index;
+	register Gen00043699 *source;
 
 	if (xfer->isSaving())
 	{
 		if (owner->m_handle == BFME_NO_ATTRIBUTE_HANDLE)
 		{
 			owner->m_handle = bfmeInternAttributeEntry(
-				new (&temporary) Gen00043699);
-			temporary.~Gen00043699();
+				new (temporaryStorage) Gen00043699);
+			((Gen00043699 *)temporaryStorage)->~Gen00043699();
 		}
 
 		source = TheBfmeAttributePool.m_start + owner->m_handle;
+	}
+	else
+	{
+		source = &entry;
 	}
 
 	((Xfer *)xfer)->xferBool((char *)source + 0x80);
@@ -170,7 +215,7 @@ void BfmeOwnerCGF::bfmeOneCGF(void *what)
 			- TheBfmeAttributePool.m_start);
 		if (count > 0)
 		{
-			index = 0;
+			register int index = 0;
 			Gen00043699 *candidate = TheBfmeAttributePool.m_start;
 			do
 			{
