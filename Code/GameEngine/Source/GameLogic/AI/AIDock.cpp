@@ -846,52 +846,17 @@ void AIDockProcessDockState::setNextDockActionFrame()
 //----------------------------------------------------------------------------------------------
 StateReturnType AIDockProcessDockState::onEnter( void )
 {
-	__asm {
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 08Bh
-		_emit 04Eh
-		_emit 01Ch
-		_emit 0E8h
-		_emit 0B5h
-		_emit 0F6h
-		_emit 0EBh
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 074h
-		_emit 00Bh
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 0D2h
-		_emit 005h
-		_emit 0ECh
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 075h
-		_emit 007h
-		_emit 0B8h
-		_emit 0FEh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 05Eh
-		_emit 0C3h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 03Bh
-		_emit 030h
-		_emit 0ECh
-		_emit 0FFh
-		_emit 033h
-		_emit 0C0h
-		_emit 05Eh
-		_emit 0C3h
-	}
+	StateMachine *machine = bfmeRetailMachine( this );
+	Object *goalObject = machine->getGoalObject();
+	if( goalObject == NULL )
+		return STATE_FAILURE;
+
+	DockUpdateInterface *dock = goalObject->getDockUpdateInterface();
+	if( dock == NULL )
+		return STATE_FAILURE;
+
+	setNextDockActionFrame();
+	return STATE_CONTINUE;
 }
 
 //----------------------------------------------------------------------------------------------
