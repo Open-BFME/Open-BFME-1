@@ -78290,8 +78290,6 @@ name,address,notes
 ?copyFromQueueNode@BFMENetworkQueueItemcopyFromQueueNodeShim@@QAEXPAX@Z,0x00658CE0,BFMENetworkQueueItem::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
 ?copyP48@@YAPAUBfmeTerrainP48@@PAU1@00ABURandomAccessIteratorTag@@PAH@Z,0x00035B5C,TerrainLogic::reset P48 __copy ILT
 ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z,0x009AEEE0,Full488B callee: cdecl context/two buffer offsets/plane selector; YUV plane and stride dispatch confirmed
-?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B callee: cdecl eight arguments, stride/index/width/height and source/dest buffers; callback passed through unchanged"
-?copyPlane009AF0D0@@YAXPAURva009AF320Context@@IHIIPAE1P6AXXZ@Z,0x009AF0D0,"Full303B eight-argument cdecl plane helper; third argument is running numeric fragment index, not a pointer"
 ?copySurfaceRects006e@@YAXVW3DRadarResetSurface@@PBUBfmeRect@@01H@Z,0x00904D20,W3DDisplay drawImage direct-surface copy target read from retail REL32
 ?copyTeamReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x00011DDD,SET_TEAM_REFERENCE_TO_REFERNECE dispatch calls the canonical reference-copy body
 ?copyUnitReference@ScriptEngine@@QAEXABVAsciiString@@V2@@Z,0x0003CB50,SET_UNIT_REFERENCE_TO_REFERENCE dispatch calls the canonical reference-copy body
@@ -86973,3 +86971,6 @@ _ImmGetCandidateListW@16,0x009F8896,Parent PE import verified IMM32.dll!ImmGetCa
 ?QueryInterface@CD3DXSkinInfo@@UAGJABU_GUID@@PAPAX@Z,0x00a04ea7,vtable-slot ??_7CD3DXSkinInfo@@6B@ slot 0 anchors=24
 ?QueryInterface@CConstantTable@D3DXShader@@UAGJABU_GUID@@PAPAX@Z,0x00a56226,vtable-slot ??_7CConstantTable@D3DXShader@@6B@ slot 0 anchors=21
 ??1ManTheWallsSpecialPower@@UAE@XZ,0x0002147C,route=0x00268F30; primary vtable scalar wrapper calls this ILT which forwards through 0x00260B50 and ILT 0x0002041E to matched destructor 0x00268F30
+?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1PBI@Z,0x009AF0D0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
+?copyPlane009AF0D0@@YAXPAURva009AF320Context@@IHIIPAE1PBI@Z,0x009AF0D0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
+?Rva009ADAA0@@YAXPAURva009AF200Context@@PAE1IIHPBI@Z,0x009ADAA0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC

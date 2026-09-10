@@ -8,11 +8,11 @@ int *Rva009ACBA0SetupBounding(Rva009ACBA0Context *ctx, int flimit);
 
 extern int *g_rva01356A9C;
 extern int *(__cdecl *g_rva01356E64)(Rva009ACBA0Context *, int);
-extern void (__cdecl *g_rva01356AA0)();
-extern void (__cdecl *g_rva01356A98)();
+extern const unsigned int *g_rva01356AA0;
+extern const unsigned int *g_rva01356A98;
 
 struct Rva009AF320Context;
-void copyPlane009AF0D0(Rva009AF320Context *, unsigned, int, unsigned, unsigned, unsigned char *, unsigned char *, void (*)());
+void copyPlane009AF0D0(Rva009AF320Context *, unsigned, int, unsigned, unsigned, unsigned char *, unsigned char *, const unsigned int *);
 
 struct Rva009AF320Context
 {
