@@ -1,11 +1,15 @@
 // ?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.63 date=2026-09-10
+// partial score=0.70 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 //
-// BFME ScriptConditions area-body recovery.  The named sibling
-// bfmeAreaGate (0x0032C400) calls this body through ILT 0x0000C586.  The
-// first argument is the Condition cache (custom data/frame at +0x44/+0x48),
-// followed by the player and trigger Parameters.
+// BFME ScriptConditions area-body recovery. The named sibling bfmeAreaGate
+// (0x0032C400, matched) calls this body through ILT 0x0000C586 as
+// `!bfmeAreaBody(a, b, c)` with its own params in the same order, confirming
+// conditionParm=a, playerParm=b, triggerParm=c. The brief's callee count
+// (?ask@BfmeSubBIA getFinalOverride thunk, x5) is real: the kindOf loop must
+// call bfmeFinalTemplate(object) FRESH at each of 5 call sites (one null
+// check plus the four kindOf tests), not once into a cached local -- doing so
+// closed 93 of the 97 previously-missing bytes (603B -> 693B of 700B).
 
 #include "ObjectDlinkPmf.h"
 
@@ -14,35 +18,31 @@ typedef int Int;
 typedef unsigned short UnsignedShort;
 typedef unsigned int UnsignedInt;
 
-template <typename T> struct BfmeStringData
-{
-	Int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	T m_text[1];
-};
-
-template <typename T> class StringBase
+// This copy-construction shape is not a guess: it is copied verbatim from the
+// matched sibling caller bfmeAreaGate (BfmeScriptCondAreaGate.cpp), which does
+// the identical by-value AsciiString-from-reference construction and is
+// already byte-verified against retail.
+template <class T> class StringBase
 {
 	friend class AsciiString;
 
 private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase &other);
+	StringBase(const StringBase &);
 	~StringBase();
-
-protected:
-	BfmeStringData<T> *m_data;
 };
 
-class AsciiString : private StringBase<char>
+class AsciiString
 {
 public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
+	AsciiString(const AsciiString &that)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&that);
+	}
+	~AsciiString();
+
+private:
+	char *m_text;
 };
 
 class PolygonTrigger;
@@ -324,18 +324,15 @@ Bool ScriptConditions::bfmeAreaBody(Parameter *conditionParm,
 					teams.cur()->iterate_TeamMemberList();
 				!members.done(); members.advance()) {
 				Object *object = members.cur();
-				BfmeThingTemplate *templateObject =
-					reinterpret_cast<BfmeThingTemplate *>(
-						bfmeFinalTemplate(object));
-				if (!templateObject)
+				if (!bfmeFinalTemplate(object))
 					continue;
-				if ((templateObject->m_kindOf2 & 0x01000000) != 0)
+				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf2 & 0x01000000) != 0)
 					continue;
-				if ((templateObject->m_kindOf4 & 0x20) != 0)
+				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x20) != 0)
 					continue;
-				if ((templateObject->m_kindOf4 & 0x00800000) != 0)
+				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x00800000) != 0)
 					continue;
-				if ((templateObject->m_kindOf5 & 0x00002000) != 0)
+				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf5 & 0x00002000) != 0)
 					continue;
 				if (!bfmeObjectIsInside(object, trigger))
 					continue;
