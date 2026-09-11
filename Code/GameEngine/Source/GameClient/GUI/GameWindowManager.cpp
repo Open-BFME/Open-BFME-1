@@ -1829,10 +1829,25 @@ Int GameWindowManager::winDestroyAll( void )
 /** Sets selected window into a modal state.  This window will get
 	* put at the top of a modal stack */
 //-------------------------------------------------------------------------------------------------
-// ?winSetModal@GameWindowManager@@UAEHPAVGameWindow@@@Z present-unmatched
+// BFME allocates ModalWindow with the global heap.  The ZH pool shim makes the
+// implicit constructor and deleteInstance path out of line, while retail
+// inlines the three-word layout and deletes through its sole vtable slot.
+struct BfmeModalWindowLayout
+{
+	void *volatile vtable;
+	GameWindow *volatile window;
+	BfmeModalWindowLayout *volatile next;
+};
+
+class BfmeModalWindowDelete
+{
+public:
+	virtual ~BfmeModalWindowDelete();
+};
+
 Int GameWindowManager::winSetModal( GameWindow *window )
 {
-	ModalWindow *modal;
+	BfmeModalWindowLayout *modal;
 
 	if( window == NULL )
 		return WIN_ERR_INVALID_WINDOW;
@@ -1844,19 +1859,20 @@ Int GameWindowManager::winSetModal( GameWindow *window )
 		return WIN_ERR_INVALID_PARAMETER;			// return error if not
 	}
 	// Allocate new Modal Window Entry
-	modal = newInstance(ModalWindow);
-	if( modal == NULL )
+	modal = (BfmeModalWindowLayout *)::operator new( sizeof( BfmeModalWindowLayout ) );
+	if( modal != NULL )
 	{
-		DEBUG_LOG(( "WinSetModal: Unable to allocate space for Modal Entry." ));
-		return WIN_ERR_GENERAL_FAILURE;
+		// Put new entry at top of list
+		modal->vtable = (void *)0x010F77D0;
+		modal->window = window;
+		modal->next = (BfmeModalWindowLayout *)m_modalHead;
+		m_modalHead = (ModalWindow *)modal;
+
+		return WIN_ERR_OK;
 	}
 
-	// Put new entry at top of list
-	modal->window = window;
-	modal->next = m_modalHead;
-	m_modalHead = modal;
-
-	return WIN_ERR_OK;
+	DEBUG_LOG(( "WinSetModal: Unable to allocate space for Modal Entry." ));
+	return WIN_ERR_GENERAL_FAILURE;
 
 }  // end WinSetModal
 
@@ -1864,7 +1880,6 @@ Int GameWindowManager::winSetModal( GameWindow *window )
 /** pops window off of the modal stack.  If this window is not the top
 	* of the modal stack an error will occur. */
 //-------------------------------------------------------------------------------------------------
-// ?winUnsetModal@GameWindowManager@@UAEHPAVGameWindow@@@Z present-unmatched
 Int GameWindowManager::winUnsetModal( GameWindow *window )
 {
 	ModalWindow *next;
@@ -1885,7 +1900,7 @@ Int GameWindowManager::winUnsetModal( GameWindow *window )
 
 	// remove from top of list
 	next = m_modalHead->next;
-	m_modalHead->deleteInstance();
+	delete (BfmeModalWindowDelete *)m_modalHead;
 	m_modalHead = next;
 
 	return WIN_ERR_OK;
