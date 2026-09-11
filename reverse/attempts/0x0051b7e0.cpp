@@ -22,7 +22,7 @@ template <typename T> class StringBase
 	friend class AsciiString;
 
 private:
-	StringBase() {}
+	StringBase() : m_data( 0 ) {}
 	StringBase( const T *text );
 	~StringBase();
 
