@@ -126,35 +126,22 @@ void SidesInfo::init(const Dict* d)
 		m_dict = *d;
 }
 
-// ug, I hate having to overload stuff, but this makes it a lot easier to make copies safely
-// ??4SidesInfo@@QAEAAV0@ABV0@@Z present-unmatched
+class SidesInfoAssignmentTemp
+{
+	unsigned char m_pad[0x18];
+
+public:
+	SidesInfoAssignmentTemp *copyFrom(void *source);
+	void swapWith(SidesInfo *target);
+};
+
+// ??4SidesInfo@@QAEAAV0@ABV0@@Z
 SidesInfo& SidesInfo::operator=(const SidesInfo& that)
 {
-	if (this != &that)
-	{
-		this->clear();
-		this->m_dict = that.m_dict;
-
-		BuildListInfo* thisBLTail = NULL;
-		for (BuildListInfo* thatBL = that.m_pBuildList; thatBL; thatBL = thatBL->getNext())
-		{
-			BuildListInfo* thisBL = newInstance( BuildListInfo );	
-			*thisBL = *thatBL;
-			thisBL->setNextBuildList(NULL);
-
-			if (thisBLTail)
-				thisBLTail->setNextBuildList(thisBL);
-			else
-				this->m_pBuildList = thisBL;
-				
-			thisBLTail = thisBL;
-		}
-
-		if (that.m_scripts)
-			this->m_scripts = that.m_scripts->duplicate();
-		else
-			this->m_scripts = NULL;
-	}
+	SidesInfoAssignmentTemp temp;
+	SidesInfoAssignmentTemp *copy = temp.copyFrom((void *)&that);
+	copy->swapWith(this);
+	(reinterpret_cast<SidesInfo *>(&temp))->~SidesInfo();
 	return *this;
 }
 

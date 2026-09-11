@@ -78448,6 +78448,7 @@ name,address,notes
 ?copyFrom@BfmeTailF5@@QAEXPBU1@@Z,0x00887B60,Open-BFME5 tail copy callee of 0x0087F520
 ?copyFrom@DictPair@Dict@@QAEXPAU12@@Z,0x00013E94
 ?copyFrom@Rva006F8340String@@QAEXABV1@@Z,0x00887C90,AsciiString-shaped copy ctor
+?copyFrom@SidesInfoAssignmentTemp@@QAEPAV1@PAX@Z,0x001985E0,temporary copy helper used by SidesInfo assignment wrapper at 0x0019AFF0
 ?copyFromOverride@W3DSnowManager@@QAEXXZ,0x0002C36D,tail callee of W3DSnowManager::extraAfterFmod at 0x00725620
 ?copyFromQueueNode@BFMENetworkQueueItem1@@QAEXPAX@Z,0x00032F6A,native BFME queue item copy helper for wrapper queue +0x3c
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
@@ -84811,6 +84812,7 @@ name,address,notes
 ?swap@@YAXAAURva003569D0Proxy14@@0@Z,0x0004B3D5,alloc-proxy swap helper for Rva003569D0Blk
 ?swap@Rva00356830Blk@@QAEXAAV1@@Z,0x00040372
 ?swap@Rva003569D0Blk@@QAEXAAV1@@Z,0x0000EFE3
+?swapWith@SidesInfoAssignmentTemp@@QAEXPAVSidesInfo@@@Z,0x00196130,temporary swap helper used by SidesInfo assignment wrapper at 0x0019AFF0
 ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z,0x000329D4,Open-BFME7: incremental-link thunk for the real body at 0x0049E780 (int3-bounded start; reads m_currContext at +0x60 and m_currentSelectedDrawable at +0x5C); the ledger row for this name sits at 0x0049E901 which is inside that body
 ?tagAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF60,pin for Rva002E2970 applyNameFlags
 ?tail@Gen_00417cb0@@QAEXPAX@Z,0x00417A70,Open-BFME5 address-derived name; tail-jmp target of 0x00417CB0 via ILT 0x000294B5; identity not asserted
