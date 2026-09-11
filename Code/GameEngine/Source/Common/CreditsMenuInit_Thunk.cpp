@@ -1,418 +1,192 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME: BFME CreditsMenu initialization at retail 0x004C6C60.
+// The parent-window literal and the Credits audio event prove the callback
+// identity. The local views preserve BFME's vtable slots and retail ABI.
 
-class WindowLayout;
-void CreditsMenuInit(WindowLayout *, void *);
-// ?CreditsMenuInit@@YAXPAVWindowLayout@@PAX@Z
-__declspec(naked) void CreditsMenuInit(WindowLayout *, void *)
+typedef bool Bool;
+typedef int Int;
+
+#define TRUE true
+#define FALSE false
+
+enum NameKeyType
 {
-	__asm {
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x58
-		__emit 0x4b
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x36
-		__emit 0x96
-		__emit 0x02
-		__emit 0x01
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x78
-		__emit 0x6a
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x6d
-		__emit 0xf7
-		__emit 0xb3
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x60
-		__emit 0x12
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x10
-		__emit 0x6a
-		__emit 0x44
-		__emit 0xe8
-		__emit 0x94
-		__emit 0xb2
-		__emit 0x3b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x09
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0x7e
-		__emit 0xa8
-		__emit 0xb3
-		__emit 0xff
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0xa3
-		__emit 0x60
-		__emit 0x12
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x52
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x60
-		__emit 0x12
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x01
-		__emit 0xff
-		__emit 0x50
-		__emit 0x04
-		__emit 0x68
-		__emit 0x64
-		__emit 0xe0
-		__emit 0x0f
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0xe8
-		__emit 0xd3
-		__emit 0x1e
-		__emit 0x3c
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x04
-		__emit 0x24
-		__emit 0x85
-		__emit 0xc0
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x05
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x00
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xc2
-		__emit 0x40
-		__emit 0xb7
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x0c
-		__emit 0x24
-		__emit 0xa3
-		__emit 0x3c
-		__emit 0x39
-		__emit 0x2f
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x13
-		__emit 0x0c
-		__emit 0x3c
-		__emit 0x00
-		__emit 0xa1
-		__emit 0x3c
-		__emit 0x39
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x40
-		__emit 0x1b
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x50
-		__emit 0x6a
-		__emit 0x00
-		__emit 0xff
-		__emit 0x92
-		__emit 0xdc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8c
-		__emit 0x24
-		__emit 0x88
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x00
-		__emit 0xa3
-		__emit 0x40
-		__emit 0x39
-		__emit 0x2f
-		__emit 0x01
-		__emit 0xff
-		__emit 0x52
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x40
-		__emit 0x1b
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x15
-		__emit 0x40
-		__emit 0x39
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x52
-		__emit 0xff
-		__emit 0x90
-		__emit 0xb0
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x68
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x02
-		__emit 0xff
-		__emit 0x50
-		__emit 0x6c
-		__emit 0x68
-		__emit 0x58
-		__emit 0xe0
-		__emit 0x0f
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0xe8
-		__emit 0x36
-		__emit 0x1e
-		__emit 0x3c
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x02
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x88
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x61
-		__emit 0xe5
-		__emit 0xb5
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0xc6
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x04
-		__emit 0xe8
-		__emit 0x8a
-		__emit 0x0b
-		__emit 0x3c
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x0e
-		__emit 0x58
-		__emit 0xb6
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x68
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x50
-		__emit 0xff
-		__emit 0x52
-		__emit 0x44
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0xc7
-		__emit 0x84
-		__emit 0x24
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x50
-		__emit 0x01
-		__emit 0xb6
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x78
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x81
-		__emit 0xc4
-		__emit 0x84
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc3
+	NAMEKEY_INVALID = 0
+};
+
+class Shell
+{
+public:
+	Bool showShellMap(Bool useShellMap);
+};
+
+extern Shell *TheShell;
+
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase(const T *text);
+	void releaseBuffer();
+
+protected:
+	char *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->releaseBuffer();
 	}
+
+	const char *str() const
+	{
+		return m_data ? m_data + 8 : (const char *)0x0107388B;
+	}
+};
+
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+class CreditsManager
+{
+public:
+	CreditsManager();
+	virtual ~CreditsManager();
+	virtual void init();
+	virtual void load();
+	virtual void postProcessLoad();
+	virtual void reset();
+	virtual void update();
+	virtual void draw();
+
+private:
+	char m_unmodelled[0x40];
+};
+
+extern CreditsManager *TheCredits;
+
+class GameWindow
+{
+};
+
+static NameKeyType parentMainMenuID = NAMEKEY_INVALID;
+static GameWindow *parentMainMenu = 0;
+
+class WindowLayout
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void hide(Bool hidden);
+};
+
+class GameWindowManager
+{
+public:
+	virtual void slot00(); virtual void slot04();
+	virtual void slot08(); virtual void slot0C();
+	virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C();
+	virtual void slot20(); virtual void slot24();
+	virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34();
+	virtual void slot38(); virtual void slot3C();
+	virtual void slot40(); virtual void slot44();
+	virtual void slot48(); virtual void slot4C();
+	virtual void slot50(); virtual void slot54();
+	virtual void slot58(); virtual void slot5C();
+	virtual void slot60(); virtual void slot64();
+	virtual void slot68(); virtual void slot6C();
+	virtual void slot70(); virtual void slot74();
+	virtual void slot78(); virtual void slot7C();
+	virtual void slot80(); virtual void slot84();
+	virtual void slot88(); virtual void slot8C();
+	virtual void slot90(); virtual void slot94();
+	virtual void slot98(); virtual void slot9C();
+	virtual void slotA0(); virtual void slotA4();
+	virtual void slotA8(); virtual void slotAC();
+	virtual Int winSetFocus(GameWindow *window);
+	virtual void slotB4(); virtual void slotB8();
+	virtual void slotBC(); virtual void slotC0();
+	virtual void slotC4(); virtual void slotC8();
+	virtual void slotCC(); virtual void slotD0();
+	virtual void slotD4(); virtual void slotD8();
+	virtual GameWindow *winGetWindowFromId(GameWindow *parent, NameKeyType id);
+};
+
+extern GameWindowManager *TheWindowManager;
+
+class AudioEventRTS
+{
+public:
+	AudioEventRTS(const AsciiString &eventName, Int extra);
+	virtual void slot00();
+	~AudioEventRTS();
+	void setIsLogicalAudio(Bool enabled);
+
+private:
+	char m_unmodelled[0x6C];
+};
+
+class Rva005A00B0AudioClient
+{
+public:
+	virtual void slot00(); virtual void slot04();
+	virtual void slot08(); virtual void slot0C();
+	virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C();
+	virtual void slot20(); virtual void slot24();
+	virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34();
+	virtual void slot38(); virtual void slot3C();
+	virtual void slot40();
+	virtual void addAudioEvent(const AudioEventRTS *event);
+	virtual void slot48(); virtual void slot4C();
+	virtual void slot50(); virtual void slot54();
+	virtual void slot58(); virtual void slot5C();
+	virtual void slot60(); virtual void slot64();
+	virtual void slot68();
+	virtual void removeAudioEvent(Int, Int, Int);
+};
+
+extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+
+// ?CreditsMenuInit@@YAXPAVWindowLayout@@PAX@Z
+void CreditsMenuInit(WindowLayout *layout, void *)
+{
+	TheShell->showShellMap(FALSE);
+
+	if (TheCredits)
+		delete TheCredits;
+
+	TheCredits = new CreditsManager;
+	TheCredits->load();
+	TheCredits->init();
+
+	{
+		AsciiString name("CreditsMenu.wnd:ParentCreditsWindow");
+		parentMainMenuID = TheNameKeyGenerator->nameToKey(name.str());
+	}
+
+	parentMainMenu = TheWindowManager->winGetWindowFromId(0, parentMainMenuID);
+	layout->hide(FALSE);
+	TheWindowManager->winSetFocus(parentMainMenu);
+
+	TheAudioClientUpdate->removeAudioEvent(2, 1, 0);
+	AudioEventRTS event(AsciiString("Credits"), 2);
+	event.setIsLogicalAudio(TRUE);
+	TheAudioClientUpdate->addAudioEvent(&event);
 }
