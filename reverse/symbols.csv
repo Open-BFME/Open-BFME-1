@@ -1322,6 +1322,7 @@ name,address,notes
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UCastleUnpackCost@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0036E040,CastleBehavior unpack cost STLport map find body
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VModuleTemplate@ModuleFactory@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0000C054
 ??$find@W4NameKeyType@@@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@QBE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Const_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@1@ABW4NameKeyType@@@Z,0x0001CDEB
+??$find@W4ScienceType@@@?$_Rb_tree@W4ScienceType@@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Select1st@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@U?$less@W4ScienceType@@@3@V?$allocator@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ScienceType@@_N@_STL@@@2@@1@ABW4ScienceType@@@Z,0x000E7350,STLport ScienceType memo map find used by the recursive ScienceStore prerequisite helper
 ??$for_each@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@@_STL@@P6AXAAU?$pair@$$CBHUGen_t_00786db0_p12cd@@@2@@Z@_STL@@YAP6AXAAU?$pair@$$CBHUGen_t_00786db0_p12cd@@@0@@ZU?$_Ht_iterator@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00786db0_p12cd@@@_STL@@@2@@0@1P6AX0@Z@Z,0x00787260,owner destructor traversal pin
 ??$for_each@U?$_Ht_iterator@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@@_STL@@P6AXAAU?$pair@$$CBHUGen_t_00786e70_p12cd@@@2@@Z@_STL@@YAP6AXAAU?$pair@$$CBHUGen_t_00786e70_p12cd@@@0@@ZU?$_Ht_iterator@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00786e70_p12cd@@@_STL@@@2@@0@1P6AX0@Z@Z,0x007872F0,owner destructor traversal pin
 ??$insert_unique@U?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@_STL@@@?$_Rb_tree@PAURva001408C0Target@@PAU1@U?$_Identity@PAURva001408C0Target@@@_STL@@U?$less@PAURva001408C0Target@@@3@V?$allocator@PAURva001408C0Target@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@PAURva001408C0Target@@U?$_Const_traits@PAURva001408C0Target@@@_STL@@@1@0@Z,0x0003AFD0,AssetList set range-insert ILT to body 0x00140CA0
@@ -9483,9 +9484,9 @@ name,address,notes
 ??1TeamFactory@@UAE@XZ,0x00013502,ILT to the matched TeamFactory destructor at RVA 0x000F74C0
 ??1TeamPrototype@@MAE@XZ,0x00023641,route=0x000F6E40; actual TeamPrototype scalar wrapper F7580 calls canonical protected complete destructor through this ILT; campaign=36h-20260908-1018
 ??1TeamRelationMap@@UAE@XZ,0x00003661,ILT to the matched TeamRelationMap destructor at RVA 0x000F21C0
-??1TerrainTreeFinalizer@@QAE@XZ,0x0000E2FF,TerrainLogic destructor call at 0x001ADE24 targets the 12-byte tree finalizer ILT
 ??1TeamsInfo@@QAE@XZ,0x00008CBA,pinharvest x1 (thunk)
 ??1TensileFormationUpdateMember@@QAE@XZ,0x0003D2C1,TensileFormationUpdate member destructor call target
+??1TerrainTreeFinalizer@@QAE@XZ,0x0000E2FF,TerrainLogic destructor call at 0x001ADE24 targets the 12-byte tree finalizer ILT
 ??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1TextureMapperClass@@UAE@XZ,0x00921380,constructor 0x009645D0 installs vtable 0x0113BFB4 whose first slot is deleting wrapper 0x00921430; that wrapper directly calls this scalar body
 ??1TextureRef@@QAE@XZ,0x00975010,BfmeThingVGX texture-reference destructor call target
@@ -10741,6 +10742,7 @@ name,address,notes
 ?Create_Decal@MeshClass@@UAEXPAVDecalGeneratorClass@@_N@Z,0x0092de80,vtable-slot ??_7MeshClass@@6BRefCountClass@@@ slot 125 anchors=56
 ?Create_Device@DX8Wrapper@@KA_NXZ,0x0090AE60,retail call target for Set_Render_Device
 ?Create_New_Particles@ParticleEmitterClass@@AAEXABVQuaternion@@ABVVector3@@@Z,0x0097F930,rel32 pin for exact-ambiguous landing
+?Create_Render_Obj@@YAPAVRenderObjClass@@PBDMH@Z,0x00901F80,BFME cdecl scaled/recoloured overload proven by exact W3DDebrisDraw::setModelName and named ModelConditionInfo::validateCachedBones callers; both pass name plus scale plus color and consume a RenderObjClass pointer
 ?Create_Vertex_Buffer@DX8VertexBufferClass@@IAEXW4UsageType@1@@Z,0x0091E0C0,DX8VertexBufferClass ctor helper
 ?Cull@AABoxCollisionTestClass@@QAE_NABVVector3@@0@Z,0x0096A700
 ?Cull@OBBoxCollisionTestClass@@QAE_NABVVector3@@0@Z,0x0096A700,derived-ICF
@@ -10950,6 +10952,8 @@ name,address,notes
 ?Gen00525800@@YAHHH@Z,0x00525800,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
 ?Gen00530200@@YAXPAPAHHHPAHUQ3HeapCompare@@@Z,0x00530200,address-derived heap-adjust helper of the 9x4 heap-primitive grid; target read from the REL32 at its call sites and followed through its ILT thunk
 ?Gen005317B0@@YAXPAPAX0PAX@Z,0x005317B0,address-derived callee; target read from the REL32 at its call site in the DibSplit twin family
+?Gen00533650Final@@YAXPAXZZ,0x0000C71B,STLport final insertion helper called by Rva00533650
+?Gen00533650Intro@@YAXPAXZZ,0x00025B03,STLport introsort helper called by Rva00533650
 ?Gen00533760Final@@YAXPAXZZ,0x00031598,STLport final insertion helper called by Rva00533760
 ?Gen00533760Intro@@YAXPAXZZ,0x00038D8E,STLport introsort helper called by Rva00533760
 ?Gen0054BCA0@@YAHHH@Z,0x0054BCA0,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
@@ -13918,6 +13922,7 @@ name,address,notes
 ?addScience@Player@@AAE_NW4ScienceType@@@Z,0x00036057
 ?addSciencePurchasePoints@Player@@QAEXH@Z,0x0000F0F1
 ?addScorch@BaseHeightMapRenderObjClass@@QAEXVVector3@@MW4Scorches@@@Z,0x00047906
+?addShadow@W3DShadowManager@@QAEPAVShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@2@PAVDrawable@@@Z,0x007B76C0,canonical W3DShadowManager dispatcher body identified by its ILT 0x0002DCA4 and exact setModelName caller ABI; upstream W3DShadow declaration and source establish the render-object plus ShadowTypeInfo plus Drawable signature
 ?addShadowCore@BFMEShadowManagerLayout@@QAEPAVW3DProjectedShadow@@PAVW3DShadowTexture@@PAVRenderObjClass@@W4ShadowType@@_NMMHMMPAPAV2@3PAVDrawable@@3@Z,0x000193BC,retail projected-shadow 13-argument core ILT thunk
 ?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
 ?addString@FeslEchoMessage@@QAEXPBD0@Z,0x007E8A10,FESL string field writer
@@ -78692,6 +78697,7 @@ name,address,notes
 ?doFXPos@BridgeAreaEffectsFXShim@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,BridgeBehavior doAreaEffects retail call at 0x001F24BA uses BFME's four-argument FX position ABI
 ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z,0x0003E360
 ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,Open-BFME5 ILT to FXList four-arg doFXPos body 0x008280D0; same thunk as BridgeAreaEffectsFXShim::doFXPos
+?doFXPos@FXList@@SAXPBV1@PBUCoord3D@@PBVMatrix3D@@M1@Z,0x0001593D,route=0x001E0A80; BFME five-argument static positional wrapper named by the exact W3DDebrisDraw caller and the matched FXList static/member family
 ?doFXPos@StructureCollapseFXShim@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z,0x0001BB21,StructureCollapse doPhaseStuff BFME four-argument FX position call thunk
 ?doFreezeTime@ScriptEngine@@QAEXXZ,0x0001FDAC,ILT freeze
 ?doFxAtBones@FXListAtBonePosFXNugget@@IBEXPBVObject@@H@Z,0x00010CC6
@@ -81420,6 +81426,7 @@ name,address,notes
 ?getRva0058B590Value@Player@@QBEJH@Z,0x0001D287,address-derived Player value thunk called by the 0x0058B590 wrapper
 ?getSaveDirectory@GameState@@QBE?AVAsciiString@@XZ,0x0001F203,Open-BFME5 ILT thunk; ?getFilePathInSaveDirectory@GameState@@QBE?AVAsciiString@@ABV2@@Z at 0x0010F120 takes the directory from it by value before concatenating the leaf
 ?getSaveGameInfoFromFile@GameState@@QAE_NVAsciiString@@PAVSaveGameInfo@@@Z,0x00111980,BFME Bool ABI: addGameToAvailableList +0x4B calls ILT 0x000083D7 and tests AL; ILT resolves to reader body 0x00111980 while legacy QAEX row remains
+?getScale@Drawable@@QBE?BMXZ,0x00410E00,canonical const-return declaration in Drawable.h and source body in Drawable.cpp; retail body loads instance scale at this plus 0x1F8 and exact setModelName calls it through ILT 0x0003939C
 ?getScale@Drawable@@QBEMXZ,0x0003939C,route=0x00410E00; upstream W3DPropDraw reactToTransformChange call and body fld [ecx+0x1F8] prove Drawable scale getter
 ?getScienceFromInternalName@ScienceStore@@QAE?AW4ScienceType@@ABVAsciiString@@@Z,0x0004B36C,ILT thunk to the ScienceStore name lookup; identity from Zero Hour ScriptActions.cpp doPlayerGrantScience
 ?getSciencePurchaseCost@ScienceStore@@QBEHW4ScienceType@@@Z,0x00002BFD
@@ -82897,6 +82904,7 @@ name,address,notes
 ?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@UGen_lt_004e5d60@@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z,0x004E5130,zhstl_007 dup_4e5d60 stand-in instantiation; retail call target read from dup_4e5d60
 ?insert_unique@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@2@@Z,0x000296BD,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x0000ED2C, which is a different tree instantiation's body"
 ?insert_unique@?$_Rb_tree@W4Open2Key6148F0@@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@U?$_Select1st@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@3@U?$less@W4Open2Key6148F0@@@3@V?$allocator@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4Open2Key6148F0@@I@_STL@@@2@@2@U32@ABU?$pair@$$CBW4Open2Key6148F0@@I@2@@Z,0x00046A47,Open2 0x6148f0 map twin callee
+?insert_unique@?$_Rb_tree@W4ScienceType@@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Select1st@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@U?$less@W4ScienceType@@@3@V?$allocator@U?$pair@$$CBW4ScienceType@@_N@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4ScienceType@@_N@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4ScienceType@@_N@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4ScienceType@@_N@2@@Z,0x000E7930,STLport ScienceType memo map insert used by the recursive ScienceStore prerequisite helper
 ?insert_unique@Rva004255F0Map@@QAE?AURva004255F0InsertResult@@ABURva004255F0Record@@@Z,0x0002A6B2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x004255F0 calls; autopin
 ?insert_unique@Rva006AEE00Tree@@QAE?AUInsertResult@1@ABV?$StringBase@D@@@Z,0x0001BC02,Rva006AEE00::init tree insertion callee at retail 0x0001BC02
 ?insert_unique@Rva006AEE00Tree@@QAEXPAUInsertResult@1@ABV?$StringBase@D@@@Z,0x0001BC02,Rva006AEE00::init insertion output callee at retail 0x0001BC02
@@ -85242,14 +85250,17 @@ name,address,notes
 ?writeCacheINI@MapCache@@AAEX_N@Z,0x0000E2B4
 ?writeDefaultAlphaHeader@FXParticleSystem@@YAXPBXPAVFile@@PAI@Z,0x00008094,DefaultModuleTemplate alpha writer header ILT
 ?writeDefaultPhysicsHeader@FXParticleSystem@@YAXPBXPAVFile@@PAI@Z,0x00039AB8,DefaultModuleTemplate physics writer header ILT
+?writeDict@DataChunkOutput@@QAEXABVDict@@@Z,0x00045377,ObjectsList writer ILT to the matched DataChunkOutput dictionary writer
 ?writeDrawInfo@FXParticleSystem@@YAXAAVFile@@PBI@Z,0x0004618C,draw module info write thunk
 ?writeDrawTemplateBase@FXParticleSystem@@YAXPBXAAVFile@@PBI@Z,0x000460C9,draw module template base write thunk
 ?writeINI_part1@FXParticleSystem@@YAXPBXPAVFile@@PAI@Z,0x000460C9,DefaultModuleTemplate writeINI helper 1
 ?writeINI_part2@FXParticleSystem@@YAXPAVFile@@PAI@Z,0x0004618C,DefaultModuleTemplate writeINI helper 2
+?writeInt@DataChunkOutput@@QAEXH@Z,0x000092B4,ObjectsList writer ILT to the matched DataChunkOutput integer writer
 ?writeLANGameInfo@@YAXPBVLANGameInfo@@PADI@Z,0x00041579,LAN request game-info serializer thunk
 ?writePhysicsPair@FXParticleSystem@@YAXPAX0PBXPAURandomVariableWriteView@1@@Z,0x00033384,DefaultModuleTemplate VelocityDamping writer ILT
 ?writePhysicsScalar@FXParticleSystem@@YAXPAVINI@@PAXPBXPBM@Z,0x0001FC8A,DefaultModuleTemplate Gravity writer ILT
 ?writePhysicsVector@FXParticleSystem@@YAXPAVINI@@PAXPBXPBM@Z,0x000382E4,DefaultModuleTemplate DriftVelocity writer ILT
+?writeReal@DataChunkOutput@@QAEXM@Z,0x00014894,ObjectsList writer ILT to the matched DataChunkOutput real writer
 ?xfer@?$BitFlags@$0BN@@@QAEXPAVXfer@@@Z,0x000335BE,Open-BFME5 BitFlags<29>::xfer ILT thunk to body 0x001C41C0; exact 29-bit pack loop transfers a four-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z,0x00042AC3,Open-BFME5 BitFlags<11>::xfer ILT thunk to body 0x001C4150; exact 11-bit pack loop transfers a two-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
