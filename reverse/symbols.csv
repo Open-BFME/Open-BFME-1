@@ -83921,6 +83921,7 @@ name,address,notes
 ?releaseContents@Rva009A2030OwnedRecord@@AAEXXZ,0x009A1F90,this-relative helper the 0x009A2030 destructor calls before freeing its pair vector
 ?releaseD3DCursorTextures@W3DMouse@@AAE_NW4MouseCursor@Mouse@@@Z,0x000484C8,retail W3DMouse::setCursor DX8 release call; ILT targets body 0x00700530 whose loop releases the 21 surface/texture slots
 ?releaseData@Dict@@AAEXXZ,0x00014475
+??0?$_Vector_base@URva00196D90Element@@V?$allocator@URva00196D90Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva00196D90Element@@@1@@Z,0x00035B07,Rva00196D90 vector base allocation call target
 ?releaseDependentResources@BfmeShaderShutdown@@SAXXZ,0x0001BB30,first phase called by W3DShaderManager shutdown at 0x00717DA2
 ?releaseInto@MixFileInfoBuffer@@QAEXPAX@Z,0x003F6E10,Open-BFME5 the one-argument member FileInfoStruct's destructor calls on its first member; unnamed in the image
 ?releaseOwnedState@Rva007A1230ArrayOwner@@AAEXXZ,0x000490A3,address-derived cleanup ILT forwarding to 0x0079E4C0 from the destructor at 0x007A1230
