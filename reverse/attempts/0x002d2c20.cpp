@@ -1,5 +1,5 @@
 // ?d_002d2c20@@YAXXZ
-// partial score=0.75 date=2026-09-06
+// partial score=0.80 date=2026-09-11
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
 typedef unsigned int UnsignedInt;
@@ -50,11 +50,6 @@ struct BfmeFlagState
 	UnsignedInt m_index;
 };
 
-__forceinline UnsignedInt bfmeLookupFlag(UnsignedInt index)
-{
-	return g_bfmeFlagTable[index];
-}
-
 class Rva002D2C20Thing
 {
 public:
@@ -79,24 +74,22 @@ void Rva002D2C20Thing::update()
 	if (state->m_mode != 0)
 	{
 		callback->v13(state->m_index);
-		UnsignedInt bit = bfmeLookupFlag(state->m_index);
+		UnsignedInt bit = g_bfmeFlagTable[state->m_index];
 		UnsignedInt mask = 1U << (bit & 0x1f);
-		UnsignedInt *word = &owner->m_flags[bit >> 5];
-		if ((*word & mask) != 0)
+		if (0 != (mask & owner->m_flags[bit >> 5]))
 		{
-			*word &= ~mask;
+			owner->m_flags[bit >> 5] &= ~mask;
 			owner->bfmeApply1VNI();
 		}
 	}
 	else
 	{
 		callback->v12(state->m_index);
-		UnsignedInt bit = bfmeLookupFlag(state->m_index);
+		UnsignedInt bit = g_bfmeFlagTable[state->m_index];
 		UnsignedInt mask = 1U << (bit & 0x1f);
-		UnsignedInt *word = &owner->m_flags[bit >> 5];
-		if ((*word & mask) == 0)
+		if ((owner->m_flags[bit >> 5] & mask) == 0)
 		{
-			*word |= mask;
+			owner->m_flags[bit >> 5] |= mask;
 			owner->bfmeApply1VNI();
 		}
 	}
