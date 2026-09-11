@@ -30,6 +30,15 @@
 //     statement boundaries; every placement that moved anything moved it away
 //     from retail.
 //
+// Also ruled out (2026-09-11, identical 8-byte diff both times):
+//   * pre-materializing the erase argument into its own pointer local
+//     (`void **pkey = &key;` taken before the count store, key=p written
+//     after, `bfmeEraseLB(pkey)`) -- the this-load still lands after the
+//     count store;
+//   * spelling the count store as a raw pointer cast
+//     (`*(int *)((char *)entry + 8) = 0;`) instead of the field access --
+//     identical codegen.
+//
 // The measured rule behind all of it: MSVC 7.1 inserts the thiscall `mov ecx`
 // immediately before the LAST pending statement of the block. With no pending
 // statement (the find call site) it lands right after the argument push, which
