@@ -1,10 +1,18 @@
-// ?update@RousingSpeechUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.92 date=2026-09-10
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// RousingSpeechUpdate::update, retail 0x00265030, 223 bytes.
+// UpdateInterface::update is reached through the secondary vtable at
+// primary_this+0x10 (the FloatUpdate::update convention); j_000087a6 clears
+// the speech-object list on the primary object each call. On first entry it
+// stamps a wake deadline from TheBfmeGameLogic->m_frame and the module's
+// wake delay, then advances an animation frame counter each tick until the
+// deadline passes, at which point it clears Object model-condition bit 0x10
+// via notifyModelConditionChanged and sleeps forever.
 
 enum UpdateSleepTime
 {
-	UpdateSleepTimeDone = 0x3fffffff
+	UPDATE_SLEEP_INVALID = 0,
+	UPDATE_SLEEP_NONE = 1,
+	UPDATE_SLEEP_FOREVER = 0x3fffffff
 };
 
 class Object
@@ -26,7 +34,7 @@ public:
 	unsigned int m_frame;
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheBfmeGameLogic;
 
 class RousingSpeechUpdateModuleData
 {
@@ -99,11 +107,8 @@ UpdateSleepTime RousingSpeechUpdate::update()
 		primary->onObjectCreated();
 		RousingSpeechUpdateModuleData *moduleData =
 			*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c);
-		const unsigned int *wakeField = &moduleData->m_wakeDelay;
-		unsigned int wakeDelay = *wakeField;
-		GameLogic *gameLogic = TheBfmeGameLogic;
-		wakeDelay += gameLogic->m_frame;
-		*reinterpret_cast<unsigned int *>(secondary + 0xdc) = wakeDelay;
+		*reinterpret_cast<unsigned int *>(secondary + 0xdc) =
+			moduleData->m_wakeDelay + TheBfmeGameLogic->m_frame;
 		secondary[0xe0] = 1;
 	}
 
@@ -138,5 +143,5 @@ UpdateSleepTime RousingSpeechUpdate::update()
 		notifyCast.asVoid = (void *)j_0002191d;
 		(object->*notifyCast.asMember)();
 	}
-	return UpdateSleepTimeDone;
+	return UPDATE_SLEEP_FOREVER;
 }
