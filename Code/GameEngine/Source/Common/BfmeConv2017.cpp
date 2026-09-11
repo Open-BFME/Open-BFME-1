@@ -103,6 +103,7 @@ public:
 	virtual void bfmeSlot69EBA();
 	virtual void bfmeSlot70EBA();
 	virtual void bfmeSelectEBA(int id);
+	virtual void bfmeSelectSlot72E5B(int id);
 };
 
 extern GameSpyInfo *TheGameSpyInfo;
@@ -124,5 +125,22 @@ void __stdcall bfmeSelectByNameEBA(int value)
 			if (id != TheGameSpyInfo->bfmeCurrentEBA())
 				TheGameSpyInfo->bfmeSelectEBA(id);
 		}
+	}
+}
+
+// The original callback spelling is not exposed by any named caller.  Its
+// GameSpyInfo receiver and slot are fixed by the matched family at 0052E4C0.
+void __stdcall bfmeSelectByNameE5B(int value)
+{
+	BfmeUStrEBA text;
+
+	text.bfmeSetEBA(bfmeFormatEBA(value));
+
+	if (text.m_bfmeDataEBA != 0 && text.m_bfmeDataEBA->m_bfmeLenEBA != 0)
+	{
+		BfmeRecEBA *rec = bfmeLookupEBA(&text);
+
+		if (rec != 0)
+			TheGameSpyInfo->bfmeSelectSlot72E5B(rec->m_bfmeIdEBA);
 	}
 }
