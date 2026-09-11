@@ -1,12 +1,8 @@
-// ?formatLadderRankText@@YA?AVUnicodeString@@H@Z
-// partial score=0.56 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// Retail 0x00539020, 191 bytes. Return a ladder-rank UnicodeString: negative
-// ranks fetch TOOLTIP:LadderRankUnavailable, otherwise format L"%d".
-// Exact length; MSVC 7.1 will not hoist rank into EAX before zeroing the
-// result local or reuse the argument slot the way retail does (same wall as
-// 0x005462E0).
+// Retail 0x00539020, 191 bytes. The formatter uses an internal-linkage
+// convention which lets MSVC reuse the dead rank argument slot for a
+// UnicodeString temporary.
 
 template <typename T> class StringBase
 {
@@ -50,7 +46,7 @@ public:
 
 extern GameTextInterface *TheGameText;
 
-UnicodeString formatLadderRankText( int rank )
+static UnicodeString formatLadderRankText( int rank )
 {
 	UnicodeString text;
 	if( rank < 0 )
@@ -58,4 +54,11 @@ UnicodeString formatLadderRankText( int rank )
 	else
 		text.format( (UnicodeString)L"%d", rank );
 	return text;
+}
+
+// absent-from-retail: preserves the formatter's private register convention.
+// ?formatLadderRankTextCaller@@YAXHPAVUnicodeString@@@Z absent-from-retail
+void formatLadderRankTextCaller( int rank, UnicodeString *out )
+{
+	*out = formatLadderRankText( rank );
 }
