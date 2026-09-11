@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "67aa69a45943d4dbb92befcab84aff5479fab3c73a93057c2e895239e0cf626e",
+  "symbol": "??0W3DTruckDrawModuleData@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ??0W3DTruckDrawModuleData@@QAE@XZ\n// partial score=0.92 date=2026-09-11\nstruct BfmeAsciiString0077F830\n{\n\tunsigned int m_data;\n\tBfmeAsciiString0077F830() : m_data(0) {}\n};\n\nclass W3DModelDrawModuleData\n{\n\tchar m_bfmeBase[0x158];\n\npublic:\n\tW3DModelDrawModuleData();\n\tvirtual ~W3DModelDrawModuleData();\n};\n\nclass W3DTruckDrawModuleData : public W3DModelDrawModuleData\n{\n\tBfmeAsciiString0077F830 m_string[21];\n\tfloat m_one0;\n\tfloat m_one1;\n\tfloat m_one2;\n\tfloat m_one3;\n\tfloat m_zero;\n\npublic:\n\tW3DTruckDrawModuleData();\n\tvirtual ~W3DTruckDrawModuleData();\n};\n\nW3DTruckDrawModuleData::W3DTruckDrawModuleData()\n{\n\tm_zero = 0.0f;\n\tm_one0 = 1.0f;\n\tm_one1 = 1.0f;\n\tm_one2 = 1.0f;\n\tm_one3 = 1.0f;\n}\n"
+}
