@@ -1,400 +1,179 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-enum CrushEnum {};
-class Object;
-CrushEnum crushLocationCheck(Object *, Object *);
+typedef float Real;
+
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+enum CrushEnum
+{
+	TOTAL_CRUSH,
+	BACK_END_CRUSH,
+	FRONT_END_CRUSH,
+	NO_CRUSH
+};
+
+class Thing
+{
+public:
+	const Coord3D *getUnitDirectionVector2D() const;
+};
+
+class BodyModuleInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual bool getFrontCrushed() const = 0;
+	virtual bool getBackCrushed() const = 0;
+};
+
+class GeometryInfo
+{
+public:
+	Real getMajorRadius() const
+	{
+		return m_majorRadius;
+	}
+
+private:
+	char m_padding[0x10];
+	Real m_majorRadius;
+};
+
+class Object : public Thing
+{
+public:
+	BodyModuleInterface *getBodyModule() const
+	{
+		return *(BodyModuleInterface **)((char *)this + 0x200);
+	}
+
+	const Coord3D *getPosition() const
+	{
+		return (const Coord3D *)((char *)this + 0x38);
+	}
+
+	const GeometryInfo &getGeometryInfo() const
+	{
+		return *(const GeometryInfo *)((char *)this + 0xAC);
+	}
+};
 
 // ?crushLocationCheck@@YA?AW4CrushEnum@@PAVObject@@0@Z
-__declspec(naked) CrushEnum crushLocationCheck(Object *, Object *)
+__declspec(noinline) static CrushEnum crushLocationCheck(Object *crusherObject,
+	Object *victimObject)
 {
-	__asm {
-		__emit 0x83
-		__emit 0xec
-		__emit 0x20
-		__emit 0x85
-		__emit 0xff
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x6b
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x63
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x00
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x53
-		__emit 0xff
-		__emit 0x50
-		__emit 0x4c
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x00
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x8a
-		__emit 0xd8
-		__emit 0xff
-		__emit 0x52
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xce
-		__emit 0x88
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0b
-		__emit 0xe8
-		__emit 0x6c
-		__emit 0xb8
-		__emit 0xde
-		__emit 0xff
-		__emit 0xd9
-		__emit 0x86
-		__emit 0xbc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x84
-		__emit 0xdb
-		__emit 0xdc
-		__emit 0x0d
-		__emit 0xf0
-		__emit 0xb3
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x38
-		__emit 0xba
-		__emit 0x03
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xd8
-		__emit 0x08
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xd8
-		__emit 0x48
-		__emit 0x04
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x05
-		__emit 0xb4
-		__emit 0x2b
-		__emit 0x0b
-		__emit 0x01
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x9b
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8a
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0b
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x36
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x8b
-		__emit 0xc1
-		__emit 0x8b
-		__emit 0x10
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x38
-		__emit 0x8b
-		__emit 0x50
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x40
-		__emit 0x08
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x3c
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x33
-		__emit 0xd2
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xd8
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0xc2
-		__emit 0xd8
-		__emit 0xcb
-		__emit 0xde
-		__emit 0xc1
-		__emit 0xdd
-		__emit 0xda
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x8b
-		__emit 0xc1
-		__emit 0x8b
-		__emit 0x30
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x70
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x40
-		__emit 0x08
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xd9
-		__emit 0xc9
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x38
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x3c
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xde
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xde
-		__emit 0xc1
-		__emit 0xd9
-		__emit 0x54
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0x7a
-		__emit 0x10
-		__emit 0x8a
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0b
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x84
-		__emit 0xc0
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x74
-		__emit 0x64
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x8a
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0b
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x61
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x41
-		__emit 0x04
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0x8b
-		__emit 0x49
-		__emit 0x08
-		__emit 0xd9
-		__emit 0xc9
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x38
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0x67
-		__emit 0x3c
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xd8
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xde
-		__emit 0xc1
-		__emit 0xd8
-		__emit 0xda
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x7a
-		__emit 0x18
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x84
-		__emit 0xdb
-		__emit 0x0f
-		__emit 0x94
-		__emit 0xc2
-		__emit 0x5b
-		__emit 0x5e
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x20
-		__emit 0xc3
-		__emit 0xba
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xeb
-		__emit 0x9f
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x20
-		__emit 0xc3
-		__emit 0xb8
-		__emit 0x03
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x20
-		__emit 0xc3
+	if ((crusherObject == 0) || (victimObject == 0))
+		return NO_CRUSH;
+
+	bool frontCrushed = victimObject->getBodyModule()->getFrontCrushed();
+	bool backCrushed = victimObject->getBodyModule()->getBackCrushed();
+	const Coord3D *otherDir = victimObject->getUnitDirectionVector2D();
+	const Coord3D *pos = crusherObject->getPosition();
+	const Coord3D *otherPos = victimObject->getPosition();
+
+	Real crushPointOffsetDistance = victimObject->getGeometryInfo().getMajorRadius() * 0.5;
+
+	Coord3D crushPointOffset;
+	crushPointOffset.x = otherDir->x * crushPointOffsetDistance;
+	crushPointOffset.y = otherDir->y * crushPointOffsetDistance;
+	crushPointOffset.z = 0;
+
+	Coord3D comparisonCoord;
+	Real dx, dy;
+
+	CrushEnum retval = NO_CRUSH;
+	Real bestDist = 99999;
+
+	if (!frontCrushed && !backCrushed)
+	{
+		comparisonCoord = *otherPos;
+
+		dx = comparisonCoord.x - pos->x;
+		dy = comparisonCoord.y - pos->y;
+		Real dist = (Real)(dx * dx + dy * dy);
+
+		retval = TOTAL_CRUSH;
+		bestDist = dist;
 	}
+
+	if (!frontCrushed)
+	{
+		comparisonCoord = *otherPos;
+		comparisonCoord.x += crushPointOffset.x;
+		comparisonCoord.y += crushPointOffset.y;
+
+		dx = comparisonCoord.x - pos->x;
+		dy = comparisonCoord.y - pos->y;
+		Real dist = (Real)(dx * dx + dy * dy);
+
+		if (dist < bestDist)
+		{
+			if (backCrushed)
+			{
+				retval = TOTAL_CRUSH;
+				bestDist = dist;
+			}
+			else
+			{
+				retval = FRONT_END_CRUSH;
+				bestDist = dist;
+			}
+		}
+	}
+
+	if (!backCrushed)
+	{
+		comparisonCoord = *otherPos;
+		comparisonCoord.x -= crushPointOffset.x;
+		comparisonCoord.y -= crushPointOffset.y;
+
+		dx = comparisonCoord.x - pos->x;
+		dy = comparisonCoord.y - pos->y;
+		Real dist = (Real)(dx * dx + dy * dy);
+
+		if (dist < bestDist)
+		{
+			if (frontCrushed)
+			{
+				retval = TOTAL_CRUSH;
+				bestDist = dist;
+			}
+			else
+			{
+				retval = BACK_END_CRUSH;
+				bestDist = dist;
+			}
+		}
+	}
+
+	return retval;
+}
+
+__declspec(noinline) CrushEnum forceCrushLocationCheck(Object *crusherObject,
+	Object *victimObject)
+{
+	return crushLocationCheck(crusherObject, victimObject);
 }
