@@ -1,41 +1,74 @@
 // ?xfer@AttributeModifierPoolUpdate@@MAEXPAVXfer@@@Z
-// partial score=0.78 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// partial score=0.85 date=2026-09-11
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/GameEngine/Source
 // stlport
 
-#include "../../../Common/System/xfer.h"
+// Identity from the AttributeModifierPoolUpdate vtable at 0x010E92DC slot 3
+// and the sibling field layouts in AttributeModifierPoolUpdateConstructor.cpp
+// and AttributeModifierPoolUpdate_bfmeGetBonus.cpp: m_modifiers begins at
+// this+0x20, m_maxFrame at +0x2c, the two 7-entry UnsignedInt arrays at
+// +0x30 and +0x4c. UpdateModule's own layout (vtable + PB_DeepBase fields +
+// two interface vtables + three ints) totals 0x20 bytes.
+
+#include "Common/System/xfer.h"
+#include "StringInline.h"
 #include <vector>
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+class Thing;
+class ModuleData;
+class Object;
 
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
+class PB_DeepBase
 {
 public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
+	PB_DeepBase( Thing *, const ModuleData * );
+	virtual ~PB_DeepBase();
+
+protected:
+	void *m_f04;
+	Object *m_object;
 };
 
-class UpdateModule
+class PB_BehaviorModuleInterface
 {
+public:
+	virtual void behaviorModuleInterfaceAnchor() = 0;
+};
+
+class PB_UpdateModuleInterface
+{
+public:
+	virtual void updateModuleInterfaceAnchor() = 0;
+};
+
+class UpdateModule : public PB_DeepBase,
+	public PB_BehaviorModuleInterface,
+	public PB_UpdateModuleInterface
+{
+public:
+	UpdateModule( Thing *thing, const ModuleData *moduleData )
+		: PB_DeepBase( thing, moduleData ),
+		  m_f14( 0 ),
+		  m_f18( -1 ),
+		  m_f1c( -1 )
+	{
+	}
+
 protected:
 	virtual void xfer( Xfer *xfer );
 
-	unsigned char m_unreconstructed[ 0x1C ];
+	unsigned int m_f14;
+	int m_f18;
+	int m_f1c;
 };
 
+// The nameKey field xfers through Xfer::operator==(int&), not the unsigned
+// overload: NameKeyType is a plain int in this tree, and the two overloads
+// sit at different vtable slots (0x78 vs 0x74), so the wrong one is a real
+// codegen difference, not cosmetic.
 struct AttributeModifierEntry
 {
-	unsigned int m_nameKey;
+	int m_nameKey;
 	AsciiString m_name;
 	unsigned int m_expirationFrame;
 	unsigned int m_unknown;
@@ -73,8 +106,7 @@ void AttributeModifierPoolUpdate::xfer( Xfer *xfer )
 		*xfer == count;
 		for ( int index = 0; index < count; ++index )
 		{
-			AsciiString empty( "" );
-			AttributeModifierEntry entry( empty );
+			AttributeModifierEntry entry( AsciiString( "" ) );
 
 			*xfer == entry.m_nameKey;
 			if ( version.data[ 1 ] >= 3 )
