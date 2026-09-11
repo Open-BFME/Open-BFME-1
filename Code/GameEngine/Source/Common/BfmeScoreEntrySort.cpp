@@ -4,12 +4,18 @@
 
 class Team;
 
+enum Relationship
+{
+	RELATIONSHIP_ALLIES = 2
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
 {
 public:
-	int getRelationship( const Team *that ) const;
+	Relationship getRelationship( const Team *that ) const;
 	bool isPlayerDead( void ) const;
+	Team *getDefaultTeam( void ) const { return m_team; }
 
 public:
 	char m_pad[ 0x230 ];
@@ -110,4 +116,34 @@ template void __adjust_heap<BfmeScoreEntry *, int, BfmeScoreEntry,
 	BfmeScoreEntryLess>( BfmeScoreEntry *, int, int, BfmeScoreEntry,
 	BfmeScoreEntryLess );
 
+}
+
+// ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z
+bool BfmeScoreEntryLess::operator()( const BfmeScoreEntry *left,
+	const BfmeScoreEntry *right ) const
+{
+	bool leftWon = TheVictoryConditions->hasAchievedVictory( left->m_player );
+	bool rightWon = TheVictoryConditions->hasAchievedVictory( right->m_player );
+	if( (leftWon ^ rightWon) != 0 )
+		return leftWon;
+
+	if( left->m_player->getRelationship( right->m_player->getDefaultTeam() ) ==
+			RELATIONSHIP_ALLIES &&
+		left->m_player->getRelationship( right->m_player->getDefaultTeam() ) ==
+			RELATIONSHIP_ALLIES )
+	{
+		unsigned char leftDead = right->m_player->isPlayerDead();
+		unsigned char rightDead = left->m_player->isPlayerDead();
+		leftDead ^= rightDead;
+		// Both callees return bool, so their exclusive-or is necessarily 0 or 1.
+		// Keeping that invariant explicit preserves the retail byte-register choice.
+		__assume( leftDead <= 1 );
+		if( leftDead )
+			return !left->m_player->isPlayerDead();
+		return left->m_primary > right->m_primary;
+	}
+
+	if( left->m_secondary != right->m_secondary )
+		return left->m_secondary > right->m_secondary;
+	return left->m_object->m_order < right->m_object->m_order;
 }
