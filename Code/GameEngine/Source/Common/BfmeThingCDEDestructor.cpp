@@ -18,6 +18,7 @@ class CDELeading
 {
 public:
 	virtual void f0();
+	virtual void f1();
 };
 
 class CDEProvider : public CDELeading, public virtual CDEVirtualBase
@@ -39,6 +40,7 @@ public:
 class BfmeThingCDE
 {
 public:
+	bool bfmeCheckABI();
 	void bfmeDtorCDE();
 	void d_008f7990();
 	void d_008f7ec0();
@@ -51,6 +53,18 @@ public:
 	CDELinkNode *m_prev;
 	CDELinkNode *m_next;
 	void *m_array;
+	int m_count;
+	int m_values[16];
+	int m_slots[16];
+	unsigned char m_status[16];
+	int m_bfmeB4;
+	int m_bfmeB8;
+	int m_bfmeBC;
+	int m_bfmeC0;
+	int m_bfmeA[2];
+	unsigned int m_bfmeC[2];
+	unsigned int m_bfmeB[2];
+	unsigned char m_bfmeDC;
 };
 
 #pragma comment(linker, "/alternatename:?d_008f7990@BfmeThingCDE@@QAEXXZ=?d_008f7990@@YAXXZ")
@@ -59,6 +73,46 @@ public:
 
 void __stdcall ArrayDeleteHelperBodyThunk(void *, unsigned, unsigned, void *);
 extern void __cdecl operator delete[](void *);
+
+bool BfmeThingCDE::bfmeCheckABI()
+{
+	d_008f7990();
+
+	if (m_ptr8 == 0)
+		return false;
+
+	unsigned int i = 0;
+	int *value = &m_values[1];
+
+	for (; i < 16; i += 4, value += 4)
+	{
+		if (m_status[i] && value[-1] == 3)
+			break;
+		if (m_status[i + 1] && value[0] == 3)
+		{
+			++i;
+			break;
+		}
+		if (m_status[i + 2] && value[1] == 3)
+		{
+			i += 2;
+			break;
+		}
+		if (m_status[i + 3] && value[2] == 3)
+		{
+			i += 3;
+			break;
+		}
+	}
+
+	if (i == 16)
+		return false;
+
+	m_ptr4->f3(0);
+	m_ptr4 = 0;
+	((CDELeading *)m_ptr8)->f1();
+	return true;
+}
 
 void BfmeThingCDE::bfmeDtorCDE()
 {
