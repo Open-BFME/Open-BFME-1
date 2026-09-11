@@ -83872,6 +83872,7 @@ name,address,notes
 ?releaseBuffer@?$BFMERetailStringBase@D@@AAEXXZ,0x00887940,WeaponFireSpecialAbilityUpdate special-weapon string release body
 ?releaseBuffer@?$NATProbeStringBase@D@@IAEXXZ,0x00887940,NAT sendAProbe string release body
 ?releaseBuffer@?$StringBase@D@@AAEXXZ,0x00887940,Canonical private StringBase<char> releaseBuffer; matched134B real body in WWLib/string_base.cpp; target3C0110 direct call
+?releaseBuffer@?$StringBase@G@@AAEXXZ,0x008881D0,Canonical private StringBase<unsigned short> releaseBuffer called by MapMetaData getFileName UnicodeString temporary
 ?releaseBuffer@AsciiString@@AAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@BFMERetailAsciiString and ??1AsciiString; BFMERetailAsciiString is this tree's stand-in name for the same class
 ?releaseBuffer@AsciiString@@IAEXXZ,0x00887940,Ghidra GrabWindowInfo direct callee
 ?releaseBuffer@AsciiString@@QAEXXZ,0x00887940,same body already pinned as ?releaseBuffer@AsciiString@@AAEXXZ; Rva0034E2E0Destructor.cpp made the member public
