@@ -78,6 +78,57 @@ inline AsciiString::AsciiString(const AsciiString &stringSrc)
 		*(const StringBase<char> *)&stringSrc);
 }
 
+struct BfmeSidesListXferVersion
+{
+	UnsignedByte m_version;
+	UnsignedByte m_currentVersion;
+};
+
+// BFME's Xfer interface predates the Zero Hour vtable layout used by the
+// released headers. Keep the retail slots local to this translation unit.
+class BfmeSidesListXfer
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual Bool isLightCRC();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void xferVersion(BfmeSidesListXferVersion *version);
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void xferCoord2D(Coord2D *value);
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void xferCoord3D(Coord3D *value);
+	virtual void slot25();
+	virtual void xferAsciiString(AsciiString *value);
+	virtual void xferReal(Real *value);
+	virtual void slot28();
+	virtual void xferUnsignedInt(UnsignedInt *value);
+	virtual void xferInt(Int *value);
+	virtual void slot31();
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void xferBool(Bool *value);
+};
+
+extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+
 static const Int K_SIDES_DATA_VERSION_1 = 1;
 static const Int K_SIDES_DATA_VERSION_2 = 2;	// includes Team list.
 static const Int K_SIDES_DATA_VERSION_3 = 3;	// includes Team list.
@@ -4806,41 +4857,43 @@ void BuildListInfo::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@BuildListInfo@@MAEXPAVXfer@@@Z present-unmatched
 void BuildListInfo::xfer( Xfer *xfer )
 {
+	BfmeSidesListXfer *bfmeXfer = (BfmeSidesListXfer *)xfer;
+	if (bfmeXfer->isLightCRC())
+		return;
 
 	// version
-	XferVersion currentVersion = 2;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
+	BfmeSidesListXferVersion version;
+	version.m_version = 1;
+	version.m_currentVersion = 1;
+	bfmeXfer->xferVersion( &version );
 
-	xfer->xferAsciiString( &m_buildingName );
-	xfer->xferAsciiString( &m_templateName );
-	xfer->xferCoord3D( &m_location );
-	xfer->xferCoord2D( &m_rallyPointOffset );
-	xfer->xferReal( &m_angle );
-	xfer->xferBool( &m_isInitiallyBuilt );
-	xfer->xferUnsignedInt( &m_numRebuilds );
-	xfer->xferAsciiString( &m_script );
-	xfer->xferInt( &m_health );
-	xfer->xferBool( &m_whiner );
-	xfer->xferBool( &m_unsellable );
-	xfer->xferBool( &m_repairable );
-	xfer->xferBool( &m_automaticallyBuild );
+	bfmeXfer->xferAsciiString( &m_buildingName );
+	bfmeXfer->xferAsciiString( &m_templateName );
+	bfmeXfer->xferCoord3D( &m_location );
+	bfmeXfer->xferCoord2D( &m_rallyPointOffset );
+	bfmeXfer->xferReal( &m_angle );
+	bfmeXfer->xferBool( &m_isInitiallyBuilt );
+	bfmeXfer->xferUnsignedInt( &m_numRebuilds );
+	bfmeXfer->xferAsciiString( &m_script );
+	bfmeXfer->xferInt( &m_health );
+	bfmeXfer->xferBool( &m_whiner );
+	bfmeXfer->xferBool( &m_unsellable );
+	bfmeXfer->xferBool( &m_repairable );
+	bfmeXfer->xferBool( &m_automaticallyBuild );
 	// m_renderObj we don't need to xfer this, its for the editor only
 	// m_shadowObj we don't need to xfer this, its for the editor only
 	// m_selected we don't need to xfer this, its for the editor only
-	xfer->xferObjectID( &m_objectID );
-	xfer->xferUnsignedInt( &m_objectTimestamp );
-	xfer->xferBool( &m_underConstruction );
-	xfer->xferUser( m_resourceGatherers, sizeof( ObjectID ) * MAX_RESOURCE_GATHERERS );
-	xfer->xferBool( &m_isSupplyBuilding );
-	xfer->xferInt( &m_desiredGatherers );
-	xfer->xferBool( &m_priorityBuild );
-	if (version>=2) {
-		xfer->xferInt(&m_currentGatherers);
-	}
+	friend_xferObjectID( xfer, &m_objectID );
+	bfmeXfer->xferUnsignedInt( &m_objectTimestamp );
+	bfmeXfer->xferBool( &m_underConstruction );
+	for (Int i = 0; i < MAX_RESOURCE_GATHERERS; ++i)
+		friend_xferObjectID( xfer, &m_resourceGatherers[i] );
+	bfmeXfer->xferBool( &m_isSupplyBuilding );
+	bfmeXfer->xferInt( &m_desiredGatherers );
+	bfmeXfer->xferBool( &m_priorityBuild );
+	bfmeXfer->xferInt( &m_currentGatherers );
 
 }  // end xfer
 
