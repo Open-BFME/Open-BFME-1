@@ -87149,3 +87149,8 @@ g_bfmeFlag1281,0x0133781D,address-derived byte flag read by the 0x008BD6B0 retai
 ?Gen00575900Intro@@YAXPAXZZ,0x0001D241,STLport introsort helper called by Rva00575900
 ?Gen00575900Final@@YAXPAXZZ,0x000498CD,STLport final insertion helper called by Rva00575900
 ?getDescription@MapMetaData@@QAE?AVUnicodeString@@XZ,0x0001C0A8,MapMetaData description getter ILT called by the first-line accessor at 0x00452000
+?setUnicode@Rva003A5450@@QAEXABVUnicodeString@@@Z,0x0001036B,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its second UnicodeString
+?setCoord@Rva003A5450@@QAEXABURva003C1C50Coord@@@Z,0x0002E898,Open-BFME5 ILT called by the exact 0x003C1C50 item builder; target copies the coordinate to +0x0C/+0x10
+?setFlag@Rva003A5450@@QAEXD@Z,0x0003688B,Open-BFME5 ILT called by the exact 0x003C1C50 item builder; target stores its byte argument at +0x1E
+?setAscii@Rva003A5450@@QAEXABVAsciiString@@@Z,0x00028CF9,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its ASCII-string argument
+?_M_insert_overflow@?$vector@PAVRva003A5450@@V?$allocator@PAVRva003A5450@@@_STL@@@_STL@@IAEXPAPAVRva003A5450@@ABQAV3@ABU__true_type@2@I_N@Z,0x00045408,Open-BFME5 ILT for the pointer-vector overflow reached by the exact 0x003C1C50 append
