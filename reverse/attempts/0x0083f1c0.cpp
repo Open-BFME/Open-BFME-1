@@ -1,5 +1,5 @@
 // ?register_callback@ios_base@_STL@@QAEXP6AXW4event@12@AAV12@H@ZH@Z
-// partial score=0.8 date=2026-09-06
+// partial score=0.95 date=2026-09-11
 // cl: /O2 /Ob0 /MD
 // Open-BFME5: STLport ios_base::iword, retail 0x0083F0C0, 117 bytes.
 
@@ -95,11 +95,10 @@ void ios_base::register_callback(event_callback fn, int index)
 	grow_array(&grown, m_callbacks, m_num_callbacks, m_callback_index);
 	if (grown.first)
 	{
-		Callback *new_callbacks = grown.first;
 		m_num_callbacks = grown.second;
-		m_callbacks = new_callbacks;
-		new_callbacks[m_callback_index].fn = fn;
-		new_callbacks[m_callback_index].index = index;
+		m_callbacks = grown.first;
+		m_callbacks[m_callback_index].fn = fn;
+		m_callbacks[m_callback_index].index = index;
 		++m_callback_index;
 		return;
 	}

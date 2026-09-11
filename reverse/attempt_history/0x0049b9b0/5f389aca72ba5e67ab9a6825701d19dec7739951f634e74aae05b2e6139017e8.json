@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5f389aca72ba5e67ab9a6825701d19dec7739951f634e74aae05b2e6139017e8",
+  "symbol": "?d_0049b9b0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?d_0049b9b0@@YAXXZ\n// partial score=0.94 date=2026-09-11\n// cl: /DNDEBUG /MD /EHsc\n\nclass AsciiString\n{\nprivate:\n\tunsigned char m_padding[4];\n};\n\nclass UpgradeTemplate\n{\npublic:\n\tunsigned int getUpgradeMask() const { return m_upgradeMask; }\n\nprivate:\n\tunsigned char m_padding[0x20];\n\tunsigned int m_upgradeMask;\n};\n\nclass UpgradeCenter\n{\npublic:\n\tconst UpgradeTemplate *findUpgrade(const AsciiString &name) const;\n};\n\nextern UpgradeCenter *TheUpgradeCenter;\n\nstruct UpgradeMaskType\n{\n\tunsigned int m_bits[6];\n\n\tvoid set(unsigned int bit)\n\t{\n\t\tm_bits[bit >> 5] |= 1U << (bit & 31);\n\t}\n};\n\nclass CommandButton\n{\npublic:\n\tvoid getBuildUpgradeMask(UpgradeMaskType &mask) const;\n\nprivate:\n\tunsigned char m_padding[0x28];\n\tAsciiString *m_buildUpgradesFirst;\n\tAsciiString *m_buildUpgradesLast;\n\tAsciiString *m_buildUpgradesEnd;\n};\n\n// ?getBuildUpgradeMask@CommandButton@@QBEXAAUUpgradeMaskType@@@Z\nvoid CommandButton::getBuildUpgradeMask(UpgradeMaskType &mask) const\n{\n\tUpgradeMaskType buildMask = {};\n\tconst CommandButton *button = this;\n\tAsciiString *upgrade = button->m_buildUpgradesFirst;\n\n\twhile (upgrade != button->m_buildUpgradesLast)\n\t{\n\t\tconst UpgradeTemplate *upgradeTemplate = TheUpgradeCenter->findUpgrade(*upgrade);\n\t\tif (upgradeTemplate != 0)\n\t\t\tbuildMask.set(upgradeTemplate->getUpgradeMask());\n\t\t++upgrade;\n\t}\n\n\tmask = buildMask;\n}\n"
+}

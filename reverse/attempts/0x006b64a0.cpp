@@ -1,6 +1,6 @@
 // ?canPlayNow@SoundManager@@QAE_NPAVAudioEventRTS@@@Z
-// partial score=0.58 date=2026-09-10
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=0.68 date=2026-09-11
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventInfo.h
 struct AudioEventInfo
@@ -20,6 +20,7 @@ struct Coord3D
 	float x;
 	float y;
 	float z;
+
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
@@ -139,17 +140,24 @@ bool SoundManager::canPlayNow(AudioEventRTS *event)
 				Coord3D position;
 				bool found;
 				event->resolveOwnerPosition(&position, &found);
-				Coord3D listener = *getListenerPosition();
+				Coord3D listener;
+				const Coord3D *listenerPosition = getListenerPosition();
+				listener.x = listenerPosition->x;
+				listener.y = listenerPosition->y;
+				listener.z = listenerPosition->z;
 				if (!found)
 					return false;
 				float dx = listener.x - position.x;
 				float dy = listener.y - position.y;
 				float dz = listener.z - position.z;
 				float range;
-				if (event->m_info->m_flags & soundTypeBit)
-					range = (float)m_state->m_integerRange;
-				else
-					range = m_state->m_floatRange;
+				if (event->m_info->m_flags & soundTypeBit) {
+					void *state = *(void **)((char *)this + 0xc);
+					range = (float)*(int *)((char *)state + 0x38);
+				} else {
+					void *state = *(void **)((char *)this + 0xc);
+					range = *(float *)((char *)state + 0x78);
+				}
 				if (range * range < dx * dx + dy * dy + dz * dz) {
 					if (v98(event))
 						*((unsigned char *)event + 0x47) = 1;
