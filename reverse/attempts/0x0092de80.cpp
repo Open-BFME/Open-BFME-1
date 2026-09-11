@@ -1,5 +1,5 @@
-// ?d_0092de80@@YAXXZ
-// partial score=0.82 date=2026-09-08
+// ?Replace_Texture@MeshClass@@QAEXABVBfmeHandleCX@@0@Z
+// partial score=0.83 date=2026-09-11
 // cl: /DNDEBUG /MD /O2 /Ob2
 
 class TextureClass
@@ -216,10 +216,11 @@ void MeshClass::Replace_Texture(const BfmeHandleCX &oldTexture, const BfmeHandle
 	MaterialInfoClass *material = getMaterialInfo();
 	for (int index = 0; index < material->Texture_Count(); ++index)
 	{
-		BfmeHandleCX texture = material->Get_Texture(index);
-		bool matched = texture.m_ptr == oldTexture.m_ptr;
-		if (texture.m_ptr != 0)
-			texture.m_ptr->Release_Ref();
+		TextureClass *tex_ptr = material->Get_Texture(index).m_ptr;
+		TextureClass *old_ptr = oldTexture.m_ptr;
+		bool matched = old_ptr == tex_ptr;
+		if (tex_ptr != 0)
+			tex_ptr->Release_Ref();
 		if (matched)
 		{
 			model->Replace_Texture(oldTexture, newTexture);
