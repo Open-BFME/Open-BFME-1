@@ -81461,6 +81461,7 @@ name,address,notes
 ?getTerrain@Rva0074D210Owner@@QAE?AVRva0074D210Handle@@XZ,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
 ?getTerrain@Rva0074D210Owner@@QAEXPAVRva0074D210Handle@@@Z,0x00040953,Open-BFME5 getTerrainTexture ILT used by 0x0074D210 alpha-texture getter
 ?getTerrainColorAt@WorldHeightMap@@QAEXMMPAURGBColor@@@Z,0x007477E0,thunk-resolved body (via 0x197ae)
+?getTerrainNameAt@WorldHeightMap@@QAE?AVAsciiString@@MM@Z,0x0000A80D,WorldHeightMap::getTerrainNameAt ILT reached by W3DTerrainVisual::getTerrainTile; target thunk resolves to 0x0074A0D0
 ?getTerrainTexture@WorldHeightMap@@QAE?AVTerrainTextureRef@@XZ,0x00040953,WorldHeightMap::getTerrainTexture ILT; both lazy getters at 0x0074D210 and 0x0074D270 generate through it
 ?getTerrainTexture@WorldHeightMap@@QAEXPAVTerrainTextureRef@@@Z,0x00040953,WorldHeightMap::getTerrainTexture ILT, sret spelling of the same thunk
 ?getTerrainTile@W3DTerrainVisual@@UAEPAVTerrainType@@MM@Z,0x00731760,vtable-slot ??_7W3DTerrainVisual@@6BSnapshot@@@ slot 8 anchors=16
