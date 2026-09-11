@@ -1,6 +1,10 @@
-// ?d_009d86e0@@YAXXZ
-// partial score=0.55 date=2026-09-07
-// scratch only: neutral Xfer-family helper reconstruction for retail 0x009D86E0.
+// ?rva009D86E0@Rva009D8630BlockWriter@@QAEXPBD@Z
+// partial score=0.62 date=2026-09-11
+// Retail RVA 0x009D86E0, 518 bytes: Rva009D8630BlockWriter::rva009D86E0,
+// called from beginBlock (XferBlockWriter.cpp) when m_flag is set.
+// A null/empty name writes a single zero marker byte instead of returning
+// silently; a name already in the map writes 0xFF + its stored index; a new
+// name writes its length (capped at 0xFE) and bytes, then inserts it.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -8,16 +12,16 @@
 #include <hash_map>
 #include <string>
 
-struct XferException
+struct BfmeFormattedText
 {
-	void *text;
+	char *text;
 	int tag;
 };
 
-extern "C" XferException *__cdecl bfmeFormatText(
-	XferException *result, int tag, const char *format, ...);
+extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
+	BfmeFormattedText *result, int tag, const char *format, ...);
 __declspec(noreturn) void __stdcall _CxxThrowException(void *object, void *throwInfo);
-extern int g_guardTargetTypeThrowInfo;
+extern "C" unsigned char g_rva005c5100ThrowInfo[];
 
 class BfmeByteStream
 {
@@ -44,25 +48,39 @@ struct Rva009D86E0AuxMap
 	}
 };
 
-class Rva009D86E0Owner
+// TU-local shim: only the members and single virtual needed to reproduce this
+// method's own offsets. The real class (six virtuals, m_positions) lives in
+// XferBlockWriter.cpp, which forward-declares this same method.
+class Rva009D8630BlockWriter
 {
 public:
 	virtual void slot0();
-	void emitName(const char *name);
+	void rva009D86E0(const char *name);
 
 private:
 	BfmeByteStream *m_stream;
 	bool m_flag;
 	unsigned char m_pad09[3];
-	unsigned char m_vector[0x0c];
+	unsigned char m_positions[0x0c];
 	Rva009D86E0NameMap m_names;
 	Rva009D86E0AuxMap m_aux;
 };
 
-void Rva009D86E0Owner::emitName(const char *name)
+void Rva009D8630BlockWriter::rva009D86E0(const char *name)
 {
+	unsigned char marker;
+	BfmeFormattedText error;
+
 	if (name == 0 || *name == 0)
+	{
+		marker = 0;
+		if (m_stream->write(&marker, 1) != 1)
+		{
+			bfmeFormatText(&error, 1, 0);
+			_CxxThrowException(&error, g_rva005c5100ThrowInfo);
+		}
 		return;
+	}
 
 	Rva009D86E0NameMap::const_iterator found;
 	{
@@ -71,19 +89,17 @@ void Rva009D86E0Owner::emitName(const char *name)
 	}
 	if (found != m_names.end())
 	{
-		unsigned char marker = 0xff;
+		marker = 0xff;
 		if (m_stream->write(&marker, 1) != 1)
 		{
-			XferException error;
 			bfmeFormatText(&error, 1, 0);
-			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+			_CxxThrowException(&error, g_rva005c5100ThrowInfo);
 		}
 
 		if (m_stream->write(&found->second, 4) != 4)
 		{
-			XferException error;
 			bfmeFormatText(&error, 1, 0);
-			_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+			_CxxThrowException(&error, g_rva005c5100ThrowInfo);
 		}
 		return;
 	}
@@ -97,16 +113,14 @@ void Rva009D86E0Owner::emitName(const char *name)
 
 	if (m_stream->write(&length, 1) != 1)
 	{
-		XferException error;
 		bfmeFormatText(&error, 1, 0);
-		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+		_CxxThrowException(&error, g_rva005c5100ThrowInfo);
 	}
 	if (m_stream->write(name, static_cast<int>(length)) !=
 		static_cast<int>(length))
 	{
-		XferException error;
 		bfmeFormatText(&error, 1, 0);
-		_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+		_CxxThrowException(&error, g_rva005c5100ThrowInfo);
 	}
 
 	m_names[Rva009D86E0String(name)] =
