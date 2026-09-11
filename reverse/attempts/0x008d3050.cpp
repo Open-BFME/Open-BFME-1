@@ -1,4 +1,24 @@
 // ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z
+// partial score=0.75 date=2026-09-11
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+//
+// Prologue, early-out, bfmeReset1285 call, loop guard, loop-top descriptor
+// reload, loop bottom and epilogue all match retail byte for byte. Four
+// instructions in the loop body still differ. Retail keeps m_records in edx
+// and m_state in ecx, then materialises the record pointer with
+// lea eax,[edx+ebp] and tests memory directly. MSVC folds the record pointer
+// into the mask load instead, so it spends a register on the loaded mask and
+// rebuilds the pointer with add eax,ebp. That costs two bytes, so ours is 129.
+// The _ReadWriteBarrier at the loop top is reconstruction shaping. Without it
+// MSVC reuses the descriptor pointer that the loop guard left in eax and drops
+// retail's reload at +0x32. A volatile-qualified read of m_descriptor does the
+// same job. Pointer arithmetic with the offset on the left, a function-scope
+// record local, hoisted field addresses, swapped definition order and /O1 all
+// leave the fold in place.
+
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
+
 // partial score=0.4 date=2026-09-02
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
@@ -58,8 +78,8 @@ void BfmeNode1285::bfmeSetState1285( int state )
 	if ( state == info->m_state )
 		return;
 
-	int offset;
 	BfmeSubmitter1283 *submitter = (BfmeSubmitter1283 *)&info->m_slot;
+	int offset;
 	info->m_state = state;
 	info->m_slot.bfmeReset1285( 0 );
 
@@ -69,6 +89,7 @@ void BfmeNode1285::bfmeSetState1285( int state )
 		offset = 0;
 		do
 		{
+			_ReadWriteBarrier();
 			BfmeStateRecord1285 *records = info->m_descriptor->m_records;
 			int currentState = info->m_state;
 			BfmeStateRecord1285 *record = (BfmeStateRecord1285 *)
