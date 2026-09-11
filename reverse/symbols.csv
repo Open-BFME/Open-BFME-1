@@ -13890,6 +13890,7 @@ name,address,notes
 ?addSupplyWarehouse@ResourceGatheringManager@@QAEXPAVObject@@@Z,0x00028646,pinned by SupplyWarehouseCreate::onCreate packet 002505a0
 ?addTargetIds@Rva007F1F60Feedback@@QAEXPAVRva007E8810Message@@PBURva007F2010TargetId@@H@Z,0x007F2010,V2 lane: FESL feedback request target-id array serializer
 ?addTeam@TeamsInfoRec@@QAEXPBVDict@@@Z,0x0000D828,pinharvest x4 (thunk)
+?addTeamToList@Player@@QAEXPAVTeamPrototype@@@Z,0x0002C1CE,Team owner transfer calls the canonical Player list insertion ILT to body 0x000D2240
 ?addTimeOutGameStartMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00037263,the address addCommand's arm encodes; the body's own incremental-link thunk is a further hop
 ?addToBuildList@SidesInfo@@QAEXPAVBuildListInfo@@H@Z,0x0000DD9B
 ?addToProductionQueue@ProductionUpdate@@IAEXPAVProductionEntry@@@Z,0x000450F7,ProductionUpdate queueUpgrade append thunk
@@ -77623,6 +77624,7 @@ name,address,notes
 ?bfmeTouchVTN@BfmeSinkVTN@@QAEPAVBfmeHostVTN@@XZ,0x000022BB,pin
 ?bfmeTouchXQ@BfmeOwnerXQ@@QAEXH@Z,0x00019574
 ?bfmeTransferDefection@TemporarilyDefectUpdate@@QAEXPAVObject@@I@Z,0x000411C3,Open-BFME5 TemporarilyDefectUpdate handoff called by Object replacement-state transfer at 0x001C5620
+?bfmeTransferPowerInfluence@BfmeTeamControlObject@@QAEXPAVPlayer@@0@Z,0x00014B91,Team.cpp BFME-layout view spelling of the proven Object power-influence transfer ILT
 ?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z,0x00014B91,Open-BFME5 recursive Object power-influence transfer ILT to body 0x001C3710
 ?bfmeTransitionFinished@@YAXXZ,0x00010D39,Gen_00588D10 completion thunk
 ?bfmeTranslateVUY@BfmeStrWVUY@@QAEXABVBfmeStrNVUY@@@Z,0x008891F0,pin
@@ -81132,6 +81134,7 @@ name,address,notes
 ?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
 ?getFinalOverride@BfmeLocomotorTemplate@@QAEPAV1@XZ,0x000022BB,AODHordeContain large-unit hook reaches the existing locomotor override-chain walker
 ?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
+?getFinalOverride@BfmeTeamControlOverridable@@QBEPBV1@XZ,0x000022BB,Team.cpp BFME-layout view spelling of the proven Overridable chain-walker ILT
 ?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
 ?getFinalOverride@Rva226790Template@@QAEPAV1@XZ,0x000022BB,address-derived template override-chain ILT thunk
@@ -83811,6 +83814,7 @@ name,address,notes
 ?refreshPlayerSlot@SkirmishScreenState@@QAEXH@Z,0x0003B1F1,SkirmishScreenState::apply calls the row refresh thunk for each slot and the thunk targets body 0x005284F0
 ?refreshPlayerTeamControl@SkirmishScreenState@@QAEXH@Z,0x0002D38A,rebuilds the team control after a slot crosses the human AI boundary
 ?refreshPlayerTypeControl@SkirmishScreenState@@QAEXH@Z,0x00029C35,rebuilds the player-type control for one Skirmish APT slot
+?refreshTeamMember@BfmeTeamControlObject@@QAEXXZ,0x00039B5D,Team.cpp BFME-layout view spelling of the member refresh ILT to body 0x001BF380
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0003A21A,matched W3DRadar::refreshTerrain at 0x006C4280 base call; route=0x00107240
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
 ?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VAptMapPreviewFunctorHolder@@@Z,0x00026328,AptMapPreview initGadgets callback registry overload identified by MapGadgetInit and Picture strings
@@ -83941,6 +83945,7 @@ name,address,notes
 ?removePropsForConstruction@W3DPropBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0001B054,removeTreesAndPropsForConstruction tail-call target (incremental-link thunk; body 0x7039E0 sits in the W3DPropBuffer.cpp region)
 ?removeShadow@W3DShadowManager@@QAEXPAVShadow@@@Z,0x0003AC38,retail ILT called by W3DDefaultDraw destructor at 0x007510D0 and named by W3DShadow.cpp
 ?removeTeam@TeamsInfoRec@@QAEXH@Z,0x0000D828,pinharvest x3 (thunk)
+?removeTeamFromList@Player@@QAEXPAVTeamPrototype@@@Z,0x0004B367,Team owner transfer calls the canonical Player list removal ILT to body 0x000CDC70
 ?removeTeamRelationship@Player@@QAE_NPBVTeam@@@Z,0x000D4200,body Player::removeTeamRelationship; m_teamRelations at Player+0x290 (next to m_playerTeamPrototypes at +0x288); empty-check then NULL->clear else find(that->getID())/erase; pinned by ?teamAboutToBeDeleted@PlayerList@@QAEXPAVTeam@@@Z at 0x000DF360 via ILT 0x00012F1C
 ?removeTerrainBib@BaseHeightMapRenderObjClass@@QAEXW4ObjectID@@@Z,0x0002B9E5,W3DTerrainVisual removeFactionBib target read from retail REL32
 ?removeTerrainBibHighlighting@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)

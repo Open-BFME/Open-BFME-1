@@ -1864,8 +1864,27 @@ Team::~Team()
 // BFME keeps the prototype at Team+0x04 and its owning player at
 // TeamPrototype+0x08, where the vendored header lands them at +0x08 and +0x0c,
 // and retail guards the prototype rather than dereferencing it blind.
+extern void j_000022bb();
+extern void j_00014b91();
+extern void j_00039b5d();
+
 struct BfmeTeamPrototypeOwner
 {
+	Player *getControllingPlayer() const
+	{
+		return m_owningPlayer;
+	}
+
+	void setControllingPlayer( Player *newController )
+	{
+		if (!newController)
+			return;
+		if (m_owningPlayer)
+			m_owningPlayer->removeTeamFromList( (TeamPrototype *)this );
+		m_owningPlayer = newController;
+		newController->addTeamToList( (TeamPrototype *)this );
+	}
+
 	UnsignedByte m_unreconstructed_00[0x08];
 	Player *m_owningPlayer;					///< retail prototype+0x08
 };
@@ -1875,6 +1894,107 @@ struct BfmeTeamProtoField
 	UnsignedByte m_unreconstructed_00[0x04];
 	BfmeTeamPrototypeOwner *m_proto;			///< retail this+0x04
 };
+
+class BfmeTeamControlOverridable
+{
+public:
+	virtual ~BfmeTeamControlOverridable();
+	const BfmeTeamControlOverridable *getFinalOverride() const;
+	BfmeTeamControlOverridable *m_nextOverride;
+};
+
+class BfmeTeamControlThingTemplate : public BfmeTeamControlOverridable
+{
+public:
+	UnsignedByte m_unmodelled_008[0xcc];
+	UnsignedInt m_kindOf;
+};
+
+template <class T> class BfmeTeamControlOverride
+{
+public:
+	const T *operator->() const
+	{
+		const T *value = m_overridable;
+		if (value && value->m_nextOverride)
+			value = (const T *)value->m_nextOverride->getFinalOverride();
+		return value;
+	}
+
+	const T *volatile m_overridable;
+};
+
+class BfmeTeamControlObject;
+
+class BfmeTeamControlObjectDlinkBase
+{
+public:
+	BfmeTeamControlObject *dlink_next_TeamMemberList() const;
+	BfmeTeamControlOverride<BfmeTeamControlThingTemplate> m_template;
+};
+
+class BfmeTeamControlObjectVtbl
+{
+public:
+	virtual void bfmeObjectSlot0() = 0;
+};
+
+class BfmeTeamControlObjectDlinkPad
+{
+public:
+	UnsignedByte m_pad[0x60];
+};
+
+class BfmeTeamControlObjectVirtualTail
+{
+public:
+	UnsignedByte m_vt[4];
+};
+
+class BfmeTeamControlObjectVbptrCarrier : public virtual BfmeTeamControlObjectVirtualTail
+{
+public:
+	UnsignedByte m_carrier[4];
+};
+
+class BfmeTeamControlObject : public BfmeTeamControlObjectVtbl,
+	public BfmeTeamControlObjectDlinkBase, public BfmeTeamControlObjectDlinkPad,
+	public BfmeTeamControlObjectVbptrCarrier
+{
+public:
+	void refreshTeamMember();
+	void bfmeTransferPowerInfluence( Player *oldPlayer, Player *newPlayer );
+};
+
+typedef BfmeTeamControlObject *(BfmeTeamControlObject::*BfmeTeamControlGetNextFunc)() const;
+
+template <class ObjectType> class BfmeTeamControlIterator
+{
+public:
+	BfmeTeamControlIterator( ObjectType *cur, BfmeTeamControlGetNextFunc getNext )
+		: m_cur( cur ), m_getNext( getNext ) { }
+
+	Bool done() const { return m_cur == NULL; }
+	ObjectType *cur() const { return m_cur; }
+	void advance() { m_cur = (m_cur->*m_getNext)(); }
+
+private:
+	ObjectType *m_cur;
+	BfmeTeamControlGetNextFunc m_getNext;
+};
+
+struct BfmeTeamControlFields
+{
+	UnsignedByte m_unmodelled_00[0x04];
+	BfmeTeamPrototypeOwner *m_proto;
+	UnsignedByte m_unmodelled_008[0x04];
+	BfmeTeamControlObject *m_memberHead;
+};
+
+#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeTeamControlObjectDlinkBase@@QBEPAVBfmeTeamControlObject@@XZ=?j_00001140@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getFinalOverride@BfmeTeamControlOverridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeTransferPowerInfluence@BfmeTeamControlObject@@QAEXPAVPlayer@@0@Z=?j_00014b91@@YAXXZ")
+#pragma comment(linker, "/alternatename:?refreshTeamMember@BfmeTeamControlObject@@QAEXXZ=?j_00039b5d@@YAXXZ")
 
 // ?getControllingPlayer@Team@@QBEPAVPlayer@@XZ
 Player *Team::getControllingPlayer() const
@@ -1886,28 +2006,30 @@ Player *Team::getControllingPlayer() const
 }
 
 // ------------------------------------------------------------------------
-// ?setControllingPlayer@Team@@QAEXPAVPlayer@@@Z present-unmatched
 void Team::setControllingPlayer(Player *newController)
 {
-	// NULL is not allowed, but is caught by TeamPrototype::setControllingPlayer()
-	m_proto->setControllingPlayer(newController);
-
-	// This function is used by one script, and it is kind of odd.  The actual units
-	// are not getting captured, the team they are on is being reassigned to a new player.  
-	// The Team doesn't change, it just starts to return a different answer when you ask for
-	// the controlling player.  I don't want to make the major change of onCapture on everyone,
-	// so I will do the minor fix for the specific bug, which is harmless even when misused.
-
-	// Tell all members to redo their looking status, as their Player has changed, but they don't know.
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) 
+	BfmeTeamControlFields *self = (BfmeTeamControlFields *)this;
+	BfmeTeamPrototypeOwner *proto = self->m_proto;
+	if (proto)
 	{
-		Object *obj = iter.cur();
-		if (!obj) 
-			continue;
+		Player *oldPlayer = getControllingPlayer();
+		proto->setControllingPlayer( newController );
 
-		obj->handlePartitionCellMaintenance();		
+		BfmeTeamControlIterator<BfmeTeamControlObject> iter( self->m_memberHead,
+			BfmeTeamControlObjectDlinkBase::dlink_next_TeamMemberList );
+		while (!iter.done())
+		{
+			BfmeTeamControlObject *object = iter.cur();
+			object->refreshTeamMember();
+			const BfmeTeamControlThingTemplate *thing = object->m_template.operator->();
+			if ((thing->m_kindOf & 0x1000) == 0
+				&& oldPlayer != NULL && oldPlayer != newController)
+			{
+				object->bfmeTransferPowerInfluence( oldPlayer, newController );
+			}
+			iter.advance();
+		}
 	}
-
 }
 
 // ------------------------------------------------------------------------
