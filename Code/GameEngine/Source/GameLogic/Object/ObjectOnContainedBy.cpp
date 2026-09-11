@@ -1,20 +1,31 @@
-// ?d_001cb9f0@@YAXXZ
-// partial score=0.98 date=2026-09-10
-// ?onContainedBy@Object@@QAEXPAV1@@Z
+// BFME 1.03 Object::onContainedBy at RVA 0x001CB9F0.
+//
+// The canonical Object.cpp declaration and the named OpenContain and
+// TunnelTracker callers establish the identity.  BFME's Object and contain
+// layouts differ from the available Generals headers, so this focused view
+// preserves the retail fields and the virtual getStatus slot used here.
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
 
+enum ObjectStatusTypes
+{
+	OBJECT_STATUS_UNDER_CONSTRUCTION = 3
+};
+
 class Object;
 
-struct ObjectStatusMaskType
+struct ContainmentStatus
 {
 	UnsignedInt m_bits[3];
-
-	Bool test(Int bit) const;
 };
+
+template <Int NUMBITS>
+class BitFlags;
+
+typedef BitFlags<86> ObjectStatusMaskType;
 
 class ContainModuleInterface
 {
@@ -29,11 +40,12 @@ public:
 	virtual void slot70(); virtual void slot74(); virtual void slot78(); virtual void slot7c();
 	virtual void slot80(); virtual void slot84(); virtual void slot88(); virtual void slot8c();
 	virtual void slot90(); virtual void slot94(); virtual void slot98();
-	virtual ObjectStatusMaskType containedStatus(const Object *object) const;
+	virtual ContainmentStatus getStatus(const Object *object) const;
 };
 
-struct ThingTemplate
+class ThingTemplate
 {
+public:
 	void *m_vtable;
 	ThingTemplate *m_nextOverride;
 	unsigned char m_pad08[0xc4];
@@ -55,8 +67,9 @@ class Object
 {
 public:
 	void onContainedBy(Object *containedBy);
-	void clearStatus(int status);
+	void clearStatus(ObjectStatusTypes status);
 	void setStatus(const ObjectStatusMaskType &status, Bool set);
+	ContainModuleInterface *getContain() const { return m_contain; }
 
 	void *m_vtable;
 	ThingTemplate *m_template;
@@ -70,8 +83,10 @@ public:
 	unsigned char m_containedFlags;
 };
 
+// ?onContainedBy@Object@@QAEXPAV1@@Z
 void Object::onContainedBy(Object *containedBy)
 {
+	ContainModuleInterface *contain;
 	ThingTemplate *thing = m_template;
 	if (thing && thing->m_nextOverride)
 		thing = thing->m_nextOverride->getFinalOverride();
@@ -79,18 +94,19 @@ void Object::onContainedBy(Object *containedBy)
 	if ((thing->m_kindOfAtCC & 0x00400000) != 0)
 	{
 		m_containedFlags &= ~1;
-		clearStatus(3);
+		clearStatus(OBJECT_STATUS_UNDER_CONSTRUCTION);
 	}
 	else
 	{
-		ContainModuleInterface *contain = containedBy ? containedBy->m_contain : 0;
-		if (contain && (contain->containedStatus(this).m_bits[0] & 8) != 0)
+		contain = containedBy ? containedBy->getContain() : 0;
+		if (contain && (contain->getStatus(this).m_bits[0] & 8) != 0)
 			m_containedFlags |= 1;
 		else
 			m_containedFlags &= ~1;
 
 		if (contain)
-			setStatus(contain->containedStatus(this), true);
+			setStatus(reinterpret_cast<const ObjectStatusMaskType &>(
+				contain->getStatus(this)), true);
 	}
 
 	m_containedBy = containedBy;
