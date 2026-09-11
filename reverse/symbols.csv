@@ -75318,6 +75318,7 @@ name,address,notes
 ?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
 ?bfmeFinalET@BfmeTmplET@@QBEPBV1@XZ,0x000022BB,pin override walk for BfmeConv2041
 ?bfmeFinalZB@BfmeOverride1137@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT override walk the 0x0045B060 destructor calls
+?bfmeFind@BfmeAttackPriorityMap@@QAEXPAPAUBfmeAttackPriorityNode@@PAPBVThingTemplate@@@Z,0x0001FF05,layout facade for canonical AttackPriorityMap::_Rb_tree::find call in AttackPriorityInfo::getPriority; retail ILT 0x0001FF05 enters matched body 0x000E9460
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
