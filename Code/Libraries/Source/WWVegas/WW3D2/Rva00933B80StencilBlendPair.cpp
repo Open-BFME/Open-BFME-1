@@ -1,8 +1,9 @@
-// ?d_00933b80@@YAXXZ
-// partial score=0.82 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
-// Two Has_Stencil blend-mode setters that write the Render2D global
-// shader-constant block.
+// Two stencil-gated presets for the same five-word shader-constant block
+// (0x012D718C-0x012D7194, 0x01346DDC-0x01346DE0) that d_00930e00.asm's third
+// sibling at 0x00933810 resets. Each branches on DX8Wrapper::Has_Stencil()
+// and writes a different constant set per side; identity beyond that is not
+// recovered, so both are address-derived.
 
 class DX8Wrapper
 {
@@ -19,13 +20,12 @@ int g_bfmeResetZ;
 int g_bfmeBlendSrc;
 int g_bfmeBlendDst;
 
-// ?d_00933b80@@YAXXZ
-void d_00933b80(void)
+// ?Rva00933B80StencilBlendA@@YAXXZ
+void Rva00933B80StencilBlendA(void)
 {
-	bool has_stencil = DX8Wrapper::Has_Stencil();
-	g_bfmeThirdEB = 7;
-	if (has_stencil)
+	if (DX8Wrapper::Has_Stencil())
 	{
+		g_bfmeThirdEB = 7;
 		int z = 0;
 		g_bfmeFirstEB = z;
 		g_bfmeFourthEB = z;
@@ -36,6 +36,7 @@ void d_00933b80(void)
 		return;
 	}
 
+	g_bfmeThirdEB = 7;
 	int z = 0;
 	int one = 1;
 	g_bfmeSecondEB = z;
@@ -45,14 +46,13 @@ void d_00933b80(void)
 	g_bfmeResetZ = 0x3F800000;
 }
 
-// ?d_00933bf0@@YAXXZ
-void d_00933bf0(void)
+// ?Rva00933BF0StencilBlendB@@YAXXZ
+void Rva00933BF0StencilBlendB(void)
 {
-	bool has_stencil = DX8Wrapper::Has_Stencil();
-	g_bfmeFifthEB = 5;
-	g_bfmeFourthEB = 2;
-	if (has_stencil)
+	if (DX8Wrapper::Has_Stencil())
 	{
+		g_bfmeFourthEB = 2;
+		g_bfmeFifthEB = 5;
 		int saved = g_bfmeBlendDst;
 		g_bfmeSecondEB = 1;
 		g_bfmeFirstEB = 0;
@@ -61,6 +61,8 @@ void d_00933bf0(void)
 		return;
 	}
 
+	g_bfmeFifthEB = 5;
+	g_bfmeFourthEB = 2;
 	int z = 0;
 	g_bfmeResetZ = 0x3F000000;
 	g_bfmeSecondEB = z;
