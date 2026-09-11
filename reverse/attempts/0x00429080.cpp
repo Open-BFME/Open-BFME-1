@@ -1,5 +1,5 @@
 // ?doFXPos@DynamicDecalFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
-// partial score=0.76 date=2026-09-07
+// partial score=0.85 date=2026-09-11
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of DynamicDecal's positional dispatch.
 
@@ -140,20 +140,20 @@ public:
 private:
 	Char m_unmodelled[0xb0];
 	AsciiString m_decalName;
-	Int m_shader;
-	Real m_size;
+	volatile Int m_shader;
+	volatile Real m_size;
 	RGBColor m_color;
 	Coord2D m_offset;
-	Bool m_orientToObject;
+	volatile Bool m_orientToObject;
 	Char m_padD5[3];
-	UnsignedInt m_opacityStart;
-	Real m_opacityFadeTimeOne;
-	UnsignedInt m_opacityPeak;
-	Real m_opacityPeakTime;
-	Real m_opacityFadeTimeTwo;
-	UnsignedInt m_opacityEnd;
-	Real m_startingDelay;
-	Real m_lifetime;
+	volatile UnsignedInt m_opacityStart;
+	volatile Real m_opacityFadeTimeOne;
+	volatile UnsignedInt m_opacityPeak;
+	volatile Real m_opacityPeakTime;
+	volatile Real m_opacityFadeTimeTwo;
+	volatile UnsignedInt m_opacityEnd;
+	volatile Real m_startingDelay;
+	volatile Real m_lifetime;
 };
 
 // ?doFXPos@DynamicDecalFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
@@ -165,21 +165,18 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 		return;
 
 	Shadow::ShadowTypeInfo decalInfo;
-		const Char *decalName = m_decalName.m_data
-			? m_decalName.m_data + 8 : (const Char *)0x0107388b;
-
 	decalInfo.flags = 20.0f;
 	decalInfo.force = false;
+		const Char *decalName = m_decalName.m_data
+			? m_decalName.m_data + 8 : (const Char *)0x0107388b;
 	strncpy(decalInfo.name, decalName, 0x40);
-	decalInfo.type = m_shader == 0 ? 0x400 : 0x800;
+	decalInfo.type = m_shader == 1 ? 0x800 : 0x400;
 	decalInfo.allowUpdates = true;
 	decalInfo.allowWorldAlign = true;
 	decalInfo.sizeY = m_size;
 	decalInfo.sizeX = m_size;
 	decalInfo.offsetX = 0.0f;
 	decalInfo.offsetY = 0.0f;
-	decalInfo.unused98 = 0;
-
 	// Retail keeps the offset vector at the low stack address and uses a
 	// separate position aggregate for the translated terrain query.
 	Coord3D offset;
@@ -220,6 +217,6 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 			m_opacityPeak,
 			(Int)(m_opacityPeakTime * BFME_FRAME_SCALE),
 			(Int)(m_opacityFadeTimeTwo * BFME_FRAME_SCALE),
-			initialOpacity);
+			m_opacityEnd);
 	}
 }
