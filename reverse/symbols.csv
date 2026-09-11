@@ -1019,6 +1019,7 @@ name,address,notes
 ??$__copy_backward@PAUS4SortElem12@@PAU1@H@_STL@@YAPAUS4SortElem12@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003EF95,retail __linear_insert at 0x00531860 calls the STLport copy_backward ILT; target follows to the 12-byte helper at 0x0092D740
 ??$__copy_backward@PAVAsciiString@@PAV1@H@_STL@@YAPAVAsciiString@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000FD9E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009CD390 calls; autopin
 ??$__copy_backward_ptrs@PAUGen_t_003c1800_p2pod@@PAU1@@_STL@@YAPAUGen_t_003c1800_p2pod@@PAU1@00ABU__false_type@0@@Z,0x0000E7E1,"Independent full retail helper review: 2-byte copy/backward/fill/placement-fill and existing 3C16A0 overflow; RVA-derived POD type, no guessed game owner"
+??$__copy_backward_ptrs@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0004368A,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x00450190 generic copy
 ??$__copy_float_and_fill@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@HHGGG@Z,0x0083C420,retail 0x0083C210 passes wchar range wide output iterator flags width fill and widened signs directly to this adjacent 300-byte helper;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75C0,gen-tgrid payload member
@@ -1201,6 +1202,7 @@ name,address,notes
 ??$__uninitialized_copy@PAUGen_t_004258e0_p24cd@@PAU1@@_STL@@YAPAUGen_t_004258e0_p24cd@@PAU1@00ABU__false_type@0@@Z,0x0002031F,Open-BFME5 STLport 24-byte vector uninitialized-copy helper called by EvaCheckVecBase::fillInsert at 0x00425420
 ??$__uninitialized_copy@PAUGen_t_0074d9c0_p128pod@@PAU1@@_STL@@YAPAUGen_t_0074d9c0_p128pod@@PAU1@00ABU__false_type@0@@Z,0x00021A1C,typed helper for 36-byte vector fill insert
 ??$__uninitialized_copy@PAUGen_t_0074e320_p16pod@@PAU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@00ABU__false_type@0@@Z,0x0074AA10,gen-tgrid payload member
+??$__uninitialized_copy@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0000F5CE,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x003F7A20 generic copy
 ??$__uninitialized_copy@PAURunwayInfo@FlightDeckBehavior@@PAU12@@_STL@@YAPAURunwayInfo@FlightDeckBehavior@@PAU12@00ABU__false_type@0@@Z,0x00038C80,Open-BFME5 the range copy the RunwayInfo vector _M_insert_overflow at 0x0039EC70 calls
 ??$__uninitialized_copy@PAURva00244A80Element@@PAU1@@_STL@@YAPAURva00244A80Element@@PAU1@00ABU__false_type@0@@Z,0x0002D11E,Open-BFME5 0x002403E0 range copy ILT
 ??$__uninitialized_copy@PAURva00426C00Element@@PAU1@@_STL@@YAPAURva00426C00Element@@PAU1@00ABU__false_type@0@@Z,0x0002EBB3,retail 28-byte vector fill-insert construction-copy ILT at 0x00426A9B
@@ -1349,6 +1351,7 @@ name,address,notes
 ??$uninitialized_fill_n@PAEIE@_STL@@YAPAEPAEIABE@Z,0x0003932E
 ??$uninitialized_fill_n@PAUCoord3D@@IU1@@_STL@@YAPAUCoord3D@@PAU1@IABU1@@Z,0x0001D192,Coord3D vector fill-insert 0x000B7AF0 uses the retail ILT; body alias 0x000B7810 independently carries the __uninitialized_fill_n object-symbol
 ??$uninitialized_fill_n@PAUEvaSideSounds@@IU1@@_STL@@YAPAUEvaSideSounds@@PAU1@IABU1@@Z,0x00039D15,EvaSideSounds vector fill-insert helper ILT proven by exact call position
+??$uninitialized_fill_n@PAUICoord2D@@IU1@@_STL@@YAPAUICoord2D@@PAU1@IABU1@@Z,0x000278B3,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x004501E0 generic fill
 ??$uninitialized_fill_n@PAURva00244A80Element@@IU1@@_STL@@YAPAURva00244A80Element@@PAU1@IABU1@@Z,0x00023443,Open-BFME5 0x002403E0 fill construction ILT
 ??$uninitialized_fill_n@PAURva00426C00Element@@IU1@@_STL@@YAPAURva00426C00Element@@PAU1@IABU1@@Z,0x00015AE1,retail 28-byte vector fill-insert construction-fill ILT at 0x00426ADB
 ??$uninitialized_fill_n@PAURva0076D560Record@@IU1@@_STL@@YAPAURva0076D560Record@@PAU1@IABU1@@Z,0x0001EDEE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0076D560 calls; autopin
@@ -10804,8 +10807,10 @@ name,address,notes
 ?GadgetStaticTextSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0002C16F
 ?GadgetTabControlShowSubPane@@YAXPAVGameWindow@@H@Z,0x00008936
 ?GadgetTextEntryGetText@@YA?AVUnicodeString@@PAVGameWindow@@@Z,0x000220B1,HostDirectConnectGame calls the incremental-link thunk
+?GadgetTextEntrySetCursorPosition@@YAXPAVGameWindow@@I@Z,0x000148A8,BFME text-entry cursor helper thunk called by 0x004BE9C0
 ?GadgetTextEntrySetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,0x0003CBCD,Open-BFME5 ILT thunk to the body already matched at 0x004BE0A0; ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z at 0x00478550 dispatches to it on the matching style bit
 ?GadgetTextEntrySetText@@YAXPAVGameWindow@@VUnicodeString@@@Z,0x0000C874,retail Skirmish onInitGadget call uses the 0x0047E5B0 ILT
+?GadgetTextEntryUpdateComposition@@YAXPAVGameWindow@@@Z,0x00011D83,BFME text-entry composition updater thunk called by 0x004BE9C0
 ?GameInfoToAsciiString@@YA?AVAsciiString@@PBVGameInfo@@_N@Z,0x0000E70A,Skirmish SlotList formatter ILT
 ?GameSpyCloseAllOverlays@@YAXXZ,0x0000F5AB,Shell push overlay-close thunk
 ?GameSpyCloseOverlay@@YAXW4GSOverlayType@@@Z,0x00040E94
@@ -13247,6 +13252,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_00787d40_m4pod@@V?$allocator@UGen_t_00787d40_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_00787d40_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x00786F50,family-emit payload member
 ?_M_insert_overflow@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x000251D0,rel32 pin for exact-ambiguous landing
 ?_M_insert_overflow@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@ABU3@ABU__false_type@2@I_N@Z,0x00017FB2
+?_M_insert_overflow@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEXPAUICoord2D@@ABU3@ABU__false_type@2@I_N@Z,0x000061B8,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact vector member helper body is the existing 0x003F8EF0 generic 8-byte overflow
 ?_M_insert_overflow@?$vector@ULevelUpFXInfo@@V?$allocator@ULevelUpFXInfo@@@_STL@@@_STL@@IAEXPAULevelUpFXInfo@@ABU3@ABU__false_type@2@I_N@Z,0x00381300,ExperienceLevel LevelUpFx vector eight-byte element overflow helper
 ?_M_insert_overflow@?$vector@ULinearTarget@@V?$allocator@ULinearTarget@@@_STL@@@_STL@@QAEXPAULinearTarget@@ABU3@ABU__false_type@2@I_N@Z,0x00001B6D,ILT to vector 12-byte _M_insert_overflow 0x001E91A0; WeaponTemplate::parseLinearTarget
 ?_M_insert_overflow@?$vector@UMissionObjectiveState@@V?$allocator@UMissionObjectiveState@@@_STL@@@_STL@@IAEXPAUMissionObjectiveState@@ABU3@ABU__false_type@2@I_N@Z,0x003C16A0,typed two-bool mission-objective-state vector overflow COMDAT folded with the matched two-byte POD body; the 0x003C29D0 caller proves the receiver element width and passes its initialized MissionObjectiveState by reference through ILT 0x0000791E; campaign=luna36h-20260907;lane=expand02;model=gpt-5.6-sol-ultra
@@ -85815,6 +85821,9 @@ __imp__bfmeTickDZC@0,0x00F59544,pin
 __imp__bfmeUseDWL@4,0x00F59210,pin
 __imp__fopen,0x00F593BC,pin
 __imp__ftell,0x00F593EC,pin
+__imp__iswalnum,0x01359428,MSVCR71 iswalnum import slot used by BFME text-entry validation
+__imp__iswascii,0x01359430,MSVCR71 iswascii import slot used by BFME text-entry validation
+__imp__iswdigit,0x01359434,MSVCR71 iswdigit import slot used by BFME text-entry validation
 __imp__itoa,0x00F592FC,MSVCR71 _itoa IAT slot; retail import identity verified
 __imp__sprintf,0x0135948C,Open-BFME5 retail sprintf import pointer
 __imp__strcasecmp,0x00F5933C,GameSpy Peer SDK imported case-insensitive compare
