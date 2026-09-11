@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b6398d1017ab3384767d626dcea808302c8b33e0f8c042f07f9710fd98366c63",
+  "symbol": "??1Rva008B2DF0TailBase@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ??1Rva008B2DF0TailBase@@QAE@XZ\n// partial score=0.9 date=2026-09-11\n// 97 bytes exact, structure recovered.\n\nextern \"C\" int _bfmeVftCVa[];\nextern \"C\" int _bfmeVftCVb[];\n\nclass Q4Base00D35D68\n{\npublic:\n\t~Q4Base00D35D68(void)\n\t{\n\t\tm_bfmeVfCV = _bfmeVftCVb;\n\t}\n\n\tvoid notify(int first, int second);\n\n\tint *volatile m_bfmeVfCV;\n\tunsigned char m_bfmeHeadCV[4];\n};\n\nclass BfmeMemCV\n{\npublic:\n\t~BfmeMemCV();\n\n\tunsigned char m_bfmeHeadCV[0x10];\n};\n\nclass BfmeOwnCV : public Q4Base00D35D68\n{\npublic:\n\t~BfmeOwnCV(void);\n\n\tBfmeMemCV m_bfmeMemCV;\n\tvolatile int m_bfmeCCV;\n\tunsigned char m_bfmePadCV[4];\n\tvolatile int m_bfmeACV;\n\tvolatile int m_bfmeBCV;\n};\n\nBfmeOwnCV::~BfmeOwnCV(void)\n{\n\tm_bfmeACV = 0;\n\tm_bfmeBCV = 0;\n\n\tm_bfmeVfCV = _bfmeVftCVa;\n\n\tnotify(0, 0);\n\n\tm_bfmeCCV = 0;\n}\n"
+}
