@@ -85257,7 +85257,6 @@ name,address,notes
 ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x000171E8
 ?worldToScreen@View@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z,0x0001C936,CanSelectDrawable retail ILT
 ?wouldIgnite@FlammableUpdate@@QAE_NXZ,0x00016653
-?wouldUpgrade@UpgradeMux@@UBE_NV?$BitFlags@$0IA@@@@Z,0x002d9df0,vtable-slot ??_7FireWeaponWhenDeadBehavior@@6BUpgradeMux@@@ slot 3 anchors=1
 ?write@ConditionWriteChunkShim@@SAXAAVDataChunkOutput@@PAVCondition@@@Z,0x00352DB0,Condition WriteConditionDataChunk incremental-link thunk target through a TU-local forwarding shim
 ?write@CustomMatchPreferences@@UAE_NXZ,0x00030495,CustomMatchPreferences::write folds onto UserPreferences::write; createGame 0x004D58F0
 ?write@DataChunkTableOfContents@@QAEXAAVOutputStream@@@Z,0x00102E60,DataChunkOutput::~DataChunkOutput callsite at retail 0x001036C0 writes the CkMp table through m_contents
