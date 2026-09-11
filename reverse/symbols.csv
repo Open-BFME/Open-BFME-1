@@ -87167,3 +87167,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??$find@I@?$_Rb_tree@IU?$pair@$$CBIPAX@_STL@@U?$_Select1st@U?$pair@$$CBIPAX@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAX@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIPAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAX@_STL@@@2@@1@ABI@Z,0x008FF560,ICF sibling of the unsigned-key zhstl find body; authored source emits equivalent H-key body with unsigned comparator; sole caller PeekHashMapValue008FF850
 ?deleteOverrides@BfmeCrateOverrideView@@QAEPAV1@XZ,0x00032D1C,Same ICF override-chain cleanup thunk as Overridable::deleteOverrides; CrateSystem::reset at 0x00379250 calls it recursively
 ?reserve@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEXI@Z,0x0036EE10,retail REL32 pin for Rva00372670XferObjectIDVector; target call uses ILT 0x00049DE6
+_CreateToolhelp32Snapshot@8,0x00AFE3F6,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+_Module32First@8,0x00AFE3F0,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+_Module32Next@8,0x00AFE3EA,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
