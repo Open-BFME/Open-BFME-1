@@ -1,6 +1,29 @@
 // ?evaluate@U4Curve006095D0@@QBEMH@Z
-// partial score=0.63 date=2026-09-09
+// partial score=0.64 date=2026-09-11
 // cl: /EHs-c-
+//
+// Two fixes over the prior 0.63 stash, both confirmed with tools/probe.py:
+// (1) the single-key "time <= firstTime" test must be written as
+// "!( time > firstTime )": retail emits test ah,0x41; JNE (branch on
+// NOT-GREATER, so unordered also takes the early return), but a literal
+// "time <= firstTime" compiles to test ah,0x41; JNP (branch only on the
+// ordered <=, unordered falls through) -- same mask, different jcc.
+// (2) case 3 of both switches ("evaluateSpline(time) + (float)cycle *
+// (last->value-start->value)") must hoist the subtraction into a local
+// BEFORE the call to match retail's precompute-then-call-then-multiply
+// shape; swapping the addition operand order instead regresses to the
+// smaller/wrong shape (ruled out). ours=556B retail=611B, 217 non-reloc
+// diff bytes remain (score computed as 1 - diffs/611).
+//
+// REMAINING WALL: the rest of the gap is spread across nearly every
+// case body in both switch(m_before)/switch(m_after) arms (case1-after's
+// (cycle-1)*span arithmetic, and case4's two-way
+// "time==firstTime || !(cycle&1)" guard, whose retail form is a
+// fucompp/fnstsw/test-ah,0x44/jnp + test cl,1/jne pair that this
+// reconstruction does not reproduce even though the C++ is a literal
+// transcription). This reads as a body-wide MSVC 7.1 register/x87
+// scheduling difference across many small case arms, not one isolated
+// lever; no single further rewrite closed it after a further ~35 minutes.
 //
 // Three unrelated small bodies from the 0x005E97B0..0x0060D680 slice, each
 // decided by its own bytes plus one pinned callee.
@@ -174,7 +197,7 @@ float U4Curve006095D0::evaluate( int t ) const
 				return start->value + ( time - firstTime ) * start->tangentIn;
 			return start->value;
 		}
-		if( time <= firstTime )
+		if( !( time > firstTime ) )
 			return start->value;
 		if( m_after != 1 )
 			return start->value;
@@ -206,8 +229,10 @@ float U4Curve006095D0::evaluate( int t ) const
 			case 2:
 				return evaluateSpline( time );
 			case 3:
-				return evaluateSpline( time ) +
-					(float)cycle * ( last->value - start->value );
+			{
+				float delta = last->value - start->value;
+				return evaluateSpline( time ) + (float)cycle * delta;
+			}
 			case 4:
 				if( time == firstTime || !( cycle & 1 ) )
 					return evaluateSpline( time );
@@ -227,8 +252,10 @@ float U4Curve006095D0::evaluate( int t ) const
 			case 2:
 				return evaluateSpline( time );
 			case 3:
-				return evaluateSpline( time ) +
-					(float)cycle * ( last->value - start->value );
+			{
+				float delta = last->value - start->value;
+				return evaluateSpline( time ) + (float)cycle * delta;
+			}
 			case 4:
 				if( time == firstTime || !( cycle & 1 ) )
 					return evaluateSpline( time );
