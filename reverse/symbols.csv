@@ -9483,6 +9483,7 @@ name,address,notes
 ??1TeamFactory@@UAE@XZ,0x00013502,ILT to the matched TeamFactory destructor at RVA 0x000F74C0
 ??1TeamPrototype@@MAE@XZ,0x00023641,route=0x000F6E40; actual TeamPrototype scalar wrapper F7580 calls canonical protected complete destructor through this ILT; campaign=36h-20260908-1018
 ??1TeamRelationMap@@UAE@XZ,0x00003661,ILT to the matched TeamRelationMap destructor at RVA 0x000F21C0
+??1TerrainTreeFinalizer@@QAE@XZ,0x0000E2FF,TerrainLogic destructor call at 0x001ADE24 targets the 12-byte tree finalizer ILT
 ??1TeamsInfo@@QAE@XZ,0x00008CBA,pinharvest x1 (thunk)
 ??1TensileFormationUpdateMember@@QAE@XZ,0x0003D2C1,TensileFormationUpdate member destructor call target
 ??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity

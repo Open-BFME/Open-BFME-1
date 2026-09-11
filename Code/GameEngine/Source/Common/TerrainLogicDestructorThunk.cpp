@@ -1,301 +1,158 @@
+// Open-BFME5: clean C++ reconstruction of TerrainLogic's BFME destructor.
+// Retail resets the SubsystemInterface subobject first, then destroys the
+// tree range, waypoint list, filename, boundary vector, and base subobject.
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??1TerrainLogic@@UAE@XZ: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class __declspec(novtable) TerrainLogic
+#include <new>
+
+class TerrainSnapshot
+{
+public:
+	virtual ~TerrainSnapshot() {}
+};
+
+class SubsystemInterface
+{
+public:
+	virtual ~SubsystemInterface();
+
+private:
+	void *m_name;
+};
+
+namespace _STL
+{
+	template <bool Threads, int Instance>
+	class __node_alloc
+	{
+		static void _M_deallocate(void *, unsigned int);
+
+	public:
+		static void deallocate(void *p, unsigned int n)
+		{
+			if (n > 128)
+				::operator delete(p);
+			else
+				_M_deallocate(p, n);
+		}
+	};
+}
+
+struct TerrainVectorElement
+{
+	char bytes[8];
+};
+
+struct TerrainTreeRangeElement
+{
+	char bytes[48];
+};
+
+class TerrainTreeFinalizer
+{
+public:
+	~TerrainTreeFinalizer();
+
+private:
+	char m_data[0xc];
+};
+
+#pragma comment(linker, "/alternatename:??1TerrainTreeFinalizer@@QAE@XZ=?j_0000e2ff@@YAXXZ")
+
+class TerrainVectorStorage
+{
+public:
+	~TerrainVectorStorage()
+	{
+		if (m_start)
+			_STL::__node_alloc<true, 0>::deallocate(
+				m_start, (m_capacity - m_start) * sizeof(TerrainVectorElement));
+	}
+
+	TerrainVectorElement *m_start;
+	TerrainVectorElement *m_finish;
+	TerrainVectorElement *m_capacity;
+};
+
+class BFMERetailAsciiString
+{
+public:
+	~BFMERetailAsciiString()
+	{
+		releaseBuffer();
+	}
+
+private:
+	void releaseBuffer();
+};
+
+
+class Member48
+{
+public:
+	~Member48()
+	{
+		clearA();
+		if (m_head)
+			_STL::__node_alloc<true, 0>::deallocate(m_head, 0xc);
+	}
+	void clearA();
+
+private:
+	void *m_head;
+};
+
+class TerrainTreeRange
+{
+public:
+	__forceinline ~TerrainTreeRange()
+	{
+		if (m_begin)
+			_STL::__node_alloc<true, 0>::deallocate(
+				m_begin, (m_capacity - m_begin) * 48);
+	}
+
+	TerrainTreeRangeElement *m_begin;
+	TerrainTreeRangeElement *m_end;
+	TerrainTreeRangeElement *m_capacity;
+};
+
+class TerrainLogic : public TerrainSnapshot, public SubsystemInterface
 {
 public:
 	virtual ~TerrainLogic();
+	virtual void reset();
+
+private:
+	void *m_waypointListHead;
+	void *m_bridgeListHead;
+	void *m_mapData;
+	char m_data[0xc];
+	TerrainVectorStorage m_secondVector;
+	int m_numWaterToUpdate;
+	int m_activeBoundary;
+	bool m_waterGridEnabled;
+	char m_pad39[3];
+	int m_field3c;
+	BFMERetailAsciiString m_filenameString;
+	bool m_bridgeDamageStatesChanged;
+	char m_pad45[3];
+	Member48 m_list;
+	char m_water[0x500];
+	int m_waterCount;
+	TerrainTreeFinalizer m_treeFinalizer;
+	TerrainTreeRange m_treeRange;
+	int m_boundary[0x4e2];
+	int m_field18f0;
+	bool m_field18f4;
+	char m_pad18f5[3];
+	int m_field18f8;
+	int m_field18fc;
+	float m_field1900;
 };
 
-// ??1TerrainLogic@@UAE@XZ
-__declspec(naked) TerrainLogic::~TerrainLogic()
+TerrainLogic::~TerrainLogic()
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0xfc
-		__emit 0x85
-		__emit 0x00
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x08
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x8d
-		__emit 0x5e
-		__emit 0x04
-		__emit 0x57
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x28
-		__emit 0xc4
-		__emit 0x09
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x03
-		__emit 0xf8
-		__emit 0xc3
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x06
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x38
-		__emit 0xd9
-		__emit 0xe6
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0x5c
-		__emit 0x05
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xff
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x05
-		__emit 0x74
-		__emit 0x3b
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x64
-		__emit 0x05
-		__emit 0x00
-		__emit 0x00
-		__emit 0x2b
-		__emit 0xcf
-		__emit 0xb8
-		__emit 0xab
-		__emit 0xaa
-		__emit 0xaa
-		__emit 0x2a
-		__emit 0xf7
-		__emit 0xe9
-		__emit 0xc1
-		__emit 0xfa
-		__emit 0x03
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0xc1
-		__emit 0xe8
-		__emit 0x1f
-		__emit 0x03
-		__emit 0xc2
-		__emit 0x8d
-		__emit 0x04
-		__emit 0x40
-		__emit 0xc1
-		__emit 0xe0
-		__emit 0x04
-		__emit 0x3d
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x76
-		__emit 0x0b
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xa6
-		__emit 0x40
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x0a
-		__emit 0x50
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xda
-		__emit 0x07
-		__emit 0x68
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x50
-		__emit 0x05
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x04
-		__emit 0xe8
-		__emit 0xd6
-		__emit 0x04
-		__emit 0xe6
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x7e
-		__emit 0x48
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x03
-		__emit 0xe8
-		__emit 0xaf
-		__emit 0xcc
-		__emit 0xe5
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x3f
-		__emit 0x85
-		__emit 0xff
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xaa
-		__emit 0x07
-		__emit 0x68
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x40
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x02
-		__emit 0xe8
-		__emit 0xea
-		__emit 0x9a
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x24
-		__emit 0x85
-		__emit 0xc9
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0x74
-		__emit 0x27
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x2c
-		__emit 0x2b
-		__emit 0xc1
-		__emit 0xc1
-		__emit 0xf8
-		__emit 0x03
-		__emit 0xc1
-		__emit 0xe0
-		__emit 0x03
-		__emit 0x3d
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x76
-		__emit 0x0b
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x36
-		__emit 0x40
-		__emit 0x6d
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x0a
-		__emit 0x50
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x6a
-		__emit 0x07
-		__emit 0x68
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0xe8
-		__emit 0xab
-		__emit 0x3b
-		__emit 0x7f
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x5f
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x44
-		__emit 0x37
-		__emit 0x07
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x14
-		__emit 0xc3
-	}
+	(reinterpret_cast<TerrainLogic *>(reinterpret_cast<char *>(this) + 4))
+		->TerrainLogic::reset();
 }
