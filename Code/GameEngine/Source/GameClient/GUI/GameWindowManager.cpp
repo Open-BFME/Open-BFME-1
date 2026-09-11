@@ -238,7 +238,6 @@ GameWindowTransitionsHandler::GameWindowTransitionsHandler( void )
 	m_transitionGroupList.clear();
 }
 
-// ?load@GameWindowTransitionsHandler@@QAEXXZ present-unmatched
 void GameWindowTransitionsHandler::load( void )
 {
 	WindowTransitionINI ini;
