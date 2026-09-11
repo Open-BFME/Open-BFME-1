@@ -1,17 +1,15 @@
 // ?_M_insert_overflow@?$vector@UGen_t_003b10f0_p32cd@@V?$allocator@UGen_t_003b10f0_p32cd@@@_STL@@@_STL@@IAEXPAUGen_t_003b10f0_p32cd@@ABU3@ABU__false_type@2@I_N@Z
-// partial score=0.97 date=2026-09-03
+// partial score=0.99 date=2026-09-11
 // Open-BFME5: STLport vector<T>::_M_insert_overflow, the reallocating insert,
-// for two more instantiations whose trailing uninitialized copy is INLINE -- the
-// same body already converted in Rva006F2C70VectorInsertOverflow.cpp, where four
-// _Construct call sites appear instead of three plus an out-of-line copy.  Grow
-// to the old size plus the larger of the old size and the fill length, copy
-// everything before the insertion point, the inserted run, and, only when the
-// at-end flag is clear, everything after it, then _M_clear and the three
-// pointers rewritten.  The element width is the stride the copy loops add and
-// the magic multiply that divides the byte distance; each is confirmed by the
-// matched push_back caller in RvaVectorPushBack.cpp, which is also what names
-// the body.  What the element IS does not follow -- every phase is a call -- so
-// each is a byte array named for the address of its push_back.
+// for the 32-byte element vector reached only from the matched push_back
+// family. Grow to the old size plus the larger of the old size and the fill
+// length, copy everything before the insertion point, the inserted run, and,
+// only when the at-end flag is clear, everything after it, then _M_clear and
+// rewrite the three pointers. The element width is the stride the copy loops
+// add and the magic multiply that divides the byte distance; each is
+// confirmed by the matched push_back caller. What the element IS does not
+// follow -- every phase is a call -- so it is a byte array named for this
+// instantiation's own address.
 
 struct Gen_t_003b10f0_p32cd
 {
@@ -111,7 +109,11 @@ void vector<Type, Allocator>::_M_insert_overflow(
 	}
 
 	if (!atEnd)
-		newFinish = uninitialized_copy(position, _M_finish, newFinish);
+	{
+		Type *last = _M_finish;
+		if (position != last)
+			newFinish = uninitialized_copy(position, last, newFinish);
+	}
 
 	_M_clear();
 
