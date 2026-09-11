@@ -2684,6 +2684,7 @@ name,address,notes
 ??0FlightDeckBehaviorModuleData@@QAE@XZ,0x0000CC3E
 ??0FloatUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x01DF84,module ctor (friend_newModuleInstance retail call target)
 ??0FloatUpdateModuleData@@QAE@XZ,0x0004601A,module-glue cascade callee (from retail call site)
+??0FontCharsClass@@QAE@XZ,0x00940610,FontCharsClass constructor called immediately after the 0x464-byte allocation in the source-authentic font-cache helper at 0x0078CC10
 ??0FreeLifeBody@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013296,link thunk to the FreeLifeBody constructor; named from the ModuleFactory registration that pairs "FreeLifeBody" with factory 0x0011F940
 ??0FreeLifeBodyModuleDataBase@@QAE@XZ,0x0003C556,base of FreeLifeBodyModuleData; same ILT as the ICF-folded MissileAIUpdate body
 ??0FreezingRainSpecialPowerModuleDataBase@@QAE@XZ,0x00015C44,FreezingRainSpecialPowerModuleData base ctor
@@ -10531,6 +10532,7 @@ name,address,notes
 ?BFMEGetWaterTrackTexture@@YA?AVBFMEWaterTrackTextureHandle@@PADHH@Z,0x0090E910,retail 4-byte texture handle return used by WaterTracksObj::init
 ?BFMENetworkAllocate@@YAPAXI@Z,0x00881F30,native BFME wrapper-list allocation call target
 ?BFME_DX8_Thread_Assert@@YAXXZ,0x00905B10,both retail IndexBufferClass lock destructors tail-dispatch to the shared DX8 thread assertion path
+?BFME_Get_Font_Chars@@YAPAVFontCharsClass@@PBDM_NH@Z,0x0078CC10,exact same-TU private font-cache helper called twice by W3DFontLibrary::loadFontData; neutral ledger row at this body records the unrecovered original spelling
 ?BFME_Test_Aligned_Box@@YA_NPAUBFMEBoxTestStruct@@@Z,0x008DA840,AABox collision helper pin
 ?BTREE_decompress@@YAHPAE0@Z,0x00822FF0,additive; direct body / per-TU copy
 ?BTREE_treepack@@YAXPAUBTreeEncodeContext@@PAUBTREEMemStruct@@IIIH@Z,0x00821200
@@ -10972,6 +10974,8 @@ name,address,notes
 ?Gen0056C7A0@@YAHHH@Z,0x0056C7A0,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
 ?Gen00574E70@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@@Z,0x00574E70,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
 ?Gen00575450@@YAXPAUQ3SortElem16@@00HUQ3SortCompare@@@Z,0x00575450,address-derived introsort-layer callee; target read from the REL32 at its call site and followed through its ILT thunk
+?Gen00575900Final@@YAXPAXZZ,0x000498CD,STLport final insertion helper called by Rva00575900
+?Gen00575900Intro@@YAXPAXZZ,0x0001D241,STLport introsort helper called by Rva00575900
 ?Gen0058C6C0@@YAHHH@Z,0x0058C6C0,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
 ?Gen0058C7F0@@YAHHH@Z,0x0058C7F0,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
 ?Gen0058C920@@YAHHH@Z,0x0058C920,per-member callee of the 100-byte obfuscated hook wrappers in BigObfHookWrappers.cpp
@@ -11099,6 +11103,7 @@ name,address,notes
 ?Get_User_Text@MeshGeometryClass@@QAEPBDXZ,0x00924C30,pinharvest x1 (body)
 ?Get_Vector@TimeCodedMotionChannelClass@@QAEXMPAM@Z,0x009781A0
 ?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z,0x00931DC0,derived from part_buf matched-caller call sites
+?Glo012F0239@@3_NA,0x012F0239,byte flag gating the debug critter-desync log call in the closest-cell search body at 0x003F5340; address-derived name
 ?Glo012F1028@@3PAVGlo012F1028Type@@A,0x012F1028,Open-BFME5 global read by ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 to reach the sub-object at +0x28 both of its arms notify; address-derived name
 ?Glo012F3344@@3PAVGlo012F3344Type@@A,0x012F3344,Open-BFME5 global ?hide@Shell@@QAEX_N@Z at 0x0057F5B0 notifies through slot 10 of its table when it is there; address-derived name
 ?Glo012F368C@@3PAVGlo012F368CType@@A,0x012F368C,Open-BFME5 global deleted and cleared by ?deleteBuildTooltipLayout@ControlBar@@QAEXXZ at 0x004C1450 through the deleting destructor in slot 0 of its table; address-derived name
@@ -11145,6 +11150,7 @@ name,address,notes
 ?IsCommandSynchronized@@YA_NW4NetCommandType@@@Z,0x00001FB9,caller-typed Bool declaration through the ILT thunk for the Int body at 0x00682E50
 ?IsMungeSortOnLoadEnabled@WW3D@@2_NA,0x0133F42E,WW3D static bool read by MeshModelClass::post_process 0x0096E750 before compute_static_sort_levels
 ?Is_Bone_Captured@HTreeClass@@QBE_NH@Z,0x00952A40
+?Is_Font@FontCharsClass@@QAE_NPBDM_NH@Z,0x0093D2D0,source-authentic font-cache helper at 0x0078CC10 calls this four-key FontChars predicate; fields are name +0x44 point size +0x3c extra setting +0x40 and bold +0x460
 ?Is_Lightmap@?$RefCountPtr@VTextureClass@@@@QBE_NXZ,0x0090C620,BFME texture handle query called from Debug_Statistics::Record_Texture 0x00937D60 (this = the 4-byte handle)
 ?Is_Procedural@?$RefCountPtr@VTextureClass@@@@QBE_NXZ,0x0090C630,BFME texture handle query called from Debug_Statistics::Record_Texture 0x00937D60 (this = the 4-byte handle)
 ?Is_Running@MouseThreadClass@@QAE_NXZ,0x009DB590,W3DMouse redraw-mode polling-thread running check
@@ -13096,6 +13102,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@ABQAV3@ABU__true_type@2@I_N@Z,0x0002B6E8
 ?_M_insert_overflow@?$vector@PAVObjectTypes@@V?$allocator@PAVObjectTypes@@@_STL@@@_STL@@IAEXPAPAVObjectTypes@@ABQAV3@ABU__true_type@2@I_N@Z,0x0000D6FC,ScriptEngine::doObjectTypeListMaintenance at retail 0x0034E370 uses the ObjectTypes pointer-vector overflow ILT
 ?_M_insert_overflow@?$vector@PAVRva00144100Item@@V?$allocator@PAVRva00144100Item@@@_STL@@@_STL@@IAEXPAPAVRva00144100Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00004F8E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00144100 calls; autopin
+?_M_insert_overflow@?$vector@PAVRva003A5450@@V?$allocator@PAVRva003A5450@@@_STL@@@_STL@@IAEXPAPAVRva003A5450@@ABQAV3@ABU__true_type@2@I_N@Z,0x00045408,Open-BFME5 ILT for the pointer-vector overflow reached by the exact 0x003C1C50 append
 ?_M_insert_overflow@?$vector@PAVRva0061AF80Region@@V?$allocator@PAVRva0061AF80Region@@@_STL@@@_STL@@IAEXPAPAVRva0061AF80Region@@ABQAV3@ABU__true_type@2@I_N@Z,0x003C8F80,parser overflow call uses the existing four-byte STLport body at the retail ILT target
 ?_M_insert_overflow@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@IAEXPAPAVScienceInfo@@ABQAV3@ABU__true_type@2@I_N@Z,0x0003076F,harvested from friend_parseScienceDefinition (thunk)
 ?_M_insert_overflow@?$vector@PAVSoundKeyPair@@V?$allocator@PAVSoundKeyPair@@@_STL@@@_STL@@IAEXPAPAVSoundKeyPair@@ABQAV3@ABU__true_type@2@I_N@Z,0x000030BC,vector<SoundKeyPair*> overflow-insert helper; ICF-identical bytes to the pointer-vector instantiation at retail ILT j_000030bc; still a dump
@@ -79418,6 +79425,7 @@ name,address,notes
 ?g_AITNGuardOuterStateVTable@@3HA,0x0109B650,Direct retail primary OuterState vtable VA written at this+0; declaration-only empty-base ABI view
 ?g_AITNGuardPickUpCrateStateVTable@@3HA,0x0109B748,Direct retail primary PickUpCrateState vtable VA written at this+0; declaration-only empty-base ABI view
 ?g_AITNGuardReturnStateVTable@@3HA,0x0109B6D0,Direct retail primary vtable VA written by AITNGuardReturnState construction in AITNGuardMachine; declaration-only empty-base ABI view
+?g_BFMEFontCharsList@@3VBFMEFontCharsList@@A,0x01306C6C,address-derived SimpleDynVecClass FontChars cache used throughout the exact 0x0078CC10 helper and cleared by the adjacent W3DFontLibrary teardown body
 ?g_BFMEIndexBufferDebug@@3PAVBFMEIndexBufferDebugClass@@A,0x01336E5C,retail DX8 error path dispatches through the shared game debug manager global
 ?g_D3DXFastTable@@3UD3DXFASTTABLE@@A,0x00EDBDF8,d3dx9-summer2003 d3dxmath.obj table; cpudetect DIR32 sites 0x1B and 0x4C prove retail VA 0x012DBDF8
 ?g_D3DXMatrixInverseImport@@3P6GPAXPAXPAMPBX@ZA,0x012DBE40,retail D3DXMatrixInverse import slot
@@ -81160,6 +81168,7 @@ name,address,notes
 ?getDecayFilename@AudioEventRTS@@QAE?AVAsciiString@@XZ,0x00049553,AudioEventRTS portion filename switch case 2 names the decay filename accessor
 ?getDecayFilename@AudioEventRTS@@QBE?AVAsciiString@@XZ,0x00049553,AudioManager getAudioLengthMS const accessor spelling at the same proven ILT
 ?getDefaultMap@@YA?AVAsciiString@@_N@Z,0x0000A1E1,callee of SkirmishPreferences::getPreferredMap 0x0009E470
+?getDescription@MapMetaData@@QAE?AVUnicodeString@@XZ,0x0001C0A8,MapMetaData description getter ILT called by the first-line accessor at 0x00452000
 ?getDifficultyListHead@ScriptActionsDifficultyListManager@@QAEPAVScriptActionsDifficultyListNode@@XZ,0x000358BE,doEnableOrDisableObjectDifficultyBonuses list-head call; ILT thunk for body 0x00383090
 ?getDisallowAsianText@CustomMatchPreferences@@QAE_NXZ,0x00019C72
 ?getDisallowNonAsianText@CustomMatchPreferences@@QAE_NXZ,0x00007E6E
@@ -84530,6 +84539,7 @@ name,address,notes
 ?setAnimData@BFMEAnimateWindowLayout@@QAEXUICoord2D@@000UBFMECoord2D@@II@Z,0x003D5B9,BFME Coord2D ABI layout call to AnimateWindow::setAnimData
 ?setAnimationLoopDuration@W3DModelDraw@@UAEXI@Z,0x0075c760,vtable-slot ??_7W3DModelDraw@@6B@ slot 24 anchors=8
 ?setAptPalantirAlertVisible@@YAXH_N@Z,0x0001136A,AptPalantir alert visibility action thunk
+?setAscii@Rva003A5450@@QAEXABVAsciiString@@@Z,0x00028CF9,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its ASCII-string argument
 ?setAsciiString@Dict@@QAEPAVAsciiString@@V2@@Z,0x00009304,Dict setAsciiString used by MapObject::setWaypointName
 ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z,0x00040D95,ILT to matched body 0x00150FE0; callee of updateTeamSetAttitude 0x002F29E0
 ?setAttitude@AIUpdateInterface@@QAEXW4AttitudeType@@@Z,0x00030553,Open-BFME5 ILT thunk to body 0x0027DEF0 in the AIUpdate range; ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z at 0x00150FE0 calls it on each member AI read from Object+0x204
@@ -84551,6 +84561,7 @@ name,address,notes
 ?setControlBarScheme@ControlBarSchemeManager@@QAEXVAsciiString@@@Z,0x004AD880,body from setControlBarSchemeByName call @0x4A00AF via ILT 0xA196
 ?setControlBarSchemeByPlayerTemplate@ControlBarSchemeManager@@QAEXPBVPlayerTemplate@@_N@Z,0x000378EE,REL32 pin: retail calls this through the incremental-link thunk at 0x378EE which jumps to 0x4ADE40
 ?setControlCommand@ControlBar@@AAEXPAVGameWindow@@PBVCommandButton@@@Z,0x00015DA7,incremental-link thunk read out of the call displacement in populateOCLTimer
+?setCoord@Rva003A5450@@QAEXABURva003C1C50Coord@@@Z,0x0002E898,Open-BFME5 ILT called by the exact 0x003C1C50 item builder; target copies the coordinate to +0x0C/+0x10
 ?setCopiedFromDefault@ThingTemplate@@QAEXXZ,0x0004609C,ThingFactory::newOverride calls the copied-from-default helper through retail ILT
 ?setCurrentFilename@BfmeAptScreenMapTransfer@@QAEXABVAsciiString@@@Z,0x00510320,FileTransfer 0x0066CE60 call through ILT 0x00030418 on singleton 0x012F496C; same this as exact BfmeAptScreenMapTransfer::processProgress and filename reference ABI proven by caller
 ?setCurrentVictim@AIUpdateInterface@@IAEXPBVObject@@@Z,0x00273960,protected spelling emitted by the exact object-order command at 0x002788B0; same matched body as the public spelling
@@ -84581,6 +84592,7 @@ name,address,notes
 ?setFPMode@@YAXXZ,0x008FC4C0
 ?setFileID@NetFileProgressCommandMsg@@QAEXG@Z,0x000247EE,ILT thunk; real body 0xA74090
 ?setFilename@Image@@QAEXVAsciiString@@@Z,0x00008C15,Image filename setter; ILT resolves to 0x00450270 and writes the string at Image+8
+?setFlag@Rva003A5450@@QAEXD@Z,0x0003688B,Open-BFME5 ILT called by the exact 0x003C1C50 item builder; target stores its byte argument at +0x1E
 ?setFlipRecursive@W3DTerrainBackground@@IAEXHHH@Z,0x0001B5F9
 ?setFlipRecursive@W3DTerrainBackground@@IAEXHHHH@Z,0x0002E735,link thunk; four-arg BFME setFlipRecursive from setFlip 0x00728BC0
 ?setFrameFade@W3DDynamicLightPulseShim@@QAEXII@Z,0x000049E9,ILT call target used by W3DDisplay light pulse
@@ -84757,6 +84769,7 @@ name,address,notes
 ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z,0x00043FFE,ILT thunk to 0x18D120; pinned from AIUpdateInterface::setTurretTargetObject @0x26E930
 ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z,0x000468F8,ILT thunk at 0x468F8 jumping to the body at 0x18D260 in the TurretAI cluster; call sites reference the thunk
 ?setType@PathfindCell@@QAEXW4CellType@1@@Z,0x003F68B0,PathfindCell type setter called by classifyMap at 0x003F9140
+?setUnicode@Rva003A5450@@QAEXABVUnicodeString@@@Z,0x0001036B,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its second UnicodeString
 ?setUserName@LanLobbyUserNamePrefs@@QAEXVUnicodeString@@@Z,0x00031575,ILT thunk to body 0x000870F0
 ?setVector@BfmeStreakObject@@QAEXPBUBfmeStreakVector@@@Z,0x00955BC0,retail callee pin for W3DStreakDraw constructor
 ?setVideoBuffer@GameWindowInstanceData@@QAEXXZ,0x0002E073,retail BFME WindowVideo init callee; ABI-shaped no-argument instance-data setter
@@ -86976,6 +86989,7 @@ g_bfmeFirstCF,0x012B5628,Open-BFME5 the first factor the scale at 0x00458430 mul
 g_bfmeFirstEB,0x01346DDC,Open-BFME5 the first word the global reset at 0x009336B0 zeroes
 g_bfmeFirstEG,0x012B87AC,Open-BFME5 the first word the constructor at 0x005A7460 copies
 g_bfmeFirstFD,0x01353520,Open-BFME5 the first block the clear at 0x00875F90 zeroes
+g_bfmeFlag1281,0x0133781D,address-derived byte flag read by the 0x008BD6B0 retail constructor
 g_bfmeFlagAGA,0x012F71B8,GameSpy buddy callback flag set and cleared at 0x0063B090
 g_bfmeFlagBGA,0x012F71B9,GameSpy buddy callback pending flag set at 0x0063B090
 g_bfmeFlagDMa,0x012B7D84,Open-BFME5 the first flag the quiet test at 0x00563940 reads
@@ -87018,6 +87032,7 @@ g_bfmeMaterialXP,0x0134B210,Open-BFME5 the default VertexMaterialClass the initi
 g_bfmeMinimumScore1285,0x01075350,address-derived minimum directional score accepted by the 0x008BB3F0 retail body
 g_bfmeMsgVftDN,0x010F5738
 g_bfmeNameVSF,0x012ED4EC,Open-BFME5 retail string object assigned by the 0x00062750 body
+g_bfmeNode1281Vtable,0x01136E00,address-derived vtable installed by the 0x008BD6B0 retail constructor
 g_bfmeObserverYU,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EDB0 checks
 g_bfmeObserverYV,0x012F0898,Open-BFME5 the observer the dispatch at 0x0058EED0 checks
 g_bfmeOffsetDF,0x01098AD4,Open-BFME5 the offset the clamped difference at 0x001E1950 subtracts
