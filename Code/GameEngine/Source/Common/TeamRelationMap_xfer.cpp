@@ -1,34 +1,33 @@
-// ?xfer@TeamRelationMap@@MAEXPAVXfer@@@Z
-// partial score=0.99 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// TeamRelationMap::xfer, retail 0x000F3C50, 269 bytes.
 //
-// BFME keeps one virtual base at TeamRelationMap+0 and the STLport relation
-// map at +4.  The save/load body is the Team relation serializer from the
-// upstream Team.h model.  BFME's three argument xferUser call is the existing
-// 25-byte Relationship forwarder at 0x0010BE40; using that real helper keeps
-// the retail literal and virtual slot rather than inventing a local wrapper.
+// TeamRelationMap::xfer, retail 0x000F3C50 (269 bytes).  The retail body and
+// the upstream Team.cpp agree on the version/count/save/load relation loop.
+// Its vtable slot had previously been pinned as loadPostProcess, but that
+// upstream method is empty; the slot-only identity ignored BFME's intervening
+// class-name getter.
 
 #include <hash_map>
 
 typedef bool Bool;
-typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef unsigned char UnsignedByte;
 
 struct XferVersion
 {
+	// BFME passes the two one-byte version values as a single object here.
+	XferVersion(UnsignedByte version) :
+		m_version(version), m_currentVersion(version)
+	{
+	}
+
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
 };
 
 class Snapshot;
 
-// BFME Xfer layout: xferVersion +0x28, xferUnsignedShort +0x7c,
-// isSaving +0x08, isDoingCRC +0x10.  The other declarations reserve the
-// intervening slots so the calls use the retail vtable offsets.
 class Xfer
 {
 public:
@@ -70,9 +69,6 @@ public:
 	virtual void xferBool(Bool *);
 };
 
-// This is defined in MidVirtualSlot90Forwarders.cpp.  It is the retail
-// helper used by this body, not a replacement implementation: it forwards
-// ("Relationship", context, 4) to Xfer's slot +0x90.
 class MidVirtualSlot90Receiver;
 extern void Rva0010BE40(MidVirtualSlot90Receiver *, void *);
 
@@ -115,38 +111,39 @@ private:
 // ?xfer@TeamRelationMap@@MAEXPAVXfer@@@Z
 void TeamRelationMap::xfer(Xfer *xfer)
 {
-    if (xfer->isDoingCRC())
-        return;
+	if (xfer->isDoingCRC())
+		return;
 
-    {
-        XferVersion version = { 1, 1 };
-        xfer->xferVersion(&version);
-    }
+	{
+		XferVersion version(1);
+		xfer->xferVersion(&version);
+	}
 
-    UnsignedShort teamRelationCount = m_map.size();
-    xfer->xferUnsignedShort(&teamRelationCount);
+	UnsignedShort teamRelationCount = m_map.size();
+	xfer->xferUnsignedShort(&teamRelationCount);
 
-    Relationship relationship;
-    if (xfer->isSaving())
-    {
-        TeamRelationMapType::iterator teamRelationIt;
-        for (teamRelationIt = m_map.begin(); teamRelationIt != m_map.end(); ++teamRelationIt)
-        {
-            TeamID teamID;
-            teamID = (*teamRelationIt).first;
-            xfer->xferTeamID(&teamID);
-            relationship = (*teamRelationIt).second;
-            Rva0010BE40((MidVirtualSlot90Receiver *)xfer, &relationship);
-        }
-    }
-    else
-    {
-        TeamID teamID;
-        for (UnsignedShort i = 0; i < teamRelationCount; ++i)
-        {
-            xfer->xferTeamID(&teamID);
-            Rva0010BE40((MidVirtualSlot90Receiver *)xfer, &relationship);
-            m_map[teamID] = relationship;
-        }
-    }
+	// Keeping this local live across both branches reproduces retail's shared
+	// stack slot; separate branch locals make MSVC colour the frame differently.
+	TeamID teamID;
+	Relationship relationship;
+	if (xfer->isSaving())
+	{
+		TeamRelationMapType::iterator teamRelationIt;
+		for (teamRelationIt = m_map.begin(); teamRelationIt != m_map.end(); ++teamRelationIt)
+		{
+			teamID = (*teamRelationIt).first;
+			xfer->xferTeamID(&teamID);
+			relationship = (*teamRelationIt).second;
+			Rva0010BE40((MidVirtualSlot90Receiver *)xfer, &relationship);
+		}
+	}
+	else
+	{
+		for (UnsignedShort i = 0; i < teamRelationCount; ++i)
+		{
+			xfer->xferTeamID(&teamID);
+			Rva0010BE40((MidVirtualSlot90Receiver *)xfer, &relationship);
+			m_map[teamID] = relationship;
+		}
+	}
 }
