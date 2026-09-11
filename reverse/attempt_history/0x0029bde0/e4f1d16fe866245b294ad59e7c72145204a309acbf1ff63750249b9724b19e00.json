@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e4f1d16fe866245b294ad59e7c72145204a309acbf1ff63750249b9724b19e00",
+  "symbol": "?walk@Gen0029BDE0@@QAEXPAVBfmeHelperD77@@_N@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?walk@Gen0029BDE0@@QAEXPAVBfmeHelperD77@@_N@Z\n// partial score=0.94 date=2026-09-04\n// ?d_0029bde0@@YAXXZ\n// partial score=0.94 date=2026-09-02\n// cl: /DNDEBUG /MD /EHsc\n//\n// Retail 0x0029BDE0: walk this+0xC (next at +0x40) up to (flag?5:1) matches\n// of type 1 or 3 against the query object.\n\nclass BfmeHelperD77\n{\npublic:\n\tchar query(void *);\n};\n\nstruct Gen0029BDE0Node\n{\n\tvoid *m_unused0;\n\tint m_type;\n\tvoid *m_key;\n\tvoid *m_unused0C;\n\tvoid *m_payload;\n\tunsigned char m_pad14[0x2c];\n\tGen0029BDE0Node *m_next;\n};\n\nclass Gen0029BDE0\n{\npublic:\n\tvirtual void slot00();\n\tvirtual void slot04();\n\tvirtual void slot08();\n\tvirtual void slot0C();\n\tvirtual void slot10();\n\tvirtual void slot14();\n\tvirtual void slot18();\n\tvirtual void slot1C();\n\tvirtual void applyPayload(void *payload);\n\n\tvoid walk(BfmeHelperD77 *target, bool flag);\n\nprivate:\n\tvoid *m_unused4;\n\tvoid *m_unused8;\n\tGen0029BDE0Node *m_head;\n};\n\n// ?walk@Gen0029BDE0@@QAEXPAVBfmeHelperD77@@_N@Z\nvoid Gen0029BDE0::walk(BfmeHelperD77 *target, bool flag)\n{\n\tGen0029BDE0Node *node = m_head;\n\tint remaining = flag ? 5 : 1;\n\tif (!remaining)\n\t\treturn;\n\tdo\n\t{\n\t\tif (!node)\n\t\t\treturn;\n\t\tif (node->m_type == 1 || node->m_type == 3)\n\t\t{\n\t\t\tif (target->query(node->m_key))\n\t\t\t{\n\t\t\t\tapplyPayload(node->m_payload);\n\t\t\t\tnode = m_head;\n\t\t\t\tremaining--;\n\t\t\t\tcontinue;\n\t\t\t}\n\t\t}\n\t\tnode = node->m_next;\n\t} while (remaining);\n}\n"
+}
