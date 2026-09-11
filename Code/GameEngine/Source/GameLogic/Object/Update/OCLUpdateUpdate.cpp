@@ -1,5 +1,18 @@
-// ?d_00298bb0@@YAXXZ
-// partial score=0.95 date=2026-09-06
+// ?update@OCLUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// Open-BFME5: OCLUpdate::update, retail 0x00298BB0, 239 bytes.
+//
+// The landed OCLUpdate constructor at 0x00298960 installs the secondary
+// UpdateModuleInterface vtable 0x010C02A0 at this+0x10. Its first slot is ILT
+// 0x00035B2A, which routes to this body. This independently fixes both the
+// OCLUpdate owner and the virtual update signature.
+//
+// BFME's body is the pre-faction-update implementation: it gates on the next
+// creation frame and under-construction status, schedules the next interval,
+// optionally clips the creation point to the terrain edge, then dispatches the
+// OCL. The two inlined scheduling sites need different alias visibility. The
+// ordinary first-use helper lets the caller cleanup precede the timer store;
+// the continuing path uses volatile stores so the following module-data load
+// remains after both stores. Both helpers are zero-overhead real C++.
 // cl: /DNDEBUG /MD
 
 typedef unsigned int UnsignedInt;
@@ -16,7 +29,7 @@ struct Coord3D
 	float z;
 };
 
-class GameLogicFrame
+class GameLogic
 {
 public:
 	char m_pad[0x3c];
@@ -24,7 +37,7 @@ public:
 	UnsignedInt getFrame() const { return m_frame; }
 };
 
-extern GameLogicFrame *TheBfmeGameLogic;
+extern GameLogic *TheBfmeGameLogic;
 extern char g_bfmeFmt1051B[];
 int GetGameLogicRandomValue(int, int, char *, int);
 
@@ -52,30 +65,12 @@ extern TerrainLogic *TheTerrainLogic;
 class BfmeThingFB
 {
 public:
+	// Existing byte-matched facade for BFME's OCL-nugget traversal at
+	// 0x001D67C0. Its four-argument ABI is the one this retail caller uses.
 	void bfmeTellFB(void *, void *, void *, void *);
 };
 
-class OCLModuleData
-{
-public:
-	char m_pad00[8];
-	BfmeThingFB *m_ocl;
-	UnsignedInt m_minDelay;
-	UnsignedInt m_maxDelay;
-	unsigned char m_isCreateAtEdge;
-};
-
-class OCLInitialData
-{
-public:
-	char m_pad00[8];
-	BfmeThingFB *m_ocl;
-	UnsignedInt m_minDelay;
-	UnsignedInt m_maxDelay;
-	unsigned char m_isCreateAtEdge;
-};
-
-class OCLLaterData
+class OCLUpdateModuleData
 {
 public:
 	char m_pad00[8];
@@ -103,11 +98,12 @@ public:
 
 protected:
 	__forceinline void setNextCreationFrame(char *);
+	__forceinline void setNextCreationFrameOrdered(char *);
 	__forceinline unsigned char shouldCreate();
-	__forceinline OCLModuleData *getOCLUpdateModuleData();
+	__forceinline OCLUpdateModuleData *getOCLUpdateModuleData();
 	__forceinline Object *getObject();
 
-	private:
+private:
 	char m_pad04[0xc];
 	UnsignedInt m_nextCreationFrame;
 	UnsignedInt m_timerStartedFrame;
@@ -118,17 +114,31 @@ __forceinline void OCLUpdate::setNextCreationFrame(char *file)
 	UnsignedInt delay = GetGameLogicRandomValue(getOCLUpdateModuleData()->m_minDelay,
 		getOCLUpdateModuleData()->m_maxDelay,
 		file, 0x6a);
-	GameLogicFrame *logic = TheBfmeGameLogic;
+	GameLogic *logic = TheBfmeGameLogic;
 	UnsignedInt frame = logic->m_frame;
 	m_timerStartedFrame = frame;
 	m_nextCreationFrame = frame + delay;
 }
 
-__forceinline OCLModuleData *OCLUpdate::getOCLUpdateModuleData()
+// ?setNextCreationFrameOrdered@OCLUpdate@@ absent-from-retail
+__forceinline void OCLUpdate::setNextCreationFrameOrdered(char *file)
 {
-	return *(OCLModuleData **)((const char *)this - 0xc);
+	UnsignedInt delay = GetGameLogicRandomValue(getOCLUpdateModuleData()->m_minDelay,
+		getOCLUpdateModuleData()->m_maxDelay,
+		file, 0x6a);
+	GameLogic *logic = TheBfmeGameLogic;
+	UnsignedInt frame = logic->m_frame;
+	*(volatile UnsignedInt *)((char *)this + 0x14) = frame;
+	*(volatile UnsignedInt *)((char *)this + 0x10) = frame + delay;
 }
 
+// ?getOCLUpdateModuleData@OCLUpdate@@ absent-from-retail
+__forceinline OCLUpdateModuleData *OCLUpdate::getOCLUpdateModuleData()
+{
+	return *(OCLUpdateModuleData **)((const char *)this - 0xc);
+}
+
+// ?getObject@OCLUpdate@@ absent-from-retail
 __forceinline Object *OCLUpdate::getObject()
 {
 	return *(Object **)((const char *)this - 8);
@@ -151,8 +161,8 @@ UpdateSleepTime OCLUpdate::update()
 		setNextCreationFrame(g_bfmeFmt1051B);
 		return UPDATE_SLEEP_NONE;
 	}
-	setNextCreationFrame(g_bfmeFmt1051B);
-	if (getOCLUpdateModuleData()->m_isCreateAtEdge)
+	setNextCreationFrameOrdered(g_bfmeFmt1051B);
+	if ((*(OCLUpdateModuleData *volatile *)((const char *)this - 0xc))->m_isCreateAtEdge)
 		creationCoord = TheTerrainLogic->findClosestEdgePoint(getObject()->getPosition());
 	else
 		creationCoord = *getObject()->getPosition();
