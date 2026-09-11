@@ -17,8 +17,8 @@
 // comparison sites, which is what this file reproduces.
 //
 // The plain bodies expand the comparison in the descent loop but call the
-// member after descent.  The explicit 0x0068FBE0 specialization below spells
-// that asymmetric source shape; the separate 0x0054F000 body remains a dump.
+// member after descent.  The explicit specializations below spell that
+// asymmetric source shape for both mapped-value layouts.
 //
 // StringBase is spelled here rather than included, because the shim's copy
 // keeps its constructors private for AsciiString's benefit and the key of a
@@ -95,10 +95,6 @@ typedef _STL::pair<const BfmeWideString, Rva0054EF10Value> Rva0054EF10Pair;
 typedef _STL::_Rb_tree<BfmeWideString, Rva0054EF10Pair, _STL::_Select1st<Rva0054EF10Pair>,
 	_STL::less<BfmeWideString>, _STL::allocator<Rva0054EF10Pair> > Rva0054EF10Tree;
 
-// retail 0x0054F000, inserting through the _M_insert at 0x0054EF10
-template _STL::pair<Rva0054EF10Tree::iterator, bool>
-Rva0054EF10Tree::insert_unique( const Rva0054EF10Pair & );
-
 // retail 0x0054F3F0, hinting into the same _M_insert
 template Rva0054EF10Tree::iterator
 Rva0054EF10Tree::insert_unique( Rva0054EF10Tree::iterator, const Rva0054EF10Pair & );
@@ -146,6 +142,32 @@ static __forceinline int bfmeWideCompareInline( const BfmeWideString &left,
 template <>
 _STL::pair<Rva0068FAF0Tree::iterator, bool>
 Rva0068FAF0Tree::insert_unique( const Rva0068FAF0Pair &value )
+{
+	_Link_type parent = this->_M_header._M_data;
+	_Link_type node = _M_root();
+	bool less = true;
+	while ( node != 0 )
+	{
+		parent = node;
+		less = bfmeWideCompareInline( value.first, _S_key( node ) ) < 0;
+		node = less ? _S_left( node ) : _S_right( node );
+	}
+	iterator position = iterator( parent );
+	if ( less && position == begin() )
+		return _STL::pair<iterator, bool>( _M_insert( parent, parent, value ), true );
+	if ( less )
+		--position;
+	if ( _S_key( position._M_node ).compare( value.first ) < 0 )
+		return _STL::pair<iterator, bool>( _M_insert( node, parent, value ), true );
+	return _STL::pair<iterator, bool>( position, false );
+}
+
+// retail 0x0054F000, inserting through the _M_insert at 0x0054EF10.
+// This is the same plain wide-string insertion shape as 0x0068FBE0; only the
+// mapped node type, its constructor thunk, and the _M_insert route differ.
+template <>
+_STL::pair<Rva0054EF10Tree::iterator, bool>
+Rva0054EF10Tree::insert_unique( const Rva0054EF10Pair &value )
 {
 	_Link_type parent = this->_M_header._M_data;
 	_Link_type node = _M_root();
