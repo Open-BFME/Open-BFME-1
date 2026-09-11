@@ -1,250 +1,117 @@
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME-DS01: lift retail bytes to standalone C++ thunk.
+// Retail 0x00497140, 237 bytes. This is a relocation-masked byte twin of
+// ProcessAnimateWindowSlideFromTop::updateAnimateWindow at 0x00496130.
 
-class AnimateWindow;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
+typedef unsigned int UnsignedInt;
+typedef int Int;
+typedef float Real;
+typedef bool Bool;
+
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+struct Coord2D
+{
+	Real x;
+	Real y;
+	Coord2D(void) {}
+	Coord2D(const Coord2D &that) : x(that.x), y(that.y) {}
+	~Coord2D(void) {}
+};
+
+class GameWindow
+{
+public:
+	Int winSetPosition(Int x, Int y);
+};
+
+class AnimateWindow
+{
+public:
+	virtual ~AnimateWindow(void);
+
+	UnsignedInt getStartTime(void) { return m_startTime; }
+	GameWindow *getGameWindow(void) { return m_gameWindow; }
+	const ICoord2D &getCurPos(void) { return m_curPos; }
+	const ICoord2D &getEndPos(void) { return m_endPos; }
+	Coord2D getVel(void) { return m_vel; }
+	Bool isFinished(void) { return m_finished; }
+	void setFinished(Bool finished) { m_finished = finished; }
+	void setCurPos(ICoord2D pos) { m_curPos = pos; }
+	void setVel(Coord2D vel) { m_vel = vel; }
+
+private:
+	UnsignedInt m_delay;
+	ICoord2D m_startPos;
+	ICoord2D m_endPos;
+	ICoord2D m_curPos;
+	ICoord2D m_restPos;
+	GameWindow *m_gameWindow;
+	Coord2D m_vel;
+	UnsignedInt m_startTime;
+	UnsignedInt m_endTime;
+	unsigned char m_padding[5];
+	Bool m_finished;
+};
+
 class ProcessAnimateWindowSlideFromTopFast
 {
 public:
-	virtual bool updateAnimateWindow(AnimateWindow *);
+	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
+	virtual void initAnimateWindow(AnimateWindow *);
+	virtual Bool updateAnimateWindow(AnimateWindow *);
+	virtual Bool reverseAnimateWindow(AnimateWindow *);
+
+private:
+	Coord2D m_maxVel;
+	Int m_slowDownThreshold;
+	Real m_slowDownRatio;
+	Real m_speedUpRatio;
 };
 
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromTopFast@@UAE_NPAVAnimateWindow@@@Z
-__declspec(naked) bool ProcessAnimateWindowSlideFromTopFast::updateAnimateWindow(AnimateWindow *)
+extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
+
+Bool ProcessAnimateWindowSlideFromTopFast::updateAnimateWindow(AnimateWindow *animWin)
 {
-	__asm {
-		__emit 0x83
-		__emit 0xec
-		__emit 0x0c
-		__emit 0x56
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x14
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0x74
-		__emit 0x07
-		__emit 0x8a
-		__emit 0x46
-		__emit 0x41
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x09
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x57
-		__emit 0x8b
-		__emit 0x7e
-		__emit 0x34
-		__emit 0xe8
-		__emit 0x7b
-		__emit 0x10
-		__emit 0xbb
-		__emit 0xff
-		__emit 0x3b
-		__emit 0xc7
-		__emit 0x73
-		__emit 0x0a
-		__emit 0x5f
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x28
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x75
-		__emit 0x0a
-		__emit 0x5f
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x7e
-		__emit 0x14
-		__emit 0x53
-		__emit 0x8b
-		__emit 0x5e
-		__emit 0x1c
-		__emit 0x55
-		__emit 0x8b
-		__emit 0x6e
-		__emit 0x18
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xce
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x9e
-		__emit 0x73
-		__emit 0xb7
-		__emit 0xff
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xe8
-		__emit 0x85
-		__emit 0xfc
-		__emit 0x55
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x03
-		__emit 0xd8
-		__emit 0x3b
-		__emit 0xdf
-		__emit 0x7e
-		__emit 0x16
-		__emit 0x57
-		__emit 0x55
-		__emit 0xe8
-		__emit 0xd9
-		__emit 0x22
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5f
-		__emit 0x88
-		__emit 0x46
-		__emit 0x41
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x53
-		__emit 0x55
-		__emit 0xe8
-		__emit 0xc3
-		__emit 0x22
-		__emit 0xb8
-		__emit 0xff
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x89
-		__emit 0x6e
-		__emit 0x18
-		__emit 0x89
-		__emit 0x5e
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x48
-		__emit 0x0c
-		__emit 0x2b
-		__emit 0xfb
-		__emit 0x3b
-		__emit 0xf9
-		__emit 0x7f
-		__emit 0x03
-		__emit 0xd8
-		__emit 0x48
-		__emit 0x10
-		__emit 0xd8
-		__emit 0x15
-		__emit 0x34
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x05
-		__emit 0x7a
-		__emit 0x08
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x34
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0x8b
-		__emit 0xc2
-		__emit 0x89
-		__emit 0x46
-		__emit 0x2c
-		__emit 0x5f
-		__emit 0x89
-		__emit 0x4e
-		__emit 0x30
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
+	if (!animWin)
+		return true;
+
+	if (animWin->isFinished())
+		return true;
+
+	if (bfme_timeGetTime() < animWin->getStartTime())
+		return false;
+
+	GameWindow *win = animWin->getGameWindow();
+	if (!win)
+		return true;
+
+	ICoord2D curPos = animWin->getCurPos();
+	ICoord2D endPos = animWin->getEndPos();
+	Coord2D vel = animWin->getVel();
+	curPos.y += (Int)vel.y;
+
+	if (curPos.y > endPos.y)
+	{
+		curPos.y = endPos.y;
+		win->winSetPosition(curPos.x, curPos.y);
+		animWin->setFinished(true);
+		return true;
 	}
+
+	win->winSetPosition(curPos.x, curPos.y);
+	animWin->setCurPos(curPos);
+
+	if (endPos.y - curPos.y <= m_slowDownThreshold)
+		vel.y *= m_slowDownRatio;
+
+	if (vel.y < 1.0f)
+		vel.y = 1.0f;
+
+	animWin->setVel(vel);
+	return false;
 }
