@@ -134,6 +134,13 @@ static DX8VertexBufferClass* _DynamicDX8VertexBuffer=NULL;
 static unsigned short _DynamicDX8VertexBufferSize=DEFAULT_VB_SIZE;
 static unsigned short _DynamicDX8VertexBufferOffset=0;
 
+// BFME resets fifteen recycled DX8 offsets rather than the upstream scalar.
+// The rest of this translation unit still describes the upstream single-buffer
+// implementation; these two globals are the BFME reset ABI.
+enum { BFME_DYNAMIC_VERTEX_OFFSET_COUNT = 15 };
+extern unsigned short BfmeDynamicDX8VertexBufferOffset[];
+extern unsigned short BfmeDynamicSortingVertexArrayOffset;
+
 static const FVFInfoClass _DynamicFVFInfo(dynamic_fvf_type);
 
 static int _DX8VertexBufferCount=0;
@@ -1008,8 +1015,12 @@ DynamicVBAccessClass::WriteLockClass::~WriteLockClass()
 
 void DynamicVBAccessClass::_Reset(bool frame_changed)
 {
-	_DynamicSortingVertexArrayOffset=0;
-	if (frame_changed) _DynamicDX8VertexBufferOffset=0;
+	BfmeDynamicSortingVertexArrayOffset = 0;
+	if (frame_changed)
+	{
+		for (int slot = 0; slot != BFME_DYNAMIC_VERTEX_OFFSET_COUNT; ++slot)
+			BfmeDynamicDX8VertexBufferOffset[slot] = 0;
+	}
 }
 
 unsigned short DynamicVBAccessClass::Get_Default_Vertex_Count(void)
