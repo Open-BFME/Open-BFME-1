@@ -472,7 +472,7 @@ void MapCache::updateCache( void )
 #endif
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheClearUnseenMapsThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/MapCacheClearUnseenMaps.cpp
 // ?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z present-unmatched
 Bool MapCache::clearUnseenMaps( AsciiString dirName )
 {
