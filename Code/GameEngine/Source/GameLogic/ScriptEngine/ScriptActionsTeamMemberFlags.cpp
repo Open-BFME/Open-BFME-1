@@ -6,9 +6,8 @@
 //
 //   0x002FD570  doTeamSetRepulsor  Object::setStatus with the repulsor bit
 //
-// The related 0x003024E0 identity correction is kept in the ledger tombstone;
-// its clean body is reintroduced under the canonical ScriptActions name by the
-// following add_match transaction.
+// The related 0x003024E0 body is the canonical TEAM_EXIT_ALL_BUILDINGS method:
+// its member AI call is the 0x0000A5DD ILT for AICommandInterface::aiExit.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
@@ -190,6 +189,7 @@ class ScriptActions
 {
 protected:
 	void doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor);
+	void doTeamExitAllBuildings(const AsciiString &teamName);
 };
 
 void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor)
@@ -210,6 +210,30 @@ void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor
 			}
 			obj->setStatus(
 				MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_REPULSOR), repulsor);
+		}
+	}
+}
+
+void ScriptActions::doTeamExitAllBuildings(const AsciiString &teamName)
+{
+	Team *team = TheScriptEngine->getTeamNamed(teamName, false);
+	if (!team)
+		return;
+
+	for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList();
+		!iter.done(); iter.advance())
+	{
+		Object *obj = iter.cur();
+		if (obj)
+		{
+			AIUpdateInterface *ai = *(AIUpdateInterface **)(
+				reinterpret_cast<unsigned char *>(obj) + 0x204);
+			if (ai != 0)
+			{
+				BfmeInnerRQ *command = reinterpret_cast<BfmeInnerRQ *>(
+					reinterpret_cast<unsigned char *>(ai) + 0x20);
+				command->bfmeSetRQ(0, 1);
+			}
 		}
 	}
 }
