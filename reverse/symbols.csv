@@ -75170,6 +75170,7 @@ name,address,notes
 ?bfmeDtorTWB@BfmeStrTWB@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWC@BfmeHeadTWC@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,pin
+?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,reconstruction alias; not historical identity; retained for the existing address-derived 0x00958680 caller
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
