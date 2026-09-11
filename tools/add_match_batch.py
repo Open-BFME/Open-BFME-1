@@ -23,7 +23,7 @@ SAFETY IS NOT RELAXED ANYWHERE. Specifically:
     concurrent agent cannot interleave;
   * every validation add_match performs -- name already claimed, address
     already claimed, range overlapping a matched row, --replace-rva naming
-    exactly one gen-dump scaffold, ICF-owner agreement -- applied to each row;
+    exactly one generated scaffold, ICF-owner agreement -- applied to each row;
   * PLUS a check add_match structurally cannot make: rows in the same batch are
     validated AGAINST EACH OTHER. A batch can collide with itself (two claims
     at one address, or two overlapping ranges), and an earlier run recorded
@@ -110,6 +110,7 @@ def main():
 
     root = args.root.resolve()
     functions_csv = root / "reverse" / "functions.csv"
+    deleted_csv = root / "reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
         add_match.fail(f"no ledger at {functions_csv}")
 
@@ -142,6 +143,7 @@ def main():
 
     # Rows this batch retires, keyed (name, rva) so the drop is by CONTENT.
     retire = {}
+    replacements = []
     # Live ranges = existing matched rows minus retired ones, plus batch rows as
     # they are accepted. Validating the batch against ITSELF is the check a
     # per-row tool cannot make.
@@ -159,12 +161,19 @@ def main():
             if len(at) != 1:
                 add_match.fail(f"line {c['line']}: replace_rva 0x{old:08X} matches "
                                f"{len(at)} live rows; it retires exactly one")
-            if not at[0]["notes"].lstrip().startswith("gen-dump"):
+            if not at[0]["notes"].lstrip().startswith(("gen-dump", "gen-thunk")):
                 add_match.fail(
                     f"line {c['line']}: replace_rva 0x{old:08X} is {at[0]['name']} "
-                    f"({at[0]['source']}), not a gen-dump scaffold row",
+                    f"({at[0]['source']}), not a generated scaffold row",
                     "only scaffolding may be taken over by name")
+            if old != rva or at[0]["size"] != size:
+                add_match.fail(
+                    f"line {c['line']}: replace_rva must preserve the scaffold's exact "
+                    f"range 0x{old:08X}/{at[0]['size']}B; new claim is "
+                    f"0x{rva:08X}/{size}B",
+                    "a different boundary needs an explicit evidence-backed retraction")
             retire[(at[0]["name"], at[0]["rva"])] = at[0]
+            replacements.append((at[0], c))
         if by_name.get(name):
             live = [r for r in by_name[name] if (r["name"], r["rva"]) not in retire]
             if live:
@@ -194,6 +203,9 @@ def main():
         accepted.append(c)
 
     sources = sorted({c["source"] for c in claims})
+    if retire and not deleted_csv.exists():
+        add_match.fail(f"no deletion ledger at {deleted_csv}",
+                       "scaffold rows cannot be retired durably without tombstones")
     print(f"add_match_batch: {len(claims)} row(s) validated across "
           f"{len(sources)} source(s); {len(retire)} scaffold row(s) to retire")
     if args.dry_run:
@@ -201,47 +213,62 @@ def main():
         return
 
     saved_sources = {s: (root / s).read_bytes() for s in sources}
-    for c in claims:
-        new = add_match.strip_marker(root / c["source"], c["name"])
-        if new is not None:
-            (root / c["source"]).write_bytes(new)
-
-    if retire:
-        new_raw, dropped = ledger_io.rewrite(
-            raw, lambda f: add_match.ledger_key(f) not in retire)
-        if dropped != len(retire):
-            add_match.fail(f"internal error: dropped {dropped} rows, expected {len(retire)}")
-    else:
-        new_raw = raw
-    appended = io.BytesIO()
-    for c in claims:
-        export_rva = add_match.lookup_export_rva(root, c["name"])
-        line = (f"{c['name']},{export_rva},0x{c['rva']:08X},{c['size']},"
-                f"{c['source']},matched,{c['notes']}")
-        appended.write(line.encode("utf-8") + b"\r\n")
-    functions_csv.write_bytes(new_raw + appended.getvalue())
+    saved_deleted = deleted_csv.read_bytes() if retire else None
+    reverted = False
 
     def revert(why):
-        functions_csv.write_bytes(raw)
+        nonlocal reverted
+        ledger_io.atomic_write_bytes(functions_csv, raw)
+        if saved_deleted is not None:
+            ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
         for s, data in saved_sources.items():
-            (root / s).write_bytes(data)
+            ledger_io.atomic_write_bytes(root / s, data)
+        reverted = True
         print(f"add_match_batch: {why} -- ALL {len(claims)} rows and every "
               "marker strip REVERTED", file=sys.stderr)
 
-    for s in sources:
-        if sys.platform == "win32":
-            cmd = [sys.executable, str(root / "tools" / "build.py"), s]
+    try:
+        for c in claims:
+            new = add_match.strip_marker(root / c["source"], c["name"])
+            if new is not None:
+                (root / c["source"]).write_bytes(new)
+
+        if retire:
+            new_raw, dropped = ledger_io.rewrite(
+                raw, lambda f: add_match.ledger_key(f) not in retire)
+            if dropped != len(retire):
+                add_match.fail(
+                    f"internal error: dropped {dropped} rows, expected {len(retire)}")
         else:
-            cmd = [str(root / "build.sh"), s]
-        print(f"add_match_batch: verifying {s}")
-        try:
+            new_raw = raw
+        appended = io.BytesIO()
+        for c in claims:
+            export_rva = add_match.lookup_export_rva(root, c["name"])
+            line = (f"{c['name']},{export_rva},0x{c['rva']:08X},{c['size']},"
+                    f"{c['source']},matched,{c['notes']}")
+            appended.write(line.encode("utf-8") + b"\r\n")
+        # Tombstones go first: a crash between the two ledger writes is loud
+        # (the old live row is condemned), never a silent union-merge deletion.
+        for incumbent, successor in replacements:
+            add_match.append_replacement_tombstone(
+                deleted_csv, incumbent, successor["name"], successor["rva"],
+                successor["size"], successor["source"], verified=True)
+        ledger_io.atomic_write_bytes(functions_csv, new_raw + appended.getvalue())
+
+        for s in sources:
+            if sys.platform == "win32":
+                cmd = [sys.executable, str(root / "tools" / "build.py"), s]
+            else:
+                cmd = [str(root / "build.sh"), s]
+            print(f"add_match_batch: verifying {s}")
             result = subprocess.run(cmd, cwd=root)
-        except BaseException:
-            revert("interrupted")
-            raise
-        if result.returncode != 0:
-            revert(f"verification failed for {s} (exit {result.returncode})")
-            sys.exit(1)
+            if result.returncode != 0:
+                revert(f"verification failed for {s} (exit {result.returncode})")
+                raise SystemExit(1)
+    except BaseException:
+        if not reverted:
+            revert("interrupted or write failed")
+        raise
     print(f"add_match_batch: verified OK -- {len(claims)} row(s) live")
 
 
