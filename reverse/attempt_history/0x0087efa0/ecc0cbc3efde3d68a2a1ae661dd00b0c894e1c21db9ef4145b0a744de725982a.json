@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ecc0cbc3efde3d68a2a1ae661dd00b0c894e1c21db9ef4145b0a744de725982a",
+  "symbol": "?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.8,
+  "source": "// ?bfmeCopyBE@@YAPAUBfmeElemBE@@PBU1@0PAU1@ABUBfmeFalseBE@@@Z\n// partial score=0.8 date=2026-09-11\n\nstruct BfmeTailBE\n{\n\tchar *m_p;\n\tvoid copyFrom(const BfmeTailBE *src);\n};\n\nstruct BfmeElemBE\n{\n\tint m_00;\n\tint m_04;\n\tint m_08;\n\tint m_0C;\n\tint m_10;\n\tint m_14;\n\tint m_18;\n\tBfmeTailBE m_1C;\n\tchar m_20;\n\tchar m_pad[3];\n};\n\nstruct BfmeFalseBE\n{\n};\n\nBfmeElemBE *bfmeCopyBE(const BfmeElemBE *first, const BfmeElemBE *last,\n\tBfmeElemBE *result, const BfmeFalseBE &)\n{\n\tBfmeElemBE *destination = result;\n\tif (first != last)\n\t{\n\t\tBfmeTailBE *destinationTail = &destination->m_1C;\n\t\tconst BfmeTailBE *sourceTail = &first->m_1C;\n\t\tdo\n\t\t{\n\t\t\tif (destination != 0)\n\t\t\t{\n\t\t\t\tdestination->m_00 = first->m_00;\n\t\t\t\tdestination->m_04 = first->m_04;\n\t\t\t\tdestination->m_08 = first->m_08;\n\t\t\t\tdestination->m_0C = first->m_0C;\n\t\t\t\tdestination->m_10 = first->m_10;\n\t\t\t\tdestination->m_14 = first->m_14;\n\t\t\t\tdestination->m_18 = first->m_18;\n\t\t\t\tdestinationTail->copyFrom(sourceTail);\n\t\t\t\tdestination->m_20 = first->m_20;\n\t\t\t}\n\t\t\t++first;\n\t\t\t++destination;\n\t\t\t++sourceTail;\n\t\t\t++destinationTail;\n\t\t}\n\t\twhile (first != last);\n\t}\n\treturn destination;\n}\n"
+}
