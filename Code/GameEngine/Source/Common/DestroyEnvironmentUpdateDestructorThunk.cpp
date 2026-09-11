@@ -1,437 +1,99 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+//
+// DestroyEnvironmentUpdate destructor, retail 0x0028CFB0 (171 bytes).
+// The constructor at 0x0028CD70 establishes the three UpdateModule vtables
+// and the object ID at +0x24.  The destructor resolves that ID, deletes the
+// attached helper when present, destroys the object, clears the ID, and then
+// runs the shared UpdateModule base teardown at 0x00047C53.
 
-class __declspec(novtable) DestroyEnvironmentUpdate
+class ModuleData;
+class Object;
+
+class GameLogic
 {
 public:
-    virtual ~DestroyEnvironmentUpdate();
+	Object *findObjectByID(int id);
+	void destroyObject(Object *object);
 };
 
-// ??1DestroyEnvironmentUpdate@@UAE@XZ
-__declspec(naked) DestroyEnvironmentUpdate::~DestroyEnvironmentUpdate()
+extern GameLogic *TheBfmeGameLogic;
+
+class BfmeDestroyable
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xc0
-        __emit 0x15
-        __emit 0x01
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x54
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x68
-        __emit 0xb8
-        __emit 0xd8
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x83
-        __emit 0xc8
-        __emit 0x10
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0xf3
-        __emit 0xb1
-        __emit 0xda
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0xb8
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x50
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x64
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x1d
-        __emit 0x59
-        __emit 0x76
-        __emit 0x00
-        __emit 0x56
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x60
-        __emit 0x02
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x5c
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x01
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xd1
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xc1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xca
-        __emit 0x8b
-        __emit 0x39
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x08
-        __emit 0x85
-        __emit 0xff
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xab
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xb7
-        __emit 0xf0
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x06
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0xd0
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x0c
-        __emit 0xff
-        __emit 0x52
-        __emit 0x78
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc6
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xe9
-        __emit 0xeb
-        __emit 0xb7
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x7f
-        __emit 0x74
-        __emit 0x4a
-        __emit 0x89
-        __emit 0x50
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x64
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x75
-        __emit 0x52
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x74
-        __emit 0x41
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x08
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x03
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x03
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x25
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xf4
-        __emit 0x4c
-        __emit 0x5f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x56
-        __emit 0xe8
-        __emit 0xeb
-        __emit 0x4c
-        __emit 0x5f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x54
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x60
-        __emit 0xc3
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x0e
-        __emit 0x14
-        __emit 0x5a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x56
-        __emit 0xe8
-        __emit 0xc5
-        __emit 0x4c
-        __emit 0x5f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x54
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x60
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0xff
-        __emit 0x48
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc9
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x64
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x75
-        __emit 0x38
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x74
-        __emit 0x27
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x08
-        __emit 0x2b
-        __emit 0xc1
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x03
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x03
-        __emit 0x3d
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x76
-        __emit 0x0b
-        __emit 0x51
-        __emit 0xe8
-        __emit 0x75
-        __emit 0x4c
-        __emit 0x5f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x0a
-        __emit 0x50
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xa9
-        __emit 0x13
-        __emit 0x5a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x56
-        __emit 0xe8
-        __emit 0x60
-        __emit 0x4c
-        __emit 0x5f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x5c
-        __emit 0x5f
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x60
-        __emit 0xc3
-    }
+public:
+	virtual void deleteInstance(int flags);
+};
+
+BfmeDestroyable *bfmeFindModule();
+
+class BFU_DeepBase
+{
+public:
+	virtual ~BFU_DeepBase();
+
+protected:
+	const ModuleData *m_moduleData;
+	Object *m_object;
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor() = 0;
+};
+
+class UpdateModuleInterface
+{
+public:
+	virtual void updateModuleInterfaceAnchor() = 0;
+};
+
+class BehaviorModule : public BFU_DeepBase, public BehaviorModuleInterface
+{
+public:
+	virtual ~BehaviorModule() {}
+};
+
+class UpdateModule : public BehaviorModule, public UpdateModuleInterface
+{
+public:
+	virtual ~UpdateModule() {}
+
+private:
+	unsigned int m_f14;
+	int m_f18;
+	int m_f1c;
+};
+
+class DestroyEnvironmentUpdate : public UpdateModule
+{
+public:
+	virtual ~DestroyEnvironmentUpdate();
+
+private:
+	unsigned int m_nextCallFrame;
+	unsigned int m_objectID;
+};
+
+#pragma comment(linker, "/alternatename:?TheBfmeGameLogic@@3PAVGameLogic@@A=?TheBfmeGameLogic@@3PAURva00367E30Logic@@A")
+#pragma comment(linker, "/alternatename:?destroyObject@GameLogic@@QAEXPAVObject@@@Z=?j_0001d0de@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeFindModule@@YAPAVBfmeDestroyable@@XZ=?d_0028ccd0@@YAXXZ")
+
+// ??1DestroyEnvironmentUpdate@@UAE@XZ
+DestroyEnvironmentUpdate::~DestroyEnvironmentUpdate()
+{
+	if (m_objectID)
+	{
+		Object *object = TheBfmeGameLogic->findObjectByID((int)m_objectID);
+		if (object)
+		{
+			BfmeDestroyable *module = bfmeFindModule();
+			if (module)
+			{
+				module->deleteInstance(0);
+				TheBfmeGameLogic->destroyObject(object);
+			}
+		}
+		m_objectID = 0;
+	}
 }
