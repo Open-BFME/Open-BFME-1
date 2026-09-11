@@ -1,36 +1,39 @@
-// ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
-// partial score=0.55 date=2026-09-09
+// ?doDisplayCounter@ScriptActions@@IAEXVAsciiString@@ABV2@@Z
+// partial score=0.99 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// DISPLAY_COUNTER at retail RVA 0x002F9660.  The executeAction case for
-// DISPLAY_COUNTER names this handler; the retail path canonicalizes the
-// counter key, appends '/', fetches its Unicode text, and installs a timer.
+// Clean C++ recovery of DISPLAY_COUNTER.
+// Retail RVA 0x002F9660 (235 bytes).  script_engine.cpp sets
+// m_actionTemplates[240].m_internalName to "DISPLAY_COUNTER", and
+// executeAction's jump table at VA 0x0070D6A0 sends arm 240 to this body.  The
+// first parameter arrives by value and this body releases it; the second stays a
+// const reference, so MSVC parks the GameText result in its dead argument slot.
 
+typedef int Int;
 typedef bool Bool;
 
-template <typename T>
-struct StringHeader
+struct BfmeAsciiStringData
 {
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	T m_text[1];
+	unsigned short m_refCount;
+	unsigned short m_numCharsAllocated;
+	unsigned short m_numChars;
+	unsigned short m_unreconstructed06;
+	char m_text[1];
 };
 
-template <typename T>
-class StringBase
+template <typename T> class StringBase
 {
 	friend class AsciiString;
 	friend class UnicodeString;
 
 public:
-	void concat(const T *text, int length);
+	void concat(const T *text, Int length);
 
 private:
 	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
+	StringBase(const StringBase<T> &other);
 	~StringBase();
 
-	StringHeader<T> *m_data;
+	void *m_data;
 };
 
 class AsciiString : private StringBase<char>
@@ -40,90 +43,62 @@ public:
 	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
 	~AsciiString() {}
 
-	const char *str() const
+	void concat(const char *text, Int length)
 	{
-		return m_data ? m_data->m_text : "";
+		StringBase<char>::concat(text, length);
 	}
+	void concat(char c) { concat(&c, 1); }
 
-	int getLength() const
+	const char *str(void) const
 	{
-		return m_data ? m_data->m_length : 0;
+		const BfmeAsciiStringData *data = (const BfmeAsciiStringData *)m_data;
+		return data ? data->m_text : "";
 	}
-
-	void concat(const char *text, int length)
+	Int getLength(void) const
 	{
-		((StringBase<char> *)this)->concat(text, length);
+		const BfmeAsciiStringData *data = (const BfmeAsciiStringData *)m_data;
+		return data ? data->m_numChars : 0;
 	}
 };
 
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
-	UnicodeString() : StringBase<unsigned short>() {}
-	UnicodeString(const UnicodeString &other)
-		: StringBase<unsigned short>(other) {}
+	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
 	~UnicodeString() {}
 };
 
-// This is the BFME flag/counter key lookup view already used by the matched
-// ScriptEngine join helper; the address is the proven 0x36336 ILT.
-class BFMEScriptEngineFlagLookup
+class BfmeScriptEngineSlashName
 {
-	friend class ScriptActions;
-
-	private:
-	AsciiString canonicalFlagName(const AsciiString &name);
+public:
+	AsciiString bfmeName(AsciiString &name);
 };
 
-class ScriptEngine : public BFMEScriptEngineFlagLookup
+class ScriptEngine
 {
 };
 
 class GameTextInterface
 {
 public:
-	virtual void _slot00() = 0;
-	virtual void _slot01() = 0;
-	virtual void _slot02() = 0;
-	virtual void _slot03() = 0;
-	virtual void _slot04() = 0;
-	virtual void _slot05() = 0;
-	virtual void _slot06() = 0;
-	virtual void _slot07() = 0;
-	virtual void _slot08() = 0;
-	virtual UnicodeString fetch(AsciiString key, Bool *unused = 0) = 0;
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual UnicodeString fetch(AsciiString label, Bool *exists) = 0;
 };
 
 class InGameUI
 {
 public:
 	void addNamedTimer(const AsciiString &name, const UnicodeString &text,
-		Bool isCountdown);
+		Bool countdown);
 };
-
-extern void j_000165db();
-
-class BfmeAddNamedTimerCall
-{
-public:
-	void addNamedTimer(const AsciiString &name, const UnicodeString &text,
-		Bool isCountdown);
-};
-
-static void bfmeAddNamedTimer(InGameUI *object, const AsciiString &name,
-	const UnicodeString &text, Bool isCountdown)
-{
-	typedef void (BfmeAddNamedTimerCall::*AddNamedTimerCall)(
-		const AsciiString &, const UnicodeString &, Bool);
-	union
-	{
-		void *raw;
-		AddNamedTimerCall member;
-	} function;
-	function.raw = (void *)j_000165db;
-	(((BfmeAddNamedTimerCall *)object)->*function.member)(
-		name, text, isCountdown);
-}
 
 extern ScriptEngine *TheScriptEngine;
 extern GameTextInterface *TheGameText;
@@ -132,21 +107,17 @@ extern InGameUI *TheInGameUI;
 class ScriptActions
 {
 protected:
-	void doDisplayCounter(const AsciiString &counterName,
+	void doDisplayCounter(AsciiString counterName,
 		const AsciiString &counterText);
 };
 
-// ?doDisplayCounter@ScriptActions@@IAEXABVAsciiString@@0@Z
-void ScriptActions::doDisplayCounter(const AsciiString &counterName,
+// ?doDisplayCounter@ScriptActions@@IAEXVAsciiString@@ABV2@@Z
+void ScriptActions::doDisplayCounter(AsciiString counterName,
 	const AsciiString &counterText)
 {
-	AsciiString canonical =
-		((BFMEScriptEngineFlagLookup *)TheScriptEngine)->canonicalFlagName(
-			counterName);
-	__declspec(align(4)) char slash = '/';
-	canonical.concat(&slash, 1);
-	canonical.concat(counterName.str(), counterName.getLength());
-	UnicodeString translated = TheGameText->fetch(counterText);
-	bfmeAddNamedTimer(TheInGameUI, canonical,
-		translated, false);
+	AsciiString name =
+		((BfmeScriptEngineSlashName *)TheScriptEngine)->bfmeName(counterName);
+	name.concat('/');
+	name.concat(counterName.str(), counterName.getLength());
+	TheInGameUI->addNamedTimer(name, TheGameText->fetch(counterText, 0), false);
 }
