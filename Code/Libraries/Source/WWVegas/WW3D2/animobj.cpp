@@ -69,6 +69,18 @@
 #include "ww3d.h"
 #include "wwmemlog.h"
 
+// BFME keeps these arithmetic constants in the image's shared data rather
+// than using immediate literals in Compute_Current_Frame.
+extern const float BfmeZeroRange;
+extern float g_bfmeDefaultBU;
+extern const float BfmeShadowScale;
+extern float g_millisecondsToSeconds;
+
+static inline float Bfme_Frame_Zero(void)
+{
+	return BfmeZeroRange;
+}
+
 // BFME's animation constructor uses the same free hierarchy lookup as the
 // animation loaders rather than dispatching through the asset manager.
 HTreeClass *Get_HTree(const char *name);
@@ -984,7 +996,7 @@ bool Animatable3DObjClass::Simple_Evaluate_Bone(int boneindex, float frame, Matr
 // ?Animatable3DObjClass::Compute_Current_Frame present-unmatched
 float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 {
-	float frame = 0;
+	float frame = Bfme_Frame_Zero();
 	float direction = ModeAnim.animDirection;
 
 	switch (CurMotionMode)
@@ -998,7 +1010,10 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 			//
 			if (ModeAnim.AnimMode != ANIM_MODE_MANUAL) {
 				float sync_time_diff = WW3D::Get_Sync_Time() - ModeAnim.LastSyncTime;
-				float delta = ModeAnim.Motion->Get_Frame_Rate() * ModeAnim.frameRateMultiplier * ModeAnim.animDirection * sync_time_diff * 0.001f;
+				float delta = ModeAnim.Motion->Get_Frame_Rate() * ModeAnim.frameRateMultiplier;
+				delta *= sync_time_diff;
+				delta *= ModeAnim.animDirection;
+				delta *= g_millisecondsToSeconds;
 				frame += delta;
 
 				//
@@ -1017,25 +1032,25 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 						}
 						// If it is still too far out, reset
 						if ( frame >= ModeAnim.Motion->Get_Num_Frames() - 1 ) {
-							frame = 0;
+							frame = BfmeZeroRange;
 						}
 						break;
-					case ANIM_MODE_ONCE_BACKWARDS:	//play animation one time but backwards
-						if (frame < 0) {
-							frame = 0;
+					case 6:	// once-backwards slot after BFME's inserted mode
+						if (frame < BfmeZeroRange) {
+							frame = BfmeZeroRange;
 						}
 						break;
-					case ANIM_MODE_LOOP_BACKWARDS:	//play animation backwards in a loop
-						if ( frame < 0 ) {
+					case 5:	// legacy loop-backwards slot after BFME's inserted mode
+						if ( frame < BfmeZeroRange ) {
 							frame += ModeAnim.Motion->Get_Num_Frames() - 1;
 						}
 						// If it is still too far out, reset
-						if ( frame < 0 ) {
+						if ( frame < BfmeZeroRange ) {
 							frame = ModeAnim.Motion->Get_Num_Frames() - 1;
 						}
 						break;
 					case ANIM_MODE_LOOP_PINGPONG:
-						if (ModeAnim.animDirection >= 1.0f)
+						if (ModeAnim.animDirection >= g_bfmeDefaultBU)
 						{	//playing forwards, reverse direction
 							if (frame >= (ModeAnim.Motion->Get_Num_Frames() - 1))
 							{	//step backwards in animation by excess time
@@ -1043,19 +1058,31 @@ float Animatable3DObjClass::Compute_Current_Frame(float *newDirection) const
 								// If it is still too far out, reset
 								if ( frame >= ModeAnim.Motion->Get_Num_Frames() - 1 )
 									frame = (ModeAnim.Motion->Get_Num_Frames() - 1);
-								direction = ModeAnim.animDirection * -1.0f;
+								direction = *(volatile const float *)&ModeAnim.animDirection * BfmeShadowScale;
 							}
 						}
 						else
 						{	//playing backwards, reverse direction
-							if (frame < 0)
+							if (frame < BfmeZeroRange)
 							{	//step forwards in animation by excess time
 								frame = -frame;
 								// If it is still too far out, reset
 								if ( frame >= ModeAnim.Motion->Get_Num_Frames() - 1 )
-										frame = 0;
-								direction = ModeAnim.animDirection * -1.0f;
+									frame = BfmeZeroRange;
+								direction = *(volatile const float *)&ModeAnim.animDirection * BfmeShadowScale;
 							}
+						}
+						break;
+					case ANIM_MODE_LOOP_BACKWARDS:
+						if (ModeAnim.animDirection > BfmeZeroRange)
+						{
+							if (frame > ModeAnim.PrevFrame)
+								frame = ModeAnim.PrevFrame;
+						}
+						else
+						{
+							if (frame < ModeAnim.PrevFrame)
+								frame = ModeAnim.PrevFrame;
 						}
 						break;
 				}
