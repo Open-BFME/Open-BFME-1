@@ -1,11 +1,16 @@
-// ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@H@Z
-// partial score=0.9 date=2026-09-09
-// ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@H@Z
+// ?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z
 // BFME Object status propagation helper, retail 0x001CD540 (294 bytes).
-// Address-derived name: identity is not recovered, only the shape. setStatus
-// cousin of the model-condition twin at 0x001CD420 and the vision-spied/
-// unspied pair at 0x001CE830/0x001CE940, guarded by a per-object status flag
-// and always applying the status to this object at the end.
+// The original method name is not recovered, so the rva name stays explicit.
+// Object ownership is established by the matched AIPanicState::onExit caller
+// through ILT 0x0002181E.  The three outgoing Object::setStatus calls establish
+// the 86-bit status mask and Bool argument; the adjacent 0x001CD420 helper
+// corroborates the containment path and class layout.
+//
+// The TU-local pointer overload is ABI-equivalent to the reference overload on
+// x86 and is exposed under the reference spelling by /alternatename below.  Its
+// top-level volatile qualifier is a source-level codegen lever: it makes VC7.1
+// preserve retail's EDI/EBX incoming-argument allocation without changing any
+// runtime operation.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -92,45 +97,45 @@ class Object
 {
 public:
 	void setStatus(const ObjectStatusMaskType &flags, Bool set);
-	void rva001CD540(const ObjectStatusMaskType &flags, Int set);
+	void rva001CD540(const ObjectStatusMaskType &flags, Bool set);
+	void rva001CD540(const ObjectStatusMaskType * volatile flags, Bool set);
 
-	void *m_vtable;								// +0x000
-	ThingTemplate *m_template;					// +0x004
+	void *m_vtable;
+	ThingTemplate *m_template;
 	unsigned char m_pad008[0x1fc - 8];
-	ContainModuleInterface *m_contain;			// +0x1fc
+	ContainModuleInterface *m_contain;
 	unsigned char m_pad200[0x214 - 0x200];
-	Object *m_containedBy;						// +0x214
+	Object *m_containedBy;
 	unsigned char m_pad218[0x369 - 0x218];
-	unsigned char m_flag369;						// +0x369
+	unsigned char m_flag369;
 };
 
-void Object::rva001CD540(const ObjectStatusMaskType &flags, Int set)
+void Object::rva001CD540(const ObjectStatusMaskType * volatile flags, Bool set)
 {
-	if (m_flag369 == 0)
+	if (m_flag369 != 0)
+		return;
+
+	ThingTemplate *thingTemplate = m_template;
+	if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
 	{
-		ThingTemplate *thingTemplate = m_template;
-		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
-		{
-			thingTemplate = const_cast<ThingTemplate *>(
-				reinterpret_cast<const ThingTemplate *>(thingTemplate->m_nextOverride->getFinalOverride()));
-		}
+		thingTemplate = const_cast<ThingTemplate *>(
+			reinterpret_cast<const ThingTemplate *>(thingTemplate->m_nextOverride->getFinalOverride()));
+	}
 
-		Object *target;
-		if (thingTemplate->m_flags & 0x1000)
-		{
-			target = this;
-		}
+	Object *target;
+	if (thingTemplate->m_flags & 0x1000)
+		target = this;
+	else
+	{
+		Object *container = m_containedBy;
+		if (container == 0 || !reinterpret_cast<const Thing *>(container)->isKindOf((KindOfType)0x6c))
+			target = 0;
 		else
-		{
-			Object *container = m_containedBy;
-			if (container == 0 || !reinterpret_cast<const Thing *>(container)->isKindOf((KindOfType)0x6c))
-				return;
 			target = container;
-		}
+	}
 
-		if (target == 0)
-			return;
-
+	if (target != 0)
+	{
 		ContainModuleInterface *contain = target->m_contain;
 		if (contain == 0)
 			return;
@@ -140,16 +145,19 @@ void Object::rva001CD540(const ObjectStatusMaskType &flags, Int set)
 			return;
 
 		ObjectList items = *horde->getContainedItemsList();
+		const ObjectStatusMaskType *status = flags;
+		Bool statusSet = set;
 		for (ObjectList::iterator it = items.begin(); it != items.end(); ++it)
-		{
-			(*it)->setStatus(flags, set != 0);
-		}
+			(*it)->setStatus(*status, statusSet);
 
-		target->setStatus(flags, set != 0);
+		target->setStatus(*status, statusSet);
 	}
-
-	setStatus(flags, set != 0);
+	else
+	{
+		setStatus(*flags, set);
+	}
 }
 
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?isKindOf@Thing@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva001CD540@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z=?rva001CD540@Object@@QAEXRBV?$BitFlags@$0FG@@@_N@Z")
