@@ -1,14 +1,8 @@
 // ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
-// partial score=0.98 date=2026-09-04
+// partial score=0.985 date=2026-09-11
 // ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
-// partial score=0.98 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
 // stlport
-// Open-BFME: GeometryInfo five-argument constructor, retail 0x00100580.
-//
-// The retail BFME object extends the older reference class with shape and
-// record vectors.  Their element layouts are the same ones proven by the
-// adjacent implicit copy constructor at 0x000FFD10.
 
 #include <vector>
 
@@ -54,24 +48,15 @@ struct GeometryRecord
 	AsciiString m_name;
 };
 
+class Xfer;
+
 class Snapshot
 {
 public:
 	virtual ~Snapshot();
-	virtual void unknown();
-	virtual const char *getName() const;
-
-protected:
-	Bool m_isSmall;
-	Real m_scalar08;
-	Real m_scalar0c;
-	int m_scalar10;
-	int m_scalar14;
-	int m_scalar18;
-	int m_scalar1c;
-	int m_scalar20;
-	int m_scalar24;
-	int m_scalar28;
+	virtual void LoadPostProcess();
+	virtual const char *GetSnapshotName();
+	virtual void DoXfer(Xfer &xfer);
 };
 
 extern Real g_geometryHeightScale;
@@ -85,6 +70,16 @@ public:
 		Real majorRadius, Real minorRadius);
 
 private:
+	Bool m_isSmall;
+	int m_scalar08;
+	int m_scalar0c;
+	int m_scalar10;
+	int m_scalar14;
+	int m_scalar18;
+	int m_scalar1c;
+	int m_scalar20;
+	int m_scalar24;
+	int m_scalar28;
 	std::vector<GeometryShape> m_shapes;
 	std::vector<GeometryRecord> m_records;
 	int m_cached44;
@@ -93,28 +88,20 @@ private:
 	int m_cached50;
 	int m_cached54;
 	int m_cached58;
+
 };
 
-// ??0GeometryInfo@@QAE@W4GeometryType@@_NMMM@Z
 GeometryInfo::GeometryInfo(GeometryType type, Bool isSmall, Real height,
 	Real majorRadius, Real minorRadius)
 {
-	m_scalar08 = 0.0f;
-	m_scalar0c = 0.0f;
-	std::vector<GeometryRecord> *records = &m_records;
+	m_scalar08 = 0;
+	m_scalar0c = 0;
 	set(type, isSmall, height, majorRadius, minorRadius);
-	__asm {
-		fld dword ptr [esp+28h]
-		fmul dword ptr [g_geometryHeightScale]
-	}
+	m_cached4c = *(volatile Real *)&height * g_geometryHeightScale;
 	m_cached44 = 0;
 	m_cached48 = 0;
-	__asm {
-		mov ecx, edi
-		fstp dword ptr [esi+4ch]
-	}
 	m_cached50 = 0;
 	m_cached54 = 0;
 	m_cached58 = 0;
-	records->erase(records->begin(), records->end());
+	m_records.clear();
 }
