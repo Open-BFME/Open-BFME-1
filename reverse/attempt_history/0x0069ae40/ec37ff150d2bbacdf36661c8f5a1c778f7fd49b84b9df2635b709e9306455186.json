@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ec37ff150d2bbacdf36661c8f5a1c778f7fd49b84b9df2635b709e9306455186",
+  "symbol": "?Rva0069AE40Check@@YGDPAURva0069AE40Unit@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?Rva0069AE40Check@@YGDPAURva0069AE40Unit@@@Z\n// partial score=0.85 date=2026-09-11\n// Retail predicate at 0x0069AE40.\n\ntypedef float Real;\n\nextern const Real BfmeShareThirdEQQ;\n\nstruct Rva0069AE40Owner\n{\n\tunsigned char m_header[0x41];\n\tchar m_ready;\n\tchar m_done;\n};\n\nstruct Rva0069AE40Body\n{\n\tunsigned char m_header[0x54];\n\tReal m_health;\n};\n\nstruct Rva0069AE40Unit\n{\n\tunsigned char m_header[4];\n\tRva0069AE40Body *m_body;\n\tunsigned char m_gap08[4];\n\tRva0069AE40Owner *volatile m_owner;\n\tunsigned char m_gap10[2];\n\tchar m_flag12;\n\tchar m_flag13;\n\tchar m_flag14;\n};\n\nchar __stdcall Rva0069AE40Check(Rva0069AE40Unit *unit)\n{\n\tif (!unit->m_flag12 && !unit->m_flag13 && !unit->m_flag14)\n\t{\n\t\tRva0069AE40Body *body = unit->m_body;\n\t\tif (body != 0 && body->m_health >= BfmeShareThirdEQQ)\n\t\t\treturn 0;\n\n\t\tRva0069AE40Owner *owner = unit->m_owner;\n\t\tif (owner == 0)\n\t\t\treturn 1;\n\t\tif (owner != 0 && owner->m_ready)\n\t\t\treturn 1;\n\t\tRva0069AE40Owner *other = unit->m_owner;\n\t\tif (other == 0)\n\t\t\treturn 1;\n\t\tif (other != 0 && other->m_done)\n\t\t\treturn 1;\n\t}\n\treturn 0;\n}\n"
+}
