@@ -109,21 +109,24 @@ void ThreadClass::Set_Priority(int priority)
 	#endif
 }
 
-// ?Stop@ThreadClass@@ present-unmatched
 void ThreadClass::Stop(unsigned ms)
 {
 	#ifdef _UNIX
 		// assert(0);
 		return;
 	#else
-		running=false;
+		// BFME's ThreadClass predates the ZH running/exception-handler fields:
+		// its native handle is at +0x48.  Keep the canonical method while using
+		// the retail layout locally so the shared ZH-compatible header stays put.
+		volatile unsigned long &bfmeHandle =
+			*(volatile unsigned long *)((char *)this + 0x48);
 		unsigned time=TIMEGETTIME();
-		while (handle) {
+		while (bfmeHandle) {
 			if ((TIMEGETTIME()-time)>ms) {
-				int res=TerminateThread((HANDLE)handle,0);
+				int res=TerminateThread((HANDLE)bfmeHandle,0);
 				res;	// just to silence compiler warnings
 				WWASSERT(res);	// Thread still not killed!
-				handle=0;
+				bfmeHandle=0;
 			}
 			Sleep(0);
 		}
