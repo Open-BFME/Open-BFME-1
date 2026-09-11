@@ -1,12 +1,9 @@
 // ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z
-// partial score=0.85 date=2026-09-08
-// Reconstructed from the retail field map and the Player::newMap caller.
-// Probe: 345 bytes versus retail's 352. Fields and call graph are aligned,
-// but MSVC emits different branch layout and register scheduling in the
-// multiplayer count selection and non-multiplayer fallback.
 
 typedef int Int;
 typedef bool Bool;
+
+#pragma comment(linker, "/alternatename:?getNthPlayer@PlayerList@@QAEPAVPlayer@@H@Z=?j_00044f30@@YAXXZ")
 
 class Player
 {
@@ -55,13 +52,13 @@ public:
 class Glo012F1028Type
 {
 public:
+    int j_0000353f();
 };
 
 extern PlayerList * volatile Rva002EE330ThePlayers;
 extern GameLogic *TheBfmeGameLogic;
 extern BfmeGlobalState *TheWritableGlobalData;
 extern Glo012F1028Type *Glo012F1028;
-extern void j_0000353f(void);
 
 static __forceinline PlayerList *readPlayersForNewMap()
 {
@@ -93,6 +90,7 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
     m_field = field;
     if (((GameLogicPortraitShim *)TheBfmeGameLogic)->isInMultiplayerOrSkirmishGame())
     {
+        const volatile int *multiplier = &m_value14;
         int count = Rva002EE330ThePlayers->unidentified_000df510(true);
         int x;
         int y;
@@ -129,25 +127,41 @@ void BfmePlayerMapState::bfmeNewMap(Int field, Bool flag)
             m_value04 = x;
         else
             m_value04 = y;
-        m_value04 = m_value04 + x * m_value14;
-        m_value04 = m_value04 + y * m_value10;
+        m_value04 = *multiplier * x + m_value10 * y + m_value04;
         return;
     }
 
-    Player *player = readPlayersForNewMap()->getNthPlayer(m_field);
+    Player *player = Rva002EE330ThePlayers->getNthPlayer(m_field);
     if (!player)
         return;
 
     if (!player->m_mapState)
     {
-        m_value04 = flag ? TheWritableGlobalData->m_valueE74
-                         : TheWritableGlobalData->m_valueE70;
+        if (flag)
+        {
+            int &globalValue = TheWritableGlobalData->m_valueE74;
+            m_value04 = globalValue;
+        }
+        else
+        {
+            int &globalValue = TheWritableGlobalData->m_valueE70;
+            m_value04 = globalValue;
+        }
         if (Glo012F1028)
-            m_value04 += ((int (__cdecl *)(void))j_0000353f)();
+            m_value04 += Glo012F1028->j_0000353f();
+        return;
     }
     else
     {
-        m_value04 = flag ? TheWritableGlobalData->m_valueE84
-                         : TheWritableGlobalData->m_valueE80;
+        if (flag)
+        {
+            int &globalValue = TheWritableGlobalData->m_valueE84;
+            m_value04 = globalValue;
+        }
+        else
+        {
+            int &globalValue = TheWritableGlobalData->m_valueE80;
+            m_value04 = globalValue;
+        }
     }
 }
