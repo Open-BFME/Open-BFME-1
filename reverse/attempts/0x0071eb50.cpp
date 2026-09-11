@@ -1,11 +1,13 @@
-// ?d_0071eb50@@YAXXZ
-// partial score=0.56 date=2026-09-10
+// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+// partial score=0.6 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
 //
-// BFME's six-argument W3DTreeBuffer::addTreeType.  The local mirrors preserve
-// the witnessed BFME tree-type table at +0x1E1CD4 and its 0x5C-byte records;
-// the retail owner name is recovered from the Zero Hour twin and the adjacent
-// TTreeType lifecycle pair.
+// BFME's six-argument W3DTreeBuffer::addTreeType. Retail call-site evidence
+// (the .set()+.concat(".tga") pair landing on the same +0x48 field, and the
+// register carrying modelName from Create_Render_Obj also feeding the +0x4C
+// set() call) proves the string field order textureName, modelName, nameC,
+// nameD; the sibling W3DTreeTypeLifecycle.cpp ctor/dtor are no-ops and do not
+// constrain this order despite declaring a different one.
 
 typedef int Int;
 typedef float Real;
@@ -94,10 +96,10 @@ struct Rva0071EB50StringData
 
 extern char Rva006A16B0Empty[];
 
-// The narrow BFME string wrapper inherits the one-pointer string base.  Its
-// inherited set() is the retail UnicodeString spelling at 0x00887C90, while
-// concat() is the already-matched narrow AsciiString body reached through the
-// 0x00022057 thunk.
+// The narrow BFME string wrapper inherits the one-pointer string base. Its
+// inherited set() is the retail spelling at 0x00887C90 (additive-pinned as
+// both AsciiString::set and UnicodeString::set); concat() is the already
+// matched narrow AsciiString body reached through the 0x00022057 thunk.
 class UnicodeString
 {
 public:
@@ -246,7 +248,7 @@ public:
 
 extern RenderObjClass *Create_Render_Obj(const char *name);
 
-class Rva0071EB50W3DTreeBuffer
+class W3DTreeBuffer
 {
 public:
 	Int addTreeType(const AsciiString &modelName, const AsciiString &nameC,
@@ -261,7 +263,7 @@ public:
 };
 
 // ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
-Int Rva0071EB50W3DTreeBuffer::addTreeType(const AsciiString &modelName,
+Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	const AsciiString &nameC, const void *data, Int shadowKind,
 	const AsciiString &textureName, const AsciiString &nameD)
 {
@@ -306,9 +308,11 @@ Int Rva0071EB50W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 
 	const Matrix3D xfm = mesh->Get_Transform();
 	SphereClass bounds(pVert, numVertex);
-	Rva0071EB50TreeType &treeType = m_treeTypes[m_numTreeTypes];
-	bounds.Center += offset;
-	treeType.m_bounds = bounds;
+	SphereClass &destBounds = m_treeTypes[m_numTreeTypes].m_bounds;
+	destBounds.Center.X = offset.X + bounds.Center.X;
+	destBounds.Center.Z = offset.Z + bounds.Center.Z;
+	destBounds.Radius = bounds.Radius;
+	destBounds.Center.Y = offset.Y + bounds.Center.Y;
 	m_treeTypes[m_numTreeTypes].m_data = data;
 	m_treeTypes[m_numTreeTypes].m_offset = offset;
 	m_treeTypes[m_numTreeTypes].m_doShadow = (shadowKind == 1);
@@ -317,7 +321,6 @@ Int Rva0071EB50W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	m_treeTypes[m_numTreeTypes].m_modelName.set(modelName);
 	m_treeTypes[m_numTreeTypes].m_nameC.set(nameC);
 	m_treeTypes[m_numTreeTypes].m_nameD.set(nameD);
-	m_treeTypes[m_numTreeTypes].m_field0058 = -2;
 	m_numTreeTypes++;
 	return m_numTreeTypes - 1;
 }
