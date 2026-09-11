@@ -1,5 +1,5 @@
 // ?d_00299a80@@YAXXZ
-// partial score=0.84 date=2026-09-09
+// partial score=0.88 date=2026-09-11
 class BfmePrimaryFV
 {
 public:
@@ -65,8 +65,9 @@ void BfmePrimaryFV::bfmeAdvanceFV(volatile int delta)
 	ShadowValue1704 *first_value = m_shadow->m_value58;
 	first_value->m_value5c = first_value->m_value58 = doubled;
 	ShadowValue1704 *second_value = m_shadow->m_value5c;
+	second_value->m_value58 = doubled;
 	second *= g_01075954;
-	second_value->m_value5c = second_value->m_value58 = doubled;
+	second_value->m_value5c = doubled;
 	scaled_second = second;
 	int opacity = (int)(curves->m_curve3c.evaluate(encoded) * g_bfmeScaleB3);
 	m_shadow->setOpacity(opacity);
