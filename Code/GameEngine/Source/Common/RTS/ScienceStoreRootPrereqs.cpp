@@ -23,15 +23,92 @@ enum ScienceType
 
 class Player;
 
+class Player
+{
+public:
+	Bool hasScience( ScienceType st ) const;
+};
+
+struct SciencePrereqGroup
+{
+	ScienceType *m_begin;
+	ScienceType *m_end;
+	ScienceType *m_capacity;
+};
+
+class ScienceInfo
+{
+public:
+	char m_head[ 0x18 ];
+	SciencePrereqGroup *m_prereqGroups;
+	SciencePrereqGroup *m_prereqGroupsEnd;
+};
+
 class ScienceStore
 {
 public:
 	Bool playerHasRootPrereqsForScience( const Player *player, ScienceType st ) const;
 
 private:
+	const ScienceInfo *findScienceInfo( ScienceType st ) const;
+
 	Bool rva000E7C20SciencePrereqMemo( const Player *player, ScienceType st,
 		void *memo ) const;
 };
+
+Bool ScienceStore::rva000E7C20SciencePrereqMemo( const Player *player, ScienceType st,
+	void *memo ) const
+{
+	std::map<ScienceType, Bool> *values = (std::map<ScienceType, Bool> *)memo;
+	std::map<ScienceType, Bool>::iterator found = values->find( st );
+	if ( found != values->end() )
+		return found->second;
+
+	Bool result;
+	if ( player->hasScience( st ) )
+	{
+		result = true;
+	}
+	else
+	{
+		result = false;
+		const ScienceInfo *science = findScienceInfo( st );
+		if ( science )
+		{
+			SciencePrereqGroup *group = science->m_prereqGroups;
+			if ( group != science->m_prereqGroupsEnd )
+			{
+				do
+				{
+					ScienceType *item = group->m_begin;
+					Bool groupOK = true;
+					if ( item != group->m_end )
+					{
+						do
+						{
+							if ( !rva000E7C20SciencePrereqMemo( player, *item, memo ) )
+							{
+								groupOK = false;
+								break;
+							}
+							++item;
+						} while ( item != group->m_end );
+					}
+					if ( groupOK )
+					{
+						result = true;
+						break;
+					}
+					++group;
+				}
+				while ( group != science->m_prereqGroupsEnd );
+			}
+		}
+	}
+
+	values->insert( std::make_pair( st, result ) );
+	return result;
+}
 
 Bool ScienceStore::playerHasRootPrereqsForScience( const Player *player, ScienceType st ) const
 {

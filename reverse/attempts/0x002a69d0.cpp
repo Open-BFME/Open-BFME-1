@@ -22,7 +22,7 @@ struct Rva00367E30Logic
 	BfmeEntryFG **m_bfmeEndFG;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
 
 class BfmeNodeFG
 {
@@ -55,7 +55,7 @@ BfmeObjFG *BfmeHostFG::bfmeFindFG(const BfmeThingFG *t)
 	for (BfmeNodeFG *n = head->m_bfmeNextFG; n != head; n = n->m_bfmeNextFG)
 	{
 		Rva00367E30Logic *g = *(Rva00367E30Logic *volatile *)&TheBfmeGameLogic;
-		unsigned int key = *(volatile unsigned int *)&n->m_bfmeKeyFG;
+		register unsigned int key = *(volatile unsigned int *)&n->m_bfmeKeyFG;
 
 		if (key == 0)
 			continue;
