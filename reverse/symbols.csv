@@ -3222,6 +3222,7 @@ name,address,notes
 ??0PassiveAreaEffectBehaviorModuleDataMemberB@@QAE@XZ,0x0003747A,PassiveAreaEffectBehaviorModuleData +0x20 handle constructor paired with the matched destructor member
 ??0PassiveAreaEffectBehaviorRoot@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,ObjectModule constructor via ILT thunk
 ??0Path@@QAE@XZ,0x000335B4,ILT to the Path default constructor reached from Pathfinder::buildActualPath at 0x003E10F0
+??0Pathfinder@@QAE@XZ,0x0000DF12,AI::AI emits the retail Pathfinder constructor ILT at 0x0000DF12
 ??0PeerRequest@@QAE@ABV0@@Z,0x0003C308,ILT reached by GameSpyPeerMessageQueue addRequest at 0x0064D880
 ??0PeerRequest@@QAE@XZ,0x000171FC,ILT of PeerRequest ctor used by 0x0053AB90
 ??0PeerResponse@@QAE@ABV0@@Z,0x004FB2E0,PeerResponse copy ctor; callee address read from the deque push_back_aux REL32 at 0x648920
