@@ -1,9 +1,11 @@
-// ?fill@Rva00726EA0TaintFill@@QAEXE@Z
-// partial score=0.99 date=2026-09-04
-// ?fill@Rva00726EA0TaintFill@@QAEXE@Z
-// partial score=0.99 date=2026-09-04
 // cl: /DNDEBUG /MD
 // Retail 0x00726EA0: fill the taint overlay's dword and byte buffers.
+//
+// TaintBuffer is the repository's established descriptive family name, not a
+// recovered EA class spelling.  The matched constructor, destructor, init, surface fill,
+// reacquire, and dirty-cell methods establish this object's family and the
+// buffer fields used here.  The byte-loop counter is defined before the row
+// accumulator to retain the retail base/index SIB encoding.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData
@@ -17,7 +19,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 
-class Rva00726EA0TaintFill
+class TaintBuffer
 {
 public:
 	void fill(unsigned char alpha);
@@ -31,8 +33,8 @@ private:
 	unsigned char *m_bytes;
 };
 
-// ?fill@Rva00726EA0TaintFill@@QAEXE@Z
-void Rva00726EA0TaintFill::fill(unsigned char alpha)
+// ?fill@TaintBuffer@@QAEXE@Z
+void TaintBuffer::fill(unsigned char alpha)
 {
 	GlobalData *g = TheWritableGlobalData;
 	if (!g)
@@ -58,11 +60,12 @@ void Rva00726EA0TaintFill::fill(unsigned char alpha)
 			dst++;
 		}
 	}
+	unsigned int i = 0;
 	unsigned int row = (unsigned int)m_bytes;
 	for (y = 0; y < m_height; y++)
 	{
-		unsigned int i;
-		for (i = 0; i < m_width; )
+		i = 0;
+		for (; i < m_width; )
 		{
 			*(char *)(i + row) = alpha;
 			i++;
