@@ -1,323 +1,146 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z: Code/GameEngine/Source/GameClient/MessageStream/HotKey.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
+// Clean C++ conversion of the HotKeyTranslator retail body.
 
-class GameMessage;
-enum GameMessageDisposition {};
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
+typedef int Int;
+typedef bool Bool;
+typedef unsigned char UnsignedByte;
+typedef unsigned short WideChar;
+
+union GameMessageArgumentType
+{
+    Int integer;
+    Int pixel[2];
+};
+
+class GameMessage
+{
+public:
+    enum Type
+    {
+        MSG_RAW_KEY_UP = 22
+    };
+
+    Type getType() const
+    {
+        return (Type)m_type;
+    }
+
+    const GameMessageArgumentType *getArgument(Int index) const;
+
+private:
+    char m_pad[0x10];
+    Int m_type;
+};
+
+enum GameMessageDisposition
+{
+    KEEP_MESSAGE,
+    DESTROY_MESSAGE
+};
+
+class Keyboard
+{
+public:
+    WideChar getPrintableKey(UnsignedByte key, Int state);
+};
+
+#define TheKeyboard (*(Keyboard **)0x012F4C50)
+
+template <typename T>
+class StringBase
+{
+friend class UnicodeString;
+friend class AsciiString;
+
+public:
+    StringBase() : m_data(0) {}
+    void set(const T *text, Int length);
+
+private:
+    ~StringBase();
+    void *m_data;
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+    UnicodeString() : StringBase<WideChar>() {}
+    ~UnicodeString() {}
+    void set(const WideChar *text, Int length);
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+    AsciiString() : StringBase<char>() {}
+    ~AsciiString() {}
+    void translate(const UnicodeString &text);
+};
+
+class BfmeTransitionMD
+{
+public:
+    Bool dispatch(AsciiString *key, Bool shiftOnly);
+};
+
+#define g_bfmeTransitionMD (*(BfmeTransitionMD **)0x012F4C7C)
+
 class HotKeyTranslator
 {
 public:
-	virtual GameMessageDisposition translateGameMessage(const GameMessage *);
+    virtual GameMessageDisposition translateGameMessage(const GameMessage *msg);
 };
 
-// ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
-__declspec(naked) GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage *)
+static __forceinline void setHotKey(UnicodeString &text, WideChar key)
 {
-	__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x10
-        __emit 0x91
-        __emit 0x03
-        __emit 0x01
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x0c
-        __emit 0x53
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x10
-        __emit 0x57
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x33
-        __emit 0xff
-        __emit 0x83
-        __emit 0xf8
-        __emit 0x16
-        __emit 0x0f
-        __emit 0x85
-        __emit 0xeb
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x5b
-        __emit 0x1b
-        __emit 0xa9
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x10
-        __emit 0x32
-        __emit 0xc9
-        __emit 0x33
-        __emit 0xc0
-        __emit 0xf7
-        __emit 0xc2
-        __emit 0x30
-        __emit 0x04
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x74
-        __emit 0x0b
-        __emit 0xb1
-        __emit 0x01
-        __emit 0xb8
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xf6
-        __emit 0xc2
-        __emit 0x0c
-        __emit 0x74
-        __emit 0x09
-        __emit 0x83
-        __emit 0xc8
-        __emit 0x04
-        __emit 0x32
-        __emit 0xc9
-        __emit 0x88
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xf6
-        __emit 0xc2
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x09
-        __emit 0x83
-        __emit 0xc8
-        __emit 0x40
-        __emit 0x32
-        __emit 0xc9
-        __emit 0x88
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x1a
-        __emit 0x3a
-        __emit 0xcb
-        __emit 0x75
-        __emit 0x16
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x18
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xfc
-        __emit 0x1a
-        __emit 0xa9
-        __emit 0xff
-        __emit 0x0f
-        __emit 0xb6
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x50
-        __emit 0x4c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x53
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x07
-        __emit 0xfe
-        __emit 0xa5
-        __emit 0xff
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0xad
-        __emit 0x45
-        __emit 0x2d
-        __emit 0x00
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x26
-        __emit 0x50
-        __emit 0x2d
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x7c
-        __emit 0x4c
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x3b
-        __emit 0xcb
-        __emit 0x74
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x28
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x52
-        __emit 0xe8
-        __emit 0x0e
-        __emit 0x43
-        __emit 0xa9
-        __emit 0xff
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x05
-        __emit 0xbf
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x20
-        __emit 0xe8
-        __emit 0xe7
-        __emit 0x38
-        __emit 0x2d
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x41
-        __emit 0x2d
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x18
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-	}
+    ((StringBase<WideChar> *)&text)->set(&key, sizeof(key) / sizeof(key));
+}
+
+GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage *msg)
+{
+    GameMessageDisposition disp = KEEP_MESSAGE;
+    GameMessage::Type t = msg->getType();
+
+    if (t == GameMessage::MSG_RAW_KEY_UP)
+    {
+        Int keyState = msg->getArgument(1)->integer;
+        Int newModState = 0;
+        Bool shiftOnly = false;
+
+        if (keyState & 0x430)
+        {
+            newModState = 0x10;
+            shiftOnly = true;
+        }
+
+        if (keyState & 0x0C)
+        {
+            newModState |= 0x04;
+            shiftOnly = false;
+        }
+
+        if (keyState & 0xC0)
+        {
+            newModState |= 0x40;
+            shiftOnly = false;
+        }
+
+        if (newModState != 0)
+        {
+            if (!shiftOnly)
+                return disp;
+        }
+
+        WideChar key = TheKeyboard->getPrintableKey(
+            (UnsignedByte)msg->getArgument(0)->integer, 0);
+        UnicodeString uKey;
+        setHotKey(uKey, key);
+        AsciiString aKey;
+        aKey.translate(uKey);
+        if (g_bfmeTransitionMD && g_bfmeTransitionMD->dispatch(&aKey, shiftOnly))
+            disp = DESTROY_MESSAGE;
+    }
+
+    return disp;
 }
