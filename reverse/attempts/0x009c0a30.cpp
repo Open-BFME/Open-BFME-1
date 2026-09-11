@@ -1,6 +1,6 @@
 // ?Rva009C0A30Vp6AddNoise@@YAXPAEIIHH@Z
-// partial score=0.55 date=2026-09-04
-// cl: /O2 /Ob0 /G6 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// partial score=0.97 date=2026-09-11
+// cl: /O2 /Z7 /Ob0 /G6 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 #include <math.h>
 #include <stdlib.h>
@@ -41,7 +41,7 @@ void __cdecl Rva009C0A30Vp6AddNoise(
 		charDist[next] = 0;
 
 	for (unsigned int noiseIndex = 0; noiseIndex < 2048; ++noiseIndex)
-		noise[noiseIndex] = charDist[rand() & 0xff];
+		noise[noiseIndex] = charDist[(*__imp__rand)() & 0xff];
 
 	__asm
 	{
@@ -84,10 +84,14 @@ void __cdecl Rva009C0A30Vp6AddNoise(
 		mov ecx, start
 		mov dword ptr [ebp - 8h], ecx
 		mov dword ptr [ebp - 4h], eax
+		_emit 08Dh
+		_emit 064h
+		_emit 024h
+		_emit 000h
 	rva009c0a30_row:
 		mov edx, dword ptr [ebp - 8h]
 		mov dword ptr [ebp - 14h], edx
-		call dword ptr ds:[01359470h]
+		call dword ptr [__imp__rand]
 		and eax, 0ffh
 		lea eax, noise[eax]
 		mov dword ptr [ebp - 0ch], eax
