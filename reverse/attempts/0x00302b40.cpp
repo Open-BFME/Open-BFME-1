@@ -1,96 +1,121 @@
-// ?bfmeNotifyABJ@@YGXPAXH_N@Z
-// partial score=0.95 date=2026-09-09
-struct BfmeVec3ABJ
+// ?doUnitGuardForFramecount@ScriptActions@@IAEXABVAsciiString@@H_N@Z
+// partial score=0.95 date=2026-09-11
+typedef bool Bool;
+typedef int Int;
+
+enum GuardMode
 {
-	int m_bfmeXABJ;
-	int m_bfmeYABJ;
-	int m_bfmeZABJ;
+	GUARDMODE_NORMAL = 0
 };
 
-class BfmeSinkABJ
+enum CommandSourceType
+{
+	CMD_FROM_SCRIPT = 1
+};
+
+struct Coord3D
+{
+	int x;
+	int y;
+	int z;
+};
+
+class AsciiString
+{
+	char *m_data;
+};
+
+class AICommandInterface
 {
 public:
-	void bfmeEmitABJ(BfmeVec3ABJ *v, int a, int b);
+	void aiGuardPosition(const Coord3D *position, GuardMode guardMode,
+		CommandSourceType commandSource);
 };
 
-struct BfmeOwnerABJ
+class AIUpdateInterface
 {
-	unsigned char m_bfmeHeadABJ[0x20];
-	BfmeSinkABJ m_bfme20ABJ;
+	unsigned char m_pad[0x20];
+
+public:
+	AICommandInterface m_command;
 };
 
-struct BfmeThingABJ
+class Object
 {
-	unsigned char m_bfmeHeadTABJ[0x38];
-	int m_bfme38ABJ;
-	int m_bfme3CABJ;
-	int m_bfme40ABJ;
-	unsigned char m_bfmeGapABJ[0x204 - 0x44];
-	BfmeOwnerABJ *m_bfme204ABJ;
+public:
+	unsigned char m_beforePosition[0x38];
+	int m_positionX;
+	int m_positionY;
+	int m_positionZ;
+	unsigned char m_beforeAI[0x204 - 0x44];
+	AIUpdateInterface *m_ai;
+
 };
 
 class ScriptEngine
 {
 public:
-	virtual void bfmeSlot0ABJ();
-	virtual void bfmeSlot1ABJ();
-	virtual void bfmeSlot2ABJ();
-	virtual void bfmeSlot3ABJ();
-	virtual void bfmeSlot4ABJ();
-	virtual void bfmeSlot5ABJ();
-	virtual void bfmeSlot6ABJ();
-	virtual void bfmeSlot7ABJ();
-	virtual void bfmeSlot8ABJ();
-	virtual void bfmeSlot9ABJ();
-	virtual void bfmeSlot10ABJ();
-	virtual void bfmeSlot11ABJ();
-	virtual void bfmeSlot12ABJ();
-	virtual void bfmeSlot13ABJ();
-	virtual void bfmeSlot14ABJ();
-	virtual void bfmeSlot15ABJ();
-	virtual void bfmeSlot16ABJ();
-	virtual void bfmeSlot17ABJ();
-	virtual void bfmeSlot18ABJ();
-	virtual void bfmeSlot19ABJ();
-	virtual void bfmeSlot20ABJ();
-	virtual void bfmeSlot21ABJ();
-	virtual void bfmeSlot22ABJ();
-	virtual void bfmeSlot23ABJ();
-	virtual void bfmeSlot24ABJ();
-	virtual void bfmeSlot25ABJ();
-	virtual struct BfmeThingABJ *bfmeLookupABJ(void *key);
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual Object *getUnitNamed(const AsciiString &name) = 0;
 
-	void bfmeReportABJ(BfmeThingABJ *t, int n);
+	void setSequentialTimer(Object *object, Int frames);
 };
 
 extern ScriptEngine *TheScriptEngine;
 
-void __stdcall bfmeNotifyABJ(void *key, int n, bool scaled);
-
-void __stdcall bfmeNotifyABJ(void *key, int n, bool scaled)
+class ScriptActions
 {
-	BfmeThingABJ *t = TheScriptEngine->bfmeLookupABJ(key);
+protected:
+	void doUnitGuardForFramecount(const AsciiString &, Int, Bool);
+};
 
-	if (t == 0)
+void ScriptActions::doUnitGuardForFramecount(const AsciiString &unitName,
+	Int framecount, Bool seconds)
+{
+	Object *object = TheScriptEngine->getUnitNamed(unitName);
+	if (!object)
 		return;
 
-	BfmeOwnerABJ *o = t->m_bfme204ABJ;
-
-	if (o == 0)
+	AIUpdateInterface *ai = object->m_ai;
+	if (!ai)
 		return;
 
-	int x = t->m_bfme38ABJ;
-	int y = t->m_bfme3CABJ;
-	BfmeVec3ABJ v;
+	int x = object->m_positionX;
+	int y = object->m_positionY;
+	Coord3D position;
+	position.y = y;
+	position.x = x;
+	position.z = object->m_positionZ;
+	ai->m_command.aiGuardPosition(&position, GUARDMODE_NORMAL,
+		CMD_FROM_SCRIPT);
 
-	v.m_bfmeXABJ = x;
-	v.m_bfmeYABJ = y;
-	v.m_bfmeZABJ = t->m_bfme40ABJ;
-
-	o->m_bfme20ABJ.bfmeEmitABJ(&v, 0, 1);
-
-	if (scaled)
-		TheScriptEngine->bfmeReportABJ(t, n * 5);
+	if (seconds)
+		TheScriptEngine->setSequentialTimer(object, framecount * 5);
 	else
-		TheScriptEngine->bfmeReportABJ(t, n);
+		TheScriptEngine->setSequentialTimer(object, framecount);
 }
