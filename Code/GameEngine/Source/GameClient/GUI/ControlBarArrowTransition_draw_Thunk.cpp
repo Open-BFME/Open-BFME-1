@@ -1,379 +1,140 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?draw@ControlBarArrowTransition@@UAEXXZ: Code/GameEngine/Source/GameClient/GUI/GameWindowTransitionsStyles.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowTransitions.h
+typedef int Int;
+typedef float Real;
+typedef unsigned char Bool;
+
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+class Image;
+
+class Display
+{
+public:
+	virtual void unused00();
+	virtual void unused01();
+	virtual void unused02();
+	virtual void unused03();
+	virtual void unused04();
+	virtual void unused05();
+	virtual void unused06();
+	virtual void unused07();
+	virtual void unused08();
+	virtual void unused09();
+	virtual void unused10();
+	virtual void unused11();
+	virtual void unused12();
+	virtual void unused13();
+	virtual void unused14();
+	virtual void unused15();
+	virtual void unused16();
+	virtual void unused17();
+	virtual void unused18();
+	virtual void unused19();
+	virtual void unused20();
+	virtual void unused21();
+	virtual void unused22();
+	virtual void unused23();
+	virtual void unused24();
+	virtual void unused25();
+	virtual void unused26();
+	virtual void unused27();
+	virtual void unused28();
+	virtual void unused29();
+	virtual void unused30();
+	virtual void unused31();
+	virtual void unused32();
+	virtual void unused33();
+	virtual void unused34();
+	virtual void unused35();
+	virtual void unused36();
+	virtual void unused37();
+	virtual void unused38();
+	virtual void unused39();
+	virtual void unused40();
+	virtual void unused41();
+	virtual void unused42();
+	virtual void unused43();
+	virtual void beginImageDraw();
+	virtual void unused45();
+	virtual void unused46();
+	virtual void unused47();
+	virtual void unused48();
+	virtual void unused49();
+	virtual void unused50();
+	virtual void unused51();
+	virtual void unused52();
+	virtual void drawImageCore(const Image *image, Real x0, Real y0,
+		Real x1, Real y1, Int color, Int mode);
+	virtual void unused54();
+	virtual void endImageDraw();
+};
+
+extern Display *TheDisplay;
+extern Real g_bfmeDefaultBU;
+extern Real g_bfmeScaleB3;
+
+inline Int GameMakeColor(unsigned char red, unsigned char green,
+	unsigned char blue, unsigned char alpha)
+{
+	return ((unsigned int)alpha << 24) | ((unsigned int)red << 16) |
+		((unsigned int)green << 8) | blue;
+}
+
+inline void drawImage(Display *display, const Image *image, Real x0,
+	Real y0, Real x1, Real y1, Int color, Int mode)
+{
+	display->beginImageDraw();
+	display->drawImageCore(image, x0, y0, x1, y1, color, mode);
+	display->endImageDraw();
+}
+
 class ControlBarArrowTransition
 {
 public:
 	virtual void draw();
+
+private:
+	Int m_frameLength;
+	Bool m_isFinished;
+	Bool m_isForward;
+	Bool m_isReversed;
+	unsigned char m_unused_0b;
+	void *m_win;
+	ICoord2D m_pos;
+	ICoord2D m_incrementPos;
+	ICoord2D m_size;
+	Real m_percent;
+	Real m_fadePercent;
+	Int m_drawState;
+	const Image *m_arrowImage;
 };
 
 // ?draw@ControlBarArrowTransition@@UAEXXZ
-__declspec(naked) void ControlBarArrowTransition::draw()
+void ControlBarArrowTransition::draw()
 {
-	__asm {
-        __emit 0x83
-        __emit 0xec
-        __emit 0x10
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x30
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x0f
-        __emit 0x8c
-        __emit 0x54
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xf9
-        __emit 0x10
-        __emit 0x57
-        __emit 0x0f
-        __emit 0x8d
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x14
-        __emit 0x0f
-        __emit 0xaf
-        __emit 0xc1
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x20
-        __emit 0x03
-        __emit 0xc7
-        __emit 0x03
-        __emit 0xc8
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x70
-        __emit 0x12
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x10
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x34
-        __emit 0x03
-        __emit 0xd0
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x01
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x08
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0xff
-        __emit 0x90
-        __emit 0xb0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x6a
-        __emit 0x02
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x51
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x50
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x92
-        __emit 0xd4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xff
-        __emit 0xa2
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc1
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x53
-        __emit 0xd8
-        __emit 0x4e
-        __emit 0x2c
-        __emit 0xd8
-        __emit 0x2d
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xd8
-        __emit 0x0d
-        __emit 0x68
-        __emit 0x40
-        __emit 0x08
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xc5
-        __emit 0xb2
-        __emit 0x45
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0x81
-        __emit 0xfb
-        __emit 0xff
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x7e
-        __emit 0x05
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x14
-        __emit 0x6b
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x24
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x20
-        __emit 0x03
-        __emit 0xc7
-        __emit 0x03
-        __emit 0xc8
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x70
-        __emit 0x12
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x10
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x34
-        __emit 0x03
-        __emit 0xd0
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x18
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x01
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0xf9
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xff
-        __emit 0x90
-        __emit 0xb0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xdb
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x6a
-        __emit 0x02
-        __emit 0x0f
-        __emit 0xb6
-        __emit 0xc3
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x18
-        __emit 0x0d
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x00
-        __emit 0x50
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0x51
-        __emit 0x50
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xd9
-        __emit 0x1c
-        __emit 0x24
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x92
-        __emit 0xd4
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x17
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xff
-        __emit 0xa2
-        __emit 0xdc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
+	if(m_drawState < 0)
+		return;
+	if(m_drawState < 16)
+	{
+		Int yPos = m_pos.y + m_incrementPos.y * m_drawState;
+		drawImage(TheDisplay, m_arrowImage, (Real)m_pos.x, (Real)yPos,
+			(Real)(m_pos.x + m_size.x), (Real)(yPos + m_size.y), -1, 2);
+	}
+	else
+	{
+		Real alphaValue = (g_bfmeDefaultBU -
+			m_fadePercent * (m_drawState - 16)) * g_bfmeScaleB3;
+		Int alpha = alphaValue;
+		if(alpha > 255)
+			alpha = 255;
+		Int yPos = m_pos.y + m_incrementPos.y * 15;
+		drawImage(TheDisplay, m_arrowImage, (Real)m_pos.x, (Real)yPos,
+			(Real)(m_pos.x + m_size.x), (Real)(yPos + m_size.y),
+			GameMakeColor(255, 255, 255, alpha), 2);
 	}
 }
