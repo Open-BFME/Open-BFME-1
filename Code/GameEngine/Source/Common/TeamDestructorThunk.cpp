@@ -1,496 +1,302 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??1Team@@MAE@XZ: Code/GameEngine/Source/Common/RTS/Team.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// ??1Team@@MAE@XZ, retail RVA 0x000F4250 (480 bytes).
+//
+// The public Team declaration is the Zero Hour layout.  BFME's constructor,
+// Team.cpp's BFME views, and the destructor's own field operands establish a
+// different object: the member list is at +0x0c, the two relation pointers at
+// +0xec/+0xf0, and the transfer-list/gate-set pair at +0x100/+0x104.  Keep
+// those views in this TU so the shared Team ABI is not changed.
 
-class __declspec(novtable) Team
+typedef unsigned int UnsignedInt;
+
+class Team;
+class Player;
+class ScriptEngine;
+
+// The calls below are incremental-link thunks at the exact retail call sites.
+// The receiver and argument types are carried by the local shims; their
+// address-derived names do not claim an unproven source-level callee.
+extern void j_00042910();
+extern void j_0000e6b5();
+extern void j_00044f30();
+extern void j_00014dcb();
+extern void j_0001e416();
+extern void j_0001f1bd();
+extern void j_0001fe2e();
+extern void j_00049eb8();
+
+class Rva000F4250ScriptCall
+{
+public:
+	void notify( Team *team );
+};
+
+class Rva000F4250GateCall
+{
+public:
+	void set( UnsignedInt gateID, UnsignedInt open );
+};
+
+class Rva000F4250PlayerListCall
+{
+public:
+	Player *getNthPlayer( int index );
+};
+
+class Rva000F4250PlayerCall
+{
+public:
+	void preTeamDestroy( const Team *team );
+};
+
+class Rva000F4250PrototypeCall
+{
+public:
+	void remove( Team *team );
+};
+
+class Rva000F4250Hash
+{
+public:
+	void clear();
+	void destroy();
+	~Rva000F4250Hash() { destroy(); }
+
+private:
+	unsigned char m_storage[ 0x14 ];
+};
+
+class Rva000F4250GateSet
+{
+public:
+	void destroy();
+	~Rva000F4250GateSet() { destroy(); }
+
+	struct TreeHeader;
+	TreeHeader *m_tree;
+	UnsignedInt m_count;
+};
+
+struct Rva000F4250GateSet::TreeHeader
+{
+	unsigned char m_pad[ 8 ];
+	struct Node *m_root;
+};
+
+struct Rva000F4250GateSetNode
+{
+	unsigned char m_pad[ 0x10 ];
+	UnsignedInt m_gateID;
+};
+
+// The Object virtual used by Team::~Team is slot 20 (+0x50).  The preceding
+// slots are intentionally unnamed: the destructor only establishes the slot
+// and does not establish those source-level method identities.
+class Rva000F4250MemberCall
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void setTeam( Team *team ) = 0;
+};
+
+class Rva000F4250RelationMap
+{
+public:
+	virtual void destroy( UnsignedInt deleting );
+};
+
+// The transfer list deliberately has a non-trivial destructor.  Team's
+// explicit clear() is the first walk in retail; its implicit member dtor is
+// the second walk and then releases the 0xc-byte sentinel.  Keeping both as
+// ordinary C++ lifetime operations reproduces the observed EH states.
+namespace _STL
+{
+template <bool threads, int instance>
+class __node_alloc
+{
+public:
+	static void _M_deallocate( void *node, UnsignedInt bytes );
+};
+}
+
+struct Rva000F4250TransferNode
+{
+	Rva000F4250TransferNode *m_next;
+	Rva000F4250TransferNode *m_previous;
+};
+
+class Rva000F4250TransferList
+{
+public:
+	void clear()
+	{
+		Rva000F4250TransferNode *node = m_node->m_next;
+		while (node != m_node)
+		{
+			Rva000F4250TransferNode *old = node;
+			node = node->m_next;
+			_STL::__node_alloc<true, 0>::_M_deallocate( old, 0xc );
+		}
+		m_node->m_next = m_node;
+		m_node->m_previous = m_node;
+	}
+
+	~Rva000F4250TransferList()
+	{
+		Rva000F4250TransferNode *node = m_node->m_next;
+		while (node != m_node)
+		{
+			Rva000F4250TransferNode *old = node;
+			node = node->m_next;
+			_STL::__node_alloc<true, 0>::_M_deallocate( old, 0xc );
+		}
+		m_node->m_next = m_node;
+		m_node->m_previous = m_node;
+		if (m_node != 0)
+			_STL::__node_alloc<true, 0>::_M_deallocate( m_node, 0xc );
+	}
+
+	Rva000F4250TransferNode *m_node;
+};
+
+// This is the one-pointer BFME StringBase object at Team+0x18.  Its private
+// releaseBuffer spelling is already pinned to the canonical WWLib body.
+class BFMERetailAsciiString
+{
+public:
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+	void *m_data;
+};
+
+// Only the fields used by this destructor are laid out on the global objects.
+class ScriptEngine
+{
+};
+
+class PlayerList
+{
+public:
+	unsigned char m_pad[ 0x10 ];
+	int m_playerCount;
+};
+
+extern ScriptEngine *TheScriptEngine;
+extern PlayerList *ThePlayerList;
+
+class Rva000F4250TeamPrototype
+{
+public:
+	unsigned char m_pad[ 0x274 ];
+	Team *m_teamInstanceList;
+};
+
+class BfmeBaseVUQ
+{
+protected:
+	virtual ~BfmeBaseVUQ() {}
+};
+
+class Team : public BfmeBaseVUQ
 {
 protected:
 	virtual ~Team();
+	Rva000F4250MemberCall *getFirstItemInTeamMemberList() const
+	{
+		return m_firstMember;
+	}
+
+private:
+	Rva000F4250TeamPrototype *m_proto;       // +0x04
+	UnsignedInt m_id;                        // +0x08
+	Rva000F4250MemberCall *m_firstMember;    // +0x0c
+	Team *m_previous;                        // +0x10
+	Team *m_next;                             // +0x14
+	BFMERetailAsciiString m_state;           // +0x18
+	Rva000F4250Hash m_hash;                  // +0x1c
+	unsigned char m_unmodelled[ 0xec - 0x30 ];
+	Rva000F4250RelationMap *m_teamRelations; // +0xec
+	Rva000F4250RelationMap *m_playerRelations; // +0xf0
+	unsigned char m_gap[ 0x100 - 0xf4 ];
+	Rva000F4250TransferList m_xferMemberIDList; // +0x100
+	Rva000F4250GateSet m_gateSet;            // +0x104
 };
 
+#pragma comment(linker, "/alternatename:?notify@Rva000F4250ScriptCall@@QAEXPAVTeam@@@Z=?j_00042910@@YAXXZ")
+#pragma comment(linker, "/alternatename:?set@Rva000F4250GateCall@@QAEXII@Z=?j_0000e6b5@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getNthPlayer@Rva000F4250PlayerListCall@@QAEPAVPlayer@@H@Z=?j_00044f30@@YAXXZ")
+#pragma comment(linker, "/alternatename:?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z=?j_00014dcb@@YAXXZ")
+#pragma comment(linker, "/alternatename:?remove@Rva000F4250PrototypeCall@@QAEXPAVTeam@@@Z=?j_0001e416@@YAXXZ")
+#pragma comment(linker, "/alternatename:?clear@Rva000F4250Hash@@QAEXXZ=?j_0001f1bd@@YAXXZ")
+#pragma comment(linker, "/alternatename:?destroy@Rva000F4250GateSet@@QAEXXZ=?j_0001fe2e@@YAXXZ")
+#pragma comment(linker, "/alternatename:?destroy@Rva000F4250Hash@@QAEXXZ=?j_00049eb8@@YAXXZ")
+
 // ??1Team@@MAE@XZ
-__declspec(naked) Team::~Team()
+Team::~Team()
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x6a
-		__emit 0xbc
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x55
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x57
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x88
-		__emit 0x5f
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x6c
-		__emit 0x07
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x85
-		__emit 0xc9
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x04
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x06
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x83
-		__emit 0xe6
-		__emit 0xf4
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x08
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x29
-		__emit 0xeb
-		__emit 0x07
-		__emit 0x8d
-		__emit 0xa4
-		__emit 0x24
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x04
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x40
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x48
-		__emit 0x10
-		__emit 0x6a
-		__emit 0x00
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xff
-		__emit 0xa3
-		__emit 0xf1
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x08
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0xe0
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x48
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x29
-		__emit 0x8b
-		__emit 0x41
-		__emit 0x10
-		__emit 0x33
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x7e
-		__emit 0x20
-		__emit 0x57
-		__emit 0xe8
-		__emit 0x57
-		__emit 0x0c
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x08
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xe8
-		__emit 0xe6
-		__emit 0x0a
-		__emit 0xf2
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x48
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x41
-		__emit 0x10
-		__emit 0x47
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0x7c
-		__emit 0xe0
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x0c
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x09
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x00
-		__emit 0xff
-		__emit 0x52
-		__emit 0x50
-		__emit 0xeb
-		__emit 0xf0
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x04
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x1c
-		__emit 0x39
-		__emit 0xb1
-		__emit 0x74
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x0e
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x10
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x07
-		__emit 0x8b
-		__emit 0x46
-		__emit 0x14
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x06
-		__emit 0x56
-		__emit 0xe8
-		__emit 0xf0
-		__emit 0xa0
-		__emit 0xf2
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xec
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x74
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xf0
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc9
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xec
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x12
-		__emit 0x8d
-		__emit 0x6e
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xf0
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x59
-		__emit 0xae
-		__emit 0xf2
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0x74
-		__emit 0x19
-		__emit 0x8b
-		__emit 0xc7
-		__emit 0x8b
-		__emit 0x3f
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x74
-		__emit 0xa2
-		__emit 0x73
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0x75
-		__emit 0xe7
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x04
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x40
-		__emit 0x04
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x03
-		__emit 0xe8
-		__emit 0x84
-		__emit 0xba
-		__emit 0xf2
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x38
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x02
-		__emit 0x74
-		__emit 0x1e
-		__emit 0xeb
-		__emit 0x03
-		__emit 0x8d
-		__emit 0x49
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xc7
-		__emit 0x8b
-		__emit 0x3f
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x24
-		__emit 0xa2
-		__emit 0x73
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xf8
-		__emit 0x75
-		__emit 0xe7
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x40
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x00
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x6a
-		__emit 0x0c
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xf4
-		__emit 0xa1
-		__emit 0x73
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xad
-		__emit 0x5a
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4e
-		__emit 0x18
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x28
-		__emit 0x35
-		__emit 0x79
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x5f
-		__emit 0xc7
-		__emit 0x06
-		__emit 0x44
-		__emit 0x37
-		__emit 0x07
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc3
+	if ( TheScriptEngine )
+		((Rva000F4250ScriptCall *)TheScriptEngine)->notify( this );
+
+	while ( m_gateSet.m_count != 0 )
+	{
+		Rva000F4250GateSetNode *root =
+			(Rva000F4250GateSetNode *)m_gateSet.m_tree->m_root;
+		((Rva000F4250GateCall *)this)->set( root->m_gateID, 0 );
 	}
+
+	if ( ThePlayerList )
+	{
+		for ( int i = 0; i < ThePlayerList->m_playerCount; ++i )
+		{
+			Player *player =
+				((Rva000F4250PlayerListCall *)ThePlayerList)->getNthPlayer( i );
+			if ( player )
+				((Rva000F4250PlayerCall *)player)->preTeamDestroy( this );
+		}
+	}
+
+	Rva000F4250MemberCall *member;
+	while ( ( member = getFirstItemInTeamMemberList() ) != 0 )
+	{
+		member->setTeam( 0 );
+	}
+
+	if ( m_proto )
+	{
+		if ( ((Rva000F4250TeamPrototype *)m_proto)->m_teamInstanceList == this ||
+			m_previous != 0 || m_next != 0 )
+			((Rva000F4250PrototypeCall *)m_proto)->remove( this );
+	}
+
+	if ( m_teamRelations )
+		m_teamRelations->destroy( 1 );
+	m_teamRelations = 0;
+
+	if ( m_playerRelations )
+		m_playerRelations->destroy( 1 );
+	m_playerRelations = 0;
+
+	m_hash.clear();
+	m_xferMemberIDList.clear();
 }

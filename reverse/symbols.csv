@@ -87202,3 +87202,11 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??A?$hash_map@VBFMERetailAsciiString@@PAVRva00618600Poly@@U?$hash@VBFMERetailAsciiString@@@rts@@U?$equal_to@VBFMERetailAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVBFMERetailAsciiString@@PAVRva00618600Poly@@@_STL@@@6@@_STL@@QAEAAPAVRva00618600Poly@@ABVBFMERetailAsciiString@@@Z,0x0004528C,ILT thunk to the hash_map operator[] insert helper at 0x006151B0 already matched under the Rva00614D10Mapped instantiation; reused for BFMERetailAsciiString/Rva00618600Poly* by the rva00616240 find-or-insert factory (operator[] codegen depends only on key type and 4-byte mapped size)
 ??0?$_Vector_base@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAE@IABV?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@1@@Z,0x0000CA77,retail vector copy constructor base call target through the 0x0000CA77 ILT
 ?get_allocator@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QBE?AV?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@2@XZ,0x00014CB8,retail vector copy constructor allocator call target through the 0x00014CB8 ILT
+?notify@Rva000F4250ScriptCall@@QAEXPAVTeam@@@Z,0x00042910,Team destructor retail call via proven ILT
+?set@Rva000F4250GateCall@@QAEXII@Z,0x0000E6B5,Team destructor retail call via proven ILT
+?getNthPlayer@Rva000F4250PlayerListCall@@QAEPAVPlayer@@H@Z,0x00044F30,Team destructor retail call via proven ILT
+?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z,0x00014DCB,Team destructor retail call via proven ILT
+?remove@Rva000F4250PrototypeCall@@QAEXPAVTeam@@@Z,0x0001E416,Team destructor retail call via proven ILT
+?clear@Rva000F4250Hash@@QAEXXZ,0x0001F1BD,Team destructor retail call via proven ILT
+?destroy@Rva000F4250GateSet@@QAEXXZ,0x0001FE2E,Team destructor retail call via proven ILT
+?destroy@Rva000F4250Hash@@QAEXXZ,0x00049EB8,Team destructor retail call via proven ILT
