@@ -85776,6 +85776,8 @@ __imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::m
 __imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
 __imp__EnumThreadWindows@12,0x01358FDC,Open-BFME5 USER32 EnumThreadWindows import the 0x0088A520 window probe calls
 __imp__GetClientRect@8,0x0135901C,Open-BFME5 USER32 GetClientRect import the 0x0088A520 window probe calls
+__imp__GetDateFormatA@24,0x01358D80,Open-BFME5 retail GetDateFormatA import pointer
+__imp__GetDateFormatW@24,0x01358D84,Open-BFME5 retail GetDateFormatW import pointer
 __imp__GetCurrentThreadId@0,0x01358D7C,Open-BFME5 KERNEL32 GetCurrentThreadId import the 0x0088A520 window probe calls
 __imp__GetDriveTypeA@4,0x01358D8C,Open-BFME5 retail KERNEL32 GetDriveTypeA import pointer
 __imp__GetLocalTime@4,0x01358DB8,Open-BFME5 retail GetLocalTime import pointer
