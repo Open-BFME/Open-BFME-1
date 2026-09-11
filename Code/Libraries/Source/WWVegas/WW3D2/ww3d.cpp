@@ -1270,76 +1270,8 @@ void WW3D::Flush(RenderInfoClass & rinfo)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-__declspec(naked) WW3DErrorType WW3D::End_Render(bool flip_frame)
-{
-	__asm {
-		__emit 0xa0;
-		__emit 0x28;
-		__emit 0xf4;
-		__emit 0x33;
-		__emit 0x01;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0x74;
-		__emit 0x35;
-		__emit 0xe8;
-		__emit 0x82;
-		__emit 0xcf;
-		__emit 0x03;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x04;
-		__emit 0x50;
-		__emit 0xc6;
-		__emit 0x05;
-		__emit 0x29;
-		__emit 0xf4;
-		__emit 0x33;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0xe8;
-		__emit 0x41;
-		__emit 0xb7;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xa1;
-		__emit 0x34;
-		__emit 0xf4;
-		__emit 0x33;
-		__emit 0x01;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x04;
-		__emit 0x40;
-		__emit 0xa3;
-		__emit 0x34;
-		__emit 0xf4;
-		__emit 0x33;
-		__emit 0x01;
-		__emit 0xe8;
-		__emit 0x3e;
-		__emit 0xa6;
-		__emit 0x03;
-		__emit 0x00;
-		__emit 0xc6;
-		__emit 0x05;
-		__emit 0x51;
-		__emit 0xf4;
-		__emit 0x33;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0xe8;
-		__emit 0x92;
-		__emit 0x63;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xb0;
-		__emit 0x01;
-		__emit 0xc3;
-	}
-}
+// ?End_Render@WW3D@@SA?AW4WW3DErrorType@@_N@Z is implemented in
+// WW3DEndRender.cpp because BFME returns its byte-sized success value through AL.
 
 
 /***********************************************************************************************
