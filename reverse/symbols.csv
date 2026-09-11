@@ -81405,7 +81405,6 @@ name,address,notes
 ?getPtr@Rva00803730Getter@@QAEPAXPAX0@Z,0x007E8900,FESL attr getPtr alias of bfmeGoRF; pin for 0x803730
 ?getRadiusAndCenter@Pathfinder@@IAEXPBVObject@@AAHAA_N@Z,0x000461FF,goalPosition caller proves the ILT target
 ?getRailedTransportDockUpdateInterface@RailedTransportDockUpdate@@UAEPAVRailedTransportDockUpdateInterface@@XZ,0x0000178A,primary vftable slot 0x2C ILT to 0x002CE320
-?getRawMapHeight@W3DTerrainVisual@@UAEHPBUICoord2D@@@Z,0x00731b70,vtable-slot ??_7W3DTerrainVisual@@6BSnapshot@@@ slot 32 anchors=16
 ?getReal@UserPreferences@@QBEMVAsciiString@@M@Z,0x000A93B0,find virtual +0x18 then atof through the CRT import at 0x01359380 and fstp/fld of the Real default; ILT 0x0000B320 used by getTimePlayed 0x0009C2C0; ret 8
 ?getRealFilename@NetFileAnnounceCommandMsg@@QAE?AVAsciiString@@XZ,0x000106D6,processFileAnnounce calls the ILT for the matched 0x00675610 StringBase<char> return body
 ?getRealFilename@NetFileCommandMsg@@QAE?AVAsciiString@@XZ,0x00675450,AsciiString forwarding ABI view of matched StringBase<char> filename getter; type19 processFile 0x00669E20 calls ILT0x0001A00F twice then reads narrow text for FileSystem doesFileExist/openFile
