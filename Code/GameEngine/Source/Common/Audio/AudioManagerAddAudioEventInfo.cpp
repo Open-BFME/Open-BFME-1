@@ -1,7 +1,12 @@
-// ?d_006ae910@@YAXXZ
-// partial score=0.97 date=2026-09-10
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+
+// ?addAudioEventInfo@AudioManager@@UAEXPAUAudioEventInfo@@@Z
+// BFME's AudioManager::addAudioEventInfo takes the OptionsPreferences-style
+// mutex at this+0x95c, unlike the ZH reference body still sitting as a stub
+// in GameAudio.cpp. This TU-scoped layout mirrors only the fields this one
+// method touches: the hash map at +0x70, the dirty byte at +0x630, and the
+// mutex handle at +0x95c.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -22,9 +27,6 @@ struct hash
 }
 
 bool operator==(const AsciiString &left, const AsciiString &right);
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
@@ -80,7 +82,6 @@ public:
 	}
 
 private:
-	int m_padding;
 	void *m_mutex;
 	unsigned char m_held;
 };
@@ -142,12 +143,10 @@ private:
 void AudioManager::addAudioEventInfo(AudioEventInfo *newEvent)
 {
 	AudioManagerMutex guard(m_mutex);
+	AudioEventInfoRef eventInfo = findAudioEventInfo(&newEvent->m_audioName);
+	if (!eventInfo.m_info)
 	{
-		AudioEventInfoRef eventInfo = findAudioEventInfo(&newEvent->m_audioName);
-		if (!eventInfo.m_info)
-		{
-			m_allAudioEventInfo[newEvent->m_audioName] = newEvent;
-			m_infoDirty = 0;
-		}
+		m_allAudioEventInfo[newEvent->m_audioName] = newEvent;
+		m_infoDirty = 0;
 	}
 }
