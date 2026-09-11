@@ -123,7 +123,7 @@ struct Rva0047FCF0FactoryInput
 	Int y;
 	Int width;
 	Int height;
-	char padBeforeInstanceData[0x18];
+	UnsignedInt padBeforeInstanceData[6];
 	WinInstanceData *instanceData;
 };
 
@@ -275,9 +275,8 @@ GameWindow *GameWindowManager::gogoGadgetTextEntry(
 	Rva0047FCF0FactoryInput *input, Rva0047FCF0EntryData *entryData,
 	GameFont *defaultFont, Bool defaultVisual)
 {
-        GameWindow *entry;
-        Rva0047FCF0EntryData *data;
-
+	Rva0047FCF0EntryData *data;
+	GameWindow *entry;
 	if ((input->instanceData->style & GWS_ENTRY_FIELD) == 0)
 		return 0;
 
@@ -301,7 +300,6 @@ GameWindow *GameWindowManager::gogoGadgetTextEntry(
 	data->text = TheDisplayStringManager->newDisplayString();
 	data->sText = TheDisplayStringManager->newDisplayString();
 	data->constructText = TheDisplayStringManager->newDisplayString();
-
 	if (entryData->text)
 		data->text->setText(entryData->text->getText());
 	if (entryData->sText)
@@ -314,33 +312,33 @@ GameWindow *GameWindowManager::gogoGadgetTextEntry(
 		OurLanguage == LANGUAGE_ID_JAPANESE)
 	{
 		WinInstanceData boxInstData;
-		Rva0047FCF0FactoryInput listInput;
 		Rva0047FCF0ListboxData listData;
+		Rva0047FCF0FactoryInput listInput;
 
 		boxInstData.init();
 		memset(&listData, 0, sizeof(Rva0047FCF0ListboxData));
+		listData.listLength = 128;
+		listData.autoScroll = 0;
+		listData.columns = 1;
+		listData.autoPurge = 1;
+		listData.scrollBar = 1;
+		listData.scrollIfAtEnd = 0;
+		listData.multiSelect = 0;
+		listData.listData = 0;
+		boxInstData.style = GWS_SCROLL_LISTBOX | GWS_MOUSE_TRACK;
 		listInput.owner = 0;
 		listInput.status = 0x4430;
 		listInput.x = 0;
 		listInput.y = input->height;
 		listInput.width = 0x6e;
 		listInput.height = 0x77;
-		*(UnsignedInt *)((char *)&listInput + 0x18) = 0;
-		*(UnsignedInt *)((char *)&listInput + 0x1c) = 0;
-		*(UnsignedInt *)((char *)&listInput + 0x20) = 0;
-		*(UnsignedInt *)((char *)&listInput + 0x24) = 0;
-		*(UnsignedInt *)((char *)&listInput + 0x28) = 0;
-		*(UnsignedInt *)((char *)&listInput + 0x2c) = 0;
 		listInput.instanceData = &boxInstData;
-		listData.autoScroll = 0;
-		listData.scrollIfAtEnd = 0;
-		listData.multiSelect = 0;
-		listData.listLength = 128;
-		listData.columns = 1;
-		listData.autoPurge = 1;
-		listData.scrollBar = 1;
-		listData.listData = 0;
-		boxInstData.style = GWS_SCROLL_LISTBOX | GWS_MOUSE_TRACK;
+		listInput.padBeforeInstanceData[0] = 0;
+		listInput.padBeforeInstanceData[1] = 0;
+		listInput.padBeforeInstanceData[2] = 0;
+		listInput.padBeforeInstanceData[3] = 0;
+		listInput.padBeforeInstanceData[4] = 0;
+		listInput.padBeforeInstanceData[5] = 0;
 
 		data->constructList = gogoGadgetListBox(
 			&listInput, &listData, 0, 1);

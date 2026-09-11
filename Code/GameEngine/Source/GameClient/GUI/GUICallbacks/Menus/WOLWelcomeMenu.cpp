@@ -63,9 +63,17 @@
 #include "GameNetwork/GameSpyOverlay.h"
 
 #include "GameNetwork/GameSpy/BuddyDefs.h"
+#define BuddyRequest Rva0050D030ReferenceBuddyRequest
+#define GameSpyBuddyMessageQueueInterface Rva0050D030ReferenceBuddyMessageQueueInterface
 #include "GameNetwork/GameSpy/BuddyThread.h"
+#undef GameSpyBuddyMessageQueueInterface
+#undef BuddyRequest
 #include "GameNetwork/GameSpy/PeerDefs.h"
+#define PeerRequest Rva0050D030ReferencePeerRequest
+#define GameSpyPeerMessageQueueInterface Rva0050D030ReferencePeerMessageQueueInterface
 #include "GameNetwork/GameSpy/PeerThread.h"
+#undef GameSpyPeerMessageQueueInterface
+#undef PeerRequest
 #include "GameNetwork/GameSpy/PersistentStorageDefs.h"
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
@@ -232,6 +240,131 @@ public:
 	virtual Int getMaxMessagesPerUpdate( void ) = 0;
 };
 #undef BFME_WOL_GSI_SLOT
+
+// BFME PeerRequest is 0x194 bytes; the reference header's request is 0x190.
+// The real constructor and destructor remain the shared symbols below.
+// ??0PeerRequest@@QAE@XZ
+// ??1PeerRequest@@QAE@XZ
+class PeerRequest
+{
+public:
+	 enum
+	 {
+		 PEERREQUEST_LOGOUT = 1
+	 };
+
+	PeerRequest();
+	~PeerRequest();
+	Int peerRequestType;
+	char m_bfmePayload[0x190];
+};
+typedef char Rva0050D030PeerRequestSizeCheck[sizeof(PeerRequest) == 0x194 ? 1 : -1];
+
+// BFME BuddyRequest is 0x2B8 bytes; only its request tag is touched here.
+// The opaque tail preserves the witnessed online-message ABI locally.
+class BuddyRequest
+{
+public:
+	 enum
+	 {
+		 BUDDYREQUEST_LOGOUT = 2
+	 };
+
+	Int buddyRequestType;
+	char m_bfmePayload[0x2B4];
+};
+typedef char Rva0050D030BuddyRequestSizeCheck[sizeof(BuddyRequest) == 0x2B8 ? 1 : -1];
+
+// The BFME queue interfaces retain addRequest at vtable slot 6 (+0x18), but
+// the request element type is the TU-local BFME mirror above.
+class Rva0050D030PeerMessageQueue
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void addRequest(const PeerRequest &request) = 0;
+};
+
+class Rva0050D030BuddyMessageQueue
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void addRequest(const BuddyRequest &request) = 0;
+};
+
+// BFME inserted three Display virtuals before getWidth/getHeight (+0x2C/+0x30).
+// ?getWidth@Display@@UAEIXZ
+// ?getHeight@Display@@UAEIXZ
+class Rva0050D030Display
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot18(void) = 0;
+	virtual void slot1C(void) = 0;
+	virtual void slot20(void) = 0;
+	virtual void slot24(void) = 0;
+	virtual void slot28(void) = 0;
+	virtual UnsignedInt getWidth(void) = 0;
+	virtual UnsignedInt getHeight(void) = 0;
+};
+
+// BFME's GameSpyInfo interface places joinBestGroupRoom at +0x24, then the
+// by-value local-name/profile pair at +0x68/+0x70.  This view is only used by
+// WOLWelcomeMenuSystem; the shared interface stays on the Zero Hour layout.
+// ?joinBestGroupRoom@GameSpyInfoInterface@@UAEXXZ
+// ?getLocalName@GameSpyInfoInterface@@UAE?AVAsciiString@@XZ
+// ?getLocalProfileID@GameSpyInfoInterface@@UAEHXZ
+class Rva0050D030GameSpyInfo
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot04(void) = 0;
+	virtual void slot08(void) = 0;
+	virtual void slot0C(void) = 0;
+	virtual void slot10(void) = 0;
+	virtual void slot14(void) = 0;
+	virtual void slot18(void) = 0;
+	virtual void slot1C(void) = 0;
+	virtual void slot20(void) = 0;
+	virtual void joinBestGroupRoom(Bool refresh) = 0;
+	virtual void slot28(void) = 0;
+	virtual void slot2C(void) = 0;
+	virtual void slot30(void) = 0;
+	virtual void slot34(void) = 0;
+	virtual void slot38(void) = 0;
+	virtual void slot3C(void) = 0;
+	virtual void slot40(void) = 0;
+	virtual void slot44(void) = 0;
+	virtual void slot48(void) = 0;
+	virtual void slot4C(void) = 0;
+	virtual void slot50(void) = 0;
+	virtual void slot54(void) = 0;
+	virtual void slot58(void) = 0;
+	virtual void slot5C(void) = 0;
+	virtual void slot60(void) = 0;
+	virtual void slot64(void) = 0;
+	virtual AsciiString getLocalName(void) = 0;
+	virtual void slot6C(void) = 0;
+	virtual Int getLocalProfileID(void) = 0;
+};
+
+// The retail ILT is entered with callee-clean stack behavior here.
+// ?GameSpyOpenOverlayShim@@YAXW4GSOverlayType@@@Z
+extern void GameSpyOpenOverlayShim(GSOverlayType overlay);
 
 
 #ifdef _INTERNAL
@@ -962,10 +1095,10 @@ WindowMsgHandledType WOLWelcomeMenuSystem( GameWindow *window, UnsignedInt msg,
 					
 					PeerRequest req;
 					req.peerRequestType = PeerRequest::PEERREQUEST_LOGOUT;
-					TheGameSpyPeerMessageQueue->addRequest( req );
+					((Rva0050D030PeerMessageQueue *)TheGameSpyPeerMessageQueue)->addRequest( req );
 					BuddyRequest breq;
 					breq.buddyRequestType = BuddyRequest::BUDDYREQUEST_LOGOUT;
-					TheGameSpyBuddyMessageQueue->addRequest( breq );
+					((Rva0050D030BuddyMessageQueue *)TheGameSpyBuddyMessageQueue)->addRequest( breq );
 
 					DEBUG_LOG(("Tearing down GameSpy from WOLWelcomeMenuSystem(GBM_SELECTED)\n"));
 					TearDownGameSpy();
@@ -995,12 +1128,12 @@ WindowMsgHandledType WOLWelcomeMenuSystem( GameWindow *window, UnsignedInt msg,
 				} //if ( controlID == buttonBack )
 				else if (controlID == buttonOptionsID)
 				{					
-					GameSpyOpenOverlay( GSOVERLAY_OPTIONS );
+					GameSpyOpenOverlayShim( GSOVERLAY_OPTIONS );
 				}
 				else if (controlID == buttonQuickMatchID)
 				{
 					GameSpyMiscPreferences mPref;
-					if ((TheDisplay->getWidth() != 800 || TheDisplay->getHeight() != 600) && mPref.getQuickMatchResLocked())
+					if ((((Rva0050D030Display *)TheDisplay)->getWidth() != 800 || ((Rva0050D030Display *)TheDisplay)->getHeight() != 600) && mPref.getQuickMatchResLocked())
 					{
 						GSMessageBoxOk(TheGameText->fetch("GUI:GSErrorTitle"), TheGameText->fetch("GUI:QuickMatch800x600"));
 					}
@@ -1013,14 +1146,14 @@ WindowMsgHandledType WOLWelcomeMenuSystem( GameWindow *window, UnsignedInt msg,
 				}// else if
 				else if (controlID == buttonMyInfoID )
 				{
-					SetLookAtPlayer(TheGameSpyInfo->getLocalProfileID(), TheGameSpyInfo->getLocalName());
+					SetLookAtPlayer(((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID(), ((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->getLocalName());
 					GameSpyToggleOverlay(GSOVERLAY_PLAYERINFO);
 				}
 				else if (controlID == buttonLobbyID)
 				{
 					//TheGameSpyChat->clearGroupRoomList();
 					//peerListGroupRooms(TheGameSpyChat->getPeer(), ListGroupRoomsCallback, NULL, PEERTrue);
-					TheGameSpyInfo->joinBestGroupRoom();
+					((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->joinBestGroupRoom(TRUE);
 					enableControls( FALSE );
 
 
@@ -1051,10 +1184,6 @@ WindowMsgHandledType WOLWelcomeMenuSystem( GameWindow *window, UnsignedInt msg,
 						GSMessageBoxOk(UnicodeString(L"Oops"), UnicodeString(L"Unable to join title room"), NULL);
 					}
 					*/
-				}
-				else if (controlID == buttonLadderID)
-				{
-					TheShell->push(AsciiString("Menus/WOLLadderScreen.wnd"));
 				}
 				break;
 			}// case GBM_SELECTED:

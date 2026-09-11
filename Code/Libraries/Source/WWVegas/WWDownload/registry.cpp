@@ -5,8 +5,22 @@
 namespace _STL
 {
 
-struct forward_iterator_tag
+struct input_iterator_tag
 {
+};
+
+struct forward_iterator_tag : public input_iterator_tag
+{
+};
+
+struct __false_type
+{
+};
+
+template <class Type>
+struct _Is_integer
+{
+	typedef __false_type _Integral;
 };
 
 template <class Character>
@@ -17,6 +31,10 @@ class char_traits
 template <class Character>
 class allocator
 {
+public:
+	__declspec(nothrow) allocator(void) {}
+	__declspec(nothrow) allocator(const allocator &source) {}
+	__declspec(nothrow) ~allocator(void) {}
 };
 
 template <bool threads, int instance>
@@ -30,6 +48,9 @@ template <class Pointer, class Value, class Alloc>
 class _STLP_alloc_proxy : public Alloc
 {
 public:
+	_STLP_alloc_proxy(const Alloc &a, Pointer pointer)
+		: Alloc(a), _M_data(pointer) {}
+
 	Pointer _M_data;
 
 	void deallocate(Pointer pointer, unsigned int count)
@@ -44,37 +65,70 @@ public:
 	}
 };
 
-template <class Character, class Traits, class Alloc>
-class basic_string
+template <class Character, class Alloc>
+class _String_base
 {
 public:
 	Character *_M_start;
 	Character *_M_finish;
 	_STLP_alloc_proxy<Character *, Character, Alloc> _M_end_of_storage;
 
+	_String_base(const Alloc &a)
+		: _M_start(0), _M_finish(0), _M_end_of_storage(a, (Character *)0) {}
+	~_String_base(void)
+	{
+		_M_end_of_storage.deallocate(_M_start,
+			(unsigned int)(_M_end_of_storage._M_data - _M_start));
+	}
+};
+
+template <class Character, class Traits, class Alloc>
+class basic_string : protected _String_base<Character, Alloc>
+{
+public:
+	typedef Alloc allocator_type;
+
 		basic_string(const Character *text,
-			const allocator<Character> &a = allocator<Character>());
+			const allocator_type &a = allocator_type());
 		basic_string(const basic_string &source);
 
 		template <class InputIterator>
 		basic_string &append(InputIterator first, InputIterator last,
 			const forward_iterator_tag &tag);
 
+	template <class InputIterator>
+		basic_string &append(InputIterator first, InputIterator last)
+		{
+			typedef typename _STL::_Is_integer<InputIterator>::_Integral Integral;
+			return appendDispatch(first, last, Integral());
+		}
+
+	basic_string &append(const basic_string &source)
+		{
+			return append(source._M_start, source._M_finish);
+		}
+
+	private:
+		template <class InputIterator>
+		basic_string &appendDispatch(InputIterator first, InputIterator last,
+			const __false_type &)
+		{
+			return append(first, last, forward_iterator_tag());
+		}
+
+	public:
+
 	const Character *c_str(void) const
 	{
-		return _M_start;
+		return this->_M_start;
 	}
 
 	unsigned int length(void) const
 	{
-		return (unsigned int)(_M_finish - _M_start);
+		return (unsigned int)(this->_M_finish - this->_M_start);
 	}
 
-	~basic_string(void)
-	{
-		_M_end_of_storage.deallocate(_M_start,
-			(unsigned int)(_M_end_of_storage._M_data - _M_start));
-	}
+	~basic_string(void) {}
 };
 
 }
@@ -128,9 +182,9 @@ bool setStringInRegistry( HKEY root, RegistryString path, RegistryString key, Re
 
 bool SetStringInRegistry( RegistryString path, RegistryString key, RegistryString val )
 {
-	RegistryString fullPath = "SOFTWARE\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour";
-	fullPath.append(path._M_start, path._M_finish,
-		_STL::forward_iterator_tag());
+	RegistryString fullPath =
+		"SOFTWARE\\Electronic Arts\\EA Games\\Command and Conquer Generals Zero Hour";
+	fullPath.append(path);
 
 	if (setStringInRegistry( (HKEY)0x80000002, fullPath, key, val))
 		return true;

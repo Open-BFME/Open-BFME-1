@@ -654,7 +654,6 @@ void W3DTreeBuffer::setTextureLOD(Int lod)
 //=============================================================================
 /** Calculates the diffuse lighting as affected by dynamic lighting. */
 //=============================================================================
-// ?doLighting@W3DTreeBuffer@@IBEIPBVVector3@@PBUTerrainLighting@GlobalData@@0IM@Z present-unmatched
 UnsignedInt W3DTreeBuffer::doLighting(const Vector3 *normal,  
 															const GlobalData::TerrainLighting	*objectLighting, 
 															const Vector3 *emissive, UnsignedInt vertDiffuse, Real scale) const
@@ -671,13 +670,22 @@ UnsignedInt W3DTreeBuffer::doLighting(const Vector3 *normal,
 		Vector3 lightDirection(objectLighting[i].lightPos.x, objectLighting[i].lightPos.y, objectLighting[i].lightPos.z);
 		lightDirection.Normalize();
 		Vector3 lightRay(-lightDirection.X, -lightDirection.Y, -lightDirection.Z);
-		shade = Vector3::Dot_Product(lightRay, *normal); 
+		shade = WWMath::Fabs(Vector3::Dot_Product(lightRay, *normal));
 
 		if (shade > 1.0) shade = 1.0;
 		if(shade < 0.0f) shade = 0.0f;
 		shadeR += shade*objectLighting[i].diffuse.red;
 		shadeG += shade*objectLighting[i].diffuse.green;
 		shadeB += shade*objectLighting[i].diffuse.blue;	
+	}
+
+	if (vertDiffuse!=0xFFFFFFFF) {
+		shade = vertDiffuse&0xff; //blue;
+		shadeB *= shade/255.0f;
+		shade = (vertDiffuse>>8)&0xFF; // green;
+		shadeG *= shade/255.0f;
+		shade = (vertDiffuse>>16)&0xFF; // red;
+		shadeR *= shade/255.0f;
 	}
 
 	shadeR *= scale;
@@ -690,21 +698,9 @@ UnsignedInt W3DTreeBuffer::doLighting(const Vector3 *normal,
 	if(shadeG < 0.0f) shadeG = 0.0f;
 	if (shadeB > 1.0) shadeB = 1.0;
 	if(shadeB < 0.0f) shadeB = 0.0f;
-	
-	if (vertDiffuse!=0xFFFFFFFF) {
-		shade = vertDiffuse&0xff; //blue;
-		shadeB *= shade/255.0f;
-		shade = (vertDiffuse>>8)&0xFF; // green;
-		shadeG *= shade/255.0f;
-		shade = (vertDiffuse>>16)&0xFF; // red;
-		shadeR *= shade/255.0f;
-	}
 
-	shadeR*=255.0f;
-	shadeG*=255.0f;
-	shadeB*=255.0f;
 	const Real alpha = 255.0;
-	return REAL_TO_UNSIGNEDINT(shadeB) | (REAL_TO_INT(shadeG) << 8) | (REAL_TO_INT(shadeR) << 16) | ((Int)alpha << 24);
+	return (UnsignedInt)(shadeB*255.0f) | ((Int)(shadeG*255.0f) << 8) | ((Int)(shadeR*255.0f) << 16) | ((Int)alpha << 24);
 	
 }
 
