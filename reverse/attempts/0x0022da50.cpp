@@ -1,5 +1,5 @@
 // ?parseNameCountListEntry@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.9 date=2026-09-06
+// partial score=0.99 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: INI field parser at 0x0022DA50 (223 B): a name token and an
 // optional count (INI::scanInt or 1 when the line ends: the Bfme5IniNamedValue
@@ -13,16 +13,28 @@ typedef int Int;
 extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )
 
-class RetailLayoutString
+template <typename T>
+class StringBase
 {
 public:
-	RetailLayoutString() : m_data( 0 ) {}
-	~RetailLayoutString() { releaseBuffer(); }
-	void set( const char *s, int n );
+	StringBase() : m_data( 0 ) {}
+	~StringBase() { releaseBuffer(); }
+	void set( const T *s, int n );
+	void releaseBuffer( void );
 
 private:
-	void releaseBuffer( void );
 	void *m_data;
+};
+
+class RetailLayoutString : private StringBase<char>
+{
+public:
+	RetailLayoutString() : StringBase<char>() {}
+	~RetailLayoutString() {}
+	void set( const char *s, int n )
+	{
+		((StringBase<char> *)this)->set( s, n );
+	}
 };
 
 class INI
@@ -79,18 +91,22 @@ struct Rva0022DA50Owner
 class Rva0022DA50
 {
 public:
-	static void parseNameCountListEntry( INI *ini, void *instance, void *store, const void *userData );
+	static void parseNameCountListEntry( register INI *ini, void *instance, void *store, const void *userData );
 };
 
 // ?parseNameCountListEntry@Rva0022DA50@@SAXPAVINI@@PAX1PBX@Z
-void Rva0022DA50::parseNameCountListEntry( INI *ini, void *instance, void *, const void * )
+void Rva0022DA50::parseNameCountListEntry( register INI *ini, void *instance, void *, const void * )
 {
-	const char *name = ini->getNextToken();
-	const char *num = ini->getNextTokenOrNull();
-	Int count = num ? INI::scanInt( num ) : 1;
+	const char *name;
+	const char *num;
+	Int count;
+	Rva0022DA50Owner *self = (Rva0022DA50Owner *)instance;
+	register INI *cursor = ini;
+	name = cursor->getNextToken();
+	num = cursor->getNextTokenOrNull();
+	count = num ? INI::scanInt( num ) : 1;
 	Rva0022DA50Entry entry;
 	entry.m_name.set( name, name ? (int)strlen( name ) : 0 );
-	Rva0022DA50List &entries = ((Rva0022DA50Owner *)instance)->m_entries;
 	entry.m_count = count;
-	entries.push_back( entry );
+	self->m_entries.push_back( entry );
 }
