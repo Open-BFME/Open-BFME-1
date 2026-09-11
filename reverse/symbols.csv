@@ -817,6 +817,8 @@ name,address,notes
 ??$__copy@PAUGen_t_00777e90_p32cd@@PAU1@H@_STL@@YAPAUGen_t_00777e90_p32cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x007748D0,gen-tgrid payload member
 ??$__copy@PAUGen_t_00777f40_p32cd@@PAU1@H@_STL@@YAPAUGen_t_00777f40_p32cd@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x007748D0,gen-tgrid payload member
 ??$__copy@PAUGen_uw_0003fcec@@PAU1@H@_STL@@YAPAUGen_uw_0003fcec@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00044396,address-derived __copy<Gen_uw_0003fcec*> shift helper for vector::erase at 0x006A3F30
+??$__copy@PAUGeometryRecord@@PAU1@H@_STL@@YAPAUGeometryRecord@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0000679E,route=0x000FCD80; GeometryInfo record-vector erase calls this TU copy through the retail ILT
+??$__copy@PAUGeometryRecord@@PAU1@H@_STL@@YAPAUGeometryRecord@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000FCD80,GeometryInfo record-vector erase copy helper; canonical 16-byte GeometryRecord TU copy
 ??$__copy@PAUHideShowSubObjInfo@ModelConditionInfo@@PAU12@H@_STL@@YAPAUHideShowSubObjInfo@ModelConditionInfo@@PAU12@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00018674,rel32 pin for exact-ambiguous landing
 ??$__copy@PAUHorzLine@@PAU1@H@_STL@@YAPAUHorzLine@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B91E
 ??$__copy@PAUNamedReveal@@PAU1@H@_STL@@YAPAUNamedReveal@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0004A1E7,Open-BFME5 ILT; the tail shift of ?removeNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z at 0x0034D440
@@ -8730,6 +8732,7 @@ name,address,notes
 ??1Gen_uwm_009eeab0@@QAE@XZ,0x009EEAB0,gen-uw-pin dtor target read from the retail funclet bytes
 ??1GenericObjectCreationNuggetAnimSets@@QAE@XZ,0x00006375,GenericObjectCreationNugget destructor anim-sets member call target
 ??1GenericObjectCreationNuggetNames@@QAE@XZ,0x00026AB2,GenericObjectCreationNugget destructor names-member call target
+??1GeometryRecord@@QAE@XZ,0x0001B207,route=0x000FD020; vector erase calls the canonical +0x0C AsciiString member destructor through this retail ILT
 ??1GeometryUpgradeModuleDataMemberA@@QAE@XZ,0x0001B97D,Open-BFME5 pin
 ??1GeometryUpgradeModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
 ??1GettingBuiltBehaviorModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
@@ -78905,6 +78908,8 @@ name,address,notes
 ?erase@?$map@HHU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHH@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHH@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHH@_STL@@@2@@2@@Z,0x0002BDA0,call-site erase for Gen_002281B0::bfmeUpdate; ILT 0x0002BDA0 -> 0x00223610
 ?erase@?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000106FE,forgetLogin depth Open-BFME4+Grok
 ?erase@?$map@VAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000488BA,forgetLogin depth Open-BFME4+Grok
+?erase@?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAEPAUGeometryRecord@@PAU3@0@Z,0x0001BD38,route=0x000FF890; GeometryInfo five-argument constructor calls this vector erase through the retail ILT
+?erase@?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAEPAUGeometryRecord@@PAU3@0@Z,0x000FF890,canonical 16-byte GeometryRecord erase body identified by the exact GeometryInfo constructor
 ?erase@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEPAUICoord2D@@PAU3@0@Z,0x0000890E,ICF alias: this thunk fronts 0x00451E10 which the ledger already names the vector<INILine> erase; both elements are eight bytes so the two folded
 ?erase@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@PAU34@0@Z,0x0001E632
 ?erase@?$vector@UQ3SortElem4@@V?$allocator@UQ3SortElem4@@@_STL@@@_STL@@QAEPAUQ3SortElem4@@PAU3@0@Z,0x00024C17
