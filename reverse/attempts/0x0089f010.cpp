@@ -1,4 +1,4 @@
-// ?Left@EAStringC@@QBE?AV1@H@Z
+// ?rva0089F010@EAStringC@@QBE?AV1@H@Z
 // partial score=0.99 date=2026-09-08
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
@@ -61,13 +61,13 @@ class EAStringC : private StringBase<char>
 
 	EAStringC(const EAStringC &other) : StringBase<char>(other) {}
 
-	EAStringC(EAStringData *data) : StringBase<char>()
+	__forceinline EAStringC(EAStringData *data) : StringBase<char>()
 	{
 		++data->m_refCount;
 		m_data = data;
 	}
 
-	~EAStringC() {}
+	__forceinline ~EAStringC() {}
 
 	enum CBPushZero
 	{
@@ -79,10 +79,10 @@ class EAStringC : private StringBase<char>
 		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
 
 public:
-	EAStringC Left(int count) const;
+	EAStringC rva0089F010(int count) const;
 };
 
-EAStringC EAStringC::Left(int count) const
+EAStringC EAStringC::rva0089F010(int count) const
 {
 	if (count <= 0)
 		return EAStringC();
