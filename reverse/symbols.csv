@@ -81381,6 +81381,7 @@ name,address,notes
 ?getPercentage@NetProgressCommandMsg@@QAEEXZ,0x000157A3
 ?getPingsRecieved@Network@@UAEHXZ,0x00681AF0,vtable 0x0111A968 slot 34 (+0x88) via ILT 0x00022165; same shape as slot 33 reading dm+0x264 (Gen_0066b140) = ZH m_pingsRecieved; caller 0x004E6D4B
 ?getPingsSent@Network@@UAEHXZ,0x00681AC0,vtable 0x0111A968 slot 33 (+0x84) via ILT 0x000266D4; if (m_conMgr && conMgr+0x120E0 DisconnectManager) return dm+0x260 (Gen_0066b130) else 0; slots 32-34 keep ZH's getPingFrame/getPingsSent/getPingsRecieved order and dm+0x260 is the counter update@BFMEDisconnectManager divides dm+0x264 by at 0x0066C976; caller 0x004E6D1F
+?getPlanarDirectionTo@Object@@QBE?AUCoord3D@@PBV1@@Z,0x001E3E20,typed semantic alias for the actual body: exact DieMuxData caller 0x002551F0 passes victim in ECX and killer as the Object argument; body forwards killer+0x38 to matched planar delta 0x00148960 which subtracts victim+0x38/+0x3C; canonical BFME method spelling is not claimed
 ?getPlayerDifficulty@Player@@QBE?AW4GameDifficulty@@XZ,0x000217D8,"Peer and lead verified ILT toC9480; player difficulty enum, const thiscall"
 ?getPlayerDisplayName@Player@@QAE?AVUnicodeString@@XZ,0x00033285,ILT of Player::getPlayerDisplayName used by setObserverWindows
 ?getPlayerFromMask@PlayerList@@QAEPAVPlayer@@G@Z,0x0001DDE5,Open-BFME5 ILT thunk to exact body 0x000DF440; accepts BFME's 16-bit PlayerMaskType and returns the first matching Player
