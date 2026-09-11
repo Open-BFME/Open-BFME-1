@@ -1,8 +1,7 @@
-// ?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.96 date=2026-09-11
+// Retail RVA 0x0017B310, 301 bytes.
 // cl: /O2 /Ob1 /QIfist /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// AIWanderInPlaceState::onEnter restores the retail wander origin, selects the
-// wander locomotor, and chooses the first randomized goal around that origin.
+// AIStates.cpp and the adjacent matched AIWanderState methods prove the
+// AIWanderInPlaceState::onEnter identity and its vtable family.
 
 typedef unsigned char Bool;
 
@@ -124,6 +123,17 @@ extern "C" __declspec(dllimport) double __cdecl floor(double value);
 extern int GetGameLogicRandomValue(int low, int high, char *file, int line);
 extern void j_000022bb();
 
+__forceinline int fast_float2long_round(float value)
+{
+	int result;
+	__asm {
+		fld [value]
+		fistp [result]
+	}
+	return result;
+}
+
+// ?getFinalTemplate@BfmeLocomotor@@QBEPAVBfmeLocomotorTemplate@@XZ absent-from-retail
 __forceinline BfmeLocomotorTemplate *BfmeLocomotor::getFinalTemplate() const
 {
 	BfmeLocomotorTemplate *locoTemplate = m_template;
@@ -157,10 +167,10 @@ StateReturnType AIWanderInPlaceState::onEnter()
 	if (locomotor != 0)
 	{
 		BfmeLocomotorTemplate *locoTemplate = locomotor->getFinalTemplate();
-		volatile float rounded = (float)floor((double)(
+		float rounded = (float)floor((double)(
 			locoTemplate->m_wanderAboutPointRadius *
 			*(const float *)0x01075c70 + *(const float *)0x0107533c));
-		delta = (int)rounded;
+		delta = fast_float2long_round(rounded);
 	}
 
 	int negativeDelta = -delta;
