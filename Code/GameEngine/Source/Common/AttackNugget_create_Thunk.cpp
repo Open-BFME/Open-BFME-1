@@ -1,20 +1,24 @@
-// ?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z
-// partial score=0.9 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
-// stlport
-// Retail AttackNugget::create, 0x001D7BC0, 334 bytes.
 //
-// This TU keeps the BFME-only member offsets local.  The source class in
-// ObjectCreationList.cpp uses the Zero Hour RadiusDecalTemplate layout, while
-// retail places the following fields at +0x34, +0x38 and +0x3c.  The Object
-// view likewise names the BFME AI pointer at +0x204 and the AI command
-// subobject at +0x20.  All calls below use the existing named retail methods;
-// no address-shaped fallback is used.
+// Open-BFME: clean reconstruction of the BFME AttackNugget::create body.
+//
+// Identity is established by the RadiusDecalUpdate call, the AttackNugget
+// vtable thunk at 0x0000BD25, and the queue caller recorded for this body at
+// 0x003992F7.  BFME's RadiusDecalTemplate is 0x30 bytes, so the member offsets
+// in this TU intentionally remain local rather than changing the shared ZH
+// ObjectCreationList layout.
+//
+// The decorated ledger spelling retained for the retail body includes the
+// legacy lifetimeFrames type, but the retail epilogue is ret 0x10 and the
+// entry consumes four stack arguments.  The clean C++ method below therefore
+// uses the actual BFME four-argument override ABI; functions.csv records its
+// object-symbol explicitly when it verifies this canonical retail row.
 
 typedef int Int;
-typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
+
+#pragma warning(disable : 4716)
 
 struct Coord3D
 {
@@ -44,6 +48,7 @@ class Waypoint;
 class PolygonTrigger;
 class CommandButton;
 class Path;
+class OCLUpdate;
 
 enum AICommandType
 {
@@ -97,20 +102,13 @@ public:
 	}
 };
 
-class AIUpdatePrefix
+// The BFME AI command vtable is the secondary object at AI +0x20.
+class AIUpdateInterface
 {
-public:
 	unsigned char m_prefix[0x20];
+public:
+	AICommandInterface m_command;
 };
-
-class AIUpdateInterface : public AIUpdatePrefix,
-	public AICommandInterface
-{
-};
-
-typedef Int WeaponSlotType;
-
-class OCLUpdate;
 
 class Object
 {
@@ -146,39 +144,37 @@ class AttackNugget
 {
 public:
 	virtual Object *create(const Object *primaryObj, const Coord3D *primary,
-		const Coord3D *secondary, Real angle,
-		UnsignedInt lifetimeFrames = 0) const;
+		const Coord3D *secondary, Real angle) const;
 
 private:
 	RadiusDecalTemplate m_deliveryDecalTemplate;
 	Real m_deliveryDecalRadius;
 	Int m_numberOfShots;
-	WeaponSlotType m_weaponSlot;
+	Int m_weaponSlot;
 };
 
-// ?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z
+// ?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1M@Z
 Object *AttackNugget::create(const Object *primaryObj, const Coord3D *primary,
-	const Coord3D *secondary, Real angle, UnsignedInt lifetimeFrames) const
+	const Coord3D *secondary, Real angle) const
 {
-	if (!primaryObj || !primary || !secondary)
-		return 0;
-
-	Object *primaryObject = const_cast<Object *>(primaryObj);
-	AIUpdateInterface *ai = primaryObject->getAIUpdateInterface();
-	if (ai)
+	if (primaryObj && primary && secondary)
 	{
-		primaryObject->setWeaponLock(m_weaponSlot, 1);
-		ai->aiAttackPosition(secondary, m_numberOfShots, CMD_FROM_AI);
-	}
+		Object *primaryObject = const_cast<Object *>(primaryObj);
+		AIUpdateInterface *ai = primaryObject->getAIUpdateInterface();
+		if (ai)
+		{
+			primaryObject->setWeaponLock(m_weaponSlot, 1);
+			ai->m_command.aiAttackPosition(secondary, m_numberOfShots, CMD_FROM_AI);
+		}
 
-	static NameKeyType key_RadiusDecalUpdate = NAMEKEY("RadiusDecalUpdate");
-	RadiusDecalUpdate *rd = (RadiusDecalUpdate *)primaryObject->findUpdateModule(
-		key_RadiusDecalUpdate);
-	if (rd)
-	{
-		rd->createRadiusDecal(m_deliveryDecalTemplate, m_deliveryDecalRadius,
-			*secondary);
-		rd->m_killWhenNoLongerAttacking = true;
+		static NameKeyType key_RadiusDecalUpdate = NAMEKEY("RadiusDecalUpdate");
+		RadiusDecalUpdate *rd = (RadiusDecalUpdate *)primaryObject->findUpdateModule(
+			key_RadiusDecalUpdate);
+		if (rd)
+		{
+			rd->createRadiusDecal(m_deliveryDecalTemplate, m_deliveryDecalRadius,
+				*secondary);
+			rd->m_killWhenNoLongerAttacking = true;
+		}
 	}
-	return 0;
 }
