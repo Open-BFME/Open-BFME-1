@@ -161,8 +161,17 @@ void __make_heap( RandomAccessIterator first, RandomAccessIterator last,
 	Compare comp, Tp *, Distance * );
 
 template <class RandomAccessIterator, class Compare>
-void sort_heap( RandomAccessIterator first, RandomAccessIterator last,
-	Compare comp );
+__declspec(noinline) void sort_heap( RandomAccessIterator first,
+	RandomAccessIterator last, Compare comp )
+{
+	while( last - first > 1 )
+	{
+		BfmeScoreEntry value = *(last - 1);
+		*(last - 1) = *first;
+		__adjust_heap( first, 0, (last - 1) - first, value, comp );
+		--last;
+	}
+}
 
 template <class RandomAccessIterator, class Distance, class Tp, class Compare>
 void __partial_sort( RandomAccessIterator first, RandomAccessIterator middle,
