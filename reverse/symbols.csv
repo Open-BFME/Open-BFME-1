@@ -2283,6 +2283,7 @@ name,address,notes
 ??0BehaviorModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,exact retail rel32 target of the six module constructors that call it; the body at 0x00113C60 is retail's ICF fold with ??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z
 ??0BezierSegment@@QAE@XZ,0x00043A9A
 ??0BfmeAllocProxy1@@QAE@PAXPAD@Z,0x000281E6,Open-BFME5 the end-pointer proxy constructor the byte-element vector constructor at 0x005C46C0 runs
+??0BfmeSetUpRankPoints@@QAE@XZ,0x00037155,SetUpGameSpy allocation is 0x30 bytes and calls this ILT to the RankPoints constructor at 0x004DAFA0
 ??0BfmeAllocProxy_000F9F70@@QAE@PAXPAUBfmeElem_000F9F70@@@Z,0x00006F5F,Open-BFME5 the end-pointer proxy constructor the sized-vector constructor at 0x000F9F70 runs
 ??0BfmeAllocProxy_000FD230@@QAE@PAXPAUBfmeElem_000FD230@@@Z,0x00026B9D,Open-BFME5 the end-pointer proxy constructor the sized-vector constructor at 0x000FD230 runs
 ??0BfmeAllocProxy_0013B110@@QAE@PAXPAUBfmeElem_0013B110@@@Z,0x00002FF4,Open-BFME5 the end-pointer proxy constructor the sized-vector constructor at 0x0013B110 runs
@@ -78549,6 +78550,8 @@ name,address,notes
 ?createInternal@ObjectCreationList@@ABEPAVObject@@PBV2@PBVCoord3D@@1MI@Z,0x0003E360,retail REL32 target decoded from assigned 0x00262DA0
 ?createLightsIterator@RTS3DScene@@QAEPAV?$RefMultiListIterator@VRenderObjClass@@@@XZ,0x007123F0,BFME identity bfmeGo1036B body 0x007123F0 via ILT 0x00042A0A
 ?createMapPictureImage@@YAPAVImage@@ABVAsciiString@@@Z,0x0004032C,AptMapPreview picture loader ILT
+?createNewMessageQueue@BfmeSetUpPSFactory@@SAPAVGameSpyPSMessageQueueInterface@@XZ,0x000362C3,SetUpGameSpy third message-queue factory call; ILT routes to the 0x0065C1F0 BFME concrete implementation
+?createNewPingerInterface@BfmeSetUpPingerFactory@@SAPAVPingerInterface@@XZ,0x0003AC83,SetUpGameSpy Pinger factory call; ILT routes to 0x00661490 which allocates 0xB4 and calls the Pinger constructor
 ?createMemoryPool@MemoryPoolFactory@@QAEPAVMemoryPool@@PBDHHH@Z,0x0003ADD7,pool-glue cascade callee (ICF-folded with findMemoryPool)
 ?createNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@0M0@Z,0x0002C8EA
 ?createParticle@BfmeParticleEmissionHelper@@QAEPAVParticle@@HH@Z,0x005D0530,BFME private particle factory called by ParticleSystem emission and serialization
