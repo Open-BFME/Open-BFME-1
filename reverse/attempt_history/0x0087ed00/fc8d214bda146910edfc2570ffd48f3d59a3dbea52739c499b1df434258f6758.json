@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fc8d214bda146910edfc2570ffd48f3d59a3dbea52739c499b1df434258f6758",
+  "symbol": "?d_0087ed00@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?d_0087ed00@@YAXXZ\n// partial score=0.98 date=2026-09-11\nextern \"C\" double sqrt(double x);\nextern \"C\" double fabs(double x);\n\n#pragma intrinsic(sqrt, fabs)\n\nclass BfmeShapeTY\n{\npublic:\n\tfloat bfmeExtentTY() const;\n\n\tint m_bfmeKindTY;\n\tint m_bfmePadTY;\n\tfloat m_bfmeATY;\n\tfloat m_bfmeBTY;\n\tfloat m_bfmeXTY;\n\tfloat m_bfmeYTY;\n};\n\nfloat BfmeShapeTY::bfmeExtentTY() const\n{\n\tfloat x = m_bfmeXTY;\n\tfloat y = m_bfmeYTY;\n\tvolatile float r = 0.0f;\n\n\tswitch (m_bfmeKindTY)\n\t{\n\t\tcase 0:\n\t\t\treturn m_bfmeATY + (float)sqrt(x * x + y * y);\n\n\t\tcase 1:\n\t\t\treturn m_bfmeATY + (float)sqrt(x * x + y * y);\n\n\t\tcase 2:\n\t\t{\n\t\t\tfloat a = (float)fabs(x) + m_bfmeATY;\n\t\t\tfloat b = (float)fabs(y) + m_bfmeBTY;\n\n\t\t\treturn (float)sqrt(a * a + b * b);\n\t\t}\n\n\t\tdefault:\n\t\t\treturn r;\n\t}\n}\n"
+}

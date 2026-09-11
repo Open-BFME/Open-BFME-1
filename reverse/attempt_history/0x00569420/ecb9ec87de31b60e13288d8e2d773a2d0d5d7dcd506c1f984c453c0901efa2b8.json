@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ecb9ec87de31b60e13288d8e2d773a2d0d5d7dcd506c1f984c453c0901efa2b8",
+  "symbol": "?_bfme_saveMenu@BfmeAptScreenQuitMenu@@QAEXPBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?_bfme_saveMenu@BfmeAptScreenQuitMenu@@QAEXPBD@Z\n// partial score=0.96 date=2026-09-11\nstruct Rva006C9270GlobalData\n{\n\tunsigned char m_bfmeHeadEAI[0xa9e];\n\tchar m_bfmeFlagEAI;\n};\n\nstruct BfmeGateEAI\n{\n\tchar bfmeCheckEAI();\n};\n\nstruct Rva00367E30Logic\n{\n\tunsigned char m_bfmeHeadEAI[0x10c];\n\tint m_bfmeModeEAI;\n};\n\nclass BfmeWinEAI\n{\npublic:\n\tvirtual void bfmeSlot0EAI(int a);\n\tvirtual void bfmeSlot1EAI();\n\tvirtual void bfmeSlot2EAI();\n\tvirtual void bfmeSlot3EAI();\n\tvirtual void bfmeSlot4EAI(int a);\n\tvirtual void bfmeSlot5EAI();\n};\n\nclass Shell40D9\n{\npublic:\n\tBfmeWinEAI *bfmeTopEAI();\n};\n\nextern Rva006C9270GlobalData *TheWritableGlobalData;\nextern BfmeGateEAI *g_bfmeGateEAI;\nextern Rva00367E30Logic *TheBfmeGameLogic;\nextern Shell40D9 *TheShell;\n\nvoid __cdecl bfmeApplyEAI(int a, int b, int c);\n\nvoid __stdcall bfmeRefreshEAI(int unused)\n{\n\tchar flag = (TheWritableGlobalData->m_bfmeFlagEAI == 0);\n\n\tif (g_bfmeGateEAI->bfmeCheckEAI())\n\t\tflag = (flag == 0);\n\n\tif (flag)\n\t{\n\t\tint mode = TheBfmeGameLogic->m_bfmeModeEAI;\n\n\t\tint n;\n\n\t\tif (mode == 1 || mode == 5)\n\t\t\tn = 4;\n\t\telse\n\t\t\tn = (mode == 2) + 1;\n\n\t\tbfmeApplyEAI(3, n, 1);\n\t}\n\telse\n\t{\n\t\tBfmeWinEAI *win = TheShell->bfmeTopEAI();\n\n\t\twin->bfmeSlot0EAI(0);\n\t\twin->bfmeSlot4EAI(0);\n\t\twin->bfmeSlot5EAI();\n\t}\n}\n"
+}
