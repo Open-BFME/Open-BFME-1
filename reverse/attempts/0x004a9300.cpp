@@ -1,5 +1,5 @@
 // ?populateMultiSelect@ControlBar@@IAEXXZ
-// partial score=0.72 date=2026-09-10
+// partial score=0.75 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
 
 // What the control bar shows for the object the player has selected, and the
@@ -862,27 +862,31 @@ void ControlBar::populateMultiSelect(void)
 	{
 		Drawable *draw = node->m_drawable;
 		Object *object = draw->getObject();
-		const ThingTemplate *thingTemplate = object->getTemplate();
-		if (thingTemplate && thingTemplate->m_nextOverride)
-		{
-			thingTemplate = (const ThingTemplate *)
-				thingTemplate->m_nextOverride->getFinalOverride();
-		}
 
-		if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xD0) &
-			0x02000000) != 0)
+		if (object != 0)
 		{
-			Rva004A9300ExperiencePair experience = rva004A9300Query(
-				*(Rva004A9300ExperienceLevelSystem **)0x012F0888, object);
-			if (rva004A9300Gate(
-				*(Rva004A9300ExperienceLevelSystem **)0x012F0888, experience))
+			const ThingTemplate *thingTemplate = object->getTemplate();
+			if (thingTemplate && thingTemplate->m_nextOverride)
 			{
-				Int score = rva004A9300Score(
-					*(Rva004A9300ExperienceLevelSystem **)0x012F0888, experience);
-				if (bestDrawable == 0 || score > bestScore)
+				thingTemplate = (const ThingTemplate *)
+					thingTemplate->m_nextOverride->getFinalOverride();
+			}
+
+			if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xD0) &
+				0x02000000) != 0)
+			{
+				Rva004A9300ExperiencePair experience = rva004A9300Query(
+					*(Rva004A9300ExperienceLevelSystem **)0x012F0888, object);
+				if (rva004A9300Gate(
+					*(Rva004A9300ExperienceLevelSystem **)0x012F0888, experience))
 				{
-					bestDrawable = draw;
-					bestScore = score;
+					Int score = rva004A9300Score(
+						*(Rva004A9300ExperienceLevelSystem **)0x012F0888, experience);
+					if (bestDrawable == 0 || score > bestScore)
+					{
+						bestDrawable = draw;
+						bestScore = score;
+					}
 				}
 			}
 		}
@@ -930,8 +934,8 @@ void ControlBar::populateMultiSelect(void)
 				thingTemplate->m_nextOverride->getFinalOverride();
 		}
 
-		if ((*(const unsigned char *)((const char *)thingTemplate + 0xCF) &
-			0x80) != 0 || object == 0 ||
+		if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xCC) &
+			0x8000) != 0 || object == 0 ||
 			((*(const UnsignedInt *)((const char *)object + 0x90) &
 			0x00080000) != 0))
 		{
