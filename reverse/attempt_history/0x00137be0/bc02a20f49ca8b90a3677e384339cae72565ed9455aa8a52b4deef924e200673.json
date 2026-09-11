@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bc02a20f49ca8b90a3677e384339cae72565ed9455aa8a52b4deef924e200673",
+  "symbol": "?freeDatabase@ThingFactory@@AAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?freeDatabase@ThingFactory@@AAEXXZ\n// partial score=0.85 date=2026-09-10\n\nclass ThingTemplate\n{\npublic:\n\tThingTemplate *getNextTemplate() const\n\t{\n\t\treturn *(ThingTemplate **)((const char *)this + 0x38c);\n\t}\n\tvirtual void deleteInstance(bool destroy = true) = 0;\n};\n\nclass ThingTemplateHashMap\n{\npublic:\n\tvoid clear();\n};\n\nclass ThingFactory\n{\n\tvoid freeDatabase();\n\npublic:\n\tchar m_base[8];\n\tThingTemplate *m_firstTemplate;\n\tchar m_pad0c[4];\n\tThingTemplateHashMap m_templateHashMap;\n};\n\nvoid ThingFactory::freeDatabase()\n{\n\twhile (m_firstTemplate)\n\t{\n\t\tThingTemplate *tmpl = m_firstTemplate;\n\t\tm_firstTemplate = tmpl->getNextTemplate();\n\t\ttmpl->deleteInstance();\n\t}\n\n\tm_templateHashMap.clear();\n}\n"
+}
