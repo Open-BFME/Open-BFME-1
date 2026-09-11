@@ -141,6 +141,10 @@ private:
     GarrisonPointData m_garrisonPointData[40];
     int m_garrisonPointsInUse;
     Coord3D m_garrisonPoints[3][40];
+    // previously unmodelled: per-damage-state capacity, read by
+    // findClosestFreeGarrisonPointIndex as m_maxGarrisonPointsForCondition[conditionIndex];
+    // real name not recovered.
+    int m_maxGarrisonPointsForCondition[3];
 };
 
 // ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z
@@ -221,4 +225,45 @@ void GarrisonContain::trackTargets()
                                      conditionIndex, newIndex);
         }
     }
+}
+
+// ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z
+int GarrisonContain::findClosestFreeGarrisonPointIndex(int conditionIndex,
+                                                        const Coord3D *targetPosition)
+{
+    if (!targetPosition || m_garrisonPointsInUse == 40)
+        return -1;
+
+    if (m_garrisonPointsInUse >= m_maxGarrisonPointsForCondition[conditionIndex])
+        return -1;
+
+    const Coord3D *const ownPosition = m_object->getPosition();
+    if (targetPosition->x == ownPosition->x &&
+        targetPosition->y == ownPosition->y &&
+        targetPosition->z == ownPosition->z)
+    {
+        for (int i = 0; i < 40; ++i)
+        {
+            if (m_garrisonPointData[i].objectID == INVALID_OBJECT_ID)
+                return i;
+        }
+        return conditionIndex;
+    }
+
+    int bestIndex = -1;
+    float bestDistanceSquared = 3.402823466e+38F;
+    const int maxPoints = m_maxGarrisonPointsForCondition[conditionIndex];
+    for (int i = 0; i < maxPoints; ++i)
+    {
+        if (m_garrisonPointData[i].objectID != INVALID_OBJECT_ID)
+            continue;
+
+        const float distanceSquared = calcDistanceSquared(*targetPosition, m_garrisonPoints[conditionIndex][i]);
+        if (distanceSquared < bestDistanceSquared)
+        {
+            bestDistanceSquared = distanceSquared;
+            bestIndex = i;
+        }
+    }
+    return bestIndex;
 }
