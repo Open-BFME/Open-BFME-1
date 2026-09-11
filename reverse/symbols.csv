@@ -78190,6 +78190,7 @@ name,address,notes
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
 ?clear@BfmeSceneVector@@AAEXPAUGen_uw_0002e866@@@Z,0x00943F70,scene-vector level rebuild clears the old cell lists
 ?clear@BfmeThing152@@QAEXXZ,0x00039595,pin
+?clear@BfmeTreeAt9C@@QAEXXZ,0x000279D0,ModelConditionInfo destructor calls this ILT on its map-like member at +0x9C; target body 0x0013BF00 destroys 0x2C-byte nodes and resets the sentinel
 ?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
 ?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
 ?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0

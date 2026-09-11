@@ -1,307 +1,78 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME: ModelConditionInfo has a 0x128-byte BFME layout.  Its callers
+// enter through ILT 0x0002306F at retail body RVA 0x0013C3F0; the historical
+// ledger row began fourteen bytes late, after the compiler's SEH prologue.
 
-class __declspec(novtable) ModelConditionInfo
+struct AsciiString
 {
-public:
-    ~ModelConditionInfo();
+	~AsciiString();
+	void *m_data;
 };
 
-// ??1ModelConditionInfo@@QAE@XZ
-__declspec(naked) ModelConditionInfo::~ModelConditionInfo()
+struct Gen00026AB2
 {
-    __asm {
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x57
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x8e
-        __emit 0xbc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x0b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x1f
-        __emit 0xb5
-        __emit 0x74
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x8e
-        __emit 0xac
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x0a
-        __emit 0xe8
-        __emit 0x9f
-        __emit 0x3b
-        __emit 0xf0
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x8e
-        __emit 0xa0
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x09
-        __emit 0xe8
-        __emit 0x6c
-        __emit 0x70
-        __emit 0xed
-        __emit 0xff
-        __emit 0x8d
-        __emit 0xbe
-        __emit 0x9c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x08
-        __emit 0xe8
-        __emit 0x7d
-        __emit 0xb5
-        __emit 0xee
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x3f
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x6a
-        __emit 0x2c
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x8f
-        __emit 0x21
-        __emit 0x6f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x08
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x86
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x07
-        __emit 0xe8
-        __emit 0xf8
-        __emit 0xa8
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x7c
-        __emit 0x51
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x06
-        __emit 0xe8
-        __emit 0xe1
-        __emit 0xa8
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x56
-        __emit 0x6c
-        __emit 0x52
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x05
-        __emit 0xe8
-        __emit 0xca
-        __emit 0xa8
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x46
-        __emit 0x5c
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x04
-        __emit 0xe8
-        __emit 0xb3
-        __emit 0xa8
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x68
-        __emit 0x28
-        __emit 0xd8
-        __emit 0x40
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x6a
-        __emit 0x04
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x4c
-        __emit 0x51
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x24
-        __emit 0x03
-        __emit 0xe8
-        __emit 0x9c
-        __emit 0xa8
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x40
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x02
-        __emit 0xe8
-        __emit 0xcb
-        __emit 0xa5
-        __emit 0xee
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x3c
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x4c
-        __emit 0xb4
-        __emit 0x74
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x34
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x3f
-        __emit 0xb4
-        __emit 0x74
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x28
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xa1
-        __emit 0xa5
-        __emit 0xee
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+	~Gen00026AB2();
+	void *m_start;
+	void *m_finish;
+	void *m_end;
+};
+
+struct Gen_uwm_000134ad
+{
+	~Gen_uwm_000134ad();
+	void *m_start;
+	void *m_finish;
+	void *m_end;
+};
+
+struct Gen00776240Field60
+{
+	~Gen00776240Field60();
+	void *m_start;
+	void *m_finish;
+	void *m_end;
+};
+
+void Gen0082E5F0(void *node, unsigned int size);
+
+struct BfmeTreeAt9C
+{
+	void clear();
+	__forceinline ~BfmeTreeAt9C()
+	{
+		clear();
+		if (m_header != 0) {
+			Gen0082E5F0(m_header, 0x2C);
+		}
+	}
+	void *m_header;
+};
+
+class ModelConditionInfo
+{
+public:
+	~ModelConditionInfo();
+
+private:
+	char m_unknown00[0x28];
+	Gen00026AB2 m_at28;
+	AsciiString m_at34;
+	int m_unknown38;
+	AsciiString m_at3C;
+	Gen00026AB2 m_at40;
+	AsciiString m_names4C[4];
+	AsciiString m_names5C[4];
+	AsciiString m_names6C[4];
+	AsciiString m_names7C[4];
+	AsciiString m_names8C[4];
+	BfmeTreeAt9C m_at9C;
+	Gen_uwm_000134ad m_atA0;
+	Gen00776240Field60 m_atAC;
+	int m_unknownB8;
+	AsciiString m_atBC;
+	char m_unknownC0[0x68];
+};
+
+ModelConditionInfo::~ModelConditionInfo()
+{
 }
