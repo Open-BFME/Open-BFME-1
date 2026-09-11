@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cdd3b8c2c5932a4018eb4cd9f9180f7f30693b1b8664babe6eecd4a6232d4df2",
+  "symbol": "?bfmeSwapESO@BfmeHostESO@@QAEXPAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeSwapESO@BfmeHostESO@@QAEXPAV1@@Z\n// partial score=0.95 date=2026-09-11\n// ?bfmeSwapESO@BfmeHostESO@@QAEXPAV1@@Z\nclass BfmeFirstESO\n{\npublic:\n\tunsigned char m_bfmeHeadESO[4];\n};\n\nclass BfmeBaseESO\n{\npublic:\n\tint m_bfmeAESO;\n\tint m_bfmeBESO;\n};\n\nclass BfmeSubAESO\n{\npublic:\n\tvoid bfmeSwapESO(BfmeSubAESO &other);\n\n\tunsigned char m_bfmeBodyESO[0x20];\n};\n\nclass BfmeSubBESO\n{\npublic:\n\tvoid bfmeSwapESO(BfmeSubBESO &other);\n\n\tunsigned char m_bfmeBodyESO[4];\n};\n\nclass BfmeHostESO;\n\nvoid __stdcall bfmeAdjustESO(BfmeHostESO *other, BfmeBaseESO *ob, BfmeBaseESO *tb);\n\nclass BfmeHostESO : public BfmeFirstESO, public BfmeBaseESO\n{\npublic:\n\tvoid bfmeSwapESO(BfmeHostESO *other);\n\tvoid bfmeFixupESO();\n\tvoid bfmeFinishESO(BfmeHostESO *other, int *a, int *b);\n\n\tBfmeSubAESO m_bfmeSubAESO;\n\tBfmeSubBESO m_bfmeSubBESO;\n};\n\nvoid BfmeHostESO::bfmeSwapESO(BfmeHostESO *other)\n{\n\tBfmeHostESO *self = this;\n\tBfmeBaseESO *tb = (BfmeBaseESO *)((char *)self + 4);\n\n\tint a = other->m_bfmeAESO;\n\tint b = tb->m_bfmeAESO;\n\n\ttb->m_bfmeAESO = a;\n\tother->m_bfmeAESO = b;\n\n\tint c = other->m_bfmeBESO;\n\tint d = tb->m_bfmeBESO;\n\n\ttb->m_bfmeBESO = c;\n\tother->m_bfmeBESO = d;\n\n\tself->m_bfmeSubAESO.bfmeSwapESO(other->m_bfmeSubAESO);\n\tself->m_bfmeSubBESO.bfmeSwapESO(other->m_bfmeSubBESO);\n\n\tself->bfmeFixupESO();\n\n\tbfmeAdjustESO(other, (BfmeBaseESO *)((char *)other + 4), tb);\n\n\tself->bfmeFinishESO(other, &other->m_bfmeBESO, &self->m_bfmeBESO);\n}\n"
+}
