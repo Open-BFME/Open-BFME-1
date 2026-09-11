@@ -133,17 +133,39 @@ void CrateSystem::init( void )
 	reset();
 }
 
-// ?reset@CrateSystem@@UAEXXZ present-unmatched
+// BFME's reset uses the original three-field Overridable layout and deleting
+// destructor, before Zero Hour's memory-pool deleteInstance path.
+class BfmeCrateOverrideView
+{
+public:
+	virtual ~BfmeCrateOverrideView();
+
+	BfmeCrateOverrideView *m_nextOverride;
+	bool m_isOverride;
+
+	BfmeCrateOverrideView *deleteOverrides()
+	{
+		if (m_isOverride)
+		{
+			delete this;
+			return NULL;
+		}
+		if (m_nextOverride)
+			m_nextOverride = m_nextOverride->deleteOverrides();
+		return this;
+	}
+};
+
 void CrateSystem::reset( void )
 {
 	// clean up overrides
 	std::vector<CrateTemplate *>::iterator it;
 	for( it = m_crateTemplateVector.begin(); it != m_crateTemplateVector.end(); )
 	{
-		CrateTemplate *currentTemplate = *it;
+		BfmeCrateOverrideView *currentTemplate = (BfmeCrateOverrideView *)*it;
 		if( currentTemplate )
 		{
-			Overridable *tempCrateTemplate = currentTemplate->deleteOverrides();
+			BfmeCrateOverrideView *tempCrateTemplate = currentTemplate->deleteOverrides();
 			if (!tempCrateTemplate)
 			{
 				// base dude was an override - kill it from the vector
@@ -325,4 +347,3 @@ void CrateTemplate::parseCrateCreationEntry( INI* ini, void *instance, void *, c
 
 	self->m_possibleCrates.push_back( newEntry );
 }
-
