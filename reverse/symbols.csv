@@ -77588,7 +77588,6 @@ name,address,notes
 ?bfmeTestSKA@BfmeSubSKA@@QAEDH@Z,0x00809690,pin
 ?bfmeTestXG@BfmeSubXG@@QAE_NPAVBfmeUnitXG@@PAX@Z,0x000357D8
 ?bfmeTestXM@BfmeProbeXM@@QAE_NPAUBfmeStateXM@@PAX@Z,0x0003DCCB
-?bfmeTestZQ@BfmeItemZQ@@QAEDPAX0@Z,0x0002ACC5
 ?bfmeTheBZF@@3PAVBfmeGlobalBZF@@A,0x00EF1028,pin
 ?bfmeTheCBC@@3HA,0x00F379BC,pin
 ?bfmeTheCBD@@3HA,0x00F379BC,pin
@@ -82489,14 +82488,15 @@ name,address,notes
 ?hasAnyBuildFacility@TeamPrototype@@QBE_NXZ,0x00032C81,Open-BFME5 ILT thunk to body 0x000F0DA0; ?hasAnyBuildFacility@Player@@QBE_NXZ at 0x000CE100 asks it of every prototype
 ?hasAnyBuildings@Player@@QBE_NV?$BitFlags@$0MA@@@_N@Z,0x00030D19,ILT thunk -> body 0x000CDF70; ZH hasAnyBuildings(KindOfMaskType) grew one arg in BFME (call site pushes 0); KindOfMaskType = width-only BitFlags<192> - see victory_conditions.cpp
 ?hasAnyBuildings@Team@@QAE_NV?$BitFlags@$0MA@@@_N@Z,0x0003B5B6,Open-BFME5 ILT thunk to body 0x000F4A70; ?hasAnyBuildings@TeamPrototype@@QAE_NV?$BitFlags@$0MA@@@_N@Z at 0x000F7020 asks it of every team on the instance list
-?hasAnyBuildings@Team@@QBE_NV?$BitFlags@$0HE@@@@Z,0x0003CCD1,Open-BFME5 ILT thunk to body 0x000F4B60; the two-dword mask overload at 0x000F70C0 asks it of every team on the instance list
 ?hasAnyBuildings@Team@@QBE_N_N@Z,0x00017652,Open-BFME5 ILT thunk to body 0x000F4980; ?hasAnyBuildings@TeamPrototype@@QAE_N_N@Z at 0x000F6FD0 passes its flag through to each team on the instance list
 ?hasAnyBuildings@TeamPrototype@@QAE_NV?$BitFlags@$0MA@@@_N@Z,0x0000B55F,Open-BFME5 ILT; ?hasAnyBuildings@Player@@QBE_NV?$BitFlags@$0MA@@@_N@Z at 0x000CDF70 forwards the mask and the flag to each prototype through it
 ?hasAnyBuildings@TeamPrototype@@QAE_N_N@Z,0x0003DD0C,Open-BFME5 ILT thunk to body 0x000F6FD0; ?hasAnyBuildings@Player@@QBE_N_N@Z at 0x000CDF20 forwards its flag to each prototype through it
 ?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
 ?hasAnyObjects@Player@@QBE_N_N@Z,0x0002BB8E,ILT thunk -> body 0x000CE0B0; ZH hasAnyObjects grew one arg in BFME (call site pushes 0); arg type unproven
+?hasAnyObjects@Team@@QBE_NPBVObjectFilter@@_N@Z,0x0003CCD1,route=0x000F4B60; matched RefundDie::onDie filtered-player call chain forwards ObjectFilter const* and Bool through TeamPrototype to this Team body
 ?hasAnyObjects@Team@@QAE_N_N@Z,0x0001478B,Team::hasAnyObjects(Bool); ILT to 0x000F4CF0; caller evaluateIsDestroyed 0x003245A0
 ?hasAnyObjects@Team@@QBE_N_N@Z,0x0001478B,Open-BFME5 ILT thunk to body 0x000F4CF0; ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z at 0x000F7170 passes its flag through to each team on the instance list
+?hasAnyObjects@TeamPrototype@@QBE_NPBVObjectFilter@@_N@Z,0x0002ACC5,route=0x000F70C0; matched RefundDie::onDie calls Player filtered hasAnyObjects which forwards the same two arguments through this ILT
 ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z,0x00021D96,Open-BFME5 ILT; ?hasAnyObjects@Player@@QBE_N_N@Z at 0x000CE0B0 forwards its flag to each prototype through it
 ?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
 ?hasAnyShortcutSpecialPower@Player@@QAEHXZ,0x0002331C,ILT thunk to the local player shortcut special power check

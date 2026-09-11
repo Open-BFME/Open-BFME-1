@@ -3,7 +3,7 @@
 // Instance-list walks over TeamPrototype+0x274:
 //   0x000F6FD0  hasAnyBuildings(Bool)                     59 bytes
 //   0x000F7020  hasAnyBuildings(BitFlags<192>, Bool)     117 bytes
-//   0x000F70C0  hasAnyBuildings(BitFlags<116>) const      67 bytes
+//   0x000F70C0  hasAnyObjects(ObjectFilter *, Bool) const 67 bytes
 //   0x000F7170  hasAnyObjects(Bool)                       59 bytes
 //   0x000ED6C0  findTeamByID(UnsignedInt)                 38 bytes
 //   0x000F41A0  damageTeamMembers(Real)                   46 bytes
@@ -19,19 +19,14 @@
 // at +0x08, production flag at +0x1C, template at +0x12C and priority string at
 // +0x270. findTeamByID reads Team's id at +0x08, after its vptr and prototype.
 //
-// The 0x000F70C0 signature remains unresolved. Its ret 8 and forwarding through
-// ILT 0x0003CCD1 -> 0x000F4B60 establish an eight-byte argument block. The callee
-// uses the first word as a this pointer for ILT 0x0001DA34 -> 0x003A04A0 and
-// reads the second word's low byte as a flag. These uses do not distinguish
-// separate parameters from fields of an aggregate; original arity and type
-// remain unknown. The 0x003A04A0 callee is still an unidentified dump.
-//
-// The retained BitFlags<116> spelling is incompatible with that eight-byte
-// block: the ordinary template needs four dwords. reverse/name_tables.tsv
-// records 116 special-power names at file offset 0x00EA8D40 and 181 KindOf
-// names at 0x00EAA068. The latter require six dwords, consistent with the
-// BitFlags<192> sibling's ret 0x1C (six words plus a flag). Recheck the tables
-// with tools/name_tables.py --bitflags before changing these legacy identities.
+// RefundDie::onDie at 0x00255BE0 settles the formerly unresolved 0x000F70C0
+// signature.  It calls Player::hasAnyObjects(ObjectFilter const *, Bool), whose
+// exact outer list walk forwards those same two arguments here through ILT
+// 0x0002ACC5.  This body then forwards them to Team through ILT 0x0003CCD1.
+// The downstream Team body treats the first word as an ObjectFilter receiver
+// and the second word's low byte as a flag, independently agreeing with the
+// matched caller.  The old BitFlags<116> label was impossible: that type needs
+// four dwords, while every boundary in this chain returns with `ret 8`.
 
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
@@ -47,20 +42,9 @@ public:
 	UnsignedInt m_bits[(NUMBITS + 31) / 32];
 };
 
-// This specialization preserves the unresolved eight-byte argument block at
-// 0x000F70C0, not the layout of an actual 116-bit mask. Pointer-like/flag uses
-// do not establish whether it originally held separate parameters or an aggregate.
-// Do not reuse it for a new body: ordinary BitFlags<116> needs four dwords.
-// Team_countObjects.cpp has another incompatible legacy use of this spelling
-// with six words per mask, so its declaration cannot be shared here.
-template <> class BitFlags<116>
-{
-public:
-	UnsignedInt m_bits[2];
-};
-
 typedef BitFlags<192> KindOfMaskType;
-typedef BitFlags<116> UnresolvedBuildingQueryArguments;
+
+class ObjectFilter;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
@@ -68,7 +52,7 @@ class Team
 public:
 	Bool hasAnyBuildings(Bool bfmeFlag) const;			// ILT thunk at 0x00017652
 	Bool hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag);	// ILT thunk at 0x0003B5B6
-	Bool hasAnyBuildings(UnresolvedBuildingQueryArguments kindOf) const;		// ILT thunk at 0x0003CCD1
+	Bool hasAnyObjects(const ObjectFilter *filter, Bool bfmeFlag) const;	// ILT thunk at 0x0003CCD1
 	Bool hasAnyObjects(Bool bfmeFlag) const;			// ILT thunk at 0x0001478B
 	Bool damageTeamMembers(Real amount);				// ILT 0x0000D148 -> 0x000F33F0
 
@@ -215,7 +199,7 @@ class TeamPrototype
 public:
 	Bool hasAnyBuildings( Bool bfmeFlag );
 	Bool hasAnyBuildings( KindOfMaskType kindOf, Bool bfmeFlag );
-	Bool hasAnyBuildings( UnresolvedBuildingQueryArguments kindOf ) const;
+	Bool hasAnyObjects( const ObjectFilter *filter, Bool bfmeFlag ) const;
 	Bool hasAnyObjects( Bool bfmeFlag );
 	Team *findTeamByID( UnsignedInt teamID );
 	void damageTeamMembers( Real amount );
@@ -265,17 +249,12 @@ Bool TeamPrototype::hasAnyBuildings( KindOfMaskType kindOf, Bool bfmeFlag )
 	return false;
 }
 
-// ?hasAnyBuildings@TeamPrototype@@QBE_NV?$BitFlags@$0HE@@@@Z
-Bool TeamPrototype::hasAnyBuildings( UnresolvedBuildingQueryArguments kindOf ) const
+// ?hasAnyObjects@TeamPrototype@@QBE_NPBVObjectFilter@@_N@Z
+Bool TeamPrototype::hasAnyObjects( const ObjectFilter *filter, Bool bfmeFlag ) const
 {
 	for( BfmeTeamInstanceIterator iter = iterate_TeamInstanceList(); !iter.done(); iter.advance() )
 	{
-		const UnsignedInt first = kindOf.m_bits[ 0 ];
-		const UnsignedInt second = kindOf.m_bits[ 1 ];
-		UnresolvedBuildingQueryArguments forwarded;
-		forwarded.m_bits[ 0 ] = first;
-		forwarded.m_bits[ 1 ] = second;
-		if( iter.cur()->hasAnyBuildings( forwarded ) )
+		if( iter.cur()->hasAnyObjects( filter, bfmeFlag ) )
 			return true;
 	}
 

@@ -6,11 +6,12 @@
 //
 //   0x000F2420  getEstimateTeamPosition  214B  average the surviving members
 //   0x000F45A0  getTeamAsAIGroup         126B  add the eligible ones to a group
+//   0x000F4B60  hasAnyObjects(filter)    136B  is any member accepted by a filter
 //   0x000F4C10  hasAnyUnits              179B  is any member a live unit
 //   0x000F4CF0  hasAnyObjects            237B  is any member a live object
 //
-// All four walk the list at Team+0x0C through the same Object DLINK
-// pointer-to-member, and all four sat in files carrying their own copy of the
+// All five walk the list at Team+0x0C through the same Object DLINK
+// pointer-to-member, and all five sat in files carrying their own copy of the
 // iterator and of Team.
 //
 // What they really shared, and what no one file could show, is the object they
@@ -39,6 +40,20 @@
 
 typedef bool Bool;
 typedef float Real;
+
+class ObjectFilter;
+class Player;
+
+// The predicate at ILT 0x0001DA34 is still carried under this existing
+// address-derived facade.  The exact caller chain proves that its receiver is
+// the ObjectFilter argument, but does not by itself prove the predicate's
+// original source-level name.  Keep that uncertainty local instead of minting
+// a speculative ObjectFilter method identity.
+class Rva2225E0Filter
+{
+public:
+	Bool accepts(Object *object, Player *player);
+};
 
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
 
@@ -168,6 +183,7 @@ public:
 	Coord3D *getEstimateTeamPosition(Coord3D *out) const;
 	void getTeamAsAIGroup(AIGroup *pAIGroup);
 	Bool hasAnyUnits() const;
+	Bool hasAnyObjects(const ObjectFilter *filter, Bool bfmeFlag) const;
 	Bool hasAnyObjects(Bool bfmeFlag) const;
 
 	void *m_vptr;
@@ -273,6 +289,29 @@ Bool Team::hasAnyUnits() const
 			continue;
 
 		return true;
+	}
+	return false;
+}
+
+// ?hasAnyObjects@Team@@QBE_NPBVObjectFilter@@_N@Z
+// The exact TeamPrototype caller at 0x000F70C0 forwards ObjectFilter const *
+// and Bool here through ILT 0x0003CCD1.  The body uses the first as the receiver
+// for the existing filter predicate and the second as the same BFME-only
+// dead/building gate used by the unfiltered sibling below.
+Bool Team::hasAnyObjects(const ObjectFilter *filter, Bool bfmeFlag) const
+{
+	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
+	{
+		BfmeObjectStatusView *obj = (BfmeObjectStatusView *)iter.cur();
+		if (bfmeFlag)
+		{
+			ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+			if ((tmpl->m_kindOf0 & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
+				continue;
+		}
+
+		if (((Rva2225E0Filter *)filter)->accepts(iter.cur(), 0))
+			return true;
 	}
 	return false;
 }

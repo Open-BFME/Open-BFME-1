@@ -1,14 +1,15 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
-// The three Player questions that are answered by asking every team prototype
+// Four Player questions are answered by asking every team prototype
 // the same question and stopping at the first yes:
 //
 //   0x000CDF20  hasAnyBuildings(Bool)                    60 bytes
 //   0x000CDF70  hasAnyBuildings(KindOfMaskType, Bool)   118 bytes
+//   0x000CE010  hasAnyObjects(ObjectFilter *, Bool)      74 bytes
 //   0x000CE0B0  hasAnyObjects(Bool)                      60 bytes
 //
-// All three are the reference's body with the same BFME change -- the question
-// carries an extra flag that the player forwards untouched -- and all three
+// All four use the reference's list walk.  BFME adds a flag that the player
+// forwards untouched; the filtered overload also forwards its filter.  They
 // walk the prototype list at this+0x288, reloading the list header each
 // iteration for the end test because the call in between is enough to make it.
 // Only the mask overload differs in shape, and only because BitFlags<192> is
@@ -34,6 +35,8 @@ public:
 
 typedef BitFlags<192> KindOfMaskType;
 
+class ObjectFilter;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class TeamPrototype
 {
@@ -41,6 +44,7 @@ public:
 	Bool hasAnyBuildings(Bool bfmeFlag);				// ILT 0x0003DD0C
 	Bool hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag);	// ILT 0x0000B55F
 	Bool hasAnyObjects(Bool bfmeFlag);				// ILT 0x00021D96
+	Bool hasAnyObjects(const ObjectFilter *filter, Bool includeDead) const;	// ILT 0x0002ACC5
 };
 
 typedef _STL::list<TeamPrototype *> PlayerTeamList;
@@ -52,6 +56,7 @@ public:
 	Bool hasAnyBuildings(Bool bfmeFlag) const;
 	Bool hasAnyBuildings(KindOfMaskType kindOf, Bool bfmeFlag) const;
 	Bool hasAnyObjects(Bool bfmeFlag) const;
+	Bool hasAnyObjects(const ObjectFilter *filter, Bool includeDead) const;
 
 private:
 	char m_slice_pad[0x288];				// retail this+0x00 .. +0x287, untouched
@@ -91,6 +96,23 @@ Bool Player::hasAnyObjects(Bool bfmeFlag) const
 			 it != m_playerTeamPrototypes.end(); ++it)
 	{
 		if ((*it)->hasAnyObjects(bfmeFlag)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+// ?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z
+// RefundDie::onDie calls this overload through ILT 0x00018016.  The call then
+// forwards the filter and include-dead flag to each TeamPrototype through ILT
+// 0x0002ACC5.  Keeping those canonical types (rather than two opaque pointers)
+// is also what makes VC7.1 retain retail's EBX/EBP parameter assignment.
+Bool Player::hasAnyObjects(const ObjectFilter *filter, Bool includeDead) const
+{
+	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin();
+		it != m_playerTeamPrototypes.end(); ++it)
+	{
+		if ((*it)->hasAnyObjects(filter, includeDead)) {
 			return true;
 		}
 	}
