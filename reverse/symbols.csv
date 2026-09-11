@@ -87067,3 +87067,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?bfmeUpdateBFromPointNA@BfmeThingNA@@QAEXABUCoord2D@@@Z,0x0001365B,matched LivingWorldManager caller 0x00615900 reaches exact body 0x0061C220 through this ILT
