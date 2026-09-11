@@ -606,21 +606,16 @@ __forceinline ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
 		manager->elements + manager->width * y + x);
 }
 
-// ?getShroudStatusForPlayer@ShroudManagerImpl008FBA40@@QBE?AW4CellShroudStatus@@HHH@Z present-unmatched
 __declspec(noinline) CellShroudStatus
 ShroudManagerImpl008FBA40::getShroudStatusForPlayer(
 	Int playerIndex, Int x, Int y) const
 {
-	CellShroudStatus result;
 	ShroudManagerImpl008FBA40ElementLayout *element =
 		shroudElementAt(this, x, y);
-	if (element)
-	{
-		unsigned short status = element->playerStates[playerIndex][0];
-		result = (CellShroudStatus)shroudStatusFromRaw(status);
-	}
-	else
-		result = CELLSHROUD_SHROUDED;
+	CellShroudStatus result = element
+		? (CellShroudStatus)shroudStatusFromRaw(
+			element->playerStates[playerIndex][0])
+		: CELLSHROUD_SHROUDED;
 
 	if (result == CELLSHROUD_FOGGED && !enabled)
 		result = CELLSHROUD_CLEAR;
