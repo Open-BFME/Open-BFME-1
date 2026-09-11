@@ -57,7 +57,6 @@
 #include "GameLogic/Module/StealthUpdate.h"
 #include "GameLogic/Module/RiderChangeContain.h"
 
-
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -171,33 +170,8 @@ RiderChangeContain::~RiderChangeContain( void )
 	can this container contain this kind of object? 
 	and, if checkCapacity is TRUE, does this container have enough space left to hold the given unit?
 */
-// ?isValidContainerFor@RiderChangeContain@@UBE_NPBVObject@@_N@Z present-unmatched
-Bool RiderChangeContain::isValidContainerFor(const Object* rider, Bool checkCapacity) const
-{
-	//Don't check capacity because our rider will kick the other rider out!
-	if( TransportContain::isValidContainerFor( rider, FALSE ) )
-	{
-		if( m_scuttledOnFrame != 0 )
-		{
-			//Scuttled... too late!
-			return FALSE;
-		}
-
-		//We can enter this bike... but now we need to extend the base functionality by limiting
-		//which infantry can enter.
-		const RiderChangeContainModuleData *data = getRiderChangeContainModuleData();
-		for( int i = 0; i < MAX_RIDERS; i++ )
-		{
-			const ThingTemplate *thing = TheThingFactory->findTemplate( data->m_riders[ i ].m_templateName );
-			if( thing->isEquivalentTo( rider->getTemplate() ) )
-			{
-				//We found a valid rider, so return success.
-				return TRUE;
-			}
-		}
-	}
-	return FALSE;
-}
+// ?isValidContainerFor@RiderChangeContain@@UBE_NPBVObject@@_N@Z
+// Body in RiderChangeContainIsValidContainerFor.cpp.
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
