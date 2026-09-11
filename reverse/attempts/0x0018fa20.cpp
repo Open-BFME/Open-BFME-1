@@ -1,5 +1,5 @@
 // ?d_0018fa20@@YAXXZ
-// partial score=0.93 date=2026-09-10
+// partial score=0.97 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /O2 /G6
 // NOT PolygonTrigger::pointInTrigger(ICoord3D&) -- that real, caller-proven
 // identity is a separate, still-unlanded address (0x0018F8A0, 307B). This is
@@ -7,6 +7,8 @@
 // matched updateBounds sibling exactly) taking a Coord3D& (float) point;
 // its real name is not recovered. Method renamed to avoid an invented-identity
 // collision with the real pointInTrigger symbol.
+// Size now matches retail exactly (367B); only 4 non-reloc bytes remain
+// (see attempt log): a spilled-reload operand swap immune to source reordering.
 
 #include <algorithm>
 
@@ -76,14 +78,14 @@ Bool PolygonTrigger::containsPointF(Coord3D &point) const
 	Int i;
 	for (i = 0; i < m_numPoints; ++i) {
 		ICoord3D pt1 = m_points[i];
+		const ICoord3D *src2 = (i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
 		ICoord3D pt2;
-		if (i == 0)
-			pt2 = m_points[m_numPoints - 1];
-		else
-			pt2 = m_points[i - 1];
-
+		pt2.x = src2->x;
+		pt2.y = src2->y;
+		pt2.z = src2->z;
 		if (pt1.y == pt2.y)
 			continue;
+
 		if (pt1.x < point.x && pt2.x < point.x)
 			continue;
 
