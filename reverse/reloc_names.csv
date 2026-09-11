@@ -522,7 +522,7 @@ name,target_rva,target_size,source,notes
 ??$__copy_backward@PAUGen_t_003a24c0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_003a24c0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x003A13E0,84,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
 ??0?$pair@$$CBUGen_t_003a2460_k4@@UGen_t_003a2460_p12cd@@@_STL@@QAE@ABU01@@Z,0x003A2360,130,Code/gen_small/tgrid_112.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@URva003A35A0Element@@V?$allocator@URva003A35A0Element@@@_STL@@@_STL@@IAEXPAURva003A35A0Element@@ABU3@ABU__false_type@2@I_N@Z,0x003A3410,289,Code/Libraries/Source/WWVegas/WWLib/RvaVectorPushBack.cpp,reloc-derived;call-sites=1;identity=real
-?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@PAVGen003BD8D0Arg@@HH@Z,0x003A3E90,46,Code/GameEngine/Source/Common/V4MirroredFlagUpdate.cpp,reloc-derived;call-sites=1;identity=generated
+?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@XZ,0x003A3E90,46,Code/GameEngine/Source/Common/Gen003BD7D0Node_build.cpp,reloc-derived;call-sites=1;identity=real;matched caller=Rva003BF540::act
 ??$__copy_backward@PAUGen_t_003a46d0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_003a46d0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x003A4270,101,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
 ??0?$pair@$$CBUGen_t_003a4670_k4@@UGen_t_003a4670_p12cd@@@_STL@@QAE@ABU01@@Z,0x003A4420,103,Code/gen_small/tgrid_112.cpp,reloc-derived;call-sites=1;identity=generated
 ?enter@Gen003BD7D0Node@@QAEXXZ,0x003A4A40,112,Code/GameEngine/Source/Common/V4MirroredFlagUpdate.cpp,reloc-derived;call-sites=1;identity=generated
@@ -601,7 +601,7 @@ name,target_rva,target_size,source,notes
 ??1Gen_dtor_003ca640@@UAE@XZ,0x003CA480,265,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeFinish@Glo012F1028Sub@@AAEXPAVGlo012F1028Item@@H@Z,0x003CA7C0,423,Code/GameEngine/Source/Common/Glo012F1028Sub_bfmeNotify.cpp,reloc-derived;call-sites=1;identity=real
 ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z,0x003CA9D0,662,Code/GameEngine/Source/Common/V4GuardedLookupFieldReads.cpp,reloc-derived;call-sites=1;identity=generated
-?consume@Gen003BF540Owner@@QAE_NPAVGen003BD8D0Built@@@Z,0x003CAE40,89,Code/GameEngine/Source/Common/V4MirroredFlagUpdate.cpp,reloc-derived;call-sites=1;identity=generated
+?consume@Gen003BF540Owner@@QAE_NPAXPAVGen003BD8D0Built@@00@Z,0x003CAE40,89,Code/GameEngine/Source/Common/Gen003BF540Owner_consume.cpp,reloc-derived;call-sites=1;identity=real;matched caller=Rva003BF540::act
 ??0?$pair@$$CBUGen_t_003cd920_k4@@UGen_t_003cd920_p12cd@@@_STL@@QAE@ABU01@@Z,0x003CC780,212,Code/gen_small/tgrid_114.cpp,reloc-derived;call-sites=1;identity=generated
 ?call@Gen000135B1@@QAEXPAVY1ForEachArg@@0@Z,0x003CCE80,227,Code/GameEngine/Source/Common/Y1MemberVectorForEach.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen003CDD00@@YAXPAPAHHHPAHUQ3HeapCompare@@@Z,0x003CDD00,131,Code/GameEngine/Source/Common/Q3HeapAlgorithmFamily.cpp,reloc-derived;call-sites=5;identity=generated

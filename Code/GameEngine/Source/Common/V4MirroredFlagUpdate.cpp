@@ -19,8 +19,10 @@
 // register and stored it once.  Retail duplicates the call, the store and the
 // epilogue, which is what an if/else with a constant in each arm compiles to.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
-// pins are address-derived and additive.
+// IDENTITY: Rva003BF540::act is the matched caller.  Its 0x003BD8D0 body
+// leaves three arguments on the stack across the niladic build call, then
+// passes the returned built pointer plus those three values to the canonical
+// four-argument consume body at 0x003CAE40.
 
 class Gen003BD7D0Node;
 class Gen003BD8D0Arg;
@@ -78,14 +80,19 @@ public:
 	bool m_at18;
 };
 
-class Gen003BD8D0Arg
+class Gen003BD8D0Built
 {
 public:
-	char               m_pad00[ 0xEC ];
-	Gen003BD8D0Sub *   m_atEC;
+	char m_pad00[ 0xB4 ];
+	void *m_atB4;
 };
 
-class Gen003BD8D0Built;
+class Gen003BD8D0Arg : public Gen003BD8D0Built
+{
+public:
+	char               m_padB8[ 0x34 ];
+	Gen003BD8D0Sub *   m_atEC;
+};
 
 struct Gen003A43C0Element
 {
@@ -128,7 +135,7 @@ public:
  }
 	void leave();
 	void enter();
-	Gen003BD8D0Built * build( Gen003BD8D0Arg * a, int b, int c );
+	Gen003BD8D0Built * build();
 };
 
 // Existing ILTs retain unresolved helper identity without introducing aliases.
@@ -150,7 +157,7 @@ extern "C" char *g_bfmeGameCW;
 class Gen003BF540Owner
 {
 public:
-	bool consume( Gen003BD8D0Built * built );
+	bool consume( void * built, Gen003BD8D0Built * a, void * c, void * d );
 };
 
 // Same global as in V4GlobalStateQuery.cpp; that file reads +0xEB0, this one
@@ -248,8 +255,7 @@ bool Rva003BF540::act( Gen003BD8D0Arg * a )
 	Gen003BD8D0Sub *sub = a->m_atEC;
 	bool saved = sub->m_at18;
 	sub->m_at18 = true;
-	Gen003BD8D0Built *built = node->build( a, 0, 0 );
-	bool answer = m_at28->consume( built );
+	bool answer = m_at28->consume( node->build(), a, 0, 0 );
 	a->m_atEC->m_at18 = saved;
 	return answer;
 }
