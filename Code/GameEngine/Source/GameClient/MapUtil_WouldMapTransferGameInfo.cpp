@@ -1,7 +1,13 @@
-// ?d_004515f0@@YAXXZ
-// partial score=0.9 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc /O2
-// BFME's GameInfo overload of WouldMapTransfer, retail 0x004515F0.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+//
+// WouldMapTransfer(GameInfo *), retail 0x004515F0, 188 bytes.
+//
+// The matched LANAPI::RequestHasMap and WOL game-setup callers pass their
+// GameInfo object to the ILT at 0x000393FB, whose target is this body.  BFME's
+// overload first rejects official maps through GameInfo::m_mapMask, then asks
+// whether the game's map begins with MapCache::getUserMapDir().  Keeping the
+// two returned AsciiString temporaries in the source expression preserves the
+// retail compiler's construction order and register schedule.
 
 typedef bool Bool;
 typedef int Int;
@@ -33,7 +39,9 @@ public:
 	Bool startsWithNoCase(const StringBase<T> &other) const
 	{
 		const Int length = other.m_data != 0 ? other.m_data->m_length : 0;
-		const T *text = other.m_data != 0 ? &other.m_data->m_text[0] : (const T *)0x0107388b;
+		const T *text = other.m_data != 0
+			? &other.m_data->m_text[0]
+			: (const T *)0x0107388b;
 		return startsWithNoCase(text, length);
 	}
 };
@@ -54,31 +62,22 @@ public:
 
 class MapCache
 {
+public:
+	AsciiString getUserMapDir() const;
 };
 
 extern MapCache *TheMapCache;
 
-class MapCacheThunk
-{
-public:
-	AsciiString getUserMapDirThunk() const;
-};
-
 class GameInfo
 {
-	public:
+public:
+	AsciiString getMap() const;
+
 	char m_prefix[0x3c];
 	AsciiString m_mapName;
 	Int m_mapCRC;
 	Int m_mapSize;
 	Int m_mapMask;
-
-};
-
-class GameInfoThunk
-{
-public:
-	AsciiString getMapThunk() const;
 };
 
 // ?WouldMapTransfer@@YA_NPAVGameInfo@@@Z
@@ -87,8 +86,5 @@ Bool WouldMapTransfer(GameInfo *game)
 	if ((game->m_mapMask & 0x200) != 0)
 		return false;
 
-	MapCache *mapCache = TheMapCache;
-	AsciiString userMapDir = reinterpret_cast<const MapCacheThunk *>(mapCache)->getUserMapDirThunk();
-	AsciiString gameMap = reinterpret_cast<const GameInfoThunk *>(game)->getMapThunk();
-	return gameMap.startsWithNoCase(userMapDir);
+	return game->getMap().startsWithNoCase(TheMapCache->getUserMapDir());
 }
