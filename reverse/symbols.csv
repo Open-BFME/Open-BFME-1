@@ -845,6 +845,8 @@ name,address,notes
 ??$__copy@PAVProductionPrerequisite@@PAV1@H@_STL@@YAPAVProductionPrerequisite@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000181A1,resweep callee back-solved
 ??$__copy@PAVRva00363820Elem@@PAV1@H@_STL@@YAPAVRva00363820Elem@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0004700A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00363820 calls; autopin
 ??$__copy@PAVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024023,ILT thunk used by call site
+??$__copy@PBDV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PBD0V10@ABUrandom_access_iterator_tag@0@PAH@Z,0x00835590,STLport 4.5.3 narrow random-access copy specialization; canonical copy-and-fill caller at 0x00835310 and NumFacetsInstantiations object symbol prove identity
+??$__copy@PBGV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@H@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@ABUrandom_access_iterator_tag@0@PAH@Z,0x00835EF0,STLport 4.5.3 wide random-access copy specialization; canonical exact copy-and-fill caller at 0x00835C40 and NumFacetsInstantiations object symbol prove identity
 ??$__copy@PBUEvaMessageInfo@@PAU1@H@_STL@@YAPAUEvaMessageInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00003F6C,0x004263D0 calls +0x00b1 and +0x00e4 ILT enters matched 28-byte copy body 0x00425A60
 ??$__copy@PBUGen00762250@@PAU1@H@_STL@@YAPAUGen00762250@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00008341,0x00770830 calls +0x00b1 and +0x00e4 ILT enters matched width-56 copy body 0x0075EAA0
 ??$__copy@PBUGen_t_000b0c00_p8cd@@PAU1@H@_STL@@YAPAUGen_t_000b0c00_p8cd@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x000B0290,gen-tgrid payload member
@@ -875,8 +877,6 @@ name,address,notes
 ??$__copy@PBUS4Poly000BC2E0@@PAU1@H@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000FC40,0x004A2370 calls +0x00b1 and +0x00e4 ILT enters matched 112-byte copy body 0x0049D5D0
 ??$__copy@PBUS4Poly00136170@@PAU1@H@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B136,0x00138D70 calls +0x00b1 and +0x00e4 ILT enters matched width-92 copy body 0x00138800
 ??$__copy@PBUWeaponBarrelInfo@@PAU1@H@_STL@@YAPAUWeaponBarrelInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0075EB00,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls twice (overwrite copy and tail uninitialized copy); matched __copy<WeaponBarrelInfo> in W3DModelDraw.cpp
-??$__copy@PBDV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@H@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PBD0V10@ABUrandom_access_iterator_tag@0@PAH@Z,0x00835590,STLport 4.5.3 narrow random-access copy specialization; canonical copy-and-fill caller at 0x00835310 and NumFacetsInstantiations object symbol prove identity
-??$__copy@PBGV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@H@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@ABUrandom_access_iterator_tag@0@PAH@Z,0x00835EF0,STLport 4.5.3 wide random-access copy specialization; canonical exact copy-and-fill caller at 0x00835C40 and NumFacetsInstantiations object symbol prove identity
 ??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
 ??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
 ??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
@@ -75319,7 +75319,6 @@ name,address,notes
 ?bfmeFinal4D0@BfmeMid4D0@@QAEPAXXZ,0x000022BB,Open-BFME6 override walk for the 0x0022F4D0 dispatch; body at 0x00087A80
 ?bfmeFinalET@BfmeTmplET@@QBEPBV1@XZ,0x000022BB,pin override walk for BfmeConv2041
 ?bfmeFinalZB@BfmeOverride1137@@QAEPAV1@XZ,0x000022BB,Open-BFME5 ILT override walk the 0x0045B060 destructor calls
-?bfmeFind@BfmeAttackPriorityMap@@QAEXPAPAUBfmeAttackPriorityNode@@PAPBVThingTemplate@@@Z,0x0001FF05,layout facade for canonical AttackPriorityMap::_Rb_tree::find call in AttackPriorityInfo::getPriority; retail ILT 0x0001FF05 enters matched body 0x000E9460
 ?bfmeFind1002@BfmeA1002@@QAEPAUBfmeX1002@@PAUBfmeArg1002@@@Z,0x0003F5DA,pin
 ?bfmeFind1004@BfmeHold1004@@QAEPAVBfmeX1004@@XZ,0x0000D3B9,pin
 ?bfmeFind1011@BfmeLook1011@@QAEPAVBfmeX1011@@H@Z,0x0001F253,pin
@@ -75359,6 +75358,7 @@ name,address,notes
 ?bfmeFind980B@BfmeFindB980@@QAEPAVBfmeUseB980@@PAUBfmeRecB980@@@Z,0x00028560,pin
 ?bfmeFind980C@BfmeLookC980@@QAEPAUBfmeXC980@@H@Z,0x0001F253,pin
 ?bfmeFind987@BfmeLook987@@QAEPAUBfmeX987@@H@Z,0x0001F253,pin
+?bfmeFind@BfmeAttackPriorityMap@@QAEXPAPAUBfmeAttackPriorityNode@@PAPBVThingTemplate@@@Z,0x0001FF05,layout facade for canonical AttackPriorityMap::_Rb_tree::find call in AttackPriorityInfo::getPriority; retail ILT 0x0001FF05 enters matched body 0x000E9460
 ?bfmeFind@BfmeChainOwner@@QAEPAVBfmeChainResult@@H@Z,0x0002F52C,Open-BFME5 ILT the four lookups around 0x002197E0 call
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@BfmeIndexedMap@@QAE?AVBfmeIndexedMapIterator@@ABH@Z,0x00034243,address-derived keyed map find thunk
@@ -80614,6 +80614,8 @@ name,address,notes
 ?g_w3dMouseThreadRunLock@@3EA,0x012F9800,W3DMouse polling loop run lock
 ?gadgetComboBoxReset@@YAXPAVGameWindow@@@Z,0x00007004,OnlineQuickMatch InitGadgets reset call uses the existing incremental-link thunk
 ?gainLevel@ExperienceLevelSystem@@QAEXPAVObject@@_N@Z,0x00027237,UNIT_GAIN_LEVEL dispatch resolves an Object and tail-calls this experience-level body with the FX flag
+?gameInfoWindowLayout@@3PAVWindowLayout@@A,0x012F3A90,GameInfoWindow.cpp static layout pointer identified by CreateLANGameInfoWindow
+?gameInfoWindowParent@@3PAVGameWindow@@A,0x012F3A58,GameInfoWindow.cpp static parent pointer identified by CreateLANGameInfoWindow
 ?gandalfTemplate@?6??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4VAsciiString@@A,0x012EF1F0,GondorGandalf static AsciiString
 ?gandalfTheGrey@?9??_bfme_getSelectedPortraitImage@@YAPBVImage@@PBVThingTemplatePortraitShim@@0@Z@4PBV2@B,0x012EF1EC,lazily cached HIGandalTheGrey image
 ?gen00032943@@YAXPAX000@Z,0x00032943,address-derived callee of the 27-byte explicit-this forwarder family; target read from the REL32 at its call sites
