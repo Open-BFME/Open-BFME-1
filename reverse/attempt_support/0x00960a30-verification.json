@@ -1,0 +1,432 @@
+{
+  "status": "partial; not a matched conversion",
+  "symbol": "?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z",
+  "rva": "0x00960A30",
+  "target_size": 14081,
+  "actual_different_bytes": 75,
+  "byte_similarity_fraction": 0.9946736737447625,
+  "base_commit": "467265486735e46b3408866131fb58f4b91cd0d2",
+  "bank_source": "reverse/attempts/0x00960a30.cpp",
+  "bank_source_sha256": "1386bef8e634881f5819a25888dc87dfc704a8dece704773a42bc0aa89ecd8b4",
+  "support_source": "reverse/attempt_support/0x00960a30.inc",
+  "support_source_sha256": "ad6f0d1b6963a896027e4473565c24476fc54286ba22ed3f6709d8d2fec8af46",
+  "complete_source_archive": "reverse/attempt_history/0x00960a30/655db775d83c3ef215e70d9298cd3a8ebd870fae82fc54296a7ebf00fadf30a2.json",
+  "compiler_version": "13.10.3077.0",
+  "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515",
+  "compiler_flags": [
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-DNDEBUG",
+    "-MD",
+    "-ICode/Libraries/Source/WWVegas/WWMath",
+    "-ICode/Libraries/Source/WWVegas/WWLib",
+    "-ICode/Libraries/Source/WWVegas/WW3D2",
+    "-ICode/Libraries/Source/WWVegas/WWSaveLoad",
+    "-ICode/Libraries/Source/WWVegas/Wwutil",
+    "-ICode/Libraries/Source/WWVegas/WWDownload",
+    "-ICode/Libraries/Source/Compression",
+    "-ICode/Libraries/Source/WWVegas/WWDebug",
+    "-Ireference/shims/sweep",
+    "reverse/attempts/0x00960a30.cpp",
+    "-showIncludes"
+  ],
+  "fresh_compilation": true,
+  "raw_render_sha256": "a233061ecdd0f3a12fc73b616b5b0bc7b7dfc2f34ec749ad13def90c94bea6cb",
+  "resolved_render_sha256": "3276d5b880d5cef9bfbd173f98e809fb13c47cc7cf9caea02fcfe6dcb242edbb",
+  "relocation_count": 190,
+  "all_relocations_canonical": true,
+  "unresolved": [],
+  "masked": false,
+  "frame_size": "0x6d84",
+  "instruction_count": 3787,
+  "call_count": 51,
+  "normalizations_exact": 25,
+  "matrix_513_bytes_exact": true,
+  "fp_store_cleanup_count": 425,
+  "fp_memory_store_count": 352,
+  "fp_cleanup_count": 73,
+  "fp_store_cleanup_sequence_equal_after_same_address_canonicalization": true,
+  "remaining_groups": [
+    {
+      "name": "chunk_reload_order",
+      "ranges": [
+        [
+          "0x43b",
+          "0x44a"
+        ]
+      ],
+      "difference_count": 14,
+      "wrong_offsets": [
+        "0x43c",
+        "0x43d",
+        "0x43e",
+        "0x43f",
+        "0x440",
+        "0x441",
+        "0x442",
+        "0x443",
+        "0x444",
+        "0x445",
+        "0x446",
+        "0x447",
+        "0x448",
+        "0x449"
+      ]
+    },
+    {
+      "name": "merge_same_EA_SIB",
+      "ranges": [
+        [
+          "0x1f8f",
+          "0x1fa0"
+        ],
+        [
+          "0x1ff3",
+          "0x2007"
+        ],
+        [
+          "0x2132",
+          "0x2147"
+        ],
+        [
+          "0x2168",
+          "0x21a7"
+        ],
+        [
+          "0x224c",
+          "0x227e"
+        ],
+        [
+          "0x23e6",
+          "0x2423"
+        ]
+      ],
+      "difference_count": 40,
+      "wrong_offsets": [
+        "0x1f91",
+        "0x1f98",
+        "0x1f9e",
+        "0x1ff5",
+        "0x1ffc",
+        "0x2005",
+        "0x2134",
+        "0x213b",
+        "0x213f",
+        "0x2143",
+        "0x216a",
+        "0x216e",
+        "0x2172",
+        "0x2176",
+        "0x217f",
+        "0x2183",
+        "0x2187",
+        "0x218b",
+        "0x2194",
+        "0x2198",
+        "0x219c",
+        "0x21a0",
+        "0x224e",
+        "0x2252",
+        "0x2256",
+        "0x225a",
+        "0x225e",
+        "0x2262",
+        "0x2268",
+        "0x226c",
+        "0x2270",
+        "0x2274",
+        "0x2278",
+        "0x227c",
+        "0x23e8",
+        "0x23ec",
+        "0x23f9",
+        "0x2408",
+        "0x2412",
+        "0x2421"
+      ]
+    },
+    {
+      "name": "merge_classification_X_product",
+      "ranges": [
+        [
+          "0x2147",
+          "0x214f"
+        ]
+      ],
+      "difference_count": 2,
+      "wrong_offsets": [
+        "0x2149",
+        "0x214d"
+      ]
+    },
+    {
+      "name": "initial_output_same_EA_SIB",
+      "ranges": [
+        [
+          "0x2951",
+          "0x295a"
+        ],
+        [
+          "0x2a13",
+          "0x2a19"
+        ],
+        [
+          "0x2a30",
+          "0x2a33"
+        ]
+      ],
+      "difference_count": 5,
+      "wrong_offsets": [
+        "0x2953",
+        "0x2959",
+        "0x2a15",
+        "0x2a18",
+        "0x2a32"
+      ]
+    },
+    {
+      "name": "expansion_TOP_additions",
+      "ranges": [
+        [
+          "0x2cbc",
+          "0x2d7d"
+        ]
+      ],
+      "difference_count": 4,
+      "wrong_offsets": [
+        "0x2d1d",
+        "0x2d1e",
+        "0x2d23",
+        "0x2d24"
+      ]
+    },
+    {
+      "name": "BOTTOM_only_projection",
+      "ranges": [
+        [
+          "0x2f9a",
+          "0x2ff1"
+        ]
+      ],
+      "difference_count": 4,
+      "wrong_offsets": [
+        "0x2f9d",
+        "0x2faa",
+        "0x2fb0",
+        "0x2fb9"
+      ]
+    },
+    {
+      "name": "TOP_only_projection",
+      "ranges": [
+        [
+          "0x3121",
+          "0x317b"
+        ]
+      ],
+      "difference_count": 6,
+      "wrong_offsets": [
+        "0x3127",
+        "0x3134",
+        "0x313d",
+        "0x3143",
+        "0x315a",
+        "0x315c"
+      ]
+    }
+  ],
+  "canonical_sibling_checks": [
+    {
+      "name": "??0Random3Class@@QAE@II@Z",
+      "rva": "0x009E5EB0",
+      "symbol": "??0Random3Class@@QAE@II@Z",
+      "size": 18,
+      "compiled_size": 18,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "??0SegLineRendererClass@@QAE@XZ",
+      "rva": "0x0095FFD0",
+      "symbol": "??0SegLineRendererClass@@QAE@XZ",
+      "size": 89,
+      "compiled_size": 89,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "??1SegLineRendererClass@@QAE@XZ",
+      "rva": "0x00960030",
+      "symbol": "??1SegLineRendererClass@@QAE@XZ",
+      "size": 28,
+      "compiled_size": 28,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "??H@YA?AVVector4@@ABV0@0@Z",
+      "rva": "0x0095FFA0",
+      "symbol": "??H@YA?AVVector4@@ABV0@0@Z",
+      "size": 46,
+      "compiled_size": 46,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z",
+      "rva": "0x00960190",
+      "symbol": "?Init@SegLineRendererClass@@QAEXABUW3dEmitterLinePropertiesStruct@@@Z",
+      "size": 237,
+      "compiled_size": 237,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Reset_Line@SegLineRendererClass@@QAEXXZ",
+      "rva": "0x009600A0",
+      "symbol": "?Reset_Line@SegLineRendererClass@@QAEXXZ",
+      "size": 17,
+      "compiled_size": 17,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Scale@SegLineRendererClass@@QAEXM@Z",
+      "rva": "0x0095FF30",
+      "symbol": "?Scale@SegLineRendererClass@@QAEXM@Z",
+      "size": 33,
+      "compiled_size": 33,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_Current_UV_Offset@SegLineRendererClass@@QAEXABVVector2@@@Z",
+      "rva": "0x0006B090",
+      "symbol": "?Set_Current_UV_Offset@SegLineRendererClass@@QAEXABVVector2@@@Z",
+      "size": 18,
+      "compiled_size": 18,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_Disable_Sorting@SegLineRendererClass@@QAEXH@Z",
+      "rva": "0x00918920",
+      "symbol": "?Set_Disable_Sorting@SegLineRendererClass@@QAEXH@Z",
+      "size": 29,
+      "compiled_size": 29,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_End_Caps@SegLineRendererClass@@QAEXH@Z",
+      "rva": "0x00918940",
+      "symbol": "?Set_End_Caps@SegLineRendererClass@@QAEXH@Z",
+      "size": 29,
+      "compiled_size": 29,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_Freeze_Random@SegLineRendererClass@@QAEXH@Z",
+      "rva": "0x00918900",
+      "symbol": "?Set_Freeze_Random@SegLineRendererClass@@QAEXH@Z",
+      "size": 29,
+      "compiled_size": 29,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_Merge_Intersections@SegLineRendererClass@@QAEXH@Z",
+      "rva": "0x009188E0",
+      "symbol": "?Set_Merge_Intersections@SegLineRendererClass@@QAEXH@Z",
+      "size": 29,
+      "compiled_size": 29,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_Texture_Tile_Factor@SegLineRendererClass@@QAEXM@Z",
+      "rva": "0x0095FEF0",
+      "symbol": "?Set_Texture_Tile_Factor@SegLineRendererClass@@QAEXM@Z",
+      "size": 64,
+      "compiled_size": 64,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?Set_UV_Offset_Rate@SegLineRendererClass@@QAEXABVVector2@@@Z",
+      "rva": "0x00919F20",
+      "symbol": "?Set_UV_Offset_Rate@SegLineRendererClass@@QAEXABVVector2@@@Z",
+      "size": 32,
+      "compiled_size": 32,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?dup_00960280@@YAXXZ",
+      "rva": "0x00960280",
+      "symbol": "?Set_Current_UV_Offset@SegLineRendererClass@@QAEXABVVector2@@@Z",
+      "size": 18,
+      "compiled_size": 18,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?getVertexBuffer@SegLineRendererClass@@AAEPAUVertexFormatXYZDUV1@@I@Z",
+      "rva": "0x0095FF60",
+      "symbol": "?getVertexBuffer@SegLineRendererClass@@AAEPAUVertexFormatXYZDUV1@@I@Z",
+      "size": 57,
+      "compiled_size": 57,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    },
+    {
+      "name": "?subdivision_util@SegLineRendererClass@@AAEXIPBVVector3@@PBMPAIPAV2@PAMPAVVector4@@5@Z",
+      "rva": "0x009602A0",
+      "symbol": "?subdivision_util@SegLineRendererClass@@AAEXIPBVVector3@@PBMPAIPAV2@PAMPAVVector4@@5@Z",
+      "size": 1768,
+      "compiled_size": 1768,
+      "diffs": 0,
+      "unresolved": [],
+      "masked": false,
+      "status": "PASS"
+    }
+  ],
+  "probe_summary": "14081 bytes, 190 relocations, 75 non-relocation differences, first +0x43c; no relocation-layout drift",
+  "verified_utc": "2026-09-11T17:45:39.059404+00:00"
+}
