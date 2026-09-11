@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2e4c65e983bc920a4b7cff2980b7c4ed2440786aeb991e2a19fb9fb1db5cc736",
+  "symbol": "?_bfme_saveMenu@BfmeAptScreenQuitMenu@@QAEXPBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?_bfme_saveMenu@BfmeAptScreenQuitMenu@@QAEXPBD@Z\n// partial score=0.96 date=2026-09-11\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\nstruct QuitGlobalData { unsigned char pad[0xa9e]; char disabled; };\nstruct QuitGate { char check(); };\nstruct QuitGameLogic { unsigned char pad[0x10c]; int mode; };\nclass QuitWindow { public: virtual void hide(int); virtual void s1(); virtual void s2(); virtual void s3(); virtual void show(int); virtual void commit(); };\nclass QuitShell { public: QuitWindow *top(); };\nextern QuitGlobalData *TheWritableGlobalData;\nextern QuitGate *g_quitGate;\nextern QuitGameLogic *TheBfmeGameLogic;\nextern QuitShell *TheShell;\nvoid bfmeApplyQuitScreen(int kind, int mode, int enabled);\n\nclass BfmeAptScreenQuitMenu {\npublic:\n\tvoid _bfme_saveMenu(const char *argument);\n};\n\nvoid BfmeAptScreenQuitMenu::_bfme_saveMenu(const char *)\n{\n\tchar enabled = TheWritableGlobalData->disabled == 0;\n\tif (g_quitGate->check()) enabled = !enabled;\n\tif (enabled) {\n\t\tint gameMode = TheBfmeGameLogic->mode;\n\t\tint menuMode;\n\t\tif (gameMode == 1 || gameMode == 5) menuMode = 4;\n\t\telse menuMode = (gameMode == 2) + 1;\n\t\tbfmeApplyQuitScreen(3, menuMode, 1);\n\t} else {\n\t\tQuitWindow *window = TheShell->top();\n\t\twindow->hide(0);\n\t\twindow->show(0);\n\t\twindow->commit();\n\t}\n}\n"
+}
