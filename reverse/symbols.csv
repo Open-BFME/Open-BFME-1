@@ -75151,7 +75151,8 @@ name,address,notes
 ?bfmeDtorTWA@BfmeStrTWA@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWB@BfmeStrTWB@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWC@BfmeHeadTWC@@QAEXXZ,0x007E86C0,pin
-?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,pin
+?Rva00958570_Flush_Buffered_Frames@FrameGrabClass@@IAEXXZ,0x00958570,pin; address-derived reconstruction spelling for the buffered AVI frame flush
+?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,reconstruction alias; not historical identity; retained for the existing address-derived 0x00958680 caller
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
@@ -77231,7 +77232,7 @@ name,address,notes
 ?bfmeShroudedVNI@@YADPAX@Z,0x000C3F80,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeShutdownCE@BfmeOwnCE@@QAEXXZ,0x000066E0,pin
-?bfmeShutdownYX@BfmeOwnerYX@@QAEXXZ,0x00958570
+?bfmeShutdownYX@BfmeOwnerYX@@QAEXXZ,0x00958570,reconstruction alias; not historical identity; retained for the existing address-derived 0x00958640 caller
 ?bfmeSinVNB@@YAMM@Z,0x00873910,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
 ?bfmeSizeVNQ@BfmeItemVNQ@@QAEHXZ,0x009212E0,pin
@@ -87030,3 +87031,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?updateLadderDetails@@YAXHPAVGameWindow@@0@Z,0x004D7E60,authentic ZH static signature confirmed by matched PopupLadderSelect callers and retail ECX=listbox EDX=static-text stack=id ABI
 ?EncryptString@@YAPBDPBD@Z,0x0000ED86,route=0x00104760; matched PopupLadderSelectSystem call reaches retail ILT 0x0000ED86 and official source proves the matched const-qualified EncryptString body at 0x00104760
 ?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
+?_Get_DX8_Front_Buffer@DX8Wrapper@@SAPAUIDirect3DSurface8@@XZ,0x00904FF0,pin; reconstruction ABI alias for the stale Generals D3D8 declaration; the matched D3D9 front-buffer body and capture surface slots establish the target

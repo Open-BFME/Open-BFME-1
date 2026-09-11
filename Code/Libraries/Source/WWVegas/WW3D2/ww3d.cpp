@@ -128,7 +128,43 @@
 #include "shdlib.h"
 
 #ifndef _UNIX
-#include "framgrab.h"
+// BFME replaced the inherited Generals frame-grabber layout with a buffered
+// AVI implementation.  Keep this ABI correction scoped to the owning TU: the
+// shared reference header intentionally remains the unmodified Generals copy.
+class FrameGrabClass
+{
+public:
+	enum MODE
+	{
+		RAW,
+		AVI
+	};
+
+	FrameGrabClass(const char *filename, MODE mode, int width, int height,
+		int bitdepth, float framerate);
+	FrameGrabClass(const char *filename, int width, int height, int bitdepth,
+		float framerate, int buffer_count, bool compressed);
+	virtual ~FrameGrabClass();
+
+	long *GetBuffer();
+	float GetFrameRate() { return FrameRate; }
+
+protected:
+	// Address-derived spelling: no surviving named caller proves the original.
+	void Rva00958570_Flush_Buffered_Frames();
+
+	int FrameSize;
+	union
+	{
+		int BufferCount;
+		float FrameRate;
+	};
+	long *Buffer;
+	int WrittenFrames;
+	int BufferedFrames;
+	void *AVIFile;
+	void *AVIStream;
+};
 #endif
 
 
@@ -1868,53 +1904,156 @@ bool WW3D::Is_Movie_Ready()
  *   5/19/99    GTH : Created.                                                                 *
  *   2/26/2001  hy : Updated to dx8                                                            *
  *=============================================================================================*/
-// ?Update_Movie_Capture@WW3D@@ present-unmatched
+class BfmeMovieCaptureSurface9
+{
+public:
+	virtual void slot00(void);
+	virtual void slot04(void);
+	virtual unsigned long __stdcall Release(void);
+	virtual void slot0c(void);
+	virtual void slot10(void);
+	virtual void slot14(void);
+	virtual void slot18(void);
+	virtual void slot1c(void);
+	virtual void slot20(void);
+	virtual void slot24(void);
+	virtual void slot28(void);
+	virtual void slot2c(void);
+	virtual long __stdcall GetDesc(void *desc);
+	virtual long __stdcall LockRect(void *locked_rect, const RECT *rect, unsigned long flags);
+};
+
+class BfmeAwakenLog
+{
+public:
+	virtual BfmeAwakenLog *slot00(int value);
+	virtual void slot04(void);
+	virtual void slot08(void);
+	virtual void slot0c(void);
+	virtual void slot10(void);
+	virtual void slot14(void);
+	virtual void slot18(void);
+	virtual void slot1c(void);
+	virtual void slot20(void);
+	virtual void slot24(void);
+	virtual void slot28(void);
+	virtual void slot2c(void);
+	virtual void slot30(void);
+	virtual void slot34(void);
+	virtual BfmeAwakenLog *slot38(const char *value);
+	virtual void slot3c(void);
+	virtual void slot40(void);
+	virtual void slot44(void);
+	virtual void slot48(void);
+	virtual BfmeAwakenLog *slot4c(int value);
+};
+
+class BfmeAwakenDebug
+{
+public:
+	virtual void slot00(void);
+	virtual void slot04(void);
+	virtual void slot08(void);
+	virtual void slot0c(void);
+	virtual void slot10(void);
+	virtual void slot14(void);
+	virtual void slot18(void);
+	virtual void slot1c(void);
+	virtual void slot20(void);
+	virtual void slot24(void);
+	virtual void slot28(void);
+	virtual void slot2c(void);
+	virtual void slot30(void);
+	virtual void slot34(void);
+	virtual void slot38(void);
+	virtual void slot3c(void);
+	virtual void slot40(void);
+	virtual void slot44(void);
+	virtual void slot48(void);
+	virtual void slot4c(void);
+	virtual void slot50(void);
+	virtual void slot54(void);
+	virtual void slot58(void);
+	virtual void slot5c(void);
+	virtual void slot60(void);
+	virtual void slot64(void);
+	virtual void slot68(void);
+	virtual BfmeAwakenLog *slot6c(int first, int second);
+};
+
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void _bfme_debugRecordCallsite(int kind);
+
+static __forceinline BfmeMovieCaptureSurface9 *Bfme_Get_DX9_Front_Buffer(void)
+{
+	// The shared WW3D header retains the Generals D3D8 return type.  BFME's
+	// implementation and surface vtable are D3D9, as the matched callee proves.
+	return (BfmeMovieCaptureSurface9 *)DX8Wrapper::_Get_DX8_Front_Buffer();
+}
+
+static __forceinline void BfmeMovieCaptureErrorCode(int result)
+{
+	if (result != 0)
+	{
+		_bfme_debugRecordCallsite(1);
+		TheBfmeAwakenDebug->slot60();
+		TheBfmeAwakenDebug->slot6c(0, 0)->slot38("DX8 error ")
+			->slot00(result)->slot4c(1);
+	}
+}
+
 void WW3D::Update_Movie_Capture( void )
 {
 #ifdef _WINDOWS
-	WWASSERT( IsCapturing);
-	WWPROFILE("WW3D::Update_Movie_Capture");
-	WWDEBUG_SAY(( "Updating\n"));
-
-		// Lock front buffer and copy
-
-	IDirect3DSurface8 *fb;
-	fb=DX8Wrapper::_Get_DX8_Front_Buffer();
-	D3DSURFACE_DESC desc;
-	fb->GetDesc(&desc);
+	char *volatile image = (char *)Movie->GetBuffer();
+	BfmeMovieCaptureSurface9 *fb = Bfme_Get_DX9_Front_Buffer();
+	char desc[32];
+	fb->GetDesc(desc);
 
 	RECT bounds;
-	GetWindowRect(_Hwnd,&bounds);
+	GetWindowRect(_Hwnd, &bounds);
 
-	D3DLOCKED_RECT lrect;
-
-	DX8_ErrorCode(fb->LockRect(&lrect,&bounds,D3DLOCK_READONLY));
-
-	unsigned int x,y,index,index2,width,height;
-
-	width=bounds.right-bounds.left;
-	height=bounds.bottom-bounds.top;
-
-	char *image=(char *)Movie->GetBuffer();
-
-	for (y=0; y<height; y++)
+	struct BfmeMovieLockedRect
 	{
-		for (x=0; x<width; x++)
-		{
-			// index for image
-			index=3*(x+(height-y-1)*width);
-			// index for fb
-			index2=y*lrect.Pitch+4*x;
+		long pitch;
+		void *bits;
+	} locked;
 
-			image[index]=*((char *) lrect.pBits + index2+0);
-			image[index+1]=*((char *) lrect.pBits + index2+1);
-			image[index+2]=*((char *) lrect.pBits + index2+2);
+	BfmeMovieCaptureErrorCode(fb->LockRect(&locked, &bounds, 0x10));
+
+	unsigned int width, height;
+	width = bounds.right - bounds.left;
+	height = bounds.bottom - bounds.top;
+
+	unsigned int y = 0;
+	if (height != 0)
+	{
+		do
+		{
+			unsigned int destination_index = 3 * ((height - y - 1) * width);
+			unsigned int source_index = y * locked.pitch;
+			if (width > 0)
+			{
+				destination_index += (unsigned int)image + 1;
+				unsigned int remaining = width;
+				do
+				{
+					char pixel = *((char *)locked.bits + source_index);
+					*((char *)destination_index - 1) = pixel;
+					pixel = *((char *)locked.bits + source_index + 1);
+					*(char *)destination_index = pixel;
+					pixel = *((char *)locked.bits + source_index + 2);
+					*((char *)destination_index + 1) = pixel;
+					destination_index += 3;
+					source_index += 4;
+				} while (--remaining != 0);
+			}
+			++y;
 		}
+		while (y < height);
 	}
 
 	fb->Release();
-
-	Movie->Grab(image);
 #endif
 }
 
