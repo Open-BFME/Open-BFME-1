@@ -59,8 +59,7 @@ public:
 		ObjectPtrHash::iterator it = m_objects.find( id );
 		if ( it == m_objects.end() )
 			return 0;
-		Object *object = (*it).second;
-		return object;
+		return (*it).second;
 	}
 
 	char m_bfmeHead[ 0xb0 ];
@@ -137,8 +136,8 @@ Bool BfmeHordeContainPoll::bfmeAllMembersReady( void )
 		member = TheGameLogic->findObjectByID( id );
 		if ( member != 0 )
 		{
-			BfmeMemberSlotState *state = bfmeGetSlotState( member );
 			BfmeMemberQueue *queue = member->m_bfmeAI->m_bfmeSlotState->m_bfmeQueue;
+			BfmeMemberSlotState *state = bfmeGetSlotState( member );
 
 			anyResolved = true;
 
