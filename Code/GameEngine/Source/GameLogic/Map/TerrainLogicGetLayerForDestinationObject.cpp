@@ -1,9 +1,6 @@
-// ?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z
-// partial score=0.9 date=2026-09-09
 // cl: /DNDEBUG /MD /EHsc
-// TerrainLogic::getLayerForDestination(Object *, Coord3D const *), retail 0x001A7C20.
-// The object-aware overload is identified by its matched callers and the
-// TerrainLogic vtable slice used by the bridge walk.
+//
+// Retail 0x001A7C20: TerrainLogic::getLayerForDestination(Object *, Coord3D const *).
 
 #include <math.h>
 
@@ -18,6 +15,7 @@ enum PathfindLayerEnum
 struct Coord3D
 {
 	Coord3D(const Coord3D &other) : x(other.x), y(other.y), z(other.z) {}
+	~Coord3D() {}
 
 	Real x;
 	Real y;
@@ -105,6 +103,7 @@ class AI
 public:
 	unsigned char m_pad0[0x0C];
 	Pathfinder *m_pathfinder;
+	Pathfinder *pathfinder() { return m_pathfinder; }
 };
 
 extern AI *TheAI;
@@ -136,12 +135,12 @@ PathfindLayerEnum TerrainLogic::getLayerForDestination(Object *object,
 	{
 		AI *ai;
 
-		if (TheAI->m_pathfinder->bfmeAnyBridgeAt(position))
+		if (TheAI->pathfinder()->bfmeAnyBridgeAt(position))
 			return (PathfindLayerEnum)16;
 
 		ai = TheAI;
-		if (ai && ai->m_pathfinder)
-			return (PathfindLayerEnum)TheAI->m_pathfinder->
+		if (ai && ai->pathfinder())
+			return (PathfindLayerEnum)TheAI->pathfinder()->
 				bfmeLayerForPosition(object, Coord3D(*position));
 	}
 
