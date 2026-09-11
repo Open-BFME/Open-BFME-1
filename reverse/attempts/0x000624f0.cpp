@@ -1,5 +1,5 @@
 // ?parseMod@@YAHQAPADH@Z
-// partial score=0.82 date=2026-09-09
+// partial score=0.88 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 #include <string.h>
@@ -19,13 +19,16 @@ struct Rva000624F0StatHolder
 	Rva000624F0Stat m_stat;
 };
 
-extern "C" int __cdecl _stat(const char *, Rva000624F0Stat *);
+extern "C" int __cdecl stat(const char *, Rva000624F0Stat *);
 
 template <class T> class StringBase
 {
-protected:
+public:
 	T *m_data;
 	void concat(const T *text, int length);
+	void set(const StringBase<T> &text);
+	bool startsWith(const T *text) const;
+	bool endsWith(const T *text) const;
 };
 
 class BFMERetailAsciiString : public StringBase<char>
@@ -41,9 +44,6 @@ public:
 	}
 
 	void format(BFMERetailAsciiString format, ...);
-	void set(const BFMERetailAsciiString &text);
-	bool startsWith(const char *text) const;
-	bool endsWith(const char *text) const;
 	__forceinline void concat(char text)
 	{
 		volatile char separator[4];
@@ -52,10 +52,26 @@ public:
 	}
 };
 
+// Minimal by-value return type for GlobalData::getPath_UserData: distinct
+// mangled name from BFMERetailAsciiString, matching the already-landed callee.
+class AsciiString
+{
+public:
+	~AsciiString(void);
+
+	const char *str(void) const
+	{
+		return m_data != 0 ? m_data + 8 : (const char *)0x0107388b;
+	}
+
+private:
+	char *m_data;
+};
+
 class GlobalData
 {
 public:
-	BFMERetailAsciiString getPath_UserData(void) const;
+	AsciiString getPath_UserData(void) const;
 
 private:
 	unsigned char m_pad0[0xdc0];
@@ -96,7 +112,7 @@ int __cdecl parseMod(char *args[], int num)
 		if (!TheLocalFileSystem->doesFileExist(modPath.str()))
 			return 2;
 
-		if (_stat(modPath.str(), &statHolder.m_stat) != 0)
+		if (stat(modPath.str(), &statHolder.m_stat) != 0)
 			return 2;
 
 		if (statHolder.m_stat.st_mode & 0x4000)
