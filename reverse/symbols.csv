@@ -87033,10 +87033,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-??$__uninitialized_copy@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0000F5CE,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x003F7A20 generic copy
-??$__copy_backward_ptrs@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0004368A,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x00450190 generic copy
-??$uninitialized_fill_n@PAUICoord2D@@IU1@@_STL@@YAPAUICoord2D@@PAU1@IABU1@@Z,0x000278B3,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x004501E0 generic fill
-?_M_insert_overflow@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEXPAUICoord2D@@ABU3@ABU__false_type@2@I_N@Z,0x000061B8,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact vector member helper body is the existing 0x003F8EF0 generic 8-byte overflow
 ?updateLadderDetails@@YAXHPAVGameWindow@@0@Z,0x004D7E60,authentic ZH static signature confirmed by matched PopupLadderSelect callers and retail ECX=listbox EDX=static-text stack=id ABI
 ?EncryptString@@YAPBDPBD@Z,0x0000ED86,route=0x00104760; matched PopupLadderSelectSystem call reaches retail ILT 0x0000ED86 and official source proves the matched const-qualified EncryptString body at 0x00104760
 ?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
