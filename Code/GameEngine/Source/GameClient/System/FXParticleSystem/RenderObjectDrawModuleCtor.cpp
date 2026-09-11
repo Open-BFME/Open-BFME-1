@@ -1,20 +1,20 @@
-// ??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@1@PBX@Z
-// partial score=0.99 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 
 // RenderObjectDrawModule is reached by the named DefaultParticleModule<5>
-// forwarding constructor at 0x005E59C0 and by the RenderObjectDraw concrete
-// module factory at 0x005E89C0.  The retail body is 267 bytes at 0x005F7820.
-// The primary base constructor route is the established 0x00041CBD thunk;
-// the three final vftable stores identify this as the RenderObjectDraw module
-// base rather than an address-only forwarding class.
+// forwarding constructor at 0x005E59C0 and by the concrete module factory at
+// 0x005E89C0.  Retail completes the three destructible string members before
+// the scalar defaults; keeping that source-level split reproduces its unwind
+// state transition while preserving the authentic field layout.
 
 template <typename Character>
 class StringBase
 {
 public:
+	StringBase() : m_data(0) {}
+	~StringBase();
 	void set(const StringBase &other);
 
+private:
 	void *m_data;
 };
 
@@ -48,31 +48,25 @@ class TrackingPtr
 {
 };
 
-extern "C" char RenderObjectDrawModuleInfo_vtbl;
-
-class __declspec(novtable) RenderObjectDrawModuleInfo
+class RenderObjectDrawModuleInfo
 {
 public:
-	RenderObjectDrawModuleInfo()
+	__forceinline RenderObjectDrawModuleInfo()
+		: m_name0(), m_name1(), m_name2()
 	{
-		*reinterpret_cast<char *volatile *>(this) = &RenderObjectDrawModuleInfo_vtbl;
-		*reinterpret_cast<unsigned int volatile *>(&m_name0) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_name1) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_name2) = 0;
-		*reinterpret_cast<unsigned char volatile *>(&m_flag) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value00) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value01) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value02) = 8;
-		*reinterpret_cast<unsigned int volatile *>(&m_value10) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value11) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value12) = 8;
-		*reinterpret_cast<unsigned int volatile *>(&m_value20) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value21) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_value22) = 8;
-		*reinterpret_cast<unsigned char volatile *>(&m_enabled) = 0;
-		*reinterpret_cast<unsigned int volatile *>(&m_type) = 0;
+		m_flag = false;
+		m_value00 = 0;
+		m_value01 = 0;
+		m_value02 = 8;
+		m_value10 = 0;
+		m_value11 = 0;
+		m_value12 = 8;
+		m_value20 = 0;
+		m_value21 = 0;
+		m_value22 = 8;
+		m_enabled = false;
+		m_type = 0;
 	}
-
 	virtual ~RenderObjectDrawModuleInfo();
 
 	unsigned char m_enabled;
@@ -91,7 +85,6 @@ public:
 	unsigned int m_value21;
 	unsigned int m_value22;
 };
-
 class RenderObjectDrawModule
 	: public ::BfmeRMiddle, public RenderObjectDrawModuleInfo
 {
@@ -102,6 +95,7 @@ public:
 	unsigned int m_field58;
 };
 
+// ??0RenderObjectDrawModule@FXParticleSystem@@QAE@AAV?$TrackingPtr@VParticleSystem@FXParticleSystem@@@1@PBX@Z
 RenderObjectDrawModule::RenderObjectDrawModule(
 	TrackingPtr<ParticleSystem> &system, const void *source)
 	: ::BfmeRMiddle(&system, const_cast<void *>(source)),
