@@ -1023,6 +1023,7 @@ name,address,notes
 ??$__copy_backward_ptrs@PAUGen_t_003c1800_p2pod@@PAU1@@_STL@@YAPAUGen_t_003c1800_p2pod@@PAU1@00ABU__false_type@0@@Z,0x0000E7E1,"Independent full retail helper review: 2-byte copy/backward/fill/placement-fill and existing 3C16A0 overflow; RVA-derived POD type, no guessed game owner"
 ??$__copy_backward_ptrs@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0004368A,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x00450190 generic copy
 ??$__copy_float_and_fill@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@HHGGG@Z,0x0083C420,retail 0x0083C210 passes wchar range wide output iterator flags width fill and widened signs directly to this adjacent 300-byte helper;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
+??$__copy_integer_and_fill@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PBDHV10@HHDDD@Z,0x00835310,STLport 4.5.3 num_put boolalpha caller at 0x00838FE0 passes string pointer and length plus output iterator flags width fill and dummy sign chars
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75C0,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE30,gen-tgrid payload member
@@ -1746,7 +1747,6 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@PAUGen_t_000f9ae0_m4pod@@U1@V?$allocator@UGen_t_000f9ae0_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_000f9ae0_m4pod@@@1@PAUGen_t_000f9ae0_m4pod@@@Z,0x000F9420,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_000fd2b0_p16cd@@U1@V?$allocator@UGen_t_000fd2b0_p16cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_000fd2b0_p16cd@@@1@PAUGen_t_000fd2b0_p16cd@@@Z,0x000FCD20,gen-tgrid payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_000fd360_m4pod@@U1@V?$allocator@UGen_t_000fd360_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_000fd360_m4pod@@@1@PAUGen_t_000fd360_m4pod@@@Z,0x000FCCD0,family-emit payload member
-??0?$_STLP_alloc_proxy@PAUGeometryShape@@U1@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV?$allocator@UGeometryShape@@@1@PAUGeometryShape@@@Z,0x00026B9D,route=0x000FCCD0; exact GeometryShape vector base constructor calls this allocator proxy through the retail ILT
 ??0?$_STLP_alloc_proxy@PAUGen_t_000fd3f0_m4pod@@U1@V?$allocator@UGen_t_000fd3f0_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_000fd3f0_m4pod@@@1@PAUGen_t_000fd3f0_m4pod@@@Z,0x000FCD20,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_00126350_m4pod@@U1@V?$allocator@UGen_t_00126350_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_00126350_m4pod@@@1@PAUGen_t_00126350_m4pod@@@Z,0x00124F10,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_001263a0_m4pod@@U1@V?$allocator@UGen_t_001263a0_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_001263a0_m4pod@@@1@PAUGen_t_001263a0_m4pod@@@Z,0x00124F40,family-emit payload member
@@ -1994,6 +1994,7 @@ name,address,notes
 ??0?$_STLP_alloc_proxy@PAUGen_t_007d69c0_m4pod@@U1@V?$allocator@UGen_t_007d69c0_m4pod@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_007d69c0_m4pod@@@1@PAUGen_t_007d69c0_m4pod@@@Z,0x007D65D0,family-emit payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_008ff3e0_p12cd@@U1@V?$allocator@UGen_t_008ff3e0_p12cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_008ff3e0_p12cd@@@1@PAUGen_t_008ff3e0_p12cd@@@Z,0x00753140,gen-tgrid payload member
 ??0?$_STLP_alloc_proxy@PAUGen_t_009f51f0_p8cd@@U1@V?$allocator@UGen_t_009f51f0_p8cd@@@_STL@@@_STL@@QAE@ABV?$allocator@UGen_t_009f51f0_p8cd@@@1@PAUGen_t_009f51f0_p8cd@@@Z,0x009F4AA0,gen-tgrid payload member
+??0?$_STLP_alloc_proxy@PAUGeometryShape@@U1@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV?$allocator@UGeometryShape@@@1@PAUGeometryShape@@@Z,0x00026B9D,route=0x000FCCD0; exact GeometryShape vector base constructor calls this allocator proxy through the retail ILT
 ??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00065430,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x000668C0,zhstl per-site callee copy (body proven byte-equal)
 ??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z,0x00068BE0,zhstl per-site callee copy (body proven byte-equal)
@@ -78998,6 +78999,7 @@ name,address,notes
 ?fadeQueueKey@@3IA,0xed588,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?fallback@BfmeRva49250Control@@QAEXPAVBfmeRva49250Object@@@Z,0x0003F0FD,assigned body helper for Rva00249250
 ?fallback@BfmeSubD4C@@QAE_NXZ,0x0002FE05,pin
+?falsename@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00838FC0,num_put boolalpha at 0x00838FE0 calls narrow numpunct vtable slot 5 through this exact forwarder
 ?fetch@BfmeMapEZC@@QAEPAHPAX@Z,0x00043C43,D9F50 map2 fetch ILT
 ?fetch@GameTextManager@@UAE?AVUnicodeString@@PBDPA_N@Z,0x00437f60,vtable-slot ??_7GameTextManager@@6B@ slot 10 anchors=8
 ?fetch@GenKey@@QAEHPA_N@Z,0x00009304,S3 table-lookup-with-fallback family callee (address-derived name)
@@ -79332,8 +79334,8 @@ name,address,notes
 ?forwardObj@BfmeMgr089_E5E@@QAEXPAX@Z,0x0001D0DE,pin
 ?forwardVal@BfmeMgr2B0@@QAEXPAX@Z,0x000201DA,pin
 ?frame@Rva007E4820FrameClock@@QAEHH@Z,0x007E4820,assigned helper body call for Rva007E4B80Vp6Stream
-?framesUntilNext@Rva002572A0ObjectSMCHelper@@AAEHXZ,0x00007D74,retail timer-list helper body is the existing address-derived framesUntilNext candidate at 0x00256FD0
 ?framesUntilNext@ObjectSMCHelper@@AAEHXZ,0x00007D74,ObjectSMCHelper helper called by setModelConditionState at 0x002572A0
+?framesUntilNext@Rva002572A0ObjectSMCHelper@@AAEHXZ,0x00007D74,retail timer-list helper body is the existing address-derived framesUntilNext candidate at 0x00256FD0
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
@@ -81538,6 +81540,7 @@ name,address,notes
 ?get_shade_indices@MeshGeometryClass@@IAEPAK_N@Z,0x00924600,Open-BFME5 retail MeshGeometryClass shade-index accessor pin
 ?get_vert_normals@MeshGeometryClass@@IAEPAVVector3@@_N@Z,0x00927230,BFME normal reader9274C0 calls927230; helper selects normal buffers40/44 and named VertexNorm allocation anchor
 ?getframe@AdaptiveDeltaMotionChannelClass@@AAEMKK@Z,0x00977FF0
+?getloc@BfmeIosLocaleView@_STL@@QBE?AVBfmeInlineLocale@2@XZ,0x00038E47,TU-local ABI view of ios_base::getloc; same return layout and call as canonical getloc pin; used to preserve retail inline locale release
 ?getloc@ios_base@_STL@@QBE?AVlocale@2@XZ,0x00038E47,STLport basic_ostream numeric helper callee reached by the 0x005F0120 body
 ?giveUpgrade@Object@@QAEXPBVUpgradeTemplate@@@Z,0x0001A97E
 ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z,0x0002DA5B,TEAM_UPGRADE canonical body grants the template to every team member
@@ -82496,11 +82499,11 @@ name,address,notes
 ?hasAnyBuildings@TeamPrototype@@QAE_N_N@Z,0x0003DD0C,Open-BFME5 ILT thunk to body 0x000F6FD0; ?hasAnyBuildings@Player@@QBE_N_N@Z at 0x000CDF20 forwards its flag to each prototype through it
 ?hasAnyObjects@Player@@QBE_NPBVObjectFilter@@_N@Z,0x00018016,RefundDie::onDie matched caller identifies the filtered player object query ILT
 ?hasAnyObjects@Player@@QBE_N_N@Z,0x0002BB8E,ILT thunk -> body 0x000CE0B0; ZH hasAnyObjects grew one arg in BFME (call site pushes 0); arg type unproven
-?hasAnyObjects@Team@@QBE_NPBVObjectFilter@@_N@Z,0x0003CCD1,route=0x000F4B60; matched RefundDie::onDie filtered-player call chain forwards ObjectFilter const* and Bool through TeamPrototype to this Team body
 ?hasAnyObjects@Team@@QAE_N_N@Z,0x0001478B,Team::hasAnyObjects(Bool); ILT to 0x000F4CF0; caller evaluateIsDestroyed 0x003245A0
+?hasAnyObjects@Team@@QBE_NPBVObjectFilter@@_N@Z,0x0003CCD1,route=0x000F4B60; matched RefundDie::onDie filtered-player call chain forwards ObjectFilter const* and Bool through TeamPrototype to this Team body
 ?hasAnyObjects@Team@@QBE_N_N@Z,0x0001478B,Open-BFME5 ILT thunk to body 0x000F4CF0; ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z at 0x000F7170 passes its flag through to each team on the instance list
-?hasAnyObjects@TeamPrototype@@QBE_NPBVObjectFilter@@_N@Z,0x0002ACC5,route=0x000F70C0; matched RefundDie::onDie calls Player filtered hasAnyObjects which forwards the same two arguments through this ILT
 ?hasAnyObjects@TeamPrototype@@QAE_N_N@Z,0x00021D96,Open-BFME5 ILT; ?hasAnyObjects@Player@@QBE_N_N@Z at 0x000CE0B0 forwards its flag to each prototype through it
+?hasAnyObjects@TeamPrototype@@QBE_NPBVObjectFilter@@_N@Z,0x0002ACC5,route=0x000F70C0; matched RefundDie::onDie calls Player filtered hasAnyObjects which forwards the same two arguments through this ILT
 ?hasAnyShortcutSpecialPower@BfmeShortcutPlayer@@QAEHXZ,0x0002331C,Open-BFME5 ILT reached by ControlBar::showSpecialPowerShortcut; returns a 32-bit value (retail tests eax not al) so it is spelled on a view; address from the donor and byte-proved by the rel32 in that call
 ?hasAnyShortcutSpecialPower@Player@@QAEHXZ,0x0002331C,ILT thunk to the local player shortcut special power check
 ?hasAnyUnits@Player@@QBE_NXZ,0x000146FF,ILT thunk -> body 0x000CE070; sits at ZH's hasAnyUnits site in hasSinglePlayerBeenDefeated
@@ -84908,6 +84911,7 @@ name,address,notes
 ?trim@?$StringBase@G@@AAEXXZ,0x00888ED0,callee of SkirmishPreferences::getUserName 0x0009FA60
 ?trim@AsciiString@@QAEXXZ,0x00888CA0,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
+?truename@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00838FA0,num_put boolalpha at 0x00838FE0 calls narrow numpunct vtable slot 4 through this exact forwarder
 ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
 ?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
 ?tryQuery@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60QueryObject@@MPAUCoord3D@@@Z,0x00148800,parent raw ILT and complete selector call-site ABI verified; actual body target
