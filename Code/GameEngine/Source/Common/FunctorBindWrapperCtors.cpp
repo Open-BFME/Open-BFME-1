@@ -87,6 +87,17 @@ struct FunctorBinding
 	FunctorMethod  m_method;
 };
 
+// The Objectives/PlayerStatus constructor uses the shared APT holder through
+// a distinct binding overload.  Its caller at 0x0052C660 constructs this
+// four-dword payload and immediately passes the resulting common holder to
+// _bfme_AptGameWindow::_bfme_showAptScreen.
+struct BfmeObjectivesFunctorBinding
+{
+	FunctorTarget *m_target;
+	unsigned int   m_refCount;
+	FunctorMethod  m_method;
+};
+
 class FunctorWrapperHead
 {
 public:
@@ -225,7 +236,36 @@ BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050E1D0FunctorHolder, Rva0050DAE0FunctorWrap
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050E240FunctorHolder, Rva0050DB30FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050E2B0FunctorHolder, Rva0050DB80FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050F840FunctorHolder, Rva0050E8B0FunctorWrapper )
-BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050F8B0FunctorHolder, Rva0050E900FunctorWrapper )
+
+class Rva0050F8B0FunctorHolder
+{
+public:
+	Rva0050F8B0FunctorHolder( FunctorBinding binding );
+	Rva0050F8B0FunctorHolder( BfmeObjectivesFunctorBinding binding );
+
+	union
+	{
+		Rva0050E900FunctorWrapper *m_ptr;
+		Rva0052B6E0FunctorWrapper *m_objectivesPtr;
+	};
+};
+
+Rva0050F8B0FunctorHolder::Rva0050F8B0FunctorHolder( FunctorBinding binding )
+{
+	m_ptr = new Rva0050E900FunctorWrapper( binding );
+	if ( m_ptr != 0 )
+		m_ptr->m_refCount++;
+}
+
+Rva0050F8B0FunctorHolder::Rva0050F8B0FunctorHolder(
+	BfmeObjectivesFunctorBinding binding )
+{
+	m_objectivesPtr = new Rva0052B6E0FunctorWrapper(
+		*(const FunctorBinding *)(const void *)&binding );
+	if ( m_objectivesPtr != 0 )
+		m_objectivesPtr->m_refCount++;
+}
+
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0050F920FunctorHolder, Rva0050E950FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva00512B70FunctorHolder, Rva005119A0FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva00512BE0FunctorHolder, Rva005119F0FunctorWrapper )
@@ -237,7 +277,6 @@ BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0051EE20FunctorHolder, Rva0051E430FunctorWrap
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0051EE90FunctorHolder, Rva0051E480FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0051EF00FunctorHolder, Rva0051E4D0FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0051EF70FunctorHolder, Rva0051E520FunctorWrapper )
-BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0052BCE0FunctorHolder, Rva0052B6E0FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0052BD50FunctorHolder, Rva0052B730FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0052BDC0FunctorHolder, Rva0052B780FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva00539A60FunctorHolder, Rva00538B80FunctorWrapper )
@@ -262,4 +301,3 @@ BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva0057CA50FunctorHolder, Rva0057A0C0FunctorWrap
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva005910D0FunctorHolder, Rva0058D220FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva00591140FunctorHolder, Rva0058D270FunctorWrapper )
 BFME_FUNCTOR_HOLDER_FROM_VALUE( Rva00599F70FunctorHolder, Rva00599630FunctorWrapper )
-

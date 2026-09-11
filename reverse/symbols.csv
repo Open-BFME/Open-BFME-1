@@ -3353,6 +3353,7 @@ name,address,notes
 ??0Rva004C1590Base@@QAE@ABV0@@Z,0x0003FAF8,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x004C1590
 ??0Rva0050F840FunctorHolder@@QAE@UFunctorBinding@@@Z,0x0003C9D9,DisconnectScreen InitGadgets binding calls the established holder constructor through this ILT
 ??0Rva0050F840FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x0050F840,address-derived per FunctorBindConstructors.cpp convention (no RTTI for the template): news the 0x18-byte functor wrapper with vtable 0x01104D9C (slot 1 = ?invoke@Rva0050E8F0FunctorInvoke) fills object/ctx/code/delta at +8..+0x14 stores it through ecx and addrefs; sole caller ctor 0x0050FA55 binding DisconnectScreen::InitGadgets; ILT 0x0003C9D9
+??0Rva0050F8B0FunctorHolder@@QAE@UBfmeObjectivesFunctorBinding@@@Z,0x0000D48B,route=0x0052BCE0; Objectives and PlayerStatus constructor 0x0052C660 calls this canonical overload through the retail ILT
 ??0Rva0050F8B0FunctorHolder@@QAE@UFunctorBinding@@@Z,0x000180C5,DisconnectScreen fscommand bindings call the established holder constructor through this ILT
 ??0Rva0050F8B0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x0050F8B0,byte-identical to 0x0050F840 except vtable 0x01104DA8 (slot 1 = ?invoke@Rva0050E940FunctorInvoke); 4 callers in the ctor 0x0050FAB1 0x0050FB0C 0x0050FB67 0x0050FBC2 binding the fscommand handlers OnInitialized Quit Kick Chat::OnBttnEnterText; ILT 0x000180C5
 ??0Rva00537630String@@QAE@ABV0@@Z,0x00832150,Open-BFME5 the string copy constructor the accessor at 0x00537630 calls
