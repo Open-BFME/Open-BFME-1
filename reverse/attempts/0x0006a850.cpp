@@ -11,8 +11,10 @@
 
 struct Rva0006AA90Element
 {
-	float m_key;
-	int m_value[3];
+	float m_time;
+	float m_value;
+	int m_inTangent;
+	int m_outTangent;
 };
 
 namespace _STL
@@ -80,7 +82,7 @@ Rva0006AA90InsertResult Rva0006AA90Vector::insertUnique(
 	Rva0006AA90Element *finish = m_finish;
 	Rva0006AA90Element *position = (Rva0006AA90Element *)bfmeCurveFind(
 		start, finish, (void *)&value, code, 0);
-	if (position == finish || value.m_key < position->m_key)
+	if (position == finish || value.m_time < position->m_time)
 	{
 		position = (Rva0006AA90Element *)insert(position, &value);
 		duplicate = false;
