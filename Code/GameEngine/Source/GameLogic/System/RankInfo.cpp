@@ -146,21 +146,39 @@ void RankInfoStore::init()
 }
 
 //-----------------------------------------------------------------------------
-// ?reset@RankInfoStore@@UAEXXZ present-unmatched
+// BFME's reset uses the original three-field Overridable layout and deleting
+// destructor, before Zero Hour's memory-pool deleteInstance path.
+class BfmeRankOverrideView
+{
+public:
+	virtual ~BfmeRankOverrideView();
+
+	BfmeRankOverrideView *m_nextOverride;
+	bool m_isOverride;
+
+	BfmeRankOverrideView *deleteOverrides()
+	{
+		if (m_isOverride)
+		{
+			delete this;
+			return NULL;
+		}
+		if (m_nextOverride)
+			m_nextOverride = m_nextOverride->deleteOverrides();
+		return this;
+	}
+};
+
 void RankInfoStore::reset()
 {
-	// nope.
-	//m_rankInfos.clear();
-
 	for (RankInfoVec::iterator it = m_rankInfos.begin(); it != m_rankInfos.end(); /*++it*/)
 	{
-		RankInfo* ri = *it;
+		BfmeRankOverrideView *ri = (BfmeRankOverrideView *)*it;
 		if (ri)
 		{
-			Overridable* temp = ri->deleteOverrides();
+			BfmeRankOverrideView *temp = ri->deleteOverrides();
 			if (!temp)
 			{
-				DEBUG_CRASH(("hmm, should not be possible for RankInfo"));
 				it = m_rankInfos.erase(it);
 			}
 			else
