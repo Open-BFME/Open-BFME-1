@@ -1,5 +1,5 @@
 // ?bfmeInitVLB@BfmeThingVLB@@QAEPAV1@EPAVBfmeOwnerUNC@@@Z
-// partial score=0.82 date=2026-09-08
+// partial score=0.92 date=2026-09-11
 // cl: /O2 /GX-
 // Retail 0x00803820: BfmeThingVLB initialisation.
 
@@ -28,7 +28,7 @@ public:
 
 private:
 	void *m_vft;
-	void *m_vftSecondary;
+	void * volatile m_vftSecondary;
 	unsigned char m_flag;
 	unsigned char m_padding[3];
 	BfmeOwnerUNC *m_owner;

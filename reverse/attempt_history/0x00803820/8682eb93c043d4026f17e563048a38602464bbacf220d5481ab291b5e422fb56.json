@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8682eb93c043d4026f17e563048a38602464bbacf220d5481ab291b5e422fb56",
+  "symbol": "?bfmeInitVLB@BfmeThingVLB@@QAEPAV1@EPAVBfmeOwnerUNC@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?bfmeInitVLB@BfmeThingVLB@@QAEPAV1@EPAVBfmeOwnerUNC@@@Z\r\n// partial score=0.92 date=2026-09-11\r\n// cl: /O2 /GX-\r\n// Retail 0x00803820: BfmeThingVLB initialisation.\r\n\r\n#include <new>\r\n\r\nclass BfmeOwnerUNC\r\n{\r\n};\r\n\r\nclass BfmeThingUNC\r\n{\r\npublic:\r\n\tBfmeThingUNC(int value, BfmeOwnerUNC *owner);\r\n};\r\n\r\nclass Gen007F0130\r\n{\r\npublic:\r\n\tstatic void *operator new(unsigned int size);\r\n};\r\n\r\nclass BfmeThingVLB\r\n{\r\npublic:\r\n\tBfmeThingVLB *bfmeInitVLB(unsigned char flag, BfmeOwnerUNC *owner);\r\n\r\nprivate:\r\n\tvoid *m_vft;\r\n\tvoid * volatile m_vftSecondary;\r\n\tunsigned char m_flag;\r\n\tunsigned char m_padding[3];\r\n\tBfmeOwnerUNC *m_owner;\r\n\tint m_field10;\r\n\tint m_field14;\r\n\tvoid *m_inner;\r\n};\r\n\r\nBfmeThingVLB *BfmeThingVLB::bfmeInitVLB(unsigned char flag, BfmeOwnerUNC *owner)\r\n{\r\n\tm_vftSecondary = (void *)0x0112B9C0;\r\n\tm_vft = (void *)0x0112C738;\r\n\tm_vftSecondary = (void *)0x0112C728;\r\n\tm_field10 = 0;\r\n\tm_field14 = 0;\r\n\tm_flag = flag;\r\n\tm_padding[0] = 0;\r\n\tm_owner = owner;\r\n\tvoid *raw = Gen007F0130::operator new(0x194);\r\n\tm_inner = raw != 0 ?\r\n\t\t(void *)new (raw) BfmeThingUNC((int)this, owner) : (void *)0;\r\n\treturn this;\r\n}\r\n"
+}
