@@ -1,8 +1,8 @@
-name: Twice-daily BFME progress
+name: Daily BFME progress
 
 on:
   schedule:
-    - cron: '0 8,18 * * *'
+    - cron: '37 8 * * *'
       timezone: America/New_York
   workflow_dispatch:
 
@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   update:
+    if: github.repository == 'Open-BFME/Open-BFME-1'
     runs-on: ubuntu-latest
     permissions:
       contents: write
