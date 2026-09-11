@@ -1,11 +1,8 @@
-// ??0Rva0061A5F0@@QAE@ABVAsciiString@@@Z
-// partial score=0.97 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: the destructor at 0x0061A5F0 (312 B) and its paired
-// constructor at 0x0061A9A0 (314 B), both on the same non-polymorphic
-// 0x98-byte aggregate: thirteen BFMERetailAsciiString members, three
-// opaque 0xC-byte vector-like members, and one BigBlockReleases-style
-// vector holder (elemsize 8, threshold 128) at +0x40/+0x44/+0x48.
+// The matched destructor at 0x0061A5F0 and the owning Living World region
+// constructor at 0x0061AF80 establish this non-polymorphic 0x98-byte field.
+
+#include <new>
 
 namespace _STL
 {
@@ -28,42 +25,73 @@ public:
 }
 
 class AsciiString;
+class BFMERetailAsciiString;
 
-class BFMERetailAsciiString
+template <typename T>
+class StringBase
 {
 public:
-	BFMERetailAsciiString() : m_data( 0 ) {}
-	BFMERetailAsciiString( const char *text );
-	BFMERetailAsciiString( const AsciiString &other );
+	StringBase() : m_data( 0 ) {}
+	friend class AsciiString;
+	friend class BFMERetailAsciiString;
+
+private:
+	StringBase( const T *text );
+	StringBase( const StringBase &other );
+	void releaseBuffer( void );
+
+	void *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString() : StringBase<char>() {}
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	BFMERetailAsciiString( const AsciiString &other )
+		: StringBase<char>( *(const StringBase<char> *)&other ) {}
 
 	~BFMERetailAsciiString()
 	{
 		releaseBuffer();
 	}
 
-	void releaseBuffer( void );
+	void releaseBuffer( void )
+	{
+		StringBase<char>::releaseBuffer();
+	}
 
-private:
-	char *m_data;
 };
 
-class AttributeModifierAuraUpdateModuleDataMemberB
+class Rva003BA9C0Range
 {
 public:
-	AttributeModifierAuraUpdateModuleDataMemberB() : m_begin( 0 ), m_end( 0 ), m_capacity( 0 ) {}
-	~AttributeModifierAuraUpdateModuleDataMemberB();
+	Rva003BA9C0Range() : m_begin( 0 ), m_end( 0 ), m_capacity( 0 ) {}
+	~Rva003BA9C0Range();
 
 	void clear( void )
 	{
-		erase( m_begin, m_end );
+		assign( m_begin, m_end );
 	}
 
-private:
-	void *erase( void *first, void *last );
+	public:
+	void assign( void *first, void *last );
 
+	private:
 	void *m_begin;
 	void *m_end;
 	void *m_capacity;
+};
+
+class Rva0061A5F0StringAt08 : public BFMERetailAsciiString
+{
+public:
+	Rva0061A5F0StringAt08( const char *text )
+		: BFMERetailAsciiString( text ) {}
 };
 
 struct Rva0061A5F0Elem8
@@ -99,7 +127,7 @@ public:
 private:
 	BFMERetailAsciiString m_str00;
 	BFMERetailAsciiString m_str04;
-	BFMERetailAsciiString m_str08;
+	Rva0061A5F0StringAt08 m_str08;
 	BFMERetailAsciiString m_str0C;
 	BFMERetailAsciiString m_str10;
 	BFMERetailAsciiString m_str14;
@@ -108,13 +136,13 @@ private:
 	BFMERetailAsciiString m_str20;
 	BFMERetailAsciiString m_str24;
 	volatile unsigned int m_unreconstructed28;
-	AttributeModifierAuraUpdateModuleDataMemberB m_member2C;
+	Rva003BA9C0Range m_member2C;
 	BFMERetailAsciiString m_str38;
 	BFMERetailAsciiString m_str3C;
 	Rva0061A5F0VectorHolder m_vector40;
 	unsigned char m_flag4C;
-	AttributeModifierAuraUpdateModuleDataMemberB m_member50;
-	AttributeModifierAuraUpdateModuleDataMemberB m_member5C;
+	Rva003BA9C0Range m_member50;
+	Rva003BA9C0Range m_member5C;
 	int m_value68;
 	int m_value6C;
 	unsigned char m_value70;

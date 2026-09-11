@@ -12,33 +12,11 @@ typedef float Real;
 class Team;
 class Object;
 
-class BfmeStringArgBase
-{
-	friend class BfmeAsciiStringArg;
-
-private:
-	BfmeStringArgBase(const BfmeStringArgBase &other);
-	~BfmeStringArgBase();
-};
-
-class BfmeAsciiStringArg
-{
-public:
-	BfmeAsciiStringArg(const AsciiString &that)
-	{
-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
-			*(const BfmeStringArgBase *)&that);
-	}
-	~BfmeAsciiStringArg();
-
-private:
-	char *m_text;
-};
-
 class Overridable
 {
 public:
 	virtual ~Overridable();
+	const Overridable *getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -159,40 +137,20 @@ public:
 	virtual void slot14() = 0;
 	virtual void slot15() = 0;
 	virtual void slot16() = 0;
-	virtual Team *getTeamNamed(BfmeAsciiStringArg name, Bool exact) = 0;
+	virtual Team *getTeamNamed(AsciiString name, Bool exact) = 0;
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern void j_00001140();
-extern void j_000022bb();
-extern void j_00029c08();
-
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?aiRepair@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_00029c08@@YAXXZ")
 
 static const ThingTemplate *bfmeFinalTemplate(const Overridable *value)
 {
-	typedef const Overridable *(Overridable::*Function)() const;
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} function;
-	function.raw = j_000022bb;
-	return (const ThingTemplate *)(value->*function.member)();
+	return (const ThingTemplate *)value->getFinalOverride();
 }
 
 static void bfmeAiRepair(AICommandInterface *command, Object *object,
 	CommandSourceType source)
 {
-	typedef void (AICommandInterface::*Function)(Object *, CommandSourceType);
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} function;
-	function.raw = j_00029c08;
-	(command->*function.member)(object, source);
+	command->aiRepair(object, source);
 }
 
 class ScriptActions
@@ -213,7 +171,7 @@ void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
 	Object *mostDamaged = 0;
 	Real lowestHealth = 1.0f;
 	BfmeDlinkIterator<Object> target = targetTeam->iterate_TeamMemberList();
-	while (!target.done())
+	for (; !target.done(); target.advance())
 	{
 		Object *object = target.cur();
 		const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
@@ -231,13 +189,12 @@ void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
 				}
 			}
 		}
-		target.advance();
 	}
 
 	if (mostDamaged)
 	{
 		BfmeDlinkIterator<Object> repair = repairTeam->iterate_TeamMemberList();
-		while (!repair.done())
+		for (; !repair.done(); repair.advance())
 		{
 			Object *object = repair.cur();
 			const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
@@ -250,7 +207,6 @@ void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
 					bfmeAiRepair(&ai->m_command, mostDamaged,
 						CMD_FROM_SCRIPT);
 			}
-			repair.advance();
 		}
 	}
 }

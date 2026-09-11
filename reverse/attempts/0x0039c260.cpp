@@ -127,9 +127,10 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 	const BfmeAsciiStringData *nameData =
 		*(const BfmeAsciiStringData *const *)context;
 	BfmeAllowanceEntry **cursor = m_allowances.begin();
+	register BfmeAllowanceEntry *entry;
 	while (index < count)
 	{
-		BfmeAllowanceEntry *entry = *cursor;
+		entry = *cursor;
 		if (entry->m_nextOverride)
 			entry = (BfmeAllowanceEntry *)entry->m_nextOverride->friend_getFinalOverride();
 

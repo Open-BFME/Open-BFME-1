@@ -32,11 +32,16 @@
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
-struct XferVersion
+struct XferVersionBytes
 {
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
-	UnsignedByte m_pad[2];
+};
+
+struct XferVersion
+{
+	XferVersionBytes m_value;
+	unsigned short m_pad;
 };
 
 struct BfmeFormattedText
@@ -124,9 +129,8 @@ void BfmeHostBJ::xfer(Xfer *x)
 		return;
 
 	XferVersion version;
-
-	version.m_version = 1;
-	version.m_currentVersion = 1;
+	version.m_value.m_version = 1;
+	version.m_value.m_currentVersion = 1;
 	x->xferVersion(&version);
 
 	int count = m_bfmeCountBJ;

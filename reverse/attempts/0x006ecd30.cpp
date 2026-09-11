@@ -7,7 +7,7 @@ typedef float Real;
 typedef unsigned long UnsignedInt;
 
 extern Real g_bfmeDefaultBU;
-extern const Real g_bfmeK1253;
+#define g_bfmeK1253 (*(Real *)0x0107533c)
 extern const Real BfmeZeroRange;
 extern "C" Real g_bfmeUint32Scale;
 
@@ -21,7 +21,10 @@ public:
 
 class RectClass
 {
-	public:
+public:
+	RectClass() {}
+	RectClass(Real left, Real top, Real right, Real bottom) :
+		Left(left), Top(top), Right(right), Bottom(bottom) {}
 	Real Left;
 	Real Top;
 	Real Right;
@@ -40,6 +43,7 @@ public:
 	void Add_Quad(const RectClass &screen, const RectClass &uv,
 		UnsignedInt color0, UnsignedInt color1,
 		UnsignedInt color2, UnsignedInt color3);
+
 };
 
 class Image
@@ -134,47 +138,43 @@ private:
 void W3DDisplay::drawImageCore(Image *image, Real x0, Real y0,
 	Real x1, Real y1, Int color)
 {
-	Image &source = *image;
-	Render2DClass *render = m_render2D;
+	Render2DClass *render;
 	Real textureScale = g_bfmeDefaultBU /
-		(Real)(UnsignedInt)source.m_18;
-	textureScale *= g_bfmeK1253;
-	render->m_texturingEnabled = 1;
+		(Real)(UnsignedInt)image->m_18;
+	m_render2D->m_texturingEnabled = 1;
+	textureScale = g_bfmeK1253 * textureScale;
 
-	TextureClass **textureRef = source.slot24();
-	if (*textureRef != m_render2D->m_texture)
+	TextureClass ** const textureRef = image->slot24();
+	render = m_render2D;
+	if (*textureRef != render->m_texture)
 	{
 		if (*textureRef)
 			++(*textureRef)->m_refCount;
-		if (m_render2D->m_texture)
-			m_render2D->m_texture->Release_Ref();
-		m_render2D->m_texture = *textureRef;
-		m_render2D->m_textureSet = -(*textureRef != 0);
+		if (render->m_texture)
+			render->m_texture->Release_Ref();
+		render->m_texture = *textureRef;
+		render->m_textureSet = render->m_texture ?
+			(UnsignedInt)-1 : 0;
 	}
 
 	Real imageRatio;
-	if (source.slot18())
-		imageRatio = (Real)(UnsignedInt)source.m_10 /
-			(Real)(UnsignedInt)source.m_18;
+	if (image->slot18())
+		imageRatio = (Real)(UnsignedInt)image->m_10 /
+			(Real)(UnsignedInt)image->m_18;
 	else
-		imageRatio = BfmeZeroRange;
+		imageRatio = 0.0f;
 
-	Real uvRatio;
-	if (source.slot18())
-		uvRatio = (Real)(UnsignedInt)source.m_0c /
-			(Real)(UnsignedInt)source.m_14;
-	else
-		uvRatio = BfmeZeroRange;
-	RectClass uv = {
-		textureScale,
-		textureScale,
-		uvRatio - textureScale,
-		imageRatio - textureScale
-	};
-	RectClass screen = { x0, y0, x1, y1 };
+	RectClass uv(textureScale, textureScale,
+		(image->slot18() ?
+			(Real)(UnsignedInt)image->m_0c /
+				(Real)(UnsignedInt)image->m_14 : BfmeZeroRange) -
+			textureScale,
+		imageRatio - textureScale);
 
+	Real opacity = image->m_20;
 	Int alpha = (color >> 24) & 0xff;
 	color = (color & 0x00ffffff) |
-		((Int)(source.m_20 * (Real)alpha) << 24);
+		((Int)(opacity * (Real)alpha) << 24);
+	RectClass screen(x0, y0, x1, y1);
 	m_render2D->Add_Quad(screen, uv, color, color, color, color);
 }

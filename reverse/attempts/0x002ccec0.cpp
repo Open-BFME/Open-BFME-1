@@ -26,7 +26,7 @@ enum KindOfType
 {
 	KINDOF_DOZER = 0x0e,
 	KINDOF_HARVESTER = 0x10,
-	KINDOF_SUPPLY_SOURCE = 0x51,
+	KINDOF_SUPPLY_SOURCE = 0x55,
 	MODELCONDITION_DOCKING_BEGINNING = 0x51,
 	MODELCONDITION_MOVING = 0x3c
 };
@@ -91,12 +91,9 @@ class ObjectView : public ObjectVtable, public Thing
 {
 };
 
-class Object
+class Object : public Thing
 {
 public:
-	void *m_vtable;
-	ThingTemplate *m_template;
-
 	const ModelConditionFlags &getModelConditionFlags() const
 	{
 		return m_modelConditionFlags;
@@ -136,6 +133,21 @@ public:
 		return *reinterpret_cast<ObjectView *const *>(
 			reinterpret_cast<const char *>(this) - 8);
 	}
+
+	ObjectView &getObjectReference() const
+	{
+		return **reinterpret_cast<ObjectView *const *>(
+			reinterpret_cast<const char *>(this) - 8);
+	}
+
+	Thing *getThingObject() const
+	{
+		const char *address = *reinterpret_cast<const char *const *>(
+			reinterpret_cast<const char *>(this) - 8);
+		address += 4;
+		return (Thing *)address;
+	}
+
 };
 
 extern void j_0000156e();
@@ -239,12 +251,11 @@ static __forceinline Bool hasDockingBeginning(Object *docker)
 
 UpdateSleepTime DockUpdate::update()
 {
-	register ObjectID activeDocker = m_activeDocker;
-	if (activeDocker == 0 && !m_dockCrippled)
+	Int positionIndex = m_activeDocker;
+	if (positionIndex == 0 && !m_dockCrippled)
 	{
-		for (Int positionIndex = 0;
-			positionIndex < m_approachPositionReached.size();
-			++positionIndex)
+		for (positionIndex = 0;
+			positionIndex < m_approachPositionReached.size(); ++positionIndex)
 		{
 			if (m_approachPositionReached[positionIndex])
 			{
@@ -255,38 +266,33 @@ UpdateSleepTime DockUpdate::update()
 	}
 	else
 	{
-		volatile unsigned char *thing =
-			(volatile unsigned char *)*reinterpret_cast<ObjectView *const *>(
-				reinterpret_cast<const char *>(this) - 8);
-		thing += 4;
-		const ThingTemplate *thingTemplate =
-			*(const ThingTemplate * volatile *)thing;
-		if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xd0) &
-			0x200000) == 0)
-			return UPDATE_SLEEP_NONE;
-
-		FindObjectByIDCall findObjectByID;
-		findObjectByID.freeFunction = j_0001f253;
-		Object *docker = (TheBfmeGameLogic->*findObjectByID.memberFunction)(
-			activeDocker);
-		IsKindOfCall isKindOf;
-		isKindOf.freeFunction = j_0003251f;
-		if (docker != 0 &&
-			((Thing *)docker->*isKindOf.memberFunction)(KINDOF_DOZER) &&
-			((Thing *)docker->*isKindOf.memberFunction)(KINDOF_HARVESTER))
+		Thing *thing = getThingObject();
+		const ThingTemplate *thingTemplate = thing->getTemplate();
+		if (thingTemplate->isKindOf(KINDOF_SUPPLY_SOURCE))
 		{
-			if (hasDockingBeginning(docker))
+			FindObjectByIDCall findObjectByID;
+			findObjectByID.freeFunction = j_0001f253;
+			Object *docker = (TheBfmeGameLogic->*findObjectByID.memberFunction)(
+				positionIndex);
+			IsKindOfCall isKindOf;
+			isKindOf.freeFunction = j_0003251f;
+			if (docker != 0 &&
+				((Thing *)docker->*isKindOf.memberFunction)(KINDOF_DOZER) &&
+				((Thing *)docker->*isKindOf.memberFunction)(KINDOF_HARVESTER))
 			{
-				Rva00170C70BitSet clearMask;
-				ConstructBitSetCall constructBitSet;
-				constructBitSet.freeFunction = j_0003d424;
-				const ModelConditionFlags &clearFlags =
-					*(const ModelConditionFlags *)(const void *)
-					(clearMask.*constructBitSet.memberFunction)(
-						0, MODELCONDITION_MOVING);
-				ClearModelConditionFlagsCall clearModelConditionFlags;
-				clearModelConditionFlags.freeFunction = j_0000b95b;
-				(docker->*clearModelConditionFlags.memberFunction)(clearFlags);
+				if (hasDockingBeginning(docker))
+				{
+					Rva00170C70BitSet clearMask;
+					ConstructBitSetCall constructBitSet;
+					constructBitSet.freeFunction = j_0003d424;
+					const ModelConditionFlags &clearFlags =
+						*(const ModelConditionFlags *)(const void *)
+						(clearMask.*constructBitSet.memberFunction)(
+							0, MODELCONDITION_MOVING);
+					ClearModelConditionFlagsCall clearModelConditionFlags;
+					clearModelConditionFlags.freeFunction = j_0000b95b;
+					(docker->*clearModelConditionFlags.memberFunction)(clearFlags);
+				}
 			}
 		}
 	}

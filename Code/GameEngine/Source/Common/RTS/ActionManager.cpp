@@ -111,6 +111,86 @@ public:
 	Bool isKindOf(Int kind) const;
 };
 
+class BFMEObjectStealthQuery
+{
+public:
+	Bool isStealthedAndUndetected(const Object *viewer) const;
+};
+
+class BFMECaptureContainModule
+{
+public:
+	virtual void slot_000() = 0;
+	virtual void slot_004() = 0;
+	virtual Bool isGarrisonable() const = 0;
+	virtual void slot_00c() = 0;
+	virtual void slot_010() = 0;
+	virtual void slot_014() = 0;
+	virtual void slot_018() = 0;
+	virtual void slot_01c() = 0;
+	virtual void slot_020() = 0;
+	virtual void slot_024() = 0;
+	virtual void slot_028() = 0;
+	virtual void slot_02c() = 0;
+	virtual void slot_030() = 0;
+	virtual void slot_034() = 0;
+	virtual void slot_038() = 0;
+	virtual void slot_03c() = 0;
+	virtual void slot_040() = 0;
+	virtual void slot_044() = 0;
+	virtual void slot_048() = 0;
+	virtual void slot_04c() = 0;
+	virtual void slot_050() = 0;
+	virtual void slot_054() = 0;
+	virtual void slot_058() = 0;
+	virtual void slot_05c() = 0;
+	virtual void slot_060() = 0;
+	virtual void slot_064() = 0;
+	virtual void slot_068() = 0;
+	virtual void slot_06c() = 0;
+	virtual void slot_070() = 0;
+	virtual void slot_074() = 0;
+	virtual void slot_078() = 0;
+	virtual void slot_07c() = 0;
+	virtual void slot_080() = 0;
+	virtual void slot_084() = 0;
+	virtual void slot_088() = 0;
+	virtual void slot_08c() = 0;
+	virtual void slot_090() = 0;
+	virtual void slot_094() = 0;
+	virtual void slot_098() = 0;
+	virtual void slot_09c() = 0;
+	virtual void slot_0a0() = 0;
+	virtual void slot_0a4() = 0;
+	virtual void slot_0a8() = 0;
+	virtual void slot_0ac() = 0;
+	virtual void slot_0b0() = 0;
+	virtual void slot_0b4() = 0;
+	virtual void slot_0b8() = 0;
+	virtual void slot_0bc() = 0;
+	virtual void slot_0c0() = 0;
+	virtual void slot_0c4() = 0;
+	virtual void slot_0c8() = 0;
+	virtual void slot_0cc() = 0;
+	virtual void slot_0d0() = 0;
+	virtual void slot_0d4() = 0;
+	virtual void slot_0d8() = 0;
+	virtual void slot_0dc() = 0;
+	virtual void slot_0e0() = 0;
+	virtual void slot_0e4() = 0;
+	virtual void slot_0e8() = 0;
+	virtual void slot_0ec() = 0;
+	virtual void slot_0f0() = 0;
+	virtual void slot_0f4() = 0;
+	virtual void slot_0f8() = 0;
+	virtual void slot_0fc() = 0;
+	virtual Int getContainCount(Int arg) const = 0;
+	virtual void slot_104() = 0;
+	virtual void slot_108() = 0;
+	virtual void slot_10c() = 0;
+	virtual Int getStealthUnitsContained() const = 0;
+};
+
 class BFMEActionBehaviorModule
 {
 public:
@@ -1012,7 +1092,6 @@ Bool ActionManager::canMakeObjectDefector( const Object *obj, const Object *obje
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 
-// ?canCaptureBuilding@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z present-unmatched
 Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectToCapture, CommandSourceType commandSource )
 {
 
@@ -1022,14 +1101,14 @@ Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectT
 
 	//Make sure our object has the capability of performing this special ability.
 
-	Bool isOwnerBlackLotus = obj->hasSpecialPower( SPECIAL_BLACKLOTUS_CAPTURE_BUILDING );
+	Bool isOwnerBlackLotus = obj->hasSpecialPower((SpecialPowerType)0x1a);
 
-	if( !obj->hasSpecialPower( SPECIAL_INFANTRY_CAPTURE_BUILDING ) && !isOwnerBlackLotus)
+	if( !obj->hasSpecialPower((SpecialPowerType)0x1d) && !isOwnerBlackLotus)
 	{
 		return false;
 	}
 
-	if( objectToCapture->isKindOf( KINDOF_IMMUNE_TO_CAPTURE ) )
+	if( objectToCapture->isKindOf((KindOfType)0x50) )
 	{
 		return false;
 	}
@@ -1046,9 +1125,9 @@ Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectT
 //	}
 
 
-	SpecialPowerModuleInterface *spInterface = obj->findSpecialPowerModuleInterface( SPECIAL_INFANTRY_CAPTURE_BUILDING );
+	SpecialPowerModuleInterface *spInterface = obj->findSpecialPowerModuleInterface((SpecialPowerType)0x1d);
 	if (!spInterface)
-		spInterface = obj->findSpecialPowerModuleInterface( SPECIAL_BLACKLOTUS_CAPTURE_BUILDING );
+		spInterface = obj->findSpecialPowerModuleInterface((SpecialPowerType)0x1a);
 	if (!spInterface)
 		return false;
 
@@ -1058,21 +1137,18 @@ Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectT
 		return false;
 	}
 
-	// can't capture dead things.
-	if (objectToCapture->isEffectivelyDead())
-	{
+	// can't capture things that are under construction, or sold.
+	if (*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(objectToCapture) + 0x344) & 1)
 		return FALSE;
-	}
 
 	// Make sure we are targeting a building!
-	if( !objectToCapture->isKindOf( KINDOF_STRUCTURE ) )
+	if( !objectToCapture->isKindOf((KindOfType)7) )
 	{
 		return FALSE;
 	}
 
-	// can't capture things that are under construction, or sold.
-	if (objectToCapture->testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION) ||
-			objectToCapture->testStatus(OBJECT_STATUS_SOLD))
+	if (reinterpret_cast<const BFMEActionObject *>(objectToCapture)->testStatus(2) ||
+			reinterpret_cast<const BFMEActionObject *>(objectToCapture)->testStatus(0x13))
 	{
 		return FALSE;
 	}
@@ -1085,23 +1161,21 @@ Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectT
 
 	// ensure that it's capturable, and not allied
 	// exception: we can always capture enemy bldgs, regardless of kindof
-	if (!(r == ENEMIES || (objectToCapture->isKindOf(KINDOF_CAPTURABLE) && r != ALLIES)))
+	if (!(r == ENEMIES || (objectToCapture->isKindOf((KindOfType)0x31) && r != ALLIES)))
 		return false;
 
 	//If the enemy unit is stealthed and not detected, then we can't capture it!
-	if( objectToCapture->testStatus( OBJECT_STATUS_STEALTHED ) && 
-			!objectToCapture->testStatus( OBJECT_STATUS_DETECTED ) &&
-			!objectToCapture->testStatus( OBJECT_STATUS_DISGUISED ) )
+	if (reinterpret_cast<const BFMEObjectStealthQuery *>(objectToCapture)->isStealthedAndUndetected(reinterpret_cast<const Object *>(obj->getControllingPlayer())))
 	{
 		return FALSE;
 	}
 
 	// if it's garrisoned already, we cannot capture it.
 	// (unless it's just stealth-garrisoned.)
-	ContainModuleInterface *contain = objectToCapture->getContain();
+	BFMECaptureContainModule *contain = *reinterpret_cast<BFMECaptureContainModule * const *>(reinterpret_cast<const char *>(objectToCapture) + 0x1fc);
 	if (contain != NULL && contain->isGarrisonable())
 	{
-		Int containCount = contain->getContainCount();
+		Int containCount = contain->getContainCount(0);
 		Int stealthContainCount = contain->getStealthUnitsContained();
 		Int nonStealthContainCount = containCount - stealthContainCount;
 		if (nonStealthContainCount > 0)
@@ -1112,8 +1186,7 @@ Bool ActionManager::canCaptureBuilding( const Object *obj, const Object *objectT
 	// the player into thinking it isn't actually an enemy.
 	if (appearsToContainFriendlies(obj, objectToCapture))
 		return FALSE;
-
-  return TRUE;
+	return TRUE;
 }
 
 // ------------------------------------------------------------------------------------------------

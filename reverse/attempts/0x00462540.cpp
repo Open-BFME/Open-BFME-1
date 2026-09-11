@@ -10,6 +10,7 @@
 // that string while the iterator advances through the table.
 
 #define _STLP_NO_EXCEPTIONS 1
+#define BFME_SHAPE_EXPERIMENT 1
 #include <algorithm>
 #include <hash_map>
 
@@ -36,12 +37,10 @@ private:
 
 	public:
 	BfmeAsciiStringData *m_data;
-};
 
-struct BfmeAptScreenCloseFunctor;
-class BFMERetailAsciiString;
-bool operator==(const BFMERetailAsciiString &left,
-	const BFMERetailAsciiString &right);
+	private:
+	void releaseBuffer();
+};
 
 class BFMERetailAsciiString
 {
@@ -54,27 +53,30 @@ public:
 	{
 		return m_string.m_data ? &m_string.m_data->data[0] : "";
 	}
-
+	int compare(const BFMERetailAsciiString &other) const
+	{
+		const int len = other.m_string.m_data ? other.m_string.m_data->length : 0;
+		const char *data = other.m_string.m_data ? &other.m_string.m_data->data[0] : "";
+		const int myLen = m_string.m_data ? m_string.m_data->length : 0;
+		const char *myData = m_string.m_data ? &m_string.m_data->data[0] : "";
+		const int result = memcmp(myData, data, myLen < len ? myLen : len);
+		if (result != 0)
+			return result;
+		return myLen - len;
+	}
+	bool operator==(const BFMERetailAsciiString &other) const
+	{
+		return compare(other) == 0;
+	}
+	template <class Record> void operator()(Record &record)
+	{
+		if (record.second.m_name == *this)
+			record.second.m_name.releaseBuffer();
+	}
 private:
-	friend bool operator==(const BFMERetailAsciiString &left,
-		const BFMERetailAsciiString &right);
-	friend struct BfmeAptScreenCloseFunctor;
 	void releaseBuffer();
 	StringBase<char> m_string;
 };
-
-inline bool operator==(const BFMERetailAsciiString &left,
-	const BFMERetailAsciiString &right)
-{
-	const BfmeAsciiStringData *rightData = right.m_string.m_data;
-	const int len = rightData ? rightData->length : 0;
-	const char *data = rightData ? &rightData->data[0] : "";
-	const BfmeAsciiStringData *leftData = left.m_string.m_data;
-	const int myLen = leftData ? leftData->length : 0;
-	const char *myData = leftData ? &leftData->data[0] : "";
-	const int result = memcmp(myData, data, myLen < len ? myLen : len);
-	return result == 0 && myLen == len;
-}
 
 struct BfmeAptScreenMapped
 {
@@ -85,16 +87,7 @@ struct BfmeAptScreenMapped
 typedef _STL::pair<const BFMERetailAsciiString, BfmeAptScreenMapped>
 	BfmeAptScreenRecord;
 
-struct BfmeAptScreenCloseFunctor
-{
-	BFMERetailAsciiString m_name;
-
-	void operator()(BfmeAptScreenRecord &record) const
-	{
-		if (record.second.m_name == m_name)
-			record.second.m_name.releaseBuffer();
-	}
-};
+typedef BFMERetailAsciiString BfmeAptScreenCloseFunctor;
 
 namespace rts
 {
@@ -127,6 +120,16 @@ typedef _STL::hashtable<BfmeAptScreenRecord, BFMERetailAsciiString,
 	_STL::equal_to<BFMERetailAsciiString>, _STL::allocator<BfmeAptScreenRecord> >
 	BfmeAptScreenTable;
 
-template BfmeAptScreenCloseFunctor _STL::for_each<BfmeAptScreenTable::iterator,
-	BfmeAptScreenCloseFunctor>(BfmeAptScreenTable::iterator,
-	BfmeAptScreenTable::iterator, BfmeAptScreenCloseFunctor);
+namespace _STL
+{
+	template <> BfmeAptScreenCloseFunctor
+	for_each<BfmeAptScreenTable::iterator, BfmeAptScreenCloseFunctor>(
+		BfmeAptScreenTable::iterator first,
+		BfmeAptScreenTable::iterator last,
+		BfmeAptScreenCloseFunctor functor)
+	{
+		for (; first != last; ++first)
+			functor(*first);
+		return functor;
+	}
+}

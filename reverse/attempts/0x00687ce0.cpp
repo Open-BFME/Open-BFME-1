@@ -1,7 +1,7 @@
 // ?RequestGameLeave@LANAPI@@QAEXXZ
 // partial score=0.65 date=2026-09-09
 // ?RequestGameLeave@LANAPI@@QAEXXZ
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/stringinline
 
 // LANAPI::RequestGameLeave, retail 0x00687CE0, 341 bytes.
 //
@@ -25,34 +25,15 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
+#include "StringInline.h"
+
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 extern "C" __declspec(dllimport) unsigned short *__cdecl wcsncpy(unsigned short *, const unsigned short *, unsigned int);
 
-struct UnicodeStringData
+const unsigned short *UnicodeString::str(void) const
 {
-	UnsignedShort m_refCount;
-	UnsignedShort m_numCharsAllocated;
-	UnsignedShort m_len;
-	UnsignedShort m_pad;
-	unsigned short m_stringdata[1];
-};
-
-class UnicodeString
-{
-public:
-	~UnicodeString() { releaseBuffer(); }
-
-	const unsigned short *str(void) const
-	{
-		return m_data ? m_data->m_stringdata : L"";
-	}
-
-protected:
-	void releaseBuffer(void);					// ?releaseBuffer@?$StringBase@G@@AAEXXZ
-
-private:
-	UnicodeStringData *m_data;
-};
+	return m_data ? m_data->m_text : L"";
+}
 
 struct BfmeNetAddress
 {

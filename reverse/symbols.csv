@@ -77907,6 +77907,7 @@ name,address,notes
 ?bucketNumber@Rva006AEE00Hashtable@@QBEIABV?$StringBase@D@@I@Z,0x0004004D,Rva006AEE00::init hash-table bucket callee at retail 0x0004004D
 ?build@ActiveBodyModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x002284A0,ActiveBodyModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
 ?build@BroadcastStealthUpdateModuleDataBuildFieldParseShim@@SAXAAVMultiIniFieldParse@@@Z,0x00289800,BroadcastStealthUpdateModuleData buildFieldParse incremental-link thunk target through a TU-local forwarding shim
+?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@PAVGen003BD8D0Arg@@HH@Z,0x003A3E90,three-argument member called on the lookup result by 0x003BD8D0; address-derived name
 ?build@Gen003BD7D0Node@@QAEPAVGen003BD8D0Built@@XZ,0x003A3E90,niladic member called on the lookup result by Rva003BF540::act at 0x003BD8D0; canonical c3 body leaves the following consume arguments on the stack
 ?build@Gen_00371340@@QAEPAVObject@@PAVThingTemplate@@HPAX@Z,0x0000983B,typed ABI pin for the assigned BUILD_BASE_BUILDING body
 ?build@Rva0006A980Cursor@@QAEXPBU1@@Z,0x00069F00,__thiscall callee of the 0x0006A980 copy constructor invoked on the sub-object at this+8 (U3_iterator_ctor.cpp); identity not recovered
@@ -78436,6 +78437,7 @@ name,address,notes
 ?construct_from@DefaultModuleTemplate7CopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x0000CC4D,DefaultModuleTemplate6 copy-ctor base shim
 ?consume@BfmeRva9140GlobalBResult@@QAEXH@Z,0x0002BCEC,assigned body helper for Rva00249140
 ?consume@BfmeRvaBA90GlobalBResult@@QAEXH@Z,0x0002BCEC,assigned body helper for Rva0024BA90
+?consume@Gen003BF540Owner@@QAE_NPAVGen003BD8D0Built@@@Z,0x003CAE40,member called on the owner at +0x28 with the built result by 0x003BD8D0; address-derived name
 ?consume@Gen003BF540Owner@@QAE_NPAXPAVGen003BD8D0Built@@00@Z,0x003CAE40,canonical four-argument member called on the owner at +0x28 by Rva003BF540::act at 0x003BD8D0; ret16 body
 ?consume@Glo012F1028Sub@@QAEXPAVAsciiString@@@Z,0x00045B88,Reviewed full3C88E0283B selects pointer record by AsciiString compare and releases old state when selection changes
 ?consume@Rva8CD490Target@@QAEXPAVRva8CCCE0Value@@@Z,0x008BD490,address-derived Apt target consumer called by 0x008CD490

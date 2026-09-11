@@ -13,14 +13,16 @@ class WWMath
 {
 public:
 	static Real Acos(Real value);
-	static __forceinline Real Sqrt(Real value)
-	{
-		__asm {
-			fld [value]
-			fsqrt
-		}
-	}
+	static Real Sqrt(Real value);
 };
+
+__forceinline Real WWMath::Sqrt(Real value)
+{
+	__asm {
+		fld value
+		fsqrt
+	}
+}
 
 class Vector2
 {
@@ -96,6 +98,7 @@ private:
 };
 
 extern Int TheW3DFrameLengthInMsec;
+extern Real g_bfmeScaleBK;
 extern Real g_bfmePiOverTwo;
 extern Real g_bfmeTwoPi;
 	 extern void normAngle(Real &angle);
@@ -118,7 +121,7 @@ void W3DView::rotateCameraTowardPosition(const Coord3D *pLoc, Int milliseconds,
 	dir.X = pLoc->x - dir.X;
 	dir.Y = pLoc->y - dir.Y;
 	const Real dirLength = dir.Length();
-	if (dirLength < 0.1f) {
+	if (dirLength < g_bfmeScaleBK) {
 		return;
 	}
 

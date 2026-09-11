@@ -1,5 +1,5 @@
 // ?createRadiusDecal@RadiusDecalTemplate@@QBEXABUCoord3D@@MPBVPlayer@@AAVRadiusDecal@@@Z
-// partial score=0.92 date=2026-09-09
+// partial score=0.93 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
 
 #include <string.h>
@@ -8,7 +8,7 @@
 // +0x04 and the characters begin at +0x08.  Keep the accessors inline here so
 // the retail body remains a manual length/data check rather than an out-of-line
 // call to a different StringBase owner.
-extern const char g_bfmeEmptyAscii[];
+#define g_bfmeEmptyAscii ((const char *)0x0107388B)
 
 class AsciiString
 {
@@ -44,6 +44,8 @@ struct Coord3D
 	float y;
 	float z;
 };
+
+#define g_010F6388 (*(const float *)0x010F6388)
 
 class Shadow
 {
@@ -86,6 +88,13 @@ public:
 	{
 		m_position = position;
 	}
+
+};
+
+class BfmeColourABK
+{
+public:
+	void bfmeSetABK(int value);
 };
 
 class RenderObjClass;
@@ -100,8 +109,7 @@ public:
 };
 
 extern ProjectedShadowManager *TheProjectedShadowManager;
-extern const float BfmeZeroRange;
-extern const float g_010F6388; // retail float at VA 0x010F6388; field identity unresolved
+#define BfmeZeroRange (*(const float *)0x01075350)
 
 class Player
 {
@@ -134,7 +142,7 @@ public:
 	}
 };
 
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+#define Rva002EE330ThePlayers (*(Rva002EE330PlayerList **)0x012ED748)
 
 class RadiusDecalTemplate;
 
@@ -209,11 +217,18 @@ void RadiusDecalTemplate::createRadiusDecal(
 			return;
 
 		result.m_decal->setAngle(0.0f);
-		result.m_decal->setColor(
+		((BfmeColourABK *)result.m_decal)->bfmeSetABK(
 			m_color == 0 ? (int)owningPlayer->getPlayerColor() : (int)m_color);
-		result.m_decal->setPosition(pos);
+		Coord3D *position = &result.m_decal->m_position;
 		if (radius > g_010F6388)
+		{
+			*position = pos;
 			result.m_decal->m_unmodelled_64 = true;
+		}
+		else
+		{
+			*position = pos;
+		}
 		result.m_template = this;
 	}
 }
