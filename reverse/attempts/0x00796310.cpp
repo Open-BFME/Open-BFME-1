@@ -1,244 +1,427 @@
 // ?drawRadioButtonText@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.75 date=2026-09-02
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef int Color;
-typedef unsigned char Bool;
+// partial score=0.85 date=2026-09-11
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// stlport
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
-class Image;
-class GameFont;
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
 
-struct ICoord2D { Int x, y; };
-struct WinDrawData { const Image *image; Color color; Color borderColor; };
+// FILE: W3DRadioButton.cpp ///////////////////////////////////////////////////
+//-----------------------------------------------------------------------------
+//                                                                          
+//                       Westwood Studios Pacific.                          
+//                                                                          
+//                       Confidential Information                           
+//                Copyright (C) 2001 - All Rights Reserved                  
+//                                                                          
+//-----------------------------------------------------------------------------
+//
+// Project:   RTS3
+//
+// File name: W3DRadioButton.cpp
+//
+// Created:   Colin Day, June 2001
+//
+// Desc:      W3D methods needed to implement the RadioButton UI control
+//
+//-----------------------------------------------------------------------------
+///////////////////////////////////////////////////////////////////////////////
 
-class DisplayString
+// SYSTEM INCLUDES ////////////////////////////////////////////////////////////
+#include <stdlib.h>
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
+
+// USER INCLUDES //////////////////////////////////////////////////////////////
+#include "GameClient/GameWindowGlobal.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GadgetRadioButton.h"
+#include "W3DDevice/GameClient/W3DGadget.h"
+#include "W3DDevice/GameClient/W3DDisplay.h"
+
+// DEFINES ////////////////////////////////////////////////////////////////////
+
+// PRIVATE TYPES //////////////////////////////////////////////////////////////
+
+// PRIVATE DATA ///////////////////////////////////////////////////////////////
+
+// PUBLIC DATA ////////////////////////////////////////////////////////////////
+
+// PRIVATE PROTOTYPES /////////////////////////////////////////////////////////
+
+// BFME's DisplayString interface predates the Zero Hour header used to build
+// this pristine TU: it has no virtual destructor slot and carries a separate
+// text-color setter.  Keep that ABI difference local to the one BFME body.
+class BFMEDisplayString
 {
 public:
-    virtual void unused00();
-    virtual void unused01();
-    virtual void unused02();
-    virtual Int getTextLength();                 // +0x0c
-    virtual void unused04();
-    virtual void unused05();
-    virtual void setFont(GameFont *font);         // +0x18
-    virtual GameFont *getFont();                  // +0x1c
-    virtual void unused08();
-    virtual void unused09();
-    virtual void setTextColor(Color, Color);      // +0x28
-    virtual void unused11();
-    virtual void unused12();
-    virtual void unused13();
-    virtual void draw(Int, Int, Int, Int);        // +0x38
-    virtual void getSize(Int *, Int *);           // +0x3c
+	virtual void unused00();
+	virtual void unused01();
+	virtual void unused02();
+	virtual Int getTextLength();
+	virtual void unused04();
+	virtual void unused05();
+	virtual void setFont( GameFont *font );
+	virtual GameFont *getFont();
+	virtual void unused08();
+	virtual void unused09();
+	virtual void setTextColor( Color color, Color dropColor );
+	virtual void unused11();
+	virtual void unused12();
+	virtual void unused13();
+	virtual void draw( Int x, Int y, Int xDrop, Int yDrop );
+	virtual void getSize( Int *width, Int *height );
 };
 
-class WinInstanceData
+// drawRadioButtonText ========================================================
+/** Draw the text for a RadioButton */
+//=============================================================================
+static void drawRadioButtonText( GameWindow *window, WinInstanceData *instData )
 {
-public:
-    unsigned char pad00[8];
-    UnsignedInt state;
-    unsigned char pad0c[0x190];
-    DisplayString *text;                          // +0x19c
+	ICoord2D origin, size, textPos;
+	Int width, height;
+	Color textColor, dropColor;
+	DisplayString *text = instData->getTextDisplayString();
+	BFMEDisplayString *bfmeText = (BFMEDisplayString *)text;
 
-    UnsignedInt getState() { return state; }
-    DisplayString *getTextDisplayString() { return text; }
-    Int getTextLength() { return text ? text->getTextLength() : 0; }
-};
+	// sanity
+	if( text == NULL || bfmeText->getTextLength() == 0 )
+		return;
 
-class GameWindow
+	// get window position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
+
+	// get the right text color
+	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
+	{
+		textColor = window->winGetDisabledTextColor();
+		dropColor = window->winGetDisabledTextBorderColor();
+	}  // end if, disabled
+	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
+	{
+		textColor = window->winGetHiliteTextColor();
+		dropColor = window->winGetHiliteTextBorderColor();
+	}  // end else if, hilited
+	else
+	{
+		textColor = window->winGetEnabledTextColor();
+		dropColor = window->winGetEnabledTextBorderColor();
+	}  // end enabled only
+
+	// set our font to that of our parent if not the same
+	if( bfmeText->getFont() != window->winGetFont() )
+		bfmeText->setFont( window->winGetFont() );
+
+	// get text size
+	bfmeText->getSize( &width, &height );
+
+	// set the location for our text
+	Int halfWidth = width / 2;
+	_ReadWriteBarrier();
+	Int halfSizeX = size.x / 2;
+	textPos.x = origin.x + halfSizeX - halfWidth;
+	Int halfHeight = height / 2;
+	_ReadWriteBarrier();
+	Int halfSizeY = size.y / 2;
+	textPos.y = origin.y + halfSizeY - halfHeight;
+
+	// draw it
+	bfmeText->setTextColor( textColor, dropColor );
+	bfmeText->draw( textPos.x, textPos.y, 1, 1 );
+
+}  // end drawRadioButtonText
+
+// PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////
+// PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+// W3DGadgetRadioButtonDraw ===================================================
+/** Draw colored check box using standard graphics */
+//=============================================================================
+void W3DGadgetRadioButtonDraw( GameWindow *window, WinInstanceData *instData )
 {
-public:
-    Int winGetScreenPosition(Int *, Int *);
-    Int winGetSize(Int *, Int *);
-    UnsignedInt winGetStatus();
-    GameFont *winGetFont();
-    Color winGetEnabledTextColor();
-    Color winGetEnabledTextBorderColor();
-    Color winGetDisabledTextColor();
-    Color winGetDisabledTextBorderColor();
-    Color winGetHiliteTextColor();
-    Color winGetHiliteTextBorderColor();
+	Int checkOffsetFromLeft;
+	Color backColor,
+				backBorder,
+				boxColor,
+				boxBorder;
+	ICoord2D origin, size, start, end;
 
-    Color winGetEnabledColor(Int i) { return enabledData[i].color; }
-    Color winGetEnabledBorderColor(Int i) { return enabledData[i].borderColor; }
-    Color winGetDisabledColor(Int i) { return disabledData[i].color; }
-    Color winGetDisabledBorderColor(Int i) { return disabledData[i].borderColor; }
-    Color winGetHiliteColor(Int i) { return hiliteData[i].color; }
-    Color winGetHiliteBorderColor(Int i) { return hiliteData[i].borderColor; }
+	// get window position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
 
-    unsigned char pad00[0x48];
-    WinDrawData enabledData[9];
-    WinDrawData disabledData[9];
-    WinDrawData hiliteData[9];
-};
+	// compute start of check offset
+	checkOffsetFromLeft = size.x / 16;
 
-class GameWindowManager
+	//
+	// get the colors we should be using to draw, see GadgetRadioButton.h
+	// draw appropriate state, see GadgetRadioButton.h for info
+	//
+	if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
+	{
+
+		// disabled background
+		backColor			= GadgetRadioGetDisabledColor( window );
+		backBorder		= GadgetRadioGetDisabledBorderColor( window );
+
+		// check box
+		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
+		{
+				boxColor		= GadgetRadioGetDisabledCheckedBoxColor( window );
+				boxBorder		= GadgetRadioGetDisabledCheckedBoxBorderColor( window );
+		}
+		else
+		{
+				boxColor		= GadgetRadioGetDisabledUncheckedBoxColor( window );
+				boxBorder		= GadgetRadioGetDisabledUncheckedBoxBorderColor( window );
+		}
+
+	}  // end if
+	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
+	{
+
+		// hilited background 
+		backColor			= GadgetRadioGetHiliteColor( window );
+		backBorder		= GadgetRadioGetHiliteBorderColor( window );
+
+		// check box
+		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
+		{
+			boxColor		= GadgetRadioGetHiliteCheckedBoxColor( window );
+			boxBorder		= GadgetRadioGetHiliteCheckedBoxBorderColor( window );
+		}
+		else
+		{
+			boxColor		= GadgetRadioGetHiliteUncheckedBoxColor( window );
+			boxBorder		= GadgetRadioGetHiliteUncheckedBoxBorderColor( window );
+		}
+
+	}  // end else if
+	else
+	{
+
+		// enabled background 
+		backColor			= GadgetRadioGetEnabledColor( window );
+		backBorder		= GadgetRadioGetEnabledBorderColor( window );
+
+		// check box
+		if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
+		{
+			boxColor		= GadgetRadioGetEnabledCheckedBoxColor( window );
+			boxBorder		= GadgetRadioGetEnabledCheckedBoxBorderColor( window );
+		}
+		else
+		{
+			boxColor		= GadgetRadioGetEnabledUncheckedBoxColor( window );
+			boxBorder		= GadgetRadioGetEnabledUncheckedBoxBorderColor( window );
+		}
+
+	}  // end else
+
+	// draw background border
+	start.x = origin.x;
+	start.y = origin.y;
+	end.x = start.x + size.x;
+	end.y = start.y + size.y;
+	TheWindowManager->winOpenRect( backBorder, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+
+	// draw the background
+	start.x++;
+	start.y++;
+	end.x--;
+	end.y--;
+	TheWindowManager->winFillRect( backColor, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+
+
+	
+	// draw box border
+	start.x = origin.x + size.y;
+	start.y = origin.y;
+	end.x = start.x;
+	end.y = start.y + size.y;
+	TheWindowManager->winDrawLine( backBorder, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+
+	// draw box for button
+	start.x = origin.x + 1;
+	start.y = origin.y + 1;
+	end.x	= origin.x + size.y -1;
+	end.y = origin.y + size.y -1;
+	TheWindowManager->winFillRect( boxColor, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+
+	// draw box border
+	start.x = origin.x + size.x - size.y;
+	start.y = origin.y;
+	end.x = start.x;
+	end.y = start.y + size.y;
+	TheWindowManager->winDrawLine( backBorder, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+
+	// draw box for button
+	start.x = origin.x + size.x - size.y;
+	start.y = origin.y + 1;
+	end.x	= origin.x + size.x -1;
+	end.y = origin.y + size.y -1;
+	TheWindowManager->winFillRect( boxColor, WIN_DRAW_LINE_WIDTH, 
+																 start.x, start.y, end.x, end.y );
+	// draw the button text
+	if( instData->getTextLength() )
+		drawRadioButtonText( window, instData );
+
+	
+
+}  // end W3DGadgetRadioButtonDraw
+
+
+void W3DGadgetRadioButtonImageDraw( GameWindow *window, 
+																	WinInstanceData *instData )
 {
-public:
-    virtual void unused00(); virtual void unused01(); virtual void unused02();
-    virtual void unused03(); virtual void unused04(); virtual void unused05();
-    virtual void unused06(); virtual void unused07(); virtual void unused08();
-    virtual void unused09(); virtual void unused10(); virtual void unused11();
-    virtual void unused12(); virtual void unused13(); virtual void unused14();
-    virtual void unused15(); virtual void unused16(); virtual void unused17();
-    virtual void unused18(); virtual void unused19(); virtual void unused20();
-    virtual void unused21(); virtual void unused22(); virtual void unused23();
-    virtual void unused24(); virtual void unused25(); virtual void unused26();
-    virtual void unused27(); virtual void unused28(); virtual void unused29();
-    virtual void unused30(); virtual void unused31(); virtual void unused32();
-    virtual void unused33(); virtual void unused34(); virtual void unused35();
-    virtual void unused36(); virtual void unused37(); virtual void unused38();
-    virtual void unused39(); virtual void unused40(); virtual void unused41();
-    virtual void unused42(); virtual void unused43(); virtual void unused44();
-    virtual void unused45(); virtual void unused46(); virtual void unused47();
-    virtual void unused48(); virtual void unused49(); virtual void unused50();
-    virtual void unused51(); virtual void unused52(); virtual void unused53();
-    virtual void unused54(); virtual void unused55(); virtual void unused56();
-    virtual void unused57(); virtual void unused58(); virtual void unused59();
-    virtual void unused60();
-    virtual void winDrawImage(const Image *, Int, Int, Int, Int, Color = -1);
-    virtual void winFillRect(Color, Real, Int, Int, Int, Int);       // +0xf8
-    virtual void winOpenRect(Color, Real, Int, Int, Int, Int);       // +0xfc
-    virtual void winDrawLine(Color, Real, Int, Int, Int, Int);       // +0x100
-};
+	const Image *leftImage, *rightImage, *centerImage;
+	ICoord2D origin, size, start, end;
+	Int xOffset, yOffset;
+	Int i;
 
-extern GameWindowManager *TheWindowManager;
+	// get screen position and size
+	window->winGetScreenPosition( &origin.x, &origin.y );
+	window->winGetSize( &size.x, &size.y );
 
-enum { WIN_STATUS_ENABLED = 8, WIN_STATE_HILITED = 2, WIN_STATE_SELECTED = 4 };
-#define FALSE 0
-#define WIN_DRAW_LINE_WIDTH 1.0f
+	IRegion2D clipLeft;
 
-inline Color GadgetRadioGetEnabledColor(GameWindow *g) { return g->winGetEnabledColor(0); }
-inline Color GadgetRadioGetEnabledBorderColor(GameWindow *g) { return g->winGetEnabledBorderColor(0); }
-inline Color GadgetRadioGetEnabledUncheckedBoxColor(GameWindow *g) { return g->winGetEnabledColor(1); }
-inline Color GadgetRadioGetEnabledUncheckedBoxBorderColor(GameWindow *g) { return g->winGetEnabledBorderColor(1); }
-inline Color GadgetRadioGetEnabledCheckedBoxColor(GameWindow *g) { return g->winGetEnabledColor(2); }
-inline Color GadgetRadioGetEnabledCheckedBoxBorderColor(GameWindow *g) { return g->winGetEnabledBorderColor(2); }
-inline Color GadgetRadioGetDisabledColor(GameWindow *g) { return g->winGetDisabledColor(0); }
-inline Color GadgetRadioGetDisabledBorderColor(GameWindow *g) { return g->winGetDisabledBorderColor(0); }
-inline Color GadgetRadioGetDisabledUncheckedBoxColor(GameWindow *g) { return g->winGetDisabledColor(1); }
-inline Color GadgetRadioGetDisabledUncheckedBoxBorderColor(GameWindow *g) { return g->winGetDisabledBorderColor(1); }
-inline Color GadgetRadioGetDisabledCheckedBoxColor(GameWindow *g) { return g->winGetDisabledColor(2); }
-inline Color GadgetRadioGetDisabledCheckedBoxBorderColor(GameWindow *g) { return g->winGetDisabledBorderColor(2); }
-inline Color GadgetRadioGetHiliteColor(GameWindow *g) { return g->winGetHiliteColor(0); }
-inline Color GadgetRadioGetHiliteBorderColor(GameWindow *g) { return g->winGetHiliteBorderColor(0); }
-inline Color GadgetRadioGetHiliteUncheckedBoxColor(GameWindow *g) { return g->winGetHiliteColor(1); }
-inline Color GadgetRadioGetHiliteUncheckedBoxBorderColor(GameWindow *g) { return g->winGetHiliteBorderColor(1); }
-inline Color GadgetRadioGetHiliteCheckedBoxColor(GameWindow *g) { return g->winGetHiliteColor(2); }
-inline Color GadgetRadioGetHiliteCheckedBoxBorderColor(GameWindow *g) { return g->winGetHiliteBorderColor(2); }
+	// get image offset
+	xOffset = instData->m_imageOffset.x;
+	yOffset = instData->m_imageOffset.y;
 
-static void drawRadioButtonText(GameWindow *window, WinInstanceData *instData)
-{
-    DisplayString *text = instData->getTextDisplayString();
-    ICoord2D origin, size, textPos;
-    Int width, height;
-    Color textColor, dropColor;
+	if( BitTest( instData->getState(), WIN_STATE_SELECTED ) )
+	{
+		//backgroundImage	= GadgetRadioGetEnabledCheckedBoxImage( window );
+		leftImage					= GadgetRadioGetSelectedImage( window );
+		centerImage				= GadgetRadioGetSelectedUncheckedBoxImage( window );
+		rightImage				= GadgetRadioGetSelectedCheckedBoxImage( window );
+		
+	}
+	else if( BitTest( window->winGetStatus(), WIN_STATUS_ENABLED ) == FALSE )
+	{
+		// disabled background
+		leftImage					= GadgetRadioGetDisabledImage( window );
+		centerImage				= GadgetRadioGetDisabledUncheckedBoxImage( window );
+		rightImage				= GadgetRadioGetDisabledCheckedBoxImage( window );
+		
+	}  // end if
+	else if( BitTest( instData->getState(), WIN_STATE_HILITED ) )
+	{
+		// hilited background 
+		leftImage					= GadgetRadioGetHiliteImage( window );
+		centerImage				= GadgetRadioGetHiliteUncheckedBoxImage( window );
+		rightImage				= GadgetRadioGetHiliteCheckedBoxImage( window );
+		
+	}  // end else if
+	else
+	{
+		// enabled background 
+		leftImage					= GadgetRadioGetEnabledImage( window );
+		centerImage				= GadgetRadioGetEnabledUncheckedBoxImage( window );
+		rightImage				= GadgetRadioGetEnabledCheckedBoxImage( window );
+		
+	}  // end else
 
-    if (text == 0 || text->getTextLength() == 0)
-        return;
-    window->winGetScreenPosition(&origin.x, &origin.y);
-    window->winGetSize(&size.x, &size.y);
+	// sanity, we need to have these images to make it look right
+	if( leftImage == NULL || centerImage == NULL || 
+			rightImage == NULL )
+		return;
 
-    if ((window->winGetStatus() & WIN_STATUS_ENABLED) == FALSE) {
-        textColor = window->winGetDisabledTextColor();
-        dropColor = window->winGetDisabledTextBorderColor();
-    } else if (instData->getState() & WIN_STATE_HILITED) {
-        textColor = window->winGetHiliteTextColor();
-        dropColor = window->winGetHiliteTextBorderColor();
-    } else {
-        textColor = window->winGetEnabledTextColor();
-        dropColor = window->winGetEnabledTextBorderColor();
-    }
+	// get image sizes for the ends
+	ICoord2D leftSize, rightSize;
+	leftSize.x = leftImage->getImageWidth();
+	leftSize.y = leftImage->getImageHeight();
+	rightSize.x = rightImage->getImageWidth();
+	rightSize.y = rightImage->getImageHeight();
 
-    if (text->getFont() != window->winGetFont())
-        text->setFont(window->winGetFont());
-    text->getSize(&width, &height);
-    textPos.x = origin.x + (size.x / 2) - (width / 2);
-    textPos.y = origin.y + (size.y / 2) - (height / 2);
-    text->setTextColor(textColor, dropColor);
-    text->draw(textPos.x, textPos.y, 1, 1);
-}
+	// get two key points used in the end drawing
+	ICoord2D leftEnd, rightStart;
+	leftEnd.x = origin.x + leftSize.x + xOffset;
+	leftEnd.y = origin.y + size.y + yOffset;
+	rightStart.x = origin.x + size.x - rightSize.x + xOffset;
+	rightStart.y = origin.y  + size.y + yOffset;
 
-void W3DGadgetRadioButtonDraw(GameWindow *window, WinInstanceData *instData)
-{
-    Int checkOffsetFromLeft;
-    Color backColor, backBorder, boxColor, boxBorder;
-    ICoord2D origin, size, start, end;
 
-    window->winGetScreenPosition(&origin.x, &origin.y);
-    window->winGetSize(&size.x, &size.y);
-    checkOffsetFromLeft = size.x / 16;
 
-    if ((window->winGetStatus() & WIN_STATUS_ENABLED) == FALSE) {
-        backColor = GadgetRadioGetDisabledColor(window);
-        backBorder = GadgetRadioGetDisabledBorderColor(window);
-        if (instData->getState() & WIN_STATE_SELECTED) {
-            boxColor = GadgetRadioGetDisabledCheckedBoxColor(window);
-            boxBorder = GadgetRadioGetDisabledCheckedBoxBorderColor(window);
-        } else {
-            boxColor = GadgetRadioGetDisabledUncheckedBoxColor(window);
-            boxBorder = GadgetRadioGetDisabledUncheckedBoxBorderColor(window);
-        }
-    } else if (instData->getState() & WIN_STATE_HILITED) {
-        backColor = GadgetRadioGetHiliteColor(window);
-        backBorder = GadgetRadioGetHiliteBorderColor(window);
-        if (instData->getState() & WIN_STATE_SELECTED) {
-            boxColor = GadgetRadioGetHiliteCheckedBoxColor(window);
-            boxBorder = GadgetRadioGetHiliteCheckedBoxBorderColor(window);
-        } else {
-            boxColor = GadgetRadioGetHiliteUncheckedBoxColor(window);
-            boxBorder = GadgetRadioGetHiliteUncheckedBoxBorderColor(window);
-        }
-    } else {
-        backColor = GadgetRadioGetEnabledColor(window);
-        backBorder = GadgetRadioGetEnabledBorderColor(window);
-        if (instData->getState() & WIN_STATE_SELECTED) {
-            boxColor = GadgetRadioGetEnabledCheckedBoxColor(window);
-            boxBorder = GadgetRadioGetEnabledCheckedBoxBorderColor(window);
-        } else {
-            boxColor = GadgetRadioGetEnabledUncheckedBoxColor(window);
-            boxBorder = GadgetRadioGetEnabledUncheckedBoxBorderColor(window);
-        }
-    }
+	// draw the center repeating bar
+	Int centerWidth, pieces;
 
-    start.x = origin.x; start.y = origin.y;
-    {
-        Int sx = start.x;
-        end.x = (Int)&*(char *)(sx + (UnsignedInt)(char *)size.x);
-    }
-    end.y = start.y + size.y;
-    TheWindowManager->winOpenRect(backBorder, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
-    start.x++; start.y++; end.x--; end.y--;
-    TheWindowManager->winFillRect(backColor, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
-    {
-        Int ox = origin.x;
-        start.x = (Int)&*(char *)(ox + (UnsignedInt)(char *)size.y);
-    }
-    start.y = origin.y;
-    end.x = start.x; end.y = start.y + size.y;
-    TheWindowManager->winDrawLine(backBorder, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
-    start.x = origin.x + 1; start.y = origin.y + 1;
-    {
-        Int ox = origin.x;
-        end.x = (Int)&*(char *)(ox + (UnsignedInt)(char *)size.y) - 1;
-    }
-    end.y = origin.y + size.y - 1;
-    TheWindowManager->winFillRect(boxColor, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
-    start.x = (Int)((char *)(size.x - size.y) + origin.x); start.y = origin.y;
-    end.x = start.x; end.y = start.y + size.y;
-    TheWindowManager->winDrawLine(backBorder, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
-    start.x = (Int)((char *)(size.x - size.y) + origin.x); start.y = origin.y + 1;
-    end.x = origin.x + size.x - 1; end.y = origin.y + size.y - 1;
-    TheWindowManager->winFillRect(boxColor, WIN_DRAW_LINE_WIDTH,
-                                  start.x, start.y, end.x, end.y);
+	// get width we have to draw our repeating center in
+	centerWidth = rightStart.x - leftEnd.x;
 
-    if (instData->getTextLength())
-        drawRadioButtonText(window, instData);
-}
+	// how many whole repeating pieces will fit in that width
+	pieces = centerWidth / centerImage->getImageWidth();
+	pieces++;
+	// draw the pieces
+	start.x = leftEnd.x;
+	start.y = origin.y + yOffset;
+	end.y =origin.y + size.y + yOffset;
+	
+	clipLeft.lo.x = leftEnd.x;
+	clipLeft.lo.y = origin.y;
+	clipLeft.hi.y = leftEnd.y;
+	clipLeft.hi.x = rightStart.x	;
+
+
+	TheDisplay->setClipRegion(&clipLeft);
+	
+	for( i = 0; i < pieces; i++ )
+	{
+		end.x = start.x + centerImage->getImageWidth();
+		TheWindowManager->winDrawImage( centerImage, 
+																		start.x, start.y,
+																		end.x, end.y );	
+		start.x += centerImage->getImageWidth();
+	}  // end for i
+	
+	TheDisplay->enableClipping(FALSE);	
+	// draw left end
+	start.x = origin.x + xOffset;
+	start.y = origin.y + yOffset;
+	end = leftEnd;
+	TheWindowManager->winDrawImage(leftImage, start.x, start.y, end.x, end.y);
+	// draw right end
+	start.x = rightStart.x;
+	start.y = origin.y + yOffset;
+	end.x = origin.x + size.x;
+	end.y = leftEnd.y;
+	TheWindowManager->winDrawImage(rightImage, start.x, start.y, end.x, end.y);
+
+	// draw the text
+	if( instData->getTextLength() )
+		drawRadioButtonText( window, instData );
+
+	
+}  // end W3DGadgetHorizontalSliderImageDraw
