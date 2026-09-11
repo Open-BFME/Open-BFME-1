@@ -194,7 +194,6 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 
 	Int x = start.x;
 	Int y = start.y;
-
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
 		PathfindCell *cell = getCell( layer, x, y );

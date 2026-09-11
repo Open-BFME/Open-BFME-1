@@ -49,6 +49,14 @@ struct Coord3D
 	Real z;
 };
 
+struct PositionTemp
+{
+	PositionTemp(void) {}
+	Real x;
+	Real y;
+	Real z;
+};
+
 class Matrix3D
 {
 public:
@@ -164,8 +172,9 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	if (!primary)
 		return;
 
-	Coord3D offset;
 	Shadow::ShadowTypeInfo decalInfo;
+	Coord3D position;
+	Real offset[3];
 	decalInfo.flags = 20.0f;
 	decalInfo.force = false;
 	strncpy(decalInfo.name,
@@ -179,20 +188,19 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	decalInfo.offsetX = 0.0f;
 	decalInfo.offsetY = 0.0f;
 // Retail builds the translated position from this offset.
-	offset.x = m_offset.x;
-	offset.y = m_offset.y;
-	offset.z = 0.0f;
+	offset[0] = m_offset.x;
+	offset[1] = m_offset.y;
+	offset[2] = 0.0f;
 
 	if (primaryMtx && m_orientToObject)
-		adjustVector(&offset, primaryMtx);
+		adjustVector((Coord3D *)offset, primaryMtx);
 
-	Real position[3];
-	position[1] = primary->y;
-	position[0] = primary->x;
-	position[0] += offset.x;
-	position[1] += offset.y;
-	position[2] = TheTerrainLogic->getGroundHeight(
-		position[0], position[1], 0);
+	position.y = primary->y;
+	position.x = primary->x;
+	position.x += offset[0];
+	position.y += offset[1];
+	position.z = TheTerrainLogic->getGroundHeight(
+		position.x, position.y, 0);
 
 	Shadow *shadow = TheProjectedShadowManager->addDecal(&decalInfo);
 	if (shadow)
@@ -203,9 +211,9 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 			shadow->m_localAngle = 0.0f;
 
 		shadow->setColor(m_color.getAsInt());
-		shadow->m_x = position[0];
-		shadow->m_y = position[1];
-		shadow->m_z = position[2];
+		shadow->m_x = position.x;
+		shadow->m_y = position.y;
+		shadow->m_z = position.z;
 
 		Int initialOpacity = (Int)(m_startingDelay > BfmeZeroRange
 			? BfmeZeroRange : (Real)m_opacityStart);

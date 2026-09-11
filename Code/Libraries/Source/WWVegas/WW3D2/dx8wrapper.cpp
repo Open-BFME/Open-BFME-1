@@ -223,6 +223,47 @@ struct BFME_PRESENT_PARAMETERS {
 	UINT FullScreen_PresentationInterval;
 };
 
+// BFME's Direct3D call sites use the retail SDK layouts, which differ from
+// the Zero Hour declarations above only in the fields witnessed by this body.
+struct Rva0090AE60CreateDeviceCaps
+{
+	unsigned char opaque_00[0x1C];
+	unsigned DevCaps;
+	unsigned char opaque_20[0x110];
+};
+
+struct Rva0090AE60AdapterIdentifier
+{
+	char Driver[0x200];
+	char Description[0x200];
+	unsigned char opaque_400[0x4C];
+};
+
+struct Rva0090AE60D3D8;
+typedef unsigned (__stdcall *Rva0090AE60GetAdapterCount)(Rva0090AE60D3D8 *);
+typedef long (__stdcall *Rva0090AE60GetAdapterIdentifier)(Rva0090AE60D3D8 *, unsigned,
+	unsigned, Rva0090AE60AdapterIdentifier *);
+typedef long (__stdcall *Rva0090AE60GetDeviceCaps)(Rva0090AE60D3D8 *, unsigned,
+	D3DDEVTYPE, Rva0090AE60CreateDeviceCaps *);
+typedef long (__stdcall *Rva0090AE60CreateDevice)(Rva0090AE60D3D8 *, unsigned,
+	D3DDEVTYPE, HWND, unsigned, BFME_PRESENT_PARAMETERS *, IDirect3DDevice8 **);
+
+struct Rva0090AE60D3D8Vtbl
+{
+	void *reserved_00[4];
+	Rva0090AE60GetAdapterCount GetAdapterCount;
+	Rva0090AE60GetAdapterIdentifier GetAdapterIdentifier;
+	void *reserved_18[8];
+	Rva0090AE60GetDeviceCaps GetDeviceCaps;
+	void *reserved_3C;
+	Rva0090AE60CreateDevice CreateDevice;
+};
+
+struct Rva0090AE60D3D8
+{
+	Rva0090AE60D3D8Vtbl *lpVtbl;
+};
+
 enum { BFME_D3DSWAPEFFECT_FLIP = 2 };
 
 static BFME_PRESENT_PARAMETERS								_PresentParameters;
@@ -590,122 +631,70 @@ void DX8Wrapper::Do_Onetime_Device_Dependent_Shutdowns(void)
 }
 
 
-// ?Create_Device@DX8Wrapper@@ present-unmatched
 bool DX8Wrapper::Create_Device(void)
 {
-	WWASSERT(D3DDevice==NULL);	// for now, once you've created a device, you're stuck with it!
+	WWASSERT(D3DDevice==NULL);
 
-	D3DCAPS8 caps;
-	if 
-	(
-		FAILED
-		(
-			D3DInterface->GetDeviceCaps
-			(
-				CurRenderDevice,
-				WW3D_DEVTYPE,
-				&caps
-			)
-		)
-	)
-	{
+	Rva0090AE60CreateDeviceCaps caps;
+	if (reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->GetDeviceCaps(
+		reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface), CurRenderDevice, WW3D_DEVTYPE,
+		&caps) < 0)
 		return false;
-	}
 
-	::ZeroMemory(&CurrentAdapterIdentifier, sizeof(D3DADAPTER_IDENTIFIER8));
-	
-	if
-	(
-		FAILED
-		( 
-			D3DInterface->GetAdapterIdentifier
-			(
-				CurRenderDevice,
-				D3DENUM_NO_WHQL_LEVEL,
-				&CurrentAdapterIdentifier
-			)
-			)	
-	) 
-	{
+	::ZeroMemory(&CurrentAdapterIdentifier, 0x44C);
+	if (reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->GetAdapterIdentifier(
+		reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface), CurRenderDevice, 0,
+		reinterpret_cast<Rva0090AE60AdapterIdentifier *>(&CurrentAdapterIdentifier)) < 0)
 		return false;
-	}
 
-#ifndef _XBOX
-	
-	Vertex_Processing_Behavior=(caps.DevCaps&D3DDEVCAPS_HWTRANSFORMANDLIGHT) ?
+	Vertex_Processing_Behavior = (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT) ?
 		D3DCREATE_MIXED_VERTEXPROCESSING : D3DCREATE_SOFTWARE_VERTEXPROCESSING;
-
-	// enable this when all 'get' dx calls are removed KJM
-	/*if (caps.DevCaps&D3DDEVCAPS_PUREDEVICE)
-	{
-		Vertex_Processing_Behavior|=D3DCREATE_PUREDEVICE;
-	}*/
-
-#else // XBOX
-	Vertex_Processing_Behavior=D3DCREATE_PUREDEVICE;
-#endif // XBOX
-
-#ifdef CREATE_DX8_MULTI_THREADED
-	Vertex_Processing_Behavior|=D3DCREATE_MULTITHREADED;
-	_DX8SingleThreaded=false;
-#else
-	_DX8SingleThreaded=true;
-#endif
-
+	Vertex_Processing_Behavior |= 4;
+	_DX8SingleThreaded = false;
 	if (DX8Wrapper_PreserveFPU)
 		Vertex_Processing_Behavior |= D3DCREATE_FPU_PRESERVE;
 
-#ifdef CREATE_DX8_FPU_PRESERVE
-	Vertex_Processing_Behavior|=D3DCREATE_FPU_PRESERVE;
-#endif
+	int adapter = CurRenderDevice;
+	volatile D3DDEVTYPE device_type = D3DDEVTYPE_HAL;
+	for (unsigned i = 0; i < reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->GetAdapterCount(
+		reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)); ++i) {
+		Rva0090AE60AdapterIdentifier adapter_identifier;
+		if (reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->GetAdapterIdentifier(
+			reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface), i, 0, &adapter_identifier) < 0)
+			continue;
 
-	HRESULT hr=D3DInterface->CreateDevice
-	(
-		CurRenderDevice,
-		WW3D_DEVTYPE,
-		_Hwnd,
+		if (strcmp(adapter_identifier.Description, "NVIDIA NVPerfHUD") != 0)
+			continue;
+
+		adapter = i;
+		device_type = D3DDEVTYPE_REF;
+		break;
+	}
+
+	HRESULT hr = reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->CreateDevice(
+		reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface), adapter, device_type, _Hwnd,
 		Vertex_Processing_Behavior,
-		reinterpret_cast<D3DPRESENT_PARAMETERS *>(&_PresentParameters),
-		&D3DDevice 
-	);
-
-	if (FAILED(hr)) 
-	{
-		// The device selection may fail because the device lied that it supports 32 bit zbuffer with 16 bit
-		// display. This happens at least on Voodoo2.
-
-		if ((_PresentParameters.BackBufferFormat==D3DFMT_R5G6B5 ||
-			_PresentParameters.BackBufferFormat==D3DFMT_X1R5G5B5 ||
-			_PresentParameters.BackBufferFormat==D3DFMT_A1R5G5B5) &&
-			(_PresentParameters.AutoDepthStencilFormat==D3DFMT_D32 ||
-			_PresentParameters.AutoDepthStencilFormat==D3DFMT_D24S8 ||
-			_PresentParameters.AutoDepthStencilFormat==D3DFMT_D24X8)) 
-		{
-			_PresentParameters.AutoDepthStencilFormat=D3DFMT_D16;
-			hr = D3DInterface->CreateDevice
-			(
-				CurRenderDevice,
-				WW3D_DEVTYPE,
-				_Hwnd,
+		reinterpret_cast<BFME_PRESENT_PARAMETERS *>(&_PresentParameters), &D3DDevice);
+	if (FAILED(hr)) {
+		if ((_PresentParameters.BackBufferFormat == D3DFMT_R5G6B5 ||
+			_PresentParameters.BackBufferFormat == D3DFMT_X1R5G5B5 ||
+			_PresentParameters.BackBufferFormat == D3DFMT_A1R5G5B5) &&
+			(_PresentParameters.AutoDepthStencilFormat == D3DFMT_D32 ||
+			_PresentParameters.AutoDepthStencilFormat == D3DFMT_D24S8 ||
+			_PresentParameters.AutoDepthStencilFormat == D3DFMT_D24X8)) {
+			_PresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
+			hr = reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface)->lpVtbl->CreateDevice(
+				reinterpret_cast<Rva0090AE60D3D8 *>(D3DInterface), CurRenderDevice,
+				D3DDEVTYPE_HAL, _Hwnd,
 				Vertex_Processing_Behavior,
-				reinterpret_cast<D3DPRESENT_PARAMETERS *>(&_PresentParameters),
-				&D3DDevice 
-			);
-
-			if (FAILED(hr)) 
-			{
+				reinterpret_cast<BFME_PRESENT_PARAMETERS *>(&_PresentParameters), &D3DDevice);
+			if (FAILED(hr))
 				return false;
-			}
-        }
-		else 
-		{
-				return false;
+		} else {
+			return false;
 		}
 	}
 
-	/*
-	** Initialize all subsystems
-	*/
 	Do_Onetime_Device_Dependent_Inits();
 	return true;
 }

@@ -1,12 +1,16 @@
 // ?groupDoSpecialPowerAtObject@AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
-// partial score=0.45 date=2026-09-09
+// partial score=0.65 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
-// Open-BFME: AIGroup special-power-at-object dispatch, retail RVA 0x00152110.
-//
-// The named GameLogic dispatcher calls this body for MSG_DO_SPECIAL_POWER_AT_OBJECT.
-// BFME orders the members by the target-distance key before asking the action
-// manager whether each member may execute the selected power.
 // stlport
+// Open-BFME: BFME's ordered special-power-at-object group dispatch,
+// retail RVA 0x00152110.
+//
+// The BFME body copies the target position and orders members by the
+// dominant horizontal axis before checking the selected power.  The local
+// mirror keeps the witnessed AIGroup list at this+0x04 and the Object AI
+// pointer at this+0x204.
+
+#define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include <math.h>
 
@@ -34,25 +38,24 @@ class SpecialPowerTemplate;
 class SpecialPowerStore
 {
 public:
-	SpecialPowerTemplate *findSpecialPowerTemplateByID(UnsignedInt id);
+	const SpecialPowerTemplate *findSpecialPowerTemplateByID(UnsignedInt id);
 };
 
-extern SpecialPowerStore *TheSpecialPowerStore;
-
-class BFMEActionManager
+class ActionManager
 {
 public:
-	Bool canDoSpecialPowerAtObject(Object *source, Object *target,
-		CommandSourceType cmdSource, SpecialPowerTemplate *power,
+	Bool canDoSpecialPowerAtObject(const Object *source, const Object *target,
+		CommandSourceType cmdSource, const SpecialPowerTemplate *power,
 		UnsignedInt options, Bool forced);
 };
 
-extern BFMEActionManager *TheActionManager;
+extern SpecialPowerStore *TheSpecialPowerStore;
+extern ActionManager *TheActionManager;
 
-class AIUpdateInterface
+class BfmeAIUpdateInterface
 {
 public:
-	unsigned char m_bfmePad[0x48];
+	unsigned char m_unmodelled_000[0x48];
 	CommandSourceType m_lastCommandSource;
 };
 
@@ -64,9 +67,9 @@ public:
 		return (const Coord3D *)((const char *)this + 0x38);
 	}
 
-	AIUpdateInterface *getAI(void)
+	BfmeAIUpdateInterface *getAI(void)
 	{
-		return *(AIUpdateInterface **)((char *)this + 0x204);
+		return *(BfmeAIUpdateInterface **)((char *)this + 0x204);
 	}
 
 	void doSpecialPowerAtObject(const SpecialPowerTemplate *power,
@@ -80,7 +83,7 @@ struct BfmeDistanceEntry
 	Real m_distance;
 };
 
-class AIGroup
+class Rva00152110AIGroup
 {
 public:
 	void groupDoSpecialPowerAtObject(UnsignedInt specialPowerID,
@@ -88,48 +91,58 @@ public:
 		CommandSourceType cmdSource);
 
 private:
-	virtual ~AIGroup();
+	unsigned char m_unmodelled_000[4];
 	_STL::list<Object *> m_memberList;
 };
 
-static Real distanceKey(const Coord3D *from, const Coord3D *to)
-{
-	Real dx = (Real)fabs(from->x - to->x);
-	Real dy = (Real)fabs(from->y - to->y);
-	return dx + dy;
-}
-
 // ?groupDoSpecialPowerAtObject@AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
-void AIGroup::groupDoSpecialPowerAtObject(UnsignedInt specialPowerID,
-	Object *target, UnsignedInt commandOptions, CommandSourceType cmdSource)
+void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
+	UnsignedInt specialPowerID, Object *target, UnsignedInt commandOptions,
+	CommandSourceType cmdSource)
 {
 	_STL::list<BfmeDistanceEntry> sorted;
-	for (_STL::list<Object *>::iterator i = m_memberList.begin();
-		i != m_memberList.end(); ++i)
+	_STL::list<Object *>::iterator i;
+
+	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
 	{
+		Real distance = *(const Real *)0x01075350;
 		Object *object = *i;
-		if (!target)
-			continue;
+		if (target)
+		{
+			Coord3D targetPosition = *target->getPosition();
+			targetPosition.x -= object->getPosition()->x;
+			targetPosition.y -= object->getPosition()->y;
+			if ((Real)fabs(targetPosition.x) > (Real)fabs(targetPosition.y))
+				distance = (Real)fabs(targetPosition.x) + (Real)fabs(targetPosition.y) * *(const Real *)0x01083B6C;
+			else
+				distance = (Real)fabs(targetPosition.y) + (Real)fabs(targetPosition.x) * *(const Real *)0x01083B6C;
+		}
 
 		BfmeDistanceEntry entry;
 		entry.m_object = object;
-		entry.m_distance = distanceKey(object->getPosition(), target->getPosition());
+		entry.m_distance = distance;
 		_STL::list<BfmeDistanceEntry>::iterator at = sorted.begin();
-		while (at != sorted.end() && at->m_distance <= entry.m_distance)
-			++at;
-		sorted.insert(at, entry);
+		for (; at != sorted.end(); ++at)
+		{
+			if (at->m_distance > entry.m_distance)
+				break;
+		}
+		if (at == sorted.end())
+			sorted.push_back(entry);
+		else
+			sorted.insert(at, entry);
 	}
 
-	for (_STL::list<BfmeDistanceEntry>::iterator i = sorted.begin();
-		i != sorted.end(); ++i)
+	for (_STL::list<BfmeDistanceEntry>::iterator j = sorted.begin();
+		j != sorted.end(); ++j)
 	{
-		Object *object = i->m_object;
-		AIUpdateInterface *ai = object->getAI();
+		Object *object = j->m_object;
+		BfmeAIUpdateInterface *ai = object->getAI();
 		if (!ai)
 			continue;
 
 		ai->m_lastCommandSource = cmdSource;
-		SpecialPowerTemplate *power =
+		const SpecialPowerTemplate *power =
 			TheSpecialPowerStore->findSpecialPowerTemplateByID(specialPowerID);
 		if (!power)
 			continue;

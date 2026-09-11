@@ -92,30 +92,41 @@ public:
 class Vector2
 {
 public:
-	union {
-		Real X;
-		Real U;
-	};
-	union {
-		Real Y;
-		Real V;
-	};
-
-	__forceinline Vector2(void) {}
 	__forceinline Vector2(Real x, Real y) : X(x), Y(y) {}
+
+	__forceinline Real Length2(void) const
+	{
+		return X * X + Y * Y;
+	}
 
 	__forceinline Real Length(void) const
 	{
 		return WWMath::Sqrt(Length2());
 	}
 
-	__forceinline Real Length2(void) const
-	{
-		return X * X + Y * Y;
-	}
+	Real X;
+	Real Y;
 };
 
 struct Direction2
+{
+	Real x;
+	Real y;
+};
+
+union DirectionSlots
+{
+	struct
+	{
+		Real angle;
+		Real length;
+		Real x;
+		Real y;
+	};
+	Real values[4];
+};
+
+struct DirectionPair
 {
 	Real x;
 	Real y;
@@ -187,21 +198,15 @@ void W3DView::cameraModFinalLookToward(Coord3D *pLoc)
 			result.y += 0.25f * (middle.y - end.y + middle.y - start.y);
 			result.z = 0;
 
-			Real directionLength;
-			Direction2 direction;
-			direction.x = pLoc->x - result.x;
-			direction.y = pLoc->y - result.y;
-			Real angle = direction.x * direction.x + direction.y * direction.y;
-			__asm {
-				fld [angle]
-				fsqrt
-				fstp [directionLength]
-			}
+			Real directionX = pLoc->x - result.x;
+			Real directionY = pLoc->y - result.y;
+			Real angle = directionX * directionX + directionY * directionY;
+			Real directionLength = WWMath::Sqrt(angle);
 			if (directionLength < 0.1f) {
 				continue;
 			}
-			angle = WWMath::Acos(direction.x / directionLength);
-			if (direction.y < 0.0f) {
+			angle = WWMath::Acos(directionX / directionLength);
+			if (directionY < 0.0f) {
 				angle = -angle;
 			}
 			angle -= g_bfmeDefaultEG;

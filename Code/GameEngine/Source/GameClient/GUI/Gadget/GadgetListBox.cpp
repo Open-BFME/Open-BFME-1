@@ -2369,9 +2369,52 @@ void GadgetListBoxRemoveMultiSelect( GameWindow *listbox )
 	* adjust multiselection lists if present and any display 
 	* strings present */
 //=============================================================================
+// BFME's listbox record inserts the child window trio before totalHeight and
+// moves the selection/display fields accordingly.  This slice is local to the
+// resized-list body so the ZH ListboxData used by the other bodies stays put.
+struct Rva004BB8E0ListboxData
+{
+	Short listLength;
+	Short columns;
+	UnsignedByte m_pad04[7];
+	Bool multiSelect;
+	UnsignedByte m_pad0c[0x0c];
+	ListEntryRow *listData;
+	GameWindow *upButton;
+	GameWindow *downButton;
+	GameWindow *slider;
+	Int totalHeight;
+	Short endPos;
+	Short insertPos;
+	UnsignedByte m_pad30[4];
+	Int selectPos;
+	Int *selections;
+	Short displayHeight;
+	UnsignedByte m_pad3e[2];
+	UnsignedInt doubleClickTime;
+	Short displayPos;
+};
+
+class Rva004BB8E0DisplayStringManager
+{
+public:
+	virtual void pad00() = 0;
+	virtual void pad04() = 0;
+	virtual void pad08() = 0;
+	virtual void pad0c() = 0;
+	virtual void pad10() = 0;
+	virtual void pad14() = 0;
+	virtual void pad18() = 0;
+	virtual void pad1c() = 0;
+	virtual void pad20() = 0;
+	virtual void pad24() = 0;
+	virtual void freeDisplayString(DisplayString *string) = 0;
+};
+
 void GadgetListBoxSetListLength( GameWindow *listbox, Int newLength )
 {
-	ListboxData *listboxData = (ListboxData *)listbox->winGetUserData();
+	Rva004BB8E0ListboxData *listboxData =
+		(Rva004BB8E0ListboxData *)listbox->winGetUserData();
 
 
 //	ListboxData *listboxData = (ListboxData *)listbox->winGetUserData();
@@ -2431,7 +2474,7 @@ void GadgetListBoxSetListLength( GameWindow *listbox, Int newLength )
 					// If we can delete the stuff that won't be showing up in the new listData struture
 					if ( cells[j].data )
 					{
-						TheDisplayStringManager->freeDisplayString((DisplayString *) cells[j].data );	
+						reinterpret_cast<Rva004BB8E0DisplayStringManager *>(TheDisplayStringManager)->freeDisplayString((DisplayString *) cells[j].data );	
 					}
 				}
 //			if ( cells[j].userData ) 
@@ -2439,14 +2482,14 @@ void GadgetListBoxSetListLength( GameWindow *listbox, Int newLength )
 			}
 		}
 		if ( i >= newLength )
-			delete(listboxData->listData[i].cell);
+			delete [] (listboxData->listData[i].cell);
 		listboxData->listData[i].cell = NULL;
 	}
 
 	listboxData->listLength = newLength;
 
 	if( listboxData->listData )
-		delete( listboxData->listData );
+		delete [] ( listboxData->listData );
 	listboxData->listData = newData;
 	
 	//reset the total height

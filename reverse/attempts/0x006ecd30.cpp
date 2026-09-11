@@ -152,20 +152,23 @@ void W3DDisplay::drawImageCore(Image *image, Real x0, Real y0,
 		m_render2D->m_textureSet = -(*textureRef != 0);
 	}
 
-	Real imageRatio = BfmeZeroRange;
+	Real imageRatio;
 	if (source.slot18())
 		imageRatio = (Real)(UnsignedInt)source.m_10 /
 			(Real)(UnsignedInt)source.m_18;
+	else
+		imageRatio = BfmeZeroRange;
 
-	if (!source.slot18())
-		return;
-
-	Real uvRatio = (Real)(UnsignedInt)source.m_0c /
-		(Real)(UnsignedInt)source.m_14;
+	Real uvRatio;
+	if (source.slot18())
+		uvRatio = (Real)(UnsignedInt)source.m_0c /
+			(Real)(UnsignedInt)source.m_14;
+	else
+		uvRatio = BfmeZeroRange;
 	RectClass uv = {
 		textureScale,
 		textureScale,
-		BfmeZeroRange - textureScale,
+		uvRatio - textureScale,
 		imageRatio - textureScale
 	};
 	RectClass screen = { x0, y0, x1, y1 };

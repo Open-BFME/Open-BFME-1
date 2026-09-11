@@ -1,5 +1,6 @@
-// ?gogoGadgetTextEntry@GameWindowManager@@UAEPAVGameWindow@@PAURva0047FCF0FactoryInput@@PAURva0047FCF0EntryData@@PAVGameFont@@_N@Z
-// partial score=0.88 date=2026-09-10
+// ?gogoGadgetTextEntry@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_EntryData@@PAVGameFont@@_N@Z
+// partial score=0.9 date=2026-09-11
+// ?gogoGadgetTextEntry@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_EntryData@@PAVGameFont@@_N@Z
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x0047FCF0 is the BFME text-entry factory.  The BFME gadget path
@@ -23,11 +24,12 @@ template <typename T> class StringBase
 {
 	friend class AsciiString;
 	friend class UnicodeString;
+	friend class Rva0047FCF0TempString;
 
 private:
-	StringBase();
-	StringBase(const StringBase<T> &that);
-	void releaseBuffer();
+	StringBase() throw();
+	StringBase(const StringBase<T> &that) throw();
+	void releaseBuffer() throw();
 
 protected:
 	void *data;
@@ -42,14 +44,23 @@ public:
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
-	UnicodeString();
-	UnicodeString(const UnicodeString &that) : StringBase<unsigned short>(that) {}
+	UnicodeString() throw();
+	UnicodeString(const UnicodeString &that) throw() : StringBase<unsigned short>(that) {}
 	~UnicodeString() { releaseBuffer(); }
 
 	Int getLength() const
 	{
 		return data ? *(UnsignedShort *)((char *)data + 4) : 0;
 	}
+
+};
+
+class Rva0047FCF0TempString : private StringBase<unsigned short>
+{
+public:
+	Rva0047FCF0TempString(const Rva0047FCF0TempString &that)
+		: StringBase<unsigned short>(that) {}
+	~Rva0047FCF0TempString() { releaseBuffer(); }
 };
 
 class WinInstanceData
@@ -70,8 +81,8 @@ class DisplayString
 {
 public:
 	virtual void v00();
-	virtual void setText(UnicodeString);
-	virtual UnicodeString getText();
+	virtual void setText(Rva0047FCF0TempString) throw();
+	virtual Rva0047FCF0TempString getText() throw();
 	virtual Int getTextLength();
 };
 
@@ -169,7 +180,7 @@ public:
 	void winSetUserData(void *data);
 };
 
-class GameWindowManager
+class Rva0047FCF0GameWindowManager
 {
 public:
 	virtual void v00();
@@ -271,7 +282,8 @@ enum
 #pragma comment(linker, "/alternatename:?init@WinInstanceData@@QAEXXZ=?j_00021431@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1WinInstanceData@@QAE@XZ=?j_00021431@@YAXXZ")
 
-GameWindow *GameWindowManager::gogoGadgetTextEntry(
+// ?gogoGadgetTextEntry@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_EntryData@@PAVGameFont@@_N@Z
+GameWindow *Rva0047FCF0GameWindowManager::gogoGadgetTextEntry(
 	Rva0047FCF0FactoryInput *input, Rva0047FCF0EntryData *entryData,
 	GameFont *defaultFont, Bool defaultVisual)
 {
@@ -319,26 +331,26 @@ GameWindow *GameWindowManager::gogoGadgetTextEntry(
 		memset(&listData, 0, sizeof(Rva0047FCF0ListboxData));
 		listData.listLength = 128;
 		listData.autoScroll = 0;
-		listData.columns = 1;
+		listData.scrollIfAtEnd = 0;
 		listData.autoPurge = 1;
 		listData.scrollBar = 1;
-		listData.scrollIfAtEnd = 0;
 		listData.multiSelect = 0;
+		listData.columns = 1;
 		listData.listData = 0;
 		boxInstData.style = GWS_SCROLL_LISTBOX | GWS_MOUSE_TRACK;
 		listInput.owner = 0;
-		listInput.status = 0x4430;
 		listInput.x = 0;
 		listInput.y = input->height;
-		listInput.width = 0x6e;
-		listInput.height = 0x77;
-		listInput.instanceData = &boxInstData;
 		listInput.padBeforeInstanceData[0] = 0;
 		listInput.padBeforeInstanceData[1] = 0;
 		listInput.padBeforeInstanceData[2] = 0;
 		listInput.padBeforeInstanceData[3] = 0;
 		listInput.padBeforeInstanceData[4] = 0;
 		listInput.padBeforeInstanceData[5] = 0;
+		listInput.status = 0x4430;
+		listInput.width = 0x6e;
+		listInput.height = 0x77;
+		listInput.instanceData = &boxInstData;
 
 		data->constructList = gogoGadgetListBox(
 			&listInput, &listData, 0, 1);
