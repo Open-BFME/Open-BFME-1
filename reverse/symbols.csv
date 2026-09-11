@@ -87169,6 +87169,7 @@ g_rva8CB8C0InitBounds,0x013378B4,address-derived bounds initializer function poi
 g_rva8CD130IdleHook,0x01337810,address-derived Apt idle hook pointer read by 0x008CD130
 g_rva8CD3F0RouteIndices,0x012D5A10,address-derived route index table read by 0x008CD3F0
 g_rva8D0D80CreateTag,0x01338610,address-derived Apt creation tag passed by 0x008D0D80
+??0GameLogic@@QAE@XZ,0x003928E0,Win32GameEngine::createGameLogic calls this body before installing W3DGameLogic primary and Snapshot vtables; body begins with SubsystemInterface construction and initializes the GameLogic layout established by its matched destructor
 g_statsConnection,0x012D9038,Open-BFME5 IsStatsConnected global
 g_theNameKeyGenerator,0x012ED600,TheNameKeyGenerator
 g_theWaypointNameDict,0x012A77A8,MapObject setWaypointName Dict global
