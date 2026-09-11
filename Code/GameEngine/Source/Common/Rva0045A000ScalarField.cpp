@@ -55,12 +55,27 @@ extern float R3FieldZero01075350;
 extern float R3FieldSampleScale010F653C;
 extern float R3FieldSlope1096CF4;
 extern float R3FieldDiagonal10861AC;
+extern float g_bfmeDefaultBU;
+extern float g_bfmeDirectionWeight1285;
+extern "C" __declspec(dllimport) double __cdecl BfmeFloorER( double value );
+
+__forceinline int Rva0045A000FloatToInt( float value )
+{
+	int result;
+	__asm
+	{
+		fld value
+		fistp result
+	}
+	return result;
+}
 
 class Rva0045A000
 {
 public:
 	void initialize( const R3HeightSample *source, int unused,
 		int sourceWidth, int sourceHeight, int state );
+	float sample( float x, float y );
 
 	_STL::vector<float, _STL::allocator<float> > m_data;
 	int m_width;
@@ -173,4 +188,52 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 
 	m_state = state;
 	m_ready = true;
+}
+
+float Rva0045A000::sample( float x, float y )
+{
+	if( !m_ready )
+		return R3FieldZero01075350;
+
+	float scale = g_bfmeDefaultBU / m_scale;
+	float offset = (float)m_state * g_bfmeDirectionWeight1285;
+	register float scaledX = (x + offset) * scale;
+	register float scaledY = (y + offset) * scale;
+	float xFloor = (float)BfmeFloorER( (double)scaledX );
+	register int xIndex = Rva0045A000FloatToInt( xFloor );
+	float yFloor = (float)BfmeFloorER( (double)scaledY );
+	register int yIndex = Rva0045A000FloatToInt( yFloor );
+	float xFraction = scaledX - (float)xIndex;
+	float yFraction = scaledY - (float)yIndex;
+
+	if( xIndex < 0 )
+		xIndex = 0;
+	if( yIndex < 0 )
+		yIndex = 0;
+
+	if( xIndex > m_width - 1 )
+		xIndex = m_width - 1;
+	if( yIndex > m_height - 1 )
+		yIndex = m_height - 1;
+	if( xIndex > m_width - 2 || yIndex > m_height - 2 )
+		return m_data[ yIndex * m_width + xIndex ];
+
+	int index = yIndex * m_width + xIndex;
+	float p0 = m_data[ index ];
+	float p2 = m_data[ index + m_width + 1 ];
+	if( yFraction > xFraction )
+	{
+		float p3 = m_data[ index + m_width ];
+		float height = (1.0f - yFraction) * (p0 - p3) +
+			xFraction * (p2 - p3);
+		height = height + p3;
+		return height;
+	}
+	{
+		float p1 = m_data[ index + 1 ];
+		float height = (1.0f - xFraction) * (p0 - p1) +
+			yFraction * (p2 - p1);
+		height = height + p1;
+		return height;
+	}
 }
