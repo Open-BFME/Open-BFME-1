@@ -1,5 +1,29 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+class RecorderClass
+{
+public:
+	static AsciiString getReplayDir();
+};
+
+extern "C" __declspec(dllimport) int __stdcall DeleteFileA(const char *fileName);
+extern "C" __declspec(dllimport) unsigned long __stdcall GetLastError(void);
+
+class GameState
+{
+public:
+	AsciiString getFilePathInSaveDirectory(const AsciiString &leaf) const;
+};
+
+extern GameState *TheGameState;
+
+struct Rva56E070SelectedItem
+{
+	AsciiString filename;
+};
+
 class BfmeThingME
 {
 public:
@@ -88,5 +112,30 @@ void Rva56E070StateOwner::dispatchLateState(int unused)
 	}
 	if (m_state == 17) {
 		m_state = m_direction != 0 ? 3 : 1;
+	}
+}
+
+void Rva56E070StateOwner::finishState16()
+{
+	if (m_arg264 != 0)
+	{
+		Rva56E070SelectedItem *selected =
+			(Rva56E070SelectedItem *)(unsigned int)bfmeTestME();
+		if (selected != 0 && *(void **)&selected->filename != 0 &&
+			*(unsigned short *)((char *)*(void **)&selected->filename + 4) != 0)
+		{
+			AsciiString path;
+			if (m_auxiliaryState == 4)
+				path = RecorderClass::getReplayDir() + selected->filename;
+			else
+				path = TheGameState->getFilePathInSaveDirectory(selected->filename);
+
+			void *pathData = *(void **)&path;
+			const char *pathText = pathData != 0
+				? (const char *)pathData + 8 : (const char *)0x0107388B;
+			DeleteFileA(pathText);
+			*(unsigned long *)0x012F4B48 = GetLastError();
+		}
+		m_state = 2;
 	}
 }
