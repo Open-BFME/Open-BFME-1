@@ -78601,6 +78601,7 @@ name,address,notes
 ?deleteListResources@Radar@@IAEXXZ,0x0002C976
 ?deleteLoadScreen@GameLogicClientUpdate@@QAEXXZ,0x00040791,ILT used by GameEngine::_bfme_updateClientSubsystems for GameLogic::deleteLoadScreen body 0x0038D100
 ?deleteNotificationBox@@YAXXZ,0x000271DD
+?deleteOverrides@BfmeSpecialPowerOverrideView@@QAEPAV1@XZ,0x00032D1C,Same ICF override-chain cleanup thunk as Overridable::deleteOverrides; SpecialPowerStore::reset at 0x000EB7B0 calls it recursively
 ?deleteOverrides@Overridable@@QAEPAV1@XZ,0x00032D1C,LocomotorStore::reset at 0x001B7160 calls the shared override-chain cleanup thunk
 ?deleteTeam@Team@@QAEX_N@Z,0x00028105,doTeamDelete canonical call after BFME ScriptEngine team lookup
 ?deleteTerrainIndexArray@@YAXPAX@Z,0x00881EF0,HeightMapRenderObjClass terrain index array deallocator

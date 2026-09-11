@@ -451,13 +451,36 @@ Bool SpecialPowerStore::canUseSpecialPower( Object *obj, const SpecialPowerTempl
 //-------------------------------------------------------------------------------------------------
 /** Reset */
 //-------------------------------------------------------------------------------------------------
-// ?reset@SpecialPowerStore@@ present-unmatched
+// BFME's Overridable cleanup predates the memory-pool deleteInstance path in
+// the Zero Hour header.  Keep the retail three-field view local to this TU so
+// reset emits the original virtual deleting-destructor call.
+class BfmeSpecialPowerOverrideView
+{
+public:
+	virtual ~BfmeSpecialPowerOverrideView();
+
+	BfmeSpecialPowerOverrideView *m_nextOverride;
+	bool m_isOverride;
+
+	BfmeSpecialPowerOverrideView *deleteOverrides()
+	{
+		if (m_isOverride)
+		{
+			delete this;
+			return NULL;
+		}
+		if (m_nextOverride)
+			m_nextOverride = m_nextOverride->deleteOverrides();
+		return this;
+	}
+};
+
 void SpecialPowerStore::reset( void )
 {
 	for (SpecialPowerTemplatePtrVector::iterator it = m_specialPowerTemplates.begin(); it != m_specialPowerTemplates.end(); /*++it*/)
 	{
-		SpecialPowerTemplate* si = *it;
-		Overridable* temp = si->deleteOverrides();
+		BfmeSpecialPowerOverrideView *si = (BfmeSpecialPowerOverrideView *)*it;
+		BfmeSpecialPowerOverrideView *temp = si->deleteOverrides();
 		if (temp == NULL)
 		{
 			it = m_specialPowerTemplates.erase(it);
