@@ -1,103 +1,89 @@
-// ?bfmeGetAG@BfmeOwnerAG@@QAE?AUBfmeVec3AG@@XZ (identity unknown)
-// partial score=0.85 date=2026-09-07
-// 89/97, eight bytes short. Solved and worth reusing:
-//   * this is an SRET body -- `ret 4`, and the hidden buffer pointer loaded with
-//     `mov eax,[esp+0x20]` at the end IS the return value.
-//   * the result must be built with `return BfmeVec3AG(x, y, z);` and the struct
-//     given a constructor. A local `r` filled field by field and returned costs
-//     19 bytes for the copy into the sret buffer (116 vs 97) --
-//     [[construct-in-the-return]], no NRV in 13.10.
-//   * x and z default to literal `0.0f` (immediate `mov dword ptr,0`) but y
-//     defaults to the NAMED const float at RVA 0x00C75350 (`fld`), so the three
-//     defaults are not spelled the same way in the source.
-// The 8-byte gap is one float round-trip: retail materialises y in memory on the
-// item path -- `mov eax,[esi+0x34]` / `mov [esp+0x14],eax` / `fld [esp+0x14]`
-// (11 bytes) -- where MSVC just does `fld [esi+0x34]` (3). Retail also reserves
-// 0x18 of frame with the three live slots 8 bytes apart (-24, -16, -8) against
-// MSVC's 8, so there are three more slots it never touches. `volatile float y`
-// would force the store but retail's zero path has NO store for y, so that is
-// not it either. Something makes y a real memory local only on one arm.
-extern const float g_bfmeZeroAG;
+// ?rva0001895d@Rva00615D50Object@@QAE?AUCoord3D@@XZ
+// partial score=0.85 date=2026-09-11
+// Authentic identity: the 0x00615D50 lookup is a named caller and its ILT
+// 0x0001895D names this Rva00615D50Object world-position getter.  The body is
+// an SRET Coord3D getter over the holder at this+0x0c and item coordinates at
+// +0x24, +0x34 and +0x44.  This clean shape is 89/97 bytes: the remaining
+// mismatch is the compiler's x87/register scheduling and y temporary spill.
+extern const float BfmeZeroRange;
 
-struct BfmeVec3AG
+struct Coord3D
 {
-	BfmeVec3AG(float x, float y, float z)
+	Coord3D(float x, float y, float z)
 	{
-		m_bfmeXAG = x;
-		m_bfmeYAG = y;
-		m_bfmeZAG = z;
+		m_x = x;
+		m_y = y;
+		m_z = z;
 	}
 
-	float m_bfmeXAG;
-	float m_bfmeYAG;
-	float m_bfmeZAG;
+	float m_x;
+	float m_y;
+	float m_z;
 };
 
-class BfmeItemAG
+class Rva00615D50Item
 {
 public:
-	virtual void bfmeV00AG();
-	virtual void bfmeV01AG();
-	virtual void bfmeV02AG();
-	virtual void bfmeV03AG();
-	virtual void bfmeV04AG();
-	virtual void bfmeV05AG();
-	virtual void bfmeV06AG();
-	virtual void bfmeV07AG();
-	virtual void bfmeV08AG();
-	virtual void bfmeV09AG();
-	virtual void bfmeV10AG();
-	virtual void bfmeV11AG();
-	virtual void bfmeV12AG();
-	virtual void bfmeV13AG();
-	virtual void bfmeV14AG();
-	virtual void bfmeV15AG();
-	virtual void bfmeV16AG();
-	virtual void bfmeV17AG();
-	virtual void bfmeV18AG();
-	virtual void bfmeV19AG();
-	virtual void bfmeUpdateAG();
+	virtual void d00();
+	virtual void d04();
+	virtual void d08();
+	virtual void d0C();
+	virtual void d10();
+	virtual void d14();
+	virtual void d18();
+	virtual void d1C();
+	virtual void d20();
+	virtual void d24();
+	virtual void d28();
+	virtual void d2C();
+	virtual void d30();
+	virtual void d34();
+	virtual void d38();
+	virtual void d3C();
+	virtual void d40();
+	virtual void d44();
+	virtual void d48();
+	virtual void d4C();
+	virtual void update();
 
-	unsigned char m_bfmeHeadAG[0x20];
-	float m_bfmeXAG;
-	unsigned char m_bfmeMidAG[0xc];
-	float m_bfmeYAG;
-	unsigned char m_bfmeMid2AG[0xc];
-	float m_bfmeZAG;
+	unsigned char m_at04[0x20];
+	float m_x;
+	unsigned char m_at28[0x0c];
+	float m_y;
+	unsigned char m_at38[0x0c];
+	float m_z;
 };
 
-class BfmeHolderAG
+struct Rva00615D50Holder
 {
-public:
-	unsigned char m_bfmeHeadAG[8];
-	BfmeItemAG *m_bfmeItemAG;
+	unsigned char m_at00[8];
+	Rva00615D50Item *m_item;
 };
 
-class BfmeOwnerAG
+struct Rva00615D50Object
 {
-public:
-	BfmeVec3AG bfmeGetAG();
+	Coord3D rva0001895d();
 
-	unsigned char m_bfmeHeadAG[0xc];
-	BfmeHolderAG *m_bfmeHolderAG;
+	void *m_at00;
+	void *m_type;
+	int m_id;
+	Rva00615D50Holder *m_holder;
 };
 
-BfmeVec3AG BfmeOwnerAG::bfmeGetAG()
+Coord3D Rva00615D50Object::rva0001895d()
 {
 	float x = 0.0f;
-	float y = g_bfmeZeroAG;
+	float y = BfmeZeroRange;
 	float z = 0.0f;
-
-	BfmeItemAG *item = m_bfmeHolderAG->m_bfmeItemAG;
+	Rva00615D50Item *item = m_holder->m_item;
 
 	if (item != 0)
 	{
-		item->bfmeUpdateAG();
-
-		x = item->m_bfmeXAG;
-		y = item->m_bfmeYAG;
-		z = item->m_bfmeZAG;
+		item->update();
+		x = item->m_x;
+		y = item->m_y;
+		z = item->m_z;
 	}
 
-	return BfmeVec3AG(x, y, z);
+	return Coord3D(x, y, z);
 }
