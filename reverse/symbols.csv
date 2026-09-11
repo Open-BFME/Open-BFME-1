@@ -9943,7 +9943,7 @@ name,address,notes
 ??_7BfmeEntVTB@@6B@,0x010EC784,Open-BFME5 retail vftable stored by the 0x003A9370 copy helper
 ??_7BfmeF1124@@6B@,0x00D2FBB8,pin
 ??_7BfmeHostZB@@6B@,0x00CF6898,Open-BFME5 vftable the 0x0045B060 destructor installs
-??_7BfmeOwnCA@@6B@,0x00CF7650,pin
+??_7FontLibrary@@6B@,0x00CF7650,pin
 ??_7BfmeOwnCB@@6B@,0x00CE7D00,pin
 ??_7BfmeOwnCC@@6B@,0x00C86090,pin
 ??_7BfmeOwnCD@@6B@,0x00CE7688,pin
@@ -75777,7 +75777,7 @@ name,address,notes
 ?bfmeFreeBigCFA@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFreeBigCFB@@YAXPAD@Z,0x00881EB0,pin
 ?bfmeFreeBlock@@YAXPAX@Z,0x00881EF0,Open-BFME5 the free the derived destructors at 0x00924090 and its siblings call
-?bfmeFreeCA@BfmeOwnCA@@QAEXXZ,0x000267C4,pin
+?deleteAllFonts@FontLibrary@@IAEXXZ,0x000267C4,pin
 ?bfmeFreeCAD@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCBF@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeCDE@@YAXPAX@Z,0x00881EB0,pin
