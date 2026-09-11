@@ -12,16 +12,20 @@ public:
 	void bfmeDo979A(int a);
 };
 
-extern BfmeStateA979 *g_bfmeStateA979;
-extern int *g_bfmeGateA979;
-extern BfmeActA979 *g_bfmeActA979;
+class Shell
+{
+public:
+	bool showShellMap(bool useShellMap);
+};
 
-char __stdcall bfmeAsk979A(int a);
+extern BfmeStateA979 *g_bfmeStateA979;
+extern BfmeActA979 *g_bfmeActA979;
+extern Shell *TheShell;
 
 char bfmeGo979A(void)
 {
-	if (!g_bfmeStateA979 || !g_bfmeGateA979 || g_bfmeStateA979->m_bfmeMode == 4
-			|| !bfmeAsk979A(1))
+	if (!g_bfmeStateA979 || !TheShell || g_bfmeStateA979->m_bfmeMode == 4
+			|| !TheShell->showShellMap(true))
 		return 1;
 
 	g_bfmeActA979->bfmeDo979A(1);

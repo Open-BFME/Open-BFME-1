@@ -41,7 +41,7 @@ public:
 class Shell
 {
 public:
-	void showShellMap(bool);
+	bool showShellMap(bool);
 	void showShell(bool);
 };
 

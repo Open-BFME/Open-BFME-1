@@ -68,7 +68,7 @@ public:
 class Shell
 {
 public:
-	void showShellMap( Bool show );
+	Bool showShellMap( Bool show );
 };
 
 class NameKeyGenerator

@@ -544,7 +544,7 @@ struct BfmeGameLODGlobalData
 class Shell
 {
 public:
-	void showShellMap(Bool useShellMap);
+	Bool showShellMap(Bool useShellMap);
 };
 
 extern Shell *TheShell;

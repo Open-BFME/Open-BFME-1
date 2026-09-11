@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+#define __SHELL_H_
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
 /*
@@ -42,6 +43,23 @@
 #include "GameClient/Shell.h"
 #include "GameClient/KeyDefs.h"
 #include "GameClient/GameWindowManager.h"
+
+// BFME changed showShellMap's result ABI from Zero Hour's void declaration.
+// Keep the ABI shim scoped to this translation unit.
+class Shell
+{
+public:
+	Bool showShellMap(Bool useShellMap);
+	void push(AsciiString filename, Bool shutdownImmediate = FALSE);
+	void pop();
+	void shutdownComplete(WindowLayout *layout, Bool impendingPush = FALSE);
+	void registerWithAnimateManager(GameWindow *window, AnimTypes type,
+		Bool needsToFinish, UnsignedInt delayMS = 0);
+	Bool isAnimFinished();
+	void reverseAnimatewindow();
+};
+
+extern Shell *TheShell;
 
 //-------------------------------------------------------------------------------------------------
 // WindowLayout::hide is virtual in BFME (vtable slot 0x10) and non-virtual in
@@ -301,4 +319,3 @@ WindowMsgHandledType SinglePlayerMenuSystem( GameWindow *window, UnsignedInt msg
 
 	return MSG_HANDLED;
 }  // end SinglePlayerMenuSystem
-
