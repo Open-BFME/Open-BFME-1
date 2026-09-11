@@ -2,6 +2,7 @@ typedef unsigned (__cdecl *FadeCallback)(float, bool);
 unsigned fade00565170(float, bool);
 unsigned fade0060F010(float, bool);
 unsigned fade005651F0(float, bool);
+void j_000304bd();
 extern unsigned fadeQueueKey;
 // cl: /DNDEBUG
 //
@@ -111,6 +112,23 @@ void rva00612160Post()
 		&fadeQueueKey);
 	postTimedOp(
 		LoadGameFadeSlot(&fade005651F0),
+		&fadeQueueKey);
+	((BfmeVirtualMouseSetCursor *)TheMouse)->setCursor(1);
+	TheAptPalantir->hide(true);
+	TheInGameUI->freeMessageResources();
+	TheLivingWorldLogic->sub->flag = 1;
+}
+
+// Two-step sibling at retail 0x00612070.  The surviving callback names are
+// incomplete, so this helper keeps an RVA-derived spelling while preserving
+// the callback ABI established by the matched three-step body above.
+void rva00612070Post()
+{
+	postTimedOp(
+		LoadGameFadeSlot(&fade00565170),
+		&fadeQueueKey);
+	postTimedOp(
+		LoadGameFadeSlot(reinterpret_cast<FadeCallback>(&j_000304bd)),
 		&fadeQueueKey);
 	((BfmeVirtualMouseSetCursor *)TheMouse)->setCursor(1);
 	TheAptPalantir->hide(true);
