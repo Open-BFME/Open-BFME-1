@@ -1,486 +1,213 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?popupMessage@InGameUI@@: Code/GameEngine/Source/GameClient/InGameUI.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-class AsciiString;
-class InGameUI { public: virtual void popupMessage(AsciiString const &, int, int, int, int, bool, bool); };
-// ?popupMessage@InGameUI@@UAEXABVAsciiString@@HHHH_N1@Z
-__declspec(naked) void InGameUI::popupMessage(AsciiString const &, int, int, int, int, bool, bool)
+typedef bool Bool;
+typedef int Int;
+typedef unsigned short WideChar;
+typedef unsigned int UnsignedInt;
+typedef int Color;
+typedef float Real;
+
+#define TRUE true
+#define FALSE false
+
+template <typename Char>
+class StringBase
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x88
-		__emit 0x2c
-		__emit 0x02
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x8b
-		__emit 0x86
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x57
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x8a
-		__emit 0xd5
-		__emit 0xbc
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x53
-		__emit 0x57
-		__emit 0xe8
-		__emit 0x22
-		__emit 0x10
-		__emit 0xbc
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x53
-		__emit 0x51
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x28
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xd8
-		__emit 0x5a
-		__emit 0x44
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x7c
-		__emit 0x14
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0x52
-		__emit 0xff
-		__emit 0x50
-		__emit 0x24
-		__emit 0x6a
-		__emit 0x20
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xe8
-		__emit 0x8d
-		__emit 0xfe
-		__emit 0x43
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x74
-		__emit 0x0b
-		__emit 0xc7
-		__emit 0x00
-		__emit 0xc4
-		__emit 0x58
-		__emit 0x0f
-		__emit 0x01
-		__emit 0x89
-		__emit 0x58
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x02
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x86
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x48
-		__emit 0x04
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x66
-		__emit 0x64
-		__emit 0x44
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xb9
-		__emit 0x64
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xc1
-		__emit 0x7e
-		__emit 0x06
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x24
-		__emit 0xeb
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x7d
-		__emit 0x04
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x3b
-		__emit 0xc1
-		__emit 0x7e
-		__emit 0x06
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xeb
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x7d
-		__emit 0x04
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x28
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x70
-		__emit 0x12
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x11
-		__emit 0xff
-		__emit 0x52
-		__emit 0x2c
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x7d
-		__emit 0x06
-		__emit 0xd8
-		__emit 0x05
-		__emit 0x58
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0x24
-		__emit 0x6c
-		__emit 0x07
-		__emit 0x01
-		__emit 0xde
-		__emit 0xc9
-		__emit 0xe8
-		__emit 0x0f
-		__emit 0x4d
-		__emit 0x5b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x41
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x70
-		__emit 0x12
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x11
-		__emit 0xff
-		__emit 0x52
-		__emit 0x30
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x7d
-		__emit 0x06
-		__emit 0xd8
-		__emit 0x05
-		__emit 0x58
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xdb
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0x24
-		__emit 0x6c
-		__emit 0x07
-		__emit 0x01
-		__emit 0xde
-		__emit 0xc9
-		__emit 0xe8
-		__emit 0xd8
-		__emit 0x4c
-		__emit 0x5b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x41
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x32
-		__emit 0x7d
-		__emit 0x05
-		__emit 0xb8
-		__emit 0x32
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x96
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x30
-		__emit 0x89
-		__emit 0x42
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x86
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x48
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x96
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8a
-		__emit 0x44
-		__emit 0x24
-		__emit 0x34
-		__emit 0x3a
-		__emit 0xc3
-		__emit 0x8a
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x38
-		__emit 0x88
-		__emit 0x42
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x96
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x88
-		__emit 0x4a
-		__emit 0x19
-		__emit 0x74
-		__emit 0x17
-		__emit 0x33
-		__emit 0xc0
-		__emit 0x3a
-		__emit 0xcb
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x98
-		__emit 0x08
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x0f
-		__emit 0x94
-		__emit 0xc0
-		__emit 0x6a
-		__emit 0x01
-		__emit 0x50
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x8e
-		__emit 0x4d
-		__emit 0xbc
-		__emit 0xff
-		__emit 0x51
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x38
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x68
-		__emit 0x5c
-		__emit 0x59
-		__emit 0x0f
-		__emit 0x01
-		__emit 0xe8
-		__emit 0xed
-		__emit 0x69
-		__emit 0x44
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x40
-		__emit 0x1b
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x11
-		__emit 0xff
-		__emit 0x52
-		__emit 0x6c
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x41
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x96
-		__emit 0xa8
-		__emit 0x12
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4a
-		__emit 0x1c
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x53
-		__emit 0xff
-		__emit 0x10
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xca
-		__emit 0x5f
-		__emit 0x44
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc2
-		__emit 0x1c
-		__emit 0x00
+public:
+	void set( const StringBase<Char> &source );
+
+protected:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const Char *source );
+	StringBase( const StringBase<Char> &source );
+	friend class UnicodeString;
+
+private:
+	void releaseBuffer();
+
+	void *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString( const AsciiString &source ) : StringBase<char>( source ) {}
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+	UnicodeString() : StringBase<WideChar>() {}
+	UnicodeString( const UnicodeString &source ) : StringBase<WideChar>( source ) {}
+	~UnicodeString() { releaseBuffer(); }
+
+	UnicodeString &operator=( const UnicodeString &source )
+	{
+		set( source );
+		return *this;
 	}
+};
+
+class BfmePopupWindowLayout
+{
+public:
+	virtual void runInit( void *userData ) = 0;
+};
+
+class PopupMessageData
+{
+public:
+	PopupMessageData() {}
+	virtual ~PopupMessageData();
+
+	UnicodeString message;
+	Int x;
+	Int y;
+	Int width;
+	Color textColor;
+	Bool pause;
+	Bool pauseMusic;
+	unsigned char _padding[2];
+	BfmePopupWindowLayout *layout;
+};
+
+class BfmeGameText
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual UnicodeString fetch( AsciiString label, Bool *exists = 0 ) = 0;
+};
+
+class BfmeDisplay
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual UnsignedInt getWidth() = 0;
+	virtual UnsignedInt getHeight() = 0;
+};
+
+class BfmeGameLogicPause
+{
+public:
+	void setGamePaused( Bool pause, Int pauseInput, Bool pauseMusic );
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	~BFMERetailAsciiString() {}
+};
+
+class BfmeWindowManager
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void slot26() = 0;
+	virtual BfmePopupWindowLayout *winCreateLayout( BFMERetailAsciiString filename ) = 0;
+};
+
+extern BfmeGameText *TheGameText;
+extern BfmeDisplay *TheDisplay;
+extern BfmeWindowManager *TheWindowManager;
+
+#define TheBfmeGameLogic (*(BfmeGameLogicPause **)0x012F0898)
+
+void UpdateDiplomacyBriefingText( const AsciiString &newText, Bool clear );
+
+class InGameUI
+{
+public:
+	virtual void popupMessage( const AsciiString &, Int, Int, Int, Color, Bool, Bool );
+	void clearPopupMessageData();
+};
+
+struct BfmeInGameUIPopup
+{
+	unsigned char _padding[0x12A8];
+	PopupMessageData *m_popupMessageData;
+};
+
+// ?popupMessage@InGameUI@@UAEXABVAsciiString@@HHHH_N1@Z
+void InGameUI::popupMessage( const AsciiString &identifier, Int x, Int y,
+	Int width, Color textColor, Bool pause, Bool pauseMusic )
+{
+	BfmeInGameUIPopup *self = (BfmeInGameUIPopup *)this;
+	if( self->m_popupMessageData )
+		clearPopupMessageData();
+
+	UpdateDiplomacyBriefingText( identifier, false );
+
+	UnicodeString message = TheGameText->fetch( identifier );
+	self->m_popupMessageData = new PopupMessageData;
+	self->m_popupMessageData->message = message;
+	if( x > 100 )
+		x = 100;
+	else if( x < 0 )
+		x = 0;
+	if( y > 100 )
+		y = 100;
+	else if( y < 0 )
+		y = 0;
+
+	self->m_popupMessageData->x = TheDisplay->getWidth() *
+		( (Real)x * *(const Real *)0x01076C24 );
+	self->m_popupMessageData->y = TheDisplay->getHeight() *
+		( (Real)y * *(const Real *)0x01076C24 );
+	if( width < 50 )
+		width = 50;
+	self->m_popupMessageData->width = width;
+	self->m_popupMessageData->textColor = textColor;
+	self->m_popupMessageData->pause = pause;
+	self->m_popupMessageData->pauseMusic = pauseMusic;
+
+	if( pause )
+		TheBfmeGameLogic->setGamePaused( TRUE, pauseMusic == FALSE, TRUE );
+
+	self->m_popupMessageData->layout =
+		TheWindowManager->winCreateLayout( BFMERetailAsciiString( "InGamePopupMessage.wnd" ) );
+	self->m_popupMessageData->layout->runInit( 0 );
 }

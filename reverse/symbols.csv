@@ -11993,6 +11993,8 @@ name,address,notes
 ?Uninitialised_Grow@StringClass@@AAEXH@Z,0x009DBA70
 ?Unregister_Mesh_Type@DX8MeshRendererClass@@QAEXPAVMeshModelClass@@@Z,0x00945F20,called by DX8TextureCategoryClass dtor 0x00946540 for each polygon renderer head
 ?UpdateBitmapInfo@CImage@ATL@@AAEXW4DIBOrientation@12@@Z,0x0005C350,direct body pin: VS2003 atlimage.h CImage::UpdateBitmapInfo exact 200-byte body; CreateEx reaches it through retail ILT 0x0004606F; campaign=luna36h-20260907;lane=xfer;model=gpt-5.6-sol-ultra
+?UpdateDiplomacyBriefingText@@YAXABVAsciiString@@_N@Z,0x004C47E0,retail diplomacy updater ABI reference spelling used by popupMessage
+?UpdateDiplomacyBriefingText@@YAXVAsciiString@@_N@Z,0x004C47E0,retail diplomacy updater called by popupMessage with AsciiString and FALSE
 ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z,0x0088A7E0,upstream Debug::GetFrameEntry direct callee when status is Unknown
 ?Update_Bounding_Box@ParticleBufferClass@@IAEXXZ,0x0098B460
 ?Update_Frustum@CameraClass@@IBEXXZ,0x00931DF0,CameraClass::Update_Frustum - REL32 callee for Project/Project_Camera_Space_Point
