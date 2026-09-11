@@ -141,17 +141,12 @@ protected:
 
 #pragma comment(linker, "/alternatename:?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ=?j_00021e27@@YAXXZ")
 
-class AIFearState
+class AIFearState : public AIInternalMoveToState
 {
 public:
 	virtual StateReturnType onEnter();
 
 private:
-	unsigned char m_pad04[0x18];
-	StateMachine *m_machine;
-	unsigned char m_pad20[0x2C];
-	Bool m_adjustDestinations;
-	unsigned char m_pad4D[3];
 	unsigned int m_okToRepathTimes;
 	Bool m_checkForPath;
 	unsigned char m_pad55[3];
@@ -214,19 +209,18 @@ typedef StateReturnType (__fastcall *StateOnEnter)(AIInternalMoveToState *);
 
 StateReturnType AIFearState::onEnter()
 {
+	AIFearState *self = this;
 	if (g_012F0239 && g_012ED4FC)
 		((CritterDesyncLog)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: setAdjustDestination(FALSE) 13");
 
 	BfmeFearObject *owner;
-	StateMachine *machine;
-	machine = (StateMachine *)m_machine;
-	m_adjustDestinations = false;
-	AIUpdateInterface *ai;
+	self->m_adjustDestinations = false;
 	BfmeFearObject *goal;
-	owner = (BfmeFearObject *)machine->m_owner;
-	goal = (BfmeFearObject *)machine->getGoalObject();
-	ai = ((BfmeFearObject *)m_machine->m_owner)->m_ai;
+	AIUpdateInterface *ai;
+	owner = (BfmeFearObject *)self->m_machine->m_owner;
+	goal = (BfmeFearObject *)self->m_machine->getGoalObject();
+	ai = ((BfmeFearObject *)self->m_machine->m_owner)->m_ai;
 	if (!goal || !ai)
 		return STATE_FAILURE;
 
@@ -246,9 +240,9 @@ StateReturnType AIFearState::onEnter()
 		((NotifyModelConditionChanged)j_0002191d)((Object *)owner);
 	}
 
-	m_okToRepathTimes = 1;
-	m_checkForPath = true;
-	m_extra = false;
+	self->m_okToRepathTimes = 1;
+	self->m_checkForPath = true;
+	self->m_extra = false;
 	Pathfinder *pathfinder = (*reinterpret_cast<AI **>(0x012EF214))->pathfinder();
 	pathfinder->removeGoal((Object *)owner);
 
@@ -263,5 +257,5 @@ StateReturnType AIFearState::onEnter()
 	destination.z += direction.z * *(const float *)0x010977E0;
 	ai->requestPath(&destination, true);
 
-	return ((StateOnEnter)j_00021e27)((AIInternalMoveToState *)this);
+	return ((StateOnEnter)j_00021e27)((AIInternalMoveToState *)self);
 }
