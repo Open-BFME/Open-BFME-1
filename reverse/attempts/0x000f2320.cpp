@@ -1,5 +1,5 @@
-// ?findTeamPrototype@TeamFactory@@QAEPAVTeamPrototype@@ABVAsciiString@@@Z
-// partial score=0.78 date=2026-09-11
+// ?d_000f2320@@YAXXZ
+// partial score=0.9 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 //
 // BFME's one-argument TeamFactory lookup splits a qualified team name into
