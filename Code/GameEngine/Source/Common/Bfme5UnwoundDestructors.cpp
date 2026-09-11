@@ -1,3 +1,35 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#define _STLP_NO_EXCEPTIONS 1
+#define __PLACEMENT_VEC_NEW_INLINE
+#define _STLP_EXPOSE_GLOBALS_IMPLEMENTATION 1
+#include "PreRTS.h"
+#include <vector>
+
+// The retail byte-vector teardown evaluates the capacity delta before testing
+// the start pointer.  Keep that source-level order explicit; STLport's vector
+// base destructor tests the pointer first and therefore emits a different
+// schedule for these five one-byte buffers.
+class BfmeDtorByteVector
+{
+public:
+	~BfmeDtorByteVector(void)
+	{
+		unsigned char *start = m_start;
+		size_t bytes = m_end_of_storage - m_start;
+		if (start != 0) {
+			_STL::allocator<unsigned char> allocator;
+			allocator.deallocate(start, bytes);
+		}
+	}
+
+private:
+	unsigned char *m_start;
+	unsigned char *m_finish;
+	unsigned char *m_end_of_storage;
+};
+
 // Five destructors over a base whose own destructor folds in.
 //
 // Each body is empty in source. What it emits is a full unwind frame -- the
@@ -17,7 +49,14 @@ public:
 	~BfmeDtorMemberA(void);				// retail 0x00836300
 
 private:
-	int m_bfmeValue;
+	_STL::vector<ICoord2D> m_vectors0[14];
+	_STL::vector<ICoord2D> m_vectorsA8[24];
+	_STL::vector<ICoord2D> m_vectors1C8[2];
+	BfmeDtorByteVector m_vector1E0;
+	BfmeDtorByteVector m_vector1EC;
+	BfmeDtorByteVector m_vector1F8;
+	BfmeDtorByteVector m_vector204;
+	BfmeDtorByteVector m_vector210;
 };
 
 class BfmeDtorMemberB
@@ -83,6 +122,10 @@ public:
 private:
 	BfmeDtorMemberB m_bfmeMember;				// +0x0C
 };
+
+BfmeDtorMemberA::~BfmeDtorMemberA(void)
+{
+}
 
 // ??1Gen_00837480@@UAE@XZ
 Gen_00837480::~Gen_00837480(void)
