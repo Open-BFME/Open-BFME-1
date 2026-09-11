@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "eff3742dad3478a3dce7ffef9e7913452efaef8f7208b47abcb26847dc68af48",
+  "symbol": "?bfmeRankPointsFromStats@@YAHPAVGen_uw_00025c1b@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?bfmeRankPointsFromStats@@YAHPAVGen_uw_00025c1b@@H@Z\n// partial score=0.86 date=2026-09-11\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\r\n// stlport\r\n\r\n#include <map>\r\n\r\ntypedef std::map<int, int> PerGeneralMap;\r\n\r\nclass Gen_uw_00025c1b\r\n{\r\npublic:\r\n\tint id;\r\n\tPerGeneralMap wins;\r\n\tPerGeneralMap losses;\r\n};\r\n\r\nstruct RankPoints\r\n{\r\n\tint m_ranks[10];\r\n\tfloat m_winMultiplier;\r\n\tfloat m_lostMultiplier;\r\n};\r\n\r\nextern RankPoints *g_bfmeLimitsDF;\r\n\r\nint bfmeRankPointsFromStats( register Gen_uw_00025c1b *stats, register int side )\r\n{\r\n\tint rankPoints = 0;\r\n\tint zero;\r\n\tPerGeneralMap::iterator it;\r\n\r\n\tif ( stats->id == 0 || !g_bfmeLimitsDF )\r\n\t\treturn 0;\r\n\r\n\trankPoints = 0;\r\n\tint key = side;\r\n\tit = stats->wins.find( key );\r\n\tif ( it != stats->wins.end() )\r\n\t{\r\n\t\tvolatile int value = it->second;\r\n\t\trankPoints = (int)( (float)value * g_bfmeLimitsDF->m_winMultiplier );\r\n\t}\r\n\r\n\tit = stats->losses.find( key );\r\n\tif ( it != stats->losses.end() )\r\n\t{\r\n\t\tvolatile int value = it->second;\r\n\t\trankPoints = (int)( (float)value * g_bfmeLimitsDF->m_lostMultiplier + (float)rankPoints );\r\n\t}\r\n\r\n\tzero = 0;\r\n\treturn *( rankPoints < 0 ? &zero : &rankPoints );\r\n}\r\n"
+}
