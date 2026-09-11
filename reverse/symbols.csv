@@ -78670,6 +78670,8 @@ name,address,notes
 ?doMergeTeamIntoTeam@ScriptActions@@IAEXABVAsciiString@@0@Z,0x00027DF4,ILT to ScriptActions::doMergeTeamIntoTeam body 0x002FD790
 ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z,0x0001FC3F
 ?doNamedMapReveal@ScriptEnginedoNamedMapRevealShim@@QAEXABVAsciiString@@@Z,0x0034D200,ScriptEngine::doNamedMapReveal incremental-link thunk target through a TU-local forwarding shim
+?doOCLAtBone@BoneFXUpdate@@IAEXPBVObjectCreationList@@PBUCoord3D@@@Z,0x0001B1F3,BoneFXUpdate update helper ILT called by update at 0x00289580
+?doParticleSystemAtBone@BoneFXUpdate@@IAEXPBVParticleSystemTemplate@@PBUCoord3D@@@Z,0x00019420,BoneFXUpdate update helper ILT called by update at 0x00289580
 ?doPhaseStuff@StructureCollapseUpdate@@IAEXW4StructureCollapsePhaseType@@PBUCoord3D@@@Z,0x00022872,StructureCollapse initial-phase ILT thunk
 ?doPhaseStuff@StructureToppleUpdate@@IAEXW4StructureTopplePhaseType@@PBUCoord3D@@@Z,0x00022AAC,StructureTopple delay FX final phase call thunk
 ?doPush@Shell@@IAEXVAsciiString@@@Z,0x00026792,Shell doPush ILT reached by Shell::shutdownComplete
