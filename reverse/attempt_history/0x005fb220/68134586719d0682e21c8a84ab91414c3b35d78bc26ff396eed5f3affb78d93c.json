@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "68134586719d0682e21c8a84ab91414c3b35d78bc26ff396eed5f3affb78d93c",
+  "symbol": "?getVelocity@LightningEmissionModule@FXParticleSystem@@UAE?AVCoord3D@2@PBV32@MM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.0,
+  "source": "// ?getVelocity@LightningEmissionModule@FXParticleSystem@@UAE?AVCoord3D@2@PBV32@MM@Z\n// partial score=0.0 date=2026-09-11\n#include <math.h>\n\nextern const float BfmeZeroRange;\nextern float g_bfmeDefaultBU;\n\nnamespace FXParticleSystem\n{\n\nstruct Coord3D\n{\n\tCoord3D(float xValue, float yValue, float zValue)\n\t\t: x(xValue), y(yValue), z(zValue) {}\n\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nclass LightningEmissionModule\n{\npublic:\n\tvirtual Coord3D getVelocity(const Coord3D *position, float speed, float radialSpeed);\n\n\tunsigned char m_pad[0x08];\n\tCoord3D m_start;\n\tCoord3D m_end;\n};\n\nCoord3D LightningEmissionModule::getVelocity(const Coord3D *, float speed, float radialSpeed)\n{\n\tfloat x = m_end.x - m_start.x;\n\tfloat y = m_end.y - m_start.y;\n\tfloat z = m_end.z - m_start.z;\n\n\tfloat length = (float)sqrt(x * x + y * y + z * z);\n\tif (length != BfmeZeroRange)\n\t{\n\t\tfloat scale = g_bfmeDefaultBU / length;\n\t\tx *= scale;\n\t\ty *= scale;\n\t\tz *= scale;\n\t}\n\n\tvolatile float sideX = BfmeZeroRange * z - y;\n\tvolatile float sideY = x - BfmeZeroRange * z;\n\tvolatile float sideZ = y - BfmeZeroRange * x;\n\n\treturn Coord3D(x * speed + sideX * radialSpeed,\n\t\ty * speed + sideY * radialSpeed,\n\t\tz * speed + sideZ * radialSpeed);\n}\n\n}\n"
+}
