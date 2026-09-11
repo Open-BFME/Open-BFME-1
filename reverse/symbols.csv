@@ -1170,6 +1170,7 @@ name,address,notes
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F3400@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F3400@@@Z,0x009F2E90,Open-BFME5 the sift-up the __adjust_heap at 0x009F3110 tails into
 ??$__push_heap@PAUS4SortElem8@@HU1@US4Cmp009F34B0@@@_STL@@YAXPAUS4SortElem8@@HHU1@US4Cmp009F34B0@@@Z,0x009F2F00,Open-BFME5 the sift-up the __adjust_heap at 0x009F3190 tails into
 ??$__put_float@V?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PAD0V10@AAVios_base@0@GGGABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@@Z,0x0083C210,retail argument pushes prove wide output iterator hidden sret char range ios fill decimal separator and grouping;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
+??$__put_integer@V?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PAD0V10@AAVios_base@0@HD@Z,0x00835230,STLport 4.5.3 narrow integer output helper called by canonical narrow num_put vtable slot 2
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp002E1690@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp002E1690@@@Z,0x002E0730,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00531FA0@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00531FA0@@@Z,0x0052FF20,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??$__unguarded_insertion_sort_aux@PAUS4SortElem12@@U1@US4Cmp00532740@@@_STL@@YAXPAUS4SortElem12@@00US4Cmp00532740@@@Z,0x00530050,S4 STLport sort-layer callee (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -1275,6 +1276,7 @@ name,address,notes
 ??$__uninitialized_fill_n@PAUGen_t_0074e320_p16pod@@IU1@@_STL@@YAPAUGen_t_0074e320_p16pod@@PAU1@IABU1@ABU__false_type@0@@Z,0x00749450,gen-tgrid payload member
 ??$__write_decimal_backward@J@_STL@@YAPADPADJHABU__true_type@0@@Z,0x00835A20,STLport __write_decimal_backward long; direct callee of __write_integer_backward long at 0x00835940; vendor _num_put.c signature; helper row remains generated-only
 ??$__write_integer_backward@J@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
+??$__write_integer_backward@_K@_STL@@YAPADPADH_K@Z,0x00835140,STLport 4.5.3 unsigned 64-bit integer formatter called by canonical narrow num_put vtable slot 2; body uses __aulldvrm
 ??$append@PAD@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEAAV01@PAD0ABUforward_iterator_tag@1@@Z,0x00011522,PeerDefs basic_string assign dispatch retail call target
 ??$append@PAG@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEAAV01@PAG0ABUforward_iterator_tag@1@@Z,0x004F2260,gen-tgrid shared callee
 ??$append@PBD@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEAAV01@PBD0ABUforward_iterator_tag@1@@Z,0x00036DE0,PeerDefs basic_string assign retail call target
