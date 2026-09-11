@@ -1,11 +1,18 @@
 // ?setupWaypointPath@W3DView@@AAEXH_NMM@Z
-// partial score=0.65 date=2026-09-10
+// partial score=0.68 date=2026-09-11
 // BFME W3DView waypoint-path setup.
 //
 // The retail body at 0x00740F60 is the private four-argument companion used
 // by W3DView's waypoint-path entry point.  The deliberately sparse virtual
 // declarations below preserve the retail ABI slots while keeping the source
 // independent of the much larger, still-being-recovered W3D headers.
+//
+// Confirmed real bug fixed vs the prior 0.65 stash: retail stores each
+// waypoint's segment length through an Int-reinterpreted round trip
+// (fstp to a stack temp, reload as int, reload as float, int-store into the
+// array, then add the reloaded float) rather than a direct float store; see
+// the RealBits round trip below. This moved the first divergence from +0x4b
+// to +0x7d (probe.py, confirmed).
 
 typedef int Int;
 typedef float Real;
@@ -179,9 +186,10 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn,
             Real dx = point[4] - point[-1];
             Real dy = point[5] - point[0];
             easeIn = dx * dx + dy * dy;
-            easeOut = squareRoot(easeIn);
-            *segmentLength = easeOut;
-            m_cameraPath.m_totalDistance += easeOut;
+            RealBits d;
+            d.value = squareRoot(easeIn);
+            *(Int *)segmentLength = d.bits;
+            m_cameraPath.m_totalDistance += d.value;
             ++waypoint;
             ++segmentLength;
             point += 5;
