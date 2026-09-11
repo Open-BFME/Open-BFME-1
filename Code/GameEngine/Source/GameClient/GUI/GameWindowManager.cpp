@@ -1895,7 +1895,6 @@ Int GameWindowManager::winUnsetModal( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Get the grabbed window */
 //-------------------------------------------------------------------------------------------------
-// ?winGetGrabWindow@GameWindowManager@@UAEPAVGameWindow@@XZ present-unmatched
 GameWindow *GameWindowManager::winGetGrabWindow( void )
 {
 
@@ -1906,7 +1905,6 @@ GameWindow *GameWindowManager::winGetGrabWindow( void )
 //-------------------------------------------------------------------------------------------------
 /** Explicitly set the grab window */
 //-------------------------------------------------------------------------------------------------
-// ?winSetGrabWindow@GameWindowManager@@UAEXPAVGameWindow@@@Z present-unmatched
 void GameWindowManager::winSetGrabWindow( GameWindow *window )
 {
 
@@ -3963,7 +3961,6 @@ void GameWindowManager::registerTabList( GameWindowList tabList )
 	m_tabList = tabList;
 }
 
-// ?clearTabList@GameWindowManager@@UAEXXZ present-unmatched
 void GameWindowManager::clearTabList( void )
 {
 	m_tabList.clear();
