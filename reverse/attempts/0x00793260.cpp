@@ -141,10 +141,7 @@ inline Color GadgetProgressBarGetHiliteBarBorderColor(GameWindow *g) { return g-
 // ?W3DGadgetProgressBarDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 {
-	ICoord2D origin;
-	ICoord2D size;
-	ICoord2D start;
-	ICoord2D end;
+	ICoord2D origin, size, start, end;
 	Color backColor, backBorder, barColor, barBorder;
 	Int progress = (Int)window->winGetUserData();
 
@@ -180,7 +177,7 @@ void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 		end.x = start.x + size.x;
 		end.y = start.y + size.y;
 		TheWindowManager->winOpenRect(backBorder, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y);
+																				 start.x, start.y, end.x, end.y);
 	}
 
 	if (backColor != WIN_COLOR_UNDEFINED)
@@ -190,7 +187,7 @@ void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 		end.x = start.x + size.x - 2;
 		end.y = start.y + size.y - 2;
 		TheWindowManager->winFillRect(backColor, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y);
+																				 start.x, start.y, end.x, end.y);
 	}
 
 	if (progress)
@@ -204,7 +201,7 @@ void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 			if (end.x - start.x > 1)
 			{
 				TheWindowManager->winOpenRect(barBorder, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y);
+																				 start.x, start.y, end.x, end.y);
 			}
 		}
 
@@ -217,7 +214,7 @@ void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 			if (end.x - start.x > 1)
 			{
 				TheWindowManager->winFillRect(barColor, WIN_DRAW_LINE_WIDTH,
-																	 start.x, start.y, end.x, end.y);
+																				 start.x, start.y, end.x, end.y);
 				TheWindowManager->winDrawLine(GameMakeColor(255, 255, 255, 255),
 					WIN_DRAW_LINE_WIDTH, start.x, start.y, end.x, start.y);
 				TheWindowManager->winDrawLine(GameMakeColor(200, 200, 200, 255),

@@ -1,5 +1,5 @@
 // ?doFXPos@DynamicDecalFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
-// partial score=0.85 date=2026-09-11
+// partial score=0.86 date=2026-09-10
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ conversion of DynamicDecal's positional dispatch.
 
@@ -90,7 +90,7 @@ public:
 		Real sizeY;
 		Real offsetX;
 		Real offsetY;
-		Int unused98;
+		Real unused98;
 		Real flags;
 		Bool force;
 	};
@@ -134,7 +134,7 @@ class DynamicDecalFXNugget
 public:
 	virtual void v00(void);
 	virtual void doFXPos(const Coord3D *, const Matrix3D *, Real,
-		const Coord3D *secondary) const;
+	const Coord3D *secondary) const;
 	virtual void doFXObj(const void *, const void *) const;
 
 private:
@@ -168,18 +168,17 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	Shadow::ShadowTypeInfo decalInfo;
 	decalInfo.flags = 20.0f;
 	decalInfo.force = false;
-		const Char *decalName = m_decalName.m_data
-			? m_decalName.m_data + 8 : (const Char *)0x0107388b;
-	strncpy(decalInfo.name, decalName, 0x40);
+	strncpy(decalInfo.name,
+		m_decalName.m_data ? m_decalName.m_data + 8
+			: (const Char *)0x0107388b, 0x40);
 	decalInfo.type = m_shader == 1 ? 0x800 : 0x400;
 	decalInfo.allowUpdates = true;
 	decalInfo.allowWorldAlign = true;
-	decalInfo.sizeX = m_size;
 	decalInfo.sizeY = m_size;
+	decalInfo.sizeX = m_size;
 	decalInfo.offsetX = 0.0f;
 	decalInfo.offsetY = 0.0f;
-	// Retail keeps the offset vector at the low stack address and uses a
-	// separate position aggregate for the translated terrain query.
+// Retail builds the translated position from this offset.
 	offset.x = m_offset.x;
 	offset.y = m_offset.y;
 	offset.z = 0.0f;
@@ -187,10 +186,13 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	if (primaryMtx && m_orientToObject)
 		adjustVector(&offset, primaryMtx);
 
-	Real positionY = offset.y + primary->y;
-	Real positionX = offset.x + primary->x;
-	Real positionZ = TheTerrainLogic->getGroundHeight(
-		positionX, positionY, 0);
+	Real position[3];
+	position[1] = primary->y;
+	position[0] = primary->x;
+	position[0] += offset.x;
+	position[1] += offset.y;
+	position[2] = TheTerrainLogic->getGroundHeight(
+		position[0], position[1], 0);
 
 	Shadow *shadow = TheProjectedShadowManager->addDecal(&decalInfo);
 	if (shadow)
@@ -201,9 +203,9 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 			shadow->m_localAngle = 0.0f;
 
 		shadow->setColor(m_color.getAsInt());
-		shadow->m_x = positionX;
-		shadow->m_y = positionY;
-		shadow->m_z = positionZ;
+		shadow->m_x = position[0];
+		shadow->m_y = position[1];
+		shadow->m_z = position[2];
 
 		Int initialOpacity = (Int)(m_startingDelay > BfmeZeroRange
 			? BfmeZeroRange : (Real)m_opacityStart);

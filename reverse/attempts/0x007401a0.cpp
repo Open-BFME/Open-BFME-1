@@ -79,20 +79,30 @@ public:
 
 	static __forceinline Real Sqrt(Real value)
 	{
+		Real result;
 		__asm {
 			fld [value]
 			fsqrt
+			fstp [result]
 		}
+		return result;
 	}
 };
 
 class Vector2
 {
 public:
-	Real X;
-	Real Y;
+	union {
+		Real X;
+		Real U;
+	};
+	union {
+		Real Y;
+		Real V;
+	};
 
-	Vector2(Real x, Real y) : X(x), Y(y) {}
+	__forceinline Vector2(void) {}
+	__forceinline Vector2(Real x, Real y) : X(x), Y(y) {}
 
 	__forceinline Real Length(void) const
 	{
@@ -103,6 +113,12 @@ public:
 	{
 		return X * X + Y * Y;
 	}
+};
+
+struct Direction2
+{
+	Real x;
+	Real y;
 };
 
 extern Real g_bfmeScaleBK;
@@ -171,10 +187,10 @@ void W3DView::cameraModFinalLookToward(Coord3D *pLoc)
 			result.y += 0.25f * (middle.y - end.y + middle.y - start.y);
 			result.z = 0;
 
-			Real directionLength;
 			Real directionX = pLoc->x - result.x;
 			Real directionY = pLoc->y - result.y;
 			Real angle = directionX * directionX + directionY * directionY;
+			Real directionLength;
 			__asm {
 				fld [angle]
 				fsqrt

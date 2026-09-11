@@ -27,10 +27,12 @@ struct Vector3
 	Real Z;
 };
 
+
 struct Matrix3D
 {
 	Real Row[3][4];
 };
+
 
 struct FrustumClass
 {

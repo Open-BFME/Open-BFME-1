@@ -25252,3 +25252,19 @@ uw_00c2caa7,0x00C2CAA7,False parent and unanchored cleanup: FuncInfo E1CDA4 map 
 ?d_00196d90@@YAXXZ,0x00196D90,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ??0?$vector@URva00196D90Element@@V?$allocator@URva00196D90Element@@@_STL@@@_STL@@QAE@I@Z, a gate-required claim from Code/GameEngine/Source/Common/Rva00196D90MemberConstructor.cpp over the same 200-byte range. The Code/gen_asm/d_0018bdd0.asm scaffold reproduces those bytes but carries no identity."
 ?d_008c51c0@@YAXXZ,0x008C51C0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?bfmeNormalizeEVF@@YAXPAXPAVBfmeStrVKI@@@Z, a gate-required claim from Code/Libraries/Source/EA/Apt/BfmeNormalizeEVF.cpp over the same 245-byte range. The Code/gen_asm/d_008c39e0.asm scaffold reproduces those bytes but carries no identity."
 ?d_006df110@@YAXXZ,0x006DF110,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z, a gate-required claim from Code/GameEngine/Source/Common/Bfme/Rva006DF110Coordinate.cpp over the same 167-byte range. The Code/gen_asm/d_0069c4f0.asm scaffold reproduces those bytes but carries no identity."
+?d_000ae520@@YAXXZ,0x000AE520,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_0034e5b0@@YAXXZ,0x0034E5B0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_0034e810@@YAXXZ,0x0034E810,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00439e70@@YAXXZ,0x00439E70,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_0053d3d0@@YAXXZ,0x0053D3D0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00608090@@YAXXZ,0x00608090,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00624c80@@YAXXZ,0x00624C80,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_0067c150@@YAXXZ,0x0067C150,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_006f7da0@@YAXXZ,0x006F7DA0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_0074beb0@@YAXXZ,0x0074BEB0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_007a2830@@YAXXZ,0x007A2830,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_008840b0@@YAXXZ,0x008840B0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00884810@@YAXXZ,0x00884810,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00885b50@@YAXXZ,0x00885B50,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_008ac790@@YAXXZ,0x008AC790,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_009e0ee0@@YAXXZ,0x009E0EE0,superseded: a real C++ row now owns this address (fleet harvest reconcile)

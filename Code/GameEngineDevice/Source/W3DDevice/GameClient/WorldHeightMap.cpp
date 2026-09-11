@@ -3483,9 +3483,92 @@ Bool WorldHeightMap::getUVData(Int xIndex, Int yIndex, float U[4], float V[4], B
 		tile to texture  a cell.  Otherwise, we use quarter tiles per cell.
 */
 
-// ?getUVForTileIndex@WorldHeightMap@@ present-unmatched
+// BFME stores the height-map members at a different layout than the ZH header.
+// The vector's first pointer is at +0x80b0; the four-byte allocator member is
+// at +0x80ac, so this overlay deliberately starts the vector at +0x80ac.
+struct BfmeWorldHeightMap0074BEB0TileIndex
+{
+	char m_pad00[0x20];
+	Int m_dataSize;
+	char m_pad24[0x68];
+	Short *m_tileNdxes;
+	char m_pad90[4];
+	Int *m_cliffInfoNdxes;
+	char m_pad98[0x8014];
+	std::vector<TCliffInfo> m_cliffInfo;
+	Int m_numTextureClasses;
+	TXTextureClass m_textureClasses[0x200];
+	char m_padD0C0[0x5008];
+	Int m_terrainTexHeight;
+};
+
+struct BfmeGlobalData0074BEB0TileIndex
+{
+	char m_pad00[0x4d];
+	Bool m_adjustCliffTextures;
+};
+
+extern double Gen01085F58;
+extern float Gen01121AE4;
+extern const BfmeGlobalData0074BEB0TileIndex *TheGlobalData0074BEB0TileIndex;
+
+#if 0 // BFME byte-match lives in the TU-local retail-layout mirror below.
+// ?getUVForTileIndex@WorldHeightMap@@IAE_NHFQAM0_N@Z
 Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4], float V[4], Bool fullTile)
 {
+	BfmeWorldHeightMap0074BEB0TileIndex *self =
+		reinterpret_cast<BfmeWorldHeightMap0074BEB0TileIndex *>(this);
+	Real nU, nV, xU, xV;
+	nU=nV=xU=xV = 0.0f;
+	Int tilesPerRow = TEXTURE_WIDTH/(2*TILE_PIXEL_EXTENT+TILE_OFFSET);
+	tilesPerRow *= 4;
+
+	if ((ndx<self->m_dataSize) && self->m_tileNdxes) {
+		getUVForNdx(tileNdx, &nU, &nV, &xU, &xV, fullTile);
+		U[0] = nU; U[1] = xU; U[2] = xU; U[3] = nU;
+		V[0] = xV; V[1] = xV; V[2] = nV; V[3] = nV;
+		if (TheGlobalData0074BEB0TileIndex && !TheGlobalData0074BEB0TileIndex->m_adjustCliffTextures) {
+			return false;
+		}
+		if (nU==Gen01085F58) {
+			return false;
+		}
+		if (fullTile) {
+			return false;
+		}
+		if (self->m_cliffInfoNdxes[ndx]) {
+			TCliffInfo info = self->m_cliffInfo[self->m_cliffInfoNdxes[ndx]];
+			Bool tilesMatch = false;
+			Int ndx1 = tileNdx>>2;
+			Int ndx2 = info.tileIndex>>2;
+			Int i;
+			for (i=0; i<self->m_numTextureClasses; i++) {
+				if (ndx1 >= self->m_textureClasses[i].firstTile && ndx1 < self->m_textureClasses[i].firstTile + self->m_textureClasses[i].numTiles) {
+					tilesMatch = ndx2 >= self->m_textureClasses[i].firstTile && ndx2 < self->m_textureClasses[i].firstTile + self->m_textureClasses[i].numTiles;
+					break;
+				}
+			}
+			if (tilesMatch) {
+				Real minU = self->m_textureClasses[i].positionInTexture.x;
+				Real maxV = self->m_textureClasses[i].positionInTexture.y + self->m_textureClasses[i].width*TILE_PIXEL_EXTENT;
+				minU*=Gen01121AE4;
+				maxV/=self->m_terrainTexHeight;
+				Real vFactor = TEXTURE_WIDTH/self->m_terrainTexHeight;
+				U[0] = info.u0+minU;
+				U[1] = info.u1+minU;
+				U[2] = info.u2+minU;
+				U[3] = info.u3+minU;
+				V[0] = info.v0*vFactor+maxV;
+				V[1] = info.v1*vFactor+maxV;
+				V[2] = info.v2*vFactor+maxV;
+				V[3] = info.v3*vFactor+maxV;
+				return info.flip;
+			}
+		}
+	}
+	return false;
+
+#if 0
 	Real nU, nV, xU, xV;
 	nU=nV=xU=xV = 0.0f;
 	Int tilesPerRow = TEXTURE_WIDTH/(2*TILE_PIXEL_EXTENT+TILE_OFFSET);
@@ -3731,9 +3814,9 @@ Bool WorldHeightMap::getUVForTileIndex(Int ndx, Short tileNdx, float U[4], float
 // 
 #endif
 
-	}	
-	return false;
+#endif
 }
+#endif
 
 ///@todo: Are the different "if" cases mutually exclusive?  If so, should add else statements.
 // ?getExtraAlphaUVData@WorldHeightMap@@QAE_NHHQAM0QAEPA_N2@Z present-unmatched

@@ -71,6 +71,10 @@ class Thing
 {
 public:
 	const ThingTemplate *getTemplate() const;
+	const ThingTemplate *getTemplatePointer() const
+	{
+		return m_template;
+	}
 	Bool isKindOf(KindOfType kind) const;
 
 	ThingTemplate *m_template;
@@ -251,19 +255,12 @@ UpdateSleepTime DockUpdate::update()
 	}
 	else
 	{
-		ObjectView &object = **reinterpret_cast<ObjectView *const *>(
-			reinterpret_cast<const char *>(this) - 8);
-		Thing *thing = static_cast<Thing *>(&object);
-		ThingTemplate *Thing::*templateMember = &Thing::m_template;
-		const ThingTemplate *thingTemplate = thing->*templateMember;
-		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
-		{
-			GetFinalOverrideCall getFinalOverride;
-			getFinalOverride.freeFunction = j_000022bb;
-			thingTemplate = (const ThingTemplate *)(
-				thingTemplate->m_nextOverride->*
-					getFinalOverride.memberFunction)();
-		}
+		volatile unsigned char *thing =
+			(volatile unsigned char *)*reinterpret_cast<ObjectView *const *>(
+				reinterpret_cast<const char *>(this) - 8);
+		thing += 4;
+		const ThingTemplate *thingTemplate =
+			*(const ThingTemplate * volatile *)thing;
 		if ((*(const UnsignedInt *)((const char *)thingTemplate + 0xd0) &
 			0x200000) == 0)
 			return UPDATE_SLEEP_NONE;
