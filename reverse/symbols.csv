@@ -5469,6 +5469,7 @@ name,address,notes
 ??1Gen_dtor_002c1a60@@UAE@XZ,0x00022CE6,gen-dtor class destructor
 ??1GiantBirdNormalFlightState@@UAE@XZ,0x00022CE6,constructor 0x002BE000 installs vtable 0x010C77F0 whose slot zero reaches deleting destructor 0x002C1A60; wrapper calls this ILT
 ??1Gen_dtor_002c1a90@@UAE@XZ,0x00031ACF,gen-dtor class destructor
+??1AIGiantBirdSwoopState@@UAE@XZ,0x00031ACF,constructor 0x002BE230 installs vtable 0x010C7868 whose slot zero reaches deleting destructor 0x002C1A90; wrapper calls this ILT
 ??1Gen_dtor_002c1ad0@@UAE@XZ,0x00002EA0,gen-dtor class destructor
 ??1Gen_dtor_002c1b10@@UAE@XZ,0x0003EFC2,gen-dtor class destructor
 ??1Gen_dtor_002c1b50@@UAE@XZ,0x00015C8A,gen-dtor class destructor
