@@ -93,7 +93,7 @@ struct Coord3D
 
 enum KindOfType
 {
-	KINDOF_INFANTRY = 16,
+	KINDOF_INFANTRY = 8,
 	KINDOF_NO_GARRISON = 27
 };
 
