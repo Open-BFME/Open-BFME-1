@@ -1,14 +1,17 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// The two base-building actions:
+// The three base-building actions:
 //
 //   0x002F16C0  doBuildBaseBuilding        action 383, BUILD_BASE_BUILDING
 //   0x002F1840  doBuildBaseBuildingInSlot  action 384, BUILD_BASE_BUILDING_IN_SLOT
+//   0x002F0D00  doBuildBuildingOnFoundation action 386, BUILD_BUILDING_ON_FOUNDATION
 //
-// Identical bodies apart from one argument: resolve the referenced base, check
-// the current player owns it and can afford the template, find the base module
-// by name key, build, then publish the resulting unit reference. Action 383
-// passes -2 for "first free slot"; action 384 reads the slot out of a
-// ScriptActionParameter at +0x08 instead.
+// The first two bodies are identical apart from one argument: resolve the
+// referenced base, check the current player owns it and can afford the
+// template, find the base module by name key, build, then publish the result.
+// Action 383 passes -2 for "first free slot"; action 384 reads the slot out of
+// a ScriptActionParameter at +0x08 instead. Action 386 uses the same ownership
+// and affordability prefix, then asks the foundation's update interface to
+// construct the selected template at the foundation position.
 
 typedef bool Bool;
 typedef int Int;
@@ -44,6 +47,31 @@ class Object;
 class BfmeY982;
 class ThingTemplate;
 class Module;
+class Player;
+
+struct Coord3D
+{
+	float x;
+	float y;
+	float z;
+};
+
+// BFME's module-query slot used by the foundation action returns an interface
+// whose eighth entry starts construction at the foundation's position.
+class ProjectileUpdateInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void buildBuildingOnFoundation(ThingTemplate *whatToBuild,
+		const Coord3D *position, Int unknown0, Player *player,
+		Int unknown1, Int unknown2) = 0;
+};
 
 // ScriptActionParameter::getInt() reads the scalar at +0x08.
 class ScriptActionParameter
@@ -79,6 +107,11 @@ class Object
 public:
 	Player *getControllingPlayer() const;
 	Module *findModule(NameKeyType key) const;
+	ProjectileUpdateInterface *getProjectileUpdateInterface() const;
+	const Coord3D *getPosition() const
+	{
+		return (const Coord3D *)((const char *)this + 0x38);
+	}
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
@@ -148,6 +181,8 @@ protected:
 	void doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 		ScriptActionParameter *slot, const AsciiString &baseName,
 		const AsciiString &referenceName);
+	void doBuildBuildingOnFoundation(const AsciiString &buildingType,
+		const AsciiString &foundationName);
 };
 
 // ?doBuildBaseBuilding@ScriptActions@@IAEXABVAsciiString@@00@Z
@@ -232,4 +267,35 @@ void ScriptActions::doBuildBaseBuildingInSlot(const AsciiString &buildingType,
 
 	TheScriptEngine->assignUnitReference(referenceName, newObject);
 	TheScriptEngine->bindUnitReference(newObject, referenceName);
+}
+
+// ?doBuildBuildingOnFoundation@ScriptActions@@IAEXABVAsciiString@@0@Z
+void ScriptActions::doBuildBuildingOnFoundation(const AsciiString &buildingType,
+	const AsciiString &foundationName)
+{
+	Object *foundation = TheScriptEngine->getUnitNamed(foundationName);
+	if (!foundation)
+		return;
+
+	Player *player = foundation->getControllingPlayer();
+	if (!player)
+		return;
+	if (!player->m_isLocallyControlled)
+		return;
+	if (player != TheScriptEngine->getCurrentPlayer())
+		return;
+
+	ThingTemplate *templateValue = TheThingFactory->findTemplate(buildingType);
+	if (!templateValue)
+		return;
+	if (!player->canAffordBuild(templateValue))
+		return;
+
+	ProjectileUpdateInterface *foundationUpdate =
+		foundation->getProjectileUpdateInterface();
+	if (!foundationUpdate)
+		return;
+
+	foundationUpdate->buildBuildingOnFoundation(templateValue,
+		foundation->getPosition(), 0, foundation->getControllingPlayer(), 0, 0);
 }
