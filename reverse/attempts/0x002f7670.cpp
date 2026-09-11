@@ -1,5 +1,5 @@
 // ?doPlayerForceEmotion@ScriptActions@@IAEXPAVParameter@@W4EmotionType@@M@Z
-// partial score=0.82 date=2026-09-03
+// partial score=0.85 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 // Open-BFME: PLAYER_FORCE_EMOTION at retail RVA 0x002F7670.
@@ -237,28 +237,31 @@ void ScriptActions::doPlayerForceEmotion(Parameter *player,
 		Player *thePlayer = ThePlayerList->getEachPlayerFromMask(mask);
 		if (thePlayer)
 		{
-			BfmePlayerTeamListNode *it;
-			it = ((Player *)thePlayer)->m_playerTeamPrototypes;
-			it = it->m_next;
-			while (it != ((Player *)thePlayer)->m_playerTeamPrototypes)
+			BfmePlayerTeamListNode *sentinel =
+				((Player *)thePlayer)->m_playerTeamPrototypes;
+			BfmePlayerTeamListNode *it = sentinel->m_next;
+			if (it != sentinel)
 			{
-				team =
-					((BfmeTeamPrototypeInstances *)it->m_value)
-						->m_teamInstanceList;
-				if (team)
+				do
 				{
-				 do
-				{
-					for (DLINK_ITERATOR<Object> objectIter =
-						team->iterate_TeamMemberList();
-						!objectIter.done(); objectIter.advance())
+					team =
+						((BfmeTeamPrototypeInstances *)it->m_value)
+							->m_teamInstanceList;
+					if (team)
 					{
-						objectIter.cur()->forceEmotion(emotion, duration, 0);
+					 do
+					{
+						for (DLINK_ITERATOR<Object> objectIter =
+							team->iterate_TeamMemberList();
+							!objectIter.done(); objectIter.advance())
+						{
+							objectIter.cur()->forceEmotion(emotion, duration, 0);
+						}
+						team = team->_bfme_nextInInstanceList();
+					} while (team);
 					}
-					team = team->_bfme_nextInInstanceList();
-				} while (team);
-				}
-				it = it->m_next;
+					it = it->m_next;
+				} while (it != sentinel);
 			}
 		}
 	} while (mask);
