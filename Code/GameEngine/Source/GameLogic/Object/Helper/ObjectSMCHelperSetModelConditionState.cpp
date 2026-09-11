@@ -1,5 +1,3 @@
-// ?d_002572a0@@YAXXZ
-// partial score=0.98 date=2026-09-10
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // stlport
 
@@ -10,8 +8,6 @@
 typedef unsigned int UnsignedInt;
 
 class Object;
-class Thing;
-class ModuleData;
 
 enum UpdateSleepTime
 {
@@ -21,19 +17,30 @@ enum UpdateSleepTime
 class UpdateModule
 {
 public:
-	virtual void updateInterfaceAnchor();
+	virtual void updateModuleAnchor();
 
 protected:
 	void setWakeFrame(Object *, UpdateSleepTime);
 	void *m_moduleData;
 	Object *m_object;
-	unsigned char m_padding[0x14];
 };
 
 class ObjectHelper : public UpdateModule
 {
 public:
 	virtual ~ObjectHelper();
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor();
+};
+
+class UpdateModuleInterface
+{
+public:
+	virtual void updateModuleInterfaceAnchor();
 };
 
 class ModelConditionFlags
@@ -87,13 +94,16 @@ private:
 	Rva002571A0Node *m_node;
 };
 
-class Rva002572A0ObjectSMCHelper : public ObjectHelper
+class ObjectSMCHelper : public ObjectHelper,
+	public BehaviorModuleInterface,
+	public UpdateModuleInterface
 {
 public:
 	void setModelConditionState(int condition, UnsignedInt frames);
 
 private:
 	int framesUntilNext();
+	unsigned char m_padding[0xc];
 	Rva002571A0List m_timers;
 };
 
@@ -114,11 +124,11 @@ const T &maximum(const T &left, const T &right)
 	return left > right ? left : right;
 }
 
-#pragma comment(linker, "/alternatename:?framesUntilNext@Rva002572A0ObjectSMCHelper@@AAEHXZ=?j_00007d74@@YAXXZ")
+#pragma comment(linker, "/alternatename:?framesUntilNext@ObjectSMCHelper@@AAEHXZ=?j_00007d74@@YAXXZ")
 #pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 #pragma comment(linker, "/alternatename:?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z=?j_000157da@@YAXXZ")
 
-void Rva002572A0ObjectSMCHelper::setModelConditionState(int condition,
+void ObjectSMCHelper::setModelConditionState(int condition,
 	UnsignedInt frames)
 {
 	if (condition < 0 || condition >= 0x130)
@@ -140,14 +150,14 @@ void Rva002572A0ObjectSMCHelper::setModelConditionState(int condition,
 
 	Rva002571A0Elem value = {(UnsignedInt)condition, frame + frames};
 	m_timers.push_back(value);
-	goto set_flags;
+	goto set_condition;
 
 update_timer:
 	UnsignedInt endFrame = frame + frames;
 	node->m_value.m_frame = maximum(node->m_value.m_frame, endFrame);
+	goto set_wake;
 
-set_flags:
-
+set_condition:
 	Object *object = m_object;
 	if (!object->m_modelConditionFlags.test(condition))
 	{
@@ -155,5 +165,6 @@ set_flags:
 		object->notifyModelConditionChanged();
 	}
 
+set_wake:
 	setWakeFrame(m_object, (UpdateSleepTime)framesUntilNext());
 }
