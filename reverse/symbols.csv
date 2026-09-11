@@ -78537,6 +78537,7 @@ name,address,notes
 ?d_008859d0@Rva00886A20Class@@QAEXPBDPAD@Z,0x008859D0,pin
 ?d_008930c0@@YAPAXH@Z,0x008930C0,typed one-argument call alias for the address-derived Apt lookup helper
 ?d_008996b0@@YAXXZ,0x008996B0,legacy ABI alias for AptBoolean::Create; existing Apt caller TUs retain the address-only declaration after the generated row conversion
+?d_008a4cd0@@YAXXZ,0x008A4CD0,legacy ABI alias for Rva008A4EA0MakeFloat; existing Apt caller TUs retain the address-only declaration after the generated row conversion
 ?d_008f7990@BfmeThingCDE@@QAEXXZ,0x008F7990,callee pin for CDE cleanup helper
 ?d_008f7ec0@BfmeThingCDE@@QAEXXZ,0x008F7EC0,callee pin for CDE entry sweep helper
 ?d_008fc4f0@@YAXXZ,0x008FC4F0,Legacy relocation spelling for retired generated ASM50 claim; existing DrawPixel call independently reaches this actual ECX-description/EAX-result helper; full105 clean recovery now in SurfaceByteSize.cpp; not a historical C++ signature; campaign=astra36h-20260908
