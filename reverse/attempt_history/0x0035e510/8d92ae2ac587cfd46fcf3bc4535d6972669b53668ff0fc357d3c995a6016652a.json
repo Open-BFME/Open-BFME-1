@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8d92ae2ac587cfd46fcf3bc4535d6972669b53668ff0fc357d3c995a6016652a",
+  "symbol": "?bfmeSwapESO@BfmeHostESO@@QAEXPAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeSwapESO@BfmeHostESO@@QAEXPAV1@@Z\n// partial score=0.95 date=2026-09-10\nclass BfmeHeadEAT\n{\npublic:\n\tint m_bfmeHeadEAT;\n};\n\nclass BfmeBaseEAT\n{\npublic:\n\tint m_bfmeAEAT;\n\tint m_bfmeBEAT;\n};\n\nclass BfmeSubAEAT\n{\npublic:\n\tvoid bfmeSwapAEAT(BfmeSubAEAT *other);\n\n\tunsigned char m_bfmeBodyAEAT[0x20];\n};\n\nclass BfmeSubBEAT\n{\npublic:\n\tvoid bfmeSwapBEAT(BfmeSubBEAT *other);\n\n\tunsigned char m_bfmeBodyBEAT[4];\n};\n\nclass BfmeNodeEAT;\n\nvoid __stdcall bfmeLinkEAT(BfmeNodeEAT *node, int *a, int *b);\n\nclass BfmeNodeEAT : public BfmeHeadEAT, public BfmeBaseEAT\n{\npublic:\n\tvoid bfmeSwapEAT(BfmeNodeEAT *other);\n\tvoid bfmeFixEAT();\n\tvoid bfmeRelinkEAT(BfmeNodeEAT *node, int *a, int *b);\n\n\tBfmeSubAEAT m_bfmeSubAEAT;\n\tBfmeSubBEAT m_bfmeSubBEAT;\n};\n\nvoid BfmeNodeEAT::bfmeSwapEAT(BfmeNodeEAT *other)\n{\n\tBfmeBaseEAT *b = other;\n\tint *link = &m_bfmeAEAT;\n\n\tint t = link[0];\n\tlink[0] = b->m_bfmeAEAT;\n\tb->m_bfmeAEAT = t;\n\n\tt = link[1];\n\tlink[1] = b->m_bfmeBEAT;\n\tb->m_bfmeBEAT = t;\n\n\tm_bfmeSubAEAT.bfmeSwapAEAT(&other->m_bfmeSubAEAT);\n\n\tm_bfmeSubBEAT.bfmeSwapBEAT(&other->m_bfmeSubBEAT);\n\n\tbfmeFixEAT();\n\n\tbfmeLinkEAT(other, &other->m_bfmeAEAT, link);\n\n\tbfmeRelinkEAT(other, &other->m_bfmeBEAT, &m_bfmeBEAT);\n}\n"
+}
