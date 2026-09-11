@@ -142,10 +142,10 @@ public:
 	virtual void slot0B4() = 0;
 	virtual void slot0B8() = 0;
 	virtual void slot0BC() = 0;
-	virtual void slot0C0() = 0;
+	virtual Bool amIHost() = 0;
 	virtual GameSpyStagingRoom *getCurrentStagingRoom() = 0;
 	virtual void slot0C8() = 0;
-	virtual void slot0CC() = 0;
+	virtual void setGameOptions() = 0;
 	virtual void slot0D0() = 0;
 	virtual void slot0D4() = 0;
 	virtual void slot0D8() = 0;
@@ -193,6 +193,22 @@ public:
 	virtual Int getLocalSlotNum() = 0;
 };
 
+// GameInfo's BFME vtable has two leading slots that are absent from the
+// vendored NAT shim. That puts resetAccepted at +0x18 in this callback's
+// retail body. Keep this view local; the normal GameInfo type remains useful
+// for its non-virtual slot accessors below.
+class BfmeTemplateSelectionGameInfo
+{
+public:
+	virtual Int slot000() = 0;
+	virtual Int slot004() = 0;
+	virtual void reset() = 0;
+	virtual void startGame( Int gameID ) = 0;
+	virtual Bool amIHost() const = 0;
+	virtual Int getLocalSlotNum() const = 0;
+	virtual void resetAccepted() = 0;
+};
+
 class BfmeStartGameInfo
 {
 public:
@@ -237,6 +253,7 @@ struct BfmeStartGlobalDataView
 
 
 void WOLDisplaySlotList( void );
+extern void j_00006942();
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -741,7 +758,7 @@ static void handlePlayerTemplateSelection(int index)
 	Int playerTemplate, selIndex;
 	GadgetComboBoxGetSelectedPos(combo, &selIndex);
 	playerTemplate = (Int)GadgetComboBoxGetItemData(combo, selIndex);
-	GameInfo *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameInfo *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 
 	if (myGame)
 	{
@@ -768,12 +785,12 @@ static void handlePlayerTemplateSelection(int index)
 		}
 
 
-		if (TheGameSpyInfo->amIHost())
+		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 		{
 			// send around a new slotlist
-			myGame->resetAccepted();
-			TheGameSpyInfo->setGameOptions();
-			WOLDisplaySlotList();
+			((BfmeTemplateSelectionGameInfo *)myGame)->resetAccepted();
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->setGameOptions();
+			j_00006942();
 		}
 		else
 		{
@@ -786,8 +803,8 @@ static void handlePlayerTemplateSelection(int index)
 			req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
 			req.UTM.isStagingRoom = TRUE;
 			req.id = "REQ/";
-			req.nick = hostName.str();
-			req.options = options.str();
+			req.nick = BfmeStartAsciiString(hostName);
+			req.options = BfmeStartAsciiString(options);
 			TheGameSpyPeerMessageQueue->addRequest(req);
 		}
 	}
@@ -3025,5 +3042,4 @@ WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg
 	}//Switch
 	return MSG_HANDLED;
 }//WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg, 
-
 
