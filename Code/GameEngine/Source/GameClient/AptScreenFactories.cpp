@@ -167,6 +167,7 @@ public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
 	void format( AsciiString format, ... );
+	void concat( const char *text, int length );
 	const char *str() const
 	{
 		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
@@ -339,19 +340,37 @@ struct FunctorBinding
 	FunctorMethod m_method;
 };
 
+// The callback binding is a distinct overload axis in retail.  Its layout is
+// the shared 16-byte binding payload; keeping the type distinct selects the
+// Objectives/PlayerStatus wrapper constructors while the registry still takes
+// its canonical common holder types.
+struct BfmeObjectivesFunctorBinding
+{
+	BfmeObjectivesFunctorBinding( FunctorMethod method, FunctorTarget *target )
+		: m_target( target ), m_method( method ) {}
+
+	FunctorTarget *m_target;
+	unsigned int m_unmodelled;
+	FunctorMethod m_method;
+};
+
+class FunctorWrapperHead;
+
 class Rva0050F840FunctorHolder
 {
 public:
 	Rva0050F840FunctorHolder( FunctorBinding binding );
+	Rva0050F840FunctorHolder( const BfmeObjectivesFunctorBinding &binding );
 
 private:
-	void *m_ptr;
+	FunctorWrapperHead *m_ptr;
 };
 
 class Rva0050F8B0FunctorHolder
 {
 public:
 	Rva0050F8B0FunctorHolder( FunctorBinding binding );
+	Rva0050F8B0FunctorHolder( BfmeObjectivesFunctorBinding binding );
 
 private:
 	void *m_ptr;
@@ -385,9 +404,10 @@ public:
 		if( m_ptr )
 			++m_ptr->m_refCount;
 	}
+	Rva0050F920FunctorHolder( const BfmeObjectivesFunctorBinding &binding );
 
 private:
-	Rva0050F920FunctorWrapper *m_ptr;
+	FunctorWrapperHead *m_ptr;
 };
 
 void _bfme_setAptScreenRef( const AsciiString &name,
@@ -740,14 +760,205 @@ void * __stdcall createAptScreenQuitMenu( void *context )
 }
 
 // Objectives.apt and PlayerStatus.apt, retail 0x00104F40, object 0x290 bytes.
-class BfmeAptScreenObjectives
+// Both screens share this object and its callback registry.
+class Rva0052B730FunctorWrapper : public FunctorWrapperHead
+{
+public:
+	Rva0052B730FunctorWrapper( const BfmeObjectivesFunctorBinding &binding )
+		: m_binding( binding ) {}
+
+	BfmeObjectivesFunctorBinding m_binding;
+};
+
+class Rva0052B780FunctorWrapper : public FunctorWrapperHead
+{
+public:
+	Rva0052B780FunctorWrapper( const BfmeObjectivesFunctorBinding &binding )
+		: m_binding( binding ) {}
+
+	BfmeObjectivesFunctorBinding m_binding;
+};
+
+inline Rva0050F920FunctorHolder::Rva0050F920FunctorHolder(
+	const BfmeObjectivesFunctorBinding &binding )
+{
+	m_ptr = new Rva0052B730FunctorWrapper( binding );
+	if( m_ptr )
+		++m_ptr->m_refCount;
+}
+
+inline Rva0050F840FunctorHolder::Rva0050F840FunctorHolder(
+	const BfmeObjectivesFunctorBinding &binding )
+{
+	m_ptr = new Rva0052B780FunctorWrapper( binding );
+	if( m_ptr )
+		++m_ptr->m_refCount;
+}
+
+extern const void *BfmeAptScreenObjectivesVftable[];
+extern const void *BfmeAptScreenObjectivesSecondaryVftable[];
+extern void *g_obj12F49E4;
+extern const char *g_bfmeObjectivesProviderNames[];
+
+class AptPlayerStatus : public _bfme_AptGameWindow,
+	public BfmeAptFunctorMarker
+{
+public:
+	void ReturnToGame( const char *argument );
+};
+
+void j_0000d69d();
+void j_00025b08();
+void j_0001bba8();
+void j_00001df2();
+void j_0000d314();
+void j_000303f5();
+
+union BfmeObjectivesMethodBits
+{
+	FunctorMethod method;
+	struct
+	{
+		void (*code)();
+		int delta;
+	} raw;
+};
+
+__forceinline FunctorMethod bfmeObjectivesMethodFromThunk( void (*code)() )
+{
+	BfmeObjectivesMethodBits bits;
+	bits.raw.code = code;
+	bits.raw.delta = 0;
+	return bits.method;
+}
+
+class BfmeAptScreenObjectivesVtableBase : public BfmeAptFunctorMarker
+{
+public:
+	__forceinline BfmeAptScreenObjectivesVtableBase( void *owner )
+	{
+		*(const void * volatile *)owner =
+			BfmeAptScreenObjectivesVftable;
+		*(const void **)( (char *)owner + 0x218 ) =
+			BfmeAptScreenObjectivesSecondaryVftable;
+	}
+};
+
+class __declspec(novtable) __multiple_inheritance BfmeAptScreenObjectives
+	: public _bfme_AptGameWindow, public BfmeAptScreenObjectivesVtableBase
 {
 public:
 	BfmeAptScreenObjectives( void *context );
+	void bfmeOnInitialized( const char *argument );
+	void ReturnToGame( const char *argument );
+	void bfmeProvide( const char *selector, void *value, bool setting );
+	void bfmeProvideObjectiveText( const char *selector, void *value, bool setting );
+	void bfmeProvideObjectiveStatus( const char *selector, void *value, bool setting );
+	void bfmePlayerColor( const char *selector, void *value, bool setting );
+	void bfmeInitGadgets( const char *name, void *argument, GameWindow *window );
 
 private:
-	char m_unmodelled[ 0x290 ];
+	_STL::vector<int> m_players;
+	int m_screenType;
+	GameWindow *m_playerControls[ 8 ];
+	signed char m_playerSlots[ 8 ];
 };
+
+BfmeAptScreenObjectives::BfmeAptScreenObjectives( void *context )
+	: _bfme_AptGameWindow( context ),
+	  BfmeAptScreenObjectivesVtableBase( this ), m_screenType( 2 )
+{
+	if( g_obj12F49E4 == 0 )
+	{
+		g_obj12F49E4 = this;
+		memset( m_playerControls, 0, sizeof( m_playerControls ) );
+		memset( m_playerSlots, 0, sizeof( m_playerSlots ) );
+
+		_bfme_AptGameWindow *registry =
+			(_bfme_AptGameWindow *)( (char *)this + 0x218 );
+
+		{
+			FunctorMethod callback =
+				bfmeObjectivesMethodFromThunk( j_0000d69d );
+			AsciiString name( "AptObjectivesMenu::OnInitialized" );
+			registry->_bfme_showAptScreen( name,
+				BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&AptPlayerStatus::ReturnToGame;
+			AsciiString name( "AptObjectivesMenu::ReturnToGame" );
+			registry->_bfme_showAptScreen( name,
+				BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				bfmeObjectivesMethodFromThunk( j_0000d69d );
+			AsciiString name( "AptPlayerStatus::OnInitialized" );
+			registry->_bfme_showAptScreen( name,
+				BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				(FunctorMethod)&AptPlayerStatus::ReturnToGame;
+			AsciiString name( "AptPlayerStatus::ReturnToGame" );
+			registry->_bfme_showAptScreen( name,
+				BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+
+		{
+			FunctorMethod callback =
+				bfmeObjectivesMethodFromThunk( j_00025b08 );
+			for( int index = 0; index < 2; ++index )
+			{
+				AsciiString name( g_bfmeObjectivesProviderNames[ index ] );
+				registry->_bfme_showAptScreenWithArg( name, (void *)index,
+					BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+			}
+		}
+
+		AsciiString objectiveName;
+		for( int objective = 0; objective < 9; ++objective )
+		{
+			objectiveName.format( (AsciiString)"Objective%d", objective + 1 );
+			registry->_bfme_showAptScreenWithArg( objectiveName, (void *)objective,
+				BfmeObjectivesFunctorBinding(
+					bfmeObjectivesMethodFromThunk( j_0001bba8 ),
+					(FunctorTarget *)this ) );
+			objectiveName.concat( "Status", 6 );
+			registry->_bfme_showAptScreenWithArg( objectiveName, (void *)objective,
+				BfmeObjectivesFunctorBinding(
+					bfmeObjectivesMethodFromThunk( j_00001df2 ),
+					(FunctorTarget *)this ) );
+		}
+
+		{
+			int player = 0;
+			FunctorMethod callback =
+				bfmeObjectivesMethodFromThunk( j_0000d314 );
+			for( ; player < 8; ++player )
+			{
+				objectiveName.format(
+					(AsciiString)"ScoreScreen:PlayerColor:%d", player );
+				registry->_bfme_showAptScreenWithArg( objectiveName, (void *)player,
+					BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+			}
+		}
+
+		g_theWindowManager->bfme_showBackground( 2 );
+
+		{
+			FunctorMethod callback =
+				bfmeObjectivesMethodFromThunk( j_000303f5 );
+			AsciiString name( "AptPlayerStatus::InitGadgets" );
+			_bfme_setAptScreenRef( name,
+				BfmeObjectivesFunctorBinding( callback, (FunctorTarget *)this ) );
+		}
+	}
+}
 
 // ?createAptScreenObjectives@@YGPAXPAX@Z
 void * __stdcall createAptScreenObjectives( void *context )

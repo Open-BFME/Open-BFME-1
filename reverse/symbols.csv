@@ -10093,6 +10093,8 @@ name,address,notes
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
 ??_7Rva0049C020Owner@@6B@,0x010FB5DC,vftable of the BfmeBaseVUH-derived 26-member record whose destructor is 0x0049C020
 ??_7Rva005225F0@@6B@,0x01106938,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005225F0 calls; autopin
+??_7Rva0052B730FunctorWrapper@@6B@,0x01106DAC,Objectives value-provider wrapper vftable read directly from all four constructor stores
+??_7Rva0052B780FunctorWrapper@@6B@,0x01106DB8,Objectives InitGadgets wrapper vftable read directly from the constructor store
 ??_7Rva0061A780@@6B@,0x01117258,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0061A780 calls; autopin
 ??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
@@ -10536,6 +10538,8 @@ name,address,notes
 ?BfmeAptScreenCampaignReviewSecondaryVftable@@3PAPBXA,0x01104C70,CampaignReview secondary APT interface vftable at this+0x218
 ?BfmeAptScreenCampaignReviewVftable@@3PAPBXA,0x01104C74,CampaignReview primary vftable written by its constructor
 ?BfmeAptScreenDisconnectScreenSecondaryVftable@@3PAPBXA,0x01104DE4,secondary vftable written at offset 0x218 by the DisconnectScreen destructor
+?BfmeAptScreenObjectivesSecondaryVftable@@3PAPBXA,0x01106DE8,secondary callback-registry vftable written by the caller-identified Objectives and PlayerStatus constructor
+?BfmeAptScreenObjectivesVftable@@3PAPBXA,0x01106DEC,primary vftable written by the caller-identified Objectives and PlayerStatus constructor
 ?BfmeAptScreenSpellStoreSecondaryVftable@@3PAPBXA,0x0110C3E8,SpellStore secondary APT interface vftable at this+0x218
 ?BfmeAptScreenSpellStoreVftable@@3PAPBXA,0x0110C3EC,SpellStore primary vftable written by its constructor
 ?BfmeArmorTemplateSetUninitializedCopy@_STL@@YAPAVArmorTemplateSet@@PAV2@00ABU__false_type@1@@Z,0x0003047C,Open-BFME5 ILT for _STL::__uninitialized_copy on ArmorTemplateSet at 0x0013DA80
@@ -80117,6 +80121,7 @@ name,address,notes
 ?g_bfmeObjUDC@@3PAVBfmeSrcUDC@@A,0x00F07214,pin
 ?g_bfmeObjVGJ@@3PAVBfmeThingVGJ@@A,0x00EED5C8,pin
 ?g_bfmeObjWE@@3PAXA,0x0130BCA0,Open-BFME5 locale impl pointer written by 0x0083B6C0
+?g_bfmeObjectivesProviderNames@@3PAPBDA,0x012B77EC,two-entry NumOfPlayers and InSkirmish name table indexed by the Objectives and PlayerStatus constructor
 ?g_bfmeOnAPB@@3_NA,0x00EED4E5,pin
 ?g_bfmeOneAOA@@3PAUBfmeOneAOA@@A,0x00EF4B98,pin
 ?g_bfmeOneAQA@@3PAVBfmeOneAQA@@A,0x00EF7048,pin
@@ -80490,6 +80495,7 @@ name,address,notes
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
 ?g_obj12F495C@@3PAXA,0x012F495C,pin
+?g_obj12F49E4@@3PAXA,0x012F49E4,Objectives and PlayerStatus screen singleton read and written by the caller-identified constructor
 ?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
 ?g_obj12F4B58@@3PAVRva0051D690Shell@@A,0x012F4B58,TheShell singleton typed for 0x0051D690
 ?g_obj12F4C38@@3PAXA,0x012F4C38,SpellStore screen singleton
