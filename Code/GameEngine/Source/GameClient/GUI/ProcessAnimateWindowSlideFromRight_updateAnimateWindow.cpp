@@ -1,19 +1,14 @@
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAE_NPAVAnimateWindow@@@Z
-// partial score=0.96 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: ProcessAnimateWindowSlideFromRight::updateAnimateWindow at
-// 0x00495850 (230 B) and its SlideFromRightFast sibling at 0x00497640, built
-// on the class shapes of the landed SlideFromRight reverseAnimateWindow TU.
-// readable body of ?reverseAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAE_NPAVAnimateWindow@@@Z: Code/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
-//
-// Retail 0x00495970, 260 bytes. After initAnimateWindow SlideFromRight
-// (0x00495730) and before ctor SlideFromLeft (0x00495AC0). Same shape as
-// SlideFromTopFast reverse with x-axis compare/clamp from the ZH twin.
+// Retail 0x00495850, 230 bytes.  BFME's SlideFromRight and
+// SlideFromRightFast implementations are byte twins apart from relocations.
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 typedef bool Bool;
+
+extern const Real BfmeShadowScale;
 
 struct ICoord2D
 {
@@ -25,9 +20,8 @@ struct Coord2D
 {
 	Real x;
 	Real y;
-	Coord2D(void) {}
-	Coord2D(const Coord2D &that) : x(that.x), y(that.y) {}
-	~Coord2D(void) {}
+	Coord2D(const Coord2D &that) throw() : x(that.x), y(that.y) {}
+	~Coord2D(void) throw() {}
 };
 
 class GameWindow
@@ -39,14 +33,13 @@ public:
 class AnimateWindow
 {
 public:
-	virtual void unused(void) = 0;
+	virtual ~AnimateWindow(void);
 
 	UnsignedInt getStartTime(void) { return m_startTime; }
 	GameWindow *getGameWindow(void) { return m_gameWindow; }
 	ICoord2D getCurPos(void) { return m_curPos; }
-	ICoord2D getStartPos(void) { return m_startPos; }
 	ICoord2D getEndPos(void) { return m_endPos; }
-	Coord2D getVel(void);
+	Coord2D getVel(void) { return m_vel; }
 	Bool isFinished(void) { return m_finished; }
 	void setFinished(Bool finished) { m_finished = finished; }
 	void setCurPos(ICoord2D pos) { m_curPos = pos; }
@@ -62,14 +55,25 @@ private:
 	Coord2D m_vel;
 	UnsignedInt m_startTime;
 	UnsignedInt m_endTime;
-	unsigned char m_padding[5];
+	int m_animType;
+	Bool m_needsToFinish;
 	Bool m_finished;
 };
 
-class ProcessAnimateWindowSlideFromRight
+class ProcessAnimateWindow
 {
 public:
-	virtual ~ProcessAnimateWindowSlideFromRight();
+	virtual ~ProcessAnimateWindow(void) {}
+	virtual void initAnimateWindow(AnimateWindow *) = 0;
+	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt) = 0;
+	virtual Bool updateAnimateWindow(AnimateWindow *) = 0;
+	virtual Bool reverseAnimateWindow(AnimateWindow *) = 0;
+};
+
+class Rva00495850ProcessAnimateWindowSlideFromRight : public ProcessAnimateWindow
+{
+public:
+	virtual ~Rva00495850ProcessAnimateWindowSlideFromRight();
 	virtual void initAnimateWindow(AnimateWindow *);
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual Bool updateAnimateWindow(AnimateWindow *);
@@ -84,37 +88,41 @@ private:
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
-static const Real BfmeMinSlideVelocity = -1.0f;
-
-Bool ProcessAnimateWindowSlideFromRight::updateAnimateWindow(AnimateWindow *animWin)
+Bool Rva00495850ProcessAnimateWindowSlideFromRight::updateAnimateWindow(
+	AnimateWindow *animWin)
 {
 	if (!animWin)
 		return true;
+
 	if (animWin->isFinished())
 		return true;
+
 	if (bfme_timeGetTime() < animWin->getStartTime())
 		return false;
+
 	GameWindow *win = animWin->getGameWindow();
 	if (!win)
 		return true;
+
 	ICoord2D curPos = animWin->getCurPos();
 	ICoord2D endPos = animWin->getEndPos();
 	Coord2D vel = animWin->getVel();
 	curPos.x += (Int)vel.x;
+
 	if (curPos.x < endPos.x)
 	{
 		curPos.x = endPos.x;
 		animWin->setFinished(true);
 		return true;
 	}
+
 	win->winSetPosition(curPos.x, curPos.y);
 	animWin->setCurPos(curPos);
+
 	if (curPos.x - endPos.x <= m_slowDownThreshold)
-	{
 		vel.x *= m_slowDownRatio;
-	}
-	if (vel.x >= BfmeMinSlideVelocity)
-		vel.x = BfmeMinSlideVelocity;
+	if (vel.x >= BfmeShadowScale)
+		vel.x = BfmeShadowScale;
 	animWin->setVel(vel);
 	return false;
 }
