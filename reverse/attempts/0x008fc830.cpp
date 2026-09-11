@@ -1,5 +1,5 @@
 // ?clear@W3DRadarResetSurface@@QAEXI@Z
-// partial score=0.82 date=2026-09-09
+// partial score=0.94 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME W3DRadarResetSurface::clear body at retail RVA 0x008FC830.
 // The one-pointer surface ABI, SurfaceClass descriptor query, ECX-based
@@ -120,7 +120,7 @@ public:
 	{
 		WW3DFormat Format;
 		unsigned Width;
-		unsigned Height;
+		volatile unsigned Height;
 		unsigned Rva008FC4F0_PixelSize() const;
 	};
 
@@ -171,7 +171,7 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 				pattern[5] = 0x55;
 				pattern[6] = 0x55;
 				pattern[7] = 0x55;
-				for (i = description.Height >> 2; i > 0; --i)
+				for (; i > 0; --i)
 				{
 					if (copy_count > 0)
 					{
