@@ -53,6 +53,56 @@
 
 HAnimClass *Get_HAnim(const char *name);
 
+// BFME's render interfaces predate the Zero Hour headers used to build this
+// source tree.  Keep the retail virtual slots and the extended shadow
+// descriptor local to this translation unit.
+class BfmeSceneView
+{
+public:
+	__forceinline void addRenderObject(RenderObjClass *renderObject)
+	{
+		typedef void (BfmeSceneView::*Method)(RenderObjClass *);
+		(this->*(*(Method *)&(*(void ***)this)[2]))(renderObject);
+	}
+};
+
+class BfmeRenderObjectView
+{
+public:
+	__forceinline void setTransform(const Matrix3D &transform)
+	{
+		typedef void (BfmeRenderObjectView::*Method)(const Matrix3D &);
+		(this->*(*(Method *)&(*(void ***)this)[21]))(transform);
+	}
+
+	__forceinline void setUserData(void *value, Bool recursive)
+	{
+		typedef void (BfmeRenderObjectView::*Method)(void *, Bool);
+		(this->*(*(Method *)&(*(void ***)this)[85]))(value, recursive);
+	}
+};
+
+struct BfmeShadowTypeInfo
+{
+	char m_shadowNames[128];
+	ShadowType m_type;
+	Bool m_allowUpdates;
+	Bool m_allowWorldAlign;
+	unsigned char m_padding86[2];
+	Real m_sizeX;
+	Real m_sizeY;
+	Real m_offsetX;
+	Real m_offsetY;
+	Real m_unmodelled98;
+	Real m_unmodelled9c;
+	Bool m_unmodelleda0;
+};
+
+// Retail exposes the scaled/recoloured BFME factory as a cdecl wrapper.  Its
+// 0x00901F80 body is also reached by ModelConditionInfo's named validation
+// caller and implements this exact three-argument ABI.
+RenderObjClass *Create_Render_Obj(const char *name, Real scale, Int color);
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0W3DDebrisDraw@@ is implemented by the exact retail thunk in
@@ -99,37 +149,41 @@ void W3DDebrisDraw::setFullyObscuredByShroud(Bool fullyObscured)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?setModelName@W3DDebrisDraw@@UAEXVAsciiString@@HW4ShadowType@@@Z present-unmatched
 void W3DDebrisDraw::setModelName(AsciiString name, Color color, ShadowType t)
 {
   if (m_renderObject == NULL && !name.isEmpty())
 	{
+		Matrix3D transform;
+		BfmeShadowTypeInfo shadowInfo;
 		Int hexColor = 0;
 		if (color != 0)
 			hexColor = color | 0xFF000000;
-		m_renderObject = W3DDisplay::m_assetManager->Create_Render_Obj(name.str(), getDrawable()->getScale(), hexColor);
+		m_renderObject = Create_Render_Obj(name.str(), getDrawable()->getScale(), hexColor);
 		DEBUG_ASSERTCRASH(m_renderObject, ("Debris model %s not found!\n",name.str()));
 		if (m_renderObject)
 		{
-			W3DDisplay::m_3DScene->Add_Render_Object(m_renderObject);
+			reinterpret_cast<BfmeSceneView *>(W3DDisplay::m_3DScene)->addRenderObject(m_renderObject);
 
-			m_renderObject->Set_User_Data(getDrawable()->getDrawableInfo());
+			reinterpret_cast<BfmeRenderObjectView *>(m_renderObject)->setUserData(
+				reinterpret_cast<unsigned char *>(getDrawable()) + 0x240, false);
 			
-			Matrix3D transform;
 			///@todo: Change back to identity once we figure out why objects show up at 0,0,0
 			/// OBJECT_PILE
 //			transform.Set(Vector3(0,0,9999));
 			transform.Set(Vector3(0,0,0));
-			m_renderObject->Set_Transform(transform);
+			reinterpret_cast<BfmeRenderObjectView *>(m_renderObject)->setTransform(transform);
 		}
 		
 		if (t != SHADOW_NONE)
 		{
-			Shadow::ShadowTypeInfo shadowInfo;
+			shadowInfo.m_unmodelled9c = 20.0f;
+			shadowInfo.m_unmodelleda0 = false;
 			shadowInfo.m_type = t;
 			shadowInfo.m_sizeX=0;
 			shadowInfo.m_sizeY=0;
-  		m_shadow = TheW3DShadowManager->addShadow(m_renderObject, &shadowInfo);
+			shadowInfo.m_unmodelled98 = 0.0f;
+			m_shadow = TheW3DShadowManager->addShadow(m_renderObject,
+				reinterpret_cast<Shadow::ShadowTypeInfo *>(&shadowInfo));
 		}
 		else
 		{
