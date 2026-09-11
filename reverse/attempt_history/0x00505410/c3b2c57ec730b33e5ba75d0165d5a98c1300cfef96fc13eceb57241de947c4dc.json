@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c3b2c57ec730b33e5ba75d0165d5a98c1300cfef96fc13eceb57241de947c4dc",
+  "symbol": "?update@BfmeQuickMatchProgressBody@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?update@BfmeQuickMatchProgressBody@@QAEXXZ\n// partial score=0.98 date=2026-09-11\n// ?update@BfmeQuickMatchProgressBody@@QAEXXZ\n// partial score=0.93 date=2026-09-02\n// cl: /DNDEBUG /MD\n\n// Open-BFME5: retail 0x00505410, 127 bytes. Scales a stored count against a\n// global denominator (50 / (n-1), or 25 when n<=1), optionally adds a 12.5\n// step, and writes the progress bar at +0x274.\n\nclass GameWindow;\n\nvoid GadgetProgressBarSetProgress(GameWindow *g, int progress);\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nextern int g_bfmeQuickMatchProgressDenom;\nextern const double g_bfmeQuickMatchStepScale;\n\nclass BfmeQuickMatchProgressBody\n{\npublic:\n\tvoid update(void);\n\n\tunsigned char _pad21c[0x21C];\n\tint m_count;\n\tunsigned char _pad220[4];\n\tint m_step;\n\tunsigned char _pad228[0x274 - 0x228];\n\tGameWindow *volatile m_bar;\n};\n\nvoid BfmeQuickMatchProgressBody::update(void)\n{\n\tint n = g_bfmeQuickMatchProgressDenom;\n\tregister int progress;\n\tif (n > 1)\n\t\tprogress = (int)((double)m_count * 50.0 / (double)(n - 1));\n\telse\n\t\tprogress = 25;\n\n\tif (m_step == 0)\n\t{\n\t\tprogress += 50;\n\t\tGadgetProgressBarSetProgress(m_bar, progress);\n\t}\n\telse\n\t{\n\t\tint shifted = m_step - 1;\n\t\tint extra = (int)((double)shifted * g_bfmeQuickMatchStepScale);\n\t\tprogress += extra;\n\t\t_ReadWriteBarrier();\n\t\tGadgetProgressBarSetProgress(m_bar, progress);\n\t}\n}\n"
+}
