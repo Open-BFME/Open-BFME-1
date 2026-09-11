@@ -1,247 +1,128 @@
+// ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Retail 0x00495CC0, 230 bytes. The layout and control flow mirror the exact
+// SlideFromRight implementation; the horizontal comparisons and clamp face
+// the opposite direction.
 
-class AnimateWindow;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
-class ProcessAnimateWindowSlideFromLeft
+typedef unsigned int UnsignedInt;
+typedef int Int;
+typedef float Real;
+typedef bool Bool;
+
+extern const Real g_bfmeDefaultBU;
+
+struct ICoord2D
 {
-public:
-	virtual bool updateAnimateWindow(AnimateWindow *);
+	Int x;
+	Int y;
 };
 
-// ?updateAnimateWindow@ProcessAnimateWindowSlideFromLeft@@UAE_NPAVAnimateWindow@@@Z
-__declspec(naked) bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow(AnimateWindow *)
+struct Coord2D
 {
-	__asm {
-        __emit 0x83
-        __emit 0xec
-        __emit 0x10
-        __emit 0x56
-        __emit 0x8b
-        __emit 0x74
-        __emit 0x24
-        __emit 0x18
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x04
-        __emit 0x74
-        __emit 0x07
-        __emit 0x8a
-        __emit 0x46
-        __emit 0x41
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x09
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x57
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x34
-        __emit 0xe8
-        __emit 0xfb
-        __emit 0x24
-        __emit 0xbb
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xc7
-        __emit 0x73
-        __emit 0x0a
-        __emit 0x5f
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x28
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x75
-        __emit 0x0a
-        __emit 0x5f
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x18
-        __emit 0x53
-        __emit 0x8b
-        __emit 0x5e
-        __emit 0x10
-        __emit 0x55
-        __emit 0x8b
-        __emit 0x6e
-        __emit 0x1c
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0xe8
-        __emit 0x1e
-        __emit 0x88
-        __emit 0xb7
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x05
-        __emit 0x11
-        __emit 0x56
-        __emit 0x00
-        __emit 0x03
-        __emit 0xf8
-        __emit 0x3b
-        __emit 0xfb
-        __emit 0x7e
-        __emit 0x0f
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5f
-        __emit 0x88
-        __emit 0x46
-        __emit 0x41
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x55
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x4a
-        __emit 0x37
-        __emit 0xb8
-        __emit 0xff
-        __emit 0xd9
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x18
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x2b
-        __emit 0xdf
-        __emit 0x3b
-        __emit 0xd9
-        __emit 0x7f
-        __emit 0x03
-        __emit 0xd8
-        __emit 0x48
-        __emit 0x10
-        __emit 0xd8
-        __emit 0x15
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xf6
-        __emit 0xc4
-        __emit 0x05
-        __emit 0x7a
-        __emit 0x08
-        __emit 0xdd
-        __emit 0xd8
-        __emit 0xd9
-        __emit 0x05
-        __emit 0x34
-        __emit 0x53
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xd9
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0xca
-        __emit 0x89
-        __emit 0x46
-        __emit 0x2c
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x30
-        __emit 0x89
-        __emit 0x54
-        __emit 0x24
-        __emit 0x08
-        __emit 0x32
-        __emit 0xc0
-        __emit 0x5e
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+	Real x;
+	Real y;
+	Coord2D(const Coord2D &that) throw() : x(that.x), y(that.y) {}
+	~Coord2D(void) throw() {}
+};
+
+class GameWindow
+{
+public:
+	Int winSetPosition(Int x, Int y);
+};
+
+class AnimateWindow
+{
+public:
+	virtual ~AnimateWindow(void);
+
+	UnsignedInt getStartTime(void) { return m_startTime; }
+	GameWindow *getGameWindow(void) { return m_gameWindow; }
+	ICoord2D getCurPos(void) { return m_curPos; }
+	ICoord2D getEndPos(void) { return m_endPos; }
+	Coord2D getVel(void) { return m_vel; }
+	Bool isFinished(void) { return m_finished; }
+	void setFinished(Bool finished) { m_finished = finished; }
+	void setCurPos(ICoord2D pos) { m_curPos = pos; }
+	void setVel(Coord2D vel) { m_vel = vel; }
+
+private:
+	UnsignedInt m_delay;
+	ICoord2D m_startPos;
+	ICoord2D m_endPos;
+	ICoord2D m_curPos;
+	ICoord2D m_restPos;
+	GameWindow *m_gameWindow;
+	Coord2D m_vel;
+	UnsignedInt m_startTime;
+	UnsignedInt m_endTime;
+	int m_animType;
+	Bool m_needsToFinish;
+	Bool m_finished;
+};
+
+class ProcessAnimateWindow
+{
+public:
+	virtual ~ProcessAnimateWindow(void) {}
+	virtual void initAnimateWindow(AnimateWindow *) = 0;
+	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt) = 0;
+	virtual Bool updateAnimateWindow(AnimateWindow *) = 0;
+	virtual Bool reverseAnimateWindow(AnimateWindow *) = 0;
+};
+
+class ProcessAnimateWindowSlideFromLeft : public ProcessAnimateWindow
+{
+public:
+	virtual ~ProcessAnimateWindowSlideFromLeft();
+	virtual void initAnimateWindow(AnimateWindow *);
+	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
+	virtual Bool updateAnimateWindow(AnimateWindow *);
+	virtual Bool reverseAnimateWindow(AnimateWindow *);
+
+private:
+	Coord2D m_maxVel;
+	Int m_slowDownThreshold;
+	Real m_slowDownRatio;
+	Real m_speedUpRatio;
+};
+
+extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
+
+Bool ProcessAnimateWindowSlideFromLeft::updateAnimateWindow(AnimateWindow *animWin)
+{
+	if (!animWin)
+		return true;
+
+	if (animWin->isFinished())
+		return true;
+
+	if (bfme_timeGetTime() < animWin->getStartTime())
+		return false;
+
+	GameWindow *win = animWin->getGameWindow();
+	if (!win)
+		return true;
+
+	ICoord2D curPos = animWin->getCurPos();
+	ICoord2D endPos = animWin->getEndPos();
+	Coord2D vel = animWin->getVel();
+	curPos.x += (Int)vel.x;
+
+	if (curPos.x > endPos.x)
+	{
+		curPos.x = endPos.x;
+		animWin->setFinished(true);
+		return true;
 	}
+
+	win->winSetPosition(curPos.x, curPos.y);
+	animWin->setCurPos(curPos);
+
+	if (endPos.x - curPos.x <= m_slowDownThreshold)
+		vel.x *= m_slowDownRatio;
+	if (vel.x < g_bfmeDefaultBU)
+		vel.x = g_bfmeDefaultBU;
+	animWin->setVel(vel);
+	return false;
 }
