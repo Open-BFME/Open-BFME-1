@@ -1,3 +1,5 @@
+class GameWindow;
+
 struct BfmeUHdrEBA
 {
 	unsigned short m_bfmeRefEBA;
@@ -17,13 +19,19 @@ public:
 	BfmeUHdrEBA *m_bfmeDataEBA;
 };
 
+// This TU-local spelling is pinned to GadgetTextEntryGetText's ILT. Keeping
+// the one-word parameter here preserves the already-proven call relocation;
+// each public callback below exposes the real GameWindow* ABI.
 BfmeUStrEBA __cdecl bfmeFormatEBA(int value);
 
 class BfmeRecEBA
 {
 public:
-	unsigned char m_bfmeHeadEBA[0x14];
+	unsigned char m_bfmeHeadEBA[4];
+	void *m_bfmeNameEBA;
+	unsigned char m_bfmePadEBA[0x0c];
 	int m_bfmeIdEBA;
+	unsigned int m_bfmeFlagsEBA;
 };
 
 BfmeRecEBA *__cdecl bfmeLookupEBA(BfmeUStrEBA *text);
@@ -59,7 +67,7 @@ public:
 	virtual void bfmeSlot25EBA();
 	virtual void bfmeSlot26EBA();
 	virtual void bfmeSlot27EBA();
-	virtual int bfmeCurrentEBA();
+	virtual int getLocalProfileIDEBA();
 	virtual void bfmeSlot29EBA();
 	virtual void bfmeSlot30EBA();
 	virtual void bfmeSlot31EBA();
@@ -102,17 +110,23 @@ public:
 	virtual void bfmeSlot68EBA();
 	virtual void bfmeSlot69EBA();
 	virtual void bfmeSlot70EBA();
-	virtual void bfmeSelectEBA(int id);
-	virtual void bfmeSelectSlot72E5B(int id);
+	virtual void requestBuddyAddEBA(int id);
+	virtual void removeBuddyE5B(int id);
+	virtual void bfmeSlot73E6B();
+	virtual void removeFromSavedIgnoreListE7B(int id);
 };
 
 extern GameSpyInfo *TheGameSpyInfo;
 
-void __stdcall bfmeSelectByNameEBA(int value)
+// Read a player name from the entry, resolve its PlayerInfo record, and issue
+// a buddy request unless it names the local profile (slots 28 and 71). The
+// historical neutral callback spelling keeps its one-word argument opaque;
+// GadgetTextEntryGetText proves that word carries a GameWindow pointer.
+void __stdcall bfmeSelectByNameEBA(int entryHandle)
 {
 	BfmeUStrEBA text;
 
-	text.bfmeSetEBA(bfmeFormatEBA(value));
+	text.bfmeSetEBA(bfmeFormatEBA(entryHandle));
 
 	if (text.m_bfmeDataEBA != 0 && text.m_bfmeDataEBA->m_bfmeLenEBA != 0)
 	{
@@ -122,25 +136,43 @@ void __stdcall bfmeSelectByNameEBA(int value)
 		{
 			int id = rec->m_bfmeIdEBA;
 
-			if (id != TheGameSpyInfo->bfmeCurrentEBA())
-				TheGameSpyInfo->bfmeSelectEBA(id);
+			if (id != TheGameSpyInfo->getLocalProfileIDEBA())
+				TheGameSpyInfo->requestBuddyAddEBA(id);
 		}
 	}
 }
 
-// The original callback spelling is not exposed by any named caller.  Its
-// GameSpyInfo receiver and slot are fixed by the matched family at 0052E4C0.
-void __stdcall bfmeSelectByNameE5B(int value)
+// The original callback spelling is not exposed by any named caller. The
+// GameSpyInfo vtable fixes slot 72 as removeBuddy.
+void __stdcall bfmeSelectByNameE5B(int entryHandle)
 {
 	BfmeUStrEBA text;
 
-	text.bfmeSetEBA(bfmeFormatEBA(value));
+	text.bfmeSetEBA(bfmeFormatEBA(entryHandle));
 
 	if (text.m_bfmeDataEBA != 0 && text.m_bfmeDataEBA->m_bfmeLenEBA != 0)
 	{
 		BfmeRecEBA *rec = bfmeLookupEBA(&text);
 
 		if (rec != 0)
-			TheGameSpyInfo->bfmeSelectSlot72E5B(rec->m_bfmeIdEBA);
+			TheGameSpyInfo->removeBuddyE5B(rec->m_bfmeIdEBA);
+	}
+}
+
+// The 0x0052E7B0 callback is the same Unicode lookup path as E5B above,
+// dispatching to GameSpyInfo::removeFromSavedIgnoreList at slot 74. Its
+// original callback spelling is likewise not exposed by a named caller.
+void __stdcall bfmeRemoveSavedIgnoreFromEntryE7B(GameWindow *entry)
+{
+	BfmeUStrEBA text;
+
+	text.bfmeSetEBA(bfmeFormatEBA((int)entry));
+
+	if (text.m_bfmeDataEBA != 0 && text.m_bfmeDataEBA->m_bfmeLenEBA != 0)
+	{
+		BfmeRecEBA *rec = bfmeLookupEBA(&text);
+
+		if (rec != 0)
+			TheGameSpyInfo->removeFromSavedIgnoreListE7B(rec->m_bfmeIdEBA);
 	}
 }
