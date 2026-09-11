@@ -875,6 +875,7 @@ name,address,notes
 ??$__copy@PBUS4Poly000BC2E0@@PAU1@H@_STL@@YAPAUS4Poly000BC2E0@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000FC40,0x004A2370 calls +0x00b1 and +0x00e4 ILT enters matched 112-byte copy body 0x0049D5D0
 ??$__copy@PBUS4Poly00136170@@PAU1@H@_STL@@YAPAUS4Poly00136170@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0000B136,0x00138D70 calls +0x00b1 and +0x00e4 ILT enters matched width-92 copy body 0x00138800
 ??$__copy@PBUWeaponBarrelInfo@@PAU1@H@_STL@@YAPAUWeaponBarrelInfo@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0075EB00,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls twice (overwrite copy and tail uninitialized copy); matched __copy<WeaponBarrelInfo> in W3DModelDraw.cpp
+??$__copy@PBGV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@H@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@ABUrandom_access_iterator_tag@0@PAH@Z,0x00835EF0,STLport 4.5.3 wide random-access copy specialization; canonical exact copy-and-fill caller at 0x00835C40 and NumFacetsInstantiations object symbol prove identity
 ??$__copy@PBVOpen2Elem138090@@PAV1@H@_STL@@YAPAVOpen2Elem138090@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00016F5E,Open2 0x138090 vector twin callee
 ??$__copy@PBVOpen2Elem3B5860@@PAV1@H@_STL@@YAPAVOpen2Elem3B5860@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x0001C4B3,Open2 0x3b5860 vector twin callee
 ??$__copy@PBVOpen2Elem3B59D0@@PAV1@H@_STL@@YAPAVOpen2Elem3B59D0@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z,0x00039EE1,Open2 0x3b59d0 vector twin callee
@@ -9646,6 +9647,7 @@ name,address,notes
 ??4?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00049382,retail finishReset list assignment call through the existing ILT thunk j_00049382
 ??4?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00381E80,STLport ExperienceLevel list assignment used by reserved 0x00382210 helper; raw callee ILT 0x000175BC and 0x00381B60 copy constructor establish value type
 ??4?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@QAEAAV01@D@Z,0x00835550,pin
+??4?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@QAEAAV01@G@Z,0x00835E90,STLport 4.5.3 wide output-iterator assignment; canonical exact copy-and-fill caller and direct wide basic_streambuf::sputc call at 0x00835ED0 prove identity
 ??4?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z,0x0002DC9F
 ??4?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x0002E00F,Open-BFME5 ILT thunk to body 0x00152530; the STLport vector assignment ?aiFollowExitProductionPath@AICommandInterface@@... at 0x00165C30 uses to copy the caller path into AICommandParms m_coords
 ??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70
