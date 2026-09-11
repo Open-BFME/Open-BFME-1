@@ -76477,6 +76477,7 @@ name,address,notes
 ?bfmeNamedAudio0046F1A0@@YAXPBD@Z,0x00002E0F,"Lead traced168B46F1A0: AudioEvent construction fromchar*, TheAudio slotsAC/44 then destructor; cdecl"
 ?bfmeNewAlloc@@YAPAXI@Z,0x00881F30,Open-BFME5 the large-block allocator the allocate-and-copy bodies at 0x000A7820 and its siblings call above 0x80 bytes
 ?bfmeNewMap@BfmePlayerMapState@@QAEXH_N@Z,0x00018679,Open-BFME5 ILT Player::newMap calls for the subobject at Player+0x30; it jumps to 0x000C7A30
+?newMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z,0x0001A0A5,route=0x005BC7C0; parseMissionPart calls the canonical Campaign::newMission by-value body through its retail ILT
 ?bfmeNewTableUPC@@YAPAXPAUBfmeStateUPC@@HH@Z,0x00999610,pin
 ?bfmeNext1016@BfmeIter1016@@QAEGH@Z,0x00835ED0,pin
 ?bfmeNext1087@BfmeP1087@@QAEGPAVParameter@@@Z,0x000230B5,Reviewed matched player-mask resolver34DB40 ushort return Parameter pointer and player iteration DF4A0 mutating ushort mask
