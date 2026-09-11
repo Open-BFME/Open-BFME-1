@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/psplayerstats /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -68,6 +68,73 @@ public:
 	virtual void slotC() = 0;
 	virtual void hide( Bool immediate ) = 0;
 };
+
+class Rva004FF2E0GameSpyInfo
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1c();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2c();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3c();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4c();
+	virtual void slot50();
+	virtual void slot54();
+	virtual void slot58();
+	virtual void slot5c();
+	virtual void slot60();
+	virtual void slot64();
+	virtual void slot68();
+	virtual void slot6c();
+	virtual Int getLocalProfileID();
+	virtual AsciiString getLocalEmail();
+	virtual void slot78();
+	virtual AsciiString getLocalPassword();
+	virtual void slot80();
+	virtual void slot84();
+	virtual AsciiString getLocalBaseName();
+	virtual void setCachedLocalPlayerStats( PSPlayerStats );
+	virtual PSPlayerStats getCachedLocalPlayerStats();
+};
+
+class StlStr
+{
+public:
+	StlStr &operator=( const char * );
+
+private:
+	char m_bytes[12];
+};
+
+typedef char Rva004FF2E0StlStrSize[(sizeof(StlStr) == 12) ? 1 : -1];
+
+struct Rva004FF2E0PSRequest : PSRequest
+{
+	Int bfmeExtra;
+};
+
+typedef char Rva004FF2E0PSRequestSize[(sizeof(Rva004FF2E0PSRequest) == 0x210) ? 1 : -1];
+
+struct Rva004FF2E0PSResponse : PSResponse
+{
+	unsigned char bfmeTail[0x24];
+};
+
+typedef char Rva004FF2E0PSResponseSize[(sizeof(Rva004FF2E0PSResponse) == 0x1f0) ? 1 : -1];
 
 
 #ifdef _INTERNAL
@@ -205,13 +272,13 @@ WindowMsgHandledType WOLLocaleSelectSystem( GameWindow *window, UnsignedInt msg,
 					GadgetListBoxGetSelected(listboxLocale, &selected);
 					if (selected < 0)
 						return MSG_HANDLED; // can't select nothing!
-					PSRequest psReq;
+					Rva004FF2E0PSRequest psReq;
 					psReq.requestType = PSRequest::PSREQUEST_UPDATEPLAYERLOCALE;
 					psReq.player.locale = selected + LOC_MIN;
-					psReq.email = TheGameSpyInfo->getLocalEmail().str();
-					psReq.nick = TheGameSpyInfo->getLocalBaseName().str();
-					psReq.password = TheGameSpyInfo->getLocalPassword().str();
-					psReq.player.id = TheGameSpyInfo->getLocalProfileID();
+					((StlStr *)&psReq.email)->operator=( ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalEmail().str() );
+					((StlStr *)&psReq.nick)->operator=( ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalBaseName().str() );
+					((StlStr *)&psReq.password)->operator=( ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalPassword().str() );
+					psReq.player.id = ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID();
 
 					TheGameSpyPSMessageQueue->addRequest(psReq);
 					GameSpyCloseOverlay(GSOVERLAY_LOCALESELECT);
@@ -220,23 +287,23 @@ WindowMsgHandledType WOLLocaleSelectSystem( GameWindow *window, UnsignedInt msg,
 					cPref.setLocale(psReq.player.locale);
 					cPref.write();
 
-					PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+					PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID(((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID());
 					stats.locale = psReq.player.locale;
-					if (stats.id == TheGameSpyInfo->getLocalProfileID())
+					if (stats.id == ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID())
 						TheGameSpyPSMessageQueue->trackPlayerStats(stats);
 
 					if(stats.id == 0)
 					{
-						stats = TheGameSpyInfo->getCachedLocalPlayerStats();
+						stats = ((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getCachedLocalPlayerStats();
 						stats.locale = psReq.player.locale;
-						TheGameSpyInfo->setCachedLocalPlayerStats(stats);
+						((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->setCachedLocalPlayerStats(stats);
 					}
 					else
 					{						
 						// force an update of our shtuff
-						PSResponse newResp;
+						Rva004FF2E0PSResponse newResp;
 						newResp.responseType = PSResponse::PSRESPONSE_PLAYERSTATS;
-						newResp.player = TheGameSpyPSMessageQueue->findPlayerStatsByID(TheGameSpyInfo->getLocalProfileID());
+						newResp.player = TheGameSpyPSMessageQueue->findPlayerStatsByID(((Rva004FF2E0GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID());
 						TheGameSpyPSMessageQueue->addResponse(newResp);
 					}
 					CheckReOpenPlayerInfo();

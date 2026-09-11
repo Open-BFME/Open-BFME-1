@@ -64,16 +64,14 @@ public:
 // ?update@Rva008D3610Owner@@QAEXHPAX@Z
 void Rva008D3610Owner::update(int delta, void *context)
 {
-	Rva008D3610Group *groups = (Rva008D3610Group *)m_groups;
 	for (int groupIndex = 0; groupIndex < m_groupCount; ++groupIndex)
 	{
-		int itemCount = groups[groupIndex].m_count;
+		int itemCount = ((Rva008D3610Group *)m_groups)[groupIndex].m_count;
 		for (int itemIndex = 0; itemIndex < itemCount; ++itemIndex)
 		{
-			Rva008D3610Node **items = (Rva008D3610Node **)groups[groupIndex].m_items;
-			Rva008D3610Node *node = items[itemIndex];
-			int kind = node->m_type - 1;
-			switch (kind)
+			switch (((Rva008D3610Node **)
+				((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+				[itemIndex]->m_type - 1)
 			{
 			case 0:
 				rva008CC540ZeroThirdForwarder(

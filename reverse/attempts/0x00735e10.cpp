@@ -17,13 +17,23 @@ struct Vector3
 	Real Y;
 	Real Z;
 
-	Vector3(void) {}
-	Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
-
-	Vector3 &operator = (const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-	Vector3 &operator += (const Vector3 &v) { X += v.X; Y += v.Y; Z += v.Z; return *this; }
-};
-
+	__forceinline Vector3(void) {}
+	__forceinline Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
+	__forceinline Vector3 &operator = (const Vector3 &v)
+	{
+		X = v.X;
+		Y = v.Y;
+		Z = v.Z;
+		return *this;
+	}
+	__forceinline Vector3 &operator += (const Vector3 &v)
+	{
+		X += v.X;
+		Y += v.Y;
+		Z += v.Z;
+		return *this;
+	}
+	};
 struct Matrix3D
 {
 	Real Row[3][4];
@@ -65,6 +75,7 @@ public:
 
 	Vector3 Center;
 	Real Radius;
+
 };
 
 struct Rva006A16B0StringData

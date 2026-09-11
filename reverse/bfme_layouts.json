@@ -5,12 +5,12 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 975.7,
-"total": 977.1,
+"votes": 977.4,
+"total": 980.5,
 "confidence": 1.0,
 "alts": {
 "0x4": 0.7,
-"0x8": 0.7
+"0x8": 2.4
 },
 "fns": [
 "??0?$BitFlags@$0BB@@@QAE@XZ",
@@ -56,11 +56,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 945.3,
-"total": 950.7,
+"votes": 946.9,
+"total": 954.0,
 "confidence": 0.99,
 "alts": {
-"0xc": 1.0,
+"0xc": 2.6,
 "0x8": 2.7,
 "0x18": 0.9,
 "0x5": 1.0
@@ -124,16 +124,16 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 623.5,
-"total": 653.5,
+"votes": 625.2,
+"total": 656.9,
 "confidence": 0.95,
 "alts": {
 "0x4": 23.2,
 "0x0": 1.5,
 "0xc": 2.0,
+"0x10": 2.6,
 "0x14": 1.7,
-"0x1c": 0.8,
-"0x10": 0.9
+"0x1c": 0.8
 },
 "fns": [
 "??0?$BitFlags@$0ED@@@QAE@XZ",
@@ -179,16 +179,16 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 389.1,
-"total": 429.5,
-"confidence": 0.91,
+"votes": 390.7,
+"total": 433.6,
+"confidence": 0.9,
 "alts": {
 "0x10": 2.0,
-"0x8": 33.1,
+"0x14": 2.6,
+"0x8": 33.9,
 "0x18": 1.6,
 "0x4": 1.0,
 "0x780c": 0.8,
-"0x14": 0.9,
 "0x350": 0.9
 },
 "fns": [
@@ -236,14 +236,14 @@
 "zh": 16,
 "bfme": 16,
 "votes": 295.5,
-"total": 319.0,
-"confidence": 0.93,
+"total": 320.6,
+"confidence": 0.92,
 "alts": {
-"0xc": 11.7,
+"0xc": 12.5,
 "0x14": 5.6,
 "0x4": 1.0,
+"0x18": 2.7,
 "0x1c": 0.9,
-"0x18": 1.9,
 "0xa94": 0.8,
 "0x24": 0.7,
 "0x354": 0.9
@@ -275,11 +275,11 @@
 "zh": 20,
 "bfme": 20,
 "votes": 212.4,
-"total": 241.6,
+"total": 242.3,
 "confidence": 0.88,
 "alts": {
 "0x18": 6.1,
-"0x10": 18.7,
+"0x10": 19.5,
 "0x20": 0.9,
 "0x8": 1.9,
 "0x1c": 0.9,
@@ -312,10 +312,10 @@
 "zh": 24,
 "bfme": 24,
 "votes": 174.1,
-"total": 198.4,
-"confidence": 0.88,
+"total": 199.2,
+"confidence": 0.87,
 "alts": {
-"0x14": 13.5,
+"0x14": 14.3,
 "0x24": 2.7,
 "0x20": 1.9,
 "0x1c": 2.0,
@@ -383,10 +383,10 @@
 "zh": 28,
 "bfme": 28,
 "votes": 154.5,
-"total": 177.0,
+"total": 177.8,
 "confidence": 0.87,
 "alts": {
-"0x18": 10.6,
+"0x18": 11.4,
 "0x30": 4.8,
 "0x20": 4.4,
 "0x28": 0.9,
@@ -454,11 +454,12 @@
 "zh": 32,
 "bfme": 32,
 "votes": 129.8,
-"total": 161.3,
+"total": 163.0,
 "confidence": 0.8,
 "alts": {
-"0x1c": 5.3,
+"0x1c": 6.1,
 "0x34": 10.7,
+"0x30": 0.8,
 "0x24": 8.0,
 "0x2c": 0.9,
 "0x0": 0.9,
@@ -531,10 +532,11 @@
 "zh": 36,
 "bfme": 36,
 "votes": 103.3,
-"total": 128.3,
-"confidence": 0.81,
+"total": 129.9,
+"confidence": 0.8,
 "alts": {
-"0x20": 5.3,
+"0x20": 6.1,
+"0x34": 0.8,
 "0x18": 1.0,
 "0x30": 0.9,
 "0x28": 5.2,
@@ -604,17 +606,17 @@
 "zh": 40,
 "bfme": 40,
 "votes": 97.5,
-"total": 120.9,
-"confidence": 0.81,
+"total": 122.5,
+"confidence": 0.8,
 "alts": {
 "0x34": 1.8,
-"0x24": 5.0,
+"0x24": 5.8,
+"0x40": 1.6,
 "0x3c": 3.6,
 "0x58": 0.9,
 "0x2c": 6.0,
 "0x30": 4.6,
-"0x0": 0.7,
-"0x40": 0.7
+"0x0": 0.7
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -629,11 +631,11 @@
 "zh": 44,
 "bfme": 44,
 "votes": 82.7,
-"total": 102.7,
-"confidence": 0.81,
+"total": 103.5,
+"confidence": 0.8,
 "alts": {
 "0x38": 0.9,
-"0x28": 5.0,
+"0x28": 5.8,
 "0x34": 5.4,
 "0x40": 2.5,
 "0x30": 3.6,
@@ -654,11 +656,11 @@
 "zh": 48,
 "bfme": 48,
 "votes": 62.1,
-"total": 82.7,
-"confidence": 0.75,
+"total": 83.5,
+"confidence": 0.74,
 "alts": {
 "0x3c": 0.9,
-"0x2c": 3.2,
+"0x2c": 4.0,
 "0x38": 4.4,
 "0x14": 0.9,
 "0x44": 2.6,
@@ -778,11 +780,11 @@
 "zh": 56,
 "bfme": 56,
 "votes": 42.4,
-"total": 62.2,
-"confidence": 0.68,
+"total": 63.0,
+"confidence": 0.67,
 "alts": {
 "0x28": 0.9,
-"0x34": 2.4,
+"0x34": 3.2,
 "0x58": 2.6,
 "0x84": 1.0,
 "0x4c": 3.5,
@@ -804,11 +806,11 @@
 "zh": 60,
 "bfme": 60,
 "votes": 32.8,
-"total": 56.8,
-"confidence": 0.58,
+"total": 57.5,
+"confidence": 0.57,
 "alts": {
 "0x2c": 0.9,
-"0x38": 2.4,
+"0x38": 3.2,
 "0x50": 3.5,
 "0x40": 2.6,
 "0x44": 8.6,
@@ -830,15 +832,15 @@
 "zh": 61,
 "bfme": 61,
 "votes": 2.8,
-"total": 3.5,
-"confidence": 0.8,
+"total": 4.2,
+"confidence": 0.65,
 "alts": {
-"0x39": 0.7
+"0x39": 1.5
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0RoadSegment@@QAE@ABV0@@Z",
-"??0W3DTreeDrawModuleData@@QAE@XZ",
-"??4BuildListInfo@@QAEAAV0@ABV0@@Z"
+"??0W3DTreeDrawModuleData@@QAE@XZ"
 ]
 },
 {
@@ -848,15 +850,15 @@
 "zh": 62,
 "bfme": 62,
 "votes": 2.0,
-"total": 2.7,
-"confidence": 0.74,
+"total": 3.5,
+"confidence": 0.57,
 "alts": {
-"0x3a": 0.7
+"0x3a": 1.5
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0RoadSegment@@QAE@ABV0@@Z",
-"??4BuildListInfo@@QAEAAV0@ABV0@@Z",
-"??4RoadSegment@@QAEAAV0@ABV0@@Z"
+"??4BuildListInfo@@QAEAAV0@ABV0@@Z"
 ]
 },
 {
@@ -866,15 +868,15 @@
 "zh": 63,
 "bfme": 63,
 "votes": 2.0,
-"total": 2.7,
-"confidence": 0.74,
+"total": 3.5,
+"confidence": 0.57,
 "alts": {
-"0x3b": 0.7
+"0x3b": 1.5
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0RoadSegment@@QAE@ABV0@@Z",
-"??4BuildListInfo@@QAEAAV0@ABV0@@Z",
-"??4RoadSegment@@QAEAAV0@ABV0@@Z"
+"??4BuildListInfo@@QAEAAV0@ABV0@@Z"
 ]
 },
 {
@@ -884,11 +886,11 @@
 "zh": 64,
 "bfme": 64,
 "votes": 40.3,
-"total": 57.0,
-"confidence": 0.71,
+"total": 57.8,
+"confidence": 0.7,
 "alts": {
 "0x30": 0.9,
-"0x3c": 1.7,
+"0x3c": 2.5,
 "0x5c": 2.4,
 "0x44": 3.3,
 "0x48": 3.5,
@@ -900,7 +902,7 @@
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0BumpEnvTextureMapperClass@@QAE@ABV0@@Z"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -924,10 +926,10 @@
 "zh": 68,
 "bfme": 68,
 "votes": 22.2,
-"total": 38.7,
-"confidence": 0.57,
+"total": 39.5,
+"confidence": 0.56,
 "alts": {
-"0x40": 2.7,
+"0x40": 3.4,
 "0x60": 0.8,
 "0x8": 1.0,
 "0x54": 1.0,
@@ -940,7 +942,7 @@
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0Condition@@IAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -978,10 +980,10 @@
 "zh": 72,
 "bfme": 72,
 "votes": 21.8,
-"total": 35.8,
-"confidence": 0.61,
+"total": 36.6,
+"confidence": 0.6,
 "alts": {
-"0x44": 2.7,
+"0x44": 3.4,
 "0x54": 0.8,
 "0x58": 1.0,
 "0x4c": 2.7,
@@ -992,7 +994,7 @@
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0Condition@@IAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1016,19 +1018,19 @@
 "zh": 76,
 "bfme": 76,
 "votes": 32.2,
-"total": 44.3,
-"confidence": 0.73,
+"total": 45.1,
+"confidence": 0.71,
 "alts": {
 "0x50": 3.5,
 "0x54": 3.6,
-"0x48": 1.7,
+"0x48": 2.5,
 "0x60": 0.7,
 "0x6c": 2.6
 },
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1038,8 +1040,8 @@
 "zh": 80,
 "bfme": 80,
 "votes": 18.5,
-"total": 35.8,
-"confidence": 0.52,
+"total": 36.6,
+"confidence": 0.51,
 "alts": {
 "0x48": 1.0,
 "0x30": 0.7,
@@ -1048,7 +1050,7 @@
 "0x58": 2.8,
 "0x59": 0.8,
 "0x0": 0.7,
-"0x4c": 3.5,
+"0x4c": 4.3,
 "0x70": 2.6
 },
 "fns": [
@@ -1098,13 +1100,13 @@
 "zh": 84,
 "bfme": 84,
 "votes": 16.7,
-"total": 31.6,
-"confidence": 0.53,
+"total": 32.3,
+"confidence": 0.52,
 "alts": {
 "0x4c": 1.0,
 "0x100": 6.3,
 "0x58": 0.9,
-"0x50": 1.4,
+"0x50": 2.2,
 "0x5c": 1.8,
 "0x68": 0.7,
 "0x74": 2.6
@@ -1122,11 +1124,11 @@
 "zh": 88,
 "bfme": 88,
 "votes": 23.4,
-"total": 30.8,
-"confidence": 0.76,
+"total": 31.6,
+"confidence": 0.74,
 "alts": {
 "0x5c": 1.6,
-"0x54": 1.4,
+"0x54": 2.2,
 "0x60": 0.9,
 "0x6c": 0.7,
 "0x78": 2.6
@@ -1134,7 +1136,7 @@
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1144,19 +1146,19 @@
 "zh": 92,
 "bfme": 92,
 "votes": 15.1,
-"total": 22.5,
-"confidence": 0.67,
+"total": 23.3,
+"confidence": 0.65,
 "alts": {
 "0x60": 2.4,
 "0x64": 0.9,
-"0x58": 0.7,
+"0x58": 1.5,
 "0x70": 0.7,
 "0x7c": 2.6
 },
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1166,20 +1168,20 @@
 "zh": 96,
 "bfme": 96,
 "votes": 15.7,
-"total": 24.4,
-"confidence": 0.65,
+"total": 25.2,
+"confidence": 0.63,
 "alts": {
 "0x58": 2.0,
 "0x64": 1.6,
 "0x68": 0.9,
-"0x5c": 0.7,
+"0x5c": 1.5,
 "0x74": 0.7,
 "0x80": 2.6
 },
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1189,22 +1191,22 @@
 "zh": 100,
 "bfme": 100,
 "votes": 23.4,
-"total": 34.9,
-"confidence": 0.67,
+"total": 35.7,
+"confidence": 0.66,
 "alts": {
 "0x70": 0.7,
 "0x5c": 0.9,
 "0x84": 3.4,
 "0x68": 2.5,
 "0x6c": 1.9,
-"0x60": 0.7,
+"0x60": 1.5,
 "0xb8": 0.7,
 "0x78": 0.7
 },
 "fns": [
 "??0BezFwdIterator@@QAE@XZ",
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ"
 ]
 },
 {
@@ -1214,19 +1216,19 @@
 "zh": 104,
 "bfme": 104,
 "votes": 14.1,
-"total": 21.6,
-"confidence": 0.65,
+"total": 22.4,
+"confidence": 0.63,
 "alts": {
 "0x6c": 2.5,
 "0x70": 0.9,
-"0x64": 0.7,
+"0x64": 1.5,
 "0x7c": 0.7,
 "0x88": 2.6
 },
 "fns": [
 "??0BridgeInfo@@QAE@XZ",
-"??0ControlBar@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ",
+"??0ControlBar@@QAE@XZ"
 ]
 },
 {
@@ -1266,20 +1268,20 @@
 "zh": 108,
 "bfme": 108,
 "votes": 5.9,
-"total": 14.6,
-"confidence": 0.41,
+"total": 15.4,
+"confidence": 0.39,
 "alts": {
 "0x8c": 3.6,
 "0x70": 0.9,
 "0x74": 1.9,
 "0x48": 0.8,
-"0x68": 0.7,
+"0x68": 1.5,
 "0x80": 0.7
 },
 "fns": [
 "??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z",
-"??0ControlBarScheme@@QAE@XZ",
-"??0DockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z"
+"??0BuildListInfo@@QAE@XZ",
+"??0ControlBarScheme@@QAE@XZ"
 ]
 },
 {
@@ -1289,22 +1291,22 @@
 "zh": 112,
 "bfme": 112,
 "votes": 12.5,
-"total": 23.3,
-"confidence": 0.54,
+"total": 24.1,
+"confidence": 0.52,
 "alts": {
 "0x74": 0.9,
 "0x88": 0.7,
 "0x78": 1.9,
-"0x6c": 0.7,
+"0x6c": 1.5,
 "0xb8": 0.7,
 "0x84": 0.7,
 "0x90": 4.2,
 "0x4c": 0.9
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0ControlBar@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ",
-"??0DockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z"
+"??0ControlBarScheme@@QAE@XZ"
 ]
 },
 {
@@ -1314,21 +1316,21 @@
 "zh": 116,
 "bfme": 116,
 "votes": 11.6,
-"total": 21.1,
-"confidence": 0.55,
+"total": 21.9,
+"confidence": 0.53,
 "alts": {
 "0x8": 0.8,
 "0x78": 0.9,
 "0x7c": 1.9,
-"0x70": 0.7,
+"0x70": 1.5,
 "0xb4": 0.7,
 "0x88": 0.7,
 "0x210": 3.7
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0CashHackSpecialPowerModuleData@@QAE@XZ",
-"??0ControlBar@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ"
+"??0ControlBar@@QAE@XZ"
 ]
 },
 {
@@ -1338,21 +1340,21 @@
 "zh": 120,
 "bfme": 120,
 "votes": 4.2,
-"total": 12.8,
-"confidence": 0.33,
+"total": 13.6,
+"confidence": 0.31,
 "alts": {
 "0x10": 0.8,
 "0x84": 0.9,
 "0x7c": 0.9,
 "0x80": 1.9,
-"0x74": 0.7,
+"0x74": 1.5,
 "0x8c": 0.7,
 "0x214": 2.7
 },
 "fns": [
+"??0BuildListInfo@@QAE@XZ",
 "??0CashHackSpecialPowerModuleData@@QAE@XZ",
-"??0ControlBar@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ"
+"??0ControlBar@@QAE@XZ"
 ]
 },
 {
@@ -1362,21 +1364,21 @@
 "zh": 124,
 "bfme": 124,
 "votes": 10.8,
-"total": 18.4,
-"confidence": 0.59,
+"total": 19.1,
+"confidence": 0.56,
 "alts": {
 "0x3c": 0.8,
 "0x80": 0.9,
 "0xa0": 0.7,
 "0x84": 0.9,
-"0x78": 1.7,
+"0x78": 2.5,
 "0x90": 0.7,
 "0x218": 1.8
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
-"??0CashHackSpecialPowerModuleData@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ",
+"??0CashHackSpecialPowerModuleData@@QAE@XZ"
 ]
 },
 {
@@ -1400,23 +1402,23 @@
 "zh": 128,
 "bfme": 128,
 "votes": 4.1,
-"total": 12.9,
-"confidence": 0.32,
+"total": 13.7,
+"confidence": 0.3,
 "alts": {
 "0x15c": 1.0,
 "0x280": 1.0,
 "0x160": 0.8,
 "0x84": 0.9,
 "0x88": 0.9,
-"0x7c": 1.7,
+"0x7c": 2.5,
 "0x94": 0.7,
 "0x21c": 0.9,
 "0xb0": 0.9
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
-"??0CashHackSpecialPowerModuleData@@QAE@XZ",
-"??0ControlBarScheme@@QAE@XZ"
+"??0BuildListInfo@@QAE@XZ",
+"??0CashHackSpecialPowerModuleData@@QAE@XZ"
 ]
 },
 {
@@ -1425,9 +1427,9 @@
 "member": "+0x84?",
 "zh": 132,
 "bfme": 128,
-"votes": 2.6,
-"total": 8.6,
-"confidence": 0.31,
+"votes": 3.4,
+"total": 9.4,
+"confidence": 0.36,
 "alts": {
 "0x94": 0.9,
 "0x88": 1.7,
@@ -1437,8 +1439,8 @@
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
-"??0ControlBarScheme@@QAE@XZ",
-"??0DockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z"
+"??0BuildListInfo@@QAE@XZ",
+"??0ControlBarScheme@@QAE@XZ"
 ]
 },
 {
@@ -1476,21 +1478,21 @@
 "zh": 136,
 "bfme": 136,
 "votes": 12.1,
-"total": 20.2,
-"confidence": 0.6,
+"total": 21.0,
+"confidence": 0.58,
 "alts": {
 "0x164": 0.8,
 "0x8c": 1.7,
 "0xac": 0.7,
 "0x90": 0.9,
-"0x84": 2.6,
+"0x84": 3.4,
 "0xe8": 0.7,
 "0x9c": 0.7
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
-"??0ControlBarScheme@@QAE@XZ",
-"??0MeshLoadContextClass@@AAE@XZ"
+"??0BuildListInfo@@QAE@XZ",
+"??0ControlBarScheme@@QAE@XZ"
 ]
 },
 {
@@ -1500,21 +1502,21 @@
 "zh": 140,
 "bfme": 140,
 "votes": 4.5,
-"total": 13.1,
-"confidence": 0.35,
+"total": 13.8,
+"confidence": 0.33,
 "alts": {
 "0x168": 0.8,
 "0x298": 0.9,
 "0x90": 0.9,
 "0x94": 1.7,
 "0x98": 0.9,
-"0x88": 2.6,
+"0x88": 3.4,
 "0xa0": 0.7
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
-"??0ControlBarScheme@@QAE@XZ",
-"??0MeshLoadContextClass@@AAE@XZ"
+"??0BuildListInfo@@QAE@XZ",
+"??0ControlBarScheme@@QAE@XZ"
 ]
 },
 {
@@ -11633,15 +11635,46 @@
 {
 "owner": "?$_Rb_tree@W4LocomotorSetType",
 "fn_class": "?$_Rb_tree@W4LocomotorSetType",
+"member": "+0x0?",
+"zh": 0,
+"bfme": 0,
+"votes": 4.8,
+"total": 4.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z",
+"?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z"
+]
+},
+{
+"owner": "?$_Rb_tree@W4LocomotorSetType",
+"fn_class": "?$_Rb_tree@W4LocomotorSetType",
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
+"votes": 2.9,
+"total": 2.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?empty@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QBE_NXZ",
+"?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z",
+"?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z"
+]
+},
+{
+"owner": "?$_Rb_tree@W4LocomotorSetType",
+"fn_class": "?$_Rb_tree@W4LocomotorSetType",
+"member": "+0x10?",
+"zh": 16,
+"bfme": 16,
 "votes": 1.0,
 "total": 1.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?empty@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QBE_NXZ"
+"?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z"
 ]
 },
 {
@@ -20526,11 +20559,84 @@
 "zh": 8,
 "bfme": 8,
 "votes": 1.0,
-"total": 1.0,
+"total": 1.8,
+"confidence": 0.54,
+"alts": {
+"0x4": 0.8
+},
+"fns": [
+"?setLocation@BuildListInfo@@QAEXUCoord3D@@@Z",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_templateName",
+"zh": 12,
+"bfme": 8,
+"votes": 0.8,
+"total": 0.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?setLocation@BuildListInfo@@QAEXUCoord3D@@@Z"
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_location+0x8",
+"zh": 24,
+"bfme": 12,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_rallyPointOffset+0x4",
+"zh": 32,
+"bfme": 24,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_angle",
+"zh": 36,
+"bfme": 32,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_isInitiallyBuilt",
+"zh": 40,
+"bfme": 36,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -20554,14 +20660,86 @@
 "zh": 48,
 "bfme": 44,
 "votes": 2.0,
-"total": 3.0,
-"confidence": 0.67,
+"total": 3.8,
+"confidence": 0.52,
 "alts": {
-"0x30": 1.0
+"0x30": 1.0,
+"0x28": 0.8
 },
 "fns": [
 "?duplicate@BuildListInfo@@QAEPAV1@XZ",
-"?setNextBuildList@BuildListInfo@@QAEXPAV1@@Z"
+"?setNextBuildList@BuildListInfo@@QAEXPAV1@@Z",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_script",
+"zh": 52,
+"bfme": 48,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_health",
+"zh": 56,
+"bfme": 52,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_health+0x1",
+"zh": 57,
+"bfme": 56,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_health+0x2",
+"zh": 58,
+"bfme": 57,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_health+0x3",
+"zh": 59,
+"bfme": 58,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -20595,15 +20773,30 @@
 {
 "owner": "BuildListInfo",
 "fn_class": "BuildListInfo",
-"member": "m_objectID",
-"zh": 76,
-"bfme": 76,
-"votes": 1.0,
-"total": 1.0,
+"member": "m_selected",
+"zh": 72,
+"bfme": 59,
+"votes": 0.8,
+"total": 0.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?setObjectID@BuildListInfo@@QAEXW4ObjectID@@@Z"
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_objectID",
+"zh": 76,
+"bfme": 76,
+"votes": 1.8,
+"total": 1.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?setObjectID@BuildListInfo@@QAEXW4ObjectID@@@Z",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -20612,12 +20805,13 @@
 "member": "m_objectTimestamp",
 "zh": 80,
 "bfme": 80,
-"votes": 1.0,
-"total": 1.0,
+"votes": 1.8,
+"total": 1.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?setObjectTimestamp@BuildListInfo@@QAEXI@Z"
+"?setObjectTimestamp@BuildListInfo@@QAEXI@Z",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -20627,11 +20821,28 @@
 "zh": 84,
 "bfme": 84,
 "votes": 1.0,
-"total": 1.0,
+"total": 1.8,
+"confidence": 0.54,
+"alts": {
+"0x7c": 0.8
+},
+"fns": [
+"?setUnderConstruction@BuildListInfo@@QAEX_N@Z",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
+]
+},
+{
+"owner": "BuildListInfo",
+"fn_class": "BuildListInfo",
+"member": "m_resourceGatherers+0x24",
+"zh": 124,
+"bfme": 128,
+"votes": 0.8,
+"total": 0.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?setUnderConstruction@BuildListInfo@@QAEX_N@Z"
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -20641,11 +20852,14 @@
 "zh": 128,
 "bfme": 128,
 "votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
+"total": 1.8,
+"confidence": 0.54,
+"alts": {
+"0x88": 0.8
+},
 "fns": [
-"?isSupplyBuilding@BuildListInfo@@QAE_NXZ"
+"?isSupplyBuilding@BuildListInfo@@QAE_NXZ",
+"?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
 {
@@ -35778,6 +35992,20 @@
 ]
 },
 {
+"owner": "MapCache",
+"fn_class": "MapCache",
+"member": "m_seen",
+"zh": 12,
+"bfme": 12,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z"
+]
+},
+{
 "owner": "MapObject",
 "fn_class": "MapObject",
 "member": "TheMapObjectListPtr",
@@ -38013,11 +38241,11 @@
 "zh": 16,
 "bfme": 16,
 "votes": 24.4,
-"total": 30.2,
-"confidence": 0.81,
+"total": 33.2,
+"confidence": 0.73,
 "alts": {
 "0xc": 2.0,
-"0x14": 3.8
+"0x14": 6.8
 },
 "fns": [
 "??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ",
@@ -41219,7 +41447,7 @@
 "fn_class": "Object",
 "member": "m_visionRange",
 "zh": 292,
-"bfme": 292,
+"bfme": 404,
 "votes": 1.0,
 "total": 1.0,
 "confidence": 1.0,
@@ -47022,6 +47250,20 @@
 "alts": {},
 "fns": [
 "?isFreeToExit@QueueProductionExitUpdate@@IBE_NXZ"
+]
+},
+{
+"owner": "QueueProductionExitUpdate",
+"fn_class": "QueueProductionExitUpdate",
+"member": "m_rallyPoint",
+"zh": 40,
+"bfme": 44,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?update@QueueProductionExitUpdate@@UAE?AW4UpdateSleepTime@@XZ"
 ]
 },
 {
@@ -58045,8 +58287,8 @@
 "member": "Header",
 "zh": 0,
 "bfme": 0,
-"votes": 25.0,
-"total": 25.0,
+"votes": 33.7,
+"total": 33.7,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58058,11 +58300,67 @@
 {
 "owner": "Targa",
 "fn_class": "Targa",
+"member": "Header+0x2",
+"zh": 2,
+"bfme": 2,
+"votes": 2.9,
+"total": 2.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "Header+0x3",
+"zh": 3,
+"bfme": 3,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "Header+0x5",
+"zh": 5,
+"bfme": 5,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "Header+0x7",
+"zh": 7,
+"bfme": 7,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
 "member": "Header+0xc",
 "zh": 12,
 "bfme": 12,
-"votes": 6.0,
-"total": 6.0,
+"votes": 7.0,
+"total": 7.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58077,8 +58375,8 @@
 "member": "Header+0xe",
 "zh": 14,
 "bfme": 14,
-"votes": 5.0,
-"total": 5.0,
+"votes": 6.0,
+"total": 6.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58093,8 +58391,8 @@
 "member": "Header+0x10",
 "zh": 16,
 "bfme": 16,
-"votes": 4.0,
-"total": 4.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58109,8 +58407,8 @@
 "member": "TGAFile",
 "zh": 20,
 "bfme": 20,
-"votes": 26.0,
-"total": 26.0,
+"votes": 34.7,
+"total": 34.7,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58155,8 +58453,8 @@
 "member": "mImage",
 "zh": 32,
 "bfme": 32,
-"votes": 9.0,
-"total": 9.0,
+"votes": 10.9,
+"total": 10.9,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -58171,11 +58469,12 @@
 "member": "mPalette",
 "zh": 36,
 "bfme": 36,
-"votes": 5.0,
-"total": 5.0,
+"votes": 6.0,
+"total": 6.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z",
 "?SetPalette@Targa@@QAEPADPAD@Z"
 ]
 },
@@ -58185,12 +58484,55 @@
 "member": "mExtension",
 "zh": 40,
 "bfme": 40,
+"votes": 2.0,
+"total": 2.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Open@Targa@@QAEJPBDJ@Z",
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "mExtension+0x1aa",
+"zh": 466,
+"bfme": 466,
 "votes": 1.0,
 "total": 1.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Open@Targa@@QAEJPBDJ@Z"
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "mExtension+0x1d3",
+"zh": 507,
+"bfme": 507,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
+]
+},
+{
+"owner": "Targa",
+"fn_class": "Targa",
+"member": "mExtension+0x1d5",
+"zh": 509,
+"bfme": 509,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Save@Targa@@QAEJPBDJ_N@Z"
 ]
 },
 {
@@ -58199,12 +58541,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 1.0,
-"total": 1.0,
+"votes": 6.0,
+"total": 6.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0DLINK_TeamInstanceList@Team@@QAE@XZ"
+"??0DLINK_TeamInstanceList@Team@@QAE@XZ",
+"?evacuateTeam@Team@@QAEXXZ"
 ]
 },
 {
@@ -58227,16 +58570,16 @@
 "member": "m_proto",
 "zh": 8,
 "bfme": 8,
-"votes": 1.8,
-"total": 2.6,
-"confidence": 0.7,
+"votes": 2.6,
+"total": 3.4,
+"confidence": 0.77,
 "alts": {
 "0x4": 0.8
 },
 "fns": [
+"?evacuateTeam@Team@@QAEXXZ",
 "?getPrototype@Team@@QAEPBVTeamPrototype@@XZ",
-"?getRelationship@Team@@QBE?AW4Relationship@@PBV1@@Z",
-"?setTeamTargetObject@Team@@QAEXPBVObject@@@Z"
+"?getRelationship@Team@@QBE?AW4Relationship@@PBV1@@Z"
 ]
 },
 {
@@ -58245,14 +58588,14 @@
 "member": "m_id+0x4",
 "zh": 16,
 "bfme": 12,
-"votes": 8.4,
-"total": 8.4,
+"votes": 9.3,
+"total": 9.3,
 "confidence": 1.0,
 "alts": {},
 "fns": [
 "?didPartialEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z",
 "?didPartialExit@Team@@QBE_NPAVPolygonTrigger@@I@Z",
-"?prependTo_TeamMemberList@Team@@QAEXPAVObject@@@Z"
+"?evacuateTeam@Team@@QAEXXZ"
 ]
 },
 {
@@ -58379,6 +58722,34 @@
 {
 "owner": "Team",
 "fn_class": "Team",
+"member": "m_xferMemberIDList+0x3c",
+"zh": 144,
+"bfme": 144,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?evacuateTeam@Team@@QAEXXZ"
+]
+},
+{
+"owner": "Team",
+"fn_class": "Team",
+"member": "m_xferMemberIDList+0x13c",
+"zh": 400,
+"bfme": 508,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?evacuateTeam@Team@@QAEXXZ"
+]
+},
+{
+"owner": "Team",
+"fn_class": "Team",
 "member": "m_xferMemberIDList+0x194",
 "zh": 488,
 "bfme": 604,
@@ -58402,6 +58773,20 @@
 "alts": {},
 "fns": [
 "?removeFrom_TeamMemberList@Team@@QAEXPAVObject@@@Z"
+]
+},
+{
+"owner": "Team",
+"fn_class": "Team",
+"member": "m_xferMemberIDList+0x243",
+"zh": 663,
+"bfme": 836,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?evacuateTeam@Team@@QAEXXZ"
 ]
 },
 {
@@ -62079,11 +62464,11 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 3.9,
-"total": 4.6,
-"confidence": 0.84,
+"votes": 5.1,
+"total": 5.9,
+"confidence": 0.86,
 "alts": {
-"0x8": 0.7
+"0x8": 0.8
 },
 "fns": [
 "??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z",
@@ -62096,8 +62481,8 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.6,
-"total": 4.6,
+"votes": 5.1,
+"total": 5.1,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -62111,12 +62496,13 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 1.0,
-"total": 1.0,
+"votes": 1.8,
+"total": 1.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z"
+"??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z",
+"??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z"
 ]
 },
 {

@@ -187,10 +187,11 @@ void W3DView::cameraModFinalLookToward(Coord3D *pLoc)
 			result.y += 0.25f * (middle.y - end.y + middle.y - start.y);
 			result.z = 0;
 
-			Real directionX = pLoc->x - result.x;
-			Real directionY = pLoc->y - result.y;
-			Real angle = directionX * directionX + directionY * directionY;
 			Real directionLength;
+			Direction2 direction;
+			direction.x = pLoc->x - result.x;
+			direction.y = pLoc->y - result.y;
+			Real angle = direction.x * direction.x + direction.y * direction.y;
 			__asm {
 				fld [angle]
 				fsqrt
@@ -199,8 +200,8 @@ void W3DView::cameraModFinalLookToward(Coord3D *pLoc)
 			if (directionLength < 0.1f) {
 				continue;
 			}
-			angle = WWMath::Acos(directionX / directionLength);
-			if (directionY < 0.0f) {
+			angle = WWMath::Acos(direction.x / directionLength);
+			if (direction.y < 0.0f) {
 				angle = -angle;
 			}
 			angle -= g_bfmeDefaultEG;

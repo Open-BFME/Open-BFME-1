@@ -11,6 +11,9 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
+extern const Real g_bfmeK1253;
+extern Real g_bfmeDefaultBU;
+
 struct Coord2D
 {
 	Real x;
@@ -146,28 +149,33 @@ Bool ScreenBWFilterDOT3::postRender(FilterModes mode, Coord2D &scrollDelta,
 	height = TheTacticalView->getHeight();
 
 	// bottom right
-	v[0].p = D3DXVECTOR4(xpos + width - 0.5f,
-		ypos + height - 0.5f, 0.0f, 1.0f);
-	v[0].u = (Real)(xpos + width) / displaySize->x;
-	v[0].v = (Real)(ypos + height) / displaySize->y;
+	v[0].p = D3DXVECTOR4(xpos + width - g_bfmeK1253,
+		ypos + height - g_bfmeK1253, 0.0f, 1.0f);
+	v[0].u = (g_bfmeDefaultBU / displaySize->x) *
+		(Real)(xpos + width);
+	v[0].v = (g_bfmeDefaultBU / displaySize->y) *
+		(Real)(ypos + height);
 	// top right
-	v[1].p = D3DXVECTOR4(xpos + width - 0.5f,
-		ypos - 0.5f, 0.0f, 1.0f);
-	v[1].u = (Real)(xpos + width) / displaySize->x;
-	v[1].v = (Real)ypos / displaySize->y;
+	v[1].p = D3DXVECTOR4(xpos + width - g_bfmeK1253,
+		ypos - g_bfmeK1253, 0.0f, 1.0f);
+	v[1].u = (g_bfmeDefaultBU / displaySize->x) *
+		(Real)(xpos + width);
+	v[1].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
 	// bottom left
-	v[2].p = D3DXVECTOR4(xpos - 0.5f,
-		ypos + height - 0.5f, 0.0f, 1.0f);
-	v[2].u = (Real)xpos / displaySize->x;
-	v[2].v = (Real)(ypos + height) / displaySize->y;
+	v[2].p = D3DXVECTOR4(xpos - g_bfmeK1253,
+		ypos + height - g_bfmeK1253, 0.0f, 1.0f);
+	v[2].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
+	v[2].v = (g_bfmeDefaultBU / displaySize->y) *
+		(Real)(ypos + height);
+
 	// top left
-	v[3].p = D3DXVECTOR4(xpos - 0.5f,
-		ypos - 0.5f, 0.0f, 1.0f);
-	v[3].u = (Real)xpos / displaySize->x;
-	v[3].v = (Real)ypos / displaySize->y;
+	v[3].p = D3DXVECTOR4(xpos - g_bfmeK1253,
+		ypos - g_bfmeK1253, 0.0f, 1.0f);
+	v[3].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
+	v[3].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
 
 	unsigned int currentFade =
-		((Int)((1.0f - BfmeFadeValue) * BfmeFadeScale) << 24) |
+		((Int)((g_bfmeDefaultBU - BfmeFadeValue) * BfmeFadeScale) << 24) |
 		0x00ffffff;
 	v[0].color = currentFade;
 	v[1].color = currentFade;

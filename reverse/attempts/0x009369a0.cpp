@@ -78,20 +78,63 @@ public:
 
 	__forceinline void Initialize()
 	{
-		for (int i = 0; i < 7; ++i)
-		{
-			m_field20[i] = -1;
-			m_field3C[i] = -1;
-			m_field04[i] = -1;
-			m_field58[i] = 0;
-		}
+		m_field20 = -1;
+		m_field3C = -1;
+		m_field04 = -1;
+		m_field58 = 0;
+		m_field24 = -1;
+		m_field40 = -1;
+		m_field08 = -1;
+		m_field5C = 0;
+		m_field28 = -1;
+		m_field44 = -1;
+		m_field0C = -1;
+		m_field60 = 0;
+		m_field2C = -1;
+		m_field48 = -1;
+		m_field10 = -1;
+		m_field64 = 0;
+		m_field30 = -1;
+		m_field4C = -1;
+		m_field14 = -1;
+		m_field68 = 0;
+		m_field34 = -1;
+		m_field50 = -1;
+		m_field18 = -1;
+		m_field6C = 0;
+		m_field1C = -1;
+		m_field70 = 0;
 	}
 
 	TextureClass *m_texture;
-	int m_field04[7];
-	int m_field20[7];
-	int m_field3C[7];
-	int m_field58[7];
+	int m_field04;
+	int m_field08;
+	int m_field0C;
+	int m_field10;
+	int m_field14;
+	int m_field18;
+	int m_field1C;
+	int m_field20;
+	int m_field24;
+	int m_field28;
+	int m_field2C;
+	int m_field30;
+	int m_field34;
+	int m_field38;
+	int m_field3C;
+	int m_field40;
+	int m_field44;
+	int m_field48;
+	int m_field4C;
+	int m_field50;
+	int m_field54;
+	int m_field58;
+	int m_field5C;
+	int m_field60;
+	int m_field64;
+	int m_field68;
+	int m_field6C;
+	int m_field70;
 };
 
 template<class T>
@@ -182,6 +225,7 @@ BfmeRenderVertex *Render2DClass::allocateGeometry006e(
 	BfmeUInt32 **indices,
 	BfmeUInt32 *baseVertexPair)
 {
+	Rva00933C60 *batch;
 	*baseVertexPair = ArrayA.Count | (ArrayA.Count << 16);
 
 	if (CurrentBatch < 0)
@@ -191,9 +235,9 @@ BfmeRenderVertex *Render2DClass::allocateGeometry006e(
 			TextureClass *texture = Texture;
 			if (texture)
 			{
-				unsigned int count = Batches.Count();
 				int found = 1;
-				if (count > 1)
+				int count = Batches.Count();
+				if ((unsigned int)count > 1)
 				{
 					for (; (unsigned int)found < (unsigned int)Batches.Count(); ++found)
 					{
@@ -202,44 +246,49 @@ BfmeRenderVertex *Render2DClass::allocateGeometry006e(
 					}
 				}
 
-				if ((unsigned int)found == count)
+				if (found == count)
 				{
-					if (texture)
-						texture->Add_Ref();
-					Rva00933C60 batch;
-					batch.m_texture = texture;
-					batch.Initialize();
-					Batches.Add(batch, count);
+					Rva00933C60 newBatch;
+					if (TextureClass *newTexture = Texture)
+						newTexture->Add_Ref();
+					newBatch.m_texture = Texture;
+					newBatch.Initialize();
+					Batches.Add(newBatch, count);
 				}
 				CurrentBatch = found;
 			}
 		}
 	}
 
-	Rva00933C60 *batch = &Batches[
+	batch = &Batches[
 		(IsDirty && Texture) ? CurrentBatch : 0];
 	BfmeRenderVertex *vertices =
 		(BfmeRenderVertex *)ArrayA.Add((int)vertexCount);
-	if (indexCount == 0 || indexCount >= 0x80000000u)
-		return 0;
-
-	ArrayB.Count += indexCount;
-	unsigned short *indexPointer;
-	if ((unsigned)ArrayB.Count > (unsigned)ArrayB.Size)
+	if (indexCount != 0 && indexCount < 0x80000000u)
 	{
-		ArrayB.Size = ArrayB.Count + ArrayB.GrowthStep;
-		ArrayB.Data = (unsigned short *)realloc(
-			ArrayB.Data, (unsigned)ArrayB.Size * 2);
-		indexPointer = (unsigned short *)ArrayB.Data;
-		if (indexPointer)
-			indexPointer += ArrayB.Count - indexCount;
+		unsigned short *data = ArrayB.Data;
+		ArrayB.Count += indexCount;
+		if ((unsigned)ArrayB.Count > (unsigned)ArrayB.Size)
+		{
+			ArrayB.Size = ArrayB.Count + ArrayB.GrowthStep;
+			ArrayB.Data = (unsigned short *)realloc(
+				data, (unsigned)ArrayB.Size * 2);
+			if (ArrayB.Data)
+				*indices = (BfmeUInt32 *)((unsigned short *)ArrayB.Data +
+					(ArrayB.Count - indexCount));
+			else
+				*indices = 0;
+		}
+		else
+		{
+			*indices = (BfmeUInt32 *)((unsigned short *)ArrayB.Data +
+				(ArrayB.Count - indexCount));
+		}
 	}
 	else
 	{
-		indexPointer = (unsigned short *)ArrayB.Data +
-			(ArrayB.Count - indexCount);
+		*indices = 0;
 	}
-	*indices = (BfmeUInt32 *)indexPointer;
 
 	int mode = Shader;
 	(reinterpret_cast<int *>(&batch->m_field58))[mode] += indexCount;
