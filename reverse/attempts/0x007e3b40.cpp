@@ -1,9 +1,12 @@
 // ??0Rva007E3B40Vp6TailStream@@QAE@HH@Z
-// partial score=0.91 date=2026-09-10
+// partial score=0.90 date=2026-09-11
 // ??0Rva007E3B40Vp6TailStream@@QAE@HH@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Retail 0x007E3B40. Constructor shape recovered from the Zero Hour
-// HelicopterSlowDeathBehavior constructor family.
+// Retail 0x007E3B40. The caller at 0x007E5080 constructs this VP6 stream
+// through the ILT at 0x0001A2FD, and vtable 0x01128DA8 links the stream family.
+
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
 
 inline void *operator new(unsigned int, void *place) { return place; }
 
@@ -82,6 +85,7 @@ Rva007E3B40Vp6TailStream::Rva007E3B40Vp6TailStream(int first, int second)
 	m_at38 = 0;
 	m_at3c = 0;
 	m_at40 = 0;
+	_ReadWriteBarrier();
 	int negative = -1;
 	m_at4c = m_at48 = negative;
 	m_at50 = 0;

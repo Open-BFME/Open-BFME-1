@@ -1,5 +1,5 @@
 // ?drawBombed@Drawable@@AAEXXZ
-// partial score=0.9 date=2026-09-09
+// partial score=0.98 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 //
