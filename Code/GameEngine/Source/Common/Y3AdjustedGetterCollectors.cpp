@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // Six bodies, 60 to 90 bytes, that read a run of null-checked pointer members,
 // ask each one for a value through a SUBOBJECT AT +0x14, write the answer into
 // a field of the supplied object, and then pass that object on to a member.
@@ -64,6 +65,24 @@ public:
 
 class Y3AdjSource : public Y3AdjPad, public Y3AdjGet
 {
+public:
+	unsigned char m_pad18[4];
+	unsigned char m_enabled;                         // +0x1c
+};
+
+#define _STLP_USE_STATIC_LIB 1
+#include <vector>
+
+// The collector builds a four-byte POD vector.  This is the same STLport
+// instantiation whose overflow body is reached through ILT 0x0002321d.
+struct Gen_t_005c8830_m4pod
+{
+	void *m_value;
+};
+
+class Y3AdjValueVector : public _STL::vector<
+	Gen_t_005c8830_m4pod, _STL::allocator<Gen_t_005c8830_m4pod> >
+{
 };
 
 class Y3AdjOut
@@ -74,13 +93,33 @@ public:
 	void *m_v48;
 	int m_pad1[2];
 	void *m_v54;
+	Y3AdjValueVector m_values;                         // +0x58
 };
 
 class Y3AdjTail_005C98E0
 {
 public:
 	void collect( Y3AdjOut *out );
+
+	Y3AdjSource **m_begin;
+	Y3AdjSource **m_end;
 };
+
+void Y3AdjTail_005C98E0::collect( Y3AdjOut *out )
+{
+	Y3AdjValueVector values;
+	for ( Y3AdjSource **it = m_begin; it != m_end; ++it )
+	{
+		Y3AdjSource *source = *it;
+		if ( source->m_enabled )
+		{
+			Gen_t_005c8830_m4pod value;
+			value.m_value = source->get();
+			values.push_back( value );
+		}
+	}
+	out->m_values.swap( values );
+}
 
 // ---- the run that ends at 0x005C98E0 --------------------------------------
 
