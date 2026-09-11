@@ -1,61 +1,68 @@
-// ??0BfmeParserRegDefaultVE_74A590@@QAE@PAX00@Z
-// partial score=0.55 date=2026-09-05
+// ?d_0074a590@@YAXXZ
+// partial score=0.85 date=2026-09-11
+// ?d_0074a590@@YAXXZ [retail body 0x0074A590]
+// experiment: apply the 0x0074A2C0 inheritance-based template
 // cl: /DNDEBUG /MD /EHsc
-// Fuzzy-twin of ?d_00088e20@@YAXXZ (BfmeParserRegDefaultVE family); see
-// reverse/attempts/0x00088e20.cpp for the analysis and the blocker note
-// (blocker=ehThisSpillTemp: retail emits a compiler-generated EH funclet
-// this-pointer stack spill around the temp AsciiString construction that
-// this reconstruction does not reproduce).
-// IDENTITY IS NOT RECOVERED: class name is address-derived.
 
 class UserParser;
 class DataChunkInput;
-typedef bool (*BfmeParserCallback)(DataChunkInput &, void *, void *);
-
-class DataChunkInput
-{
-public:
-	UserParser *registerParser(void *name, void *label, BfmeParserCallback callback, void *userData);
-};
+typedef bool (*HeightMapParserCallback)(DataChunkInput &, void *, void *);
 
 class BFMERetailAsciiString
 {
 public:
-	BFMERetailAsciiString(const char *s);
+	BFMERetailAsciiString(const char *text);
 	~BFMERetailAsciiString();
+
 private:
 	void *m_data;
 };
 
-class BfmeParserRegistrationVE
+class DataChunkInput
 {
 public:
-	BfmeParserRegistrationVE(DataChunkInput *table, void *name, void *label)
+	UserParser *registerParser(const BFMERetailAsciiString &name,
+		const BFMERetailAsciiString &label, HeightMapParserCallback callback,
+		void *userData);
+};
+
+class HeightMapDataParserBase
+{
+public:
+	HeightMapDataParserBase(DataChunkInput *input,
+		const BFMERetailAsciiString *name,
+		const BFMERetailAsciiString *label)
 	{
 		m_vftable = (void *)0x0107C7D0;
-		m_table = table;
-		m_parser = table->registerParser(name, label, (BfmeParserCallback)0x0041579E, this);
+		m_input = input;
+		m_parser = input->registerParser(*name, *label,
+			(HeightMapParserCallback)0x0041579E, this);
 	}
+	~HeightMapDataParserBase();
+
 protected:
 	void *m_vftable;
-	DataChunkInput *m_table;
+	DataChunkInput *m_input;
 	UserParser *m_parser;
 };
 
-class BfmeParserRegDefaultVE_74A590 : public BfmeParserRegistrationVE
+class Rva0074A590Parser : public HeightMapDataParserBase
 {
 public:
-	BfmeParserRegDefaultVE_74A590(void *a, void *b, void *c);
+	Rva0074A590Parser(void *heightMap, DataChunkInput *input,
+		const BFMERetailAsciiString *label);
+
 private:
-	void *m_third;
+	void *m_heightMap;
 };
 
-// ?d_0074a590@@YAXXZ
-BfmeParserRegDefaultVE_74A590::BfmeParserRegDefaultVE_74A590(void *a, void *b, void *c)
-	: BfmeParserRegistrationVE((DataChunkInput *)b,
+Rva0074A590Parser::Rva0074A590Parser(
+	void *heightMap, DataChunkInput *input,
+	const BFMERetailAsciiString *label)
+	: HeightMapDataParserBase(input,
 		&BFMERetailAsciiString((const char *)0x01121ABC),
-		c ? c : (void *)0x01336E50)
+		label ? label : (const BFMERetailAsciiString *)0x01336E50)
 {
-	m_third = a;
+	m_heightMap = heightMap;
 	m_vftable = (void *)0x01121B24;
 }
