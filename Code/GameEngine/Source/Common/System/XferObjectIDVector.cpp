@@ -1,11 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc /Ireference/shims/stlp_nodealloc /Ireference/shims/asciistring_thin /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
 // stlport
 //
-// The retail body at 0x00372670 is the Xfer-side ObjectID-vector transfer
-// helper.  Its ObjectID element call reaches the existing 0x0000C9B4 ILT and
-// its load path reaches the matched vector<ObjectID> growth body at
-// 0x00010B8B.  The upstream owner is Xfer::xferSTLObjectIDVector; this free
-// wrapper retains the two-pointer helper ABI used by the retail image.
+// The retail body at 0x00372670 has the same ObjectID-vector serialization
+// semantics as upstream Xfer::xferSTLObjectIDVector. Retail exposes a distinct
+// free cdecl two-pointer helper, however, and no named caller recovers its
+// authentic source spelling. The RVA-qualified symbol is deliberately neutral.
 
 #define BFME_STLP_NODE_ALLOC
 #include <vector>
