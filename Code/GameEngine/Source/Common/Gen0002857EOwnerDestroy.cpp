@@ -1,13 +1,12 @@
-// ?d_00693e20@@YAXXZ
-// partial score=0.98 date=2026-09-11
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Open-BFME5: Gen0002857EOwner's final removal path at 0x00693E20.
+// ?destroy@Gen0002857EOwner@@QAEXPAVGen0002857E@@H@Z
+// Gen0002857E::release reaches Gen0002857EOwner::notify when the guarded
+// reference count reaches zero. The notify body calls this two-argument
+// cleanup routine with the object and a deferred-removal flag.
 //
-// Gen0002857E::release calls the owner's notify method at 0x00693EC0 when the
-// guarded reference count reaches zero.  That method calls this routine with
-// the object and a defer-removal flag.  The object supplies its accounting
-// value at +0x30, bucket number at +0x3c, and active flag at +0x41.  Each
-// owner bucket is a sentinel-headed list of object pointers.
+// The retail body subtracts the object's +0x30 accounting value from the
+// owner's +0x38 total, unlinks an inactive object from one of nine sentinel
+// lists, calls the owner's cleanup helpers, destroys the object, and frees it.
 
 class Gen0002857E;
 
@@ -22,8 +21,6 @@ class Gen0002857EBuckets
 {
 public:
 	__forceinline Gen0002857EListNode *&operator[](int index) { return m_heads[index]; }
-
-private:
 	Gen0002857EListNode *m_heads[9];
 };
 
@@ -40,7 +37,7 @@ public:
 	char m_pad30[0x30];
 	int m_accountingValue;
 	char m_pad3c[8];
-	int m_bucket;
+	unsigned int m_bucket;
 	char m_pad41;
 	bool m_active;
 };
@@ -72,7 +69,9 @@ void Gen0002857EOwner::destroy(Gen0002857E *value, int deferred)
 
 	if (!value->m_active)
 	{
-		Gen0002857EListNode *head = m_buckets[value->getBucket()];
+		int bucket = value->m_bucket;
+		__assume(bucket >= 0 && bucket < 9);
+		Gen0002857EListNode *head = m_buckets.m_heads[bucket];
 		for (Gen0002857EListNode *node = head->next; node != head; node = node->next)
 		{
 			if (node->value == value)
