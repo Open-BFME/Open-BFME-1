@@ -1,9 +1,6 @@
-// ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z
-// partial score=0.98 date=2026-09-07
 // cl: /O2 /DNDEBUG /MD /EHsc
-// Same object as ??0Rva006DF550@@QAE@XZ (vtable 0x0111E188). After virtual
-// slots 0x30..0x40 run, +0x18 is dirty unless +4/+8/+0xC/+0x10 equal
-// 120, 300, 37.5 and the double constant at 0x01085F58.
+// Retail 0x006DF110. The Rva006DF550 vtable and constructor fields identify
+// this body as the coordinate and angle calculation for that object.
 
 #include <math.h>
 
@@ -41,7 +38,6 @@ public:
 	virtual void v3c();
 	virtual void v40();
 
-	void recompute();
 	void rva006DF110(BfmeCoord6DF110 *, Real *);
 
 	float m_04;
@@ -52,20 +48,7 @@ public:
 	char m_18;
 };
 
-void Rva006DF550::recompute()
-{
-	v30();
-	v34();
-	v38();
-	v3c();
-	v40();
-	if (m_0C == 37.5f && (double)m_10 == Gen01085F58 && m_04 == 120.0f && m_08 == 300.0f)
-		m_18 = 0;
-	else
-		m_18 = 1;
-}
-
-// ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z present-unmatched
+// ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z
 void Rva006DF550::rva006DF110(BfmeCoord6DF110 *out, Real *angle)
 {
 	if (m_18)
@@ -92,7 +75,7 @@ void Rva006DF550::rva006DF110(BfmeCoord6DF110 *out, Real *angle)
 		{
 			out->z = m_08;
 			out->y = -out->z / (Real)tan(m_0C * *(const double *)0x0111e168);
-			out->x = -((Real)tan(m_10 * *(const double *)0x0111e168) * out->y);
+			out->x = -(tan(m_10 * *(const double *)0x0111e168) * out->y);
 		}
 		if (angle)
 			*angle = 0.0f;
