@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 //
+// stlport
 // Open-BFME5: GameLogic::~GameLogic, retail RVA 0x0038F080, 821 bytes.
 // This is the BFME layout, not the shorter ZH GameLogic twin.  The retail
 // constructor at 0x003928E0 is the raw 839-byte function (still a dump).  0x003929D0
@@ -41,6 +42,16 @@
 //     0x0000B5CD.  0x0038D000/112B is the existing matched
 //     Gen_0038D000::bfmeClear body, ILT 0x00041641.  The existing matched
 //     GameLogic::closeWindows body is 0x00396950/294B, ILT 0x00003486.
+
+#define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
+#include <list>
+
+// The +0x4C member is the concrete STLport list<int> whose out-of-line base
+// destructor is the retail 0x00387480 body.  Keep the vendor instantiation in
+// this production TU so its object symbol is available to the address-qualified
+// ledger row below without retaining the old generated tgrid owner.
+template class _STL::_List_base<int, _STL::allocator<int> >;
 
 extern void __cdecl setFPMode(void);                    // retail 0x008FC4C0
 
@@ -315,6 +326,10 @@ struct RvaIntListNode
 	int m_value;
 };
 
+// Address-qualified ledger identity for the concrete STLport list<int> member
+// at GameLogic +0x4C.  Its exact body is the vendor _List_base<int> dtor; the
+// alternatename preserves the authentic member-dtor call in GameLogic while
+// the vendor instantiation supplies the sole emitted implementation.
 class Rva00387480IntList
 {
 public:
@@ -323,6 +338,8 @@ public:
 private:
 	RvaIntListNode *m_node;
 };
+
+#pragma comment(linker, "/alternatename:??1Rva00387480IntList@@QAE@XZ=??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ")
 
 class BFMERetailAsciiString
 {
