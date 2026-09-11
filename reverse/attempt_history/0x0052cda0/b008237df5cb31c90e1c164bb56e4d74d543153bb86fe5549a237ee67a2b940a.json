@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b008237df5cb31c90e1c164bb56e4d74d543153bb86fe5549a237ee67a2b940a",
+  "symbol": "?d_0052cda0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_0052cda0@@YAXXZ\n// partial score=0.97 date=2026-09-10\nstruct Rva00579160Manager { void fire(void* target, const char* name, int a, int b, int c, int d, int e, int f); };\nextern Rva00579160Manager* Rva00579160TheManager;\nextern char g_bfmeFmt1057[];\nextern char g_bfmeEscAI[];\n\nclass BfmeOwnerEAG\n{\npublic:\n\tunsigned char m_bfmeHeadEAG[0x250];\n\tvoid *m_bfmeTargetEAG;\n};\n\nclass BfmeHostEAG\n{\npublic:\n\tint bfmeKeyEAG(int unused, int code, unsigned char kind, unsigned char flags);\n\tvoid bfmeCloseEAG(int mode);\n\n\tunsigned char m_bfmeHeadEAG[0x34];\n\tBfmeOwnerEAG *m_bfmeOwnerEAG;\n\tunsigned char m_bfmePadEAG[0x70];\n\tint m_bfmeStateEAG;\n};\n\nint BfmeHostEAG::bfmeKeyEAG(int unused, int code, unsigned char kind, unsigned char flags)\n{\n\tif (code == 0x15 && kind - 1 == 0 && (flags & 1) != 0 && m_bfmeStateEAG != 4)\n\t{\n\t\tRva00579160TheManager->fire(m_bfmeOwnerEAG->m_bfmeTargetEAG,\n\t\t\tg_bfmeFmt1057, 1, (int)g_bfmeEscAI, 0, 0, 0, 0);\n\n\t\tbfmeCloseEAG(0);\n\n\t\treturn 1;\n\t}\n\n\treturn 0;\n}\n"
+}
