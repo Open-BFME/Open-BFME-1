@@ -14078,6 +14078,7 @@ name,address,notes
 ?applyDisconnectVote@BfmeDisconnectVoteSender@@QAEXHIHPAVConnectionManager@@@Z,0x000215AD,alias of the DisconnectManager spelling pinned below; voteForPlayerDisconnect reaches applyDisconnectVote through a view class because both callees are defined earlier in the same TU and MSVC inlines them where retail calls
 ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
 ?applyFirst@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00031F75,address-derived first target updater called by retail 0x002D9510
+?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z,0x002FDEF0,TU-local outlined helper for the exact TEAM_SET_MODELCONDITION body; reconstruction alias; not historical identity
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
 ?applyNamed@ScriptEngine@@QAEXPAX0@Z,0x00340F10,ScriptEngine named-apply callee of walkNamed
 ?applyOwner@Rva003BF540@@QAEXPAVGen003BD7D0Node@@@Z,0x00025798,Reviewed ILT to3BF190 full444B receives node from same-owner find and handles null
