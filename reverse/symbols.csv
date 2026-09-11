@@ -5473,6 +5473,7 @@ name,address,notes
 ??1Gen_dtor_002c1ad0@@UAE@XZ,0x00002EA0,gen-dtor class destructor
 ??1AIGiantBirdAttackState@@UAE@XZ,0x00002EA0,constructor 0x002BE400 installs vtable 0x010C78D8 whose slot zero reaches deleting destructor 0x002C1AD0; wrapper calls this ILT
 ??1Gen_dtor_002c1b10@@UAE@XZ,0x0003EFC2,gen-dtor class destructor
+??1AIGiantBirdFollowThruState@@UAE@XZ,0x0003EFC2,constructor 0x002BEC00 installs vtable 0x010C7968 whose slot zero reaches deleting destructor 0x002C1B10; wrapper calls this ILT
 ??1Gen_dtor_002c1b50@@UAE@XZ,0x00015C8A,gen-dtor class destructor
 ??1Gen_dtor_002c1b90@@UAE@XZ,0x00030FD0,gen-dtor class destructor
 ??1Gen_dtor_002c1c40@@UAE@XZ,0x000317DC,gen-dtor class destructor
