@@ -2,14 +2,13 @@
 // stlport
 // readable body of ?doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
-// The two actions that walk a team and set a flag on every member:
+// This TU contains the BFME virtual-DLINK team walk for the repulsor action:
 //
 //   0x002FD570  doTeamSetRepulsor  Object::setStatus with the repulsor bit
-//   0x003024E0  doTeamSetUnmanned  a two-argument call on the member's AI
 //
-// Both walk the member list through Object's virtually-inherited DLINK
-// pointer-to-member {pfn=0x00401140, delta=-100, vbindex=0}; only what they do
-// to each member differs.
+// The related 0x003024E0 identity correction is kept in the ledger tombstone;
+// its clean body is reintroduced under the canonical ScriptActions name by the
+// following add_match transaction.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
@@ -97,9 +96,7 @@ class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
 // setStatus is declared here, not on a cast-to helper, so the reloc names the
 // matched ?setStatus@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z at 0x001C7370.
 //
-// The tail runs to 0x194 rather than the 0x40 stub one of the two files carried:
-// the four bases above occupy 0x70, so 0x194 is what puts the AI pointer that
-// doTeamSetUnmanned reads at +0x204 inside the object rather than past its end.
+// The tail runs to 0x194 rather than the 0x40 stub one of the two files carried.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
@@ -193,7 +190,6 @@ class ScriptActions
 {
 protected:
 	void doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor);
-	void doTeamSetUnmanned(const AsciiString &teamName);
 };
 
 void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor)
@@ -214,30 +210,6 @@ void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor
 			}
 			obj->setStatus(
 				MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_REPULSOR), repulsor);
-		}
-	}
-}
-
-void ScriptActions::doTeamSetUnmanned(const AsciiString &teamName)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName, false);
-	if (!team)
-		return;
-
-	for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList();
-		!iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		if (obj)
-		{
-			AIUpdateInterface *ai = *(AIUpdateInterface **)(
-				reinterpret_cast<unsigned char *>(obj) + 0x204);
-			if (ai != 0)
-			{
-				BfmeInnerRQ *command = reinterpret_cast<BfmeInnerRQ *>(
-					reinterpret_cast<unsigned char *>(ai) + 0x20);
-				command->bfmeSetRQ(0, 1);
-			}
 		}
 	}
 }
