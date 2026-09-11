@@ -1,239 +1,87 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// Open-BFME: clean ABI-slice reconstruction of StateMachine::~StateMachine.
+// Retail 0x000A1130/224.  The BFME object has one base vptr, an STLport map
+// at +0x04, and current state at +0x1c; the vendored StateMachine headers have
+// a different multiple-inheritance layout, so this TU keeps only the proven
+// destructor-facing slice.
 
-class __declspec(novtable) StateMachine
+#define _STLP_NO_EXCEPTIONS 1
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include <map>
+
+typedef unsigned int StateID;
+
+enum StateExitType
+{
+	EXIT_RESET = 1
+};
+
+class State
+{
+protected:
+	virtual ~State();
+
+public:
+	virtual void stateSlot02();
+	virtual void stateSlot03();
+	virtual void stateSlot04();
+	virtual void stateSlot05();
+	virtual void onExit(StateExitType status);
+
+	void deleteInstance()
+	{
+		delete this;
+	}
+};
+
+class StateMachineBase
+{
+public:
+	virtual ~StateMachineBase() {}
+};
+
+// The target's two map helpers are the existing int-keyed STLport bodies at
+// 0x000A0A60/0x000A0F40.  The dtor never reads the key, so this four-byte
+// value shim preserves the proven node layout while selecting those helpers.
+struct Gen_t_000a0f40_p4pod
+{
+	State *state;
+};
+
+typedef std::map<int, Gen_t_000a0f40_p4pod> StateMap;
+
+class StateMachine : public StateMachineBase
 {
 protected:
 	virtual ~StateMachine();
+
+private:
+	StateMap m_stateMap;
+	void *m_owner;
+	unsigned int m_sleepTill;
+	StateID m_defaultStateID;
+	State *m_currentState;
+	unsigned int m_goalObjectID;
+	unsigned char m_goalPosition[12];
+	unsigned char m_locked;
+	unsigned char m_defaultStateInited;
 };
 
 // ??1StateMachine@@MAE@XZ
-__declspec(naked) StateMachine::~StateMachine()
+StateMachine::~StateMachine()
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x13
-		__emit 0x6d
-		__emit 0xff
-		__emit 0x00
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x51
-		__emit 0x53
-		__emit 0x55
-		__emit 0x8b
-		__emit 0xd9
-		__emit 0x56
-		__emit 0x57
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xc7
-		__emit 0x03
-		__emit 0x10
-		__emit 0x07
-		__emit 0x08
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x4b
-		__emit 0x1c
-		__emit 0x33
-		__emit 0xed
-		__emit 0x3b
-		__emit 0xcd
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x74
-		__emit 0x07
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x50
-		__emit 0x14
-		__emit 0x8b
-		__emit 0x43
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x70
-		__emit 0x08
-		__emit 0x3b
-		__emit 0xf0
-		__emit 0x8d
-		__emit 0x7b
-		__emit 0x04
-		__emit 0x74
-		__emit 0x23
-		__emit 0xeb
-		__emit 0x03
-		__emit 0x8d
-		__emit 0x49
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x14
-		__emit 0x3b
-		__emit 0xcd
-		__emit 0x74
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x12
-		__emit 0x56
-		__emit 0xe8
-		__emit 0xdd
-		__emit 0xa6
-		__emit 0x78
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x8b
-		__emit 0x07
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x3b
-		__emit 0xf0
-		__emit 0x75
-		__emit 0xe2
-		__emit 0x39
-		__emit 0x6f
-		__emit 0x04
-		__emit 0x74
-		__emit 0x3e
-		__emit 0x8b
-		__emit 0x07
-		__emit 0x8b
-		__emit 0x70
-		__emit 0x04
-		__emit 0x3b
-		__emit 0xf5
-		__emit 0x74
-		__emit 0x23
-		__emit 0x8d
-		__emit 0x64
-		__emit 0x24
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4e
-		__emit 0x0c
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xd1
-		__emit 0x66
-		__emit 0xf7
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x6e
-		__emit 0x08
-		__emit 0x6a
-		__emit 0x18
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x2a
-		__emit 0xd4
-		__emit 0x78
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x85
-		__emit 0xed
-		__emit 0x8b
-		__emit 0xf5
-		__emit 0x75
-		__emit 0xe1
-		__emit 0x8b
-		__emit 0x07
-		__emit 0x89
-		__emit 0x40
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x17
-		__emit 0x89
-		__emit 0x6a
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x07
-		__emit 0x89
-		__emit 0x40
-		__emit 0x0c
-		__emit 0x89
-		__emit 0x6f
-		__emit 0x04
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xc7
-		__emit 0x43
-		__emit 0x18
-		__emit 0x3f
-		__emit 0x42
-		__emit 0x0f
-		__emit 0x00
-		__emit 0x89
-		__emit 0x6b
-		__emit 0x1c
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x04
-		__emit 0x6e
-		__emit 0xf9
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0xc7
-		__emit 0x03
-		__emit 0x44
-		__emit 0x37
-		__emit 0x07
-		__emit 0x01
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x10
-		__emit 0xc3
+	if (m_currentState)
+		m_currentState->onExit(EXIT_RESET);
+
+	StateMap::iterator i;
+	for (i = m_stateMap.begin(); i != m_stateMap.end(); ++i)
+	{
+		if ((*i).second.state)
+			(*i).second.state->deleteInstance();
 	}
+
+	m_stateMap.clear();
+	m_defaultStateID = 999999;
+	m_currentState = 0;
 }
