@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// The retail call site leaves the narrow AsciiString constructor out of line.
+// Keep that choice local to this TU; the shared header supports it per caller.
+#define BFME_ASCIISTRING_CSTR_CTOR_NOINLINE
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
@@ -79,6 +82,54 @@ public:
 	virtual void slot8() = 0;
 	virtual void slotC() = 0;
 	virtual void hide( Bool immediate ) = 0;
+};
+
+// BFME inserted seven GameSpyInfo virtuals before the profile accessor used
+// by this callback; the vendored ZH interface places it at +0x54 instead.
+class BfmeGameSpyInfoLocalProfileView
+{
+public:
+	virtual void slot00() = 0; virtual void slot01() = 0;
+	virtual void slot02() = 0; virtual void slot03() = 0;
+	virtual void slot04() = 0; virtual void slot05() = 0;
+	virtual void slot06() = 0; virtual void slot07() = 0;
+	virtual void slot08() = 0; virtual void slot09() = 0;
+	virtual void slot10() = 0; virtual void slot11() = 0;
+	virtual void slot12() = 0; virtual void slot13() = 0;
+	virtual void slot14() = 0; virtual void slot15() = 0;
+	virtual void slot16() = 0; virtual void slot17() = 0;
+	virtual void slot18() = 0; virtual void slot19() = 0;
+	virtual void slot20() = 0; virtual void slot21() = 0;
+	virtual void slot22() = 0; virtual void slot23() = 0;
+	virtual void slot24() = 0; virtual void slot25() = 0;
+	virtual void slot26() = 0; virtual void slot27() = 0;
+	virtual Int getLocalProfileID() = 0;
+};
+
+// The retail temporary uses the visible inline-forwarding argument view.  The
+// ABI is one data pointer, so the call below can retain the real free-function
+// address while presenting the compiler with the retail argument type.
+class BfmeStringLiteralBase
+{
+	friend class BfmeAsciiStringArg;
+
+private:
+	BfmeStringLiteralBase(const char *text);
+	~BfmeStringLiteralBase();
+};
+
+class BfmeAsciiStringArg
+{
+public:
+	BfmeAsciiStringArg(const char *text)
+	{
+		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
+	}
+
+	~BfmeAsciiStringArg();
+
+private:
+	char *m_text;
 };
 
 
@@ -1228,10 +1279,10 @@ void GameSpyPlayerInfoOverlayInit( WindowLayout *layout, void *userData )
 
 	GameSpyCloseOverlay(GSOVERLAY_BUDDY);
 	raiseMessageBox = true;
-	PopulatePlayerInfoWindows("PopupPlayerInfo.wnd");
+	((void (__cdecl *)(BfmeAsciiStringArg))PopulatePlayerInfoWindows)("PopupPlayerInfo.wnd");
 
 	// we're on the myinfo screen
-	if(lookAtPlayerID == TheGameSpyInfo->getLocalProfileID())
+	if(lookAtPlayerID == reinterpret_cast<BfmeGameSpyInfoLocalProfileView *>(TheGameSpyInfo)->getLocalProfileID())
 	{
 		//buttonbuttonOptions->winHide(FALSE);
 		buttonSetLocale->winHide(FALSE);
