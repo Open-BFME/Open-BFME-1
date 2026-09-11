@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a0589fbafdb3305d5ff81a9ec3ab1dcc4681792984d0f9ee3597737e69622ea5",
+  "symbol": "?bfmeEmitCJ@@YAXPAXDD0@Z (identity unknown)",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?bfmeEmitCJ@@YAXPAXDD0@Z (identity unknown)\r\n// partial score=0.85 date=2026-09-07\r\n// 57/66. The logic is exact: `xor eax,eax / test cl,cl / sete al / inc eax` is\r\n// `(first == 0) ? 2 : 1`, and the two arms or in 8 or 4 before a cdecl 3-arg\r\n// call. Both arms and both epilogues are byte-identical where they overlap.\r\n// The 9 bytes are entirely MSVC HOISTING: it lifts the `target` and `extra`\r\n// loads and the first `push ecx` above the branch so the second arm reuses\r\n// them; retail reloads both inside each arm.\r\n// Not reachable by flag: /Ot /Og /Gy /Ob0 all give 57, /Oy- gives 58.\r\n// This is the third body this tick to differ only in a merge/duplicate/hoist\r\n// decision (see also 0x0061DD60 and 0x0015A130) -- small call-chain bodies are\r\n// dominated by these, so prefer larger ones from the same screen.\r\nextern \"C\" void __cdecl bfmeSendCJ(void *target, int flags, void *extra);\r\n\r\nvoid __cdecl bfmeEmitCJ(void *target, char first, char second, void *extra)\r\n{\r\n\tint flags = (first == 0) ? 2 : 1;\r\n\r\n\tif (second != 0)\r\n\t\tbfmeSendCJ(target, flags | 8, extra);\r\n\telse\r\n\t\tbfmeSendCJ(target, flags | 4, extra);\r\n}\r\n"
+}
