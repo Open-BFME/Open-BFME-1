@@ -1,170 +1,82 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??0GameWindow@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/GameWindow.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /O2 /Ob1 /GF /Gy /MD /EHsc /GR /DNDEBUG /DWIN32 /D_WINDOWS
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
-class GameWindow {
-public:
-    GameWindow();
-};
-__declspec(naked) GameWindow::GameWindow()
+// Byte-exact BFME reconstruction of ??0GameWindow@@QAE@XZ.  The BFME layout
+// is kept TU-local because the ordinary GameWindow reference header has the
+// Zero Hour offsets; these fields are corroborated by the BFME accessors and
+// neighboring constructors.
+class WinInstanceData
 {
-    __asm {
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x30
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x78
-        __emit 0x77
-        __emit 0x0f
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x44
-        __emit 0x45
-        __emit 0xba
-        __emit 0xff
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x89
-        __emit 0x46
-        __emit 0x04
-        __emit 0x89
-        __emit 0x46
-        __emit 0x08
-        __emit 0x89
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x46
-        __emit 0x10
-        __emit 0x89
-        __emit 0x46
-        __emit 0x14
-        __emit 0x89
-        __emit 0x46
-        __emit 0x18
-        __emit 0x89
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x46
-        __emit 0x20
-        __emit 0x89
-        __emit 0x46
-        __emit 0x24
-        __emit 0x89
-        __emit 0x46
-        __emit 0x28
-        __emit 0x89
-        __emit 0x46
-        __emit 0x2c
-        __emit 0x89
-        __emit 0x86
-        __emit 0xd8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xdc
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe0
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe4
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xe8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xec
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xf0
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xf8
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0xfc
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x00
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x04
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x08
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x0c
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x10
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x86
-        __emit 0x14
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc7
-        __emit 0x86
-        __emit 0xf4
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc3
-    }
+public:
+	WinInstanceData();
+
+private:
+	char m_data[ 0x1A8 ];
+};
+
+class GameWindow
+{
+public:
+	GameWindow();
+	virtual void winDrawBorder( void ) = 0;
+
+private:
+	void *m_bfmeAnchor;
+	int m_status;
+	int m_sizeX;
+	int m_sizeY;
+	int m_regionLoX;
+	int m_regionLoY;
+	int m_regionHiX;
+	int m_regionHiY;
+	int m_cursorX;
+	int m_cursorY;
+	void *m_userData;
+	WinInstanceData m_instData;
+	void *m_inputData;
+	void *m_bfmeInputExtra;
+	void *m_input;
+	void *m_system;
+	void *m_draw;
+	void *m_tooltip;
+	void *m_bfmeCallbackExtra;
+	int m_bfmeCallbackExtra2;
+	void *m_next;
+	void *m_prev;
+	void *m_parent;
+	void *m_child;
+	void *m_nextLayout;
+	void *m_prevLayout;
+	void *m_layout;
+	void *m_editData;
+};
+
+GameWindow::GameWindow( void )
+{
+	m_bfmeAnchor = 0;
+	m_status = 0;
+	m_sizeX = 0;
+	m_sizeY = 0;
+	m_regionLoX = 0;
+	m_regionLoY = 0;
+	m_regionHiX = 0;
+	m_regionHiY = 0;
+	m_cursorX = 0;
+	m_cursorY = 0;
+	m_userData = 0;
+	m_inputData = 0;
+	m_bfmeInputExtra = 0;
+	m_input = 0;
+	m_system = 0;
+	m_draw = 0;
+	m_tooltip = 0;
+	m_bfmeCallbackExtra = 0;
+	m_next = 0;
+	m_prev = 0;
+	m_parent = 0;
+	m_child = 0;
+	m_nextLayout = 0;
+	m_prevLayout = 0;
+	m_layout = 0;
+	m_editData = 0;
+	m_bfmeCallbackExtra2 = 1;
 }
