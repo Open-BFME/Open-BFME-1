@@ -6188,16 +6188,8 @@ void ScriptActions::doTeamIdleForFramecount(const AsciiString& teamName, Int fra
 //-------------------------------------------------------------------------------------------------
 /** doWaterChangeHeight */
 //-------------------------------------------------------------------------------------------------
-// ?doWaterChangeHeight@ScriptActions@@IAEXABVAsciiString@@M@Z present-unmatched
-void ScriptActions::doWaterChangeHeight(const AsciiString& waterName, Real newHeight)
-{
-	const WaterHandle *water = TheTerrainLogic->getWaterHandleByName(waterName);
-	if (!water) {
-		return;
-	}
-
-	TheTerrainLogic->setWaterHeight(water, newHeight, 999999.9f, TRUE );
-}
+// ?doWaterChangeHeight@ScriptActions@@IAEXABVAsciiString@@M@Z
+// Body in ScriptActions_doWaterChangeHeight_Thunk.cpp (exact 63B @ 0x002F5180).
 
 //-------------------------------------------------------------------------------------------------
 /** doWaterChangeHeightOverTime */
