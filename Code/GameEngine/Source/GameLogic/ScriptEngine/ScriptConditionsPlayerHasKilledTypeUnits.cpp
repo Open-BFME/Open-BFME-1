@@ -1,12 +1,12 @@
-// ?d_00326660@@YAXXZ
-// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 // ScriptConditions::evaluatePlayerHasKilledTypeUnits, retail 0x00326660.
+// The named condition resolves an ObjectTypes list and sums each listed type.
 
 #include "StringInline.h"
 
 typedef bool Bool;
 typedef int Int;
+typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 
 class Player;
@@ -39,9 +39,9 @@ public:
 		return m_objectTypes[index];
 	}
 
-	__forceinline Int getListSize(void) const
+	__forceinline UnsignedInt getListSize(void) const
 	{
-		return (Int)(m_objectTypes.m_end - m_objectTypes.m_begin);
+		return (UnsignedInt)(m_objectTypes.m_end - m_objectTypes.m_begin);
 	}
 
 private:
@@ -127,14 +127,16 @@ Bool ScriptConditions::evaluatePlayerHasKilledTypeUnits(
 		if (kills) {
 			ObjectTypes *types;
 			types = TheScriptEngine->getObjectTypes(pTypeParm->m_string);
+			int total = 0;
 			if (types) {
-				int total = 0;
-				for (Int typeIndex = 0; typeIndex < types->getListSize(); ++typeIndex) {
+				for (UnsignedInt typeIndex = 0; typeIndex < types->getListSize(); ++typeIndex) {
 					AsciiString typeName = types->getNthInList(typeIndex);
 					total += bfmeGetKillsOfType(kills, typeName);
 				}
-				return total >= *(int *)((char *)pCountParm + 8);
+			} else {
+				total = bfmeGetKillsOfType(kills, pTypeParm->m_string);
 			}
+			return total >= *(int *)((char *)pCountParm + 8);
 		}
 	}
 
