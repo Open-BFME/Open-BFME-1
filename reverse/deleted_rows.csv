@@ -25268,3 +25268,4 @@ uw_00c2caa7,0x00C2CAA7,False parent and unanchored cleanup: FuncInfo E1CDA4 map 
 ?d_00885b50@@YAXXZ,0x00885B50,superseded: a real C++ row now owns this address (fleet harvest reconcile)
 ?d_008ac790@@YAXXZ,0x008AC790,superseded: a real C++ row now owns this address (fleet harvest reconcile)
 ?d_009e0ee0@@YAXXZ,0x009E0EE0,superseded: a real C++ row now owns this address (fleet harvest reconcile)
+?d_00574410@@YAXXZ,0x00574410,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ??$__partial_sort@PAUBfmeScoreEntry@@HU1@UBfmeScoreEntryLess@@@_STL@@YAXPAUBfmeScoreEntry@@000UBfmeScoreEntryLess@@@Z, a gate-required claim from Code/GameEngine/Source/Common/BfmeScoreEntrySort.cpp over the same 192-byte range. The Code/gen_asm/d_0056a2f0.asm scaffold reproduces those bytes but carries no identity."

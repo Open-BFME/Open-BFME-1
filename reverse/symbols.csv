@@ -1322,6 +1322,7 @@ name,address,notes
 ??$sort_heap@PAHUQ4Sort004567A0@@@_STL@@YAXPAH0UQ4Sort004567A0@@@Z,0x004546F0,resolved via decode_calls at __partial_sort<Q4Sort004567A0>; final call in the standard partial_sort algorithm shape
 ??$sort_heap@PAPAVBfmeRecAU@@VBfmeCompAU@@@_STL@@YAXPAPAVBfmeRecAU@@0VBfmeCompAU@@@Z,0x0004A048,retail ILT called by the 264-byte BfmeRecAU pointer partial-sort body at 0x00515550
 ??$sort_heap@PAPAVRva00532DF0Rec@@VRva00532DF0Comp@@@_STL@@YAXPAPAVRva00532DF0Rec@@0VRva00532DF0Comp@@@Z,0x0000AD1C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00532DF0 calls; autopin
+??$sort_heap@PAUBfmeScoreEntry@@UBfmeScoreEntryLess@@@_STL@@YAXPAUBfmeScoreEntry@@0UBfmeScoreEntryLess@@@Z,0x00573B00,score-entry sort-heap body reached through ILT 0x0002B2A6 by the canonical partial-sort final call
 ??$sort_heap@PAURva00364980HeapElement@@URva00364980HeapCompare@@@_STL@@YAXPAURva00364980HeapElement@@0URva00364980HeapCompare@@@Z,0x00011A95,REL32 wide-element sort-heap target from 0x00366854
 ??$sort_heap@PAUS4SortElem12@@US4Cmp00574DF0@@@_STL@@YAXPAUS4SortElem12@@0US4Cmp00574DF0@@@Z,0x00035BC0,Lead verified 12B record STL heap family; helper body and cdecl argument layout agree
 ??$sort_heap@PAUS4SortElem20@@US4Cmp002EB8E0@@@_STL@@YAXPAUS4SortElem20@@0US4Cmp002EB8E0@@@Z,0x00044B7A,Canonical S4 heap family; existing retail caller and body verified;route=0x002EB010

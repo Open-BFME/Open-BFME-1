@@ -55,7 +55,7 @@ struct BfmeScoreEntry
 
 struct BfmeScoreEntryLess
 {
-	bool operator()( const BfmeScoreEntry *left,
+	__declspec(noinline) bool operator()( const BfmeScoreEntry *left,
 		const BfmeScoreEntry *right ) const;
 };
 
@@ -119,7 +119,8 @@ template void __adjust_heap<BfmeScoreEntry *, int, BfmeScoreEntry,
 }
 
 // ??RBfmeScoreEntryLess@@QBE_NPBUBfmeScoreEntry@@0@Z
-bool BfmeScoreEntryLess::operator()( const BfmeScoreEntry *left,
+__declspec(noinline) bool BfmeScoreEntryLess::operator()(
+	const BfmeScoreEntry *left,
 	const BfmeScoreEntry *right ) const
 {
 	bool leftWon = TheVictoryConditions->hasAchievedVictory( left->m_player );
@@ -146,4 +147,43 @@ bool BfmeScoreEntryLess::operator()( const BfmeScoreEntry *left,
 	if( left->m_secondary != right->m_secondary )
 		return left->m_secondary > right->m_secondary;
 	return left->m_object->m_order < right->m_object->m_order;
+}
+
+// Open-BFME5: STLport's score-entry partial sort at retail 0x00574410.
+// Keeping the comparator body visible but out of line lets VC7.1 prove that
+// the empty functor is not mutated across its call, preserving the retail
+// incoming-argument slot and register schedule.
+namespace _STL
+{
+
+template <class RandomAccessIterator, class Compare, class Tp, class Distance>
+void __make_heap( RandomAccessIterator first, RandomAccessIterator last,
+	Compare comp, Tp *, Distance * );
+
+template <class RandomAccessIterator, class Compare>
+void sort_heap( RandomAccessIterator first, RandomAccessIterator last,
+	Compare comp );
+
+template <class RandomAccessIterator, class Distance, class Tp, class Compare>
+void __partial_sort( RandomAccessIterator first, RandomAccessIterator middle,
+	RandomAccessIterator last, Tp *, Compare comp )
+{
+	__make_heap( first, middle, comp, (Tp *)0, (Distance *)0 );
+	for( RandomAccessIterator i = middle; i < last; ++i )
+	{
+		if( comp( i, first ) )
+		{
+			Tp value = *i;
+			*i = *first;
+			__adjust_heap( first, (Distance)0,
+				(Distance)(middle - first), value, comp );
+		}
+	}
+	sort_heap( first, middle, comp );
+}
+
+template void __partial_sort<BfmeScoreEntry *, int, BfmeScoreEntry,
+	BfmeScoreEntryLess>( BfmeScoreEntry *, BfmeScoreEntry *,
+	BfmeScoreEntry *, BfmeScoreEntry *, BfmeScoreEntryLess );
+
 }
