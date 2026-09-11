@@ -63,15 +63,12 @@ private:
 	Gen_003C6340StringData *m_data;
 };
 
-struct Gen_003C6340Vector
+class Gen_003C6340Vector
 {
-	AsciiString *m_start;
-	AsciiString *m_finish;
-	AsciiString *m_endOfStorage;
-
+public:
 	__forceinline void erase(AsciiString *position)
 	{
-		int count = m_finish - (position + 1);
+		int count = (int)(m_finish - (position + 1));
 		if (count > 0)
 		{
 			AsciiString *source = position + 1;
@@ -84,9 +81,14 @@ struct Gen_003C6340Vector
 				--count;
 			}
 		}
+
 		--m_finish;
 		m_finish->~AsciiString();
 	}
+
+	AsciiString *m_start;
+	AsciiString *m_finish;
+	AsciiString *m_endOfStorage;
 };
 
 class Gen_000C9770Target

@@ -57,7 +57,7 @@ public:
 	virtual void slot6C();
 	virtual void slot70();
 	virtual void xferUnsignedInt(UnsignedInt *);
-	virtual void xferInt(int *);
+	virtual Xfer &operator==(int &);
 	virtual void slot7C();
 	virtual void slot80();
 	virtual void slot84();
@@ -115,7 +115,7 @@ void AIAttackMeleeEngageState::xfer(Xfer *xfer)
 				m_fireWeaponState = new AIAttackFireWeaponState(m_machine, m_notifyWeaponFired);
 
 			int field54 = m_field54;
-			xfer->xferInt(&field54);
+			xfer->operator==(field54);
 			m_field54 = field54;
 			xfer->xferSnapshot(m_fireWeaponState);
 		}

@@ -124,10 +124,10 @@ void BfmeSpecialPowerAllowanceStore::bfmeRunEUAe(
 	if (count <= 0)
 		return;
 
+	BfmeAllowanceEntry *entry;
 	const BfmeAsciiStringData *nameData =
 		*(const BfmeAsciiStringData *const *)context;
 	BfmeAllowanceEntry **cursor = m_allowances.begin();
-	register BfmeAllowanceEntry *entry;
 	while (index < count)
 	{
 		entry = *cursor;

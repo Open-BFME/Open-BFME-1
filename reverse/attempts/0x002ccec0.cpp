@@ -71,10 +71,6 @@ class Thing
 {
 public:
 	const ThingTemplate *getTemplate() const;
-	const ThingTemplate *getTemplatePointer() const
-	{
-		return m_template;
-	}
 	Bool isKindOf(KindOfType kind) const;
 
 	ThingTemplate *m_template;
@@ -89,6 +85,17 @@ public:
 
 class ObjectView : public ObjectVtable, public Thing
 {
+public:
+	const Thing *getThing() const
+	{
+		return this;
+	}
+
+	const ThingTemplate *getThingTemplate() const
+	{
+		const Thing *thing = static_cast<const Thing *>(this);
+		return thing->m_template;
+	}
 };
 
 class Object : public Thing
@@ -132,20 +139,6 @@ public:
 	{
 		return *reinterpret_cast<ObjectView *const *>(
 			reinterpret_cast<const char *>(this) - 8);
-	}
-
-	ObjectView &getObjectReference() const
-	{
-		return **reinterpret_cast<ObjectView *const *>(
-			reinterpret_cast<const char *>(this) - 8);
-	}
-
-	Thing *getThingObject() const
-	{
-		const char *address = *reinterpret_cast<const char *const *>(
-			reinterpret_cast<const char *>(this) - 8);
-		address += 4;
-		return (Thing *)address;
 	}
 
 };
@@ -266,8 +259,18 @@ UpdateSleepTime DockUpdate::update()
 	}
 	else
 	{
-		Thing *thing = getThingObject();
-		const ThingTemplate *thingTemplate = thing->getTemplate();
+		ObjectView *object = getObject();
+		__assume(object != 0);
+		register const Thing *thing = object->getThing();
+		register const ThingTemplate *thingTemplate = thing->m_template;
+		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
+		{
+			GetFinalOverrideCall getFinalOverride;
+			getFinalOverride.freeFunction = j_000022bb;
+			thingTemplate = (ThingTemplate *)
+				(thingTemplate->m_nextOverride->*
+					getFinalOverride.memberFunction)();
+		}
 		if (thingTemplate->isKindOf(KINDOF_SUPPLY_SOURCE))
 		{
 			FindObjectByIDCall findObjectByID;

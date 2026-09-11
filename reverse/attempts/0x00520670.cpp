@@ -38,7 +38,6 @@ class Gen00529110Base
 public:
 	Gen00529110Base() : m_data00(0), m_data04(0), m_data08(0), m_data0c(0), m_data10(0) {}
 
-	public:
 	int m_data00;
 	int m_data04;
 	int m_data08;
@@ -49,7 +48,6 @@ public:
 class BfmeWideVGI
 {
 public:
-	BfmeWideVGI() {}
 	~BfmeWideVGI();
 	__forceinline void touch() {}
 	__forceinline void clear()
@@ -126,8 +124,8 @@ __forceinline void clearGen00529110Base(Gen00529110Base *base)
 	base->m_data10 = 0;
 }
 
+// ??0Gen00529110Member28@@QAE@XZ
 Gen00529110Member28::Gen00529110Member28()
-	: m_base()
 {
 	clearGen00529110Base(&m_base);
 	m_data34 = 0;

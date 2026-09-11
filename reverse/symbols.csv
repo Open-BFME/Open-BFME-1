@@ -79155,6 +79155,7 @@ name,address,notes
 ?findFlag@BFMEScriptEngineFlagLookup@@QAEPA_NVAsciiString@@@Z,0x0004278F,TU-scoped ABI name for the ScriptEngine flag lookup ILT; target body 0x00344E10 is semantically proven but its canonical retail spelling is unknown
 ?findFormat@@YA?AW4WW3DFormat@@QBW41@@Z,0x006C09B0,W3DRadar retail texture format selector
 ?findFunction@FunctionLexicon@@IAEPAXW4NameKeyType@@W4TableIndex@1@@Z,0x00025CD4
+?findGoodBuildOrRepairPosition@Rva002B8890DozerAIUpdate@@QAE_NPBVObject@@0AAUCoord3D@@@Z,0x00043130,TU-local BFME thiscall shim for the after-jmp identity ?findGoodBuildOrRepairPosition@DozerAIUpdate@@SA_NPBVObject@@0AAUCoord3D@@@Z
 ?findGroup@BFMETransitionHandler@@QAEPAVBFMETransitionGroup@@VBFMETransitionAsciiString@@@Z,0x0048A520,retail GameWindowTransitionsHandler::findGroup
 ?findGroup@GameWindowTransitionsHandler@@AAEPAVTransitionGroup@@VAsciiString@@@Z,0x00024172,setGroup retail call target thunk to 0x0048A520
 ?findGroup@ScriptEngine@@IAEPAVScriptGroup@@VAsciiString@@PAV3@@Z,0x00007AC7,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
@@ -87146,3 +87147,4 @@ g_bfmeFlag1281,0x0133781D,address-derived byte flag read by the 0x008BD6B0 retai
 ?setFlag@Rva003A5450@@QAEXD@Z,0x0003688B,Open-BFME5 ILT called by the exact 0x003C1C50 item builder; target stores its byte argument at +0x1E
 ?setAscii@Rva003A5450@@QAEXABVAsciiString@@@Z,0x00028CF9,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its ASCII-string argument
 ?_M_insert_overflow@?$vector@PAVRva003A5450@@V?$allocator@PAVRva003A5450@@@_STL@@@_STL@@IAEXPAPAVRva003A5450@@ABQAV3@ABU__true_type@2@I_N@Z,0x00045408,Open-BFME5 ILT for the pointer-vector overflow reached by the exact 0x003C1C50 append
+?d_009a8430@@YAXXZ,0x009A8430,alias kept for callers of the former dump; body converted as Get_RDTSC_CPU_Speed
