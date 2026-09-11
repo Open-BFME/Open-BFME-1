@@ -122,20 +122,21 @@ def known_sources(spec):
     return allowed
 
 
-def tombstones():
+def tombstones(raw=None):
     """(name, rva) pairs deleted on purpose -> why. See reverse/deleted_rows.csv.
 
     functions.csv merges with git's union driver, which cannot express a
     deletion: any branch forked before the delete puts the row back with no
     conflict. Without this, a proven-wrong row silently returns to master.
     """
-    if not DELETED.exists():
-        return {}
+    if raw is None:
+        if not DELETED.exists():
+            return {}
+        raw = DELETED.read_bytes()
     out = {}
-    for line in DELETED.read_text(encoding="utf-8").splitlines():
-        if not line.strip() or line.startswith("#") or line.startswith("name,"):
+    for row in csv.reader(io.StringIO(raw.decode("utf-8", errors="replace"))):
+        if not row or not row[0].strip() or row[0].startswith("#") or row[0] == "name":
             continue
-        row = next(csv.reader(io.StringIO(line)))
         if len(row) < 2:
             continue
         try:
@@ -145,8 +146,36 @@ def tombstones():
     return out
 
 
-def check_functions(raw, problems, sources_ok):
-    deleted = tombstones()
+def function_keys(raw):
+    """Semantic (name, RVA) keys in one functions.csv state."""
+    keys = set()
+    for row in csv.reader(io.StringIO(raw.decode("utf-8", errors="replace"))):
+        if len(row) < 3 or row[0] == "name":
+            continue
+        try:
+            keys.add((row[0], int(row[2], 16)))
+        except ValueError:
+            continue
+    return keys
+
+
+def check_removed_rows(before, after, deleted, problems):
+    """A staged functions.csv deletion is durable only with its tombstone.
+
+    Comparing semantic keys permits duplicate cleanup and same-key metadata
+    rewrites, while catching every identity/address retirement a union merge
+    could otherwise reverse after the commit lands.
+    """
+    missing = sorted(function_keys(before) - function_keys(after) - set(deleted))
+    for name, rva in missing:
+        problems.append(
+            f"functions.csv removes {name} @ 0x{rva:08X} without a staged "
+            "reverse/deleted_rows.csv tombstone. A union merge will resurrect it; "
+            "stage the transaction's tombstone with the ledger change.")
+
+
+def check_functions(raw, problems, sources_ok, deleted=None):
+    deleted = tombstones() if deleted is None else deleted
     if b"\r\n" not in raw[:200]:
         problems.append("functions.csv: CRLF line endings were lost (file is LF). "
                         "Restore from git and use binary-safe edits (tools/dedup_csv.py "
@@ -443,7 +472,12 @@ def main():
 
     spec = "" if args.staged else args.ref  # None -> working tree
     problems = []
-    n_funcs = check_functions(read_ledger(FUNCTIONS, spec), problems, known_sources(spec))
+    functions_raw = read_ledger(FUNCTIONS, spec)
+    deleted = tombstones(read_ledger(DELETED, spec))
+    n_funcs = check_functions(functions_raw, problems, known_sources(spec), deleted)
+    if args.staged:
+        check_removed_rows(read_ledger(FUNCTIONS, "HEAD"), functions_raw,
+                           deleted, problems)
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
     check_attempts(spec, problems)
     n_orphans = check_orphans(spec, problems)

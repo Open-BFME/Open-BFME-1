@@ -154,6 +154,57 @@ def test_shipped_tombstone_file_parses():
     assert all(isinstance(rva, int) and reason for (_, rva), reason in entries.items()), entries
 
 
+def test_tombstones_parse_quoted_commas_from_the_selected_state():
+    raw = (b'name,target_rva,reason\n'
+           b'?old@Thing@@QAEXXZ,0x00401000,"replaced by new identity, after proof"\n')
+
+    entries = check_csv.tombstones(raw)
+
+    assert entries[("?old@Thing@@QAEXXZ", 0x00401000)] == (
+        "replaced by new identity, after proof")
+
+
+def test_staged_identity_removal_requires_a_tombstone():
+    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    old = (HEADER + "\r\n"
+           + f"?old@Thing@@QAEXXZ,,0x00401000,16,{src},matched,gen-dump\r\n").encode()
+    new = (HEADER + "\r\n"
+           + f"?new@Thing@@QAEXXZ,,0x00401000,16,{src},matched,\r\n").encode()
+    problems = []
+
+    check_csv.check_removed_rows(old, new, {}, problems)
+
+    assert len(problems) == 1
+    assert "without a staged" in problems[0]
+    assert "0x00401000" in problems[0]
+
+
+def test_staged_tombstone_makes_the_identity_removal_durable():
+    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    old = (HEADER + "\r\n"
+           + f"?old@Thing@@QAEXXZ,,0x00401000,16,{src},matched,gen-dump\r\n").encode()
+    new = (HEADER + "\r\n"
+           + f"?new@Thing@@QAEXXZ,,0x00401000,16,{src},matched,\r\n").encode()
+    deleted = {("?old@Thing@@QAEXXZ", 0x00401000): "superseded"}
+    problems = []
+
+    check_csv.check_removed_rows(old, new, deleted, problems)
+
+    assert problems == []
+
+
+def test_same_key_metadata_rewrite_needs_no_tombstone():
+    src = "Code/GameEngine/Source/Common/Thing.cpp"
+    old = (HEADER + "\r\n"
+           + f"?same@Thing@@QAEXXZ,,0x00401000,16,{src},matched,old\r\n").encode()
+    new = old.replace(b",old\r\n", b",better evidence\r\n")
+    problems = []
+
+    check_csv.check_removed_rows(old, new, {}, problems)
+
+    assert problems == []
+
+
 # --- banked near-miss attempts (reverse/attempts/) -------------------------
 # check_attempts reads the state being gated through known_sources/read_ledger,
 # so these drive it with both stubbed rather than writing into the real repo.
