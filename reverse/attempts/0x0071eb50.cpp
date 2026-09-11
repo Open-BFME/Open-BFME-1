@@ -1,0 +1,323 @@
+// ?d_0071eb50@@YAXXZ
+// partial score=0.56 date=2026-09-10
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
+//
+// BFME's six-argument W3DTreeBuffer::addTreeType.  The local mirrors preserve
+// the witnessed BFME tree-type table at +0x1E1CD4 and its 0x5C-byte records;
+// the retail owner name is recovered from the Zero Hour twin and the adjacent
+// TTreeType lifecycle pair.
+
+typedef int Int;
+typedef float Real;
+typedef unsigned char UnsignedByte;
+
+class MeshClass;
+class RenderObjClass;
+
+struct Vector3
+{
+	Real X;
+	Real Y;
+	Real Z;
+
+	__forceinline Vector3(void) {}
+	__forceinline Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
+
+	__forceinline Vector3 &operator = (const Vector3 &v)
+	{
+		X = v.X;
+		Y = v.Y;
+		Z = v.Z;
+		return *this;
+	}
+
+	__forceinline Vector3 &operator += (const Vector3 &v)
+	{
+		X += v.X;
+		Y += v.Y;
+		Z += v.Z;
+		return *this;
+	}
+
+};
+
+struct Matrix3D
+{
+	Real Row[3][4];
+
+	Matrix3D(void) {}
+	__forceinline Matrix3D(const Matrix3D &m)
+	{
+		Row[0][0] = m.Row[0][0];
+		Row[0][1] = m.Row[0][1];
+		Row[0][2] = m.Row[0][2];
+		Row[0][3] = m.Row[0][3];
+		Row[1][0] = m.Row[1][0];
+		Row[1][1] = m.Row[1][1];
+		Row[1][2] = m.Row[1][2];
+		Row[1][3] = m.Row[1][3];
+		Row[2][0] = m.Row[2][0];
+		Row[2][1] = m.Row[2][1];
+		Row[2][2] = m.Row[2][2];
+		Row[2][3] = m.Row[2][3];
+	}
+
+	void Get_Translation(Vector3 *set) const
+	{
+		set->X = Row[0][3];
+		set->Y = Row[1][3];
+		set->Z = Row[2][3];
+	}
+};
+
+class AABoxClass
+{
+public:
+	Vector3 Center;
+	Vector3 Extent;
+};
+
+class SphereClass
+{
+public:
+	SphereClass(const Vector3 *points, Int count);
+
+	Vector3 Center;
+	Real Radius;
+};
+
+struct Rva0071EB50StringData
+{
+	unsigned char m_header[8];
+	char m_chars[1];
+};
+
+extern char Rva006A16B0Empty[];
+
+// The narrow BFME string wrapper inherits the one-pointer string base.  Its
+// inherited set() is the retail UnicodeString spelling at 0x00887C90, while
+// concat() is the already-matched narrow AsciiString body reached through the
+// 0x00022057 thunk.
+class UnicodeString
+{
+public:
+	void set(const UnicodeString &that);
+
+	void *m_data;
+};
+
+class AsciiString : public UnicodeString
+{
+public:
+	void concat(const char *text);
+
+	const char *str(void) const
+	{
+		if (m_data != 0)
+			return ((Rva0071EB50StringData *)m_data)->m_chars;
+		return Rva006A16B0Empty;
+	}
+};
+
+class Rva0071EB50TreeType
+{
+public:
+	MeshClass *m_mesh;
+	Vector3 m_offset;
+	SphereClass m_bounds;
+	const void *m_data;
+	unsigned char m_gap0024[0x44 - 0x24];
+	UnsignedByte m_doShadow;
+	UnsignedByte m_pad0045[3];
+	AsciiString m_textureName;
+	AsciiString m_modelName;
+	AsciiString m_nameC;
+	AsciiString m_nameD;
+	Int m_field0058;
+};
+
+struct Rva0071EB50VertexBuffer
+{
+	unsigned char m_head[0x0c];
+	Vector3 *m_array;
+};
+
+struct Rva0071EB50Model
+{
+	unsigned char m_head[0x28];
+	Int m_vertexCount;
+	unsigned char m_gap002c[4];
+	Rva0071EB50VertexBuffer *m_vertexBuffer;
+
+	Int Get_Vertex_Count(void) const { return m_vertexCount; }
+	Vector3 *Get_Vertex_Array(void) const { return m_vertexBuffer->m_array; }
+};
+
+class RenderObjClass
+{
+public:
+	virtual void Delete_This(void) = 0;
+	virtual void renderObjSlot04(void) = 0;
+	virtual void renderObjSlot08(void) = 0;
+	virtual Int Class_ID(void) const = 0;
+	virtual void renderObjSlot10(void) = 0;
+	virtual MeshClass *As_Mesh(void) = 0;
+	virtual void renderObjSlot18(void) = 0;
+	virtual void renderObjSlot1C(void) = 0;
+	virtual void renderObjSlot20(void) = 0;
+	virtual void renderObjSlot24(void) = 0;
+	virtual void renderObjSlot28(void) = 0;
+	virtual void renderObjSlot2C(void) = 0;
+	virtual void renderObjSlot30(void) = 0;
+	virtual void renderObjSlot34(void) = 0;
+	virtual void renderObjSlot38(void) = 0;
+	virtual void renderObjSlot3C(void) = 0;
+	virtual void renderObjSlot40(void) = 0;
+	virtual void renderObjSlot44(void) = 0;
+	virtual void renderObjSlot48(void) = 0;
+	virtual void renderObjSlot4C(void) = 0;
+	virtual const Matrix3D &Get_Transform(void) const = 0;
+	virtual void renderObjSlot54(void) = 0;
+	virtual void renderObjSlot58(void) = 0;
+	virtual void renderObjSlot5C(void) = 0;
+	virtual void renderObjSlot60(void) = 0;
+	virtual void renderObjSlot64(void) = 0;
+	virtual void renderObjSlot68(void) = 0;
+	virtual void renderObjSlot6C(void) = 0;
+	virtual void renderObjSlot70(void) = 0;
+	virtual RenderObjClass *Get_Sub_Object(Int index) const = 0;
+	virtual void renderObjSlot78(void) = 0;
+	virtual void renderObjSlot7C(void) = 0;
+	virtual void renderObjSlot80(void) = 0;
+	virtual void renderObjSlot84(void) = 0;
+	virtual void renderObjSlot88(void) = 0;
+	virtual void renderObjSlot8C(void) = 0;
+	virtual void renderObjSlot90(void) = 0;
+	virtual void renderObjSlot94(void) = 0;
+	virtual void renderObjSlot98(void) = 0;
+	virtual void renderObjSlot9C(void) = 0;
+	virtual void renderObjSlotA0(void) = 0;
+	virtual void renderObjSlotA4(void) = 0;
+	virtual void renderObjSlotA8(void) = 0;
+	virtual void renderObjSlotAC(void) = 0;
+	virtual void renderObjSlotB0(void) = 0;
+	virtual void renderObjSlotB4(void) = 0;
+	virtual void renderObjSlotB8(void) = 0;
+	virtual void renderObjSlotBC(void) = 0;
+	virtual void renderObjSlotC0(void) = 0;
+	virtual void renderObjSlotC4(void) = 0;
+	virtual const Matrix3D &Get_Bone_Transform(Int index) const = 0;
+	virtual void renderObjSlotCC(void) = 0;
+	virtual void renderObjSlotD0(void) = 0;
+	virtual void renderObjSlotD4(void) = 0;
+	virtual void renderObjSlotD8(void) = 0;
+	virtual void renderObjSlotDC(void) = 0;
+	virtual void renderObjSlotE0(void) = 0;
+	virtual void renderObjSlotE4(void) = 0;
+	virtual void renderObjSlotE8(void) = 0;
+	virtual void renderObjSlotEC(void) = 0;
+	virtual void renderObjSlotF0(void) = 0;
+	virtual void renderObjSlotF4(void) = 0;
+	virtual void renderObjSlotF8(void) = 0;
+	virtual void renderObjSlotFC(void) = 0;
+	virtual void renderObjSlot100(void) = 0;
+	virtual void renderObjSlot104(void) = 0;
+	virtual void renderObjSlot108(void) = 0;
+	virtual void Get_Obj_Space_Bounding_Box(AABoxClass &box) const = 0;
+
+	void Release_Ref(void)
+	{
+		--m_refCount;
+		if (m_refCount == 0)
+			Delete_This();
+	}
+
+	Int m_refCount;
+};
+
+class MeshClass : public RenderObjClass
+{
+public:
+	Rva0071EB50Model *Peek_Model(void) const { return m_model; }
+
+	unsigned char m_meshGap[0xC8 - 8];
+	Rva0071EB50Model *m_model;
+};
+
+extern RenderObjClass *Create_Render_Obj(const char *name);
+
+class Rva0071EB50W3DTreeBuffer
+{
+public:
+	Int addTreeType(const AsciiString &modelName, const AsciiString &nameC,
+		const void *data, Int shadowKind, const AsciiString &textureName,
+		const AsciiString &nameD);
+
+	unsigned char m_head[0x1e1cd1];
+	UnsignedByte m_needToUpdateTexture;
+	UnsignedByte m_pad1e1cd2[2];
+	Rva0071EB50TreeType m_treeTypes[64];
+	Int m_numTreeTypes;
+};
+
+// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+Int Rva0071EB50W3DTreeBuffer::addTreeType(const AsciiString &modelName,
+	const AsciiString &nameC, const void *data, Int shadowKind,
+	const AsciiString &textureName, const AsciiString &nameD)
+{
+	if (m_numTreeTypes >= 64) {
+		return 0;
+	}
+	m_needToUpdateTexture = 1;
+
+	if (m_treeTypes[m_numTreeTypes].m_mesh != 0) {
+		m_treeTypes[m_numTreeTypes].m_mesh->Release_Ref();
+		m_treeTypes[m_numTreeTypes].m_mesh = 0;
+	}
+
+	RenderObjClass *robj = Create_Render_Obj(modelName.str());
+
+	if (robj == 0) {
+		return 0;
+	}
+	AABoxClass box;
+
+	robj->Get_Obj_Space_Bounding_Box(box);
+	Vector3 offset(0, 0, 0);
+	if (robj->Class_ID() == 0x19) {
+		RenderObjClass *hlod = robj;
+		robj = hlod->Get_Sub_Object(0);
+		const Matrix3D xfm = robj->Get_Bone_Transform(0);
+		xfm.Get_Translation(&offset);
+		hlod->Release_Ref();
+	}
+
+	if (robj->Class_ID() == 0)
+		m_treeTypes[m_numTreeTypes].m_mesh = robj->As_Mesh();
+
+	MeshClass *mesh = m_treeTypes[m_numTreeTypes].m_mesh;
+	if (mesh == 0) {
+		robj->Release_Ref();
+		return 0;
+	}
+
+	Int numVertex = mesh->Peek_Model()->Get_Vertex_Count();
+	Vector3 *pVert = mesh->Peek_Model()->Get_Vertex_Array();
+
+	const Matrix3D xfm = mesh->Get_Transform();
+	SphereClass bounds(pVert, numVertex);
+	Rva0071EB50TreeType &treeType = m_treeTypes[m_numTreeTypes];
+	bounds.Center += offset;
+	treeType.m_bounds = bounds;
+	m_treeTypes[m_numTreeTypes].m_data = data;
+	m_treeTypes[m_numTreeTypes].m_offset = offset;
+	m_treeTypes[m_numTreeTypes].m_doShadow = (shadowKind == 1);
+	m_treeTypes[m_numTreeTypes].m_textureName.set(textureName);
+	m_treeTypes[m_numTreeTypes].m_textureName.concat(".tga");
+	m_treeTypes[m_numTreeTypes].m_modelName.set(modelName);
+	m_treeTypes[m_numTreeTypes].m_nameC.set(nameC);
+	m_treeTypes[m_numTreeTypes].m_nameD.set(nameD);
+	m_treeTypes[m_numTreeTypes].m_field0058 = -2;
+	m_numTreeTypes++;
+	return m_numTreeTypes - 1;
+}

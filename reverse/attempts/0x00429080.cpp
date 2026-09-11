@@ -134,14 +134,14 @@ class DynamicDecalFXNugget
 public:
 	virtual void v00(void);
 	virtual void doFXPos(const Coord3D *, const Matrix3D *, Real,
-		const Coord3D *) const;
+		const Coord3D *secondary) const;
 	virtual void doFXObj(const void *, const void *) const;
 
 private:
 	Char m_unmodelled[0xb0];
 	AsciiString m_decalName;
 	volatile Int m_shader;
-	volatile Real m_size;
+	Real m_size;
 	RGBColor m_color;
 	Coord2D m_offset;
 	volatile Bool m_orientToObject;
@@ -159,11 +159,12 @@ private:
 // ?doFXPos@DynamicDecalFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z
 void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	const Matrix3D *primaryMtx, Real,
-	const Coord3D *) const
+	const Coord3D *secondary) const
 {
 	if (!primary)
 		return;
 
+	Coord3D offset;
 	Shadow::ShadowTypeInfo decalInfo;
 	decalInfo.flags = 20.0f;
 	decalInfo.force = false;
@@ -173,13 +174,12 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	decalInfo.type = m_shader == 1 ? 0x800 : 0x400;
 	decalInfo.allowUpdates = true;
 	decalInfo.allowWorldAlign = true;
-	decalInfo.sizeY = m_size;
 	decalInfo.sizeX = m_size;
+	decalInfo.sizeY = m_size;
 	decalInfo.offsetX = 0.0f;
 	decalInfo.offsetY = 0.0f;
 	// Retail keeps the offset vector at the low stack address and uses a
 	// separate position aggregate for the translated terrain query.
-	Coord3D offset;
 	offset.x = m_offset.x;
 	offset.y = m_offset.y;
 	offset.z = 0.0f;
@@ -187,24 +187,23 @@ void DynamicDecalFXNugget::doFXPos(const Coord3D *primary,
 	if (primaryMtx && m_orientToObject)
 		adjustVector(&offset, primaryMtx);
 
-	Coord3D position;
-	position.x = offset.x + primary->x;
-	position.y = offset.y + primary->y;
-	position.z = TheTerrainLogic->getGroundHeight(
-		position.x, position.y, 0);
+	Real positionY = offset.y + primary->y;
+	Real positionX = offset.x + primary->x;
+	Real positionZ = TheTerrainLogic->getGroundHeight(
+		positionX, positionY, 0);
 
 	Shadow *shadow = TheProjectedShadowManager->addDecal(&decalInfo);
 	if (shadow)
 	{
-		if (primaryMtx && m_orientToObject)
-			shadow->m_localAngle = primaryMtx->Get_Z_Rotation();
+		if (secondary && m_orientToObject)
+			shadow->m_localAngle = reinterpret_cast<const Matrix3D *>(secondary)->Get_Z_Rotation();
 		else
 			shadow->m_localAngle = 0.0f;
 
 		shadow->setColor(m_color.getAsInt());
-		shadow->m_x = position.x;
-		shadow->m_y = position.y;
-		shadow->m_z = position.z;
+		shadow->m_x = positionX;
+		shadow->m_y = positionY;
+		shadow->m_z = positionZ;
 
 		Int initialOpacity = (Int)(m_startingDelay > BfmeZeroRange
 			? BfmeZeroRange : (Real)m_opacityStart);

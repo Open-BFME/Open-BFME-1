@@ -1,5 +1,4 @@
 name,address,notes
-?configureWindowParameters@@YAXPAVGen_004659D0@@@Z,0x00894800,typed parameter adapter for the generated Apt parameter configurator called by WindowManager::init at 0x0046C5F0
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
@@ -10757,6 +10756,7 @@ name,address,notes
 ?EmptyScript@ScriptList@@0PAVScript@@A,0x012F078C,Open-BFME5 retail ScriptList recovery singleton
 ?EnableSlotListUpdates@@YAX_N@Z,0x000345EF,ILT thunk to body 0x006237A0
 ?Enable_Fog@ShaderClass@@QAEXPBD@Z,0x00910F90,derived from ParticleBufferClass main ctor aligned call sites
+?EncryptString@@YAPBDPBD@Z,0x0000ED86,route=0x00104760; matched PopupLadderSelectSystem call reaches retail ILT 0x0000ED86 and official source proves the matched const-qualified EncryptString body at 0x00104760
 ?End_Chunk@ChunkSaveClass@@QAE_NXZ,0x009E17F0
 ?End_Scene@DX8Wrapper@@SAX_N@Z,0x00908FE0,End_Render depth Open-BFME4+Grok
 ?End_Statistics@Debug_Statistics@@YAXXZ,0x00937EF0,End_Render depth Open-BFME4+Grok
@@ -11552,6 +11552,7 @@ name,address,notes
 ?Rva00917280Init@@YAXXZ,0x00917280,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
 ?Rva0091DA30Init@@YAXXZ,0x0091DA30,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
 ?Rva00944C40Empty@DX8MeshRendererClass@@QAEXXZ,0x00944C40,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
+?Rva00958570_Flush_Buffered_Frames@FrameGrabClass@@IAEXXZ,0x00958570,pin; address-derived reconstruction spelling for the buffered AVI frame flush
 ?Rva00959410Dispatch@@3URva00959410Ptr@@A,0x0134B280,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00959410 calls; autopin
 ?Rva0096CF60ClearPassBit@MeshMatDescClass@@QAEXXZ,0x0096CF60,MeshMatDescClass member called by MeshModelClass::post_process 0x0096E750 on DefMatDesc and AlternateMatDesc; clears bit 0x100000 on the description and each pass entry
 ?Rva00990030Lookup@@YAIPAUlua_State@@H@Z,0x00990030,"Reviewed Lua stack16B value slots, State top0/base10 and cdecl index argument; corrected typed lua_State* alias for existing extraction helper"
@@ -12014,6 +12015,7 @@ name,address,notes
 ?_Construct@_STL@@YAXPAURunwayInfo@FlightDeckBehavior@@ABU23@@Z,0x00008049,attribute interner copy construction thunk
 ?_Create_DX8_Surface@DX8Wrapper@@SAPAVIDirect3DSurface9@@IIW4WW3DFormat@@W4_D3DPOOL@@@Z,0x00904CE0,SurfaceClass four-argument constructor call target
 ?_CxxThrowException@@YGXPAX0@Z,0x009F6D00,MSVC retail exception throw helper with C++ linkage
+?_Get_DX8_Front_Buffer@DX8Wrapper@@SAPAUIDirect3DSurface8@@XZ,0x00904FF0,pin; reconstruction ABI alias for the stale Generals D3D8 declaration; the matched D3D9 front-buffer body and capture surface slots establish the target
 ?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@1@@Z,0x00920D10,pinharvest x2 (body)
 ?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@@@Z,0x00920D10,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
 ?_Init_timeinfo@_STL@@YAXAAV_Time_Info@1@@Z,0x00846F10,STLport 4.5.3 time facet initializer; address read from the four assigned retail constructor REL32 displacements
@@ -13601,6 +13603,7 @@ name,address,notes
 ?_M_release_lock@NodeAllocMutex@_STL@@QAEXXZ,0x0082AD50,node_alloc deallocate lock release; mov [ecx],0 ret spinlock release
 ?_M_seek_return@?$basic_filebuf@DV?$char_traits@D@_STL@@@_STL@@AAE?AV?$fpos@H@2@JH@Z,0x00841B90,STLport char filebuf helper read from retail seekpos call
 ?_M_seek_return@?$basic_filebuf@GV?$char_traits@G@_STL@@@_STL@@AAE?AV?$fpos@H@2@JH@Z,0x00842560,STLport wchar filebuf helper read from retail seekpos call
+?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBIW4Relationship@@@_STL@@@2@XZ,0x0004170E,TeamRelationMap xfer retail ILT; target body byte-identical to existing C++ template owner
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@XZ,0x00460DA0,zhstl per-site callee copy (body proven byte-equal)
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x0000722F,"jump stub to 0x00498BC0, same 59-byte body rebase-equal to 0x000D0CE0"
 ?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@XZ,0x0004167D,"jump stub to 0x0037ED50, one of this iterator's ICF twins (59 bytes, rebase-equal to the ledger body 0x000D0CE0); window_video_manager.cpp encodes it (dropped wholesale by d27ae4b7b)"
@@ -73817,6 +73820,7 @@ name,address,notes
 ?begin@?$hashtable@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeExperienceLevelDefinition@@V?$allocator@VBfmeExperienceLevelDefinition@@@_STL@@@_STL@@@_STL@@@2@@2@XZ,0x0037EBB0,ExperienceLevelSystem map begin
 ?begin@?$hashtable@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VBfmeOwnedReference@@V?$allocator@VBfmeOwnedReference@@@_STL@@@_STL@@@_STL@@@2@@2@XZ,0x00034CC0,ExperienceLevelSystem cleanup hash-map begin helper at 0x003801AD
 ?begin@?$hashtable@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHV?$list@VExperienceLevel@@V?$allocator@VExperienceLevel@@@_STL@@@_STL@@@_STL@@@2@@2@XZ,0x0037EBB0,complete typed ExperienceLevel map begin body returns the STLport iterator {node owner}; retail findLevel call uses ILT 0x00019B37 whose E9 reaches this body;campaign=luna36h-20260907;lane=hlod;model=gpt-5.6-sol-ultra
+?begin@?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIW4Relationship@@@_STL@@@2@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@2@XZ,0x00011A2C,TeamRelationMap xfer retail ILT; target body byte-identical to existing C++ template owner
 ?begin@?$hashtable@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAURva00615D50Object@@@_STL@@@2@@2@XZ,0x00611680,LivingWorldManager +0x224 object map begin; 0x00615CB0 reaches the body through ILT 0x00036412 and uses the native two-word iterator;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
 ?begin@?$hashtable@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVBfmeThingNA@@@_STL@@@2@@2@XZ,0x006115A0,LivingWorldManager BfmeThingNA map begin at this+0x194 through ILT 0x00009561
 ?begin@?$hashtable@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@2@XZ,0x0001ABD1,ParticleSystemManager destructor calls the retail template map begin thunk
@@ -74200,6 +74204,7 @@ name,address,notes
 ?bfmeArenaReady@@YAXXZ,0x00897050,Open-BFME5 the routine the arena initialiser at 0x00897120 tail-calls
 ?bfmeAsk1013@@YADXZ,0x0001E533,pin
 ?bfmeAsk1023@BfmeSub1023@@QAEDXZ,0x00035A5D,pin
+?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
 ?bfmeAsk993B@BfmeAskB993@@QAEDXZ,0x00008ED1,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
@@ -75164,8 +75169,7 @@ name,address,notes
 ?bfmeDtorTWA@BfmeStrTWA@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWB@BfmeStrTWB@@QAEXXZ,0x007E86C0,pin
 ?bfmeDtorTWC@BfmeHeadTWC@@QAEXXZ,0x007E86C0,pin
-?Rva00958570_Flush_Buffered_Frames@FrameGrabClass@@IAEXXZ,0x00958570,pin; address-derived reconstruction spelling for the buffered AVI frame flush
-?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,reconstruction alias; not historical identity; retained for the existing address-derived 0x00958680 caller
+?bfmeDtorTXA@BfmeThingTXA@@QAEXXZ,0x00958570,pin
 ?bfmeDtorUD@BfmeThingUD@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUE@BfmeThingUE@@QAEXXZ,0x00AB8350,pin
 ?bfmeDtorUEW@BfmeThingUEW@@QAEXXZ,0x008A2F30,pin
@@ -77245,7 +77249,7 @@ name,address,notes
 ?bfmeShroudedVNI@@YADPAX@Z,0x000C3F80,pin
 ?bfmeShut1085@BfmeR1085@@QAEXPAVBfmeX1085@@@Z,0x00012733,pin
 ?bfmeShutdownCE@BfmeOwnCE@@QAEXXZ,0x000066E0,pin
-?bfmeShutdownYX@BfmeOwnerYX@@QAEXXZ,0x00958570,reconstruction alias; not historical identity; retained for the existing address-derived 0x00958640 caller
+?bfmeShutdownYX@BfmeOwnerYX@@QAEXXZ,0x00958570
 ?bfmeSinVNB@@YAMM@Z,0x00873910,pin
 ?bfmeSize1035@BfmeSubE1035@@QAEHXZ,0x0089CC10,pin
 ?bfmeSizeVNQ@BfmeItemVNQ@@QAEHXZ,0x009212E0,pin
@@ -78285,6 +78289,7 @@ name,address,notes
 ?concat@BfmeSmallScaleDownString@@QAEXPBDH@Z,0x00887D60,Open-BFME5 view-class spelling of the two-argument concat already pinned as ?concat@AsciiString@@QAEXPBDH@Z; BFME passes an explicit length where the vendored declaration takes only the pointer
 ?concat@UnicodeString@@QAEXPBGH@Z,0x00888600,Apt disconnect-screen quit message uses the StringBase<unsigned short> concat body
 ?configure@ShroudManagerImpl008FBA40@@QAEXURegion3D@@M@Z,0x008FB5F0,RVA 0x008FBAD0 validated Region3D configure call target
+?configureWindowParameters@@YAXPAVGen_004659D0@@@Z,0x00894800,typed parameter adapter for the generated Apt parameter configurator called by WindowManager::init at 0x0046C5F0
 ?connectCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPConnectResponseArg@@@Z,0x000314AD
 ?construct@AODHordeContainModuleDataBaseShim@@QAEXXZ,0x0000ED77,AODHordeContain ModuleData base
 ?construct@AnimSetConstructShim@_STL@@SAXPAUAnimSet@GenericObjectCreationNugget@@ABU34@@Z,0x00754B20,_STL _Construct AnimSet incremental-link thunk target through a TU-local forwarding shim
@@ -79843,6 +79848,7 @@ name,address,notes
 ?g_bfmeGameCW@@3PAVBfmeGameCW@@A,0x012F706C,Actual C++ COFF spelling of the singleton loaded by reviewed 0x00618740; pointer owner view BfmeGameCW
 ?g_bfmeGameLogicFV@@3PAVBfmeLogicFV@@A,0x00EF0898,pin
 ?g_bfmeGate961@@3PAVBfmeGate961@@A,0x00EF706C,pin
+?g_bfmeGateA979@@3PAHA,0x00EF4B58,pin
 ?g_bfmeGlo012F15F8@@3PAVBfmeOverride1137@@A,0x012F15F8,Open-BFME5 Overridable singleton walked by BfmeA1137::copyFromOverride
 ?g_bfmeGlob956@@3PAUBfmeGlob956@@A,0x00EEF214,pin
 ?g_bfmeGlob9A@@3HA,0x00EF10D8,Open-BFME5 global the walk at 0x00409A60 stores
@@ -83141,7 +83147,7 @@ name,address,notes
 ?loadPostProcess@DockUpdate@@MAEXXZ,0x0003C55B,Open-BFME5 DockUpdate loadPostProcess retail ILT callee
 ?loadPostProcess@RailedTransportDockUpdate@@MAEXXZ,0x0001D7C3,primary vftable slot 0x04 ILT to 0x002CE440
 ?loadPostProcess@Script@@UAEXXZ,0x00006EB5,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
-?xfer@TeamRelationMap@@MAEXPAVXfer@@@Z,0x000F3C50,retail body matches upstream Team.cpp serializer; replaces incorrect slot-only loadPostProcess identity
+?loadPostProcess@TeamRelationMap@@MAEXXZ,0x000f3c50,vtable-slot ??_7TeamRelationMap@@6B@ slot 3 anchors=1
 ?loadPostProcess@UpdateModule@@MAEXXZ,0x00015E0B,DockUpdate retail base-call ILT chains through 0x002B2070 and 0x0004049E to the no-op UpdateModule body at 0x001EF410
 ?loadPostProcess@UpdateModule@@MAEXXZ,0x0002D600,"Rva0036BAE0 retail base-call thunk to the same no-op UpdateModule body at 0x001EF410; re-added after d27ae4b7b, one-name-one-body clean"
 ?loadProfile@LadderPreferences@@QAE_NH@Z,0x000AE0A0,ZH LadderDefs.cpp LadderPreferences::loadProfile: clears the PreferenceMap (+4; ILT 0x00049E13) and m_ladders (+0x14; ILT 0x00033000); formats "LoTRB4MEOnline\Ladders%d.ini" with the profile id; vslot+8 load; parses name:address:port:date values into m_ladders through operator[] 0x000ACC40; ILT 0x00016C98; callers PopulateCustomLadderComboBox 0x004D65F3 and the QM ladder panel 0x00508E2D
@@ -84730,6 +84736,7 @@ name,address,notes
 ?showNamedTimerDisplay@InGameUI@@QAEX_N@Z,0x0001E1A0,ILT thunk for ScriptActions timer display
 ?showOptions@AptPalantir@@QAEXXZ,0x000131A1,AptPalantir OnBttnOptions dispatcher
 ?showScreen@DisconnectMenu@@QAEXXZ,0x0050E9A0,ZH DisconnectMenu::showScreen twin: HideDiplomacy 0x0052ADE0 / HideInGameChat 0x00512670 / 0x00598F30 (ZH HideQuitMenu position; ledger name hidePurchaseScience is suspect) / HideSaveLoadMenu 0x005696D0 then UI singleton 0x012F148C slot +0x150(1) then TheWindowManager 0x012F1B40 slot +0x6C (winCreateLayout position) with literal DisconnectScreen.apt 0x01087A9C stored to 0x012F4960 and layout slot 0(0); this-less like hideScreen; sole caller DisconnectManager::turnOnScreen 0x0066BFE4; ILT 0x00020144
+?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
 ?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
 ?shutdown@GameResultsThread@@QAEXXZ,0x009DB5A0,Open-BFME5 GameResultsQueue worker shutdown
 ?shutdown@GameResultsThreadWide@@QAEXXZ,0x009DB5A0,near-twin pin of shutdown@GameResultsThread for GameResultsQueueDestructorWide.cpp
@@ -85007,6 +85014,8 @@ name,address,notes
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z,0x003E9720,address-derived five-argument pathfinder refresh used by 0x002BDF10
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z,0x003E9720,BFME five-argument updateGoal called by GiantBirdNormalFlightState::onExit at 0x002BE180; source file and line are encoded in the retail call
 ?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
+?updateLadderDetails@@YAXHPAVGameWindow@@0@Z,0x004D7E60,authentic ZH static signature confirmed by matched PopupLadderSelect callers and retail ECX=listbox EDX=static-text stack=id ABI
+?updateLadderDetails@@YAXPAVGameWindow@@0H@Z,0x004D7E60,structural callee pin: retail call target decoded from e8 at 0x004D8796 inside populateLadderListBox body; TU-local fastcall static
 ?updateLighting@W3DRoadBuffer@@QAEXXZ,0x000109A1,incremental thunk used by BaseHeightMap setTimeOfDay
 ?updateLights@@YAXMPBUTerrainLighting@@PAPAVLightClass@@@Z,0x006E9760,Parent full372B through6E98D3 confirms EAX lighting EDX light-array and stack scale; four null-guarded lights zero ambient/specular and scaled diffuse; scalar-first TU-local compiler ABI view of existing matched updateLights; calls6E99D7 and6E99E5
 ?updateMPBattleHonors@@YAXAAHAAVPSPlayerStats@@@Z,0x004E59E0,ZH updateMPBattleHonors(Int& honors PSPlayerStats& stats) with stats in EAX (LTCG custom convention) and honors on the stack: winsInARow(+0x188)>=3/10/25 -> 0x2/0x8/0x10 (ZH only STREAK at 5); gamesInRowWithLastGeneral(+0x17c)>=20 && localPlayer side America/China/GLA -> 0x20/0x40/0x200; getTotalUnitsBuilt(VEHICLE !AIRCRAFT)>=50 -> 0x80 (BATTLE_TANK); (AIRCRAFT)>=20 -> 0x100 (AIR_WING); TheGameLogic frame/300<5 -> 0x4000 BLITZ5 frame/5/60<10 -> 0x8000 BLITZ10; no apocalypse/global-general arms; sole caller populatePlayerInfo 0x004E75F1 gated on !crc !discon !isLocalAlliedDefeat getEndFrame
@@ -85184,6 +85193,7 @@ name,address,notes
 ?xfer@RailedTransportDockUpdate@@MAEXPAVXfer@@@Z,0x0003AF53,primary vftable ILT to 0x002CE3A0
 ?xfer@Script@@UAEXPAVXfer@@@Z,0x0001044C,"Script vtable10E858C: slots1/2/3 target352C00 no-arg return,352C10 const Script name,350EF0 Xfer pointer; independently decoded full bodies"
 ?xfer@SpecialAbilityUpdate@@QAEXPAVXfer@@@Z,0x000289F7,SpecialAbilityUpdate base xfer ILT called by WeaponFireSpecialAbilityUpdate::xfer
+?xfer@TeamRelationMap@@MAEXPAVXfer@@@Z,0x000F3C50,retail body matches upstream Team.cpp serializer; replaces incorrect slot-only loadPostProcess identity
 ?xfer@UpdateModule@@MAEXPAVXfer@@@Z,0x000044C1,UpdateModule xfer ILT called by BridgeBehavior::xfer
 ?xfer@W3DDebrisDrawDrawModule@@MAEXPAVXfer@@@Z,0x0002FD88,W3DDebrisDraw inherits the same DrawModule Xfer ILT as W3DRopeDraw
 ?xfer@W3DRopeDrawDrawModule@@MAEXPAVXfer@@@Z,0x0002FD88,
@@ -87046,9 +87056,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?updateLadderDetails@@YAXHPAVGameWindow@@0@Z,0x004D7E60,authentic ZH static signature confirmed by matched PopupLadderSelect callers and retail ECX=listbox EDX=static-text stack=id ABI
-?EncryptString@@YAPBDPBD@Z,0x0000ED86,route=0x00104760; matched PopupLadderSelectSystem call reaches retail ILT 0x0000ED86 and official source proves the matched const-qualified EncryptString body at 0x00104760
-?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
-?_Get_DX8_Front_Buffer@DX8Wrapper@@SAPAUIDirect3DSurface8@@XZ,0x00904FF0,pin; reconstruction ABI alias for the stale Generals D3D8 declaration; the matched D3D9 front-buffer body and capture surface slots establish the target
-?begin@?$hashtable@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIW4Relationship@@@_STL@@@2@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@2@XZ,0x00011A2C,TeamRelationMap xfer retail ILT; target body byte-identical to existing C++ template owner
-?_M_skip_to_next@?$_Hashtable_iterator@U?$pair@$$CBIW4Relationship@@@_STL@@IU?$hash@I@2@U?$_Select1st@U?$pair@$$CBIW4Relationship@@@_STL@@@2@U?$equal_to@I@2@V?$allocator@U?$pair@$$CBIW4Relationship@@@_STL@@@2@@_STL@@QAEPAU?$_Hashtable_node@U?$pair@$$CBIW4Relationship@@@_STL@@@2@XZ,0x0004170E,TeamRelationMap xfer retail ILT; target body byte-identical to existing C++ template owner

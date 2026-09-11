@@ -603,24 +603,82 @@ static void updateLadderDetails( Int selID, GameWindow *staticTextLadderName, Ga
 	}
 }
 
-static void closeRightClickMenu(GameWindow *win)
+// BFME's WindowLayout vtable has the virtual operations used by retail here;
+// the shared Zero Hour header models these as non-virtual pool methods.
+class Rva004D8440WindowLayout
 {
+public:
+	virtual void runInit(void *userData);
+	virtual ~Rva004D8440WindowLayout();
+	virtual void runUpdate(void *userData);
+	virtual void runShutdown(void *userData);
+	virtual void hide(Bool hide);
+	virtual void bringForward(void);
+	virtual void addWindow(GameWindow *window);
+	virtual void removeWindow(GameWindow *window);
+	virtual void destroyWindows(void);
 
-	if(win)
+	void deleteInstance(void) { delete this; }
+};
+
+class Rva004D8440GameSpyInfo
+{
+public:
+#define RVA004D8440_GS_SLOT(N) virtual void slot##N();
+	RVA004D8440_GS_SLOT(00) RVA004D8440_GS_SLOT(01)
+	RVA004D8440_GS_SLOT(02) RVA004D8440_GS_SLOT(03)
+	RVA004D8440_GS_SLOT(04) RVA004D8440_GS_SLOT(05)
+	RVA004D8440_GS_SLOT(06) RVA004D8440_GS_SLOT(07)
+	RVA004D8440_GS_SLOT(08) RVA004D8440_GS_SLOT(09)
+	RVA004D8440_GS_SLOT(10) RVA004D8440_GS_SLOT(11)
+	RVA004D8440_GS_SLOT(12) RVA004D8440_GS_SLOT(13)
+	RVA004D8440_GS_SLOT(14) RVA004D8440_GS_SLOT(15)
+	RVA004D8440_GS_SLOT(16) RVA004D8440_GS_SLOT(17)
+	RVA004D8440_GS_SLOT(18) RVA004D8440_GS_SLOT(19)
+	RVA004D8440_GS_SLOT(20) RVA004D8440_GS_SLOT(21)
+	RVA004D8440_GS_SLOT(22) RVA004D8440_GS_SLOT(23)
+	RVA004D8440_GS_SLOT(24) RVA004D8440_GS_SLOT(25)
+	RVA004D8440_GS_SLOT(26) RVA004D8440_GS_SLOT(27)
+	RVA004D8440_GS_SLOT(28) RVA004D8440_GS_SLOT(29)
+	RVA004D8440_GS_SLOT(30) RVA004D8440_GS_SLOT(31)
+	RVA004D8440_GS_SLOT(32) RVA004D8440_GS_SLOT(33)
+	RVA004D8440_GS_SLOT(34) RVA004D8440_GS_SLOT(35)
+	RVA004D8440_GS_SLOT(36) RVA004D8440_GS_SLOT(37)
+#undef RVA004D8440_GS_SLOT
+	virtual StagingRoomMap *getStagingRoomList(void);
+};
+
+class Rva004D8440GameSpyStagingRoom
+{
+public:
+	// ?getLadderPort@GameSpyStagingRoom@@QBEGXZ
+	UnsignedShort getLadderPort(void) const
 	{
-		WindowLayout *winLay = win->winGetLayout();
+		return *(const UnsignedShort *)((const char *)this + 0x450);
+	}
+};
+
+static __forceinline void closeRightClickMenu(GameWindow *win)
+{
+	if(!win)
+		return;
+
+	{
+		Rva004D8440WindowLayout *winLay =
+			(Rva004D8440WindowLayout *)win->winGetLayout();
 		if(!winLay)
 			return;
-		winLay->destroyWindows();					
+		winLay->destroyWindows();
 		winLay->deleteInstance();
 		winLay = NULL;
-
 	}
+
 }
 void RCGameDetailsMenuInit( WindowLayout *layout, void *userData )
 {
 }
 
+// ?RCGameDetailsMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
 WindowMsgHandledType RCGameDetailsMenuSystem( GameWindow *window, UnsignedInt msg, WindowMsgData mData1, WindowMsgData mData2 )
 {
 
@@ -659,22 +717,26 @@ WindowMsgHandledType RCGameDetailsMenuSystem( GameWindow *window, UnsignedInt ms
 
 				if (controlID == ladderInfoID)
 				{
-					StagingRoomMap *srm = TheGameSpyInfo->getStagingRoomList();
+					StagingRoomMap *srm =
+						((Rva004D8440GameSpyInfo *)TheGameSpyInfo)->getStagingRoomList();
 					StagingRoomMap::iterator srmIt = srm->find(selectedID);
 					if (srmIt != srm->end())
 					{
 						GameSpyStagingRoom *theRoom = srmIt->second;
 						if (!theRoom)
 							break;
-						const LadderInfo *linfo = TheLadderList->findLadder(theRoom->getLadderIP(), theRoom->getLadderPort());
+						const LadderInfo *linfo = TheLadderList->findLadder(
+							theRoom->getLadderIP(),
+							((Rva004D8440GameSpyStagingRoom *)theRoom)->getLadderPort());
 						if (linfo)
 						{
-							WindowLayout *rcLayout = TheWindowManager->winCreateLayout(AsciiString("Menus/PopupLadderDetails.wnd"));	
+							WindowLayout *rcLayout = TheWindowManager->winCreateLayout(
+								AsciiString("Menus/PopupLadderDetails.wnd"));	
 							if (!rcLayout)
 								break;
 
 							GameWindow *rcMenu = rcLayout->getFirstWindow();
-							rcMenu->winGetLayout()->runInit();
+							((Rva004D8440WindowLayout *)rcMenu->winGetLayout())->runInit(NULL);
 							rcMenu->winBringToTop();
 							rcMenu->winHide(FALSE);
 							
