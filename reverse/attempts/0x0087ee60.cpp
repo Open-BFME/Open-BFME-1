@@ -1,8 +1,13 @@
-// d_0087ee60
-// partial score=0.92 date=2026-09-07
+// ?calcBoundingStuff@GeometryInfo@@AAEXXZ
+// partial score=0.95 date=2026-09-11
 // cl: /O2 /Ob1 /G5
 // stlport
 // Open-BFME: GeometryInfo::calcBoundingStuff, retail 0x0087EE60, 301 bytes.
+// Caller/layout evidence fixes the inherited model: +0x10 is the bounding
+// circle, +0x14 is the bounding sphere, and retail calls the 101-byte circle
+// helper before the 228-byte sphere helper.  With those corrections this is
+// 301/301 bytes; the remaining diff is one EDI/EBP colour swap through the
+// radius loop plus two commutative x87 load-order choices near the tail.
 
 #include <vector>
 #include <math.h>
@@ -16,12 +21,12 @@ inline const Real *bfmeMax(const Real *a, const Real *b)
 
 struct GeometryBounds
 {
-	Real m_minX;
-	Real m_minY;
-	Real m_minZ;
-	Real m_maxX;
-	Real m_maxY;
-	Real m_maxZ;
+	volatile Real m_minX;
+	volatile Real m_minY;
+	volatile Real m_minZ;
+	volatile Real m_maxX;
+	volatile Real m_maxY;
+	volatile Real m_maxZ;
 };
 
 struct GeometryShape
@@ -59,8 +64,8 @@ private:
 	bool m_isSmall;
 	int m_scalar08;
 	int m_scalar0c;
-	Real m_boundingSphereRadius;
 	Real m_boundingCircleRadius;
+	Real m_boundingSphereRadius;
 	Real m_centerX;
 	Real m_centerY;
 	Real m_centerZ;
@@ -77,6 +82,8 @@ inline Real sqr(Real x)
 {
 	return x * x;
 }
+
+#pragma comment(linker, "/alternatename:?getBoundingCircleRadius@GeometryShape@@QBEMXZ=?d_0087ed00@@YAXXZ")
 
 __declspec(noinline) Real GeometryShape::getBoundingCircleRadius() const
 {
@@ -125,10 +132,10 @@ void GeometryInfo::calcBoundingStuff()
 {
 	GeometryBounds bounds;
 	std::vector<GeometryShape>::const_iterator shape = m_shapes.begin();
+	m_boundingCircleRadius = 0.0f;
+	m_boundingSphereRadius = 0.0f;
 	Real *sphereRadius = &m_boundingSphereRadius;
 	Real *circleRadius = &m_boundingCircleRadius;
-	*sphereRadius = 0.0f;
-	*circleRadius = 0.0f;
 
 	while (shape != m_shapes.end())
 	{
@@ -138,23 +145,24 @@ void GeometryInfo::calcBoundingStuff()
 			continue;
 		}
 
-		Real sphereValue = shape->getBoundingSphereRadius();
-		*sphereRadius = *bfmeMax(sphereRadius, &sphereValue);
+		Real sphereValue;
 		Real circleValue = shape->getBoundingCircleRadius();
 		*circleRadius = *bfmeMax(circleRadius, &circleValue);
+		sphereValue = shape->getBoundingSphereRadius();
+		*sphereRadius = *bfmeMax(sphereRadius, &sphereValue);
 		++shape;
 	}
 
 	getBounds(&bounds);
 	m_centerX = 0.0f;
-	m_centerX += (bounds.m_minX + bounds.m_maxX) * g_bfmeK1257;
 	m_centerY = 0.0f;
-	m_centerY += (bounds.m_minY + bounds.m_maxY) * g_bfmeK1257;
 	m_centerZ = 0.0f;
+	m_centerX += (bounds.m_minX + bounds.m_maxX) * g_bfmeK1257;
+	m_centerY += (bounds.m_minY + bounds.m_maxY) * g_bfmeK1257;
 	m_centerZ += (bounds.m_minZ + bounds.m_maxZ) * g_bfmeK1257;
 
 	Real negativeMinX = -bounds.m_minX;
-	m_extentX = *bfmeMax(&bounds.m_maxX, &negativeMinX);
+	m_extentX = *bfmeMax((const Real *)&bounds.m_maxX, &negativeMinX);
 	Real negativeMaxY = -bounds.m_maxY;
-	m_extentY = *bfmeMax(&bounds.m_maxY, &negativeMaxY);
+	m_extentY = *bfmeMax((const Real *)&bounds.m_maxY, &negativeMaxY);
 }
