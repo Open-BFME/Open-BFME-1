@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dd7fd2af3be862b5f1cf547ea9944459f19e0901bd068b18a46dc5771ba693b7",
+  "symbol": "?bfmeNameAAG@BfmeHostAAG@@QBE?AVBFMERetailAsciiString@@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?bfmeNameAAG@BfmeHostAAG@@QBE?AVBFMERetailAsciiString@@XZ\n// partial score=0.94 date=2026-09-11\nclass BFMERetailAsciiString\n{\npublic:\n\tBFMERetailAsciiString(const char *s);\n\tBFMERetailAsciiString(const BFMERetailAsciiString &o);\n\t~BFMERetailAsciiString();\n\n\tvoid *m_bfmeDataAAG;\n};\n\nstruct Rva006A16B0Entry\n{\n\tconst char *m_bfmeNameAAG;\n\tint m_bfmeIdAAG;\n};\n\nextern Rva006A16B0Entry Rva006A16B0Table[];\n\nextern int (__stdcall *g_bfmeFnAAG)(void *slot);\n\nstruct BfmeSlotAAG\n{\n\tvoid *m_bfmeAAAG;\n\tvoid *m_bfmeBAAG;\n\tvoid *m_bfmeCAAG;\n};\n\nclass BfmeHostAAG\n{\npublic:\n\tBFMERetailAsciiString bfmeNameAAG() const;\n\n\tunsigned char m_bfmeHeadAAG[0x658];\n\tBfmeSlotAAG m_bfme658AAG[64];\n\tint m_bfme958AAG;\n};\n\nBFMERetailAsciiString BfmeHostAAG::bfmeNameAAG() const\n{\n\tint r = g_bfmeFnAAG(m_bfme658AAG[m_bfme958AAG].m_bfmeAAAG);\n\n\tfor (unsigned int i = 0; i < 26; ++i)\n\t\tif (r == Rva006A16B0Table[i].m_bfmeIdAAG)\n\t\t\treturn BFMERetailAsciiString(Rva006A16B0Table[i].m_bfmeNameAAG);\n\n\treturn BFMERetailAsciiString(\"<Unknown>\");\n}\n"
+}

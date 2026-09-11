@@ -141,11 +141,8 @@ StateReturnType GiantBirdGuardInnerState::update()
 	Object *goalObject = m_subMachine->m_stateMachine->getGoalObject();
 	if (goalObject == 0 || (goalObject->m_status & 1) != 0)
 	{
-		if (m_subMachine != 0)
-		{
-			if (m_subMachine->isComplete())
-				return STATE_COMPLETE;
-		}
+		if (m_subMachine != 0 && isComplete(m_subMachine))
+			return STATE_COMPLETE;
 	}
 	return (StateReturnType)result;
 }
