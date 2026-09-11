@@ -1,18 +1,39 @@
-// ?updateSupplyStatus@Object@@QAEXHH@Z
-// partial score=0.95 date=2026-09-04
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// stlport
+// Object::updateSupplyStatus, retail 0x001C8B20 (152 bytes).
+
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
+
 typedef unsigned int UnsignedInt;
 
 class ModelConditionFlags
 {
 public:
-	UnsignedInt m_words[9];
+	bool test(int bit) const
+	{
+		return m_bits.test(bit);
+	}
+
+	void set(int bit)
+	{
+		m_bits.set(bit);
+	}
+
+	void reset(int bit)
+	{
+		m_bits.reset(bit);
+	}
+
+private:
+	_STL::bitset<288> m_bits;
 };
 
 class Drawable
 {
 public:
-	void replaceModelConditionState(const ModelConditionFlags &flags, UnsignedInt a, UnsignedInt b);
+	void replaceModelConditionState(const ModelConditionFlags &flags,
+		UnsignedInt a, UnsignedInt b);
 	void updateDrawableSupplyStatus(int maxSupply, int currentSupply);
 };
 
@@ -48,18 +69,17 @@ void Object::updateSupplyStatus(int maxSupply, int currentSupply)
 {
 	if (currentSupply > 0)
 	{
-		UnsignedInt mask = 0x100000;
-		if (!(m_conditionFlags.m_words[2] & mask))
+		if (!m_conditionFlags.test(84))
 		{
-			m_conditionFlags.m_words[2] |= mask;
+			m_conditionFlags.set(84);
 			notifyModelConditionChanged();
 		}
 	}
 	else
 	{
-		if (m_conditionFlags.m_words[2] & 0x100000)
+		if (m_conditionFlags.test(84))
 		{
-			m_conditionFlags.m_words[2] &= 0xffefffff;
+			m_conditionFlags.reset(84);
 			notifyModelConditionChanged();
 		}
 	}
