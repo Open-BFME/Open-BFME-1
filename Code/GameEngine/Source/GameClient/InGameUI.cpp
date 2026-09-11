@@ -10513,10 +10513,54 @@ void InGameUI::clearTooltipsDisabled()
 	m_tooltipsDisabledUntil = 0;
 }
 
-// ?areTooltipsDisabled@InGameUI@@UBE_NXZ present-unmatched
+struct BfmeTooltipGlobalDataView
+{
+	UnsignedByte m_padding[0xe54];
+	Bool m_tooltipsEnabled;
+};
+
+class Glo012F1028Type
+{
+public:
+	UnsignedByte m_padding[0x2c];
+	Bool m_active;
+	Bool m_locked;
+};
+
+extern Glo012F1028Type *Glo012F1028;
+
+// ?areTooltipsDisabled@InGameUI@@UBE_NXZ
 Bool InGameUI::areTooltipsDisabled() const
 {
-	return (TheGameLogic->getFrame() < m_tooltipsDisabledUntil);
+	const BfmeTooltipGlobalDataView *tooltipData =
+		reinterpret_cast<const BfmeTooltipGlobalDataView *>(TheWritableGlobalData);
+	if (!tooltipData->m_tooltipsEnabled)
+		return TRUE;
+
+	Glo012F1028Type *mode = Glo012F1028;
+	if (mode != NULL && mode->m_active && mode->m_locked)
+		goto tooltipsEnabled;
+
+	union BoolWord
+	{
+		UnsignedInt word;
+		Bool value;
+	} result;
+	// BFME's InGameUI layout is smaller than the later GeneralsMD layout.
+	const UnsignedInt *disabledUntil = reinterpret_cast<const UnsignedInt *>(
+		reinterpret_cast<const UnsignedByte *>(this) + 0x814);
+	if (TheGameLogic->getFrame() < *disabledUntil)
+	{
+		result.word = 1;
+	}
+	else
+	{
+tooltipsEnabled:
+		result.word = 0;
+	}
+	// Keeping the comparison result word-sized reproduces retail's wide late
+	// true/false returns while preserving the native-bool ABI.
+	return result.value;
 }
 
 
