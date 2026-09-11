@@ -1,5 +1,5 @@
 // ?rotateCameraOneFrame@W3DView@@AAEXXZ
-// partial score=0.55 date=2026-09-09
+// partial score=0.56 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
 // BFME W3DView::rotateCameraOneFrame, retail 0x00743860 (676 bytes).
 //
@@ -9,6 +9,12 @@
 // generated row is the only current claim for that range.  This TU keeps the
 // BFME camera layout local, as the shared W3DView header has a different
 // state ordering.
+//
+// curFrame is cached in a local (retail spills ++m_rcInfo.curFrame to
+// [esp+0xc] once, frees ebx for reuse as the zero constant, and never
+// reloads the member); see the attempt log for two ruled-out variants
+// (plain register-cached local, volatile local) neither of which reproduces
+// that exact spill.
 
 #include <math.h>
 #include "vector2.h"
@@ -166,9 +172,9 @@ private:
 // ?rotateCameraOneFrame@W3DView@@AAEXXZ
 void W3DView::rotateCameraOneFrame(void)
 {
-	m_rcInfo.curFrame++;
+	Int curFrame = ++m_rcInfo.curFrame;
 	if (TheWritableGlobalData->m_disableCameraMovement) {
-		if (m_rcInfo.curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
+		if (curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
 			m_doingRotateCamera = false;
 			m_freezeTimeForCameraMovement = false;
 		}
@@ -177,7 +183,7 @@ void W3DView::rotateCameraOneFrame(void)
 
 	if (m_rcInfo.trackObject)
 	{
-		if (m_rcInfo.curFrame <= m_rcInfo.numFrames + m_rcInfo.numHoldFrames)
+		if (curFrame <= m_rcInfo.numFrames + m_rcInfo.numHoldFrames)
 		{
 			const Object *obj = TheGameLogic->findObjectByID(m_rcInfo.target.targetObjectID);
 			if (obj)
@@ -196,9 +202,9 @@ void W3DView::rotateCameraOneFrame(void)
 				angle -= BFME_PI_OVER_TWO;
 				normAngle(angle);
 
-				if (m_rcInfo.curFrame <= m_rcInfo.numFrames)
+				if (curFrame <= m_rcInfo.numFrames)
 				{
-					Real factor = m_rcInfo.ease(((Real)m_rcInfo.curFrame) / m_rcInfo.numFrames);
+					Real factor = m_rcInfo.ease(((Real)curFrame) / m_rcInfo.numFrames);
 					Real angleDiff = angle - m_angle;
 					normAngle(angleDiff);
 					angleDiff *= factor;
@@ -214,16 +220,16 @@ void W3DView::rotateCameraOneFrame(void)
 			}
 		}
 	}
-	else if (m_rcInfo.curFrame <= m_rcInfo.numFrames)
+	else if (curFrame <= m_rcInfo.numFrames)
 	{
-		Real factor = m_rcInfo.ease(((Real)m_rcInfo.curFrame) / m_rcInfo.numFrames);
+		Real factor = m_rcInfo.ease(((Real)curFrame) / m_rcInfo.numFrames);
 		m_angle = WWMath::Lerp(m_rcInfo.angle.startAngle, m_rcInfo.angle.endAngle, factor);
 		normAngle(m_angle);
 		m_timeMultiplier = m_rcInfo.startTimeMultiplier + REAL_TO_INT_FLOOR(
 			0.5 + (m_rcInfo.endTimeMultiplier - m_rcInfo.startTimeMultiplier) * factor);
 	}
 
-	if (m_rcInfo.curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
+	if (curFrame >= m_rcInfo.numFrames + m_rcInfo.numHoldFrames) {
 		m_doingRotateCamera = false;
 		m_freezeTimeForCameraMovement = false;
 		if (!m_rcInfo.trackObject)
