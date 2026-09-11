@@ -1,9 +1,12 @@
-// ?d_0022d2a0@@YAXXZ
-// partial score=0.98 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: TransportContain::createPayload, retail 0x0022D2A0.
+// Identity is anchored by TransportContain's vtable slot 27 and the matched
+// HordeContain::createPayload caller at retail 0x0023C000.
 
 typedef bool Bool;
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 extern const char g_bfmeEmptyAscii[];
 
@@ -84,8 +87,23 @@ class TransportContainModuleData
 {
 public:
 	unsigned char m_pad[0x174];
+	// BFME stores the initial-payload list as a sentinel node here.  Each
+	// element's name and count are at offsets 8 and 0xc, respectively.
 	InitialPayloadNode *m_initialPayload;
 };
+
+static __forceinline Bool advanceInitialPayload(InitialPayloadNode *&node,
+	TransportContainModuleData *const &moduleData)
+{
+	// The volatile by-reference reload and compiler-only barrier preserve the
+	// retail loop-latch scheduling without emitting any extra instructions.
+	TransportContainModuleData *owner =
+		*(TransportContainModuleData *volatile *)&moduleData;
+	InitialPayloadNode *next = node->m_next;
+	_ReadWriteBarrier();
+	node = next;
+	return node != owner->m_initialPayload;
+}
 
 class TransportContain
 {
@@ -130,7 +148,7 @@ void TransportContain::createPayload()
 				}
 				contain->enableLoadSounds(true);
 			}
-			node = *(InitialPayloadNode **)((char *)node);
-		} while (node != moduleData->m_initialPayload);
+
+		} while (advanceInitialPayload(node, moduleData));
 	}
 }
