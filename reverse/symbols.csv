@@ -87177,3 +87177,18 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?playbackFile@RecorderClass@@QAE_NVAsciiString@@@Z,0x00028B2D,ReplayMenu reallyLoadReplay callback calls RecorderClass::playbackFile through this ILT thunk; target body is the matched recorder implementation at 0x0049B150
+?d_009a8430@@YAXXZ,0x009A8430,alias kept for callers of the former dump; body converted as Get_RDTSC_CPU_Speed
+?__adjust_float_buffer@_STL@@YAXPAD0D@Z,0x008490B0,STLport 4.5.3 narrow float-buffer decimal-point replacement; canonical __put_float at 0x0083B830 is a direct caller and its three arguments exactly match the 34-byte range replacement loop
+??$__find@PADD@_STL@@YAPADPAD0ABDABUrandom_access_iterator_tag@0@@Z,0x0083B940,STLport 4.5.3 char-pointer random-access find specialization; adjacent canonical __put_float at 0x0083B830 calls it with input range and decimal point and the matched alias row names this exact object symbol
+??$__copy_float_and_fill@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PBD0V10@HHDDD@Z,0x0083B9B0,STLport 4.5.3 narrow copy-float-and-fill specialization; canonical __put_float at 0x0083B830 calls the adjacent 300-byte body with its char range output iterator flags width fill and literal signs
+?j_0000353f@Glo012F1028Type@@QAEHXZ,0x0000353F,adjustment call emitted through Glo012F1028Type in BfmePlayerMapState::bfmeNewMap
+??$find@H@?$_Rb_tree@HU?$pair@$$CBHPAX@_STL@@U?$_Select1st@U?$pair@$$CBHPAX@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBHPAX@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHPAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHPAX@_STL@@@2@@1@ABH@Z,0x008FF560,STLport map<int,void*> find with unsigned comparator; sole caller PeekHashMapValue008FF850
+??$find@I@?$_Rb_tree@IU?$pair@$$CBIPAX@_STL@@U?$_Select1st@U?$pair@$$CBIPAX@_STL@@@2@U?$less@I@2@V?$allocator@U?$pair@$$CBIPAX@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBIPAX@_STL@@U?$_Nonconst_traits@U?$pair@$$CBIPAX@_STL@@@2@@1@ABI@Z,0x008FF560,ICF sibling of the unsigned-key zhstl find body; authored source emits equivalent H-key body with unsigned comparator; sole caller PeekHashMapValue008FF850
+?deleteOverrides@BfmeCrateOverrideView@@QAEPAV1@XZ,0x00032D1C,Same ICF override-chain cleanup thunk as Overridable::deleteOverrides; CrateSystem::reset at 0x00379250 calls it recursively
+?reserve@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEXI@Z,0x0036EE10,retail REL32 pin for Rva00372670XferObjectIDVector; target call uses ILT 0x00049DE6
+_CreateToolhelp32Snapshot@8,0x00AFE3F6,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+_Module32First@8,0x00AFE3F0,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+_Module32Next@8,0x00AFE3EA,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+?release@Rva005C6730Value@@QAEXXZ,0x00013994,shared handle-release thunk; same target as many other class destructors already pinned here
+??$_Construct@URva005C6730Value@@@_STL@@YAXPAURva005C6730Value@@ABU1@@Z,0x00030549,shared 12-byte-POD _Construct thunk; same target as the Rva005C5580Element/Rva005C6B20Element/Video list-insert twins
+?bfmeUpdateBFromPointGuardedNA@BfmeThingNA@@QAEXABUCoord2D@@@Z,0x000307EC,LivingWorldManager caller 0x00615A70 reaches exact body 0x0061C2F0 through this ILT; U-tag Coord2D matches the LivingWorldManagerRva00615A70.cpp caller TU view
