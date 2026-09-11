@@ -1,5 +1,5 @@
 // ?removeObjectType@ObjectTypes@@QAEXABVAsciiString@@@Z
-// partial score=0.88 date=2026-09-10
+// partial score=0.90 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -75,35 +75,10 @@ public:
 
 // The retail remove body inlines vector::erase.  Its three STL calls are
 // through the ILTs below: the two find specializations and the four-byte
-// __copy body at 0x000653C0.  Keep the vector's three pointers explicit so
-// the source retains the actual ObjectTypes +0x08 layout and the erase's
-// element-destructor call remains visible.
-struct BFMEAsciiStringVector
-{
-	AsciiString *m_begin;
-	AsciiString *m_finish;
-	AsciiString *m_capacity;
-};
-
-struct BFMEObjectTypesAt8
-{
-	virtual void unused() = 0;
-	char m_padding[0x04];
-	BFMEAsciiStringVector m_objectTypes;
-	void removeBody(const AsciiString &objectType);
-};
-
-// PreRTS exposes the BFME header's inline destructor.  The retail vector
-// erase calls the out-of-line destructor body at 0x0005EE90, so use a
-// layout-identical declaration-only view for that one call and bind its
-// decorated symbol to the canonical AsciiString destructor.
-struct BFMEObjectTypeString
-{
-	void *m_data;
-	~BFMEObjectTypeString();
-};
-#pragma comment(linker, "/alternatename:??1BFMEObjectTypeString@@QAE@XZ=??1AsciiString@@QAE@XZ")
-
+// __copy body at 0x000653C0.  Keep the vector's finish/begin as raw pointer
+// arithmetic on the ObjectTypes layout so the erase's element-destructor call
+// stays visible and the final finish store is a fresh reload of m_finish
+// rather than the mid-function cached copy, matching retail+0x51.
 extern void j_0004b29a();
 extern void j_0004a534();
 extern void j_000485ef();
@@ -141,66 +116,19 @@ static __forceinline void bfmeCopyObjectTypes(
 	fn.call(first, last, result, tag, 0);
 }
 
-static __forceinline void bfmeRemoveObjectTypesBody(
-	AsciiString *finish, BFMEObjectTypesAt8 *self,
-	const AsciiString &objectType)
+// The vendored GeneralsMD AsciiString destructor is a fully inline refcount
+// decrement (Common/AsciiString.h), so calling ~AsciiString() directly here
+// inlines that shape instead of retail's plain out-of-line call. Route the
+// erase's element destructor through the established ??1BFMERetailAsciiString
+// alias (reverse/symbols.csv, VA 0x0000D828, the same ILT retail's unwind
+// funclet jumps to) so it stays a single call, matching retail+0x5c.
+class BFMERetailAsciiString
 {
-	_STL::random_access_iterator_tag tag;
-	AsciiString *begin = self->m_objectTypes.m_begin;
-	const AsciiString *found = bfmeFindObjectTypeConst(
-		begin, finish, objectType, tag);
-	if (found == finish)
-		return;
-
-	AsciiString *it = bfmeFindObjectType(begin, finish, objectType, tag);
-	AsciiString *next = it + 1;
-	if (next != finish)
-		bfmeCopyObjectTypes(next, finish, it, tag);
-
-	AsciiString *oldFinish = self->m_objectTypes.m_finish - 1;
-	self->m_objectTypes.m_finish = oldFinish;
-	((BFMEObjectTypeString *)oldFinish)->~BFMEObjectTypeString();
-}
-
-static __forceinline void bfmeRemoveObjectTypesBodyRef(
-	ObjectTypes &owner, const AsciiString &objectType)
-{
-	BFMEObjectTypesAt8 *self = (BFMEObjectTypesAt8 *)&owner;
-	_STL::random_access_iterator_tag tag;
-	AsciiString *finish = self->m_objectTypes.m_finish;
-	AsciiString *begin = self->m_objectTypes.m_begin;
-	const AsciiString *found = bfmeFindObjectTypeConst(
-		begin, finish, objectType, tag);
-	if (found == finish)
-		return;
-	AsciiString *it = bfmeFindObjectType(begin, finish, objectType, tag);
-	AsciiString *next = it + 1;
-	if (next != finish)
-		bfmeCopyObjectTypes(next, finish, it, tag);
-	AsciiString *oldFinish = self->m_objectTypes.m_finish - 1;
-	self->m_objectTypes.m_finish = oldFinish;
-	((BFMEObjectTypeString *)oldFinish)->~BFMEObjectTypeString();
-}
-
-__forceinline void BFMEObjectTypesAt8::removeBody(const AsciiString &objectType)
-{
-	_STL::random_access_iterator_tag tag;
-	register AsciiString *finish = m_objectTypes.m_finish;
-	register AsciiString *begin = m_objectTypes.m_begin;
-	const AsciiString *found = bfmeFindObjectTypeConst(
-		begin, finish, objectType, tag);
-	if (found == finish)
-		return;
-
-	AsciiString *it = bfmeFindObjectType(begin, finish, objectType, tag);
-	AsciiString *next = it + 1;
-	if (next != finish)
-		bfmeCopyObjectTypes(next, finish, it, tag);
-
-	AsciiString *oldFinish = m_objectTypes.m_finish - 1;
-	m_objectTypes.m_finish = oldFinish;
-	((BFMEObjectTypeString *)oldFinish)->~BFMEObjectTypeString();
-}
+public:
+	~BFMERetailAsciiString();
+private:
+	void *m_data;
+};
 
 //-------------------------------------------------------------------------------------------------
 void ObjectTypes::addObjectType(const AsciiString &objectType)
@@ -231,8 +159,9 @@ void ObjectTypes::removeObjectType(const AsciiString &objectType)
 	if (next != finish)
 		bfmeCopyObjectTypes(next, finish, it, tag);
 
-	*(AsciiString **)((char *)this + 0x0c) = finish - 1;
-	((BFMEObjectTypeString *)(finish - 1))->~BFMEObjectTypeString();
+	char *newFinish = *(char **)((char *)this + 0x0c) - 4;
+	*(char **)((char *)this + 0x0c) = newFinish;
+	((BFMERetailAsciiString *)newFinish)->~BFMERetailAsciiString();
 }
 
 //-------------------------------------------------------------------------------------------------
