@@ -1,417 +1,182 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+//
+// QuickMatch color population.  The ZH source routine is a static helper, but
+// BFME's APT port calls this extracted body with the surrounding
+// BfmeAptScreenQuickMatchMenu in ECX and the preferences object on the stack.
+// The +0x25c color gadget is the member established by the menu constructor
+// and its init-gadgets caller; this TU keeps that ABI view local.
 
-class QuickMatchPreferences;
+typedef unsigned short WideChar;
+typedef bool Bool;
+typedef int Int;
+typedef int Color;
 
-// ?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z
-__declspec(naked) void __cdecl populateQMColorComboBox(class QuickMatchPreferences &)
+template <typename T> struct Rva006239C0StringData
 {
-__asm {
-	__emit 0x6a
-	__emit 0xff
-	__emit 0x64
-	__emit 0xa1
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x68
-	__emit 0xf8
-	__emit 0xe1
-	__emit 0x02
-	__emit 0x01
-	__emit 0x50
-	__emit 0x64
-	__emit 0x89
-	__emit 0x25
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x83
-	__emit 0xec
-	__emit 0x14
-	__emit 0x53
-	__emit 0x55
-	__emit 0x56
-	__emit 0x8b
-	__emit 0xf1
-	__emit 0x8b
-	__emit 0x0d
-	__emit 0xfc
-	__emit 0xd5
-	__emit 0x2e
-	__emit 0x01
-	__emit 0x8b
-	__emit 0x51
-	__emit 0x3c
-	__emit 0x8d
-	__emit 0x41
-	__emit 0x3c
-	__emit 0x33
-	__emit 0xdb
-	__emit 0x3b
-	__emit 0xd3
-	__emit 0x57
-	__emit 0x75
-	__emit 0x05
-	__emit 0x8b
-	__emit 0x49
-	__emit 0x34
-	__emit 0x89
-	__emit 0x08
-	__emit 0x8b
-	__emit 0x38
-	__emit 0x89
-	__emit 0x7c
-	__emit 0x24
-	__emit 0x1c
-	__emit 0x89
-	__emit 0x5c
-	__emit 0x24
-	__emit 0x10
-	__emit 0x8b
-	__emit 0x96
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x52
-	__emit 0x89
-	__emit 0x5c
-	__emit 0x24
-	__emit 0x30
-	__emit 0xe8
-	__emit 0x05
-	__emit 0x12
-	__emit 0xb0
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x0d
-	__emit 0xfc
-	__emit 0xd5
-	__emit 0x2e
-	__emit 0x01
-	__emit 0x83
-	__emit 0xc4
-	__emit 0x04
-	__emit 0x6a
-	__emit 0xff
-	__emit 0xe8
-	__emit 0xb3
-	__emit 0xc0
-	__emit 0xb1
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x40
-	__emit 0x10
-	__emit 0x8b
-	__emit 0x0d
-	__emit 0x7c
-	__emit 0x14
-	__emit 0x2f
-	__emit 0x01
-	__emit 0x50
-	__emit 0x8b
-	__emit 0x01
-	__emit 0x51
-	__emit 0x8b
-	__emit 0xd4
-	__emit 0x89
-	__emit 0x64
-	__emit 0x24
-	__emit 0x20
-	__emit 0x53
-	__emit 0x68
-	__emit 0x50
-	__emit 0x40
-	__emit 0x10
-	__emit 0x01
-	__emit 0x52
-	__emit 0xff
-	__emit 0x50
-	__emit 0x28
-	__emit 0x8b
-	__emit 0x86
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x50
-	__emit 0xe8
-	__emit 0x00
-	__emit 0x95
-	__emit 0xb2
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x8e
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x6a
-	__emit 0xff
-	__emit 0x50
-	__emit 0x51
-	__emit 0xe8
-	__emit 0xd4
-	__emit 0x71
-	__emit 0xb1
-	__emit 0xff
-	__emit 0x83
-	__emit 0xc4
-	__emit 0x18
-	__emit 0x33
-	__emit 0xed
-	__emit 0x3b
-	__emit 0xfb
-	__emit 0x0f
-	__emit 0x8e
-	__emit 0xb2
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x8b
-	__emit 0x0d
-	__emit 0xfc
-	__emit 0xd5
-	__emit 0x2e
-	__emit 0x01
-	__emit 0x55
-	__emit 0xe8
-	__emit 0x62
-	__emit 0xc0
-	__emit 0xb1
-	__emit 0xff
-	__emit 0x8b
-	__emit 0xf8
-	__emit 0x3b
-	__emit 0xfb
-	__emit 0x0f
-	__emit 0x84
-	__emit 0x8f
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x8d
-	__emit 0x54
-	__emit 0x24
-	__emit 0x18
-	__emit 0x52
-	__emit 0x8b
-	__emit 0xcf
-	__emit 0xe8
-	__emit 0xba
-	__emit 0x79
-	__emit 0xb2
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x00
-	__emit 0x3b
-	__emit 0xc3
-	__emit 0xc6
-	__emit 0x44
-	__emit 0x24
-	__emit 0x2c
-	__emit 0x01
-	__emit 0x74
-	__emit 0x05
-	__emit 0x83
-	__emit 0xc0
-	__emit 0x08
-	__emit 0xeb
-	__emit 0x05
-	__emit 0xb8
-	__emit 0x8b
-	__emit 0x38
-	__emit 0x07
-	__emit 0x01
-	__emit 0x8b
-	__emit 0x0d
-	__emit 0x7c
-	__emit 0x14
-	__emit 0x2f
-	__emit 0x01
-	__emit 0x8b
-	__emit 0x11
-	__emit 0x53
-	__emit 0x50
-	__emit 0x8d
-	__emit 0x44
-	__emit 0x24
-	__emit 0x1c
-	__emit 0x50
-	__emit 0xff
-	__emit 0x52
-	__emit 0x28
-	__emit 0x50
-	__emit 0x8d
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x14
-	__emit 0xc6
-	__emit 0x44
-	__emit 0x24
-	__emit 0x30
-	__emit 0x02
-	__emit 0xe8
-	__emit 0x84
-	__emit 0x26
-	__emit 0x38
-	__emit 0x00
-	__emit 0x8d
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x14
-	__emit 0xc6
-	__emit 0x44
-	__emit 0x24
-	__emit 0x2c
-	__emit 0x01
-	__emit 0xe8
-	__emit 0x16
-	__emit 0x23
-	__emit 0x38
-	__emit 0x00
-	__emit 0x8d
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x18
-	__emit 0x88
-	__emit 0x5c
-	__emit 0x24
-	__emit 0x2c
-	__emit 0xe8
-	__emit 0x79
-	__emit 0x1a
-	__emit 0x38
-	__emit 0x00
-	__emit 0x8b
-	__emit 0x47
-	__emit 0x10
-	__emit 0x50
-	__emit 0x51
-	__emit 0x8d
-	__emit 0x54
-	__emit 0x24
-	__emit 0x18
-	__emit 0x89
-	__emit 0x64
-	__emit 0x24
-	__emit 0x28
-	__emit 0x8b
-	__emit 0xcc
-	__emit 0x52
-	__emit 0xe8
-	__emit 0x24
-	__emit 0x25
-	__emit 0x38
-	__emit 0x00
-	__emit 0x8b
-	__emit 0x86
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x50
-	__emit 0xe8
-	__emit 0x50
-	__emit 0x94
-	__emit 0xb2
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x8e
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x55
-	__emit 0x50
-	__emit 0x51
-	__emit 0xe8
-	__emit 0x25
-	__emit 0x71
-	__emit 0xb1
-	__emit 0xff
-	__emit 0x83
-	__emit 0xc4
-	__emit 0x18
-	__emit 0x8b
-	__emit 0x44
-	__emit 0x24
-	__emit 0x1c
-	__emit 0x45
-	__emit 0x3b
-	__emit 0xe8
-	__emit 0x0f
-	__emit 0x8c
-	__emit 0x4e
-	__emit 0xff
-	__emit 0xff
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x34
-	__emit 0x53
-	__emit 0xe8
-	__emit 0x3d
-	__emit 0x3f
-	__emit 0xb1
-	__emit 0xff
-	__emit 0x8b
-	__emit 0x96
-	__emit 0x5c
-	__emit 0x02
-	__emit 0x00
-	__emit 0x00
-	__emit 0x50
-	__emit 0x52
-	__emit 0xe8
-	__emit 0xa6
-	__emit 0xda
-	__emit 0xb3
-	__emit 0xff
-	__emit 0x83
-	__emit 0xc4
-	__emit 0x0c
-	__emit 0x8d
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x10
-	__emit 0xc7
-	__emit 0x44
-	__emit 0x24
-	__emit 0x2c
-	__emit 0xff
-	__emit 0xff
-	__emit 0xff
-	__emit 0xff
-	__emit 0xe8
-	__emit 0x9f
-	__emit 0x22
-	__emit 0x38
-	__emit 0x00
-	__emit 0x8b
-	__emit 0x4c
-	__emit 0x24
-	__emit 0x24
-	__emit 0x5f
-	__emit 0x5e
-	__emit 0x5d
-	__emit 0x64
-	__emit 0x89
-	__emit 0x0d
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x00
-	__emit 0x5b
-	__emit 0x83
-	__emit 0xc4
-	__emit 0x20
-	__emit 0xc2
-	__emit 0x04
-	__emit 0x00
-}
+	int m_refCount;
+	int m_length;
+	T m_text[1];
+};
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+	friend class UnicodeString;
+
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &other);
+	~StringBase();
+	Rva006239C0StringData<T> *m_data;
+
+public:
+	void set(const StringBase<T> &other);
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+
+	const char *str() const
+	{
+		return m_data ? m_data->m_text : (const char *)0x0107388B;
+	}
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+	UnicodeString() : StringBase<WideChar>() {}
+	UnicodeString(const UnicodeString &other) : StringBase<WideChar>(other) {}
+	~UnicodeString() {}
+
+	UnicodeString &operator=(const UnicodeString &other)
+	{
+		set(other);
+		return *this;
+	}
+};
+
+class GameWindow {};
+
+class GameTextInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual UnicodeString fetch(const char *label, Bool *exists = 0) = 0;
+};
+
+class MultiplayerColorDefinition
+{
+public:
+	Color getColor() const
+	{
+		return *(const Color *)((const char *)this + 0x10);
+	}
+
+	AsciiString getTooltipName() const;
+};
+
+class MultiplayerColorList
+{
+public:
+	Int size() const { return *(const Int *)this; }
+
+private:
+	Int m_size;
+	Int m_tree;
+};
+
+class MultiplayerSettings
+{
+public:
+	Int getNumColors()
+	{
+		if (m_numColors == 0)
+			m_numColors = m_colorList.size();
+		return m_numColors;
+	}
+
+	MultiplayerColorDefinition *getColor(Int which);
+
+private:
+	char m_unmodelled[0x34];
+	MultiplayerColorList m_colorList;
+	Int m_numColors;
+};
+
+class QuickMatchPreferences
+{
+public:
+	Int getColor();
+};
+
+class __declspec(novtable) BfmeAptScreenQuickMatchMenu
+{
+public:
+	virtual void slot0();
+	void populateQMColorComboBox(QuickMatchPreferences &pref);
+
+private:
+	char m_unmodelled[0x258];
+	GameWindow *m_color;
+};
+
+extern GameTextInterface *TheGameText;
+extern MultiplayerSettings *TheMultiplayerSettings;
+
+extern void GadgetComboBoxReset(GameWindow *comboBox);
+extern Int GadgetComboBoxAddEntry(GameWindow *comboBox, UnicodeString text,
+	Color color);
+extern void GadgetComboBoxSetItemData(GameWindow *comboBox, Int item,
+	void *data);
+extern void GadgetComboBoxSetSelectedPos(GameWindow *comboBox, Int item,
+	Bool dontHide = false);
+
+// AptScreenFactories.cpp still declares the helper in the source-authentic
+// static form.  Keep that call spelling routed to this member body without
+// putting a second implementation in the large WOL TU.
+#pragma comment(linker, "/alternatename:?populateQMColorComboBox@@YAXAAVQuickMatchPreferences@@@Z=?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z")
+
+// ?populateQMColorComboBox@BfmeAptScreenQuickMatchMenu@@QAEXAAVQuickMatchPreferences@@@Z present-unmatched
+void BfmeAptScreenQuickMatchMenu::populateQMColorComboBox(
+	QuickMatchPreferences &pref)
+{
+	Int numColors = TheMultiplayerSettings->getNumColors();
+	UnicodeString colorName;
+
+	GadgetComboBoxReset(m_color);
+
+	MultiplayerColorDefinition *def =
+		TheMultiplayerSettings->getColor(-1);
+	Int newIndex = GadgetComboBoxAddEntry(m_color,
+		TheGameText->fetch("GUI:???"), def->getColor());
+	GadgetComboBoxSetItemData(m_color, newIndex, (void *)-1);
+
+	for (Int c = 0; c < numColors; ++c)
+	{
+		def = TheMultiplayerSettings->getColor(c);
+		if (!def)
+			continue;
+
+		colorName = TheGameText->fetch(def->getTooltipName().str());
+		newIndex = GadgetComboBoxAddEntry(m_color, colorName,
+			def->getColor());
+		GadgetComboBoxSetItemData(m_color, newIndex, (void *)c);
+	}
+
+	GadgetComboBoxSetSelectedPos(m_color, pref.getColor());
 }
