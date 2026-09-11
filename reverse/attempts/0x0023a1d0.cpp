@@ -1,6 +1,7 @@
-// ?d_0023a1d0@@YAXXZ
-// partial score=0.55 date=2026-09-02
-// Recovered from retail code at 0x0063A1D0.
+// ?dispatchMissing@BfmeMissingObjectDispatch@@QAEXPAX0@Z
+// partial score=0.92 date=2026-09-11
+// Identity: list head at this-0xAC, dispatch tree at this+0x30 (sentinel==tree
+// header), object id at +0x74, dispatch interface at +0x204, virtual slot 120.
 
 struct BfmeDispatchInterface
 {
@@ -51,15 +52,14 @@ void BfmeMissingObjectDispatch::dispatchMissing(void *first, void *second)
     {
         BfmeDispatchObject *object = node->object;
         BfmeDispatchTree *tree = *(BfmeDispatchTree **)((char *)this + 0x30);
-        BfmeDispatchTreeNode *sentinel = (BfmeDispatchTreeNode *)tree;
         BfmeDispatchTreeNode *cursor = tree->root;
-        BfmeDispatchTreeNode *found = sentinel;
-        int key = object->id;
         node = node->next;
+        int key = object->id;
+        BfmeDispatchTreeNode *found = (BfmeDispatchTreeNode *)tree;
 
         while (cursor != 0)
         {
-            if (cursor->key < key)
+            if (cursor->key >= key)
             {
                 found = cursor;
                 cursor = cursor->child_b;
@@ -70,16 +70,17 @@ void BfmeMissingObjectDispatch::dispatchMissing(void *first, void *second)
             }
         }
 
-        if (found != sentinel && key < found->key)
+        if (found != (BfmeDispatchTreeNode *)tree && key < found->key)
         {
-            found = sentinel;
+            found = (BfmeDispatchTreeNode *)tree;
         }
 
-        if (found == sentinel && object->dispatch != 0)
+        BfmeDispatchInterface *dispatch = object->dispatch;
+        if (found == (BfmeDispatchTreeNode *)*(BfmeDispatchTree *volatile *)((char *)this + 0x30) && dispatch != 0)
         {
-            void **vtable = *(void ***)object->dispatch;
+            void **vtable = *(void ***)dispatch;
             BfmeDispatchMethod method = *(BfmeDispatchMethod *)&vtable[120];
-            (object->dispatch->*method)(first, second);
+            (dispatch->*method)(first, second);
         }
     }
 }
