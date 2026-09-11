@@ -209,7 +209,7 @@ public:
 	virtual void slot00c() = 0;
 	virtual void slot010() = 0;
 	virtual void getEnterPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x14
-	virtual void slot018() = 0;
+	virtual void getExitPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x18
 	virtual void getDockPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x1C
 	virtual void slot020() = 0;
 	virtual void slot024() = 0;
@@ -960,7 +960,9 @@ void AIDockProcessDockState::onExit( StateExitType status )
 /**
  * Move to the dock's exit position.
  */
-// ?onEnter@AIDockMoveToExitState@@ present-unmatched
+// Retail carries the same isDockOpen guard and machine lock as
+// AIDockMoveToEntryState::onEnter; getExitPosition sits at vtable +0x18, one
+// slot before getDockPosition.
 StateReturnType AIDockMoveToExitState::onEnter( void )
 {
 	Object *goalObject = bfmeRetailMachine( this )->getGoalObject();
@@ -973,15 +975,32 @@ StateReturnType AIDockMoveToExitState::onEnter( void )
 	if (dock == NULL)
 		return STATE_FAILURE;
 
+	// fail if the dock is closed
+	if( dock->isDockOpen() == FALSE )
+	{
+		dock->cancelDock( bfmeRetailMachineOwner( this ) );
+		return STATE_FAILURE;
+	}
+
 	// get the exit position
-	dock->getExitPosition( bfmeRetailMachineOwner( this ), &m_goalPosition );
+	((BFMERetailDockVTable *)dock)->getExitPosition( bfmeRetailMachineOwner( this ), &m_goalPosition );
 
 	AIUpdateInterface *ai = bfmeRetailAIUpdate( bfmeRetailMachineOwner( this ) );
-	if( ai  &&  ((BFMERetailDockVTable *)dock)->isAllowPassthroughType() ) 
+	if( ai  &&  ((BFMERetailDockVTable *)dock)->isAllowPassthroughType() )
 	{
 		ai->ignoreObstacle( bfmeRetailMachine( this )->getGoalObject() );
-		setAdjustsDestination(false);
+
+		if( bfmeRetailCritterDesyncFlag )
+		{
+			if( bfmeRetailCritterDesyncSink )
+				bfmeRetailCritterDesyncLog( bfmeRetailCritterDesyncSink, "CritterDesync: setAdjustDestination(FALSE) 1" );
+		}
+
+		*((char *)this + 0x4C) = 0;
 	}
+
+	// lock the machine
+	*((char *)bfmeRetailMachine( this ) + 0x40) = 1;
 
 	// this behavior is an extention of basic MoveTo
 	return AIInternalMoveToState::onEnter();
