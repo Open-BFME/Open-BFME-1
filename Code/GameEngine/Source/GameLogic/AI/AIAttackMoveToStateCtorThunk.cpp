@@ -1,252 +1,139 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0AIAttackMoveToState@@QAE@PAVStateMachine@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
+// Retail 0x00183990 is the three-argument constructor for
+// AIFollowPathAsTeamState.  The caller passes the state machine, a Bool, and
+// the name "AIFollowPathAsTeamState"; vtable 0x01099C08 confirms the class.
 
-class StateMachine;
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
-class AIAttackMoveToState
+class BfmeOrderedBool
 {
 public:
-    AIAttackMoveToState(StateMachine*);
+	__forceinline BfmeOrderedBool(bool value)
+	{
+		m_value = value;
+	}
+
+private:
+	volatile bool m_value;
 };
 
-__declspec(naked) AIAttackMoveToState::AIAttackMoveToState(StateMachine*)
+class AsciiString
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 7Bh
-        _emit 62h
-        _emit 00h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0ECh
-        _emit 08h
-        _emit 53h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 57h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 0Ch
-        _emit 51h
-        _emit 8Dh
-        _emit 44h
-        _emit 24h
-        _emit 30h
-        _emit 89h
-        _emit 64h
-        _emit 24h
-        _emit 14h
-        _emit 8Bh
-        _emit 0CCh
-        _emit 33h
-        _emit 0DBh
-        _emit 50h
-        _emit 89h
-        _emit 5Ch
-        _emit 24h
-        _emit 24h
-        _emit 0E8h
-        _emit 98h
-        _emit 41h
-        _emit 70h
-        _emit 00h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 28h
-        _emit 51h
-        _emit 8Bh
-        _emit 0CEh
-        _emit 0E8h
-        _emit 0AEh
-        _emit 0E7h
-        _emit 0EAh
-        _emit 0FFh
-        _emit 38h
-        _emit 5Ch
-        _emit 24h
-        _emit 28h
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 1Ch
-        _emit 01h
-        _emit 0C7h
-        _emit 06h
-        _emit 08h
-        _emit 9Ch
-        _emit 09h
-        _emit 01h
-        _emit 89h
-        _emit 5Eh
-        _emit 50h
-        _emit 0C7h
-        _emit 46h
-        _emit 54h
-        _emit 05h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0C6h
-        _emit 46h
-        _emit 58h
-        _emit 01h
-        _emit 88h
-        _emit 5Eh
-        _emit 59h
-        _emit 88h
-        _emit 5Eh
-        _emit 5Ah
-        _emit 88h
-        _emit 5Eh
-        _emit 5Bh
-        _emit 89h
-        _emit 5Eh
-        _emit 5Ch
-        _emit 89h
-        _emit 5Eh
-        _emit 60h
-        _emit 89h
-        _emit 5Eh
-        _emit 64h
-        _emit 88h
-        _emit 5Eh
-        _emit 68h
-        _emit 74h
-        _emit 4Bh
-        _emit 6Ah
-        _emit 44h
-        _emit 0E8h
-        _emit 21h
-        _emit 0E5h
-        _emit 6Fh
-        _emit 00h
-        _emit 8Bh
-        _emit 0F8h
-        _emit 83h
-        _emit 0C4h
-        _emit 04h
-        _emit 89h
-        _emit 7Ch
-        _emit 24h
-        _emit 28h
-        _emit 3Bh
-        _emit 0FBh
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 1Ch
-        _emit 02h
-        _emit 74h
-        _emit 21h
-        _emit 51h
-        _emit 89h
-        _emit 64h
-        _emit 24h
-        _emit 28h
-        _emit 8Bh
-        _emit 0CCh
-        _emit 68h
-        _emit 78h
-        _emit 0B1h
-        _emit 09h
-        _emit 01h
-        _emit 0E8h
-        _emit 8Eh
-        _emit 51h
-        _emit 70h
-        _emit 00h
-        _emit 8Bh
-        _emit 56h
-        _emit 1Ch
-        _emit 8Bh
-        _emit 42h
-        _emit 10h
-        _emit 50h
-        _emit 8Bh
-        _emit 0CFh
-        _emit 0E8h
-        _emit 68h
-        _emit 0A5h
-        _emit 0E8h
-        _emit 0FFh
-        _emit 0EBh
-        _emit 02h
-        _emit 33h
-        _emit 0C0h
-        _emit 89h
-        _emit 46h
-        _emit 60h
-        _emit 8Bh
-        _emit 10h
-        _emit 8Bh
-        _emit 0C8h
-        _emit 0C6h
-        _emit 44h
-        _emit 24h
-        _emit 1Ch
-        _emit 01h
-        _emit 0FFh
-        _emit 52h
-        _emit 1Ch
-        _emit 8Dh
-        _emit 4Ch
-        _emit 24h
-        _emit 2Ch
-        _emit 0C7h
-        _emit 44h
-        _emit 24h
-        _emit 1Ch
-        _emit 0FFh
-        _emit 0FFh
-        _emit 0FFh
-        _emit 0FFh
-        _emit 0E8h
-        _emit 0DCh
-        _emit 3Eh
-        _emit 70h
-        _emit 00h
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 14h
-        _emit 5Fh
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 5Bh
-        _emit 83h
-        _emit 0C4h
-        _emit 14h
-        _emit 0C2h
-        _emit 0Ch
-        _emit 00h
-    }
-}
+public:
+	AsciiString(const char *text) : m_string(text) {}
 
+	StringBase<char> m_string;
+};
+
+class StateMachine;
+class Object;
+
+// This is the BFME AIInternalMoveToState prefix.  The complete virtual shape
+// preserves the retail vtable slot used by the constructor's derived class.
+class AIInternalMoveToState
+{
+public:
+	AIInternalMoveToState(void *machine, AsciiString name);
+
+	virtual ~AIInternalMoveToState();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+
+protected:
+	char m_baseGap04[0x18];
+	void *m_machine;
+	char m_baseTail20[0x50 - 0x20];
+};
+
+// The constructor at 0x00581F60 is reached through the nested machine's
+// constructor call.  Seven slots after the destructor put initDefaultState
+// at the retail indirect-call slot +0x1c.
+class Rva00581F60SubMachine
+{
+public:
+	Rva00581F60SubMachine(Object *owner, AsciiString name);
+	virtual ~Rva00581F60SubMachine();
+	virtual void unused04();
+	virtual void unused08();
+	virtual void unused0C();
+	virtual void unused10();
+	virtual void unused14();
+	virtual void unused18();
+	virtual void initDefaultState();
+
+private:
+	char m_unreconstructed04[0x40];
+};
+
+typedef Rva00581F60SubMachine AIAttackMoveStateMachine;
+
+class BfmeStateMachineLayout
+{
+private:
+	char m_gap00[0x10];
+
+public:
+	Object *m_owner;
+
+	Object *getOwner() { return m_owner; }
+};
+
+extern int g_AIFollowPathAsTeamStateVTable;
+
+class AIFollowPathAsTeamState : public AIInternalMoveToState
+{
+public:
+	AIFollowPathAsTeamState(StateMachine *machine, bool asTeam, AsciiString name);
+
+private:
+	int m_field50;
+	int m_retryCount;
+	bool m_field58;
+	bool m_field59;
+	bool m_field5A;
+	bool m_field5B;
+	int m_field5C;
+	AIAttackMoveStateMachine *m_attackMoveMachine;
+	int m_field64;
+	bool m_field68;
+};
+
+// ??0AIFollowPathAsTeamState@@QAE@PAVStateMachine@@_NVAsciiString@@@Z
+AIFollowPathAsTeamState::AIFollowPathAsTeamState(
+	StateMachine *machine, bool asTeam, AsciiString name) :
+	AIInternalMoveToState(machine, name)
+{
+	*(int **)this = &g_AIFollowPathAsTeamStateVTable;
+	m_field50 = 0;
+	m_retryCount = 5;
+	m_field58 = true;
+	m_field59 = false;
+	m_field5A = false;
+	m_field5B = false;
+	m_field5C = 0;
+	m_attackMoveMachine = 0;
+	m_field64 = 0;
+	m_field68 = false;
+	if (asTeam)
+	{
+		m_attackMoveMachine = new AIAttackMoveStateMachine(
+			((BfmeStateMachineLayout *)m_machine)->getOwner(),
+			AsciiString("AIAttackMoveMachine"));
+		m_attackMoveMachine->initDefaultState();
+	}
+}
