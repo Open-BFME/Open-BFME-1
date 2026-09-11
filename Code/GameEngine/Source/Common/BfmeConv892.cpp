@@ -4,11 +4,107 @@ public:
 	void bfmeCallFCB(void *a, int z);
 };
 
+class Player;
+
+class Object
+{
+public:
+	virtual void bfmeVirtual00();
+	virtual void bfmeVirtual01();
+	virtual void bfmeVirtual02();
+	virtual void bfmeVirtual03();
+	virtual void bfmeVirtual04();
+	virtual void bfmeVirtual05();
+	virtual void bfmeVirtual06();
+	virtual void bfmeVirtual07();
+	virtual void bfmeVirtual08();
+	virtual void bfmeVirtual09();
+	virtual void *bfmeVirtual10();
+	Player *getControllingPlayer() const;
+};
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+class PlayerList
+{
+public:
+	char m_pad[0xc];
+	Player *m_localPlayer;
+};
+
+extern void j_0000f763();
+
+#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+#define ThePlayers (*(PlayerList **)0x012ED748)
+
 class BfmeOwnFCB
 {
 public:
 	void bfmeAfterFCB();
+
+	virtual void bfmeAnchorFCB();
+	char m_pad0[4];
+	Object *m_object;
+	char m_pad1[0xd8];
+	int m_objectID;
 };
+
+class BfmeAfterFCBTarget
+{
+public:
+	void apply(int type, float x, float y, float z);
+};
+
+typedef void (BfmeAfterFCBTarget::*BfmeAfterFCBApply)(
+	int, float, float, float);
+
+void BfmeOwnFCB::bfmeAfterFCB()
+{
+	register BfmeOwnFCB &owner = *this;
+	Object *found = TheBfmeGameLogic->findObjectByID(owner.m_objectID);
+	if (found)
+	{
+		Object *object = owner.m_object;
+		if (object)
+		{
+			Player *local = ThePlayers->m_localPlayer;
+			Player *objectPlayer = object->getControllingPlayer();
+			if (local && objectPlayer)
+			{
+				void *first;
+				void *second;
+				if (local == objectPlayer)
+				{
+					first = found->bfmeVirtual10();
+					second = object->bfmeVirtual10();
+				}
+				else
+				{
+					first = object->bfmeVirtual10();
+					second = found->bfmeVirtual10();
+				}
+				if (first)
+				{
+					union { void (*asFunction)(); BfmeAfterFCBApply asMember; } thunk;
+					thunk.asFunction = j_0000f763;
+					(reinterpret_cast<BfmeAfterFCBTarget *>(first)->*thunk.asMember)(
+						5, 0.2f, 0.7f, 2.0f);
+				}
+				if (second)
+				{
+					union { void (*asFunction)(); BfmeAfterFCBApply asMember; } thunk;
+					thunk.asFunction = j_0000f763;
+					(reinterpret_cast<BfmeAfterFCBTarget *>(second)->*thunk.asMember)(
+						0, 0.2f, 0.7f, 2.0f);
+				}
+			}
+		}
+	}
+}
 
 struct BfmeThingFCB
 {
@@ -191,4 +287,3 @@ void *BfmeThingFCH::bfmeGoFCH()
 	}
 	return 0;
 }
-
