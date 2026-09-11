@@ -9082,6 +9082,7 @@ name,address,notes
 ??1Rva00256890PrimaryBase@@UAE@XZ,0x0002514E,pin near-twin primary base chain reuses Gen_dtor_001c0e70 body
 ??1Rva002DC6D0Filter@@QAE@XZ,0x0001A401,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
 ??1Rva002E32A0AsciiString@@QAE@XZ,0x00887940,AsciiString destructor alias (releaseBuffer) called by 0x002E32A0
+??1Rva003631D0String@@QAE@XZ,0x00887940,TU-scoped target string destructor alias; retail temporary cleanup in 0x003631D0 calls the StringBase release body
 ??1Rva00364980HeapElement@@QAE@XZ,0x000257ED,REL32 wide heap element destructor target from 0x00363D6A
 ??1Rva00365B40Record@@QAE@XZ,0x000257ED,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00365B40 calls; autopin
 ??1Rva003691A0OwnedRecord@@QAE@XZ,0x00024DB6,retail clean C++ delete loop calls the bounded 0x003691A0 record destructor through this ILT thunk
@@ -78501,6 +78502,7 @@ name,address,notes
 ?copyFromQueueNode@BFMENetworkQueueItem1copyFromQueueNodeShim@@QAEXPAX@Z,0x00658340,BFMENetworkQueueItem1::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
 ?copyFromQueueNode@BFMENetworkQueueItem@@QAEXPAX@Z,0x00030C60,native BFME queue item copy helper for wrapper queue +0x14
 ?copyFromQueueNode@BFMENetworkQueueItemcopyFromQueueNodeShim@@QAEXPAX@Z,0x00658CE0,BFMENetworkQueueItem::copyFromQueueNode incremental-link thunk target through a TU-local forwarding shim
+?copyStringAt0C@Rva003631D0Entry@@QAE?AVRva003631D0String@@XZ,0x00361930,TU-scoped target alias; Rva00383870 caller proves the +0x0C record-string copy through ILT 0x0004B470 to retail body 0x00361930
 ?copyP48@@YAPAUBfmeTerrainP48@@PAU1@00ABURandomAccessIteratorTag@@PAH@Z,0x00035B5C,TerrainLogic::reset P48 __copy ILT
 ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z,0x009AEEE0,Full488B callee: cdecl context/two buffer offsets/plane selector; YUV plane and stride dispatch confirmed
 ?copyPlane009AF0D0@@YAXPAURva009AF200Context@@IHIIPAE1PBI@Z,0x009AF0D0,BFME plane family pointer-to-integer-table ABI; edgecallee9ADAA0 dereferences seventh argument indexed by ctx+0xC
