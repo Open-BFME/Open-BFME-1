@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "68dae3af514b395decc9d1b39788077ad77c95a070489f05ca0c677a622aca35",
+  "symbol": "?d_008958d0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?d_008958d0@@YAXXZ\n// partial score=0.94 date=2026-09-11\nextern \"C\" int memcmp(const void *a, const void *b, unsigned int n);\r\n\r\n#pragma intrinsic(memcmp)\r\n\r\nclass BfmeStrFH\r\n{\r\npublic:\r\n\tunsigned char m_bfmeHeadFH[2];\r\n\tunsigned short m_bfmeLenFH;\r\n\tunsigned char m_bfmeGapFH[4];\r\n\tchar m_bfmeDataFH[1];\r\n};\r\n\r\nclass BfmeObjFH\r\n{\r\npublic:\r\n\tint m_bfmeRefFH;\r\n\tBfmeStrFH *m_bfmeKeyFH;\r\n};\r\n\r\nclass BfmeNodeFH\r\n{\r\npublic:\r\n\tBfmeObjFH *m_bfmeObjFH;\r\n\tBfmeNodeFH *m_bfmeNextFH;\r\n};\r\n\r\n__forceinline BfmeStrFH *bfmeLoadFH(BfmeStrFH *volatile *pp)\r\n{\r\n\treturn *pp;\r\n}\r\n\r\nclass BfmeHostFH\r\n{\r\npublic:\r\n\tvoid bfmeFindFH(BfmeObjFH **out, BfmeStrFH **key);\r\n\r\n\tBfmeNodeFH *m_bfmeHeadFH;\r\n};\r\n\r\nvoid BfmeHostFH::bfmeFindFH(BfmeObjFH **out, BfmeStrFH **key)\r\n{\r\n\tBfmeNodeFH *n = m_bfmeHeadFH;\r\n\tvolatile int r = 0;\r\n\r\n\tif (n != 0)\r\n\t{\r\n\t\tBfmeStrFH *k = *key;\r\n\t\tint len = k->m_bfmeLenFH;\r\n\r\n\t\tdo\r\n\t\t{\r\n\t\t\tBfmeStrFH *s = bfmeLoadFH(&n->m_bfmeObjFH->m_bfmeKeyFH);\r\n\r\n\t\t\tif (len == s->m_bfmeLenFH)\r\n\t\t\t{\r\n\t\t\t\tif (k == s || memcmp(k->m_bfmeDataFH, s->m_bfmeDataFH, len) == 0)\r\n\t\t\t\t{\r\n\t\t\t\t\tBfmeObjFH *o = n->m_bfmeObjFH;\r\n\r\n\t\t\t\t\t*out = o;\r\n\r\n\t\t\t\t\tif (o != 0)\r\n\t\t\t\t\t\t++o->m_bfmeRefFH;\r\n\r\n\t\t\t\t\treturn;\r\n\t\t\t\t}\r\n\t\t\t}\r\n\r\n\t\t\tn = n->m_bfmeNextFH;\r\n\t\t}\r\n\t\twhile (n != 0);\r\n\t}\r\n\r\n\t*out = 0;\r\n}\r\n"
+}
