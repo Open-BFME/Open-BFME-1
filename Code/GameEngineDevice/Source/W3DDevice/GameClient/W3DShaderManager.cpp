@@ -509,7 +509,10 @@ public:
 // corrected in the header, which every other consumer of that enum shares --
 // including the still-unconverted comparisons at lines below, which keep the
 // reference value because no body here has proven them.
-enum { BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3 };
+enum {
+	BFME_DC_GEFORCE2 = 1,
+	BFME_DC_GENERIC_PIXEL_SHADER_1_1 = 3
+};
 
 // BFME tests the two device globals directly where the reference calls
 // W3DShaderManager::canRenderToTexture().
@@ -2451,6 +2454,9 @@ void TerrainShaderPixelShader::reset(void)
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
 
+
+
+
 ///Cloud layer rendering shader - used for objects similar to terrain which only need the cloud layer.
 class CloudTextureShader : public W3DShaderInterface
 {
@@ -3356,6 +3362,21 @@ __declspec(noinline) ChipsetType W3DShaderManager::getChipset( void )
 	return m_currentChipset;
 }
 
+// The BFME GPU-index body inlines this compact chipset query. Keep the
+// protected static behind a derived view so the source remains ordinary C++
+// while preserving the retail's BFME chipset thresholds (1 and 3).
+class BfmeGpuChipsetQuery : public W3DShaderManager
+{
+public:
+	static __forceinline ChipsetType query(void)
+	{
+		if (*(volatile unsigned char *)((char *)TheGlobalData + 0x28)
+			&& m_currentChipset >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
+			return (ChipsetType)2;
+		return m_currentChipset;
+	}
+};
+
 //=============================================================================
 // WaterRenderObjClass::LoadAndCreateShader
 //=============================================================================
@@ -3478,18 +3499,17 @@ Bool W3DShaderManager::testMinimumRequirements(ChipsetType *videoChipType, CpuTy
 }
 
 /**Try to guess how well the video card will handle the game assuming very fast CPU*/
-// ?getGPUPerformanceIndex@W3DShaderManager@@SA?AW4StaticGameLODLevel@@XZ present-unmatched
 StaticGameLODLevel W3DShaderManager::getGPUPerformanceIndex(void)
 {
-	ChipsetType	chipType;
-	StaticGameLODLevel detailSetting=STATIC_GAME_LOD_LOW;	//assume lowest settings for now.
+	StaticGameLODLevel detailSetting=(StaticGameLODLevel)1;
+	ChipsetType chipType=BfmeGpuChipsetQuery::query();
 
-	if ((chipType=getChipset()) != DC_UNKNOWN)
-	{	//a known video card so we can make some assumptions
-		if (chipType >=	DC_GEFORCE2)
-			detailSetting=STATIC_GAME_LOD_LOW;	//these cards need multiple terrain passes.
-		if (chipType >= DC_GENERIC_PIXEL_SHADER_1_1)	//these cards can do terrain in single pass.
-			detailSetting=STATIC_GAME_LOD_HIGH;
+	if (chipType)
+	{
+		if (chipType >= BFME_DC_GEFORCE2)
+			detailSetting=(StaticGameLODLevel)1;
+		if (chipType >= BFME_DC_GENERIC_PIXEL_SHADER_1_1)
+			detailSetting=(StaticGameLODLevel)3;
 	}
 
 	return detailSetting;
@@ -4089,6 +4109,3 @@ void FlatTerrainShaderPixelShader::reset(void)
 
 	DX8Wrapper::Invalidate_Cached_Render_States();
 }
-
-
-
