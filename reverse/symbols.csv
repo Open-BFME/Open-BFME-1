@@ -79305,6 +79305,7 @@ name,address,notes
 ?forwardObj@BfmeMgr089_E5E@@QAEXPAX@Z,0x0001D0DE,pin
 ?forwardVal@BfmeMgr2B0@@QAEXPAX@Z,0x000201DA,pin
 ?frame@Rva007E4820FrameClock@@QAEHH@Z,0x007E4820,assigned helper body call for Rva007E4B80Vp6Stream
+?framesUntilNext@Rva002572A0ObjectSMCHelper@@AAEHXZ,0x00007D74,retail timer-list helper body is the existing address-derived framesUntilNext candidate at 0x00256FD0
 ?freeAllBuffers@W3DBufferManager@@QAEXXZ,0x00023349,Open-BFME5 ILT the GenAlpha shadow-resource release tail-jumps through
 ?freeAllSlots@W3DBufferManager@@QAEXXZ,0x00018188,link thunk; the address freeAllBuffers at 0x007ADAD0 encodes
 ?freeBlock@MemoryPool@@QAEXPAX@Z,0x00003873,pinharvest x1 (thunk)
