@@ -87134,3 +87134,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Gen00533650Final@@YAXPAXZZ,0x0000C71B,STLport final insertion helper called by Rva00533650
 g_bfmeNode1281Vtable,0x01136E00,address-derived vtable installed by the 0x008BD6B0 retail constructor
 g_bfmeFlag1281,0x0133781D,address-derived byte flag read by the 0x008BD6B0 retail constructor
+?Glo012F0239@@3_NA,0x012F0239,byte flag gating the debug critter-desync log call in the closest-cell search body at 0x003F5340; address-derived name
