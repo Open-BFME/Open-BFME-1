@@ -87171,3 +87171,4 @@ _CreateToolhelp32Snapshot@8,0x00AFE3F6,kernel32.dll import stub (direct REL32 ca
 _Module32First@8,0x00AFE3F0,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
 _Module32Next@8,0x00AFE3EA,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
 ?release@Rva005C6730Value@@QAEXXZ,0x00013994,shared handle-release thunk; same target as many other class destructors already pinned here
+??$_Construct@URva005C6730Value@@@_STL@@YAXPAURva005C6730Value@@ABU1@@Z,0x00030549,shared 12-byte-POD _Construct thunk; same target as the Rva005C5580Element/Rva005C6B20Element/Video list-insert twins
