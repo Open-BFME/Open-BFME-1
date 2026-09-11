@@ -1,5 +1,5 @@
 // ?ParseObjectDataChunk@WorldHeightMap@@KA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-// partial score=0.9 date=2026-09-11
+// partial score=0.97 date=2026-09-12
 // Stashed reconstruction attempt for WorldHeightMap::ParseObjectDataChunk,
 // retail RVA 0x00088B70, 545 bytes (dump d_00088b70.asm / d_0007cab0.asm).
 // This body is not a standalone TU: it belongs inline in
@@ -15,77 +15,109 @@
 // at 0x00137E20 names its caller "ParseObjectDataChunk", and the
 // _M_find@Rva00137E20ThingNameRegistry pin note says "reached from
 // ParseObjectDataChunk predicate". The mangled name was verified against
-// this exact signature with a throwaway cl.exe compile (build/mangle_wh.cpp
-// in a past session's scratch), not guessed.
+// this exact signature with a throwaway cl.exe compile.
 //
-// Every pin this body needs is already appended to reverse/symbols.csv
-// (search for "0x00088B70" in the notes column): readReal (0x0002E5E1),
-// readAsciiString (0x000041C9, as bfmeReadAsciiString@Rva0041230aFileView),
-// Dict::Dict(int) (0x00002ECD), Dict::operator= (0x00045566),
-// Dict::getType (0x0001EFD8), StaticNameKey::key (0x00009304, shared ILT
-// slot), acceptsThingTemplateName/findTemplate TU-local views
-// (0x0002323B / 0x00028560), the MapObject-alias ctor (0x0041230A), the
-// name-wrapper dtor (0x00887940), and the singleton view global
-// (bfmeThingRegistry_0088B70 at 0x012EF1D8). readInt, readDict and
-// Dict::releaseData already had additive pins under their real names before
-// this session. THE PIN VALUES don't depend on any part of this file
-// landing; they're additive candidate resolutions and are safe to keep.
+// Every pin this body needs is already in reverse/symbols.csv (search for
+// "0x00088B70" in the notes column). THE PIN VALUES don't depend on any
+// part of this file landing; they're additive candidate resolutions and are
+// safe to keep.
 //
-// STATE AS OF THIS BANK: probe.py reports ours=489, retail=545 bytes, and
-// every byte through offset +0151 (into the MapObject construction) is
-// byte-identical, including all 15+ resolved callees above. Three named,
-// understood residual gaps remain, none of which further shape iteration
-// in this session closed:
+// PROGRESS THIS SESSION (2026-09-12): probe.py now reports ours=541,
+// retail=545 -- only 4 bytes off, up from the prior bank's ours=489
+// (56 bytes off). The prior bank treated "return value shape" and "tail
+// merging" as two separate residual gaps; they are THE SAME root cause.
 //
-// 1. Missing EH bookkeeping before the MapObject-alias ctor call. Retail
-//    emits `mov dword ptr [esp+0x38], esp` immediately before `call ctor`
-//    (offset +0153 in the retail listing); no C++ shape tried (plain
-//    `new T(args)`, explicit placement-new with a null check, a named vs.
-//    split-statement local, a declared-only vs. inline dtor, a by-value vs.
-//    by-reference `name` parameter, a lightweight forwarding string wrapper
-//    matching Code/GameEngine/Source/Common/Rva00388820FindWaypointByName.cpp's
-//    "declared dtor, no declared copy ctor" pattern) reproduces it. This
-//    matches docs/lessons.md "The EH-temporary transposition: a two-byte
-//    wall this toolchain cannot cross" almost exactly (same instruction,
-//    `mov [esp+N],esp` before a by-value-class-argument-adjacent call,
-//    documented there as tried under many /G*, /O*, /EH* flag combinations
-//    and both destructor styles, all unsuccessful) -- treat as the same
-//    class of toolchain wall, not a fresh one to keep grinding.
+// THE KEY FIX: the early "z out of range" exit must `return false;`, not
+// `return true;`. Retail's compiled bytes prove this directly: the early
+// exit's tail does `xor eax,eax` (returns 0) while the normal-completion
+// tail does `mov eax,esi` (copies the raw MapObject pointer, non-zero/
+// truthy). Because the two exits return DIFFERENT values, MSVC 7.1 cannot
+// share one epilogue between them and compiles two separate release-and-
+// return blocks, exactly matching retail's layout (0x160-0x1ec normal-path
+// cleanup+return, 0x1ed-0x220 early-exit cleanup+return, near-duplicates of
+// each other). The prior bank's source had BOTH exits returning `true`,
+// which gave MSVC an identical byte sequence to fold into one shared tail
+// (ours=489B) -- that fold was not a compiler quirk to work around with a
+// nested-scope/tail-merge trick, it was CORRECT compiler behavior given a
+// wrong source (both paths truly did return the same value). Restructuring
+// with if/else vs. a bare early-return-then-fallthrough made no measured
+// difference (both compile to 541B, confirmed by probe.py) -- the return
+// VALUE divergence is what un-merges the tails, not the source's control
+// shape. shape_levers.md's "tail merge" lever does not apply here; retag
+// any future search for this symptom to check return-value divergence
+// FIRST.
 //
-// 2. Return value. Retail's success path does `mov eax, esi` (copying the
-//    raw newly-constructed pointer into eax, NOT a normalized bool 0/1) at
-//    offset +01d8, and the early "z out of range" exit does `xor eax,eax`
-//    (offset +0213) rather than setting al=1. A `Bool`-returning function
-//    cannot produce a raw untested pointer copy under the C++ standard's
-//    pointer-to-bool conversion rules (MSVC 7.1 obeys this), so no
-//    Bool-typed source spelling reaches it; changing the declared return
-//    type to void*/MapObject* would fix it, but the declaration lives in
-//    the PRISTINE vendored reference header
-//    (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/
-//    Include/W3DDevice/GameClient/WorldHeightMap.h), which must stay
-//    unmodified. (The project's own shim at
-//    reference/shims/bfmeheightmap/W3DDevice/GameClient/WorldHeightMap.h
-//    is NOT on this TU's include path -- verified by its // cl: line -- so
-//    editing it has no effect and is a dead end.) Whether BFME's real
-//    declaration genuinely differs from Bool, or this needs inline asm as
-//    a narrow codegen-blocker exception, is unresolved.
+// This flips ZH's original semantics (ZH's ParseObjectData always
+// `return true;`, even when discarding an out-of-range object) but matches
+// retail's actual bytes, which is the standard this project measures
+// against.
 //
-// 3. Tail merging. Retail duplicates the Dict/name release-and-return
-//    sequence at BOTH exit points (the early z-bounds return and the
-//    normal completion); the compiled shape below shares one epilogue for
-//    both, which is smaller (489 vs 545 bytes) and shifts every later
-//    offset. Not attempted: shape_levers.md's "identical return tails not
-//    merged" lever (separate nested scopes ending exactly where each
-//    retail destructor call sits) -- worth trying first in a follow-up,
-//    since unlike gaps 1-2 it has no documented wall precedent.
+// TWO NAMED RESIDUAL GAPS REMAIN (4 bytes / a few instructions, not closed
+// this session; both match previously-documented toolchain walls -- do not
+// grind further without a genuinely new lever):
+//
+// 1. Missing EH bookkeeping: retail emits `mov dword ptr [esp+0x38], esp`
+//    immediately before `call ctor` (this session's probe: retail offset
+//    +0153); ours instead calls the ctor directly, 4 bytes shorter. This is
+//    docs/lessons.md's "EH-temporary transposition" class (`mov [esp+N],esp`
+//    recording a by-value-class-argument address before the ctor's `this`
+//    setup). RULED OUT THIS SESSION: the documented fix for that exact
+//    symptom -- passing the by-value argument through a StringInline-style
+//    class whose copy ctor/dtor are INLINE FORWARDERS to an out-of-line
+//    base (reference/shims/stringinline/StringInline.h pattern, base pins
+//    already in symbols.csv as Rva0041230aNameBase ctor 0x00887B60 / dtor
+//    0x00887940) -- does NOT apply to this call site. Declaring the
+//    MapObject-alias ctor's `name` parameter BY VALUE as this inline-
+//    forwarding type and passing `name` (not `nameRef`) regressed to
+//    ours=555B (10 bytes OVER retail, not under) with esi/edi register
+//    churn appearing much earlier in the body (edi used from +0xf3 on,
+//    where retail and the by-ref version both use esi) -- i.e. retail does
+//    NOT actually construct a by-value AsciiString copy at this call site
+//    (no visible copy-ctor call in retail's bytes either), so the missing
+//    instruction is NOT the by-value-string-argument case the lesson
+//    documents. Left unresolved: whether it's an EH record for `loc`
+//    (Coord3D, POD, passed by value with no destructor -- would be unusual
+//    for MSVC to need an unwind record for a trivially-destructible
+//    struct) or for the raw operator-new(0x60) memory block (placement-
+//    delete-on-throw bookkeeping for the `new Rva0041230aMapObject(...)`
+//    expression itself). Previously also ruled out (earlier session): plain
+//    new-expression, explicit placement-new+null-check, split decl/
+//    assignment, by-ref vs by-value name (this session re-confirmed by-value
+//    regresses), and a StringInline-style forwarding wrapper on the name
+//    argument specifically (this session, see above -- same conclusion via
+//    a different, now-confirmed route).
+//
+// 2. Return-value normalization on the SUCCESS path: retail's `mov eax,esi`
+//    copies the raw MapObject pointer into eax without normalizing to 0/1,
+//    even though the mangled name's `_N` return-type code and the pristine
+//    vendored reference header (WorldHeightMap.h) both confirm the return
+//    type is genuinely `Bool` (=C++ bool, confirmed via
+//    Libraries/Include/Lib/BaseType.h's `typedef bool Bool;`). A `bool`-
+//    returning function performing a pointer-to-bool conversion should
+//    normalize via test+setne under standard C++ semantics, which MSVC 7.1
+//    obeys for an ordinary `return ptr;` or `return ptr != NULL;`. No C++
+//    source spelling tried (across two sessions) reproduces a raw,
+//    unnormalized register copy for a genuinely bool-typed return. The
+//    vendored header cannot be edited to test a pointer-return hypothesis.
+//    Unresolved: unknown whether this is a further undiscovered MSVC 7.1
+//    quirk/flag or requires a narrow inline-asm exception for the return
+//    sequence only.
+//
+// A smaller, apparently-linked shape difference (not separately scored):
+// in BOTH cleanup+return blocks, ours pops the callee-saved registers
+// (edi/esi/ebp/ebx) BEFORE restoring the SEH chain (`mov fs:[0],ecx`) and
+// `add esp,0x28`; retail restores the SEH chain FIRST, then pops. Same
+// instructions, different order, in both tails identically -- likely the
+// same underlying EH-model difference as gap 1 rather than an independent
+// wall; no separate lever attempted.
 //
 // Everything else -- all field offsets (+0x24 properties, +0x44 runtime
 // flags), the three dict-key/flag checks in ZH's original order
 // (waypointID/bit4, lightHeightAboveTerrain/bit2, scorchType/bit8), the
 // acceptsThingTemplateName filter ZH's version lacks, the absence of
-// pPrevious/TheMapObjectListPtr linkage ZH's version has (genuinely not
-// present in retail's bytes -- checked exhaustively) -- is verified
-// correct against retail bytes, not guessed.
+// pPrevious/TheMapObjectListPtr linkage ZH's version has, and now the full
+// duplicated release-and-return shape at both exits -- is verified correct
+// against retail bytes, not guessed.
 
 // TU-local view of the retail singleton at 0x012EF1D8 for the two calls
 // this body routes through thunks at 0x0002323B and 0x00028560; the real
@@ -172,7 +204,7 @@ Bool WorldHeightMap::ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *i
 	}
 
 	if (loc.z<minZ || loc.z>maxZ) {
-		return true;
+		return false;
 	}
 
 	const AsciiString &nameRef = *reinterpret_cast<const AsciiString *>(&name);
