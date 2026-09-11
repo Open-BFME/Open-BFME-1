@@ -1,5 +1,4 @@
 // ?onRemoving@GarrisonContain@@UAEXPAVObject@@@Z
-// partial score=0.8 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 // BFME retail ?onRemoving@GarrisonContain@@UAEXPAVObject@@@Z at RVA
@@ -7,9 +6,10 @@
 //
 // Identity is established independently of the generated placeholder: the
 // secondary GarrisonContain vtable at 0x010AB598 has slot +0x48 pointing at
-// j_00005c22, whose body is the 0x0021F0A0 range.  The same thunk is called by
-// the named BfmeThingCQE::... body at 0x00248AA0.  The incoming ECX is the
-// secondary interface; the BFME primary module is ECX-0x20.
+// j_00005c22, whose body is the 0x0021F0A0 range.  Compiling the vendored ZH
+// GarrisonContain translation unit independently names this corresponding
+// vtable slot onRemoving.  The incoming ECX is the secondary interface; the
+// BFME primary module is ECX-0x20.
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -19,6 +19,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned int ObjectID;
 typedef bool Bool;
+typedef float Real;
 
 class Object;
 class Team;
@@ -103,9 +104,9 @@ public:
 	const BfmeOverridable *getFinalOverride() const;
 };
 
-// Object+4 is the BFME template/module link.  The resolved override carries
+// Object+4 is the BFME ThingTemplate link.  The resolved override carries
 // the occlusion delay at +0x424 in this executable's layout.
-struct BfmeObjectModuleLink
+struct BfmeThingTemplateView
 {
 	unsigned char m_unmodelled_000[4];
 	BfmeOverridable *m_override;
@@ -114,7 +115,7 @@ struct BfmeObjectModuleLink
 struct BfmeObjectTemplateLink
 {
 	void *m_vtable;
-	BfmeObjectModuleLink *m_module;
+	BfmeThingTemplateView *m_template;
 };
 
 struct BfmeObjectOverrideLayout
@@ -280,8 +281,10 @@ public:
 class Rva00221540
 {
 public:
-	int isReady();
+	Int isReady();
 };
+
+extern const Real BfmeZeroRange;
 
 // ?onRemoving@GarrisonContain@@UAEXPAVObject@@@Z
 void GarrisonContain::onRemoving(Object *object)
@@ -348,25 +351,24 @@ void GarrisonContain::onRemoving(Object *object)
 	}
 
 	const UnsignedInt frame = TheBfmeGameLogic->m_frame;
-	BfmeObjectModuleLink *module =
-		reinterpret_cast<BfmeObjectTemplateLink *>(object)->m_module;
-	if (module != 0 && module->m_override != 0)
-	{
-		const BfmeOverridable *resolved = module->m_override->getFinalOverride();
-		const UnsignedInt delay = reinterpret_cast<const BfmeObjectOverrideLayout *>(
-			resolved)->m_occlusionDelay;
-		reinterpret_cast<BfmeObjectFrameView *>(object)->m_safeOcclusionFrame = frame + delay;
-	}
+	const BfmeThingTemplateView *thingTemplate =
+		reinterpret_cast<BfmeObjectTemplateLink *>(object)->m_template;
+	if (thingTemplate != 0 && thingTemplate->m_override != 0)
+		thingTemplate = reinterpret_cast<const BfmeThingTemplateView *>(
+			thingTemplate->m_override->getFinalOverride());
+	const UnsignedInt delay = reinterpret_cast<const BfmeObjectOverrideLayout *>(
+		thingTemplate)->m_occlusionDelay;
+	reinterpret_cast<BfmeObjectFrameView *>(object)->m_safeOcclusionFrame = frame + delay;
 
 	recalcApparentControllingPlayer();
 
-	if (reinterpret_cast<Rva00221540 *>(
-			reinterpret_cast<unsigned char *>(this) - 0x20)->isReady() != 0)
+	if ((reinterpret_cast<Rva00221540 *>(
+		reinterpret_cast<unsigned char *>(this) - 0x20)->isReady() & 0xff) != 0)
 	{
 		BfmeBodyModule *body = reinterpret_cast<BfmeObjectBodyLink *>(
 			reinterpret_cast<unsigned char *>(reinterpret_cast<BfmeGarrisonOwnerLink *>(
 			reinterpret_cast<unsigned char *>(this) - 0x18)->m_object))->m_body;
-		if (body != 0 && body->getHealth() == 0.0f)
+		if (body->getHealth() <= BfmeZeroRange)
 			reinterpret_cast<GameLogic *>(TheBfmeGameLogic)->destroyObject(object);
 	}
 }
