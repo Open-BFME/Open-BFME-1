@@ -1,5 +1,5 @@
 // ?bfmeComputeStatus@Weapon@@ABE?AW4WeaponStatus@@PA_N@Z
-// partial score=0.83 date=2026-09-09
+// partial score=0.8365384615 date=2026-09-10
 // cl: /O2 /Ob0 /DNDEBUG /MD
 
 typedef bool Bool;
@@ -55,6 +55,7 @@ private:
 	UnsignedInt m_whenPreAttackFinished;
 	UnsignedInt m_whenStatus5;
 };
+
 WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 {
 	UnsignedInt now = TheGameLogic->m_frame;
@@ -71,39 +72,30 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 		return BFME_STATUS_5;
 	}
 
-	WeaponTemplate *n1 = m_template;
-	int n2 = n1->m_flag68;
-	if (n2 >= 0)
+	WeaponTemplate *tmpl = m_template;
+	int flag = tmpl->m_flag68;
+	if (flag >= 0)
 	{
 		if (now < m_whenWeCanFireAgain)
 		{
-			if (!n1->m_ammo.isValid())
+			if (!tmpl->m_ammo.isValid())
 				return m_status;
 		}
 
-		if (getRemainingAmmo(0) <= 0)
-		{
-			if (now < m_whenWeCanFireAgain)
-				goto out;
-			if (!m_template->m_ammo.isValid())
-				goto out;
-			if (bfmeAmmoReady())
-				goto ready;
-			goto out;
-		}
-	out:
-		return OUT_OF_AMMO;
-	ready:
+		if (getRemainingAmmo(false) > 0)
+			return READY_TO_FIRE;
+		const WeaponTemplate *templateForAmmo = m_template;
+		if (now < m_whenWeCanFireAgain ||
+			!templateForAmmo->m_ammo.isValid() || !bfmeAmmoReady())
+			return OUT_OF_AMMO;
 		return READY_TO_FIRE;
 	}
 
 	if (now < m_whenWeCanFireAgain)
 	{
-		if (n1->m_ammo.isValid())
-			goto ammo_status;
-		return m_status;
+		if (!tmpl->m_ammo.isValid())
+			return m_status;
 	}
 
-	ammo_status:
-	return getRemainingAmmo(0) > 0 ? READY_TO_FIRE : OUT_OF_AMMO;
+	return getRemainingAmmo(false) > 0 ? READY_TO_FIRE : OUT_OF_AMMO;
 }
