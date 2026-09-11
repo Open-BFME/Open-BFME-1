@@ -1,307 +1,70 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ?applyBattlePlanBonusesForPlayerObjects@Player@@QAEXPBVBattlePlanBonuses@@@Z: Code/GameEngine/Source/Common/RTS/Player.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// ZH twin: Player::applyBattlePlanBonusesForPlayerObjects
 
-class BattlePlanBonuses;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
+#include <cstring>
+
+typedef unsigned int UnsignedInt;
+
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+class Object;
+
+struct KindOfMaskType
+{
+	UnsignedInt m_bits[6];
+
+	// std::bitset<192>::reset() is the authentic KindOfMaskType constructor
+	// shape. MSVC inlines it as one xor, two lea instructions, and two groups
+	// of six stores.
+	__forceinline KindOfMaskType() { memset(this, 0, sizeof(*this)); }
+};
+
+class BattlePlanBonuses
+{
+public:
+	float m_armorScalar;
+	int m_bombardment;
+	int m_searchAndDestroy;
+	int m_holdTheLine;
+	float m_sightRangeScalar;
+	KindOfMaskType m_validKindOf;
+	KindOfMaskType m_invalidKindOf;
+};
+
+void localApplyBattlePlanBonusesToObject(Object *object, void *bonuses);
+
 class Player
 {
 public:
-	void applyBattlePlanBonusesForPlayerObjects(const BattlePlanBonuses *);
+	unsigned char m_unreconstructed_00[0x70];
+	BattlePlanBonuses *m_battlePlanBonuses;
+
+	void applyBattlePlanBonusesForPlayerObjects(const BattlePlanBonuses *bonus);
+	void iterateObjects(void (__cdecl *callback)(Object *, void *), void *userData) const;
 };
 
 // ?applyBattlePlanBonusesForPlayerObjects@Player@@QAEXPBVBattlePlanBonuses@@@Z
-__declspec(naked) void Player::applyBattlePlanBonusesForPlayerObjects(const BattlePlanBonuses *)
+void Player::applyBattlePlanBonusesForPlayerObjects(const BattlePlanBonuses *bonus)
 {
-	__asm {
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xd9
-        __emit 0x8b
-        __emit 0x4b
-        __emit 0x70
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x56
-        __emit 0x57
-        __emit 0x0f
-        __emit 0x85
-        __emit 0x82
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x44
-        __emit 0xe8
-        __emit 0xf9
-        __emit 0xc1
-        __emit 0x7a
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x4f
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x14
-        __emit 0x89
-        __emit 0x0a
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x10
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x14
-        __emit 0x8d
-        __emit 0x50
-        __emit 0x2c
-        __emit 0x89
-        __emit 0x0a
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x04
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x08
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x10
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x4a
-        __emit 0x14
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x7b
-        __emit 0x70
-        __emit 0xb9
-        __emit 0x11
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0xf3
-        __emit 0xa5
-        __emit 0x68
-        __emit 0x40
-        __emit 0x5a
-        __emit 0x4d
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0xe8
-        __emit 0x44
-        __emit 0x94
-        __emit 0xf5
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x33
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x89
-        __emit 0x7b
-        __emit 0x70
-        __emit 0xb9
-        __emit 0x11
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0xf3
-        __emit 0xa5
-        __emit 0x68
-        __emit 0x40
-        __emit 0x5a
-        __emit 0x4d
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0xe8
-        __emit 0x1f
-        __emit 0x94
-        __emit 0xf5
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-        __emit 0xd9
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0xd8
-        __emit 0x08
-        __emit 0x50
-        __emit 0x68
-        __emit 0x40
-        __emit 0x5a
-        __emit 0x4d
-        __emit 0x00
-        __emit 0xd9
-        __emit 0x19
-        __emit 0x8b
-        __emit 0x4b
-        __emit 0x70
-        __emit 0xd9
-        __emit 0x40
-        __emit 0x10
-        __emit 0xd8
-        __emit 0x49
-        __emit 0x10
-        __emit 0xd9
-        __emit 0x59
-        __emit 0x10
-        __emit 0x8b
-        __emit 0x4b
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x04
-        __emit 0x03
-        __emit 0xf2
-        __emit 0x89
-        __emit 0x71
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x73
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x04
-        __emit 0xb9
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x98
-        __emit 0xc1
-        __emit 0x49
-        __emit 0x23
-        __emit 0xcf
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x4b
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x0c
-        __emit 0x03
-        __emit 0xf2
-        __emit 0x89
-        __emit 0x71
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x73
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x0c
-        __emit 0xb9
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x98
-        __emit 0xc1
-        __emit 0x49
-        __emit 0x23
-        __emit 0xcf
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x0c
-        __emit 0x8b
-        __emit 0x4b
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x71
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x50
-        __emit 0x08
-        __emit 0x03
-        __emit 0xf2
-        __emit 0x89
-        __emit 0x71
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x73
-        __emit 0x70
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x08
-        __emit 0xb9
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x98
-        __emit 0xc1
-        __emit 0x49
-        __emit 0x23
-        __emit 0xcf
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0xcb
-        __emit 0xe8
-        __emit 0x90
-        __emit 0x93
-        __emit 0xf5
-        __emit 0xff
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x5b
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
+	if (!m_battlePlanBonuses)
+	{
+		m_battlePlanBonuses = new BattlePlanBonuses;
+		*m_battlePlanBonuses = *bonus;
 	}
+	else
+	{
+		m_battlePlanBonuses->m_armorScalar *= bonus->m_armorScalar;
+		m_battlePlanBonuses->m_sightRangeScalar *= bonus->m_sightRangeScalar;
+
+		m_battlePlanBonuses->m_bombardment += bonus->m_bombardment;
+		m_battlePlanBonuses->m_bombardment = MAX(0, m_battlePlanBonuses->m_bombardment);
+
+		m_battlePlanBonuses->m_holdTheLine += bonus->m_holdTheLine;
+		m_battlePlanBonuses->m_holdTheLine = MAX(0, m_battlePlanBonuses->m_holdTheLine);
+
+		m_battlePlanBonuses->m_searchAndDestroy += bonus->m_searchAndDestroy;
+		m_battlePlanBonuses->m_searchAndDestroy = MAX(0, m_battlePlanBonuses->m_searchAndDestroy);
+	}
+
+	iterateObjects(localApplyBattlePlanBonusesToObject, (void *)bonus);
 }
