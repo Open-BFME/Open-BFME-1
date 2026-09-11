@@ -17,9 +17,9 @@ verification.  `--replace-rva` does the same keyed on the ADDRESS instead of the
 name, which is the only way to convert a machine byte-dump: a real conversion
 changes the name (`?d_000a8940@@YAXXZ` -> `?addr@SpikeAccessor@@QAEPADXZ`), so
 --replace-existing cannot find the row it needs to retire and add_match refuses
-the address as already claimed.  It accepts scaffold rows only.  This is the supported path for replacing a 5-byte MASM thunk
-claim with the clean C++ body it jumps to; the original row is restored if the
-new claim does not byte-verify.
+the address as already claimed. It accepts scaffold rows only. This is the
+supported path for replacing a 5-byte MASM thunk claim with the clean C++ body
+it jumps to; the original row is restored if the new claim does not byte-verify.
 """
 import argparse
 import csv
@@ -162,6 +162,46 @@ def remove_stash(rva, root):
         print(f"add_match: cleared banked attempt {stash.relative_to(Path(root)).as_posix()}")
 
 
+def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
+                                 successor_size, successor_source, *, verified,
+                                 boundary_evidence=None):
+    """Make a replaced ledger identity survive functions.csv union merges.
+
+    A branch forked before the conversion can merge the removed functions.csv
+    line back without a conflict. check_csv treats this append-only record as
+    the authoritative deletion and rejects that resurrection.
+    """
+    proof = "byte-verified" if verified else "verification-deferred"
+    if boundary_evidence:
+        kind = replaced["notes"].lstrip().split(";", 1)[0]
+        reason = (
+            f"{kind} scaffold retired because its {replaced['size']}-byte extent at "
+            f"0x{replaced['rva']:08X} was wrong. The real identity {successor_name} is "
+            f"{proof} from {successor_source} over the corrected {successor_size}-byte "
+            f"range at the same start. Boundary evidence: {boundary_evidence}"
+        )
+    elif replaced["notes"].lstrip().startswith(("gen-dump", "gen-thunk")):
+        kind = replaced["notes"].lstrip().split(";", 1)[0]
+        reason = (
+            f"{kind} scaffold placeholder superseded by the real identity of these bytes: "
+            f"{successor_name}, {proof} from {successor_source} over the same "
+            f"{replaced['size']}-byte range. The {replaced['source']} scaffold reproduces "
+            "those bytes but carries no identity."
+        )
+    else:
+        reason = (
+            f"claim superseded by the {proof} replacement {successor_name} at "
+            f"0x{successor_rva:08X}/{successor_size}B from {successor_source}. The prior "
+            f"claim at 0x{replaced['rva']:08X}/{replaced['size']}B from "
+            f"{replaced['source']} was retired."
+        )
+    buffer = io.StringIO()
+    csv.writer(buffer, lineterminator="\n").writerow(
+        [replaced["name"], f"0x{replaced['rva']:08X}", reason])
+    with path.open("ab") as handle:
+        handle.write(buffer.getvalue().encode("utf-8"))
+
+
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -179,6 +219,10 @@ def main():
                         help="retire the SCAFFOLD row at this address and claim it "
                              "under the new name (the dump -> C++ conversion path); "
                              "the old row is restored if verification fails")
+    parser.add_argument("--boundary-evidence",
+                        help="with --replace-rva, permit a corrected target_size while "
+                             "recording why the scaffold extent was wrong; the start RVA "
+                             "must still agree")
     parser.add_argument("--no-verify", action="store_true",
                         help="skip ./build.sh verification (row lands UNVERIFIED — "
                              "verify before committing)")
@@ -186,11 +230,19 @@ def main():
                         help="TEST-ONLY: operate on a copy of the repo rooted here "
                              "instead of the live ledger (default: repo root)")
     args = parser.parse_args()
+    if args.boundary_evidence is not None:
+        if not args.replace_rva:
+            fail("--boundary-evidence requires --replace-rva")
+        if not args.boundary_evidence.strip():
+            fail("--boundary-evidence must not be empty")
+        if set(args.boundary_evidence) & set("\r\n"):
+            fail("--boundary-evidence must be one line")
     from fleet_run import run_tag
     args.notes = run_tag(args.notes)
 
     root = args.root.resolve()
     functions_csv = root / "reverse" / "functions.csv"
+    deleted_csv = root / "reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
         fail(f"no ledger at {functions_csv}")
 
@@ -259,6 +311,20 @@ def main():
                  f"({at_rva[0]['source']}), not a gen-dump scaffold row",
                  "only scaffolding may be taken over by name; retract a real claim "
                  "in its own commit so the retraction is reviewable")
+        if old_rva != rva:
+            fail(f"--replace-rva must preserve the scaffold's exact range "
+                 f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
+                 f"0x{rva:08X}/{size}B",
+                 "a different boundary needs an explicit evidence-backed retraction")
+        if at_rva[0]["size"] != size and not args.boundary_evidence:
+            fail(f"--replace-rva must preserve the scaffold's exact range "
+                 f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
+                 f"0x{rva:08X}/{size}B",
+                 "pass --boundary-evidence only when retail disassembly proves the "
+                 "scaffold extent itself was wrong")
+        if at_rva[0]["size"] == size and args.boundary_evidence:
+            fail("--boundary-evidence is only for a proven target_size correction; "
+                 "this replacement already preserves the scaffold extent")
         replaced = at_rva[0]
     if args.replace_existing:
         if len(claims) != 1:
@@ -271,6 +337,13 @@ def main():
         fail(f"{name} is already in the ledger at {addresses}",
              "one name = one address; use --replace-existing only when deliberately "
              "repointing that claim")
+
+    needs_tombstone = (replaced is not None and
+                       (args.replace_rva is not None or
+                        (replaced["name"], replaced["rva"]) != (name, rva)))
+    if needs_tombstone and not deleted_csv.exists():
+        fail(f"no deletion ledger at {deleted_csv}",
+             "a ledger identity cannot be retired durably without a tombstone")
 
     new_end = rva + size
     icf_owner = None
@@ -303,34 +376,56 @@ def main():
     ledger_row = f"{name},{export_rva},0x{rva:08X},{size},{source_rel},matched,{args.notes}"
 
     saved_source = source_path.read_bytes()
-    new_source = strip_marker(source_path, name)
-    if new_source is not None:
-        source_path.write_bytes(new_source)
+    saved_deleted = deleted_csv.read_bytes() if needs_tombstone else None
 
-    if replaced is not None:
-        # Drop the old row by CONTENT, not by line number. parse_ledger numbers
-        # csv records while raw.splitlines() counts physical lines, and the two
-        # disagree whenever a row carries a stray CR (the ledger is currently
-        # written with \r\r\n): indexing physical lines with a record number
-        # deletes an unrelated row and silently glues its neighbours together.
-        # parse_ledger already guaranteed exactly one row for this name.
-        # Drop it through ledger_io, which keeps each record's own terminator:
-        # the ledger mixes \r\r\n, \r\n and bare \n, so splitting on \r\n glues a
-        # bare-\n row onto its neighbour and deletes both.
-        key = (replaced["name"], replaced["rva"])
-        new_raw, dropped = ledger_io.rewrite(
-            raw, lambda f: ledger_key(f) != key)
-        if dropped != 1:
-            fail(f"internal error: {dropped} ledger rows match {key} — "
-                 "expected exactly one")
-        functions_csv.write_bytes(new_raw + ledger_row.encode("utf-8") + b"\r\n")
-        print(f"add_match: replaced row {replaced['line']}: "
-              f"0x{replaced['rva']:08X}/{replaced['size']}B {replaced['source']}")
-        print(f"add_match: with: {ledger_row}")
-    else:
-        with functions_csv.open("ab") as handle:
-            handle.write(ledger_row.encode("utf-8") + b"\r\n")
-        print(f"add_match: appended: {ledger_row}")
+    def restore():
+        ledger_io.atomic_write_bytes(functions_csv, raw)
+        ledger_io.atomic_write_bytes(source_path, saved_source)
+        if saved_deleted is not None:
+            ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
+
+    try:
+        new_source = strip_marker(source_path, name)
+        if new_source is not None:
+            source_path.write_bytes(new_source)
+
+        if replaced is not None:
+            # Drop the old row by CONTENT, not by line number. parse_ledger numbers
+            # csv records while raw.splitlines() counts physical lines, and the two
+            # disagree whenever a row carries a stray CR (the ledger is currently
+            # written with \r\r\n): indexing physical lines with a record number
+            # deletes an unrelated row and silently glues its neighbours together.
+            # parse_ledger already guaranteed exactly one row for this name.
+            # Drop it through ledger_io, which keeps each record's own terminator:
+            # the ledger mixes \r\r\n, \r\n and bare \n, so splitting on \r\n glues a
+            # bare-\n row onto its neighbour and deletes both.
+            key = (replaced["name"], replaced["rva"])
+            new_raw, dropped = ledger_io.rewrite(
+                raw, lambda f: ledger_key(f) != key)
+            if dropped != 1:
+                fail(f"internal error: {dropped} ledger rows match {key} — "
+                     "expected exactly one")
+            # Tombstone first: if the process dies between the two writes,
+            # check_csv loudly rejects the still-live old row. The reverse order
+            # would leave a silent deletion that a later union merge can resurrect.
+            if needs_tombstone:
+                append_replacement_tombstone(
+                    deleted_csv, replaced, name, rva, size, source_rel,
+                    verified=not args.no_verify,
+                    boundary_evidence=args.boundary_evidence)
+            ledger_io.atomic_write_bytes(
+                functions_csv, new_raw + ledger_row.encode("utf-8") + b"\r\n")
+            print(f"add_match: replaced row {replaced['line']}: "
+                  f"0x{replaced['rva']:08X}/{replaced['size']}B {replaced['source']}")
+            print(f"add_match: with: {ledger_row}")
+        else:
+            with functions_csv.open("ab") as handle:
+                handle.write(ledger_row.encode("utf-8") + b"\r\n")
+            print(f"add_match: appended: {ledger_row}")
+    except BaseException:
+        restore()
+        print("add_match: write failed — ledger and marker changes REVERTED", file=sys.stderr)
+        raise
 
     if args.no_verify:
         print("add_match: --no-verify: row is UNVERIFIED — run "
@@ -340,8 +435,7 @@ def main():
     build_sh = root / "build.sh"
     if not build_sh.exists():
         # revert: an unverifiable row must not survive
-        ledger_io.atomic_write_bytes(functions_csv, raw)
-        source_path.write_bytes(saved_source)
+        restore()
         fail(f"no build.sh at {root} — cannot verify; append reverted")
 
     if sys.platform == "win32":
@@ -355,13 +449,11 @@ def main():
     try:
         result = subprocess.run(verify_cmd, cwd=root, env=verify_env)
     except BaseException:
-        ledger_io.atomic_write_bytes(functions_csv, raw)
-        source_path.write_bytes(saved_source)
+        restore()
         print("add_match: interrupted — append and marker strip REVERTED", file=sys.stderr)
         raise
     if result.returncode != 0:
-        ledger_io.atomic_write_bytes(functions_csv, raw)
-        source_path.write_bytes(saved_source)
+        restore()
         fail(f"verification failed (exit {result.returncode}) — append and "
              "marker strip REVERTED; nothing was changed")
     print("add_match: verified OK — row is live")
