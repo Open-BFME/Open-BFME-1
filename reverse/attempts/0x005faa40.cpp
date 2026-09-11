@@ -1,30 +1,27 @@
-// ?d_005faa40@@YAXXZ
-// partial score=0.86 date=2026-09-04
+// ?getPosition@SphereEmissionVolumeModule@FXParticleSystem@@QAE?AUCoord3D@2@MMMM@Z
+// partial score=0.9 date=2026-09-10
 extern float GetGameClientRandomValueReal(float low, float high, char *file, int line);
 
 namespace FXParticleSystem {
 
 struct Coord3D {
-    void scale(float scale)
+    Coord3D() {}
+
+    Coord3D(const Coord3D &that)
     {
-        x *= scale;
-        y *= scale;
-        z *= scale;
+        x = that.x;
+        y = that.y;
+        z = that.z;
+    }
+
+    ~Coord3D()
+    {
     }
 
     float x;
     float y;
     float z;
 };
-
-inline Coord3D operator*(const Coord3D &value, float scale)
-{
-    Coord3D result;
-    result.x = value.x * scale;
-    result.y = value.y * scale;
-    result.z = value.z * scale;
-    return result;
-}
 
 extern Coord3D *getRandomUnitVector(Coord3D *result);
 
@@ -44,8 +41,12 @@ Coord3D SphereEmissionVolumeModule::getPosition(float, float, float, float)
     char *source = "F:\\bfme\\Code\\gameengine\\Source\\GameClient\\System\\FXParticleSystem\\fxpsemitterspherevolumemodule.cpp";
     float radius = m_hollow ? m_radius : GetGameClientRandomValueReal(0.0f, m_radius, source, 86);
     Coord3D randomPoint;
-    Coord3D result = *getRandomUnitVector(&randomPoint);
-    return result * radius;
+    getRandomUnitVector(&randomPoint);
+    Coord3D result = randomPoint;
+    result.x *= radius;
+    result.y *= radius;
+    result.z *= radius;
+    return result;
 }
 
 }

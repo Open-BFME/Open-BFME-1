@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d7f6310b4541ff6ca55f06dc51f13163285056ad80729a00d679ab32b113e59c",
+  "symbol": "?d_005faa40@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?d_005faa40@@YAXXZ\n// partial score=0.86 date=2026-09-04\nextern float GetGameClientRandomValueReal(float low, float high, char *file, int line);\n\nnamespace FXParticleSystem {\n\nstruct Coord3D {\n    Coord3D() {}\n\n    Coord3D(const Coord3D &that)\n    {\n        x = that.x;\n        y = that.y;\n        z = that.z;\n    }\n\n    ~Coord3D()\n    {\n    }\n\n    float x;\n    float y;\n    float z;\n};\n\nextern Coord3D *getRandomUnitVector(Coord3D *result);\n\nclass SphereEmissionVolumeModule {\npublic:\n    Coord3D getPosition(float, float, float, float);\n\nprivate:\n    char m_base[0x20];\n    bool m_hollow;\n    char m_pad[3];\n    float m_radius;\n};\n\nCoord3D SphereEmissionVolumeModule::getPosition(float, float, float, float)\n{\n    char *source = \"F:\\\\bfme\\\\Code\\\\gameengine\\\\Source\\\\GameClient\\\\System\\\\FXParticleSystem\\\\fxpsemitterspherevolumemodule.cpp\";\n    float radius = m_hollow ? m_radius : GetGameClientRandomValueReal(0.0f, m_radius, source, 86);\n    Coord3D randomPoint;\n    getRandomUnitVector(&randomPoint);\n    Coord3D result = randomPoint;\n    result.x *= radius;\n    result.y *= radius;\n    result.z *= radius;\n    return result;\n}\n\n}\n// cl: /DNDEBUG /MD /GX- /O2 /Ob2\n"
+}
