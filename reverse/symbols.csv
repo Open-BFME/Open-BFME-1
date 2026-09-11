@@ -87132,3 +87132,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?getScale@Drawable@@QBE?BMXZ,0x00410E00,canonical const-return declaration in Drawable.h and source body in Drawable.cpp; retail body loads instance scale at this plus 0x1F8 and exact setModelName calls it through ILT 0x0003939C
 ?Gen00533650Intro@@YAXPAXZZ,0x00025B03,STLport introsort helper called by Rva00533650
 ?Gen00533650Final@@YAXPAXZZ,0x0000C71B,STLport final insertion helper called by Rva00533650
+g_bfmeNode1281Vtable,0x01136E00,address-derived vtable installed by the 0x008BD6B0 retail constructor
+g_bfmeFlag1281,0x0133781D,address-derived byte flag read by the 0x008BD6B0 retail constructor

@@ -1,8 +1,19 @@
 // ?d_008bd6b0@@YAXXZ
-// partial score=0.86 date=2026-08-30
+// partial score=0.975 date=2026-09-11
+struct BfmeStringData3AF0
+{
+	unsigned short m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
+	unsigned short m_flags;
+};
+
 extern char g_bfmeNode1281Vtable;
-extern unsigned short g_bfmeEmptyString1281;
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern unsigned char g_bfmeFlag1281;
+
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 
 class BfmeNode1281
 {
@@ -58,15 +69,17 @@ BfmeNode1281::BfmeNode1281()
 	m_bfme10 = 0;
 	m_bfme14 = 0;
 	m_vtable = &g_bfmeNode1281Vtable;
-	m_bfme18 = &g_bfmeEmptyString1281;
-	++g_bfmeEmptyString1281;
-	m_bfme1c = &g_bfmeEmptyString1281;
-	++g_bfmeEmptyString1281;
+	_ReadWriteBarrier();
+	m_bfme18 = &g_bfmeDefaultString1284;
+	++g_bfmeDefaultString1284.m_refCount;
+	m_bfme1c = &g_bfmeDefaultString1284;
+	++g_bfmeDefaultString1284.m_refCount;
 	m_bfme24 = -1;
 	m_bfme30 = -1;
 	m_bfme38 = 3;
 	m_bfme3c = 3;
 	unsigned int flags = m_flags;
+	_ReadWriteBarrier();
 	m_bfme28 = 1;
 	m_bfme2c = 1;
 	m_flags = flags & ~7u;
