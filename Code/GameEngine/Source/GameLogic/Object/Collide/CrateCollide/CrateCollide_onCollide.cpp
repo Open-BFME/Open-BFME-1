@@ -6,6 +6,7 @@
 
 #include "Precompiled/PreRTS.h"
 
+#include "Common/Player.h"
 #include "GameLogic/Module/CollideModule.h"
 #include "GameLogic/Object.h"
 #include "GameLogic/GameLogic.h"
@@ -30,7 +31,14 @@ public:
 // CrateCollideModuleData fields are at these BFME offsets after ModuleData.
 struct CrateCollideModuleDataSlice
 {
-	char m_prefix[0x40];
+	char m_prefix[8];
+	UnsignedByte m_kindof[0x18];
+	UnsignedByte m_kindofnot[0x18];
+	Bool m_isForbidOwnerPlayer;
+	Bool m_isBuildingPickup;
+	Bool m_isHumanOnlyPickup;
+	char m_padding3b;
+	ScienceType m_pickupScience;
 	FXList *m_executeFX;
 	AsciiString m_executionAnimationTemplate;
 	Real m_executeAnimationDisplayTimeInSeconds;
@@ -108,6 +116,25 @@ inline Bool bfmeGetDrawIconUI(GameLogic *logic)
 	return *(const Bool *)((const char *)logic + 0x92);
 }
 
+struct BfmeObjectStateView
+{
+	char m_prefix[0x204];
+	const AIUpdateInterface *m_ai;
+	char m_padding208[0x344 - 0x208];
+	UnsignedByte m_privateStatus;
+};
+
+inline const BfmeObjectStateView *bfmeObjectState(const Object *object)
+{
+	return reinterpret_cast<const BfmeObjectStateView *>(object);
+}
+
+struct BfmePlayerView
+{
+	char m_prefix[0x2c];
+	PlayerType m_playerType;
+};
+
 // ?onCollide@CrateCollide@@UAEXPAVObject@@PBUCoord3D@@1@Z
 void CrateCollide::onCollide(Object *other, const Coord3D *, const Coord3D *)
 {
@@ -144,5 +171,51 @@ void CrateCollide::onCollide(Object *other, const Coord3D *, const Coord3D *)
 				modData->m_executeAnimationDisplayTimeInSeconds,
 				modData->m_executeAnimationZRisePerSecond);
 		}
+	}
+}
+
+Bool CrateCollide::isValidToExecute(const Object *other) const
+{
+	if (other == NULL)
+	{
+		return FALSE;
+	}
+	else
+	{
+		if (m_everExecuted)
+			return FALSE;
+		if (other->isNeutralControlled())
+			return FALSE;
+
+		const CrateCollideModuleDataSlice *modData = getCrateCollideModuleData();
+		Bool validBuildingAttempt =
+			modData->m_isBuildingPickup && other->isKindOf(KINDOF_STRUCTURE);
+		if (bfmeObjectState(other)->m_ai == NULL && !validBuildingAttempt)
+			return FALSE;
+		if (!other->isKindOfMulti(
+			*reinterpret_cast<const KindOfMaskType *>(modData->m_kindof),
+			*reinterpret_cast<const KindOfMaskType *>(modData->m_kindofnot)))
+			return FALSE;
+		if (bfmeObjectState(other)->m_privateStatus & 1)
+			return FALSE;
+		if (getObject()->isAboveTerrain() && !validBuildingAttempt)
+			return FALSE;
+		if (modData->m_isForbidOwnerPlayer &&
+			getObject()->getControllingPlayer() == other->getControllingPlayer())
+			return FALSE;
+		if (modData->m_isHumanOnlyPickup && other->getControllingPlayer() != NULL &&
+			reinterpret_cast<const BfmePlayerView *>(
+				other->getControllingPlayer())->m_playerType != PLAYER_HUMAN)
+			return FALSE;
+		if (modData->m_pickupScience != SCIENCE_INVALID &&
+			other->getControllingPlayer() != NULL &&
+			!other->getControllingPlayer()->hasScience(modData->m_pickupScience))
+			return FALSE;
+
+		UnsignedByte status = bfmeObjectState(getObject())->m_privateStatus;
+		status >>= 1;
+		status = ~status;
+		status &= 1;
+		return status;
 	}
 }
