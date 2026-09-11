@@ -1025,6 +1025,7 @@ name,address,notes
 ??$__copy_backward_ptrs@PAUICoord2D@@PAU1@@_STL@@YAPAUICoord2D@@PAU1@00ABU__false_type@0@@Z,0x0004368A,ICoord2D vector fill-insert 0x00452450 calls this retail ILT; exact 8-byte POD helper body is the existing 0x00450190 generic copy
 ??$__copy_float_and_fill@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBG0V10@HHGGG@Z,0x0083C420,retail 0x0083C210 passes wchar range wide output iterator flags width fill and widened signs directly to this adjacent 300-byte helper;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
 ??$__copy_integer_and_fill@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@0@PBDHV10@HHDDD@Z,0x00835310,STLport 4.5.3 num_put boolalpha caller at 0x00838FE0 passes string pointer and length plus output iterator flags width fill and dummy sign chars
+??$__copy_integer_and_fill@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@YA?AV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@0@PBGHV10@HHGGG@Z,0x00835C40,STLport 4.5.3 wide copy-and-fill helper called by canonical wide num_put bool
 ??$__copy_ptrs@PBUGen_t_00095d30_p8pod@@PAU1@@_STL@@YAPAUGen_t_00095d30_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00095390,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000a7cb0_p4pod@@PAU1@@_STL@@YAPAUGen_t_000a7cb0_p4pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000A75C0,gen-tgrid payload member
 ??$__copy_ptrs@PBUGen_t_000b0560_p8pod@@PAU1@@_STL@@YAPAUGen_t_000b0560_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x000AFE30,gen-tgrid payload member
@@ -79004,6 +79005,7 @@ name,address,notes
 ?fallback@BfmeRva49250Control@@QAEXPAVBfmeRva49250Object@@@Z,0x0003F0FD,assigned body helper for Rva00249250
 ?fallback@BfmeSubD4C@@QAE_NXZ,0x0002FE05,pin
 ?falsename@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00838FC0,num_put boolalpha at 0x00838FE0 calls narrow numpunct vtable slot 5 through this exact forwarder
+?falsename@?$numpunct@G@_STL@@QBE?AV?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@2@XZ,0x0083AE80,STLport 4.5.3 wide numpunct false-name forwarder proven by vtable 0x0112EB18 slot 5 and canonical wide num_put bool caller
 ?fetch@BfmeMapEZC@@QAEPAHPAX@Z,0x00043C43,D9F50 map2 fetch ILT
 ?fetch@GameTextManager@@UAE?AVUnicodeString@@PBDPA_N@Z,0x00437f60,vtable-slot ??_7GameTextManager@@6B@ slot 10 anchors=8
 ?fetch@GenKey@@QAEHPA_N@Z,0x00009304,S3 table-lookup-with-fallback family callee (address-derived name)
@@ -84919,6 +84921,7 @@ name,address,notes
 ?trim@AsciiString@@QAEXXZ,0x00888CA0,callee of SkirmishPreferences::getPreferredMap 0x0009E470
 ?trim@UnicodeString@@QAEXXZ,0x00888ED0,alias of matched StringBase<unsigned short>::trim (PopupJoinGameSystem callee)
 ?truename@?$numpunct@D@_STL@@QBE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@XZ,0x00838FA0,num_put boolalpha at 0x00838FE0 calls narrow numpunct vtable slot 4 through this exact forwarder
+?truename@?$numpunct@G@_STL@@QBE?AV?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@2@XZ,0x0083AE60,STLport 4.5.3 wide numpunct true-name forwarder proven by vtable 0x0112EB18 slot 4 and canonical wide num_put bool caller
 ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z,0x00046876,ILT to 0x001599A0 from groupAttackMoveToPosition 0x0015A030
 ?tryGroupSpecial@Rva0015A190Owner@@QAE_NPAXHH00@Z,0x00046876,ILT to 0x001599A0 from applyOrFallback 0x0015A190
 ?tryQuery@Rva002BCB60AerialPathfinder@@QAE_NPAVRva002BCB60QueryObject@@MPAUCoord3D@@@Z,0x00148800,parent raw ILT and complete selector call-site ABI verified; actual body target
