@@ -1,224 +1,70 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Reconstructed from the canonical W3D shadow mesh source and the BFME
+// terrain-shadow layout.  The pool and normal-builder declarations preserve
+// the retail helper ABIs; the body is ordinary C++ rather than a lifted dump.
 
-class __declspec(novtable) W3DShadowGeometryMesh
+extern void *__cdecl operator new[]( unsigned int size );
+extern void __cdecl operator delete[]( void *pointer ) throw();
+
+class Vector3
 {
 public:
-    void buildPolygonNormals();
+	float X;
+	float Y;
+	float Z;
+	Vector3();
+};
+
+struct ShadowPool
+{
+	bool allocate( int count, int flags );
+	char m_prefix[4];
+	Vector3 *buffer;
+	int available;
+};
+
+extern ShadowPool ShadowPoolA;
+extern int ShadowPoolALimit;
+
+class W3DShadowGeometryMesh
+{
+public:
+	virtual ~W3DShadowGeometryMesh();
+	void buildPolygonNormals();
+
+protected:
+	Vector3 *buildPolygonNormal( long polygonIndex, Vector3 *normal ) const throw();
+
+private:
+	char m_beforeNormals[0x0c];
+	Vector3 *m_polygonNormals;
+	char m_beforePolygonCount[0x08];
+	int m_numPolygons;
+	char m_beforeTerrainFlag[0x10];
+	unsigned char m_terrainShadow;
 };
 
 // ?buildPolygonNormals@W3DShadowGeometryMesh@@QAEXXZ
-__declspec(naked) void W3DShadowGeometryMesh::buildPolygonNormals()
+void W3DShadowGeometryMesh::buildPolygonNormals()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xcb
-        __emit 0x2c
-        __emit 0x05
-        __emit 0x01
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x51
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x85
-        __emit 0x9d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8a
-        __emit 0x46
-        __emit 0x30
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x53
-        __emit 0x55
-        __emit 0x57
-        __emit 0x74
-        __emit 0x36
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x39
-        __emit 0x05
-        __emit 0x5c
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0x7d
-        __emit 0x23
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x50
-        __emit 0xb9
-        __emit 0x54
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x18
-        __emit 0x29
-        __emit 0x88
-        __emit 0xff
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x12
-        __emit 0xa1
-        __emit 0x5c
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0x3b
-        __emit 0x05
-        __emit 0x64
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0x7d
-        __emit 0x05
-        __emit 0xa3
-        __emit 0x64
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x2d
-        __emit 0x58
-        __emit 0x6f
-        __emit 0x30
-        __emit 0x01
-        __emit 0xeb
-        __emit 0x38
-        __emit 0x8b
-        __emit 0x7e
-        __emit 0x1c
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x7f
-        __emit 0xc1
-        __emit 0xe0
-        __emit 0x02
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xdd
-        __emit 0x4b
-        __emit 0x0c
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xd8
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x85
-        __emit 0xdb
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x10
-        __emit 0x68
-        __emit 0x7c
-        __emit 0x67
-        __emit 0x44
-        __emit 0x00
-        __emit 0x57
-        __emit 0x6a
-        __emit 0x0c
-        __emit 0x53
-        __emit 0xe8
-        __emit 0xa6
-        __emit 0xda
-        __emit 0x84
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x8b
-        __emit 0xeb
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x33
-        __emit 0xff
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x16
-        __emit 0x8b
-        __emit 0xdd
-        __emit 0x53
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0x29
-        __emit 0x3d
-        __emit 0x85
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x1c
-        __emit 0x47
-        __emit 0x83
-        __emit 0xc3
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xf8
-        __emit 0x7c
-        __emit 0xec
-        __emit 0x5f
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x10
-        __emit 0x5d
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0xc3
-    }
+	if (!m_polygonNormals)
+	{
+		Vector3 *tempVec;
+		if (m_terrainShadow)
+		{
+			if (ShadowPoolA.available < m_numPolygons &&
+				ShadowPoolA.allocate( m_numPolygons, 0 ) &&
+				ShadowPoolA.available < ShadowPoolALimit)
+				ShadowPoolALimit = ShadowPoolA.available;
+			tempVec = ShadowPoolA.buffer;
+		}
+		else
+		{
+			tempVec = new Vector3[m_numPolygons];
+		}
+
+		for (int i = 0; i < m_numPolygons; ++i)
+			buildPolygonNormal( i, &tempVec[i] );
+		m_polygonNormals = tempVec;
+	}
 }
