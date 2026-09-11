@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f0056ec331643286ca24425197f730a226d8b0fd0d69d15103bdfffc4e6d053a",
+  "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\n// partial score=0.99 date=2026-09-10\n// Open-BFME: retail RVA 0x009F2AE0, 46 bytes.\n//\n// PartitionFilter::link is called by the named ActionManager, AIPlayer,\n// script-action, and update paths listed in reverse/callers_of.py.  The\n// symbols pin identifies the shared +4 next link, and the upstream\n// PartitionFilter declaration supplies the polymorphic owner.  Retail walks\n// to the last filter and appends the supplied filter, or writes the head when\n// the chain is empty.\n\nclass PartitionFilter;\n\nclass PartitionFilter\n{\npublic:\n\tvirtual bool allow(void *object) = 0;\n\tPartitionFilter *link(PartitionFilter *next);\n\tPartitionFilter *m_next;\n};\n\nPartitionFilter *PartitionFilter::link(PartitionFilter *next)\n{\n\tPartitionFilter *cursor = 0;\n\tPartitionFilter *candidate = m_next;\n\tif (candidate != 0)\n\t{\n\t\tdo\n\t\t{\n\t\t\tcursor = candidate;\n\t\t\tcandidate = cursor->m_next;\n\t\t}\n\t\twhile (candidate != 0);\n\t\tcursor->m_next = next;\n\t}\n\telse\n\t{\n\t\tm_next = next;\n\t}\n\treturn this;\n}\n"
+}
