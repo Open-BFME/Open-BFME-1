@@ -2011,7 +2011,7 @@ void WW3D::Update_Movie_Capture( void )
 	fb->GetDesc(desc);
 
 	RECT bounds;
-	GetWindowRect(_Hwnd, &bounds);
+	GetClientRect(_Hwnd, &bounds);
 
 	struct BfmeMovieLockedRect
 	{
