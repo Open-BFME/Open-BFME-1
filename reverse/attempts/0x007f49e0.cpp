@@ -1,8 +1,5 @@
 // ?d_007f49e0@@YAXXZ
-// partial score=0.9 date=2026-09-05
-// cl: /GS
-// EA FESL Aries UDP sender from ariesudp.cpp, retail 0x007F49E0.
-
+// partial score=0.91 date=2026-09-11
 #include <string.h>
 
 class Rva007EB810Diag
@@ -34,8 +31,8 @@ public:
 
 struct Rva007F49E0Fap
 {
-	unsigned int m_sequence;
-	unsigned int m_type;
+	int m_sequence;
+	int m_type;
 	const unsigned char *m_data;
 	unsigned int m_size;
 	bool m_reliable;
