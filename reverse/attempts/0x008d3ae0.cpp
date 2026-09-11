@@ -1,6 +1,19 @@
 // _bfmeReload1221
-// partial score=0.8 date=2026-09-08
-// _bfmeReload1221
+// partial score=0.8 date=2026-09-11
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+//
+// The ledger size 275 is six bytes short and cuts this body inside shr eax,0x12.
+// The real body runs 281 bytes. Its ret sits at +0x118, seven int3 bytes pad to
+// +0x11f, and bfmeNext1221 starts at 0x008D3C00. Probe with --size 281.
+//
+// The first twist loop matches retail byte for byte. The second loop is a clean
+// two-register swap: retail holds the lag pointer in ebx and the mixed word in
+// edx, and this body holds them the other way round. Declaring lag before the
+// loop, dropping the register qualifier and storing an unnamed temporary instead
+// of a named local all leave the swap in place. The tail after the second loop
+// also reorders: retail loads state[0] into esi, mixes into eax, stores, then
+// tempers from a saved copy in edx, while MSVC hoists the lag read into ebp and
+// starts tempering before the store.
 
 extern int g_bfmeIndexFA;
 extern unsigned int g_bfmeStateFA[];
@@ -9,7 +22,6 @@ extern void bfmeSeed(int seed);
 
 extern "C" unsigned int bfmeReload1221(void)
 {
-	register int *lag;
 	unsigned int *entry = &g_bfmeStateFA[0];
 	unsigned int *next = &g_bfmeStateFA[2];
 
@@ -39,12 +51,11 @@ extern "C" unsigned int bfmeReload1221(void)
 	}
 	while (--count != 0);
 
-	unsigned int secondMixed;
-	lag = (int *)&g_bfmeStateFA[0];
+	int *lag = (int *)&g_bfmeStateFA[0];
 	count = 0x18c;
 	do
 	{
-		secondMixed = value ^ previous;
+		unsigned int secondMixed = value ^ previous;
 		secondMixed = (secondMixed & 0x7ffffffe) ^ previous;
 		secondMixed >>= 1;
 		secondMixed ^= ((value & 1) ? 0x9908b0df : 0);
