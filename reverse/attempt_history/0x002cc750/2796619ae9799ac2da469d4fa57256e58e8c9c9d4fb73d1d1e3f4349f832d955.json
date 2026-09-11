@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2796619ae9799ac2da469d4fa57256e58e8c9c9d4fb73d1d1e3f4349f832d955",
+  "symbol": "?onDockReached@DockUpdate@@UAEXPAVObject@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?onDockReached@DockUpdate@@UAEXPAVObject@@@Z\n// partial score=0.95 date=2026-09-11\n// cl: /DNDEBUG /DWIN32 /MD /EHsc\n// Open-BFME: DockUpdate::onDockReached, retail 0x002CC750.\n//\n// The DockUpdateInterface vtable slot pin, the AIDock caller, and the\n// Zero Hour DockUpdate implementation establish the method identity.  The\n// BFME Object model-condition mask has its 0x20000/0x40000 word at +0x118;\n// the retail helper deliberately writes the cleared and set masks separately.\n\nclass Object\n{\npublic:\n\tvoid notifyModelConditionChanged(void);\n\n\tunsigned char m_unmodelled000[0x118];\n\tvolatile unsigned int m_modelConditionFlagsWord;\n};\n\nstatic __forceinline void applyDockCondition(Object *object)\n{\n\tunsigned int flags = object->m_modelConditionFlagsWord;\n\tif ((flags & 0x20000) != 0 || (flags & 0x40000) == 0)\n\t{\n\t\tunsigned int set;\n\t\tunsigned int cleared = object->m_modelConditionFlagsWord & 0xfffdffff;\n\t\tset = cleared | 0x40000;\n\t\tobject->m_modelConditionFlagsWord = cleared;\n\t\tobject->m_modelConditionFlagsWord = set;\n\t\tobject->notifyModelConditionChanged();\n\t}\n}\n\nclass DockUpdate\n{\npublic:\n\tvirtual void onDockReached(Object *docker);\n};\n\nvoid DockUpdate::onDockReached(Object *docker)\n{\n\tapplyDockCondition(*(Object **)((char *)this - 0x18));\n\tapplyDockCondition(docker);\n}\n"
+}
