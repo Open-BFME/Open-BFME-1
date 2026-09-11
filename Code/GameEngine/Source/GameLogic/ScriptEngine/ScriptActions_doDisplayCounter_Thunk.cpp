@@ -1,12 +1,5 @@
-// ?doDisplayCounter@ScriptActions@@IAEXVAsciiString@@ABV2@@Z
-// partial score=0.99 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// Clean C++ recovery of DISPLAY_COUNTER.
-// Retail RVA 0x002F9660 (235 bytes).  script_engine.cpp sets
-// m_actionTemplates[240].m_internalName to "DISPLAY_COUNTER", and
-// executeAction's jump table at VA 0x0070D6A0 sends arm 240 to this body.  The
-// first parameter arrives by value and this body releases it; the second stays a
-// const reference, so MSVC parks the GameText result in its dead argument slot.
+// Open-BFME5: clean C++ recovery of DISPLAY_COUNTER.
 
 typedef int Int;
 typedef bool Bool;
