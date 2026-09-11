@@ -68,8 +68,8 @@
 //
 // Layout proven from the retail ctor body at 0x48BF40 (reached through ILT
 // thunk 0x29A5): base SubsystemInterface ctor called, vptr 0x10F9610, an
-// inlined std::list ctor at this+0x1C (operator new(0xC) head node, size
-// zeroed at +0x20), four group pointers zeroed at this+0x24..0x30, byte
+// inlined std::list ctor at this+0x1C (operator new(0xC) head node), four
+// group pointers zeroed at this+0x20..0x2C, byte
 // stores at this+0x4C/0x4D/0x54/0x55, and 0x21 stored at this+0x50. The
 // 0x34..0x4B run and the trailing scalars are not semantically
 // reconstructed yet. (The base class is 8 bytes in this build (vptr plus
@@ -203,11 +203,11 @@ private:
 
 	WindowTransitionMap m_transitionMap;		///< this+0x08, BFME factory registry
 	TransitionGroupList m_transitionGroupList;	///< this+0x1C
-	TransitionGroup *m_currentGroup;			///< this+0x24
-	TransitionGroup *m_pendingGroup;			///< this+0x28
-	TransitionGroup *m_drawGroup;				///< this+0x2C
-	TransitionGroup *m_secondaryDrawGroup;		///< this+0x30
-	Int m_unknown34[7];			///< untouched by the ctor; sized for sizeof == 0x58
+	TransitionGroup *m_currentGroup;			///< this+0x20
+	TransitionGroup *m_pendingGroup;			///< this+0x24
+	TransitionGroup *m_drawGroup;				///< this+0x28
+	TransitionGroup *m_secondaryDrawGroup;		///< this+0x2C
+	Int m_unknown30[7];			///< this+0x30; remainder untouched by ctor
 	bool m_unknown4C;				///< this+0x4C
 	bool m_unknown4D;				///< this+0x4D
 	Int m_unknown50;				///< this+0x50, ctor stores 0x21
@@ -218,6 +218,26 @@ private:
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 #include "GameClient/GameWindowTransitions.h"
+
+// BFME's handler gained a transition-factory map and four small state fields
+// after the Zero Hour source snapshot.  The matched GameWindowManager::init
+// caller reaches this constructor through ILT 0x000029A5, while the vtable at
+// 0x010F9610 and the matched destructor independently prove the class/layout.
+GameWindowTransitionsHandler::GameWindowTransitionsHandler( void )
+{
+	m_currentGroup = NULL;
+	m_pendingGroup = NULL;
+	m_drawGroup = NULL;
+	m_secondaryDrawGroup = NULL;
+	m_unknown50 = 0x21;
+	m_unknown55 = false;
+	m_unknown54 = false;
+	m_unknown4C = false;
+	m_unknown4D = false;
+	m_unknown30[0] = 0;
+	m_transitionGroupList.clear();
+}
+
 // ?load@GameWindowTransitionsHandler@@QAEXXZ present-unmatched
 void GameWindowTransitionsHandler::load( void )
 {
