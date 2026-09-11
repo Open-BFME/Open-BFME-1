@@ -1275,6 +1275,46 @@ def _boundary_request():
     return names["name"], rva, names["source"]
 
 
+def _boundary_requests():
+    """Return all one-shot claims requested by add_match or add_match_batch."""
+    single = _boundary_request()
+    batch_file = os.environ.get("ADDMATCH_BOUNDARY_BATCH_FILE")
+    if batch_file is None:
+        return frozenset([single] if single is not None else [])
+    if single is not None:
+        raise SystemExit("single and batch add_match boundary requests cannot be combined")
+    try:
+        raw = Path(batch_file).read_bytes()
+    except OSError as error:
+        raise SystemExit(f"cannot read add_match batch boundary request {batch_file}: {error}")
+    if len(raw) > 16 * 1024 * 1024:
+        raise SystemExit("add_match batch boundary request is over 16 MiB")
+    try:
+        entries = json.loads(raw)
+    except (TypeError, ValueError) as error:
+        raise SystemExit(
+            f"add_match batch boundary request {batch_file} is invalid JSON: {error}")
+    if not isinstance(entries, list) or not entries:
+        raise SystemExit("add_match batch boundary request must be a non-empty JSON list")
+    requests = []
+    for index, entry in enumerate(entries, 1):
+        if not isinstance(entry, dict):
+            raise SystemExit(f"add_match batch boundary request {index} is not an object")
+        name, rva, source = (entry.get("name"), entry.get("rva"), entry.get("source"))
+        if not isinstance(name, str) or not name or not isinstance(source, str) or not source:
+            raise SystemExit(
+                f"add_match batch boundary request {index} needs non-empty name and source")
+        try:
+            parsed_rva = int(rva, 0) if isinstance(rva, str) else int(rva)
+        except (TypeError, ValueError):
+            raise SystemExit(
+                f"add_match batch boundary request {index} has invalid RVA {rva!r}")
+        requests.append((name, parsed_rva, source))
+    if len(set(requests)) != len(requests):
+        raise SystemExit("add_match batch boundary request contains a duplicate claim")
+    return frozenset(requests)
+
+
 def _branch_target(instruction):
     """Return a direct branch target, or ``None`` for indirect/non-branches."""
     from capstone import CS_GRP_JUMP, CS_OP_IMM
@@ -1883,7 +1923,7 @@ def verify_functions(only=None):
             raise SystemExit("no functions match: " + ", ".join(only))
     total = len(rows)
     symbol_map = load_symbol_map()
-    boundary_request = _boundary_request()
+    boundary_requests = _boundary_requests()
 
     sources = []
     seen = set()
@@ -1966,15 +2006,12 @@ def verify_functions(only=None):
     failures = 0
     patches = []
     renumbered = []
-    boundary_seen = False
+    boundary_seen = set()
     for row in rows:
-        boundary_row = bool(
-            boundary_request
-            and row["name"] == boundary_request[0]
-            and int(row["target_rva"], 16) == boundary_request[1]
-            and row["source"] == boundary_request[2]
-        )
-        boundary_seen |= boundary_row
+        boundary_key = (row["name"], int(row["target_rva"], 16), row["source"])
+        boundary_row = boundary_key in boundary_requests
+        if boundary_row:
+            boundary_seen.add(boundary_key)
         try:
             patch = compile_function(
                 row, symbol_map, row_object(row), retain_compiled=boundary_row)
@@ -2015,11 +2052,12 @@ def verify_functions(only=None):
         if patch["rel32"]:
             explain_rel32(patch)
 
-    if boundary_request and not boundary_seen:
-        name, rva, source = boundary_request
+    missing_boundaries = sorted(boundary_requests - boundary_seen)
+    if missing_boundaries:
+        name, rva, source = missing_boundaries[0]
         raise SystemExit(
             f"add_match boundary request for {name} at 0x{rva:08X} in {source} "
-            "did not select a matched row")
+            f"did not select a matched row ({len(missing_boundaries)} missing request(s))")
 
     if renumbered:
         # Green, but on a pin the ledger got wrong: say so every time, or the

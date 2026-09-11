@@ -8,6 +8,7 @@ noreturn, traps are valid bodies, and inline dispatch data is ambiguous.  The
 compiler's COFF section may continue with padding or another function, so a raw
 full-size equality rule would be wrong.
 """
+import json
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -217,7 +218,48 @@ def test_add_match_requests_the_guard_only_for_compiled_sources(
 def test_no_boundary_request_keeps_normal_builds_unmodified(monkeypatch):
     for variable in add_match.BOUNDARY_ENV.values():
         monkeypatch.delenv(variable, raising=False)
+    monkeypatch.delenv(add_match.BOUNDARY_BATCH_FILE_ENV, raising=False)
     assert build._boundary_request() is None
+    assert build._boundary_requests() == frozenset()
+
+
+def test_batch_environment_carries_every_new_cpp_claim_in_the_source(monkeypatch):
+    for variable in add_match.BOUNDARY_ENV.values():
+        monkeypatch.setenv(variable, "stale")
+    monkeypatch.setenv(add_match.BOUNDARY_BATCH_FILE_ENV, "stale")
+    claims = [
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "Code/Family.cpp"},
+        {"name": "?asm@Test@@YAXXZ", "rva": 0x401040, "source": "Code/Family.asm"},
+        {"name": "?other@Test@@YAXXZ", "rva": 0x402000, "source": "Code/Other.cpp"},
+    ]
+
+    requests = add_match.batch_boundary_requests(claims, "Code/Family.cpp")
+    environment = add_match.batch_verification_environment(Path("requests.json"))
+
+    assert not any(variable in environment for variable in add_match.BOUNDARY_ENV.values())
+    assert environment[add_match.BOUNDARY_BATCH_FILE_ENV] == "requests.json"
+    assert requests == [
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": 0x401020, "source": "Code/Family.cpp"},
+    ]
+
+
+def test_build_parses_a_batch_boundary_request(monkeypatch, tmp_path):
+    for variable in add_match.BOUNDARY_ENV.values():
+        monkeypatch.delenv(variable, raising=False)
+    payload = [
+        {"name": "?a@Test@@YAXXZ", "rva": 0x401000, "source": "Code/Family.cpp"},
+        {"name": "?b@Test@@YAXXZ", "rva": "0x00401020", "source": "Code/Family.cpp"},
+    ]
+    request = tmp_path / "requests.json"
+    request.write_text(json.dumps(payload), encoding="utf-8")
+    monkeypatch.setenv(add_match.BOUNDARY_BATCH_FILE_ENV, str(request))
+
+    assert build._boundary_requests() == frozenset({
+        ("?a@Test@@YAXXZ", 0x401000, "Code/Family.cpp"),
+        ("?b@Test@@YAXXZ", 0x401020, "Code/Family.cpp"),
+    })
 
 
 def test_bytes_after_backward_unconditional_jump_are_not_linear_code():

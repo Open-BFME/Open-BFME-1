@@ -42,6 +42,7 @@ BOUNDARY_ENV = {
     "rva": "ADDMATCH_BOUNDARY_RVA",
     "source": "ADDMATCH_BOUNDARY_SOURCE",
 }
+BOUNDARY_BATCH_FILE_ENV = "ADDMATCH_BOUNDARY_BATCH_FILE"
 
 
 def fail(*lines):
@@ -141,10 +142,32 @@ def verification_environment(source_path, source_rel, name, rva):
     environment = os.environ.copy()
     for variable in BOUNDARY_ENV.values():
         environment.pop(variable, None)
+    environment.pop(BOUNDARY_BATCH_FILE_ENV, None)
     if source_path.suffix.lower() in COMPILED_SOURCE_SUFFIXES:
         environment[BOUNDARY_ENV["name"]] = name
         environment[BOUNDARY_ENV["rva"]] = f"0x{rva:08X}"
         environment[BOUNDARY_ENV["source"]] = source_rel
+    return environment
+
+
+def batch_boundary_requests(claims, source_rel):
+    """Every new compiled claim the source-scoped build must boundary-check."""
+    return [
+        {"name": claim["name"], "rva": claim["rva"], "source": claim["source"]}
+        for claim in claims
+        if claim["source"] == source_rel
+        and Path(claim["source"]).suffix.lower() in COMPILED_SOURCE_SUFFIXES
+    ]
+
+
+def batch_verification_environment(request_path):
+    """Point build.py at a batch request file without bloating its environment."""
+    environment = os.environ.copy()
+    for variable in BOUNDARY_ENV.values():
+        environment.pop(variable, None)
+    environment.pop(BOUNDARY_BATCH_FILE_ENV, None)
+    if request_path is not None:
+        environment[BOUNDARY_BATCH_FILE_ENV] = str(request_path)
     return environment
 
 
@@ -162,21 +185,21 @@ def remove_stash(rva, root):
         print(f"add_match: cleared banked attempt {stash.relative_to(Path(root)).as_posix()}")
 
 
-def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
+def replacement_tombstone_record(replaced, successor_name, successor_rva,
                                  successor_size, successor_source, *, verified,
                                  boundary_evidence=None):
-    """Make a replaced ledger identity survive functions.csv union merges.
+    """Render one durable replacement record for deleted_rows.csv.
 
     A branch forked before the conversion can merge the removed functions.csv
     line back without a conflict. check_csv treats this append-only record as
     the authoritative deletion and rejects that resurrection.
     """
-    proof = "byte-verified" if verified else "verification-deferred"
+    proof = "gate-required claim" if verified else "verification-deferred claim"
     if boundary_evidence:
         kind = replaced["notes"].lstrip().split(";", 1)[0]
         reason = (
             f"{kind} scaffold retired because its {replaced['size']}-byte extent at "
-            f"0x{replaced['rva']:08X} was wrong. The real identity {successor_name} is "
+            f"0x{replaced['rva']:08X} was wrong. The real identity {successor_name} is a "
             f"{proof} from {successor_source} over the corrected {successor_size}-byte "
             f"range at the same start. Boundary evidence: {boundary_evidence}"
         )
@@ -184,13 +207,13 @@ def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
         kind = replaced["notes"].lstrip().split(";", 1)[0]
         reason = (
             f"{kind} scaffold placeholder superseded by the real identity of these bytes: "
-            f"{successor_name}, {proof} from {successor_source} over the same "
+            f"{successor_name}, a {proof} from {successor_source} over the same "
             f"{replaced['size']}-byte range. The {replaced['source']} scaffold reproduces "
             "those bytes but carries no identity."
         )
     else:
         reason = (
-            f"claim superseded by the {proof} replacement {successor_name} at "
+            f"claim superseded by the {proof} for {successor_name} at "
             f"0x{successor_rva:08X}/{successor_size}B from {successor_source}. The prior "
             f"claim at 0x{replaced['rva']:08X}/{replaced['size']}B from "
             f"{replaced['source']} was retired."
@@ -198,8 +221,34 @@ def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
     buffer = io.StringIO()
     csv.writer(buffer, lineterminator="\n").writerow(
         [replaced["name"], f"0x{replaced['rva']:08X}", reason])
-    with path.open("ab") as handle:
-        handle.write(buffer.getvalue().encode("utf-8"))
+    return buffer.getvalue().encode("utf-8")
+
+
+def validate_tombstone_append_target(raw, path):
+    """Refuse an append that could glue onto a torn or headerless CSV record."""
+    if not raw.endswith(b"\n"):
+        fail(f"{path} does not end with a newline; refusing a torn tombstone append")
+    header = raw.split(b"\n", 1)[0].rstrip(b"\r")
+    if header != b"name,target_rva,reason":
+        fail(f"{path} has an invalid deletion-ledger header")
+    try:
+        text = raw.decode("utf-8")
+        list(csv.reader(io.StringIO(text), strict=True))
+    except (UnicodeError, csv.Error) as error:
+        fail(f"{path} is not valid CSV: {error}",
+             "repair the deletion ledger before appending another tombstone")
+
+
+def append_replacement_tombstone(path, replaced, successor_name, successor_rva,
+                                 successor_size, successor_source, *, verified,
+                                 boundary_evidence=None):
+    """Atomically append one replacement record to the deletion ledger."""
+    record = replacement_tombstone_record(
+        replaced, successor_name, successor_rva, successor_size, successor_source,
+        verified=verified, boundary_evidence=boundary_evidence)
+    raw = path.read_bytes()
+    validate_tombstone_append_target(raw, path)
+    ledger_io.atomic_write_bytes(path, raw + record)
 
 
 def main():
@@ -379,15 +428,17 @@ def main():
     saved_deleted = deleted_csv.read_bytes() if needs_tombstone else None
 
     def restore():
-        ledger_io.atomic_write_bytes(functions_csv, raw)
+        # Source first leaves at worst a stale unmatched marker on the still-live
+        # new row. Restoring the ledger first could silently erase an ordinary
+        # append while its marker was still stripped. A replacement tombstone is
+        # last, so the restored old row stays loudly condemned until rollback ends.
         ledger_io.atomic_write_bytes(source_path, saved_source)
+        ledger_io.atomic_write_bytes(functions_csv, raw)
         if saved_deleted is not None:
             ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
 
     try:
         new_source = strip_marker(source_path, name)
-        if new_source is not None:
-            source_path.write_bytes(new_source)
 
         if replaced is not None:
             # Drop the old row by CONTENT, not by line number. parse_ledger numbers
@@ -419,9 +470,14 @@ def main():
                   f"0x{replaced['rva']:08X}/{replaced['size']}B {replaced['source']}")
             print(f"add_match: with: {ledger_row}")
         else:
-            with functions_csv.open("ab") as handle:
-                handle.write(ledger_row.encode("utf-8") + b"\r\n")
+            ledger_io.atomic_write_bytes(
+                functions_csv, raw + ledger_row.encode("utf-8") + b"\r\n")
             print(f"add_match: appended: {ledger_row}")
+        # Marker removal is deliberately last. A hard kill before the ledger
+        # writes leaves the source untouched; a kill after them leaves only a
+        # stale comment, never a silently unrecorded body.
+        if new_source is not None:
+            ledger_io.atomic_write_bytes(source_path, new_source)
     except BaseException:
         restore()
         print("add_match: write failed — ledger and marker changes REVERTED", file=sys.stderr)

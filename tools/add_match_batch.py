@@ -48,8 +48,10 @@ Usage:
 import argparse
 import csv
 import io
+import json
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -121,6 +123,14 @@ def main():
         claims = read_manifest(sys.stdin)
 
     for c in claims:
+        source_arg = Path(c["source"])
+        try:
+            resolved_source = (source_arg if source_arg.is_absolute()
+                               else root / source_arg).resolve()
+            c["source"] = resolved_source.relative_to(root).as_posix()
+        except ValueError:
+            add_match.fail(
+                f"manifest line {c['line']}: source {source_arg} is not under {root}")
         p = root / c["source"]
         if not p.exists():
             add_match.fail(f"manifest line {c['line']}: source does not exist: {p}",
@@ -172,6 +182,11 @@ def main():
                     f"range 0x{old:08X}/{at[0]['size']}B; new claim is "
                     f"0x{rva:08X}/{size}B",
                     "a different boundary needs an explicit evidence-backed retraction")
+            if at[0]["name"] == name:
+                add_match.fail(
+                    f"line {c['line']}: replace_rva keeps the scaffold name {name}",
+                    "a scaffold takeover must recover a real identity; use single-row "
+                    "add_match --replace-existing for a same-key metadata update")
             retire[(at[0]["name"], at[0]["rva"])] = at[0]
             replacements.append((at[0], c))
         if by_name.get(name):
@@ -214,25 +229,24 @@ def main():
 
     saved_sources = {s: (root / s).read_bytes() for s in sources}
     saved_deleted = deleted_csv.read_bytes() if retire else None
+    if saved_deleted is not None:
+        add_match.validate_tombstone_append_target(saved_deleted, deleted_csv)
     reverted = False
 
     def revert(why):
         nonlocal reverted
-        ledger_io.atomic_write_bytes(functions_csv, raw)
-        if saved_deleted is not None:
-            ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
         for s, data in saved_sources.items():
             ledger_io.atomic_write_bytes(root / s, data)
+        ledger_io.atomic_write_bytes(functions_csv, raw)
+        # Restore the tombstone last: until this point the newly-restored old
+        # function row remains loudly condemned if rollback is hard-killed.
+        if saved_deleted is not None:
+            ledger_io.atomic_write_bytes(deleted_csv, saved_deleted)
         reverted = True
         print(f"add_match_batch: {why} -- ALL {len(claims)} rows and every "
               "marker strip REVERTED", file=sys.stderr)
 
     try:
-        for c in claims:
-            new = add_match.strip_marker(root / c["source"], c["name"])
-            if new is not None:
-                (root / c["source"]).write_bytes(new)
-
         if retire:
             new_raw, dropped = ledger_io.rewrite(
                 raw, lambda f: add_match.ledger_key(f) not in retire)
@@ -249,22 +263,44 @@ def main():
             appended.write(line.encode("utf-8") + b"\r\n")
         # Tombstones go first: a crash between the two ledger writes is loud
         # (the old live row is condemned), never a silent union-merge deletion.
-        for incumbent, successor in replacements:
-            add_match.append_replacement_tombstone(
-                deleted_csv, incumbent, successor["name"], successor["rva"],
-                successor["size"], successor["source"], verified=True)
+        if replacements:
+            tombstone_records = b"".join(
+                add_match.replacement_tombstone_record(
+                    incumbent, successor["name"], successor["rva"],
+                    successor["size"], successor["source"], verified=True)
+                for incumbent, successor in replacements)
+            ledger_io.atomic_write_bytes(deleted_csv, saved_deleted + tombstone_records)
         ledger_io.atomic_write_bytes(functions_csv, new_raw + appended.getvalue())
 
-        for s in sources:
-            if sys.platform == "win32":
-                cmd = [sys.executable, str(root / "tools" / "build.py"), s]
-            else:
-                cmd = [str(root / "build.sh"), s]
-            print(f"add_match_batch: verifying {s}")
-            result = subprocess.run(cmd, cwd=root)
-            if result.returncode != 0:
-                revert(f"verification failed for {s} (exit {result.returncode})")
-                raise SystemExit(1)
+        # Strip markers only after both ledger writes. A hard kill before this
+        # point cannot silently erase the only record of an unmatched body; a
+        # kill during the loop leaves at worst a stale marker on a live row.
+        for c in claims:
+            new = add_match.strip_marker(root / c["source"], c["name"])
+            if new is not None:
+                ledger_io.atomic_write_bytes(root / c["source"], new)
+
+        build_temp = root / "build"
+        build_temp.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix="add-match-boundaries-", dir=build_temp) as temp:
+            for index, s in enumerate(sources):
+                if sys.platform == "win32":
+                    cmd = [sys.executable, str(root / "tools" / "build.py"), s]
+                else:
+                    cmd = [str(root / "build.sh"), s]
+                requests = add_match.batch_boundary_requests(claims, s)
+                request_path = None
+                if requests:
+                    request_path = Path(temp) / f"{index}.json"
+                    ledger_io.atomic_write_bytes(
+                        request_path,
+                        json.dumps(requests, separators=(",", ":")).encode("utf-8"))
+                print(f"add_match_batch: verifying {s}")
+                verify_env = add_match.batch_verification_environment(request_path)
+                result = subprocess.run(cmd, cwd=root, env=verify_env)
+                if result.returncode != 0:
+                    revert(f"verification failed for {s} (exit {result.returncode})")
+                    raise SystemExit(1)
     except BaseException:
         if not reverted:
             revert("interrupted or write failed")
