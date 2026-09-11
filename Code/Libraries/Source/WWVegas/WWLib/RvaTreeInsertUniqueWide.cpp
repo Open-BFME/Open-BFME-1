@@ -16,14 +16,9 @@
 // Both hinted bodies call it out of line at 0x0005FFA0 at every one of their
 // comparison sites, which is what this file reproduces.
 //
-// The two PLAIN bodies at 0x0054F000 and 0x0068FBE0 are NOT landed here.  They
-// are the same shape plus one expansion of that comparison, inlined at the
-// comparison inside the descent loop and called at the one after it -- 328
-// bytes against the 193 this file emits.  MSVC 7.1 will not inline a function
-// containing a loop: neither `inline`, an in-class definition nor
-// __forceinline gets the expansion, and hand-inlining it puts the expansion at
-// both sites.  Whatever spelling retail used, it is not a call to this
-// function, and the two rows stay byte-dumps until it is found.
+// The plain bodies expand the comparison in the descent loop but call the
+// member after descent.  The explicit 0x0068FBE0 specialization below spells
+// that asymmetric source shape; the separate 0x0054F000 body remains a dump.
 //
 // StringBase is spelled here rather than included, because the shim's copy
 // keeps its constructors private for AsciiString's benefit and the key of a
@@ -118,9 +113,58 @@ typedef _STL::pair<const BfmeWideString, Rva0068FAF0Value> Rva0068FAF0Pair;
 typedef _STL::_Rb_tree<BfmeWideString, Rva0068FAF0Pair, _STL::_Select1st<Rva0068FAF0Pair>,
 	_STL::less<BfmeWideString>, _STL::allocator<Rva0068FAF0Pair> > Rva0068FAF0Tree;
 
-// retail 0x0068FBE0, inserting through the _M_insert at 0x0068FAF0
-template _STL::pair<Rva0068FAF0Tree::iterator, bool>
-Rva0068FAF0Tree::insert_unique( const Rva0068FAF0Pair & );
+static __forceinline int bfmeWideCompareInline( const BfmeWideString &left,
+	const BfmeWideString &right )
+{
+	int rightLength = right.m_data ? right.m_data->length : 0;
+	const unsigned short *rightText = right.m_data ? right.m_data->data :
+		(const unsigned short *)L"";
+	int leftLength = left.m_data ? left.m_data->length : 0;
+	const unsigned short *leftText = left.m_data ? left.m_data->data :
+		(const unsigned short *)L"";
+	int count = leftLength < rightLength ? leftLength : rightLength;
+	int result = 0;
+	while ( count > 0 )
+	{
+		if ( *leftText != *rightText )
+		{
+			result = (int)*leftText - (int)*rightText;
+			break;
+		}
+		++leftText;
+		++rightText;
+		--count;
+	}
+	if ( result != 0 )
+		return result;
+	return leftLength - rightLength;
+}
+
+// retail 0x0068FBE0, inserting through the _M_insert at 0x0068FAF0.
+// Retail expands the comparison in the descent loop, but leaves the final
+// predecessor comparison out of line.
+template <>
+_STL::pair<Rva0068FAF0Tree::iterator, bool>
+Rva0068FAF0Tree::insert_unique( const Rva0068FAF0Pair &value )
+{
+	_Link_type parent = this->_M_header._M_data;
+	_Link_type node = _M_root();
+	bool less = true;
+	while ( node != 0 )
+	{
+		parent = node;
+		less = bfmeWideCompareInline( value.first, _S_key( node ) ) < 0;
+		node = less ? _S_left( node ) : _S_right( node );
+	}
+	iterator position = iterator( parent );
+	if ( less && position == begin() )
+		return _STL::pair<iterator, bool>( _M_insert( parent, parent, value ), true );
+	if ( less )
+		--position;
+	if ( _S_key( position._M_node ).compare( value.first ) < 0 )
+		return _STL::pair<iterator, bool>( _M_insert( node, parent, value ), true );
+	return _STL::pair<iterator, bool>( position, false );
+}
 
 // retail 0x0068FF60, hinting into the same _M_insert
 template Rva0068FAF0Tree::iterator
