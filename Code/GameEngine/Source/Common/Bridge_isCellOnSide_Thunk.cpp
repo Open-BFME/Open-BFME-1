@@ -1,516 +1,134 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Bridge::isCellOnSide, retail 0x001A26D0.
 
-struct Region2D;
-class Bridge { public: bool isCellOnSide(Region2D const *); };
-// ?isCellOnSide@Bridge@@QAE_NPBURegion2D@@@Z
-__declspec(naked) bool Bridge::isCellOnSide(Region2D const *)
+#include <math.h>
+
+typedef float Real;
+typedef bool Bool;
+
+struct Coord2D
 {
-	__asm {
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x34
-		__emit 0x83
-		__emit 0xec
-		__emit 0x4c
-		__emit 0xd8
-		__emit 0x61
-		__emit 0x28
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x38
-		__emit 0xd8
-		__emit 0x61
-		__emit 0x2c
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x3c
-		__emit 0xd8
-		__emit 0x61
-		__emit 0x30
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xde
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0xc1
-		__emit 0xd8
-		__emit 0xca
-		__emit 0xde
-		__emit 0xc1
-		__emit 0xd9
-		__emit 0xc2
-		__emit 0xd8
-		__emit 0xcb
-		__emit 0xde
-		__emit 0xc1
-		__emit 0xd9
-		__emit 0xfa
-		__emit 0xd9
-		__emit 0x05
-		__emit 0x50
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xd9
-		__emit 0xc1
-		__emit 0xda
-		__emit 0xe9
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x44
-		__emit 0x7b
-		__emit 0x0e
-		__emit 0xd8
-		__emit 0x3d
-		__emit 0x34
-		__emit 0x53
-		__emit 0x07
-		__emit 0x01
-		__emit 0xd9
-		__emit 0xc0
-		__emit 0xde
-		__emit 0xcb
-		__emit 0xde
-		__emit 0xc9
-		__emit 0xeb
-		__emit 0x02
-		__emit 0xdd
-		__emit 0xd8
-		__emit 0xd9
-		__emit 0xc9
-		__emit 0x56
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0x44
-		__emit 0xc3
-		__emit 0x09
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x54
-		__emit 0x56
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0x52
-		__emit 0xd8
-		__emit 0x0d
-		__emit 0x44
-		__emit 0xc3
-		__emit 0x09
-		__emit 0x01
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x2c
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x28
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x4c
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x4c
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x50
-		__emit 0xd9
-		__emit 0x54
-		__emit 0x24
-		__emit 0x54
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x38
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x34
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x30
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x44
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x40
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x44
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x24
-		__emit 0xd9
-		__emit 0x54
-		__emit 0x24
-		__emit 0x48
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x50
-		__emit 0xd9
-		__emit 0x41
-		__emit 0x4c
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x44
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x38
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x3c
-		__emit 0xd9
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x14
-		__emit 0xe8
-		__emit 0x2c
-		__emit 0xd8
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x09
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x4c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x10
-		__emit 0x56
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x34
-		__emit 0x52
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x50
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0xe8
-		__emit 0xec
-		__emit 0xd7
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0xc0
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x44
-		__emit 0x56
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x4c
-		__emit 0x50
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x28
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x2c
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x40
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x40
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x40
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x44
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xd8
-		__emit 0x64
-		__emit 0x24
-		__emit 0x20
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x51
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x48
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x48
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x38
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x38
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x3c
-		__emit 0xd8
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x3c
-		__emit 0xd9
-		__emit 0xc9
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x18
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xe8
-		__emit 0x63
-		__emit 0xd7
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x33
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x2c
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x20
-		__emit 0x89
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0x56
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x34
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x51
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x14
-		__emit 0xe8
-		__emit 0x28
-		__emit 0xd7
-		__emit 0xe7
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x95
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x4c
-		__emit 0xc2
-		__emit 0x04
-		__emit 0x00
+	Real x;
+	Real y;
+};
+
+struct Region2D
+{
+	Coord2D lo;
+	Coord2D hi;
+};
+
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+
+	Coord3D(void) {}
+	Coord3D(const Coord3D &that) : x(that.x), y(that.y) {}
+
+	Real length(void) const { return (Real)sqrt(x * x + y * y + z * z); }
+
+	void normalize(void)
+	{
+		Real len = length();
+		if (len != 0)
+		{
+			x /= len;
+			y /= len;
+			z /= len;
+		}
 	}
+};
+
+struct BridgeInfo
+{
+	unsigned char m_pad[0x24];
+	Coord3D fromLeft;
+	Coord3D fromRight;
+	Coord3D toLeft;
+	Coord3D toRight;
+};
+
+extern Bool LineInRegion(const Coord2D *p1, const Coord2D *p2,
+	const Region2D *clipRegion);
+#pragma comment(linker, "/alternatename:?LineInRegion@@YA_NPBUCoord2D@@0PBURegion2D@@@Z=?j_0001ffe1@@YAXXZ")
+
+#define BRIDGE_SIDE_SCALE (*(const Real *)0x0109C344)
+
+class Bridge
+{
+public:
+	Bool isCellOnSide(const Region2D *cell);
+
+private:
+	unsigned char m_pad[0x04];
+	BridgeInfo m_bridgeInfo;
+};
+
+Bool Bridge::isCellOnSide(const Region2D *cell)
+{
+	Coord3D endVector;
+	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
+	endVector.y = m_bridgeInfo.fromRight.y - m_bridgeInfo.fromLeft.y;
+	endVector.z = m_bridgeInfo.fromRight.z - m_bridgeInfo.fromLeft.z;
+	endVector.normalize();
+	endVector.x *= BRIDGE_SIDE_SCALE;
+	endVector.y *= BRIDGE_SIDE_SCALE;
+
+	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	fromLeft.x -= endVector.x;
+	fromLeft.y -= endVector.y;
+
+	Coord3D fromRight = m_bridgeInfo.fromRight;
+	fromRight.x += endVector.x;
+	fromRight.y += endVector.y;
+
+	Coord3D toLeft = m_bridgeInfo.toLeft;
+	toLeft.x -= endVector.x;
+	toLeft.y -= endVector.y;
+
+	Coord3D toRight = m_bridgeInfo.toRight;
+	toRight.x += endVector.x;
+	toRight.y += endVector.y;
+
+	Coord2D line1, line2;
+	line1.x = fromLeft.x;
+	line1.y = fromLeft.y;
+	line2.x = toLeft.x;
+	line2.y = toLeft.y;
+	if (LineInRegion(&line1, &line2, cell))
+		return true;
+
+	line1.x = fromRight.x;
+	line1.y = fromRight.y;
+	line2.x = toRight.x;
+	line2.y = toRight.y;
+	if (LineInRegion(&line1, &line2, cell))
+		return true;
+
+	fromLeft.x -= endVector.x;
+	fromLeft.y -= endVector.y;
+	fromRight.x += endVector.x;
+	fromRight.y += endVector.y;
+	toLeft.x -= endVector.x;
+	toLeft.y -= endVector.y;
+	toRight.x += endVector.x;
+	toRight.y += endVector.y;
+
+	line1.x = fromLeft.x;
+	line1.y = fromLeft.y;
+	line2.x = toLeft.x;
+	line2.y = toLeft.y;
+	if (LineInRegion(&line1, &line2, cell))
+		return true;
+
+	line1.x = fromRight.x;
+	line1.y = fromRight.y;
+	line2.x = toRight.x;
+	line2.y = toRight.y;
+	if (LineInRegion(&line1, &line2, cell))
+		return true;
+
+	return false;
 }
