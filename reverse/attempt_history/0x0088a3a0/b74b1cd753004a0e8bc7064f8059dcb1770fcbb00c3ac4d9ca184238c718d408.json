@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b74b1cd753004a0e8bc7064f8059dcb1770fcbb00c3ac4d9ca184238c718d408",
+  "symbol": "?SimpleMatch@Debug@@SA_NPBD0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.72,
+  "source": "// ?SimpleMatch@Debug@@SA_NPBD0@Z\n// partial score=0.72 date=2026-09-03\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Oy- /O1\n\nclass Debug\n{\npublic:\n\tstatic bool SimpleMatch(const char *str, const char *pattern);\n};\n\nbool Debug::SimpleMatch(const char *str, const char *pattern)\n{\n\tfor (;;)\n\t{\n\t\tif (*str == 0)\n\t\t\tbreak;\n\t\tif (*pattern == 0)\n\t\t\tbreak;\n\t\tif (*pattern == '*')\n\t\t\tgoto match_star;\n\n\t\tif (*str >= 'A' && *str <= 'Z')\n\t\t{\n\t\t\tif ((*str++ + ('a' - 'A')) != *pattern++)\n\t\t\t\treturn false;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tif (*str++ != *pattern++)\n\t\t\t\treturn false;\n\t\t}\n\t}\n\n\tif (*pattern != '*')\n\t\treturn *str == *pattern;\n\nmatch_star:\n\t++pattern;\n\twhile (*str)\n\t{\n\t\tif (SimpleMatch(str++, pattern))\n\t\t\treturn true;\n\t}\n\treturn *str == *pattern;\n}\n"
+}
