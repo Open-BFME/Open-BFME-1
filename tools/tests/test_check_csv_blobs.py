@@ -96,3 +96,46 @@ def test_attempt_validation_still_checks_committed_evidence(repo, monkeypatch,
         assert any(expected in problem for problem in problems), problems
     else:
         assert problems == []
+
+
+@pytest.mark.parametrize('staged_naked', [True, False],
+                         ids=['naked-index-real-worktree',
+                              'real-index-naked-worktree'])
+def test_attempt_sources_use_index_and_deduplicate_shared_source(repo, monkeypatch,
+                                                                staged_naked):
+    root, git = repo
+    attempts = root / 'reverse/attempts'
+    attempts.mkdir(parents=True)
+    bank_body = b'// fn\n// partial score=0.9 date=2026-09-04\n'
+    for rva in ('0x00001000', '0x00002000'):
+        (attempts / f'{rva}.cpp').write_bytes(bank_body)
+
+    ledger = root / 'reverse/functions.csv'
+    ledger.write_bytes((check_csv.FUNCTIONS_HEADER + '\r\n' +
+                        'first,,0x00001000,1,Code/shared.cpp,matched,\r\n' +
+                        'second,,0x00002000,1,Code/shared.cpp,matched,\r\n').encode())
+    source = root / 'Code/shared.cpp'
+    source.parent.mkdir()
+    naked = '__declspec(naked) void fn() {}'
+    real = 'void fn() {}'
+    source.write_text(naked if staged_naked else real)
+    git('add', '--', 'reverse', 'Code/shared.cpp')
+    source.write_text(real if staged_naked else naked)
+
+    monkeypatch.setattr(check_csv, 'FUNCTIONS', ledger)
+    original = check_csv.read_blobs
+    batches = []
+
+    def recording_read_blobs(paths, spec):
+        paths = list(paths)
+        batches.append(paths)
+        return original(paths, spec)
+
+    monkeypatch.setattr(check_csv, 'read_blobs', recording_read_blobs)
+    problems = []
+    assert check_csv.check_attempts('', problems) == 2
+    orphan_problems = [problem for problem in problems
+                       if 'already has real C++' in problem]
+    assert len(orphan_problems) == (0 if staged_naked else 2), problems
+    assert len(batches) == 2
+    assert batches[1] == [source]
