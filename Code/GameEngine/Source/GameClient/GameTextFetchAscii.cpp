@@ -10,7 +10,7 @@
 // the complete function is 114 bytes through ret12 at RVA 0x00436FFF.
 // This isolated ABI view leaves the other GameText.cpp bodies unchanged.
 
-template<class T> struct StringData { unsigned short refs, capacity, length, pad; T text[1]; };
+template<class T> struct StringData { int ref_count; unsigned short length, capacity; T text[1]; };
 template<class T> class StringBase {
     friend class AsciiString;
     friend class UnicodeString;

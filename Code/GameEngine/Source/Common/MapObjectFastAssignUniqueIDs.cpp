@@ -9,7 +9,7 @@
 // Keep the original recursive Overridable getter visible for retail CSE.
 #include <stdlib.h>
 
-template<class T> struct StringData { unsigned short refs, capacity, length, pad; T text[1]; };
+template<class T> struct StringData { int ref_count; unsigned short length, capacity; T text[1]; };
 template<class T> class StringBase {
     friend class AsciiString;
 protected:

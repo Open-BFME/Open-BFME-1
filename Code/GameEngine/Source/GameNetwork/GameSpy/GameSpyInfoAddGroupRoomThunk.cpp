@@ -18,7 +18,7 @@ typedef int Int;
 #define TRUE true
 #define FALSE false
 
-template<class T> struct StringData { unsigned short refs, capacity, length, pad; T text[1]; };
+template<class T> struct StringData { int ref_count; unsigned short length, capacity; T text[1]; };
 template<class T> class StringBase {
     friend class AsciiString;
     friend class UnicodeString;
