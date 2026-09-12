@@ -4782,6 +4782,7 @@ name,address,notes
 ??1Gen_dtor_0006fc30@@UAE@XZ,0x0002C543,gen-dtor class destructor
 ??1?$SubsystemSlot@VMultiplayerSettings@@@@UAE@XZ,0x0002C543,SubsystemSlot<MultiplayerSettings> destructor ILT called by authentic scalar-deleting destructor at 0x0006FC30
 ??1Gen_dtor_0006fcf0@@UAE@XZ,0x0002C520,gen-dtor class destructor
+??1?$SubsystemSlot@VTerrainTypeCollection@@@@UAE@XZ,0x0002C520,SubsystemSlot<TerrainTypeCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FCF0
 ??1Gen_dtor_0006fdb0@@UAE@XZ,0x00045C50,gen-dtor class destructor
 ??1Gen_dtor_0006fe70@@UAE@XZ,0x000220E3,gen-dtor class destructor
 ??1Gen_dtor_0006ff30@@UAE@XZ,0x00031D72,gen-dtor class destructor
@@ -9950,6 +9951,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$SubsystemSlot@VMultiplayerSettings@@@@6B@,0x01075DAC,vtable installed by exact SubsystemSlot<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
+??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x01075DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
