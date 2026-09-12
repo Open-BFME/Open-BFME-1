@@ -1,13 +1,13 @@
-// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
-// partial score=0.6 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
+// ?addTreeType@W3DShrubBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
 //
-// BFME's six-argument W3DTreeBuffer::addTreeType. Retail call-site evidence
-// (the .set()+.concat(".tga") pair landing on the same +0x48 field, and the
-// register carrying modelName from Create_Render_Obj also feeding the +0x4C
-// set() call) proves the string field order textureName, modelName, nameC,
-// nameD; the sibling W3DTreeTypeLifecycle.cpp ctor/dtor are no-ops and do not
-// constrain this order despite declaring a different one.
+// BFME's shrub-type insertion. The owner is proven by the destructor at
+// RVA 0x007206E0: vtable 0x01120F94 slot +8 reaches 0x007207E0, which
+// returns "W3DShrubBuffer". Its type array/count are +0x1E1CD4/+0x1E33D4.
+// The texture set/concat pair proves textureName at +0x48, followed by
+// modelName at +0x4C and the remaining names at +0x50/+0x54.
+// Keep the real inline WWMath constructors visible: treating SphereClass
+// construction as opaque changes the x87 lifetime of the translated center.
 
 typedef int Int;
 typedef float Real;
@@ -16,109 +16,34 @@ typedef unsigned char UnsignedByte;
 class MeshClass;
 class RenderObjClass;
 
-struct Vector3
+#include "vector3.h"
+#include "matrix3d.h"
+#include "sphere.h"
+#include "aabox.h"
+
+// The BFME narrow string owns one reference-counted data pointer. The
+// copy-set target is the matched StringBase<char> body at RVA 0x00887C90.
+template <typename T> struct TreeStringData
 {
-	Real X;
-	Real Y;
-	Real Z;
-
-	__forceinline Vector3(void) {}
-	__forceinline Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
-
-	__forceinline Vector3 &operator = (const Vector3 &v)
-	{
-		X = v.X;
-		Y = v.Y;
-		Z = v.Z;
-		return *this;
-	}
-
-	__forceinline Vector3 &operator += (const Vector3 &v)
-	{
-		X += v.X;
-		Y += v.Y;
-		Z += v.Z;
-		return *this;
-	}
-
+    int m_refCount;
+    int m_length;
+    T m_text[1];
 };
 
-struct Matrix3D
-{
-	Real Row[3][4];
-
-	Matrix3D(void) {}
-	__forceinline Matrix3D(const Matrix3D &m)
-	{
-		Row[0][0] = m.Row[0][0];
-		Row[0][1] = m.Row[0][1];
-		Row[0][2] = m.Row[0][2];
-		Row[0][3] = m.Row[0][3];
-		Row[1][0] = m.Row[1][0];
-		Row[1][1] = m.Row[1][1];
-		Row[1][2] = m.Row[1][2];
-		Row[1][3] = m.Row[1][3];
-		Row[2][0] = m.Row[2][0];
-		Row[2][1] = m.Row[2][1];
-		Row[2][2] = m.Row[2][2];
-		Row[2][3] = m.Row[2][3];
-	}
-
-	void Get_Translation(Vector3 *set) const
-	{
-		set->X = Row[0][3];
-		set->Y = Row[1][3];
-		set->Z = Row[2][3];
-	}
-};
-
-class AABoxClass
+template <typename T> class StringBase
 {
 public:
-	Vector3 Center;
-	Vector3 Extent;
+    void set(const StringBase<T> &other);
+protected:
+    TreeStringData<T> *m_data;
 };
 
-class SphereClass
+class AsciiString : private StringBase<char>
 {
 public:
-	SphereClass(const Vector3 *points, Int count);
-
-	Vector3 Center;
-	Real Radius;
-};
-
-struct Rva0071EB50StringData
-{
-	unsigned char m_header[8];
-	char m_chars[1];
-};
-
-extern char Rva006A16B0Empty[];
-
-// The narrow BFME string wrapper inherits the one-pointer string base. Its
-// inherited set() is the retail spelling at 0x00887C90 (additive-pinned as
-// both AsciiString::set and UnicodeString::set); concat() is the already
-// matched narrow AsciiString body reached through the 0x00022057 thunk.
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &that);
-
-	void *m_data;
-};
-
-class AsciiString : public UnicodeString
-{
-public:
-	void concat(const char *text);
-
-	const char *str(void) const
-	{
-		if (m_data != 0)
-			return ((Rva0071EB50StringData *)m_data)->m_chars;
-		return Rva006A16B0Empty;
-	}
+    void set(const AsciiString &other) { StringBase<char>::set(other); }
+    void concat(const char *text);
+    const char *str(void) const { return m_data ? m_data->m_text : ""; }
 };
 
 class Rva0071EB50TreeType
@@ -248,7 +173,7 @@ public:
 
 extern RenderObjClass *Create_Render_Obj(const char *name);
 
-class W3DTreeBuffer
+class W3DShrubBuffer
 {
 public:
 	Int addTreeType(const AsciiString &modelName, const AsciiString &nameC,
@@ -262,8 +187,8 @@ public:
 	Int m_numTreeTypes;
 };
 
-// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
-Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
+// ?addTreeType@W3DShrubBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+Int W3DShrubBuffer::addTreeType(const AsciiString &modelName,
 	const AsciiString &nameC, const void *data, Int shadowKind,
 	const AsciiString &textureName, const AsciiString &nameD)
 {
@@ -309,10 +234,8 @@ Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	const Matrix3D xfm = mesh->Get_Transform();
 	SphereClass bounds(pVert, numVertex);
 	SphereClass &destBounds = m_treeTypes[m_numTreeTypes].m_bounds;
-	destBounds.Center.X = offset.X + bounds.Center.X;
-	destBounds.Center.Z = offset.Z + bounds.Center.Z;
-	destBounds.Radius = bounds.Radius;
-	destBounds.Center.Y = offset.Y + bounds.Center.Y;
+	bounds.Center += offset;
+	destBounds = bounds;
 	m_treeTypes[m_numTreeTypes].m_data = data;
 	m_treeTypes[m_numTreeTypes].m_offset = offset;
 	m_treeTypes[m_numTreeTypes].m_doShadow = (shadowKind == 1);
@@ -321,6 +244,8 @@ Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	m_treeTypes[m_numTreeTypes].m_modelName.set(modelName);
 	m_treeTypes[m_numTreeTypes].m_nameC.set(nameC);
 	m_treeTypes[m_numTreeTypes].m_nameD.set(nameD);
+	// Retail initializes this per-type sentinel after the string fields.
+	m_treeTypes[m_numTreeTypes].m_field0058 = -2;
 	m_numTreeTypes++;
 	return m_numTreeTypes - 1;
 }
