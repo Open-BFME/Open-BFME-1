@@ -829,9 +829,3 @@ WinInstanceData+0x14|m_unreconstructed_14|m_owner,Code/GameEngineDevice/Source/W
 WinInstanceData+0x4|m_bfmePrefix|m_id,Code/GameEngine/Source/GameClient/GUI/GameWindowWinSetInstanceData.cpp,58,1.00,layout_witness
 WinInstanceData+0x8|m_unreconstructed_08|m_state,Code/GameEngine/Source/Common/parseName_Thunk.cpp,54,1.00,layout_witness
 WindowVideo+0x0|m_bfme_head|m_playType,Code/GameEngine/Source/GameClient/GUI/WindowVideo_dtor.cpp,69,1.00,layout_witness
-WorldHeightMap+0x20|m_cellCount|m_dataSize,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualBfme.cpp,89,1.00,layout_witness
-WorldHeightMap+0x24|m_heights|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualBfme.cpp,90,1.00,layout_witness
-WorldHeightMap+0x8|m_drawWidth|m_width,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReAcquireResources_Bfme.cpp,84,1.00,layout_witness
-WorldHeightMap+0x8|m_xExtent|m_width,Code/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferInit.cpp,66,1.00,layout_witness
-WorldHeightMap+0x8|m_xExtent|m_width,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundIsEdgeAligned.cpp,11,1.00,layout_witness
-WorldHeightMap+0x8|m_xExtent|m_width,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackground_clearFlipStates.cpp,10,1.00,layout_witness

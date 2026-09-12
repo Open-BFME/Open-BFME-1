@@ -65,17 +65,17 @@ public:
 	unsigned short getHeight(int x, int y) const
 	{
 		int index = x + y * m_width;
-		if (index < 0 || index >= m_cellCount || !m_heights) {
+		if (index < 0 || index >= m_dataSize || !m_data) {
 			return 0;
 		}
-		return m_heights[index];
+		return m_data[index];
 	}
 
 	void setRawHeight(int x, int y, int height)
 	{
 		int index = x + y * m_width;
-		if (index >= 0 && index < m_cellCount && m_heights) {
-			m_heights[index] = static_cast<unsigned short>(height);
+		if (index >= 0 && index < m_dataSize && m_data) {
+			m_data[index] = static_cast<unsigned short>(height);
 		}
 	}
 
@@ -85,8 +85,8 @@ private:
 	unsigned char m_padding0C[0x04];
 	int m_borderSize;
 	unsigned char m_padding14[0x0C];
-	int m_cellCount;
-	unsigned short *m_heights;
+	int m_dataSize;
+	unsigned short *m_data;
 };
 
 #define BFME_VIRTUAL_SLOT(n) virtual void slot##n();

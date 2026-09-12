@@ -6,8 +6,8 @@ class WorldHeightMap
 {
 public:
 	unsigned char m_pad00[8];
-	int m_xExtent;
-	int m_yExtent;
+	int m_width;
+	int m_height;
 };
 
 extern void d_00749830(void);
@@ -36,8 +36,8 @@ private:
 void W3DTerrainBackground::clearFlipStates(void)
 {
 	WorldHeightMap *map = m_map;
-	int limitX = map->m_xExtent;
-	int limitY = map->m_yExtent;
+	int limitX = map->m_width;
+	int limitY = map->m_height;
 	limitX--;
 	limitY--;
 	int xOrig = m_xOrigin;

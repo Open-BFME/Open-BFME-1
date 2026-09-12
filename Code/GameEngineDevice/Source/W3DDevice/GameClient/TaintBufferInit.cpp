@@ -62,8 +62,8 @@ class WorldHeightMap
 {
 public:
 	unsigned char m_pad00[8];
-	int m_xExtent;
-	int m_yExtent;
+	int m_width;
+	int m_height;
 	int m_borderSize;
 	unsigned char m_pad14[0x120E8 - 0x14];
 	int m_drawWidth;
@@ -148,10 +148,10 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 	if (map)
 	{
 		m_numCellsX = bfmeFloatToLong27050(bfmeFloatCeil27050(
-			(Real)(map->m_xExtent - 1 - map->m_borderSize * 2)
+			(Real)(map->m_width - 1 - map->m_borderSize * 2)
 				/ m_cellWidth * 10.0f));
 		m_numCellsY = bfmeFloatToLong27050(bfmeFloatCeil27050(
-			(Real)(map->m_yExtent - 1 - map->m_borderSize * 2)
+			(Real)(map->m_height - 1 - map->m_borderSize * 2)
 				/ m_cellHeight * 10.0f));
 
 		dstTextureWidth = m_numMaxVisibleCellsX =

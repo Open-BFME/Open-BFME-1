@@ -80,8 +80,8 @@ class WorldHeightMap
 {
 public:
 	char m_padding[8];
-	int m_drawWidth;
-	int m_drawHeight;
+	int m_width;
+	int m_height;
 };
 
 class BaseHeightMapRenderObjClass
@@ -160,7 +160,7 @@ void BaseHeightMapRenderObjClass::ReAcquireResources(void)
 	if (m_shroudSecondary != 0)
 		CALL_TARGET(j_000357d3, m_shroudSecondary);
 	if (m_map != 0)
-		complete->v132(m_map->m_drawWidth, m_map->m_drawHeight, m_map, 0);
+		complete->v132(m_map->m_width, m_map->m_height, m_map, 0);
 	if (m_roadBuffer != 0)
 		CALL_TARGET(j_0000566e, m_roadBuffer);
 	if (m_treeBuffer != 0)

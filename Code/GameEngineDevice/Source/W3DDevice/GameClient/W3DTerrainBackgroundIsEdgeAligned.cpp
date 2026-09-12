@@ -7,8 +7,8 @@ class WorldHeightMap
 {
 public:
 	unsigned char m_pad00[0x08];
-	int m_xExtent;
-	int m_yExtent;
+	int m_width;
+	int m_height;
 };
 
 class W3DTerrainBackground
@@ -41,11 +41,11 @@ Bool W3DTerrainBackground::isEdgeAligned(int x, int y, int requested)
 {
 	int yValue = y;
 	WorldHeightMap *map = m_map;
-	int limitY = map->m_yExtent - 1;
+	int limitY = map->m_height - 1;
 	if (yValue != 0)
 		goto afterMapRightEdge;
 	{
-		int limitX = map->m_xExtent - 1;
+		int limitX = map->m_width - 1;
 		if (m_xOrigin + x == limitX)
 			goto resultTrue;
 	}
