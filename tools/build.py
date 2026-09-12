@@ -1054,13 +1054,52 @@ _SWEEP_INCLUDE_DIRS = [
 ]
 
 
-def compile_source(source, output):
+_CL_ERROR = re.compile(r"(?:fatal\s+)?error\s+(C\d+):\s*(.*)", re.I)
+
+
+def first_cl_error(text):
+    """Grouping key for one cl.exe transcript.
+
+    The file(line) prefix is stripped so TUs that share a root cause (the same
+    missing header, the same undeclared identifier) collapse into one bucket.
+    layout_witness --compile prints these buckets; swallowing SystemExit used
+    to leave the 289 failing reference TUs unattributed.
+    """
+    if not text or not str(text).strip():
+        return "(empty compiler output)"
+    leftover = []
+    for raw in str(text).splitlines():
+        line = raw.strip()
+        if not line or line.startswith("Note: including file:"):
+            continue
+        if line.lower().startswith("compile failed:"):
+            continue
+        match = _CL_ERROR.search(line)
+        if match:
+            return f"{match.group(1)}: {match.group(2).strip()}"
+        leftover.append(line)
+    for line in leftover:
+        if line.lower().startswith("warning"):
+            continue
+        return line[:200]
+    return "(unrecognized compiler output)"
+
+
+def try_compile_source(source, output):
+    """Compile `source` to `output`. Return (ok, filtered_output, returncode).
+
+    Same retries as compile_source (sweep-include path, transient Wine launch)
+    but never raises SystemExit on a compiler error: layout_witness groups the
+    message, and a raised SystemExit is how wine-not-found still fails loud.
+    """
     output.parent.mkdir(parents=True, exist_ok=True)
     command, env = compiler_command(source, output)
     is_cl = source.suffix.lower() != ".asm"
     # Fingerprint the BASE command: the sweep-include retry below is a
     # deterministic function of these same inputs, so cache validity holds.
     fingerprint = _cmd_fingerprint(command, env)
+    filtered = ""
+    code = 1
     for attempt in range(3):
         result = subprocess.run(
             command + (["-showIncludes"] if is_cl else []),
@@ -1070,29 +1109,41 @@ def compile_source(source, output):
             stderr=subprocess.STDOUT,
             text=True,
         )
-        if result.returncode == 0:
-            _write_deps_sidecar(source, output, fingerprint, result.stdout, is_cl)
-            return
+        stdout = result.stdout or ""
+        filtered = "\n".join(l for l in stdout.splitlines()
+                             if not l.startswith("Note: including file:"))
+        code = result.returncode
+        if code == 0:
+            _write_deps_sidecar(source, output, fingerprint, stdout, is_cl)
+            return True, filtered, 0
         # Retry once with the sweep include dirs on the path (header resolution
         # only — never affects codegen of already-matched sources).
         if attempt == 0 and any(d.exists() for d in _SWEEP_INCLUDE_DIRS):
-            missing = any("Cannot open include file" in l for l in result.stdout.splitlines())
+            missing = any("Cannot open include file" in l for l in stdout.splitlines())
             if missing:
                 env = dict(env)
                 extra = ";".join(wine_path(d) for d in _SWEEP_INCLUDE_DIRS if d.exists())
                 env["INCLUDE"] = env["INCLUDE"] + ";" + extra
                 command = list(command) + [f"-I{wine_path(d)}" for d in _SWEEP_INCLUDE_DIRS if d.exists()]
                 continue
-        transient = (not result.stdout.strip()
-                     or "Application could not be started" in result.stdout
-                     or "ShellExecuteEx failed" in result.stdout)
+        transient = (not stdout.strip()
+                     or "Application could not be started" in stdout
+                     or "ShellExecuteEx failed" in stdout)
         if not transient or attempt == 2:
-            print(f"compile failed: {source.relative_to(ROOT)}", file=sys.stderr)
-            print("\n".join(l for l in result.stdout.splitlines()
-                            if not l.startswith("Note: including file:")))
-            raise SystemExit(result.returncode)
+            return False, filtered, code
         print(f"retrying transient Wine launch failure for "
               f"{source.relative_to(ROOT)} ({attempt + 2}/3)", file=sys.stderr)
+    return False, filtered, code
+
+
+def compile_source(source, output):
+    ok, text, code = try_compile_source(source, output)
+    if ok:
+        return
+    print(f"compile failed: {source.relative_to(ROOT)}", file=sys.stderr)
+    if text:
+        print(text)
+    raise SystemExit(code)
 
 
 def is_funclet_row(row, object_symbol):
