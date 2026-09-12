@@ -9589,6 +9589,7 @@ name,address,notes
 ??1W3DFloorDrawModuleDataBase@@UAE@XZ,0x0004584A,route=0x00759480; scalar deleting destructor call target established by retail wrapper
 ??1W3DLaserDrawModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1W3DModelDraw@@MAE@XZ,0x0002FF31,route=0x0077B090; W3DQuadrupedDraw empty destructor tail-call through the retail ILT
+??1W3DPropDraw@@MAE@XZ,0x0002CA0C,route=0x00759350; scalar deleting destructor call target established by retail wrapper
 ??1W3DQuadrupedDraw@@UAE@XZ,0x0001615D,route=0x00759770; scalar deleting destructor call target established by retail wrapper
 ??1W3DStreakDrawModuleData@@UAE@XZ,0x0003F3DC,route=0x0077D490; scalar deleting destructor call target established by retail wrapper
 ??1W3DSupplyDraw@@MAE@XZ,0x00028BD2,route=0x0077DBE0; scalar deleting destructor call target established by retail wrapper
