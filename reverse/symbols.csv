@@ -5349,7 +5349,7 @@ name,address,notes
 ??1Gen_dtor_002664b0@@UAE@XZ,0x0003C03D,gen-dtor class destructor
 ??1Gen_dtor_00266670@@UAE@XZ,0x00016153,gen-dtor class destructor
 ??1Gen_dtor_00267890@@UAE@XZ,0x00008AE4,gen-dtor class destructor
-??1Gen_dtor_00267a60@@UAE@XZ,0x0001A834,gen-dtor class destructor
+??1SpecialDisguiseUpdateModuleData@@UAE@XZ,0x0001A834,route=0x00267A90; vtable 0x010B7770 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_00269100@@UAE@XZ,0x0002041E,gen-dtor class destructor
 ??1Gen_dtor_0026a9f0@@UAE@XZ,0x0001BBE4,gen-dtor class destructor
 ??1Gen_dtor_0026aff0@@UAE@XZ,0x00019565,gen-dtor class destructor
