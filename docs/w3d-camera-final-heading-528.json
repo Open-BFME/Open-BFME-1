@@ -1,0 +1,112 @@
+{
+  "symbol": "?cameraModFinalLookToward@W3DView@@UAEXPAUCoord3D@@@Z",
+  "rva": "0x007401A0",
+  "size": 528,
+  "source": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraModFinalLookTowardBfme.cpp",
+  "source_sha256_lf": "7cf375c2e1bfbd45680f26a1776ec333594a986ec4734b23c2c12fcc40002107",
+  "raw_sha256": "da15dc0d234216c9e5c507438a3a66ca2d65fabb1cee014614a5d4d08862ed0e",
+  "resolved_sha256": "032d5bab3e93c6de0a81cf5becf0496634114895b748d1836db00648f2ef75d9",
+  "differences": 0,
+  "unresolved": [],
+  "masked": false,
+  "relocation_count": 16,
+  "numeric_dir32": [
+    {
+      "offset": "0x7e",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0x98",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0xc6",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0xd4",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0xe2",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0xf0",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    },
+    {
+      "offset": "0x10c",
+      "symbol": "__real@3e800000",
+      "retail_va": "0x1083b6c",
+      "actual_bytes": "0000803e"
+    },
+    {
+      "offset": "0x128",
+      "symbol": "__real@3e800000",
+      "retail_va": "0x1083b6c",
+      "actual_bytes": "0000803e"
+    },
+    {
+      "offset": "0x16d",
+      "symbol": "__real@3dcccccd",
+      "retail_va": "0x1075c70",
+      "actual_bytes": "cdcccc3d"
+    },
+    {
+      "offset": "0x18b",
+      "symbol": "__real@00000000",
+      "retail_va": "0x1075350",
+      "actual_bytes": "00000000"
+    },
+    {
+      "offset": "0x19a",
+      "symbol": "__real@3fc90fdb",
+      "retail_va": "0x1097114",
+      "actual_bytes": "db0fc93f"
+    },
+    {
+      "offset": "0x1da",
+      "symbol": "__real@3f000000",
+      "retail_va": "0x107533c",
+      "actual_bytes": "0000003f"
+    }
+  ],
+  "rel32": [
+    {
+      "offset": "0x181",
+      "symbol": "__CIacos",
+      "resolved_rva": "0x9f7256"
+    },
+    {
+      "offset": "0x1a7",
+      "symbol": "?normAngle@@YIXAAM@Z",
+      "resolved_rva": "0x73a900"
+    },
+    {
+      "offset": "0x1cc",
+      "symbol": "?normAngle@@YIXAAM@Z",
+      "resolved_rva": "0x73a900"
+    },
+    {
+      "offset": "0x1e6",
+      "symbol": "?normAngle@@YIXAAM@Z",
+      "resolved_rva": "0x73a900"
+    }
+  ],
+  "boundary": "ret 4 at +0x20D; end +0x210 followed by32 INT3 bytes",
+  "identity": "W3DView primary vtableVA0x011217A0 slot37 points toVA0x00437646 whoseE9 reachesVA0x00B401A0; canonical cameraModFinalLookToward source algorithm agrees",
+  "shape": "Canonical Vector2 direction; the squared-length input, normalized heading and heading delta share one scalar across disjoint lifetimes. No new math or inline assembly."
+}
