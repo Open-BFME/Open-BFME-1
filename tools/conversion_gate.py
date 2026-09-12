@@ -71,20 +71,22 @@ def run(*argv):
     return proc.stdout
 
 
-def added_lift_lines(old, new):
-    diff_cmd = ["git", "diff", "--unified=0"]
-    diff_cmd += ["--cached", old] if new == ":" else [old, new]
+def added_lift_lines(old, new, lines=None):
+    if lines is None:
+        lines = diff_lines(old, new, "Code/", ":(exclude)Code/gen_small/")
     # Authored code only. A ledger row may name a file in the vendored
     # reference/ tree, and those rows sit outside this scan on purpose: nobody
     # authors that tree, nine of its files already contain __emit upstream, and
     # scanning it would fire on the next re-vendor rather than on a regression.
     # Rule B below reads whatever path a row names, so it covers them.
-    diff_cmd += ["--", "Code/", ":(exclude)Code/gen_small/"]
     bad, path = {}, None
-    for line in run(*diff_cmd).splitlines():
+    for line in lines:
         if line.startswith("+++ b/"):
             path = line[6:]
         elif line.startswith("+") and not line.startswith("+++"):
+            if path is None or not path.startswith("Code/") \
+                    or path.startswith("Code/gen_small/"):
+                continue
             if is_lift_line(line):
                 first, count = bad.get(path, (line[1:].strip()[:80], 0))
                 bad[path] = (first, count + 1)
@@ -106,12 +108,19 @@ def diff_lines(old, new, *paths):
     return run(*cmd, "--", *paths).splitlines()
 
 
-def gen_asm_offences(old, new):
+def collect_diff_lines(old, new):
+    """Collect the shared Code/ledger diff used by Rules A and C."""
+    return diff_lines(old, new, "Code/", LEDGER)
+
+
+def gen_asm_offences(old, new, lines=None):
     """Rule C. Returns a list of human-readable offences, empty when clean."""
     offences = []
     path = None
     dump_rows, other_code_edits = [], set()
-    for line in diff_lines(old, new, "Code/", LEDGER):
+    if lines is None:
+        lines = diff_lines(old, new, "Code/", LEDGER)
+    for line in lines:
         if line.startswith("+++ b/"):
             path = line[6:]
             continue
@@ -240,8 +249,13 @@ def main():
     if len(sys.argv) != 3:
         raise SystemExit(__doc__.strip().splitlines()[2].strip())
     old, new = sys.argv[1], sys.argv[2]
+    # Rule A and Rule C consume the same Code/ledger diff. Keep the complete
+    # diff in memory once, then let each rule apply its own path filter. Rule B
+    # independently uses ledger_blob so its authoritative ledger-state check
+    # remains valid for binary, rename, or otherwise unusual Git diffs.
+    collected = collect_diff_lines(old, new)
     failed = False
-    for path, line in added_lift_lines(old, new):
+    for path, line in added_lift_lines(old, new, collected):
         failed = True
         print("conversion gate: %s adds a naked/__emit body outside Code/gen_small/:\n"
               "    %s" % (path, line), file=sys.stderr)
@@ -250,7 +264,7 @@ def main():
               "produce and moves progress.py C++ exact by +0. Convert to real C++, or\n"
               "leave the .asm dump alone (codegen blockers: Code/masm_dumps/*.asm).",
               file=sys.stderr)
-    for offence in gen_asm_offences(old, new):
+    for offence in gen_asm_offences(old, new, collected):
         failed = True
         print("conversion gate: " + offence, file=sys.stderr)
     for rva, name, old_src, new_src in clean_coverage_lost(old, new):
