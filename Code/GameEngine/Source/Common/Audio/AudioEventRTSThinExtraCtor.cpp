@@ -4,7 +4,7 @@
 // (ILT 0x0004A86D) after the member zeros.
 //   extra       0x000B2D90 101B  (inlined twin 0x000B2CC0)
 //   positional  0x000B2F00 133B  (inlined twin 0x000B2E10)
-//   ObjectID    0x000B4440 141B  (inlined twin 0x000B4350)
+//   ObjectID    0x000B4440 141B  (AudioEventInfoRef overload; caller-proven)
 //   DrawableID  0x000B45E0 141B  (inlined twin 0x000B44F0)
 //   LivingWorld 0x000B4780 145B  (inlined twin 0x000B4690)
 
@@ -17,6 +17,10 @@ public:
 private:
 	char *m_data;
 };
+
+// One-word opaque ABI view. SlowDeathBehavior retains/releases this pointer
+// and the callee helper reads info+8, proving this overload takes an info ref.
+struct AudioEventInfoRef { void *ptr; };
 
 enum ObjectID
 {
@@ -52,7 +56,7 @@ class AudioEventRTS
 public:
 	AudioEventRTS(const AsciiString &eventName, int extra);
 	AudioEventRTS(const AsciiString &eventName, const Coord3D *positionOfAudio, int extra);
-	AudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
+	AudioEventRTS(const AudioEventInfoRef &eventInfo, ObjectID ownerID);
 	AudioEventRTS(const AsciiString &eventName, DrawableID drawableID);
 	AudioEventRTS(const AsciiString &eventName, LivingWorldID ownerID);
 	virtual ~AudioEventRTS();
@@ -94,10 +98,12 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positi
 	m_flag40 = 1;
 }
 
-// object-symbol=??0AudioEventRTS@@QAE@ABVAsciiString@@W4ObjectID@@@Z
-AudioEventRTS::AudioEventRTS(const AsciiString &eventName, ObjectID ownerID)
+// ??0AudioEventRTS@@QAE@ABUAudioEventInfoRef@@W4ObjectID@@@Z
+AudioEventRTS::AudioEventRTS(const AudioEventInfoRef &eventInfo, ObjectID ownerID)
 {
-	initFromName(eventName);
+    // Keep the established helper's source-local spelling and pin. Its argument
+    // is the same one-pointer ref ABI; the helper dereferences it as info+8.
+    initFromName(reinterpret_cast<const AsciiString &>(eventInfo));
 	m_objectID = ownerID;
 	m_timeOfDay = 0;
 	if (ownerID)

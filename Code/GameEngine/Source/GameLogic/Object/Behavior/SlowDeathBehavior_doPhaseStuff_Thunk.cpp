@@ -1,521 +1,151 @@
+// stlport
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump SlowDeathBehavior::doPhaseStuff to C++ thunk.
+#include <vector>
+// SlowDeathBehavior::doPhaseStuff, retail RVA 0x002080B0 (504 bytes).
+// beginSlowDeath at RVA 0x00209BB0 calls this dispatcher; the original
+// SlowDeathBehavior.cpp establishes its phase, FX, OCL and weapon operations.
+// BFME adds per-phase sounds and uses client RNG for FX and sounds, logic RNG
+// for OCLs and weapons. Its four arrays start at +0x58/+0x88/+0xB8/+0xE8;
+// the runtime gate is the module-data byte at +0x1A4.
+//
+// Audio ctor ILT 0x00008E86 -> 0x000B4440 -> helper 0x000B2610 consumes an
+// AudioEventInfoRef: it reads the retained object's name at +8, then binds
+// that ref to AudioEventRTS+8. Older ledger AsciiString spellings describe
+// the same one-word ABI but do not describe this refcounted argument.
+//
+// Real STLport OCL/weapon vectors preserve the retail temporary ordering.
+// The final sound-base/object/id locals also matter to MSVC register choice.
 
-enum SlowDeathPhaseType {};
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SlowDeathBehavior.h
-class SlowDeathBehavior
-{
-protected:
-void doPhaseStuff(SlowDeathPhaseType);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *);
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *);
+extern int GetGameClientRandomValue(int, int, char *, int);
+extern int GetGameLogicRandomValue(int, int, char *, int);
+
+
+struct Coord3D { float x, y, z; };
+enum ObjectID { INVALID_OBJECT_ID = 0 };
+enum SlowDeathPhaseType { SDPHASE_INITIAL, SDPHASE_MIDPOINT, SDPHASE_FINAL };
+class Object {
+public:
+    char pad00[0x38];
+    Coord3D position;
+    char pad44[0x30];
+    ObjectID id;
 };
+class FXList {
+public:
+    bool bfmeIsBlocked() const;
+    void doFXObj(const Object *, const Object *) const;
+    static void doFXObj(const FXList *fx, const Object *obj, const Object *victim) {
+        if (fx && !fx->bfmeIsBlocked()) fx->doFXObj(obj, victim);
+    }
+};
+class ObjectCreationList {
+public:
+    void createInternal(const Object *, const Object *, unsigned int) const;
+    static void create(const ObjectCreationList *ocl, const Object *obj, const Object *victim) {
+        if (ocl) ocl->createInternal(obj, victim, 0);
+    }
+};
+class WeaponTemplate;
+class WeaponStore {
+public:
+    void createAndFireTempWeapon(const WeaponTemplate *, const Object *, const Coord3D *);
+};
+extern WeaponStore *TheWeaponStore;
 
-// ?doPhaseStuff@SlowDeathBehavior@@IAEXW4SlowDeathPhaseType@@@Z
-__declspec(naked) void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType)
+class AudioEventInfo {
+public:
+    virtual ~AudioEventInfo();
+    long m_refCount;
+    void Release_Ref() {
+        if (InterlockedDecrement(&m_refCount) <= 0) delete this;
+    }
+};
+struct AudioEventInfoRef {
+    AudioEventInfo *ptr;
+    AudioEventInfoRef(AudioEventInfo *other) : ptr(other) {
+        if (ptr) InterlockedIncrement(&ptr->m_refCount);
+    }
+    ~AudioEventInfoRef() {
+        if (ptr) ptr->Release_Ref();
+    }
+};
+class AudioEventRTS {
+public:
+    AudioEventRTS(const AudioEventInfoRef &, ObjectID);
+    ~AudioEventRTS();
+private:
+    char storage[0x70];
+};
+class AudioManager {
+public:
+    virtual void slot00(); virtual void slot01(); virtual void slot02();
+    virtual void slot03(); virtual void slot04(); virtual void slot05();
+    virtual void slot06(); virtual void slot07(); virtual void slot08();
+    virtual void slot09(); virtual void slot10(); virtual void slot11();
+    virtual void slot12(); virtual void slot13(); virtual void slot14();
+    virtual void slot15(); virtual void slot16();
+    virtual unsigned int addAudioEvent(const AudioEventRTS *);
+};
+extern AudioManager *TheAudio;
+
+template<class T> struct PhaseVector {
+    T *begin;
+    T *end;
+    T *capacity;
+    int size() const { return end - begin; }
+    const T &operator[](int index) const { return begin[index]; }
+};
+struct SlowDeathBehaviorModuleData {
+    char pad00[0x58];
+    PhaseVector<const FXList *> fx[4];
+    std::vector<const ObjectCreationList *> ocls[4];
+    std::vector<const WeaponTemplate *> weapons[4];
+    PhaseVector<AudioEventInfo *> sounds[4];
+    char pad118[0x8c];
+    unsigned char maskOfLoadedEffects;
+};
+class SlowDeathBehavior {
+protected:
+    void doPhaseStuff(SlowDeathPhaseType);
+    void *vtable;
+    const SlowDeathBehaviorModuleData *data;
+    Object *object;
+};
+void SlowDeathBehavior::doPhaseStuff(SlowDeathPhaseType phase)
 {
-__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0xe0
-        __emit 0xbf
-        __emit 0x00
-        __emit 0x01
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x74
-        __emit 0x55
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x04
-        __emit 0x8a
-        __emit 0x81
-        __emit 0xa4
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x84
-        __emit 0xb7
-        __emit 0x01
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x84
-        __emit 0x24
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x04
-        __emit 0x40
-        __emit 0x56
-        __emit 0x8d
-        __emit 0x34
-        __emit 0x81
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x5c
-        __emit 0x57
-        __emit 0x2b
-        __emit 0x46
-        __emit 0x58
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x3a
-        __emit 0x53
-        __emit 0x68
-        __emit 0x17
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x0a
-        __emit 0x01
-        __emit 0x48
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xa0
-        __emit 0xf9
-        __emit 0xe1
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x58
-        __emit 0x8b
-        __emit 0x3c
-        __emit 0x81
-        __emit 0x8b
-        __emit 0x5d
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x85
-        __emit 0xff
-        __emit 0x74
-        __emit 0x15
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x54
-        __emit 0x9e
-        __emit 0xe0
-        __emit 0xff
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x0a
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x53
-        __emit 0x8b
-        __emit 0xcf
-        __emit 0xe8
-        __emit 0x89
-        __emit 0xaa
-        __emit 0xe1
-        __emit 0xff
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0x86
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x2b
-        __emit 0x86
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x30
-        __emit 0x68
-        __emit 0x21
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x0a
-        __emit 0x01
-        __emit 0x48
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x56
-        __emit 0x9a
-        __emit 0xdf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x8e
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x0c
-        __emit 0x81
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x5c
-        __emit 0xdf
-        __emit 0xe0
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x86
-        __emit 0xbc
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x2b
-        __emit 0x86
-        __emit 0xb8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7e
-        __emit 0x37
-        __emit 0x68
-        __emit 0x2b
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x0a
-        __emit 0x01
-        __emit 0x48
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x13
-        __emit 0x9a
-        __emit 0xdf
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x8e
-        __emit 0xb8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x04
-        __emit 0x81
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x4d
-        __emit 0x08
-        __emit 0x8d
-        __emit 0x51
-        __emit 0x38
-        __emit 0x52
-        __emit 0x51
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x38
-        __emit 0xf7
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x9f
-        __emit 0xdc
-        __emit 0xe2
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x86
-        __emit 0xec
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x2b
-        __emit 0x86
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc1
-        __emit 0xf8
-        __emit 0x02
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x0f
-        __emit 0x8e
-        __emit 0xbb
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0x38
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x68
-        __emit 0xe8
-        __emit 0x66
-        __emit 0x0a
-        __emit 0x01
-        __emit 0x48
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xc3
-        __emit 0xf8
-        __emit 0xe1
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xb6
-        __emit 0xe8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x04
-        __emit 0x86
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x74
-        __emit 0x0e
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x04
-        __emit 0x50
-        __emit 0xff
-        __emit 0x15
-        __emit 0x5c
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x74
-        __emit 0x4c
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x68
-        __emit 0xd6
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x42
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x74
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x18
-        __emit 0xe8
-        __emit 0x4d
-        __emit 0x0c
-        __emit 0xe0
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x68
-        __emit 0xd6
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x50
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x8c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x01
-        __emit 0xff
-        __emit 0x52
-        __emit 0x44
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x84
-        __emit 0x24
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xd3
-        __emit 0xec
-        __emit 0xe1
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xc0
-        __emit 0xc7
-        __emit 0x84
-        __emit 0x24
-        __emit 0x88
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x04
-        __emit 0x50
-        __emit 0xff
-        __emit 0x15
-        __emit 0x54
-        __emit 0x8e
-        __emit 0x35
-        __emit 0x01
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x7f
-        __emit 0x0c
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x16
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xff
-        __emit 0x12
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x78
-        __emit 0x5d
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x81
-        __emit 0xc4
-        __emit 0x80
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-}
+    const SlowDeathBehaviorModuleData *d = data;
+    int idx, listSize;
+    if (!d->maskOfLoadedEffects) return;
+    listSize = d->fx[phase].size();
+    if (listSize > 0) {
+        idx = GetGameClientRandomValue(0, listSize - 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\SlowDeathBehavior.cpp", 535);
+        const FXList *fx = d->fx[phase][idx];
+        FXList::doFXObj(fx, object, 0);
+    }
+    listSize = d->ocls[phase].size();
+    if (listSize > 0) {
+        idx = GetGameLogicRandomValue(0, listSize - 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\SlowDeathBehavior.cpp", 545);
+        const ObjectCreationList *ocl = d->ocls[phase][idx];
+        ObjectCreationList::create(ocl, object, 0);
+    }
+    listSize = d->weapons[phase].size();
+    if (listSize > 0) {
+        idx = GetGameLogicRandomValue(0, listSize - 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\SlowDeathBehavior.cpp", 555);
+        const WeaponTemplate *wt = d->weapons[phase][idx];
+        if (wt) TheWeaponStore->createAndFireTempWeapon(wt, object, &object->position);
+    }
+    listSize = d->sounds[phase].size();
+    if (listSize > 0) {
+        idx = GetGameClientRandomValue(0, listSize - 1, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\SlowDeathBehavior.cpp", 568);
+        AudioEventInfo **base = d->sounds[phase].begin;
+        AudioEventInfoRef sound = base[idx];
+        if (sound.ptr && TheAudio) {
+            Object *obj = object;
+            ObjectID id = obj->id;
+            AudioEventRTS event(sound, id);
+            TheAudio->addAudioEvent(&event);
+        }
+    }
 }

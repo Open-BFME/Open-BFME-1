@@ -87231,3 +87231,5 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?bfmeDestroy@Gen_003AFBB0@@QAEXXZ,0x000066FE,route=0x003AFBB0; vector insertion clears existing storage through matched destroy body
 ??0Rva0041230aMapObject@@QAE@VVector3@@ABVAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z,0x0001230A,MapObject reader RVA0x00088B70 constructor call; retail jump leads to MapObject body RVA0x00088160; Vector3 models nontrivial three-float by-value ABI
 ?getCrushableLevel@Object@@QBEEXZ,0x00019B23,route=0x001C74E0; doPathfind signed level comparison reaches matched Object accessor
+??0AudioEventRTS@@QAE@ABUAudioEventInfoRef@@W4ObjectID@@@Z,0x00008E86,route=0x000B4440; SlowDeathBehavior doPhaseStuff passes retained AudioEventInfoRef; ctor helper 0x000B2610 extracts info+8 name then binds ref to AudioEventRTS+8
+?createInternal@ObjectCreationList@@QBEXPBVObject@@0I@Z,0x000160D1,route=0x001D6810; SlowDeathBehavior doPhaseStuff OCL phase and original source identify BFME three-argument element dispatch; body fans out vtable slot +8

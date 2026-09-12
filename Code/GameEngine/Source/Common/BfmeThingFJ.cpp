@@ -1,31 +1,36 @@
-// A run told three things: walk the pointer vector at this+0 / this+4
-// and call vtable slot 2 on each item.
+// ObjectCreationList::createInternal(const Object*, const Object*, unsigned),
+// retail RVA 0x001D6810, 52 bytes. The named SlowDeathBehavior phase dispatcher
+// selects its OCL and calls ILT 0x000160D1, which reaches this body. Zero Hour
+// declares the same three-argument OCL creation path; BFME dispatches every
+// element and has no Object* return value. The old BfmeThingFJ label carried
+// the vector ABI only, not the recovered OCL identity.
+class Object;
 
-class BfmeItemFJ
+class ObjectCreationListElement
 {
 public:
-	virtual void bfmeSpare000FJ(void) = 0;
-	virtual void bfmeSpare001FJ(void) = 0;
-	virtual void bfmeDoFJ(void *a, void *b, void *c) = 0;
+	virtual void unknownSlot0(void) = 0;
+	virtual void unknownSlot1(void) = 0;
+	virtual void create(const Object *primary, const Object *secondary, unsigned int lifetimeFrames) = 0;
 };
 
-class BfmeThingFJ
+class ObjectCreationList
 {
 public:
-	void bfmeTellFJ(void *a, void *b, void *c);
+	void createInternal(const Object *primary, const Object *secondary, unsigned int lifetimeFrames) const;
 
 private:
-	BfmeItemFJ **m_bfmeBegin;
-	BfmeItemFJ **m_bfmeEnd;
+	ObjectCreationListElement **m_begin;
+	ObjectCreationListElement **m_end;
 };
 
-void BfmeThingFJ::bfmeTellFJ(void *a, void *b, void *c)
+void ObjectCreationList::createInternal(const Object *primary, const Object *secondary, unsigned int lifetimeFrames) const
 {
-	BfmeItemFJ **at = m_bfmeBegin;
+	ObjectCreationListElement **at = m_begin;
 
-	while (at != m_bfmeEnd)
+	while (at != m_end)
 	{
-		(*at)->bfmeDoFJ(a, b, c);
+		(*at)->create(primary, secondary, lifetimeFrames);
 
 		++at;
 	}
