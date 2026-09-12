@@ -25830,3 +25830,4 @@ tg_005c9ca0,0x005C9CA0,Generated += shape placeholder superseded by authentic ST
 ??_GGen_dtor_001384d0@@UAEPAXI@Z,0x001384D0,"generated scalar-destructor placeholder superseded by the authentic ThingFactory scalar-deleting destructor over the same 30-byte range"
 ??_EGen_dtorv_0005d8e0@@UAEPAXI@Z,0x0005D8E0,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::CategoryModuleTemplateBase<0> vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_0005da10@@UAEPAXI@Z,0x0005DA10,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::CategoryModuleTemplate<0> vector-deleting destructor over the same 84-byte range"
+??_EGen_dtorv_0005e2d0@@UAEPAXI@Z,0x0005E2D0,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::CategoryModuleTemplateBase<8> vector-deleting destructor over the same 84-byte range"
