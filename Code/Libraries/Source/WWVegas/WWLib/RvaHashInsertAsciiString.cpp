@@ -75,17 +75,17 @@ struct Rva000B8AE0Value
 
 struct Rva000B8AE0ExtractKey
 {
-	const AsciiString &operator()( const Rva000B8AE0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva000B8AE0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000B8AE0Value, AsciiString, rts::hash<AsciiString>,
 	Rva000B8AE0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000B8AE0Value> > Rva000B8AE0Table;
+	_STL::allocator<Rva000B8AE0Value> > AsciiStringIntHash000B8AE0;
 
 // retail 0x000B8AE0
-void BfmeHashInsertAnchor000B8AE0( Rva000B8AE0Table &table, const Rva000B8AE0Value &v )
+void BfmeHashInsertAnchor000B8AE0( AsciiStringIntHash000B8AE0 &table, const Rva000B8AE0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva000D6770Value
@@ -96,17 +96,17 @@ struct Rva000D6770Value
 
 struct Rva000D6770ExtractKey
 {
-	const AsciiString &operator()( const Rva000D6770Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva000D6770Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000D6770Value, AsciiString, rts::hash<AsciiString>,
 	Rva000D6770ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000D6770Value> > Rva000D6770Table;
+	_STL::allocator<Rva000D6770Value> > AsciiStringIntHash000D6770;
 
 // retail 0x000D6770
-void BfmeHashInsertAnchor000D6770( Rva000D6770Table &table, const Rva000D6770Value &v )
+void BfmeHashInsertAnchor000D6770( AsciiStringIntHash000D6770 &table, const Rva000D6770Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva000D6C60Value
@@ -117,17 +117,17 @@ struct Rva000D6C60Value
 
 struct Rva000D6C60ExtractKey
 {
-	const AsciiString &operator()( const Rva000D6C60Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva000D6C60Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000D6C60Value, AsciiString, rts::hash<AsciiString>,
 	Rva000D6C60ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000D6C60Value> > Rva000D6C60Table;
+	_STL::allocator<Rva000D6C60Value> > AsciiStringIntHash000D6C60;
 
 // retail 0x000D6C60
-void BfmeHashInsertAnchor000D6C60( Rva000D6C60Table &table, const Rva000D6C60Value &v )
+void BfmeHashInsertAnchor000D6C60( AsciiStringIntHash000D6C60 &table, const Rva000D6C60Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva000F6C10Value
@@ -138,17 +138,17 @@ struct Rva000F6C10Value
 
 struct Rva000F6C10ExtractKey
 {
-	const AsciiString &operator()( const Rva000F6C10Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva000F6C10Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000F6C10Value, AsciiString, rts::hash<AsciiString>,
 	Rva000F6C10ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000F6C10Value> > Rva000F6C10Table;
+	_STL::allocator<Rva000F6C10Value> > AsciiStringIntHash000F6C10;
 
 // retail 0x000F6C10
-void BfmeHashInsertAnchor000F6C10( Rva000F6C10Table &table, const Rva000F6C10Value &v )
+void BfmeHashInsertAnchor000F6C10( AsciiStringIntHash000F6C10 &table, const Rva000F6C10Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva001360E0Value
@@ -159,17 +159,17 @@ struct Rva001360E0Value
 
 struct Rva001360E0ExtractKey
 {
-	const AsciiString &operator()( const Rva001360E0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva001360E0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva001360E0Value, AsciiString, rts::hash<AsciiString>,
 	Rva001360E0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva001360E0Value> > Rva001360E0Table;
+	_STL::allocator<Rva001360E0Value> > AsciiStringIntHash001360E0;
 
 // retail 0x001360E0
-void BfmeHashInsertAnchor001360E0( Rva001360E0Table &table, const Rva001360E0Value &v )
+void BfmeHashInsertAnchor001360E0( AsciiStringIntHash001360E0 &table, const Rva001360E0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0038ED80Value
@@ -180,17 +180,17 @@ struct Rva0038ED80Value
 
 struct Rva0038ED80ExtractKey
 {
-	const AsciiString &operator()( const Rva0038ED80Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0038ED80Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0038ED80Value, AsciiString, rts::hash<AsciiString>,
 	Rva0038ED80ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0038ED80Value> > Rva0038ED80Table;
+	_STL::allocator<Rva0038ED80Value> > AsciiStringIntHash0038ED80;
 
 // retail 0x0038ED80
-void BfmeHashInsertAnchor0038ED80( Rva0038ED80Table &table, const Rva0038ED80Value &v )
+void BfmeHashInsertAnchor0038ED80( AsciiStringIntHash0038ED80 &table, const Rva0038ED80Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0038EE10Value
@@ -201,17 +201,17 @@ struct Rva0038EE10Value
 
 struct Rva0038EE10ExtractKey
 {
-	const AsciiString &operator()( const Rva0038EE10Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0038EE10Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0038EE10Value, AsciiString, rts::hash<AsciiString>,
 	Rva0038EE10ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0038EE10Value> > Rva0038EE10Table;
+	_STL::allocator<Rva0038EE10Value> > AsciiStringIntHash0038EE10;
 
 // retail 0x0038EE10
-void BfmeHashInsertAnchor0038EE10( Rva0038EE10Table &table, const Rva0038EE10Value &v )
+void BfmeHashInsertAnchor0038EE10( AsciiStringIntHash0038EE10 &table, const Rva0038EE10Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00461250Value
@@ -222,17 +222,17 @@ struct Rva00461250Value
 
 struct Rva00461250ExtractKey
 {
-	const AsciiString &operator()( const Rva00461250Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00461250Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00461250Value, AsciiString, rts::hash<AsciiString>,
 	Rva00461250ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00461250Value> > Rva00461250Table;
+	_STL::allocator<Rva00461250Value> > AsciiStringIntHash00461250;
 
 // retail 0x00461250
-void BfmeHashInsertAnchor00461250( Rva00461250Table &table, const Rva00461250Value &v )
+void BfmeHashInsertAnchor00461250( AsciiStringIntHash00461250 &table, const Rva00461250Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva004613F0Value
@@ -243,17 +243,17 @@ struct Rva004613F0Value
 
 struct Rva004613F0ExtractKey
 {
-	const AsciiString &operator()( const Rva004613F0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva004613F0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva004613F0Value, AsciiString, rts::hash<AsciiString>,
 	Rva004613F0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva004613F0Value> > Rva004613F0Table;
+	_STL::allocator<Rva004613F0Value> > AsciiStringIntHash004613F0;
 
 // retail 0x004613F0
-void BfmeHashInsertAnchor004613F0( Rva004613F0Table &table, const Rva004613F0Value &v )
+void BfmeHashInsertAnchor004613F0( AsciiStringIntHash004613F0 &table, const Rva004613F0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00469D20Value
@@ -264,17 +264,17 @@ struct Rva00469D20Value
 
 struct Rva00469D20ExtractKey
 {
-	const AsciiString &operator()( const Rva00469D20Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00469D20Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00469D20Value, AsciiString, rts::hash<AsciiString>,
 	Rva00469D20ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00469D20Value> > Rva00469D20Table;
+	_STL::allocator<Rva00469D20Value> > AsciiStringIntHash00469D20;
 
 // retail 0x00469D20
-void BfmeHashInsertAnchor00469D20( Rva00469D20Table &table, const Rva00469D20Value &v )
+void BfmeHashInsertAnchor00469D20( AsciiStringIntHash00469D20 &table, const Rva00469D20Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00469FC0Value
@@ -285,17 +285,17 @@ struct Rva00469FC0Value
 
 struct Rva00469FC0ExtractKey
 {
-	const AsciiString &operator()( const Rva00469FC0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00469FC0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00469FC0Value, AsciiString, rts::hash<AsciiString>,
 	Rva00469FC0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00469FC0Value> > Rva00469FC0Table;
+	_STL::allocator<Rva00469FC0Value> > AsciiStringIntHash00469FC0;
 
 // retail 0x00469FC0
-void BfmeHashInsertAnchor00469FC0( Rva00469FC0Table &table, const Rva00469FC0Value &v )
+void BfmeHashInsertAnchor00469FC0( AsciiStringIntHash00469FC0 &table, const Rva00469FC0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0046AF20Value
@@ -306,17 +306,17 @@ struct Rva0046AF20Value
 
 struct Rva0046AF20ExtractKey
 {
-	const AsciiString &operator()( const Rva0046AF20Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0046AF20Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046AF20Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046AF20ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046AF20Value> > Rva0046AF20Table;
+	_STL::allocator<Rva0046AF20Value> > AsciiStringIntHash0046AF20;
 
 // retail 0x0046AF20
-void BfmeHashInsertAnchor0046AF20( Rva0046AF20Table &table, const Rva0046AF20Value &v )
+void BfmeHashInsertAnchor0046AF20( AsciiStringIntHash0046AF20 &table, const Rva0046AF20Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0046C000Value
@@ -327,17 +327,17 @@ struct Rva0046C000Value
 
 struct Rva0046C000ExtractKey
 {
-	const AsciiString &operator()( const Rva0046C000Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0046C000Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046C000Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046C000ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046C000Value> > Rva0046C000Table;
+	_STL::allocator<Rva0046C000Value> > AsciiStringIntHash0046C000;
 
 // retail 0x0046C000
-void BfmeHashInsertAnchor0046C000( Rva0046C000Table &table, const Rva0046C000Value &v )
+void BfmeHashInsertAnchor0046C000( AsciiStringIntHash0046C000 &table, const Rva0046C000Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0046C540Value
@@ -348,17 +348,17 @@ struct Rva0046C540Value
 
 struct Rva0046C540ExtractKey
 {
-	const AsciiString &operator()( const Rva0046C540Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0046C540Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046C540Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046C540ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046C540Value> > Rva0046C540Table;
+	_STL::allocator<Rva0046C540Value> > AsciiStringIntHash0046C540;
 
 // retail 0x0046C540
-void BfmeHashInsertAnchor0046C540( Rva0046C540Table &table, const Rva0046C540Value &v )
+void BfmeHashInsertAnchor0046C540( AsciiStringIntHash0046C540 &table, const Rva0046C540Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00614BC0Value
@@ -369,17 +369,17 @@ struct Rva00614BC0Value
 
 struct Rva00614BC0ExtractKey
 {
-	const AsciiString &operator()( const Rva00614BC0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00614BC0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00614BC0Value, AsciiString, rts::hash<AsciiString>,
 	Rva00614BC0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00614BC0Value> > Rva00614BC0Table;
+	_STL::allocator<Rva00614BC0Value> > AsciiStringIntHash00614BC0;
 
 // retail 0x00614BC0
-void BfmeHashInsertAnchor00614BC0( Rva00614BC0Table &table, const Rva00614BC0Value &v )
+void BfmeHashInsertAnchor00614BC0( AsciiStringIntHash00614BC0 &table, const Rva00614BC0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00614D10Value
@@ -390,17 +390,17 @@ struct Rva00614D10Value
 
 struct Rva00614D10ExtractKey
 {
-	const AsciiString &operator()( const Rva00614D10Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00614D10Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00614D10Value, AsciiString, rts::hash<AsciiString>,
 	Rva00614D10ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00614D10Value> > Rva00614D10Table;
+	_STL::allocator<Rva00614D10Value> > AsciiStringIntHash00614D10;
 
 // retail 0x00614D10
-void BfmeHashInsertAnchor00614D10( Rva00614D10Table &table, const Rva00614D10Value &v )
+void BfmeHashInsertAnchor00614D10( AsciiStringIntHash00614D10 &table, const Rva00614D10Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00693020Value
@@ -411,17 +411,17 @@ struct Rva00693020Value
 
 struct Rva00693020ExtractKey
 {
-	const AsciiString &operator()( const Rva00693020Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00693020Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00693020Value, AsciiString, rts::hash<AsciiString>,
 	Rva00693020ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00693020Value> > Rva00693020Table;
+	_STL::allocator<Rva00693020Value> > AsciiStringIntHash00693020;
 
 // retail 0x00693020
-void BfmeHashInsertAnchor00693020( Rva00693020Table &table, const Rva00693020Value &v )
+void BfmeHashInsertAnchor00693020( AsciiStringIntHash00693020 &table, const Rva00693020Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva006A7AD0Value
@@ -432,17 +432,17 @@ struct Rva006A7AD0Value
 
 struct Rva006A7AD0ExtractKey
 {
-	const AsciiString &operator()( const Rva006A7AD0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva006A7AD0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva006A7AD0Value, AsciiString, rts::hash<AsciiString>,
 	Rva006A7AD0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva006A7AD0Value> > Rva006A7AD0Table;
+	_STL::allocator<Rva006A7AD0Value> > AsciiStringIntHash006A7AD0;
 
 // retail 0x006A7AD0
-void BfmeHashInsertAnchor006A7AD0( Rva006A7AD0Table &table, const Rva006A7AD0Value &v )
+void BfmeHashInsertAnchor006A7AD0( AsciiStringIntHash006A7AD0 &table, const Rva006A7AD0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00461360Value
@@ -453,17 +453,17 @@ struct Rva00461360Value
 
 struct Rva00461360ExtractKey
 {
-	const AsciiString &operator()( const Rva00461360Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00461360Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00461360Value, AsciiString, rts::hash<AsciiString>,
 	Rva00461360ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00461360Value> > Rva00461360Table;
+	_STL::allocator<Rva00461360Value> > AsciiStringMapped44Hash00461360;
 
 // retail 0x00461360, a 0x34-byte node
-void BfmeHashInsertAnchor00461360( Rva00461360Table &table, const Rva00461360Value &v )
+void BfmeHashInsertAnchor00461360( AsciiStringMapped44Hash00461360 &table, const Rva00461360Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0046AC80Value
@@ -474,17 +474,17 @@ struct Rva0046AC80Value
 
 struct Rva0046AC80ExtractKey
 {
-	const AsciiString &operator()( const Rva0046AC80Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0046AC80Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046AC80Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046AC80ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046AC80Value> > Rva0046AC80Table;
+	_STL::allocator<Rva0046AC80Value> > AsciiStringMapped8Hash0046AC80;
 
 // retail 0x0046AC80, a 0x10-byte node
-void BfmeHashInsertAnchor0046AC80( Rva0046AC80Table &table, const Rva0046AC80Value &v )
+void BfmeHashInsertAnchor0046AC80( AsciiStringMapped8Hash0046AC80 &table, const Rva0046AC80Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva0046C2A0Value
@@ -495,17 +495,17 @@ struct Rva0046C2A0Value
 
 struct Rva0046C2A0ExtractKey
 {
-	const AsciiString &operator()( const Rva0046C2A0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva0046C2A0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046C2A0Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046C2A0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046C2A0Value> > Rva0046C2A0Table;
+	_STL::allocator<Rva0046C2A0Value> > AsciiStringMapped8Hash0046C2A0;
 
 // retail 0x0046C2A0, a 0x10-byte node
-void BfmeHashInsertAnchor0046C2A0( Rva0046C2A0Table &table, const Rva0046C2A0Value &v )
+void BfmeHashInsertAnchor0046C2A0( AsciiStringMapped8Hash0046C2A0 &table, const Rva0046C2A0Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
 struct Rva00583B30Value
@@ -516,16 +516,16 @@ struct Rva00583B30Value
 
 struct Rva00583B30ExtractKey
 {
-	const AsciiString &operator()( const Rva00583B30Value &x ) const { return x.m_key; }
+	const AsciiString &operator()( const Rva00583B30Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00583B30Value, AsciiString, rts::hash<AsciiString>,
 	Rva00583B30ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00583B30Value> > Rva00583B30Table;
+	_STL::allocator<Rva00583B30Value> > AsciiStringMapped16Hash00583B30;
 
 // retail 0x00583B30, a 0x18-byte node
-void BfmeHashInsertAnchor00583B30( Rva00583B30Table &table, const Rva00583B30Value &v )
+void BfmeHashInsertAnchor00583B30( AsciiStringMapped16Hash00583B30 &table, const Rva00583B30Value &value )
 {
-	table._M_insert( v );
+	table._M_insert( value );
 }
 
