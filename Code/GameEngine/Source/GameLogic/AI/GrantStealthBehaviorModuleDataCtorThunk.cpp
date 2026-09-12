@@ -1,119 +1,57 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantStealthBehavior.h
-class GrantStealthBehaviorModuleData
+// Base's own ctor is trivial and inlines away, so this ctor installs the
+// derived vtable directly (same elision as DelayedDeathBodyConstructor.cpp).
+// +0x4 is left untouched, matching retail.
+class GrantStealthBehaviorModuleDataBase
 {
 public:
-    GrantStealthBehaviorModuleData();
+	virtual ~GrantStealthBehaviorModuleDataBase() {}
+
+protected:
+	unsigned int m_unused04;
 };
 
-__declspec(naked) GrantStealthBehaviorModuleData::GrantStealthBehaviorModuleData()
+// Already-landed interned attribute handle: Code/GameEngine/Source/GameLogic/Object/Update/Gen003A0410Constructor.cpp
+class Gen003A0410
 {
-    __asm {
-        _emit 6Ah
-        _emit 0FFh
-        _emit 68h
-        _emit 0C8h
-        _emit 1Eh
-        _emit 01h
-        _emit 01h
-        _emit 64h
-        _emit 0A1h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 50h
-        _emit 64h
-        _emit 89h
-        _emit 25h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 51h
-        _emit 56h
-        _emit 8Bh
-        _emit 0F1h
-        _emit 57h
-        _emit 89h
-        _emit 74h
-        _emit 24h
-        _emit 08h
-        _emit 33h
-        _emit 0FFh
-        _emit 8Dh
-        _emit 4Eh
-        _emit 0Ch
-        _emit 89h
-        _emit 7Ch
-        _emit 24h
-        _emit 14h
-        _emit 0C7h
-        _emit 06h
-        _emit 60h
-        _emit 0FDh
-        _emit 0Bh
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 08h
-        _emit 05h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 0E8h
-        _emit 0A1h
-        _emit 0FBh
-        _emit 0D9h
-        _emit 0FFh
-        _emit 8Bh
-        _emit 4Ch
-        _emit 24h
-        _emit 0Ch
-        _emit 89h
-        _emit 7Eh
-        _emit 10h
-        _emit 89h
-        _emit 7Eh
-        _emit 14h
-        _emit 0C6h
-        _emit 46h
-        _emit 18h
-        _emit 01h
-        _emit 0C7h
-        _emit 46h
-        _emit 1Ch
-        _emit 00h
-        _emit 00h
-        _emit 0A0h
-        _emit 41h
-        _emit 89h
-        _emit 7Eh
-        _emit 20h
-        _emit 89h
-        _emit 7Eh
-        _emit 24h
-        _emit 89h
-        _emit 7Eh
-        _emit 28h
-        _emit 89h
-        _emit 7Eh
-        _emit 2Ch
-        _emit 5Fh
-        _emit 8Bh
-        _emit 0C6h
-        _emit 5Eh
-        _emit 64h
-        _emit 89h
-        _emit 0Dh
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 00h
-        _emit 83h
-        _emit 0C4h
-        _emit 10h
-        _emit 0C3h
-    }
+public:
+	Gen003A0410();
+
+private:
+	unsigned int m_handle;
+};
+
+class GrantStealthBehaviorModuleData : public GrantStealthBehaviorModuleDataBase
+{
+public:
+	GrantStealthBehaviorModuleData();
+	virtual ~GrantStealthBehaviorModuleData();
+
+private:
+	unsigned int m_healingAmount; // +0x08
+	Gen003A0410 m_kindOfHandle;   // +0x0c
+	volatile unsigned int m_gap10;         // +0x10
+	volatile unsigned int m_gap14;         // +0x14
+	volatile bool m_flag18;                // +0x18
+	volatile float m_realVal1c;            // +0x1c
+	volatile unsigned int m_gap20;         // +0x20
+	volatile unsigned int m_gap24;         // +0x24
+	volatile unsigned int m_gap28;         // +0x28
+	volatile unsigned int m_gap2c;         // +0x2c
+};
+
+// ??0GrantStealthBehaviorModuleData@@QAE@XZ
+GrantStealthBehaviorModuleData::GrantStealthBehaviorModuleData()
+	: m_healingAmount( 5 )
+{
+	m_gap10 = 0;
+	m_gap14 = 0;
+	m_flag18 = true;
+	m_realVal1c = 20.0f;
+	m_gap20 = 0;
+	m_gap24 = 0;
+	m_gap28 = 0;
+	m_gap2c = 0;
 }
