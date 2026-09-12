@@ -64,19 +64,19 @@
 // names come from the vtable address the bytes store.
 
 #define Q2_VTABLE_BASE( ADDR )                                            \
-	class Q2Vt##ADDR                                                      \
+	class PolymorphicVptrBase##ADDR                                       \
 	{                                                                     \
 	public:                                                               \
 		virtual void slot0();                                             \
-		virtual ~Q2Vt##ADDR() {}                                          \
+		virtual ~PolymorphicVptrBase##ADDR() {}                           \
 	};
 
 #define Q2_VTABLE_BASE_WIDE( ADDR )                                       \
-	class Q2Vt##ADDR                                                      \
+	class PolymorphicVptrDwordBase##ADDR                                  \
 	{                                                                     \
 	public:                                                               \
 		virtual void slot0();                                             \
-		virtual ~Q2Vt##ADDR() {}                                          \
+		virtual ~PolymorphicVptrDwordBase##ADDR() {}                      \
 		int m_unreconstructed_04;                                         \
 	};
 
@@ -104,53 +104,53 @@ public:
 	};                                                                    \
 	NAME::NAME() {}
 
-Q2_TWO_BASE_CONSTRUCTOR( Rva005EE6B0, Q2Vt0110F978 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005EE880, Q2Vt0110F978 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005EFA20, Q2Vt01073760 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005EFAF0, Q2Vt01073760 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FC620, Q2Vt0107375C )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FDBA0, Q2Vt0110F9E4 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FDC50, Q2Vt0110F9E4 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FE920, Q2Vt0110FA14 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FE9E0, Q2Vt0110FA14 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FF9E0, Q2Vt0110F9E8 )
-Q2_TWO_BASE_CONSTRUCTOR( Rva005FFAA0, Q2Vt0110F9E8 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005EE6B0, PolymorphicVptrBase0110F978 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005EE880, PolymorphicVptrBase0110F978 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005EFA20, PolymorphicVptrBase01073760 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005EFAF0, PolymorphicVptrBase01073760 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FC620, PolymorphicVptrDwordBase0107375C )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FDBA0, PolymorphicVptrBase0110F9E4 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FDC50, PolymorphicVptrBase0110F9E4 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FE920, PolymorphicVptrBase0110FA14 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FE9E0, PolymorphicVptrBase0110FA14 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FF9E0, PolymorphicVptrBase0110F9E8 )
+Q2_TWO_BASE_CONSTRUCTOR( Rva005FFAA0, PolymorphicVptrBase0110F9E8 )
 
 // ------------------------------------------------------------------- shape B
 
-class Q2Vt01111D20
+class PolymorphicVptrBase01111D20
 {
 public:
 	virtual void slot0();
-	virtual ~Q2Vt01111D20() {}
+	virtual ~PolymorphicVptrBase01111D20() {}
 };
 
-class Q2Vt01073744
+class PolymorphicVptrBase01073744
 {
 public:
 	virtual void slot0();
-	virtual ~Q2Vt01073744() {}
+	virtual ~PolymorphicVptrBase01073744() {}
 };
 
 #define Q2_THREE_BASE_DESTRUCTOR( NAME, SECOND )                          \
-	class NAME : public Q2Vt01111D20, public SECOND, public Q2Vt01073744  \
+	class NAME : public PolymorphicVptrBase01111D20, public SECOND, public PolymorphicVptrBase01073744 \
 	{                                                                     \
 	public:                                                               \
 		virtual ~NAME();                                                  \
 	};                                                                    \
 	NAME::~NAME() {}
 
-Q2_THREE_BASE_DESTRUCTOR( Rva005E54F0, Q2Vt0107375C )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7A30, Q2Vt0110F9E8 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7AA0, Q2Vt0110F9E8 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7CC0, Q2Vt0110F978 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7D30, Q2Vt0110F978 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7D90, Q2Vt01073760 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7E00, Q2Vt01073760 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7E60, Q2Vt0110F9E4 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7ED0, Q2Vt0110F9E4 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7F30, Q2Vt0110F9E8 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E7FA0, Q2Vt0110F9E8 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E8000, Q2Vt0110FA14 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E8070, Q2Vt0110FA14 )
-Q2_THREE_BASE_DESTRUCTOR( Rva005E80E0, Q2Vt0107375C )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E54F0, PolymorphicVptrDwordBase0107375C )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7A30, PolymorphicVptrBase0110F9E8 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7AA0, PolymorphicVptrBase0110F9E8 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7CC0, PolymorphicVptrBase0110F978 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7D30, PolymorphicVptrBase0110F978 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7D90, PolymorphicVptrBase01073760 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7E00, PolymorphicVptrBase01073760 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7E60, PolymorphicVptrBase0110F9E4 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7ED0, PolymorphicVptrBase0110F9E4 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7F30, PolymorphicVptrBase0110F9E8 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E7FA0, PolymorphicVptrBase0110F9E8 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E8000, PolymorphicVptrBase0110FA14 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E8070, PolymorphicVptrBase0110FA14 )
+Q2_THREE_BASE_DESTRUCTOR( Rva005E80E0, PolymorphicVptrDwordBase0107375C )
