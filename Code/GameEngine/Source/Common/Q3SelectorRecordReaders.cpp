@@ -41,14 +41,14 @@
 // dwords), what the fifth entry of each array is for, and why a stack address or
 // a timestamp is being used as a two-bit selector.
 
-struct Q3SelectorRecord
+struct TwoBitSelectorRecord
 {
 	int *m_first[ 5 ];
 	int *m_second[ 5 ];
 };
 
 #define BFME_SELECT_BY_STACK( NAME, RECORD )                                  \
-	extern Q3SelectorRecord RECORD;                                           \
+	extern TwoBitSelectorRecord RECORD;                                       \
 	void NAME( int **outSecond, int **outFirst )                              \
 	{                                                                         \
 		unsigned int selector = 0;                                            \
@@ -59,7 +59,7 @@ struct Q3SelectorRecord
 	}
 
 #define BFME_SELECT_BY_TIMESTAMP( NAME, RECORD )                              \
-	extern Q3SelectorRecord RECORD;                                           \
+	extern TwoBitSelectorRecord RECORD;                                       \
 	void NAME( int **outSecond, int **outFirst )                              \
 	{                                                                         \
 		unsigned int selector = 0;                                            \
@@ -70,28 +70,28 @@ struct Q3SelectorRecord
 		*outFirst = RECORD.m_first[ index ];                                  \
 	}
 
-BFME_SELECT_BY_STACK( Rva00072B80, g_q3Record012A7304 )
-BFME_SELECT_BY_STACK( Rva00072C00, g_q3Record012A7354 )
-BFME_SELECT_BY_STACK( Rva003C7EA0, g_q3Record012B4864 )
-BFME_SELECT_BY_STACK( Rva003C7EE0, g_q3Record012B488C )
-BFME_SELECT_BY_STACK( Rva00526430, g_q3Record012B7738 )
-BFME_SELECT_BY_STACK( Rva005264B0, g_q3Record012B7788 )
-BFME_SELECT_BY_STACK( Rva0054D600, g_q3Record012B79A4 )
-BFME_SELECT_BY_STACK( Rva0054D640, g_q3Record012B79CC )
-BFME_SELECT_BY_STACK( Rva0054D6C0, g_q3Record012B7A1C )
-BFME_SELECT_BY_STACK( Rva0054D700, g_q3Record012B7A44 )
-BFME_SELECT_BY_STACK( Rva0056CCC0, g_q3Record012B7E70 )
-BFME_SELECT_BY_STACK( Rva0056CD40, g_q3Record012B7EC0 )
-BFME_SELECT_BY_STACK( Rva0058F530, g_q3Record012B829C )
+BFME_SELECT_BY_STACK( Rva00072B80, g_twoBitSelectorRecord012A7304 )
+BFME_SELECT_BY_STACK( Rva00072C00, g_twoBitSelectorRecord012A7354 )
+BFME_SELECT_BY_STACK( Rva003C7EA0, g_twoBitSelectorRecord012B4864 )
+BFME_SELECT_BY_STACK( Rva003C7EE0, g_twoBitSelectorRecord012B488C )
+BFME_SELECT_BY_STACK( Rva00526430, g_twoBitSelectorRecord012B7738 )
+BFME_SELECT_BY_STACK( Rva005264B0, g_twoBitSelectorRecord012B7788 )
+BFME_SELECT_BY_STACK( Rva0054D600, g_twoBitSelectorRecord012B79A4 )
+BFME_SELECT_BY_STACK( Rva0054D640, g_twoBitSelectorRecord012B79CC )
+BFME_SELECT_BY_STACK( Rva0054D6C0, g_twoBitSelectorRecord012B7A1C )
+BFME_SELECT_BY_STACK( Rva0054D700, g_twoBitSelectorRecord012B7A44 )
+BFME_SELECT_BY_STACK( Rva0056CCC0, g_twoBitSelectorRecord012B7E70 )
+BFME_SELECT_BY_STACK( Rva0056CD40, g_twoBitSelectorRecord012B7EC0 )
+BFME_SELECT_BY_STACK( Rva0058F530, g_twoBitSelectorRecord012B829C )
 
-BFME_SELECT_BY_TIMESTAMP( Rva00062870, g_q3Record012A6FF4 )
-BFME_SELECT_BY_TIMESTAMP( Rva00099350, g_q3Record012A7D38 )
-BFME_SELECT_BY_TIMESTAMP( Rva003875C0, g_q3Record012B446C )
-BFME_SELECT_BY_TIMESTAMP( Rva00387600, g_q3Record012B4494 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D680, g_q3Record012B79F4 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D740, g_q3Record012B7A6C )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D780, g_q3Record012B7A94 )
-BFME_SELECT_BY_TIMESTAMP( Rva0054D7C0, g_q3Record012B7ABC )
-BFME_SELECT_BY_TIMESTAMP( Rva0056CD00, g_q3Record012B7E98 )
-BFME_SELECT_BY_TIMESTAMP( Rva0056CD80, g_q3Record012B7EE8 )
-BFME_SELECT_BY_TIMESTAMP( Rva00619B10, g_q3Record012B90B8 )
+BFME_SELECT_BY_TIMESTAMP( Rva00062870, g_twoBitSelectorRecord012A6FF4 )
+BFME_SELECT_BY_TIMESTAMP( Rva00099350, g_twoBitSelectorRecord012A7D38 )
+BFME_SELECT_BY_TIMESTAMP( Rva003875C0, g_twoBitSelectorRecord012B446C )
+BFME_SELECT_BY_TIMESTAMP( Rva00387600, g_twoBitSelectorRecord012B4494 )
+BFME_SELECT_BY_TIMESTAMP( Rva0054D680, g_twoBitSelectorRecord012B79F4 )
+BFME_SELECT_BY_TIMESTAMP( Rva0054D740, g_twoBitSelectorRecord012B7A6C )
+BFME_SELECT_BY_TIMESTAMP( Rva0054D780, g_twoBitSelectorRecord012B7A94 )
+BFME_SELECT_BY_TIMESTAMP( Rva0054D7C0, g_twoBitSelectorRecord012B7ABC )
+BFME_SELECT_BY_TIMESTAMP( Rva0056CD00, g_twoBitSelectorRecord012B7E98 )
+BFME_SELECT_BY_TIMESTAMP( Rva0056CD80, g_twoBitSelectorRecord012B7EE8 )
+BFME_SELECT_BY_TIMESTAMP( Rva00619B10, g_twoBitSelectorRecord012B90B8 )
