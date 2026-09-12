@@ -6737,7 +6737,6 @@ name,address,notes
 ??1Gen_dtorv_005d7f70@@UAE@XZ,0x00042F28,gen-dtor class destructor
 ??1Gen_dtorv_005d9230@@UAE@XZ,0x00011A3B,gen-dtor class destructor
 ??1Gen_dtorv_005d9e30@@UAE@XZ,0x00040FDE,gen-dtor class destructor
-??1Gen_dtorv_005da0d0@@UAE@XZ,0x0000CD74,gen-dtor class destructor
 ??1Gen_dtorv_005da220@@UAE@XZ,0x00032E2F,gen-dtor class destructor
 ??1Gen_dtorv_005da3e0@@UAE@XZ,0x00044C15,gen-dtor class destructor
 ??1Gen_dtorv_005db180@@UAE@XZ,0x00009C5A,gen-dtor class destructor
