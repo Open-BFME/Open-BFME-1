@@ -1016,30 +1016,7 @@ void DozerActionState::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?onEnter@DozerActionState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType DozerActionState::onEnter( void )
-{
-
-	// save this as the current action of the dozer
-	Object *dozer = getMachineOwner();
-	if( !dozer->getAIUpdateInterface() )
-	{
-		return STATE_FAILURE;
-	}
-	DozerAIInterface *dozerAI = dozer->getAIUpdateInterface()->getDozerAIInterface();
-	dozerAI->setCurrentTask( m_task );
-
-	//
-	// we have a machine within this state all it's own ...
-	// note that during an onEnter, since the action machine is persistent, anytime we transition
-	// into doing an action, we need to reset our state machine to do that action as it may
-	// have been left in any state from the previous time we ran it
-	//
-	m_actionMachine->resetToDefaultState();
-
-	return STATE_CONTINUE;
-
-}  // end onEnter
+// DozerActionState::onEnter is byte-verified in DozerActionStateLifecycle.cpp.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
