@@ -12858,7 +12858,6 @@ name,address,notes
 ?_M_initialize_buckets@?$hashtable@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@W4NameKeyType@@U?$hash@W4NameKeyType@@@rts@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@U?$equal_to@W4NameKeyType@@@5@V?$allocator@U?$pair@$$CBW4NameKeyType@@VDamageFX@@@_STL@@@2@@_STL@@AAEXI@Z,0x0000E0FC,Open-BFME5 DamageFXStore ctor call target: retail uses the ILT for NameKeyType-to-DamageFX hashtable bucket initialization
 ?_M_initialize_buckets@?$hashtable@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@PBVGameWindow@@UhashConstGameWindowPtr@WindowVideoManager@@U?$_Select1st@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@U?$equal_to@PBVGameWindow@@@2@V?$allocator@U?$pair@QBVGameWindow@@PAVWindowVideo@@@_STL@@@2@@_STL@@AAEXI@Z,0x00498DE0,body byte-verified from WindowVideoManagerCtor.cpp; call sites reach it via ILT thunk 0x0002DF4C
 ?_M_initialize_map@?$_Deque_base@HV?$allocator@H@_STL@@@_STL@@IAEXI@Z,0x00089190,gen-tgrid shared callee
-?_M_initialize_map@?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,rel32 pin for exact-ambiguous landing
 ?_M_initialize_map@?$_Deque_base@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXI@Z,0x008FA150,rel32 pin for exact-ambiguous landing
 ?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z,0x009ED640,resweep callee back-solved
 ?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x003546E0,gen-tgrid shared callee
@@ -12911,10 +12910,6 @@ name,address,notes
 ?_M_initialize_map@?$_Deque_base@URva0064CAF0Element@@V?$allocator@URva0064CAF0Element@@@_STL@@@_STL@@IAEXI@Z,0x000324E8,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x0064CAF0 calls
 ?_M_initialize_map@?$_Deque_base@URva0065A950Element@@V?$allocator@URva0065A950Element@@@_STL@@@_STL@@IAEXI@Z,0x000109D3,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x0065A950 calls
 ?_M_initialize_map@?$_Deque_base@URva006AADB0Element@@V?$allocator@URva006AADB0Element@@@_STL@@@_STL@@IAEXI@Z,0x0002C291,Open-BFME5 the deque _M_initialize_map the queue constructor at 0x006AADB0 calls
-?_M_initialize_map@?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
-?_M_initialize_map@?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
-?_M_initialize_map@?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
-?_M_initialize_map@?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXI@Z,0x008FA2B0,shared deque initialize_map body (4 template instances)
 ?_M_initialize_map@?$_Deque_base@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@IAEXI@Z,0x0003584B,GameSpyPeerMessageQueue constructor at 0x0064D650 initializes the PeerRequest deque
 ?_M_initialize_map@?$_Deque_base@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@IAEXI@Z,0x000324E8,GameSpyPeerMessageQueue constructor at 0x0064D650 initializes the PeerResponse deque
 ?_M_initialize_map@?$_Deque_base@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@IAEXI@Z,0x0001FD7A
@@ -87246,3 +87241,5 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?prependNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0002B7F1,route=0x0026E4D0; decoded setPathFromWaypoint call and independently matched PathNodeInsertion body
 ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,0x00009D04,route=0x003E6A30; decoded setPathFromWaypoint terminal waypoint snap call to matched PathfinderSnapPosition body
 ?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z,0x0002EA3C,route=0x003D9880; decoded setPathFromWaypoint debug publication call to matched PathfinderSetDebugPath body
+??0?$_STLP_alloc_proxy@PAPAURva008FA2B0Element@@PAU1@V?$allocator@PAURva008FA2B0Element@@@_STL@@@_STL@@QAE@ABV?$allocator@PAURva008FA2B0Element@@@1@PAPAURva008FA2B0Element@@@Z,0x008F9A20,20-byte deque ctor8FA9A0 pointer allocation proxy; entire11B body exact
+??0?$_STLP_alloc_proxy@IURva008FA2B0Element@@V?$allocator@URva008FA2B0Element@@@_STL@@@_STL@@QAE@ABV?$allocator@URva008FA2B0Element@@@1@I@Z,0x008F9A30,20-byte deque ctor8FA9A0 size allocation proxy; entire11B body exact
