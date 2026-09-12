@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a04c571e648164945eaf12910b8a1d257f8d0ece114922942aeea16e8ebe095a",
+  "symbol": "??0RunOffMapBehaviorModuleData@@QAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.84,
+  "source": "// ??0RunOffMapBehaviorModuleData@@QAE@XZ\n// partial score=0.84 date=2026-09-12\n// cl: /DNDEBUG /MD /EHsc\n\n// Retail 0x01336E50 -- already pinned under two other type tags\n// (Rva0036CA00Str / Rva002E5FF0Str) by other converted bodies; this file\n// reuses the same address as a real UnicodeString, matching the retail\n// ?set@UnicodeString@@ call.\nclass UnicodeString\n{\npublic:\n\tUnicodeString(void) { m_text = 0; }\n\t~UnicodeString(void);\n\n\tvoid set(const UnicodeString &that);\n\nprivate:\n\tvoid *m_text;\n};\n\nextern UnicodeString Rva01336E50Str;\n\nclass RunOffMapBehaviorModuleDataBase\n{\npublic:\n\tvirtual ~RunOffMapBehaviorModuleDataBase() {}\n\nprotected:\n\tunsigned int m_unused04;\n};\n\nclass RunOffMapBehaviorModuleData : public RunOffMapBehaviorModuleDataBase\n{\npublic:\n\tRunOffMapBehaviorModuleData();\n\tvirtual ~RunOffMapBehaviorModuleData();\n\nprivate:\n\tvolatile float m_speed1;   // +0x08\n\tvolatile float m_speed2;   // +0x0c\n\tvolatile bool m_flag10;    // +0x10\n\tUnicodeString m_text14;    // +0x14\n\tvolatile bool m_flag18;    // +0x18\n};\n\n// ??0RunOffMapBehaviorModuleData@@QAE@XZ\nRunOffMapBehaviorModuleData::RunOffMapBehaviorModuleData()\n{\n\tm_flag18 = false;\n\tm_speed1 = 10.0f;\n\tm_speed2 = 10.0f;\n\tm_flag10 = false;\n\tm_text14.set( Rva01336E50Str );\n}\n"
+}
