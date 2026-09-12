@@ -77556,6 +77556,7 @@ name,address,notes
 ?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
 ?bfmeSubmitBL@BfmeSinkBL@@QAEXVAsciiStringBL@@HPAVBfmeBlobBL@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B370 makes
+?rva004498d0@Rva004488B0FourBlockRecord@@QAEXVAsciiStringBL@@H@Z,0x00043603,address-derived typed alias for the existing ILT that reaches the 0x004498D0 helper
 ?bfmeSubmitBM@BfmeSinkBM@@QAEXVAsciiStringBM@@HPAVBfmeBlobBM@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B3D0 makes
 ?bfmeSubmitEVA@Rva00893030Manager@@QAEXPAVBfmeStrVKI@@@Z,0x00895D30,pin manager submit for BfmeConv1992
 ?bfmeSwapESO@BfmeSubAESO@@QAEXAAV1@@Z,0x00040372,pin
