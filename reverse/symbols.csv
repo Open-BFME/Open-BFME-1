@@ -87302,3 +87302,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??1StateMachine@@UAE@XZ,0x00031D5E,ILT to matched StateMachine scalar destructor at 0x000A1130; retail Dozer constructor unwind target decoded from 0x00C133C0
 ?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x0002694A,ICF helper route for PeerThread 0x00647F90: pointer deque init is the verified 203-byte 4-byte ICF body shared with 0x003546E0/0x003684C0; retail call encodes j_0002694a
 ?_M_push_back_aux_v@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXABQAX@Z,0x00036C82,ICF helper route for PeerThread 0x00647F90: pointer deque push body 0x00369710 is the verified 101-byte retail helper; call encodes j_00036c82
+?g_bfmeChatColor@@3HA,0x00EB73F8,BFME disconnect chat listbox color; retail VA 0x012B73F8

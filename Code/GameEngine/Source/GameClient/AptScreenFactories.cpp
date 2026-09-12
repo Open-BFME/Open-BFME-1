@@ -153,6 +153,11 @@ public:
 		((StringBase<unsigned short> *)this)->trim();
 	}
 	bool isEmpty() const { return !m_data || m_data->m_length == 0; }
+const unsigned short *str() const
+{
+	return m_data ? (const unsigned short *)((char *)m_data + 8)
+		: (const unsigned short *)0x0107388C;
+}
 
 private:
 	UnicodeStringData *m_data;
@@ -526,6 +531,48 @@ BfmeAptScreenDisconnectScreen::BfmeAptScreenDisconnectScreen( void *context )
 				FunctorBinding( playerColorCallback, (FunctorTarget *)this ) );
 			((DisconnectMenu *)this)->removePlayer( slot, UnicodeString::TheEmptyString );
 		}
+	}
+}
+
+extern int g_bfmeChatColor;
+
+// ?removePlayer@DisconnectMenu@@QAEXHVUnicodeString@@@Z
+void DisconnectMenu::removePlayer( int slot, UnicodeString playerName )
+{
+	AsciiString variableName;
+	char slotText[ 32 ];
+	variableName.format( (AsciiString)"DisconnectScreen::PlayerName%d", slot );
+
+	if( playerName.isEmpty() )
+	{
+		UnicodeString blank( L" " );
+		g_theWindowManager->bfme_setAptText( variableName, blank );
+	}
+	else
+	{
+		g_theWindowManager->bfme_setAptText( variableName, playerName );
+
+		if( *(GameWindow **)( (char *)this + 0x258 ) )
+		{
+			UnicodeString text;
+			text.format( TheGameText->fetch( "Network:PlayerLeftGame" ), playerName.str() );
+			GadgetListBoxAddEntryText( *(GameWindow **)( (char *)this + 0x258 ),
+				text, g_bfmeChatColor, -1, -1, true );
+		}
+	}
+
+	sprintf( slotText, "%d", slot );
+
+	int movie = *(int *)( (char *)this + 0x250 );
+	g_theWindowManager->unidentified_00015235(
+		movie, "HideKickButton", 1, slotText,
+		reinterpret_cast< const void * >( 0 ), 0, 0, 0 );
+	*(char *)( (char *)this + 0x262 + slot ) = 0;
+
+	variableName.format( (AsciiString)"DisconnectScreen::VotesReceived%d", slot );
+	{
+		const UnicodeString &blank2 = UnicodeString( L" " );
+		g_theWindowManager->bfme_setAptText( variableName, blank2 );
 	}
 }
 
