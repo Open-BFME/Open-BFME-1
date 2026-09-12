@@ -9592,6 +9592,7 @@ name,address,notes
 ??1W3DDisplayStringMemberB@@QAE@XZ,0x009409F0,Open-BFME5 pin
 ??1W3DLaserDrawModuleDataBase@@UAE@XZ,0x00887940,Open-BFME5 base dtor pin
 ??1W3DModelDraw@@MAE@XZ,0x0002FF31,route=0x0077B090; W3DQuadrupedDraw empty destructor tail-call through the retail ILT
+??1W3DQuadrupedDraw@@UAE@XZ,0x0001615D,route=0x00759770; scalar deleting destructor call target established by retail wrapper
 ??1W3DModelDrawModuleDataBase@@UAE@XZ,0x0000CAB3,Open-BFME5 pin
 ??1W3DModelDrawModuleDataMember@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1W3DMouseSurfaceRef@@QAE@XZ,0x008FC5B0,W3DMouse surface-reference destructor used by freeD3DAssets and its EH vector constructor
