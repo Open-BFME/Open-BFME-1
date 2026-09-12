@@ -384,6 +384,24 @@ def check_attempts(spec, problems):
 
     blobs = read_blobs((ROOT / rel for rel in paths
                         if ATTEMPT_NAME.match(rel[len(ATTEMPTS_DIR):])), spec)
+    # Full commit IDs are immutable: batch exactly the claimed source blobs
+    # this invocation may inspect, through the same framed Git reader used for
+    # the banks. Do not retain/reuse working-tree or index reads; those inputs
+    # are mutable. A full SHA is what pre-push passes as --ref.
+    source_blobs = None
+    if spec and re.fullmatch(r"[0-9a-fA-F]{40}", spec):
+        source_paths = {}
+        for rel in paths:
+            name = rel[len(ATTEMPTS_DIR):]
+            if not ATTEMPT_NAME.match(name):
+                continue
+            lines = blobs[ROOT / rel].decode("utf-8", errors="replace").splitlines()
+            if len(lines) < 2 or not re_log._STASH_SCORE.match(lines[1]):
+                continue
+            for _sym, source in matched.get(name[:-len(".cpp")], []):
+                if Path(source).suffix.lower() not in (".asm", ".s", ".lib"):
+                    source_paths[ROOT / source] = None
+        source_blobs = read_blobs(source_paths, spec)
     for rel in paths:
         name = rel[len(ATTEMPTS_DIR):]
         if not ATTEMPT_NAME.match(name):
@@ -413,7 +431,9 @@ def check_attempts(spec, problems):
             # and a .cpp row is one when its body is a naked/__emit lift.
             if Path(source).suffix.lower() in (".asm", ".s", ".lib"):
                 continue
-            text = read_ledger(ROOT / source, spec).decode("utf-8", errors="replace")
+            raw = (source_blobs[ROOT / source] if source_blobs is not None
+                   else read_ledger(ROOT / source, spec))
+            text = raw.decode("utf-8", errors="replace")
             if "__declspec(naked)" in text or "_emit" in text:
                 continue
             problems.append(
