@@ -1,7 +1,7 @@
 // ?rva00284810@BannerCarrierUpdate@@QAEXPAVBannerCarrierObjectName@@_N@Z
 // partial score=0.36 date=2026-09-12
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// Address-derived method name.  The BannerCarrierUpdate class and member
+// Address-derived method name. The BannerCarrierUpdate class and member
 // layout are established by the adjacent ctor and module-data methods.
 
 #include "../../../../reference/shims/stringinline/StringInline.h"
@@ -10,10 +10,11 @@ typedef bool Bool;
 
 struct Coord3D { float x, y, z; };
 
-struct ModelConditionFlags
+class BfmeConditionFlags
 {
-	ModelConditionFlags(int end, int a, int b, int c, int d, int e, int f,
-		int g, int h, int i, int j, int k);
+public:
+	BfmeConditionFlags(int end, int a, int b, int c, int d, int e, int f,
+		int g, int h, int i, int j, int k) throw();
 	unsigned int words[10];
 };
 
@@ -40,7 +41,7 @@ class BannerCarrierUpdateModuleData
 public:
 	BannerCarrierObjectPayload *rva00284700FindObjectName(
 		BannerCarrierObjectPayload *result, const BannerCarrierString *name) const;
-	AsciiString *rva00283A20FindLocomotorName(AsciiString *result,
+	AsciiString rva00283A20FindLocomotorName(
 		const BannerCarrierString *name) const;
 
 public:
@@ -102,9 +103,9 @@ public:
 class Object
 {
 public:
-	void clearAndSetModelConditionFlags(const ModelConditionFlags &clear,
-		const ModelConditionFlags &set);
-	void refreshPartitionCells();
+	void clearAndSetModelConditionFlags(const BfmeConditionFlags &clear,
+		const BfmeConditionFlags &set);
+	void bfmeRefreshPartitionCells();
 
 	unsigned char m_prefix[0x38];
 	Coord3D m_direction;
@@ -112,9 +113,10 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
-extern ModelConditionFlags g_rva00284810ClearFlags;
+extern BfmeConditionFlags g_rva00284810ClearFlags;
 extern const char *TheLocomotorSetNames[];
-extern "C" float __cdecl sqrtf(float value);
+extern "C" double __cdecl sqrt(double value);
+#pragma intrinsic(sqrt)
 
 class INI
 {
@@ -143,33 +145,35 @@ private:
 void BannerCarrierUpdate::rva00284810(BannerCarrierObjectName *entry,
 	Bool playMorphFX)
 {
+	BannerCarrierUpdateModuleData *const moduleData = m_moduleData;
+	Object *const object = m_object;
 	BannerCarrierObjectPayload payload;
 	const BannerCarrierString *name =
 		(const BannerCarrierString *)((unsigned char *)entry + 0x20);
-	m_moduleData->rva00284700FindObjectName(&payload, name);
+	moduleData->rva00284700FindObjectName(&payload, name);
 
-	static ModelConditionFlags clearFlags(0, 0xcb, 0xae, 0xaf, 0xb0, 0xb1,
+	static BfmeConditionFlags clearFlags(0, 0xcb, 0xae, 0xaf, 0xb0, 0xb1,
 		0xb2, 0xb8, 0xb9, 0xba, 0xbb, 0xbc);
-	m_object->clearAndSetModelConditionFlags(clearFlags,
-		*(const ModelConditionFlags *)&payload);
+	object->clearAndSetModelConditionFlags(clearFlags,
+		*(const BfmeConditionFlags *)&payload);
 
-	const float length = sqrtf(
-		m_object->m_direction.x * m_object->m_direction.x +
-		m_object->m_direction.y * m_object->m_direction.y +
-		m_object->m_direction.z * m_object->m_direction.z);
+	const float directionX = object->m_direction.x;
+	const float directionY = object->m_direction.y;
+	const float directionZ = object->m_direction.z;
+	const float length = (float)sqrt(directionX * directionX +
+		directionY * directionY + directionZ * directionZ);
 	if (length > 0.0f)
-		m_object->refreshPartitionCells();
+		object->bfmeRefreshPartitionCells();
 
-	if (m_moduleData->m_bannerMorphFX != 0 && playMorphFX &&
-		!m_moduleData->m_bannerMorphFX->isEmpty())
-		m_moduleData->m_bannerMorphFX->doFXObj(m_object, 0);
+	FXList *const morphFX = moduleData->m_bannerMorphFX;
+	if (morphFX != 0 && playMorphFX && !morphFX->isEmpty())
+		morphFX->doFXObj(object, 0);
 
-	AsciiString locomotorName;
-	m_moduleData->rva00283A20FindLocomotorName(&locomotorName, name);
+	AsciiString locomotorName = moduleData->rva00283A20FindLocomotorName(name);
 	void *stringData = *(void **)&locomotorName;
 	if (stringData != 0 && *(unsigned short *)((char *)stringData + 4) != 0)
 	{
 		int set = INI::scanIndexList(locomotorName.str(), TheLocomotorSetNames);
-		m_object->m_ai->rvaSlot1FC(set);
+		object->m_ai->rvaSlot1FC(set);
 	}
 }
