@@ -1,108 +1,52 @@
-// ?d_00735e10@@YAXXZ
-// partial score=0.94 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
-// ?addTreeType@Rva00736590W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
-// Port of the Zero Hour W3DTreeBuffer::addTreeType with BFME's six-argument
-// signature; the class spelling stays address-derived as at 0x00736590.
+// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep
+//
+// BFME tree-type insertion. The owner is proven by the class-name
+// virtual at RVA 0x007366E0 (vtable 0x01121608 slot +8), which returns
+// "W3DTreeBuffer". Its type array/count are +0x2A7CBC/+0x2A93BC.
+// The texture set/concat pair proves textureName at +0x48, followed by
+// modelName at +0x4C and the remaining names at +0x50/+0x54.
+// Keep the real inline WWMath constructors visible to preserve the
+// translated bounding sphere's x87 value lifetimes.
 
 typedef int Int;
 typedef float Real;
+typedef unsigned char UnsignedByte;
 
 class MeshClass;
 class RenderObjClass;
 
-struct Vector3
+#include "vector3.h"
+#include "matrix3d.h"
+#include "sphere.h"
+#include "aabox.h"
+
+// The BFME narrow string owns one reference-counted data pointer. The
+// copy-set target is the matched StringBase<char> body at RVA 0x00887C90.
+template <typename T> struct TreeStringData
 {
-	Real X;
-	Real Y;
-	Real Z;
+    int m_refCount;
+    int m_length;
+    T m_text[1];
+};
 
-	__forceinline Vector3(void) {}
-	__forceinline Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
-	__forceinline Vector3 &operator = (const Vector3 &v)
-	{
-		X = v.X;
-		Y = v.Y;
-		Z = v.Z;
-		return *this;
-	}
-	__forceinline Vector3 &operator += (const Vector3 &v)
-	{
-		X += v.X;
-		Y += v.Y;
-		Z += v.Z;
-		return *this;
-	}
-	};
-struct Matrix3D
-{
-	Real Row[3][4];
-
-	Matrix3D(void) {}
-	__forceinline Matrix3D(const Matrix3D &m)
-	{
-		Row[0][0] = m.Row[0][0];
-		Row[0][1] = m.Row[0][1];
-		Row[0][2] = m.Row[0][2];
-		Row[0][3] = m.Row[0][3];
-		Row[1][0] = m.Row[1][0];
-		Row[1][1] = m.Row[1][1];
-		Row[1][2] = m.Row[1][2];
-		Row[1][3] = m.Row[1][3];
-		Row[2][0] = m.Row[2][0];
-		Row[2][1] = m.Row[2][1];
-		Row[2][2] = m.Row[2][2];
-		Row[2][3] = m.Row[2][3];
-	}
-
-	void Get_Translation(Vector3 *set) const
-	{
-		set->X = Row[0][3];
-		set->Y = Row[1][3];
-		set->Z = Row[2][3];
-	}
-};class AABoxClass
+template <typename T> class StringBase
 {
 public:
-	Vector3 Center;
-	Vector3 Extent;
+    void set(const StringBase<T> &other);
+protected:
+    TreeStringData<T> *m_data;
 };
 
-class SphereClass
+class AsciiString : private StringBase<char>
 {
 public:
-	SphereClass(const Vector3 *points, Int count);
-
-	Vector3 Center;
-	Real Radius;
-
+    void set(const AsciiString &other) { StringBase<char>::set(other); }
+    void concat(const char *text);
+    const char *str(void) const { return m_data ? m_data->m_text : ""; }
 };
 
-struct Rva006A16B0StringData
-{
-	unsigned char m_header[8];
-	char m_chars[1];
-};
-
-extern char Rva006A16B0Empty[];
-
-class AsciiString
-{
-public:
-	void set(const AsciiString &that);
-	void concat(const char *text);
-
-	const char *str(void) const
-	{
-		if (m_data != 0)
-			return m_data->m_chars;
-		return Rva006A16B0Empty;
-	}
-
-	Rva006A16B0StringData *m_data;
-};
-
-class Rva00736590TreeType
+class Rva00735E10TreeType
 {
 public:
 	MeshClass *m_mesh;
@@ -110,8 +54,8 @@ public:
 	SphereClass m_bounds;
 	const void *m_data;
 	unsigned char m_gap0024[0x44 - 0x24];
-	unsigned char m_doShadow;
-	unsigned char m_pad0045[3];
+	UnsignedByte m_doShadow;
+	UnsignedByte m_pad0045[3];
 	AsciiString m_textureName;
 	AsciiString m_modelName;
 	AsciiString m_nameC;
@@ -121,7 +65,7 @@ public:
 
 struct Rva00735E10VertexBuffer
 {
-	unsigned char m_head[0xc];
+	unsigned char m_head[0x0c];
 	Vector3 *m_array;
 };
 
@@ -135,6 +79,7 @@ struct Rva00735E10Model
 	Int Get_Vertex_Count(void) const { return m_vertexCount; }
 	Vector3 *Get_Vertex_Array(void) const { return m_vertexBuffer->m_array; }
 };
+
 class RenderObjClass
 {
 public:
@@ -228,7 +173,7 @@ public:
 
 extern RenderObjClass *Create_Render_Obj(const char *name);
 
-class Rva00736590W3DTreeBuffer
+class W3DTreeBuffer
 {
 public:
 	Int addTreeType(const AsciiString &modelName, const AsciiString &nameC,
@@ -236,14 +181,16 @@ public:
 		const AsciiString &nameD);
 
 	unsigned char m_head[0x2a7cb9];
-	unsigned char m_needToUpdateTexture;
-	unsigned char m_pad2a7cba[2];
-	Rva00736590TreeType m_treeTypes[64];
+	UnsignedByte m_needToUpdateTexture;
+	UnsignedByte m_pad2a7cba[2];
+	Rva00735E10TreeType m_treeTypes[64];
 	Int m_numTreeTypes;
 };
 
-Int Rva00736590W3DTreeBuffer::addTreeType(const AsciiString &modelName, const AsciiString &nameC,
-	const void *data, Int shadowKind, const AsciiString &textureName, const AsciiString &nameD)
+// ?addTreeType@W3DTreeBuffer@@QAEHABVAsciiString@@0PBXH00@Z
+Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
+	const AsciiString &nameC, const void *data, Int shadowKind,
+	const AsciiString &textureName, const AsciiString &nameD)
 {
 	if (m_numTreeTypes >= 64) {
 		return 0;
@@ -281,10 +228,11 @@ Int Rva00736590W3DTreeBuffer::addTreeType(const AsciiString &modelName, const As
 	Int numVertex = mesh->Peek_Model()->Get_Vertex_Count();
 	Vector3 *pVert = mesh->Peek_Model()->Get_Vertex_Array();
 
-	const Matrix3D &xfm = mesh->Get_Transform();
+	const Matrix3D xfm = mesh->Get_Transform();
 	SphereClass bounds(pVert, numVertex);
+	SphereClass &destBounds = m_treeTypes[m_numTreeTypes].m_bounds;
 	bounds.Center += offset;
-	m_treeTypes[m_numTreeTypes].m_bounds = bounds;
+	destBounds = bounds;
 	m_treeTypes[m_numTreeTypes].m_data = data;
 	m_treeTypes[m_numTreeTypes].m_offset = offset;
 	m_treeTypes[m_numTreeTypes].m_doShadow = (shadowKind == 1);
@@ -293,6 +241,7 @@ Int Rva00736590W3DTreeBuffer::addTreeType(const AsciiString &modelName, const As
 	m_treeTypes[m_numTreeTypes].m_modelName.set(modelName);
 	m_treeTypes[m_numTreeTypes].m_nameC.set(nameC);
 	m_treeTypes[m_numTreeTypes].m_nameD.set(nameD);
+	// Retail initializes this per-type sentinel after the string fields.
 	m_treeTypes[m_numTreeTypes].m_field0058 = -2;
 	m_numTreeTypes++;
 	return m_numTreeTypes - 1;
