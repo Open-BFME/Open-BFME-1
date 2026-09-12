@@ -17,8 +17,10 @@
 // The key itself is still only known by its comparison.  Where retail emits
 // `setl` it is modelled as an enumeration, which MSVC gives int as its
 // underlying type; where retail emits `setb` it is modelled as a pointer,
-// which compares unsigned.  Both are four bytes wide and both are named for
-// the address of the body, so every instantiation gets its own decorated name.
+// which compares unsigned.  Both are four bytes wide.  The Key/Target
+// identifiers are pinned in the ledger mangled names and stay; the tree
+// typedefs name the shape (enum vs pointer identity tree) plus the body
+// address, so every instantiation keeps its own decorated name.
 
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
@@ -32,10 +34,10 @@ typedef _STL::_Rb_tree<Rva000EEC50Key,
 	Rva000EEC50Key,
 	_STL::_Identity<Rva000EEC50Key>,
 	_STL::less<Rva000EEC50Key>,
-	_STL::allocator<Rva000EEC50Key> > Rva000EEC50Tree;
+	_STL::allocator<Rva000EEC50Key> > EnumIdentityTree000EEC50;
 
-template _STL::pair<Rva000EEC50Tree::iterator, bool>
-Rva000EEC50Tree::insert_unique( const Rva000EEC50Key & );
+template _STL::pair<EnumIdentityTree000EEC50::iterator, bool>
+EnumIdentityTree000EEC50::insert_unique( const Rva000EEC50Key & );
 
 struct Rva00076190Target;
 
@@ -45,10 +47,10 @@ typedef _STL::_Rb_tree<Rva00076190Key,
 	Rva00076190Key,
 	_STL::_Identity<Rva00076190Key>,
 	_STL::less<Rva00076190Key>,
-	_STL::allocator<Rva00076190Key> > Rva00076190Tree;
+	_STL::allocator<Rva00076190Key> > PointerIdentityTree00076190;
 
-template _STL::pair<Rva00076190Tree::iterator, bool>
-Rva00076190Tree::insert_unique( const Rva00076190Key & );
+template _STL::pair<PointerIdentityTree00076190::iterator, bool>
+PointerIdentityTree00076190::insert_unique( const Rva00076190Key & );
 
 struct Rva0013FA60Target;
 
@@ -58,10 +60,10 @@ typedef _STL::_Rb_tree<Rva0013FA60Key,
 	Rva0013FA60Key,
 	_STL::_Identity<Rva0013FA60Key>,
 	_STL::less<Rva0013FA60Key>,
-	_STL::allocator<Rva0013FA60Key> > Rva0013FA60Tree;
+	_STL::allocator<Rva0013FA60Key> > PointerIdentityTree0013FA60;
 
-template _STL::pair<Rva0013FA60Tree::iterator, bool>
-Rva0013FA60Tree::insert_unique( const Rva0013FA60Key & );
+template _STL::pair<PointerIdentityTree0013FA60::iterator, bool>
+PointerIdentityTree0013FA60::insert_unique( const Rva0013FA60Key & );
 
 struct Rva0025BD30Target;
 
@@ -71,10 +73,10 @@ typedef _STL::_Rb_tree<Rva0025BD30Key,
 	Rva0025BD30Key,
 	_STL::_Identity<Rva0025BD30Key>,
 	_STL::less<Rva0025BD30Key>,
-	_STL::allocator<Rva0025BD30Key> > Rva0025BD30Tree;
+	_STL::allocator<Rva0025BD30Key> > PointerIdentityTree0025BD30;
 
-template _STL::pair<Rva0025BD30Tree::iterator, bool>
-Rva0025BD30Tree::insert_unique( const Rva0025BD30Key & );
+template _STL::pair<PointerIdentityTree0025BD30::iterator, bool>
+PointerIdentityTree0025BD30::insert_unique( const Rva0025BD30Key & );
 
 struct Rva00296ED0Target;
 
@@ -84,10 +86,10 @@ typedef _STL::_Rb_tree<Rva00296ED0Key,
 	Rva00296ED0Key,
 	_STL::_Identity<Rva00296ED0Key>,
 	_STL::less<Rva00296ED0Key>,
-	_STL::allocator<Rva00296ED0Key> > Rva00296ED0Tree;
+	_STL::allocator<Rva00296ED0Key> > PointerIdentityTree00296ED0;
 
-template _STL::pair<Rva00296ED0Tree::iterator, bool>
-Rva00296ED0Tree::insert_unique( const Rva00296ED0Key & );
+template _STL::pair<PointerIdentityTree00296ED0::iterator, bool>
+PointerIdentityTree00296ED0::insert_unique( const Rva00296ED0Key & );
 
 struct Rva0036ED40Target;
 
@@ -97,10 +99,10 @@ typedef _STL::_Rb_tree<Rva0036ED40Key,
 	Rva0036ED40Key,
 	_STL::_Identity<Rva0036ED40Key>,
 	_STL::less<Rva0036ED40Key>,
-	_STL::allocator<Rva0036ED40Key> > Rva0036ED40Tree;
+	_STL::allocator<Rva0036ED40Key> > PointerIdentityTree0036ED40;
 
-template _STL::pair<Rva0036ED40Tree::iterator, bool>
-Rva0036ED40Tree::insert_unique( const Rva0036ED40Key & );
+template _STL::pair<PointerIdentityTree0036ED40::iterator, bool>
+PointerIdentityTree0036ED40::insert_unique( const Rva0036ED40Key & );
 
 struct Rva00442AB0Target;
 
@@ -110,10 +112,10 @@ typedef _STL::_Rb_tree<Rva00442AB0Key,
 	Rva00442AB0Key,
 	_STL::_Identity<Rva00442AB0Key>,
 	_STL::less<Rva00442AB0Key>,
-	_STL::allocator<Rva00442AB0Key> > Rva00442AB0Tree;
+	_STL::allocator<Rva00442AB0Key> > PointerIdentityTree00442AB0;
 
-template _STL::pair<Rva00442AB0Tree::iterator, bool>
-Rva00442AB0Tree::insert_unique( const Rva00442AB0Key & );
+template _STL::pair<PointerIdentityTree00442AB0::iterator, bool>
+PointerIdentityTree00442AB0::insert_unique( const Rva00442AB0Key & );
 
 struct Rva006DE9B0Target;
 
@@ -123,8 +125,8 @@ typedef _STL::_Rb_tree<Rva006DE9B0Key,
 	Rva006DE9B0Key,
 	_STL::_Identity<Rva006DE9B0Key>,
 	_STL::less<Rva006DE9B0Key>,
-	_STL::allocator<Rva006DE9B0Key> > Rva006DE9B0Tree;
+	_STL::allocator<Rva006DE9B0Key> > PointerIdentityTree006DE9B0;
 
-template _STL::pair<Rva006DE9B0Tree::iterator, bool>
-Rva006DE9B0Tree::insert_unique( const Rva006DE9B0Key & );
+template _STL::pair<PointerIdentityTree006DE9B0::iterator, bool>
+PointerIdentityTree006DE9B0::insert_unique( const Rva006DE9B0Key & );
 
