@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?changeVisualDisguise@StealthUpdate@@: Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate.cpp
-// Open-BFME5: lift the retail StealthUpdate::changeVisualDisguise MASM body into a C++ thunk.
+// Existing assembly-backed range 0x00267D80..0x00267F31, not a C++ conversion.
+// SpecialDisguiseUpdate constructor 0x00267820 installs vtable 0x010B7708;
+// slot 15 calls ILT 0x0003DD43, whose target is this body. Original method name unknown.
+// The C linker name below is a legacy RVA-bearing label, not a StealthUpdate identity.
 
 extern "C" __declspec(naked) void bfme_StealthUpdateChangeVisualDisguise_267D80()
 {
