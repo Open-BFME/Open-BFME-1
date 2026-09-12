@@ -1,16 +1,22 @@
 // ?playerMessageCallback@@YAXPAXPBD1W4MessageType@@0@Z
-// partial score=0.86 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy
 // stlport
 //
 // The PeerCallbacks table built by PeerThreadClass::Thread_Function at
 // 0x0064FB90 stores 0x0064A2E0 in its playerMessage slot (+0x14).  The old
 // ledger name at this address was a naked nick-error lift; the retail body
 // parses the player-message MBOT protocol and is the reference's
-// playerMessageCallback at PeerThread.cpp:2478.
+// playerMessageCallback at PeerThread.cpp:2478. BFME parses six tokens per
+// player; the sixth field has unknown original spelling and is named extra.
+// A literal -1 in that field is replaced with -- before the nine-argument
+// handleQMMatch call. Retaining the NAT token across parsing the extra field
+// reflects the real validity test; it is the fifth token that counts players.
+// PeerResponse uses natural STLport strings and the proven 0x330-byte ABI;
+// its union includes the handler's port and extra arrays for consistency.
 
 #include <string>
 #include <string.h>
+#include <stdlib.h>
 
 char *strtok_r(char *text, const char *delimiters, char **lasts);
 
@@ -79,9 +85,11 @@ public:
 			Int mapIdx;
 			Int seed;
 			UnsignedInt IP[MAX_SLOTS];
+			unsigned short port[MAX_SLOTS];
 			Int side[MAX_SLOTS];
 			Int color[MAX_SLOTS];
 			Int nat[MAX_SLOTS];
+			Int extra[MAX_SLOTS];
 		} qmStatus;
 		int words[143];
 	};
@@ -107,7 +115,7 @@ extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern std::wstring MultiByteToWideCharSingleLine(const char *text);
 extern "C" int peerGetPlayerInfoNoWaitA(PEER peer, const char *nick,
 	UnsignedInt *IP, Int *profileID);
-__declspec(dllimport) int __cdecl bfmeAtoi1027(char *text);
+
 
 class PeerThreadClass
 {
@@ -116,16 +124,13 @@ public:
 	void handleQMMatch(PEER peer, Int mapIndex, Int seed,
 		char *playerName[MAX_SLOTS], char *playerIP[MAX_SLOTS],
 		char *playerSide[MAX_SLOTS], char *playerColor[MAX_SLOTS],
-		char *playerNAT[MAX_SLOTS]);
+		char *playerNAT[MAX_SLOTS], char *playerExtra[MAX_SLOTS]);
 };
 
 // PeerThread.cpp's static matchbotProfileID is placed at this proven retail
 // address.  A direct TU-local view keeps the callback tied to that state
 // without exporting or inventing a second variable.
 #define BFME_MATCHBOT_PROFILE_ID (*(Int *)0x012F750C)
-
-#pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
 
 #pragma optimize("y", on)
 void playerMessageCallback(PEER peer, const char *nick, const char *message,
@@ -157,6 +162,7 @@ void playerMessageCallback(PEER peer, const char *nick, const char *message,
 				char *playerSideStr[MAX_SLOTS];
 				char *playerColorStr[MAX_SLOTS];
 				char *playerNATStr[MAX_SLOTS];
+				char *playerExtraStr[MAX_SLOTS];
 				Int numPlayers = 0;
 				for (Int i = 0; i < MAX_SLOTS; ++i)
 				{
@@ -164,8 +170,12 @@ void playerMessageCallback(PEER peer, const char *nick, const char *message,
 					playerIPStr[i] = strtok_r(NULL, " ", &lastStr);
 					playerSideStr[i] = strtok_r(NULL, " ", &lastStr);
 					playerColorStr[i] = strtok_r(NULL, " ", &lastStr);
-					playerNATStr[i] = strtok_r(NULL, " ", &lastStr);
-					if (playerNATStr[i])
+					char *natToken = strtok_r(NULL, " ", &lastStr);
+					playerNATStr[i] = natToken;
+					playerExtraStr[i] = strtok_r(NULL, " ", &lastStr);
+					if (playerExtraStr[i] && strcmp(playerExtraStr[i], "-1") == 0)
+						playerExtraStr[i] = "--";
+					if (natToken)
 					{
 						++numPlayers;
 					}
@@ -176,14 +186,15 @@ void playerMessageCallback(PEER peer, const char *nick, const char *message,
 						playerSideStr[i] = NULL;
 						playerColorStr[i] = NULL;
 						playerNATStr[i] = NULL;
+						playerExtraStr[i] = NULL;
 					}
 				}
 
 				if (numPlayers > 1)
 				{
-					t->handleQMMatch(peer, bfmeAtoi1027(mapNumStr),
-						bfmeAtoi1027(seedStr), playerStr, playerIPStr,
-						playerSideStr, playerColorStr, playerNATStr);
+					t->handleQMMatch(peer, atoi(mapNumStr),
+						atoi(seedStr), playerStr, playerIPStr,
+						playerSideStr, playerColorStr, playerNATStr, playerExtraStr);
 				}
 			}
 			else if (cmd && strcmp(cmd, "MBOT:WORKING") == 0)
@@ -191,7 +202,7 @@ void playerMessageCallback(PEER peer, const char *nick, const char *message,
 				Int poolSize = 0;
 				char *poolStr = strtok_r(NULL, " ", &lastStr);
 				if (poolStr)
-					poolSize = bfmeAtoi1027(poolStr);
+					poolSize = atoi(poolStr);
 				PeerResponse resp;
 				resp.peerResponseType = 17;
 				resp.qmStatus.status = QM_WORKING;
