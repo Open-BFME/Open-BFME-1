@@ -1,6 +1,6 @@
 // cl: /Od /GZ /GS /MD /DNDEBUG
 
-struct Rva00812DD0Comm
+struct CommTAPIRef
 {
 	void *m_ops[ 14 ];
 	char m_gap38[ 0x14 ];
@@ -48,12 +48,12 @@ void rva00813CF0( void );
 void rva00813A40( void );
 void Rva00814020( void );
 
-extern "C" Rva00812DD0Comm *Rva00812DD0( int first, int second, int third )
+extern "C" CommTAPIRef *Rva00812DD0( int first, int second, int third )
 {
 	void *threadHandle;
-	Rva00812DD0Comm *comm;
+	CommTAPIRef *comm;
 
-	comm = (Rva00812DD0Comm *)Rva01358E3C( Rva01358DDC(), 0, 0x19C );
+	comm = (CommTAPIRef *)Rva01358E3C( Rva01358DDC(), 0, 0x19C );
 	if ( comm == 0 )
 		return 0;
 
