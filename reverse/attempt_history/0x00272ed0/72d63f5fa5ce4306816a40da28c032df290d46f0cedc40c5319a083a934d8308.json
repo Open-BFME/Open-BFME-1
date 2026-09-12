@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "72d63f5fa5ce4306816a40da28c032df290d46f0cedc40c5319a083a934d8308",
+  "symbol": "?d_00272ed0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?d_00272ed0@@YAXXZ\n// partial score=0.92 date=2026-09-11\nclass BfmeNodeGN\n{\npublic:\n\tBfmeNodeGN *bfmeGetGN();\n\tfloat bfmeComputeGN(int v);\n\n\tunsigned char m_bfmeHeadGN[4];\n\tBfmeNodeGN *m_bfmeSubGN;\n};\n\nclass BfmeOwnerGN\n{\npublic:\n\tunsigned char m_bfmeGapGN[4];\n\tBfmeNodeGN *volatile m_bfmeNodeGN;\n};\n\nclass BfmeSelfGN\n{\npublic:\n\tbool bfmeApplyGN(int v);\n\tbool bfmeCheckGN(int v);\n\tvoid bfmeBeginGN();\n\n\tunsigned char m_bfmeHeadGN[8];\n\tBfmeOwnerGN *m_bfmeOwnerGN;\n\tunsigned char m_bfmeGap2GN[0x1c4];\n\tint m_bfmeValueGN;\n\tfloat m_bfmeResultGN;\n\tunsigned char m_bfmeGap3GN[0x14f];\n\tchar m_bfmeFlagAGN;\n\tunsigned char m_bfmeGap4GN[0xf];\n\tchar m_bfmeFlagBGN;\n};\n\nstatic __forceinline BfmeNodeGN *bfmeDerefGN(BfmeNodeGN *p)\n{\n\tif (p->m_bfmeSubGN != 0)\n\t\treturn p->m_bfmeSubGN->bfmeGetGN();\n\n\treturn 0;\n}\n\nbool BfmeSelfGN::bfmeApplyGN(int v)\n{\n\tif (v == 0 && m_bfmeFlagAGN != 0)\n\t\tv = 1;\n\n\tif (v == m_bfmeValueGN)\n\t\treturn true;\n\n\tif (m_bfmeFlagBGN == 0 && bfmeCheckGN(v))\n\t{\n\t\tbfmeBeginGN();\n\n\t\tBfmeNodeGN *n = m_bfmeOwnerGN->m_bfmeNodeGN;\n\t\tBfmeNodeGN *r = (n != 0) ? bfmeDerefGN(n) : 0;\n\n\t\tm_bfmeResultGN = r->bfmeComputeGN(m_bfmeValueGN);\n\n\t\treturn true;\n\t}\n\telse\n\t{\n\t\treturn false;\n\t}\n}\n"
+}

@@ -40,7 +40,7 @@ static __forceinline BfmeNodeGN *bfmeDerefGN(BfmeNodeGN *p)
 	if (p->m_bfmeSubGN != 0)
 		return p->m_bfmeSubGN->bfmeGetGN();
 
-	return p;
+	return 0;
 }
 
 bool BfmeSelfGN::bfmeApplyGN(int v)
