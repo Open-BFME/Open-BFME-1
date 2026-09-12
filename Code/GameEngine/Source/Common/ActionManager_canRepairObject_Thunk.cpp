@@ -1,335 +1,178 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?canRepairObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z: Code/GameEngine/Source/Common/RTS/ActionManager.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Retail identity comes from the ActionManager callers and the helper ILTs.
+// The local views preserve the BFME object offsets and virtual call slots.
 
-enum CommandSourceType { };
-class Object;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ActionManager.h
+typedef bool Bool;
+typedef int Int;
+typedef unsigned char UnsignedByte;
+
+enum ObjectID
+{
+	INVALID_ID = 0
+};
+
+enum Relationship
+{
+	ENEMIES = 2
+};
+
+enum CommandSourceType
+{
+	CMD_FROM_SCRIPT = 1
+};
+
+enum ObjectShroudStatus
+{
+	OBJECTSHROUD_FOGGED = 3
+};
+
+class Player
+{
+public:
+	Int getPlayerIndex(void) const;
+};
+
+class StructureCompletionInterface
+{
+public:
+	virtual void slot00(void);
+	virtual void slot04(void);
+	virtual void slot08(void);
+	virtual void slot0c(void);
+	virtual void slot10(void);
+	virtual void slot14(void);
+	virtual void slot18(void);
+	virtual void slot1c(void);
+	virtual Bool slot20(void);
+};
+
+class BFMEActionObject
+{
+public:
+	Bool testStatus(Int status) const;
+};
+
+class BFMEActionThing
+{
+public:
+	Bool isKindOf(Int kind) const;
+};
+
+class Rva000C4A70
+{
+public:
+	Bool field(void) const;
+};
+
+class BodyModuleInterface
+{
+public:
+	virtual void slot00(void);
+	virtual void slot04(void);
+	virtual void slot08(void);
+	virtual void slot0c(void);
+	virtual float getHealth(void);
+	virtual void slot14(void);
+	virtual float getMaxHealth(void);
+};
+
+class Object
+{
+public:
+	Relationship getRelationship(const Object *other) const;
+	Player *getControllingPlayer(void) const;
+	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
+	StructureCompletionInterface *getStructureCompletionInterface(void);
+	ObjectID getSoleHealingBenefactor(void) const;
+
+	char m_pad00[0x74];
+	Int m_id74;
+	char m_pad78[0x88];
+	UnsignedByte m_privateStatus100;
+	char m_pad101[0xff];
+	BodyModuleInterface *m_body200;
+	char m_pad204[0x10];
+	void *m_containedBy214;
+	char m_pad218[0x12c];
+	UnsignedByte m_privateStatus344;
+};
+
+static Bool isObjectShroudedForAction(const Object *source, const Object *target,
+	CommandSourceType commandSource)
+{
+	if (target)
+	{
+		Int targetID = *reinterpret_cast<const Int *>(reinterpret_cast<const char *>(target) + 0x74);
+		if (targetID >= 0x05f5e0fc && targetID <= 0x05f5e0ff)
+			return false;
+	}
+
+	if (source && target && source->getControllingPlayer())
+	{
+		if (*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(source->getControllingPlayer()) + 0x2c) == 0 &&
+			commandSource != CMD_FROM_SCRIPT &&
+			target->getShroudedStatus(source->getControllingPlayer()->getPlayerIndex()) >= OBJECTSHROUD_FOGGED)
+			return true;
+	}
+
+	return false;
+}
+
 class ActionManager
 {
 public:
-	bool canRepairObject(const Object *, const Object *, CommandSourceType);
+	Bool canRepairObject(const Object *, const Object *, CommandSourceType);
 };
 
-// ?canRepairObject@ActionManager@@QAE_NPBVObject@@0W4CommandSourceType@@@Z
-__declspec(naked) bool ActionManager::canRepairObject(const Object *, const Object *, CommandSourceType)
+// The relationship, kind, status, completion, health, shroud, and beneficiary
+// calls match the retail ILTs used by the Dozer and Worker repair callers.
+Bool ActionManager::canRepairObject(const Object *obj, const Object *objectToRepair,
+	CommandSourceType commandSource)
 {
-	__asm {
-		__emit 0x56
-		__emit 0x57
-		__emit 0x8b
-		__emit 0x7c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x85
-		__emit 0xff
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x27
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x10
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x1b
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xc7
-		__emit 0x54
-		__emit 0xf8
-		__emit 0xff
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x02
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x0a
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xf6
-		__emit 0x86
-		__emit 0x44
-		__emit 0x03
-		__emit 0x00
-		__emit 0x00
-		__emit 0x01
-		__emit 0x74
-		__emit 0x0f
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x18
-		__emit 0xe0
-		__emit 0xf3
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xf2
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xa3
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0xe1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x18
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x92
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0xd0
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x02
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x06
-		__emit 0xc4
-		__emit 0xf3
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0xbf
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x02
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xf5
-		__emit 0xc3
-		__emit 0xf3
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0xae
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x26
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x5f
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x3c
-		__emit 0x01
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x9d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x0e
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x4e
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x8c
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x07
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x3d
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x7f
-		__emit 0x53
-		__emit 0x8b
-		__emit 0x9e
-		__emit 0x00
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x03
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xff
-		__emit 0x50
-		__emit 0x10
-		__emit 0xd9
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x13
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xff
-		__emit 0x52
-		__emit 0x18
-		__emit 0xd9
-		__emit 0x44
-		__emit 0x24
-		__emit 0x10
-		__emit 0xda
-		__emit 0xe9
-		__emit 0x5b
-		__emit 0xdf
-		__emit 0xe0
-		__emit 0xf6
-		__emit 0xc4
-		__emit 0x44
-		__emit 0x7b
-		__emit 0x58
-		__emit 0x68
-		__emit 0x95
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x06
-		__emit 0xd2
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x48
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xb5
-		__emit 0xfe
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x0b
-		__emit 0x8b
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xc8
-		__emit 0xff
-		__emit 0x52
-		__emit 0x20
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x32
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x43
-		__emit 0xec
-		__emit 0xff
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x21
-		__emit 0x8b
-		__emit 0x87
-		__emit 0x14
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x75
-		__emit 0x17
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x82
-		__emit 0xd6
-		__emit 0xf3
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x05
-		__emit 0x3b
-		__emit 0x47
-		__emit 0x74
-		__emit 0x75
-		__emit 0x07
-		__emit 0x5f
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x5e
-		__emit 0xc2
-		__emit 0x0c
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x5e
-		__emit 0xc2
-		__emit 0x0c
-		__emit 0x00
-	}
+	if (obj == 0 || objectToRepair == 0)
+		return false;
+
+	if (obj->getRelationship(objectToRepair) != ENEMIES)
+		return false;
+
+	if ((objectToRepair->m_privateStatus344 & 1) != 0 &&
+		!((const Rva000C4A70 *)objectToRepair)->field())
+		return false;
+
+	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x16))
+		return false;
+	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x18))
+		return false;
+	if (((const BFMEActionObject *)obj)->testStatus(2))
+		return false;
+	if (((const BFMEActionObject *)objectToRepair)->testStatus(2))
+		return false;
+	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x26) == 1)
+		return false;
+	if (!((const BFMEActionThing *)obj)->isKindOf(0x0e))
+		return false;
+	if (!((const BFMEActionThing *)objectToRepair)->isKindOf(7))
+		return false;
+
+	BodyModuleInterface *body = objectToRepair->m_body200;
+	if (body->getHealth() == body->getMaxHealth())
+		return false;
+
+	if (((const BFMEActionThing *)objectToRepair)->isKindOf(0x95))
+		return false;
+
+	StructureCompletionInterface *completion =
+		const_cast<Object *>(objectToRepair)->getStructureCompletionInterface();
+	if (completion && completion->slot20())
+		return false;
+
+	if (isObjectShroudedForAction(obj, objectToRepair, commandSource))
+		return false;
+	if (obj->m_containedBy214 != 0)
+		return false;
+
+	ObjectID beneficiary = objectToRepair->getSoleHealingBenefactor();
+	if (beneficiary != 0 && beneficiary != obj->m_id74)
+		return false;
+	return true;
 }
