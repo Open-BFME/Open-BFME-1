@@ -1,6 +1,9 @@
-// ?parseGameDataDefinition@GlobalData@@SAXPAVINI@@@Z
-// partial score=0.86 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
+// Retail GameData definition parser, RVA 0x00085C20 (1171 bytes).
+// The GameData registration at RVA 0x00EA85B0 points through ILT 0x00021684
+// to this body. The INI/override/preferences algorithm follows GlobalData.cpp;
+// BFME adds registry-based data directories and its own field offsets.
+// These declarations describe only the BFME ABI used by this translation unit.
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -102,7 +105,7 @@ public:
 
 	const unsigned short *str(void) const
 	{
-		return m_data ? m_data + 8 : (const unsigned short *)g_bfmeEmptyUnicode;
+		return m_data ? (const unsigned short *)((const unsigned char *)m_data + 8) : (const unsigned short *)g_bfmeEmptyUnicode;
 	}
 };
 
@@ -210,18 +213,21 @@ void GlobalData::parseGameDataDefinition(INI *ini)
 		CreateDirectoryA(temp, NULL);
 		TheWritableGlobalData->m_userDataDir.set(temp);
 
-		wchar_t wideTemp[MAX_PATH];
-		if (SHGetSpecialFolderPathW(NULL, wideTemp, CSIDL_APPDATA, TRUE))
-		{
-			UnicodeString wideLeaf = GetRegistryUserDataLeafNameUnicode();
-			if (wideTemp[wcslen(wideTemp) - 1] != L'\\')
-				wcscat(wideTemp, L"\\");
-			wcscat(wideTemp, wideLeaf.str());
+	}
+
+	// Both folder lookups run independently, including after a narrow failure.
+	wchar_t wideTemp[MAX_PATH];
+	if (SHGetSpecialFolderPathW(NULL, wideTemp, CSIDL_APPDATA, TRUE))
+	{
+		UnicodeString wideLeaf = GetRegistryUserDataLeafNameUnicode();
+		// Retail indexes the narrow buffer using the wide path length here.
+		if (temp[wcslen(wideTemp) - 1] != '\\')
 			wcscat(wideTemp, L"\\");
-			CreateDirectoryW(wideTemp, NULL);
-			TheWritableGlobalData->m_userDataDirUnicode.set(
-				(const unsigned short *)wideTemp);
-		}
+		wcscat(wideTemp, wideLeaf.str());
+		wcscat(wideTemp, L"\\");
+		CreateDirectoryW(wideTemp, NULL);
+		TheWritableGlobalData->m_userDataDirUnicode.set(
+			(const unsigned short *)wideTemp);
 	}
 
 	OptionPreferences optionPref;
