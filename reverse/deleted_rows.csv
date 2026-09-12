@@ -25823,3 +25823,4 @@ tg_005c9ca0,0x005C9CA0,Generated += shape placeholder superseded by authentic ST
 ??_EGen_dtorv_005bd730@@UAEPAXI@Z,0x005BD730,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::EmissionVolumeInfo vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005bd870@@UAEPAXI@Z,0x005BD870,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::EmissionVelocityInfo vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005bdad0@@UAEPAXI@Z,0x005BDAD0,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::WindModuleInfo vector-deleting destructor over the same 84-byte range"
+??_EGen_dtorv_0048d3f0@@UAEPAXI@Z,0x0048D3F0,"generated vector-destructor placeholder superseded by the authentic UnicodeString vector-deleting destructor over the same 84-byte range"
