@@ -4776,6 +4776,7 @@ name,address,notes
 ??1Gen_dtor_0006f9f0@@UAE@XZ,0x0003B51B,gen-dtor class destructor
 ??1?$SubsystemSlot@VEva@@@@UAE@XZ,0x0003B51B,SubsystemSlot<Eva> destructor ILT called by authentic scalar-deleting destructor at 0x0006F9F0
 ??1Gen_dtor_0006fab0@@UAE@XZ,0x0001B18A,gen-dtor class destructor
+??1?$SubsystemSlot@VScienceStore@@@@UAE@XZ,0x0001B18A,SubsystemSlot<ScienceStore> destructor ILT called by authentic scalar-deleting destructor at 0x0006FAB0
 ??1Gen_dtor_0006fb70@@UAE@XZ,0x0000111D,gen-dtor class destructor
 ??1Gen_dtor_0006fc30@@UAE@XZ,0x0002C543,gen-dtor class destructor
 ??1Gen_dtor_0006fcf0@@UAE@XZ,0x0002C520,gen-dtor class destructor
@@ -9944,6 +9945,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x01075D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
 ??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
 ??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
+??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
