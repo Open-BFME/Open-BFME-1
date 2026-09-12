@@ -79,6 +79,21 @@ CANDIDATE = re.compile(r"//\s*readable body of\b")
 # machine noise. 95 of 146 clusters contain one, so this is the difference between a
 # merge lane and a corruption lane.
 NAKED = re.compile(r"__declspec\s*\(\s*naked\s*\)|\b__emit\b|\b__asm\b")
+# The `// cl:` line is the TU's whole compile environment -- flags AND include
+# search path. Two files that disagree about it cannot share a translation unit,
+# whatever their bodies look like: BezierSegmentEvaluation builds against
+# Code/GameEngine/Include while BezierSegment.cpp builds against the ZH reference
+# tree, so folding the first into the second resolved different headers and the
+# body stopped reproducing retail (FAIL 1/68) even though the source text was
+# identical. Only 19% of directories are flag-homogeneous, so this is the common
+# case, not the corner.
+CL_LINE = re.compile(r"^\s*//\s*cl:(.*)$", re.M)
+
+
+def cl_flags(text):
+    """The TU's declared compile environment, or None when it takes the default."""
+    found = CL_LINE.search(text)
+    return " ".join(found.group(1).split()) if found else None
 CLASS_OPEN = re.compile(r"^(?:class|struct)\s+(\w+)\b")
 # A data member: no call parens, no initialiser, ends at the semicolon. Function
 # declarations are excluded on purpose -- siblings differing there are overloads
@@ -380,6 +395,16 @@ def do_plan(root, dest, only):
         for rel, marked in partial:
             for name in sorted(set(owned[rel]) - set(marked)):
                 print(f"      {rel} keeps {name}")
+    dest_flags = cl_flags(read_text(root / dest)) if (root / dest).exists() else None
+    mismatch = [(rel, cl_flags(read_text(root / rel))) for rel in chosen
+                if cl_flags(read_text(root / rel)) != dest_flags]
+    if mismatch:
+        print(f"  {len(mismatch)} FLAG-MISMATCHED donor(s) — a different `// cl:` line is a")
+        print(f"      different compile environment, so the donor cannot share a TU with")
+        print(f"      {dest}. --apply refuses these.")
+        for rel, fl in mismatch:
+            print(f"      {rel}\n          donor: {(fl or '(default)')[:100]}")
+        print(f"          dest : {(dest_flags or '(default)')[:100]}")
     naked = [rel for rel in chosen if NAKED.search(read_text(root / rel))]
     if naked:
         print(f"  {len(naked)} NAKED donor(s) — a __declspec(naked)/__emit/__asm body is a")
@@ -460,6 +485,24 @@ def do_apply(root, dest, into, only, symbols=()):
              "deletes donors, it never synthesises a body")
     if into_rel in chosen:
         fail(f"--into {into_rel} is also named by --only; a file cannot be its own donor")
+    # Donors must agree with EACH OTHER, and with --into when it declares a line.
+    # A freshly written merged file may not carry one yet, and demanding it there
+    # would block the ordinary "write the TU, then apply" order; what must never
+    # happen is folding two donors whose compile environments differ.
+    donor_flags = {rel: cl_flags(read_text(root / rel)) for rel in chosen}
+    distinct = set(donor_flags.values())
+    if len(distinct) > 1:
+        fail("refusing: donors declare %d different `// cl:` lines" % len(distinct),
+             "that line is the TU's compile environment -- flags and include search",
+             "path -- so donors that disagree resolve different headers and stop",
+             "reproducing retail even when the source text is identical.",
+             *(f"  {rel}\n      {(fl or '(default)')[:110]}" for rel, fl in sorted(donor_flags.items())))
+    into_flags = cl_flags(read_text(root / into_rel))
+    donor_line = next(iter(distinct))
+    if into_flags is not None and into_flags != donor_line:
+        fail("refusing: --into declares a different `// cl:` line than its donors",
+             f"  --into : {(into_flags or '(default)')[:110]}",
+             f"  donors : {(donor_line or '(default)')[:110]}")
     naked = [rel for rel in chosen if NAKED.search(read_text(root / rel))]
     if naked:
         fail("refusing: %d donor(s) hold a __declspec(naked)/__emit/__asm body" % len(naked),

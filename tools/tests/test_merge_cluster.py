@@ -422,3 +422,29 @@ def test_plan_flags_a_thunk_only_donor_whose_fold_would_delete_the_real_body(
     assert thunk in plan.split("THUNK-ONLY")[1]
     # the real body must NOT be flagged, or the warning is noise
     assert real not in plan.split("THUNK-ONLY")[1].split("declarations common")[0]
+
+
+def test_donors_with_different_cl_lines_are_refused(tmp_path, capsys):
+    """The `// cl:` line is the TU's whole compile environment -- flags AND include
+    search path. BezierSegmentEvaluation builds against Code/GameEngine/Include and
+    BezierSegment.cpp against the ZH reference tree; folding the first into the
+    second resolved different headers and the body stopped reproducing retail
+    (FAIL 1/68) from byte-identical source text. Only 19% of directories are
+    flag-homogeneous, so this is the common case, not a corner."""
+    a = "Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyUnits.cpp"
+    b = "Code/GameEngine/Source/Common/RTS/TeamPrototype_countBuildings.cpp"
+    ledger = repo(tmp_path, {
+        a: "// cl: /DNDEBUG /MD /EHsc\n" + sibling("?hasAnyUnits@TeamPrototype@@QBE_NXZ", DEST),
+        b: "// cl: /O2 /Ob0\n" + sibling("?countBuildings@TeamPrototype@@QAEHXZ", DEST),
+        MERGED: "// cl: /DNDEBUG /MD /EHsc\n// merged\n",
+    }, [("?hasAnyUnits@TeamPrototype@@QBE_NXZ", a, b"\r\n"),
+        ("?countBuildings@TeamPrototype@@QAEHXZ", b, b"\r\n")])
+    before = ledger.read_bytes()
+
+    with pytest.raises(SystemExit) as exc:
+        run("--apply", DEST, "--into", MERGED, "--only", a, b, "--root", str(tmp_path))
+
+    assert exc.value.code == 1
+    assert "different `// cl:` lines" in capsys.readouterr().err
+    assert ledger.read_bytes() == before, "a refusal must not touch the ledger"
+    assert (tmp_path / a).exists() and (tmp_path / b).exists()
