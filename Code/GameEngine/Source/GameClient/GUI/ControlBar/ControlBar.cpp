@@ -2078,7 +2078,7 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 	* passed in */
 //-------------------------------------------------------------------------------------------------
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
-// Body in ControlBar_switchToContext.asm (exact 869B retail).
+// Retail switchToContext starts at RVA 0x0049E780; old 0x0049E901 claim was interior.
 
 // BFME adds a FIFTH border type Zero Hour does not have. Retail's jump table
 // covers switch values 1 through 5 as an identity map, so the arms are in source
