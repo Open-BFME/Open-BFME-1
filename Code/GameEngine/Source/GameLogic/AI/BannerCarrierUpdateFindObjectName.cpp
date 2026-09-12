@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
+#include "../../../../reference/shims/stringinline/StringInline.h"
 #include <vector>
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
@@ -73,6 +74,8 @@ public:
 	BannerCarrierObjectPayload *rva00284700FindObjectName(
 		BannerCarrierObjectPayload *result,
 		const BannerCarrierString *name ) const;
+	AsciiString rva00283A20FindLocomotorName(
+		const BannerCarrierString *name ) const;
 
 private:
 	std::vector<BannerCarrierObjectName *> m_objectNames;
@@ -102,4 +105,16 @@ BannerCarrierUpdateModuleData::rva00284700FindObjectName(
 	memset( result, 0, sizeof( *result ) );
 	result->m_fields[4] |= 0x4000;
 	return result;
+}
+
+AsciiString BannerCarrierUpdateModuleData::rva00283A20FindLocomotorName(
+	const BannerCarrierString *name ) const
+{
+	for (unsigned int i = 0; i < m_objectNames.size(); ++i)
+	{
+		if (m_objectNames[i]->m_name.compareNoCase( *name ) == 0)
+			return *(const AsciiString *)&m_objectNames[i]->m_objectTemplateName;
+	}
+
+	return (const char *)0x0107301c;
 }
