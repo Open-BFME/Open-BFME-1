@@ -1,887 +1,261 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??1BaseHeightMapRenderObjClass@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// BFME BaseHeightMapRenderObjClass destructor. This lane-local mirror keeps
+// the retail BFME additions (two vector<bool> objects and terrain buffers)
+// while leaving the imported ZH header untouched.
 
-class __declspec(novtable) BaseHeightMapRenderObjClass
+void __cdecl bfmeFreeScalar(void *block); // retail 0x00881EB0
+void __cdecl bfmeDeallocate(void *block, unsigned int bytes); // retail 0x0082E5F0
+void __cdecl operator delete[](void *block); // retail 0x00881EF0
+
+class TextureBaseClass
 {
 public:
-	virtual ~BaseHeightMapRenderObjClass();
+	void Release_Ref(void); // retail 0x009EB7A0
+};
+
+class TextureRef
+{
+public:
+	TextureBaseClass *m_ptr;
+
+	~TextureRef(void)
+	{
+		if (m_ptr)
+			m_ptr->Release_Ref();
+	}
+};
+
+class AsciiString;
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+	~StringBase(void) {}
+	void releaseBuffer(void); // retail 0x00887940
+	T *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	~AsciiString(void)
+	{
+		((StringBase<char> *)this)->releaseBuffer();
+	}
+};
+
+class BfmeVectorBool
+{
+public:
+	~BfmeVectorBool(void)
+	{
+		int *start = m_start;
+		if (start)
+		{
+			unsigned int bytes = sizeof(int) * (m_end - start);
+			if (bytes > 0x80)
+				bfmeFreeScalar(start);
+			else
+				bfmeDeallocate(start, bytes);
+		}
+	}
+
+	int *m_start;
+	unsigned int m_startBit;
+	int *m_finish;
+	unsigned int m_finishBit;
+	int *m_end;
+};
+
+class BfmeVirtualBuffer
+{
+public:
+	virtual ~BfmeVirtualBuffer(void);
+};
+
+class Rva006D6FD0
+{
+public:
+	~Rva006D6FD0(void);
+};
+
+class W3DWaypointBuffer
+{
+public:
+	~W3DWaypointBuffer(void);
+};
+
+class W3DRoadBuffer
+{
+public:
+	~W3DRoadBuffer(void);
+};
+
+class W3DBridgeBuffer
+{
+public:
+	~W3DBridgeBuffer(void);
+};
+
+class Rva006DED60RoadBuffer
+{
+public:
+	~Rva006DED60RoadBuffer(void);
+};
+
+class W3DShroud
+{
+public:
+	~W3DShroud(void);
+};
+
+class TaintBuffer
+{
+public:
+	~TaintBuffer(void);
+};
+
+struct BfmeArrayElement
+{
+	int m_value;
+};
+
+class BfmeTreeBuffer
+{
+public:
+	virtual ~BfmeTreeBuffer(void);
+};
+
+class RenderObjBaseA
+{
+public:
+	virtual ~RenderObjBaseA(void);
+	int m_pad;
+};
+
+class RenderObjBaseB
+{
+public:
+	virtual ~RenderObjBaseB(void);
+};
+
+class RenderObjClass : public RenderObjBaseA, public RenderObjBaseB
+{
+public:
+	virtual ~RenderObjClass(void);
+	char m_pad[0xbc];
+};
+
+class DX8_CleanupHook
+{
+public:
+	virtual void ReleaseResources(void) = 0;
+	virtual void ReAcquireResources(void) = 0;
+};
+
+class Snapshot
+{
+public:
+	virtual ~Snapshot(void) {}
+};
+
+class BaseHeightMapRenderObjClass
+	: public RenderObjClass, public DX8_CleanupHook, public Snapshot
+{
+public:
+	virtual ~BaseHeightMapRenderObjClass(void);
+	virtual int freeMapResources(void);
+
+private:
+	char m_pad_d0[0x08];
+	TextureRef m_textureD8;
+	char m_pad_dc_to_3020[0x3020 - 0xdc];
+	BfmeVectorBool m_visibleCliff;
+	BfmeVectorBool m_impassableCliff;
+	char m_pad3048[0x04];
+	void *m_resource304c;
+	TextureRef m_texture3050;
+	TextureRef m_texture3054;
+	TextureRef m_texture3058;
+	TextureRef m_texture305c;
+	TextureRef m_texture3060;
+	TextureRef m_texture3064;
+	TextureRef m_texture3068;
+	char m_pad306c[0x04];
+	AsciiString m_string3070;
+	AsciiString m_string3074;
+	AsciiString m_string3078;
+	AsciiString m_string307c;
+	AsciiString m_string3080;
+	AsciiString m_string3084;
+	AsciiString m_string3088;
+	AsciiString m_string308c;
+	TextureRef m_texture3090;
+	BfmeTreeBuffer *m_treeBuffer;
+	BfmeVirtualBuffer *m_buffer3098;
+	BfmeVirtualBuffer *m_propBuffer;
+	Rva006D6FD0 *m_bibBuffer;
+	BfmeVirtualBuffer *m_waypointBuffer;
+	W3DWaypointBuffer *m_roadBuffer;
+	W3DRoadBuffer *m_bridgeBuffer;
+	W3DBridgeBuffer *m_shroudBuffer;
+	Rva006DED60RoadBuffer *m_buffer30b4;
+	W3DShroud *m_buffer30b8;
+	TaintBuffer *m_buffer30bc;
+	BfmeArrayElement *m_shoreLineTilePositions;
 };
 
 // ??1BaseHeightMapRenderObjClass@@UAE@XZ
-__declspec(naked) BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass()
+// Direct member destructor identities follow the existing rows at 0x006DEA80, 0x006D6FD0, 0x00746800, 0x0070FAF0, 0x006D8A80, 0x0071B3D0, and 0x00727380.
+BaseHeightMapRenderObjClass::~BaseHeightMapRenderObjClass(void)
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x9b
-		__emit 0xa3
-		__emit 0x04
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x08
-		__emit 0x53
-		__emit 0x56
-		__emit 0x8b
-		__emit 0xf1
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc7
-		__emit 0x06
-		__emit 0xb8
-		__emit 0xd8
-		__emit 0x11
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x46
-		__emit 0x08
-		__emit 0xb0
-		__emit 0xd8
-		__emit 0x11
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xc8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xa4
-		__emit 0xd8
-		__emit 0x11
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xcc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x90
-		__emit 0xd8
-		__emit 0x11
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x14
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x2b
-		__emit 0xc4
-		__emit 0x96
-		__emit 0xff
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x94
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x33
-		__emit 0xdb
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x10
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x94
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x57
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xb4
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x2a
-		__emit 0x90
-		__emit 0x97
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xa2
-		__emit 0x2f
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xb4
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x98
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x12
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x98
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x9c
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x0c
-		__emit 0x8b
-		__emit 0x01
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x10
-		__emit 0x89
-		__emit 0x9e
-		__emit 0x9c
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xa0
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x6d
-		__emit 0x2e
-		__emit 0x97
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0x56
-		__emit 0x2f
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xa0
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xac
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xcd
-		__emit 0x43
-		__emit 0x93
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0x36
-		__emit 0x2f
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xac
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xb0
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x10
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0xea
-		__emit 0xc2
-		__emit 0x95
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0x16
-		__emit 0x2f
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xa4
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0x74
-		__emit 0x06
-		__emit 0x8b
-		__emit 0x11
-		__emit 0x6a
-		__emit 0x01
-		__emit 0xff
-		__emit 0x12
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xa8
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x45
-		__emit 0x4b
-		__emit 0x97
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xec
-		__emit 0x2e
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xa8
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xb8
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x64
-		__emit 0x4b
-		__emit 0x94
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xcc
-		__emit 0x2e
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xb8
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xbe
-		__emit 0xbc
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xfb
-		__emit 0x74
-		__emit 0x16
-		__emit 0x8b
-		__emit 0xcf
-		__emit 0xe8
-		__emit 0x8e
-		__emit 0xff
-		__emit 0x95
-		__emit 0xff
-		__emit 0x57
-		__emit 0xe8
-		__emit 0xac
-		__emit 0x2e
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xbc
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0xc0
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x5f
-		__emit 0x74
-		__emit 0x0f
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xd2
-		__emit 0x2e
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0x89
-		__emit 0x9e
-		__emit 0xc0
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x90
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x13
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x65
-		__emit 0xc7
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x8c
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x12
-		__emit 0xe8
-		__emit 0xf5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x88
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x11
-		__emit 0xe8
-		__emit 0xe5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x84
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x10
-		__emit 0xe8
-		__emit 0xd5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x80
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0f
-		__emit 0xe8
-		__emit 0xc5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x7c
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0e
-		__emit 0xe8
-		__emit 0xb5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x78
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0d
-		__emit 0xe8
-		__emit 0xa5
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x74
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0x95
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x8e
-		__emit 0x70
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0b
-		__emit 0xe8
-		__emit 0x85
-		__emit 0x88
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x68
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x0a
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0xd1
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x64
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x09
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0xbd
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x60
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x08
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0xa9
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x5c
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x07
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x95
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x58
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x06
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x81
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x54
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x05
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x6d
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x50
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x04
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0x59
-		__emit 0xc6
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x34
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x03
-		__emit 0x74
-		__emit 0x2a
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x44
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x2b
-		__emit 0xc1
-		__emit 0xc1
-		__emit 0xf8
-		__emit 0x02
-		__emit 0xc1
-		__emit 0xe0
-		__emit 0x02
-		__emit 0x3d
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x76
-		__emit 0x0b
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x3f
-		__emit 0x2d
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x0a
-		__emit 0x50
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x73
-		__emit 0xf4
-		__emit 0x15
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x20
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x02
-		__emit 0x74
-		__emit 0x2a
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x30
-		__emit 0x30
-		__emit 0x00
-		__emit 0x00
-		__emit 0x2b
-		__emit 0xc1
-		__emit 0xc1
-		__emit 0xf8
-		__emit 0x02
-		__emit 0xc1
-		__emit 0xe0
-		__emit 0x02
-		__emit 0x3d
-		__emit 0x80
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x76
-		__emit 0x0b
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x06
-		__emit 0x2d
-		__emit 0x1b
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x04
-		__emit 0xeb
-		__emit 0x0a
-		__emit 0x50
-		__emit 0x51
-		__emit 0xe8
-		__emit 0x3a
-		__emit 0xf4
-		__emit 0x15
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0xd8
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x3b
-		__emit 0xcb
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0x01
-		__emit 0x74
-		__emit 0x05
-		__emit 0xe8
-		__emit 0xd3
-		__emit 0xc5
-		__emit 0x31
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xc7
-		__emit 0x86
-		__emit 0xcc
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x44
-		__emit 0x37
-		__emit 0x07
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x18
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0x2a
-		__emit 0x0a
-		__emit 0x25
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x5e
-		__emit 0x5b
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x14
-		__emit 0xc3
+	freeMapResources();
+
+	if (m_treeBuffer) {
+		delete m_treeBuffer;
+		m_treeBuffer = 0;
+	}
+	if (m_buffer30b4) {
+		delete m_buffer30b4;
+		m_buffer30b4 = 0;
+	}
+	if (m_buffer3098) {
+		delete m_buffer3098;
+		m_buffer3098 = 0;
+	}
+	if (m_propBuffer) {
+		delete m_propBuffer;
+		m_propBuffer = 0;
+	}
+	if (m_bibBuffer) {
+		delete m_bibBuffer;
+		m_bibBuffer = 0;
+	}
+	if (m_bridgeBuffer) {
+		delete m_bridgeBuffer;
+		m_bridgeBuffer = 0;
+	}
+	if (m_shroudBuffer) {
+		delete m_shroudBuffer;
+	}
+	if (m_waypointBuffer) {
+		delete m_waypointBuffer;
+	}
+	if (m_roadBuffer) {
+		delete m_roadBuffer;
+		m_roadBuffer = 0;
+	}
+	if (m_buffer30b8) {
+		delete m_buffer30b8;
+		m_buffer30b8 = 0;
+	}
+	if (m_buffer30bc) {
+		delete m_buffer30bc;
+		m_buffer30bc = 0;
+	}
+	if (m_shoreLineTilePositions) {
+		delete [] m_shoreLineTilePositions;
+		m_shoreLineTilePositions = 0;
 	}
 }
