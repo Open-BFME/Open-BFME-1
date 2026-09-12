@@ -1,5 +1,3 @@
-// ?_M_insert_overflow@?$vector@UGen_t_003b10f0_p32cd@@V?$allocator@UGen_t_003b10f0_p32cd@@@_STL@@@_STL@@IAEXPAUGen_t_003b10f0_p32cd@@ABU3@ABU__false_type@2@I_N@Z
-// partial score=0.99 date=2026-09-11
 // Open-BFME5: STLport vector<T>::_M_insert_overflow, the reallocating insert,
 // for the 32-byte element vector reached only from the matched push_back
 // family. Grow to the old size plus the larger of the old size and the fill
@@ -16,6 +14,10 @@ struct Gen_t_003b10f0_p32cd
 	char m_body[ 32 ];
 };
 
+struct P6Elem003B1940;
+void __cdecl Bfme003B1940Construct(P6Elem003B1940 *, const P6Elem003B1940 &);
+class Gen_003AFBB0 { public: void bfmeDestroy(); };
+
 namespace _STL
 {
 struct __false_type
@@ -31,7 +33,10 @@ void *__cdecl vectorLargeAllocate(unsigned int bytes);
 void *__cdecl vectorSmallAllocate(unsigned int bytes);
 
 template <class Type>
-void __cdecl BfmeElementConstruct(Type *destination, const Type &value);
+__forceinline void BfmeElementConstruct(Type *destination, const Type &value)
+{
+    Bfme003B1940Construct(reinterpret_cast<P6Elem003B1940 *>(destination), reinterpret_cast<const P6Elem003B1940 &>(value));
+}
 
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
@@ -115,7 +120,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			newFinish = uninitialized_copy(position, last, newFinish);
 	}
 
-	_M_clear();
+	reinterpret_cast<Gen_003AFBB0 *>(this)->bfmeDestroy();
 
 	_M_finish = newFinish;
 	_M_start = newStart;
