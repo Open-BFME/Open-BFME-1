@@ -1127,6 +1127,22 @@ public:
 
 };
 
+class Rva003BEDD0
+{
+public:
+	int classify();
+};
+
+// The retail global has the canonical CampaignObject spelling.  Its
+// subobject at offset zero is the matched list classifier, so the inherited
+// view preserves the existing Rva003BEDD0 method symbol while the data
+// relocation names the actual engine global.
+class CampaignObject : public Rva003BEDD0
+{
+};
+
+extern CampaignObject *TheLivingWorldLogic;
+
 BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 	: _bfme_AptGameWindow( context )
 {
@@ -1176,6 +1192,44 @@ BfmeAptScreenCampaignReview::BfmeAptScreenCampaignReview( void *context )
 
 		unidentified_0003A085();
 		g_theWindowManager->unidentified_0001A483();
+	}
+}
+
+// ?_bfme_initGadgets@BfmeAptScreenCampaignReview@@QAEXXZ
+void BfmeAptScreenCampaignReview::_bfme_initGadgets()
+{
+	if( TheLivingWorldLogic == 0 )
+	{
+		g_theWindowManager->bfme_setAptText(
+			AsciiString( "APT:CmpgnRevResult" ),
+			*(const UnicodeString *)0x01336E54 );
+		return;
+	}
+
+	int result = static_cast<Rva003BEDD0 *>( TheLivingWorldLogic )->classify();
+	if( result == 2 )
+	{
+		AsciiString variableName( "APT:CmpgnRevResult" );
+		g_theWindowManager->bfme_setAptText( variableName,
+			TheGameText->fetch( "APT:TotalVictoryCaps", 0 ) );
+	}
+	else if( result == 1 )
+	{
+		AsciiString variableName( "APT:CmpgnRevResult" );
+		g_theWindowManager->bfme_setAptText( variableName,
+			TheGameText->fetch( "APT:VictoryCaps", 0 ) );
+	}
+	else if( result == 0 )
+	{
+		AsciiString variableName( "APT:CmpgnRevResult" );
+		g_theWindowManager->bfme_setAptText( variableName,
+			TheGameText->fetch( "APT:SurvivedCaps", 0 ) );
+	}
+	else
+	{
+		AsciiString variableName( "APT:CmpgnRevResult" );
+		g_theWindowManager->bfme_setAptText(
+			variableName, *(const UnicodeString *)0x01336E54 );
 	}
 }
 
