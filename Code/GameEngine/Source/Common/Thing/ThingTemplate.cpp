@@ -1107,22 +1107,67 @@ void ThingTemplate::validate()
 }
 
 //-------------------------------------------------------------------------------------------------
+class BfmeThingTemplateCopyString;
+
+template <typename T> class StringBase
+{
+	friend class BfmeThingTemplateCopyString;
+
+	private:
+	StringBase(const StringBase<T> &other);
+	~StringBase();
+
+	public:
+	void set(const StringBase<T> &other);
+
+	void *m_data;
+};
+
+class BfmeThingTemplateCopyString : private StringBase<char>
+{
+public:
+	BfmeThingTemplateCopyString(
+		const BfmeThingTemplateCopyString &other) : StringBase<char>(other) {}
+	~BfmeThingTemplateCopyString() {}
+	void set(const BfmeThingTemplateCopyString &other)
+	{
+		((StringBase<char> *)this)->set(
+			*(const StringBase<char> *)&other);
+	}
+};
+
+struct BfmeThingTemplateCopyLayout
+{
+	char m_beforeName[ 0x20 ];
+	BfmeThingTemplateCopyString m_name;
+	char m_beforeNext[ 0x38c - 0x24 ];
+	ThingTemplate *m_next;
+	char m_beforeId[ 0x478 - 0x390 ];
+	UnsignedShort m_id;
+};
+
 // copy the guts of that into this, but preserve this' name, id, and list-links.
-// ?copyFrom@ThingTemplate@@QAEXPBV1@@Z present-unmatched
 void ThingTemplate::copyFrom(const ThingTemplate* that)
 {
-	if (!that)
+	const void *sourceAddress = that;
+	if (sourceAddress == 0)
+		return;
+	if ((const void *)this == sourceAddress)
 		return;
 
-	ThingTemplate* next = this->m_nextThingTemplate;
-	UnsignedShort id = this->m_templateID;
-	AsciiString name = this->m_nameString;
+	BfmeThingTemplateCopyLayout *self =
+		(BfmeThingTemplateCopyLayout *)this;
+	ThingTemplate* next = self->m_next;
+	UnsignedShort id = self->m_id;
+	BfmeThingTemplateCopyString name = self->m_name;
 
+	*(unsigned char *)0x012ED611 = 1;
 	*this = *that;
+	*(unsigned char *)0x012ED611 = 0;
 
-	this->m_nextThingTemplate = next;
-	this->m_templateID = id;
-	this->m_nameString = name;
+	self->m_next = next;
+	self->m_id = id;
+	self->m_name.set(name);
 }
 
 //-------------------------------------------------------------------------------------------------
