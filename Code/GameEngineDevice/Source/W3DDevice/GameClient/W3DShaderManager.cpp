@@ -160,6 +160,24 @@ public:
 	}
 };
 
+class BFMEValueNameLate
+{
+	TCHAR *m_Buffer;
+
+public:
+	BFMEValueNameLate(int initial_len, bool hint_temporary)
+		: m_Buffer(StringClass::m_EmptyString)
+	{
+		((StringClass *)this)->Get_String(initial_len, hint_temporary);
+		m_Buffer[0] = *(volatile TCHAR *)&g_bfmeCh1035;
+	}
+
+	~BFMEValueNameLate()
+	{
+		((StringClass *)this)->Free_String();
+	}
+};
+
 namespace {
 	enum { BFME_SET_TEXTURE_SLOT = 65, BFME_SET_PIXEL_SHADER_SLOT = 107 };
 	typedef HRESULT (__stdcall *BFMESetTextureFn)(IDirect3DDevice8 *, DWORD, IDirect3DBaseTexture8 *);
@@ -249,6 +267,29 @@ namespace {
 		IDirect3DDevice8 *tss_device_ = DX8Wrapper::_Get_D3D_Device8();                      \
 		(*(BFMESetTSSFn **)tss_device_)[BFME_SET_TSS_SLOT](tss_device_,                      \
 			(stage_), (state_), (value_));                                                   \
+		number_of_DX8_calls++;                                                               \
+		DX8Wrapper::texture_stage_state_changes++;                                           \
+	}
+
+#define BFME_SET_TSS_LATE(stage_, state_, value_)                                            \
+	if ((unsigned)(stage_) >= MAX_TEXTURE_STAGES) {                                           \
+		IDirect3DDevice8 *tss_raw_ = DX8Wrapper::_Get_D3D_Device8();                          \
+		(*(BFMESetTSSFn **)tss_raw_)[BFME_SET_TSS_SLOT](tss_raw_,                             \
+			(stage_), (state_), (value_));                                                    \
+		number_of_DX8_calls++;                                                               \
+	} else if (DX8Wrapper::TextureStageStates[stage_][state_] != (unsigned)(value_)) {      \
+		if (WW3D::Is_Snapshot_Activated()) {                                                 \
+			BFMEValueNameLate value_name(0, true);                                            \
+			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(*(StringClass *)&value_name,    \
+				(D3DTEXTURESTAGESTATETYPE)(state_), (value_));                                  \
+			SNAPSHOT_SAY(("DX8 - SetTextureStageState(stage: %d, state: %s, value: %s)\\n",  \
+				(stage_), DX8Wrapper::Get_DX8_Texture_Stage_State_Name(                          \
+					(D3DTEXTURESTAGESTATETYPE)(state_)), value_name));                             \
+		}                                                                                    \
+		DX8Wrapper::TextureStageStates[stage_][state_] = (value_);                            \
+		IDirect3DDevice8 *tss_device_ = DX8Wrapper::_Get_D3D_Device8();                      \
+		(*(BFMESetTSSFn **)tss_device_)[BFME_SET_TSS_SLOT](tss_device_,                      \
+			(stage_), (state_), (value_));                                                    \
 		number_of_DX8_calls++;                                                               \
 		DX8Wrapper::texture_stage_state_changes++;                                           \
 	}
@@ -1597,7 +1638,6 @@ Int FlatShroudTextureShader::init(void)
 }
 
 //Setup a texture projection in the given stage that applies our shroud.
-// ?set@FlatShroudTextureShader@@EAEHH@Z present-unmatched
 Int FlatShroudTextureShader::set(Int stage)
 {
 	//force WW3D2 system to set it's states so it won't later overwrite our custom settings.
@@ -1614,9 +1654,9 @@ Int FlatShroudTextureShader::set(Int stage)
 	BFME_SET_TSS(stage, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 	BFME_SET_TSS(stage, D3DTSS_COLORARG2, D3DTA_CURRENT);
 	BFME_SET_TSS(stage, D3DTSS_COLOROP, D3DTOP_MODULATE);
-	BFME_SET_TSS(stage, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
-	BFME_SET_TSS(stage, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
-	BFME_SET_TSS(stage, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+	BFME_SET_TSS_LATE(stage, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+	BFME_SET_TSS_LATE(stage, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+	BFME_SET_TSS_LATE(stage, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 	//DX8Wrapper::Apply_Render_State_Changes();
 
 	//We need to scale so shroud texel stretches over one full terrain cell.  Each texel
