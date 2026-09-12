@@ -1,5 +1,6 @@
 // ?bfmeRegionRenderC@@YAXPAXHH@Z
-// partial score=0.995 date=2026-09-09
+// Retail 0x00412C10..0x00412DEE; Drawable::bfmeRegionDispatch routes through ILT00005A51.
+// Existing raw-argument ABI; native volatile view preserves the one offset-x load.
 // cl: /DNDEBUG /MD /EHs-c-
 
 typedef unsigned int UnsignedInt;
@@ -59,7 +60,7 @@ public:
 
 extern Display *TheDisplay;
 extern void j_0003b390();
-typedef void (__cdecl *Rva00411220ColorCall)( Int value, Color *colors );
+typedef void (__cdecl *Rva00411400ColorCall)( Int value, Color *colors );
 
 void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 {
@@ -68,7 +69,7 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 	const Int regionLeft = region->left;
 	Color colors[3];
 	Real regionWidth = (Real)(region->right - regionLeft);
-	((Rva00411220ColorCall)j_0003b390)( rawValue, colors );
+	((Rva00411400ColorCall)j_0003b390)( rawValue, colors );
 
 	UnsignedInt state = *(UnsignedInt *)0x012F13D8;
 	if( (state & 1) == 0 )
@@ -91,7 +92,7 @@ void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
 	}
 
 	TheDisplay->drawOpenRect(
-		(Real)(regionLeft + offset->x - 3),
+		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
 		regionWidth + *(const Real *)0x010828C4,
 		9.0f, 1.0f, *(UnsignedInt *)0x012F13D4 );
