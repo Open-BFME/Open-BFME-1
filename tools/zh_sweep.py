@@ -682,7 +682,7 @@ def callee_pins(rva, body, relocs, sources):
     retail folds and duplicates bodies, so a name the ledger holds is routinely
     called HERE at a copy the ledger does not hold, and a pin that reads the
     name alone asserts a symbol is landed while quoting an address no row
-    covers. docs/lessons.md:613 is that trap.
+    covers. that is the trap.
     """
     lines = []
     for offset, kind, callee in relocs:

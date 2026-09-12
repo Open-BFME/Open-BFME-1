@@ -106,7 +106,7 @@ def test_the_shipped_limit_is_not_the_compiled_one():
     """The value the game runs on comes from _patch222.big.
 
     Quoting the disassembly here would put 30 in a document about a build that
-    measures 38, which is the trap docs/lessons.md records twice already."""
+    measures 38, which is a trap this tree has hit twice."""
     out = subprocess.run([sys.executable, str(ROOT / "tools/ini_value.py"),
                           "FramesPerSecondLimit"],
                          capture_output=True, text=True, cwd=ROOT)

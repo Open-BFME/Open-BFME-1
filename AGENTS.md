@@ -113,8 +113,9 @@ record `blocked`.
   naming the *wrong* function still byte-matches and a green gate proves
   nothing about it. Run `tools/pin_consistency.py --symbol <name>` before you
   pin and `--check` after. `reverse/pin_consistency_baseline.csv` is the
-  known-bad backlog and may only shrink — never add a line to get green. See
-  `docs/lessons.md`, "A `pinharvest` row is a candidate, not an address".
+  known-bad backlog and may only shrink — never add a line to get green. A
+  `pinharvest` row is a CANDIDATE, not an address: it proposes a name for an
+  address, and the resolver keeping it is not evidence that it is right.
   Pinning an address calls ENCODE but the function does not LIVE at (an import
   thunk, a jump stub) needs a `route=<target>` note: `--routes` re-derives every
   one from the retail image and refuses anything else, so it exempts that row
@@ -134,6 +135,12 @@ record `blocked`.
   An address-derived name is self-labelling and harmless; a plausible WRONG one is
   invisible and no gate can see it, so the address may only be dropped for a name
   evidence supports. `docs/naming_evidence.md` has the supply, the rule and the traps.
+- **Two placeholder conventions, for two different things.**
+  `?j_XXXXXXXX@@YAXXZ` is an ILT thunk claimed by ADDRESS — 5 bytes, no identity
+  claim. `?dup_XXXXXXXX@@YAXXZ` is a REAL BODY whose identity is unknown or
+  disputed, parked under its address. A mis-anchored row is re-homed to whichever
+  fits its SIZE; neither throws away byte coverage and neither asserts an identity
+  the evidence does not support.
 - No fallback paths; they conceal mismatches.
 - Never load `reverse/functions.csv`, `ghidra_functions.csv` or `exports.csv`
   wholesale; use `rg` or narrow filters.

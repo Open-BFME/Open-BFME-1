@@ -1038,7 +1038,7 @@ def print_cluster(candidate, candidates):
     if len(siblings) > 12:
         print(f"      ... and {len(siblings) - 12} more in this file")
     print("  If a shared header is involved, edit every dependent body first and "
-          "pay the full gate once (docs/lessons.md).")
+          "pay the full gate once.")
 
 
 def structural_size_label(candidate):

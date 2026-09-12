@@ -1,7 +1,7 @@
 """marker_screen clears a destination's marker to measure a donor, so the one
 thing it must never do is leave that marker cleared. A destination missing its
 marker makes the NEXT build report a stale-annotation pass that never compared
-a byte -- the trap docs/lessons.md records -- so an interrupted screen is worse
+a byte -- the known trap -- so an interrupted screen is worse
 than a failed one."""
 import sys
 from pathlib import Path

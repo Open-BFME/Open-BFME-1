@@ -3,7 +3,7 @@
 Run `python3 tools/probe.py <file.cpp> "<symbol>" 0x<RVA>` first: it compiles, diffs against retail with relocations masked, and prints the symptom row below with its lever.
 
 Read this before banking a near-miss. Each lever below turned a 0.9+ partial into
-a byte-exact landing on 2026-09-02; the mechanism is in `docs/lessons.md`.
+a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 
 | Symptom in the byte diff | Lever |
 |---|---|

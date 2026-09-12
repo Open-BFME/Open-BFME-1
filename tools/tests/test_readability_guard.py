@@ -6,7 +6,7 @@ original, and neither can be defended by a better pattern:
   * 13,329 ledger rows in the measured areas are named `d_`/`dup_`/`sub_`/`uw_`/
     `j_` plus an address. They are ICF aliases, ILT thunks and unwind funclets --
     `?dup_XXXXXXXX@@YAXXZ` is a real body PARKED under its address precisely
-    because its identity is not known (docs/lessons.md, "Two placeholder
+    because its identity is not known (the two placeholder
     conventions"). Spelling them all as words is Ident 20.72 -> 29.21 (+8.49 pp)
     and not one function becomes easier to read.
   * 10,522 pad members answer to `char m_pad[8]`. Renamed to `char m_slack[8]`

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Drop EXACT duplicate records (keep first) from the ledgers, under the lock.
-The union-merge artifact after every rebase; see docs/lessons.md."""
+The union-merge artifact after every rebase."""
 import sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]

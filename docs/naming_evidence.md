@@ -23,11 +23,20 @@ property to defend is the self-labelling, not the machine-generatedness.
 
 **The address disappears as a reward for evidence, not as a style preference.** An
 unproven name that drops its address has converted a visible unknown into an invisible
-one, which is strictly worse than where it started. ICF makes this concrete: a type
-named after an address exists so the mangled callee resolves at the copy you want
-(`Open2Elem063700` reaches `0x00063700`, not `0x00757C70`, see `lessons.md`). The
-address must stay UNIQUE; it never has to be the whole name, and
-`AsciiStringElemNoRefcountBump` disambiguates just as well while saying something.
+one, which is strictly worse than where it started. ICF makes this concrete. `vector<AsciiString>::_M_insert_overflow` exists twice:
+`0x00063700` has 38 retail call sites across 29 claimed sources and `0x00757C70`
+has 2. They are the same 268-byte template body and differ only in three rel32
+slots. A type named after an address exists so the mangled callee resolves at the
+copy you want — `Open2Elem063700` reaches `0x00063700`, not `0x00757C70`:
+
+    class Open2Elem063700 : public AsciiString      // shim AsciiString: derive
+    { public: Open2Elem063700( const Open2Elem063700 &o ) : AsciiString( o ) {} };
+
+Deriving keeps the layout and both string callees, so only the mangled callee
+changes. **The address must stay UNIQUE; it never has to be the whole name.**
+`AsciiStringElemNoRefcountBump` disambiguates exactly as well and says what the
+distinction IS, which is the whole difference between a disambiguator and a
+riddle. Count the call sites before deciding which ICF copy owns a name.
 
 ## Do not guess — ask
 

@@ -70,8 +70,6 @@ the inventory pass:
 * `docs/game-quitting.md`
 * `docs/ini_schema.md`
 * `docs/lan-testing.md`
-* `docs/lessons-archive.md`
-* `docs/lessons.md`
 * `docs/local_fleet.md`
 * `docs/matching.md`
 * `docs/mods.md`

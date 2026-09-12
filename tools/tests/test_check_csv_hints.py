@@ -2,7 +2,7 @@
 
 check_csv used to answer every duplicate with `Fix: python3 tools/dedup_csv.py`.
 That renormalises both ledgers (~157k lines) and conflicts with every branch in
-flight, so docs/lessons.md has told agents three separate times to ignore the
+flight, so agents have been told three separate times to ignore the
 hint -- and agents kept following it, because the tool is what they read.
 """
 import sys

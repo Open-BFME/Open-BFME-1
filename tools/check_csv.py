@@ -32,7 +32,7 @@ DELETED = ROOT / "reverse" / "deleted_rows.csv"
 # checks below still name it.
 DUP_FIX = ("Fix: drop the duplicate record(s) with tools/ledger_io.py keeping the "
            "first -- expect a contiguous block, not one line. Not dedup_csv: see "
-           "docs/lessons.md 'Union-merge duplicate row'.")
+           "a union merge duplicated the row; keep the first and drop the rest.")
 
 # realcrc.cpp is linked twice in the retail exe, so these two symbols
 # legitimately appear at two addresses each. Any other duplicate name is a bug.

@@ -13,7 +13,7 @@ Prints the failing rows and one total line; the gate's byte dumps stay in the
 gate. Exit 0 means the gate ran to completion with every row green. A gate that
 dies before it reaches byte comparison -- a TU that will not compile exits 2 --
 gets its own verdict and never reads as zero red rows: that wall once hid twelve
-hours of commits (docs/lessons.md).
+hours of commits.
 """
 import os
 import re

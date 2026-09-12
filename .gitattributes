@@ -21,6 +21,4 @@ reverse/symbols.csv merge=union
 # flight at exactly the moment the escape hatch is needed.
 reverse/deleted_rows.csv merge=union
 reverse/re_attempts.log merge=union
-# Append-only like the log above. docs/lessons.md is curated, NOT append-only,
 # so it deliberately gets no union merge.
-docs/lessons-archive.md merge=union

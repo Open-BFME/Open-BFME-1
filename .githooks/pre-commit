@@ -36,6 +36,20 @@ sys.exit(bad)
 PY
 fi
 
+# docs/lessons.md is deleted and must stay that way. It was designated the one doc
+# agents could extend without asking, and it grew to 82,688 words; the grant was
+# removed on 2026-08-01 and 541 more commits went into it; it was distilled to 206
+# lines on 2026-08-13 and grew back to 2,565 -- 7.4x in thirty days, past the ~2,000
+# line cap written in its own header. Two prose bans did not hold it. By the end the
+# two sections other files cited BY NAME ("A pinharvest row is a candidate", "Union-
+# merge duplicate row") no longer existed in it, so it had stopped working as a
+# reference as well. An operational fact belongs in the commit message, in the tool
+# that enforces it, or next to the code it is about -- not in a growing middens.
+if git diff --cached --name-only --diff-filter=ACMR \
+        | grep -qE '^docs/lessons(-archive)?\.md$'; then
+    fail "docs/lessons.md was deleted deliberately; put the fact where it is enforced, not in a new middens"
+fi
+
 # Direction: conversions run asm -> C++, never the reverse. Byte-verification
 # cannot see this (an __emit lift of a retail dump is byte-true), so it gets
 # its own gate: no new naked/__emit bodies outside Code/gen_small/, and no
