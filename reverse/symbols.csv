@@ -83314,6 +83314,7 @@ name,address,notes
 ?load@HeaderTemplateINI@@QAEXVHeaderTemplateString@@W4HeaderTemplateINILoadType@@PAVXfer@@@Z,0x00853A20,Open-BFME5 HeaderTemplateManager init relocation
 ?load@INI@@QAEXVAsciiString@@HHPAX@Z,0x00853CB0,retail INI::load(file loadType reload xfer); called by the subsystem loader at 0x000BB310
 ?load@INI@@QAEXVAsciiString@@HPAVXfer@@P6AXPAV1@@Z@Z,0x00853CB0,Retail853CE3 stores thirdarg toINI s_xfer130CE54;853D5F calls fourtharg cdecl with INI pointer. Corrects old reload/xfer labels
+?load@INI@@QAEXVBFMERetailAsciiString@@00HH@Z,0x00853B30,retail five-argument INI entry point called by the FX particle-system loader
 ?load@MapCacheLoadStandardMapsShim@@QAEXXZ,0x004507A0,MapCache loadStandardMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@MapCacheLoadUserMapsShim@@QAE_NXZ,0x004577C0,MapCache loadUserMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@UserPreferences@@UAE_NVAsciiString@@@Z,0x00014308,QuickMatchPreferences retail constructor call ILT reaches UserPreferences::load at 0x000A9230
