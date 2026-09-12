@@ -5311,7 +5311,7 @@ name,address,notes
 ??1Gen_dtor_00255f30@@UAE@XZ,0x00033866,gen-dtor class destructor
 ??1Gen_dtor_002561d0@@UAE@XZ,0x0001B7B6,gen-dtor class destructor
 ??1Gen_dtor_00256940@@UAE@XZ,0x00004D3B,gen-dtor class destructor
-??1Gen_dtor_00257620@@UAE@XZ,0x000308C3,gen-dtor class destructor
+??1ArrowStormUpdateModuleData@@UAE@XZ,0x000308C3,route=0x00257650; vtable 0x010B3668 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_00257c70@@UAE@XZ,0x0003E879,gen-dtor class destructor
 ??1Gen_dtor_002592f0@@UAE@XZ,0x0001F76C,gen-dtor class destructor
 ??1Gen_dtor_002598d0@@UAE@XZ,0x0000B37F,gen-dtor class destructor
@@ -5322,7 +5322,7 @@ name,address,notes
 ??1Gen_dtor_0025ac50@@UAE@XZ,0x00032E25,gen-dtor class destructor
 ??1Gen_dtor_0025ae30@@UAE@XZ,0x000227B4,gen-dtor class destructor
 ??1Gen_dtor_0025bbf0@@UAE@XZ,0x00002F86,gen-dtor class destructor
-??1Gen_dtor_0025cc50@@UAE@XZ,0x0004854A,gen-dtor class destructor
+??1ElvenWoodSpecialPowerModuleData@@UAE@XZ,0x0004854A,route=0x0025CC80; vtable 0x010B4C38 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
 ??1Gen_dtor_0025d8f0@@UAE@XZ,0x0004770D,gen-dtor class destructor
 ??1Gen_dtor_0025dbb0@@UAE@XZ,0x0004653D,gen-dtor class destructor
@@ -5349,7 +5349,7 @@ name,address,notes
 ??1Gen_dtor_002664b0@@UAE@XZ,0x0003C03D,gen-dtor class destructor
 ??1Gen_dtor_00266670@@UAE@XZ,0x00016153,gen-dtor class destructor
 ??1Gen_dtor_00267890@@UAE@XZ,0x00008AE4,gen-dtor class destructor
-??1Gen_dtor_00267a60@@UAE@XZ,0x0001A834,gen-dtor class destructor
+??1SpecialDisguiseUpdateModuleData@@UAE@XZ,0x0001A834,route=0x00267A90; vtable 0x010B7770 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_00269100@@UAE@XZ,0x0002041E,gen-dtor class destructor
 ??1Gen_dtor_0026a9f0@@UAE@XZ,0x0001BBE4,gen-dtor class destructor
 ??1Gen_dtor_0026aff0@@UAE@XZ,0x00019565,gen-dtor class destructor
@@ -5361,7 +5361,7 @@ name,address,notes
 ??1Gen_dtor_0026c790@@UAE@XZ,0x0003E5E5,gen-dtor class destructor
 ??1Gen_dtor_0026cee0@@UAE@XZ,0x0002C179,gen-dtor class destructor
 ??1Gen_dtor_0026d490@@UAE@XZ,0x0001DAED,gen-dtor class destructor
-??1Gen_dtor_0026d780@@UAE@XZ,0x00006BD6,gen-dtor class destructor
+??1WeaponFireSpecialAbilityUpdateModuleData@@UAE@XZ,0x00006BD6,route=0x0026D7B0; vtable 0x010B8D98 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_0026dd90@@UAE@XZ,0x000466DC,gen-dtor class destructor
 ??1Gen_dtor_0026e0f0@@UAE@XZ,0x0003666A,gen-dtor class destructor
 ??1Gen_dtor_00271ab0@@UAE@XZ,0x0004B2F4,gen-dtor class destructor
@@ -5446,7 +5446,7 @@ name,address,notes
 ??1Gen_dtor_002b0c30@@UAE@XZ,0x000356C0,gen-dtor class destructor
 ??1Gen_dtor_002b2410@@UAE@XZ,0x0002575C,gen-dtor class destructor
 ??1Gen_dtor_002b2c70@@UAE@XZ,0x00005673,gen-dtor class destructor
-??1Gen_dtor_002b2d40@@UAE@XZ,0x0003EA7C,gen-dtor class destructor
+??1WeaponModeSpecialPowerUpdateModuleData@@UAE@XZ,0x0003EA7C,route=0x002B2D70; vtable 0x010C5510 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_002b3130@@UAE@XZ,0x00030E1D,gen-dtor class destructor
 ??1Gen_dtor_002b4770@@UAE@XZ,0x000029B4,gen-dtor class destructor
 ??1Gen_dtor_002b55d0@@UAE@XZ,0x000396F8,gen-dtor class destructor
