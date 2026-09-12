@@ -11832,7 +11832,7 @@ name,address,notes
 ?TheCampaignManager@@3PAVCampaignManager@@A,0x012F4CB0,TheCampaignManager used by ScoreScreen startNextCampaignGame and initSinglePlayer
 ?TheCashHackSpecialPowerPool@?1??getClassMemoryPool@CashHackSpecialPower@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFC54,pool-glue cascade static (back-solved)
 ?TheCaveContainPool@?1??getClassMemoryPool@CaveContain@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA38,pool-glue cascade static (back-solved)
-?TheCollisionManager@@3PAVCollisionManager@@A,0x00ED5C4,GameEngine::init 0x0038A2F1 constructs exact CollisionManager 0x009A25B0 stores global VA 0x012ED5C4 and assigns literal TheCollisionManager; GameLogic phase 2 calls vtable 0x01141680 slot +0x14
+?TheCollisionManager@@3PAVCollisionManager@@A,0x00EED5C4,GameEngine::init 0x0038A2F1 constructs exact CollisionManager 0x009A25B0 stores global VA 0x012ED5C4 and assigns literal TheCollisionManager; GameLogic phase 2 calls vtable 0x01141680 slot +0x14
 ?TheCommandButtonHuntUpdatePool@?1??getClassMemoryPool@CommandButtonHuntUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFEE0,pool-glue cascade static (back-solved)
 ?TheCommandSetUpgradePool@?1??getClassMemoryPool@CommandSetUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0548,pool-glue cascade static (back-solved)
 ?TheControlBar@@3PAVControlBar@@A,0x012F33F8,Open-BFME5 Player::addScience inlines markUIDirty here as a byte store at +0x24 and doDisableInput calls deleteBuildTooltipLayout on it
