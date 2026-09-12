@@ -1,8 +1,11 @@
 // ?update@ToppleUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.96 date=2026-09-11
+// BFME ToppleUpdate::update [0x002B1610,0x002B1A95), including the
+// authentic static deathByToppling helper at 0x002B1440 (58 bytes).
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
+#define ToppleUpdate DonorToppleUpdate
+#define DamageInfo DonorDamageInfo
 #include "PreRTS.h"
 
 #include "Common/ThingTemplate.h"
@@ -22,6 +25,23 @@
 #include "GameLogic/Module/PhysicsUpdate.h"
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/Damage.h"
+#undef DamageInfo
+#undef ToppleUpdate
+
+// Retail DamageInfo is 0x5c bytes; these offsets agree with the matched
+// constructor and Object::kill family. The donor has a different layout.
+class DamageInfo {
+public:
+ DamageInfo();
+ unsigned char pad00[8];
+ ObjectID sourceID;
+ unsigned char pad0c[4];
+ int damageType;
+ unsigned char pad14[4];
+ int deathType;
+ float amount;
+ unsigned char rest20[0x3c];
+};
 
 static const Real ANGULAR_LIMIT = PI/2 - PI/64;
 
@@ -69,9 +89,12 @@ public:
 	virtual void slot20();
 	virtual void slot24();
 	virtual Drawable *getDrawable();
+	virtual void slot2c();
+	virtual void slot30();
+	virtual void attemptDamage(DamageInfo *);
 };
 
-class Rva002B1610Self
+class ToppleUpdate
 {
 public:
 	virtual UpdateSleepTime update();
@@ -91,7 +114,31 @@ private:
 	Real m_bfmeState;
 };
 
-extern void d_002b1440();
+// This BFME transform-copy body is independently owned at RVA 0x00132200.
+// Keep its actual ILT: the donor setTransformMatrix name also names another body.
+extern void j_000361ce();
+class BfmeThingTransformTarget { public: void copyTransform(const Matrix3D *); };
+static inline void bfmeCopyThingTransform(Object *object,const Matrix3D *matrix)
+{
+ union { void (*function)(); void (BfmeThingTransformTarget::*method)(const Matrix3D *); } target;
+ target.function=j_000361ce;
+ (reinterpret_cast<BfmeThingTransformTarget *>(object)->*target.method)(matrix);
+}
+
+// BFME ordinals; Zero Hour assigns UNRESISTABLE a different value.
+static const int BFME_DAMAGE_UNRESISTABLE = 8;
+
+// The static helper deliberately retains its authentic C++ body: MSVC 7.1
+// infers the private ESI argument convention from these two local callers.
+static __declspec(noinline) void deathByToppling(Object *obj)
+{
+ DamageInfo damageInfo;
+ damageInfo.damageType=BFME_DAMAGE_UNRESISTABLE;
+ damageInfo.deathType=DEATH_TOPPLED;
+ damageInfo.sourceID=INVALID_ID;
+ damageInfo.amount=999999.0f;
+ reinterpret_cast<Rva002B1610ObjectView *>(obj)->attemptDamage(&damageInfo);
+}
 
 #define RVA002B1610_BOUNCE_STEP (*(const Real *)0x010C51AC)
 #define RVA002B1610_BOUNCE_FLOOR (*(const Real *)0x010BA670)
@@ -99,7 +146,7 @@ extern void d_002b1440();
 #define RVA002B1610_BASE ((Rva002B1610Base *)((char *)this - 0x10))
 
 // ?update@ToppleUpdate@@UAE?AW4UpdateSleepTime@@XZ
-UpdateSleepTime Rva002B1610Self::update()
+UpdateSleepTime ToppleUpdate::update()
 {
 	DEBUG_ASSERTCRASH(m_toppleState != TOPPLE_UPRIGHT, ("hmm, we should be sleeping here"));
 	if ((m_toppleState == TOPPLE_UPRIGHT) || (m_toppleState == TOPPLE_DOWN))
@@ -114,7 +161,7 @@ UpdateSleepTime Rva002B1610Self::update()
 	{
 		Matrix3D xfrm = *obj->getTransformMatrix();
 		xfrm.In_Place_Pre_Rotate_Z(m_angleDeltaX);
-		obj->setTransformMatrix(&xfrm);
+		bfmeCopyThingTransform(obj,&xfrm);
 		--m_numAngleDeltaX;
 	}
 
@@ -126,7 +173,7 @@ UpdateSleepTime Rva002B1610Self::update()
 	Matrix3D xfrm = *obj->getTransformMatrix();
 	xfrm.In_Place_Pre_Rotate_X(-curVelToUse * m_toppleDirection.y);
 	xfrm.In_Place_Pre_Rotate_Y(curVelToUse * m_toppleDirection.x);
-	obj->setTransformMatrix(&xfrm);
+	bfmeCopyThingTransform(obj,&xfrm);
 
 	m_angularAccumulation += curVelToUse;
 	if ((m_angularAccumulation >= ANGULAR_LIMIT) && (m_angularVelocity > 0))
@@ -148,8 +195,7 @@ UpdateSleepTime Rva002B1610Self::update()
 
 			if (d->m_killWhenToppled)
 			{
-				__asm mov esi, edi
-				d_002b1440();
+				deathByToppling(obj);
 				if (d->m_reorientToppledRubble)
 				{
 					Vector3 pos;
@@ -172,8 +218,7 @@ UpdateSleepTime Rva002B1610Self::update()
 				Object *stump = TheGameLogic->findObjectByID(m_stumpID);
 				if (stump)
 				{
-					__asm mov esi, eax
-					d_002b1440();
+					deathByToppling(stump);
 				}
 			}
 		}
