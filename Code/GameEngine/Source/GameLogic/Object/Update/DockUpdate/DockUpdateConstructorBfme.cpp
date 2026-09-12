@@ -1,9 +1,7 @@
-// ?d_002cd4b0@@YAXXZ
-// partial score=0.9 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DBFME_MODULE_NO_MPO /Ireference/shims/dockupdate /Ireference/shims/moduledata /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 
-// The anonymous row is the BFME DockUpdate base constructor.  The base chain
+// BFME DockUpdate base constructor at RVA 0x002CD4B0 (464 bytes).  The base chain
 // stays local so the extra BFME word in UpdateModule is not a shared-header
 // claim; the ledger carries the real constructor name.
 #include <limits.h>
@@ -20,6 +18,10 @@ typedef bool Bool;
 
 struct Coord3D
 {
+	// Retail Coord3D has an empty default ctor (0x00083330) and a
+	// nontrivial copy ctor (0x0005BC20); this keeps resize fill values in place.
+	Coord3D() {}
+	Coord3D(const Coord3D &);
 	void zero()
 	{
 		x = 0.0f;
@@ -46,28 +48,24 @@ enum ObjectID
 namespace _STL
 {
 template <>
-class vector<Coord3D, allocator<Coord3D> >
+class vector<Coord3D, allocator<Coord3D> > : public _Vector_base<Coord3D, allocator<Coord3D> >
 {
 public:
-	vector() : m_start(0), m_finish(0), m_endOfStorage(0) {}
-	~vector() {}
+	vector() : _Vector_base<Coord3D, allocator<Coord3D> >(allocator<Coord3D>()) {}
+	~vector();
 
 	unsigned int size() const
 	{
-		return (unsigned int)(m_finish - m_start);
+		return (unsigned int)(_M_finish - _M_start);
 	}
 
 	Coord3D &operator[](unsigned int index)
 	{
-		return m_start[index];
+		return _M_start[index];
 	}
 
 	void resize(unsigned int newSize, Coord3D value = Coord3D());
 
-private:
-	Coord3D *m_start;
-	Coord3D *m_finish;
-	Coord3D *m_endOfStorage;
 };
 
 template <>
@@ -75,7 +73,7 @@ class vector<ObjectID, allocator<ObjectID> >
 {
 public:
 	vector() : m_start(0), m_finish(0), m_endOfStorage(0) {}
-	~vector() {}
+	~vector();
 
 	unsigned int size() const
 	{
@@ -107,6 +105,7 @@ class ObjectModule
 {
 public:
 	ObjectModule(Thing *thing, const ModuleData *moduleData);
+	virtual ~ObjectModule();
 
 	virtual void objectModuleAnchor();
 
@@ -132,11 +131,12 @@ class UpdateModule : public ObjectModule,
 {
 public:
 	UpdateModule(Thing *thing, const ModuleData *moduleData)
-		: ObjectModule(thing, moduleData),
-		  m_nextCallFrameAndPhase(0),
-		  m_indexInLogic(-1),
-		  m_bfmeReserved(-1)
+		: ObjectModule(thing, moduleData)
 	{
+		const Int invalid = -1;
+		m_nextCallFrameAndPhase = 0;
+		m_indexInLogic = invalid;
+		m_bfmeReserved = invalid;
 	}
 
 	virtual void behaviorAnchor();
@@ -154,7 +154,7 @@ public:
 	virtual void dockAnchor() = 0;
 };
 
-class Rva002CD4B0DockUpdateModuleData
+class DockUpdateModuleData
 {
 public:
 	void *m_vftable;
@@ -163,10 +163,10 @@ public:
 	Bool m_isAllowPassthrough;
 };
 
-class Rva002CD4B0DockUpdate : public UpdateModule, public DockUpdateInterface
+class DockUpdate : public UpdateModule, public DockUpdateInterface
 {
 public:
-	Rva002CD4B0DockUpdate(Thing *thing, const ModuleData *moduleData);
+	DockUpdate(Thing *thing, const ModuleData *moduleData);
 
 	virtual void objectModuleAnchor();
 	virtual void behaviorAnchor();
@@ -195,7 +195,7 @@ enum
 };
 
 // ??0DockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-Rva002CD4B0DockUpdate::Rva002CD4B0DockUpdate(
+DockUpdate::DockUpdate(
 	Thing *thing, const ModuleData *moduleData)
 	: UpdateModule(thing, moduleData)
 {
@@ -206,8 +206,8 @@ Rva002CD4B0DockUpdate::Rva002CD4B0DockUpdate(
 	m_dockerInside = FALSE;
 	m_dockCrippled = FALSE;
 
-	const Rva002CD4B0DockUpdateModuleData *md =
-		(const Rva002CD4B0DockUpdateModuleData *)moduleData;
+	const DockUpdateModuleData *md =
+		(const DockUpdateModuleData *)moduleData;
 	m_exitPosition.zero();
 	m_dockPosition.zero();
 	m_enterPosition.zero();
