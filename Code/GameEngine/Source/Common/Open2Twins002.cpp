@@ -31,7 +31,7 @@
 // declared-only constructor leaves the by-value temporary opaque and MSVC then
 // emits `mov ecx,esp' before the frame store rather than after, which is six
 // bytes wrong in a thirty-six byte function.  See
-// docs/lessons-archive.md on the by-value temporary transposition.
+// this tree has hit the by-value temporary transposition before.
 //
 ///////////////////////////////////////////////////////////////////////////////
 

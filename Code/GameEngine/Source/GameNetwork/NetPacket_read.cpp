@@ -77,7 +77,7 @@ public:
 	void set(const T *str) { set(str, stringLength(str)); }
 	void set(const T *str, int len);
 
-	// Inline in retail: assignment lands straight on set(). See lessons.
+	// Inline in retail: assignment lands straight on set().
 	StringBase<T> &operator=(const StringBase<T> &src) { set(src); return *this; }
 	void set(const StringBase<T> &src);
 

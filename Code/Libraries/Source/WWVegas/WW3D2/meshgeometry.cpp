@@ -1263,7 +1263,7 @@ bool MeshGeometryClass::cast_obbox_brute_force(OBBoxCollisionTestClass & boxtest
 // ?MeshGeometryClass::Compute_Plane_Equations present-unmatched
 // BFME: PolyCount/Poly/Vertex sit four bytes earlier than this header's
 // declared layout (this+0x24/0x2c/0x30, not +0x28/0x30/0x34 - see
-// docs/lessons-archive.md's "MeshGeometryClass has Poly at +0x2C" note), so
+// MeshGeometryClass has Poly at +0x2C), so
 // read them through the retail offsets directly rather than the named
 // members, same technique as get_shade_indices' this+0x54 access above.
 void MeshGeometryClass::Compute_Plane_Equations(Vector4 * peq)

@@ -779,7 +779,7 @@ bool AABTreeClass::Cast_Ray_To_Polys(CullNodeStruct * node,RayCollisionTestClass
 		// PolySurfaceType at this+0x60, 0x1C higher. So BFME drops one dword
 		// ahead of Poly and carries seven more pointer members between Vertex
 		// and PolySurfaceType. Correcting the header is the real fix, but it is
-		// a header and the full gate is red (docs/lessons.md), so these three
+		// a header and the full gate is red, so these three
 		// reads go straight to the retail offsets. ShareBufferClass::Get_Array
 		// is itself at +0xC in both, which is why only the bases move.
 		const Vector3 * loc =

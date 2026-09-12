@@ -96,7 +96,7 @@ int DebugIOCon::Read(char *buf, int maxchar)
     // reference internal_io.h does, so retail compares this signed (jle at
     // 0x00890FBC) where the unsigned reference fields give jbe. The cast is
     // scoped here rather than fixed in the header because a header edit costs
-    // the host-wide full gate for one byte (AGENTS.md, docs/lessons.md).
+    // the host-wide full gate for one byte (AGENTS.md).
     if (maxchar>(int)(m_inputUsed-m_inputRead))
     {
       // return all

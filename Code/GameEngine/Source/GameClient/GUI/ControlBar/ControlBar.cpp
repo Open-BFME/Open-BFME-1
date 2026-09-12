@@ -1484,7 +1484,7 @@ const Image *ControlBar::getStarImage(void )
 // byte-exact reconstruction: Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp
 // ?onPlayerRankChanged@ControlBar@@QAEXPBVPlayer@@@Z present-unmatched
 // onPlayerRankChanged cannot come home: it stops two bytes short on the
-// EH-temporary transposition, which docs/lessons.md records as a wall this
+// EH-temporary transposition, a known wall this
 // toolchain does not cross. Recorded so nobody spends the cycle again.
 //
 // The merged form is otherwise EXACT. Every byte matches except one pair:
@@ -1502,7 +1502,7 @@ const Image *ControlBar::getStarImage(void )
 //     fixes the register chain, so the walk reuses eax the way retail does
 //     instead of switching to ecx one load earlier. That is a register
 //     allocation difference that a source shape DID reach, which is worth
-//     knowing given lessons.md says register allocation is not source-controllable.
+//     knowing, since register allocation is not source-controllable.
 //
 // The layout and behaviour are settled: PlayerList's local player at +0x0c, the
 // player's science points at +0x264, ControlBar's UI-dirty flag at +0x24, the

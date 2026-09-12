@@ -443,7 +443,7 @@ void DirectInputMouse::init( void )
 	// this+0x4D10 and this+0x4D14 where the shim gives +0x4D08 and +0x4D0C.
 	// The real fix is eight bytes moved from _bfme_hole_beforeCurrentCursor to
 	// just ahead of m_mouseEvents, which is byte-neutral for W3DMouse.cpp, but
-	// that is a shim edit and the full gate is red (docs/lessons.md). So this
+	// that is a shim edit and the full gate is red. So this
 	// reads the retail offsets directly, the way CrateSystem.cpp reads INI's
 	// m_loadType.
 	const ICoord2D *retailCurrMousePos =

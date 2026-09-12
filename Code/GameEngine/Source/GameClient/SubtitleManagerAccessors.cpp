@@ -41,7 +41,7 @@ void _bfme_debugRecordCallsite(int kind);
 // that retail INLINED at every call site, so a call here has to encode
 // StringBase<char>'s body at 0x00887B60 directly. A declared-only copy ctor
 // emits a call to the forwarder instead, and no pin can repair that -- see
-// docs/lessons.md, "The same lever decides the CALL TARGET".
+// the same lever decides the CALL TARGET.
 template <typename T>
 class StringBase
 {

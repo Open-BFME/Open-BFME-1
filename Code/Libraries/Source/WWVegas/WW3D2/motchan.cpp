@@ -409,7 +409,7 @@ bool TimeCodedMotionChannelClass::Load_W3D(ChunkLoadClass & cload)
 	// here - (NumTimeCodes-1)*PacketSize, which is Zero Hour's definition of
 	// LastTimeCodeIdx exactly, not a zeroed cache. Correcting the name means
 	// editing motchan.h, and a header edit runs the full gate, which is red
-	// on six DIR32 inconsistencies (docs/lessons.md). So the value is made
+	// on six DIR32 inconsistencies. So the value is made
 	// right here and the name is left for whoever finds the gate green.
 	CachedIdx	 = (NumTimeCodes - 1) * PacketSize;
 

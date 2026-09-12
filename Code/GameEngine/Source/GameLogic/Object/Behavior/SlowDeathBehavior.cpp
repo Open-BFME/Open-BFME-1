@@ -112,7 +112,7 @@ static void parseOCL( INI* ini, void *instance, void * /*store*/, const void* /*
 		// BFME's SlowDeathBehaviorModuleData puts m_ocls at this+0x88, not the
 		// +0x64 the header gives it: retail @0x00209815 does
 		// lea esi,[ebx+ecx*4+0x88]. Correcting the header is the real fix and
-		// the full gate is red (docs/lessons.md), so the array base is taken at
+		// the full gate is red, so the array base is taken at
 		// the retail offset here.
 		OCLVec * const bfmeOcls = (OCLVec *)((char *)self + 0x88);
 		bfmeOcls[sdphase].push_back(ocl);

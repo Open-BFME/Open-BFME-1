@@ -4,7 +4,7 @@
 //
 // `this` is the interface subobject, not the container: every reference to the
 // contained-items list is `this - 0xAC`, the same interior-this shape
-// GarrisonContain::getApparentControllingPlayer records in docs/lessons.md. The
+// GarrisonContain::getApparentControllingPlayer shows the same shape. The
 // member is an STLport list, so its one word is the sentinel node and the walk
 // re-reads that word every iteration because the virtual call inside can change
 // it.

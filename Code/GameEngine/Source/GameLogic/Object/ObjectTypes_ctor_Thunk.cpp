@@ -15,7 +15,7 @@
 // with data members AsciiString m_listName (4 bytes) and a
 // std::vector<AsciiString> m_objectTypes (3 pointers, 12 bytes). MemoryPoolObject
 // contributes exactly one vtable slot in BFME -- its virtual destructor -- and
-// retail installs only ONE vftable here (see docs/lessons-archive.md's "A vtable
+// retail installs only ONE vftable here ('s "A vtable
 // slot belongs to the class that DECLARES the virtual" / MemoryPoolObject entry):
 // Snapshot's crc/xfer/loadPostProcess slots land in that same vtable rather than
 // a second base-subobject pointer. Total object size is one vptr + 4 zeroed data

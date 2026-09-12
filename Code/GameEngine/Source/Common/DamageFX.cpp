@@ -41,7 +41,7 @@
 // bytes - which sixteen of the names survive is not - so the enum keeps every
 // name and only the array bound is pinned. Scoped to this translation unit:
 // narrowing it in GameLogic/Damage.h is a header edit and the full gate is red
-// (docs/lessons.md).
+//.
 #define DAMAGE_NUM_TYPES 16
 
 #include "Common/INI.h"

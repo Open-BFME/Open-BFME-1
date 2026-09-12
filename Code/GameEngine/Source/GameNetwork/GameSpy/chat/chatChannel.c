@@ -357,7 +357,7 @@ void chatSetChannelLimitA(CHAT chat, const char *channel, int limit)
    byte, so the table is case-insensitive.  The sum is signed and the modulus
    is idiv, not a mask.
 
-   The loop cost two builds and both lessons are in its spelling.  It tests
+   The loop cost two builds and both findings are in its spelling.  It tests
    the PROMOTED value, not the char -- written `while(*name)` the test is on
    al and the sign extension moves to the call.  And the increment comes
    BEFORE the accumulate: written after it, VC7.1 reloads through [esi+1] and

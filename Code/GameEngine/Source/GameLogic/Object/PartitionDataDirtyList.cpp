@@ -20,7 +20,7 @@
 // PartitionData::makeDirty (Code/GameEngine/Source/GameLogic/Object/ObjectFields.cpp,
 // retail 0x008F7B30) calls this 31-byte body at retail 0x008F8C50 to link the
 // PartitionData onto an intrusive dirty-modules list. It is defined here, in a
-// sibling TU from its only caller, per docs/lessons: a definition this small
+// sibling TU from its only caller: a definition this small
 // placed in the caller's own file gets inlined by MSVC and breaks both bodies'
 // matched bytes.
 //

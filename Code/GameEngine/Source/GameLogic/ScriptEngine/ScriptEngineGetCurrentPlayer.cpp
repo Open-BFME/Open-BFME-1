@@ -31,7 +31,7 @@ class AsciiString
 public:
 
 	// Visible delegation, not a bare declaration: see
-	// docs/lessons-archive.md on the by-value temporary transposition.
+	// this tree has hit the by-value temporary transposition before.
 	AsciiString(const char *s)
 	{
 		((StringBase<char> *)this)->StringBase<char>::StringBase(s);

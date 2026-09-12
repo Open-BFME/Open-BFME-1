@@ -11,7 +11,7 @@ struct AsciiStringData
 };
 
 // The inline forwarders over StringBase are what put retail's EH saved-esp
-// store ahead of the in-place ctor `this` (docs/lessons.md, EH transposition).
+// store ahead of the in-place ctor `this` (EH transposition).
 template <typename T> class StringBase
 {
 	friend class AsciiString;

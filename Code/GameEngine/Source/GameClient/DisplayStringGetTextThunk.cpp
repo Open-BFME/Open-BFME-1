@@ -12,7 +12,7 @@ class UnicodeString;
 // encodes 0x00888400 = ??0?$StringBase@G@@AAE@ABV0@@Z, not a UnicodeString
 // symbol. Spelling UnicodeString with an out-of-line copy constructor emits
 // ??0UnicodeString@@QAE@ABV0@@Z and no pin can bridge that: the two addresses
-// are different functions (docs/lessons.md).
+// are different functions.
 template <typename T> class StringBase
 {
 public:

@@ -10,7 +10,7 @@
 // Only the two virtual slots are reconstructed; the entries ahead of them are
 // declared to place them and are never defined or called. Vector3 is copied
 // from the reference WWMath header rather than hand-rolled, for the reason
-// recorded in docs/lessons.md -- an equivalent-looking class makes MSVC route
+// an equivalent-looking class makes MSVC route
 // the temporaries through memory.
 
 class Vector3

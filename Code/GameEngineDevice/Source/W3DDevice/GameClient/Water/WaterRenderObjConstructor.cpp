@@ -199,7 +199,7 @@ struct ListSlot4
 };
 
 // Sub-object grouping to pin the store-scheduling boundary between a run of
-// zero dwords and the following distinct float constant (see docs/lessons.md
+// zero dwords and the following distinct float constant (
 // "MSVC regroups plain stores by feeding register").
 struct ZeroQuad4
 {
