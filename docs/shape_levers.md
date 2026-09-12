@@ -132,3 +132,25 @@ The visible helper independently matches all 82 bytes at `0x0009A510`, and all
 69 claimed emissions in AIUpdate.cpp pass the normal gate. This is another
 case where callee side-effect knowledge affects scheduling in its caller;
 the helper must be real, not an invented pure stub.
+
+
+The same mechanism recovered two more AI siblings from real source:
+
+- `blockedBy` (`0x00274630`, 1052 B): the opaque
+  `Thing::bfmeRelativeAngleTo` call kept address-taken coordinate locals in
+  separate stack slots. Its authentic non-inlined definition lets VC7.1 prove
+  the pointers are not retained, reducing the frame from 0x5C to retail 0x4C
+  and restoring copy scheduling. The helper independently matches 214 B at
+  `0x00150510`. Nontrivial Coord3D copying is also required; the helper's
+  arithmetic-only delta stays a trivial three-float temporary.
+- `setPathFromWaypoint` (`0x00270B40`, 398 B): an inline Coord3D copy constructor
+  reduced the mismatch to one swapped load/store pair (seven bytes at +0x94).
+  Local-order, memcpy, flag, and copy-expression variations did not fix it.
+  Exposing real `Path::prependNode` with `__declspec(noinline)` and its real
+  inline PathNode constructor recovered the caller exactly. The helper also
+  independently matches its existing 104-byte body at `0x0026E4D0`.
+
+For a remaining load/store swap or excess frame slots, inspect the actual
+called helper's memory effects before attempting register-order variations.
+Keep the authentic helper and verify its emission; a fabricated side-effect
+stub would manufacture a compiler assumption rather than recover the program.

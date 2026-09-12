@@ -87243,3 +87243,6 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?_M_initialize_map@?$_Deque_base@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXI@Z,0x00037C90,MapObject::fastAssignAllUniqueIDs765B caller; actual four-byte POD deque init203B at RVA0x00089190 independently matched
 ?_M_reallocate_map@?$deque@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXI_N@Z,0x0000F6C3,MapObject::fastAssignAllUniqueIDs765B caller; four-byte POD deque reallocate367B at RVA0x00089850 independently matched
 ?_M_destroy_nodes@?$_Deque_base@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXPAPAUMapObjectIDPointer@@0@Z,0x00033023,MapObject::fastAssignAllUniqueIDs765B caller; four-byte POD deque destroy48B at RVA0x00088060 independently matched
+?prependNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z,0x0002B7F1,route=0x0026E4D0; decoded setPathFromWaypoint call and independently matched PathNodeInsertion body
+?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,0x00009D04,route=0x003E6A30; decoded setPathFromWaypoint terminal waypoint snap call to matched PathfinderSnapPosition body
+?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z,0x0002EA3C,route=0x003D9880; decoded setPathFromWaypoint debug publication call to matched PathfinderSetDebugPath body

@@ -1,25 +1,33 @@
-// ?setPathFromWaypoint@AIUpdateInterface@@QAEXPBVWaypoint@@PBUCoord2D@@@Z
-// partial score=0.9824 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc
+// BFME AIUpdateInterface::setPathFromWaypoint, RVA 0x00270B40, 398 bytes.
+// Original algorithm: AIUpdate.cpp. Preserve real nontrivial Coord3D copying
+// and visible non-inlined Path::prependNode (independently exact, 104 bytes).
+// The latter lets VC7.1 see the coordinate is copied rather than retained and
+// fixes the final adjacent load/store swap at +0x94. An opaque declaration
+// leaves seven differing bytes even though size and every other instruction match.
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
-struct Coord3D { Coord3D(){} Coord3D(const Coord3D& c):x(c.x),y(c.y),z(c.z){} float x,y,z; };
+struct Coord3D { Coord3D(){} Coord3D(const Coord3D& c):x(c.x),y(c.y),z(c.z){} Coord3D& operator=(const Coord3D&c){x=c.x;y=c.y;z=c.z;return *this;} float x,y,z; };
 struct Coord2D { float x,y; };
 enum PathfindLayerEnum { LAYER_GROUND=1 };
 enum UpdateSleepTime { UPDATE_SLEEP_NONE=1 };
 class Object { public: char pad[0x38]; Coord3D position; const Coord3D *getPosition() const {return &position;} };
+class PathNode{
+public:PathNode(const Coord3D*pos,PathfindLayerEnum layer){next=0;prev=0;opti=0;position=*pos;this->layer=layer;canOptimize=false;cost=0x7fffffff;}
+PathNode *next,*prev,*opti;Coord3D position;PathfindLayerEnum layer;bool canOptimize;int cost;
+};
 class AIUpdateInterface;
 class Path {
  friend class AIUpdateInterface;
 public:
  Path();
- void prependNode(const Coord3D *,PathfindLayerEnum);
+ __declspec(noinline) void prependNode(const Coord3D *,PathfindLayerEnum);
  void appendNode(const Coord3D *,PathfindLayerEnum);
  void markOptimized() { optimized=true; }
 protected:
  virtual ~Path();
 private:
- char pad04[8]; bool optimized; char pad0d[0x17];
+ PathNode *head,*tail; bool optimized; char pad0d[0x17];
 };
 class Waypoint {
 public:
@@ -173,9 +181,6 @@ private:
  char pad144[0x31e-0x144]; bool waiting,attack; char pad320[6]; bool blocked;
  char pad327[9]; bool inUpdate;
 };
-#pragma comment(linker, "/alternatename:?prependNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z=?j_0002b7f1@@YAXXZ")
-#pragma comment(linker, "/alternatename:?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z=?j_00009d04@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z=?j_0002ea3c@@YAXXZ")
 void AIUpdateInterface::setPathFromWaypoint(const Waypoint *way,const Coord2D *offset)
 {
  destroyPath();
@@ -197,4 +202,9 @@ void AIUpdateInterface::setPathFromWaypoint(const Waypoint *way,const Coord2D *o
  waiting=false;
  TheAI->pathfinder()->setDebugPath(path);
  wakeUpNow();
+}
+
+void Path::prependNode(const Coord3D*pos,PathfindLayerEnum layer){
+PathNode *node=new PathNode(pos,layer);PathNode*old=head;
+node->opti=old;node->next=old;if(old)old->prev=node;head=node;optimized=false;if(tail==0)tail=node;
 }

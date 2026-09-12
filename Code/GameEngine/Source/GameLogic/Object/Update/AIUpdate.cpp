@@ -1566,7 +1566,7 @@ void AIUpdateInterface::requestSafePath( ObjectID repulsor )
 enum {WAYPOINT_PATH_LIMIT=1024};
 //-------------------------------------------------------------------------------------------------
 // 
-// ?setPathFromWaypoint@AIUpdateInterface@@ present-unmatched
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateWaypointPath.cpp
 void AIUpdateInterface::setPathFromWaypoint(const Waypoint *way, const Coord2D *offset) 
 {
 	destroyPath();
