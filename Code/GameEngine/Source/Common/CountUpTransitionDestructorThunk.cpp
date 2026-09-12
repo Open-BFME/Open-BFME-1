@@ -26,7 +26,7 @@ private:
 	unsigned char m_gap[8]; // +0x04 .. +0x0b
 	unsigned int m_zero; // +0x0c
 	unsigned char m_gap2[0x1c]; // +0x10 .. +0x2b
-	CountUpBuffer m_a; // +0x2c
+	CountUpBuffer m_fullText; // +0x2c
 	CountUpBuffer m_b; // +0x30
 };
 

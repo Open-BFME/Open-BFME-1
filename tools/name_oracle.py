@@ -121,7 +121,9 @@ def outer_members(text, brace):
 
 def sources(paths, staged):
     if paths:
-        return [Path(p) for p in paths]
+        # Callers pass repo-relative paths (that is what every other tool here
+        # prints), so anchor them; an unanchored Path breaks relative_to(ROOT) later.
+        return [Path(p) if Path(p).is_absolute() else ROOT / p for p in paths]
     if staged:
         out = subprocess.run(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMRT"],
@@ -179,6 +181,7 @@ def main():
     ap.add_argument("--offset", help="with --class, answer one offset (hex or decimal)")
     ap.add_argument("--check", action="store_true", help="report sources that CONFLICT with the witness")
     ap.add_argument("--todo", action="store_true", help="list placeholders the evidence can already name")
+    ap.add_argument("--apply", action="store_true", help="with --todo, rewrite those placeholders in place")
     ap.add_argument("--staged", action="store_true", help="with --check, only the staged sources")
     ap.add_argument("--write-baseline", action="store_true", help="record today's findings as the debt register")
     ap.add_argument("paths", nargs="*")
@@ -220,6 +223,26 @@ def main():
               f"({len({key(t) for t in todo})} distinct)")
         for t in sorted(todo, key=lambda r: (r[2], r[3])):
             print(f"  {t[0]}:{t[1]}: {t[2]}+{t[3]:#x}  {t[4]}  ->  {t[5]}  ({t[7]})")
+        if not args.apply:
+            return 0
+        # Member renames are byte-neutral (nothing in a member name reaches the
+        # mangled symbol), so this is a text substitution and the gate is the proof.
+        # It stages nothing and commits nothing: build the touched files, then commit.
+        done = refused = 0
+        for path in sorted({t[0] for t in todo}):
+            text = (ROOT / path).read_text(encoding="utf-8")
+            for _, _, _, _, old, new, _, _ in [t for t in todo if t[0] == path]:
+                if re.search(rf"\b{re.escape(new)}\b", text):
+                    # Renaming onto a name the file already uses would silently merge
+                    # two distinct members. Refuse the row, never the whole file.
+                    print(f"  REFUSED {path}: {new!r} already appears in this file", file=sys.stderr)
+                    refused += 1
+                    continue
+                text, n = re.subn(rf"\b{re.escape(old)}\b", new, text)
+                done += n
+            (ROOT / path).write_text(text, encoding="utf-8")
+        print(f"name_oracle: rewrote {done} occurrence(s), refused {refused}. "
+              f"Now byte-verify: ./build.sh " + " ".join(sorted({t[0] for t in todo})[:4]) + " ...")
         return 0
 
     if args.write_baseline:

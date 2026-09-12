@@ -61,7 +61,7 @@ public:
 	char m_pad1[0x214 - 0x78];
 	void *m_containedBy;					// +0x214
 	char m_pad2[0x344 - 0x218];
-	unsigned char m_flag344;				// +0x344
+	unsigned char m_privateStatus;				// +0x344
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
@@ -107,7 +107,7 @@ Object *Team::getTeamTargetObject()
 		Player *viewer = getControllingPlayer();
 		if (target->isStealthedAndUndetected((const Object *)viewer))
 			target = 0;
-		else if (target->m_flag344 & 1)
+		else if (target->m_privateStatus & 1)
 			target = 0;
 		else if (target->m_containedBy)
 			target = 0;

@@ -283,7 +283,7 @@ private:
 	UnsignedByte m_pad100[ 0x0c ];
 	DynamicAudioEventInfo *m_customSoundAmbientInfo;		// +0x10c
 	UnsignedByte m_pad110[ 0x30 ];
-	UnsignedByte m_ambientSoundEnabled;				// +0x140
+	UnsignedByte m_secondMaterialPassOpacity;				// +0x140
 	UnsignedByte m_ambientSoundEnabledFromScript;			// +0x141
 	UnsignedByte m_gap142;
 	UnsignedByte m_ambientSoundPermanent;				// +0x143
@@ -322,7 +322,7 @@ void Drawable::setCustomSoundAmbientInfo( DynamicAudioEventInfo **customAmbientI
 		*slot = *customAmbientInfo;
 	}
 
-	if ( m_ambientSoundEnabled && m_ambientSoundEnabledFromScript && m_ambientSoundPermanent )
+	if ( m_secondMaterialPassOpacity && m_ambientSoundEnabledFromScript && m_ambientSoundPermanent )
 	{
 		reinterpret_cast<Gen_00417cb0 *>( this )->alt();
 

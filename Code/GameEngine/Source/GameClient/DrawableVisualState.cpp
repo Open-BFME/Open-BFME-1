@@ -199,7 +199,7 @@ private:
 	char m_pad08c[0x110 - 0x08c];
 	UnsignedInt m_status;					// this+0x110, bit 1 is shadows
 	char m_pad114[0x140 - 0x114];
-	unsigned char m_flag140;				// this+0x140
+	unsigned char m_secondMaterialPassOpacity;				// this+0x140
 	unsigned char m_flag141;				// this+0x141
 	unsigned char m_pad142[0xA];
 	DynamicAudioEventRTS *m_ambientSound;			// this+0x14c
@@ -320,7 +320,7 @@ void Drawable::replaceModelConditionState( const ModelConditionFlags &flags,
 	if( (newFlags.m_bits[ 4 ] & 0x80000) != 0 )
 	{
 		if( (m_conditionState.m_bits[ 4 ] & 0x80000) == 0 &&
-			m_flag141 != 0 && m_flag140 != 0 )
+			m_flag141 != 0 && m_secondMaterialPassOpacity != 0 )
 		{
 			refreshAmbientSound();
 		}

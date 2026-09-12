@@ -44,7 +44,7 @@ private:
 	void *m_data;
 };
 
-// The m_arr9c[4] array's element dtor is called through the vector destructor
+// The m_vertexWaterAvailableMaps[4] array's element dtor is called through the vector destructor
 // iterator (??_M), which needs the REAL ??1BFMERetailAsciiString@@QAE@XZ ILT
 // thunk address (0xD828), not releaseBuffer's own address -- so this element
 // spelling stays declare-only and is pinned to that thunk directly, instead
@@ -130,11 +130,11 @@ private:
 	unsigned char m_pad18[0x94 - 0x18];
 	BFMERetailAsciiString m_s94;								// +0x94
 	unsigned char m_pad98[0x9c - 0x98];
-	GdAsciiStringElem m_arr9c[4];								// +0x9c (16 bytes)
+	GdAsciiStringElem m_vertexWaterAvailableMaps[4];								// +0x9c (16 bytes)
 	unsigned char m_padAc[0x200 - 0xac];
-	BFMERetailAsciiString m_s200;								// +0x200
+	BFMERetailAsciiString m_levelGainAnimationName;								// +0x200
 	unsigned char m_pad204[0x20c - 0x204];
-	BFMERetailAsciiString m_s20c;								// +0x20c
+	BFMERetailAsciiString m_getHealedAnimationName;								// +0x20c
 	unsigned char m_pad210[0x224 - 0x210];
 	GdElemSlot m_elemD0[18], m_elemD1[18], m_elemD2[18];		// +0x224, +0x4ac, +0x734 (0x288 each)
 	unsigned char m_pad9bc[0xa04 - 0x9bc];
@@ -160,10 +160,10 @@ private:
 	unsigned char m_padB88[0xb94 - 0xb88];
 	void *m_weaponBonusSet;									// +0xb94
 	unsigned char m_padB98[0xbb0 - 0xb98];
-	BFMERetailAsciiString m_sBb0;								// +0xbb0
+	BFMERetailAsciiString m_shellMapName;								// +0xbb0
 	unsigned char m_padBb4[0xc40 - 0xbb4];
-	BFMERetailAsciiString m_sC40;								// +0xc40
-	Rva00026AB2Vec12 m_vecC44;									// +0xc44 (0xc)
+	BFMERetailAsciiString m_specialPowerViewObjectName;								// +0xc40
+	Rva00026AB2Vec12 m_standardPublicBones;									// +0xc44 (0xc)
 	unsigned char m_padC50[0xd8c - 0xc50];
 	BFMERetailAsciiString m_sD8c, m_sD90;						// +0xd8c, +0xd90
 	unsigned char m_padD94[0xdb8 - 0xd94];

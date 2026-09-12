@@ -21,9 +21,9 @@ class Team
 {
 	unsigned char m_pad[0x31];
 public:
-	unsigned char m_b31;	// +0x31
-	unsigned char m_b32;	// +0x32
-	void setActive() { if (!m_b31) { m_b32 = 1; m_b31 = 1; } }
+	unsigned char m_active;	// +0x31
+	unsigned char m_created;	// +0x32
+	void setActive() { if (!m_active) { m_created = 1; m_active = 1; } }
 };
 
 class TeamInQueueBase

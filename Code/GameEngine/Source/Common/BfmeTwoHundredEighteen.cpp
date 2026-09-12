@@ -31,7 +31,7 @@ public:
 class GlobalData
 {
 public:
-	unsigned char m_bfmeHead[0x1278];	// 0x0000
+	unsigned char s_GlobalDataFieldParseTable[0x1278];	// 0x0000
 	unsigned char m_bfmeOn;			// 0x1278
 };
 

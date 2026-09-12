@@ -41,10 +41,10 @@ private:
 	unsigned char m_padding01DD[0x204 - 0x1DD];
 	Bool m_cameraFlag0204;                    // +0x204
 	unsigned char m_padding0205[0x228 - 0x205];
-	Bool m_cameraFlag0228;                    // +0x228
+	Bool m_doingZoomCamera;                    // +0x228
 	unsigned char m_padding0229[0x27C - 0x229];
 	Bool m_cameraFlag027C;                    // +0x27C
-	Bool m_cameraFlag027D;                    // +0x27D
+	Bool m_doingScriptedCameraLock;                    // +0x27D
 	unsigned char m_padding027E[0x2354 - 0x27E];
 	int m_cameraMovementMode;                 // +0x2354
 	unsigned char m_padding2358[0x23B8 - 0x2358];
@@ -62,8 +62,8 @@ void W3DView::setDefaultView(Real pitch, Real, Real maxHeight)
 	m_cameraMovementMode = 0;
 	m_doingRotateCamera = false;
 	m_cameraFlag0204 = false;
-	m_cameraFlag0228 = false;
-	m_cameraFlag027D = false;
+	m_doingZoomCamera = false;
+	m_doingScriptedCameraLock = false;
 	m_cameraFlag027C = false;
 	m_cameraState23B8 = false;
 	m_cameraState243C = 0;

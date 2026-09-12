@@ -48,7 +48,7 @@ private:
 	Object *								m_owner;				// this+0x10
 	unsigned int						m_sleepTill;		// this+0x14
 	unsigned int						m_defaultStateID;	// this+0x18
-	unsigned int						m_slot1c;			// this+0x1c
+	unsigned int						m_currentState;			// this+0x1c
 	unsigned int						m_slot20;			// this+0x20
 	unsigned int						m_slot24;
 	unsigned int						m_slot28;
@@ -57,7 +57,7 @@ private:
 	unsigned int						m_slot34;
 	unsigned int						m_slot38;
 	unsigned int						m_slot3c;			// this+0x3c
-	char									m_slot40;			// this+0x40
+	char									m_locked;			// this+0x40
 	char									m_slot41;			// this+0x41
 	char									m_slot42;			// this+0x42
 };
@@ -70,8 +70,8 @@ StateMachine::StateMachine( Object *owner, AsciiString name, Bool flag )
 	m_sleepTill = 0;
 	m_defaultStateID = 999999;
 	m_slot41 = 0;
-	m_slot1c = 0;
-	m_slot40 = 0;
+	m_currentState = 0;
+	m_locked = 0;
 	m_slot20 = 0;
 	m_slot24 = 0;
 	m_slot28 = 0;

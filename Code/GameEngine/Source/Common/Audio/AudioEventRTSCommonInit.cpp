@@ -81,7 +81,7 @@ private:
 	unsigned int m_objectID;		// +0x2C
 	int m_ownerType;				// +0x30
 	Coord3D m_position;				// +0x34
-	unsigned char m_flag40;			// +0x40
+	unsigned char m_shouldFade;			// +0x40
 	unsigned char m_flag41;
 	unsigned char m_flag42;
 	unsigned char m_flag43;
@@ -93,11 +93,11 @@ private:
 	unsigned char m_flag49;
 	unsigned char m_pad4A[2];
 	float m_float4C;				// +0x4C
-	float m_float50;				// +0x50
-	int m_int54;					// +0x54
+	float m_volumeShift;				// +0x50
+	int m_delay;					// +0x54
 	int m_int58;					// +0x58
-	int m_int5C;					// +0x5C
-	int m_int60;					// +0x60
+	int m_playerIndex;					// +0x5C
+	int m_portionToPlayNext;					// +0x60
 	int m_loopCount;				// +0x64
 	int m_int68;					// +0x68
 	AsciiString m_tail;				// +0x6C
@@ -112,7 +112,7 @@ void AudioEventRTS::commonInit(void)
 	m_volume = m_pitchShift;
 	m_position.zero();
 
-	m_flag40 = 0;
+	m_shouldFade = 0;
 	m_ownerType = 4;
 	m_timeOfDay = zero;
 	m_flag41 = 0;
@@ -124,10 +124,10 @@ void AudioEventRTS::commonInit(void)
 	m_playingHandle = zero;
 	m_killThisHandle = zero;
 	m_float4C = 1.0f;
-	m_float50 = 1.0f;
+	m_volumeShift = 1.0f;
 	m_int58 = -1;
-	m_int5C = -1;
-	m_int54 = 0;
+	m_playerIndex = -1;
+	m_delay = 0;
 	m_flag43 = 0;
 	m_flag44 = 0;
 	m_flag45 = 0;
@@ -135,7 +135,7 @@ void AudioEventRTS::commonInit(void)
 	m_flag47 = 0;
 	m_flag48 = 0;
 	m_flag49 = 0;
-	m_int60 = 0;
+	m_portionToPlayNext = 0;
 
 	m_attackName.clear();
 	m_decayName.clear();

@@ -244,7 +244,7 @@ public:
 	const Coord3D *getPosition(void) const { return &m_position; }
 	BfmeGroupAI *getAI(void) { return m_ai; }
 	unsigned char getDisabledMask(void) const { return m_disabledMask; }
-	bool isAirborneTarget(void) const { return (m_status90 & 0x40) != 0; }
+	bool isAirborneTarget(void) const { return (m_status & 0x40) != 0; }
 	ContainModuleInterface *getContain(void) { return m_contain; }
 
 	StealthUpdate *findUpdateModule(NameKeyType key);	// ILT 0x0002AE23
@@ -255,7 +255,7 @@ public:
 	unsigned char m_unreconstructed_08[0x38 - 0x08];
 	Coord3D m_position;					// +0x38
 	unsigned char m_unreconstructed_44[0x90 - 0x44];
-	unsigned char m_status90;				// +0x90
+	unsigned char m_status;				// +0x90
 	unsigned char m_unreconstructed_91[0x1A4 - 0x91];
 	volatile unsigned char m_disabledMask;				// +0x1A4
 	unsigned char m_unreconstructed_1A5[0x1FC - 0x1A5];

@@ -166,7 +166,7 @@ class UpdateModule : public BehaviorModule, public BehaviorModuleInterface, publ
 {
 public:
 	UpdateModule(Thing *thing, const ModuleData *moduleData)
-		: BehaviorModule(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+		: BehaviorModule(thing, moduleData), m_nextCallFrameAndPhase(0), m_f18(-1), m_f1c(-1) {}
 	virtual ~UpdateModule() {}
 
 protected:
@@ -174,7 +174,7 @@ protected:
 	Object *getObject() const { return m_object; }
 
 private:
-	unsigned int m_f14;				// +0x14
+	unsigned int m_nextCallFrameAndPhase;				// +0x14
 	int m_f18;					// +0x18
 	int m_f1c;					// +0x1C
 };

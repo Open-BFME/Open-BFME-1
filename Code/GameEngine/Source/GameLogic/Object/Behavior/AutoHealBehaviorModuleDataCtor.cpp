@@ -34,7 +34,7 @@ public:
 private:
 	void *m_x04;
 	AHB_BaseModuleData m_base;			// this+0x08
-	bool m_x70;							// this+0x70
+	bool m_initiallyActive;							// this+0x70
 	bool m_x71;
 	bool m_x72;
 	unsigned int m_x74;
@@ -52,7 +52,7 @@ private:
 // ??0AutoHealBehaviorModuleData@@QAE@XZ
 AutoHealBehaviorModuleData::AutoHealBehaviorModuleData()
 {
-	m_x70 = false;
+	m_initiallyActive = false;
 	m_x71 = false;
 	m_x72 = false;
 	m_x74 = 0;

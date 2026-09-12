@@ -65,7 +65,7 @@ public:
 	AsciiString m_uiStrings[12];   // +0x14
 	int         m_numParameters;   // +0x44
 	int         m_parameters[12];  // +0x48
-	int         m_pad;             // +0x78
+	int         m_helpText;             // +0x78
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h

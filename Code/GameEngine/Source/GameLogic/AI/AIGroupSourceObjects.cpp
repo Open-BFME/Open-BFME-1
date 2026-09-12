@@ -41,7 +41,7 @@ public:
 	GUICommandType getCommandType(void) const { return m_command; }
 
 private:
-	unsigned char m_unmodelled_000[0x10];			// +0x00 .. +0x0F
+	unsigned char m_thingTemplate[0x10];			// +0x00 .. +0x0F
 	GUICommandType m_command;				// +0x10
 };
 
@@ -85,7 +85,7 @@ public:
 	Object *getCommandButtonSourceObject(GUICommandType type);
 
 private:
-	unsigned char m_unmodelled_000[4];			// this+0x00, untouched
+	unsigned char m_thingTemplate[4];			// this+0x00, untouched
 	_STL::list<Object *> m_memberList;			// this+0x04
 };
 

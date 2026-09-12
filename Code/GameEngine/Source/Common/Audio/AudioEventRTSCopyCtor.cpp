@@ -93,7 +93,7 @@ private:
 	unsigned int m_objectID;		// +0x2C
 	int m_ownerType;				// +0x30
 	Coord3D m_position;				// +0x34
-	unsigned char m_flag40;			// +0x40
+	unsigned char m_shouldFade;			// +0x40
 	unsigned char m_flag41;
 	unsigned char m_flag42;
 	unsigned char m_flag43;
@@ -105,11 +105,11 @@ private:
 	unsigned char m_flag49;
 	unsigned char m_pad4A[2];
 	unsigned int m_float4C;			// +0x4C
-	unsigned int m_float50;			// +0x50
-	unsigned int m_int54;			// +0x54
+	unsigned int m_volumeShift;			// +0x50
+	unsigned int m_delay;			// +0x54
 	unsigned int m_int58;			// +0x58
-	unsigned int m_int5C;			// +0x5C
-	unsigned int m_int60;			// +0x60
+	unsigned int m_playerIndex;			// +0x5C
+	unsigned int m_portionToPlayNext;			// +0x60
 	unsigned int m_loopCount;		// +0x64
 	unsigned int m_int68;			// +0x68
 	AsciiString m_tail;				// +0x6C
@@ -130,13 +130,13 @@ AudioEventRTS::AudioEventRTS(const AudioEventRTS &right)
 	m_flag41 = right.m_flag41;
 	m_flag42 = right.m_flag42;
 	m_float4C = right.m_float4C;
-	m_float50 = right.m_float50;
+	m_volumeShift = right.m_volumeShift;
 	m_int58 = right.m_int58;
-	m_int5C = right.m_int5C;
-	m_int54 = right.m_int54;
+	m_playerIndex = right.m_playerIndex;
+	m_delay = right.m_delay;
 	m_attackName = right.m_attackName;
 	m_decayName = right.m_decayName;
-	m_int60 = right.m_int60;
+	m_portionToPlayNext = right.m_portionToPlayNext;
 	m_flag43 = right.m_flag43;
 	m_flag44 = right.m_flag44;
 	m_flag45 = right.m_flag45;
@@ -150,7 +150,7 @@ AudioEventRTS::AudioEventRTS(const AudioEventRTS &right)
 	m_position.x = right.m_position.x;
 	m_position.y = right.m_position.y;
 	m_position.z = right.m_position.z;
-	m_flag40 = right.m_flag40;
+	m_shouldFade = right.m_shouldFade;
 	if (m_ownerType == 1)
 		m_objectID = right.m_objectID;
 	else if (m_ownerType == 2)
@@ -174,13 +174,13 @@ AudioEventRTS &AudioEventRTS::operator=(const AudioEventRTS &right)
 	m_flag41 = right.m_flag41;
 	m_flag42 = right.m_flag42;
 	m_float4C = right.m_float4C;
-	m_float50 = right.m_float50;
+	m_volumeShift = right.m_volumeShift;
 	m_int58 = right.m_int58;
-	m_int5C = right.m_int5C;
-	m_int54 = right.m_int54;
+	m_playerIndex = right.m_playerIndex;
+	m_delay = right.m_delay;
 	m_attackName = right.m_attackName;
 	m_decayName = right.m_decayName;
-	m_int60 = right.m_int60;
+	m_portionToPlayNext = right.m_portionToPlayNext;
 	m_flag43 = right.m_flag43;
 	m_flag44 = right.m_flag44;
 	m_flag45 = right.m_flag45;
@@ -194,7 +194,7 @@ AudioEventRTS &AudioEventRTS::operator=(const AudioEventRTS &right)
 	m_position.x = right.m_position.x;
 	m_position.y = right.m_position.y;
 	m_position.z = right.m_position.z;
-	m_flag40 = right.m_flag40;
+	m_shouldFade = right.m_shouldFade;
 	if (m_ownerType == 1)
 	{
 		m_objectID = right.m_objectID;

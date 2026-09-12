@@ -395,7 +395,7 @@ class Radar
 	unsigned char m_pad00[0x0C];
 public:
 	Bool m_hidden;						// +0x0c
-	Bool m_forced;						// +0x0d
+	Bool m_radarForceOn;						// +0x0d
 	Bool screenPixelToWorld(const ICoord2D *pixel, Coord3D *world);
 };
 
@@ -719,7 +719,7 @@ void InGameUI::handleRadiusCursor()
 
 	const ICoord2D *mousePos = &TheMouse->m_pos;
 	Coord3D pos;
-	Bool radarOn = TheRadar->m_forced ||
+	Bool radarOn = TheRadar->m_radarForceOn ||
 		(!TheRadar->m_hidden && ThePlayerList->m_localPlayer &&
 		 ThePlayerList->m_localPlayer->hasRadar());
 

@@ -153,8 +153,8 @@ class ThingTemplate
 {
 public:
 	unsigned char m_head[0xC8];
-	unsigned int m_kindOf0;						// +0xC8
-	unsigned int m_kindOf1;						// +0xCC
+	unsigned int m_kindof;						// +0xC8
+	unsigned int m_shadowOffsetY;						// +0xCC
 	unsigned int m_kindOf2;						// +0xD0
 	unsigned int m_kindOf3;						// +0xD4
 	unsigned int m_kindOf4;						// +0xD8
@@ -277,11 +277,11 @@ Bool Team::hasAnyUnits() const
 			continue;
 
 		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-		if ((tmpl->m_kindOf0 & (1u << 7)) != 0)
+		if ((tmpl->m_kindof & (1u << 7)) != 0)
 			continue;
 
 		tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-		if ((tmpl->m_kindOf0 & 0x2000000) != 0)
+		if ((tmpl->m_kindof & 0x2000000) != 0)
 			continue;
 
 		tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
@@ -306,7 +306,7 @@ Bool Team::hasAnyObjects(const ObjectFilter *filter, Bool bfmeFlag) const
 		if (bfmeFlag)
 		{
 			ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-			if ((tmpl->m_kindOf0 & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
+			if ((tmpl->m_kindof & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
 				continue;
 		}
 
@@ -330,13 +330,13 @@ Bool Team::hasAnyObjects(Bool bfmeFlag) const
 		if (bfmeFlag)
 		{
 			ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-			if ((tmpl->m_kindOf0 & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
+			if ((tmpl->m_kindof & (1u << 7)) != 0 && (obj->m_status118 & 0x0C) != 0)
 				continue;
 		}
 
 		{
 			ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
-			if ((tmpl->m_kindOf0 & 0x2000000) != 0)
+			if ((tmpl->m_kindof & 0x2000000) != 0)
 				continue;
 		}
 

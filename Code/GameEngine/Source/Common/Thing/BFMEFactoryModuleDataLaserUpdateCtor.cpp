@@ -28,7 +28,7 @@ public:
 	virtual void moduleDataAnchor();
 
 private:
-	unsigned int m_unmodelled_04;			// +0x04, never written
+	unsigned int m_moduleTagNameKey;			// +0x04, never written
 };
 
 // +0x10 and +0x14 travel together: retail writes the dword at +0x14 BEFORE the

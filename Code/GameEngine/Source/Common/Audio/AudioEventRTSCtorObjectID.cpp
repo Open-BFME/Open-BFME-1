@@ -114,7 +114,7 @@ private:
 	ObjectID m_objectID;			// +0x2C
 	int m_ownerType;				// +0x30
 	Coord3D m_position;				// +0x34
-	unsigned char m_flag40;			// +0x40
+	unsigned char m_shouldFade;			// +0x40
 	char m_41[0x6C - 0x41];
 	AsciiString m_tail;				// +0x6C
 };
@@ -202,6 +202,6 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positi
 
 	m_position = *positionOfAudio;
 	m_ownerType = 0;
-	m_flag40 = 1;
+	m_shouldFade = 1;
 	m_timeOfDay = static_cast<unsigned int>(extra);
 }

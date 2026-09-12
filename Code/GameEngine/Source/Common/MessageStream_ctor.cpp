@@ -28,17 +28,17 @@ public:
 private:
 	int m_unmodelled_08;					// +0x08
 	int m_unmodelled_0C;					// +0x0C
-	int m_unmodelled_10;					// +0x10
-	int m_unmodelled_14;					// +0x14
-	int m_unmodelled_18;					// +0x18
+	int m_firstTranslator;					// +0x10
+	int m_lastTranslator;					// +0x14
+	int m_nextTranslatorID;					// +0x18
 };
 
 // ??0MessageStream@@QAE@XZ
 MessageStream::MessageStream()
 	: m_unmodelled_08( 0 ),
 	  m_unmodelled_0C( 0 ),
-	  m_unmodelled_10( 0 ),
-	  m_unmodelled_14( 0 ),
-	  m_unmodelled_18( 1 )
+	  m_firstTranslator( 0 ),
+	  m_lastTranslator( 0 ),
+	  m_nextTranslatorID( 1 )
 {
 }

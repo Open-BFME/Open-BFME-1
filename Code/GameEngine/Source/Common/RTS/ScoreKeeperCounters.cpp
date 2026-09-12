@@ -188,11 +188,11 @@ public:
 class GameLogic
 {
 public:
-	bool isScoringEnabled(void) const { return m_isScoringEnabled != 0; }
+	bool isScoringEnabled(void) const { return m_nextObjID != 0; }
 
 private:
 	unsigned char m_pad[0x90];
-	unsigned char m_isScoringEnabled;				// +0x90
+	unsigned char m_nextObjID;				// +0x90
 };
 
 // Address-derived: the unit-score filter BFME uses where Zero Hour tested the

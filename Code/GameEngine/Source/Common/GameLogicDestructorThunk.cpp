@@ -469,11 +469,11 @@ public:
 
 private:
 	Rva0038E950HashMap m_hash0C;                      // +0x0C
-	Rva0038EA00HashMap m_hash20;                      // +0x20
+	Rva0038EA00HashMap m_controlBarOverrides;                      // +0x20
 	Rva00387480IntList m_list4C;                     // +0x4C
 	BFMERetailAsciiString m_string50;                 // +0x50
 	Rva000658A0AsciiVector m_vector54;                // +0x54
-	BFMERetailAsciiString m_string60;                 // +0x60
+	BFMERetailAsciiString m_scriptHulkMaxLifetimeOverride;                 // +0x60
 	BFMERetailAsciiString m_string64;                 // +0x64
 	unsigned char m_pad68[8];                         // +0x68
 	BFMERetailAsciiString m_string70;                 // +0x70

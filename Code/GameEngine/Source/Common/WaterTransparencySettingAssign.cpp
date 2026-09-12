@@ -47,11 +47,11 @@ public:
 	WaterTransparencySetting &operator=(const WaterTransparencySetting &other);
 
 private:
-	Int m_bfme0C;						// +0x0C
-	Int m_bfme10;						// +0x10
-	BfmeWaterTriple m_bfme14;				// +0x14
-	BfmeWaterTriple m_bfme20;				// +0x20
-	char m_bfme2C;						// +0x2C
+	Int m_skyboxTextureS;						// +0x0C
+	Int m_skyboxTextureW;						// +0x10
+	BfmeWaterTriple m_skyboxTextureT;				// +0x14
+	BfmeWaterTriple m_radarColor;				// +0x20
+	char m_additiveBlend;						// +0x2C
 	char m_bfmePad2D[3];
 	AsciiString m_bfmeName;					// +0x30
 	Int m_bfme34;						// +0x34
@@ -65,11 +65,11 @@ WaterTransparencySetting &WaterTransparencySetting::operator=(
 {
 	ScienceInfoBase::operator=(other);
 
-	m_bfme0C = other.m_bfme0C;
-	m_bfme10 = other.m_bfme10;
-	m_bfme14 = other.m_bfme14;
-	m_bfme20 = other.m_bfme20;
-	m_bfme2C = other.m_bfme2C;
+	m_skyboxTextureS = other.m_skyboxTextureS;
+	m_skyboxTextureW = other.m_skyboxTextureW;
+	m_skyboxTextureT = other.m_skyboxTextureT;
+	m_radarColor = other.m_radarColor;
+	m_additiveBlend = other.m_additiveBlend;
 	m_bfmeName = other.m_bfmeName;
 	m_bfme34 = other.m_bfme34;
 	m_bfme38 = other.m_bfme38;
