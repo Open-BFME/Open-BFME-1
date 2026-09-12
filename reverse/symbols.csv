@@ -87219,3 +87219,7 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??1BfmeNamedBaseBG@@UAE@XZ,0x0061E3E0,Open-BFME5 scaffold base dtor in BfmeNamedCtorBG.cpp; retail base-class destructor the named dtor 0x0060AB40 calls last, still a dump
 ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z,0x00048612,route=0x0018DB60; real TurretStateMachine constructor; retail ILT 0x00048612 in gen_small/thunks_034.cpp reaches corrected full boundary; existing 0x0018DB84 ledger row is a stale interior boundary
 ?set@BFMERetailAsciiString@@QAEXABV1@@Z,0x00887C90,additive; same per-TU copy already pinned as ?set@UnicodeString@@QAEXABV1@@Z; used by Condition::ParseConditionDataChunk 0x0035A510
+?resetActive@Rva001ABA80TerrainCache@@QAEXH@Z,0x0041FF82,ILT to unmatched b_001a6d20 (FUN_005a6d20); no recovered real name/signature; pinned at the encoded call site for the Waypoint dtor 0x001ABA80
+_Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00403860; pinned separately under a cdecl free-function name for the Waypoint dtor 0x001ABA80 call-site shape
+?registerHelpBoxText@Rva00579160Manager@@QAEXPAVBFMERetailAsciiString@@@Z,0x004347D9,ILT to unmatched FUN_0086def0; no recovered real name/signature; pinned at the encoded call site for the Rva00592640 destructor 0x005927F0
+??1Rva00592640Member@@QAE@XZ,0x0043FA7B,ILT to unmatched FUN_0098c4c0; no recovered real name/signature; pinned at the encoded call site for the Rva00592640 destructor 0x005927F0
