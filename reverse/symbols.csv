@@ -5486,6 +5486,7 @@ name,address,notes
 ??1GiantBirdGuardOuterState@@UAE@XZ,0x00038118,constructor 0x002C04D0 installs vtable 0x010C7C28 whose slot zero reaches deleting destructor 0x002C1CC0; adjacent exact name getter proves identity
 ??1Gen_dtor_002c1d00@@UAE@XZ,0x00007AEF,gen-dtor class destructor
 ??1Gen_dtor_002c1d40@@UAE@XZ,0x0000FDC1,gen-dtor class destructor
+??1GiantBirdGuardAttackAggressorState@@UAE@XZ,0x0000FDC1,constructor 0x002C11E0 names the state and installs vtable 0x010C7D88 whose slot zero reaches deleting destructor 0x002C1D40
 ??1Gen_dtor_002c2400@@UAE@XZ,0x000357A6,gen-dtor class destructor
 ??1Gen_dtor_002c2800@@UAE@XZ,0x00030792,gen-dtor class destructor
 ??1Gen_dtor_002c4450@@UAE@XZ,0x00033A37,gen-dtor class destructor
