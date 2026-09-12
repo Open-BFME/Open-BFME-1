@@ -14,7 +14,7 @@ class GameLogic
 {
 public:
 	unsigned char m_unmodelled_000[0x90];
-	Bool m_nextObjID;				// +0x90
+	Bool m_bfmeRecordingEnabled;				// +0x90
 };
 
 extern GameLogic *TheGameLogic;
@@ -31,7 +31,7 @@ private:
 
 void BfmeAcademyPointRecorder::_bfme_recordPointsEarned(Int points)
 {
-	if (TheGameLogic->m_nextObjID)
+	if (TheGameLogic->m_bfmeRecordingEnabled)
 	{
 		m_pointsEarned += points;
 	}

@@ -55,16 +55,53 @@ PLACEHOLDER = re.compile(
     r"^m_(?:[a-z]{1,2}\d*$"                       # m_a, m_b, m_x1
     r"|(?:unk|unmodelled|field|pad|slack|slot|reserved|unused)"
     r"|(?:bfme)?(?:dword|word|byte|bool|int|float|short|ptr|hash|string|str|val|value)\d*$"
-    r"|bfme[0-9A-Fa-f]{2,}$"                      # m_bfme0C
-    r"|[a-z]+[0-9A-Fa-f]{2,}$"                    # m_hash20, m_slot1c
-    r"|at[0-9A-Fa-f]+$)", re.I)
+    r"|[A-Za-z]+\d[0-9A-Fa-f]+$"                  # m_hash20, m_slot1c, m_bfme0C, m_flag40
+    r"|at\d[0-9A-Fa-f]*$)")
 
-DECL = re.compile(r"\b(?:class|struct)\s+([A-Za-z_][A-Za-z_0-9]*)\s*(?::[^{;]*)?\{")
-# `Real m_offsetZ;  // +0x18`, `BfmeShape *m_shapes;  // this+0x2C`
+DECL = re.compile(r"\b(?:class|struct)\s+([A-Za-z_][A-Za-z_0-9]*)\s*(?P<base>:[^{;]*)?\{")
+# `Real m_offsetZ;  // +0x18`, `BfmeShape *m_shapes;  // this+0x2C`, `int m_x;`
 MEMBER = re.compile(
-    r"^\s*(?:[A-Za-z_][\w:<>*&\s]*?)\s+(m_[A-Za-z_0-9]+)\s*(?:\[[^\]]*\])?\s*;"
-    r"\s*//\s*(?:this)?\s*\+?(0x[0-9A-Fa-f]+)\b"
+    r"^\s*((?:const\s+)?[A-Za-z_][\w:<> ]*?)\s+(\*?\s*)(m_[A-Za-z_0-9]+)\s*(\[[^\]]*\])?\s*;"
+    r"(?:\s*//\s*(?:this)?\s*\+?(0x[0-9A-Fa-f]+)\b)?"
 )
+
+# MSVC 7.1 on x86: natural alignment, capped at 8 (/Zp8, what this tree compiles
+# with). A type absent from this table makes the struct UNCOMPUTABLE and the whole
+# struct is refused -- a guessed size shifts every offset after it, which would turn
+# this checker into a generator of false findings against other people's commits.
+SIZES = {
+    "char": 1, "signed char": 1, "unsigned char": 1, "bool": 1, "Bool": 1,
+    "Byte": 1, "UnsignedByte": 1,
+    "short": 2, "unsigned short": 2, "wchar_t": 2, "Short": 2, "UnsignedShort": 2,
+    "WideChar": 2,
+    "int": 4, "unsigned int": 4, "unsigned": 4, "long": 4, "unsigned long": 4,
+    "float": 4, "Int": 4, "UnsignedInt": 4, "UnsignedInt32": 4, "Real": 4,
+    "Color": 4, "ObjectID": 4, "DrawableID": 4,
+    "double": 8, "__int64": 8, "unsigned __int64": 8, "Int64": 8, "UnsignedInt64": 8,
+}
+
+
+def size_of(decl_type, pointer, array):
+    """(total bytes, alignment) for one declaration, or None when unsizeable."""
+    name = " ".join(decl_type.replace("const", "").split())
+    if pointer.strip() == "*":
+        unit = 4
+    elif name in SIZES:
+        unit = SIZES[name]
+    else:
+        return None
+    count = 1
+    if array:
+        inner = array[1:-1].strip()
+        try:
+            count = int(inner, 0)
+        except ValueError:
+            # `[0x18 - 0x0C]` is how the tree spells a gap between two known offsets.
+            span = re.fullmatch(r"(0x[0-9A-Fa-f]+|\d+)\s*-\s*(0x[0-9A-Fa-f]+|\d+)", inner)
+            if not span:
+                return None
+            count = int(span.group(1), 0) - int(span.group(2), 0)
+    return unit * count, unit
 
 
 def load_witness():
@@ -91,32 +128,83 @@ def load_witness():
     return out
 
 
-def outer_members(text, brace):
-    """Members of THIS type only, never a nested one.
-
-    A nested struct's offsets are relative to the NESTED type. Folding them into the
-    outer class's offset space invents contradictions that are not there -- it scored
-    GeometryInfo's inner BfmeShape::m_height against GeometryInfo+0x04 and called a
-    correct file a defect. Depth tracking is the whole point of this function.
-    """
+def struct_body(text, brace):
+    """The text between this declaration's braces, nested braces included."""
     depth = 0
     i = brace
-    out = []
     while i < len(text):
-        ch = text[i]
-        if ch == "{":
+        if text[i] == "{":
             depth += 1
-        elif ch == "}":
+        elif text[i] == "}":
             depth -= 1
             if depth == 0:
-                return out
-        elif ch == "\n" and depth == 1:
-            end = text.find("\n", i + 1)
-            hit = MEMBER.match(text[i + 1 : end if end > 0 else len(text)])
-            if hit:
-                out.append((hit.group(1), int(hit.group(2), 16), text.count("\n", 0, i) + 2))
+                return text[brace + 1 : i]
         i += 1
-    return out
+    return None
+
+
+def outer_members(text, brace, has_base):
+    """Offsets for THIS type's own members, computed from declaration order.
+
+    Only 11.1% of member declarations state their offset in a comment, so requiring
+    one confined this checker to ~1% of the surface. Computing it instead reaches
+    43,332 members -- but only while every case the model cannot account for is
+    REFUSED rather than approximated. Each `return [], reason` below is one of those.
+
+    A nested struct's offsets are relative to the NESTED type, so only depth-1 lines
+    count; folding the inner ones in scored GeometryInfo's BfmeShape::m_height
+    against GeometryInfo+0x04 and reported a correct file as a defect.
+
+    Returns (members, refusal_reason). Measured against the 5,285 members that state
+    their own offset, this model agrees 99.5% of the time; `--selfcheck` is that test.
+    """
+    if has_base:
+        return [], "base class of unknown size"
+    body = struct_body(text, brace)
+    if body is None:
+        return [], "unterminated declaration"
+    # A polymorphic class puts a 4-byte vptr at +0, so its first member starts at +4.
+    # Missing this was the entire off-by-four cluster: 90.5% agreement became 99.5%.
+    off = 4 if re.search(r"\bvirtual\b", body) else 0
+    first_line = text.count("\n", 0, brace) + 1
+    out = []
+    depth = 0
+    for n, line in enumerate(body.splitlines()):
+        # Depth is tested BEFORE the line's own braces are counted, so a nested
+        # declaration's members are skipped while its closing `};` still returns here.
+        nested, depth = depth > 0, depth + line.count("{") - line.count("}")
+        if nested:
+            continue
+        if re.match(r"^\s*(?:public|private|protected)\s*:", line):
+            continue
+        if re.match(r"^\s*(?://|/\*|\*|$|\}|#)", line) or "(" in line:
+            continue
+        hit = MEMBER.match(line)
+        if not hit:
+            if re.search(r"\bm_[A-Za-z_0-9]+\s*;", line):
+                return [], "unparsed member declaration"
+            continue
+        sized = size_of(hit.group(1), hit.group(2), hit.group(4))
+        if sized is None:
+            return [], f"unsizeable type {hit.group(1).strip()!r}"
+        span, align = sized
+        step = min(align, 8)
+        off = (off + step - 1) // step * step
+        stated = int(hit.group(5), 16) if hit.group(5) else None
+        if stated is not None and stated != off:
+            if not out or all(m[3] is None for m in out):
+                # The first member states an offset the model does not put it at, so
+                # this declaration windows into the middle of a larger class and every
+                # offset in it is relative to something we do not know.
+                return [], "declaration windows into a larger class"
+            # The struct's own annotation contradicts the model. Trust the file, not
+            # the model, and disqualify the struct: asserting offsets from a layout
+            # this very declaration has already refuted is how a checker starts
+            # blocking correct commits.
+            return [], "annotation contradicts the computed layout"
+        out.append((hit.group(3), off, first_line + n + 1, stated))
+        off += span
+    return out, None
 
 
 def sources(paths, staged):
@@ -143,7 +231,15 @@ def scan(paths, staged):
         text = path.read_text(encoding="utf-8", errors="replace")
         for decl in DECL.finditer(text):
             owner = decl.group(1)
-            for member, off, line in outer_members(text, decl.end() - 1):
+            members, refused = outer_members(text, decl.end() - 1, bool(decl.group("base")))
+            if refused:
+                # Counted, never silent: refusals are the safety property, so a drop
+                # in this number is the signal that the model started guessing.
+                tally["refused: " + refused.split(" '")[0]] += 1
+            for member, off, line, stated in members:
+                tally["members computed"] += 1
+                if stated is not None:
+                    tally["  ...offset stated in the file too"] += 1
                 known = wit.get((owner, off))
                 if known is None:
                     continue
@@ -165,6 +261,70 @@ def scan(paths, staged):
     return tally, todo, conflicts
 
 
+def selfcheck(paths):
+    """Score the offset model against the offsets the tree already states.
+
+    7,154 member declarations carry a `// +0xNN` comment. That is free ground truth
+    for the one thing this tool cannot otherwise prove about itself, it needs no new
+    evidence, and it runs in seconds -- so every change to SIZES or to the alignment
+    model is answerable here before it reaches anybody's commit.
+
+    Unlike the scan, this does NOT disqualify a struct on the first contradiction:
+    the point is to count them.
+    """
+    agree, mismatch, structs = 0, [], collections.Counter()
+    for path in sources(paths, False):
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for decl in DECL.finditer(text):
+            if decl.group("base"):
+                structs["skipped: base class"] += 1
+                continue
+            body = struct_body(text, decl.end() - 1)
+            if body is None:
+                continue
+            off = 4 if re.search(r"\bvirtual\b", body) else 0
+            rows, bad = [], None
+            for line in body.splitlines():
+                if re.match(r"^\s*(?:public|private|protected)\s*:", line):
+                    continue
+                if re.match(r"^\s*(?://|/\*|\*|$|\}|#)", line) or "(" in line:
+                    continue
+                hit = MEMBER.match(line)
+                if not hit:
+                    if re.search(r"\bm_[A-Za-z_0-9]+\s*;", line):
+                        bad = "unparsed member"
+                        break
+                    continue
+                sized = size_of(hit.group(1), hit.group(2), hit.group(4))
+                if sized is None:
+                    bad = "unsizeable type"
+                    break
+                span, align = sized
+                step = min(align, 8)
+                off = (off + step - 1) // step * step
+                rows.append((hit.group(3), off, int(hit.group(5), 16) if hit.group(5) else None))
+                off += span
+            if bad:
+                structs["skipped: " + bad] += 1
+                continue
+            stated = [r for r in rows if r[2] is not None]
+            if stated and stated[0][2] != stated[0][1]:
+                structs["skipped: windows into a larger class"] += 1
+                continue
+            structs["scored"] += 1
+            for name, computed, said in rows:
+                if said is None:
+                    continue
+                if said == computed:
+                    agree += 1
+                else:
+                    mismatch.append(f"{path.relative_to(ROOT)}: {decl.group(1)}::{name} "
+                                    f"states {said:#x}, model computes {computed:#x}")
+    return agree, mismatch, structs
+
+
 def key(f):
     return f"{f[2]}+{f[3]:#x}|{f[4]}|{f[5]}"
 
@@ -183,7 +343,12 @@ def main():
     ap.add_argument("--todo", action="store_true", help="list placeholders the evidence can already name")
     ap.add_argument("--apply", action="store_true", help="with --todo, rewrite those placeholders in place")
     ap.add_argument("--staged", action="store_true", help="with --check, only the staged sources")
+    ap.add_argument("--selfcheck", action="store_true", help="score the offset model against the offsets the tree states")
+    ap.add_argument("--max-mismatch", type=int, default=0,
+                    help="with --selfcheck, the residual this model is known to have; exceeding it fails")
     ap.add_argument("--write-baseline", action="store_true", help="record today's findings as the debt register")
+    ap.add_argument("--reach-changed", action="store_true",
+                    help="with --write-baseline, allow growth because the DETECTOR got wider, not the debt")
     ap.add_argument("paths", nargs="*")
     args = ap.parse_args()
 
@@ -211,8 +376,30 @@ def main():
             print(f"  +{off:#06x}  {n:<40} conf={c:.2f}  {s}")
         return 0
 
+    if args.selfcheck:
+        agree, mismatch, structs = selfcheck(args.paths)
+        total = agree + len(mismatch)
+        print(f"name_oracle --selfcheck: {agree} of {total} stated offsets reproduced "
+              f"({100 * agree / max(total, 1):.1f}%)")
+        for k, v in structs.most_common():
+            print(f"  {v:>6}  structs {k}")
+        for m in mismatch[:40]:
+            print(f"  MISMATCH {m}")
+        if len(mismatch) > 40:
+            print(f"  ... and {len(mismatch) - 40} more")
+        # A mismatch is a bug in SIZES or the alignment model, never something to
+        # wave through: the scan disqualifies such a struct, so every one of these
+        # is coverage this tool is silently giving up. The ceiling exists so a change
+        # to the model is answerable as better-or-worse rather than pass-or-fail --
+        # today's residual is 25, all packed or gap-modelled Bfme* declarations.
+        if len(mismatch) > args.max_mismatch:
+            print(f"name_oracle: {len(mismatch)} mismatch(es) exceeds the known "
+                  f"residual of {args.max_mismatch}", file=sys.stderr)
+            return 1
+        return 0
+
     if not (args.check or args.todo or args.write_baseline):
-        ap.error("give --class, --check, --todo or --write-baseline")
+        ap.error("give --class, --check, --todo, --selfcheck or --write-baseline")
 
     tally, todo, findings = scan(args.paths, args.staged)
 
@@ -248,9 +435,12 @@ def main():
     if args.write_baseline:
         old = read_baseline()
         new = {key(f) for f in findings}
-        if new - old and old:
+        if new - old and old and not args.reach_changed:
             # Same rule pin_consistency_baseline lives by: a debt register that can
-            # grow is not a register, it is a rubber stamp.
+            # grow is not a register, it is a rubber stamp. The one honest exception
+            # is a detector that started seeing more of the tree -- that is new SIGHT,
+            # not new debt -- and it needs saying out loud with --reach-changed, in a
+            # commit that changes no source, so the growth is attributable.
             print(f"name_oracle: refusing to grow the baseline by {len(new - old)} finding(s):", file=sys.stderr)
             for k in sorted(new - old)[:10]:
                 print(f"    {k}", file=sys.stderr)

@@ -206,6 +206,18 @@ fi
 # the third, null_reloc, takes ~70s and runs in the full gate instead.
 python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong function (see above)"
 
+# SHADOW, NOT A GATE. name_oracle compares the offsets a source asserts for a member
+# against the offsets the ZH<->retail alignment witnesses -- the one naming defect no
+# byte comparison can see, because m_pitchShift and m_priority compile identically.
+# It computes offsets the source does not state, and while it reproduces 99.5% of the
+# 5,285 offsets the tree DOES state, 99.5% over 3,277 members is still ~16 wrong
+# assertions somewhere in the corpus. This hook runs on other people's commits at
+# 30-50 an hour, so it prints and never blocks until a shadow period has shown what
+# it would have stopped. Promote it by deleting the `|| true` -- and only then.
+if [ "${#staged_sources[@]}" -ne 0 ]; then
+    python3 tools/name_oracle.py --check --staged >&2 || true
+fi
+
 # A fixed path count still overflows Windows' 32767-code-unit command line
 # when source paths are long. Twice the UTF-8 byte length plus quotes/space
 # bounds the quoted UTF-16 argument size; reserve room for launcher/script paths.

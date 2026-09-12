@@ -87,6 +87,66 @@ that is the first thing to fix for anyone who wants this number to move.
 Until then: `reverse/bfme_layouts.json` is a committed artifact that a naive re-run
 silently degrades. Do not regenerate it without comparing the before/after counts.
 
+## The offset model, and why it refuses so much
+
+Only 11.1% of member declarations state their offset in a comment, so requiring one
+confined the checker to ~1% of the member surface. It computes the offset instead —
+declaration order, natural alignment capped at 8 (`/Zp8`), a 4-byte vptr at +0 for any
+polymorphic class. That reaches 43,332 members, of which **3,277 land on a
+`(class, offset)` the witness knows**: agreements went 548 → 2,311 and the nameable
+placeholder queue 10 → 288.
+
+Note what that ratio means. Once offsets are computed, only 7.6% of them find a
+witness — **the bottleneck moves from the source side to the evidence side**, and the
+next lever becomes `layout_witness`'s 289 failing reference compiles rather than
+anything about parsing.
+
+The model is validated against evidence the tree already contains: **5,285 members
+state their own offset, and it reproduces 5,260 of them — 99.5%.** That is
+`--selfcheck`, it needs no new data, it runs in seconds, and `--max-mismatch` turns it
+into a regression test so a change to the size table is answerable as better-or-worse.
+Both corrections that got it there came from reading failures rather than guessing:
+the off-by-four cluster was the unmodelled vptr (90.5% → 99.5%), and
+`GlobalData::m_bfmeOn` stating `+0x1278` as its FIRST member revealed declarations that
+window into the middle of a larger class.
+
+Everything the model cannot account for is refused, and the refusals are counted
+because they are the safety property: 5,150 structs with a base class of unknown size,
+4,867 with an unsizeable type, 1,367 with an unparsed member, 23 windowing into a
+larger class. A struct whose own annotation contradicts the computed layout is
+disqualified outright — the file wins over the model, which is what stops the 25 known
+packed-struct residuals from becoming 25 false findings on somebody's commit.
+
+## It ships in shadow first
+
+`--check --staged` runs in `.githooks/pre-commit` and **prints without blocking**.
+99.5% across 3,277 members still means roughly sixteen wrong assertions somewhere in
+the corpus, and this hook runs on other people's commits at 30–50 an hour. Collect
+what it would have stopped, adjudicate those into the baseline, and only then delete
+the `|| true`.
+
+## An incident worth not repeating
+
+The first `--todo --apply` pass renamed 116 members and five of them were regressions,
+landed on master and reverted afterwards:
+
+    m_isScoringEnabled     -> m_nextObjID     leaving  isScoringEnabled() { return m_nextObjID != 0; }
+    m_ambientSoundEnabled  -> m_secondMaterialPassOpacity   beside m_ambientSoundEnabledFromScript
+    m_kindOf0 / m_kindOf1  -> m_kindof / m_shadowOffsetY    splitting one 64-bit KindOf mask
+
+The cause was a single `re.I` on the placeholder pattern: with it,
+`[0-9A-Fa-f]{2,}$` matched ordinary letters, so `m_shouldFade` parsed as
+`shouldFa` + `de` and read as address-derived. A rule meant to identify names that
+admit ignorance was quietly classifying real names, and `--apply` then overwrote them
+from the witness.
+
+Two lessons, both now enforced by `tools/tests/test_name_oracle.py`. **The placeholder
+test is load-bearing** — it decides what gets rewritten automatically, so it needs
+fixtures asserting both what it matches and what it must not. And **a name that is not
+a placeholder is a question, never an automatic rewrite**, however confident the
+witness: `m_forced -> m_radarForceOn` was kept because it reads coherently in a Radar
+body, and that judgement is not one a script gets to make.
+
 ## Reading a `--check` finding
 
     name_oracle: 494 agree, 16 resolve inside an embedded struct, 7 spelling variants,
