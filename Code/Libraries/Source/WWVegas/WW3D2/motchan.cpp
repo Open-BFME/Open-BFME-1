@@ -508,65 +508,67 @@ void	TimeCodedMotionChannelClass::Get_Vector(float32 frame,float * setvec)
 }	// Get_Vector
 
 
-// ?TimeCodedMotionChannelClass::Get_QuatVector present-unmatched
+// RVA 0x0095B500: complete 374 bytes; hidden Quaternion result and frame; ret 8.
+// The same decoder is inlined in the matched HCompressed rotation methods.
 Quaternion TimeCodedMotionChannelClass::Get_QuatVector(float32 frame)
 {
+	// Retain the sample data snapshot across the index search.
+	uint32 * data = Data;
+	uint32 pidx;
+	uint32 tc0 = frame;
+	Quaternion q;
+	// BFME stores the final packet index in the field named CachedIdx.
+	if (tc0 >= (data[CachedIdx] & 0x7FFFFFFF)) {
+		pidx = CachedIdx;
+	} else {
+		int leftIdx = 0;
+		int rightIdx = (int)NumTimeCodes - 2;
+		// Retail reloads this field for the search and the timestamp pair.
+		uint32 *search_data = *(uint32 * volatile *)&Data;
+		for (;;) {
+			int mid = (leftIdx + rightIdx) / 2;
+			uint32 * pkt = search_data + mid * (int)PacketSize;
+			uint32 t0 = *pkt;
+			if (tc0 < (t0 & 0x7FFFFFFF)) {
+				rightIdx = mid;
+				continue;
+			}
+			if (tc0 < (pkt[PacketSize] & 0x7FFFFFFF)) {
+				pidx = (uint32)(pkt - search_data);
+				break;
+			}
+			if (leftIdx ^ mid) {
+				leftIdx = mid;
+				continue;
+			}
+			leftIdx++;
+		}
+	}
 
-	assert(VectorLen == 4);
-
-	Quaternion q(1);
-
-	uint32	tc0;
-  
-	tc0 = frame;
-	
-	uint32 pidx = get_index( tc0 );						
 	uint32 p2idx;
-  
-	if (pidx == ((NumTimeCodes - 1) * PacketSize))  {
-  	
-		float32 *vec = (float32 *) &Data[pidx+1];	 									
-               
-		q.Set(vec[0], vec[1], vec[2], vec[3]);
+	if (pidx == CachedIdx) {
+		const float32 * vec = (const float32 *)&data[pidx + 1];
+		return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+	} else {
+		p2idx = pidx + PacketSize;
+		uint32 *time_data = *(uint32 * volatile *)&Data;
+		uint32 time = time_data[p2idx];
+		if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
+			const float32 * vec = (const float32 *)&data[pidx + 1];
+			return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+		} else {
+			float32 time1 = (time_data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
 
-		return( q );		  
-             
+			// The binary flag has already been excluded from the second time.
+			float32 ratio = (frame - time1) / ((float32)time - time1);
+			Fast_Slerp(q,
+				*(Quaternion *)&data[pidx + 1],
+				*(Quaternion *)&data[p2idx + 1],
+				ratio);
+		}
 	}
-	else {
-  		p2idx = pidx + PacketSize;
-	}
-  
-	uint32 time = Data[p2idx];
-
-	if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
-		// its a binary movement!
-		float32 *vec = (float32 *) &Data[pidx+1];
-
-		q.Set(vec[0], vec[1], vec[2], vec[3]);
-		
-		return( q );
-	}
-	
-	float32 time1 = (Data[pidx]  & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-	float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-
-	float32 ratio = (frame - time1) / (time2 - time1);	
-	   
-	float32 *frame1 = (float32 *) &Data[pidx+1];
-	float32 *frame2 = (float32 *) &Data[p2idx+1];
-  					
-	Quaternion q1(1);
-	Quaternion q2(1);
-
-	q1.Set(frame1[0], frame1[1], frame1[2], frame1[3]);
-	q2.Set(frame2[0], frame2[1], frame2[2], frame2[3]);
-
-	Fast_Slerp(q, q1, q2, ratio);
-
-	return( q );
-
-} // Get_QuatVector
-
+	return q;
+}
 
 
 /*********************************************************************************************** 
