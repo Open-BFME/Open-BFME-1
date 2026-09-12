@@ -87264,3 +87264,4 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?push_back@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXABUCoord3D@@@Z,0x00035F8F,route=0x00156BF0; QueueProductionExitUpdate1083 calls this full62B Coord3D push_back; emitted full helper independently exact with12B copy ctor and overflow
 ??1?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@XZ,0x0000DE68,route=0x000D6230; QueueProductionExitUpdate1083 calls this full64B STLport node allocator Coord3D vector destructor; emitted helper independently exact
 ?setExperienceSink@ExperienceTracker@@QAEXW4ObjectID@@@Z,0x0001E9D4,route=0x001B2000; QueueProductionExitUpdate1083 receiver Object+210 ExperienceTracker; raw10B writes sink+18 and ret4; exact ctor and reference setter identify field
+?handleNested@Rva0024C2A0Owner@@QAEXPAVObject@@PAX@Z,0x00047690,assigned-body helper; all three aligned calls in exact 0x0024C2A0 containment pass target ILT 0x00047690
