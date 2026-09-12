@@ -25813,3 +25813,4 @@ tg_005c9ca0,0x005C9CA0,Generated += shape placeholder superseded by authentic ST
 ??_EGen_dtorv_005d7f70@@UAEPAXI@Z,0x005D7F70,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::DefaultPhysicsModuleInfo vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005d9230@@UAEPAXI@Z,0x005D9230,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::LightningDrawModuleTemplate vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005ddee0@@UAEPAXI@Z,0x005DDEE0,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::LifeEventModuleInfo vector-deleting destructor over the same 84-byte range"
+??_EGen_dtorv_005de180@@UAEPAXI@Z,0x005DE180,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::LifeEventModuleTemplate vector-deleting destructor over the same 84-byte range"
