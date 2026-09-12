@@ -6674,6 +6674,7 @@ name,address,notes
 ??1Gen_dtorv_005bf190@@UAE@XZ,0x0001F54B,gen-dtor class destructor
 ??1Gen_dtorv_005bf3e0@@UAE@XZ,0x0000EAB1,gen-dtor class destructor
 ??1Gen_dtorv_005bf630@@UAE@XZ,0x00035111,gen-dtor class destructor
+??1Gen_dtorv_005bf510@@UAE@XZ,0x00037E66,gen-dtor class destructor
 ??1Gen_dtorv_005bf760@@UAE@XZ,0x0002E6EA,gen-dtor class destructor
 ??1Gen_dtorv_005bf880@@UAE@XZ,0x00041D5D,gen-dtor class destructor
 ??1Gen_dtorv_005bf9b0@@UAE@XZ,0x0001DF48,gen-dtor class destructor
