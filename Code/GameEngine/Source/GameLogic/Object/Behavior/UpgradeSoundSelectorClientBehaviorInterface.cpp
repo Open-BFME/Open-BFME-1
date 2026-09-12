@@ -15,7 +15,7 @@ class ModuleData
 public:
 	virtual void anchor();
 
-	unsigned int m_tag;
+	unsigned int m_moduleTagNameKey;
 };
 
 class ClientUpdateModule

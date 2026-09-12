@@ -19,7 +19,7 @@ public:
 	virtual void moduleDataAnchor();		///< vptr at 0x00
 	~ModuleData();
 
-	int m_04;
+	int m_moduleTagNameKey;
 };
 
 class InstantDeathDieMuxData

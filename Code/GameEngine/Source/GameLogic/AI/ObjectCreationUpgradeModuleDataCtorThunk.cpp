@@ -12,7 +12,7 @@ class ModuleData
 public:
 	virtual void moduleDataAnchor();
 
-	int m_04;
+	int m_moduleTagNameKey;
 };
 
 class UpgradeModuleDataSub

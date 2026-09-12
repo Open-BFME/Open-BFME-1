@@ -11,7 +11,7 @@ class ModuleData
 public:
 	virtual void moduleDataAnchor();		///< vptr at 0x00
 
-	int m_04;
+	int m_moduleTagNameKey;
 };
 
 class ClickReactionBehaviorModuleData : public ModuleData

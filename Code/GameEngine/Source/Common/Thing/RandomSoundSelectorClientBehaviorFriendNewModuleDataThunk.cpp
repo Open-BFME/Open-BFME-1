@@ -23,7 +23,7 @@ public:
 	virtual ~ModuleData();
 
 private:
-	unsigned int m_baseField;
+	unsigned int m_moduleTagNameKey;
 };
 
 class RandomSoundSelectorSoundNames

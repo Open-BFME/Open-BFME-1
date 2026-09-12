@@ -68,7 +68,7 @@ public:
 	virtual ~ModuleData() {}
 
 private:
-	unsigned char m_body[4];
+	unsigned int m_moduleTagNameKey;
 };
 
 class InstantDeathDieMuxData

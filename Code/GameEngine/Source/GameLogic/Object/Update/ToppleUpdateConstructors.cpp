@@ -101,7 +101,7 @@ class ModuleData
 public:
 	virtual ~ModuleData() {}
 
-	unsigned int m_04;
+	unsigned int m_moduleTagNameKey;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ToppleUpdate.h

@@ -14,7 +14,7 @@ public:
 	// because a throw from the member's constructor would have nothing to unwind.
 	~ModuleData();
 
-	int m_04;
+	int m_moduleTagNameKey;
 };
 
 class RS_Member

@@ -33,7 +33,7 @@ class ModuleData
 {
 public:
 	virtual ~ModuleData() {}
-	unsigned int m_04;
+	unsigned int m_moduleTagNameKey;
 };
 
 class AnimalAIUpdateModuleData : public ModuleData

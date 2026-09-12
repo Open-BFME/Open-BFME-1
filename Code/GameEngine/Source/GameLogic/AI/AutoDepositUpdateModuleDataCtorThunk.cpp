@@ -14,7 +14,7 @@ public:
 	virtual void moduleDataAnchor();
 	~ModuleData();
 
-	int m_04;
+	int m_moduleTagNameKey;
 };
 
 class RS_Member

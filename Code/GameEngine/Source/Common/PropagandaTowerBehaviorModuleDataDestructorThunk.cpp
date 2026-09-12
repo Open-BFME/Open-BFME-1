@@ -40,7 +40,7 @@ class ModuleData
 public:
 	virtual ~ModuleData() {}
 
-	unsigned int m_04;
+	unsigned int m_moduleTagNameKey;
 };
 
 class __declspec(novtable) PropagandaTowerBehaviorModuleData : public ModuleData
