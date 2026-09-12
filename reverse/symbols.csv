@@ -13710,6 +13710,7 @@ name,address,notes
 ?__string_to_float@_STL@@YAXABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@AAM@Z,0x00847C90,STLport float conversion wrapper called by num_get do_get(float) at 0x00838BE0
 ?__write_float@_STL@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@HHN@Z,0x00849770,retail wide num_put helper called by _M_do_put_float<double> at 0x0083C590; compiler-emitted STLport signature and direct retail call prove the double formatter
 ?__write_float@_STL@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@1@HHO@Z,0x00849860,retail wide num_put helper passes string flags precision and long double; the sibling double overload is 0x00849770;campaign=luna36h-20260907;lane=expand10;model=gpt-5.6-sol-ultra
+??$bfmeFormatFloat@O@_STL@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@PBDHHOHH_N@Z,0x00849530,local STLport formatting helper called by the long-double __write_float wrapper
 ?__write_formatted_time@_STL@@YAPADPADDDABV_Time_Info@1@PBUtm@@@Z,0x00846320,pin
 ?__write_integer_backward@_STL@@YAPADPADHJ@Z,0x00835940,STLport __write_integer_backward long; callee of __write_integer 0x008459B0
 ?_bfme_allows@BfmeSpecialPowerAllowanceStore@@QAEEPAVBfmePlayerSpecialPowerState@@PBVSpecialPowerTemplate@@@Z,0x00024E33,Open-BFME5 shape-only pin: the thunk Player _bfme_allowsSpecialPower calls; thiscall on the global at 0x012F0FF8 with the player subobject and the template
