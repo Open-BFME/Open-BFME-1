@@ -18,11 +18,11 @@
 class AnimateWindowManager
 {
 public:
-	bool isReversed(void) const { return m_reversed; }
+	bool isReversed(void) const { return m_reverse; }
 
 private:
 	char m_unreconstructed_00[0x11];
-	bool m_reversed;								///< retail this+0x11
+	bool m_reverse;								///< retail this+0x11
 };
 
 class GlobalData;

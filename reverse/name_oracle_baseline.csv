@@ -14,7 +14,6 @@ AIUpdateInterface+0x140|m_curLocomotor|m_path,Code/GameEngine/Source/GameLogic/A
 AIUpdateInterface+0x140|m_owner|m_path,Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001BC820.cpp,84,1.00,layout_witness
 AIUpdateInterface+0x1cc|m_locomotor|m_curLocomotor,Code/GameEngine/Source/GameLogic/AI/Rva0017DC90State_onExit.cpp,72,1.00,layout_witness
 AIUpdateInterface+0x326|m_pathRequested|m_isBlockedAndStuck,Code/GameEngine/Source/GameLogic/AI/AIPickUpCrateState_computePath.cpp,22,1.00,layout_witness
-AnimateWindowManager+0x11|m_reversed|m_reverse,Code/GameEngine/Source/GameClient/GUI/Shell/Shell_isAnimReversed_Thunk.cpp,26,1.00,layout_witness
 ArchiveFile+0x4|m_opaque|m_file,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileDtor.cpp,53,1.00,layout_witness
 ArchiveFileSystem+0x4|m_bfmeBodyEBB|m_archiveFileMap,Code/GameEngine/Source/Common/BfmeConv2018.cpp,22,1.00,layout_witness
 ArmorTemplateSet+0x0|m_data|m_types,Code/GameEngine/Source/Common/Thing/ArmorTemplateSetVectorInsertOverflowBody.cpp,26,1.00,layout_witness
