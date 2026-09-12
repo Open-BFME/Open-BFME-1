@@ -18,7 +18,9 @@
 // mapped half of the value is not merely unnamed here -- it is unmeasured, the
 // way it is in every one of these lookup bodies.  Each table is therefore
 // spelled with its own extract-key functor over a value that begins with the
-// AsciiString, and named for the address of the body.
+// AsciiString.  The Value/ExtractKey identifiers are pinned in the ledger
+// mangled names and stay; the table typedefs are named from a matched
+// hash_map<AsciiString, Mapped>::operator[] caller where one exists.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -75,15 +77,15 @@ struct Rva000B8A10Value
 
 struct Rva000B8A10ExtractKey
 {
-	const AsciiString &operator()( const Rva000B8A10Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva000B8A10Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000B8A10Value, AsciiString, rts::hash<AsciiString>,
 	Rva000B8A10ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000B8A10Value> > Rva000B8A10Table;
+	_STL::allocator<Rva000B8A10Value> > SkyboxTextureSetHash;
 
-// retail 0x000B8A10 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor000B8A10( const Rva000B8A10Table &table, const AsciiString &key )
+// hash_map<AsciiString, SkyboxTextureSet*>; find() is public, _M_find is not
+Bool BfmeHashFindAnchor000B8A10(const SkyboxTextureSetHash &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -95,15 +97,15 @@ struct Rva000D7180Value
 
 struct Rva000D7180ExtractKey
 {
-	const AsciiString &operator()( const Rva000D7180Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva000D7180Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000D7180Value, AsciiString, rts::hash<AsciiString>,
 	Rva000D7180ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000D7180Value> > Rva000D7180Table;
+	_STL::allocator<Rva000D7180Value> > AsciiStringKeyedHash000D7180;
 
 // retail 0x000D7180 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor000D7180( const Rva000D7180Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor000D7180(const AsciiStringKeyedHash000D7180 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -115,15 +117,15 @@ struct Rva000D7250Value
 
 struct Rva000D7250ExtractKey
 {
-	const AsciiString &operator()( const Rva000D7250Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva000D7250Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000D7250Value, AsciiString, rts::hash<AsciiString>,
 	Rva000D7250ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000D7250Value> > Rva000D7250Table;
+	_STL::allocator<Rva000D7250Value> > AsciiStringKeyedHash000D7250;
 
 // retail 0x000D7250 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor000D7250( const Rva000D7250Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor000D7250(const AsciiStringKeyedHash000D7250 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -135,15 +137,15 @@ struct Rva000F2010Value
 
 struct Rva000F2010ExtractKey
 {
-	const AsciiString &operator()( const Rva000F2010Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva000F2010Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva000F2010Value, AsciiString, rts::hash<AsciiString>,
 	Rva000F2010ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva000F2010Value> > Rva000F2010Table;
+	_STL::allocator<Rva000F2010Value> > AsciiStringToByteHash;
 
-// retail 0x000F2010 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor000F2010( const Rva000F2010Table &table, const AsciiString &key )
+// hash_map<AsciiString, unsigned char>; find() is public, _M_find is not
+Bool BfmeHashFindAnchor000F2010(const AsciiStringToByteHash &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -155,15 +157,15 @@ struct Rva001366A0Value
 
 struct Rva001366A0ExtractKey
 {
-	const AsciiString &operator()( const Rva001366A0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva001366A0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva001366A0Value, AsciiString, rts::hash<AsciiString>,
 	Rva001366A0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva001366A0Value> > Rva001366A0Table;
+	_STL::allocator<Rva001366A0Value> > AsciiStringKeyedHash001366A0;
 
 // retail 0x001366A0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor001366A0( const Rva001366A0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor001366A0(const AsciiStringKeyedHash001366A0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -175,15 +177,15 @@ struct Rva0038BE40Value
 
 struct Rva0038BE40ExtractKey
 {
-	const AsciiString &operator()( const Rva0038BE40Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0038BE40Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0038BE40Value, AsciiString, rts::hash<AsciiString>,
 	Rva0038BE40ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0038BE40Value> > Rva0038BE40Table;
+	_STL::allocator<Rva0038BE40Value> > BuildableStatusHash;
 
-// retail 0x0038BE40 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0038BE40( const Rva0038BE40Table &table, const AsciiString &key )
+// hash_map<AsciiString, BuildableStatus>; find() is public, _M_find is not
+Bool BfmeHashFindAnchor0038BE40(const BuildableStatusHash &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -195,15 +197,15 @@ struct Rva0038BF10Value
 
 struct Rva0038BF10ExtractKey
 {
-	const AsciiString &operator()( const Rva0038BF10Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0038BF10Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0038BF10Value, AsciiString, rts::hash<AsciiString>,
 	Rva0038BF10ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0038BF10Value> > Rva0038BF10Table;
+	_STL::allocator<Rva0038BF10Value> > AsciiStringKeyedHash0038BF10;
 
 // retail 0x0038BF10 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0038BF10( const Rva0038BF10Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0038BF10(const AsciiStringKeyedHash0038BF10 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -215,15 +217,15 @@ struct Rva004246F0Value
 
 struct Rva004246F0ExtractKey
 {
-	const AsciiString &operator()( const Rva004246F0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva004246F0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva004246F0Value, AsciiString, rts::hash<AsciiString>,
 	Rva004246F0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva004246F0Value> > Rva004246F0Table;
+	_STL::allocator<Rva004246F0Value> > AsciiStringKeyedHash004246F0;
 
 // retail 0x004246F0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor004246F0( const Rva004246F0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor004246F0(const AsciiStringKeyedHash004246F0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -235,15 +237,15 @@ struct Rva00460B30Value
 
 struct Rva00460B30ExtractKey
 {
-	const AsciiString &operator()( const Rva00460B30Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00460B30Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00460B30Value, AsciiString, rts::hash<AsciiString>,
 	Rva00460B30ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00460B30Value> > Rva00460B30Table;
+	_STL::allocator<Rva00460B30Value> > AsciiStringKeyedHash00460B30;
 
 // retail 0x00460B30 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00460B30( const Rva00460B30Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor00460B30(const AsciiStringKeyedHash00460B30 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -255,15 +257,15 @@ struct Rva00460C00Value
 
 struct Rva00460C00ExtractKey
 {
-	const AsciiString &operator()( const Rva00460C00Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00460C00Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00460C00Value, AsciiString, rts::hash<AsciiString>,
 	Rva00460C00ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00460C00Value> > Rva00460C00Table;
+	_STL::allocator<Rva00460C00Value> > AsciiStringKeyedHash00460C00;
 
 // retail 0x00460C00 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00460C00( const Rva00460C00Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor00460C00(const AsciiStringKeyedHash00460C00 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -275,15 +277,15 @@ struct Rva00460CD0Value
 
 struct Rva00460CD0ExtractKey
 {
-	const AsciiString &operator()( const Rva00460CD0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00460CD0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00460CD0Value, AsciiString, rts::hash<AsciiString>,
 	Rva00460CD0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00460CD0Value> > Rva00460CD0Table;
+	_STL::allocator<Rva00460CD0Value> > AsciiStringKeyedHash00460CD0;
 
 // retail 0x00460CD0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00460CD0( const Rva00460CD0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor00460CD0(const AsciiStringKeyedHash00460CD0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -295,15 +297,15 @@ struct Rva0046A130Value
 
 struct Rva0046A130ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A130Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A130Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A130Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A130ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A130Value> > Rva0046A130Table;
+	_STL::allocator<Rva0046A130Value> > AsciiStringKeyedHash0046A130;
 
 // retail 0x0046A130 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A130( const Rva0046A130Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A130(const AsciiStringKeyedHash0046A130 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -315,15 +317,15 @@ struct Rva0046A200Value
 
 struct Rva0046A200ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A200Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A200Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A200Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A200ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A200Value> > Rva0046A200Table;
+	_STL::allocator<Rva0046A200Value> > AsciiStringKeyedHash0046A200;
 
 // retail 0x0046A200 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A200( const Rva0046A200Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A200(const AsciiStringKeyedHash0046A200 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -335,15 +337,15 @@ struct Rva0046A2D0Value
 
 struct Rva0046A2D0ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A2D0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A2D0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A2D0Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A2D0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A2D0Value> > Rva0046A2D0Table;
+	_STL::allocator<Rva0046A2D0Value> > AsciiStringKeyedHash0046A2D0;
 
 // retail 0x0046A2D0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A2D0( const Rva0046A2D0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A2D0(const AsciiStringKeyedHash0046A2D0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -355,15 +357,15 @@ struct Rva0046A3A0Value
 
 struct Rva0046A3A0ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A3A0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A3A0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A3A0Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A3A0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A3A0Value> > Rva0046A3A0Table;
+	_STL::allocator<Rva0046A3A0Value> > AptTextRecordHash;
 
-// retail 0x0046A3A0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A3A0( const Rva0046A3A0Table &table, const AsciiString &key )
+// hash_map<AsciiString, AptTextRecord>; find() is public, _M_find is not
+Bool BfmeHashFindAnchor0046A3A0(const AptTextRecordHash &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -375,15 +377,15 @@ struct Rva0046A470Value
 
 struct Rva0046A470ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A470Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A470Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A470Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A470ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A470Value> > Rva0046A470Table;
+	_STL::allocator<Rva0046A470Value> > AsciiStringKeyedHash0046A470;
 
 // retail 0x0046A470 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A470( const Rva0046A470Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A470(const AsciiStringKeyedHash0046A470 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -395,15 +397,15 @@ struct Rva0046A540Value
 
 struct Rva0046A540ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A540Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A540Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A540Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A540ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A540Value> > Rva0046A540Table;
+	_STL::allocator<Rva0046A540Value> > AsciiStringKeyedHash0046A540;
 
 // retail 0x0046A540 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A540( const Rva0046A540Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A540(const AsciiStringKeyedHash0046A540 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -415,15 +417,15 @@ struct Rva0046A610Value
 
 struct Rva0046A610ExtractKey
 {
-	const AsciiString &operator()( const Rva0046A610Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva0046A610Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva0046A610Value, AsciiString, rts::hash<AsciiString>,
 	Rva0046A610ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva0046A610Value> > Rva0046A610Table;
+	_STL::allocator<Rva0046A610Value> > AsciiStringKeyedHash0046A610;
 
 // retail 0x0046A610 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor0046A610( const Rva0046A610Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor0046A610(const AsciiStringKeyedHash0046A610 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -435,15 +437,15 @@ struct Rva00583580Value
 
 struct Rva00583580ExtractKey
 {
-	const AsciiString &operator()( const Rva00583580Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00583580Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00583580Value, AsciiString, rts::hash<AsciiString>,
 	Rva00583580ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00583580Value> > Rva00583580Table;
+	_STL::allocator<Rva00583580Value> > BannerTypeHash;
 
-// retail 0x00583580 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00583580( const Rva00583580Table &table, const AsciiString &key )
+// hash_map<AsciiString, BannerType>; find() is public, _M_find is not
+Bool BfmeHashFindAnchor00583580(const BannerTypeHash &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -455,15 +457,15 @@ struct Rva00613AE0Value
 
 struct Rva00613AE0ExtractKey
 {
-	const AsciiString &operator()( const Rva00613AE0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00613AE0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00613AE0Value, AsciiString, rts::hash<AsciiString>,
 	Rva00613AE0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00613AE0Value> > Rva00613AE0Table;
+	_STL::allocator<Rva00613AE0Value> > AsciiStringKeyedHash00613AE0;
 
 // retail 0x00613AE0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00613AE0( const Rva00613AE0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor00613AE0(const AsciiStringKeyedHash00613AE0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -475,15 +477,15 @@ struct Rva00613BB0Value
 
 struct Rva00613BB0ExtractKey
 {
-	const AsciiString &operator()( const Rva00613BB0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva00613BB0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva00613BB0Value, AsciiString, rts::hash<AsciiString>,
 	Rva00613BB0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva00613BB0Value> > Rva00613BB0Table;
+	_STL::allocator<Rva00613BB0Value> > AsciiStringKeyedHash00613BB0;
 
 // retail 0x00613BB0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor00613BB0( const Rva00613BB0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor00613BB0(const AsciiStringKeyedHash00613BB0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -495,15 +497,15 @@ struct Rva006931A0Value
 
 struct Rva006931A0ExtractKey
 {
-	const AsciiString &operator()( const Rva006931A0Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva006931A0Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva006931A0Value, AsciiString, rts::hash<AsciiString>,
 	Rva006931A0ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva006931A0Value> > Rva006931A0Table;
+	_STL::allocator<Rva006931A0Value> > AsciiStringKeyedHash006931A0;
 
 // retail 0x006931A0 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor006931A0( const Rva006931A0Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor006931A0(const AsciiStringKeyedHash006931A0 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -515,15 +517,15 @@ struct Rva006A7F80Value
 
 struct Rva006A7F80ExtractKey
 {
-	const AsciiString &operator()( const Rva006A7F80Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva006A7F80Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva006A7F80Value, AsciiString, rts::hash<AsciiString>,
 	Rva006A7F80ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva006A7F80Value> > Rva006A7F80Table;
+	_STL::allocator<Rva006A7F80Value> > AsciiStringKeyedHash006A7F80;
 
 // retail 0x006A7F80 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor006A7F80( const Rva006A7F80Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor006A7F80(const AsciiStringKeyedHash006A7F80 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
@@ -535,15 +537,15 @@ struct Rva006A8050Value
 
 struct Rva006A8050ExtractKey
 {
-	const AsciiString &operator()( const Rva006A8050Value &x ) const { return x.m_key; }
+	const AsciiString &operator()(const Rva006A8050Value &entry ) const { return entry.m_key; }
 };
 
 typedef _STL::hashtable<Rva006A8050Value, AsciiString, rts::hash<AsciiString>,
 	Rva006A8050ExtractKey, _STL::equal_to<AsciiString>,
-	_STL::allocator<Rva006A8050Value> > Rva006A8050Table;
+	_STL::allocator<Rva006A8050Value> > AsciiStringKeyedHash006A8050;
 
 // retail 0x006A8050 -- find() is public, _M_find is not, so the public call emits it
-Bool BfmeHashFindAnchor006A8050( const Rva006A8050Table &table, const AsciiString &key )
+Bool BfmeHashFindAnchor006A8050(const AsciiStringKeyedHash006A8050 &table, const AsciiString &key )
 {
 	return table.find( key ) != table.end();
 }
