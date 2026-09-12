@@ -1,9 +1,7 @@
+// Open-BFME5: Drawable::drawIconUI.
 // ?drawIconUI@Drawable@@QAEXXZ
-// partial score=0.98 date=2026-09-08
-// ?drawIconUI@Drawable@@QAEXXZ
-// This body matches the retail control flow and stack layout through the
-// projection path. The remaining four bytes come from MSVC 7.1 x87 load and
-// FPU-stack cleanup choices in the adjusted health-box calculation.
+// This body matches the retail control flow, stack layout, and x87 sequence
+// through the projection and icon queue paths.
 
 typedef int Int;
 typedef float Real;
@@ -267,8 +265,13 @@ void Drawable::drawIconUI( void )
 		const Coord3D *drawablePosition =
 			(reinterpret_cast<DrawableIconSelfCall *>( this )->*position.memberFunction)();
 		DrawableIconTacticalView *tacticalView = DRAWABLE_ICON_TACTICAL_VIEW;
-	Real &adjustedZ = locals.m_adjustedHealthBoxPosition.z;
-	adjustedZ -= (drawablePosition->z - adjustedZ) * DRAWABLE_ICON_VERTICAL_SCALE;
+	// Retail reads drawable z, adjusted z, then the adjusted-z destination a second time.
+	// The volatile read casts preserve that MSVC 7.1 x87 order; they add no read
+	// beyond the three memory operands present in the retail body.
+	Real *adjustedZ = &locals.m_adjustedHealthBoxPosition.z;
+	const Real positionZ = *(const volatile Real *)&drawablePosition->z;
+	const Real adjusted = *(const volatile Real *)adjustedZ;
+	*adjustedZ = *adjustedZ - (adjusted - positionZ) * DRAWABLE_ICON_VERTICAL_SCALE;
 
 		if ( tacticalView->worldToScreen(
 			&locals.m_adjustedHealthBoxPosition, &locals.m_adjustedScreen ) )

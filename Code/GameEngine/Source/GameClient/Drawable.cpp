@@ -5022,60 +5022,9 @@ Bool Drawable::drawsAnyUIText( void )
 /** This is called as part of the "post draw" phase when drawable a drawable.  It is there
 	* that we should overlay on the screen any 2D elements for purposes of user interface
 	* information (such as a heatlh bar, veterency levels, etc.) */
-// ------------------------------------------------------------------------------------------------
-// ?drawIconUI@Drawable@@QAEXXZ present-unmatched
-void Drawable::drawIconUI( void )
-{
-	if( TheGameLogic->getDrawIconUI() && (TheScriptEngine->getFade()==ScriptEngine::FADE_NONE) )
-	{
-		IRegion2D healthBarRegionStorage;
-		const IRegion2D* healthBarRegion = NULL;
-		if (computeHealthRegion(this, healthBarRegionStorage))
-			healthBarRegion = &healthBarRegionStorage; //both data and a PointerAsFlag for logic in the methods below
-
-		Object *obj = getObject();
-		
-		// we only draw icons drawables with objects, so one bail here -------------------------
-		if ( ! obj )
-			return;
-
-		//Icons that can be drawn on dead things
-		drawHealthBar( healthBarRegion );                                        
-		drawEmoticon( healthBarRegion );                                         
-
-		drawCaption( healthBarRegion );
-		drawConstructPercent( healthBarRegion );
-
-		//All Icons Below only draw on ALIVE things, so  bail here -------------------------
-		if( obj->isEffectivelyDead() || obj->isKindOf( KINDOF_IGNORED_IN_GUI )) // object explicitly wants nothing to do with these icons, so...
-			return;
-		drawHealing( healthBarRegion );//call so dead things can kill their healing icons
-		drawBombed( healthBarRegion );
-	
-	
-		//Disabled for multiplay!
-		//drawBattlePlans( healthBarRegion );
-	
-		if ( drawsAnyUIText() )
-			TheGameClient->addTextBearingDrawable( this );
-
-		drawEnthusiastic( healthBarRegion );                                       
-#ifdef ALLOW_DEMORALIZE
-		drawDemoralized( healthBarRegion );
-#endif
-		drawDisabled( healthBarRegion );
-
-		drawAmmo( healthBarRegion );                
-		drawContained( healthBarRegion ); 
-
-		//Moved this to last so that it shows up over contained and ammo icons.
-		drawVeterancy( healthBarRegion ); 
-
-#ifdef KRIS_BRUTAL_HACK_FOR_AIRCRAFT_CARRIER_DEBUGGING
-		drawUIText();
-#endif
-	}
-}
+// The BFME no-argument icon pass is defined in
+// GameClient/Drawable_drawIconUI_BFME.cpp so its retail body can be verified
+// independently from this large translation unit.
 
 //------------------------------------------------------------------------------------------------
 // ?getIconInfo@Drawable@@QAEPAVDrawableIconInfo@@XZ present-unmatched
