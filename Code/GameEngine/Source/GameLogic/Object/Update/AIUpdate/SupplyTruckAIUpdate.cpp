@@ -300,19 +300,26 @@ void SupplyTruckAIUpdate::privateDock( Object *dock, CommandSourceType cmdSource
 }
 
 //----------------------------------------------------------------------------------------
-// ?getActionDelayForDock@SupplyTruckAIUpdate@@ present-unmatched
 UnsignedInt SupplyTruckAIUpdate::getActionDelayForDock( Object *dock )
 {
+	// BFME's AIUpdate module-data pointer is at retail this-0x33c (SupplyTruckAIUpdate
+	// carries one fewer interface vptr than WorkerAIUpdate, whose analogous fix uses
+	// this-0x340). The ZH-shaped module header exposes the same fields through a
+	// shorter base; this source-level displacement emits the retail slot unchanged.
 	// Decide whether to use my Center or Warehouse delay time
 	static const NameKeyType key_warehouseUpdate = NAMEKEY("SupplyWarehouseDockUpdate");
 	SupplyWarehouseDockUpdate *warehouseModule = (SupplyWarehouseDockUpdate*) dock->findUpdateModule( key_warehouseUpdate );
 	if (warehouseModule) {
-		return getSupplyTruckAIUpdateModuleData()->m_warehouseDelay;
+		// SupplyTruckAIUpdateModuleData lacks WorkerAIUpdateModuleData's three extra
+		// Real fields, so its delay fields sit 0xC lower: this -0x13c, +0x6c.
+		const char *moduleData = *reinterpret_cast<const char * const *>(reinterpret_cast<const char *>(this) - 0x13c);
+		return *reinterpret_cast<const UnsignedInt *>(moduleData + 0x6c);
 	}
 	static const NameKeyType key_centerUpdate = NAMEKEY("SupplyCenterDockUpdate");
 	SupplyCenterDockUpdate *centerModule = (SupplyCenterDockUpdate*) dock->findUpdateModule( key_centerUpdate );
 	if (centerModule) {
-		return getSupplyTruckAIUpdateModuleData()->m_centerDelay;
+		const char *moduleData = *reinterpret_cast<const char * const *>(reinterpret_cast<const char *>(this) - 0x13c);
+		return *reinterpret_cast<const UnsignedInt *>(moduleData + 0x68);
 	}
 
 	return 0;
