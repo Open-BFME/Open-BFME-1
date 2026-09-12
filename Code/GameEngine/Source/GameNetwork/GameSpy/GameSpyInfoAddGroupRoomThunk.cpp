@@ -1,1243 +1,167 @@
-// readable body of ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
-// Exact retail bytes for ?addGroupRoom@GameSpyInfo@@UAEXVGameSpyGroupRoom@@@Z at 0x00636650.
-extern "C" __declspec(naked) void bfme_GameSpyInfo_addGroupRoom_636650()
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// GameSpyInfo::addGroupRoom, retail RVA 0x00636650, full 1238-byte body.
+// The PeerDefs.cpp algorithm gains BFME's translation fallback on both paths.
+// The room is 32 bytes: its two strings are at +0/+4, followed by six integers.
+// Existing exact room-copy (0x004F97B0), map operator[] (0x006357D0), and pair
+// destruction (0x00631920) bodies independently establish that member geometry.
+// TU-scoped interface prefixes below preserve only this body's used ABI slots.
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <stl/_config.h>
+#undef _STLP_DEFAULT_CONSTRUCTOR_BUG
+#include <map>
+#include <vector>
+#include <string.h>
+typedef bool Bool;
+typedef int Int;
+#define TRUE true
+#define FALSE false
+
+template<class T> struct StringData { unsigned short refs, capacity, length, pad; T text[1]; };
+template<class T> class StringBase {
+    friend class AsciiString;
+    friend class UnicodeString;
+private:
+    StringData<T> *data;
+    StringBase():data(0) {}
+    StringBase(const T*);
+    StringBase(const StringBase&);
+    ~StringBase();
+    void set(const StringBase&);
+};
+class AsciiString : private StringBase<char> {
+public:
+    AsciiString() {}
+    AsciiString(const char *p):StringBase<char>(p) {}
+    AsciiString(const AsciiString &p):StringBase<char>(p) {}
+    ~AsciiString() {}
+    const char *str() const { return data ? data->text : ""; }
+    void __cdecl format(AsciiString, ...);
+    AsciiString &operator=(const AsciiString &other) { set(other); return *this; }
+};
+class UnicodeString : private StringBase<unsigned short> {
+public:
+    UnicodeString() {}
+    UnicodeString(const unsigned short *p):StringBase<unsigned short>(p) {}
+    UnicodeString(const UnicodeString &p):StringBase<unsigned short>(p) {}
+    ~UnicodeString() {}
+    const unsigned short *str() const { return data ? data->text : (const unsigned short *)L""; }
+    void __cdecl format(UnicodeString, ...);
+    void translate(const AsciiString&);
+    UnicodeString &operator=(const UnicodeString &other) { set(other); return *this; }
+};
+class GameSpyGroupRoom {
+public:
+    GameSpyGroupRoom();
+    GameSpyGroupRoom(const GameSpyGroupRoom&);
+    AsciiString m_name;
+    UnicodeString m_translatedName;
+    Int m_groupID,m_numWaiting,m_maxWaiting,m_numGames,m_numPlaying,m_bfmeExtra;
+};
+typedef std::map<Int,GameSpyGroupRoom> GroupRoomMap;
+class GameSpyInfo {
+public:
+    virtual ~GameSpyInfo();
+    virtual void reset();
+    virtual void clearGroupRoomList();
+    virtual GroupRoomMap *getGroupRoomList() { return &m_groupRooms; }
+    virtual void addGroupRoom(GameSpyGroupRoom);
+    char pad04[0x18-4];
+    GroupRoomMap m_groupRooms;
+    char pad24[0x68-0x24];
+    Bool m_gotGroupRoomList;
+};
+extern GameSpyInfo *TheGameSpyInfo;
+// Unused virtual slots are intentionally unnamed; their signatures are not claims.
+class GameSpyConfigInterface {
+public:
+    virtual ~GameSpyConfigInterface();
+    virtual void slot04(); virtual void slot08(); virtual void slot0c();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+    virtual Int getQMChannel();
+    virtual void setQMChannel(Int);
+};
+extern GameSpyConfigInterface *TheGameSpyConfig;
+class GameTextInterface {
+public:
+    virtual ~GameTextInterface();
+    virtual void slot04(); virtual void slot08(); virtual void slot0c();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c(); virtual void slot20();
+    virtual UnicodeString fetch(AsciiString, Bool *exists=0);
+};
+extern GameTextInterface *TheGameText;
+
+void GameSpyInfo::addGroupRoom( GameSpyGroupRoom room )
 {
-	__asm __emit 0x6a
-	__asm __emit 0xff
-	__asm __emit 0x68
-	__asm __emit 0x92
-	__asm __emit 0x0e
-	__asm __emit 0x04
-	__asm __emit 0x01
-	__asm __emit 0x64
-	__asm __emit 0xa1
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x50
-	__asm __emit 0x64
-	__asm __emit 0x89
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x83
-	__asm __emit 0xec
-	__asm __emit 0x44
-	__asm __emit 0x53
-	__asm __emit 0x55
-	__asm __emit 0x56
-	__asm __emit 0x57
-	__asm __emit 0x8b
-	__asm __emit 0xd9
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x33
-	__asm __emit 0xff
-	__asm __emit 0x3b
-	__asm __emit 0xc7
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x0f
-	__asm __emit 0x85
-	__asm __emit 0x3f
-	__asm __emit 0x03
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0xc6
-	__asm __emit 0x43
-	__asm __emit 0x68
-	__asm __emit 0x01
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x28
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x30
-	__asm __emit 0x8b
-	__asm __emit 0x03
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x01
-	__asm __emit 0x33
-	__asm __emit 0xed
-	__asm __emit 0xff
-	__asm __emit 0x50
-	__asm __emit 0x0c
-	__asm __emit 0x8b
-	__asm __emit 0x08
-	__asm __emit 0x8b
-	__asm __emit 0x71
-	__asm __emit 0x08
-	__asm __emit 0x8b
-	__asm __emit 0x13
-	__asm __emit 0x8b
-	__asm __emit 0xcb
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x0c
-	__asm __emit 0x3b
-	__asm __emit 0x30
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0xaa
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x46
-	__asm __emit 0x14
-	__asm __emit 0x50
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0xe8
-	__asm __emit 0x46
-	__asm __emit 0xf8
-	__asm __emit 0x9f
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0xe4
-	__asm __emit 0x70
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x11
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x02
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x20
-	__asm __emit 0x39
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0x4d
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x45
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x34
-	__asm __emit 0x3b
-	__asm __emit 0xc7
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x03
-	__asm __emit 0x74
-	__asm __emit 0x05
-	__asm __emit 0x83
-	__asm __emit 0xc0
-	__asm __emit 0x08
-	__asm __emit 0xeb
-	__asm __emit 0x05
-	__asm __emit 0xb8
-	__asm __emit 0x8b
-	__asm __emit 0x38
-	__asm __emit 0x07
-	__asm __emit 0x01
-	__asm __emit 0x50
-	__asm __emit 0x51
-	__asm __emit 0x89
-	__asm __emit 0x64
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0xcc
-	__asm __emit 0x68
-	__asm __emit 0xc0
-	__asm __emit 0x5a
-	__asm __emit 0x0f
-	__asm __emit 0x01
-	__asm __emit 0xe8
-	__asm __emit 0xbb
-	__asm __emit 0x24
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x50
-	__asm __emit 0xe8
-	__asm __emit 0xe1
-	__asm __emit 0x28
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x0c
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x13
-	__asm __emit 0x51
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x89
-	__asm __emit 0x64
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0xcc
-	__asm __emit 0x52
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x1f
-	__asm __emit 0x00
-	__asm __emit 0xe8
-	__asm __emit 0x33
-	__asm __emit 0x14
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0x7c
-	__asm __emit 0x14
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x01
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x20
-	__asm __emit 0x52
-	__asm __emit 0xff
-	__asm __emit 0x50
-	__asm __emit 0x24
-	__asm __emit 0x8a
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x13
-	__asm __emit 0x84
-	__asm __emit 0xc0
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x04
-	__asm __emit 0x74
-	__asm __emit 0x4f
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x3b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x30
-	__asm __emit 0x74
-	__asm __emit 0x2b
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x14
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x20
-	__asm __emit 0x3b
-	__asm __emit 0xcf
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x05
-	__asm __emit 0x74
-	__asm __emit 0x0e
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x18
-	__asm __emit 0x50
-	__asm __emit 0xe8
-	__asm __emit 0x91
-	__asm __emit 0x1c
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x83
-	__asm __emit 0xc1
-	__asm __emit 0x04
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0xe9
-	__asm __emit 0x89
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x6a
-	__asm __emit 0x01
-	__asm __emit 0x6a
-	__asm __emit 0x01
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x52
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x50
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0xe8
-	__asm __emit 0xcc
-	__asm __emit 0x02
-	__asm __emit 0x9e
-	__asm __emit 0xff
-	__asm __emit 0xeb
-	__asm __emit 0x6f
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x14
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x34
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x18
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x60
-	__asm __emit 0x06
-	__asm __emit 0xe8
-	__asm __emit 0x40
-	__asm __emit 0x2a
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x3b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x30
-	__asm __emit 0x74
-	__asm __emit 0x28
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x20
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x3b
-	__asm __emit 0xcf
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x07
-	__asm __emit 0x74
-	__asm __emit 0x0e
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x14
-	__asm __emit 0x52
-	__asm __emit 0xe8
-	__asm __emit 0x2b
-	__asm __emit 0x1c
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x83
-	__asm __emit 0xc1
-	__asm __emit 0x04
-	__asm __emit 0x89
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0xeb
-	__asm __emit 0x18
-	__asm __emit 0x6a
-	__asm __emit 0x01
-	__asm __emit 0x6a
-	__asm __emit 0x01
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x50
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x20
-	__asm __emit 0x52
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0xe8
-	__asm __emit 0x69
-	__asm __emit 0x02
-	__asm __emit 0x9e
-	__asm __emit 0xff
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x14
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x04
-	__asm __emit 0xe8
-	__asm __emit 0xc8
-	__asm __emit 0x19
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x18
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x03
-	__asm __emit 0xe8
-	__asm __emit 0xba
-	__asm __emit 0x19
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x02
-	__asm __emit 0xe8
-	__asm __emit 0x1c
-	__asm __emit 0x11
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x08
-	__asm __emit 0xe8
-	__asm __emit 0x9e
-	__asm __emit 0x19
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x34
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x01
-	__asm __emit 0xe8
-	__asm __emit 0x00
-	__asm __emit 0x11
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x56
-	__asm __emit 0xe8
-	__asm __emit 0x2a
-	__asm __emit 0x50
-	__asm __emit 0x1f
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0xf0
-	__asm __emit 0x8b
-	__asm __emit 0x03
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x04
-	__asm __emit 0x8b
-	__asm __emit 0xcb
-	__asm __emit 0xff
-	__asm __emit 0x50
-	__asm __emit 0x0c
-	__asm __emit 0x3b
-	__asm __emit 0x30
-	__asm __emit 0x0f
-	__asm __emit 0x85
-	__asm __emit 0x56
-	__asm __emit 0xfe
-	__asm __emit 0xff
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x28
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x3b
-	__asm __emit 0xc8
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0x42
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x2b
-	__asm __emit 0xc1
-	__asm __emit 0xc1
-	__asm __emit 0xf8
-	__asm __emit 0x02
-	__asm __emit 0x3b
-	__asm __emit 0xc5
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0x35
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0x94
-	__asm __emit 0x71
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x11
-	__asm __emit 0xc7
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x0c
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0x94
-	__asm __emit 0x71
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x11
-	__asm __emit 0x8b
-	__asm __emit 0x68
-	__asm __emit 0x08
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x0c
-	__asm __emit 0x3b
-	__asm __emit 0x28
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0x0a
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x45
-	__asm __emit 0x14
-	__asm __emit 0x50
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0xe8
-	__asm __emit 0x54
-	__asm __emit 0xf6
-	__asm __emit 0x9f
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0xe4
-	__asm __emit 0x70
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x11
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x09
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x20
-	__asm __emit 0x39
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0x0f
-	__asm __emit 0x84
-	__asm __emit 0xa9
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x28
-	__asm __emit 0x50
-	__asm __emit 0x8b
-	__asm __emit 0x04
-	__asm __emit 0xb9
-	__asm __emit 0x85
-	__asm __emit 0xc0
-	__asm __emit 0x74
-	__asm __emit 0x05
-	__asm __emit 0x83
-	__asm __emit 0xc0
-	__asm __emit 0x08
-	__asm __emit 0xeb
-	__asm __emit 0x05
-	__asm __emit 0xb8
-	__asm __emit 0x8c
-	__asm __emit 0x38
-	__asm __emit 0x07
-	__asm __emit 0x01
-	__asm __emit 0x50
-	__asm __emit 0x51
-	__asm __emit 0x89
-	__asm __emit 0x64
-	__asm __emit 0x24
-	__asm __emit 0x30
-	__asm __emit 0x8b
-	__asm __emit 0xcc
-	__asm __emit 0x68
-	__asm __emit 0xbc
-	__asm __emit 0x88
-	__asm __emit 0x11
-	__asm __emit 0x01
-	__asm __emit 0xe8
-	__asm __emit 0xeb
-	__asm __emit 0x24
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x44
-	__asm __emit 0x52
-	__asm __emit 0xe8
-	__asm __emit 0x91
-	__asm __emit 0x28
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0x2b
-	__asm __emit 0xca
-	__asm __emit 0xc1
-	__asm __emit 0xf9
-	__asm __emit 0x02
-	__asm __emit 0x33
-	__asm __emit 0xd2
-	__asm __emit 0x8d
-	__asm __emit 0x47
-	__asm __emit 0x01
-	__asm __emit 0xf7
-	__asm __emit 0xf1
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x10
-	__asm __emit 0x8d
-	__asm __emit 0x4b
-	__asm __emit 0x18
-	__asm __emit 0x8b
-	__asm __emit 0xfa
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0x52
-	__asm __emit 0xe8
-	__asm __emit 0x9c
-	__asm __emit 0xfb
-	__asm __emit 0x9f
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0xf0
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x34
-	__asm __emit 0x50
-	__asm __emit 0x8b
-	__asm __emit 0xce
-	__asm __emit 0xe8
-	__asm __emit 0x5d
-	__asm __emit 0x13
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0x8d
-	__asm __emit 0x4e
-	__asm __emit 0x04
-	__asm __emit 0x52
-	__asm __emit 0xe8
-	__asm __emit 0xf0
-	__asm __emit 0x1b
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x85
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x3c
-	__asm __emit 0x89
-	__asm __emit 0x46
-	__asm __emit 0x08
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x40
-	__asm __emit 0x89
-	__asm __emit 0x4e
-	__asm __emit 0x0c
-	__asm __emit 0x8b
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x44
-	__asm __emit 0x89
-	__asm __emit 0x56
-	__asm __emit 0x10
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x48
-	__asm __emit 0x89
-	__asm __emit 0x46
-	__asm __emit 0x14
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x4c
-	__asm __emit 0x89
-	__asm __emit 0x4e
-	__asm __emit 0x18
-	__asm __emit 0x8b
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x50
-	__asm __emit 0x89
-	__asm __emit 0x56
-	__asm __emit 0x1c
-	__asm __emit 0x75
-	__asm __emit 0x04
-	__asm __emit 0xff
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x38
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x0a
-	__asm __emit 0xe8
-	__asm __emit 0x50
-	__asm __emit 0x18
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x34
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x01
-	__asm __emit 0xe8
-	__asm __emit 0xb2
-	__asm __emit 0x0f
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x55
-	__asm __emit 0xe8
-	__asm __emit 0xdc
-	__asm __emit 0x4e
-	__asm __emit 0x1f
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0x94
-	__asm __emit 0x71
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0xe8
-	__asm __emit 0x8b
-	__asm __emit 0x01
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x04
-	__asm __emit 0xff
-	__asm __emit 0x50
-	__asm __emit 0x0c
-	__asm __emit 0x3b
-	__asm __emit 0x28
-	__asm __emit 0x0f
-	__asm __emit 0x85
-	__asm __emit 0xf6
-	__asm __emit 0xfe
-	__asm __emit 0xff
-	__asm __emit 0xff
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x28
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x00
-	__asm __emit 0xe8
-	__asm __emit 0x00
-	__asm __emit 0x67
-	__asm __emit 0x9f
-	__asm __emit 0xff
-	__asm __emit 0xe9
-	__asm __emit 0x30
-	__asm __emit 0x01
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x89
-	__asm __emit 0x7c
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x64
-	__asm __emit 0x3b
-	__asm __emit 0xc7
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x0b
-	__asm __emit 0x74
-	__asm __emit 0x05
-	__asm __emit 0x83
-	__asm __emit 0xc0
-	__asm __emit 0x08
-	__asm __emit 0xeb
-	__asm __emit 0x05
-	__asm __emit 0xb8
-	__asm __emit 0x8b
-	__asm __emit 0x38
-	__asm __emit 0x07
-	__asm __emit 0x01
-	__asm __emit 0x50
-	__asm __emit 0x51
-	__asm __emit 0x89
-	__asm __emit 0x64
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x8b
-	__asm __emit 0xcc
-	__asm __emit 0x68
-	__asm __emit 0xc0
-	__asm __emit 0x5a
-	__asm __emit 0x0f
-	__asm __emit 0x01
-	__asm __emit 0xe8
-	__asm __emit 0xd4
-	__asm __emit 0x21
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x51
-	__asm __emit 0xe8
-	__asm __emit 0xfa
-	__asm __emit 0x25
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x0c
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x13
-	__asm __emit 0x52
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x24
-	__asm __emit 0x89
-	__asm __emit 0x64
-	__asm __emit 0x24
-	__asm __emit 0x2c
-	__asm __emit 0x8b
-	__asm __emit 0xcc
-	__asm __emit 0x50
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x1f
-	__asm __emit 0x00
-	__asm __emit 0xe8
-	__asm __emit 0x4c
-	__asm __emit 0x11
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0x7c
-	__asm __emit 0x14
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x11
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x20
-	__asm __emit 0x50
-	__asm __emit 0xff
-	__asm __emit 0x52
-	__asm __emit 0x24
-	__asm __emit 0x50
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x60
-	__asm __emit 0x0c
-	__asm __emit 0xe8
-	__asm __emit 0xfd
-	__asm __emit 0x1a
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x18
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x0b
-	__asm __emit 0xe8
-	__asm __emit 0x8f
-	__asm __emit 0x17
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8a
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x13
-	__asm __emit 0x84
-	__asm __emit 0xc0
-	__asm __emit 0x75
-	__asm __emit 0x0e
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x64
-	__asm __emit 0x51
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0xe8
-	__asm __emit 0x99
-	__asm __emit 0x27
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x52
-	__asm __emit 0x8d
-	__asm __emit 0x4b
-	__asm __emit 0x18
-	__asm __emit 0xe8
-	__asm __emit 0x5d
-	__asm __emit 0xfa
-	__asm __emit 0x9f
-	__asm __emit 0xff
-	__asm __emit 0x8b
-	__asm __emit 0xf0
-	__asm __emit 0x8d
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x64
-	__asm __emit 0x50
-	__asm __emit 0x8b
-	__asm __emit 0xce
-	__asm __emit 0xe8
-	__asm __emit 0x1e
-	__asm __emit 0x12
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x68
-	__asm __emit 0x8d
-	__asm __emit 0x4e
-	__asm __emit 0x04
-	__asm __emit 0x52
-	__asm __emit 0xe8
-	__asm __emit 0xb1
-	__asm __emit 0x1a
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x89
-	__asm __emit 0x46
-	__asm __emit 0x08
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x70
-	__asm __emit 0x89
-	__asm __emit 0x4e
-	__asm __emit 0x0c
-	__asm __emit 0x8b
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x74
-	__asm __emit 0x89
-	__asm __emit 0x56
-	__asm __emit 0x10
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x78
-	__asm __emit 0x89
-	__asm __emit 0x46
-	__asm __emit 0x14
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x7c
-	__asm __emit 0x89
-	__asm __emit 0x4e
-	__asm __emit 0x18
-	__asm __emit 0x8b
-	__asm __emit 0x94
-	__asm __emit 0x24
-	__asm __emit 0x80
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x89
-	__asm __emit 0x56
-	__asm __emit 0x1c
-	__asm __emit 0x8b
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x64
-	__asm __emit 0x3b
-	__asm __emit 0xc7
-	__asm __emit 0x74
-	__asm __emit 0x05
-	__asm __emit 0x83
-	__asm __emit 0xc0
-	__asm __emit 0x08
-	__asm __emit 0xeb
-	__asm __emit 0x05
-	__asm __emit 0xb8
-	__asm __emit 0x8b
-	__asm __emit 0x38
-	__asm __emit 0x07
-	__asm __emit 0x01
-	__asm __emit 0x50
-	__asm __emit 0x68
-	__asm __emit 0xac
-	__asm __emit 0x88
-	__asm __emit 0x11
-	__asm __emit 0x01
-	__asm __emit 0xff
-	__asm __emit 0x15
-	__asm __emit 0x3c
-	__asm __emit 0x93
-	__asm __emit 0x35
-	__asm __emit 0x01
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x08
-	__asm __emit 0x85
-	__asm __emit 0xc0
-	__asm __emit 0x75
-	__asm __emit 0x10
-	__asm __emit 0x8b
-	__asm __emit 0x0d
-	__asm __emit 0xe4
-	__asm __emit 0x70
-	__asm __emit 0x2f
-	__asm __emit 0x01
-	__asm __emit 0x8b
-	__asm __emit 0x54
-	__asm __emit 0x24
-	__asm __emit 0x6c
-	__asm __emit 0x8b
-	__asm __emit 0x01
-	__asm __emit 0x52
-	__asm __emit 0xff
-	__asm __emit 0x50
-	__asm __emit 0x24
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x1c
-	__asm __emit 0xc6
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x00
-	__asm __emit 0xe8
-	__asm __emit 0x51
-	__asm __emit 0x0e
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x68
-	__asm __emit 0xc7
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0x0d
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0xe8
-	__asm __emit 0xd0
-	__asm __emit 0x16
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8d
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x64
-	__asm __emit 0xc7
-	__asm __emit 0x44
-	__asm __emit 0x24
-	__asm __emit 0x5c
-	__asm __emit 0xff
-	__asm __emit 0xff
-	__asm __emit 0xff
-	__asm __emit 0xff
-	__asm __emit 0xe8
-	__asm __emit 0x2f
-	__asm __emit 0x0e
-	__asm __emit 0x25
-	__asm __emit 0x00
-	__asm __emit 0x8b
-	__asm __emit 0x4c
-	__asm __emit 0x24
-	__asm __emit 0x54
-	__asm __emit 0x5f
-	__asm __emit 0x5e
-	__asm __emit 0x5d
-	__asm __emit 0x64
-	__asm __emit 0x89
-	__asm __emit 0x0d
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x00
-	__asm __emit 0x5b
-	__asm __emit 0x83
-	__asm __emit 0xc4
-	__asm __emit 0x50
-	__asm __emit 0xc2
-	__asm __emit 0x20
-	__asm __emit 0x00
+	if (room.m_groupID == 0)
+	{
+		m_gotGroupRoomList = TRUE;
+
+		GroupRoomMap::iterator iter;
+
+		// figure out how many good strings we've got
+		std::vector<UnicodeString> names;
+		Int numRooms = 0;
+		for (iter = getGroupRoomList()->begin(); iter != getGroupRoomList()->end(); ++iter)
+		{
+			GameSpyGroupRoom room = iter->second;
+			if (room.m_groupID != TheGameSpyConfig->getQMChannel())
+			{
+				++numRooms;
+
+				AsciiString groupLabel;
+				groupLabel.format("GUI:%s", room.m_name.str());
+
+				Bool exists = FALSE;
+				UnicodeString groupName = TheGameText->fetch(groupLabel, &exists);
+				if (exists)
+				{
+					names.push_back(groupName);
+				}
+				else
+				{
+					// BFME retains rooms whose label has no localized text.
+					UnicodeString name;
+					name.translate(room.m_name);
+					names.push_back(name);
+				}
+			}
+		}
+
+		if (!names.empty() && names.size() != numRooms)
+		{
+			// didn't get all names.  fix up
+			Int nameIndex = 0;
+			Int timesThrough = 1; // start with USA Lobby 1
+			for (iter = TheGameSpyInfo->getGroupRoomList()->begin(); iter != TheGameSpyInfo->getGroupRoomList()->end(); ++iter)
+			{
+				GameSpyGroupRoom room = iter->second;
+				if (room.m_groupID != TheGameSpyConfig->getQMChannel())
+				{
+					room.m_translatedName.format(L"%ls %d", names[nameIndex].str(), timesThrough);
+					nameIndex = (nameIndex+1)%names.size();
+					m_groupRooms[room.m_groupID] = room;
+					if (!nameIndex)
+					{
+						// we've looped through the name list already.  increment the timesThrough counter
+						++timesThrough;
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		AsciiString groupLabel;
+		groupLabel.format("GUI:%s", room.m_name.str());
+		Bool exists = FALSE;
+		room.m_translatedName = TheGameText->fetch(groupLabel, &exists);
+		if (!exists) room.m_translatedName.translate(room.m_name);
+		m_groupRooms[room.m_groupID] = room;
+		if ( !stricmp("quickmatch", room.m_name.str()) )
+		{
+			TheGameSpyConfig->setQMChannel(room.m_groupID);
+		}
+	}
 }
