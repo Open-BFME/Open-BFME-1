@@ -83269,6 +83269,7 @@ name,address,notes
 ?j_000100d7@?$vector@PAVRva003C5890Item@@V?$allocator@PAVRva003C5890Item@@@_STL@@@_STL@@IAEXPAPAVRva003C5890Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x000100D7,STLport pointer vector overflow ILT for Rva003C5890Owner
 ?j_00010712@Glo012F1024Item@@QAEXXZ,0x00010712,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_00010bcc@Glo012F1024Item@@QAEXXZ,0x00010BCC,tail-called continuation of ?bfmeEnter@Glo012F1024Item@@QAEXXZ
+?j_0001569f@@YIXPAX@Z,0x0001569F,renderer flush thunk called with the Rva00785FD0Renderer receiver in ECX; target 0x0078BD40 shares the renderer counters and buffer state
 ?j_000186e7@Rva002E9F70CommandIface@@QAEXH@Z,0x000186E7,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E9F70 calls; autopin
 ?j_00019c36@Glo012F1028Sub@@QAEXAAVBfmeSubA@@H@Z,0x00019C36,Open-BFME5 ILT the Glo012F1028 sub-object consumes each early-vector string
 ?j_00019eca@Glo012F1024Item@@QAEXXZ,0x00019ECA,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
