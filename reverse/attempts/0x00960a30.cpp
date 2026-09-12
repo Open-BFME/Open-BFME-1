@@ -1,5 +1,5 @@
 // ?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z
-// partial score=0.9960940274128258 date=2026-09-12
+// partial score=0.9963780981464385 date=2026-09-12
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -377,6 +377,13 @@ return Vector3(*(const volatile float *)&a.X + b.X, a.Y + b.Y, a.Z + b.Z);
 static WWINLINE Vector3 SubtractSegLineBottomPlane(const Vector3 &a, const Vector3 &b)
 {
 return Vector3(*(const volatile float *)&a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+}
+// Keep this helper boundary: folding both asymmetric dots directly into Render
+// changes the initial projection's live x87 temporary in MSVC 7.1.
+static WWINLINE float DotSegLineBottomOutput(const Vector3 &point, const Vector3 &direction)
+{
+return (*(const volatile float *)&point.Y * direction.Y
+    + point.Z * direction.Z) + point.X * direction.X;
 }
 void SegLineRendererClass::Render
 (	
@@ -886,7 +893,7 @@ bottom_int_idx++;
 residual_bottom_points = intersection[bottom_int_idx][BOTTOM_EDGE].PointCount;
 pidx++;
 Vector3 &bottom_dir = intersection[bottom_int_idx][BOTTOM_EDGE].Direction;
-bottom = bottom_dir * Vector3::Dot_Product(points[pidx], bottom_dir);
+bottom = bottom_dir * DotSegLineBottomOutput(points[pidx], bottom_dir);
 vArray[vidx].x = bottom.X;
 vArray[vidx].y = bottom.Y;
 vArray[vidx].z = bottom.Z;

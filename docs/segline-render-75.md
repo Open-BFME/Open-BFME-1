@@ -1,8 +1,8 @@
-# SegLineRendererClass::Render: 55-byte partial checkpoint
+# SegLineRendererClass::Render: 51-byte partial checkpoint
 
-As of 2026-09-12, the reconstruction produces **14,081 bytes with 55 actual
+As of 2026-09-12, the reconstruction produces **14,081 bytes with 51 actual
 resolved byte differences** at RVA `0x00960A30` (VA `0x00D60A30`). This is
-99.609% byte similarity, not a completed conversion or a runtime correctness
+99.638% byte similarity, not a completed conversion or a runtime correctness
 claim. The `Code/gen_asm/d_00960a30.asm` ledger entry remains unchanged.
 The document keeps its original filename so existing links continue to work.
 
@@ -14,7 +14,7 @@ The document keeps its original filename so existing links continue to work.
   This unchanged declaration prefix retains its upstream license. Splitting
   the prefix keeps the bank below the 64 KiB banking limit.
 - [Verification receipt](../reverse/attempt_support/0x00960a30-verification.json):
-  source hashes, compiler options, all 55 differing offsets, and 17 sibling checks.
+  source hashes, compiler options, all 51 differing offsets, and 17 sibling checks.
 - [Earlier self-contained source archive](../reverse/attempt_history/0x00960a30/655db775d83c3ef215e70d9298cd3a8ebd870fae82fc54296a7ebf00fadf30a2.json).
   Its `source` field contains the complete **75-difference** predecessor before
   the include split. Keep it when retiring the bank: ordinary bank archives
@@ -22,10 +22,10 @@ The document keeps its original filename so existing links continue to work.
 
 The actual bank was freshly compiled with the repository's original MSVC 7.1,
 version `13.10.3077.0`. The normal `build.compile_function` resolver reports
-55 differences, `unresolved=[]`, and `masked=False`; all 190 relocation tuples
+51 differences, `unresolved=[]`, and `masked=False`; all 190 relocation tuples
 are identical to the previous checkpoint. All 17 canonical owner/sibling
 emissions pass from the same object. `tools/probe.py` independently confirms
-55 non-relocation differences with no relocation-layout drift.
+51 non-relocation differences with no relocation-layout drift.
 
 An independent reviewer also audited all 143 DIR32 operands: seven distinct
 float constants, the common `render_state` base `0x01340EC0`, the real floor
@@ -36,8 +36,8 @@ ends at VA `0x00D64131`, followed by 15 padding bytes.
 
 Source/support hashes in the receipt use normalized LF text. Render hashes:
 
-- Raw: `a80aff876194e0b9175e0fe46215e425c066ed39f16712a447d98fc487ef48d3`.
-- Resolved: `8b05487e7221bec028f1de88f72725ff9dd3291bdd67d3ecdf6528370f0f809c`.
+- Raw: `29ee090942e4e4c8dd21616977b5297e69c466f829b1893d9936e25eae6323cd`.
+- Resolved: `ebedceb981e1efd684d010c29f25c87fd0545c2c44598a71171dfda41b7858d2`.
 
 ## What now matches
 
@@ -52,12 +52,20 @@ six bytes at `+0x3127`, `+0x3134`, `+0x313d`, `+0x3143`, `+0x315a` and
 `+0x315c`; every other raw byte and relocation tuple is unchanged. The ordered
 floating-point store/cleanup sequence is identical to the predecessor.
 
-The new 55-difference checkpoint includes canonical `matrix3d.h` before the
+The 55-difference checkpoint included canonical `matrix3d.h` before the
 existing TU ABI prefix. This restores all 14 chunk-loop reload bytes, with
 every other raw byte and relocation tuple unchanged. Independent verification
 confirms the same 17 exact siblings. A copied Matrix3D header and duplicate
 multiply helper initially reproduced this result, but isolated experiments
 showed that the include order alone is sufficient; neither is part of the bank.
+
+The latest 51-difference checkpoint puts the BOTTOM Y-Z-X dot expression in
+`DotSegLineBottomOutput`, an inline helper with a volatile `point.Y` read.
+The TOP expression stays directly in Render. This removes exactly four more
+bytes (`+0x2f9d`, `+0x2faa`, `+0x2fb0`, `+0x2fb9`) with every other byte and
+relocation unchanged; both asymmetric projections now match together. The
+helper boundary matters: spelling both dots directly in Render changes the
+initial projection's live x87 temporary and was rejected.
 
 The older predecessor's main improvement remains essential: ordinary in-place
 `NormalizeMerge(pl)` with its original Dot/Cross consumers keeps the matrix,
@@ -74,7 +82,6 @@ Offsets are relative to Render; the receipt lists each differing byte.
 | Merge classification X-product order | 2 | `+0x2147` and `+0x214b` |
 | Initial output address encodings | 5 | `+0x2951`, `+0x2a13`, `+0x2a30` regions |
 | Expansion TOP-X addition order | 4 | `+0x2d1d`, `+0x2d1e`, `+0x2d23`, `+0x2d24` |
-| BOTTOM-only projection | 4 | `+0x2f9a..+0x2ff0` |
 
 The chunk-loop reloads now match retail: `num_points` into ECX, `chidx` into
 EBX, then `chunk_size` into EAX. First entry still bypasses those reloads.
@@ -91,9 +98,9 @@ values, especially the first BOTTOM endpoint's nonpop dot store/live Z product.
 
 Useful negative evidence:
 
-- The matching volatile-Y expression also fixes the BOTTOM tail in isolation,
-  but combining both fixes changes earlier initial-projection lifetimes and
-  creates relocation-layout drift. Local tail equality is insufficient.
+- Directly spelling both volatile-Y projection expressions in Render changes
+  earlier initial-projection lifetimes and creates relocation-layout drift.
+  Keep the BOTTOM helper boundary; local tail equality is insufficient.
 - Integer-address/reversed-index spellings and pointer-variable casts leave
   all merge SIB bytes unchanged. Explicitly naming the edge-byte offset can
   change SIB order, but also changes the frame and many earlier instructions.
