@@ -116,7 +116,7 @@ class ControlBar
 {
 public:
 	unsigned char m_unmodelled000[0x24];
-	Bool m_dirty;
+	Bool m_UIDirty;
 };
 
 extern ControlBar *TheControlBar;
@@ -163,7 +163,7 @@ void Object::onCapture(Player *oldOwner, Player *newOwner)
 	setScriptStatus(OBJECT_STATUS_SCRIPT_UNSELLABLE, false);
 
 	if (oldOwner->isLocalPlayer() || newOwner->isLocalPlayer())
-		TheControlBar->m_dirty = true;
+		TheControlBar->m_UIDirty = true;
 }
 
 // The prior unmatched onCapture body was the only Object.cpp use that emitted

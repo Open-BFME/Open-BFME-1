@@ -190,8 +190,6 @@ ControlBar+0x0|m_unreconstructed_000|m_containData,Code/GameEngine/Source/Common
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp,89,1.00,layout_witness
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/Common/ControlBar_showSpecialPowerShortcutMethodThunk.cpp,77,1.00,layout_witness
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_getStarImage_Thunk.cpp,162,1.00,layout_witness
-ControlBar+0x24|m_dirty|m_UIDirty,Code/GameEngine/Source/GameLogic/Object/Rva002D9510ControlBar.cpp,43,1.00,layout_witness
-ControlBar+0x24|m_dirty|m_UIDirty,Code/GameEngine/Source/GameLogic/Object/ObjectOnCaptureRva001D2810.cpp,120,1.00,layout_witness
 CursorInfo+0x0|m_body|imageName,Code/GameEngine/Source/GameClient/Input/Mouse_destructor.cpp,39,1.00,field_names
 DX8MeshRendererClass+0x0|m_body|enable_lighting,Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Do_Onetime_Device_Dependent_Inits.cpp,33,1.00,layout_witness
 DX8MeshRendererClass+0x4|m_camera|camera,Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderObjectBfme.cpp,74,1.00,layout_witness

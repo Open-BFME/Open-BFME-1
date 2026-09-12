@@ -39,7 +39,7 @@ class ControlBar
 {
 public:
 	unsigned char m_pad000[0x24];
-	bool m_dirty;
+	bool m_UIDirty;
 };
 
 extern ControlBar *TheControlBar;
@@ -57,5 +57,5 @@ void Rva002D9510Owner::applyAndDirty()
 		target->applyFirst(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x70));
 		target->applySecond(reinterpret_cast<Rva002D9510Value *>(reinterpret_cast<char *>(*reinterpret_cast<Rva002D9510Data **>(reinterpret_cast<char *>(this) - 12)) + 0x74));
 	}
-	TheControlBar->m_dirty = true;
+	TheControlBar->m_UIDirty = true;
 }
