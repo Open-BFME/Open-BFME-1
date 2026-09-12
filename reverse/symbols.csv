@@ -4792,6 +4792,7 @@ name,address,notes
 ??1Gen_dtor_0006ff30@@UAE@XZ,0x00031D72,gen-dtor class destructor
 ??1?$SubsystemSlot@VGlobalWeatherSystem@@@@UAE@XZ,0x00031D72,SubsystemSlot<GlobalWeatherSystem> destructor ILT called by authentic scalar-deleting destructor at 0x0006FF30
 ??1Gen_dtor_0006fff0@@UAE@XZ,0x000292AD,gen-dtor class destructor
+??1?$SubsystemSlot@VFunctionLexicon@@@@UAE@XZ,0x000292AD,SubsystemSlot<FunctionLexicon> destructor ILT called by authentic scalar-deleting destructor at 0x0006FFF0
 ??1Gen_dtor_000700b0@@UAE@XZ,0x0003A6D4,gen-dtor class destructor
 ??1Gen_dtor_00070170@@UAE@XZ,0x00031C46,gen-dtor class destructor
 ??1Gen_dtor_00070230@@UAE@XZ,0x000467FE,gen-dtor class destructor
@@ -9962,6 +9963,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
 ??_7?$SubsystemSlot@VCDManagerInterface@@@@6B@,0x01075DB8,vtable installed by exact SubsystemSlot<CDManagerInterface> constructor at 0x0006FE50; slot zero routes through ILT 0x0002501D to scalar-deleting destructor 0x0006FE70
 ??_7?$SubsystemSlot@VGlobalWeatherSystem@@@@6B@,0x01075DBC,vtable installed by exact SubsystemSlot<GlobalWeatherSystem> constructor at 0x0006FF10; slot zero routes through ILT 0x0003E5E0 to scalar-deleting destructor 0x0006FF30
+??_7?$SubsystemSlot@VFunctionLexicon@@@@6B@,0x01075DC0,vtable installed by exact SubsystemSlot<FunctionLexicon> constructor at 0x0006FFD0; slot zero routes through ILT 0x0002A644 to scalar-deleting destructor 0x0006FFF0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
