@@ -665,68 +665,128 @@ bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HCompressedAnimClass::Get_Transform present-unmatched
+// The two decoder paths retain different x87 product lifetimes. Keep these
+// matrix builders local so their ordering does not change other animation TUs.
+static WWINLINE Matrix3D &Build_Compressed_Matrix3D(const Quaternion & q, Matrix3D &out)
+{
+	float z2 = q[2] * q[2];
+	float y2 = q[1] * q[1];
 
+	out[0][0] = (float)(1.0 - 2.0 * (y2 + z2));
+	out[0][1] = (float)(2.0 * (q[0] * q[1] - q[2] * q[3]));
+	out[0][2] = (float)(2.0 * (q[2] * q[0] + q[1] * q[3]));
+
+	out[1][0] = (float)(2.0 * (q[0] * q[1] + q[2] * q[3]));
+	out[1][1] = (float)(1.0 - 2.0f * (z2 + q[0] * q[0]));
+	out[1][2] = (float)(2.0 * (q[1] * q[2] - q[0] * q[3]));
+
+	out[2][0] = (float)(2.0 * (q[2] * q[0] - q[1] * q[3]));
+	out[2][1] = (float)(2.0 * (q[1] * q[2] + q[0] * q[3]));
+	out[2][2] =(float)(1.0 - 2.0 * (y2 + q[0] * q[0]));
+
+	// no translation
+	out[0][3] = out[1][3] = out[2][3] = 0.0f;
+
+	return out;
+}
+
+static WWINLINE Matrix3D &Build_Adaptive_Matrix3D(const Quaternion & q, Matrix3D &out)
+{
+	out[0][0] = (float)(1.0 - 2.0 * (q[1] * q[1] + q[2] * q[2]));
+	out[0][1] = (float)(2.0 * (q[0] * q[1] - q[2] * q[3]));
+	out[0][2] = (float)(2.0 * (q[2] * q[0] + q[1] * q[3]));
+
+	out[1][0] = (float)(2.0 * (q[0] * q[1] + q[2] * q[3]));
+	out[1][1] = (float)(1.0 - 2.0f * (q[2] * q[2] + q[0] * q[0]));
+	out[1][2] = (float)(2.0 * (q[1] * q[2] - q[0] * q[3]));
+
+	out[2][0] = (float)(2.0 * (q[2] * q[0] - q[1] * q[3]));
+	// Preserve the original Z*Y product before W*X using the existing component.
+	out[2][1] = (float)(2.0 * ((*(const volatile float *)&q[2]) * q[1] + q[3] * q[0]));
+	out[2][2] =(float)(1.0 - 2.0 * (q[1] * q[1] + q[0] * q[0]));
+
+	// no translation
+	out[0][3] = out[1][3] = out[2][3] = 0.0f;
+
+	return out;
+}
+
+// RVA 0x0095BCB0: 1063 bytes; vtable slot 0x2C; callee pops 12 bytes.
 void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame ) const
 {
+	struct TimecodedDecoder {
+		TimeCodedMotionChannelClass *qchan;
+
+		__forceinline Quaternion Get(float frame) {
+			// Retain the sample data snapshot across the index search.
+			uint32 * data = qchan->Data;
+			uint32 pidx;
+			uint32 tc0 = frame;
+			Quaternion q;
+			// BFME stores the final packet index in the field named CachedIdx.
+			if (tc0 >= (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
+				pidx = qchan->CachedIdx;
+			} else {
+				int leftIdx = 0;
+				int rightIdx = (int)qchan->NumTimeCodes - 2;
+				// Retail reloads this field for the search and the timestamp pair.
+				uint32 *search_data = *(uint32 * volatile *)&qchan->Data;
+				for (;;) {
+					int mid = (leftIdx + rightIdx) / 2;
+					uint32 * pkt = search_data + mid * (int)qchan->PacketSize;
+					uint32 t0 = *pkt;
+					if (tc0 < (t0 & 0x7FFFFFFF)) {
+						rightIdx = mid;
+						continue;
+					}
+					if (tc0 < (pkt[qchan->PacketSize] & 0x7FFFFFFF)) {
+						pidx = (uint32)(pkt - search_data);
+						break;
+					}
+					if (leftIdx ^ mid) {
+						leftIdx = mid;
+						continue;
+					}
+					leftIdx++;
+				}
+			}
+
+			uint32 p2idx;
+			if (pidx == qchan->CachedIdx) {
+				const float32 * vec = (const float32 *)&data[pidx + 1];
+				return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+			} else {
+				p2idx = pidx + qchan->PacketSize;
+				uint32 *time_data = *(uint32 * volatile *)&qchan->Data;
+				uint32 time = time_data[p2idx];
+				if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
+					const float32 * vec = (const float32 *)&data[pidx + 1];
+					return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+				} else {
+					float32 time1 = (time_data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+
+					// The binary flag has already been excluded from the second time.
+					float32 ratio = (frame - time1) / ((float32)time - time1);
+					Fast_Slerp(q,
+						*(Quaternion *)&data[pidx + 1],
+						*(Quaternion *)&data[p2idx + 1],
+						ratio);
+				}
+			}
+			return q;
+		}
+	};
+
 	struct NodeCompressedMotionStruct * motion = &NodeMotion[pividx];
 	  
-		switch(Flavor) {
+	switch(Flavor) {
 		case ANIM_FLAVOR_TIMECODED:
 		{
 			TimeCodedMotionChannelClass * qchan = NodeMotion[pividx].tc.Q;
 			if (qchan) {
-				uint32 * data = qchan->Data;
-				uint32 pidx;
-				uint32 tc0 = frame;
-				Quaternion q;
-				if (tc0 < (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
-					int rightIdx = (int)qchan->NumTimeCodes;
-					int leftIdx = 0;
-					rightIdx -= 2;
-					for (;;) {
-						int mid = (leftIdx + rightIdx) / 2;
-						uint32 * pkt = data + mid * (int)qchan->PacketSize;
-						uint32 t0 = *pkt;
-						if (tc0 < (t0 & 0x7FFFFFFF)) {
-							rightIdx = mid;
-							continue;
-						}
-						if (tc0 < (pkt[qchan->PacketSize] & 0x7FFFFFFF)) {
-							pidx = (uint32)(pkt - data);
-							break;
-						}
-						if (leftIdx ^ mid) {
-							leftIdx = mid;
-							continue;
-						}
-						leftIdx++;
-					}
-				} else {
-					pidx = qchan->CachedIdx;
-				}
-
-				uint32 p2idx;
-				if (pidx == ((qchan->NumTimeCodes - 1) * qchan->PacketSize)) {
-					const float32 * vec = (const float32 *)&data[pidx + 1];
-					q.Set(vec[0], vec[1], vec[2], vec[3]);
-				} else {
-					p2idx = pidx + qchan->PacketSize;
-					uint32 time = data[p2idx];
-					if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
-						const float32 * vec = (const float32 *)&data[pidx + 1];
-						q.Set(vec[0], vec[1], vec[2], vec[3]);
-					} else {
-						float32 time1 = (data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-						float32 time2 = (time & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
-						float32 ratio = (frame - time1) / (time2 - time1);
-						Fast_Slerp(q,
-							*(Quaternion *)&data[pidx + 1],
-							*(Quaternion *)&data[p2idx + 1],
-							 ratio);
-					}
-				}
-				::Build_Matrix3D(q,mtx);
+				TimecodedDecoder decoder = { qchan };
+				Quaternion q = decoder.Get(frame);
+				Build_Compressed_Matrix3D(q,mtx);
 			}
 			else mtx.Make_Identity();
 			if (motion->tc.X) motion->tc.X->Get_Vector(frame, &(mtx[0][3]));
@@ -737,7 +797,7 @@ void HCompressedAnimClass::Get_Transform( Matrix3D& mtx, int pividx, float frame
 		case ANIM_FLAVOR_ADAPTIVE_DELTA:
 		{
 			if (NodeMotion[pividx].ad.Q) {
-				::Build_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);
+				Build_Adaptive_Matrix3D(NodeMotion[pividx].ad.Q->Get_QuatVector(frame),mtx);
 			}
 			else mtx.Make_Identity();
 
