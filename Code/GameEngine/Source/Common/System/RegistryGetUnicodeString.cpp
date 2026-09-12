@@ -33,7 +33,7 @@ public:
 	~UnicodeString();
 
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 static const wchar_t *registryString(const UnicodeString &value)

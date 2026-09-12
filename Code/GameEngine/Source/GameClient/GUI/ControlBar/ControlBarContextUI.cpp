@@ -73,7 +73,7 @@ public:
 
 private:
 
-	void *m_text;
+	void *m_data;
 
 };
 
@@ -432,7 +432,7 @@ class UnicodeString
 {
 public:
 
-	UnicodeString() { m_text = 0; }
+	UnicodeString() { m_data = 0; }
 
 	// Visible delegation, so the by-value temporary is scheduled retail's way.
 	UnicodeString(const UnicodeString &that)
@@ -449,7 +449,7 @@ public:
 
 private:
 
-	void *m_text;
+	void *m_data;
 
 };
 

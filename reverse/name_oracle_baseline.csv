@@ -35,7 +35,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonors
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonorsTotals.cpp,45,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/OptionPreferences_setCampaignDifficulty_Thunk.cpp,22,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonorsPlayerStats.cpp,59,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Dict_setNameAndType.cpp,29,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/BfmeScriptCondAreaGate.cpp,32,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Rva00467270AsciiStringFormat.cpp,27,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SoundKeyPairDestructor.cpp,25,1.00,layout_witness
@@ -43,7 +42,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonors
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/UpgradeTemplateAssignThunk.cpp,21,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonors_rankDisplay.cpp,31,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Open2Twins002.cpp,95,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Dict_releaseData.cpp,31,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonors_getRankWidth.cpp,31,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Gen_dtor_004b05d0.cpp,33,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/NameKeyGenerator_keyToName.cpp,76,1.00,layout_witness
@@ -71,7 +69,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/DynamicDecalFXNu
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/ParticleSystemFXNugget_dtor_Thunk.cpp,19,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/BuffNuggetFXNuggetConstructor.cpp,34,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameNetwork/Pinger_getPingString.cpp,55,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomCtorThunk.cpp,22,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PSResponseConstructThunk.cpp,34,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doUnitGuardNearestKindof_Rva00303490.cpp,26,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/ScriptEngine/ConditionGetUiText.cpp,66,1.00,layout_witness
@@ -119,7 +116,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/AI/TAiDataCtor.cp
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/AI/AttackStateMachineCtorThunk.cpp,10,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/AI/EnragedBehaviorModuleDataCtorThunk.cpp,18,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/AI/ProductionSpeedBonusModuleDataCtorThunk.cpp,19,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/Map/SidesListAddPlayerByTemplate.cpp,81,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/Object/Behavior/Gen00375FF0IniPair.cpp,12,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateModuleDataCtorThunk.cpp,15,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateMakeStateMachine.cpp,59,1.00,layout_witness
@@ -131,7 +127,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/WindowVideo_
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/WinInstanceDataDisplayStrings.cpp,97,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUnderConstruction.cpp,53,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandSetLifetime.cpp,64,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarContextUI.cpp,77,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferences_getUserName.cpp,31,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferencesCtorThunk.cpp,32,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferencesCtorThunk.cpp,59,1.00,layout_witness
@@ -142,7 +137,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/RTS/Team_bfmeCall244
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp,213,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/INI/INI_AsciiStringVectorParsers.cpp,60,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Bfme/Rva000F9670ResolveTemplate.cpp,15,1.00,layout_witness
-AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Rva0010D090SaveInfoXfer.cpp,50,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/GameStateRealMapPathToPortableMapPathThunk.cpp,133,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/GameStateMap_clearScratchPadMaps.cpp,34,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/GameStatePortableMapPathToRealMapPathThunk.cpp,112,1.00,layout_witness
@@ -707,25 +701,10 @@ Transport+0x0|m_data|m_outBuffer,Code/GameEngine/Source/GameNetwork/NAT_attachSl
 Transport+0x0|m_data|m_outBuffer,Code/GameEngine/Source/GameNetwork/ConnectionManager_initTransport.cpp,23,1.00,layout_witness
 Transport+0x40e04|m_udp|m_udpsock,Code/GameEngine/Source/GameNetwork/LANAPISetLocalIP.cpp,44,1.00,layout_witness
 Transport+0x40e04|m_udp|m_udpsock,Code/GameEngine/Source/GameNetwork/LANAPILocalAddress.cpp,102,1.00,layout_witness
-UnicodeString+0x0|m_bfmeBufCQ|m_data,Code/GameEngine/Source/Common/BfmeConv1926.cpp,11,1.00,layout_witness
-UnicodeString+0x0|m_bfmeBufDF|m_data,Code/GameEngine/Source/Common/BfmeConv1938.cpp,19,1.00,layout_witness
 UnicodeString+0x0|m_body|m_data,Code/GameEngine/Source/GameClient/Input/Mouse_destructor.cpp,30,1.00,layout_witness
-UnicodeString+0x0|m_storage|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerUnlink.cpp,7,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Dict_setNameAndType.cpp,38,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Dict_releaseData.cpp,40,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameNetwork/GameSlotIsPlayerAsciiThunk.cpp,42,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomCtorThunk.cpp,38,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/LivingWorld/Rva003C15C0LivingWorldListCtor.cpp,34,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameLogic/Map/SidesListAddPlayerByTemplate.cpp,107,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends.cpp,53,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_killThemKillThemAll.cpp,51,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarContextUI.cpp,453,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BuddyMessageCopyConstructorThunk.cpp,48,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/KeyboardOptionsMenuKeyHandlers.cpp,52,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/RegistryUserDataLeafNameUnicode.cpp,26,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/RegistryGetUnicodeStringPublic.cpp,31,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/RegistryGetUnicodeString.cpp,37,1.00,layout_witness
-UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Rva0010D090SaveInfoXfer.cpp,44,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp,182,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp,24,1.00,layout_witness
 UpgradeTemplate+0x4|m_head|m_type,Code/GameEngine/Source/Common/UpgradeCenterDestructorThunk.cpp,23,1.00,field_names

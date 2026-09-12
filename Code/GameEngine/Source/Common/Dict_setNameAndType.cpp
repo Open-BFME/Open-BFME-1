@@ -25,7 +25,7 @@ class AsciiString
 public:
 	~AsciiString();
 private:
-	char *m_text;
+	char *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
@@ -34,7 +34,7 @@ class UnicodeString
 public:
 	~UnicodeString();
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Dict.h

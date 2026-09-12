@@ -40,13 +40,13 @@
 // ---- minimal string wrappers completing xfer.h's forward declarations ----
 class UnicodeString {
 public:
-    char *m_text;
+    char *m_data;
     void set(const UnicodeString &s);
 };
 
 class AsciiString {
 public:
-    char *m_text;
+    char *m_data;
     static const AsciiString TheEmptyString;
 };
 

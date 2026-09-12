@@ -15,7 +15,7 @@ public:
 
 	void releaseBufferDF();
 
-	BfmeBufDF *m_bfmeBufDF;
+	BfmeBufDF *m_data;
 };
 
 class View
@@ -178,7 +178,7 @@ void BfmeHostDF::bfmeSetLabelDF(UnicodeString text)
 
 	dst->set(text);
 
-	if (dst->m_bfmeBufDF != 0 && dst->m_bfmeBufDF->m_bfmeLenDF != 0)
+	if (dst->m_data != 0 && dst->m_data->m_bfmeLenDF != 0)
 		TheTacticalView->bfmeShowDF(dst);
 	else
 		TheTacticalView->bfmeHideDF();

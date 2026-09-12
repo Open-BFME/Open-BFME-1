@@ -30,7 +30,7 @@ private:
 class UnicodeString
 {
 public:
-    UnicodeString() : m_text(0) {}
+    UnicodeString() : m_data(0) {}
     explicit UnicodeString(const WideChar *text)
     {
         ((BfmeSelectFriendsUnicodeBase *)this)->BfmeSelectFriendsUnicodeBase::BfmeSelectFriendsUnicodeBase(text);
@@ -47,7 +47,7 @@ public:
     }
     void format(UnicodeString format, ...);
 private:
-    WideChar *m_text;
+    WideChar *m_data;
 };
 
 // BFME adds virtuals to InGameUI that are absent from the Zero Hour reference

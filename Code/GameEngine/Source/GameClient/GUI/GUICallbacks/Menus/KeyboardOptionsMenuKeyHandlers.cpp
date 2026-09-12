@@ -13,7 +13,7 @@ class UnicodeString
 public:
 	static UnicodeString TheEmptyString;
 
-	UnicodeString() { m_text = 0; }
+	UnicodeString() { m_data = 0; }
 	UnicodeString( const UnicodeString &that )
 	{
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase( *(const StringBase<unsigned short> *)&that );
@@ -33,22 +33,22 @@ public:
 	int getLength() const { return ((const StringBase<unsigned short> *)this)->getLength(); }
 	unsigned short getCharAt( int index ) const
 	{
-		return m_text ? ((const unsigned short *)((const char *)m_text + 8))[index] : 0;
+		return m_data ? ((const unsigned short *)((const char *)m_data + 8))[index] : 0;
 	}
 	const unsigned short *str() const { return ((const StringBase<unsigned short> *)this)->str(); }
 	void set( const UnicodeString &that ) { ((StringBase<unsigned short> *)this)->set( *(const StringBase<unsigned short> *)&that ); }
 	void concat( const UnicodeString &that )
 	{
-		const int length = that.m_text ? *(const unsigned short *)((const char *)that.m_text + 4) : 0;
+		const int length = that.m_data ? *(const unsigned short *)((const char *)that.m_data + 4) : 0;
 		static const unsigned short empty[1] = { 0 };
-		const unsigned short *text = that.m_text ? (const unsigned short *)((const char *)that.m_text + 8) : empty;
+		const unsigned short *text = that.m_data ? (const unsigned short *)((const char *)that.m_data + 8) : empty;
 		((StringBase<unsigned short> *)this)->concat( text, length );
 	}
 	int compare( const UnicodeString &that ) const { return ((const StringBase<unsigned short> *)this)->compare( *(const StringBase<unsigned short> *)&that ); }
 	int compareNoCase( const UnicodeString &that ) const { return ((const StringBase<unsigned short> *)this)->compareNoCase( *(const StringBase<unsigned short> *)&that ); }
 
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 inline bool operator==( const UnicodeString &a, const UnicodeString &b )

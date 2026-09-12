@@ -26,7 +26,7 @@ public:
 
 	AsciiString()
 	{
-		m_text = 0;
+		m_data = 0;
 	}
 
 	~AsciiString()
@@ -51,21 +51,21 @@ public:
 
 	void concat(const AsciiString &text)
 	{
-		int length = text.m_text
-			? *(const unsigned short *)(text.m_text + 4)
+		int length = text.m_data
+			? *(const unsigned short *)(text.m_data + 4)
 			: 0;
-		const char *data = text.m_text ? text.m_text + 8 : Rva006A16B0Empty;
+		const char *data = text.m_data ? text.m_data + 8 : Rva006A16B0Empty;
 		((StringBase<char> *)this)->concat(data, length);
 	}
 
 	bool isEmpty() const
 	{
-		return m_text == 0 || *(const unsigned short *)(m_text + 4) == 0;
+		return m_data == 0 || *(const unsigned short *)(m_data + 4) == 0;
 	}
 
 	const char *str() const
 	{
-		return m_text ? m_text + 8 : Rva006A16B0Empty;
+		return m_data ? m_data + 8 : Rva006A16B0Empty;
 	}
 
 	bool startsWith(const char *text) const
@@ -77,7 +77,7 @@ public:
 	int bfmeCompare1294(const char *text) const;
 
 private:
-	char *m_text;
+	char *m_data;
 };
 
 class UnicodeString
@@ -85,7 +85,7 @@ class UnicodeString
 public:
 	UnicodeString()
 	{
-		m_text = 0;
+		m_data = 0;
 	}
 
 	~UnicodeString()
@@ -103,7 +103,7 @@ public:
 	void translate(const AsciiString &text);
 
 private:
-	WideChar *m_text;
+	WideChar *m_data;
 };
 
 enum NameKeyType

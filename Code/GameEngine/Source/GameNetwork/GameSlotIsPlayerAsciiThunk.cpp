@@ -26,7 +26,7 @@ enum SlotState
 class UnicodeString
 {
 public:
-	UnicodeString() { m_text = 0; }
+	UnicodeString() { m_data = 0; }
 	~UnicodeString();
 
 	void translate(const AsciiString& stringSrc);
@@ -38,7 +38,7 @@ public:
 	}
 
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h

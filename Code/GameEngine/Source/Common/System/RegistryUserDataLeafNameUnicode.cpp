@@ -8,7 +8,7 @@
 class UnicodeString
 {
 public:
-	UnicodeString() : m_text(0) {}
+	UnicodeString() : m_data(0) {}
 	UnicodeString(const wchar_t *value)
 	{
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
@@ -22,7 +22,7 @@ public:
 	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 bool GetStringFromRegistry(UnicodeString path, UnicodeString key, UnicodeString &val);

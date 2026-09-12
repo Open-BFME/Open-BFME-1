@@ -7,7 +7,7 @@ public:
 
 	void releaseBufferCQ();
 
-	void *m_bfmeBufCQ;
+	void *m_data;
 };
 
 struct BfmePairCQ

@@ -10,7 +10,7 @@ class AsciiString
 {
 public:
 	static const AsciiString TheEmptyString;
-	AsciiString() { m_text = 0; }
+	AsciiString() { m_data = 0; }
 	~AsciiString();
 	AsciiString &operator=(const AsciiString &that)
 	{
@@ -18,7 +18,7 @@ public:
 		return *this;
 	}
 private:
-	char *m_text;
+	char *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
@@ -26,7 +26,7 @@ class UnicodeString
 {
 public:
 	static const UnicodeString TheEmptyString;
-	UnicodeString() { m_text = 0; }
+	UnicodeString() { m_data = 0; }
 	~UnicodeString();
 	UnicodeString &operator=(const UnicodeString &that)
 	{
@@ -34,7 +34,7 @@ public:
 		return *this;
 	}
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h

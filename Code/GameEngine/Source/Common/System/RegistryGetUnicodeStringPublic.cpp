@@ -27,7 +27,7 @@ public:
 	~UnicodeString();
 
 private:
-	unsigned short *m_text;
+	unsigned short *m_data;
 };
 
 bool getStringFromRegistry(HKEY root, UnicodeString path, UnicodeString key, UnicodeString &val);
