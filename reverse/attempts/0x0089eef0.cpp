@@ -22,21 +22,15 @@ struct BfmeStringData3AF0
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
-template <typename T> class StringBase
+class EAStringC
 {
-protected:
-	BfmeStringData3AF0 *m_pData;
-	StringBase() {}
-};
-
-class EAStringC : private StringBase<char>
-{
-	BfmeStringData3AF0 *m_pData;
 	enum CBPushZero
 	{
 		CB_NO_PUSH_ZERO,
 		CB_PUSH_ZERO
 	};
+
+	BfmeStringData3AF0 *m_pData;
 
 	void ChangeBuffer(unsigned int uSizeToReserve, unsigned int uOffsetCopy,
 		unsigned int uSizeCopy, CBPushZero ePushZero, unsigned int uInternalSize);
@@ -52,28 +46,26 @@ public:
 
 int EAStringC::Remove(int start, int count)
 {
-	int end = start + count;
-	int size;
-	EAStringC *self = this;
+	int end = count + start;
 	if (count <= 0)
 	{
-		BfmeStringData3AF0 *data = self->m_pData;
+		BfmeStringData3AF0 *data = m_pData;
 		if (--data->m_refCount == 0)
 		{
 			g_bfmeStringPool1284->free(data);
 		}
-		self->m_pData = &g_bfmeDefaultString1284;
+		m_pData = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refCount;
 		return 0;
 	}
 	if (end <= 0)
 	{
-		BfmeStringData3AF0 *data = self->m_pData;
+		BfmeStringData3AF0 *data = m_pData;
 		if (--data->m_refCount == 0)
 		{
 			g_bfmeStringPool1284->free(data);
 		}
-		self->m_pData = &g_bfmeDefaultString1284;
+		m_pData = &g_bfmeDefaultString1284;
 		++g_bfmeDefaultString1284.m_refCount;
 		return 0;
 	}
@@ -81,9 +73,10 @@ int EAStringC::Remove(int start, int count)
 	if (start < 0)
 		start = 0;
 
-	BfmeStringData3AF0 *data = self->m_pData;
+	int size;
+	BfmeStringData3AF0 *data = m_pData;
 	size = data->m_size;
-	if (end > size)
+	if (end >= size)
 		end = size;
 
 	if (start == 0)
@@ -102,7 +95,7 @@ int EAStringC::Remove(int start, int count)
 	int suffix = size - end;
 	int newSize = start + suffix;
 	ChangeBuffer(newSize, 0, start, CB_NO_PUSH_ZERO, newSize);
-	memcpy(reinterpret_cast<char *>(self->m_pData) + sizeof(BfmeStringData3AF0) + start,
+	memcpy(reinterpret_cast<char *>(m_pData) + sizeof(BfmeStringData3AF0) + start,
 		reinterpret_cast<char *>(data) + sizeof(BfmeStringData3AF0) + end, suffix + 1);
 	return count;
 }
