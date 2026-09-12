@@ -48,18 +48,18 @@
 
 class __single_inheritance FunctorTargetSingle;
 
-typedef void (FunctorTargetSingle::*FunctorMethodSingle)(void);
+typedef void (FunctorTargetSingle::*SingleInheritancePmf)(void);
 
 #define BFME_FUNCTOR_BIND_SINGLE_INIT( NAME )                                                     \
 	struct NAME                                                                                   \
 	{                                                                                             \
 		FunctorTargetSingle *m_target;                                                            \
-		FunctorMethodSingle  m_method;                                                            \
+		SingleInheritancePmf m_method;                                                            \
 	};                                                                                            \
-	void __cdecl NAME##Init( NAME *self, FunctorMethodSingle method, FunctorTargetSingle *target )\
+	void __cdecl NAME##Init( NAME *binding, SingleInheritancePmf method, FunctorTargetSingle *target )\
 	{                                                                                             \
-		self->m_target = target;                                                                  \
-		self->m_method = method;                                                                  \
+		binding->m_target = target;                                                               \
+		binding->m_method = method;                                                               \
 	}
 
 BFME_FUNCTOR_BIND_SINGLE_INIT( Rva00510280FunctorBind )
