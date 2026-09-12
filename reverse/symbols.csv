@@ -4761,6 +4761,7 @@ name,address,notes
 ??1Gen_dtor_0006f7b0@@UAE@XZ,0x000268AA,gen-dtor class destructor
 ??1?$SubsystemSlot@VGlobalLanguage@@@@UAE@XZ,0x000268AA,SubsystemSlot<GlobalLanguage> destructor ILT called by authentic scalar-deleting destructor at 0x0006F7B0
 ??1Gen_dtor_0006f870@@UAE@XZ,0x0001C274,gen-dtor class destructor
+??1?$SubsystemSlot@VGameTextInterface@@@@UAE@XZ,0x0001C274,SubsystemSlot<GameTextInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006F870
 ??1Gen_dtor_0006f930@@UAE@XZ,0x000223BD,gen-dtor class destructor
 ??1Gen_dtor_0006f9f0@@UAE@XZ,0x0003B51B,gen-dtor class destructor
 ??1Gen_dtor_0006fab0@@UAE@XZ,0x0001B18A,gen-dtor class destructor
@@ -9929,6 +9930,7 @@ name,address,notes
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x01075D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
 ??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x01075D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
+??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x01075D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
