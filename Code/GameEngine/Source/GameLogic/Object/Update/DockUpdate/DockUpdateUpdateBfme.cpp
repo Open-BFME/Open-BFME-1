@@ -1,5 +1,4 @@
 // ?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.93 date=2026-09-10
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // DockUpdate::update, reconstructed from the retail body at 0x002CCEC0.
@@ -50,6 +49,12 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	Overridable *m_nextOverride;
 };
@@ -67,13 +72,28 @@ public:
 	UnsignedInt m_kindOf[3];
 };
 
+// Preserve the reference Override.h conversion/dereference layers. Flattening
+// this owning-template view to a raw pointer loses ten retail inline bytes.
+template<class T> class OVERRIDE
+{
+	const T *m_overridable;
+public:
+	inline const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+	inline operator const T*() const { return operator*(); }
+};
+
 class Thing
 {
 public:
 	const ThingTemplate *getTemplate() const;
 	Bool isKindOf(KindOfType kind) const;
 
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
 	UnsignedInt m_unused;
 };
 
@@ -203,21 +223,7 @@ union ConstructBitSetCall
 	ConstructBitSet memberFunction;
 };
 
-inline const ThingTemplate *Thing::getTemplate() const
-{
-	const ThingTemplate *thingTemplate = m_template;
-	if (thingTemplate == 0)
-		return 0;
-	if (thingTemplate->m_nextOverride != 0)
-	{
-		GetFinalOverrideCall getFinalOverride;
-		getFinalOverride.freeFunction = j_000022bb;
-		thingTemplate = (const ThingTemplate *)
-			(thingTemplate->m_nextOverride->*
-				getFinalOverride.memberFunction)();
-	}
-	return thingTemplate;
-}
+inline const ThingTemplate *Thing::getTemplate() const { return m_template; }
 
 inline Bool Thing::isKindOf(KindOfType kind) const
 {
@@ -260,17 +266,7 @@ UpdateSleepTime DockUpdate::update()
 	else
 	{
 		ObjectView *object = getObject();
-		__assume(object != 0);
-		register const Thing *thing = object->getThing();
-		register const ThingTemplate *thingTemplate = thing->m_template;
-		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
-		{
-			GetFinalOverrideCall getFinalOverride;
-			getFinalOverride.freeFunction = j_000022bb;
-			thingTemplate = (ThingTemplate *)
-				(thingTemplate->m_nextOverride->*
-					getFinalOverride.memberFunction)();
-		}
+		const ThingTemplate *thingTemplate = object->getTemplate();
 		if (thingTemplate->isKindOf(KINDOF_SUPPLY_SOURCE))
 		{
 			FindObjectByIDCall findObjectByID;
