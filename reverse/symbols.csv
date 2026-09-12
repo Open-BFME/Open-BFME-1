@@ -5361,7 +5361,7 @@ name,address,notes
 ??1Gen_dtor_0026c790@@UAE@XZ,0x0003E5E5,gen-dtor class destructor
 ??1Gen_dtor_0026cee0@@UAE@XZ,0x0002C179,gen-dtor class destructor
 ??1Gen_dtor_0026d490@@UAE@XZ,0x0001DAED,gen-dtor class destructor
-??1Gen_dtor_0026d780@@UAE@XZ,0x00006BD6,gen-dtor class destructor
+??1WeaponFireSpecialAbilityUpdateModuleData@@UAE@XZ,0x00006BD6,route=0x0026D7B0; vtable 0x010B8D98 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_0026dd90@@UAE@XZ,0x000466DC,gen-dtor class destructor
 ??1Gen_dtor_0026e0f0@@UAE@XZ,0x0003666A,gen-dtor class destructor
 ??1Gen_dtor_00271ab0@@UAE@XZ,0x0004B2F4,gen-dtor class destructor
