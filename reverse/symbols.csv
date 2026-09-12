@@ -87300,3 +87300,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z,0x0090DB70,TU-local ABI constructor alias emitted by W3DWaterTracks.cpp; alternatename targets canonical ??0Gen0090DB70@@QAE@PAX@Z at 0x0090DB70
 ?g_Rva012F340C@@3PCVDrawable@@C,0x012F340C,Address-derived drawable selection cache read at switchToContext0049E780+4D and written at+72; full1254B real C++ body witnesses data VA
 ??1StateMachine@@UAE@XZ,0x00031D5E,ILT to matched StateMachine scalar destructor at 0x000A1130; retail Dozer constructor unwind target decoded from 0x00C133C0
+?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x0002694A,ICF helper route for PeerThread 0x00647F90: pointer deque init is the verified 203-byte 4-byte ICF body shared with 0x003546E0/0x003684C0; retail call encodes j_0002694a
+?_M_push_back_aux_v@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXABQAX@Z,0x00036C82,ICF helper route for PeerThread 0x00647F90: pointer deque push body 0x00369710 is the verified 101-byte retail helper; call encodes j_00036c82
