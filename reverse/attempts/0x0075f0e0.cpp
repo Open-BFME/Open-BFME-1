@@ -60,7 +60,6 @@ int Gen_0075F090::bfmeRandom(int index, int count) const
 	if (size < 2)
 		return 0;
 
-	int randomValue;
 	int total = 0;
 	int i = 0;
 	int *weight;
@@ -78,7 +77,7 @@ int Gen_0075F090::bfmeRandom(int index, int count) const
 		} while (i < size);
 	}
 
-	randomValue = GetGameClientRandomValue(0, total - 1, (char *)0x01123918, 0x45c);
+	int randomValue = GetGameClientRandomValue(0, total - 1, (char *)0x01123918, 0x45c);
 	i = randomValue - randomValue;
 	if (size > 0)
 	{
