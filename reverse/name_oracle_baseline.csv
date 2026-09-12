@@ -35,6 +35,7 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/LibraryMapParse.cpp,
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/GenericObjectCreationNuggetConstructor.cpp,35,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/GenericObjectCreationNuggetDestructorThunk.cpp,9,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonors_rankHelpers.cpp,40,1.00,layout_witness
+AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonorsTotals.cpp,45,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/OptionPreferences_setCampaignDifficulty_Thunk.cpp,22,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/SkirmishBattleHonorsPlayerStats.cpp,59,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/Dict_setNameAndType.cpp,29,1.00,layout_witness
@@ -247,6 +248,15 @@ GameSlot+0x2c|m_internalPlayerName|m_IP,Code/GameEngine/Source/GameClient/GUI/GU
 GameSlot+0x2c|m_internalPlayerName|m_IP,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenGrabMultiPlayerInfo.cpp,68,1.00,layout_witness
 GameSlot+0x2c|m_serial|m_IP,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_constructor.cpp,39,1.00,layout_witness
 GameSlot+0x2c|m_stringData|m_IP,Code/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,59,1.00,layout_witness
+GameSlot+0x30|m_address|m_connectInfo,Code/GameEngine/Source/GameNetwork/LANAPIMessageHandlers.cpp,98,1.00,layout_witness
+GameSlot+0x30|m_address|m_connectInfo,Code/GameEngine/Source/GameNetwork/LANAPIRequestGameCreateThunk.cpp,147,1.00,layout_witness
+GameSlot+0x30|m_address|m_connectInfo,Code/GameEngine/Source/GameNetwork/LANAPI_handleInActive.cpp,82,1.00,layout_witness
+GameSlot+0x30|m_address|m_connectInfo,Code/GameEngine/Source/GameNetwork/LANAPIOnAccept.cpp,61,1.00,layout_witness
+GameSlot+0x30|m_address|m_connectInfo,Code/GameEngine/Source/GameNetwork/LANGameInfoBodies.cpp,138,1.00,layout_witness
+GameSlot+0x38|m_afterAddress|m_lastFrameInGame,Code/GameEngine/Source/GameNetwork/LANAPIOnAccept.cpp,62,1.00,layout_witness
+GameSlot+0x38|m_bfmeAfterAddress|m_lastFrameInGame,Code/GameEngine/Source/GameNetwork/LANAPIMessageHandlers.cpp,99,1.00,layout_witness
+GameSlot+0x38|m_bfmeTail|m_lastFrameInGame,Code/GameEngine/Source/GameNetwork/LANAPIRequestGameCreateThunk.cpp,148,1.00,layout_witness
+GameSlot+0x38|m_bfmeTail|m_lastFrameInGame,Code/GameEngine/Source/GameNetwork/LANGameInfoBodies.cpp,139,1.00,layout_witness
 GameSlot+0x38|m_natBehavior|m_lastFrameInGame,Code/GameEngine/Source/GameNetwork/NAT_gotMangledPort_Thunk.cpp,19,1.00,layout_witness
 GameSlot+0x4|m_bfmeBeforeHasMap|m_state,Code/GameEngine/Source/GameNetwork/LANAPIRequestHasMap.cpp,104,1.00,layout_witness
 GameSlot+0x4|m_bfmeFields|m_state,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ReplayGameInfoCtorThunk.cpp,22,1.00,layout_witness
@@ -309,7 +319,6 @@ GlobalData+0x61|m_bfme_61|m_rightMouseAlwaysScrolls,Code/GameEngine/Source/Commo
 GlobalData+0x68|m_textureReduction|m_textureReductionFactor,Code/GameEngine/Source/Common/OptionPreferences_getTextureReduction_Thunk.cpp,63,1.00,field_names
 GlobalData+0x70|m_buildingOcclusionEnabled|m_enableBehindBuildingMarkers,Code/GameEngine/Source/Common/OptionPreferences_getBuildingOcclusionEnabled.cpp,67,1.00,field_names
 GlobalData+0x8|m_maxTankTrackFadeDelay|m_mapName,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassSystem.cpp,36,1.00,field_names
-GlobalData+0x8|m_unreconstructed_04|m_mapName,Code/GameEngine/Source/Common/GlobalData_reset_Thunk.cpp,23,1.00,field_names
 GlobalData+0xa6e|m_unreconstructed_0A6E|m_soundsOn,Code/GameEngine/Source/GameLogic/System/GameLogicPopulateGameReport.cpp,169,1.00,field_names
 GlobalData+0xa88|m_unreconstructed_A88|m_debugAI,Code/GameEngine/Source/Common/T3CommandLineParsers.cpp,66,1.00,field_names
 GlobalData+0xab4|m_unreconstructed_AB4|m_particleScale,Code/GameEngine/Source/Common/T3CommandLineParsers.cpp,74,1.00,field_names
@@ -336,6 +345,7 @@ INI+0x0|m_storage|m_file,Code/GameEngine/Source/GameClient/MapCacheLoad.cpp,108,
 INI+0x0|m_storage|m_file,Code/GameEngine/Source/GameClient/GUI/Rva00473500LoadFontSubstitution.cpp,30,1.00,layout_witness
 INI+0x0|m_storage|m_file,Code/GameEngine/Source/GameClient/GUI/Rva00093F70LoadIniFromParam.cpp,32,1.00,layout_witness
 INI+0x0|m_storage|m_file,Code/GameEngine/Source/Common/Audio/Y1LargeGroupAudioInit.cpp,60,1.00,layout_witness
+INI+0x0|m_unported|m_file,Code/GameEngine/Source/Common/Rva00339330FXParticleSystemLoad.cpp,36,1.00,layout_witness
 INI+0x0|m_unported|m_file,Code/GameEngine/Source/GameClient/EvaInit.cpp,107,1.00,layout_witness
 INI+0x0|m_unreconstructed_000|m_file,Code/GameEngine/Source/Common/MultiPlayMultParseCallbacks.cpp,59,1.00,layout_witness
 INI+0x0|m_unreconstructed_000|m_file,Code/GameEngine/Source/Common/ExperienceLevelParseLevelUpFx.cpp,45,1.00,layout_witness
@@ -360,8 +370,13 @@ LANAPI+0x2c|m_bfmeHeadB|m_actionTimeout,Code/GameEngine/Source/GameNetwork/LANAP
 LANAPI+0x3c|m_bfmeHeadD|m_isInLANMenu,Code/GameEngine/Source/GameNetwork/LANAPILobbyNames.cpp,171,1.00,layout_witness
 LANAPI+0x4c|m_memberObject|m_transport,Code/GameEngine/Source/GameNetwork/LANAPIRequestEnableMPSetupUI.cpp,151,1.00,layout_witness
 LANAPI+0x4c|m_memberObject|m_transport,Code/GameEngine/Source/GameNetwork/LANAPIRequestGameLeave.cpp,132,1.00,layout_witness
+LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/Common/LANAPI_RequestChat_Thunk.cpp,197,1.00,layout_witness
+LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPIReset.cpp,110,1.00,layout_witness
+LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPIRequestGameCreateThunk.cpp,338,1.00,layout_witness
 LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPIOnPlayerList.cpp,50,1.00,layout_witness
 LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPIAddPlayer.cpp,75,1.00,layout_witness
+LANAPI+0xc|m_bfmeHeadB|m_games,Code/GameEngine/Source/Common/LANAPI_RequestChat_Thunk.cpp,198,1.00,layout_witness
+LANAPI+0xc|m_bfmeHeadB|m_games,Code/GameEngine/Source/GameNetwork/LANAPIRequestGameCreateThunk.cpp,339,1.00,layout_witness
 MaterialInfoClass+0x8|m_08|VertexMaterials,Code/Libraries/Source/WWVegas/WW3D2/MaterialRemapperCtor.cpp,27,1.00,layout_witness
 MaterialInfoClass+0x8|m_08|VertexMaterials,Code/Libraries/Source/WWVegas/WW3D2/MaterialRemapMesh.cpp,26,1.00,layout_witness
 MaterialInfoClass+0x8|m_08|VertexMaterials,Code/Libraries/Source/WWVegas/WW3D2/MaterialRemapTexture.cpp,26,1.00,layout_witness
@@ -388,6 +403,11 @@ MeshModelClass+0x9c|m_9c|CurMatDesc,Code/GameEngine/Source/Common/SmallGaps/Rva0
 MeshModelClass+0x9c|m_materialDescription|CurMatDesc,Code/Libraries/Source/WWVegas/WW3D2/MeshShaderFixup.cpp,30,1.00,layout_witness
 MeshModelClass+0x9c|m_materialInfo|CurMatDesc,Code/Libraries/Source/WWVegas/WW3D2/MeshModelClass_read_prelit_material_Thunk.cpp,39,1.00,layout_witness
 MetaMapRec+0x0|m_next|m_transition,Code/GameEngine/Source/GameClient/MessageStream/MetaMap_getMetaMapRecThunk.cpp,52,1.00,field_names
+MiscAudio+0x0|m_bfmeHead|m_radarHarvesterUnderAttackSound,Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/HealCrateCollide_executeCrateBehavior.cpp,64,1.00,field_names
+MiscAudio+0x0|m_bfmeHead|m_radarHarvesterUnderAttackSound,Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/MoneyCrateCollide_executeCrateBehavior.cpp,101,1.00,field_names
+MiscAudio+0x0|m_bfmeHead|m_radarHarvesterUnderAttackSound,Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/ShroudCrateCollide_executeCrateBehavior.cpp,66,1.00,field_names
+MiscAudio+0x0|m_bfme_head|m_radarHarvesterUnderAttackSound,Code/GameEngine/Source/Common/RTS/Money_deposit.cpp,39,1.00,field_names
+MiscAudio+0x0|m_bfme_head|m_radarHarvesterUnderAttackSound,Code/GameEngine/Source/Common/RTS/PlayerAddRadar.cpp,23,1.00,field_names
 Mission+0x8|m_bfme_map|m_mapName,Code/GameEngine/Source/GameClient/System/Campaign_getNextMission.cpp,79,1.00,field_names
 ModelConditionInfo+0x0|m_data|m_conditionsYesVec,Code/GameEngine/Source/Common/Thing/ModelConditionInfoUninitializedFillThunk.cpp,8,1.00,layout_witness
 ModelConditionInfo+0x0|m_unreconstructed_00|m_conditionsYesVec,Code/GameEngine/Source/Common/Rva003A1120CopyCtor.cpp,40,1.00,layout_witness
@@ -570,7 +590,9 @@ PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/ScriptEngi
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogicSetMissionObjectiveVisible.cpp,100,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Rva00419E40DrawablePredicate.cpp,92,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Contain/CaveContainRecalcApparentControllingPlayer.cpp,107,1.00,layout_witness
+PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Update/TemporarilyDefectUpdate_update.cpp,67,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_hintDetectableWhileUnstealthed.cpp,66,1.00,layout_witness
+PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateChangeVisualDisguise.cpp,182,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPurchaseScience.cpp,35,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_getStarImage_Thunk.cpp,71,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenInitSinglePlayer.cpp,50,1.00,layout_witness
@@ -635,7 +657,6 @@ ScoreKeeper+0x13c|m_frameOverride|m_totalUnitsLost,Code/GameEngine/Source/Common
 Script+0x28|m_frameToEvaluateAt|m_action,Code/GameEngine/Source/Common/RTS/TeamPrototypeScripts.cpp,106,1.00,layout_witness
 ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_disableScript.cpp,32,1.00,layout_witness
 ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineSetPriorityDefault.cpp,64,1.00,layout_witness
-ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineTimers.cpp,96,1.00,layout_witness
 ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineFlagsAndCounters.cpp,50,1.00,layout_witness
 ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_enableScript.cpp,32,1.00,layout_witness
 ScriptAction+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineSetPriorityKind.cpp,68,1.00,layout_witness
@@ -675,10 +696,6 @@ StateMachine+0x14|m_unreconstructed_14|m_sleepTill,Code/GameEngine/Source/GameLo
 StateMachine+0x1c|m_curState|m_currentState,Code/GameEngine/Source/GameLogic/AI/TurretAI_setTurretTargetPosition.cpp,108,1.00,layout_witness
 StateMachine+0x1c|m_state|m_currentState,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCommandDispatch.cpp,117,1.00,layout_witness
 StateMachine+0x40|m_halted|m_locked,Code/GameEngine/Source/GameLogic/AI/StateMachine_halt.cpp,12,1.00,layout_witness
-StringClass+0x0|m_EmptyString|m_Buffer,Code/GameEngine/Source/Common/Rva00900FF0Constructor.cpp,16,1.00,layout_witness
-StringClass+0x0|m_EmptyString|m_Buffer,Code/Libraries/Source/WWVegas/WW3D2/Rva00971CE0AggregatePrototypeCtor.cpp,12,1.00,layout_witness
-StringClass+0x0|m_EmptyString|m_Buffer,Code/Libraries/Source/WWVegas/WW3D2/HierarchyPrototypeLoad.cpp,37,1.00,layout_witness
-StringClass+0x0|m_EmptyString|m_Buffer,Code/Libraries/Source/WWVegas/WW3D2/Rva0090BD60ProtoCtor.cpp,12,1.00,layout_witness
 StringClass+0x0|m_data|m_Buffer,Code/Libraries/Source/WWVegas/WW3D2/RenderDeviceDescClassDtor.cpp,15,1.00,layout_witness
 StringClass+0x0|m_data|m_Buffer,Code/Libraries/Source/WWVegas/WW3D2/DX8CapsDestructor.cpp,10,1.00,layout_witness
 SubsystemInterface+0x4|m_04|m_name,Code/GameEngine/Source/Common/SpecialPowerStoreDestructorThunk.cpp,32,0.92,layout_witness
@@ -778,6 +795,9 @@ UnicodeString+0x0|m_text|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClien
 UnicodeString+0x0|m_text|m_data,Code/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp,24,1.00,layout_witness
 UpdateModule+0x14|m_nextCallFrame|m_nextCallFrameAndPhase,Code/GameEngine/Source/GameLogic/Object/Update/UpdateModule_getWakeFrame.cpp,37,1.00,layout_witness
 UpgradeTemplate+0x4|m_head|m_type,Code/GameEngine/Source/Common/UpgradeCenterDestructorThunk.cpp,23,1.00,field_names
+View+0x3c|m_minHeightAboveGround|m_zoom,Code/GameEngine/Source/GameClient/ViewConstructorBfme.cpp,35,1.00,layout_witness
+View+0x44|m_zoomLimited|m_heightAboveGround,Code/GameEngine/Source/GameClient/ViewConstructorBfme.cpp,37,1.00,layout_witness
+View+0x48|m_defaultAngle|m_zoomLimited,Code/GameEngine/Source/GameClient/ViewConstructorBfme.cpp,39,1.00,layout_witness
 View+0x4|m_body|m_next,Code/GameEngine/Source/Common/W3DView_initBfme.cpp,133,1.00,layout_witness
 View+0x6c|m_angle|m_FOV,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewGetAngleBfme.cpp,19,1.00,layout_witness
 W3DAnimationInfo+0x4|m_previous|m_distanceCovered,Code/GameEngine/Source/Common/LivingWorldManagerParticleSystem.cpp,77,1.00,layout_witness
