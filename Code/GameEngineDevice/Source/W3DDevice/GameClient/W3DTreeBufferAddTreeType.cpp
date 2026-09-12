@@ -88,7 +88,8 @@ public:
 	virtual void renderObjSlot08(void) = 0;
 	virtual Int Class_ID(void) const = 0;
 	virtual void renderObjSlot10(void) = 0;
-	virtual MeshClass *As_Mesh(void) = 0;
+	// Retail slot +0x14 returns the mesh view; its original name is unknown.
+	virtual MeshClass *renderObjSlot14(void) const = 0;
 	virtual void renderObjSlot18(void) = 0;
 	virtual void renderObjSlot1C(void) = 0;
 	virtual void renderObjSlot20(void) = 0;
@@ -103,7 +104,7 @@ public:
 	virtual void renderObjSlot44(void) = 0;
 	virtual void renderObjSlot48(void) = 0;
 	virtual void renderObjSlot4C(void) = 0;
-	virtual const Matrix3D &Get_Transform(void) const = 0;
+	virtual void Validate_Transform(void) const = 0;
 	virtual void renderObjSlot54(void) = 0;
 	virtual void renderObjSlot58(void) = 0;
 	virtual void renderObjSlot5C(void) = 0;
@@ -133,7 +134,7 @@ public:
 	virtual void renderObjSlotBC(void) = 0;
 	virtual void renderObjSlotC0(void) = 0;
 	virtual void renderObjSlotC4(void) = 0;
-	virtual const Matrix3D &Get_Bone_Transform(Int index) const = 0;
+	virtual const Matrix3D &Get_Bone_Transform(Int index) = 0;
 	virtual void renderObjSlotCC(void) = 0;
 	virtual void renderObjSlotD0(void) = 0;
 	virtual void renderObjSlotD4(void) = 0;
@@ -217,7 +218,7 @@ Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	}
 
 	if (robj->Class_ID() == 0)
-		m_treeTypes[m_numTreeTypes].m_mesh = robj->As_Mesh();
+		m_treeTypes[m_numTreeTypes].m_mesh = robj->renderObjSlot14();
 
 	MeshClass *mesh = m_treeTypes[m_numTreeTypes].m_mesh;
 	if (mesh == 0) {
@@ -228,7 +229,7 @@ Int W3DTreeBuffer::addTreeType(const AsciiString &modelName,
 	Int numVertex = mesh->Peek_Model()->Get_Vertex_Count();
 	Vector3 *pVert = mesh->Peek_Model()->Get_Vertex_Array();
 
-	const Matrix3D xfm = mesh->Get_Transform();
+	mesh->Validate_Transform();
 	SphereClass bounds(pVert, numVertex);
 	SphereClass &destBounds = m_treeTypes[m_numTreeTypes].m_bounds;
 	bounds.Center += offset;
