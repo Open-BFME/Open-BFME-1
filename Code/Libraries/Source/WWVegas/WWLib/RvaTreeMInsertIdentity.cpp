@@ -205,9 +205,9 @@ struct BfmeRbTreeInsertAnchorHelper
 {
 	template <class Tree, class Value>
 	static typename Tree::iterator run( Tree *tree, _STL::_Rb_tree_node_base *x,
-		_STL::_Rb_tree_node_base *y, const Value &v, _STL::_Rb_tree_node_base *w )
+		_STL::_Rb_tree_node_base *y, const Value &value, _STL::_Rb_tree_node_base *w )
 	{
-		return tree->_M_insert( x, y, v, w );
+		return tree->_M_insert( x, y, value, w );
 	}
 };
 
@@ -217,118 +217,118 @@ enum Rva000EEC50Key
 };
 
 typedef _STL::_Rb_tree<Rva000EEC50Key, Rva000EEC50Key, _STL::_Identity<Rva000EEC50Key>,
-	_STL::less<Rva000EEC50Key>, _STL::allocator<Rva000EEC50Key> > Rva000EEC50Tree;
+	_STL::less<Rva000EEC50Key>, _STL::allocator<Rva000EEC50Key> > EnumIdentityTree000EEC50;
 
 // retail 0x000EE420, called by the insert_unique at 0x000EEC50
-Rva000EEC50Tree::iterator BfmeRbTreeInsertAnchor000EEC50( Rva000EEC50Tree *tree,
+EnumIdentityTree000EEC50::iterator BfmeRbTreeInsertAnchor000EEC50( EnumIdentityTree000EEC50 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva000EEC50Key &v, _STL::_Rb_tree_node_base *w )
+	const Rva000EEC50Key &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva00076190Target;
 
-typedef Rva00076190Target *Rva00076190Key;
+typedef Rva00076190Target *PointerKey00076190;
 
-typedef _STL::_Rb_tree<Rva00076190Key, Rva00076190Key, _STL::_Identity<Rva00076190Key>,
-	_STL::less<Rva00076190Key>, _STL::allocator<Rva00076190Key> > Rva00076190Tree;
+typedef _STL::_Rb_tree<PointerKey00076190, PointerKey00076190, _STL::_Identity<PointerKey00076190>,
+	_STL::less<PointerKey00076190>, _STL::allocator<PointerKey00076190> > PointerIdentityTree00076190;
 
 // retail 0x00072C90, called by the insert_unique at 0x00076190
-Rva00076190Tree::iterator BfmeRbTreeInsertAnchor00076190( Rva00076190Tree *tree,
+PointerIdentityTree00076190::iterator BfmeRbTreeInsertAnchor00076190( PointerIdentityTree00076190 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva00076190Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey00076190 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva0013FA60Target;
 
-typedef Rva0013FA60Target *Rva0013FA60Key;
+typedef Rva0013FA60Target *PointerKey0013FA60;
 
-typedef _STL::_Rb_tree<Rva0013FA60Key, Rva0013FA60Key, _STL::_Identity<Rva0013FA60Key>,
-	_STL::less<Rva0013FA60Key>, _STL::allocator<Rva0013FA60Key> > Rva0013FA60Tree;
+typedef _STL::_Rb_tree<PointerKey0013FA60, PointerKey0013FA60, _STL::_Identity<PointerKey0013FA60>,
+	_STL::less<PointerKey0013FA60>, _STL::allocator<PointerKey0013FA60> > PointerIdentityTree0013FA60;
 
 // retail 0x0013F760, called by the insert_unique at 0x0013FA60
-Rva0013FA60Tree::iterator BfmeRbTreeInsertAnchor0013FA60( Rva0013FA60Tree *tree,
+PointerIdentityTree0013FA60::iterator BfmeRbTreeInsertAnchor0013FA60( PointerIdentityTree0013FA60 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva0013FA60Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey0013FA60 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva0025BD30Target;
 
-typedef Rva0025BD30Target *Rva0025BD30Key;
+typedef Rva0025BD30Target *PointerKey0025BD30;
 
-typedef _STL::_Rb_tree<Rva0025BD30Key, Rva0025BD30Key, _STL::_Identity<Rva0025BD30Key>,
-	_STL::less<Rva0025BD30Key>, _STL::allocator<Rva0025BD30Key> > Rva0025BD30Tree;
+typedef _STL::_Rb_tree<PointerKey0025BD30, PointerKey0025BD30, _STL::_Identity<PointerKey0025BD30>,
+	_STL::less<PointerKey0025BD30>, _STL::allocator<PointerKey0025BD30> > PointerIdentityTree0025BD30;
 
 // retail 0x0025BAB0, called by the insert_unique at 0x0025BD30
-Rva0025BD30Tree::iterator BfmeRbTreeInsertAnchor0025BD30( Rva0025BD30Tree *tree,
+PointerIdentityTree0025BD30::iterator BfmeRbTreeInsertAnchor0025BD30( PointerIdentityTree0025BD30 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva0025BD30Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey0025BD30 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva00296ED0Target;
 
-typedef Rva00296ED0Target *Rva00296ED0Key;
+typedef Rva00296ED0Target *PointerKey00296ED0;
 
-typedef _STL::_Rb_tree<Rva00296ED0Key, Rva00296ED0Key, _STL::_Identity<Rva00296ED0Key>,
-	_STL::less<Rva00296ED0Key>, _STL::allocator<Rva00296ED0Key> > Rva00296ED0Tree;
+typedef _STL::_Rb_tree<PointerKey00296ED0, PointerKey00296ED0, _STL::_Identity<PointerKey00296ED0>,
+	_STL::less<PointerKey00296ED0>, _STL::allocator<PointerKey00296ED0> > PointerIdentityTree00296ED0;
 
 // retail 0x00296B90, called by the insert_unique at 0x00296ED0
-Rva00296ED0Tree::iterator BfmeRbTreeInsertAnchor00296ED0( Rva00296ED0Tree *tree,
+PointerIdentityTree00296ED0::iterator BfmeRbTreeInsertAnchor00296ED0( PointerIdentityTree00296ED0 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva00296ED0Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey00296ED0 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva0036ED40Target;
 
-typedef Rva0036ED40Target *Rva0036ED40Key;
+typedef Rva0036ED40Target *PointerKey0036ED40;
 
-typedef _STL::_Rb_tree<Rva0036ED40Key, Rva0036ED40Key, _STL::_Identity<Rva0036ED40Key>,
-	_STL::less<Rva0036ED40Key>, _STL::allocator<Rva0036ED40Key> > Rva0036ED40Tree;
+typedef _STL::_Rb_tree<PointerKey0036ED40, PointerKey0036ED40, _STL::_Identity<PointerKey0036ED40>,
+	_STL::less<PointerKey0036ED40>, _STL::allocator<PointerKey0036ED40> > PointerIdentityTree0036ED40;
 
 // retail 0x0036E1E0, called by the insert_unique at 0x0036ED40
-Rva0036ED40Tree::iterator BfmeRbTreeInsertAnchor0036ED40( Rva0036ED40Tree *tree,
+PointerIdentityTree0036ED40::iterator BfmeRbTreeInsertAnchor0036ED40( PointerIdentityTree0036ED40 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva0036ED40Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey0036ED40 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva00442AB0Target;
 
-typedef Rva00442AB0Target *Rva00442AB0Key;
+typedef Rva00442AB0Target *PointerKey00442AB0;
 
-typedef _STL::_Rb_tree<Rva00442AB0Key, Rva00442AB0Key, _STL::_Identity<Rva00442AB0Key>,
-	_STL::less<Rva00442AB0Key>, _STL::allocator<Rva00442AB0Key> > Rva00442AB0Tree;
+typedef _STL::_Rb_tree<PointerKey00442AB0, PointerKey00442AB0, _STL::_Identity<PointerKey00442AB0>,
+	_STL::less<PointerKey00442AB0>, _STL::allocator<PointerKey00442AB0> > PointerIdentityTree00442AB0;
 
 // retail 0x004408A0, called by the insert_unique at 0x00442AB0
-Rva00442AB0Tree::iterator BfmeRbTreeInsertAnchor00442AB0( Rva00442AB0Tree *tree,
+PointerIdentityTree00442AB0::iterator BfmeRbTreeInsertAnchor00442AB0( PointerIdentityTree00442AB0 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva00442AB0Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey00442AB0 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
 struct Rva006DE9B0Target;
 
-typedef Rva006DE9B0Target *Rva006DE9B0Key;
+typedef Rva006DE9B0Target *PointerKey006DE9B0;
 
-typedef _STL::_Rb_tree<Rva006DE9B0Key, Rva006DE9B0Key, _STL::_Identity<Rva006DE9B0Key>,
-	_STL::less<Rva006DE9B0Key>, _STL::allocator<Rva006DE9B0Key> > Rva006DE9B0Tree;
+typedef _STL::_Rb_tree<PointerKey006DE9B0, PointerKey006DE9B0, _STL::_Identity<PointerKey006DE9B0>,
+	_STL::less<PointerKey006DE9B0>, _STL::allocator<PointerKey006DE9B0> > PointerIdentityTree006DE9B0;
 
 // retail 0x006DBFF0, called by the insert_unique at 0x006DE9B0
-Rva006DE9B0Tree::iterator BfmeRbTreeInsertAnchor006DE9B0( Rva006DE9B0Tree *tree,
+PointerIdentityTree006DE9B0::iterator BfmeRbTreeInsertAnchor006DE9B0( PointerIdentityTree006DE9B0 *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const Rva006DE9B0Key &v, _STL::_Rb_tree_node_base *w )
+	const PointerKey006DE9B0 &value, _STL::_Rb_tree_node_base *w )
 {
-	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
+	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, value, w );
 }
 
