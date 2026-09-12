@@ -7,10 +7,10 @@ class AutoFindHealingUpdateModuleData
 
 	virtual void virtualAnchor( void ) = 0;
 	unsigned int m_padding;
-	unsigned int m_first;
-	unsigned int m_second;
-	float m_searchDelay;
-	float m_searchRange;
+	unsigned int m_scanFrames;
+	unsigned int m_scanRange;
+	float m_neverHeal;
+	float m_alwaysHeal;
 
 public:
 	AutoFindHealingUpdateModuleData( void );
@@ -18,10 +18,10 @@ public:
 
 AutoFindHealingUpdateModuleData::AutoFindHealingUpdateModuleData( void )
 {
-	m_first = 0;
-	m_second = 0;
-	m_searchDelay = 0.95f;
-	m_searchRange = 0.25f;
+	m_scanFrames = 0;
+	m_scanRange = 0;
+	m_neverHeal = 0.95f;
+	m_alwaysHeal = 0.25f;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -214,7 +214,7 @@ UpdateSleepTime AutoFindHealingUpdate::update( void )
 		( *nextScanFrames )--;
 		return UPDATE_SLEEP_NONE;
 	}
-	*nextScanFrames = data->m_first;
+	*nextScanFrames = data->m_scanFrames;
 
 	AIUpdateInterface_VT *ai =
 		*reinterpret_cast<AIUpdateInterface_VT **>( reinterpret_cast<char *>( obj ) + 0x204 );
@@ -230,7 +230,7 @@ UpdateSleepTime AutoFindHealingUpdate::update( void )
 		return UPDATE_SLEEP_NONE;
 	}
 
-	if( body->getHealth() > body->getMaxHealth() * data->m_searchDelay )
+	if( body->getHealth() > body->getMaxHealth() * data->m_neverHeal )
 	{
 		return UPDATE_SLEEP_NONE;
 	}

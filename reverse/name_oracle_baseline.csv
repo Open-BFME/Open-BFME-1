@@ -156,10 +156,6 @@ AudioEventRTS+0x20|m_pitchShift|m_priority,Code/GameEngine/Source/Common/Audio/A
 AudioEventRTS+0x42|m_isLogicalAudio|m_uninterruptable,Code/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp,31,1.00,layout_witness
 AudioSettings+0x0|m_prefix|m_audioRoot,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,35,1.00,field_names
 AudioSettings+0x28|m_gap2|m_sampleCount2D,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,42,1.00,field_names
-AutoFindHealingUpdateModuleData+0x10|m_searchDelay|m_neverHeal,Code/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,13,1.00,field_names
-AutoFindHealingUpdateModuleData+0x14|m_searchRange|m_alwaysHeal,Code/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,14,1.00,field_names
-AutoFindHealingUpdateModuleData+0x8|m_first|m_scanFrames,Code/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,11,1.00,field_names
-AutoFindHealingUpdateModuleData+0xc|m_second|m_scanRange,Code/GameEngine/Source/GameLogic/Object/Update/AutoFindHealingUpdate.cpp,12,1.00,field_names
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReleaseResources_Bfme.cpp,146,1.00,layout_witness
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReAcquireResources_Bfme.cpp,104,1.00,layout_witness
 BezierSegment+0x0|m_controlPoints|s_bezBasisMatrix,Code/GameEngine/Source/Common/Bezier/BezierSegmentConstructionAndLength.cpp,55,1.00,layout_witness
