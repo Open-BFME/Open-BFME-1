@@ -184,7 +184,7 @@ using PopupJoinGameState::buttonCancelID;
 using PopupJoinGameState::parentPopup;
 using PopupJoinGameState::textEntryGamePassword;
 
-static void joinGame( AsciiString password );
+void joinGame( AsciiString password );
 
 //-----------------------------------------------------------------------------
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
@@ -329,23 +329,5 @@ WindowMsgHandledType PopupJoinGameSystem( GameWindow *window, UnsignedInt msg, W
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
-static void joinGame( AsciiString password )
-{
-	GameSpyStagingRoom *ourRoom = TheGameSpyInfo->findStagingRoomByID(TheGameSpyInfo->getCurrentStagingRoomID());
-	if (!ourRoom)
-	{
-		GameSpyCloseOverlay(GSOVERLAY_GAMEPASSWORD);
-		SetLobbyAttemptHostJoin( FALSE );
-		parentPopup = NULL;
-		return;
-	}
-	PeerRequest req;
-	req.peerRequestType = PeerRequest::PEERREQUEST_JOINSTAGINGROOM;
-	req.text = ourRoom->getGameName().str();
-	req.stagingRoom.id = ourRoom->getID();
-	req.password = password.str();
-	TheGameSpyPeerMessageQueue->addRequest(req);
-	DEBUG_LOG(("Attempting to join game %d(%ls) with password [%s]\n", ourRoom->getID(), ourRoom->getGameName().str(), password.str()));
-	GameSpyCloseOverlay(GSOVERLAY_GAMEPASSWORD);
-	parentPopup = NULL;
-}
+// The byte-verified request producer is in PopupJoinGameJoin.cpp.
+
