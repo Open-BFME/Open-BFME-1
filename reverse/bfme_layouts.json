@@ -60,10 +60,10 @@
 "total": 954.0,
 "confidence": 0.99,
 "alts": {
-"0xc": 2.6,
 "0x8": 2.7,
 "0x18": 0.9,
-"0x5": 1.0
+"0x5": 1.0,
+"0xc": 2.6
 },
 "fns": [
 "??0?$BitFlags@$0CG@@@QAE@XZ",
@@ -130,10 +130,10 @@
 "alts": {
 "0x4": 23.2,
 "0x0": 1.5,
+"0x1c": 0.8,
 "0xc": 2.0,
-"0x10": 2.6,
 "0x14": 1.7,
-"0x1c": 0.8
+"0x10": 2.6
 },
 "fns": [
 "??0?$BitFlags@$0ED@@@QAE@XZ",
@@ -183,13 +183,13 @@
 "total": 433.6,
 "confidence": 0.9,
 "alts": {
-"0x10": 2.0,
-"0x14": 2.6,
 "0x8": 33.9,
 "0x18": 1.6,
 "0x4": 1.0,
-"0x780c": 0.8,
-"0x350": 0.9
+"0x10": 2.0,
+"0x350": 0.9,
+"0x14": 2.6,
+"0x780c": 0.8
 },
 "fns": [
 "??0?$BitFlags@$0HE@@@QAE@XZ",
@@ -235,18 +235,18 @@
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
-"votes": 295.5,
-"total": 320.6,
+"votes": 296.3,
+"total": 321.3,
 "confidence": 0.92,
 "alts": {
 "0xc": 12.5,
 "0x14": 5.6,
 "0x4": 1.0,
+"0xa94": 0.8,
+"0x354": 0.9,
 "0x18": 2.7,
 "0x1c": 0.9,
-"0xa94": 0.8,
-"0x24": 0.7,
-"0x354": 0.9
+"0x24": 0.7
 },
 "fns": [
 "??0?$_Bvector_base@V?$allocator@_N@_STL@@@_STL@@QAE@ABV?$allocator@_N@1@@Z",
@@ -274,15 +274,15 @@
 "member": "+0x14?",
 "zh": 20,
 "bfme": 20,
-"votes": 212.4,
-"total": 242.3,
+"votes": 213.1,
+"total": 243.1,
 "confidence": 0.88,
 "alts": {
-"0x18": 6.1,
 "0x10": 19.5,
-"0x20": 0.9,
+"0x18": 6.1,
 "0x8": 1.9,
 "0x1c": 0.9,
+"0x20": 0.9,
 "0x28": 0.7
 },
 "fns": [
@@ -315,14 +315,14 @@
 "total": 199.2,
 "confidence": 0.87,
 "alts": {
-"0x14": 14.3,
-"0x24": 2.7,
-"0x20": 1.9,
-"0x1c": 2.0,
-"0x8": 1.0,
 "0x10": 0.9,
+"0x14": 14.3,
+"0x8": 1.0,
+"0x1c": 2.0,
+"0x344": 0.9,
 "0x2c": 1.5,
-"0x344": 0.9
+"0x20": 1.9,
+"0x24": 2.7
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -386,12 +386,12 @@
 "total": 177.8,
 "confidence": 0.87,
 "alts": {
+"0x14": 0.9,
 "0x18": 11.4,
-"0x30": 4.8,
 "0x20": 4.4,
-"0x28": 0.9,
+"0x30": 4.8,
 "0x24": 0.9,
-"0x14": 0.9
+"0x28": 0.9
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -457,17 +457,17 @@
 "total": 163.0,
 "confidence": 0.8,
 "alts": {
+"0x24": 8.0,
+"0x14": 1.6,
+"0x10": 1.7,
 "0x1c": 6.1,
 "0x34": 10.7,
+"0x38": 0.7,
 "0x30": 0.8,
-"0x24": 8.0,
-"0x2c": 0.9,
-"0x0": 0.9,
 "0x28": 0.9,
 "0x18": 0.9,
-"0x38": 0.7,
-"0x10": 1.7,
-"0x14": 1.6
+"0x0": 0.9,
+"0x2c": 0.9
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -535,18 +535,18 @@
 "total": 129.9,
 "confidence": 0.8,
 "alts": {
-"0x20": 6.1,
-"0x34": 0.8,
-"0x18": 1.0,
-"0x30": 0.9,
-"0x28": 5.2,
 "0xc": 1.0,
+"0x18": 1.0,
+"0x14": 0.9,
+"0x20": 6.1,
+"0x28": 5.2,
+"0x3c": 1.6,
+"0x23": 0.9,
+"0x34": 0.8,
+"0x2c": 3.7,
 "0x38": 3.6,
 "0x8": 0.9,
-"0x2c": 3.7,
-"0x23": 0.9,
-"0x3c": 1.6,
-"0x14": 0.9
+"0x30": 0.9
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -609,14 +609,14 @@
 "total": 122.5,
 "confidence": 0.8,
 "alts": {
-"0x34": 1.8,
+"0x2c": 6.0,
 "0x24": 5.8,
 "0x40": 1.6,
+"0x0": 0.7,
+"0x30": 4.6,
 "0x3c": 3.6,
 "0x58": 0.9,
-"0x2c": 6.0,
-"0x30": 4.6,
-"0x0": 0.7
+"0x34": 1.8
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -634,14 +634,14 @@
 "total": 103.5,
 "confidence": 0.8,
 "alts": {
-"0x38": 0.9,
 "0x28": 5.8,
-"0x34": 5.4,
-"0x40": 2.5,
 "0x30": 3.6,
+"0x40": 2.5,
 "0x44": 0.7,
 "0x24": 0.8,
-"0x58": 0.9
+"0x34": 5.4,
+"0x58": 0.9,
+"0x38": 0.9
 },
 "fns": [
 "??0?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@QAE@ABU01@@Z",
@@ -659,14 +659,14 @@
 "total": 83.5,
 "confidence": 0.74,
 "alts": {
-"0x3c": 0.9,
-"0x2c": 4.0,
-"0x38": 4.4,
-"0x14": 0.9,
-"0x44": 2.6,
-"0x34": 3.6,
-"0x54": 0.7,
 "0x24": 0.7,
+"0x34": 3.6,
+"0x2c": 4.0,
+"0x54": 0.7,
+"0x38": 4.4,
+"0x44": 2.6,
+"0x3c": 0.9,
+"0x14": 0.9,
 "0x50": 1.8,
 "0x60": 1.7
 },
@@ -714,14 +714,14 @@
 "total": 76.1,
 "confidence": 0.71,
 "alts": {
-"0x44": 1.7,
+"0x38": 5.3,
+"0x28": 0.7,
+"0x58": 2.7,
 "0x30": 2.7,
+"0x3c": 1.8,
 "0x2c": 0.9,
 "0x48": 2.6,
-"0x38": 5.3,
-"0x3c": 1.8,
-"0x58": 2.7,
-"0x28": 0.7,
+"0x44": 1.7,
 "0x54": 1.8,
 "0x50": 1.7
 },
@@ -783,14 +783,14 @@
 "total": 63.0,
 "confidence": 0.67,
 "alts": {
-"0x28": 0.9,
-"0x34": 3.2,
-"0x58": 2.6,
-"0x84": 1.0,
-"0x4c": 3.5,
 "0x3c": 4.4,
-"0x40": 2.6,
 "0x2c": 0.7,
+"0x40": 2.6,
+"0x4c": 3.5,
+"0x34": 3.2,
+"0x84": 1.0,
+"0x28": 0.9,
+"0x58": 2.6,
 "0x54": 1.7
 },
 "fns": [
@@ -809,13 +809,13 @@
 "total": 57.5,
 "confidence": 0.57,
 "alts": {
-"0x2c": 0.9,
-"0x38": 3.2,
-"0x50": 3.5,
-"0x40": 2.6,
 "0x44": 8.6,
 "0x30": 1.5,
 "0x28": 0.9,
+"0x38": 3.2,
+"0x40": 2.6,
+"0x50": 3.5,
+"0x2c": 0.9,
 "0x5c": 1.8,
 "0x58": 1.7
 },
@@ -889,14 +889,14 @@
 "total": 57.8,
 "confidence": 0.7,
 "alts": {
-"0x30": 0.9,
-"0x3c": 2.5,
-"0x5c": 2.4,
 "0x44": 3.3,
+"0x38": 0.7,
 "0x48": 3.5,
 "0x88": 0.7,
+"0x3c": 2.5,
 "0x54": 1.7,
-"0x38": 0.7,
+"0x30": 0.9,
+"0x5c": 2.4,
 "0x60": 1.8
 },
 "fns": [
@@ -929,14 +929,14 @@
 "total": 39.5,
 "confidence": 0.56,
 "alts": {
-"0x40": 3.4,
-"0x60": 0.8,
 "0x8": 1.0,
-"0x54": 1.0,
-"0x48": 2.6,
 "0x4c": 3.5,
-"0x58": 0.7,
 "0x24": 0.9,
+"0x40": 3.4,
+"0x48": 2.6,
+"0x54": 1.0,
+"0x60": 0.8,
+"0x58": 0.7,
 "0x64": 3.5
 },
 "fns": [
@@ -983,11 +983,11 @@
 "total": 36.6,
 "confidence": 0.6,
 "alts": {
-"0x44": 3.4,
-"0x54": 0.8,
-"0x58": 1.0,
-"0x4c": 2.7,
 "0x50": 3.6,
+"0x44": 3.4,
+"0x4c": 2.7,
+"0x58": 1.0,
+"0x54": 0.8,
 "0x5c": 0.7,
 "0x68": 2.6
 },
@@ -1021,8 +1021,8 @@
 "total": 45.1,
 "confidence": 0.71,
 "alts": {
-"0x50": 3.5,
 "0x54": 3.6,
+"0x50": 3.5,
 "0x48": 2.5,
 "0x60": 0.7,
 "0x6c": 2.6
@@ -1043,14 +1043,14 @@
 "total": 36.6,
 "confidence": 0.51,
 "alts": {
-"0x48": 1.0,
-"0x30": 0.7,
-"0x64": 1.5,
-"0x54": 3.5,
 "0x58": 2.8,
-"0x59": 0.8,
-"0x0": 0.7,
+"0x30": 0.7,
+"0x54": 3.5,
 "0x4c": 4.3,
+"0x64": 1.5,
+"0x0": 0.7,
+"0x48": 1.0,
+"0x59": 0.8,
 "0x70": 2.6
 },
 "fns": [
@@ -1103,11 +1103,11 @@
 "total": 32.3,
 "confidence": 0.52,
 "alts": {
-"0x4c": 1.0,
-"0x100": 6.3,
-"0x58": 0.9,
 "0x50": 2.2,
 "0x5c": 1.8,
+"0x58": 0.9,
+"0x100": 6.3,
+"0x4c": 1.0,
 "0x68": 0.7,
 "0x74": 2.6
 },
@@ -1150,8 +1150,8 @@
 "confidence": 0.65,
 "alts": {
 "0x60": 2.4,
-"0x64": 0.9,
 "0x58": 1.5,
+"0x64": 0.9,
 "0x70": 0.7,
 "0x7c": 2.6
 },
@@ -1173,8 +1173,8 @@
 "alts": {
 "0x58": 2.0,
 "0x64": 1.6,
-"0x68": 0.9,
 "0x5c": 1.5,
+"0x68": 0.9,
 "0x74": 0.7,
 "0x80": 2.6
 },
@@ -1194,13 +1194,13 @@
 "total": 35.7,
 "confidence": 0.66,
 "alts": {
-"0x70": 0.7,
-"0x5c": 0.9,
-"0x84": 3.4,
 "0x68": 2.5,
-"0x6c": 1.9,
-"0x60": 1.5,
 "0xb8": 0.7,
+"0x60": 1.5,
+"0x5c": 0.9,
+"0x6c": 1.9,
+"0x84": 3.4,
+"0x70": 0.7,
 "0x78": 0.7
 },
 "fns": [
@@ -1220,8 +1220,8 @@
 "confidence": 0.63,
 "alts": {
 "0x6c": 2.5,
-"0x70": 0.9,
 "0x64": 1.5,
+"0x70": 0.9,
 "0x7c": 0.7,
 "0x88": 2.6
 },
@@ -1271,11 +1271,11 @@
 "total": 15.4,
 "confidence": 0.39,
 "alts": {
+"0x68": 1.5,
+"0x74": 1.9,
 "0x8c": 3.6,
 "0x70": 0.9,
-"0x74": 1.9,
 "0x48": 0.8,
-"0x68": 1.5,
 "0x80": 0.7
 },
 "fns": [
@@ -1294,11 +1294,11 @@
 "total": 24.1,
 "confidence": 0.52,
 "alts": {
-"0x74": 0.9,
 "0x88": 0.7,
-"0x78": 1.9,
 "0x6c": 1.5,
 "0xb8": 0.7,
+"0x78": 1.9,
+"0x74": 0.9,
 "0x84": 0.7,
 "0x90": 4.2,
 "0x4c": 0.9
@@ -1319,13 +1319,13 @@
 "total": 21.9,
 "confidence": 0.53,
 "alts": {
-"0x8": 0.8,
-"0x78": 0.9,
-"0x7c": 1.9,
+"0x210": 3.7,
 "0x70": 1.5,
+"0x8": 0.8,
 "0xb4": 0.7,
-"0x88": 0.7,
-"0x210": 3.7
+"0x7c": 1.9,
+"0x78": 0.9,
+"0x88": 0.7
 },
 "fns": [
 "??0BuildListInfo@@QAE@XZ",
@@ -1343,13 +1343,13 @@
 "total": 13.6,
 "confidence": 0.31,
 "alts": {
+"0x74": 1.5,
 "0x10": 0.8,
+"0x214": 2.7,
+"0x80": 1.9,
 "0x84": 0.9,
 "0x7c": 0.9,
-"0x80": 1.9,
-"0x74": 1.5,
-"0x8c": 0.7,
-"0x214": 2.7
+"0x8c": 0.7
 },
 "fns": [
 "??0BuildListInfo@@QAE@XZ",
@@ -1367,13 +1367,13 @@
 "total": 19.1,
 "confidence": 0.56,
 "alts": {
-"0x3c": 0.8,
-"0x80": 0.9,
 "0xa0": 0.7,
-"0x84": 0.9,
 "0x78": 2.5,
-"0x90": 0.7,
-"0x218": 1.8
+"0x3c": 0.8,
+"0x218": 1.8,
+"0x84": 0.9,
+"0x80": 0.9,
+"0x90": 0.7
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
@@ -1405,15 +1405,15 @@
 "total": 13.7,
 "confidence": 0.3,
 "alts": {
+"0x7c": 2.5,
+"0x21c": 0.9,
 "0x15c": 1.0,
 "0x280": 1.0,
 "0x160": 0.8,
-"0x84": 0.9,
 "0x88": 0.9,
-"0x7c": 2.5,
-"0x94": 0.7,
-"0x21c": 0.9,
-"0xb0": 0.9
+"0x84": 0.9,
+"0xb0": 0.9,
+"0x94": 0.7
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
@@ -1431,9 +1431,9 @@
 "total": 9.4,
 "confidence": 0.36,
 "alts": {
-"0x94": 0.9,
-"0x88": 1.7,
 "0x84": 1.7,
+"0x88": 1.7,
+"0x94": 0.9,
 "0x8c": 0.9,
 "0x98": 0.7
 },
@@ -1481,12 +1481,12 @@
 "total": 21.0,
 "confidence": 0.58,
 "alts": {
-"0x164": 0.8,
-"0x8c": 1.7,
 "0xac": 0.7,
-"0x90": 0.9,
 "0x84": 3.4,
 "0xe8": 0.7,
+"0x8c": 1.7,
+"0x164": 0.8,
+"0x90": 0.9,
 "0x9c": 0.7
 },
 "fns": [
@@ -1505,12 +1505,12 @@
 "total": 13.8,
 "confidence": 0.33,
 "alts": {
+"0x88": 3.4,
+"0x94": 1.7,
 "0x168": 0.8,
 "0x298": 0.9,
 "0x90": 0.9,
-"0x94": 1.7,
 "0x98": 0.9,
-"0x88": 3.4,
 "0xa0": 0.7
 },
 "fns": [
@@ -1529,11 +1529,11 @@
 "total": 15.0,
 "confidence": 0.3,
 "alts": {
-"0x16c": 0.8,
 "0x90": 4.2,
+"0x8c": 1.9,
+"0x16c": 0.8,
 "0x98": 1.9,
 "0x9c": 0.9,
-"0x8c": 1.9,
 "0xa4": 0.7
 },
 "fns": [
@@ -1552,13 +1552,13 @@
 "total": 21.8,
 "confidence": 0.5,
 "alts": {
-"0x9c": 1.9,
 "0xb8": 0.7,
-"0x84": 0.8,
 "0x90": 1.9,
+"0x84": 0.8,
+"0x9c": 1.9,
 "0xa8": 0.7,
-"0x98": 2.9,
-"0xc8": 2.0
+"0xc8": 2.0,
+"0x98": 2.9
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
@@ -1576,12 +1576,12 @@
 "total": 16.9,
 "confidence": 0.3,
 "alts": {
+"0x94": 1.9,
 "0x108": 2.6,
 "0xa0": 1.9,
-"0x94": 1.9,
 "0xac": 0.7,
-"0x9c": 2.7,
-"0xcc": 2.0
+"0xcc": 2.0,
+"0x9c": 2.7
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
@@ -1599,12 +1599,12 @@
 "total": 15.1,
 "confidence": 0.29,
 "alts": {
+"0x98": 1.9,
 "0xcc": 1.7,
 "0xa4": 1.9,
-"0x98": 1.9,
 "0xb0": 0.7,
-"0xa0": 2.6,
-"0xd0": 2.0
+"0xd0": 2.0,
+"0xa0": 2.6
 },
 "fns": [
 "??0AISkirmishPlayer@@QAE@PAVPlayer@@@Z",
@@ -1637,13 +1637,13 @@
 "total": 23.3,
 "confidence": 0.48,
 "alts": {
-"0x2ac": 0.9,
-"0x110": 3.6,
-"0xd0": 1.0,
-"0xe0": 0.7,
-"0xa8": 2.8,
 "0xc4": 0.7,
 "0x9c": 1.0,
+"0xe0": 0.7,
+"0x110": 3.6,
+"0x2ac": 0.9,
+"0xa8": 2.8,
+"0xd0": 1.0,
 "0xb4": 0.7,
 "0xa4": 0.9
 },
@@ -1677,12 +1677,12 @@
 "total": 13.4,
 "confidence": 0.41,
 "alts": {
-"0xd4": 1.0,
 "0xd0": 0.7,
 "0xac": 1.9,
+"0xd4": 1.0,
 "0xb8": 0.7,
-"0xa8": 1.7,
-"0xd8": 2.0
+"0xd8": 2.0,
+"0xa8": 1.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -1700,11 +1700,11 @@
 "total": 9.7,
 "confidence": 0.2,
 "alts": {
-"0xd8": 1.0,
-"0xe4": 0.7,
-"0xbc": 1.6,
 "0xa8": 1.7,
+"0xe4": 0.7,
 "0xb0": 0.9,
+"0xd8": 1.0,
+"0xbc": 1.6,
 "0xac": 1.7
 },
 "fns": [
@@ -1720,12 +1720,13 @@
 "zh": 172,
 "bfme": 172,
 "votes": 12.1,
-"total": 18.4,
-"confidence": 0.66,
+"total": 23.0,
+"confidence": 0.53,
 "alts": {
+"0xd0": 0.7,
+"0x144": 4.7,
 "0xe0": 2.9,
 "0xb4": 0.9,
-"0xd0": 0.7,
 "0xc0": 0.7,
 "0xb0": 1.0
 },
@@ -1742,9 +1743,10 @@
 "zh": 176,
 "bfme": 176,
 "votes": 3.7,
-"total": 6.5,
-"confidence": 0.56,
+"total": 7.5,
+"confidence": 0.49,
 "alts": {
+"0x148": 0.9,
 "0xe4": 1.0,
 "0xb8": 0.9,
 "0xb4": 1.0
@@ -1765,8 +1767,8 @@
 "total": 7.6,
 "confidence": 0.39,
 "alts": {
-"0x2c0": 0.9,
 "0xb4": 2.8,
+"0x2c0": 0.9,
 "0xd0": 0.9
 },
 "fns": [
@@ -1782,12 +1784,13 @@
 "zh": 184,
 "bfme": 184,
 "votes": 11.2,
-"total": 16.8,
-"confidence": 0.67,
+"total": 17.7,
+"confidence": 0.63,
 "alts": {
+"0xdc": 0.7,
+"0x150": 0.9,
 "0xec": 2.9,
 "0xb0": 0.9,
-"0xdc": 0.7,
 "0xc0": 1.0
 },
 "fns": [
@@ -1898,8 +1901,8 @@
 "total": 13.5,
 "confidence": 0.68,
 "alts": {
-"0xc8": 0.9,
 "0xe8": 0.7,
+"0xc8": 0.9,
 "0x104": 0.7,
 "0xf8": 2.0
 },
@@ -1920,8 +1923,8 @@
 "confidence": 0.33,
 "alts": {
 "0x2d4": 0.9,
-"0xe0": 0.7,
 "0xcc": 0.9,
+"0xe0": 0.7,
 "0x108": 0.7,
 "0xfc": 2.0
 },
@@ -1941,9 +1944,9 @@
 "total": 6.2,
 "confidence": 0.32,
 "alts": {
+"0xcc": 1.7,
 "0x13c": 0.8,
 "0xd8": 0.9,
-"0xcc": 1.7,
 "0x10c": 0.7
 },
 "fns": [
@@ -1962,8 +1965,8 @@
 "total": 16.2,
 "confidence": 0.62,
 "alts": {
-"0xdc": 1.7,
 "0xf4": 0.7,
+"0xdc": 1.7,
 "0x110": 0.7,
 "0xd8": 1.0,
 "0x104": 2.0
@@ -2051,10 +2054,10 @@
 "total": 16.1,
 "confidence": 0.57,
 "alts": {
-"0x2e8": 0.9,
-"0xe8": 1.7,
-"0xf4": 0.9,
 "0x100": 0.7,
+"0xe8": 1.7,
+"0x2e8": 0.9,
+"0xf4": 0.9,
 "0x11c": 0.7,
 "0xe4": 2.0
 },
@@ -2116,11 +2119,11 @@
 "total": 16.2,
 "confidence": 0.63,
 "alts": {
+"0x10c": 0.7,
+"0xd4": 0.7,
 "0x2f4": 0.9,
 "0x100": 0.9,
-"0xd4": 0.7,
 "0xf4": 0.9,
-"0x10c": 0.7,
 "0xf0": 2.0
 },
 "fns": [
@@ -2153,8 +2156,8 @@
 "total": 7.0,
 "confidence": 0.37,
 "alts": {
-"0x104": 1.8,
 "0xe8": 0.7,
+"0x104": 1.8,
 "0xf8": 0.9,
 "0xf4": 1.0
 },
@@ -2174,10 +2177,10 @@
 "total": 7.0,
 "confidence": 0.26,
 "alts": {
-"0x160": 0.8,
-"0xd8": 0.7,
-"0xfc": 0.9,
 "0xf0": 1.7,
+"0xd8": 0.7,
+"0x160": 0.8,
+"0xfc": 0.9,
 "0xf8": 1.0
 },
 "fns": [
@@ -2196,10 +2199,10 @@
 "total": 13.5,
 "confidence": 0.68,
 "alts": {
-"0x10c": 0.9,
-"0xec": 0.7,
-"0x100": 0.9,
 "0x118": 0.7,
+"0xec": 0.7,
+"0x10c": 0.9,
+"0x100": 0.9,
 "0xfc": 1.0
 },
 "fns": [
@@ -2238,8 +2241,8 @@
 "total": 3.6,
 "confidence": 0.51,
 "alts": {
-"0x108": 0.9,
-"0xfc": 0.8
+"0xfc": 0.8,
+"0x108": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2271,9 +2274,9 @@
 "total": 12.7,
 "confidence": 0.8,
 "alts": {
+"0x124": 0.7,
 "0x120": 0.9,
-"0x10c": 0.9,
-"0x124": 0.7
+"0x10c": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2326,8 +2329,8 @@
 "total": 11.7,
 "confidence": 0.86,
 "alts": {
-"0x118": 0.9,
-"0x130": 0.7
+"0x130": 0.7,
+"0x118": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2426,8 +2429,8 @@
 "total": 10.8,
 "confidence": 0.69,
 "alts": {
-"0x124": 0.9,
-"0x118": 2.5
+"0x118": 2.5,
+"0x124": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2445,8 +2448,8 @@
 "total": 4.6,
 "confidence": 0.43,
 "alts": {
-"0x128": 0.9,
-"0x140": 1.7
+"0x140": 1.7,
+"0x128": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2512,11 +2515,11 @@
 "total": 5.0,
 "confidence": 0.18,
 "alts": {
-"0x150": 0.7,
 "0x12c": 0.8,
 "0x13c": 0.8,
 "0x14c": 0.9,
-"0x15c": 0.8
+"0x15c": 0.8,
+"0x150": 0.7
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2615,8 +2618,8 @@
 "total": 5.5,
 "confidence": 0.51,
 "alts": {
-"0xd4": 0.9,
 "0x178": 0.8,
+"0xd4": 0.9,
 "0x29c": 1.0
 },
 "fns": [
@@ -2635,8 +2638,8 @@
 "total": 2.7,
 "confidence": 0.36,
 "alts": {
-"0xc0": 0.9,
-"0x17c": 0.8
+"0x17c": 0.8,
+"0xc0": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2654,9 +2657,9 @@
 "total": 3.5,
 "confidence": 0.28,
 "alts": {
-"0x150": 0.9,
 "0x174": 0.8,
-"0x180": 0.8
+"0x180": 0.8,
+"0x150": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2674,10 +2677,10 @@
 "total": 4.4,
 "confidence": 0.23,
 "alts": {
-"0x154": 0.9,
 "0x150": 0.8,
 "0x178": 0.8,
-"0x190": 0.8
+"0x190": 0.8,
+"0x154": 0.9
 },
 "fns": [
 "??0ControlBarScheme@@QAE@XZ",
@@ -2820,9 +2823,9 @@
 "total": 3.2,
 "confidence": 0.27,
 "alts": {
-"0x274": 0.7,
 "0x194": 0.8,
-"0x1a4": 0.8
+"0x1a4": 0.8,
+"0x274": 0.7
 },
 "fns": [
 "??0PSPlayerStats@@QAE@ABV0@@Z",
@@ -2873,18 +2876,19 @@
 "fn_class": null,
 "member": "+0x178?",
 "zh": 376,
-"bfme": 376,
-"votes": 0.8,
-"total": 2.5,
-"confidence": 0.34,
+"bfme": 720,
+"votes": 4.7,
+"total": 7.1,
+"confidence": 0.65,
 "alts": {
+"0x178": 0.8,
 "0x1a0": 0.8,
 "0x1b0": 0.8
 },
 "fns": [
 "??0PSPlayerStats@@QAE@ABV0@@Z",
-"??4PSPlayerStats@@QAEAAV0@ABV0@@Z",
-"??4WinInstanceData@@QAEAAV0@ABV0@@Z"
+"??0ScoreKeeper@@QAE@XZ",
+"??4PSPlayerStats@@QAEAAV0@ABV0@@Z"
 ]
 },
 {
@@ -2894,15 +2898,16 @@
 "zh": 380,
 "bfme": 380,
 "votes": 2.8,
-"total": 3.7,
-"confidence": 0.78,
+"total": 4.6,
+"confidence": 0.62,
 "alts": {
-"0x1a4": 0.8
+"0x1a4": 0.8,
+"0x2d4": 0.9
 },
 "fns": [
+"??0ScoreKeeper@@QAE@XZ",
 "??1FirewallHelperClass@@UAE@XZ",
-"??4PSPlayerStats@@QAEAAV0@ABV0@@Z",
-"??4WinInstanceData@@QAEAAV0@ABV0@@Z"
+"??4PSPlayerStats@@QAEAAV0@ABV0@@Z"
 ]
 },
 {
@@ -2915,9 +2920,9 @@
 "total": 3.2,
 "confidence": 0.26,
 "alts": {
-"0xf8": 0.7,
 "0x1a8": 0.8,
-"0x184": 0.8
+"0x184": 0.8,
+"0xf8": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -2930,14 +2935,15 @@
 "fn_class": null,
 "member": "+0x184?",
 "zh": 388,
-"bfme": 388,
-"votes": 1.8,
-"total": 4.2,
-"confidence": 0.44,
+"bfme": 732,
+"votes": 4.7,
+"total": 8.9,
+"confidence": 0.52,
 "alts": {
-"0xfc": 0.7,
+"0x184": 1.8,
 "0x1ac": 0.8,
-"0x188": 0.8
+"0x188": 0.8,
+"0xfc": 0.7
 },
 "fns": [
 "??0CDownload@@QAE@PAVIDownload@@@Z",
@@ -2952,17 +2958,18 @@
 "zh": 392,
 "bfme": 392,
 "votes": 1.0,
-"total": 3.4,
-"confidence": 0.3,
+"total": 4.3,
+"confidence": 0.23,
 "alts": {
-"0x9c": 0.7,
 "0x1b0": 0.8,
-"0x18c": 0.8
+"0x18c": 0.8,
+"0x9c": 0.7,
+"0x2e0": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
 "??0PSPlayerStats@@QAE@ABV0@@Z",
-"??0WinInstanceData@@QAE@XZ"
+"??0ScoreKeeper@@QAE@XZ"
 ]
 },
 {
@@ -2975,8 +2982,8 @@
 "total": 2.5,
 "confidence": 0.39,
 "alts": {
-"0xa0": 0.7,
-"0x1b4": 0.8
+"0x1b4": 0.8,
+"0xa0": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -2994,10 +3001,10 @@
 "total": 5.0,
 "confidence": 0.33,
 "alts": {
-"0x1c0": 0.7,
+"0x168": 0.9,
 "0xa4": 0.7,
 "0x190": 1.0,
-"0x168": 0.9
+"0x1c0": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3015,8 +3022,8 @@
 "total": 2.7,
 "confidence": 0.38,
 "alts": {
-"0x1ac": 0.9,
-"0xa8": 0.7
+"0xa8": 0.7,
+"0x1ac": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3048,8 +3055,8 @@
 "total": 3.5,
 "confidence": 0.55,
 "alts": {
-"0xac": 0.7,
-"0x198": 0.8
+"0x198": 0.8,
+"0xac": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3067,8 +3074,8 @@
 "total": 3.5,
 "confidence": 0.53,
 "alts": {
-"0x1b4": 0.9,
-"0xb0": 0.7
+"0xb0": 0.7,
+"0x1b4": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3086,9 +3093,9 @@
 "total": 5.1,
 "confidence": 0.36,
 "alts": {
-"0x1b8": 0.9,
+"0x1c8": 1.6,
 "0xb4": 0.7,
-"0x1c8": 1.6
+"0x1b8": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3106,8 +3113,8 @@
 "total": 3.5,
 "confidence": 0.53,
 "alts": {
-"0x1bc": 0.9,
-"0xb8": 0.7
+"0xb8": 0.7,
+"0x1bc": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3142,8 +3149,8 @@
 "total": 3.3,
 "confidence": 0.49,
 "alts": {
-"0x1c4": 0.9,
-"0xc0": 0.7
+"0xc0": 0.7,
+"0x1c4": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3287,8 +3294,8 @@
 "total": 3.3,
 "confidence": 0.49,
 "alts": {
-"0x204": 0.9,
-"0x1f0": 0.7
+"0x1f0": 0.7,
+"0x204": 0.9
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3321,8 +3328,8 @@
 "total": 2.4,
 "confidence": 0.38,
 "alts": {
-"0x1f4": 0.7,
-"0x1fc": 0.7
+"0x1fc": 0.7,
+"0x1f4": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -3532,8 +3539,8 @@
 "total": 4.3,
 "confidence": 0.38,
 "alts": {
-"0x268": 1.0,
 "0x228": 0.7,
+"0x268": 1.0,
 "0x208": 0.9
 },
 "fns": [
@@ -4007,9 +4014,9 @@
 "total": 3.2,
 "confidence": 0.29,
 "alts": {
-"0x310": 0.7,
+"0x3fc": 0.8,
 "0x278": 0.7,
-"0x3fc": 0.8
+"0x310": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -4335,8 +4342,8 @@
 "total": 2.4,
 "confidence": 0.39,
 "alts": {
-"0x380": 0.7,
-"0x2e0": 0.7
+"0x2e0": 0.7,
+"0x380": 0.7
 },
 "fns": [
 "??0ControlBar@@QAE@XZ",
@@ -5275,9 +5282,9 @@
 "total": 3.6,
 "confidence": 0.27,
 "alts": {
+"0xe0": 1.0,
 "0x7e0": 0.7,
-"0x540": 0.9,
-"0xe0": 1.0
+"0x540": 0.9
 },
 "fns": [
 "??0CaveContain@@QAE@PAVThing@@PBVModuleData@@@Z",
@@ -14962,8 +14969,8 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 11.9,
-"total": 11.9,
+"votes": 9.9,
+"total": 9.9,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -14978,8 +14985,8 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 3.8,
-"total": 3.8,
+"votes": 2.8,
+"total": 2.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -17559,8 +17566,8 @@
 "member": "m_goalPosition",
 "zh": 36,
 "bfme": 36,
-"votes": 19.5,
-"total": 19.5,
+"votes": 20.2,
+"total": 20.2,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -18139,8 +18146,8 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 16.3,
-"total": 16.3,
+"votes": 17.0,
+"total": 17.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -18181,11 +18188,25 @@
 {
 "owner": "AIUpdateInterface",
 "fn_class": "AIUpdateInterface",
+"member": "m_currentWaypointID",
+"zh": 40,
+"bfme": 36,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?privateFollowPathAppend@AIUpdateInterface@@MAEXPBUCoord3D@@W4CommandSourceType@@@Z"
+]
+},
+{
+"owner": "AIUpdateInterface",
+"fn_class": "AIUpdateInterface",
 "member": "m_stateMachine",
 "zh": 44,
 "bfme": 48,
-"votes": 12.1,
-"total": 12.8,
+"votes": 12.8,
+"total": 13.5,
 "confidence": 0.94,
 "alts": {
 "0x8": 0.7
@@ -18194,6 +18215,20 @@
 "?getCurrentVictimPos@AIUpdateInterface@@QBEPBUCoord3D@@XZ",
 "?joinTeam@AIUpdateInterface@@UAEXXZ",
 "?privateAttackMoveToPosition@AIUpdateInterface@@MAEXPBUCoord3D@@HW4CommandSourceType@@@Z"
+]
+},
+{
+"owner": "AIUpdateInterface",
+"fn_class": "SupplyTruckAIUpdate",
+"member": "m_nextEnemyScanTime",
+"zh": 48,
+"bfme": 108,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?getActionDelayForDock@SupplyTruckAIUpdate@@UAEIPAVObject@@@Z"
 ]
 },
 {
@@ -18218,10 +18253,13 @@
 "zh": 56,
 "bfme": 56,
 "votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
+"total": 1.7,
+"confidence": 0.59,
+"alts": {
+"0x1c": 0.7
+},
 "fns": [
+"?privateFollowPathAppend@AIUpdateInterface@@MAEXPBUCoord3D@@W4CommandSourceType@@@Z",
 "?setDesiredSpeed@AIUpdateInterface@@QAEXM@Z"
 ]
 },
@@ -18231,12 +18269,12 @@
 "member": "m_lastCommandSource",
 "zh": 60,
 "bfme": 72,
-"votes": 5.2,
-"total": 10.8,
-"confidence": 0.48,
+"votes": 5.9,
+"total": 11.5,
+"confidence": 0.51,
 "alts": {
-"0x3c": 4.7,
-"0x78": 1.0
+"0x78": 1.0,
+"0x3c": 4.7
 },
 "fns": [
 "?friend_setLastCommandSource@AIUpdateInterface@@QAEXW4CommandSourceType@@@Z",
@@ -18561,6 +18599,20 @@
 },
 {
 "owner": "AIUpdateInterface",
+"fn_class": "WorkerAIUpdate",
+"member": "m_nextMoodCheckTime",
+"zh": 480,
+"bfme": 800,
+"votes": 5.1,
+"total": 5.1,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?aiDoCommand@WorkerAIUpdate@@UAEXPBUAICommandParms@@@Z"
+]
+},
+{
+"owner": "AIUpdateInterface",
 "fn_class": "AIUpdateInterface",
 "member": "m_isAttackPath",
 "zh": 494,
@@ -18690,6 +18742,62 @@
 "?friend_notifyStateMachineChanged@AIUpdateInterface@@UAEXXZ",
 "?markAsDead@AIUpdateInterface@@QAEXXZ",
 "?requestPath@AIUpdateInterface@@QAEXPAUCoord3D@@_N@Z"
+]
+},
+{
+"owner": "AIWanderInPlaceState",
+"fn_class": "AIWanderInPlaceState",
+"member": "+0x0?",
+"zh": 0,
+"bfme": 0,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ"
+]
+},
+{
+"owner": "AIWanderInPlaceState",
+"fn_class": "AIWanderInPlaceState",
+"member": "+0x4?",
+"zh": 4,
+"bfme": 4,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ"
+]
+},
+{
+"owner": "AIWanderInPlaceState",
+"fn_class": "AIWanderInPlaceState",
+"member": "m_origin",
+"zh": 80,
+"bfme": 80,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ"
+]
+},
+{
+"owner": "AIWanderInPlaceState",
+"fn_class": "AIWanderInPlaceState",
+"member": "m_timer",
+"zh": 96,
+"bfme": 96,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ"
 ]
 },
 {
@@ -19132,48 +19240,6 @@
 "alts": {},
 "fns": [
 "?peek@AsciiStringData@AsciiString@@QAEPADXZ"
-]
-},
-{
-"owner": "AttackNugget",
-"fn_class": "AttackNugget",
-"member": "+0x20?",
-"zh": 32,
-"bfme": 52,
-"votes": 0.9,
-"total": 0.9,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z"
-]
-},
-{
-"owner": "AttackNugget",
-"fn_class": "AttackNugget",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 56,
-"votes": 0.9,
-"total": 0.9,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z"
-]
-},
-{
-"owner": "AttackNugget",
-"fn_class": "AttackNugget",
-"member": "+0x28?",
-"zh": 40,
-"bfme": 60,
-"votes": 0.9,
-"total": 0.9,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?create@AttackNugget@@UBEPAVObject@@PBV2@PBUCoord3D@@1MI@Z"
 ]
 },
 {
@@ -25903,16 +25969,16 @@
 "member": "m_numberApproachPositionBones",
 "zh": 76,
 "bfme": 76,
-"votes": 3.9,
-"total": 4.7,
-"confidence": 0.84,
+"votes": 4.7,
+"total": 5.4,
+"confidence": 0.86,
 "alts": {
 "0x50": 0.7
 },
 "fns": [
 "?advanceApproachPosition@DockUpdate@@UAE_NPAVObject@@PAUCoord3D@@PAH@Z",
-"?isClearToAdvance@DockUpdate@@UBE_NPBVObject@@H@Z",
-"?onApproachReached@DockUpdate@@UAEXPAVObject@@@Z"
+"?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z",
+"?isClearToAdvance@DockUpdate@@UBE_NPBVObject@@H@Z"
 ]
 },
 {
@@ -25921,11 +25987,12 @@
 "member": "m_positionsLoaded",
 "zh": 80,
 "bfme": 80,
-"votes": 2.0,
-"total": 2.0,
+"votes": 2.8,
+"total": 2.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z",
 "?isClearToAdvance@DockUpdate@@UBE_NPBVObject@@H@Z",
 "?onApproachReached@DockUpdate@@UAEXPAVObject@@@Z"
 ]
@@ -25936,11 +26003,12 @@
 "member": "m_approachPositions",
 "zh": 84,
 "bfme": 84,
-"votes": 0.9,
-"total": 0.9,
+"votes": 1.7,
+"total": 1.7,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z",
 "?reserveApproachPosition@DockUpdate@@UAE_NPAVObject@@PAUCoord3D@@PAH@Z"
 ]
 },
@@ -26531,12 +26599,15 @@
 "fn_class": "Drawable",
 "member": "m_instanceScale",
 "zh": 260,
-"bfme": 260,
+"bfme": 504,
 "votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
+"total": 2.0,
+"confidence": 0.5,
+"alts": {
+"0x104": 1.0
+},
 "fns": [
+"?getScale@Drawable@@QBE?BMXZ",
 "?setInstanceScale@Drawable@@QAEXM@Z"
 ]
 },
@@ -26601,12 +26672,12 @@
 "fn_class": "AnimatedParticleSysBoneClientUpdate",
 "member": "m_drawable",
 "zh": 12,
-"bfme": 12,
-"votes": 4.0,
-"total": 6.9,
-"confidence": 0.58,
+"bfme": 8,
+"votes": 5.7,
+"total": 9.7,
+"confidence": 0.59,
 "alts": {
-"0x8": 2.9
+"0xc": 4.0
 },
 "fns": [
 "??0TreadObjectInfo@W3DTankDraw@@QAE@XZ",
@@ -26970,6 +27041,20 @@
 "alts": {},
 "fns": [
 "?shouldExit@ExitConditions@@UBE_NPBVStateMachine@@@Z"
+]
+},
+{
+"owner": "ExperienceTracker",
+"fn_class": "ExperienceTracker",
+"member": "m_experienceSink",
+"zh": 20,
+"bfme": 24,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?setExperienceSink@ExperienceTracker@@QAEXW4ObjectID@@@Z"
 ]
 },
 {
@@ -27800,6 +27885,20 @@
 "alts": {},
 "fns": [
 "??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ"
+]
+},
+{
+"owner": "FloatUpdate",
+"fn_class": "FloatUpdate",
+"member": "+0x0?",
+"zh": 0,
+"bfme": 0,
+"votes": 0.9,
+"total": 0.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?update@FloatUpdate@@UAE?AW4UpdateSleepTime@@XZ"
 ]
 },
 {
@@ -30520,14 +30619,14 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.9,
-"total": 7.9,
+"votes": 8.8,
+"total": 8.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
 "?deinit@GameTextManager@@UAEXXZ",
-"?readChar@GameTextManager@@IAEDPAVFile@@@Z",
-"?stripSpaces@GameTextManager@@IAEXPAG@Z"
+"?fetch@GameTextManager@@UAE?AVUnicodeString@@VAsciiString@@PA_N@Z",
+"?readChar@GameTextManager@@IAEDPAVFile@@@Z"
 ]
 },
 {
@@ -31189,14 +31288,14 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 67.8,
-"total": 67.8,
+"votes": 67.3,
+"total": 67.3,
 "confidence": 1.0,
 "alts": {},
 "fns": [
 "?assignDefaultGadgetLook@GameWindowManager@@UAEXPAVGameWindow@@PAVGameFont@@_N@Z",
-"?enableWindowsInRange@GameWindowManager@@UAEXPAVGameWindow@@HH_N@Z",
-"?gogoGadgetTabControl@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_TabControlData@@PAVGameFont@@_N@Z"
+"?clearTabList@GameWindowManager@@UAEXXZ",
+"?enableWindowsInRange@GameWindowManager@@UAEXPAVGameWindow@@HH_N@Z"
 ]
 },
 {
@@ -31306,8 +31405,8 @@
 "member": "m_modalHead",
 "zh": 32,
 "bfme": 32,
-"votes": 6.0,
-"total": 6.0,
+"votes": 7.6,
+"total": 7.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -31322,13 +31421,14 @@
 "member": "m_grabWindow",
 "zh": 36,
 "bfme": 36,
-"votes": 3.0,
-"total": 3.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
 "?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z",
-"?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z"
+"?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z",
+"?winGetGrabWindow@GameWindowManager@@UAEPAVGameWindow@@XZ"
 ]
 },
 {
@@ -31351,14 +31451,14 @@
 "member": "m_tabList",
 "zh": 44,
 "bfme": 44,
-"votes": 6.0,
-"total": 6.0,
+"votes": 9.8,
+"total": 9.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?clearTabList@GameWindowManager@@UAEXXZ",
 "?registerTabList@GameWindowManager@@UAEXV?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@@Z",
-"?winNextTab@GameWindowManager@@UAEXPAVGameWindow@@@Z",
-"?winPrevTab@GameWindowManager@@UAEXPAVGameWindow@@@Z"
+"?winNextTab@GameWindowManager@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -31550,20 +31650,6 @@
 "fns": [
 "?Is_Valid@GenericNode@@QBE_NXZ",
 "?Unlink@GenericNode@@QAEXXZ"
-]
-},
-{
-"owner": "GenericNode",
-"fn_class": "INISection",
-"member": "PrevNode+0x28",
-"zh": 48,
-"bfme": 48,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Find_Entry@INISection@@QBEPAUINIEntry@@PBD@Z"
 ]
 },
 {
@@ -33619,6 +33705,20 @@
 "bfme": 16,
 "votes": 2.0,
 "total": 2.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Find_Entry@INISection@@QBEPAUINIEntry@@PBD@Z"
+]
+},
+{
+"owner": "INISection",
+"fn_class": "INISection",
+"member": "EntryIndex+0x4",
+"zh": 48,
+"bfme": 48,
+"votes": 1.0,
+"total": 1.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -38244,8 +38344,8 @@
 "total": 33.2,
 "confidence": 0.73,
 "alts": {
-"0xc": 2.0,
-"0x14": 6.8
+"0x14": 6.8,
+"0xc": 2.0
 },
 "fns": [
 "??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ",
@@ -38309,18 +38409,19 @@
 "member": "m_moduleData+0x18",
 "zh": 32,
 "bfme": 32,
-"votes": 3.6,
-"total": 9.2,
-"confidence": 0.39,
+"votes": 5.1,
+"total": 11.4,
+"confidence": 0.44,
 "alts": {
 "0x28": 1.8,
 "0x1c": 2.9,
+"0x58": 0.7,
 "0x24": 0.9
 },
 "fns": [
+"?doPullInDocking@RailedTransportDockUpdate@@IAEXXZ",
 "?getTurretRotAndPitch@AIUpdateInterface@@QBE_NW4WhichTurretType@@PAM1@Z",
-"?getWhichTurretForWeaponSlot@AIUpdateInterface@@QBE?AW4WhichTurretType@@W4WeaponSlotType@@PAM1@Z",
-"?hasObjectsWantingToEnterOrExit@OpenContain@@UBE_NXZ"
+"?getWhichTurretForWeaponSlot@AIUpdateInterface@@QBE?AW4WhichTurretType@@W4WeaponSlotType@@PAM1@Z"
 ]
 },
 {
@@ -38333,8 +38434,8 @@
 "total": 6.9,
 "confidence": 0.43,
 "alts": {
-"0x30": 1.0,
-"0x28": 2.9
+"0x28": 2.9,
+"0x30": 1.0
 },
 "fns": [
 "?createRadiusDecal@RadiusDecalUpdate@@QAEXABVRadiusDecalTemplate@@MABUCoord3D@@@Z",
@@ -38384,8 +38485,8 @@
 "total": 6.6,
 "confidence": 0.74,
 "alts": {
-"0x2c": 1.0,
-"0x10": 0.7
+"0x10": 0.7,
+"0x2c": 1.0
 },
 "fns": [
 "?clientOnly_getRenderObjBoundBox@W3DModelDraw@@UBE_NPAVOBBoxClass@@@Z",
@@ -38695,6 +38796,20 @@
 },
 {
 "owner": "Module",
+"fn_class": "W3DDebrisDraw",
+"member": "m_moduleData+0x80",
+"zh": 136,
+"bfme": 252,
+"votes": 0.9,
+"total": 0.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z"
+]
+},
+{
+"owner": "Module",
 "fn_class": "W3DTankDraw",
 "member": "m_moduleData+0x90",
 "zh": 152,
@@ -38945,13 +39060,30 @@
 "fn_class": "DeliverPayloadAIUpdate",
 "member": "m_moduleData+0x294",
 "zh": 668,
-"bfme": 668,
-"votes": 1.0,
-"total": 1.0,
+"bfme": 988,
+"votes": 1.7,
+"total": 2.7,
+"confidence": 0.63,
+"alts": {
+"0x29c": 1.0
+},
+"fns": [
+"?aiDoCommand@WorkerAIUpdate@@UAEXPBUAICommandParms@@@Z",
+"?getVisibleItemsDelivered@DeliverPayloadAIUpdate@@QBEHXZ"
+]
+},
+{
+"owner": "Module",
+"fn_class": "WorkerAIUpdate",
+"member": "m_moduleData+0x2a4",
+"zh": 684,
+"bfme": 1024,
+"votes": 0.8,
+"total": 0.8,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getVisibleItemsDelivered@DeliverPayloadAIUpdate@@QBEHXZ"
+"?aiDoCommand@WorkerAIUpdate@@UAEXPBUAICommandParms@@@Z"
 ]
 },
 {
@@ -38994,6 +39126,20 @@
 "alts": {},
 "fns": [
 "?onSelling@TunnelContain@@UAEXXZ"
+]
+},
+{
+"owner": "Module",
+"fn_class": "RiderChangeContain",
+"member": "m_moduleData+0x680",
+"zh": 1672,
+"bfme": 232,
+"votes": 0.7,
+"total": 0.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?isValidContainerFor@RiderChangeContain@@UBE_NPBVObject@@_N@Z"
 ]
 },
 {
@@ -42014,12 +42160,12 @@
 "member": "m_object",
 "zh": 12,
 "bfme": 8,
-"votes": 69.6,
-"total": 92.6,
+"votes": 71.1,
+"total": 95.0,
 "confidence": 0.75,
 "alts": {
-"0xc": 16.1,
-"0x10": 6.8
+"0x10": 7.8,
+"0xc": 16.1
 },
 "fns": [
 "??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ",
@@ -43064,14 +43210,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.0,
-"total": 7.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z",
-"??D?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QBEAAPAVMapObject@@XZ"
+"??D?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QBEAAPAVMapObject@@XZ",
+"??F?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -43080,13 +43225,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z",
 "??F?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -43096,13 +43239,11 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 3.0,
-"total": 3.0,
+"votes": 1.0,
+"total": 1.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z",
 "??F?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -43112,104 +43253,12 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z",
 "??F?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QAEAAU01@XZ"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x10?",
-"zh": 16,
-"bfme": 16,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x14?",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x18?",
-"zh": 24,
-"bfme": 24,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x1c?",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x20?",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
-]
-},
-{
-"owner": "PAVMapObject",
-"fn_class": "PAVMapObject",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z",
-"??0?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@@Z"
 ]
 },
 {
@@ -47662,11 +47711,12 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 1.0,
-"total": 1.0,
+"votes": 1.7,
+"total": 1.7,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?doPullInDocking@RailedTransportDockUpdate@@IAEXXZ",
 "?isClearToEnter@RailedTransportDockUpdate@@UBE_NPBVObject@@@Z"
 ]
 },
@@ -47682,6 +47732,34 @@
 "alts": {},
 "fns": [
 "?isLoadingOrUnloading@RailedTransportDockUpdate@@UAE_NXZ"
+]
+},
+{
+"owner": "RailedTransportDockUpdate",
+"fn_class": "RailedTransportDockUpdate",
+"member": "m_dockingObjectID",
+"zh": 140,
+"bfme": 140,
+"votes": 1.5,
+"total": 1.5,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doPullInDocking@RailedTransportDockUpdate@@IAEXXZ"
+]
+},
+{
+"owner": "RailedTransportDockUpdate",
+"fn_class": "RailedTransportDockUpdate",
+"member": "m_pullInsideDistancePerFrame",
+"zh": 144,
+"bfme": 144,
+"votes": 1.5,
+"total": 1.5,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doPullInDocking@RailedTransportDockUpdate@@IAEXXZ"
 ]
 },
 {
@@ -48031,19 +48109,20 @@
 },
 {
 "owner": "RefCountClass",
-"fn_class": "SceneClass",
+"fn_class": "RenderObjClass",
 "member": "NumRefs+0x18",
 "zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 2.0,
-"confidence": 0.5,
+"bfme": 24,
+"votes": 4.0,
+"total": 5.0,
+"confidence": 0.8,
 "alts": {
-"0x18": 1.0
+"0x1c": 1.0
 },
 "fns": [
-"?Render_Seg_Line@StreakLineClass@@IAEXAAVRenderInfoClass@@@Z",
-"?Set_Fog_Enable@SceneClass@@UAEX_N@Z"
+"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@H@Z",
+"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@PBD@Z",
+"?Get_Transform@RenderObjClass@@QBEABVMatrix3D@@XZ"
 ]
 },
 {
@@ -48137,6 +48216,34 @@
 },
 {
 "owner": "RefCountClass",
+"fn_class": "RenderObjClass",
+"member": "NumRefs+0x50",
+"zh": 84,
+"bfme": 80,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Get_Bounding_Sphere@RenderObjClass@@UBEABVSphereClass@@XZ"
+]
+},
+{
+"owner": "RefCountClass",
+"fn_class": "RenderObjClass",
+"member": "NumRefs+0x60",
+"zh": 100,
+"bfme": 96,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Get_Bounding_Box@RenderObjClass@@UBEABVAABoxClass@@XZ"
+]
+},
+{
+"owner": "RefCountClass",
 "fn_class": "RTS3DScene",
 "member": "NumRefs+0x64",
 "zh": 104,
@@ -48156,10 +48263,13 @@
 "zh": 140,
 "bfme": 140,
 "votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
+"total": 3.0,
+"confidence": 0.67,
+"alts": {
+"0x88": 1.0
+},
 "fns": [
+"?Set_User_Data@RenderObjClass@@UAEXPAX_N@Z",
 "?_bfme_ro_get_8c@RenderObjClass@@UBEMXZ",
 "?_bfme_ro_set_8c@RenderObjClass@@UAEXM@Z"
 ]
@@ -49223,14 +49333,14 @@
 "member": "Bits",
 "zh": 16,
 "bfme": 16,
-"votes": 43.9,
-"total": 43.9,
+"votes": 21.0,
+"total": 21.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Collision_Type@RenderObjClass@@UBEHXZ",
 "?Get_Obj_Space_Bounding_Box@StreakLineClass@@UBEXAAVAABoxClass@@@Z",
-"?Invalidate_Cached_Bounding_Volumes@RenderObjClass@@IBEXXZ"
+"?Invalidate_Cached_Bounding_Volumes@RenderObjClass@@IBEXXZ",
+"?_bfme_ro_flag109@RenderObjClass@@UBEHXZ"
 ]
 },
 {
@@ -49239,23 +49349,21 @@
 "member": "Transform",
 "zh": 24,
 "bfme": 16,
-"votes": 5.0,
-"total": 8.0,
-"confidence": 0.62,
-"alts": {
-"0x18": 3.0
-},
+"votes": 27.9,
+"total": 27.9,
+"confidence": 1.0,
+"alts": {},
 "fns": [
 "?Are_Sub_Object_Transforms_Dirty@RenderObjClass@@QAE_NXZ",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@H@Z",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@PBD@Z"
+"?Get_Collision_Type@RenderObjClass@@UBEHXZ",
+"?Is_Additive@RenderObjClass@@UBEHXZ"
 ]
 },
 {
 "owner": "RenderObjClass",
 "fn_class": "RenderObjClass",
-"member": "ObjectScale",
-"zh": 72,
+"member": "ObjectColor",
+"zh": 76,
 "bfme": 72,
 "votes": 1.0,
 "total": 1.0,
@@ -49268,8 +49376,8 @@
 {
 "owner": "RenderObjClass",
 "fn_class": "RenderObjClass",
-"member": "ObjectColor",
-"zh": 76,
+"member": "CachedBoundingSphere",
+"zh": 80,
 "bfme": 80,
 "votes": 1.0,
 "total": 1.0,
@@ -49282,36 +49390,8 @@
 {
 "owner": "RenderObjClass",
 "fn_class": "RenderObjClass",
-"member": "CachedBoundingSphere",
-"zh": 80,
-"bfme": 80,
-"votes": 0.8,
-"total": 0.8,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Bounding_Sphere@RenderObjClass@@UBEABVSphereClass@@XZ"
-]
-},
-{
-"owner": "RenderObjClass",
-"fn_class": "RenderObjClass",
-"member": "CachedBoundingBox",
-"zh": 96,
-"bfme": 96,
-"votes": 0.8,
-"total": 0.8,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Bounding_Box@RenderObjClass@@UBEABVAABoxClass@@XZ"
-]
-},
-{
-"owner": "RenderObjClass",
-"fn_class": "RenderObjClass",
-"member": "NativeScreenSize",
-"zh": 120,
+"member": "IsTransformIdentity",
+"zh": 124,
 "bfme": 120,
 "votes": 2.0,
 "total": 2.0,
@@ -49327,15 +49407,14 @@
 "fn_class": "BaseHeightMapRenderObjClass",
 "member": "Scene",
 "zh": 128,
-"bfme": 128,
-"votes": 1.9,
-"total": 2.9,
-"confidence": 0.65,
+"bfme": 124,
+"votes": 1.0,
+"total": 1.9,
+"confidence": 0.53,
 "alts": {
-"0x7c": 1.0
+"0x80": 0.9
 },
 "fns": [
-"?Is_In_Scene@RenderObjClass@@UAE_NXZ",
 "?Is_Transform_Identity@RenderObjClass@@QBE_NXZ",
 "?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z"
 ]
@@ -49343,18 +49422,29 @@
 {
 "owner": "RenderObjClass",
 "fn_class": "RenderObjClass",
+"member": "Container",
+"zh": 132,
+"bfme": 128,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?Is_In_Scene@RenderObjClass@@UAE_NXZ"
+]
+},
+{
+"owner": "RenderObjClass",
+"fn_class": "RenderObjClass",
 "member": "User_Data",
 "zh": 136,
-"bfme": 136,
+"bfme": 132,
 "votes": 1.0,
-"total": 2.0,
-"confidence": 0.5,
-"alts": {
-"0x84": 1.0
-},
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
 "fns": [
-"?Get_Container@RenderObjClass@@QBEPAV1@XZ",
-"?Set_User_Data@RenderObjClass@@UAEXPAX_N@Z"
+"?Get_Container@RenderObjClass@@QBEPAV1@XZ"
 ]
 },
 {
@@ -50435,8 +50525,8 @@
 "member": "m_messageWindow",
 "zh": 0,
 "bfme": 0,
-"votes": 41.7,
-"total": 41.7,
+"votes": 43.4,
+"total": 43.4,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -50465,8 +50555,8 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 16.1,
-"total": 16.1,
+"votes": 17.5,
+"total": 17.5,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -52041,8 +52131,8 @@
 "member": "m_ID",
 "zh": 8,
 "bfme": 8,
-"votes": 10.5,
-"total": 10.5,
+"votes": 11.2,
+"total": 11.2,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -52074,12 +52164,12 @@
 "fn_class": "AIFollowWaypointPathState",
 "member": "m_failureStateID",
 "zh": 16,
-"bfme": 12,
+"bfme": 16,
 "votes": 1.0,
 "total": 2.0,
 "confidence": 0.5,
 "alts": {
-"0x10": 1.0
+"0xc": 1.0
 },
 "fns": [
 "?calcExtraPathDistance@AIFollowWaypointPathState@@IAEMXZ",
@@ -52140,8 +52230,8 @@
 "member": "m_machine",
 "zh": 32,
 "bfme": 28,
-"votes": 83.9,
-"total": 84.9,
+"votes": 84.6,
+"total": 85.6,
 "confidence": 0.99,
 "alts": {
 "0x20": 1.0
@@ -52202,14 +52292,14 @@
 "member": "m_machine+0x8",
 "zh": 40,
 "bfme": 40,
-"votes": 2.7,
-"total": 2.7,
+"votes": 4.1,
+"total": 4.1,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?onEnter@AIWanderInPlaceState@@UAE?AW4StateReturnType@@XZ",
 "?onExit@AIAttackApproachTargetState@@UAEXW4StateExitType@@@Z",
-"?update@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ",
-"?update@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ"
+"?update@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ"
 ]
 },
 {
@@ -53031,8 +53121,8 @@
 "member": "m_name",
 "zh": 4,
 "bfme": 4,
-"votes": 32.0,
-"total": 34.9,
+"votes": 32.9,
+"total": 35.9,
 "confidence": 0.92,
 "alts": {
 "0x8": 2.9
@@ -62125,8 +62215,8 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 18.2,
-"total": 18.2,
+"votes": 19.0,
+"total": 19.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
@@ -62147,6 +62237,20 @@
 "alts": {},
 "fns": [
 "??0?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@ABV?$allocator@UCoord3D@@@1@@Z"
+]
+},
+{
+"owner": "UCoord3D",
+"fn_class": "UCoord3D",
+"member": "+0x8?",
+"zh": 8,
+"bfme": 8,
+"votes": 0.8,
+"total": 0.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"??1?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@XZ"
 ]
 },
 {
@@ -63328,14 +63432,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.0,
-"total": 7.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z",
-"??D?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QBEAAVBuddyRequest@@XZ"
+"??D?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QBEAAVBuddyRequest@@XZ",
+"??E?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -63344,13 +63447,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63360,13 +63461,11 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63376,104 +63475,12 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x10?",
-"zh": 16,
-"bfme": 16,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x14?",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x18?",
-"zh": 24,
-"bfme": 24,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x1c?",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x20?",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyRequest",
-"fn_class": "VBuddyRequest",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z",
-"??0?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@@Z"
 ]
 },
 {
@@ -63482,14 +63489,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.0,
-"total": 7.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z",
-"??D?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QBEAAVBuddyResponse@@XZ"
+"??D?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QBEAAVBuddyResponse@@XZ",
+"??E?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -63498,13 +63504,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63514,13 +63518,11 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63530,104 +63532,12 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z",
 "??E?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x10?",
-"zh": 16,
-"bfme": 16,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x14?",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x18?",
-"zh": 24,
-"bfme": 24,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x1c?",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x20?",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
-]
-},
-{
-"owner": "VBuddyResponse",
-"fn_class": "VBuddyResponse",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z",
-"??0?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@@Z"
 ]
 },
 {
@@ -63873,14 +63783,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.0,
-"total": 7.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
-"??D?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QBEAAVGameResultsRequest@@XZ"
+"??D?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QBEAAVGameResultsRequest@@XZ",
+"??E?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -63889,13 +63798,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
 "??E?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63905,13 +63812,11 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
 "??E?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63921,14 +63826,14 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 5.6,
-"total": 5.6,
+"votes": 3.6,
+"total": 3.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
-"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
+"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ",
+"??E?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -63937,44 +63842,12 @@
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
-"votes": 2.9,
-"total": 2.9,
+"votes": 0.9,
+"total": 0.9,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
 "??1?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
-]
-},
-{
-"owner": "VGameResultsRequest",
-"fn_class": "VGameResultsRequest",
-"member": "+0x14?",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z"
-]
-},
-{
-"owner": "VGameResultsRequest",
-"fn_class": "VGameResultsRequest",
-"member": "+0x18?",
-"zh": 24,
-"bfme": 24,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z"
 ]
 },
 {
@@ -63983,14 +63856,13 @@
 "member": "+0x1c?",
 "zh": 28,
 "bfme": 28,
-"votes": 3.6,
-"total": 3.6,
+"votes": 1.6,
+"total": 1.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
-"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
+"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
 ]
 },
 {
@@ -63999,29 +63871,13 @@
 "member": "+0x20?",
 "zh": 32,
 "bfme": 32,
-"votes": 5.2,
-"total": 5.2,
+"votes": 3.2,
+"total": 3.2,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z",
-"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
-]
-},
-{
-"owner": "VGameResultsRequest",
-"fn_class": "VGameResultsRequest",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z",
-"??0?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@@Z"
+"??1?$_Deque_base@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@XZ"
 ]
 },
 {
@@ -64030,14 +63886,13 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 7.0,
-"total": 7.0,
+"votes": 5.0,
+"total": 5.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
-"??D?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QBEAAVGameResultsResponse@@XZ"
+"??D?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QBEAAVGameResultsResponse@@XZ",
+"??E?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -64046,13 +63901,11 @@
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
 "??E?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -64062,13 +63915,11 @@
 "member": "+0x8?",
 "zh": 8,
 "bfme": 8,
-"votes": 4.0,
-"total": 4.0,
+"votes": 2.0,
+"total": 2.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
 "??E?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -64078,14 +63929,14 @@
 "member": "+0xc?",
 "zh": 12,
 "bfme": 12,
-"votes": 5.6,
-"total": 5.6,
+"votes": 3.6,
+"total": 3.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
-"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
+"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ",
+"??E?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -64094,44 +63945,12 @@
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
-"votes": 2.9,
-"total": 2.9,
+"votes": 0.9,
+"total": 0.9,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
 "??1?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
-]
-},
-{
-"owner": "VGameResultsResponse",
-"fn_class": "VGameResultsResponse",
-"member": "+0x14?",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z"
-]
-},
-{
-"owner": "VGameResultsResponse",
-"fn_class": "VGameResultsResponse",
-"member": "+0x18?",
-"zh": 24,
-"bfme": 24,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z"
 ]
 },
 {
@@ -64140,14 +63959,13 @@
 "member": "+0x1c?",
 "zh": 28,
 "bfme": 28,
-"votes": 3.6,
-"total": 3.6,
+"votes": 1.6,
+"total": 1.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
-"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
+"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
 ]
 },
 {
@@ -64156,29 +63974,13 @@
 "member": "+0x20?",
 "zh": 32,
 "bfme": 32,
-"votes": 5.2,
-"total": 5.2,
+"votes": 3.2,
+"total": 3.2,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z",
-"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
-]
-},
-{
-"owner": "VGameResultsResponse",
-"fn_class": "VGameResultsResponse",
-"member": "+0x24?",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z",
-"??0?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@@Z"
+"??1?$_Deque_base@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ",
+"??1?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@XZ"
 ]
 },
 {
@@ -68289,6 +68091,105 @@
 ]
 },
 {
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "+0x0?",
+"zh": 0,
+"bfme": 0,
+"votes": 5.1,
+"total": 5.1,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z",
+"?setModelName@W3DDebrisDraw@@UAEXVAsciiString@@HW4ShadowType@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_modelColor",
+"zh": 24,
+"bfme": 24,
+"votes": 3.9,
+"total": 3.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?setModelName@W3DDebrisDraw@@UAEXVAsciiString@@HW4ShadowType@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_renderObject",
+"zh": 40,
+"bfme": 36,
+"votes": 4.6,
+"total": 4.6,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_fxFinal",
+"zh": 56,
+"bfme": 56,
+"votes": 2.3,
+"total": 2.3,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?setModelName@W3DDebrisDraw@@UAEXVAsciiString@@HW4ShadowType@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_state",
+"zh": 60,
+"bfme": 56,
+"votes": 6.5,
+"total": 6.5,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_frames",
+"zh": 64,
+"bfme": 60,
+"votes": 2.8,
+"total": 2.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z"
+]
+},
+{
+"owner": "W3DDebrisDraw",
+"fn_class": "W3DDebrisDraw",
+"member": "m_finalStop",
+"zh": 68,
+"bfme": 64,
+"votes": 0.9,
+"total": 0.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?doDrawModule@W3DDebrisDraw@@UAEXPBVMatrix3D@@@Z"
+]
+},
+{
 "owner": "W3DDisplayString",
 "fn_class": "W3DDisplayString",
 "member": "+0x0?",
@@ -70034,15 +69935,44 @@
 {
 "owner": "W3DShadowGeometryMesh",
 "fn_class": "W3DShadowGeometryMesh",
-"member": "+0x8?",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
+"member": "+0x0?",
+"zh": 0,
+"bfme": 0,
+"votes": 1.9,
+"total": 1.9,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?GetVertex@W3DShadowGeometryMesh@@IBEABVVector3@@H@Z"
+"?buildPolygonNormal@W3DShadowGeometryMesh@@IBEPAVVector3@@JPAV2@@Z"
+]
+},
+{
+"owner": "W3DShadowGeometryMesh",
+"fn_class": "W3DShadowGeometryMesh",
+"member": "+0x4?",
+"zh": 4,
+"bfme": 4,
+"votes": 1.9,
+"total": 1.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?buildPolygonNormal@W3DShadowGeometryMesh@@IBEPAVVector3@@JPAV2@@Z"
+]
+},
+{
+"owner": "W3DShadowGeometryMesh",
+"fn_class": "W3DShadowGeometryMesh",
+"member": "+0x8?",
+"zh": 8,
+"bfme": 8,
+"votes": 3.9,
+"total": 3.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?GetVertex@W3DShadowGeometryMesh@@IBEABVVector3@@H@Z",
+"?buildPolygonNormal@W3DShadowGeometryMesh@@IBEPAVVector3@@JPAV2@@Z"
 ]
 },
 {
@@ -70052,11 +69982,28 @@
 "zh": 12,
 "bfme": 12,
 "votes": 1.0,
+"total": 2.0,
+"confidence": 0.51,
+"alts": {
+"0x10": 1.0
+},
+"fns": [
+"?GetPolygonNormal@W3DShadowGeometryMesh@@QBEABVVector3@@J@Z",
+"?buildPolygonNormal@W3DShadowGeometryMesh@@IBEPAVVector3@@JPAV2@@Z"
+]
+},
+{
+"owner": "W3DShadowGeometryMesh",
+"fn_class": "W3DShadowGeometryMesh",
+"member": "+0x1c?",
+"zh": 28,
+"bfme": 32,
+"votes": 1.0,
 "total": 1.0,
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?GetPolygonNormal@W3DShadowGeometryMesh@@QBEABVVector3@@J@Z"
+"?buildPolygonNormal@W3DShadowGeometryMesh@@IBEPAVVector3@@JPAV2@@Z"
 ]
 },
 {
@@ -72524,12 +72471,27 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 1.9,
-"total": 1.9,
+"votes": 5.7,
+"total": 5.7,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?ReAcquireResources@WaterTracksRenderSystem@@QAEXXZ",
 "?saveTracks@WaterTracksRenderSystem@@QAEXXZ"
+]
+},
+{
+"owner": "WaterTracksRenderSystem",
+"fn_class": "WaterTracksRenderSystem",
+"member": "+0x4?",
+"zh": 4,
+"bfme": 4,
+"votes": 3.8,
+"total": 3.8,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?ReAcquireResources@WaterTracksRenderSystem@@QAEXXZ"
 ]
 },
 {
@@ -72560,6 +72522,48 @@
 "alts": {},
 "fns": [
 "?bindTrack@WaterTracksRenderSystem@@QAEPAVWaterTracksObj@@W4waveType@@@Z"
+]
+},
+{
+"owner": "WaterTracksRenderSystem",
+"fn_class": "WaterTracksRenderSystem",
+"member": "+0x18?",
+"zh": 24,
+"bfme": 24,
+"votes": 5.7,
+"total": 5.7,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?ReAcquireResources@WaterTracksRenderSystem@@QAEXXZ"
+]
+},
+{
+"owner": "WaterTracksRenderSystem",
+"fn_class": "WaterTracksRenderSystem",
+"member": "+0x1c?",
+"zh": 28,
+"bfme": 28,
+"votes": 1.9,
+"total": 1.9,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?ReAcquireResources@WaterTracksRenderSystem@@QAEXXZ"
+]
+},
+{
+"owner": "WaterTracksRenderSystem",
+"fn_class": "WaterTracksRenderSystem",
+"member": "+0x20?",
+"zh": 32,
+"bfme": 32,
+"votes": 1.0,
+"total": 1.0,
+"confidence": 1.0,
+"alts": {},
+"fns": [
+"?ReAcquireResources@WaterTracksRenderSystem@@QAEXXZ"
 ]
 },
 {
@@ -75044,14 +75048,14 @@
 "member": "+0x0?",
 "zh": 0,
 "bfme": 0,
-"votes": 5.7,
-"total": 5.7,
+"votes": 6.6,
+"total": 6.6,
 "confidence": 1.0,
 "alts": {},
 "fns": [
+"?aiDoCommand@WorkerAIUpdate@@UAEXPBUAICommandParms@@@Z",
 "?canAcceptNewRepair@WorkerAIUpdate@@UAE_NPAVObject@@@Z",
-"?createMachines@WorkerAIUpdate@@AAEXXZ",
-"?getMostRecentCommand@WorkerAIUpdate@@UAE?AW4DozerTask@@XZ"
+"?createMachines@WorkerAIUpdate@@AAEXXZ"
 ]
 },
 {
