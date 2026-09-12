@@ -6,13 +6,13 @@
 class GameSlot
 {
 public:
-	unsigned int getIP() const { return m_ip; }
+	unsigned int getIP() const { return m_connectInfo; }
 	unsigned short getPort() const { return m_port; }
 	void setPort(unsigned short port) { m_port = port; }
 	unsigned char getNATBehavior() const { return m_natBehavior; }
 private:
 	unsigned char m_pad[0x30];
-	unsigned int m_ip;
+	unsigned int m_connectInfo;
 	unsigned short m_port;
 	unsigned char m_pad2[2];
 	unsigned char m_natBehavior;
