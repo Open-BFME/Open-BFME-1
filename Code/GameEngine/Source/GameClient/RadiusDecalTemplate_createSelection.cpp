@@ -1,5 +1,5 @@
-// ?d_004588d0@@YAXXZ
-// partial score=0.99 date=2026-09-11
+// Open-BFME5: RadiusDecalTemplate::createRadiusDecal selection overload.
+// ?createRadiusDecal@RadiusDecalTemplate@@QAEXMMMIHAAVRadiusDecal@@M@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /O2
 
 #include <string.h>
@@ -99,10 +99,10 @@ public:
 	void clear(void);
 };
 
-class Rva004588D0RadiusDecalTemplate
+class RadiusDecalTemplate
 {
 public:
-	void create(float, float, float, unsigned int, int, RadiusDecal &, float);
+	void createRadiusDecal(float, float, float, unsigned int, int, RadiusDecal &, float);
 
 private:
 	AsciiString m_name;
@@ -120,8 +120,8 @@ private:
 	float m_rotationsPerMinute;
 };
 
-// ?create@Rva004588D0RadiusDecalTemplate@@QAEXMMMIHAAVRadiusDecal@@M@Z
-void Rva004588D0RadiusDecalTemplate::create(
+// ?createRadiusDecal@RadiusDecalTemplate@@QAEXMMMIHAAVRadiusDecal@@M@Z
+void RadiusDecalTemplate::createRadiusDecal(
 	float x,
 	float y,
 	float z,
