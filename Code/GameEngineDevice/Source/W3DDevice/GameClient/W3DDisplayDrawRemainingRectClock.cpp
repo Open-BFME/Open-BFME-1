@@ -1,30 +1,9 @@
 // ?drawRemainingRectClock@W3DDisplay@@UAEXMMMMMK@Z
-// partial score=0.90 date=2026-09-11
-// Retail RVA 0x006ECA80; W3DDisplay vtable slot +0xCC (after the matched
-// drawRectClock slot +0xC8).  The 544-byte body is the BFME radial remaining
-// clock variant: it clamps the percentage, builds an ellipse fan, and sends
-// each triangle through the already matched BfmeA1207 helper.
-//
-// The two-pi data reference is a separate retail literal at VA 0x0111E36C;
-// it is pinned under g_bfmeDisplayTwoPi rather than being recreated locally.
-//
-// Fixed vs the 0.84 bank: the count-multiply/pop shape (fusing the K1266B
-// multiply into the bfmeMathVE cast expression keeps the ternary maxHalf
-// value resident across the fraction multiply, matching retail's deferred
-// "fstp st(0)" discard) and the zero1/zero2/zero3 store order (declare them
-// zero3,zero2,zero1 so the compiler's argument-order materialization comes
-// out ascending like retail's). ours=550B vs retail=544B, 117 non-reloc
-// diff bytes, first divergence now at +0x107: retail speculatively loads
-// dword ptr [esp+0x30] (previous.X) between the centerX/centerY register
-// loads that precede the do-while loop and keeps that one FPU register
-// resident across the whole loop for one of the two vertex-sum adds inside
-// the loop body (loop body itself is otherwise byte-exact); nothing tried
-// here (temp-variable reordering of the X/Y sum expressions, zero-struct
-// declaration order) reproduces that speculative preload. Ruled out:
-// reordering the countValue statements alone (three-statement form always
-// pops fraction immediately, regardless of maxHalf/fraction operand order);
-// a single fused maxHalf*fraction*K1266B expression (wrong operand order,
-// loads K1266B via fld first, 550B with an extra fld+fmul).
+// Retail RVA 0x006ECA80; W3DDisplay vtable slot +0xCC (slot 51).
+// Exact BFME body: 544 bytes, 14 relocations, verified by the limited fleet probe.
+// The adjacent matched drawRectClock slot is +0xC8; this method owns the next slot.
+// BfmeV1207 assignment and the four-byte x87 conversion helper preserve the
+// native BFME codegen shape. The generated dump remains untouched.
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned long UnsignedInt;
@@ -33,6 +12,7 @@ struct BfmeV1207
 {
 	BfmeV1207() {}
 	BfmeV1207(float x, float y) : X(x), Y(y) {}
+	BfmeV1207 &operator=(const BfmeV1207 &v) { X = v.X; Y = v.Y; return *this; }
 	float X;
 	float Y;
 };
