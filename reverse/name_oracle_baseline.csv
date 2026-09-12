@@ -240,8 +240,6 @@ GameMessage+0x18|m_bfmeTail|m_argCount,Code/GameEngine/Source/GameNetwork/Networ
 GameMessage+0x18|m_bfmeTail|m_argCount,Code/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,119,1.00,layout_witness
 GameSlot+0x10|m_color|m_startPos,Code/GameEngine/Source/GameNetwork/ResetLanSession.cpp,12,1.00,layout_witness
 GameSlot+0x10|m_playerTemplate|m_startPos,Code/GameEngine/Source/GameNetwork/GameInfo_allSameTeam.cpp,38,1.00,layout_witness
-GameSlot+0x10|m_startPosition|m_startPos,Code/GameEngine/Source/GameClient/GUI/Gen00525EE0MapRefresh.cpp,143,1.00,layout_witness
-GameSlot+0x10|m_startPosition|m_startPos,Code/GameEngine/Source/GameClient/GUI/Gen00525EE0StartPositionInfo.cpp,21,1.00,layout_witness
 GameSlot+0x14|m_teamNumber|m_playerTemplate,Code/GameEngine/Source/GameNetwork/GameInfo_allSameTeam.cpp,39,1.00,layout_witness
 GameSlot+0x2c|m_bfmeSlotNameKeyText|m_IP,Code/GameEngine/Source/GameNetwork/Network_processDestroyPlayerCommand.cpp,77,1.00,layout_witness
 GameSlot+0x2c|m_internalPlayerName|m_IP,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva004EB2A0NotificationOtherMode.cpp,39,1.00,layout_witness

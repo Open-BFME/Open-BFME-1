@@ -133,13 +133,13 @@ class GameSlot
 public:
 	bool isAI(void) const;
 	bool isHuman(void) const;
-	int getStartPosition(void) const { return m_startPosition; }
+	int getStartPosition(void) const { return m_startPos; }
 	int getPlayerTemplate(void) const { return m_playerTemplate; }
 	int getColor(void) const { return m_color; }
 
 private:
 	unsigned char m_unmodelled[0x10];
-	int m_startPosition;
+	int m_startPos;
 	int m_playerTemplate;
 	int m_color;
 };

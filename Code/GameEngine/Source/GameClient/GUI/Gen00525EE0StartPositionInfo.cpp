@@ -14,10 +14,10 @@ private:
 class GameSlot
 {
 public:
-	int getStartPosition(void) const { return m_startPosition; }
+	int getStartPosition(void) const { return m_startPos; }
 private:
 	unsigned char m_unmodelled[0x10];
-	int m_startPosition;
+	int m_startPos;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
