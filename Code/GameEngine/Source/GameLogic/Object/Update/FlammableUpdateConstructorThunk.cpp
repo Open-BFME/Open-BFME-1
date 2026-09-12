@@ -46,7 +46,12 @@ class DamageModuleInterface { public: virtual void slot(); };
 class FlammableUpdateModuleData
 {
 private:
-    unsigned char m_pad[0x1c];
+    unsigned char m_pad00[8];
+    unsigned int m_burnedDelay;
+    unsigned int m_aflameDuration;
+    unsigned int m_aflameDamageDelay;
+    int m_aflameDamageAmount;
+    void *m_burningSoundName;
 
 public:
     float m_flameDamageLimit;
