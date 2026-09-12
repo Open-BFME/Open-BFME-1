@@ -87303,3 +87303,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x0002694A,ICF helper route for PeerThread 0x00647F90: pointer deque init is the verified 203-byte 4-byte ICF body shared with 0x003546E0/0x003684C0; retail call encodes j_0002694a
 ?_M_push_back_aux_v@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXABQAX@Z,0x00036C82,ICF helper route for PeerThread 0x00647F90: pointer deque push body 0x00369710 is the verified 101-byte retail helper; call encodes j_00036c82
 ?g_bfmeChatColor@@3HA,0x00EB73F8,BFME disconnect chat listbox color; retail VA 0x012B73F8
+?j_0002f95a@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A,UpgradeCenter::findUpgrade call uses the retail ILT at 0x0002F95A
+?j_00004f8e@?$vector@PBVUpgradeTemplate@@V?$allocator@PBVUpgradeTemplate@@@_STL@@@_STL@@IAEXPAPBVUpgradeTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x00004F8E,STLport pointer vector overflow ILT for ExperienceLevel upgrades
