@@ -58,3 +58,18 @@ BfmeNamedBG::BfmeNamedBG(const AsciiStringBG &name)
 
 	m_bfmeCBG = 0;
 }
+
+// BfmeNamedBG's own destructor (BfmeNamedDtorBG.cpp, retail 0x0060AB40) calls
+// this base sibling's dtor last; it lives here, in the same TU as the
+// constructor, purely so the file keeps a matched row (check_orphans) while
+// staying out-of-line (undefined at the call site, so it cannot be elided).
+class BfmeNamedBaseBG
+{
+public:
+	virtual ~BfmeNamedBaseBG();
+};
+
+// ??1BfmeNamedBaseBG@@UAE@XZ present-unmatched
+BfmeNamedBaseBG::~BfmeNamedBaseBG()
+{
+}

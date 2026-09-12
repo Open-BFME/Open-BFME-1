@@ -87214,3 +87214,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?destroy@Rva000F4250Hash@@QAEXXZ,0x00049EB8,Team destructor retail call via proven ILT
 ?Rva009A7950@@YAXPAHPAGHHHHPBH@Z,0x009A7950,VP6 four-tap filter callee of Rva009A79D0/Rva009A7FE0Vp6Filter; unclaimed and blocked in re_attempts.log
 ?Rva009A7F60@@YAXPAHPAGHHHHPBH@Z,0x009A7F60,VP6 four-tap filter callee of Rva009A7FE0Vp6Filter; unclaimed sibling of 0x009A7950
+?bfmeGetKeyBG@BfmeNamedBG@@QBE?AVAsciiString@@XZ,0x0060AA10,Open-BFME5 scaffold getter in BfmeNamedDtorBG.cpp; reuses the retail generic getter body already claimed by dup_0060aa10
+??1BfmeNamedBaseBG@@UAE@XZ,0x0061E3E0,Open-BFME5 scaffold base dtor in BfmeNamedCtorBG.cpp; retail base-class destructor the named dtor 0x0060AB40 calls last, still a dump
