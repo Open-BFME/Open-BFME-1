@@ -40,7 +40,6 @@ public:
 	}
 
 	void format( UnicodeString fmt, ... );
-};
 
 private:
 	void *m_data;
