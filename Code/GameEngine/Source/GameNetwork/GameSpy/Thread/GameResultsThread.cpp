@@ -49,6 +49,17 @@ namespace _STL
 template <>
 void deque<GameResultsResponse, allocator<GameResultsResponse> >::_M_push_back_aux_v(
 	const GameResultsResponse &response);
+
+// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsRequestDestroyThunk.cpp
+template void __destroy<
+	_Deque_iterator<GameResultsRequest,
+		_Nonconst_traits<GameResultsRequest> >,
+	GameResultsRequest>(
+	_Deque_iterator<GameResultsRequest,
+		_Nonconst_traits<GameResultsRequest> >,
+	_Deque_iterator<GameResultsRequest,
+		_Nonconst_traits<GameResultsRequest> >,
+	GameResultsRequest *);
 }
 
 //-------------------------------------------------------------------------
