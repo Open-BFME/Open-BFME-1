@@ -36,11 +36,12 @@ private:
 class Waypoint;
 
 // TheTerrainLogic's path/boundary cache at +0x550. Entry fields are recovered
-// only from the reset sequence: m_field4 at +0x00, m_next at +0x08, m_prev at
-// +0x0c; nothing else about this cache is modeled.
+// only from the reset sequence: m_field4 at +0x04, m_next at +0x08, m_prev at
+// +0x0c; the first word remains opaque.
 class Rva001ABA80CacheEntry
 {
 public:
+	unsigned char m_unreconstructed_00[4];
 	int m_field4;
 	Rva001ABA80CacheEntry *m_next;
 	Rva001ABA80CacheEntry *m_prev;
@@ -90,14 +91,15 @@ private:
 
 Waypoint::~Waypoint()
 {
-	Rva001ABA80TerrainCache *cache;
+	register Rva001ABA80TerrainCache *cache;
+	Waypoint *self = this;
 
-	if (m_next)
-		m_next->m_prev = m_prev;
-	if (m_prev)
-		m_prev->m_next = m_next;
+	if (self->m_next)
+		self->m_next->m_prev = self->m_prev;
+	if (self->m_prev)
+		self->m_prev->m_next = self->m_next;
 	else
-		g_waypointListHead = m_next;
+		g_waypointListHead = self->m_next;
 
 	if (TheTerrainLogic) {
 		cache = &TheTerrainLogic->m_cache;
@@ -110,5 +112,5 @@ Waypoint::~Waypoint()
 		}
 	}
 
-	Rva001ABA80ResetHook(this);
+	Rva001ABA80ResetHook((void *)(Waypoint *)self);
 }
