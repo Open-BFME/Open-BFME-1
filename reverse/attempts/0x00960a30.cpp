@@ -1,5 +1,5 @@
 // ?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z
-// partial score=0.9950997798451814 date=2026-09-12
+// partial score=0.9960940274128258 date=2026-09-12
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -19,6 +19,8 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 // RVA 0x00960A30: scratch-free bank; TU-local VB ABI declarations included.
+// Preserve the retail MSVC 7.1 inline context and chunk-loop reload order.
+#include "matrix3d.h"
 #include "../attempt_support/0x00960a30.inc"
 #include "seglinerenderer.h"
 #include "ww3d.h"

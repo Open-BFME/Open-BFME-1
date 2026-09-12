@@ -3,11 +3,11 @@
   "symbol": "?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z",
   "rva": "0x00960A30",
   "target_size": 14081,
-  "actual_different_bytes": 69,
-  "byte_similarity_fraction": 0.9950997798451815,
-  "base_commit": "306ce72d707e2e2e8da1d2f57effa60516900a08",
+  "actual_different_bytes": 55,
+  "byte_similarity_fraction": 0.9960940274128258,
+  "base_commit": "2928e6fa3524a5adf90f2cd798235e92ced475c6",
   "bank_source": "reverse/attempts/0x00960a30.cpp",
-  "bank_source_sha256": "ad569027c4c5242013c0526df9fe7517778a8ec16aa1237e3490bbaa83d09f9c",
+  "bank_source_sha256": "c4c70cd1a190f2620dcd95c1301578e14af3f1bab6f3063552d77da3a97b6022",
   "support_source": "reverse/attempt_support/0x00960a30.inc",
   "support_source_sha256": "ad6f0d1b6963a896027e4473565c24476fc54286ba22ed3f6709d8d2fec8af46",
   "complete_source_archive": "reverse/attempt_history/0x00960a30/655db775d83c3ef215e70d9298cd3a8ebd870fae82fc54296a7ebf00fadf30a2.json",
@@ -34,8 +34,8 @@
     "-showIncludes"
   ],
   "fresh_compilation": true,
-  "raw_render_sha256": "6895ee9a13517b68afa6eb6e64c8394d4c09a077cc30e8c3f7d5031fe2d0d851",
-  "resolved_render_sha256": "90deb703963eff60072dccbd672457317183da70577d299ed7bfb5c976363e83",
+  "raw_render_sha256": "a80aff876194e0b9175e0fe46215e425c066ed39f16712a447d98fc487ef48d3",
+  "resolved_render_sha256": "8b05487e7221bec028f1de88f72725ff9dd3291bdd67d3ecdf6528370f0f809c",
   "relocation_count": 190,
   "all_relocations_canonical": true,
   "unresolved": [],
@@ -50,32 +50,6 @@
   "fp_cleanup_count": 73,
   "fp_store_cleanup_sequence_equal_after_same_address_canonicalization": true,
   "remaining_groups": [
-    {
-      "name": "chunk_reload_order",
-      "ranges": [
-        [
-          "0x43b",
-          "0x44a"
-        ]
-      ],
-      "difference_count": 14,
-      "wrong_offsets": [
-        "0x43c",
-        "0x43d",
-        "0x43e",
-        "0x43f",
-        "0x440",
-        "0x441",
-        "0x442",
-        "0x443",
-        "0x444",
-        "0x445",
-        "0x446",
-        "0x447",
-        "0x448",
-        "0x449"
-      ]
-    },
     {
       "name": "merge_same_EA_SIB",
       "ranges": [
@@ -409,10 +383,10 @@
       "status": "PASS"
     }
   ],
-  "probe_summary": "14081 bytes, 190 relocations, 69 non-relocation differences, first +0x43c; no relocation-layout drift",
-  "verified_utc": "2026-09-12T04:23:40.745963+00:00",
-  "previous_checkpoint_different_bytes": 75,
-  "preferred_body_change": "TOP-only projection uses explicit Y-Z-X dot expression with a volatile point.Y read; six byte differences removed; all other raw bytes and relocation tuples unchanged.",
-  "previous_raw_render_sha256": "a233061ecdd0f3a12fc73b616b5b0bc7b7dfc2f34ec749ad13def90c94bea6cb",
-  "independent_review": "2026-09-12: separate reviewer reproduced 69 resolved differences and 17 sibling matches; audited all 143 DIR32 relocations, seven distinct float constants, render_state common base 0x01340EC0, floor IAT 0x013593B8, Vector4 callback, and the two EH cleanup states; no ABI or hidden-data defect found."
+  "probe_summary": "14081 bytes, 190 relocations, 55 non-relocation differences, first +0x1f91; no relocation-layout drift",
+  "verified_utc": "2026-09-12T04:34:51.560115+00:00",
+  "previous_checkpoint_different_bytes": 69,
+  "preferred_body_change": "Canonical matrix3d.h is included before the TU ABI prefix; exactly 14 chunk-loop reload bytes improve over the 69-difference checkpoint, with no other raw-byte or relocation change.",
+  "previous_raw_render_sha256": "6895ee9a13517b68afa6eb6e64c8394d4c09a077cc30e8c3f7d5031fe2d0d851",
+  "independent_review": "2026-09-12: separate reviewer audited all 143 DIR32 operands of the 69-difference predecessor; all 190 relocation tuples remain unchanged. Independent codegen support reproduced this canonical-include 55-difference body and all 17 exact sibling emissions; no class shim or shared-header change is required."
 }
