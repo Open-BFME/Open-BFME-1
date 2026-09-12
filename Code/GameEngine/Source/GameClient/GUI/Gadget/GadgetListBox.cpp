@@ -279,7 +279,7 @@ static void removeSelection( ListboxData *list, Int i )
 	(*(Int **)((char *)list + 0x38))[(list->listLength - 1)] = -1;
 }
 
-static void adjustDisplay( GameWindow *window, Int adjustment, Bool updateSlider );
+void adjustDisplay( GameWindow *window, Int adjustment, Bool updateSlider );
 
 // BFME's listbox record has an inserted four-byte slice before the child
 // pointers and a second inserted slice before displayHeight.  The ordinary ZH
@@ -361,59 +361,9 @@ __declspec(noinline) void __cdecl adjustDisplay( GameWindow *window, Bool update
 	}
 }
 
-// adjustDisplay ==============================================================
-/** Update Display List information inlcuding scrollbar */
-//=============================================================================
-static void adjustDisplay( GameWindow *window, Int adjustment,
-													 Bool updateSlider )
-{
-	Int entry;
-	SliderData *sData;
-	ListboxData *list = (ListboxData *)window->winGetUserData();
-
-	// determin which entry is at the top of the display area
-	entry = getListboxTopEntry( list ) + adjustment;
-
-	if( entry < 0 )
-		entry = 0;
-	else if( entry >= list->endPos )
-		entry = list->endPos - 1;
-
-	if( updateSlider )
-	{
-		if( entry > 0 )
-			list->displayPos = list->listData[(entry - 1)].listHeight + 1;
-		else
-			list->displayPos = 0;
-	}
-
-	if( list->slider != NULL )
-	{
-		ICoord2D sliderSize, sliderChildSize;
-		GameWindow *child;
-
-		sData = (SliderData *)list->slider->winGetUserData();
-		list->slider->winGetSize( &sliderSize.x, &sliderSize.y );
-		// Take into account that there is a line-drawn outline surrounding listbox
-		sData->maxVal = list->totalHeight - ( list->displayHeight - TOTAL_OUTLINE_HEIGHT ) + 1;
-		
-		if( sData->maxVal < 0 )
-		{
-			sData->maxVal = 0;
-		}
-		
-		child = list->slider->winGetChild();
-		child->winGetSize( &sliderChildSize.x, &sliderChildSize.y );
-		sData->numTicks = (float)((sliderSize.y - sliderChildSize.y) / (float)sData->maxVal);
-
-		if( updateSlider )
-			TheWindowManager->winSendSystemMsg( list->slider, 
-																					GSM_SET_SLIDER, 
-																					(sData->maxVal - list->displayPos), 
-																					0 );
-	}
-
-}  // end adjustDisplay
+// The BFME three-argument adjustDisplay body is owned by
+// GadgetListBoxDisplay.cpp at 0x004B7CA0.  Keep this declaration external so
+// callers use the retail cdecl ABI rather than a private same-TU convention.
 
 // BFME uses this file-static delta helper from GadgetListBoxSystem's selected
 // button branch.  Its first parameter uses MSVC's private register convention.
@@ -451,7 +401,7 @@ void forceAdjustDisplayByDelta( GameWindow *window, Int adjustment,
 // independently proven correct by other call sites in this same file, so
 // only the getSize slot is overridden here via the same hand-cast
 // convention GadgetListBoxSetFont already uses for setFont@slot6.
-static void computeTotalHeight( GameWindow *window )
+static __declspec(noinline) void computeTotalHeight( GameWindow *window )
 {
 	Int i, height = 0;
 	Int tempHeight;
@@ -584,124 +534,159 @@ static Int addImageEntry( const Image *image, Color color, Int row, Int column, 
 }// static Int addImageEntry( Image image, Int column, GameWindow *window)
 
 // startingRow will get moved to startingRow+1, etc.  This assumes there is space!!!!!
-// BFME ListboxData field offsets (see GadgetListBoxGetNumEntries / IsFull):
-// listData@+0x18 endPos@+0x2c insertPos@+0x2e multiSelect@+0x0b
-// selectPos@+0x34 selections@+0x38 — keep expression shape of ZH body for MSVC 7.1.
+// BFME ListboxData field offsets: listData@+0x18 endPos@+0x2c
+// insertPos@+0x2e multiSelect@+0x0b selectPos@+0x34 selections@+0x38.
+struct BFMEAddEntryCell
+{
+	Int cellType;
+	Int color;
+	void *data;
+	void *userData;
+	Int width;
+	Int height;
+};
+
+struct BFMEAddEntryRow
+{
+	Int listHeight;
+	Int height;
+	BFMEAddEntryCell *cell;
+};
+
+struct BFMEAddEntryListboxData
+{
+	Short listLength;
+	Short columns;
+	UnsignedByte m_unreconstructed_04[0x10];
+	Int *columnWidth;
+	BFMEAddEntryRow *listData;
+	UnsignedByte m_unreconstructed_1c[0x0c];
+	Int totalHeight;
+	Short endPos;
+	Short insertPos;
+	UnsignedByte m_unreconstructed_30[4];
+	Int selectPos;
+	Int *selections;
+};
+
 static Int moveRowsDown(ListboxData *list, Int startingRow)
 {
-	//
-	// copy the cells down
-	//
-	Int copyLen = (*(Short *)((char *)list + 0x2C) - startingRow) * sizeof(ListEntryRow);
-	char *buf = NEW char[copyLen];
-	memcpy(buf, *(ListEntryRow **)((char *)list + 0x18) + startingRow, copyLen);
-	memcpy(*(ListEntryRow **)((char *)list + 0x18) + startingRow + 1, buf, copyLen );
+	BFMEAddEntryListboxData *bfme = (BFMEAddEntryListboxData *)list;
+	Int copyLen = (bfme->endPos - startingRow) * sizeof(BFMEAddEntryRow);
+	char *buf = new char[copyLen];
+	memcpy(buf, bfme->listData + startingRow, copyLen);
+	memcpy(bfme->listData + startingRow + 1, buf, copyLen);
 	delete [] buf;
-
-	(*(Short *)((char *)list + 0x2C))++;
-	*(Short *)((char *)list + 0x2E) = *(Short *)((char *)list + 0x2C);
-
-	//
-	// remove the display or links to images after the shift
-	// Retail zeros height as a dword (Byte field + pad), not a byte store.
-	//
-	(*(ListEntryRow **)((char *)list + 0x18))[startingRow].cell = NULL;
-	*(Int *)((char *)(*(ListEntryRow **)((char *)list + 0x18) + startingRow) + 4) = 0;
-	(*(ListEntryRow **)((char *)list + 0x18))[startingRow].listHeight = 0;
-
-	if( *(Bool *)((char *)list + 0x0B) )
+	bfme->endPos++;
+	bfme->insertPos = bfme->endPos;
+	bfme->listData[startingRow].cell = 0;
+	bfme->listData[startingRow].height = 0;
+	bfme->listData[startingRow].listHeight = 0;
+	if (*(Bool *)((char *)bfme + 0x0b))
 	{
 		Int i = 0;
-
-		while( (*(Int **)((char *)list + 0x38))[i] >= 0 )
+		while (bfme->selections[i] >= 0)
 		{
-			if( startingRow <= (*(Int **)((char *)list + 0x38))[i] )
-				(*(Int **)((char *)list + 0x38))[i]++;
+			if (startingRow <= bfme->selections[i])
+				bfme->selections[i]++;
 			i++;
 		}
 	}
 	else
 	{
-		if( *(Int *)((char *)list + 0x34) >= startingRow )
-			(*(Int *)((char *)list + 0x34))++;
+		if (bfme->selectPos >= startingRow)
+			bfme->selectPos++;
 	}
-
-	/*
-	if( list->displayPos > 0 )
-		adjustDisplay( window, (-1 * mData1), TRUE );
-
-	computeTotalHeight( window );
-	*/
-
 	return 1;
 }
 
 // addEntry ===================================================================
 /** Add and process one string at insertPos */
 //=============================================================================
-static Int addEntry( UnicodeString *string, Int color, Int row, Int column, GameWindow *window, Bool overwrite )
+class BFMEAddEntryDisplayString
 {
-//	WinInstanceData *instData = window->winGetInstanceData();
-	ListboxData *list = (ListboxData *)window->winGetUserData();
+public:
+	virtual void displayStringSlot0() = 0;
+	virtual void setText(UnicodeString text) = 0;
+	virtual void getText() = 0;
+	virtual void getTextLength() = 0;
+	virtual void notifyTextChanged() = 0;
+	virtual void reset() = 0;
+	virtual void setFont(GameFont *font) = 0;
+	virtual GameFont *getFont() = 0;
+	virtual void setWordWrap(Int width) = 0;
+	virtual void setWordWrapCentered(Bool centered) = 0;
+	virtual void draw(Int x, Int y, Int color, Int dropColor) = 0;
+	virtual void drawWithDrop(Int x, Int y, Int color, Int dropColor,
+		Int xDrop, Int yDrop) = 0;
+	virtual void displayStringSlot12() = 0;
+	virtual void displayStringSlot13() = 0;
+	virtual void displayStringSlot14() = 0;
+	virtual void getSize(Int *width, Int *height) = 0;
+};
+
+class BFMEAddEntryDisplayStringManager
+{
+public:
+	virtual void managerSlot0() = 0;
+	virtual void managerSlot1() = 0;
+	virtual void managerSlot2() = 0;
+	virtual void managerSlot3() = 0;
+	virtual void managerSlot4() = 0;
+	virtual void managerSlot5() = 0;
+	virtual void managerSlot6() = 0;
+	virtual void managerSlot7() = 0;
+	virtual void managerSlot8() = 0;
+	virtual DisplayString *newDisplayString() = 0;
+};
+
+static __declspec(noinline) Int addEntry(UnicodeString *string, Int color, Int row, Int column,
+	GameWindow *window, Bool overwrite)
+{
+	BFMEAddEntryListboxData *list = (BFMEAddEntryListboxData *)window->winGetUserData();
 	Int width;
 	DisplayString *displayString;
-	
-	// make sure our params are good
-	if( column >= list->columns  || row >= list->listLength )
-	{
-		DEBUG_ASSERTCRASH(false, ("Tried to add text to Listbox at invalid position"));
+
+	if (column >= list->columns || row >= list->listLength)
 		return -1;
-	}
-	
-	// If we want to just add an entry to the bottom, set the defaults
+
 	if (row == -1)
 	{
 		row = list->insertPos;
 		list->insertPos++;
 		list->endPos++;
 	}
-	if( column == -1 )
+	if (column == -1)
 		column = 0;
 
 	width = list->columnWidth[column] - TEXT_WIDTH_OFFSET;
 
 	Int rowsAdded = 0;
-
-	ListEntryRow *listRow = &list->listData[row];
-	// Here I've decided to just overright what's in the row, if that's not what we want, change it here
-	// Check and see if we have allocated cells for that row yet, if not, allocate them
-	if(!listRow->cell)
+	BFMEAddEntryRow *listRow = &list->listData[row];
+	if (!listRow->cell)
 	{
-		listRow->cell = NEW ListEntryCell[list->columns];
-		memset(listRow->cell,0,list->columns * sizeof(ListEntryCell));
+		listRow->cell = (BFMEAddEntryCell *)operator new[](list->columns * sizeof(BFMEAddEntryCell));
+		memset(listRow->cell, 0, list->columns * sizeof(BFMEAddEntryCell));
 		rowsAdded = 1;
 	}
 	else if (!overwrite)
 	{
-		// Shove things down
-		moveRowsDown(list, row);
-		listRow->cell = NEW ListEntryCell[list->columns];
-		memset(listRow->cell,0,list->columns * sizeof(ListEntryCell));
+		moveRowsDown((ListboxData *)list, row);
+		listRow->cell = (BFMEAddEntryCell *)operator new[](list->columns * sizeof(BFMEAddEntryCell));
+		memset(listRow->cell, 0, list->columns * sizeof(BFMEAddEntryCell));
 		rowsAdded = 1;
 	}
-	
-	//add Image to selected row/cell
-	listRow->cell[column].cellType = LISTBOX_TEXT;
 
-	// assign the color to the list data element
+	listRow->cell[column].cellType = LISTBOX_TEXT;
 	listRow->cell[column].color = color;
 
-	// copy text
-	if( !listRow->cell[column].data )
-		listRow->cell[column].data = (void *) TheDisplayStringManager->newDisplayString();
-	displayString = (DisplayString *) listRow->cell[column].data;
-	if ( BitTest( window->winGetStatus(), WIN_STATUS_ONE_LINE ) == FALSE )
-		displayString->setWordWrap( width );
-	displayString->setText( *string );
-
-	/** @todo we need for formalize this, but for now just set the font
-	of this listbox entry to the font of the window */
-	displayString->setFont( window->winGetFont() );
+	if (!listRow->cell[column].data)
+		listRow->cell[column].data = (void *)((BFMEAddEntryDisplayStringManager *)TheDisplayStringManager)->newDisplayString();
+	displayString = (DisplayString *)listRow->cell[column].data;
+	if ((window->winGetStatus() & WIN_STATUS_ONE_LINE) == 0)
+		displayString->setWordWrap(width);
+	displayString->setText(*string);
+	displayString->setFont(window->winGetFont());
 
 	if (overwrite)
 	{
@@ -711,27 +696,25 @@ static Int addEntry( UnicodeString *string, Int color, Int row, Int column, Game
 		Int totalHeight;
 
 		if (!oldTotalHeight && row)
-		{
-			oldTotalHeight = list->listData[row-1].listHeight;
-		}
+			oldTotalHeight = list->listData[row - 1].listHeight;
 
-		displayString->getSize( NULL, &rowHeight );
+		((BFMEAddEntryDisplayString *)displayString)->getSize(0, &rowHeight);
 		if (rowHeight > oldRowHeight)
 		{
 			totalHeight = oldTotalHeight + (rowHeight - oldRowHeight);
 			listRow->height = rowHeight;
 			listRow->listHeight = totalHeight + rowsAdded;
 			list->totalHeight += (rowHeight - oldRowHeight) + rowsAdded;
-			adjustDisplay( window, 0, TRUE );
+			adjustDisplay(window, 0, true);
 		}
 	}
 	else
 	{
-		computeTotalHeight( window );
+		computeTotalHeight(window);
 	}
 
-	return (row);
-}  // end addEntry
+	return row;
+}
 
 // PUBLIC DATA ////////////////////////////////////////////////////////////////
 
