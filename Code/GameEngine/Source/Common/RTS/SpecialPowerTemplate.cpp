@@ -3,11 +3,31 @@
 #include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
-class SpecialPowerTemplate
+class Overridable
+{
+public:
+    const Overridable *friend_getFinalOverride() const
+    {
+        if (m_nextOverride)
+            return m_nextOverride->m_nextOverride
+                ? m_nextOverride->m_nextOverride->friend_getFinalOverride()
+                : m_nextOverride;
+        return this;
+    }
+
+    void *m_vtable;
+    const Overridable *m_nextOverride;
+};
+
+class SpecialPowerTemplate : public Overridable
 {
 public:
     AsciiString getName() const;
     UnsignedInt getViewObjectDuration() const;
+
+private:
+    char m_unreconstructed_08[0x100];
+    UnsignedInt m_viewObjectDuration;
 };
 
 __declspec(naked) AsciiString SpecialPowerTemplate::getName() const
@@ -68,41 +88,7 @@ __declspec(naked) AsciiString SpecialPowerTemplate::getName() const
     }
 }
 
-__declspec(naked) UnsignedInt SpecialPowerTemplate::getViewObjectDuration() const
+UnsignedInt SpecialPowerTemplate::getViewObjectDuration() const
 {
-    __asm {
-        _emit 08Bh
-        _emit 041h
-        _emit 004h
-        _emit 085h
-        _emit 0C0h
-        _emit 074h
-        _emit 013h
-        _emit 08Bh
-        _emit 048h
-        _emit 004h
-        _emit 085h
-        _emit 0C9h
-        _emit 074h
-        _emit 005h
-        _emit 0E8h
-        _emit 0FEh
-        _emit 002h
-        _emit 0DEh
-        _emit 0FFh
-        _emit 08Bh
-        _emit 080h
-        _emit 008h
-        _emit 001h
-        _emit 000h
-        _emit 000h
-        _emit 0C3h
-        _emit 08Bh
-        _emit 081h
-        _emit 008h
-        _emit 001h
-        _emit 000h
-        _emit 000h
-        _emit 0C3h
-    }
+    return ((const SpecialPowerTemplate *)friend_getFinalOverride())->m_viewObjectDuration;
 }
