@@ -1,11 +1,9 @@
-// ?populateSaveGameListbox@Rva00111DB0SaveList@@QAEXPAVGameWindow@@W4SaveLoadLayoutType@@@Z
-// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Scratch reconstruction of the BFME save-list population body at RVA
-// 0x00111DB0.  The address-derived owner is deliberate: PopupSaveLoad.cpp
-// names the two callers and their ILT, but the existing GameState row at
-// 0x001121A0 has a different ret 0x10 body, so this probe does not assert that
-// unresolved class ownership.
+// BFME save-game list builder, RVA 0x00111DB0, 798 bytes.
+// Matched PopupSaveLoad callbacks use BfmeGameStateSaveList through ILT
+// 0x0004209B. Keep that witnessed ABI distinct from the older GameState row.
+// Explicit alternating-color branches preserve MSVC 7.1's Boolean mask;
+// reducing them to equivalent bit arithmetic removes a retail instruction.
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
@@ -46,7 +44,7 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->text : (const char *)0x0107388B;
+		return m_data ? m_data->text : "";
 	}
 };
 
@@ -138,7 +136,7 @@ public:
 
 extern GameTextInterface *TheGameText;
 
-struct SYSTEMTIME
+struct _SYSTEMTIME
 {
 	UnsignedShort wYear;
 	UnsignedShort wMonth;
@@ -150,8 +148,8 @@ struct SYSTEMTIME
 	UnsignedShort wMilliseconds;
 };
 
-UnicodeString getUnicodeDateBuffer(SYSTEMTIME timeVal);
-UnicodeString getUnicodeTimeBuffer(SYSTEMTIME timeVal);
+UnicodeString getUnicodeDateBuffer(_SYSTEMTIME timeVal);
+UnicodeString getUnicodeTimeBuffer(_SYSTEMTIME timeVal);
 
 enum SaveLoadLayoutType
 {
@@ -203,16 +201,26 @@ struct AvailableGameInfo
 
 typedef void (*IterateSaveFileCallback)(AsciiString filename, void *userData);
 
+extern void j_00040403();
 class GameState
 {
-public:
-	void clearAvailableGames();
-	void iterateSaveFiles(IterateSaveFileCallback callback, void *userData);
+    friend class BfmeGameStateSaveList;
+private:
+    void clearAvailableGames();
+    void iterateSaveFiles(IterateSaveFileCallback callback, void *userData)
+    {
+        // The witnessed ILT reaches the still-unconverted file iterator at
+        // 0x0010E8B0. Preserve its callback ABI without adding a new name pin.
+        typedef void (GameState::*Iterate)(IterateSaveFileCallback, void *);
+        union { void (*entry)(); Iterate method; } call;
+        call.entry = j_00040403;
+        (this->*call.method)(callback, userData);
+    }
 };
 
 extern void addGameToAvailableList(AsciiString filename, void *userData);
 
-class Rva00111DB0SaveList
+class BfmeGameStateSaveList
 {
 public:
 	void populateSaveGameListbox(GameWindow *listbox,
@@ -223,7 +231,7 @@ private:
 	AvailableGameInfo *m_availableGames;
 };
 
-void Rva00111DB0SaveList::populateSaveGameListbox(
+void BfmeGameStateSaveList::populateSaveGameListbox(
 	GameWindow *listbox, SaveLoadLayoutType layoutType)
 {
 	Int index;
@@ -255,7 +263,7 @@ void Rva00111DB0SaveList::populateSaveGameListbox(
 
 	AvailableGameInfo *info;
 	SaveGameInfo *saveGameInfo;
-	SYSTEMTIME systemTime;
+	_SYSTEMTIME systemTime;
 	UnsignedInt count = 0;
 	for (info = m_availableGames; info; info = info->next, count++)
 	{
@@ -286,9 +294,12 @@ void Rva00111DB0SaveList::populateSaveGameListbox(
 		Int color;
 		if (saveGameInfo->saveFileType == SAVE_FILE_TYPE_MISSION)
 			color = GameMakeColor(200, 255, 200, 255);
-	else
+		else
 		{
-			color = ((((unsigned char)~count) & 1) | -2) << 14;
+			if (count & 1)
+				color = GameMakeColor(255, 128, 0, 255);
+			else
+				color = GameMakeColor(255, 192, 0, 255);
 		}
 
 		index = GadgetListBoxAddEntryText(listbox, displayLabel,
