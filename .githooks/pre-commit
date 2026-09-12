@@ -206,16 +206,25 @@ fi
 # the third, null_reloc, takes ~70s and runs in the full gate instead.
 python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong function (see above)"
 
-# SHADOW, NOT A GATE. name_oracle compares the offsets a source asserts for a member
-# against the offsets the ZH<->retail alignment witnesses -- the one naming defect no
-# byte comparison can see, because m_pitchShift and m_priority compile identically.
-# It computes offsets the source does not state, and while it reproduces 99.5% of the
-# 5,285 offsets the tree DOES state, 99.5% over 3,277 members is still ~16 wrong
-# assertions somewhere in the corpus. This hook runs on other people's commits at
-# 30-50 an hour, so it prints and never blocks until a shadow period has shown what
-# it would have stopped. Promote it by deleting the `|| true` -- and only then.
+# A member name is the one naming defect no byte comparison can see: m_pitchShift and
+# m_priority compile identically, and the five identity detectors are all keyed on an
+# ADDRESS, which a member does not have. This compares the offset a source asserts for
+# each member against the offset the ZH<->retail alignment witnesses.
+#
+# Promoted from shadow on measured evidence. Replaying the last 3,000 commits took
+# 2m36s: 1,139 touched Code/, 70 introduced a finding the baseline already held, and
+# exactly ONE would have been blocked -- cbedb732c, which put m_status at
+# WinInstanceData+0xC where the witness has m_style, with a getStatus() reading it.
+# A real defect, corrected by hand three commits later in bd878b1eb1; this would have
+# caught it at commit time. Zero false positives over 1,139 exposed commits bounds
+# the rate under 0.26%.
+#
+# A finding is still a QUESTION -- the witness is inferred and BFME forked the ZH
+# layout -- so it fails against reverse/name_oracle_baseline.csv, which may only
+# shrink. Settle the disagreement; never add a line to go green.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
-    python3 tools/name_oracle.py --check --staged >&2 || true
+    python3 tools/name_oracle.py --check --staged \
+        || fail "a member name disagrees with the witnessed layout (see above)"
 fi
 
 # A fixed path count still overflows Windows' 32767-code-unit command line

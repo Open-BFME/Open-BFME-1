@@ -69,25 +69,40 @@ MEMBER = re.compile(
 # with). A type absent from this table makes the struct UNCOMPUTABLE and the whole
 # struct is refused -- a guessed size shifts every offset after it, which would turn
 # this checker into a generator of false findings against other people's commits.
+# (size, alignment). They differ for aggregates: Coord3D is 12 bytes but aligns to 4,
+# and treating its size as its alignment would push every following member.
+#
+# Every entry beyond the built-ins is READ FROM THE HEADER, never guessed, and then
+# confirmed by --selfcheck against the offsets the tree already states:
+#   StringBase/AsciiString/UnicodeString -- string_base.h:80 is one `Header *m_data`
+#   Coord3D / Coord2D / ICoord2D         -- basetype.h: three Reals / two Reals / two Ints
+# AsciiString alone blocked 739 structs and Coord3D another 272, and a blocked struct
+# is one this checker cannot see into at all -- which is how three deliberately bogus
+# names walked past it during the promotion probe.
 SIZES = {
-    "char": 1, "signed char": 1, "unsigned char": 1, "bool": 1, "Bool": 1,
-    "Byte": 1, "UnsignedByte": 1,
-    "short": 2, "unsigned short": 2, "wchar_t": 2, "Short": 2, "UnsignedShort": 2,
-    "WideChar": 2,
-    "int": 4, "unsigned int": 4, "unsigned": 4, "long": 4, "unsigned long": 4,
-    "float": 4, "Int": 4, "UnsignedInt": 4, "UnsignedInt32": 4, "Real": 4,
-    "Color": 4, "ObjectID": 4, "DrawableID": 4,
-    "double": 8, "__int64": 8, "unsigned __int64": 8, "Int64": 8, "UnsignedInt64": 8,
+    "char": (1, 1), "signed char": (1, 1), "unsigned char": (1, 1), "bool": (1, 1),
+    "Bool": (1, 1), "Byte": (1, 1), "UnsignedByte": (1, 1),
+    "short": (2, 2), "unsigned short": (2, 2), "wchar_t": (2, 2), "Short": (2, 2),
+    "UnsignedShort": (2, 2), "WideChar": (2, 2),
+    "int": (4, 4), "unsigned int": (4, 4), "unsigned": (4, 4), "long": (4, 4),
+    "unsigned long": (4, 4), "float": (4, 4), "Int": (4, 4), "UnsignedInt": (4, 4),
+    "UnsignedInt32": (4, 4), "Real": (4, 4), "Color": (4, 4), "ObjectID": (4, 4),
+    "DrawableID": (4, 4),
+    "double": (8, 8), "__int64": (8, 8), "unsigned __int64": (8, 8),
+    "Int64": (8, 8), "UnsignedInt64": (8, 8),
+    "AsciiString": (4, 4), "UnicodeString": (4, 4), "StringBase<char>": (4, 4),
+    "BFMERetailAsciiString": (4, 4),
+    "Coord3D": (12, 4), "Coord2D": (8, 4), "ICoord2D": (8, 4),
 }
 
 
 def size_of(decl_type, pointer, array):
     """(total bytes, alignment) for one declaration, or None when unsizeable."""
-    name = " ".join(decl_type.replace("const", "").split())
+    name = " ".join(decl_type.replace("const", "").replace("volatile", "").split())
     if pointer.strip() == "*":
-        unit = 4
+        unit, align = 4, 4
     elif name in SIZES:
-        unit = SIZES[name]
+        unit, align = SIZES[name]
     else:
         return None
     count = 1
@@ -101,7 +116,7 @@ def size_of(decl_type, pointer, array):
             if not span:
                 return None
             count = int(span.group(1), 0) - int(span.group(2), 0)
-    return unit * count, unit
+    return unit * count, align
 
 
 def load_witness():
@@ -163,6 +178,11 @@ def outer_members(text, brace, has_base):
     body = struct_body(text, brace)
     if body is None:
         return [], "unterminated declaration"
+    if re.search(r"\bunion\b", body):
+        # Union members OVERLAY; this model sums them, so it would push every later
+        # offset. PathfindCellInfo hid behind the unsizeable-type refusal until
+        # ICoord2D became sizeable, then produced nine wrong offsets at once.
+        return [], "contains a union"
     # A polymorphic class puts a 4-byte vptr at +0, so its first member starts at +4.
     # Missing this was the entire off-by-four cluster: 90.5% agreement became 99.5%.
     off = 4 if re.search(r"\bvirtual\b", body) else 0
@@ -283,6 +303,9 @@ def selfcheck(paths):
                 continue
             body = struct_body(text, decl.end() - 1)
             if body is None:
+                continue
+            if re.search(r"\bunion\b", body):
+                structs["skipped: contains a union"] += 1
                 continue
             off = 4 if re.search(r"\bvirtual\b", body) else 0
             rows, bad = [], None

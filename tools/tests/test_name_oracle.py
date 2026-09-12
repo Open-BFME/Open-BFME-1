@@ -66,8 +66,27 @@ def test_refuses_a_base_class():
 
 
 def test_refuses_an_unsizeable_type():
-    _, refused = members("struct S {\n\tAsciiString m_name;\n\tint m_after;\n};")
+    """AsciiString and Coord3D are in the table now (read from their headers); a type
+    that is genuinely unknown still stops the walk rather than being approximated."""
+    _, refused = members("struct S {\n\tSomeUnknownThing m_name;\n\tint m_after;\n};")
     assert refused.startswith("unsizeable type")
+
+
+def test_refuses_a_union():
+    """Union members overlay; this model sums them. PathfindCellInfo produced nine
+    wrong offsets the moment ICoord2D became sizeable and stopped hiding the struct."""
+    _, refused = members(
+        "struct S {\n\tunion { int m_a; char m_b; };\n\tint m_after;\n};")
+    assert refused == "contains a union"
+
+
+def test_header_read_sizes_place_the_members_after_them():
+    """AsciiString is one `Header *m_data` (string_base.h:80); Coord3D is three Reals
+    but aligns to 4, so its size must not be mistaken for its alignment."""
+    got, refused = members(
+        "struct S {\n\tAsciiString m_name;\n\tCoord3D m_where;\n\tchar m_tag;\n};")
+    assert refused is None
+    assert got == {"m_name": 0, "m_where": 4, "m_tag": 16}
 
 
 def test_refuses_a_declaration_that_windows_into_a_larger_class():

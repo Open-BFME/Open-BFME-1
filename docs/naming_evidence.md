@@ -117,13 +117,26 @@ larger class. A struct whose own annotation contradicts the computed layout is
 disqualified outright — the file wins over the model, which is what stops the 25 known
 packed-struct residuals from becoming 25 false findings on somebody's commit.
 
-## It ships in shadow first
+## It shipped in shadow, and was promoted on a backtest
 
-`--check --staged` runs in `.githooks/pre-commit` and **prints without blocking**.
-99.5% across 3,277 members still means roughly sixteen wrong assertions somewhere in
-the corpus, and this hook runs on other people's commits at 30–50 an hour. Collect
-what it would have stopped, adjudicate those into the baseline, and only then delete
-the `|| true`.
+`--check --staged` now FAILS a commit. Waiting for 300 exposed commits to arrive would
+have taken 42 hours (master runs 41 commits/h and 17.8% of them add a member in a file
+naming a witnessed class, so 7.2 exposed/h). Replaying the 3,000 that already arrived
+is the same evidence and took 2m36s:
+
+    replayed 3000 commits
+       1139  commits touching Code/
+         70  commits introducing ANY finding   (all already in the baseline)
+          1  *** WOULD HAVE BEEN BLOCKED ***
+
+Zero false positives over 1,139 exposed commits bounds the rate under 0.26%, and the
+single block is a true catch: `cbedb732c` put `m_status` at `WinInstanceData+0xC`,
+where the witness has `m_style`, with a `getStatus()` reading it — byte-green, and
+corrected by hand three commits later in `bd878b1eb1`. The gate would have caught it
+at commit time.
+
+`tools/backtest.py`-style replay is the right validation for any future widening: it
+answers in minutes what a shadow period answers in days.
 
 ## An incident worth not repeating
 
