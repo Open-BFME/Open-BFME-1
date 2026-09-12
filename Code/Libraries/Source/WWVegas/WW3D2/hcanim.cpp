@@ -632,24 +632,93 @@ void HCompressedAnimClass::Get_Translation( Vector3& trans, int pividx, float fr
  * HISTORY:                                                                                    * 
  *   08/11/1997 GH  : Created.                                                                 * 
  *=============================================================================================*/
-// ?HCompressedAnimClass::Get_Orientation present-unmatched
+// RVA 0x0095BAD0: 475 bytes; HCompressed vtable slot 0x24; bool result.
 bool HCompressedAnimClass::Get_Orientation(Quaternion& q, int pividx,float frame) const
-{		
+{
+	struct TimecodedDecoder {
+		TimeCodedMotionChannelClass *qchan;
+
+		__forceinline Quaternion Get(float frame) {
+			// Retain the sample data snapshot across the index search.
+			uint32 * data = qchan->Data;
+			uint32 pidx;
+			uint32 tc0 = frame;
+			Quaternion q;
+			// BFME stores the final packet index in the field named CachedIdx.
+			if (tc0 >= (data[qchan->CachedIdx] & 0x7FFFFFFF)) {
+				pidx = qchan->CachedIdx;
+			} else {
+				int leftIdx = 0;
+				int rightIdx = (int)qchan->NumTimeCodes - 2;
+				// Retail reloads this field for the search and the timestamp pair.
+				uint32 *search_data = *(uint32 * volatile *)&qchan->Data;
+				for (;;) {
+					int mid = (leftIdx + rightIdx) / 2;
+					uint32 * pkt = search_data + mid * (int)qchan->PacketSize;
+					uint32 t0 = *pkt;
+					if (tc0 < (t0 & 0x7FFFFFFF)) {
+						rightIdx = mid;
+						continue;
+					}
+					if (tc0 < (pkt[qchan->PacketSize] & 0x7FFFFFFF)) {
+						pidx = (uint32)(pkt - search_data);
+						break;
+					}
+					if (leftIdx ^ mid) {
+						leftIdx = mid;
+						continue;
+					}
+					leftIdx++;
+				}
+			}
+
+			uint32 p2idx;
+			if (pidx == qchan->CachedIdx) {
+				const float32 * vec = (const float32 *)&data[pidx + 1];
+				return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+			} else {
+				p2idx = pidx + qchan->PacketSize;
+				uint32 *time_data = *(uint32 * volatile *)&qchan->Data;
+				uint32 time = time_data[p2idx];
+				if (time & W3D_TIMECODED_BINARY_MOVEMENT_FLAG) {
+					const float32 * vec = (const float32 *)&data[pidx + 1];
+					return Quaternion(vec[0], vec[1], vec[2], vec[3]);
+				} else {
+					float32 time1 = (time_data[pidx] & ~W3D_TIMECODED_BINARY_MOVEMENT_FLAG);
+
+					// The binary flag has already been excluded from the second time.
+					float32 ratio = (frame - time1) / ((float32)time - time1);
+					Fast_Slerp(q,
+						*(Quaternion *)&data[pidx + 1],
+						*(Quaternion *)&data[p2idx + 1],
+						ratio);
+				}
+			}
+			return q;
+		}
+	};
+
 	switch(Flavor) {
-		case ANIM_FLAVOR_TIMECODED:
-			if (NodeMotion[pividx].tc.Q) q = NodeMotion[pividx].tc.Q->Get_QuatVector(frame);
-			else q.Make_Identity();
+		case ANIM_FLAVOR_TIMECODED: {
+			TimeCodedMotionChannelClass *qchan = NodeMotion[pividx].tc.Q;
+			if (qchan) {
+				TimecodedDecoder decoder = { qchan };
+				q = decoder.Get(frame);
+			} else return false;
 			break;
-		case ANIM_FLAVOR_ADAPTIVE_DELTA:
-			if (NodeMotion[pividx].ad.Q) q = NodeMotion[pividx].ad.Q->Get_QuatVector(frame);
-			else q.Make_Identity();
+		}
+		case ANIM_FLAVOR_ADAPTIVE_DELTA: {
+			AdaptiveDeltaMotionChannelClass *qchan = NodeMotion[pividx].ad.Q;
+			if (qchan) {
+				q = qchan->Get_QuatVector(frame);
+			} else return false;
 			break;
+		}
 		default:
-			WWASSERT(0); // unknown flavor
+			WWASSERT(0);
 			break;
 	}
-	// BFME reports whether the pivot actually has rotation; these bodies are not
-	// matched yet, so true is a placeholder that preserves Zero Hour behaviour.
+	// Only a missing channel returns false; retail's default arm joins here.
 	return true;
 } // Get_Orientation
 
