@@ -5551,22 +5551,6 @@ Bool Pathfinder::adjustDestination(Object *obj, const LocomotorSet& locomotorSet
 	return false;
 }
 
-// ?checkForTarget@Pathfinder@@IAE_NPBVObject@@HHPBVWeapon@@0PBUCoord3D@@H_NPAU4@@Z present-unmatched
-Bool Pathfinder::checkForTarget(const Object *obj, 	Int cellX, Int cellY, const Weapon *weapon,
-																const Object *victim, const Coord3D *victimPos,
-																Int iRadius, Bool center,Coord3D *dest) 
-{
-	Coord3D adjustDest;
-	if (checkDestination(obj, cellX, cellY, LAYER_GROUND, iRadius, center)) {
-		adjustCoordToCell(cellX, cellY,  center, adjustDest, LAYER_GROUND);
-		if (weapon->isGoalPosWithinAttackRange( obj, &adjustDest, victim, victimPos ))	{
-			*dest = adjustDest;
-			return true;
-		}
-	}
-	return false;
-}
-
 /**
  * Find an unoccupied spot for a unit to move to that can fire at victim.
  * Returns false if there are no spots available within a reasonable radius.
