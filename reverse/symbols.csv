@@ -74553,7 +74553,7 @@ name,address,notes
 ?bfmeCETC@BfmeBaseETC@@QAEXPAX000@Z,0x00043545,pin
 ?bfmeCalc919G@BfmeCalc919G@@QAEHXZ,0x00017512,pin
 ?bfmeCalcBT@BfmeSrcBT@@QAEMPAX@Z,0x00043CED,pin
-?bfmeCalcBWF@BfmeCalcBWF@@QAEXPAVBfmeRetBWF@@H0@Z,0x0087E0D0,pin
+?bfmeCalcBWF@BfmeCalcBWF@@QAE_NPAVBfmeRetBWF@@M0@Z,0x0087E0D0,120-byte bool return and float angle; matched callers 0x00087CC0 and 0x00087CF0; latter angle written by 0x00087D90 from a float-returning callee
 ?bfmeCalcBXA@@YAHHI@Z,0x00023254,pin
 ?bfmeCalcBXB@@YAHHI@Z,0x0003F7CE,pin
 ?bfmeCalcBXC@@YAHHI@Z,0x0003F7CE,pin

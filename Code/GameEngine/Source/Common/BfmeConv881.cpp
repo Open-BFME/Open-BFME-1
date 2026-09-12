@@ -88,7 +88,7 @@ class BfmeRetBWF
 class BfmeCalcBWF
 {
 public:
-	void bfmeCalcBWF(BfmeRetBWF *one, int value, BfmeRetBWF *two);
+	bool bfmeCalcBWF(BfmeRetBWF *one, float value, BfmeRetBWF *two);
 };
 
 struct BfmeOwnerBWF
@@ -174,7 +174,7 @@ void BfmeThingEOC::bfmeAfterEOC()
 	if (self->m_bfmeOwner != 0)
 	{
 		event = &self->m_bfmeTwo;
-		self->m_bfmeOwner->m_bfmeSub.bfmeCalcBWF(&self->m_bfmeOne, self->m_bfmeArg, event);
+		self->m_bfmeOwner->m_bfmeSub.bfmeCalcBWF(&self->m_bfmeOne, self->m_bfmeF, event);
 	}
 	else
 	{

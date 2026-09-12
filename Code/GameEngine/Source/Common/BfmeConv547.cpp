@@ -5,7 +5,7 @@ class BfmeRetBWF
 class BfmeCalcBWF
 {
 public:
-	void bfmeCalcBWF(BfmeRetBWF *one, int value, BfmeRetBWF *two);
+	bool bfmeCalcBWF(BfmeRetBWF *one, float value, BfmeRetBWF *two);
 };
 
 struct BfmeOwnerBWF
@@ -21,7 +21,7 @@ struct BfmeThingBWF
 	BfmeRetBWF m_bfmeOne;
 	unsigned char m_bfmeGap[0xf];
 	BfmeOwnerBWF *m_bfmeOwner;
-	int m_bfmeArg;
+	float m_bfmeArg;
 	unsigned char m_bfmeGap2[0x28];
 	BfmeRetBWF m_bfmeTwo;
 };
