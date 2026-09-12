@@ -415,6 +415,30 @@ static void adjustDisplay( GameWindow *window, Int adjustment,
 
 }  // end adjustDisplay
 
+// BFME uses this file-static delta helper from GadgetListBoxSystem's selected
+// button branch.  Its first parameter uses MSVC's private register convention.
+static void adjustDisplayByDelta( GameWindow *window, Int adjustment,
+																 Bool updateSlider )
+{
+	BFMEAdjustDisplayListboxData *list =
+		(BFMEAdjustDisplayListboxData *)window->winGetUserData();
+
+	list->displayPos += adjustment;
+	if( list->displayPos > list->totalHeight - list->displayHeight + 1 )
+		list->displayPos = list->totalHeight - list->displayHeight + 1;
+	if( list->displayPos < 0 )
+		list->displayPos = 0;
+
+	adjustDisplay( window, updateSlider );
+}
+
+// ?forceAdjustDisplayByDelta@@YAXPAVGameWindow@@H_N@Z absent-from-retail
+void forceAdjustDisplayByDelta( GameWindow *window, Int adjustment,
+																 Bool updateSlider )
+{
+	adjustDisplayByDelta( window, adjustment, updateSlider );
+}
+
 // computeTotalHeight =========================================================
 /** Compute Total Height and fill in listHeight values */
 // BFME ListboxData field offsets (see moveRowsDown above): listData@+0x18
