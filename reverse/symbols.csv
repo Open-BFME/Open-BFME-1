@@ -9585,6 +9585,7 @@ name,address,notes
 ??1VictoryParameterVector@@QAE@XZ,0x00032DD5,VictorySystem destructor member at +0xEC; ILT targets the 0x001DFD90 vector destructor
 ??1Video@@QAE@XZ,0x0001642D
 ??1W3DAnimationInfo@@QAE@XZ,0x00034AE0,"ILT the _Destroy loop encodes"
+??1W3DDefaultDraw@@MAE@XZ,0x0004A1F6,route=0x007510D0; scalar deleting destructor call target established by retail wrapper
 ??1W3DDisplayStringBase@@UAE@XZ,0x0000D823,Open-BFME5 pin
 ??1W3DDisplayStringMemberB@@QAE@XZ,0x009409F0,Open-BFME5 pin
 ??1W3DFloorDrawModuleDataBase@@UAE@XZ,0x0004584A,route=0x00759480; scalar deleting destructor call target established by retail wrapper
