@@ -14,6 +14,9 @@
 // password/observer bytes, ushort port and full CRC/count widths. Field +0xBC
 // has no independently recovered member spelling, so its accessor is named
 // by offset. Existing by-value string accessors are kept under proven names.
+// Registration literals prove PW=54 and OBS=55. The field order and hosting
+// setters independently identify password at+0xAD and observers at+0x13C;
+// the old bank had both semantic labels swapped despite preserving the bytes.
 
 #include <string>
 #include <string.h>
@@ -105,8 +108,8 @@ public:
 unsigned int exeCRC() { return *reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(this) + 0x12c); }
 unsigned int iniCRC() { return *reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(this) + 0x130); }
 unsigned int cmdCRC() { return *reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(this) + 0x134); }
-bool allowObservers() { return *reinterpret_cast<const bool *>(reinterpret_cast<const char *>(this) + 0xad); }
-bool hasPassword() { return *reinterpret_cast<const bool *>(reinterpret_cast<const char *>(this) + 0x13c); }
+bool hasPassword() { return *reinterpret_cast<const bool *>(reinterpret_cast<const char *>(this) + 0xad); }
+bool allowObservers() { return *reinterpret_cast<const bool *>(reinterpret_cast<const char *>(this) + 0x13c); }
 unsigned short ladderPort() { return *reinterpret_cast<const unsigned short *>(reinterpret_cast<const char *>(this) + 0x158); }
 int getNumPlayers() { return *reinterpret_cast<const int *>(reinterpret_cast<const char *>(this) + 0x1fc); }
 int getMaxPlayers() { return *reinterpret_cast<const int *>(reinterpret_cast<const char *>(this) + 0x200); }
@@ -127,8 +130,8 @@ enum
 	EXECRC_KEY = 51,
 	INICRC_KEY = 52,
 	CMDCRC_KEY = 53,
-	OBS_KEY = 54,
-	PW_KEY = 55,
+	PW_KEY = 54,
+	OBS_KEY = 55,
 	LADIP_KEY = 56,
 	LADPORT_KEY = 57,
 	PINGSTR_KEY = 58,
@@ -187,11 +190,11 @@ static void QRServerKeyCallback
 	case MAPNAME_KEY:
 		ADD(((Rva00647720Host *)thread)->copyStringAtB0().c_str());
 		break;
-	case OBS_KEY:
-		ADDINT(thread->allowObservers());
-		break;
 	case PW_KEY:
 		ADDINT(thread->hasPassword());
+		break;
+	case OBS_KEY:
+		ADDINT(thread->allowObservers());
 		break;
 	case LADIP_KEY:
 		ADD(((Rva006477B0Host *)thread)->copyStringAt14C().c_str());
