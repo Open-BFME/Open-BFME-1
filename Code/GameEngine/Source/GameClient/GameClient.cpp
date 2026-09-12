@@ -96,6 +96,107 @@
 
 #define DRAWABLE_HASH_SIZE	8192
 
+// Retail keeps the drawable lookup table at this+0x14.  The public header
+// uses a vector for the later BFME lookup path, so reset views that storage
+// through the STLport instantiations already matched at 0x00430770 and
+// 0x00430F10.
+struct Gen_t_00430ca0_p12cd { int a[3]; };
+typedef _STL::pair<const int, Gen_t_00430ca0_p12cd> GameClientDrawableHashPair;
+typedef _STL::hashtable<GameClientDrawableHashPair, int, _STL::hash<int>,
+	_STL::_Select1st<GameClientDrawableHashPair>, _STL::equal_to<int>,
+	_STL::allocator<GameClientDrawableHashPair> > GameClientDrawableHash;
+
+struct Rva00430F10Value { UnsignedInt m_key; };
+struct Rva00430F10ExtractKey {
+	const UnsignedInt &operator()(const Rva00430F10Value &value) const { return value.m_key; }
+};
+typedef _STL::hashtable<Rva00430F10Value, UnsignedInt, _STL::hash<UnsignedInt>,
+	Rva00430F10ExtractKey, _STL::equal_to<UnsignedInt>,
+	_STL::allocator<Rva00430F10Value> > GameClientHashResizeTable;
+
+class BfmeResetSubsystem
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void reset();
+};
+
+class BfmeResetTerrainPrimary
+{
+public:
+	virtual void slot0();
+};
+
+class BfmeResetTerrainInterface
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void reset();
+};
+
+class BfmeResetTerrain : public BfmeResetTerrainPrimary, public BfmeResetTerrainInterface
+{
+};
+
+class BfmeResetClient
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void destroyDrawable(Drawable *draw);
+};
+
+void j_00012418();
+void j_00041349();
+void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+extern const char g_Rva0107301CEmptyString[];
+
+class RetailLayoutString
+{
+public:
+	void set(const char *text, int length);
+};
+
+class Gen_dtor_0042f540
+{
+public:
+	virtual ~Gen_dtor_0042f540();
+};
+
+struct BfmeResetTOCNode
+{
+	BfmeResetTOCNode *next;
+	BfmeResetTOCNode *previous;
+};
+
 /// The GameClient singleton instance
 GameClient *TheGameClient = NULL;
 
@@ -455,37 +556,60 @@ void GameClient::init( void )
 
 //-------------------------------------------------------------------------------------------------
 /** Reset the game client for a new game */
-// ?reset@GameClient@@ present-unmatched
 void GameClient::reset( void )
 {
 	Drawable *draw, *nextDraw;
-//	m_drawableHash.clear();
-//	m_drawableHash.resize(DRAWABLE_HASH_SIZE);
 
-	m_drawableVector.clear();
-	m_drawableVector.resize(DRAWABLE_HASH_SIZE, NULL);
+	GameClientDrawableHash *drawableHash = reinterpret_cast<GameClientDrawableHash *>(reinterpret_cast<char *>(this) + 0x14);
+	drawableHash->clear();
+	reinterpret_cast<GameClientHashResizeTable *>(drawableHash)->resize(DRAWABLE_HASH_SIZE);
+	m_frame = 0;
 
 	// need to reset the in game UI to clear drawables before they are destroyed
-	TheInGameUI->reset();
+	reinterpret_cast<BfmeResetSubsystem *>(TheInGameUI)->reset();
 
 	// destroy all Drawables
 	for( draw = m_drawableList; draw; draw = nextDraw )
 	{
-		nextDraw = draw->getNextDrawable();
-		destroyDrawable( draw );
+		nextDraw = *reinterpret_cast<Drawable **>(reinterpret_cast<char *>(draw) + 0x104);
+		reinterpret_cast<BfmeResetClient *>(this)->destroyDrawable( draw );
 	}
 	m_drawableList = NULL;
 
-	TheDisplay->reset();
-	TheTerrainVisual->reset();
-	TheRayEffects->reset();
-	TheVideoPlayer->reset();
-	TheEva->reset();
-	if (TheSnowManager)
-		TheSnowManager->reset();
+	reinterpret_cast<BfmeResetSubsystem *>(TheDisplay)->reset();
+	reinterpret_cast<BfmeResetTerrain *>(TheTerrainVisual)->reset();
+	reinterpret_cast<BfmeResetSubsystem *>(TheRayEffects)->reset();
+	reinterpret_cast<BfmeResetSubsystem *>(TheVideoPlayer)->reset();
+	reinterpret_cast<BfmeResetSubsystem *>(TheEva)->reset();
+	j_00041349();
+
+	BfmeResetSubsystem *subsystem = *reinterpret_cast<BfmeResetSubsystem **>(0x012f15f4);
+	if (subsystem)
+		subsystem->reset();
+	subsystem = *reinterpret_cast<BfmeResetSubsystem **>(0x012f1104);
+	if (subsystem)
+		subsystem->reset();
+	subsystem = *reinterpret_cast<BfmeResetSubsystem **>(0x012f10f0);
+	if (subsystem)
+		subsystem->reset();
 
 	// clear any drawable TOC we might have
-	m_drawableTOC.clear();
+	BfmeResetTOCNode *tocNode = *reinterpret_cast<BfmeResetTOCNode **>(reinterpret_cast<char *>(this) + 0xf0);
+	tocNode = tocNode->next;
+	while (tocNode != *reinterpret_cast<BfmeResetTOCNode **>(reinterpret_cast<char *>(this) + 0xf0))
+	{
+		BfmeResetTOCNode *current = tocNode;
+		tocNode = tocNode->next;
+		reinterpret_cast<Gen_dtor_0042f540 *>(reinterpret_cast<char *>(current) + 8)->Gen_dtor_0042f540::~Gen_dtor_0042f540();
+		bfmeDeallocate(current, 0x10);
+	}
+	BfmeResetTOCNode *tocSentinel = *reinterpret_cast<BfmeResetTOCNode **>(reinterpret_cast<char *>(this) + 0xf0);
+	tocSentinel->next = tocSentinel;
+	tocSentinel = *reinterpret_cast<BfmeResetTOCNode **>(reinterpret_cast<char *>(this) + 0xf0);
+	tocSentinel->previous = tocSentinel;
+	reinterpret_cast<RetailLayoutString *>(reinterpret_cast<char *>(this) + 0xb8)->set(g_Rva0107301CEmptyString, 0);
+	*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0xbd) = 0;
+	*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0xbc) = 0;
 
 }  // end reset
 
