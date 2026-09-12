@@ -131,13 +131,14 @@ BFME_SMALL_STRIDE_INDEX( Rva00581A10StrideIndex, 0x1C )
 BFME_SMALL_STRIDE_INDEX( Rva0075CFE0StrideIndex, 0x38 )
 
 // mov eax,[ecx-<BACK>] / add eax,<OFFSET> / ret -- a pointer read at a
-// NEGATIVE displacement and advanced by a constant.
+// NEGATIVE displacement and advanced by a constant.  The object at
+// (this - BACK) is only witnessed as a pointer sitting at offset 0.
+struct LeadingPointerBlock
+{
+	char *m_base;
+};
+
 #define BFME_SMALL_BACK_POINTER_OFFSET( NAME, BACK, OFFSET )                  \
-	class Sub##NAME                                                           \
-	{                                                                         \
-	public:                                                                   \
-		char *m_base;                                                         \
-	};                                                                        \
 	class NAME                                                                \
 	{                                                                         \
 	public:                                                                   \
@@ -145,7 +146,7 @@ BFME_SMALL_STRIDE_INDEX( Rva0075CFE0StrideIndex, 0x38 )
 	};                                                                        \
 	char *NAME::get() const                                                   \
 	{                                                                         \
-		return ( (const Sub##NAME *)( (const char *)this - ( BACK ) ) )->m_base \
+		return ( (const LeadingPointerBlock *)( (const char *)this - ( BACK ) ) )->m_base \
 			+ ( OFFSET );                                                     \
 	}
 
@@ -193,18 +194,21 @@ BFME_SMALL_MEMBER_ARRAY( Rva00696340MemberArray, 0xAC4 )
 
 // mov eax,[ecx-<BACK>] / mov al,[eax+<INNER>] / ret -- the chained byte
 // getter of ChainedFieldGetters.cpp with both displacements widened to disp32.
+// ByteAtDisp / PtrToByteAtDisp name the witnessed layout, not an identity.
+template <int kDisp>
+struct ByteAtDisp
+{
+	char          m_lead[ kDisp ];
+	unsigned char m_value;
+};
+
+template <int kDisp>
+struct PtrToByteAtDisp
+{
+	ByteAtDisp<kDisp> *m_holder;
+};
+
 #define BFME_SMALL_BACK_CHAIN_BYTE( NAME, BACK, INNER )                       \
-	class Inner##NAME                                                         \
-	{                                                                         \
-	public:                                                                   \
-		char          m_lead[ INNER ];                                        \
-		unsigned char m_value;                                                \
-	};                                                                        \
-	class Sub##NAME                                                           \
-	{                                                                         \
-	public:                                                                   \
-		Inner##NAME *m_holder;                                                \
-	};                                                                        \
 	class NAME                                                                \
 	{                                                                         \
 	public:                                                                   \
@@ -212,7 +216,7 @@ BFME_SMALL_MEMBER_ARRAY( Rva00696340MemberArray, 0xAC4 )
 	};                                                                        \
 	unsigned char NAME::get() const                                           \
 	{                                                                         \
-		return ( (const Sub##NAME *)( (const char *)this - ( BACK ) ) )       \
+		return ( (const PtrToByteAtDisp<INNER> *)( (const char *)this - ( BACK ) ) ) \
 			->m_holder->m_value;                                              \
 	}
 
