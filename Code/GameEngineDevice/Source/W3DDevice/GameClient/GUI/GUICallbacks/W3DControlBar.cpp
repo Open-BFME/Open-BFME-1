@@ -98,71 +98,30 @@ void W3DLeftHUDDraw( GameWindow *window, WinInstanceData *instData )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-__declspec(naked) void W3DRightHUDDraw( GameWindow *window, WinInstanceData *instData )
+// ?W3DRightHUDDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+// BFME's GameWindow carries a per-window draw-callback pointer and an
+// embedded polymorphic draw delegate past the fields the ZH header above
+// declares; both are reached here by their retail byte offset. The
+// delegate's own vtable pointer lives at its own address (a normal embedded
+// C++ subobject), and its second slot performs the fallback draw.
+typedef void (__cdecl *BfmeWindowDrawFunc)( GameWindow *, WinInstanceData * );
+
+class BfmeWindowDrawDelegate
 {
-	__asm {
-		__emit 0x56;
-		__emit 0x8b;
-		__emit 0x74;
-		__emit 0x24;
-		__emit 0x08;
-		__emit 0x8b;
-		__emit 0xce;
-		__emit 0xe8;
-		__emit 0xae;
-		__emit 0x9e;
-		__emit 0x88;
-		__emit 0xff;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0x79;
-		__emit 0x2c;
-		__emit 0x8b;
-		__emit 0x86;
-		__emit 0xe8;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x74;
-		__emit 0x0d;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x51;
-		__emit 0x56;
-		__emit 0xff;
-		__emit 0xd0;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x08;
-		__emit 0x5e;
-		__emit 0xc3;
-		__emit 0x8b;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x8b;
-		__emit 0x96;
-		__emit 0x18;
-		__emit 0x02;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x8d;
-		__emit 0x8e;
-		__emit 0x18;
-		__emit 0x02;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x50;
-		__emit 0x56;
-		__emit 0xff;
-		__emit 0x52;
-		__emit 0x04;
-		__emit 0x5e;
-		__emit 0xc3;
+public:
+	virtual void unused00();
+	virtual void draw( GameWindow *window, WinInstanceData *instData );
+};
+
+void W3DRightHUDDraw( GameWindow *window, WinInstanceData *instData )
+{
+	if ( BitTest( window->winGetStatus(), WIN_STATUS_IMAGE ) )
+	{
+		BfmeWindowDrawFunc draw = *(BfmeWindowDrawFunc *)((char *)window + 0x1e8);
+		if ( draw )
+			draw( window, instData );
+		else
+			((BfmeWindowDrawDelegate *)((char *)window + 0x218))->draw( window, instData );
 	}
 }  // end W3DRightHUDDraw
 
