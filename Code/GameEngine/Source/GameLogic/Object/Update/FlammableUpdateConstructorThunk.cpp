@@ -54,7 +54,7 @@ private:
     void *m_burningSoundName;
 
 public:
-    float m_flameDamageLimit;
+    float m_flameDamageLimitData;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FlammableUpdate.h
@@ -101,7 +101,7 @@ FlammableUpdate::FlammableUpdate(
     m_damageEndFrame = 0;
     m_audioHandle = 0;
     m_flameDamageLimit =
-        ((const FlammableUpdateModuleData *)getModuleData())->m_flameDamageLimit;
+        ((const FlammableUpdateModuleData *)getModuleData())->m_flameDamageLimitData;
     m_lastFlameDamageDealt = 0;
     m_flag40 = false;
     m_field44 = 0;

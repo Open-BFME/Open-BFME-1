@@ -19,7 +19,7 @@ public:
 	virtual ~AssistedTargetingUpdateModuleData();
 private:
 	unsigned int m_pad;
-	unsigned int m_one;
+	unsigned int m_clipSize;
 	unsigned int m_weaponSlot;
 	unsigned int m_laserFromAssistedName;
 	unsigned int m_laserToTargetName;
@@ -49,7 +49,7 @@ public:
 
 AssistedTargetingUpdateModuleData::AssistedTargetingUpdateModuleData()
 {
-	m_one = 1;
+	m_clipSize = 1;
 	m_weaponSlot = 0;
 	m_laserFromAssistedName = 0;
 	m_laserToTargetName = 0;

@@ -142,7 +142,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Game
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/GameStatePortableMapPathToRealMapPathThunk.cpp,112,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileDtor.cpp,43,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileNames.cpp,50,1.00,layout_witness
-AssistedTargetingUpdateModuleData+0x8|m_one|m_clipSize,Code/GameEngine/Source/GameLogic/AI/AssistedTargetingUpdateFriendNewModuleDataThunk.cpp,23,1.00,field_names
 AudioSettings+0x0|m_prefix|m_audioRoot,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,35,1.00,field_names
 AudioSettings+0x28|m_gap2|m_sampleCount2D,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,42,1.00,field_names
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReleaseResources_Bfme.cpp,146,1.00,layout_witness
@@ -187,7 +186,6 @@ DemoTrapUpdateModuleData+0xc|m_block|m_ignoreKindOf,Code/GameEngine/Source/GameL
 Dict+0x0|m_body|m_data,Code/GameEngine/Source/Common/Rva0019FD00Fill.cpp,37,1.00,layout_witness
 DieMuxData+0x0|m_opaque|m_deathTypes,Code/GameEngine/Source/GameLogic/Object/Behavior/DieModuleDataCtorThunk.cpp,24,1.00,field_names
 DieMuxData+0x0|m_unreconstructed|m_deathTypes,Code/GameEngine/Source/GameLogic/Object/Die/CreateCrateDie.cpp,201,1.00,field_names
-DisplayStringManager+0x8|m_head|m_stringList,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerUnlink.cpp,42,1.00,layout_witness
 Drawable+0x100|m_beforeSelected|m_id,Code/GameEngine/Source/GameClient/MessageStream/SelectionXlat_areAllSelected.cpp,64,1.00,layout_witness
 Drawable+0x140|m_ambientSoundEnabled|m_secondMaterialPassOpacity,Code/GameEngine/Source/GameClient/DrawableCaptionAndAmbient.cpp,287,1.00,layout_witness
 Drawable+0x148|m_ambientSoundAlternate|m_drawableFullyObscuredByShroud,Code/GameEngine/Source/GameClient/DrawableCaptionAndAmbient.cpp,292,1.00,layout_witness
@@ -200,7 +198,6 @@ File+0x4|m_head|m_nameStr,Code/GameEngineDevice/Source/Win32Device/Common/Win32B
 File+0x4|m_nameData|m_nameStr,Code/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp,103,1.00,layout_witness
 File+0x4|m_unreconstructed_04|m_nameStr,Code/GameEngine/Source/Common/System/RAMFileOpenByNameThunk.cpp,54,1.00,layout_witness
 File+0xc|m_flags|m_open,Code/GameEngine/Source/Common/StreamingArchiveFileRead.cpp,34,1.00,layout_witness
-FlammableUpdateModuleData+0x1c|m_flameDamageLimit|m_flameDamageLimitData,Code/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp,58,1.00,field_names
 FullFadeTransition+0x18|m_posX|m_pos,Code/GameEngine/Source/Common/FullFadeTransition_init_Thunk.cpp,48,1.00,layout_witness
 FullFadeTransition+0x20|m_sizeX|m_size,Code/GameEngine/Source/Common/FullFadeTransition_init_Thunk.cpp,50,1.00,layout_witness
 GameClientRandomVariable+0x0|m_storage|DistributionTypeNames,Code/GameEngine/Source/GameClient/System/FXParticleSystem/EmissionVelocityModuleCtors.cpp,47,1.00,layout_witness

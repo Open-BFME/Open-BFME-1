@@ -38,7 +38,7 @@ protected:
 
 private:
 	unsigned char m_unmodelled_00[8];
-	DisplayString *m_head;
+	DisplayString *m_stringList;
 };
 
 void DisplayStringManager::link(DisplayString *string)
@@ -48,10 +48,10 @@ void DisplayStringManager::link(DisplayString *string)
 
 	if (string)
 	{
-		string->m_next = m_head;
-		if (m_head)
-			m_head->m_previous = string;
-		m_head = string;
+		string->m_next = m_stringList;
+		if (m_stringList)
+			m_stringList->m_previous = string;
+		m_stringList = string;
 	}
 }
 
@@ -60,7 +60,7 @@ void DisplayStringManager::unLink(DisplayString *string)
 	AsciiString unusedText;
 	unusedText.translate(string->m_text);
 
-	if (string && m_head)
+	if (string && m_stringList)
 	{
 		if (string->m_next)
 			string->m_next->m_previous = string->m_previous;
@@ -68,6 +68,6 @@ void DisplayStringManager::unLink(DisplayString *string)
 		if (string->m_previous)
 			string->m_previous->m_next = string->m_next;
 		else
-			m_head = string->m_next;
+			m_stringList = string->m_next;
 	}
 }
