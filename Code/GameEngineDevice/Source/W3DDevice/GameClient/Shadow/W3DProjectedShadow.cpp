@@ -2657,124 +2657,86 @@ __declspec(naked) Int W3DProjectedShadowManager::renderShadows(RenderInfoClass &
 
 /** Generic function which can be used to create arbitrary decals that don't have to be used for shadows.
 Some examples: Scorch marks, blood, stains, selection/status indicators, etc.*/
-// ?addDecal@W3DProjectedShadowManager@@ present-unmatched
-Shadow* W3DProjectedShadowManager::addDecal(Shadow::ShadowTypeInfo *shadowInfo)
+struct BFMEShadowTypeInfo
 {
-	W3DShadowTexture *st=NULL;
-	ShadowType shadowType=SHADOW_NONE;		/// type of projection
-	Bool	allowWorldAlign=FALSE;	/// wrap shadow around world geometry - else align perpendicular to local z-axis.
-	Real	decalSizeX=0.0f;
-	Real	decalSizeY=0.0f;
+	Char name[128];
+	ShadowType type;
+	Bool allowUpdates;
+	Bool allowWorldAlign;
+	Char pad[2];
+	Real sizeX;
+	Real sizeY;
+	Real offsetX;
+	Real offsetY;
+	Int unused98;
+	Int flags;
+	Bool force;
+};
 
-	Bool	allowSunDirection=FALSE;
-	Char	texture_name[64];
-	Int nameLen;
+class BFMEShadowManagerLayout
+{
+public:
+	W3DShadowTexture *getTexture(const Char *name);
+	W3DProjectedShadow *addShadowCore(
+		W3DShadowTexture *texture,
+		RenderObjClass *robj,
+		ShadowType type,
+		Bool allowWorldAlign,
+		Real sizeX,
+		Real sizeY,
+		Int flags,
+		Real offsetX,
+		Real offsetY,
+		W3DProjectedShadow **list,
+		Bool simple,
+		Drawable *draw,
+		Bool projected);
+};
 
-	if (!shadowInfo)
-		return NULL;	//right now we require hardware render-to-texture support
+Shadow *W3DProjectedShadowManager::addDecal(Shadow::ShadowTypeInfo *shadowInfo)
+{
+	BFMEShadowTypeInfo *info = (BFMEShadowTypeInfo *)shadowInfo;
+	BFMEShadowManagerLayout *manager = (BFMEShadowManagerLayout *)this;
 
-	//simple decal using the premade texture specified.
-	//can be always perpendicular to model's z-axis or projected
-	//onto world geometry.
-	nameLen=strlen(shadowInfo->m_ShadowName);
-	strncpy(texture_name,shadowInfo->m_ShadowName,nameLen);
-	strcpy(texture_name+nameLen,".tga");	//append texture extension
-	
-	//Check if we previously added a decal using this texture
-	st=m_W3DShadowTextureManager->getTexture(texture_name);
-	if (st == NULL)
-	{
-		//Adding a new decal texture
-		TextureClass *w3dTexture=WW3DAssetManager::Get_Instance()->Get_Texture(texture_name);
-		w3dTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		w3dTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		w3dTexture->Get_Filter().Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
-
-		DEBUG_ASSERTCRASH(w3dTexture != NULL, ("Could not load decal texture: %s\n",texture_name));
-
-		if (!w3dTexture)
-			return NULL;
-
-		st = NEW W3DShadowTexture;	// poolify
-		SET_REF_OWNER( st );
-		st->Set_Name(texture_name);
-		m_W3DShadowTextureManager->addTexture( st );
-		st->setTexture(w3dTexture);
-	}
-
-	shadowType=shadowInfo->m_type;
-	allowWorldAlign=shadowInfo->allowWorldAlign;
-	allowSunDirection=shadowInfo->m_type & SHADOW_DIRECTIONAL_PROJECTION;
-	decalSizeX=shadowInfo->m_sizeX;
-	decalSizeY=shadowInfo->m_sizeY;
-
-	W3DProjectedShadow *shadow = NEW W3DProjectedShadow;	// poolify
-
-	// sanity
-	if( shadow == NULL )
+	if (info == NULL)
 		return NULL;
 
-	shadow->setRenderObject(NULL);
-	shadow->setTexture(0,st);	///@todo: Fix projected shadows to allow multiple lights
-	shadow->m_type = shadowType;		/// type of projection
-	shadow->m_allowWorldAlign=allowWorldAlign;	/// wrap shadow around world geometry - else align perpendicular to local z-axis.
-
-	shadow->m_oowDecalSizeX = 1.0f/decalSizeX;	//one over width
-	shadow->m_oowDecalSizeY = 1.0f/decalSizeY;	//one over height
-
-	//Prestore some values used during projection to optimize out division.
-	shadow->m_decalSizeX = decalSizeX;	//width
-	shadow->m_decalSizeY = decalSizeY;	//height
-
-	shadow->m_decalOffsetU=0;
-	shadow->m_decalOffsetV=0;
-
-	shadow->m_flags	= allowSunDirection;
-
-	shadow->init();
-
-	// add to our shadow list through the shadow next links, insert next to other shadows using same texture
-
-	W3DProjectedShadow *nextShadow=NULL,*prevShadow=NULL;
-	for( nextShadow = m_decalList; nextShadow; prevShadow=nextShadow,nextShadow = nextShadow->m_next )
+	if (info->type == (ShadowType)0x1000)
 	{
-		if (nextShadow->m_shadowTexture[0]==st)
-		{	//found start of other shadows using same texture, insert new shadow here.
-			shadow->m_next=nextShadow;
-			if (prevShadow)
-			{	prevShadow->m_next=shadow;
-			}
-			else
-				m_decalList=shadow;
-			break;
-		}
+		return manager->addShadowCore(
+			manager->getTexture(info->name),
+			NULL,
+			info->type,
+			info->allowWorldAlign,
+			info->sizeX,
+			info->sizeY,
+			info->flags,
+			0,
+			0,
+			(W3DProjectedShadow **)((Char *)this + 0x1c),
+			FALSE,
+			(Drawable *)manager->getTexture(info->name + 0x40),
+			TRUE);
 	}
 
-	if (nextShadow==NULL)
-	{	//shadow with new texture. Add to top of list.
-		shadow->m_next = m_decalList;
-		m_decalList = shadow;
-	}
-
-	switch (shadow->m_type)
-	{
-		case SHADOW_DECAL:
-		case SHADOW_ALPHA_DECAL:
-		case SHADOW_ADDITIVE_DECAL:
-			m_numDecalShadows++;
-			break;
-		case SHADOW_PROJECTION:
-			m_numProjectionShadows++;
-		default:
-			break;
-	}
-
-	return shadow;
+	return manager->addShadowCore(
+		manager->getTexture(info->name),
+		NULL,
+		info->type,
+		info->allowWorldAlign,
+		info->sizeX,
+		info->sizeY,
+		info->flags,
+		0,
+		0,
+		(W3DProjectedShadow **)((Char *)this + 8),
+		FALSE,
+		NULL,
+		FALSE);
 }
-
 /** Generic function which can be used to create arbitrary decals that follow the renderObject but don't have to be used for shadows.
 Some examples: Scorch marks, blood, stains, selection/status indicators, etc.*/
-// ?addDecal@W3DProjectedShadowManager@@ present-unmatched
+// ?addDecal@W3DProjectedShadowManager@@UAEPAVShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@2@@Z present-unmatched
 Shadow* W3DProjectedShadowManager::addDecal(RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo)
 {
 	W3DShadowTexture *st=NULL;
@@ -2908,42 +2870,6 @@ Shadow* W3DProjectedShadowManager::addDecal(RenderObjClass *robj, Shadow::Shadow
 
 	return shadow;
 }
-
-struct BFMEShadowTypeInfo
-{
-	Char name[128];
-	ShadowType type;
-	Bool allowUpdates;
-	Bool allowWorldAlign;
-	Char pad[2];
-	Real sizeX;
-	Real sizeY;
-	Real offsetX;
-	Real offsetY;
-	Int unused98;
-	Int flags;
-	Bool force;
-};
-
-class BFMEShadowManagerLayout
-{
-public:
-	W3DShadowTexture *getTexture(const Char *name);
-	W3DProjectedShadow *addShadowCore(
-		W3DShadowTexture *texture,
-		RenderObjClass *robj,
-		ShadowType type,
-		Bool allowWorldAlign,
-		Real sizeX,
-		Real sizeY,
-		Int flags,
-		Real offsetX,
-		Real offsetY,
-		W3DProjectedShadow **list,
-		Bool simple,
-		Drawable *draw,
-		Bool projected);
-};
 
 W3DProjectedShadow* W3DProjectedShadowManager::addShadow(RenderObjClass *robj, Shadow::ShadowTypeInfo *shadowInfo, Drawable *draw)
 {
