@@ -87266,3 +87266,6 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?setExperienceSink@ExperienceTracker@@QAEXW4ObjectID@@@Z,0x0001E9D4,route=0x001B2000; QueueProductionExitUpdate1083 receiver Object+210 ExperienceTracker; raw10B writes sink+18 and ret4; exact ctor and reference setter identify field
 ?handleNested@Rva0024C2A0Owner@@QAEXPAVObject@@PAX@Z,0x00047690,assigned-body helper; all three aligned calls in exact 0x0024C2A0 containment pass target ILT 0x00047690
 ??1?$pair@$$CBVUnicodeString@@_N@_STL@@QAE@XZ,0x00039D7E,pair<const UnicodeString Bool> destructor forwards through the existing releaseBuffer jump-thunk shared with other UnicodeString dtor callers
+??$__uninitialized_copy@PAW4ObjectID@@PAW41@@_STL@@YAPAW4ObjectID@@PAW41@00ABU__false_type@0@@Z,0x00150370,vector<ObjectID>::_M_fill_insert __uninitialized_copy instantiation reached through gen-thunk j_00037b96
+??$fill@PAW4ObjectID@@W41@@_STL@@YAXPAW4ObjectID@@0ABW41@@Z,0x002CA830,vector<ObjectID>::_M_fill_insert fill instantiation reached through gen-thunk j_00007ba8
+??$uninitialized_fill_n@PAW4ObjectID@@IW41@@_STL@@YAPAW4ObjectID@@PAW41@IABW41@@Z,0x002CA860,vector<ObjectID>::_M_fill_insert uninitialized_fill_n instantiation reached through gen-thunk j_0003dbb8
