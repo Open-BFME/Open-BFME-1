@@ -73,6 +73,12 @@ MARKER = re.compile(r"^\s*//\s*readable body of\s+(\S.*?)\s*:\s*(\S+)\s*$")
 # failure: a trailing `code; // readable body of X: Y` is still a candidate and
 # still fails, because MARKER requires the comment to start the line.
 CANDIDATE = re.compile(r"//\s*readable body of\b")
+# A `__declspec(naked)`/`__emit` body is a byte spray, not C++. Folding one into a
+# readable destination is the "lift" AGENTS.md bans: it byte-matches by construction,
+# scores +0, and replaces the destination's readable statement of the function with
+# machine noise. 95 of 146 clusters contain one, so this is the difference between a
+# merge lane and a corruption lane.
+NAKED = re.compile(r"__declspec\s*\(\s*naked\s*\)|\b__emit\b|\b__asm\b")
 CLASS_OPEN = re.compile(r"^(?:class|struct)\s+(\w+)\b")
 # A data member: no call parens, no initialiser, ends at the semicolon. Function
 # declarations are excluded on purpose -- siblings differing there are overloads
@@ -311,7 +317,7 @@ def conflicts(root, files):
 
 # -------------------------------------------------------------------- modes ---
 
-def do_list(root):
+def do_list(root, ready_only=False):
     clusters, declared = scan(root)
     multi = {dest: files for dest, files in clusters.items() if len(files) > 1}
     # Marker LINES and cluster MEMBERSHIPS are different totals -- a file naming
@@ -321,8 +327,22 @@ def do_list(root):
           f"{len(declared)} file(s) name {len(clusters)} destination(s); "
           f"{len(multi)} destination(s) hold two or more files, "
           f"{len(set().union(*multi.values()))} files in all")
-    for dest, files in sorted(multi.items(), key=lambda item: (-len(item[1]), item[0])):
-        print(f"{len(files):>4}  {dest}")
+    # A cluster whose donors include a byte spray cannot be folded at all, and
+    # counting it as available work is how "146 clusters" became a number nobody
+    # could act on. Splitting them is the difference between a queue and a list.
+    ready, blocked = {}, {}
+    for dest, files in multi.items():
+        naked = [rel for rel in files if NAKED.search(read_text(root / rel))]
+        (blocked if naked else ready)[dest] = (files, naked)
+    rcount = sum(len(f) for f, _ in ready.values())
+    bcount = sum(len(f) for f, _ in blocked.values())
+    print(f"  READY  {len(ready):>3} cluster(s), {rcount} file(s) -- no naked donor")
+    print(f"  BLOCKED{len(blocked):>3} cluster(s), {bcount} file(s) -- hold a "
+          f"__declspec(naked)/__emit body that must be converted first")
+    shown = ready if ready_only else {**ready, **{d: v for d, v in blocked.items()}}
+    for dest, (files, naked) in sorted(shown.items(), key=lambda i: (-len(i[1][0]), i[0])):
+        flag = "" if not naked else f"   [{len(naked)} naked]"
+        print(f"{len(files):>4}  {dest}{flag}")
     return 0
 
 
@@ -360,6 +380,14 @@ def do_plan(root, dest, only):
         for rel, marked in partial:
             for name in sorted(set(owned[rel]) - set(marked)):
                 print(f"      {rel} keeps {name}")
+    naked = [rel for rel in chosen if NAKED.search(read_text(root / rel))]
+    if naked:
+        print(f"  {len(naked)} NAKED donor(s) — a __declspec(naked)/__emit/__asm body is a")
+        print(f"      byte spray, not C++. Folding one into {dest} would replace a readable")
+        print(f"      statement of the function with machine noise, which is the lift AGENTS.md")
+        print(f"      bans. Convert these to real C++ first; --apply refuses while they remain.")
+        for rel in naked:
+            print(f"      {rel}")
     thunks = thunk_donors(root, set(chosen))
     if thunks:
         print(f"  {len(thunks)} THUNK-ONLY donor(s) — every row is <= {THUNK_BYTES} bytes, so the")
@@ -370,8 +398,15 @@ def do_plan(root, dest, only):
         for rel in sorted(thunks):
             print(f"      {rel}")
     print(f"  declarations common to ALL {len(chosen)} (free to hoist): {len(common)}")
-    differing = sorted(set.union(*sets) - common)
-    print(f"  declarations needing reconciliation: {len(differing)}")
+    # The differing set is how a non-member difference surfaces at all -- a const
+    # overload is a reconciliation the member parser cannot see, because it is a
+    # method, not a data member. But a naked donor puts 900 `__emit 0x00;` lines in
+    # here and buries every real one, so the byte spray is filtered rather than the
+    # listing dropped.
+    differing = [t for t in sorted(set.union(*sets) - common) if not NAKED.search(t)]
+    buried = len(set.union(*sets) - common) - len(differing)
+    print(f"  declarations needing reconciliation: {len(differing)}"
+          + (f" ({buried} byte-spray line(s) not shown)" if buried else ""))
     for text in differing:
         print(f"      {text}")
 
@@ -425,6 +460,13 @@ def do_apply(root, dest, into, only, symbols=()):
              "deletes donors, it never synthesises a body")
     if into_rel in chosen:
         fail(f"--into {into_rel} is also named by --only; a file cannot be its own donor")
+    naked = [rel for rel in chosen if NAKED.search(read_text(root / rel))]
+    if naked:
+        fail("refusing: %d donor(s) hold a __declspec(naked)/__emit/__asm body" % len(naked),
+             "folding a byte spray into a readable file is the lift AGENTS.md bans -- it",
+             "byte-matches by construction, scores +0, and destroys the destination's",
+             "readable statement of that function. Convert them to C++ first.",
+             *("  " + rel for rel in naked))
 
     clashes = conflicts(root, chosen)
     if clashes:
@@ -637,6 +679,8 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--list", action="store_true",
                       help="destinations with two or more files, largest cluster first")
+    parser.add_argument("--ready", action="store_true",
+                        help="with --list, show only clusters with no naked donor")
     mode.add_argument("--plan", metavar="DEST",
                       help="report one cluster's files and their declarations")
     mode.add_argument("--apply", metavar="DEST",
@@ -658,7 +702,7 @@ def main(argv=None):
     if args.list:
         if args.only or args.into or args.symbols:
             fail("--list takes neither --only nor --into nor --symbols")
-        return do_list(root)
+        return do_list(root, args.ready)
     if args.plan is not None:
         if args.into:
             fail("--into belongs to --apply, not --plan")
