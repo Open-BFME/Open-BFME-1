@@ -1,28 +1,27 @@
-// ?d_0055d7f0@@YAXXZ
-// partial score=0.46 date=2026-09-10
-// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
+#include <vector>
 //
-// Key-message pre-dispatch for an Online Shell style Apt screen, retail
-// 0x0055D7F0 (597 bytes). Message type 0x15 with scan code 1 (escape-like)
-// or 0x1C/0x9C (enter-like) special-cases a logoff confirmation; anything
-// else and the fall-through both walk a listener vector at +0x25c/+0x260.
-// The two GameText keys read from the binary at 0x011090B4/0x01109094 are
-// "APT:LogoffConfirmationTitle" and "APT:LogoffConfirmationMsg", and the two
-// FunctorSlot callback thunks installed are the OK/cancel handlers at
-// 0x0042D2BD (j_0002d2bd -> 0x0055BD30) and 0x00418C00 (j_00018c00 ->
-// 0x0055BD20), neither of which is landed yet.
+// OnlineShell primary virtual slot 1: RVA 0x0055D7F0, 597 bytes. The paired
+// constructor installs table 0x01108F48 whose slot routes through 0x0001DED0
+// to this complete body (last ret12 at 0x0055DA42..44). The method spelling
+// is reconstructed. The vector at +0x25c is also owned by the matched
+// OnlineShell constructor/destructor.
+//
+// Message 0x15 handles Escape/Enter scan codes, toggles the in-game chat
+// shortcut, then offers unconsumed messages to screen references. An
+// unconsumed Escape opens the localized logoff confirmation. Its callback
+// pair contains the WindowManager action (18C00 ->55BD20) and a no-op
+// (2D2BD ->55BD30). Typed holders preserve the actual reference ownership.
+// The strings belong inside the confirmation branch: this lexical scope
+// reproduces retail's reuse of the first two dead incoming-argument slots.
 
-typedef int Bool;
-
-class StringBaseG
+class UnicodeString
 {
 public:
-	~StringBaseG() { releaseBuffer(); }
-
-	void *m_bfmeBufDQ;
-
+	~UnicodeString();
 private:
-	void releaseBuffer();
+	void *m_data;
 };
 
 class GameTextInterface
@@ -38,7 +37,7 @@ public:
 	virtual void bfmeSlot07GT();
 	virtual void bfmeSlot08GT();
 	virtual void bfmeSlot09GT();
-	virtual StringBaseG bfmeFetchDQ( const char *label, char *found );
+	virtual UnicodeString fetch( const char *label, bool *found );
 };
 
 extern GameTextInterface *TheGameText;
@@ -70,7 +69,10 @@ public:
 	virtual void slot150(); virtual void slot154(); virtual void slot158(); virtual void slot15C();
 	virtual void slot160(); virtual void slot164(); virtual void slot168(); virtual void slot16C();
 	virtual void slot170(); virtual void slot174(); virtual void slot178();
-	virtual Bool bfmeCanConfirmLogoff();
+	// Retail vtable11188D0 +17C ->1CBDE ->637210: byte at +6FC.
+	// Its wider original meaning is not recovered; this caller uses it as
+	// the chat-shortcut gate, not as a permission to show logoff confirmation.
+	virtual unsigned char getChatGateRva00637210() const;
 };
 
 extern GameSpyInfo *TheGameSpyInfo;
@@ -85,49 +87,29 @@ extern void j_00028a51();
 
 struct FunctorSlot
 {
-	__forceinline FunctorSlot( void *slot ) : m_slot( slot ) {}
-
-	void *m_slot;
+	FunctorSlot(void (*callback)()) : m_callback(callback) {}
+	void (*m_callback)();
 };
-
-class FunctorSlotWrapperHead
-{
-public:
-	__forceinline FunctorSlotWrapperHead() : m_refCount( 0 ) {}
-
-	virtual void functorSlotWrapperAnchor();
-
-	unsigned int m_refCount;
-};
-
-class Rva0055D8DBFunctorSlotWrapper : public FunctorSlotWrapperHead
-{
-public:
-	__forceinline Rva0055D8DBFunctorSlotWrapper( const FunctorSlot &slot ) : m_slot( slot ) {}
-
-	FunctorSlot m_slot;
-};
-
-class Rva0055D999FunctorSlotWrapper : public FunctorSlotWrapperHead
-{
-public:
-	__forceinline Rva0055D999FunctorSlotWrapper( const FunctorSlot &slot ) : m_slot( slot ) {}
-
-	FunctorSlot m_slot;
-};
-
 class Open2Counted
 {
 public:
-	virtual void release( int deleting );
-
+	Open2Counted() : m_refs(0) {}
+	virtual ~Open2Counted();
 	int m_refs;
+};
+class Rva010FDFACFunctorSlotWrapper : public Open2Counted
+{
+public:
+	Rva010FDFACFunctorSlotWrapper(const FunctorSlot &slot) : m_callback(slot.m_callback) {}
+	virtual ~Rva010FDFACFunctorSlotWrapper(); // slot0: 4C56A0 deleting destructor
+	virtual void invoke(); // slot1: 4C5690, jumps through callback at +8
+	void (*m_callback)();
 };
 
 class Open2Handle
 {
 public:
-	Open2Handle( Open2Counted *p ) : m_held( p )
+	Open2Handle( const FunctorSlot &slot ) : m_held( new Rva010FDFACFunctorSlotWrapper(slot) )
 	{
 		if( m_held != 0 )
 			++m_held->m_refs;
@@ -142,88 +124,79 @@ public:
 	~Open2Handle()
 	{
 		if( m_held != 0 && --m_held->m_refs <= 0 )
-			m_held->release( 1 );
+			delete m_held;
 	}
 
 	Open2Counted *m_held;
 };
 
-class Rva004C5C30
-{
-public:
-	Rva004C5C30( Open2Handle first, Open2Handle second );
-
-	Open2Handle m_first;
-	Open2Handle m_second;
-};
-
 class Bfme5RefCounted
 {
 public:
+	virtual ~Bfme5RefCounted();
 	int m_refs;
 };
-
 class Bfme5RefPtr
 {
 public:
+	Bfme5RefPtr(const Bfme5RefPtr &other) : m_ptr(other.m_ptr)
+	{
+		if(m_ptr) ++m_ptr->m_refs;
+	}
 	Bfme5RefCounted *m_ptr;
 };
-
 struct Bfme5RefPairVal
 {
-	Bfme5RefPairVal( Bfme5RefCounted *a, Bfme5RefCounted *b )
-	{
-		m_a.m_ptr = a;
-		m_b.m_ptr = b;
-	}
-
 	Bfme5RefPtr m_a;
 	Bfme5RefPtr m_b;
 	~Bfme5RefPairVal();
 };
-
+class Rva004C5C30 : public Bfme5RefPairVal
+{
+public:
+	Rva004C5C30(Open2Handle first, Open2Handle second);
+};
 class Rva004C6370
 {
 public:
-	Rva004C6370( Bfme5RefPairVal s );
-
+	Rva004C6370(Bfme5RefPairVal s);
+	Rva004C6370(const Rva004C6370 &other) throw() : m_bfmeNode(other.m_bfmeNode)
+	{
+		if(m_bfmeNode) ++((Open2Counted *)m_bfmeNode)->m_refs;
+	}
+	~Rva004C6370();
 	void *m_bfmeNode;
 };
-
-class BfmeTagZB
-{
-public:
-	BfmeTagZB( int tag ) { m_bfmeTagZB = tag; }
-	BfmeTagZB( const BfmeTagZB &other ) throw() { m_bfmeTagZB = other.m_bfmeTagZB; }
-	~BfmeTagZB();
-
-	int m_bfmeTagZB;
-};
-
-extern void __cdecl bfmeSendZB( void *first, void *second, void *third, BfmeTagZB tag );
+// Existing byte-verified routes, used with their observed cdecl signatures:
+// 28A51 ->511CC0 consumes mode3; 2E0B9 ->522D20 consumes dialog kind,
+// the two UnicodeString references and the by-value callback-pair holder.
+extern void j_0002e0b9();
+typedef char KeyTextSize[(sizeof(UnicodeString) == 4) ? 1 : -1];
+typedef char KeyCallbackSize[(sizeof(Rva010FDFACFunctorSlotWrapper) == 12) ? 1 : -1];
+typedef char KeyPairSize[(sizeof(Rva004C5C30) == 8) ? 1 : -1];
+typedef char KeyDialogHolderSize[(sizeof(Rva004C6370) == 4) ? 1 : -1];
 
 class Rva0055D7F0Handler
 {
 public:
-	virtual void hSlot00();
+	virtual ~Rva0055D7F0Handler();
 	virtual void hSlot04();
 	virtual void hSlot08();
 	virtual int handleKey( void *owner, int msgType, int code, int flags );
 };
 
-class Rva0055D7F0Owner
+class BfmeAptScreenOnlineShell
 {
 public:
 	int handleLogoffKey( int msgType, int code, int flags );
 
 private:
 	unsigned char m_pad[ 0x25c ];
-	Rva0055D7F0Handler **m_listBegin;
-	Rva0055D7F0Handler **m_listEnd;
+	std::vector<Rva0055D7F0Handler *> m_list;
 };
 
-// @?handleLogoffKey@Rva0055D7F0Owner@@QAEHHHH@Z 0x0055D7F0
-int Rva0055D7F0Owner::handleLogoffKey( int msgType, int code, int flags )
+// @?handleLogoffKey@BfmeAptScreenOnlineShell@@QAEHHHH@Z 0x0055D7F0
+int BfmeAptScreenOnlineShell::handleLogoffKey( int msgType, int code, int flags )
 {
 	unsigned char wantsConfirm = 0;
 
@@ -245,16 +218,16 @@ int Rva0055D7F0Owner::handleLogoffKey( int msgType, int code, int flags )
 		{
 			if( flags & 0xc )
 			{
-				if( TheGameSpyInfo && TheGameSpyInfo->bfmeCanConfirmLogoff() )
+				if( TheGameSpyInfo && TheGameSpyInfo->getChatGateRva00637210() )
 				{
 					if( flags & 1 )
 					{
-						if( g_Rva005127A0InGameChat )
+						if( !g_Rva005127A0InGameChat )
 						{
-							HideInGameChat();
+							((void (__cdecl *)(int))j_00028a51)(3);
 							return 1;
 						}
-						j_00028a51();
+						HideInGameChat();
 						return 1;
 					}
 					return 1;
@@ -263,27 +236,22 @@ int Rva0055D7F0Owner::handleLogoffKey( int msgType, int code, int flags )
 		}
 	}
 
-	for( Rva0055D7F0Handler **it = m_listBegin; it != m_listEnd; ++it )
+	for( std::vector<Rva0055D7F0Handler *>::iterator it = m_list.begin(); it != m_list.end(); ++it )
 	{
 		if( (*it)->handleKey( this, msgType, code, flags ) == 1 )
 			return 1;
 	}
 
-	if( !wantsConfirm )
-		return 0;
+	if( wantsConfirm )
+	{
+		UnicodeString title = TheGameText->fetch( "APT:LogoffConfirmationTitle", 0 );
+		UnicodeString message = TheGameText->fetch( "APT:LogoffConfirmationMsg", 0 );
 
-	StringBaseG title = TheGameText->bfmeFetchDQ( "APT:LogoffConfirmationTitle", 0 );
-	StringBaseG message = TheGameText->bfmeFetchDQ( "APT:LogoffConfirmationMsg", 0 );
+		((void (__cdecl *)(int, const UnicodeString &, const UnicodeString &, Rva004C6370))j_0002e0b9)(
+			2, title, message, Rva004C5C30(
+				FunctorSlot(j_00018c00),
+				FunctorSlot(j_0002d2bd)));
 
-	Rva004C5C30 pair(
-		Open2Handle( (Open2Counted *)new Rva0055D8DBFunctorSlotWrapper( FunctorSlot( (void *)&j_0002d2bd ) ) ),
-		Open2Handle( (Open2Counted *)new Rva0055D999FunctorSlotWrapper( FunctorSlot( (void *)&j_00018c00 ) ) ) );
-
-	Rva004C6370 grand( Bfme5RefPairVal(
-		(Bfme5RefCounted *)pair.m_first.m_held,
-		(Bfme5RefCounted *)pair.m_second.m_held ) );
-
-	bfmeSendZB( &title, &message, &grand, BfmeTagZB( 2 ) );
-
+	}
 	return 0;
 }
