@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "acb15d1870b30132c67450300d833369f92cd1e8d340defa44d68dfd59196839",
+  "symbol": "?process@Rva0024CF00Owner@@QAEXPAX0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.13,
+  "source": "// ?process@Rva0024CF00Owner@@QAEXPAX0@Z\n// partial score=0.13 date=2026-09-12\n// ?process@Rva0024CF00Owner@@QAEXPAX0@Z\n// cl: /DNDEBUG /MD /EHsc\n\nclass Rva0024CF00Vector\n{\npublic:\n\tRva0024CF00Vector();\n\tfloat x, y, z, w;\n};\n\nclass Rva0024CF00Triangle\n{\npublic:\n\t__forceinline Rva0024CF00Triangle() {}\n\tRva0024CF00Vector points[3];\n};\n\nclass Rva0024CF00Owner\n{\npublic:\n\tvoid process(void *subject, void *context);\n};\n\nclass Rva0024CF00Scratch\n{\npublic:\n\tRva0024CF00Scratch();\n\t~Rva0024CF00Scratch();\n\tchar bytes[0xa8];\n};\n\nvoid processRva0024CF00Candidates(Rva0024CF00Triangle *, void *, void *, void *);\n\nextern \"C\" void b_000fbb40(void);\n#pragma comment(linker, \"/alternatename:??0Rva0024CF00Vector@@QAE@XZ=?b_000fbb40@@YAXXZ\")\n\nvoid Rva0024CF00Owner::process(void *subject, void *context)\n{\n\tRva0024CF00Triangle candidates[32];\n\tRva0024CF00Scratch scratch;\n\t(void)subject;\n\t(void)context;\n\tprocessRva0024CF00Candidates(candidates, subject, context, &scratch);\n}\n"
+}
