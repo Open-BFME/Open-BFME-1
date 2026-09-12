@@ -1,5 +1,4 @@
 // ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z
-// partial score=0.93 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z
 //
@@ -26,7 +25,7 @@ public:
 	Object *getFirstObject();
 };
 
-#define TheGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
 
 class ThingTemplate
 {
@@ -34,7 +33,8 @@ public:
 	void *m_vtable;
 	ThingTemplate *m_nextOverride;
 	unsigned char m_unmodelled008[0xcc - 8];
-	unsigned int m_kindOf;
+	// Retail tests bit 30 of this word; the current naming witness conflicts.
+	unsigned int m_field0xcc;
 	unsigned char m_unmodelled0d0[0x4cb - 0xd0];
 	unsigned char m_bfmeProductionFlag;
 
@@ -70,15 +70,24 @@ public:
 	}
 };
 
-class BfmeBuildIndexSelector
+// Existing ILT 0000A7A9 routes to the measured selector body at 000FA8B0.
+// Its owner name is unresolved; preserve an RVA-qualified call-site view.
+extern void j_0000a7a9();
+class Rva000FA8B0Selector
 {
 public:
-	Int findBuildIndex(const ThingTemplate *thing, Int requestedIndex);
+	__forceinline Int findBuildIndex(const ThingTemplate *thing, Int requestedIndex)
+	{
+		typedef Int (Rva000FA8B0Selector::*Call)(const ThingTemplate *, Int);
+		union { void (*raw)(); Call member; } target;
+		target.raw = j_0000a7a9;
+		return (this->*target.member)(thing, requestedIndex);
+	}
 };
 
 static Int bfmeFindBuildIndex(Player *player, const ThingTemplate *thing)
 {
-	return ((BfmeBuildIndexSelector *)((char *)player + 0x684))->
+	return ((Rva000FA8B0Selector *)((char *)player + 0x684))->
 		findBuildIndex(thing, -1);
 }
 
@@ -106,7 +115,7 @@ public:
 		const ThingTemplate *thing, Int buildIndex) = 0;
 };
 
-#define TheBuildAssistant (*(BuildAssistant **)0x012ED83C)
+extern BuildAssistant *TheBuildAssistant;
 
 class ProductionEntry
 {
@@ -170,7 +179,7 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 		ThingTemplate *factoryTemplate = factory->m_template;
 		if (factoryTemplate != NULL && factoryTemplate->m_nextOverride != NULL)
 			factoryTemplate = factoryTemplate->m_nextOverride->getFinalOverride();
-		if ((factoryTemplate->m_kindOf & 0x40000000) == 0)
+		if ((factoryTemplate->m_field0xcc & 0x40000000) == 0)
 			goto nextFactory;
 		if ((factory->m_status & 4) != 0 ||
 			(factory->m_status & 0x80000) != 0)
@@ -195,16 +204,17 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 				goto nextFactory;
 			if (buildIndex != NULL)
 				*buildIndex = availableBuildIndex;
-			goto foundFactory;
+			goto afterBuildIndex;
 		}
 
-	noBuildIndex:
 		if (!buildAssistant->isPossibleToMakeUnit(factory, requestedThing, -1))
 			goto nextFactory;
+
+	afterBuildIndex:
 		if (production->getProductionCount() <= 0)
 			goto foundFactory;
 		if (m_player->canBuildFromProduction() == 0)
-			goto nextFactory;
+			goto considerBusy;
 
 		ProductionEntry *entry = production->firstProduction();
 		if (entry != NULL)
@@ -216,8 +226,8 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 			{
 				ThingTemplate *entryThing = entry->m_thing;
 				if (entryThing != NULL && entryThing->m_bfmeProductionFlag != 0 &&
-					requestedThing->isEquivalentTo(entryThing))
-					goto considerBusy;
+					!requestedThing->isEquivalentTo(entryThing))
+					goto foundFactory;
 			}
 		}
 
