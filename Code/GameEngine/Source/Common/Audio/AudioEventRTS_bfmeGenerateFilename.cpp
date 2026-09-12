@@ -1,15 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// AudioManager::getAudioLengthMS and isMusicAlreadyLoaded call this body;
+// their Zero Hour twins call generateFilename at those sites. BFME split
+// delay + lazy filename off the 400-byte generateFilename at 0x000B3970.
+// ILT 0x00046A33 is already pinned as AudioEventRTS::bfmeGenerateFilename.
 
 typedef unsigned char Byte;
 
 float __cdecl GetGameAudioRandomValueReal(float low, float high, char *file, int line);
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
-class AudioEventRTS
-{
-public:
-	void generateFilename();
-};
 
 class AudioEventInfoDelayView
 {
@@ -19,10 +16,12 @@ public:
 	int m_delayMax;
 };
 
-class Rva006ABFD0Event
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
+class AudioEventRTS
 {
 public:
-	void advance();
+	void bfmeGenerateFilename();
+	void generateFilename();
 
 private:
 	Byte m_pad00[0x08];
@@ -37,7 +36,7 @@ private:
 	float m_delay;
 };
 
-void Rva006ABFD0Event::advance()
+void AudioEventRTS::bfmeGenerateFilename()
 {
 	if (m_eventInfo == 0)
 		return;
@@ -55,6 +54,6 @@ void Rva006ABFD0Event::advance()
 		m_filenameDirty = 1;
 		m_shouldRegenerateFilename = 0;
 		if (m_isLogicalAudio)
-			((AudioEventRTS *)this)->generateFilename();
+			generateFilename();
 	}
 }
