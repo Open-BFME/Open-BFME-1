@@ -1,5 +1,5 @@
 // ?rva00284E70ParseObjectName@BannerCarrierUpdateModuleData@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.32 date=2026-09-12
+// partial score=0.36 date=2026-09-12
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
 typedef bool Bool;
@@ -50,6 +50,11 @@ struct BannerCarrierSubObject
 
 struct BannerCarrierObjectNameParse
 {
+	enum MagicEnum { GLUE_NOT_IMPLEMENTED = 0 };
+	inline void *operator new(UnsignedInt size, MagicEnum)
+	{
+		return ::operator new(size);
+	}
 	BannerCarrierObjectNameParse() : m_begin(0), m_end(0), m_storageEnd(0) {}
 	int m_level;
 	BannerCarrierSubObject **m_begin;
@@ -79,11 +84,9 @@ public:
 void BannerCarrierUpdateModuleData::rva00284E70ParseObjectName(
 	INI *ini, void *, void *store, const void *)
 {
-	void *recordStorage = operator new(sizeof(BannerCarrierObjectNameParse));
-	BannerCarrierObjectNameParse *allocationResult = recordStorage != 0
-		? new (recordStorage) BannerCarrierObjectNameParse : 0;
-	_ReadWriteBarrier();
-	BannerCarrierObjectNameParse *record = allocationResult;
+	BannerCarrierObjectNameParse *record;
+	record = new (BannerCarrierObjectNameParse::GLUE_NOT_IMPLEMENTED)
+		BannerCarrierObjectNameParse;
 	const char *token = ini->getNextTokenOrNull(ini->m_tokenDelimiters);
 	if (token == 0 || strcmp(token, "Level") != 0)
 		throw INIException(3, "'ModelState' expected");
