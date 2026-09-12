@@ -1,5 +1,5 @@
 // ?personaAccept@BfmeAptScreenSkirmish@@QAEXH@Z
-// partial score=0.92 date=2026-09-09
+// lane 35 scratch, based on reverse/attempts/0x0057d600.cpp
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
 
 template <typename T> class StringBase
@@ -10,7 +10,8 @@ private:
     StringBase() : m_data( 0 ) {}
     StringBase( const StringBase<T> &other );
     void trim();
-    ~StringBase();
+    void set( const StringBase<T> &other );
+    void releaseBuffer();
 
 public:
     void *m_data;
@@ -20,8 +21,15 @@ class UnicodeString : private StringBase<unsigned short>
 {
 public:
     static UnicodeString TheEmptyString;
-    UnicodeString &operator=( const UnicodeString &other );
-    void trim();
+    UnicodeString( const UnicodeString &other )
+        : StringBase<unsigned short>( other ) {}
+    __forceinline ~UnicodeString() { releaseBuffer(); }
+    UnicodeString &operator=( const UnicodeString &other )
+    {
+        StringBase<unsigned short>::set( other );
+        return *this;
+    }
+    void trim() { StringBase<unsigned short>::trim(); }
 };
 
 class GameWindow;
@@ -39,6 +47,25 @@ public:
     void Rva0009FDF0( UnicodeString value );
 };
 
+class Gen0009FBB0Owner
+{
+public:
+    void Rva0009FBB0( UnicodeString value );
+};
+
+class SkirmishPreferencesMap
+{
+public:
+    virtual void slot0();
+    void *m_head;
+};
+
+class SkirmishPreferencesVector
+{
+public:
+    void *m_head;
+};
+
 class SkirmishPreferences
 {
 public:
@@ -50,7 +77,10 @@ public:
     bool unidentified_00017AF8();
     UnicodeString getUserName();
 
-    char m_unmodelled[ 0x14 ];
+    SkirmishPreferencesMap m_map;
+    char m_unmodelled_0c[ 4 ];
+    UnicodeString m_userName;
+    SkirmishPreferencesVector m_userNames;
 };
 
 class SkirmishBattleHonors
@@ -64,7 +94,10 @@ public:
     SkirmishBattleHonors( UnicodeString userName );
     void setProfileCreatedDate();
 
-    char m_unmodelled[ 0x38 ];
+    SkirmishPreferencesMap m_map;
+    char m_unmodelled_0c[ 4 ];
+    UnicodeString m_userName;
+    int m_values[ 10 ];
 };
 
 class Rva0057D0C0
@@ -83,6 +116,9 @@ public:
 
 extern WindowManager *g_theWindowManager;
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic( _ReadWriteBarrier )
+
 class SkirmishScreenState
 {
 public:
@@ -92,6 +128,9 @@ public:
 private:
     char m_unmodelled[ 0x130 ];
 };
+
+typedef bool (__fastcall *SkirmishPreferencesWriteCall)( SkirmishPreferences * );
+typedef void (__fastcall *SkirmishScreenStateResetCall)( SkirmishScreenState * );
 
 class BfmeAptScreenSkirmish
 {
@@ -110,7 +149,7 @@ private:
     int m_mode;
     int m_previousMode;
     unsigned char m_unmodelled_408;
-    unsigned char m_profileOpen;
+    bool m_profileOpen;
     char m_unmodelled_40a[ 0x22 ];
     GameWindow *m_createPersonaEntry;
 };
@@ -135,50 +174,56 @@ void BfmeAptScreenSkirmish::personaAccept( int )
     if( ( (StringBase<unsigned short> *)&value )->m_data != 0 &&
         *(unsigned short *)( (char *)((StringBase<unsigned short> *)&value)->m_data + 4 ) != 0 )
     {
-        SkirmishPreferences *preferences = &m_preferences;
-        if( ( (Rva0009F090WideList *)preferences )->findNoCase( value ) >= 0 )
+        if( ( (Rva0009F090WideList *)&m_preferences )->findNoCase( value ) >= 0 )
         {
             g_theWindowManager->unidentified_00015235(
                 m_movie, kErrorSameName, 0, 0, 0, 0, 0, 0 );
-            m_previousMode = m_mode;
+            int previousMode = m_mode;
+            m_previousMode = previousMode;
             m_mode = 4;
         }
         else
         {
+            SkirmishPreferences *preferences = &m_preferences;
             ( (Gen0009FDF0Owner *)preferences )->Rva0009FDF0( value );
+            ( (Gen0009FBB0Owner *)preferences )->Rva0009FBB0( value );
             preferences->write();
             m_honors.write();
-            {
-                SkirmishBattleHonors honors( preferences->getUserName() );
-                ( (Rva0057D0C0 *)&m_honors )->operator=(
-                    (const Rva0057D0C0 *)&honors );
-            }
+            SkirmishBattleHonors honors( preferences->getUserName() );
+            ( (Rva0057D0C0 *)&m_honors )->operator=(
+                (const Rva0057D0C0 *)&honors );
             _bfme_refreshProfile();
             preferences->write();
             m_honors.setProfileCreatedDate();
             m_honors.write();
             g_theWindowManager->unidentified_00015235(
                 m_movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
-            m_preferences.write();
-            m_profileOpen = 1;
-            m_state.reset();
+            m_profileOpen = true;
+            void **preferencesVtable = *(void ***)&m_preferences;
+            ( (SkirmishPreferencesWriteCall)preferencesVtable[ 3 ] )(
+                &m_preferences );
+            ( (SkirmishScreenStateResetCall)( *(void ***)&m_state )[ 1 ] )(
+                &m_state );
             m_mode = 5;
         }
     }
     else if( !m_preferences.unidentified_00017AF8() )
     {
+        int movie = m_movie;
         g_theWindowManager->unidentified_00015235(
-            m_movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
+            movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
+        int profileMovie = m_movie;
         g_theWindowManager->unidentified_00015235(
-            m_movie, kPopUpControl, 1, kProfileAction, 0, 0, 0, 0 );
-        m_profileOpen = 1;
-        m_mode = 7;
+            profileMovie, kPopUpControl, 1, kProfileAction, 0, 0, 0, 0 );
+        return;
     }
     else
     {
         _bfme_refreshProfile();
+        int movie = m_movie;
         g_theWindowManager->unidentified_00015235(
-            m_movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
+            movie, kPopUpControl, 1, kClose, 0, 0, 0, 0 );
+        _ReadWriteBarrier();
         m_profileOpen = 1;
         m_mode = 7;
     }
