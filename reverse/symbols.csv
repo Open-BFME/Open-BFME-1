@@ -5490,6 +5490,7 @@ name,address,notes
 ??1GiantBirdGuardAttackAggressorState@@UAE@XZ,0x0000FDC1,constructor 0x002C11E0 names the state and installs vtable 0x010C7D88 whose slot zero reaches deleting destructor 0x002C1D40
 ??1Gen_dtor_002c2400@@UAE@XZ,0x000357A6,gen-dtor class destructor
 ??1Gen_dtor_002c2800@@UAE@XZ,0x00030792,gen-dtor class destructor
+??1GiantBirdAIUpdate@@MAE@XZ,0x00030792,constructor 0x002C2430 installs primary vtable 0x010C7F40 whose slot zero reaches deleting destructor 0x002C2800; wrapper calls this protected-destructor ILT
 ??1Gen_dtor_002c4450@@UAE@XZ,0x00033A37,gen-dtor class destructor
 ??1Gen_dtor_002c4b30@@UAE@XZ,0x000369AD,gen-dtor class destructor
 ??1Gen_dtor_002c5460@@UAE@XZ,0x00025F7C,gen-dtor class destructor
