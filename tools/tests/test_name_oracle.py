@@ -131,3 +131,13 @@ def test_placeholder_shapes_are_told_apart_from_real_names():
         assert N.PLACEHOLDER.match(name), name
     for name in ("m_priority", "m_shouldFade", "m_currentState", "m_boundingCircleRadius"):
         assert not N.PLACEHOLDER.match(name), name
+
+
+def test_a_member_reports_its_size_so_a_span_can_be_told_from_a_field():
+    """`char m_unknown[0x54]` starting where s_GlobalDataFieldParseTable starts is not
+    that field -- it is unknown SPACE beginning there. --todo must not offer to rename
+    it, or a 0x54-byte pad acquires the name of the 4-byte pointer at its front."""
+    rows, refused = N.outer_members(
+        "struct S {\n\tchar m_unknown[0x54];\n\tint m_after;\n};", 9, False)
+    assert refused is None
+    assert [(r[0], r[1], r[4]) for r in rows] == [("m_unknown", 0, 0x54), ("m_after", 0x54, 4)]

@@ -222,7 +222,7 @@ def outer_members(text, brace, has_base):
             # this very declaration has already refuted is how a checker starts
             # blocking correct commits.
             return [], "annotation contradicts the computed layout"
-        out.append((hit.group(3), off, first_line + n + 1, stated))
+        out.append((hit.group(3), off, first_line + n + 1, stated, span))
         off += span
     return out, None
 
@@ -256,7 +256,7 @@ def scan(paths, staged):
                 # Counted, never silent: refusals are the safety property, so a drop
                 # in this number is the signal that the model started guessing.
                 tally["refused: " + refused.split(" '")[0]] += 1
-            for member, off, line, stated in members:
+            for member, off, line, stated, span in members:
                 tally["members computed"] += 1
                 if stated is not None:
                     tally["  ...offset stated in the file too"] += 1
@@ -275,7 +275,15 @@ def scan(paths, staged):
                 elif member.lower().replace("bfme", "") == name.lower().replace("bfme", ""):
                     tally["variant"] += 1
                 elif PLACEHOLDER.match(member):
-                    todo.append(rec)
+                    # `char m_unknown[0x54]` starting where s_GlobalDataFieldParseTable
+                    # starts is not that field -- it is unknown SPACE that happens to
+                    # begin there, and naming it after the first field inside it is
+                    # simply false. Offer a name only when the member does not swallow
+                    # another witnessed offset.
+                    if any((owner, o) in wit for o in range(off + 1, off + span)):
+                        tally["placeholder spans other witnessed fields"] += 1
+                    else:
+                        todo.append(rec)
                 else:
                     conflicts.append(rec)
     return tally, todo, conflicts
@@ -442,6 +450,14 @@ def main():
         for path in sorted({t[0] for t in todo}):
             text = (ROOT / path).read_text(encoding="utf-8")
             for _, _, _, _, old, new, _, _ in [t for t in todo if t[0] == path]:
+                if len(re.findall(rf"\b{re.escape(old)}\b\s*(?:\[[^\]]*\])?\s*;", text)) > 1:
+                    # The same placeholder spelling declared in two structs of one file
+                    # sits at two different offsets; a file-wide substitution would put
+                    # one struct's name into the other. Refuse the row, not the file.
+                    print(f"  REFUSED {path}: {old!r} is declared more than once here",
+                          file=sys.stderr)
+                    refused += 1
+                    continue
                 if re.search(rf"\b{re.escape(new)}\b", text):
                     # Renaming onto a name the file already uses would silently merge
                     # two distinct members. Refuse the row, never the whole file.
