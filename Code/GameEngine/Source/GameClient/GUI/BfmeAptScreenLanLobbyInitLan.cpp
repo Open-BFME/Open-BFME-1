@@ -1,13 +1,15 @@
-// ?d_00517d00@@YAXXZ
-// partial score=0.99 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/asciistring_downloadmanager /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 //
 // BfmeAptScreenLanLobby LAN start-up, retail 0x00517D00 (647 bytes).  This is
-// the ZH LanLobbyMenuInit body: create TheLAN, choose a local IP through
+// the BFME counterpart of ZH LanLobbyMenuInit: create TheLAN, choose a local IP through
 // IPEnumeration, publish the three list windows on the singleton, then clamp
 // the preferences user name to twelve characters and announce it.  The window
 // and preferences offsets are the ones BfmeAptScreenLanLobby_submitName.cpp
 // established; sizeof(LANAPI) is fixed at 0x68 by the retail operator new.
+// initLanRva00517D00 is an explicit reconstruction label, not a claim that
+// the stripped executable preserves that original method spelling.
+// Full COFF extent is 647 bytes: ret at RVA 0x00517F86, then INT3 padding.
+// All 39 relocation sites follow existing pins; no new pin is introduced.
 
 typedef unsigned short wchar_t;
 typedef unsigned short WideChar;
@@ -158,6 +160,7 @@ public:
 	void setPlayerList(GameWindow *w) { m_playerList = w; }
 };
 
+typedef char LanLobbyLANSize[(sizeof(LANAPI) == 0x68) ? 1 : -1];
 extern LANAPI *TheLAN;
 
 class Rva005265F0
@@ -182,6 +185,9 @@ public:
 	int *m_table;
 	int m_value;
 	GameWindow *m_owner;
+// Keep this access as an inline accessor: MSVC reuses the retired screen
+	// register for the window after constructing the by-value text argument.
+	GameWindow *getOwner() { return m_owner; }
 };
 
 class BfmeAptScreenLanLobby
@@ -261,7 +267,7 @@ bool BfmeAptScreenLanLobby::initLanRva00517D00()
 	m_userNamePrefs.setUserName(defaultName);
 
 	if (m_nameEntry.m_owner)
-		GadgetTextEntrySetText(m_nameEntry.m_owner, defaultName);
+		GadgetTextEntrySetText(m_nameEntry.getOwner(), defaultName);
 
 	TheLAN->RequestSetName(defaultName);
 	TheLAN->RequestLocations();
