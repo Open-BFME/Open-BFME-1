@@ -53,6 +53,103 @@
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+#ifndef BFME_POPUP_STRINGBASE_H
+#define BFME_POPUP_STRINGBASE_H
+template <typename T> struct PopupStringData
+{
+    int m_refCount;
+    int m_length;
+    T m_text[1];
+};
+template <> struct PopupStringData<unsigned short>
+{
+    unsigned short m_refCount;
+    unsigned short m_length;
+    unsigned short m_text[1];
+};
+template <typename T> class StringBase
+{
+    friend class AsciiString;
+    friend class UnicodeString;
+public:
+    bool isEmpty() const;
+    bool isNotEmpty() const;
+    bool isNone() const;
+    bool isNotNone() const;
+    int getLength() const;
+    const T *str() const;
+    int compareNoCase(const StringBase<T> &other) const;
+    void set(const StringBase<T> &other);
+    void trim();
+protected:
+    T *m_text_for_popup() const;
+private:
+    StringBase() : m_data(0) {}
+    StringBase(const T *text);
+    StringBase(const StringBase<T> &other);
+    ~StringBase();
+    void releaseBuffer();
+    PopupStringData<T> *m_data;
+};
+#endif
+
+#ifndef ASCIISTRING_H
+#define ASCIISTRING_H
+class UnicodeString;
+class AsciiString : private StringBase<char>
+{
+public:
+    static AsciiString TheEmptyString;
+    AsciiString() : StringBase<char>() {}
+    AsciiString(char c);
+    AsciiString(const char *text) : StringBase<char>(text) {}
+    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+    const char *str() const { return m_data ? m_data->m_text : ""; }
+    int getLength() const;
+    bool isEmpty() const;
+    bool isNotEmpty() const;
+    bool isNone() const;
+    bool isNotNone() const;
+    int compareNoCase(const AsciiString &other) const;
+    void translate(const UnicodeString &other);
+    void set(const AsciiString &other);
+    void trim();
+    const char *getBufferForRead(int len);
+};
+inline bool operator==(const AsciiString &a, const AsciiString &b) { return a.compareNoCase(b) == 0; }
+inline bool operator!=(const AsciiString &a, const AsciiString &b) { return !(a == b); }
+inline bool operator<(const AsciiString &a, const AsciiString &b) { return a.compareNoCase(b) < 0; }
+#endif
+
+#ifndef UNICODESTRING_H
+#define UNICODESTRING_H
+class AsciiString;
+class UnicodeString : private StringBase<unsigned short>
+{
+public:
+    static UnicodeString TheEmptyString;
+    UnicodeString() : StringBase<unsigned short>() {}
+    UnicodeString(unsigned short c);
+    explicit UnicodeString(const unsigned short *text) : StringBase<unsigned short>(text) {}
+    UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
+    ~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+    int getLength() const;
+    bool isEmpty() const { return m_data == 0 || m_data->m_text[0] == 0; }
+    bool isNotEmpty() const { return !isEmpty(); }
+    int compareNoCase(const UnicodeString &other) const;
+    const unsigned short *str() const { return m_data ? m_data->m_text : (const unsigned short *)L""; }
+    void set(const UnicodeString &other) { ((StringBase<unsigned short> *)this)->set(*(const StringBase<unsigned short> *)&other); }
+    void trim();
+    void clear();
+    void translate(const AsciiString &other);
+};
+inline bool operator==(const UnicodeString &a, const UnicodeString &b) { return a.compareNoCase(b) == 0; }
+inline bool operator!=(const UnicodeString &a, const UnicodeString &b) { return !(a == b); }
+inline bool operator<(const UnicodeString &a, const UnicodeString &b) { return a.compareNoCase(b) < 0; }
+#endif
+
+
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/GlobalData.h"
