@@ -180,17 +180,25 @@ fi
 # Parked reconstruction drafts (whitelisted zero-matched-row sources) have
 # nothing to byte-verify; build.py errors on a filter that matches no rows.
 if [ "${#verify_set[@]}" -ne 0 ]; then
-    while IFS= read -r path; do
-        unset "verify_set[$path]"
-    done < <(python3 - "${!verify_set[@]}" <<'PY'
-import csv, sys
+    verify_input=$(mktemp)
+    verify_removed=$(mktemp) || { rm -f "$verify_input"; fail "temporary verification file"; }
+    # printf is a Bash builtin: this expansion never crosses Windows' argv limit.
+    printf '%s\0' "${!verify_set[@]}" > "$verify_input"
+    python3 - "$verify_input" > "$verify_removed" <<'PY' \
+        || { rm -f "$verify_input" "$verify_removed"; fail "filtering claimed sources (see above)"; }
+import csv, os, sys
 claimed = {r["source"] for r in csv.DictReader(open("reverse/functions.csv"))
            if r.get("status") == "matched"}
-for p in sys.argv[1:]:
-    if p not in claimed:
-        print(p)
+with open(sys.argv[1], "rb") as stream:
+    paths = stream.read().split(b"\0")[:-1]
+for path in paths:
+    if os.fsdecode(path) not in claimed:
+        sys.stdout.buffer.write(path + b"\0")
 PY
-    )
+    while IFS= read -r -d '' path; do
+        unset 'verify_set[$path]'
+    done < "$verify_removed"
+    rm -f "$verify_input" "$verify_removed"
 fi
 
 # A pin naming the wrong function still byte-matches, so nothing above can see
@@ -198,8 +206,29 @@ fi
 # the third, null_reloc, takes ~70s and runs in the full gate instead.
 python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong function (see above)"
 
-if [ "${#verify_set[@]}" -ne 0 ]; then
-    BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${!verify_set[@]}" \
+# A fixed path count still overflows Windows' 32767-code-unit command line
+# when source paths are long. Twice the UTF-8 byte length plus quotes/space
+# bounds the quoted UTF-16 argument size; reserve room for launcher/script paths.
+measure_verify_argument() {
+    local LC_ALL=C
+    verify_argument_bytes=$((2 * ${#1} + 3))
+}
+verify_chunk=()
+verify_bytes=0
+for path in "${!verify_set[@]}"; do
+    measure_verify_argument "$path"
+    [ "$verify_argument_bytes" -le 24000 ] || fail "source path exceeds byte-verify argument limit: $path"
+    if [ "$((verify_bytes + verify_argument_bytes))" -gt 24000 ]; then
+        BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}" \
+            || fail "byte-verify of changed sources (see above)"
+        verify_chunk=()
+        verify_bytes=0
+    fi
+    verify_chunk+=("$path")
+    verify_bytes=$((verify_bytes + verify_argument_bytes))
+done
+if [ "${#verify_chunk[@]}" -ne 0 ]; then
+    BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}" \
         || fail "byte-verify of changed sources (see above)"
 fi
 
