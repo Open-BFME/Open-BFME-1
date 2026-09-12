@@ -28,7 +28,7 @@ class Rva0045A000
 	char m_padding1D[0x70 - 0x1D];
 };
 
-extern void d_0073a9b0(void);
+extern Real getHeightAroundPos(Real x, Real y);
 extern void j_00046fa1(void);
 extern void j_000312a0(void);
 
@@ -151,8 +151,7 @@ void W3DView::resetCamera(const Coord3D *location, Int milliseconds,
 	m_cameraMode = 0;
 	m_pos = *location;
 
-	typedef Real (__cdecl *TerrainHeight)(Real, Real);
-	Real terrainHeight = reinterpret_cast<TerrainHeight>(d_0073a9b0)(m_pos.x, m_pos.y);
+	Real terrainHeight = getHeightAroundPos(m_pos.x, m_pos.y);
 	if (m_heightField.m_ready)
 	{
 		typedef Real (Rva0045A000::*Sample)(Real, Real);

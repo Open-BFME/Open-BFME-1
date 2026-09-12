@@ -1,0 +1,176 @@
+{
+  "symbol": "?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z",
+  "rva": "0x00741D30",
+  "size": 1322,
+  "source": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp",
+  "source_sha256_lf": "b66ded4f2191f99c151433f8da4fe13e48c374e9c3249d1eda50fceeeb172768",
+  "raw_sha256": "c383cae5e34f5fd6b5a0e355060f566a3af13cd76e7e2b4b263bbe06c4a5e172",
+  "resolved_sha256": "38858a727dfffa08bec39706b8694066eec61aeb1bf41e4770e4353143d537fb",
+  "strict_differences": 0,
+  "masked": false,
+  "unresolved": [],
+  "relocation_count": 31,
+  "rel32": [
+    {
+      "offset": "0xAD",
+      "symbol": "??0Gen_006DFC60@@QAE@XZ",
+      "resolved_rva": "0x000299F6"
+    },
+    {
+      "offset": "0x291",
+      "symbol": "?set@?$StringBase@D@@QAEXABV1@@Z",
+      "resolved_rva": "0x00887C90"
+    },
+    {
+      "offset": "0x2A4",
+      "symbol": "?set@?$StringBase@D@@QAEXABV1@@Z",
+      "resolved_rva": "0x00887C90"
+    },
+    {
+      "offset": "0x435",
+      "symbol": "?findObjectByID@GameLogic@@QAEPAVObject@@H@Z",
+      "resolved_rva": "0x0001F253"
+    },
+    {
+      "offset": "0x486",
+      "symbol": "?build@Rva006E0580State@@QAEXPAVGen_006DFC60@@@Z",
+      "resolved_rva": "0x000035B7"
+    },
+    {
+      "offset": "0x4E2",
+      "symbol": "?key@StaticNameKey@@QBE?AW4NameKeyType@@XZ",
+      "resolved_rva": "0x00009304"
+    },
+    {
+      "offset": "0x4FA",
+      "symbol": "?setReal@Dict@@QAEXW4NameKeyType@@M@Z",
+      "resolved_rva": "0x00048FA4"
+    },
+    {
+      "offset": "0x50E",
+      "symbol": "??1Rva00740C80@@QAE@XZ",
+      "resolved_rva": "0x000084EA"
+    }
+  ],
+  "dir32": [
+    {
+      "offset": "0x2",
+      "symbol": "__except_list",
+      "actual_retail_va": "0x00000000"
+    },
+    {
+      "offset": "0x9",
+      "symbol": "__ehhandler$?buildCameraTransform@W3DView@@AAEXPAVMatrix3D@@@Z",
+      "actual_retail_va": "0x0104DB1B"
+    },
+    {
+      "offset": "0xF",
+      "symbol": "?TheGameLogic@@3PAVGameLogic@@A",
+      "actual_retail_va": "0x012F0898"
+    },
+    {
+      "offset": "0x16",
+      "symbol": "__except_list",
+      "actual_retail_va": "0x00000000"
+    },
+    {
+      "offset": "0x9A",
+      "symbol": "__except_list",
+      "actual_retail_va": "0x00000000"
+    },
+    {
+      "offset": "0xB3",
+      "symbol": "?BfmeCameraGlobal12BB214@@3MA",
+      "actual_retail_va": "0x012BB214"
+    },
+    {
+      "offset": "0x172",
+      "symbol": "?BfmeCameraGlobal12F9DBC@@3MA",
+      "actual_retail_va": "0x012F9DBC"
+    },
+    {
+      "offset": "0x2D9",
+      "symbol": "__real@00000000",
+      "actual_retail_va": "0x01075350"
+    },
+    {
+      "offset": "0x347",
+      "symbol": "__real@3dcccccd",
+      "actual_retail_va": "0x01075C70"
+    },
+    {
+      "offset": "0x353",
+      "symbol": "__real@40400000",
+      "actual_retail_va": "0x01075338"
+    },
+    {
+      "offset": "0x366",
+      "symbol": "__real@c0400000",
+      "actual_retail_va": "0x01121730"
+    },
+    {
+      "offset": "0x3B6",
+      "symbol": "__real@00000000",
+      "actual_retail_va": "0x01075350"
+    },
+    {
+      "offset": "0x3C3",
+      "symbol": "__real@40400000",
+      "actual_retail_va": "0x01075338"
+    },
+    {
+      "offset": "0x3D4",
+      "symbol": "__real@40400000",
+      "actual_retail_va": "0x01075338"
+    },
+    {
+      "offset": "0x3EA",
+      "symbol": "__real@00000000",
+      "actual_retail_va": "0x01075350"
+    },
+    {
+      "offset": "0x3F7",
+      "symbol": "__real@c0400000",
+      "actual_retail_va": "0x01121730"
+    },
+    {
+      "offset": "0x408",
+      "symbol": "__real@c0400000",
+      "actual_retail_va": "0x01121730"
+    },
+    {
+      "offset": "0x42F",
+      "symbol": "?TheGameLogic@@3PAVGameLogic@@A",
+      "actual_retail_va": "0x012F0898"
+    },
+    {
+      "offset": "0x4C3",
+      "symbol": "?TheGameClient@@3PAVGameClient@@A",
+      "actual_retail_va": "0x012F1464"
+    },
+    {
+      "offset": "0x4DD",
+      "symbol": "?CameraYawAngleKey@@3VStaticNameKey@@A",
+      "actual_retail_va": "0x012A79D0"
+    },
+    {
+      "offset": "0x4EB",
+      "symbol": "__real@42652ee0",
+      "actual_retail_va": "0x0109ECC0"
+    },
+    {
+      "offset": "0x4F1",
+      "symbol": "?TheWorldDict@MapObject@@2VDict@@A",
+      "actual_retail_va": "0x012ED5E0"
+    },
+    {
+      "offset": "0x51D",
+      "symbol": "__except_list",
+      "actual_retail_va": "0x00000000"
+    }
+  ],
+  "boundary": "Terminal ret 4 at +0x527; function ends +0x52A; next 24 bytes are INT3.",
+  "identity": "Named setCameraTransform caller 0x007423B0 and resetCamera 0x00743640 call ILT 0x0000A8DF whose E9 reaches 0x00741D30.",
+  "eh": "One automatic 0xD8 camera context. FuncInfo RVA 0x00E3D678 has maxState 1. Unwind map RVA 0x00E3D670 maps state 0 to -1 through action RVA 0x00C4DB10: lea ecx,[ebp-0xE4]; jmp 0x000084EA. Normal and unwind paths reach destructor 0x00740C80.",
+  "dir32_caveat": "The normal resolver copies DIR32 operands from retail. Acceptance also requires independent pointed-to numeric values, global identities and EH verification described in docs/w3d-camera-transform-1322.md."
+}
