@@ -7,7 +7,7 @@ public:
 	~AsciiString();
 
 private:
-	unsigned m_value;
+	unsigned m_data;
 };
 
 class Rva0045EF90Registry

@@ -22,15 +22,15 @@ public:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 
 public:
 	AsciiString(void) {}
-	AsciiString(const AsciiString &other) : m_string(other.m_string) {}
+	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
 	~AsciiString(void) {}
 	AsciiString &operator=(const AsciiString &other)
 	{
-		m_string = other.m_string;
+		m_data = other.m_data;
 		return *this;
 	}
 };

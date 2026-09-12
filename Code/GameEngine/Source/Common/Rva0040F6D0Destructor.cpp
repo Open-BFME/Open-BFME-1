@@ -22,7 +22,7 @@ class AsciiString
 public:
 	~AsciiString() {}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h

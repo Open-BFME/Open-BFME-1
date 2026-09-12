@@ -44,7 +44,7 @@ public:
 	~AsciiString(void);
 
 private:
-	int m_value;
+	int m_data;
 };
 
 class AudioEventRTS

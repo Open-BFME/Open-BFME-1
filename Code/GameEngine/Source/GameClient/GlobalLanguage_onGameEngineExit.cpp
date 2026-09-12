@@ -48,9 +48,9 @@ struct BfmeStringView
 class AsciiString
 {
 public:
-	AsciiString() { m_string.m_data = NULL; }
-	AsciiString( const char *text ) : m_string( text ) {}
-	~AsciiString() { m_string.releaseBuffer(); }
+	AsciiString() { m_data.m_data = NULL; }
+	AsciiString( const char *text ) : m_data( text ) {}
+	~AsciiString() { m_data.releaseBuffer(); }
 
 	const char *str() const
 	{
@@ -61,20 +61,20 @@ public:
 
 	Bool isEmpty() const
 	{
-		return m_string.m_data == NULL || *(unsigned short *)(m_string.m_data + 4) == 0;
+		return m_data.m_data == NULL || *(unsigned short *)(m_data.m_data + 4) == 0;
 	}
 
 	Bool isNotEmpty() const { return !isEmpty(); }
 
 	__forceinline void clear()
 	{
-		m_string.set( *(const StringBase<char> *)0x01336E50 );
+		m_data.set( *(const StringBase<char> *)0x01336E50 );
 	}
 
 	void format( AsciiString format, ... );
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 struct BfmeFontEntry
