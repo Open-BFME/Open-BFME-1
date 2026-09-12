@@ -1,5 +1,5 @@
 // ?ignoreObstacle@AIUpdateInterface@@QAEXPBVObject@@@Z
-// partial score=0.72 date=2026-09-12
+// partial score=0.76 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/STLport-4.5.3/stlport
 // stlport
 #include <hash_map>
@@ -101,12 +101,18 @@ void AIUpdateInterface::ignoreObstacle(const Object *obj)
 					((CritterLog)j_0003a17a)(g_012ED4FC,
 						"  CritterDesync - Critter %s(%d) set to ignore NOTHING. Was previously ignoring %s(%d)",
 						m_object->getTemplate()->m_name.str(), m_object->getID(),
+						obj->getTemplate()->m_name.str(), obj->getID(),
 						old->getTemplate()->m_name.str(), old->getID());
 			}
-			else if (g_012ED4FC)
-				((CritterLog)j_0003a17a)(g_012ED4FC,
-					"  CritterDesync - Critter %s(%d) set to ignore NOTHING. Was previously ignoring NOTHING",
-					m_object->getTemplate()->m_name.str(), m_object->getID());
+			else
+			{
+				void *sink = g_012ED4FC;
+				if (sink)
+					((CritterLog)j_0003a17a)(sink,
+						"  CritterDesync - Critter %s(%d) set to ignore NOTHING. Was previously ignoring NOTHING",
+						m_object->getTemplate()->m_name.str(), m_object->getID(),
+						obj->getTemplate()->m_name.str(), obj->getID());
+			}
 		}
 	}
 	m_ignoreObstacleID = obj ? obj->getID() : INVALID_ID;
