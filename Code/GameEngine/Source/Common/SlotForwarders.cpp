@@ -50,26 +50,26 @@
 // Each body is named for its own address so the row claims the bytes without
 // asserting an identity nobody has recovered.
 
-class SlotTarget3
+class OneArgVtableSlot3
 {
 public:
 	virtual void slotPad0();
 	virtual void slotPad1();
 	virtual void slotPad2();
-	virtual void slotDispatch( void *p );
+	virtual void slotDispatch( void *argument );
 };
 
-class SlotTarget4
+class OneArgVtableSlot4
 {
 public:
 	virtual void slotPad0();
 	virtual void slotPad1();
 	virtual void slotPad2();
 	virtual void slotPad3();
-	virtual void slotDispatch( void *p );
+	virtual void slotDispatch( void *argument );
 };
 
-class SlotTarget5
+class OneArgVtableSlot5
 {
 public:
 	virtual void slotPad0();
@@ -77,10 +77,10 @@ public:
 	virtual void slotPad2();
 	virtual void slotPad3();
 	virtual void slotPad4();
-	virtual void slotDispatch( void *p );
+	virtual void slotDispatch( void *argument );
 };
 
-class SlotTarget6
+class OneArgVtableSlot6
 {
 public:
 	virtual void slotPad0();
@@ -89,46 +89,46 @@ public:
 	virtual void slotPad3();
 	virtual void slotPad4();
 	virtual void slotPad5();
-	virtual void slotDispatch( void *p );
+	virtual void slotDispatch( void *argument );
 };
 
 #define BFME_SLOT_FORWARD( NAME, BASE )                                       \
 	class NAME : public BASE                                                  \
 	{                                                                         \
 	public:                                                                   \
-		void *forward( void *p );                                             \
+		void *forward( void *argument );                                      \
 	};                                                                        \
-	void *NAME::forward( void *p )                                            \
+	void *NAME::forward( void *argument )                                     \
 	{                                                                         \
 		volatile int retained = 0;                                            \
                                                                               \
-		slotDispatch( p );                                                    \
-		return p;                                                             \
+		slotDispatch( argument );                                             \
+		return argument;                                                      \
 	}
 
-BFME_SLOT_FORWARD( Rva0053A5A0SlotForward, SlotTarget3 )
-BFME_SLOT_FORWARD( Rva00838460SlotForward, SlotTarget3 )
-BFME_SLOT_FORWARD( Rva008384E0SlotForward, SlotTarget3 )
-BFME_SLOT_FORWARD( Rva0083A340SlotForward, SlotTarget3 )
-BFME_SLOT_FORWARD( Rva0083A3C0SlotForward, SlotTarget3 )
-BFME_SLOT_FORWARD( Rva0083F690SlotForward, SlotTarget3 )
+BFME_SLOT_FORWARD( Rva0053A5A0SlotForward, OneArgVtableSlot3 )
+BFME_SLOT_FORWARD( Rva00838460SlotForward, OneArgVtableSlot3 )
+BFME_SLOT_FORWARD( Rva008384E0SlotForward, OneArgVtableSlot3 )
+BFME_SLOT_FORWARD( Rva0083A340SlotForward, OneArgVtableSlot3 )
+BFME_SLOT_FORWARD( Rva0083A3C0SlotForward, OneArgVtableSlot3 )
+BFME_SLOT_FORWARD( Rva0083F690SlotForward, OneArgVtableSlot3 )
 
-BFME_SLOT_FORWARD( Rva00838480SlotForward, SlotTarget4 )
-BFME_SLOT_FORWARD( Rva00838500SlotForward, SlotTarget4 )
-BFME_SLOT_FORWARD( Rva00838FA0SlotForward, SlotTarget4 )
-BFME_SLOT_FORWARD( Rva0083A360SlotForward, SlotTarget4 )
-BFME_SLOT_FORWARD( Rva0083A3E0SlotForward, SlotTarget4 )
-BFME_SLOT_FORWARD( Rva0083AE60SlotForward, SlotTarget4 )
+BFME_SLOT_FORWARD( Rva00838480SlotForward, OneArgVtableSlot4 )
+BFME_SLOT_FORWARD( Rva00838500SlotForward, OneArgVtableSlot4 )
+BFME_SLOT_FORWARD( Rva00838FA0SlotForward, OneArgVtableSlot4 )
+BFME_SLOT_FORWARD( Rva0083A360SlotForward, OneArgVtableSlot4 )
+BFME_SLOT_FORWARD( Rva0083A3E0SlotForward, OneArgVtableSlot4 )
+BFME_SLOT_FORWARD( Rva0083AE60SlotForward, OneArgVtableSlot4 )
 
-BFME_SLOT_FORWARD( Rva008384A0SlotForward, SlotTarget5 )
-BFME_SLOT_FORWARD( Rva00838520SlotForward, SlotTarget5 )
-BFME_SLOT_FORWARD( Rva00838FC0SlotForward, SlotTarget5 )
-BFME_SLOT_FORWARD( Rva0083A380SlotForward, SlotTarget5 )
-BFME_SLOT_FORWARD( Rva0083A400SlotForward, SlotTarget5 )
-BFME_SLOT_FORWARD( Rva0083AE80SlotForward, SlotTarget5 )
+BFME_SLOT_FORWARD( Rva008384A0SlotForward, OneArgVtableSlot5 )
+BFME_SLOT_FORWARD( Rva00838520SlotForward, OneArgVtableSlot5 )
+BFME_SLOT_FORWARD( Rva00838FC0SlotForward, OneArgVtableSlot5 )
+BFME_SLOT_FORWARD( Rva0083A380SlotForward, OneArgVtableSlot5 )
+BFME_SLOT_FORWARD( Rva0083A400SlotForward, OneArgVtableSlot5 )
+BFME_SLOT_FORWARD( Rva0083AE80SlotForward, OneArgVtableSlot5 )
 
-BFME_SLOT_FORWARD( Rva008384C0SlotForward, SlotTarget6 )
-BFME_SLOT_FORWARD( Rva00838540SlotForward, SlotTarget6 )
-BFME_SLOT_FORWARD( Rva0083A3A0SlotForward, SlotTarget6 )
-BFME_SLOT_FORWARD( Rva0083A420SlotForward, SlotTarget6 )
+BFME_SLOT_FORWARD( Rva008384C0SlotForward, OneArgVtableSlot6 )
+BFME_SLOT_FORWARD( Rva00838540SlotForward, OneArgVtableSlot6 )
+BFME_SLOT_FORWARD( Rva0083A3A0SlotForward, OneArgVtableSlot6 )
+BFME_SLOT_FORWARD( Rva0083A420SlotForward, OneArgVtableSlot6 )
 
