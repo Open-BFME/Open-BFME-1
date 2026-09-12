@@ -1,15 +1,13 @@
 // ?GetAdditionalDisconnectsFromUserFile@@YAXPAVPSPlayerStats@@@Z
-// partial score=0.8 date=2026-09-04
+// BFME retail 0x004DB560 (1205 bytes); caller SendStatsToOtherPlayers via ILT 0x00023F8D.
+// The body is the BFME typed PSPlayerStats* overload.  It uses the local
+// UserPreferences and GameSpyInfo views from the retail call sequence.
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME: readAdditionalDisconnectsFromUserFile, retail 0x004DB0B0, 858 bytes.
-// Converted from gen-dump d_004db0b0. ZH twin is static getTotalDisconnectsFromFile
-// in PopupPlayerInfo.cpp. BFME takes the player id in ECX (__fastcall), formats
-// LoTRB4MEOnline\MiscPref%d.ini, loads UserPreferences, and sums atoi of keys
-// "0".."5". Named by the already-matched GetAdditionalDisconnectsFromUserFile
-// thunk at 0x004DB4E0, which mov ecx,id / call this body.
+// stlport
 
-extern "C" __declspec(dllimport) int __cdecl atoi( const char * );
-extern "C" int __cdecl abs( int );
+#include <map>
+
+extern "C" int (__cdecl *__imp__atoi)( const char * );
 
 template <typename T> struct StringInlineData
 {
@@ -77,39 +75,9 @@ public:
 	AsciiString m_filename;
 };
 
-int __fastcall readAdditionalDisconnectsFromUserFile( int playerID )
-{
-	int retval = 0;
-	if ( playerID == 0 )
-		return 0;
+int __fastcall readAdditionalDisconnectsFromUserFile( int playerID );
 
-	UserPreferences pref;
-	AsciiString userPrefFilename;
-	userPrefFilename.format( AsciiString( "LoTRB4MEOnline\\MiscPref%d.ini" ), playerID );
-	pref.load( userPrefFilename );
-
-	if ( pref.m_map.find( "0" ) != pref.m_map.m_end )
-		retval = atoi( prefStr( pref.m_map.find( "0" ) ) );
-	if ( pref.m_map.find( "1" ) != pref.m_map.m_end )
-		retval += atoi( prefStr( pref.m_map.find( "1" ) ) );
-	if ( pref.m_map.find( "2" ) != pref.m_map.m_end )
-		retval += atoi( prefStr( pref.m_map.find( "2" ) ) );
-	if ( pref.m_map.find( "3" ) != pref.m_map.m_end )
-		retval += atoi( prefStr( pref.m_map.find( "3" ) ) );
-	if ( pref.m_map.find( "4" ) != pref.m_map.m_end )
-		retval += atoi( prefStr( pref.m_map.find( "4" ) ) );
-	if ( pref.m_map.find( "5" ) != pref.m_map.m_end )
-		retval += atoi( prefStr( pref.m_map.find( "5" ) ) );
-
-	return retval;
-}
-
-class BfmeIntUMap
-{
-public:
-	unsigned &operator[]( const int &key ) throw();
-	char m_pad[ 12 ];
-};
+typedef std::map<int, unsigned> BfmeIntUMap;
 
 class PSPlayerStats
 {
@@ -139,6 +107,7 @@ struct GameSpyInfo
 
 extern GameSpyInfo *TheGameSpyInfo;
 
+// ?GetAdditionalDisconnectsFromUserFile@@YAXPAVPSPlayerStats@@@Z
 void GetAdditionalDisconnectsFromUserFile( PSPlayerStats *stats )
 {
 	if ( !stats || stats->id == 0 )
@@ -157,15 +126,27 @@ void GetAdditionalDisconnectsFromUserFile( PSPlayerStats *stats )
 	pref.load( userPrefFilename );
 
 	if ( pref.m_map.find( "0" ) != pref.m_map.m_end )
-		stats->desyncs[ 2 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "0" ) ) ) );
+	{
+		stats->desyncs[ 2 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "0" ) ) ) );
+	}
 	if ( pref.m_map.find( "1" ) != pref.m_map.m_end )
-		stats->desyncs[ 3 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "1" ) ) ) );
+	{
+		stats->desyncs[ 3 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "1" ) ) ) );
+	}
 	if ( pref.m_map.find( "2" ) != pref.m_map.m_end )
-		stats->desyncs[ 4 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "2" ) ) ) );
+	{
+		stats->desyncs[ 4 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "2" ) ) ) );
+	}
 	if ( pref.m_map.find( "3" ) != pref.m_map.m_end )
-		stats->discons[ 2 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "3" ) ) ) );
+	{
+		stats->discons[ 2 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "3" ) ) ) );
+	}
 	if ( pref.m_map.find( "4" ) != pref.m_map.m_end )
-		stats->discons[ 3 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "4" ) ) ) );
+	{
+		stats->discons[ 3 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "4" ) ) ) );
+	}
 	if ( pref.m_map.find( "5" ) != pref.m_map.m_end )
-		stats->discons[ 4 ] += (unsigned)abs( atoi( prefStr( pref.m_map.find( "5" ) ) ) );
+	{
+		stats->discons[ 4 ] += (unsigned)abs( (*__imp__atoi)( prefStr( pref.m_map.find( "5" ) ) ) );
+	}
 }
