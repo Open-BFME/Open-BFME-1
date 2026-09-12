@@ -1,27 +1,23 @@
 // ?parseKeyLabelList@Rva0043A3B0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.55 date=2026-09-09
+// partial score=0.99 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+// The parser's list, string temporaries, and pair layout identify the retail
+// callback at 0x0043A3B0. The list owner stores its sentinel pointer at +0x134.
 
-// Open-BFME7: INI field parser at 0x0043A3B0 (203 B): reads a label via
-// INI::getNextAsciiString (hidden-return AsciiString), sets a UnicodeString
-// local from it and inserts a (key value) pair into the instance's
-// associative list at +0x214 -- the pair ctor at 0x00439370 (already
-// matched, key 4 bytes / value 12 bytes) is the node's _Construct.  The
-// UnicodeString::set(const UnicodeString&) mangled name given for the
-// 0x00887C90 callee is used as-is even though the source value here is
-// built from an AsciiString; not yet byte-verified.
+#include <new>
 
-typedef int Int;
+#pragma comment(linker, "/alternatename:?releaseBuffer@UnicodeString@@AAEXXZ=?releaseBuffer@AsciiString@@AAEXXZ")
 
 class AsciiString
 {
 public:
-	AsciiString();
+	AsciiString() : m_data( 0 ) {}
 	~AsciiString() { releaseBuffer(); }
-
-	private:
-	void *m_data;
 	void releaseBuffer();
+
+private:
+	void *m_data;
 };
 
 class INI
@@ -34,35 +30,35 @@ class UnicodeString
 {
 public:
 	UnicodeString() : m_data( 0 ) {}
-	~UnicodeString();
-
+	~UnicodeString() { ((AsciiString *)this)->releaseBuffer(); }
 	void set( const UnicodeString &other );
 
 private:
-	unsigned short *m_data;
+	void *m_data;
 };
 
-struct Rva00439370Pair
+struct Gen_t_00439370_k4
 {
-	Int m_key;
 	UnicodeString m_value;
+};
+
+struct Gen_t_00439370_p12cd
+{
+	AsciiString m_value;
 };
 
 namespace _STL
 {
 
-void *__cdecl vectorLargeAllocate(unsigned int bytes);
-void *__cdecl vectorSmallAllocate(unsigned int bytes);
-
-inline void *BfmeNodeAllocate(unsigned int bytes)
-{
-	if (bytes > 128)
-		return vectorLargeAllocate(bytes);
-	return vectorSmallAllocate(bytes);
-}
-
 template <class T1, class T2>
-void __cdecl _Construct(T1 *destination, const T2 &value);
+struct pair
+{
+public:
+	pair() : first(), second() {}
+	pair( const pair &other );
+	T1 first;
+	T2 second;
+};
 
 template <class T>
 class allocator
@@ -72,6 +68,18 @@ class allocator
 template <class T>
 struct _Nonconst_traits
 {
+};
+
+template <class T, class Alloc>
+class list;
+
+template <bool threads, int instance>
+class __node_alloc
+{
+	template <class T, class Alloc>
+	friend class list;
+
+	static void *_M_allocate( unsigned int bytes );
 };
 
 struct _List_node_base
@@ -89,60 +97,48 @@ struct _List_node : public _List_node_base
 template <class T, class Traits>
 struct _List_iterator
 {
-	_List_iterator(_List_node_base *node) : _M_node(node) {}
+	_List_iterator( _List_node_base *node ) : _M_node( node ) {}
 
 	_List_node_base *_M_node;
 };
 
 template <class T, class Alloc>
-class _List_base
-{
-public:
-	typedef _List_node<T> _Node;
-
-	_Node *_M_node;
-};
-
-template <class T, class Alloc>
-class list : public _List_base<T, Alloc>
+class list
 {
 public:
 	typedef _List_node<T> _Node;
 	typedef _List_iterator<T, _Nonconst_traits<T> > iterator;
 
-	iterator insert( iterator position, const T &value )
+	_Node *_M_node;
+
+	void push_back( const T &value )
 	{
-		_Node *node = _M_create_node( value );
-		_List_node_base *at = position._M_node;
+		_List_node_base *at = _M_node;
+		_Node *node = (_Node *)__node_alloc<true, 0>::_M_allocate( sizeof( _Node ) );
+		_Construct( &node->_M_data, value );
 		_List_node_base *before = at->_M_prev;
 		node->_M_next = at;
 		node->_M_prev = before;
 		before->_M_next = node;
 		at->_M_prev = node;
-		return iterator( node );
-	}
-
-	void push_back( const T &value )
-	{
-		insert( iterator( this->_M_node ), value );
 	}
 
 private:
-	_Node *_M_create_node( const T &value )
+	template <class U>
+	static void _Construct( U *destination, const U &value )
 	{
-		_Node *node = (_Node *)BfmeNodeAllocate( sizeof( _Node ) );
-		_Construct( &node->_M_data, value );
-		return node;
+		new( destination ) U( value );
 	}
 };
 
 }
 
-class Rva0043A3B0Store
+typedef _STL::pair<const Gen_t_00439370_k4, Gen_t_00439370_p12cd> Rva0043A3B0Pair;
+
+struct Rva0043A3B0Store
 {
-public:
-	char m_bfmeHead[ 0x134 ];
-	_STL::list<Rva00439370Pair, _STL::allocator<Rva00439370Pair> > *m_bfmeItems;
+	unsigned char m_prefix[0x134];
+	_STL::list<Rva0043A3B0Pair, _STL::allocator<Rva0043A3B0Pair> > *m_items;
 };
 
 class Rva0043A3B0
@@ -151,14 +147,11 @@ public:
 	static void parseKeyLabelList( INI *ini, void *instance, void *, const void * );
 };
 
-// ?parseKeyLabelList@Rva0043A3B0@@SAXPAVINI@@PAX1PBX@Z
-void Rva0043A3B0::parseKeyLabelList( INI *ini, void *instance, void *, const void * )
+void Rva0043A3B0::parseKeyLabelList( INI *ini, void *instance, void *, const void *)
 {
-	AsciiString token = ini->getNextAsciiString();
-
-	Rva00439370Pair entry = { 0 };
-	entry.m_value.set( *(const UnicodeString *)&token );
-
 	Rva0043A3B0Store *self = (Rva0043A3B0Store *)instance;
-	self->m_bfmeItems->push_back( entry );
+	AsciiString token = ini->getNextAsciiString();
+	Rva0043A3B0Pair entry;
+	((UnicodeString *)&entry.first)->set( *(const UnicodeString *)&token );
+	self->m_items->push_back( entry );
 }
