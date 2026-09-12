@@ -828,9 +828,6 @@ WinInstanceData+0x10|m_controlID|m_status,Code/GameEngine/Source/GameClient/GUI/
 WinInstanceData+0x14|m_unreconstructed_14|m_owner,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DPushButtonDraw_Thunk.cpp,72,1.00,layout_witness
 WinInstanceData+0x4|m_bfmePrefix|m_id,Code/GameEngine/Source/GameClient/GUI/GameWindowWinSetInstanceData.cpp,58,1.00,layout_witness
 WinInstanceData+0x8|m_unreconstructed_08|m_state,Code/GameEngine/Source/Common/parseName_Thunk.cpp,54,1.00,layout_witness
-WindowLayout+0x8|m_firstWindow|m_windowList,Code/GameEngine/Source/Common/GameEngineReset.cpp,41,1.00,layout_witness
-WindowLayout+0x8|m_firstWindow|m_windowList,Code/GameEngine/Source/GameLogic/System/GameLogic_prepareNewGame_Thunk.cpp,76,1.00,layout_witness
-WindowLayout+0x8|m_firstWindow|m_windowList,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenInitSinglePlayer.cpp,84,1.00,layout_witness
 WindowVideo+0x0|m_bfme_head|m_playType,Code/GameEngine/Source/GameClient/GUI/WindowVideo_dtor.cpp,69,1.00,layout_witness
 WorldHeightMap+0x20|m_cellCount|m_dataSize,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualBfme.cpp,89,1.00,layout_witness
 WorldHeightMap+0x24|m_heights|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualBfme.cpp,90,1.00,layout_witness

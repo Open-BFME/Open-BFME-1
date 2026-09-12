@@ -37,7 +37,7 @@ public:
 	virtual void destroyWindows(void);
 
 	char m_unknown04[4];
-	GameWindow *m_firstWindow;
+	GameWindow *m_windowList;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
@@ -149,7 +149,7 @@ void GameEngine::reset(void)
 		TheWindowManager->winCreateLayout(AsciiString("Menus/BlankWindow.wnd"));
 	background->hide(false);
 	background->bringForward();
-	background->m_firstWindow->winClearStatus(0x80);
+	background->m_windowList->winClearStatus(0x80);
 
 	bool deleteNetwork = false;
 	if (TheGameLogic->m_gameMode == 1 || TheGameLogic->m_gameMode == 5)

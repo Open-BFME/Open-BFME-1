@@ -67,12 +67,12 @@ public:
 
 	GameWindow *getFirstWindow() const
 	{
-		return m_firstWindow;
+		return m_windowList;
 	}
 
 private:
 	AsciiString m_filename;
-	GameWindow *m_firstWindow;
+	GameWindow *m_windowList;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h

@@ -80,7 +80,7 @@ public:
 	virtual void hide(int immediate) = 0;
 	virtual void bringForward() = 0;
 	int m_unknown04;
-	GameWindow *m_firstWindow;
+	GameWindow *m_windowList;
 };
 
 class GameWindow
@@ -157,5 +157,5 @@ void initSinglePlayer(void)
 		AsciiString("Menus/BlankWindow.wnd"));
 	s_blankLayout->hide(0);
 	s_blankLayout->bringForward();
-	s_blankLayout->m_firstWindow->winClearStatus(0x80);
+	s_blankLayout->m_windowList->winClearStatus(0x80);
 }
