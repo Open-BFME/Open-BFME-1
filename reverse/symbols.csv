@@ -87244,3 +87244,4 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z,0x0002EA3C,route=0x003D9880; decoded setPathFromWaypoint debug publication call to matched PathfinderSetDebugPath body
 ??0?$_STLP_alloc_proxy@PAPAURva008FA2B0Element@@PAU1@V?$allocator@PAURva008FA2B0Element@@@_STL@@@_STL@@QAE@ABV?$allocator@PAURva008FA2B0Element@@@1@PAPAURva008FA2B0Element@@@Z,0x008F9A20,20-byte deque ctor8FA9A0 pointer allocation proxy; entire11B body exact
 ??0?$_STLP_alloc_proxy@IURva008FA2B0Element@@V?$allocator@URva008FA2B0Element@@@_STL@@@_STL@@QAE@ABV?$allocator@URva008FA2B0Element@@@1@I@Z,0x008F9A30,20-byte deque ctor8FA9A0 size allocation proxy; entire11B body exact
+?addToGoalPath@AIStateMachine@@QAEXPBUCoord3D@@@Z,0x00046A65,route=0x00187FA0; decoded privateFollowPathAppend call into independently matched AIStateMachine goal-path append body

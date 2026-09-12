@@ -1,5 +1,10 @@
 // ?privateFollowPathAppend@AIUpdateInterface@@MAEXPBUCoord3D@@W4CommandSourceType@@@Z
-// partial score=0.9578 date=2026-09-12
+// BFME privateFollowPathAppend, RVA0x0027E200,545B.
+// Source algorithm: AIUpdate.cpp, with BFME fallback state16 exclusion.
+// Real nontrivial Coord3D copying is required by the vector insertion sites:
+// a POD declaration leaves23 register bytes wrong despite identical body size.
+// The isMoving implementation remains a dump; its known ILT identity is
+// retained via a single-inheritance PMF rather than a speculative new pin.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -7,7 +12,7 @@
 
 typedef bool Bool;
 enum CommandSourceType { CMD_FROM_PLAYER, CMD_FROM_AI };
-struct Coord3D { float x,y,z; };
+struct Coord3D { Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){} float x,y,z; };
 class Object;
 struct State { int getID() const { return id; } char prefix[4]; int id; };
 class AIStateMachine {
@@ -23,6 +28,7 @@ public:
  char pad30[0x14]; _STL::vector<Coord3D> goalPath;
  char pad50[8]; State *current;
 };
+extern void j_00044774();
 class AIUpdateInterface {
 public:
  virtual void slot00();
@@ -52,7 +58,11 @@ public:
  virtual void slot60();
  virtual void slot64();
  virtual void privateFollowPath(const _STL::vector<Coord3D> *,Object *,CommandSourceType,Bool);
- Bool isMoving() const;
+ __forceinline Bool isMoving() const{
+ typedef Bool (AIUpdateInterface::*Call)()const;
+ union {void(*address)();Call member;} route={j_00044774};
+ return (this->*route.member)();
+ }
 protected:
  virtual void privateFollowPathAppend(const Coord3D *,CommandSourceType);
  void playMoveVoiceResponse(const Coord3D *);
@@ -60,8 +70,6 @@ private:
  char pad04[0x2c]; AIStateMachine *machine;
  char pad34[0x31e-0x34]; Bool waiting;
 };
-#pragma comment(linker, "/alternatename:?isMoving@AIUpdateInterface@@QBE_NXZ=?j_00044774@@YAXXZ")
-#pragma comment(linker, "/alternatename:?addToGoalPath@AIStateMachine@@QAEXPBUCoord3D@@@Z=?j_00046a65@@YAXXZ")
 void AIUpdateInterface::privateFollowPathAppend(const Coord3D *pos, CommandSourceType command)
 {
  Bool effectivelyMoving = isMoving() || waiting;

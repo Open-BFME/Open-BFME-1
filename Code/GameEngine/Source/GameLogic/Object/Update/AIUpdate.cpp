@@ -4595,7 +4595,7 @@ void AIUpdateInterface::privateFollowWaypointPathAsTeamExact( const Waypoint *wa
 }
 
 //----------------------------------------------------------------------------------------
-// ?privateFollowPathAppend@AIUpdateInterface@@ present-unmatched
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateFollowPathAppend.cpp
 void AIUpdateInterface::privateFollowPathAppend( const Coord3D *pos, CommandSourceType cmdSource )
 {
 	// We're adding a dynamic waypoint!
