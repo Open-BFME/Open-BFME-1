@@ -142,6 +142,8 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Game
 AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/GameStatePortableMapPathToRealMapPathThunk.cpp,112,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileDtor.cpp,43,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileNames.cpp,50,1.00,layout_witness
+AudioEventRTS+0x20|m_pitchShift|m_priority,Code/GameEngine/Source/Common/Audio/AudioEventRTSGetPitchShiftThunk.cpp,65,1.00,layout_witness
+AudioEventRTS+0x42|m_isLogicalAudio|m_uninterruptable,Code/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp,31,1.00,layout_witness
 AudioSettings+0x0|m_prefix|m_audioRoot,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,35,1.00,field_names
 AudioSettings+0x28|m_gap2|m_sampleCount2D,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,42,1.00,field_names
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReleaseResources_Bfme.cpp,146,1.00,layout_witness
@@ -173,6 +175,7 @@ ControlBar+0x0|m_prefix|m_containData,Code/GameEngine/Source/GameClient/GUI/Cont
 ControlBar+0x0|m_unreconstructed_000|m_containData,Code/GameEngine/Source/Common/RTS/Player_addScience_bfme.cpp,200,1.00,layout_witness
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp,89,1.00,layout_witness
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/Common/ControlBar_showSpecialPowerShortcutMethodThunk.cpp,77,1.00,layout_witness
+ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_updateSpecialPowerShortcut.cpp,106,1.00,layout_witness
 ControlBar+0x0|m_unreconstructed_00|m_containData,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_getStarImage_Thunk.cpp,162,1.00,layout_witness
 CursorInfo+0x0|m_body|imageName,Code/GameEngine/Source/GameClient/Input/Mouse_destructor.cpp,39,1.00,field_names
 DX8MeshRendererClass+0x0|m_body|enable_lighting,Code/Libraries/Source/WWVegas/WW3D2/DX8Wrapper_Do_Onetime_Device_Dependent_Inits.cpp,33,1.00,layout_witness
@@ -334,6 +337,9 @@ INI+0x0|m_unreconstructed_000|m_file,Code/GameEngine/Source/GameLogic/Object/Upd
 INI+0x0|m_unreconstructed|m_file,Code/GameEngine/Source/Common/INI/INI_fieldParsers.cpp,94,1.00,layout_witness
 INI+0x0|m_unreconstructed|m_file,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfo_parseModel.cpp,25,1.00,layout_witness
 IPEnumeration+0x0|m_addresses|m_IPlist,Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyInitLan.cpp,103,1.00,layout_witness
+Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/Common/insertPlayerInListbox_Thunk.cpp,62,1.00,layout_witness
+Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/GameClient/System/Anim2DConstructor.cpp,40,1.00,layout_witness
+Image+0x24|m_width|m_imageSize,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchInsertGame.cpp,64,1.00,layout_witness
 Keyboard+0xa|m_bfmeKeyboardTail|m_shift2Key,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboardDtor.cpp,53,1.00,layout_witness
 Keyboard+0xa|m_bfmeKeyboardTail|m_shift2Key,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboardCtor.cpp,49,1.00,layout_witness
 LANAPI+0x10|m_bfmeHeadB|m_name,Code/GameEngine/Source/GameNetwork/LANAPIGames.cpp,226,1.00,layout_witness
@@ -455,6 +461,7 @@ Object+0x78|m_bfmeKeyZK|m_producerID,Code/GameEngine/Source/GameLogic/Object/Obj
 Object+0x78|m_bfmeTail|m_producerID,Code/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp,32,1.00,layout_witness
 Object+0x78|m_unreconstructed_078|m_producerID,Code/GameEngine/Source/GameLogic/AI/Rva00174670State_onEnter.cpp,84,1.00,layout_witness
 Object+0x88|m_nextObject|m_next,Code/GameEngine/Source/Common/StatsCollector.cpp,168,1.00,layout_witness
+Object+0x88|m_nextObject|m_next,Code/GameEngine/Source/GameLogic/AI/AIPlayer_findFactory.cpp,52,1.00,layout_witness
 Object+0x88|m_nextObject|m_next,Code/GameEngine/Source/GameLogic/Map/Bridge.cpp,77,1.00,layout_witness
 Object+0x88|m_nextObject|m_next,Code/GameEngine/Source/GameLogic/Object/Update/BfmeObjectReferenceStoreClear.cpp,9,1.00,layout_witness
 Object+0x88|m_prev|m_next,Code/GameEngine/Source/GameLogic/Object/ObjectRemoveFromList.cpp,14,1.00,layout_witness
@@ -530,6 +537,7 @@ PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Upd
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_hintDetectableWhileUnstealthed.cpp,66,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateChangeVisualDisguise.cpp,182,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPurchaseScience.cpp,35,1.00,layout_witness
+PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_updateSpecialPowerShortcut.cpp,50,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_getStarImage_Thunk.cpp,71,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenInitSinglePlayer.cpp,50,1.00,layout_witness
 PlayerList+0xc|m_players|m_local,Code/GameEngine/Source/Common/RTS/PlayerListXfer.cpp,61,1.00,layout_witness
@@ -573,6 +581,7 @@ RefCountClass+0x4|m_refCount|NumRefs,Code/GameEngineDevice/Source/W3DDevice/Game
 RefCountClass+0x4|m_refCount|NumRefs,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer_freeTreeBuffers.cpp,30,1.00,layout_witness
 RefCountClass+0x4|m_refCount|NumRefs,Code/Libraries/Source/WWVegas/WW3D2/SetMeshModelFlag.cpp,55,1.00,layout_witness
 RefCountClass+0x4|m_ref_count|NumRefs,Code/GameEngine/Source/Common/Rva00739B30RenderObjectUnique.cpp,18,1.00,layout_witness
+RefCountClass+0x4|m_ref_count|NumRefs,Code/Libraries/Source/WWVegas/WW3D2/Rva008FEB90MaterialUnique.cpp,18,1.00,layout_witness
 RefCountClass+0x4|m_refs|NumRefs,Code/GameEngine/Source/Common/Open2Conv002.cpp,220,1.00,layout_witness
 RefCountClass+0x4|m_refs|NumRefs,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapFloorElementDestructor.cpp,38,1.00,layout_witness
 RefCountClass+0x4|m_refs|NumRefs,Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DShadowTextureDestructor.cpp,23,1.00,layout_witness
@@ -607,6 +616,7 @@ ShaderClass+0x0|m_shaderBits|ShaderBits,Code/GameEngine/Source/Common/S3ReserveH
 ShaderClass+0x0|m_shaderBits|ShaderBits,Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DScene_Ctor_Thunk.cpp,182,1.00,layout_witness
 Shadow+0x34|m_type|m_localAngle,Code/GameEngine/Source/GameClient/ShadowSetOpacity.cpp,20,1.00,layout_witness
 Shadow+0x8|m_position|m_opacity,Code/GameEngine/Source/Common/BfmeSubZF_bfmeGoZF.cpp,54,1.00,layout_witness
+Shadow+0x8|m_position|m_opacity,Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createSelection.cpp,56,1.00,layout_witness
 Shell+0x48|m_bfmeTop|m_screenCount,Code/GameEngine/Source/GameClient/Shell_hide.cpp,150,1.00,layout_witness
 Shell+0x4d|m_gap|m_pendingPop,Code/GameEngine/Source/Common/Shell_push_Thunk.cpp,51,1.00,layout_witness
 SidesInfo+0x0|m_dict|m_pBuildList,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptList_updateDefaults_Thunk.cpp,11,1.00,layout_witness
@@ -681,6 +691,7 @@ ThingTemplate+0x0|m_vtable|s_objectFieldParseTable,Code/GameEngine/Source/Common
 ThingTemplate+0x0|m_vtable|s_objectFieldParseTable,Code/GameEngine/Source/GameLogic/Object/Object_onDisabledEdge_Thunk.cpp,52,1.00,layout_witness
 ThingTemplate+0x0|m_vtable|s_objectFieldParseTable,Code/GameEngine/Source/GameLogic/Object/ObjectOnContainedBy.cpp,50,1.00,layout_witness
 ThingTemplate+0x0|m_vtable|s_objectFieldParseTable,Code/GameEngine/Source/GameLogic/AI/wantToSquishTarget_Thunk.cpp,27,1.00,layout_witness
+ThingTemplate+0x0|m_vtable|s_objectFieldParseTable,Code/GameEngine/Source/GameLogic/AI/AIPlayer_findFactory.cpp,34,1.00,layout_witness
 ThingTemplate+0xc8|m_kindOf0|m_kindof,Code/GameEngine/Source/Common/Team_hasAnyBuildings.cpp,76,1.00,field_names
 ThingTemplate+0xc8|m_kindOf0|m_kindof,Code/GameEngine/Source/Common/RTS/TeamPrototype_hasAnyBuildings.cpp,90,1.00,field_names
 ThingTemplate+0xc8|m_kindOf0|m_kindof,Code/GameEngine/Source/Common/RTS/TeamMemberQueries.cpp,157,1.00,field_names
@@ -715,6 +726,7 @@ W3DAnimationInfo+0x8|m_next|m_naturalDurationInMsec,Code/GameEngine/Source/Commo
 W3DBridge+0x0|m_bytes|m_start,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBufferDestructor.cpp,50,1.00,layout_witness
 W3DBridge+0x0|m_unreconstructed_00|m_start,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBufferCtorThunk.cpp,19,1.00,layout_witness
 W3DBufferManager+0x9000|m_heads|m_W3DVertexBuffers,Code/Libraries/Source/WWVegas/WW3D2/W3DBufferManagerVertexBuffer.cpp,26,1.00,layout_witness
+W3DDebrisDraw+0x38|m_state|m_fxFinal,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDrawDoDrawModule.cpp,234,1.00,layout_witness
 W3DModelDraw+0x34|m_obj|m_renderObject,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawNukeCurrentRender.cpp,98,1.00,layout_witness
 W3DModelDraw+0x5c|m_animationMode|m_subObjectVec,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetPauseAnimation.cpp,162,1.00,layout_witness
 W3DTerrainLogic+0x18fc|m_bfmeExtentLoZ|m_mapMinZ,Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp,84,1.00,layout_witness
