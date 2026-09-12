@@ -14,6 +14,7 @@ class W3DFloorDrawModuleDataBase
 {
 public:
 	W3DFloorDrawModuleDataBase();
+	virtual ~W3DFloorDrawModuleDataBase();
 
 	virtual void moduleDataAnchor();
 
@@ -25,6 +26,7 @@ class W3DFloorDrawModuleData : public W3DFloorDrawModuleDataBase
 {
 public:
 	W3DFloorDrawModuleData();
+	virtual ~W3DFloorDrawModuleData();
 
 private:
 	bool m_unmodelled_0C;					// +0x0C
@@ -38,5 +40,9 @@ W3DFloorDrawModuleData::W3DFloorDrawModuleData()
 	  m_unmodelled_0D( false ),
 	  m_unmodelled_0E( false ),
 	  m_unmodelled_10( 0 )
+{
+}
+
+W3DFloorDrawModuleData::~W3DFloorDrawModuleData()
 {
 }
