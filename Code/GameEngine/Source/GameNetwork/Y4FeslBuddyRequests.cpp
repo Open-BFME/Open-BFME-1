@@ -26,6 +26,8 @@
 
 typedef __int64 FeslInt64;
 
+// Class name is the claimed pin (ctor 0x007E8810).  Layout is the same object
+// V2FeslTxnRequests.cpp already recovered from reset()/add* stores.
 class Rva007E8810Message
 {
 public:
@@ -36,15 +38,22 @@ public:
 	void addBool( const char *key, bool value );                     // 0x007E8980
 	void setError( int code );                                       // 0x007E88C0
 
-	char m_head[ 0x1C ];
-	unsigned int m_category;
-	char m_tail[ 0x0C ];
-	int m_depth;
+	char m_pad00[ 0x10 ];
+	char *m_output;                                                  // +0x10
+	int m_bufferSize;                                                // +0x14
+	int m_writeCursor;                                               // +0x18
+	unsigned int m_category;                                         // +0x1C
+	char m_pad20[ 4 ];
+	int m_errorCode;                                                 // +0x24
+	char m_pad28[ 4 ];
+	int m_depth;                                                     // +0x2C
 };
+
+typedef Rva007E8810Message FeslTxnMessage;
 
 // ---- 'AUTH' ---------------------------------------------------------------
 
-void __stdcall Rva007FAE40( Rva007E8810Message *msg, const char *lkey,
+void __stdcall Rva007FAE40( FeslTxnMessage *msg, const char *lkey,
 	const char *prod, const char *vers, const char *pres, const char *rsrc )
 {
 	msg->reset();
@@ -60,7 +69,7 @@ void __stdcall Rva007FAE40( Rva007E8810Message *msg, const char *lkey,
 		msg->addString( "RSRC", "CSO" );
 }
 
-void __stdcall Rva007FAEE0( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FAEE0( FeslTxnMessage *msg, const char *user,
 	const char *pass, const char *prod, const char *vers, const char *pres,
 	const char *rsrc )
 {
@@ -80,7 +89,7 @@ void __stdcall Rva007FAEE0( Rva007E8810Message *msg, const char *user,
 
 // ---- 'USCH' ---------------------------------------------------------------
 
-void __stdcall Rva007FAFB0( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FAFB0( FeslTxnMessage *msg, const char *user,
 	const char *domain, const char *rsrc, bool dist, int maxResults )
 {
 	msg->reset();
@@ -100,7 +109,7 @@ void __stdcall Rva007FAFB0( Rva007E8810Message *msg, const char *user,
 
 // ---- 'PADD' / 'PDEL' / 'TCKL' ---------------------------------------------
 
-void __stdcall Rva007FB080( Rva007E8810Message *msg, const char *user )
+void __stdcall Rva007FB080( FeslTxnMessage *msg, const char *user )
 {
 	msg->reset();
 	msg->m_category = 'PADD';
@@ -108,7 +117,7 @@ void __stdcall Rva007FB080( Rva007E8810Message *msg, const char *user )
 	msg->addString( "USER", user );
 }
 
-void __stdcall Rva007FB0B0( Rva007E8810Message *msg, const char *user )
+void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
 {
 	msg->reset();
 	msg->m_category = 'PDEL';
@@ -116,7 +125,7 @@ void __stdcall Rva007FB0B0( Rva007E8810Message *msg, const char *user )
 	msg->addString( "USER", user );
 }
 
-void __stdcall Rva007FB510( Rva007E8810Message *msg, const char *user )
+void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
 {
 	msg->reset();
 	msg->m_category = 'TCKL';
@@ -127,7 +136,7 @@ void __stdcall Rva007FB510( Rva007E8810Message *msg, const char *user )
 
 // ---- 'RADM' / 'MLST' / 'RDEM' ---------------------------------------------
 
-void __stdcall Rva007FB390( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FB390( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc, bool pres )
 {
 	msg->reset();
@@ -141,7 +150,7 @@ void __stdcall Rva007FB390( Rva007E8810Message *msg, const char *user,
 	msg->addString( "PRES", pres ? "Y" : "N" );
 }
 
-void __stdcall Rva007FB4B0( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FB4B0( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc )
 {
 	msg->reset();
@@ -154,7 +163,7 @@ void __stdcall Rva007FB4B0( Rva007E8810Message *msg, const char *user,
 		msg->addString( "LSRC", lsrc );
 }
 
-void __stdcall Rva007FB620( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FB620( FeslTxnMessage *msg, const char *user,
 	const char *group, const char *lsrc, bool pres )
 {
 	msg->reset();
@@ -170,7 +179,7 @@ void __stdcall Rva007FB620( Rva007E8810Message *msg, const char *user,
 
 // ---- 'GINV' / 'GRVK' / 'EPST' ---------------------------------------------
 
-void __stdcall Rva007FB7B0( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FB7B0( FeslTxnMessage *msg, const char *user,
 	const char *sess, const char *titl )
 {
 	msg->reset();
@@ -181,7 +190,7 @@ void __stdcall Rva007FB7B0( Rva007E8810Message *msg, const char *user,
 	msg->addString( "TITL", titl );
 }
 
-void __stdcall Rva007FB890( Rva007E8810Message *msg, const char *user,
+void __stdcall Rva007FB890( FeslTxnMessage *msg, const char *user,
 	const char *sess )
 {
 	msg->reset();
@@ -191,7 +200,7 @@ void __stdcall Rva007FB890( Rva007E8810Message *msg, const char *user,
 	msg->addString( "SESS", sess );
 }
 
-void __stdcall Rva007FB9F0( Rva007E8810Message *msg, const char *addr, bool enab )
+void __stdcall Rva007FB9F0( FeslTxnMessage *msg, const char *addr, bool enab )
 {
 	msg->reset();
 	msg->m_category = 'EPST';
@@ -210,7 +219,7 @@ void __stdcall Rva007FB9F0( Rva007E8810Message *msg, const char *addr, bool enab
 // V2FeslTxnRequests.cpp.  Its four bytes are a DIR32 site copied from retail.
 static char *g_Rva012C3BC4;
 
-void __stdcall Rva007FC170( Rva007E8810Message *msg, const char *prod,
+void __stdcall Rva007FC170( FeslTxnMessage *msg, const char *prod,
 	const char *vers, const char *plat, const char *locale )
 {
 	msg->reset();
@@ -224,7 +233,7 @@ void __stdcall Rva007FC170( Rva007E8810Message *msg, const char *prod,
 	msg->addString( "LOCALE", locale );
 }
 
-void __stdcall Rva007FC210( Rva007E8810Message *msg, const char *hid,
+void __stdcall Rva007FC210( FeslTxnMessage *msg, const char *hid,
 	const char *lkey, const char *name )
 {
 	msg->reset();
@@ -237,7 +246,7 @@ void __stdcall Rva007FC210( Rva007E8810Message *msg, const char *hid,
 
 // ---- game-session ids -----------------------------------------------------
 
-void __stdcall Rva007FC510( Rva007E8810Message *msg, int lid, int gid )
+void __stdcall Rva007FC510( FeslTxnMessage *msg, int lid, int gid )
 {
 	msg->reset();
 	msg->m_category = 'GDAT';
@@ -246,7 +255,7 @@ void __stdcall Rva007FC510( Rva007E8810Message *msg, int lid, int gid )
 	msg->addInt( "GID", gid );
 }
 
-void __stdcall Rva007FCA40( Rva007E8810Message *msg, bool start )
+void __stdcall Rva007FCA40( FeslTxnMessage *msg, bool start )
 {
 	msg->reset();
 	msg->m_category = 'UBRA';
@@ -254,7 +263,7 @@ void __stdcall Rva007FCA40( Rva007E8810Message *msg, bool start )
 	msg->addBool( "START", start );
 }
 
-void __stdcall Rva007FCA70( Rva007E8810Message *msg, int lid, int gid, int port )
+void __stdcall Rva007FCA70( FeslTxnMessage *msg, int lid, int gid, int port )
 {
 	msg->reset();
 	msg->m_category = 'EGAM';
@@ -264,7 +273,7 @@ void __stdcall Rva007FCA70( Rva007E8810Message *msg, int lid, int gid, int port 
 	msg->addInt( "PORT", port );
 }
 
-void __stdcall Rva007FCAD0( Rva007E8810Message *msg, int lid, int gid )
+void __stdcall Rva007FCAD0( FeslTxnMessage *msg, int lid, int gid )
 {
 	msg->reset();
 	msg->m_category = 'ECNL';
@@ -273,7 +282,7 @@ void __stdcall Rva007FCAD0( Rva007E8810Message *msg, int lid, int gid )
 	msg->addInt( "GID", gid );
 }
 
-void __stdcall Rva007FCC50( Rva007E8810Message *msg, int pid )
+void __stdcall Rva007FCC50( FeslTxnMessage *msg, int pid )
 {
 	msg->reset();
 	msg->m_category = 'PLVT';
@@ -281,7 +290,7 @@ void __stdcall Rva007FCC50( Rva007E8810Message *msg, int pid )
 	msg->addInt( "PID", pid );
 }
 
-void __stdcall Rva007FCE70( Rva007E8810Message *msg, int timeout )
+void __stdcall Rva007FCE70( FeslTxnMessage *msg, int timeout )
 {
 	msg->reset();
 	msg->m_category = 'KEEP';
@@ -289,7 +298,7 @@ void __stdcall Rva007FCE70( Rva007E8810Message *msg, int timeout )
 	msg->addInt( "TIMO", timeout );
 }
 
-void __stdcall Rva007FCEA0( Rva007E8810Message *msg, const char *ugid,
+void __stdcall Rva007FCEA0( FeslTxnMessage *msg, const char *ugid,
 	const char *secret, int port )
 {
 	msg->reset();
