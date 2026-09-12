@@ -1,20 +1,24 @@
 // ?bfmeSetState1285@BfmeNode1285@@QAEXH@Z
-// partial score=0.75 date=2026-09-11
+// partial score=0.8 date=2026-09-11
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
-// Prologue, early-out, bfmeReset1285 call, loop guard, loop-top descriptor
-// reload, loop bottom and epilogue all match retail byte for byte. Four
-// instructions in the loop body still differ. Retail keeps m_records in edx
-// and m_state in ecx, then materialises the record pointer with
-// lea eax,[edx+ebp] and tests memory directly. MSVC folds the record pointer
-// into the mask load instead, so it spends a register on the loaded mask and
-// rebuilds the pointer with add eax,ebp. That costs two bytes, so ours is 129.
-// The _ReadWriteBarrier at the loop top is reconstruction shaping. Without it
-// MSVC reuses the descriptor pointer that the loop guard left in eax and drops
-// retail's reload at +0x32. A volatile-qualified read of m_descriptor does the
-// same job. Pointer arithmetic with the offset on the left, a function-scope
-// record local, hoisted field addresses, swapped definition order and /O1 all
-// leave the fold in place.
+// 126 bytes against retail 127, with three instructions left in the loop body.
+// Retail holds the descriptor in ecx and the records pointer in edx, then builds
+// the record pointer into a fresh eax with lea eax,[edx+ebp]. MSVC loads the
+// descriptor into edx and the records pointer into eax, then consumes that
+// register with add eax,ebp, which saves the byte that makes this 126.
+//
+// The first _ReadWriteBarrier is what restores retail reload of m_descriptor at
+// +0x32; without it MSVC serves the loop-top read from the register the loop
+// guard left in eax. A volatile-qualified read of m_descriptor does the same.
+// The second barrier is what produces retail test dword ptr [eax],ecx; without
+// it MSVC folds the record pointer into the mask load and spends a register on
+// the loaded mask.
+//
+// Ruled out for the lea: inlining the records load into the record expression,
+// reading m_state before the records pointer, offset-on-the-left pointer
+// arithmetic, a function-scope record local, hoisting the two field addresses
+// out of the if, a ternary or two-branch clamp, and /O1, which emits 115 bytes.
 
 extern "C" void _ReadWriteBarrier( void );
 #pragma intrinsic( _ReadWriteBarrier )
@@ -94,6 +98,7 @@ void BfmeNode1285::bfmeSetState1285( int state )
 			int currentState = info->m_state;
 			BfmeStateRecord1285 *record = (BfmeStateRecord1285 *)
 				((char *)records + offset);
+			_ReadWriteBarrier();
 			if ( (record->m_mask & currentState) != 0 )
 			{
 				submitter->bfmeSubmit1283(
