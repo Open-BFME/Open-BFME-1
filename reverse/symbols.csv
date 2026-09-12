@@ -87320,3 +87320,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?internalChangeHealth@ActiveBody@@UAEXM_N@Z,0x00035337,ActiveBody::internalChangeHealth ILT thunk called by ImmortalBody::internalChangeHealth
