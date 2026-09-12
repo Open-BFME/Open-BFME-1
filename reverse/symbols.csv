@@ -5479,6 +5479,7 @@ name,address,notes
 ??1Gen_dtor_002c1b90@@UAE@XZ,0x00030FD0,gen-dtor class destructor
 ??1GiantBirdAttackMoveToState@@UAE@XZ,0x00030FD0,constructor 0x002BF6D0 installs vtable 0x010C7A60 whose slot zero reaches deleting destructor 0x002C1B90; wrapper calls this ILT
 ??1Gen_dtor_002c1c40@@UAE@XZ,0x000317DC,gen-dtor class destructor
+??1GiantBirdGuardInnerState@@UAE@XZ,0x000317DC,constructor 0x002C03F0 installs vtable 0x010C7B28 whose slot zero reaches deleting destructor 0x002C1C40; adjacent name getter proves class identity
 ??1Gen_dtor_002c1c80@@UAE@XZ,0x000097F5,gen-dtor class destructor
 ??1Gen_dtor_002c1cc0@@UAE@XZ,0x00038118,gen-dtor class destructor
 ??1Gen_dtor_002c1d00@@UAE@XZ,0x00007AEF,gen-dtor class destructor
