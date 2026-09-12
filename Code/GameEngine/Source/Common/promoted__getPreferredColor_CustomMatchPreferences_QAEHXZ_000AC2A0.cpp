@@ -69,7 +69,14 @@ public:
 	}
 
 private:
-	unsigned char m_unreconstructed_00[0x34];
+	unsigned char m_pad00[0x10];
+	int m_startCountdownTimerSeconds;
+	int m_maxBeaconsPerPlayer;
+	unsigned char m_isShroudInMultiplayer;
+	unsigned char m_showRandomPlayerTemplate;
+	unsigned char m_showRandomStartPos;
+	unsigned char m_showRandomColor;
+	unsigned char m_pad1c[0x34 - 0x1c];
 	int m_colorCount;									///< retail this+0x34
 	unsigned char m_unreconstructed_38[4];
 	int m_numColors;									///< retail this+0x3C
