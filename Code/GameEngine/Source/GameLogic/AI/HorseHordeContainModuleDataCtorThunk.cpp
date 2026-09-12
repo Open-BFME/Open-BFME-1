@@ -1,544 +1,208 @@
-// cl: /DNDEBUG /MD /EHsc
+// Open-BFME5: HorseHordeContainModuleData constructor reconstruction.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-class HorseHordeContainModuleData
+#include <list>
+#include <set>
+#include <vector>
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+class BFMERetailAsciiString
+{
+public:
+    BFMERetailAsciiString() : m_data(0) {}
+    ~BFMERetailAsciiString() { releaseBuffer(); }
+    void releaseBuffer();
+    void set(const BFMERetailAsciiString &);
+private:
+    void *m_data;
+};
+
+#pragma comment(linker, "/alternatename:?set@BFMERetailAsciiString@@QAEXABV1@@Z=?set@?$StringBase@D@@QAEXABV1@@Z")
+
+class AsciiString
+{
+public:
+    AsciiString() : m_data(0) {}
+    ~AsciiString() { ((BFMERetailAsciiString *)this)->releaseBuffer(); }
+    AsciiString &operator=(const AsciiString &that)
+    {
+        ((BFMERetailAsciiString *)this)->set(*(const BFMERetailAsciiString *)&that);
+        return *this;
+    }
+private:
+    void *m_data;
+};
+
+class BfmeHordeContainSplitResultList
+{
+public:
+    virtual void slot0();
+    ~BfmeHordeContainSplitResultList();
+};
+#pragma comment(linker, "/alternatename:??1BfmeHordeContainSplitResultList@@QAE@XZ=?j_00017657@@YAXXZ")
+
+class AudioEventRTS
+{
+public:
+    ~AudioEventRTS();
+private:
+    unsigned char m_data[0x70];
+};
+#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
+
+class Rva002472D0AudioEntry
+{
+private:
+    BFMERetailAsciiString m_00;
+    BFMERetailAsciiString m_04;
+    AudioEventRTS m_08;
+    AudioEventRTS m_78;
+};
+class Rva002472D0TwoAsciiEntry
+{
+private:
+    BFMERetailAsciiString m_00;
+    BFMERetailAsciiString m_04;
+};
+class Rva002472D0OneAsciiEntry
+{
+private:
+    BFMERetailAsciiString m_00;
+};
+
+struct Gen_t_002360c0_k4
+{
+    int m_00[1];
+};
+bool operator==(const Gen_t_002360c0_k4 &, const Gen_t_002360c0_k4 &);
+bool operator<(const Gen_t_002360c0_k4 &, const Gen_t_002360c0_k4 &);
+typedef _STL::_Rb_tree<Gen_t_002360c0_k4, Gen_t_002360c0_k4,
+    _STL::_Identity<Gen_t_002360c0_k4>, _STL::less<Gen_t_002360c0_k4>,
+    _STL::allocator<Gen_t_002360c0_k4> > Rva002472D0TreeK4;
+
+// The constructor calls this shared ICF-folded base body through its named
+// ILT.  The Horse identity is established by the factory/vtable path; this
+// base spelling only selects the existing 0x3D055 constructor candidate.
+class HordeGarrisonContainModuleDataBase
+{
+public:
+    HordeGarrisonContainModuleDataBase();
+    virtual ~HordeGarrisonContainModuleDataBase();
+private:
+    unsigned char m_004_to_223[0x220];
+};
+struct Rva002472D0Config
+{
+    unsigned int m_268;
+    unsigned int m_26c;
+    unsigned char m_270;
+    unsigned char m_pad271[3];
+    unsigned int m_274;
+    unsigned int m_278;
+    float m_27c;
+    float m_280;
+    float m_284;
+    unsigned int m_288;
+
+    Rva002472D0Config()
+    {
+        m_268 = 0;
+        m_26c = 0;
+        m_274 = 2;
+        m_278 = 15;
+        m_27c = 3.0f;
+        m_280 = 5.0f;
+        m_284 = 0.5f;
+        m_288 = 0;
+        m_270 = 1;
+    }
+};
+
+typedef char Rva002472D0ConfigSizeCheck[(sizeof(Rva002472D0Config) == 0x24) ? 1 : -1];
+
+struct Rva002472D0Pod298
+{
+    unsigned int m_298;
+    unsigned int m_29c;
+    unsigned int m_2a0;
+
+    Rva002472D0Pod298()
+    {
+        m_298 = 0;
+        m_29c = 0;
+        m_2a0 = 0;
+    }
+};
+
+struct Rva002472D0Tail
+{
+    volatile unsigned char m_2c8;
+    unsigned char m_pad2c9[3];
+    unsigned int m_2cc;
+    volatile unsigned char m_2d0;
+    unsigned char m_pad2d1[3];
+    volatile unsigned int m_2d4;
+    unsigned char m_2d8;
+    unsigned char m_pad2d9[3];
+    float m_2dc;
+    float m_2e0;
+    unsigned int m_2e4;
+    unsigned char m_2e8;
+    unsigned char m_pad2e9[3];
+    unsigned int m_2ec;
+    unsigned char m_2f0;
+    unsigned char m_2f1;
+    unsigned char m_2f2;
+    unsigned char m_2f3;
+
+    Rva002472D0Tail()
+    {
+        unsigned int minusOne = 0xffffffff;
+        m_2cc = minusOne;
+        m_2c8 = 0;
+        _ReadWriteBarrier();
+        m_2d0 = 0;
+        m_2d4 = 0;
+        _ReadWriteBarrier();
+        m_2e4 = minusOne;
+        m_2d8 = 1;
+        m_2e8 = 0;
+        m_2ec = 0;
+        m_2f0 = 0;
+        m_2f1 = 0;
+        m_2f2 = 0;
+        m_2dc = 0.4f;
+        m_2e0 = 60.0f;
+    }
+};
+typedef char Rva002472D0TailSizeCheck[(sizeof(Rva002472D0Tail) == 0x2c) ? 1 : -1];
+
+class HorseHordeContainModuleData : public HordeGarrisonContainModuleDataBase
 {
 public:
     HorseHordeContainModuleData();
+    virtual ~HorseHordeContainModuleData();
+private:
+    std::vector<BfmeHordeContainSplitResultList *> m_224;
+    std::vector<Rva002472D0AudioEntry *> m_230;
+    std::vector<Rva002472D0TwoAsciiEntry *> m_23c;
+    AsciiString m_248;
+    std::list<int> m_24c;
+    Rva002472D0TreeK4 m_250;
+    Rva002472D0TreeK4 m_25c;
+    Rva002472D0Config m_config;
+    std::vector<AsciiString> m_28c;
+    Rva002472D0Pod298 m_pod298;
+    std::vector<Rva002472D0OneAsciiEntry *> m_2a4;
+    std::vector<AsciiString> m_2b0;
+    std::vector<AsciiString> m_2bc;
+    Rva002472D0Tail m_tail;
 };
+typedef char Rva002472D0SizeCheck[(sizeof(HorseHordeContainModuleData) == 0x2f4) ? 1 : -1];
 
-__declspec(naked) HorseHordeContainModuleData::HorseHordeContainModuleData()
+HorseHordeContainModuleData::HorseHordeContainModuleData()
 {
-    __asm {
-        _emit 06Ah
-        _emit 0FFh
-        _emit 068h
-        _emit 04Ch
-        _emit 0E0h
-        _emit 000h
-        _emit 001h
-        _emit 064h
-        _emit 0A1h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 050h
-        _emit 064h
-        _emit 089h
-        _emit 025h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 051h
-        _emit 053h
-        _emit 056h
-        _emit 08Bh
-        _emit 0F1h
-        _emit 089h
-        _emit 074h
-        _emit 024h
-        _emit 008h
-        _emit 0E8h
-        _emit 062h
-        _emit 05Dh
-        _emit 0DFh
-        _emit 0FFh
-        _emit 033h
-        _emit 0DBh
-        _emit 0C7h
-        _emit 006h
-        _emit 0B0h
-        _emit 0F9h
-        _emit 00Ah
-        _emit 001h
-        _emit 089h
-        _emit 09Eh
-        _emit 024h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 028h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 05Ch
-        _emit 024h
-        _emit 014h
-        _emit 089h
-        _emit 09Eh
-        _emit 02Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 030h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 034h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 038h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 03Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 040h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 044h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 048h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 06Ah
-        _emit 00Ch
-        _emit 0C6h
-        _emit 044h
-        _emit 024h
-        _emit 018h
-        _emit 004h
-        _emit 089h
-        _emit 09Eh
-        _emit 04Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0E8h
-        _emit 0F3h
-        _emit 071h
-        _emit 05Eh
-        _emit 000h
-        _emit 089h
-        _emit 000h
-        _emit 089h
-        _emit 040h
-        _emit 004h
-        _emit 089h
-        _emit 086h
-        _emit 04Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 06Ah
-        _emit 014h
-        _emit 0C6h
-        _emit 044h
-        _emit 024h
-        _emit 01Ch
-        _emit 005h
-        _emit 089h
-        _emit 09Eh
-        _emit 050h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0E8h
-        _emit 0D6h
-        _emit 071h
-        _emit 05Eh
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 050h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 054h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 018h
-        _emit 08Bh
-        _emit 086h
-        _emit 050h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 058h
-        _emit 004h
-        _emit 08Bh
-        _emit 086h
-        _emit 050h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 040h
-        _emit 008h
-        _emit 08Bh
-        _emit 086h
-        _emit 050h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 040h
-        _emit 00Ch
-        _emit 06Ah
-        _emit 014h
-        _emit 0C6h
-        _emit 044h
-        _emit 024h
-        _emit 020h
-        _emit 006h
-        _emit 089h
-        _emit 09Eh
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0E8h
-        _emit 09Bh
-        _emit 071h
-        _emit 05Eh
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 060h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 018h
-        _emit 08Bh
-        _emit 08Eh
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 059h
-        _emit 004h
-        _emit 08Bh
-        _emit 086h
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 040h
-        _emit 008h
-        _emit 08Bh
-        _emit 086h
-        _emit 05Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 040h
-        _emit 00Ch
-        _emit 089h
-        _emit 09Eh
-        _emit 068h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 06Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 074h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 078h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 00Fh
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 07Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 040h
-        _emit 040h
-        _emit 0C7h
-        _emit 086h
-        _emit 080h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 0A0h
-        _emit 040h
-        _emit 0C7h
-        _emit 086h
-        _emit 084h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 03Fh
-        _emit 089h
-        _emit 09Eh
-        _emit 088h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0B1h
-        _emit 001h
-        _emit 088h
-        _emit 08Eh
-        _emit 070h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 08Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 090h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 094h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 098h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 09Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0A0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0A4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0A8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0ACh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0B0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0B4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 083h
-        _emit 0C4h
-        _emit 00Ch
-        _emit 089h
-        _emit 09Eh
-        _emit 0B8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0BCh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0C0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0C4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 083h
-        _emit 0C8h
-        _emit 0FFh
-        _emit 088h
-        _emit 09Eh
-        _emit 0C8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 0CCh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 09Eh
-        _emit 0D0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0D4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 086h
-        _emit 0E4h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 08Eh
-        _emit 0D8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 08Bh
-        _emit 04Ch
-        _emit 024h
-        _emit 00Ch
-        _emit 088h
-        _emit 09Eh
-        _emit 0E8h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 089h
-        _emit 09Eh
-        _emit 0ECh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 09Eh
-        _emit 0F0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 09Eh
-        _emit 0F1h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 088h
-        _emit 09Eh
-        _emit 0F2h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0C7h
-        _emit 086h
-        _emit 0DCh
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 0CDh
-        _emit 0CCh
-        _emit 0CCh
-        _emit 03Eh
-        _emit 0C7h
-        _emit 086h
-        _emit 0E0h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 070h
-        _emit 042h
-        _emit 08Bh
-        _emit 0C6h
-        _emit 05Eh
-        _emit 05Bh
-        _emit 064h
-        _emit 089h
-        _emit 00Dh
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 000h
-        _emit 083h
-        _emit 0C4h
-        _emit 010h
-        _emit 0C3h
-    }
 }
