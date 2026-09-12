@@ -1,67 +1,76 @@
-// ?bfmeSetupJY@@YAXPAVBfmeCodecJY@@PBI@Z
-// partial score=0.85 date=2026-09-08
-extern "C" void *__cdecl memcpy(void *d, const void *s, unsigned int n);
+// ?bfmeInitD70@@YAXPAX0@Z
+// partial score=0.86 date=2026-09-12
+extern "C" void *__cdecl memcpy(void *destination, const void *source,
+	unsigned int bytes);
 
-class BfmeCodecJY
+class BfmeInitD70Record
 {
 public:
-	unsigned char m_bfmeHeadJY[0x40];
-	unsigned int m_bfme40JY;
-	unsigned int m_bfme44JY;
-	unsigned int m_bfme48JY;
-	unsigned int m_bfme4cJY;
-	unsigned int m_bfmeRestJY[10];
-	unsigned int m_bfme78JY;
-	unsigned int m_bfme7cJY;
-	unsigned int m_bfme80JY;
-	unsigned int m_bfme84JY;
-	unsigned int m_bfme88JY;
-	unsigned int m_bfme8cJY;
-	unsigned int m_bfme90JY;
-	unsigned int m_bfme94JY;
-	unsigned int m_bfme98JY;
-	unsigned int m_bfme9cJY;
-	unsigned char m_bfmeGapJY[0x14];
-	unsigned int m_bfmeB4JY;
+	unsigned char m_pad00[0x40];
+	unsigned int m_field40;
+	unsigned int m_field44;
+	unsigned int m_field48;
+	unsigned int m_field4c;
+	unsigned int m_copied[10];
+	unsigned int m_field78;
+	unsigned int m_field7c;
+	unsigned int m_field80;
+	unsigned int m_field84;
+	unsigned int m_field88;
+	unsigned int m_field8c;
+	unsigned int m_field90;
+	unsigned int m_field94;
+	volatile unsigned int m_field98;
+	unsigned int m_field9c;
+	unsigned char m_padA0[0x14];
+	unsigned int m_fieldB4;
 };
 
-void bfmeSetupJY(BfmeCodecJY *p, const unsigned int *src)
+// ?bfmeInitD70@@YAXPAX0@Z
+// Retail copies fourteen source words into the codec record, then stores its derived sizes.
+void __cdecl bfmeInitD70(void *selfRaw, void *sourceRaw)
 {
-	memcpy(&p->m_bfme40JY, src, 14 * 4);
+	BfmeInitD70Record *self = (BfmeInitD70Record *)selfRaw;
+	unsigned int *source = (unsigned int *)sourceRaw;
 
-	unsigned int a = p->m_bfme40JY;
-	unsigned int m44 = p->m_bfme44JY;
-	unsigned int m48 = p->m_bfme48JY;
+	memcpy(&self->m_field40, source, 14 * 4);
 
-	a = a >> 3;
+	unsigned int width = self->m_field40;
+	unsigned int rawHeight = self->m_field44;
+	const unsigned int plane = self->m_field48;
+	volatile unsigned int &field98 = self->m_field98;
 
-	unsigned int b = m44 >> 3;
+	width >>= 3;
+	unsigned int height = rawHeight >> 3;
 
-	p->m_bfme94JY = b;
+	self->m_field94 = height;
 
-	unsigned int ab = b * a;
+	unsigned int pixels = height * width;
 
-	p->m_bfme84JY = ab;
+	self->m_field84 = pixels;
+	const unsigned int *strideField = &self->m_field4c;
+	register unsigned int stride = *strideField;
 
-	unsigned int c = p->m_bfme4cJY;
-	unsigned int q = ab >> 2;
+	unsigned int quarterPixels = pixels >> 2;
 
-	p->m_bfme8cJY = ab + q * 2;
-	p->m_bfme90JY = a;
+	self->m_field8c = pixels + quarterPixels * 2;
+	self->m_field90 = width;
 
-	unsigned int d = (m48 - a * 8) >> 1;
+	unsigned int chromaSpan = (plane - width * 8) >> 1;
 
-	p->m_bfme78JY = (m48 + 1) * d;
+	self->m_field78 = (plane + 1) * chromaSpan;
 
-	unsigned int e = (m44 + d * 2) * m48;
+	const unsigned int planeBytes = (rawHeight + chromaSpan * 2) * plane;
 
-	p->m_bfme98JY = m48;
+	field98 = plane;
 
-	unsigned int h = d >> 1;
+	const unsigned int halfChromaSpan = chromaSpan >> 1;
 
-	p->m_bfmeB4JY = d;
-	p->m_bfme88JY = q;
-	p->m_bfme7cJY = (c + 1) * h + e;
-	p->m_bfme9cJY = c;
-	p->m_bfme80JY = h * c + (((m44 >> 1) + d) * c + h) + e;
+	self->m_fieldB4 = chromaSpan;
+	self->m_field88 = quarterPixels;
+	self->m_field7c = (stride + 1) * halfChromaSpan + planeBytes;
+	self->m_field9c = stride;
+	self->m_field80 = halfChromaSpan * stride
+		+ ((rawHeight >> 1) + chromaSpan) * stride
+		+ halfChromaSpan + planeBytes;
 }
