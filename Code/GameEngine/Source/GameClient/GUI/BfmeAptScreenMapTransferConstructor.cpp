@@ -96,34 +96,44 @@ public:
 typedef void ( Rva0050FE50Host::*MapTransferCallback )(
 	int, char *, bool );
 
-class FunctorWrapperHead
-{
-public:
-	FunctorWrapperHead() : m_refCount( 0 ) {}
-	virtual ~FunctorWrapperHead();
-	int m_refCount;
-};
+typedef Rva0050FE50Host FunctorTargetSingle;
+typedef MapTransferCallback FunctorMethodSingle;
 
-class MapTransferColorFunctorWrapper
-	: public FunctorWrapperHead
+struct FunctorBindingSingle
 {
-public:
-	MapTransferColorFunctorWrapper( Rva0050FE50Host *target,
-		MapTransferCallback method )
+	FunctorBindingSingle( FunctorTargetSingle *target,
+		FunctorMethodSingle method )
 		: m_target( target ), m_method( method ) {}
 
-	Rva0050FE50Host *m_target;
-	MapTransferCallback m_method;
+	FunctorTargetSingle *m_target;
+	FunctorMethodSingle m_method;
+};
+
+class FunctorSingleWrapperHead
+{
+public:
+	FunctorSingleWrapperHead() : m_refCount( 0 ) {}
+	virtual void functorSingleWrapperAnchor();
+	unsigned int m_refCount;
+};
+
+class MapTransferColorFunctorWrapper : public FunctorSingleWrapperHead
+{
+public:
+	MapTransferColorFunctorWrapper( const FunctorBindingSingle &binding )
+		: m_binding( binding ) {}
+
+	FunctorBindingSingle m_binding;
 };
 
 class Rva0050F920FunctorHolder
 {
 public:
-	Rva0050F920FunctorHolder( MapTransferColorFunctorWrapper *ptr )
-		: m_ptr( ptr )
+	Rva0050F920FunctorHolder( FunctorBindingSingle binding )
 	{
+		m_ptr = new MapTransferColorFunctorWrapper( binding );
 		if( m_ptr )
-			++m_ptr->m_refCount;
+			m_ptr->m_refCount++;
 	}
 
 	Rva0050F920FunctorHolder( const Rva0050F920FunctorHolder &other )
@@ -135,7 +145,7 @@ public:
 
 	~Rva0050F920FunctorHolder()
 	{
-		FunctorWrapperHead *p = m_ptr;
+		FunctorSingleWrapperHead *p = m_ptr;
 		if( p && ( p->m_refCount = p->m_refCount - 1 ) <= 0 )
 			delete p;
 	}
@@ -153,7 +163,38 @@ public:
 	unsigned int m_unmodelled[ 12 ];
 };
 
-class __declspec( novtable ) BfmeAptScreenMapTransfer
+class BfmeAptScreenMapTransferBase
+{
+public:
+	virtual ~BfmeAptScreenMapTransferBase();
+
+	struct AptVector
+	{
+		void *begin;
+		void *end;
+		void *capacity;
+		AptVector() : begin( 0 ), end( 0 ), capacity( 0 ) {}
+	};
+	struct AptVectorTwo
+	{
+		void *a;
+		void *b;
+		AptVectorTwo() : a( 0 ), b( 0 ) {}
+	};
+	struct AptVectorOne
+	{
+		void *a;
+		AptVectorOne() : a( 0 ) {}
+	};
+
+	AptVector m_vec0;
+	AptVector m_vec1;
+	AptVector m_vec2;
+	AptVectorTwo m_vec3a;
+	AptVectorOne m_vec3b;
+};
+
+class BfmeAptScreenMapTransfer : public BfmeAptScreenMapTransferBase
 {
 public:
 	virtual ~BfmeAptScreenMapTransfer();
@@ -161,7 +202,6 @@ public:
 	void processProgress( int playerId, int percentage, UnicodeString text );
 
 private:
-	unsigned int m_unmodelled[ 12 ];
 	GameInfo *m_game;
 	int m_playerLookup[ 8 ];
 };
@@ -173,18 +213,6 @@ extern const unsigned short BFMEEmptyString[];
 
 BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 {
-	m_unmodelled[ 0 ] = 0;
-	m_unmodelled[ 1 ] = 0;
-	m_unmodelled[ 2 ] = 0;
-	m_unmodelled[ 3 ] = 0;
-	m_unmodelled[ 4 ] = 0;
-	m_unmodelled[ 5 ] = 0;
-	m_unmodelled[ 6 ] = 0;
-	m_unmodelled[ 7 ] = 0;
-	m_unmodelled[ 8 ] = 0;
-	m_unmodelled[ 9 ] = 0;
-	m_unmodelled[ 10 ] = 0;
-	m_unmodelled[ 11 ] = 0;
 	*(void **)this = (void *)0x01104FF8;
 	m_game = (GameInfo *)context;
 	if( TheBfmeAptScreenMapTransfer )
@@ -199,7 +227,6 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		*lookup = -1;
 
 	int display = 0;
-	MapTransferCallback callback;
 	for( int i = 0; i < 8; ++i )
 	{
 		const GameSlot *slot = ((GameInfo *)context)->getConstSlot( i );
@@ -209,22 +236,20 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		m_playerLookup[ i ] = display;
 		AsciiString variableName;
 		variableName.format( (AsciiString)"FileTransfer::PlayerName%d", display );
-		{
-			UnicodeString playerName = slot->getName();
-			g_theWindowManager->bfme_setAptText( variableName, playerName );
-		}
+		g_theWindowManager->bfme_setAptText( variableName, slot->getName() );
 
 		variableName.format( (AsciiString)"FileTransfer:PlayerColor:%d", display );
-		callback = (MapTransferCallback)&Rva0050FE50Host::bfmeProvide;
+		MapTransferCallback callback =
+			(MapTransferCallback)&Rva0050FE50Host::bfmeProvide;
 		((_bfme_AptGameWindow *)this)->_bfme_showAptScreenWithArg(
 			variableName, (void *)i,
-			Rva0050F920FunctorHolder( new MapTransferColorFunctorWrapper(
+			Rva0050F920FunctorHolder( FunctorBindingSingle(
 				(Rva0050FE50Host *)this, callback ) ) );
 		processProgress( display, 0, UnicodeString( BFMEEmptyString ) );
 		++display;
 	}
 
-	for( ; display < 8; ++display )
+	for( ; display < 8; )
 	{
 		AsciiString variableName;
 		variableName.format( (AsciiString)"FileTransfer::PlayerName%d", display );
@@ -240,26 +265,28 @@ BfmeAptScreenMapTransfer::BfmeAptScreenMapTransfer( void *context )
 		}
 
 		variableName.format( (AsciiString)"FileTransfer:PlayerColor:%d", display );
-		callback = (MapTransferCallback)&Rva0050FE50Host::bfmeProvide;
+		MapTransferCallback callback =
+			(MapTransferCallback)&Rva0050FE50Host::bfmeProvide;
 		((_bfme_AptGameWindow *)this)->_bfme_showAptScreenWithArg(
 			variableName, (void *)-1,
-			Rva0050F920FunctorHolder( new MapTransferColorFunctorWrapper(
+			Rva0050F920FunctorHolder( FunctorBindingSingle(
 				(Rva0050FE50Host *)this, callback ) ) );
+		++display;
 	}
 
 	{
 		AsciiString name( "APT:FileTransferLoadingPlayerName" );
-		UnicodeString text = TheGameText->fetch( "GUI:PlayerName" );
-		g_theWindowManager->bfme_setAptText( name, text );
+		g_theWindowManager->bfme_setAptText( name,
+			TheGameText->fetch( "GUI:PlayerName" ) );
 	}
 	{
 		AsciiString name( "APT:FileTransferLoadingProgress" );
-		UnicodeString text = TheGameText->fetch( "GUI:Progress" );
-		g_theWindowManager->bfme_setAptText( name, text );
+		g_theWindowManager->bfme_setAptText( name,
+			TheGameText->fetch( "GUI:Progress" ) );
 	}
 	{
 		AsciiString name( "APT:FileTransferLoadingStatus" );
-		UnicodeString text = TheGameText->fetch( "GUI:Status" );
-		g_theWindowManager->bfme_setAptText( name, text );
+		g_theWindowManager->bfme_setAptText( name,
+			TheGameText->fetch( "GUI:Status" ) );
 	}
 }
