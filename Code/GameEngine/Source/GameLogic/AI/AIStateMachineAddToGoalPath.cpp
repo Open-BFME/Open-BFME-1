@@ -19,16 +19,6 @@ struct Coord3D
 	}
 };
 
-// Retail folded the out-of-line twelve-byte push_back used here with this
-// equivalent STL instantiation.
-struct Gen_t_00156bf0_p12cd
-{
-	int value[3];
-	Gen_t_00156bf0_p12cd();
-	Gen_t_00156bf0_p12cd(const Gen_t_00156bf0_p12cd &);
-	~Gen_t_00156bf0_p12cd();
-	Gen_t_00156bf0_p12cd &operator=(const Gen_t_00156bf0_p12cd &);
-};
 
 namespace _STL
 {
@@ -109,10 +99,7 @@ void AIStateMachine::addToGoalPath(const Coord3D *pathPoint)
 		Coord3D *finalPoint = &m_goalPath[m_goalPath.size() - 1];
 		if (!finalPoint->equals(*pathPoint))
 		{
-			typedef _STL::vector<Gen_t_00156bf0_p12cd,
-				_STL::allocator<Gen_t_00156bf0_p12cd> > FoldedGoalPathVector;
-			reinterpret_cast<FoldedGoalPathVector *>(&m_goalPath)->push_back(
-				*reinterpret_cast<const Gen_t_00156bf0_p12cd *>(pathPoint));
+			m_goalPath.push_back(*pathPoint);
 		}
 	}
 }
