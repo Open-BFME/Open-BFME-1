@@ -80,6 +80,33 @@ static ShaderClass detailOpaqueShader(SC_ALPHA);
 Bool W3DStatusCircle::m_needUpdate;
 Int W3DStatusCircle::m_diffuse=255; // blue.
 
+// BFME's DX8 buffer objects are four bytes larger than the vendored Zero Hour
+// views, and BFME passes the index count at full width.  These standalone
+// views keep the allocation size and constructor ABI used by the retail body;
+// the pinned constructor aliases resolve their calls to the real DX8 classes.
+class BfmeDX8IndexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8IndexBuffer(unsigned count, UsageType usage);
+
+private:
+	unsigned char m_bfmeBody[0x18];
+};
+
+class BfmeDX8VertexBuffer
+{
+public:
+	enum UsageType { USAGE_DEFAULT = 0, USAGE_DYNAMIC = 1 };
+
+	BfmeDX8VertexBuffer(unsigned fvf, unsigned short count, UsageType usage,
+		unsigned size);
+
+private:
+	unsigned char m_bfmeBody[0x20];
+};
+
 W3DStatusCircle::~W3DStatusCircle(void)
 {
 	freeMapResources();
@@ -146,7 +173,7 @@ struct W3DStatusCircleRetailResources
 {
 	char m_head[0xd8];
 	DX8IndexBufferClass *m_indexBuffer;
-	char m_gap[4];
+	unsigned m_shaderBits;
 	VertexMaterialClass *m_vertexMaterialClass;
 	DX8VertexBufferClass *m_vertexBufferCircle;
 	DX8VertexBufferClass *m_vertexBufferScreen;
@@ -183,19 +210,22 @@ Int W3DStatusCircle::freeMapResources(void)
 #define NUM_TRI 20
 //Allocate a heightmap of x by y vertices.
 //data must be an array matching this size.
-// ?initData@W3DStatusCircle@@IAEHXZ present-unmatched
 Int W3DStatusCircle::initData(void)
 {	
 	Int i;
+	W3DStatusCircleRetailResources *resources =
+		reinterpret_cast<W3DStatusCircleRetailResources *>(this);
 
 	m_needUpdate = true;
 	freeMapResources();	//free old data and ib/vb
 
 	m_numTriangles = NUM_TRI;
-	m_indexBuffer=NEW_REF(DX8IndexBufferClass,(m_numTriangles*3));
+	resources->m_indexBuffer = reinterpret_cast<DX8IndexBufferClass *>(
+		::new BfmeDX8IndexBuffer(m_numTriangles * 3,
+			BfmeDX8IndexBuffer::USAGE_DEFAULT));
 
 	// Fill up the IB
-	DX8IndexBufferClass::WriteLockClass lockIdxBuffer(m_indexBuffer);
+	DX8IndexBufferClass::WriteLockClass lockIdxBuffer(resources->m_indexBuffer);
 	UnsignedShort *ib=lockIdxBuffer.Get_Index_Array();
 		
 	for (i=0; i<3*m_numTriangles; i+=3)
@@ -207,13 +237,18 @@ Int W3DStatusCircle::initData(void)
 		ib+=3;	//skip the 3 indices we just filled
 	}
 
-	m_vertexBufferCircle=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,m_numTriangles*3,DX8VertexBufferClass::USAGE_DEFAULT));
-	m_vertexBufferScreen=NEW_REF(DX8VertexBufferClass,(DX8_FVF_XYZDUV1,2*3,DX8VertexBufferClass::USAGE_DEFAULT));
+	resources->m_vertexBufferCircle = reinterpret_cast<DX8VertexBufferClass *>(
+		::new BfmeDX8VertexBuffer(DX8_FVF_XYZDUV1, m_numTriangles * 3,
+			BfmeDX8VertexBuffer::USAGE_DEFAULT, 0));
+	resources->m_vertexBufferScreen = reinterpret_cast<DX8VertexBufferClass *>(
+		::new BfmeDX8VertexBuffer(DX8_FVF_XYZDUV1, 2 * 3,
+			BfmeDX8VertexBuffer::USAGE_DEFAULT, 0));
 
 	//go with a preset material for now.
-	m_vertexMaterialClass=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
+	resources->m_vertexMaterialClass =
+		VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
 
-	m_shaderClass = ShaderClass::ShaderClass(SC_ALPHA);// _PresetOpaque2DShader;//; //_PresetOpaqueShader;
+	resources->m_shaderBits = 0x001198b7;	// BFME's SC_ALPHA; //_PresetOpaque2DShader; //_PresetOpaqueShader;
 
 
 	return 0;
