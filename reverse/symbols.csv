@@ -87240,3 +87240,6 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ??0W3DGhostObject@@QAE@XZ,0x006BCEC0,W3DGhostObjectManager addGhostObject allocates 0x120 bytes; constructor initializes 32 snapshots and DrawableInfo at independently matched ghost layout offsets
 ?getShroudedStatus@BfmeObjectShroudCall@@QBE?AW4ObjectShroudStatus@@H@Z,0x0002B81E,local BFME ABI call view routes the retail shroud query through its ILT
 ?clearModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BEA@@@@Z,0x0000B95B,BFME 320-bit model mask; MonsterDockUpdate action slot12 calls existing clear ILT with ten-word temporary
+?_M_initialize_map@?$_Deque_base@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXI@Z,0x00037C90,MapObject::fastAssignAllUniqueIDs765B caller; actual four-byte POD deque init203B at RVA0x00089190 independently matched
+?_M_reallocate_map@?$deque@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXI_N@Z,0x0000F6C3,MapObject::fastAssignAllUniqueIDs765B caller; four-byte POD deque reallocate367B at RVA0x00089850 independently matched
+?_M_destroy_nodes@?$_Deque_base@UMapObjectIDPointer@@V?$allocator@UMapObjectIDPointer@@@_STL@@@_STL@@IAEXPAPAUMapObjectIDPointer@@0@Z,0x00033023,MapObject::fastAssignAllUniqueIDs765B caller; four-byte POD deque destroy48B at RVA0x00088060 independently matched
