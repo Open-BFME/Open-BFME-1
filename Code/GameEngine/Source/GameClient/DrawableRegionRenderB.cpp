@@ -71,7 +71,7 @@ extern void j_00017256();
 
 // The retail call is to the existing 5-byte ILT.  Keep its thunk symbol and
 // cast only the proven call ABI, so no new shared pin is needed.
-typedef void (__cdecl *Rva00411220ColorCall)( Int value, Color *colors );
+typedef void (__cdecl *Rva00411270ColorCall)( Int value, Color *colors );
 
 // ?bfmeRegionRenderB@@YAXPAXHH@Z
 void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
@@ -81,7 +81,7 @@ void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
 	Int regionLeft = region->left;
 	Color colors[4];
 	Real regionWidth = (Real)(region->right - regionLeft);
-	((Rva00411220ColorCall)j_00017256)( rawValue, colors );
+	((Rva00411270ColorCall)j_00017256)( rawValue, colors );
 
 	UnsignedInt state = *(UnsignedInt *)0x012F13C8;
 	if( (state & 1) == 0 )
@@ -106,7 +106,7 @@ void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
 	// Retail float pool values: 0x010828C4 is 6.0f, 0x01075340 is 4.0f,
 	// and 0x01088830 is 2.0f.
 	TheDisplay->drawOpenRect(
-		(Real)(offset->x + regionLeft - 3),
+		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
 		regionWidth + *(const Real *)0x010828C4,
 		10.0f, 1.0f, *(UnsignedInt *)0x012F13C4 );
@@ -123,7 +123,8 @@ void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
 		regionWidth + *(const Real *)0x01088830,
 		6.0f, *(UnsignedInt *)0x012F13BC );
 
-	regionWidth = *(volatile Real *)&regionWidth * *(Real *)&rawValue;
+	const Real &rawValueReal = *(const Real *)&rawValue;
+	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
 	for( Int i = 0; i < 4; ++i )
 	{
 		TheDisplay->drawFillRect(
