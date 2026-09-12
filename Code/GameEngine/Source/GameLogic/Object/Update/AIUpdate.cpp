@@ -2436,7 +2436,7 @@ Real AIUpdateInterface::calculateMaxBlockedSpeed(Object *other) const
 
 
 //-------------------------------------------------------------------------------------------------
-// ?blockedBy@AIUpdateInterface@@ present-unmatched
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateBlockedBy.cpp
 Bool AIUpdateInterface::blockedBy(Object *other)
 /* Returns TRUE if we are blocked from moving by the other object.*/
 {
