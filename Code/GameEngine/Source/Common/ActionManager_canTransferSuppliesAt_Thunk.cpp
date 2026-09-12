@@ -1,469 +1,274 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Open-BFME: BFME ABI reconstruction of ActionManager::canTransferSuppliesAt.
 
-class Object;
-class ActionManager { public: bool canTransferSuppliesAt(Object const *, Object const *); };
-// ?canTransferSuppliesAt@ActionManager@@QAE_NPBVObject@@0@Z
-__declspec(naked) bool ActionManager::canTransferSuppliesAt(Object const *, Object const *)
+typedef bool Bool;
+typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef int NameKeyType;
+
+#define NULL 0
+#define FALSE false
+#define TRUE true
+
+enum Relationship
 {
-	__asm {
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x3c
-		__emit 0x94
-		__emit 0xff
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x53
-		__emit 0x55
-		__emit 0x56
-		__emit 0x8b
-		__emit 0x74
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x57
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x8e
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x6c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x85
-		__emit 0xed
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x82
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xf6
-		__emit 0x85
-		__emit 0x44
-		__emit 0x03
-		__emit 0x00
-		__emit 0x00
-		__emit 0x01
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x75
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x86
-		__emit 0x90
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xa8
-		__emit 0x04
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x67
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xf6
-		__emit 0x85
-		__emit 0x90
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x04
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x5a
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x6a
-		__emit 0x13
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xe8
-		__emit 0xc2
-		__emit 0xc7
-		__emit 0xf3
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x85
-		__emit 0x49
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x8e
-		__emit 0x04
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x3b
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x01
-		__emit 0xff
-		__emit 0x90
-		__emit 0x40
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xd8
-		__emit 0x85
-		__emit 0xdb
-		__emit 0x89
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x25
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0xa0
-		__emit 0x0c
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x83
-		__emit 0xce
-		__emit 0xff
-		__emit 0xa8
-		__emit 0x01
-		__emit 0x75
-		__emit 0x28
-		__emit 0x83
-		__emit 0x0d
-		__emit 0x0c
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x00
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x68
-		__emit 0xdc
-		__emit 0x3b
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x9e
-		__emit 0x5e
-		__emit 0xf7
-		__emit 0xff
-		__emit 0xa3
-		__emit 0x08
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x08
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x51
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xe8
-		__emit 0xd3
-		__emit 0x5e
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xf8
-		__emit 0x85
-		__emit 0xff
-		__emit 0x74
-		__emit 0x22
-		__emit 0x8b
-		__emit 0x87
-		__emit 0x88
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xcf
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x54
-		__emit 0x24
-		__emit 0x20
-		__emit 0x52
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xe8
-		__emit 0xa9
-		__emit 0x57
-		__emit 0xf8
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x0f
-		__emit 0x84
-		__emit 0xbb
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8a
-		__emit 0x0d
-		__emit 0x0c
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0xb8
-		__emit 0x02
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x84
-		__emit 0xc8
-		__emit 0x75
-		__emit 0x27
-		__emit 0x09
-		__emit 0x05
-		__emit 0x0c
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x00
-		__emit 0xd6
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x68
-		__emit 0xc0
-		__emit 0x3b
-		__emit 0x08
-		__emit 0x01
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x32
-		__emit 0x5e
-		__emit 0xf7
-		__emit 0xff
-		__emit 0xa3
-		__emit 0x04
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x89
-		__emit 0x74
-		__emit 0x24
-		__emit 0x18
-		__emit 0xa1
-		__emit 0x04
-		__emit 0xd7
-		__emit 0x2e
-		__emit 0x01
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xe8
-		__emit 0x68
-		__emit 0x5e
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xf0
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x74
-		__emit 0x24
-		__emit 0x8b
-		__emit 0x13
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xff
-		__emit 0x12
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x68
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xe8
-		__emit 0x50
-		__emit 0xb8
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0x8b
-		__emit 0xd8
-		__emit 0xe8
-		__emit 0x47
-		__emit 0xb8
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x3b
-		__emit 0xc3
-		__emit 0x75
-		__emit 0x52
-		__emit 0x8b
-		__emit 0x5c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x85
-		__emit 0xff
-		__emit 0x75
-		__emit 0x04
-		__emit 0x85
-		__emit 0xf6
-		__emit 0x74
-		__emit 0x46
-		__emit 0x8b
-		__emit 0x03
-		__emit 0x8b
-		__emit 0xcb
-		__emit 0xff
-		__emit 0x50
-		__emit 0x10
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x3b
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x20
-		__emit 0xe8
-		__emit 0x23
-		__emit 0xb8
-		__emit 0xf5
-		__emit 0xff
-		__emit 0x85
-		__emit 0xc0
-		__emit 0x74
-		__emit 0x17
-		__emit 0x8b
-		__emit 0x48
-		__emit 0x2c
-		__emit 0x85
-		__emit 0xc9
-		__emit 0x75
-		__emit 0x10
-		__emit 0x8b
-		__emit 0x40
-		__emit 0x24
-		__emit 0x50
-		__emit 0x8b
-		__emit 0xcd
-		__emit 0xe8
-		__emit 0x07
-		__emit 0x68
-		__emit 0xf6
-		__emit 0xff
-		__emit 0x83
-		__emit 0xf8
-		__emit 0x04
-		__emit 0x74
-		__emit 0x17
-		__emit 0xb0
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x5b
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x10
-		__emit 0x5f
-		__emit 0x5e
-		__emit 0x5d
-		__emit 0x32
-		__emit 0xc0
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5b
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x0c
-		__emit 0xc2
-		__emit 0x08
-		__emit 0x00
+	ENEMIES = 0
+};
+
+enum ObjectShroudStatus
+{
+	OBJECTSHROUD_SHROUDED = 4
+};
+
+class Module;
+class SupplyTruckAIInterface;
+
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+class BFMEAIUpdateInterface
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void slot00c() = 0;
+	virtual void slot010() = 0;
+	virtual void slot014() = 0;
+	virtual void slot018() = 0;
+	virtual void slot01c() = 0;
+	virtual void slot020() = 0;
+	virtual void slot024() = 0;
+	virtual void slot028() = 0;
+	virtual void slot02c() = 0;
+	virtual void slot030() = 0;
+	virtual void slot034() = 0;
+	virtual void slot038() = 0;
+	virtual void slot03c() = 0;
+	virtual void slot040() = 0;
+	virtual void slot044() = 0;
+	virtual void slot048() = 0;
+	virtual void slot04c() = 0;
+	virtual void slot050() = 0;
+	virtual void slot054() = 0;
+	virtual void slot058() = 0;
+	virtual void slot05c() = 0;
+	virtual void slot060() = 0;
+	virtual void slot064() = 0;
+	virtual void slot068() = 0;
+	virtual void slot06c() = 0;
+	virtual void slot070() = 0;
+	virtual void slot074() = 0;
+	virtual void slot078() = 0;
+	virtual void slot07c() = 0;
+	virtual void slot080() = 0;
+	virtual void slot084() = 0;
+	virtual void slot088() = 0;
+	virtual void slot08c() = 0;
+	virtual void slot090() = 0;
+	virtual void slot094() = 0;
+	virtual void slot098() = 0;
+	virtual void slot09c() = 0;
+	virtual void slot0a0() = 0;
+	virtual void slot0a4() = 0;
+	virtual void slot0a8() = 0;
+	virtual void slot0ac() = 0;
+	virtual void slot0b0() = 0;
+	virtual void slot0b4() = 0;
+	virtual void slot0b8() = 0;
+	virtual void slot0bc() = 0;
+	virtual void slot0c0() = 0;
+	virtual void slot0c4() = 0;
+	virtual void slot0c8() = 0;
+	virtual void slot0cc() = 0;
+	virtual void slot0d0() = 0;
+	virtual void slot0d4() = 0;
+	virtual void slot0d8() = 0;
+	virtual void slot0dc() = 0;
+	virtual void slot0e0() = 0;
+	virtual void slot0e4() = 0;
+	virtual void slot0e8() = 0;
+	virtual void slot0ec() = 0;
+	virtual void slot0f0() = 0;
+	virtual void slot0f4() = 0;
+	virtual void slot0f8() = 0;
+	virtual void slot0fc() = 0;
+	virtual void slot100() = 0;
+	virtual void slot104() = 0;
+	virtual void slot108() = 0;
+	virtual void slot10c() = 0;
+	virtual void slot110() = 0;
+	virtual void slot114() = 0;
+	virtual void slot118() = 0;
+	virtual void slot11c() = 0;
+	virtual void slot120() = 0;
+	virtual void slot124() = 0;
+	virtual void slot128() = 0;
+	virtual void slot12c() = 0;
+	virtual void slot130() = 0;
+	virtual void slot134() = 0;
+	virtual void slot138() = 0;
+	virtual void slot13c() = 0;
+	virtual SupplyTruckAIInterface *getSupplyTruckAIInterface() const = 0;
+};
+
+class SupplyTruckAIInterface
+{
+public:
+	virtual Int getNumberBoxes() const = 0;
+	virtual void slot004() const = 0;
+	virtual void slot008() const = 0;
+	virtual void slot00c() const = 0;
+	virtual Bool isAvailableForSupplying() const = 0;
+};
+
+class SupplyWarehouseDockUpdate
+{
+public:
+	Int getBoxesStored() const
+	{
+		return *(const Int *)((const char *)this + 0x88);
 	}
+};
+
+class SupplyCenterDockUpdate
+{
+};
+
+class Player
+{
+public:
+	Int getPlayerType() const
+	{
+		return *(const Int *)((const char *)this + 0x2c);
+	}
+
+	Int getPlayerIndex() const
+	{
+		return *(const Int *)((const char *)this + 0x24);
+	}
+};
+
+class Object
+{
+public:
+	Bool isEffectivelyDead() const
+	{
+		return (*(const unsigned char *)((const char *)this + 0x344) & 1) != 0;
+	}
+
+	Bool testStatus(Int status) const;
+	Module *findModule(Int key) const;
+	Relationship getRelationship(const Object *that) const;
+	Player *getControllingPlayer() const;
+	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
+	UnsignedInt getStatusWord() const
+	{
+		return m_status[0];
+	}
+
+	BFMEAIUpdateInterface *getAI() const
+	{
+		return *(BFMEAIUpdateInterface * const *)((const char *)this + 0x204);
+	}
+
+private:
+	char m_beforeStatus[0x90];
+	UnsignedInt m_status[2];
+	char m_beforeAI[0x204 - 0x98];
+	BFMEAIUpdateInterface *m_ai;
+};
+
+class BfmeObjectCall
+{
+public:
+	Player *getControllingPlayer() const;
+};
+
+class BfmeObjectShroudCall
+{
+public:
+	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
+};
+
+#pragma comment(linker, "/alternatename:?getControllingPlayer@BfmeObjectCall@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getShroudedStatus@BfmeObjectShroudCall@@QBE?AW4ObjectShroudStatus@@H@Z=?j_0002b81e@@YAXXZ")
+
+class ActionManager
+{
+public:
+	Bool canTransferSuppliesAt(const Object *, const Object *);
+};
+
+// ?canTransferSuppliesAt@ActionManager@@QAE_NPBVObject@@0@Z
+Bool ActionManager::canTransferSuppliesAt(const Object *obj,
+	const Object *transferDest)
+{
+	if (obj == NULL || transferDest == NULL)
+		return FALSE;
+
+	if (transferDest->isEffectivelyDead())
+		return FALSE;
+
+	if ((obj->getStatusWord() & 4) != 0 ||
+		(*(const UnsignedInt *)((const char *)transferDest + 0x90) & 4) != 0)
+		return FALSE;
+
+	if (transferDest->testStatus(0x13))
+		return FALSE;
+
+	const BFMEAIUpdateInterface *ai = obj->getAI();
+	if (ai == NULL)
+		return FALSE;
+
+	const SupplyTruckAIInterface *supplyTruck =
+		ai->getSupplyTruckAIInterface();
+	if (supplyTruck == NULL)
+		return FALSE;
+
+	static const NameKeyType key_warehouseUpdate =
+		TheNameKeyGenerator->nameToKey("SupplyWarehouseDockUpdate");
+	SupplyWarehouseDockUpdate *warehouseModule =
+		(SupplyWarehouseDockUpdate *)transferDest->findModule(key_warehouseUpdate);
+	if (warehouseModule != NULL)
+	{
+		if (warehouseModule->getBoxesStored() == 0 ||
+			transferDest->getRelationship(obj) == ENEMIES)
+			return FALSE;
+	}
+
+	static const NameKeyType key_centerUpdate =
+		TheNameKeyGenerator->nameToKey("SupplyCenterDockUpdate");
+	SupplyCenterDockUpdate *centerModule =
+		(SupplyCenterDockUpdate *)transferDest->findModule(key_centerUpdate);
+	if (centerModule != NULL)
+	{
+		if (supplyTruck->getNumberBoxes() == 0 ||
+			reinterpret_cast<const BfmeObjectCall *>(transferDest)->getControllingPlayer() !=
+			reinterpret_cast<const BfmeObjectCall *>(obj)->getControllingPlayer())
+			return FALSE;
+	}
+
+	if (warehouseModule == NULL && centerModule == NULL)
+		return FALSE;
+
+	if (!supplyTruck->isAvailableForSupplying())
+		return FALSE;
+
+	Player *objPlayer =
+		reinterpret_cast<const BfmeObjectCall *>(obj)->getControllingPlayer();
+	if (objPlayer != NULL)
+	{
+		if (objPlayer->getPlayerType() == 0 &&
+			reinterpret_cast<const BfmeObjectShroudCall *>(transferDest)->getShroudedStatus(objPlayer->getPlayerIndex()) ==
+			OBJECTSHROUD_SHROUDED)
+			return FALSE;
+	}
+
+	return TRUE;
 }
