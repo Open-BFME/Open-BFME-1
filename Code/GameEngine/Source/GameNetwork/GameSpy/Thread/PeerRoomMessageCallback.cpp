@@ -1,5 +1,5 @@
 // ?roomMessageCallback@@YAXPAXW4RoomType@@PBD2W4MessageType@@0@Z
-// partial score=0.9 date=2026-09-10
+// exact probe score=1.0 date=2026-09-12
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
@@ -139,7 +139,9 @@ public:
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern std::wstring MultiByteToWideCharSingleLine(const char *);
 extern "C" int peerGetPlayerInfoNoWaitA(PEER, const char *, UnsignedInt *, Int *);
-extern "C" int atoi(const char *);
+// BFME's import is the decorated parser at 0x00F59384; CRT atoi has a
+// different relocation and does not reproduce retail here.
+__declspec(dllimport) int __cdecl bfmeAtoi1027(char *);
 extern "C" int strcmp(const char *, const char *);
 
 // These offsets are independently present in the retail body: QM status is
@@ -166,6 +168,7 @@ public:
 void roomMessageCallback(PEER peer, RoomType roomType, const char *nick,
 	const char *message, MessageType messageType, void *param)
 {
+	PeerThreadClass *t = (PeerThreadClass *)param;
 	PeerResponse resp;
 	if (messageType == NoticeMessage)
 	{
@@ -184,7 +187,6 @@ void roomMessageCallback(PEER peer, RoomType roomType, const char *nick,
 
 		UnsignedInt IP;
 		peerGetPlayerInfoNoWaitA(peer, nick, &IP, &resp.message.profileID);
-		PeerThreadClass *t = (PeerThreadClass *)param;
 		if (t && (t->getQMStatus() != QM_IDLE && t->getQMStatus() != QM_STOPPED))
 		{
 			if (resp.message.profileID == MATCHBOT_PROFILE_ID)
@@ -194,15 +196,14 @@ void roomMessageCallback(PEER peer, RoomType roomType, const char *nick,
 				if (cmd && strcmp(cmd, "MBOT:POOLSIZE") == 0)
 				{
 					Int poolSize = 0;
-
 					while (1)
 					{
 						char *poolStr = strtok_r(NULL, " ", &lastStr);
 						char *sizeStr = strtok_r(NULL, " ", &lastStr);
 						if (poolStr && sizeStr)
 						{
-							Int pool = atoi(poolStr);
-							Int size = atoi(sizeStr);
+							Int pool = bfmeAtoi1027(poolStr);
+							Int size = bfmeAtoi1027(sizeStr);
 							if (pool == t->getQMLadder())
 							{
 								poolSize = size;
