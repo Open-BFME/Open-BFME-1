@@ -89,6 +89,54 @@ def test_header_read_sizes_place_the_members_after_them():
     assert got == {"m_name": 0, "m_where": 4, "m_tag": 16}
 
 
+def test_new_header_sizes_place_the_members_after_them():
+    """Rva0036CA00Str is one pointer; BfmeNetAddress is UnsignedInt+UnsignedShort
+    padded to 8; BfmeSubObject is char[4] aligning to 1; Matrix3D is Vector4[3];
+    AudioEventRTS is 0x70; FieldParse is four pointer/Int fields."""
+    got, refused = members("""struct S {
+	Rva0036CA00Str m_name;
+	BfmeNetAddress m_addr;
+	BfmeSubObject m_sub;
+	char m_tag;
+	Matrix3D m_xform;
+	AudioEventRTS m_sound;
+	FieldParse m_parse;
+};""")
+    assert refused is None
+    assert got == {
+        "m_name": 0,
+        "m_addr": 4,
+        "m_sub": 12,
+        "m_tag": 16,
+        "m_xform": 20,
+        "m_sound": 68,
+        "m_parse": 0x70 + 68,
+    }
+
+
+def test_static_members_do_not_occupy_instance_space():
+    """static const FieldParse tables blocked 22 structs. Static members are not
+    in the instance layout, so they are skipped rather than sized -- sizing them
+    would push every following member, the same class of bug as summing a union."""
+    got, refused = members("""struct S {
+	int m_key;
+	static const FieldParse m_fieldParseTable[];
+	int m_after;
+};""")
+    assert refused is None
+    assert got == {"m_key": 0, "m_after": 4}
+
+
+def test_template_parameter_and_bitset_stay_unsizeable():
+    """T is a template parameter; _STL::bitset<NUMBITS> depends on one. Inventing
+    a number would shift every following member of 200+ structs."""
+    _, refused_t = members("struct S {\n\tT m_item;\n\tint m_after;\n};")
+    assert refused_t.startswith("unsizeable type")
+    _, refused_bits = members(
+        "struct S {\n\t_STL::bitset<NUMBITS> m_bits;\n\tint m_after;\n};")
+    assert refused_bits.startswith("unsizeable type")
+
+
 def test_refuses_a_declaration_that_windows_into_a_larger_class():
     """`GlobalData::m_bfmeOn` states +0x1278 as its FIRST member: the declaration is a
     slice of a bigger class, so every offset in it is relative to something unknown."""

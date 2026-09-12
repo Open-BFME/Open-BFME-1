@@ -76,9 +76,25 @@ MEMBER = re.compile(
 # confirmed by --selfcheck against the offsets the tree already states:
 #   StringBase/AsciiString/UnicodeString -- string_base.h:80 is one `Header *m_data`
 #   Coord3D / Coord2D / ICoord2D         -- basetype.h: three Reals / two Reals / two Ints
+#   Rva0036CA00Str                       -- one `void *m_item`, same shape as AsciiString
+#   BfmeSubObject                        -- char m_bfmeBytes[4]; alignment is 1, not 4
+#   BfmeNetAddress                       -- UnsignedInt ip + UnsignedShort port; BfmeLANSlot
+#                                          spells the size as `0x68 - 8`
+#   Matrix3D                             -- matrix3d.h:382 is Vector4 Row[3]; vector4.h is
+#                                          four floats, so 48 bytes aligning to 4
+#   AudioEventRTS                        -- virtual + unsigned char m_data[0x6c], and
+#                                          MiscAudio places the next event 0x70 later
+#   FieldParse                           -- INI.h: four pointer/Int fields
 # AsciiString alone blocked 739 structs and Coord3D another 272, and a blocked struct
 # is one this checker cannot see into at all -- which is how three deliberately bogus
 # names walked past it during the promotion probe.
+#
+# Left unsizeable on purpose, not as unfinished work:
+#   T, _STL::bitset<NUMBITS> -- the size is a template argument
+#   GetNextFunc              -- pointer-to-member-function; 4, 8 or 12 by inheritance
+#   AICommandInterface       -- empty 1-byte stub vs virtual 4-byte vptr, file by file
+#   ObjectPtrHash            -- STLport hash_map; empty functors + vector + alloc_proxy
+#   ModelConditionFlags      -- BitFlags<288> is 36, BitFlags<320> is 40, some stubs are 4
 SIZES = {
     "char": (1, 1), "signed char": (1, 1), "unsigned char": (1, 1), "bool": (1, 1),
     "Bool": (1, 1), "Byte": (1, 1), "UnsignedByte": (1, 1),
@@ -93,6 +109,12 @@ SIZES = {
     "AsciiString": (4, 4), "UnicodeString": (4, 4), "StringBase<char>": (4, 4),
     "BFMERetailAsciiString": (4, 4),
     "Coord3D": (12, 4), "Coord2D": (8, 4), "ICoord2D": (8, 4),
+    "Rva0036CA00Str": (4, 4),
+    "BfmeSubObject": (4, 1),
+    "BfmeNetAddress": (8, 4),
+    "Matrix3D": (48, 4),
+    "AudioEventRTS": (0x70, 4),
+    "FieldParse": (16, 4),
 }
 
 
@@ -196,6 +218,12 @@ def outer_members(text, brace, has_base):
         if nested:
             continue
         if re.match(r"^\s*(?:public|private|protected)\s*:", line):
+            continue
+        if re.match(r"^\s*static\b", line):
+            # Static members are not in the instance layout. Sizing
+            # `static const FieldParse m_fieldParseTable[]` as 16 bytes (or
+            # refusing the whole struct because `[]` is unsized) would push
+            # every following member -- the same class of bug as summing a union.
             continue
         if re.match(r"^\s*(?://|/\*|\*|$|\}|#)", line) or "(" in line:
             continue
@@ -325,6 +353,8 @@ def selfcheck(paths):
             rows, bad = [], None
             for line in body.splitlines():
                 if re.match(r"^\s*(?:public|private|protected)\s*:", line):
+                    continue
+                if re.match(r"^\s*static\b", line):
                     continue
                 if re.match(r"^\s*(?://|/\*|\*|$|\}|#)", line) or "(" in line:
                     continue
