@@ -53,8 +53,8 @@ public:
 	// visible here lets MSVC reuse the hidden-result temporary without making
 	// a second non-inline definition of the already matched member.
 	__declspec(noinline) Coord2D getVel(void) { return m_vel; }
-	Bool isFinished(void) { return m_finished; }
-	void setFinished(Bool finished) { m_finished = finished; }
+	Bool isFinished(void) { return m_isFinished; }
+	void setFinished(Bool finished) { m_isFinished = finished; }
 	void setCurPos(ICoord2D pos) { m_curPos = pos; }
 	void setVel(Coord2D vel) { m_vel = vel; }
 
@@ -69,7 +69,7 @@ private:
 	UnsignedInt m_startTime;
 	UnsignedInt m_endTime;
 	unsigned char m_padding[5];
-	Bool m_finished;
+	Bool m_isFinished;
 };
 
 class ProcessAnimateWindowSlideFromBottom

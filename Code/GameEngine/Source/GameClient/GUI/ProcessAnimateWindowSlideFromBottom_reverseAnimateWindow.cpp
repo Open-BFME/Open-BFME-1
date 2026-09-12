@@ -42,8 +42,8 @@ public:
 	ICoord2D getStartPos( void ) { return m_startPos; }
 	ICoord2D getEndPos( void ) { return m_endPos; }
 	Coord2D getVel( void );
-	Bool isFinished( void ) { return m_finished; }
-	void setFinished( Bool finished ) { m_finished = finished; }
+	Bool isFinished( void ) { return m_isFinished; }
+	void setFinished( Bool finished ) { m_isFinished = finished; }
 	void setCurPos( ICoord2D pos ) { m_curPos = pos; }
 	void setVel( Coord2D vel ) { m_vel = vel; }
 
@@ -58,7 +58,7 @@ private:
 	UnsignedInt m_startTime;
 	UnsignedInt m_endTime;
 	unsigned char m_padding[5];
-	Bool m_finished;
+	Bool m_isFinished;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h

@@ -40,8 +40,8 @@ public:
 	ICoord2D getCurPos(void) { return m_curPos; }
 	ICoord2D getEndPos(void) { return m_endPos; }
 	Coord2D getVel(void) { return m_vel; }
-	Bool isFinished(void) { return m_finished; }
-	void setFinished(Bool finished) { m_finished = finished; }
+	Bool isFinished(void) { return m_isFinished; }
+	void setFinished(Bool finished) { m_isFinished = finished; }
 	void setCurPos(ICoord2D pos) { m_curPos = pos; }
 	void setVel(Coord2D vel) { m_vel = vel; }
 
@@ -57,7 +57,7 @@ private:
 	UnsignedInt m_endTime;
 	int m_animType;
 	Bool m_needsToFinish;
-	Bool m_finished;
+	Bool m_isFinished;
 };
 
 class ProcessAnimateWindow

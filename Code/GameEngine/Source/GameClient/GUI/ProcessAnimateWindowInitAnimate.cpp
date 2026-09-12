@@ -61,14 +61,14 @@ public:
 
 	UnsignedInt getDelay(void) const { return m_delay; }
 	GameWindow *getGameWindow(void) { return m_gameWindow; }
-	void setFinished(unsigned char value) { m_finished = value; }
+	void setFinished(unsigned char value) { m_isFinished = value; }
 
 private:
 	UnsignedInt m_delay;
 	unsigned char m_padding0[0x20];
 	GameWindow *m_gameWindow;
 	unsigned char m_padding1[0x15];
-	unsigned char m_finished;
+	unsigned char m_isFinished;
 };
 
 class Display

@@ -43,7 +43,7 @@ public:
 	ICoord2D getEndPos(void) { return m_endPos; }
 	ICoord2D getStartPos(void) { return m_startPos; }
 	void setStartTime(UnsignedInt value) { m_startTime = value; }
-	void setFinished(Bool value) { m_finished = value; }
+	void setFinished(Bool value) { m_isFinished = value; }
 	void setVel(Coord2D value) { m_vel = value; }
 	void setCurPos(ICoord2D value) { m_curPos = value; }
 	void setEndPos(ICoord2D value) { m_endPos = value; }
@@ -60,7 +60,7 @@ private:
 	UnsignedInt m_startTime;
 	UnsignedInt m_endTime;
 	unsigned char m_padding[5];
-	Bool m_finished;
+	Bool m_isFinished;
 };
 
 class ProcessAnimateWindowSlideFromRightFast

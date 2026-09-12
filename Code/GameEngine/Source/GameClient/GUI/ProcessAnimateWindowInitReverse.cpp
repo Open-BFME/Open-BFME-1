@@ -47,14 +47,14 @@ public:
 	Coord2D getVel(void);
 	void setStartTime(UnsignedInt value) { m_startTime = value; }
 	void setVel(Coord2D value) { m_vel = value; }
-	void setFinished(Bool value) { m_finished = value; }
+	void setFinished(Bool value) { m_isFinished = value; }
 
 	UnsignedInt m_delay;
 	unsigned char m_padding0[0x24];
 	Coord2D m_vel;
 	UnsignedInt m_startTime;
 	unsigned char m_padding1[0x41 - 0x38];
-	Bool m_finished;
+	Bool m_isFinished;
 };
 
 class ProcessAnimateWindowSlideFromRight
