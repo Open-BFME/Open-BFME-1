@@ -5,8 +5,10 @@
 // destructor, and restores the base table at 0x01073744.  The secondary base
 // owns a four-slot base and a five-slot virtual base.  Its final methods and
 // the 0x7C-byte nonvirtual layout make MSVC emit the retail vtordisp update.
-// The surrounding class name is not recovered, so this source keeps the
-// address-derived Rva001B3E60 name.
+// Identity recovered from W3DGhostObject's constructor at 0x006BCEC0: its
+// base call through 0x000405A2 reaches this constructor. The parent-object
+// field and GeometryInfo layout agree with the ghost allocation and snapshot
+// paths. Internal interface names remain opaque ABI placeholders.
 
 class BfmeBaseVUQ
 {
@@ -70,13 +72,13 @@ public:
 	unsigned int m_1C;
 };
 
-class Rva001B3E60
+class GhostObject
 	: public BfmeBaseVUQ
 	, public Rva001B3E60SecondBase
 {
 public:
-	Rva001B3E60();
-	~Rva001B3E60();
+	GhostObject();
+	~GhostObject();
 
 	virtual void vslot00() { }
 	virtual void vslot04() { }
@@ -90,8 +92,8 @@ private:
 	unsigned int m_7C;
 };
 
-// @??0Rva001B3E60@@QAE@XZ 0x001B3CF0
-Rva001B3E60::Rva001B3E60()
+// @??0GhostObject@@QAE@XZ 0x001B3CF0
+GhostObject::GhostObject()
 	: m_state()
 	, m_member()
 	, m_7C(0)
@@ -101,8 +103,8 @@ Rva001B3E60::Rva001B3E60()
 	m_state.m_18 = 0;
 }
 
-// @??1Rva001B3E60@@UAE@XZ 0x001B3E60
-Rva001B3E60::~Rva001B3E60()
+// @??1GhostObject@@UAE@XZ 0x001B3E60
+GhostObject::~GhostObject()
 {
 	reinterpret_cast<ClearanceTestingSlowDeathBehaviorModuleDataMember *>(
 		&m_member)->~ClearanceTestingSlowDeathBehaviorModuleDataMember();

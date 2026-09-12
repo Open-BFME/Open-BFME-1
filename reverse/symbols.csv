@@ -84009,7 +84009,6 @@ name,address,notes
 ?releaseDependentResources@BfmeShaderShutdown@@SAXXZ,0x0001BB30,first phase called by W3DShaderManager shutdown at 0x00717DA2
 ?releaseInto@MixFileInfoBuffer@@QAEXPAX@Z,0x003F6E10,Open-BFME5 the one-argument member FileInfoStruct's destructor calls on its first member; unnamed in the image
 ?releaseOwnedState@Rva007A1230ArrayOwner@@AAEXXZ,0x000490A3,address-derived cleanup ILT forwarding to 0x0079E4C0 from the destructor at 0x007A1230
-?releasePartitionData@W3DGhostObjectManager@@UAEXXZ,0x006bd280,vtable-slot ??_7W3DGhostObjectManager@@6B@ slot 7 anchors=1
 ?releaseRef@W3DRadarResetTextureRef@@QAEXXZ,0x009EB7A0,W3DRadar reset texture release ABI shim
 ?releaseReferences@Rva007ADB80Owner@@QAEXXZ,0x00007CF7,ILT for releaseReferences used by GenAlpha::h00024D2A
 ?releaseResources@Gen0045A970_00723FB0@@QAEXXZ,0x000491C5,assigned 0x00723FB0 snow reacquire cleanup call resolves through the matched release thunk
@@ -87238,3 +87237,4 @@ _Rva001ABA80ResetHook,0x0042E8A2,ILT to the matched 1-byte ret skeleton m@Gen_00
 ??0?$BitFlags@$0BDA@@@QAE@W4BogusInitType@0@HHHHH@Z,0x001ED160,OpenContain onRemoving callsite 0x13D via ILT 0x0000DB0C; signed-key tree or model-flag constructor identity decoded and emitter checked where available
 ??$find@H@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@1@ABH@Z,0x002231C0,OpenContain onRemoving callsite 0x182 via ILT 0x00026530; signed-key tree or model-flag constructor identity decoded and emitter checked where available
 ?erase@?$map@HIU?$less@H@_STL@@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@2@@Z,0x00223760,OpenContain onRemoving callsite 0x19F via ILT 0x0000179E; signed-key tree or model-flag constructor identity decoded and emitter checked where available
+??0W3DGhostObject@@QAE@XZ,0x006BCEC0,W3DGhostObjectManager addGhostObject allocates 0x120 bytes; constructor initializes 32 snapshots and DrawableInfo at independently matched ghost layout offsets
