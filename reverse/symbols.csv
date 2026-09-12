@@ -5311,7 +5311,7 @@ name,address,notes
 ??1Gen_dtor_00255f30@@UAE@XZ,0x00033866,gen-dtor class destructor
 ??1Gen_dtor_002561d0@@UAE@XZ,0x0001B7B6,gen-dtor class destructor
 ??1Gen_dtor_00256940@@UAE@XZ,0x00004D3B,gen-dtor class destructor
-??1Gen_dtor_00257620@@UAE@XZ,0x000308C3,gen-dtor class destructor
+??1ArrowStormUpdateModuleData@@UAE@XZ,0x000308C3,route=0x00257650; vtable 0x010B3668 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_00257c70@@UAE@XZ,0x0003E879,gen-dtor class destructor
 ??1Gen_dtor_002592f0@@UAE@XZ,0x0001F76C,gen-dtor class destructor
 ??1Gen_dtor_002598d0@@UAE@XZ,0x0000B37F,gen-dtor class destructor
