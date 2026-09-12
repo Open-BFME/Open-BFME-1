@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1dd8b3d3aab5d680521607e65cf71cd30fbb8fa78ca283712b1e912bf78721ef",
+  "symbol": "?findByNameA@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?findByNameA@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z\n// partial score=0.99 date=2026-09-11\nclass AsciiString\n{\npublic:\n\tint compare(const AsciiString &other) const;\n\nprivate:\n\tvoid *m_data;\n};\n\nclass BfmeNamedItem0033c340\n{\n};\n\nstruct BfmeStoredItem00359d40\n{\n\tunsigned char m_head[4];\n\tBfmeNamedItem0033c340 m_item;\n};\n\nstruct BfmeBucket00359d40\n{\n\tunsigned char m_head[8];\n\tAsciiString m_name;\n\tunsigned char m_pad[4];\n\tBfmeStoredItem00359d40 *m_storedItem;\n};\n\nclass BfmeMap00359d40\n{\npublic:\n\tunsigned int findNameIndex(const AsciiString &name);\n\n\tint *m_first;\n\tint *m_last;\n\tunsigned char m_mid[4];\n\tBfmeBucket00359d40 *m_entries;\n};\n\nclass BfmeNamedContainer0033c340\n{\npublic:\n\tBfmeNamedItem0033c340 *findByNameA(const AsciiString &name);\n\nprivate:\n\tunsigned char m_head[0xc];\n\tBfmeMap00359d40 m_map;\n};\n\nBfmeNamedItem0033c340 *BfmeNamedContainer0033c340::findByNameA(\n\tconst AsciiString &name)\n{\n\tBfmeMap00359d40 *map = &m_map;\n\tunsigned int i = map->findNameIndex(name);\n\n\tif (i < (unsigned int)(map->m_last - map->m_first))\n\t{\n\t\tint id = map->m_first[i];\n\t\tAsciiString *entryName = &map->m_entries[id].m_name;\n\t\tif (entryName->compare(name) == 0 && id != -1)\n\t\t\treturn &m_map.m_entries[id].m_storedItem->m_item;\n\t}\n\n\treturn 0;\n}\n"
+}
