@@ -1020,20 +1020,7 @@ void DozerActionState::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?onExit@DozerActionState@@UAEXW4StateExitType@@@Z present-unmatched
-void DozerActionState::onExit( StateExitType status )
-{
-
-	// save the current action of the dozer as none
-	Object *dozer = getMachineOwner();
-	if( !dozer->getAIUpdateInterface() )
-	{
-		return;
-	}
-	DozerAIInterface *dozerAI = dozer->getAIUpdateInterface()->getDozerAIInterface();
-	dozerAI->setCurrentTask( DOZER_TASK_INVALID );
-
-}  // end onExit
+// DozerActionState::onExit is byte-verified in DozerActionStateLifecycle.cpp.
 
 //-------------------------------------------------------------------------------------------------
 /** Dozer primary going home state */

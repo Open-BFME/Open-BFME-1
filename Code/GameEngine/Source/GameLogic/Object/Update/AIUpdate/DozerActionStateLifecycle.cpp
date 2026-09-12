@@ -123,3 +123,13 @@ StateReturnType DozerActionState::onEnter()
     return STATE_CONTINUE;
 }
 
+void DozerActionState::onExit(StateExitType status)
+{
+    Object *dozer = getMachineOwner();
+    if (!dozer->getAIUpdateInterface())
+        return;
+
+    DozerAIInterface *dozerAI = dozer->getAIUpdateInterface()->getDozerAIInterface();
+    dozerAI->setCurrentTask(DOZER_TASK_INVALID);
+    dozerAI->finishBuildingSound();
+}
