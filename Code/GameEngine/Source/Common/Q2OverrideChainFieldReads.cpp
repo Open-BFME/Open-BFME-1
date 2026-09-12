@@ -63,7 +63,7 @@ public:
 };
 
 #define Q2_OVERRIDE_CHAIN_FIELD( NAME, TYPE, OFFSET )                     \
-	class NAME##Data : public Overridable                                 \
+	class NAME##OverrideData : public Overridable                         \
 	{                                                                     \
 	public:                                                               \
 		char m_unreconstructed_08[ OFFSET - 8 ];                          \
@@ -75,16 +75,16 @@ public:
 		TYPE field() const;                                               \
 	private:                                                              \
 		void *m_unreconstructed_00;                                       \
-		const NAME##Data *m_data;                                         \
+		const NAME##OverrideData *m_data;                                 \
 	};                                                                    \
 	TYPE NAME::field() const                                              \
 	{                                                                     \
-		const NAME##Data *d = m_data;                                     \
-		const NAME##Data *f;                                              \
+		const NAME##OverrideData *d = m_data;                             \
+		const NAME##OverrideData *f;                                      \
 		if ( d == 0 )                                                     \
 			f = d;                                                        \
 		else                                                              \
-			f = (const NAME##Data *)( d->m_nextOverride                   \
+			f = (const NAME##OverrideData *)( d->m_nextOverride           \
 				? d->m_nextOverride->getFinalOverride()                   \
 				: d );                                                    \
 		return f->m_field;                                                \
@@ -118,7 +118,7 @@ Q2_OVERRIDE_CHAIN_FIELD( Rva003FE740, float, 0x3C )
 
 // This neighbor uses the same override walk, but tests a pointer-sized field
 // instead of returning the field itself.
-class Rva001B5120Data : public Overridable
+class Rva001B5120OverrideData : public Overridable
 {
 public:
 	char m_unreconstructed_08[ 0xD4 - 8 ];
@@ -132,17 +132,17 @@ public:
 
 private:
 	void *m_unreconstructed_00;
-	const Rva001B5120Data *m_data;
+	const Rva001B5120OverrideData *m_data;
 };
 
 unsigned char Rva001B5120::hasValue() const
 {
-	const Rva001B5120Data *d = m_data;
-	const Rva001B5120Data *f;
+	const Rva001B5120OverrideData *d = m_data;
+	const Rva001B5120OverrideData *f;
 	if ( d == 0 )
 		f = d;
 	else
-		f = (const Rva001B5120Data *)( d->m_nextOverride
+		f = (const Rva001B5120OverrideData *)( d->m_nextOverride
 			? d->m_nextOverride->getFinalOverride()
 			: d );
 	return f->m_value != 0;
